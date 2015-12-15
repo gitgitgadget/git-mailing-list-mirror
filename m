@@ -1,95 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/8] xread_nonblock: add functionality to read from fds
- without blocking
-Date: Mon, 14 Dec 2015 20:44:57 -0500
-Message-ID: <20151215014456.GA28768@sigill.intra.peff.net>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
- <1450121838-7069-4-git-send-email-sbeller@google.com>
- <CAPig+cSiE8rJD8ohgW99SBJMFE8cJ6UrHKeAucj4fTEmUW7Ntg@mail.gmail.com>
- <xmqqio40hbam.fsf@gitster.mtv.corp.google.com>
- <20151214235736.GA26133@sigill.intra.peff.net>
- <CAGZ79kZGjCy-o=2hO22=4=n2JqUsEG+dqOZFP4Hhf5E72B-_JA@mail.gmail.com>
- <20151215001642.GA26409@sigill.intra.peff.net>
- <CAGZ79kbLHNtxcwhZz=tHpJB2XnxMeuEJBG=PmoAbcVF4Wzno2g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 02:45:14 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v3 1/3] Introduce a null_oid constant.
+Date: Tue, 15 Dec 2015 01:52:03 +0000
+Message-ID: <1450144325-182108-2-git-send-email-sandals@crustytoothpaste.net>
+References: <1450144325-182108-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 15 02:52:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8efw-00024Z-8r
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 02:45:12 +0100
+	id 1a8emn-00008k-HP
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 02:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932989AbbLOBpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 20:45:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41828 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753664AbbLOBpA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 20:45:00 -0500
-Received: (qmail 8447 invoked by uid 102); 15 Dec 2015 01:45:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 19:44:59 -0600
-Received: (qmail 4807 invoked by uid 107); 15 Dec 2015 01:45:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 20:45:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 20:44:57 -0500
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbLHNtxcwhZz=tHpJB2XnxMeuEJBG=PmoAbcVF4Wzno2g@mail.gmail.com>
+	id S932899AbbLOBwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 20:52:14 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47200 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932695AbbLOBwM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 20:52:12 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 65493282CB;
+	Tue, 15 Dec 2015 01:52:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1450144331;
+	bh=mGSm2kCtSKCpdSxcWdo82EM6xNSlLqQrqB1tGGFbsUg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qXHHvS3ZEzb4DI/Zy7Lo3GJmcsAHYtf9Nrq/NLHGp/nQB67b4JcWjpGohqL4dRKYb
+	 Y+kHq57EztiK6gFh30KTutUf82q6ShGM1u80vkadUbfzIAkY8dEsv9z5m9XneZePlj
+	 2U7rBvL+jwob3RMp2xBFTQvqLRJqoT0J3Fdtg9+oBF5bQ9mAXOa5lUr3/H4cXtMS+E
+	 Sm2/UYhbc9MlwNqsL7MkzIydQm4d5sOb4JvesZvoqX9yunWhDUM62ruGIvERah12/R
+	 sKIHAbokq0uMunuSxju/qVzPGNLUSZCJ+zAB7/WE4vAvFulbz5bQqa/0vmMjrbo47p
+	 tb0MNm+9+DreSqx/J6i7IXSkaeGyWYo8zEaH8KJc8TqbDiYxKhfe2+IW+FcJs7PdzD
+	 A4wwQvVz4ld0alH8uKczL/3i+FHouERki9txJ6rDxTE1yfDVVYiQP8ITkKQY6uxHPW
+	 aNfHGPsxTz7n2fce0jtZNt5TqVv5Y7xE3rVLNa0v1+MbON2hA+Y
+X-Mailer: git-send-email 2.7.0.rc0.173.g4a846af
+In-Reply-To: <1450144325-182108-1-git-send-email-sandals@crustytoothpaste.net>
+X-Spam-Score: -2.49 ALL_TRUSTED,BAYES_00,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282461>
 
-On Mon, Dec 14, 2015 at 04:25:18PM -0800, Stefan Beller wrote:
+null_oid is the struct object_id equivalent to null_sha1.
 
-> > But yeah, I think simply using xread() as-is in strbuf_read_once (or
-> > whatever it ends up being called) is OK.
-> 
-> I was actually thinking about using {without-x}read, just the plain system call.
-> Do we have any issues with that for wrapping purposes for Windows?
-> There is no technical reason to prefer xread over read in strbuf_read_once as
-> * we are not nonblocking (so the EAGAIN|| EWOULDBLOCK doesn't apply)
-> * we don't care about EINTR and retrying upon that signal
-> * we would not care about MAX_IO_SIZE most likely (that's actually one
-> of the reasons I could technically think of to prefer xread)
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ cache.h     | 1 +
+ sha1_file.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-I think you do still need to care about EINTR, or at least not barfing
-if read() returns -1. If I understand correctly, you want to do
-something like:
-
-  while (1) {
-	poll(some_fds);
-	for (i = 0; i < nr_fds; i++) {
-		if (some_fds[i].revents & POLLIN) {
-			int r = strbuf_read_once(buf[i], some_fds[i]);
-			/* ??? what do we do with r? */
-		}
-	}
-  }
-
-If we get EINTR from that read, it's OK for us to loop back to the
-poll() and go again.
-
-But if we get a true error in "r", we'd want to know, right? That means
-we must distinguish between EINTR and "real" errors (like EIO or
-something). We can do that here, but I think it's just as easy to do it
-inside of strbuf_read_once (by calling xread() there). It's OK not to
-jump back to the poll(), because we know the data that triggered the
-POLLIN is still waiting for us to read it.
-
-And we are fine with EAGAIN, too. We don't expect the sockets to be
-non-blocking in the first place, but even if they were, we know we just
-got POLLIN, so there should be data waiting.
-
--Peff
+diff --git a/cache.h b/cache.h
+index 5ab6cb50..c63fcc11 100644
+--- a/cache.h
++++ b/cache.h
+@@ -831,6 +831,7 @@ extern const char *find_unique_abbrev(const unsigned char *sha1, int len);
+ extern int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len);
+ 
+ extern const unsigned char null_sha1[GIT_SHA1_RAWSZ];
++extern const struct object_id null_oid;
+ 
+ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+ {
+diff --git a/sha1_file.c b/sha1_file.c
+index 27ce7b70..a54deb05 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -36,6 +36,7 @@
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
+ 
+ const unsigned char null_sha1[20];
++const struct object_id null_oid;
+ 
+ /*
+  * This is meant to hold a *small* number of objects that you would
+-- 
+2.7.0.rc0.194.g1187e4e.dirty
