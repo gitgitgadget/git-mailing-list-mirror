@@ -1,51 +1,97 @@
-From: Financial Service <hardiyansyah@mail.binadarma.ac.id>
-Subject: (unknown)
-Date: Tue, 15 Dec 2015 11:26:50 +0530
-Message-ID: <20151215055702.31937310083@mail.binadarma.ac.id>
-Reply-To: payingfundss@qq.com
+From: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/2] push: add '-d' as shorthand for '--delete'
+Date: Tue, 15 Dec 2015 10:22:06 +0100
+Message-ID: <20151215092206.GA1209@pks-xps.elego.de>
+References: <1450106584-22313-1-git-send-email-ps@pks.im>
+ <1450106584-22313-2-git-send-email-ps@pks.im>
+ <xmqqegeokfet.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <hardiyansyah@mail.binadarma.ac.id>
-X-From: git-owner@vger.kernel.org Tue Dec 15 07:28:23 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 15 10:22:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8j5y-0001D9-6Z
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 07:28:22 +0100
+	id 1a8loK-0007ph-9h
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 10:22:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbbLOG1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 01:27:46 -0500
-Received: from mail.binadarma.ac.id ([118.97.174.133]:48394 "EHLO
-	mail.binadarma.ac.id" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901AbbLOG1p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Dec 2015 01:27:45 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.binadarma.ac.id (Postfix) with ESMTP id D4B72229097D;
-	Tue, 15 Dec 2015 12:57:12 +0700 (WIT)
-DKIM-Filter: OpenDKIM Filter v2.7.3 mail.binadarma.ac.id D4B72229097D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.binadarma.ac.id;
-	s=selector; t=1450159032;
-	bh=0qfGLtGu72XU2t0eC6m19VBoEIOasTyPZmInjvXyw74=;
-	h=Subject:To:From:Date:Reply-To;
-	b=Sso5rI92mmVu42TdbERa1IFLW+zYKkxQPD1eA/Eazg4bFGjWcSHjYJj0UVXOcRELd
-	 yBxEu1nmiznDT39sNvQLqK48dRzXqyxGebPvQ5riP4lFckVGiUste1WoGJi78t7a68
-	 hgQJybSmRPd13KoI/mfB6IYTG/cKH2A0EbHsM/NM=
-X-Virus-Scanned: amavisd-new at mail.binadarma.ac.id
-Received: from mail.binadarma.ac.id ([127.0.0.1])
-	by localhost (mail.binadarma.ac.id [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QtE1rezVj+ix; Tue, 15 Dec 2015 12:57:12 +0700 (WIT)
-Received: from [100.66.30.123] (unknown [116.202.32.121])
-	by mail.binadarma.ac.id (Postfix) with ESMTPSA id 31937310083;
-	Tue, 15 Dec 2015 12:57:02 +0700 (WIT)
-Content-Description: Mail message body
-Subject: 
+	id S933383AbbLOJWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 04:22:11 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55250 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933212AbbLOJWJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Dec 2015 04:22:09 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 0CE4B21B85
+	for <git@vger.kernel.org>; Tue, 15 Dec 2015 04:22:09 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 15 Dec 2015 04:22:09 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=/UIhYv0rjL8FQNmfGrgbwcjcyJk=; b=GfC0f
+	xqGb1FCajZouARF+0pfaSJX+KMUam+BmvqmuDN25df1uK+nx41X3ALowhrTFSsTo
+	dW9wLTp2tcW0hpUiYRFwgQD+cafbkKH/I7Q5t4zWPUoVXC/7yPboHp4zjTrWGJZT
+	dZBd/mTM46GpoI/FVpD1ry0rUfN/RLIaqZMD9w=
+X-Sasl-enc: flI0MWKiBMQVqd5yp9wYL2byMhAK6s8vRDpl8d/aJSar 1450171328
+Received: from localhost (i59f7870a.versanet.de [89.247.135.10])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5ABACC016C4;
+	Tue, 15 Dec 2015 04:22:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <xmqqegeokfet.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282467>
 
-Are you in need of private or business loans for various purposes? if yes,apply now
+
+--MGYHOYXEY6WxJCY8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Dec 14, 2015 at 11:18:18AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > It is only possible to delete branches on remotes by specifying
+> > the long '--delete' flag.
+>=20
+> Not really.  "git push origin :unnecessary-branch" should just work
+> with out "--delete" or "-d".
+
+Well, sure, didn't think about this when phrasing the commit
+message. Still I think my point stands that it is more convenient
+for users to also have the '-d' shorthand, as is also in use for
+branch deletion in `git-branch`. I'll resend this patch with a
+corrected message.
+
+Patrick
+
+--MGYHOYXEY6WxJCY8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWb9u+AAoJEBF8Z7aeq/EskygQALFDqhGF5d/UiCrKfabCkn8C
+/ij2mgNNjj+VHMPfhq3I2LgnGZk+zofcNoA6/uqh22FQ8P3fJdwaPaiGE55AHruG
+dRCbVHIeGtcCx3I2iaHa2yTtbRbapqNpuazbbf4azDevKDw31pX1attbw5j+VHgn
+yUFLUbivVSRwqZSOFE6R4r1hBftuChN4qlxHWoppim/YQc2ObJQ70e46ZGQShde/
+F7HoHUySj0Fl62p0wG45HJEGzwpJmf0Q9LGelfNTK3auKsczRU3ZXIwnkSjRnXUI
+Ohfin+vzouD0tP9tC477JMCGmtXcEtYxEYGeyNBwzmQ52EYD5O6KXd7mTTuvpgnj
+CbsIh5+Wl6meMXuAFAKmmmeROmkei2y7Ua+bF6rOpCrYsXze8+CWo9Pg3OWncLTm
+CNIe1ycRORaLdhnrb4WQTR5ETdUgmw/j/aWWWoL8aPPXJmG7CHuti3VaehJwXEXB
+b7pczSI2cGuaS2mv1bqUieDBQM5DImJwX1M1S3aFd+jrntupi7U4he2eC1AmAXt9
+MnHdasjvl9c61T7hFLJjtki3j7jZchFAKagvygrWTx8p/bpn8Z7NvEJFaHbFB95O
+x5YTKLsHKcFynTl6HDPkOhGlBs7QeoGI803D8cheF3GR1kxiwrv6FFk8/u+xI7oH
+zqEd+/IS5zY/zdCUdH7I
+=jbk7
+-----END PGP SIGNATURE-----
+
+--MGYHOYXEY6WxJCY8--
