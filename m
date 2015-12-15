@@ -1,87 +1,69 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Announcing Git for Windows 2.6.4
-Date: Tue, 15 Dec 2015 11:16:07 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1512151116020.6483@virtualbox>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: update index mtime etc metadata
+Date: Tue, 15 Dec 2015 18:17:14 +0700
+Message-ID: <CACsJy8DUxBxQJxe0RzJAs7oeu0FbVhEF3OZFpHNp==1DD_Ht4w@mail.gmail.com>
+References: <20151214204429.GA31013@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=X-UNKNOWN
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 15 11:16:23 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Joey Hess <id@joeyh.name>
+X-From: git-owner@vger.kernel.org Tue Dec 15 12:17:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8meb-0004QE-DS
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 11:16:21 +0100
+	id 1a8nc7-0001Ug-Dp
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 12:17:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbbLOKQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 05:16:14 -0500
-Received: from mout.gmx.net ([212.227.15.15]:59424 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964798AbbLOKQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 05:16:12 -0500
-Received: from virtualbox ([37.24.143.140]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LvE2c-1aGnLH3Jdy-010MY2; Tue, 15 Dec 2015 11:16:09
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4Rtj4U3NWROxWyg79/QoPsbE8/HbR1B/6I7/7HIeB49CmsLZXjY
- iQQM4wlOn6r8FpBdMN8YflVYFLjrkt4pKeaMHWFy6e7KnhQPq3z0kutFghjNaO7NkkVtMoe
- DHJ+Ahxx/v0lYTjhpZ2zsEo6rtAtDdrWPb5FoRt5mCGNLvRtA453zXadXksx3s0N7SBobzf
- vzRHesdSSWFUnqDFDBquQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mDLCkOV/sho=:XD9Sv1DVojox+O2lsTT48w
- xw6pLik0sW6lyny5nQM7+iA54o0C8mztj3DDmhDG4K/PkarshHzBwgHTw7YW2ECzD1spD8guh
- bLTMsSi8J3DhBRlI0PIBsqFGt9fb2ngwzlZgugp4HyOgurRNLIQtj0uF4dcvwSGZ90vCTQcah
- 9GfdkJGUANmMXYJfnIbl4AfqMyZ+QLg0Wq1L3EJkXM8DePgvVjMf6wIimjJoRowc2SojFqR2m
- 9XoGvNJhRuZfrfZtTgjN09tDjkB0eCUC6KuhvEkY487vaTemx7ezdV24lBx9FwLN6Q8GNrz6H
- JgyrY/XQYI6pXfeDOKnFN/KC2R+EObW0F4n//h3Dca8AXqkbqZR9ResbQG8Pq8Qg1gubzMvay
- OOFOEdge5RVMH6zFRGfjVvw0oIRCkJJnp7mXOGk30jrRkNw/4Rw+byWV4rMMgqkGHdMarUWiu
- yPVJbhqJrU37yg652xMDaVu/1IqXtatAdmyHL621TGMTwUXeanl81SiRFIeYFJnYCdRXWm4Eq
- 1+RKKxYQJOugianqYiM85iskIHNvFVl46nIv9G1JrhFb5g1gMAHhbQfztnDUvh4gpag+BrDqx
- p5M85ZyJDcUdjmcS1OlXoODfT+KpgGll+BC1d3ZqNbGE6Po2FYV0gpbUTXqvQW+w8AIJwzq38
- nHWPik8XelBKQR5ADKPdEU3sf5xVNLw6co8dEl797zTGQwo4U8eM4BJwUqnZE/eMOPQlCA98Y
- YbRPHsx253/TijDBTYAOFF7lnhP6kcLhJJ33N2kGFfqaJt2OQ6OgoRYVqJFxvEAEy4Ds+ecm 
+	id S965091AbbLOLRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 06:17:46 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:36348 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964803AbbLOLRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 06:17:45 -0500
+Received: by mail-lb0-f175.google.com with SMTP id lt2so3433447lbb.3
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 03:17:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Asb1DgLB5WY81FN20V5Ng1Gj5HFMcDgBa3zCqLFtUGw=;
+        b=UFE+z4tZTJm9FAr+8DhKv9jBlmELRBBGqnmC7SbNFvH5wEaL6lsYFG3FjJzl6DStNm
+         c9CsY7FWJdgWpKTxncon9REfXrwuItErltRFG2nqErpX7+pfR3iUQqKDILt2OfMAIAAs
+         3kSBHKjKBLlaztIOBZE5i1EFMMDobWIIMrQEuZUA9yKcLDMvtuv/ojuuc97Sl1gAS9iw
+         lT4P8Dc1XAETVakWtwEG3fyBV1FaFNHBPZEmzWOAOdeH2OjQzijrDuYtiMcHyETfrjdo
+         wetJj9Pd+xXM8UU8lfDpCc/nFEzvgPmksezXEoXDd1KaOOHXm96cCbvqr7VOkXpYquci
+         c9Lw==
+X-Received: by 10.112.202.168 with SMTP id kj8mr14897018lbc.12.1450178263837;
+ Tue, 15 Dec 2015 03:17:43 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Tue, 15 Dec 2015 03:17:14 -0800 (PST)
+In-Reply-To: <20151214204429.GA31013@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282472>
 
-Dear Git users,
+On Tue, Dec 15, 2015 at 3:44 AM, Joey Hess <id@joeyh.name> wrote:
+> Is there any available plumbing that can change the mtime etc metadata
+> that is recorded in the index for a file, to user-provided values? Or,
+> to force the current file stat metadata to be updated in the index?
 
-It is my pleasure to announce that Git for Windows 2.6.4 is available from:
+I don't think there is a way. We probably should improve ls-files and
+update-index to examine and update basically everything in the index..
+But so far, nothing yet.
 
-	https://git-for-windows.github.io/
+> I know, git update-index --refresh, but I have a case where that's too
+> expensive. I'm using smudge filters; I know that the cleaned version of
+> the file will be unchanged from what's in the index now and only the
+> stat metadata will change, and so I want to avoid
+> git update-index --refresh running the clean filter, which can
+> be quite expensive for a large file.
+>
+> At the moment I don't see a way to do it other than using eg libgit2 to
+> update the appropriate fields in the index structure.
 
-Changes since Git for Windows v2.6.3 (November 10th 2015)
-
-New Features
-
-  ??? Comes with Git v2.6.4.
-  ??? Also available as .tar.bz2 packages (you need an MSys2/
-    Cygwin-compatible unpacker to recreate the symbolic links
-    correctly).
-
-Bug Fixes
-
-  ??? Git for Windows v2.6.3's installer failed to elevate privileges
-    automatically (reported three times, making it a charm), and as a
-    consequence Git for Windows 2.6.3 was frequently installed per-user
-    by mistake
-  ??? The bug where SHELL_PATH had spaces and that was reported multiple
-    times has been fixed.
-  ??? An additional work-around from upstream Git for SHELL_PATH
-    containing spaces (fixing problems with interactive rebase's exec
-    command has been applied.
-
-Filename | SHA-256
--------- | -------
-Git-2.6.4-64-bit.exe | 2deab47a0e4a212576f6822db532269d8a69ec47345f946da655e04b2437ae44
-Git-2.6.4-32-bit.exe | c2c27746010f3b09949fb8435ac8a8d1496aeb6fb26fc6ac787ed09686cffcaa
-PortableGit-2.6.4-64-bit.7z.exe | 42190f01e78c68e0b4485cd31f8296af392bcaf82a7291f21918f4412e90db8c
-PortableGit-2.6.4-32-bit.7z.exe | 5b0fcea5262db1a7676b5cd21df717cd02f1835a270d7f94d1537028462e61df
-Git-2.6.4-64-bit.tar.bz2 | d2d143fe5b9a6517ebec5afcb3183a809f3b7ceda9abf2c1c76203accf65e877
-Git-2.6.4-32-bit.tar.bz2 | 71296bef22154077f8f5acda61b791fbbecce872f4d2c550b61ca82f58eb8c90
-
-Ciao,
-Johannes
+Yeah. I see libgit2 has a haskell binding, probably best for you.
+-- 
+Duy
