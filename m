@@ -1,123 +1,81 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv3] Makefile: add missing phony target
-Date: Tue, 15 Dec 2015 15:21:00 +0000
-Message-ID: <1450192860-60337-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Matthieu.Moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
+From: Victor Leschuk <vleschuk@gmail.com>
+Subject: [PATCH v8 0/2] Add git-grep threads param
+Date: Tue, 15 Dec 2015 18:31:38 +0300
+Message-ID: <1450193500-22468-1-git-send-email-vleschuk@accesssoftek.com>
+Cc: vleschuk@accesssoftek.com, gitster@pobox.com, john@keeping.me.uk,
+	peff@peff.net, pclouds@gmail.com, sunshine@sunshineco.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 15 16:21:34 2015
+X-From: git-owner@vger.kernel.org Tue Dec 15 16:31:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8rPo-0008PY-Ck
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 16:21:24 +0100
+	id 1a8rZu-0000rf-5a
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 16:31:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092AbbLOPVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 10:21:10 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:37008 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753854AbbLOPVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 10:21:07 -0500
-Received: by mail-wm0-f53.google.com with SMTP id n186so30872544wmn.0
-        for <git@vger.kernel.org>; Tue, 15 Dec 2015 07:21:06 -0800 (PST)
+	id S965210AbbLOPbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 10:31:46 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:33785 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964829AbbLOPbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 10:31:45 -0500
+Received: by mail-lb0-f180.google.com with SMTP id kw15so8037846lbb.0
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 07:31:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=qzXXlWvgXCUg2eLk1Xh8/VOJ5i1CVAixyQFjAOnUysE=;
-        b=Hw61pS/92K4AXKQJ/KJXNTkGsR4TfiOv+MuJsi9UuUIXR47Kluc4csK4IaZfehfyrD
-         vtdmSHiFqklq+z+/2PJ8412iio1pk2++L3oXUPn1wVZ+AmGFLNX5aNwb/xrmEopLn2nj
-         oLig6JHyuVjfk8w8Rzud/bmAxX4SDbYJ2A3hWCsDUCf2Y547qehOdFEZLQ2EvEc1X1EC
-         rpj6zcQjELmiwWnzwiAkA7aCCi6udALEp9LrD0UY0Myxn447pKdwKYaKS3IsYW/CWk/T
-         6z60UJUOExQz9+sDwDd96WdFlAjTMRFx6+wJgBia7miXedyE5UTWPapE63eGHfw0OjIn
-         BANQ==
-X-Received: by 10.194.114.105 with SMTP id jf9mr44080828wjb.102.1450192866006;
-        Tue, 15 Dec 2015 07:21:06 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id u205sm3274288wmb.12.2015.12.15.07.21.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Dec 2015 07:21:04 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.21.gfb43dd0
+        bh=6fMO1iTA/LszG3Dw2XH+B45OtBNd2sbTc0K3ZjxVkyo=;
+        b=i7b/0fc9zxR2sfSkvzeO4hTg2CKL3giPkqUIHdr13j2OyGpU52i2/LkbjpDCRa1I/H
+         J4GhqDezfxZcjk8zKaCt9K+P+fAiKliuoCEbZJLTuiddRJ8Cz7IFYzghGt3XFxhBbz6h
+         VTUFgLDX6A54jdwJbVIGKZDWsCGLe+4m3jFEox7U6i6N2JBw+7OLC4vuPYXDZWJ0FoKz
+         Wjppseb71WhHzZew0mOVf77qJRDKjedrHAg5Wd5fXS/3TvvWVtKmX8VsdmALL1OqGxrP
+         hMHqZo8o2upGnppvJ4JTmwyM7f6uH1/DtAjVzLoa8Q0c9NoU2/WTvgleFwk0iIsSR+Wi
+         egDA==
+X-Received: by 10.112.63.100 with SMTP id f4mr16138622lbs.85.1450193503660;
+        Tue, 15 Dec 2015 07:31:43 -0800 (PST)
+Received: from del-debian (93-80-35-229.broadband.corbina.ru. [93.80.35.229])
+        by smtp.gmail.com with ESMTPSA id d196sm285830lfd.38.2015.12.15.07.31.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Dec 2015 07:31:42 -0800 (PST)
+X-Google-Original-From: Victor Leschuk <vleschuk@accesssoftek.com>
+Received: from del by del-debian with local (Exim 4.86)
+	(envelope-from <vleschuk@gmail.com>)
+	id 1a8rZm-0005r4-2V; Tue, 15 Dec 2015 18:31:42 +0300
+X-Mailer: git-send-email 2.6.3.369.g3e7f205.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282478>
 
-Add some missing phony target to Makefile.
+Introducing v8 of git-grep threads param patch.
+Patch is now split in 2 parts - 1/2 is actually renewed v6 version (see list of changes below),
+2/2 removes dependency on online_cpus() - as we discussed with Eric this is rather 
+significant change in default behavior and should be placed into separate patch.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
-This is the third version of this patch.
+Here is list of changes since v6 ($gmane/281160):
 
-Compared to the previous I have added only the missing phony 
-target as suggested by Matthieu Moy
+  * Fixed broken t7811: moved all threads_num setup to 1 place (for -O option it was in wrong place)
+  * Fixed 'invalid number of threads' message so that it could be translated
+  * Got rid of grep_threads_config() - its too trivial to be separate function
+  * Fixed xcalloc() args (sizeof(pthread_t) -> sizeof(*threads)) to correspond to general git style
+  * Improved commit message (in 2/2) to explain why online_cpus() is now not used in threads_num setup
+  * The full param documentation was moved into single place (grep.threads description in git-grep.txt) and is referenced from other places. Also made few language improvements in documentation.
+  * Style improvements: splitted too long lines
 
- Makefile | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Victor Leschuk (2):
+  "git grep" can now be configured (or told from the command line)    
+    how many threads to use when searching in the working tree files.
+  Number of threads now doesn't depend on online_cpus(),     e.g. if
+    specific number is not configured GREP_NUM_THREADS_DEFAULT (8)    
+    threads will be used even on 1-core CPU.
 
-diff --git a/Makefile b/Makefile
-index fd19b54..fc2f1ab 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2025,6 +2025,7 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
- 
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
-+.PHONY: doc man html info pdf
- doc:
- 	$(MAKE) -C Documentation all
- 
-@@ -2068,6 +2069,7 @@ po/git.pot: $(GENERATED_H) FORCE
- 		$(LOCALIZED_PERL)
- 	mv $@+ $@
- 
-+.PHONY: pot
- pot: po/git.pot
- 
- POFILES := $(wildcard po/*.po)
-@@ -2277,6 +2279,7 @@ mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
- 
- install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
- 
-+.PHONY: profile-install profile-fast-install
- profile-install: profile
- 	$(MAKE) install
- 
-@@ -2343,6 +2346,8 @@ endif
- 	done && \
- 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
- 
-+.PHONY: install-gitweb install-doc install-man install-html install-info install-pdf
-+.PHONY: quick-install-doc quick-install-man quick-install-html
- install-gitweb:
- 	$(MAKE) -C gitweb install
- 
-@@ -2402,6 +2407,7 @@ rpm: dist
- 
- htmldocs = git-htmldocs-$(GIT_VERSION)
- manpages = git-manpages-$(GIT_VERSION)
-+.PHONY: dist-doc distclean
- dist-doc:
- 	$(RM) -r .doc-tmp-dir
- 	mkdir .doc-tmp-dir
-@@ -2470,6 +2476,8 @@ ALL_COMMANDS += git
- ALL_COMMANDS += gitk
- ALL_COMMANDS += gitweb
- ALL_COMMANDS += git-gui git-citool
-+
-+.PHONY: check-docs
- check-docs::
- 	@(for v in $(ALL_COMMANDS); \
- 	do \
-@@ -2514,6 +2522,7 @@ check-builtins::
- ### Test suite coverage testing
- #
- .PHONY: coverage coverage-clean coverage-compile coverage-test coverage-report
-+.PHONY: coverage-untested-functions cover_db cover_db_html
- .PHONY: coverage-clean-results
- 
- coverage:
+ Documentation/config.txt               |  4 +++
+ Documentation/git-grep.txt             | 12 +++++++++
+ builtin/grep.c                         | 49 +++++++++++++++++++++++-----------
+ contrib/completion/git-completion.bash |  1 +
+ 4 files changed, 51 insertions(+), 15 deletions(-)
+
 -- 
-2.5.0
+2.6.3.369.g3e7f205.dirty
