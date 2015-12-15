@@ -1,212 +1,93 @@
-From: Victor Leschuk <vleschuk@gmail.com>
-Subject: Re: [PATCH 1/2] Introduce grep threads param
-Date: Tue, 15 Dec 2015 23:21:28 +0300
-Message-ID: <56707648.4050005@gmail.com>
-References: <1450193500-22468-1-git-send-email-vleschuk@accesssoftek.com>
- <1450193500-22468-2-git-send-email-vleschuk@accesssoftek.com>
- <xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Tue, 15 Dec 2015 22:53:09 +0100
+Message-ID: <CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+ <1449594916-21167-8-git-send-email-chriscool@tuxfamily.org>
+ <xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com> <xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+ <xmqq6100ke7v.fsf@gitster.mtv.corp.google.com> <xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com> <xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, vleschuk@accesssoftek.com, john@keeping.me.uk,
-	peff@peff.net, pclouds@gmail.com, sunshine@sunshineco.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 21:21:41 2015
+X-From: git-owner@vger.kernel.org Tue Dec 15 22:53:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8w6L-0003YH-OO
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 21:21:38 +0100
+	id 1a8xXL-0003Mr-0c
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 22:53:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754222AbbLOUVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 15:21:33 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:36405 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754180AbbLOUVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 15:21:32 -0500
-Received: by mail-lb0-f181.google.com with SMTP id lt2so13231959lbb.3
-        for <git@vger.kernel.org>; Tue, 15 Dec 2015 12:21:31 -0800 (PST)
+	id S933738AbbLOVxa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Dec 2015 16:53:30 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:35995 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932449AbbLOVx3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Dec 2015 16:53:29 -0500
+Received: by mail-qg0-f48.google.com with SMTP id 103so19355406qgi.3
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 13:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=R7KNtRE/qWyGlr+QcgLLs9+qUSVwgj/AF5NAspnlYKQ=;
-        b=NTbI9tYztAH8bixRDmdAw3FljPVTkrbGu0LG3q+2f1fGAKQZDwXqGWi7OfuV4PU6t9
-         umheu+jh8sUdPkRmWg+0t57/v6LwKm4PADGf6gQXyQ3uumpqTHjsf+9mgDeXwTjCHzoA
-         H6q+MHhZbC5+zx2HMscGJ8w6vSr4cQoiEJgnP6k3Bnaez9N+EDC6im0uerwj2Rd5NtLa
-         dlkP3h2X0tpeaamMcJ9fHZ6S/WdM75eQNzkA6n4n8ObWyNA+Ndm4GJR21M2RK1CoLM7w
-         EtiaM0WW19SjvOjxU7PKSKPM+SVevoAmLyIC0zRKQKvheP9e/6KXF6F7S5jAX6aJhyFO
-         KlHw==
-X-Received: by 10.112.161.33 with SMTP id xp1mr16524614lbb.141.1450210890542;
-        Tue, 15 Dec 2015 12:21:30 -0800 (PST)
-Received: from [192.168.1.101] (93-80-35-229.broadband.corbina.ru. [93.80.35.229])
-        by smtp.gmail.com with ESMTPSA id pl2sm450477lbc.8.2015.12.15.12.21.29
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Dec 2015 12:21:29 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ll9ZBL/8gGIc9xLZvNrT/R2U94PAd3rU26oQU3op50E=;
+        b=JRebMYeQDNUep8kPElPWit8bWWsOXAobSBmxkQWwPxSEnECM1Li3qydYz1aZgpYh2P
+         2UESvu4vRCQgNh7XOuZuBOq0B7KmVvh6ZnbbRxI184Os/jkAt4gfWuScI9/b3N5sSubq
+         bDi41trh/A68BU6LEin3VY01iXm+Dt0cZ2DQCLAZJRIMj4dksnm7VCLqlpV7sxgymzaw
+         di/bAZxZwp/1a4HEgVWa4KsM0zpZXICL7ZiVwU9B2e75JGoz/Z5P5R20nsI5lrHjpu9O
+         J41RO6SFvX11wS7Gkuke8eTCQomymyBDidRV7nMUimy5qvXuy0vPZSIKkzQwRirh6RoF
+         yzMA==
+X-Received: by 10.140.253.3 with SMTP id y3mr22279583qhc.39.1450216408709;
+ Tue, 15 Dec 2015 13:53:28 -0800 (PST)
+Received: by 10.55.108.197 with HTTP; Tue, 15 Dec 2015 13:53:09 -0800 (PST)
+In-Reply-To: <xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282499>
 
-Hello Junio,
+On Tue, Dec 15, 2015 at 8:40 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> I still have a problem with the approach from "design cleanliness"
+> point of view[...]
+>
+> In any case I think we already have agreed to disagree on this
+> point, so there is no use discussing it any longer from my side.  I
+> am not closing the door to this series, but I am not convinced,
+> either.  At least not yet.
 
-On 12/15/2015 11:06 PM, Junio C Hamano wrote:
-> Victor Leschuk <vleschuk@gmail.com> writes:
->
->> Subject: Re: [PATCH 1/2] Introduce grep threads param
-> I'll retitle this to something like
->
->      grep: add --threads=<num> option and grep.threads configuration
->
-> while queuing (which I did for v7 earlier).
-Ok, thanks.
->
->>   "git grep" can now be configured (or told from the command line)
->>   how many threads to use when searching in the working tree files.
->>
->> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
->> ---
->> ...
->> +grep.threads::
->> +	Number of grep worker threads.
-> "Number of grep worker threads to use"?
-Accepted, will change.
->
->> +	See `grep.threads` in linkgit:git-grep[1] for more information.
->> ...
->> +grep.threads::
->> +	Number of grep worker threads, use it to tune up performance on
->> +	your machines. Leave it unset (or set to 0) for default behavior,
->> +	which is using 8 threads for all systems.
->> +	Default behavior may change in future versions
->> +	to better suit hardware and circumstances.
-> The last sentence is too noisy.  Perhaps drop it and phrase it like
-> this instead?
->
->      grep.threads::
->              Number of grep worker threads to use.  If unset (or set to 0),
->              to 0), 8 threads are used by default (for now).
-Agree.
->
->> diff --git a/builtin/grep.c b/builtin/grep.c
->> index 4229cae..e9aebab 100644
->> --- a/builtin/grep.c
->> +++ b/builtin/grep.c
->> @@ -24,11 +24,11 @@ static char const * const grep_usage[] = {
->>   	NULL
->>   };
->>   
->> -static int use_threads = 1;
->> +#define GREP_NUM_THREADS_DEFAULT 8
->> +static int num_threads = 0;
-> Please do not initialize static to 0 (or NULL).
-Ok.
->
->> @@ -267,6 +270,12 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
->>   	int st = grep_config(var, value, cb);
->>   	if (git_color_default_config(var, value, cb) < 0)
->>   		st = -1;
->> +
->> +	if (!strcmp(var, "grep.threads")) {
->> +		/* Sanity check of value will be perfomed later */
-> Hmm, is that a good design?
->
-> A user may hear "invalid number of threads specified (-4)" later,
-> but if that came from "grep.threads", especially when the user did
-> not say "--threads=-4" from the command line, would she know to
-> check her configuration file?
->
-> If she had "grep.threads=Yes" in her configuration, we would
-> helpfully tell her that 'Yes' given to grep.threads is not a valid
-> integer.  Shouldn't we do the same for '-4' given to grep.threads,
-> too?
->
-> 	if (!strcmp(var, "grep.threads")) {
-> 		num_threads = git_config_int(var, value);
-> 		if (num_threads < 0)
-> 			die(_("invalid number of threads specified (%d) for %s"),
-> 			    num_threads, var);
-> 	}
->
-> perhaps.
-When I was doing this I looked at other code and saw that exact message 
-"Invalid number of threads..." is used in other parts of git and is 
-present in 'po' translations. Thus I decided to use exactly the same 
-message in order not to create numerous almost similar localizations 
-(which we should do if we use two different messages in different 
-places). Do you think we need to create two more different messages (and 
-translations, I can prepare Russian and French) and create two checks 
-for cmd and config?
->
->> @@ -817,14 +827,23 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->>   	}
->>   
->>   #ifndef NO_PTHREADS
->> -	if (list.nr || cached || online_cpus() == 1)
->> -		use_threads = 0;
->> +	if (list.nr || cached || online_cpus() == 1 || show_in_pager) {
->> +		/* Can not multi-thread object lookup */
->> +		num_threads = 0;
-> Removing 'use_threads = 0' from an earlier part and moving the check
-> to show_in_pager is a good idea, but it invalidates this comment.
-> The earlier three (actually two and a half) are "cannot" cases,
-> i.e. the object layer is not easily threaded without locking, and
-> when you have a single core, you do not truly run multiple
-> operations at the same time, but as [PATCH 2/2] does, threading in
-> "grep" is not about CPU alone, so that is why I am demoting it to
-> just a half ;-).  But show_in_pager is "we do not want to", I think.
->
-> In any case, this comment and "User didn't specify" below are not
-> telling the reader something very much useful.  You probably should
-> remove them.
-Ok, will remove comments.
->
->> +	}
->> +	else if (num_threads == 0) {
->> +		/* User didn't specify value, or just wants default behavior */
->> +		num_threads = GREP_NUM_THREADS_DEFAULT;
->> +	}
->> +	else if (num_threads < 0) {
->> +		die(_("invalid number of threads specified (%d)"), num_threads);
->> +	}
-> Many unnecessary braces.
-I put braces to make code look more unified. I had to put braces here:
+In general the fantastic thing about the git configuration facility is
+that it provides both systems administrators and normal users with
+what they want. It's possible to configure things system-wide and
+override those on a user or repository basis.
 
-+	else if (num_threads == 0) {
-+		/* User didn't specify value, or just wants default behavior */
+Of course hindsight is 20/20, but I think that given what's been
+covered in this thread it's been established that it's categorically
+better that if we introduce features like these that they be
+configured through the normal configuration facility rather than the
+configuration being sticky to the index. It gives you everything that
+the per-index configuration gives you and more.
 
+So assuming that's the case, how do we migrate something that's
+configured via the index towards being configured through git-config?
 
-In order to be able to place long comment above the line. And code like:
+I think there's no general answer to that, but in this case the worst
+case scenario with accepting this series as-is is that we downgrade
+some users who've opted in to it to pre-v2.5.0 "git status"
+performance.
 
-if (a)
-   do_smth();
-else if (b) {
-   do_smth1();
-   do_smth2();
-}
-else
-   do_smth3();
-
-Looks rather ugly to me. Usually I put braces to all 'ifs' if any part 
-of block requires them.
-Actually I will remove comments as I said above, and thus remove all braces.
->
-> I think [2/2] and also moving the code to disable threading when
-> show-in-pager mode should be separate "preparatory clean-up" patches
-> before this main patch.  I'll push out what I think this topic
-> should be on 'pu' later today (with fixups suggested above squashed
-> in); please check them and see what you think.
->
-> Thanks.
-Ok, I will prepare v8 as soon as we finish discussion on this one.
-
-Thanks for the review.
-
---
-Victor
+Since the change in performance really isn't noticeable except on
+really large repositories, which are more likely to have someone
+involved watching the changelog on upgrades I think that's OK.
