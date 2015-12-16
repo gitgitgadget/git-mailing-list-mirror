@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 01/11] strbuf: introduce strbuf_split_str_without_term()
-Date: Wed, 16 Dec 2015 20:59:52 +0530
-Message-ID: <1450279802-29414-2-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v2 03/11] ref-filter: introduce struct used_atom
+Date: Wed, 16 Dec 2015 20:59:54 +0530
+Message-ID: <1450279802-29414-4-git-send-email-Karthik.188@gmail.com>
 References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 16:29:55 2015
+X-From: git-owner@vger.kernel.org Wed Dec 16 16:29:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9E1Z-0001Nn-Tw
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 16:29:54 +0100
+	id 1a9E1b-0001Nn-9N
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 16:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933803AbbLPP3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 10:29:44 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:35650 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933118AbbLPP3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 10:29:42 -0500
-Received: by mail-pa0-f52.google.com with SMTP id tl7so2904370pab.2
-        for <git@vger.kernel.org>; Wed, 16 Dec 2015 07:29:42 -0800 (PST)
+	id S934108AbbLPP3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 10:29:50 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:32976 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933118AbbLPP3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 10:29:48 -0500
+Received: by mail-pa0-f42.google.com with SMTP id ur14so25130274pab.0
+        for <git@vger.kernel.org>; Wed, 16 Dec 2015 07:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PPiyqBWFOOdFwseWPTXgxYNVCzKCSP5bh3m3bcqy2ng=;
-        b=gwdJnXw+NkzfGcqxlE4c1G1HmTcVJLQwxrl+4h9l9iKqwVmoA4MG5cCgtc7xKMPkBK
-         lRyAGTTgQ4ZTKVM8VPBYsOkGjeUWy6PNu0KV/TNvAoBMToJTRM/0D35gZzGZT35TSME1
-         WBjk0eOi8vjQP4P0JQI4hhWeXAq8dpWyG/CAqcpWTuSkwLK+yJ2QVe+WGdmDhfnTFhfg
-         O0bKlMImRXm97d9zIuD4FzOMBUaVpClRK+q9PPAFMJHwQbNClUwjL5ZeyRt9luDvE/h6
-         rYkkqzbMLZBeogUryDiM6lH541GM2NU4auBZZgP08tmWatF3rkz/PmXDagQFLjsBsrNr
-         MdsA==
-X-Received: by 10.66.100.135 with SMTP id ey7mr64745299pab.108.1450279782099;
-        Wed, 16 Dec 2015 07:29:42 -0800 (PST)
+        bh=x1GgjF2CxXmkMoGwHJ9+YmdZz3nhUJn3Azc163T0h0w=;
+        b=pylozN/pkbXbeOtkNTyNJIJGFYW9JAB7laLtVhBOkGH4xeH0swNuKGXc/nIS27DQw3
+         aPwKS6qBsiGtMQRx/Qkp3vxAqa2jP5keFE5O0YNTJ8nrNTXeb/7CnWVd/y52TXJJJAl7
+         Egjk1bt1iRI/PujiiJIMDxoZQOPsZWZ7TD9OoSeRqdFEpBc0cay/7TpJTpOpsRUAo7ns
+         HWhKYpeZs3HB2rnwJ0pv2bzBtUM/u1DHykFLCvDdyH3lCzLZqSo6nYHAXQVJhNQfWY4a
+         KTZxabw54ktVf8rGOOwfhkhOM3JOhZMnKbo2CQ/tk4742myRRFA2gYsJfUyq2DAdIrLq
+         5FGQ==
+X-Received: by 10.66.156.106 with SMTP id wd10mr64397615pab.150.1450279788246;
+        Wed, 16 Dec 2015 07:29:48 -0800 (PST)
 Received: from ashley.localdomain ([106.51.233.145])
-        by smtp.gmail.com with ESMTPSA id x12sm5620612pfi.95.2015.12.16.07.29.39
+        by smtp.gmail.com with ESMTPSA id x12sm5620612pfi.95.2015.12.16.07.29.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Dec 2015 07:29:41 -0800 (PST)
+        Wed, 16 Dec 2015 07:29:47 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.6.4
 In-Reply-To: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
@@ -46,102 +46,183 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282565>
 
-The current implementation of 'strbuf_split_buf()' includes the
-terminator at the end of each strbuf post splitting. Add an option
-wherein we can drop the terminator if desired. In this context
-introduce a wrapper function 'strbuf_split_str_without_term()' which
-splits a given string into strbufs without including the terminator.
+Introduce the 'used_array' structure which would replace the existing
+implementation of 'used_array' (which a list of atoms). This helps us
+parse atom's before hand and store required details into the
+'used_array' for future usage.
+
+Also introduce a parsing function for each atom in valid_atom. Using
+this we can define special parsing functions for each of the atoms.
 
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- strbuf.c |  7 ++++---
- strbuf.h | 25 ++++++++++++++++---------
- 2 files changed, 20 insertions(+), 12 deletions(-)
+ ref-filter.c | 63 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 33 insertions(+), 30 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index b552a13..b62508e 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -115,7 +115,7 @@ void strbuf_tolower(struct strbuf *sb)
- }
+diff --git a/ref-filter.c b/ref-filter.c
+index 6263710..043a02a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -16,9 +16,27 @@
  
- struct strbuf **strbuf_split_buf(const char *str, size_t slen,
--				 int terminator, int max)
-+				 int terminator, int max, int omit_term)
- {
- 	struct strbuf **ret = NULL;
- 	size_t nr = 0, alloc = 0;
-@@ -123,14 +123,15 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
  
- 	while (slen) {
- 		int len = slen;
-+		const char *end = NULL;
- 		if (max <= 0 || nr + 1 < max) {
--			const char *end = memchr(str, terminator, slen);
-+			end = memchr(str, terminator, slen);
- 			if (end)
- 				len = end - str + 1;
- 		}
- 		t = xmalloc(sizeof(struct strbuf));
- 		strbuf_init(t, len);
--		strbuf_add(t, str, len);
-+		strbuf_add(t, str, len - !!end * !!omit_term);
- 		ALLOC_GROW(ret, nr + 2, alloc);
- 		ret[nr++] = t;
- 		str += len;
-diff --git a/strbuf.h b/strbuf.h
-index 6ae7a72..a865a74 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -450,11 +450,12 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
- /**
-  * Split str (of length slen) at the specified terminator character.
-  * Return a null-terminated array of pointers to strbuf objects
-- * holding the substrings.  The substrings include the terminator,
-- * except for the last substring, which might be unterminated if the
-- * original string did not end with a terminator.  If max is positive,
-- * then split the string into at most max substrings (with the last
-- * substring containing everything following the (max-1)th terminator
-+ * holding the substrings.  The substrings include the terminator if
-+ * the value of omit_term is '0' else the terminator is excluded.  The
-+ * last substring, might be unterminated if the original string did
-+ * not end with a terminator.  If max is positive, then split the
-+ * string into at most max substrings (with the last substring
-+ * containing everything following the (max-1)th terminator
-  * character).
-  *
-  * The most generic form is `strbuf_split_buf`, which takes an arbitrary
-@@ -465,19 +466,25 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
-  * For lighter-weight alternatives, see string_list_split() and
-  * string_list_split_in_place().
-  */
--extern struct strbuf **strbuf_split_buf(const char *, size_t,
--					int terminator, int max);
-+extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
-+					int terminator, int max, int omit_term);
++/*
++ * An atom is a valid field atom listed below, possibly prefixed with
++ * a "*" to denote deref_tag().
++ *
++ * We parse given format string and sort specifiers, and make a list
++ * of properties that we need to extract out of objects.  ref_array_item
++ * structure will hold an array of values extracted that can be
++ * indexed with the "atom number", which is an index into this
++ * array.
++ */
++static struct used_atom {
++	const char *str;
++	cmp_type type;
++} *used_atom;
++static int used_atom_cnt, need_tagged, need_symref;
++static int need_color_reset_at_eol;
 +
-+static inline struct strbuf **strbuf_split_str_omit_term(const char *str,
-+							    int terminator, int max)
-+{
-+	return strbuf_split_buf(str, strlen(str), terminator, max, 1);
-+}
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
++	void (*parser)(struct used_atom *atom);
+ } valid_atom[] = {
+ 	{ "refname" },
+ 	{ "objecttype" },
+@@ -92,21 +110,6 @@ struct atom_value {
+ };
  
- static inline struct strbuf **strbuf_split_str(const char *str,
- 					       int terminator, int max)
- {
--	return strbuf_split_buf(str, strlen(str), terminator, max);
-+	return strbuf_split_buf(str, strlen(str), terminator, max, 0);
+ /*
+- * An atom is a valid field atom listed above, possibly prefixed with
+- * a "*" to denote deref_tag().
+- *
+- * We parse given format string and sort specifiers, and make a list
+- * of properties that we need to extract out of objects.  ref_array_item
+- * structure will hold an array of values extracted that can be
+- * indexed with the "atom number", which is an index into this
+- * array.
+- */
+-static const char **used_atom;
+-static cmp_type *used_atom_type;
+-static int used_atom_cnt, need_tagged, need_symref;
+-static int need_color_reset_at_eol;
+-
+-/*
+  * Used to parse format string and sort specifiers
+  */
+ int parse_ref_filter_atom(const char *atom, const char *ep)
+@@ -122,8 +125,8 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 
+ 	/* Do we have the atom already used elsewhere? */
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		int len = strlen(used_atom[i]);
+-		if (len == ep - atom && !memcmp(used_atom[i], atom, len))
++		int len = strlen(used_atom[i].str);
++		if (len == ep - atom && !memcmp(used_atom[i].str, atom, len))
+ 			return i;
+ 	}
+ 
+@@ -150,12 +153,11 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 	at = used_atom_cnt;
+ 	used_atom_cnt++;
+ 	REALLOC_ARRAY(used_atom, used_atom_cnt);
+-	REALLOC_ARRAY(used_atom_type, used_atom_cnt);
+-	used_atom[at] = xmemdupz(atom, ep - atom);
+-	used_atom_type[at] = valid_atom[i].cmp_type;
++	used_atom[at].str = xmemdupz(atom, ep - atom);
++	used_atom[at].type = valid_atom[i].cmp_type;
+ 	if (*atom == '*')
+ 		need_tagged = 1;
+-	if (!strcmp(used_atom[at], "symref"))
++	if (!strcmp(used_atom[at].str, "symref"))
+ 		need_symref = 1;
+ 	return at;
  }
+@@ -315,7 +317,7 @@ int verify_ref_format(const char *format)
+ 		at = parse_ref_filter_atom(sp + 2, ep);
+ 		cp = ep + 1;
  
- static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
- 						int terminator, int max)
+-		if (skip_prefix(used_atom[at], "color:", &color))
++		if (skip_prefix(used_atom[at].str, "color:", &color))
+ 			need_color_reset_at_eol = !!strcmp(color, "reset");
+ 	}
+ 	return 0;
+@@ -359,7 +361,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 	int i;
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+@@ -383,7 +385,7 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
+ 	struct tag *tag = (struct tag *) obj;
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+@@ -405,7 +407,7 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 	struct commit *commit = (struct commit *) obj;
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+@@ -535,7 +537,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 	const char *wholine = NULL;
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+@@ -573,7 +575,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 	if (!wholine)
+ 		return;
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+@@ -663,7 +665,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+ 	unsigned long sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		const char *name = used_atom[i].str;
+ 		struct atom_value *v = &val[i];
+ 		const char *valp = NULL;
+ 		if (!!deref != (*name == '*'))
+@@ -786,7 +788,8 @@ static void populate_value(struct ref_array_item *ref)
+ 
+ 	/* Fill in specials first */
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		const char *name = used_atom[i];
++		struct used_atom *atom = &used_atom[i];
++		const char *name = atom->str;
+ 		struct atom_value *v = &ref->value[i];
+ 		int deref = 0;
+ 		const char *refname;
+@@ -1438,7 +1441,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
  {
--	return strbuf_split_buf(sb->buf, sb->len, terminator, max);
-+	return strbuf_split_buf(sb->buf, sb->len, terminator, max, 0);
- }
+ 	struct atom_value *va, *vb;
+ 	int cmp;
+-	cmp_type cmp_type = used_atom_type[s->atom];
++	cmp_type cmp_type = used_atom[s->atom].type;
  
- static inline struct strbuf **strbuf_split(const struct strbuf *sb,
+ 	get_ref_atom_value(a, s->atom, &va);
+ 	get_ref_atom_value(b, s->atom, &vb);
 -- 
 2.6.4
