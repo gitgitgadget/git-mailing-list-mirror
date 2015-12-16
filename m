@@ -1,85 +1,75 @@
-From: "Harfoot A.J." <A.J.P.Harfoot@soton.ac.uk>
-Subject: No auto CRLF conversion in Commit Message comments
-Date: Wed, 16 Dec 2015 15:13:41 +0000
-Message-ID: <FBEAE9E9FAB4174499E31C0F26B4BACD2DED2E66@SRV00048.soton.ac.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Fix tyop in the 2.7.0 release notes
+Date: Wed, 16 Dec 2015 16:23:02 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1512161620040.6483@virtualbox>
+References: <1450269335-10300-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 16 16:20:33 2015
+Content-Type: multipart/mixed; BOUNDARY="8323329-1823752096-1450279382=:6483"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Dec 16 16:23:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9DsK-0003J4-SF
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 16:20:21 +0100
+	id 1a9DvP-0007a3-Jk
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 16:23:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965710AbbLPPUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 10:20:08 -0500
-Received: from mailgate6.iss.soton.ac.uk ([152.78.128.11]:37108 "EHLO
-	mailgate6.iss.soton.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932857AbbLPPUF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Dec 2015 10:20:05 -0500
-X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Dec 2015 10:20:04 EST
-Received: from mailgate6.iss.soton.ac.uk (localhost.localdomain [127.0.0.1])
-	by mailgate6.iss.soton.ac.uk (8.13.8/8.13.4) with ESMTP id tBGFDgWk030673
-	for <git@vger.kernel.org>; Wed, 16 Dec 2015 15:13:42 GMT
-Received: from UOS-MSG00036-VS.soton.ac.uk (uos-msg00036-vs.soton.ac.uk [152.78.119.50])
-	by mailgate6.iss.soton.ac.uk (mailgate6.iss.soton.ac.uk [152.78.128.11]) envelope-from <A.J.P.Harfoot@soton.ac.uk> with ESMTP
-	id rBFFDg2311065439kf ret-id none; Wed, 16 Dec 2015 15:13:42 +0000
-Received: from SRV00048.soton.ac.uk ([169.254.11.163]) by
- UOS-MSG00036-VS.soton.ac.uk ([152.78.119.50]) with mapi id 14.03.0248.002;
- Wed, 16 Dec 2015 15:13:41 +0000
-Thread-Topic: No auto CRLF conversion in Commit Message comments
-Thread-Index: AQHROBRYkYrXtaH3HUq0zzehPcZICw==
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.9.181.111]
-X-smtpf-Report: sid=rBFFDb231106543900; tid=rBFFDg2311065439kf; client=relay,white,ipv6; mail=; rcpt=; nrcpt=1:0; fails=0
-Received-SPF: None; receiver=mailgate6.iss.soton.ac.uk; client-ip=152.78.119.50; helo=<UOS-MSG00036-VS.soton.ac.uk>
-Received-SPF: None; receiver=mailgate6.iss.soton.ac.uk; client-ip=152.78.119.50; envelope-from=<A.J.P.Harfoot@soton.ac.uk>
-X-UOS-MailScanner-Information: Please contact Serviceline@soton.ac.uk for more information
-X-UOS-MailScanner-ID: tBGFDgWk030673
-X-UOS-MailScanner: Found to be clean
-X-UOS-MailScanner-From: a.j.p.harfoot@soton.ac.uk
+	id S934052AbbLPPX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 10:23:27 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52353 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932664AbbLPPXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 10:23:22 -0500
+Received: from virtualbox ([37.24.143.114]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MPqtK-1a5OQW3BX0-004ymU; Wed, 16 Dec 2015 16:23:02
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1450269335-10300-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:m6TZ/eLPtKDEYMYzcPITb0+/dTrxVc2vTiWub4qPIRObpoejMEr
+ VI1h/VATDOWqtA3THzafcrt16wDyLn/aFD2CzWgmhg8fZQLD4nyceSHIjCnlRlfQ4dM0Wk4
+ G11V/pYc1mkhZnNggHGXXwqNMtcs69vOg0ABlN3cR8cO2EbtSooxWnbQEGYShRORFLehKK1
+ CJyk7jitUQowSCDj+ASLg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tAGsn420xgg=:5ShbdJApbrY7WqmJnJoSTT
+ HuQpEHSLG5rxs4fRQhNH5oiPZjj0rvOk+kwroLPxdqteOXe1zlJvC1eGwRyqY/HcGxZCmN3TP
+ G41Tv1kY36pzOJ+htwMXiyF/i4IxYvGaxA8L+iJ5CcV/ClYTBgI+1e/jIJ46BHE+suRk9mZwC
+ 3l0nQPd5NGjDt6M806X3wn1DF/ngH0CwZbwQNdRH/YaGvdVvDGQOazSvrMVHuX/PD/JEuY614
+ QWfwdDSfRjNTvWeexWoL9Hk+w5iHIz2AIKVqVahP8tRUp73im0pAiTJ7EFq0FJyM6sZzxtYP0
+ rPTWKFsM2CK9lYr4WW7Ig4QMhZtzs1jONkOocC6dp6MXGvhdKkAg4LpNRoBMX6ZMj4cB3ewlD
+ himDMCIm2PAgPXkjJt53UJ61RrIFm8oAMQIfj/5TCEOFWrLSAknNPO1kktXXeSwcglMj5p23A
+ tovQAEZNY6c16Jk9RLHriAeHgEQa48I6l3YdnbjBuGqqEu9KdxE+W2+jD/mRbNLF++UKyZq/w
+ LMtYVFIya5vDq/NcngU77sPxTqybpDl0HjR0d2CosOhqMvQXtmzzZd+Dn5X08Aw6jBKLPLPvW
+ DGAy5CCfEvgknr0YWdJrSIAmbOLJa9QDQImBhMmMvSHUtNnFVOxuEfi9gZVl+NZe/ds16Sllo
+ jS91N21kprs7T1xNAnWAcOvwETYgLKd7i8pzwxMictcosrw9ZMcirxHa7MwiXigdJ4vRmRvjp
+ wffpcCuPDeWbEx6njQ6/q3A+cIG79oyFVl6mcviSD7++vu9FU9Ui4Mu+wHezBzqHmlShGSYu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282562>
 
-Hi there,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'm new to Git, so apologies if this is already available, but after some searching and experimenting I haven't been able to resolve it.
+--8323329-1823752096-1450279382=:6483
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I am running Git 2.6.4.windows.1 on Windows 7 64 bit.
+Hi G=E1bor,
 
-I have the global configuration variable core.autocrlf=true
+On Wed, 16 Dec 2015, SZEDER G=E1bor wrote:
 
-When I commit, the commit message template file is loaded into my configured text editor (in this case Windows Notepad), however the comment lines are terminated with LF, not CRLF, and so are not displayed as new lines by Notepad.
-In the opposite direction, the output of 'git log' redirected to a file has all EOL characters set to LF, when originally entered as CRLF, so automatic conversion is working
+> /^Subject:/ s/tyop/typo/
 
-I have tried to generate a custom commit message using the commit.template variable, but the commented lines are appended to this file, creating a mixture of EOL characters!
+That was actually on purpose... I guess I made it a habit in another
+project to call it tyop from time to time to take out the edge (many
+scientists are pretty bda at speling ;-)).
 
-Is there a way to fix this inconsistency?
+But sure, if that joke is lost, let's not have a tyop in the comit mesage
+;-)
 
-Cheers,
-
-Andy
-
--- 
-
-Andy Harfoot
-
-GeoData Institute
-University of Southampton
-Southampton
-SO17 1BJ
-
-Tel:  +44 (0)23 8059 2719
-Fax:  +44 (0)23 8059 2849
-
-www.geodata.soton.ac.uk
+Ciao,
+Dscho
+--8323329-1823752096-1450279382=:6483--
