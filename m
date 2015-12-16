@@ -1,99 +1,118 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] mingw: emulate write(2) that fails with a EPIPE
-Date: Wed, 16 Dec 2015 14:47:15 -0500
-Message-ID: <CAPig+cQzCHtyVs47=ASs5V2BSV7gpVszbdTFydiRhnz3gtD2Qw@mail.gmail.com>
-References: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame: display a more helpful error message if the file was deleted
+Date: Wed, 16 Dec 2015 11:56:47 -0800
+Message-ID: <xmqq37v2dv5s.fsf@gitster.mtv.corp.google.com>
+References: <1450224047-25527-1-git-send-email-alexhenrie24@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 16 20:47:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Alex Henrie <alexhenrie24@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 20:57:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9I37-00045c-2H
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 20:47:45 +0100
+	id 1a9IC4-0004Ub-E0
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 20:57:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764AbbLPTrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 14:47:17 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:35806 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbbLPTrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 14:47:16 -0500
-Received: by mail-vk0-f44.google.com with SMTP id a189so33114601vkh.2
-        for <git@vger.kernel.org>; Wed, 16 Dec 2015 11:47:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=iVvlCsORIVvVJHwxE6ckCKyt/D8c2c0iFbKb5OIMPs8=;
-        b=gD+6i5q6HybjCCSOVpvMcrKrTw63CRzEAMlcgDsK/QhdOf5zHeE2shA+Yl0oZkFSry
-         ZxUulH9MKdRS2xayzSDY6aZ6V7c2yVA6Ko9Mfk0cvJjmxbcWccQBGejoPnoHAF6IKXzN
-         aDQHCa/FEqAlbG+7GgzaeQTHi31uVyYlDXOPlrHu5+HHAgDHo3Xa50u4LaTFiEPBN0fX
-         23VGis2V6TLV8aNcIZUSYCadLvcfMCSmeZyhl/N6guJxy6fcHDGpK2lf7O9AvoiT3P37
-         td4dPNOfAAwtR4TNjKhA69cvigIcPCgrQjKvcnpix3YdonARyoCvqYf+EbzGrolyyZgK
-         OAAw==
-X-Received: by 10.31.182.129 with SMTP id g123mr35631742vkf.45.1450295235996;
- Wed, 16 Dec 2015 11:47:15 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 11:47:15 -0800 (PST)
-In-Reply-To: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de>
-X-Google-Sender-Auth: 572gqooPPRF5bgBaPd5Osdd1HzQ
+	id S966548AbbLPT44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 14:56:56 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53733 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S966113AbbLPT4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 14:56:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CA9A3435E;
+	Wed, 16 Dec 2015 14:56:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CWcFUmTeclCmrcsA2bcdiIvabhY=; b=kyN56S
+	77kRNj6mOCZFLBvBCByclIiI8yjz1H1BICNimmRlyHSiCJ3JJFM04Yhi0K2oip0n
+	hozE4dK0UMK5EBzZjFOZk3cR7sBCq4Cu1BwPPYeU92XtDYG+2i7z3CyVVkK1jQYj
+	5+JTggej0AkDYhNwfWJ87T3lzuCVVOGzZ6whQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PpTYGHuTDnsE9m1n9nlxBkVRTkmLZykt
+	0rHyCp04H+Mc/MWq5WuISquo1gy8jhETE+0kV+cAC7h7nFFtllNquDTUc6AQGvel
+	/OBKWa/+YwNWqHMlxqtyNKQjAkp923rLNJEu5cp285kNQtYn6otL4kYLf6KMZorW
+	gnJF65LSYXw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6416E3435C;
+	Wed, 16 Dec 2015 14:56:49 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D610A3435B;
+	Wed, 16 Dec 2015 14:56:48 -0500 (EST)
+In-Reply-To: <1450224047-25527-1-git-send-email-alexhenrie24@gmail.com> (Alex
+	Henrie's message of "Tue, 15 Dec 2015 17:00:47 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 249637A8-A42F-11E5-A0B5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282583>
 
-On Wednesday, December 16, 2015, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> On Windows, when writing to a pipe fails, errno is always
-> EINVAL. However, Git expects it to be EPIPE.
+Alex Henrie <alexhenrie24@gmail.com> writes:
+
+> `git blame 22414770 generate-cmdlist.perl` currently results in:
+>     fatal: cannot stat path '22414770': No such file or directory
 >
-> According to the documentation, there are two cases in which write()
-> triggers EINVAL: the buffer is NULL, or the length is odd but the mode
-> is 16-bit Unicode (the broken pipe is not mentioned as possible cause).
-> Git never sets the file mode to anything but binary, therefore we know
-> that errno should actually be EPIPE if it is EINVAL and the buffer is
-> not NULL.
+> This patch changes the error message to:
+>     fatal: ambiguous argument 'generate-cmdlist.perl': unknown revision
+>     or path not in the working tree.
+>     Use '--' to separate paths from revisions, like this:
+>     'git <command> [<revision>...] -- [<file>...]'"
 >
-> See https://msdn.microsoft.com/en-us/library/1570wh78.aspx for more
-> details.
+> That way, the user knows to rewrite the command as
+> `git blame 22414770 -- generate-cmdlist.perl`.
+
+It is unfortunate that the command line parser of 'blame' needs to
+cater to an oddball syntax, 'git annotate <path> [<rev>]'.
+
+This change still makes us emit the following funny errors:
+
+    $ ./git blame 00000000 generate-cmdlist.prel
+    fatal: bad revision 'generate-cmdlist.prel'
+    $ ./git blame generate-cmdlist.prel 00000000
+    fatal: bad revision '00000000'
+
+and gives the users a wrong impression that the early argument is
+the path and then comes the revision.
+
+I'll take the patch as-is, because the original is not better, i.e.
+
+    $ git blame 00000000 generate-cmdlist.prel
+    fatal: cannot stat path '00000000': No such file or directory
+    $ git blame generate-cmdlist.prel 00000000
+    fatal: cannot stat path 'generate-cmdlist.prel': No such file or directory
+
+and the change is not making things worse.
+
+But I think in the longer term we should deprecate and eventually
+remove 'git annotate' with its odd syntax, so that we can lose the
+special case we have in the command line parser of 'git blame'.
+
+Thanks.
+
 >
-> This works around t5571.11 failing with v2.6.4 on Windows.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 > ---
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> @@ -210,6 +210,24 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream);
-> +static inline ssize_t mingw_write(int fd, const void *buf, size_t len)
-> +{
-> +       ssize_t result = write(fd, buf, len);
-> +
-> +       if (result < 0 && errno == EINVAL && buf) {
-
-Here, errno is EINVAL...
-
-> +               /* check if fd is a pipe */
-> +               HANDLE h = (HANDLE) _get_osfhandle(fd);
-> +               if (GetFileType(h) == FILE_TYPE_PIPE)
-> +                       errno = EPIPE;
-> +               else
-> +                       errno = EINVAL;
-
-Does any of the code between the outer 'if' and this point clobber
-errno, or are you merely assigning EINVAL for robustness against
-future changes?
-
-> +       }
-> +
-> +       return result;
-> +}
-> +
-> +#define write mingw_write
-> +
-> --
-> 2.6.3.windows.1.300.g1c25e49
+>  builtin/blame.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 1df13cf..f070272 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -2683,8 +2683,6 @@ parse_done:
+>  		argv[argc - 1] = "--";
+>  
+>  		setup_work_tree();
+> -		if (!file_exists(path))
+> -			die_errno("cannot stat path '%s'", path);
+>  	}
+>  
+>  	revs.disable_stdin = 1;
