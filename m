@@ -1,80 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] push: add '-d' as shorthand for '--delete'
-Date: Wed, 16 Dec 2015 12:29:38 -0800
-Message-ID: <xmqqr3imcf2l.fsf@gitster.mtv.corp.google.com>
-References: <1450106584-22313-1-git-send-email-ps@pks.im>
-	<1450106584-22313-2-git-send-email-ps@pks.im>
-	<20151214211856.GF14788@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 01/11] strbuf: introduce strbuf_split_str_without_term()
+Date: Wed, 16 Dec 2015 15:35:48 -0500
+Message-ID: <CAPig+cQcCGVuzqYT3zXUMK=sF+QLCXUbbzcoqmaAe2zf+faWsA@mail.gmail.com>
+References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
+	<1450279802-29414-2-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 16 21:29:47 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 21:35:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9Ihk-0006Hj-VB
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 21:29:45 +0100
+	id 1a9Ini-0000Mc-8K
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 21:35:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343AbbLPU3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 15:29:41 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62883 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750801AbbLPU3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 15:29:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB02C33565;
-	Wed, 16 Dec 2015 15:29:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6o8DFTZ7wtVzyY9EHgViANjoDNc=; b=gNMqCK
-	8fzP7x2FhtgHIcxoj9m3/85HocvdwisndxseaPTjg0wFYWTwjToVE2wLtqqaRRBy
-	nzUY/F+k9mjJk26aaleBr/p+2bRFbvFjfHfVKM+xBQTaWOE1zdsN5pT3ybkJ+Jyw
-	VBtmq0tjwvmYgR9yn5McbRla+QvEG+0DVPgbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cX0lbC33d0wSSPhqJWTgS1e2nk6Vak09
-	XL0Jl3ZGXo3k39QW9EJ5LFj6QA6YRAo91r4d0aiL2aDllzk4ZOPZpKZVa5FOfjPc
-	CAugdQjbkLUlSNzdLqKnmao3L2/jUqLsxRRW3j7Cq2AZOmnD4hKghzU7mFz0KeRr
-	Q1GzjQVPIpQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E245133564;
-	Wed, 16 Dec 2015 15:29:39 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 60D9533560;
-	Wed, 16 Dec 2015 15:29:39 -0500 (EST)
-In-Reply-To: <20151214211856.GF14788@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 14 Dec 2015 16:18:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BB1BA4F2-A433-11E5-9D00-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755369AbbLPUfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 15:35:50 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:35297 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755347AbbLPUft (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 15:35:49 -0500
+Received: by mail-vk0-f51.google.com with SMTP id a189so33954776vkh.2
+        for <git@vger.kernel.org>; Wed, 16 Dec 2015 12:35:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Db4zzlfDlu8h0L/4M7GGhnCeSSoRwW20461Y9JKVlDA=;
+        b=jKJYwzlZf8SAQ2sMZ3/aQew3UlIJ1hcl1ekj/4HT4HMrNwVAZZSzPDrupEb3UavDJ6
+         354Q35le6NpqcyU6GNcTflrrN3f/I05OcmreYVT71x541w2CKXdXDYMAumYyC76IB7oD
+         jlmeAoTzPNpZ7UKlEDoHiiH9hazztWLHEYqDGItCb8ILRYfXiBKj4aYjlXN978oDXNE0
+         TZbVo1FrfAVV6You6uwNYU8zvw230XO6OkjyUZmliJ2JiFOvjJf/4G2URCke32VhpwNY
+         xVfeY0xdRNjM6XBCLimMOayeBHx3ysTDHu+OcyzcQ5iwZ0Fsdz4jNnl9saUWbOpKZBSY
+         nvtQ==
+X-Received: by 10.31.182.129 with SMTP id g123mr35801398vkf.45.1450298148472;
+ Wed, 16 Dec 2015 12:35:48 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 12:35:48 -0800 (PST)
+In-Reply-To: <1450279802-29414-2-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: u6lxIQWq-Ra-k1we4Qp0Y-9xUPA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282586>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> strbuf: introduce strbuf_split_str_without_term()
 
-> At this point, it seems that "--delete" is useful, and nothing else has
-> been proposed for "-d" in the intervening years. It seems like a
-> reasonable use of the flag to me.
+s/without/omit/
 
-I think there were two (and a half) reasons why we didn't let
-"--delete" use a short-and-sweet "-d", and I agree that "something
-else that is more useful did not come" removes one of them.
+> The current implementation of 'strbuf_split_buf()' includes the
+> terminator at the end of each strbuf post splitting. Add an option
+> wherein we can drop the terminator if desired. In this context
+> introduce a wrapper function 'strbuf_split_str_without_term()' which
 
-The other reason was to avoid the chance of fat-fingering, because
-deleting is destructive, and it is even harder to recover from if
-the damage is done remotely (and the remaining one-half is that
-deleting is a rare event).
+s/without/omit/
 
-Even though I do not think the need for the "safety" has been
-reduced over time to warrant this change, a similarity with "branch"
-that has "-d/--delete" would be a good enough argument to support
-this change.
+> splits a given string into strbufs without including the terminator.
+>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/strbuf.c b/strbuf.c
+> @@ -115,7 +115,7 @@ void strbuf_tolower(struct strbuf *sb)
+>  struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+> -                                int terminator, int max)
+> +                                int terminator, int max, int omit_term)
+>  {
+>         struct strbuf **ret = NULL;
+>         size_t nr = 0, alloc = 0;
+> @@ -123,14 +123,15 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+>
+>         while (slen) {
+>                 int len = slen;
+> +               const char *end = NULL;
+>                 if (max <= 0 || nr + 1 < max) {
+> -                       const char *end = memchr(str, terminator, slen);
+> +                       end = memchr(str, terminator, slen);
+>                         if (end)
+>                                 len = end - str + 1;
+>                 }
+>                 t = xmalloc(sizeof(struct strbuf));
+>                 strbuf_init(t, len);
+> -               strbuf_add(t, str, len);
+> +               strbuf_add(t, str, len - !!end * !!omit_term);
 
-Thanks.
+This version of the patch with its minimal[1] change is much easier to
+review for correctness than the original attempt[2].
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/281882
+[2]: http://article.gmane.org/gmane.comp.version-control.git/281189
+
+>                 ALLOC_GROW(ret, nr + 2, alloc);
+>                 ret[nr++] = t;
+>                 str += len;
+> diff --git a/strbuf.h b/strbuf.h
+> index 6ae7a72..a865a74 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -450,11 +450,12 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+>  /**
+>   * Split str (of length slen) at the specified terminator character.
+>   * Return a null-terminated array of pointers to strbuf objects
+> - * holding the substrings.  The substrings include the terminator,
+> - * except for the last substring, which might be unterminated if the
+> - * original string did not end with a terminator.  If max is positive,
+> - * then split the string into at most max substrings (with the last
+> - * substring containing everything following the (max-1)th terminator
+> + * holding the substrings.  The substrings include the terminator if
+> + * the value of omit_term is '0' else the terminator is excluded.  The
+
+Perhaps just say "if omit_term is false" rather than "if the value of ... is 0".
+
+> + * last substring, might be unterminated if the original string did
+> + * not end with a terminator.  If max is positive, then split the
+
+This bit about the last substring is perhaps too disconnected from the
+previous sentence. What if you re-word the entire thing something like
+this:
+
+    If omit_term is true, the terminator will be stripped from all
+    substrings. Otherwise, substrings will include the terminator,
+    except for the final substring, if the original string lacked a
+    terminator.
+
+> + * string into at most max substrings (with the last substring
+> + * containing everything following the (max-1)th terminator
+>   * character).
+>   *
+>   * The most generic form is `strbuf_split_buf`, which takes an arbitrary
+> @@ -465,19 +466,25 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+>   * For lighter-weight alternatives, see string_list_split() and
+>   * string_list_split_in_place().
+>   */
+> -extern struct strbuf **strbuf_split_buf(const char *, size_t,
+> -                                       int terminator, int max);
+> +extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+> +                                       int terminator, int max, int omit_term);
+> +
+> +static inline struct strbuf **strbuf_split_str_omit_term(const char *str,
+> +                                                           int terminator, int max)
+> +{
+> +       return strbuf_split_buf(str, strlen(str), terminator, max, 1);
+> +}
+>
+>  static inline struct strbuf **strbuf_split_str(const char *str,
+>                                                int terminator, int max)
+>  {
+> -       return strbuf_split_buf(str, strlen(str), terminator, max);
+> +       return strbuf_split_buf(str, strlen(str), terminator, max, 0);
+>  }
+>
+>  static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
+>                                                 int terminator, int max)
+>  {
+> -       return strbuf_split_buf(sb->buf, sb->len, terminator, max);
+> +       return strbuf_split_buf(sb->buf, sb->len, terminator, max, 0);
+>  }
+>
+>  static inline struct strbuf **strbuf_split(const struct strbuf *sb,
+> --
+> 2.6.4
