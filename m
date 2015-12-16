@@ -1,66 +1,74 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] git-gui: do not use obsolete `git merge $msg HEAD $branch'
-Date: Wed, 16 Dec 2015 22:44:08 +0100
-Message-ID: <5671DB28.8020901@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] push: add '-d' as shorthand for '--delete'
+Date: Wed, 16 Dec 2015 16:52:52 -0500
+Message-ID: <20151216215252.GA11615@sigill.intra.peff.net>
+References: <1450106584-22313-1-git-send-email-ps@pks.im>
+ <1450106584-22313-2-git-send-email-ps@pks.im>
+ <20151214211856.GF14788@sigill.intra.peff.net>
+ <xmqqr3imcf2l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Dec 16 22:44:18 2015
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 22:53:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9Jrs-0007np-TU
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 22:44:17 +0100
+	id 1a9K0a-0007Gi-L1
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 22:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966065AbbLPVoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 16:44:13 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:7734 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751370AbbLPVoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 16:44:12 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pLVMs05DYz5tlH;
-	Wed, 16 Dec 2015 22:44:08 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 389F753B1;
-	Wed, 16 Dec 2015 22:44:08 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+	id S966706AbbLPVw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 16:52:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43225 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S966654AbbLPVwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 16:52:55 -0500
+Received: (qmail 25800 invoked by uid 102); 16 Dec 2015 21:52:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Dec 2015 15:52:55 -0600
+Received: (qmail 874 invoked by uid 107); 16 Dec 2015 21:53:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Dec 2015 16:53:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Dec 2015 16:52:52 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqr3imcf2l.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282595>
 
-Use the modern `git merge' invocation pattern.
+On Wed, Dec 16, 2015 at 12:29:38PM -0800, Junio C Hamano wrote:
 
-Since both `git merge' and `git fmt-merge-msg' obey the merge.log
-configuration, instruct the former not to generate the log summary to
-avoid that it appears twice in the commit message.
+> Jeff King <peff@peff.net> writes:
+> 
+> > At this point, it seems that "--delete" is useful, and nothing else has
+> > been proposed for "-d" in the intervening years. It seems like a
+> > reasonable use of the flag to me.
+> 
+> I think there were two (and a half) reasons why we didn't let
+> "--delete" use a short-and-sweet "-d", and I agree that "something
+> else that is more useful did not come" removes one of them.
+> 
+> The other reason was to avoid the chance of fat-fingering, because
+> deleting is destructive, and it is even harder to recover from if
+> the damage is done remotely (and the remaining one-half is that
+> deleting is a rare event).
+> 
+> Even though I do not think the need for the "safety" has been
+> reduced over time to warrant this change, a similarity with "branch"
+> that has "-d/--delete" would be a good enough argument to support
+> this change.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- lib/merge.tcl | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks for the input, I hadn't considered "safety" at all. We do have
+safety measures on "git branch -d" that we don't have here. I guess we
+could implement something similar (e.g., see if the to-be-deleted branch
+is merged elsewhere; of course we might not have the objects locally at
+all). On the other hand, you can already screw yourself pretty badly
+with "push -f".
 
-diff --git a/lib/merge.tcl b/lib/merge.tcl
-index 460d32f..f512456 100644
---- a/lib/merge.tcl
-+++ b/lib/merge.tcl
-@@ -115,8 +115,9 @@ method _start {} {
- 	set cmd [list git]
- 	lappend cmd merge
- 	lappend cmd --strategy=recursive
-+	lappend cmd --no-log
-+	lappend cmd -m
- 	lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
--	lappend cmd HEAD
- 	lappend cmd $name
- 
- 	ui_status [mc "Merging %s and %s..." $current_branch $stitle]
--- 
-2.6.2.337.ga235d84
+So I think it's probably OK to add "-d".
+
+-Peff
