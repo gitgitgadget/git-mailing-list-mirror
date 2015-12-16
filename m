@@ -1,146 +1,116 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] push: Fully test --recurse-submodules on command line
- overrides config
-Date: Wed, 16 Dec 2015 12:48:56 -0800
-Message-ID: <CAGZ79kb3XCkabxUq6Sh-aLa=a6kzRZtR6WG+wTk1SQY9_Mehog@mail.gmail.com>
-References: <20151203131006.GA5119@mcrowe.com>
-	<1449148235-29569-1-git-send-email-mac@mcrowe.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 03/11] ref-filter: introduce struct used_atom
+Date: Wed, 16 Dec 2015 15:57:51 -0500
+Message-ID: <CAPig+cR5=8urU+Vq_doC53+T4WCmEWJdKXyMEsbL3gWxsNpmxg@mail.gmail.com>
+References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
+	<1450279802-29414-4-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Mike Crowe <mac@mcrowe.com>
-X-From: git-owner@vger.kernel.org Wed Dec 16 21:49:03 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 21:57:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9J0Q-0000N4-0O
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 21:49:02 +0100
+	id 1a9J93-0007ed-8T
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 21:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762AbbLPUs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 15:48:58 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:35655 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389AbbLPUs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 15:48:57 -0500
-Received: by mail-ig0-f175.google.com with SMTP id to4so83385635igc.0
-        for <git@vger.kernel.org>; Wed, 16 Dec 2015 12:48:57 -0800 (PST)
+	id S965604AbbLPU5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 15:57:52 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:33382 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934216AbbLPU5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 15:57:52 -0500
+Received: by mail-vk0-f47.google.com with SMTP id a188so34713895vkc.0
+        for <git@vger.kernel.org>; Wed, 16 Dec 2015 12:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EBbBQOqIW27a6NRnC//yk1nm9MS3RUiP4qutW5C4x+0=;
-        b=iLw4X38rCHEfYulRpQJAlCK/xYzfN6djf2MbVEnZpMqmuL8Gc8FPZPN1cxklr6AHX6
-         Zlk0BYlGlQC89KXucVxSj1ruo7rKOV2pLm5tdAgpUL9UmFFCOxAFujXmt7RC2bM12arE
-         5jjInj8Awo4fQHqrkUk/5x/pRT2yWsRfIfB4lFGRSQydIyD5II+gvTUpWdL87SbhlWtw
-         89PMosvq3fUOLAnwD7J0nz+Zo2yxfSwBzogpty8ncCeBfU3syGiVPDHwlS7ZOdM5vMI2
-         lW7qDGSS5tCeTukx4yxwSTE1lhq2As6gM79bKHTJ+k+W2H3z4xyVubaiDVmQes8619hb
-         ESSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EBbBQOqIW27a6NRnC//yk1nm9MS3RUiP4qutW5C4x+0=;
-        b=gKIYUnMAANHP4MSWTy3Q/knyPoJnv69T4MjfY+2+c49Cbgj1k6Bxsrb0o9NrTo0h09
-         l81XWSEhFsW4RHMaMBOd0938GfX8VjGboSGiBawCgYR/jOfIOhy5klM+EWUNyigMKHs6
-         ThX7YmWHJHuhdueMlCMCzLXiOTS63e8zbcRT4VCkflyZBnv3k3rBkfn6M2j0eN1x6Aip
-         bSmHSrRALGdn2lcKdR9U64lHNj1OHMvRYh/VhHoSPPkUL/p1WLakhjjLXcjLogLTNIOB
-         6SAe8gL8ROhwxulK0lcucQe0yFOL+Ddp40uXgUVEoTsXCLbfkFyIo7tqyJd3MlKZ+MyZ
-         APjg==
-X-Gm-Message-State: ALoCoQkdoMZYlIsqU1MoUnedYIUoyzcMhP2aVvE7vsvDgeKioNcCZyeX/WGuSGp8G3hzToZiQmAEleEsQfnx3VkxPFmoJ71nGXEu00yzL3M1cHS0Q5kcF4o=
-X-Received: by 10.107.168.203 with SMTP id e72mr3447617ioj.96.1450298936664;
- Wed, 16 Dec 2015 12:48:56 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Wed, 16 Dec 2015 12:48:56 -0800 (PST)
-In-Reply-To: <1449148235-29569-1-git-send-email-mac@mcrowe.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=kCFlhxIQ2T4YOCkxLSqNGafORYkICpMENFZrbCe14XU=;
+        b=dNFagjVBX2+ucsTwL73ftfyg1ZqUQbM6wFKrrOIGhC+1Q6WJgpkfeUBfRsHZktFpzY
+         g+H0IRyw7fXnPG78ZLri9CgwVNVf5cCM0pOjLjf5qXd44ETiRnWRsqUBlq0KPJW1LPO5
+         pDL3QAlUPXs1imIdT5u/cdJScEzM0bajx7cCT4K6hE2ZNmta8Y5orUvOjcoCV2QBTvY6
+         KZWItEl/sUcmuik8oqCPi7IQRRHStJY58Ap1qzCpGvGy6wJOeY1hNfwimM+ksT8cdSWS
+         iWlVOFB7v3Timyw6KuDMj7i4F1SrnXf3pqRr+41V8ZyXs42Gzx+qurYDJ7E4UUPA5kKy
+         hP6A==
+X-Received: by 10.31.52.82 with SMTP id b79mr36120750vka.84.1450299471195;
+ Wed, 16 Dec 2015 12:57:51 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 12:57:51 -0800 (PST)
+In-Reply-To: <1450279802-29414-4-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: nzwUeJRV1pS1DTAQs81WVH3MWBM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282589>
 
-On Thu, Dec 3, 2015 at 5:10 AM, Mike Crowe <mac@mcrowe.com> wrote:
-> t5531 only checked that the push.recurseSubmodules config option was
-> overridden by passing --recurse-submodules=check on the command line.
-> Add new tests for overriding with --recurse-submodules=no,
-> --no-recurse-submodules and --recurse-submodules=push too.
->
-> Also correct minor typo in test commit message.
->
-> Signed-off-by: Mike Crowe <mac@mcrowe.com>
+On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce the 'used_array' structure which would replace the existing
+> implementation of 'used_array' (which a list of atoms). This helps us
+> parse atom's before hand and store required details into the
+> 'used_array' for future usage.
 
-This looks good to me.
+All my v1 review comments[1] about the commit message still apply to
+this version.
 
-Thanks,
-Stefan
+[1]: http://article.gmane.org/gmane.comp.version-control.git/281860
 
+> Also introduce a parsing function for each atom in valid_atom. Using
+> this we can define special parsing functions for each of the atoms.
 
+This is a conceptually distinct change which probably deserves its own
+patch. In particular, the new patch would add this field to
+valid_atom[] *and* add the code which invokes the custom parser. (That
+code is currently commingled with introduction of the color parser in
+patch 6/11.)
+
+More below...
+
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
->  t/t5531-deep-submodule-push.sh | 32 ++++++++++++++++++++++++++++----
->  1 file changed, 28 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
-> index 9fda7b0..721be32 100755
-> --- a/t/t5531-deep-submodule-push.sh
-> +++ b/t/t5531-deep-submodule-push.sh
-> @@ -126,24 +126,48 @@ test_expect_success 'push succeeds if submodule commit not on remote but using o
->         )
->  '
->
-> -test_expect_success 'push fails if submodule commit not on remote using check from cmdline overriding config' '
-> +test_expect_success 'push recurse-submodules on command line overrides config' '
->         (
->                 cd work/gar/bage &&
->                 >recurse-check-on-command-line-overriding-config &&
->                 git add recurse-check-on-command-line-overriding-config &&
-> -               git commit -m "Recurse on command-line overridiing config junk"
-> +               git commit -m "Recurse on command-line overriding config junk"
->         ) &&
->         (
->                 cd work &&
->                 git add gar/bage &&
->                 git commit -m "Recurse on command-line overriding config for gar/bage" &&
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -16,9 +16,27 @@
+> +/*
+> + * An atom is a valid field atom listed below, possibly prefixed with
+> + * a "*" to denote deref_tag().
+> + *
+> + * We parse given format string and sort specifiers, and make a list
+> + * of properties that we need to extract out of objects.  ref_array_item
+> + * structure will hold an array of values extracted that can be
+> + * indexed with the "atom number", which is an index into this
+> + * array.
+> + */
+> +static struct used_atom {
+> +       const char *str;
+> +       cmp_type type;
+> +} *used_atom;
+> +static int used_atom_cnt, need_tagged, need_symref;
+> +static int need_color_reset_at_eol;
 > +
-> +               # Ensure that we can override on-demand in the config
-> +               # to just check submodules
->                 test_must_fail git -c push.recurseSubmodules=on-demand push --recurse-submodules=check ../pub.git master &&
->                 # Check that the supermodule commit did not get there
->                 git fetch ../pub.git &&
->                 git diff --quiet FETCH_HEAD master^ &&
->                 # Check that the submodule commit did not get there
-> -               cd gar/bage &&
-> -               git diff --quiet origin/master master^
-> +               (cd gar/bage && git diff --quiet origin/master master^) &&
-> +
-> +               # Ensure that we can override check in the config to
-> +               # disable submodule recursion entirely
-> +               (cd gar/bage && git diff --quiet origin/master master^) &&
-> +               git -c push.recurseSubmodules=on-demand push --recurse-submodules=no ../pub.git master &&
-> +               git fetch ../pub.git &&
-> +               git diff --quiet FETCH_HEAD master &&
-> +               (cd gar/bage && git diff --quiet origin/master master^) &&
-> +
-> +               # Ensure that we can override check in the config to
-> +               # disable submodule recursion entirely (alternative form)
-> +               git -c push.recurseSubmodules=on-demand push --no-recurse-submodules ../pub.git master &&
-> +               git fetch ../pub.git &&
-> +               git diff --quiet FETCH_HEAD master &&
-> +               (cd gar/bage && git diff --quiet origin/master master^) &&
-> +
-> +               # Ensure that we can override check in the config to
-> +               # push the submodule too
-> +               git -c push.recurseSubmodules=check push --recurse-submodules=on-demand ../pub.git master &&
-> +               git fetch ../pub.git &&
-> +               git diff --quiet FETCH_HEAD master &&
-> +               (cd gar/bage && git diff --quiet origin/master master)
->         )
->  '
+>  static struct {
+>         const char *name;
+>         cmp_type cmp_type;
+> +       void (*parser)(struct used_atom *atom);
+>  } valid_atom[] = {
+>         { "refname" },
+>         { "objecttype" },
+> @@ -786,7 +788,8 @@ static void populate_value(struct ref_array_item *ref)
 >
-> --
-> 2.1.4
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>         /* Fill in specials first */
+>         for (i = 0; i < used_atom_cnt; i++) {
+> -               const char *name = used_atom[i];
+> +               struct used_atom *atom = &used_atom[i];
+> +               const char *name = atom->str;
+
+Same question as my previous review[1]: Why not just:
+
+    const char *name = used_atom[i].str;
+
+?
+
+>                 struct atom_value *v = &ref->value[i];
+>                 int deref = 0;
+>                 const char *refname;
