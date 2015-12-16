@@ -1,70 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2015, #05; Tue, 15)
-Date: Tue, 15 Dec 2015 15:44:42 -0800
-Message-ID: <xmqq4mfjff9x.fsf@gitster.mtv.corp.google.com>
-References: <xmqq8u4ve3at.fsf@gitster.mtv.corp.google.com>
-	<20151215233207.GA30294@sigill.intra.peff.net>
-	<xmqqbn9rffo0.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 16 00:44:52 2015
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] blame: display a more helpful error message if the file was deleted
+Date: Tue, 15 Dec 2015 17:00:47 -0700
+Message-ID: <1450224047-25527-1-git-send-email-alexhenrie24@gmail.com>
+Cc: Alex Henrie <alexhenrie24@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Dec 16 01:01:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8zH0-0001s1-4E
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 00:44:50 +0100
+	id 1a8zWc-0007F5-51
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 01:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964953AbbLOXoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 18:44:46 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933785AbbLOXop (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 18:44:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8BABC33BC2;
-	Tue, 15 Dec 2015 18:44:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h47Ut1tjZdrOHPjmtdZhWx0LO08=; b=VON+Y0
-	QCn0PFh1dO8zYkORT4hbs94AylcCf0gDNmdw96N2X3jMUQ4dLT4M1kcJomjh5zvr
-	N5UiXrCai4yUzrKxSmTSYDR4z5NfXjBinV6LYCYPrPnxPh1kvGwCVlAYg7K1mv45
-	jGytId8ZiZBQ792TRMMF7KAB1i3PtXrRgtCik=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VsIYNfpSEJ7GcUmNC6UY+l8zo+qWR3iC
-	mctZfzqfNmwqug7mlrm9CcsdsEPg6ffVAVnzuqiwpG7O3gmWXxeLQ6wfdYm6hhy2
-	peGnPDOd4bqcbNxYvlt0VKAe0fu2Baua4c/u+/RzhLxHVej2IGBVrkeF4C0Segxj
-	Xb6Ar6/8MNw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 839B733BC0;
-	Tue, 15 Dec 2015 18:44:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05F9733BBF;
-	Tue, 15 Dec 2015 18:44:43 -0500 (EST)
-In-Reply-To: <xmqqbn9rffo0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 15 Dec 2015 15:36:15 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D13214FA-A385-11E5-8937-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754425AbbLPAAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 19:00:54 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33607 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754391AbbLPAAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 19:00:53 -0500
+Received: by mail-pa0-f49.google.com with SMTP id ur14so13388356pab.0
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 16:00:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=2CHxgoO/+G/CuRdwh0Z6h/mVmdwKpvoGN/DRI9gvSmA=;
+        b=cH3PQIGnwOh6GAKsrhA5DVeI//d5M+lj1MZL2trLgfcR4iBlh43AAM5BuRtZxyAcMI
+         dyngpqpv9kmdETu8jAwMLmnyfdP0AiRJ6M4PUetWa0Nlcqpnu4NVEokHBlnaJwczFrWZ
+         OTUBSJROdoaE/9brUIBm0KgcR1Z/8WLH7QfZpySJbSFWqncDoFsn1Em5ERfpthaF1roN
+         76tFB2I1Xo4jtetZC4b4r2oVmE7wD08D/cYD6UufqJSrqvXaisc4zR5Vm4QKVXMJnAVA
+         FSoFGkPgRPTwO2M03af0c44pyXEbjy8uLLrnMjK2LVaKcoEhU3PxUd6TlCb20uTruw/0
+         5pfA==
+X-Received: by 10.67.1.103 with SMTP id bf7mr58679201pad.147.1450224053080;
+        Tue, 15 Dec 2015 16:00:53 -0800 (PST)
+Received: from alex-wolverine.bmi.utah.edu ([2001:1948:410:2:290:f5ff:feea:ac6d])
+        by smtp.gmail.com with ESMTPSA id u14sm389855pfi.58.2015.12.15.16.00.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 15 Dec 2015 16:00:51 -0800 (PST)
+X-Mailer: git-send-email 2.6.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282513>
 
-Junio C Hamano <gitster@pobox.com> writes:
+`git blame 22414770 generate-cmdlist.perl` currently results in:
+    fatal: cannot stat path '22414770': No such file or directory
 
-> There already was strbuf_getline_crlf(), and I wanted a new name to
-> be conservative.
+This patch changes the error message to:
+    fatal: ambiguous argument 'generate-cmdlist.perl': unknown revision
+    or path not in the working tree.
+    Use '--' to separate paths from revisions, like this:
+    'git <command> [<revision>...] -- [<file>...]'"
 
-When I re-read the series, I realize that the existing one had
-exactly the same semantics as strbuf_gets(), so I think no risk
-would come from reusing that name.  Let me try redoing the series
-when I find time ;-)
+That way, the user knows to rewrite the command as
+`git blame 22414770 -- generate-cmdlist.perl`.
 
-Thanks.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ builtin/blame.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 1df13cf..f070272 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2683,8 +2683,6 @@ parse_done:
+ 		argv[argc - 1] = "--";
+ 
+ 		setup_work_tree();
+-		if (!file_exists(path))
+-			die_errno("cannot stat path '%s'", path);
+ 	}
+ 
+ 	revs.disable_stdin = 1;
+-- 
+2.6.4
