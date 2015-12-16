@@ -1,74 +1,162 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] push: add '-d' as shorthand for '--delete'
-Date: Wed, 16 Dec 2015 16:52:52 -0500
-Message-ID: <20151216215252.GA11615@sigill.intra.peff.net>
-References: <1450106584-22313-1-git-send-email-ps@pks.im>
- <1450106584-22313-2-git-send-email-ps@pks.im>
- <20151214211856.GF14788@sigill.intra.peff.net>
- <xmqqr3imcf2l.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 07/11] ref-filter: introduce align_atom_parser()
+Date: Wed, 16 Dec 2015 16:54:41 -0500
+Message-ID: <CAPig+cR=dYnMfaHUYcq_kz8M+C1nCxOX=SN=_6+ep1aWvVCUow@mail.gmail.com>
+References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
+	<1450279802-29414-8-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 16 22:53:17 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 22:54:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9K0a-0007Gi-L1
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 22:53:17 +0100
+	id 1a9K22-00023s-No
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 22:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966706AbbLPVw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 16:52:56 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43225 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S966654AbbLPVwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 16:52:55 -0500
-Received: (qmail 25800 invoked by uid 102); 16 Dec 2015 21:52:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Dec 2015 15:52:55 -0600
-Received: (qmail 874 invoked by uid 107); 16 Dec 2015 21:53:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Dec 2015 16:53:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Dec 2015 16:52:52 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqr3imcf2l.fsf@gitster.mtv.corp.google.com>
+	id S966625AbbLPVyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 16:54:43 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33617 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753275AbbLPVym (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 16:54:42 -0500
+Received: by mail-vk0-f51.google.com with SMTP id a188so35602086vkc.0
+        for <git@vger.kernel.org>; Wed, 16 Dec 2015 13:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SW2Yo6iUakHlpkZLz0MHgkwPAnTbgOEoO8IV4f/8eks=;
+        b=m/iLQCRd3/IUYwe7PySTvuAP1xcQAc1hbshI4X7b9HCsSGOUq3Bngagmf5aLsrncw3
+         i906Oqi4WDeJ2huvMoT+piGq9RIEbmumfjsG+23ov3kccdtNnIDi0fYzetxVwEAnKxZa
+         GNvD00heDl6HqjTLopJKfLQ8IoSMw6fG/dxbgm7SLkC9IMjWZfuIx9taSh9F5TrjMdmd
+         G+BBmDVKHtKlZlazxDDp+ddgw9RIG+4XxTPiHPNgQ8OlT7ZVq7ibG/AzAdU838T6kfeG
+         HMc21/gYbKJb5VA9ACnRYda2oje0dBjfKPEVDO/B35thXnfDirKxiUs8U9c7BygD6FyE
+         CZFQ==
+X-Received: by 10.31.52.82 with SMTP id b79mr36294723vka.84.1450302881500;
+ Wed, 16 Dec 2015 13:54:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 13:54:41 -0800 (PST)
+In-Reply-To: <1450279802-29414-8-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: tTCF1mZz1y2kPhNBtnlJpwo6MgY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282596>
 
-On Wed, Dec 16, 2015 at 12:29:38PM -0800, Junio C Hamano wrote:
+On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce align_atom_parser() which will parse an "align" atom and
+> store the required alignment position and width in the "use_atom"
+> structure for further usage in 'populate_value()'.
+>
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -63,6 +69,49 @@ static void color_atom_parser(struct used_atom *atom)
+> +static align_type parse_align_position(const char *s)
+> +{
+> +       if (!strcmp(s, "right"))
+> +               return ALIGN_RIGHT;
+> +       else if (!strcmp(s, "middle"))
+> +               return ALIGN_MIDDLE;
+> +       else if (!strcmp(s, "left"))
+> +               return ALIGN_LEFT;
+> +       return -1;
+> +}
+> +
+> +static void align_atom_parser(struct used_atom *atom)
+> +{
+> +       struct align *align = &atom->u.align;
+> +       const char *buf = NULL;
+> +       struct strbuf **s, **to_free;
+> +       int width = -1;
+> +
+> +       match_atom_name(atom->str, "align", &buf);
+> +       if (!buf)
+> +               die(_("expected format: %%(align:<width>,<position>)"));
+> +       s = to_free = strbuf_split_str_omit_term(buf, ',', 0);
+> +
+> +       align->position = ALIGN_LEFT;
+> +
+> +       while (*s) {
+> +               int position;
+> +
+> +               if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > At this point, it seems that "--delete" is useful, and nothing else has
-> > been proposed for "-d" in the intervening years. It seems like a
-> > reasonable use of the flag to me.
-> 
-> I think there were two (and a half) reasons why we didn't let
-> "--delete" use a short-and-sweet "-d", and I agree that "something
-> else that is more useful did not come" removes one of them.
-> 
-> The other reason was to avoid the chance of fat-fingering, because
-> deleting is destructive, and it is even harder to recover from if
-> the damage is done remotely (and the remaining one-half is that
-> deleting is a rare event).
-> 
-> Even though I do not think the need for the "safety" has been
-> reduced over time to warrant this change, a similarity with "branch"
-> that has "-d/--delete" would be a good enough argument to support
-> this change.
+This casting is pretty ugly. It probably would be cleaner to declare
+'width' as 'unsigned int' and initialize it with ~0U than to do this
+ugly and potentially dangerous casting. Likewise, below where you
+check 'width < 0', you'd check instead for ~0U. However, such a change
+should not be part of the current patch, but rather as a separate
+preparatory patch.
 
-Thanks for the input, I hadn't considered "safety" at all. We do have
-safety measures on "git branch -d" that we don't have here. I guess we
-could implement something similar (e.g., see if the to-be-deleted branch
-is merged elsewhere; of course we might not have the objects locally at
-all). On the other hand, you can already screw yourself pretty badly
-with "push -f".
+> +                       ;
+> +               else if ((position = parse_align_position(s[0]->buf)) > 0)
 
-So I think it's probably OK to add "-d".
+Shouldn't this be '>=' rather than '>'?
 
--Peff
+This likely would have been easier to spot if parse_align_position()
+had been factored out in its own patch, as suggested by my v1
+review[1], since the caller would have been trivially inspectable
+rather than having to keep track of both code movement and changes.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/281916
+
+> +                       align->position = position;
+> +               else
+> +                       die(_("unrecognized %%(align) argument: %s"), s[0]->buf);
+> +               s++;
+> +       }
+> +
+> +       if (width < 0)
+> +               die(_("positive width expected with the %%(align) atom"));
+> +       align->width = width;
+> +       strbuf_list_free(to_free);
+> +}
+> +
+>  static struct {
+>         const char *name;
+>         cmp_type cmp_type;
+> @@ -880,35 +924,7 @@ static void populate_value(struct ref_array_item *ref)
+>                                 v->s = " ";
+>                         continue;
+>                 } else if (match_atom_name(name, "align", &valp)) {
+> -                       struct align *align = &v->u.align;
+> -                       struct strbuf **s, **to_free;
+> -                       int width = -1;
+> -
+> -                       if (!valp)
+> -                               die(_("expected format: %%(align:<width>,<position>)"));
+> -
+> -                       s = to_free = strbuf_split_str_omit_term(valp, ',', 0);
+> -
+> -                       align->position = ALIGN_LEFT;
+> -
+> -                       while (*s) {
+> -                               if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
+> -                                       ;
+> -                               else if (!strcmp(s[0]->buf, "left"))
+> -                                       align->position = ALIGN_LEFT;
+> -                               else if (!strcmp(s[0]->buf, "right"))
+> -                                       align->position = ALIGN_RIGHT;
+> -                               else if (!strcmp(s[0]->buf, "middle"))
+> -                                       align->position = ALIGN_MIDDLE;
+> -                               else
+> -                                       die(_("improper format entered align:%s"), s[0]->buf);
+> -                               s++;
+> -                       }
+> -
+> -                       if (width < 0)
+> -                               die(_("positive width expected with the %%(align) atom"));
+> -                       align->width = width;
+> -                       strbuf_list_free(to_free);
+> +                       v->u.align = atom->u.align;
+>                         v->handler = align_atom_handler;
+>                         continue;
+>                 } else if (!strcmp(name, "end")) {
+> --
+> 2.6.4
