@@ -1,93 +1,109 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] Introduce grep threads param
-Date: Tue, 15 Dec 2015 19:26:46 -0500
-Message-ID: <CAPig+cRTz=DMd6XyJ=co26d2c=PgVqhhsWQpgy53930MdC_=Rw@mail.gmail.com>
-References: <1450193500-22468-1-git-send-email-vleschuk@accesssoftek.com>
-	<1450193500-22468-2-git-send-email-vleschuk@accesssoftek.com>
-	<xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
+From: Sam Hocevar <sam@hocevar.net>
+Subject: Re: [PATCH 0/2] git-p4: fix for handling of multiple depot paths
+Date: Wed, 16 Dec 2015 01:38:34 +0100
+Message-ID: <20151216003834.GG48528@hocevar.net>
+References: <1450037234-15344-1-git-send-email-luke@diamand.org>
+ <CAE5ih7_T1xC9AyO41T4ktJmj6tENaEGbAG556WLyfsYz-jawsw@mail.gmail.com>
+ <xmqqio40kfhl.fsf@gitster.mtv.corp.google.com>
+ <CAE5ih7_9m8kw=sVj8Sv5mAfT_22-g0vdTb78FvLTrNUkJO0M0g@mail.gmail.com>
+ <xmqqtwnkhegw.fsf@gitster.mtv.corp.google.com>
+ <CAE5ih7_qY5oF+UWs4gE2eHUu17pBg6TVGTUyRRRcBe12ybkw+Q@mail.gmail.com>
+ <1450220213834.32062@vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Victor Leschuk <vleschuk@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Victor Leschuk <vleschuk@accesssoftek.com>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 16 01:26:53 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Luke Diamand <luke@diamand.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Users <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: James Farwell <jfarwell@vmware.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 01:38:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8zvh-00088R-Az
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 01:26:53 +0100
+	id 1a907D-0007hX-Qi
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 01:38:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754549AbbLPA0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 19:26:48 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:33764 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752750AbbLPA0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 19:26:47 -0500
-Received: by mail-vk0-f48.google.com with SMTP id a188so16876259vkc.0
-        for <git@vger.kernel.org>; Tue, 15 Dec 2015 16:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=u1U33470xli61xA4a5nJNSjzGjQw2hR1laO0EeFvLFk=;
-        b=xb8xoszvMlWkAB3wl5p0Gu/vriz4yY4qS8W7gVZjb4I/vO4NroMeCZgkb24kHj2QXs
-         cYh7/vRXU4hy/UIE+Z8HLxynfFCwsofO0GgZ2sNS+Yir1M1khDpviLVwb7y67+xLGf8/
-         sscvMmCfDZdpJuFmCAf4Gubgxd7x+0lw+zhPh5Zg6dJ1Sneu6ofan59sHBGcrKoNWITR
-         4iRGAivu1krVaK3KyOpiYvMHdfgCeTkIqPPBSws0t0srTnVXkSvP9e/v3UHUoD3F4jK2
-         fzqBkte2K5/5qu2oizRqb+ucue2jvxdik5jDZZyXb2XO1349OkrMM3VYLhtmJNWYFJ5m
-         EL4g==
-X-Received: by 10.31.58.74 with SMTP id h71mr31332443vka.151.1450225606826;
- Tue, 15 Dec 2015 16:26:46 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 15 Dec 2015 16:26:46 -0800 (PST)
-In-Reply-To: <xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: 5Cdx_5WjqSEkIpIZHsr9XPM-lMo
+	id S933844AbbLPAim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 19:38:42 -0500
+Received: from poulet.zoy.org ([193.200.42.166]:56343 "EHLO smtp.zoy.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932992AbbLPAil (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 19:38:41 -0500
+Received: by smtp.zoy.org (Postfix, from userid 1000)
+	id 507D136126C; Wed, 16 Dec 2015 01:38:34 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1450220213834.32062@vmware.com>
+Mail-Copies-To: never
+X-No-CC: I read mailing-lists; do not CC me on replies.
+X-Snort: uid=0(root) gid=0(root)
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282524>
 
-On Tue, Dec 15, 2015 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Victor Leschuk <vleschuk@gmail.com> writes:
->> Subject: Re: [PATCH 1/2] Introduce grep threads param
->
-> I'll retitle this to something like
->
->     grep: add --threads=<num> option and grep.threads configuration
->
-> while queuing (which I did for v7 earlier).
->
-> I think [2/2] and also moving the code to disable threading when
-> show-in-pager mode should be separate "preparatory clean-up" patches
-> before this main patch.  I'll push out what I think this topic
-> should be on 'pu' later today (with fixups suggested above squashed
-> in); please check them and see what you think.
+   I'm actually surprised that the patch changes the order at all, since
+all it does is affect the decision (on a yes/no basis) to include a given
+file into a changelist. I'm going to have a look at that specific unit
+test, but of course as a user I'd prefer if the default behaviour could
+remain the same, unless it was actually a bug.
 
-I read over what was pushed to 'pu' and noticed a couple problems.
+-- 
+Sam.
 
-First, the 'online_cpus() == 1' check, which was removed in patch 1/3,
-accidentally creeps back in with patch 3/3.
-
->> +grep.threads::
->> +     Number of grep worker threads, use it to tune up performance on
->> +     your machines. Leave it unset (or set to 0) for default behavior,
->> +     which is using 8 threads for all systems.
->> +     Default behavior may change in future versions
->> +     to better suit hardware and circumstances.
->
-> The last sentence is too noisy.  Perhaps drop it and phrase it like
-> this instead?
->
->     grep.threads::
->             Number of grep worker threads to use.  If unset (or set to 0),
->             to 0), 8 threads are used by default (for now).
-
-Second, the stray "to 0)," on the second line needs to be dropped.
-
-Other than that, the series looks reasonable.
+On Tue, Dec 15, 2015, James Farwell wrote:
+> I'm not sure if my opinion as an outsider is of use, but since the perforce change number is monotonically increasing, my expectation as a user would be for them to be applied in order by the perforce change number. :)
+> 
+> - James
+> 
+> ________________________________________
+> From: Luke Diamand <luke@diamand.org>
+> Sent: Monday, December 14, 2015 3:09 PM
+> To: Junio C Hamano
+> Cc: Git Users; James Farwell; Lars Schneider; Eric Sunshine; Sam Hocevar
+> Subject: Re: [PATCH 0/2] git-p4: fix for handling of multiple depot paths
+> 
+> Sorry - I've just run the tests, and this change causes one of the
+> test cases in t9800-git-p4-basic.sh to fail.
+> 
+> It looks like the test case makes an assumption about who wins if two
+> P4 depots have changes to files that end up in the same place, and
+> this change reverses the order. It may actually be fine, but it needs
+> to be thought about a bit.
+> 
+> Sam - do you have any thoughts on this?
+> 
+> Thanks
+> Luke
+> 
+> 
+> 
+> 
+> 
+> 
+> On 14 December 2015 at 22:06, Junio C Hamano <gitster@pobox.com> wrote:
+> > Luke Diamand <luke@diamand.org> writes:
+> >
+> >> On 14 December 2015 at 19:16, Junio C Hamano <gitster@pobox.com> wrote:
+> >>> Luke Diamand <luke@diamand.org> writes:
+> >>>
+> >>>> Having just fixed this, I've now just spotted that Sam Hocevar's fix
+> >>>> to reduce the number of P4 transactions also fixes it:
+> >>>>
+> >>>> https://urldefense.proofpoint.com/v2/url?u=https-3A__www.mail-2Darchive.com_git-2540vger.kernel.org_msg81880.html&d=BQIBaQ&c=Sqcl0Ez6M0X8aeM67LKIiDJAXVeAw-YihVMNtXt-uEs&r=wkCayFhpIBdAOEa7tZDTcd1weqwtiFMEIQTL-WQPwC4&m=q8dsOAHvUiDzzPNGRAfMMrcXstxNlI-v7I_03uEL1e8&s=C8wVLMC-iU7We0r36sxOuu920ZjZYdpy7ysNi_5PYv8&e=
+> >>>>
+> >>>> That seems like a cleaner fix.
+> >>>
+> >>> Hmm, do you mean I should ignore this series and take the other one,
+> >>> take only 1/2 from this for tests and then both patches in the other
+> >>> one, or something else?
+> >>
+> >> The second of those (take only 1/2 from this for tests, and then both
+> >> from the other) seems like the way to go.
+> >
+> > OK.  Should I consider the two patches from Sam "Reviewed-by" you?
+echo "creationism" | tr -d "holy godly goal"
