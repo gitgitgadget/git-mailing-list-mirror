@@ -1,72 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Dec 2015, #05; Tue, 15)
-Date: Wed, 16 Dec 2015 16:58:51 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1512161657250.6483@virtualbox>
-References: <xmqq8u4ve3at.fsf@gitster.mtv.corp.google.com> <20151215233207.GA30294@sigill.intra.peff.net> <xmqqbn9rffo0.fsf@gitster.mtv.corp.google.com> <xmqq4mfjff9x.fsf@gitster.mtv.corp.google.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] dir: mark add_untracked_ident() as a file local symbol
+Date: Wed, 16 Dec 2015 16:06:52 +0000
+Message-ID: <56718C1C.2040609@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 16 16:59:15 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: christian.couder@gmail.com
+X-From: git-owner@vger.kernel.org Wed Dec 16 17:07:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9ETx-0001jm-VJ
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 16:59:14 +0100
+	id 1a9EcH-0008S1-Cq
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 17:07:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965545AbbLPP7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 10:59:09 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60736 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752442AbbLPP7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 10:59:07 -0500
-Received: from virtualbox ([37.24.143.114]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lpxdr-1afHy51vFP-00ffO7; Wed, 16 Dec 2015 16:58:54
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq4mfjff9x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:uLt8AB8e5BgEM8YjZzCY8CTynTmkD3a+8DVpldGIqxKBtXSG5Ru
- 3OICwEHMEORHgucsfGfBTSCd+4RYOgt7yDRArS+hS2G+kf6S+Pr1xOPds6RG7j+lU3m1Bts
- f42RS+LJA8vz2fUnQTl2sXrep2FlLG3dqM3FenasAryxQva9fCyP4OL6L66RgZHwrZY78yQ
- xMp4+nOKR8puFpYu0m/uw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3xkRUv/WUvA=:RybcCYVqsPGykXkxfVzTTW
- K2ico0IxdGfRmY+RDPcXuKoHsKOvdiEEdWP50TzxOoNlPFDJgAPFSfc1ICK6tknoyrzp9xHZ3
- ZvlNx2BYkTDbjKH9ASmt8uBm8alG8uSEPY8QjS/m3SzPNqA4y+kzOFKVqdZEkrS/rwVUDbxYp
- jI3WvmxkL93osrzWrQGz9HJQxW6nuX6WqWYiZ9Evtgp016OhuSqrKkRL1xb2ANFqsKjNM7Yvs
- zITtmTz+v6LDsAYnX7Zmookj7QeER1JfOL7saY1mt7CtGFtJnfKa1oeurrmgyPda6TDIZ6Hwt
- jT323+ZaIUKqrdattg21HqREfZX+To5gnmK76mt+V2TRhH3bHfc6ptfR+DN8qma5KpPRlXC/o
- 7g4RhqJMnPteXYafRcXb/HGM6E3z+LbzIP7473EP97n6hakQieabBmCCLsTa803p9tA0shETr
- FVYCcKz3Fy5GG7kl1cEPSUAFSL4D1sA1t3iAdQ73X+pwGhLyaUJGQ3PMhBVKLDYv9Oaz+hKye
- cnH56UJaJewh72LDfqil8/SnoX0gkk8SOEI8XhjFDiEHYPvjnds/2G1uGKYpqBfvHF1jRIiBd
- FHpNmDrsFolVuM0f1as33YV5I/aksFmiEexE7quew1RPY4wDNiaE9YYDQv0e/64CPcuz6kTgE
- K7qDa9/yB5CeqwpecZ19VHb+SDpTHwnmVjMedDRYh4S58ygpzEagpW36e1k1T1X0Cd5Vi3l2u
- KiToSOgMFpbzjEUg6WfH5jJDxRQDrm83XTQ1z6VBrOckXZazX7MdAD0yKkJ7UA7dGwTtTroF 
+	id S934108AbbLPQHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Dec 2015 11:07:45 -0500
+Received: from avasout08.plus.net ([212.159.14.20]:35602 "EHLO
+	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934065AbbLPQHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Dec 2015 11:07:44 -0500
+Received: from [10.0.2.15] ([146.200.5.254])
+	by avasout08 with smtp
+	id uG6y1r0065UqX4q01G6z3S; Wed, 16 Dec 2015 16:07:01 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=LpJvsSpc c=1 sm=1 tr=0
+ a=GKs3PHufgjMgxBavMeQJCg==:117 a=GKs3PHufgjMgxBavMeQJCg==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=hLqOqOg1XUkiebUatTYA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282576>
 
-Hi Junio,
 
-On Tue, 15 Dec 2015, Junio C Hamano wrote:
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > There already was strbuf_getline_crlf(), and I wanted a new name to
-> > be conservative.
-> 
-> When I re-read the series, I realize that the existing one had
-> exactly the same semantics as strbuf_gets(), so I think no risk
-> would come from reusing that name.  Let me try redoing the series
-> when I find time ;-)
+Hi Christian,
 
-v1 is still in my inbox, and I promise it has not been malice that I did
-not review it yet. Hopefully I will have enough brain cycles available
-when you post v2.
+If you need to re-roll your 'cc/untracked' branch, could you
+please squash the relevant parts of this into your patches.
 
-Very interested,
-Dscho
+Thanks!
+
+Also, you may what to consider removing the emulation of uname()
+on MinGW, since this is no longer required after your series.
+
+ATB,
+Ramsay Jones
+
+ dir.c | 2 +-
+ dir.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 94fba2a..be27afa 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1908,7 +1908,7 @@ static int treat_leading_path(struct dir_struct *dir,
+  * We used to save the location of the work tree and the kernel version,
+  * but it was not a good idea, so we now just save an empty string.
+  */
+-void add_untracked_ident(struct untracked_cache *uc)
++static void add_untracked_ident(struct untracked_cache *uc)
+ {
+ 	strbuf_addstr(&uc->ident, "");
+ 	/* this strbuf contains a list of strings, save NUL too */
+diff --git a/dir.h b/dir.h
+index 1935b76..531c99a 100644
+--- a/dir.h
++++ b/dir.h
+@@ -307,7 +307,6 @@ void untracked_cache_add_to_index(struct index_state *, const char *);
+ void free_untracked_cache(struct untracked_cache *);
+ struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+-void add_untracked_ident(struct untracked_cache *);
+ void add_untracked_cache(void);
+ void remove_untracked_cache(void);
+ #endif
+-- 
+2.6.0
