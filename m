@@ -1,156 +1,93 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/7] Rerolling sb/submodule-parallel-fetch for the time after 2.7
-Date: Tue, 15 Dec 2015 16:19:54 -0800
-Message-ID: <1450225194-18386-1-git-send-email-sbeller@google.com>
-References: <1450224252-16833-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, jrnieder@gmail.com, johannes.schindelin@gmail.com,
-	Jens.Lehmann@web.de, ericsunshine@gmail.com, j6t@kdbg.org,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 16 01:20:13 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] Introduce grep threads param
+Date: Tue, 15 Dec 2015 19:26:46 -0500
+Message-ID: <CAPig+cRTz=DMd6XyJ=co26d2c=PgVqhhsWQpgy53930MdC_=Rw@mail.gmail.com>
+References: <1450193500-22468-1-git-send-email-vleschuk@accesssoftek.com>
+	<1450193500-22468-2-git-send-email-vleschuk@accesssoftek.com>
+	<xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Victor Leschuk <vleschuk@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Victor Leschuk <vleschuk@accesssoftek.com>,
+	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 16 01:26:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8zpD-0003Bg-DW
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 01:20:11 +0100
+	id 1a8zvh-00088R-Az
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 01:26:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754372AbbLPAUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 19:20:05 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:32837 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087AbbLPAUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 19:20:04 -0500
-Received: by mail-pa0-f49.google.com with SMTP id ur14so13634545pab.0
-        for <git@vger.kernel.org>; Tue, 15 Dec 2015 16:20:04 -0800 (PST)
+	id S1754549AbbLPA0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 19:26:48 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:33764 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752750AbbLPA0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 19:26:47 -0500
+Received: by mail-vk0-f48.google.com with SMTP id a188so16876259vkc.0
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 16:26:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FJpBBvzKOV38fttK3NU08J5qZoL21aWM2uhx4DL1ZGw=;
-        b=X0e9P8UuWLxtmkKwXMlF3KJmd6CIVAxK3Oi9ElJxZpDJFLNMAEetIWW3wqleT6wwmH
-         isFUUrP/JOHDdwWE5qZW1wXlNr4mV9inRVyVmKPubVtOMEHA9ce321PoFOQq2y9VSscZ
-         Idj6slyG92NtkTZWdPVH5DIAeCsYKNW1Eld6vz+hKqU6uUOvyB9/rxg74ctrXviZYtPf
-         vq+Bd9vr6o4oVm3I/Y2ecBVVKhi4P81pjOvAsQjSGFWCTVxaOHzr3ELOiUSyE4UhtwOh
-         v6W9/EUYhcxzHAiGsfjEtJIiQdHKfW39p5d8ZEpA8ZHKmsRwrBbr0RQaZ9tvFnYmroY3
-         Kmvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FJpBBvzKOV38fttK3NU08J5qZoL21aWM2uhx4DL1ZGw=;
-        b=fhcJ9OupldTLa1UpI1Of7SevUSv+39seUeu61cDEQCxw5Gm8saHjyFx4NYeeBXNnSe
-         kd6hxK+gjzREHIhoRAH6GHxSeq5VGrhXEiAcXnIG3QYX7uuJfqnb/xWG/84COASSZbT9
-         FqZMq6l8myGcegvkSQyP5pNqDgKR6haBPBevyAuErSFnQvUEE+Go7sGjuiy6MG/6n/SA
-         xQqFbYbZWa0EcGBvR8ZUTYXh5TrZF5jnPmpSwYb70OisCl0telM2uSOpa0npH+PXrPuD
-         KukIU8aXaYpM9JuvYaa3ipv8RM67sJiHfLLjVRCdNqQZo6kPAhVjeAasVb6fmaapTNSM
-         8UWg==
-X-Gm-Message-State: ALoCoQk33eNSY1r5/67dRjeFxohg7WcxPUpRd81GL8tTjoWEbGs47pc9IuKyUenM5btvK5fCMVhKBHHQmt4UjOrrAQiKbl1CYw==
-X-Received: by 10.66.158.193 with SMTP id ww1mr29716942pab.21.1450225203908;
-        Tue, 15 Dec 2015 16:20:03 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a171:258:4778:14b4])
-        by smtp.gmail.com with ESMTPSA id p83sm437928pfi.96.2015.12.15.16.20.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 15 Dec 2015 16:20:03 -0800 (PST)
-X-Mailer: git-send-email 2.6.4.443.ge094245.dirty
-In-Reply-To: <1450224252-16833-1-git-send-email-sbeller@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=u1U33470xli61xA4a5nJNSjzGjQw2hR1laO0EeFvLFk=;
+        b=xb8xoszvMlWkAB3wl5p0Gu/vriz4yY4qS8W7gVZjb4I/vO4NroMeCZgkb24kHj2QXs
+         cYh7/vRXU4hy/UIE+Z8HLxynfFCwsofO0GgZ2sNS+Yir1M1khDpviLVwb7y67+xLGf8/
+         sscvMmCfDZdpJuFmCAf4Gubgxd7x+0lw+zhPh5Zg6dJ1Sneu6ofan59sHBGcrKoNWITR
+         4iRGAivu1krVaK3KyOpiYvMHdfgCeTkIqPPBSws0t0srTnVXkSvP9e/v3UHUoD3F4jK2
+         fzqBkte2K5/5qu2oizRqb+ucue2jvxdik5jDZZyXb2XO1349OkrMM3VYLhtmJNWYFJ5m
+         EL4g==
+X-Received: by 10.31.58.74 with SMTP id h71mr31332443vka.151.1450225606826;
+ Tue, 15 Dec 2015 16:26:46 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 15 Dec 2015 16:26:46 -0800 (PST)
+In-Reply-To: <xmqq60zzfpdz.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: 5Cdx_5WjqSEkIpIZHsr9XPM-lMo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282523>
 
-with the interdiff below:
+On Tue, Dec 15, 2015 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Victor Leschuk <vleschuk@gmail.com> writes:
+>> Subject: Re: [PATCH 1/2] Introduce grep threads param
+>
+> I'll retitle this to something like
+>
+>     grep: add --threads=<num> option and grep.threads configuration
+>
+> while queuing (which I did for v7 earlier).
+>
+> I think [2/2] and also moving the code to disable threading when
+> show-in-pager mode should be separate "preparatory clean-up" patches
+> before this main patch.  I'll push out what I think this topic
+> should be on 'pu' later today (with fixups suggested above squashed
+> in); please check them and see what you think.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 87456a3..8e39867 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -723,7 +723,6 @@ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_
- extern void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
- extern int xopen(const char *path, int flags, ...);
- extern ssize_t xread(int fd, void *buf, size_t len);
--extern ssize_t xread_nonblock(int fd, void *buf, size_t len);
- extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
- extern int xdup(int fd);
-diff --git a/strbuf.c b/strbuf.c
-index b552a13..38686ff 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -389,7 +389,7 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
- 	ssize_t cnt;
+I read over what was pushed to 'pu' and noticed a couple problems.
 
- 	strbuf_grow(sb, hint ? hint : 8192);
--	cnt = xread_nonblock(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-+	cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
- 	if (cnt > 0)
- 		strbuf_setlen(sb, sb->len + cnt);
- 	return cnt;
-diff --git a/strbuf.h b/strbuf.h
-index c3e5980..2bf90e7 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -367,10 +367,10 @@ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
- extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
+First, the 'online_cpus() == 1' check, which was removed in patch 1/3,
+accidentally creeps back in with patch 3/3.
 
- /**
-- * Returns the number of new bytes appended to the sb.
-- * Negative return value signals there was an error returned from
-- * underlying read(2), in which case the caller should check errno.
-- * e.g. errno == EAGAIN when the read may have blocked.
-+ * Read the contents of a given file descriptor partially by using only one
-+ * attempt of xread. The third argument can be used to give a hint about the
-+ * file size, to avoid reallocs. Returns the number of new bytes appended to
-+ * the sb.
-  */
- extern ssize_t strbuf_read_once(struct strbuf *, int fd, size_t hint);
-diff --git a/wrapper.c b/wrapper.c
-index f71237c..1770efa 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -243,7 +243,14 @@ ssize_t xread(int fd, void *buf, size_t len)
- 				struct pollfd pfd;
- 				pfd.events = POLLIN;
- 				pfd.fd = fd;
--				/* We deliberately ignore the return value */
-+				/*
-+				 * it is OK if this poll() failed; we
-+				 * want to leave this infinite loop
-+				 * only when read() returns with
-+				 * success, or an expected failure,
-+				 * which would be checked by the next
-+				 * call to read(2).
-+				 */
- 				poll(&pfd, 1, -1);
- 			}
- 		}
-@@ -252,28 +259,6 @@ ssize_t xread(int fd, void *buf, size_t len)
- }
+>> +grep.threads::
+>> +     Number of grep worker threads, use it to tune up performance on
+>> +     your machines. Leave it unset (or set to 0) for default behavior,
+>> +     which is using 8 threads for all systems.
+>> +     Default behavior may change in future versions
+>> +     to better suit hardware and circumstances.
+>
+> The last sentence is too noisy.  Perhaps drop it and phrase it like
+> this instead?
+>
+>     grep.threads::
+>             Number of grep worker threads to use.  If unset (or set to 0),
+>             to 0), 8 threads are used by default (for now).
 
- /*
-- * xread_nonblock() is the same a read(), but it automatically restarts read()
-- * interrupted operations (EINTR). xread_nonblock() DOES NOT GUARANTEE that
-- * "len" bytes is read. EWOULDBLOCK is turned into EAGAIN.
-- */
--ssize_t xread_nonblock(int fd, void *buf, size_t len)
--{
--	ssize_t nr;
--	if (len > MAX_IO_SIZE)
--		len = MAX_IO_SIZE;
--	while (1) {
--		nr = read(fd, buf, len);
--		if (nr < 0) {
--			if (errno == EINTR)
--				continue;
--			if (errno == EWOULDBLOCK)
--				errno = EAGAIN;
--		}
--		return nr;
--	}
--}
--
--/*
-  * xwrite() is the same a write(), but it automatically restarts write()
-  * operations with a recoverable error (EAGAIN and EINTR). xwrite() DOES NOT
-  * GUARANTEE that "len" bytes is written even if the operation is successful.
+Second, the stray "to 0)," on the second line needs to be dropped.
+
+Other than that, the series looks reasonable.
