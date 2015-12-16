@@ -1,185 +1,115 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Odd rebase behavior
-Date: Tue, 15 Dec 2015 21:17:30 -0600
-Message-ID: <877fkf9j5h.fsf@waller.obbligato.org>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: [RFC] Malicously tampering git metadata?
+Date: Tue, 15 Dec 2015 22:26:39 -0500
+Message-ID: <20151216032639.GA1901@LykOS>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: john@keeping.me.uk, sandals@crustytoothpaste.net, peff@peff.net,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 04:17:55 2015
+Content-Type: text/plain; charset=us-ascii
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 16 04:26:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a92bB-0000S0-Ot
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 04:17:54 +0100
+	id 1a92jm-0002PG-Tm
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 04:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933954AbbLPDRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Dec 2015 22:17:44 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:56260 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933900AbbLPDRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Dec 2015 22:17:43 -0500
-Received: from 206-55-177-216.fttp.usinternet.com ([206.55.177.216] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1a92aw-0003GK-Am; Tue, 15 Dec 2015 21:17:38 -0600
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S933915AbbLPD0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 22:26:43 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:34310 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932552AbbLPD0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 22:26:42 -0500
+Received: by mail-qk0-f174.google.com with SMTP id p187so45786779qkd.1
+        for <git@vger.kernel.org>; Tue, 15 Dec 2015 19:26:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition;
+        bh=ztigY8C+gjZbjLINWvOIjrhX+akqjtMh0zmMiJrdOHw=;
+        b=yI0DR9TLUGSDSvaOz/fOvmfU9ATHSljl0fcR7ld9kLIBKfwAGVS63BOYIpPZVuo7ek
+         Aqs0PhoLlQCIGejNm4BFR8Zltc6zSWlLNRVuezAN50LyTcRp0RVroaJ84sJ/y4ecx8Tq
+         7MCWIA099pUHjU6kQDszzE8B+tHDVoTvB0xxW5jV/RVNo4Qhv7OkJ+84BZS9ewap/GkD
+         l+LR7yT9y7yQTrFKOdHuxmTUU86G/f9cnN2LqdCC+zv+zuNylhAXA0sJMH9hRLVvtuAg
+         Srr57t1XV5wjgo9v+OUcazzSIxRdTFEGxMVCvRYkXbsNmcNraBp+hJJmCut+oIaE2uJq
+         eqTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition;
+        bh=ztigY8C+gjZbjLINWvOIjrhX+akqjtMh0zmMiJrdOHw=;
+        b=ShTdGevdQbZUC1G2AJsm4/WT4wptw2ecAx39oRVtwkfHDquPwQAfwNGtdjXRUieSD/
+         uV722MtzGkcG/n+EwOoJrX1Ln4XC0r8njrkv86+4guwQMH+uPjQuEQDlAwC/ev+HVwbT
+         3LLDJF9gHauulCp8ocondilYseeJwIYDJCkGd4N40e5DnM7TizczLWD1tA1/Umuq8YLp
+         F2+dKBw+bKzlmCqEJnEaHgOZYS0p490+hLLiqFcb7Jt/k7UChNSy+LHvlI4tTPdQEYYt
+         dkJfq4lN+yBhrDsz7Qq7jc8S9JICs5U0M/y8sA6LhCz9x3DGyznUordy1pKbKzuZauUz
+         l4Aw==
+X-Gm-Message-State: ALoCoQkay7fWB5tfcae2SnqUUmJUNhL2IMFn6GT5fehBYyzNOflZj1Bkdd8qkjMu9cLlJIy9WNuWj0mf++HbOCLVk787+2Malw==
+X-Received: by 10.55.20.1 with SMTP id e1mr12788652qkh.60.1450236401737;
+        Tue, 15 Dec 2015 19:26:41 -0800 (PST)
+Received: from LykOS (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
+        by smtp.gmail.com with ESMTPSA id s131sm1848931qhs.11.2015.12.15.19.26.41
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 15 Dec 2015 19:26:41 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282532>
 
-Hi,
+Hello everyone,
 
-The attached tests do not do what I expected them to do.  I commented
-out the tests involving the new rebase empty commit behavior I just
-sent.  The uncommented tests show the strange behavior.
+I'm Santiago, a PhD student at NYU doing research about secure software
+development pipelines. We've been studying different aspects of Git
+lately, (as it is an integral part of many projects) and we believe
+we've found a vulnerabilty in the way Git structures/signs metadata. 
 
-According to the rebase man page, rebase gathers commits as in "git log
-<upstream>..HEAD."  However, that is not what happens in the tests
-below.  Some of the commits disappear.
+An attacker capable of performing as a Man in the Middle between a
+GitHub server and a developer is able to trick such developer into
+merging vulnerable commit objects, or omit security patches --- even if
+all users sign all commit objects. Given that Git metadata is unsigned,
+it can be modified to provide incorrect views of a repository to
+downstream developers.
 
-The test basically does this:
+An example of a malicious commit merge follows:
 
-- Setup a master project and a subproject, merged via a subtree-like
-  merge (this is how git-subtree does it).
+1) The attacker controlling or acting as the upstream server identifies
+two branches: one in which the unsuspecting developer is working on, and
+another in which a vulnerable piece of code is located.
 
-- Add some commits to the subproject directory after the subtree merge,
-  to create some history not in the original subproject.
+2) Branch pointers are modified: the packed-refs file (or ref/heads/*)
+is edited so that the master branch points to the vulnerable commit
+object. Having performed the change, no additional configuration must be
+made by the attacker, who now waits for an unsuspecting developer to
+pull.
 
-- filter-branch --subdirectory-filter to extract commits from the
-  subproject directory.
+3) Once a developer pulls, he or she will be prompted to merge his code
+with the new change-set (the vulnerable commit). This operation will
+only resemble developer negligence. If no conflicts arise, the attack
+will pass unsuspected.
 
-- Rebase those commits back on to the original subproject repository.
+4) The developer pushes to upstream. All the traffic can be re-routed
+back to the original repository. The target branch now contains a
+vulnerable piece of code.
 
-The above loses all commits made after the subproject is merged into
-the main project.
+We have identified additional attack scenarios for modifying the
+metadata that result in a incorrect state of the target repository, and
+we are ready to disclose information about other variants of this attack
+as well.
 
-Note that the rebase is a little wonky.  filter-branch creates a
-disconnected graph and the rebase is invoked with <upstream>=master.
-I'm not sure how rebase is supposed to operate in this case (if it is
-supported at all) but it definitely is not doing the master..HEAD thing.
+We also designed a backwards-compatible defense mechanism to prevent
+attacks based on Git metadata tampering. Also we implemented a proof of
+concept of the scheme, and performed timing, stress and concurrency
+tests; our results show that the overhead should be minimal, even in
+large software repositories such as the Linux Kernel.
 
-Replacing "master" with "--root" causes rebase to do the right thing.
+We already approached people from CERT and GitHub regarding this attack
+scenario, and we'd also like to hear your comments regarding this.
 
-This seems like a bug to me, even with the strange <upstream> on a
-disconnected graph.  At the very least git should not silently lose
-commits.
+Thanks!
+-Santiago.
 
-I can think of two ways this could be resolved:
-
-- Forbid this kind of operation and error our with a message (when
-  <upstream> and HEAD do not share ancestry)
-
-- Make it work as if --root were specified
-
-Thoughts?
-
-                         -David
-
---->8---
-
-#!/bin/sh
-
-test_description='git rebase tests for empty commits
-
-This test runs git rebase and tests handling of empty commits.
-'
-. ./test-lib.sh
-
-addfile() {
-    name=$1
-    echo $(basename ${name}) > ${name}
-    ${git} add ${name}
-    ${git} commit -m "Add $(basename ${name})"
-}
-
-check_equal()
-{
-	test_debug 'echo'
-	test_debug "echo \"check a:\" \"{$1}\""
-	test_debug "echo \"      b:\" \"{$2}\""
-	if [ "$1" = "$2" ]; then
-		return 0
-	else
-		return 1
-	fi
-}
-
-last_commit_message()
-{
-	git log --pretty=format:%s -1
-}
-
-test_expect_success 'setup' '
-	test_commit README &&
-	mkdir files &&
-	cd files &&
-	git init &&
-	test_commit master1 &&
-	test_commit master2 &&
-	test_commit master3 &&
-	cd .. &&
-	test_debug "echo Add project master to master" &&
-	git fetch files master &&
-	git branch files-master FETCH_HEAD &&
-	test_debug "echo Add subtree master to master via subtree" &&
-	git read-tree --prefix=files_subtree files-master &&
-	git checkout -- files_subtree &&
-	tree=$(git write-tree) &&
-	head=$(git rev-parse HEAD) &&
-	rev=$(git rev-parse --verify files-master^0) &&
-	commit=$(git commit-tree -p ${head} -p ${rev} -m "Add subproject master" ${tree}) &&
-	git reset ${commit} &&
-	cd files_subtree &&
-	test_commit master4 &&
-	cd .. &&
-	test_commit files_subtree/master5
-'
-
-# Does not preserve master4 and master5.
-test_expect_success 'Rebase default' '
-	git checkout -b rebase-default master &&
-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-	git commit -m "Empty commit" --allow-empty &&
-	git rebase -Xsubtree=files_subtree  --preserve-merges --onto files-master master &&
-	check_equal "$(last_commit_message)" "files_subtree/master5"
-'
-
-# Does not preserve master4, master5 and empty.
-test_expect_success 'Rebase --keep-empty' '
-	git checkout -b rebase-keep-empty master &&
-	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-	git commit -m "Empty commit" --allow-empty &&
-	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
-	check_equal "$(last_commit_message)" "Empty commit"
-'
-
-
-# Does not preserve master4 and master5.
-#test_expect_success 'Rebase --keep-redundant' '
-#	git checkout -b rebase-keep-redundant master &&
-#	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-#	git commit -m "Empty commit" --allow-empty &&
-#	git rebase -Xsubtree=files_subtree --keep-redundant --preserve-merges --onto files-master master &&
-#	check_equal "$(last_commit_message)" "files_subtree/master5"
-#'
-
-
-# Does not preserve master4, master5 and empty.
-#test_expect_success 'Rebase --keep-empty --keep-redundant' '
-#	git checkout -b rebase-keep-empty-keep-redundant master &&
-#	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-#	git commit -m "Empty commit" --allow-empty &&
-#	git rebase -Xsubtree=files_subtree --keep-empty --keep-redundant --preserve-merges --onto files-master master &&
-#	check_equal "$(last_commit_message)" "Empty commit"
-#'
-
-
-test_done
+P.S. We also elaborate more about this attack vector in this document: 
+https://drive.google.com/a/nyu.edu/file/d/0B2KBm0fULlS1RDR5UHVESjVua3M/view?usp=sharing
