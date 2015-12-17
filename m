@@ -1,84 +1,54 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCHv2] Porting resolve_relative_url from shell to C
-Date: Thu, 17 Dec 2015 08:47:18 +0100
-Message-ID: <56726886.6060305@web.de>
-References: <1449709654-30189-1-git-send-email-sbeller@google.com>
- <1450311999-3992-1-git-send-email-sbeller@google.com>
+From: Michael@mail.microamerica.com.pe,
+	"J.Tynan <f.digeronimo"@federconsumatori.abruzzo.it
+Subject: Review & Reply
+Date: Thu, 17 Dec 2015 07:55:23 +0700
+Message-ID: <20151217005613.51E6389D6688@mail.microamerica.com.pe>
+Reply-To: michaeljtynan8@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, jens.lehmann@web.de, j6t@kdbg.org
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 17 08:47:38 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <f.digeronimo@federconsumatori.abruzzo.it>
+X-From: git-owner@vger.kernel.org Thu Dec 17 08:57:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9THm-0007lW-2X
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:47:38 +0100
+	id 1a9TQs-0008H1-N1
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938AbbLQHre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 02:47:34 -0500
-Received: from mout.web.de ([212.227.17.11]:52289 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439AbbLQHrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 02:47:33 -0500
-Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MHp4r-1aD2iO0pTx-003cF1; Thu, 17 Dec 2015 08:47:25
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.4.0
-In-Reply-To: <1450311999-3992-1-git-send-email-sbeller@google.com>
-X-Provags-ID: V03:K0:OQt4ljxCQJ08VuLTzDTrKEKaRXJOjggAwPYzkBxB3xPW94j74cX
- URCJ6VpxN6ZJLN8KiOXpCM0sBJFODHj/HLo1gpnGG92zXtrdxTv2MXTgNMvxJZBs8woUijQ
- ruqh3zrbNW/SyXNHtDVHO/8g/tmgJVW/esOZaI+5rXcYEGk5IGsdVdzH2mdLUCYXFwoHOIM
- 53i0RWvy8Lqnt2zJDPvRw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vrtQ0O5kIJI=:HXUyjl/lL/ttjsgjMl0jB1
- /1mpFIVZlxdRkU8Zq8lrIazP5k7RKnUX3X6EHEs83HdYL0Du/eHyM8EMFBtIk+6p1gLhgGXNb
- FLcvKfwRN7cnSVgta0k5xgT8rECNAkbS5JrFJ0dQgwWvomoOaJ5Ejk6wtYcWRQIVLyiEcIjtz
- /msUx2rBelv2mywiG1miIQzA6/xCh03NcS+qsENykbGX/SK13mDD4s7o0VMy0hvnuJ3aY5TWD
- bQuIjBYPHbE+bERsxEDG8wvSbhwujsYJGDuEqcF2FmyI0G5YORVg0DnleKnLmlSA9pnaOO3qn
- OyzffD4Amc8/DJD0SIMsK+dQHnbccA/H+e6FDO3/+PaG43QjQlrlm087fMflx/yA6e/efNdR0
- Qdqb/YmmZV/QrRBXMVCeGPkTfV8KT4vnum91u99xMk7+OuuvOCJED39wmPhWRQIO9VKrjX4gY
- fTHjCwA4cnlzECyZkv/HYpufJQTsGaEY1qd39XrPvsQ1YFolkXM+vNqpQVywop0zFZvNXn+ju
- 5urYWp/TrJBobP9dZ+5tI/JTtmcLWDhdcevrRndDDogAGAOq59e5XIOhTJorgxAs1Zw61m8Bf
- eYbzZ4pnzCW+fQLnM3QNHzl5QpTlHOwWFdrzGCgdpwTIQCSQDW8PBCVq9aZI73ptESgrz+7c/
- u/jIO9m33FXSS3ibjMvSRn0XxwyR5azGc5HnaCAlau+Gm50KplJMzv+AX6xd5NCkd2XBzEVo/
- /3u3Y+0ihd35RWGjqK2nVr1O6usvt1IdLms4AK6L4LECMKRjwzpF/796GfuhXpalEgt/OxMz 
+	id S1752926AbbLQH44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 02:56:56 -0500
+Received: from mail.microamerica.com.pe ([200.37.170.69]:49466 "EHLO
+	mail.microamerica.com.pe" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752812AbbLQH4y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2015 02:56:54 -0500
+X-Greylist: delayed 16984 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Dec 2015 02:56:53 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.microamerica.com.pe (Postfix) with ESMTP id 721EF89D6686;
+	Wed, 16 Dec 2015 19:59:01 -0500 (PET)
+Received: from mail.microamerica.com.pe ([127.0.0.1])
+	by localhost (mail.microamerica.com.pe [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 6qM9AJQozNtU; Wed, 16 Dec 2015 19:59:01 -0500 (PET)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.microamerica.com.pe (Postfix) with ESMTP id A994B89D6682;
+	Wed, 16 Dec 2015 19:57:38 -0500 (PET)
+X-Virus-Scanned: amavisd-new at microamerica.com.pe
+Received: from mail.microamerica.com.pe ([127.0.0.1])
+	by localhost (mail.microamerica.com.pe [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id F3EWmfxzhAlX; Wed, 16 Dec 2015 19:57:38 -0500 (PET)
+Received: from [180.250.80.61] (unknown [180.250.80.61])
+	by mail.microamerica.com.pe (Postfix) with ESMTPSA id 51E6389D6688;
+	Wed, 16 Dec 2015 19:56:12 -0500 (PET)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282638>
 
-On 17.12.15 01:26, Stefan Beller wrote:
-> A new version of the patch, which spells out more its intent and
-> may actually work in Windows.
-> 
-> Any comment welcome,
-> Thanks,
-> Stefan
-> 
-> Stefan Beller (1):
->   submodule: Port resolve_relative_url from shell to C
-> 
->  builtin/submodule--helper.c | 151 ++++++++++++++++++++++++++++++++++++++++++++
->  git-submodule.sh            |  81 ++----------------------
->  2 files changed, 155 insertions(+), 77 deletions(-)
-> 
-> interdiff to previous version:
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f48b5b5..b925bed 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -31,6 +31,36 @@ static const char *get_default_remote(void)
->  		return xstrdup(dest);
->  }
->  
-> +static int has_same_dir_prefix(const char *str, const char **out)
-> +{
-> +#ifdef GIT_WINDOWS_NATIVE
-Should that be
-if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
+Greetings,
+My name is Mr.Michael J. Tynan, I am a banker with Bank Of America. It is true that we have not meet each other in person, but I strongly believe in trust and friendship in every business. I have a Lebanese deceased customer's abandoned fund, which I am his personal financial adviser before his accidental death, that being the main reason why I alone working in the bank here, know much about the existence of this fund and the secrets surrounding this money. But before I disclose the full details to you, I will like to know your interest and willingness to assist me. You can call me as soon you receive my message, so that i will send to you full details about the transaction.
+My best regards,
+Mr.Michael J. Tynan
+MOBILE: +1 347 269 3740
