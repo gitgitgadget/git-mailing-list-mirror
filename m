@@ -1,88 +1,168 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: emulate write(2) that fails with a EPIPE
-Date: Thu, 17 Dec 2015 10:37:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1512171035580.6483@virtualbox>
-References: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de> <CAPig+cQzCHtyVs47=ASs5V2BSV7gpVszbdTFydiRhnz3gtD2Qw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 10/11] ref-filter: introduce contents_atom_parser()
+Date: Thu, 17 Dec 2015 04:39:02 -0500
+Message-ID: <CAPig+cRmUe4SRzmiV13XWSYou8M7TuDE3Ko37g8p-q2kEQNU+w@mail.gmail.com>
+References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
+	<1450279802-29414-11-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 10:37:39 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 10:39:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9V0E-0008LW-3R
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 10:37:38 +0100
+	id 1a9V1o-0002cr-5M
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 10:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755295AbbLQJhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 04:37:33 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54269 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846AbbLQJhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 04:37:31 -0500
-Received: from virtualbox ([37.24.143.114]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M5cpk-1aOr5V4Amm-00xd9O; Thu, 17 Dec 2015 10:37:22
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cQzCHtyVs47=ASs5V2BSV7gpVszbdTFydiRhnz3gtD2Qw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:IFkXv0wvbk8AbdnA0/iEuf2zbKMNshJej3Vgz5krQHNcG9osrsJ
- nF891b94CdnwzYS+Vcf0saL28tIhu27vFXXvXPIcaYLPq1s8XVSatCP5DYCoOlJ9wri0S9N
- I7WmJTW3pC0VOo5hR3NU3lFkwHGUsjHNItiXhXgU6pBg05QcDQ3LxM/hYW/+HJfkF+lisl2
- +MC2fq5wfdjtY13oXfzXg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hDHv3m/1ji0=:GLK+RAuH8KeEKCuOuwH/EP
- JXKQq7OZkhnwpD9CjkdwACyiaFn8gVPJUQ3CtdS/wKSlH5cK8SZKjTZhqk5So1b2oHxCAodGH
- f9NoGjTIE9mifUPfNqP9chOnH0SxHzOv2mam0athU/Ey1hD0Nl5KNf/qZNkmF1pM4K8SRF2lo
- T3Hb1Mq4mMAd7MCKShZ1BBZpyRwJZ56P5o0h8MsjiGLf2gdB8Kj5DTbrweahQUir5LluI+r7O
- Pj4f9K5XdQ52556pRnFEqtJiC34d7jFudfXStGp//0IgemQVeGhDyg307T/f0b45nUl62Sx2I
- 8V9InXGLmbRQSvDkEq6Doqc/G4mD8uMSeCAL5fDOtmhIHu6UiMh2zX2kFxDo/RNYtr4b6XZvb
- wAQLsx/rsU4bKCqJcE3qyRfz1nJGrEmeZcG3HFP4pQU+LKEWU63eP2W9kSSa3gIJaK8NSuPRN
- p/Byjj1v4wqSY1t2vQS74MgiktM22KUik71v47atteSvrlK1A57pTeAjVxsCdkondcL7DpCqU
- QWBsweDq+IltyGmVBe/kTZTnXgDJ0jh9mcZb+g3f2sHpV7YmGyF1wm1OXxV6/cgkw3pdPcb6s
- ehrdV8b/T1oplm2urMgHKT3V7oJwFq4topsI/1fuJsGRDnJsajwpFciv1028VdyVs8NMjCyeN
- vejoJAEEAmEvxmxu6prgsEDEWoeOCi/Z7nzKN4sD4PocIQdofPVEx5VWzGNmdFCPgXGtsevu8
- 0eTxjkuvCubin6K9xcBCaodgsmPdPnx6M6tCY+w40YLHMxKOOfuaN+J0UZtXRGpEcnlJRc5U 
+	id S1752300AbbLQJjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 04:39:08 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36278 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751664AbbLQJjD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 04:39:03 -0500
+Received: by mail-vk0-f51.google.com with SMTP id f2so4376786vkb.3
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 01:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BI4zSbPEcsYUYJNGIxy2156yD33L/xhkS86NRmE4UA8=;
+        b=AOZbyqKyfPa5NM5UKZXpf7W5n9nogJB5gGM8ChJ+Y2ICj07vycS03F0Nc6ZBGZ5bK3
+         Qe/X6WhEt/9KPfPqV5L3LDgRrFW66DUSLXmP6X3PLW4FYOa15wNORbr7lOwriaqfi89C
+         tRJ7pTF2Br7MWjbntY0aA+dXXFbC4Wfv1oIbvsxdBsvIhSs+xUomjZlaPzygEr/KixM6
+         vg+V+Mj7/Lx+M94SXBGyMpgwfJ7LILl5V8T3sAwkHTfmzD5Ak7LuZSuMoWpo6YEdXcvi
+         fZstMqpTiWEWYTKUkYkbI7KnmMM/me1Do4G/vAm4wbjtoDunEXzxtG5xYMhvrtTThoTs
+         F7DA==
+X-Received: by 10.31.58.142 with SMTP id h136mr37895311vka.115.1450345142266;
+ Thu, 17 Dec 2015 01:39:02 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 17 Dec 2015 01:39:02 -0800 (PST)
+In-Reply-To: <1450279802-29414-11-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: 6AtFjNjex_ncllkZIs8kPRtQbEw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282645>
 
-Hi Eric,
+On Wed, Dec 16, 2015 at 10:30 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce contents_atom_parser() which will parse the '%(contents)'
+> atom and store information into the 'used_atom' structure based on the
+> modifiers used along with the atom.
+>
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -39,6 +39,10 @@ static struct used_atom {
+>                 struct align align;
+>                 enum { RR_SHORTEN, RR_TRACK, RR_TRACKSHORT, RR_NORMAL }
+>                         remote_ref;
+> +               struct {
+> +                       enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+> +                       unsigned int no_lines;
 
-On Wed, 16 Dec 2015, Eric Sunshine wrote:
+'no_lines' sounds like "no lines!". How about 'nlines' instead?
 
-> On Wednesday, December 16, 2015, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > diff --git a/compat/mingw.h b/compat/mingw.h
-> > @@ -210,6 +210,24 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream);
-> > +static inline ssize_t mingw_write(int fd, const void *buf, size_t len)
-> > +{
-> > +       ssize_t result = write(fd, buf, len);
-> > +
-> > +       if (result < 0 && errno == EINVAL && buf) {
-> 
-> Here, errno is EINVAL...
-> 
-> > +               /* check if fd is a pipe */
-> > +               HANDLE h = (HANDLE) _get_osfhandle(fd);
-> > +               if (GetFileType(h) == FILE_TYPE_PIPE)
-> > +                       errno = EPIPE;
-> > +               else
-> > +                       errno = EINVAL;
-> 
-> Does any of the code between the outer 'if' and this point clobber
-> errno, or are you merely assigning EINVAL for robustness against
-> future changes?
+> +               } contents;
+>         } u;
+>  } *used_atom;
+>  static int used_atom_cnt, need_tagged, need_symref;
+> @@ -90,6 +94,36 @@ static void remote_ref_atom_parser(struct used_atom *atom)
+> +static void contents_atom_parser(struct used_atom *atom)
+> +{
+> +       const char * buf;
+> +
+> +       if (match_atom_name(atom->str, "contents", &buf))
+> +               atom->u.contents.option = C_BARE;
+> +       else if (match_atom_name(atom->str, "subject", &buf)) {
 
-Yes, it is proofing the code against future changes. And TBH I did not
-even bother to check whether _get_osfhandle() or GetFileType() can modify
-the errno value, since I *really* wanted to make sure that errno is either
-EPIPE or EINVAL in this execution path.
+The original code used strcmp() and matched only "subject", however
+the new code will incorrectly match both "subject" and
+"subject:whatever". Therefore, you should be using strcmp() here
+rather than match_atom_name().
 
-Ciao,
-Dscho
+Ditto for "body".
+
+> +               atom->u.contents.option = C_SUB;
+> +               return;
+> +       } else if (match_atom_name(atom->str, "body", &buf)) {
+> +               atom->u.contents.option = C_BODY_DEP;
+> +               return;
+> +       }
+> +       if (!buf)
+> +               return;
+
+It's not easy to see that this 'if (!buf)' check relates to the
+"contents" check at the very top of the if/else if/ chain since there
+are entirely unrelated checks in between. Reorganizing it can improve
+clarity:
+
+    if (!strcmp("subject")) {
+        ...
+        return;
+    } else if (!strcmp("body")) {
+        ...
+        return;
+    } else if (!match_atom_name(...,"contents", &buf))
+        die("BUG: expected 'contents' or 'contents:'");
+
+    if (!buf) {
+        atom->u.contents.option = C_BARE;
+        return;
+    }
+
+> +       if (!strcmp(buf, "body"))
+> +               atom->u.contents.option = C_BODY;
+> +       else if (!strcmp(buf, "signature"))
+> +               atom->u.contents.option = C_SIG;
+> +       else if (!strcmp(buf, "subject"))
+> +               atom->u.contents.option = C_SUB;
+> +       else if (skip_prefix(buf, "lines=", &buf)) {
+> +               atom->u.contents.option = C_LINES;
+> +               if (strtoul_ui(buf, 10, &atom->u.contents.no_lines))
+> +                       die(_("positive value expected contents:lines=%s"), buf);
+> +       } else
+> +               die(_("unrecognized %%(contents) argument: %s"), buf);
+> +}
+> @@ -777,28 +801,23 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+>                                     &bodypos, &bodylen, &nonsiglen,
+>                                     &sigpos, &siglen);
+>
+> -               if (!strcmp(name, "subject"))
+> +               if (atom->u.contents.option == C_SUB)
+>                         v->s = copy_subject(subpos, sublen);
+> -               else if (!strcmp(name, "contents:subject"))
+> -                       v->s = copy_subject(subpos, sublen);
+> -               else if (!strcmp(name, "body"))
+> +               else if (atom->u.contents.option == C_BODY_DEP)
+>                         v->s = xmemdupz(bodypos, bodylen);
+> -               else if (!strcmp(name, "contents:body"))
+> +               else if (atom->u.contents.option == C_BODY)
+>                         v->s = xmemdupz(bodypos, nonsiglen);
+> -               else if (!strcmp(name, "contents:signature"))
+> +               else if (atom->u.contents.option == C_SIG)
+>                         v->s = xmemdupz(sigpos, siglen);
+> -               else if (!strcmp(name, "contents"))
+> -                       v->s = xstrdup(subpos);
+> -               else if (skip_prefix(name, "contents:lines=", &valp)) {
+> +               else if (atom->u.contents.option == C_LINES) {
+>                         struct strbuf s = STRBUF_INIT;
+>                         const char *contents_end = bodylen + bodypos - siglen;
+>
+> -                       if (strtoul_ui(valp, 10, &v->u.contents.lines))
+> -                               die(_("positive value expected contents:lines=%s"), valp);
+>                         /*  Size is the length of the message after removing the signature */
+> -                       append_lines(&s, subpos, contents_end - subpos, v->u.contents.lines);
+> +                       append_lines(&s, subpos, contents_end - subpos, atom->u.contents.no_lines);
+>                         v->s = strbuf_detach(&s, NULL);
+> -               }
+> +               } else if (atom->u.contents.option == C_BARE)
+> +                       v->s = xstrdup(subpos);
+>         }
+>  }
+>
+> --
+> 2.6.4
