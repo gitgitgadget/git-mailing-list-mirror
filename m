@@ -1,108 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/8] config: add core.untrackedCache
-Date: Thu, 17 Dec 2015 02:44:43 -0500
-Message-ID: <20151217074443.GA4830@sigill.intra.peff.net>
-References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
- <xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
- <xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
- <CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
- <xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
- <CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
- <xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
- <20151216024605.GA618@sigill.intra.peff.net>
- <xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
- <xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v1 1/4] git-gui: remove duplicate entries from
+ .gitconfig's gui.recentrepo
+Date: Thu, 17 Dec 2015 02:45:14 -0500
+Message-ID: <CAPig+cQd2f7zHJAwS29-zuL3xvC2thu9pvU-i1GXVTm_3E6rAQ@mail.gmail.com>
+References: <3453668A49C94C2AA39911FC594AE151@PhilipOakley>
+	<1450105743-2432-1-git-send-email-philipoakley@iee.org>
+	<1450105743-2432-2-git-send-email-philipoakley@iee.org>
+	<CAPig+cQ8=WKwew5GNqyAPFuYJDgM+ae6rxaJQg=jhrxn61rNbQ@mail.gmail.com>
+	<B283141DAA2647EF9917F27A817CC7FA@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 08:44:52 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Alexey Astakhov <asstv7@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Dec 17 08:45:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9TF5-0002Ph-FA
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:44:51 +0100
+	id 1a9TFb-0003Nj-C6
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:45:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbbLQHor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 02:44:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43469 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750811AbbLQHoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 02:44:46 -0500
-Received: (qmail 9013 invoked by uid 102); 17 Dec 2015 07:44:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 01:44:46 -0600
-Received: (qmail 9632 invoked by uid 107); 17 Dec 2015 07:44:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 02:44:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2015 02:44:43 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
+	id S1751806AbbLQHpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 02:45:17 -0500
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:34591 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbbLQHpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 02:45:15 -0500
+Received: by mail-vk0-f44.google.com with SMTP id j66so41612540vkg.1
+        for <git@vger.kernel.org>; Wed, 16 Dec 2015 23:45:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=7jI+vA/eT5gjnosPiWM68qq3qfT6eDxN4GNNYbriw/4=;
+        b=nPorogQQULUJlnYUZfemxbJL8aZtAqqM/yFibbPKsaTxhE+O3s/RG/Xlv9eCBw6mKe
+         NTbnbDFeEEs1vJqZTR4udpMisQ2LyVFs04wdHtbHDkp5bjSQ5BwlMnr6CYjF3Y3FpFN7
+         sIMizaRZ9ln5MxiXRon60bn/QPt0yBZyA9/cZAlRyVvzruG8KfTR/RFv13u5EAvTrLeW
+         edDu1lB7CFkC+UUEdFWkh/5BzmdppbBEESoR7QYH4gmMAyzaueoNK3kjGQN3Ae3Cw33i
+         XlXGpjWxkij/pib/hub57qyG4DVVAkK13TEcDOHv5g7wE4IehO4wu+WpnnBht+gCCeqD
+         qcsA==
+X-Received: by 10.31.56.18 with SMTP id f18mr33226126vka.19.1450338314434;
+ Wed, 16 Dec 2015 23:45:14 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 23:45:14 -0800 (PST)
+In-Reply-To: <B283141DAA2647EF9917F27A817CC7FA@PhilipOakley>
+X-Google-Sender-Auth: _eS2CT_Omzo8nBk3zA0H6xhc8L0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282636>
 
-On Tue, Dec 15, 2015 at 10:05:57PM -0800, Junio C Hamano wrote:
+On Wed, Dec 16, 2015 at 6:41 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Eric Sunshine" <sunshine@sunshineco.com>
+>> On Monday, December 14, 2015, Philip Oakley <philipoakley@iee.org> wrote:
+>>> The git gui's recent repo list may become contaminated with duplicate
+>>> entries. The git gui would barf when attempting to remove one entry.
+>>> Remove them all - there is no option within 'git config' to selectively
+>>> remove one of the entries.
+>>>
+>>> This issue was reported on the 'Git User' list
+>>> (https://groups.google.com/forum/#!topic/git-users/msev4KsQGFc,
+>>> Warning: gui.recentrepo has multiply values while executing).
+>>
+>> s/multiply/multiple/
+>
+> The original report has that mistake. I'll quote the thread title.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > This is why the_index.has_untracked_cache is not just a simple "Do I
-> > want to use this feature?" boolean configuration.  The index also
-> > stores the real data, and "Am I using this feature?" bit goes hand
-> > in hand with that real data.  Thinking that this is merely a boolean
-> > configuration is the real source of the confusion, and introducing a
-> > config that overrules what the user has stored in the index needs to
-> > add complexity.
-> >
-> > The additional complexity may (or may not) be justifiable, but in
-> > any case "all other things being equal, this is a config" feels like
-> > a flawed observation.
-> 
-> To put it another way, the "bit" in the index (i.e. the presence of
-> the cached data) is "Am I using the feature now?".  The effect of
-> the feature has to (and is designed to) persist, as it is a cache
-> and you do not want a stale cache to give you wrong answers.  There
-> is no "Do I want to use the feature?" preference, in other words.
-> 
-> And I do not mind creating such a preference bit as a configuration.
-> 
-> That is why I suggested such a configuration to cause the equivalent
-> of "update-index --untracked-cache" when a new index is created from
-> scratch (as opposed to the case where the previously created cache
-> data is carried forward across read_cache() -> do things to the
-> index -> write_cache() flow).  Doing it that way will not have to
-> involve additional complexity that comes from the desire that
-> setting a single configuration on (or off) has to suddenly change
-> the behaviour of an index file that is already using (or not using)
-> the feature.
-
-I think we may actually be thinking of the same thing. Naively, I would
-expect:
-
-  - if there is untracked cache data in the index, we will make use of
-    it when enumerating untracked files (and my understanding is that if
-    it is stale, we can detect that)
-
-  - if core.untrackedCache is set, we will update and write out an
-    untracked cache when we are enumerating the untracked files
-
-  - if there is cache data in the index but that config flag is not set,
-    presumably we would not update it (we could even explicitly drop it,
-    but my understanding is that is not necessary for correctness, but
-    only as a possible optimization).
-
-You could have a config option for "if there is a cache there, pretend
-it isn't and ignore it", but I don't see much point.
-
--Peff
+Ah, I had checked the screenshot included with the original report and
+saw that it was correctly spelled, thus assumed that the typo was
+yours. I didn't pay much attention to the title in the original
+report, which indeed already contains this misspelling.
