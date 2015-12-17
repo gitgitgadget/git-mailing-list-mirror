@@ -1,75 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] push: Fully test --recurse-submodules on command line overrides config
-Date: Thu, 17 Dec 2015 08:41:52 -0800
-Message-ID: <xmqqa8p9c9in.fsf@gitster.mtv.corp.google.com>
-References: <20151203131006.GA5119@mcrowe.com>
-	<1449148235-29569-1-git-send-email-mac@mcrowe.com>
-	<CAGZ79kb3XCkabxUq6Sh-aLa=a6kzRZtR6WG+wTk1SQY9_Mehog@mail.gmail.com>
-	<xmqqio3yc8yd.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZpCPp6CrfknQRDObKvuNnCe2+bZwCAF8XKrkkVNS+e3w@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 10/10] dir: do not use untracked cache ident anymore
+Date: Thu, 17 Dec 2015 17:54:34 +0100
+Message-ID: <CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
+References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
+	<1450196907-17805-11-git-send-email-chriscool@tuxfamily.org>
+	<xmqqd1u7fq5r.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Mike Crowe <mac@mcrowe.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 17:42:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 17:54:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9bcu-000879-KA
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 17:42:00 +0100
+	id 1a9bpB-0002jN-JI
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 17:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756043AbbLQQl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 11:41:56 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60731 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755883AbbLQQlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 11:41:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BAE9430162;
-	Thu, 17 Dec 2015 11:41:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dnhJ/Vn5fOpQTnjrLAsdlTxIiJ8=; b=SbQJVu
-	7waKCIp6bHrT1zFox0MynuWWiI7GVJtc8BMxS1BWBbpN1bMHzm3wQZES+TRX7ZPl
-	vrQD+DDJouIMm+D89AVmM1gG9T6HzdVu9zy0E8PeMOxf3TXjQvAaOTFrqyzokEO5
-	wVKJzZ/4Me58AJAVag2mrej8dTrFUvobFYKAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ke9ZVOq3ehhH6zOL43QJbFMSVKcj0wQc
-	sj+0j9tFslk0ZAiv//W20i4KmaWL1YPftDSdsRdtlyf2xiPmS+9Q9z6rk/Pr85P2
-	VXxFz3wFrLNK8wGQYRt2L8XyVVM6ZxXjbC/Qj1vlkLxuW5+f0bosZWgYKME4t/fD
-	HzGIxb2t954=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B329830161;
-	Thu, 17 Dec 2015 11:41:54 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 259D53015D;
-	Thu, 17 Dec 2015 11:41:54 -0500 (EST)
-In-Reply-To: <CAGZ79kZpCPp6CrfknQRDObKvuNnCe2+bZwCAF8XKrkkVNS+e3w@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 16 Dec 2015 14:46:23 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 146684B0-A4DD-11E5-8EB7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S965188AbbLQQyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 11:54:37 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:36051 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756254AbbLQQyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 11:54:36 -0500
+Received: by mail-lf0-f54.google.com with SMTP id z124so51078017lfa.3
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 08:54:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KvUuOj0A8EQ+2QrDQ3LqteBy7xe6gSJxU9fkwbjCu8U=;
+        b=PQSeCCRZzTqCeqRIz58oOBU50xUemB9SM3eQkDRycETAZOlvoRnAbg4pfNb0HOGrin
+         kBnhA8p32AJGVJe7UbnfA378rFodcBf9e8bmtR5Qpqc2DsrlsL/1R0ho+wj6QhHfbrGo
+         fd4ypBMIv+/hXeYD03IAP46v8JVlB7YSt/IvtmzbIpLn2o1nT1uNXG8FaEmLbTLADI8K
+         oydpleCGKy8xO3GowOIFFDQeNX9pKDHCbTbZy+lbehCb7vdxC5wECxaGoitv50wW/8+b
+         IeVuFtPlHr0bXkrf+T04GJS49phDrd9iWtaFVxu3YJsPPAKXOSjCetfIrtCDiEh1ohrN
+         mdOg==
+X-Received: by 10.25.86.9 with SMTP id k9mr22490284lfb.36.1450371274423; Thu,
+ 17 Dec 2015 08:54:34 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Thu, 17 Dec 2015 08:54:34 -0800 (PST)
+In-Reply-To: <xmqqd1u7fq5r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282658>
 
-Stefan Beller <sbeller@google.com> writes:
-
->>> This looks good to me.
->>>
->> Thanks.  Does "This" refer to 1/2 alone or the whole series?
+On Tue, Dec 15, 2015 at 8:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Yes. :)
+>> +/*
+>> + * We used to save the location of the work tree and the kernel version,
+>> + * but it was not a good idea, so we now just save an empty string.
+>> + */
 >
-> "This" is applicable to both patches. We had the discussion on 2/2 about me
-> misreading a line a few days earlier, but apart from that it looked good, too.
+> I do agree that storing the kernel version (or hostname or whatever
+> specific to the machine) was not a good idea.  I however suspect
+> that you must save and check the location of the working tree,
+> though, for correctness.  If you use one GIT_DIR and GIT_WORK_TREE
+> to do "git add" or whatever, and then use the same GIT_DIR but a
+> different GIT_WORK_TREE, you should be able to notice that a
+> directory D in the old GIT_WORK_TREE whose modification time you
+> recorded is different from the directory D with the same name but in
+> the new GIT_WORK_TREE, no?
 
-Thanks.
+Yeah, if people use many worktrees made using "git worktree", the code
+above should be fine because there is one index per worktree, but if
+they just use one GIT_DIR with many GIT_WORK_TREE then there will be
+only one index used.
+
+I am wondering about the case when the worktree is moved and then
+GIT_WORK_TREE is changed to reflect the new path were the worktree has
+been moved.
+
+In the "git worktree" documentation there is:
+
+"If you move a linked working tree to another file system, or within a
+file system that does not support hard links, you need to run at least
+one git command inside the linked working tree (e.g. git status) in
+order to update its administrative files in the repository so that
+they do not get automatically pruned."
+
+It looks like git can detect when a worktree created with "git
+worktree" has been moved and I wonder if it would be possible to
+detect if the main worktree pointed to by GIT_WORK_TREE as moved.
