@@ -1,176 +1,82 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2] mingw: emulate write(2) that fails with a EPIPE
-Date: Thu, 17 Dec 2015 18:08:15 +0100 (CET)
-Message-ID: <ca357ac83a9990d6c88b637b76c6cc7f30d3f7be.1450372051.git.johannes.schindelin@gmx.de>
-References: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2 02/10] update-index: add --test-untracked-cache
+Date: Thu, 17 Dec 2015 13:05:27 -0500
+Organization: Twitter
+Message-ID: <1450375527.11927.3.camel@twopensource.com>
+References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
+	 <1450196907-17805-3-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 18:08:31 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 19:05:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9c2W-0000TD-Ry
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 18:08:29 +0100
+	id 1a9cvr-0006MJ-IP
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:05:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751376AbbLQRIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 12:08:25 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55597 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750830AbbLQRIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 12:08:24 -0500
-Received: from virtualbox ([37.24.143.114]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MEo4s-1Zy2X43k2U-00Fx4K; Thu, 17 Dec 2015 18:08:17
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:M7ZKeDvnOfgPnuaj7WHuUWcfCBFUSdf2FjXDljiLMnNGZa8uOyb
- z4rUDpphvuR7kjpMWALPraU2tCnNufjpWzAe11k9dK8J5T2V6xD4CtPS571IU7qTyOOl/s0
- /uAPKX1HKKTh3BAlbwJH6lR2k96PQUjw7hsPJ+bggKbxbYk0oD7RrM/xvAMXF/NCst7waeP
- PgUYUAG5Kr7klSy8B+zgA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iNiA5p6Zu70=:hXIdHZjDFSj1PzG3DDl6Q+
- KWOEqGs/BW5iKRaL87emrsBvp2YYG2BHWZeRs5klMRn4yDq+ofHy8E/F1t0Dlk+5YwqLF9bLk
- /AEuYk6ClY/2/Yhgd/4lGxSkMtyPM5zes+IVPqGrLD6378qYJ/WFiuBvjoGtjdyUw6pqDC6th
- c/yuEvtQN0x8aBLXbQqtVRPzzpyucGxo5lIcxUnvjtu0tNAP11VaEEcYmWcvZrkkXTNSb/Yhk
- 5td4Ys3HrdKD85QuF+JRUpEjm+kv2xEI48RVtOeAB/D27d5xhKGTXhhdWWe9VkhFo1L+4MWbd
- 67D0OwVfxDPQqG76fenrULJda2bAozDXHgP4Z4GJ0DQljAb66Ko0jVqWmSBWne0vDf54uYI4F
- RYL5cYztz4LJRjCeDrxXsJKK2VAak8zHHHUb780fefeoos80D8nqbkatWG4Ne+Y1R1Jz4xUWo
- QsGMBTeO7TYtkrcniQ4eHhqbkzPEEqLUkojKIrecu6dh0oaew5NZAbYCHBPGU0HMF6Eh1oLLI
- WQ2FeFdaIgGLwTp10tJR7CiJQQDnRwNyie2beuMyoucDz8aG65dKNqbvm6MtyY2P2VDTuGSTw
- EUyUBLbW0OsnxmtPYYHoY0yNMLRl5D4Glp30fQBxLgNkqDyvQHILr484MEAgq0xEN6cJTqdt7
- 9XsbggxUkW+zGk/I0uB8Q9QFBsRTzSZNSlX3ZRFafms4JmKv71oPlmkuMnlRXz2ul8qX5ruGq
- EamVGBnOMz9vupqHv6AktuvCEpfp/KVSeOl0siVIUUNuvpXRk0gd3N6e7ypGkDh+8fD/2CUl 
+	id S1752004AbbLQSFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 13:05:32 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:35749 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751163AbbLQSFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 13:05:30 -0500
+Received: by mail-qg0-f48.google.com with SMTP id v36so13538687qgd.2
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 10:05:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=JkI2SJ+++DayW0RQGbQCcL20+rGOwhEqofyaMh8E8bk=;
+        b=ewpk90LMxp21O1cq+0cdQ1rNM6zLY6Hr5TCTd3ZA1krL6ExH0+VURsxvRlFNfzZFvT
+         /VFYxFzgYs+t/sgwPnjPH6Zizzf9eItl9L9pVIXE9WpgFN9AjZB7buCPrxLdBUfhjphb
+         PRx8rg15PPcIOX+EYkIjwI6t3HiNE/qHyryW7ZJuZ3JWMf5sD6LX5IDXCxYbGPhpoacv
+         kvOERR1ewrmI7apsxJSVrEGuxZaFNENBJeZM++CFojd5E5PQM/Wh2T1JbIKFKSZrzJw4
+         ekq3nUTnyuyw2fA32BxJ9iFei0SW9+EIwmY/yH2AtZTSZZ8SYoAN5LnrhEQF3OzMIDCP
+         V+uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=JkI2SJ+++DayW0RQGbQCcL20+rGOwhEqofyaMh8E8bk=;
+        b=NihL9k+r86uUiv5n3QHJI52XNQz88cHVwDe3Ztyz94oRYrAvEW6KIMGa1FkYBbWyHA
+         F4K5/WFLx/Ze5hYwFfmOCUdIFdpTcnXNWA8LNuuipg8GEzFiATA7NscvTVSw2SUME3FK
+         I5D2i93W3OgW0XgB8W8NLXYIHaX3REUosjnrYdnUEE0d7z2o3ZzmpNJEYVb0USivBvaQ
+         xXHztsFHALJWmANQMf4DvtIYXWOqrYVRzwn4KL2Nwp8IxRZpePWLm7ZHkGLdO745GXsw
+         zr+QjLp/I6RB+W0XgRhEgpWnBa8LUIzqAnZvfTESsAEFeo4yIHKxlcLOIAhYoco08Cb1
+         pLAQ==
+X-Gm-Message-State: ALoCoQmVY5Dkhv5SIlU+C04NOCADFfWGbz3IVDqkVDjOtsjagCvREEvN8cwDkt2CfMpEZ5Y5p24U5bcWeeW3ktIcphH73sVVYA==
+X-Received: by 10.140.153.73 with SMTP id 70mr42085096qhz.30.1450375529273;
+        Thu, 17 Dec 2015 10:05:29 -0800 (PST)
+Received: from ubuntu (amctrendout.amcny.org. [65.206.11.162])
+        by smtp.gmail.com with ESMTPSA id c2sm5128050qkb.41.2015.12.17.10.05.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Dec 2015 10:05:28 -0800 (PST)
+In-Reply-To: <1450196907-17805-3-git-send-email-chriscool@tuxfamily.org>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282661>
 
-On Windows, when writing to a pipe fails, errno is always
-EINVAL. However, Git expects it to be EPIPE.
+On Tue, 2015-12-15 at 17:28 +0100, Christian Couder wrote: 
+> +--test-untracked-cache::
+> +	Only perform tests on the working directory to make sure
+> +	untracked cache can be used. You have to manually enable
+> +	untracked cache using `--force-untracked-cache` (or
+> +	`--untracked-cache` but this will run the tests again)
+> +	afterwards if you really want to use it.
 
-According to the documentation, there are two cases in which write()
-triggers EINVAL: the buffer is NULL, or the length is odd but the mode
-is 16-bit Unicode (the broken pipe is not mentioned as possible cause).
-Git never sets the file mode to anything but binary, therefore we know
-that errno should actually be EPIPE if it is EINVAL and the buffer is
-not NULL.
-
-See https://msdn.microsoft.com/en-us/library/1570wh78.aspx for more
-details.
-
-This works around t5571.11 failing with v2.6.4 on Windows.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c | 17 +++++++++++++++++
- compat/mingw.h |  3 +++
- 2 files changed, 20 insertions(+)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 90bdb1e..5edea29 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -394,6 +394,23 @@ int mingw_fflush(FILE *stream)
- 	return ret;
- }
- 
-+#undef write
-+ssize_t mingw_write(int fd, const void *buf, size_t len)
-+{
-+	ssize_t result = write(fd, buf, len);
-+
-+	if (result < 0 && errno == EINVAL && buf) {
-+		/* check if fd is a pipe */
-+		HANDLE h = (HANDLE) _get_osfhandle(fd);
-+		if (GetFileType(h) == FILE_TYPE_PIPE)
-+			errno = EPIPE;
-+		else
-+			errno = EINVAL;
-+	}
-+
-+	return result;
-+}
-+
- int mingw_access(const char *filename, int mode)
- {
- 	wchar_t wfilename[MAX_PATH];
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 738865c..57ca477 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -210,6 +210,9 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream);
- int mingw_fflush(FILE *stream);
- #define fflush mingw_fflush
- 
-+ssize_t mingw_write(int fd, const void *buf, size_t len);
-+#define write mingw_write
-+
- int mingw_access(const char *filename, int mode);
- #undef access
- #define access mingw_access
-Interdiff vs v1:
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 90bdb1e..5edea29 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -394,6 +394,23 @@ int mingw_fflush(FILE *stream)
- 	return ret;
- }
- 
-+#undef write
-+ssize_t mingw_write(int fd, const void *buf, size_t len)
-+{
-+	ssize_t result = write(fd, buf, len);
-+
-+	if (result < 0 && errno == EINVAL && buf) {
-+		/* check if fd is a pipe */
-+		HANDLE h = (HANDLE) _get_osfhandle(fd);
-+		if (GetFileType(h) == FILE_TYPE_PIPE)
-+			errno = EPIPE;
-+		else
-+			errno = EINVAL;
-+	}
-+
-+	return result;
-+}
-+
- int mingw_access(const char *filename, int mode)
- {
- 	wchar_t wfilename[MAX_PATH];
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 2aca347..57ca477 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -210,22 +210,7 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream);
- int mingw_fflush(FILE *stream);
- #define fflush mingw_fflush
- 
--static inline ssize_t mingw_write(int fd, const void *buf, size_t len)
--{
--	ssize_t result = write(fd, buf, len);
--
--	if (result < 0 && errno == EINVAL && buf) {
--		/* check if fd is a pipe */
--		HANDLE h = (HANDLE) _get_osfhandle(fd);
--		if (GetFileType(h) == FILE_TYPE_PIPE)
--			errno = EPIPE;
--		else
--			errno = EINVAL;
--	}
--
--	return result;
--}
--
-+ssize_t mingw_write(int fd, const void *buf, size_t len);
- #define write mingw_write
- 
- int mingw_access(const char *filename, int mode);
-
--- 
-2.6.3.windows.1.300.g1c25e49
+It would be nice if this said how the result would be reported (by exit
+code, it appears).
