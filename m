@@ -1,83 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: add --verify-signatures
-Date: Thu, 17 Dec 2015 10:22:20 -0800
-Message-ID: <xmqq60zxc4v7.fsf@gitster.mtv.corp.google.com>
-References: <20151210130228.GA22641@netblarch.tu-darmstadt.de>
-	<xmqq37vai0ev.fsf@gitster.mtv.corp.google.com>
-	<xmqqy4d2gjw6.fsf@gitster.mtv.corp.google.com>
-	<20151216133915.GA3586@blarch>
-	<xmqqfuz2e003.fsf@gitster.mtv.corp.google.com>
-	<20151217010422.GA19500@blarch>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Git issue report : issue with capital letter in folder name
+Date: Thu, 17 Dec 2015 10:29:27 -0800
+Message-ID: <CAGZ79kbi-qdaNorabfZkFFL=FDZSgD332+N8bUrqfvu621EYvA@mail.gmail.com>
+References: <5672D895.7030209@mail.mcgill.ca>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 19:22:30 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: PFDuc <pierre-francois.duc@mail.mcgill.ca>
+X-From: git-owner@vger.kernel.org Thu Dec 17 19:29:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9dC7-0001qq-Ul
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:22:28 +0100
+	id 1a9dIz-00067Q-AB
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbbLQSWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 13:22:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51018 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752743AbbLQSWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 13:22:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7111C35AD1;
-	Thu, 17 Dec 2015 13:22:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+edCP9i/9ge35QFV/1H3hvi6UAs=; b=MfhNLQ
-	0MEebcLGHvgLr0dw2BZxN5EMUCLfof3P8Z1TnAKs4tOX6aMLXcj+WHtwrJ2gxMkh
-	5o6Nt2foA27KMxRx6I+EyQPeIax5NC+J3LZkYL+m0kd2/5zkZJ2jus/QxBhjt0OD
-	9NIW1loMkwGXhFcnJhcaM3EGLgEBqmORfo3ug=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e1JjevkTOewcNNgwZzoguV8t+tmvnMcD
-	kgvEc/QQzxqsSDyFHVj09EmSL/B07z/ds9Yg1KsvXkLaTLLqcfp0qg12GH3PNQOL
-	eJ0D1ojuQMf8WTj/ydeUyb41glsJ2s5gQtORlcSTCjvjv3vJLj32YHaTxCL8JZSW
-	eJcyOcfZ1BI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 68F7135AD0;
-	Thu, 17 Dec 2015 13:22:22 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E1C5635ACD;
-	Thu, 17 Dec 2015 13:22:21 -0500 (EST)
-In-Reply-To: <20151217010422.GA19500@blarch> (Alexander Hirsch's message of
-	"Thu, 17 Dec 2015 02:04:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D3BB8AE-A4EB-11E5-B327-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752685AbbLQS33 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2015 13:29:29 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:35919 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751903AbbLQS32 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2015 13:29:28 -0500
+Received: by mail-io0-f177.google.com with SMTP id o67so64281453iof.3
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 10:29:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Hv6OX3x7Mxf/67Jlq6smdr/UMi+i/zE1NTmGnDjsHQ8=;
+        b=kLglhMBVHcani1R5aPfCBxeU2y6CjE21YN+siKVrgF4clupFXc5nqg+RAf5IGZISgA
+         9nx26cuiBHhNGt8Uuu55MxaVtYXYzn74i3gNhxyRQq9ycxQphOQVCXIDY3A3vU+LiAiW
+         ZIXsd2YeEsVxJ4Z1zul5DtVh7CdDj1ovtl2w2B3PqjZkjXhL/lyWPq76m7BHpFb4mC5e
+         tvgpefn3Ab9GLLLGWsyJQMUjCqR56ep7p8RGHFmqjYjnQkLNaZ49zaYqplMCnQ+EvKJb
+         Y+oCNczvqrxuX9XR5hOqColYCWlvULy/NrKkYoRYQnxBfOtpz62ztTR4shaupf89Cug8
+         kTHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Hv6OX3x7Mxf/67Jlq6smdr/UMi+i/zE1NTmGnDjsHQ8=;
+        b=HeoLGPS/1jR3q41wUf8sGfd1xJlxtgugDeiiGb6z+GL9MV8PSFTV0lmqzwG869JPa0
+         AL4m+LB4ohg18ZBRlRGqiARmEVe5X6IqeyKoXWznhqjSBAHQmO7m5TjPrutyEEjqGRcq
+         hjG1Bk433W6CHlNnm2MgR2PFwZoc2fagm6BPBGNo4lIxqlZPRdrUolWtwR+fQfdzT2Og
+         +uM/lqLLP3o3X5l7P39FU2ow/s+P9SM/3QeMIUud9Y7H55SJPqlUpP90PNztRM/i33PQ
+         baM3QLg+EybUcaaTgXsznWLG+dq0o3DnQ8pZ4mbRqjl370x4XrvPbgUxxw/q99xqSrx+
+         oDag==
+X-Gm-Message-State: ALoCoQne+pmnhBIldKlKSCUurRlTlVk+IwDa1rbbWS24wg+Q8+GEycNE8+WZsUzPbb5VANVgx9HkCtnxEye690THor2stZ/n20MtlnS3Ev5K4A89bViLEVQ=
+X-Received: by 10.107.168.203 with SMTP id e72mr8541964ioj.96.1450376967469;
+ Thu, 17 Dec 2015 10:29:27 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Thu, 17 Dec 2015 10:29:27 -0800 (PST)
+In-Reply-To: <5672D895.7030209@mail.mcgill.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282664>
 
-Alexander 'z33ky' Hirsch <1zeeky@gmail.com> writes:
+On Thu, Dec 17, 2015 at 7:45 AM, PFDuc
+<pierre-francois.duc@mail.mcgill.ca> wrote:
+> Hello,
+>
+> first of all thank you for developping git !
+>
+> I had an issue with a capital block in the folder name inside my git =
+repo.
+> The folder in my local was named "Display" and the one at origin was =
+named
+> "display" resulting in error when importing python code from this fol=
+der for
+> users who got the repo from origin.
 
-> As I understand it, this is the same reason for the existence of
-> --verify-signatures for git-merge. Otherwise the same argument could be
-> made for git-merge 
+By any chance, were different operating systems or file systems
+involved in creation of
+this problem?
 
-I suspect that you are missing the bigger workflow issues, if you
-think this and merge are the same.
+There are file systems which care about the capitalization, and others =
+don't.
+So if you have a file system which doesn't care about capitalization
+of the folder/file name,
+you can use a different capitalization and it still works. If you take
+the code to
+another system then, which is a bit more careful there are problems of =
+course.
 
-git-merge will check the other history on the side branch that you
-are merging _into_ the trunk, to give you an opportunity to reject
-what does not pass and keep the trunk sane without doing anything
-else.  How you (or others who asked you to pull) clean up the side
-branch is outside the scope of its verification.
+The main question which remains, is how is Git involved? i.e. would it
+also happen
+if you just transfer a tarball? Did Git itself break anything?
 
-Your change to "git pull --rebase" checks the other way---the
-history, which is already the trunk, onto which your work will be
-rebased.  There is nothing you can do without messing with the trunk
-if the validation did not pass, be it with a rewind-and-rebuild or a
-sealing empty commit which is pointless.
+>
+> I tried to change the folder name on bitbucket.org but I was unable t=
+o (or
+> wasn't smart enough to find how to).
+>
+> I fixed the issue by deleting the file from my local, then commit, th=
+en
+> push, put the same folder in my local, then commit then push.
+>
+> I am therefore only writing to tell you that story which is not so
+> important, but I had the thought that because it is not so important =
+maybe
+> nobody reports that and the bug (if any) cannot be fixed.
+>
+> Have a good day and happy end of year season!
+>
+> Regards,
+>
+> Pierre-Fran=C3=A7ois Duc
+> PhD candidate Physics McGill university
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
