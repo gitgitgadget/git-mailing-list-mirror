@@ -1,154 +1,91 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: RefTree: Alternate ref backend
-Date: Thu, 17 Dec 2015 14:28:01 -0800
-Message-ID: <CAJo=hJsSgU6yOFZMac85jkOtw9TXWXh0Ext4-Gb1TsSXqROn4g@mail.gmail.com>
-References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
- <20151217221045.GA8150@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 23:28:27 2015
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v3 4/4] git gui: allow for a long recentrepo list
+Date: Thu, 17 Dec 2015 22:40:07 +0000
+Message-ID: <1450392007-600-1-git-send-email-philipoakley@iee.org>
+References: <2F62ABA2EE734F5F926C9E102969895F@PhilipOakley>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Alexey Astakhov <asstv7@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>
+To: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Dec 17 23:40:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9h2A-0003TA-3I
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 23:28:26 +0100
+	id 1a9hDi-0007pr-IO
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 23:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934126AbbLQW2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 17:28:22 -0500
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:34600 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933531AbbLQW2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 17:28:21 -0500
-Received: by mail-vk0-f47.google.com with SMTP id j66so55242665vkg.1
-        for <git@vger.kernel.org>; Thu, 17 Dec 2015 14:28:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=b323b9vZMbWmuTspFevqRJkpILazLyYDj/xjshJPOok=;
-        b=M7GmSVkq3S3URg0F0ceAzgJJT2kpk0EC0hQRYMqQugVrMXaq/cqN46QsawqzXcGtkb
-         EQBnB4/7ZTZ4gpZhA/z7r2AezrPn9LwsNunJYNhMd9RSMV2KrC53vGgUJypeySOkryoH
-         XgQTJLKF+6+tz8Sp+pX5gZAsqq4q854kRgyWg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=b323b9vZMbWmuTspFevqRJkpILazLyYDj/xjshJPOok=;
-        b=R5ES882k3wML4Tvlf5v4xDWIAMJvbankSvvhzxsbjDd5krzsJBxH9mfg23PYCmp89F
-         tmq+XLMw/jzbMnhd2Qu74UT5mhdNBOXLZaTqvMEjuf475CoYcwavaVDzHBH36Z1VzZMp
-         hvfo9W17KFXexlRLcEeolAlz+ZzgR18UFo7/+13t9mv5/2fKhXy+KoFnf24eBdrzeycB
-         GoeUUrMRQxtpqCkuCvtp5MXe5bkaqs1/lWIcfgWltpYtUD3G5/EYxnqXdgTmq88TKtHR
-         m1QhHdUuf3zvNQXh76CBID2Rae+NNK+Nlh5feEZnE1BGVKlD3NHSAK3T4jXAan3HW6mv
-         pu6A==
-X-Gm-Message-State: ALoCoQkmchSxHD2WdZFljv236jYosv5OZLHFbwzaLNsOigG8YJT2fIZ9ZWX1bWDhg2EC+PA2aG9DSO11wJG31c9QLJJKrM9Rew==
-X-Received: by 10.31.161.131 with SMTP id k125mr183360vke.74.1450391300473;
- Thu, 17 Dec 2015 14:28:20 -0800 (PST)
-Received: by 10.103.97.197 with HTTP; Thu, 17 Dec 2015 14:28:01 -0800 (PST)
-In-Reply-To: <20151217221045.GA8150@sigill.intra.peff.net>
+	id S933612AbbLQWkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 17:40:17 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:36134 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933531AbbLQWkQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2015 17:40:16 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CLAwCfOHNWPK4lFlxeGQEBAQELAQIBAQEBAYI5UYE/hmC0YIIZAQ2BYoYHBAICgTw5FAEBAQEBAQEGAQEBAUABP4Q1AQEEViMQUTkKFAYBEogzsWKMGgEBCCOGVokzhQsFln2qZSABAYRGPjSDIIFKAQEB
+X-IPAS-Result: A2CLAwCfOHNWPK4lFlxeGQEBAQELAQIBAQEBAYI5UYE/hmC0YIIZAQ2BYoYHBAICgTw5FAEBAQEBAQEGAQEBAUABP4Q1AQEEViMQUTkKFAYBEogzsWKMGgEBCCOGVokzhQsFln2qZSABAYRGPjSDIIFKAQEB
+X-IronPort-AV: E=Sophos;i="5.20,443,1444690800"; 
+   d="scan'208";a="70451857"
+Received: from host-92-22-37-174.as13285.net (HELO localhost.localdomain) ([92.22.37.174])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 17 Dec 2015 23:04:41 +0000
+X-Mailer: git-send-email 2.6.4.windows.1
+In-Reply-To: <2F62ABA2EE734F5F926C9E102969895F@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282685>
 
-On Thu, Dec 17, 2015 at 2:10 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Dec 17, 2015 at 01:02:50PM -0800, Shawn Pearce wrote:
->
->> I started playing around with the idea of storing references directly
->> in Git. Exploiting the GITLINK tree entry, we can associate a name to
->> any SHA-1.
->
-> Gitlink entries don't imply reachability, though. I guess that doesn't
-> matter if your ref backend says "no, really, these are the ref tips, and
-> they are reachable".
+The gui.recentrepo list may be longer than the maxrecent setting.
+Use the actual length determined earlier, now saved as $lenrecent.
 
-Exactly. This works with existing JGit because it swaps out the ref
-backend. When GC tries to enumerate the roots (current refs), it gets
-these through the ref backend by scanning the tree recursively. The
-packer itself doesn't care where those roots came from.
+In an ideal world, the git gui would limit the number of entries
+to the maxrecent setting, however the recentrepo config list may
+have been extended outside of the gui, or the maxrecent setting changed
+to a reduced value. Further, when testing the gui's recentrepo
+logic it is useful to show these extra, but valid, entries.
 
-Same would be true for any other pluggable ref backend in git-core. GC
-has to ask the ref backend, and then trust its reply. How/where that
-ref backend tracks that is an implementation detail.
+The list length will be trimmed to $maxrecent after the user selects
+a repo to open.
 
->  But you could not push the whole thing up to
-> another server and expect it to hold the whole graph.
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+V2:
+word usage corrected.
+Eric's comments $gmane/282432
+V3: 
+Updated list length measure following Junio's comments $gmane/282669
 
-Correct, pushing this to another repository doesn't transmit the
-graph. If the other repository also used this for its refs backend,
-its now corrupt and confused out of its mind. Just like copying the
-packed-refs file with scp. Don't do that. :)
+Replaces the previous V2 Patch 4/4.
 
-> Which is not strictly necessary, but to me seems like the real advantage
-> of using git objects versus some other system.
+---
+ git-gui/lib/choose_repository.tcl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-One advantage is you can edit HEAD symref remotely. Commit a different
-symlink value and push. :)
-
-I want to say more, but I'm going to hold back right now. There's more
-going on in my head than just this.
-
-> Of course, the lack of reachability has advantages, too. You can
-> drop commits pointed to by old reflogs without rewriting the ref
-> history.
-
-Yes.
-
-> Unfortunately you cannot expunge the reflogs at all. That's
-> good if you like audit trails. Bad if you are worried that your reflogs
-> will grow large. :)
-
-At present our servers do not truncate their reflogs. Yes some are... big.
-
-I considered truncating this graph by just using a shallow marker. Add
-a shallow entry and repack. The ancient history will eventually be
-garbage collected and disappear.
-
-One advantage of this format is deleted branches can retain a reflog
-post deletion. Another is you can trivially copy the reflog using
-native Git to another system for backup purposes. Or fetch it over the
-network to inspect locally. So a shared group server could be
-exporting its reflog, you can fetch it and review locally what
-happened to branches without logging into the shared server.
-
-So long as you remember that copying the reflog doesn't mean you
-actually copied the commit histories, its works nicely.
-
-Another advantage of this format over LMDB or TDB or whatever is Git
-already understands it. The tools already understand it. Plumbing can
-inspect and repair things. You can reflog the reflog using traditional
-reflog ($GIT_DIR/reflogs/refs/txn/committed).
-
->> By storing all references in a single tree, atomic transactions are
->> possible. Its a simple compare-and-swap of a single 40 byte SHA-1.
->> This of course leads to a bootstrapping problem, where do we store the
->> 40 byte SHA-1? For this example its just $GIT_DIR/refs/txn/committed
->> as a classical loose reference.
->
-> Somehow putting it inside `refs/` seems weird to me, in an infinite
-> recursion kind of way.  I would have picked $GIT_DIR/REFSTREE or
-> something. But that is a minor point.
-
-I had started with $GIT_DIR/REFS, but see above. I have more going on
-in my head. This is only a tiny building block.
-
->> Configuration:
->>
->>   [core]
->>     repositoryformatversion = 1
->>   [extensions]
->>     refsBackendType = RefTree
->
-> The semantics of extensions config keys are open-ended. The
-> formatVersion=1 spec only says "if there is a key you don't know about,
-> then you may not proceed". Now we're defining a refsBackendType
-> extension. It probably makes sense to write up a few rules (e.g., is
-> RefTree case-sensitive?).
-
-In my prototype in JGIt I parse it as case insensitive, but used
-CamelCase because the JavaClassNameIsNamedThatWayBecauseJava.
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index ad7a888..b4cc7dd 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -134,7 +134,8 @@ constructor pick {} {
+ 	$opts conf -state disabled
+ 
+ 	set sorted_recent [_get_recentrepos]
+-	if {[llength $sorted_recent] > 0} {
++	set lenrecent [llength $sorted_recent]
++	if {$lenrecent > 0} {
+ 		if {$m_repo ne {}} {
+ 			$m_repo add separator
+ 			$m_repo add command \
+@@ -153,7 +154,7 @@ constructor pick {} {
+ 			-background [get_bg_color $w_body.recentlabel] \
+ 			-wrap none \
+ 			-width 50 \
+-			-height $maxrecent
++			-height $lenrecent
+ 		$w_recentlist tag conf link \
+ 			-foreground blue \
+ 			-underline 1
+-- 
+2.6.4.windows.1
