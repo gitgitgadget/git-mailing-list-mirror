@@ -1,80 +1,108 @@
 From: Jeff King <peff@peff.net>
-Subject: [RFC] Git Developer Summit, April 4th, 2016, NYC
-Date: Thu, 17 Dec 2015 02:14:30 -0500
-Message-ID: <20151217071430.GA3711@sigill.intra.peff.net>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Thu, 17 Dec 2015 02:44:43 -0500
+Message-ID: <20151217074443.GA4830@sigill.intra.peff.net>
+References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+ <xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
+ <xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
+ <xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
+ <xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
+ <20151216024605.GA618@sigill.intra.peff.net>
+ <xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
+ <xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 17 08:15:18 2015
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 08:44:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9SmQ-0003zb-QU
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:15:15 +0100
+	id 1a9TF5-0002Ph-FA
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933398AbbLQHOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 02:14:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43444 "HELO cloud.peff.net"
+	id S1751461AbbLQHor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 02:44:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43469 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932162AbbLQHOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 02:14:45 -0500
-Received: (qmail 6144 invoked by uid 102); 17 Dec 2015 07:14:33 -0000
+	id S1750811AbbLQHoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 02:44:46 -0500
+Received: (qmail 9013 invoked by uid 102); 17 Dec 2015 07:44:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 01:14:33 -0600
-Received: (qmail 9188 invoked by uid 107); 17 Dec 2015 07:14:41 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 01:44:46 -0600
+Received: (qmail 9632 invoked by uid 107); 17 Dec 2015 07:44:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 02:14:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2015 02:14:30 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 02:44:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2015 02:44:43 -0500
 Content-Disposition: inline
+In-Reply-To: <xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282635>
 
-GitHub is organizing another Git Merge conference this coming April in
-New York City, USA. The organizers have offered to host a developer's
-summit similar to what we did last year in Paris (one day, developers
-sitting around chatting).
+On Tue, Dec 15, 2015 at 10:05:57PM -0800, Junio C Hamano wrote:
 
-The venue has not been booked yet, and they've asked for input before
-doing so.  Specifically, they need a rough headcount to book something
-of the appropriate size. So I'd like to get a list of people who are
-potentially interested in coming (you can respond here, or email me
-off-list). This isn't a commitment, so don't be afraid to say you're
-interested if you're not sure yet. But at the same time, be realistic. :)
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > This is why the_index.has_untracked_cache is not just a simple "Do I
+> > want to use this feature?" boolean configuration.  The index also
+> > stores the real data, and "Am I using this feature?" bit goes hand
+> > in hand with that real data.  Thinking that this is merely a boolean
+> > configuration is the real source of the confusion, and introducing a
+> > config that overrules what the user has stored in the index needs to
+> > add complexity.
+> >
+> > The additional complexity may (or may not) be justifiable, but in
+> > any case "all other things being equal, this is a config" feels like
+> > a flawed observation.
+> 
+> To put it another way, the "bit" in the index (i.e. the presence of
+> the cached data) is "Am I using the feature now?".  The effect of
+> the feature has to (and is designed to) persist, as it is a cache
+> and you do not want a stale cache to give you wrong answers.  There
+> is no "Do I want to use the feature?" preference, in other words.
+> 
+> And I do not mind creating such a preference bit as a configuration.
+> 
+> That is why I suggested such a configuration to cause the equivalent
+> of "update-index --untracked-cache" when a new index is created from
+> scratch (as opposed to the case where the previously created cache
+> data is carried forward across read_cache() -> do things to the
+> index -> write_cache() flow).  Doing it that way will not have to
+> involve additional complexity that comes from the desire that
+> setting a single configuration on (or off) has to suddenly change
+> the behaviour of an index file that is already using (or not using)
+> the feature.
 
-In the past we've more or less limited attendance to people involved in
-the development of Git, alternate implementations (e.g., JGit, libgit2),
-and surrounding tools (e.g., I'd welcome discussion about distributed
-code review systems built around git). If you're not sure if you'd be
-welcome, please ask (here, or feel free to email me off-list).
+I think we may actually be thinking of the same thing. Naively, I would
+expect:
 
-If you need or want money to help with travel expenses, it's possible
-that GitHub or the Git project itself may be able to help out. There's
-nothing particularly organized yet, but if you are interested, you can
-either email me or the Git project committee (<git@sfconservancy.org>).
-I think we'll need to see how many requests there are before we have a
-sense of how many can be filled (but in past years, there have not been
-many requests, so please don't be shy because you think we're
-overburdened).
+  - if there is untracked cache data in the index, we will make use of
+    it when enumerating untracked files (and my understanding is that if
+    it is stale, we can detect that)
 
-All of the details are open for discussion, including the attendance
-policy and Git project policy for doling out money. The format in years
-past has been mostly unconference, and centered around round-table
-discussions. I've asked for more round-table style seating (as opposed
-to theater-style for presentations). There will probably be a projector.
-I've also asked to have a developer's dinner (last year there was an
-ad-hoc thing, but I thought it might be easier if somebody organized it
-in advance).
+  - if core.untrackedCache is set, we will update and write out an
+    untracked cache when we are enumerating the untracked files
 
-Let me know if there are additional requests. It's early still, but some
-things are easier to accommodate earlier than later. And if anybody is
-interested in organizing any part of it (e.g., figuring out the dinner
-ourselves rather than leaving it to GitHub organizers), let me know.
+  - if there is cache data in the index but that config flag is not set,
+    presumably we would not update it (we could even explicitly drop it,
+    but my understanding is that is not necessary for correctness, but
+    only as a possible optimization).
 
-I hope to see people there!
+You could have a config option for "if there is a cache there, pretend
+it isn't and ignore it", but I don't see much point.
 
 -Peff
