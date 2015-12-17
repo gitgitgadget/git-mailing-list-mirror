@@ -1,65 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: 'Comma in -to/-cc entry' on valid addresses
-Date: Thu, 17 Dec 2015 07:50:09 +0100
-Message-ID: <vpq7fkdfu1q.fsf@anie.imag.fr>
-References: <CALCETrWY+n-m_P-0ub4ZPn5yGrr52C8F+wAtJok-cCQmM12d5Q@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [RFC] Git Developer Summit, April 4th, 2016, NYC
+Date: Thu, 17 Dec 2015 02:14:30 -0500
+Message-ID: <20151217071430.GA3711@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Andy Lutomirski <luto@amacapital.net>
-X-From: git-owner@vger.kernel.org Thu Dec 17 07:50:25 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 08:15:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9SOO-0005kU-KW
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 07:50:24 +0100
+	id 1a9SmQ-0003zb-QU
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbbLQGuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 01:50:17 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:50050 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751464AbbLQGuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 01:50:16 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id tBH6o9q6018343
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 17 Dec 2015 07:50:09 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tBH6o9ee030536;
-	Thu, 17 Dec 2015 07:50:09 +0100
-In-Reply-To: <CALCETrWY+n-m_P-0ub4ZPn5yGrr52C8F+wAtJok-cCQmM12d5Q@mail.gmail.com>
-	(Andy Lutomirski's message of "Wed, 16 Dec 2015 16:43:28 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 17 Dec 2015 07:50:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tBH6o9q6018343
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1450939812.92251@QUK76FVEEm8uG9ARV6QB4A
+	id S933398AbbLQHOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 02:14:46 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43444 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932162AbbLQHOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 02:14:45 -0500
+Received: (qmail 6144 invoked by uid 102); 17 Dec 2015 07:14:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 01:14:33 -0600
+Received: (qmail 9188 invoked by uid 107); 17 Dec 2015 07:14:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 02:14:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2015 02:14:30 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282634>
 
-Andy Lutomirski <luto@amacapital.net> writes:
+GitHub is organizing another Git Merge conference this coming April in
+New York City, USA. The organizers have offered to host a developer's
+summit similar to what we did last year in Paris (one day, developers
+sitting around chatting).
 
-> $ git send-email --to='"Address, Valid" <somebody@foobarbaz.com>'
-> Comma in --to entry: "Address, Valid" <somebody@foobarbaz.com>'
-> $ git --version
-> git version 2.5.0
->
-> This appears to be a recent regression.
+The venue has not been booked yet, and they've asked for input before
+doing so.  Specifically, they need a rough headcount to book something
+of the appropriate size. So I'd like to get a list of people who are
+potentially interested in coming (you can respond here, or email me
+off-list). This isn't a commitment, so don't be afraid to say you're
+interested if you're not sure yet. But at the same time, be realistic. :)
 
-It's not: the check was introduced in 79ee555 (Check and document the
-options to prevent mistakes., 2006-06-21).
+In the past we've more or less limited attendance to people involved in
+the development of Git, alternate implementations (e.g., JGit, libgit2),
+and surrounding tools (e.g., I'd welcome discussion about distributed
+code review systems built around git). If you're not sure if you'd be
+welcome, please ask (here, or feel free to email me off-list).
 
-The check was _removed_ in Git 2.6.0, which happily accepts your
-command. IOW, the bug is already fixed :-).
+If you need or want money to help with travel expenses, it's possible
+that GitHub or the Git project itself may be able to help out. There's
+nothing particularly organized yet, but if you are interested, you can
+either email me or the Git project committee (<git@sfconservancy.org>).
+I think we'll need to see how many requests there are before we have a
+sense of how many can be filled (but in past years, there have not been
+many requests, so please don't be shy because you think we're
+overburdened).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+All of the details are open for discussion, including the attendance
+policy and Git project policy for doling out money. The format in years
+past has been mostly unconference, and centered around round-table
+discussions. I've asked for more round-table style seating (as opposed
+to theater-style for presentations). There will probably be a projector.
+I've also asked to have a developer's dinner (last year there was an
+ad-hoc thing, but I thought it might be easier if somebody organized it
+in advance).
+
+Let me know if there are additional requests. It's early still, but some
+things are easier to accommodate earlier than later. And if anybody is
+interested in organizing any part of it (e.g., figuring out the dinner
+ourselves rather than leaving it to GitHub organizers), let me know.
+
+I hope to see people there!
+
+-Peff
