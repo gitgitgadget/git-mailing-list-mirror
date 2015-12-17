@@ -1,95 +1,207 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/10] dir: do not use untracked cache ident anymore
-Date: Thu, 17 Dec 2015 10:33:27 -0800
-Message-ID: <xmqq1talc4co.fsf@gitster.mtv.corp.google.com>
-References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
-	<1450196907-17805-11-git-send-email-chriscool@tuxfamily.org>
-	<xmqqd1u7fq5r.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCHv2] submodule: Port resolve_relative_url from shell to C
+Date: Thu, 17 Dec 2015 19:55:43 +0100
+Message-ID: <5673052F.7050000@kdbg.org>
+References: <1450311999-3992-1-git-send-email-sbeller@google.com>
+ <1450311999-3992-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 17 19:33:37 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, jens.lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 19:55:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9dMt-0004yv-PQ
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:33:36 +0100
+	id 1a9diS-0000eI-6t
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753882AbbLQSdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 13:33:32 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62020 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752673AbbLQSda (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 13:33:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 059F933082;
-	Thu, 17 Dec 2015 13:33:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0WVFLnUJbADyN3mtALsJRL4BXKw=; b=cAYUcJ
-	tUhh2/iFoWHV/Zu8TBYkhYhIF2/l5/MYRoI0L1KguTgiNsNydCmhekf71VkR7yvs
-	sGi9t7E5G7AvQA2SYdEm0xT99gapMnyBd9yMTmY+oUlHaxpqy0BMEL5tzEHaLSCI
-	E12ctDyRi42Yt5SXqQxCrwAGi/GmL5gS/uSY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jQ4aeUp53PrGJiNBPfnuiB8eMG1C1JLk
-	h0kPtKsqHtR7kg/pTgnTbNGRLGyzOoS3Oo9RAYrxf1EoQ4jPEvjbb1sPAQXNlLjK
-	m4XLrp5YcHGfrfmw0JUzdX0f/KZPQZvd9e/0HTap0z6zqRn0bNeL+KX2oLNMj/2s
-	lrD3qFtOtoI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F068533081;
-	Thu, 17 Dec 2015 13:33:28 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 599B43307D;
-	Thu, 17 Dec 2015 13:33:28 -0500 (EST)
-In-Reply-To: <CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
-	(Christian Couder's message of "Thu, 17 Dec 2015 17:54:34 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AA812888-A4EC-11E5-9379-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752007AbbLQSzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 13:55:48 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:29727 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751190AbbLQSzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 13:55:47 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pM2b51tQqz5tlJ;
+	Thu, 17 Dec 2015 19:55:44 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 244AB53B0;
+	Thu, 17 Dec 2015 19:55:44 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <1450311999-3992-2-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282666>
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> In the "git worktree" documentation there is:
+Am 17.12.2015 um 01:26 schrieb Stefan Beller:
+> This reimplements the helper function `resolve_relative_url` in shell
+> in C. This functionality is needed in C for introducing the groups
+> feature later on. When using groups, the user should not need to run
+> `git submodule init`, but it should be implicit at all appropriate places,
+> which are all in C code. As the we would not just call out to `git
+> submodule init`, but do a more fine grained structure there, we actually
+> need all the init functionality in C before attempting the groups
+> feature. To get the init functionality in C, rewriting the
+> resolve_relative_url subfunction is a major step.
 >
-> "If you move a linked working tree to another file system, or within a
-> file system that does not support hard links, you need to run at least
-> one git command inside the linked working tree (e.g. git status) in
-> order to update its administrative files in the repository so that
-> they do not get automatically pruned."
+> This also improves the performance:
+> (Best out of 3) time ./t7400-submodule-basic.sh
+> Before:
+> real	0m9.575s
+> user	0m2.683s
+> sys	0m6.773s
+> After:
+> real	0m9.293s
+> user	0m2.691s
+> sys	0m6.549s
 >
-> It looks like git can detect when a worktree created with "git
-> worktree" has been moved and I wonder if it would be possible to
-> detect if the main worktree pointed to by GIT_WORK_TREE as moved.
+> That's about 3%.
 
-As I personally do not find "moving a working tree" a very
-compelling use case, I'd be fine if cached information is not used
-when the actual worktree and the root of the cached untracked paths
-are different.
+I appreciate this effort as it should help us on Windows. Although the
+numbers (and my own timings) suggest that this is only a small step
+forward. That's not surprising as the patch removes only two forks.
 
-If you are going to change the in-index data of untracked cache
-anyway (like you attempted with 10/10 patch), I think a lot more
-sensible simplification may be to make the mechanism _always_ keep
-track of the worktree that is rooted one level above the index, and
-not use the cache in all other cases.  That way, if you move the
-working tree in its entirety (i.e. $foo/{Makefile,.git/,untracked}
-all move to $bar/. at the same time), the untracked cache data that
-was in $foo/.git/index, which knew about $foo/untracked, will now
-know about $bar/untracked when the index is moved to $bar/.git/index
-automatically.
+As to the implementation, find a patch below that removes the ifdefs
+and a few other suggestions. It is a mechanical conversion without
+understanding what relative_url() does. I have the gut feeling that the
+two strbuf_addf towards the end of the function can be contracted and
+the temporarily allocate copy in 'out' can be removed.
+
+If there were a few examples in the comment above the function, it
+would be much simpler to understand.
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b925bed..8ec0975 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -11,6 +11,7 @@
+ #include "run-command.h"
+ #include "remote.h"
+ #include "refs.h"
++#include "connect.h"
+ 
+ static const char *get_default_remote(void)
+ {
+@@ -31,34 +32,23 @@ static const char *get_default_remote(void)
+ 		return xstrdup(dest);
+ }
+ 
+-static int has_same_dir_prefix(const char *str, const char **out)
++static int starts_with_dot_slash(const char *str)
+ {
+-#ifdef GIT_WINDOWS_NATIVE
+-	return skip_prefix(str, "./", out)
+-		|| skip_prefix(str, ".\\", out);
+-#else
+-	return skip_prefix(str, "./", out);
+-#endif
++	return str[0] == '.' && is_dir_sep(str[1]);
+ }
+ 
+-static int has_upper_dir_prefix(const char *str, const char **out)
++static int starts_with_dot_dot_slash(const char *str)
+ {
+-#ifdef GIT_WINDOWS_NATIVE
+-	return skip_prefix(str, "../", out)
+-		|| skip_prefix(str, "..\\", out);
+-#else
+-	return skip_prefix(str, "../", out);
+-#endif
++	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
+ }
+ 
+-static char *last_dir_separator(const char *str)
++static char *last_dir_separator(char *str)
+ {
+-#ifdef GIT_WINDOWS_NATIVE
+-	return strrchr(str, "/")
+-		|| strrchr(str, "\\");
+-#else
+-	return strrchr(str, '/');
+-#endif
++	char* p = str + strlen(str);
++	while (p-- != str)
++		if (is_dir_sep(*p))
++			return p;
++	return NULL;
+ }
+ 
+ /*
+@@ -85,9 +75,10 @@ static const char *relative_url(const char *url, const char *up_path)
+ 	size_t len;
+ 	char *remoteurl = NULL;
+ 	char *sep = "/";
+-	const char *out;
++	char *out;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *remote = get_default_remote();
++
+ 	strbuf_addf(&sb, "remote.%s.url", remote);
+ 
+ 	if (git_config_get_string(sb.buf, &remoteurl))
+@@ -98,22 +89,23 @@ static const char *relative_url(const char *url, const char *up_path)
+ 	if (is_dir_sep(remoteurl[len]))
+ 		remoteurl[len] = '\0';
+ 
+-	if (strchr(remoteurl, ':') || is_dir_sep(*remoteurl))
++	if (!url_is_local_not_ssh(remoteurl) || is_absolute_path(remoteurl))
+ 		is_relative = 0;
+-	else if (has_same_dir_prefix(remoteurl, &out) ||
+-		    has_upper_dir_prefix(remoteurl, &out))
++	else if (starts_with_dot_slash(remoteurl) ||
++		    starts_with_dot_dot_slash(remoteurl))
+ 		is_relative = 1;
+ 	else {
+ 		is_relative = 1;
+ 		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "./%s", remoteurl);
++		free(remoteurl);
+ 		remoteurl = strbuf_detach(&sb, NULL);
+ 	}
+ 
+ 	while (url) {
+-		if (has_upper_dir_prefix(url, &out)) {
++		if (starts_with_dot_dot_slash(url)) {
+ 			char *rfind;
+-			url = out;
++			url += 3;
+ 
+ 			rfind = last_dir_separator(remoteurl);
+ 			if (rfind)
+@@ -130,22 +122,23 @@ static const char *relative_url(const char *url, const char *up_path)
+ 						remoteurl = ".";
+ 				}
+ 			}
+-		} else if (has_same_dir_prefix(url, &out))
+-			url = out;
+-		else
++		} else if (starts_with_dot_slash(url)) {
++			url += 2;
++		} else
+ 			break;
+ 	}
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s%s%s", remoteurl, sep, url);
+ 
+-	if (!has_same_dir_prefix(sb.buf, &out))
+-		out = sb.buf;
+-	out = xstrdup(out);
++	if (starts_with_dot_slash(sb.buf))
++		out = strdup(sb.buf + 2);
++	else
++		out = xstrdup(sb.buf);
+ 
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s%s", is_relative && up_path ? up_path : "", out);
+ 
+-	free((char*)out);
++	free(out);
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 
