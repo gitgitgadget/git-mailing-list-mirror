@@ -1,116 +1,95 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Git issue report : issue with capital letter in folder name
-Date: Thu, 17 Dec 2015 10:29:27 -0800
-Message-ID: <CAGZ79kbi-qdaNorabfZkFFL=FDZSgD332+N8bUrqfvu621EYvA@mail.gmail.com>
-References: <5672D895.7030209@mail.mcgill.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 10/10] dir: do not use untracked cache ident anymore
+Date: Thu, 17 Dec 2015 10:33:27 -0800
+Message-ID: <xmqq1talc4co.fsf@gitster.mtv.corp.google.com>
+References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
+	<1450196907-17805-11-git-send-email-chriscool@tuxfamily.org>
+	<xmqqd1u7fq5r.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: PFDuc <pierre-francois.duc@mail.mcgill.ca>
-X-From: git-owner@vger.kernel.org Thu Dec 17 19:29:34 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 17 19:33:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9dIz-00067Q-AB
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:29:33 +0100
+	id 1a9dMt-0004yv-PQ
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 19:33:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685AbbLQS33 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Dec 2015 13:29:29 -0500
-Received: from mail-io0-f177.google.com ([209.85.223.177]:35919 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903AbbLQS32 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2015 13:29:28 -0500
-Received: by mail-io0-f177.google.com with SMTP id o67so64281453iof.3
-        for <git@vger.kernel.org>; Thu, 17 Dec 2015 10:29:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Hv6OX3x7Mxf/67Jlq6smdr/UMi+i/zE1NTmGnDjsHQ8=;
-        b=kLglhMBVHcani1R5aPfCBxeU2y6CjE21YN+siKVrgF4clupFXc5nqg+RAf5IGZISgA
-         9nx26cuiBHhNGt8Uuu55MxaVtYXYzn74i3gNhxyRQq9ycxQphOQVCXIDY3A3vU+LiAiW
-         ZIXsd2YeEsVxJ4Z1zul5DtVh7CdDj1ovtl2w2B3PqjZkjXhL/lyWPq76m7BHpFb4mC5e
-         tvgpefn3Ab9GLLLGWsyJQMUjCqR56ep7p8RGHFmqjYjnQkLNaZ49zaYqplMCnQ+EvKJb
-         Y+oCNczvqrxuX9XR5hOqColYCWlvULy/NrKkYoRYQnxBfOtpz62ztTR4shaupf89Cug8
-         kTHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Hv6OX3x7Mxf/67Jlq6smdr/UMi+i/zE1NTmGnDjsHQ8=;
-        b=HeoLGPS/1jR3q41wUf8sGfd1xJlxtgugDeiiGb6z+GL9MV8PSFTV0lmqzwG869JPa0
-         AL4m+LB4ohg18ZBRlRGqiARmEVe5X6IqeyKoXWznhqjSBAHQmO7m5TjPrutyEEjqGRcq
-         hjG1Bk433W6CHlNnm2MgR2PFwZoc2fagm6BPBGNo4lIxqlZPRdrUolWtwR+fQfdzT2Og
-         +uM/lqLLP3o3X5l7P39FU2ow/s+P9SM/3QeMIUud9Y7H55SJPqlUpP90PNztRM/i33PQ
-         baM3QLg+EybUcaaTgXsznWLG+dq0o3DnQ8pZ4mbRqjl370x4XrvPbgUxxw/q99xqSrx+
-         oDag==
-X-Gm-Message-State: ALoCoQne+pmnhBIldKlKSCUurRlTlVk+IwDa1rbbWS24wg+Q8+GEycNE8+WZsUzPbb5VANVgx9HkCtnxEye690THor2stZ/n20MtlnS3Ev5K4A89bViLEVQ=
-X-Received: by 10.107.168.203 with SMTP id e72mr8541964ioj.96.1450376967469;
- Thu, 17 Dec 2015 10:29:27 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Thu, 17 Dec 2015 10:29:27 -0800 (PST)
-In-Reply-To: <5672D895.7030209@mail.mcgill.ca>
+	id S1753882AbbLQSdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 13:33:32 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62020 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752673AbbLQSda (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 13:33:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 059F933082;
+	Thu, 17 Dec 2015 13:33:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0WVFLnUJbADyN3mtALsJRL4BXKw=; b=cAYUcJ
+	tUhh2/iFoWHV/Zu8TBYkhYhIF2/l5/MYRoI0L1KguTgiNsNydCmhekf71VkR7yvs
+	sGi9t7E5G7AvQA2SYdEm0xT99gapMnyBd9yMTmY+oUlHaxpqy0BMEL5tzEHaLSCI
+	E12ctDyRi42Yt5SXqQxCrwAGi/GmL5gS/uSY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jQ4aeUp53PrGJiNBPfnuiB8eMG1C1JLk
+	h0kPtKsqHtR7kg/pTgnTbNGRLGyzOoS3Oo9RAYrxf1EoQ4jPEvjbb1sPAQXNlLjK
+	m4XLrp5YcHGfrfmw0JUzdX0f/KZPQZvd9e/0HTap0z6zqRn0bNeL+KX2oLNMj/2s
+	lrD3qFtOtoI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F068533081;
+	Thu, 17 Dec 2015 13:33:28 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 599B43307D;
+	Thu, 17 Dec 2015 13:33:28 -0500 (EST)
+In-Reply-To: <CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
+	(Christian Couder's message of "Thu, 17 Dec 2015 17:54:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AA812888-A4EC-11E5-9379-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282665>
 
-On Thu, Dec 17, 2015 at 7:45 AM, PFDuc
-<pierre-francois.duc@mail.mcgill.ca> wrote:
-> Hello,
->
-> first of all thank you for developping git !
->
-> I had an issue with a capital block in the folder name inside my git =
-repo.
-> The folder in my local was named "Display" and the one at origin was =
-named
-> "display" resulting in error when importing python code from this fol=
-der for
-> users who got the repo from origin.
+Christian Couder <christian.couder@gmail.com> writes:
 
-By any chance, were different operating systems or file systems
-involved in creation of
-this problem?
+> In the "git worktree" documentation there is:
+>
+> "If you move a linked working tree to another file system, or within a
+> file system that does not support hard links, you need to run at least
+> one git command inside the linked working tree (e.g. git status) in
+> order to update its administrative files in the repository so that
+> they do not get automatically pruned."
+>
+> It looks like git can detect when a worktree created with "git
+> worktree" has been moved and I wonder if it would be possible to
+> detect if the main worktree pointed to by GIT_WORK_TREE as moved.
 
-There are file systems which care about the capitalization, and others =
-don't.
-So if you have a file system which doesn't care about capitalization
-of the folder/file name,
-you can use a different capitalization and it still works. If you take
-the code to
-another system then, which is a bit more careful there are problems of =
-course.
+As I personally do not find "moving a working tree" a very
+compelling use case, I'd be fine if cached information is not used
+when the actual worktree and the root of the cached untracked paths
+are different.
 
-The main question which remains, is how is Git involved? i.e. would it
-also happen
-if you just transfer a tarball? Did Git itself break anything?
-
->
-> I tried to change the folder name on bitbucket.org but I was unable t=
-o (or
-> wasn't smart enough to find how to).
->
-> I fixed the issue by deleting the file from my local, then commit, th=
-en
-> push, put the same folder in my local, then commit then push.
->
-> I am therefore only writing to tell you that story which is not so
-> important, but I had the thought that because it is not so important =
-maybe
-> nobody reports that and the bug (if any) cannot be fixed.
->
-> Have a good day and happy end of year season!
->
-> Regards,
->
-> Pierre-Fran=C3=A7ois Duc
-> PhD candidate Physics McGill university
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+If you are going to change the in-index data of untracked cache
+anyway (like you attempted with 10/10 patch), I think a lot more
+sensible simplification may be to make the mechanism _always_ keep
+track of the worktree that is rooted one level above the index, and
+not use the cache in all other cases.  That way, if you move the
+working tree in its entirety (i.e. $foo/{Makefile,.git/,untracked}
+all move to $bar/. at the same time), the untracked cache data that
+was in $foo/.git/index, which knew about $foo/untracked, will now
+know about $bar/untracked when the index is moved to $bar/.git/index
+automatically.
