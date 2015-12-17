@@ -1,111 +1,259 @@
-From: Alexander Skrinnik <askrinnik@amtoss.com.ua>
-Subject: RE: CruiseControl.NET hangs on git-submodule bad file descriptor
-Date: Thu, 17 Dec 2015 14:07:11 +0000
-Message-ID: <HE1PR08MB089115A3232C83713A4E3859F8E00@HE1PR08MB0891.eurprd08.prod.outlook.com>
-References: <HE1PR08MB089107ED02BEA428A6BB37A5F8E00@HE1PR08MB0891.eurprd08.prod.outlook.com>
- <alpine.DEB.2.20.1512171045230.6483@virtualbox>
- <HE1PR08MB089122D0784C67685EAF5A76F8E00@HE1PR08MB0891.eurprd08.prod.outlook.com>
- <alpine.DEB.2.20.1512171453140.6483@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 17 15:07:24 2015
+From: Victor Leschuk <vleschuk@gmail.com>
+Subject: [PATCH v2] git-svn: add support for prefixed globs in config
+Date: Thu, 17 Dec 2015 17:34:42 +0300
+Message-ID: <1450362882-716-1-git-send-email-vleschuk@accesssoftek.com>
+Cc: vleschuk@accesssoftek.com, normalperson@yhbt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 15:34:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9ZDH-000700-D2
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 15:07:24 +0100
+	id 1a9Zds-0004Bv-TV
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 15:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934720AbbLQOHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 09:07:18 -0500
-Received: from mail-db3on0094.outbound.protection.outlook.com ([157.55.234.94]:20400
-	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755996AbbLQOHR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Dec 2015 09:07:17 -0500
+	id S965833AbbLQOes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 09:34:48 -0500
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:33135 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934373AbbLQOer (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 09:34:47 -0500
+Received: by mail-lb0-f173.google.com with SMTP id kw15so46555160lbb.0
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 06:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amtoss.onmicrosoft.com; s=selector1-amtoss-com-ua;
- h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=WSRMIMpMiVu+sSTDMg1ZXl1Mi77+3jcNGcNRRUhpbv0=;
- b=EEQ8CsEV1MzzATA/my53zoynCuy7Bo17H+KBnohNDWBPNZZObscOpXPoVgsoXhxLz1Mx2bQ3fdQ5Fxd+qr69ZhXrLlNc87IY+zCS1pLTK+wMg93LdzYTzgb+VCH4Uh6nV+9zH0AausGjVt0DBgnfyEITWr0moMXlaGjTkRYu6SU=
-Received: from HE1PR08MB0891.eurprd08.prod.outlook.com (10.164.53.29) by
- HE1PR08MB0890.eurprd08.prod.outlook.com (10.164.53.28) with Microsoft SMTP
- Server (TLS) id 15.1.355.16; Thu, 17 Dec 2015 14:07:12 +0000
-Received: from HE1PR08MB0891.eurprd08.prod.outlook.com ([10.164.53.29]) by
- HE1PR08MB0891.eurprd08.prod.outlook.com ([10.164.53.29]) with mapi id
- 15.01.0355.012; Thu, 17 Dec 2015 14:07:12 +0000
-Thread-Topic: CruiseControl.NET hangs on git-submodule bad file descriptor
-Thread-Index: AdE4o1uEu2TGfefDQfCy4zvcOMHAYQADGDIAAAK4n8AABflQAAAAZm1Q
-In-Reply-To: <alpine.DEB.2.20.1512171453140.6483@virtualbox>
-Accept-Language: ru-RU, en-US
-Content-Language: ru-RU
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=askrinnik@amtoss.com.ua; 
-x-originating-ip: [94.27.36.22]
-x-microsoft-exchange-diagnostics: 1;HE1PR08MB0890;5:h5a3S0TqXuTAd+v1npiT/neX37riOEVXvOYOuZU0vrjSrXgDDXvvGdP2GDdFU1auV5rTSz/OTnM/DiLSAuO6c0RE6mo7HGiqzJDEm9dNQ+B0Rr8rWSRRVGmg4tAAsPFBtYg8mE9jwyZe1Zp4c/X+7w==;24:/YXQEDJcrRWbZEiVgATwUnFh4y3lbE0P4QWgLbQf1pTsWote99do71XxxOiLzyaKj+qPyeIeYxn/XzfF6mfVxeRYUYKMQOr1wzKACidk5qM=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:HE1PR08MB0890;
-x-microsoft-antispam-prvs: <HE1PR08MB08900950179C8EF3288A0A9DF8E00@HE1PR08MB0890.eurprd08.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(2401047)(520078)(5005006)(8121501046)(3002001)(10201501046);SRVR:HE1PR08MB0890;BCL:0;PCL:0;RULEID:;SRVR:HE1PR08MB0890;
-x-forefront-prvs: 07935ACF08
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(377454003)(199003)(189002)(24454002)(13464003)(66066001)(33656002)(11100500001)(5001960100002)(2950100001)(105586002)(2900100001)(1220700001)(1096002)(106356001)(92566002)(19580395003)(5008740100001)(5004730100002)(86362001)(102836003)(6116002)(586003)(74482002)(87936001)(110136002)(5002640100001)(189998001)(10400500002)(81156007)(5003600100002)(97736004)(3846002)(19580405001)(101416001)(93886004)(122556002)(40100003)(77096005)(50986999)(74316001)(76176999)(76576001)(54356999)(7059030);DIR:OUT;SFP:1101;SCL:1;SRVR:HE1PR08MB0890;H:HE1PR08MB0891.eurprd08.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: amtoss.com.ua does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-X-OriginatorOrg: amtoss.com.ua
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Dec 2015 14:07:11.9935
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3a059e38-2ff1-46cc-b231-299d17307f39
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR08MB0890
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=4UtzgNzT98yAIxi5/7rK+NzJqt8V2A8rxYy5UJQTG64=;
+        b=OJnNPYU/R9UH1zFxnKDpTUv4dXw0CVr60+/QSXpxRcrMnnxsWfw7j1ZNL1cJ++kgSJ
+         +cT2IblvgljXXL0M5MTnkMSLAR3hcHBWb6+20ZNYZNcwDpJ8A3002H+f0EICGjranmer
+         1Cl8DPTF6+sGCcClHnNg7frlRJ/XFh3Kb+oTTpqNVobGva7tweUfBjuPkMlsNmenM/uf
+         5kZF3i2ie4cQfhNkfvncXSjNKy7A+mwJHDDDDeJntN8HcPzuw0jnEYd+BVvjHFaF7e9t
+         nat1qkpbw7thbx3edrnNSQw7/tbqL3X/Ci/nGNAlDXYRdK7g/EjmYJSNsaGZUrGvaMhi
+         sDgg==
+X-Received: by 10.112.36.130 with SMTP id q2mr21141000lbj.116.1450362885888;
+        Thu, 17 Dec 2015 06:34:45 -0800 (PST)
+Received: from del-debian (93-80-35-229.broadband.corbina.ru. [93.80.35.229])
+        by smtp.gmail.com with ESMTPSA id a190sm1979290lfa.32.2015.12.17.06.34.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Dec 2015 06:34:45 -0800 (PST)
+X-Google-Original-From: Victor Leschuk <vleschuk@accesssoftek.com>
+Received: from del by del-debian with local (Exim 4.86)
+	(envelope-from <vleschuk@gmail.com>)
+	id 1a9Zdk-0000CE-7w; Thu, 17 Dec 2015 17:34:44 +0300
+X-Mailer: git-send-email 2.7.0.rc0.21.gb793f61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282655>
 
-OK, no problem 
-I have workaround :)
+Introduce prefixed globs for branches and tags in git-svn.
+Globs like 'release_*' allow users to avoid long lines in config like:
 
-Thanks a lot for your help
+branches = branches/{release_20,release_21,release_22,...}
 
-Best wishes
---
-Alexander Skrinnik
+Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+---
+Changes from v1:
+	* Joined implementation and test in one patch
+	* Fixed test code style according to current coding style guide
 
+ Documentation/git-svn.txt        |   5 ++
+ perl/Git/SVN/GlobSpec.pm         |   9 ++-
+ t/t9168-git-svn-prefixed-glob.sh | 136 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 145 insertions(+), 5 deletions(-)
+ create mode 100755 t/t9168-git-svn-prefixed-glob.sh
 
------Original Message-----
-From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-Sent: Thursday, December 17, 2015 3:55 PM
-To: Alexander Skrinnik
-Cc: git@vger.kernel.org
-Subject: RE: CruiseControl.NET hangs on git-submodule bad file descriptor
-
-Hi Alexander,
-
-you might want to refrain from top-posting on this list in the future.
-Just sayin' ;-)
-
-On Thu, 17 Dec 2015, Alexander Skrinnik wrote:
-
-> I found workaround, CC.NET invokes bat-file with command:
-> git submodule foreach git checkout "myBranch" <NUL
-> 
-> It works fine. But looks like the issue is in git. Not in CC.NET :) If 
-> you have a chance, could you look into it, please?
-
-Unfortunately, this is one of those problems where the bug reporter expects me not only to fix the problem, but also to come up with an easy way to reproduce the issue.
-
-And even more unfortunate is the fact that I am really pressed on some other, more critical issues.
-
-Is there really no chance for you to have a crack at resolving this issue?
-
-Ciao,
-Johannes
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 0c0f60b..529cffe 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -1034,6 +1034,7 @@ listed below are allowed:
+ 	url = http://server.org/svn
+ 	fetch = trunk/project-a:refs/remotes/project-a/trunk
+ 	branches = branches/*/project-a:refs/remotes/project-a/branches/*
++	branches = branches/release_*:refs/remotes/project-a/branches/release_*
+ 	tags = tags/*/project-a:refs/remotes/project-a/tags/*
+ ------------------------------------------------------------------------
+ 
+@@ -1044,6 +1045,10 @@ independent path component (surrounded by '/' or EOL).   This
+ type of configuration is not automatically created by 'init' and
+ should be manually entered with a text-editor or using 'git config'.
+ 
++Also note that prefixed globs (e.g. 'release_*') match everything after prefix
++but do not match exact prefix. For example:
++'release_*' will match 'release_1' or 'release_v1' but will not match 'release_'.
++
+ It is also possible to fetch a subset of branches or tags by using a
+ comma-separated list of names within braces. For example:
+ 
+diff --git a/perl/Git/SVN/GlobSpec.pm b/perl/Git/SVN/GlobSpec.pm
+index c95f5d7..a136090 100644
+--- a/perl/Git/SVN/GlobSpec.pm
++++ b/perl/Git/SVN/GlobSpec.pm
+@@ -11,16 +11,15 @@ sub new {
+ 	my $die_msg = "Only one set of wildcard directories " .
+ 				"(e.g. '*' or '*/*/*') is supported: '$glob'\n";
+ 	for my $part (split(m|/|, $glob)) {
+-		if ($part =~ /\*/ && $part ne "*") {
+-			die "Invalid pattern in '$glob': $part\n";
+-		} elsif ($pattern_ok && $part =~ /[{}]/ &&
++		if ($pattern_ok && $part =~ /[{}]/ &&
+ 			 $part !~ /^\{[^{}]+\}/) {
+ 			die "Invalid pattern in '$glob': $part\n";
+ 		}
+-		if ($part eq "*") {
++		if ($part =~ /(\w*)\*/) {
+ 			die $die_msg if $state eq "right";
+ 			$state = "pattern";
+-			push(@patterns, "[^/]*");
++			my $pat = $1 ? "${1}[^/]+" : "[^/]*";
++			push(@patterns, $pat);
+ 		} elsif ($pattern_ok && $part =~ /^\{(.*)\}$/) {
+ 			die $die_msg if $state eq "right";
+ 			$state = "pattern";
+diff --git a/t/t9168-git-svn-prefixed-glob.sh b/t/t9168-git-svn-prefixed-glob.sh
+new file mode 100755
+index 0000000..b8a059b
+--- /dev/null
++++ b/t/t9168-git-svn-prefixed-glob.sh
+@@ -0,0 +1,136 @@
++#!/bin/sh
++test_description='git svn globbing refspecs with prefixed globs'
++. ./lib-git-svn.sh
++
++cat >expect.end <<EOF
++the end
++hi
++start a new branch
++initial
++EOF
++
++test_expect_success 'test refspec prefixed globbing' '
++	mkdir -p trunk/src/a trunk/src/b trunk/doc &&
++	echo "hello world" >trunk/src/a/readme &&
++	echo "goodbye world" >trunk/src/b/readme &&
++	svn_cmd import -m "initial" trunk "$svnrepo"/trunk &&
++	svn_cmd co "$svnrepo" tmp &&
++	(
++		cd tmp &&
++		mkdir branches tags &&
++		svn_cmd add branches tags &&
++		svn_cmd cp trunk branches/b_start &&
++		svn_cmd commit -m "start a new branch" &&
++		svn_cmd up &&
++		echo "hi" >>branches/b_start/src/b/readme &&
++		poke branches/b_start/src/b/readme &&
++		echo "hey" >>branches/b_start/src/a/readme &&
++		poke branches/b_start/src/a/readme &&
++		svn_cmd commit -m "hi" &&
++		svn_cmd up &&
++		svn_cmd cp branches/b_start tags/t_end &&
++		echo "bye" >>tags/t_end/src/b/readme &&
++		poke tags/t_end/src/b/readme &&
++		echo "aye" >>tags/t_end/src/a/readme &&
++		poke tags/t_end/src/a/readme &&
++		svn_cmd commit -m "the end" &&
++		echo "byebye" >>tags/t_end/src/b/readme &&
++		poke tags/t_end/src/b/readme &&
++		svn_cmd commit -m "nothing to see here"
++	) &&
++	git config --add svn-remote.svn.url "$svnrepo" &&
++	git config --add svn-remote.svn.fetch \
++	                 "trunk/src/a:refs/remotes/trunk" &&
++	git config --add svn-remote.svn.branches \
++	                 "branches/b_*/src/a:refs/remotes/branches/b_*" &&
++	git config --add svn-remote.svn.tags\
++	                 "tags/t_*/src/a:refs/remotes/tags/t_*" &&
++	git svn multi-fetch &&
++	git log --pretty=oneline refs/remotes/tags/t_end | \
++	    sed -e "s/^.\{41\}//" >output.end &&
++	test_cmp expect.end output.end &&
++	test "`git rev-parse refs/remotes/tags/t_end~1`" = \
++		"`git rev-parse refs/remotes/branches/b_start`" &&
++	test "`git rev-parse refs/remotes/branches/b_start~2`" = \
++		"`git rev-parse refs/remotes/trunk`" &&
++	test_must_fail git rev-parse refs/remotes/tags/t_end@3
++	'
++
++echo try to try >expect.two &&
++echo nothing to see here >>expect.two &&
++cat expect.end >>expect.two
++
++test_expect_success 'test left-hand-side only prefixed globbing' '
++	git config --add svn-remote.two.url "$svnrepo" &&
++	git config --add svn-remote.two.fetch trunk:refs/remotes/two/trunk &&
++	git config --add svn-remote.two.branches \
++	                 "branches/b_*:refs/remotes/two/branches/*" &&
++	git config --add svn-remote.two.tags \
++	                 "tags/t_*:refs/remotes/two/tags/*" &&
++	(
++		cd tmp &&
++		echo "try try" >>tags/t_end/src/b/readme &&
++		poke tags/t_end/src/b/readme &&
++		svn_cmd commit -m "try to try"
++	) &&
++	git svn fetch two &&
++	test `git rev-list refs/remotes/two/tags/t_end | wc -l` -eq 6 &&
++	test `git rev-list refs/remotes/two/branches/b_start | wc -l` -eq 3 &&
++	test `git rev-parse refs/remotes/two/branches/b_start~2` = \
++	     `git rev-parse refs/remotes/two/trunk` &&
++	test `git rev-parse refs/remotes/two/tags/t_end~3` = \
++	     `git rev-parse refs/remotes/two/branches/b_start` &&
++	git log --pretty=oneline refs/remotes/two/tags/t_end | \
++	    sed -e "s/^.\{41\}//" >output.two &&
++	test_cmp expect.two output.two
++	'
++
++test_expect_success 'test prefixed globs do not match just prefix' '
++	git config --add svn-remote.three.url "$svnrepo" &&
++	git config --add svn-remote.three.fetch \
++	                 trunk:refs/remotes/three/trunk &&
++	git config --add svn-remote.three.branches \
++	                 "branches/b_*:refs/remotes/three/branches/*" &&
++	git config --add svn-remote.three.tags \
++	                 "tags/t_*:refs/remotes/three/tags/*" &&
++	(
++		cd tmp &&
++		svn_cmd cp trunk branches/b_ &&
++		echo "You should never see me" >>branches/b_/src/a/readme &&
++		poke branches/b_/src/a/readme &&
++		svn_cmd commit -m "Never seen branch commit" &&
++		svn_cmd up &&
++		svn_cmd cp branches/b_ tags/t_ &&
++		echo "You should never see mee too" >>tags/t_/src/a/readme &&
++		poke tags/t_/src/a/readme &&
++		svn_cmd commit -m "Never seen tag commit" &&
++		svn_cmd up
++	) &&
++	git svn fetch three &&
++	test_path_is_missing refs/remotes/three/branches/b_ &&
++	test_path_is_missing refs/remotes/three/tags/t_
++	'
++
++echo "Only one set of wildcard directories" \
++     "(e.g. '*' or '*/*/*') is supported: 'branches/b_*/t/*'" >expect.four &&
++echo "" >>expect.four
++
++test_expect_success 'test disallow prefixed multi-globs' '
++	git config --add svn-remote.four.url "$svnrepo" &&
++	git config --add svn-remote.four.fetch \
++	                 trunk:refs/remotes/four/trunk &&
++	git config --add svn-remote.four.branches \
++	                 "branches/b_*/t/*:refs/remotes/four/branches/*" &&
++	git config --add svn-remote.four.tags \
++	                 "tags/t_*/*:refs/remotes/four/tags/*" &&
++	(
++		cd tmp &&
++		echo "try try" >>tags/t_end/src/b/readme &&
++		poke tags/t_end/src/b/readme &&
++		svn_cmd commit -m "try to try"
++	) &&
++	test_must_fail git svn fetch four 2>stderr.four &&
++	test_cmp expect.four stderr.four
++	'
++
++test_done
+-- 
+2.7.0.rc0.21.gb793f61
