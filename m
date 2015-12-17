@@ -1,75 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1 1/4] git-gui: remove duplicate entries from
- .gitconfig's gui.recentrepo
-Date: Thu, 17 Dec 2015 02:45:14 -0500
-Message-ID: <CAPig+cQd2f7zHJAwS29-zuL3xvC2thu9pvU-i1GXVTm_3E6rAQ@mail.gmail.com>
-References: <3453668A49C94C2AA39911FC594AE151@PhilipOakley>
-	<1450105743-2432-1-git-send-email-philipoakley@iee.org>
-	<1450105743-2432-2-git-send-email-philipoakley@iee.org>
-	<CAPig+cQ8=WKwew5GNqyAPFuYJDgM+ae6rxaJQg=jhrxn61rNbQ@mail.gmail.com>
-	<B283141DAA2647EF9917F27A817CC7FA@PhilipOakley>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCHv2] Porting resolve_relative_url from shell to C
+Date: Thu, 17 Dec 2015 08:47:18 +0100
+Message-ID: <56726886.6060305@web.de>
+References: <1449709654-30189-1-git-send-email-sbeller@google.com>
+ <1450311999-3992-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Alexey Astakhov <asstv7@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Dec 17 08:45:24 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, jens.lehmann@web.de, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 17 08:47:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9TFb-0003Nj-C6
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:45:23 +0100
+	id 1a9THm-0007lW-2X
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Dec 2015 08:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806AbbLQHpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 02:45:17 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:34591 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbbLQHpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 02:45:15 -0500
-Received: by mail-vk0-f44.google.com with SMTP id j66so41612540vkg.1
-        for <git@vger.kernel.org>; Wed, 16 Dec 2015 23:45:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=7jI+vA/eT5gjnosPiWM68qq3qfT6eDxN4GNNYbriw/4=;
-        b=nPorogQQULUJlnYUZfemxbJL8aZtAqqM/yFibbPKsaTxhE+O3s/RG/Xlv9eCBw6mKe
-         NTbnbDFeEEs1vJqZTR4udpMisQ2LyVFs04wdHtbHDkp5bjSQ5BwlMnr6CYjF3Y3FpFN7
-         sIMizaRZ9ln5MxiXRon60bn/QPt0yBZyA9/cZAlRyVvzruG8KfTR/RFv13u5EAvTrLeW
-         edDu1lB7CFkC+UUEdFWkh/5BzmdppbBEESoR7QYH4gmMAyzaueoNK3kjGQN3Ae3Cw33i
-         XlXGpjWxkij/pib/hub57qyG4DVVAkK13TEcDOHv5g7wE4IehO4wu+WpnnBht+gCCeqD
-         qcsA==
-X-Received: by 10.31.56.18 with SMTP id f18mr33226126vka.19.1450338314434;
- Wed, 16 Dec 2015 23:45:14 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 16 Dec 2015 23:45:14 -0800 (PST)
-In-Reply-To: <B283141DAA2647EF9917F27A817CC7FA@PhilipOakley>
-X-Google-Sender-Auth: _eS2CT_Omzo8nBk3zA0H6xhc8L0
+	id S1751938AbbLQHre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 02:47:34 -0500
+Received: from mout.web.de ([212.227.17.11]:52289 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751439AbbLQHrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 02:47:33 -0500
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MHp4r-1aD2iO0pTx-003cF1; Thu, 17 Dec 2015 08:47:25
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+In-Reply-To: <1450311999-3992-1-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:OQt4ljxCQJ08VuLTzDTrKEKaRXJOjggAwPYzkBxB3xPW94j74cX
+ URCJ6VpxN6ZJLN8KiOXpCM0sBJFODHj/HLo1gpnGG92zXtrdxTv2MXTgNMvxJZBs8woUijQ
+ ruqh3zrbNW/SyXNHtDVHO/8g/tmgJVW/esOZaI+5rXcYEGk5IGsdVdzH2mdLUCYXFwoHOIM
+ 53i0RWvy8Lqnt2zJDPvRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vrtQ0O5kIJI=:HXUyjl/lL/ttjsgjMl0jB1
+ /1mpFIVZlxdRkU8Zq8lrIazP5k7RKnUX3X6EHEs83HdYL0Du/eHyM8EMFBtIk+6p1gLhgGXNb
+ FLcvKfwRN7cnSVgta0k5xgT8rECNAkbS5JrFJ0dQgwWvomoOaJ5Ejk6wtYcWRQIVLyiEcIjtz
+ /msUx2rBelv2mywiG1miIQzA6/xCh03NcS+qsENykbGX/SK13mDD4s7o0VMy0hvnuJ3aY5TWD
+ bQuIjBYPHbE+bERsxEDG8wvSbhwujsYJGDuEqcF2FmyI0G5YORVg0DnleKnLmlSA9pnaOO3qn
+ OyzffD4Amc8/DJD0SIMsK+dQHnbccA/H+e6FDO3/+PaG43QjQlrlm087fMflx/yA6e/efNdR0
+ Qdqb/YmmZV/QrRBXMVCeGPkTfV8KT4vnum91u99xMk7+OuuvOCJED39wmPhWRQIO9VKrjX4gY
+ fTHjCwA4cnlzECyZkv/HYpufJQTsGaEY1qd39XrPvsQ1YFolkXM+vNqpQVywop0zFZvNXn+ju
+ 5urYWp/TrJBobP9dZ+5tI/JTtmcLWDhdcevrRndDDogAGAOq59e5XIOhTJorgxAs1Zw61m8Bf
+ eYbzZ4pnzCW+fQLnM3QNHzl5QpTlHOwWFdrzGCgdpwTIQCSQDW8PBCVq9aZI73ptESgrz+7c/
+ u/jIO9m33FXSS3ibjMvSRn0XxwyR5azGc5HnaCAlau+Gm50KplJMzv+AX6xd5NCkd2XBzEVo/
+ /3u3Y+0ihd35RWGjqK2nVr1O6usvt1IdLms4AK6L4LECMKRjwzpF/796GfuhXpalEgt/OxMz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282637>
 
-On Wed, Dec 16, 2015 at 6:41 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Eric Sunshine" <sunshine@sunshineco.com>
->> On Monday, December 14, 2015, Philip Oakley <philipoakley@iee.org> wrote:
->>> The git gui's recent repo list may become contaminated with duplicate
->>> entries. The git gui would barf when attempting to remove one entry.
->>> Remove them all - there is no option within 'git config' to selectively
->>> remove one of the entries.
->>>
->>> This issue was reported on the 'Git User' list
->>> (https://groups.google.com/forum/#!topic/git-users/msev4KsQGFc,
->>> Warning: gui.recentrepo has multiply values while executing).
->>
->> s/multiply/multiple/
->
-> The original report has that mistake. I'll quote the thread title.
-
-Ah, I had checked the screenshot included with the original report and
-saw that it was correctly spelled, thus assumed that the typo was
-yours. I didn't pay much attention to the title in the original
-report, which indeed already contains this misspelling.
+On 17.12.15 01:26, Stefan Beller wrote:
+> A new version of the patch, which spells out more its intent and
+> may actually work in Windows.
+> 
+> Any comment welcome,
+> Thanks,
+> Stefan
+> 
+> Stefan Beller (1):
+>   submodule: Port resolve_relative_url from shell to C
+> 
+>  builtin/submodule--helper.c | 151 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-submodule.sh            |  81 ++----------------------
+>  2 files changed, 155 insertions(+), 77 deletions(-)
+> 
+> interdiff to previous version:
+> 
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f48b5b5..b925bed 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -31,6 +31,36 @@ static const char *get_default_remote(void)
+>  		return xstrdup(dest);
+>  }
+>  
+> +static int has_same_dir_prefix(const char *str, const char **out)
+> +{
+> +#ifdef GIT_WINDOWS_NATIVE
+Should that be
+if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
