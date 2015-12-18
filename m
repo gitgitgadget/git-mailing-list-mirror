@@ -1,185 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 11/11] ref-filter: introduce objectname_atom_parser()
-Date: Fri, 18 Dec 2015 01:24:50 -0500
-Message-ID: <CAPig+cSFG86U=+onvJ1aaosmX3k+fzD-431q-hFTnWHpg=pZVw@mail.gmail.com>
-References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
-	<1450279802-29414-12-git-send-email-Karthik.188@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 10/10] dir: do not use untracked cache ident anymore
+Date: Fri, 18 Dec 2015 09:32:03 +0100
+Message-ID: <CAP8UFD2UzNW6ZsrrOjRO-+5BSpx6Ntz+7gk4FsnOZ74KbEiTJg@mail.gmail.com>
+References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
+	<1450196907-17805-11-git-send-email-chriscool@tuxfamily.org>
+	<xmqqd1u7fq5r.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD0Y252vmqxziy4Y8Bp3cw6fS0iOVFzZG+=wGt7K25V8Yg@mail.gmail.com>
+	<xmqq1talc4co.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 07:24:56 2015
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 09:32:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9oTH-0006h4-Ia
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 07:24:55 +0100
+	id 1a9qSm-0001Cx-51
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 09:32:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbbLRGYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 01:24:51 -0500
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:36699 "EHLO
-	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbbLRGYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 01:24:51 -0500
-Received: by mail-vk0-f53.google.com with SMTP id f2so21346636vkb.3
-        for <git@vger.kernel.org>; Thu, 17 Dec 2015 22:24:50 -0800 (PST)
+	id S1753627AbbLRIcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 03:32:07 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:33440 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753300AbbLRIcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 03:32:05 -0500
+Received: by mail-lb0-f180.google.com with SMTP id kw15so59641853lbb.0
+        for <git@vger.kernel.org>; Fri, 18 Dec 2015 00:32:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XDuw8OLH4bWzlmGcfmT/Ws6ioEoUqnQEb4bDITlx2wA=;
-        b=aiwMGMeskTYTg3YC7rIbQ4IVN3oI8Jo0sHXC9pYTsGcI9Vw4ob2Bi4R6yNrX9Pcch+
-         qGKARpwCqqcdH0Bnw5O6750z9haZ6iVJCD+jWvAgaVJ7rgMZmbhpryV48FswSqKzxn0K
-         bvfc2MiB1VmrWbavxpo6uJQeqWROvTvmYbUPFIrKK38N8gYr8QXntQ7pj17XNuyqVXi6
-         xWajRcs8r8CaYAnZQ4iwQwVKZCBpda+DqOb3DpiMybpagWPNZwcKB+kD6vl6MOCn/14Z
-         9jLb/PALRzLedjN6JKjHy082GEwlkEETYFDsMyoFCCuKNUlMQpyot/bBJJeJzdTrz/1C
-         JtpQ==
-X-Received: by 10.31.182.129 with SMTP id g123mr1136982vkf.45.1450419890365;
- Thu, 17 Dec 2015 22:24:50 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 17 Dec 2015 22:24:50 -0800 (PST)
-In-Reply-To: <1450279802-29414-12-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: vH01qg9Yw2tenSbtVkCz6a_ZZ6c
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MA6GE4YDD2UvcOyeqe1Q9G7GH5F9yZwGtnxuuY732aY=;
+        b=wjpJTDXN0pVOHcmJmkYqmEyLhZ1xyJplFvbo7brNW5sBEi/Ez88CM3niDicUDEomhc
+         fZUAbjpjpiNaeHb+ytgHhYtC3w2woz6tK7y19eWTguqQnrqao+dTrBnlDwHJo0FxIwXc
+         s8ATAfuC23slkkGiZjVGF/7awStrF6uswi8vuZMC2oh2CyKKRAaUoTuvLkFeV73hAcoh
+         mlWJGHhCdwQq41vraPResX/DwbZADWWlpaej1GHxCGj6k9Z8JEGKZY5ls7TvBie0w72j
+         J91VQQ/H6QVsoGBED4yw+DRY9TkONs98I89HyV26xr/cB04kACBwZNxHX3V6ZepGi4WF
+         MH/w==
+X-Received: by 10.112.141.201 with SMTP id rq9mr816897lbb.4.1450427523928;
+ Fri, 18 Dec 2015 00:32:03 -0800 (PST)
+Received: by 10.25.23.90 with HTTP; Fri, 18 Dec 2015 00:32:03 -0800 (PST)
+In-Reply-To: <xmqq1talc4co.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282702>
 
-On Wed, Dec 16, 2015 at 10:30 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Introduce objectname_atom_parser() which will parse the
-> '%(objectname)' atom and store information into the 'used_atom'
-> structure based on the modifiers used along with the atom.
+On Thu, Dec 17, 2015 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> @@ -43,6 +43,7 @@ static struct used_atom {
->                         enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
->                         unsigned int no_lines;
->                 } contents;
-> +               enum { O_FULL, O_SHORT } objectname;
->         } u;
->  } *used_atom;
-> @@ -124,6 +125,21 @@ static void contents_atom_parser(struct used_atom *atom)
-> +static void objectname_atom_parser(struct used_atom *atom)
-> +{
-> +       const char * buf;
-> +
-> +       if (match_atom_name(atom->str, "objectname", &buf))
-> +               atom->u.objectname = O_FULL;
-> +       if (!buf)
-> +               return;
-
-Let me make sure that I understand this correctly.
-
-make_atom_name("objectname") will return true only for "objectname" or
-"objectname:", and will return false for anything else, such as
-"objectnamely" or "schmorf". Furthermore, the only way
-objectname_atom_parser() can be called is when %(objectname) or
-%(objectname:...) is seen, thus match_atom_name() *must* return true
-here, which means the above conditional is misleading, suggesting that
-it could somehow return false.
-
-And, if match_atom_name() did return false here, then that indicates a
-programming error: objectname_atom_parser() somehow got called for
-something other than %(objectname) or %(objectname:...). This implies
-that the code should instead be structured like this:
-
-    if (!match_atom_name(..., "objectname", &buf)
-        die("BUG: parsing non-'objectname'")
-    if (!buf)
-        atom->u.objectname = O_FULL;
-    else if (!strcmp(buf, "short"))
-        atom->u.objectname = O_SHORT;
-    else
-        die(_("unrecognized %%(objectname) argument: %s"), buf);
-
-However, this can be simplified further by recognizing that, following
-this patch series, match_atom_name() is *only* called by these new
-parse functions[1], which means that, as a convenience,
-match_atom_name() itself could become a void rather than boolean
-function and die() if the expected atom name is not found. Thus, the
-code would become:
-
-    match_atom_name(...);
-    if (!buf)
-        ...
-    else if (!strcmp(...))
-        ...
-    ...
-
-By the way, the above commentary isn't specific to this patch and
-%(objectname), but is in fact also relevant for all of the preceding
-patches which introduce parse functions calling match_atom_name().
-
-More below...
-
-[1]: ...assuming you replace the unnecessary match_atom_name() in
-populate_value() with starts_with() as suggested in my patch 7/11
-review addendum[2].
-
-[2]: http://article.gmane.org/gmane.comp.version-control.git/282700
-
-> +
-> +       if (!strcmp(buf, "short"))
-> +               atom->u.objectname = O_SHORT;
-> +       else
-> +               die(_("unrecognized %%(objectname) argument: %s"), buf);
-> +}
-> +
-> @@ -461,15 +477,16 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
->  static int grab_objectname(const char *name, const unsigned char *sha1,
-> -                           struct atom_value *v)
-> +                          struct atom_value *v, struct used_atom *atom)
->  {
-> -       if (!strcmp(name, "objectname")) {
-> -               v->s = xstrdup(sha1_to_hex(sha1));
-> -               return 1;
-> -       }
-> -       if (!strcmp(name, "objectname:short")) {
-> -               v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-> -               return 1;
-> +       if (starts_with(name, "objectname")) {
-> +               if (atom->u.objectname == O_SHORT) {
-> +                       v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-> +                       return 1;
-> +               } else if (atom->u.objectname == O_FULL) {
-> +                       v->s = xstrdup(sha1_to_hex(sha1));
-> +                       return 1;
-> +               }
-
-Since 'objectname' can only ever be O_SHORT or O_FULL wouldn't it be a
-programming error if it ever falls through to this point after the
-closing brace? Perhaps a die("BUG:...") would be appropriate?
-
->         }
->         return 0;
->  }
-> @@ -493,7 +510,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
->                         v->s = xstrfmt("%lu", sz);
->                 }
->                 else if (deref)
-> -                       grab_objectname(name, obj->sha1, v);
-> +                       grab_objectname(name, obj->sha1, v, &used_atom[i]);
-
-This patch hunk is somehow corrupt and doesn't apply. Was there some
-hand-editing involved, or were some earlier patches regenerated after
-this patch was made or something?
-
->         }
->  }
+>> In the "git worktree" documentation there is:
+>>
+>> "If you move a linked working tree to another file system, or within a
+>> file system that does not support hard links, you need to run at least
+>> one git command inside the linked working tree (e.g. git status) in
+>> order to update its administrative files in the repository so that
+>> they do not get automatically pruned."
+>>
+>> It looks like git can detect when a worktree created with "git
+>> worktree" has been moved and I wonder if it would be possible to
+>> detect if the main worktree pointed to by GIT_WORK_TREE as moved.
 >
-> @@ -999,7 +1016,7 @@ static void populate_value(struct ref_array_item *ref)
->                                 v->s = xstrdup(buf + 1);
->                         }
->                         continue;
-> -               } else if (!deref && grab_objectname(name, ref->objectname, v)) {
-> +               } else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
->                         continue;
->                 } else if (!strcmp(name, "HEAD")) {
->                         const char *head;
-> --
-> 2.6.4
+> As I personally do not find "moving a working tree" a very
+> compelling use case, I'd be fine if cached information is not used
+> when the actual worktree and the root of the cached untracked paths
+> are different.
+
+Yeah, I could just discard and recreate the UC from scratch if the
+actual worktree and the root of the UC paths are different.
+
+> If you are going to change the in-index data of untracked cache
+> anyway (like you attempted with 10/10 patch), I think a lot more
+> sensible simplification may be to make the mechanism _always_ keep
+> track of the worktree that is rooted one level above the index, and
+> not use the cache in all other cases.  That way, if you move the
+> working tree in its entirety (i.e. $foo/{Makefile,.git/,untracked}
+> all move to $bar/. at the same time), the untracked cache data that
+> was in $foo/.git/index, which knew about $foo/untracked, will now
+> know about $bar/untracked when the index is moved to $bar/.git/index
+> automatically.
+
+I am ok with that, though I worry a bit about some people having a
+setup where they always use a worktree that is not one level above the
+.git directory.
