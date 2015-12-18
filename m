@@ -1,132 +1,127 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: [RFC] Malicously tampering git metadata?
-Date: Fri, 18 Dec 2015 18:10:32 -0500
-Message-ID: <20151218231032.GA16904@thunk.org>
-References: <20151216032639.GA1901@LykOS>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Sat, 19 Dec 2015 00:24:10 +0100
+Message-ID: <CAP8UFD16HbwN71ugTKek_CdT65571M1meisaBajjSFgoZePg8g@mail.gmail.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+	<1449594916-21167-8-git-send-email-chriscool@tuxfamily.org>
+	<xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com>
+	<xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
+	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
+	<xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
+	<CACsJy8B2tFqhfKPE17cPpp1uDYPa4OTB9zLHPY0j2QF9zuxAtQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Sat Dec 19 00:10:42 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 19 00:24:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aA4Ab-0008OE-Iw
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 00:10:41 +0100
+	id 1aA4Nk-0001bX-PM
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 00:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbbLRXKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 18:10:38 -0500
-Received: from imap.thunk.org ([74.207.234.97]:47984 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbbLRXKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 18:10:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=qgodWnqBs3o0DeKfZuox31Y7ix5Cq5t6spTMI1TMZIo=;
-	b=tsXkiGnnyvAOptzA13s0wUIlMECY9xfMapt+6nkvcxdG+IXVw48ay5RKEWYTKx5dvwlHoewn8yTZw3ewC3qIYplDsZGb88ZLzn/EMltO+3L6XH27UPtOD+qJG41ax+U1uDBMa/9C/p0leAa1Vs0vIjj14jXdbekeGtfgvS8dboA=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84)
-	(envelope-from <tytso@thunk.org>)
-	id 1aA4AU-0006w6-1x; Fri, 18 Dec 2015 23:10:34 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id CF29B8200D0; Fri, 18 Dec 2015 18:10:32 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20151216032639.GA1901@LykOS>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1751817AbbLRXYN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2015 18:24:13 -0500
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:36587 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592AbbLRXYM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Dec 2015 18:24:12 -0500
+Received: by mail-lb0-f178.google.com with SMTP id yq9so52241344lbb.3
+        for <git@vger.kernel.org>; Fri, 18 Dec 2015 15:24:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=KCnnGpwIurZSLyRTBP4HQVZ1KnCOFuBscIAuMbb8JKg=;
+        b=KGZIAgmcdkKX+m4JL4O76ohfIKmQIDiYHo6SZra0AFB6/nygPVQDfhC5dITGwulxwD
+         0+r1hSdp8eBpAZz6i/kS0mSScUgavQlJsDWNdY/5u3cmNlJ8WAtuLmt/Dk94nQf/FEwh
+         w8W50b9rWZKomZkmW/hxnf2F4vycYncrAWayBkax4kwruUXX16cR0cWm4TY1kYRaDdK2
+         vdD82ZmLpYS4jjXHo/DE6PPV5Sq/eOOWei1OLHc1AWAYRNQmPJWh6GCshUWG2Zfn+WkI
+         dDd4F/2SpaB/oHDp4U7jVoKJYJ8gwiGZyoWq7B0MSt8WqQTJR7fwu7HenlAviBS22PJD
+         YR9g==
+X-Received: by 10.112.150.102 with SMTP id uh6mr2409451lbb.16.1450481050570;
+ Fri, 18 Dec 2015 15:24:10 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Fri, 18 Dec 2015 15:24:10 -0800 (PST)
+In-Reply-To: <CACsJy8B2tFqhfKPE17cPpp1uDYPa4OTB9zLHPY0j2QF9zuxAtQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282720>
 
-On Tue, Dec 15, 2015 at 10:26:39PM -0500, Santiago Torres wrote:
-> 4) The developer pushes to upstream. All the traffic can be re-routed
-> back to the original repository. The target branch now contains a
-> vulnerable piece of code.
+On Thu, Dec 17, 2015 at 1:36 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Dec 16, 2015 at 4:53 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on
+> <avarab@gmail.com> wrote:
+>> On Tue, Dec 15, 2015 at 8:40 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>> I still have a problem with the approach from "design cleanliness"
+>>> point of view[...]
+>>>
+>>> In any case I think we already have agreed to disagree on this
+>>> point, so there is no use discussing it any longer from my side.  I
+>>> am not closing the door to this series, but I am not convinced,
+>>> either.  At least not yet.
+>>
+>> In general the fantastic thing about the git configuration facility =
+is
+>> that it provides both systems administrators and normal users with
+>> what they want. It's possible to configure things system-wide and
+>> override those on a user or repository basis.
+>>
+>> Of course hindsight is 20/20, but I think that given what's been
+>> covered in this thread it's been established that it's categorically
+>> better that if we introduce features like these that they be
+>> configured through the normal configuration facility rather than the
+>> configuration being sticky to the index.
+>
+> A minor note for implementers. We need to check that config is loaded
+> first. read-cache.c, being part of the core, does not bother itself
+> with config loading. And I think so far it has not used any config
+> vars. If a command forgets (*) to load the config, the cache may be
+> deleted (if we do it the safe way).
+>
+> (*) is there any command deliberately avoid loading config? git-clone
+> and git-init are special, but for this particular case it's probably
+> fine.
 
-I assume you are assuming here that the "push to upstream" doesn't
-involve some kind of human verification?  If someone tried pushing
-something like this to Linus, he would be checking the git diff stats
-and git commit structure for things that might look like "developer
-negligence".  He's been known to complain to subsystem developers in
-his own inimitable when the git commit structure looks suspicious, so
-I'm pretty sure he would notice this.
+Thanks for this note.
 
-But normally that developnment process we don't talk about "pushing to
-upstream" as much as "requesting a pull".  So it would be useful when
-you describe the attack to explicit describe the development workflow
-that is vulnerable to your attack.
+Looking at the current patch, the global variable in which the value
+of the core.untrackedCache config var is stored is
+"use_untracked_cache".
+It is used in the following places:
 
-For example, in my use case, I'm authorative over changes in fs/ext4.
-So when I pull from Linus's repo, I examine (using "gitk fs/ext4") all
-commits coming from upstream that modify fs/ext4.  So if someone tries
-introducing a change in fs/ext4 coming from "upstream", I will notice.
-Then when I request a pull request from Linus, the git pull request
-describes what commits are new in my tree that are not in his, and
-shows the diffstats from upstream.  When Linus verifies my pull, there
-are multiple opportunities where he will notice funny business:
+- wt_status_collect_untracked() in wt-status.c which is called only by
+"git status" and "git commit" after the config has been loaded.
 
-a) He would notice that my origin commit is something that is not in
-his upstream tree.
+- cmd_update_index() in builtin/update-index.c which loads the config
+before using it
 
-b) His diffstat is different from my diffstat (since thanks to the
-man-in-the middle, the conception of what commits are new in the git
-pull request will be different from his).
+- validate_untracked_cache() in dir.c where it is used in:
 
-c) His diffstat will show that files outside of fs/ext4 have been
-modified, which is a red flag that will merit more close examination.
-(And if the attacker had tried to introduce a change in fs/ext4, I
-would have noticed when I pulled from the man-in-the-middle git
-repo.)
+       if (use_untracked_cache !=3D 1 && !ident_in_untracked(dir->untra=
+cked)) {
+                warning(_("Untracked cache is disabled on this system."=
+));
+                return NULL;
+        }
 
-Now, if there is zero checking when the user pushes to upstream, then
-yes, there are all sorts of potential problems.  But that's one of the
-reasons why it's generally considered a good thing for Linux
-developers to use as the origin commit for their work official
-releases (which can be demarked using GPG-signed git tags).
+but this "if" and its contents are removed by patch 10/10 in v2.
 
-So for example, the changes for ext4 that were sent to Linus for v4.4
-was based off of v4.3-rc2:
-
-git tag  --verify v4.3-rc2
-object 1f93e4a96c9109378204c147b3eec0d0e8100fde
-type commit
-tag v4.3-rc2
-tagger Linus Torvalds <torvalds@linux-foundation.org> 1442784761 -0700
-
-Linux 4.3-rc2
-gpg: Signature made Sun 20 Sep 2015 05:32:41 PM EDT using RSA key ID 00411886
-gpg: Good signature from "Linus Torvalds <torvalds@linux-foundation.org>" [full]
-
-
-And the changes which I sent to Linus were also signed by a tag, and
-better yet, someone can indepedently verify this after the fact:
-
-% git show --oneline --show-signature f41683a204ea61568f0fd0804d47c19561f2ee39
-f41683a merged tag 'ext4_for_linus_stable'
-gpg: Signature made Sun 06 Dec 2015 10:35:27 PM EST using RSA key ID 950D81A3
-gpg: Good signature from "Theodore Ts'o <tytso@mit.edu>" [ultimate]
-gpg:                 aka "Theodore Ts'o <tytso@debian.org>" [ultimate]
-gpg:                 aka "Theodore Ts'o <tytso@google.com>" [ultimate]
-
-They can also verify that the chain of commits that I sent to Linus
-were rooted in Linus's signed v4.3-rc2 tag, so this kind of
-after-the-fact auditing means that if there *were* funny business, it
-could be caught even if Linus slipped up in his checking.
-
-
-Now, the crazy behavior where github users randomly and promiscuously
-do pushes and pull without doing any kind of verification may very
-well be dangerous.  But so is someone who saves a 80 patch series from
-their inbox, and without reading or verifying all of the patches
-applies them blindly to their tree using "git am" --- or if they were
-using cvs or svn, bulk applied the patches without doing any
-verification....
-
-Cheers,
-
-					- Ted
+So at the end of this patch series, there is no risk of
+use_untracked_cache not being properly setup.
