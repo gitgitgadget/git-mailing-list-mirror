@@ -1,116 +1,185 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 07/11] ref-filter: introduce align_atom_parser()
-Date: Fri, 18 Dec 2015 00:50:30 -0500
-Message-ID: <CAPig+cTvKL9C0M3NKF395dq6yCP94AL+iDe0EGRaK9xYDZ0YuQ@mail.gmail.com>
+Subject: Re: [PATCH v2 11/11] ref-filter: introduce objectname_atom_parser()
+Date: Fri, 18 Dec 2015 01:24:50 -0500
+Message-ID: <CAPig+cSFG86U=+onvJ1aaosmX3k+fzD-431q-hFTnWHpg=pZVw@mail.gmail.com>
 References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
-	<1450279802-29414-8-git-send-email-Karthik.188@gmail.com>
+	<1450279802-29414-12-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 06:50:36 2015
+X-From: git-owner@vger.kernel.org Fri Dec 18 07:24:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9nw3-0000M1-Lc
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 06:50:36 +0100
+	id 1a9oTH-0006h4-Ia
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 07:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbbLRFuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 00:50:32 -0500
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:34692 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751217AbbLRFub (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 00:50:31 -0500
-Received: by mail-vk0-f47.google.com with SMTP id j66so59681889vkg.1
-        for <git@vger.kernel.org>; Thu, 17 Dec 2015 21:50:30 -0800 (PST)
+	id S1752076AbbLRGYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 01:24:51 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:36699 "EHLO
+	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751899AbbLRGYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 01:24:51 -0500
+Received: by mail-vk0-f53.google.com with SMTP id f2so21346636vkb.3
+        for <git@vger.kernel.org>; Thu, 17 Dec 2015 22:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=wRbsd/NcAc0cBecc9cdnVQ6o+rSwI0MdjhXAiXv8IQk=;
-        b=pbxKALwC00N54unszpK5nueQx05OPFnuz6l1MH6Ps+uir4zZA5kCpU1zdGB75aQcfN
-         CeBVYujU4xI2ABsCjTY6u0AlGUbDQYbG8NRvSU4MoYw5l1O5pNAlE2eCXRCS3p7272Ns
-         yj/s/QduASeDiDRBJAK4FOadqrVsyzyeXAUi8CWjJUEdL+2MsotPldhaQd4sfUexK838
-         3NpakkncOZGgJlzz0W1//LeK1jMgm6e8LSGl9jDurTTKlgF9FhGDkZZYKJbfBii7avyY
-         ArShuBQ5l5ncIucXn8niqWOPeL1RDk/4syPa1rurJwOW8GAQcE+fn8dGJEQENqfAtSLo
-         9fZQ==
-X-Received: by 10.31.52.82 with SMTP id b79mr1140259vka.84.1450417830347; Thu,
- 17 Dec 2015 21:50:30 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 17 Dec 2015 21:50:30 -0800 (PST)
-In-Reply-To: <1450279802-29414-8-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: HJB6RcM48a2GHe3EL10Eb-_g9Jo
+        bh=XDuw8OLH4bWzlmGcfmT/Ws6ioEoUqnQEb4bDITlx2wA=;
+        b=aiwMGMeskTYTg3YC7rIbQ4IVN3oI8Jo0sHXC9pYTsGcI9Vw4ob2Bi4R6yNrX9Pcch+
+         qGKARpwCqqcdH0Bnw5O6750z9haZ6iVJCD+jWvAgaVJ7rgMZmbhpryV48FswSqKzxn0K
+         bvfc2MiB1VmrWbavxpo6uJQeqWROvTvmYbUPFIrKK38N8gYr8QXntQ7pj17XNuyqVXi6
+         xWajRcs8r8CaYAnZQ4iwQwVKZCBpda+DqOb3DpiMybpagWPNZwcKB+kD6vl6MOCn/14Z
+         9jLb/PALRzLedjN6JKjHy082GEwlkEETYFDsMyoFCCuKNUlMQpyot/bBJJeJzdTrz/1C
+         JtpQ==
+X-Received: by 10.31.182.129 with SMTP id g123mr1136982vkf.45.1450419890365;
+ Thu, 17 Dec 2015 22:24:50 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 17 Dec 2015 22:24:50 -0800 (PST)
+In-Reply-To: <1450279802-29414-12-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: vH01qg9Yw2tenSbtVkCz6a_ZZ6c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282701>
 
-On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Introduce align_atom_parser() which will parse an "align" atom and
-> store the required alignment position and width in the "use_atom"
-> structure for further usage in 'populate_value()'.
+On Wed, Dec 16, 2015 at 10:30 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce objectname_atom_parser() which will parse the
+> '%(objectname)' atom and store information into the 'used_atom'
+> structure based on the modifiers used along with the atom.
 >
 > Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 > Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
 > diff --git a/ref-filter.c b/ref-filter.c
-> @@ -63,6 +69,49 @@ static void color_atom_parser(struct used_atom *atom)
-> +static void align_atom_parser(struct used_atom *atom)
+> @@ -43,6 +43,7 @@ static struct used_atom {
+>                         enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+>                         unsigned int no_lines;
+>                 } contents;
+> +               enum { O_FULL, O_SHORT } objectname;
+>         } u;
+>  } *used_atom;
+> @@ -124,6 +125,21 @@ static void contents_atom_parser(struct used_atom *atom)
+> +static void objectname_atom_parser(struct used_atom *atom)
 > +{
-> +       [...]
-> +       match_atom_name(atom->str, "align", &buf);
+> +       const char * buf;
+> +
+> +       if (match_atom_name(atom->str, "objectname", &buf))
+> +               atom->u.objectname = O_FULL;
 > +       if (!buf)
-> +               die(_("expected format: %%(align:<width>,<position>)"));
-> +       [...]
+> +               return;
+
+Let me make sure that I understand this correctly.
+
+make_atom_name("objectname") will return true only for "objectname" or
+"objectname:", and will return false for anything else, such as
+"objectnamely" or "schmorf". Furthermore, the only way
+objectname_atom_parser() can be called is when %(objectname) or
+%(objectname:...) is seen, thus match_atom_name() *must* return true
+here, which means the above conditional is misleading, suggesting that
+it could somehow return false.
+
+And, if match_atom_name() did return false here, then that indicates a
+programming error: objectname_atom_parser() somehow got called for
+something other than %(objectname) or %(objectname:...). This implies
+that the code should instead be structured like this:
+
+    if (!match_atom_name(..., "objectname", &buf)
+        die("BUG: parsing non-'objectname'")
+    if (!buf)
+        atom->u.objectname = O_FULL;
+    else if (!strcmp(buf, "short"))
+        atom->u.objectname = O_SHORT;
+    else
+        die(_("unrecognized %%(objectname) argument: %s"), buf);
+
+However, this can be simplified further by recognizing that, following
+this patch series, match_atom_name() is *only* called by these new
+parse functions[1], which means that, as a convenience,
+match_atom_name() itself could become a void rather than boolean
+function and die() if the expected atom name is not found. Thus, the
+code would become:
+
+    match_atom_name(...);
+    if (!buf)
+        ...
+    else if (!strcmp(...))
+        ...
+    ...
+
+By the way, the above commentary isn't specific to this patch and
+%(objectname), but is in fact also relevant for all of the preceding
+patches which introduce parse functions calling match_atom_name().
+
+More below...
+
+[1]: ...assuming you replace the unnecessary match_atom_name() in
+populate_value() with starts_with() as suggested in my patch 7/11
+review addendum[2].
+
+[2]: http://article.gmane.org/gmane.comp.version-control.git/282700
+
+> +
+> +       if (!strcmp(buf, "short"))
+> +               atom->u.objectname = O_SHORT;
+> +       else
+> +               die(_("unrecognized %%(objectname) argument: %s"), buf);
 > +}
-> @@ -880,35 +924,7 @@ static void populate_value(struct ref_array_item *ref)
->                                 v->s = " ";
+> +
+> @@ -461,15 +477,16 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
+>  static int grab_objectname(const char *name, const unsigned char *sha1,
+> -                           struct atom_value *v)
+> +                          struct atom_value *v, struct used_atom *atom)
+>  {
+> -       if (!strcmp(name, "objectname")) {
+> -               v->s = xstrdup(sha1_to_hex(sha1));
+> -               return 1;
+> -       }
+> -       if (!strcmp(name, "objectname:short")) {
+> -               v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
+> -               return 1;
+> +       if (starts_with(name, "objectname")) {
+> +               if (atom->u.objectname == O_SHORT) {
+> +                       v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
+> +                       return 1;
+> +               } else if (atom->u.objectname == O_FULL) {
+> +                       v->s = xstrdup(sha1_to_hex(sha1));
+> +                       return 1;
+> +               }
+
+Since 'objectname' can only ever be O_SHORT or O_FULL wouldn't it be a
+programming error if it ever falls through to this point after the
+closing brace? Perhaps a die("BUG:...") would be appropriate?
+
+>         }
+>         return 0;
+>  }
+> @@ -493,7 +510,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+>                         v->s = xstrfmt("%lu", sz);
+>                 }
+>                 else if (deref)
+> -                       grab_objectname(name, obj->sha1, v);
+> +                       grab_objectname(name, obj->sha1, v, &used_atom[i]);
+
+This patch hunk is somehow corrupt and doesn't apply. Was there some
+hand-editing involved, or were some earlier patches regenerated after
+this patch was made or something?
+
+>         }
+>  }
+>
+> @@ -999,7 +1016,7 @@ static void populate_value(struct ref_array_item *ref)
+>                                 v->s = xstrdup(buf + 1);
+>                         }
 >                         continue;
->                 } else if (match_atom_name(name, "align", &valp)) {
-
-Hmm, align_atom_parser() has already been called before we get here,
-right? And it has already invoked match_atom_name() and died if the
-argument to "align:" was missing, correct? If so, then this invocation
-of match_atom_name() in populate_value() is unnecessary and should be
-replaced with a simpler starts_with("align:").
-
-Plus, 'valp' is not used, aside from this unnecessary
-match_atom_name(), thus it can be removed as well.
-
-> -                       struct align *align = &v->u.align;
-> -                       struct strbuf **s, **to_free;
-> -                       int width = -1;
-> -
-> -                       if (!valp)
-> -                               die(_("expected format: %%(align:<width>,<position>)"));
-> -
-> -                       s = to_free = strbuf_split_str_omit_term(valp, ',', 0);
-> -
-> -                       align->position = ALIGN_LEFT;
-> -
-> -                       while (*s) {
-> -                               if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
-> -                                       ;
-> -                               else if (!strcmp(s[0]->buf, "left"))
-> -                                       align->position = ALIGN_LEFT;
-> -                               else if (!strcmp(s[0]->buf, "right"))
-> -                                       align->position = ALIGN_RIGHT;
-> -                               else if (!strcmp(s[0]->buf, "middle"))
-> -                                       align->position = ALIGN_MIDDLE;
-> -                               else
-> -                                       die(_("improper format entered align:%s"), s[0]->buf);
-> -                               s++;
-> -                       }
-> -
-> -                       if (width < 0)
-> -                               die(_("positive width expected with the %%(align) atom"));
-> -                       align->width = width;
-> -                       strbuf_list_free(to_free);
-> +                       v->u.align = atom->u.align;
->                         v->handler = align_atom_handler;
+> -               } else if (!deref && grab_objectname(name, ref->objectname, v)) {
+> +               } else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
 >                         continue;
->                 } else if (!strcmp(name, "end")) {
+>                 } else if (!strcmp(name, "HEAD")) {
+>                         const char *head;
 > --
 > 2.6.4
