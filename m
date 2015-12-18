@@ -1,69 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] mingw: emulate write(2) that fails with a EPIPE
-Date: Fri, 18 Dec 2015 17:10:48 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1512181709310.6483@virtualbox>
-References: <01da36219c18373f8507e19035e141d7e56b2d18.1450267413.git.johannes.schindelin@gmx.de> <ca357ac83a9990d6c88b637b76c6cc7f30d3f7be.1450372051.git.johannes.schindelin@gmx.de> <xmqqwpscc22e.fsf@gitster.mtv.corp.google.com>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: Help debugging git-svn
+Date: Fri, 18 Dec 2015 11:28:04 -0600
+Message-ID: <CAOc6etaUUN_OdQqVJbHZ7XPq70hzEgO2HR1Uq0XxxEtK5CeDEQ@mail.gmail.com>
+References: <CAOc6etaOKSN0KyB9v2caiQbaQBEGrHxi3NmFy3aJkFxczGdqHA@mail.gmail.com>
+	<20151216074158.GB28518@dcvr.yhbt.net>
+	<CAOc6eta=ZGyWFuBPAYe_4xWSH79RRmPcP5thCHYd8SsKScwW6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 18 17:11:08 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Dec 18 18:28:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9xcZ-0000kp-3L
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 17:11:07 +0100
+	id 1a9yp9-0006jk-Ep
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 18:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815AbbLRQLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 11:11:02 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49379 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932151AbbLRQLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 11:11:00 -0500
-Received: from virtualbox ([37.24.143.211]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MOkQc-1a504h3Db4-0063Mc; Fri, 18 Dec 2015 17:10:53
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqwpscc22e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:iSi+r/y9q6Asp+LZwLKO7z9cwsr/7hb+xBztTRviwN19vG5WnNu
- PfXdZC+a+L6mkXevrN5O2iUkEDsSgQNFXEQi3UGJg3gg/QNYZRpZe+119dQUIMmJn3U81+I
- 4NdhymiDyiZD2m+IDESJR0mXtNduv3psBO/S1lU2AcjNlMIs/haO8k6xgs3+Y+ALuO/R6XD
- MFuX6ZZuf2KVyatsR0JRA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Pbq7hsPHVP0=:rNXNIN5LkH89Axok9WgHxh
- Mihj6GPfitwqHijsCiX73SSv+BCErOsytBC0d9c41leVOX8UxgHKZwleM0+22i6sGdC0cXOKq
- aiVwqlwQSl7NcgqMifNFUwosgKwEuPSBF+7ef2CPXc4SZOc2jdxTeWaKoUzVZNNqXr8/FVMGp
- vZxQFK3c7dfcBQTHz5Ckj9zY4qzEPa3Uw/LZmRkiQMcZHL6y7GJqTkbGo+NYlJSPbQ9uzYQ50
- /R5Vz1ZtrP2gU3kutwyQFctYiJQ+6MkCS0Ag4E+s9URsOtl4PuoocTl1izaxkD9VpXt29AWt5
- 7cfeR8Jd2wHLBZU1uyF6ytb0+G26mQQ6va2gqwno4RXO5q5Y4wJo9/put0RuntVEIbaztkQ5m
- +ZTzWATBunVHyGF+TI6NRCqeqCcDdBgJ3dh3tS2T+p3MCXqcmzRxns28gU0v2lrJ3ieuqhgpF
- 4y9LjC167b/yLVrIdiy4aq2TkZQmBo6QJV7qYNQ+B4shZAXzYwvk7wnL0CzvzCIK5o83Sm+JL
- O315VdEeXmrFHbUiQltQIEhtrLOq0hb/LhKOTjrbc2sqjVtBzxDYXVurNiCl6TeSzzuE3ULB3
- sTlFZG9bHNomlN6QK6PBYzCJg8Ay7YwryKXbkkTlD24d2d6jWwDWfpHdlHDH12mReqClq0STR
- JuLdMHr4bctDTFudmIaJh8ojGmvG7ZRqgWRlnsx1GN2cOQp+m6ONSAxpFazteY8nvO/KUW0lV
- 2M4bsx4mtqLouioB4UFj1lmZAZdpC/SLGgSE5aoeYijOnT77WPSHVxDG0ZubsMgx0hJvYNzE 
+	id S932831AbbLRR2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 12:28:07 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:35163 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932647AbbLRR2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 12:28:06 -0500
+Received: by mail-pa0-f45.google.com with SMTP id jx14so34643943pad.2
+        for <git@vger.kernel.org>; Fri, 18 Dec 2015 09:28:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8ZR2pkS+kNAI4umNU9TYEMTucOs/MxhDDqGebUkVRbw=;
+        b=sWeO915ZGNvjSVEIrlYTCaaER4e7gEI5Nf2dhpoccqnM2FLd7H0Ou1IGtk/xrQmc/J
+         t8g9wE1rN4D8M2fNe62ZWRJt8RwysxiYY81i4qo4xI932rrBpiZywAC7rxWrJdw6igKJ
+         +V/ECmwWapmLJuYYf7IEhPUbRzlSpVMQJY8tikq6mcMBXcJpzkeo2BMfcWMzuisXLJ/z
+         vbBbgn5Qq4qPh2k6OJqR1Ifgs5fkQDImqNeljCptx3aRojr+9yWln3965P+O2D1DWfHy
+         0V+siMcQCoakB5eTvVTgTDh+ODz5HS8CvGgQF3elKadiEoE4aTI37vQB6Ka0Dq/DzdPp
+         rePg==
+X-Received: by 10.66.190.66 with SMTP id go2mr7113407pac.114.1450459684553;
+ Fri, 18 Dec 2015 09:28:04 -0800 (PST)
+Received: by 10.66.89.42 with HTTP; Fri, 18 Dec 2015 09:28:04 -0800 (PST)
+In-Reply-To: <CAOc6eta=ZGyWFuBPAYe_4xWSH79RRmPcP5thCHYd8SsKScwW6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282708>
 
-Hi Junio,
+Ok.... I came up with another idea to avoid having to deal with the
+old svn history (I'm having no problems fetching/dcommitting with my
+current repo). I already have the branches I work with, the thing is
+that the revisions I fetched before I started using the svn authors
+file have nasty IDs instead of human names. I though that I could
+create a script to rewrite the whole history of the project adjusting
+the usernames to real names (I'll take care of the details, no problem
+there... just found out about filter-branch, could work for what I'm
+thinking of). My question would be in the direction of rebuilding
+git-svn metainfo once I'm done so that I can continue fetching from
+svn as if nothing had happened. I checked the documentation in
+git-scm.com but didn't find the details about it. Is there a
+straight-forward document that explains how the git-svn metadata files
+are built?
 
-On Thu, 17 Dec 2015, Junio C Hamano wrote:
+Thanks in advance.
 
-> PLEASE DON'T DO THE BELOW TO THE SAME MESSAGE AS THE PATCH ITSELF.
-> "git apply" would not read and understand the next line as a natural
-> language sentence for obvious reasons.
-> 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Interdiff vs v1:
-
-Whoops. This is an obvious bug in my patch series submission script. Will
-fix.
-
-Sorry,
-Dscho
+On Wed, Dec 16, 2015 at 6:36 AM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> On Wed, Dec 16, 2015 at 1:41 AM, Eric Wong <normalperson@yhbt.net> wrote:
+>>
+>> Any chance you can reproduce this on a Linux system?
+>> I do not use non-Free systems and have no debugging experience
+>> there at all.
+>>
+>
+> My wish.... But it's a big resounding "no".
+>
+>>> With my very flawed knowledge of perl I have seen that the process is
+>>> getting to Ra.pm around here:
+>>
+>> It could also be a bug in the SVN bindings or the port of
+>> Perl.  Which versions are you running?
+>
+> I'm working on git for windows 2.6.3. I think I could use cygwin, just
+> in case (I used it before).
+>
+>>
+>>
+>> I've also been wondering about the motivation of SVN developers to do a
+>> good job on maintaining their Perl bindings (given git-svn is likely the
+>> main user of them).
+>> We've certainly had problems in the past with SVN breaking and
+>> causing git-svn to segfault around 2011-2012; but it's been a while...
