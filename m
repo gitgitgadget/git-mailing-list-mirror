@@ -1,90 +1,90 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: RefTree: Alternate ref backend
-Date: Fri, 18 Dec 2015 10:36:03 +0900
-Message-ID: <20151218013603.GA13717@glandium.org>
-References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
- <20151217221045.GA8150@sigill.intra.peff.net>
- <CAJo=hJsSgU6yOFZMac85jkOtw9TXWXh0Ext4-Gb1TsSXqROn4g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 2/7] xread: poll on non blocking fds
+Date: Thu, 17 Dec 2015 22:07:53 -0500
+Message-ID: <20151218030752.GA8432@sigill.intra.peff.net>
+References: <1450224252-16833-1-git-send-email-sbeller@google.com>
+ <1450224252-16833-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 18 03:19:53 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 18 04:08:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9ke8-0001tm-Sp
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 03:19:53 +0100
+	id 1a9lOi-00080D-Cd
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 04:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966097AbbLRCTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Dec 2015 21:19:49 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:59136 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965253AbbLRCTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Dec 2015 21:19:48 -0500
-X-Greylist: delayed 2599 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Dec 2015 21:19:43 EST
-Received: from glandium by zenigata with local (Exim 4.86)
-	(envelope-from <glandium@glandium.org>)
-	id 1a9jxj-0003cB-Lj; Fri, 18 Dec 2015 10:36:03 +0900
+	id S932906AbbLRDH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Dec 2015 22:07:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44062 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751533AbbLRDHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Dec 2015 22:07:55 -0500
+Received: (qmail 9999 invoked by uid 102); 18 Dec 2015 03:07:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 21:07:55 -0600
+Received: (qmail 20645 invoked by uid 107); 18 Dec 2015 03:08:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Dec 2015 22:08:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Dec 2015 22:07:53 -0500
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJsSgU6yOFZMac85jkOtw9TXWXh0Ext4-Gb1TsSXqROn4g@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1450224252-16833-3-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282693>
 
-On Thu, Dec 17, 2015 at 02:28:01PM -0800, Shawn Pearce wrote:
-> On Thu, Dec 17, 2015 at 2:10 PM, Jeff King <peff@peff.net> wrote:
-> > On Thu, Dec 17, 2015 at 01:02:50PM -0800, Shawn Pearce wrote:
-> >
-> >> I started playing around with the idea of storing references directly
-> >> in Git. Exploiting the GITLINK tree entry, we can associate a name to
-> >> any SHA-1.
-> >
-> > Gitlink entries don't imply reachability, though. I guess that doesn't
-> > matter if your ref backend says "no, really, these are the ref tips, and
-> > they are reachable".
-> 
-> Exactly. This works with existing JGit because it swaps out the ref
-> backend. When GC tries to enumerate the roots (current refs), it gets
-> these through the ref backend by scanning the tree recursively. The
-> packer itself doesn't care where those roots came from.
-> 
-> Same would be true for any other pluggable ref backend in git-core. GC
-> has to ask the ref backend, and then trust its reply. How/where that
-> ref backend tracks that is an implementation detail.
-> 
-> >  But you could not push the whole thing up to
-> > another server and expect it to hold the whole graph.
-> 
-> Correct, pushing this to another repository doesn't transmit the
-> graph. If the other repository also used this for its refs backend,
-> its now corrupt and confused out of its mind. Just like copying the
-> packed-refs file with scp. Don't do that. :)
-> 
-> > Which is not strictly necessary, but to me seems like the real advantage
-> > of using git objects versus some other system.
-> 
-> One advantage is you can edit HEAD symref remotely. Commit a different
-> symlink value and push. :)
-> 
-> I want to say more, but I'm going to hold back right now. There's more
-> going on in my head than just this.
-> 
-> > Of course, the lack of reachability has advantages, too. You can
-> > drop commits pointed to by old reflogs without rewriting the ref
-> > history.
-> 
-> Yes.
+On Tue, Dec 15, 2015 at 04:04:07PM -0800, Stefan Beller wrote:
 
-Related thread: "Allowing weak references to blobs and strong references
-to commits" http://marc.info/?l=git&m=142779648816577&w=2
+> If we get an EAGAIN or EWOULDBLOCK the fd must have set O_NONBLOCK.
+> As the intent of xread is to read as much as possible either until the
+> fd is EOF or an actual error occurs, we can ease the feeder of the fd
+> by not spinning the whole time, but rather wait for it politely by not
+> busy waiting.
 
-Mike
+I'm not sure this second sentence is true. The point of xread() is to do
+a single read that makes forward progress (or returns a real error), not
+to read as much as we can.
+
+The rationale seems more to me like:
+
+  The point of xread() is to perform read() until we either get some
+  data, or encounter a "real" error. We do not count EINTR or EAGAIN as
+  "real" errors, as a reader trying to make forward progress would
+  generally just repeat the read, so we loop for them as a convenience.
+
+  In the case of EINTR, trying the read() again immediately is fine; a
+  signal interrupted us, but there is no reason to think the read()
+  would not succeed if we tried it again.
+
+  For EAGAIN, however, we know that the fd must have set O_NONBLOCK. In
+  this case reading again immediately is not likely to produce results,
+  and we will chew up CPU spinning on read() calls. Instead, let's
+  insert a poll() to block until we actually get data.
+
+I also don't know that this patch necessarily needs to be part of the
+parallel-fetch series anymore. We are not setting O_NONBLOCK ourselves,
+and I don't think the correctness of the new strbuf_read_once() is
+impacted by this. I.e., I think this optimization applies equally well
+to the hundreds of existing xread() calls, should they unexpectedly be
+fed an O_NONBLOCK descriptor.
+
+That said, I do not mind it here, but I think it could be its own
+separate topic if you wanted to reduce the complexity of the
+parallel-fetch topic.
+
+> We should not care if the call to poll failed, as we're in an infinite
+> loop and can only get out with the correct read().
+
+You might want to expand on "correct" here. I think you mean "can only
+get out with a read() that returns data or a "real" error" (I am reusing
+the terminology I introduced above; I am fine with other terminology,
+depending on how you word the rest of it).
+
+-Peff
