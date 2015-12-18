@@ -1,88 +1,104 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Odd rebase behavior
-Date: Fri, 18 Dec 2015 18:05:49 +0000
-Message-ID: <20151218180549.GA14056@serenity.lan>
-References: <877fkf9j5h.fsf@waller.obbligato.org>
- <20151216221716.GD1581@serenity.lan>
- <nngmvt73b63.fsf@lnx-dag.us.cray.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 2/7] xread: poll on non blocking fds
+Date: Fri, 18 Dec 2015 13:12:33 -0500
+Message-ID: <20151218181233.GA29057@sigill.intra.peff.net>
+References: <1450224252-16833-1-git-send-email-sbeller@google.com>
+ <1450224252-16833-3-git-send-email-sbeller@google.com>
+ <56731715.9000509@web.de>
+ <CAGZ79kZD_vrwHyd2WZzx-9FF3D6CVVi6X=Cx1=HAgr1gqNKyaA@mail.gmail.com>
+ <56731E19.7050504@web.de>
+ <20151218031336.GA8467@sigill.intra.peff.net>
+ <5673C8E6.8010001@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, peff@peff.net,
-	gitster@pobox.com
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Fri Dec 18 19:07:22 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Dec 18 19:12:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9zR1-0002yq-JQ
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 19:07:19 +0100
+	id 1a9zWD-0004oI-QG
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 19:12:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932745AbbLRSHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 13:07:14 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:34557 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932091AbbLRSHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 13:07:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 48CE3866013;
-	Fri, 18 Dec 2015 18:07:12 +0000 (GMT)
-X-Quarantine-ID: <minh1jTxEFMF>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id minh1jTxEFMF; Fri, 18 Dec 2015 18:07:11 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 40D66866037;
-	Fri, 18 Dec 2015 18:05:55 +0000 (GMT)
+	id S932826AbbLRSMh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Dec 2015 13:12:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44320 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932091AbbLRSMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 13:12:37 -0500
+Received: (qmail 13973 invoked by uid 102); 18 Dec 2015 18:12:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Dec 2015 12:12:36 -0600
+Received: (qmail 31047 invoked by uid 107); 18 Dec 2015 18:12:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Dec 2015 13:12:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Dec 2015 13:12:33 -0500
 Content-Disposition: inline
-In-Reply-To: <nngmvt73b63.fsf@lnx-dag.us.cray.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <5673C8E6.8010001@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282712>
 
-On Fri, Dec 18, 2015 at 11:43:16AM -0600, David A. Greene wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > It seems that the problem is introduces by --preserve-merges (and
-> > -Xsubtree causes something interesting to happen as well).  I see the
-> > following behaviour:
-> 
-> Thanks for narrowing this down!  Is it possible this is actually a
-> cherry-pick problem since --preserve-merges forces rebase to use
-> cherry-pick?
+On Fri, Dec 18, 2015 at 09:50:46AM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-I'm pretty sure this a result of the code in git-rebase--interactive.sh
-just below the comment "Watch for commits that have been dropped by
-cherry-pick", which filters out certain commits.  However, I'm not at
-all familiar with the --preserve-merges code in git-rebase so I could be
-completely wrong.
+> >> So the code would look like this:
+> >>
+> >>    if (!poll(&pfd, 1, -1))
+> >>       return -1;
+> >=20
+> > That changes the semantics of the function. The poll() is just a
+> > convenience to avoid spinning. If it fails, with Stefan's patch[1] =
+the
+> > worst case is that we would spin on read() and poll(), instead of
+> > actually blocking in the poll().
+> >=20
+> > But if we return on poll() failure, now the caller will see errors =
+from
+> > poll() even though they don't know or care that we called poll() in=
+ the
+> > first place. Consider what would happen with your code if read got
+> > EAGAIN and then poll got EINTR. We would report an error, even thou=
+gh
+> > the whole point of xread() is to loop on these conditions.
+> [...]
+>
+> /* So the code v2 would look like this: */
+>=20
+>     if (!poll(&pfd, 1, -1)) {
+>         if (errno =3D=3D EINTR)
+>             continue;
+>          return -1; /* poll() failed, this is serious. */
+>     }
 
-> > git rebase -Xsubtree=files_subtree --onto files-master master
-> >
-> > 	fatal: Could not parse object 'b15c4133fc3146e1330c84159886f0f7a09fbf43^'
-> > 	Unknown exit code (128) from command: git-merge-recursive
-> > b15c4133fc3146e1330c84159886f0f7a09fbf43^ -- HEAD
-> > b15c4133fc3146e1330c84159886f0f7a09fbf43
-> 
-> Ah, good!  I had seen this behavior as well but couldn't remember what I
-> did to trigger it.
-> 
-> I don't think I have the expertise to fix rebase and/or cherry-pick.
-> What's the process for adding these tests to the testbase and marking
-> them so the appropriate person can fix them?  I see a lot of TODO tests.
-> Should I mark these similarly and propose a patch to the testbase?
+That solves the EINTR problem, but I still don't see why we want to
+return -1. The caller asked us to read(). We know that read() did not
+fail with an actual error. Yet we are going to return an error to the
+user, with errno set to something related only to poll(). I think we ar=
+e
+better off to keep the same semantics from the caller's point of view:
+we loop until read() returns forward progress or a real error, and
+anything else we do is a behind-the-scenes optimization.
 
-I think marking them with test_expect_failure (instead of
-test_expect_success) is enough.
+BTW, I am assuming you mean:
+
+  if (poll(&pfd, 1, -1) < 0)
+	...
+
+in your examples. Returning "0" means that poll timed out, but of cours=
+e
+we are not providing a timeout.
+
+-Peff
