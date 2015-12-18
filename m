@@ -1,68 +1,88 @@
-From: "David A. Greene" <greened@obbligato.org>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: Odd rebase behavior
-Date: Fri, 18 Dec 2015 11:43:16 -0600
-Message-ID: <nngmvt73b63.fsf@lnx-dag.us.cray.com>
+Date: Fri, 18 Dec 2015 18:05:49 +0000
+Message-ID: <20151218180549.GA14056@serenity.lan>
 References: <877fkf9j5h.fsf@waller.obbligato.org>
-	<20151216221716.GD1581@serenity.lan>
+ <20151216221716.GD1581@serenity.lan>
+ <nngmvt73b63.fsf@lnx-dag.us.cray.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, peff@peff.net,
 	gitster@pobox.com
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Dec 18 18:43:34 2015
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Fri Dec 18 19:07:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a9z42-0000E4-Ed
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 18:43:34 +0100
+	id 1a9zR1-0002yq-JQ
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Dec 2015 19:07:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933105AbbLRRna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 12:43:30 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:60358 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933068AbbLRRn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 12:43:29 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=lnx-dag.us.cray.com)
-	by johnson.obbligato.org with esmtpsa (TLS1.1:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1a9z44-0001j7-9s; Fri, 18 Dec 2015 11:43:36 -0600
-In-Reply-To: <20151216221716.GD1581@serenity.lan> (John Keeping's message of
-	"Wed, 16 Dec 2015 22:17:16 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S932745AbbLRSHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 13:07:14 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:34557 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932091AbbLRSHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 13:07:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 48CE3866013;
+	Fri, 18 Dec 2015 18:07:12 +0000 (GMT)
+X-Quarantine-ID: <minh1jTxEFMF>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id minh1jTxEFMF; Fri, 18 Dec 2015 18:07:11 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 40D66866037;
+	Fri, 18 Dec 2015 18:05:55 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <nngmvt73b63.fsf@lnx-dag.us.cray.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282711>
 
-John Keeping <john@keeping.me.uk> writes:
+On Fri, Dec 18, 2015 at 11:43:16AM -0600, David A. Greene wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > It seems that the problem is introduces by --preserve-merges (and
+> > -Xsubtree causes something interesting to happen as well).  I see the
+> > following behaviour:
+> 
+> Thanks for narrowing this down!  Is it possible this is actually a
+> cherry-pick problem since --preserve-merges forces rebase to use
+> cherry-pick?
 
-> It seems that the problem is introduces by --preserve-merges (and
-> -Xsubtree causes something interesting to happen as well).  I see the
-> following behaviour:
+I'm pretty sure this a result of the code in git-rebase--interactive.sh
+just below the comment "Watch for commits that have been dropped by
+cherry-pick", which filters out certain commits.  However, I'm not at
+all familiar with the --preserve-merges code in git-rebase so I could be
+completely wrong.
 
-Thanks for narrowing this down!  Is it possible this is actually a
-cherry-pick problem since --preserve-merges forces rebase to use
-cherry-pick?
+> > git rebase -Xsubtree=files_subtree --onto files-master master
+> >
+> > 	fatal: Could not parse object 'b15c4133fc3146e1330c84159886f0f7a09fbf43^'
+> > 	Unknown exit code (128) from command: git-merge-recursive
+> > b15c4133fc3146e1330c84159886f0f7a09fbf43^ -- HEAD
+> > b15c4133fc3146e1330c84159886f0f7a09fbf43
+> 
+> Ah, good!  I had seen this behavior as well but couldn't remember what I
+> did to trigger it.
+> 
+> I don't think I have the expertise to fix rebase and/or cherry-pick.
+> What's the process for adding these tests to the testbase and marking
+> them so the appropriate person can fix them?  I see a lot of TODO tests.
+> Should I mark these similarly and propose a patch to the testbase?
 
-> git rebase -Xsubtree=files_subtree --onto files-master master
->
-> 	fatal: Could not parse object 'b15c4133fc3146e1330c84159886f0f7a09fbf43^'
-> 	Unknown exit code (128) from command: git-merge-recursive
-> b15c4133fc3146e1330c84159886f0f7a09fbf43^ -- HEAD
-> b15c4133fc3146e1330c84159886f0f7a09fbf43
-
-Ah, good!  I had seen this behavior as well but couldn't remember what I
-did to trigger it.
-
-I don't think I have the expertise to fix rebase and/or cherry-pick.
-What's the process for adding these tests to the testbase and marking
-them so the appropriate person can fix them?  I see a lot of TODO tests.
-Should I mark these similarly and propose a patch to the testbase?
-
-                             -David
+I think marking them with test_expect_failure (instead of
+test_expect_success) is enough.
