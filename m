@@ -1,123 +1,63 @@
-From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: [PATCH 2/3] t5304: Add test for .bitmap garbage files
-Date: Fri, 18 Dec 2015 18:06:39 -0600
-Message-ID: <1450483600-64091-3-git-send-email-dougk.ff7@gmail.com>
-References: <20151215232534.GA30998@sigill.intra.peff.net>
- <1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
-Cc: peff@peff.net, sbeller@google.com, gitster@pobox.com,
-	Doug Kelly <dougk.ff7@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 19 01:07:29 2015
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Forcing git to pack objects
+Date: Fri, 18 Dec 2015 19:03:39 -0600
+Message-ID: <CAOc6etZePL=yvy=fVt9e=RmwdStJy6Kf621icYbYOER-NyMvXg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 19 02:03:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aA53X-0000NW-S8
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 01:07:28 +0100
+	id 1aA5w7-00036h-3D
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 02:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932164AbbLSAHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 19:07:16 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:35609 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbbLSAHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 19:07:04 -0500
-Received: by mail-yk0-f174.google.com with SMTP id v6so76647817ykc.2
-        for <git@vger.kernel.org>; Fri, 18 Dec 2015 16:07:04 -0800 (PST)
+	id S1752305AbbLSBDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 20:03:40 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:32821 "EHLO
+	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342AbbLSBDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 20:03:39 -0500
+Received: by mail-pf0-f176.google.com with SMTP id n128so39375539pfn.0
+        for <git@vger.kernel.org>; Fri, 18 Dec 2015 17:03:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fUF77s+7NAUr7NQHNhzM6XLvmAsx66e9VXghceJq3LQ=;
-        b=zoTtfmbiDA+5YyTX73Cb7jjDuAEwsu+nsIusdqDIoi9z+vnNA/Bv/AODy8ibee/A+0
-         9DiIEvxiAqoNMwLd++9Bme7Hf34jhjZt/9TH2x0jWOvgErT6jbE1dO9DNihDR+chRI3C
-         KCAQ1YbwCsqSDMETQ/KKNFX9kE/4qzNcIlsvKTurOwfJ59Ach6cL5cRddqj1aFKFabbd
-         6jLH90ggmpMG5oGdBg/FlPUtA8v+cF7dLIsrmzMlLlY1+fykuVBHvQXaEU8grPh3BB2s
-         Yvg3YBWlAXuU6skycR8tV7PJ8zzJdJd9Qx9EKDgsltDgXCMrx3ZYM5i6mlx7PLHNhVR5
-         m2zw==
-X-Received: by 10.13.249.199 with SMTP id j190mr5327389ywf.286.1450483624098;
-        Fri, 18 Dec 2015 16:07:04 -0800 (PST)
-Received: from localhost.localdomain ([204.77.163.41])
-        by smtp.gmail.com with ESMTPSA id w184sm18490831ywc.41.2015.12.18.16.07.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 Dec 2015 16:07:03 -0800 (PST)
-X-Mailer: git-send-email 2.6.1
-In-Reply-To: <1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=J0neZWHBYBmOoh2A6M/ojGb3f9AmMwWBCEDITynOOM4=;
+        b=Y0Ni1/MAbxCEMeNB+O57sCnwfUnjGOp6fuCIOB2y4NNudxVcGjy0WEYWWGUvNFTsB4
+         eXFJnCQguuHu9AqD2mRtmore6pvxdoSdumwRcAQtJUnyWZbj23VjgUI4o0w2AfIrxxpX
+         /jclNEfzX6CtW1ApBDJmquRRlABo7ctxJXyF7mk9AUFmKbxdeZOUTT9V9fUJe6gVF96f
+         J3Wuk5LDds1AFvjXA5wGI3ERSCqtS2N2QDI6M3cmp1I5zvFge83STj30laqGcuK9ILWz
+         sN3IaJbG6GNZcp71HE8YortYD+5TuaoJ2zVVP+EJSlPmRClOqP3cWB+Dc9X2+tgupfV1
+         9Yfw==
+X-Received: by 10.98.74.10 with SMTP id x10mr9595209pfa.163.1450487019278;
+ Fri, 18 Dec 2015 17:03:39 -0800 (PST)
+Received: by 10.66.89.42 with HTTP; Fri, 18 Dec 2015 17:03:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282725>
 
-When checking for pack garbage, .bitmap files are now detected as
-garbage when not associated with another .pack/.idx file.
+Hi!
 
-Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
----
- t/t5304-prune.sh | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+Recently I was running manually a git gc --prune command (wanted to
+shrink my 2.8G .git directory by getting rid of loose objects) and I
+ended up running out of space on my HD. After freaking out a little
+bit (didn't know if the repo would end up in a 'stable' state), I
+ended up freeing up some space and I again have a working repo...
+_but_ I noticed that basically _all_ objects on my repo are laying
+around in directories .git/objects/00 to ff (and taking a whole lot of
+space... like the .git directory is now like 5 GBs). After running git
+gc manually again it ended up taking a lot of time and the objects are
+still there. Also git svn sometimes gcs after fetching and it took to
+run cause of the gc execution (ended up killing it) and the files are
+still there. Is it possible to ask git to put all those objects in
+.pack files? Or did I mess something on my repo?
 
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 1ea8279..4fa6e7a 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -230,6 +230,12 @@ test_expect_success 'garbage report in count-objects -v' '
- 	: >.git/objects/pack/fake.idx &&
- 	: >.git/objects/pack/fake2.keep &&
- 	: >.git/objects/pack/fake3.idx &&
-+	: >.git/objects/pack/fake4.bitmap &&
-+	: >.git/objects/pack/fake5.bitmap &&
-+	: >.git/objects/pack/fake5.idx &&
-+	: >.git/objects/pack/fake6.keep &&
-+	: >.git/objects/pack/fake6.bitmap &&
-+	: >.git/objects/pack/fake6.idx &&
- 	git count-objects -v 2>stderr &&
- 	grep "index file .git/objects/pack/fake.idx is too small" stderr &&
- 	grep "^warning:" stderr | sort >actual &&
-@@ -238,14 +244,20 @@ warning: garbage found: .git/objects/pack/fake.bar
- warning: garbage found: .git/objects/pack/foo
- warning: garbage found: .git/objects/pack/foo.bar
- warning: no corresponding .idx or .pack: .git/objects/pack/fake2.keep
-+warning: no corresponding .idx or .pack: .git/objects/pack/fake4.bitmap
- warning: no corresponding .idx: .git/objects/pack/foo.keep
- warning: no corresponding .idx: .git/objects/pack/foo.pack
- warning: no corresponding .pack: .git/objects/pack/fake3.idx
-+warning: no corresponding .pack: .git/objects/pack/fake5.bitmap
-+warning: no corresponding .pack: .git/objects/pack/fake5.idx
-+warning: no corresponding .pack: .git/objects/pack/fake6.bitmap
-+warning: no corresponding .pack: .git/objects/pack/fake6.idx
-+warning: no corresponding .pack: .git/objects/pack/fake6.keep
- EOF
- 	test_cmp expected actual
- '
- 
--test_expect_success 'clean pack garbage with gc' '
-+test_expect_failure 'clean pack garbage with gc' '
- 	test_when_finished "rm -f .git/objects/pack/fake*" &&
- 	test_when_finished "rm -f .git/objects/pack/foo*" &&
- 	: >.git/objects/pack/foo.keep &&
-@@ -254,15 +266,21 @@ test_expect_success 'clean pack garbage with gc' '
- 	: >.git/objects/pack/fake2.keep &&
- 	: >.git/objects/pack/fake2.idx &&
- 	: >.git/objects/pack/fake3.keep &&
-+	: >.git/objects/pack/fake4.bitmap &&
-+	: >.git/objects/pack/fake5.bitmap &&
-+	: >.git/objects/pack/fake5.idx &&
-+	: >.git/objects/pack/fake6.keep &&
-+	: >.git/objects/pack/fake6.bitmap &&
-+	: >.git/objects/pack/fake6.idx &&
- 	git gc &&
- 	git count-objects -v 2>stderr &&
- 	grep "^warning:" stderr | sort >actual &&
- 	cat >expected <<\EOF &&
-+warning: no corresponding .idx or .pack: .git/objects/pack/fake2.keep
- warning: no corresponding .idx or .pack: .git/objects/pack/fake3.keep
-+warning: no corresponding .idx or .pack: .git/objects/pack/fake6.keep
- warning: no corresponding .idx: .git/objects/pack/foo.keep
- warning: no corresponding .idx: .git/objects/pack/foo.pack
--warning: no corresponding .pack: .git/objects/pack/fake2.idx
--warning: no corresponding .pack: .git/objects/pack/fake2.keep
- EOF
- 	test_cmp expected actual
- '
--- 
-2.6.1
+Just in case, that's a repo I use at work that's working on a windows
+box (git for windows 2.6.3).
+
+Thanks in advance.
