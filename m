@@ -1,88 +1,54 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 07/11] ref-filter: introduce align_atom_parser()
-Date: Sat, 19 Dec 2015 17:05:53 +0530
-Message-ID: <CAOLa=ZTvuGeKbstvWi939_VD2ciJf0Fhine7VjkDqi_DjPT_9Q@mail.gmail.com>
-References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
- <1450279802-29414-8-git-send-email-Karthik.188@gmail.com> <CAPig+cR=dYnMfaHUYcq_kz8M+C1nCxOX=SN=_6+ep1aWvVCUow@mail.gmail.com>
- <CAOLa=ZQH4sb1e87Hrze_xThkH9fCKMzzFQQ106cXf3w83wr1aA@mail.gmail.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: git leaves behind .git/COMMIT_EDITMSG non-shared in --shared non-bare repo
+Date: Sat, 19 Dec 2015 13:40:04 +0100
+Message-ID: <1450528804-669-1-git-send-email-szeder@ira.uka.de>
+References: <alpine.DEB.2.20.1512191137450.6483@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 12:36:29 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Yaroslav Halchenko <yoh@onerussian.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Dec 19 13:41:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAFoK-0001fb-Vg
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 12:36:29 +0100
+	id 1aAGpd-00010G-4U
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 13:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932443AbbLSLgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2015 06:36:23 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34703 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932175AbbLSLgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2015 06:36:23 -0500
-Received: by mail-vk0-f42.google.com with SMTP id j66so79051782vkg.1
-        for <git@vger.kernel.org>; Sat, 19 Dec 2015 03:36:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=9isNvfRxrctNZ7+mPFXauxH1BUtzUbWSeuy5QCINIP4=;
-        b=PIdQUWcTKV76hc0lKbaUNRi/NdXFw6/bQktWmEjotU7brkNg7dYpuIXeNDsiJxtaih
-         WcRi6u5v3haLbKvo8a8iLpdbI4R2BKEZDdcQuJuL//c6e3knFIBZ9tbN0R/ZSBraOMvQ
-         jBP0nllk2Y/3d7FgwjgZF6UNnhYQFe1xewn+k+erSA7Lvz7z98ZDbJwF3iVgShk2CCcB
-         SeIYsSnEtFKn+/Bcn4qYEfUr8OKkbT58hF29S5Oa3e7J/JPkYrF0fDlec74fErmPDt2o
-         hnH83HQXspWnjtkFlTkU0PdhMcE1uQE3uYn1roBvLDxIJELemAYA8Ih2WWHAGV8iNEQu
-         HSsQ==
-X-Received: by 10.31.142.16 with SMTP id q16mr5511486vkd.95.1450524982472;
- Sat, 19 Dec 2015 03:36:22 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Sat, 19 Dec 2015 03:35:53 -0800 (PST)
-In-Reply-To: <CAOLa=ZQH4sb1e87Hrze_xThkH9fCKMzzFQQ106cXf3w83wr1aA@mail.gmail.com>
+	id S933027AbbLSMlO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Dec 2015 07:41:14 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42743 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932933AbbLSMlN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Dec 2015 07:41:13 -0500
+Received: from x590d6c76.dyn.telefonica.de ([89.13.108.118] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1aAGot-0006ZV-MI; Sat, 19 Dec 2015 13:41:08 +0100
+X-Mailer: git-send-email 2.7.0.rc0.37.g77d69b9
+In-Reply-To: <alpine.DEB.2.20.1512191137450.6483@virtualbox>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1450528868.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282745>
 
-On Fri, Dec 18, 2015 at 11:20 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce align_atom_parser() which will parse an "align" atom and
->> store the required alignment position and width in the "use_atom"
->> structure for further usage in 'populate_value()'.
->>
->> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -63,6 +69,49 @@ static void color_atom_parser(struct used_atom *atom)
->> +static void align_atom_parser(struct used_atom *atom)
->> +{
->> +       [...]
->> +       match_atom_name(atom->str, "align", &buf);
->> +       if (!buf)
->> +               die(_("expected format: %%(align:<width>,<position>)"));
->> +       [...]
->> +}
->> @@ -880,35 +924,7 @@ static void populate_value(struct ref_array_item *ref)
->>                                 v->s = " ";
->>                         continue;
->>                 } else if (match_atom_name(name, "align", &valp)) {
->
-> Hmm, align_atom_parser() has already been called before we get here,
-> right? And it has already invoked match_atom_name() and died if the
-> argument to "align:" was missing, correct? If so, then this invocation
-> of match_atom_name() in populate_value() is unnecessary and should be
-> replaced with a simpler starts_with("align:").
->
-> Plus, 'valp' is not used, aside from this unnecessary
-> match_atom_name(), thus it can be removed as well.
->
+> On Fri, 18 Dec 2015, Yaroslav Halchenko wrote:
+>=20
+> > Not sure for what batch operations that file is actually useful,
+>=20
+> None. This file is written when you commit interactively. It is delet=
+ed
+> afterwards, unless aborted in a fatal manner.
 
-WIll do. Thanks for noticing this. I missed it.
+Is it?  I have a COMMIT_EDITMSG lying around in just about every git
+repository I have and couldn't find any unlink() in builtin/commit.c
+or elsewhere that would remove it.  In fact, not deleting it seems to
+be the desired bahavior, because many tests in t7502-commit.sh depend
+on this file still being present after a successful 'git commit'.
 
--- 
-Regards,
-Karthik Nayak
+G=C3=A1bor
