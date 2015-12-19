@@ -1,75 +1,80 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] commit: ensure correct permissions of the commit message
-Date: Sat, 19 Dec 2015 19:21:59 +0100 (CET)
-Message-ID: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git leaves behind .git/COMMIT_EDITMSG non-shared in --shared
+ non-bare repo
+Date: Sat, 19 Dec 2015 19:24:12 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1512191923220.6483@virtualbox>
+References: <1450528804-669-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
-	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 19:22:33 2015
+Content-Type: multipart/mixed; BOUNDARY="8323329-1412484842-1450549454=:6483"
+Cc: Yaroslav Halchenko <yoh@onerussian.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Dec 19 19:24:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAM9I-00043k-CY
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 19:22:32 +0100
+	id 1aAMBC-0007nJ-CM
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 19:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071AbbLSSWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2015 13:22:19 -0500
-Received: from mout.gmx.net ([212.227.15.19]:62036 "EHLO mout.gmx.net"
+	id S1754077AbbLSSY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2015 13:24:26 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57969 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754042AbbLSSWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2015 13:22:19 -0500
-Received: from virtualbox ([37.24.143.167]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lt1S6-1aLoUV12Wg-012c3c; Sat, 19 Dec 2015 19:22:01
+	id S1754042AbbLSSYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2015 13:24:25 -0500
+Received: from virtualbox ([37.24.143.167]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MfW5D-1ZqvkT0G4Z-00P9ik; Sat, 19 Dec 2015 19:24:14
  +0100
 X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1450528804-669-1-git-send-email-szeder@ira.uka.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:NNG8U5WQLIF74h3CYDeBrlYoBI8qrNdMVnjKo+1QSd5XTeBtK9T
- qqKqRxW9gOCb3goBzXzzFAb87/jttsfixIm11ytnnax5jEtb8ytIPT7oEp0UwIkU4LHEMAD
- gK7piamYDA8Gp64LRkaWpylb6TewLil9QZa/jA4Gjk/p0X96dBMnLMZ3r+TxY6JYgW9yTGl
- lQpyVibV3nUsdLrdoo/8g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WPXHBw3dEpw=:jMex4RbyHvnMfNko9kgkUD
- YWt2CsBL75J4e0x7SDBzdD+7mw9D4jzfLhiPEk5scbGeMLLMhCL85glEjMPFc7EYkeYfekvvZ
- qms6D+2arMZEp2KVLjRNWijOBr3z8LJhokmwnBWe1uHBQIyBXBfsVd3zOwpHT7QVdUjjwViIP
- wP64/MT8wLolwum/2CrTWu0EJcL4zPGmYvtWusHk162l/x1Bus3LJotoWKYbJM9ttuHvaRviw
- Smcuh019jWJyKMKuFoq11tMC7HUgWvAVhTUXjl51dYrTRd9eGZycnPwBNe9My06TrmpoAkaXO
- 1++RfUpvjzVMBvADWYL6QnNqsv6sAf3B0sKGy/tAbS6Ec0pwYtcCcstU/QGL5gx9b+8RSR0Oo
- gqYe8hiP1uWOaVRk92eJjVZdf5Q/QHRXSU6WVFMKx8JuuC4spAAEVvAPM4TWOppUwgzPSpRgf
- YK+H99lxlw4XKTvdK7MIWfp1f7aB0G8oB3WTTX51W5bt7vUiPFIupziXJ02RZ742wjHj3Y72Y
- nIKnCej01ILB79ygSJScTkuxMb/gV50Qj4oeIypaHQt874DKW1X/cxeHn4x1xGA1gxDdenIii
- 3j9r4A9aR392sSJaPouOEOTvCS8lhMtBHI3sYR3tqhjjl31poWLtfVVm6vv+Ak6i0eeZ45iti
- pScvyjEAqr9O0rHLiBO4YnbmscSzpI5dtXplNJmNgpYgK5BcaNWjlGGIikH06+Rk33XL+9pA1
- VwHX31iAedugkI8KFsI2hwlmYPHx1bhgw/i8lop0rrLe8A6TPPSvIuvA+zIHgcz8QCpGexkY 
+X-Provags-ID: V03:K0:+n8YtUGhlmrEEyF+UEyL6x/zSth/ws7r5KxtjoQ/j9/NgQAUo2R
+ g+atp476ja/L4GaGTc6VVDDrq6bpH4MY0l+8/6W4JBdMvCa+ywqGPX+4a+5ZZQRoKedyAk4
+ bbWNdjRkY47yFuB/DzaIiXlw6gHgKtwMHy2xJYpbcRSx3ACHm8efwkkdAN/uNF7fqQpBWr9
+ fEkxS6KU56C/S2mqwhJuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vBkT1k+TtFI=:92nDBZ46+n4F2DcXBIx/Fr
+ 8LfpGRM5OtkUepTe3UJpDGAD9UBDhS7EveC66DgYziOHSLZqwr4ecBiSyfd5qKJAF5UtAdeUp
+ qUnGGpEGZG6jqhZU07aHhDvnmg1xSyA8bO10xXaFDhhBqMDWuqSCAvwpyHXZBZBgFzUELW3ay
+ 5xu9k3x7TfTz4Pr5ML3VffqaKucg7+l4uNld7TrnM7zjnZWLJ28i79rQLF0ExTs1l9/ywIf9O
+ IGJU1OKgSJEghAVDBl9NXBtC6qjaAivwJDSUpSOKvWobl61O3Q0EuAXmN9BLvKfCzTLAUhv5v
+ pFP6FhzmRexYK8oCciIoTSnwZgziLoBMvsYCbKZaGefdiSHduqTu2HIvEy4jLwBETKM4Ww9Cg
+ IxWHvqMIxYLQ0Xtwo2LDVZBQ5jCEe3PcIJoX7JllA9kmJI2COuMEHnb8n/oDwv+8EQcqyslfP
+ WZNSEnk+8543fG4NEOq4NdES04cDrxZUOFPQKcOMni9DRo97/AFExsboAEN5XytlTmomoJj8/
+ gaVF4rBRHxIbZgw8QLAmZTM7SFHICm3gE/zhaHVb8vTN+AXCz6Oyudjmg4wAe5/kJiPdW/6Qb
+ wZm/LCg6haK096WErhK5GADGeRXrR6824S0vABsC/6F5hgI7MAGq1sgitfds/UqHf1n7EUGVt
+ GHqQ6Acr6xdnvA3ywoGigUifn+EcQc2Nn2yEZ8mXw9lsbpMTPxuGVRKceoot4kGVQyG2IJFgG
+ +crtpmQwYwXONBXV+zwhxqr6n+dL2WwYNMsF5fR2HXzBMda06rbNQtF2K72f+EcPxVmFfm7t 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282751>
 
-It was pointed out by Yaroslav Halchenko that the file containing the
-commit message had the wrong permissions in a shared setting.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Let's fix that.
+--8323329-1412484842-1450549454=:6483
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/commit.c | 1 +
- 1 file changed, 1 insertion(+)
+Hi G=C3=A1bor,
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d054f84..3bfd457 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -905,6 +905,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	strbuf_release(&committer_ident);
- 
- 	fclose(s->fp);
-+	adjust_shared_perm(git_path(commit_editmsg));
- 
- 	/*
- 	 * Reject an attempt to record a non-merge empty commit without
--- 
-2.6.3.windows.1.300.g1c25e49
+On Sat, 19 Dec 2015, SZEDER G=C3=A1bor wrote:
+
+> > On Fri, 18 Dec 2015, Yaroslav Halchenko wrote:
+> >=20
+> > > Not sure for what batch operations that file is actually useful,
+> >=20
+> > None. This file is written when you commit interactively. It is deleted
+> > afterwards, unless aborted in a fatal manner.
+>=20
+> Is it?  I have a COMMIT_EDITMSG lying around in just about every git
+> repository I have and couldn't find any unlink() in builtin/commit.c
+> or elsewhere that would remove it.
+
+Oops. My mistake. Patch sent.
+
+Ciao,
+Dscho
+--8323329-1412484842-1450549454=:6483--
