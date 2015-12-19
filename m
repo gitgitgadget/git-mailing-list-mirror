@@ -1,72 +1,127 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: Help debugging git-svn
-Date: Fri, 18 Dec 2015 22:31:13 -0600
-Message-ID: <CAOc6etanJZub-rwqT-45WpKsutVe_wkDHbPS_RorxXLGHOE9tA@mail.gmail.com>
-References: <CAOc6etaOKSN0KyB9v2caiQbaQBEGrHxi3NmFy3aJkFxczGdqHA@mail.gmail.com>
-	<20151216074158.GB28518@dcvr.yhbt.net>
-	<CAOc6eta=ZGyWFuBPAYe_4xWSH79RRmPcP5thCHYd8SsKScwW6g@mail.gmail.com>
-	<CAOc6etaUUN_OdQqVJbHZ7XPq70hzEgO2HR1Uq0XxxEtK5CeDEQ@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 03/11] ref-filter: introduce struct used_atom
+Date: Sat, 19 Dec 2015 10:12:39 +0530
+Message-ID: <CAOLa=ZTfBqkYiYpRyZQP5pNisa6kEz29FBpr-QKcAGYwrKk9Tw@mail.gmail.com>
+References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
+ <1450279802-29414-4-git-send-email-Karthik.188@gmail.com> <CAPig+cR5=8urU+Vq_doC53+T4WCmEWJdKXyMEsbL3gWxsNpmxg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Dec 19 05:31:53 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Dec 19 05:44:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aA9BQ-0002lg-4n
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 05:31:52 +0100
+	id 1aA9NN-0003Pb-Eg
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 05:44:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853AbbLSEbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 23:31:14 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36600 "EHLO
-	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752196AbbLSEbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 23:31:13 -0500
-Received: by mail-pf0-f178.google.com with SMTP id o64so58818495pfb.3
-        for <git@vger.kernel.org>; Fri, 18 Dec 2015 20:31:13 -0800 (PST)
+	id S932495AbbLSEnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 23:43:37 -0500
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:34745 "EHLO
+	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404AbbLSEnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 23:43:09 -0500
+Received: by mail-vk0-f42.google.com with SMTP id j66so76289756vkg.1
+        for <git@vger.kernel.org>; Fri, 18 Dec 2015 20:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=idQ6qnL/wtjWSm424MB2lA0D12F37cvgPyCa5xBihrs=;
-        b=rDjZWWEcBfR6B82qMyGwMHDUR9iheEgdDILJq/ugWqwOFEq1eHa/TEJfsk+NLQJpz2
-         xLYs3A1lWR41sJFCl+HJSDuLUhhrBHesNvnjmnrjkuLhJ+ySTORwY4CGXz+Uz+ivk/R7
-         gvM/PwYqOR2L6YgrNrPwD68BEznEfFIkKfduV2nlomavsnWEpDqL47u1xkZtRdbxI5Xd
-         Lel2cNFpTD5x/VUg5obHp5WJ9IpIx8rCNFKyE/lXSQRJhW5JugniP1MXh+g+AZOims/v
-         PY3Ccdpvf87p2Kr5R2hG3YVpIQXZiL3yNiN1pxWqx2vFpkdsSei8Q8JFX2wFHj8if33D
-         JMTg==
-X-Received: by 10.98.67.74 with SMTP id q71mr10353028pfa.134.1450499473466;
- Fri, 18 Dec 2015 20:31:13 -0800 (PST)
-Received: by 10.66.89.42 with HTTP; Fri, 18 Dec 2015 20:31:13 -0800 (PST)
-In-Reply-To: <CAOc6etaUUN_OdQqVJbHZ7XPq70hzEgO2HR1Uq0XxxEtK5CeDEQ@mail.gmail.com>
+        bh=5w5UsL7mj3Iw7pQlf5+JL8NmcPbV9f6Bj0MudJQhZoA=;
+        b=O5dMToqloHIUGjONbvC8KgenCBevtIHX+Alf5bzM7kcp4fGIzDS34SfkqMDns4kwDn
+         yeDT4tsIoXWQ8q8qd5sl/3ZQiJizbv0yRwr1VMdoBXt0QrhtliN8wqdZ7qQ0uhcnyA5o
+         2V2n8nVTHwNKfK52RokejqEJrOW/12Rwt6CwCOg4oslpZpyk+q6t0awq5CHglpCr+WF5
+         EKEXg9nYdkgSDpX0oWAKv+l83PLUP2/hgs0UzQDO2CTubvP6Elf7Jor0/PnBTdwOsz/z
+         Fs9xk0pxxkvPfIu4HY9wPhqHzOzEX0YvnF/GRB825mqvKi7PlnRwLe+CYlbFv7UuqCoY
+         FprQ==
+X-Received: by 10.31.16.140 with SMTP id 12mr4423800vkq.106.1450500188525;
+ Fri, 18 Dec 2015 20:43:08 -0800 (PST)
+Received: by 10.103.97.199 with HTTP; Fri, 18 Dec 2015 20:42:39 -0800 (PST)
+In-Reply-To: <CAPig+cR5=8urU+Vq_doC53+T4WCmEWJdKXyMEsbL3gWxsNpmxg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282735>
 
-On Fri, Dec 18, 2015 at 11:28 AM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> Ok.... I came up with another idea to avoid having to deal with the
-> old svn history (I'm having no problems fetching/dcommitting with my
-> current repo). I already have the branches I work with, the thing is
-> that the revisions I fetched before I started using the svn authors
-> file have nasty IDs instead of human names. I though that I could
-> create a script to rewrite the whole history of the project adjusting
-> the usernames to real names (I'll take care of the details, no problem
-> there... just found out about filter-branch, could work for what I'm
-> thinking of). My question would be in the direction of rebuilding
-> git-svn metainfo once I'm done so that I can continue fetching from
-> svn as if nothing had happened. I checked the documentation in
-> git-scm.com but didn't find the details about it. Is there a
-> straight-forward document that explains how the git-svn metadata files
-> are built?
+On Thu, Dec 17, 2015 at 2:27 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Introduce the 'used_array' structure which would replace the existing
+>> implementation of 'used_array' (which a list of atoms). This helps us
+>> parse atom's before hand and store required details into the
+>> 'used_array' for future usage.
 >
-> Thanks in advance.
+> All my v1 review comments[1] about the commit message still apply to
+> this version.
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/281860
+>
 
-.rev_map files appear to be simple enough. I'll have fun with them a
-little bit. Will let you know how it goes later (don't hold your
-breath.... it might take a while).
+I totally missed this out, thanks for bringing it up.
+
+>> Also introduce a parsing function for each atom in valid_atom. Using
+>> this we can define special parsing functions for each of the atoms.
+>
+> This is a conceptually distinct change which probably deserves its own
+> patch. In particular, the new patch would add this field to
+> valid_atom[] *and* add the code which invokes the custom parser. (That
+> code is currently commingled with introduction of the color parser in
+> patch 6/11.)
+>go
+
+I guess that could be done, I was thinking it goes together, but it
+makes sense to have a
+separate patch for introduction of the parsing function and its invocations.
+
+> More below...
+>
+>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> @@ -16,9 +16,27 @@
+>> +/*
+>> + * An atom is a valid field atom listed below, possibly prefixed with
+>> + * a "*" to denote deref_tag().
+>> + *
+>> + * We parse given format string and sort specifiers, and make a list
+>> + * of properties that we need to extract out of objects.  ref_array_item
+>> + * structure will hold an array of values extracted that can be
+>> + * indexed with the "atom number", which is an index into this
+>> + * array.
+>> + */
+>> +static struct used_atom {
+>> +       const char *str;
+>> +       cmp_type type;
+>> +} *used_atom;
+>> +static int used_atom_cnt, need_tagged, need_symref;
+>> +static int need_color_reset_at_eol;
+>> +
+>>  static struct {
+>>         const char *name;
+>>         cmp_type cmp_type;
+>> +       void (*parser)(struct used_atom *atom);
+>>  } valid_atom[] = {
+>>         { "refname" },
+>>         { "objecttype" },
+>> @@ -786,7 +788,8 @@ static void populate_value(struct ref_array_item *ref)
+>>
+>>         /* Fill in specials first */
+>>         for (i = 0; i < used_atom_cnt; i++) {
+>> -               const char *name = used_atom[i];
+>> +               struct used_atom *atom = &used_atom[i];
+>> +               const char *name = atom->str;
+>
+> Same question as my previous review[1]: Why not just:
+>
+>     const char *name = used_atom[i].str;
+>
+> ?
+
+I think It's leftover code, I was using the atom variable also before.
+I'll remove it.
+
+-- 
+Regards,
+Karthik Nayak
