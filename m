@@ -1,94 +1,122 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Odd rebase behavior
-Date: Sat, 19 Dec 2015 16:09:06 +0000
-Message-ID: <20151219160906.GB14056@serenity.lan>
-References: <877fkf9j5h.fsf@waller.obbligato.org>
- <20151216221716.GD1581@serenity.lan>
- <nngmvt73b63.fsf@lnx-dag.us.cray.com>
- <20151218180549.GA14056@serenity.lan>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [RFC] Malicously tampering git metadata?
+Date: Sat, 19 Dec 2015 12:30:18 -0500
+Message-ID: <20151219173018.GA1178@LykOS>
+References: <20151216032639.GA1901@LykOS>
+ <20151218231032.GA16904@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, peff@peff.net,
-	gitster@pobox.com
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Sat Dec 19 17:09:29 2015
+Cc: Git <git@vger.kernel.org>
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sat Dec 19 18:30:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAK4V-0005D9-RQ
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 17:09:28 +0100
+	id 1aALKs-00027T-8H
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 18:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091AbbLSQJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2015 11:09:24 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:42424 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753995AbbLSQJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2015 11:09:23 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id B423BCDA3A8;
-	Sat, 19 Dec 2015 16:09:22 +0000 (GMT)
-X-Quarantine-ID: <LnXYcVQoZoAx>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id LnXYcVQoZoAx; Sat, 19 Dec 2015 16:09:22 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 5FD4BCDA593;
-	Sat, 19 Dec 2015 16:09:08 +0000 (GMT)
+	id S933349AbbLSRaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2015 12:30:22 -0500
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:36217 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933337AbbLSRaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2015 12:30:21 -0500
+Received: by mail-qg0-f46.google.com with SMTP id c96so56932885qgd.3
+        for <git@vger.kernel.org>; Sat, 19 Dec 2015 09:30:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=xAMvJdrzcysHR7KHcQbRE6WPdb4S27lFro4XzAFOx+8=;
+        b=RV0vzykbIr/uTJWxo0ne1+FGOSMK/wfgdjpgQN4ONZXaWmsa0StusoQ1Z3btQqBdvU
+         PHMHVJGsZEuYNkxuDmkQYwHo6LmmlCvpRSdBenKyqruOoV4cdcWEpK/2z+P+KXIjUV2+
+         I3bq2uhehQcfkn+CVxxVOfzumFAaqPa/X6/CmITK0nhX0SGDHatCGQiLO5cN3+3QiBK6
+         H6+BqSoUZp1pMpS/K+0J8R9WtoxGdnICk8KBLHuco0G87o+RgCHDvBB7hn5UHmo9Y9+n
+         VrxkrDsXgOJDlUSzsPNhKQKH1Y2Hq3GmsyvKMuz5ya9Y9MPTrXDAvIOYhXFnTdLtpYWJ
+         042Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to;
+        bh=xAMvJdrzcysHR7KHcQbRE6WPdb4S27lFro4XzAFOx+8=;
+        b=GOZZLbFyKCvHqLPD53q7RwCKd+vihWxdVVBqJ+a+H/A6dnz9zuw51ovDjjamzQpNH+
+         cWk3BP0wXEqieRZa9RHnGSDDM9Tv/mePy5jRlhbCfzCub4J/ZMQHDeIxQVYLauoR/4c8
+         d0jfBOR5uQc5kHlGi9Vnexq77w6peA1XlM8v9L61wUH5k6w+yUPHxmL6lkdFO0Xj19Nc
+         3NPDJLTo0zGrXxgYQVPpR0SCwkWpNOfpb6YerHsBNd8L59SYcLLaICHBsICtaHdThjkR
+         rhNB63qEXNnvS1XTMVy4+IjL0DyEptDPw2xkokJNELrapkbIjQqgO1dvUdZdI980hw7k
+         X5FA==
+X-Gm-Message-State: ALoCoQno2vFqfDxaFuFc0Tl8wzffvABQpMaZWp22p7XUv4iebFIzfMdi0LiqeQ1NidC6GJLCXPViZzxMJ731lHOPg3diq27fWg==
+X-Received: by 10.140.80.240 with SMTP id c103mr13518284qgd.61.1450546221060;
+        Sat, 19 Dec 2015 09:30:21 -0800 (PST)
+Received: from LykOS (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
+        by smtp.gmail.com with ESMTPSA id m52sm9206441qge.20.2015.12.19.09.30.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 19 Dec 2015 09:30:20 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20151218180549.GA14056@serenity.lan>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20151218231032.GA16904@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282749>
 
-On Fri, Dec 18, 2015 at 06:05:49PM +0000, John Keeping wrote:
-> On Fri, Dec 18, 2015 at 11:43:16AM -0600, David A. Greene wrote:
-> > John Keeping <john@keeping.me.uk> writes:
-> > 
-> > > It seems that the problem is introduces by --preserve-merges (and
-> > > -Xsubtree causes something interesting to happen as well).  I see the
-> > > following behaviour:
-> > 
-> > Thanks for narrowing this down!  Is it possible this is actually a
-> > cherry-pick problem since --preserve-merges forces rebase to use
-> > cherry-pick?
+> I assume you are assuming here that the "push to upstream" doesn't
+> involve some kind of human verification?  If someone tried pushing
+> something like this to Linus, he would be checking the git diff stats
+> and git commit structure for things that might look like "developer
+> negligence".  He's been known to complain to subsystem developers in
+> his own inimitable when the git commit structure looks suspicious, so
+> I'm pretty sure he would notice this.
 > 
-> I'm pretty sure this a result of the code in git-rebase--interactive.sh
-> just below the comment "Watch for commits that have been dropped by
-> cherry-pick", which filters out certain commits.  However, I'm not at
-> all familiar with the --preserve-merges code in git-rebase so I could be
-> completely wrong.
+> For example, in my use case, I'm authorative over changes in fs/ext4.
+> So when I pull from Linus's repo, I examine (using "gitk fs/ext4") all
+> commits coming from upstream that modify fs/ext4.  So if someone tries
+> introducing a change in fs/ext4 coming from "upstream", I will notice.
+> Then when I request a pull request from Linus, the git pull request
+> describes what commits are new in my tree that are not in his, and
+> shows the diffstats from upstream.  When Linus verifies my pull, there
+> are multiple opportunities where he will notice funny business:
+> 
+> a) He would notice that my origin commit is something that is not in
+> his upstream tree.
+> 
+> b) His diffstat is different from my diffstat (since thanks to the
+> man-in-the middle, the conception of what commits are new in the git
+> pull request will be different from his).
+> 
+> c) His diffstat will show that files outside of fs/ext4 have been
+> modified, which is a red flag that will merit more close examination.
+> (And if the attacker had tried to introduce a change in fs/ext4, I
+> would have noticed when I pulled from the man-in-the-middle git
+> repo.)
 
-I've traced through git-rebase--interactive.sh and I can see what's
-happening here now.  The problematic code is around the handling of the
-"rewritten" directory.
+Yes, we've been considering that these kind of attacks wouldn't be too
+effective against, let's say, dictator-lieutenant workflows. 
 
-In --preserve-merges mode, we write the SHA1 of the "onto" commit into
-rewritten and then add any commits descended from it along the
-first-parent path that we have identified as candidates for being
-rebased.  This allows us to identify commits that have been merged in
-and remove them from the rebase instruction list.
+> 
+> Now, the crazy behavior where github users randomly and promiscuously
+> do pushes and pull without doing any kind of verification may very
+> well be dangerous. 
 
-Because the right-hand commit in this case is disjoint from "onto", we
-end up dropping everything at this point.  The --root option fixes this
-because instead of preserving just "onto", it adds all of the commits
-given by:
+Yes, we were mostly familiar with this workflow before starting this
+research. I can see how the "github generation" is open to many attacks
+of this nature. Would git be interested in integrating a defense that
+covers users of this nature (which seems to be a growing userbase)?
 
-	git merge-base --all $orig_head $upstream
+> But so is someone who saves a 80 patch series from
+> their inbox, and without reading or verifying all of the patches
+> applies them blindly to their tree using "git am" --- or if they were
+> using cvs or svn, bulk applied the patches without doing any
+> verification....
 
-Since the disjoint history causes the root commit to be rewritten, I
-think requiring --root for this case to work is reasonable.  However,
-I'm not sure we should add it automatically.  It may be better to detect
-that there is no common history and die if --root has not been given.
+Just out of curiosity, are there known cases of projects in which this
+has happened (I've noticed that both Git and Linux are quite stringent
+in their review/merge process so this wouldn't be the case).
+
+> 
+> Cheers,
+
+Thanks for the insight!
+-Santiago.
