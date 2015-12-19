@@ -1,174 +1,140 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH] do_compare_entry: use already-computed path
-Date: Fri, 18 Dec 2015 20:40:27 -0500
-Message-ID: <1450489227-4771-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 19 02:41:17 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] gc: Clean garbage .bitmap files from pack dir
+Date: Fri, 18 Dec 2015 21:01:23 -0500
+Message-ID: <20151219020123.GA31782@sigill.intra.peff.net>
+References: <20151215232534.GA30998@sigill.intra.peff.net>
+ <1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
+ <1450483600-64091-4-git-send-email-dougk.ff7@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, sbeller@google.com, gitster@pobox.com
+To: Doug Kelly <dougk.ff7@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 19 03:01:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aA6WJ-0000bu-PF
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 02:41:16 +0100
+	id 1aA6pu-0007Fq-Sk
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 03:01:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565AbbLSBkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Dec 2015 20:40:45 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:34443 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752423AbbLSBko (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Dec 2015 20:40:44 -0500
-Received: by mail-qk0-f171.google.com with SMTP id p187so118209089qkd.1
-        for <git@vger.kernel.org>; Fri, 18 Dec 2015 17:40:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=2TFk/xiNKRzAFrmLdtftiNkI0nOvO173xq5StJEk9JE=;
-        b=F7hFMuUEOqApRxx2Vr1BtEZtFvgnff4geWdXj+DB4medrj2/K+gIDJv+pMnIz4UJjM
-         rRfqnQF/pysE/QW8S4EMqRPeFAAZOlnNENRHHvQEPBM0jixmnUQzMnpP0hD/lIUWQQs4
-         SxW+WFZ+eFcUdQCyp9RBiEHF0nejGnnVgLAFCP6ZA1HkR2hirhqwSxXLoxb4qG4LD1ZB
-         PGhbwD+j1t5GdLVKFXalOH8m4ju7V6YVW7FXRaY+CY5DKfxNYkUAs2ek1fqwkylMV5fW
-         33jAHZLcI5aeaMIJBw1aHfkMk1wjgqBQsB3gz85eTP7a/uzSXSzkW4ivFJUcCgcMBa7C
-         TOjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=2TFk/xiNKRzAFrmLdtftiNkI0nOvO173xq5StJEk9JE=;
-        b=ks4dsW0/Ra98gIAw2KXEkuoyPtOdKNixcEKqBzdowpVIxOzmJpCxAsfl13Ur722r7u
-         QStNgBBUTfCrPdgkkLcx1ZN4kVvP4Wd7WOxpGeXEM8AxBaC58sW8vX1Jw9nzFPQgBcAa
-         0ES6k8czvtBS7P/c729EDA4duriBDla0JjcNqNuQMP76kTNRIwJCxxlGagkI/GzrS+wA
-         W+H2gZ7a05Jb9/kbZTlXS2BhwGOS3MbyUBC3ZIYboEa+qK/BCgPK7LMJHZVKwdGSxEmW
-         86KpuTSoVn3kSDYoYOVRDbe1+fA7zinoCdmuAjc1C6j/RWpt18GY7kood7vXRkrSx6lP
-         SAaw==
-X-Gm-Message-State: ALoCoQnN25ygJM6hEn3vT27tXf8+2lAxsmHWbL2tevk1hMsvd/dDgzcJyNXBNz/MWySPYPKfYTFCwae2dZetVHoY/AHm9Cw4lw==
-X-Received: by 10.55.73.133 with SMTP id w127mr9467488qka.53.1450489243194;
-        Fri, 18 Dec 2015 17:40:43 -0800 (PST)
-Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id r83sm7950727qhc.8.2015.12.18.17.40.41
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 18 Dec 2015 17:40:42 -0800 (PST)
-X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
+	id S932199AbbLSCB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Dec 2015 21:01:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44482 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752523AbbLSCB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Dec 2015 21:01:26 -0500
+Received: (qmail 20444 invoked by uid 102); 19 Dec 2015 02:01:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Dec 2015 20:01:25 -0600
+Received: (qmail 2165 invoked by uid 107); 19 Dec 2015 02:01:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Dec 2015 21:01:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Dec 2015 21:01:23 -0500
+Content-Disposition: inline
+In-Reply-To: <1450483600-64091-4-git-send-email-dougk.ff7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282727>
 
-In traverse_trees, we generate the complete traverse path for a
-traverse_info.  Later, in do_compare_entry, we used to go do a bunch
-of work to compare the traverse_info to a cache_entry's name without
-computing that path.  But since we already have that path, we don't
-need to do all that work.  Instead, we can just stuff the generated
-path into the traverse_info, and do the comparison more directly.
-This makes git checkout much faster -- about 25% on Twitter's
-monorepo.  Deeper directory trees are likely to benefit more than
-shallower ones.
+On Fri, Dec 18, 2015 at 06:06:40PM -0600, Doug Kelly wrote:
 
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- tree-walk.c    |  4 ++++
- tree-walk.h    |  1 +
- unpack-trees.c | 41 +++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 44 insertions(+), 2 deletions(-)
+> Similar to cleaning up excess .idx files, clean any garbage .bitmap
+> files that are not otherwise associated with any .idx/.pack files.
+> 
+> Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
+> ---
+>  builtin/gc.c     | 12 ++++++++++--
+>  t/t5304-prune.sh |  2 +-
+>  2 files changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index c583aad..7ddf071 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -58,8 +58,16 @@ static void clean_pack_garbage(void)
+>  
+>  static void report_pack_garbage(unsigned seen_bits, const char *path)
+>  {
+> -	if (seen_bits == PACKDIR_FILE_IDX)
+> -		string_list_append(&pack_garbage, path);
+> +	if (seen_bits & PACKDIR_FILE_IDX ||
+> +	    seen_bits & PACKDIR_FILE_BITMAP) {
+> +		const char *dot = strrchr(path, '.');
+> +		if (dot) {
+> +			int baselen = dot - path + 1;
+> +			if (!strcmp(path+baselen, "idx") ||
+> +				!strcmp(path+baselen, "bitmap"))
+> +				string_list_append(&pack_garbage, path);
+> +		}
+> +	}
+>  }
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 6dccd2d..4cab3e1 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -329,6 +329,9 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
- 		make_traverse_path(base.buf, info->prev, &info->name);
- 		base.buf[info->pathlen-1] = '/';
- 		strbuf_setlen(&base, info->pathlen);
-+		info->traverse_path = base.buf;
-+	} else {
-+		info->traverse_path = info->name.path;
- 	}
- 	for (;;) {
- 		int trees_used;
-@@ -411,6 +414,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
- 	for (i = 0; i < n; i++)
- 		free_extended_entry(tx + i);
- 	free(tx);
-+	info->traverse_path = NULL;
- 	strbuf_release(&base);
- 	return error;
- }
-diff --git a/tree-walk.h b/tree-walk.h
-index 3b2f7bf..174eb61 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -59,6 +59,7 @@ enum follow_symlinks_result {
- enum follow_symlinks_result get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode);
- 
- struct traverse_info {
-+	const char *traverse_path;
- 	struct traverse_info *prev;
- 	struct name_entry name;
- 	int pathlen;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8e2032f..127dd4d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -498,13 +498,14 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
-  * itself - the caller needs to do the final check for the cache
-  * entry having more data at the end!
-  */
--static int do_compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
-+static int do_compare_entry_piecewise(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
- {
- 	int len, pathlen, ce_len;
- 	const char *ce_name;
- 
- 	if (info->prev) {
--		int cmp = do_compare_entry(ce, info->prev, &info->name);
-+		int cmp = do_compare_entry_piecewise(ce, info->prev,
-+						     &info->name);
- 		if (cmp)
- 			return cmp;
- 	}
-@@ -522,6 +523,42 @@ static int do_compare_entry(const struct cache_entry *ce, const struct traverse_
- 	return df_name_compare(ce_name, ce_len, S_IFREG, n->path, len, n->mode);
- }
- 
-+static int do_compare_entry(const struct cache_entry *ce,
-+			    const struct traverse_info *info,
-+			    const struct name_entry *n)
-+{
-+	int len, pathlen, ce_len;
-+	const char *ce_name;
-+	int cmp;
-+
-+	/*
-+	 * If we have not precomputed the traverse path, it is quicker
-+	 * to avoid doing so.  But if we have precomputed it,
-+	 * it is quicker to use the precomputed version.
-+	 */
-+	if (!info->traverse_path)
-+		return do_compare_entry_piecewise(ce, info, n);
-+
-+	cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
-+	if (cmp)
-+		return cmp;
-+
-+	pathlen = info->pathlen;
-+	ce_len = ce_namelen(ce);
-+
-+	if (ce_len < pathlen) {
-+		if (do_compare_entry_piecewise(ce, info, n) >= 0)
-+			die("pathlen");
-+		return -1;
-+	}
-+
-+	ce_len -= pathlen;
-+	ce_name = ce->name + pathlen;
-+
-+	len = tree_entry_len(n);
-+	return df_name_compare(ce_name, ce_len, S_IFREG, n->path, len, n->mode);
-+}
-+
- static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
- {
- 	int cmp = do_compare_entry(ce, info, n);
--- 
-2.4.2.749.g730654d-twtrsrc
+Hmm. Thinking on this further, do we actually need to check seen_bits
+here at all?
+
+The original was trying to ask "is this a .idx file" by checking
+seen_bits.  That was actually broken by the first patch in this series
+for some cases, as we might send more bits. E.g., if you have "foo.idx"
+and "foo.pack", this function will get called twice (once per file), but
+with seen_bits set to IDX|BITMAP for both cases. And we would not match
+the "==" above, and would therefore fail to trigger.
+
+That case is re-fixed by this patch, which is good. But I think
+seen_bits is not really telling us anything at this point. We know it's
+a garbage case, or else report_helper wouldn't have passed it along to
+us. But we care only about the extension in the path, which is what
+distinguishes each individual call to this function.
+
+So we can just check that.  I also think the logic may be clearer if we
+handle each extension exhaustively, like:
+
+  /* We know these are useless without the matching .pack */
+  if (ends_with(path, ".bitmap") || ends_with(path, ".idx")) {
+          string_list_append(&pack_garbage, path);
+	  return;
+  }
+
+  /*
+   * A pack without other files cannot be used, but should be saved,
+   * as this is a recoverable situation (we may even see it racily
+   * as new packs come into existence).
+   */
+  if (ends_with(path, ".pack"))
+	  return;
+
+  /*
+   * A .keep file is useless without the matching pack, but it
+   * _could_ contain information generated by the user. Let's keep it.
+   * In the future, we may expand this to look for obvious leftover
+   * receive-pack locks and drop them.
+   */
+  if (ends_with(path, ".keep"))
+          return;
+
+  /*
+   * A totally unrelated garbage file should be kept, to err
+   * on the conservative side.
+   */
+  if (seen_bits & PACKDIR_FILE_GARBAGE)
+	return;
+
+  /*
+   * We have a file type that the garbage-reporting functions
+   * know about but we don't. This function needs updating.
+   */
+  die("BUG: report_pack_garbage confused");
+
+> -test_expect_failure 'clean pack garbage with gc' '
+> +test_expect_success 'clean pack garbage with gc' '
+>  	test_when_finished "rm -f .git/objects/pack/fake*" &&
+>  	test_when_finished "rm -f .git/objects/pack/foo*" &&
+>  	: >.git/objects/pack/foo.keep &&
+
+And I think here we should make sure that we are covering the above
+situations (and especially that we are keeping files that should be
+kept).
+
+-Peff
