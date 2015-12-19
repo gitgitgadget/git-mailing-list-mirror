@@ -1,122 +1,157 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 06/11] ref-filter: introduce color_atom_parser()
-Date: Sat, 19 Dec 2015 11:30:21 +0530
-Message-ID: <CAOLa=ZTRJFrOFbYbqMOsicinJmzrMhi0NB3ySf1=-DTWY6sc+w@mail.gmail.com>
-References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
- <1450279802-29414-7-git-send-email-Karthik.188@gmail.com> <CAPig+cTNEXA75Gh_jXrdhLOJpXYgyZ97TJCPHXz4DodOcjWheA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Dec 19 07:01:05 2015
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCHv2 3/3] git-p4: reduce number of server queries for fetches
+Date: Sat, 19 Dec 2015 09:39:40 +0000
+Message-ID: <1450517980-1744-4-git-send-email-luke@diamand.org>
+References: <1450517980-1744-1-git-send-email-luke@diamand.org>
+Cc: James Farwell <jfarwell@vmware.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sam Hocevar <sam@hocevar.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 19 10:40:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAAZk-0006VC-UG
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 07:01:05 +0100
+	id 1aAE0E-0001Gi-90
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Dec 2015 10:40:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752276AbbLSGAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Dec 2015 01:00:52 -0500
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:32783 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480AbbLSGAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Dec 2015 01:00:51 -0500
-Received: by mail-vk0-f51.google.com with SMTP id a188so77661112vkc.0
-        for <git@vger.kernel.org>; Fri, 18 Dec 2015 22:00:51 -0800 (PST)
+	id S932665AbbLSJjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Dec 2015 04:39:51 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38102 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932495AbbLSJjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Dec 2015 04:39:41 -0500
+Received: by mail-wm0-f48.google.com with SMTP id l126so13400593wml.1
+        for <git@vger.kernel.org>; Sat, 19 Dec 2015 01:39:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=MHkx5K+6xdsAIxKmkrkdyhJcJCeopfb4PLK909Z0gRA=;
-        b=xvZmUJREm0hG+SqMOqfotQZL+hNVffBbIvI9AY27n6haLYCwG3yU3aBYtNBFBrM6J6
-         bVayVM+Jv+b03inRPQhwsk6gIdmpd1Qg41SDG55yKPXPCm5hZHuIoGQdvJBIxUdtu5Ne
-         W3D4OYpqubQGFNACvgFjEFn0xMqSzEo2bpI/9abqf7DF5ro9STxGLAoBd5nA2/LUhexU
-         6zippGDo/nm+1IB3mvyGAxQ3Y86lAqO1LpxfQnN0epUe/ymab3QH6sDOey15pwTC5BV4
-         56R6HABx83juzeL/TWPWnvbn5dy8jZEw2A45pfTuUA9tCkOhR2DxZvZlqnvEbRpVAyak
-         d16w==
-X-Received: by 10.31.155.23 with SMTP id d23mr4268164vke.146.1450504850693;
- Fri, 18 Dec 2015 22:00:50 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Fri, 18 Dec 2015 22:00:21 -0800 (PST)
-In-Reply-To: <CAPig+cTNEXA75Gh_jXrdhLOJpXYgyZ97TJCPHXz4DodOcjWheA@mail.gmail.com>
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=tDeLp7PTEGcAxJev6sDDGzeqdsbHUwgIZi9HuBbNqoI=;
+        b=YrE3Ffe+uFEbeOtDDoI5czFt3miksvsOqlIfFoNFUt7F1Mxrte+YM0H2CVszxZGlKK
+         XfAYt20KJ4mVjua/AK1Hz1a4TywY+LNJ9yxVLUp1JYiQDL1IvrPxirI9Ptkl9oJbREau
+         a9bV5Mzr5jdzI94hl/M6mCCyBQDR+Lg+U24A0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=tDeLp7PTEGcAxJev6sDDGzeqdsbHUwgIZi9HuBbNqoI=;
+        b=E8186kdB+EKfzGe54bcsftTyC+O64CYgch0s6Tt8H2LGWziLw8wTqBJjH+U+UDSV+I
+         MHHmQq2F4VFWeh89wj/wKUvfCbrQAWrhdHSmXR6QtFja14res7FEmzCQPjfUyXrReqvD
+         255QyIV77hNuEu524iIo2fbbQ7FRsHZRm4BfKAV6Pn9xqiXZ6X1x3uXefOh7bheooH0r
+         mowiJw81oNHvublPW9AfQiaxhmn8Mt4pgEQ0l+CpphKIKN4cvXcrtQVtMS8f2U7+HbFq
+         DcSQp3rNMlFACi59rRRTqz9YpM0sVs96fP1YVkQM9FM6mwxQBog5iIEqqh9Elv8ONQCd
+         PRWw==
+X-Gm-Message-State: ALoCoQlrANW7Xkgzq0V+depqLcXzB+RGeN+OVEm8OW2XV62waEpKlhyHlOuSrXwkszil46MXW2FxcHMQi7XIlOAQl/oVXGM+2A==
+X-Received: by 10.194.79.227 with SMTP id m3mr8731140wjx.5.1450517979892;
+        Sat, 19 Dec 2015 01:39:39 -0800 (PST)
+Received: from ethel.local.diamand.org (cpc92798-cmbg19-2-0-cust327.5-4.cable.virginm.net. [80.1.41.72])
+        by smtp.gmail.com with ESMTPSA id b84sm10211547wmh.15.2015.12.19.01.39.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 19 Dec 2015 01:39:39 -0800 (PST)
+X-Mailer: git-send-email 2.6.2.474.g3eb3291
+In-Reply-To: <1450517980-1744-1-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282738>
 
-On Thu, Dec 17, 2015 at 2:51 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce color_atom_parser() which will parse a "color" atom and
->> store its color in the "use_atom" structure for further usage in
->
-> Same comment as last time: s/use_atom/used_atom/
->
+From: Sam Hocevar <sam@hocevar.net>
 
-Will change.
+When fetching changes from a depot using a full client spec, there
+is no need to perform as many queries as there are top-level paths
+in the client spec.  Instead we query all changes in chronological
+order, also getting rid of the need to sort the results and remove
+duplicates.
 
->> 'populate_value()'.
->
-> s/'//g
->
+Signed-off-by: Sam Hocevar <sam@hocevar.net>
+Signed-off-by: Luke Diamand <luke@diamand.org>
+---
+ git-p4.py               | 44 +++++++++++++++++++++-----------------------
+ t/t9818-git-p4-block.sh |  2 +-
+ 2 files changed, 22 insertions(+), 24 deletions(-)
 
-Will do.
-
-> More below...
->
->> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -29,6 +29,9 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
->>  static struct used_atom {
->>         const char *str;
->>         cmp_type type;
->> +       union {
->> +               const char *color;
->> +       } u;
->>  } *used_atom;
->>  static int used_atom_cnt, need_tagged, need_symref;
->>  static int need_color_reset_at_eol;
->> @@ -53,6 +56,13 @@ static int match_atom_name(const char *name, const char *atom_name, const char *
->> +static void color_atom_parser(struct used_atom *atom)
->> +{
->> +       match_atom_name(atom->str, "color", &atom->u.color);
->> +       if (!atom->u.color)
->> +               die(_("expected format: %%(color:<color>)"));
->> +}
->> +
->> @@ -833,12 +846,10 @@ static void populate_value(struct ref_array_item *ref)
->>                         refname = branch_get_push(branch, NULL);
->>                         if (!refname)
->>                                 continue;
->> -               } else if (match_atom_name(name, "color", &valp)) {
->> +               } else if (starts_with(name, "color:")) {
->>                         char color[COLOR_MAXLEN] = "";
->>
->> -                       if (!valp)
->> -                               die(_("expected format: %%(color:<color>)"));
->> -                       if (color_parse(valp, color) < 0)
->> +                       if (color_parse(atom->u.color, color) < 0)
->
-> It would make a lot more sense to invoke color_parse() with the
-> unchanging argument to "color:" just once in color_atom_parser()
-> rather than doing it here repeatedly. (Also, you'd drop 'const' from
-> used_atom.u.color declaration.)
->
-
-This makes sense, I'll put have color_parse() in color_atom_parser().
-This would also require us to allocate memory once in color_atom_parser.
-
->
-> Does v->s get freed each time through the loop? If not, then, assuming
-> you parse the color just once in color_atom_parser(), then you could
-> just assign the parsed color directly to v->s rather than duplicating
-> it.
-
-No it doesn't. Yup will do.
-
+diff --git a/git-p4.py b/git-p4.py
+index 122aff2..c33dece 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -822,39 +822,37 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+                 die("cannot use --changes-block-size with non-numeric revisions")
+             block_size = None
+ 
+-    # Accumulate change numbers in a dictionary to avoid duplicates
+-    changes = {}
++    changes = []
+ 
+-    for p in depotPaths:
+-        # Retrieve changes a block at a time, to prevent running
+-        # into a MaxResults/MaxScanRows error from the server.
++    # Retrieve changes a block at a time, to prevent running
++    # into a MaxResults/MaxScanRows error from the server.
+ 
+-        while True:
+-            cmd = ['changes']
++    while True:
++        cmd = ['changes']
+ 
+-            if block_size:
+-                end = min(changeEnd, changeStart + block_size)
+-                revisionRange = "%d,%d" % (changeStart, end)
+-            else:
+-                revisionRange = "%s,%s" % (changeStart, changeEnd)
++        if block_size:
++            end = min(changeEnd, changeStart + block_size)
++            revisionRange = "%d,%d" % (changeStart, end)
++        else:
++            revisionRange = "%s,%s" % (changeStart, changeEnd)
+ 
++        for p in depotPaths:
+             cmd += ["%s...@%s" % (p, revisionRange)]
+ 
+-            for line in p4_read_pipe_lines(cmd):
+-                changeNum = int(line.split(" ")[1])
+-                changes[changeNum] = True
++        # Insert changes in chronological order
++        for line in reversed(p4_read_pipe_lines(cmd)):
++            changes.append(int(line.split(" ")[1]))
+ 
+-            if not block_size:
+-                break
++        if not block_size:
++            break
+ 
+-            if end >= changeEnd:
+-                break
++        if end >= changeEnd:
++            break
+ 
+-            changeStart = end + 1
++        changeStart = end + 1
+ 
+-    changelist = changes.keys()
+-    changelist.sort()
+-    return changelist
++    changes = sorted(changes)
++    return changes
+ 
+ def p4PathStartsWith(path, prefix):
+     # This method tries to remedy a potential mixed-case issue:
+diff --git a/t/t9818-git-p4-block.sh b/t/t9818-git-p4-block.sh
+index 64510b7..8840a18 100755
+--- a/t/t9818-git-p4-block.sh
++++ b/t/t9818-git-p4-block.sh
+@@ -128,7 +128,7 @@ test_expect_success 'Create a repo with multiple depot paths' '
+ 	done
+ '
+ 
+-test_expect_failure 'Clone repo with multiple depot paths' '
++test_expect_success 'Clone repo with multiple depot paths' '
+ 	(
+ 		cd "$git" &&
+ 		git p4 clone --changes-block-size=4 //depot/pathA@all //depot/pathB@all \
 -- 
-Regards,
-Karthik Nayak
+2.6.2.474.g3eb3291
