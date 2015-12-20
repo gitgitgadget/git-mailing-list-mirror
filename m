@@ -1,66 +1,75 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v1 0/2] git-p4: kill watchdog and suppress irrelevant output
-Date: Sun, 20 Dec 2015 17:44:27 +0100
-Message-ID: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v1 1/2] git-p4: kill p4d watchdog on cleanup
+Date: Sun, 20 Dec 2015 17:44:28 +0100
+Message-ID: <1450629869-49522-2-git-send-email-larsxschneider@gmail.com>
+References: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com>
 Cc: luke@diamand.org, sunshine@sunshineco.com,
 	Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 20 17:44:39 2015
+X-From: git-owner@vger.kernel.org Sun Dec 20 17:44:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAh66-0007la-LV
+	id 1aAh67-0007la-9h
 	for gcvg-git-2@plane.gmane.org; Sun, 20 Dec 2015 17:44:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933451AbbLTQoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933456AbbLTQof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Dec 2015 11:44:35 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34174 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933230AbbLTQoe (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 20 Dec 2015 11:44:34 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35087 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754190AbbLTQod (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Dec 2015 11:44:33 -0500
-Received: by mail-wm0-f66.google.com with SMTP id p187so8335452wmp.2
-        for <git@vger.kernel.org>; Sun, 20 Dec 2015 08:44:32 -0800 (PST)
+Received: by mail-wm0-f68.google.com with SMTP id l126so8347411wml.1
+        for <git@vger.kernel.org>; Sun, 20 Dec 2015 08:44:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DknBg1StvZKV7pcSdzawOjJKxCz6TYqgB/FHCTpYHdM=;
-        b=Jj/SIZZWYWdtojjX+DbHSnmcqCeSRQzQJtpKn3zXEMgeplzuCdlfoJevxFHm/F4HUk
-         hW8YH+OEXarsfUQ3044omGaZx9mvhNZGwBQiIIDa6zO2d8iXxqmHT2QRvE5xPF03kIpm
-         TRK5AfElhTdiDnyQeTILZnumws8bkufX2pbw3Vlzjbu8j9ffaaJozIQtDcXUzMkn7FGe
-         NuMwsfk6jbBPj8/Q+NIfNVyNH51wFfnrlJHRXSW7+qAVKurMQOSnv1RahtIJyLL4rJ5K
-         Md1SIIivzpiur/6xW/OJHOlq8+iuF1osmI/g+esWHj4Z4m7R5WfuVmuUyRWpdUMV4BUI
-         ZAIg==
-X-Received: by 10.194.117.68 with SMTP id kc4mr15581892wjb.77.1450629872342;
-        Sun, 20 Dec 2015 08:44:32 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=eckmrAHSlUzDnEHspJjp1d9YfcXmsrmswQZ4jc0CQQM=;
+        b=0MHJN7LJ5uPytPsdTStBKx3wGTvvy7IAzNkSNyQYQaG5kalhJZdjL9TJg7yLe0JntK
+         QcQW06+9x/gj4p9rqcYwXtO9WCdx804CubtpywAH9ERNi9nAaF1sEmS/XtVs/UzlidF9
+         DPGJ1ExC66RU4iIMZ6PCSxcRRhkC2HtElXB4TYmOnc4SpddvpkCcND8R4bGsJNI/U7N1
+         qrHe1anUcRnIjCA4Dp+FpK+PcriLWIbm6pU7nT9JQUHUW2jVLcUeSsvCVCjYVrty0VIP
+         WYf0EB43vYS8m9tHiwO8NdDHZZ0Jz7WkcfC3keaBwjRFJChjgV2FXiTycQk7jMW0CVpo
+         F24w==
+X-Received: by 10.194.86.71 with SMTP id n7mr9571933wjz.107.1450629873522;
+        Sun, 20 Dec 2015 08:44:33 -0800 (PST)
 Received: from slxBook3.fritz.box (p508BA24E.dip0.t-ipconnect.de. [80.139.162.78])
-        by smtp.gmail.com with ESMTPSA id g127sm16057280wmf.24.2015.12.20.08.44.31
+        by smtp.gmail.com with ESMTPSA id g127sm16057280wmf.24.2015.12.20.08.44.32
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Dec 2015 08:44:31 -0800 (PST)
+        Sun, 20 Dec 2015 08:44:32 -0800 (PST)
 X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282773>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Hi,
+If failing tests are executed with the "immediate" flag then "kill_p4d"
+is not called and consequently the watchdog process, which is supposed
+to detect a hanging p4d, is not killed. Kill the watchdog always in the
+"on exit" cleanup trap.
 
-these patches extend "git-p4: add trap to kill p4d on test exit" (dfe90e8)
-and therefore should be applied on master.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/lib-git-p4.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Lars
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index f9ae1d7..30bf7ae 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -76,6 +76,7 @@ pidfile="$TRASH_DIRECTORY/p4d.pid"
 
-Lars Schneider (2):
-  git-p4: kill p4d watchdog on cleanup
-  git-p4: suppress non test relevant output
-
- t/lib-git-p4.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
+ # Sometimes "prove" seems to hang on exit because p4d is still running
+ cleanup() {
++	kill -9 $watchdog_pid 2>/dev/null
+ 	if test -f "$pidfile"
+ 	then
+ 		kill -9 $(cat "$pidfile") 2>/dev/null && exit 255
 --
 2.5.1
