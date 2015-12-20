@@ -1,254 +1,127 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v1] git-p4: ignore P4 changelists that only touch files
-Date: Sun, 20 Dec 2015 15:59:39 +0100
-Message-ID: <1450623579-17013-2-git-send-email-larsxschneider@gmail.com>
-References: <1450623579-17013-1-git-send-email-larsxschneider@gmail.com>
-Cc: luke@diamand.org, sunshine@sunshineco.com,
-	Lars Schneider <larsxschneider@gmail.com>
+From: Elliott Cable <me@ell.io>
+Subject: `format:%>` padding and `git log --graph`
+Date: Sun, 20 Dec 2015 10:41:44 -0600
+Message-ID: <CAPZ477ObN53VffNVvHVuqT0MQ2Csu70i0+himmmjvPj1wfXjUQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 20 16:00:03 2015
+X-From: git-owner@vger.kernel.org Sun Dec 20 17:42:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAfSs-0007jt-Cb
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Dec 2015 16:00:02 +0100
+	id 1aAh3q-0003fI-Ly
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Dec 2015 17:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754520AbbLTO7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Dec 2015 09:59:51 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36465 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754510AbbLTO7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Dec 2015 09:59:44 -0500
-Received: by mail-wm0-f48.google.com with SMTP id p187so40249493wmp.1
-        for <git@vger.kernel.org>; Sun, 20 Dec 2015 06:59:43 -0800 (PST)
+	id S933398AbbLTQmJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2015 11:42:09 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:36104 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932305AbbLTQmG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Dec 2015 11:42:06 -0500
+Received: by mail-vk0-f52.google.com with SMTP id f2so51021736vkb.3
+        for <git@vger.kernel.org>; Sun, 20 Dec 2015 08:42:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OObh2vkhsr5Fyqpebm+dStM4kyfz5H9a1NAefZBlVYw=;
-        b=Th8sA94CIzxYTYgIfQ2lSUNhsAHjFuF6Fg2NPJq0A1i1l3UlcmmiyFheRAcQoMZ0xJ
-         nlQoS5zcipHfgyVZewYnrMFuhapZC1sTNRxJahkPBTRDIcUmsbtoFT5nUWIdS7n7f17l
-         RaXvJjUOoUuGjaPE8SZra0m/zeBix09/JsfSaYbaMD93orKqiHgbLtmeXBA3C/Yk7fKo
-         Q39RpEtQpOffKAfcOvBBVv8Z2TVPeJn6SveeYo8qNN74SrtW2j5RjWQFfN8EnaBRadPe
-         xscWC5icnTtpP4azJOGrgcE5Zn0uXN3r29Pdm6u36XMmrgU2Q8/kz2GEH63k/fErbwdG
-         PNeA==
-X-Received: by 10.194.173.102 with SMTP id bj6mr15013393wjc.180.1450623583363;
-        Sun, 20 Dec 2015 06:59:43 -0800 (PST)
-Received: from slxBook3.fritz.box (p508BA24E.dip0.t-ipconnect.de. [80.139.162.78])
-        by smtp.gmail.com with ESMTPSA id xs9sm23830722wjc.43.2015.12.20.06.59.42
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Dec 2015 06:59:42 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1450623579-17013-1-git-send-email-larsxschneider@gmail.com>
+        d=ell.io; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=wwuTMfsLXkE0+PnvunYlGoTUPqmRZch+gbO35B8eZW8=;
+        b=gHaPK/iIt6+TTF7nA2rnBlvi3L2+M0ANDsj26W7gl6Zs9TOynTUo+ZaowouxtnIFQ2
+         bBDd5PILH8M2u4etxu1kZIXUxhXbtXhabNGS7Jc/vc5XeEMZS7O3VdjgQSfmDPFgO/T5
+         mjUwkr5DjYJqWS+KWvaVo20WbnV90DLCFjnlg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=wwuTMfsLXkE0+PnvunYlGoTUPqmRZch+gbO35B8eZW8=;
+        b=Bs/E9raD1PGuVjEBjsHDvxR/zeTmxyRXhR1EtFkS7YvdILPRNJNXZQ3L12TZb7Zfso
+         LFojjlLpJqr980Ey4DeIz4aIlem5bSXC2Hteap2iENmy9+e4Iyp7mgzlCQjhUYDO79MN
+         XIxWOw5/y/v8rf1TfBtpj4FAkvPeUEOIRz2GtK4ktuNHi4Ovsna2nZWtO3fR+BP+fUek
+         WWxKBkomAqer5K/HRTSwwdfKpVVaK81WVF4lLX7qYC860G34IvEU+WvitstvR/mnzXuu
+         M0u9i/0XXdNj+6IkkHM3QYkJF9mT5Xi3IyaO0V6Hx/w+qVYlJGNChwSHBw7TsXEJ7IUZ
+         8usQ==
+X-Gm-Message-State: ALoCoQkJHRiNfAsjvStEiib9t8HjAp6yP+THLajv1Ix5OtVaNRBrZpmzelHgbAYGHX+s4UMV3Jewq5FQIwPXvgIWHv0PZj6xcA==
+X-Received: by 10.31.8.83 with SMTP id 80mr9546941vki.105.1450629724884; Sun,
+ 20 Dec 2015 08:42:04 -0800 (PST)
+Received: by 10.103.74.29 with HTTP; Sun, 20 Dec 2015 08:41:44 -0800 (PST)
+X-Originating-IP: [204.14.154.133]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282771>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+I'm not sure what version the `%>` / `<|` / etc padding showed up in,
+but they're truly excellent for building beautiful one-line `git log`
+output.
 
-Detect if a P4 changelists only changes the creation or modification
-date of its files. Ignore these kind of changed files on import to avoid
-empty Git commits. This would happen because Git does not track these
-properties.
+This may be a long-shot, but, unfortunately, these new formats sort of
+fall flat in the presence of `git log --graph`: The =E2=80=98pad until =
+column=E2=80=99
+feature, which when reading the manpage, I desperately hoped
+*specifically exists* to replace the normal =E2=80=98pad with spaces=E2=
+=80=99 in
+situations where `--graph` adds an un-known number of characters to the
+start of the line ... unfortunately doesn't seem to work that way.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- git-p4.py                            | 54 ++++++++++++++++++++++++++++++++++--
- t/t9826-git-p4-keep-empty-commits.sh | 48 ++++++++++++++++++++++++++++++--
- 2 files changed, 97 insertions(+), 5 deletions(-)
+=46or instance, here's some truncated output from a basic `--graph`:
 
-diff --git a/git-p4.py b/git-p4.py
-index 7a9dd6a..c38a8f7 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -328,6 +328,15 @@ def split_p4_type(p4type):
-     return (base, mods)
- 
- #
-+# converts P4 mods to Git file modes
-+#
-+def convert_to_git_mode(p4_mods):
-+    if 'x' in p4_mods:
-+        return '100755'
-+    else:
-+        return '100644'
-+
-+#
- # return the raw p4 type of a file (text, text+ko, etc)
- #
- def p4_type(f):
-@@ -335,6 +344,35 @@ def p4_type(f):
-     return results[0]['headType']
- 
- #
-+# Returns true if Git would mark the diff of a file `f` in `changelist1`
-+# and `changelist2` as modified. The change detection is very conservative
-+# as a P4 file type change would usually not change the Git content.
-+# However, in case of symlinks or UTF-16 files that might happen.
-+#
-+def p4_file_changed(f, changelist1, changelist2):
-+    if not changelist1 or not changelist2:
-+        return True
-+    results = p4CmdList([
-+        'diff2',
-+        '{}@{}'.format(wildcard_encode(f), changelist1),
-+        '{}@{}'.format(wildcard_encode(f), changelist2)
-+    ])
-+    if len(results) != 1:
-+        return True
-+    elif ('status' not in results[0] or
-+          'type' not in results[0] or
-+          'type2' not in results[0]):
-+        return True
-+    else:
-+        (type1, mods1) = split_p4_type(results[0]['type'])
-+        (type2, mods2) = split_p4_type(results[0]['type2'])
-+        return (
-+            results[0]['status'] != 'identical' or
-+            convert_to_git_mode(mods1) != convert_to_git_mode(mods2) or
-+            type1 != type2
-+        )
-+
-+#
- # Given a type base and modifier, return a regexp matching
- # the keywords that can be expanded in the file
- #
-@@ -2394,10 +2432,8 @@ class P4Sync(Command, P4UserMap):
-             sys.stdout.flush()
- 
-         (type_base, type_mods) = split_p4_type(file["type"])
-+        git_mode = convert_to_git_mode(type_mods)
- 
--        git_mode = "100644"
--        if "x" in type_mods:
--            git_mode = "100755"
-         if type_base == "symlink":
-             git_mode = "120000"
-             # p4 print on a symlink sometimes contains "target\n";
-@@ -2656,6 +2692,14 @@ class P4Sync(Command, P4UserMap):
-         files = [f for f in files
-             if self.inClientSpec(f['path']) and self.hasBranchPrefix(f['path'])]
- 
-+        files = [f for f in files
-+            if not f['action'] == 'edit' or p4_file_changed(
-+                f['path'],
-+                details.get('previous_change', None),
-+                details['change']
-+            )
-+        ]
-+
-         if not files and not gitConfigBool('git-p4.keepEmptyCommits'):
-             print('Ignoring revision {0} as it would produce an empty commit.'
-                 .format(details['change']))
-@@ -2993,8 +3037,10 @@ class P4Sync(Command, P4UserMap):
- 
-     def importChanges(self, changes):
-         cnt = 1
-+        previous_change = None
-         for change in changes:
-             description = p4_describe(change)
-+            description['previous_change'] = previous_change
-             self.updateOptionDict(description)
- 
-             if not self.silent:
-@@ -3069,6 +3115,8 @@ class P4Sync(Command, P4UserMap):
-                                 self.initialParent)
-                     # only needed once, to connect to the previous commit
-                     self.initialParent = ""
-+
-+                previous_change = change
-             except IOError:
-                 print self.gitError.read()
-                 sys.exit(1)
-diff --git a/t/t9826-git-p4-keep-empty-commits.sh b/t/t9826-git-p4-keep-empty-commits.sh
-index be12960..23a300a 100755
---- a/t/t9826-git-p4-keep-empty-commits.sh
-+++ b/t/t9826-git-p4-keep-empty-commits.sh
-@@ -15,7 +15,7 @@ test_expect_success 'Create a repo' '
- 
- 		mkdir -p subdir &&
- 
--		>subdir/file1.txt &&
-+		echo "content1" >subdir/file1.txt &&
- 		p4 add subdir/file1.txt &&
- 		p4 submit -d "Add file 1" &&
- 
-@@ -35,7 +35,21 @@ test_expect_success 'Create a repo' '
- 		p4 submit -d "Remove file 3" &&
- 
- 		p4 delete file4.txt &&
--		p4 submit -d "Remove file 4"
-+		p4 submit -d "Remove file 4" &&
-+
-+		p4 edit subdir/file1.txt &&
-+		touch subdir/file1.txt &&
-+		p4 submit -d "Touch file1 - no changes" subdir/file1.txt
-+
-+		p4 edit -t text+x subdir/file1.txt &&
-+		p4 submit -d "Change execution bit" subdir/file1.txt
-+
-+		p4 edit -t binary+x subdir/file1.txt &&
-+		p4 submit -d "Change filetype" subdir/file1.txt
-+
-+		p4 edit subdir/file1.txt &&
-+		echo "content1 changed" >subdir/file1.txt &&
-+		p4 submit -d "Change content" subdir/file1.txt
- 	)
- '
- 
-@@ -47,6 +61,15 @@ test_expect_success 'Clone repo root path with all history' '
- 		git init . &&
- 		git p4 clone --use-client-spec --destination="$git" //depot@all &&
- 		cat >expect <<-\EOF &&
-+Change content
-+[git-p4: depot-paths = "//depot/": change = 10]
-+
-+Change filetype
-+[git-p4: depot-paths = "//depot/": change = 9]
-+
-+Change execution bit
-+[git-p4: depot-paths = "//depot/": change = 8]
-+
- Remove file 4
- [git-p4: depot-paths = "//depot/": change = 6]
- 
-@@ -80,6 +103,18 @@ test_expect_success 'Clone repo subdir with all history but keep empty commits'
- 		git config git-p4.keepEmptyCommits true &&
- 		git p4 clone --use-client-spec --destination="$git" //depot@all &&
- 		cat >expect <<-\EOF &&
-+Change content
-+[git-p4: depot-paths = "//depot/": change = 10]
-+
-+Change filetype
-+[git-p4: depot-paths = "//depot/": change = 9]
-+
-+Change execution bit
-+[git-p4: depot-paths = "//depot/": change = 8]
-+
-+Touch file1 - no changes
-+[git-p4: depot-paths = "//depot/": change = 7]
-+
- Remove file 4
- [git-p4: depot-paths = "//depot/": change = 6]
- 
-@@ -112,6 +147,15 @@ test_expect_success 'Clone repo subdir with all history' '
- 		git init . &&
- 		git p4 clone --use-client-spec --destination="$git" --verbose //depot@all &&
- 		cat >expect <<-\EOF &&
-+Change content
-+[git-p4: depot-paths = "//depot/": change = 10]
-+
-+Change filetype
-+[git-p4: depot-paths = "//depot/": change = 9]
-+
-+Change execution bit
-+[git-p4: depot-paths = "//depot/": change = 8]
-+
- Remove file 3
- [git-p4: depot-paths = "//depot/": change = 5]
- 
--- 
-2.5.1
+    $ git log --graph --abbrev=3D8 --pretty=3D"tformat:%h %s"
+    ...
+    * | a4402023 + basic boilerplate for Liability / LiabilityFamily
+    * |   32ed6de8 Merge branch 'queueless' into queueless+
+    |\ \
+    | * \   1e53ea10 (merge misc) Bring in some `bats` fixes, and re-st=
+y
+    | |\ \
+    | | |/
+    | | * c8c270ff (!! new doc) Add rationale for basically *all* of th=
+e
+
+Here's what `%>|(16)%h` gives me:
+
+    $ git log --graph --abbrev=3D8 --pretty=3D"tformat:%>|(16)%h %s"
+    ...
+    * |         a4402023 + basic boilerplate for Liability / LiabilityF=
+a
+    * |           32ed6de8 Merge branch 'queueless' into queueless+
+    |\ \
+    | * \           1e53ea10 (merge misc) Bring in some `bats` fixes, a=
+n
+    | |\ \
+    | | |/
+    | | *         c8c270ff (!! new doc) Add rationale for basically *al=
+l
+
+Here's something like what I'd *like* to have seen:
+
+    $ git log --graph --abbrev=3D8 --pretty=3D"tformat:%>|(16)%h %s"
+    ...
+    * |     a4402023 + basic boilerplate for Liability / LiabilityFamil=
+y
+    * |     32ed6de8 Merge branch 'queueless' into queueless+
+    |\ \
+    | * \   1e53ea10 (merge misc) Bring in some `bats` fixes, and re-st=
+y
+    | * \   1e53ea10 (merge misc) Bring in some `bats` fixes, and re-st=
+y
+    | |\ \
+    | | |/
+    | | *   c8c270ff (!! new doc) Add rationale for basically *all* of =
+t
+
+So: Is this nigh-unimplementable? I once [dove into the git-log
+source][patch], and I recall the `--graph` code being terrifying; so if
+this is difficult to support, I can see why it would be left out.
+
+If I'm off, though, and this is just an oversight, it'd be really neat
+to see somebody implement it! (=3D
+
+
+=E2=81=93=E2=80=89ELLIOTTCABLE=E2=80=84=E2=80=94=E2=80=84fly safe.
+=E2=80=83=E2=80=89http://ell.io/tt
+
+   [patch]: <http://article.gmane.org/gmane.comp.version-control.git/22=
+6387>
