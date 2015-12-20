@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 2/3] setup.c: re-fix d95138e (setup: set env $GIT_WORK_TREE when ..
-Date: Sun, 20 Dec 2015 14:50:18 +0700
-Message-ID: <1450597819-26278-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 3/3] git.c: make sure we do not leak GIT_* to alias scripts
+Date: Sun, 20 Dec 2015 14:50:19 +0700
+Message-ID: <1450597819-26278-4-git-send-email-pclouds@gmail.com>
 References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
  <1450597819-26278-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,223 +13,146 @@ Cc: Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 20 08:50:59 2015
+X-From: git-owner@vger.kernel.org Sun Dec 20 08:51:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAYlc-0002M6-4V
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Dec 2015 08:50:56 +0100
+	id 1aAYlm-0002aP-6G
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Dec 2015 08:51:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198AbbLTHuv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2015 02:50:51 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36350 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752603AbbLTHuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Dec 2015 02:50:50 -0500
-Received: by mail-pf0-f177.google.com with SMTP id o64so71852765pfb.3
-        for <git@vger.kernel.org>; Sat, 19 Dec 2015 23:50:50 -0800 (PST)
+	id S1754205AbbLTHu4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Dec 2015 02:50:56 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36379 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752603AbbLTHuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Dec 2015 02:50:55 -0500
+Received: by mail-pf0-f171.google.com with SMTP id o64so71853463pfb.3
+        for <git@vger.kernel.org>; Sat, 19 Dec 2015 23:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=XGdY2iQXXlVpjHq9+H/0sG+siQ9Byb2/SGlANgiJolc=;
-        b=XQTfe/O9Bw3l0lPVDIzEywSW29Tqt/kSteDEIq8Ljjlvi9wgx9KNl+gT1IQwT+TV11
-         NBg7++lQ58JLVF9IOVkFh4AUZfkrdHYmI3R6XGMqS4l4K2/5q+7AlijG+zn5hzQxBvaN
-         ofVviTqwwOFCF9sqRIQvdxJs9rguPq/7GzgZkpol0Dwq0eZ+KfeNT4q67+2Y3EtVCYYM
-         FbRiyBTn7gBwmX6QJ1J5K4rTgZfjJ4HFeu6toS67KVqMO5F2JcYM7/auN7LX4OqguS6Y
-         ywl7CBwNN+Zrr1jxQe+EVGLLuBK1RiKMtyLrTc2vuXwDJ18uQy28S6M4iuQmbSfwFP4P
-         SboA==
-X-Received: by 10.98.64.92 with SMTP id n89mr17992039pfa.159.1450597847917;
-        Sat, 19 Dec 2015 23:50:47 -0800 (PST)
+        bh=U+0UerjKLH4RNr8YYlYSe885MpoB0s8YVOi2KKTmXRI=;
+        b=Nk8lF6cUpMWIyrDkNu0yKpalI8+nxmNPm6ZuUzZSgrgAmsOtrvIzqh4hTkro/DIgc8
+         8l3DsORizJEz6y4VsdNVDQ/8FFGT0THk6XnU4Grg1Ll8phq2nwotOpB4SXqi1nh0c5Gk
+         PN4ghlIXJ0U+1sm6Qmo8eF74E2R+UC4OqP7FsHfDYVq7mM1/lzLj9WaeQB9EqdhngV7+
+         e/k0C2ze3uEQ+EXWrJ0ZGZ+qkbnUzHO3uLx9Ht6EOknhZsDlzYO+PAXoZoz72Ywr5Qv+
+         Nn5VVu9d4ikN9D6sE96TvUZF6NDYXKk2Ij4w9MgwKAeye+dZdvDgiVcVrsdlHDYarkBj
+         3t8Q==
+X-Received: by 10.98.15.150 with SMTP id 22mr18002485pfp.57.1450597854318;
+        Sat, 19 Dec 2015 23:50:54 -0800 (PST)
 Received: from lanh ([171.233.236.127])
-        by smtp.gmail.com with ESMTPSA id w62sm27216623pfi.48.2015.12.19.23.50.43
+        by smtp.gmail.com with ESMTPSA id ix2sm31819893pac.15.2015.12.19.23.50.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 19 Dec 2015 23:50:46 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 20 Dec 2015 14:50:46 +0700
+        Sat, 19 Dec 2015 23:50:52 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 20 Dec 2015 14:50:53 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1450597819-26278-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282767>
 
-Commit d95138e [1] fixes a .git file problem by setting GIT_WORK_TREE
-whenever GIT_DIR is set. It sounded harmless because we handle
-GIT_DIR and GIT_WORK_TREE side by side for most commands, with two
-exceptions: git-init and git-clone.
+The unfortunate commit d95138e (setup: set env $GIT_WORK_TREE when
+work tree is set, like $GIT_DIR - 2015-06-26) exposes another problem,
+besides git-clone that's described in the previous commit. If
+GIT_WORK_TREE (or even GIT_DIR) is exported to an alias script, it may
+mislead git commands in the script where the repo is. Granted, most
+scripts work on the repo where the alias is summoned from. But nowhere
+do we forbid the script to visit another repository.
 
-"git clone" is not happy with d95138e. This command ignores GIT_DIR
-but respects GIT_WORK_TREE [2] [3] which means it used to run fine
-from a hook, where GIT_DIR was set but GIT_WORK_TREE was not (*). With
-d95138e, GIT_WORK_TREE is set all the time and git-clone interprets
-that as "I give you order to put the worktree here", usually against
-the user's intention.
+The revert of d95138e in the previous commit is sufficient as a
+fix. However, to protect us from accidentally leaking GIT_*
+environment variables again, we restore certain sensitive env before
+calling the external script.
 
-The solution in d95138e is reverted in this commit. Instead we reuse
-the solution from c056261 [4]. c056261 fixes another setup-messed-
-up-by-alias by saving and restoring env and spawning a new process,
-but for git-clone and git-init only. Now I conclude that setup-messed-
-up-by-alias is always evil. So the env restoration is done for _all_
-commands, including external ones, whenever aliases are involved. It
-fixes what d95138e tries to fix. And it does not upset git-clone-
-inside-hooks.
+GIT_PREFIX is let through because there's another setup side effect
+that we simply accepted so far: current working directory is
+moved. Maybe in future we can introduce a new alias format that
+guarantees no cwd move, then we can unexport GIT_PREFIX.
 
-The test from d95138e remains to verify it's not broken by this. A new
-test is added to make sure git-clone-inside-hooks remains happy.
-
-(*) GIT_WORK_TREE was not set _most of the time_. In some cases
-    GIT_WORK_TREE is set and git-clone will behave differently. The
-    use of GIT_WORK_TREE to direct git-clone to put work tree
-    elsewhere looks like a mistake because it causes surprises this
-    way. But that's a separate story.
-
-[1] d95138e (setup: set env $GIT_WORK_TREE when work tree is set, like
-             $GIT_DIR - 2015-06-26)
-[2] 2beebd2 (clone: create intermediate directories of destination
-             repo - 2008-06-25)
-[3] 20ccef4 (make git-clone GIT_WORK_TREE aware - 2007-07-06)
-[4] c056261 (git potty: restore environments after alias expansion -
-             2014-06-08)
-
-Reported-by: Anthony Sottile <asottile@umich.edu>
+Reported-by: Gabriel Ganne <gabriel.ganne@gmail.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- environment.c    |  2 --
- git.c            | 23 ++++++++++++-----------
- t/t5601-clone.sh | 23 +++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 13 deletions(-)
+ git.c           | 10 +++++++---
+ t/t0001-init.sh | 17 +++++++++++++++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index 2da7fe2..1cc4aab 100644
---- a/environment.c
-+++ b/environment.c
-@@ -235,8 +235,6 @@ void set_git_work_tree(const char *new_work_tree)
- 	}
- 	git_work_tree_initialized =3D 1;
- 	work_tree =3D xstrdup(real_path(new_work_tree));
--	if (setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1))
--		die("could not set GIT_WORK_TREE to '%s'", work_tree);
- }
-=20
- const char *get_git_work_tree(void)
 diff --git a/git.c b/git.c
-index 6ce7043..1a7d399 100644
+index 1a7d399..da278c3 100644
 --- a/git.c
 +++ b/git.c
-@@ -226,7 +226,6 @@ static int handle_options(const char ***argv, int *=
-argc, int *envchanged)
- static int handle_alias(int *argcp, const char ***argv)
+@@ -41,13 +41,16 @@ static void save_env_before_alias(void)
+ 	}
+ }
+=20
+-static void restore_env(void)
++static void restore_env(int external_alias)
  {
- 	int envchanged =3D 0, ret =3D 0, saved_errno =3D errno;
--	const char *subdir;
- 	int count, option_count;
- 	const char **new_argv;
- 	const char *alias_command;
-@@ -234,7 +233,7 @@ static int handle_alias(int *argcp, const char ***a=
+ 	int i;
+-	if (orig_cwd && chdir(orig_cwd))
++	if (!external_alias && orig_cwd && chdir(orig_cwd))
+ 		die_errno("could not move to %s", orig_cwd);
+ 	free(orig_cwd);
+ 	for (i =3D 0; i < ARRAY_SIZE(env_names); i++) {
++		if (external_alias &&
++		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
++			continue;
+ 		if (orig_env[i])
+ 			setenv(env_names[i], orig_env[i], 1);
+ 		else
+@@ -243,6 +246,7 @@ static int handle_alias(int *argcp, const char ***a=
 rgv)
- 	int unused_nongit;
+ 			int argc =3D *argcp, i;
 =20
- 	save_env_before_alias();
--	subdir =3D setup_git_directory_gently(&unused_nongit);
-+	setup_git_directory_gently(&unused_nongit);
+ 			commit_pager_choice();
++			restore_env(1);
 =20
- 	alias_command =3D (*argv)[0];
- 	alias_string =3D alias_lookup(alias_command);
-@@ -292,8 +291,7 @@ static int handle_alias(int *argcp, const char ***a=
+ 			/* build alias_argv */
+ 			alias_argv =3D xmalloc(sizeof(*alias_argv) * (argc + 1));
+@@ -291,7 +295,7 @@ static int handle_alias(int *argcp, const char ***a=
 rgv)
  		ret =3D 1;
  	}
 =20
--	if (subdir && chdir(subdir))
--		die_errno("Cannot change to '%s'", subdir);
-+	restore_env();
+-	restore_env();
++	restore_env(0);
 =20
  	errno =3D saved_errno;
 =20
-@@ -308,7 +306,6 @@ static int handle_alias(int *argcp, const char ***a=
-rgv)
-  * RUN_SETUP for reading from the configuration file.
-  */
- #define NEED_WORK_TREE		(1<<3)
--#define NO_SETUP		(1<<4)
-=20
- struct cmd_struct {
- 	const char *cmd;
-@@ -390,7 +387,7 @@ static struct cmd_struct commands[] =3D {
- 	{ "cherry", cmd_cherry, RUN_SETUP },
- 	{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
- 	{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
--	{ "clone", cmd_clone, NO_SETUP },
-+	{ "clone", cmd_clone },
- 	{ "column", cmd_column, RUN_SETUP_GENTLY },
- 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
- 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
-@@ -416,8 +413,8 @@ static struct cmd_struct commands[] =3D {
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
--	{ "init", cmd_init_db, NO_SETUP },
--	{ "init-db", cmd_init_db, NO_SETUP },
-+	{ "init", cmd_init_db },
-+	{ "init-db", cmd_init_db },
- 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
-@@ -531,9 +528,13 @@ static void handle_builtin(int argc, const char **=
-argv)
-=20
- 	builtin =3D get_builtin(cmd);
- 	if (builtin) {
--		if (saved_env_before_alias && (builtin->option & NO_SETUP))
--			restore_env();
--		else
-+		/*
-+		 * XXX: if we can figure out cases where it is _safe_
-+		 * to do, we can avoid spawning a new process when
-+		 * saved_env_before_alias is true
-+		 * (i.e. setup_git_dir* has been run once)
-+		 */
-+		if (!saved_env_before_alias)
- 			exit(run_builtin(builtin, argc, argv));
- 	}
- }
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 9b34f3c..31b4658 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -65,6 +65,29 @@ test_expect_success 'clone respects GIT_WORK_TREE' '
-=20
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index f91bbcf..295aa59 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -87,6 +87,23 @@ test_expect_success 'plain nested in bare through al=
+iased command' '
+ 	check_config bare-ancestor-aliased.git/plain-nested/.git false unset
  '
 =20
-+test_expect_success 'clone from hooks' '
-+
-+	test_create_repo r0 &&
-+	cd r0 &&
-+	test_commit initial &&
-+	cd .. &&
-+	git init r1 &&
-+	cd r1 &&
-+	cat >.git/hooks/pre-commit <<-\EOF &&
++test_expect_success 'No extra GIT_* on alias scripts' '
++	(
++		env | sed -ne "/^GIT_/s/=3D.*//p" &&
++		echo GIT_PREFIX &&        # setup.c
++		echo GIT_TEXTDOMAINDIR    # wrapper-for-bin.sh
++	) | sort | uniq >expected &&
++	cat <<-\EOF >script &&
 +	#!/bin/sh
-+	git clone ../r0 ../r2
-+	exit 1
++	env | sed -ne "/^GIT_/s/=3D.*//p" | sort >actual
++	exit 0
 +	EOF
-+	chmod u+x .git/hooks/pre-commit &&
-+	: >file &&
-+	git add file &&
-+	test_must_fail git commit -m invoke-hook &&
-+	cd .. &&
-+	test_cmp r0/.git/HEAD r2/.git/HEAD &&
-+	test_cmp r0/initial.t r2/initial.t
-+
++	chmod 755 script &&
++	git config alias.script \!./script &&
++	( mkdir sub && cd sub && git script ) &&
++	test_cmp expected actual
 +'
 +
- test_expect_success 'clone creates intermediate directories' '
-=20
- 	git clone src long/path/to/dst &&
+ test_expect_success 'plain with GIT_WORK_TREE' '
+ 	mkdir plain-wt &&
+ 	test_must_fail env GIT_WORK_TREE=3D"$(pwd)/plain-wt" git init plain-w=
+t
 --=20
 2.3.0.rc1.137.g477eb31
