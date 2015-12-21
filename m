@@ -1,101 +1,55 @@
-From: Romain Picard <romain.picard@oakbits.com>
-Subject: [PATCH] git-p4.py: add support for filetype change
-Date: Mon, 21 Dec 2015 14:09:25 +0100
-Message-ID: <1450703365-10427-1-git-send-email-romain.picard@oakbits.com>
-Cc: Romain Picard <romain.picard@oakbits.com>
+From: Alan Mackenzie <acm@muc.de>
+Subject: "git stash pop" is doing an unwanted "git add" when there are
+	conflicts.
+Date: Mon, 21 Dec 2015 14:29:54 +0000
+Message-ID: <20151221142953.GA12764@acm.fritz.box>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 21 15:23:22 2015
+X-From: git-owner@vger.kernel.org Mon Dec 21 15:34:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aB1Mu-0001cc-PB
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 15:23:21 +0100
+	id 1aB1Xf-0001C1-0H
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 15:34:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbbLUOXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 09:23:16 -0500
-Received: from 4.mo2.mail-out.ovh.net ([87.98.172.75]:43823 "EHLO
-	4.mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009AbbLUOXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 09:23:15 -0500
-X-Greylist: delayed 2409 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2015 09:23:15 EST
-Received: from mail184.ha.ovh.net (b9.ovh.net [213.186.33.59])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id 0855FFFC412
-	for <git@vger.kernel.org>; Mon, 21 Dec 2015 14:06:12 +0100 (CET)
-Received: from localhost (HELO queueout) (127.0.0.1)
-	by localhost with SMTP; 21 Dec 2015 15:06:12 +0200
-Received: from unknown (HELO sahnlpt0238.softathome.com) (romain.picard@oakbits.com@149.6.166.170)
-  by ns0.ovh.net with SMTP; 21 Dec 2015 15:06:06 +0200
-X-Mailer: git-send-email 2.6.4
-X-Ovh-Tracer-Id: 17959792365144203742
-X-Ovh-Remote: 149.6.166.170 ()
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekiedrgeduucetufdoteggodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekiedrgedugdegiecutefuodetggdotffvucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenuc
+	id S1751224AbbLUOeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2015 09:34:23 -0500
+Received: from mail.muc.de ([193.149.48.3]:21114 "EHLO mail.muc.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751125AbbLUOeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2015 09:34:22 -0500
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2015 09:34:21 EST
+Received: (qmail 3492 invoked by uid 3782); 21 Dec 2015 14:27:39 -0000
+Received: from acm.muc.de (p548A50F8.dip0.t-ipconnect.de [84.138.80.248]) by
+	colin.muc.de (tmda-ofmipd) with ESMTP;
+	Mon, 21 Dec 2015 15:27:38 +0100
+Received: (qmail 12827 invoked by uid 1000); 21 Dec 2015 14:29:54 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+X-Primary-Address: acm@muc.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282794>
 
-After changing the type of a file in the git repository, it is not possible to
-"git p4 publish" the commit to perforce. This is due to the fact that the git
-"T" status is not handled in git-p4.py. This can typically occur when replacing
-an existing file with a symbolic link.
+Hello, git project.
 
-The "T" modifier is now supported in git-p4.py. When a file type has changed,
-inform perforce with the "p4 edit -f auto" command.
+Last night, whilst clearing out a stale "stash stack", I did "git stash
+pop".  There were conflicts in two files.
 
-Signed-off-by: Romain Picard <romain.picard@oakbits.com>
----
- git-p4.py | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+However, all the popped files became staged.  This doesn't normally happen.
+It was intensely irritating, and required me to do "git reset HEAD" on
+each of the files, none of which I wanted to commit.
 
-diff --git a/git-p4.py b/git-p4.py
-index a7ec118..b7a3494 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -240,8 +240,8 @@ def p4_add(f):
- def p4_delete(f):
-     p4_system(["delete", wildcard_encode(f)])
- 
--def p4_edit(f):
--    p4_system(["edit", wildcard_encode(f)])
-+def p4_edit(f, *options):
-+    p4_system(["edit"] + list(options) + [wildcard_encode(f)])
- 
- def p4_revert(f):
-     p4_system(["revert", wildcard_encode(f)])
-@@ -1344,6 +1344,7 @@ class P4Submit(Command, P4UserMap):
- 
-         diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (self.diffOpts, id, id))
-         filesToAdd = set()
-+        filesToChangeType = set()
-         filesToDelete = set()
-         editedFiles = set()
-         pureRenameCopy = set()
-@@ -1404,6 +1405,8 @@ class P4Submit(Command, P4UserMap):
-                     os.unlink(dest)
-                     filesToDelete.add(src)
-                 editedFiles.add(dest)
-+            elif modifier == "T":
-+                filesToChangeType.add(path)
-             else:
-                 die("unknown modifier %s for %s" % (modifier, path))
- 
-@@ -1463,6 +1466,8 @@ class P4Submit(Command, P4UserMap):
-         #
-         system(applyPatchCmd)
- 
-+        for f in filesToChangeType:
-+            p4_edit(f, "-t", "auto")
-         for f in filesToAdd:
-             p4_add(f)
-         for f in filesToDelete:
+I searched the git-stash man page for this scenario, but found nothing
+about it.
+
+Surely staging all the files is a bug?
+
 -- 
-2.6.4
+Alan Mackenzie (Nuremberg, Germany).
