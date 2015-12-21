@@ -1,79 +1,58 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 1/2] traverse_info: make mostly const
-Date: Mon, 21 Dec 2015 18:15:14 -0500
-Organization: Twitter
-Message-ID: <1450739714.3892.2.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] do_compare_entry: use already-computed path
+Date: Mon, 21 Dec 2015 15:27:38 -0800
+Message-ID: <xmqqzix3e61h.fsf@gitster.mtv.corp.google.com>
 References: <1450737260-15965-1-git-send-email-dturner@twopensource.com>
-	 <1450737260-15965-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 00:15:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Dec 22 00:27:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aB9fq-0003RH-BK
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 00:15:26 +0100
+	id 1aB9rl-0007Yx-N5
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 00:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825AbbLUXPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 18:15:21 -0500
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:34956 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbbLUXPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 18:15:18 -0500
-Received: by mail-qg0-f49.google.com with SMTP id o11so42890599qge.2
-        for <git@vger.kernel.org>; Mon, 21 Dec 2015 15:15:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=uJeoSxT+b+8hgs6F/iAGsKf1weZonGXzh2ntrwTrBAA=;
-        b=vM3afGYUeNgfIjA3AUBzJI/hekmMm7i8tisGiTBBFAMvqN9OxXQcFyQCw06XliSYQ0
-         x+E1hSinmeU6Hpbfss6WJe75XluBABqHPOme2yjvoT5RSq2TWb1dX1IarQmGhFkjPmtS
-         HMBMIiCIG8LlohFRCtGPX4wsrO81bHnEzFv2Zyo/1lSzpb8AdzuKJuPSVkn9iWmCRH9Q
-         dOhApJ88/LpltTCldTFxHE/GQQmtUaiZ0qaMkuWfawnNnAHeEyFEFj6qZbvcufCAQNQg
-         zfM0LysjumDQwuZWqW6hA4MdkqB+Dnfp7TExnM/2Y16otmyoxlKNXjFPVtcLdlZl/mzG
-         IU/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=uJeoSxT+b+8hgs6F/iAGsKf1weZonGXzh2ntrwTrBAA=;
-        b=AJKHyQ+tMb8KSEcaA7Tnb70ktfW209aInbxqO1JqDMrEVs9F1aSqoK1Sv9fcIf8/g3
-         SIrx3xf0hw+tSty5daIPIoqoWRG9koPMQSj9tp4/BmehezYy0F/wEFwr6GZa2Ns/Iv7s
-         CyNZZRfUyZ/n7M7wlZOJeJ2EmH1Fm562a/raY8mALl+nfr/pCPGdIqka7I5ffCXPIePI
-         87ExO0KGkM65bridGS4S5+iuwnz6GuFaJV03ZCZaIufkiTuks/SErAkXBX1H4EYo3ioA
-         w0873GAOeomxgSqkYLMiCsRMZkfb2dK17crqsAsxBYaM5PkwX9r5OOCoEs1VlDzg02Uv
-         gN5A==
-X-Gm-Message-State: ALoCoQmum2PYSgotqXkAV0niKgIHgU4etTnhB5UxHvYg33zPbCWNX1QpXW+RZIprPEMplWq3DBcmkgfxvOmPo6tsuRnepCvVlA==
-X-Received: by 10.140.158.4 with SMTP id e4mr30350567qhe.81.1450739717378;
-        Mon, 21 Dec 2015 15:15:17 -0800 (PST)
-Received: from ubuntu ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id v138sm15059354qka.6.2015.12.21.15.15.15
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Dec 2015 15:15:16 -0800 (PST)
-In-Reply-To: <1450737260-15965-2-git-send-email-dturner@twopensource.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751728AbbLUX1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2015 18:27:41 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62371 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751572AbbLUX1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2015 18:27:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2F09B35A63;
+	Mon, 21 Dec 2015 18:27:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kx7+oh4IA8DS82viKW6gxumwikA=; b=mFXsl0
+	NLYc2fdaNNEB+iYtTUcevXBw9jQtyyPE2jTuGnHUKQFpP137Xw21ON6MRGA6ox61
+	pvm+JsXAkZZQqG63REfPrAf4RR9EHlxrkEVmeHbYhZ2N+0dp7lPB/Vjec6dBMIpw
+	9HPchNEi04sUHPbz0E7IlpgDJIgvr5j4AdGfs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E8TpewDzEtRWYI4ktaPsHnozQPpdMZf7
+	/pIaD8C4obDQYjkHerZortAndGBrfvSE0TriWnO5XKfR+qAaB2xAxLA6A4iU68v1
+	RoXIz4AZPfXQyGOydxWaIu6CBBkdYuzbSsm35oyjkafv/JcTFhNVvlFdekO2ZI17
+	b+Hnx83PTHE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27C8535A61;
+	Mon, 21 Dec 2015 18:27:40 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9C1CF35A60;
+	Mon, 21 Dec 2015 18:27:39 -0500 (EST)
+In-Reply-To: <1450737260-15965-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Mon, 21 Dec 2015 17:34:18 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6D17EC9C-A83A-11E5-ADB3-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282824>
 
-On Mon, 2015-12-21 at 17:34 -0500, David Turner wrote:
-> We don't usually modify traverse_info, so make it const across a wide
-> range of functions.
-> 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  builtin/merge-tree.c     |  2 +-
->  cache-tree.c             |  4 ++--
->  cache-tree.h             |  2 +-
->  t/t4010-diff-pathspec.sh |  2 +-
-
-no, that change was not necessary at all.  
+Thanks.  Does the number still stay at 25% improvement?
