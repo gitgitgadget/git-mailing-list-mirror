@@ -1,68 +1,101 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [git-for-windows] Case insensitive branch names
-Date: Mon, 21 Dec 2015 19:21:02 +0700
-Message-ID: <CACsJy8CEYaf9NA4J_2u1cqsikYvtR7nz=FEiwAxsKMLSREDhCg@mail.gmail.com>
-References: <D350A5BC87B74A53B5BE4B10BC658208@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	git-for-windows <git-for-windows@googlegroups.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Dec 21 13:21:38 2015
+From: Romain Picard <romain.picard@oakbits.com>
+Subject: [PATCH] git-p4.py: add support for filetype change
+Date: Mon, 21 Dec 2015 14:09:25 +0100
+Message-ID: <1450703365-10427-1-git-send-email-romain.picard@oakbits.com>
+Cc: Romain Picard <romain.picard@oakbits.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 21 15:23:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAzT7-0001Yx-K4
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 13:21:37 +0100
+	id 1aB1Mu-0001cc-PB
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 15:23:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbbLUMVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 07:21:33 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:33194 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751199AbbLUMVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 07:21:33 -0500
-Received: by mail-lf0-f42.google.com with SMTP id p203so111034170lfa.0
-        for <git@vger.kernel.org>; Mon, 21 Dec 2015 04:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+la1TfcUg3oEKlInN5Fh9fL9+m4XfMD3tPDXZyx/490=;
-        b=WDyYQ3Ou5kIBe4pIJhBHYRyBXgN8Q5XEW5UWc+BdUvY+aOYmg4e7QTW09gQYJoLfxX
-         P58oxUnvsgf40PWdKtN/BE7aqGjvRzHTQJI809MXPU7cro7tFxkvVwojGT72M3prp74n
-         U27T5TzeWyQ3bmjy9QUdlrapEdLUS5HFH+owwOgC2l3tWa2nBP8GTgrANvhRGcNvOOOt
-         J8kKrBn6oOI9mtXgKM9+tPQOOty+dF8owmMuz2qwPYaek70+hw4JNueVc12fI1VGTZTO
-         TbKbP4d597Ggq3EWIGrhp3cK4YGg8h0r0G9yA4zoK37ZSUb4nGJsRQNRkWRFA4Ja1gWp
-         gQfA==
-X-Received: by 10.25.141.9 with SMTP id p9mr6378534lfd.112.1450700491709; Mon,
- 21 Dec 2015 04:21:31 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Mon, 21 Dec 2015 04:21:02 -0800 (PST)
-In-Reply-To: <D350A5BC87B74A53B5BE4B10BC658208@PhilipOakley>
+	id S1751235AbbLUOXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2015 09:23:16 -0500
+Received: from 4.mo2.mail-out.ovh.net ([87.98.172.75]:43823 "EHLO
+	4.mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbbLUOXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2015 09:23:15 -0500
+X-Greylist: delayed 2409 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2015 09:23:15 EST
+Received: from mail184.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id 0855FFFC412
+	for <git@vger.kernel.org>; Mon, 21 Dec 2015 14:06:12 +0100 (CET)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 21 Dec 2015 15:06:12 +0200
+Received: from unknown (HELO sahnlpt0238.softathome.com) (romain.picard@oakbits.com@149.6.166.170)
+  by ns0.ovh.net with SMTP; 21 Dec 2015 15:06:06 +0200
+X-Mailer: git-send-email 2.6.4
+X-Ovh-Tracer-Id: 17959792365144203742
+X-Ovh-Remote: 149.6.166.170 ()
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekiedrgeduucetufdoteggodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekiedrgedugdegiecutefuodetggdotffvucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenuc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282793>
 
-On Mon, Dec 21, 2015 at 6:01 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> On the Git User's list, Diego J. reported that:
->
-> 'When I "checkout" a branch using different Upper Case/Lower Case than the
-> original, the branch doesn't show in "git branch [--list]"' [1]
->
-> While case sensitivity for filenames is a common issue on Windows and the
-> like, I haven't seen any discussion regarding ref name sensitivity - any
-> pointers to past discussions?
+After changing the type of a file in the git repository, it is not possible to
+"git p4 publish" the commit to perforce. This is due to the fact that the git
+"T" status is not handled in git-p4.py. This can typically occur when replacing
+an existing file with a symbolic link.
 
-Multiple ref backend [1] should solve this.It's supposed to help
-handle a huge number refs. But a side effect from not using file
-system for refs is we can handle ref case-sensitivity much easier. And
-I believe David had that in mind he chose lmdb (because of Mac, which
-shares the same problem with Windows)
+The "T" modifier is now supported in git-p4.py. When a file type has changed,
+inform perforce with the "p4 edit -f auto" command.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/281925
+Signed-off-by: Romain Picard <romain.picard@oakbits.com>
+---
+ git-p4.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index a7ec118..b7a3494 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -240,8 +240,8 @@ def p4_add(f):
+ def p4_delete(f):
+     p4_system(["delete", wildcard_encode(f)])
+ 
+-def p4_edit(f):
+-    p4_system(["edit", wildcard_encode(f)])
++def p4_edit(f, *options):
++    p4_system(["edit"] + list(options) + [wildcard_encode(f)])
+ 
+ def p4_revert(f):
+     p4_system(["revert", wildcard_encode(f)])
+@@ -1344,6 +1344,7 @@ class P4Submit(Command, P4UserMap):
+ 
+         diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (self.diffOpts, id, id))
+         filesToAdd = set()
++        filesToChangeType = set()
+         filesToDelete = set()
+         editedFiles = set()
+         pureRenameCopy = set()
+@@ -1404,6 +1405,8 @@ class P4Submit(Command, P4UserMap):
+                     os.unlink(dest)
+                     filesToDelete.add(src)
+                 editedFiles.add(dest)
++            elif modifier == "T":
++                filesToChangeType.add(path)
+             else:
+                 die("unknown modifier %s for %s" % (modifier, path))
+ 
+@@ -1463,6 +1466,8 @@ class P4Submit(Command, P4UserMap):
+         #
+         system(applyPatchCmd)
+ 
++        for f in filesToChangeType:
++            p4_edit(f, "-t", "auto")
+         for f in filesToAdd:
+             p4_add(f)
+         for f in filesToDelete:
 -- 
-Duy
+2.6.4
