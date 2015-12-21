@@ -1,70 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] pack-revindex: drop hash table
-Date: Mon, 21 Dec 2015 02:08:28 -0500
-Message-ID: <20151221070828.GA3895@sigill.intra.peff.net>
-References: <20151221061948.GA25763@sigill.intra.peff.net>
- <CAPig+cTD+qknnZ3rH7skcTxZA16AL0BPbLT5ZaJdwwu_d-i=Jw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: -C option with pull doesn't seem to be respected in aliases in
+ git 2.6.4.
+Date: Mon, 21 Dec 2015 16:57:09 +0700
+Message-ID: <CACsJy8BDCqX4+i0krS-8Xq2q-4-siwdCcG5+Maqa8XEUU3sVOg@mail.gmail.com>
+References: <96FA4EE3-B68F-49B9-896F-38F37E12676D@apple.com> <CACsJy8D=a4NUi+zWj=DVrzRdCxzWA6hp8kCaPAN_Cwv7H7Ohkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Dec 21 08:08:35 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Paul Tan <pyokagan@gmail.com>
+To: Cameron Esfahani <dirty@apple.com>
+X-From: git-owner@vger.kernel.org Mon Dec 21 10:57:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aAuaB-0003Ut-74
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 08:08:35 +0100
+	id 1aAxDz-0008L6-QZ
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 10:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750915AbbLUHIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 02:08:31 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44808 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750875AbbLUHIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 02:08:31 -0500
-Received: (qmail 581 invoked by uid 102); 21 Dec 2015 07:08:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Dec 2015 01:08:31 -0600
-Received: (qmail 18643 invoked by uid 107); 21 Dec 2015 07:08:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Dec 2015 02:08:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Dec 2015 02:08:28 -0500
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTD+qknnZ3rH7skcTxZA16AL0BPbLT5ZaJdwwu_d-i=Jw@mail.gmail.com>
+	id S1751476AbbLUJ5n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Dec 2015 04:57:43 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:34109 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751030AbbLUJ5l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Dec 2015 04:57:41 -0500
+Received: by mail-lb0-f174.google.com with SMTP id pv2so26112631lbb.1
+        for <git@vger.kernel.org>; Mon, 21 Dec 2015 01:57:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FPZzM14wsrOeoOTMb+XMIs5XRsT+2pzcgnaNP4Iq8HE=;
+        b=QlmfI+JUiULDsnpUfGhTF8yaYuz67VIt9sdc9VSadqqqy5Vn7+RXnjOoS+6vSwgWeC
+         /D6Ze3bvLeNnVSl16wOXc4lRZbInySm8Ji5UiHc384rJaHV9FasxKAqql9qIriEDoHvE
+         xSuidagJ+ik8Xhb1MYMQ900FYrxWho8PzPHmYI84vqAs/O5YqDE0iuBWGuFK6sfPzqrR
+         YlSv0W1lSVJt6aDAoaA/q0/Yg7TRGLMP/zkkQF/6L519G5G3SFLUNtLsZ621keiMhiXo
+         KM/FbqIdspJ1lcyppMuvEMvAxvcO5cEymOTIjG5+e02KKFyMXKygLFtj1Z83bRfmg6lo
+         jr8A==
+X-Received: by 10.112.202.168 with SMTP id kj8mr5696586lbc.12.1450691859287;
+ Mon, 21 Dec 2015 01:57:39 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Mon, 21 Dec 2015 01:57:09 -0800 (PST)
+In-Reply-To: <CACsJy8D=a4NUi+zWj=DVrzRdCxzWA6hp8kCaPAN_Cwv7H7Ohkg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282788>
 
-On Mon, Dec 21, 2015 at 02:06:59AM -0500, Eric Sunshine wrote:
+On Mon, Dec 21, 2015 at 8:17 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Dec 18, 2015 at 8:35 AM, Cameron Esfahani <dirty@apple.com> w=
+rote:
+>> I have git project checked out at ~/llvm.  Inside of there, inside o=
+f a =E2=80=9Ctools=E2=80=9D directory, I have another project checked o=
+ut as =E2=80=9Clldb=E2=80=9D:
+>>
+>> ~/llvm/tools/lldb
+>>
+>> I wrote an alias which would help me update all my projects:
+>>
+>>         all =3D !find . -type d -name .git | sed 's:/.git::' | xargs=
+ -I{} -t git -C {} $1 && :
+>>
+>> This would allow me to be inside of ~/llvm and type "git all pull" a=
+nd get all my projects updated.
+>>
+>> It seems that at some point this broke.  If try to use this alias un=
+der git 2.6.4, it only updates the llvm project.
+>>
+>> The interesting thing is that if I pass fetch, instead of pull: "git=
+ all fetch", then it seems to work correctly.
 
-> On Mon, Dec 21, 2015 at 1:19 AM, Jeff King <peff@peff.net> wrote:
-> > The main entry point to the pack-revindex code is
-> > find_pack_revindex(). This calls revindex_for_pack(), which
-> > lazily computes and caches the revindex for the pack.
-> >
-> > We store the cache in a very simple hash table. It's created
-> > by init_pack_revindex(), which inserts an entry for every
-> > packfile we know about, and we never grow or shrink the
-> > hash. If we ever need the revindex for a pack that isn't in
-> > the hash, we die() with an internal error.
-> >
-> > This can lead to a race, because we may load more packs
-> > after having called init_pack_revindex(). For example,
-> > imagine we have one process which needs to look at the
-> > revindex for a variety of objects (e.g., cat-file's
-> > "%(objectsize:disk)" format).  Simultaneously, git-gc is
-> > running, which is doing a `git repack -ad` is running. We
-> > might hit a sequence like:
-> 
-> Probably want to drop one of the "is running"s...
-
-Whoops. Not matter how many times I read it over...
-
-It should be:
-
-  Simultaneously, git-gc is running, which is doing a `git repack -ad`.
-
--Peff
+Because the difference between git-fetch and git-pull in git.c is
+NEED_WORK_TREE. Can you try to unset GIT_WORK_TREE before "find"? This
+could be yet another regression from d95138e (setup: set env
+$GIT_WORK_TREE when work tree is set, like $GIT_DIR - 2015-06-26)
+--=20
+Duy
