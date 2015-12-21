@@ -1,116 +1,87 @@
-From: Julian Andres Klode <jak@debian.org>
-Subject: [PATCH] hooks/update: Add a hooks.denyunsignedtags option
-Date: Mon, 21 Dec 2015 18:32:04 +0100
-Message-ID: <1450719124-10558-1-git-send-email-jak@debian.org>
-Cc: git@vger.kernel.org, Julian Andres Klode <jak@debian.org>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Dec 21 18:32:40 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [git-for-windows] Case insensitive branch names
+Date: Mon, 21 Dec 2015 09:37:08 -0800
+Message-ID: <xmqqa8p3hfej.fsf@gitster.mtv.corp.google.com>
+References: <D350A5BC87B74A53B5BE4B10BC658208@PhilipOakley>
+	<CACsJy8CEYaf9NA4J_2u1cqsikYvtR7nz=FEiwAxsKMLSREDhCg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git List <git@vger.kernel.org>,
+	git-for-windows <git-for-windows@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 21 18:38:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aB4K7-0003ij-5h
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 18:32:39 +0100
+	id 1aB4PL-0004PL-6S
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Dec 2015 18:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbbLURcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 12:32:36 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:34225 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbbLURcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 12:32:33 -0500
-Received: by mail-wm0-f52.google.com with SMTP id l126so77991962wml.1
-        for <git@vger.kernel.org>; Mon, 21 Dec 2015 09:32:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=HoWehhNx6UrcsLl3lbaXyz+M5ZWO3f/DLkaihvcuwVI=;
-        b=lxxhhe4LzGbjiuF0pdflv0ciiT7S/Qn+LuxYvPQPaAt7WUd7yafrrzn9oD+WI4kol2
-         ORBgBEZztZbMA4YPYw36LaGU02ZMgEBduEmnRtLGY8J/E5P+jhOjTomB3n7+rkn9pd5N
-         zQ86IYGkZdG8srGGn+EHJzWDcc+8w9Mj4OpoChHUXG8m0OQj0TLKgPK9pMZJ9WhtqiuJ
-         ZThc+nF79oAV3ICgEuqb+NXEejD2JZ6Xw8o2GdyG+1aFs8YHh7rixFA4Tr7sXnsvcyuh
-         yJeA47xObcsnEXz9VcZTp5kl2wcvjU6cbBYqY3asrRGkb+tKtKBFruOE/5SrEccW/t6C
-         f/4g==
-X-Received: by 10.194.203.99 with SMTP id kp3mr22423662wjc.3.1450719151635;
-        Mon, 21 Dec 2015 09:32:31 -0800 (PST)
-Received: from jak-x230 (p54B91CDB.dip0.t-ipconnect.de. [84.185.28.219])
-        by smtp.gmail.com with ESMTPSA id e136sm21017524wma.23.2015.12.21.09.32.31
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Dec 2015 09:32:31 -0800 (PST)
-X-Mailer: git-send-email 2.6.4
+	id S1751606AbbLURh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2015 12:37:27 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54926 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751444AbbLURhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2015 12:37:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 25D9132BC1;
+	Mon, 21 Dec 2015 12:37:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VYEKY92eLXv27ELImG8re8bwQ1Q=; b=cT6XWM
+	G5UNZ7e4tFAGAnwkhKrT1s7F0Fn9nJXl8p9huuBMcCzM1gU1lG46ZbLExYdw6OAw
+	BR8G3IldacyYn/YRpYCIWiJoiCdaEpw9ifVSTSeUp9x/0xuY3+4xN1Ef5V9pFclP
+	n2usJ5ocN57UClTzpyS3S2u0drYWT6be2Cdzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vtsPox9wFkOATvznjR2ZvnC0J9nxuYRV
+	5OkY6OjGIBp7Q+VI1v7mdVr49578XrD5qXXFu8LEYLinLagkPqaMoLkd2tM0FrnO
+	G1/7uzD/1xD2usSc24Qx3pJSTjD59qEc0papYoBr9XteIzlmPkvqW62WnLicx5O6
+	buav67FhKFg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0FC0F32BBE;
+	Mon, 21 Dec 2015 12:37:10 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 845D032BBB;
+	Mon, 21 Dec 2015 12:37:09 -0500 (EST)
+In-Reply-To: <CACsJy8CEYaf9NA4J_2u1cqsikYvtR7nz=FEiwAxsKMLSREDhCg@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 21 Dec 2015 19:21:02 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 762DC058-A809-11E5-BBE0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282804>
 
-Introduce an option to deny unsigned tags from entering
-a repository. This is useful in teams where members forget
-to sign their release tags.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-It does not actually check whether the signature is actually
-complete or valid, it just checks for the beginning of a
-signature, as further checks would be too involved.
+> On Mon, Dec 21, 2015 at 6:01 PM, Philip Oakley <philipoakley@iee.org> wrote:
+>> On the Git User's list, Diego J. reported that:
+>>
+>> 'When I "checkout" a branch using different Upper Case/Lower Case than the
+>> original, the branch doesn't show in "git branch [--list]"' [1]
+>>
+>> While case sensitivity for filenames is a common issue on Windows and the
+>> like, I haven't seen any discussion regarding ref name sensitivity - any
+>> pointers to past discussions?
+>
+> Multiple ref backend [1] should solve this.
 
-This effectively also denies un-annotated tags, as those
-are unsigned by definition.
+Yup, I had the same reaction.  Instead of restricting the namespace
+of branches even on systems that do not have this problem, use a ref
+backend that is not limited by the underlying filesystem.  A much
+better solution.
 
-Signed-off-by: Julian Andres Klode <jak@debian.org>
----
-
-Note: Submitted for review on Sep 12, re-asked on Sep 22, but
-no feedback, so I assume it's good to go, see
-http://thread.gmane.org/gmane.comp.version-control.git/277722
-for details
-
- templates/hooks--update.sample | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
-index d847583..e261d30 100755
---- a/templates/hooks--update.sample
-+++ b/templates/hooks--update.sample
-@@ -16,6 +16,9 @@
- # hooks.allowmodifytag
- #   This boolean sets whether a tag may be modified after creation. By default
- #   it won't be.
-+# hooks.denyunsignedtag
-+#   This boolean sets whether creating unsigned tags will be denied. By
-+#   default this is allowed.
- # hooks.allowdeletebranch
- #   This boolean sets whether deleting branches will be allowed in the
- #   repository.  By default they won't be.
-@@ -48,6 +51,7 @@ allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
- denycreatebranch=$(git config --bool hooks.denycreatebranch)
- allowdeletetag=$(git config --bool hooks.allowdeletetag)
- allowmodifytag=$(git config --bool hooks.allowmodifytag)
-+denyunsignedtag=$(git config --bool hooks.denyunsignedtag)
- 
- # check for no description
- projectdesc=$(sed -e '1q' "$GIT_DIR/description")
-@@ -71,7 +75,7 @@ case "$refname","$newrev_type" in
- 	refs/tags/*,commit)
- 		# un-annotated tag
- 		short_refname=${refname##refs/tags/}
--		if [ "$allowunannotated" != "true" ]; then
-+		if [ "$allowunannotated" != "true" ] || [ "$denyunsignedtag" = "true" ]; then
- 			echo "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2
- 			echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
- 			exit 1
-@@ -86,6 +90,14 @@ case "$refname","$newrev_type" in
- 		;;
- 	refs/tags/*,tag)
- 		# annotated tag
-+		if [ "$denyunsignedtag" != "true" ] || git cat-file -p $newrev | grep -q 'BEGIN PGP SIGNATURE'; then
-+			:
-+		else
-+			echo "*** Tag '$refname' is unsigned"
-+			echo "*** Unsigned tags are not allowed in this repository." >&2
-+			exit 1
-+		fi
-+
- 		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
- 		then
- 			echo "*** Tag '$refname' already exists." >&2
--- 
-2.6.4
+In addition to the LMDB backend, it might not be a bad idea to add
+another filesystem-based backend that encodes the refnames safely on
+case insensitive or case destroying filesystem.  That way, those who
+do not want an extra dependency but do want case sensitive refnames
+would have an option, and having two non-default backends with quite
+different semantics may be a good way to ensure that the API for
+refs backend is kept sane.
