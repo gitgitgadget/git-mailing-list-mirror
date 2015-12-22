@@ -1,111 +1,86 @@
-From: Pierre-Luc Loyer <Pierre-Luc.Loyer@bhvr.com>
-Subject: Git Rebase Issue
-Date: Tue, 22 Dec 2015 17:53:42 +0000
-Message-ID: <39E7EE9D306F544FAD3A0D16B7B7CAAD2C1E819D@mtlsvrmxwv02.A2M.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] nd/clear-gitenv-upon-use-of-alias
+Date: Tue, 22 Dec 2015 10:13:03 -0800
+Message-ID: <xmqqd1tye4i8.fsf@gitster.mtv.corp.google.com>
+References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
+	<1450597819-26278-1-git-send-email-pclouds@gmail.com>
+	<xmqq4mfbfqla.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8DFmZSa2x4y2fDwVsvwa5uAuMJn8v=utvYtAPTGFbdWPg@mail.gmail.com>
+	<CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 22 19:09:01 2015
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Anthony Sottile <asottile@umich.edu>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 22 19:13:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBRMq-0003dZ-OG
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 19:09:01 +0100
+	id 1aBRRV-0002aH-8H
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 19:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367AbbLVSI4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Dec 2015 13:08:56 -0500
-Received: from mail.a2m.com ([207.253.225.40]:59643 "EHLO mtlsvraslv01.a2m.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754130AbbLVSI4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 13:08:56 -0500
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2015 13:08:55 EST
-X-AuditID: c0a81416-f794d6d000000ff2-7a-56798e1e1403
-Received: from mtlsvrmxwv02.A2M.com (Unknown_Domain [192.168.10.13])
-	by mtlsvraslv01.a2m.com (Symantec Messaging Gateway) with SMTP id 1D.FA.04082.E1E89765; Tue, 22 Dec 2015 12:53:34 -0500 (EST)
-Received: from MTLSVRMXWV02.A2M.com ([::1]) by mtlsvrmxwv02.A2M.com ([::1])
- with mapi id 14.03.0248.002; Tue, 22 Dec 2015 12:53:42 -0500
-Thread-Topic: Git Rebase Issue
-Thread-Index: AdE84bIQFgMlL9wkRxO7f8ub1F14nw==
-Accept-Language: fr-FR, en-CA, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.16.17.154]
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGLMWRmVeSWpSXmKPExsVyYAUXr65cX2WYwbnJshZdV7qZHBg9Pm+S
-	C2CM4rJJSc3JLEst0rdL4Mp4eHkVe8FpwYq7n/+zNDBO5uti5OSQEDCRuDHtMROELSZx4d56
-	NhBbSOAIo8S2PUJdjFxAdhejREPrF0aQBJuAkcS82zOBGjg4RAT0JfouiIKEhQUkJe49vswK
-	YosIyEns+3IYytaTOP7nJpjNIqAqsWLxNBYQm1fAW+L59tNsIGMYBVQkTj4NBwkzC4hLfDu6
-	khniHAGJJXvOQ9miEi8f/2OFsBUlGi5BjGQGGn9j6hQ2CFtbYtnC18wQ4wUlTs58wjKBUXgW
-	krGzkLTMQtIyC0nLAkaWVYwiuSU5xWVFicU5ZQaGeolGuXrJ+bmbGMGhLSK2g/HjN61DjAIc
-	jEo8vDM6KsOEWBPLiitzDzFKcDArifC+aQAK8aYkVlalFuXHF5XmpBYfYpTmYFES5/XPjQoR
-	EkhPLEnNTk0tSC2CyTJxcEo1MOqpTvoz4/jSu9Hf2qI2HRNZ16dT72c73fBJ5j72no11qwtL
-	P0/Lv3spcBLzbakeG3fzC6mSM2LTb2ovmn/5lLntNYewOM3PRY5lda+9v3FlN71edLn93SI2
-	6bMMix7pfVl8j4E/w/fDP5Zw+8VpD77u/jKrOK2q+ULczpcCNvb8LJs7FCYFsSqxFGckGmox
-	FxUnAgD2Aj6WaQIAAA==
+	id S933267AbbLVSNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 13:13:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55870 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933145AbbLVSNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 13:13:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CB1C362B3;
+	Tue, 22 Dec 2015 13:13:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YGfJ/Dukl7Uy35amuM3ltshXDBo=; b=Qu/Vxe
+	Lt4H6KbTnWl1HbkAl2fBsIqqab4njKWBS0aPmSOzVl/pftgiGJ4kCbaZketSBTmm
+	7t4rOq8d0X9XvzYM2doolt7D5OjPcLtxFElY1zaNsyIBlyxhWRIWUtstLYB+dnKQ
+	QRcW8OHKhhfTuO6f7wE+irq+uE2DIoslPO2eo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sK7LJ3jEHBlw8SZuB8qJs9HEYXFocgCR
+	T+31RtZokw0dbyKzNRr11DEa+rU/qko1GCulzm2cO4XnaExIyheXlOYSKbfLFj/c
+	HMJqdLe1ytEbdhLDmTzky1M8uswKLWqrru6zPbdxZmyUWcOASUqZU8hwpFjVR/VL
+	akE6SkWSbuw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 64CFE362B2;
+	Tue, 22 Dec 2015 13:13:05 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D2D51362B0;
+	Tue, 22 Dec 2015 13:13:04 -0500 (EST)
+In-Reply-To: <CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 22 Dec 2015 18:53:16 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A5439C72-A8D7-11E5-AEFD-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282894>
 
-Hi,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I've encountered a situation using rebase for which I don't understand =
-the results, even after reading the documentation.
-I'm currently working in my feature branch and then I want to squash co=
-mmits, thus I use interactive rebase. After successfully completing the=
- rebase, I end up in a detached HEAD state, rather than back on my bran=
-ch, which is confusing. The command that is causing me to be in detache=
-d HEAD mode is: git rebase -i HEAD~2 HEAD
-=46rom the documentation, I read that my second parameter (HEAD) is the=
- <branch> parameter:
+> On Tue, Dec 22, 2015 at 5:57 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Tue, Dec 22, 2015 at 4:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Thanks.  I wiggled these three on top of the "Revert the earlier
+>>> one"; while I think the result is correct, I'd appreciate if you can
+>>> double check the result when I push the topic out later today.
+>>
+>> Looks good. "prove" passed too by the way.
+>
+> Another by the way, this "forcing aliases as external commands" now
+> shows something like "error: git-log died of signal 13" when the pager
+> exits early, for an alias like "l1 = log --oneline".
 
-=A0 =A0git rebase [-i | --interactive] [options] [--exec <cmd>] [--onto=
- <newbase>]
+... and we do not show that when we directly call "git log" is...?
 
-=A0 =A0[<upstream>] [<branch>]
+We do signal this with non-zero exit status like so:
 
-=A0 =A0If <branch> is specified, git rebase will perform an automatic g=
-it checkout <branch> before doing anything else. Otherwise it remains o=
-n the current branch.
-<branch> Working branch; defaults to HEAD.
+	$ GIT_PAGER=true git log --oneline ; echo $?
+        141
 
-=A0 =A0Upon completion, <branch> will be the current branch.
-
-Here is a full example than can be used to easily repro the issue. Go t=
-o an empty folder.
-git init
-git echo text > file.txt
-git add .
-git commit -m "Add file.txt"
-git echo text2 > file.txt
-git commit -am "Modify file.txt"
-git echo text3 > file.txt
-git commit -am "Remodify file.txt"
-
-Now the interesting part:
-$ git rebase -i HEAD~2 HEAD
-[detached HEAD 9178b93] Modify file
-1 file changed, 1 insertion(+), 1 deletion(-)
-Successfully rebased and updated detached HEAD.=A0
-
-=46rom the documentation it says that <branch> (which is HEAD) will be =
-checked out before doing anything and that upon completion, <branch> wi=
-ll be the current branch. However, this doesn't seem to happen. In fact=
-, it seems more like the following is happening during the rebase:
-1) detach HEAD
-2) rebase
-3) reattach to <branch>
-
-If <branch> is HEAD, then is does nothing and remains detached.
-I find this behavior confusing since I would expect it to return to wha=
-tever HEAD was pointing to at the start of the command, such as my bran=
-ch. Also, the documentation says that the <branch> parameter defaults t=
-o HEAD, so passing 'HEAD' explicitly should result in the same behavior=
- as not passing it:
-<branch> Working branch; defaults to HEAD.
-
-Pierre-Luc Loyer
+and it is not surprising that the one that is catching the exit
+status of what was spawned and reporting "signal 13".
