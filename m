@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/10] t/t1511-rev-parse-caret.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:49 +0100
-Message-ID: <1450796755-15848-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] t/t1512-rev-parse-disambiguation.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:50 +0100
+Message-ID: <1450796755-15848-6-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:36 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOWI-0004nC-HA
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:34 +0100
+	id 1aBOWN-0004s7-5H
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932975AbbLVPGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:31 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:34051 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932491AbbLVPGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:03 -0500
-Received: by mail-pa0-f45.google.com with SMTP id uo6so13613940pac.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:02 -0800 (PST)
+	id S932972AbbLVPGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:30 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:34057 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932524AbbLVPGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:04 -0500
+Received: by mail-pa0-f53.google.com with SMTP id uo6so13614122pac.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5nUZ06r3FQcdEVi/z3VxUglGSoA6JNXkHFpT36O2STM=;
-        b=Ldxx2HO0qc0gA4m9n+aa3J/bCzHq9qst2Xda3fm0WGNlx0WNf2hy8U/hQ6CSc6/Njc
-         ROAl+Xym/msaD8OOSjmhas8GkHPC8VihDj0nIKjZiRWRvKs64H/T3Vk22eRpFAHGQzR2
-         P3vjgX86qTlLsqemtxQWht10qRljBWUgxTH3u1V8wDFCabEkHDJXHgcqmEPB1RFeVImx
-         DpQemuS6/NVF293KMlFoVV3ecPXk6NOIVPywHdn2XrZQGoraKkLB6lYLleVp1zyY3Wo0
-         +NOM+zywd+BbVf7WeMpywRSjgRzNyx7QzrmNfhgCIQnV768vCx0hPjAAUXSS341uX0Ch
-         Wt0A==
-X-Received: by 10.66.190.66 with SMTP id go2mr36901638pac.114.1450796762753;
-        Tue, 22 Dec 2015 07:06:02 -0800 (PST)
+        bh=2JbbSmzlEJsySoiEDAVi9+un3uZNM25jJsWdpKBpi0I=;
+        b=CHF0KcDCvP5DVvHjtFeec/85O8nRogoRo5nyXXWuCv7q+q9U9ezngbhk6lxmlw/OGV
+         AAMWxZ065jEFY8rnql5pSDMhwdpxIpunorUzqoMUEyMiRTz7JNWBvUcDAp5NceHU+i5r
+         vo1q7IRCUN6tfdZ1tMOq1i9t/R82K+7oh84JuoxxZ4Yur3svX0EPmPY6lt5o/xo8D6Pz
+         dKfIchRKvrYdBS7Iua5/QeIAStogKkeIzX0IEhWH1yffZzEdydRiCWJ7z84cU7lDQeRD
+         XrB2q3y6PGBmoHBEXe997iUwuFR93SEIG89mwFNQ+Pe2qPsLIxhLFeeKdHKNjLKu9zqH
+         KVRA==
+X-Received: by 10.66.216.200 with SMTP id os8mr36519882pac.143.1450796763660;
+        Tue, 22 Dec 2015 07:06:03 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.01
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:06:02 -0800 (PST)
+        Tue, 22 Dec 2015 07:06:03 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282864>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,26 +66,36 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1511-rev-parse-caret.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1512-rev-parse-disambiguation.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-index 15973f2..7043ba7 100755
---- a/t/t1511-rev-parse-caret.sh
-+++ b/t/t1511-rev-parse-caret.sh
-@@ -6,11 +6,11 @@ test_description='tests for ref^{stuff}'
+diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+index 4a155c8..e221167 100755
+--- a/t/t1512-rev-parse-disambiguation.sh
++++ b/t/t1512-rev-parse-disambiguation.sh
+@@ -275,19 +275,19 @@ test_expect_success 'rev-parse --disambiguate' '
  
- test_expect_success 'setup' '
- 	echo blob >a-blob &&
--	git tag -a -m blob blob-tag `git hash-object -w a-blob` &&
-+	git tag -a -m blob blob-tag $(git hash-object -w a-blob) &&
- 	mkdir a-tree &&
- 	echo moreblobs >a-tree/another-blob &&
- 	git add . &&
--	TREE_SHA1=`git write-tree` &&
-+	TREE_SHA1=$(git write-tree) &&
- 	git tag -a -m tree tree-tag "$TREE_SHA1" &&
- 	git commit -m Initial &&
- 	git tag -a -m commit commit-tag &&
+ test_expect_success 'ambiguous 40-hex ref' '
+ 	TREE=$(git mktree </dev/null) &&
+-	REF=`git rev-parse HEAD` &&
++	REF=$(git rev-parse HEAD) &&
+ 	VAL=$(git commit-tree $TREE </dev/null) &&
+ 	git update-ref refs/heads/$REF $VAL &&
+-	test `git rev-parse $REF 2>err` = $REF &&
++	test $(git rev-parse $REF 2>err) = $REF &&
+ 	grep "refname.*${REF}.*ambiguous" err
+ '
+ 
+ test_expect_success 'ambiguous short sha1 ref' '
+ 	TREE=$(git mktree </dev/null) &&
+-	REF=`git rev-parse --short HEAD` &&
++	REF=$(git rev-parse --short HEAD) &&
+ 	VAL=$(git commit-tree $TREE </dev/null) &&
+ 	git update-ref refs/heads/$REF $VAL &&
+-	test `git rev-parse $REF 2>err` = $VAL &&
++	test $(git rev-parse $REF 2>err) = $VAL &&
+ 	grep "refname.*${REF}.*ambiguous" err
+ '
+ 
 -- 
 2.3.3.GIT
