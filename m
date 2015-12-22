@@ -1,90 +1,100 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 00/10] use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:22 +0100
-Message-ID: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] contrib/examples/git-revert.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:27 +0100
+Message-ID: <1450793432-9345-6-git-send-email-gitter.spiros@gmail.com>
+References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:10:50 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:10:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNeM-0002Wb-9V
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:10:50 +0100
+	id 1aBNeU-0002jz-9S
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbbLVOKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:10:41 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:36529 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbbLVOKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:40 -0500
-Received: by mail-pa0-f46.google.com with SMTP id q3so97268187pav.3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:40 -0800 (PST)
+	id S1754150AbbLVOKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:10:48 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:34959 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754087AbbLVOKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:45 -0500
+Received: by mail-pa0-f43.google.com with SMTP id jx14so90159486pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=tUR5oWWr1LM1qLBee2YO7Z/zOvXowETIMnDz052dqmU=;
-        b=VZrkRL8HjGQy8WLd8An7jMATIttuKZHRWHp4ILL9pNGKjUo1qe6K608cE43Ef0XsaE
-         WiK8XXp1NF372XCWQrMROy3dj/6oUJiE0x2LPmxG5iaLO1OTzMCv8aK+HsZ5bPltO6MP
-         L0IfZC2q/q1eiAWxOl8fVksZyiLdbKh2HCzQOOw9NdWmXiTZ539yl6U0pwsgpTXZW2XE
-         FTYfv9V3/dwm6H5ad0lbldgPfmnxwK0MpsIi0HrP8/MkGIYbjgs/HQwqDnEcmFgh9McA
-         OJS/a5kJRlYMCxz6FCTkMpExzyaCuJuD5wo+bphuC1dYQGsePI8tJh0KiUbUXZ7XbdlV
-         cJDw==
-X-Received: by 10.66.158.169 with SMTP id wv9mr35640616pab.138.1450793439983;
-        Tue, 22 Dec 2015 06:10:39 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ffTohtw1AeuEVh2ImcvJNQejiGIiSe+Tir+Q8h52QiE=;
+        b=QN5J3kSfyteh+M2zU1+M7PbWAcqAVBgntQAosGA982aMOqadqNIrk++UQnhIDiJViY
+         t21LDDJTLeOE9aHyKMU/bgLH5rJW3Bsx4DLQL1qsq67B4njK5rS0cDbTSWQVLeWE1vV2
+         WRv/Prc9mXbsa43OIx9jU33lGCSS+IMYonQP24lsumEc1nirTfl7Adfojc5w21i/oyVd
+         MvZrSVJrQPJyPJuiIVu9kT2mEEW/vKp0fxuG+VsnNKRqnNLuvfLauBZwKxpmH2gWmIMy
+         7CFyARlGoaARm/akA6F1jrv9mMcDfAUe03xJV6D4TPbxCAi9djRyDRAdEGihW8GaX3vF
+         LOEw==
+X-Received: by 10.66.190.66 with SMTP id go2mr36469971pac.114.1450793444654;
+        Tue, 22 Dec 2015 06:10:44 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.38
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 06:10:39 -0800 (PST)
+        Tue, 22 Dec 2015 06:10:44 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282850>
 
-This patch series continues the changes introduced with the merge 
-6753d8a85d543253d95184ec2faad6dc197f248:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-    Merge branch 'ep/shell-command-substitution'
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-    Adjust shell scripts to use $(cmd) instead of `cmd`.
+The patch was generated by:
 
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
 
-This is the first series, the other will be sent separately.
+and then carefully proof-read.
 
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ contrib/examples/git-revert.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Elia Pinto (10):
-  contrib/examples/git-commit.sh: use the $( ... ) construct for command
-    substitution
-  contrib/examples/git-fetch.sh: use the $( ... ) construct for command
-    substitution
-  contrib/examples/git-merge.sh: use the $( ... ) construct for command
-    substitution
-  contrib/examples/git-repack.sh: use the $( ... ) construct for command
-    substitution
-  contrib/examples/git-revert.sh: use the $( ... ) construct for command
-    substitution
-  contrib/thunderbird-patch-inline/appp.sh: use the $( ... ) construct
-    for command substitution
-  git-gui/po/glossary/txt-to-pot.sh: use the $( ... ) construct for
-    command substitution
-  t/lib-httpd.sh: use the $( ... ) construct for command substitution
-  test-sha1.sh: use the $( ... ) construct for command substitution
-  unimplemented.sh: use the $( ... ) construct for command substitution
-
- contrib/examples/git-commit.sh           | 8 ++++----
- contrib/examples/git-fetch.sh            | 4 ++--
- contrib/examples/git-merge.sh            | 4 ++--
- contrib/examples/git-repack.sh           | 4 ++--
- contrib/examples/git-revert.sh           | 8 ++++----
- contrib/thunderbird-patch-inline/appp.sh | 4 ++--
- git-gui/po/glossary/txt-to-pot.sh        | 4 ++--
- t/lib-httpd.sh                           | 4 ++--
- test-sha1.sh                             | 8 ++++----
- unimplemented.sh                         | 2 +-
- 10 files changed, 25 insertions(+), 25 deletions(-)
-
+diff --git a/contrib/examples/git-revert.sh b/contrib/examples/git-revert.sh
+index 7e2aad5..197838d 100755
+--- a/contrib/examples/git-revert.sh
++++ b/contrib/examples/git-revert.sh
+@@ -138,8 +138,8 @@ cherry-pick)
+ 	}'
+ 
+ 	logmsg=$(git show -s --pretty=raw --encoding="$encoding" "$commit")
+-	set_author_env=`echo "$logmsg" |
+-	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
++	set_author_env=$(echo "$logmsg" |
++	LANG=C LC_ALL=C sed -ne "$pick_author_script")
+ 	eval "$set_author_env"
+ 	export GIT_AUTHOR_NAME
+ 	export GIT_AUTHOR_EMAIL
+@@ -160,9 +160,9 @@ cherry-pick)
+ esac >.msg
+ 
+ eval GITHEAD_$head=HEAD
+-eval GITHEAD_$next='`git show -s \
++eval GITHEAD_$next='$(git show -s \
+ 	--pretty=oneline --encoding="$encoding" "$commit" |
+-	sed -e "s/^[^ ]* //"`'
++	sed -e "s/^[^ ]* //")'
+ export GITHEAD_$head GITHEAD_$next
+ 
+ # This three way merge is an interesting one.  We are at
 -- 
 2.3.3.GIT
