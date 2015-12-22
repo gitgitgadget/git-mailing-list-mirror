@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] t/t2025-worktree-add.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:52 +0100
-Message-ID: <1450796755-15848-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/10] t/t1700-split-index.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:51 +0100
+Message-ID: <1450796755-15848-7-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:18 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOW1-0004UU-HF
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:17 +0100
+	id 1aBOWA-0004fn-Pq
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932620AbbLVPGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:07 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35311 "EHLO
+	id S932929AbbLVPGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:15 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36186 "EHLO
 	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753207AbbLVPGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:05 -0500
-Received: by mail-pa0-f49.google.com with SMTP id jx14so90778894pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:05 -0800 (PST)
+	with ESMTP id S932638AbbLVPGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:07 -0500
+Received: by mail-pa0-f49.google.com with SMTP id q3so97871366pav.3
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E2hertTmATqK0bpxaG8O6RMfBuVI/q3INhkbhpAj0kg=;
-        b=jZ82P/4KVnpYrEylDkM2nxXrweUMopN+HBTh4qgBIv+6KSfiOc19yYzqtzrZ6P+/o2
-         csXLEBjqAyshqp1MC7vFmnZz4n08mvRhNGN/a23hv5RqA9eSlVYYB2j4S60DJGhANW7S
-         5LLEMbK4PwuW+XSr5P5YAxCIBo13FXXAhk1IOQjri9fpDhunuFAcuTJTIQW4F3j0XfX3
-         ry9V7iFcoVxlVY5/dG0rEUN+FEulLzllFZN32SJpXwYrv/gt3TFdeRkHBGa0m8c8HUXG
-         X6cFp7YdITe0fDq48nWFgnf4zrlL/mtUckLJbEqZuAp/soDkxnUvlyfDxFmdvVDr99dm
-         alCg==
-X-Received: by 10.66.100.135 with SMTP id ey7mr36762055pab.108.1450796765341;
-        Tue, 22 Dec 2015 07:06:05 -0800 (PST)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=vtCFTx4kwZS6C8Vh1/oMyWGgl3+eGObB3buKyDh8dmo=;
+        b=tpP/kCvDfc4k8Qifwxxq1AFX132FOhQSX2VK0YgEZyd4gGOEqwC3HggZwG6DOMbSTZ
+         I8Mjjw8063icL00wh4sz4EVEiiuiylSwVZh71q8JY2tol2NfDc9EzrWpdIO3ZCCM3laf
+         FnrjqX9BwKG2mQYFdENYEiWiaY/9ngsLTFjpGv/iDhmNBsRQ0U50zFGRqZu82mBSrsvw
+         2w1QK56gAYkc+8/xuhrvxUDnH7yQNFVzrs5e4PAfHGzIUSMp1zE72b9YM8hIjBvk+8vX
+         Pu0+TEBuj+cQRtnWPyb3Lj8iqRKZ5yiG+mKY8OGAiMJs7nHQAFklPCmM9fRwLWthsFm9
+         6rdA==
+X-Received: by 10.66.66.1 with SMTP id b1mr36119214pat.27.1450796764477;
         Tue, 22 Dec 2015 07:06:04 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Dec 2015 07:06:03 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282860>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,25 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t2025-worktree-add.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1700-split-index.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 3694174..0a804da 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -123,10 +123,10 @@ test_expect_success 'checkout from a bare repo without "add"' '
- test_expect_success 'checkout with grafts' '
- 	test_when_finished rm .git/info/grafts &&
- 	test_commit abc &&
--	SHA1=`git rev-parse HEAD` &&
-+	SHA1=$(git rev-parse HEAD) &&
- 	test_commit def &&
- 	test_commit xyz &&
--	echo "`git rev-parse HEAD` $SHA1" >.git/info/grafts &&
-+	echo "$(git rev-parse HEAD) $SHA1" >.git/info/grafts &&
- 	cat >expected <<-\EOF &&
- 	xyz
- 	abc
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 193d55c..8aef49f 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -55,7 +55,7 @@ test_expect_success 'disable split index' '
+ EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+-	BASE=`test-dump-split-index .git/index | grep "^own" | sed "s/own/base/"` &&
++	BASE=$(test-dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
+ 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
+ 	cat >expect <<EOF &&
+ not a split index
 -- 
 2.3.3.GIT
