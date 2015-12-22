@@ -1,41 +1,41 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 10/10] t5302-pack-index.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:53 +0100
-Message-ID: <1450798073-22811-11-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/10] t5301-sliding-window.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:52 +0100
+Message-ID: <1450798073-22811-10-git-send-email-gitter.spiros@gmail.com>
 References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:21 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOrL-00029j-7i
+	id 1aBOrK-00029j-Ju
 	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498AbbLVP2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:13 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36431 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932184AbbLVP2H (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932231AbbLVP2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:09 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35432 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752645AbbLVP2H (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 22 Dec 2015 10:28:07 -0500
-Received: by mail-pf0-f181.google.com with SMTP id o64so107853006pfb.3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:07 -0800 (PST)
+Received: by mail-pa0-f42.google.com with SMTP id jx14so91028737pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4DMb3aS80HYG4M+96lG4UlLmfitXbHry/QfkwOl5bcE=;
-        b=rCN5pzhz1uwsPqByyK6DI4D+W5BaGCnJ9WrtNI60VFaU4UVZKG1MIa5bs2j4Ht3yYD
-         RgEmHfojW/jyksd0SHiqPXdenbxUUEL/ziWZ4WDmKLD7nMDRMXFM0HakiB+TDfCmUYY8
-         QD86wAk2jt4UIgqRJq8SIg9GtrT1u0liIlVVw4SYvIT3Z/AP6gzBiI+kRc9K/rfWNAlr
-         QqJyjwgRWikmz91O8AU4RKaVse1jIS0H6jN33lo/L9q3MFryjghCHCLS/2pjt5yW3iH5
-         b7gen0iaN+9eC21kl98sPK3Z6D+8I/oqPcbrocS09IUyAFzZOzJIdoKbyitDj6MGK56Z
-         iNEA==
-X-Received: by 10.98.19.9 with SMTP id b9mr35701026pfj.28.1450798087417;
-        Tue, 22 Dec 2015 07:28:07 -0800 (PST)
+        bh=unNfwD5SLJgZFMoj5fv8JHGzKtdRVVoJl3isY2Y2XYs=;
+        b=v2VQQrrWcpo7QuRbvFE2ebnUVvjSya5O1bvvmhY32JehtHAEwPSX/6IaCTdPCSx/Gk
+         Nn3sebU29/pZgCeOyzmsHppychv15mkV5ytBVJliAWtkQIQdLkP0tYMEGFReSyDe/HuH
+         OZUf9lDKuTkiYKkh8ZzpILMJhjGZ4k0HxITgtBgM8YASbWI7rzMu023rmXthQm8Omvhz
+         64SuKibvfDEAWVvuEhO+HJveggNxGftUOoeJ4zbYc72LBOs9W572sS/eRJrqPJdy4WhQ
+         K0bxVo+RQA+pTd6ldLcCfXkX57t1AqVzKEsYyKRUlZUYltYcPdTVEuLUP9K3JDhgEDEk
+         przg==
+X-Received: by 10.66.55.6 with SMTP id n6mr36253416pap.33.1450798086639;
+        Tue, 22 Dec 2015 07:28:06 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.06
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 22 Dec 2015 07:28:06 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282872>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,85 +66,44 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5302-pack-index.sh | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ t/t5301-sliding-window.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 3dc5ec4..c2fc584 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -14,21 +14,21 @@ test_expect_success \
-      i=1 &&
-      while test $i -le 100
-      do
--         iii=`printf '%03i' $i`
-+         iii=$(printf '%03i' $i)
-          test-genrandom "bar" 200 > wide_delta_$iii &&
-          test-genrandom "baz $iii" 50 >> wide_delta_$iii &&
-          test-genrandom "foo"$i 100 > deep_delta_$iii &&
--         test-genrandom "foo"`expr $i + 1` 100 >> deep_delta_$iii &&
--         test-genrandom "foo"`expr $i + 2` 100 >> deep_delta_$iii &&
-+         test-genrandom "foo"$(expr $i + 1) 100 >> deep_delta_$iii &&
-+         test-genrandom "foo"$(expr $i + 2) 100 >> deep_delta_$iii &&
-          echo $iii >file_$iii &&
-          test-genrandom "$iii" 8192 >>file_$iii &&
-          git update-index --add file_$iii deep_delta_$iii wide_delta_$iii &&
--         i=`expr $i + 1` || return 1
-+         i=$(expr $i + 1) || return 1
+diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
+index 2fc5af6..cae8c2e 100755
+--- a/t/t5301-sliding-window.sh
++++ b/t/t5301-sliding-window.sh
+@@ -16,12 +16,12 @@ test_expect_success \
+          git update-index --add $i || return 1
       done &&
-      { echo 101 && test-genrandom 100 8192; } >file_101 &&
-      git update-index --add file_101 &&
+      echo d >d && cat c >>d && git update-index --add d &&
 -     tree=`git write-tree` &&
--     commit=`git commit-tree $tree </dev/null` && {
+-     commit1=`git commit-tree $tree </dev/null` &&
 +     tree=$(git write-tree) &&
-+     commit=$(git commit-tree $tree </dev/null) && {
- 	 echo $tree &&
- 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-      } >obj-list &&
-@@ -152,10 +152,10 @@ test_expect_success \
-     '[index v1] 2) create a stealth corruption in a delta base reference' \
-     '# This test assumes file_101 is a delta smaller than 16 bytes.
-      # It should be against file_100 but we substitute its base for file_099
--     sha1_101=`git hash-object file_101` &&
--     sha1_099=`git hash-object file_099` &&
--     offs_101=`index_obj_offset 1.idx $sha1_101` &&
--     nr_099=`index_obj_nr 1.idx $sha1_099` &&
-+     sha1_101=$(git hash-object file_101) &&
-+     sha1_099=$(git hash-object file_099) &&
-+     offs_101=$(index_obj_offset 1.idx $sha1_101) &&
-+     nr_099=$(index_obj_nr 1.idx $sha1_099) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=".git/objects/pack/pack-${pack1}.pack" seek=$(($offs_101 + 1)) \
-         if=".git/objects/pack/pack-${pack1}.idx" \
-@@ -193,10 +193,10 @@ test_expect_success \
-     '[index v2] 2) create a stealth corruption in a delta base reference' \
-     '# This test assumes file_101 is a delta smaller than 16 bytes.
-      # It should be against file_100 but we substitute its base for file_099
--     sha1_101=`git hash-object file_101` &&
--     sha1_099=`git hash-object file_099` &&
--     offs_101=`index_obj_offset 1.idx $sha1_101` &&
--     nr_099=`index_obj_nr 1.idx $sha1_099` &&
-+     sha1_101=$(git hash-object file_101) &&
-+     sha1_099=$(git hash-object file_099) &&
-+     offs_101=$(index_obj_offset 1.idx $sha1_101) &&
-+     nr_099=$(index_obj_nr 1.idx $sha1_099) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=".git/objects/pack/pack-${pack1}.pack" seek=$(($offs_101 + 1)) \
-         if=".git/objects/pack/pack-${pack1}.idx" \
-@@ -222,11 +222,11 @@ test_expect_success \
-     'rm -f .git/objects/pack/* &&
-      git index-pack --index-version=2 --stdin < "test-1-${pack1}.pack" &&
-      git verify-pack ".git/objects/pack/pack-${pack1}.pack" &&
--     obj=`git hash-object file_001` &&
--     nr=`index_obj_nr ".git/objects/pack/pack-${pack1}.idx" $obj` &&
-+     obj=$(git hash-object file_001) &&
-+     nr=$(index_obj_nr ".git/objects/pack/pack-${pack1}.idx" $obj) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.idx" &&
-      printf xxxx | dd of=".git/objects/pack/pack-${pack1}.idx" conv=notrunc \
--        bs=1 count=4 seek=$((8 + 256 * 4 + `wc -l <obj-list` * 20 + $nr * 4)) &&
-+        bs=1 count=4 seek=$((8 + 256 * 4 + $(wc -l <obj-list) * 20 + $nr * 4)) &&
-      ( while read obj
-        do git cat-file -p $obj >/dev/null || exit 1
-        done <obj-list ) &&
++     commit1=$(git commit-tree $tree </dev/null) &&
+      git update-ref HEAD $commit1 &&
+      git repack -a -d &&
+-     test "`git count-objects`" = "0 objects, 0 kilobytes" &&
+-     pack1=`ls .git/objects/pack/*.pack` &&
++     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
++     pack1=$(ls .git/objects/pack/*.pack) &&
+      test -f "$pack1"'
+ 
+ test_expect_success \
+@@ -43,11 +43,11 @@ test_expect_success \
+     'repack -a -d, packedGit{WindowSize,Limit} == 1 page' \
+     'git config core.packedGitWindowSize 512 &&
+      git config core.packedGitLimit 512 &&
+-     commit2=`git commit-tree $tree -p $commit1 </dev/null` &&
++     commit2=$(git commit-tree $tree -p $commit1 </dev/null) &&
+      git update-ref HEAD $commit2 &&
+      git repack -a -d &&
+-     test "`git count-objects`" = "0 objects, 0 kilobytes" &&
+-     pack2=`ls .git/objects/pack/*.pack` &&
++     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
++     pack2=$(ls .git/objects/pack/*.pack) &&
+      test -f "$pack2" &&
+      test "$pack1" \!= "$pack2"'
+ 
 -- 
 2.3.3.GIT
