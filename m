@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/10] t5301-sliding-window.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:52 +0100
-Message-ID: <1450798073-22811-10-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] t3600-rm.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:48 +0100
+Message-ID: <1450798073-22811-6-git-send-email-gitter.spiros@gmail.com>
 References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:23 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOrK-00029j-Ju
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:19 +0100
+	id 1aBOrQ-0002Db-9j
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbbLVP2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:09 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35432 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645AbbLVP2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:28:07 -0500
-Received: by mail-pa0-f42.google.com with SMTP id jx14so91028737pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:06 -0800 (PST)
+	id S1755211AbbLVP2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:06 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35410 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196AbbLVP2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:03 -0500
+Received: by mail-pa0-f51.google.com with SMTP id jx14so91028174pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=unNfwD5SLJgZFMoj5fv8JHGzKtdRVVoJl3isY2Y2XYs=;
-        b=v2VQQrrWcpo7QuRbvFE2ebnUVvjSya5O1bvvmhY32JehtHAEwPSX/6IaCTdPCSx/Gk
-         Nn3sebU29/pZgCeOyzmsHppychv15mkV5ytBVJliAWtkQIQdLkP0tYMEGFReSyDe/HuH
-         OZUf9lDKuTkiYKkh8ZzpILMJhjGZ4k0HxITgtBgM8YASbWI7rzMu023rmXthQm8Omvhz
-         64SuKibvfDEAWVvuEhO+HJveggNxGftUOoeJ4zbYc72LBOs9W572sS/eRJrqPJdy4WhQ
-         K0bxVo+RQA+pTd6ldLcCfXkX57t1AqVzKEsYyKRUlZUYltYcPdTVEuLUP9K3JDhgEDEk
-         przg==
-X-Received: by 10.66.55.6 with SMTP id n6mr36253416pap.33.1450798086639;
-        Tue, 22 Dec 2015 07:28:06 -0800 (PST)
+        bh=fX9LcvEVrxbJhLCQf/6a1EIE3bq5fF/gCVNMkvGqFbA=;
+        b=XgLSXMeIU8dYds0Bd2Lx4f15vqTD9vwdH7bkjtSaeqHefNQOuKR6MTlOs2IR7w57qA
+         ddBSZqsBpozNV7yhZyt3yPwimq13vRWulUJ0sehhNAt+hK553XmrXxDRY52ogAnKd9NV
+         r4THSWIimanrIS7yCkyfvClLiADOa9lEy90ziD0Sut828+XMwlMVpOHMomsZtIxt5QaQ
+         Szv8iVE3uTuSN55NYz6rvWBLFzD5r5EOpqo4s6/WaSRwWK9a4haWHmfussSzWxxqqA6v
+         S8hM3kOW6ZLPBQTvmL1gEM3bZZsr8josSc82g1ow2FgblA8VroLvBtSnsA3Ty2Oxi/hu
+         p/Qg==
+X-Received: by 10.67.6.195 with SMTP id cw3mr36566559pad.88.1450798083361;
+        Tue, 22 Dec 2015 07:28:03 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.05
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:28:06 -0800 (PST)
+        Tue, 22 Dec 2015 07:28:02 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282873>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,44 +66,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5301-sliding-window.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/t3600-rm.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
-index 2fc5af6..cae8c2e 100755
---- a/t/t5301-sliding-window.sh
-+++ b/t/t5301-sliding-window.sh
-@@ -16,12 +16,12 @@ test_expect_success \
-          git update-index --add $i || return 1
-      done &&
-      echo d >d && cat c >>d && git update-index --add d &&
--     tree=`git write-tree` &&
--     commit1=`git commit-tree $tree </dev/null` &&
-+     tree=$(git write-tree) &&
-+     commit1=$(git commit-tree $tree </dev/null) &&
-      git update-ref HEAD $commit1 &&
-      git repack -a -d &&
--     test "`git count-objects`" = "0 objects, 0 kilobytes" &&
--     pack1=`ls .git/objects/pack/*.pack` &&
-+     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
-+     pack1=$(ls .git/objects/pack/*.pack) &&
-      test -f "$pack1"'
- 
- test_expect_success \
-@@ -43,11 +43,11 @@ test_expect_success \
-     'repack -a -d, packedGit{WindowSize,Limit} == 1 page' \
-     'git config core.packedGitWindowSize 512 &&
-      git config core.packedGitLimit 512 &&
--     commit2=`git commit-tree $tree -p $commit1 </dev/null` &&
-+     commit2=$(git commit-tree $tree -p $commit1 </dev/null) &&
-      git update-ref HEAD $commit2 &&
-      git repack -a -d &&
--     test "`git count-objects`" = "0 objects, 0 kilobytes" &&
--     pack2=`ls .git/objects/pack/*.pack` &&
-+     test "$(git count-objects)" = "0 objects, 0 kilobytes" &&
-+     pack2=$(ls .git/objects/pack/*.pack) &&
-      test -f "$pack2" &&
-      test "$pack1" \!= "$pack2"'
- 
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 9d90d2c..2e47a2b 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -115,7 +115,7 @@ test_expect_success '"rm" command printed' '
+ 	git add test-file &&
+ 	git commit -m "add file for rm test" &&
+ 	git rm test-file > rm-output &&
+-	test `grep "^rm " rm-output | wc -l` = 1 &&
++	test $(grep "^rm " rm-output | wc -l) = 1 &&
+ 	rm -f test-file rm-output &&
+ 	git commit -m "remove file from rm test"
+ '
+@@ -125,7 +125,7 @@ test_expect_success '"rm" command suppressed with --quiet' '
+ 	git add test-file &&
+ 	git commit -m "add file for rm --quiet test" &&
+ 	git rm --quiet test-file > rm-output &&
+-	test `wc -l < rm-output` = 0 &&
++	test $(wc -l < rm-output) = 0 &&
+ 	rm -f test-file rm-output &&
+ 	git commit -m "remove file from rm --quiet test"
+ '
 -- 
 2.3.3.GIT
