@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] t5100-mailinfo.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:50 +0100
-Message-ID: <1450798073-22811-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t5300-pack-object.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:51 +0100
+Message-ID: <1450798073-22811-9-git-send-email-gitter.spiros@gmail.com>
 References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:36 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOrc-0002YC-6U
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:36 +0100
+	id 1aBOrk-0002oI-HS
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755225AbbLVP2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:20 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35421 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560AbbLVP2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:28:05 -0500
-Received: by mail-pa0-f48.google.com with SMTP id jx14so91028456pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:05 -0800 (PST)
+	id S1755215AbbLVP2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:19 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34372 "EHLO
+	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210AbbLVP2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:06 -0500
+Received: by mail-pf0-f172.google.com with SMTP id u7so61509676pfb.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WSsDRh69oBpfKAWMIs4OusM9uM9fLT116GhqKljPyzI=;
-        b=G76KS5DubAv9oeS+A0L9ITLSP+OW+wLu/Mf06k+3IFwT/+NVqJAc6N1OJ6up/uJ0mO
-         p3pIpw4c+J+AK8YaqnSxgl3Jz+eBrMnTQWXTuVnw7xx6GHKo1GDkbtTLPOUDr6BPHnsG
-         Vy4S36QlLbNh64hFP6XTlDk41t4Dtnds3hxz9QM2sXyNHJfqaAhKeOkgjyHBM8p6uH9X
-         /C0qhAnUhK4UfBwp9pdDxrSqmt1r5Wd32c/H7iYUq+HxwqDo9gtvF/AK6nzzu5LpvCJ/
-         ZNgdmyxvhJurqepAFNO2Vi7DmDCZdben+jI+QZTplgCkeSt69eDhQQdquR8iUo5Bvorv
-         nu5g==
-X-Received: by 10.66.255.10 with SMTP id am10mr36588161pad.79.1450798085016;
+        bh=Q59FgEbRSaoebLCQNftFYel4M7ekKt4Q0jzwsmmLRbU=;
+        b=igh0+JxqBr3NWBY7I2rV/NyKYPt+7AyUoVsNosYgYmkQEpJWRtQLUO5Io4z+fGo/hd
+         W3+izXjWQBhyHROjtYjF2D2nsx9Rwi29VNZjNuU8LVdDFZDu9V354yHij/yiZHTalHzT
+         weqtf8OHNws3pRUncgmGYyJijrjBE4UZ7AVkM62acJGWAnOdvCl5sXkPQbyD99EiqOjA
+         CDXpeNHfI9eHx5fy1m0DAsNMn1XhLz3/Org0y6ASx2pqgLGX2HT4fMhkzkLcxqrgTW7W
+         ernngEF7KUPX16jWgDD7wOHazWttqCasU8Tsq1jB8AjusStgidl236Ndq3gs0zk/mxV8
+         psrw==
+X-Received: by 10.98.75.197 with SMTP id d66mr36477362pfj.137.1450798085855;
         Tue, 22 Dec 2015 07:28:05 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.04
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:28:04 -0800 (PST)
+        Tue, 22 Dec 2015 07:28:05 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282875>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,48 +66,79 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5100-mailinfo.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t5300-pack-object.sh | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index e97cfb2..4e52b3b 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -9,9 +9,9 @@ test_description='git mailinfo and git mailsplit test'
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 20c1961..fc2be63 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -8,7 +8,7 @@ test_description='git pack-object
+ '
+ . ./test-lib.sh
  
- test_expect_success 'split sample box' \
- 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
--	last=`cat last` &&
-+	last=$(cat last) &&
- 	echo total is $last &&
--	test `cat last` = 17'
-+	test $(cat last) = 17'
+-TRASH=`pwd`
++TRASH=$(pwd)
  
- check_mailinfo () {
- 	mail=$1 opt=$2
-@@ -23,7 +23,7 @@ check_mailinfo () {
- }
+ test_expect_success \
+     'setup' \
+@@ -20,8 +20,8 @@ test_expect_success \
+      test-genrandom "seed b" 2097152 > b_big &&
+      git update-index --add a a_big b b_big c &&
+      cat c >d && echo foo >>d && git update-index --add d &&
+-     tree=`git write-tree` &&
+-     commit=`git commit-tree $tree </dev/null` && {
++     tree=$(git write-tree) &&
++     commit=$(git commit-tree $tree </dev/null) && {
+ 	 echo $tree &&
+ 	 echo $commit &&
+ 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
+@@ -29,7 +29,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=`git cat-file -t $object` &&
++	    t=$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+      } >expect'
+@@ -147,7 +147,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=`git cat-file -t $object` &&
++	    t=$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -162,7 +162,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=`git cat-file -t $object` &&
++	    t=$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -177,7 +177,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=`git cat-file -t $object` &&
++	    t=$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -252,8 +252,8 @@ test_expect_success \
  
- 
--for mail in `echo 00*`
-+for mail in $(echo 00*)
- do
- 	test_expect_success "mailinfo $mail" '
- 		check_mailinfo $mail "" &&
-@@ -47,11 +47,11 @@ test_expect_success 'split box with rfc2047 samples' \
- 	'mkdir rfc2047 &&
- 	git mailsplit -orfc2047 "$TEST_DIRECTORY"/t5100/rfc2047-samples.mbox \
- 	  >rfc2047/last &&
--	last=`cat rfc2047/last` &&
-+	last=$(cat rfc2047/last) &&
- 	echo total is $last &&
--	test `cat rfc2047/last` = 11'
-+	test $(cat rfc2047/last) = 11'
- 
--for mail in `echo rfc2047/00*`
-+for mail in $(echo rfc2047/00*)
- do
- 	test_expect_success "mailinfo $mail" '
- 		git mailinfo -u $mail-msg $mail-patch <$mail >$mail-info &&
+ test_expect_success \
+     'verify-pack catches a corrupted sum of the index file itself' \
+-    'l=`wc -c <test-3.idx` &&
+-     l=`expr $l - 20` &&
++    'l=$(wc -c <test-3.idx) &&
++     l=$(expr $l - 20) &&
+      cat test-1-${packname_1}.pack >test-3.pack &&
+      printf "%20s" "" | dd of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
+      if git verify-pack test-3.pack
 -- 
 2.3.3.GIT
