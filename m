@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/10] t/t1401-symbolic-ref.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:47 +0100
-Message-ID: <1450796755-15848-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t/t2102-update-index-symlinks.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:53 +0100
+Message-ID: <1450796755-15848-9-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
@@ -11,40 +11,40 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOVv-00049p-Lg
+	id 1aBOVw-00049p-9U
 	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932557AbbLVPGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:05 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35278 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbbLVPGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:01 -0500
-Received: by mail-pa0-f48.google.com with SMTP id jx14so90777965pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:01 -0800 (PST)
+	id S932838AbbLVPGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:08 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35318 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754791AbbLVPGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:06 -0500
+Received: by mail-pa0-f54.google.com with SMTP id jx14so90779084pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qbk9w/dgV4WIYqf02zH3ZBDZKvmPzMhdjVkbXrfF8DE=;
-        b=1JvPYIiqhIeIeV0y6hK42FDc27krBSho99ZnThnbMVKj6Bdmy8QHcnPWyN3brWqRNG
-         2ryoVKy5C+p1ahsLRY/iS9uo7VIKZq4AQLkfRhgjhrKQS5A99OnryB/Dkt/clwVHOjlN
-         2nfRJJIMH5/3sgB7HRiaKOl8pZiLVwYiyVAXuYeR4Nihy5q1wJAvTvJV4d9bEOJ31egg
-         aKR60Raaqk1CpfoXLUPdDmTFvWDUgtsLQLGYgICOM4SM6wuGjZW7M+n+LHzcTSmSKFnl
-         IUidpu6DbdoweG1imZOXdOA4uXACBWFybSuMOyURZO4WXDrzij3sCygHMP71647sfjlg
-         oMLA==
-X-Received: by 10.66.62.166 with SMTP id z6mr36255401par.122.1450796760834;
-        Tue, 22 Dec 2015 07:06:00 -0800 (PST)
+        bh=dObzpY6+zmyfGOukUT6o5OlBcaHZpH3qIFGmv+fjL7Y=;
+        b=hhxS3m8Sj00EMO5R4oqXTHYuYmbTOz7tJsTJ18lvP1E6JB8vk9fHi8W3I8yK2lCBFv
+         9E+h+t6Z+9slOidrYd3j+2GTckTVIzPWgcM4MZCNCkbRYvinO1K4z8ajdd2bs7r5dQKH
+         Ng4AfEaA+n5xQmBxnbz0PjCWW6DPkyux1sHkKEjCQQ7vGJ7LkRLH9T5C8Z0LZR8txwJg
+         oGuTvhVdDu7b29WF+XSyGHPZ+22LcWEU9tV1nKiDSV2GZGsFgipnkhGv5zgcmWwwjfM3
+         y0KjoSL0Z/ywES6sg2w/TOWVbrGo1S2G9qHWkI6g/vSLRaGDY9owXGC74CGp1JFXn9ni
+         aPNQ==
+X-Received: by 10.66.232.170 with SMTP id tp10mr36480705pac.38.1450796766223;
+        Tue, 22 Dec 2015 07:06:06 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.05.59
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:06:00 -0800 (PST)
+        Tue, 22 Dec 2015 07:06:05 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282857>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1401-symbolic-ref.sh | 2 +-
+ t/t2102-update-index-symlinks.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 20b022a..e6c5830 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -29,7 +29,7 @@ reset_to_sane
+diff --git a/t/t2102-update-index-symlinks.sh b/t/t2102-update-index-symlinks.sh
+index 4d0d0a3..22f2c73 100755
+--- a/t/t2102-update-index-symlinks.sh
++++ b/t/t2102-update-index-symlinks.sh
+@@ -23,7 +23,7 @@ git update-index symlink'
  
- test_expect_success 'symbolic-ref refuses bare sha1' '
- 	echo content >file && git add file && git commit -m one &&
--	test_must_fail git symbolic-ref HEAD `git rev-parse HEAD`
-+	test_must_fail git symbolic-ref HEAD $(git rev-parse HEAD)
- '
- reset_to_sane
- 
+ test_expect_success \
+ 'the index entry must still be a symbolic link' '
+-case "`git ls-files --stage --cached symlink`" in
++case "$(git ls-files --stage --cached symlink)" in
+ 120000" "*symlink) echo pass;;
+ *) echo fail; git ls-files --stage --cached symlink; (exit 1);;
+ esac'
 -- 
 2.3.3.GIT
