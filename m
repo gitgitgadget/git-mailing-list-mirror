@@ -1,111 +1,121 @@
-From: Paul Smith <paul@mad-scientist.net>
-Subject: Building Git with HTTPS support: avoiding libcurl?
-Date: Tue, 22 Dec 2015 10:39:40 -0500
-Organization: I may be mad, but I am a professional!
-Message-ID: <1450798780.11255.22.camel@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: RefTree: Alternate ref backend
+Date: Tue, 22 Dec 2015 16:41:43 +0100
+Message-ID: <56796F37.1000600@alum.mit.edu>
+References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:46:39 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>
+To: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:49:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBP93-00057p-Db
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:46:37 +0100
+	id 1aBPBO-0000PX-J2
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621AbbLVPqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:46:32 -0500
-Received: from gproxy9-pub.mail.unifiedlayer.com ([69.89.20.122]:58417 "HELO
-	gproxy9-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751726AbbLVPq3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 10:46:29 -0500
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2015 10:46:29 EST
-Received: (qmail 14186 invoked by uid 0); 22 Dec 2015 15:39:49 -0000
-Received: from unknown (HELO CMOut01) (10.0.90.82)
-  by gproxy9.mail.unifiedlayer.com with SMTP; 22 Dec 2015 15:39:49 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-	by CMOut01 with 
-	id wffl1r00M2qhmhE01ffoJa; Tue, 22 Dec 2015 08:39:48 -0700
-X-Authority-Analysis: v=2.1 cv=Zc6OaKlA c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17 a=cNaOj0WVAAAA:8
- a=f5113yIGAAAA:8 a=pBbsfl06AAAA:8 a=IkcTkHD0fZMA:10 a=cdVwids0oJMA:10
- a=O5GnRg5U9jgA:10 a=wUQvQvOEmiQA:10 a=ztIK0ruuaPtuWua6FMMA:9
- a=GRKuZyVBmsutu15l:21 a=FnaGvjvTtDRSD0jB:21 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mad-scientist.net; s=default;
-	h=Content-Transfer-Encoding:Mime-Version:Content-Type:Date:To:Reply-To:From:Subject:Message-ID; bh=CXCjpqQl7tMse57m8qJoXb0ApI7rnQHwsCEF0utB7g0=;
-	b=dFYICXcG/tcpiL50J64qw5sKLo5ZPDvVfauEOeFgZHLX00k436CrR6pTa5hYzoeaq2N3hm3TeV396JbB90TWFrEABEwKVCJyXncv3EMQwKAG3VNTbj4dImEHUQdZBgie;
-Received: from [96.237.233.6] (port=43692 helo=homebase)
-	by box531.bluehost.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1aBP2Q-0000Nr-90
-	for git@vger.kernel.org; Tue, 22 Dec 2015 08:39:46 -0700
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
-X-Identified-User: {678:box531.bluehost.com:madscie1:mad-scientist.us} {sentby:smtp auth 96.237.233.6 authed with paul+mad-scientist.us}
+	id S1755269AbbLVPsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:48:51 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55967 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754381AbbLVPst (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 10:48:49 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2015 10:48:49 EST
+X-AuditID: 1207440f-f79df6d000007c0f-8e-56796f3b1dd1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id BD.84.31759.B3F69765; Tue, 22 Dec 2015 10:41:47 -0500 (EST)
+Received: from [192.168.69.130] (p4FC969CC.dip0.t-ipconnect.de [79.201.105.204])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBMFfifX032077
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 22 Dec 2015 10:41:45 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.4.0
+In-Reply-To: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBKsWRmVeSWpSXmKPExsUixO6iqGudXxlmsOEpm8X8TScYLbqudDNZ
+	/GjpYbaYf2giqwOLx7PePYwef87vYfVY8Pw+u8fnTXIBLFHcNkmJJWXBmel5+nYJ3Blr9l1i
+	KmiRrHizr42lgXGVSBcjJ4eEgInErO83WCFsMYkL99azdTFycQgJXGaU+HFuAjOEc4FJYtXb
+	1ywgVcIC2hLPu3+BdYgIOEr0vfrHBGILCQRIfLvwhhHEZhZwk3i+upcNxGYT0JVY1NPMBLFB
+	TqK3exLYHF6gOYeO3mYHsVkEVCVudc1nBrFFBUIk9u7sgKoRlDg58wmYzSkQKLHswgsWiPnq
+	En/mXWKGsOUlmrfOZp7AKDgLScssJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRr
+	opebWaKXmlK6iRES6vw7GLvWyxxiFOBgVOLhnbCgIkyINbGsuDL3EKMkB5OSKO/JzMowIb6k
+	/JTKjMTijPii0pzU4kOMEhzMSiK8AUFAOd6UxMqq1KJ8mJQ0B4uSOK/6EnU/IYH0xJLU7NTU
+	gtQimKwMB4eSBK9gHlCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCiG44uBUQyS
+	4gHaawXSzltckJgLFIVoPcWoKCXOKwCSEABJZJTmwY2FJbBXjOJAXwrzZoBU8QCTH1z3K6DB
+	TECD/6wrBxlckoiQkmpgTOeJ/HDsM2u1muSvxzmViteOluy1OZp4fo23UcP7rY6L6rnCgjay
+	WLrtcwsIWGx4ZJbupkp3hp87TzLbdMpOqeOfuvf9hSe5U924uXauONiQ0lnUL/VR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282880>
 
-I'm trying to build Git (2.6.4) on GNU/Linux, but without any
-requirements (other than basic libc etc.) on the local system.  This
-works fine except for one thing: git-remote-https.
+On 12/17/2015 10:02 PM, Shawn Pearce wrote:
+> I started playing around with the idea of storing references directly
+> in Git. Exploiting the GITLINK tree entry, we can associate a name to
+> any SHA-1.
+> 
+> By storing all references in a single tree, atomic transactions are
+> possible. Its a simple compare-and-swap of a single 40 byte SHA-1.
+> This of course leads to a bootstrapping problem, where do we store the
+> 40 byte SHA-1? For this example its just $GIT_DIR/refs/txn/committed
+> as a classical loose reference.
 
-In order to build this I need to have libcurl, but libcurl is a MONSTER
-library with an enormous number of prerequisites (see below).
+I like this general idea a lot, even while recognizing some practical
+problems that other people have pointed out. I especially like the idea
+of having truly atomic multi-reference updates.
 
-Just wondering if anyone has considered an alternative to libcurl; maybe
-I'm wrong but it seems to me that HTTPS support for Git would require
-only a tiny fraction of the libcurl features and maybe there's an
-alternative available which would be more targeted?
+I'm curious why you decided to store all of the references in a single
+list, similar to the packed-refs file. This design means that the whole
+object has to be rewritten whenever any reference is updated [1].
+Certainly, storing the references in a single tree *object* is not a
+requirement for having atomic transitions.
 
-I realize this is not a short-term thing in that there won't be an API
-compatible library that can just be dropped in.  This is more a forward
--looking question.  For now I'm looking to see if I can rebuild libcurl
-myself without most of these dependencies such as Kerberos, LDAP, etc.
+I would have expected a design where the layout of the references in
+trees mimics the layout of loose references in the filesystem; e.g., one
+tree object for "refs/", one for "refs/heads/" one for "refs/remotes/"
+etc. This design would reduce the amount of rewriting that is needed
+when one or a few references are updated.
 
+Another reason that I find a hierarchical layout intriguing would be
+that one could imagine using the SHA-1s of reference namespace subtrees
+to speed up the negotiation phase of "git fetch". In the common case
+that I use the local namespace "refs/remotes/origin" to track an
+upstream repo, the SHA-1 of my "refs/remotes/origin" tree would usually
+represent a complete description of the state of the upstream references
+at the time that I last fetched. My client could tell the server
 
-$ ldd /usr/lib/x86_64-linux-gnu/libcurl.so.4
-        linux-vdso.so.1 =>  (0x00007fff37d81000)
-        libidn.so.11 => /usr/lib/x86_64-linux-gnu/libidn.so.11 (0x00007f682b921000)
-        librtmp.so.1 => /usr/lib/x86_64-linux-gnu/librtmp.so.1 (0x00007f682b704000)
-        libssl.so.1.0.0 => /lib/x86_64-linux-gnu/libssl.so.1.0.0 (0x00007f682b49a000)
-        libcrypto.so.1.0.0 => /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 (0x00007f682b058000)
-        libgssapi_krb5.so.2 => /usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2 (0x00007f682ae0e000)
-        liblber-2.4.so.2 => /usr/lib/x86_64-linux-gnu/liblber-2.4.so.2 (0x00007f682abfe000)
-        libldap_r-2.4.so.2 => /usr/lib/x86_64-linux-gnu/libldap_r-2.4.so.2 (0x00007f682a9ac000)
-        libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f682a792000)
-        libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f682a573000)
-        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f682a1a9000)
-        libgnutls-deb0.so.28 => /usr/lib/x86_64-linux-gnu/libgnutls-deb0.so.28 (0x00007f6829e8d000)
-        libhogweed.so.4 => /usr/lib/x86_64-linux-gnu/libhogweed.so.4 (0x00007f6829c59000)
-        libnettle.so.6 => /usr/lib/x86_64-linux-gnu/libnettle.so.6 (0x00007f6829a23000)
-        libgmp.so.10 => /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f68297a3000)
-        libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f682959e000)
-        libkrb5.so.3 => /usr/lib/x86_64-linux-gnu/libkrb5.so.3 (0x00007f68292cc000)
-        libk5crypto.so.3 => /usr/lib/x86_64-linux-gnu/libk5crypto.so.3 (0x00007f682909d000)
-        libcom_err.so.2 => /lib/x86_64-linux-gnu/libcom_err.so.2 (0x00007f6828e98000)
-        libkrb5support.so.0 => /usr/lib/x86_64-linux-gnu/libkrb5support.so.0 (0x00007f6828c8d000)
-        libresolv.so.2 => /lib/x86_64-linux-gnu/libresolv.so.2 (0x00007f6828a71000)
-        libsasl2.so.2 => /usr/lib/x86_64-linux-gnu/libsasl2.so.2 (0x00007f6828855000)
-        libgssapi.so.3 => /usr/lib/x86_64-linux-gnu/libgssapi.so.3 (0x00007f6828615000)
-        /lib64/ld-linux-x86-64.so.2 (0x0000559b03259000)
-        libp11-kit.so.0 => /usr/lib/x86_64-linux-gnu/libp11-kit.so.0 (0x00007f68283b0000)
-        libtasn1.so.6 => /usr/lib/x86_64-linux-gnu/libtasn1.so.6 (0x00007f682819c000)
-        libkeyutils.so.1 => /lib/x86_64-linux-gnu/libkeyutils.so.1 (0x00007f6827f98000)
-        libheimntlm.so.0 => /usr/lib/x86_64-linux-gnu/libheimntlm.so.0 (0x00007f6827d8e000)
-        libkrb5.so.26 => /usr/lib/x86_64-linux-gnu/libkrb5.so.26 (0x00007f6827b04000)
-        libasn1.so.8 => /usr/lib/x86_64-linux-gnu/libasn1.so.8 (0x00007f6827861000)
-        libhcrypto.so.4 => /usr/lib/x86_64-linux-gnu/libhcrypto.so.4 (0x00007f682762d000)
-        libroken.so.18 => /usr/lib/x86_64-linux-gnu/libroken.so.18 (0x00007f6827418000)
-        libffi.so.6 => /usr/lib/x86_64-linux-gnu/libffi.so.6 (0x00007f6827210000)
-        libwind.so.0 => /usr/lib/x86_64-linux-gnu/libwind.so.0 (0x00007f6826fe6000)
-        libheimbase.so.1 => /usr/lib/x86_64-linux-gnu/libheimbase.so.1 (0x00007f6826dd7000)
-        libhx509.so.5 => /usr/lib/x86_64-linux-gnu/libhx509.so.5 (0x00007f6826b8c000)
-        libsqlite3.so.0 => /usr/lib/x86_64-linux-gnu/libsqlite3.so.0 (0x00007f68268be000)
-        libcrypt.so.1 => /lib/x86_64-linux-gnu/libcrypt.so.1 (0x00007f6826686000)
+    have-tree $SHA1
+
+, where $SHA1 is the hash of the tree representing
+"refs/remotes/origin/". If the server keeps a reflog as you have
+described (but hierarchically), then the server could look up $SHA1 and
+immediately know the full set of references, and therefore of objects,
+that I fetched last time. More generally, the negotiation could proceed
+down the reference namespace tree and stop whenever commonality is found.
+
+There are a lot of "if"s in that last paragraph, and maybe it's not
+workable. For example, if I'm not pruning on fetch, then my reference
+tree won't be identical to one that was ever present on the server and
+this technique wouldn't necessarily help. But if, for example, we change
+the default to pruning, or perhaps record some extra reftree SHA-1's,
+then in most cases I would expect that this trick could reduce the
+effort of negotiation to negligible in most cases, and reduce the time
+of the whole fetch to negligible in the case that the clone is already
+up-to-date.
+
+Michael
+
+[1] At GitHub, we store public repositories in networks with a shared
+object store. The central repository in each network can have 10M+
+references. So for us, rewriting that many references for every
+reference update would be unworkable.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
