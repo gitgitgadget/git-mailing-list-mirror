@@ -1,67 +1,111 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] push: don't mark options of recurse-submodules for translation
-Date: Tue, 22 Dec 2015 18:53:00 +0100
-Message-ID: <1450806780-16822-1-git-send-email-ralf.thielow@gmail.com>
-Cc: gitster@pobox.com, worldhello.net@gmail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 18:53:21 2015
+From: Pierre-Luc Loyer <Pierre-Luc.Loyer@bhvr.com>
+Subject: Git Rebase Issue
+Date: Tue, 22 Dec 2015 17:53:42 +0000
+Message-ID: <39E7EE9D306F544FAD3A0D16B7B7CAAD2C1E819D@mtlsvrmxwv02.A2M.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 22 19:09:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBR7g-0005Qd-N0
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 18:53:21 +0100
+	id 1aBRMq-0003dZ-OG
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 19:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933140AbbLVRxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 12:53:12 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34592 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932910AbbLVRxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 12:53:11 -0500
-Received: by mail-wm0-f66.google.com with SMTP id l126so22900428wml.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 09:53:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=h46zymRANaBtIQ0P9UfCx1KgTbYW+uAIVrgOVJB2oJI=;
-        b=grr/AIeL40RasNXdU433935L4n9eIXnxoL3IngRx5q4BPUQo4jBDU4ybfeI5eqBCVw
-         K818qp6IKCdvPuikTsFs0n8b8nnyqD5b66nEQXeRpP3TEWaiuxBjjmBsPNz2+BcZuNHU
-         f8yi2rh5mzIIBG+r0Ig+KBJXUEsb8AGyHe45XCHA0GemL6kTr2oo2A7Ozt9o2K7A1dhX
-         /IIfQ+N4MZ7GEUL6uj9RGGM4x0SH5dCCC7XET6XWRRWw9OgTVOSfrxmgTU6N2SB7VktZ
-         700GMen87SJuTm7w3jKiLjxxEBNTxv7GWvF/1IY5D39VVdOdYjxmHcFizFnLDYyQB4oV
-         DWOw==
-X-Received: by 10.194.118.36 with SMTP id kj4mr27874276wjb.88.1450806789742;
-        Tue, 22 Dec 2015 09:53:09 -0800 (PST)
-Received: from localhost (cable-95-168-157-91.cust.telecolumbus.net. [95.168.157.91])
-        by smtp.gmail.com with ESMTPSA id gj2sm33922047wjb.40.2015.12.22.09.53.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 09:53:08 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc1.195.g5ee9e94
+	id S1755367AbbLVSI4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Dec 2015 13:08:56 -0500
+Received: from mail.a2m.com ([207.253.225.40]:59643 "EHLO mtlsvraslv01.a2m.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754130AbbLVSI4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 13:08:56 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2015 13:08:55 EST
+X-AuditID: c0a81416-f794d6d000000ff2-7a-56798e1e1403
+Received: from mtlsvrmxwv02.A2M.com (Unknown_Domain [192.168.10.13])
+	by mtlsvraslv01.a2m.com (Symantec Messaging Gateway) with SMTP id 1D.FA.04082.E1E89765; Tue, 22 Dec 2015 12:53:34 -0500 (EST)
+Received: from MTLSVRMXWV02.A2M.com ([::1]) by mtlsvrmxwv02.A2M.com ([::1])
+ with mapi id 14.03.0248.002; Tue, 22 Dec 2015 12:53:42 -0500
+Thread-Topic: Git Rebase Issue
+Thread-Index: AdE84bIQFgMlL9wkRxO7f8ub1F14nw==
+Accept-Language: fr-FR, en-CA, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.16.17.154]
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGLMWRmVeSWpSXmKPExsVyYAUXr65cX2WYwbnJshZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4Mp4eHkVe8FpwYq7n/+zNDBO5uti5OSQEDCRuDHtMROELSZx4d56
+	NhBbSOAIo8S2PUJdjFxAdhejREPrF0aQBJuAkcS82zOBGjg4RAT0JfouiIKEhQUkJe49vswK
+	YosIyEns+3IYytaTOP7nJpjNIqAqsWLxNBYQm1fAW+L59tNsIGMYBVQkTj4NBwkzC4hLfDu6
+	khniHAGJJXvOQ9miEi8f/2OFsBUlGi5BjGQGGn9j6hQ2CFtbYtnC18wQ4wUlTs58wjKBUXgW
+	krGzkLTMQtIyC0nLAkaWVYwiuSU5xWVFicU5ZQaGeolGuXrJ+bmbGMGhLSK2g/HjN61DjAIc
+	jEo8vDM6KsOEWBPLiitzDzFKcDArifC+aQAK8aYkVlalFuXHF5XmpBYfYpTmYFES5/XPjQoR
+	EkhPLEnNTk0tSC2CyTJxcEo1MOqpTvoz4/jSu9Hf2qI2HRNZ16dT72c73fBJ5j72no11qwtL
+	P0/Lv3spcBLzbakeG3fzC6mSM2LTb2ovmn/5lLntNYewOM3PRY5lda+9v3FlN71edLn93SI2
+	6bMMix7pfVl8j4E/w/fDP5Zw+8VpD77u/jKrOK2q+ULczpcCNvb8LJs7FCYFsSqxFGckGmox
+	FxUnAgD2Aj6WaQIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282893>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- builtin/push.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-diff --git a/builtin/push.c b/builtin/push.c
-index cc29277..8963dbd 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -547,7 +547,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
- 		  N_("require old value of ref to be at this value"),
- 		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
--		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, N_("check|on-demand|no"),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
- 			N_("control recursive pushing of submodules"),
- 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
--- 
-2.7.0.rc1.195.g5ee9e94
+I've encountered a situation using rebase for which I don't understand =
+the results, even after reading the documentation.
+I'm currently working in my feature branch and then I want to squash co=
+mmits, thus I use interactive rebase. After successfully completing the=
+ rebase, I end up in a detached HEAD state, rather than back on my bran=
+ch, which is confusing. The command that is causing me to be in detache=
+d HEAD mode is: git rebase -i HEAD~2 HEAD
+=46rom the documentation, I read that my second parameter (HEAD) is the=
+ <branch> parameter:
+
+=A0 =A0git rebase [-i | --interactive] [options] [--exec <cmd>] [--onto=
+ <newbase>]
+
+=A0 =A0[<upstream>] [<branch>]
+
+=A0 =A0If <branch> is specified, git rebase will perform an automatic g=
+it checkout <branch> before doing anything else. Otherwise it remains o=
+n the current branch.
+<branch> Working branch; defaults to HEAD.
+
+=A0 =A0Upon completion, <branch> will be the current branch.
+
+Here is a full example than can be used to easily repro the issue. Go t=
+o an empty folder.
+git init
+git echo text > file.txt
+git add .
+git commit -m "Add file.txt"
+git echo text2 > file.txt
+git commit -am "Modify file.txt"
+git echo text3 > file.txt
+git commit -am "Remodify file.txt"
+
+Now the interesting part:
+$ git rebase -i HEAD~2 HEAD
+[detached HEAD 9178b93] Modify file
+1 file changed, 1 insertion(+), 1 deletion(-)
+Successfully rebased and updated detached HEAD.=A0
+
+=46rom the documentation it says that <branch> (which is HEAD) will be =
+checked out before doing anything and that upon completion, <branch> wi=
+ll be the current branch. However, this doesn't seem to happen. In fact=
+, it seems more like the following is happening during the rebase:
+1) detach HEAD
+2) rebase
+3) reattach to <branch>
+
+If <branch> is HEAD, then is does nothing and remains detached.
+I find this behavior confusing since I would expect it to return to wha=
+tever HEAD was pointing to at the start of the command, such as my bran=
+ch. Also, the documentation says that the <branch> parameter defaults t=
+o HEAD, so passing 'HEAD' explicitly should result in the same behavior=
+ as not passing it:
+<branch> Working branch; defaults to HEAD.
+
+Pierre-Luc Loyer
