@@ -1,91 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] config: add core.untrackedCache
-Date: Tue, 22 Dec 2015 08:33:11 -0800
-Message-ID: <xmqqh9jae94o.fsf@gitster.mtv.corp.google.com>
-References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
-	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
-	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
-	<CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
-	<xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
-	<CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
-	<xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
-	<20151216024605.GA618@sigill.intra.peff.net>
-	<xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
-	<xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
-	<20151217074443.GA4830@sigill.intra.peff.net>
-	<CACsJy8BwARfGmGBXEdWHnDxxXcubZDzjCg7Zy6qD0qzHZWGoFw@mail.gmail.com>
-	<xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/3] pretty: Pass graph width to pretty formatting for use
+ in '%>|(N)'
+Date: Wed, 23 Dec 2015 00:03:19 +0700
+Message-ID: <CACsJy8C8DCi_pZDd=m1hE70t7Z+MX3j6WcMe-Hp-u0y5VvwKqg@mail.gmail.com>
+References: <xmqqk2rwzlhi.fsf@gitster.mtv.corp.google.com> <1442013913-2970-1-git-send-email-josef@kufner.cz>
+ <xmqqa8sfa7di.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Josef Kufner <josef@kufner.cz>,
+	Git Mailing List <git@vger.kernel.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 17:33:22 2015
+	Elliott Cable <me@ell.io>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 22 18:03:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBPsI-00033F-9R
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 17:33:22 +0100
+	id 1aBQLq-0007t8-PJ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 18:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498AbbLVQdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 11:33:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60318 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754297AbbLVQdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 11:33:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C09C633E29;
-	Tue, 22 Dec 2015 11:33:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AckCXXZ+MCsnupYnVWCoIvKN8Jc=; b=AXsE+O
-	8fHujKQ57oq7j1RozP81EWq2OhcuJY520ZTKIYVWt5VLqOSRasOGnWNf5ntIhdh9
-	o7TVlVx+Iza8r891xYCBElhC3c4iUFBcFDXaNbdWxzhdUQkKnIHktXBHfgySGW5m
-	4KUPY/0K/WR5rGYgFsuWchFIUhqzZhVgb46f0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IKy83bTrHkq3nezyHza78FGdlCECe10k
-	Cnm5puus93maavRnXkSB45+ZEGLBGQqS6Pc4hPlVXtIINcD9lX6bjO3VMIEhixd5
-	QPkRfbyA8gPLole/xpNwMJlyMH2A9FFEx1Ux9HSBlVg2VqX2W442VoFfxNkcCZKc
-	gOsmXYa0heE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B784F33E28;
-	Tue, 22 Dec 2015 11:33:13 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 109BE33E27;
-	Tue, 22 Dec 2015 11:33:13 -0500 (EST)
-In-Reply-To: <CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 22 Dec 2015 15:27:34 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B1EA9B96-A8C9-11E5-9CED-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753416AbbLVRDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 12:03:51 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:35166 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751362AbbLVRDu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 12:03:50 -0500
+Received: by mail-lb0-f171.google.com with SMTP id bc4so34400350lbc.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 09:03:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=tFDH7eSN3RS9quJ4ZF12GcNsfSFquEc0EsEJOM9rdWs=;
+        b=GK/Qa0IWJwpRDZ/HMc1wXbxuzz3HtoBi5/idRywTMECQWukmiTU2ATuUqomP/cKqJS
+         cIUAIMi9sApc7DvWrTtCsxZZT09aNdC6xVqbB0eFCGBzjGjlQYc+9QXrCmcJbGf1unpM
+         DKLd/iZGAdFZgZ0y22afBx3Xh9WSFzIqHk81SZc8LaxAXIBkmoF5mQiHxzkXjCHAz2Qe
+         DN75WN066y+AGUuqrmjGmD3IA4OpfGvc3nzSEHZIcIQdKitcXG9APHCIVdAzsqihF32t
+         lZzgPTztHHK4jjS4+N36dXlF2haKVudT7Fnob616wFQrZapno+jMfKam9ePbFQI8ZQNm
+         a0KA==
+X-Received: by 10.112.137.101 with SMTP id qh5mr8445204lbb.81.1450803828864;
+ Tue, 22 Dec 2015 09:03:48 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Tue, 22 Dec 2015 09:03:19 -0800 (PST)
+In-Reply-To: <xmqqa8sfa7di.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282886>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+(I'm joining the newer thread [1] back to this one, thanks for
+reminding me about this)
 
-> In that case we can just check config once in read_index_from and
-> destroy UNTR extension. Or the middle ground, we check config once in
-> that place, make a note in struct index_state, and make invalidate_*
-> check that note instead of config file. The middle ground has an
-> advantage over destroying UNTR: (probably) many operations will touch
-> index but do not add or remove entries.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/282771
 
-Or we can even teach read_index_from() to skip reading the extension
-without even parsing when the configuration tells it that the
-feature is force-disabled.  It can also add an empty one when the
-configuration tells it that the feature is force-enabled and there
-is no UNTR extension yet.
+On Tue, Sep 22, 2015 at 2:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Josef Kufner <josef@kufner.cz> writes:
+>
+>> Pass graph width to pretty formatting, so N in '%>|(N)' includes columns
+>> consumed by graph rendered when --graph option is in use.
+>>
+>> Example:
+>>   git log --all --graph --pretty='format: [%>|(20)%h] %ar%d'
+>>
+>>   All commit hashes should be aligned at 20th column from edge of the
+>>   terminal, not from the edge of the graph.
+>>
+>> Signed-off-by: Josef Kufner <josef@kufner.cz>
+>> ---
+>
+> [CC'ed Duy for ideas, as the "%>|(ALIGN)" thing is his invention]
+>
+> If you imagine an entry for a commit in the "git log" output as a
+> rectangle that has its commit log message, "--graph" draws a bunch
+> of lines on the left hand side and place these rectangles on the
+> right of these lines.  Space allocated to each of these rectangles
+> may and do begin at a different column.  For example, here is an
+> output from
+>
+>  $ git log -12 --graph --oneline
+>
+>  *   7d211c9 Merge branch 'jk/graph-format-padding' into pu
+>  |\
+>  | * ead86db pretty: pass graph width to pretty formatting
+>  * |   5be4874 Merge branch 'ld/p4-detached-head' into pu
+>  |\ \
+>  | * | 4086903 git-p4: work with a detached head
+>  | * | 6d2be82 git-p4: add failing test for submit from detached
+>  head
+>  * | |   7cec6a3 Merge branch 'ls/p4-lfs' into pu
+>  |\ \ \
+>  | * | | 5fac7db git-p4: add Git LFS backend for large file system
+>  | * | | 53b938f git-p4: add support for large file systems
+>  | * | | 760e31c git-p4: return an empty list if a list config has
+>  no values
+>  | * | | c1e88b8 git-p4: add gitConfigInt reader
+>  | * | | 465af7a git-p4: add optional type specifier to gitConfig
+>  reader
+>  * | | |   5197bd3 Merge branch 'nd/clone-linked-checkout' into pu
+>
+> I can understand why you would want to include the varying width of
+> the river on the left hand side in the "space allocated for the
+> commit", and under that mental model, the patch makes sense, but at
+> the same time, it is also a perfectly good specification to make
+> "%>|(20)%h" pad "%h" to 20 columns from the left edge of the space
+> given to the commit.
+>
+> I have a suspicion that 50% of the users would appreciate this
+> change, and the remainder of the users see this break their
+> expectation.  To avoid such a regression, we may be better off if we
+> introduced a new alignment operator that is different from '%>|(N)'
+> so that this new behaviour is available to those who want to use it,
+> without negatively affecting existing uses.
+
+I tend to agree with Josef. >|(N) is about columns relative to the
+left edge of the screen. You can already use >(N) to be relative to
+the left edge of the space given to the commit.
+-- 
+Duy
