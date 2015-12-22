@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/10] contrib/examples/git-commit.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:23 +0100
-Message-ID: <1450793432-9345-2-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 02/10] contrib/examples/git-fetch.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:24 +0100
+Message-ID: <1450793432-9345-3-git-send-email-gitter.spiros@gmail.com>
 References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:10:52 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:10:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNeM-0002Wb-Tc
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:10:51 +0100
+	id 1aBNeO-0002Wb-6a
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754068AbbLVOKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:10:43 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33823 "EHLO
-	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbbLVOKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:41 -0500
-Received: by mail-pf0-f173.google.com with SMTP id u7so60633592pfb.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:41 -0800 (PST)
+	id S1754161AbbLVOKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:10:49 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33049 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754059AbbLVOKm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:42 -0500
+Received: by mail-pa0-f45.google.com with SMTP id cy9so35653253pac.0
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wKCpdzUHcn8gkO39RTmH+9DW64gqjisw4TWlVlS8y4Q=;
-        b=GHj3S5gSvp6sPsAztPjdSuIMtAW3OOKZB9uLgYnpHo3rq9655ysgZ15gXNB6x+53WE
-         6ltbBF3fJ9CyVqydJFxUi4oL5XdfmwAw+qX8Wy1CTnaP0hYIf9KSwUiVtVXsvXcxFCj7
-         +4EKMBJIt/eEt7p4qpAo6tv4RxBo3sYOaWhoxrZVt2MGU9Ieihn0UNNZxzQYTAivvpIB
-         y80kY+wRSFAW09I9mqB00T/z/RScEZDM/04LAg/tTHDwjA8+On38XxteioR6PsDCcHtd
-         TuqmQbjRznX45knRluexBCYqlQaGNtsPTpaTzgTlQizWWLhmsZpb8hzeQFl6JpPlb1Dg
-         llCw==
-X-Received: by 10.98.8.73 with SMTP id c70mr35790217pfd.41.1450793441031;
+        bh=7/LjkZZiQVQEqmVa8yi0xXX7mjZERwr+9Kt40RI8eeY=;
+        b=Lgx6muWxJ7PnsUSprLgEz+Zc9V9Z0ZvmplH0HkfOD/LHL/F4nr7KNupk+ipITA7bS4
+         OItPLke2ZnL2v+iU4KoBjvSfPt2hxgS7szOK04Qc3o/R4bJjItoUiBDwWfIoMivoM0lX
+         3YWhZ32ErfEx2cYfJvenbcekLoeXoHFDAJOrXnPJLtMT5kU3ESKmBWSVfJ8bPHFssaSA
+         9c6Um+gT2rghx2x9Latotw6XfNOVOJwtA+wLlPzAfcio6Zk18j+Meq5TMZ1Pa7wU4l9g
+         066SbBFnddSFq6MLb8vVh32YVDBb1favXsvjBnPmpNKd9Z4LMFvKgasHQ+LYRWmYc3AF
+         ntoQ==
+X-Received: by 10.66.248.74 with SMTP id yk10mr35480848pac.17.1450793441933;
         Tue, 22 Dec 2015 06:10:41 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.40
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 06:10:40 -0800 (PST)
+        Tue, 22 Dec 2015 06:10:41 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282846>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,36 +66,28 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-commit.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ contrib/examples/git-fetch.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-commit.sh b/contrib/examples/git-commit.sh
-index 934505b..86c9cfa 100755
---- a/contrib/examples/git-commit.sh
-+++ b/contrib/examples/git-commit.sh
-@@ -574,10 +574,10 @@ then
- 	if test "$templatefile" != ""
+diff --git a/contrib/examples/git-fetch.sh b/contrib/examples/git-fetch.sh
+index 5540709..57d2e56 100755
+--- a/contrib/examples/git-fetch.sh
++++ b/contrib/examples/git-fetch.sh
+@@ -146,13 +146,13 @@ esac
+ reflist=$(get_remote_refs_for_fetch "$@")
+ if test "$tags"
+ then
+-	taglist=`IFS='	' &&
++	taglist=$(IFS='	' &&
+ 		  echo "$ls_remote_result" |
+ 		  git show-ref --exclude-existing=refs/tags/ |
+ 	          while read sha1 name
+ 		  do
+ 			echo ".${name}:${name}"
+-		  done` || exit
++		  done) || exit
+ 	if test "$#" -gt 1
  	then
- 		# Test whether this is just the unaltered template.
--		if cnt=`sed -e '/^#/d' < "$templatefile" |
-+		if cnt=$(sed -e '/^#/d' < "$templatefile" |
- 			git stripspace |
- 			diff "$GIT_DIR"/COMMIT_BAREMSG - |
--			wc -l` &&
-+			wc -l) &&
- 		   test 0 -lt $cnt
- 		then
- 			have_commitmsg=t
-@@ -630,8 +630,8 @@ then
- 	fi
- 	if test -z "$quiet"
- 	then
--		commit=`git diff-tree --always --shortstat --pretty="format:%h: %s"\
--		       --abbrev --summary --root HEAD --`
-+		commit=$(git diff-tree --always --shortstat --pretty="format:%h: %s"\
-+		       --abbrev --summary --root HEAD --)
- 		echo "Created${initial_commit:+ initial} commit $commit"
- 	fi
- fi
+ 		# remote URL plus explicit refspecs; we need to merge them.
 -- 
 2.3.3.GIT
