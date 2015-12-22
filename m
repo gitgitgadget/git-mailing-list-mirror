@@ -1,92 +1,90 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 00/10] use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:45 +0100
-Message-ID: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 07/10] t/t2025-worktree-add.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:52 +0100
+Message-ID: <1450796755-15848-8-git-send-email-gitter.spiros@gmail.com>
+References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:12 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOVu-00049p-Hh
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:11 +0100
+	id 1aBOW1-0004UU-HF
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754783AbbLVPGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:00 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34021 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbbLVPF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:05:59 -0500
-Received: by mail-pa0-f43.google.com with SMTP id uo6so13613096pac.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:05:59 -0800 (PST)
+	id S932620AbbLVPGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:07 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35311 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753207AbbLVPGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:05 -0500
+Received: by mail-pa0-f49.google.com with SMTP id jx14so90778894pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GAnItoz9R5Ae/UYQetJ4033rtfEGEyRyZSMZXst6UO0=;
-        b=JVqrPo1CfJYLV/SDnytPQVi6hyqvSEKCnx1KL6/0KusiNlAWdiZQuFvSmSTreZ2CHR
-         SJSqgDzVu8evEwwOoJ7K/PFkU6GQeld214cZ+SJ5lyBc0wfoKjwnE09r9Mi31y6Y/Q5b
-         FuUVJN7qNmUT//FXDt9ImKj+GGrLAeVrFNTssJ8PO+dyC/ggTZW4BaWOMRU9Cvy8qEcM
-         2XVGm+2cNed3i5rgTAObGmbtBGitgnoJMHYW37rtTIoam/VnDv5cDapSBTECPIVpoXno
-         rUc/1GoWwpQaFCRGE3ytR4ItVvQNPMTUst66l7UerjeXTWf5uOu9bp4P3fl6V5eOYbib
-         QpKw==
-X-Received: by 10.66.180.99 with SMTP id dn3mr36753963pac.85.1450796758978;
-        Tue, 22 Dec 2015 07:05:58 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=E2hertTmATqK0bpxaG8O6RMfBuVI/q3INhkbhpAj0kg=;
+        b=jZ82P/4KVnpYrEylDkM2nxXrweUMopN+HBTh4qgBIv+6KSfiOc19yYzqtzrZ6P+/o2
+         csXLEBjqAyshqp1MC7vFmnZz4n08mvRhNGN/a23hv5RqA9eSlVYYB2j4S60DJGhANW7S
+         5LLEMbK4PwuW+XSr5P5YAxCIBo13FXXAhk1IOQjri9fpDhunuFAcuTJTIQW4F3j0XfX3
+         ry9V7iFcoVxlVY5/dG0rEUN+FEulLzllFZN32SJpXwYrv/gt3TFdeRkHBGa0m8c8HUXG
+         X6cFp7YdITe0fDq48nWFgnf4zrlL/mtUckLJbEqZuAp/soDkxnUvlyfDxFmdvVDr99dm
+         alCg==
+X-Received: by 10.66.100.135 with SMTP id ey7mr36762055pab.108.1450796765341;
+        Tue, 22 Dec 2015 07:06:05 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.05.58
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:05:58 -0800 (PST)
+        Tue, 22 Dec 2015 07:06:04 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282859>
 
-This patch series continues the changes introduced with the merge
-6753d8a85d543253d95184ec2faad6dc197f248:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-    Merge branch 'ep/shell-command-substitution'
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-    Adjust shell scripts to use $(cmd) instead of `cmd`.
+The patch was generated by:
 
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
 
-This is the second series, the other will be sent separately.
+and then carefully proof-read.
 
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t2025-worktree-add.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Elia Pinto (10):
-  t/t1100-commit-tree-options.sh: use the $( ... ) construct for command
-    substitution
-  t/t1401-symbolic-ref.sh: use the $( ... ) construct for command
-    substitution
-  t/t1410-reflog.sh: use the $( ... ) construct for command substitution
-  t/t1511-rev-parse-caret.sh: use the $( ... ) construct for command
-    substitution
-  t/t1512-rev-parse-disambiguation.sh: use the $( ... ) construct for
-    command substitution
-  t/t1700-split-index.sh: use the $( ... ) construct for command
-    substitution
-  t/t2025-worktree-add.sh: use the $( ... ) construct for command
-    substitution
-  t/t2102-update-index-symlinks.sh: use the $( ... ) construct for
-    command substitution
-  t/t3030-merge-recursive.sh: use the $( ... ) construct for command
-    substitution
-  t/t3100-ls-tree-restrict.sh: use the $( ... ) construct for command
-    substitution
-
- t/t1100-commit-tree-options.sh      |  4 ++--
- t/t1401-symbolic-ref.sh             |  2 +-
- t/t1410-reflog.sh                   | 24 ++++++++++++------------
- t/t1511-rev-parse-caret.sh          |  4 ++--
- t/t1512-rev-parse-disambiguation.sh |  8 ++++----
- t/t1700-split-index.sh              |  2 +-
- t/t2025-worktree-add.sh             |  4 ++--
- t/t2102-update-index-symlinks.sh    |  2 +-
- t/t3030-merge-recursive.sh          |  2 +-
- t/t3100-ls-tree-restrict.sh         |  2 +-
- 10 files changed, 27 insertions(+), 27 deletions(-)
-
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 3694174..0a804da 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -123,10 +123,10 @@ test_expect_success 'checkout from a bare repo without "add"' '
+ test_expect_success 'checkout with grafts' '
+ 	test_when_finished rm .git/info/grafts &&
+ 	test_commit abc &&
+-	SHA1=`git rev-parse HEAD` &&
++	SHA1=$(git rev-parse HEAD) &&
+ 	test_commit def &&
+ 	test_commit xyz &&
+-	echo "`git rev-parse HEAD` $SHA1" >.git/info/grafts &&
++	echo "$(git rev-parse HEAD) $SHA1" >.git/info/grafts &&
+ 	cat >expected <<-\EOF &&
+ 	xyz
+ 	abc
 -- 
 2.3.3.GIT
