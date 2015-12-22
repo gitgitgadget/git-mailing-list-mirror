@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/10] t5300-pack-object.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:51 +0100
-Message-ID: <1450798073-22811-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] t3101-ls-tree-dirname.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:44 +0100
+Message-ID: <1450798073-22811-2-git-send-email-gitter.spiros@gmail.com>
 References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:46 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOrk-0002oI-HS
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:44 +0100
+	id 1aBOrq-000305-45
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755215AbbLVP2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:19 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34372 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755210AbbLVP2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:28:06 -0500
-Received: by mail-pf0-f172.google.com with SMTP id u7so61509676pfb.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:06 -0800 (PST)
+	id S1755194AbbLVP2C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:02 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35382 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755180AbbLVP2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:00 -0500
+Received: by mail-pa0-f47.google.com with SMTP id jx14so91027502pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:27:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q59FgEbRSaoebLCQNftFYel4M7ekKt4Q0jzwsmmLRbU=;
-        b=igh0+JxqBr3NWBY7I2rV/NyKYPt+7AyUoVsNosYgYmkQEpJWRtQLUO5Io4z+fGo/hd
-         W3+izXjWQBhyHROjtYjF2D2nsx9Rwi29VNZjNuU8LVdDFZDu9V354yHij/yiZHTalHzT
-         weqtf8OHNws3pRUncgmGYyJijrjBE4UZ7AVkM62acJGWAnOdvCl5sXkPQbyD99EiqOjA
-         CDXpeNHfI9eHx5fy1m0DAsNMn1XhLz3/Org0y6ASx2pqgLGX2HT4fMhkzkLcxqrgTW7W
-         ernngEF7KUPX16jWgDD7wOHazWttqCasU8Tsq1jB8AjusStgidl236Ndq3gs0zk/mxV8
-         psrw==
-X-Received: by 10.98.75.197 with SMTP id d66mr36477362pfj.137.1450798085855;
-        Tue, 22 Dec 2015 07:28:05 -0800 (PST)
+        bh=TGeqhYwiOIlhRGEHWEABggmGn6Y1AupVO6zF+tGR8v8=;
+        b=JQLS7MCXFStkAmOra9+/947j3gXFchlMjeKLN+pC/GmH/YQBtFjLWRBga9b0g8sUFA
+         sduVDyZZedWNt+dr3eXSmZKRsLRcrTRXEC57afozO2gn17YalmQEGVE7Fwew3+lHvPY+
+         xNTkr3iHufQz9UpAte/EpNskffRyUowiR5CJLFhj4haiaGPigSDh337V+MQ3ah9wUiEO
+         SKIWGwmxmm0fQUZ3ByRA7JtnbWCtlH7qvCwiTjxRiSp+ccC8yvwlnYN4oq/WC9YOLxUc
+         xxm9YKLqU/dWw96zTApX6/o4fLYJ4rs7GHRD5mj0Xu0mpuBA6wzCoTi01zuUvcwqw15b
+         SB0Q==
+X-Received: by 10.66.140.39 with SMTP id rd7mr36326009pab.86.1450798079700;
+        Tue, 22 Dec 2015 07:27:59 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.05
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.27.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:28:05 -0800 (PST)
+        Tue, 22 Dec 2015 07:27:59 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282876>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,79 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5300-pack-object.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t3101-ls-tree-dirname.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 20c1961..fc2be63 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -8,7 +8,7 @@ test_description='git pack-object
+diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
+index 026f9f8..425d858 100755
+--- a/t/t3101-ls-tree-dirname.sh
++++ b/t/t3101-ls-tree-dirname.sh
+@@ -35,7 +35,7 @@ test_expect_success 'setup' '
+ 	echo 222 >path3/2.txt &&
+ 	find *.txt path* \( -type f -o -type l \) -print |
+ 	xargs git update-index --add &&
+-	tree=`git write-tree` &&
++	tree=$(git write-tree) &&
+ 	echo $tree
  '
- . ./test-lib.sh
  
--TRASH=`pwd`
-+TRASH=$(pwd)
- 
- test_expect_success \
-     'setup' \
-@@ -20,8 +20,8 @@ test_expect_success \
-      test-genrandom "seed b" 2097152 > b_big &&
-      git update-index --add a a_big b b_big c &&
-      cat c >d && echo foo >>d && git update-index --add d &&
--     tree=`git write-tree` &&
--     commit=`git commit-tree $tree </dev/null` && {
-+     tree=$(git write-tree) &&
-+     commit=$(git commit-tree $tree </dev/null) && {
- 	 echo $tree &&
- 	 echo $commit &&
- 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-@@ -29,7 +29,7 @@ test_expect_success \
- 	 git diff-tree --root -p $commit &&
- 	 while read object
- 	 do
--	    t=`git cat-file -t $object` &&
-+	    t=$(git cat-file -t $object) &&
- 	    git cat-file $t $object || return 1
- 	 done <obj-list
-      } >expect'
-@@ -147,7 +147,7 @@ test_expect_success \
- 	 git diff-tree --root -p $commit &&
- 	 while read object
- 	 do
--	    t=`git cat-file -t $object` &&
-+	    t=$(git cat-file -t $object) &&
- 	    git cat-file $t $object || return 1
- 	 done <obj-list
-     } >current &&
-@@ -162,7 +162,7 @@ test_expect_success \
- 	 git diff-tree --root -p $commit &&
- 	 while read object
- 	 do
--	    t=`git cat-file -t $object` &&
-+	    t=$(git cat-file -t $object) &&
- 	    git cat-file $t $object || return 1
- 	 done <obj-list
-     } >current &&
-@@ -177,7 +177,7 @@ test_expect_success \
- 	 git diff-tree --root -p $commit &&
- 	 while read object
- 	 do
--	    t=`git cat-file -t $object` &&
-+	    t=$(git cat-file -t $object) &&
- 	    git cat-file $t $object || return 1
- 	 done <obj-list
-     } >current &&
-@@ -252,8 +252,8 @@ test_expect_success \
- 
- test_expect_success \
-     'verify-pack catches a corrupted sum of the index file itself' \
--    'l=`wc -c <test-3.idx` &&
--     l=`expr $l - 20` &&
-+    'l=$(wc -c <test-3.idx) &&
-+     l=$(expr $l - 20) &&
-      cat test-1-${packname_1}.pack >test-3.pack &&
-      printf "%20s" "" | dd of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
-      if git verify-pack test-3.pack
 -- 
 2.3.3.GIT
