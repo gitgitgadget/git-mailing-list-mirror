@@ -1,41 +1,41 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] git-gui/po/glossary/txt-to-pot.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:29 +0100
-Message-ID: <1450793432-9345-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/10] contrib/thunderbird-patch-inline/appp.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:28 +0100
+Message-ID: <1450793432-9345-7-git-send-email-gitter.spiros@gmail.com>
 References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:14 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNej-000389-Ub
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:14 +0100
+	id 1aBNeo-0003E2-CE
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754297AbbLVOLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:11:06 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34535 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbbLVOKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:46 -0500
-Received: by mail-pa0-f48.google.com with SMTP id uo6so13016368pac.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:46 -0800 (PST)
+	id S1754344AbbLVOLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:11:14 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33073 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092AbbLVOKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:45 -0500
+Received: by mail-pa0-f53.google.com with SMTP id cy9so35653938pac.0
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F42Q1r60aVCU+OQb8EGTtgWvZ4baHBO1YiUq1HiNcXM=;
-        b=rV03/waTKuSZQKEVIfThCod0tV3JKOKjA+aCCABF7UVAFFga/wxmqbrJXUvJDtaLVG
-         8oKl6vu9wJ0mFnbAa2kTJJTaVNpMBe2Z3PXC3pyM4Vg3mQmCJN/StiHxcKpPHQC3qYNf
-         VMVIOsSk53WlrGdRGdcFICplW6xuXAyWKXAEGMMEGJr2ec4hFdqZAa8jdw57zbwsyE4Y
-         Ue1q2guSylxaXD9+5n8llqQ0+vcD3eZ3CjzTr9Drdfr9Yok8OfTGFgxUB8uEns9AFvDZ
-         lr0Aw2R3sM6VRWOexs4ycxXU1IJM+xMJStws7MNZOWCfbU/dlCoR58+gTSxO/E2FJsyr
-         aeDQ==
-X-Received: by 10.67.7.101 with SMTP id db5mr35570455pad.53.1450793446419;
-        Tue, 22 Dec 2015 06:10:46 -0800 (PST)
+        bh=jIq39n6TZBWFkg+DvDo80i512qyGbSxGiSsyAxIna7k=;
+        b=iot8l4N4kVg+x1RrSOoDNzRU2eviP+wzj3BwPv7Oq6tOwbX3LdrPMKJr1iUuyiLP7p
+         OX3AYwq5nHhoKXIl7QETeCQQR549FOcLyDOyrAovQ1kzK9L4vv14bvbhbRPWceM1vMR+
+         3cXoS4pOqKeGVoQ7uElB13poRKNDs4cFgFXZwcPXXeEejoLW38MZ3R2IfgAIe6DYO0wY
+         G51hSbit5BY5XyJEwDrmzYxYEigrGLPjTMxGAL0quRJ5AmvCPur5zhipmWFJDsJdOBQX
+         iU4OuqV2RiuOIcsj/e5Vu3qKgZFQVVgeKTXZH+VbehlNKjaAZDiqeBAR3Su6XcfZh3Fr
+         FZhQ==
+X-Received: by 10.66.100.228 with SMTP id fb4mr34967197pab.84.1450793445562;
+        Tue, 22 Dec 2015 06:10:45 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.45
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 22 Dec 2015 06:10:45 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282854>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,30 +66,23 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-gui/po/glossary/txt-to-pot.sh | 4 ++--
+ contrib/thunderbird-patch-inline/appp.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/git-gui/po/glossary/txt-to-pot.sh b/git-gui/po/glossary/txt-to-pot.sh
-index 49bf7c5..8249915 100755
---- a/git-gui/po/glossary/txt-to-pot.sh
-+++ b/git-gui/po/glossary/txt-to-pot.sh
-@@ -11,7 +11,7 @@
- if [ $# -eq 0 ]
- then
- 	cat <<!
--Usage: `basename $0` git-gui-glossary.txt > git-gui-glossary.pot
-+Usage: $(basename $0) git-gui-glossary.txt > git-gui-glossary.pot
- !
- 	exit 1;
- fi
-@@ -33,7 +33,7 @@ cat <<!
- msgid ""
- msgstr ""
- "Project-Id-Version: PACKAGE VERSION\n"
--"POT-Creation-Date: `date +'%Y-%m-%d %H:%M%z'`\n"
-+"POT-Creation-Date: $(date +'%Y-%m-%d %H:%M%z')\n"
- "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
- "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
- "Language-Team: LANGUAGE <LL@li.org>\n"
+diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
+index 8dc73ec..1053872 100755
+--- a/contrib/thunderbird-patch-inline/appp.sh
++++ b/contrib/thunderbird-patch-inline/appp.sh
+@@ -31,8 +31,8 @@ BODY=$(sed -e "1,/${SEP}/d" $1)
+ CMT_MSG=$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
+ DIFF=$(sed -e '1,/^---$/d' "${PATCH}")
+ 
+-CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+-	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
++CCS=$(echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
++	-e 's/^Signed-off-by: \(.*\)/\1,/gp')
+ 
+ echo "$SUBJECT" > $1
+ echo "Cc: $CCS" >> $1
 -- 
 2.3.3.GIT
