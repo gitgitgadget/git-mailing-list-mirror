@@ -1,95 +1,122 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 7/8] config: add core.untrackedCache
-Date: Tue, 22 Dec 2015 15:27:34 +0700
-Message-ID: <CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
-References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
- <xmqq6100ke7v.fsf@gitster.mtv.corp.google.com> <xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
- <CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
- <xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com> <CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
- <xmqqy4cvco25.fsf@gitster.mtv.corp.google.com> <20151216024605.GA618@sigill.intra.peff.net>
- <xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com> <xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
- <20151217074443.GA4830@sigill.intra.peff.net> <CACsJy8BwARfGmGBXEdWHnDxxXcubZDzjCg7Zy6qD0qzHZWGoFw@mail.gmail.com>
- <xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1 2/2] git-p4: suppress non test relevant output
+Date: Tue, 22 Dec 2015 09:47:35 +0100
+Message-ID: <0185CA76-DDEE-4E7F-8EFF-65E80720E0AF@gmail.com>
+References: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com> <1450629869-49522-3-git-send-email-larsxschneider@gmail.com> <xmqqd1tzfsfm.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, luke@diamand.org, sunshine@sunshineco.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 09:28:14 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 09:47:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBIIo-0005k1-8P
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 09:28:14 +0100
+	id 1aBIbe-0001dS-Ow
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 09:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbbLVI2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 03:28:07 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:35134 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296AbbLVI2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 03:28:06 -0500
-Received: by mail-lb0-f179.google.com with SMTP id bc4so27244521lbc.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 00:28:05 -0800 (PST)
+	id S1753382AbbLVIri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 03:47:38 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34937 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbbLVIrh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 03:47:37 -0500
+Received: by mail-wm0-f49.google.com with SMTP id l126so100696498wml.0
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 00:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0Of7Uoj9XJ1f6BZuMXF4GQJYuucOcwRsdTeIleHxnak=;
-        b=0yz0YMPVHMd5QjrACxCKADpfUtswCqfBhm1gZezu10UL0qlIcPuLI0aa66DZ5vtCOY
-         NDJAaHtTkh7lh9IAcytuKfz6EtUejqJwyvSfRqEWJmn6WjGrIcNG+aiuV4eRHsmW8zmK
-         754MrTlcWbx0CzoqR86osl8AKaFKdAUCwmBLE+7w+nnCKpGAC1FB7rhq/9tsZdfU3WUB
-         0ybIOzUSbF0OMSBlbuE2jduz4wVb0NfsEZZ9+G6DEygTjRhyOQZhfGEpQOM7NMfb1VDN
-         hgsg5tpXbw+FC2s7upv/pLFUB3Iw1SGqMUbBBjwZeNK/ZwjyFBDsA8LOY6ALTtSyuFdc
-         6faQ==
-X-Received: by 10.112.134.169 with SMTP id pl9mr7632354lbb.145.1450772883891;
- Tue, 22 Dec 2015 00:28:03 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Tue, 22 Dec 2015 00:27:34 -0800 (PST)
-In-Reply-To: <xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=l9lc9lTbzGcXFAsGX88N5S9qRjT7vd9ti1aip2fBUhA=;
+        b=AlFobsWe/Wr+WrSg8Z8VEjCILr9QlElmsPYZAiAzaYx+IoBt9mfjI/HoneIjN+VRqH
+         BteSpFq0+gA6dprg0RUCHWIEj+obn1pSCM4YndQailmJ5txPmkRCDmHdq3NKV3mJjndE
+         Ae/i1AqiuFwqR+zoI/ToMA2/oLcikwnhdKf0O+f6sbLpkQYfig3xU/lUpAGZ2Ln9opfr
+         /AasD60xpFozA0hlN8pkFy2b/wzY1Iirs+NbyzJPTYqQONubiN8QskO6Yvo4/o4N2yvK
+         NDVLFsmwOONhph4vLNBeh1mB+vlp3us6HiTCZkq6IfoVkDonH24a2l4gO5UVakC2UGAI
+         NEsg==
+X-Received: by 10.194.19.100 with SMTP id d4mr26466763wje.18.1450774056209;
+        Tue, 22 Dec 2015 00:47:36 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB452E.dip0.t-ipconnect.de. [93.219.69.46])
+        by smtp.gmail.com with ESMTPSA id b82sm23904457wmf.9.2015.12.22.00.47.34
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Dec 2015 00:47:35 -0800 (PST)
+In-Reply-To: <xmqqd1tzfsfm.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282836>
 
-On Tue, Dec 22, 2015 at 1:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Thu, Dec 17, 2015 at 2:44 PM, Jeff King <peff@peff.net> wrote:
->>> I think we may actually be thinking of the same thing. Naively, I would
->>> expect:
->>>
->>> ..
->>>   - if there is cache data in the index but that config flag is not set,
->>>     presumably we would not update it (we could even explicitly drop it,
->>>     but my understanding is that is not necessary for correctness, but
->>>     only as a possible optimization).
->>
->> No, if somebody adds or removes something from the index, we either
->> update or drop it, or it's stale. There's the invalidate_untracked()
->> or something in dir.c that we can hook in, check config var and do
->> that. And because config is cached recently, it should be a cheap
->> operation.
->
-> Checking the config may be cheap, but it bothers me a lot that we
-> have to call that "invalidate" thing every time we go into the
-> codepath to deal with the index, from code cleanliness point of
-> view.
 
-In that case we can just check config once in read_index_from and
-destroy UNTR extension. Or the middle ground, we check config once in
-that place, make a note in struct index_state, and make invalidate_*
-check that note instead of config file. The middle ground has an
-advantage over destroying UNTR: (probably) many operations will touch
-index but do not add or remove entries. Though I may be wrong,
-replacing an entry may be implemented as delete then add, I haven't
-checked the code.
--- 
-Duy
+On 21 Dec 2015, at 21:38, Junio C Hamano <gitster@pobox.com> wrote:
+
+> larsxschneider@gmail.com writes:
+> 
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> If tests are executed in verbose mode then the retry logic clutters the
+>> test output. Suppress that clutter.
+>> 
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>> t/lib-git-p4.sh | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+>> index 30bf7ae..03f29c1 100644
+>> --- a/t/lib-git-p4.sh
+>> +++ b/t/lib-git-p4.sh
+>> @@ -174,7 +174,7 @@ retry_until_fail() {
+>> 	until ! "$@" 2>/dev/null || test $(time_in_seconds) -gt $timeout
+>> 	do
+>> 		sleep 1
+>> -	done
+>> +	done >/dev/null 2>&1
+> 
+> Eh, what does this squelch?  The sleep in the body of the loop is
+> silent, "test A -gt B" on the loop condition would be silent too, so
+> you are squelching the invocation of "$@" whose standard error
+> stream is already sent to 2>/dev/null?
+> 
+> If so, why not do it there instead?  You seem to run only "kill" to
+> send some signal to a process using this helper function, and it
+> would be silent on its standard output stream (even though it may
+> say "no such process" etc. on its standard error), so it is not
+> clear to me what you are doing with this change here...
+
+If I run git-p4 tests in verbose mode (e.g. "./t9823-git-p4-mock-lfs.sh -v") without this patch then the last lines of the output look like this:
+
+>>> Output Start >>>
+expecting success:
+	kill_p4d
+
+./lib-git-p4.sh: line 172: 26289 Killed: 9               while true; do
+    if test $(time_in_seconds) -gt $timeout; then
+        kill -9 $pid; exit 1;
+    fi; sleep 1;
+done
+ok 8 - kill p4d
+
+# passed all 8 test(s)
+1..8 
+<<< Output end <<<
+
+However, I want them to look like this:
+
+>>> Output Start >>>
+expecting success:
+	kill_p4d
+
+ok 8 - kill p4d
+
+# passed all 8 test(s)
+1..8
+<<< Output end <<<
+
+This is achieved with the patch. I am no shell expert ... is there a nicer way to achieve the same?
+
+Thanks,
+Lars
