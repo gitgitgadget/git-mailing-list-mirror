@@ -1,66 +1,63 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 68 new messages
-Date: Tue, 22 Dec 2015 21:15:33 +0100
-Message-ID: <CAN0XMOKsyTKevF0kB3zK-JB=nXMWhgoHdeJk66L=BeEYQOmzxA@mail.gmail.com>
-References: <1450805964-7734-1-git-send-email-ralf.thielow@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 07/10] t5100-mailinfo.sh: use the $( ... ) construct for
+ command substitution
+Date: Tue, 22 Dec 2015 21:34:42 +0100
+Message-ID: <5679B3E2.7090406@kdbg.org>
+References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
+ <1450798073-22811-8-git-send-email-gitter.spiros@gmail.com>
+ <567997E4.1000700@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	Phillip Sz <phillip.szelat@gmail.com>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	Magnus G <magnus.goerlitz@googlemail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 22 21:15:42 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 22 21:34:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBTLP-0002ND-8n
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 21:15:39 +0100
+	id 1aBTdy-0006tU-Mq
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 21:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932729AbbLVUPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 15:15:35 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36130 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752970AbbLVUPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 15:15:34 -0500
-Received: by mail-lf0-f68.google.com with SMTP id p203so13470494lfa.3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 12:15:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qfznjhKraGNm8imZLg2yDsic4RWxa1U5D6dBWyHFMCU=;
-        b=QujgBiQzwaqUYK9YPnChjlYoKJ9iRDh3dCd2uHR2DTmTquAgOwd+e8LSaV6FSdcSlG
-         kNJBfg4nbIn9UgZz6YSNqzqFU6+H6byzPf4i1T0Q6Y9ngJAlyUXRyx35Xh3ZT97xQ3gg
-         AB253qCbhZrA1lrvrB9gp+logQ8OxwWl3spbxURD9rQlfdc5ALPr3rbKgxjZIVM6kZGW
-         MAknxkvrKWu3bPqR93wDrCr3zSppBf9Qd0oPXWT8WyFUezj9z2mH7swAd5AWYwKFv7rm
-         0oXzUS9l9NbShsNOFBuE5LeObbN04WV/70RPyCWD6TgmzPO1O/8GTdJCri5IZfKGvoby
-         YgBg==
-X-Received: by 10.25.37.198 with SMTP id l189mr9227231lfl.111.1450815333063;
- Tue, 22 Dec 2015 12:15:33 -0800 (PST)
-Received: by 10.25.216.212 with HTTP; Tue, 22 Dec 2015 12:15:33 -0800 (PST)
-In-Reply-To: <1450805964-7734-1-git-send-email-ralf.thielow@gmail.com>
+	id S932968AbbLVUep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 15:34:45 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:2617 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932945AbbLVUep (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 15:34:45 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pQ8Xz0wG0z5tlC;
+	Tue, 22 Dec 2015 21:34:43 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 9D7D05333;
+	Tue, 22 Dec 2015 21:34:42 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <567997E4.1000700@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282905>
 
-Am 22. Dezember 2015 um 18:39 schrieb Ralf Thielow <ralf.thielow@gmail.com>:
->  #: builtin/tag.c:25
-> -#, fuzzy
->  msgid ""
->  "git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]\n"
->  "\t\t[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]"
->  msgstr ""
->  "git tag -l [-n[<Nummer>]] [--contains <Commit>] [--points-at <Objekt>]\n"
-> -"\t\t[<Muster>...]"
-> +"\t\t[--format=<Muster>] [--[no-]merged [<Commit>]] [Muster>...]"
+Am 22.12.2015 um 19:35 schrieb Johannes Sixt:
+> Am 22.12.2015 um 16:27 schrieb Elia Pinto:
+>> -for mail in `echo 00*`
+>> +for mail in $(echo 00*)
 >
+>> -for mail in `echo rfc2047/00*`
+>> +for mail in $(echo rfc2047/00*)
+>
+> True, these are equvalence transformations. But a better way to get rid
+> of the back-quotes is to write these lines as
+>
+> for mail in echo 00*
+> for mail in echo rfc2047/00*
 
-Should be "<Muster>".  Will be fixed in v2.
+Ahem... both of these lines without the 'echo', of course!
+
+>
+> No?
+>
+> -- Hannes
+>
