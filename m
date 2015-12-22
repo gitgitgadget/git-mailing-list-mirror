@@ -1,118 +1,71 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH 2/2] Add a section to the users manual documenting shallow clones.
-Date: Mon, 21 Dec 2015 19:09:39 -0700
-Message-ID: <1450750180-1811-2-git-send-email-ischis2@cox.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] Define the term shallow clone.
+Date: Mon, 21 Dec 2015 22:12:03 -0500
+Message-ID: <CAPig+cR5_ybQ_gODu6iusXxib2ZEOfjYJ2RCe3qwh6LCF5Yw3A@mail.gmail.com>
 References: <1450750180-1811-1-git-send-email-ischis2@cox.net>
-Cc: "Stephen P. Smith" <ischis2@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 03:10:12 2015
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: "Stephen P. Smith" <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Tue Dec 22 04:12:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBCOx-0001dJ-1L
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 03:10:11 +0100
+	id 1aBDMw-0007tK-8W
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 04:12:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039AbbLVCKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 21:10:06 -0500
-Received: from fed1rmfepo102.cox.net ([68.230.241.144]:55768 "EHLO
-	fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982AbbLVCKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 21:10:03 -0500
-Received: from fed1rmimpo210 ([68.230.241.161]) by fed1rmfepo102.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151222021002.JUDW7752.fed1rmfepo102.cox.net@fed1rmimpo210>
-          for <git@vger.kernel.org>; Mon, 21 Dec 2015 21:10:02 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo210 with cox
-	id wSA21r0052tqoqC01SA2XN; Mon, 21 Dec 2015 21:10:02 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020203.5678B0FA.00A0,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=Hq2o7TvS c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=VwQbUJbxAAAA:8 a=_4diPbmaOKkjqgUBgfkA:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 156C813F6E8;
-	Mon, 21 Dec 2015 19:10:46 -0700 (MST)
-X-Mailer: git-send-email 2.6.3.368.gf34be46
+	id S1752324AbbLVDMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Dec 2015 22:12:06 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:33554 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275AbbLVDMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Dec 2015 22:12:05 -0500
+Received: by mail-vk0-f47.google.com with SMTP id a188so112405879vkc.0
+        for <git@vger.kernel.org>; Mon, 21 Dec 2015 19:12:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=tNSoyowNYiX6Ui0W9Z+twXbuWltg5TV32heDnYTZL38=;
+        b=fy/TcJMPtqfByHz/5qubHaziXUUnFqfI1O9uNWuqfXpgASSirPVCuu+gDA6WlNm/8R
+         KXNdKzuS2TzMz1cIpw7mQDl9HhAgf/hC+7m9LtOmyAfBBL3buAKWs4krmOqdF4eQ/fUr
+         RrFHRKZz5TBwAilQj4mkgQ2WHodj/QvtCunjgGHdSuI5yFmcAi0jMgNIOkIso5ggObFB
+         lp7TSTydOf58/PxlDLiK8vtQIPOFvVNDUD6CW4Ikfhxa0vC1M8aZne9qVo6MP61UGMKi
+         xptrDTKWeh3fGRTHMsXgfoJRZviSAG6qkzA6ywVVRGYssO1FENDPOInyaFHj42BL212z
+         UQZQ==
+X-Received: by 10.31.47.130 with SMTP id v124mr14353540vkv.117.1450753923471;
+ Mon, 21 Dec 2015 19:12:03 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 21 Dec 2015 19:12:03 -0800 (PST)
 In-Reply-To: <1450750180-1811-1-git-send-email-ischis2@cox.net>
+X-Google-Sender-Auth: hd0qU62S6BJUy3CWPif3Q9JYd-U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282830>
 
-The todo section previously noted that documentation of shallow clones
-was not in the manual and had references to the 1.5.0 release notes.
+On Mon, Dec 21, 2015 at 9:09 PM, Stephen P. Smith <ischis2@cox.net> wrote:
+> There are several places in the documentation that
+> the term shallow clone is used. Defining the term
+> enables its use elsewhere with a known definition.
+>
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> @@ -531,6 +531,10 @@ The most notable example is `HEAD`.
+>         "Secure Hash Algorithm 1"; a cryptographic hash function.
+>         In the context of Git used as a synonym for <<def_object_name,object name>>.
+>
+> +[[def_shallow_clone]]shallow clone::
+> +       A clone of a <<def_repository,repository>> which creates a
+> +    <<def_shallow_repository,shallow_repository>>.
 
-The patch adds a section to the manual and removes the entry in the
-ToDo list.
+Botched indentation on second line of definition. Use tab rather than spaces.
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
-
-Notes:
-    I considered adding a paragraph to each of several sections noting the
-    issues with regard to clone, fetch, merge and push.
-    
-    After looking for other such notes and finding none in the
-    manual I chose to not add the paragraphs.
-
- Documentation/user-manual.txt | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 1c790ac..15825e0 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -39,7 +39,6 @@ without any explanation.
- Finally, see <<todo>> for ways that you can help make this manual more
- complete.
- 
--
- [[repositories-and-branches]]
- Repositories and Branches
- =========================
-@@ -72,6 +71,25 @@ called the <<def_working_tree,working tree>>, together with a special
- top-level directory named `.git`, which contains all the information
- about the history of the project.
- 
-+[[how-to-get-a-git-repository-with-minimal-history]]
-+How to get a Git repository with minimal history
-+------------------------------------------------
-+
-+Sometimes there is a need to view recent history or send email patches
-+for a project with lots of history. In such cases a <<def_shallow_clone,shallow
-+clone>> can be used to create a <<def_shallow_repository,shallow
-+repository>>.
-+
-+A <<def_shallow_clone,shallow clone>> is created by specifying the
-+depth when creating a clone of a repository using the
-+linkgit:git-clone[1] --depth switch.  The depth can later be changed
-+by using the linkgit:git-fetch[1] --depth switch.
-+
-+------------------------------------------------
-+	# the Linux kernel:
-+$ git clone --depth=20 git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-+------------------------------------------------
-+
- [[how-to-check-out]]
- How to check out a different version of a project
- -------------------------------------------------
-@@ -4645,9 +4663,6 @@ standard end-of-chapter section?
- 
- Include cross-references to the glossary, where appropriate.
- 
--Document shallow clones?  See draft 1.5.0 release notes for some
--documentation.
--
- Add a section on working with other version control systems, including
- CVS, Subversion, and just imports of series of release tarballs.
- 
--- 
-2.6.3.368.gf34be46
+>  [[def_shallow_repository]]shallow repository::
+>         A shallow <<def_repository,repository>> has an incomplete
+>         history some of whose <<def_commit,commits>> have <<def_parent,parents>> cauterized away (in other
+> --
+> 2.6.3.368.gf34be46
