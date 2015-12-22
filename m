@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/10] t/lib-httpd.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:30 +0100
-Message-ID: <1450793432-9345-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 07/10] git-gui/po/glossary/txt-to-pot.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:29 +0100
+Message-ID: <1450793432-9345-8-git-send-email-gitter.spiros@gmail.com>
 References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:08 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNed-0002yj-Gn
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:07 +0100
+	id 1aBNej-000389-Ub
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754272AbbLVOLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:11:02 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:34974 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754080AbbLVOKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:47 -0500
-Received: by mail-pa0-f45.google.com with SMTP id jx14so90159886pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:47 -0800 (PST)
+	id S1754297AbbLVOLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:11:06 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34535 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751599AbbLVOKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:46 -0500
+Received: by mail-pa0-f48.google.com with SMTP id uo6so13016368pac.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=168ayzhi6wmPRy1ewXLX5/VdNC+KlX7ObabSe1C3cxY=;
-        b=MV5VFaQMxZYCXh95mVAYc2+Ai5ymQJGNGadFoVWnnQj9bUzEjD9BrSxgGMS1GcoXkB
-         zcdC9njp72x0hcfJDjiM//S2/Gw2yqRFd/PNpWqBnnwRIyvLfaplIcwMwwg6fqtGg7nG
-         UpF6L+YHsiLimOK4FTbkCgXPhTNRArQjfsttnkFi6deHn8He2JDCKQzCclAUPnObMpqG
-         H5OHsemSAkjTg841If5zzkMqEma+0BS4nXd4dt2x1MSI5qvUUiiu1FR3KnxmVYv1DSox
-         7/ZXC2+l8uI6uLSLpOV5Ao7yk0CFRV7diIMyJQCcVKB2R3X5j2Arvd3MvYcfTDSCYNfw
-         agZg==
-X-Received: by 10.67.15.73 with SMTP id fm9mr2235373pad.130.1450793447267;
-        Tue, 22 Dec 2015 06:10:47 -0800 (PST)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=F42Q1r60aVCU+OQb8EGTtgWvZ4baHBO1YiUq1HiNcXM=;
+        b=rV03/waTKuSZQKEVIfThCod0tV3JKOKjA+aCCABF7UVAFFga/wxmqbrJXUvJDtaLVG
+         8oKl6vu9wJ0mFnbAa2kTJJTaVNpMBe2Z3PXC3pyM4Vg3mQmCJN/StiHxcKpPHQC3qYNf
+         VMVIOsSk53WlrGdRGdcFICplW6xuXAyWKXAEGMMEGJr2ec4hFdqZAa8jdw57zbwsyE4Y
+         Ue1q2guSylxaXD9+5n8llqQ0+vcD3eZ3CjzTr9Drdfr9Yok8OfTGFgxUB8uEns9AFvDZ
+         lr0Aw2R3sM6VRWOexs4ycxXU1IJM+xMJStws7MNZOWCfbU/dlCoR58+gTSxO/E2FJsyr
+         aeDQ==
+X-Received: by 10.67.7.101 with SMTP id db5mr35570455pad.53.1450793446419;
         Tue, 22 Dec 2015 06:10:46 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Dec 2015 06:10:45 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282853>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,23 +66,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/lib-httpd.sh | 4 ++--
+ git-gui/po/glossary/txt-to-pot.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index e971446..f9f3e5f 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -98,8 +98,8 @@ then
- 	test_skip_or_die $GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
- fi
- 
--HTTPD_VERSION=`$LIB_HTTPD_PATH -v | \
--	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q'`
-+HTTPD_VERSION=$($LIB_HTTPD_PATH -v | \
-+	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q')
- 
- if test -n "$HTTPD_VERSION"
+diff --git a/git-gui/po/glossary/txt-to-pot.sh b/git-gui/po/glossary/txt-to-pot.sh
+index 49bf7c5..8249915 100755
+--- a/git-gui/po/glossary/txt-to-pot.sh
++++ b/git-gui/po/glossary/txt-to-pot.sh
+@@ -11,7 +11,7 @@
+ if [ $# -eq 0 ]
  then
+ 	cat <<!
+-Usage: `basename $0` git-gui-glossary.txt > git-gui-glossary.pot
++Usage: $(basename $0) git-gui-glossary.txt > git-gui-glossary.pot
+ !
+ 	exit 1;
+ fi
+@@ -33,7 +33,7 @@ cat <<!
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+-"POT-Creation-Date: `date +'%Y-%m-%d %H:%M%z'`\n"
++"POT-Creation-Date: $(date +'%Y-%m-%d %H:%M%z')\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
 -- 
 2.3.3.GIT
