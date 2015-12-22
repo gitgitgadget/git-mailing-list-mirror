@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 10/10] t/t3100-ls-tree-restrict.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:55 +0100
-Message-ID: <1450796755-15848-11-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 03/10] t/t1410-reflog.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:48 +0100
+Message-ID: <1450796755-15848-4-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:39 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOWB-0004fn-EZ
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:27 +0100
+	id 1aBOWQ-0004x6-Er
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932869AbbLVPGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:13 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33623 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932573AbbLVPGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:08 -0500
-Received: by mail-pa0-f51.google.com with SMTP id cy9so36252948pac.0
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:08 -0800 (PST)
+	id S932973AbbLVPGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:38 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35284 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932365AbbLVPGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:02 -0500
+Received: by mail-pa0-f43.google.com with SMTP id jx14so90778158pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MRbSIMERItm/+vBtlJK32h18Z10+ZdcF0DgP9KGr9sg=;
-        b=JK11PgBLo9TiCL7MpaxuZiSImeBQrG056Cag4nZbGn13gq9IlYi54tu5oa02OEB0eK
-         8ku4CEd28Hsw0iHk+MNP2icx95g3w5vweS7kZNPRMK6b3BiiaNyT/cQIZWIDfNuuj5vc
-         +Eozffw0lMvBCQWiGydx9U4KeMKa++0WudwE8biGegCVuwLjLZFBS0fZQKkNPtQ06Xuf
-         I1WKqEVrtZ00TvzGTDa5SzuQOCxJI9/RITqixypHh2llahaTQ6KC5YK5KHno2Gy/0Q9L
-         7v1nYF+/0lC7RPG41AC5X6TgizXzbSauWqkTTP/bV6GYhD4q8NwCIXOHc2JGSOK3S+xM
-         djYg==
-X-Received: by 10.67.6.195 with SMTP id cw3mr36389637pad.88.1450796767927;
-        Tue, 22 Dec 2015 07:06:07 -0800 (PST)
+        bh=DCKu2eUg5yr+taPW3SQQ3EhsVRY2YAGUWIgI5t5svNI=;
+        b=XfN5D8rDeBi6fm+Kx7UkCYFkBy664mxlQZUeJ44qZwNK7/hnDGTe1iXzk2I3yIlQs+
+         rRL+iq8jGvYxolI3LolC6oKqSlglehyTZ1zYObI6BTGe9KniCX+nb7pHzYZ6E1hXOpCK
+         84Lgjk84cvCu+qbonMqK3EltGsiiEi0QaZv9J14TqewNhjGjKxqc8tuggEZrgs18pkAw
+         pVYRFZq1povK80Br9nhyVrhFFLsP/P9JU/bmWoRvS6Qaq3OC9apDCftkX1bhP1zScJYt
+         iKL/momWvw1Ft7WPi5cxSOke3pcdzlZsEr+EMsheI28pHxsoh8+ZJFb35ckwCktXyFR7
+         jkEg==
+X-Received: by 10.66.254.100 with SMTP id ah4mr23868348pad.121.1450796761685;
+        Tue, 22 Dec 2015 07:06:01 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.07
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:06:07 -0800 (PST)
+        Tue, 22 Dec 2015 07:06:01 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282866>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,59 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3100-ls-tree-restrict.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1410-reflog.sh | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
-index eb73c06..325114f 100755
---- a/t/t3100-ls-tree-restrict.sh
-+++ b/t/t3100-ls-tree-restrict.sh
-@@ -28,7 +28,7 @@ test_expect_success \
-      echo Mi >path2/baz/b &&
-      find path? \( -type f -o -type l \) -print |
-      xargs git update-index --add &&
--     tree=`git write-tree` &&
-+     tree=$(git write-tree) &&
-      echo $tree'
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index b79049f..fbed8d7 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -62,18 +62,18 @@ test_expect_success setup '
+ 	git add . &&
  
- test_output () {
+ 	test_tick && git commit -m rabbit &&
+-	H=`git rev-parse --verify HEAD` &&
+-	A=`git rev-parse --verify HEAD:A` &&
+-	B=`git rev-parse --verify HEAD:A/B` &&
+-	C=`git rev-parse --verify HEAD:C` &&
+-	D=`git rev-parse --verify HEAD:A/D` &&
+-	E=`git rev-parse --verify HEAD:A/B/E` &&
++	H=$(git rev-parse --verify HEAD) &&
++	A=$(git rev-parse --verify HEAD:A) &&
++	B=$(git rev-parse --verify HEAD:A/B) &&
++	C=$(git rev-parse --verify HEAD:C) &&
++	D=$(git rev-parse --verify HEAD:A/D) &&
++	E=$(git rev-parse --verify HEAD:A/B/E) &&
+ 	check_fsck &&
+ 
+ 	test_chmod +x C &&
+ 	git add C &&
+ 	test_tick && git commit -m dragon &&
+-	L=`git rev-parse --verify HEAD` &&
++	L=$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+ 
+ 	rm -f C A/B/E &&
+@@ -81,15 +81,15 @@ test_expect_success setup '
+ 	echo horse >A/G &&
+ 	git add F A/G &&
+ 	test_tick && git commit -a -m sheep &&
+-	F=`git rev-parse --verify HEAD:F` &&
+-	G=`git rev-parse --verify HEAD:A/G` &&
+-	I=`git rev-parse --verify HEAD:A` &&
+-	J=`git rev-parse --verify HEAD` &&
++	F=$(git rev-parse --verify HEAD:F) &&
++	G=$(git rev-parse --verify HEAD:A/G) &&
++	I=$(git rev-parse --verify HEAD:A) &&
++	J=$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+ 
+ 	rm -f A/G &&
+ 	test_tick && git commit -a -m monkey &&
+-	K=`git rev-parse --verify HEAD` &&
++	K=$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+ 
+ 	check_have A B C D E F G H I J K L &&
 -- 
 2.3.3.GIT
