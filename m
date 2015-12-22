@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/10] contrib/examples/git-repack.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:26 +0100
-Message-ID: <1450793432-9345-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t/lib-httpd.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:30 +0100
+Message-ID: <1450793432-9345-9-git-send-email-gitter.spiros@gmail.com>
 References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:10 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNee-0002yj-54
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:08 +0100
+	id 1aBNed-0002yj-Gn
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbbLVOKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:10:46 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:34954 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754072AbbLVOKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:44 -0500
-Received: by mail-pa0-f41.google.com with SMTP id jx14so90159341pad.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:44 -0800 (PST)
+	id S1754272AbbLVOLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:11:02 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34974 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754080AbbLVOKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:47 -0500
+Received: by mail-pa0-f45.google.com with SMTP id jx14so90159886pad.2
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mo6X9jhX1Bi6cl4RjNNNymjxV7YsZMP/7Flg4ExacyM=;
-        b=sVoj/OuG0C8KjgMc7YwvDT43Jeq90diJwq6/HIEZ8Wut0D7YtkmVTGvc8ILJru9WC+
-         RrGVfQrj7Q38bJ89+ehKdTa0DWirKRm34/Mkbgy4KTg6Cm1idc0UgSlJupNMGQPrJYww
-         KVH7ExPBrStaxdY9Bvr7zE40sluA/KmM/dRoNzVkGq1wIfNWWqPNEXWisqmZNFs0tK8n
-         0X5GzXZAtVeyBrHM6KeRtr9ZOw4yQ8j+5X94RkrD/LB7BZRrxm+IYksFjUPTVg9dLqxy
-         YMDT9max+acfTvZ1U154gQj4vvEyhSi5B9KNgCfOQp826GkcR2H6eiL9wgFQ3l9IIYC9
-         Gc1Q==
-X-Received: by 10.66.90.234 with SMTP id bz10mr36096629pab.115.1450793443891;
-        Tue, 22 Dec 2015 06:10:43 -0800 (PST)
+        bh=168ayzhi6wmPRy1ewXLX5/VdNC+KlX7ObabSe1C3cxY=;
+        b=MV5VFaQMxZYCXh95mVAYc2+Ai5ymQJGNGadFoVWnnQj9bUzEjD9BrSxgGMS1GcoXkB
+         zcdC9njp72x0hcfJDjiM//S2/Gw2yqRFd/PNpWqBnnwRIyvLfaplIcwMwwg6fqtGg7nG
+         UpF6L+YHsiLimOK4FTbkCgXPhTNRArQjfsttnkFi6deHn8He2JDCKQzCclAUPnObMpqG
+         H5OHsemSAkjTg841If5zzkMqEma+0BS4nXd4dt2x1MSI5qvUUiiu1FR3KnxmVYv1DSox
+         7/ZXC2+l8uI6uLSLpOV5Ao7yk0CFRV7diIMyJQCcVKB2R3X5j2Arvd3MvYcfTDSCYNfw
+         agZg==
+X-Received: by 10.67.15.73 with SMTP id fm9mr2235373pad.130.1450793447267;
+        Tue, 22 Dec 2015 06:10:47 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.42
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 06:10:43 -0800 (PST)
+        Tue, 22 Dec 2015 06:10:46 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282852>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,23 +66,23 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-repack.sh | 4 ++--
+ t/lib-httpd.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-repack.sh b/contrib/examples/git-repack.sh
-index 96e3fed..672af93 100755
---- a/contrib/examples/git-repack.sh
-+++ b/contrib/examples/git-repack.sh
-@@ -67,8 +67,8 @@ case ",$all_into_one," in
- ,t,)
- 	args= existing=
- 	if [ -d "$PACKDIR" ]; then
--		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
--			| sed -e 's/^\.\///' -e 's/\.pack$//'`
-+		for e in $(cd "$PACKDIR" && find . -type f -name '*.pack' \
-+			| sed -e 's/^\.\///' -e 's/\.pack$//')
- 		do
- 			if [ -e "$PACKDIR/$e.keep" ]; then
- 				: keep
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index e971446..f9f3e5f 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -98,8 +98,8 @@ then
+ 	test_skip_or_die $GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
+ fi
+ 
+-HTTPD_VERSION=`$LIB_HTTPD_PATH -v | \
+-	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q'`
++HTTPD_VERSION=$($LIB_HTTPD_PATH -v | \
++	sed -n 's/^Server version: Apache\/\([0-9]*\)\..*$/\1/p; q')
+ 
+ if test -n "$HTTPD_VERSION"
+ then
 -- 
 2.3.3.GIT
