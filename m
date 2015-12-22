@@ -1,75 +1,86 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.7.0 round 2
-Date: Tue, 22 Dec 2015 23:15:45 +0800
-Message-ID: <CANYiYbEp5_3ieiOy3rcyy_McDgF1o=8ixQ7DB-jAsds-yD6uzA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:15:56 2015
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 02/10] t3210-pack-refs.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:45 +0100
+Message-ID: <1450798073-22811-3-git-send-email-gitter.spiros@gmail.com>
+References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOfH-00018z-ME
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:15:52 +0100
+	id 1aBOr9-0001p6-RJ
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813AbbLVPPr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Dec 2015 10:15:47 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:36228 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298AbbLVPPq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 10:15:46 -0500
-Received: by mail-wm0-f46.google.com with SMTP id p187so112993559wmp.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:15:46 -0800 (PST)
+	id S932095AbbLVP2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:03 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:35970 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754498AbbLVP2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:01 -0500
+Received: by mail-pa0-f46.google.com with SMTP id q3so98113137pav.3
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HNc1NCUTjSvliNg5gETF9pFP1Kw89chDkOsQHNQVrWk=;
-        b=F1HAgZbAyKCZ/C180aWfkyMJyMBKgO9qLmt04nCwIhG7M7lnopVBljKRUdib+qTGLX
-         DyO4RSEysTzXWdp7qCHkrzDCp/f2e5EF8yaSrHiGDRKM1qmjFEDu9Pb1hM8C9k8LrzQE
-         9/8F1GbKqcw3iXzn+x05Izs6FBD3nfTXIEMk1RDu3VSW/TsGOM8ctfSrCb5R9ssodrae
-         N6J6iurXsF0VcDeW5yNrdhaef6os87cr5aSsUbtWnmzHxbc/VBVrQ/fImA8MULPtsZW9
-         MRS7dH0r2jOVR8QubqR9NVE/0QkY/jBMnGlbzDrXRDdO+PFiD+bWqGN6ZK2HcpA4VSTD
-         Lelg==
-X-Received: by 10.28.5.5 with SMTP id 5mr30128861wmf.94.1450797345518; Tue, 22
- Dec 2015 07:15:45 -0800 (PST)
-Received: by 10.194.83.226 with HTTP; Tue, 22 Dec 2015 07:15:45 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=uL+EvSwrWW92sqjGcF8B5ik5dTTzlK9jTAAi0NkInfI=;
+        b=gqYt5aqGz50sIpHPc9eVfiNDoVv5xLtpxjyBib4OyV/3xRA8JS5bLUGAo7k/fqFw7C
+         tjkipz28u+PM5MwZCs0oyE5YpGB4ResujLSbj0coyopxy0lIRimdXUfp3cniwCbIvClo
+         5go0BCIHfSLNOvAQnUEGW6/N30gEZI5Yfb4xCKbv1E/a1wzEHT7Y//6G6lJpFr5deMMH
+         8TA3mt7u0mdY2ucuSCN48rYCasncgNGePdS56zdPhxpAdV4xuHEqeMnYedl6Qp1iWtpm
+         jAPWmW9zQVWtloczljW2Cl4JQ5FPbJltstAEnV1hf3qlcIvRKKqCne1YENMhDJ8rFQBa
+         ZiZQ==
+X-Received: by 10.66.65.203 with SMTP id z11mr36554818pas.152.1450798080488;
+        Tue, 22 Dec 2015 07:28:00 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.27.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Dec 2015 07:27:59 -0800 (PST)
+X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282868>
 
-Hi guys,
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-Another two new messages need to be translated, so let's start Git l10n
-for Git v2.7.0 round 2.
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-    l10n: git.pot: v2.7.0 round 2 (2 new, 2 removed)
+The patch was generated by:
 
-    Generate po/git.pot from v2.7.0-rc1-44-g1d88dab for git v2.7.0 l10n=
- round 2.
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+and then carefully proof-read.
 
-You can get it from the usual place:
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t3210-pack-refs.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
-
---
-Jiang Xin
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index db244d2..9b182a0 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -27,7 +27,7 @@ SHA1=
+ test_expect_success \
+     'see if git show-ref works as expected' \
+     'git branch a &&
+-     SHA1=`cat .git/refs/heads/a` &&
++     SHA1=$(cat .git/refs/heads/a) &&
+      echo "$SHA1 refs/heads/a" >expect &&
+      git show-ref a >result &&
+      test_cmp expect result'
+-- 
+2.3.3.GIT
