@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/10] contrib/examples/git-revert.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 15:10:27 +0100
-Message-ID: <1450793432-9345-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] contrib/examples/git-repack.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 15:10:26 +0100
+Message-ID: <1450793432-9345-5-git-send-email-gitter.spiros@gmail.com>
 References: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 15:10:58 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 15:11:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBNeU-0002jz-9S
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:10:58 +0100
+	id 1aBNee-0002yj-54
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 15:11:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150AbbLVOKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 09:10:48 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34959 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754087AbbLVOKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 09:10:45 -0500
-Received: by mail-pa0-f43.google.com with SMTP id jx14so90159486pad.2
+	id S1754131AbbLVOKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 09:10:46 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:34954 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754072AbbLVOKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 09:10:44 -0500
+Received: by mail-pa0-f41.google.com with SMTP id jx14so90159341pad.2
         for <git@vger.kernel.org>; Tue, 22 Dec 2015 06:10:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ffTohtw1AeuEVh2ImcvJNQejiGIiSe+Tir+Q8h52QiE=;
-        b=QN5J3kSfyteh+M2zU1+M7PbWAcqAVBgntQAosGA982aMOqadqNIrk++UQnhIDiJViY
-         t21LDDJTLeOE9aHyKMU/bgLH5rJW3Bsx4DLQL1qsq67B4njK5rS0cDbTSWQVLeWE1vV2
-         WRv/Prc9mXbsa43OIx9jU33lGCSS+IMYonQP24lsumEc1nirTfl7Adfojc5w21i/oyVd
-         MvZrSVJrQPJyPJuiIVu9kT2mEEW/vKp0fxuG+VsnNKRqnNLuvfLauBZwKxpmH2gWmIMy
-         7CFyARlGoaARm/akA6F1jrv9mMcDfAUe03xJV6D4TPbxCAi9djRyDRAdEGihW8GaX3vF
-         LOEw==
-X-Received: by 10.66.190.66 with SMTP id go2mr36469971pac.114.1450793444654;
-        Tue, 22 Dec 2015 06:10:44 -0800 (PST)
+        bh=mo6X9jhX1Bi6cl4RjNNNymjxV7YsZMP/7Flg4ExacyM=;
+        b=sVoj/OuG0C8KjgMc7YwvDT43Jeq90diJwq6/HIEZ8Wut0D7YtkmVTGvc8ILJru9WC+
+         RrGVfQrj7Q38bJ89+ehKdTa0DWirKRm34/Mkbgy4KTg6Cm1idc0UgSlJupNMGQPrJYww
+         KVH7ExPBrStaxdY9Bvr7zE40sluA/KmM/dRoNzVkGq1wIfNWWqPNEXWisqmZNFs0tK8n
+         0X5GzXZAtVeyBrHM6KeRtr9ZOw4yQ8j+5X94RkrD/LB7BZRrxm+IYksFjUPTVg9dLqxy
+         YMDT9max+acfTvZ1U154gQj4vvEyhSi5B9KNgCfOQp826GkcR2H6eiL9wgFQ3l9IIYC9
+         Gc1Q==
+X-Received: by 10.66.90.234 with SMTP id bz10mr36096629pab.115.1450793443891;
+        Tue, 22 Dec 2015 06:10:43 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.43
+        by smtp.gmail.com with ESMTPSA id fe6sm46421455pab.40.2015.12.22.06.10.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 06:10:44 -0800 (PST)
+        Tue, 22 Dec 2015 06:10:43 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450793432-9345-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282851>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,35 +66,23 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-revert.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ contrib/examples/git-repack.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-revert.sh b/contrib/examples/git-revert.sh
-index 7e2aad5..197838d 100755
---- a/contrib/examples/git-revert.sh
-+++ b/contrib/examples/git-revert.sh
-@@ -138,8 +138,8 @@ cherry-pick)
- 	}'
- 
- 	logmsg=$(git show -s --pretty=raw --encoding="$encoding" "$commit")
--	set_author_env=`echo "$logmsg" |
--	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
-+	set_author_env=$(echo "$logmsg" |
-+	LANG=C LC_ALL=C sed -ne "$pick_author_script")
- 	eval "$set_author_env"
- 	export GIT_AUTHOR_NAME
- 	export GIT_AUTHOR_EMAIL
-@@ -160,9 +160,9 @@ cherry-pick)
- esac >.msg
- 
- eval GITHEAD_$head=HEAD
--eval GITHEAD_$next='`git show -s \
-+eval GITHEAD_$next='$(git show -s \
- 	--pretty=oneline --encoding="$encoding" "$commit" |
--	sed -e "s/^[^ ]* //"`'
-+	sed -e "s/^[^ ]* //")'
- export GITHEAD_$head GITHEAD_$next
- 
- # This three way merge is an interesting one.  We are at
+diff --git a/contrib/examples/git-repack.sh b/contrib/examples/git-repack.sh
+index 96e3fed..672af93 100755
+--- a/contrib/examples/git-repack.sh
++++ b/contrib/examples/git-repack.sh
+@@ -67,8 +67,8 @@ case ",$all_into_one," in
+ ,t,)
+ 	args= existing=
+ 	if [ -d "$PACKDIR" ]; then
+-		for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
+-			| sed -e 's/^\.\///' -e 's/\.pack$//'`
++		for e in $(cd "$PACKDIR" && find . -type f -name '*.pack' \
++			| sed -e 's/^\.\///' -e 's/\.pack$//')
+ 		do
+ 			if [ -e "$PACKDIR/$e.keep" ]; then
+ 				: keep
 -- 
 2.3.3.GIT
