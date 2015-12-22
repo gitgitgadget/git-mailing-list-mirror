@@ -1,88 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] create_symref: use existing ref-lock code
-Date: Mon, 21 Dec 2015 19:58:24 -0500
-Message-ID: <20151222005824.GB6901@sigill.intra.peff.net>
-References: <20151220072637.GA22102@sigill.intra.peff.net>
- <20151220073414.GD30662@sigill.intra.peff.net>
- <xmqq8u4nfrvv.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Revert "setup: set env $GIT_WORK_TREE when work tree is
+ set, like $GIT_DIR"
+Date: Tue, 22 Dec 2015 08:06:20 +0700
+Message-ID: <CACsJy8DP7ugh1UAU=iGzzHTSwUm5ZPkQhS0fTvkOpQV6vP1Jxg@mail.gmail.com>
+References: <xmqqh9k06all.fsf@gitster.mtv.corp.google.com> <1450693372-6863-1-git-send-email-pclouds@gmail.com>
+ <xmqqegefhftq.fsf@gitster.mtv.corp.google.com> <xmqqtwnbfybj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 01:58:34 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 02:06:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBBHd-0003rA-5q
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 01:58:33 +0100
+	id 1aBBPk-0001dw-3v
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 02:06:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932233AbbLVA62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Dec 2015 19:58:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45085 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932162AbbLVA61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Dec 2015 19:58:27 -0500
-Received: (qmail 16704 invoked by uid 102); 22 Dec 2015 00:58:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Dec 2015 18:58:26 -0600
-Received: (qmail 25557 invoked by uid 107); 22 Dec 2015 00:58:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Dec 2015 19:58:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Dec 2015 19:58:24 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq8u4nfrvv.fsf@gitster.mtv.corp.google.com>
+	id S1752293AbbLVBGw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Dec 2015 20:06:52 -0500
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:32845 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751885AbbLVBGv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Dec 2015 20:06:51 -0500
+Received: by mail-lf0-f43.google.com with SMTP id p203so121601578lfa.0
+        for <git@vger.kernel.org>; Mon, 21 Dec 2015 17:06:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=FecldJFMDeS7WxHo1J8XI+hkrU60CBYW3FX3YE9+gig=;
+        b=mmk0tGitSuAWX4OHGAWZQYqWeHlHU0wQ99EHFrlqYPEyXjPBAYArsSDdHx4O4n0w66
+         0TuvY8lhEHlq2qgCQS/HMklQCKn0fPfAwk89GkMF4d4KrrBc3tcCfC8ymJD7R2v1bc2k
+         8b6E66opfXpmWm7twVBmMcbz9wC22Wst98SfhfF96Mb2ZxbZNKMY9RkyKn5pspGFE1qV
+         z8qRzQv8CFjhtvV9gsznfVQ/sKLzurAWzQnSaxuNEU0Z7mt936xxCJrqA47xwSqVPy9v
+         1L38yUNBJDwu2yhlL4MV1nK/9F9RxhoCrEvpiEpRC0zle3Dhks41uNQTBPd4dnMUhrZK
+         0VNg==
+X-Received: by 10.25.137.84 with SMTP id l81mr7440610lfd.45.1450746409788;
+ Mon, 21 Dec 2015 17:06:49 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Mon, 21 Dec 2015 17:06:20 -0800 (PST)
+In-Reply-To: <xmqqtwnbfybj.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282827>
 
-On Mon, Dec 21, 2015 at 12:50:28PM -0800, Junio C Hamano wrote:
+On Tue, Dec 22, 2015 at 1:31 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>>
+>>> This commit has caused three regression reports so far. All of them=
+ are
+>>> about spawning git subprocesses, where the new presence of GIT_WORK=
+_TREE
+>>> either changes command behaviour (git-init or git-clone), or how
+>>> repo/worktree is detected (from aliases), with or without $GIT_DIR.
+>>> The original bug will be re-fixed another way.
+>>>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> ---
+>>>  On Thu, Dec 3, 2015 at 12:09 AM, Junio C Hamano <gitster@pobox.com=
+> wrote:
+>>>  > OK, when/if you decide that our first step should be a revert of
+>>>  > d95138e please send in a patch to do so with a brief write-up of=
+ a
+>>>  > follow-up plan.
+>>>
+>>>  Three reports to me are enough. And I obviously could not push the
+>>>  fix out fast enough. So if you want to revert it, here's the patch=
+ on
+>>>  maint.
+>
+> Also, can you reference these three reports for future reference?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >  #ifndef NO_SYMLINK_HEAD
-> > -	if (prefer_symlink_refs) {
-> > -		unlink(ref_path);
-> > -		if (!symlink(target, ref_path))
-> > -			goto done;
-> 
-> I see that the original was sloppy (most certainly my bad) ...
-> 
-> > +	char *ref_path = get_locked_file_path(lock->lk);
-> > +	unlink(ref_path);
-> 
-> ... and you inherited that.  I see a few seemingly related helpers
-> in wrapper.c, but none looks useful in this context X-<.
-> 
->     if (unlink_or_warn(ref_path))
->     	return -1;
-> 
-> is close enough, but it still lets the caller fallback to textual
-> symref.
+http://article.gmane.org/gmane.comp.version-control.git/281608
+http://article.gmane.org/gmane.comp.version-control.git/281979
+http://article.gmane.org/gmane.comp.version-control.git/282691
 
-I don't think the original is _wrong_; it's meant to be "unlink if
-needed", and the symlink call is what we really care about (if our
-unlink failed for anything but ENOENT, the symlink will, too). But I
-agree unlink_or_warn should do that and give us a nice warning (and
-cover up ENOENT). To fall through, I think we just want (in the
-original):
-
-  if (!unlink_or_warn(ref_path) && !symlink(target, ref_path))
-	goto done;
-
-and in mine that becomes:
-
-  int ret = -1;
-  ...
-  if (!unlink_or_warn(ref_path) && !symlink(target, ref_path))
-	ret = 0;
-
-I must confess I considered a follow-on patch to drop the
-prefer_symlink_refs code path completely. I'm surprised it all still
-works with packed-refs, etc, but resolve_ref does take special care to
-use readlink().
-
--Peff
+The last one is not confirmed by the reporter yet. But I'm pretty sure
+i'll trigger the special case "when GIT_WORK_TREE is set but GIT_DIR
+is not" in setup code
+--=20
+Duy
