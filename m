@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/10] t3403-rebase-skip.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:46 +0100
-Message-ID: <1450798073-22811-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] t3511-cherry-pick-x.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:47 +0100
+Message-ID: <1450798073-22811-5-git-send-email-gitter.spiros@gmail.com>
 References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:54 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:29:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOrq-000305-Q2
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:51 +0100
+	id 1aBOs6-0003OU-Da
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932723AbbLVP2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:47 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34975 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755189AbbLVP2C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:28:02 -0500
-Received: by mail-pf0-f179.google.com with SMTP id 78so35228132pfw.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:01 -0800 (PST)
+	id S932462AbbLVP2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:46 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33906 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755192AbbLVP2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:03 -0500
+Received: by mail-pa0-f53.google.com with SMTP id uo6so13857849pac.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GiB+fiQtVl7pYe5hHQE7fybbzNtRD9+6eIi0oh2uoKs=;
-        b=UqEQpwqKBW79qWSHMT/epVbpw8Y8kI0+WMG6Ccmm6q/rkj5pUYKSRcU3Cppebb0l2c
-         Oyqof9EI5lkq1NfDhSVsGJnkw/jGfF0eiwuiPr2+SQjhL6QOXgCbe3ac9r3R5yCQUbQz
-         OTBzz2S8e9aVTw4ZTxjG0qD5IMpAxH/95O8+tDhbMYXLqbd++PVQwBIAd8P1gksifNzK
-         IhWC6EqT2/gurs13mfYWctOiRJYoBvWBDcihdZwSqJWp680aDMjOPF3jElv8C9j4kukL
-         wCE9B+xb5jmcH8kg5Doy7YWdKehke9apviowUJ32ez0d4rwd8mUL+/B77saYA3jc2xp+
-         IyXQ==
-X-Received: by 10.98.31.153 with SMTP id l25mr11681574pfj.144.1450798081714;
-        Tue, 22 Dec 2015 07:28:01 -0800 (PST)
+        bh=MCC126WFr/ECv62G/fbiKmV6beY7JaKvIQGLgoSz6hA=;
+        b=xYRneuvPIAtdbK6KKalvr4adeQR8vKs2xnBi+ic8NdHWTRfk9CFtKkon2/rRPhxCMk
+         3QIONZN8lO8aV8mUVGUJpgiwr7AMWSUqCGbwEZPjQ2A1DJb3XDbTHth234x32VHKuZZD
+         igiogSqJHCeTQBEkjV1rMHS9t/DI9wKbcP63dgRaUbWbYOc1ALrFZZcT/SRUVNCXH0cF
+         vIVHC5oGaHDFI8bMJeYnsJVFWbvyVj54PRCKvQyXV8Np5QxXcr6mukyBjgfhTwASYOi1
+         hyVrjaxWq5mA+BGt/r/BZP6vJhDEWyRiVe6k990gS8MYqfHQFpcnJ0SGIwWPzL3/gav4
+         PpPA==
+X-Received: by 10.67.5.2 with SMTP id ci2mr36440327pad.47.1450798082468;
+        Tue, 22 Dec 2015 07:28:02 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.00
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:28:01 -0800 (PST)
+        Tue, 22 Dec 2015 07:28:02 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282878>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,75 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3403-rebase-skip.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3511-cherry-pick-x.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index 3968020..1f5122b 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -67,7 +67,7 @@ test_expect_success 'rebase --skip with --merge' '
- '
+diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+index b7dff09..9cce5ae 100755
+--- a/t/t3511-cherry-pick-x.sh
++++ b/t/t3511-cherry-pick-x.sh
+@@ -77,7 +77,7 @@ test_expect_success setup '
  
- test_expect_success 'merge and reference trees equal' '
--	test -z "`git diff-tree skip-merge skip-reference`"
-+	test -z "$(git diff-tree skip-merge skip-reference)"
- '
+ test_expect_success 'cherry-pick -x inserts blank line after one line subject' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-one-line^0` &&
++	sha1=$(git rev-parse mesg-one-line^0) &&
+ 	git cherry-pick -x mesg-one-line &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_one_line
+@@ -114,7 +114,7 @@ test_expect_success 'cherry-pick -s inserts blank line after non-conforming foot
  
- test_expect_success 'moved back to branch correctly' '
+ test_expect_success 'cherry-pick -x inserts blank line when conforming footer not found' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-no-footer^0` &&
++	sha1=$(git rev-parse mesg-no-footer^0) &&
+ 	git cherry-pick -x mesg-no-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_no_footer
+@@ -139,7 +139,7 @@ test_expect_success 'cherry-pick -s inserts blank line when conforming footer no
+ 
+ test_expect_success 'cherry-pick -x -s inserts blank line when conforming footer not found' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-no-footer^0` &&
++	sha1=$(git rev-parse mesg-no-footer^0) &&
+ 	git cherry-pick -x -s mesg-no-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_no_footer
+@@ -164,7 +164,7 @@ test_expect_success 'cherry-pick -s adds sob when last sob doesnt match committe
+ 
+ test_expect_success 'cherry-pick -x -s adds sob when last sob doesnt match committer' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-with-footer^0` &&
++	sha1=$(git rev-parse mesg-with-footer^0) &&
+ 	git cherry-pick -x -s mesg-with-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_footer
+@@ -187,7 +187,7 @@ test_expect_success 'cherry-pick -s refrains from adding duplicate trailing sob'
+ 
+ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists for committer' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-with-footer-sob^0` &&
++	sha1=$(git rev-parse mesg-with-footer-sob^0) &&
+ 	git cherry-pick -x -s mesg-with-footer-sob &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_footer_sob
+@@ -200,7 +200,7 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
+ 
+ test_expect_success 'cherry-pick -x treats "(cherry picked from..." line as part of footer' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-with-cherry-footer^0` &&
++	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+ 	git cherry-pick -x mesg-with-cherry-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_cherry_footer
+@@ -223,7 +223,7 @@ test_expect_success 'cherry-pick -s treats "(cherry picked from..." line as part
+ 
+ test_expect_success 'cherry-pick -x -s treats "(cherry picked from..." line as part of footer' '
+ 	pristine_detach initial &&
+-	sha1=`git rev-parse mesg-with-cherry-footer^0` &&
++	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+ 	git cherry-pick -x -s mesg-with-cherry-footer &&
+ 	cat <<-EOF >expect &&
+ 		$mesg_with_cherry_footer
 -- 
 2.3.3.GIT
