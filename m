@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/10] t/t3030-merge-recursive.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:54 +0100
-Message-ID: <1450796755-15848-10-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] t/t1100-commit-tree-options.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:46 +0100
+Message-ID: <1450796755-15848-2-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:25 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:06:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOW6-0004ab-FG
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:22 +0100
+	id 1aBOWH-0004nC-Sw
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932962AbbLVPGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:06:16 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:34082 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932571AbbLVPGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:07 -0500
-Received: by mail-pa0-f54.google.com with SMTP id uo6so13614840pac.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:07 -0800 (PST)
+	id S932509AbbLVPGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:03 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:36129 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932327AbbLVPGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:06:00 -0500
+Received: by mail-pa0-f53.google.com with SMTP id q3so97869869pav.3
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ELGDtfzepotjVDbW9ZhKjJEbrS6ExMiCrkD/CgY96O8=;
-        b=BSwEDn4oM0TqjPjJATHqazuOQF71hpBPxmZ1QP+pppPbo0FW3Bjqw+RwGX54oUBlQC
-         hQ6115l3ORUmmlxp44itZHOKkxBQqw9ym16ddRm92+n1cQ1Q3IuDGJDM2K97WfTZvi3o
-         UcqGM743z0zeWtRxcXrrR17s2OWwar5QoAlZAxkdWojQKmMZVZXnEqe3gE+8/G2urrb/
-         0klhlPtUF4iR2KU4/arqWmsyZ2pfGDD6+iNxzncrruJkeEP9NopemFRoR/ZY7X1Lf2SE
-         2UqwfDUMniUg+nzZKE9K3om5ys2dVSMPoPbyqqo8dfW1vlnApGo8fMvCOBw+IXnz2jWS
-         F1BQ==
-X-Received: by 10.66.242.17 with SMTP id wm17mr4228570pac.155.1450796767031;
-        Tue, 22 Dec 2015 07:06:07 -0800 (PST)
+        bh=n92LjvkgCi0yzxSfLChV468y3b/21+oc3LVxn3PgStA=;
+        b=PrfLgbjDTeEkoTPOGsfN87LpZnkO80BMfbm8kWnHfBgxcIsESo/eEOyylSX5flLPbE
+         Q60LFedd4HcaJiCkJlzLgqTmH80nF7Xh1nqwYiid+MyO8O6qD82c98vE/hj1I/3QSCS/
+         pw11sXtMX87il8XB90T+ROFCyKcm/3iYA8kOPA3AUbXkKfu1mKXihVGa5hQRYiExnkNd
+         XJ78HQL5GuIZy1PMjdA7t6xzbWeGhVoBUrWCgykydl0MO4oDTltPBLAP6yptVQXbAuGi
+         wJqqFCVPujNWZoelJvir+ETFF7ryNQ1s60fUuCZDWu2eGMcDjUTYBFZ0jyEp8RoD9+ZE
+         fGqw==
+X-Received: by 10.66.158.129 with SMTP id wu1mr36309301pab.146.1450796759869;
+        Tue, 22 Dec 2015 07:05:59 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.06
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.05.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:06:06 -0800 (PST)
+        Tue, 22 Dec 2015 07:05:59 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282862>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,26 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3030-merge-recursive.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1100-commit-tree-options.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 6224187..f7b0e59 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -263,7 +263,7 @@ test_expect_success 'setup 8' '
- 	test_ln_s_add e a &&
- 	test_tick &&
- 	git commit -m "rename a->e, symlink a->e" &&
--	oln=`printf e | git hash-object --stdin`
-+	oln=$(printf e | git hash-object --stdin)
- '
+diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
+index f8457f9..b7e9b4fc 100755
+--- a/t/t1100-commit-tree-options.sh
++++ b/t/t1100-commit-tree-options.sh
+@@ -35,11 +35,11 @@ test_expect_success \
+      GIT_COMMITTER_NAME="Committer Name" \
+      GIT_COMMITTER_EMAIL="committer@email" \
+      GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-     TZ=GMT git commit-tree `cat treeid` >commitid 2>/dev/null'
++     TZ=GMT git commit-tree $(cat treeid) >commitid 2>/dev/null'
  
- test_expect_success 'setup 9' '
+ test_expect_success \
+     'read commit' \
+-    'git cat-file commit `cat commitid` >commit'
++    'git cat-file commit $(cat commitid) >commit'
+ 
+ test_expect_success \
+     'compare commit' \
 -- 
 2.3.3.GIT
