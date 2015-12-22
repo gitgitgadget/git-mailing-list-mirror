@@ -1,121 +1,78 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] pretty: Pass graph width to pretty formatting for use
- in '%>|(N)'
-Date: Wed, 23 Dec 2015 00:03:19 +0700
-Message-ID: <CACsJy8C8DCi_pZDd=m1hE70t7Z+MX3j6WcMe-Hp-u0y5VvwKqg@mail.gmail.com>
-References: <xmqqk2rwzlhi.fsf@gitster.mtv.corp.google.com> <1442013913-2970-1-git-send-email-josef@kufner.cz>
- <xmqqa8sfa7di.fsf@gitster.mtv.corp.google.com>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: RefTree: Alternate ref backend
+Date: Tue, 22 Dec 2015 09:04:12 -0800
+Message-ID: <CAD0k6qT21siw00XMM6fSz2d9dT1yiTMh5ai9_w=fFk9GKin83w@mail.gmail.com>
+References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
+ <56796F37.1000600@alum.mit.edu> <CAJo=hJtPSxY1YZgEt1AA_ukgY9cTA=1tdv_F+nCetv_Ux9E=3g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Josef Kufner <josef@kufner.cz>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Elliott Cable <me@ell.io>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 22 18:03:56 2015
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git <git@vger.kernel.org>,
+	David Turner <dturner@twopensource.com>,
+	Jeff King <peff@peff.net>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 22 18:04:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBQLq-0007t8-PJ
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 18:03:55 +0100
+	id 1aBQMW-0000XR-Ur
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 18:04:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753416AbbLVRDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 12:03:51 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:35166 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362AbbLVRDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 12:03:50 -0500
-Received: by mail-lb0-f171.google.com with SMTP id bc4so34400350lbc.2
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 09:03:49 -0800 (PST)
+	id S932782AbbLVREd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 12:04:33 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34214 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932129AbbLVREc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 12:04:32 -0500
+Received: by mail-io0-f169.google.com with SMTP id e126so192663929ioa.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 09:04:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=tFDH7eSN3RS9quJ4ZF12GcNsfSFquEc0EsEJOM9rdWs=;
-        b=GK/Qa0IWJwpRDZ/HMc1wXbxuzz3HtoBi5/idRywTMECQWukmiTU2ATuUqomP/cKqJS
-         cIUAIMi9sApc7DvWrTtCsxZZT09aNdC6xVqbB0eFCGBzjGjlQYc+9QXrCmcJbGf1unpM
-         DKLd/iZGAdFZgZ0y22afBx3Xh9WSFzIqHk81SZc8LaxAXIBkmoF5mQiHxzkXjCHAz2Qe
-         DN75WN066y+AGUuqrmjGmD3IA4OpfGvc3nzSEHZIcIQdKitcXG9APHCIVdAzsqihF32t
-         lZzgPTztHHK4jjS4+N36dXlF2haKVudT7Fnob616wFQrZapno+jMfKam9ePbFQI8ZQNm
-         a0KA==
-X-Received: by 10.112.137.101 with SMTP id qh5mr8445204lbb.81.1450803828864;
- Tue, 22 Dec 2015 09:03:48 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Tue, 22 Dec 2015 09:03:19 -0800 (PST)
-In-Reply-To: <xmqqa8sfa7di.fsf@gitster.mtv.corp.google.com>
+        bh=7XCNO9RsYCLdsy7Gq054MQVpovXgk8m7O/lv1miZqxw=;
+        b=YVLuxKjv+RoncvTJpxTaekWS3R2p4RqiGVKq7Zlyyh2fPpBGx3Mncl7Dp5vebOcmTI
+         urIPcCR5T0Pq5sNc80WWtu4148Rq3kWHT5BkQs3NfURrLMmO1spdb88xyGrMqQxbn22m
+         hjCaLp/a2WyZOd+WwhbalcUS2JioVqE9v0azTCpiJHWwPiZgbPpREmfi1CQy3a3IwYZt
+         +Y4yzY3Ai9/VRsBzrbZmBPdfSJ6hiLSVBRrF3s5daz9f2IXTnn5tu/vcNQ/8qIyRaeSn
+         WiI1Klw4fUvpUX023R9oGFxJcRe//BGHWUZTP984+ixRF0URtJY0+PULdtyyszByHVSp
+         Zl4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=7XCNO9RsYCLdsy7Gq054MQVpovXgk8m7O/lv1miZqxw=;
+        b=KvfBLgcLVrjPn9nfNRQRnj5dgnK6uNLC8zz3GDXkOwQEmw1EOR3JXcZljqF2WDO0ZU
+         m2qyfwyoKqE4ikbAClJdJv9eoDyVUyDN1Cdof24NRasSO+2VmpNO0xzk2vhvSLj90Wxp
+         12iFAzXy8ZCmTFyQpy6juNYFrRDB/sJROdUvkb1L0PwndUl5Ml8QSnQdjg6XhoGTTciA
+         tQ8lL5ASkrYGq7Uiyy21AQbOGKdIV/uRRi6ZKHydR7KpSt1KVL9dOO9uytfFl9u5UwaM
+         +rWOel3ugRYrZzIH0oXytj4KMk8raU+6HSBSBQNGoHgYPAQoXURy+9DYFcIjc4ezyHmN
+         bZOQ==
+X-Gm-Message-State: ALoCoQlEe3m/VKPIW1PVhFfHOTkWbuvqq5ulkP0lagguZiaN7mgq7+EYoTpavcT3A/Subvyt7rPhU9nmln7/bsnPGyqDljQn/dsOT3sZavEW5ysNhKAwrco=
+X-Received: by 10.107.62.136 with SMTP id l130mr11228814ioa.28.1450803872158;
+ Tue, 22 Dec 2015 09:04:32 -0800 (PST)
+Received: by 10.36.122.193 with HTTP; Tue, 22 Dec 2015 09:04:12 -0800 (PST)
+In-Reply-To: <CAJo=hJtPSxY1YZgEt1AA_ukgY9cTA=1tdv_F+nCetv_Ux9E=3g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282887>
 
-(I'm joining the newer thread [1] back to this one, thanks for
-reminding me about this)
+On Tue, Dec 22, 2015 at 8:11 AM, Shawn Pearce <spearce@spearce.org> wrote:
+> Yup, and Gerrit Code Review servers often have 100k+ refs per
+> repository. We can't rewrite the entire store every time either. So
+> its not a flat list. Its a directory structure using the / separators
+> in the ref namespace.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/282771
+I wonder if this might be insufficient in some cases, and additional
+sharding might be required (though I haven't thought about how to do
+that).
 
-On Tue, Sep 22, 2015 at 2:40 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Josef Kufner <josef@kufner.cz> writes:
->
->> Pass graph width to pretty formatting, so N in '%>|(N)' includes columns
->> consumed by graph rendered when --graph option is in use.
->>
->> Example:
->>   git log --all --graph --pretty='format: [%>|(20)%h] %ar%d'
->>
->>   All commit hashes should be aligned at 20th column from edge of the
->>   terminal, not from the edge of the graph.
->>
->> Signed-off-by: Josef Kufner <josef@kufner.cz>
->> ---
->
-> [CC'ed Duy for ideas, as the "%>|(ALIGN)" thing is his invention]
->
-> If you imagine an entry for a commit in the "git log" output as a
-> rectangle that has its commit log message, "--graph" draws a bunch
-> of lines on the left hand side and place these rectangles on the
-> right of these lines.  Space allocated to each of these rectangles
-> may and do begin at a different column.  For example, here is an
-> output from
->
->  $ git log -12 --graph --oneline
->
->  *   7d211c9 Merge branch 'jk/graph-format-padding' into pu
->  |\
->  | * ead86db pretty: pass graph width to pretty formatting
->  * |   5be4874 Merge branch 'ld/p4-detached-head' into pu
->  |\ \
->  | * | 4086903 git-p4: work with a detached head
->  | * | 6d2be82 git-p4: add failing test for submit from detached
->  head
->  * | |   7cec6a3 Merge branch 'ls/p4-lfs' into pu
->  |\ \ \
->  | * | | 5fac7db git-p4: add Git LFS backend for large file system
->  | * | | 53b938f git-p4: add support for large file systems
->  | * | | 760e31c git-p4: return an empty list if a list config has
->  no values
->  | * | | c1e88b8 git-p4: add gitConfigInt reader
->  | * | | 465af7a git-p4: add optional type specifier to gitConfig
->  reader
->  * | | |   5197bd3 Merge branch 'nd/clone-linked-checkout' into pu
->
-> I can understand why you would want to include the varying width of
-> the river on the left hand side in the "space allocated for the
-> commit", and under that mental model, the patch makes sense, but at
-> the same time, it is also a perfectly good specification to make
-> "%>|(20)%h" pad "%h" to 20 columns from the left edge of the space
-> given to the commit.
->
-> I have a suspicion that 50% of the users would appreciate this
-> change, and the remainder of the users see this break their
-> expectation.  To avoid such a regression, we may be better off if we
-> introduced a new alignment operator that is different from '%>|(N)'
-> so that this new behaviour is available to those who want to use it,
-> without negatively affecting existing uses.
+Chromium, for example, has upwards of 10k tags:
+$ git ls-remote https://chromium.googlesource.com/chromium/src
+refs/tags/\* | wc -l
+8733
 
-I tend to agree with Josef. >|(N) is about columns relative to the
-left edge of the screen. You can already use >(N) to be relative to
-the left edge of the space given to the commit.
--- 
-Duy
+And I doubt it's unique in this regard.
