@@ -1,90 +1,140 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 00/10] use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:27:43 +0100
-Message-ID: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/10] t3700-add.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:27:49 +0100
+Message-ID: <1450798073-22811-7-git-send-email-gitter.spiros@gmail.com>
+References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:11 2015
+X-From: git-owner@vger.kernel.org Tue Dec 22 16:28:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOr9-0001p6-7X
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:07 +0100
+	id 1aBOrJ-00029j-VI
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:28:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187AbbLVP2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:28:00 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34323 "EHLO
-	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754498AbbLVP17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:27:59 -0500
-Received: by mail-pf0-f169.google.com with SMTP id u7so61508336pfb.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:27:59 -0800 (PST)
+	id S932182AbbLVP2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:28:07 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33916 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754498AbbLVP2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 10:28:04 -0500
+Received: by mail-pa0-f51.google.com with SMTP id uo6so13858113pac.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:28:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Q0tXh+gl4Dp5PQWmlD+Vx8ktW0iDOT0xIuXWQySLURI=;
-        b=mcNGe0pZTWRM1X5x1DAbB0S4hSgQ7pg4XEMZhZ1gUAtyBaP5GJ9ZF9FwkbDmBB7BWu
-         7Bi0bJU4CktjAvk6PgZMPP2UOjLzRcst1WXVIPE4ptn/AeZD2kezvFy+N8RvcvhxpW/R
-         NsNpmt8VMjbqtPtMLydt6VR+DJBgMdFkMeW++sQt3Kzx6oY1kgS5o+TBknt9mIKV29Bd
-         Mi1fN9xTRyOtWOkE+NiODXBhnSmSWV9Zr/xTNKUuN0NxerH0hHLODxV/5dTaO4bD5Ih2
-         KPyXZhIDn+3z+jx9Jfo8syk1Y7/Nc+YNyPtV+2wSofaBKPK7ht7mecyRgKm8EvCr5Dfi
-         1BDA==
-X-Received: by 10.98.14.143 with SMTP id 15mr36690918pfo.154.1450798078810;
-        Tue, 22 Dec 2015 07:27:58 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=tE8VlVAoaH5PFl81VLPMkYWUEqzFPxFMEb+1hZCKcOU=;
+        b=CJwrBZ4h3pDCX+yC4MW8htRYYmJSaUGeoY0KD72P/PJrg8twfKeq70khAqrO28lMsZ
+         YwqdfYxXnrhaehOhT1FAPaWE7VQKsz52tvjX6n49EGzT5fop18C/TMS2VmF3ZEeSGubd
+         SSCMRcI9F/Mw6Vzw5Kbwc2RWgJRE4zKtDzEHEvSCB3/r9ds33q0/D/lpdhm1iK02az62
+         fTQ7X/MqhORUDIMe+fszHz4ipDv3et+5ChAq9SLn08Cv3ZZPSGg93F/opMLES3qXgwt8
+         sPDblVfDcjXvpn5mV0gpmdQimr89+yZpFDtXUhPLRnrR/om9iFWfsir+XEEendh9kyfM
+         qH6A==
+X-Received: by 10.66.240.4 with SMTP id vw4mr36545833pac.9.1450798084154;
+        Tue, 22 Dec 2015 07:28:04 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.27.58
+        by smtp.gmail.com with ESMTPSA id q190sm42030149pfq.59.2015.12.22.07.28.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:27:58 -0800 (PST)
+        Tue, 22 Dec 2015 07:28:03 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282870>
 
-This patch series continues the changes introduced with the merge
-6753d8a85d543253d95184ec2faad6dc197f248:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-    Merge branch 'ep/shell-command-substitution'
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-    Adjust shell scripts to use $(cmd) instead of `cmd`.
+The patch was generated by:
 
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
 
-This is the third serie, the other will be sent separately.
+and then carefully proof-read.
 
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t3700-add.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Elia Pinto (10):
-  t3101-ls-tree-dirname.sh: use the $( ... ) construct for command
-    substitution
-  t3210-pack-refs.sh: use the $( ... ) construct for command
-    substitution
-  t3403-rebase-skip.sh: use the $( ... ) construct for command
-    substitution
-  t3511-cherry-pick-x.sh: use the $( ... ) construct for command
-    substitution
-  t3600-rm.sh: use the $( ... ) construct for command substitution
-  t3700-add.sh: use the $( ... ) construct for command substitution
-  t5100-mailinfo.sh: use the $( ... ) construct for command substitution
-  t5300-pack-object.sh: use the $( ... ) construct for command
-    substitution
-  t5301-sliding-window.sh: use the $( ... ) construct for command
-    substitution
-  t5302-pack-index.sh: use the $( ... ) construct for command
-    substitution
-
- t/t3101-ls-tree-dirname.sh |  2 +-
- t/t3210-pack-refs.sh       |  2 +-
- t/t3403-rebase-skip.sh     |  2 +-
- t/t3511-cherry-pick-x.sh   | 14 +++++++-------
- t/t3600-rm.sh              |  4 ++--
- t/t3700-add.sh             | 16 ++++++++--------
- t/t5100-mailinfo.sh        | 12 ++++++------
- t/t5300-pack-object.sh     | 18 +++++++++---------
- t/t5301-sliding-window.sh  | 14 +++++++-------
- t/t5302-pack-index.sh      | 34 +++++++++++++++++-----------------
- 10 files changed, 59 insertions(+), 59 deletions(-)
-
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index f7ff1f5..f14a665 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -25,7 +25,7 @@ test_expect_success \
+ 	 echo foo >xfoo1 &&
+ 	 chmod 755 xfoo1 &&
+ 	 git add xfoo1 &&
+-	 case "`git ls-files --stage xfoo1`" in
++	 case "$(git ls-files --stage xfoo1)" in
+ 	 100644" "*xfoo1) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	 esac'
+@@ -33,7 +33,7 @@ test_expect_success \
+ test_expect_success 'git add: filemode=0 should not get confused by symlink' '
+ 	rm -f xfoo1 &&
+ 	test_ln_s_add foo xfoo1 &&
+-	case "`git ls-files --stage xfoo1`" in
++	case "$(git ls-files --stage xfoo1)" in
+ 	120000" "*xfoo1) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	esac
+@@ -45,7 +45,7 @@ test_expect_success \
+ 	 echo foo >xfoo2 &&
+ 	 chmod 755 xfoo2 &&
+ 	 git update-index --add xfoo2 &&
+-	 case "`git ls-files --stage xfoo2`" in
++	 case "$(git ls-files --stage xfoo2)" in
+ 	 100644" "*xfoo2) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	 esac'
+@@ -53,7 +53,7 @@ test_expect_success \
+ test_expect_success 'git add: filemode=0 should not get confused by symlink' '
+ 	rm -f xfoo2 &&
+ 	test_ln_s_add foo xfoo2 &&
+-	case "`git ls-files --stage xfoo2`" in
++	case "$(git ls-files --stage xfoo2)" in
+ 	120000" "*xfoo2) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	esac
+@@ -63,7 +63,7 @@ test_expect_success \
+ 	'git update-index --add: Test that executable bit is not used...' \
+ 	'git config core.filemode 0 &&
+ 	 test_ln_s_add xfoo2 xfoo3 &&	# runs git update-index --add
+-	 case "`git ls-files --stage xfoo3`" in
++	 case "$(git ls-files --stage xfoo3)" in
+ 	 120000" "*xfoo3) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo3; (exit 1);;
+ 	 esac'
+@@ -173,14 +173,14 @@ test_expect_success 'git add with filemode=0, symlinks=0 prefers stage 2 over st
+ 
+ test_expect_success 'git add --refresh' '
+ 	>foo && git add foo && git commit -a -m "commit all" &&
+-	test -z "`git diff-index HEAD -- foo`" &&
++	test -z "$(git diff-index HEAD -- foo)" &&
+ 	git read-tree HEAD &&
+-	case "`git diff-index HEAD -- foo`" in
++	case "$(git diff-index HEAD -- foo)" in
+ 	:100644" "*"M	foo") echo pass;;
+ 	*) echo fail; (exit 1);;
+ 	esac &&
+ 	git add --refresh -- foo &&
+-	test -z "`git diff-index HEAD -- foo`"
++	test -z "$(git diff-index HEAD -- foo)"
+ '
+ 
+ test_expect_success 'git add --refresh with pathspec' '
 -- 
 2.3.3.GIT
