@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/10] t/t1100-commit-tree-options.sh: use the $( ... ) construct for command substitution
-Date: Tue, 22 Dec 2015 16:05:46 +0100
-Message-ID: <1450796755-15848-2-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] t/t1511-rev-parse-caret.sh: use the $( ... ) construct for command substitution
+Date: Tue, 22 Dec 2015 16:05:49 +0100
+Message-ID: <1450796755-15848-5-git-send-email-gitter.spiros@gmail.com>
 References: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
@@ -11,40 +11,40 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBOWH-0004nC-Sw
+	id 1aBOWI-0004nC-HA
 	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:06:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932509AbbLVPGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932975AbbLVPGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 10:06:31 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34051 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932491AbbLVPGD (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 22 Dec 2015 10:06:03 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36129 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932327AbbLVPGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 10:06:00 -0500
-Received: by mail-pa0-f53.google.com with SMTP id q3so97869869pav.3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:00 -0800 (PST)
+Received: by mail-pa0-f45.google.com with SMTP id uo6so13613940pac.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2015 07:06:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n92LjvkgCi0yzxSfLChV468y3b/21+oc3LVxn3PgStA=;
-        b=PrfLgbjDTeEkoTPOGsfN87LpZnkO80BMfbm8kWnHfBgxcIsESo/eEOyylSX5flLPbE
-         Q60LFedd4HcaJiCkJlzLgqTmH80nF7Xh1nqwYiid+MyO8O6qD82c98vE/hj1I/3QSCS/
-         pw11sXtMX87il8XB90T+ROFCyKcm/3iYA8kOPA3AUbXkKfu1mKXihVGa5hQRYiExnkNd
-         XJ78HQL5GuIZy1PMjdA7t6xzbWeGhVoBUrWCgykydl0MO4oDTltPBLAP6yptVQXbAuGi
-         wJqqFCVPujNWZoelJvir+ETFF7ryNQ1s60fUuCZDWu2eGMcDjUTYBFZ0jyEp8RoD9+ZE
-         fGqw==
-X-Received: by 10.66.158.129 with SMTP id wu1mr36309301pab.146.1450796759869;
-        Tue, 22 Dec 2015 07:05:59 -0800 (PST)
+        bh=5nUZ06r3FQcdEVi/z3VxUglGSoA6JNXkHFpT36O2STM=;
+        b=Ldxx2HO0qc0gA4m9n+aa3J/bCzHq9qst2Xda3fm0WGNlx0WNf2hy8U/hQ6CSc6/Njc
+         ROAl+Xym/msaD8OOSjmhas8GkHPC8VihDj0nIKjZiRWRvKs64H/T3Vk22eRpFAHGQzR2
+         P3vjgX86qTlLsqemtxQWht10qRljBWUgxTH3u1V8wDFCabEkHDJXHgcqmEPB1RFeVImx
+         DpQemuS6/NVF293KMlFoVV3ecPXk6NOIVPywHdn2XrZQGoraKkLB6lYLleVp1zyY3Wo0
+         +NOM+zywd+BbVf7WeMpywRSjgRzNyx7QzrmNfhgCIQnV768vCx0hPjAAUXSS341uX0Ch
+         Wt0A==
+X-Received: by 10.66.190.66 with SMTP id go2mr36901638pac.114.1450796762753;
+        Tue, 22 Dec 2015 07:06:02 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.05.59
+        by smtp.gmail.com with ESMTPSA id hz8sm46766591pac.10.2015.12.22.07.06.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 22 Dec 2015 07:05:59 -0800 (PST)
+        Tue, 22 Dec 2015 07:06:02 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450796755-15848-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282863>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,26 +66,26 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1100-commit-tree-options.sh | 4 ++--
+ t/t1511-rev-parse-caret.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
-index f8457f9..b7e9b4fc 100755
---- a/t/t1100-commit-tree-options.sh
-+++ b/t/t1100-commit-tree-options.sh
-@@ -35,11 +35,11 @@ test_expect_success \
-      GIT_COMMITTER_NAME="Committer Name" \
-      GIT_COMMITTER_EMAIL="committer@email" \
-      GIT_COMMITTER_DATE="2005-05-26 23:30" \
--     TZ=GMT git commit-tree `cat treeid` >commitid 2>/dev/null'
-+     TZ=GMT git commit-tree $(cat treeid) >commitid 2>/dev/null'
+diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
+index 15973f2..7043ba7 100755
+--- a/t/t1511-rev-parse-caret.sh
++++ b/t/t1511-rev-parse-caret.sh
+@@ -6,11 +6,11 @@ test_description='tests for ref^{stuff}'
  
- test_expect_success \
-     'read commit' \
--    'git cat-file commit `cat commitid` >commit'
-+    'git cat-file commit $(cat commitid) >commit'
- 
- test_expect_success \
-     'compare commit' \
+ test_expect_success 'setup' '
+ 	echo blob >a-blob &&
+-	git tag -a -m blob blob-tag `git hash-object -w a-blob` &&
++	git tag -a -m blob blob-tag $(git hash-object -w a-blob) &&
+ 	mkdir a-tree &&
+ 	echo moreblobs >a-tree/another-blob &&
+ 	git add . &&
+-	TREE_SHA1=`git write-tree` &&
++	TREE_SHA1=$(git write-tree) &&
+ 	git tag -a -m tree tree-tag "$TREE_SHA1" &&
+ 	git commit -m Initial &&
+ 	git tag -a -m commit commit-tag &&
 -- 
 2.3.3.GIT
