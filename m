@@ -1,121 +1,121 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: RefTree: Alternate ref backend
-Date: Tue, 22 Dec 2015 16:41:43 +0100
-Message-ID: <56796F37.1000600@alum.mit.edu>
-References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Pls Support Conservancy: https://sfconservancy.org/supporter/
+Date: Tue, 22 Dec 2015 08:02:25 -0800
+Message-ID: <xmqqpoxyeajy.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>
-To: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 22 16:49:06 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 22 17:02:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBPBO-0000PX-J2
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 16:49:02 +0100
+	id 1aBPOh-0004w1-HL
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Dec 2015 17:02:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755269AbbLVPsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 10:48:51 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55967 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754381AbbLVPst (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Dec 2015 10:48:49 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Dec 2015 10:48:49 EST
-X-AuditID: 1207440f-f79df6d000007c0f-8e-56796f3b1dd1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id BD.84.31759.B3F69765; Tue, 22 Dec 2015 10:41:47 -0500 (EST)
-Received: from [192.168.69.130] (p4FC969CC.dip0.t-ipconnect.de [79.201.105.204])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBMFfifX032077
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 22 Dec 2015 10:41:45 -0500
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.4.0
-In-Reply-To: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBKsWRmVeSWpSXmKPExsUixO6iqGudXxlmsOEpm8X8TScYLbqudDNZ
-	/GjpYbaYf2giqwOLx7PePYwef87vYfVY8Pw+u8fnTXIBLFHcNkmJJWXBmel5+nYJ3Blr9l1i
-	KmiRrHizr42lgXGVSBcjJ4eEgInErO83WCFsMYkL99azdTFycQgJXGaU+HFuAjOEc4FJYtXb
-	1ywgVcIC2hLPu3+BdYgIOEr0vfrHBGILCQRIfLvwhhHEZhZwk3i+upcNxGYT0JVY1NPMBLFB
-	TqK3exLYHF6gOYeO3mYHsVkEVCVudc1nBrFFBUIk9u7sgKoRlDg58wmYzSkQKLHswgsWiPnq
-	En/mXWKGsOUlmrfOZp7AKDgLScssJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRr
-	opebWaKXmlK6iRES6vw7GLvWyxxiFOBgVOLhnbCgIkyINbGsuDL3EKMkB5OSKO/JzMowIb6k
-	/JTKjMTijPii0pzU4kOMEhzMSiK8AUFAOd6UxMqq1KJ8mJQ0B4uSOK/6EnU/IYH0xJLU7NTU
-	gtQimKwMB4eSBK9gHlCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCiG44uBUQyS
-	4gHaawXSzltckJgLFIVoPcWoKCXOKwCSEABJZJTmwY2FJbBXjOJAXwrzZoBU8QCTH1z3K6DB
-	TECD/6wrBxlckoiQkmpgTOeJ/HDsM2u1muSvxzmViteOluy1OZp4fo23UcP7rY6L6rnCgjay
-	WLrtcwsIWGx4ZJbupkp3hp87TzLbdMpOqeOfuvf9hSe5U924uXauONiQ0lnUL/VR 
+	id S1753630AbbLVQCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Dec 2015 11:02:36 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64301 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753506AbbLVQCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Dec 2015 11:02:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5AA933317;
+	Tue, 22 Dec 2015 11:02:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=H
+	rvuNJKq6doH81RgKG4Symra/oY=; b=b7mzu1UX36N6kssq8ak4/l1WDwp1v4LWB
+	yEYTSoGJBj3G6v8OgNAUPLmETRCqenUuPjFaZVtwkxXBGLvoP5jGJElJbnLxEMsi
+	2UOHhxEjtu14F97WNynB6J3OXij0x93nGDz03R0SvEEGFFt8+UXLhy6EZ0qqyN2m
+	WdiXfcZ204=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=SSD
+	RQoPjmW/ZWyD1zmSvVrrkQKlQIXBOvEMehZgllqoKt+K/XmMNRJuSTqemWBcyp0X
+	5P0vBg1UJYkjmYuMawRXUeuZCNI9Z50Sr0Cn86K7SCF/LUUCiZnZOXCzlXzf0+V5
+	Y0tvAMAHAloaFacNitetXeMP3goCAh8r56aSTgww=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9DA4B33316;
+	Tue, 22 Dec 2015 11:02:27 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E46E33315;
+	Tue, 22 Dec 2015 11:02:27 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 659B17B0-A8C5-11E5-95A1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282881>
 
-On 12/17/2015 10:02 PM, Shawn Pearce wrote:
-> I started playing around with the idea of storing references directly
-> in Git. Exploiting the GITLINK tree entry, we can associate a name to
-> any SHA-1.
-> 
-> By storing all references in a single tree, atomic transactions are
-> possible. Its a simple compare-and-swap of a single 40 byte SHA-1.
-> This of course leads to a bootstrapping problem, where do we store the
-> 40 byte SHA-1? For this example its just $GIT_DIR/refs/txn/committed
-> as a classical loose reference.
+[Jeff King, Shawn Pearce and myself represent the Git project to the
+Conservancy, and here is a request for help from us.]
 
-I like this general idea a lot, even while recognizing some practical
-problems that other people have pointed out. I especially like the idea
-of having truly atomic multi-reference updates.
+We apologize that we're interrupting the usual content on this
+mailing list with a fundraising message, but the non-profit home of
+the Git project, Software Freedom Conservancy, is in urgent need of
+your immediate support: https://sfconservancy.org/supporter/
 
-I'm curious why you decided to store all of the references in a single
-list, similar to the packed-refs file. This design means that the whole
-object has to be rewritten whenever any reference is updated [1].
-Certainly, storing the references in a single tree *object* is not a
-requirement for having atomic transitions.
+Git receives a myriad of important services (see
+https://sfconservancy.org/members/services/ ) from Conservancy.  We
+have relied on Conservancy since 2009 to provide them, and we ask
+that you support them.  While Git gladly contributes 10% of our
+project's gross revenue to Conservancy's general fund, (while
+Conservancy maintains and administers the other 90% in collaboration
+with us to advance the Git project), that 10% of contributions from
+all Conservancy's member projects doesn't add up to enough to even
+employ one full time person, let alone the already overworked staff
+of three that Conservancy has.
 
-I would have expected a design where the layout of the references in
-trees mimics the layout of loose references in the filesystem; e.g., one
-tree object for "refs/", one for "refs/heads/" one for "refs/remotes/"
-etc. This design would reduce the amount of rewriting that is needed
-when one or a few references are updated.
+Conservancy's fundraiser, found at https://sfconservancy.org/supporter/
+, is centered around asking individuals who care about the work that
+Conservancy does to donate $120/year, or just $10/month, to support the
+organization.  Conservancy seeks about 2,500 Supporters to continue its
+current work, and 750 Supporters to continue a "bare minimum" of
+services to its projects.
 
-Another reason that I find a hierarchical layout intriguing would be
-that one could imagine using the SHA-1s of reference namespace subtrees
-to speed up the negotiation phase of "git fetch". In the common case
-that I use the local namespace "refs/remotes/origin" to track an
-upstream repo, the SHA-1 of my "refs/remotes/origin" tree would usually
-represent a complete description of the state of the upstream references
-at the time that I last fetched. My client could tell the server
+Here are some of the things that Conservancy does for Git that are in
+the "bare minimum" category:
 
-    have-tree $SHA1
+ * Handle our Google Summer of Code payments and travel, including
+   handling all financial transactions with Google to receive and then
+   disperse the money.
 
-, where $SHA1 is the hash of the tree representing
-"refs/remotes/origin/". If the server keeps a reflog as you have
-described (but hierarchically), then the server could look up $SHA1 and
-immediately know the full set of references, and therefore of objects,
-that I fetched last time. More generally, the negotiation could proceed
-down the reference namespace tree and stop whenever commonality is found.
+ * Coordinating travel reimbursements for Git contributors to attend
+   conferences.
 
-There are a lot of "if"s in that last paragraph, and maybe it's not
-workable. For example, if I'm not pruning on fetch, then my reference
-tree won't be identical to one that was ever present on the server and
-this technique wouldn't necessarily help. But if, for example, we change
-the default to pruning, or perhaps record some extra reftree SHA-1's,
-then in most cases I would expect that this trick could reduce the
-effort of negotiation to negligible in most cases, and reduce the time
-of the whole fetch to negligible in the case that the clone is already
-up-to-date.
+ * Buying and shipping hardware to Git volunteer contributors who need
+   it.
 
-Michael
+ * Keeping the non-profit status for us so that we don't have to form
+   our own org and file our own paperwork.
 
-[1] At GitHub, we store public repositories in networks with a shared
-object store. The central repository in each network can have 10M+
-references. So for us, rewriting that many references for every
-reference update would be unworkable.
+Here are some of the services Git has received in the wider category:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+ * Dealing with questions from the community about the DCO and legal
+   issues surrounding contributions to the Git project.
+
+ * Discussing the issue of copyright governance and contributions with
+   large corporations who want their employees to contribute to Git
+   but need legal assurances or have questions relating to Git's
+   license or contribution policies.
+
+ * Helping us write the Git trademark policy:
+   https://git-scm.com/trademark , registering the trademark, and
+   enforcing the trademark when we need it.  This assures Git users can
+   know that when they see something called "Git", it relates to the Git
+   project in some way.
+ 
+ * And, in fact, we do very occasionally find companies violating the
+   GPL on Git, and Conservancy has helped us out with that.
+
+
+As you can see, Git really relies on the important work of Conservancy,
+and thus the Git project leadership encourages you to choose Conservancy
+as one of your charitable gifts this holiday season.  (Conservancy is a
+501(c)(3) charity incorporated in New York, and donations are typically
+deductible on U.S. taxes.)
+
+Please visit: https://sfconservancy.org/supporter/
