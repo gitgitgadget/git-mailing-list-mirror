@@ -1,67 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 14/16] refs: allow ref backend to be set for clone
-Date: Wed, 23 Dec 2015 15:23:25 -0500
-Message-ID: <CAPig+cSaZRAXJ+sVZgFUbWcNMzqWGtH9rgqFXjupjtTJiQVYFw@mail.gmail.com>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	<1449102921-7707-15-git-send-email-dturner@twopensource.com>
-	<567AA6DD.9000404@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Dec 23 21:23:31 2015
+From: "Stephen P. Smith" <ischis2@cox.net>
+Subject: [PATCH V4 2/2] user-manual: add section documenting shallow clones
+Date: Wed, 23 Dec 2015 13:36:01 -0700
+Message-ID: <1450902961-1528-1-git-send-email-ischis2@cox.net>
+References: <CAPig+cRMdpJ-k9L33jE01ubfK6MOWNGwuoUULuQqOv8C0we+DQ@mail.gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"Stephen P. Smith" <ischis2@cox.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 23 21:35:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBpwZ-0002gG-3O
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 21:23:31 +0100
+	id 1aBq8O-0005P7-Vj
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 21:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934203AbbLWUX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 15:23:27 -0500
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:35112 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934182AbbLWUX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 15:23:26 -0500
-Received: by mail-vk0-f46.google.com with SMTP id k1so11903572vkb.2
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 12:23:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JPgXUP0jt0tZc1faJAzLpUsvvgJpw4/warCrm8NYWKc=;
-        b=cs8GE/bKPfiWgHpcFoVNE63nWp0IjJTEam1UfrVBxrqPox8AZ43Jkg/AxWCZVaF5V/
-         bcRqpDCMDxP+g6HEKWJX8gte+oLcQMAqV/xUP5XpUdf2zEeuGmguBJ0mRXArU3eCueau
-         lKGneoCjV8VQKKw6s30FRPIcqOFfHMsKHzFHZze7wnT9qOLUGXrEeBKqgHRrSp4uFXg9
-         /RJmv7QWFEPVwHCew3WEMzpeyJIY6CGRMZaLK6XWrtkkd8rUMpwxKuZutlOENG0nML3Q
-         7BRbKtr7upv4O7+dL0lpCpKUOnsldXMgiaU9WC5f9nWfOkaaNmnd3/dCTuRSr9WMwA35
-         ALZw==
-X-Received: by 10.31.52.82 with SMTP id b79mr21108154vka.84.1450902205613;
- Wed, 23 Dec 2015 12:23:25 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 23 Dec 2015 12:23:25 -0800 (PST)
-In-Reply-To: <567AA6DD.9000404@alum.mit.edu>
-X-Google-Sender-Auth: eSiT5-i1S2FOO4uRoRGmcCjej0s
+	id S965366AbbLWUfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 15:35:41 -0500
+Received: from fed1rmfepo102.cox.net ([68.230.241.144]:51664 "EHLO
+	fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965352AbbLWUfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 15:35:40 -0500
+Received: from fed1rmimpo110 ([68.230.241.159]) by fed1rmfepo102.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20151223203539.SQM7752.fed1rmfepo102.cox.net@fed1rmimpo110>
+          for <git@vger.kernel.org>; Wed, 23 Dec 2015 15:35:39 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo110 with cox
+	id x8be1r00Z2tqoqC018becs; Wed, 23 Dec 2015 15:35:39 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020201.567B059B.0066,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=B55nJpRM c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
+ a=TSbVqHtbAAAA:8 a=a-mmkxGj_Wl2OYgx35IA:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id BC43213F63A;
+	Wed, 23 Dec 2015 13:36:32 -0700 (MST)
+X-Mailer: git-send-email 2.6.3.368.gf34be46
+In-Reply-To: <CAPig+cRMdpJ-k9L33jE01ubfK6MOWNGwuoUULuQqOv8C0we+DQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282953>
 
-On Wed, Dec 23, 2015 at 8:51 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 12/03/2015 01:35 AM, David Turner wrote:
->> +     if (refs_backend_type && *refs_backend_type) {
->> +             argv_array_push(&cp.args, "--refs-backend-type");
->> +             argv_array_push(&cp.args, refs_backend_type);
->> +     }
->
-> This could be shortened to
->
->     argv_array_pushf(&cp.args, "--refs-backend-type=%s", refs_backend_type);
+Rather than merely pointing readers at the 1.5 release notes to
+learn about shallow clones, document them formally.
 
-Or, without interpolation:
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
 
-    argv_array_pushl(&cp.args, "--refs-backend-type", refs_backend_type, NULL);
+ I replaced the paragraphs that I wrote with Eric Shunshine's since it
+ was cleaner.
+
+ I like the idea of linking to the preceeding effort, but gmane.org is
+ currently undergoing maintance and therefore giving me errors when I
+ attempt to access it.
+
+ Documentation/user-manual.txt | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 1c790ac..5c13683 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2128,6 +2128,20 @@ The gitweb cgi script provides users an easy way to browse your
+ project's files and history without having to install Git; see the file
+ gitweb/INSTALL in the Git source tree for instructions on setting it up.
+ 
++[[how-to-get-a-git-repository-with-minimal-history]]
++How to get a Git repository with minimal history
++------------------------------------------------
++
++A <<def_shallow_clone,shallow clone>>, with its truncated
++history, is useful when one is interested only in recent history
++of a project and getting full history from the upstream is
++expensive.
++
++A <<def_shallow_clone,shallow clone>> is created by specifying
++the linkgit:git-clone[1] `--depth` switch. The depth can later be
++changed with the linkgit:git-fetch[1] `--depth` switch, or full
++history restored with `--unshallow`.
++
+ [[sharing-development-examples]]
+ Examples
+ --------
+@@ -4645,9 +4659,6 @@ standard end-of-chapter section?
+ 
+ Include cross-references to the glossary, where appropriate.
+ 
+-Document shallow clones?  See draft 1.5.0 release notes for some
+-documentation.
+-
+ Add a section on working with other version control systems, including
+ CVS, Subversion, and just imports of series of release tarballs.
+ 
+-- 
+2.6.3.368.gf34be46
