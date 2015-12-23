@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/10] t/t5505-remote.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Dec 2015 14:45:53 +0100
-Message-ID: <1450878358-7422-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] t/t5303-pack-corruption-resilience.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Dec 2015 14:45:49 +0100
+Message-ID: <1450878358-7422-2-git-send-email-gitter.spiros@gmail.com>
 References: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:45 2015
+X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBjkb-0002dg-1N
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:45 +0100
+	id 1aBjkf-0002nm-Sc
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933859AbbLWNqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 08:46:38 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36619 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933808AbbLWNqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 08:46:21 -0500
-Received: by mail-pa0-f49.google.com with SMTP id q3so112890869pav.3
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:21 -0800 (PST)
+	id S933804AbbLWNqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 08:46:19 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34115 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933796AbbLWNqS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 08:46:18 -0500
+Received: by mail-pa0-f50.google.com with SMTP id uo6so28633135pac.1
+        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VcrksGb/UyVSszY6s/8OpePHizevnM0MNOZMBzmREOQ=;
-        b=kTiig3+YyIz/QRMMDfBNoypAja02ln9FqG/RvAxwk+WqALYvS9nEh7dvZNzXjpeTj6
-         JRP4h1Qqmsn2aOhsGnhZW7B/XxWm5+wD4OXQe2OIMBWK2NFtXYBRb8kgNqxw0x7LmpAt
-         2UH2TS3SJcGQOB9h7AH44kLVDYL2KJbgfmH1xhO3ueeYz/fCwc0oi0hVNA5ovMtlSRD0
-         mzjff27mAHfm5tskfw9azSld6xZFErkBs6mH4vSZkFUKnHbE2KcjTVcFKoxsoSgNh8kd
-         4czgPKkILLl0UIZB+tVHqM6dm0w9/yBvSW7mJZP6sJ5QKWSTz5rfHq/Sc7i/ewTH2f3c
-         D4mw==
-X-Received: by 10.66.227.102 with SMTP id rz6mr43635529pac.4.1450878381563;
-        Wed, 23 Dec 2015 05:46:21 -0800 (PST)
+        bh=8gSwzz6k7PFzWm6JX/dWERc+pPnBFZW+HgwfbQjDwYs=;
+        b=XN4qWTjrMraWVBytRmPor26FBlgGsh8ou/h44P7RZQCPraDSVCniWrhkfzNIghFkyy
+         db0JRGym4pdmCJhayu2Xzao3lhxi/U7oAJmmYrzqsFde+20pb2IEiqmoJNvOFiakQhFG
+         zswanfk3VV8w/oP2elgih05QFpOiRJZAmFMxIJ2CwmWAarEFrhcwhdYQF9ofBKBE4xaP
+         8uwApFWI3+WciURYmkzFb5XXZb7W861dLZdcBXEmTOfqSfb+0wrKaHF97oPEP8WZu7/y
+         bOq1/ik5eSzobddvEbwdOqrlSGzBiE5A5bMKLRg74yRpugzoPpFxTTeyAUFWvNyDhW0c
+         AHGA==
+X-Received: by 10.66.180.48 with SMTP id dl16mr43426972pac.39.1450878377660;
+        Wed, 23 Dec 2015 05:46:17 -0800 (PST)
 Received: from ubuntu14.nephoscale.com ([67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.20
+        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Dec 2015 05:46:20 -0800 (PST)
+        Wed, 23 Dec 2015 05:46:16 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282945>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,44 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5505-remote.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5303-pack-corruption-resilience.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index dfaf9d9..1a8e3b8 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -85,7 +85,7 @@ test_expect_success C_LOCALE_OUTPUT 'check remote-tracking' '
- test_expect_success 'remote forces tracking branches' '
- 	(
- 		cd test &&
--		case `git config remote.second.fetch` in
-+		case $(git config remote.second.fetch) in
- 		+*) true ;;
- 		 *) false ;;
- 		esac
+diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
+index 663b02b..5940ce2 100755
+--- a/t/t5303-pack-corruption-resilience.sh
++++ b/t/t5303-pack-corruption-resilience.sh
+@@ -32,23 +32,23 @@ create_test_files() {
+ create_new_pack() {
+     rm -rf .git &&
+     git init &&
+-    blob_1=`git hash-object -t blob -w file_1` &&
+-    blob_2=`git hash-object -t blob -w file_2` &&
+-    blob_3=`git hash-object -t blob -w file_3` &&
+-    pack=`printf "$blob_1\n$blob_2\n$blob_3\n" |
+-          git pack-objects $@ .git/objects/pack/pack` &&
++    blob_1=$(git hash-object -t blob -w file_1) &&
++    blob_2=$(git hash-object -t blob -w file_2) &&
++    blob_3=$(git hash-object -t blob -w file_3) &&
++    pack=$(printf "$blob_1\n$blob_2\n$blob_3\n" |
++          git pack-objects $@ .git/objects/pack/pack) &&
+     pack=".git/objects/pack/pack-${pack}" &&
+     git verify-pack -v ${pack}.pack
+ }
+ 
+ do_repack() {
+-    pack=`printf "$blob_1\n$blob_2\n$blob_3\n" |
+-          git pack-objects $@ .git/objects/pack/pack` &&
++    pack=$(printf "$blob_1\n$blob_2\n$blob_3\n" |
++          git pack-objects $@ .git/objects/pack/pack) &&
+     pack=".git/objects/pack/pack-${pack}"
+ }
+ 
+ do_corrupt_object() {
+-    ofs=`git show-index < ${pack}.idx | grep $1 | cut -f1 -d" "` &&
++    ofs=$(git show-index < ${pack}.idx | grep $1 | cut -f1 -d" ") &&
+     ofs=$(($ofs + $2)) &&
+     chmod +w ${pack}.pack &&
+     dd of=${pack}.pack bs=1 conv=notrunc seek=$ofs &&
 -- 
 2.3.3.GIT
