@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] t/t5510-fetch.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Dec 2015 14:45:55 +0100
-Message-ID: <1450878358-7422-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] t/t5505-remote.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Dec 2015 14:45:53 +0100
+Message-ID: <1450878358-7422-6-git-send-email-gitter.spiros@gmail.com>
 References: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:47 2015
+X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBjkb-0002dg-LX
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:46 +0100
+	id 1aBjkb-0002dg-1N
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933853AbbLWNqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 08:46:37 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34146 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933815AbbLWNqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 08:46:23 -0500
-Received: by mail-pa0-f48.google.com with SMTP id uo6so28633993pac.1
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:23 -0800 (PST)
+	id S933859AbbLWNqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 08:46:38 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36619 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933808AbbLWNqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 08:46:21 -0500
+Received: by mail-pa0-f49.google.com with SMTP id q3so112890869pav.3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WIt7XUKp4qTxEM+X/lRTfON0gQrjX9qvbKtz9qgHhC8=;
-        b=RxcPIHd6nP7x7Xk3OVc3DCD0sXGhLhjmifhpyrCPdPz6Z+TLU8LEym2IM+4qEox4J0
-         YgxaptPLEGzUPNqWR9TlhaS8ekSMyoW97HmnCFsaIVZcvi13doCL3XVySItTvXJOcAhG
-         y7c2s/KaljAsgTYLA2ho2JAcuTlCTIzJQc0MXVpkvP/EpP9Y+VGjNyl8h3VBLShwCG/1
-         YivhOvY+J3GnEiWRNsGb7hW6C55N52YBNqO79SpEjkbWRHVk1dtmLIcAFrWNRrF97/m3
-         /2JAYtyO8u8ZYAbmNlvdggR7c0tqK7LfXGWsjNDlPzJeEfnySe1Jn2Fms2xti+pyQ+Hn
-         CKxQ==
-X-Received: by 10.66.119.202 with SMTP id kw10mr13202791pab.7.1450878383275;
-        Wed, 23 Dec 2015 05:46:23 -0800 (PST)
+        bh=VcrksGb/UyVSszY6s/8OpePHizevnM0MNOZMBzmREOQ=;
+        b=kTiig3+YyIz/QRMMDfBNoypAja02ln9FqG/RvAxwk+WqALYvS9nEh7dvZNzXjpeTj6
+         JRP4h1Qqmsn2aOhsGnhZW7B/XxWm5+wD4OXQe2OIMBWK2NFtXYBRb8kgNqxw0x7LmpAt
+         2UH2TS3SJcGQOB9h7AH44kLVDYL2KJbgfmH1xhO3ueeYz/fCwc0oi0hVNA5ovMtlSRD0
+         mzjff27mAHfm5tskfw9azSld6xZFErkBs6mH4vSZkFUKnHbE2KcjTVcFKoxsoSgNh8kd
+         4czgPKkILLl0UIZB+tVHqM6dm0w9/yBvSW7mJZP6sJ5QKWSTz5rfHq/Sc7i/ewTH2f3c
+         D4mw==
+X-Received: by 10.66.227.102 with SMTP id rz6mr43635529pac.4.1450878381563;
+        Wed, 23 Dec 2015 05:46:21 -0800 (PST)
 Received: from ubuntu14.nephoscale.com ([67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.22
+        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Dec 2015 05:46:22 -0800 (PST)
+        Wed, 23 Dec 2015 05:46:20 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282944>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,43 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5510-fetch.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5505-remote.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 0ba9db0..47e68a5 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -7,7 +7,7 @@ test_description='Per branch config variables affects "git fetch".
- 
- . ./test-lib.sh
- 
--D=`pwd`
-+D=$(pwd)
- 
- test_bundle_object_count () {
- 	git verify-pack -v "$1" >verify.out &&
-@@ -64,8 +64,8 @@ test_expect_success "fetch test" '
- 	cd two &&
- 	git fetch &&
- 	test -f .git/refs/heads/one &&
--	mine=`git rev-parse refs/heads/one` &&
--	his=`cd ../one && git rev-parse refs/heads/master` &&
-+	mine=$(git rev-parse refs/heads/one) &&
-+	his=$(cd ../one && git rev-parse refs/heads/master) &&
- 	test "z$mine" = "z$his"
- '
- 
-@@ -75,8 +75,8 @@ test_expect_success "fetch test for-merge" '
- 	git fetch &&
- 	test -f .git/refs/heads/two &&
- 	test -f .git/refs/heads/one &&
--	master_in_two=`cd ../two && git rev-parse master` &&
--	one_in_two=`cd ../two && git rev-parse one` &&
-+	master_in_two=$(cd ../two && git rev-parse master) &&
-+	one_in_two=$(cd ../two && git rev-parse one) &&
- 	{
- 		echo "$one_in_two	"
- 		echo "$master_in_two	not-for-merge"
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index dfaf9d9..1a8e3b8 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -85,7 +85,7 @@ test_expect_success C_LOCALE_OUTPUT 'check remote-tracking' '
+ test_expect_success 'remote forces tracking branches' '
+ 	(
+ 		cd test &&
+-		case `git config remote.second.fetch` in
++		case $(git config remote.second.fetch) in
+ 		+*) true ;;
+ 		 *) false ;;
+ 		esac
 -- 
 2.3.3.GIT
