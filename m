@@ -1,147 +1,131 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 11/11] t7063: add tests for core.untrackedCache
-Date: Wed, 23 Dec 2015 22:03:59 +0100
-Message-ID: <1450904639-25592-12-git-send-email-chriscool@tuxfamily.org>
-References: <1450904639-25592-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 22:05:14 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/3] nd/clear-gitenv-upon-use-of-alias
+Date: Wed, 23 Dec 2015 16:31:40 -0500
+Message-ID: <20151223213140.GB21277@sigill.intra.peff.net>
+References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
+ <1450597819-26278-1-git-send-email-pclouds@gmail.com>
+ <xmqq4mfbfqla.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8DFmZSa2x4y2fDwVsvwa5uAuMJn8v=utvYtAPTGFbdWPg@mail.gmail.com>
+ <CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
+ <xmqqd1tye4i8.fsf@gitster.mtv.corp.google.com>
+ <20151223093700.GA13386@sigill.intra.peff.net>
+ <567B05F0.5020604@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Anthony Sottile <asottile@umich.edu>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Dec 23 22:31:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBqau-0000lK-DD
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 22:05:12 +0100
+	id 1aBr0d-0008W0-Ok
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 22:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965491AbbLWVFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 16:05:08 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34963 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965452AbbLWVEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 16:04:51 -0500
-Received: by mail-wm0-f49.google.com with SMTP id l126so161980041wml.0
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 13:04:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+yPU086eu9VCsUXbyHrvciE/a1C+IDK9ss6H+ekQ5I4=;
-        b=tXIlSjelDVLVargFswhEuLK8r9lNDMNvJYZazikStkDMVh+eTdOf7IhwyfSlmIAX+j
-         d/SydRkLWYC+AHWvvt+BtFRYOz68irwrxB+mOU7TArbW1dsno/zoAZy/bw571i9RHbMi
-         Zn3IiAHzhPr3GnZxCLQkO7i56SdwoCr/NPaOwhLEs0+OqhuZVYOoYcGLBguG+UbjZvow
-         VZZ8wTCIDCRh3egA5VnLglvKNUET9KOo0nSyflgPoENHPLWIv8n2WTF7c6GSvRwwmgpu
-         F5BS3afAbPhy4N2YS/lHyQfCAutqfmkQr8hRGMN3+kPEXRQTVvSLHetiLqLP4lSLst2V
-         s7Cg==
-X-Received: by 10.194.89.226 with SMTP id br2mr39994620wjb.22.1450904690290;
-        Wed, 23 Dec 2015 13:04:50 -0800 (PST)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id w80sm9434692wme.17.2015.12.23.13.04.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Dec 2015 13:04:49 -0800 (PST)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.7.0.rc2.11.g68ccdd4
-In-Reply-To: <1450904639-25592-1-git-send-email-chriscool@tuxfamily.org>
+	id S965453AbbLWVbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 16:31:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45732 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965289AbbLWVbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 16:31:43 -0500
+Received: (qmail 16503 invoked by uid 102); 23 Dec 2015 21:31:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Dec 2015 15:31:43 -0600
+Received: (qmail 11341 invoked by uid 107); 23 Dec 2015 21:31:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Dec 2015 16:31:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Dec 2015 16:31:40 -0500
+Content-Disposition: inline
+In-Reply-To: <567B05F0.5020604@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282967>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t7063-status-untracked-cache.sh | 48 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 46 insertions(+), 2 deletions(-)
+On Wed, Dec 23, 2015 at 09:37:04PM +0100, Johannes Sixt wrote:
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 253160a..f0af41c 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -18,6 +18,10 @@ if ! test_have_prereq UNTRACKED_CACHE; then
- 	test_done
- fi
- 
-+test_expect_success 'core.untrackedCache is unset' '
-+	test_must_fail git config --get core.untrackedCache
-+'
-+
- test_expect_success 'setup' '
- 	git init worktree &&
- 	cd worktree &&
-@@ -28,6 +32,11 @@ test_expect_success 'setup' '
- 	git update-index --untracked-cache
- '
- 
-+test_expect_success 'core.untrackedCache is true' '
-+	UC=$(git config core.untrackedCache) &&
-+	test "$UC" = "true"
-+'
-+
- test_expect_success 'untracked cache is empty' '
- 	test-dump-untracked-cache >../actual &&
- 	cat >../expect <<EOF &&
-@@ -506,7 +515,7 @@ EOF
- 
- test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
- 	test-dump-untracked-cache >../actual &&
--	cat >../expect <<EOF &&
-+	cat >../expect-from-test-dump <<EOF &&
- info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
-@@ -525,7 +534,7 @@ file
- /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
- two
- EOF
--	test_cmp ../expect ../actual
-+	test_cmp ../expect-from-test-dump ../actual
- '
- 
- test_expect_success 'test sparse status again with untracked cache and subdir' '
-@@ -569,4 +578,39 @@ EOF
- 	test_cmp ../status.expect ../status.actual
- '
- 
-+test_expect_success '--no-untracked-cache removes the cache' '
-+	git update-index --no-untracked-cache &&
-+	UC=$(git config core.untrackedCache) &&
-+	test "$UC" = "false" &&
-+	test-dump-untracked-cache >../actual &&
-+	echo "no untracked cache" >../expect &&
-+	test_cmp ../expect ../actual
-+'
-+
-+test_expect_success 'git status does not change anything' '
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect ../actual &&
-+	UC=$(git config core.untrackedCache) &&
-+	test "$UC" = "false"
-+'
-+
-+test_expect_success 'setting core.untrackedCache and using git status creates the cache' '
-+	git config core.untrackedCache true &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-from-test-dump ../actual
-+'
-+
-+test_expect_success 'unsetting core.untrackedCache and using git status removes the cache' '
-+	git config --unset core.untrackedCache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-from-test-dump ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect ../actual
-+'
-+
- test_done
--- 
-2.7.0.rc2.11.g68ccdd4
+> >--- a/git.c
+> >+++ b/git.c
+> >@@ -252,7 +252,7 @@ static int handle_alias(int *argcp, const char ***argv)
+> >  			alias_argv[argc] = NULL;
+> >
+> >  			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+> >-			if (ret >= 0)   /* normal exit */
+> >+			if (ret != -1)  /* normal exit */
+> 
+> Why does this make a difference? We only ever return -1, zero, or a positive
+> value from run_command/finish_command/wait_or_whine, as far as I can see.
+
+Yeah, you're right. This bit predates 709ca73 (run-command: encode
+signal death as a positive integer, 2013-01-05), which came out of the
+same discussion. So I'd agree this hunk can simply be dropped.
+
+That leaves the ignoring of SIGPIPE in wait_or_whine. I started to
+rewrite the commit message to drop the first hunk, but I found I
+couldn't replicate the problem in the second either!
+
+Doing:
+
+  GIT_PAGER=false git -c alias.foo='!git log -p' foo
+
+doesn't trigger it. We run the alias through a shell, so we see only the
+munged "141" value from the shell's exit code.
+
+Something like:
+
+  GIT_PAGER=false git -p -c alias.foo='!yes' foo
+
+does generate the error message. But we've redirected stderr into the
+pager at that point, so by definition it can never be shown.
+
+So I think we would need a case where:
+
+  - the outer git doesn't run the pager that dies; instead the pager is
+    run inside the alias. But...
+
+  - inside the alias cannot be a shell pipeline, since "foo | less" will
+    report the exit code of "less", not "foo" (we make special arrangements
+    in git to propagate the exit code of "foo"). So it pretty much has
+    to be a git invocation inside the alias. But...
+
+  - The git invocation will convert signal death in the sub-process into
+    141, like a shell would.
+
+So I'm not sure if this is triggerable at all with an alias.
+
+I did manage to trigger it with an external command, like:
+
+  $ cat $(which git-yes)
+  #!/bin/sh
+  # This _has_ to be exec, otherwise the shell converts SIGPIPE death
+  # into 141.
+  exec yes
+
+and then if you run your _own_ pager, like this:
+
+  $ git yes | false
+  error: git-yes died of signal 13
+
+you see it. But if git starts the pager, you don't:
+
+  $ GIT_PAGER=false git -p yes
+
+Because the stderr of the outer git process is going to the same dead
+pipe.
+
+So my takeaways are:
+
+  1. Complaining about signal death in general is going to be flaky,
+     because it's so easy for shells or git to rewrite the exit code and
+     not trigger WIFSIGNALED() in the first place.
+
+  2. I doubt anybody is actually seeing this in practice anymore. But
+     maybe I am misunderstanding something in Duy's series that changes
+     this.
+
+-Peff
