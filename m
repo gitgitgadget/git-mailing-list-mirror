@@ -1,184 +1,172 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: RefTree: Alternate ref backend
-Date: Wed, 23 Dec 2015 05:59:48 +0100
-Message-ID: <567A2A44.3050003@alum.mit.edu>
-References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
- <56796F37.1000600@alum.mit.edu>
- <CAJo=hJtPSxY1YZgEt1AA_ukgY9cTA=1tdv_F+nCetv_Ux9E=3g@mail.gmail.com>
- <567985A8.2020301@alum.mit.edu>
- <CAJo=hJtgfpZn0OjbQ=BVoO_=03yG0Czjfn9vX4RobWLYpNVENg@mail.gmail.com>
- <xmqq1taee1w9.fsf@gitster.mtv.corp.google.com>
- <CAJo=hJswuPdLT0KtGdf_=UGxD7-5NjGk2mwFjRU=uYb-Su-y+A@mail.gmail.com>
- <xmqqsi2ucm60.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 08/16] refs: add methods to init refs backend and db
+Date: Wed, 23 Dec 2015 06:33:28 +0100
+Message-ID: <567A3228.2060407@alum.mit.edu>
+References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
+ <1449102921-7707-9-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 8bit
-Cc: git <git@vger.kernel.org>, David Turner <dturner@twopensource.com>,
-	Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 23 06:07:12 2015
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 23 06:40:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBbdn-0001r3-CM
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 06:07:11 +0100
+	id 1aBcAB-0004Kr-Ph
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 06:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbbLWFHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 00:07:04 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64685 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750710AbbLWFHD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Dec 2015 00:07:03 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Dec 2015 00:07:03 EST
-X-AuditID: 1207440e-f79516d0000012b3-16-567a2a47bf3a
+	id S933020AbbLWFkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 00:40:36 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:60895 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932426AbbLWFkf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Dec 2015 00:40:35 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Dec 2015 00:40:34 EST
+X-AuditID: 12074412-f79a76d000007c8b-58-567a322904d4
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.BF.04787.74A2A765; Tue, 22 Dec 2015 23:59:51 -0500 (EST)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 10.70.31883.9223A765; Wed, 23 Dec 2015 00:33:30 -0500 (EST)
 Received: from [192.168.69.130] (p4FC971CA.dip0.t-ipconnect.de [79.201.113.202])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBN4xmLf005016
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBN5XSxL006412
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 22 Dec 2015 23:59:50 -0500
+	Wed, 23 Dec 2015 00:33:29 -0500
 X-Enigmail-Draft-Status: N1110
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Icedove/38.4.0
-In-Reply-To: <xmqqsi2ucm60.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqOuuVRVmsGWqjsX8TScYLbqudDNZ
-	NPReYba4/34dk8WPlh5mi/mHJrI6sHlc7utl8njWu4fR4+IlZY8/5/eweix4fp/d4/MmuQC2
-	KG6bpMSSsuDM9Dx9uwTujJ2Nj5kLdqhVHN/ayNLA+EWui5GTQ0LAROLY8+NsELaYxIV764Fs
-	Lg4hgcuMEs/f7IdyLjBJrHvWwg5SJSygLfG8+xcriC0i4CXxf9pbdoii08wSfQt2MIE4zAJ9
-	jBLffl8Bq2IT0JVY1NPMBLFDTqK3exJLFyMHBy/QpJ1HPUBMFgFVie7PwiAVogIhEnt3drCA
-	2LwCghInZz4BszkFrCWW3nkIdgOzgJ7EjusQNzALyEs0b53NPIFRcBaSlllIymYhKVvAyLyK
-	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdYLzezRC81pXQTIyQi+HYwtq+XOcQowMGoxMPr2FYZ
+In-Reply-To: <1449102921-7707-9-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupgleLIzCtJLcpLzFFi42IRYndR1NUyqgoz2LeCyWL+phOMFl1Xupkc
+	mDwWPL/P7vF5k1wAUxS3TVJiSVlwZnqevl0Cd8bvdT8ZCyYpVCzv38vUwNgi1cXIySEhYCLR
+	vvEpC4QtJnHh3nq2LkYuDiGBy4wSz9auBksICVxgkvj3NQfEFhbwkNgx/QMziC0i4CBxeddR
+	ZoiGVkaJGRv3s4Mk2AR0JRb1NDNBTJWT6O2eBDaIV0Bbonv3M0YQm0VAVWLmkzVgNaICIRJ7
+	d3ZA1QhKnJz5BMzmBFo2e89DsJnMAnoSO67/YoWw5SWat85mnsAoMAtJyywkZbOQlC1gZF7F
+	KJeYU5qrm5uYmVOcmqxbnJyYl5dapGuml5tZopeaUrqJERKqQjsY15+UO8QowMGoxMPr0FYZ
 	JsSaWFZcmXuIUZKDSUmUV5e7KkyILyk/pTIjsTgjvqg0J7X4EKMEB7OSCG/6O6By3pTEyqrU
-	onyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEb74m0FDBotT01Iq0zJwShDQTByfI
-	cC4pkeLUvJTUosTSkox4UAzHFwOjGCTFA7TXHqSdt7ggMRcoCtF6ilFRSpy3VgMoIQCSyCjN
-	gxsLS3OvGMWBvhTm5Qdp5wGmSLjuV0CDmYAG/1lXDjK4JBEhJdXAmH9CP3kVx5mKrZ5n23VN
-	HdMTPbgr1u360LzrRo3f66/bYir3ekw4VRVf96QrgO2Kz+5LLuc+7V73/NXetITF 
+	onyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ3pcGQEMFi1LTUyvSMnNKENJMHJwg
+	w7mkRIpT81JSixJLSzLiQbEaXwyMVpAUD9DevyDtvMUFiblAUYjWU4yKUkBbQRICIImM0jy4
+	sbAE9IpRHOhLYd7rIFU8wOQF1/0KaDAT0OA/68pBBpckIqSkGhgD7NXjdBem385LMpSX1nM5
+	f8HmoIKZrZo3j39m7KYVwq+5K3YaR8bs9ztZ/+PhzjhJ9lP73jxqVry9Sfro3ytS0de2Sk6b
+	ubzM9Tn7P5X+2W9nxHaZpllOkt+8ppdPr5LnmvGuNw/5Z/Ds+BLZPYW39P4J82X2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282923>
 
-On 12/22/2015 08:34 PM, Junio C Hamano wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+On 12/03/2015 01:35 AM, David Turner wrote:
+> Alternate refs backends might not need the refs/heads directory and so
+> on, so we make ref db initialization part of the backend.  We also
+> might need to initialize ref backends themselves, so we'll add a
+> method for that as well.
 > 
->> On Tue, Dec 22, 2015 at 11:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Shawn Pearce <spearce@spearce.org> writes:
->>>
->>>>> But really, aside from slightly helping
->>>>> disambiguate references from paths in the command line, what is it good
->>>>> for?
->>>>
->>>> Nothing really; today refs/ prefix is used to encourage to the tools
->>>> that you really meant refs/heads/master and not
->>>> refs/heads/heads/master or some other crazy construct. You can thank
->>>> the DWIMery inside the ref rev parse logic for needing this.
->>>
->>> Aren't you two forgetting one minor thing, though?
->>>
->>> A layout without refs/, i.e. $GIT_DIR/{heads,tags,...}, will force
->>> us to keep track of where the tips of histories are anchored for
->>> reachability purposes, every time you would add a new hierarchy
->>> (e.g. $GIT_DIR/changes)--and those unfortunate souls who run a
->>> slightly older version of Git that is unaware of 'changes' hierarchy
->>> would weep after running "git gc", no?
->>
->> You still store them under refs/
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  builtin/init-db.c    | 14 ++++----------
+>  refs.c               |  8 +++++++-
+>  refs.h               |  4 +++-
+>  refs/files-backend.c | 23 +++++++++++++++++++++++
+>  refs/refs-internal.h |  4 ++++
+>  5 files changed, 41 insertions(+), 12 deletions(-)
 > 
-> Well I know; the comment was merely a reaction to the exchange
-> between you two, "What is refs/ good for?", "Nothing really".
+> [...]
+> diff --git a/refs.c b/refs.c
+> index 9a2fed7..bdeb276 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -22,13 +22,14 @@ struct ref_be *refs_backends = &refs_be_files;
+>  /*
+>   * This function is used to switch to an alternate backend.
+>   */
+> -int set_refs_backend(const char *name)
+> +int set_refs_backend(const char *name, void *data)
+
+The purpose of the data argument is rather mysterious at this point,
+especially since set_refs_backend() still doesn't have any callers. I
+hope that will become clearer later in the series. Nevertheless, it
+would be nice for its use to be described in the docstring (which should
+preferably be moved to the header file).
+
+> [...]
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index e769242..6600c02 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3313,6 +3313,11 @@ static int ref_present(const char *refname,
+>  	return string_list_has_string(affected_refnames, refname);
+>  }
+>  
+> +void files_init_backend(void *data)
+> +{
+> +	/* do nothing */
+> +}
+> +
+>  static int files_initial_transaction_commit(struct ref_transaction *transaction,
+>  					    struct strbuf *err)
+>  {
+> @@ -3534,9 +3539,27 @@ static int files_reflog_expire(const char *refname, const unsigned char *sha1,
+>  	return -1;
+>  }
+>  
+> +static int files_init_db(struct strbuf *err, int shared)
+> +{
+> +	/*
+> +	 * Create .git/refs/{heads,tags}
+> +	 */
+> +	safe_create_dir(git_path("refs"), 1);
+> +	safe_create_dir(git_path("refs/heads"), 1);
+> +	safe_create_dir(git_path("refs/tags"), 1);
+> +	if (shared) {
+> +		adjust_shared_perm(git_path("refs"));
+> +		adjust_shared_perm(git_path("refs/heads"));
+> +		adjust_shared_perm(git_path("refs/tags"));
+> +	}
+> +	return 0;
+> +}
+> +
+>  struct ref_be refs_be_files = {
+>  	NULL,
+>  	"files",
+> +	files_init_backend,
+> +	files_init_db,
+>  	files_transaction_commit,
+>  	files_initial_transaction_commit,
+>  
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 478ad54..85a0b91 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -208,6 +208,8 @@ const char *find_descendant_ref(const char *dirname,
+>  int rename_ref_available(const char *oldname, const char *newname);
+>  
+>  /* refs backends */
+> +typedef void ref_backend_init_fn(void *data);
+> +typedef int ref_backend_init_db_fn(struct strbuf *err, int shared);
+>  typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
+>  				      struct strbuf *err);
+>  
+> @@ -267,6 +269,8 @@ typedef int for_each_replace_ref_fn(each_ref_fn fn, void *cb_data);
+>  struct ref_be {
+>  	struct ref_be *next;
+>  	const char *name;
+> +	ref_backend_init_fn *init_backend;
+> +	ref_backend_init_db_fn *init_db;
+>  	ref_transaction_commit_fn *transaction_commit;
+>  	ref_transaction_commit_fn *initial_transaction_commit;
+>  
 > 
-> You'd benefit by having "refs/" that is known to contain all the
-> anchoring points for reachability without knowing what subhierarchy
-> it may contain in the future, that is what it is good for.
 
-You are answering "What is 'refs/' good for in the pathnames of files
-that store loose references?" I was asking "What is 'refs/' good for in
-the logical names of references?"
+Your naming seems inconsistent here. I would have expected a
+"files_init_backend()" function to satisfy the typedef
+"ref_backend_init_backend_fn" or "ref_init_backend_fn", not
+"ref_backend_init_fn". Or, conversely, for the function implementing
+"ref_backend_init_fn" to be called "files_init()".
 
-It would have been totally possible to make the full name of a branch
-be, for example, "heads/master" and nevertheless store its loose
-reference in "$GIT_DIR/refs/heads/master". The obvious place to store
-HEAD in such a scheme would have been "$GIT_DIR/refs/HEAD" while still
-calling it "HEAD". This could have avoided the problem that we now have
-with pseudo-references like FETCH_HEAD being stored directly in $GIT_DIR.
-
-On 12/22/2015 09:56 PM, Martin Fick wrote:
-> On Tuesday, December 22, 2015 06:17:28 PM you wrote:
->> On Tue, Dec 22, 2015 at 7:41 AM, Michael Haggerty
-> <mhagger@alum.mit.edu> wrote:
->>
->> [...] Would we really be worse off if
->> references' full names were
->>
->>     HEAD
->>     heads/master
->>     tags/v1.0.0
->>     remotes/origin/master (or remotes/origin/heads/master)
->
-> I think this is a bit off, because
->
->   HEAD != refs/HEAD
->
-> so not quite useless.
-
-A reference called "refs/HEAD" is not forbidden today but it's still not
-very useful, is it? Do you know of some system that uses reference names
-like this or are you just pointing out that it's theoretically possible?
-
-> But, I agree that the whole refs notation has always bugged
-> me, it is quirky.  It makes it hard to disambiguate when
-> something is meant to be absolute or not.  What if we added
-> a leading slash for absolute references? Then I could do
-> something like:
->
-> /HEAD
-> /refs/heads/master
-> /refs/tags/v1.0.0
-> /refs/remotes/origin/master
-
-I like the idea of having a way to express "absolute" reference names.
-But maybe if we do so we could take a step towards deprecating "refs/"
-in references' logical names, by instead using the following absolute
-notation for the above references:
-
-    /HEAD
-    /heads/master
-    /tags/v1.0.0
-    /remotes/origin/master
-
-Specifically:
-
-* Any name of the form "/$name" for which is_pseudoref_syntax($name)
-  returns true would be mapped to what we today call "$name" (e.g.,
-  "/FETCH_HEAD" would be mapped to today's "FETCH_HEAD")
-
-* Any other name of the form "/$name" would be mapped to today's
-  "refs/$name".
-
-Note that all of the absolute reference listed above, with their leading
-"/" removed, have the same interpretation under DWIM as they would as
-absolute names under my proposal (provided of course, that there is no
-DWIM ambiguity with other reference names).
-
-The only disadvantage that I can see with this scheme is that there
-would be no "absolute" notation for a reference that currently has a
-full name like "refs/HEAD" (or more generally a reference currently
-called "refs/$name" where is_pseudoref_syntax($name) returns true). I
-think that is acceptable: (1) such references are probably not in wide
-use; (2) we wouldn't (yet) have to prohibit such references; even though
-there would be no absolute notation to represent them, their old-style
-names would still work.
-
-If we ever decide to go further in banishing "refs/", the next step in
-the transition would be to disallow names like "refs/HEAD", treat the
-absolute reference names as the "canonical" version, and adding DWIM
-rules that treat a prefix "refs/" very much like a leading "/".
+More generally, it would be nice to have a consistent naming pattern
+between (1) the name of the typedef, (2) the name of the member in
+"struct ref_be", (3) the names of concrete, backend-specific
+implementations of the functions.
 
 Michael
 
