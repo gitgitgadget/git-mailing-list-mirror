@@ -1,85 +1,74 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new
- repos
-Date: Wed, 23 Dec 2015 10:52:41 +0100
-Message-ID: <567A6EE9.3030600@alum.mit.edu>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
- <1449102921-7707-14-git-send-email-dturner@twopensource.com>
- <CACsJy8DDKW4np7N+KA=dpz9uNke0+cyQD-J3U74VM=4WbsjrKQ@mail.gmail.com>
- <20151205074444.GD21639@sigill.intra.peff.net>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: Building Git with HTTPS support: avoiding libcurl?
+Date: Wed, 23 Dec 2015 11:17:35 +0100 (CET)
+Message-ID: <alpine.DEB.2.11.1512231059380.23702@tvnag.unkk.fr>
+References: <1450798780.11255.22.camel@mad-scientist.net>  <CAD0k6qT+s4e_7y1DxVTN63V0tO_xFv-9i-Fmq5O0SrpQAyAzVA@mail.gmail.com> <1450805416.11255.58.camel@mad-scientist.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 23 10:53:04 2015
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+To: Paul Smith <paul@mad-scientist.net>
+X-From: git-owner@vger.kernel.org Wed Dec 23 11:17:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBg6Q-0000pm-BE
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 10:53:03 +0100
+	id 1aBgUT-0000oV-Mn
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 11:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933154AbbLWJw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 04:52:56 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:46962 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753360AbbLWJwx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Dec 2015 04:52:53 -0500
-X-AuditID: 12074414-f794f6d000007852-3d-567a6eecfa91
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id B6.E1.30802.CEE6A765; Wed, 23 Dec 2015 04:52:44 -0500 (EST)
-Received: from [192.168.69.130] (p4FC971CA.dip0.t-ipconnect.de [79.201.113.202])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBN9qg7q016480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 23 Dec 2015 04:52:43 -0500
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.4.0
-In-Reply-To: <20151205074444.GD21639@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqPsmryrMoHMBs8X8TScYLbqudDNZ
-	dE95y2jxo6WH2YHFY+esu+wez3r3MHoseH6f3ePzJrkAlihum6TEkrLgzPQ8fbsE7oy/zU0s
-	BafYK7bP4GpgXMTWxcjBISFgIrG8yamLkRPIFJO4cG89UJiLQ0jgMqPE0R0PGCGcC0wSt3+t
-	YQapEhYIlthwbysbiC0iYCvxdPd/qI5/jBLn98wFK2IWiJHY2bccrIhNQFdiUU8zE8QKOYne
-	7kksIDavgLbEjqndYHEWAVWJFVdmgtmiAiESe3d2QNUISpyc+QTM5hSwllh5vh9qvrrEn3mX
-	oGx5ieats5knMArOQtIyC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpWujlZpbo
-	paaUbmKEBLrIDsYjJ+UOMQpwMCrx8Dq0VYYJsSaWFVfmHmKU5GBSEuX1t6oKE+JLyk+pzEgs
-	zogvKs1JLT7EKMHBrCTCm/4OqJw3JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxW
-	hoNDSYL3aS7QUMGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQBMcXA2MYJMUDtPcu
-	SDtvcUFiLlAUovUUoy7Hgh+31zIJseTl56VKifP2ghQJgBRllObBrYCltVeM4kAfC/M+BKni
-	AaZEuEmvgJYwAS35s64cZElJIkJKqoFR696Rh9//v94qp2dS9klynYawLUNwX3lK48s5l9nD
-	vy+aZvw8PJb7/vFnc5rmHtQRu7fL/KR1gqHObcPmivIZrJKPm3b95Czou3riqdyp 
+	id S934023AbbLWKRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 05:17:49 -0500
+Received: from giant.haxx.se ([80.67.6.50]:44559 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933814AbbLWKRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 05:17:47 -0500
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-7) with ESMTP id tBNAHb3S013233
+	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Dec 2015 11:17:37 +0100
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id tBNAHZIn013226;
+	Wed, 23 Dec 2015 11:17:36 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <1450805416.11255.58.camel@mad-scientist.net>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282931>
 
-On 12/05/2015 08:44 AM, Jeff King wrote:
-> [...]
-> I think the config option needs to be extensions.refsBackendType, too,
-> per the logic in 00a09d5 (introduce "extensions" form of
-> core.repositoryformatversion, 2015-06-23). And I guess it needs to bump
-> core.repositoryformatversion to "1".
+On Tue, 22 Dec 2015, Paul Smith wrote:
 
-I think also, strictly speaking, the extensions.refsBackendType option
-should be ignored if core.repositoryFormatVersion is not "1". In
-practice, it probably makes more sense for the code to error out in that
-case because it is likely the result of a bug.
+> I grok that Git doesn't want to re-invent the wheel and that libcurl is 
+> convenient.  I just wonder if anyone knows of another wheel, that doesn't 
+> come attached to an entire tractor-trailer, that could be used instead :).
 
-Note that if the user explicitly chooses the "files" backend, it would
-be preferable to leave "core.repositoryFormatVersion" at "0" (assuming
-that no other extension is being used) and leave
-"extensions.refsBackendType" unset. This approach creates a repository
-that is compatible with older clients that don't know about
-refsBackendTypes.
+But if you would consider another lib, then you could just rebuild your own 
+libcurl instead from source, entirely without any dependencies on other libs! 
+That would be similar to finding another lib with less dependencies. (As 
+already mentioned, you'd still need crypto and TLS support no doubt.)
 
-Michael
+That huge dependency collection is there much because your distro decided that 
+having a libcurl with all that support is preferable. libcurl itself offers 
+lots of customizability at build-time so you can strip out most of that if you 
+wanted to.
+
+But why do the distros build and provide a libcurl that can do all this?
+
+I think you can look at this from a slightly higher altitude. By re-using a 
+very widely used, well developed and properly documented library (yeah, I 
+claim it is but you don't need to take my word for it) that is available 
+everywhere - git benefits. By having many projects use the same lib, even if 
+no two projects use the exact same feature set, we get more reliable software 
+in the entire ecosystem - with less work.
+
+I would guess that switching out libcurl in git would be a not insignificant 
+amount of work, as no libcurl alternative I'm aware of is even close to this 
+API.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+
+  / daniel.haxx.se
