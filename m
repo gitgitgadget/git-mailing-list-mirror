@@ -1,99 +1,187 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH V3 2/2] user-manual: add section documenting shallow clones
-Date: Tue, 22 Dec 2015 20:53:47 -0700
-Message-ID: <1450842827-14115-1-git-send-email-ischis2@cox.net>
-References: <CAPig+cQOAGzQMj5oNMEsD0u7Wqj80kyyYcOwi-Y0q1yHtX4s4A@mail.gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	"Stephen P. Smith" <ischis2@cox.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 23 04:53:15 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: RefTree: Alternate ref backend
+Date: Wed, 23 Dec 2015 05:59:48 +0100
+Message-ID: <567A2A44.3050003@alum.mit.edu>
+References: <CAJo=hJvnAPNAdDcAAwAvU9C4RVeQdoS3Ev9WTguHx4fD0V_nOg@mail.gmail.com>
+ <56796F37.1000600@alum.mit.edu>
+ <CAJo=hJtPSxY1YZgEt1AA_ukgY9cTA=1tdv_F+nCetv_Ux9E=3g@mail.gmail.com>
+ <567985A8.2020301@alum.mit.edu>
+ <CAJo=hJtgfpZn0OjbQ=BVoO_=03yG0Czjfn9vX4RobWLYpNVENg@mail.gmail.com>
+ <xmqq1taee1w9.fsf@gitster.mtv.corp.google.com>
+ <CAJo=hJswuPdLT0KtGdf_=UGxD7-5NjGk2mwFjRU=uYb-Su-y+A@mail.gmail.com>
+ <xmqqsi2ucm60.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>, David Turner <dturner@twopensource.com>,
+	Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 23 06:07:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBaUF-00015J-1G
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 04:53:15 +0100
+	id 1aBbdn-0001r3-CM
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 06:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755269AbbLWDxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Dec 2015 22:53:07 -0500
-Received: from fed1rmfepo202.cox.net ([68.230.241.147]:41534 "EHLO
-	fed1rmfepo202.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755192AbbLWDxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Dec 2015 22:53:05 -0500
-Received: from fed1rmimpo306 ([68.230.241.174]) by fed1rmfepo202.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151223035304.VBLV22785.fed1rmfepo202.cox.net@fed1rmimpo306>
-          for <git@vger.kernel.org>; Tue, 22 Dec 2015 22:53:04 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo306 with cox
-	id wrt41r0012tqoqC01rt4Yt; Tue, 22 Dec 2015 22:53:04 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020206.567A1AA0.0051,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=LKq4tuq9 c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=1PfJBRKZKCHrU5mnAFQA:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id F122113F63A;
-	Tue, 22 Dec 2015 20:53:53 -0700 (MST)
-X-Mailer: git-send-email 2.6.3.368.gf34be46
-In-Reply-To: <CAPig+cQOAGzQMj5oNMEsD0u7Wqj80kyyYcOwi-Y0q1yHtX4s4A@mail.gmail.com>
+	id S1751581AbbLWFHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 00:07:04 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64685 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750710AbbLWFHD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Dec 2015 00:07:03 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Dec 2015 00:07:03 EST
+X-AuditID: 1207440e-f79516d0000012b3-16-567a2a47bf3a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.BF.04787.74A2A765; Tue, 22 Dec 2015 23:59:51 -0500 (EST)
+Received: from [192.168.69.130] (p4FC971CA.dip0.t-ipconnect.de [79.201.113.202])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBN4xmLf005016
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 22 Dec 2015 23:59:50 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.4.0
+In-Reply-To: <xmqqsi2ucm60.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqOuuVRVmsGWqjsX8TScYLbqudDNZ
+	NPReYba4/34dk8WPlh5mi/mHJrI6sHlc7utl8njWu4fR4+IlZY8/5/eweix4fp/d4/MmuQC2
+	KG6bpMSSsuDM9Dx9uwTujJ2Nj5kLdqhVHN/ayNLA+EWui5GTQ0LAROLY8+NsELaYxIV764Fs
+	Lg4hgcuMEs/f7IdyLjBJrHvWwg5SJSygLfG8+xcriC0i4CXxf9pbdoii08wSfQt2MIE4zAJ9
+	jBLffl8Bq2IT0JVY1NPMBLFDTqK3exJLFyMHBy/QpJ1HPUBMFgFVie7PwiAVogIhEnt3drCA
+	2LwCghInZz4BszkFrCWW3nkIdgOzgJ7EjusQNzALyEs0b53NPIFRcBaSlllIymYhKVvAyLyK
+	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdYLzezRC81pXQTIyQi+HYwtq+XOcQowMGoxMPr2FYZ
+	JsSaWFZcmXuIUZKDSUmUV5e7KkyILyk/pTIjsTgjvqg0J7X4EKMEB7OSCG/6O6By3pTEyqrU
+	onyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEb74m0FDBotT01Iq0zJwShDQTByfI
+	cC4pkeLUvJTUosTSkox4UAzHFwOjGCTFA7TXHqSdt7ggMRcoCtF6ilFRSpy3VgMoIQCSyCjN
+	gxsLS3OvGMWBvhTm5Qdp5wGmSLjuV0CDmYAG/1lXDjK4JBEhJdXAmH9CP3kVx5mKrZ5n23VN
+	HdMTPbgr1u360LzrRo3f66/bYir3ekw4VRVf96QrgO2Kz+5LLuc+7V73/NXetITF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282922>
 
-Rather than merely pointing readers at the 1.5 release notes to
-learn about shallow clones, document them formally.
+On 12/22/2015 08:34 PM, Junio C Hamano wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
+> 
+>> On Tue, Dec 22, 2015 at 11:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Shawn Pearce <spearce@spearce.org> writes:
+>>>
+>>>>> But really, aside from slightly helping
+>>>>> disambiguate references from paths in the command line, what is it good
+>>>>> for?
+>>>>
+>>>> Nothing really; today refs/ prefix is used to encourage to the tools
+>>>> that you really meant refs/heads/master and not
+>>>> refs/heads/heads/master or some other crazy construct. You can thank
+>>>> the DWIMery inside the ref rev parse logic for needing this.
+>>>
+>>> Aren't you two forgetting one minor thing, though?
+>>>
+>>> A layout without refs/, i.e. $GIT_DIR/{heads,tags,...}, will force
+>>> us to keep track of where the tips of histories are anchored for
+>>> reachability purposes, every time you would add a new hierarchy
+>>> (e.g. $GIT_DIR/changes)--and those unfortunate souls who run a
+>>> slightly older version of Git that is unaware of 'changes' hierarchy
+>>> would weep after running "git gc", no?
+>>
+>> You still store them under refs/
+> 
+> Well I know; the comment was merely a reaction to the exchange
+> between you two, "What is refs/ good for?", "Nothing really".
+> 
+> You'd benefit by having "refs/" that is known to contain all the
+> anchoring points for reachability without knowing what subhierarchy
+> it may contain in the future, that is what it is good for.
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
- Documentation/user-manual.txt | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+You are answering "What is 'refs/' good for in the pathnames of files
+that store loose references?" I was asking "What is 'refs/' good for in
+the logical names of references?"
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 1c790ac..bdfe984 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2128,6 +2128,24 @@ The gitweb cgi script provides users an easy way to browse your
- project's files and history without having to install Git; see the file
- gitweb/INSTALL in the Git source tree for instructions on setting it up.
- 
-+[[how-to-get-a-git-repository-with-minimal-history]]
-+How to get a Git repository with minimal history
-+------------------------------------------------
-+
-+A <<def_shallow_clone,shallow clone>> is useful when the recent
-+history of a project is needed and getting real history recorded in
-+the upstream is expensive. The resultant cloned <<def_repository,repository>>
-+has truncated history. This clone could be used to look at history
-+near the tip of a branch and contribute email patches to the project.
-+
-+A <<def_shallow_clone,shallow clone>> is created by specifying the
-+depth when creating a clone of a repository using the
-+linkgit:git-clone[1] `--depth` switch.  The depth can later be changed
-+by using the linkgit:git-fetch[1] `--depth` switch.  If there is later
-+a need to fetch the entire history and if the source repository is
-+complete, the linkgit:git-fetch[1] `--unshallow` switch can be used to
-+convert a shallow repository to a complete one.
-+
- [[sharing-development-examples]]
- Examples
- --------
-@@ -4645,9 +4663,6 @@ standard end-of-chapter section?
- 
- Include cross-references to the glossary, where appropriate.
- 
--Document shallow clones?  See draft 1.5.0 release notes for some
--documentation.
--
- Add a section on working with other version control systems, including
- CVS, Subversion, and just imports of series of release tarballs.
- 
+It would have been totally possible to make the full name of a branch
+be, for example, "heads/master" and nevertheless store its loose
+reference in "$GIT_DIR/refs/heads/master". The obvious place to store
+HEAD in such a scheme would have been "$GIT_DIR/refs/HEAD" while still
+calling it "HEAD". This could have avoided the problem that we now have
+with pseudo-references like FETCH_HEAD being stored directly in $GIT_DIR.
+
+On 12/22/2015 09:56 PM, Martin Fick wrote:
+> On Tuesday, December 22, 2015 06:17:28 PM you wrote:
+>> On Tue, Dec 22, 2015 at 7:41 AM, Michael Haggerty
+> <mhagger@alum.mit.edu> wrote:
+>>
+>> [...] Would we really be worse off if
+>> references' full names were
+>>
+>>     HEAD
+>>     heads/master
+>>     tags/v1.0.0
+>>     remotes/origin/master (or remotes/origin/heads/master)
+>
+> I think this is a bit off, because
+>
+>   HEAD != refs/HEAD
+>
+> so not quite useless.
+
+A reference called "refs/HEAD" is not forbidden today but it's still not
+very useful, is it? Do you know of some system that uses reference names
+like this or are you just pointing out that it's theoretically possible?
+
+> But, I agree that the whole refs notation has always bugged
+> me, it is quirky.  It makes it hard to disambiguate when
+> something is meant to be absolute or not.  What if we added
+> a leading slash for absolute references? Then I could do
+> something like:
+>
+> /HEAD
+> /refs/heads/master
+> /refs/tags/v1.0.0
+> /refs/remotes/origin/master
+
+I like the idea of having a way to express "absolute" reference names.
+But maybe if we do so we could take a step towards deprecating "refs/"
+in references' logical names, by instead using the following absolute
+notation for the above references:
+
+    /HEAD
+    /heads/master
+    /tags/v1.0.0
+    /remotes/origin/master
+
+Specifically:
+
+* Any name of the form "/$name" for which is_pseudoref_syntax($name)
+  returns true would be mapped to what we today call "$name" (e.g.,
+  "/FETCH_HEAD" would be mapped to today's "FETCH_HEAD")
+
+* Any other name of the form "/$name" would be mapped to today's
+  "refs/$name".
+
+Note that all of the absolute reference listed above, with their leading
+"/" removed, have the same interpretation under DWIM as they would as
+absolute names under my proposal (provided of course, that there is no
+DWIM ambiguity with other reference names).
+
+The only disadvantage that I can see with this scheme is that there
+would be no "absolute" notation for a reference that currently has a
+full name like "refs/HEAD" (or more generally a reference currently
+called "refs/$name" where is_pseudoref_syntax($name) returns true). I
+think that is acceptable: (1) such references are probably not in wide
+use; (2) we wouldn't (yet) have to prohibit such references; even though
+there would be no absolute notation to represent them, their old-style
+names would still work.
+
+If we ever decide to go further in banishing "refs/", the next step in
+the transition would be to disallow names like "refs/HEAD", treat the
+absolute reference names as the "canonical" version, and adding DWIM
+rules that treat a prefix "refs/" very much like a leading "/".
+
+Michael
+
 -- 
-2.6.3.368.gf34be46
+Michael Haggerty
+mhagger@alum.mit.edu
