@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/10] t/t5516-fetch-push.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Dec 2015 14:45:57 +0100
-Message-ID: <1450878358-7422-10-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] t/t5500-fetch-pack.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Dec 2015 14:45:52 +0100
+Message-ID: <1450878358-7422-5-git-send-email-gitter.spiros@gmail.com>
 References: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:38 2015
+X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBjkS-0002W7-23
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:36 +0100
+	id 1aBjkX-0002Zl-Mh
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933845AbbLWNq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 08:46:27 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34158 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933811AbbLWNqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 08:46:25 -0500
-Received: by mail-pa0-f42.google.com with SMTP id uo6so28634314pac.1
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:25 -0800 (PST)
+	id S933861AbbLWNqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 08:46:38 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34574 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933797AbbLWNqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 08:46:21 -0500
+Received: by mail-pf0-f179.google.com with SMTP id e65so599818pfe.1
+        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yQBuYk/AGGqt3jS/kebDS6QG/mCh84WdqHGcgfL3a1w=;
-        b=GyZQ/bvkrt0aqb9PBOTFvDvUDWdF0yXR1PiG6uzhAl4i15FDp/+xzjrNjpFk2KZ76q
-         +zyEYmfps6nD+LDfSMnxoik9//Tqn/tapXWGSzkj3bXP3VsIq/uOA3cJU8a/jG/gnojN
-         QpHpgmVCPXDQhF2Mm0E7CSn7AY9uMkTHdbf1LejjGKDBw9elYLmOaHbPG5e5beC69x2J
-         27ufgHZEs8v4GfupwT3JplyXx0cC9vF4NXNVqRUZw2w6OwE0qS+HpB5HyDVsy8Jm89Jb
-         78QTGuYxKAdC7/ebVOwEZRcgZrNmyj7lT2ZZGY8PN5ezp8GYHOQspHgCpCjjswknn0vq
-         vgrA==
-X-Received: by 10.66.216.200 with SMTP id os8mr44228643pac.143.1450878385251;
-        Wed, 23 Dec 2015 05:46:25 -0800 (PST)
+        bh=MSXxwTC/eIwLqPTSUh9aCJrx0wLr6lAb6/FgpFCFhME=;
+        b=SHcpqem0723NxmF5R+IKAn+QljO9MP98sd61tztGF46sIxbCJZ2bofAAJHiPP95JI6
+         9noBXQiQpXvgrEn3sP8vVOMWPHrLkw9mx3AXs90xgbd1j3jU40yD1eSCB1BgK0xm/M6E
+         s0HvKjJ66qNJmdTjUuGwbi7aD0/pOkJ1ItIXAP0qE6PeFMN/taRjLK/bU5u2CTftWUJ1
+         AMDEyY/eQdI6MYfg6rWu/3OxYcwzSrIiTbsXUanFCcbqZk5+8DYgqLq9f6/ya7q73FAK
+         UsnMw3SZlYd3RhRRi/fL1Rmc8Hux1oewAMBVRkuXggCYOZLAMMoZoiQu2SjJ7HHXCtB/
+         ujDw==
+X-Received: by 10.98.67.148 with SMTP id l20mr44460215pfi.109.1450878380606;
+        Wed, 23 Dec 2015 05:46:20 -0800 (PST)
 Received: from ubuntu14.nephoscale.com ([67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.24
+        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Dec 2015 05:46:24 -0800 (PST)
+        Wed, 23 Dec 2015 05:46:20 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282941>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,30 +66,79 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5516-fetch-push.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5500-fetch-pack.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 0a87e19..26b2caf 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -16,7 +16,7 @@ This test checks the following functionality:
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 3a9b775..e5f83bf 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -14,7 +14,7 @@ test_description='Testing multi_ack pack fetching'
+ add () {
+ 	name=$1 &&
+ 	text="$@" &&
+-	branch=`echo $name | sed -e 's/^\(.\).*$/\1/'` &&
++	branch=$(echo $name | sed -e 's/^\(.\).*$/\1/') &&
+ 	parents="" &&
  
- . ./test-lib.sh
+ 	shift &&
+@@ -50,18 +50,18 @@ pull_to_client () {
+ 			case "$heads" in *B*)
+ 			    echo $BTIP > .git/refs/heads/B;;
+ 			esac &&
+-			git symbolic-ref HEAD refs/heads/`echo $heads \
+-				| sed -e "s/^\(.\).*$/\1/"` &&
++			git symbolic-ref HEAD refs/heads/$(echo $heads \
++				| sed -e "s/^\(.\).*$/\1/") &&
  
--D=`pwd`
-+D=$(pwd)
+ 			git fsck --full &&
  
- mk_empty () {
- 	repo_name="$1"
-@@ -422,7 +422,7 @@ test_expect_success 'push tag with non-existent, incomplete dest' '
- test_expect_success 'push sha1 with non-existent, incomplete dest' '
+ 			mv .git/objects/pack/pack-* . &&
+-			p=`ls -1 pack-*.pack` &&
++			p=$(ls -1 pack-*.pack) &&
+ 			git unpack-objects <$p &&
+ 			git fsck --full &&
  
- 	mk_test testrepo &&
--	test_must_fail git push testrepo `git rev-parse master`:foo
-+	test_must_fail git push testrepo $(git rev-parse master):foo
+-			idx=`echo pack-*.idx` &&
+-			pack_count=`git show-index <$idx | wc -l` &&
++			idx=$(echo pack-*.idx) &&
++			pack_count=$(git show-index <$idx | wc -l) &&
+ 			test $pack_count = $count &&
+ 			rm -f pack-*
+ 		)
+@@ -132,13 +132,13 @@ test_expect_success 'single given branch clone' '
  
+ test_expect_success 'clone shallow depth 1' '
+ 	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0 &&
+-	test "`git --git-dir=shallow0/.git rev-list --count HEAD`" = 1
++	test "$(git --git-dir=shallow0/.git rev-list --count HEAD)" = 1
  '
  
+ test_expect_success 'clone shallow depth 1 with fsck' '
+ 	git config --global fetch.fsckobjects true &&
+ 	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0fsck &&
+-	test "`git --git-dir=shallow0fsck/.git rev-list --count HEAD`" = 1 &&
++	test "$(git --git-dir=shallow0fsck/.git rev-list --count HEAD)" = 1 &&
+ 	git config --global --unset fetch.fsckobjects
+ '
+ 
+@@ -147,7 +147,7 @@ test_expect_success 'clone shallow' '
+ '
+ 
+ test_expect_success 'clone shallow depth count' '
+-	test "`git --git-dir=shallow/.git rev-list --count HEAD`" = 2
++	test "$(git --git-dir=shallow/.git rev-list --count HEAD)" = 2
+ '
+ 
+ test_expect_success 'clone shallow object count' '
+@@ -273,7 +273,7 @@ test_expect_success 'additional simple shallow deepenings' '
+ '
+ 
+ test_expect_success 'clone shallow depth count' '
+-	test "`git --git-dir=shallow/.git rev-list --count HEAD`" = 11
++	test "$(git --git-dir=shallow/.git rev-list --count HEAD)" = 11
+ '
+ 
+ test_expect_success 'clone shallow object count' '
 -- 
 2.3.3.GIT
