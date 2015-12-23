@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/10] t/t5304-prune.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Dec 2015 14:45:50 +0100
-Message-ID: <1450878358-7422-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t/t5515-fetch-merge-logic.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Dec 2015 14:45:56 +0100
+Message-ID: <1450878358-7422-9-git-send-email-gitter.spiros@gmail.com>
 References: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:28 2015
+X-From: git-owner@vger.kernel.org Wed Dec 23 14:46:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBjkF-0002CZ-3k
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:23 +0100
+	id 1aBjkM-0002LW-If
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 14:46:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933807AbbLWNqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 08:46:20 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34120 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933797AbbLWNqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 08:46:19 -0500
-Received: by mail-pa0-f47.google.com with SMTP id uo6so28633265pac.1
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:18 -0800 (PST)
+	id S933848AbbLWNq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 08:46:28 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35593 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933824AbbLWNqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 08:46:24 -0500
+Received: by mail-pa0-f53.google.com with SMTP id jx14so106351101pad.2
+        for <git@vger.kernel.org>; Wed, 23 Dec 2015 05:46:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9+XfBL7YWsQ4rBDWDhmgrB5kARrqd/RZXVKDc93q194=;
-        b=wPDSZzoQxbD0JMt1hX7Uy7djWktJce2HlQHf3eez6+M0A2i1ZLNmi8hUn0YO/LwXO8
-         iP1fupQMzFpRKlsz9g2g8eBbDtYjcpsOy9i4M/6d3fPkU7rhKxKpwrQxfkB0c7/ksQcv
-         Wr8v0iSiKd22N8C+WIJld3/npbU6RbGfATC5KcO0gUYz8qd29qJ3b5yF/4QlMV9axP7u
-         zKm5Vq2rAyioLE7g8Tpa6Su66K54vYMR6Ub3jDoUAs1zfQFT2g8JUQvlsz9OakVuCWyq
-         7e5+B35k0pLFm+5Dn4tWY8IX/BtI+Xg3JxNQrY9Domk8jx6cUyfANiDgzW85PG9s86qr
-         36rA==
-X-Received: by 10.66.182.202 with SMTP id eg10mr44085667pac.50.1450878378621;
-        Wed, 23 Dec 2015 05:46:18 -0800 (PST)
+        bh=DIhbnydkTeLkyRK6YsT4J5SYFNunoIFAVh6L2lwlA+8=;
+        b=0wN+8v5A+pkhsE9PYbixVYeDTqH9A15EMKZauv9ZW2fA/gOZZqW+EnJQDa7ukO2sxg
+         LnN/9kXO/KbHt0Reo1uDfaHFNmdAdDZznEOlTjYdagwd4ZlakJ7z167l0a6ifAeIc16u
+         IWuWjRGl7+qshkvSVet9437YmeDPpK92BwWG/iQ6Jma1opx3hu2hkoNjWOxdJC1hBW5f
+         NygPrTQsniStnMj83PlvmlLPsz5nuagR/UM6RQw49r70vl+5Zm/ufiW5rRzrHvBmm7Cf
+         kT3UaX1+Ge2qnEGkjooIA+IRpyF5tTcE1yv7DEWPi+IZBMTO6H5xgGs2HTOprI2wWK1B
+         xO5g==
+X-Received: by 10.66.139.131 with SMTP id qy3mr44258346pab.71.1450878384295;
+        Wed, 23 Dec 2015 05:46:24 -0800 (PST)
 Received: from ubuntu14.nephoscale.com ([67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.17
+        by smtp.gmail.com with ESMTPSA id p83sm48250443pfi.96.2015.12.23.05.46.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Dec 2015 05:46:18 -0800 (PST)
+        Wed, 23 Dec 2015 05:46:23 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1450878358-7422-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282936>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,23 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5304-prune.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5515-fetch-merge-logic.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index def203c..133b584 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -266,7 +266,7 @@ EOF
- '
- 
- test_expect_success 'prune .git/shallow' '
--	SHA1=`echo hi|git commit-tree HEAD^{tree}` &&
-+	SHA1=$(echo hi|git commit-tree HEAD^{tree}) &&
- 	echo $SHA1 >.git/shallow &&
- 	git prune --dry-run >out &&
- 	grep $SHA1 .git/shallow &&
+diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
+index dbb927d..36b0dbc 100755
+--- a/t/t5515-fetch-merge-logic.sh
++++ b/t/t5515-fetch-merge-logic.sh
+@@ -128,8 +128,8 @@ do
+ 	case "$cmd" in
+ 	'' | '#'*) continue ;;
+ 	esac
+-	test=`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
+-	pfx=`printf "%04d" $test_count`
++	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
++	pfx=$(printf "%04d" $test_count)
+ 	expect_f="$TEST_DIRECTORY/t5515/fetch.$test"
+ 	actual_f="$pfx-fetch.$test"
+ 	expect_r="$TEST_DIRECTORY/t5515/refs.$test"
 -- 
 2.3.3.GIT
