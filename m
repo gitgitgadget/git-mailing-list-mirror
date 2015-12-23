@@ -1,103 +1,83 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH V4 2/2] user-manual: add section documenting shallow clones
-Date: Wed, 23 Dec 2015 13:36:01 -0700
-Message-ID: <1450902961-1528-1-git-send-email-ischis2@cox.net>
-References: <CAPig+cRMdpJ-k9L33jE01ubfK6MOWNGwuoUULuQqOv8C0we+DQ@mail.gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	"Stephen P. Smith" <ischis2@cox.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 23 21:35:48 2015
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 0/3] nd/clear-gitenv-upon-use-of-alias
+Date: Wed, 23 Dec 2015 21:37:04 +0100
+Message-ID: <567B05F0.5020604@kdbg.org>
+References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
+ <1450597819-26278-1-git-send-email-pclouds@gmail.com>
+ <xmqq4mfbfqla.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8DFmZSa2x4y2fDwVsvwa5uAuMJn8v=utvYtAPTGFbdWPg@mail.gmail.com>
+ <CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
+ <xmqqd1tye4i8.fsf@gitster.mtv.corp.google.com>
+ <20151223093700.GA13386@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Anthony Sottile <asottile@umich.edu>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 23 21:37:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aBq8O-0005P7-Vj
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 21:35:45 +0100
+	id 1aBq9q-0007rg-VJ
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Dec 2015 21:37:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965366AbbLWUfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Dec 2015 15:35:41 -0500
-Received: from fed1rmfepo102.cox.net ([68.230.241.144]:51664 "EHLO
-	fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965352AbbLWUfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Dec 2015 15:35:40 -0500
-Received: from fed1rmimpo110 ([68.230.241.159]) by fed1rmfepo102.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151223203539.SQM7752.fed1rmfepo102.cox.net@fed1rmimpo110>
-          for <git@vger.kernel.org>; Wed, 23 Dec 2015 15:35:39 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo110 with cox
-	id x8be1r00Z2tqoqC018becs; Wed, 23 Dec 2015 15:35:39 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020201.567B059B.0066,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=B55nJpRM c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=TSbVqHtbAAAA:8 a=a-mmkxGj_Wl2OYgx35IA:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id BC43213F63A;
-	Wed, 23 Dec 2015 13:36:32 -0700 (MST)
-X-Mailer: git-send-email 2.6.3.368.gf34be46
-In-Reply-To: <CAPig+cRMdpJ-k9L33jE01ubfK6MOWNGwuoUULuQqOv8C0we+DQ@mail.gmail.com>
+	id S965377AbbLWUhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Dec 2015 15:37:11 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:22466 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965368AbbLWUhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Dec 2015 15:37:09 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pQmYF69L8z5tlD;
+	Wed, 23 Dec 2015 21:37:05 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id E0B4A53B0;
+	Wed, 23 Dec 2015 21:37:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <20151223093700.GA13386@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282954>
 
-Rather than merely pointing readers at the 1.5 release notes to
-learn about shallow clones, document them formally.
+Am 23.12.2015 um 10:37 schrieb Jeff King:
+> The second line comes from handle_alias itself. It calls
+> die_errno whenever run_command returns a negative value.
+> However, only -1 indicates a syscall error where errno has
+> something useful (note that it says the useless "success"
+> above). Instead, we treat negative returns from run_command
+> (except for -1) as a normal code to be passed to exit.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   git.c         | 2 +-
+>   run-command.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/git.c b/git.c
+> index 6ed824c..34a18a3 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -252,7 +252,7 @@ static int handle_alias(int *argcp, const char ***argv)
+>   			alias_argv[argc] = NULL;
+>
+>   			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+> -			if (ret >= 0)   /* normal exit */
+> +			if (ret != -1)  /* normal exit */
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
+Why does this make a difference? We only ever return -1, zero, or a 
+positive value from run_command/finish_command/wait_or_whine, as far as 
+I can see.
 
- I replaced the paragraphs that I wrote with Eric Shunshine's since it
- was cleaner.
+>   				exit(ret);
+>
+>   			die_errno("While expanding alias '%s': '%s'",
 
- I like the idea of linking to the preceeding effort, but gmane.org is
- currently undergoing maintance and therefore giving me errors when I
- attempt to access it.
-
- Documentation/user-manual.txt | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 1c790ac..5c13683 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2128,6 +2128,20 @@ The gitweb cgi script provides users an easy way to browse your
- project's files and history without having to install Git; see the file
- gitweb/INSTALL in the Git source tree for instructions on setting it up.
- 
-+[[how-to-get-a-git-repository-with-minimal-history]]
-+How to get a Git repository with minimal history
-+------------------------------------------------
-+
-+A <<def_shallow_clone,shallow clone>>, with its truncated
-+history, is useful when one is interested only in recent history
-+of a project and getting full history from the upstream is
-+expensive.
-+
-+A <<def_shallow_clone,shallow clone>> is created by specifying
-+the linkgit:git-clone[1] `--depth` switch. The depth can later be
-+changed with the linkgit:git-fetch[1] `--depth` switch, or full
-+history restored with `--unshallow`.
-+
- [[sharing-development-examples]]
- Examples
- --------
-@@ -4645,9 +4659,6 @@ standard end-of-chapter section?
- 
- Include cross-references to the glossary, where appropriate.
- 
--Document shallow clones?  See draft 1.5.0 release notes for some
--documentation.
--
- Add a section on working with other version control systems, including
- CVS, Subversion, and just imports of series of release tarballs.
- 
--- 
-2.6.3.368.gf34be46
+-- Hannes
