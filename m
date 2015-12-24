@@ -1,61 +1,71 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: Building Git with HTTPS support: avoiding libcurl?
-Date: Thu, 24 Dec 2015 20:36:48 -0200
-Message-ID: <CACnwZYdLS7F-crNu0RjdYw__82nbaTujnjDc+q2jAXZ2Qoja+Q@mail.gmail.com>
-References: <1450798780.11255.22.camel@mad-scientist.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git objects
+Date: Thu, 24 Dec 2015 15:34:33 -0800
+Message-ID: <CAJo=hJt9c6gr9AuapR7yUSYchF8=67AYQp-06XrTudbfa2ipkA@mail.gmail.com>
+References: <CACnwZYfMKG18ZTR3bCLY5FRsBYmSsC9Co2e=iLRYxsM=w=Dqog@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: paul@mad-scientist.net
-X-From: git-owner@vger.kernel.org Thu Dec 24 23:36:55 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 25 00:35:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aCEVB-0001YD-Si
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 23:36:54 +0100
+	id 1aCFQ3-0007Y9-Lj
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Dec 2015 00:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbbLXWgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 17:36:50 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35503 "EHLO
-	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbbLXWgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 17:36:49 -0500
-Received: by mail-io0-f195.google.com with SMTP id o67so22788632iof.2
-        for <git@vger.kernel.org>; Thu, 24 Dec 2015 14:36:49 -0800 (PST)
+	id S1752948AbbLXXey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2015 18:34:54 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:35742 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbbLXXey (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2015 18:34:54 -0500
+Received: by mail-vk0-f52.google.com with SMTP id k1so25267347vkb.2
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 15:34:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Fnq5awqNi1XkRpCfn2IMC6VC2UAkiXMOqcztjBG7DkE=;
-        b=V3Wb8oEig4c74KfaXLIP3LMimuf7BBcxvKM0hwPSQhHtDFDydb6GY+e1gjX2MEaSps
-         pQNxhYJrdM2Ww22XxurYMeGbgxhyBqr6NhPURZAZIYQZRK5cAWnI1DoER9EMc3OYrWMX
-         Xx2WgBhLTbT9hW5BqAi8jb/x6Dq6jv7jl3ylGJ0RwacINGSxHyYm2ueKj6zFIRujjlFd
-         T9q1lKk3mZTQHQzpG8x3DVDZgnWnP/TMXRTTsaOR+sWOLwS4AvlquZFTiWomSdu/E0Tc
-         zj4okBCnYGxS/6YmqbZTtdKGciWj1o0mRbDsuaM8MYg4+pzJR/rU0npE1NFGuMI2Evj2
-         JLgA==
-X-Received: by 10.107.15.17 with SMTP id x17mr34896624ioi.35.1450996608710;
- Thu, 24 Dec 2015 14:36:48 -0800 (PST)
-Received: by 10.79.115.134 with HTTP; Thu, 24 Dec 2015 14:36:48 -0800 (PST)
-In-Reply-To: <1450798780.11255.22.camel@mad-scientist.net>
+        bh=L3rPjMI9Yn36+b5H6UQ7wQHl+lElaZitteyDDaGZoN0=;
+        b=Keh9CRUVdhKltoGuEYsOucSw9+URwn5nYHRhguyq33yofh9FAuqLe++0KbHphjCtPZ
+         KrAT+NK0g6GzwovpzZpMjbSwtU8wAu/yV9WFYBNLY2rnHt+Iz/1swBMCXPb4qHemrg5r
+         y68Lmuj9QrP741iuWPJ12N3yWEpfiZHG5j0fw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=L3rPjMI9Yn36+b5H6UQ7wQHl+lElaZitteyDDaGZoN0=;
+        b=mBgHTrls+4U6F385fPGoHztX69uc2ElihUJL/bnOL86e3XT9E+bbUN0AU5xfKVEtc2
+         tZUtHGt1LWY4DuzXCZCK/L0XsPKy32sPZa2A89y3hN/t/6Qk4WaCdK7aw6rCDnHkZ0L+
+         uQLh5tBcKxo7TVq3Cf7n6I8M4SI6NmHraCAwrj3HCqMU1lMvg0dy1gX7npWc7F3l5pJB
+         Quk6uPqLtihzNQm9017D3U4/94w/Ch0se9E6VdFwkGUU/3M6KVHvzvhCQlnd88bISA2j
+         /ZXBTxVPic4nIaOS8WjTn4hMinADjzE37yXxtjcC+MOlBMXMA/Xi6f8GjT/zy5SjRcA6
+         VpXQ==
+X-Gm-Message-State: ALoCoQm1g0xfC1wK0h8O0MFTzGkDTDgczpALSqm2sPZ9sPLmKLOvpZ7qtBBVRh7BNdV58QDVDt6H9A0I3gbkmJiBrzqTo4bdvA==
+X-Received: by 10.31.150.23 with SMTP id y23mr25139366vkd.87.1451000093091;
+ Thu, 24 Dec 2015 15:34:53 -0800 (PST)
+Received: by 10.103.97.65 with HTTP; Thu, 24 Dec 2015 15:34:33 -0800 (PST)
+In-Reply-To: <CACnwZYfMKG18ZTR3bCLY5FRsBYmSsC9Co2e=iLRYxsM=w=Dqog@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282987>
 
-On Tue, Dec 22, 2015 at 1:39 PM, Paul Smith <paul@mad-scientist.net> wrote:
-> I'm trying to build Git (2.6.4) on GNU/Linux, but without any
-> requirements (other than basic libc etc.) on the local system.  This
-> works fine except for one thing: git-remote-https.
+On Thu, Dec 24, 2015 at 2:17 PM, Thiago Farina <tfransosi@gmail.com> wrote:
 >
-> In order to build this I need to have libcurl, but libcurl is a MONSTER
-> library with an enormous number of prerequisites (see below).
+> When ever I make a commit (assume I'm changing a single file) and do a
+> 'git push origin master', git says 'Counting objects: 6, done.'
 >
-I think Git would have to be changed to use raw sockets and implement
-everything it needs on top of that, like libgit2 already does. Certainly this
-won't be a trivial task.
+> Does git makes 6 objects everytime? What are those objects?
 
--- 
-Thiago Farina
+1 commit object;
+1 blob object for the new file revision;
+1 tree object for the top level directory;
+3 tree objects for intermediate paths
+= 6
+
+So your single file is some path like "src/main/lib/foo.c".
