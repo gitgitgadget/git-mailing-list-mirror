@@ -1,10 +1,10 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 10/11] config: add core.untrackedCache
-Date: Thu, 24 Dec 2015 22:10:29 +0100
-Message-ID: <CAP8UFD0penKjBBUW-9aPJ=T8x7WfhZGDtH1-jBsuJ4CTb2mrXw@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] update-index: add untracked cache notifications
+Date: Thu, 24 Dec 2015 22:11:50 +0100
+Message-ID: <CAP8UFD12kjUFvuaSMj3Q5sgDzCELejO7mEBuZ8g-=Cfa7sv5=A@mail.gmail.com>
 References: <1450904639-25592-1-git-send-email-chriscool@tuxfamily.org>
-	<1450904639-25592-11-git-send-email-chriscool@tuxfamily.org>
-	<CACsJy8C0CwbFy+Ghk3EWTyhqPYcr6xE5jczumWW98cAAHdfmPg@mail.gmail.com>
+	<1450904639-25592-5-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8BQi8LQSHsZ7UMduCdE2_AeNwxn3kppc1xTfaNsMN=OXA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
@@ -16,64 +16,62 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 24 22:10:42 2015
+X-From: git-owner@vger.kernel.org Thu Dec 24 22:11:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aCD9l-00037s-8i
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 22:10:41 +0100
+	id 1aCDAy-00052r-4a
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 22:11:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535AbbLXVKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 16:10:34 -0500
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:34926 "EHLO
+	id S1752664AbbLXVLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2015 16:11:52 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:34783 "EHLO
 	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753245AbbLXVKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 16:10:31 -0500
-Received: by mail-lf0-f47.google.com with SMTP id l133so166452111lfd.2
-        for <git@vger.kernel.org>; Thu, 24 Dec 2015 13:10:30 -0800 (PST)
+	with ESMTP id S1752071AbbLXVLv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2015 16:11:51 -0500
+Received: by mail-lf0-f47.google.com with SMTP id y184so166939423lfc.1
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 13:11:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=vB1//eKSj2K10qjWzF6+1o78EeMvhZePLhY9YcClqT0=;
-        b=AF0Ttbxa0+g0a4btkkIAf/MVwN07EI6IfSrqekE6jZQAjPgFzqdkw3XKweO9X89tGM
-         sywk4HU3L4/qlQ412wSVt9U7XdMDfZXeKN0hyNwzawGih5KQbNwdHX1+MYg5g81Fjt6z
-         EKymGYn8sM9X/iSbBtzvquZEdlOZAej2jDaRG4TAHx2yyUpOliEPuXgytxy82VIHvsSl
-         5KE8Y6X4AuIaHjLy54amaETTdXSGZr7MekLE85jzzZoRw0IMg8a370IFFg7F+qnKp4tg
-         Hc8DVoBLjOAfD1ZjlzMYFmQFxQwPBlO2HyMHAHWHyFnDCfl3kfbxTSVzlbi8U7YOO4/f
-         il9g==
-X-Received: by 10.25.39.200 with SMTP id n191mr12906078lfn.7.1450991429497;
- Thu, 24 Dec 2015 13:10:29 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Thu, 24 Dec 2015 13:10:29 -0800 (PST)
-In-Reply-To: <CACsJy8C0CwbFy+Ghk3EWTyhqPYcr6xE5jczumWW98cAAHdfmPg@mail.gmail.com>
+        bh=0at1cXacdPLOgQIx84XbjN7PrlGoHqDXpm82v6D1W+A=;
+        b=KCfqWR0DLQlGI8aiVDSiaqgYUkUXc7Q1bf12tGWp6RAN208+7HIoFDlMQkUoBNhjp0
+         zSvv8U0/AS1AftQxao9GhOGrtd4I9V70qnr/WHVio7wIV/xrQD9d7AiuB4lGWMU3nUsg
+         dghdEc8OBkJWd6140MYhluEnt2em7VbzIF3+0NEJtMKcWYQQHpIKGzyzN/gA8nZWFwYv
+         Qy3cABeXogzX088eqP69ase933VW8KngFbJx5Zf97MXCJ0RIebFQ2nTLAnwPM4cHmm9K
+         +vnKCpoeLVXvQTJ0moS5ZakzQqGRayWcaOTyHUs3j8jsHBfIf1zifwNlf/O8XS6PbZWT
+         t9zA==
+X-Received: by 10.25.169.212 with SMTP id s203mr10480682lfe.134.1450991510385;
+ Thu, 24 Dec 2015 13:11:50 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Thu, 24 Dec 2015 13:11:50 -0800 (PST)
+In-Reply-To: <CACsJy8BQi8LQSHsZ7UMduCdE2_AeNwxn3kppc1xTfaNsMN=OXA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282984>
 
-On Thu, Dec 24, 2015 at 11:13 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+On Thu, Dec 24, 2015 at 11:01 AM, Duy Nguyen <pclouds@gmail.com> wrote:
 > On Thu, Dec 24, 2015 at 4:03 AM, Christian Couder
 > <christian.couder@gmail.com> wrote:
->>  --force-untracked-cache::
->> -       For safety, `--untracked-cache` performs tests on the working
->> -       directory to make sure untracked cache can be used. These
->> -       tests can take a few seconds. `--force-untracked-cache` can be
->> -       used to skip the tests.
->> +       Same as `--untracked-cache`. Provided for backwards
->> +       compatibility with older versions of Git where
->> +       `--untracked-cache` used to imply `--test-untracked-cache` but
->> +       this option would enable the extension unconditionally.
+>> @@ -1135,10 +1135,16 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>>                 }
+>>                 add_untracked_ident(the_index.untracked);
+>>                 the_index.cache_changed |= UNTRACKED_CHANGED;
+>> -       } else if (untracked_cache == UC_DISABLE && the_index.untracked) {
+>> -               free_untracked_cache(the_index.untracked);
+>> -               the_index.untracked = NULL;
+>> -               the_index.cache_changed |= UNTRACKED_CHANGED;
+>> +               if (verbose)
+>> +                       printf(_("Untracked cache enabled for '%s'\n"), get_git_work_tree());
 >
-> Nit. The reason --force-untracked-cache remains can probably stay in
-> the commit message. Here we can simply say "synonym of
-> --untracked-cache, deprecated" or something like that (or even ".. to
-> be deleted in version N.M").
+> Nit. If you use report(), then you can skip "if (verbose)" because
+> it's done inside report().
 
-Yeah, I think "deprecated" should be enough and clearer, but I will
-see with AEvar who helped me on this.
+Ok, will do.
 
 Thanks,
 Christian.
