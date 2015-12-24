@@ -1,72 +1,125 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 10/11] config: add core.untrackedCache
-Date: Thu, 24 Dec 2015 17:13:22 +0700
-Message-ID: <CACsJy8C0CwbFy+Ghk3EWTyhqPYcr6xE5jczumWW98cAAHdfmPg@mail.gmail.com>
-References: <1450904639-25592-1-git-send-email-chriscool@tuxfamily.org> <1450904639-25592-11-git-send-email-chriscool@tuxfamily.org>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v1 2/2] git-p4: suppress non test relevant output
+Date: Thu, 24 Dec 2015 11:09:35 +0000
+Message-ID: <567BD26F.3020006@diamand.org>
+References: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com> <1450629869-49522-3-git-send-email-larsxschneider@gmail.com> <xmqqd1tzfsfm.fsf@gitster.mtv.corp.google.com> <0185CA76-DDEE-4E7F-8EFF-65E80720E0AF@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 24 11:13:59 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 24 12:09:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aC2uE-0006dJ-EM
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 11:13:58 +0100
+	id 1aC3lx-0003Gy-Vi
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 12:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075AbbLXKNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 05:13:54 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:32772 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752573AbbLXKNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 05:13:53 -0500
-Received: by mail-lb0-f181.google.com with SMTP id sv6so51673175lbb.0
-        for <git@vger.kernel.org>; Thu, 24 Dec 2015 02:13:52 -0800 (PST)
+	id S1752624AbbLXLJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2015 06:09:24 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:35589 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbbLXLJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2015 06:09:23 -0500
+Received: by mail-pf0-f173.google.com with SMTP id 78so65216009pfw.2
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 03:09:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QBACvEiS6LZBPBEu4dPBfjZHe4mLMPLZ2ESwmTkg8Zg=;
-        b=MtU+sdeL3bSWRCWltOdJbZcN74qCMx/R2KtSnX8/Qc8lvokSHVGRGLhWqI73sVCN9j
-         vZ7BPETwbrFWAOl4zUpqJPdcJW5n4J03pAZk1dvSztkSvKwJkQTFNbrUlcZSRrX+qlav
-         5b/nx/Jv5/NuG0r3vdvfBQ54Lhr1k7omS9xjUfwXSMA2DIHSyc2o6zf/7nX8GxvYQ7U2
-         cNaREE9wg1aFGKR8jQ5D8hpmHSJ1PlPVXC35bsJXkecoLoAOhQYEfFFKxvBuq1otCh/w
-         3U8LXm+59vDnlCm9pLIDCA8F0wOkM342CPLvLh16R/9RkqZcVm3fICfGMSk0li4tRsHU
-         bK5A==
-X-Received: by 10.112.172.233 with SMTP id bf9mr12136881lbc.137.1450952031807;
- Thu, 24 Dec 2015 02:13:51 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Thu, 24 Dec 2015 02:13:22 -0800 (PST)
-In-Reply-To: <1450904639-25592-11-git-send-email-chriscool@tuxfamily.org>
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=OlkpWDI/H9bS1HOxV/jn0BysilG6hUPZPtHGBeN9G1g=;
+        b=XPZ5mH0gOn/Wg3dX3xHoy7OH0whvbDvVxXNYEAyy0uGasE9YF9oHM/x6d+3crvLxhu
+         6Azq5wgKOguDoSGJtrekSqkYmdFU8AINuTQ6VWvljDV49qg9pwihlNLM0yetPiUd7ItO
+         IlMjOrUurwWqLe+wxZZ3CMYHaXw1jaTaaFtXE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=OlkpWDI/H9bS1HOxV/jn0BysilG6hUPZPtHGBeN9G1g=;
+        b=eIiXh6ijB06jwmMNQFYzKeQFMNwB25mk3m/va0VoNPtk+yeYC1zWDS5BEktOETDnFw
+         XOQBLZtMKZW76vDVKkOnf3tHEizfu9HuCkAnZkEH9FKdomYXeJiBOUpptd0D2/n+HHYe
+         4IH5xbfVaOePn8WhapqPNqjnZ2zU30HK85Dm+rWkRaEs5vJDQq4BwSFO5YFiubhMpB5Y
+         4HeJad329AEdGGmrIBGftxM1EyzNcA7crYgOyt1jeo6/7IsmSzZSEip9pPEf0EGCrYcz
+         nyvyFD11nPsaYYjGAf4Pb/l9ygDk4PhQHYGs03tXh5Vp/CVFek+fGFcSCDQNIhEyyMHj
+         AtZg==
+X-Gm-Message-State: ALoCoQlJV8qLO8mwP3fs7vG6g0AY+EYIgRLMjhDJuq+yqKzwM26aks4GV5PnY74gAdf0XzaAekQQYe+nSI4OP+peOBE/TKRTQQ==
+X-Received: by 10.98.76.206 with SMTP id e75mr50867899pfj.157.1450955362420;
+        Thu, 24 Dec 2015 03:09:22 -0800 (PST)
+Received: from [192.168.245.128] (cpc92798-cmbg19-2-0-cust327.5-4.cable.virginm.net. [80.1.41.72])
+        by smtp.gmail.com with ESMTPSA id h80sm23701580pfd.44.2015.12.24.03.09.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Dec 2015 03:09:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <0185CA76-DDEE-4E7F-8EFF-65E80720E0AF@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282980>
 
-On Thu, Dec 24, 2015 at 4:03 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
->  --force-untracked-cache::
-> -       For safety, `--untracked-cache` performs tests on the working
-> -       directory to make sure untracked cache can be used. These
-> -       tests can take a few seconds. `--force-untracked-cache` can be
-> -       used to skip the tests.
-> +       Same as `--untracked-cache`. Provided for backwards
-> +       compatibility with older versions of Git where
-> +       `--untracked-cache` used to imply `--test-untracked-cache` but
-> +       this option would enable the extension unconditionally.
+On 22/12/15 08:47, Lars Schneider wrote:
+>
+> On 21 Dec 2015, at 21:38, Junio C Hamano <gitster@pobox.com> wrote:
+>
 
-Nit. The reason --force-untracked-cache remains can probably stay in
-the commit message. Here we can simply say "synonym of
---untracked-cache, deprecated" or something like that (or even ".. to
-be deleted in version N.M").
--- 
-Duy
+>>
+>> If so, why not do it there instead?  You seem to run only "kill" to
+>> send some signal to a process using this helper function, and it
+>> would be silent on its standard output stream (even though it may
+>> say "no such process" etc. on its standard error), so it is not
+>> clear to me what you are doing with this change here...
+>
+> If I run git-p4 tests in verbose mode (e.g. "./t9823-git-p4-mock-lfs.sh -v") without this patch then the last lines of the output look like this:
+>
+>>>> Output Start >>>
+> expecting success:
+> 	kill_p4d
+>
+> ./lib-git-p4.sh: line 172: 26289 Killed: 9               while true; do
+>      if test $(time_in_seconds) -gt $timeout; then
+>          kill -9 $pid; exit 1;
+>      fi; sleep 1;
+> done
+> ok 8 - kill p4d
+>
+> # passed all 8 test(s)
+> 1..8
+> <<< Output end <<<
+>
+> However, I want them to look like this:
+>
+>>>> Output Start >>>
+> expecting success:
+> 	kill_p4d
+>
+> ok 8 - kill p4d
+>
+> # passed all 8 test(s)
+> 1..8
+> <<< Output end <<<
+>
+> This is achieved with the patch. I am no shell expert ... is there a nicer way to achieve the same?
+
+I get your desired output with the unmodified code from origin/next:
+
+$ ./t9823-git-p4-mock-lfs.sh -v
+expecting success:
+	kill_p4d
+
+ok 8 - kill p4d
+
+# passed all 8 test(s)
+1..8
+
+But that's because my shell is symlinked to /bin/dash. I suspect you are 
+using bash - when I run this with bash I get your command output. 
+Possibly a bash bug?
+
+As Junio says, it seems a bit weird that we have to redirect the stderr 
+of that entire expression.
+
+Luke
