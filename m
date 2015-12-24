@@ -1,117 +1,97 @@
-From: Alan Mackenzie <acm@muc.de>
-Subject: Re: "git stash pop" is doing an unwanted "git add" when there are
-	conflicts.
-Date: Thu, 24 Dec 2015 09:20:38 +0000
-Message-ID: <20151224092038.GA2397@acm.fritz.box>
-References: <20151221142953.GA12764@acm.fritz.box>
-	<1450772258.7937.9.camel@kaarsemaker.net>
-	<20151222093032.GA5173@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 0/3] nd/clear-gitenv-upon-use-of-alias
+Date: Thu, 24 Dec 2015 16:35:33 +0700
+Message-ID: <CACsJy8Aqu9wTigWKC1-74qLUimV8PvmbDG1XeqYcbW0ZSMLSTg@mail.gmail.com>
+References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
+ <1450597819-26278-1-git-send-email-pclouds@gmail.com> <xmqq4mfbfqla.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8DFmZSa2x4y2fDwVsvwa5uAuMJn8v=utvYtAPTGFbdWPg@mail.gmail.com>
+ <CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
+ <xmqqd1tye4i8.fsf@gitster.mtv.corp.google.com> <20151223093700.GA13386@sigill.intra.peff.net>
+ <567B05F0.5020604@kdbg.org> <20151223213140.GB21277@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Anthony Sottile <asottile@umich.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 24 10:18:40 2015
+X-From: git-owner@vger.kernel.org Thu Dec 24 10:36:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aC22g-0002wn-T3
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 10:18:39 +0100
+	id 1aC2Jk-0005wd-0F
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 10:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932946AbbLXJSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 04:18:32 -0500
-Received: from mail.muc.de ([193.149.48.3]:51192 "EHLO mail.muc.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932878AbbLXJS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 04:18:26 -0500
-Received: (qmail 8630 invoked by uid 3782); 24 Dec 2015 09:18:22 -0000
-Received: from acm.muc.de (p548A5291.dip0.t-ipconnect.de [84.138.82.145]) by
-	colin.muc.de (tmda-ofmipd) with ESMTP;
-	Thu, 24 Dec 2015 10:18:20 +0100
-Received: (qmail 2434 invoked by uid 1000); 24 Dec 2015 09:20:38 -0000
-Content-Disposition: inline
-In-Reply-To: <20151222093032.GA5173@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Delivery-Agent: TMDA/1.1.12 (Macallan)
-X-Primary-Address: acm@muc.de
+	id S1752883AbbLXJgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2015 04:36:08 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:35103 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750771AbbLXJgG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2015 04:36:06 -0500
+Received: by mail-lb0-f177.google.com with SMTP id bc4so58132874lbc.2
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 01:36:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bLUSLQHh97xHGjcc9PY3l7YkZspvoVgLq/74F7oiMi0=;
+        b=r4w/SvKLC6L8TXRNPmIW4G2sGtUypQrKQZbjgxj86SOQeKmHU+eXJyOwbAqEYa44J9
+         PmYenWIWbBrBh69iln2OJFYekgvwg3L7rZU+z+t8E9PkqWaKo7Z6q8wsx7VS5xcVzAWh
+         T3zAbMpr618QrUyuBwEh+tPfuQHuEEPiQCSIP/llVkz7WF/Xlwx37Hp6QGqWPJD2FiP3
+         YgZlhy8vXjLOAo2ULyMn2lrmcXY805cJU7Ns43oTEW+p2v9lA5XS/DaudJdOoR0qXmt1
+         +hWHucfYYoTlN4xdkb9Pt89rrxFJJ2QQewNHErkCevXbPcFpTOtxrcKD6dPyPuleYiPK
+         eoyQ==
+X-Received: by 10.112.16.135 with SMTP id g7mr12363135lbd.80.1450949763541;
+ Thu, 24 Dec 2015 01:36:03 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Thu, 24 Dec 2015 01:35:33 -0800 (PST)
+In-Reply-To: <20151223213140.GB21277@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282976>
 
-Hello, Jeff.
+On Thu, Dec 24, 2015 at 4:31 AM, Jeff King <peff@peff.net> wrote:
+>   2. I doubt anybody is actually seeing this in practice anymore. But
+>      maybe I am misunderstanding something in Duy's series that changes
+>      this.
 
-On Tue, Dec 22, 2015 at 04:30:33AM -0500, Jeff King wrote:
-> On Tue, Dec 22, 2015 at 09:17:38AM +0100, Dennis Kaarsemaker wrote:
+There are two parts in your patch, one (that you two seemed to focus
+on) about return code with "!" aliases. Another, suppressing SIGPIPE,
+affects more than "!" aliases. In my case it's
+execv_dashed_external(). Non-"!" aliases are now forced to use that
+function.
 
-> > On ma, 2015-12-21 at 14:29 +0000, Alan Mackenzie wrote:
-> > > Hello, git project.
+This is the output with 'pu'. Notice git-log is executed separately
 
-> > > Last night, whilst clearing out a stale "stash stack", I did "git stash
-> > > pop".  There were conflicts in two files.
+> ~/w/git $ GIT_TRACE=2 PAGER=true ./git --exec-path=. l
+16:28:19.167040 git.c:567               trace: exec: 'git-l'
+16:28:19.167088 run-command.c:345       trace: run_command: 'git-l'
+16:28:19.168599 git.c:286               trace: alias expansion: l =>
+'log' '--stat'
+16:28:19.168633 git.c:567               trace: exec: 'git-log' '--stat'
+16:28:19.168649 run-command.c:345       trace: run_command: 'git-log' '--stat'
+16:28:19.170420 git.c:350               trace: built-in: git 'log' '--stat'
+16:28:19.210074 run-command.c:345       trace: run_command: 'true'
+16:28:19.210382 run-command.c:204       trace: exec: 'true'
+error: git-log died of signal 13
 
-> > > However, all the popped files became staged.  This doesn't normally happen.
-> > > It was intensely irritating, and required me to do "git reset HEAD" on
-> > > each of the files, none of which I wanted to commit.
+With your patch on top, "git-log died of.." goes away. And this is
+with 'master', where the builtin version of git-log is used
 
-> > > I searched the git-stash man page for this scenario, but found nothing
-> > > about it.
+> ~/w/git $ GIT_TRACE=2 PAGER=true ./git --exec-path=. l
+16:29:17.546382 git.c:561               trace: exec: 'git-l'
+16:29:17.546428 run-command.c:343       trace: run_command: 'git-l'
+16:29:17.547485 git.c:282               trace: alias expansion: l =>
+'log' '--stat'
+16:29:17.548482 git.c:348               trace: built-in: git 'log' '--stat'
+16:29:17.586457 run-command.c:343       trace: run_command: 'true'
+16:29:17.586770 run-command.c:202       trace: exec: 'true'
 
-> > > Surely staging all the files is a bug?
-
-> > That depends. A stash is two commits: one for all changes that were in
-> > the index when you ran 'git stash save' and one for all changes not yet
-> > in the index. When you pop the stash, these then get restored as staged
-> > resp. unstaged changes. So if your changes are now all staged, I'd
-> > wager that they were staged when you ran git stash save.
-
-> No, I think there's something else going on. Try this:
-  
->     git init repo &&
->     cd repo &&
-    
->     echo base >one &&
->     echo base >two &&
->     git add . &&
->     git commit -m base &&
-    
->     echo stash >one &&
->     echo stash >two &&
->     git stash &&
-    
->     echo "==> No conflicts, nothing staged"
->     git stash apply &&
-    
->     git reset --hard &&
->     echo changes >two &&
->     git commit -am changes &&
-    
->     echo "==> Conflict stages non-conflicting file 'one'"
->     ! git stash apply &&
->     git status
-
-Thanks for creating a reproducible test case for me!
-
-> It seems to be a side effect of merge-recursive to stage the results,
-> and in the no-conflict path we explicitly reset the index. For the
-> conflicting case, it's trickier, because we would want to retain the
-> unmerged entries.
-
-> So I agree it's kind of weird, but the conflicting case is inherently
-> going to touch the index, and you'd generally have to `git add` to mark
-> the resolutions (but if you really want to just touch the working tree,
-> you'd need to `git reset`).
-
->From the point of view of a user, this is suboptimal.  git stash is an
-abstraction: the preservation of uncomitted changes for later.  Staging
-previously unstaged changes with git stash pop severely damages this
-abstraction.
-
-Are there any prospects of this getting fixed?
-
-> -Peff
-
+So, in practice, people will see "died of signal 13" a lot more often
+if my series is merged and released (I assume that people often use
+aliases for paged commands like git-log, git-diff...)
 -- 
-Alan Mackenzie (Nuremberg, Germany).
+Duy
