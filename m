@@ -1,125 +1,169 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v1 2/2] git-p4: suppress non test relevant output
-Date: Thu, 24 Dec 2015 11:09:35 +0000
-Message-ID: <567BD26F.3020006@diamand.org>
-References: <1450629869-49522-1-git-send-email-larsxschneider@gmail.com> <1450629869-49522-3-git-send-email-larsxschneider@gmail.com> <xmqqd1tzfsfm.fsf@gitster.mtv.corp.google.com> <0185CA76-DDEE-4E7F-8EFF-65E80720E0AF@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Thu, 24 Dec 2015 21:54:59 +0100
+Message-ID: <CAP8UFD2riDWmK64UWHyg61YyxLVEmT8d_5qzM7U+Bs-9qCv0mA@mail.gmail.com>
+References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
+	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
+	<xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
+	<xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
+	<20151216024605.GA618@sigill.intra.peff.net>
+	<xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
+	<xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
+	<20151217074443.GA4830@sigill.intra.peff.net>
+	<CACsJy8BwARfGmGBXEdWHnDxxXcubZDzjCg7Zy6qD0qzHZWGoFw@mail.gmail.com>
+	<xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
+	<xmqqh9jae94o.fsf@gitster.mtv.corp.google.com>
+	<xmqqio3obody.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 24 12:09:37 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git <git@vger.kernel.org>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 24 21:55:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aC3lx-0003Gy-Vi
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 12:09:30 +0100
+	id 1aCCum-0005Dz-Sd
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 21:55:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbbLXLJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 06:09:24 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35589 "EHLO
-	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbbLXLJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 06:09:23 -0500
-Received: by mail-pf0-f173.google.com with SMTP id 78so65216009pfw.2
-        for <git@vger.kernel.org>; Thu, 24 Dec 2015 03:09:22 -0800 (PST)
+	id S1753175AbbLXUzE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Dec 2015 15:55:04 -0500
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:32792 "EHLO
+	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753095AbbLXUzB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Dec 2015 15:55:01 -0500
+Received: by mail-lf0-f49.google.com with SMTP id p203so168953781lfa.0
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 12:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=OlkpWDI/H9bS1HOxV/jn0BysilG6hUPZPtHGBeN9G1g=;
-        b=XPZ5mH0gOn/Wg3dX3xHoy7OH0whvbDvVxXNYEAyy0uGasE9YF9oHM/x6d+3crvLxhu
-         6Azq5wgKOguDoSGJtrekSqkYmdFU8AINuTQ6VWvljDV49qg9pwihlNLM0yetPiUd7ItO
-         IlMjOrUurwWqLe+wxZZ3CMYHaXw1jaTaaFtXE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=OlkpWDI/H9bS1HOxV/jn0BysilG6hUPZPtHGBeN9G1g=;
-        b=eIiXh6ijB06jwmMNQFYzKeQFMNwB25mk3m/va0VoNPtk+yeYC1zWDS5BEktOETDnFw
-         XOQBLZtMKZW76vDVKkOnf3tHEizfu9HuCkAnZkEH9FKdomYXeJiBOUpptd0D2/n+HHYe
-         4IH5xbfVaOePn8WhapqPNqjnZ2zU30HK85Dm+rWkRaEs5vJDQq4BwSFO5YFiubhMpB5Y
-         4HeJad329AEdGGmrIBGftxM1EyzNcA7crYgOyt1jeo6/7IsmSzZSEip9pPEf0EGCrYcz
-         nyvyFD11nPsaYYjGAf4Pb/l9ygDk4PhQHYGs03tXh5Vp/CVFek+fGFcSCDQNIhEyyMHj
-         AtZg==
-X-Gm-Message-State: ALoCoQlJV8qLO8mwP3fs7vG6g0AY+EYIgRLMjhDJuq+yqKzwM26aks4GV5PnY74gAdf0XzaAekQQYe+nSI4OP+peOBE/TKRTQQ==
-X-Received: by 10.98.76.206 with SMTP id e75mr50867899pfj.157.1450955362420;
-        Thu, 24 Dec 2015 03:09:22 -0800 (PST)
-Received: from [192.168.245.128] (cpc92798-cmbg19-2-0-cust327.5-4.cable.virginm.net. [80.1.41.72])
-        by smtp.gmail.com with ESMTPSA id h80sm23701580pfd.44.2015.12.24.03.09.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Dec 2015 03:09:21 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <0185CA76-DDEE-4E7F-8EFF-65E80720E0AF@gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=dgrbSmqx2IU4glK4RtyYTEDq2kvKl82xT1lvyAFmJgg=;
+        b=P37f1bXlSM8rzdAwM8O7fF+f9SudDmWvf3IdHtnEarNfCrGsXZnihTgO2nrMOJwG7X
+         B9YL3QTHkh0iUS8ruVKlAdvwMagyiyz+GmVsvTyb9YwroR+2FA4NTWAoxcpgRQA4KlHq
+         jLLxKo6HAFBsmpbMASqn+8vIBYDoXoJ3R3vA5+9FBQxwbDPUf+Mv2iGCkjTDillXBxJu
+         aiG9lYwkheoSXNPYWY/22WduNVYkiSmPe0PdbDJuBCHkfA0LEvUGgv+u0cykr2QnXsF1
+         7SZ7XdAmmtFLVOhJEylSK4GQunN4yb1IzbgZ2expg6ZmXjEHxJCU6sP3s2SUEVsH9bMq
+         N05w==
+X-Received: by 10.25.22.14 with SMTP id m14mr3068636lfi.124.1450990499584;
+ Thu, 24 Dec 2015 12:54:59 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Thu, 24 Dec 2015 12:54:59 -0800 (PST)
+In-Reply-To: <xmqqio3obody.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282981>
 
-On 22/12/15 08:47, Lars Schneider wrote:
+On Thu, Dec 24, 2015 at 2:56 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> On 21 Dec 2015, at 21:38, Junio C Hamano <gitster@pobox.com> wrote:
->
-
+>> Duy Nguyen <pclouds@gmail.com> writes:
 >>
->> If so, why not do it there instead?  You seem to run only "kill" to
->> send some signal to a process using this helper function, and it
->> would be silent on its standard output stream (even though it may
->> say "no such process" etc. on its standard error), so it is not
->> clear to me what you are doing with this change here...
+>>> In that case we can just check config once in read_index_from and
+>>> destroy UNTR extension. Or the middle ground, we check config once =
+in
+>>> that place, make a note in struct index_state, and make invalidate_=
+*
+>>> check that note instead of config file. The middle ground has an
+>>> advantage over destroying UNTR: (probably) many operations will tou=
+ch
+>>> index but do not add or remove entries.
+>>
+>> Or we can even teach read_index_from() to skip reading the extension
+>> without even parsing when the configuration tells it that the
+>> feature is force-disabled.  It can also add an empty one when the
+>> configuration tells it that the feature is force-enabled and there
+>> is no UNTR extension yet.
 >
-> If I run git-p4 tests in verbose mode (e.g. "./t9823-git-p4-mock-lfs.sh -v") without this patch then the last lines of the output look like this:
->
->>>> Output Start >>>
-> expecting success:
-> 	kill_p4d
->
-> ./lib-git-p4.sh: line 172: 26289 Killed: 9               while true; do
->      if test $(time_in_seconds) -gt $timeout; then
->          kill -9 $pid; exit 1;
->      fi; sleep 1;
-> done
-> ok 8 - kill p4d
->
-> # passed all 8 test(s)
-> 1..8
-> <<< Output end <<<
->
-> However, I want them to look like this:
->
->>>> Output Start >>>
-> expecting success:
-> 	kill_p4d
->
-> ok 8 - kill p4d
->
-> # passed all 8 test(s)
-> 1..8
-> <<< Output end <<<
->
-> This is achieved with the patch. I am no shell expert ... is there a nicer way to achieve the same?
+> Thinking about this a bit more, I am starting to feel that the
+> config that can be used to optionally override the presence of
+> in-index UNTR extension does not have to be too bad a thing,
+> provided if it is done with a few tweaks to the design I read in
+> Christian & =C3=86var's messages.
 
-I get your desired output with the unmodified code from origin/next:
+Great!
 
-$ ./t9823-git-p4-mock-lfs.sh -v
-expecting success:
-	kill_p4d
+> One tweak is to address the following from =C3=86var's message:
+>
+>>> Once this series is applied and git is shipped with it existing
+>>> users that have set "git update-index --untracked-cache" will have
+>>> their UC feature disabled. This is because we fall back to "oh no
+>>> config here? Must have been disabled, rm it from the index" clause
+>>> which keeps our UC from going stale in the face of config
+>>> flip-flopping.
+>
+> The above would happen only if the configuration is a boolean that
+> defaults to false.  I'd think we can have this a tristate instead.
+> That is, config.untrackedCache can be explicitly set to 'true',
+> 'false', or 'keep'.  And make a missing config.untrackedCache
+> default to 'keep'.
 
-ok 8 - kill p4d
+Ok. The first RFC patch series about this had a tristate and I
+switched to a boolean as it seemed that people prefered a boolean, but
+you are right that a tristate is more backward compatible.
 
-# passed all 8 test(s)
-1..8
+> When read_index_from() reads an existing index:
+>
+>     When the configuration is set to 'true':
+>         an existing UNTR is kept, otherwise a new UNTR gets added.
+>     When the configuration is set to 'false:
+>         an existing UNTR is dropped.
+>     When the configuration is set to 'keep':
+>         an existing UNTR is kept, otherwise nothing happens.
+>
+> When write_index() writes out an index that wasn't initialized from
+> the filesystem, a new UNTR gets added only when the configuration is
+> set to 'true' and there is no in-core UNTR already.
 
-But that's because my shell is symlinked to /bin/dash. I suspect you are 
-using bash - when I run this with bash I get your command output. 
-Possibly a bash bug?
+My current patch series does these changes in
+wt_status_collect_untracked() because currently the UNTR is mostly
+used only in git status, so it feels safer to me to not affect other
+code paths.
 
-As Junio says, it seems a bit weird that we have to redirect the stderr 
-of that entire expression.
+> That way, those who use /etc/gitconfig to force the feature over
+> their users would be able to set it to 'true', those who have been
+> using the feature in some but not all of their repositories won't
+> see any different behaviour until they muck with the configuration
+> (and if they are paranoid and want to opt out of their administrator'=
+s
+> setting, they can set it to 'keep' in their $HOME/.gitconfig to make
+> sure their repositories are not affected).
+>
+> Orthogonal to the "config overrides the existing users' practice"
+> issue, I still think that [PATCH v2 10/10] goes too far to remove
+> the safety based on the working tree location.  Checking kernel
+> version and other thing may be too much, but the check based on the
+> working tree location is a cheap way to make sure that those who do
+> unusual things (namely, use $GIT_DIR/$GIT_WORK_TREE or their
+> equivalents to tell Git that the working tree for this invocation is
+> at a place different from what UNTR data was prepared for) are not
+> harmed by incorrectly reusing the cached data for an unrelated
+> location.  So another tweak I'd feel better to see is to resurrect
+> that safety.
 
-Luke
+This has been changed in v3, see patch 09/11, and I think it should
+now work as you suggest.
+
+> I wouldn't have as much issue with such a scheme as I had with the
+> earlier description of the design in the Christian's series.
+
+Great! I am preparing a v4 that I hope to send in a few days.
+By the way the v3 does not pass its own tests due to a bug introduced
+in last minute changes.
+
+Thanks,
+Christian.
