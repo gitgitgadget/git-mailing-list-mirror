@@ -1,156 +1,127 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 09/11] ref-filter: introduce remote_ref_atom_parser()
-Date: Thu, 24 Dec 2015 13:12:28 +0530
-Message-ID: <CAOLa=ZQ1SXm6GG0jzokq7shrm0=4B8vvME13Qbh_QCEWt2X=0A@mail.gmail.com>
+Subject: Re: [PATCH v2 10/11] ref-filter: introduce contents_atom_parser()
+Date: Thu, 24 Dec 2015 13:57:18 +0530
+Message-ID: <CAOLa=ZTCnOwAa1DDmFiNeCdYFo0tkTfDM-fC_AkPStFA6rFU5w@mail.gmail.com>
 References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
- <1450279802-29414-10-git-send-email-Karthik.188@gmail.com> <CAPig+cRG_HTWL=VNqOxDnv_M0NbYZSReCHSsGe1CJiFQS8h-XQ@mail.gmail.com>
+ <1450279802-29414-11-git-send-email-Karthik.188@gmail.com> <CAPig+cRmUe4SRzmiV13XWSYou8M7TuDE3Ko37g8p-q2kEQNU+w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 24 08:43:05 2015
+X-From: git-owner@vger.kernel.org Thu Dec 24 09:27:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aC0YC-0001If-L7
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 08:43:05 +0100
+	id 1aC1FZ-0006JU-6j
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Dec 2015 09:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754609AbbLXHnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Dec 2015 02:43:00 -0500
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:33067 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751939AbbLXHm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Dec 2015 02:42:58 -0500
-Received: by mail-vk0-f51.google.com with SMTP id a188so145917806vkc.0
-        for <git@vger.kernel.org>; Wed, 23 Dec 2015 23:42:58 -0800 (PST)
+	id S1754979AbbLXI1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Dec 2015 03:27:49 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:35568 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078AbbLXI1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Dec 2015 03:27:48 -0500
+Received: by mail-vk0-f48.google.com with SMTP id k1so17953377vkb.2
+        for <git@vger.kernel.org>; Thu, 24 Dec 2015 00:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=tKWLiK/SPmj2qH1rdzSzk8n1IyoBTy3hYn+th2TYovM=;
-        b=Q2MAxg0i5p8VVpBUZZpOWi8bhTLdG4DwRWljec1T7BLoLTCwdemuvnZyr44+dot+yJ
-         SnRzx0MkI/Ob1w8vmfYxIWcl2rf34CZ8Ah9IP0vt9OPM6lSBiZ4Wekp6sbpKpkSABY/w
-         Azg0bYq0JeCkUxnv+OGqx3eAoUogVk0nEfEWr1gZoS2fT6FW8116tu2EoGIn134dadY7
-         l/mn/LyoX0wbXdI2c3SoJsh4nhDXqyCGhH+HhcnmSYUVwNR9Dg4wYWAiehNLGfJb5+zw
-         AYyYDSQdSt4hOQP8F6bFBc41dq7GesHJ3nTO18t8HdZjIkhTpVAFeFjvpZw5tpIQ+cT0
-         RD9g==
-X-Received: by 10.31.16.140 with SMTP id 12mr21007898vkq.106.1450942977872;
- Wed, 23 Dec 2015 23:42:57 -0800 (PST)
-Received: by 10.103.82.146 with HTTP; Wed, 23 Dec 2015 23:42:28 -0800 (PST)
-In-Reply-To: <CAPig+cRG_HTWL=VNqOxDnv_M0NbYZSReCHSsGe1CJiFQS8h-XQ@mail.gmail.com>
+        bh=2DCiyNbLdHE511dl4TCHDOLJLQ1fwgHRvYl2XVKGyTE=;
+        b=R1WdbFlsqSBsSXy860QDPFhy+hV5lZDehrd8vBQt78CCqOlhl83rMD5hqEoj4Lhfqk
+         L966YAq8+7WA4gXQYkcjeu/HMl+eaEW29YKPDCvdIADRwadR9hKp/6iXtNJTSCqzoHuA
+         7++4lg9Q3xBXevcj7OknnXLntqqYTe0QFbbWx5AppSxu/+XOOGtdo7xqenrd2woDNbXv
+         SyYRaTuLKt9fT6nffLVPcYQ+edWNrH2q6gdsaKHMm1CDez/zXH/x6kaegSc+uWusHjC6
+         IUNDVCiJd4h9FhmK65avW5p2eP5ZGHbiHcp2DZ33w3mayvjSxRKHy7CyD+9bbCnPVZh3
+         22Uw==
+X-Received: by 10.31.153.201 with SMTP id b192mr3335075vke.46.1450945667696;
+ Thu, 24 Dec 2015 00:27:47 -0800 (PST)
+Received: by 10.103.82.146 with HTTP; Thu, 24 Dec 2015 00:27:18 -0800 (PST)
+In-Reply-To: <CAPig+cRmUe4SRzmiV13XWSYou8M7TuDE3Ko37g8p-q2kEQNU+w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282974>
 
-On Thu, Dec 17, 2015 at 2:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Thu, Dec 17, 2015 at 3:09 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Wed, Dec 16, 2015 at 10:30 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
->> and '%(push)' atoms and store information into the 'used_atom'
->> structure based on the modifiers used along with the corresponding
->> atom.
+>> Introduce contents_atom_parser() which will parse the '%(contents)'
+>> atom and store information into the 'used_atom' structure based on the
+>> modifiers used along with the atom.
 >>
 >> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 >> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 >> ---
 >> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -37,6 +37,8 @@ static struct used_atom {
->>         union {
->>                 const char *color;
+>> @@ -39,6 +39,10 @@ static struct used_atom {
 >>                 struct align align;
->> +               enum { RR_SHORTEN, RR_TRACK, RR_TRACKSHORT, RR_NORMAL }
+>>                 enum { RR_SHORTEN, RR_TRACK, RR_TRACKSHORT, RR_NORMAL }
+>>                         remote_ref;
+>> +               struct {
+>> +                       enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+>> +                       unsigned int no_lines;
 >
-> Nit: I'd have expected to see the normal/plain case first rather than
-> last (but not itself worth a re-roll).
+> 'no_lines' sounds like "no lines!". How about 'nlines' instead?
 >
 
-Will add it in. That'll put it in an alphabetical order too.
+Sure, will do.
 
->> +                       remote_ref;
+>> +               } contents;
 >>         } u;
 >>  } *used_atom;
 >>  static int used_atom_cnt, need_tagged, need_symref;
->> @@ -69,6 +71,25 @@ static void color_atom_parser(struct used_atom *atom)
->> +static void remote_ref_atom_parser(struct used_atom *atom)
+>> @@ -90,6 +94,36 @@ static void remote_ref_atom_parser(struct used_atom *atom)
+>> +static void contents_atom_parser(struct used_atom *atom)
 >> +{
->> +       const char *buf;
+>> +       const char * buf;
 >> +
->> +       buf = strchr(atom->str, ':');
->> +       atom->u.remote_ref = RR_NORMAL;
+>> +       if (match_atom_name(atom->str, "contents", &buf))
+>> +               atom->u.contents.option = C_BARE;
+>> +       else if (match_atom_name(atom->str, "subject", &buf)) {
+>
+> The original code used strcmp() and matched only "subject", however
+> the new code will incorrectly match both "subject" and
+> "subject:whatever". Therefore, you should be using strcmp() here
+> rather than match_atom_name().
+>
+> Ditto for "body".
+
+Will change.
+
+>
+>> +               atom->u.contents.option = C_SUB;
+>> +               return;
+>> +       } else if (match_atom_name(atom->str, "body", &buf)) {
+>> +               atom->u.contents.option = C_BODY_DEP;
+>> +               return;
+>> +       }
 >> +       if (!buf)
 >> +               return;
 >
-> This code is not as clear as it could be due to the way the 'buf'
-> assignment and check for NULL are split apart. It can be made clearer
-> either by doing this:
+> It's not easy to see that this 'if (!buf)' check relates to the
+> "contents" check at the very top of the if/else if/ chain since there
+> are entirely unrelated checks in between. Reorganizing it can improve
+> clarity:
 >
->     atom->u.remote_ref = RR_NORMAL;
->     buf = strchr(...);
->     if (!buf)
+>     if (!strcmp("subject")) {
+>         ...
 >         return;
+>     } else if (!strcmp("body")) {
+>         ...
+>         return;
+>     } else if (!match_atom_name(...,"contents", &buf))
+>         die("BUG: expected 'contents' or 'contents:'");
 >
-> or (even better) this:
->
->     buf = strchr(...);
 >     if (!buf) {
->         atom->u.remote_ref = RR_NORMAL;
+>         atom->u.contents.option = C_BARE;
 >         return;
 >     }
 >
 
-Will do the latter, thanks.
-
->> +       buf++;
->> +       if (!strcmp(buf, "short"))
->> +               atom->u.remote_ref = RR_SHORTEN;
->> +       else if (!strcmp(buf, "track"))
->> +               atom->u.remote_ref = RR_TRACK;
->> +       else if (!strcmp(buf, "trackshort"))
->> +               atom->u.remote_ref = RR_TRACKSHORT;
->> +       else
->> +               die(_("unrecognized format: %%(%s)"), atom->str);
->> +}
->> +
->> @@ -835,6 +856,42 @@ static inline char *copy_advance(char *dst, const char *src)
->> +static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->> +                                   struct branch *branch, const char **s)
->> +{
->> +       int num_ours, num_theirs;
->> +       if (atom->u.remote_ref == RR_SHORTEN)
->> +               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
->> +       else if (atom->u.remote_ref == RR_TRACK) {
->> +               if (stat_tracking_info(branch, &num_ours,
->> +                                      &num_theirs, NULL))
->> +                       return;
->
-> The RR_TRACKSHORT branch below has a blank line following the
-> 'return', but this branch lacks it, which is inconsistent.
->
-
-will add.
-
->> +               if (!num_ours && !num_theirs)
->> +                       *s = "";
->> +               else if (!num_ours)
->> +                       *s = xstrfmt("[behind %d]", num_theirs);
->> +               else if (!num_theirs)
->> +                       *s = xstrfmt("[ahead %d]", num_ours);
->> +               else
->> +                       *s = xstrfmt("[ahead %d, behind %d]",
->> +                                    num_ours, num_theirs);
->> +       } else if (atom->u.remote_ref == RR_TRACKSHORT) {
->> +               if (stat_tracking_info(branch, &num_ours,
->> +                                      &num_theirs, NULL))
->
-> What happened to the assert(branch) which was in the original code
-> from which this was derived (below)? Is it no longer needed?
->
-
-stat_tracking_info() takes care of that, instead of aborting, we gracefully
-continue while leaving that value empty.
+This looks good. Thanks.
 
 -- 
 Regards,
