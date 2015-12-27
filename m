@@ -1,93 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] config: add core.untrackedCache
-Date: Sun, 27 Dec 2015 12:21:22 -0800
-Message-ID: <xmqqege7bq2l.fsf@gitster.mtv.corp.google.com>
-References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
-	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
-	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
-	<CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
-	<xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
-	<CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
-	<xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
-	<20151216024605.GA618@sigill.intra.peff.net>
-	<xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
-	<xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
-	<20151217074443.GA4830@sigill.intra.peff.net>
-	<CACsJy8BwARfGmGBXEdWHnDxxXcubZDzjCg7Zy6qD0qzHZWGoFw@mail.gmail.com>
-	<xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
-	<xmqqh9jae94o.fsf@gitster.mtv.corp.google.com>
-	<xmqqio3obody.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8AO0BumZQmwWNVHL-viGLY=ExE3syJOt1h75zeQug95mQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 27 21:21:36 2015
+From: Mostyn Bramley-Moore <mostynb@opera.com>
+Subject: [PATCH/RFC 0/2] add a perl compatible regex match flag to git describe
+Date: Sun, 27 Dec 2015 23:59:50 +0100
+Message-ID: <1451257192-5755-1-git-send-email-mostynb@opera.com>
+Cc: Mostyn Bramley-Moore <mostynb@opera.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 28 00:00:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDHot-0008Be-7c
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Dec 2015 21:21:35 +0100
+	id 1aDKIX-000104-Vy
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 00:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522AbbL0UVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2015 15:21:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51911 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751914AbbL0UV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2015 15:21:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0C8D3679A;
-	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=l6V8m+fNfwNKnjV1/EtDs9EhNrc=; b=ZDk/8x
-	GgLzjdR4LiyWM1Ya721TK2ejkxNgICzehnYoEc3AAjkC55qQiqmVtwt3gigvVzLc
-	sPmzOm86oKTLpxtPnwzDQH31fkdpedKLp85t5K+F4DOr1c8eIzTzrHchoZMCm6lQ
-	v5mWIU7QNjHXIOd55/YxUqB+sH7LcDAi2Trmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZBIyFw4PzURcMlf0jOBjuf2RPaoWWAbN
-	PU2lD8xDCftY4y0LnZWm+NszQAxNx0I04txkjar4wnYfU/7Itvyjuh0harc+MfaY
-	kwFjSTc7QXg2GJpoLM+w82v2z5uPgojE1/2xNFrQMLTmH8ONIRc0amOywPBmdDdB
-	8fjBNYEtqNE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C8CA136799;
-	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 461C036798;
-	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
-In-Reply-To: <CACsJy8AO0BumZQmwWNVHL-viGLY=ExE3syJOt1h75zeQug95mQ@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 24 Dec 2015 16:49:15 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 65FD0A68-ACD7-11E5-B9FE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754646AbbL0XAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2015 18:00:17 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:35676 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754573AbbL0XAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2015 18:00:15 -0500
+Received: by mail-wm0-f51.google.com with SMTP id l126so248770360wml.0
+        for <git@vger.kernel.org>; Sun, 27 Dec 2015 15:00:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=opera-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=qllu/4WsYBmbsO5qqRUNi9sZxsrwNlTJCwbiGsge+ek=;
+        b=foycLaGUsvwCmwt9WschEh/1EbNuqqcIOHE0AWzVHYyfgKt0q1UXiIEEGs6r49C6mk
+         CvmW7/uOpGarzz/aelK16kNn60RnUot0efpSQAG4k7G0nSBgcAiamNoE1RQv3sz2r5E0
+         /5AANPtWzRVvw93m2hR1SRGu61C3dEBng+17HQaDTpj768z4oiasjVJXRg3q0zUos8/L
+         Q9J/m7QfPu5R3leX4vf7iKtSLy7ZQYhqXmQ03LPFo/dXpogpu/h/oDH8xXlvSjfuai9k
+         YXDudKcdUGay07YcIVNYbU6ZHEcKP/9hgyBKncb97pix7cD81W0vChi4pppwWZHZF/NW
+         /ZQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qllu/4WsYBmbsO5qqRUNi9sZxsrwNlTJCwbiGsge+ek=;
+        b=Hv9mwc0oTTGSe92DGTKsad1U9mi87/zdHQxsHK3vh+/o4P/3OxBjTQPQ3275R+AdJP
+         R6dbBUv6fjqNCcKeQFJ/O13MFnwuz57kZ0ndnECAP1mZQFo+hSmnf5ksk67p0aXQg99u
+         jyxMGbPuP0ugWu1UMIFKKgyxrTCrM+LD/XFfMNYpafkNO1DF58yarkLqx8hiKtkDltNq
+         tTw7Y1OcqeIzABs2l5bMkL7xjvM9pzeVSo9cGLqhMA9k5FJgbXOa+3diJ46sFL7PSfUF
+         bMEWQF5vTJE6b2uQOIg6O8J609oxKNk//+PceNEb7lWcNwQycKvSJXiGGb0HPgmaCl2+
+         npEA==
+X-Gm-Message-State: ALoCoQn3xm3JubBBRBaR3mDLYeelNF70ZkWOTtS6do9RUt+0ggWx4JPBWp477UrCYj6eT5uE/MrqdVLYOhn+sAv53KSVPRrvuQ==
+X-Received: by 10.28.17.8 with SMTP id 8mr10432514wmr.65.1451257214573;
+        Sun, 27 Dec 2015 15:00:14 -0800 (PST)
+Received: from teardrop.skrumpis (h151n12-g-kt-d2.ias.bredband.telia.com. [213.64.207.151])
+        by smtp.gmail.com with ESMTPSA id w17sm12929872wmw.15.2015.12.27.15.00.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 27 Dec 2015 15:00:13 -0800 (PST)
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283019>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+git describe currently only supports glob matching with the --matches flag.
+It would be useful to support regular expressions.
 
-> Sounds good, except..
->
->> When write_index() writes out an index that wasn't initialized from
->> the filesystem, a new UNTR gets added only when the configuration is
->> set to 'true' and there is no in-core UNTR already.
->
-> Do we really need this?
+PCRE is already an optional dependency from git grep, I wonder if posix or
+extended regexes would be preferable?
 
-We don't; you're right.
+Some old discussion of this as a candidate feature is here, though nobody put
+together a patch as far as I can see:
+http://comments.gmane.org/gmane.comp.version-control.git/173873
 
-Thanks.
+Mostyn Bramley-Moore (2):
+  describe: mention glob in the --matches help text
+  describe: add --pcre-match option
+
+ Documentation/git-describe.txt |  5 +++
+ builtin/describe.c             | 73 ++++++++++++++++++++++++++++++++++++++++--
+ t/README                       |  3 +-
+ t/t6120-describe.sh            | 29 ++++++++++++++---
+ 4 files changed, 103 insertions(+), 7 deletions(-)
+
+-- 
+2.5.0
