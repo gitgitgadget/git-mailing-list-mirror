@@ -1,130 +1,93 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] worktree: stop supporting moving worktrees manually
-Date: Sun, 27 Dec 2015 10:43:16 +0700
-Message-ID: <1451187796-31138-1-git-send-email-pclouds@gmail.com>
-References: <xmqqmvuudfk6.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Sun, 27 Dec 2015 12:21:22 -0800
+Message-ID: <xmqqege7bq2l.fsf@gitster.mtv.corp.google.com>
+References: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
+	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX6=sU2cb_vRn5DAqVEuNTwsk0m7vQ0_WUp5qPWeQq5JhQ@mail.gmail.com>
+	<xmqqh9jjfqk4.fsf@gitster.mtv.corp.google.com>
+	<CACBZZX7QW2J6DcMSXTa1y+QdMrqq5DXs1Fu3m8toV5a4yZKNjw@mail.gmail.com>
+	<xmqqy4cvco25.fsf@gitster.mtv.corp.google.com>
+	<20151216024605.GA618@sigill.intra.peff.net>
+	<xmqqwpsfdl5y.fsf@gitster.mtv.corp.google.com>
+	<xmqqoadrdj22.fsf@gitster.mtv.corp.google.com>
+	<20151217074443.GA4830@sigill.intra.peff.net>
+	<CACsJy8BwARfGmGBXEdWHnDxxXcubZDzjCg7Zy6qD0qzHZWGoFw@mail.gmail.com>
+	<xmqqy4cnfyds.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8AF-7ULixapHmTtCia9x0HTtJ1nmnAER9A3BeLVjQM_Mg@mail.gmail.com>
+	<xmqqh9jae94o.fsf@gitster.mtv.corp.google.com>
+	<xmqqio3obody.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8AO0BumZQmwWNVHL-viGLY=ExE3syJOt1h75zeQug95mQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, peff@peff.net,
-	rappazzo@gmail.com, kyle@kyleam.com, sunshine@sunshineco.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 27 04:43:25 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 27 21:21:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aD2Eu-00089V-Kn
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Dec 2015 04:43:25 +0100
+	id 1aDHot-0008Be-7c
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Dec 2015 21:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451AbbL0DnU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Dec 2015 22:43:20 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:35971 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753574AbbL0DnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Dec 2015 22:43:19 -0500
-Received: by mail-pa0-f50.google.com with SMTP id yy13so1639566pab.3
-        for <git@vger.kernel.org>; Sat, 26 Dec 2015 19:43:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=0z+hAdDJELurYOM3GgK5CNA2GDqYhHPzsyjnaOXhFsE=;
-        b=wjzZcaroFcj7RCxFU2O0hk+ZWtDQb6osco7KZ54mkNVB5/YkoLAoHxefzvKe/c5qi6
-         IaeQmq1lVyqkReqE/jlPFiLuoYSjyUQQkv7QRqUQJoYDeitTfe5rhnn6LuvaIT4Io+bd
-         89dWsFV7NiCGBdQF4bYuIAC9oxvd3uG0NG2h9kzAhy9ghz4YyQHrY3rhER4q5nKTIGOl
-         cmy1sHRKe7uWqUBwgcDtJU64zeW06asc75lGvSjigpCO6t5jBBAQfeBa3WdgVgAhaJJ5
-         iRuT4mknP6O64iXcRCt2rU/RUbKcw2wdGjwfgT0fxjXyrKTCpZKni7yutaEotKg1prJS
-         k4Kg==
-X-Received: by 10.66.251.3 with SMTP id zg3mr69423435pac.145.1451187798462;
-        Sat, 26 Dec 2015 19:43:18 -0800 (PST)
-Received: from lanh ([171.233.234.31])
-        by smtp.gmail.com with ESMTPSA id sg4sm72816129pac.48.2015.12.26.19.43.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Dec 2015 19:43:16 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 27 Dec 2015 10:43:24 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <xmqqmvuudfk6.fsf@gitster.mtv.corp.google.com>
+	id S1752522AbbL0UVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2015 15:21:31 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51911 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751914AbbL0UV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2015 15:21:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0C8D3679A;
+	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l6V8m+fNfwNKnjV1/EtDs9EhNrc=; b=ZDk/8x
+	GgLzjdR4LiyWM1Ya721TK2ejkxNgICzehnYoEc3AAjkC55qQiqmVtwt3gigvVzLc
+	sPmzOm86oKTLpxtPnwzDQH31fkdpedKLp85t5K+F4DOr1c8eIzTzrHchoZMCm6lQ
+	v5mWIU7QNjHXIOd55/YxUqB+sH7LcDAi2Trmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZBIyFw4PzURcMlf0jOBjuf2RPaoWWAbN
+	PU2lD8xDCftY4y0LnZWm+NszQAxNx0I04txkjar4wnYfU/7Itvyjuh0harc+MfaY
+	kwFjSTc7QXg2GJpoLM+w82v2z5uPgojE1/2xNFrQMLTmH8ONIRc0amOywPBmdDdB
+	8fjBNYEtqNE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C8CA136799;
+	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 461C036798;
+	Sun, 27 Dec 2015 15:21:23 -0500 (EST)
+In-Reply-To: <CACsJy8AO0BumZQmwWNVHL-viGLY=ExE3syJOt1h75zeQug95mQ@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 24 Dec 2015 16:49:15 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 65FD0A68-ACD7-11E5-B9FE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283018>
 
-The current update_linked_gitdir() has a bug that can create "gitdir"
-file in non-multi-worktree setup. Instead of fixing this, we step back =
-a
-bit. The original design was probably not well thought out. For now, if
-the user manually moves a worktree, they have to fix up "gitdir" file
-manually or the worktree will get pruned. In future, we probably will
-add "git worktree mv" to support this use case.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-worktree.txt |  6 ++----
- setup.c                        | 12 ------------
- 2 files changed, 2 insertions(+), 16 deletions(-)
+> Sounds good, except..
+>
+>> When write_index() writes out an index that wasn't initialized from
+>> the filesystem, a new UNTR gets added only when the configuration is
+>> set to 'true' and there is no in-core UNTR already.
+>
+> Do we really need this?
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktre=
-e.txt
-index 5b9ad04..4814f48 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -33,10 +33,8 @@ The working tree's administrative files in the repos=
-itory (see
- clean up any stale administrative files.
-=20
- If you move a linked working tree to another file system, or
--within a file system that does not support hard links, you need to run
--at least one git command inside the linked working tree
--(e.g. `git status`) in order to update its administrative files in the
--repository so that they do not get automatically pruned.
-+within a file system that does not support hard links, you need to upd=
-ate
-+$GIT_DIR/worktrees/<id>/gitdir so that they do not get automatically p=
-runed.
-=20
- If a linked working tree is stored on a portable device or network sha=
-re
- which is not always mounted, you can prevent its administrative files =
-from
-diff --git a/setup.c b/setup.c
-index d343725..6ee2b23 100644
---- a/setup.c
-+++ b/setup.c
-@@ -434,17 +434,6 @@ static int check_repository_format_gently(const ch=
-ar *gitdir, int *nongit_ok)
- 	return ret;
- }
-=20
--static void update_linked_gitdir(const char *gitfile, const char *gitd=
-ir)
--{
--	struct strbuf path =3D STRBUF_INIT;
--	struct stat st;
--
--	strbuf_addf(&path, "%s/gitdir", gitdir);
--	if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
--		write_file(path.buf, "%s", gitfile);
--	strbuf_release(&path);
--}
--
- /*
-  * Try to read the location of the git directory from the .git file,
-  * return path to git directory if found.
-@@ -514,7 +503,6 @@ const char *read_gitfile_gently(const char *path, i=
-nt *return_error_code)
- 		error_code =3D READ_GITFILE_ERR_NOT_A_REPO;
- 		goto cleanup_return;
- 	}
--	update_linked_gitdir(path, dir);
- 	path =3D real_path(dir);
-=20
- cleanup_return:
---=20
-2.3.0.rc1.137.g477eb31
+We don't; you're right.
+
+Thanks.
