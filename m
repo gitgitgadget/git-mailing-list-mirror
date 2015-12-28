@@ -1,139 +1,142 @@
-From: Stephen & Linda Smith <ischis2@cox.net>
-Subject: Re: [PATCH] user-manual: remove temporary branch entry from todo list
-Date: Sun, 27 Dec 2015 23:02:31 -0700
-Message-ID: <3065044.ki4VpYSZvR@thunderbird>
-References: <1450918023-30309-1-git-send-email-ischis2@cox.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] worktree: stop supporting moving worktrees manually
+Date: Mon, 28 Dec 2015 01:22:06 -0500
+Message-ID: <20151228062206.GA4621@flurp.local>
+References: <xmqqmvuudfk6.fsf@gitster.mtv.corp.google.com>
+ <1451187796-31138-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 28 07:02:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	peff@peff.net, rappazzo@gmail.com, kyle@kyleam.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 28 07:23:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDQst-0003gm-7S
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 07:02:19 +0100
+	id 1aDRCr-0000f8-TC
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 07:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbbL1GCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Dec 2015 01:02:15 -0500
-Received: from fed1rmfepo102.cox.net ([68.230.241.144]:42774 "EHLO
-	fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbbL1GCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Dec 2015 01:02:14 -0500
-Received: from fed1rmimpo209 ([68.230.241.160]) by fed1rmfepo102.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151228060213.BSH7752.fed1rmfepo102.cox.net@fed1rmimpo209>
-          for <git@vger.kernel.org>; Mon, 28 Dec 2015 01:02:13 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo209 with cox
-	id yu2C1r00M2tqoqC01u2CKG; Mon, 28 Dec 2015 01:02:13 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020206.5680D065.0043,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=RNFt6fe+ c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=VwQbUJbxAAAA:8 a=oko8Isk52rHqN623ek4A:9 a=CjuIK1q_8ugA:10 a=x8gzFH9gYPwA:10
- a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 8AD93143320;
-	Sun, 27 Dec 2015 23:02:31 -0700 (MST)
-User-Agent: KMail/5.0.2 (Linux/4.3.0-2-generic; KDE/5.15.0; x86_64; ; )
+	id S1751162AbbL1GWT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Dec 2015 01:22:19 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:33461 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbbL1GWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2015 01:22:18 -0500
+Received: by mail-io0-f169.google.com with SMTP id q21so13500893iod.0
+        for <git@vger.kernel.org>; Sun, 27 Dec 2015 22:22:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=gydVuhmwg1RSLt+P/wN/i4fQMErNylYwmt01V7Emipc=;
+        b=kKLiSWS+njmC0rJMkcMf5spYop/MBkp6kg3FG1MPS8zFkRIxOgGQuFWvPF0KRdkWjg
+         o23Nj1E2rJPBPgoD4dxs+UK/30qmPC40R0zK2f9c/1NBYIEGNAWxDzleOpEQvS1VHTBR
+         pIrfidpfflQf/BB6uVRE6JvnB9eKuxf+T6ZCjPw/QWUNWLP9nnNI9hebkJYIKD62PPUZ
+         PRzdr7wBBC+ri15eXLep80mFzDoDG+KsoyeAq3PXbju2n5b8ehzFnXcUIz6TRykL5G0C
+         KlKwS7zJ/goz4rf6yQVF86x27GJnZumnG6F+eWe27zMl8iemdloMu6mPCP31Hup6hnVh
+         yK1g==
+X-Received: by 10.107.40.200 with SMTP id o191mr53480289ioo.160.1451283737930;
+        Sun, 27 Dec 2015 22:22:17 -0800 (PST)
+Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id z15sm19323725igg.20.2015.12.27.22.22.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 27 Dec 2015 22:22:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1451187796-31138-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283029>
 
-On Sunday, December 27, 2015 06:41:09 PM Junio C Hamano wrote:
-> "Stephen P. Smith" <ischis2@cox.net> writes:
-> 
-> > Remove the suggestion for using a detached HEAD instead of a
-> > temporary branch.
-> 
-> That is something we can read from the patch text.  Please explain
-> why it is a good idea to remove it.
-> 
-> I can think of two completely different reasons:
-> 
->  (1) Maybe the task was done some time ago, and we are seeing a
->      stale todo item?
-> 
->  (2) The task the todo item hints at was not done, but maybe it is
->      not a good thing to do after all?
-> 
-> You seem to be hinting the former, but I do not think "the task was
-> done" is the case here.
- 
-I think that this is a stale todo.   
- 
-The only place there is a mention of temporary branches (which 
-is then parenthetically called a topic branch) is in relation to how Tony Luck organizes his work.   
-Additionally there is already a subsection on using a detatched head ("Examining an 
-old version without creating a new branch). 
- 
-If there is more that was wanted, then I would be glad to add something, but 
-I don't see that there are references to remove.
- 
-> 
-> > Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> > ---
-> >
-> > Notes:
-> >     A search of the user manual found only one location which refers to
-> >     temporary branches.  This has to do with how Tony Luck uses them.
-> >     
-> >     Even then there is a clarifying parenthetical noting that the
-> >     temporary branches are topic branches.
-> >     
-> >     A git blame showed that the last time that the entry was updated was
-> >     in 2007.
-> >
-> >  Documentation/user-manual.txt | 3 ---
-> >  1 file changed, 3 deletions(-)
-> >
-> > diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> > index 1c790ac..18e2f1e 100644
-> > --- a/Documentation/user-manual.txt
-> > +++ b/Documentation/user-manual.txt
-> > @@ -4636,9 +4636,6 @@ Scan email archives for other stuff left out
-> >  Scan man pages to see if any assume more background than this manual
-> >  provides.
-> >  
-> > -Simplify beginning by suggesting disconnected head instead of
-> > -temporary branch creation?
-> > -
-> 
-> What does "beginning" refer to in this sentence, though?
+On Sun, Dec 27, 2015 at 10:43:16AM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> The current update_linked_gitdir() has a bug that can create "gitdir"
+> file in non-multi-worktree setup. Instead of fixing this, we step bac=
+k a
+> bit. The original design was probably not well thought out. For now, =
+if
+> the user manually moves a worktree, they have to fix up "gitdir" file
+> manually or the worktree will get pruned. In future, we probably will
+> add "git worktree mv" to support this use case.
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-workt=
+ree.txt
+> @@ -33,10 +33,8 @@ The working tree's administrative files in the rep=
+ository (see
+>  If you move a linked working tree to another file system, or
+> -within a file system that does not support hard links, you need to r=
+un
+> -at least one git command inside the linked working tree
+> -(e.g. `git status`) in order to update its administrative files in t=
+he
+> -repository so that they do not get automatically pruned.
+> +within a file system that does not support hard links, you need to u=
+pdate
 
-I had that question too even after looking at the 2007 version of the manual.
+Hmm, is this "hard links" feature implemented? If not, then this
+documentation is a bit outdated.
 
-> 
-> After a quick reading of the beginning part of the document, I am
-> getting the impression that it refers to the use of the 'new'
-> branch, which is initially created out of v2.6.13 and then later
-> reset to v2.6.17 while the user is in the sightseeing mode.  And
-> this way of working _is_ a remnant from the days back when detached
-> HEAD was not with us.
-> 
-> It is a completely separate matter if it is a good idea to teach
-> detached HEAD that early in the tutorial, though.  
- 
-So are you suggesting a move of the section further down?   
-Or are you suggesting that that is excised from the manual?
+> +$GIT_DIR/worktrees/<id>/gitdir so that they do not get automatically=
+ pruned.
 
-> So "remove the task because detached HEAD is a bit too weird thing to learn in that
-> early stage in the learning curve" (i.e. the latter reason) might
-> apply.
- 
-Could it be there are two reasons to remove the todo?
+=46ollowing the example of af189b4 (Documentation/git-worktree: split
+technical info from general description, 2015-07-06), it might be a
+good idea to keep this high-level overview free of such low-level
+details and instead mention $GIT_DIR/worktrees/<id>/gitdir in the
+"DETAILS" section.
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Perhaps something like this, on top of your patch (assuming that the
+"hard links" feature is not implemented):
+
+--- 8< ---
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktre=
+e.txt
+index 4814f48..62c76c1 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -32,9 +32,9 @@ The working tree's administrative files in the reposi=
+tory (see
+ `git worktree prune` in the main or any linked working tree to
+ clean up any stale administrative files.
+=20
+-If you move a linked working tree to another file system, or
+-within a file system that does not support hard links, you need to upd=
+ate
+-$GIT_DIR/worktrees/<id>/gitdir so that they do not get automatically p=
+runed.
++If you move a linked working tree, you need to manually update the
++administrative files so that they do not get pruned automatically. See
++section "DETAILS" for more information.
+=20
+ If a linked working tree is stored on a portable device or network sha=
+re
+ which is not always mounted, you can prevent its administrative files =
+from
+@@ -135,6 +135,13 @@ thumb is do not make any assumption about whether =
+a path belongs to
+ $GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
+ inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
+=20
++If you move a linked working tree, you need to update the 'gitdir' fil=
+e
++in the entry's directory. For example, if a linked working tree is mov=
+ed
++to `/newpath/test-next` and its `.git` file points to
++`/path/main/.git/worktrees/test-next`, then update
++`/path/main/.git/worktrees/test-next/gitdir` to reference `/newpath/te=
+st-next`
++instead.
++
+ To prevent a $GIT_DIR/worktrees entry from being pruned (which
+ can be useful in some situations, such as when the
+ entry's working tree is stored on a portable device), add a file named
+--- 8< ---
