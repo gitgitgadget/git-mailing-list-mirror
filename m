@@ -1,257 +1,82 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 4/4] create_symref: use existing ref-lock code
-Date: Mon, 28 Dec 2015 10:45:19 +0100
-Message-ID: <568104AF.102@alum.mit.edu>
-References: <20151220072637.GA22102@sigill.intra.peff.net>
- <20151220073414.GD30662@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 28 10:52:59 2015
+From: Mostyn Bramley-Moore <mostynb@opera.com>
+Subject: [PATCH/RFC v2 0/2] add regex match flags to git describe
+Date: Mon, 28 Dec 2015 11:30:22 +0100
+Message-ID: <cover.1451298323.git.mostynb@opera.com>
+Cc: Mostyn Bramley-Moore <mostynb@opera.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 28 11:30:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDUU6-0008Fd-F5
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 10:52:59 +0100
+	id 1aDV4s-0000UJ-5b
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 11:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275AbbL1Jw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Dec 2015 04:52:26 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:49274 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750994AbbL1JwY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Dec 2015 04:52:24 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Dec 2015 04:52:24 EST
-X-AuditID: 1207440d-f79136d00000402c-24-568104b19a5d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id DA.2D.16428.1B401865; Mon, 28 Dec 2015 04:45:21 -0500 (EST)
-Received: from [192.168.69.130] (p4FC97751.dip0.t-ipconnect.de [79.201.119.81])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBS9jJuU015873
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 28 Dec 2015 04:45:21 -0500
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.4.0
-In-Reply-To: <20151220073414.GD30662@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1N3I0hhmMPGNgUXXlW4mix8tPcwO
-	TB7PevcwenzeJBfAFMVtk5RYUhacmZ6nb5fAnXFmp1/BR4uKlRO+sTUw/tHpYuTkkBAwkVgx
-	5wsrhC0mceHeerYuRi4OIYHLjBJnts5ihXDOM0m0nGoGcjg4hAWcJL7tEgZpEBEwkrjx4Rsb
-	iC0kkC3RvXQP2CA2AV2JRT3NTBBD5SR6uyexgNi8AuoSx/YuA6tnEVCVaNn3GaxeVCBEYu/O
-	DqgaQYmTM5+A2ZwC1hK7DpxhBrGZgXr/zLsEZctLNG+dzTyBUWAWkpZZSMpmISlbwMi8ilEu
-	Mac0Vzc3MTOnODVZtzg5MS8vtUjXSC83s0QvNaV0EyMkTHl3MP5fJ3OIUYCDUYmHt6OpIUyI
-	NbGsuDL3EKMkB5OSKO/CH0AhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrymb4ByvCmJlVWpRfkw
-	KWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3lbmxjAhwaLU9NSKtMycEoQ0EwcnyHAu
-	KZHi1LyU1KLE0pKMeFCcxhcDIxUkxQO0txaknbe4IDEXKArReopRUUqc9yhIQgAkkVGaBzcW
-	lnxeMYoDfSnMew2kigeYuOC6XwENZgIaPHNqPcjgkkSElFQDY6HCtBM3mSfPmJld9sbF89H7
-	sO1HV2zUZrxzODPjp9rNe5POH+HnrTnJtelG2D072/tPVBJ7T6yWmbfddaP/R5ao0/f3ZR12
-	FpRrFVZZcI5l3YIPE7/MMyurX3Vumu7ZeY/bwgLe1ca909zTlKPma7DtVr1q7dTo 
+	id S1751817AbbL1Kau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Dec 2015 05:30:50 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:37131 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751586AbbL1Kas (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Dec 2015 05:30:48 -0500
+Received: by mail-wm0-f54.google.com with SMTP id f206so2974403wmf.0
+        for <git@vger.kernel.org>; Mon, 28 Dec 2015 02:30:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=opera-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=zgQp1eTrLQ5Obh0LWzgGw36YoIvnNwzhGuIjsZDOTj4=;
+        b=Fhj/wsfhc+ZF4pY2UbFv0O3KxcNbAaCdzeT6vXcv7HTEIIxcFp2TZU0AyWuwHOFPsp
+         UpU6nbp6VbKwENuYSxcRte/JiG2+HAyjWGnJQlH7r/4M5TKzbJuAyqNd9rL43Q7l5g1l
+         aDNkqopwfDYFhu0Ej87tk9u6lO1njG8SJKriqbP4iqJWgFBpXlPlgNDB/UWMgQFWicFq
+         fdUm74x5XFnBS/UcQe6wSDBJyrsDUXDSlx+1BG956cmwA8AVfm9gA76Y0ZACVZHdrvnA
+         pVBP6Tw+WFpzqGpyNbp2Z9KfCxfGNk0xmXJcr1wyBF9HAidMQeLQXaTOUr+lhXe7eYJY
+         CHMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zgQp1eTrLQ5Obh0LWzgGw36YoIvnNwzhGuIjsZDOTj4=;
+        b=JZSDf27g0ECsbAoHoq5x/tEpnQ1ElOsyQKNfcdWGcuxXYUJ/G2EPilHPKZIeePobmb
+         qV8FQrQ2+AmffzglfAgdLPPqULS3uzFG7JX2xURbccceLnZo3csEnqU/YKy4b9ZqBgEd
+         lxjLvO/C4EkShRHIXX56MRDXBI0ZHMw5hTWIEuPs/KkEw1njG0Tkw0+pDpoy5mtBcx3F
+         TtQQ3leo9THTrwO+6yAgTeTYfKr+dAEDV7AkLf8MZnDxgC44VWp0FvuNqUBlLK+xAiW2
+         RAYGZANEf8hYD4DjX7yQRFAKQGMlmIMNS1CX7wibp8HRfKdWaaJKcGisvID+bKZ27DvK
+         jaJg==
+X-Gm-Message-State: ALoCoQn4K2N3tfpq42N9AwK/lnZqwWTQga3x1tbpcwMS5b25wjSx7TGJ8GrAQZXBZk7IzbvtcCSfWsS5ygnvank0agkrIZCIPg==
+X-Received: by 10.28.158.194 with SMTP id h185mr53406567wme.48.1451298647577;
+        Mon, 28 Dec 2015 02:30:47 -0800 (PST)
+Received: from teardrop.oslo.osa (h151n12-g-kt-d2.ias.bredband.telia.com. [213.64.207.151])
+        by smtp.gmail.com with ESMTPSA id uw6sm56248541wjc.42.2015.12.28.02.30.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 28 Dec 2015 02:30:46 -0800 (PST)
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283033>
 
-On 12/20/2015 08:34 AM, Jeff King wrote:
-> The create_symref() function predates the existence of
-> "struct lock_file", let alone the more recent "struct
-> ref_lock". Instead, it just does its own manual dot-locking.
-> Besides being more code, this has a few downsides:
-> 
->  - if git is interrupted while holding the lock, we don't
->    clean up the lockfile
-> 
->  - we don't do the usual directory/filename conflict check.
->    So you can sometimes create a symref "refs/heads/foo/bar",
->    even if "refs/heads/foo" exists (namely, if the refs are
->    packed and we do not hit the d/f conflict in the
->    filesystem).
-> 
-> This patch refactors create_symref() to use the "struct
-> ref_lock" interface, which handles both of these things.
-> There are a few bonus cleanups that come along with it:
-> 
->  - we leaked ref_path in some error cases
-> 
->  - the symref contents were stored in a fixed-size buffer,
->    putting an artificial (albeit large) limitation on the
->    length of the refname. We now write through fprintf, and
->    handle refnames of any size.
-> 
->  - we called adjust_shared_perm only after the file was
->    renamed into place, creating a potential race with
->    readers in a shared repository. Now we fix the
->    permissions first, and commit only if that succeeded.
->    This also makes the update atomic with respect to our
->    exit code (whereas previously, we might report failure
->    even though we updated the ref).
-> 
->  - the legacy prefer_symlink_refs path did not do any
->    locking at all. Admittedly, it is not atomic from a
->    reader's perspective (and it cannot be; it has to unlink
->    and then symlink, creating a race), but at least it
->    cannot conflict with other writers now.
-> 
->  - the result of this patch is hopefully more readable. It
->    eliminates three goto labels. Two were for error checking
->    that is now simplified, and the third was to reach shared
->    code that has been pulled into its own function.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  refs/files-backend.c    | 113 +++++++++++++++++++++++++-----------------------
->  t/t1401-symbolic-ref.sh |   8 ++++
->  2 files changed, 66 insertions(+), 55 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 6bfa139..3d53c42 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2811,74 +2811,77 @@ static int commit_ref_update(struct ref_lock *lock,
->  	return 0;
->  }
->  
-> -int create_symref(const char *ref, const char *target, const char *logmsg)
-> +static int create_ref_symlink(struct ref_lock *lock, const char *target)
->  {
-> -	char *lockpath = NULL;
-> -	char buf[1000];
-> -	int fd, len, written;
-> -	char *ref_path = git_pathdup("%s", ref);
-> -	unsigned char old_sha1[20], new_sha1[20];
-> -	struct strbuf err = STRBUF_INIT;
-> -
-> -	if (logmsg && read_ref(ref, old_sha1))
-> -		hashclr(old_sha1);
-> -
-> -	if (safe_create_leading_directories(ref_path) < 0)
-> -		return error("unable to create directory for %s", ref_path);
-> -
-> +	int ret = -1;
->  #ifndef NO_SYMLINK_HEAD
-> -	if (prefer_symlink_refs) {
-> -		unlink(ref_path);
-> -		if (!symlink(target, ref_path))
-> -			goto done;
-> +	char *ref_path = get_locked_file_path(lock->lk);
-> +	unlink(ref_path);
-> +	ret = symlink(target, ref_path);
-> +	free(ref_path);
-> +
-> +	if (ret)
->  		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
-> -	}
->  #endif
-> +	return ret;
-> +}
+git describe currently only supports glob matching with the --matches flag.
+It would be useful to support regular expressions.
 
-This function is racy. A reader might see no reference at all in the
-moment between the `unlink()` and the `symlink()`. Moreover, if this
-process is killed at that moment, the symbolic ref would be gone forever.
+For consistency, this uses the same regex flags as those used by git-grep.
 
-I think that the semantics of `rename()` would allow this race to be
-fixed, though, since `symlink()` doesn't have the analogue of
-`O_CREAT|O_EXCL`, one would need a lockfile *and* a second temporary
-filename under which the new symlink is originally created.
+Some old discussion of this as a candidate feature is here, though nobody put
+together a patch as far as I can see:
+http://comments.gmane.org/gmane.comp.version-control.git/173873
 
-However, this race has always been here, and symlink-based symrefs are
-obsolete, so it's probably not worth fixing.
 
-> -	len = snprintf(buf, sizeof(buf), "ref: %s\n", target);
-> -	if (sizeof(buf) <= len) {
-> -		error("refname too long: %s", target);
-> -		goto error_free_return;
-> -	}
-> -	lockpath = mkpathdup("%s.lock", ref_path);
-> -	fd = open(lockpath, O_CREAT | O_EXCL | O_WRONLY, 0666);
-> -	if (fd < 0) {
-> -		error("Unable to open %s for writing", lockpath);
-> -		goto error_free_return;
-> -	}
-> -	written = write_in_full(fd, buf, len);
-> -	if (close(fd) != 0 || written != len) {
-> -		error("Unable to write to %s", lockpath);
-> -		goto error_unlink_return;
-> -	}
-> -	if (rename(lockpath, ref_path) < 0) {
-> -		error("Unable to create %s", ref_path);
-> -		goto error_unlink_return;
-> -	}
-> -	if (adjust_shared_perm(ref_path)) {
-> -		error("Unable to fix permissions on %s", lockpath);
-> -	error_unlink_return:
-> -		unlink_or_warn(lockpath);
-> -	error_free_return:
-> -		free(lockpath);
-> -		free(ref_path);
-> -		return -1;
-> -	}
-> -	free(lockpath);
-> -
-> -#ifndef NO_SYMLINK_HEAD
-> -	done:
-> -#endif
-> +static void update_symref_reflog(struct ref_lock *lock, const char *ref,
-> +				 const char *target, const char *logmsg)
-> +{
-> +	struct strbuf err = STRBUF_INIT;
-> +	unsigned char new_sha1[20];
->  	if (logmsg && !read_ref(target, new_sha1) &&
-> -		log_ref_write(ref, old_sha1, new_sha1, logmsg, 0, &err)) {
-> +	    log_ref_write(ref, lock->old_oid.hash, new_sha1, logmsg, 0, &err)) {
->  		error("%s", err.buf);
->  		strbuf_release(&err);
->  	}
-> +}
->  
-> -	free(ref_path);
-> +static int create_symref_locked(struct ref_lock *lock, const char *ref,
-> +				const char *target, const char *logmsg)
-> +{
-> +	if (prefer_symlink_refs && !create_ref_symlink(lock, target)) {
-> +		update_symref_reflog(lock, ref, target, logmsg);
-> +		return 0;
-> +	}
-> +
-> +	if (!fdopen_lock_file(lock->lk, "w"))
-> +		return error("unable to fdopen %s: %s",
-> +			     lock->lk->tempfile.filename.buf, strerror(errno));
-> +
-> +	if (adjust_shared_perm(lock->lk->tempfile.filename.buf))
-> +		return error("unable to fix permissions on %s: %s",
-> +			     lock->lk->tempfile.filename.buf, strerror(errno));
+-Mostyn.
 
-You can skip this step. lock_file() already calls adjust_shared_perm().
+Mostyn Bramley-Moore (2):
+  describe: add option to use perl-compatible regexes with --match
+  describe: add basic and extended posix regex matching for completeness
 
-> +	/* no error check; commit_ref will check ferror */
-> +	fprintf(lock->lk->tempfile.fp, "ref: %s\n", target);
-> +	if (commit_ref(lock) < 0)
-> +		return error("unable to write symref for %s: %s", ref,
-> +			     strerror(errno));
-> +	update_symref_reflog(lock, ref, target, logmsg);
-
-Here is another problem that didn't originate with your changes:
-
-The reflog should be written while holding the reference lock, to
-prevent two processes' trying to write new entries at the same time.
-
-I think the problem would be solved if you move the call to
-update_symref_reflog() above the call to commit_ref().
-
-Granted, this could case a reflog entry to be written for a reference
-update whose commit fails, but that's also a risk for non-symbolic
-references. Fixing this residual problem would require the ability to
-roll back reflog changes.
-
->  	return 0;
->  }
-> [...]
-
-Michael
+ Documentation/git-describe.txt |  21 ++++++-
+ builtin/describe.c             | 131 ++++++++++++++++++++++++++++++++++++++++-
+ t/README                       |   3 +-
+ t/t6120-describe.sh            |  38 ++++++++++--
+ 4 files changed, 184 insertions(+), 9 deletions(-)
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.5.0
