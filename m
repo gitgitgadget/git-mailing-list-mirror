@@ -1,110 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Combining APPLE_COMMON_CRYPTO=1 and NO_OPENSSL=1 produces unexpected result
-Date: Sun, 27 Dec 2015 18:29:29 -0800
-Message-ID: <xmqqy4cf9ugm.fsf@gitster.mtv.corp.google.com>
-References: <CAMYxyaVQyVRQb-b0nVv412tMZ3rEnOfUPRakg2dEREg5_Ba5Ag@mail.gmail.com>
-	<CAPig+cS2+NP=-XEYA6e=doQu=+Qn-Lzut-7OCeYJRFZFchNepg@mail.gmail.com>
+Subject: Re: [PATCH] user-manual: remove temporary branch entry from todo list
+Date: Sun, 27 Dec 2015 18:41:09 -0800
+Message-ID: <xmqqtwn39tx6.fsf@gitster.mtv.corp.google.com>
+References: <1450918023-30309-1-git-send-email-ischis2@cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jack Nagel <jacknagel@gmail.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Dec 28 03:29:39 2015
+Cc: Git List <git@vger.kernel.org>
+To: "Stephen P. Smith" <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Mon Dec 28 03:42:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDNZ2-0001ZT-KT
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 03:29:37 +0100
+	id 1aDNl9-0006XT-Tw
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 03:42:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbbL1C3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2015 21:29:33 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58456 "EHLO
+	id S1751110AbbL1Cla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2015 21:41:30 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65216 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750833AbbL1C3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2015 21:29:31 -0500
+	with ESMTP id S1750844AbbL1Cl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2015 21:41:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA17537C91;
-	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BD8337F8E;
+	Sun, 27 Dec 2015 21:41:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1c0YJXmah0fwON8bhXDqRKXDVzE=; b=E4qefl
-	iymIa472Tc6kf9s+lXqKToNvRqbgih+YcNyjTZnfkLz3tULmjRulcGNJMZtGZDaH
-	uJrVbdnEniRTQ4jU6HPxnacPp39NEv4OhpdM/wNGLrQBw1NSpacYnu4v5iReb2iD
-	GgEUGyDY4LvSgRszzBrQgOR2dLE2cjT/Lg4kI=
+	:content-type; s=sasl; bh=8NM31NpCZ9LuWh0uqSkQC2039WA=; b=GTEoyo
+	SHSftR4EsJTCByAo6rgu0HYRZRTr1Z6eYHxol6JjPIBwxAvl8N1cBXC1W/jCMSyr
+	GCkn8IcmojpfgtEwgfKp9Y6CxPs7WI1z1gWkvCwrBKszvLQus1QWMs/dvRLxqjaS
+	WLA2tHKzulSdLX3y6ifjYlyD7oCiqDGDAfn60=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MbNSWxF+cgqdv8v4iberUWGTTYZlUPGM
-	TDTNgcp6EbIR9A86kkY80vGqzJcyj9Lb7VK6l9P23kZERRyGih5GiYh2CikuF7Xj
-	ccmak/M0H5vimeoVwjMR6NGDm7chckPi6Toa/2FT4+NM+3ZLTqDIdnF/If8t7tGP
-	yDIRgnoC6Bw=
+	:content-type; q=dns; s=sasl; b=Jn9GHC0if6ww3nItRsMDaqGpJLtvAElU
+	lLQ8n85N9vdmtAzK25EGiWD0Q255rCJLg8QilYC6qydVmle/z6+YBxW3L3QW/HrY
+	AVpgifUcA7QkNrg4AlFTgpimab/iYN3iJLpliBuNvOB3+GrQnDNBJH03w+N1K9GT
+	PRX8MqRGygQ=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D13D437C90;
-	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 934E337F8D;
+	Sun, 27 Dec 2015 21:41:27 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 53DF837C8F;
-	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
-In-Reply-To: <CAPig+cS2+NP=-XEYA6e=doQu=+Qn-Lzut-7OCeYJRFZFchNepg@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 23 Dec 2015 03:51:56 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 183E137F8B;
+	Sun, 27 Dec 2015 21:41:27 -0500 (EST)
+In-Reply-To: <1450918023-30309-1-git-send-email-ischis2@cox.net> (Stephen
+	P. Smith's message of "Wed, 23 Dec 2015 17:47:03 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D2DB95E0-AD0A-11E5-940D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 7E13D70A-AD0C-11E5-9A19-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283026>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+"Stephen P. Smith" <ischis2@cox.net> writes:
 
-> So, it might be easier to think of NO_OPENSSL as really meaning NO_SSL
-> (that is, "disable all SSL-related functionality"). Since the only SSL
-> implementation Git knows how to use is OpenSSL, perhaps one can
-> consider the name NO_OPENSSL a historic anomaly.
+> Remove the suggestion for using a detached HEAD instead of a
+> temporary branch.
 
-That is a good explanation of what is observed.  I am not sure if it
-is a good justification, though.  If you tell somebody who needs to
-link an implementation of SHA-1 in that you (1) do not want to use
-OpenSSL (or do not want to have SSL at all), and (2) do not mind
-using Apple's CommonCrypto, and if you _know_ that CommonCrypto is
-a possible source of the SHA-1 implementation, then I would think it
-is reasonable to expect that CommonCrypto SHA-1 to be used.
+That is something we can read from the patch text.  Please explain
+why it is a good idea to remove it.
 
-	Note. To further explain the situation, the only reason we
-	added CommonCrypto knob in the build system was to allow
-	people to use OpenSSL as the SSL implementation.  Those who
-	added the knob weren't making a conscious decision on which
-	SHA-1 implementation to use in that scenario---they may not
-	even have been aware of the fact that SHA-1 was offered by
-	CommonCrypto for that matter.
+I can think of two completely different reasons:
 
-A few questions we should be asking Apple users are:
+ (1) Maybe the task was done some time ago, and we are seeing a
+     stale todo item?
 
- - Is there a strong-enough reason why those who do not want to use
-   SSL should be able to choose the SHA-1 implementation available
-   from CommonCrypto over block-sha1?
+ (2) The task the todo item hints at was not done, but maybe it is
+     not a good thing to do after all?
 
- - Is CommonCrypto SHA-1 a better implementation than block-sha1?
+You seem to be hinting the former, but I do not think "the task was
+done" is the case here.
 
-Depending on the answers to these questions, we might want to:
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+>
+> Notes:
+>     A search of the user manual found only one location which refers to
+>     temporary branches.  This has to do with how Tony Luck uses them.
+>     
+>     Even then there is a clarifying parenthetical noting that the
+>     temporary branches are topic branches.
+>     
+>     A git blame showed that the last time that the entry was updated was
+>     in 2007.
+>
+>  Documentation/user-manual.txt | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 1c790ac..18e2f1e 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -4636,9 +4636,6 @@ Scan email archives for other stuff left out
+>  Scan man pages to see if any assume more background than this manual
+>  provides.
+>  
+> -Simplify beginning by suggesting disconnected head instead of
+> -temporary branch creation?
+> -
 
- - add a knob to allow choosing between two available
-   implementations (i.e. when NO_APPLE_COMMON_CRYPTO is unset) of
-   SHA-1, regardless of the setting of NO_OPENSSL.
+What does "beginning" refer to in this sentence, though?
 
- - decide which one between CommonCrypto and block-sha1 should be
-   the default.
+After a quick reading of the beginning part of the document, I am
+getting the impression that it refers to the use of the 'new'
+branch, which is initially created out of v2.6.13 and then later
+reset to v2.6.17 while the user is in the sightseeing mode.  And
+this way of working _is_ a remnant from the days back when detached
+HEAD was not with us.
 
-If we end up deciding that we use block-sha1 as the default, we
-should do so even when both NO_OPENSSL and NO_APPLE_COMMON_CRYPTO
-are left unset.  If we decide that block-sha1 should merely be a
-fallback when no other SHA-1 implementation is availble, on the
-other hand, we should be using CommonCrypto SHA-1 as long as the
-user did not set NO_APPLE_COMMON_CRYPTO explicitly, even when we are
-building with NO_OPENSSL.
-
-If people do not care, we can leave things as they are.  It would
-seem mysterious to use block-sha1 when we are not using CommonCrypto
-for SSL (i.e. NO_OPENSSL), and otherwise CommonCrypto SHA-1, and
-would invite a puzzlement we saw in this thread, though.
+It is a completely separate matter if it is a good idea to teach
+detached HEAD that early in the tutorial, though.  So "remove the
+task because detached HEAD is a bit too weird thing to learn in that
+early stage in the learning curve" (i.e. the latter reason) might
+apply.
