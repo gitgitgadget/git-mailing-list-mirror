@@ -1,109 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/10] t5100-mailinfo.sh: use the $( ... ) construct for command substitution
-Date: Sun, 27 Dec 2015 17:59:16 -0800
-Message-ID: <xmqq37unbaff.fsf@gitster.mtv.corp.google.com>
-References: <1450798073-22811-1-git-send-email-gitter.spiros@gmail.com>
-	<1450798073-22811-8-git-send-email-gitter.spiros@gmail.com>
-	<567997E4.1000700@kdbg.org> <5679B3E2.7090406@kdbg.org>
-	<xmqq7fjzbgkr.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Combining APPLE_COMMON_CRYPTO=1 and NO_OPENSSL=1 produces unexpected result
+Date: Sun, 27 Dec 2015 18:29:29 -0800
+Message-ID: <xmqqy4cf9ugm.fsf@gitster.mtv.corp.google.com>
+References: <CAMYxyaVQyVRQb-b0nVv412tMZ3rEnOfUPRakg2dEREg5_Ba5Ag@mail.gmail.com>
+	<CAPig+cS2+NP=-XEYA6e=doQu=+Qn-Lzut-7OCeYJRFZFchNepg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Dec 28 02:59:27 2015
+Cc: Jack Nagel <jacknagel@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Dec 28 03:29:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDN5q-0002Vp-F4
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 02:59:26 +0100
+	id 1aDNZ2-0001ZT-KT
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Dec 2015 03:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275AbbL1B7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Dec 2015 20:59:21 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55645 "EHLO
+	id S1751198AbbL1C3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Dec 2015 21:29:33 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58456 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750990AbbL1B7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Dec 2015 20:59:20 -0500
+	with ESMTP id S1750833AbbL1C3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Dec 2015 21:29:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 303F337639;
-	Sun, 27 Dec 2015 20:59:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA17537C91;
+	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zai6cVafcpuw/Ht/+4p7eRxjQSY=; b=JekPkY
-	4r8N+dBu/pURZN0iosoqWl6WolJ8GaS+MdTvURpnLlBV/4Ou/8Xhoq3N8ULh23iP
-	Y/z1KptOtv+Gl++mLL297LoYTQbuV9XRKMoDcA36AzpVzG7Ba7jDZPJJ7/7yerKz
-	fMRsNmW3NRbByKxwACMBPMv8QFtyt31B3Dias=
+	:content-type; s=sasl; bh=1c0YJXmah0fwON8bhXDqRKXDVzE=; b=E4qefl
+	iymIa472Tc6kf9s+lXqKToNvRqbgih+YcNyjTZnfkLz3tULmjRulcGNJMZtGZDaH
+	uJrVbdnEniRTQ4jU6HPxnacPp39NEv4OhpdM/wNGLrQBw1NSpacYnu4v5iReb2iD
+	GgEUGyDY4LvSgRszzBrQgOR2dLE2cjT/Lg4kI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CmqcxMkl0S6QesT+5B7bniE11gqYz0Vb
-	XEaAMcTQKb7FwZxHClp8AV45BHwF4juATjEt2ie/LiWeiFrwAcv416i+bXGY69WH
-	b37bmejhmZX5ekEQzok21tFuIu9Ib+xXpMWTlS5yl2YuLfhDLrmt7jw6QM5nTA9y
-	0lfABd6+fQY=
+	:content-type; q=dns; s=sasl; b=MbNSWxF+cgqdv8v4iberUWGTTYZlUPGM
+	TDTNgcp6EbIR9A86kkY80vGqzJcyj9Lb7VK6l9P23kZERRyGih5GiYh2CikuF7Xj
+	ccmak/M0H5vimeoVwjMR6NGDm7chckPi6Toa/2FT4+NM+3ZLTqDIdnF/If8t7tGP
+	yDIRgnoC6Bw=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26D3B37638;
-	Sun, 27 Dec 2015 20:59:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D13D437C90;
+	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9D45B37636;
-	Sun, 27 Dec 2015 20:59:18 -0500 (EST)
-In-Reply-To: <xmqq7fjzbgkr.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 27 Dec 2015 15:46:28 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 53DF837C8F;
+	Sun, 27 Dec 2015 21:29:30 -0500 (EST)
+In-Reply-To: <CAPig+cS2+NP=-XEYA6e=doQu=+Qn-Lzut-7OCeYJRFZFchNepg@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 23 Dec 2015 03:51:56 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9B0079B4-AD06-11E5-A5FC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D2DB95E0-AD0A-11E5-940D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283025>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Very true.  Let's leave that kind of things as separate clean-ups
-> after these patches settle, as mixing manual and mechanical changes
-> in a single patch makes it harder to review.
->
-> Thanks.
+> So, it might be easier to think of NO_OPENSSL as really meaning NO_SSL
+> (that is, "disable all SSL-related functionality"). Since the only SSL
+> implementation Git knows how to use is OpenSSL, perhaps one can
+> consider the name NO_OPENSSL a historic anomaly.
 
-So that I won't forget (I'll need to amend with your sign-off even
-if this one is satisfactory to you).
+That is a good explanation of what is observed.  I am not sure if it
+is a good justification, though.  If you tell somebody who needs to
+link an implementation of SHA-1 in that you (1) do not want to use
+OpenSSL (or do not want to have SSL at all), and (2) do not mind
+using Apple's CommonCrypto, and if you _know_ that CommonCrypto is
+a possible source of the SHA-1 implementation, then I would think it
+is reasonable to expect that CommonCrypto SHA-1 to be used.
 
--- >8 --
-From: Johannes Sixt <j6t@kdbg.org>
-Date: Tue, 22 Dec 2015 19:35:16 +0100
-Subject: [PATCH] t5100: no need to use 'echo' command substitutions for globbing
+	Note. To further explain the situation, the only reason we
+	added CommonCrypto knob in the build system was to allow
+	people to use OpenSSL as the SSL implementation.  Those who
+	added the knob weren't making a conscious decision on which
+	SHA-1 implementation to use in that scenario---they may not
+	even have been aware of the fact that SHA-1 was offered by
+	CommonCrypto for that matter.
 
-Instead of making the shell expand 00* and invoke 'echo' with it,
-and then capturing its output as command substitution, just use
-the result of expanding 00* directly.
+A few questions we should be asking Apple users are:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5100-mailinfo.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ - Is there a strong-enough reason why those who do not want to use
+   SSL should be able to choose the SHA-1 implementation available
+   from CommonCrypto over block-sha1?
 
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 4e52b3b..85b3df5 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -23,7 +23,7 @@ check_mailinfo () {
- }
- 
- 
--for mail in $(echo 00*)
-+for mail in 00*
- do
- 	test_expect_success "mailinfo $mail" '
- 		check_mailinfo $mail "" &&
-@@ -51,7 +51,7 @@ test_expect_success 'split box with rfc2047 samples' \
- 	echo total is $last &&
- 	test $(cat rfc2047/last) = 11'
- 
--for mail in $(echo rfc2047/00*)
-+for mail in rfc2047/00*
- do
- 	test_expect_success "mailinfo $mail" '
- 		git mailinfo -u $mail-msg $mail-patch <$mail >$mail-info &&
--- 
-2.7.0-rc2-145-g5695473
+ - Is CommonCrypto SHA-1 a better implementation than block-sha1?
+
+Depending on the answers to these questions, we might want to:
+
+ - add a knob to allow choosing between two available
+   implementations (i.e. when NO_APPLE_COMMON_CRYPTO is unset) of
+   SHA-1, regardless of the setting of NO_OPENSSL.
+
+ - decide which one between CommonCrypto and block-sha1 should be
+   the default.
+
+If we end up deciding that we use block-sha1 as the default, we
+should do so even when both NO_OPENSSL and NO_APPLE_COMMON_CRYPTO
+are left unset.  If we decide that block-sha1 should merely be a
+fallback when no other SHA-1 implementation is availble, on the
+other hand, we should be using CommonCrypto SHA-1 as long as the
+user did not set NO_APPLE_COMMON_CRYPTO explicitly, even when we are
+building with NO_OPENSSL.
+
+If people do not care, we can leave things as they are.  It would
+seem mysterious to use block-sha1 when we are not using CommonCrypto
+for SSL (i.e. NO_OPENSSL), and otherwise CommonCrypto SHA-1, and
+would invite a puzzlement we saw in this thread, though.
