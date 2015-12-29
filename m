@@ -1,111 +1,107 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH V5 2/2] user-manual: add section documenting shallow clones
-Date: Tue, 29 Dec 2015 11:54:56 -0700
-Message-ID: <1451415296-3960-1-git-send-email-ischis2@cox.net>
-References: <xmqqfuymji50.fsf@gitster.mtv.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	"Stephen P. Smith" <ischis2@cox.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 29 19:55:10 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git stash pop" is doing an unwanted "git add" when there are conflicts.
+Date: Tue, 29 Dec 2015 11:04:20 -0800
+Message-ID: <xmqq37ulhya3.fsf@gitster.mtv.corp.google.com>
+References: <20151221142953.GA12764@acm.fritz.box>
+	<1450772258.7937.9.camel@kaarsemaker.net>
+	<20151222093032.GA5173@sigill.intra.peff.net>
+	<20151224092038.GA2397@acm.fritz.box>
+	<20151229075329.GA9254@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Alan Mackenzie <acm@muc.de>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 29 20:04:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDzQK-0002b5-BG
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 19:55:08 +0100
+	id 1aDzZO-0002DN-KF
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 20:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753711AbbL2SzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 13:55:04 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:44854 "EHLO
-	fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753606AbbL2SzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 13:55:03 -0500
-Received: from fed1rmimpo210 ([68.230.241.161]) by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151229185501.PZTA11111.fed1rmfepo103.cox.net@fed1rmimpo210>
-          for <git@vger.kernel.org>; Tue, 29 Dec 2015 13:55:01 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo210 with cox
-	id zWv11r0052tqoqC01Wv1iD; Tue, 29 Dec 2015 13:55:01 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020202.5682D705.00FB,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=Hq2o7TvS c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=TSbVqHtbAAAA:8 a=zGAwCBeI_n6qoTXIpA4A:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id F333013F6E8;
-	Tue, 29 Dec 2015 11:55:00 -0700 (MST)
-X-Mailer: git-send-email 2.7.0-rc2
-In-Reply-To: <xmqqfuymji50.fsf@gitster.mtv.corp.google.com>
+	id S1753826AbbL2TE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 14:04:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753658AbbL2TEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 14:04:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4069637EE8;
+	Tue, 29 Dec 2015 14:04:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WIy6lj9EYNSpR7Tn9RtwBPCRW6Y=; b=TeOfs3
+	jwmyQl+es9cip9p6oKxu1YASJNVWEFkpE4VVvMbdrjOG9q3WI+hi8B2smAWR7inz
+	VwGD3tZCpIBg0yNxOLSZe2fgoQjx9Jp14Rn2PiiDOBGzqceexQ2OtKMNcWVULqev
+	xfWQi7nShKt7943p+fDZXiVbfaSnF5+tZ+SaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JXVLhGI2ljMzeX0O1OiBWhO4olw+KrVi
+	UVFF9arAFjb4/iBgVpQERRVKp0e00yiTRgtc5pEwVAm2HDVl2NO4W8MZKNXh0dAw
+	84mW8Xsf37q/+RImQIC6T2+KYzbFG5tQgPwcdovtVesHfdGcMPW6gnU45Pfh2eiC
+	+U4eR6o7K/E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3826237EE7;
+	Tue, 29 Dec 2015 14:04:22 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AB22337EE6;
+	Tue, 29 Dec 2015 14:04:21 -0500 (EST)
+In-Reply-To: <20151229075329.GA9254@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Dec 2015 02:53:30 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F818134C-AE5E-11E5-A5CA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283144>
 
-Rather than merely pointing readers at the 1.5 release notes to
-learn about shallow clones, document them formally.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
+> Yeah, I think I agree. But keep in mind that we have to mention the
+> conflicts _somewhere_, so we're going to touch the index regardless (and
+> the user is going to have to erase the conflicts in the index
+> eventually, either with `git add` or `git reset`).
 
-Notes:
-    Added a paragraph about the fundamental limitation with merging
-    histories that do not have a merge base in the shallow repository.
-    
-    The review comment implied that since the first two limitations have
-    been lifted they would not need to be noted [1].
-    
-    [1] http://article.gmane.org/gmane.comp.version-control.git/283052
+I do not think there is much we can do at this point in time (but
+notice that I did say "much", and didn't say "anything").
 
- Documentation/user-manual.txt | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+The way we replay any potentially conflicting change and present the
+result to the end user in Git is uniformly to add the cleanly
+applied parts to the index while leaving the conflicted ones as
+unmerged index entries, but "git stash apply/pop" does not follow
+this pattern.  I think this is partly because the command is also
+used to "stash away" a work-in-progress changes to the index, and
+avoiding to touch the index with the changes in the working tree
+would more closely match the behaviour of the command when there is
+no conflict.
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 1c790ac..78f878d 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2128,6 +2128,25 @@ The gitweb cgi script provides users an easy way to browse your
- project's files and history without having to install Git; see the file
- gitweb/INSTALL in the Git source tree for instructions on setting it up.
- 
-+[[how-to-get-a-git-repository-with-minimal-history]]
-+How to get a Git repository with minimal history
-+------------------------------------------------
-+
-+A <<def_shallow_clone,shallow clone>>, with its truncated
-+history, is useful when one is interested only in recent history
-+of a project and getting full history from the upstream is
-+expensive.
-+
-+A <<def_shallow_clone,shallow clone>> is created by specifying
-+the linkgit:git-clone[1] `--depth` switch. The depth can later be
-+changed with the linkgit:git-fetch[1] `--depth` switch, or full
-+history restored with `--unshallow`.
-+
-+Merging inside a <<def_shallow_clone,shallow clone>> will work as long
-+as the merge base is in the resent history.  If the merge base is not
-+present then the merge would be of un-related histories.  This
-+limitaion is fundamental and will not be removed.
-+
- [[sharing-development-examples]]
- Examples
- --------
-@@ -4645,9 +4664,6 @@ standard end-of-chapter section?
- 
- Include cross-references to the glossary, where appropriate.
- 
--Document shallow clones?  See draft 1.5.0 release notes for some
--documentation.
--
- Add a section on working with other version control systems, including
- CVS, Subversion, and just imports of series of release tarballs.
- 
--- 
-2.7.0-rc2
+I notice that I said the same thing long time ago, i.e. in the
+initial round of review:
+
+  http://article.gmane.org/gmane.comp.version-control.git/50749
+
+| However, I think it is a bit counterintuitive to update the
+| working tree change to the index if the merge did not conflict.
+| It might be better to run an equivalent of "git reset", so that
+| after "git save restore", the user can say "git diff" (not "git
+| diff HEAD") to view the local changes.  Perhaps...
+
+In the above, I suggested to "git reset" when there is no conflict.
+I think this line of thinking can be followed even further to
+selectively reset the paths that were cleanly merged (which is added
+by the call to merge-recursive), leaving _only_ the conflicted paths.
+
+Would that give us a better outcome?  I dunno.
+
+>> Are there any prospects of this getting fixed?
+>
+> Somebody needs to write a patch. I am not 100% convinced that it
+> _should_ be fixed, but I am leaning that way. But I am not planning to
+> work on it myself anytime soon. The best way to get more discussion
+> going is to post a patch. :)
