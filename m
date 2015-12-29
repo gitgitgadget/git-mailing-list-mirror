@@ -1,90 +1,123 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 0/3] improve symbolic-ref robustness
-Date: Tue, 29 Dec 2015 09:25:06 +0100
-Message-ID: <56824362.30903@alum.mit.edu>
-References: <20151220072637.GA22102@sigill.intra.peff.net>
- <20151229055558.GA12848@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/20] More flexibility in making shallow clones
+Date: Tue, 29 Dec 2015 19:10:23 +0700
+Message-ID: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 29 09:25:16 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 29 13:11:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDpal-00089c-DV
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 09:25:15 +0100
+	id 1aDt7H-0005td-Uy
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 13:11:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbbL2IZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 03:25:11 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47033 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753096AbbL2IZK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Dec 2015 03:25:10 -0500
-X-AuditID: 12074412-f79a76d000007c8b-06-568243658e73
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id DB.06.31883.56342865; Tue, 29 Dec 2015 03:25:09 -0500 (EST)
-Received: from [192.168.69.130] (p4FC97AF1.dip0.t-ipconnect.de [79.201.122.241])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBT8P778009964
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 29 Dec 2015 03:25:08 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.4.0
-In-Reply-To: <20151229055558.GA12848@sigill.intra.peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqJvq3BRmsP4Yj0XXlW4mi4beK8wW
-	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oy2BetYC85xVNx5+I2tgfEx
-	WxcjJ4eEgInEkXVfmSBsMYkL99YDxbk4hAQuM0p09lxkhnAuMElMu/USrEpYwFri0eop7CC2
-	iICRxI0P38AmCQlkS3x+OI0RxGYWUJNo3zSFFcRmE9CVWNTTDNbLK6Ap8epyHwuIzSKgKvF8
-	5wmwOaICIRJ7d3awQNQISpyc+QTI5uDgBNo1c7EPxEh1iT/zLjFD2PIS29/OYZ7AKDALSccs
-	JGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrppebWaKXmlK6iRESukI7GNeflDvE
-	KMDBqMTDmzmpMUyINbGsuDL3EKMkB5OSKK/jL6AQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV7X
-	LUA53pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ3seOTWFCgkWp6akV
-	aZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aBIjS8GxipIigdo70cHoHbe4oLEXKAoROspRkUp
-	cV4BJ6CEAEgiozQPbiwsIb1iFAf6UpjXAKSKB5jM4LpfAQ1mAho8c2o9yOCSRISUVAPjkSUG
-	uffLw9x4xFQ7In5//32D1/7OYcmwH55J+peVtGbENlzOvHk4a8axuTNdDiwLO368IOXIWqOL
-	c3Yd9b/3kSNEwv5t5obv9w6JHw79WM+88qnmZPUZexP9F3G+Tdo1vXbhzsRLodp/ 
+	id S1752957AbbL2MLA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 07:11:00 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:34657 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538AbbL2MK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 07:10:58 -0500
+Received: by mail-pf0-f174.google.com with SMTP id e65so74274748pfe.1
+        for <git@vger.kernel.org>; Tue, 29 Dec 2015 04:10:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=9UVd7aeJjUcnp8RHpYFQLcr1mXcyk0UJtOmYRpSa7+o=;
+        b=EH6G4IYboj3t1C91RyJWUMrj7hNUA+mTvSatxw0C1KfgIZ9LrPDd0K8p5gN9S4MgHG
+         xsD2U1fAORKmdr0YSlSe/gJ4L+X28EoljB2bczyhs/M8/VFHHAkFQfdLN5mBC3SpJzNQ
+         oUQRX6ByC10RKZZHD0aZdzl8TjtbcJQvcnCuOlicU4Pr9SR2A9L2i8uefTFfi9tGHGH7
+         +yMl83VxsAX8x94MqoOZjH0fcYuI4GA9jStjMHKId/NI6IUrHoWzP2BXNHYSOZDgrj+H
+         kik5sYUOLSSWnpU0hjKia52fE+iUZCFXV5c/o++ZkXc9FrlykWfZ3bIvuj552Mme0cwd
+         Vqlg==
+X-Received: by 10.98.44.209 with SMTP id s200mr77581449pfs.2.1451391057552;
+        Tue, 29 Dec 2015 04:10:57 -0800 (PST)
+Received: from lanh ([171.233.234.31])
+        by smtp.gmail.com with ESMTPSA id p80sm58245031pfi.12.2015.12.29.04.10.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Dec 2015 04:10:55 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 29 Dec 2015 19:10:52 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283110>
 
-On 12/29/2015 06:55 AM, Jeff King wrote:
-> On Sun, Dec 20, 2015 at 02:26:37AM -0500, Jeff King wrote:
-> 
->> I noticed that an interrupt "git symbolic-ref" will not clean up
->> "HEAD.lock". So I started this series as an attempt to convert
->> create_symref() to "struct lock_file" to get the usual tempfile cleanup.
-> 
-> Here's version 2, based on comments from Michael. The first two patches
-> were picked out separately for jk/symbolic-ref-maint, so I've dropped
-> them here (so 1+2 here are the original 3+4).
-> 
-> The other differences from v1 are:
-> 
->   - use "refname" instead of "ref" to match surrounding code
-> 
->   - drop adjust_shared_perm, as lockfile does it for us
-> 
->   - adjust reflog writing order (done in a new patch)
-> 
-> The patches are:
-> 
->   [1/3]: create_symref: modernize variable names
->   [2/3]: create_symref: use existing ref-lock code
->   [3/3]: create_symref: write reflog while holding lock
+This series brings three new options to shallow clone/fetch. --since
+lets you specify cut point by time. --not cuts by excluding specified
+refs. And --deepen=3D<N> extends shallow boundary in a more predictable
+way. Some of these were requested in the past.
 
-Thanks, Peff. The whole series is
+An important point of this series is it starts to use rev-list behind
+the scene to define shallow boundary, which opens doors to even more
+ways of cutting a repository.
 
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
+The series is good enough to look at but I don't think I have stared
+long enough to spot all the bugs. This mail is mostly about checking
+if the design (at both code and protocol levels) and the UI make
+sense. I'm thinking --since and --not may be too generic, but I don't
+see any better names, for example.
 
-Michael
+Refactor/cleanup patches are sprinkled throughout (bad?). The meat is
+in 05, 09, 12, 13, 16, 17, 18 and 20.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+HTTP support is not in this series (and I don't intend to do soon).
+The amount of filler code just to pass some info from UI down to the
+protocol seems too much, and it's even more so when HTTP support is
+added. But I don't see anyway around it. Maybe we can share some code
+between git-clone, git-fetch and git-fetch-pack, at least the argument
+parsing..
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (20):
+  upload-pack: move shallow deepen code out of receive_needs()
+  upload-pack: move "shallow" sending code out of deepen()
+  upload-pack: remove unused variable "backup"
+  upload-pack: move "unshallow" sending code out of deepen()
+  shallow.c: implement a generic shallow boundary finder based on rev-l=
+ist
+  upload-pack: glue code to use get_shallow_commits_by_rev_list
+  upload-pack: use skip_prefix() instead of starts_with() when possible
+  upload-pack: tighten number parsing at "deepen" lines
+  upload-pack: add deepen-since to cut shallow repos based on time
+  fetch-pack: use a common function for verbose printing
+  fetch-pack: use a separate flag for fetch in deepening mode
+  fetch: define shallow boundary with --since
+  clone: define shallow clone boundary based on time with --since
+  Add test_repo_expect_success for running tests in a new repository
+  t5500: test for shallow depth since a specific date
+  upload-pack: support define shallow boundary by excluding revisions
+  fetch: define shallow boundary with --not
+  clone: define shallow clone boundary with --not
+  t5500: test for shallow depth excluding a ref
+  fetch: add --deepen=3D<N> to extend shallow boundary by <N> commits
+
+ Documentation/fetch-options.txt                   |  14 ++
+ Documentation/git-clone.txt                       |   8 +
+ Documentation/technical/pack-protocol.txt         |   4 +-
+ Documentation/technical/protocol-capabilities.txt |  25 +++
+ builtin/clone.c                                   |  32 +++-
+ builtin/fetch.c                                   |  44 ++++-
+ commit.h                                          |   2 +
+ fetch-pack.c                                      | 128 ++++++++------
+ fetch-pack.h                                      |   4 +
+ shallow.c                                         |  92 ++++++++++
+ t/README                                          |  15 ++
+ t/t5500-fetch-pack.sh                             |  36 ++++
+ t/t5510-fetch.sh                                  |  12 ++
+ t/test-lib-functions.sh                           |  20 +++
+ transport.c                                       |  11 ++
+ transport.h                                       |  14 ++
+ upload-pack.c                                     | 206 ++++++++++++++=
+++------
+ 17 files changed, 550 insertions(+), 117 deletions(-)
+
+--=20
+2.3.0.rc1.137.g477eb31
