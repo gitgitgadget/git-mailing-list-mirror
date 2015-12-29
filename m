@@ -1,111 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH V5 2/2] user-manual: add section documenting shallow clones
-Date: Tue, 29 Dec 2015 11:24:00 -0800
-Message-ID: <xmqqtwn1gisv.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfuymji50.fsf@gitster.mtv.corp.google.com>
-	<1451415296-3960-1-git-send-email-ischis2@cox.net>
+From: Romain Picard <romain.picard@oakbits.com>
+Subject: Re: [PATCH] git-p4.py: add support for filetype change
+Date: Tue, 29 Dec 2015 18:33:12 +0100
+Message-ID: <3d38fd830e58bef6cd50c41650268244@oakbits.com>
+References: <1450703365-10427-1-git-send-email-romain.picard@oakbits.com>
+ <CAE5ih7-3H=O8GqzGebzKTttwUs=HRA+B+pV85sfWoesAvKXKgg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: "Stephen P. Smith" <ischis2@cox.net>
-X-From: git-owner@vger.kernel.org Tue Dec 29 20:24:46 2015
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	git-owner@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Dec 29 21:01:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDzsy-0003Ge-Eq
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 20:24:44 +0100
+	id 1aE0SD-0001aw-CW
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 21:01:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753656AbbL2TYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 14:24:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753587AbbL2TYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 14:24:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B4E9357E6;
-	Tue, 29 Dec 2015 14:24:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iYwuGk7aGnaDYdNWx/jo+c9P5rs=; b=i2zepv
-	Qc27IA9KLCwtmTXKbHl59gXJhVIXWtldoKy1LzOmeixKp6GESrMqOI7hPvpx/PPc
-	s/NnRmYeA/ElXw90BNR1+1k0Q3vk83quS9rewwT4ab+Tj4wfNEt60MWh/NeCLOUy
-	/tZDY9PLH8KqhFGGlnZPKPFLJ/DsTaa/7YJ8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IVHJfGUKXyMpUyytyAKgkcDgNm4KG2sq
-	NPE1dAR6OmVWPWQ/lK6J3IUU9M+b35GqPtyPdWu+VGyZ1DgDvaR4Caa48+cHXNoN
-	hLU+exCbbWOkZVcIjL3czRDw/8LEgiRQ+cxxEwFzh602SHwOJIkz71g1RLpSiWfo
-	cQejblo9e/Y=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 20FD6357E4;
-	Tue, 29 Dec 2015 14:24:03 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 94BD5357E3;
-	Tue, 29 Dec 2015 14:24:02 -0500 (EST)
-In-Reply-To: <1451415296-3960-1-git-send-email-ischis2@cox.net> (Stephen
-	P. Smith's message of "Tue, 29 Dec 2015 11:54:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B7F88EE2-AE61-11E5-AF8A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753939AbbL2UBF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 15:01:05 -0500
+Received: from 18.mo7.mail-out.ovh.net ([188.165.56.163]:49283 "EHLO
+	18.mo7.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753932AbbL2UBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 15:01:03 -0500
+X-Greylist: delayed 8396 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Dec 2015 15:01:03 EST
+Received: from mail372.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo7.mail-out.ovh.net (Postfix) with ESMTP id 578D2FF85B9;
+	Tue, 29 Dec 2015 18:33:17 +0100 (CET)
+Received: from RCM-2.6.200.35 (localhost [127.0.0.1])
+	by mail372.ha.ovh.net (Postfix) with ESMTPA id 9E42B6C0063;
+	Tue, 29 Dec 2015 18:33:12 +0100 (CET)
+Received: from APoitiers-655-1-396-35.w2-6.abo.wanadoo.fr ([2.6.200.35])
+ by ssl0.ovh.net
+ with HTTP (HTTP/1.1 POST); Tue, 29 Dec 2015 18:33:12 +0100
+In-Reply-To: <CAE5ih7-3H=O8GqzGebzKTttwUs=HRA+B+pV85sfWoesAvKXKgg@mail.gmail.com>
+X-Sender: romain.picard@oakbits.com
+User-Agent: Roundcube Webmail/1.1.3
+X-Originating-IP: 2.6.200.35
+X-Webmail-UserID: romain.picard@oakbits.com
+X-Ovh-Tracer-Id: 14113155334541566229
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekiedrheekgdeljecutefuodetggdotffvucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283147>
 
-"Stephen P. Smith" <ischis2@cox.net> writes:
+Le 26.12.2015 11:26, Luke Diamand a =C3=A9crit=C2=A0:
+> On 21 December 2015 at 13:09, Romain Picard <romain.picard@oakbits.co=
+m>=20
+> wrote:
+>> After changing the type of a file in the git repository, it is not=20
+>> possible to
+>> "git p4 publish" the commit to perforce. This is due to the fact tha=
+t=20
+>> the git
+>> "T" status is not handled in git-p4.py. This can typically occur whe=
+n=20
+>> replacing
+>> an existing file with a symbolic link.
+>>=20
+>> The "T" modifier is now supported in git-p4.py. When a file type has=
+=20
+>> changed,
+>> inform perforce with the "p4 edit -f auto" command.
+>=20
+> Romain,
+>=20
+> Thanks for looking at this. It looks like a reasonable change.
+>=20
+> Do you think you could add a unit test as well?
 
-> Rather than merely pointing readers at the 1.5 release notes to
-> learn about shallow clones, document them formally.
->
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
+Yes, I will look at the existing tests to see how to add some new ones.
 
-Thanks.  I do not think the reference to RelNotes were meant for the
-end-user readers, though.  That was a hint for whoever is working to
-clear the "todo" items from that list i.e. you ;-).
-
-> +[[how-to-get-a-git-repository-with-minimal-history]]
-> +How to get a Git repository with minimal history
-> +------------------------------------------------
-> +
-> +A <<def_shallow_clone,shallow clone>>, with its truncated
-> +history, is useful when one is interested only in recent history
-> +of a project and getting full history from the upstream is
-> +expensive.
-> +
-> +A <<def_shallow_clone,shallow clone>> is created by specifying
-> +the linkgit:git-clone[1] `--depth` switch. The depth can later be
-> +changed with the linkgit:git-fetch[1] `--depth` switch, or full
-> +history restored with `--unshallow`.
-> +
-> +Merging inside a <<def_shallow_clone,shallow clone>> will work as long
-> +as the merge base is in the resent history.  If the merge base is not
-
-recent?
-
-> +present then the merge would be of un-related histories.  This
-> +limitaion is fundamental and will not be removed.
-
-I think "fundamental and will not change" is much less important
-than the "huge conflicts, making the result of 'clone --depth=<n>'
-not very useful to perform merges in", which is what the users would
-need to know before deciding to use this feature.
-
-> +
->  [[sharing-development-examples]]
->  Examples
->  --------
-> @@ -4645,9 +4664,6 @@ standard end-of-chapter section?
->  
->  Include cross-references to the glossary, where appropriate.
->  
-> -Document shallow clones?  See draft 1.5.0 release notes for some
-> -documentation.
-> -
->  Add a section on working with other version control systems, including
->  CVS, Subversion, and just imports of series of release tarballs.
+>=20
+> Thanks
+> Luke
+>=20
+>=20
+>>=20
+>> Signed-off-by: Romain Picard <romain.picard@oakbits.com>
+>> ---
+>>  git-p4.py | 9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/git-p4.py b/git-p4.py
+>> index a7ec118..b7a3494 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -240,8 +240,8 @@ def p4_add(f):
+>>  def p4_delete(f):
+>>      p4_system(["delete", wildcard_encode(f)])
+>>=20
+>> -def p4_edit(f):
+>> -    p4_system(["edit", wildcard_encode(f)])
+>> +def p4_edit(f, *options):
+>> +    p4_system(["edit"] + list(options) + [wildcard_encode(f)])
+>>=20
+>>  def p4_revert(f):
+>>      p4_system(["revert", wildcard_encode(f)])
+>> @@ -1344,6 +1344,7 @@ class P4Submit(Command, P4UserMap):
+>>=20
+>>          diff =3D read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\=
+"" %=20
+>> (self.diffOpts, id, id))
+>>          filesToAdd =3D set()
+>> +        filesToChangeType =3D set()
+>>          filesToDelete =3D set()
+>>          editedFiles =3D set()
+>>          pureRenameCopy =3D set()
+>> @@ -1404,6 +1405,8 @@ class P4Submit(Command, P4UserMap):
+>>                      os.unlink(dest)
+>>                      filesToDelete.add(src)
+>>                  editedFiles.add(dest)
+>> +            elif modifier =3D=3D "T":
+>> +                filesToChangeType.add(path)
+>>              else:
+>>                  die("unknown modifier %s for %s" % (modifier, path)=
+)
+>>=20
+>> @@ -1463,6 +1466,8 @@ class P4Submit(Command, P4UserMap):
+>>          #
+>>          system(applyPatchCmd)
+>>=20
+>> +        for f in filesToChangeType:
+>> +            p4_edit(f, "-t", "auto")
+>>          for f in filesToAdd:
+>>              p4_add(f)
+>>          for f in filesToDelete:
+>> --
+>> 2.6.4
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
