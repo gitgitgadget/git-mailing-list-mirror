@@ -1,145 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/3] nd/clear-gitenv-upon-use-of-alias
-Date: Tue, 29 Dec 2015 03:12:22 -0500
-Message-ID: <20151229081222.GB9254@sigill.intra.peff.net>
-References: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
- <1450597819-26278-1-git-send-email-pclouds@gmail.com>
- <xmqq4mfbfqla.fsf@gitster.mtv.corp.google.com>
- <CACsJy8DFmZSa2x4y2fDwVsvwa5uAuMJn8v=utvYtAPTGFbdWPg@mail.gmail.com>
- <CACsJy8A5AcRj2HiLe3PQijhYcHMzJ6eEuMyeVTMvPtXvMg_Sug@mail.gmail.com>
- <xmqqd1tye4i8.fsf@gitster.mtv.corp.google.com>
- <20151223093700.GA13386@sigill.intra.peff.net>
- <567B05F0.5020604@kdbg.org>
- <20151223213140.GB21277@sigill.intra.peff.net>
- <CACsJy8Aqu9wTigWKC1-74qLUimV8PvmbDG1XeqYcbW0ZSMLSTg@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/3] improve symbolic-ref robustness
+Date: Tue, 29 Dec 2015 09:25:06 +0100
+Message-ID: <56824362.30903@alum.mit.edu>
+References: <20151220072637.GA22102@sigill.intra.peff.net>
+ <20151229055558.GA12848@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Anthony Sottile <asottile@umich.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 09:13:04 2015
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 29 09:25:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDpOy-0005S9-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 09:13:04 +0100
+	id 1aDpal-00089c-DV
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 09:25:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbbL2IM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 03:12:27 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46665 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750908AbbL2IMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 03:12:25 -0500
-Received: (qmail 19955 invoked by uid 102); 29 Dec 2015 08:12:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 02:12:25 -0600
-Received: (qmail 20275 invoked by uid 107); 29 Dec 2015 08:12:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 03:12:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Dec 2015 03:12:22 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Aqu9wTigWKC1-74qLUimV8PvmbDG1XeqYcbW0ZSMLSTg@mail.gmail.com>
+	id S1753339AbbL2IZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 03:25:11 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47033 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753096AbbL2IZK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Dec 2015 03:25:10 -0500
+X-AuditID: 12074412-f79a76d000007c8b-06-568243658e73
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id DB.06.31883.56342865; Tue, 29 Dec 2015 03:25:09 -0500 (EST)
+Received: from [192.168.69.130] (p4FC97AF1.dip0.t-ipconnect.de [79.201.122.241])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tBT8P778009964
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 29 Dec 2015 03:25:08 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.4.0
+In-Reply-To: <20151229055558.GA12848@sigill.intra.peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqJvq3BRmsP4Yj0XXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oy2BetYC85xVNx5+I2tgfEx
+	WxcjJ4eEgInEkXVfmSBsMYkL99YDxbk4hAQuM0p09lxkhnAuMElMu/USrEpYwFri0eop7CC2
+	iICRxI0P38AmCQlkS3x+OI0RxGYWUJNo3zSFFcRmE9CVWNTTDNbLK6Ap8epyHwuIzSKgKvF8
+	5wmwOaICIRJ7d3awQNQISpyc+QTI5uDgBNo1c7EPxEh1iT/zLjFD2PIS29/OYZ7AKDALSccs
+	JGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrppebWaKXmlK6iRESukI7GNeflDvE
+	KMDBqMTDmzmpMUyINbGsuDL3EKMkB5OSKK/jL6AQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV7X
+	LUA53pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ3seOTWFCgkWp6akV
+	aZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aBIjS8GxipIigdo70cHoHbe4oLEXKAoROspRkUp
+	cV4BJ6CEAEgiozQPbiwsIb1iFAf6UpjXAKSKB5jM4LpfAQ1mAho8c2o9yOCSRISUVAPjkSUG
+	uffLw9x4xFQ7In5//32D1/7OYcmwH55J+peVtGbENlzOvHk4a8axuTNdDiwLO368IOXIWqOL
+	c3Yd9b/3kSNEwv5t5obv9w6JHw79WM+88qnmZPUZexP9F3G+Tdo1vXbhzsRLodp/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283109>
 
-On Thu, Dec 24, 2015 at 04:35:33PM +0700, Duy Nguyen wrote:
-
-> On Thu, Dec 24, 2015 at 4:31 AM, Jeff King <peff@peff.net> wrote:
-> >   2. I doubt anybody is actually seeing this in practice anymore. But
-> >      maybe I am misunderstanding something in Duy's series that changes
-> >      this.
+On 12/29/2015 06:55 AM, Jeff King wrote:
+> On Sun, Dec 20, 2015 at 02:26:37AM -0500, Jeff King wrote:
 > 
-> There are two parts in your patch, one (that you two seemed to focus
-> on) about return code with "!" aliases. Another, suppressing SIGPIPE,
-> affects more than "!" aliases.
+>> I noticed that an interrupt "git symbolic-ref" will not clean up
+>> "HEAD.lock". So I started this series as an attempt to convert
+>> create_symref() to "struct lock_file" to get the usual tempfile cleanup.
+> 
+> Here's version 2, based on comments from Michael. The first two patches
+> were picked out separately for jk/symbolic-ref-maint, so I've dropped
+> them here (so 1+2 here are the original 3+4).
+> 
+> The other differences from v1 are:
+> 
+>   - use "refname" instead of "ref" to match surrounding code
+> 
+>   - drop adjust_shared_perm, as lockfile does it for us
+> 
+>   - adjust reflog writing order (done in a new patch)
+> 
+> The patches are:
+> 
+>   [1/3]: create_symref: modernize variable names
+>   [2/3]: create_symref: use existing ref-lock code
+>   [3/3]: create_symref: write reflog while holding lock
 
-Sorry if I was confusing; most of the examples in my previous message
-are about the SIGPIPE thing. I was having trouble triggering the message
-in practice, even for externals (because the error message goes to the
-pager, too!).
+Thanks, Peff. The whole series is
 
-> In my case it's execv_dashed_external(). Non-"!" aliases are now
-> forced to use that function.
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-Thanks, this is the part I was missing.
+Michael
 
-The outer git wrapper doesn't start the pager, so its stderr still gets
-seen by the user. But the _inner_ git-log does start the pager, and then
-dies of SIGPIPE.
-
-So yeah, I think we want something like this on top of
-nd/clear-gitenv-upon-use-of-alias.
-
--- >8 --
-Subject: [PATCH] run-command: don't warn on SIGPIPE deaths
-
-When git executes a sub-command, we print a warning if the
-command dies due to a signal, but make an exception for
-"uninteresting" cases like SIGINT and SIGQUIT (since the
-user presumably just hit ^C).
-
-We should make a similar exception for SIGPIPE, because it's
-an expected and uninteresting return in most cases; it
-generally means the user quit the pager before git had
-finished generating all output.  This used to be very hard
-to trigger in practice, because:
-
-  1. We only complain if we see a real SIGPIPE death, not
-     the shell-induced 141 exit code. This means that
-     anything we run via the shell does not trigger the
-     warning, which includes most non-trivial aliases.
-
-  2. The common case for SIGPIPE is the user quitting the
-     pager before git has finished generating all output.
-     But if the user triggers a pager with "-p", we redirect
-     the git wrapper's stderr to that pager, too.  Since the
-     pager is dead, it means that the message goes nowhere.
-
-  3. You can see it if you run your own pager, like
-     "git foo | head". But that only happens if "foo" is a
-     non-builtin (so it doesn't work with "log", for
-     example).
-
-However, it may become more common after 86d26f2, which
-teaches alias to re-exec builtins rather than running them
-in the same process. This case doesn't trigger (1), as we
-don't need a shell to run a git command. It doesn't trigger
-(2), because the pager is not started by the original git,
-but by the inner re-exec of git. And it doesn't trigger (3),
-because builtins are treated more like non-builtins in this
-case.
-
-Given how flaky this message already is (e.g., you cannot
-even know whether you will see it, as git optimizes out some
-shell invocations behind the scenes based on the contents of
-the command!), and that it is unlikely to ever provide
-useful information, let's suppress it for all cases of
-SIGPIPE.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- run-command.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/run-command.c b/run-command.c
-index 13fa452..694a6ff 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -245,7 +245,7 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
- 		error("waitpid is confused (%s)", argv0);
- 	} else if (WIFSIGNALED(status)) {
- 		code = WTERMSIG(status);
--		if (code != SIGINT && code != SIGQUIT)
-+		if (code != SIGINT && code != SIGQUIT && code != SIGPIPE)
- 			error("%s died of signal %d", argv0, code);
- 		/*
- 		 * This return value is chosen so that code & 0xff
 -- 
-2.7.0.rc3.367.g09631da
+Michael Haggerty
+mhagger@alum.mit.edu
