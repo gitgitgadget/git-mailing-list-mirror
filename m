@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/10] update-index: add --test-untracked-cache
-Date: Tue, 29 Dec 2015 14:28:23 -0800
-Message-ID: <xmqqy4ccga9k.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v4 08/10] dir: simplify untracked cache "ident" field
+Date: Tue, 29 Dec 2015 14:32:58 -0800
+Message-ID: <xmqqsi2kga1x.fsf@gitster.mtv.corp.google.com>
 References: <1451372974-16266-1-git-send-email-chriscool@tuxfamily.org>
-	<1451372974-16266-4-git-send-email-chriscool@tuxfamily.org>
+	<1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -14,125 +14,86 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Torsten =?utf-8?Q?B=C3=B6gersh?= =?utf-8?Q?ausen?= 
 	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
 To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 23:28:37 2015
+X-From: git-owner@vger.kernel.org Tue Dec 29 23:33:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aE2kr-00014g-9G
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 23:28:33 +0100
+	id 1aE2pH-0004uT-6P
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 23:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754029AbbL2W23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 17:28:29 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53600 "EHLO
+	id S1753839AbbL2WdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 17:33:03 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59816 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753792AbbL2W2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 17:28:25 -0500
+	with ESMTP id S1752743AbbL2WdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 17:33:01 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3273038057;
-	Tue, 29 Dec 2015 17:28:25 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9C9C93830C;
+	Tue, 29 Dec 2015 17:33:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FprqoghGi2+C+sKM4D6j+2I3xyY=; b=E6TFXe
-	HaZTCTIovvNbC4HnWDj3PwaRxLoq/UqzVK2bmkLraSOwLtymYnPAazbnpbS+A/41
-	r7lXTWW1NZU9FBXoAOyPduhqwR/Z+9Z/yvIozuo74IGienCGmvBbzGR8T9MYI41R
-	OuysIwjUXMGIOTNeq/3FbilYO3/11/CeJkcOs=
+	:content-type; s=sasl; bh=k0qztsUfWXitHcri65q+773qNO4=; b=Q6Hafy
+	+PbxrtAoDCk4Dq5BiQ5Gwm1r33pNnxtE81IDBs90dVjFtz7yY68b+YUO/xZdsify
+	rCcbqSheTWgxUW9bM/+9Br0DCwEhUE74xpTD4YufMIK4VfMlhPpoKcYSSr/YCvZp
+	E0uNzN4q1y+fRScc7iD81KO0T/bPghI1EVcaE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FiAcwsqzd/L08scYyd5ue0MlEN57wdvQ
-	tnSLvUJ+yfJ3jw84dgz3gdzfLNIlPm91GhYdld7g6gZ7LHoaFkNnAKTwd+r1Mfg6
-	/KJDiTUwHX7PO9TMcJLsanF+ChkYl+ps2pOgVWJoEljeMXB3tM6O6cKuE1DkDBgM
-	zQlcWjj8SJo=
+	:content-type; q=dns; s=sasl; b=C9Ijc83V4alqnHgZwljnlS6N7C9GJgFi
+	BCXnO64WtDYqGjLGQFFYsRtyIZqHtUZ+Tf5xiMQHjQiN1mPoQUcEln6Dww3m1dr8
+	cy0FRUTs2oZph5EzFPIsiZS1TDiRJ12d/ksBSQgrK93geUM90MvfumT5EjG4cdgq
+	rE8H0zwsezE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27CA438056;
-	Tue, 29 Dec 2015 17:28:25 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 908BD3830B;
+	Tue, 29 Dec 2015 17:33:00 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 916C438055;
-	Tue, 29 Dec 2015 17:28:24 -0500 (EST)
-In-Reply-To: <1451372974-16266-4-git-send-email-chriscool@tuxfamily.org>
-	(Christian Couder's message of "Tue, 29 Dec 2015 08:09:27 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E43203830A;
+	Tue, 29 Dec 2015 17:32:59 -0500 (EST)
+In-Reply-To: <1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
+	(Christian Couder's message of "Tue, 29 Dec 2015 08:09:32 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 79781790-AE7B-11E5-81AE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1D957AC0-AE7C-11E5-A69D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283154>
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> It is nice to just be able to test if untracked cache is
-> supported without enabling it.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/git-update-index.txt | 12 +++++++++++-
->  builtin/update-index.c             |  5 +++++
->  2 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index f4e5a85..a0afe17 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -18,7 +18,7 @@ SYNOPSIS
->  	     [--[no-]skip-worktree]
->  	     [--ignore-submodules]
->  	     [--[no-]split-index]
-> -	     [--[no-|force-]untracked-cache]
-> +	     [--[no-|test-|force-]untracked-cache]
->  	     [--really-refresh] [--unresolve] [--again | -g]
->  	     [--info-only] [--index-info]
->  	     [-z] [--stdin] [--index-version <n>]
-> @@ -180,6 +180,16 @@ may not support it yet.
->  	system must change `st_mtime` field of a directory if files
->  	are added or deleted in that directory.
+> -static int ident_in_untracked(const struct untracked_cache *uc)
+> +static int ident_current_location_in_untracked(const struct untracked_cache *uc)
+>  {
+> -	const char *end = uc->ident.buf + uc->ident.len;
+> -	const char *p   = uc->ident.buf;
+> +	struct strbuf cur_loc = STRBUF_INIT;
+> +	int res = 0;
 >  
-> +--test-untracked-cache::
-> +	Only perform tests on the working directory to make sure
-> +	untracked cache can be used. You have to manually enable
-> +	untracked cache using `--force-untracked-cache` (or
-> +	`--untracked-cache` but this will run the tests again)
-> +	afterwards if you really want to use it. If a test fails
-> +	the exit code is 1 and a message explains what is not
-> +	working as needed, otherwise the exit code is 0 and OK is
-> +	printed.
+> -	for (p = uc->ident.buf; p < end; p += strlen(p) + 1)
+> -		if (!strcmp(p, get_ident_string()))
+> -			return 1;
+> -	return 0;
+> +	/*
+> +	 * Previous git versions may have saved many strings in the
+> +	 * "ident" field, but it is insane to manage many locations,
+> +	 * so just take care of the first one.
+> +	 */
 > +
+> +	strbuf_addf(&cur_loc, "Location %s, system ", get_git_work_tree());
+> +
+> +	if (starts_with(uc->ident.buf, cur_loc.buf))
+> +		res = 1;
+> +
+> +	strbuf_release(&cur_loc);
+> +
+> +	return res;
+>  }
 
-Looks good.
+The ", system " part looks funny.  I think I know what you are
+trying to do, though.
 
->  --force-untracked-cache::
->  	For safety, `--untracked-cache` performs tests on the working
->  	directory to make sure untracked cache can be used. These
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 1e546a3..62222dd 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -40,6 +40,7 @@ enum uc_mode {
->  	UC_UNSPECIFIED = -1,
->  	UC_DISABLE = 0,
->  	UC_ENABLE,
-> +	UC_TEST,
->  	UC_FORCE
->  };
->  
-> @@ -1004,6 +1005,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->  			N_("enable or disable split index")),
->  		OPT_BOOL(0, "untracked-cache", &untracked_cache,
->  			N_("enable/disable untracked cache")),
-> +		OPT_SET_INT(0, "test-untracked-cache", &untracked_cache,
-> +			    N_("test if the filesystem supports untracked cache"), UC_TEST),
->  		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
->  			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
->  		OPT_END()
-> @@ -1119,6 +1122,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->  			setup_work_tree();
->  			if (!test_if_untracked_cache_is_supported())
->  				return 1;
-> +			if (untracked_cache == UC_TEST)
-> +				return 0;
->  		}
->  		if (!the_index.untracked) {
->  			uc = xcalloc(1, sizeof(*uc));
+If the path to the working tree has ", system " as a substring,
+I wonder if funny things may happen with this starts_with()?
