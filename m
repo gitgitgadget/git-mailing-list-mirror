@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/20] upload-pack: add deepen-since to cut shallow repos based on time
-Date: Tue, 29 Dec 2015 19:10:32 +0700
-Message-ID: <1451391043-28093-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 10/20] fetch-pack: use a common function for verbose printing
+Date: Tue, 29 Dec 2015 19:10:33 +0700
+Message-ID: <1451391043-28093-11-git-send-email-pclouds@gmail.com>
 References: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,183 +10,255 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 29 13:11:56 2015
+X-From: git-owner@vger.kernel.org Tue Dec 29 13:12:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDt85-0006cX-Nv
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 13:11:54 +0100
+	id 1aDt8B-0006jW-Q9
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 13:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368AbbL2MLv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 07:11:51 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:32916 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753320AbbL2MLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 07:11:49 -0500
-Received: by mail-pa0-f53.google.com with SMTP id cy9so123708655pac.0
-        for <git@vger.kernel.org>; Tue, 29 Dec 2015 04:11:48 -0800 (PST)
+	id S1753370AbbL2ML5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 07:11:57 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36510 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbbL2MLy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 07:11:54 -0500
+Received: by mail-pf0-f169.google.com with SMTP id 65so82246445pff.3
+        for <git@vger.kernel.org>; Tue, 29 Dec 2015 04:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=6NcgE/ngRL2yRg+6hNpUzxLB+38CKwpPzrL+Mhcw128=;
-        b=bsvLIT8CZuIPWE8q1R0jdO7TAaG34oMfxoFW8lCIZIUHOaGRNyHH41Jp1CzbjL8HdN
-         QMBnvlzWmMSVbvGWvWRqbJyLRQaDgUv3N+fDpEsXurEhQnBpQ5lqZoUTLqTWHC75RdYr
-         U36nl0iLKn5DUjFYGsiV+iMK30YNnTyqK/T8A7WtPK00P+qC5cJvgFpyje7QsCrv2l95
-         f9lY+emrKiL+KkxM1MZick5r+ze9QtyAFz01H3H5JXeNdEFDmOTzBYsTjh6IbCNqMyG8
-         uCyIE2kcEkvxArs+xywY00EriyvYgWL+y/5EYMUJ0GCMb8iZ10KOab/g4WTPCkNfd2Iz
-         qnWg==
-X-Received: by 10.66.216.200 with SMTP id os8mr86125822pac.143.1451391108538;
-        Tue, 29 Dec 2015 04:11:48 -0800 (PST)
+        bh=DpWmK4z1560XAoqxRKj+eh4BH4KK5dodjbfE9eiDgWA=;
+        b=GIPxHyh5JSINDXqWMLsiV3+9A+0A170dHvDwoxXgBKbvif6d00/6ZAihuXpoeWLpjv
+         9OTu/jnbcyShE16lWShU15yzZEGOZb78xFCrIHhIB863vmUmwrF929OOGsCf4strawPy
+         Jn/Vz80r4BXQaOPN9+Z9+3hPcAN1JZYt9OhFRaPKSkTzBKZRVCTmkqEma8DyNmBGNBVR
+         9V58SpBMO3vI/bD6m+mc2Cdw0En+U2QSP9zD4+B3AzlJ4Q67aGukDo4nyVLE596kJBac
+         jB2F/moqM5J4iWLzTWnyXrgmHtjdIs2rvsMUBD/Oyrbk6dEeYRHKyXPsAw6TCAXXNq0z
+         WlAw==
+X-Received: by 10.98.73.19 with SMTP id w19mr86304097pfa.103.1451391114156;
+        Tue, 29 Dec 2015 04:11:54 -0800 (PST)
 Received: from lanh ([171.233.234.31])
-        by smtp.gmail.com with ESMTPSA id fc6sm87892451pac.44.2015.12.29.04.11.45
+        by smtp.gmail.com with ESMTPSA id w66sm46255579pfi.48.2015.12.29.04.11.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Dec 2015 04:11:47 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 29 Dec 2015 19:11:43 +0700
+        Tue, 29 Dec 2015 04:11:52 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 29 Dec 2015 19:11:49 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283120>
 
-This should allow the user to say "create a shallow clone containing th=
-e
-work from last year" (once the client side is fixed up, of course).
-
-In theory deepen-since and deepen (aka --depth) can be used together to
-draw the shallow boundary (whether it's intersection or union is up to
-discussion, but if rev-list is used, it's likely intersection). However=
-,
-because deepen goes with a custom commit walker, we can't mix the two
-yet.
+This reduces the number of "if (verbose)" which makes it a bit easier
+to read imo. It also makes it easier to redirect all these printouts,
+to a file for example.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/technical/pack-protocol.txt         |  3 ++-
- Documentation/technical/protocol-capabilities.txt |  9 +++++++
- upload-pack.c                                     | 33 +++++++++++++++=
-++++++--
- 3 files changed, 42 insertions(+), 3 deletions(-)
+ fetch-pack.c | 88 +++++++++++++++++++++++++++++-----------------------=
+--------
+ 1 file changed, 42 insertions(+), 46 deletions(-)
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/=
-technical/pack-protocol.txt
-index c6977bb..9251df1 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -219,7 +219,8 @@ out of what the server said it could do with the fi=
-rst 'want' line.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 01e34b6..16917f9 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -50,6 +50,21 @@ static int non_common_revs, multi_ack, use_sideband;
+ #define ALLOW_REACHABLE_SHA1	02
+ static unsigned int allow_unadvertised_object_request;
 =20
-   shallow-line      =3D  PKT-LINE("shallow" SP obj-id)
-=20
--  depth-request     =3D  PKT-LINE("deepen" SP depth)
-+  depth-request     =3D  PKT-LINE("deepen" SP depth) /
-+		       PKT-LINE("deepen-since" SP timestamp)
-=20
-   first-want        =3D  PKT-LINE("want" SP obj-id SP capability-list)
-   additional-want   =3D  PKT-LINE("want" SP obj-id)
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Docume=
-ntation/technical/protocol-capabilities.txt
-index eaab6b4..f08cc4e 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -179,6 +179,15 @@ This capability adds "deepen", "shallow" and "unsh=
-allow" commands to
- the  fetch-pack/upload-pack protocol so clients can request shallow
- clones.
-=20
-+deepen-since
-+------------
++__attribute__((format (printf, 2, 3)))
++static inline void print_verbose(const struct fetch_pack_args *args,
++				 const char *fmt, ...)
++{
++	va_list params;
 +
-+This capability adds "deepen-since" command to fetch-pack/upload-pack
-+protocol so the client can request shallow clones that are cut at a
-+specific time, instead of depth. Internally it's equivalent of doing
-+"rev-list --max-age=3D<timestamp>" on the server side. "deepen-since"
-+cannot be used with "deepen".
++	if (!args->verbose)
++		return;
 +
- no-progress
- -----------
-=20
-diff --git a/upload-pack.c b/upload-pack.c
-index 573ffa2..100b604 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -14,6 +14,7 @@
- #include "sigchain.h"
- #include "version.h"
- #include "string-list.h"
-+#include "argv-array.h"
-=20
- static const char upload_pack_usage[] =3D "git upload-pack [--strict] =
-[--timeout=3D<n>] <dir>";
-=20
-@@ -618,6 +619,8 @@ static void receive_needs(void)
- 	struct object_array shallows =3D OBJECT_ARRAY_INIT;
- 	int depth =3D 0;
- 	int has_non_tip =3D 0;
-+	unsigned long deepen_since =3D 0;
-+	int deepen_rev_list =3D 0;
-=20
- 	shallow_nr =3D 0;
- 	for (;;) {
-@@ -654,6 +657,16 @@ static void receive_needs(void)
- 				die("Invalid deepen: %s", line);
++	va_start(params, fmt);
++	vfprintf(stderr, fmt, params);
++	va_end(params);
++	fputc('\n', stderr);
++}
++
+ static void rev_list_push(struct commit *commit, int mark)
+ {
+ 	if (!(commit->object.flags & mark)) {
+@@ -375,8 +390,7 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 	retval =3D -1;
+ 	while ((sha1 =3D get_rev())) {
+ 		packet_buf_write(&req_buf, "have %s\n", sha1_to_hex(sha1));
+-		if (args->verbose)
+-			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
++		print_verbose(args, "have %s", sha1_to_hex(sha1));
+ 		in_vain++;
+ 		if (flush_at <=3D ++count) {
+ 			int ack;
+@@ -397,9 +411,9 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 			consume_shallow_list(args, fd[0]);
+ 			do {
+ 				ack =3D get_ack(fd[0], result_sha1);
+-				if (args->verbose && ack)
+-					fprintf(stderr, "got ack %d %s\n", ack,
+-							sha1_to_hex(result_sha1));
++				if (ack)
++					print_verbose(args, "got ack %d %s", ack,
++						      sha1_to_hex(result_sha1));
+ 				switch (ack) {
+ 				case ACK:
+ 					flushes =3D 0;
+@@ -438,8 +452,7 @@ static int find_common(struct fetch_pack_args *args=
+,
+ 			} while (ack);
+ 			flushes--;
+ 			if (got_continue && MAX_IN_VAIN < in_vain) {
+-				if (args->verbose)
+-					fprintf(stderr, "giving up\n");
++				print_verbose(args, "giving up");
+ 				break; /* give up */
+ 			}
+ 		}
+@@ -449,8 +462,7 @@ done:
+ 		packet_buf_write(&req_buf, "done\n");
+ 		send_request(args, fd[1], &req_buf);
+ 	}
+-	if (args->verbose)
+-		fprintf(stderr, "done\n");
++	print_verbose(args, "done");
+ 	if (retval !=3D 0) {
+ 		multi_ack =3D 0;
+ 		flushes++;
+@@ -462,9 +474,8 @@ done:
+ 	while (flushes || multi_ack) {
+ 		int ack =3D get_ack(fd[0], result_sha1);
+ 		if (ack) {
+-			if (args->verbose)
+-				fprintf(stderr, "got ack (%d) %s\n", ack,
+-					sha1_to_hex(result_sha1));
++			print_verbose(args, "got ack (%d) %s", ack,
++				      sha1_to_hex(result_sha1));
+ 			if (ack =3D=3D ACK)
+ 				return 0;
+ 			multi_ack =3D 1;
+@@ -509,9 +520,8 @@ static void mark_recent_complete_commits(struct fet=
+ch_pack_args *args,
+ 					 unsigned long cutoff)
+ {
+ 	while (complete && cutoff <=3D complete->item->date) {
+-		if (args->verbose)
+-			fprintf(stderr, "Marking %s as complete\n",
+-				oid_to_hex(&complete->item->object.oid));
++		print_verbose(args, "Marking %s as complete",
++			      oid_to_hex(&complete->item->object.oid));
+ 		pop_most_recent_commit(&complete, COMPLETE);
+ 	}
+ }
+@@ -652,18 +662,12 @@ static int everything_local(struct fetch_pack_arg=
+s *args,
+ 		o =3D lookup_object(remote);
+ 		if (!o || !(o->flags & COMPLETE)) {
+ 			retval =3D 0;
+-			if (!args->verbose)
+-				continue;
+-			fprintf(stderr,
+-				"want %s (%s)\n", sha1_to_hex(remote),
+-				ref->name);
++			print_verbose(args, "want %s (%s)", sha1_to_hex(remote),
++				      ref->name);
  			continue;
  		}
-+		if (skip_prefix(line, "deepen-since ", &arg)) {
-+			char *end =3D NULL;
-+			deepen_since =3D strtoul(arg, &end, 0);
-+			if (!end || *end || !deepen_since ||
-+			    /* revisions.c's max_age -1 is special */
-+			    deepen_since =3D=3D -1)
-+				die("Invalid deepen-since: %s", line);
-+			deepen_rev_list =3D 1;
-+			continue;
-+		}
- 		if (!skip_prefix(line, "want ", &arg) ||
- 		    get_sha1_hex(arg, sha1_buf))
- 			die("git upload-pack: protocol error, "
-@@ -705,10 +718,26 @@ static void receive_needs(void)
- 	if (!use_sideband && daemon_mode)
- 		no_progress =3D 1;
+-		if (!args->verbose)
+-			continue;
+-		fprintf(stderr,
+-			"already have %s (%s)\n", sha1_to_hex(remote),
+-			ref->name);
++		print_verbose(args, "already have %s (%s)", sha1_to_hex(remote),
++			      ref->name);
+ 	}
+ 	return retval;
+ }
+@@ -810,39 +814,32 @@ static struct ref *do_fetch_pack(struct fetch_pac=
+k_args *args,
+ 	if ((args->depth > 0 || is_repository_shallow()) && !server_supports(=
+"shallow"))
+ 		die("Server does not support shallow clients");
+ 	if (server_supports("multi_ack_detailed")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports multi_ack_detailed\n");
++		print_verbose(args, "Server supports multi_ack_detailed");
+ 		multi_ack =3D 2;
+ 		if (server_supports("no-done")) {
+-			if (args->verbose)
+-				fprintf(stderr, "Server supports no-done\n");
++			print_verbose(args, "Server supports no-done");
+ 			if (args->stateless_rpc)
+ 				no_done =3D 1;
+ 		}
+ 	}
+ 	else if (server_supports("multi_ack")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports multi_ack\n");
++		print_verbose(args, "Server supports multi_ack");
+ 		multi_ack =3D 1;
+ 	}
+ 	if (server_supports("side-band-64k")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports side-band-64k\n");
++		print_verbose(args, "Server supports side-band-64k");
+ 		use_sideband =3D 2;
+ 	}
+ 	else if (server_supports("side-band")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports side-band\n");
++		print_verbose(args, "Server supports side-band");
+ 		use_sideband =3D 1;
+ 	}
+ 	if (server_supports("allow-tip-sha1-in-want")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports allow-tip-sha1-in-want\n");
++		print_verbose(args, "Server supports allow-tip-sha1-in-want");
+ 		allow_unadvertised_object_request |=3D ALLOW_TIP_SHA1;
+ 	}
+ 	if (server_supports("allow-reachable-sha1-in-want")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports allow-reachable-sha1-in-want\n");
++		print_verbose(args, "Server supports allow-reachable-sha1-in-want\n"=
+);
+ 		allow_unadvertised_object_request |=3D ALLOW_REACHABLE_SHA1;
+ 	}
+ 	if (!server_supports("thin-pack"))
+@@ -851,17 +848,16 @@ static struct ref *do_fetch_pack(struct fetch_pac=
+k_args *args,
+ 		args->no_progress =3D 0;
+ 	if (!server_supports("include-tag"))
+ 		args->include_tag =3D 0;
+-	if (server_supports("ofs-delta")) {
+-		if (args->verbose)
+-			fprintf(stderr, "Server supports ofs-delta\n");
+-	} else
++	if (server_supports("ofs-delta"))
++		print_verbose(args, "Server supports ofs-delta");
++	else
+ 		prefer_ofs_delta =3D 0;
 =20
--	if (depth =3D=3D 0 && shallows.nr =3D=3D 0)
-+	if (depth =3D=3D 0 && !deepen_rev_list && shallows.nr =3D=3D 0)
- 		return;
-+	if (depth > 0 && deepen_rev_list)
-+		die("--depth and --since cannot be used together");
- 	if (depth > 0)
- 		deepen(depth, &shallows);
-+	else if (deepen_rev_list) {
-+		struct argv_array av =3D ARGV_ARRAY_INIT;
-+		int i;
-+
-+		argv_array_push(&av, "rev-list");
-+		if (deepen_since)
-+			argv_array_pushf(&av, "--max-age=3D%lu", deepen_since);
-+		for (i =3D 0; i < want_obj.nr; i++) {
-+			struct object *o =3D want_obj.objects[i].item;
-+			argv_array_push(&av, oid_to_hex(&o->oid));
-+		}
-+		deepen_by_rev_list(av.argc, av.argv, &shallows);
-+		argv_array_clear(&av);
-+	}
- 	else
- 		if (shallows.nr > 0) {
- 			int i;
-@@ -757,7 +786,7 @@ static int send_ref(const char *refname, const stru=
-ct object_id *oid,
- 		    int flag, void *cb_data)
- {
- 	static const char *capabilities =3D "multi_ack thin-pack side-band"
--		" side-band-64k ofs-delta shallow no-progress"
-+		" side-band-64k ofs-delta shallow deepen-since no-progress"
- 		" include-tag multi_ack_detailed";
- 	const char *refname_nons =3D strip_namespace(refname);
- 	struct object_id peeled;
+ 	if ((agent_feature =3D server_feature_value("agent", &agent_len))) {
+ 		agent_supported =3D 1;
+-		if (args->verbose && agent_len)
+-			fprintf(stderr, "Server version is %.*s\n",
+-				agent_len, agent_feature);
++		if (agent_len)
++			print_verbose(args, "Server version is %.*s",
++				      agent_len, agent_feature);
+ 	}
+=20
+ 	if (everything_local(args, &ref, sought, nr_sought)) {
 --=20
 2.3.0.rc1.137.g477eb31
