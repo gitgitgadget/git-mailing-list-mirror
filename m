@@ -1,216 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 09/10] config: add core.untrackedCache
-Date: Tue, 29 Dec 2015 14:35:17 -0800
-Message-ID: <xmqqlh8cg9y2.fsf@gitster.mtv.corp.google.com>
-References: <1451372974-16266-1-git-send-email-chriscool@tuxfamily.org>
-	<1451372974-16266-10-git-send-email-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gersh?= =?utf-8?Q?ausen?= 
-	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 23:35:26 2015
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v2] notes: allow merging from arbitrary references
+Date: Tue, 29 Dec 2015 14:40:28 -0800
+Message-ID: <1451428828-23714-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Mike Hommey <mh@glandium.org>, Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 29 23:40:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aE2rU-0006p4-OX
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 23:35:25 +0100
+	id 1aE2wX-0002kE-1J
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 23:40:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753826AbbL2WfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 17:35:21 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752743AbbL2WfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 17:35:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F1FBB3843A;
-	Tue, 29 Dec 2015 17:35:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=oSLmaAiwzdeAbk5RTNzawl8SJ1w=; b=RSIdGDgklKNcKMoj1Jt2
-	zvS3Qt6+CfQig38XALWHm52++vUBwIMBbrKb0kuKDFCRKFjrlBEMfbjU9ptyr0Lo
-	Fq2looTsgJS+fdY0zYzX+Rg74c7EijAwa0eCVQfex81yJaLZv2tz3hj1BR5w9Um2
-	IgVmdrtQiKauZq5xNZqpTEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=sc+VOtVoeKzMktCYMc6m4kpl/lKQHtzXb05VOnX/AzfhxI
-	1cRQeXjuSoddtNElQ++lGmC4ywLBJ+L3/BfBCICTF7VMn0iXcLB2GUYoVu57eLQ+
-	muQKS9WXwK0WqJlsIGrDaz27b0ufvOBDry5zR87Yk0hJqEq2H4bVw23zubjB8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E94A838439;
-	Tue, 29 Dec 2015 17:35:18 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 343A838438;
-	Tue, 29 Dec 2015 17:35:18 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7000CE68-AE7C-11E5-9E28-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753877AbbL2Wkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 17:40:33 -0500
+Received: from mga11.intel.com ([192.55.52.93]:13941 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752743AbbL2Wkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 17:40:31 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP; 29 Dec 2015 14:40:31 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.20,497,1444719600"; 
+   d="scan'208";a="871456740"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.65])
+  by fmsmga001.fm.intel.com with ESMTP; 29 Dec 2015 14:40:32 -0800
+X-Mailer: git-send-email 2.6.3.505.g5cc1fd1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283156>
 
-Christian Couder <christian.couder@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> +core.untrackedCache::
-> +	Determines if untracked cache will be automatically enabled or
-> +	disabled. It can be `keep`, `true` or `false`. Before setting
-> +	it to `true`, you should check that mtime is working properly
-> +	on your system.
-> +	See linkgit:git-update-index[1]. `keep` by default.
-> +
+Create a new expansion function, expand_loose_notes_ref which will first
+check whether the ref can be found using get_sha1. If it can't be found
+then it will fallback to using expand_notes_ref. The content of the
+strbuf will not be changed if the notes ref can be located using
+get_sha1. Otherwise, it may be updated as done by expand_notes_ref.
 
-Before "Before setting it to `true`", the reader needs to be told
-what would happen when this is set to each of these three values (as
-well as what happens when this is not set at all).
+Since we now support merging from non-notes refs, remove the test case
+associated with that behavior. Add a test case for merging from a
+non-notes ref.
 
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index a0afe17..813f6cc 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -174,27 +174,31 @@ may not support it yet.
->  
->  --untracked-cache::
->  --no-untracked-cache::
-> -	Enable or disable untracked cache extension. This could speed
-> -	up for commands that involve determining untracked files such
-> -	as `git status`. The underlying operating system and file
-> -	system must change `st_mtime` field of a directory if files
-> -	are added or deleted in that directory.
-> +	Enable or disable untracked cache extension. Please use
-> +	`--test-untracked-cache` before enabling it.
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
 
-"extension" is a term that is fairly close to the machinery.  In
-other parts of the documentation (like the added text below in this
-patch), it is called "untracked cache FEATURE", which probably is a
-better word to use here as well.
+Notes:
+    - v2
+    * don't expand notes-ref to the sha1, in order to support get-ref better
+    * fix failed tests due to mis-use of argv[0] instead of remote_ref.buf
 
-> ++
-> +These options cannot override the `core.untrackedCache` configuration
-> +variable when it is set to `true` or `false` (see
-> +linkgit:git-config[1]). They can override it only when it is unset or
-> +set to `keep`. If you want untracked cache to persist, it is better
-> +anyway to just set this configuration variable to `true` or `false`
-> +directly.
+ builtin/notes.c        |  2 +-
+ notes.c                | 10 ++++++++++
+ notes.h                |  7 +++++++
+ t/t3308-notes-merge.sh | 22 +++++++++++-----------
+ 4 files changed, 29 insertions(+), 12 deletions(-)
 
-While the above is not wrong per-se, from the point of those who
-looked for these options (that is, those who wanted to do a one-shot
-enabling or disabling of the feature, perhaps to try it out to see
-how well it helps on their system), I think the explanation of the
-interaction between the option and the config is backwards.  For
-their purpose, setting it to `true` or `false` will be hinderance,
-because the options are made no-op by such a setting.  IOW, the
-advertisement "once you decided that you want to use the feature,
-configuration is a better place to set it" does not belong here.
-
-If I were writing this documentation, I'd probably rephrase the
-second paragraph like so:
-
-	These options take effect only when the
-	`core.untrackedCache` configuration variable (see
-	linkgit:git-config[1]) is set to `keep` (or it is left
-	unset).  When the configuration variable is set to `true`,
-	the untracked cache feature is always enabled (and when it
-	is set to `false`, it is always disabled), making these
-	options no-op.
-
-perhaps.
-
-> @@ -385,6 +389,34 @@ Although this bit looks similar to assume-unchanged bit, its goal is
->  different from assume-unchanged bit's. Skip-worktree also takes
->  precedence over assume-unchanged bit when both are set.
->  
-> +Untracked cache
-> +---------------
-> +
-> +This cache could speed up commands that involve determining untracked
-> +...
-> +It is recommended to use the `core.untrackedCache` configuration
-> +variable (see linkgit:git-config[1]) to enable or disable this feature
-> +instead of using the `--[no-|force-]untracked-cache`, as it is more
-> +persistant and visible with a configuration variable.
-
-s/persistant/persistent/; but more importantly, I do not think
-persistence has much to do with the choice between the option and
-configuration.  Once it is set with `--untracked-cache`, it should
-persist until you explicitly use `--no-untracked-cache` to disable
-it, no?  Otherwise you have a bug that needs to be fixed.
-
-The reason you'd want to use a configuration is because the effect
-of using the `--untracked-cache` option is per repository (rather,
-per index-file).
-
-    If you want to enable (or disable) this feature, it is easier to
-    use the `core.untrackedCache` configuration variable than using
-    the `--untracked-cache` option to `git update-index` in each
-    repository, especially if you want to do so across all
-    repositories you use, because you can set the configuration
-    variable to `true` (or `false`) in your `$HOME/.gitconfig` just
-    once and have it affect all repositories you touch.
-
-or something, perhaps.
-
-> +When the `core.untrackedCache` configuration variable is changed, the
-> +untracked cache is added to or removed from the index the next time
-> +"git status" is run; while when `--[no-|force-]untracked-cache` are
-> +used, the untracked cache is immediately added to or removed from the
-> +index.
-
-Is it only "git status", or anything that writes/updates the index
-file?  The above makes it sound as if you are saying "If you change
-the variable, you must run `git status` for the change to take
-effect", and if that is indeed the case, perhaps you should say so
-more explicitly.  My cursory reading of the code suggests that the
-user must run `git status` in a mode that shows untracked files
-(i.e. "git status -uno" does not fix)?
-
-I somehow thought, per the previous discussion with Duy, that the
-check and addition of an empty one (if missing in the index and
-configuration is set to `true`) or removal of an existing one (if
-configuration is set to `false`) were to be done when the index is
-read by read_index_from(), though.  If you have to say "After
-setting the configuration, you must run this command", that does not
-sound like a huge improvement over "If you want to enable this
-feature, you must run this command".
-
-> +	switch (untracked_cache) {
-> +	case UC_UNSPECIFIED:
-> +		break;
-> +	case UC_DISABLE:
-> +		if (use_untracked_cache == 1)
-> +			die("core.untrackedCache is set to true; "
-> +			    "remove or change it, if you really want to "
-> +			    "disable the untracked cache");
->  		remove_untracked_cache();
->  		report(_("Untracked cache disabled"));
-> +		break;
-> +	case UC_TEST:
-> +		setup_work_tree();
-> +		return !test_if_untracked_cache_is_supported();
-> +	case UC_ENABLE:
-> +	case UC_FORCE:
-> +		if (use_untracked_cache == 0)
-> +			die("core.untrackedCache is set to false; "
-> +			    "remove or change it, if you really want to "
-> +			    "enable the untracked cache");
-> +		add_untracked_cache();
-> +		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
-> +		break;
-
-I do buy the decision to make these no-op when the configuration
-says `true` or `false`, but I am not sure if these deserve die().
-
-Exiting with 0 (= success) after issuing a warning() might be more
-appropriate.  I'd especially anticipate that some newbies will
-complain that they got "fatal:" when they used the "--force-"
-variant, saying "I know what I am doing, that is why I said 'force',
-why does stupid Git refuse?".
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 515cebbeb8a3..c090e33dcadb 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -806,7 +806,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 
+ 	o.local_ref = default_notes_ref();
+ 	strbuf_addstr(&remote_ref, argv[0]);
+-	expand_notes_ref(&remote_ref);
++	expand_loose_notes_ref(&remote_ref);
+ 	o.remote_ref = remote_ref.buf;
+ 
+ 	t = init_notes_check("merge");
+diff --git a/notes.c b/notes.c
+index db77922130b4..086cc483e518 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1303,3 +1303,13 @@ void expand_notes_ref(struct strbuf *sb)
+ 	else
+ 		strbuf_insert(sb, 0, "refs/notes/", 11);
+ }
++
++void expand_loose_notes_ref(struct strbuf *sb)
++{
++	unsigned char object[20];
++
++	if (get_sha1(sb->buf, object)) {
++		/* fallback to expand_notes_ref */
++		expand_notes_ref(sb);
++	}
++}
+diff --git a/notes.h b/notes.h
+index 2a3f92338076..431f14378817 100644
+--- a/notes.h
++++ b/notes.h
+@@ -294,4 +294,11 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
+ /* Expand inplace a note ref like "foo" or "notes/foo" into "refs/notes/foo" */
+ void expand_notes_ref(struct strbuf *sb);
+ 
++/*
++ * Similar to expand_notes_ref, but will check whether the ref can be located
++ * via get_sha1 first, and only falls back to expand_notes_ref in the case
++ * where get_sha1 fails.
++ */
++void expand_loose_notes_ref(struct strbuf *sb);
++
+ #endif
+diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
+index 24d82b49bbea..19aed7ec953b 100755
+--- a/t/t3308-notes-merge.sh
++++ b/t/t3308-notes-merge.sh
+@@ -18,7 +18,9 @@ test_expect_success setup '
+ 	git notes add -m "Notes on 1st commit" 1st &&
+ 	git notes add -m "Notes on 2nd commit" 2nd &&
+ 	git notes add -m "Notes on 3rd commit" 3rd &&
+-	git notes add -m "Notes on 4th commit" 4th
++	git notes add -m "Notes on 4th commit" 4th &&
++	# Copy notes to remote-notes
++	git fetch . refs/notes/*:refs/remote-notes/origin/*
+ '
+ 
+ commit_sha1=$(git rev-parse 1st^{commit})
+@@ -66,7 +68,9 @@ test_expect_success 'verify initial notes (x)' '
+ '
+ 
+ cp expect_notes_x expect_notes_y
++cp expect_notes_x expect_notes_v
+ cp expect_log_x expect_log_y
++cp expect_log_x expect_log_v
+ 
+ test_expect_success 'fail to merge empty notes ref into empty notes ref (z => y)' '
+ 	test_must_fail git -c "core.notesRef=refs/notes/y" notes merge z
+@@ -84,16 +88,12 @@ test_expect_success 'fail to merge into various non-notes refs' '
+ 	test_must_fail git -c "core.notesRef=refs/notes/foo^{bar" notes merge x
+ '
+ 
+-test_expect_success 'fail to merge various non-note-trees' '
+-	git config core.notesRef refs/notes/y &&
+-	test_must_fail git notes merge refs/notes &&
+-	test_must_fail git notes merge refs/notes/ &&
+-	test_must_fail git notes merge refs/notes/dir &&
+-	test_must_fail git notes merge refs/notes/dir/ &&
+-	test_must_fail git notes merge refs/heads/master &&
+-	test_must_fail git notes merge x: &&
+-	test_must_fail git notes merge x:foo &&
+-	test_must_fail git notes merge foo^{bar
++test_expect_success 'merge non-notes ref into empty notes ref (remote-notes/origin/x => v)' '
++	git config core.notesRef refs/notes/v &&
++	git notes merge refs/remote-notes/origin/x &&
++	verify_notes v &&
++	# refs/remote-notes/origin/x and v should point to the same notes commit
++	test "$(git rev-parse refs/remote-notes/origin/x)" = "$(git rev-parse refs/notes/v)"
+ '
+ 
+ test_expect_success 'merge notes into empty notes ref (x => y)' '
+-- 
+2.6.3.505.g5cc1fd1
