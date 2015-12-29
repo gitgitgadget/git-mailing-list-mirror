@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 05/20] shallow.c: implement a generic shallow boundary finder based on rev-list
-Date: Tue, 29 Dec 2015 19:10:28 +0700
-Message-ID: <1451391043-28093-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 07/20] upload-pack: use skip_prefix() instead of starts_with() when possible
+Date: Tue, 29 Dec 2015 19:10:30 +0700
+Message-ID: <1451391043-28093-8-git-send-email-pclouds@gmail.com>
 References: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,199 +10,132 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 29 13:11:32 2015
+X-From: git-owner@vger.kernel.org Tue Dec 29 13:11:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDt7i-0006J6-Ku
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 13:11:31 +0100
+	id 1aDt7u-0006Sl-DV
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 13:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317AbbL2ML1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 07:11:27 -0500
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:36350 "EHLO
-	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217AbbL2ML0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 07:11:26 -0500
-Received: by mail-pf0-f182.google.com with SMTP id 65so82241590pff.3
-        for <git@vger.kernel.org>; Tue, 29 Dec 2015 04:11:25 -0800 (PST)
+	id S1753345AbbL2MLj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Dec 2015 07:11:39 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34202 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbbL2MLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 07:11:37 -0500
+Received: by mail-pa0-f47.google.com with SMTP id uo6so101692317pac.1
+        for <git@vger.kernel.org>; Tue, 29 Dec 2015 04:11:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Tbl/6CvPGlJ3aQhOpEBjFC2E8jVFX4g6r9GO2E7EBfs=;
-        b=lFq69IJBuWSSJ8C/h2gIkVzDV1sEx4EZwaYLgfX+azoWoAd/IVAR4s5SmCqvMzm89U
-         FoYuoy6Nyv0ViNSJhNQCugyt7XNd07KRTkDDxxV6YASRAunO7GVD1WojQs5LXOE9/yeP
-         eQz0aD+NEFnCNm0qJbOV1HAhJa+z1pSjkCpsurlNEwPiV0Z5TGO94ZcS1V3iqZNfUNZT
-         usBoMsSdzuuc6NQF6SoDKwf6EcG1jiDCOnGW3J2w/PtvPRQZmmG9KywOZtmInXPiX/GJ
-         chfOt/P9m1C6EueBNfizwuQwxUj4N4cNwAUPov7/HgxZx3Qlv+dduGihV/u+/FctkzAj
-         ldTw==
-X-Received: by 10.98.14.5 with SMTP id w5mr68685734pfi.126.1451391085668;
-        Tue, 29 Dec 2015 04:11:25 -0800 (PST)
+        bh=0m8C2qqQ65eZIau1LaehEoUfOj+Q7+IjujLST9nTWIw=;
+        b=ahdV0yF05kWrQ1zhWjLTDCrW53pRLth5siiMs1mOp36SzmuGuBrPFcIQgL6DIWPolY
+         +ZUG//ua4Vxb7q0r+bnz1LL2miEVqJzUg0ZKbMrtAGtMfMuYqVzhVynIMKLBYA2dGLxs
+         MaP0PM1uUuXYPDHXNHl6S3LOreCfvcF4otSLvFG5/IIbdYp3a68F2PmCp1MxRu+a+Chi
+         Yy6IUA6cUimOW7eTH1LAiioL8R98nLoxZk675GPajffcnOEM5ab/lqgq5J/KXP54YvjY
+         vP3tLsZTlXbkrBNX4xCQzkvz4UcDp/qkqj/U9KVrQWuFI/1Jep4yk/FhavzMAXt66nMv
+         5yDw==
+X-Received: by 10.66.140.39 with SMTP id rd7mr85536553pab.86.1451391097610;
+        Tue, 29 Dec 2015 04:11:37 -0800 (PST)
 Received: from lanh ([171.233.234.31])
-        by smtp.gmail.com with ESMTPSA id k65sm83042922pfj.57.2015.12.29.04.11.22
+        by smtp.gmail.com with ESMTPSA id y26sm16240834pfi.89.2015.12.29.04.11.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Dec 2015 04:11:24 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 29 Dec 2015 19:11:20 +0700
+        Tue, 29 Dec 2015 04:11:36 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 29 Dec 2015 19:11:32 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283116>
-
-Instead of a custom commit walker like get_shallow_commits(), this new
-function uses rev-list to mark NOT_SHALLOW to all reachable commits,
-except borders. The definition of reachable is to be defined by the
-protocol later. This makes it more flexible to define shallow boundary.
-
-Note: if a commit has one NOT_SHALLOW parent and one SHALLOW parent,
-then it's considered the boundary. Which means in the client side, this
-commit has _no_ parents. This could lead to surprising cuts if we're no=
-t
-careful.
-
-Another option is to include more commits and only mark commits whose
-all parents are SHALLOW as boundary.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283117>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- commit.h  |  2 ++
- shallow.c | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 94 insertions(+)
+ upload-pack.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/commit.h b/commit.h
-index 5d58be0..b717be1 100644
---- a/commit.h
-+++ b/commit.h
-@@ -258,6 +258,8 @@ extern int for_each_commit_graft(each_commit_graft_=
-fn, void *);
- extern int is_repository_shallow(void);
- extern struct commit_list *get_shallow_commits(struct object_array *he=
-ads,
- 		int depth, int shallow_flag, int not_shallow_flag);
-+extern struct commit_list *get_shallow_commits_by_rev_list(
-+		int ac, const char **av, int shallow_flag, int not_shallow_flag);
- extern void set_alternate_shallow_file(const char *path, int override)=
-;
- extern int write_shallow_commits(struct strbuf *out, int use_pack_prot=
-ocol,
- 				 const struct sha1_array *extra);
-diff --git a/shallow.c b/shallow.c
-index 60f1505..45dffaa 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -10,6 +10,8 @@
- #include "diff.h"
- #include "revision.h"
- #include "commit-slab.h"
-+#include "revision.h"
-+#include "list-objects.h"
-=20
- static int is_shallow =3D -1;
- static struct stat_validity shallow_stat;
-@@ -137,6 +139,96 @@ struct commit_list *get_shallow_commits(struct obj=
-ect_array *heads, int depth,
- 	return result;
+diff --git a/upload-pack.c b/upload-pack.c
+index 9ae09a0..e9594d1 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -276,7 +276,7 @@ static void create_pack_file(void)
+ 	die("git upload-pack: %s", abort_msg);
  }
 =20
-+static void show_commit(struct commit *commit, void *data)
-+{
-+	commit->object.flags |=3D *(int *)data;
-+}
-+
-+/*
-+ * Given rev-list arguments, run rev-list. All reachable commits
-+ * except border ones are marked with not_shallow_flag. Border commits
-+ * are marked with shallow_flag. The list of border/shallow commits
-+ * are also returned.
-+ */
-+struct commit_list *get_shallow_commits_by_rev_list(int ac, const char=
- **av,
-+						    int shallow_flag,
-+						    int not_shallow_flag)
-+{
-+	struct commit_list *result =3D NULL, *cl;
-+	struct rev_info revs;
-+	unsigned int i, nr;
-+
-+	/*
-+	 * SHALLOW and NOT_SHALLOW should not be set at this
-+	 * point. But better be safe than sorry.
-+	 */
-+	nr =3D get_max_object_index();
-+	for (i =3D 0; i < nr; i++) {
-+		struct object *o =3D get_indexed_object(i);
-+		if (!o)
-+			continue;
-+		o->flags &=3D ~(shallow_flag | not_shallow_flag);
-+	}
-+
-+	is_repository_shallow(); /* make sure shallows are read */
-+
-+	init_revisions(&revs, NULL);
-+	save_commit_buffer =3D 0;
-+	setup_revisions(ac, av, &revs, NULL);
-+
-+	/* Mark all reachable commits as NOT_SHALLOW */
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
-+	traverse_commit_list(&revs, show_commit, NULL, &not_shallow_flag);
-+
-+	/*
-+	 * mark border commits SHALLOW + NOT_SHALLOW.
-+	 * We cannot clear NOT_SHALLOW right now. Imagine border
-+	 * commit A is processed first, then commit B, whose parent is
-+	 * A, later. If NOT_SHALLOW on A is cleared at step 1, B
-+	 * itself is considered border at step 2, which is incorrect.
-+	 */
-+	nr =3D get_max_object_index();
-+	for (i =3D 0; i < nr; i++) {
-+		struct object *o =3D get_indexed_object(i);
-+		struct commit *c =3D (struct commit *)o;
-+		struct commit_list *p;
-+		int parent_is_shallow =3D 0;
-+
-+		if (!o || o->type !=3D OBJ_COMMIT || !(o->flags & not_shallow_flag))
-+			continue;
-+
-+		if (parse_commit(c))
-+			die("unable to parse commit %s",
-+			    oid_to_hex(&c->object.oid));
-+
-+		for (p =3D c->parents; p; p =3D p->next) {
-+			if (p->item->object.flags & not_shallow_flag)
-+				continue;
-+			parent_is_shallow =3D 1;
-+			if (p->item->object.flags & shallow_flag)
-+				continue;
-+			p->item->object.flags |=3D shallow_flag;
-+			commit_list_insert(p->item, &result);
-+		}
-+
-+		if (parent_is_shallow) {
-+			o->flags |=3D shallow_flag;
-+			commit_list_insert(c, &result);
-+		}
-+	}
-+	/* clean up NOT_SHALLOW on border commits */
-+	cl =3D result;
-+	while (cl) {
-+		struct object *object =3D &result->item->object;
-+		if ((object->flags & not_shallow_flag) &&
-+		    (object->flags & shallow_flag))
-+			object->flags &=3D ~not_shallow_flag;
-+		cl =3D cl->next;
-+	}
-+	return result;
-+}
-+
- static void check_shallow_file_for_update(void)
+-static int got_sha1(char *hex, unsigned char *sha1)
++static int got_sha1(const char *hex, unsigned char *sha1)
  {
- 	if (is_shallow =3D=3D -1)
+ 	struct object *o;
+ 	int we_knew_they_have =3D 0;
+@@ -382,6 +382,8 @@ static int get_common_commits(void)
+=20
+ 	for (;;) {
+ 		char *line =3D packet_read_line(0, NULL);
++		const char *arg;
++
+ 		reset_timeout();
+=20
+ 		if (!line) {
+@@ -403,8 +405,8 @@ static int get_common_commits(void)
+ 			got_other =3D 0;
+ 			continue;
+ 		}
+-		if (starts_with(line, "have ")) {
+-			switch (got_sha1(line+5, sha1)) {
++		if (skip_prefix(line, "have ", &arg)) {
++			switch (got_sha1(arg, sha1)) {
+ 			case -1: /* they have what we do not */
+ 				got_other =3D 1;
+ 				if (multi_ack && ok_to_give_up()) {
+@@ -623,14 +625,16 @@ static void receive_needs(void)
+ 		const char *features;
+ 		unsigned char sha1_buf[20];
+ 		char *line =3D packet_read_line(0, NULL);
++		const char *arg;
++
+ 		reset_timeout();
+ 		if (!line)
+ 			break;
+=20
+-		if (starts_with(line, "shallow ")) {
++		if (skip_prefix(line, "shallow ", &arg)) {
+ 			unsigned char sha1[20];
+ 			struct object *object;
+-			if (get_sha1_hex(line + 8, sha1))
++			if (get_sha1_hex(arg, sha1))
+ 				die("invalid shallow line: %s", line);
+ 			object =3D parse_object(sha1);
+ 			if (!object)
+@@ -643,19 +647,19 @@ static void receive_needs(void)
+ 			}
+ 			continue;
+ 		}
+-		if (starts_with(line, "deepen ")) {
++		if (skip_prefix(line, "deepen ", &arg)) {
+ 			char *end;
+-			depth =3D strtol(line + 7, &end, 0);
+-			if (end =3D=3D line + 7 || depth <=3D 0)
++			depth =3D strtol(arg, &end, 0);
++			if (end =3D=3D arg || depth <=3D 0)
+ 				die("Invalid deepen: %s", line);
+ 			continue;
+ 		}
+-		if (!starts_with(line, "want ") ||
+-		    get_sha1_hex(line+5, sha1_buf))
++		if (!skip_prefix(line, "want ", &arg) ||
++		    get_sha1_hex(arg, sha1_buf))
+ 			die("git upload-pack: protocol error, "
+ 			    "expected to get sha, not '%s'", line);
+=20
+-		features =3D line + 45;
++		features =3D arg + 40;
+=20
+ 		if (parse_feature_request(features, "multi_ack_detailed"))
+ 			multi_ack =3D 2;
 --=20
 2.3.0.rc1.137.g477eb31
