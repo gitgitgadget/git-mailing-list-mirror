@@ -1,69 +1,293 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes: allow merging from arbitrary references
-Date: Tue, 29 Dec 2015 10:28:04 -0800
-Message-ID: <xmqqfuylhzyj.fsf@gitster.mtv.corp.google.com>
-References: <1451326763-8447-1-git-send-email-jacob.e.keller@intel.com>
-	<xmqqbn9ajg1x.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [RFC/PATCH 4/3] create_symref: drop support for writing symbolic links
+Date: Tue, 29 Dec 2015 10:32:04 -0800
+Message-ID: <xmqqbn99hzrv.fsf@gitster.mtv.corp.google.com>
+References: <20151229055558.GA12848@sigill.intra.peff.net>
+	<20151229060055.GA17047@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Tue Dec 29 19:28:15 2015
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 29 19:32:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDz0G-0004rf-Jo
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 19:28:12 +0100
+	id 1aDz49-0008KT-82
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 19:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734AbbL2S2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 13:28:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57137 "EHLO
+	id S1753718AbbL2ScJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 13:32:09 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51829 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753728AbbL2S2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 13:28:06 -0500
+	with ESMTP id S1753640AbbL2ScH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 13:32:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4B6D236FA9;
-	Tue, 29 Dec 2015 13:28:06 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 064E53726C;
+	Tue, 29 Dec 2015 13:32:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R5rXbr0RAyeQWLJo5ojvmSSXHfs=; b=PE1sfY
-	6aEnVaw2VcMI/DCoKA+q+eCIyeHvBTQ4r9cws6+5Zd0ByfaaSuMn8QdFr5ADrX0W
-	o/V7SHPR7lb9T2KLh46ccdL0wh/M+k1eg8SkBsrjpuGqGPEIeyncXGMqaBfzKyZl
-	MA7Y28owHL8oTyslko0/C4+jMo1BXPZjHJtVI=
+	:content-type; s=sasl; bh=h/srDDXyiuyU6iQNkCukYav4llc=; b=pQ0wb0
+	gIWFeebTr97Q7laTg7R68d3L4jMJ9e0kOuE1Ig/gl2ixJeG9zF/uH+Mbt7fgWJLw
+	iiI568r/FAmWL5INze+aChd3UlyYw7RziTc1XpUZCCUGJ9WMyP3hqbZvJKdJnSAq
+	ZOvvqwJvfqLg3dGqBwcDTKr1lRRvDUSYwhZBA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kg2oG7X/1EdAj1JoCDleyooJCJG1Ai5z
-	XVuHvMBF6X16XkVeHLd28EqxhgZpN/IoAlCbxkPNZ+UboljSmI4Ph8djdgccHr3U
-	hpUT3pFAIUxmyCZTAN2h+DSE5IkL/y2g/RhvynNt/V+v3jabXD0N5hTyWL/4ebqp
-	0OcSTSefULU=
+	:content-type; q=dns; s=sasl; b=Wi+4j29B6P9trS6JiW1DLKWPLCRQW2cL
+	1t/kCoa+QNq05jXj0/WBgbElGt7NKLfoenY9rVZc71bPIk4EkLw6d89SG/a2HuU8
+	HGcEi/L+FVWDSFI916rMJHbx4T3PGlGzAK5ozMoa05D7fafEfz4LBp9Qlp3JQRtT
+	DxwDR2/wSv4=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4292C36FA8;
-	Tue, 29 Dec 2015 13:28:06 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F1AA13726B;
+	Tue, 29 Dec 2015 13:32:05 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A8FBD36FA6;
-	Tue, 29 Dec 2015 13:28:05 -0500 (EST)
-In-Reply-To: <xmqqbn9ajg1x.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 28 Dec 2015 15:42:50 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5DC8C3726A;
+	Tue, 29 Dec 2015 13:32:05 -0500 (EST)
+In-Reply-To: <20151229060055.GA17047@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Dec 2015 01:00:55 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E72702FA-AE59-11E5-B4E6-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 75F56788-AE5A-11E5-A8CE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283140>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> OK, will try to queue again (but I am cutting an -rc today so it may
-> have to wait a bit).  Those who have been involved in the notes topics
-> need to review it before the patch can make progress, though.
+> A conservative choice would probably be to issue a deprecation warning
+> when we see it defined, wait a few versions, and then apply the patch
+> below.
 
-Just FYI, with this the tip of 'pu' seems to fail a few tests in
-t3310.
+I agree with the analysis below.  And I agree that in the ideal
+world, it would have been better not to add "prefer symlink refs"
+configuration in the first place.  But we do not live in the ideal
+world, and we already have it, so deprecation would need the usual
+multi-step process.
+
+Thanks.
+
+> -- >8 --
+> Long ago, in 2fabd21 (Disable USE_SYMLINK_HEAD by default,
+> 2005-11-15), we switched git's default behavior to writing
+> text symrefs instead of symbolic links. Any scripts
+> accustomed to looking directly at .git/HEAD were updated to
+> use `rev-parse` instead. The Linux kernel's setlocalversion
+> script was one, and it was fixed in 117a93d (kbuild: Use git
+> in scripts/setlocalversion, 2006-01-04).
+>
+> However, the problem still happened when bisecting the
+> kernel; pre-117a93d kernels would not build properly with a
+> newer git, because they wanted to look directly at HEAD. To
+> solve this, we added 9f0bb90 (core.prefersymlinkrefs: use
+> symlinks for .git/HEAD, 2006-05-02), which lets the user
+> turn on the old behavior, theoretically letting you bisect
+> older kernel history.
+>
+> But there are a few complications with this solution:
+>
+>   - packed-refs means you are limited in what you can do
+>     with .git/HEAD. If it is a symlink, you may `readlink`
+>     it to see where it points, but you cannot necessarily
+>     `cat .git/HEAD` to get the sha1, as the pointed-to ref
+>     may be packed.
+>
+>     In particular, this means that the pre-117a93d kbuild
+>     script would sometimes work and sometimes not.
+>
+>   - These days, we bisect on a detached HEAD. So during
+>     bisection, .git/HEAD _is_ a regular file with the
+>     sha1, and it works to `cat` it, whether or not you set
+>     core.preferSymlinkRefs.
+>
+> Such scripts will all be broken again if we move to
+> alternate ref backends. They should have learned to use
+> `rev-parse` long ago, and it is only bisecting ancient
+> history that is a problem.
+>
+> Now that almost ten years have passed, it seems less likely
+> that developers will bisect so far back in history. And
+> moreover, this is but one of many possible problems
+> developers run into when trying to build versions. The
+> standard solution is to apply a "fixup" patch or other
+> workaround while test-building the project, and that would
+> work here, too.
+>
+> This patch therefore drops core.preferSymlinkRefs
+> completely. There are a few reasons to want to do so:
+>
+>   1. It drops some code that is probably exercised very
+>      rarely.
+>
+>   2. The symlink code is not up to the same standards as the
+>      rest of the ref code. In particular, it is racy with
+>      respect to simultaneous readers and writers.
+>
+>   3. If we want to eventually drop the symlink-reading code,
+>      this is a good first step to deprecating it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/config.txt               |  6 ------
+>  cache.h                                |  1 -
+>  config.c                               |  5 -----
+>  contrib/completion/git-completion.bash |  1 -
+>  environment.c                          |  1 -
+>  refs/files-backend.c                   | 20 --------------------
+>  t/t7201-co.sh                          | 12 ------------
+>  t/t9903-bash-prompt.sh                 |  9 ---------
+>  8 files changed, 55 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index f617886..06a2f2a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -433,12 +433,6 @@ CIFS/Microsoft Windows.
+>  +
+>  False by default.
+>  
+> -core.preferSymlinkRefs::
+> -	Instead of the default "symref" format for HEAD
+> -	and other symbolic reference files, use symbolic links.
+> -	This is sometimes needed to work with old scripts that
+> -	expect HEAD to be a symbolic link.
+> -
+>  core.bare::
+>  	If true this repository is assumed to be 'bare' and has no
+>  	working directory associated with it.  If this is the case a
+> diff --git a/cache.h b/cache.h
+> index c63fcc1..5ff7df2 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -625,7 +625,6 @@ extern int has_symlinks;
+>  extern int minimum_abbrev, default_abbrev;
+>  extern int ignore_case;
+>  extern int assume_unchanged;
+> -extern int prefer_symlink_refs;
+>  extern int log_all_ref_updates;
+>  extern int warn_ambiguous_refs;
+>  extern int warn_on_object_refname_ambiguity;
+> diff --git a/config.c b/config.c
+> index 86a5eb2..f479eaa 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -726,11 +726,6 @@ static int git_default_core_config(const char *var, const char *value)
+>  		return 0;
+>  	}
+>  
+> -	if (!strcmp(var, "core.prefersymlinkrefs")) {
+> -		prefer_symlink_refs = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+>  	if (!strcmp(var, "core.logallrefupdates")) {
+>  		log_all_ref_updates = git_config_bool(var, value);
+>  		return 0;
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 6956807..31d517d 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2046,7 +2046,6 @@ _git_config ()
+>  		core.packedGitLimit
+>  		core.packedGitWindowSize
+>  		core.pager
+> -		core.preferSymlinkRefs
+>  		core.preloadindex
+>  		core.quotepath
+>  		core.repositoryFormatVersion
+> diff --git a/environment.c b/environment.c
+> index 2da7fe2..80a1c0c 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -19,7 +19,6 @@ int has_symlinks = 1;
+>  int minimum_abbrev = 4, default_abbrev = 7;
+>  int ignore_case;
+>  int assume_unchanged;
+> -int prefer_symlink_refs;
+>  int is_bare_repository_cfg = -1; /* unspecified */
+>  int log_all_ref_updates = -1; /* unspecified */
+>  int warn_ambiguous_refs = 1;
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 180c837..6e19953 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2811,21 +2811,6 @@ static int commit_ref_update(struct ref_lock *lock,
+>  	return 0;
+>  }
+>  
+> -static int create_ref_symlink(struct ref_lock *lock, const char *target)
+> -{
+> -	int ret = -1;
+> -#ifndef NO_SYMLINK_HEAD
+> -	char *ref_path = get_locked_file_path(lock->lk);
+> -	unlink(ref_path);
+> -	ret = symlink(target, ref_path);
+> -	free(ref_path);
+> -
+> -	if (ret)
+> -		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
+> -#endif
+> -	return ret;
+> -}
+> -
+>  static void update_symref_reflog(struct ref_lock *lock, const char *refname,
+>  				 const char *target, const char *logmsg)
+>  {
+> @@ -2841,11 +2826,6 @@ static void update_symref_reflog(struct ref_lock *lock, const char *refname,
+>  static int create_symref_locked(struct ref_lock *lock, const char *refname,
+>  				const char *target, const char *logmsg)
+>  {
+> -	if (prefer_symlink_refs && !create_ref_symlink(lock, target)) {
+> -		update_symref_reflog(lock, refname, target, logmsg);
+> -		return 0;
+> -	}
+> -
+>  	if (!fdopen_lock_file(lock->lk, "w"))
+>  		return error("unable to fdopen %s: %s",
+>  			     lock->lk->tempfile.filename.buf, strerror(errno));
+> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+> index 8859236..715dc00 100755
+> --- a/t/t7201-co.sh
+> +++ b/t/t7201-co.sh
+> @@ -427,18 +427,6 @@ test_expect_success 'checkout w/--track from tag fails' '
+>      test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
+>  '
+>  
+> -test_expect_success 'detach a symbolic link HEAD' '
+> -    git checkout master &&
+> -    git config --bool core.prefersymlinkrefs yes &&
+> -    git checkout side &&
+> -    git checkout master &&
+> -    it=$(git symbolic-ref HEAD) &&
+> -    test "z$it" = zrefs/heads/master &&
+> -    here=$(git rev-parse --verify refs/heads/master) &&
+> -    git checkout side^ &&
+> -    test "z$(git rev-parse --verify refs/heads/master)" = "z$here"
+> -'
+> -
+>  test_expect_success \
+>      'checkout with --track fakes a sensible -b <name>' '
+>      git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" &&
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index af82049..25066f35 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -46,15 +46,6 @@ test_expect_success 'prompt - branch name' '
+>  	test_cmp expected "$actual"
+>  '
+>  
+> -test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
+> -	printf " (master)" >expected &&
+> -	test_when_finished "git checkout master" &&
+> -	test_config core.preferSymlinkRefs true &&
+> -	git checkout master &&
+> -	__git_ps1 >"$actual" &&
+> -	test_cmp expected "$actual"
+> -'
+> -
+>  test_expect_success 'prompt - unborn branch' '
+>  	printf " (unborn)" >expected &&
+>  	git checkout --orphan unborn &&
