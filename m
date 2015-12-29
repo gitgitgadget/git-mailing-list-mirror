@@ -1,132 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 4/3] create_symref: drop support for writing symbolic
- links
-Date: Tue, 29 Dec 2015 01:03:58 -0500
-Message-ID: <20151229060358.GB12848@sigill.intra.peff.net>
-References: <20151229055558.GA12848@sigill.intra.peff.net>
- <20151229060055.GA17047@sigill.intra.peff.net>
+Subject: [PATCH 0/2] compiling with -fsanitize=undefined
+Date: Tue, 29 Dec 2015 01:34:49 -0500
+Message-ID: <20151229063449.GA28755@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 29 07:04:11 2015
+X-From: git-owner@vger.kernel.org Tue Dec 29 07:35:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aDnOE-00055x-M3
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 07:04:11 +0100
+	id 1aDnsX-0008Jh-8J
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Dec 2015 07:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333AbbL2GEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 01:04:06 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46519 "HELO cloud.peff.net"
+	id S1751384AbbL2Gey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 01:34:54 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46529 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752973AbbL2GEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 01:04:01 -0500
-Received: (qmail 14327 invoked by uid 102); 29 Dec 2015 06:04:01 -0000
+	id S1751097AbbL2Gew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 01:34:52 -0500
+Received: (qmail 15619 invoked by uid 102); 29 Dec 2015 06:34:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 00:04:01 -0600
-Received: (qmail 18468 invoked by uid 107); 29 Dec 2015 06:04:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 00:34:52 -0600
+Received: (qmail 18781 invoked by uid 107); 29 Dec 2015 06:35:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 01:04:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Dec 2015 01:03:58 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 29 Dec 2015 01:35:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Dec 2015 01:34:49 -0500
 Content-Disposition: inline
-In-Reply-To: <20151229060055.GA17047@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283074>
 
-On Tue, Dec 29, 2015 at 01:00:55AM -0500, Jeff King wrote:
+I was playing around with the new-ish "-fsanitize=undefined" compiler
+flag, and it detected a few problems:
 
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2811,21 +2811,6 @@ static int commit_ref_update(struct ref_lock *lock,
->  	return 0;
->  }
->  
-> -static int create_ref_symlink(struct ref_lock *lock, const char *target)
-> -{
-> -	int ret = -1;
-> -#ifndef NO_SYMLINK_HEAD
-> -	char *ref_path = get_locked_file_path(lock->lk);
-> -	unlink(ref_path);
-> -	ret = symlink(target, ref_path);
-> -	free(ref_path);
-> -
-> -	if (ret)
-> -		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
-> -#endif
+  1. We sometimes bit-shift signed constants too far (fixed by the first
+     patch).
 
-I forgot the build-time knob, which becomes a noop after this patch. If
-we choose to apply this patch, we'd want to squash this in, too:
+  2. We have some unaligned memory accesses that presumably work OK on
+     x86, but would blow up on ARM or other platforms (I didn't test).
 
-diff --git a/Makefile b/Makefile
-index fd19b54..05ffd60 100644
---- a/Makefile
-+++ b/Makefile
-@@ -113,9 +113,6 @@ all::
- #
- # Define NO_SYS_SELECT_H if you don't have sys/select.h.
- #
--# Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
--# Enable it on Windows.  By default, symrefs are still used.
--#
- # Define NO_SVN_TESTS if you want to skip time-consuming SVN interoperability
- # tests.  These tests take up a significant amount of the total test time
- # but are not needed unless you plan to talk to SVN repos.
-@@ -1200,9 +1197,6 @@ ifdef FREAD_READS_DIRECTORIES
- 	COMPAT_CFLAGS += -DFREAD_READS_DIRECTORIES
- 	COMPAT_OBJS += compat/fopen.o
- endif
--ifdef NO_SYMLINK_HEAD
--	BASIC_CFLAGS += -DNO_SYMLINK_HEAD
--endif
- ifdef GETTEXT_POISON
- 	BASIC_CFLAGS += -DGETTEXT_POISON
- endif
-diff --git a/config.mak.uname b/config.mak.uname
-index f34dcaa..9b77e2c 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -169,7 +169,6 @@ ifeq ($(uname_O),Cygwin)
- 		NO_STRCASESTR = YesPlease
- 		NO_MEMMEM = YesPlease
- 		NO_MKSTEMPS = YesPlease
--		NO_SYMLINK_HEAD = YesPlease
- 		NO_IPV6 = YesPlease
- 		OLD_ICONV = UnfortunatelyYes
- 		# There are conflicting reports about this.
-@@ -338,7 +337,6 @@ ifeq ($(uname_S),Windows)
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
--	NO_SYMLINK_HEAD = YesPlease
- 	NO_IPV6 = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
- 	NO_SETENV = YesPlease
-@@ -491,7 +489,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NO_LIBGEN_H = YesPlease
- 	NO_POLL = YesPlease
--	NO_SYMLINK_HEAD = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
- 	NO_SETENV = YesPlease
- 	NO_STRCASESTR = YesPlease
-diff --git a/configure.ac b/configure.ac
-index 89e2590..cad5418 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1096,9 +1096,6 @@ GIT_CONF_SUBST([HAVE_BSD_SYSCTL])
- # Define USE_PIC if you need the main git objects to be built with -fPIC
- # in order to build and link perl/Git.so.  x86-64 seems to need this.
- #
--# Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
--# Enable it on Windows.  By default, symrefs are still used.
--#
- # Define NO_PTHREADS if we do not have pthreads.
- #
- # Define PTHREAD_LIBS to the linker flag used for Pthread support.
+The latter looks like it's in the untracked cache code (Duy and
+Christian cc'd). Running t7063 gets me this:
+
+dir.c:2631:45: runtime error: member access within misaligned address 0x7f19806ff185 for type 'const struct ondisk_untracked_cache', which requires 4 byte alignment
+0x7f19806ff185: note: pointer points here
+ 31 33 29 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00
+             ^
+
+We also do unaligned loads in the get_be* functions, but only on x86 and
+similar platforms.  I'm counting these as a false positive, since it is
+presumably OK there. The second patch makes it easier to squelch these.
+
+I also got false positives from feeding NULL to qsort(). This is
+technically wrong, but OK in practice when we tell it we have zero
+elements. Compiling with INTERNAL_QSORT silences these (and if somebody
+is on a platform where their qsort() segfaults, it's what I'd tell them
+to use).
+
+So if you want to play along at home, my build is something like:
+
+  make \
+    CC=clang \
+    INTERNAL_QSORT=YesPlease \
+    CFLAGS='-O2 -g -fsanitize=undefined -fno-sanitize-recover=undefined -DNO_UNALIGNED_LOADS' \
+    test
+
+and it passes except for t7063.
+
+The patches are:
+
+  [1/2]: avoid shifting signed integers 31 bits
+  [2/2]: bswap: add NO_UNALIGNED_LOADS define
+
+-Peff
