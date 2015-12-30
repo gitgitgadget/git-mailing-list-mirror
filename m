@@ -1,97 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in
- pack directory
-Date: Wed, 30 Dec 2015 02:37:59 -0500
-Message-ID: <20151230073759.GA785@sigill.intra.peff.net>
-References: <1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
- <CAPig+cS0ntr1sYzVAPjNCwd8ei4oGQRNs+W=qMBV4Z6NaRWCWA@mail.gmail.com>
- <xmqq37zhg8la.fsf@gitster.dls.corp.google.com>
- <xmqqbnbilw9u.fsf@gitster.mtv.corp.google.com>
- <CAEtYS8TR4mnaGpGDpB3cz_nu2hdCYTWf=PVCJbmzYi6YA53_bg@mail.gmail.com>
- <CAEtYS8Q1T-ig2KqZUoCCODs1YbjOmF__vbiH5rL-s6hNaUhZeA@mail.gmail.com>
- <xmqqr3k5a76v.fsf@gitster.mtv.corp.google.com>
- <CAEtYS8Rp0Eb7uHB8kJ=muVWy6u+beB7kAAWZqPgTYqfuKx3P2A@mail.gmail.com>
- <20151104200249.GC16101@sigill.intra.peff.net>
- <CAEtYS8S_ys3jT5ziWd7_u6Dn8b3LwnZYO7Pz6EegsmWpUM5riw@mail.gmail.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Segfault in git reflog
+Date: Wed, 30 Dec 2015 10:24:01 +0100
+Message-ID: <20151230092400.GA9319@spirit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 30 08:38:10 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 10:24:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEBKi-0007rp-7Q
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 08:38:08 +0100
+	id 1aECzm-0004ty-Dw
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 10:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655AbbL3HiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2015 02:38:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47064 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750910AbbL3HiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 02:38:03 -0500
-Received: (qmail 18768 invoked by uid 102); 30 Dec 2015 07:38:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Dec 2015 02:38:02 -0500
-Received: (qmail 28657 invoked by uid 107); 30 Dec 2015 07:38:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 30 Dec 2015 02:38:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Dec 2015 02:37:59 -0500
+	id S1752857AbbL3JYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 04:24:10 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:34982 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795AbbL3JYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 04:24:06 -0500
+Received: by mail-wm0-f43.google.com with SMTP id f206so31840983wmf.0
+        for <git@vger.kernel.org>; Wed, 30 Dec 2015 01:24:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=xsxvAXLy95Ru5RVDZdTqr25zo02rW6tNfKfYUv3g06A=;
+        b=OaHIVzZaqsm/ELsccCPYUBODtH0u+6bTfVN+TQzDvjV/ziaF0VTh3P6OAZr1twUe8/
+         GNs7TQP3wKdfXrweZ+Yc4tb1N7mMHvt0zjiZfOmdt0OJQL/DD/A0JK2JYoVXTLf3rJXZ
+         pKs+ZaHJM8plV8HkrUQkrNaLSj4PlH7yCjnChFaDzHAIu880VhrF84z7dyLFnHc3gXW+
+         YqkbSEa/Pycgc85UlLhc2BdrxReks+734NBZNGbK77vraN/vZPnB3djwW5MsL0h4K1g9
+         2kNzLyqeqnSUOzD0CiOQyLLWR0xj/BG9A83HdWb1+u/+S9H6T5rCr9BBPvcScmWNCjr4
+         TQTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=xsxvAXLy95Ru5RVDZdTqr25zo02rW6tNfKfYUv3g06A=;
+        b=bhuf3zCnelGf2rLFpFozR/vcVwomN3Mtkrxn1LfTnlatPKVJJw6Vmg3dHC7MjxuJTw
+         n+li1DqkWA64TwXd37/t4lhH4B0Z3nLyNyFmTYT404CU3rQfBWjrCMtGY49tH612DH1R
+         i+43+LCox62WPkSwwAhZjXSFzFqPKrflnOORJ6H/+tz2TGRCsQGJhBs5vyuCjx2b70YK
+         phuGYkiriKIxAoCxoLaR1u/Np16CEPafPab96CyoO9AgaisO0S8NGWqUbX08pr09EFEa
+         PD3oU1UdedxEd5Ou1Y7Pm3w4FZ7BLBkfUtzLNp8gjBpvURH8WR2AbWgggj3LmwSdfx3C
+         i02Q==
+X-Gm-Message-State: ALoCoQkFeOnPt4m2/z9/oL7jQquzYHiVADz1MnQmj/LnCmge+2hn0EnniKkrMiJn/tiZwNGiH47vC++yPCLMaMH0Ox+LiLi48Q==
+X-Received: by 10.194.123.8 with SMTP id lw8mr68638108wjb.72.1451467444238;
+        Wed, 30 Dec 2015 01:24:04 -0800 (PST)
+Received: from spirit ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id m65sm33016884wma.13.2015.12.30.01.24.03
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Dec 2015 01:24:03 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAEtYS8S_ys3jT5ziWd7_u6Dn8b3LwnZYO7Pz6EegsmWpUM5riw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283169>
 
-On Wed, Nov 04, 2015 at 02:08:21PM -0600, Doug Kelly wrote:
+I've hit a segfault in git reflog with latest git, reproducable in git.git:
 
-> On Wed, Nov 4, 2015 at 2:02 PM, Jeff King <peff@peff.net> wrote:
-> > Definitely cleaning up the .bitmap is sane and not racy (it's in the
-> > same boat as the .idx, I think).
-> >
-> > .keep files are more tricky. I'd have to go over the receive-pack code
-> > to confirm, but I think they _are_ racy. That is, receive-pack will
-> > create them as a lockfile before moving the pack into place. That's OK,
-> > though, if we use mtimes to give ourselves a grace period (I haven't
-> > looked at your series yet).
-> >
-> > But moreover, .keep files can be created manually by the user. If the
-> > pack they referenced goes away, they are not really serving any purpose.
-> > But it's possible that the user would want to salvage the content of the
-> > file, or know that it was there.
-> >
-> > So I'd argue we should leave them. Or at least leave ones that do not
-> > have the generic "{receive,fetch}-pack $pid on $host comment in them,
-> > which were clearly created as lockfiles.
-> 
-> Currently there's no mtime-guarding logic (I dug up that conversation
-> earlier, though, but after I'd done the respin on this series)... OK,
-> in that case, I'll create a separate patch that tests/cleans up
-> .bitmap, but doesn't touch .keep.  This might be a small series since
-> I think the logic for finding pack garbage doesn't know anything about
-> .bitmap per-se, so it's looking like I'll extend that relevant code,
-> before adding the handling in gc and appropriate tests.
+spirit:~/code/git (master)$ ./git describe
+v2.7.0-rc3
 
-I happened to be looking over your series again, and I noticed that we
-didn't end up with any mtime logic at all in what got merged.
+I've minimized the reflog to:
 
-I _think_ that is probably OK, because we always write the pack,
-followed by the .idx, followed by the .bitmap (if any). And we don't
-drop .keep files (though I think we would perhaps note them as possible
-cruft?).
+spirit:~/code/git (master)$ cat .git/logs/HEAD
+2635c2b8bfc9aec07b7f023d8e3b3d02df715344 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <dennis@kaarsemaker.net> 1446765642 +0100  
+74c855f87d25a5b5c12d0485ec77c785a1c734c5 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <dennis@kaarsemaker.net> 1446765951 +0100  checkout: moving from 3c3d3f629a6176b401ebec455c5dd59ed1b5f910 to master
 
-So I don't think there are any races introduced here, but I wonder if we
-want to be a bit more conservative. Sorry to bring this up so much after
-the fact; I completely forgot about it when reviewing the patches.
+...which I realize looks a bit broken. I think at the time I was playing with
+some patches that also caused segfaults, causing gaps in the reflog.
+Nevertheless, I think segfaulting is bad. All objects in the reflog are
+reachable.
 
-These changes are slated for the v2.7 release. Like I said, I don't
-think it's buggy, so we don't necessarily need to address it before the
-release. We could add an mtime check in the next cycle as a
-belt-and-suspenders safety, rather than a fix.
+gdb has the following to say:
 
--Peff
+spirit:~/code/git (master)$ gdb --args ./git --no-pager reflog
+(gdb) run
+Starting program: /home/dennis/code/git/git --no-pager reflog
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+28274d0 (HEAD -> master, tag: v2.7.0-rc3, upstream/master, peff/jk/tag-source-propagate, peff/jk/sigpipe-report, gitster/master) HEAD@{0}: checkout: moving from 3c3d3f629a6176b401ebec455c5dd59ed1b5f910 to master
+
+Program received signal SIGSEGV, Segmentation fault.
+copy_commit_list (list=0x4834dc7000000011) at commit.c:450
+450         pp = commit_list_append(list->item, pp);
+(gdb) bt
+#0  copy_commit_list (list=0x4834dc7000000011) at commit.c:450
+#1  0x000000000050705e in save_parents (commit=commit@entry=0x928a90, revs=0x7fffffffcb80) at revision.c:3044
+#2  0x000000000050a54e in get_revision_1 (revs=revs@entry=0x7fffffffcb80) at revision.c:3119
+#3  0x000000000050a710 in get_revision_1 (revs=<optimized out>) at revision.c:3112
+#4  get_revision_internal (revs=0x7fffffffcb80) at revision.c:3248
+#5  0x000000000050a99d in get_revision (revs=revs@entry=0x7fffffffcb80) at revision.c:3322
+#6  0x0000000000446032 in cmd_log_walk (rev=rev@entry=0x7fffffffcb80) at builtin/log.c:344
+#7  0x0000000000446bf8 in cmd_log_reflog (argc=1, argv=0x7fffffffd6a8, prefix=0x0) at builtin/log.c:626
+#8  0x0000000000406126 in run_builtin (argv=0x7fffffffd6a8, argc=1, p=0x7bbec0 <commands+1920>) at git.c:350
+#9  handle_builtin (argc=1, argv=0x7fffffffd6a8) at git.c:536
+#10 0x0000000000405261 in run_argv (argv=0x7fffffffd4c8, argcp=0x7fffffffd4ac) at git.c:582
+#11 main (argc=1, av=<optimized out>) at git.c:690
+(gdb) p list
+$1 = (struct commit_list *) 0x4834dc7000000011
+(gdb) p list->item
+Cannot access memory at address 0x4834dc7000000011
+
+A bisect blames 53d00b3 (log: use true parents for diff even when rewriting),
+which does indeed touch the code that seems to be segfaulting.
+
+I've tried digging into this, but didn't get very far.
+-- 
+Dennis Kaarsemaker <dennis@kaarsemaker.net>
