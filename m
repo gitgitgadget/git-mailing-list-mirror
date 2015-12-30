@@ -1,73 +1,76 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v8] ls-files: Add eol diagnostics
-Date: Wed, 30 Dec 2015 16:27:30 +0100
-Message-ID: <5683F7E2.3070503@web.de>
-References: <5683D49D.2010509@web.de> <5683E8B4.7040005@ramsayjones.plus.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] dir.h: remove orphaned declaration
+Date: Wed, 30 Dec 2015 17:11:41 +0000
+Message-ID: <5684104D.6000001@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 30 16:27:51 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 18:13:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEIfE-0001ur-ON
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 16:27:49 +0100
+	id 1aEKJ5-0004Gh-Ui
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 18:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048AbbL3P1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2015 10:27:44 -0500
-Received: from mout.web.de ([212.227.17.12]:63091 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755039AbbL3P1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 10:27:40 -0500
-Received: from [192.168.2.107] ([79.223.108.227]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MF3jD-1aSpO02uQV-00GFo7; Wed, 30 Dec 2015 16:27:35
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-In-Reply-To: <5683E8B4.7040005@ramsayjones.plus.com>
-X-Provags-ID: V03:K0:rrky0bcRaY3QAyijD36hAUKf/yJE1gb9bi4cMOvomf/J9qU+gNY
- nt7dR2F90dxk3r7C1/RVKGPtmSe3i/RrRxM+RLR7wC9PenCxW6XvrITzrQuYld3/PEH/Cb7
- 2qzsChRSXL5Yrf/OzF6Fj9XIwahHnoD1FFLtAa6moyyfl9lLW2piF/22a/0hWOfdKGMKPVA
- SMkwpftmbSfJaYOBqwZ1Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bbXRLcbO0G8=:6ln74y6gOBXchX7WKXdKkj
- /ASSsZcug0k305tb1Q+1ZJRVZnTL+nFKPjsWcI1+FG6LmEe3XYfFzT/rXnYhUkmfC8UBzIALH
- boqJ5rD7asu1vteQnz0/e9cEsQSyLX7j0zR3AYN+1mIeNoMw/XztoXFzyGO48GeybZMegSXNd
- svJ6MKal2H84tdsFZqmqsdZpJG2Y+l3yi6/xhPYsnnoSm3T+hr6lmffIDjfnHxq8ItJN2KGr8
- fkx6WjMEcc6GnQYOR8ly0xEfrXwU1h8DrTtWxymOUm3spQNZA1caI8KAdE/SnLAKbJzR3+R7b
- wC0cRj1D7PIaaZm357QjNVVolrLiSMcOBExNUIOL/mhUVrRH8gyvKscINOcmaLlm4ANX4I/lv
- zeWmzpazjq6anOPNaCkYYMTYHb9fn8+hjyULDLVYAJXpA0ow+DBrxe9vCDnXk6W4VHRzctdgq
- UowRkD3HBivsOD4LZJp5Muwj9WS9NLXHl7Jjzd/fv0WPydIsm8HHFByvUl5P9OTCFxe0yXD2d
- tisrXkyoj94Jj4YanqBhDtXD81Fr9j6hFXmBWT5rX0EV6LITS0usi2OaL8gySPPAchDwdv3LO
- +9kstf2w4+QSdzIm91EpxWDaOoaWOIgMCKg32m9w/JiS4YnMdoz23XQMrBCiBxX02sMTxWqWl
- qYDJaaHyBwRG4x1uSz4QzHbT/lPHUeFWzkHIqRvLXJBrAtC4wBRi71/VnbkAzlYwarxw+qBO5
- FXfwM2agiYMRFsiY6grw57fzftTmnR+oy5W5PHuCeHcUUTvjCy2kmDxbwSPBMlLmk8xDCmSU 
+	id S1755091AbbL3RNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 12:13:00 -0500
+Received: from avasout07.plus.net ([84.93.230.235]:46955 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754889AbbL3RM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 12:12:58 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout07 with smtp
+	id ztBj1r0064mu3xa01tBk4B; Wed, 30 Dec 2015 17:11:45 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=MZKRwMLf c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=iSRSRv9M13OCdgcdhqwA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283188>
 
->> "binary"       binary file
->> "text-no-eol"  text file without any EOL
->> "text-lf"      text file with LF
->> "text-crlf"    text file with CRLF
->> "text-crlf-lf" text file with mixed line endings.
 
-> If you prefer to have 'text' in there somewhere, how about:
-> 
->    binary, text-none, text-lf, text-crlf, text-mixed.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-text-none could be OK.
+Hi Christian,
 
-text-mixed as well, but the you can't run
-"git ls-files | grep i/text-crlf"
-any more to get an impression if there are un-normalized files,
-which may, may, need normalization.
+If you need to re-roll your 'cc/untracked' branch, could you
+please squash this into your patches.
 
-Thanks for the reminder,
-lets wait a couple of days and see if there are more voices.
+You seem to have only half applied my last fixup patch! ;-)
+(I'm guessing that you had already renamed the function
+locally before I sent the fixup).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ dir.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/dir.h b/dir.h
+index 3e5114d..85286e5 100644
+--- a/dir.h
++++ b/dir.h
+@@ -307,7 +307,6 @@ void untracked_cache_add_to_index(struct index_state *, const char *);
+ void free_untracked_cache(struct untracked_cache *);
+ struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+-void add_untracked_ident(struct untracked_cache *);
+ void add_untracked_cache(void);
+ void remove_untracked_cache(void);
+ #endif
+-- 
+2.6.0
