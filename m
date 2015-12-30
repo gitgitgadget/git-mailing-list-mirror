@@ -1,79 +1,156 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Segfault in git reflog
-Date: Wed, 30 Dec 2015 18:28:19 +0700
-Message-ID: <CACsJy8Cm6a2FiyZwXsTpzbp7ZkZUGWf=HmjsMtQvJMjzVLkTzA@mail.gmail.com>
-References: <20151230092400.GA9319@spirit> <1451474248.9251.7.camel@kaarsemaker.net>
- <CACsJy8CoRs8dNPWag-E947oVTt4R8XbKBLvaQvBPGm4jqZBKNw@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v4 08/10] dir: simplify untracked cache "ident" field
+Date: Wed, 30 Dec 2015 12:47:47 +0100
+Message-ID: <5683C463.9010003@web.de>
+References: <1451372974-16266-1-git-send-email-chriscool@tuxfamily.org>
+ <1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Wed Dec 30 12:28:55 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
+	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 12:48:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEEw3-0001Tw-67
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 12:28:55 +0100
+	id 1aEFFL-0000Fd-Tj
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 12:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611AbbL3L2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2015 06:28:52 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:35665 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754397AbbL3L2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 06:28:50 -0500
-Received: by mail-lb0-f171.google.com with SMTP id bc4so114309353lbc.2
-        for <git@vger.kernel.org>; Wed, 30 Dec 2015 03:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WECG2MVzKcoVkpNgOdo9LMqRwNIPdyiO35yVz4L5S0k=;
-        b=eiOthqcEwJuZogha1d4SQiWkclhP7GjaPWx8J+HEGZyuN/z3RnQNcPiB5QjVcwgaIh
-         pPXs8vUj08m3oG96O3zaPsJG6S9W/8X1S3z3Sw2QmpE/fONGwJoJ+MEULOF+5yNwsBdl
-         7umQwaJPkH1NvzW43ZkjspRfMSUo1788AqbKtnJKbsU0cXzUcq4RnEzZHMLmcxNgRcbf
-         QhuSDepOUpiHDFKLka33esSPWN01Od+b67YFU250i34ITeuLNsvLqI3l8ySsW/z1OGn3
-         +HdcCxszYTW5knmGc3en0HX5XksnnuwKh5ZDipHfMxsd9pxxHQmIO9YE3C8zgAkWQddC
-         Aizw==
-X-Received: by 10.112.172.8 with SMTP id ay8mr2236771lbc.145.1451474929283;
- Wed, 30 Dec 2015 03:28:49 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Wed, 30 Dec 2015 03:28:19 -0800 (PST)
-In-Reply-To: <CACsJy8CoRs8dNPWag-E947oVTt4R8XbKBLvaQvBPGm4jqZBKNw@mail.gmail.com>
+	id S1754524AbbL3LsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 06:48:19 -0500
+Received: from mout.web.de ([212.227.17.11]:52556 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754312AbbL3LsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 06:48:17 -0500
+Received: from [192.168.2.107] ([79.223.108.227]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0M41Bm-1ZvtMs2rX0-00rbZ3; Wed, 30 Dec 2015 12:47:57
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.0
+In-Reply-To: <1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
+X-Provags-ID: V03:K0:dkDkEqXJx/2cWQmp7YK06Zzgy0ruwSwkQgE8Ff5J5+WZ1utoFfd
+ MrLtB3H86OFAaCFmj7pf3Y6990ay6b/Qfvu4QJpavmUOtwCW+J2h+PuKfYrtUShH8Ze8XDS
+ qfxNKbIu1bldDRdc9ZwtBMXQC91nXbxkBwZ7QaWisTqXBkZ+bEC58AxuEgIWkCNvmJHOpw/
+ Z7lkjcZyNVu4rYK70N7jQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rVs58x6lBZA=:y3oP0P0Dj98WEdfM1OVry3
+ mukBU+Dz0a67blsFV5K7adUbLzg6k8Knc8qtJOYMVNVfstYAYChWnn2jZTxuvrUJXlcR5yFsg
+ ejjiWkXnKpPqTNnVEn71pYzPbHikdCtFAPq+ng4BmoqSSItjfFPG2tT2fMowRGVxuL5hHHrpY
+ e1Leoi2Nuozrne/teGp6fC7jmKu81IH7fLSCkISfyVl2YFBz1b6yeJHVDhhGdZOUK5ovh/U/R
+ BRHZ6gyi+dvjvtCJkNhpi43/ljIl9zPnCXeVLdDREvr4pZqq/GPykzDu+jdokjh12gxiU7BTB
+ nPsjWypZJNJ9ypE0/Z/XyeIUs76AnyLmNkkz3XX8tMlIhHIniCn0zQ+iMECPzICwvAkq5QlQI
+ vets1QFudS5mEwqOlktLPDvwWUsJzdlw3cXsk+xImQJV5FyRiwZdYqJYdAEqHmPBoT8oFulhD
+ Cc5qbG3bLiXQve9HeKx4mywRHCRamEBpv15PxlRRbKlS0oAlnZumBMePCAiGAyOd/dh/ePzOv
+ 8W4xAiZgT+PC6LgvwfG5E31DHxCymlGubI5cCks5J4rlBZZfED8ZY+uVrO8J7oirUxm1sOIOL
+ tM7woeAzqdn2gvnTMW+W6AekLLdlwqsTzvYDXlvs3Zb0ixBDuSjrFsTMXjZielfMLvih1QjX3
+ pZHulm/YWTzcP2TGpikPAvSpyttrVRoDkEZxmsXuv69TzMYVfnUeUUnWE8Au8cdctQ+rGsLpU
+ +Z8I0/NdrT7U4+mXKsalNyyJJcFeUujySw8E4pnNHYLzqvOI//NpCz8gpimB6jGiQt9sf211 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283178>
 
-On Wed, Dec 30, 2015 at 6:26 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Dec 30, 2015 at 6:17 PM, Dennis Kaarsemaker
-> <dennis@kaarsemaker.net> wrote:
->> On wo, 2015-12-30 at 10:24 +0100, Dennis Kaarsemaker wrote:
->>> spirit:~/code/git (master)$ cat .git/logs/HEAD
->>> 2635c2b8bfc9aec07b7f023d8e3b3d02df715344 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <dennis@kaarsemaker.net> 1446765642 +0100
->>> 74c855f87d25a5b5c12d0485ec77c785a1c734c5 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <dennis@kaarsemaker.net> 1446765951 +0100  checkout: moving from 3c3d3f629a6176b401ebec455c5dd59ed1b5f910 to master
+On 2015-12-29 08.09, Christian Couder wrote:
+> It is not a good idea to compare kernel versions and disable
+> the untracked cache if it changes as people may upgrade and
+> still want the untracked cache to work. So let's just
+> compare work tree locations to decide if we should disable
+> it.
+OK with that.
+> 
+> Also it's not useful to store many locations in the ident
+> field and compare to any of them. It can even be dangerous
+> if GIT_WORK_TREE is used with different values. So let's
+> just store one location, the location of the current work
+> tree.
+I don't think I fully agree in all details.
+The list is there to distinguish between different clients when sharing
+a Git workspace over a network to different clients:
 
-Ah... I came from a different angle and did not realize the tag sha1
-is from your reflog. So yeah maybe reflog parsing code should check
-object type first, don't assume it's a commit!
+A file system is exported from Linux to Linux via NFS,
+including a Git workspace)
+The same Workspace is exported via SAMBA to Windows and, in an extreme case,
+AFS to Mac OS.
 
->>
->> 74c855f87d25a5b5c12d0485ec77c785a1c734c5 is actually a tag, pointing to
->> 3c3d3f629a6176b401ebec455c5dd59ed1b5f910. I'm not sure if that is
->> relevant.
->
-> It is. save_parents() expects "commit" to be a commit because it needs
-> commit->index, which is not available from struct tag. So when
-> saved_parents_at() tries to read commit->index, it gets random value
-> (from the tag). Hell breaks loose from there because this index field
-> points to some memory in the slab mem allocator. The question is, how
-> come a tag is passed in here. Maybe we can sprinkle some
-> assert(object->type == OBJ_COMMIT) in revision.c and see..
-> --
-> Duy
+Other combinations could be
+Linux - SAMBA - Linux
+Linux - AFP - Linux
+
+Mac OS - NFS - Linux
+Mac OS - AFP - Mac OS
+Mac OS - SMB - Linux, Mac OS, Windows
+The list is incomplete (BSD and other Unix is missing),
+there are other combinations of network protocols,
+there are NAS boxes which mostly Linux under the hood, but
+may have vendor specific tweaks.
+
+Now we want to know, which of the combinations work.
+The different clients need to test separately.
+E.g. for a given server:
+
+NFS - Linux
+SMB - Linux
+SMB Windows.
+
+At this point I would agree that the old code from dir.c:
+
+static const char *get_ident_string(void)
+{
+	static struct strbuf sb = STRBUF_INIT;
+	struct utsname uts;
+
+	if (sb.len)
+		return sb.buf;
+	if (uname(&uts) < 0)
+		die_errno(_("failed to get kernel name and information"));
+	strbuf_addf(&sb, "Location %s, system %s %s %s", get_git_work_tree(),
+		    uts.sysname, uts.release, uts.version);
+	return sb.buf;
+}
+------------------
+is unneccessary picky, and the sysname should be enough:
+
+strbuf_addf(&sb, "Location %s, system %s", get_git_work_tree(),
+uts.sysname);
 
 
+The old code did not find out, which network protocol that we used,
+(you need to call "mount", and grep for the directory, and try to get
+the FS information, which may be ext4, btrfs, smbfs, nfs....)
+This is unnecessary complicated, so we endet up in using the path.
 
--- 
-Duy
+If I was a system administrator, (I sometimes am), I would set up a
+bunch of Linux boxes in a similar way, so that the repo is under
+/nfs/server1/projects/myproject
+(and the same path is used for all Linux boxes)
+
+The Windows machines may use something like
+N:/projects/myproject
+or
+//server1/projects/myproject
+
+and Mac OS may use
+/Volumes/projects/myproject
+(If mounted from the finder)
+or
+/nfs/projects/myproject
+(When autofs is used)
+
+
+I may have missed the discussion somewhat, could you explain why having
+different uname/location combinations are not usable at your site ?
+
+How much burden is actually put on your system, and is there a way to keep a
+list of different clients ?
+
+
+What I understand is that a kernel update of a Linux machine shouldn't matter,
+but if a machine runs Windows or Linux should matter.
