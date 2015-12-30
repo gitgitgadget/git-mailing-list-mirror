@@ -1,127 +1,73 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH] reflog-walk: don't segfault on non-commit sha1's in the
- reflog
-Date: Wed, 30 Dec 2015 16:22:49 +0100
-Message-ID: <20151230152245.GA30549@spirit>
-References: <20151230131914.GA27241@lanh>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v8] ls-files: Add eol diagnostics
+Date: Wed, 30 Dec 2015 16:27:30 +0100
+Message-ID: <5683F7E2.3070503@web.de>
+References: <5683D49D.2010509@web.de> <5683E8B4.7040005@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 30 16:22:58 2015
+Content-Transfer-Encoding: 7bit
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 16:27:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEIaX-0006TX-C2
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 16:22:57 +0100
+	id 1aEIfE-0001ur-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 16:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbbL3PWy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2015 10:22:54 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33512 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752975AbbL3PWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 10:22:52 -0500
-Received: by mail-wm0-f45.google.com with SMTP id f206so69303287wmf.0
-        for <git@vger.kernel.org>; Wed, 30 Dec 2015 07:22:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=bERKbPCJVPUxM/Agw65uoXuWz+BkY6PK/96YMPvJfAY=;
-        b=Fx3vGtpzcvXQPtf2vSqJ35KXaZtJj6+NmnzQBcpsOgb/BwHhH9lXTybTMyEjcgmbh1
-         WpyScHZJBJX4/rPKvOYTteS4mDVCL5BMXYDpOaUHdH4S1waEQYAGYGrGv1Tx/8qbLlKb
-         NzkcpYNq/J4437KviSIaSRFfw0gjVAkzO4wz77QL6CxScr8imd6McuPt/Dd5395U0nji
-         YfIwQuqEA9eFdXF298BjJdK1VUz0XueaX6+dUbF/dYhZ8d/MT5pVwMX/3JRU1TGsYkWX
-         c3APo+4woJCKjX7y9YfYNQtUBV4Vi7jmC1P6DkzNq9jSsZnP1PqcEVxObXAhLP4qDuAG
-         pYmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=bERKbPCJVPUxM/Agw65uoXuWz+BkY6PK/96YMPvJfAY=;
-        b=aJJcGJNaLhrY2MGA9hDTiPfZanQi/vhcGLfUDL0quej1n76sDCPgUY5zn86TE6cc4H
-         4G3YT7Joi6Jziy/BIyAIztMMAyLttxF21ptFFgnQ/RHyOP4M9mevJ9U0oz1Y+Oa655y8
-         fVhx6HIX2eDvA6PWUMtxbmEZaMyYb2RYptyDatVKNAenU0YrlbrmZ2lY/FhmbinX22LS
-         bBg/TzcLqfKfofQZaOXSpGxjH+w2XWaUhPkSRQIGGe4TifcOG3amFWXxaRiR76RiFpb1
-         KPOA5AzZsE6VUvVLFPa9dJuYgQOES+IdBECuzSP/VsEmfCJNcK3lSRFJ2nXfTvLv6ANe
-         dnAA==
-X-Gm-Message-State: ALoCoQnjC2zD6pvq3gPqCU+XzzhffyBk3dDU/Nazq6ErMHI2LYGjYkaC19N7QXvRYmQvFgeWBaGW06789XdWudkeectefhqedA==
-X-Received: by 10.194.110.5 with SMTP id hw5mr82969441wjb.154.1451488971798;
-        Wed, 30 Dec 2015 07:22:51 -0800 (PST)
-Received: from spirit ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id d2sm65916018wjy.16.2015.12.30.07.22.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Dec 2015 07:22:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20151230131914.GA27241@lanh>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755048AbbL3P1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 10:27:44 -0500
+Received: from mout.web.de ([212.227.17.12]:63091 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755039AbbL3P1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 10:27:40 -0500
+Received: from [192.168.2.107] ([79.223.108.227]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MF3jD-1aSpO02uQV-00GFo7; Wed, 30 Dec 2015 16:27:35
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.0
+In-Reply-To: <5683E8B4.7040005@ramsayjones.plus.com>
+X-Provags-ID: V03:K0:rrky0bcRaY3QAyijD36hAUKf/yJE1gb9bi4cMOvomf/J9qU+gNY
+ nt7dR2F90dxk3r7C1/RVKGPtmSe3i/RrRxM+RLR7wC9PenCxW6XvrITzrQuYld3/PEH/Cb7
+ 2qzsChRSXL5Yrf/OzF6Fj9XIwahHnoD1FFLtAa6moyyfl9lLW2piF/22a/0hWOfdKGMKPVA
+ SMkwpftmbSfJaYOBqwZ1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bbXRLcbO0G8=:6ln74y6gOBXchX7WKXdKkj
+ /ASSsZcug0k305tb1Q+1ZJRVZnTL+nFKPjsWcI1+FG6LmEe3XYfFzT/rXnYhUkmfC8UBzIALH
+ boqJ5rD7asu1vteQnz0/e9cEsQSyLX7j0zR3AYN+1mIeNoMw/XztoXFzyGO48GeybZMegSXNd
+ svJ6MKal2H84tdsFZqmqsdZpJG2Y+l3yi6/xhPYsnnoSm3T+hr6lmffIDjfnHxq8ItJN2KGr8
+ fkx6WjMEcc6GnQYOR8ly0xEfrXwU1h8DrTtWxymOUm3spQNZA1caI8KAdE/SnLAKbJzR3+R7b
+ wC0cRj1D7PIaaZm357QjNVVolrLiSMcOBExNUIOL/mhUVrRH8gyvKscINOcmaLlm4ANX4I/lv
+ zeWmzpazjq6anOPNaCkYYMTYHb9fn8+hjyULDLVYAJXpA0ow+DBrxe9vCDnXk6W4VHRzctdgq
+ UowRkD3HBivsOD4LZJp5Muwj9WS9NLXHl7Jjzd/fv0WPydIsm8HHFByvUl5P9OTCFxe0yXD2d
+ tisrXkyoj94Jj4YanqBhDtXD81Fr9j6hFXmBWT5rX0EV6LITS0usi2OaL8gySPPAchDwdv3LO
+ +9kstf2w4+QSdzIm91EpxWDaOoaWOIgMCKg32m9w/JiS4YnMdoz23XQMrBCiBxX02sMTxWqWl
+ qYDJaaHyBwRG4x1uSz4QzHbT/lPHUeFWzkHIqRvLXJBrAtC4wBRi71/VnbkAzlYwarxw+qBO5
+ FXfwM2agiYMRFsiY6grw57fzftTmnR+oy5W5PHuCeHcUUTvjCy2kmDxbwSPBMlLmk8xDCmSU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283187>
 
-Use lookup_commit instead of parse_object to look up commits mentioned
-in the reflog. This avoids a segfault in save_parents if somehow a sha1
-for something other than a commit ends up in the reflog.
+>> "binary"       binary file
+>> "text-no-eol"  text file without any EOL
+>> "text-lf"      text file with LF
+>> "text-crlf"    text file with CRLF
+>> "text-crlf-lf" text file with mixed line endings.
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->
----
-Duy Nguyen wrote:
+> If you prefer to have 'text' in there somewhere, how about:
+> 
+>    binary, text-none, text-lf, text-crlf, text-mixed.
 
-> I would go with something like this. The typecasting to "struct commi=
-t
-> *" is the bug because parse_object() can return any object type.
+text-none could be OK.
 
-Yeah, that's much better. Here it is as a patch with a test.=20
+text-mixed as well, but the you can't run
+"git ls-files | grep i/text-crlf"
+any more to get an impression if there are un-normalized files,
+which may, may, need normalization.
 
- reflog-walk.c     | 4 ++--
- t/t1410-reflog.sh | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 85b8a54..b85c8e8 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -236,8 +236,8 @@ void fake_reflog_parent(struct reflog_walk_info *in=
-fo, struct commit *commit)
- 	reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
- 	info->last_commit_reflog =3D commit_reflog;
- 	commit_reflog->recno--;
--	commit_info->commit =3D (struct commit *)parse_object(reflog->osha1);
--	if (!commit_info->commit) {
-+	commit_info->commit =3D lookup_commit(reflog->osha1);
-+	if (!commit_info->commit || parse_commit(commit_info->commit)) {
- 		commit->parents =3D NULL;
- 		return;
- 	}
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index b79049f..76ccbe5 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -325,4 +325,10 @@ test_expect_success 'parsing reverse reflogs at BU=
-=46SIZ boundaries' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'reflog containing non-commit sha1s' '
-+	git checkout -b broken-reflog &&
-+	echo "$(git rev-parse HEAD^{tree}) $(git rev-parse HEAD) abc <xyz> 00=
-00000001 +0000" >> .git/logs/refs/heads/broken-reflog &&
-+	git reflog broken-reflog
-+'
-+
- test_done
---=20
-2.7.0-rc1-207-ga35084c
-
-
---=20
-Dennis Kaarsemaker <dennis@kaarsemaker.net>
-http://twitter.com/seveas
+Thanks for the reminder,
+lets wait a couple of days and see if there are more voices.
