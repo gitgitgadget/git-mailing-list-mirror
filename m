@@ -1,99 +1,87 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH V7 2/2] user-manual: add section documenting shallow clones
-Date: Tue, 29 Dec 2015 17:03:50 -0700
-Message-ID: <1451433830-7680-1-git-send-email-ischis2@cox.net>
-References: <xmqq8u4cg6y8.fsf@gitster.mtv.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	"Stephen P. Smith" <ischis2@cox.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 30 01:04:07 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] avoid shifting signed integers 31 bits
+Date: Tue, 29 Dec 2015 16:09:21 -0800
+Message-ID: <xmqq4mf0g5la.fsf@gitster.mtv.corp.google.com>
+References: <20151229063449.GA28755@sigill.intra.peff.net>
+	<20151229063545.GA30340@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 30 01:09:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aE4FL-0004A4-6d
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 01:04:07 +0100
+	id 1aE4KW-0008S5-NX
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 01:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019AbbL3AEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Dec 2015 19:04:01 -0500
-Received: from fed1rmfepo101.cox.net ([68.230.241.143]:56753 "EHLO
-	fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754007AbbL3ADz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Dec 2015 19:03:55 -0500
-Received: from fed1rmimpo110 ([68.230.241.159]) by fed1rmfepo101.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20151230000354.ZMWV331.fed1rmfepo101.cox.net@fed1rmimpo110>
-          for <git@vger.kernel.org>; Tue, 29 Dec 2015 19:03:54 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo110 with cox
-	id zc3u1r0072tqoqC01c3uEi; Tue, 29 Dec 2015 19:03:54 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020206.56831F6A.00BC,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=B55nJpRM c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=wUQvQvOEmiQA:10
- a=a-mmkxGj_Wl2OYgx35IA:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 2C8481402B9;
-	Tue, 29 Dec 2015 17:03:55 -0700 (MST)
-X-Mailer: git-send-email 2.7.0-rc2
-In-Reply-To: <xmqq8u4cg6y8.fsf@gitster.mtv.corp.google.com>
+	id S1753869AbbL3AJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Dec 2015 19:09:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753493AbbL3AJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Dec 2015 19:09:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8BFBE387A1;
+	Tue, 29 Dec 2015 19:09:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rP3oKbzbE98JOwn5Bcuf4Hepun4=; b=k0LT5h
+	pS8AY6GuOHqKIYkpxT2tKwJMxIH8DI6/NsltVbxQPLw2ci/9Rgpg1jPsSlkvJ547
+	tIs315aVcMc3Xw00whFx4OKPPUchxnSmQQZG0gunk4EJwDB0aqlMKScfqGzRdf38
+	n5a7jOHOFceHFtnJOPZsh50CPxwe7LrRFP6Jc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eCHvpz+Z8ila+M7G+DiYKOVLJcCMkmsz
+	0tzwmFK9HeHHx9MY1+JoO4kH6dvoeABzge0M+zeSxa/YFQwvOxumV4eRCq4/m141
+	CIJBheIbPseBvAzWqcEi+gQBZ1D18yHuyhY9Uf/pr3xEhuJb/mT3HWU7pzzqrPFp
+	a0HbfvXLns0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 83173387A0;
+	Tue, 29 Dec 2015 19:09:23 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 028E33879E;
+	Tue, 29 Dec 2015 19:09:22 -0500 (EST)
+In-Reply-To: <20151229063545.GA30340@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Dec 2015 01:35:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9486930A-AE89-11E5-8550-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283161>
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
- Documentation/user-manual.txt | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 1c790ac..ce347ff 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2128,6 +2128,26 @@ The gitweb cgi script provides users an easy way to browse your
- project's files and history without having to install Git; see the file
- gitweb/INSTALL in the Git source tree for instructions on setting it up.
- 
-+[[how-to-get-a-git-repository-with-minimal-history]]
-+How to get a Git repository with minimal history
-+------------------------------------------------
-+
-+A <<def_shallow_clone,shallow clone>>, with its truncated
-+history, is useful when one is interested only in recent history
-+of a project and getting full history from the upstream is
-+expensive.
-+
-+A <<def_shallow_clone,shallow clone>> is created by specifying
-+the linkgit:git-clone[1] `--depth` switch. The depth can later be
-+changed with the linkgit:git-fetch[1] `--depth` switch, or full
-+history restored with `--unshallow`.
-+
-+Merging inside a <<def_shallow_clone,shallow clone>> will work as long
-+as a merge base is in the recent history.
-+Otherwise, it will be like merging unrelated histories and may
-+have to result in huge conflicts.  This limitation may make such
-+a repository unsuitable to be used in merge based workflows.
-+
- [[sharing-development-examples]]
- Examples
- --------
-@@ -4645,9 +4665,6 @@ standard end-of-chapter section?
- 
- Include cross-references to the glossary, where appropriate.
- 
--Document shallow clones?  See draft 1.5.0 release notes for some
--documentation.
--
- Add a section on working with other version control systems, including
- CVS, Subversion, and just imports of series of release tarballs.
- 
--- 
-2.7.0-rc2
+> diff --git a/diff.h b/diff.h
+> index f7208ad..893f446 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -91,7 +91,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+>  #define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
+>  #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
+>  #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
+> -#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1 << 31)
+> +#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1U << 31)
+>  
+>  #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+>  #define DIFF_OPT_TOUCHED(opts, flag)    ((opts)->touched_flags & DIFF_OPT_##flag)
+
+Thanks.
+
+Seeing (1 << 30) and (1U <<31) together made me feel that we are way
+_too_ explicit being careful about 32-bit archs (iow, it would be
+more consistent to turn all of these "1 <<" into "1U <<"), but at
+the same time, (1 << 30) won't be broken unless we are on 31-bit
+arch in the sense that if we are on 30-bit or smaller arch the
+expression is already broken with or without "U", and if we are on
+32-bit or more, then with or without "U" we are OK---which made me
+feel somewhat funny.
+
+In any case, these two are good changes.  Thanks.
