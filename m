@@ -1,112 +1,134 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: ./t3310-notes-merge-manual-resolve.sh broken on pu under Mac OS ?
-Date: Wed, 30 Dec 2015 14:20:04 +0100
-Message-ID: <5683DA04.6000007@web.de>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v8] ls-files: Add eol diagnostics
+Date: Wed, 30 Dec 2015 14:22:44 +0000
+Message-ID: <5683E8B4.7040005@ramsayjones.plus.com>
+References: <5683D49D.2010509@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 30 14:20:13 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 30 15:24:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEGfk-0003Xm-NG
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 14:20:13 +0100
+	id 1aEHfh-0002z3-Ek
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 15:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754731AbbL3NUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2015 08:20:09 -0500
-Received: from mout.web.de ([212.227.17.12]:58323 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753950AbbL3NUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 08:20:07 -0500
-Received: from [192.168.2.107] ([79.223.108.227]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0M1X9B-1ZyNgK1JhR-00tVx4 for <git@vger.kernel.org>;
- Wed, 30 Dec 2015 14:20:05 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-X-Provags-ID: V03:K0:orvumDvY6tkFGJDnCfH+axkPPdw3H9uk9W1unGhElJXaxjNQLEm
- 0xPJyv5y7sEWtPDTrjaCN4f6Q/r0K+9bI+FoWRRFoG5GmrgurznlM0EUoppO9w3HzvkECHi
- 4+y1iVtVBJnSwnCiF+QROVhFpuzudl2MJsNtWo7j1uqL5w6UTwwjJYFeIGJPjfcQPRfOoYc
- hGwgTIRA7hApu08NJLgLQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:synI0+ye46Y=:Q/YraKnBI9JSs1ItGAXUbn
- h/oO388U+/xrhOyqAY6sg5sGFtd9Mt2kuAJfYnNDvOWSKF/wndxfgn/IMxscsXz1FcpkhNMwY
- l0CLIOEvzLflArCjftpYT428PmpZrIKCmhpytC8lVZP8qC7rTCQx+RUgiIVYuVCTEI8J9rr5V
- sTSzRE0daUndcDJyUUnJyZc96Al1si4SKInLPLnrpfJvR0BmvGkW/i2BHjw5RDOJYr6JLmyGZ
- RdQ9rzYDUC9RhUvM77KD5z1XD2of096ojxGBKr/fyr6U1qUQ+auSOuMH10C+FW4ol2Sh90b0W
- SwY18OAZedOtsFazhAoUDwBr5gJTgiTS+AQZ/1agPUMChY0cdKNbK03xF83jV3FmmneCT9L/A
- iij2qY9tNxzcwCCb3GsC6dz9B/jxdIqDXmLPiVVjNAr+HE1mTkL6j3zel1gn/EDJXObSqp5aQ
- ylkZQYmzPRbgxAe0j94HI3VF2dIXbRhszrq6GA+Qgm1RPTmYXzuMbXzM7ydAhLg5dxEjqzfQv
- gwX7FDH47jNMKdlEdEFXIRyHP0Zo7LLustHY2RrSJMPjVDVy/BpYamHP5xZ0WdKJNha+qtGsn
- /WAStIemJOdCyN3zSRfNeoNdkn7hiHhxW8roXlRuNEKkhs+cQYqqXYG6KRVrLo3IwHsw0rnND
- Ui0bomGfJbsUp+D7dDLnq3B+qM6QOn2p93BGiEJ1Xu+o1uAkwLpDe5ODBrXxHcg4szEZVkNY8
- 4cSH43PPxRJtAKD7HYMBUQvRz9vusgjwTH1rEVt0UpiF7GtADhUbS0xyUbGJ905IiNaYjsxz 
+	id S1752680AbbL3OYJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2015 09:24:09 -0500
+Received: from avasout07.plus.net ([84.93.230.235]:44398 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752171AbbL3OYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 09:24:08 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout07 with smtp
+	id zqNr1r00F4mu3xa01qNsBh; Wed, 30 Dec 2015 14:22:52 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=MZKRwMLf c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8 a=DoEN08qvR1caZIqocaMA:9
+ a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <5683D49D.2010509@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283182>
-
-I got 2 failures on pu under Mac OS, (Linux is OK)
-I did some very basic debugging, it seems as if grep doesn't find
-a needed string.
-Does anybody have an idea here ?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283183>
 
 
---------------------
-Failure 1:
-Add some debug code:
-git diff
 
--       grep -q refs/notes/z merge_commit_msg &&
-+       echo >&2 before grep &&
-+       echo >&2 before cat &&
-+       cat >&2 merge_commit_msg &&
-+       echo >&2 after cat &&
-+       grep  refs/notes/z merge_commit_msg >&2 &&
-        # Merge commit mentions conflicting notes
-+       echo >&2 after grep &&
+On 30/12/15 12:57, Torsten B=C3=B6gershausen wrote:
+> When working in a cross-platform environment, a user wants to
+> check if text files are stored normalized in the repository and if
+> .gitattributes are set appropriately.
+>=20
+> Make it possible to let Git show the line endings in the index and
+> in the working tree and the effective text/eol attributes.
+>=20
+> The end of line ("eolinfo") are shown like this:
+> "binary"       binary file
+> "text-no-eol"  text file without any EOL
+> "text-lf"      text file with LF
+> "text-crlf"    text file with CRLF
+> "text-crlf-lf" text file with mixed line endings.
+>=20
+> The effective text/eol attribute is one of these:
+> "", "-text", "text", "text=3Dauto", "eol=3Dlf", "eol=3Dcrlf"
+>=20
+> git ls-files --eol gives an output like this:
+>=20
+> i/text-no-eol   w/text-no-eol   attr/text=3Dauto t/t5100/empty
+> i/binary        w/binary        attr/-text     t/test-binary-2.png
+> i/text-lf       w/text-lf       attr/eol=3Dlf    t/t5100/rfc2047-info=
+-0007
+> i/text-lf       w/text-crlf     attr/eol=3Dcrlf  doit.bat
+> i/text-crlf-lf  w/text-crlf-lf  attr/          locale/XX.po
+>=20
+> Add test cases in t0027, thanks to Junio C Hamano for the optimized
+> grep-less sed expression.
+>=20
+> Helped-By: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+> ---
+> Changes since v7:
+> - Remove the "may change" from commit message.
+> - Run make doc, improved git-ls-files.txt
+>  Documentation/git-ls-files.txt |  23 +++++++++
+>  builtin/ls-files.c             |  19 +++++++
+>  convert.c                      |  85 +++++++++++++++++++++++++++++++
+>  convert.h                      |   3 ++
+>  t/t0027-auto-crlf.sh           | 112 +++++++++++++++++++++++++++++++=
++++++-----
+>  5 files changed, 230 insertions(+), 12 deletions(-)
+>=20
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-fi=
+les.txt
+> index e26f01f..13b0e1d 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -12,6 +12,7 @@ SYNOPSIS
+>  'git ls-files' [-z] [-t] [-v]
+>  		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])=
+*
+>  		(-[c|d|o|i|s|u|k|m])*
+> +		[--eol]
+>  		[-x <pattern>|--exclude=3D<pattern>]
+>  		[-X <file>|--exclude-from=3D<file>]
+>  		[--exclude-per-directory=3D<file>]
+> @@ -147,6 +148,19 @@ a space) at the start of each line:
+>  	possible for manual inspection; the exact format may change at
+>  	any time.
+>  +--eol::
+> +	Show line endings ("eolinfo") and the text/eol attributes ("texteol=
+attr") of
+> files.
+> +	"eolinfo" is the file content identification used by Git when
+> +	the "text" attribute is "auto", or core.autocrlf !=3D false.
+> ++
+> +"eolinfo" is either "" (when the the info is not available"), or one=
+ of "binary",
+> +"text-no-eol", "text-lf", "text-crlf" or "text-crlf-lf".
 
------- run the test:
-debug=t verbose=t   ./t3310-notes-merge-manual-resolve.sh 2>&1 | less
--------- get this output:
-before grep
-before cat
-Merged notes from z into refs/notes/m
+<bikeshedding>
 
-Conflicts:
-        04ed9a0bbe0285f41c913e2002cb09ef8449d4a6
-        0f7aa3ec6325aeb88b910453bb3eb37c49d75c11
-        7a4ca6ee52a974a66cbaa78e33214535dff1d691
-        d07d62e5208f22eb5695e7eb47667dc8b9860290
+Again, I think this list reads better as: binary, none, lf, crlf and mi=
+xed.
 
-after cat
-not ok 13 - finalize conflicting merge (z => m)
+If you prefer to have 'text' in there somewhere, how about:
 
+   binary, text-none, text-lf, text-crlf, text-mixed.
 
------------------------
-Failure 2:
-index d557212..92fabf0 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -472,6 +472,9 @@ EOF
-        test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-        # Merge commit mentions the notes refs merged
-        git log -1 --format=%B refs/notes/m > merge_commit_msg &&
-+       echo >&2 before cat &&
-+       cat merge_commit_msg >&2 &&
-+       echo >&2 after cat &&
+:-D
 
-not ok 17 - add + remove notes in finalized merge (z => m)
----------- gives this:
-before cat
-Merged notes from z into refs/notes/m
+(I promise not the mention it again!)
 
-Conflicts:
-        04ed9a0bbe0285f41c913e2002cb09ef8449d4a6
-        0f7aa3ec6325aeb88b910453bb3eb37c49d75c11
-        7a4ca6ee52a974a66cbaa78e33214535dff1d691
-        d07d62e5208f22eb5695e7eb47667dc8b9860290
+</bikeshedding>
 
-after cat
+ATB,
+Ramsay Jones
