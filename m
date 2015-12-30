@@ -1,134 +1,108 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v8] ls-files: Add eol diagnostics
-Date: Wed, 30 Dec 2015 14:22:44 +0000
-Message-ID: <5683E8B4.7040005@ramsayjones.plus.com>
-References: <5683D49D.2010509@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] commit: ensure correct permissions of the commit
+ message
+Date: Wed, 30 Dec 2015 15:50:09 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1512301535550.14434@virtualbox>
+References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de> <20151220074559.GF30662@sigill.intra.peff.net> <xmqq7fk8io3f.fsf@gitster.mtv.corp.google.com> <20151221065944.GA3550@sigill.intra.peff.net>
+ <xmqqio3rhg2f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 30 15:24:14 2015
+Content-Type: text/plain; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Yaroslav Halchenko <yoh@onerussian.com>,
+	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 15:50:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEHfh-0002z3-Ek
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 15:24:13 +0100
+	id 1aEI5V-0006eV-DO
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 15:50:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbbL3OYJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2015 09:24:09 -0500
-Received: from avasout07.plus.net ([84.93.230.235]:44398 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752171AbbL3OYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 09:24:08 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout07 with smtp
-	id zqNr1r00F4mu3xa01qNsBh; Wed, 30 Dec 2015 14:22:52 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=MZKRwMLf c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8 a=DoEN08qvR1caZIqocaMA:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-In-Reply-To: <5683D49D.2010509@web.de>
+	id S1752680AbbL3Ouj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 09:50:39 -0500
+Received: from mout.gmx.net ([212.227.17.20]:49953 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751537AbbL3Oui (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 09:50:38 -0500
+Received: from virtualbox ([37.24.143.189]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0M7Y9j-1a1Ae3203j-00xNNQ; Wed, 30 Dec 2015 15:50:12
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqio3rhg2f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:1XoMLBRrfFoTliB0v2mCFWtluv76SgcubxK1lpZRA0NaI1BrwmY
+ ARpOkttSHYeHl0nmA8fyGcG3gpIiF413YVTjqqLNJ1WiwX3MNwTNJIX5pInhMDNDM8hNMJZ
+ WqjC3gMIkKofZ8FvA/lB2wfSzt4C81FjttNtWwoNCBMrwSuYcPEtYFdJMYVuWH842nhnbuY
+ 37ePJbhsPZBhA30zq+ByQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:29V9F+qhVYw=:9Uz9o1MGidZNFqu5Le3tet
+ QLMgsf6fCy8YnLLEJyxnm/7Zbu9rgwxzXUfxRrldYGR3enRiYYBtlH4HSs1nQMCkGPpev/8O0
+ yYzfRU/18PREKX/iPhsFFpcXDywJnd5qkqa5nZTbiHBrW3qco2orV/K4m591A4UbuWyw+MM0C
+ nZavmM57XOSviFIo4O1dBzPS+LC0K8L3GsHIT1i/mV8CpY241yzoEDZ9JBVAT9BO65QCtRm/6
+ +YH9lAkfKPPL+i2KJeaSy5APR4pseuxVx0cKB0Ffn8wrf/PksBDZKqpVBbsUXQAo1IUlbQ4g4
+ HMC3xhDEfe26KPJZY91yiHrsvCHfTNZaVJAf2AxK+Du3JIX1/dS8ZoAnDADU5a3uDYLlhOfCY
+ Sc+4vqCs8bahjunk9VxGSwVVN3acJ1y7f54N2CL83yDrf3yWgWT/tXsBtF1itaUtLoIWcqt6e
+ Fff3vZQZ3DIp4GKLBjVuxthbLZY+RKWRifj+EZpBbUU/kp09UwVFi6WdpyXAihxS36UUN9zul
+ H7ovf5CFFXkes5PTWX8mcnGPLRCJIEc+Ns/bnDVuBCEYhjIeo8SBxtRE3lS70KBg7MiC8L0Nz
+ bj7qsnRyNk5vvrpPzaLV3b45jqyHDfuqf+LQKSnVlcM1STHeQaBWTqI9D4Lo3+jCLpaSlBZI0
+ cCpMInGmzVpjvmuTAkb8dgKz5XfaQUePQU2lKP2Qx4dZ+NGNgnuwJ6ANz7syeDIh8abWJ3QOw
+ 3JMiqsYPwZUJZW9f3V4oxZXmRquDgbe6wdWlerLA/9LAk0cX/u1CfNMYuWpk/P8dfEpxM33B 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283184>
 
+Hi,
 
+On Mon, 21 Dec 2015, Junio C Hamano wrote:
 
-On 30/12/15 12:57, Torsten B=C3=B6gershausen wrote:
-> When working in a cross-platform environment, a user wants to
-> check if text files are stored normalized in the repository and if
-> .gitattributes are set appropriately.
->=20
-> Make it possible to let Git show the line endings in the index and
-> in the working tree and the effective text/eol attributes.
->=20
-> The end of line ("eolinfo") are shown like this:
-> "binary"       binary file
-> "text-no-eol"  text file without any EOL
-> "text-lf"      text file with LF
-> "text-crlf"    text file with CRLF
-> "text-crlf-lf" text file with mixed line endings.
->=20
-> The effective text/eol attribute is one of these:
-> "", "-text", "text", "text=3Dauto", "eol=3Dlf", "eol=3Dcrlf"
->=20
-> git ls-files --eol gives an output like this:
->=20
-> i/text-no-eol   w/text-no-eol   attr/text=3Dauto t/t5100/empty
-> i/binary        w/binary        attr/-text     t/test-binary-2.png
-> i/text-lf       w/text-lf       attr/eol=3Dlf    t/t5100/rfc2047-info=
--0007
-> i/text-lf       w/text-crlf     attr/eol=3Dcrlf  doit.bat
-> i/text-crlf-lf  w/text-crlf-lf  attr/          locale/XX.po
->=20
-> Add test cases in t0027, thanks to Junio C Hamano for the optimized
-> grep-less sed expression.
->=20
-> Helped-By: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> Changes since v7:
-> - Remove the "may change" from commit message.
-> - Run make doc, improved git-ls-files.txt
->  Documentation/git-ls-files.txt |  23 +++++++++
->  builtin/ls-files.c             |  19 +++++++
->  convert.c                      |  85 +++++++++++++++++++++++++++++++
->  convert.h                      |   3 ++
->  t/t0027-auto-crlf.sh           | 112 +++++++++++++++++++++++++++++++=
-+++++-----
->  5 files changed, 230 insertions(+), 12 deletions(-)
->=20
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-fi=
-les.txt
-> index e26f01f..13b0e1d 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -12,6 +12,7 @@ SYNOPSIS
->  'git ls-files' [-z] [-t] [-v]
->  		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])=
-*
->  		(-[c|d|o|i|s|u|k|m])*
-> +		[--eol]
->  		[-x <pattern>|--exclude=3D<pattern>]
->  		[-X <file>|--exclude-from=3D<file>]
->  		[--exclude-per-directory=3D<file>]
-> @@ -147,6 +148,19 @@ a space) at the start of each line:
->  	possible for manual inspection; the exact format may change at
->  	any time.
->  +--eol::
-> +	Show line endings ("eolinfo") and the text/eol attributes ("texteol=
-attr") of
-> files.
-> +	"eolinfo" is the file content identification used by Git when
-> +	the "text" attribute is "auto", or core.autocrlf !=3D false.
-> ++
-> +"eolinfo" is either "" (when the the info is not available"), or one=
- of "binary",
-> +"text-no-eol", "text-lf", "text-crlf" or "text-crlf-lf".
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Sun, Dec 20, 2015 at 05:31:48PM -0800, Junio C Hamano wrote:
+> >
+> >> we could do something like this, perhaps?
+> >> 
+> >>         FILE *fopen_forcibly(const char *path, const char *mode)
+> >>         {
+> >>                 FILE *ret = fopen(path, mode);
+> >> 
+> >>                 if (!ret && errno == EPERM) {
+> >>                         if (!unlink(path))
+> >>                                 ret = fopen(path, mode);
+> >>                         else
+> >>                                 errno = EPERM;
+> >>                 }
+> >>                 return ret;
+> >>         }
+> >
+> > Yeah, I think that is a much nicer solution for this case. It should
+> > work even in a shared repo, since we set the permissions for the
+> > surrounding $GIT_DIR appropriately[1].
+> >
+> > I guess it would not apply to any files that do not want to truncate the
+> > existing contents. Probably it should drop the "mode" parameter at all,
+> > since anything but "w" would be crazy?
+> 
+> Absolutely.  Thanks for spotting.
 
-<bikeshedding>
+So maybe
 
-Again, I think this list reads better as: binary, none, lf, crlf and mi=
-xed.
+	fcreate_or_truncate(const char *path)
+	{
+		 FILE *ret = fopen(path, "w");
 
-If you prefer to have 'text' in there somewhere, how about:
+		 if (!ret && errno == EPERM) {
+			 if (!unlink(path))
+				 ret = fopen(path, "w");
+			 else
+				 errno = EPERM;
+		 }
+		 return ret;
+	 }
 
-   binary, text-none, text-lf, text-crlf, text-mixed.
+?
 
-:-D
-
-(I promise not the mention it again!)
-
-</bikeshedding>
-
-ATB,
-Ramsay Jones
+Ciao,
+Dscho
