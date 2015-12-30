@@ -1,156 +1,114 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 08/10] dir: simplify untracked cache "ident" field
-Date: Wed, 30 Dec 2015 12:47:47 +0100
-Message-ID: <5683C463.9010003@web.de>
-References: <1451372974-16266-1-git-send-email-chriscool@tuxfamily.org>
- <1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Segfault in git reflog
+Date: Wed, 30 Dec 2015 13:28:06 +0100
+Message-ID: <1451478486.9251.11.camel@kaarsemaker.net>
+References: <20151230092400.GA9319@spirit>
+	 <1451474248.9251.7.camel@kaarsemaker.net>
+	 <CACsJy8CoRs8dNPWag-E947oVTt4R8XbKBLvaQvBPGm4jqZBKNw@mail.gmail.com>
+	 <CACsJy8Cm6a2FiyZwXsTpzbp7ZkZUGWf=HmjsMtQvJMjzVLkTzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 30 12:48:52 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 30 13:28:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEFFL-0000Fd-Tj
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 12:48:52 +0100
+	id 1aEFrS-0005cp-UH
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Dec 2015 13:28:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754524AbbL3LsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Dec 2015 06:48:19 -0500
-Received: from mout.web.de ([212.227.17.11]:52556 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754312AbbL3LsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 06:48:17 -0500
-Received: from [192.168.2.107] ([79.223.108.227]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0M41Bm-1ZvtMs2rX0-00rbZ3; Wed, 30 Dec 2015 12:47:57
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-In-Reply-To: <1451372974-16266-9-git-send-email-chriscool@tuxfamily.org>
-X-Provags-ID: V03:K0:dkDkEqXJx/2cWQmp7YK06Zzgy0ruwSwkQgE8Ff5J5+WZ1utoFfd
- MrLtB3H86OFAaCFmj7pf3Y6990ay6b/Qfvu4QJpavmUOtwCW+J2h+PuKfYrtUShH8Ze8XDS
- qfxNKbIu1bldDRdc9ZwtBMXQC91nXbxkBwZ7QaWisTqXBkZ+bEC58AxuEgIWkCNvmJHOpw/
- Z7lkjcZyNVu4rYK70N7jQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rVs58x6lBZA=:y3oP0P0Dj98WEdfM1OVry3
- mukBU+Dz0a67blsFV5K7adUbLzg6k8Knc8qtJOYMVNVfstYAYChWnn2jZTxuvrUJXlcR5yFsg
- ejjiWkXnKpPqTNnVEn71pYzPbHikdCtFAPq+ng4BmoqSSItjfFPG2tT2fMowRGVxuL5hHHrpY
- e1Leoi2Nuozrne/teGp6fC7jmKu81IH7fLSCkISfyVl2YFBz1b6yeJHVDhhGdZOUK5ovh/U/R
- BRHZ6gyi+dvjvtCJkNhpi43/ljIl9zPnCXeVLdDREvr4pZqq/GPykzDu+jdokjh12gxiU7BTB
- nPsjWypZJNJ9ypE0/Z/XyeIUs76AnyLmNkkz3XX8tMlIhHIniCn0zQ+iMECPzICwvAkq5QlQI
- vets1QFudS5mEwqOlktLPDvwWUsJzdlw3cXsk+xImQJV5FyRiwZdYqJYdAEqHmPBoT8oFulhD
- Cc5qbG3bLiXQve9HeKx4mywRHCRamEBpv15PxlRRbKlS0oAlnZumBMePCAiGAyOd/dh/ePzOv
- 8W4xAiZgT+PC6LgvwfG5E31DHxCymlGubI5cCks5J4rlBZZfED8ZY+uVrO8J7oirUxm1sOIOL
- tM7woeAzqdn2gvnTMW+W6AekLLdlwqsTzvYDXlvs3Zb0ixBDuSjrFsTMXjZielfMLvih1QjX3
- pZHulm/YWTzcP2TGpikPAvSpyttrVRoDkEZxmsXuv69TzMYVfnUeUUnWE8Au8cdctQ+rGsLpU
- +Z8I0/NdrT7U4+mXKsalNyyJJcFeUujySw8E4pnNHYLzqvOI//NpCz8gpimB6jGiQt9sf211 
+	id S1754763AbbL3M2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 07:28:11 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:34871 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754619AbbL3M2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 07:28:09 -0500
+Received: by mail-wm0-f54.google.com with SMTP id f206so36055655wmf.0
+        for <git@vger.kernel.org>; Wed, 30 Dec 2015 04:28:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :content-type:mime-version:content-transfer-encoding;
+        bh=XE+nKRi/shU71veBVCHKV1DxEuYi3dWKyeQ6xNqhBDM=;
+        b=AdsHu9GJpGcqRob+vjg3wzt/ETSFYv6+XZK7bPLJSpV4O9lH18Rphx36xRFSycdaIl
+         K5F+z89UhI3MGC+P2i8imaur89kdwIHa5sa/zco/TIeKw7iKXXWBrCcIfEXkudeDoVMK
+         /zKQZSMJPdpvpJVyY6DeigU+EEo9CbnN3E+TkoIljSaG7vZ4ZqkiHD4S/jBQKMyz3Pcw
+         cR6Ah250wXG3V8na3TulbRJtIqF8pUcLGmfxPPzkrGR9dc59I1/y8dCwLkKIhs1mlaJv
+         gat0ag6dok3RYYiTaZBB6HG6w6a9sv0YouazhVmwac9VT40GTxOnz327ZvhljdWjmooz
+         uAGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=XE+nKRi/shU71veBVCHKV1DxEuYi3dWKyeQ6xNqhBDM=;
+        b=G5DQsTfUFagZBmuyTKAivH8ax6QBphxsHoDNPxFTr6DC8S5TWIXJo6D4Nsfy7FCElw
+         KXGuwxuMZJGaEBP1RX+3eY2bB/J5vRiLJGtWhoD1CXTSBUCBOiRtxIOrqL1iUWbAMu0f
+         Mj9dM/Ijzt3Cp7SN4hwFsg6vzlFSP5nnj6DX9r8mGxNuXHe0zLpwhKU4N0mynQVDSszs
+         zA0A0Yx2zScnPByqOX9fymbAKSrfoVW8iQQdbGJpO8W84jJUzSMbHjtYLQwdBqhVNWaj
+         eX5j2M5ozrH4aXeNJ5tFEhJm+jX6gBWMdsDybAP0LdelWAkt7eeqvUpyUKBB0A89kqGp
+         JAAg==
+X-Gm-Message-State: ALoCoQlN/Fop4jrWkLFgI+e3maIXQduWBLmmNPLG7omxXb0ZoQrP/UBYi36pT/OyUr7ejiXQnJ+gGjMMrRlhuXtxv4dOxQNIBA==
+X-Received: by 10.194.204.232 with SMTP id lb8mr83700196wjc.112.1451478488229;
+        Wed, 30 Dec 2015 04:28:08 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id un6sm65279908wjc.34.2015.12.30.04.28.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Dec 2015 04:28:07 -0800 (PST)
+In-Reply-To: <CACsJy8Cm6a2FiyZwXsTpzbp7ZkZUGWf=HmjsMtQvJMjzVLkTzA@mail.gmail.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283179>
 
-On 2015-12-29 08.09, Christian Couder wrote:
-> It is not a good idea to compare kernel versions and disable
-> the untracked cache if it changes as people may upgrade and
-> still want the untracked cache to work. So let's just
-> compare work tree locations to decide if we should disable
-> it.
-OK with that.
+On wo, 2015-12-30 at 18:28 +0700, Duy Nguyen wrote:
+> On Wed, Dec 30, 2015 at 6:26 PM, Duy Nguyen <pclouds@gmail.com>
+> wrote:
+> > On Wed, Dec 30, 2015 at 6:17 PM, Dennis Kaarsemaker
+> > <dennis@kaarsemaker.net> wrote:
+> >> On wo, 2015-12-30 at 10:24 +0100, Dennis Kaarsemaker wrote:
+> >>> spirit:~/code/git (master)$ cat .git/logs/HEAD
+> >>> 2635c2b8bfc9aec07b7f023d8e3b3d02df715344
+> 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <
+> dennis@kaarsemaker.net> 1446765642 +0100
+> >>> 74c855f87d25a5b5c12d0485ec77c785a1c734c5
+> 54bc41416c5d3ecb978acb0df80d57aa3e54494c Dennis Kaarsemaker <
+> dennis@kaarsemaker.net> 1446765951 +0100  checkout: moving from
+> 3c3d3f629a6176b401ebec455c5dd59ed1b5f910 to master
 > 
-> Also it's not useful to store many locations in the ident
-> field and compare to any of them. It can even be dangerous
-> if GIT_WORK_TREE is used with different values. So let's
-> just store one location, the location of the current work
-> tree.
-I don't think I fully agree in all details.
-The list is there to distinguish between different clients when sharing
-a Git workspace over a network to different clients:
+> Ah... I came from a different angle and did not realize the tag sha1
+> is from your reflog. So yeah maybe reflog parsing code should check
+> object type first, don't assume it's a commit!
 
-A file system is exported from Linux to Linux via NFS,
-including a Git workspace)
-The same Workspace is exported via SAMBA to Windows and, in an extreme case,
-AFS to Mac OS.
+Something like this perhaps?
 
-Other combinations could be
-Linux - SAMBA - Linux
-Linux - AFP - Linux
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 85b8a54..cd538dd 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -25,6 +25,14 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
+ {
+        struct complete_reflogs *array = cb_data;
+        struct reflog_info *item;
++       struct object *obj;
++
++       obj = parse_object(osha1);
++       if(obj && obj->type != OBJ_COMMIT)
++               die(_("Broken reflog, %s is a %s, not a commit"), sha1_to_hex(obj->oid.hash), typename(obj->type));
++       obj = parse_object(nsha1);
++       if(obj && obj->type != OBJ_COMMIT)
++               die(_("Broken reflog, %s is a %s, not a commit"), sha1_to_hex(obj->oid.hash), typename(obj->type));
+ 
+        ALLOC_GROW(array->items, array->nr + 1, array->alloc);
+        item = array->items + array->nr;
 
-Mac OS - NFS - Linux
-Mac OS - AFP - Mac OS
-Mac OS - SMB - Linux, Mac OS, Windows
-The list is incomplete (BSD and other Unix is missing),
-there are other combinations of network protocols,
-there are NAS boxes which mostly Linux under the hood, but
-may have vendor specific tweaks.
+That gives me:
+fatal: Broken reflog, 74c855f87d25a5b5c12d0485ec77c785a1c734c5 is a tag, not a commit
 
-Now we want to know, which of the combinations work.
-The different clients need to test separately.
-E.g. for a given server:
-
-NFS - Linux
-SMB - Linux
-SMB Windows.
-
-At this point I would agree that the old code from dir.c:
-
-static const char *get_ident_string(void)
-{
-	static struct strbuf sb = STRBUF_INIT;
-	struct utsname uts;
-
-	if (sb.len)
-		return sb.buf;
-	if (uname(&uts) < 0)
-		die_errno(_("failed to get kernel name and information"));
-	strbuf_addf(&sb, "Location %s, system %s %s %s", get_git_work_tree(),
-		    uts.sysname, uts.release, uts.version);
-	return sb.buf;
-}
-------------------
-is unneccessary picky, and the sysname should be enough:
-
-strbuf_addf(&sb, "Location %s, system %s", get_git_work_tree(),
-uts.sysname);
-
-
-The old code did not find out, which network protocol that we used,
-(you need to call "mount", and grep for the directory, and try to get
-the FS information, which may be ext4, btrfs, smbfs, nfs....)
-This is unnecessary complicated, so we endet up in using the path.
-
-If I was a system administrator, (I sometimes am), I would set up a
-bunch of Linux boxes in a similar way, so that the repo is under
-/nfs/server1/projects/myproject
-(and the same path is used for all Linux boxes)
-
-The Windows machines may use something like
-N:/projects/myproject
-or
-//server1/projects/myproject
-
-and Mac OS may use
-/Volumes/projects/myproject
-(If mounted from the finder)
-or
-/nfs/projects/myproject
-(When autofs is used)
-
-
-I may have missed the discussion somewhat, could you explain why having
-different uname/location combinations are not usable at your site ?
-
-How much burden is actually put on your system, and is there a way to keep a
-list of different clients ?
-
-
-What I understand is that a kernel update of a Linux machine shouldn't matter,
-but if a machine runs Windows or Linux should matter.
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
