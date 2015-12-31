@@ -1,148 +1,136 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3] reflog-walk: don't segfault on non-commit sha1's in
- the reflog
-Date: Thu, 31 Dec 2015 09:57:07 +0100
-Message-ID: <1451552227.11138.6.camel@kaarsemaker.net>
-References: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
-	 <20151230233301.GA9194@spirit>
-	 <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
+From: Mostyn Bramley-Moore <mostynb@opera.com>
+Subject: Re: [PATCH/RFC v2 0/2] add regex match flags to git describe
+Date: Thu, 31 Dec 2015 11:07:29 +0100
+Organization: Opera Software
+Message-ID: <5684FE61.4010701@opera.com>
+References: <cover.1451298323.git.mostynb@opera.com>
+ <xmqqy4cejoz4.fsf@gitster.mtv.corp.google.com> <5681D02C.1040609@opera.com>
+ <xmqqk2nxi002.fsf@gitster.mtv.corp.google.com> <5684702C.3040802@opera.com>
+ <xmqqy4cbbh5e.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 31 09:57:18 2015
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 31 11:08:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEZ2r-0001ce-AI
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 09:57:17 +0100
+	id 1aEa9R-0006Ad-Nw
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 11:08:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbbLaI5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2015 03:57:12 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:36921 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752262AbbLaI5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 03:57:11 -0500
-Received: by mail-wm0-f54.google.com with SMTP id f206so104610559wmf.0
-        for <git@vger.kernel.org>; Thu, 31 Dec 2015 00:57:10 -0800 (PST)
+	id S1751551AbbLaKHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2015 05:07:35 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37850 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751247AbbLaKHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 05:07:33 -0500
+Received: by mail-wm0-f51.google.com with SMTP id f206so106450148wmf.0
+        for <git@vger.kernel.org>; Thu, 31 Dec 2015 02:07:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=sf5uTO7m250iTIOwz5pKrpznEvdxdPl2IRPIHQGWZJY=;
-        b=1u6dP2esz3ukF+g/seM0OJct+uxrY4dv0cH4Bebpv16HLgOauGyd8yYPwS8NApyRSr
-         e43svtJTJbi8SQuOYbqp5qUE4m8IryOT3XANz1iKw8nOIw8+prESb47OFOwbVxJ3/VYB
-         Wwt6lO8tSjhaqlH7boUEzIS9ZGlwXYFZC6YjT5aUNLPE6TILs75Eerk2R/D+Xpn8RVEd
-         BddZb6WORYvH4PjBIYuXG7zyYMGnRdbCzcZJKl+97ldjEDDM3ldySrlbwR2NQCZSr9b/
-         CmvlIkafsTorXBM8w1sxCmkpVFfLtrQ44cPMyN1Oyl6yJrQnuUu3rZbOMMkPxT5R4U+7
-         feKw==
+        d=opera-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:cc:from:organization:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=jiueVd2vkS1NYhhrbwD8E7VqhpKKlopG1LN00UP8lrQ=;
+        b=tGv2SFj/RZ/eHr3bY7lhSzF65vNF3qhrQrpSujqgNpMbmg77fOPoN5mjQuNnXghzBX
+         DYMAsGeITYmMBH7+afthV7WIxkJgfNAEK2lb3aPBXgylzj18yLBGjDO7/M9rYJoqiYQZ
+         0cgbTKCtD9bQyTqTb02R5dRBB51GnWSAN1lY66BJI2xHthgdFkbcuGL6uI3McFmiPhlL
+         5MvUxjXQq3yTAuC15k4erNtFJUAqHVUECSxoYrrYapPCbqn4QOMYKmFMwR05JjcKlZGl
+         XlE/AcYkrBH9gRV9Mlvb+WKnCsj6pEVDk1MS/EqCy9FPQB/BiITSXIwcMB7vFJJEeud9
+         6jYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=sf5uTO7m250iTIOwz5pKrpznEvdxdPl2IRPIHQGWZJY=;
-        b=GGeFzVSyZg58nUGDoeGzOnI2lK4jennTd+I0Il5xPPooFxuqJKRHiAgXSh25CUGAkp
-         WbVcC809L7iNZFenfIp6Slan4LYejibqD8osuDtMGlHQIKy+WyMsCOWEbKpGGV2di8xy
-         aWlUJMsZSXoDisuo9m8Mw31sXrRvsotFpiZ1Aj9jPN5Bk9AbhuuYqWWLio7/pYWz6AwA
-         /h2WajA4eMCLteloprsN6IXKYi0ZwEPM1wesFdRFq3nONpb9zWvyMBHVQEu4J6wMcnln
-         LH2JVHQaJqdpCGMc+YUcirBQtH/FGmyOcyZ7yFsSW1OzGDbUbXdlOJeJZa7jBpITcolL
-         h40A==
-X-Gm-Message-State: ALoCoQm1cdpo8gKOuxYdGvEKE6cN/5EZyDS+SdReXqi0wE8u6txgyOA/gYYGJUnpsUzmW6vQ3FeidYeMr46P31b6VN9dRLkJ0g==
-X-Received: by 10.28.54.209 with SMTP id y78mr22464149wmh.26.1451552229938;
-        Thu, 31 Dec 2015 00:57:09 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id x125sm57962485wmg.1.2015.12.31.00.57.08
+        h=x-gm-message-state:subject:to:references:cc:from:organization
+         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=jiueVd2vkS1NYhhrbwD8E7VqhpKKlopG1LN00UP8lrQ=;
+        b=MOd0BK0QOKbo3MRbEyUUZrM+tdb63JEWyB2KUgnAKh5sIQ+J18ZxQFa7hXtldgU+w2
+         PG5Ka3syprUCY5yn8QdynMff3ZiXSTq/YuK074R/PNwR7YYbVfXs7r+qcWepFnKeFjf1
+         /dIBpOms/fySHOU+lf0QtcIZbqdHBcRuJ7qnCIBrST81AjT/h7VHRIgnSOKIeOmpUYEJ
+         FFb2WxeEIyij6DPvPdUr+IbAoWOyht8HZZOsddRrpo4ZiB8On9G0B+SHLxEZY2SypOYP
+         0zef9MSGBf2EGrCQc53MSgPp5lYvyVVrw77OmBRVbW8WekxYWnSophrehG2fdpgVCoLB
+         AoFA==
+X-Gm-Message-State: ALoCoQmBiUzUEGR2MxKKj7sxHd8NhDt0lwJZH0nY/zlAlOm7G+6pSlbseh1OOtfzGCMrnqgw/URqjrvcoh/DEaGLGV9bDgpW+A==
+X-Received: by 10.194.143.104 with SMTP id sd8mr29028495wjb.35.1451556451945;
+        Thu, 31 Dec 2015 02:07:31 -0800 (PST)
+Received: from [10.0.0.50] (h151n12-g-kt-d2.ias.bredband.telia.com. [213.64.207.151])
+        by smtp.gmail.com with ESMTPSA id df10sm54330516wjb.44.2015.12.31.02.07.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Dec 2015 00:57:08 -0800 (PST)
-In-Reply-To: <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        Thu, 31 Dec 2015 02:07:30 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <xmqqy4cbbh5e.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283233>
 
-On wo, 2015-12-30 at 16:02 -0800, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> 
-> > diff --git a/reflog-walk.c b/reflog-walk.c
-> > index 85b8a54..0ebd1da 100644
-> > --- a/reflog-walk.c
-> > +++ b/reflog-walk.c
-> > @@ -221,6 +221,7 @@ void fake_reflog_parent(struct reflog_walk_info
-> > *info, struct commit *commit)
-> >  	struct commit_info *commit_info =
-> >  		get_commit_info(commit, &info->reflogs, 0);
-> >  	struct commit_reflog *commit_reflog;
-> > +	struct object *logobj;
-> 
-> This thing is not initialized...
-> 
-> >  	struct reflog_info *reflog;
-> >  
-> >  	info->last_commit_reflog = NULL;
-> > @@ -232,15 +233,20 @@ void fake_reflog_parent(struct
-> > reflog_walk_info *info, struct commit *commit)
-> >  		commit->parents = NULL;
-> >  		return;
-> >  	}
-> > -
-> > -	reflog = &commit_reflog->reflogs->items[commit_reflog
-> > ->recno];
-> >  	info->last_commit_reflog = commit_reflog;
-> > -	commit_reflog->recno--;
-> > -	commit_info->commit = (struct commit *)parse_object(reflog
-> > ->osha1);
-> > -	if (!commit_info->commit) {
-> > +
-> > +	do {
-> > +		reflog = &commit_reflog->reflogs
-> > ->items[commit_reflog->recno];
-> > +		commit_reflog->recno--;
-> > +		logobj = parse_object(reflog->osha1);
-> > +	} while (commit_reflog->recno && (logobj && logobj->type
-> > != OBJ_COMMIT));
-> 
-> But this loop runs at least once, so logobj will always have some
-> sane value when the loop exits.
-> 
-> > +	if (!logobj || logobj->type != OBJ_COMMIT) {
-> 
-> And the only case where this should trigger is when we ran out of
-> recno.  Am I reading the updated code correctly?
+On 12/31/2015 01:23 AM, Junio C Hamano wrote:
+> Mostyn Bramley-Moore <mostynb@opera.com> writes:
+>
+>> OK, brainstorming a bit, how about either of these:
+>>
+>> 1)
+>> --match-pattern-type=<glob|fixed-strings|basic-regexp|extended-regexp|perl-regexp>
+>>
+>> It's a bit lengthy (maybe --match-type would be sufficient), but I
+>> like that the value names are shared with git grep etc option names.
+>> And it seems future-proof- if we ever need to support different
+>> pattern types for other arguments, a --foo-pattern-type flag could be
+>> added and make obvious sense.
+>
+> Swapping the option key and value may not be a bad idea, but one
+> problem that the above does not solve, which I outlined in the
+> message you are responding to, is that "match-pattern-type" does not
+> give any hint that this is about affecting the match that is done to
+> "refs", e.g. you cannot tell in
+>
+>    $ git mgrep --match-pattern-type=perl-regexp -e foo --refs 'release_*'
+>
+> if the perl-regexp is to be used for matching branch names or for
+> matching the strings the command looks for in the trees of the
+> matching branches.
 
-Yes, your description matches what I tried to implement.
+There is a hint: --foo-pattern-type applies only to --foo.
 
-> With the updated code, the number of times we return from this
-> function is different from the number initially set to recno.  I had
-> to wonder if the caller cares and misbehaves, but the caller does
-> not know how long the reflog is before starting to call
-> get_revision() in a loop anyway, so it already has to deal with a
-> case where it did .recno=20 and get_revision() did not return that
-> many times.  So this probably is safe.
+In your mgrep example --match-pattern-type would apply to --match 
+patterns only, and if we choose to implement it then --refs-pattern-type 
+would apply to --refs patterns only.
 
-That corresponds to what I see when experimenting with different
-reflogs.
+eg:
+$ git mgrep --match '^foo' --match-pattern-type=perl-regexp --refs 
+'release_*' --refs-pattern-type=glob
 
-> > +test_expect_success 'reflog containing non-commit sha1s displays
-> > properly' '
-> 
-> In general, "properly" is a poor word to use in test description (or
-> a commit log message or a bug report, for that matter), as the whole
-> point of a test is to precisely define what is "proper".
-> 
-> And the code change declares that a proper thing to do is to omit
-> non-commit entries without segfaulting, so something like
-> 
->     s/displays properly/omits them/
-> 
-> perhaps?
+> Magic pattern annotation like we do for pathspecs Duy raised may not
+> be a bad idea, either, and would probably be easier to teach people.
+> Just like in Perl "(?i)$any_pattern" is a way to introduce the case
+> insensitive match with $any_pattern, we may be able to pick an
+> extensible magic syntax and decorate the pattern you would specify
+> for matching refnames to tell Git what kind of pattern it is, e.g.
+>
+>    $ git mgrep -P -e foo --refs '/?glob/release_*'
+>
+> I am not suggesting that we must use /?<pattern type name>/ prefix
+> as the "extensible magic syntax" here--I am just illustrating what
+> I mean by "extensible magic syntax".
 
-I did find the test title a bit iffy but couldn't really figure out
-why. What you're saying makes a lot of sense, will fix.
+I hadn't seen the pathspec magic patterns before- interesting.  We could 
+possibly share syntax with pathspecs, ie
+:(?pattern-options...)pattern
+
+Would this be confusing for commands that already have --perl-regexp 
+etc?  What should happen if you specify both --perl-regexp and and a 
+different type of pattern like :(glob)foo (error out, I suppose)?
+
+
+-Mostyn.
 -- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Mostyn Bramley-Moore
+TV and Connected Devices
+Opera Software ASA
+mostynb@opera.com
