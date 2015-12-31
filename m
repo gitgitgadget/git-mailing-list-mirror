@@ -1,223 +1,99 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 08/11] ref-filter: introduce prefixes for the align atom
-Date: Thu, 31 Dec 2015 18:49:50 +0530
-Message-ID: <CAOLa=ZRrv26j4kHT3tQZ-ch8aycAKG4cQp4DcTTXEwOvMtZx7w@mail.gmail.com>
-References: <1450279802-29414-1-git-send-email-Karthik.188@gmail.com>
- <1450279802-29414-9-git-send-email-Karthik.188@gmail.com> <CAPig+cRmoOoSscuLcVHWkpH4uVU2Gei791qqn0GjyZ4b9fA45w@mail.gmail.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3] reflog-walk: don't segfault on non-commit sha1's in
+ the reflog
+Date: Thu, 31 Dec 2015 16:43:00 +0100
+Message-ID: <1451576580.11138.14.camel@kaarsemaker.net>
+References: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
+	 <20151230233301.GA9194@spirit>
+	 <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
+	 <1451552227.11138.6.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 14:20:59 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 31 16:43:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEdA1-0000Cc-Eu
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 14:20:57 +0100
+	id 1aEfNf-00037z-3l
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 16:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbbLaNUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2015 08:20:22 -0500
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:35138 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751565AbbLaNUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 08:20:21 -0500
-Received: by mail-vk0-f41.google.com with SMTP id k1so89264980vkb.2
-        for <git@vger.kernel.org>; Thu, 31 Dec 2015 05:20:20 -0800 (PST)
+	id S1753334AbbLaPnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2015 10:43:05 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:35630 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750947AbbLaPnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 10:43:04 -0500
+Received: by mail-wm0-f51.google.com with SMTP id f206so66192678wmf.0
+        for <git@vger.kernel.org>; Thu, 31 Dec 2015 07:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nBeVEZt1V7wcUM+4qH5TmU3zWJ4jO8eyyCHoXMTIulo=;
-        b=sKIDRIFE1uBIq+gW4U9K7OM/VOZozEuCO05P5oanf4S3DCPbBEoljppMT64Zv7lDYw
-         NV71SUxdLiielbVmsn0PndhC74l7ykhJvIJDcRlcDNg9Fn2BZb8SFeoyj7N6Vyn17Tko
-         EYHF+CW29r6xQqc69BbaiqGFxT2BJ5dMrseRwwYk4epalQSr9CaL6KgZQeSCuHcXCPdq
-         KNfxnPTFkLPVSbWNBWAXDV2hKisPM72un4c2TGjEAYtj7RH0+aVeYKgm1B1B1PcW85G8
-         VUYZsl+iBtU6mgtDgPrQHvloU1rILFrS4w9M+C73v79xtkwsfyHBPbj6BVfrKI6kPgQL
-         W98w==
-X-Received: by 10.31.155.23 with SMTP id d23mr40505085vke.146.1451568020184;
- Thu, 31 Dec 2015 05:20:20 -0800 (PST)
-Received: by 10.103.82.146 with HTTP; Thu, 31 Dec 2015 05:19:50 -0800 (PST)
-In-Reply-To: <CAPig+cRmoOoSscuLcVHWkpH4uVU2Gei791qqn0GjyZ4b9fA45w@mail.gmail.com>
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version:content-transfer-encoding;
+        bh=NApTSWKr9znXcg9Cr5WhwaLG7LZWfr2ywh3mNxC8v7w=;
+        b=i1A3ZxTLmwsvqURVItHDvLqF9zKebWr4ef1nmWPYn+zMMuDl/OsqfpDJYGgTOBrPul
+         EqJj9Hu3++vKCxgv+EWF8QFEMKxCXUs8Y64Jj5BRwb5Tq+iSx4uJfDPyWfjYfPZfRLT3
+         PqNdWuzOsO9sl1B1blHawDwXUkoQiQIfxNiag08PHT/XNQ3Q6FrUHuK/0PaiyyOMMyOa
+         trwGaHRrciFRHedaKOnGRpRZaYS2Ph/qzQmQlFk47NjSOuTJWhqgGvJiOKwO+fnzzEXj
+         qM48oPtt1U+B7XXJfU/5VTzdmJlSNKE4MpWeqItT+kv5qCm8gh2qOk/SWn6Z6hN1zb9F
+         1/Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=NApTSWKr9znXcg9Cr5WhwaLG7LZWfr2ywh3mNxC8v7w=;
+        b=GtBtztM/ekmry4lvIAj5yAf6VOIkvt/CwUC87Mms8uzuLDhXMkQ1tNT8jKMDdH+lGG
+         Ofqs30CqXI3tuJQ2Q/cjQmUduSTfFUI/ZR0JavcfRu9Y98tZoFN4wbfaUZVgECbI6DFQ
+         43x+R+YgNhIgiXMR76Q2G1pr65htu/gq6Q9NMi9EjOXCWNsuJOzc4ufpAp0ltg+UGuWW
+         JhhxTUrmUpGFHvG8rlclpdmL4fTnbnHFsAe+yYqTL5Yxu4WS21TzR5c7xQUlYRyAb2z8
+         ZQOJqg8QGV00S2NL4PXMI6LLARXkfhXvN1FBlRu0AuZXQgSbstfbKUU4iARa1MZdplcB
+         rBcg==
+X-Gm-Message-State: ALoCoQmznnGODA+Xz0O8Wub4yyEb4GwxV3HfUPkdvvWb8bkju9TpOg36QZ3Jcq9TGohS+mJAYu/6jrolrD1M8ykGQ1qfm9wp+g==
+X-Received: by 10.194.82.199 with SMTP id k7mr70070193wjy.65.1451576582025;
+        Thu, 31 Dec 2015 07:43:02 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id q4sm70293138wja.6.2015.12.31.07.43.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Dec 2015 07:43:01 -0800 (PST)
+In-Reply-To: <1451552227.11138.6.camel@kaarsemaker.net>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283245>
 
-On Thu, Dec 17, 2015 at 2:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Dec 16, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> ref-filter: introduce prefixes for the align atom
->
-> The prefixes are actually for the arguments to the 'align' atom, not
-> for the atom itself. However, it might be better to describe this at a
-> bit higher level. Perhaps:
->
->     ref-filter: align: introduce long-form syntax
->
-> or something.
+On do, 2015-12-31 at 09:57 +0100, Dennis Kaarsemaker wrote:
+> > > +test_expect_success 'reflog containing non-commit sha1s displays
+> > > properly' '
+> > 
+> > In general, "properly" is a poor word to use in test description
+> (or
+> > a commit log message or a bug report, for that matter), as the
+> whole
+> > point of a test is to precisely define what is "proper".
+> > 
+> > And the code change declares that a proper thing to do is to omit
+> > non-commit entries without segfaulting, so something like
+> > 
+> >     s/displays properly/omits them/
+> > 
+> > perhaps?
+> 
+> I did find the test title a bit iffy but couldn't really figure out
+> why. What you're saying makes a lot of sense, will fix.
 
-Makes sense, thanks.
+Thinking about it a bit more: 'proper' would be to show everything, we
+just expect that not to work yet. So I'll make it
 
->
->> Introduce optional prefixes "width=" and "position=" for the align atom
->> so that the atom can be used as "%(align:width=<width>,position=<position>)".
->>
->> Add Documetation and tests for the same.
->>
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -96,10 +96,19 @@ static void align_atom_parser(struct used_atom *atom)
->>
->>         while (*s) {
->>                 int position;
->> +               buf = s[0]->buf;
->
-> It probably would be better to do this assignment in the previous
-> patch (7/11) since its presence here introduces unwanted noise
-> (textual replacement of "s[0]->buf" with "buf") in several locations
-> below which slightly obscure the real changes of this patch.
->
-
-This makes sense from a reviewers perspective, will do.
-
->> -               if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
->> +               if (skip_prefix(buf, "position=", &buf)) {
->> +                       position = parse_align_position(buf);
->> +                       if (position == -1)
->
-> It may be more idiomatic in this codebase to detect errors via '< 0'
-> rather than explicit '== -1'. Ditto below.
->
-
-I think Junio also mentioned this once. Thanks for reminding.
-
->> +                               die(_("unrecognized position:%s"), buf);
->> +                       align->position = position;
->> +               } else if (skip_prefix(buf, "width=", &buf)) {
->> +                       if (strtoul_ui(buf, 10, (unsigned int *)&width))
->> +                               die(_("unrecognized width:%s"), buf);
->> +               } else if (!strtoul_ui(buf, 10, (unsigned int *)&width))
->>                         ;
->> -               else if ((position = parse_align_position(s[0]->buf)) > 0)
->> +               else if ((position = parse_align_position(buf)) != -1)
->>                         align->position = position;
->>                 else
->>                         die(_("unrecognized %%(align) argument: %s"), s[0]->buf);
->
-> s/s[0]->//
->
-
-Thanks.
-
-
-> More below...
->
->> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
->> @@ -133,6 +133,168 @@ test_expect_success 'right alignment' '
->>         test_cmp expect actual
->>  '
->>
->> +test_expect_success 'alignment with "position" prefix' '
->> +       cat >expect <<-\EOF &&
->> +       |  refname is refs/heads/master|refs/heads/master
->> +       |    refname is refs/heads/side|refs/heads/side
->> +       |      refname is refs/odd/spot|refs/odd/spot
->> +       |refname is refs/tags/double-tag|refs/tags/double-tag
->> +       |     refname is refs/tags/four|refs/tags/four
->> +       |      refname is refs/tags/one|refs/tags/one
->> +       |refname is refs/tags/signed-tag|refs/tags/signed-tag
->> +       |    refname is refs/tags/three|refs/tags/three
->> +       |      refname is refs/tags/two|refs/tags/two
->> +       EOF
->> +       git for-each-ref --format="|%(align:30,position=right)refname is %(refname)%(end)|%(refname)" >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'alignment with "position" prefix' '
->> +       cat >expect <<-\EOF &&
->> +       |  refname is refs/heads/master|refs/heads/master
->> +       |    refname is refs/heads/side|refs/heads/side
->> +       |      refname is refs/odd/spot|refs/odd/spot
->> +       |refname is refs/tags/double-tag|refs/tags/double-tag
->> +       |     refname is refs/tags/four|refs/tags/four
->> +       |      refname is refs/tags/one|refs/tags/one
->> +       |refname is refs/tags/signed-tag|refs/tags/signed-tag
->> +       |    refname is refs/tags/three|refs/tags/three
->> +       |      refname is refs/tags/two|refs/tags/two
->> +       EOF
->> +       git for-each-ref --format="|%(align:position=right,30)refname is %(refname)%(end)|%(refname)" >actual &&
->> +       test_cmp expect actual
->> +'
->
-> This (and below) is a lot of copy/paste code which makes it difficult
-> to read the tests and maintain (change) them. Since 'expect' doesn't
-> appear to change from test to test, one way to eliminate some of this
-> noisiness would be to create 'expect' once outside of the tests.
->
-> However, even better, especially from a comprehension,
-> maintainability, and extensibility standpoints would be to make this
-> all table-driven. In particular, I'd expect to see a table with
-> exactly the list of test inputs mentioned in my earlier review[1], and
-> have that table passed to a shell function which performs the test for
-> each element of the table. For instance, something like:
->
->     test_align_permutations <<-\EOF
->         middle,42
->         42,middle
->         position=middle,42
->         42,position=middle
->         middle,width=42
->         width=42,middle
->         position=middle,width=42
->         width=42,position=middle
->         EOF
->
-> where test_align_permutations is the name of the shell function which
-> reads each line of it stdin and performs the "git for-each-ref
-> --format=..." test with the given %(align:) arguments.
->
-> Ditto regarding the below "last one wins (silently) tests".
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/281916
->
-
-This seems like a good idea, I implemented both of those together.
-
-test_align_permutations() {
-while read -r option; do
-test_expect_success 'align permutations' '
-git for-each-ref --format="|%(align:$option)refname is
-%(refname)%(end)|%(refname)" >actual &&
-test_cmp expect actual
+test_expect_failure 'reflog with non-commit entries displays all entries' '
+	git reflog refs/tests/tree-in-reflog >actual &&
+	test_line_count = 3 actual
 '
-done;
-}
 
-test_align_permutations <<-\EOF
-middle,42
-42,middle
-position=middle,42
-42,position=middle
-middle,width=42
-width=42,middle
-position=middle,width=42
-width=42,position=middle
-EOF
-
-# Last one wins (silently) when multiple arguments of the same type are given
-
-test_align_permutations <<-\EOF
-32,width=42,middle
-width=30,42,middle
-width=42,position=right,middle
-42,right,position=middle
-EOF
-
-Thanks :)
-
---
-Regards,
-Karthik Nayak
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
