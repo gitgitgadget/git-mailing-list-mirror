@@ -1,92 +1,148 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 04/14] shortlog: use skip_prefix_icase to parse "Author" lines
-Date: Thu, 31 Dec 2015 01:47:21 -0500
-Message-ID: <CAPig+cTxRbASyLhQH_WZDLX_RTY4t=F-QJeo5Uc5zWUxF1jvZw@mail.gmail.com>
-References: <20151229071847.GA8726@sigill.intra.peff.net>
-	<20151229072746.GD8842@sigill.intra.peff.net>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v3] reflog-walk: don't segfault on non-commit sha1's in
+ the reflog
+Date: Thu, 31 Dec 2015 09:57:07 +0100
+Message-ID: <1451552227.11138.6.camel@kaarsemaker.net>
+References: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
+	 <20151230233301.GA9194@spirit>
+	 <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 31 07:48:03 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 31 09:57:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEX1m-0000Uy-08
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 07:48:02 +0100
+	id 1aEZ2r-0001ce-AI
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 09:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbbLaGrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2015 01:47:23 -0500
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:33404 "EHLO
-	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbbLaGrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 01:47:22 -0500
-Received: by mail-vk0-f53.google.com with SMTP id a188so214505082vkc.0
-        for <git@vger.kernel.org>; Wed, 30 Dec 2015 22:47:22 -0800 (PST)
+	id S1755294AbbLaI5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2015 03:57:12 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36921 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752262AbbLaI5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 03:57:11 -0500
+Received: by mail-wm0-f54.google.com with SMTP id f206so104610559wmf.0
+        for <git@vger.kernel.org>; Thu, 31 Dec 2015 00:57:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uryszsn2UrbjsYkkBV2JGaR10rs74VZkrf7LEKzMvhM=;
-        b=FpAtUoHJwDFC+xgUxf0j6UX012MEhcxot438ekVJutTp84v04AC6jIWcSQ3BAbUGnH
-         s36IYiBm16WKHUsQYnhSPjb0E6oIA3vhzVjkqp+oQCgqvi9rGpqS4Do30ndT5M2TyeBA
-         egqQv6w5ueb9jEWSm7PBZQBHlgg2v7hdh7BTMttbaOfT5iI2ZvJv7dI0gvRwLWWdR6V1
-         65fRi5nBqGQOvvBxWlJMDmLdA/xqucrViRMzEbVd1fVcOMQDcFb5Tt0poS90ileO6d4f
-         mvKIclbDEeJKzytyPG3dLoKWARKkV9y9/51Oexnja9pYk+Wt7WoXAuJlol6F6uvweh8G
-         12gg==
-X-Received: by 10.31.58.142 with SMTP id h136mr45169801vka.115.1451544441580;
- Wed, 30 Dec 2015 22:47:21 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 30 Dec 2015 22:47:21 -0800 (PST)
-In-Reply-To: <20151229072746.GD8842@sigill.intra.peff.net>
-X-Google-Sender-Auth: VzOcqK-3Qx2vhO4MPwFwu5tg7Fs
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version:content-transfer-encoding;
+        bh=sf5uTO7m250iTIOwz5pKrpznEvdxdPl2IRPIHQGWZJY=;
+        b=1u6dP2esz3ukF+g/seM0OJct+uxrY4dv0cH4Bebpv16HLgOauGyd8yYPwS8NApyRSr
+         e43svtJTJbi8SQuOYbqp5qUE4m8IryOT3XANz1iKw8nOIw8+prESb47OFOwbVxJ3/VYB
+         Wwt6lO8tSjhaqlH7boUEzIS9ZGlwXYFZC6YjT5aUNLPE6TILs75Eerk2R/D+Xpn8RVEd
+         BddZb6WORYvH4PjBIYuXG7zyYMGnRdbCzcZJKl+97ldjEDDM3ldySrlbwR2NQCZSr9b/
+         CmvlIkafsTorXBM8w1sxCmkpVFfLtrQ44cPMyN1Oyl6yJrQnuUu3rZbOMMkPxT5R4U+7
+         feKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=sf5uTO7m250iTIOwz5pKrpznEvdxdPl2IRPIHQGWZJY=;
+        b=GGeFzVSyZg58nUGDoeGzOnI2lK4jennTd+I0Il5xPPooFxuqJKRHiAgXSh25CUGAkp
+         WbVcC809L7iNZFenfIp6Slan4LYejibqD8osuDtMGlHQIKy+WyMsCOWEbKpGGV2di8xy
+         aWlUJMsZSXoDisuo9m8Mw31sXrRvsotFpiZ1Aj9jPN5Bk9AbhuuYqWWLio7/pYWz6AwA
+         /h2WajA4eMCLteloprsN6IXKYi0ZwEPM1wesFdRFq3nONpb9zWvyMBHVQEu4J6wMcnln
+         LH2JVHQaJqdpCGMc+YUcirBQtH/FGmyOcyZ7yFsSW1OzGDbUbXdlOJeJZa7jBpITcolL
+         h40A==
+X-Gm-Message-State: ALoCoQm1cdpo8gKOuxYdGvEKE6cN/5EZyDS+SdReXqi0wE8u6txgyOA/gYYGJUnpsUzmW6vQ3FeidYeMr46P31b6VN9dRLkJ0g==
+X-Received: by 10.28.54.209 with SMTP id y78mr22464149wmh.26.1451552229938;
+        Thu, 31 Dec 2015 00:57:09 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id x125sm57962485wmg.1.2015.12.31.00.57.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Dec 2015 00:57:08 -0800 (PST)
+In-Reply-To: <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283232>
 
-On Tue, Dec 29, 2015 at 2:27 AM, Jeff King <peff@peff.net> wrote:
-> Because we must match both "Author" and "author" here, we
-> could not use skip_prefix, and had to hand-code a partial
-> case-insensitive match. Now that we have skip_prefix_case,
+On wo, 2015-12-30 at 16:02 -0800, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+> 
+> > diff --git a/reflog-walk.c b/reflog-walk.c
+> > index 85b8a54..0ebd1da 100644
+> > --- a/reflog-walk.c
+> > +++ b/reflog-walk.c
+> > @@ -221,6 +221,7 @@ void fake_reflog_parent(struct reflog_walk_info
+> > *info, struct commit *commit)
+> >  	struct commit_info *commit_info =
+> >  		get_commit_info(commit, &info->reflogs, 0);
+> >  	struct commit_reflog *commit_reflog;
+> > +	struct object *logobj;
+> 
+> This thing is not initialized...
+> 
+> >  	struct reflog_info *reflog;
+> >  
+> >  	info->last_commit_reflog = NULL;
+> > @@ -232,15 +233,20 @@ void fake_reflog_parent(struct
+> > reflog_walk_info *info, struct commit *commit)
+> >  		commit->parents = NULL;
+> >  		return;
+> >  	}
+> > -
+> > -	reflog = &commit_reflog->reflogs->items[commit_reflog
+> > ->recno];
+> >  	info->last_commit_reflog = commit_reflog;
+> > -	commit_reflog->recno--;
+> > -	commit_info->commit = (struct commit *)parse_object(reflog
+> > ->osha1);
+> > -	if (!commit_info->commit) {
+> > +
+> > +	do {
+> > +		reflog = &commit_reflog->reflogs
+> > ->items[commit_reflog->recno];
+> > +		commit_reflog->recno--;
+> > +		logobj = parse_object(reflog->osha1);
+> > +	} while (commit_reflog->recno && (logobj && logobj->type
+> > != OBJ_COMMIT));
+> 
+> But this loop runs at least once, so logobj will always have some
+> sane value when the loop exits.
+> 
+> > +	if (!logobj || logobj->type != OBJ_COMMIT) {
+> 
+> And the only case where this should trigger is when we ran out of
+> recno.  Am I reading the updated code correctly?
 
-s/skip_prefix_case/skip_prefix_icase/
+Yes, your description matches what I tried to implement.
 
-> we can use it. This is technically more liberal in what it
-> matches (e.g., it will match AUTHOR), but in this particular
-> case that that's OK (we are matching git-log output, so we
+> With the updated code, the number of times we return from this
+> function is different from the number initially set to recno.  I had
+> to wonder if the caller cares and misbehaves, but the caller does
+> not know how long the reflog is before starting to call
+> get_revision() in a loop anyway, so it already has to deal with a
+> case where it did .recno=20 and get_revision() did not return that
+> many times.  So this probably is safe.
 
-s/that that's/that's/
+That corresponds to what I see when experimenting with different
+reflogs.
 
-> expect arbitrary data like commit headers to be indented).
->
-> In addition to being easier to read, this will make the code
-> easier to adapt for matching other lines.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> @@ -94,8 +94,8 @@ static void read_from_stdin(struct shortlog *log)
->         char author[1024], oneline[1024];
->
->         while (fgets(author, sizeof(author), stdin) != NULL) {
-> -               if (!(author[0] == 'A' || author[0] == 'a') ||
-> -                   !starts_with(author + 1, "uthor: "))
-> +               const char *v;
-> +               if (!skip_prefix_icase(author, "Author: ", &v))
->                         continue;
->                 while (fgets(oneline, sizeof(oneline), stdin) &&
->                        oneline[0] != '\n')
-> @@ -103,7 +103,7 @@ static void read_from_stdin(struct shortlog *log)
->                 while (fgets(oneline, sizeof(oneline), stdin) &&
->                        oneline[0] == '\n')
->                         ; /* discard blanks */
-> -               insert_one_record(log, author + 8, oneline);
-> +               insert_one_record(log, v, oneline);
->         }
->  }
->
-> --
-> 2.7.0.rc3.367.g09631da
+> > +test_expect_success 'reflog containing non-commit sha1s displays
+> > properly' '
+> 
+> In general, "properly" is a poor word to use in test description (or
+> a commit log message or a bug report, for that matter), as the whole
+> point of a test is to precisely define what is "proper".
+> 
+> And the code change declares that a proper thing to do is to omit
+> non-commit entries without segfaulting, so something like
+> 
+>     s/displays properly/omits them/
+> 
+> perhaps?
+
+I did find the test title a bit iffy but couldn't really figure out
+why. What you're saying makes a lot of sense, will fix.
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
