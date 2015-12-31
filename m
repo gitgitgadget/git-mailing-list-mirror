@@ -1,103 +1,61 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: ./t3310 fixed, t3400 broken
-Date: Thu, 31 Dec 2015 16:47:23 +0100
-Message-ID: <56854E0B.9010205@web.de>
-References: <5683DA04.6000007@web.de>
- <CAPig+cQZq-aDYv5G3eNivvqC0eCTfyPtA4gEuop0PWq2LFT=9Q@mail.gmail.com>
- <56851E2E.4050403@ramsayjones.plus.com>
+From: Eli Woods <eliaswoods@gmail.com>
+Subject: GIT GUI - Windows build will open a window on a disconnected display
+Date: Thu, 31 Dec 2015 11:46:59 -0500
+Message-ID: <CANw98ADVGg0GKXmHbNVrPhqM4fbFL3et_vrY7kcvMt-LaW7Htg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Dec 31 16:48:08 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 31 17:47:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEfSR-0007vo-7u
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 16:48:07 +0100
+	id 1aEgOL-0006uw-A5
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 17:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751905AbbLaPrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2015 10:47:41 -0500
-Received: from mout.web.de ([212.227.15.4]:57756 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750947AbbLaPrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 10:47:39 -0500
-Received: from [192.168.2.107] ([79.223.100.211]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0LfzcB-1ZvK8X2dLP-00pcUe; Thu, 31 Dec 2015 16:47:30
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-In-Reply-To: <56851E2E.4050403@ramsayjones.plus.com>
-X-Provags-ID: V03:K0:64i+7WJqTxyA6h+x/Ei+jH6q2wYbePcK03+4gfJILX6LISuZwEu
- frZuT60uQF1I5zPJPatIaQcL6GTWxvb5RUYaDZu2xfhFJVc7UV1GqMemSKDsabpEqTyScRv
- 6lIGuOceez0VKjA8uJV/HKckxCSDppTd2fITEVNwyuW+tOuxfrtu8tqe9ge4NcANmOI8CvX
- K6R9cz5lYRlZQLeFoGriw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XYpSmzgXNZw=:dv3XD/P0SzI9sHi58aAT7b
- ryanj9C7LgmN7UnnshGsjQq+z39YvHSBXlJSTRd7VoQJzlHr24FqcrZ4xxpjTDmnksxaYmkTh
- rqOktpQCtGzkubQ4GCLWSF908Kgj25L+wGpNg6X0qIvRRGLRZifdFtYTa1v8FKMpe8svzBWE3
- liY5K5Ek5g44fEHDOazH2Gt5uMKqDwv9I/cRrOKAUZJbIvY9c3qtlWYYMjEB17QCNT6wWaWtO
- wpudbcRRcIp7pVXAaNW4HHBl3HHTc+x7NvjJ+bYWuBHmTvt0h9pe0NZ9bP/F3Gshro7M31bVD
- rARKa11Gkyl5MaHcGuCY1ctyNSPrU+7F9fIeNesHwxF/lY0Y3OmluJ/QVIzc8nBtwOzNVO33h
- YTmV25WT/ypom8NqjClwCh8F0ifckxN4vAf2mRZ0r5mkm+Lqyek1nvGW3sIueGCKAWhVcULxA
- MDicE3+gI3igMGjW3/3V61Pu6V5AW+czC8fFCWsW+EOYArgr/ouPFXtj/diTv7zFdBfry7JhF
- MUTXvldgJ1qf1ZbJWB4zppLpVXYQpA6OUlelNd9Uhxr+BJ5NDEMihx1vg9US1suZqR5+Y2kio
- e7sarwlY7OXGhI6CWF2RBDg5ERfSyktu+sdgBFuVZMhBT+s6tNuP/dwbcbgdVay5HJOnlaVOa
- uJi3XoBZMfxVq+bLp9JPmFlTWd95Cfg9jKv8+NTGFqreCT8FptTblERxHeImchw19tMuVsMbw
- VzsfVyqg03fCtn7fpNXbBCr1xeLDlrpQqGq0SVDc6H7zWQoCw0vh1hgHZEv9UmfrOCTqmWqz 
+	id S1751003AbbLaQrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2015 11:47:20 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:35913 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750726AbbLaQrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 11:47:19 -0500
+Received: by mail-yk0-f169.google.com with SMTP id v14so90264704ykd.3
+        for <git@vger.kernel.org>; Thu, 31 Dec 2015 08:47:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=rS7pF/TlIBKxeM6UOQ8qObFlw1xaTp7eDEETu7KboDo=;
+        b=vlQc/QCRBJYXn6NEFT6oiCKmlrvLfqld/KTS4MrroV/4zhz5Xb35U/CZBw6TdnkUXh
+         hH9a5k1R1jDvv0CPrEGUhlyaLGuHIx9rVH9Y//+OUIgjQXcRqkXHsGPW+IYwNpG3PwiG
+         c2hdvDpX8NNWtJSL1rB1jenGaeR5afjDDScvHncLK/8LsOSFLL9EMVXpgwZ7rGRaR7sl
+         ScVmbbhFdMX78bFP+lqGArY+/wTwiXZsDdPAFO8pVu5g4LfgfoNVlC+cXYFr+SUChDex
+         YvX8GucV7GWVKdp5bi2sC7WTPXVRRd3NkFPGkgsd/roDiQjih+DwNF9nxmbYDHg9L/7s
+         bl4A==
+X-Received: by 10.129.56.196 with SMTP id f187mr12723651ywa.111.1451580438966;
+ Thu, 31 Dec 2015 08:47:18 -0800 (PST)
+Received: by 10.13.226.209 with HTTP; Thu, 31 Dec 2015 08:46:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283247>
 
-> t3310-notes-merge-manual-resolve.sh
->failed during a short window (due to commit 2bd811ec) and
-> has already been fixed in commit 3a74ea38 ("notes: allow merging
-> from arbitrary references", 29-12-2015).
+I use a secondary monitor when at the office and I often will have
+applications open on the second display.
 
-Yes, it's fixed. Sorry for the noise.
+The bug happens when I open the Git GUI application without having the
+second monitor connected. The dialog window that asks for selection is
+displayed properly but the main window is lost on another display.
 
+You can still get around to the window by using windows keyboard
+shortcuts but it isn't ideal.
 
-The next failure is t3400.
-Is there a chance to squeeze in this diff ?
+This may not be a bug specifically for Git GUI, it may better be
+reported to WISH
+ or even Microsoft.
 
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -259,11 +259,11 @@ test_expect_success 'rebase duplicated commit with
---keep-empty' '
-        git reset --hard &&
-        git checkout master &&
-
--       >x && git add x && git commit x -mx &&
--       echo x >x && git commit x -mx1 &&
-+       >y && git add y && git commit y -my &&
-+       echo y >y && git commit y -my1 &&
-
-        git checkout -b duplicated HEAD~ &&
--       echo x >x && git commit x -mx2 &&
-+       echo y >y && git commit y -my2 &&
-        git rebase --keep-empty master
- '
-
-
-
-
-
-
-
-
-> 
-> ATB,
-> Ramsay Jones
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Windows 7
+git-gui version 0.20.GITGUI
+git version 2.6.3.windows.1
+Tcl/Tk version 8.6.4
