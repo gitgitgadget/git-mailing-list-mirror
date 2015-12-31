@@ -1,99 +1,103 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH v3] reflog-walk: don't segfault on non-commit sha1's in
- the reflog
-Date: Thu, 31 Dec 2015 16:43:00 +0100
-Message-ID: <1451576580.11138.14.camel@kaarsemaker.net>
-References: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
-	 <20151230233301.GA9194@spirit>
-	 <xmqq37ujcwny.fsf@gitster.mtv.corp.google.com>
-	 <1451552227.11138.6.camel@kaarsemaker.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: ./t3310 fixed, t3400 broken
+Date: Thu, 31 Dec 2015 16:47:23 +0100
+Message-ID: <56854E0B.9010205@web.de>
+References: <5683DA04.6000007@web.de>
+ <CAPig+cQZq-aDYv5G3eNivvqC0eCTfyPtA4gEuop0PWq2LFT=9Q@mail.gmail.com>
+ <56851E2E.4050403@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 31 16:43:12 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Dec 31 16:48:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEfNf-00037z-3l
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 16:43:11 +0100
+	id 1aEfSR-0007vo-7u
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 16:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334AbbLaPnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Dec 2015 10:43:05 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35630 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750947AbbLaPnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 10:43:04 -0500
-Received: by mail-wm0-f51.google.com with SMTP id f206so66192678wmf.0
-        for <git@vger.kernel.org>; Thu, 31 Dec 2015 07:43:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=NApTSWKr9znXcg9Cr5WhwaLG7LZWfr2ywh3mNxC8v7w=;
-        b=i1A3ZxTLmwsvqURVItHDvLqF9zKebWr4ef1nmWPYn+zMMuDl/OsqfpDJYGgTOBrPul
-         EqJj9Hu3++vKCxgv+EWF8QFEMKxCXUs8Y64Jj5BRwb5Tq+iSx4uJfDPyWfjYfPZfRLT3
-         PqNdWuzOsO9sl1B1blHawDwXUkoQiQIfxNiag08PHT/XNQ3Q6FrUHuK/0PaiyyOMMyOa
-         trwGaHRrciFRHedaKOnGRpRZaYS2Ph/qzQmQlFk47NjSOuTJWhqgGvJiOKwO+fnzzEXj
-         qM48oPtt1U+B7XXJfU/5VTzdmJlSNKE4MpWeqItT+kv5qCm8gh2qOk/SWn6Z6hN1zb9F
-         1/Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=NApTSWKr9znXcg9Cr5WhwaLG7LZWfr2ywh3mNxC8v7w=;
-        b=GtBtztM/ekmry4lvIAj5yAf6VOIkvt/CwUC87Mms8uzuLDhXMkQ1tNT8jKMDdH+lGG
-         Ofqs30CqXI3tuJQ2Q/cjQmUduSTfFUI/ZR0JavcfRu9Y98tZoFN4wbfaUZVgECbI6DFQ
-         43x+R+YgNhIgiXMR76Q2G1pr65htu/gq6Q9NMi9EjOXCWNsuJOzc4ufpAp0ltg+UGuWW
-         JhhxTUrmUpGFHvG8rlclpdmL4fTnbnHFsAe+yYqTL5Yxu4WS21TzR5c7xQUlYRyAb2z8
-         ZQOJqg8QGV00S2NL4PXMI6LLARXkfhXvN1FBlRu0AuZXQgSbstfbKUU4iARa1MZdplcB
-         rBcg==
-X-Gm-Message-State: ALoCoQmznnGODA+Xz0O8Wub4yyEb4GwxV3HfUPkdvvWb8bkju9TpOg36QZ3Jcq9TGohS+mJAYu/6jrolrD1M8ykGQ1qfm9wp+g==
-X-Received: by 10.194.82.199 with SMTP id k7mr70070193wjy.65.1451576582025;
-        Thu, 31 Dec 2015 07:43:02 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id q4sm70293138wja.6.2015.12.31.07.43.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Dec 2015 07:43:01 -0800 (PST)
-In-Reply-To: <1451552227.11138.6.camel@kaarsemaker.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751905AbbLaPrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Dec 2015 10:47:41 -0500
+Received: from mout.web.de ([212.227.15.4]:57756 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750947AbbLaPrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 10:47:39 -0500
+Received: from [192.168.2.107] ([79.223.100.211]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LfzcB-1ZvK8X2dLP-00pcUe; Thu, 31 Dec 2015 16:47:30
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.0
+In-Reply-To: <56851E2E.4050403@ramsayjones.plus.com>
+X-Provags-ID: V03:K0:64i+7WJqTxyA6h+x/Ei+jH6q2wYbePcK03+4gfJILX6LISuZwEu
+ frZuT60uQF1I5zPJPatIaQcL6GTWxvb5RUYaDZu2xfhFJVc7UV1GqMemSKDsabpEqTyScRv
+ 6lIGuOceez0VKjA8uJV/HKckxCSDppTd2fITEVNwyuW+tOuxfrtu8tqe9ge4NcANmOI8CvX
+ K6R9cz5lYRlZQLeFoGriw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XYpSmzgXNZw=:dv3XD/P0SzI9sHi58aAT7b
+ ryanj9C7LgmN7UnnshGsjQq+z39YvHSBXlJSTRd7VoQJzlHr24FqcrZ4xxpjTDmnksxaYmkTh
+ rqOktpQCtGzkubQ4GCLWSF908Kgj25L+wGpNg6X0qIvRRGLRZifdFtYTa1v8FKMpe8svzBWE3
+ liY5K5Ek5g44fEHDOazH2Gt5uMKqDwv9I/cRrOKAUZJbIvY9c3qtlWYYMjEB17QCNT6wWaWtO
+ wpudbcRRcIp7pVXAaNW4HHBl3HHTc+x7NvjJ+bYWuBHmTvt0h9pe0NZ9bP/F3Gshro7M31bVD
+ rARKa11Gkyl5MaHcGuCY1ctyNSPrU+7F9fIeNesHwxF/lY0Y3OmluJ/QVIzc8nBtwOzNVO33h
+ YTmV25WT/ypom8NqjClwCh8F0ifckxN4vAf2mRZ0r5mkm+Lqyek1nvGW3sIueGCKAWhVcULxA
+ MDicE3+gI3igMGjW3/3V61Pu6V5AW+czC8fFCWsW+EOYArgr/ouPFXtj/diTv7zFdBfry7JhF
+ MUTXvldgJ1qf1ZbJWB4zppLpVXYQpA6OUlelNd9Uhxr+BJ5NDEMihx1vg9US1suZqR5+Y2kio
+ e7sarwlY7OXGhI6CWF2RBDg5ERfSyktu+sdgBFuVZMhBT+s6tNuP/dwbcbgdVay5HJOnlaVOa
+ uJi3XoBZMfxVq+bLp9JPmFlTWd95Cfg9jKv8+NTGFqreCT8FptTblERxHeImchw19tMuVsMbw
+ VzsfVyqg03fCtn7fpNXbBCr1xeLDlrpQqGq0SVDc6H7zWQoCw0vh1hgHZEv9UmfrOCTqmWqz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283246>
 
-On do, 2015-12-31 at 09:57 +0100, Dennis Kaarsemaker wrote:
-> > > +test_expect_success 'reflog containing non-commit sha1s displays
-> > > properly' '
-> > 
-> > In general, "properly" is a poor word to use in test description
-> (or
-> > a commit log message or a bug report, for that matter), as the
-> whole
-> > point of a test is to precisely define what is "proper".
-> > 
-> > And the code change declares that a proper thing to do is to omit
-> > non-commit entries without segfaulting, so something like
-> > 
-> >     s/displays properly/omits them/
-> > 
-> > perhaps?
+> t3310-notes-merge-manual-resolve.sh
+>failed during a short window (due to commit 2bd811ec) and
+> has already been fixed in commit 3a74ea38 ("notes: allow merging
+> from arbitrary references", 29-12-2015).
+
+Yes, it's fixed. Sorry for the noise.
+
+
+The next failure is t3400.
+Is there a chance to squeeze in this diff ?
+
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -259,11 +259,11 @@ test_expect_success 'rebase duplicated commit with
+--keep-empty' '
+        git reset --hard &&
+        git checkout master &&
+
+-       >x && git add x && git commit x -mx &&
+-       echo x >x && git commit x -mx1 &&
++       >y && git add y && git commit y -my &&
++       echo y >y && git commit y -my1 &&
+
+        git checkout -b duplicated HEAD~ &&
+-       echo x >x && git commit x -mx2 &&
++       echo y >y && git commit y -my2 &&
+        git rebase --keep-empty master
+ '
+
+
+
+
+
+
+
+
 > 
-> I did find the test title a bit iffy but couldn't really figure out
-> why. What you're saying makes a lot of sense, will fix.
-
-Thinking about it a bit more: 'proper' would be to show everything, we
-just expect that not to work yet. So I'll make it
-
-test_expect_failure 'reflog with non-commit entries displays all entries' '
-	git reflog refs/tests/tree-in-reflog >actual &&
-	test_line_count = 3 actual
-'
-
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+> ATB,
+> Ramsay Jones
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
