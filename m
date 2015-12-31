@@ -1,9 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/7] diff.c: keep all word diff structs together
-Date: Thu, 31 Dec 2015 19:37:31 +0700
-Message-ID: <1451565457-18756-2-git-send-email-pclouds@gmail.com>
-References: <1451565457-18756-1-git-send-email-pclouds@gmail.com>
+Subject: A failed attempt to integrate diff-highlight to the core
+Date: Thu, 31 Dec 2015 19:37:30 +0700
+Message-ID: <1451565457-18756-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -16,88 +15,79 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEcUO-0001CE-Ss
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 13:37:57 +0100
+	id 1aEcUO-0001CE-9y
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 13:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255AbbLaMhz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2015 07:37:55 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36391 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985AbbLaMhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Dec 2015 07:37:52 -0500
-Received: by mail-pa0-f43.google.com with SMTP id yy13so59480132pab.3
-        for <git@vger.kernel.org>; Thu, 31 Dec 2015 04:37:52 -0800 (PST)
+	id S1752133AbbLaMhs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2015 07:37:48 -0500
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:32776 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985AbbLaMhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Dec 2015 07:37:45 -0500
+Received: by mail-pf0-f179.google.com with SMTP id q63so119896169pfb.0
+        for <git@vger.kernel.org>; Thu, 31 Dec 2015 04:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=a0YHcaWDDxqX19uAQOwvN3pudNX23AOoy0jCEJtdy5I=;
-        b=G29fJVAnCMyjVwLllE9jonI7gvUODpNQdFCDPAQfHZlmi2SuG59XQEmQ79/PA/nOpl
-         5VdsB90DjSl9z8uFSVNgWl3SSqZRoxmG2iJZPT/P+UvHuogsnzQKBO7acm7K3XzPINYJ
-         ItGpym/nbfmTtgk8ckr/MgnkRKhxcMzYhd0eD7vvsgHO5Fdt6PUWp4VS+HpdxIVxz7yI
-         GMLoddtHc9TmHLg7eooJpvUffpA9qFHw029AjI4+STrqMVVz2Af/CkGuShwvLMiwKaXA
-         RUinhJMVgL+BVmkiiy78niZdNOrMJFLka93RlpUj8vFuFHGd0+RKZEVlhg2RxA9qYfo4
-         2YGA==
-X-Received: by 10.66.184.15 with SMTP id eq15mr45005308pac.42.1451565471730;
-        Thu, 31 Dec 2015 04:37:51 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=CJnmJBCIX9RegcWzPctutWt8RqDDVe9zqX9c3fdo1WE=;
+        b=U9i5iY03dQNdKczZpSou8MuNqtqxr0Jk8zwomV/Hhh8ndNIhutwK8dBn8sRaCPRH8R
+         jH7fIcRpAVQTboGGMqpnkPPfasiaJfBUtioTTcq56ezBRTHsetGsfu3I5EJqlHFeZKvj
+         0fDQWt4G9jz/J1Ymcn6bgsckXDwQy42YO0fo7trdRYzGksWai1bHu7jwh6pftR5yqEY3
+         bIkSIEB8OrFhKAVI+Xm2/R31QrPaRNOk8f3xkMRiUo2JIv3bVTIwrH6gEo0cuBT6rq4A
+         5fqRNwlTn9SeufERXYhEVXwsNPWHCD2qvhpSjOAprCiPlTzHk2duvPpgi1p/VKi7nv73
+         fN7w==
+X-Received: by 10.98.73.21 with SMTP id w21mr82912452pfa.136.1451565464831;
+        Thu, 31 Dec 2015 04:37:44 -0800 (PST)
 Received: from lanh ([171.233.234.31])
-        by smtp.gmail.com with ESMTPSA id h10sm101640136pat.7.2015.12.31.04.37.48
+        by smtp.gmail.com with ESMTPSA id n62sm33761894pfa.14.2015.12.31.04.37.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Dec 2015 04:37:50 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 31 Dec 2015 19:37:47 +0700
+        Thu, 31 Dec 2015 04:37:43 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 31 Dec 2015 19:37:41 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1451565457-18756-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283237>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- diff.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+This is mostly for the record. The patches are not as important as the
+result in this mail. But if you want to try out, you can.
 
-diff --git a/diff.c b/diff.c
-index 80eb0c2..dfbed41 100644
---- a/diff.c
-+++ b/diff.c
-@@ -759,17 +759,6 @@ struct diff_words_buffer {
- 	int orig_nr, orig_alloc;
- };
-=20
--static void diff_words_append(char *line, unsigned long len,
--		struct diff_words_buffer *buffer)
--{
--	ALLOC_GROW(buffer->text.ptr, buffer->text.size + len, buffer->alloc);
--	line++;
--	len--;
--	memcpy(buffer->text.ptr + buffer->text.size, line, len);
--	buffer->text.size +=3D len;
--	buffer->text.ptr[buffer->text.size] =3D '\0';
--}
--
- struct diff_words_style_elem {
- 	const char *prefix;
- 	const char *suffix;
-@@ -799,6 +788,17 @@ struct diff_words_data {
- 	struct diff_words_style *style;
- };
-=20
-+static void diff_words_append(char *line, unsigned long len,
-+		struct diff_words_buffer *buffer)
-+{
-+	ALLOC_GROW(buffer->text.ptr, buffer->text.size + len, buffer->alloc);
-+	line++;
-+	len--;
-+	memcpy(buffer->text.ptr + buffer->text.size, line, len);
-+	buffer->text.size +=3D len;
-+	buffer->text.ptr[buffer->text.size] =3D '\0';
-+}
-+
- static int fn_out_diff_words_write_helper(FILE *fp,
- 					  struct diff_words_style_elem *st_el,
- 					  const char *newline,
+If you don't know, the script diff-highlight in contrib can highlight
+changes between two nearly identical lines, pointing out what
+characters are different. It can improve readability a lot in certain
+cases (e.g. when you wrap _() around strings).
+
+I approached it differently. I took --color-words and reformatted its
+output in unified diff format. So you'll see +/- lines like a normal
+diff, but deleted and added words are also highlighted.
+
+The idea seems to fit well into diff-words machinery. But the output
+does not, especially in cases where there are many deleted/added words
+in a chunk. It could look.. patchy, like somebody throwing colors on a
+wall (especially when you do --highlight-words=3D.). You can try out an=
+d
+see.  git-log works so you can see lots of diff.
+
+I don't know, maybe the idea can be improved to have something closer
+to diff-highlight. I suppose we can select similar lines and diff
+them, instead of diff the entire chunk in one go. I might revisit it
+at some point in future, but for now, it's a failure.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (7):
+  diff.c: keep all word diff structs together
+  diff.c: refactor diff_words_append()
+  diff --color-words: another special diff case
+  diff.c: refactor fn_out_diff_words_write_helper()
+  diff: unified diff with colored words, step 1, unified diff only
+  diff.c: add new arguments to emit_line_0()
+  diff --highlight-words: actually highlight words
+
+ diff.c | 400 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++-------
+ diff.h |   3 +-
+ 2 files changed, 363 insertions(+), 40 deletions(-)
+
 --=20
 2.3.0.rc1.137.g477eb31
