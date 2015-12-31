@@ -1,111 +1,116 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] worktree: stop supporting moving worktrees manually
-Date: Thu, 31 Dec 2015 00:59:48 -0500
-Message-ID: <CAPig+cSDNgSmwMcEKfEQVcY=_7VHFrNiOHkR++YwvPtcsp5WZg@mail.gmail.com>
-References: <xmqqmvuudfk6.fsf@gitster.mtv.corp.google.com>
-	<1451187796-31138-1-git-send-email-pclouds@gmail.com>
-	<20151228062206.GA4621@flurp.local>
-	<CACsJy8ALc32ptP20_Mm+XDRXR6+b=Lam4saV77Kfrr1-3rHjfw@mail.gmail.com>
+Subject: Re: ./t3310-notes-merge-manual-resolve.sh broken on pu under Mac OS ?
+Date: Thu, 31 Dec 2015 01:08:05 -0500
+Message-ID: <CAPig+cQZq-aDYv5G3eNivvqC0eCTfyPtA4gEuop0PWq2LFT=9Q@mail.gmail.com>
+References: <5683DA04.6000007@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Mike Rappazzo <rappazzo@gmail.com>,
-	kyle@kyleam.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 31 07:00:37 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Dec 31 07:08:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEWHs-0005eC-Mu
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 07:00:37 +0100
+	id 1aEWPk-0003TM-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 07:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974AbbLaGA0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2015 01:00:26 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:32943 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751747AbbLaF7t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2015 00:59:49 -0500
-Received: by mail-vk0-f44.google.com with SMTP id a188so214187709vkc.0
-        for <git@vger.kernel.org>; Wed, 30 Dec 2015 21:59:49 -0800 (PST)
+	id S1751007AbbLaGII convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Dec 2015 01:08:08 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:33692 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbbLaGIH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Dec 2015 01:08:07 -0500
+Received: by mail-vk0-f48.google.com with SMTP id a188so214245985vkc.0
+        for <git@vger.kernel.org>; Wed, 30 Dec 2015 22:08:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=FUbU50clfJ8b3zpbse3eFqaen2ebYE8RaQ2289WVvTI=;
-        b=Xp77eNeJEuVnk1mVpS3RDea4692obClUTupLpXptRN73dtY1zGaDrl/WuDRNrJPLs2
-         +2J3B/lVOecR9C+vw8Xv9MeCitX+w+9Von14EsNZPWkFuD8pBcc+ytLsOJTlGRuD4THk
-         sJT/dcUzGwn70aHCosURs8eWtsASSR6I7H1RF2cxj0WC0mZkfZQgLa0Bua6bnejYl7mM
-         YBMr/k8+YRhLQE1bbXbG0/UuL04g0lyeZFZT3MMBr1WTuJrRMBQdUO2Uy9ppo1juHaNS
-         bIx69C7t+WRemHYvtXfTl0KVorpcnQcfmeJP5Qa99RbzfJIpEyvp/JvhbzBG67neWOZ7
-         8BVA==
-X-Received: by 10.31.58.142 with SMTP id h136mr45056589vka.115.1451541588518;
- Wed, 30 Dec 2015 21:59:48 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 30 Dec 2015 21:59:48 -0800 (PST)
-In-Reply-To: <CACsJy8ALc32ptP20_Mm+XDRXR6+b=Lam4saV77Kfrr1-3rHjfw@mail.gmail.com>
-X-Google-Sender-Auth: mMnBhhMxmpKVKnpPMC0BRwpXtpw
+        bh=ehw8Shjaabs7sY0VHPATBsSaItky+6LufR0m6d/f9kU=;
+        b=0E8Rpm1+a7zi11rXcbBkfjlpd/yfb3AZd5IAwF10dKmkFFLTNwpRe9YCmJQd3KKICJ
+         V9t2HgTz7i0LNM4xCWoqKM+zwxRYsR6PQXMxJXeTGA8avKtIE03LRKO6mgeKSgMTURgX
+         vKtYQYxk0SDeXpgssZsDj2AWBs3sI+I6jM+DUVeSzJ0z5N9dJISiLerxNwzW0Pt4g1IG
+         WjSS/kPU75pE8Zl7Srih3r6kfO4XCJkT+bSi10vFz6/wOJTYG1N386WXvzfiYiHN4Oie
+         HiXce6Dy23vSFwvFnJEMa50RFW7XXU+WTLQTP8lnwqCvhuid8oN3vKXvtK15aeZA8rp3
+         7RPg==
+X-Received: by 10.31.58.74 with SMTP id h71mr44878596vka.151.1451542085967;
+ Wed, 30 Dec 2015 22:08:05 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 30 Dec 2015 22:08:05 -0800 (PST)
+In-Reply-To: <5683DA04.6000007@web.de>
+X-Google-Sender-Auth: gcCNuOggofc401NLYRQgBu-Dg5c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283228>
 
-On Tue, Dec 29, 2015 at 8:55 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Dec 28, 2015 at 1:22 PM, Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
->> On Sun, Dec 27, 2015 at 10:43:16AM +0700, Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy wrote:
->>>  If you move a linked working tree to another file system, or
->>> -within a file system that does not support hard links, you need to=
- run
->>> -at least one git command inside the linked working tree
->>> -(e.g. `git status`) in order to update its administrative files in=
- the
->>> -repository so that they do not get automatically pruned.
->>> +within a file system that does not support hard links, you need to=
- update
->>
->> Hmm, is this "hard links" feature implemented? If not, then this
->> documentation is a bit outdated.
+On Wed, Dec 30, 2015 at 8:20 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> I got 2 failures on pu under Mac OS, (Linux is OK)
+> I did some very basic debugging, it seems as if grep doesn't find
+> a needed string.
+> Does anybody have an idea here ?
+
+I'm unable to reproduce these failures on Mac.
+
+> --------------------
+> Failure 1:
+> Add some debug code:
+> git diff
 >
-> The prune logic is there. But this hard link is not created by
-> 'worktree add'. I think calling link() was done at some point but the=
-n
-> it got dropped. Ah found it, it wasn't a big "no" so maybe we can
-> revive it at some point.
+> -       grep -q refs/notes/z merge_commit_msg &&
+> +       echo >&2 before grep &&
+> +       echo >&2 before cat &&
+> +       cat >&2 merge_commit_msg &&
+> +       echo >&2 after cat &&
+> +       grep  refs/notes/z merge_commit_msg >&2 &&
+>         # Merge commit mentions conflicting notes
+> +       echo >&2 after grep &&
 >
-> http://article.gmane.org/gmane.comp.version-control.git/243475
-
-Hmm, yes...
-
->>> +$GIT_DIR/worktrees/<id>/gitdir so that they do not get automatical=
-ly pruned.
->>
->> Following the example of af189b4 (Documentation/git-worktree: split
->> technical info from general description, 2015-07-06), it might be a
->> good idea to keep this high-level overview free of such low-level
->> details and instead mention $GIT_DIR/worktrees/<id>/gitdir in the
->> "DETAILS" section.
->>
->> Perhaps something like this, on top of your patch (assuming that the
->> "hard links" feature is not implemented):
+> ------ run the test:
+> debug=3Dt verbose=3Dt   ./t3310-notes-merge-manual-resolve.sh 2>&1 | =
+less
+> -------- get this output:
+> before grep
+> before cat
+> Merged notes from z into refs/notes/m
 >
-> Looks good.
+> Conflicts:
+>         04ed9a0bbe0285f41c913e2002cb09ef8449d4a6
+>         0f7aa3ec6325aeb88b910453bb3eb37c49d75c11
+>         7a4ca6ee52a974a66cbaa78e33214535dff1d691
+>         d07d62e5208f22eb5695e7eb47667dc8b9860290
 >
-> How about something like this at the end of the last new paragraph?
-> "alternatively if your file system supports hard link and the worktre=
-e
-> and $GIT_DIR are on the same file system, you can create a hard link
-> named "link" back to the .git file. See gitrepository-layout.txt for
-> more information".
-
-That makes sense, however...
-
-If I understand correctly, while it's true that the 'link' file will
-inhibit pruning, don't we still have the problem that "git worktree
-list" will show an outdated path if the user fails to update 'gitdir'?
-And doesn't the "branch already checked out in some other worktree"
-interrogation also depend upon 'gitdir' being up-to-date?
+> after cat
+> not ok 13 - finalize conflicting merge (z =3D> m)
+>
+>
+> -----------------------
+> Failure 2:
+> index d557212..92fabf0 100755
+> --- a/t/t3310-notes-merge-manual-resolve.sh
+> +++ b/t/t3310-notes-merge-manual-resolve.sh
+> @@ -472,6 +472,9 @@ EOF
+>         test "$(git rev-parse refs/notes/m^2)" =3D "$(cat pre_merge_z=
+)" &&
+>         # Merge commit mentions the notes refs merged
+>         git log -1 --format=3D%B refs/notes/m > merge_commit_msg &&
+> +       echo >&2 before cat &&
+> +       cat merge_commit_msg >&2 &&
+> +       echo >&2 after cat &&
+>
+> not ok 17 - add + remove notes in finalized merge (z =3D> m)
+> ---------- gives this:
+> before cat
+> Merged notes from z into refs/notes/m
+>
+> Conflicts:
+>         04ed9a0bbe0285f41c913e2002cb09ef8449d4a6
+>         0f7aa3ec6325aeb88b910453bb3eb37c49d75c11
+>         7a4ca6ee52a974a66cbaa78e33214535dff1d691
+>         d07d62e5208f22eb5695e7eb47667dc8b9860290
+>
+> after cat
