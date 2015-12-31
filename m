@@ -1,184 +1,198 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v3] reflog-walk: don't segfault on non-commit sha1's in the
- reflog
-Date: Thu, 31 Dec 2015 00:33:03 +0100
-Message-ID: <20151230233301.GA9194@spirit>
-References: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
+From: Mostyn Bramley-Moore <mostynb@opera.com>
+Subject: Re: [PATCH/RFC v2 0/2] add regex match flags to git describe
+Date: Thu, 31 Dec 2015 01:00:44 +0100
+Organization: Opera Software
+Message-ID: <5684702C.3040802@opera.com>
+References: <cover.1451298323.git.mostynb@opera.com>
+ <xmqqy4cejoz4.fsf@gitster.mtv.corp.google.com> <5681D02C.1040609@opera.com>
+ <xmqqk2nxi002.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Dec 31 00:33:16 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 31 01:01:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aEQEz-0003cp-Hx
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 00:33:13 +0100
+	id 1aEQgN-00007R-NA
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Dec 2015 01:01:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492AbbL3XdJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Dec 2015 18:33:09 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36167 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028AbbL3XdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Dec 2015 18:33:08 -0500
-Received: by mail-wm0-f52.google.com with SMTP id l65so72862593wmf.1
-        for <git@vger.kernel.org>; Wed, 30 Dec 2015 15:33:07 -0800 (PST)
+	id S1751491AbbLaAAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Dec 2015 19:00:50 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:35874 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750966AbbLaAAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Dec 2015 19:00:48 -0500
+Received: by mail-wm0-f46.google.com with SMTP id l65so73212752wmf.1
+        for <git@vger.kernel.org>; Wed, 30 Dec 2015 16:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=wGo+Lgs+s7pxNWzV32sXc7mUqLn1JvBswExMcqWix/I=;
-        b=NzXXju3GW5BOlhyaltEDaMpRY0PAnvBf/Q5+jde0+JFnvx3AnLpE48b4KKQxqjXyry
-         5Y3WdvLpivNEZFg75HGDCb85WCtLLxJe1zLlLRRBGMS1xuJAME/63/Ztt4evHi53w79y
-         NKyF/L3W1IqHakUU0j/TJ4xyBnDc9HSKJ29+mkFeiQIiV1L2x/s+94wD4mMP/XF9qDtk
-         9ulDSEyIynxHf1xOYmSwp4y18R7IdB3hBpOOTSvgtHFO9laHVbvcqIXoI2ZgWPNZJirY
-         A8Nr/x74Q1dMtkv05YHjnmeOTBZfA9HVFlR1/eG7O10W/MkQTyJaQwWnRz4aBhMZCrim
-         ygFA==
+        d=opera-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:cc:from:organization:message-id:date
+         :user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=lnkbjsKxo+zXTDxwB3J9lHvBvlarITKTLgck/kyjqek=;
+        b=UKmv3K3HO6B3VCjPzJ8RsqeyBwVTyJvtldOhWLBCEuvVdI5I5V//x95C3tN8FjjtVQ
+         /7NUE7Sib09bDkL0MpHJW11ZZGV5eZQTnsSiqBaX/UYqua1aTdJxP7yHNHhA+NZbYRT8
+         vtnlaLg/HSzkpcIP84TS5XxloJXaYBhnmm0YhrZwJtnjdhYtkd//RX124S2+XRY6EzUq
+         XNVIDAkKtw04e9OAbT4x4UmkJQBmwrg3NkUVYVZYBAuKMUJ6hQmE5CM2mDIan+0aAPnf
+         ydQaBQM0qvLVa5z4gAl2dZva4ZoSpJpjzrDeBhWTUeX2gx1WtKlU9VuZKaHDktd9XTWY
+         n2Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=wGo+Lgs+s7pxNWzV32sXc7mUqLn1JvBswExMcqWix/I=;
-        b=KFeay5KZRyPC0NfHGpTYi9mGhAaRduKfpF/8Qn9NOUVQ3GJFeVi/9J4pRvFj69gaat
-         6OOekbfMVIpUPvlEug/aL2crUu5eM6AJxlIBPV+ifyHXFZFBoE/F+Cb3rX0z7POo7rny
-         +0Q4vyqLa/8c6ZUi6tJks5FeeyW+xInlAHciTg8Etl+aDFAxR3LfJmW3cBxuVqsFCsZ4
-         ZoVrdMuRSqUd6D8H3Edp4/bFcANivGrHH1tn6DajbQu/kA1AyOmAZWq5VYw8UF5f3Gin
-         IIAZ4RJuqwXVOYnpmy5iSjHX1Sp4RTiRyn6oobWhqU0l3QZ4Ld40PYFzWHVs4vClIn44
-         basQ==
-X-Gm-Message-State: ALoCoQkBsAl6VSr1K0efZqKVnZACcrMYW41C9aTSbdtkS/3Q9ecbKbmFS4esAdy3lF+dettOFxw0h5u2Sqr+rTantCG5y3aXJw==
-X-Received: by 10.28.138.6 with SMTP id m6mr75258370wmd.82.1451518386301;
-        Wed, 30 Dec 2015 15:33:06 -0800 (PST)
-Received: from spirit ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id cv10sm16926818wjb.17.2015.12.30.15.33.05
+        h=x-gm-message-state:subject:to:references:cc:from:organization
+         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=lnkbjsKxo+zXTDxwB3J9lHvBvlarITKTLgck/kyjqek=;
+        b=R2yRmusilpnDVoLhNVXDAa6dbyx5KuUCtzXTuAMyaMZslEK/lsYwoyTQTSvcTuK3Ou
+         4kMs086NiIpVwyLnw34ZcSxEih/hBWfVVYwxY3NkDmLH+rnvCD1Uz0F3M6z+KN8UxYsx
+         Gmhm/WOnrQMMnmUrP4aA/v2Q0eQHAAA6Bg0rRNXp8qlrYtqgeywCYo00kLppZbFEXYXC
+         QP5qPJcbb0DE8xMl9q70JfZ/fQEDBpWTL4HYc3ZAJLR8d2iyERRLtwt6IeZAaCnE1FgU
+         l6ru8IioifNMNvNnCfFh989aajnPpCFNoMpCJ1eAouV4H4eA7Sp2C7lpFELZxyd0ygMO
+         M3Fw==
+X-Gm-Message-State: ALoCoQm9T8M/q+qkX9moOT8BFurdLOSKR4Yktuw4vkhtd0/9Q+8dDf9pqOfTErNBGUImwDWt/dmnXK2uldF3ZNfFv2uNfYSNqg==
+X-Received: by 10.28.73.135 with SMTP id w129mr57157146wma.55.1451520046632;
+        Wed, 30 Dec 2015 16:00:46 -0800 (PST)
+Received: from [10.0.0.50] (h151n12-g-kt-d2.ias.bredband.telia.com. [213.64.207.151])
+        by smtp.gmail.com with ESMTPSA id a126sm9017283wmh.0.2015.12.30.16.00.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Dec 2015 15:33:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqk2nvd0cz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Wed, 30 Dec 2015 16:00:45 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <xmqqk2nxi002.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283218>
 
-git reflog (ab)uses the log machinery to display its list of log
-entries. To do so it must fake commit parent information for the log
-walker.
-
-=46or refs in refs/heads this is no problem, as they should only ever
-point to commits. Tags and other refs however can point to anything,
-thus their reflog may contain non-commit objects.
-
-To avoid segfaulting, we check whether reflog entries are commits befor=
-e
-feeding them to the log walker and skip any non-commits. This means tha=
-t
-git reflog output will be incomplete for such refs, but that's one step
-up from segfaulting. A more complete solution would be to decouple git
-reflog from the log walker machinery.
-
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+On 12/29/2015 07:27 PM, Junio C Hamano wrote:
+> Mostyn Bramley-Moore <mostynb@opera.com> writes:
 >
-Helped-by: Junio C Hamano <gitster@pobox.com>
----
- reflog-walk.c     | 16 +++++++++++-----
- t/t1410-reflog.sh | 13 +++++++++++++
- 2 files changed, 24 insertions(+), 5 deletions(-)
+>>> I do not think it is wrong per-se to add an option to use regular
+>>> expressions instead of globs, but if we are to do so, the endgame we
+>>> aim for MUST be that we do so consistently to all the other commands
+>>> that iterate over refs and limit their output to the ones that match
+>>> given pattern (or a set of patterns), not just 'describe'.
+>>
+>> There is one important distinction between 'git describe' and the
+>> other commands that iterate through refs- it applies an internal
+>> search strategy and outputs at most one match.  This makes it
+>> difficult to search for the closest matching tag...
+>
+> If that was what you were trying to solve, then it sounds like a
+> typical XY problem.  You do not need custom matching flags; you need
+> a "give me N (or all) names based on possible tags" option.
 
-Junio C Hamano wrote:
+I can submit a separate patch for this, if you think it makes sense. 
+Some possibilities that spring to mind:
+* --results=<all|N>
+* --num-results=<all|N>
+* --show-matches=<all|N>
+* --multiple-results[=<N>]
+* --all-matches
+* -<N>
 
-> However, I see that there are one of two things that you could do to
-> make this part of code do slightly better than stopping at the first
-> non-commit object:
->=20
->  - pretend that the non-commit entry never existed in the first
->     place and return the commit that appears in the reflog next.
+> And I do not think it is a bad thing to add.  I already
+> said that an option to match with a regular expression is not a bad
+> thing to add, either ;-)
+>
+>> Besides 'git grep', the only regex type flag that is given a short
+>> option seems to be -E for 'git log' and 'git rev-list'.  I have no
+>> objection to dropping the short options, or leaving only -E.
+>
+> They also take -F, but "log" and friends do not pattern match the
+> refnames, so I do not think you have to worry about them at the
+> moment.
+>
+> It is more important to envision what we would do in the future when
+> a command that takes a pattern (or a set of patterns) to match the
+> refnames with _and_ another pattern (or a set of patterns) to match
+> something else, and take that into account when designing this
+> "allowing matching logic for refnames to be customized from glob to
+> something else" feature, so that we do not paint outselves into a
+> corner we cannot later get out of.  Imagine a hypothetical command
+> 'git mgrep' that can look for a pattern in tips of multiple branches
+> that can be used this way:
+>
+>      $ git mgrep -e 'froo*tz' --refs 'refs/heads/release/*'
+>
+> which may look for strings that match "froo*tz" in the trees of
+> all branches whose name match the pattern 'release/*'.  In this
+> example, the pattern to match strings is a BRE (same default as
+> "git grep"), and the pattern to match refnames is a glob.
+>
+> Consistency & similarity with "git grep" would most likely lead us
+> to add -E/-F/-G/-P options to this command and to make it affect how
+> the pattern to match strings works.  For example:
+>
+>      $ git mgrep -E -e 'fro+tz' --match-refs 'refs/heads/release/*'
+>
+> may look for the same strings that would match the first example,
+> but the pattern is expressed in ERE.  "-P", "-G", and "-F" options
+> would also work the same way.
+>
+> Now, the question is what this "-E" (or -P/-G/-F) should do with the
+> matching the command does with the refnames.  The easiest (and
+> laziest) way out from the implementors' point of view might be to
+> declare that they affect both at the same time.  But is that useful
+> in practice?  It probably isn't, as it forces the users to write
+>
+>      $ git mgrep -E -e 'fro+tz' --match-refs 'refs/heads/release/.*'
+>
+> because the ref matching suddenly starts to use ERE (not glob),
+> which most likely is not something users would expect.  So we may
+> need a separate set of options to affect the way how refs are
+> matched.
+>
+> We cannot just say "but we do not have that 'mgrep' command yet, so
+> we can do whatever we want to do with 'describe' today".  When the
+> need eventually arises that requires us to be able to specify how
+> strings are matched and how refnames are matched independently, we
+> would end up with an inconsistent UI where 'describe' takes '-P' (or
+> '--perl-regexp') to affect the way how refnames are matched, while
+> commands like 'mgrep' would need to use '--refmatch-perl-regexp' (or
+> any other name that can be distinguished from '--perl-regexp') to do
+> the same thing because they do not want '--perl-regexp' to affect
+> the matching of refnames.
+>
+> And at that point in the future, it is too late to fix 'describe',
+> as people are so used to use '--perl-regexp' to match with refs.  We
+> will forever regret that we did not give the option a name that can
+> be used independently from the existing '--perl-regexp' that is
+> about matching for strings, not refnames.
+>
+> That is exactly the kind of thing that would paint us in a corner
+> that we cannot get out of, which we need to avoid, hence we need to
+> think ahead now.
 
-This turned out to be doable in the same code segment: just keep on
-processing reflog entries until you hit a commit or run out of entries.
-That (and the updated foremerly-failing test) are the only changes
-between v2 and v3.
+OK, brainstorming a bit, how about either of these:
 
-I'll try to actually implement the proper solution, but that'll take a
-while. Until then, this at least stops a segfault :)
+1) 
+--match-pattern-type=<glob|fixed-strings|basic-regexp|extended-regexp|perl-regexp>
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 85b8a54..0ebd1da 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -221,6 +221,7 @@ void fake_reflog_parent(struct reflog_walk_info *in=
-fo, struct commit *commit)
- 	struct commit_info *commit_info =3D
- 		get_commit_info(commit, &info->reflogs, 0);
- 	struct commit_reflog *commit_reflog;
-+	struct object *logobj;
- 	struct reflog_info *reflog;
-=20
- 	info->last_commit_reflog =3D NULL;
-@@ -232,15 +233,20 @@ void fake_reflog_parent(struct reflog_walk_info *=
-info, struct commit *commit)
- 		commit->parents =3D NULL;
- 		return;
- 	}
--
--	reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
- 	info->last_commit_reflog =3D commit_reflog;
--	commit_reflog->recno--;
--	commit_info->commit =3D (struct commit *)parse_object(reflog->osha1);
--	if (!commit_info->commit) {
-+
-+	do {
-+		reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
-+		commit_reflog->recno--;
-+		logobj =3D parse_object(reflog->osha1);
-+	} while (commit_reflog->recno && (logobj && logobj->type !=3D OBJ_COM=
-MIT));
-+
-+	if (!logobj || logobj->type !=3D OBJ_COMMIT) {
-+		commit_info->commit =3D NULL;
- 		commit->parents =3D NULL;
- 		return;
- 	}
-+	commit_info->commit =3D (struct commit *)logobj;
-=20
- 	commit->parents =3D xcalloc(1, sizeof(struct commit_list));
- 	commit->parents->item =3D commit_info->commit;
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index b79049f..f97513c 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -325,4 +325,17 @@ test_expect_success 'parsing reverse reflogs at BU=
-=46SIZ boundaries' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'no segfaults for reflog containing non-commit sha=
-1s' '
-+	git update-ref --create-reflog -m "Creating ref" \
-+		refs/tests/tree-in-reflog HEAD &&
-+	git update-ref -m "Forcing tree" refs/tests/tree-in-reflog HEAD^{tree=
-} &&
-+	git update-ref -m "Restoring to commit" refs/tests/tree-in-reflog HEA=
-D &&
-+	git reflog refs/tests/tree-in-reflog
-+'
-+
-+test_expect_success 'reflog containing non-commit sha1s displays prope=
-rly' '
-+	git reflog refs/tests/tree-in-reflog >actual &&
-+	test_line_count =3D 2 actual
-+'
-+
- test_done
---=20
-2.7.0-rc1-207-ga35084c
+It's a bit lengthy (maybe --match-type would be sufficient), but I like 
+that the value names are shared with git grep etc option names.  And it 
+seems future-proof- if we ever need to support different pattern types 
+for other arguments, a --foo-pattern-type flag could be added and make 
+obvious sense.
+
+2) Interpret --match patterns that start and end with / as regular 
+expressions, and just pick one regex type to support.  I would suggest 
+extended posix regex (since it's supported in all builds unlike PCRE). 
+Downsides: some people might assume this is PCRE, also if we ever wanted 
+to support other regex types we would need to add another option like 
+(1), which would then make this feature redundant.
+
+I prefer (1).
 
 
---=20
-Dennis Kaarsemaker <dennis@kaarsemaker.net>
-http://twitter.com/seveas
+-Mostyn.
+-- 
+Mostyn Bramley-Moore
+TV and Connected Devices
+Opera Software ASA
+mostynb@opera.com
