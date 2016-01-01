@@ -1,61 +1,62 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: t6023 broken under Mac OS
-Date: Fri, 1 Jan 2016 16:36:48 +0100
-Message-ID: <56869D10.9090105@web.de>
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Subject: How do I get the contents of a directory in fast-import
+Date: Fri, 01 Jan 2016 10:54:00 -0500
+Message-ID: <jwvio3d7152.fsf-monnier+gmane.comp.version-control.git.user@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: dev+git@drbeat.li, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 01 16:37:49 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 01 16:54:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aF1ly-0004Zf-Ni
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jan 2016 16:37:47 +0100
+	id 1aF21v-0004H7-Hv
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jan 2016 16:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829AbcAAPg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jan 2016 10:36:58 -0500
-Received: from mout.web.de ([212.227.15.4]:63097 "EHLO mout.web.de"
+	id S1751862AbcAAPyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jan 2016 10:54:12 -0500
+Received: from plane.gmane.org ([80.91.229.3]:51979 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751583AbcAAPg5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jan 2016 10:36:57 -0500
-Received: from [192.168.2.107] ([79.223.114.113]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M5flQ-1a3vzQ1DZo-00xd0y; Fri, 01 Jan 2016 16:36:52
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-X-Provags-ID: V03:K0:GDxbQt9jeh4b5zIJJT8/FIAqKceHMETL2rHNWTeaxknsfx4p8Nm
- vz3esLaYQiaE5BLb6GL4laaRMWa3ACqdKrd6ZoVV7g4lo6BBsOHDostG6oyYwxZYVcmTEkF
- EnQkjPDsifs/M0XLL89hUviKy93wDsnh0YgDomg7/1R97HH5/to2pE1PqnNa/L2URi5P7Yw
- CZXAexKSV/kjfZ6G+u0Qg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GRMIWE1U4sg=:Ncqy8f7aPOA5Vy66B6qDmi
- WgR40urhCWM2Sf1C6+4UAUTxkwd7mDRoVdcBD1BJlgMhV9X7tOAFvR1MrE1FOt2vftS+nL0uJ
- CxIQ+a9Z1jUtStdhnd+kkCBFltMR7JxJXxUKn/k1X+PP2hOA04xTznYjUTsWmbLOa8LuxJv2R
- e4t0/+KepVr+t4hjHSgBywZbhzCRUHaadvWEiBGkV+MlVlT5eu/LWRMwziijkB+T+VPCScyUW
- uo4VIjL6h5ZXdks9K8pQ1zHEEsn+On7wSyxh8F7bz3sl1oEtzhyTRbB8gH6XfJ2/ndv+cTkFs
- 9tZqBXGGUG59yDeu5aM8IEL6+E9jKqW4TgeEpif6l3pAV++c8YOzNOxIo0P+ES2+41E4q7meF
- wgQeomZZx7fz7NxFspEklFyJvvu0etXkiBwgoUX4z54mw5MHsK46VZ2Dj+rJBILxlws40VaR4
- cBbHoOokSe3cBoJXZ7NwdB8dJ1R/i0Ei6GsGV1+zjlpbOZkGkBmvn2SUGLh+Lo/D7cBwq/dVj
- CE7cQnKhqdGu7HTYeGe8C7/+FHPSA8Ou2ytUcyr3+OEgq54pVVFgy2fLQg7gDBLu3AHJO5Zif
- d7KSxfgwk9GRCRVBSzep2moUdKsascoCKrxZnmbv8Ipo2QYgItMoL2IeVZGi73EWCGvM1GfJm
- r+mNUylj4GMJU/Va9/ZqNpvTzK6++GG6MHKEcQHSPzfQa3B7Iqq+hhDWjRbZVGHO3ftPgnMwo
- UxzuH91e6uSR+Y6np0JmNFoNoCADgtG9e3FCUWqge4Z15zkqURAe2RFANudhy9a7jS2NECre 
+	id S1751737AbcAAPyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jan 2016 10:54:11 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aF21p-00049h-77
+	for git@vger.kernel.org; Fri, 01 Jan 2016 16:54:09 +0100
+Received: from 181.47.69.49 ([181.47.69.49])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jan 2016 16:54:09 +0100
+Received: from monnier by 181.47.69.49 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jan 2016 16:54:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 181.47.69.49
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.50 (gnu/linux)
+Cancel-Lock: sha1:UoLk9kf1WGXXlVpaDx75E94OJBU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283257>
 
-The (last) test case
-'conflict markers contain CRLF when core.eol=crlf'
+I have a program which tries to collect info from lots of branches and
+generate some table from that data into another branch.
 
-does not work as expected under Mac OS: "wc -l" is not portable and the line
-test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 3
-fails.
+For performance reasons, I'd like to do that from fast-import, and as
+long as I know the name of all the files I need to consult, everything
+is fine since I can use the "ls" and "cat-blob" commands of fast-import
+to get efficiently the data I need.
 
-(The other problem is that the usage of "\r" in a sed expression is not portable
-either.)
+But I also need to look at some files whose names I don't know beforehand
+(i.e. all the files in some directories).  If I do "cat-blob" on those
+directories I get some binary "thing" which I don't understand.
 
-In other words: I don't have a solution at hand.
+So how do I get a directory listing from fast-inmport, i.e.
+like I can get with "git cat-file -p", but without having to fork
+a separate git process?
+
+
+        Stefan
