@@ -1,85 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] commit: ensure correct permissions of the commit
- message
-Date: Fri, 1 Jan 2016 16:04:25 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601011604070.14434@virtualbox>
-References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de> <20151220074559.GF30662@sigill.intra.peff.net> <xmqq7fk8io3f.fsf@gitster.mtv.corp.google.com> <20151221065944.GA3550@sigill.intra.peff.net>
- <xmqqio3rhg2f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1512301535550.14434@virtualbox> <xmqqfuyjczpv.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1] Fix t3400 on a case insensitive file system
+Date: Fri, 1 Jan 2016 16:08:57 +0100
+Message-ID: <56869689.7030604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Yaroslav Halchenko <yoh@onerussian.com>,
-	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 01 16:04:58 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de, ps@pks.im
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 01 16:09:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aF1GE-0006fY-3H
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jan 2016 16:04:58 +0100
+	id 1aF1KL-00029o-2w
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Jan 2016 16:09:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902AbcAAPEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Jan 2016 10:04:55 -0500
-Received: from mout.gmx.net ([212.227.17.20]:63250 "EHLO mout.gmx.net"
+	id S1751868AbcAAPJJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jan 2016 10:09:09 -0500
+Received: from mout.web.de ([212.227.15.14]:63995 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751840AbcAAPEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jan 2016 10:04:53 -0500
-Received: from virtualbox ([37.24.143.189]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LyVcA-1a8uqo0PyA-015rjv; Fri, 01 Jan 2016 16:04:28
+	id S1751583AbcAAPJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jan 2016 10:09:08 -0500
+Received: from [192.168.2.107] ([79.223.114.113]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LfzgJ-1Zupjp43qt-00pZsf; Fri, 01 Jan 2016 16:09:03
  +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqfuyjczpv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:gqIWXUIbxPQ7BmADr5fY0slyuQsYYkLi5SN2rXe5jbwZHw9y5Du
- PC8L0a/+PqbNyda6urbT1x+DW509u1gv0D7hGD93A6dKZfrTdJ2Rvx2cyhaIbE7uj3kB2BS
- 0/bg+2lzCL7EO3F2BlEbQNRi9DvyOd0x7b+h/qgCoSM00z6H0DFdJ187hIV+a3GqzlfFlpd
- Dxs3/1qs9YmPrgzawm47A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hq0CmvS6Y8g=:yl8Dibi8aFxrT8u2pnOZZq
- HJYEpCQf6P7YtJUp+TT24zFDsV4Yw6tK8rrjUXEKZiud29YhtyhypJzV+0fYAztV58M9vfp21
- RjuGAoWUVUNcalPSaDvQTB9vEdy790lsWAGr6gQ0MKsKlh9/KtFhUlLryEi3F0eG8zq293heW
- mE/wsFzHUmhINEY+P4tRNqZGW0LsNoWzXq1vLojyxQi8F2qtx8uTu1ZHi+Q5HPzIG/7VpNHRc
- uL2bdzCqLz7c+2cCISv1XsA7du/JO+pomJFT8qDTBDPKeMPqw/sz4SRdfkULh63JjGdOWXZ6n
- As6wYvB4//uqfu3gH5XjwpnKtuLvncDcECU6ocecBqaWCAONTz+lm0zFzscnhEDsG5bFsIk3h
- kiYs4m+DibUqvbTQgcX6NB8Q4ZvRremxZEtgiohcr1+Mt3g2rLE8imo3hr5eOywXCD2639Z0y
- Mb/n4HtgiEfNamahPx8QFHushKXtHpL3zqw41dwggOQhv3JRMW1d7yeXxz9tQmaDNGGGXoQ43
- /8AXjKKUVBTFdKS2nXZ1gheMdVf+fd8bZo4X4Lq1drjPF/pwlmtEOl+QI0ofAm4lFQSZr/ty+
- UHf/F1BxYppvDrzrime78O+7RRAixA9IhfyEgHmhmwNH7S7FsF9zwL4rXWe0H8i9X+Go13vwD
- 8NjSz+PlIoxFkOV1vv+fsDBawfjT/FDjaSccFg0JI249nt+3Adfudk10jF4OwGhljz15VlnrD
- UKkpOUGz2vW+ViQQ4SeBRzit1NzykC+82doNj4sh9bmAf97ceKK1q882j8u5+0HqIzmzcxZo 
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.0
+X-Provags-ID: V03:K0:ZzUqp+ago5X7MYQ8L7DtREswhGEKG0DuU0qD0boCs03scgZE71w
+ xM+Q9hUJivSurl9KXo1nS7/hYYq0cIz1D89xUgaUma8E08/3/kI3MjHa50xW/FDU6QFO7g6
+ 1gEUWRhCIOr2gPvKD3Fr033diE/LRIz2OBO0GDFjAJK1yDJqCFbOtA3JlZjRVKBfEz2K8XC
+ q9BMHdLImDglgwv6d7CEg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QaC1sOaPeNs=:i6sQKOCd68U9V0LhyKKOXj
+ +feaLTzpS5VcPVlkoGPyK4OgULmgpwtQKZDsVKvA7o5so6iCWCQi8oFn5xLH/yhg/u9l8kZWj
+ lFQPDvHfbEfSzDj+iWxKj/r/RsZ2i7ucyT50KlJsuaZFPBzuSRBO9AE8yb8FXrKTzJymDGe53
+ QeBJxnz7xI9SND3jWHy+m/qlDi0uW1pT2VYolX731LO+Jg4eDoDz0kU19cp5QSEZdTkRJyE82
+ zGKr7IVHWjpoUeN/MIpTT+hWAbk2ELjCR4WPXDdA9VdnjkS6SQE0V+TOlPP5kepz3gDK0D8Uc
+ pq+OsmG/wZ2vyt9LXMAmPIOdlmmLtwlISbmiFMxNdlKY0UFen98ISMZYDvM8Tx3h+2runZ4fH
+ YulxtLixVU2o6DjPS9GsmPrG0UERIq4KbUuRgc1HVjdDeJlRNKYRfhxDpOQlycosX8cboyAjo
+ ACexQXp+q+RQRwq2XdaedEs4FmqUWczELzJ22WLY+sMnG7agUFP/qKlWPTslHVXXONkDcK2EP
+ 5ZKY/e4Vz4D3phwFXQoMiTOI7bRTNF/MYNBxFUqKU7ZyO2W9lz8uaLDJA5we/QJ4u1Te2kaiK
+ Tc1/Rwn1K1uHQsdEfzgP0JqmpZTN8kv6sYVFg7vL10FHdl6eTxYY3SqUS9lr6SewTM1N7svOa
+ cwsMb12/ccub/CBW+Kx899+qtKeue0/vK6+CFE47yp91GNdDnnmSLinhRI+lBpX3bXpg893Eu
+ kQSjoi0bw41e75G8rKaqOW6gJAZvecZm/p23N5qai3ILgx5WNTsWjg5mkIGvC/trIBIUyR2f 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283255>
 
-Hi Junio,
+On a case insenstive file system x is the same as X.
+When a file named "X" exist, e.g. ">x && git add x" does not work as ex=
+pected,
+use file name "Y" instead.
 
-On Wed, 30 Dec 2015, Junio C Hamano wrote:
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t3400-rebase.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > So maybe
-> >
-> > 	fcreate_or_truncate(const char *path)
-> > 	{
-> > 		 FILE *ret = fopen(path, "w");
-> >
-> > 		 if (!ret && errno == EPERM) {
-> > 			 if (!unlink(path))
-> > 				 ret = fopen(path, "w");
-> > 			 else
-> > 				 errno = EPERM;
-> > 		 }
-> > 		 return ret;
-> > 	 }
-> >
-> > ?
-> 
-> I do not know fcreate_or_truncate() is a good name, though.
-
-So what would be a good name?
-
-Ciao,
-Dscho
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 5ed4012..2eebd22 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -259,11 +259,11 @@ test_expect_success 'rebase duplicated commit wit=
+h
+--keep-empty' '
+ 	git reset --hard &&
+ 	git checkout master &&
+ -	>x && git add x && git commit x -mx &&
+-	echo x >x && git commit x -mx1 &&
++	>Y && git add Y && git commit Y -mY &&
++	echo Y >Y && git commit Y -mY1 &&
+  	git checkout -b duplicated HEAD~ &&
+-	echo x >x && git commit x -mx2 &&
++	echo Y >Y && git commit Y -mY2 &&
+ 	git rebase --keep-empty master
+ '
+ -- 2.6.2.403.g6abe3ff.dirty
