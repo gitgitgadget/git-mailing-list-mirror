@@ -1,172 +1,74 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: t6023 broken under Mac OS
-Date: Fri, 1 Jan 2016 23:23:46 +0100
-Message-ID: <5686FC72.8030008@web.de>
-References: <56869D10.9090105@web.de> <5686B400.7000800@ramsayjones.plus.com>
- <5686BC3B.5080302@web.de> <5686EC29.3080901@ramsayjones.plus.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] German l10n updates on Git 2.7.0
+Date: Sat, 2 Jan 2016 08:53:15 +0800
+Message-ID: <CANYiYbGd4cZLnDQdOjbzehOeJEeu_ZyTwyyYsD_=ghGzHHqh1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	dev+git@drbeat.li, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 01 23:24:07 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 02 01:53:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aF87D-0002vN-26
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Jan 2016 23:24:07 +0100
+	id 1aFASC-00081Q-0E
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Jan 2016 01:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617AbcAAWYD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Jan 2016 17:24:03 -0500
-Received: from mout.web.de ([212.227.15.14]:51805 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752180AbcAAWYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jan 2016 17:24:01 -0500
-Received: from [192.168.2.107] ([79.223.114.113]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MGRYe-1aSHFa2zcO-00DKkT; Fri, 01 Jan 2016 23:23:55
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.0
-In-Reply-To: <5686EC29.3080901@ramsayjones.plus.com>
-X-Provags-ID: V03:K0:+9+xa2vC6xCUYQr3thpewBdEJ5QJGjSRsMwgLzsrZocY254wl9e
- SjzeP7oUDCQbnHbV1JXsGfADdw258oj1Gmry3ThnrtVlHf0p60eEUHbGgMViW4aovm1z8tF
- aX2Kp4z6FdmFkSmi1RUeM8qGuNPhYYuP1LECdaUVjdFzdOGBmL57As+wj3iS+QNC40gkb1c
- hN5i/ej6/lA7/6vCAOcug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:x7YTwykXRWo=:Xt8ssoVFozwuM+yldSomwg
- Zk6vzsDlgZIGQYoc04ZNaHTdA/KaaWDirDd7OoCf7PYLs/fPtstBUBwShZ7O+YoeN6DUnJU8a
- hl5R0N9jg0gv/AfJcru96R93k4GMM327WA+sm0Hf22u+X4D04RYbK4t5gamjP1XKp5bZmnrYG
- MtTgLekcYSfaMKb/b6Rb+/3n83BAupqATV0WpBMGO18Falv/zEBqBfdZGkEMRMz5sJfjL6uwa
- nK8kncQXyBsa9hEeqwrp3f0cBB8Lve0sL0Z4MJlE36Qkmx3gGHFTI27KUb4D7RGC58xcvC9Id
- Aasp6gjKkoXRmVaDaSgPSrkavDDlbqvYQBPU1M3N3z7ONtP/ou1fsDZy4lDayl7tfV8C++DkK
- j1Kt8G8rRKmCZMnimcjyFxmUneM3q+r8W7sxqPpw+DJM8Vcbxp1N3JJxRaa2zisOwWh/wmPxJ
- qZw+Z2ejT8jiXNhFfNouaTP9wso3usLrXyPPZNGdKqwvaF3yhQqwE0FYIvIiEG/8ULM6bI1tE
- T4eqk3WOHHcnM4mUWVQU7pJgynsfSru0wWKiWy6AB5QE5mNpI/J+u2lftKyhKTWSkPinsnrX7
- RSPE262z0BREnqR94b/8qAas5r3aXm/0zAK1lbFmQ6rLtzVsk5NsjfActcLA5E9+dhY77CnT2
- UW53Mv4l6XivWXQiO7brRiW69sKJpsX0Sulr7eO0cv3mIkFVfLSi8tx1A2uODFPU+K+4+Q102
- O8CFTpJpoOqFdI5M09Se6F8K9R/TEn/TPWGELb6rYB6b+ySuT6FWqiHWZx9rX6kyj8FEqxWs 
+	id S1752387AbcABAxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Jan 2016 19:53:18 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38605 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804AbcABAxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jan 2016 19:53:17 -0500
+Received: by mail-wm0-f49.google.com with SMTP id b14so118487231wmb.1
+        for <git@vger.kernel.org>; Fri, 01 Jan 2016 16:53:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=j0vr1AKLKaK4Wj0MJgM2I3mGtag4/1YfTMKXlfW3Vkk=;
+        b=Hb/1F2JQTa8xl+GgOyS49s2YltBs+LA1SBa3gmpVUs1KIl1raK573VFRZkKGUyGbwT
+         jhDtQ7giycbCJsAO1ml5uDNRYN9amhmIgaLp96h71nftm/q7m9mrlMClhkvprVmYtJ3B
+         T1i+sXl7B/G3orKdCuZkRNT85pYsZ8Wu9nRO1mQ+SnBQw83meVx/KfSKrNdr35KiXHYW
+         quuETIJC3jVe7reHY+H7nFHWK4vuYzE6MqbMcAw4Ixclyrgql+zcbdtJs2c7tvEKPutD
+         +nytj/cm6cHCrErbuMS+HVkYoK6o+AHDNXQlOBy2aTF+r4wMY/Jf+jmW1Qbz8M3G9c5i
+         Nz+w==
+X-Received: by 10.194.246.200 with SMTP id xy8mr81749563wjc.62.1451695995517;
+ Fri, 01 Jan 2016 16:53:15 -0800 (PST)
+Received: by 10.194.61.43 with HTTP; Fri, 1 Jan 2016 16:53:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283263>
 
-On 2016-01-01 22.14, Ramsay Jones wrote:
->=20
->=20
-> On 01/01/16 17:49, Torsten B=C3=B6gershausen wrote:
->> On 2016-01-01 18.14, Ramsay Jones wrote:
->>> Hi Torsten,
->>>
->>> On 01/01/16 15:36, Torsten B=C3=B6gershausen wrote:
->>>> The (last) test case
->>>> 'conflict markers contain CRLF when core.eol=3Dcrlf'
->>>>
->>>> does not work as expected under Mac OS: "wc -l" is not portable an=
-d the line
->>>> test $(sed -n "/\.txt\r$/p" output.txt | wc -l) =3D 3
->>>> fails.
->>>
->>> Hmm, I have never used a Mac, so I'm just guessing here, but
->>> you could try something like (obviously untested!):
->>>
->>> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
->>> index 245359a..68b306f 100755
->>> --- a/t/t6023-merge-file.sh
->>> +++ b/t/t6023-merge-file.sh
->>> @@ -350,7 +350,7 @@ test_expect_success 'conflict at EOF without LF=
- resolved by --union' \
->>>  test_expect_success 'conflict markers contain CRLF when core.eol=3D=
-crlf' '
->>>  	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->>>  		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
->>> -	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) =3D 3
->>> +	test $(tr "\015" Q <output.txt | sed -n "/\.txtQ$/p" | wc -l) -eq=
- 3
->>>  '
->>> =20
->>>  test_done
->> Yes, this works.
->>
->>>
->>> [The 'wc -l' portability should only be a problem if you rely on th=
-e
->>> exact textual form of the output, rather than the integer count.
->>> 'wc -l' is used in many many tests ...]
->>>
->>> Note that this test is not checking all conflict markers (the
->>> =3D=3D=3D=3D=3D=3D=3D marker does not have a filename appended). Sh=
-ould that
->>> be fixed also?
->> This is may attempt (against pu)
->>
->> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
->> index 68b306f..b1f8e41 100755
->> --- a/t/t6023-merge-file.sh
->> +++ b/t/t6023-merge-file.sh
->> @@ -350,7 +350,13 @@ test_expect_success 'conflict at EOF without LF=
- resolved by
->> --union' \
->>  test_expect_success 'conflict markers contain CRLF when core.eol=3D=
-crlf' '
->>         test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->>                 nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.=
-txt &&
->> -       test $(tr "\015" Q <output.txt | sed -n "/\.txtQ$/p" | wc -l=
-) -eq 3
->> +       tr "\015" Q <output.txt | sed -n "/\.txtQ$/p" >out &&
->> +       cat >exp <<\EOF  &&
->> +<<<<<<< nolf-diff1.txtQ
->> +||||||| nolf-orig.txtQ
->> +>>>>>>> nolf-diff2.txtQ
->> +EOF
->> +        test_cmp exp out
->>  '
->>
->=20
-> This still doesn't test the '=3D=3D=3D=3D=3D=3D=3D conflict marker', =
-how about
-> something like this (again not tested on Mac - is the re in the
-> sed invocation OK on the Mac?):
-sed is OK (The problem is the usage of "\r" inside sed:)
+Hi Junio,
 
-Linux:
-printf "AA\r\n" | sed 's/\r$//' | od -c
-0000000   A   A  \n
+Ralf completed his work on German l10n for Git 2.7.0, please pull.
 
-Mac OS:
-printf "AA\r\n" | sed 's/\r$//' | od -c
-0000000    A   A  \r  \n
-0000004
->=20
-> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
-> index 245359a..0697b22 100755
-> --- a/t/t6023-merge-file.sh
-> +++ b/t/t6023-merge-file.sh
-> @@ -350,7 +350,14 @@ test_expect_success 'conflict at EOF without LF =
-resolved by --union' \
->  test_expect_success 'conflict markers contain CRLF when core.eol=3Dc=
-rlf' '
->  	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->  		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
-> -	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) =3D 3
-> +	tr "\015" Q <output.txt | sed -n "/^[<=3D>|].*Q$/p" >out.txt &&
-> +	cat >expect.txt <<-\EOF &&
-> +	<<<<<<< nolf-diff1.txtQ
-> +	||||||| nolf-orig.txtQ
-> +	=3D=3D=3D=3D=3D=3D=3DQ
-> +	>>>>>>> nolf-diff2.txtQ
-> +	EOF
-> +	test_cmp expect.txt out.txt
->  '
-> =20
->  test_done
-Your fix works under Mac OS.
+The following changes since commit 28274d02c489f4c7e68153056e9061a46f62d7a0:
 
-Micro-nit: should the sed expression use -e (is that more Git style ?)
-tr "\015" Q <output.txt | sed -n -e "/^[<=3D>|].*Q$/p" >out.txt &&
-Micro.nit 2:
-We can simplify and use grep instead:
-tr "\015" Q <output.txt | grep "^[<=3D>|]" >out.txt &&
+  Git 2.7-rc3 (2015-12-28 14:00:52 -0800)
+
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po tags/l10n-2.7.0-rnd2+de
+
+for you to fetch changes up to 02103b328912d06d1b04cf42e408cad2218b1f9b:
+
+  l10n: de.po: translate 68 new messages (2015-12-29 19:53:17 +0100)
+
+----------------------------------------------------------------
+l10n-2.7.0-rnd2+de
+
+----------------------------------------------------------------
+Ralf Thielow (2):
+      l10n: de.po: improve some translations
+      l10n: de.po: translate 68 new messages
+
+ po/de.po | 3212 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 1723 insertions(+), 1489 deletions(-)
+
+--
+Jiang Xin
