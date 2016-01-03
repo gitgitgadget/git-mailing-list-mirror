@@ -1,78 +1,76 @@
-From: KES <kes-kes@yandex.ua>
-Subject: Can not 'git add file'
-Date: Sun, 03 Jan 2016 16:53:11 +0200
-Message-ID: <1500251451832791@web17m.yandex.ru>
+From: Jeff Merkey <linux.mdb@gmail.com>
+Subject: Re: "git send-email" thru Gmail incurs few minutes delay
+Date: Sun, 3 Jan 2016 08:59:14 -0700
+Message-ID: <CAO6TR8UzKR=cXu-bgf4HfBwNKrmMx-Ucha-nHUA3ranw2AoxgA@mail.gmail.com>
+References: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 03 16:01:02 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	git@vger.kernel.org, Andrey Utkin <andrey.od.utkin@gmail.com>
+To: Andrey Utkin <andrey.utkin@corp.bluecherry.net>
+X-From: linux-kernel-owner@vger.kernel.org Sun Jan 03 17:00:10 2016
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aFk9V-0002ov-7A
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Jan 2016 16:01:01 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1aFl4i-0002XS-Lc
+	for glk-linux-kernel-3@plane.gmane.org; Sun, 03 Jan 2016 17:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbcACPAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Jan 2016 10:00:24 -0500
-Received: from forward18m.cmail.yandex.net ([5.255.216.149]:57998 "EHLO
-	forward18m.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751355AbcACPAX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Jan 2016 10:00:23 -0500
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Jan 2016 10:00:22 EST
-Received: from web17m.yandex.ru (web17m.yandex.ru [37.140.138.108])
-	by forward18m.cmail.yandex.net (Yandex) with ESMTP id 5D3E120C4D
-	for <git@vger.kernel.org>; Sun,  3 Jan 2016 17:53:12 +0300 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web17m.yandex.ru (Yandex) with ESMTP id D443C37A2C41;
-	Sun,  3 Jan 2016 17:53:11 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1451832792; bh=Zt5tK5SYMal/8veyG8+9Ml283S3C4Vvpy5uuPa3hfig=;
-	h=From:To:Subject:Date;
-	b=a1NQdU9JkSGyikbpZPQlN/8kcUFPnqO1aGUmPnw2GsG7nafOJCZoULyYHQB2zHv0X
-	 tTI1uklDva+1yyyuljuiEeg6dG9xExP5RJz3OztFGBXWmLesyF6pXOgPuw2S8GlUX7
-	 YdOFMxcq/c9JApZtoPhzOCxsaM1rMgbvWFMg+U/M=
-Received: by web17m.yandex.ru with HTTP;
-	Sun, 03 Jan 2016 17:53:11 +0300
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Sender: git-owner@vger.kernel.org
+	id S1751978AbcACP7R (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 3 Jan 2016 10:59:17 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:38552 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbcACP7O (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 3 Jan 2016 10:59:14 -0500
+Received: by mail-ig0-f169.google.com with SMTP id mw1so92714679igb.1;
+        Sun, 03 Jan 2016 07:59:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+vtnWzEqCySwZBZTofTjiH5p0RHCNnin0s+KM7BdY3c=;
+        b=w4hAJLD549XWbCoeqqj0IPmo7FQnjsfJtP02GirYaFB9UK6m5vpeXgBwZ1SxnMyPIC
+         RY1rbFHS5OFW+ijhgcOONFgQZkHf3l2ccpspAU5NwgcQYCqaVrhUmFQcDrTGlvmrHouf
+         HfV47f9R4TU67KyQ/FvL0VySePoTxW65v/03wen4+HAAPBVNdl3jnDycyZEXKJvqfWf2
+         Y3Osv/VjDwXus2QcwbJvVfH5qx+r2QWBRC3mRv0DzN84qnfzl2KdUEpHi+Pp7zI7auBV
+         qGjtTMZqU3EN0LRJsqCXql4dhV2WG+CWlKU3gOR144k6O1mA82b81k/MfDwQF/giPiSY
+         ItTw==
+X-Received: by 10.50.64.146 with SMTP id o18mr73328106igs.51.1451836754191;
+ Sun, 03 Jan 2016 07:59:14 -0800 (PST)
+Received: by 10.79.75.69 with HTTP; Sun, 3 Jan 2016 07:59:14 -0800 (PST)
+In-Reply-To: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283274>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283275>
 
-Hi.
+On 1/3/16, Andrey Utkin <andrey.utkin@corp.bluecherry.net> wrote:
+> After "Send this email? ([y]es|[n]o|[q]uit|[a]ll): y" prompt and
+> before "Password for 'smtp://XXX@gmail.com@smtp.gmail.com:587':"
+> prompt I always have a delay of 2-3 minutes. It is weird! "Unsafe
+> clients" are allowed in Gmail settings.
+> I experience this both with @gmail.com mailbox and with gmail-based
+> company domain mail.
+> I noticed this happening the first time several months ago.
+> Has anybody else experienced this? Any solution?
+> My git version is 2.6.4.
+>
+> --
 
-How to reproduce
 
-$ git-number
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+Yes. I see it.  It's the gmail smtp gateway but 3 minutes is short, I
+am seeing longer.  It's gmail not git.
 
-1	modified:   ../lib/Devel/DebugHooks.pm
-2	modified:   ../lib/Devel/KillPrint.pm
-3	modified:   00-simple.t
+Jeff
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
 
-4	../lib/Devel/DebugHooks/
-5	../lib/Devel/ImportArgs.pm
-6	../lib/Devel/KillPrintTest.pm
-7	../lib/Devel/KillPrint_scope.pm
-8	../lib/Devel/PkgAtCompileTime.pm
-9	../lib/Devel/t.pl
-10	lib/Devel/AutoInit.pm
-11	lib/Devel/DZVii.pm
-
-no changes added to commit (use "git add" and/or "git commit -a")
-$ git add -p ../lib/Devel/DebugHooks/Commands.pm 
-No changes.
-
-I want to start track file here, but I do not want to stage while file.
-
-It seems the git can not process this case and do not allow me to complete that.
+> Bluecherry developer.
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Please read the FAQ at  http://www.tux.org/lkml/
+>
