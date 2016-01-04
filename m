@@ -1,70 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 16/17] grep: read -f file with strbuf_getline_crlf()
-Date: Mon, 4 Jan 2016 13:27:44 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601041321360.14434@virtualbox>
-References: <1446071161-15610-1-git-send-email-gitster@pobox.com> <1450303398-25900-1-git-send-email-gitster@pobox.com> <1450303398-25900-17-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH v2 02/17] check-attr, check-ignore, checkout-index: read
+ paths with strbuf_getline_crlf()
+Date: Mon, 4 Jan 2016 13:27:26 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601041305020.14434@virtualbox>
+References: <1446071161-15610-1-git-send-email-gitster@pobox.com> <1450303398-25900-1-git-send-email-gitster@pobox.com> <1450303398-25900-3-git-send-email-gitster@pobox.com> <alpine.DEB.2.20.1601041258280.14434@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 13:28:01 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 13:27:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG4Ew-0007hR-SM
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 13:27:59 +0100
+	id 1aG4Ep-0007bM-JX
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 13:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753927AbcADM1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 07:27:51 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55964 "EHLO mout.gmx.net"
+	id S1753777AbcADM1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 07:27:33 -0500
+Received: from mout.gmx.net ([212.227.15.15]:49970 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753762AbcADM1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 07:27:48 -0500
+	id S1753665AbcADM1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 07:27:30 -0500
 Received: from virtualbox ([37.24.143.189]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LztD9-1aBRhK228B-0153rE; Mon, 04 Jan 2016 13:27:45
+ ESMTPSA (Nemesis) id 0M0Ppl-1ZxiSo1nTB-00ubph; Mon, 04 Jan 2016 13:27:27
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1450303398-25900-17-git-send-email-gitster@pobox.com>
+In-Reply-To: <alpine.DEB.2.20.1601041258280.14434@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:SX/n1TNNzQCjeTx1ZzST/2ANFJJ1lPJxmnk8BMaoRNDvr2PQhtR
- Gd+LqCilreJpXU20J0GJF1K5iF6Ax8mZru2u8LVf79MO9yWB9PuvHUPqSXtx9yMubs4ehvm
- KgqHp+Jv6I3qZWoIEXWhFxCopxWpWltzmW+BMhE3t16ighMJWNFvMgV8XQOnXRJun/SEG5L
- 9uruOj/fH6X+fCFpx56NQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e7vvryTBLWg=:/ymFZ2vtFRIPNogcLoF2kV
- VrGGOtD4c69ny1Th7l/IDGwJonoaR2w40rIoyg4/bH8fjMiZZvip82jSJQe4Hf7GQfxC3GFRH
- EdgaffuIM0qeRW+gM15YgVB9WmtM1qqa/lSawaqzo1fLSafTdMKYI6uMW0rtV1hOBngH6a7kY
- sGwp2/OwkEOzAhq4ICDOK4+DhRamWjnkeqlTtgb639lfrsr7e7AFLqdU5hfXjdlg2KSV4mq3A
- GIW3Jcttl9RLgbC7nZrIfmJ6B6aj83yMnNp+FDRlfL8heAaN2jMWIHZ/mq59u0uJOGpJn0OoC
- vAmlkLJVXfUJYf8zlSi2EBqX5Gj715wO10rI4NlFaXR4chaRAEPqsFkn7ksxsZ5RfShNNJCzB
- cjZRe7yjYOW9XPEc5lU8s6DUIHSq8BZvTpqKH0K+hpUWjLjSz4xbtyIf77T3BItI+Atby8DYp
- 8fFpcKRS+muuqo+uvd9TVNUTnwvDGroRDNW6HFBuhZ94RH3BKLqdCsVN+za28e2KOfY+/IXw+
- xk32EwC13rCWIrMuYft7kHvpAe5h+VbEvPOkQlGcJDN6qlZBzG13NYjkMUyKdctP4xOWK59xG
- 31B6VlA4O1RPkLTcoD3lDpKoc22dkKYv0UJ29OPnyn6HanH/D5T9J78WfohlbEqXpTxiOnLkq
- fBv4ds9AmX+6P8ygznSoW4Bvo39Cpu9KKi+l9HApmNWyIxCIWF9SvwsY1WtNNuYQcF2WqJdzU
- ztRjCmQDuzMX2aCpR/KBdQiC+Mm7pfTuCn+NPRipqMk5NnuDxP7ZB0esBnzVoyJAv+yYZ92U 
+X-Provags-ID: V03:K0:7Gvku8/GpMgtrmb7T1KiLgU6PtKDYkDYp4RrNW+Qbo1Te1EfY+l
+ FkjHQ2QMnTGnY5z8KI+4OnOvB7SXwDyszCGhplSFiwHMKY14j2HMekUS80FbZPj9vrN/rI+
+ b4YQAV7Kzh8cxuta/EtHXCwagWxBONQb7AzEXFWGbn9Va740CGaNZEUouMzu4PVSvf1Y6b+
+ YFqujf3wSDbwCjxMFiXSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uHhqrQpTgcM=:hYRds1hexjkP9R6sQTpwyz
+ xreMKzOLbYVpMURDdQ3chln6kPINJWCHwhxXfCIT7lmxylJt4p2RK2C5Yb84laJqaa63f393M
+ SXgSg2tTHRsV7hHRc4ZrdmmkH3MHZ6JtP6q66ADMDhfoTzghrR2viPpy/nVm6rGqGkZgpPzmN
+ AUbftIkoBu7sYZQhd05iuKHFVR7dJFDXZ3GNvUGU7IWtaSXyecWmHA5bA97HY74gF45vxvVxH
+ treBgbQTRs/f8UI0FIRh3egqiRPMchGhJMO5g9R2tQDN2QOk5ZnFwywAAEhdzLndeQa51zV8g
+ PHc5feeaVuKEiMeoekgBkSvmdlX9Kh+GohYqmMPZr+EPzK4Tca3u3MsI2mwpQw/uZBB6swZD5
+ 0rw1C4htGmqyZL2guxuCQCommWr0E3KjVNfsQipqV/37FOOfYwwaImRA1C7QCeXqsUxz5tDWo
+ ruUBvjqChB+gsi91orN0Kf+8ItyJEyBnoQzobCWA+EDCwIr9K/A2H1HLSpSh623/TWShXuLRq
+ kkbjQ+JwfODhgGAQpK9o1Z9UyJgQh7zDTBOktYygq8a+m+Bi3KphEFegrZFoMkZiophSYsLOv
+ Dk1UHTfA9rZ3+a+5LiFEc0PfNMqsmSSeqmLZGqWhn+SGTNAlTuidHcY9N9HbSsFv2GhjT1BbY
+ J3wXfkYuBeLQnJufWlWXNPAz8YzsiPwXbBdnjIHWTQmz0fQlk35Wux669RpHLII4JuOjanSjV
+ dE5RsZos8qEZaHnadVjzXXWUePFCZId8tYm9TPG0jRPT2t5Q4mQ+jvPdkyiOJ2YkGcgn8k3j 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283302>
 
 Hi Junio,
 
-On Wed, 16 Dec 2015, Junio C Hamano wrote:
+On Mon, 4 Jan 2016, Johannes Schindelin wrote:
 
-> This is iffy; you may actually be trying to find a line with ^M in
-> it on a system whose line ending is LF.  You can of course work it
-> around by having a line that has "^M^M^J", let the strbuf_getline_crlf() eat
-> the last "^M^J", leaving just the single "^M" as the pattern.
+>  	strbuf_init(&buf, 0);
+>  	strbuf_init(&nbuf, 0);
+> -	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+> -		if (line_termination && buf.buf[0] == '"') {
+> +	while ((nul_term_line
+> +			? strbuf_getline(&buf, stdin, '\0')
+> +			: strbuf_getline_crlf(&buf, stdin)) != EOF) {
+> +		if (!nul_term_line && buf.buf[0] == '"') {
+>  			strbuf_reset(&nbuf);
+>  			if (unquote_c_style(&nbuf, buf.buf, NULL))
 
-Thanks for being careful.
-
-Having said that, `grep` operates on lines of text, and CR is established
-as a non-text byte, so I would argue that the previous behavior was
-actually incorrect: if you searched for, say, `abc$` in a CR/LF delimited
-file, the outcome would not have met my expectation of correct behavior.
+FWIW this is an example of that "abuse" I referred to earlier: the call to
+strbuf_getline(..., '\0') is actually *not* interested in a line at all.
+So I guess I would suggest to change the name "strbuf_getline" to
+"strbuf_getdelim" first, and then re-introduce a different
+"strbuf_getline" which is actually your "strbuf_getline_crlf". Because
+let's face it, if we are really reading a line of text, CR/LF should be
+handled automatically.
 
 Ciao,
 Dscho
