@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/10] t/t5532-fetch-proxy.sh: use the $( ... ) construct for command substitution
-Date: Mon,  4 Jan 2016 10:10:44 +0100
-Message-ID: <1451898651-16468-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] t/t5537-fetch-shallow.sh: use the $( ... ) construct for command substitution
+Date: Mon,  4 Jan 2016 10:10:45 +0100
+Message-ID: <1451898651-16468-5-git-send-email-gitter.spiros@gmail.com>
 References: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:40 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG1Av-0004zF-Uy
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:38 +0100
+	id 1aG1Av-0004zF-CJ
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261AbcADJL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 04:11:28 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34629 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753222AbcADJLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 04:11:04 -0500
-Received: by mail-pf0-f180.google.com with SMTP id e65so146463282pfe.1
-        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:04 -0800 (PST)
+	id S1753257AbcADJL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 04:11:26 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35137 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753224AbcADJLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 04:11:05 -0500
+Received: by mail-pa0-f47.google.com with SMTP id do7so2520213pab.2
+        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n1PhSUKXj+DW2cuxHMPesSO1y7TMPARV0XgyZ2Pk17Y=;
-        b=U0n+3T1UMYJlJILIgPFu8L90U9E7ilMki0EfC02fZNiEUr9Kzad8l62RBUlFD1tQ8N
-         G0hJ9fTAzKZxdpknlXFq2CnUlyfuimd8XuhyGo4esbSEq/uUo68sQr9+OB6oUryl2gKE
-         bI8FjWTONIM7TGYnP7lcGgNN83iqHHAzD3pKKqJNfUiElh7fuLKmIhSV8RaKnOvUMvaW
-         pW5+lC1Zylems7BAeEXaAC3LGvBCA2IgZ1UFUdzMN1QItkGkOV5qmOwC+QNahesaZ2DA
-         vfIAJ5NY+S6mhRgzSut+nTRrOTKIMp20LK8K7WCk4AzgA6CweG2o42j/8RUje9T+HL5M
-         sI2g==
-X-Received: by 10.98.74.88 with SMTP id x85mr47745639pfa.147.1451898664234;
+        bh=Bx+ZwYivVOEidt2WGQptY0CgB+hG5Ni6xtnqGY8Locw=;
+        b=y7uinuffX0xUgL84ivL2onmcgDzn4g1QxvzFMJqPFgMJJ/g2ajE5ptrdMSXrDNLNJ8
+         NkxSTb9k4qsTxGErRhNhXPmusIF6jkqDzN2DcG+Fhql5kRCN+NgqfaT7MNv9pYGlcdUp
+         sD10KKtL+rq6sst3/R/k8IEfg8UfAI4P5JSnHmvjP9es/S/C94qZqpzCLQMXJoijFCe/
+         0Wa0j7SyGHUo6LEUOJHE0S3sNGnVMBWgP8oURR0E8VV9xUb03ueay7Wod0GB0z2UkhCs
+         v5Q0U60s7u98GX9REMtdJpohHpsPbr/AUfcl2Qa+mu9cfhjrQcXEzxt6RX2NIkNnc7TN
+         EtaA==
+X-Received: by 10.66.101.3 with SMTP id fc3mr84456996pab.2.1451898664948;
         Mon, 04 Jan 2016 01:11:04 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.03
+        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Jan 2016 01:11:03 -0800 (PST)
+        Mon, 04 Jan 2016 01:11:04 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283286>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,30 +66,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5532-fetch-proxy.sh | 4 ++--
+ t/t5537-fetch-shallow.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5532-fetch-proxy.sh b/t/t5532-fetch-proxy.sh
-index 5531bd1..d75ef0e 100755
---- a/t/t5532-fetch-proxy.sh
-+++ b/t/t5532-fetch-proxy.sh
-@@ -15,7 +15,7 @@ test_expect_success 'setup remote repo' '
- cat >proxy <<'EOF'
- #!/bin/sh
- echo >&2 "proxying for $*"
--cmd=`"$PERL_PATH" -e '
-+cmd=$("$PERL_PATH" -e '
- 	read(STDIN, $buf, 4);
- 	my $n = hex($buf) - 4;
- 	read(STDIN, $buf, $n);
-@@ -23,7 +23,7 @@ cmd=`"$PERL_PATH" -e '
- 	# drop absolute-path on repo name
- 	$cmd =~ s{ /}{ };
- 	print $cmd;
--'`
-+')
- echo >&2 "Running '$cmd'"
- exec $cmd
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index a980574..df8d2f0 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -98,7 +98,7 @@ EOF
+ test_expect_success 'fetch something upstream has but hidden by clients shallow boundaries' '
+ 	# the blob "1" is available in .git but hidden by the
+ 	# shallow2/.git/shallow and it should be resent
+-	! git --git-dir=shallow2/.git cat-file blob `echo 1|git hash-object --stdin` >/dev/null &&
++	! git --git-dir=shallow2/.git cat-file blob $(echo 1|git hash-object --stdin) >/dev/null &&
+ 	echo 1 >1.t &&
+ 	git add 1.t &&
+ 	git commit -m add-1-back &&
+@@ -114,7 +114,7 @@ add-1-back
  EOF
+ 	test_cmp expect actual
+ 	) &&
+-	git --git-dir=shallow2/.git cat-file blob `echo 1|git hash-object --stdin` >/dev/null
++	git --git-dir=shallow2/.git cat-file blob $(echo 1|git hash-object --stdin) >/dev/null
+ 
+ '
+ 
 -- 
 2.3.3.GIT
