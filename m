@@ -1,55 +1,86 @@
-From: Mr Johnson Martin <nataliabarbosa.saude@setelagoas.mg.gov.br>
-Subject: Military Man from Syria
-Date: Mon, 4 Jan 2016 03:28:17 -0200 (BRST)
-Message-ID: <1059238834.1377027.1451885297398.JavaMail.zimbra@setelagoas.mg.gov.br>
-Reply-To: Mr Johnson Martin <mrjohnson.martin94@yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Jan 04 06:41:34 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] t/t5522-pull-symlink.sh: use the $( ... ) construct for command substitution
+Date: Mon,  4 Jan 2016 10:10:42 +0100
+Message-ID: <1451898651-16468-2-git-send-email-gitter.spiros@gmail.com>
+References: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aFxte-00054B-1Y
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 06:41:34 +0100
+	id 1aG1AY-0004hF-2X
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbcADFlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 00:41:00 -0500
-Received: from zimbra.setelagoas.mg.gov.br ([177.128.225.201]:35520 "EHLO
-	zimbra.setelagoas.mg.gov.br" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750759AbcADFk7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jan 2016 00:40:59 -0500
-X-Greylist: delayed 503 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Jan 2016 00:40:58 EST
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.setelagoas.mg.gov.br (Postfix) with ESMTP id E4FBC7AE6DA;
-	Mon,  4 Jan 2016 03:28:24 -0200 (BRST)
-Received: from zimbra.setelagoas.mg.gov.br ([127.0.0.1])
-	by localhost (zimbra.setelagoas.mg.gov.br [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id jE4PYSEdVlB4; Mon,  4 Jan 2016 03:28:22 -0200 (BRST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.setelagoas.mg.gov.br (Postfix) with ESMTP id 3DCEA7AE6D2;
-	Mon,  4 Jan 2016 03:28:20 -0200 (BRST)
-X-Virus-Scanned: amavisd-new at setelagoas.mg.gov.br
-Received: from zimbra.setelagoas.mg.gov.br ([127.0.0.1])
-	by localhost (zimbra.setelagoas.mg.gov.br [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id naVdCfv80zcH; Mon,  4 Jan 2016 03:28:19 -0200 (BRST)
-Received: from zimbra.setelagoas.mg.gov.br (zimbra.setelagoas.mg.gov.br [10.1.1.131])
-	by zimbra.setelagoas.mg.gov.br (Postfix) with ESMTP id 744467AE6BD;
-	Mon,  4 Jan 2016 03:28:17 -0200 (BRST)
-X-Originating-IP: [36.37.192.90]
-X-Mailer: Zimbra 8.0.7_GA_6021 (ZimbraWebClient - FF38 (Win)/8.0.7_GA_6021)
-Thread-Topic: Military Man from Syria
-Thread-Index: TF4awhlXHa/uDc/4pGrjuWKEnko+vQ==
+	id S1753234AbcADJLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 04:11:09 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33299 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753220AbcADJLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 04:11:03 -0500
+Received: by mail-pf0-f182.google.com with SMTP id q63so163389514pfb.0
+        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=MqWmewKqwfWoqDuEcQjdSlqnzKOjJg7heAIeH4bywTk=;
+        b=vfHb4zfgiyrufxlUm0eAJj84Il1CpnyD4wKasy18l/71CAVXmgMBBmQntphpcKiWA2
+         0f26AC9AcAvqw86U+qX7lvpgU7m3JmxxO8coyx4pFCG5THfunsLPdX2YVR+junW1LcSY
+         htIP8IrM9JIsDvs1erUMd1hw8zAA8qcvOJ9lh5bn5jjemHYOnby0ljPWABsAClsNbFB1
+         2gtkHZSRm29t5AtH324Ujl7bggUHUoWyQp96QB32b4cNephCS/jkxkoA0ao5CXkp0r2W
+         /MpM/Ii0GpoOXOS45GJ8nWbhvXYcP7Qw8aaBmBkgT7bhkQUPIvzfK9/ZculigS8lsFZG
+         6o/Q==
+X-Received: by 10.98.70.12 with SMTP id t12mr99756971pfa.38.1451898662685;
+        Mon, 04 Jan 2016 01:11:02 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 Jan 2016 01:11:02 -0800 (PST)
+X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283279>
 
-Hello How are you today, I'm Mr Johnson Martin from United State of America, I'm 46 years now, also Military man. I'm working here in Syria, please i want to know more about you and how reliable that i can trust you,, if your aren't Interested please  never mind to reply, i just want to let you know that I need a capable  person that can handle this fund that i want to move from Syria to your country for security reason i will let you know more details about me and feel free to ask me but respect the fact that I'm always on duty here. hope to receive you reply, i need a capable and trusted one take care
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-Best Regard
-Johnson Martin
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
+
+The patch was generated by:
+
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
+
+and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t5522-pull-symlink.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5522-pull-symlink.sh b/t/t5522-pull-symlink.sh
+index 8e9b204..bcff460 100755
+--- a/t/t5522-pull-symlink.sh
++++ b/t/t5522-pull-symlink.sh
+@@ -54,7 +54,7 @@ test_expect_success SYMLINKS 'pulling from real subdir' '
+ # git rev-parse --show-cdup printed a path relative to
+ # clone-repo/subdir/, not subdir-link/.  Git rev-parse --show-cdup
+ # used the correct .git, but when the git pull shell script did
+-# "cd `git rev-parse --show-cdup`", it ended up in the wrong
++# "cd $(git rev-parse --show-cdup)", it ended up in the wrong
+ # directory.  A POSIX shell's "cd" works a little differently
+ # than chdir() in C; "cd -P" is much closer to chdir().
+ #
+-- 
+2.3.3.GIT
