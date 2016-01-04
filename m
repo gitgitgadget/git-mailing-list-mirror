@@ -1,91 +1,112 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 00/10] use the $( ... ) construct for command substitution
-Date: Mon,  4 Jan 2016 10:10:41 +0100
-Message-ID: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 07/10] t/t5570-git-daemon.sh: use the $( ... ) construct for command substitution
+Date: Mon,  4 Jan 2016 10:10:48 +0100
+Message-ID: <1451898651-16468-8-git-send-email-gitter.spiros@gmail.com>
+References: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:15 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG1AX-0004hF-G6
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:13 +0100
+	id 1aG1Ak-0004sO-E9
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbcADJLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 04:11:08 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33294 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753149AbcADJLC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 04:11:02 -0500
-Received: by mail-pf0-f176.google.com with SMTP id q63so163389359pfb.0
-        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:02 -0800 (PST)
+	id S1753247AbcADJLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 04:11:20 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33331 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753122AbcADJLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 04:11:07 -0500
+Received: by mail-pf0-f170.google.com with SMTP id q63so163390466pfb.0
+        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=zIdkZ+JHxQoIO9Yk3ngOeuOBeWD0Gwv1taoqsp15qGs=;
-        b=BTQwky6j1PxKbBBartQbJTL5ZwVwfavmWxLgNmMD2G6RfpZOn+FDYSzVpiCyAL2Qjf
-         yVQjlcg+qEZ3Mc9QDvVcq+YLNVg6aGAIOxaRMMx+6McpBf49YFYLDFGAAkk0dcEIAt1i
-         DASSawg0s7Ch3U21PBzQjEPEHiN/SEDyG2iki3439GtwjXZGYLXRZPrI5dHj3QP742sG
-         O6QmxpNnFEmswa/UKC2MY1sbLTySC1AfFTI6xPQYbhProfHV/4b0ZqRM4qYidOwx/cnV
-         J7ZyJ9LjuIq/bHAj1GdRis3f2oVLoOTuZVGVzL55gCiQPxnBWs7CNoYPEMeDUprFx6M9
-         m/oA==
-X-Received: by 10.98.44.209 with SMTP id s200mr117114979pfs.2.1451898661884;
-        Mon, 04 Jan 2016 01:11:01 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=sVI8NdX7JVv3JDtqNBpBYiUkWNYB9LasUg/6S8TBkeU=;
+        b=wOWoQrR1MxMkbUKZkvlbcIPj6UXVsbqFF8fkLm1NN3sWGArt0inWoWTm5P7tZqNlLD
+         GFJJvdjweAS/XQQ3TktqXXzeginTsR9baTfv+thp0P5WQAizJPzuvU0xnyfH5yq0nhGM
+         XG7+aFAY8oZ33eGyhmcy8JaKgMPkodEnbxDYh3gSAtc6dmrKzV0Tu3SY2pp8ndJID3Ou
+         f41cOY7GKJdpxFT43W1tedkyQLh3Ys1aweg/B7ES0eTJTK2rW/kSprQm4IdUSMXRiw2I
+         ROUHeuQv1LuTcgJ1ktCbiA58VT27SB7DhVnh9CYcQLs39sRFp5ChrLuqN6mcYXNIbKUe
+         cVYw==
+X-Received: by 10.98.75.197 with SMTP id d66mr60940830pfj.58.1451898667282;
+        Mon, 04 Jan 2016 01:11:07 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.00
+        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Jan 2016 01:11:00 -0800 (PST)
+        Mon, 04 Jan 2016 01:11:06 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283281>
 
-This patch series continues the changes introduced with the merge
-6753d8a85d543253d95184ec2faad6dc197f248:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-    Merge branch 'ep/shell-command-substitution'
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-    Adjust shell scripts to use $(cmd) instead of `cmd`.
+The patch was generated by:
 
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
 
-This is the fifth series, the other will be sent separately.
+and then carefully proof-read.
 
-Elia Pinto (10):
-  t/t5522-pull-symlink.sh: use the $( ... ) construct for command
-    substitution
-  t/t5530-upload-pack-error.sh: use the $( ... ) construct for command
-    substitution
-  t/t5532-fetch-proxy.sh: use the $( ... ) construct for command
-    substitution
-  t/t5537-fetch-shallow.sh: use the $( ... ) construct for command
-    substitution
-  t/t5538-push-shallow.sh: use the $( ... ) construct for command
-    substitution
-  t/t5550-http-fetch-dumb.sh: use the $( ... ) construct for command
-    substitution
-  t/t5570-git-daemon.sh: use the $( ... ) construct for command
-    substitution
-  t/t5601-clone.sh: use the $( ... ) construct for command substitution
-  t/t5700-clone-reference.sh: use the $( ... ) construct for command
-    substitution
-  t/t5710-info-alternate.sh: use the $( ... ) construct for command
-    substitution
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t5570-git-daemon.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- t/t5522-pull-symlink.sh      | 2 +-
- t/t5530-upload-pack-error.sh | 2 +-
- t/t5532-fetch-proxy.sh       | 4 ++--
- t/t5537-fetch-shallow.sh     | 4 ++--
- t/t5538-push-shallow.sh      | 4 ++--
- t/t5550-http-fetch-dumb.sh   | 8 ++++----
- t/t5570-git-daemon.sh        | 8 ++++----
- t/t5601-clone.sh             | 2 +-
- t/t5700-clone-reference.sh   | 2 +-
- t/t5710-info-alternate.sh    | 2 +-
- 10 files changed, 19 insertions(+), 19 deletions(-)
-
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index b7e2832..d76269a 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -57,7 +57,7 @@ test_expect_success 'prepare pack objects' '
+ test_expect_success 'fetch notices corrupt pack' '
+ 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+ 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+-	 p=`ls objects/pack/pack-*.pack` &&
++	 p=$(ls objects/pack/pack-*.pack) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
+ 	) &&
+@@ -65,14 +65,14 @@ test_expect_success 'fetch notices corrupt pack' '
+ 	(cd repo_bad1.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad1.git" &&
+-	 test 0 = `ls objects/pack/pack-*.pack | wc -l`
++	 test 0 = $(ls objects/pack/pack-*.pack | wc -l)
+ 	)
+ '
+ 
+ test_expect_success 'fetch notices corrupt idx' '
+ 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+ 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+-	 p=`ls objects/pack/pack-*.idx` &&
++	 p=$(ls objects/pack/pack-*.idx) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
+ 	) &&
+@@ -80,7 +80,7 @@ test_expect_success 'fetch notices corrupt idx' '
+ 	(cd repo_bad2.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad2.git" &&
+-	 test 0 = `ls objects/pack | wc -l`
++	 test 0 = $(ls objects/pack | wc -l)
+ 	)
+ '
+ 
 -- 
 2.3.3.GIT
