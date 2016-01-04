@@ -1,79 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 03/17] update-index: read --index-info with
- strbuf_getline_crlf()
-Date: Mon, 4 Jan 2016 13:27:31 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601041308310.14434@virtualbox>
-References: <1446071161-15610-1-git-send-email-gitster@pobox.com> <1450303398-25900-1-git-send-email-gitster@pobox.com> <1450303398-25900-4-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH v2 04/17] update-index: read list of paths with
+ strbuf_getline_crlf() under --stdin
+Date: Mon, 4 Jan 2016 13:27:36 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601041314240.14434@virtualbox>
+References: <1446071161-15610-1-git-send-email-gitster@pobox.com> <1450303398-25900-1-git-send-email-gitster@pobox.com> <1450303398-25900-5-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 13:27:54 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 13:27:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG4Ej-0007Uk-8X
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 13:27:45 +0100
+	id 1aG4Ep-0007bM-0u
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 13:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753744AbcADM1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 07:27:37 -0500
-Received: from mout.gmx.net ([212.227.15.19]:59811 "EHLO mout.gmx.net"
+	id S1753765AbcADM1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 07:27:46 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53967 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752912AbcADM1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 07:27:35 -0500
-Received: from virtualbox ([37.24.143.189]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MXq3L-1albKl0wEh-00WpA1; Mon, 04 Jan 2016 13:27:32
+	id S1753762AbcADM1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 07:27:43 -0500
+Received: from virtualbox ([37.24.143.189]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Ldttv-1ZpUyY0uRv-00j0wl; Mon, 04 Jan 2016 13:27:37
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1450303398-25900-4-git-send-email-gitster@pobox.com>
+In-Reply-To: <1450303398-25900-5-git-send-email-gitster@pobox.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:lq9/sRByOKtUGT+chT+1nQ3HuZVEEqNN1rfS1GxPC+lSfba8JBs
- +3Z4+BYl1yzteZeNWWuK4tIXWBsFNk6FyB8kvqi1QOUFlGn/gHm3W/O1TqHZ9RO2KScAeo8
- 5TY3mAPlkx63tZ0IBee/zw18N8gaDiZ/8oyjJNMedrEiz8lcdIWhdKU8fzkPNJ/UHoRWb4y
- lRmjHaD9WkMFqE+oiwYeA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RxpOgMofZN4=:egdfrVW2DflGzzcKLjoH7T
- tnNHZ+dCJ1EMFvKF1pRQmaHNyDecCuv7oQBx5yJ1/31naepRFUGWo4hb/GeBrJ9npVFj7z0bb
- pmqHJ/6iowYAWpWCF8MK0NaB0evo1eN4KeiQ3vZNIHHwOyxjERQAjI16dLOsNhheHXC4FvFiY
- oKhWF+mtjDXNVBRSeveCr0wHUS42LrRFCa1YYloTPVy2g9hNAL2BHX+Bq/yDAHcjzRxW+8fcd
- akPf5PdVkkhE3Vb+TzT7NY3TA1kq/ivolFp+al4SmzZNIorCUHT8DbZkJdZv7VgmpvrX7pVnj
- 4uIXgNtuuC530cHqtKqRmZLARtFaDWY7KdWDXL36GrsA5kIiRAwQYFFejZOxiSutQMhJnX8lB
- F/V9MTsclzSGyBVLxlmxXmYxo8awSncVel/BTpjoRaAgT/Jbv54JHh77Z9EPQCa791w45YXPD
- vGGKBiYsgAP00t5hDZ3bRMjFk4q12hJ3GoVyyfTATL5Z/QV4P29JJEMFIGijcKk03hSYSIsix
- 5Uoy10iMGt7DAPFDtpCCOq/C1USyVU5Ch9VmCwpnDnDc+f6pDXTuvlHOGJfsqsqnnFebMAOiw
- rdrmwV0Dg/T9/RpjhfoCzwnGUWXoPKYc3c+dHo6vCejkEstkubzdL0hh6hvZb+JHrwttUuXMz
- ZLCwS8N5qsAuIVVl4khCJklO1RBuVzbrg7VM6dlwc+8Yt5/+dfkughL+jN5AggTJ2MiUdKbMF
- usNxxjpDs5Ff96/qwkIcIP2LJsilevsbDp8ixXTCvwbD+no6eBPM1o5iJHGNLGsHXVyZUii3 
+X-Provags-ID: V03:K0:gTuMzm9HJPAwM7+zh6q4MOp/kfmx8ximkCRkM6ZIlEQEYCjL4BG
+ Mnmq2dTBALNBMgu/eMF9Tk3NzwNlx90jeOX2PuKDneCWFqw1pvFEtES02dcoNMcuE7McWYU
+ MqWK+RSkM2gzKdBJ2a+W+C2yHR+UvbepOMFu3ptIVxzsUuit1GXMa7h+HZhyNP/RPKOBVZY
+ NVEAt39EPHmWQPlvO+IAw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sTLekrRr1LY=:jektp5vdOdiqqzlTQiLWwL
+ E60Ii0xkxmsukXU5WOG1rgQGn17k2+bqfmI7/FUx4e191Wn2n13uvsDBFPPpWO6oFx6D1MOJk
+ FBilwqmtp9qJjvlaThhrA9B5cR4s/Xz0hymCvPG9XsUfxbbVEjP6YGwdk7j9CM98w/jpd3qYg
+ dLSYtHnYAoV5geBK0J3oIoQZtfAa3IO4OTH3AxX1dBELfDLVP2XvLEepAX2Qm2rqZx0kajNqu
+ UaM8bOYX08pDmF0AIkV1PXZU33Ut1nh1e5HSyjMxnXJaWUjH1j5i8S8DSPRJf59n0PkvFntJC
+ R0uWGRtxZbGR/j3w43zYpZXimODqeQkWGcdkdeUVArB1MwWBKe86DiWv2e6FydZWANL6tCUFJ
+ z1HWXk9Vn/xg9FT5d8dCgvIJ1MnqrhvupxzeYY2UgrtknWQJvam13G9+9781tEyinelP7Cq8h
+ c21dLBBtGA4VJ297k3r79434s+lpzqHzQ9h97ncHW3k0OB7Wi96u/d5pUwlYchwLG38H0ShyF
+ HaLU+hSVCd7OJavVNHkfljRQJaEphgqBrw1CWpIruOqePfpJ/pL6SS8q53uxyZ0YPRXKlowG4
+ w2oCAw/hpFGQnQ4ym2Wacopndl0QPc/i460mbw5oO//qmObdKf6ujdVxxc6XZ7vJWrVkdkguO
+ 1CvBswPtXXIqz0j6W0ciTrhSlieJRaDLHHMJ//qKtntDkP9CngfXCn+nttZYE3yTJQOb9psQS
+ 8ewm7gezCAXlVeWBqthtUElftycmXsddPLFO8+1aMdRLIlmaHIcPRH8NKXnbou+6irVn0qRY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283304>
 
 Hi Junio,
 
 On Wed, 16 Dec 2015, Junio C Hamano wrote:
 
 > diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 7431938..a7a9a7e 100644
+> index a7a9a7e..3a6c5b2 100644
 > --- a/builtin/update-index.c
 > +++ b/builtin/update-index.c
-> @@ -473,7 +473,9 @@ static void read_index_info(int line_termination)
->  	struct strbuf buf = STRBUF_INIT;
->  	struct strbuf uq = STRBUF_INIT;
+> @@ -1075,7 +1075,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  		struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
 >  
-> -	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-> +	while ((line_termination
-> +		? strbuf_getline_crlf(&buf, stdin)
-> +		: strbuf_getline(&buf, stdin, '\0')) != EOF) {
->  		char *ptr, *tab;
+>  		setup_work_tree();
+> -		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+> +
+> +		while ((line_termination
+> +			? strbuf_getline_crlf(&buf, stdin)
+> +			: strbuf_getline(&buf, stdin, '\0')) != EOF) {
+>  			char *p;
+>  			if (line_termination && buf.buf[0] == '"') {
 
-This is a problematic change because it does not safeguard for future
-introduction of a line_termination value other than LF or NUL. I believe
-the safest would be to change read_index_info() to take a `nul_delimited`
-parameter instead of the `line_termination` parameter first, and then
-introduce that change to use strbuf_getline_crlf if !nul_delimited.
+Again, I think it would make things clearer and more future proof if we
+changed the logic to talk about nul_delimited instead of line_termination.
 
 Ciao,
 Dscho
