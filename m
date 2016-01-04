@@ -1,123 +1,146 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 11/14] shortlog: allow grouping by committer ident
-Date: Mon, 4 Jan 2016 04:44:00 -0500
-Message-ID: <CAPig+cT1pNXt2U1bd-KVapiUD=-6TQ8KRBNC8y+0wLAtuqUhQQ@mail.gmail.com>
-References: <20151229071847.GA8726@sigill.intra.peff.net>
-	<20151229073515.GK8842@sigill.intra.peff.net>
+Subject: Re: [PATCH 20/20] fetch: add --deepen=<N> to extend shallow boundary
+ by <N> commits
+Date: Mon, 4 Jan 2016 04:45:05 -0500
+Message-ID: <CAPig+cTiN+y0KXLjoK0EeyxXk6DOMG16A2gQ_a9PsU__DA-LUg@mail.gmail.com>
+References: <1451391043-28093-1-git-send-email-pclouds@gmail.com>
+	<1451391043-28093-21-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 10:44:34 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Dongcan Jiang <dongcan.jiang@gmail.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:45:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG1gn-00054v-HO
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:44:33 +0100
+	id 1aG1hQ-0005Yd-HR
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbcADJo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 04:44:29 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:35336 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753261AbcADJoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 04:44:00 -0500
-Received: by mail-vk0-f52.google.com with SMTP id k1so119407689vkb.2
-        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:44:00 -0800 (PST)
+	id S1753001AbcADJpJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jan 2016 04:45:09 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36082 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797AbcADJpG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jan 2016 04:45:06 -0500
+Received: by mail-vk0-f51.google.com with SMTP id f2so207323192vkb.3
+        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:45:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=DIRHwyM+szH90OiLd6kuc16WIfq3dURcTLBuzH7fd1g=;
-        b=p7Jf65Jeh9ZrR0ofSDMJU4+OFBYG8smb8rwjkjUIVgik6U9X/FMToqd/E7DCT4NRi5
-         h/3kRUZdmk8BJ4aq3gOpM6JTEaUCoFgBcFm7U2tZlTPE6oN6patVOvXrYoGNR/Tw1s6P
-         AgZyY8gC2A7ZqR+KwvL+dE4Kd6Lt0pDQ8tZ6JUQ4KBR7G3o6btJLygqN1EvWlopOxjwU
-         VqAHeJfVq11soFx0ZVUBlHw8i1vDS7455ye79n1nS9QodParUIY9hmeY4VuR5MhHC7Yd
-         D7XHpO+biQQrLEufnu99F0gylbC2cu537/YpP8p48vHXi40YhgKfawnDNkPD3Sv/COTj
-         CnNA==
-X-Received: by 10.31.56.18 with SMTP id f18mr52830070vka.19.1451900640100;
- Mon, 04 Jan 2016 01:44:00 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 4 Jan 2016 01:44:00 -0800 (PST)
-In-Reply-To: <20151229073515.GK8842@sigill.intra.peff.net>
-X-Google-Sender-Auth: lUJGN68KlLq4fJeZ2I8N2xsRob8
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=sitM6ZxtNYheKW4UYPk4lbnCtrImPBSC/FAu0TJH3L0=;
+        b=Pu9gSTzgAzze0Oh/ihlFhX9cWJPDu6Bk2itEyQa/rotHwBb26f9bvspQKzrzHh2nhv
+         uUExnnLO0RRumbmmFRJTPMe25Yvod5wzkhkJyNkQI+L5ATqWHNnRRXsIbu7w4LW9OxWP
+         EhQGNPdXeFbZtq7YXSvK96atnxbLLPGmeOyKxIuBo2BLaiLf+I+MoFjRpueV2xj8hmBo
+         miARw31t4+9vbbaEYVssjxvAEuP0IEjyMlyZH9+xFUgf7kbh6E9LFc87VQ+uc2s2GIwZ
+         qMyiaFpMnMjOToV1492eMr+6PxESxA28h+ztWl0mgmeYSfhHkfALNGjUjjTCaFMRIpyq
+         gA0g==
+X-Received: by 10.31.164.78 with SMTP id n75mr27319614vke.14.1451900705881;
+ Mon, 04 Jan 2016 01:45:05 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 4 Jan 2016 01:45:05 -0800 (PST)
+In-Reply-To: <1451391043-28093-21-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: 3GUypj-yi_lch7BUWKLLiBIXyuE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283293>
 
-On Tue, Dec 29, 2015 at 2:35 AM, Jeff King <peff@peff.net> wrote:
-> Shortlog always groups commits by the author field. It can
-> be interesting to group by other fields, as well. The
-> obvious other identity in each commit is the committer
-> field. This might be interesting if your project follows a
-> workflow where committers and authors are not the same and
-> where there is not simply one maintainer picking up all of
-> the patches.
+On Tue, Dec 29, 2015 at 7:10 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> In git-fetch, --depth argument is always relative with the latest
+> remote refs. This makes it a bit difficult to cover this use case,
+> where the user wants to make the shallow history, say 3 levels
+> deeper. It would work if remote refs have not moved yet, but nobody
+> can guarantee that, especially when that use case is performed a
+> couple months after the last clone or "git fetch --depth". Also,
+> modifying shallow boundary using --depth does not work well with
+> clones created by --since or --not.
+> [...]
 >
-> For instance, you can use this in git.git to see interim and
-> subsystem maintainers. Likewise, you can see in linux.git
-> the patches picked up by lieutenants and merged into Linus's
-> tree.
->
-> This patch also provides some of the necessary
-> infrastructure for adding more ident types (e.g., from
-> trailers) in the future.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> Helped-by: Duy Nguyen <pclouds@gmail.com>
+> Helped-By: Eric Sunshine <sunshine@sunshineco.com>
+
+s/By/by/
+
+> Helped-By: Junio C Hamano <gitster@pobox.com>
+
+Ditto.
+
+> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
-> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-> @@ -47,6 +47,14 @@ OPTIONS
-> +--ident=<type>::
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-op=
+tions.txt
+> @@ -13,6 +13,11 @@
+> +--deepen=3D<depth>::
+> +       Similar to --depth, except it specifies the number of commits
+> +       from the current shallow boundary instead of from the tip of
+> +       reach remote branch history.
 
-Should this be called --group-by?
+Did you mean s/reach/each/ ?
 
-> +       By default, `shortlog` collects and collates author identities;
-> +       using `--ident` will collect other types of identity. If
-> +       `<type>` is:
-> ++
-> + - `author`, commits are grouped by author (this is the default)
-> + - `committer`, commits are grouped by committer
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> @@ -1185,6 +1189,15 @@ int cmd_fetch(int argc, const char **argv, con=
+st char *prefix)
+>         /* no need to be strict, transport_set_option() will validate=
+ it again */
+>         if (depth && atoi(depth) < 1)
+>                 die(_("depth %s is not a positive number"), depth);
+> +       if (deepen_relative) {
+> +               struct strbuf sb =3D STRBUF_INIT;
+> +               if (deepen_relative < 0)
+> +                       die(_("Negative depth in --deepen is not supp=
+orted"));
+> +               if (depth)
+> +                       die(_("--deepen and --depth are mutually excl=
+usive"));
+> +               strbuf_addf(&sb, "%d", deepen_relative);
+> +               depth =3D strbuf_detach(&sb, NULL);
 
-There is a bit of redundancy here. I wonder if it could be described
-more succinctly. For instance, instead of all the above, perhaps:
+Maybe replace:
 
-    Group commits by `<type>`, which can be one of:
+    struct strbuf sb =3D STRBUF_INIT;
+    ...
+    strbuf_addf(&sb, "%d", deepen_relative);
+    depth =3D strbuf_detach(&sb, NULL);
 
-    - `author` (default)
-    - `committer`
+with:
 
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index d7eb0cb..39da2d4 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -147,11 +157,23 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
-> -       format_commit_message(commit, "%an <%ae>", &ident, &ctx);
-> -       if (ident.len <= 3) {
-> -               warning(_("Missing author: %s"),
-> -                   oid_to_hex(&commit->object.oid));
-> -               return;
-> +       switch (log->ident_type) {
-> +       case SHORTLOG_IDENT_AUTHOR:
-> +               format_commit_message(commit, "%an <%ae>", &ident, &ctx);
-> +               if (ident.len <= 3) {
-> +                       warning(_("Missing author: %s"),
-> +                               oid_to_hex(&commit->object.oid));
-> +                       return;
-> +               }
-> +               break;
-> +       case SHORTLOG_IDENT_COMMITTER:
-> +               format_commit_message(commit, "%cn <%ce>", &ident, &ctx);
-> +               if (ident.len <= 3) {
-> +                       warning(_("Missing committer: %s"),
-> +                               oid_to_hex(&commit->object.oid));
-> +                       return;
+    depth =3D xstrfmt("%d", deepen_relative);
 
-Is this leaking strbuf 'ident'?
+?
 
-(Ditto for the "author" case as mentioned already in the patch 6/14 review.)
+> +       }
+>         if (depth || deepen_since || deepen_not.nr)
+>                 deepen =3D 1;
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> @@ -708,4 +708,16 @@ test_expect_success 'fetching a one-level ref wo=
+rks' '
+> +test_expect_success 'fetching deepen' '
+> +       git clone . deepen --depth=3D1 && (
 
-> +               }
-> +               break;
->         }
+Style: ( on its own line.
+
+> +               cd deepen &&
+> +               git fetch .. foo --depth=3D1
+> +               git show foo
+
+Are these git-show instances merely for checking if a ref is valid? If
+so, perhaps git-rev-parse would be clearer?
+
+> +               test_must_fail git show foo~
+> +               git fetch .. foo --deepen=3D1
+> +               git show foo~
+> +               test_must_fail git show foo~2
+
+&&-chain heavily broken in subshell.
+
+> +       )
+> +'
