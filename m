@@ -1,153 +1,147 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] avoid shifting signed integers 31 bits
-Date: Mon, 04 Jan 2016 09:52:10 -0800
-Message-ID: <xmqqh9itp705.fsf@gitster.mtv.corp.google.com>
-References: <20151229063449.GA28755@sigill.intra.peff.net>
-	<20151229063545.GA30340@sigill.intra.peff.net>
-	<CACsJy8CAAqZFQCfadUov7DFhSgh=dtGfE-onbXZQXO-0Y2652g@mail.gmail.com>
-	<20151231052029.GA10238@sigill.intra.peff.net>
+Subject: Re: [PATCH v4 09/10] config: add core.untrackedCache
+Date: Mon, 04 Jan 2016 10:09:00 -0800
+Message-ID: <xmqqd1thp683.fsf@gitster.mtv.corp.google.com>
+References: <1451372974-16266-1-git-send-email-chriscool@tuxfamily.org>
+	<1451372974-16266-10-git-send-email-chriscool@tuxfamily.org>
+	<xmqqlh8cg9y2.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD0pOiqa5ZxwM0Vfzr_wMJ+HDrXyhzJ+TmRDED5GH+koMw@mail.gmail.com>
+	<xmqqbn97cyh3.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD35VZ3QCLg525RCpacDrRHqt7EhxV1MeL-9xxHf8BCZ+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 04 18:52:18 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 04 19:09:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG9In-0004nt-FP
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 18:52:17 +0100
+	id 1aG9ZC-0004Vs-QM
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 19:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431AbcADRwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 12:52:14 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54814 "EHLO
+	id S1752499AbcADSJK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Jan 2016 13:09:10 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63406 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751390AbcADRwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 12:52:12 -0500
+	with ESMTP id S1752850AbcADSJF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Jan 2016 13:09:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B38693418D;
-	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55A8A3464D;
+	Mon,  4 Jan 2016 13:09:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/ktmf3hfF4DYGErzfwoZunDxRKM=; b=ZrfRn0
-	gHhUYmHDk/ueNzrNBuESp0gux3wOTkKdk1mFWJJbzXtY3c/w+gyg/zi6344zMdxI
-	RvI/4SI6aovgdulh2EMEoyzfNWQTOcla1I+GYPPdDEIY3ivc4YWwGE75DsQSx9+4
-	dDRXDSHdeD69oJvH5zeJCvp+dzr/bSiSRk87Y=
+	:content-type:content-transfer-encoding; s=sasl; bh=HNHeXGhQFQLY
+	bFy7HI3vI/Hi6Rk=; b=G9EEyswVEgQMZUnZEoLw0noicl2T7tI6votA5q8hVMsu
+	VA85aqvNTliPUjKIoL6cMIk4Qx+g3+2AU3h7aG/fi0yaECVpjt6uAjOseL0tJVud
+	n2eYBtgc4tsywVCDi4kul3ylIc6YeJULwtcshP/H5xsX65tf/TnP1ta1RY4BoOw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hnzsxp8qzPrEnjBMM1UJiWn/wigmjHDg
-	3AuWaaTOhn0CWFm1Nnh5aJkezjr+fIDG5J5T895TMB31E31rc+Tj1FhHNpX3sn7O
-	SZoszVTCGCFKhDwyeeyCK6oiwFF6wnl5SwiKvZSdrgP0EVM/aXyjKMSGZV+ItTcz
-	Jo6yh4bMRl0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hwtZUR
+	gnpxIlIGgtOyO/V4kjnKdRZ7XbzAqpa2xF2gEeR1PjCIvUMyxzE03tXIrQBKyM24
+	z5O4E/+fxe7aVxEQBM42uYseQXUyryXX+T/hUFA0t4SVEFYdsb1eCYn1HBuluqw2
+	7iyidZTH/lTebGTQ9MWk7ZRqTB0Afkrw2cus8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A9AD03418C;
-	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D0623464C;
+	Mon,  4 Jan 2016 13:09:04 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 296663418B;
-	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
-In-Reply-To: <20151231052029.GA10238@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 31 Dec 2015 00:20:29 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF25D34647;
+	Mon,  4 Jan 2016 13:09:03 -0500 (EST)
+In-Reply-To: <CAP8UFD35VZ3QCLg525RCpacDrRHqt7EhxV1MeL-9xxHf8BCZ+A@mail.gmail.com>
+	(Christian Couder's message of "Thu, 31 Dec 2015 13:33:24 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E15FBF22-B30B-11E5-9E29-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 3CF12B8A-B30E-11E5-8C76-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283311>
 
-Jeff King <peff@peff.net> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On Thu, Dec 31, 2015 at 12:10:33PM +0700, Duy Nguyen wrote:
+> What scenario do you have in mind where people would have to do thing=
+s
+> differently?
+
+They eventually will see a system in which that they do not have do
+anything after flipping the configuration, yet will still see stale
+"you must run 'git status'" on their websearches and SO questions,
+which would be a cost for them to remember that they no longer have
+to do the extra 'git status'.
+
+>> Itt sounds like somewhat a short-sighted mindset to design the
+>> system, and I was hoping that by now you would have become better
+>> than that.
+>>
+>> The real question is what are the problems in implementing this in
+>> the way Duy suggested in the previous discussion.  The answer may
+>> fall into somewhere between "that approach does not work in such and
+>> such cases, so this is the best I could come up with" and "I know
+>> that approach is far superiour, but I have invested too much in this
+>> inferiour approach and refuse to rework it further to make it better=
+=2E"
 >
->> On Tue, Dec 29, 2015 at 1:35 PM, Jeff King <peff@peff.net> wrote:
->> > We sometimes use 32-bit unsigned integers as bit-fields.
->> > It's fine to access the MSB, because it's unsigned. However,
->> > doing so as "1 << 31" is wrong, because the constant "1" is
->> > a signed int, and we shift into the sign bit, causing
->> > undefined behavior.
->> >
->> > We can fix this by using "1U" as the constant.
->> 
->> We have this in cache.h, should it be fixed as well?
->> 
->> /* CE_EXTENDED2 is for future extension */
->> #define CE_EXTENDED2         (1 << 31)
+> My question is why should I invest time thinking about and testing
+> another approach when the current approach seems simpler, less bug
+> prone, faster and without any downside?
+
+As to the downside, I think Duy's "at the time we read the index" is
+the least problematic route from the maintainability point of view.
+What are you doing to help people who make changes in the future to
+the system to make "git add $dir" or "git clean $dir" aware of the
+untracked cache not to forget doing the "oh, the config says we want
+to add the untracked cache if missing, so we do it here" in their
+new codepath?  Whey you say "This is only about status", you are
+essentially saying "It's outside the scope of my job, I was hired to
+improve the usability of 'git status' with untracked cache and I do
+not care about the longer term overall health of the system".
+
+Now, you said something about "simpler", "less bug prone" and
+"faster" (I doubt you can make such statements that involve
+comparison without investing time thinking about other approaches,
+though, but that is a separate topic).  That would mean that you see
+"complexity", "error prone-ness", and "slowness" in the way Duy
+suggested---that is exactly the question I asked you in the message
+you are responding to.  What are the problems in implementing this
+in the way Duy suggested?  What kind of "complexity" do you see?
+Which part is more "error prone"?  Why does it have to be "slower"?
+
+>> Using of not using untracked-cache is (supposed to be) purely
+>> performance and not correctness thing, and I do not think the users
+>> and the scripts do not deserve to see a failure from "update-index
+>> --untracked-cache" only because there is a stray core.untrackedCache
+>> set to 'false' somewhere.
 >
-> Sort of. We don't actually use it, and since it's a macro, that means it
-> never even hits the compiler proper itself. So it's not a bug, but it's
-> a bug waiting to happen. :)
+> This "stray core.untrackedCache" could not have been put there by
+> users of previous git versions because it has no meaning before this
+> patch series. So I don't understand why you call it "a stray
+> core.untrackedCache".
 >
-> -Peff
+> It is no more "stray" to me than the call to "update-index --untracke=
+d-cache".
+>
+> If it has been put in /etc/git.config by an admin and if the user
+> thinks he knows better, the user can still change the config locally
+> to override the system one.
 
-Let's squash an obvious change for that in to 1/2, then, before I
-merge the series to 'next'.
+You are assuming that everybody constantly looks at /etc/git.config
+to make sure evil admins won't do things that affect their
+repositories and use of Git in potentially negative way.  I doubt
+anybody does.
 
-Thanks.
-
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Tue, 29 Dec 2015 01:35:46 -0500
-Subject: [PATCH] avoid shifting signed integers 31 bits
-
-We sometimes use 32-bit unsigned integers as bit-fields.
-It's fine to access the MSB, because it's unsigned. However,
-doing so as "1 << 31" is wrong, because the constant "1" is
-a signed int, and we shift into the sign bit, causing
-undefined behavior.
-
-We can fix this by using "1U" as the constant.
-
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/receive-pack.c | 2 +-
- cache.h                | 2 +-
- diff.h                 | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e6b93d0..e35ed40 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1597,7 +1597,7 @@ static void prepare_shallow_update(struct command *commands,
- 				continue;
- 			si->need_reachability_test[i]++;
- 			for (k = 0; k < 32; k++)
--				if (si->used_shallow[i][j] & (1 << k))
-+				if (si->used_shallow[i][j] & (1U << k))
- 					si->shallow_ref[j * 32 + k]++;
- 		}
- 
-diff --git a/cache.h b/cache.h
-index 6f53962..9088843 100644
---- a/cache.h
-+++ b/cache.h
-@@ -214,7 +214,7 @@ struct cache_entry {
- #define CE_INTENT_TO_ADD     (1 << 29)
- #define CE_SKIP_WORKTREE     (1 << 30)
- /* CE_EXTENDED2 is for future extension */
--#define CE_EXTENDED2         (1 << 31)
-+#define CE_EXTENDED2         (1U << 31)
- 
- #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
- 
-diff --git a/diff.h b/diff.h
-index f7208ad..893f446 100644
---- a/diff.h
-+++ b/diff.h
-@@ -91,7 +91,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
- #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
- #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
--#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1 << 31)
-+#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1U << 31)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_TOUCHED(opts, flag)    ((opts)->touched_flags & DIFF_OPT_##flag)
--- 
-2.7.0-rc3-132-g73ad441
+By the way, I understand that this "stray one affects without user
+being aware of it" is the primary the reason why =C3=86var wants this
+'configuration automatically adds untracked cache even to the
+existing index' feature---everybody will get it without even be
+aware of the change their admins make.  Which may be a good thing
+for those who use the configuration variable.
