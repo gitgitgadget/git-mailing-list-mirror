@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 06/10] t/t5550-http-fetch-dumb.sh: use the $( ... ) construct for command substitution
-Date: Mon,  4 Jan 2016 10:10:47 +0100
-Message-ID: <1451898651-16468-7-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/10] t/t5710-info-alternate.sh: use the $( ... ) construct for command substitution
+Date: Mon,  4 Jan 2016 10:10:51 +0100
+Message-ID: <1451898651-16468-11-git-send-email-gitter.spiros@gmail.com>
 References: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:33 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG1Al-0004sO-0V
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:27 +0100
+	id 1aG1Aj-0004sO-RE
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbcADJLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 04:11:21 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35149 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753042AbcADJLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 04:11:06 -0500
-Received: by mail-pa0-f43.google.com with SMTP id do7so2520555pab.2
-        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:06 -0800 (PST)
+	id S1753245AbcADJLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 04:11:19 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33491 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753231AbcADJLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 04:11:09 -0500
+Received: by mail-pa0-f49.google.com with SMTP id cy9so194553541pac.0
+        for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dPC8eAOck3S3oZNLWl5MGTSV67XV3fEduYnvyLwK+8E=;
-        b=1EewyGNaBW3zel4uRyCtptobnEDP9uHZzC0C6wdyxH62OXsA/T716koyi1qsJCdOq5
-         zcv+y60NdyAS8/BvlLlY6upRR8SBf0V4V7+GLfKMg4Mr4F3olVP5v/f/ZZcG/zZTteoH
-         zpNi6gvPIjwfgFElAwWuRFg9/4dRBbZy5yPdiWqPYGtTH1P6vV2jqfrh5eqOyKxVR0Z3
-         u/xh50kYz5TdCP7JWdd0gbL4oSuSWVoyM2gao6DoFHhMDX4BiZPojBZhmfeZrjDW43ou
-         905fzFArXqe9Wgf2kIpzVbCTgTvcPB9GQTfmRzMMW1jkwlOtXw3QlXsY11cmJjcJWg4V
-         7otw==
-X-Received: by 10.66.90.133 with SMTP id bw5mr27778227pab.22.1451898666491;
-        Mon, 04 Jan 2016 01:11:06 -0800 (PST)
+        bh=F5B/BIBUV3TjqL4NiFTSow3drdBRVkVr9dkYeROUARg=;
+        b=SqTIhptk2NBRld3L7lqpn8Nk930A5TYF8zNej2ET5IbQm6o2DppT8sUAgqE9FkbCPA
+         gk+lcc5uiqig6UIxDjINjvZ9dNs+CnJKBBNgX6yKU2pI6/qfH/4LZ+dyEZFiqtxB8c74
+         iJDl8GgYNRI3aIaJpRUPPRFu37uTy102Hr7aomdrfM8DLSav6voHW1Pd+1Ac2sPrGyrO
+         ld1TEz10W3korz/uuyM/EleFb/wu4BANhW4Q4pZKksVoYD++T08fl8To50LFn/ZaRbqD
+         /0XTRSZMaxQeLhUbHBBlIcUj5TwdavK81UwDW2XvQ+BmyzSoDDpGiNI34QvnN3EFbUlB
+         tnFQ==
+X-Received: by 10.67.5.69 with SMTP id ck5mr124926850pad.125.1451898669368;
+        Mon, 04 Jan 2016 01:11:09 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.05
+        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Jan 2016 01:11:06 -0800 (PST)
+        Mon, 04 Jan 2016 01:11:08 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283283>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,47 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5550-http-fetch-dumb.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t5710-info-alternate.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 87a7aa0..6414635 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -132,7 +132,7 @@ test_expect_success 'fetch packed objects' '
- test_expect_success 'fetch notices corrupt pack' '
- 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
--	 p=`ls objects/pack/pack-*.pack` &&
-+	 p=$(ls objects/pack/pack-*.pack) &&
- 	 chmod u+w $p &&
- 	 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
- 	) &&
-@@ -140,14 +140,14 @@ test_expect_success 'fetch notices corrupt pack' '
- 	(cd repo_bad1.git &&
- 	 git --bare init &&
- 	 test_must_fail git --bare fetch $HTTPD_URL/dumb/repo_bad1.git &&
--	 test 0 = `ls objects/pack/pack-*.pack | wc -l`
-+	 test 0 = $(ls objects/pack/pack-*.pack | wc -l)
- 	)
- '
+diff --git a/t/t5710-info-alternate.sh b/t/t5710-info-alternate.sh
+index 5a6e49d..9cd2626 100755
+--- a/t/t5710-info-alternate.sh
++++ b/t/t5710-info-alternate.sh
+@@ -21,7 +21,7 @@ test_valid_repo() {
+ 	test_line_count = 0 fsck.log
+ }
  
- test_expect_success 'fetch notices corrupt idx' '
- 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
--	 p=`ls objects/pack/pack-*.idx` &&
-+	 p=$(ls objects/pack/pack-*.idx) &&
- 	 chmod u+w $p &&
- 	 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
- 	) &&
-@@ -155,7 +155,7 @@ test_expect_success 'fetch notices corrupt idx' '
- 	(cd repo_bad2.git &&
- 	 git --bare init &&
- 	 test_must_fail git --bare fetch $HTTPD_URL/dumb/repo_bad2.git &&
--	 test 0 = `ls objects/pack | wc -l`
-+	 test 0 = $(ls objects/pack | wc -l)
- 	)
- '
+-base_dir=`pwd`
++base_dir=$(pwd)
  
+ test_expect_success 'preparing first repository' \
+ 'test_create_repo A && cd A &&
 -- 
 2.3.3.GIT
