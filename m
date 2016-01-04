@@ -1,131 +1,85 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 03/16] refs: add methods for the ref iterators
-Date: Mon, 4 Jan 2016 11:12:19 -0800
-Message-ID: <CAL=YDW=3JE==2s7Y3-fVRnTgaAzT674CAnypuXOKynpfD0q=Bg@mail.gmail.com>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	<1449102921-7707-4-git-send-email-dturner@twopensource.com>
-	<20160103000623.GB14424@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/17] strbuf: make strbuf_getline_crlf() global
+Date: Mon, 04 Jan 2016 11:17:50 -0800
+Message-ID: <xmqqvb79nogx.fsf@gitster.mtv.corp.google.com>
+References: <1446071161-15610-1-git-send-email-gitster@pobox.com>
+	<1450303398-25900-1-git-send-email-gitster@pobox.com>
+	<1450303398-25900-2-git-send-email-gitster@pobox.com>
+	<alpine.DEB.2.20.1601041255110.14434@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 20:12:28 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 04 20:17:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGAYL-0004bl-3X
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 20:12:25 +0100
+	id 1aGAdi-0001de-4O
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 20:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbcADTMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 14:12:22 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:33543 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982AbcADTMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 14:12:20 -0500
-Received: by mail-wm0-f52.google.com with SMTP id f206so2484965wmf.0
-        for <git@vger.kernel.org>; Mon, 04 Jan 2016 11:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=o3OASmWx6IY1dAoMrqxPN/VmH3BiRQTF1ibuJ1/gn80=;
-        b=XwDPAtC63LGKO+8CTzVYfzfBNtUwEKtBiDK2JYJyBUJvwHYMJAI8oiBJ/zuCHifQP3
-         uGrkckDy4r4WkcUhkrCxpaWP5tZIW2x4gAqKVRWiHMse8i8eGg1KMVaKc7AZYS8lh00p
-         CQ89V82pXMx+V76f0/itpXcNv35tV3BW5UvgvhMgR7U5fr+HzCBS9KZKIVo4Gkk+Rhdc
-         S/bLjv0jwdljCzHgFfW0AqhMjJD2tq8CvswYkKoNUWXoSWaTVEDOxSOI/oMm6gDC/vZs
-         PubsGMxZuI+1MvsLCWTSwjMGVbBn1OKOk/tQ/eZxIJ7Dltbo2wE85hg3r1EkMh5q8BOY
-         rO4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=o3OASmWx6IY1dAoMrqxPN/VmH3BiRQTF1ibuJ1/gn80=;
-        b=cxC2ZcgIYwf8ZoyOfpNPP6wGOXsKskl7w1NlUqvUS0S9CXV7DTwV8laa+o4Fw3/Fh+
-         gIv/q2Ys9YQkGmbomasCBYQzE2syzzHD7ttBpZ+oll9f0bNTn54k3kLVrA98n3grvXR9
-         RrYeJ96ndcaC4nPz36sjlS+yzZMZivI+0vM/mRFvIpB3bbWw9lsFDOB/bjKtU6C1mXyG
-         ar9kaFYgryQINzoCp1MBzMDYcD3d2aC9RWFdbGjdpnDZC947v2W4SEOtk5GVeqAoc0WT
-         BA70IcGUAeXl8VtC+uVrHYqMTxe7eULsm7msUGlqr3gW8Fi3hYpoDR7t/+yaEg4BDJ8c
-         MEIQ==
-X-Gm-Message-State: ALoCoQnPpWUlQgFWrfXHs6DLRVvlxrT88+nKpm8vTS4hkkOlBCZTRJaIp2N08EIiEzNSmXeaydzHw8zkuOw+csRomZ9IyIUYMlIhGfTT01rH2WuLViFkl6E=
-X-Received: by 10.194.103.69 with SMTP id fu5mr110038359wjb.2.1451934739162;
- Mon, 04 Jan 2016 11:12:19 -0800 (PST)
-Received: by 10.28.216.18 with HTTP; Mon, 4 Jan 2016 11:12:19 -0800 (PST)
-In-Reply-To: <20160103000623.GB14424@gmail.com>
+	id S1752012AbcADTRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 14:17:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65464 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751933AbcADTRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 14:17:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B3E7369E0;
+	Mon,  4 Jan 2016 14:17:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CRYG46M5fmAnuECNQfDvrs/TE/U=; b=lz6Oc7
+	bpg4qfIvGhPR02hXD2imcrNJVdTC09+Vxpy2mvN+OmZHH4T4c61I/YUPh5RCjhdT
+	aAzRM6Ze6YoeAhuoKNFAAsayV6DhhVNEZxMHFXvbxUiK4U+0LB/cA52M15CHFuyv
+	VTkDk4cpV0FXkkYoLgoCC5adLtN6zaTK44r5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uKBZ7RrlyqlgueftHgBOdPeSyA22esST
+	1efwjezuy/CKXzXja1SmvuI8QPx3Y/BkMSSEoXpJJba4al8hyxfHcsczB+qwh7PW
+	kT0NHhI6mx/FutNmEO9Pi04R7i58HQmrdkPB91KV9cvax/JZ3JFHzDIQh2Fpk5qu
+	ORTV/4htEN4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 929AD369DE;
+	Mon,  4 Jan 2016 14:17:52 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 11275369DC;
+	Mon,  4 Jan 2016 14:17:51 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601041255110.14434@virtualbox> (Johannes
+	Schindelin's message of "Mon, 4 Jan 2016 13:25:35 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D996ABC8-B317-11E5-8F79-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283317>
 
-On Sat, Jan 2, 2016 at 4:06 PM, David Aguilar <davvid@gmail.com> wrote:
-> Apologies for the late review, and this review should probably
-> go on patch 01 or 02 but I don't have it in my mbox atm...
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Hi Junio,
 >
-> On Wed, Dec 02, 2015 at 07:35:08PM -0500, David Turner wrote:
->> From: Ronnie Sahlberg <sahlberg@google.com>
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> Signed-off-by: David Turner <dturner@twopensource.com>
->> ---
->>  refs.c               | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  refs/files-backend.c | 41 +++++++++++++++++++++++++++------------
->>  refs/refs-internal.h | 29 ++++++++++++++++++++++++++++
->>  3 files changed, 112 insertions(+), 12 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index 9562325..b9b0244 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1150,3 +1150,57 @@ int resolve_gitlink_ref(const char *path, const char *refname,
->>  {
->>       return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
->>  }
->> +
->> +int head_ref(each_ref_fn fn, void *cb_data)
->> +{
->> +     return the_refs_backend->head_ref(fn, cb_data);
->> +}
+> On Wed, 16 Dec 2015, Junio C Hamano wrote:
 >
-> My only comment is that it seems like having a single static global
-> the_refs_backend seems like it should be avoided.
+>> Often we read "text" files that are supplied by the end user
+>> (e.g. commit log message that was edited with $GIT_EDITOR upon
+>> 'git commit -e'), and in some environments lines in a text file
+>> are terminated with CRLF.  Existing strbuf_getline() knows to read
+>> a single line and then strip the terminating byte from the result,
+>> but it is handy to have a version that is more tailored for a "text"
+>> input that takes both '\n' and '\r\n' as line terminator (aka
+>> <newline> in POSIX lingo) and returns the body of the line after
+>> stripping <newline>.
+>> 
+>> Recently reimplemented "git am" uses such a function implemented
+>> privately; move it to strbuf.[ch] and make it available for others.
 >
-> It seems like the intention was to keep the existing interface
-> as-is, which explains why this is using globals, but it seems
-> like the refs backend should be part of some "application
-> context" struct on the stack or allocated during main().  It can
-> then be passed around in the API so that we do not need to have
-> a global.
+> ... While at it, we fix the formatting of the strbuf_getline() function.
 
-Not commenting on whether this is the right direction or not. A global
-variable holding a methods table might not be most aesthetic design,
-but there are practicalities.
+Yeah right; I think it is obvious from the patch text, but while at
+it, I'll amend the log message ;-)
 
-However, that kind of change would change the function signatures for
-all public refs functions and probably most private refs functions as
-well and will likely have massive conflicts with almost any other
-patch that touches the refs code.
-
-If doing this API change is desired it is probably best to do that as
-a separate patch later that ONLY does this signature change and
-nothing else to make review easier and to possibly make merge conflict
-changes easier to manage.
-
-
-
->
-> That way the code will not be tied to a specific single
-> the_refs_backend and could in theory have multiple backends
-> working at the same time.  If submodule were ever rewritten in C
-> then this could potentially be a useful feature.
->
-> That said, the refs backend is not the only global static data
-> in git that would need to be factored out, but it wouldn't hurt
->ice,  to make this part a little more tidy.
->
-> Thoughts?
-> --
-> David
+Thanks.
