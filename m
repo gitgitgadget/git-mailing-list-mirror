@@ -1,146 +1,153 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 0/2] add regex match flags to git describe
-Date: Mon, 04 Jan 2016 09:46:42 -0800
-Message-ID: <xmqqmvslp799.fsf@gitster.mtv.corp.google.com>
-References: <cover.1451298323.git.mostynb@opera.com>
-	<xmqqy4cejoz4.fsf@gitster.mtv.corp.google.com>
-	<5681D02C.1040609@opera.com>
-	<xmqqk2nxi002.fsf@gitster.mtv.corp.google.com>
-	<5684702C.3040802@opera.com>
-	<xmqqy4cbbh5e.fsf@gitster.mtv.corp.google.com>
-	<5684FE61.4010701@opera.com>
+Subject: Re: [PATCH 1/2] avoid shifting signed integers 31 bits
+Date: Mon, 04 Jan 2016 09:52:10 -0800
+Message-ID: <xmqqh9itp705.fsf@gitster.mtv.corp.google.com>
+References: <20151229063449.GA28755@sigill.intra.peff.net>
+	<20151229063545.GA30340@sigill.intra.peff.net>
+	<CACsJy8CAAqZFQCfadUov7DFhSgh=dtGfE-onbXZQXO-0Y2652g@mail.gmail.com>
+	<20151231052029.GA10238@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>
-To: Mostyn Bramley-Moore <mostynb@opera.com>
-X-From: git-owner@vger.kernel.org Mon Jan 04 18:46:56 2016
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 04 18:52:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG9Dc-0008At-7z
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 18:46:56 +0100
+	id 1aG9In-0004nt-FP
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 18:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752707AbcADRqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 12:46:53 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53367 "EHLO
+	id S1751431AbcADRwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 12:52:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54814 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752137AbcADRqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 12:46:51 -0500
+	with ESMTP id S1751390AbcADRwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 12:52:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B57FC34028;
-	Mon,  4 Jan 2016 12:46:44 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B38693418D;
+	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E5WwaOzjJK5h3lWVDDritUqpFzI=; b=HWRq5H
-	/lL/iJlTWDqeOF0Vmc7YjgFR8Jjo02uQ0x5Mu3kwg8oR4jJyoQeBd8lKDbcn7U47
-	pL5d6+HipQpNz2+9MKxm0nTd2WVGYrSqhnHUFsUJHe62xmeM2uMy6dNbAOjr8sTY
-	0AjYHwqEHs3z7UyxRq2VtlfL5a6TmQQm/opqc=
+	:content-type; s=sasl; bh=/ktmf3hfF4DYGErzfwoZunDxRKM=; b=ZrfRn0
+	gHhUYmHDk/ueNzrNBuESp0gux3wOTkKdk1mFWJJbzXtY3c/w+gyg/zi6344zMdxI
+	RvI/4SI6aovgdulh2EMEoyzfNWQTOcla1I+GYPPdDEIY3ivc4YWwGE75DsQSx9+4
+	dDRXDSHdeD69oJvH5zeJCvp+dzr/bSiSRk87Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fOINwd1oW0GmR3zhVpLI27h7S6Yt50Db
-	S2D5SQd9HH12ZwQy5Tr7GpxXjAfPa3vQqQSJFqHMLdUO61o3mnOtOyugD3N/e9ea
-	AF1MFw1RVmltjBc6a27lfNf1NcZ08U88rCvly/TQfmGK4WNIC2mzEKPKEexs6jr1
-	IngaqzvapYU=
+	:content-type; q=dns; s=sasl; b=hnzsxp8qzPrEnjBMM1UJiWn/wigmjHDg
+	3AuWaaTOhn0CWFm1Nnh5aJkezjr+fIDG5J5T895TMB31E31rc+Tj1FhHNpX3sn7O
+	SZoszVTCGCFKhDwyeeyCK6oiwFF6wnl5SwiKvZSdrgP0EVM/aXyjKMSGZV+ItTcz
+	Jo6yh4bMRl0=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD0D334027;
-	Mon,  4 Jan 2016 12:46:44 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A9AD03418C;
+	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1644234026;
-	Mon,  4 Jan 2016 12:46:44 -0500 (EST)
-In-Reply-To: <5684FE61.4010701@opera.com> (Mostyn Bramley-Moore's message of
-	"Thu, 31 Dec 2015 11:07:29 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 296663418B;
+	Mon,  4 Jan 2016 12:52:11 -0500 (EST)
+In-Reply-To: <20151231052029.GA10238@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 31 Dec 2015 00:20:29 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1E75F788-B30B-11E5-8CBF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E15FBF22-B30B-11E5-9E29-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283310>
 
-Mostyn Bramley-Moore <mostynb@opera.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 12/31/2015 01:23 AM, Junio C Hamano wrote:
-> ...
->> Swapping the option key and value may not be a bad idea, but one
->> problem that the above does not solve, which I outlined in the
->> message you are responding to, is that "match-pattern-type" does not
->> give any hint that this is about affecting the match that is done to
->> "refs", e.g. you cannot tell in
->>
->>    $ git mgrep --match-pattern-type=perl-regexp -e foo --refs 'release_*'
->>
->> if the perl-regexp is to be used for matching branch names or for
->> matching the strings the command looks for in the trees of the
->> matching branches.
+> On Thu, Dec 31, 2015 at 12:10:33PM +0700, Duy Nguyen wrote:
 >
-> There is a hint: --foo-pattern-type applies only to --foo.
-
-Hmph.
-
-> In your mgrep example --match-pattern-type would apply to --match
-> patterns only, and if we choose to implement it then
-> --refs-pattern-type would apply to --refs patterns only.
-> eg:
-> $ git mgrep --match '^foo' --match-pattern-type=perl-regexp --refs
-> release_*' --refs-pattern-type=glob
-
-Most likely the hypothetical "mgrep" would not use "--match" but use
-"-e" to retain similarity to "grep", and "--e-pattern-type" would be
-confusing.  But I agree that "--refs-pattern-type" uniformly used
-where we take pattern parameter on the command line to match with
-refs may make it clear that you are only affecting the matches
-against refs.
-
->> Magic pattern annotation like we do for pathspecs Duy raised may not
->> be a bad idea, either, and would probably be easier to teach people.
->> Just like in Perl "(?i)$any_pattern" is a way to introduce the case
->> insensitive match with $any_pattern, we may be able to pick an
->> extensible magic syntax and decorate the pattern you would specify
->> for matching refnames to tell Git what kind of pattern it is, e.g.
->>
->>    $ git mgrep -P -e foo --refs '/?glob/release_*'
->>
->> I am not suggesting that we must use /?<pattern type name>/ prefix
->> as the "extensible magic syntax" here--I am just illustrating what
->> I mean by "extensible magic syntax".
+>> On Tue, Dec 29, 2015 at 1:35 PM, Jeff King <peff@peff.net> wrote:
+>> > We sometimes use 32-bit unsigned integers as bit-fields.
+>> > It's fine to access the MSB, because it's unsigned. However,
+>> > doing so as "1 << 31" is wrong, because the constant "1" is
+>> > a signed int, and we shift into the sign bit, causing
+>> > undefined behavior.
+>> >
+>> > We can fix this by using "1U" as the constant.
+>> 
+>> We have this in cache.h, should it be fixed as well?
+>> 
+>> /* CE_EXTENDED2 is for future extension */
+>> #define CE_EXTENDED2         (1 << 31)
 >
-> I hadn't seen the pathspec magic patterns before- interesting.  We
-> could possibly share syntax with pathspecs, ie
-> :(?pattern-options...)pattern
+> Sort of. We don't actually use it, and since it's a macro, that means it
+> never even hits the compiler proper itself. So it's not a bug, but it's
+> a bug waiting to happen. :)
+>
+> -Peff
 
-Even though we have DWIM between revisions and paths on the command
-line when the user omits "--" for disambiguation, I do not think we
-look at the shape of the string to DWIM/decide that it is a pattern,
-so as long as the magic syntax cannot be a valid pattern to match
-against refs right now (and your ":(?...)"  qualifies as such, as a
-refname would not contain a component that begins with a colon), it
-would be possible to introduce it as the magic syntax for matching
-refs.
+Let's squash an obvious change for that in to 1/2, then, before I
+merge the series to 'next'.
 
-Or did you mean to use this syntax also for patterns that match
-strings in contents, e.g.
+Thanks.
 
-    $ git grep -e ':(?perl-regexp)...'
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Tue, 29 Dec 2015 01:35:46 -0500
+Subject: [PATCH] avoid shifting signed integers 31 bits
 
-I am not bold enough to say that it would be a good idea, but I
-offhand do not think of a reason why we shouldn't go that route,
-either.
+We sometimes use 32-bit unsigned integers as bit-fields.
+It's fine to access the MSB, because it's unsigned. However,
+doing so as "1 << 31" is wrong, because the constant "1" is
+a signed int, and we shift into the sign bit, causing
+undefined behavior.
 
-> Would this be confusing for commands that already have --perl-regexp
-> etc?  What should happen if you specify both --perl-regexp and and a
-> different type of pattern like :(glob)foo (error out, I suppose)?
+We can fix this by using "1U" as the constant.
 
-If we were to go that route, ideally, I would say that
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/receive-pack.c | 2 +-
+ cache.h                | 2 +-
+ diff.h                 | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-    $ git grep --perl-regexp -e 'A' -e ':(?basic-regexp)B' -e ':(?fixed-string)C'
-
-should match with A as pcre, B as BRE and C as a fixed string.
-
-I do not offhand remember if we built the underlying grep machinery
-in such a way that it is easy to extend it to allow such mixture,
-though.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e6b93d0..e35ed40 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1597,7 +1597,7 @@ static void prepare_shallow_update(struct command *commands,
+ 				continue;
+ 			si->need_reachability_test[i]++;
+ 			for (k = 0; k < 32; k++)
+-				if (si->used_shallow[i][j] & (1 << k))
++				if (si->used_shallow[i][j] & (1U << k))
+ 					si->shallow_ref[j * 32 + k]++;
+ 		}
+ 
+diff --git a/cache.h b/cache.h
+index 6f53962..9088843 100644
+--- a/cache.h
++++ b/cache.h
+@@ -214,7 +214,7 @@ struct cache_entry {
+ #define CE_INTENT_TO_ADD     (1 << 29)
+ #define CE_SKIP_WORKTREE     (1 << 30)
+ /* CE_EXTENDED2 is for future extension */
+-#define CE_EXTENDED2         (1 << 31)
++#define CE_EXTENDED2         (1U << 31)
+ 
+ #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
+ 
+diff --git a/diff.h b/diff.h
+index f7208ad..893f446 100644
+--- a/diff.h
++++ b/diff.h
+@@ -91,7 +91,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_DIRSTAT_BY_LINE     (1 << 28)
+ #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
+ #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
+-#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1 << 31)
++#define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1U << 31)
+ 
+ #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
+ #define DIFF_OPT_TOUCHED(opts, flag)    ((opts)->touched_flags & DIFF_OPT_##flag)
+-- 
+2.7.0-rc3-132-g73ad441
