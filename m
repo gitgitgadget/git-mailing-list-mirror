@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/10] t/t5601-clone.sh: use the $( ... ) construct for command substitution
-Date: Mon,  4 Jan 2016 10:10:49 +0100
-Message-ID: <1451898651-16468-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/10] t/t5700-clone-reference.sh: use the $( ... ) construct for command substitution
+Date: Mon,  4 Jan 2016 10:10:50 +0100
+Message-ID: <1451898651-16468-10-git-send-email-gitter.spiros@gmail.com>
 References: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:49 2016
+X-From: git-owner@vger.kernel.org Mon Jan 04 10:11:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aG1B7-000551-8K
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:49 +0100
+	id 1aG1B7-000551-Qf
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Jan 2016 10:11:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbcADJLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 04:11:17 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:34628 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753149AbcADJLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 04:11:08 -0500
-Received: by mail-pa0-f54.google.com with SMTP id uo6so174591572pac.1
+	id S1753237AbcADJLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 04:11:16 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34634 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753230AbcADJLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 04:11:09 -0500
+Received: by mail-pa0-f47.google.com with SMTP id uo6so174591743pac.1
         for <git@vger.kernel.org>; Mon, 04 Jan 2016 01:11:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QojjpSFbMkMxeZEnfYL4dVVWJRc1DIIVcPQPZ7LzJXw=;
-        b=mkhFJAaJL8neWnKm0proJ2eOq9UWsA6GcNp94oYtoHAcx/Srpck3KDs+6BoNcZ3CuP
-         FNUaWy8z5JqyX/xNrcu38oNNw1MMTIOgTNKwos/UA6WJQJPvZ4HUJUjYS9+XNVb20LiU
-         QmdnBSR0lQn9r0aJIfIrFacq7ItnRpXp5P7etx9h/OprbyYsWM3QWLnePQxhoFuES9Qq
-         COLG+eOaBq32dKniSvL3jSCv1S+6DYtOOuhdxYWP0ly/nNahaFbOezAvUAOaG2wCkaH1
-         LHwuN2faFJ5iFQxBLm83qY8bCDLq0Jb7mtUb0FewbSc8n2BHHNSXAAFxo+mbQ9jZIWiD
-         DcHQ==
-X-Received: by 10.66.65.203 with SMTP id z11mr125652336pas.152.1451898668035;
+        bh=AvVVBX3oN/5REJHfhhyBbD1u8PkxZTMOVxRxWcfkFT8=;
+        b=uXLExmrApOwLs/YTxvKlqRhStVBTkGo+CrfRE2Eg5G+NInIsIAt8iejLQ80Tbc/ORq
+         691TCkSRQqEY8ViGl3pOTyPhuePAInC9pJaWPqMNfRvuv9bjf4Uk9bxWh0WsXoz1M05z
+         iUlqXA1AGL7w1QUUwZL1WKUPJ49O91Jt68Bxagt1ifUGV8UBP8qSm28b5R+iSlBG4X8z
+         sBT/C7wRag95cQEZ4siEDtEERZXfLzId/69GO8WOTNGjr/41GvFmFNmJg+vDuszis4Dr
+         Mp7Ggmiq7+Q8DKl5unml0ZzAEYeVOF48M8DMqfwwqeZ3aMVlxezXV+SdB/WYTyqnY3nW
+         9tPA==
+X-Received: by 10.66.222.101 with SMTP id ql5mr125649065pac.144.1451898668690;
         Mon, 04 Jan 2016 01:11:08 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.07
+        by smtp.gmail.com with ESMTPSA id h10sm124416205pat.7.2016.01.04.01.11.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 Jan 2016 01:11:07 -0800 (PST)
+        Mon, 04 Jan 2016 01:11:08 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1451898651-16468-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283289>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5601-clone.sh | 2 +-
+ t/t5700-clone-reference.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 9b34f3c..61dc4ce 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -221,7 +221,7 @@ test_expect_success 'clone separate gitdir' '
- '
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index dfa1bf7..4320082 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -6,7 +6,7 @@
+ test_description='test clone --reference'
+ . ./test-lib.sh
  
- test_expect_success 'clone separate gitdir: output' '
--	echo "gitdir: `pwd`/realgitdir" >expected &&
-+	echo "gitdir: $(pwd)/realgitdir" >expected &&
- 	test_cmp expected dst/.git
- '
+-base_dir=`pwd`
++base_dir=$(pwd)
+ 
+ U=$base_dir/UPLOAD_LOG
  
 -- 
 2.3.3.GIT
