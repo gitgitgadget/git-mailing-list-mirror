@@ -1,97 +1,128 @@
-From: Stephen & Linda Smith <ischis2@cox.net>
-Subject: Re: What's cooking in git.git (Jan 2016, #01; Mon, 4)
-Date: Mon, 04 Jan 2016 21:32:27 -0700
-Message-ID: <3613836.VnYUjhoksq@thunderbird>
-References: <1718717.tR0GOgDc0N@thunderbird>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org, Will Palmer <wmpalmer@gmail.com>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 05:32:31 2016
+From: David Greene <greened@obbligato.org>
+Subject: [PATCH] Add a test for subtree rebase that loses commits
+Date: Mon,  4 Jan 2016 22:40:05 -0600
+Message-ID: <1451968805-6948-2-git-send-email-greened@obbligato.org>
+References: <1451968805-6948-1-git-send-email-greened@obbligato.org>
+Cc: gitster@pobox.com, john@keeping.me.uk,
+	sandals@crustytoothpaste.net, peff@peff.net,
+	"David A. Greene" <greened@obbligato.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 05 05:41:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGJIL-0000zM-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 05:32:30 +0100
+	id 1aGJQb-00013w-GM
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 05:41:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006AbcAEEbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Jan 2016 23:31:55 -0500
-Received: from fed1rmfepo101.cox.net ([68.230.241.143]:54150 "EHLO
-	fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbcAEEbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jan 2016 23:31:53 -0500
-Received: from fed1rmimpo306 ([68.230.241.174]) by fed1rmfepo101.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160105043152.YIDW331.fed1rmfepo101.cox.net@fed1rmimpo306>
-          for <git@vger.kernel.org>; Mon, 4 Jan 2016 23:31:52 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo306 with cox
-	id 24Xs1s0022tqoqC014Xs6H; Mon, 04 Jan 2016 23:31:52 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020203.568B4738.008C,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=LKq4tuq9 c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
- a=-lJPUGd8qEjaHvAxeCAA:9 a=CjuIK1q_8ugA:10 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id EBBA4140912;
-	Mon,  4 Jan 2016 21:32:27 -0700 (MST)
-User-Agent: KMail/5.0.2 (Linux/4.3.0-2-generic; KDE/5.15.0; x86_64; ; )
+	id S1754023AbcAEEkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Jan 2016 23:40:22 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:45839 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753884AbcAEEkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jan 2016 23:40:21 -0500
+Received: from 206-55-177-216.fttp.usinternet.com ([206.55.177.216] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
+	(Exim 4.85)
+	(envelope-from <greened@obbligato.org>)
+	id 1aGJQn-0000AE-B4; Mon, 04 Jan 2016 22:41:13 -0600
+X-Mailer: git-send-email 2.6.1
+In-Reply-To: <1451968805-6948-1-git-send-email-greened@obbligato.org>
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283347>
 
-On Monday, January 04, 2016 07:36:05 PM Junio C Hamano wrote:
-> Stephen & Linda Smith <ischis2@cox.net> writes:
-> 
-> > On Monday, January 04, 2016 03:44:33 PM Junio C Hamano wrote:
-> >>  Becoming tired of waiting for a reroll.
-> >>  ($gmane/271213).
-> >>  Anybody wants to help rerolling this?  Otherwise will discard.
-> >
-> > <snip>
-> >
-> >> Becoming tired of waiting for a reroll.
-> >>  Anybody wants to help rerolling this?  Otherwise will discard.
-> >  > ($gmane/272180).
-> >
-> > What do you mean by rerolling this?  If you mean that you would
-> > like someone to pick up the patch and try and get it though then I
-> > don't mind helping.
-> 
-> More or less.  I do not mind if these topics disappeared, either,
-> but we have spent review and discussion bandwidth for these
-> unfinished topics and we may want to take them to the completion.
-> 
-> > For my education, how does this affect the sign-off proceedure?
-> 
-> Depending on the extent of changes from the original version, either
-> you take the authorship (with comment in the log message saying that
-> it is based on Such and Such's patches) or you still keep them as
-> the author (with comment in the log message saying that you extended
-> it in such and such way).  In either case, as long as their original
-> remains in the resulting patch, you retain their Sign-off and then
-> add your Sign-off at the end.
-> 
-> If you take the ideas from their series and rewrite everything from
-> scratch, you would take the authorship, with comment in the log
-> message saying that you took inspiration from Such and Such's
-> patches, and have only your Sign-off.
-> 
-> 
+From: "David A. Greene" <greened@obbligato.org>
 
-If Will isn't interested in finishing these two patches I will pick them 
-up [ ($gmane/271213), ($gmane/272180) ]
+This test merges an external tree in as a subtree, makes some commits
+on top of it and splits it back out.  In the process the added commits
+are lost.  This is marked to expect failure so that we don't forget to
+fix it.
 
-After that I will check look at some of the others for which you've 
-asked for help.
+Signed-off-by: David A. Greene <greened@obbligato.org>
+---
+ t/t3427-rebase-subtree.sh | 68 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
+ create mode 100755 t/t3427-rebase-subtree.sh
+
+diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+new file mode 100755
+index 0000000..7eb28ab
+--- /dev/null
++++ b/t/t3427-rebase-subtree.sh
+@@ -0,0 +1,68 @@
++#!/bin/sh
++
++test_description='git rebase tests for -Xsubtree
++
++This test runs git rebase and tests the subtree strategy.
++'
++. ./test-lib.sh
++
++addfile() {
++    name=$1
++    echo $(basename ${name}) > ${name}
++    ${git} add ${name}
++    ${git} commit -m "Add $(basename ${name})"
++}
++
++check_equal()
++{
++	test_debug 'echo'
++	test_debug "echo \"check a:\" \"{$1}\""
++	test_debug "echo \"      b:\" \"{$2}\""
++	if [ "$1" = "$2" ]; then
++		return 0
++	else
++		return 1
++	fi
++}
++
++last_commit_message()
++{
++	git log --pretty=format:%s -1
++}
++
++test_expect_success 'setup' '
++	test_commit README &&
++	mkdir files &&
++	cd files &&
++	git init &&
++	test_commit master1 &&
++	test_commit master2 &&
++	test_commit master3 &&
++	cd .. &&
++	test_debug "echo Add project master to master" &&
++	git fetch files master &&
++	git branch files-master FETCH_HEAD &&
++	test_debug "echo Add subtree master to master via subtree" &&
++	git read-tree --prefix=files_subtree files-master &&
++	git checkout -- files_subtree &&
++	tree=$(git write-tree) &&
++	head=$(git rev-parse HEAD) &&
++	rev=$(git rev-parse --verify files-master^0) &&
++	commit=$(git commit-tree -p ${head} -p ${rev} -m "Add subproject master" ${tree}) &&
++	git reset ${commit} &&
++	cd files_subtree &&
++	test_commit master4 &&
++	cd .. &&
++	test_commit files_subtree/master5
++'
++
++# Does not preserve master4 and master5.
++test_expect_failure 'Rebase default' '
++	git checkout -b rebase-default master &&
++	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
++	git commit -m "Empty commit" --allow-empty &&
++	git rebase -Xsubtree=files_subtree  --preserve-merges --onto files-master master &&
++	check_equal "$(last_commit_message)" "files_subtree/master5"
++'
++
++test_done
+-- 
+2.6.1
