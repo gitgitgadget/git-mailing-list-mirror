@@ -1,108 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
-Date: Tue, 5 Jan 2016 10:24:36 -0500
-Message-ID: <20160105152436.GA1205@sigill.intra.peff.net>
-References: <568BC8D1.3080201@gmail.com>
+Subject: Re: [PATCH 1/3] t6050-replace: make failing editor test more robust
+Date: Tue, 5 Jan 2016 10:39:33 -0500
+Message-ID: <20160105153933.GA5586@sigill.intra.peff.net>
+References: <1451990010-15458-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jacek Wielemborek <d33tah@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 16:24:50 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jan 05 16:39:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGTTY-0002yL-AS
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 16:24:44 +0100
+	id 1aGTi0-0000U0-FP
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 16:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226AbcAEPYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2016 10:24:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48921 "HELO cloud.peff.net"
+	id S1751873AbcAEPjh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jan 2016 10:39:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48927 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752172AbcAEPYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2016 10:24:39 -0500
-Received: (qmail 15850 invoked by uid 102); 5 Jan 2016 15:24:38 -0000
+	id S1751603AbcAEPjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2016 10:39:36 -0500
+Received: (qmail 16499 invoked by uid 102); 5 Jan 2016 15:39:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jan 2016 10:24:38 -0500
-Received: (qmail 13725 invoked by uid 107); 5 Jan 2016 15:24:53 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jan 2016 10:39:35 -0500
+Received: (qmail 13811 invoked by uid 107); 5 Jan 2016 15:39:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jan 2016 10:24:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jan 2016 10:24:36 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 Jan 2016 10:39:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Jan 2016 10:39:33 -0500
 Content-Disposition: inline
-In-Reply-To: <568BC8D1.3080201@gmail.com>
+In-Reply-To: <1451990010-15458-1-git-send-email-szeder@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283381>
 
-On Tue, Jan 05, 2016 at 02:44:49PM +0100, Jacek Wielemborek wrote:
+On Tue, Jan 05, 2016 at 11:33:30AM +0100, SZEDER G=C3=A1bor wrote:
 
-> Steps to reproduce:
-> 
-> 1. base64 -d and unpack the .tar.gz file from here:
-> https://gist.github.com/d33tah/4e976f2e043718594a85
-> 
-> 2. cd into it, run "git log"
-> 
-> I'll be happy to guide you through the fuzzing process - I stopped it at
-> the first crash.
+> However, this editor doesn't actually modify the edited object,
+> because start_command() turns this editor into:
+>=20
+>   /bin/sh -c './fakeeditor;false "$@"' './fakeeditor;false' \
+>           '.../.git/REPLACE_EDITOBJ'
 
-I'm not terribly surprised, and we should look into fixing the
-segfault[1].  But I want to also note that fuzzing packfiles for "git
-log" is not a terribly realistic attack vector.
+Thanks for thorough explanation. I think your patch makes sense.
 
-Git packfiles come from two places:
+> Should we be more thorough, perhaps, and check the error message to b=
+e
+> extra sure that 'git replace --edit' errors out for the expected
+> reason?  There are oh so many 'test_must_fail's in our test scripts
+> and we don't check the error message in most of the cases...
 
-  1. Local maintenance repacks loose and already-packed objects into a
-     new packfile. We trust the local repack process to generate a valid
-     packfile (though the contents of individual objects may be
-     untrusted, of course).
+We usually try to avoid hard-coding error messages, because they end up
+brittle. I think if we've isolated the failure, it's a reasonable test
+(in an ideal world, you check that "foo" doesn't fail, and "foo -wrong"
+does fail; i.e., just changing one variable in your experiment).
 
-  2. A fetch or push may introduce a new packfile to the repository, but
-     it does not enter directly. It is passed through "index-pack
-     --stdin", which checks it byte by byte, creating its own index, and
-     making sure that both the pack structure is good, and optionally
-     the format of the individual object data.
+>  test_expect_success '--edit with and without already replaced object=
+' '
+> @@ -372,7 +376,7 @@ test_expect_success '--edit with and without alre=
+ady replaced object' '
+>  test_expect_success '--edit and change nothing or command failed' '
+>  	git replace -d "$PARA3" &&
+>  	test_must_fail env GIT_EDITOR=3Dtrue git replace --edit "$PARA3" &&
+> -	test_must_fail env GIT_EDITOR=3D"./fakeeditor;false" git replace --=
+edit "$PARA3" &&
+> +	test_must_fail env GIT_EDITOR=3D"./failingfakeeditor" git replace -=
+-edit "$PARA3" &&
 
-So "index-pack" is the enforcement point, and the rest of the git
-commands generally assume that we can trust what is on disk (as it is
-has either been generated by us, or checked by index-pack).  The rest of
-the commands do not spend time checking that the on-disk contents are
-sane (though you can run git-fsck if you want to do that).
+We have the same problem when running aliases, or any git command that
+you want to expand into more complex shell. The usual solution for
+one-off is something like:
 
-If you can find a fuzzed packfile that crashes "index-pack", then _that_
-would be a big deal. I tried AFL against it a few months ago, but didn't
-turn up any hits. I didn't run it for all that long, but I'd be
-surprised if it is all that fruitful. There are quite a few embedded
-checksums in a packfile (zlib checksums, as well as a sha1 over the
-whole file), and index-pack punts when one doesn't match. I think you'd
-need a fuzzer which is aware of the zlib and packfile formats.
+  test_must_fail env GIT_EDITOR=3D"f() { ./fakeeditor; false; } f" git =
+=2E..
+
+That might be preferable to yours, because a reader can see immediately
+in the test what is going on, without wondering what it is that
+failingfakeeditor does. OTOH, it is perhaps somewhat non-obvious. It
+came to mind to me because it is an idiom we use elsewhere; I remember
+thinking it was very clever the first time somebody showed it to me. :)
+
+I'd be OK with the patch using either method.
 
 -Peff
-
-[1] I briefly ran your case under valgrind and got:
-
-    ==5409== Invalid read of size 4
-    ==5409==    at 0x55F92A: nth_packed_object_offset (sha1_file.c:2464)
-    ==5409==    by 0x55FBD4: find_pack_entry_one (sha1_file.c:2523)
-    ==5409==    by 0x55FCF7: fill_pack_entry (sha1_file.c:2566)
-    ==5409==    by 0x55FDE2: find_pack_entry (sha1_file.c:2604)
-    ==5409==    by 0x5615BA: has_sha1_file_with_flags (sha1_file.c:3212)
-    ==5409==    by 0x50FC38: has_sha1_file (cache.h:1049)
-    ==5409==    by 0x51043B: parse_object (object.c:259)
-    ==5409==    by 0x546BF9: get_reference (revision.c:254)
-    ==5409==    by 0x54CA15: setup_revisions (revision.c:2342)
-    ==5409==    by 0x4531DA: cmd_log_init_finish (log.c:156)
-    ==5409==    by 0x453465: cmd_log_init (log.c:211)
-    ==5409==    by 0x4547EB: cmd_log (log.c:672)
-    ==5409==  Address 0x840244bc is not stack'd, malloc'd or (recently) free'd
-
-    So I'd guess it's not the pack itself, but rather the .idx which is
-    full of nonsense values. And that's always generated from scratch
-    locally.
-
-    Which isn't to say there aren't _some_ attacks you could do with
-    this. But git's security model has never been that you can untar
-    a random .git directory and use it securely.
