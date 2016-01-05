@@ -1,169 +1,189 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 2/2] do_compare_entry: use already-computed path
-Date: Tue, 05 Jan 2016 14:40:58 -0500
-Organization: Twitter
-Message-ID: <1452022858.3892.48.camel@twopensource.com>
-References: <1450737260-15965-1-git-send-email-dturner@twopensource.com>
-	 <1450737260-15965-3-git-send-email-dturner@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] Add a test for subtree rebase that loses commits
+Date: Tue, 5 Jan 2016 15:34:04 -0500
+Message-ID: <CAPig+cSOzwGdp-FACM2=wK78KSjvEZoB6VKiEtBLnBX0G1L4QQ@mail.gmail.com>
+References: <1451968805-6948-1-git-send-email-greened@obbligato.org>
+	<1451968805-6948-2-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-SecpQQn9/JjUKxNdp++W"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 05 20:41:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>
+To: David Greene <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Tue Jan 05 21:34:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGXTk-0007Pv-7j
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 20:41:12 +0100
+	id 1aGYJS-0007Q9-Pd
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 21:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbcAETlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2016 14:41:03 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:36860 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751688AbcAETlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2016 14:41:01 -0500
-Received: by mail-qg0-f46.google.com with SMTP id e32so196350832qgf.3
-        for <git@vger.kernel.org>; Tue, 05 Jan 2016 11:41:00 -0800 (PST)
+	id S1752115AbcAEUed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2016 15:34:33 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:34738 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829AbcAEUeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2016 15:34:06 -0500
+Received: by mail-vk0-f65.google.com with SMTP id a123so579872vkh.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2016 12:34:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version;
-        bh=Z0c3FnwiZwTePojO5BlSL49IXZ7zDWJHm26G52oaPsM=;
-        b=mKU8WOwtIoIPXVLoXd6I4Q1kvTnh1+kCk5OjhA9KigkfsHR4+gPnU30YplZhj0kIDJ
-         zyjP00xBfKwnU2szh2lDNcokKWjNB0MglFFwyi/dwj3x+2iUlTEnk2wSCRscvalwY5LV
-         0YNzqGFB+iWLgnvL2K0TiXxUG173fTKpNhNzTSHa8Kq058BGZEjqG+JS80mFUU+O0rFW
-         RYEy6TujosCEOI/Y+Cdc4NevWCe8mH+UdcTXln1s8kG6Z2OLZQxMTxrPUZe0ZsXEmZyc
-         Lc24Dgfo/sBKptT2j0gsYBuEVvmWflK2Z4qBrTN8HMlPoztHpoUvP8Mq1yRx27CQOSgc
-         mUSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version;
-        bh=Z0c3FnwiZwTePojO5BlSL49IXZ7zDWJHm26G52oaPsM=;
-        b=VK9ox1L708mj+VQ9EDrC2v5Wl8rq7bqLcbUB98DTePRCCQG4GrS9bdNlEIgVGujDxx
-         ng59SwRNzjNNsPmDjLD/zaWygy+anNZyQ8+i/cq6mYd3xJYkAwWZBeQtiNlbDbqWaZU7
-         GPpHtyK78szmNxUjXIl1h9iQxTFP3xp/6+EVjGvjJsbavgIwkUOXz6HAd/DbqTvRU76j
-         NVWLikj2ZI08/0E6kJIj/LMkoSXqJaCbCCTKQ5LR5Rg0SJjNL/Cg+04ZFbSTz3dynstO
-         0gzTcvOpOWmuarkqtFhoKzI3egB66boicG2Qq05sJKMBQTAGAbOea4a1Ki4c2Llizszi
-         +AFw==
-X-Gm-Message-State: ALoCoQm98hZoOpWd7XziQjcnLxeSzA4V8TXal149n54O2KV/lPFxnd404ZkTLGCJ7RVHFVBtvKKti/0S5ssoO/uRpa8vAbNgaQ==
-X-Received: by 10.140.201.20 with SMTP id w20mr67895590qha.10.1452022860255;
-        Tue, 05 Jan 2016 11:41:00 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 17sm42404317qhp.1.2016.01.05.11.40.58
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Jan 2016 11:40:59 -0800 (PST)
-In-Reply-To: <1450737260-15965-3-git-send-email-dturner@twopensource.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=LQQ0u2wuPGsbxjPX7xFLZjCSaqqxiPrG1f7GJ9iOFd8=;
+        b=j8Poj//FkDhO4qirOfqksHoxgA4cSbzxc40K53v/uLawOe+JHPPi6Aj6e050+kLeWX
+         aVyBjtwq+a3BgwqYez3ml/uMhE64LMlHdHtYIZt+sPqZeABZSrGn+KVxN5+yszlVpTfu
+         J/llSbI9HDciSJH4nt8YkmsLnt5hE56G7uDw0OoRqkWucXuH9K/0gHylu7oH11gflX9Y
+         pxTBm+K4jZUz8xWOWkvOYLH5+MISuzXF5m+6IHEgeT/N3Vxm9vxwI+624GqctqWJZPO/
+         smiPRJt7baC4YXIVkSMpSzVp0lZNppp8VcfsDz3bykjB2iaAJsCdw0gOENSRPIg1IV81
+         no5g==
+X-Received: by 10.31.164.78 with SMTP id n75mr33706756vke.14.1452026045018;
+ Tue, 05 Jan 2016 12:34:05 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 5 Jan 2016 12:34:04 -0800 (PST)
+In-Reply-To: <1451968805-6948-2-git-send-email-greened@obbligato.org>
+X-Google-Sender-Auth: zs2IoThawieiTV3_ZzfBC-Pc3wo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283398>
 
+On Mon, Jan 4, 2016 at 11:40 PM, David Greene <greened@obbligato.org> wrote:
+> This test merges an external tree in as a subtree, makes some commits
+> on top of it and splits it back out.  In the process the added commits
+> are lost.  This is marked to expect failure so that we don't forget to
+> fix it.
+>
+> Signed-off-by: David A. Greene <greened@obbligato.org>
+> ---
+> diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+> @@ -0,0 +1,68 @@
+> +#!/bin/sh
+> +
+> +test_description='git rebase tests for -Xsubtree
+> +
+> +This test runs git rebase and tests the subtree strategy.
+> +'
+> +. ./test-lib.sh
+> +
+> +addfile() {
+> +    name=$1
+> +    echo $(basename ${name}) > ${name}
+> +    ${git} add ${name}
+> +    ${git} commit -m "Add $(basename ${name})"
+> +}
 
---=-SecpQQn9/JjUKxNdp++W
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+What is this function for? It doesn't seem to be used at all by this script.
 
-On Mon, 2015-12-21 at 17:34 -0500, David Turner wrote:
-> In traverse_trees, we generate the complete traverse path for a
+> +check_equal()
+> +{
 
-Please replace with the attached version, which eliminates an
-unnecessary check.
---=-SecpQQn9/JjUKxNdp++W
-Content-Disposition: attachment;
-	filename="0001-do_compare_entry-use-already-computed-path.patch"
-Content-Type: text/x-patch; name="0001-do_compare_entry-use-already-computed-path.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+Style: Place brace on the same line as the function declaration.
 
-RnJvbSA1MjBjZmJmZjE1ZmFhNmRlNTBkMzdiNGE0NzZiMjFkYmUxNTk4NDMzIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBUdXJuZXIgPGR0dXJuZXJAdHdvcGVuc291cmNlLmNv
-bT4KRGF0ZTogTW9uLCAyMSBEZWMgMjAxNSAxNzozNDoyMCAtMDUwMApTdWJqZWN0OiBbUEFUQ0hd
-IGRvX2NvbXBhcmVfZW50cnk6IHVzZSBhbHJlYWR5LWNvbXB1dGVkIHBhdGgKCkluIHRyYXZlcnNl
-X3RyZWVzLCB3ZSBnZW5lcmF0ZSB0aGUgY29tcGxldGUgdHJhdmVyc2UgcGF0aCBmb3IgYQp0cmF2
-ZXJzZV9pbmZvLiAgTGF0ZXIsIGluIGRvX2NvbXBhcmVfZW50cnksIHdlIHVzZWQgdG8gZ28gZG8g
-YSBidW5jaApvZiB3b3JrIHRvIGNvbXBhcmUgdGhlIHRyYXZlcnNlX2luZm8gdG8gYSBjYWNoZV9l
-bnRyeSdzIG5hbWUgd2l0aG91dApjb21wdXRpbmcgdGhhdCBwYXRoLiAgQnV0IHNpbmNlIHdlIGFs
-cmVhZHkgaGF2ZSB0aGF0IHBhdGgsIHdlIGRvbid0Cm5lZWQgdG8gZG8gYWxsIHRoYXQgd29yay4g
-IEluc3RlYWQsIHdlIGNhbiBqdXN0IHB1dCB0aGUgZ2VuZXJhdGVkCnBhdGggaW50byB0aGUgdHJh
-dmVyc2VfaW5mbywgYW5kIGRvIHRoZSBjb21wYXJpc29uIG1vcmUgZGlyZWN0bHkuCgpXZSBjb3B5
-IHRoZSBwYXRoIGJlY2F1c2UgcHJ1bmVfdHJhdmVyc2FsIG1pZ2h0IG11dGF0ZSBgYmFzZWAuIFRo
-aXMKZG9lc24ndCBoYXBwZW4gaW4gYW55IGNvZGVwYXRocyB3aGVyZSBkb19jb21wYXJlX2VudHJ5
-IGlzIGNhbGxlZCwKYnV0IGl0J3MgYmV0dGVyIHRvIGJlIHNhZmUuCgpUaGlzIG1ha2VzIGdpdCBj
-aGVja291dCBtdWNoIGZhc3RlciAtLSBhYm91dCAyNSUgb24gVHdpdHRlcidzCm1vbm9yZXBvLiAg
-RGVlcGVyIGRpcmVjdG9yeSB0cmVlcyBhcmUgbGlrZWx5IHRvIGJlbmVmaXQgbW9yZSB0aGFuCnNo
-YWxsb3dlciBvbmVzLgoKU2lnbmVkLW9mZi1ieTogRGF2aWQgVHVybmVyIDxkdHVybmVyQHR3b3Bl
-bnNvdXJjZS5jb20+ClNpZ25lZC1vZmYtYnk6IEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94
-LmNvbT4KLS0tCiB0cmVlLXdhbGsuYyAgICB8ICA3ICsrKysrKysKIHRyZWUtd2Fsay5oICAgIHwg
-IDEgKwogdW5wYWNrLXRyZWVzLmMgfCAzOCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKystLQogMyBmaWxlcyBjaGFuZ2VkLCA0NCBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygt
-KQoKZGlmZiAtLWdpdCBhL3RyZWUtd2Fsay5jIGIvdHJlZS13YWxrLmMKaW5kZXggNmRjY2QyZC4u
-Y2Q0YmIyYyAxMDA2NDQKLS0tIGEvdHJlZS13YWxrLmMKKysrIGIvdHJlZS13YWxrLmMKQEAgLTMy
-MCw2ICszMjAsNyBAQCBpbnQgdHJhdmVyc2VfdHJlZXMoaW50IG4sIHN0cnVjdCB0cmVlX2Rlc2Mg
-KnQsIHN0cnVjdCB0cmF2ZXJzZV9pbmZvICppbmZvKQogCXN0cnVjdCB0cmVlX2Rlc2NfeCAqdHgg
-PSB4Y2FsbG9jKG4sIHNpemVvZigqdHgpKTsKIAlzdHJ1Y3Qgc3RyYnVmIGJhc2UgPSBTVFJCVUZf
-SU5JVDsKIAlpbnQgaW50ZXJlc3RpbmcgPSAxOworCWNoYXIgKnRyYXZlcnNlX3BhdGg7CiAKIAlm
-b3IgKGkgPSAwOyBpIDwgbjsgaSsrKQogCQl0eFtpXS5kID0gdFtpXTsKQEAgLTMyOSw3ICszMzAs
-MTEgQEAgaW50IHRyYXZlcnNlX3RyZWVzKGludCBuLCBzdHJ1Y3QgdHJlZV9kZXNjICp0LCBzdHJ1
-Y3QgdHJhdmVyc2VfaW5mbyAqaW5mbykKIAkJbWFrZV90cmF2ZXJzZV9wYXRoKGJhc2UuYnVmLCBp
-bmZvLT5wcmV2LCAmaW5mby0+bmFtZSk7CiAJCWJhc2UuYnVmW2luZm8tPnBhdGhsZW4tMV0gPSAn
-Lyc7CiAJCXN0cmJ1Zl9zZXRsZW4oJmJhc2UsIGluZm8tPnBhdGhsZW4pOworCQl0cmF2ZXJzZV9w
-YXRoID0geHN0cm5kdXAoYmFzZS5idWYsIGluZm8tPnBhdGhsZW4pOworCX0gZWxzZSB7CisJCXRy
-YXZlcnNlX3BhdGggPSB4c3RybmR1cChpbmZvLT5uYW1lLnBhdGgsIGluZm8tPnBhdGhsZW4pOwog
-CX0KKwlpbmZvLT50cmF2ZXJzZV9wYXRoID0gdHJhdmVyc2VfcGF0aDsKIAlmb3IgKDs7KSB7CiAJ
-CWludCB0cmVlc191c2VkOwogCQl1bnNpZ25lZCBsb25nIG1hc2ssIGRpcm1hc2s7CkBAIC00MTEs
-NiArNDE2LDggQEAgaW50IHRyYXZlcnNlX3RyZWVzKGludCBuLCBzdHJ1Y3QgdHJlZV9kZXNjICp0
-LCBzdHJ1Y3QgdHJhdmVyc2VfaW5mbyAqaW5mbykKIAlmb3IgKGkgPSAwOyBpIDwgbjsgaSsrKQog
-CQlmcmVlX2V4dGVuZGVkX2VudHJ5KHR4ICsgaSk7CiAJZnJlZSh0eCk7CisJZnJlZSh0cmF2ZXJz
-ZV9wYXRoKTsKKwlpbmZvLT50cmF2ZXJzZV9wYXRoID0gTlVMTDsKIAlzdHJidWZfcmVsZWFzZSgm
-YmFzZSk7CiAJcmV0dXJuIGVycm9yOwogfQpkaWZmIC0tZ2l0IGEvdHJlZS13YWxrLmggYi90cmVl
-LXdhbGsuaAppbmRleCAzYjJmN2JmLi4xNzRlYjYxIDEwMDY0NAotLS0gYS90cmVlLXdhbGsuaAor
-KysgYi90cmVlLXdhbGsuaApAQCAtNTksNiArNTksNyBAQCBlbnVtIGZvbGxvd19zeW1saW5rc19y
-ZXN1bHQgewogZW51bSBmb2xsb3dfc3ltbGlua3NfcmVzdWx0IGdldF90cmVlX2VudHJ5X2ZvbGxv
-d19zeW1saW5rcyh1bnNpZ25lZCBjaGFyICp0cmVlX3NoYTEsIGNvbnN0IGNoYXIgKm5hbWUsIHVu
-c2lnbmVkIGNoYXIgKnJlc3VsdCwgc3RydWN0IHN0cmJ1ZiAqcmVzdWx0X3BhdGgsIHVuc2lnbmVk
-ICptb2RlKTsKIAogc3RydWN0IHRyYXZlcnNlX2luZm8geworCWNvbnN0IGNoYXIgKnRyYXZlcnNl
-X3BhdGg7CiAJc3RydWN0IHRyYXZlcnNlX2luZm8gKnByZXY7CiAJc3RydWN0IG5hbWVfZW50cnkg
-bmFtZTsKIAlpbnQgcGF0aGxlbjsKZGlmZiAtLWdpdCBhL3VucGFjay10cmVlcy5jIGIvdW5wYWNr
-LXRyZWVzLmMKaW5kZXggOGUyMDMyZi4uNWY1NDFjMiAxMDA2NDQKLS0tIGEvdW5wYWNrLXRyZWVz
-LmMKKysrIGIvdW5wYWNrLXRyZWVzLmMKQEAgLTQ5OCwxMyArNDk4LDE0IEBAIHN0YXRpYyBpbnQg
-dHJhdmVyc2VfdHJlZXNfcmVjdXJzaXZlKGludCBuLCB1bnNpZ25lZCBsb25nIGRpcm1hc2ssCiAg
-KiBpdHNlbGYgLSB0aGUgY2FsbGVyIG5lZWRzIHRvIGRvIHRoZSBmaW5hbCBjaGVjayBmb3IgdGhl
-IGNhY2hlCiAgKiBlbnRyeSBoYXZpbmcgbW9yZSBkYXRhIGF0IHRoZSBlbmQhCiAgKi8KLXN0YXRp
-YyBpbnQgZG9fY29tcGFyZV9lbnRyeShjb25zdCBzdHJ1Y3QgY2FjaGVfZW50cnkgKmNlLCBjb25z
-dCBzdHJ1Y3QgdHJhdmVyc2VfaW5mbyAqaW5mbywgY29uc3Qgc3RydWN0IG5hbWVfZW50cnkgKm4p
-CitzdGF0aWMgaW50IGRvX2NvbXBhcmVfZW50cnlfcGllY2V3aXNlKGNvbnN0IHN0cnVjdCBjYWNo
-ZV9lbnRyeSAqY2UsIGNvbnN0IHN0cnVjdCB0cmF2ZXJzZV9pbmZvICppbmZvLCBjb25zdCBzdHJ1
-Y3QgbmFtZV9lbnRyeSAqbikKIHsKIAlpbnQgbGVuLCBwYXRobGVuLCBjZV9sZW47CiAJY29uc3Qg
-Y2hhciAqY2VfbmFtZTsKIAogCWlmIChpbmZvLT5wcmV2KSB7Ci0JCWludCBjbXAgPSBkb19jb21w
-YXJlX2VudHJ5KGNlLCBpbmZvLT5wcmV2LCAmaW5mby0+bmFtZSk7CisJCWludCBjbXAgPSBkb19j
-b21wYXJlX2VudHJ5X3BpZWNld2lzZShjZSwgaW5mby0+cHJldiwKKwkJCQkJCSAgICAgJmluZm8t
-Pm5hbWUpOwogCQlpZiAoY21wKQogCQkJcmV0dXJuIGNtcDsKIAl9CkBAIC01MjIsNiArNTIzLDM5
-IEBAIHN0YXRpYyBpbnQgZG9fY29tcGFyZV9lbnRyeShjb25zdCBzdHJ1Y3QgY2FjaGVfZW50cnkg
-KmNlLCBjb25zdCBzdHJ1Y3QgdHJhdmVyc2VfCiAJcmV0dXJuIGRmX25hbWVfY29tcGFyZShjZV9u
-YW1lLCBjZV9sZW4sIFNfSUZSRUcsIG4tPnBhdGgsIGxlbiwgbi0+bW9kZSk7CiB9CiAKK3N0YXRp
-YyBpbnQgZG9fY29tcGFyZV9lbnRyeShjb25zdCBzdHJ1Y3QgY2FjaGVfZW50cnkgKmNlLAorCQkJ
-ICAgIGNvbnN0IHN0cnVjdCB0cmF2ZXJzZV9pbmZvICppbmZvLAorCQkJICAgIGNvbnN0IHN0cnVj
-dCBuYW1lX2VudHJ5ICpuKQoreworCWludCBsZW4sIHBhdGhsZW4sIGNlX2xlbjsKKwljb25zdCBj
-aGFyICpjZV9uYW1lOworCWludCBjbXA7CisKKwkvKgorCSAqIElmIHdlIGhhdmUgbm90IHByZWNv
-bXB1dGVkIHRoZSB0cmF2ZXJzZSBwYXRoLCBpdCBpcyBxdWlja2VyCisJICogdG8gYXZvaWQgZG9p
-bmcgc28uICBCdXQgaWYgd2UgaGF2ZSBwcmVjb21wdXRlZCBpdCwKKwkgKiBpdCBpcyBxdWlja2Vy
-IHRvIHVzZSB0aGUgcHJlY29tcHV0ZWQgdmVyc2lvbi4KKwkgKi8KKwlpZiAoIWluZm8tPnRyYXZl
-cnNlX3BhdGgpCisJCXJldHVybiBkb19jb21wYXJlX2VudHJ5X3BpZWNld2lzZShjZSwgaW5mbywg
-bik7CisKKwljbXAgPSBzdHJuY21wKGNlLT5uYW1lLCBpbmZvLT50cmF2ZXJzZV9wYXRoLCBpbmZv
-LT5wYXRobGVuKTsKKwlpZiAoY21wKQorCQlyZXR1cm4gY21wOworCisJcGF0aGxlbiA9IGluZm8t
-PnBhdGhsZW47CisJY2VfbGVuID0gY2VfbmFtZWxlbihjZSk7CisKKwlpZiAoY2VfbGVuIDwgcGF0
-aGxlbikKKwkJcmV0dXJuIC0xOworCisJY2VfbGVuIC09IHBhdGhsZW47CisJY2VfbmFtZSA9IGNl
-LT5uYW1lICsgcGF0aGxlbjsKKworCWxlbiA9IHRyZWVfZW50cnlfbGVuKG4pOworCXJldHVybiBk
-Zl9uYW1lX2NvbXBhcmUoY2VfbmFtZSwgY2VfbGVuLCBTX0lGUkVHLCBuLT5wYXRoLCBsZW4sIG4t
-Pm1vZGUpOworfQorCiBzdGF0aWMgaW50IGNvbXBhcmVfZW50cnkoY29uc3Qgc3RydWN0IGNhY2hl
-X2VudHJ5ICpjZSwgY29uc3Qgc3RydWN0IHRyYXZlcnNlX2luZm8gKmluZm8sIGNvbnN0IHN0cnVj
-dCBuYW1lX2VudHJ5ICpuKQogewogCWludCBjbXAgPSBkb19jb21wYXJlX2VudHJ5KGNlLCBpbmZv
-LCBuKTsKLS0gCjIuNC4yLjc0OS5nNzMwNjU0ZC10d3Ryc3JjCgo=
+> +       test_debug 'echo'
+> +       test_debug "echo \"check a:\" \"{$1}\""
+> +       test_debug "echo \"      b:\" \"{$2}\""
+> +       if [ "$1" = "$2" ]; then
 
+Style: Use 'test' rather than '[', drop semi-colon, and place 'then'
+on its own line.
 
---=-SecpQQn9/JjUKxNdp++W--
+> +               return 0
+> +       else
+> +               return 1
+> +       fi
+
+This entire if/else/fi can be rephrased as just a single line at the
+end of the function:
+
+    test "$1" = "$2"
+
+the result of which will be 0 if the strings are equal, else 1, thus
+there's no need for if/else/fi.
+
+> +}
+
+Isn't check_equal() pretty much a (less generic) re-invention of
+t/test-lib-functions.sh:verbose()?
+
+> +last_commit_message()
+> +{
+> +       git log --pretty=format:%s -1
+> +}
+
+Are there plans to re-use this function by more than the current
+single call site? If not, it might be just as clear to assign the
+result of the expression to an aptly named variable directly in the
+caller:
+
+   last_commit_msg=$(git log --pretty=format:%s -1)
+
+or something.
+
+> +test_expect_success 'setup' '
+> +       test_commit README &&
+> +       mkdir files &&
+> +       cd files &&
+> +       git init &&
+> +       test_commit master1 &&
+> +       test_commit master2 &&
+> +       test_commit master3 &&
+> +       cd .. &&
+
+Mentioned by Torsten: If any command before "cd .." fails, then "cd
+.." won't be invoked, and subsequent tests will be executed in the
+wrong directory. Use a subshell to overcome this problem since the
+current directory of the parent shell is not impacted by the subshell
+(thus you can drop the "cd .." altogether):
+
+    mkdir files &&
+    (
+        cd files &&
+        git init &&
+        ...
+    ) &&
+    ...
+
+> +       test_debug "echo Add project master to master" &&
+> +       git fetch files master &&
+> +       git branch files-master FETCH_HEAD &&
+> +       test_debug "echo Add subtree master to master via subtree" &&
+> +       git read-tree --prefix=files_subtree files-master &&
+> +       git checkout -- files_subtree &&
+> +       tree=$(git write-tree) &&
+> +       head=$(git rev-parse HEAD) &&
+> +       rev=$(git rev-parse --verify files-master^0) &&
+> +       commit=$(git commit-tree -p ${head} -p ${rev} -m "Add subproject master" ${tree}) &&
+
+Nit: This could be less syntactically noisy by dropping the
+unnecessary braces: ${head} -> $head
+
+> +       git reset ${commit} &&
+> +       cd files_subtree &&
+> +       test_commit master4 &&
+> +       cd .. &&
+> +       test_commit files_subtree/master5
+> +'
+> +
+> +# Does not preserve master4 and master5.
+> +test_expect_failure 'Rebase default' '
+> +       git checkout -b rebase-default master &&
+> +       git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
+> +       git commit -m "Empty commit" --allow-empty &&
+> +       git rebase -Xsubtree=files_subtree  --preserve-merges --onto files-master master &&
+
+Style: Too many spaces before --preserve-merges.
+
+> +       check_equal "$(last_commit_message)" "files_subtree/master5"
+
+Hmm, is checking the commit message the best way to determine if the
+expected commit was there? Why not check the commit ID instead or
+something?
+
+> +'
+> +
+> +test_done
+> --
+> 2.6.1
