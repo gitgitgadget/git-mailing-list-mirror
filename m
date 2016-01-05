@@ -1,86 +1,133 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] Add a test for subtree rebase that loses commits
-Date: Tue, 05 Jan 2016 10:57:37 +0100
-Message-ID: <1451987857.2668.5.camel@kaarsemaker.net>
-References: <1451968805-6948-1-git-send-email-greened@obbligato.org>
-	 <1451968805-6948-2-git-send-email-greened@obbligato.org>
-	 <568B833B.4060001@web.de>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 1/3] t6050-replace: make failing editor test more robust
+Date: Tue,  5 Jan 2016 11:33:30 +0100
+Message-ID: <1451990010-15458-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, greened@obbligato.org
-X-From: git-owner@vger.kernel.org Tue Jan 05 10:57:50 2016
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 05 11:33:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGON8-0004Ws-RW
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 10:57:47 +0100
+	id 1aGOvy-0006s6-Mc
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 11:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751687AbcAEJ5m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jan 2016 04:57:42 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37636 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456AbcAEJ5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2016 04:57:40 -0500
-Received: by mail-wm0-f46.google.com with SMTP id f206so20725036wmf.0
-        for <git@vger.kernel.org>; Tue, 05 Jan 2016 01:57:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=OozexJAVvpypQsBjKB/BqYxqTBg57mYIiwITuCemG18=;
-        b=SFpH139FvoVQeUGoSRGlaiWwOkuSV5Id8Jfpk3lTr3uhd9RCNgiQzIYhwDjDKKGZMZ
-         lVJwS5G5JaIbCyKNktYCCt1fXQhWhNb6A/aQiSXZ4iTQoFl+vviv5EpBh3ZIyqfVytVp
-         J8fOb48x7gwYDLa/wnfFkDTGuGktsGOh/jM17I1Uzq/Rufk/Tx3IiLuYbeOIFIlZNtDt
-         xInKtFAMy3YnkWsFKGqS+XfSxkqg/XYnjAHXHUBHm4Iudm8LdiInlM0Xn4DJfK0Urc9g
-         IYLTmJ55NZJ4Wb5InQXd/rlJtqmxaZ3MwuSDIzsK5tjiKMASjfRLGCHqFheMui1JN/8Z
-         pNqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=OozexJAVvpypQsBjKB/BqYxqTBg57mYIiwITuCemG18=;
-        b=i7Qqo0jdAVzi46YnOCNUnPsepvQ1KyEaIHPFb9mmjNZqKKs2UGewS1ldoP03HQcoJF
-         SXwafATOb5g8+HYqsG4GJJXbHbT55Dl1Md+krCoAqKVXlNtEPg6mJMr7rpR+hhY/ylyz
-         lvHH+hFk8rHd17tx4BUrVLmwAQ5GZi/2aJSjDHen4LQTAe2giRUA7rYayOGlT0rVKw+H
-         f3+Uv/n/ma+mb2vHe+q4lq/RRoe9EH1gO8M4tcC1349erB+IQc05kCY8vrRidUQIalFB
-         tB9THMPUxfhakSaUYOpmCxNudUWy2Z7TDWgZ4maoiO0uemvXcjdsHBZ0HQ8rUd7VWeaU
-         JDhQ==
-X-Gm-Message-State: ALoCoQk40XpHZAQ1TVxGQ/IIbDz63WWNKdIS6Wq8Ndv8CWZLyS/v/mNEb0exCmgJRJ+4OVZB6vq33GwS8An5ysumHlvHFu1u3Q==
-X-Received: by 10.28.148.140 with SMTP id w134mr3274904wmd.66.1451987859670;
-        Tue, 05 Jan 2016 01:57:39 -0800 (PST)
-Received: from seahawk.local (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id x125sm2976395wmg.1.2016.01.05.01.57.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Jan 2016 01:57:38 -0800 (PST)
-In-Reply-To: <568B833B.4060001@web.de>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751543AbcAEKdn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Jan 2016 05:33:43 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:49756 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751456AbcAEKdl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jan 2016 05:33:41 -0500
+Received: from 94-21-29-97.pool.digikabel.hu ([94.21.29.97] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1aGOvo-0008F7-KD; Tue, 05 Jan 2016 11:33:38 +0100
+X-Mailer: git-send-email 2.7.0.rc2.34.g28a1f98
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1451990018.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283369>
 
-On di, 2016-01-05 at 09:47 +0100, Torsten B=C3=B6gershausen wrote:
-> Need to drop
-> David Greene <greened@obbligato.org>
-> from List, no MX record
+'git replace --edit' should error out when the invoked editor fails,
+but the test checking this behavior would not notice if this weren't
+the case.
 
-seahawk:~$ dig MX obbligato.org
-obbligato.org.		1800	IN	MX	10
-mail.obbligato.org.
-seahawk:~$ dig mail.obbligato.org
-mail.obbligato.org.	1800	IN	CNAME	obbligato
-=2Eorg.
-obbligato.org.		1800	IN	A	173.255.19
-9.253
+The test in question, ever since it was added in 85f98fc037ae
+(replace: add tests for --edit, 2014-05-17), has simulated a failing
+editor in an unconventional way:
 
-So it has an MX record, it's just incorrect: MX records must not point
-to things that are CNAMEs.
+  test_must_fail env GIT_EDITOR=3D'./fakeeditor;false' git replace --ed=
+it
 
+I presume the reason for this unconventional editor was the fact that
+'git replace --edit' requires the edited object to be different from
+the original, but a mere 'false' as editor would leave the object
+unchanged and 'git replace --edit' would error out anyway complaining
+about the new and the original object files being the same.  Running
+'fakeeditor' before 'false' was supposed to ensure that the object
+file is modified and thus 'git replace --edit' errors out because of
+the failed editor.
+
+However, this editor doesn't actually modify the edited object,
+because start_command() turns this editor into:
+
+  /bin/sh -c './fakeeditor;false "$@"' './fakeeditor;false' \
+          '.../.git/REPLACE_EDITOBJ'
+
+This means that the test's fakeeditor script doesn't even get the path
+of the object to be edited as argument, triggering error messages from
+the commands executed inside the script ('sed' and 'mv'), and
+ultimately leaving the object file unchanged.
+
+If a patch were to remove the die() from the error path after
+launch_editor(), the test would not catch it, because 'git replace'
+would continue execution past launch_editor() and would error out a
+bit later due to the unchanged edited object.  Though 'git replace'
+would error out for the wrong reason, this would satisfy
+'test_must_fail' just as well, and the test would succeed leaving the
+undesired change unnoticed.
+
+Create a proper failing fake editor script for this test to ensure
+that the edited object is in fact modified and 'git replace --edit'
+won't error out because the new and original object files are the
+same.
+
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+
+Should we be more thorough, perhaps, and check the error message to be
+extra sure that 'git replace --edit' errors out for the expected
+reason?  There are oh so many 'test_must_fail's in our test scripts
+and we don't check the error message in most of the cases...
+
+I looked through the output of 'git grep GIT_EDITOR t/' and didn't
+notice any other similar case where GIT_EDITOR consists of multiple
+commands.
+
+ t/t6050-replace.sh | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 4d5a25eedfef..c630aba657e9 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -351,11 +351,15 @@ test_expect_success 'test --format long' '
+ 	test_cmp expected actual
+ '
+=20
+-test_expect_success 'setup a fake editor' '
+-	write_script fakeeditor <<-\EOF
++test_expect_success 'setup fake editors' '
++	write_script fakeeditor <<-\EOF &&
+ 		sed -e "s/A U Thor/A fake Thor/" "$1" >"$1.new"
+ 		mv "$1.new" "$1"
+ 	EOF
++	write_script failingfakeeditor <<-\EOF
++		./fakeeditor "$@"
++		false
++	EOF
+ '
+=20
+ test_expect_success '--edit with and without already replaced object' =
+'
+@@ -372,7 +376,7 @@ test_expect_success '--edit with and without alread=
+y replaced object' '
+ test_expect_success '--edit and change nothing or command failed' '
+ 	git replace -d "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR=3Dtrue git replace --edit "$PARA3" &&
+-	test_must_fail env GIT_EDITOR=3D"./fakeeditor;false" git replace --ed=
+it "$PARA3" &&
++	test_must_fail env GIT_EDITOR=3D"./failingfakeeditor" git replace --e=
+dit "$PARA3" &&
+ 	GIT_EDITOR=3D./fakeeditor git replace --edit "$PARA3" &&
+ 	git replace -l | grep "$PARA3" &&
+ 	git cat-file commit "$PARA3" | grep "A fake Thor"
 --=20
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+2.7.0.rc2.34.g28a1f98
