@@ -1,116 +1,115 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new
- repos
-Date: Tue, 05 Jan 2016 13:24:24 -0500
-Organization: Twitter
-Message-ID: <1452018264.3892.45.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/16] refs: add methods for the ref iterators
+Date: Tue, 05 Jan 2016 10:56:58 -0800
+Message-ID: <xmqqfuybkg79.fsf@gitster.mtv.corp.google.com>
 References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	 <1449102921-7707-14-git-send-email-dturner@twopensource.com>
-	 <567AA2DF.1020408@alum.mit.edu> <1452014787.3892.40.camel@twopensource.com>
-	 <xmqqk2nnkio4.fsf@gitster.mtv.corp.google.com>
+	<1449102921-7707-4-git-send-email-dturner@twopensource.com>
+	<20160103000623.GB14424@gmail.com>
+	<xmqqziwlnp7d.fsf@gitster.mtv.corp.google.com>
+	<568BC88C.6000703@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 19:24:33 2016
+Content-Type: text/plain
+Cc: David Aguilar <davvid@gmail.com>,
+	David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 05 19:57:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGWHY-00049k-He
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 19:24:32 +0100
+	id 1aGWn8-0000O1-4i
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 19:57:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbcAESY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2016 13:24:29 -0500
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:35827 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631AbcAESY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2016 13:24:27 -0500
-Received: by mail-qg0-f48.google.com with SMTP id o11so284771781qge.2
-        for <git@vger.kernel.org>; Tue, 05 Jan 2016 10:24:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=85zQG9tJ2fycnX+YBdTX4MXi9SnsX181Y8z9UWm3IQU=;
-        b=HPzSfKe6DD3M9g9vL5Mdh6ZJOGqJbrE1NsfN3yaXY3A5Cc02s295dIEM+5m823u8W5
-         joBU7+AsJdPnD0K8XZNMgKfBrSjQumy10PLXGMQ2daQ3bCSGVSOxzeEKbVjpmKbeTyq6
-         biPovMIViY4mFAO8hop2kTLqJhpiVoVckn805DjFTXFNcegZhXHiBpLSbBVSp9NTvPZL
-         +JkubMpgQrGu1V/Ll8vI9znH6k2VrmPaUaGtNFXmcx8VwWM453+3Pd4KdYgUEzV4YI8a
-         2iEgkamRLLU+XgZ6sTmfkHojNFHpGe7qsxQTU3u6qgVdOBG+1jNbpH7QuhxhdtpHuDo3
-         MwJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=85zQG9tJ2fycnX+YBdTX4MXi9SnsX181Y8z9UWm3IQU=;
-        b=j3xipV1rthxJqABclyNk5rDn88Azaoh1vu8/d/XOcKu+e5htkFEl+PO40JMeLnRu9J
-         asb30AtFflUm8kmwru5lya84Kr7u4pcUXrp3626Fb9QsFCPPb3o5MR2dYuZwJcGU/sMh
-         5WnNzWuFndrDEftlXbfw3iRAERHyUek0lH1AKU/UQKtVPSmMkZQ/C5OUcR2Hl6VWw9Lr
-         53aW5mFu/iNr63FJ4KESc7RaH+oeI6BQGayDrbmeRrxok+8S13N+7kKADB2d+9AScxm/
-         m4Y/yluZ8t/bz19977jWWkE7vCyOcMSOHrPnfU0U/EQrxxAJ1sdWlKubTk7MTMlD0kjp
-         VF4g==
-X-Gm-Message-State: ALoCoQmJcfSLOv0svx9IeLlxku6uIUTuwPuc16vuwGq442uEcDRy2C/3VChLKJeibCyDUFrz7Py2VQmEyS+Q8cIO5MGnALKW2w==
-X-Received: by 10.140.29.202 with SMTP id b68mr65763774qgb.100.1452018266460;
-        Tue, 05 Jan 2016 10:24:26 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id p19sm42515435qgp.9.2016.01.05.10.24.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 05 Jan 2016 10:24:25 -0800 (PST)
-In-Reply-To: <xmqqk2nnkio4.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751965AbcAES5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2016 13:57:04 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751870AbcAES5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2016 13:57:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E399C381B9;
+	Tue,  5 Jan 2016 13:56:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GUJLaOgSwyz0Zutf2BfN/bFSd8g=; b=ZVGMoC
+	NA5iBuGZX2PdyFNNtS/bomZUrEtr39PDf3qmIvJP/UGvQ3zNxQDTpbvDwA7S+91+
+	XfRmanp983+AaSgkagvTmY5rNYiLTfUGSMj3uqWAz+r6cqNFXEFu0w7W9xvNygFI
+	vSHq/E15ioc4cUnbVALNX3r+6cBNETYNbp0h0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jnwY8ape/1weZHDW+6XioZoTZWykdvNL
+	XfHFBfDouFyP0t0beClsG/gP141zcqJOHumF6zk0I8MHrvpAxA48KhFSaRzDP3Cj
+	4CrkxJ1pvA2ZdG9CNWT87g0IyEQI05ykdR8j8QFSwu+8mrzv/oyM562rOj7NYbX9
+	40P7/zhIDaA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAB0B381B8;
+	Tue,  5 Jan 2016 13:56:59 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3DBD1381B4;
+	Tue,  5 Jan 2016 13:56:59 -0500 (EST)
+In-Reply-To: <568BC88C.6000703@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 5 Jan 2016 14:43:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 19500586-B3DE-11E5-9546-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283393>
 
-On Tue, 2016-01-05 at 10:03 -0800, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > I'm working on the rest now, but wanted to comment on this first. 
-> >  I
-> > went ahead and made this change, but I'm not sure I like it.  In
-> > the
-> > git codebase, the concept will continue to be called "backend";
-> > there
-> > are already-accepted patches using that terminology.  Having two
-> > separate names for the same thing seems confusing to me.
-> 
-> We have the option to update whatever "are already-accepted" [*1*].
-> That would allow us to uniformly call it "ref storage", if we wanted
-> to.
-> 
-> In any case, we shouldn't be using an unqualified "backend" (or
-> "storage" for that matter); we should always say "ref", i.e. either
-> "ref backend" or "ref storage", in the name.
-> 
-> Between "backend" and "storage", I am slightly in favor of the
-> latter, but I am not good at naming things so...
-> 
-> 
-> [Footnote]
-> 
-> *1* Output from
-> 
->     $ git grep backend master --
-> 
-> seems to show me only 
-> 
->     master:refs.c: * The backend-independent part of the reference
-> module.
-> 
-> and all others are other kinds of backends, e.g. "merge backend",
-> "http-backend", etc. so that may not be too bad.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-There's refs/files-backend.c in master.
+> Actually, maybe we will never have to rewrite all callers. I rather
+> think that we will retain one simplified API for dealing with "*this*
+> repository's references" and a second for dealing with other repos' refs.
 
-I guess the argument for "backend" is that it is a better description
-of the struct.  That is, "a storage" sounds funny.  Usually "storage"
-is a mass noun.  I guess we could call them "storage backends" (with
-"ref-storage" in the UI), which would split the difference.  I guess
-I'll go with that, and we can decide later whether to rename those
-files.
+Yeah, I think the similarity with the multiple in-core index support
+Peff brought up holds true here as well.
+
+>> [...]
+>> The caching of already read refs is a responsiblity of each ref
+>> backend in the current codebase.  I am not sure if that is a good
+>> placement, or a single implementation of the caching layer should
+>> instead sit on top of any and ll ref backends.
+>
+> I still dream about having compoundable reference backends, in which
+> case, ultimately, a "CacheReferenceStore" instance would optionally wrap
+> on top of an arbitrary other "ReferenceStore" instance (so to speak) to
+> give it caching functionality.
+
+I am not sure if we need or want the fully stackable backends, but I
+can see that the implementation of the API could be structured like
+so:
+
+ (1) Users of API would interact solely with the in-core caching
+     layer when creating, reading, modifying, enumerating and
+     deleting refs and contents of their logs.  The caching layer
+     has a handle for each in-core representation of a "repository",
+     and there is a single default one, i.e. our repository.  Also
+     there is a way to ask for the in-core represention of a
+     "repository" for submodules.
+
+ (2) An instance of an in-core "repository" caching layer knows what
+     "storage backend" the repository uses and this is used to
+     dispatch the requests to suitable backends.  The caching layer
+     would be responsible for maintaining the validity of in-core
+     cache it keeps while it relays the requests.
+
+ (3) The implementation of for_each_ref_in_submodule() family of
+     functions may need to be restructured; having to have the
+     backend method for them would force storage backends to be
+     aware of "other" repositories.  Other "only in this repository"
+     methods David and Ronnie's topics abstracts out of the files
+     backend would remain the same.
+
+which may be clean and flexible enough for our purpose.
+
+Just to reiterate to avoid misunderstanding, I do not think that
+kind of restructuring has to be a prerequisite for the current
+effort to allow multiple backends, though.
+
+Thanks.
