@@ -1,143 +1,150 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: [PATCH] contrib/subtree: Remove --annotate
-Date: Tue, 05 Jan 2016 15:35:23 -0600
-Message-ID: <87oaczwvz8.fsf@waller.obbligato.org>
-References: <1451963101-4901-1-git-send-email-greened@obbligato.org>
-	<1451963101-4901-2-git-send-email-greened@obbligato.org>
-	<xmqqsi2cj5hu.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Expand documentation describing --signoff
+Date: Tue, 05 Jan 2016 15:02:07 -0800
+Message-ID: <xmqqa8ojiqa8.fsf@gitster.mtv.corp.google.com>
+References: <E1aGX9e-0002m1-55@rmm6prod02.runbox.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, techlivezheng@gmail.com,
-	alex.crezoff@gmail.com, davvid@gmail.com, cbailey32@bloomberg.net,
-	danny0838@gmail.com, prohaska@zib.de, th.acker@arcor.de,
-	sschuberth@gmail.com, peff@peff.net, gitter.spiros@gmail.com,
-	nod.helm@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 05 22:35:44 2016
+Cc: "git" <git@vger.kernel.org>
+To: "David A. Wheeler" <dwheeler@dwheeler.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 00:02:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGZGZ-0005Ji-DN
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 22:35:43 +0100
+	id 1aGacN-0002bP-7T
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 00:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959AbcAEVfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Jan 2016 16:35:40 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:47060 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751934AbcAEVfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jan 2016 16:35:38 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1aGZHF-00028t-AX; Tue, 05 Jan 2016 15:36:25 -0600
-In-Reply-To: <xmqqsi2cj5hu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 05 Jan 2016 09:33:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1751805AbcAEXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2016 18:02:12 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55242 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751663AbcAEXCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2016 18:02:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 11DFB39291;
+	Tue,  5 Jan 2016 18:02:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B/jiQRPqgz0/2GQvKRygQ9H0RiA=; b=TF77ns
+	m8XjRx1H9v+iximu86WX81ar/c14FzsUCCYjpq4IPojgiS//2EB2sjE4uH9jZjNx
+	bqjDf4Cz0ayJwzRqncJUTc31KhuE1iqfSSQcH76B8uSKNBB741kW/mNkKiPg3sYi
+	vSX8BQ+XWir2vms3755Qp5k5A4wPtso7RnnKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OFa7u5nrvC6ScqX/qac2BwVqhnZNPdkn
+	DZKpS9u0aIG8yo5kAfGM+qQt7QnSBEoqLqy3XSHI7PfjGicSAGz6DTAA+Ycea59f
+	4vDA6qi8Y7bjLU1DXaUftMhBcOvl+KrGlMweWowVBt2QMX/R9RcW4p2Nm1aD1Pyv
+	SfvxpRqZpaA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 095ED39290;
+	Tue,  5 Jan 2016 18:02:09 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 76BDF3928E;
+	Tue,  5 Jan 2016 18:02:08 -0500 (EST)
+In-Reply-To: <E1aGX9e-0002m1-55@rmm6prod02.runbox.com> (David A. Wheeler's
+	message of "Tue, 05 Jan 2016 14:20:26 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 58A725D0-B400-11E5-98EA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283407>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"David A. Wheeler" <dwheeler@dwheeler.com> writes:
 
-> David Greene <greened@obbligato.org> writes:
+> Modify various document (man page) files to explain
+> in more detail what --signoff means.
 >
->> From: "David A. Greene" <greened@obbligato.org>
->>
->> Remove --annotate.  This obviates the need for an --unannotate
->> command, which is both an obvious addition and difficult to define
->> due to the numerous ways one might want to specify how to edit
->> commit messages.  git has other tools more suited to rewriting
->> commit messages and it's easy enough to use them after a subtree
->> split.  Such tools include filter-branch, rebase -i and
->> commit --amend.
+> This was inspired by https://lwn.net/Articles/669976/ where
+> paulj noted, "adding [the] '-s' argument to [a] git commit
+> doesn't really mean you have even heard of the DCO...".
+> Extending git's documentation will make it easier to argue
+> that developers understood --signoff when they use it.
 >
-> I do not think that "there are other ways to do this" is a good
-> justification for removing a feature, unless it can be shown that
-> nobody is using it, of course.
+> Signed-off-by: David A. Wheeler <dwheeler@dwheeler.com>
+> ---
 
-I thought you might say that.  :)
+Looks sensible, striking the balance between the need by the
+projects that do adopt DCO to be specific, and the need by the
+others to allow other uses of "-s".
 
-I honestly don't know how much it's used.  Obviously someone uses it
-because we got a request a couple of years ago for an --unannotate
-option and the ensuing discussion made it clear that that's not a
-trivial thing.
+Will queue; thanks.
 
-The original author is not active anymore so I don't even know why it
-was added in the first place.  I don't know how to get data about usage.
 
-I'm in the process of getting git-subtree into shape so it can move out
-of contrib into the main area.  Is there a policy for interface changes
-to things in contrib?
-
-There are a few other things I'm working on that will involve slight
-semantic changes.  I was planning to do those similarly to how push
-changed with git 2.0.  Make the current behavior default, emit a warning
-and switch the default after a few releases.  This is all being done to
-make git-subtree faster, take advanted of new git features since it was
-opriginally written and generally make it more solid and predictable.  I
-could do the deprecate/remote thing with --annotate if that sounds
-better to you.
-
-My thinking on this change runs as follows:
-
-- --annotate isn't as powerful/flexible as other git commit message
-  rewrite tools.
-
-- Its obvious pair feature --unannotate isn't trivial to do -- people
-  didn't even agree on what it *should* do.  It won't be added any
-  time soon, if at all, so don't advertise something that naturally
-  leads people to request it.
-
-- We really shouldn't lie about the state of this.  --annotate feels
-  tacked-on and incomplete.  It would be best to not have it at all if
-  we can't do it right.
-
-- Better to make the change now before moving out of contrib.
-
-If you really don't want to get rid of this, I guess that's ok but my
-preference as maintainer is to reduce the feature set to those things
-people seem to actually regularly use (according to my very unscientific
-Google searches) and add features as requested/evaluated.  --annotate
-isn't a huge maintenance burdern but some of those other changes I
-mentioned do in fact significantly reduce the maintenance burden of
-git-subtree.  I hope I will have some leeway with those, even if they
-change semantics slightly.
-
->> @@ -319,7 +315,7 @@ copy_commit()
->>  			GIT_COMMITTER_NAME \
->>  			GIT_COMMITTER_EMAIL \
->>  			GIT_COMMITTER_DATE
->> -		(printf "%s" "$annotate"; cat ) |
->> +		(echo -n ""; cat ) |
+>  Documentation/git-am.txt           | 1 +
+>  Documentation/git-cherry-pick.txt  | 1 +
+>  Documentation/git-commit.txt       | 6 +++++-
+>  Documentation/git-format-patch.txt | 1 +
+>  Documentation/git-revert.txt       | 1 +
+>  5 files changed, 9 insertions(+), 1 deletion(-)
 >
-> I can see that by changing "printf something" with 'echo -n ""', you
-> are making it clear that we are stopping to add that something to
-> the pipeline, but (1) I think the intended effect of running 'echo
-> -n' on an empty string is to do nothing, and (2) 'echo -n' is not
-> portable [*1*], so this leaves a puzzling code that makes future
-> readers scratch their heads.
->
-> I wonder why this cannot be simply the removal of the entire line,
-> making the resulting implementation more like this:
->
->                 git log -1 --pretty=format:... "$1" |
->                 (
->                         read ... various variables ...
->                         export ... various variables ...
->         -		(printf "%s" "$annotate"; cat ) |
->                         git commit-tree "$2" $3 # reads the rest of stdin
->                 ) || die "cannot copy"
->
-> That is, just feed the remainder of what is coming directly to the
-> command?
-
-That makes sense.  Thanks.
-
-                   -David
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index 452c1fe..13cdd7f 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -35,6 +35,7 @@ OPTIONS
+>  --signoff::
+>  	Add a `Signed-off-by:` line to the commit message, using
+>  	the committer identity of yourself.
+> +	See the signoff option in linkgit:git-commit[1] for more information.
+>  
+>  -k::
+>  --keep::
+> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> index 77da29a..6154e57 100644
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -100,6 +100,7 @@ effect to your index in a row.
+>  -s::
+>  --signoff::
+>  	Add Signed-off-by line at the end of the commit message.
+> +	See the signoff option in linkgit:git-commit[1] for more information.
+>  
+>  -S[<keyid>]::
+>  --gpg-sign[=<keyid>]::
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index 7f34a5b..9ec6b3c 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -154,7 +154,11 @@ OPTIONS
+>  -s::
+>  --signoff::
+>  	Add Signed-off-by line by the committer at the end of the commit
+> -	log message.
+> +	log message.  The meaning of a signoff depends on the project,
+> +	but it typically certifies that committer has
+> +	the rights to submit this work under the same license and
+> +	agrees to a Developer Certificate of Origin
+> +	(see http://developercertificate.org/ for more information).
+>  
+>  -n::
+>  --no-verify::
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index e3cdaeb..b149e09 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -109,6 +109,7 @@ include::diff-options.txt[]
+>  --signoff::
+>  	Add `Signed-off-by:` line to the commit message, using
+>  	the committer identity of yourself.
+> +	See the signoff option in linkgit:git-commit[1] for more information.
+>  
+>  --stdout::
+>  	Print all commits to the standard output in mbox format,
+> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> index b15139f..573616a 100644
+> --- a/Documentation/git-revert.txt
+> +++ b/Documentation/git-revert.txt
+> @@ -89,6 +89,7 @@ effect to your index in a row.
+>  -s::
+>  --signoff::
+>  	Add Signed-off-by line at the end of the commit message.
+> +	See the signoff option in linkgit:git-commit[1] for more information.
+>  
+>  --strategy=<strategy>::
+>  	Use the given merge strategy.  Should only be used once.
