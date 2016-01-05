@@ -1,68 +1,76 @@
-From: Andrey Utkin <andrey.utkin@corp.bluecherry.net>
-Subject: Re: "git send-email" thru Gmail incurs few minutes delay
-Date: Tue, 5 Jan 2016 17:41:41 +0200
-Message-ID: <CAM_ZknX6m1UBrMyzovhRAODMzJxBD+gk86+6fmnDJLK6PwgokA@mail.gmail.com>
-References: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
-	<CAMuHMdUZf2CLyzWVr+KUcgALejWpgEhUt1DMDBg614bKbFEXZw@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.7.0
+Date: Tue, 5 Jan 2016 16:42:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601051641240.14434@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andrey Utkin <andrey.od.utkin@gmail.com>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 05 16:41:53 2016
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=X-UNKNOWN
+To: git-for-windows@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 05 16:42:24 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1aGTk7-0002Xu-Le
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 05 Jan 2016 16:41:52 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1aGTkZ-000324-Dp
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Jan 2016 16:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531AbcAEPlq (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 5 Jan 2016 10:41:46 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33664 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077AbcAEPlm (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 5 Jan 2016 10:41:42 -0500
-Received: by mail-io0-f173.google.com with SMTP id q21so189885139iod.0
-        for <linux-kernel@vger.kernel.org>; Tue, 05 Jan 2016 07:41:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=corp-bluecherry-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=H8tGqjvKuP85EUQTfgON+htVwvTR6Sbl7Je38rDKWbE=;
-        b=u7mK03RcvQt1BjTQkgha2+DstI4ph9FGl6MD+ndv1QcXLq/MZV9ABzL3z79fptj/0x
-         iuFZVrZIFy1UkduhyJeH8ZyqxUZr1OPoEsof2XoY5zotsf8Fp8nd6J63Xe+i4LihmbSX
-         p5vvLt1RrYCScWENDJFfw8c/E1Qjni6nh1llM5G8ac3nT7bbgnG1a85YdOVoKFifqYIX
-         CORGvNiiX/9PBUc2JQApoo+cqa4LY5Y0/f+JiY0dx6e+JhSmIyEYj8ow2cLbPaM+hkV0
-         N8Ywx6wcy228HE+kMGqMBEB1BK063ROhfEZoUELueH8i23lo2LQ1kA6Oq8g5fQ2QENoT
-         g/bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=H8tGqjvKuP85EUQTfgON+htVwvTR6Sbl7Je38rDKWbE=;
-        b=Jo6NPhb3eDyMbElMRlAT8/Yskpl4vdKgEawIfKi1NGR99wFM2MAWFKqPRola6D4wbb
-         wgQorf1/EHmRCabAhufBTOYJlH9fvRNYzYO8C/D1KeGVu2BfrVvx5VbLH4nzD6NRXc63
-         MFYrXR6sxY0vAU6pGH5l0As1Fzue25FHqVblxQpGmmnFa9kzNSvsB+kNuDBv4Kh9Rkek
-         sTSVhEyIN0nOYxn3AH4awvjb8TybAyTU5lrLBpsGQAlAM+9dx2yb3g2B+UGVrgHB7mH9
-         APQdePxSgYl376g+WwcTsfMYxVMTCUhIyB+KOCpcXV/nx88GbF7MrCLQiaSkmGojC0ec
-         e4Kw==
-X-Gm-Message-State: ALoCoQk2Yp6cf5hAZ+fS2/uYtFoKPOJVipgS4FZu68d5MfYfV7ml7eEI2fQMad5kXZF4s2fR+O/iBq+zXO8olH5jSG9LtEGLVVLzrn6PqvI9pquIXBeXtcQ=
-X-Received: by 10.107.8.20 with SMTP id 20mr96322129ioi.34.1452008501868; Tue,
- 05 Jan 2016 07:41:41 -0800 (PST)
-Received: by 10.107.201.13 with HTTP; Tue, 5 Jan 2016 07:41:41 -0800 (PST)
-In-Reply-To: <CAMuHMdUZf2CLyzWVr+KUcgALejWpgEhUt1DMDBg614bKbFEXZw@mail.gmail.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752615AbcAEPmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Jan 2016 10:42:12 -0500
+Received: from mout.gmx.net ([212.227.17.20]:60936 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751846AbcAEPmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jan 2016 10:42:08 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lq9Ma-1ZlYqc1NPk-00djeM; Tue, 05 Jan 2016 16:42:06
+ +0100
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:UTdkpwG3c3LaKpPkniyiGoCocNfgiVvj/0Lu10tYzr7G/xm6kPI
+ 63uGaA/xvr4zkV4Eq9lpapecDsiwjAb9u/WIPSVdnyPREGK8Jhp1rLfslBQeuKW4iWcvNyN
+ oJ6Dcng7m9GnNJ/dxQ/qB+A2+W2+buzHh0TVUSbNQVJ0kjgTNjLgO6WdBej7OEU9cP7X5E0
+ F/GaZ+t5QgCAmI/9UYSig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Kw7bqB86+4E=:ssbGQ0ngi31wTJbcMGhoH4
+ t7va8YXwjMzRv08vj0Hn8GKPItHTXkv7LNzsQE/1q/l06hneqRIvH9ae/EUq7ybKk//+4XZvG
+ cuVXZeU/gXiMB1IYQNdO2Rfol88jkH5pvnhP2G3VfpNib3sGOgxLm/X868+esStT8I9yUmIB5
+ 1WMbWi+IteutKkfQnLEXqji69Plus15cWXSaRIlOtChn1xck9HeC9rHxvXsPHu+RuWqCg5IuW
+ oiwOC5QD8xiOj+7yKHObA2sw1PxjV0L4tqCfe+Otlb86hPN2eR5tl7KKlSimvRGleiwoze7Aj
+ 5m6AU7Vr71JgOkm3J/aioBOl1lYpNldi+26Ljiui/a9EaubqApy57eoJZqh9raAeV3rlQUaoZ
+ k61oYwiVJjt7w1tYDPrtNqQDMxmVoFJqOTe8Q1Xa1D9qB4ReKy1kIpjm+RPVtmGUotP10/iWn
+ 3xVyR0/NqvE2n4xd9/6/WZr3rS6H9gP2PkXRoKkpaYDEo23a/exb7P3onbDsFnY4FJf/1S6m2
+ sDRGEs9Vs8dABx560VKnmGz6fMd2NzcWcmJpIPRiVJcZCO1ILldVngiFVeSHZMUD4TzMfLnVB
+ FF4ij4nGZE0NiWzxtvvc0U9SYgxIEsi9yQUDHmhehIB4TTY2h59NkMcvfwuJq4GwQM7AI8kGS
+ W2kjmIcC1mhgopzx+Su4UzQx4KxvcoV0kFHB1bnlltmY+osFqJwnrCl8PPIxbur0xZqx5euLd
+ l8gtGI65AFT/+18r4ElXbPeklApLm6Pb8XmiLZxH6Kvmm+7Nf1znVnKOSBOFx27K1OT6maKw 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283382>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283383>
 
-On Tue, Jan 5, 2016 at 1:27 PM, Geert Uytterhoeven <geert@linux-m68k.org> wrote:
-> Does it work better if you store the (preferably app-specific) password in
-> smtppass in .gitconfig?
+Happy new year!
 
-No.
+It is my pleasure to announce that Git for Windows 2.7.0 is available from:
+
+	https://git-for-windows.github.io/
+
+Changes since Git for Windows v2.6.4 (December 14th 2015)
+
+New Features
+
+  * Comes with Git v2.7.0.
+
+Bug Fixes
+
+  * Non-ASCII command-lines are now passed properly to shell scripts.
+
+Filename | SHA-256
+-------- | -------
+Git-2.7.0-64-bit.exe | edab3c7ee50cdcb66ac66b5f3b2e7ea7ce25c85ffc03e9602deffd8eb27e323e
+Git-2.7.0-32-bit.exe | 58d7b7b8038e91ac6a29c3d9150da536f836247dafde4821c745ba1f88ccc0f1
+PortableGit-2.7.0-64-bit.7z.exe | d7cf3f8ceef88b824fd7dfa476e2bbffd1bff0011b7577bc864e7fbb61fb95f1
+PortableGit-2.7.0-32-bit.7z.exe | d1d46375004451beceb15c33c4807d50c925c039173df9f4bd0de0c01cd0f30c
+Git-2.7.0-64-bit.tar.bz2 | ff9c84a7651ea4c535b98ee0dae561b01d99246e1f9770c3f8b2d80c6df51f65
+Git-2.7.0-32-bit.tar.bz2 | 1099955bdbd744b3383bdcdd39c202d0b0a8e2c0734befeb53eb894b89e78ff7
+
+Ciao,
+Johannes
