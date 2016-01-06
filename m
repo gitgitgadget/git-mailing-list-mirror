@@ -1,83 +1,104 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new
- repos
-Date: Wed, 6 Jan 2016 13:02:47 +0100
-Message-ID: <568D0267.7080707@alum.mit.edu>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
- <1449102921-7707-14-git-send-email-dturner@twopensource.com>
- <567AA2DF.1020408@alum.mit.edu> <1452014787.3892.40.camel@twopensource.com>
- <xmqqk2nnkio4.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC v2 0/2] add regex match flags to git describe
+Date: Wed, 6 Jan 2016 19:23:05 +0700
+Message-ID: <CACsJy8AOxs9EizWabdPdEpx6PkPFmv-ZiAtQbdXWV9zDia13Lw@mail.gmail.com>
+References: <cover.1451298323.git.mostynb@opera.com> <xmqqy4cejoz4.fsf@gitster.mtv.corp.google.com>
+ <5681D02C.1040609@opera.com> <xmqqk2nxi002.fsf@gitster.mtv.corp.google.com>
+ <5684702C.3040802@opera.com> <xmqqy4cbbh5e.fsf@gitster.mtv.corp.google.com>
+ <5684FE61.4010701@opera.com> <xmqqmvslp799.fsf@gitster.mtv.corp.google.com> <568C690C.7050007@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 13:03:02 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+To: Mostyn Bramley-Moore <mostynb@opera.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 13:23:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGmns-0006MO-D0
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 13:03:00 +0100
+	id 1aGn7t-0004rj-Et
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 13:23:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176AbcAFMCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2016 07:02:52 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55494 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752094AbcAFMCu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2016 07:02:50 -0500
-X-AuditID: 12074414-f794f6d000007852-7e-568d02692d48
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 37.44.30802.9620D865; Wed,  6 Jan 2016 07:02:49 -0500 (EST)
-Received: from [192.168.69.130] (p4FC97A29.dip0.t-ipconnect.de [79.201.122.41])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u06C2lqE004296
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 6 Jan 2016 07:02:48 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.4.0
-In-Reply-To: <xmqqk2nnkio4.fsf@gitster.mtv.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqJvJ1BtmcPGTpsX8TScYLbqudDNZ
-	NPReYXZg9rh4SdljwfP77B6fN8kFMEdx2yQllpQFZ6bn6dslcGe837ODsWAZe0Xj+fwGxues
-	XYycHBICJhKdjyYwQdhiEhfurWfrYuTiEBK4zCjx5fZGKOcck8ScFTfBOoQFgiU23NvKBmKL
-	CERINLxqYYQoamWSaPnTzQySYBYQl1g39zw7iM0moCuxqKcZaAUHB6+AtsT/8/IgYRYBFYl7
-	r7vBNosKhEjs3dnBAmLzCghKnJz5BMzmFLCWuLD1DyvESD2JHdd/QdnyEtvfzmGewCgwC0nL
-	LCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokREroiOxiPnJQ7
-	xCjAwajEwysg0xMmxJpYVlyZe4hRkoNJSZR33cruMCG+pPyUyozE4oz4otKc1OJDjBIczEoi
-	vCHFQOW8KYmVValF+TApaQ4WJXHeb4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8soy9YUKCRanp
-	qRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoEiNLwbGKkiKB2jvBQagdt7igsRcoChE6ylG
-	XY4FP26vZRJiycvPS5US51UH2SEAUpRRmge3ApaoXjGKA30szOsJUsUDTHJwk14BLWECWsJQ
-	1A2ypCQRISXVwOj8p3mWXcf6T2n94bMli7ZlS96M0j85c9PFFc0a051u2Co/fex/NOHL9wee
-	SsXi7wS9cs2rp/qvXmEgeyg+5MHOkns2zOk6K+W0SrKFbCUn7pL+u0UlXNN/0neh 
+	id S1751230AbcAFMXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2016 07:23:38 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:34943 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750989AbcAFMXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2016 07:23:37 -0500
+Received: by mail-lb0-f174.google.com with SMTP id bc4so189506187lbc.2
+        for <git@vger.kernel.org>; Wed, 06 Jan 2016 04:23:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=esqsUfHzHxWAZF19f1S6tR0AKHNqFOfa1Du8Xh2aRFk=;
+        b=08rnXX5At1npJfa0u/i+PzBc59J+izo+X/bvdHwh2GhPMTpBcwKEKrQbai66tz95Rv
+         3sWbmWNySZ9EsdUc52wXBm/0Wonv6+zje27Hohg9w0/U8oGfTsAPx6r3Y56gs5Myuth4
+         /tbCjXCu3wO/RO03ZyrJynX8AgmT2iIZvZc/yxlk81L2JoINH6Aq+MxzllWrLkIjb1EE
+         t5MyPGpubrsp5ZYlDa9EE4DpA7XYgDSXpF8GhJmcZCiIHtMsS5fUPbh4MCXOQdC02D5w
+         O10nVV1EUaFZgJX2oAk+rPD3SJ8lIzh63Toy/XSOROE7zuNcJ05ILdmv1vlxR81RdZ8l
+         LVXA==
+X-Received: by 10.112.172.233 with SMTP id bf9mr35672276lbc.137.1452083015551;
+ Wed, 06 Jan 2016 04:23:35 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Wed, 6 Jan 2016 04:23:05 -0800 (PST)
+In-Reply-To: <568C690C.7050007@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283435>
 
-On 01/05/2016 07:03 PM, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
->> I'm working on the rest now, but wanted to comment on this first.  I
->> went ahead and made this change, but I'm not sure I like it.  In the
->> git codebase, the concept will continue to be called "backend"; there
->> are already-accepted patches using that terminology.  Having two
->> separate names for the same thing seems confusing to me.
-> 
-> We have the option to update whatever "are already-accepted" [*1*].
-> That would allow us to uniformly call it "ref storage", if we wanted
-> to.
+On Wed, Jan 6, 2016 at 8:08 AM, Mostyn Bramley-Moore <mostynb@opera.com> wrote:
+> On 01/04/2016 06:46 PM, Junio C Hamano wrote:
+>>>> Magic pattern annotation like we do for pathspecs Duy raised may not
+>>>> be a bad idea, either, and would probably be easier to teach people.
+>>>> Just like in Perl "(?i)$any_pattern" is a way to introduce the case
+>>>> insensitive match with $any_pattern, we may be able to pick an
+>>>> extensible magic syntax and decorate the pattern you would specify
+>>>> for matching refnames to tell Git what kind of pattern it is, e.g.
+>>>>
+>>>>     $ git mgrep -P -e foo --refs '/?glob/release_*'
+>>>>
+>>>> I am not suggesting that we must use /?<pattern type name>/ prefix
+>>>> as the "extensible magic syntax" here--I am just illustrating what
+>>>> I mean by "extensible magic syntax".
+>>>
+>>>
+>>> I hadn't seen the pathspec magic patterns before- interesting.  We
+>>> could possibly share syntax with pathspecs, ie
+>>> :(?pattern-options...)pattern
+>>
+>>
+>> Even though we have DWIM between revisions and paths on the command
+>> line when the user omits "--" for disambiguation, I do not think we
+>> look at the shape of the string to DWIM/decide that it is a pattern,
+>> so as long as the magic syntax cannot be a valid pattern to match
+>> against refs right now (and your ":(?...)"  qualifies as such, as a
+>> refname would not contain a component that begins with a colon), it
+>> would be possible to introduce it as the magic syntax for matching
+>> refs.
+>>
+>> Or did you mean to use this syntax also for patterns that match
+>> strings in contents, e.g.
+>>
+>>      $ git grep -e ':(?perl-regexp)...'
+>
+>
+> I think it would be nice to support this syntax in every command that does
+> pattern matching.
+>
+> Corner case: what if we want to search for ":(?perl-regexp)", eg in git's
+> own source?  I suppose this would do:
+> git grep -e ":(?fixed-strings):(?perl-regexp)"
 
-...whereas whatever we name the option, we have to live with forever
-because it is user-facing. It's more important to get the option name
-correct (though I agree that it would be nice for the nomenclature used
-in the code to be reminiscent of the option name).
-
-Michael
-
+We can also override it with command line options. If you define
+--perl-regexp as "if no regex syntax is specified in the pattern, pcre
+is used", then you can have something like --force-perl-regexp that
+says "all patterns are in pcre, there's no magic whatsoever to choose
+a different regex syntax". Though I think --perl-regexp should play
+the role of --force-perl-regexp so you don't surprise current scripts,
+and have a new option --default-syntax=<type> instead.
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Duy
