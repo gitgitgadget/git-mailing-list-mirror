@@ -1,84 +1,139 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH] clone: use child_process for recursive checkouts
-Date: Wed, 06 Jan 2016 18:41:37 -0500
-Organization: Twitter
-Message-ID: <1452123697.3892.112.camel@twopensource.com>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	 <1449102921-7707-14-git-send-email-dturner@twopensource.com>
-	 <c21eb4a5d3a3a4886c45da0abe307fe1772e932e.1450869637.git.mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jan 07 00:41:46 2016
+Subject: [PATCH/RFC v2 1/3] refs: allow log-only updates
+Date: Wed,  6 Jan 2016 18:41:57 -0500
+Message-ID: <1452123719-22634-1-git-send-email-dturner@twopensource.com>
+References: <567A5516.9070209@alum.mit.edu>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu Jan 07 00:42:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGxi5-0002QG-7d
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 00:41:45 +0100
+	id 1aGxiq-000380-Az
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 00:42:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbcAFXlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2016 18:41:42 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:34364 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752194AbcAFXlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2016 18:41:39 -0500
-Received: by mail-qg0-f46.google.com with SMTP id 6so237317731qgy.1
-        for <git@vger.kernel.org>; Wed, 06 Jan 2016 15:41:39 -0800 (PST)
+	id S1752617AbcAFXm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2016 18:42:28 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:33497 "EHLO
+	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbcAFXm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2016 18:42:27 -0500
+Received: by mail-qk0-f177.google.com with SMTP id p186so87653091qke.0
+        for <git@vger.kernel.org>; Wed, 06 Jan 2016 15:42:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=bFyAl2UsFpALgdU6f9lZ13sBUA4Ne7sF+YgbSXlohLo=;
-        b=QPUeO6tS53kDE5HYFt1CCX/mFbHrN8cPboIgYr2vFBFW0q/sGgSw9zfe0YGaLUiyOt
-         AJrb1P3/3rPxGUfpEw8unnblBx+y27mnCEvJQN3K0B+9GJDSEG/OpYznX9XtPqa3zevG
-         5R5XKisA4fKPrEFgTf9Z7TuxNlUz7XmygQLtM3uTOhZIf6YbKqyGmPhzY2uBDCDpJ589
-         KKVI/zHu8y39wS/AHe2qwJAORwXwOnj+157n1/Morphoz5fbSVHG6w/DLO0b8Edas+04
-         ntyQKZnF56qRGDpAaGPjCDsKY6Dr0WOyocUpP/v+h3SJo8EYsA6wxJE8SnTuGEJTwGU4
-         NovA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=qch+KX1TsP+BsIA6rrgdPgupyWozhuPdtToVoxqi7uc=;
+        b=fnKlf/ny1sOC5nwZ5VTluAa82RJ3LU9v/tehWJ+xyA1zFXSiCk9uqT/Mf6ScIaD0rt
+         NEg2ek64g9C/PGEFuJcsInqWvTHKBGwFZSxN/am3fNgYf/FxX9+ZbZcutp1vA/YTTxPT
+         76lZOkPuEuJ3Oj7AZZ2pGGCyXIlXAwS5gol92Er4J2Friq5n/93ftKJPN99rwER8HSSI
+         drfhSoS/JY8JAqJoNP/od5JdbxS2sNXkLOGSypkZve9WNr+zSyGmXkfDbwfXOw0Tcdiy
+         Il2O0PBthLZAz53XS/PXz8nabb+7oXCMcP9PtGPBZqLk1X9sfz2Hq3d5/5mGs3govq2x
+         7qnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=bFyAl2UsFpALgdU6f9lZ13sBUA4Ne7sF+YgbSXlohLo=;
-        b=dIK2rIGj5f+mjxPdwwPtTOAJPeXFRsQ/jxYwe1aWDEWxcb+bCY8C26yV6wgPAsMP6J
-         iVOZcVfRgNMr5QyoDL+d8anXWvf5lGJ4oK+wN3q2Ni5qZroK86KwhLBhncPbyamIe8yx
-         wo2qDFN0LOPOjW/GIwRwpokKgFHX05TEgF7M82EvXo1iFsbsXLmt4qCFQBjTG/PK2Jmf
-         xr+mZ0C/rJIeXnO3pyH2rGpmliX4AZc86LMdBBhqPN2bxbZHGzeuwIAI0c276BP/jnW0
-         TL1bojQwlWpmBDfua31gXude5N9eo+GRzs47qAw/kADIen+7vz8V0RId2bUSItRx8Wh0
-         uz+g==
-X-Gm-Message-State: ALoCoQnOaDcoqvuVKrc9Zu28Hy3H358iFSv2KKF1d4vx7hmipOqvbf1fmvird4ACmMcWVAR9vAnCoRvhxfzef4utCoodx4WRwQ==
-X-Received: by 10.140.102.246 with SMTP id w109mr131772725qge.58.1452123698859;
-        Wed, 06 Jan 2016 15:41:38 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id f132sm27112283qhe.6.2016.01.06.15.41.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=qch+KX1TsP+BsIA6rrgdPgupyWozhuPdtToVoxqi7uc=;
+        b=i4EEa0/UkGCNsMSUSxg25eCW4D99Zum1WZgqyRB2MSqGFjnH5nHUjO8lQojiZjCeTd
+         8GgTzXvtg/vrEHLHsBZusyQiE/KwXHazyZ4D5AYgx6gQ8ArYHdW8Pb3Wb7+oRPe8CWlW
+         1bV4+RvapXSO0FlxZvgcODYLvq4r/+9IpURBGTSZdaOKbG0xyNZaInft9SsVRAwuhM37
+         woYCfyb9iLgEUZpDBCBVvepVhmNV2YJ7WlGCELzl8udZI3odAlG4Pu+pA6oSlVIr34qw
+         Syy7S7v3bktq3BqFjq5zS4VyjbZhvz0EIDt29pJrI85Is1D1mU5Du+ovaWcyUqsJjki8
+         r71w==
+X-Gm-Message-State: ALoCoQmjNvD2US7XnLdIesIaHqj4X5WvC265TnwE5ZeYKHZ46ik9OGqFvyfvJAPRmX+oMO6YVD5H+Cvb5X/a64Lctx//AMTVhw==
+X-Received: by 10.55.72.77 with SMTP id v74mr86767419qka.88.1452123746551;
+        Wed, 06 Jan 2016 15:42:26 -0800 (PST)
+Received: from ubuntu.twitter.biz ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f132sm27113524qhe.6.2016.01.06.15.42.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 06 Jan 2016 15:41:38 -0800 (PST)
-In-Reply-To: <c21eb4a5d3a3a4886c45da0abe307fe1772e932e.1450869637.git.mhagger@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        Wed, 06 Jan 2016 15:42:25 -0800 (PST)
+X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
+In-Reply-To: <567A5516.9070209@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283459>
 
-On Wed, 2015-12-23 at 12:30 +0100, Michael Haggerty wrote:
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> David, I think if you insert this patch before your
-> 
->   13/16 refs: allow ref backend to be set for clone
-> 
-> , then the hunk in builtin/clone.c:checkout() of your patch becomes
-> trivial:
-> 
-> 	if (refs_backend_type)
-> 		argv_array_pushf(&cmd.args, "--refs-backend-type=%s",
-> 				 refs_backend_type);
+The refs infrastructure learns about log-only ref updates, which only
+update the reflog.  Later, we will use this to separate symbolic
+reference resolution from ref updating.
 
-Inserted, thanks.
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ refs/files-backend.c | 15 ++++++++++-----
+ refs/refs-internal.h |  2 ++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 176cf65..0800a57 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2821,7 +2821,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			}
+ 		}
+ 	}
+-	if (commit_ref(lock)) {
++	if (!(flags & REF_LOG_ONLY) && commit_ref(lock)) {
+ 		error("Couldn't set %s", lock->ref_name);
+ 		unlock_ref(lock);
+ 		return -1;
+@@ -3175,7 +3175,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 			goto cleanup;
+ 		}
+ 		if ((update->flags & REF_HAVE_NEW) &&
+-		    !(update->flags & REF_DELETING)) {
++		    !(update->flags & REF_DELETING) &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			int overwriting_symref = ((update->type & REF_ISSYMREF) &&
+ 						  (update->flags & REF_NODEREF));
+ 
+@@ -3205,7 +3206,9 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 				update->flags |= REF_NEEDS_COMMIT;
+ 			}
+ 		}
+-		if (!(update->flags & REF_NEEDS_COMMIT)) {
++
++		if (!(update->flags & REF_LOG_ONLY) &&
++		    !(update->flags & REF_NEEDS_COMMIT)) {
+ 			/*
+ 			 * We didn't have to write anything to the lockfile.
+ 			 * Close it to free up the file descriptor:
+@@ -3222,7 +3225,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+-		if (update->flags & REF_NEEDS_COMMIT) {
++		if (update->flags & REF_NEEDS_COMMIT ||
++		    update->flags & REF_LOG_ONLY) {
+ 			if (commit_ref_update(update->backend_data,
+ 					      update->new_sha1, update->msg,
+ 					      update->flags, err)) {
+@@ -3242,7 +3246,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 		struct ref_lock *lock = update->backend_data;
+ 
+-		if (update->flags & REF_DELETING) {
++		if (update->flags & REF_DELETING &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			if (delete_ref_loose(lock, update->type, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 21ac680..649ba63 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -42,6 +42,8 @@
+  * value to ref_update::flags
+  */
+ 
++#define REF_LOG_ONLY 0x80
++
+ /* Include broken references in a do_for_each_ref*() iteration */
+ #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+ 
+-- 
+2.4.2.749.g730654d-twtrsrc
