@@ -1,104 +1,85 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH] interpret-trailers: add option for in-place editing
-Date: Wed, 6 Jan 2016 15:36:36 +0100
-Message-ID: <20160106143635.GI29125@distanz.ch>
-References: <1452087258-3893-1-git-send-email-tobias.klauser@zhinst.com>
- <vpqoacylri6.fsf@anie.imag.fr>
+From: Richard Ipsum <richard.ipsum@codethink.co.uk>
+Subject: Re: [PATCH 0/2] git-candidate: git based patch tracking and review
+Date: Wed, 6 Jan 2016 15:49:10 +0000
+Message-ID: <20160106154910.GA8375@salo>
+References: <1447160198-23296-1-git-send-email-richard.ipsum@codethink.co.uk>
+ <5643107B.20501@alum.mit.edu>
+ <20151201205527.GF18255@google.com>
+ <CAD0k6qQ98ED4xLynRZdnnPX_HDHhEq5SQhNov-5cwG82pqMFGw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tobias Klauser <tobias.klauser@zhinst.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 06 15:46:40 2016
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git <git@vger.kernel.org>
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 16:49:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGpMF-0005VA-BQ
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 15:46:39 +0100
+	id 1aGqKt-0002q3-Kd
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 16:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbcAFOqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2016 09:46:36 -0500
-Received: from sym2.noone.org ([178.63.92.236]:55683 "EHLO sym2.noone.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752055AbcAFOqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2016 09:46:35 -0500
-X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Jan 2016 09:46:34 EST
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3pbCtt2LzfzQWhG; Wed,  6 Jan 2016 15:36:37 +0100 (CET)
+	id S1751922AbcAFPtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2016 10:49:16 -0500
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:36388 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751708AbcAFPtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2016 10:49:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id ABA5646082F;
+	Wed,  6 Jan 2016 15:49:12 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id k4WHm5ya0fEz; Wed,  6 Jan 2016 15:49:06 +0000 (GMT)
+Received: from salo (salo.dyn.ducie.codethink.co.uk [10.24.2.138])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 3850D4609E8;
+	Wed,  6 Jan 2016 15:49:06 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <vpqoacylri6.fsf@anie.imag.fr>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAD0k6qQ98ED4xLynRZdnnPX_HDHhEq5SQhNov-5cwG82pqMFGw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283448>
 
-Thanks for your feedback Matthieu!
-
-On 2016-01-06 at 15:19:45 +0100, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Tobias Klauser <tobias.klauser@zhinst.com> writes:
+On Tue, Dec 01, 2015 at 04:00:52PM -0500, Dave Borowitz wrote:
+> On Tue, Dec 1, 2015 at 3:55 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > Cc-ing dborowitz, who has been working on storing Gerrit's code review
+> > information in Git instead of a separate database (e.g., see [1]).
 > 
-> > From: Tobias Klauser <tklauser@distanz.ch>
-> >
-> > Add a command line option --in-place to support in-place editing akin to
-> > sed -i.  This allows to write commands like the following:
-> 
-> Since -i is a common shortcut for --in-place (perl -i, sed -i), it
-> probably makes sense to have it here too. OTOH, this is meant for
-> scripting and perhaps it's best to force script writters to be verbose.
+> Thanks, we actually already had a thread going that I realize only in
+> retrospect did not include the git mailing list.
 
-Yes, I thought this would mainly be used in scripts and thus omitted the
-short option.
+Thanks, we did indeed have a thread going,
+that probably should have been on-list.
+I'm also working on a little library[1] that should eventually allow other
+tools to use gerrit's notedb in the hope that this might
+eventually lead to the development/adoption of a common format for such tools.
 
-> > Also add the corresponding documentation and tests.
-> 
-> This sentence does not harm, but I personnally don't think it's really
-> helpfull, as it's already clear by the diffstat right below, and the
-> patch itself.
+One thing that concerns me about notedb with respect to distributed review
+is the storage format for comments. Within a distributed review system comments
+may be made in any order, yet the format is designed around the kind of
+linearisation that can be assumed by a centralised system.
 
-Ok, I can omit it for v2.
+The problem is that multiple comments in notedb may be stored within
+the same blob/note, specifically all comments on a particular commit will
+be stored in the same blob. In a distributed system storing multiple comments
+in the same blob like this will inevitably lead to merge conflicts.
 
-> > -static void print_tok_val(const char *tok, const char *val)
-> > +static void print_tok_val(FILE *fp, const char *tok, const char *val)
-> >  {
-> >  	char c = last_non_space_char(tok);
-> >  	if (!c)
-> >  		return;
-> >  	if (strchr(separators, c))
-> > -		printf("%s%s\n", tok, val);
-> > +		fprintf(fp, "%s%s\n", tok, val);
-> >  	else
-> > -		printf("%s%c %s\n", tok, separators[0], val);
-> > +		fprintf(fp, "%s%c %s\n", tok, separators[0], val);
-> >  }
-> 
-> The patch would be even easier to read if split into a preparatory
-> refactoring patch "turn printf into fprintf" and then the actual one.
-> But it's already rather clear, so you can probably leave it as-is.
+This problem isn't unsolvable, someone already suggested to me the idea
+of writing a custom merge driver for merging different notes stored in notedb.
+It would obviously be preferable to have a format that avoided creating
+conflicts in the first place, but a custom merge driver doesn't seem like
+an unreasonable solution.
 
-Ok. I have also no problem with splitting it. I'll wait for a feedback
-from Junio on what he prefers.
+If anyone has any thoughts on how else this problem might be solved,
+I'd be very interested to hear them.
 
-> > -static void print_lines(struct strbuf **lines, int start, int end)
-> > +static void print_lines(FILE *fp, struct strbuf **lines, int start, int end)
-> 
-> Here and below: it would probably be more readable with a more explicit
-> name for fp, like "outfile". Especially here:
-> 
-> > -static int process_input_file(struct strbuf **lines,
-> > +static int process_input_file(FILE *fp,
-> > +			      struct strbuf **lines,
-> 
-> Where it's tempting to think that a parameter given to
-> process_input_file is ... the input file!
+Thanks again,
+Richard Ipsum
 
-Yes, makes sense. I'll change it to a more concise and readable name
-I'd also take "outfile" as you suggest, unless anyone objects.
-
-Thanks
-Tobias
+[1]: https://bitbucket.org/richardipsum/perl-notedb
