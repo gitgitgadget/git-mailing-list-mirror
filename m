@@ -1,64 +1,91 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git 2.7.0 gitignore behaviour regression
-Date: Wed, 6 Jan 2016 17:03:10 +0700
-Message-ID: <CACsJy8CvPqYGRXB845+4fHjkXH_kSAWG684CoxtWAnXE-gM6ag@mail.gmail.com>
-References: <4B0F686D-3DF9-4E5D-971D-DB106C6573FD@mikemcquaid.com>
- <20160105150602.GA4130@sigill.intra.peff.net> <CACsJy8AQ9s4VkFn+TNJLD55xJc40+-54BTYbC4Os71uSkL1QSA@mail.gmail.com>
- <5E517AD0-CD4E-4F85-8FEB-89B7A0183967@mikemcquaid.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 08/15] ref-filter: introduce color_atom_parser()
+Date: Wed, 6 Jan 2016 15:46:46 +0530
+Message-ID: <CAOLa=ZRaviYJNmnq0jucBdQLZrDKr7xNR30k3jP_j_n9UCJ91Q@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
+ <1451980994-26865-9-git-send-email-Karthik.188@gmail.com> <xmqqr3hvivml.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Mike McQuaid <mike@mikemcquaid.com>
-X-From: git-owner@vger.kernel.org Wed Jan 06 11:03:49 2016
+Cc: Git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 06 11:17:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aGkwV-0004ZI-Ti
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 11:03:48 +0100
+	id 1aGl9e-0005o8-BA
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Jan 2016 11:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176AbcAFKDn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Jan 2016 05:03:43 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:34920 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752088AbcAFKDl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jan 2016 05:03:41 -0500
-Received: by mail-lb0-f179.google.com with SMTP id bc4so187890196lbc.2
-        for <git@vger.kernel.org>; Wed, 06 Jan 2016 02:03:41 -0800 (PST)
+	id S1752157AbcAFKRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2016 05:17:19 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33723 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985AbcAFKRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2016 05:17:16 -0500
+Received: by mail-vk0-f66.google.com with SMTP id f2so23868746vkb.0
+        for <git@vger.kernel.org>; Wed, 06 Jan 2016 02:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6yfU+setbi4cZd/NX1zSZ/O+PBTI3COg3F94Brjup5o=;
-        b=oU0Hvib/GP52ByIsWpMXHVf2BDOIw4Hlotu6PsIQLz5wxmysxrXTk1dGniuzF2eOj2
-         pmEGK+elXiH/V/5YOZZag3n4DCbaDEw2LEWKOD4ARKC8Ta25EOPeLY+oacdQhxlJM3Be
-         ViztoPTrVToDgy1u2lJVjb6iw9F2qPXO8vV/Z7wISxk63GNd5zGtmujrQxOppMLnwcaY
-         Pn5NjTsHi5h+xypSYOOXs7Puc0PWb6R2S7k0qj4eopOMeU4V6AUWZdJeTqgzh8n3xBio
-         FCGj/ZNw/sUenG7xKJ9C+T1NyNfIV2UW8aD3jr1lLeQHpmgdBIN0j+kKn1w+AxHigyM2
-         g8sQ==
-X-Received: by 10.112.172.233 with SMTP id bf9mr35416068lbc.137.1452074620191;
- Wed, 06 Jan 2016 02:03:40 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Wed, 6 Jan 2016 02:03:10 -0800 (PST)
-In-Reply-To: <5E517AD0-CD4E-4F85-8FEB-89B7A0183967@mikemcquaid.com>
+         :cc:content-type;
+        bh=3J4cGpRZnhGw8yKIoJb/WS9jz15WpFDNOOZYFnGes+I=;
+        b=OVvuSUXQXOEE5Wr64IiCnAE8P9I+w9Z9VHSHec2N94sb9UOJHCEhAECvbfgHgrtr+r
+         LNXLx0b3vgDCijBYVLooKqQwaQcuqlAucq3Ko4QQ8GYgYMNXOAvlCBovZJzAUsVpZj1+
+         Pnrd1SP6FlrY/dM5umwEDKwaBkBNwz8sBVDk/QODvzqnuIYWDhIPOzl/wsy6y1FrwDBE
+         g7bsWXx3h62i60yoVKl+fNCG8bjorR1s5shVfYIuox4ql322ONuAUkScvOR44Vsddv2f
+         0xNGPNPdrJoWueVBu2CukbWCnfdtQ0ri6X9XC+sktIGGAArbiwr6ioUr1O67estoD9AW
+         HUeA==
+X-Received: by 10.31.8.204 with SMTP id 195mr68347556vki.30.1452075435744;
+ Wed, 06 Jan 2016 02:17:15 -0800 (PST)
+Received: by 10.103.82.146 with HTTP; Wed, 6 Jan 2016 02:16:46 -0800 (PST)
+In-Reply-To: <xmqqr3hvivml.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283432>
 
-On Wed, Jan 6, 2016 at 4:50 PM, Mike McQuaid <mike@mikemcquaid.com> wro=
-te:
-> it=E2=80=99s also a big area where libgit2 was inconsistent with Git=E2=
-=80=99s behaviour on either of those versions too.
+On Wed, Jan 6, 2016 at 2:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> @@ -90,7 +105,7 @@ static struct {
+>>       { "symref" },
+>>       { "flag" },
+>>       { "HEAD" },
+>> -     { "color" },
+>> +     { "color", FIELD_STR, color_atom_parser },
+>>       { "align" },
+>>       { "end" },
+>>  };
+>
+> This is minor, as I do not think anybody sane would say
+> "for-each-ref --sort=color" and expect anything sensible, but
+>
 
-Yeah.. it looks like libgit2's gitignore support was written new, not
-imported from C Git, so behavior differences (especially in corner
-cases) and even lack of some feature ("**" support comes to mind). For
-isolated features like gitignore, perhaps we can have an option to
-replace C Git code with libgit2 and therefore can test libgit2 against
-C Git test suite. It could be a good start for libgit2 to invade C
-Git. Not sure if anybody's interested in doing it though.
---=20
-Duy
+I completely understand and the only reason that I added FIELD_STR
+cause that was the default either ways.
+
+> I think we shouldn't mark these bogus attributes [*1*] as FIELD_STR
+> (and it is not FIELD_ULONG, either).  Perhaps add a new FIELD_BOGUS
+> (or some better name to make it clear that this is not a "value"
+> that belongs to the ref and can be used to sort, e.g. "FAKE") value
+> and mark them as such?
+>
+> That would allow us to error out when they are specified as a
+> sorting criteria.
+>
+>
+> [Footnote]
+>
+> *1* Bogus from the point of view of "what are the various attributes
+> specific to these items that the command is iterating over,
+> i.e. refs (or the objects at the tips of these refs)", as color,
+> align, etc. are not attributes per refs.
+
+I'm sure something like FIELD_BOGUS would make a lot of sense, but I wont
+include that into this series. Maybe after this?
+
+-- 
+Regards,
+Karthik Nayak
