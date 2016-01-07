@@ -1,64 +1,82 @@
-From: Stephen & Linda Smith <ischis2@cox.net>
-Subject: Re: Picking up old threads/patches
-Date: Wed, 06 Jan 2016 20:59:52 -0700
-Message-ID: <3039057.pHpnyVLACL@thunderbird>
-References: <1718717.tR0GOgDc0N@thunderbird> <2143067.ZpDECoHz1r@thunderbird>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [BUG?] worktree setup broken in subdirs with git alias
+Date: Thu, 7 Jan 2016 08:15:51 +0100
+Message-ID: <568E10A7.5050606@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 04:59:29 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 07 08:23:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aH1jS-0007E6-G8
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 04:59:26 +0100
+	id 1aH4uU-0004eK-6z
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 08:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbcAGD7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2016 22:59:23 -0500
-Received: from fed1rmfepo203.cox.net ([68.230.241.148]:43123 "EHLO
-	fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751272AbcAGD7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2016 22:59:22 -0500
-Received: from fed1rmimpo305 ([68.230.241.173]) by fed1rmfepo203.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160107035921.JTRJ26406.fed1rmfepo203.cox.net@fed1rmimpo305>
-          for <git@vger.kernel.org>; Wed, 6 Jan 2016 22:59:21 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo305 with cox
-	id 2rzM1s0032tqoqC01rzMno; Wed, 06 Jan 2016 22:59:21 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020201.568DE299.007F,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=f8aW8pOM c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
- a=BQtpHITu_MMSGcP1tawA:9 a=CjuIK1q_8ugA:10 a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 08DB713F6F3;
-	Wed,  6 Jan 2016 20:59:53 -0700 (MST)
-User-Agent: KMail/5.0.2 (Linux/4.3.0-5-generic; KDE/5.15.0; x86_64; ; )
-In-Reply-To: <2143067.ZpDECoHz1r@thunderbird>
+	id S1750890AbcAGHW4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2016 02:22:56 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46642 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750768AbcAGHWz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 02:22:55 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jan 2016 02:22:55 EST
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 08F4B2099E
+	for <git@vger.kernel.org>; Thu,  7 Jan 2016 02:15:53 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 07 Jan 2016 02:15:53 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=BB4
+	S9H7C9mAQHFPegPKRM6bKu9c=; b=i1IGDyolwPINu+2eToiWk16RDJ55XrqzvK2
+	C1rhOydEtfzo4tX4VvSd8jmJw4EN+SRVL91eoqZ/u/YY7EXum2+3XZsQHhN/9M1A
+	rkUmzLDbmw8PgW0cDmOOHzToHVAwMQeUwX90fOStUhUT/py//1fOc/OVR7OHH5FZ
+	Lse2ajtE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=BB4S9H7C9mAQHFPegPKRM6bKu9c=; b=dYM2O
+	pXsEMRQjHul8P9wqkI9aJcgdEPfkI1n0pJlzBoZXR8u02upQI6BwBBWlN9tqlMip
+	uHYmG/4vWm8mhkkz3lUr/D4JfNPrcQVPoIC7iM2inMduAq8BpUKoTWBcsuZFzanM
+	8eSMZHIV2nIzB/lxh9XP68FKVpRO9WYfOpma0o=
+X-Sasl-enc: jmh5Jpo46tOtV+cdwHAB68HrC9aGeoVs4FB5NMgfwKO/ 1452150952
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 9E2B5C016D5
+	for <git@vger.kernel.org>; Thu,  7 Jan 2016 02:15:52 -0500 (EST)
+X-Mozilla-News-Host: news://news.gmane.org:119
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283469>
 
-> If Will isn't interested in finishing these two patches I will pick them 
-> up [ ($gmane/271213), ($gmane/272180) ]
-> 
-> After that I will check look at some of the others for which you've 
-> asked for help.
- 
-I started work on both of these rerolls this evening.   Since I do not have the 
-original emails I don't have the Message ID's which  would allow me 
-to add to the threads with the git send-email command.   Do either of you have the 
-message ID's?
+Hi there,
 
- 
+sorry I can't dig deeper now, but the worktree code from next seems to
+get confused now as soon as you cd to a subdir of a worktree (other tha=
+n
+the main worktree) and use an alias:
+
+git help ss
+`git ss' is aliased to `status -s -b'
+[mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git status -s -b
+## exam
+[mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git ss
+fatal: internal error: work tree has already been set
+Current worktree: /home/mjg/Teaching/LUK
+New worktree: /home/mjg/Teaching/LUK/Biomath-WS15
+
+This is inside the subdir "Biomath-WS15" of the worktree residing in
+".../LUK".
+
+It wasn't like that last year ;)
+
+Something about setting GIT_DIR and the like in the environment must
+have changed (for aliases), badly interacting with the worktree code.
+
+Michael
