@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/10] t/t6002-rev-list-bisect.sh: use the $( ... ) construct for command substitution
-Date: Thu,  7 Jan 2016 14:51:43 +0100
-Message-ID: <1452174710-28188-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t/t7003-filter-branch.sh: use the $( ... ) construct for command substitution
+Date: Thu,  7 Jan 2016 14:51:48 +0100
+Message-ID: <1452174710-28188-9-git-send-email-gitter.spiros@gmail.com>
 References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:22 2016
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAzF-00024f-Cq
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:21 +0100
+	id 1aHAzG-00024f-Hh
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbcAGNwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:52:00 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33903 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbcAGNv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 08:51:58 -0500
-Received: by mail-pa0-f43.google.com with SMTP id uo6so241077490pac.1
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:51:58 -0800 (PST)
+	id S1752733AbcAGNwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 08:52:14 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:33936 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465AbcAGNwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 08:52:03 -0500
+Received: by mail-pa0-f44.google.com with SMTP id uo6so241078618pac.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nDKfx4Y0MaoX2YqetikQpeLHMnV1YOw+lNEceby3z0c=;
-        b=rLDy7cskp3U1s5IF6oufHLb+JIsqxcNbNY2loo2yEj43/IN09NAQ9xr4gciMlDcVRI
-         yXPvyfd/w8MDE6PIAA2OLU9sinufqWMidtytfw7gTdGhLa+ANjTeUIEhn8QtctEBLviD
-         ZNgq34szusHonnzyfsKSX4ZQys4eCzCNrZrJll2lXVJTqgGqQCB3eTRiwQK28SjCO3DW
-         S1skMMjokeYZBu0NWujEvIpprkyvdtEcEn5J+T3eHiN1i9mfsKy2AYn1DFKa/lSZBs7V
-         noMZCXdns5Zl4uR2JlOJbW7InpWllrlbHv59lm+dyFhH3cv4HnNWD9KlgdoBAP9BBdZB
-         Vw9Q==
-X-Received: by 10.67.14.74 with SMTP id fe10mr152939584pad.151.1452174718435;
-        Thu, 07 Jan 2016 05:51:58 -0800 (PST)
+        bh=bxW6TWskTve5lcWoAI9bpsbVPXjp3vNuEzAYKKjiUNc=;
+        b=DfrhD6G6PSjHgk8r116zfx0qtPzQkU9Ilecwo10f5SPwtgj///E1fqjipTXatlECex
+         vNjNAm9qY0G19JdG1C14Ht1fIZvJ6Z+5DPBTvzSKCf4n+BnX0ukALiwxRQtvNKV07U1t
+         7SXqsI/GqsuRlwy3J/9aPD3Lbrd3Vyu0dGZto58tUYNN5x+rAwrnHphmroJfl/2YeDGy
+         Umnf3xRIPj2x5rLVifwB0KRVWy22oydIw9R+iCzcTKZT4bcIpMhfUuUjCW/7hWbni6H+
+         oq/eUj/w38D7d/hE2SWxZmkAHXvmMIBEi2jXUt/bWw3fCU6xyqQ1oD/bbLqbUrLGGGXx
+         K9gQ==
+X-Received: by 10.66.220.170 with SMTP id px10mr4428906pac.145.1452174722247;
+        Thu, 07 Jan 2016 05:52:02 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.57
+        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.52.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jan 2016 05:51:57 -0800 (PST)
+        Thu, 07 Jan 2016 05:52:01 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283488>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,25 +66,39 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t6002-rev-list-bisect.sh | 6 +++---
+ t/t7003-filter-branch.sh | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
-index 43ad772..3bf2759 100755
---- a/t/t6002-rev-list-bisect.sh
-+++ b/t/t6002-rev-list-bisect.sh
-@@ -27,9 +27,9 @@ test_bisection_diff()
- 	# Test if bisection size is close to half of list size within
- 	# tolerance.
- 	#
--	_bisect_err=`expr $_list_size - $_bisection_size \* 2`
--	test "$_bisect_err" -lt 0 && _bisect_err=`expr 0 - $_bisect_err`
--	_bisect_err=`expr $_bisect_err / 2` ; # floor
-+	_bisect_err=$(expr $_list_size - $_bisection_size \* 2)
-+	test "$_bisect_err" -lt 0 && _bisect_err=$(expr 0 - $_bisect_err)
-+	_bisect_err=$(expr $_bisect_err / 2) ; # floor
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 869e0bf..8868e6e 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -387,7 +387,7 @@ test_expect_success 'setup submodule' '
+ 	git branch original HEAD
+ '
  
- 	test_expect_success \
- 	"bisection diff $_bisect_option $_head $* <= $_max_diff" \
+-orig_head=`git show-ref --hash --head HEAD`
++orig_head=$(git show-ref --hash --head HEAD)
+ 
+ test_expect_success 'rewrite submodule with another content' '
+ 	git filter-branch --tree-filter "test -d submod && {
+@@ -396,7 +396,7 @@ test_expect_success 'rewrite submodule with another content' '
+ 					 mkdir submod &&
+ 					 : > submod/file
+ 					 } || :" HEAD &&
+-	test $orig_head != `git show-ref --hash --head HEAD`
++	test $orig_head != $(git show-ref --hash --head HEAD)
+ '
+ 
+ test_expect_success 'replace submodule revision' '
+@@ -405,7 +405,7 @@ test_expect_success 'replace submodule revision' '
+ 	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
+ 	     then git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 submod
+ 	     fi" HEAD &&
+-	test $orig_head != `git show-ref --hash --head HEAD`
++	test $orig_head != $(git show-ref --hash --head HEAD)
+ '
+ 
+ test_expect_success 'filter commit message without trailing newline' '
 -- 
 2.3.3.GIT
