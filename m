@@ -1,93 +1,116 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v3 0/3] add test to demonstrate that shallow recursive clones fail
-Date: Thu, 7 Jan 2016 22:50:28 +0100
-Message-ID: <79770C7D-B6A1-4239-A1EF-0A986CCD24AA@gmail.com>
-References: <1450653595-22676-1-git-send-email-larsxschneider@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 22:50:41 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] Handle more file writes correctly in shared repos
+Date: Thu, 07 Jan 2016 13:52:11 -0800
+Message-ID: <xmqq1t9t3vn8.fsf@gitster.mtv.corp.google.com>
+References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de>
+	<cover.1452085713.git.johannes.schindelin@gmx.de>
+	<c03e5a9d367b76d8a249680c752b4c4d935e9b91.1452085713.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 07 22:52:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHIS5-0005Mz-Gx
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 22:50:37 +0100
+	id 1aHITi-0006sg-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 22:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbcAGVud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 16:50:33 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:36913 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752230AbcAGVuc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 16:50:32 -0500
-Received: by mail-wm0-f53.google.com with SMTP id f206so144731522wmf.0
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 13:50:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1dl0V6Irh912DkXMntQ2zGmwgNVYrT0Z9NJ6qiLglBA=;
-        b=FyTYwA5xlAjOS0NMUt1wHjf1sVKzwq2uirvyqDnwe5JW7J6g1v6NgXZaoOECpj4yhI
-         IqBojCrnUHID0FP+vC6CEe9gM9Y2rv2OfXZvJrwQTOs7/E5BnxXv0xqNreI5830EfXL1
-         ZWtw+87p2QvHQbN8vmV7S9r9RpJ/rmk3P9aPu9qvLrTmbOr36FqwppTQJDDw7Exh6PJG
-         ILHFluPPRE/RqiJZCHdaob64J4resSRzyVQN6Frv3LqJIYbKnX2W4IgQta7kzxKTndc0
-         kXTK3VfR0MGp7ackkjHdPHYNJpuqRlOXNC4J6c0LdQJKOg6h9L63pcb8CguAXNVW3uX0
-         w8yg==
-X-Received: by 10.28.24.85 with SMTP id 82mr19936081wmy.58.1452203431336;
-        Thu, 07 Jan 2016 13:50:31 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB47F7.dip0.t-ipconnect.de. [93.219.71.247])
-        by smtp.gmail.com with ESMTPSA id y8sm15444826wmg.9.2016.01.07.13.50.29
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jan 2016 13:50:30 -0800 (PST)
-In-Reply-To: <1450653595-22676-1-git-send-email-larsxschneider@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1752552AbcAGVwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 16:52:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61376 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751709AbcAGVwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 16:52:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E439382FD;
+	Thu,  7 Jan 2016 16:52:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5QQZdVX3cUbLEZ/MTQpz220kP7s=; b=D9saLE
+	NesEP7QNVLjy00a/AinTzT0RMpzdViJ9LauZ779IxarLZFQPJVWOo+3zkXHBao9A
+	2aNfdsvrdI0yOdlE3gEr5cKH34F29kO7e1bDjpUJt6Y158L9W/nq+o/lDUJ4Vx06
+	nbFzZNNbCxt0ZMVX/sTQmtc4MMZ3RJYfiHkMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IFAt7Qtzk7nfVK2MNXCA8P3m2yfywb64
+	4+wysqkoAf38XAZQmTC6+h8RX9JL5W6sM95te+Hw0SWU7Y+btO2Gw1IFteEhpFu6
+	a6mjhiA7xrYJgWOHDwnji5HCod7SvgQNbRDOjhxG88f3vzeeDhi0r3S+Khgb/wLi
+	74qxE+MJD0U=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 155BD382FC;
+	Thu,  7 Jan 2016 16:52:13 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7D058382FB;
+	Thu,  7 Jan 2016 16:52:12 -0500 (EST)
+In-Reply-To: <c03e5a9d367b76d8a249680c752b4c4d935e9b91.1452085713.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Wed, 6 Jan 2016 14:09:49 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E87B81A4-B588-11E5-8279-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283511>
 
-Hi,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-does anyone have a few free cycles to take a look at this patch series?
-I wonder if you deem it as not interesting or if it got lost.
+> - git apply, when writing rejected hunks
 
-Thank you,
-Lars
+Today I may try to apply and leave hello.c.rej; tomorrow you may try
+to apply a different patch and get rejection for the same file.  And
+you would not be able to if my umask is 077.
 
+I do not know "intended to be shared" is a good criteria, unless it
+is a synomym to "what is under $GIT_DIR".  core.sharedRepository is
+about the shared-ness of $GIT_DIR and never about the working tree,
+so I consider it is correct that not adjusting the permission is the
+right thing to do when 'git apply' writes .rej files, though.
 
-On 21 Dec 2015, at 00:19, larsxschneider@gmail.com wrote:
+> - git fsck, when writing lost&found blobs
 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> diff to v2:
-> * remove workaround tests as suggested by Peff [1]
-> * fix chain breakage introduced in 275cd18
-> * add hints to the user if a submodule checkout fails while using the
->  depth argument [2]
-> 
-> Thanks,
-> Lars
-> 
-> [1] http://article.gmane.org/gmane.comp.version-control.git/281237
-> [2] http://article.gmane.org/gmane.comp.version-control.git/281420
-> 
-> Lars Schneider (3):
->  submodule: add test to demonstrate that shallow recursive clones fail
->  submodule: fix &&-chain breakage
->  submodule: extend die message on failed checkout with depth argument
-> 
-> git-submodule.sh               |  4 ++++
-> t/t7406-submodule-update.sh    | 35 +++++++++++++++++++++++++---
-> t/t7412-submodule-recursive.sh | 52 ++++++++++++++++++++++++++++++++++++++++++
-> 3 files changed, 88 insertions(+), 3 deletions(-)
-> create mode 100755 t/t7412-submodule-recursive.sh
-> 
-> --
-> 2.5.1
-> 
+So this _is_ conceptually a problem, but writing anything indexed
+with the object name is an idempotent operation, so this will not
+matter in practice, I think.
+
+> - git merge-file, when writing merged files (when Git itself calls
+>   merge-file, the file in question was already there, with shared
+>   permissions).
+
+Again, this is not a problem (i.e. not touching it in this patch is
+the right thing to do) as this is about files in the working tree.
+
+> - git fast-import, when writing a crash report
+
+I am not sure about this one.  Is the crash report designed to get
+unique filename every time you run?  Otherwise, the fixed name
+inside $GIT_DIR/ is a shared resource, so I suspect it would want to
+overwrite.  "Not overwriting the crash report is safer, because the
+existence of it is a sign that the earlier crash hasn't been dealt
+with" is also a valid position to take, but then it shouldn't even
+overwrite my own crash report from an earlier run.
+
+So I am inclined to say that this should be changed (either
+consistently overwrite using fopen_harder(), or consistently fail
+when my earlier crash report is already there).  I however do not
+think that change belongs to this topic.
+
+> - mailinfo() in mailinfo.c, because the output is clearly not intended to
+>   be shared between the users of the current repository
+
+This is more because "not intended to be run multiple simultaneously
+using the same filename" plus "the callers clean up after they are
+done" (similar to what you wrote for "git am"), I think.
+
+> - git rerere, when writing resolved files, because the files in question
+>   were already written with the correct permissions
+
+This again is more because the result goes to the working tree, not
+$GIT_DIR.
