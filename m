@@ -1,82 +1,67 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [BUG?] worktree setup broken in subdirs with git alias
-Date: Thu, 7 Jan 2016 08:15:51 +0100
-Message-ID: <568E10A7.5050606@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Picking up old threads/patches
+Date: Thu, 7 Jan 2016 03:03:50 -0500
+Message-ID: <20160107080350.GA15453@sigill.intra.peff.net>
+References: <1718717.tR0GOgDc0N@thunderbird>
+ <2143067.ZpDECoHz1r@thunderbird>
+ <3039057.pHpnyVLACL@thunderbird>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 07 08:23:06 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Stephen & Linda Smith <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jan 07 09:04:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aH4uU-0004eK-6z
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 08:23:02 +0100
+	id 1aH5Y7-0000WF-Jj
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 09:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbcAGHW4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2016 02:22:56 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46642 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750768AbcAGHWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 02:22:55 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jan 2016 02:22:55 EST
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 08F4B2099E
-	for <git@vger.kernel.org>; Thu,  7 Jan 2016 02:15:53 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 07 Jan 2016 02:15:53 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=BB4
-	S9H7C9mAQHFPegPKRM6bKu9c=; b=i1IGDyolwPINu+2eToiWk16RDJ55XrqzvK2
-	C1rhOydEtfzo4tX4VvSd8jmJw4EN+SRVL91eoqZ/u/YY7EXum2+3XZsQHhN/9M1A
-	rkUmzLDbmw8PgW0cDmOOHzToHVAwMQeUwX90fOStUhUT/py//1fOc/OVR7OHH5FZ
-	Lse2ajtE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=BB4S9H7C9mAQHFPegPKRM6bKu9c=; b=dYM2O
-	pXsEMRQjHul8P9wqkI9aJcgdEPfkI1n0pJlzBoZXR8u02upQI6BwBBWlN9tqlMip
-	uHYmG/4vWm8mhkkz3lUr/D4JfNPrcQVPoIC7iM2inMduAq8BpUKoTWBcsuZFzanM
-	8eSMZHIV2nIzB/lxh9XP68FKVpRO9WYfOpma0o=
-X-Sasl-enc: jmh5Jpo46tOtV+cdwHAB68HrC9aGeoVs4FB5NMgfwKO/ 1452150952
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 9E2B5C016D5
-	for <git@vger.kernel.org>; Thu,  7 Jan 2016 02:15:52 -0500 (EST)
-X-Mozilla-News-Host: news://news.gmane.org:119
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+	id S1752662AbcAGID4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 03:03:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49772 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751905AbcAGIDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 03:03:55 -0500
+Received: (qmail 23700 invoked by uid 102); 7 Jan 2016 08:03:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jan 2016 03:03:55 -0500
+Received: (qmail 1960 invoked by uid 107); 7 Jan 2016 08:04:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 Jan 2016 03:04:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Jan 2016 03:03:50 -0500
+Content-Disposition: inline
+In-Reply-To: <3039057.pHpnyVLACL@thunderbird>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283470>
 
-Hi there,
+On Wed, Jan 06, 2016 at 08:59:52PM -0700, Stephen & Linda Smith wrote:
 
-sorry I can't dig deeper now, but the worktree code from next seems to
-get confused now as soon as you cd to a subdir of a worktree (other tha=
-n
-the main worktree) and use an alias:
+> > If Will isn't interested in finishing these two patches I will pick them 
+> > up [ ($gmane/271213), ($gmane/272180) ]
+> > 
+> > After that I will check look at some of the others for which you've 
+> > asked for help.
+>  
+> I started work on both of these rerolls this evening.   Since I do not have the 
+> original emails I don't have the Message ID's which  would allow me 
+> to add to the threads with the git send-email command.   Do either of you have the 
+> message ID's?
 
-git help ss
-`git ss' is aliased to `status -s -b'
-[mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git status -s -b
-## exam
-[mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git ss
-fatal: internal error: work tree has already been set
-Current worktree: /home/mjg/Teaching/LUK
-New worktree: /home/mjg/Teaching/LUK/Biomath-WS15
+If it's an ancient thread, it's not a big deal to just start a new
+thread (especially if you reference the old one in the text so people
+can dig it up if they really care).
 
-This is inside the subdir "Biomath-WS15" of the worktree residing in
-".../LUK".
+But for reference, you can add `/raw` to the end of a gmane article URL
+to get all the headers. E.g.:
 
-It wasn't like that last year ;)
+  $ gmane=http://article.gmane.org/gmane.comp.version-control.git
+  $ curl -s $gmane/271213/raw | grep -i ^message-id:
+  Message-ID: <CAAKF_ub5c+2vVmG161O6gnUUeEcNfDUMU=mtn+k0T8bC-9ZHPw@mail.gmail.com>
 
-Something about setting GIT_DIR and the like in the environment must
-have changed (for aliases), badly interacting with the worktree code.
-
-Michael
+-Peff
