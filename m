@@ -1,143 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
-Date: Thu, 07 Jan 2016 11:37:11 -0800
-Message-ID: <xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com>
-References: <568BC8D1.3080201@gmail.com>
-	<20160105152436.GA1205@sigill.intra.peff.net>
+Subject: Re: [PATCH] docs: clarify that passing --depth to git-clone implies --single-branch
+Date: Thu, 07 Jan 2016 11:45:04 -0800
+Message-ID: <xmqqmvsh41j3.fsf@gitster.mtv.corp.google.com>
+References: <n6j1cs$p4$1@ger.gmane.org>
+	<CACsJy8D5DeDOCd1tn876s3+2fBR6e-X1UANkAeiw8tzAeDcDng@mail.gmail.com>
+	<568D10D6.7020707@gmail.com> <568D1167.30700@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jacek Wielemborek <d33tah@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 07 20:37:24 2016
+Cc: git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 20:45:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHGN9-0005cR-05
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 20:37:23 +0100
+	id 1aHGUl-0004iW-B1
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 20:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752248AbcAGThR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 14:37:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63667 "EHLO
+	id S1753341AbcAGTpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 14:45:09 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52912 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752120AbcAGThP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 14:37:15 -0500
+	with ESMTP id S1753127AbcAGTpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 14:45:06 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 059863833E;
-	Thu,  7 Jan 2016 14:37:13 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D6DA23859B;
+	Thu,  7 Jan 2016 14:45:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UiTjT3r643T+HxPXgZPxG/gqD8Y=; b=NXcNgJ
-	QhueMiEd6iE6n18qFMuRD8Ix6gVsp5uNsqKrL10doi4YEiQ41Dj2RjyTjexR4wJN
-	BVPaWl5PRuJ3SMgPyJkj+N2EThR7z3dNxwiODctgdn6cONaO3gbKFxFRRp+ozB/0
-	HaLmkfU2MKjV/EMguAZgndN0AfA/KUvv9XnRw=
+	:content-type; s=sasl; bh=wwbliPSolfzU1lc0S5LHQKqJ05g=; b=bNJWy2
+	iqrjNq5w4D4IiXs/qBHCkojn9NUB8UUtMSduLDY6MRtJoUgNeqe9sHyLAwEaHMrA
+	kqVOZxXcUfPkMo05u3TFdP9TCSosvJjClpInkwW4NqrFIoi4RWbuRU7UXA0rqgW+
+	seAgB0AnM9ttU4Kr9IjW1+1Eilw0mfUEwSCWA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jq/1cOe4olg758Iu0tAOvsocpuVE5G8C
-	nV/kHflE0zLPcWg+QjszG7d1CMSXdN2Msbb3UX6Jyt7y/NkDNnUro+KLcopveFFD
-	1+XgdNjyY0CrpHMeMU+OhbBo8VUlGqq9/M6wGnevI3OieGFpSxbrfCKlOMSO/xd2
-	/2Yb7p6PV4k=
+	:content-type; q=dns; s=sasl; b=mA+K86T5ND8JnoTptr1uiX0AKyXgIsHI
+	Ocg+5dQf5Nkf+LnfQsDmx2QlLoGxevqb+d6K+nj/RyhCdkTKBLZWe550MI5nwgLt
+	NcnpaJk2ekFt03D9jk91lsjBa3ldEPOwv1t8CfEx1EpvJWKsPXkBRKFJ2fGhYRN1
+	2Mvn81wEDZ8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE8693833D;
-	Thu,  7 Jan 2016 14:37:12 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CEA0F3859A;
+	Thu,  7 Jan 2016 14:45:05 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5F68D3833C;
-	Thu,  7 Jan 2016 14:37:12 -0500 (EST)
-In-Reply-To: <20160105152436.GA1205@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 5 Jan 2016 10:24:36 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0F23D38594;
+	Thu,  7 Jan 2016 14:45:04 -0500 (EST)
+In-Reply-To: <568D1167.30700@gmail.com> (Sebastian Schuberth's message of
+	"Wed, 6 Jan 2016 14:06:47 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0C6F8CA8-B576-11E5-A0CC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 262B0FAE-B577-11E5-94F0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283501>
 
-Jeff King <peff@peff.net> writes:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> [1] I briefly ran your case under valgrind and got:
+> It is confusing to document how --depth behaves as part of the
+> --single-branch docs. Better move that part to the --depth docs, saying
+> that it implies --single-branch by default.
 >
->     ==5409== Invalid read of size 4
->     ==5409==    at 0x55F92A: nth_packed_object_offset (sha1_file.c:2464)
->     ==5409==    by 0x55FBD4: find_pack_entry_one (sha1_file.c:2523)
->     ==5409==    by 0x55FCF7: fill_pack_entry (sha1_file.c:2566)
->     ==5409==    by 0x55FDE2: find_pack_entry (sha1_file.c:2604)
->     ==5409==    by 0x5615BA: has_sha1_file_with_flags (sha1_file.c:3212)
->     ==5409==    by 0x50FC38: has_sha1_file (cache.h:1049)
->     ==5409==    by 0x51043B: parse_object (object.c:259)
->     ==5409==    by 0x546BF9: get_reference (revision.c:254)
->     ==5409==    by 0x54CA15: setup_revisions (revision.c:2342)
->     ==5409==    by 0x4531DA: cmd_log_init_finish (log.c:156)
->     ==5409==    by 0x453465: cmd_log_init (log.c:211)
->     ==5409==    by 0x4547EB: cmd_log (log.c:672)
->     ==5409==  Address 0x840244bc is not stack'd, malloc'd or (recently) free'd
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+
+Yeah, the new organization is much easier and intuitive to follow.
+
+Thanks.
+
+
+>  Documentation/git-clone.txt | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
 >
->     So I'd guess it's not the pack itself, but rather the .idx which is
->     full of nonsense values. And that's always generated from scratch
->     locally.
-
-After I seeing your "it's not the pack itself but rather the .idx"
-without looking at (rather, conciously avoiding to look at) the
-valgrind trace, I checked the codepath that starts from
-read_packed_sha1().
-
-When we map in the .idx file, we do minimum sanity checks to make
-sure that .idx file itself has sorted fan-out.  We do not check if
-the object names are sorted, so a bogus .idx could tell us that an
-object does not exist when it exists in the matching .pack, but that
-is harmless.  Also an unsorted object names will not make our binary
-search run in circles while looking things up.  We do not check if
-the offset of individual objects are within the corresponding .pack
-file, either.
-
-And I arrived at nth_packed_object_offset(), so I think I am hitting
-the right nail.  There are a few values we read from the .idx file
-here that we would want to validate for sanity.
-
-
-    off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
-    {
-            const unsigned char *index = p->index_data;
-            index += 4 * 256;
-            if (p->index_version == 1) {
-                    return ntohl(*((uint32_t *)(index + 24 * n)));
-
-This can return an offset that goes beyond the end of the packfile,
-possibly leading to a read access of unmapped region.
-
-            } else {
-                    uint32_t off;
-                    index += 8 + p->num_objects * (20 + 4);
-                    off = ntohl(*((uint32_t *)(index + 4 * n)));
-                    if (!(off & 0x80000000))
-                            return off;
-
-This also can return an offset that goes beyond the end of the
-packfile.
-
-Otherwise 'off' at this point gives an offset into the .idx file
-itself, that is the location of the 8-byte offset into the packfile.
-
-                    index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
-
-And this computation can take us beyond the end of the .idx
-
-                    return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
-                                       ntohl(*((uint32_t *)(index + 4)));
-
-Or the value we read with this can take us beyond the end of the
-packfile.
-
-            }
-    }
-
-As long as the returned value is within the valid region of
-packfile, packed_object_info() and unpack_entry() should be
-responsible for ensuring that we do not read past the end of the
-data.  They should both begin by calling use_pack(), which already
-has the "offset beyond end of packfile" check, so I think that they
-would successfully catch a malicious .idx file that has handcrafted
-bad offsets if we fixed nth_packed_object_offset().
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index 6bf000d..943de8b 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -190,15 +190,14 @@ objects from the source repository into a pack in the cloned repository.
+>  
+>  --depth <depth>::
+>  	Create a 'shallow' clone with a history truncated to the
+> -	specified number of revisions.
+> +	specified number of revisions. Implies `--single-branch` unless
+> +	`--no-single-branch` is given to fetch the histories near the
+> +	tips of all branches.
+>  
+>  --[no-]single-branch::
+>  	Clone only the history leading to the tip of a single branch,
+>  	either specified by the `--branch` option or the primary
+> -	branch remote's `HEAD` points at. When creating a shallow
+> -	clone with the `--depth` option, this is the default, unless
+> -	`--no-single-branch` is given to fetch the histories near the
+> -	tips of all branches.
+> +	branch remote's `HEAD` points at.
+>  	Further fetches into the resulting repository will only update the
+>  	remote-tracking branch for the branch this option was used for the
+>  	initial cloning.  If the HEAD at the remote did not point at any
