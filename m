@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] t/t7001-mv.sh: use the $( ... ) construct for command substitution
-Date: Thu,  7 Jan 2016 14:51:47 +0100
-Message-ID: <1452174710-28188-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] t/t6032-merge-large-rename.sh: use the $( ... ) construct for command substitution
+Date: Thu,  7 Jan 2016 14:51:45 +0100
+Message-ID: <1452174710-28188-6-git-send-email-gitter.spiros@gmail.com>
 References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:18 2016
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAz5-00021A-Px
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:12 +0100
+	id 1aHAzF-00024f-VR
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752719AbcAGNwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:52:04 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:33929 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752293AbcAGNwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 08:52:01 -0500
-Received: by mail-pa0-f50.google.com with SMTP id uo6so241078382pac.1
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:01 -0800 (PST)
+	id S1752738AbcAGNwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 08:52:16 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35329 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693AbcAGNwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 08:52:00 -0500
+Received: by mail-pa0-f53.google.com with SMTP id qh10so9247932pab.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Mq+0ge2z3TqsRk5I9yDkJ3rifJXWgaGbxOA7ZfzxZrE=;
-        b=Dwkh/j4vL/v5WmDTjDyxb+OxcWG4xoFwEvc00fF0K8wbjLVVSZDAHB/+accavbSR1S
-         VlqT1v8krD41e4dE+1ZXGeXOXt6oZqksI8bxr06h6ewUqL1EecXwztVAa1AdQUMh57VD
-         4efCAAHM/PqgjzUs2ZR8EODvhZrMiGmqVLof+pLT9GOEHE8zmiEJ/bQ/5pkeKn6TY40/
-         IqedQO5XFvluHIkx2eLKCt2/wCdTUzhNcrWxe9N6cVAVBq90veZgjwAsRDTQ7Srvw7R+
-         gSBysTFxrPSbxvFrue5x8KJOcs4IliIqs2bBiXV5XXkM6WvD7sz3OKVyVT+73vmJz62d
-         6Bmw==
-X-Received: by 10.66.242.17 with SMTP id wm17mr118294876pac.155.1452174721468;
-        Thu, 07 Jan 2016 05:52:01 -0800 (PST)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.52.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=PjUntUhCtzMxilxF7Vanq0/DvuzS2EGmafjPLNFuHtg=;
+        b=l1cTwgqeIhH1WvhW9bAeD5m8Rxi+fZO84rTMubVztOTQ9GlA+I9K0UkLcJgPQeDiUo
+         cPk+W1cRLw66KYpKf0mZHvjFkF+fPaZSYoPD4hQw01SlA+bokS25RwnLfK5F0VSrYNRu
+         U34TS2KN3ObkeqqFdRZBZHK46zbuNIyb86GtGjamvWLGQQE9qJN9A2Rb0YJTGSArp92X
+         YhHsQoWwpdT9C4olJ6COOnM0kS1VhPAiP01L6eAatS2+RqM7M81LRevUaU1ZIwG7SrrZ
+         Iwb/QtvAEAmowR2R20Fgsd7oEdtFy2WQOU74of8JDXCXK8mwUHZo6Ye7qiVe/lg4yCtG
+         Qa6A==
+X-Received: by 10.66.142.232 with SMTP id rz8mr151665928pab.74.1452174720002;
         Thu, 07 Jan 2016 05:52:00 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 07 Jan 2016 05:51:59 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283486>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,26 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7001-mv.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t6032-merge-large-rename.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 7b56081..51dd2b4 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -156,11 +156,11 @@ test_expect_success "Michael Cassar's test case" '
- 	echo b > partA/outline.txt &&
- 	echo c > papers/unsorted/_another &&
- 	git add papers partA &&
--	T1=`git write-tree` &&
-+	T1=$(git write-tree) &&
+diff --git a/t/t6032-merge-large-rename.sh b/t/t6032-merge-large-rename.sh
+index 0f79268..8077738 100755
+--- a/t/t6032-merge-large-rename.sh
++++ b/t/t6032-merge-large-rename.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup (initial)' '
  
- 	git mv papers/unsorted/Thesis.pdf papers/all-papers/moo-blah.pdf &&
- 
--	T=`git write-tree` &&
-+	T=$(git write-tree) &&
- 	git ls-tree -r $T | verbose grep partA/outline.txt
- '
- 
+ make_text() {
+ 	echo $1: $2
+-	for i in `count 20`; do
++	for i in $(count 20); do
+ 		echo $1: $i
+ 	done
+ 	echo $1: $3
 -- 
 2.3.3.GIT
