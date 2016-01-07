@@ -1,67 +1,115 @@
-From: Stephen & Linda Smith <ischis2@cox.net>
-Subject: Re: Picking up old threads/patches
-Date: Thu, 07 Jan 2016 06:29:55 -0700
-Message-ID: <2745760.1oOIncE5MG@thunderbird>
-References: <1718717.tR0GOgDc0N@thunderbird> <3039057.pHpnyVLACL@thunderbird>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:29:33 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 02/10] t/t6001-rev-list-graft.sh: use the $( ... ) construct for command substitution
+Date: Thu,  7 Jan 2016 14:51:42 +0100
+Message-ID: <1452174710-28188-3-git-send-email-gitter.spiros@gmail.com>
+References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAd8-0000yX-IN
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:29:30 +0100
+	id 1aHAz1-0001sB-0o
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbcAGN3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:29:25 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:33640 "EHLO
-	fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbcAGN3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 08:29:23 -0500
-Received: from fed1rmimpo109 ([68.230.241.158]) by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160107132922.FMOU11111.fed1rmfepo103.cox.net@fed1rmimpo109>
-          for <git@vger.kernel.org>; Thu, 7 Jan 2016 08:29:22 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo109 with cox
-	id 31VM1s01E2tqoqC011VMg4; Thu, 07 Jan 2016 08:29:22 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020206.568E6832.002D,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=LaPiHEji c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
- a=TSbVqHtbAAAA:8 a=pGLkceISAAAA:8 a=kJYFBE522lDANFFAsdcA:9 a=CjuIK1q_8ugA:10
- a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id D98FE13F6F3;
-	Thu,  7 Jan 2016 06:29:55 -0700 (MST)
-User-Agent: KMail/5.0.2 (Linux/4.3.0-5-generic; KDE/5.15.0; x86_64; ; )
+	id S1752711AbcAGNwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 08:52:00 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36564 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752293AbcAGNv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 08:51:58 -0500
+Received: by mail-pa0-f54.google.com with SMTP id yy13so166900558pab.3
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:51:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7zF+i0WS9y1KF1yLJ/dRqe65wRcdGEx2hbf8GeI6JUI=;
+        b=WTe/ar4z1MplyK1gqdaBOxM1Hr2P0Gfm627PYNnlMKKJxkne41/PiyP1iQdiytqSoX
+         Gp7bo19jI4eXn7PJcv1NE+wgad/SOxxaM1atd3t5LbrjLEwf91/zlkvppwgcJkI4tIVa
+         PPVJkrvCdLZzpvJ4+baEeh5uPJpEwHowbIGg/Q/LqfLV+GQZNrq34OKQ8ULB9QHWir9t
+         aWI6wJVDzv0SvPzKBL7nxxhi5F2XSTVb/99ho6rOjJNuph1IZi8KzJABptNSfE0MpLih
+         10cQEPZCX2a1xCRS8r5PUC5KD5auqtG3tsUJtvGztkySpGiH5OnsfiEVAlhMKC3Ddor5
+         YkJA==
+X-Received: by 10.66.101.3 with SMTP id fc3mr110154558pab.2.1452174717661;
+        Thu, 07 Jan 2016 05:51:57 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 07 Jan 2016 05:51:57 -0800 (PST)
+X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283482>
 
-On Thursday, January 07, 2016 03:03:50 AM Jeff King wrote:
-> If it's an ancient thread, it's not a big deal to just start a new
-> thread (especially if you reference the old one in the text so people
-> can dig it up if they really care).
-> 
-> But for reference, you can add `/raw` to the end of a gmane article URL
-> to get all the headers. E.g.:
-> 
->   $ gmane=http://article.gmane.org/gmane.comp.version-control.git
->   $ curl -s $gmane/271213/raw | grep -i ^message-id:
->   Message-ID: <CAAKF_ub5c+2vVmG161O6gnUUeEcNfDUMU=mtn+k0T8bC-9ZHPw@mail.gmail.com>
-> 
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-Thank you.
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
+
+The patch was generated by:
+
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
+
+and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t6001-rev-list-graft.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
+index 8efcd13..05ddc69 100755
+--- a/t/t6001-rev-list-graft.sh
++++ b/t/t6001-rev-list-graft.sh
+@@ -10,15 +10,15 @@ test_expect_success setup '
+ 	echo >subdir/fileB fileB &&
+ 	git add fileA subdir/fileB &&
+ 	git commit -a -m "Initial in one history." &&
+-	A0=`git rev-parse --verify HEAD` &&
++	A0=$(git rev-parse --verify HEAD) &&
+ 
+ 	echo >fileA fileA modified &&
+ 	git commit -a -m "Second in one history." &&
+-	A1=`git rev-parse --verify HEAD` &&
++	A1=$(git rev-parse --verify HEAD) &&
+ 
+ 	echo >subdir/fileB fileB modified &&
+ 	git commit -a -m "Third in one history." &&
+-	A2=`git rev-parse --verify HEAD` &&
++	A2=$(git rev-parse --verify HEAD) &&
+ 
+ 	rm -f .git/refs/heads/master .git/index &&
+ 
+@@ -26,15 +26,15 @@ test_expect_success setup '
+ 	echo >subdir/fileB fileB again &&
+ 	git add fileA subdir/fileB &&
+ 	git commit -a -m "Initial in alternate history." &&
+-	B0=`git rev-parse --verify HEAD` &&
++	B0=$(git rev-parse --verify HEAD) &&
+ 
+ 	echo >fileA fileA modified in alternate history &&
+ 	git commit -a -m "Second in alternate history." &&
+-	B1=`git rev-parse --verify HEAD` &&
++	B1=$(git rev-parse --verify HEAD) &&
+ 
+ 	echo >subdir/fileB fileB modified in alternate history &&
+ 	git commit -a -m "Third in alternate history." &&
+-	B2=`git rev-parse --verify HEAD` &&
++	B2=$(git rev-parse --verify HEAD) &&
+ 	: done
+ '
+ 
+-- 
+2.3.3.GIT
