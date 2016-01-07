@@ -1,115 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
-Date: Thu, 07 Jan 2016 14:54:50 -0800
-Message-ID: <xmqqtwmp2e6d.fsf@gitster.mtv.corp.google.com>
-References: <568BC8D1.3080201@gmail.com>
-	<20160105152436.GA1205@sigill.intra.peff.net>
-	<xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: how to fetch entire heirarchy of refs from a remote?
+Date: Thu, 7 Jan 2016 15:06:00 -0800
+Message-ID: <CA+P7+xqexsOma5c9NfS5ma333UJV=5i1a4GhnwZuU75eaxRd=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacek Wielemborek <d33tah@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 07 23:54:59 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 08 00:06:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHJSL-0006g9-GF
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 23:54:57 +0100
+	id 1aHJdR-0000kS-4q
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 00:06:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753377AbcAGWyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 17:54:53 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50890 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752230AbcAGWyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 17:54:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DB5563A0FE;
-	Thu,  7 Jan 2016 17:54:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0VYSbfnjmq2M4iUPgXo3eHNwQ4k=; b=FhUXUL
-	TWzXbusl3HWxY8cUPjXYGsWh73oKg6ddpeblgRPGZH37b696p8LnKQ/LQzw/RsgX
-	T1HYZSeZb0B6mJY6ibWM9Vdn3kjkUUWAR5LAmSq/4LzdRfbPSKofBdFwYYRicgJx
-	XtdS8vfeGvOHA596hDcWYeRNJbTRtr+6bYUPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gutEmGE5i68d4bb32TwGnOKXTU+EJeKQ
-	kqip3Nfth6yZDcYIDC2HcTH3VxHhotOj+f8OZgPP7P8l+jPaGQhMiemGM+8SRPVs
-	qskulD50zkqLUifLJe3/Nb2TBAq8IytvasPEsfuFFNxwi3Oc1cSlJ+hsirqzLHaa
-	PE8i3NucebE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D27C03A0FD;
-	Thu,  7 Jan 2016 17:54:51 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 55A293A0FC;
-	Thu,  7 Jan 2016 17:54:51 -0500 (EST)
-In-Reply-To: <xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 07 Jan 2016 11:37:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A8ECC8FA-B591-11E5-95F1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753851AbcAGXGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 18:06:21 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:36988 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753849AbcAGXGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 18:06:20 -0500
+Received: by mail-ig0-f173.google.com with SMTP id h5so24808722igh.0
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 15:06:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=YWkT2er+HhIvgjGk4bc+04fpmXVcY8Hx4md0p7EkQD0=;
+        b=02Hy536GTAnlAJR8wCk77p//+BuZSfDxwdEtLg0juPByqLLtylOxrri5Zo/EJer7fE
+         mxvvJXalbARPB4NR1t0T4ufEbRj+4XT4ndqI0As8XYCUhbL6kWqOsoy54ja75LMurolY
+         YTwbOfIN1TwOLmza7nR2x75zdMGmUltfPEAw4oHtC+dl171svjEIUguiV1YSTYlTyplo
+         ddqja0CMWo3EQXYAoBjMcKIUVfHSjJE3a4+4L4+WUQwWlc7AKw9tBXcfhFWC8UelDDy3
+         LWtnna4vUjjpTEwqIMw3AUBIR7fCkKD+fJrsrnmmRCXxWKYQIU6ooNAdf7JqSDDbrdB3
+         V8BA==
+X-Received: by 10.50.36.74 with SMTP id o10mr17224942igj.73.1452207980217;
+ Thu, 07 Jan 2016 15:06:20 -0800 (PST)
+Received: by 10.107.63.130 with HTTP; Thu, 7 Jan 2016 15:06:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283514>
 
-When we map in the .idx file, we do only minimum sanity checks to
-make sure that the .idx file itself has sorted fan-out.  We do not
-check if the object names are sorted, so a bogus .idx could tell us
-that an object does not exist when it exists in the matching .pack,
-but that is harmless.  Also an unsorted object names will not make
-our binary search run in circles while looking things up.
+Hi,
 
-We do not check if the offset of individual objects are within the
-corresponding .pack file, either, and nth_packed_object_offset()
-does return the data read from .idx file that is not checked for
-sanity.  use_pack(), which is the helper used by the callers of
-nth_packed_object_offset() that finds the offset in the packfile for
-each object, avoids allowing a read access to mapped pack data
-beyond the end of it, so it is OK to return bogus value that was
-read from the .idx file from this function, but there is one
-computation the function itself does using a possibly bogus value
-read from the disk: to find out where in the secondary offset table
-in the .idx file the offset in the packfile is stored.
+Say I have a repository which has a series of refs in a heirarchy such
+as a gerrit repository with changes specified something like:
 
----
+refs/changes/96/55596/3
+refs/changes/96/55596/4
+refs/changes/96/57496/1
+refs/changes/96/57496/2
+refs/changes/96/69796/1
+refs/changes/96/69796/2
+refs/changes/96/71696/1
+refs/changes/96/71696/2
+refs/changes/97/40197/1
+refs/changes/97/40197/2
+refs/changes/97/40197/3
+refs/changes/97/40197/4
+...
+refs/changes/97/71697/2
+refs/changes/97/71697/3
+refs/changes/98/47298/1
+refs/changes/98/47298/2
+refs/changes/98/47298/3
+refs/changes/98/57298/1
+refs/changes/98/57298/2
+refs/changes/98/73598/1
+refs/changes/99/44099/1
+refs/changes/99/69299/1
 
- This is not even compile tested; I just wanted to prevent people
- from adding two unnecessary checks to this function following my
- analysis in the previous message.  I think returning bogus value
- stored in a crafted .idx file from this function is OK, as the
- offset will be first used by use_pack() and the sanity of the
- offset, relative to the packfile size, is checked there, and an
- offset that points to a random point in the packfile will be caught
- by the pack reading code, either by unpack_compressed_entry() or by
- patch_delta(), so that is also safe.
 
- We do need to check the unprotected access here.  Nobody else in
- the current codepath protects us from this access attempting to
- read an unmapped memory and segfault.
+Is it possible to specify a refspec such that all of these will be
+fetched? I tried doing
 
- sha1_file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
++refs/changes/*:refs/changes/*
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 73ccd49..8aca1f6 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2458,6 +2458,13 @@ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
- 		off = ntohl(*((uint32_t *)(index + 4 * n)));
- 		if (!(off & 0x80000000))
- 			return off;
-+
-+		/* 8-byte offset table */
-+		if ((p->index_size - (8 + 256 * 4 + 28 * p->num_objects + 40))
-+		    <
-+		    (off & 0x7fffffff) * 8)
-+			die("offset beyond end of .idx file");
-+
- 		index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
- 		return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
- 				   ntohl(*((uint32_t *)(index + 4)));
+but this doesn't work since the * can only be one portion of a refspec
+
+The problem is that I would like to be able to pull all of these
+changes in a git mirror so that I can reduce network traffic I use to
+the gerrit server, by updating my local copy once and using the local
+copy on the other tasks I need. This is necessary since the gerrit
+server is (a) far away and (b) closes my connection when I have too
+many requests.
+
+But, git clone --mirror and git fetch have failed to pull every ref,
+and only end up with heads and tags.
+
+Regards,
+Jake
