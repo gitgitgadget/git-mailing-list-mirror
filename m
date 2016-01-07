@@ -1,92 +1,63 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new repos
-Date: Wed, 6 Jan 2016 19:31:14 -0800
-Message-ID: <CAJo=hJt0U_XxYUmiGpZK+ZraA+CbcdgNMU-rnQfDS83Cve29ig@mail.gmail.com>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
- <1449102921-7707-14-git-send-email-dturner@twopensource.com>
- <567AA2DF.1020408@alum.mit.edu> <CACsJy8DQMBfSh1re0jMk1W=d9gYa2=6jqO+Q6bqam5WBY3hfmg@mail.gmail.com>
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Picking up old threads/patches
+Date: Wed, 06 Jan 2016 20:56:28 -0700
+Message-ID: <2143067.ZpDECoHz1r@thunderbird>
+References: <1718717.tR0GOgDc0N@thunderbird>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 04:31:40 2016
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org, ischis2@cox.net
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 04:56:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aH1IZ-0006dc-Lc
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 04:31:40 +0100
+	id 1aH1gD-00049m-C6
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 04:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275AbcAGDbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Jan 2016 22:31:36 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:32772 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751616AbcAGDbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jan 2016 22:31:35 -0500
-Received: by mail-vk0-f42.google.com with SMTP id i129so29291766vkb.0
-        for <git@vger.kernel.org>; Wed, 06 Jan 2016 19:31:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lC+cK5dILDJh6L6dshs7FcuZO9/THHoq+n1VCMkwPwA=;
-        b=NlBuEclRb09Ktxn7X7rOO1IUSKIC/pIkU3KrdZUVHQ2rT5ZEoYM2T6kdj0HzTwBQZy
-         G0n34Rfl13P+7iTXqO0UQbkw1L7QzvKHfzxuP9NNzVsmXxY+a5X+vE/racAJxXhqmzwU
-         TOsA54IParLACg3ni+Euw86VNtqr+3OOco8SY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=lC+cK5dILDJh6L6dshs7FcuZO9/THHoq+n1VCMkwPwA=;
-        b=gnQNkk32dBTrbuF2UmDQEpH/+tozvlY7L2cqRngRBQPdJmTZrzD9cc3a6bRZPrVh0F
-         4kGYvMr0iVRHOvKMdlHtwXCbRLqItSREUpMKKdMYRLeflOflDt1mwI7zEW7to6FSwmfy
-         TZ0g/2kLSFR2G5YH1k/7U9OISZITBVGDA+ewJCRFueJ8Opw95+/odCU82ByLW8EQfIBK
-         uiUiPLieGHHspZolJATKp3LB7UVUux8ZNvg/OE59rIvfSJdJDYM3w25t3Ia0bPPpNqTX
-         h/G9bfZlY1cLKhnt2BQeDqtzvniPbX1m0+6cfjFn6htz8UTIG3pT8vxD0OLhJcD+RDOT
-         Nd+A==
-X-Gm-Message-State: ALoCoQlA7I2asyFv/aRpg2lUj4kWmW0YSj5PkGsvVGF2kZFYNXZhyM/E4B5IBIfbt20ocYy9uU5MkUUd+cO/xdCxmGrFU3jbxw==
-X-Received: by 10.31.149.3 with SMTP id x3mr6145422vkd.46.1452137493847; Wed,
- 06 Jan 2016 19:31:33 -0800 (PST)
-Received: by 10.103.97.65 with HTTP; Wed, 6 Jan 2016 19:31:14 -0800 (PST)
-In-Reply-To: <CACsJy8DQMBfSh1re0jMk1W=d9gYa2=6jqO+Q6bqam5WBY3hfmg@mail.gmail.com>
+	id S1752699AbcAGD4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Jan 2016 22:56:01 -0500
+Received: from fed1rmfepo203.cox.net ([68.230.241.148]:46267 "EHLO
+	fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751910AbcAGDz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jan 2016 22:55:59 -0500
+Received: from fed1rmimpo109 ([68.230.241.158]) by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20160107035557.JRWN26406.fed1rmfepo203.cox.net@fed1rmimpo109>
+          for <git@vger.kernel.org>; Wed, 6 Jan 2016 22:55:57 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo109 with cox
+	id 2rvx1s0062tqoqC01rvxuf; Wed, 06 Jan 2016 22:55:57 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020204.568DE1CD.00C5,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=LaPiHEji c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
+ a=BPQls3JwoBarq2rtXqEA:9 a=CjuIK1q_8ugA:10 a=r8vSpy9NjcIA:10
+ a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id D0E0C13F6F3;
+	Wed,  6 Jan 2016 20:56:28 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.3.0-5-generic; KDE/5.15.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283467>
 
-On Wed, Jan 6, 2016 at 4:52 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Dec 23, 2015 at 8:34 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 12/03/2015 01:35 AM, David Turner wrote:
->>> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
->>> index 8174d27..9ea6753 100644
->>> --- a/Documentation/git-init.txt
->>> +++ b/Documentation/git-init.txt
->>> @@ -12,7 +12,7 @@ SYNOPSIS
->>>  'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
->>>         [--separate-git-dir <git dir>]
->>>         [--shared[=<permissions>]] [directory]
->>> -
->>> +       [--refs-backend-type=<name>]
->>
->> ISTM that "backend" (used here in this option name, and in the manpage)
->> is not such a meaningful term to users. Could we pick a less obscure
->> term? E.g., maybe "--ref-storage=<name>"?
->
-> From an (ex-)translator point of view, storage is also easier to
-> translate than the technical term "backend". I know we do not
-> translate option names, but whatever term you use usually show up in
-> some user-facing messages that need translating. But I do prefer
-> backend in source code, I think it expresses the idea much better than
-> storage.
+> If Will isn't interested in finishing these two patches I will pick them 
+> up [ ($gmane/271213), ($gmane/272180) ]
+> 
+> After that I will check look at some of the others for which you've 
+> asked for help.
 
-And JGit calls these things RefDatabases. Because Java.
-
-Also, its a table of ref -> SHA-1.
-And you put tables into databases.
-Or something.
-
-</two-cents>
+I started work on both of this this evening.   Since I do not have the 
+original emails I don't have the Message ID's which would make it 
+to use with the git send-email command.   Do either of you have the 
+message ID's?
