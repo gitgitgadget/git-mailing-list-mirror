@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/10] t/t7003-filter-branch.sh: use the $( ... ) construct for command substitution
-Date: Thu,  7 Jan 2016 14:51:48 +0100
-Message-ID: <1452174710-28188-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/10] t/t7004-tag.sh: use the $( ... ) construct for command substitution
+Date: Thu,  7 Jan 2016 14:51:49 +0100
+Message-ID: <1452174710-28188-10-git-send-email-gitter.spiros@gmail.com>
 References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:29 2016
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAzG-00024f-Hh
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:22 +0100
+	id 1aHAzH-00024f-41
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733AbcAGNwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:52:14 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33936 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752465AbcAGNwD (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752490AbcAGNwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 08:52:13 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33943 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752241AbcAGNwD (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 7 Jan 2016 08:52:03 -0500
-Received: by mail-pa0-f44.google.com with SMTP id uo6so241078618pac.1
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:02 -0800 (PST)
+Received: by mail-pa0-f45.google.com with SMTP id uo6so241078824pac.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bxW6TWskTve5lcWoAI9bpsbVPXjp3vNuEzAYKKjiUNc=;
-        b=DfrhD6G6PSjHgk8r116zfx0qtPzQkU9Ilecwo10f5SPwtgj///E1fqjipTXatlECex
-         vNjNAm9qY0G19JdG1C14Ht1fIZvJ6Z+5DPBTvzSKCf4n+BnX0ukALiwxRQtvNKV07U1t
-         7SXqsI/GqsuRlwy3J/9aPD3Lbrd3Vyu0dGZto58tUYNN5x+rAwrnHphmroJfl/2YeDGy
-         Umnf3xRIPj2x5rLVifwB0KRVWy22oydIw9R+iCzcTKZT4bcIpMhfUuUjCW/7hWbni6H+
-         oq/eUj/w38D7d/hE2SWxZmkAHXvmMIBEi2jXUt/bWw3fCU6xyqQ1oD/bbLqbUrLGGGXx
-         K9gQ==
-X-Received: by 10.66.220.170 with SMTP id px10mr4428906pac.145.1452174722247;
+        bh=9vQuLKgMMvQvJDWLjM4PiEjD5/zPjMfVRCI4POVDXL0=;
+        b=F7VGEyWJFN2ka+lqb6eycRHs6U+y4lQ21tsuT8SDXx1eNGldjMDFkjKBTU1RnVF4It
+         3gzAsTj8WEkVaOKhU+M7b0bhv1qb36/j/7M9UGLLlo2VbqkZzajxXpmNguwmKJz5wZbb
+         Rnk7ZDeU/KfqzJvs8Xkup8F2Vk6qP/r31IqaYkIJw/B8tJmxqGkgfJazAnS0v9maNB3a
+         a1dTzXrkRzSNGNzs9ySW2gvnfiJCd7aiFT2j0gOEy5IpZcsM/76C5x95C4jktI8nHy1s
+         TP2mW5BepR0bfF+p96Ry0UbK3cP95cRAbn+LnBwaiokIyGgVRcpvklHs8t2/vB3H9B+d
+         DbdQ==
+X-Received: by 10.66.65.203 with SMTP id z11mr151478873pas.152.1452174722986;
         Thu, 07 Jan 2016 05:52:02 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.52.01
+        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.52.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jan 2016 05:52:01 -0800 (PST)
+        Thu, 07 Jan 2016 05:52:02 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283489>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,39 +66,68 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7003-filter-branch.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t7004-tag.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 869e0bf..8868e6e 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -387,7 +387,7 @@ test_expect_success 'setup submodule' '
- 	git branch original HEAD
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 3dd2f51..2797f22 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -23,8 +23,8 @@ test_expect_success 'listing all tags in an empty tree should succeed' '
  '
  
--orig_head=`git show-ref --hash --head HEAD`
-+orig_head=$(git show-ref --hash --head HEAD)
- 
- test_expect_success 'rewrite submodule with another content' '
- 	git filter-branch --tree-filter "test -d submod && {
-@@ -396,7 +396,7 @@ test_expect_success 'rewrite submodule with another content' '
- 					 mkdir submod &&
- 					 : > submod/file
- 					 } || :" HEAD &&
--	test $orig_head != `git show-ref --hash --head HEAD`
-+	test $orig_head != $(git show-ref --hash --head HEAD)
+ test_expect_success 'listing all tags in an empty tree should output nothing' '
+-	test `git tag -l | wc -l` -eq 0 &&
+-	test `git tag | wc -l` -eq 0
++	test $(git tag -l | wc -l) -eq 0 &&
++	test $(git tag | wc -l) -eq 0
  '
  
- test_expect_success 'replace submodule revision' '
-@@ -405,7 +405,7 @@ test_expect_success 'replace submodule revision' '
- 	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
- 	     then git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 submod
- 	     fi" HEAD &&
--	test $orig_head != `git show-ref --hash --head HEAD`
-+	test $orig_head != $(git show-ref --hash --head HEAD)
+ test_expect_success 'looking for a tag in an empty tree should fail' \
+@@ -72,8 +72,8 @@ test_expect_success 'listing all tags if one exists should succeed' '
  '
  
- test_expect_success 'filter commit message without trailing newline' '
+ test_expect_success 'listing all tags if one exists should output that tag' '
+-	test `git tag -l` = mytag &&
+-	test `git tag` = mytag
++	test $(git tag -l) = mytag &&
++	test $(git tag) = mytag
+ '
+ 
+ # pattern matching:
+@@ -83,7 +83,7 @@ test_expect_success 'listing a tag using a matching pattern should succeed' \
+ 
+ test_expect_success \
+ 	'listing a tag using a matching pattern should output that tag' \
+-	'test `git tag -l mytag` = mytag'
++	'test $(git tag -l mytag) = mytag'
+ 
+ # todo: git tag -l now returns always zero, when fixed, change this test
+ test_expect_success \
+@@ -92,7 +92,7 @@ test_expect_success \
+ 
+ test_expect_success \
+ 	'listing tags using a non-matching pattern should output nothing' \
+-	'test `git tag -l xxx | wc -l` -eq 0'
++	'test $(git tag -l xxx | wc -l) -eq 0'
+ 
+ # special cases for creating tags:
+ 
+@@ -102,13 +102,13 @@ test_expect_success \
+ 
+ test_expect_success \
+ 	'trying to create a tag with a non-valid name should fail' '
+-	test `git tag -l | wc -l` -eq 1 &&
++	test $(git tag -l | wc -l) -eq 1 &&
+ 	test_must_fail git tag "" &&
+ 	test_must_fail git tag .othertag &&
+ 	test_must_fail git tag "other tag" &&
+ 	test_must_fail git tag "othertag^" &&
+ 	test_must_fail git tag "other~tag" &&
+-	test `git tag -l | wc -l` -eq 1
++	test $(git tag -l | wc -l) -eq 1
+ '
+ 
+ test_expect_success 'creating a tag using HEAD directly should succeed' '
 -- 
 2.3.3.GIT
