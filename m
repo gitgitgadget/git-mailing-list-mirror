@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/10] t/t6032-merge-large-rename.sh: use the $( ... ) construct for command substitution
-Date: Thu,  7 Jan 2016 14:51:45 +0100
-Message-ID: <1452174710-28188-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 03/10] t/t6002-rev-list-bisect.sh: use the $( ... ) construct for command substitution
+Date: Thu,  7 Jan 2016 14:51:43 +0100
+Message-ID: <1452174710-28188-4-git-send-email-gitter.spiros@gmail.com>
 References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:23 2016
+X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAzF-00024f-VR
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:22 +0100
+	id 1aHAzF-00024f-Cq
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbcAGNwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:52:16 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35329 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbcAGNwA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752697AbcAGNwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 7 Jan 2016 08:52:00 -0500
-Received: by mail-pa0-f53.google.com with SMTP id qh10so9247932pab.2
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:52:00 -0800 (PST)
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33903 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751500AbcAGNv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 08:51:58 -0500
+Received: by mail-pa0-f43.google.com with SMTP id uo6so241077490pac.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:51:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PjUntUhCtzMxilxF7Vanq0/DvuzS2EGmafjPLNFuHtg=;
-        b=l1cTwgqeIhH1WvhW9bAeD5m8Rxi+fZO84rTMubVztOTQ9GlA+I9K0UkLcJgPQeDiUo
-         cPk+W1cRLw66KYpKf0mZHvjFkF+fPaZSYoPD4hQw01SlA+bokS25RwnLfK5F0VSrYNRu
-         U34TS2KN3ObkeqqFdRZBZHK46zbuNIyb86GtGjamvWLGQQE9qJN9A2Rb0YJTGSArp92X
-         YhHsQoWwpdT9C4olJ6COOnM0kS1VhPAiP01L6eAatS2+RqM7M81LRevUaU1ZIwG7SrrZ
-         Iwb/QtvAEAmowR2R20Fgsd7oEdtFy2WQOU74of8JDXCXK8mwUHZo6Ye7qiVe/lg4yCtG
-         Qa6A==
-X-Received: by 10.66.142.232 with SMTP id rz8mr151665928pab.74.1452174720002;
-        Thu, 07 Jan 2016 05:52:00 -0800 (PST)
+        bh=nDKfx4Y0MaoX2YqetikQpeLHMnV1YOw+lNEceby3z0c=;
+        b=rLDy7cskp3U1s5IF6oufHLb+JIsqxcNbNY2loo2yEj43/IN09NAQ9xr4gciMlDcVRI
+         yXPvyfd/w8MDE6PIAA2OLU9sinufqWMidtytfw7gTdGhLa+ANjTeUIEhn8QtctEBLviD
+         ZNgq34szusHonnzyfsKSX4ZQys4eCzCNrZrJll2lXVJTqgGqQCB3eTRiwQK28SjCO3DW
+         S1skMMjokeYZBu0NWujEvIpprkyvdtEcEn5J+T3eHiN1i9mfsKy2AYn1DFKa/lSZBs7V
+         noMZCXdns5Zl4uR2JlOJbW7InpWllrlbHv59lm+dyFhH3cv4HnNWD9KlgdoBAP9BBdZB
+         Vw9Q==
+X-Received: by 10.67.14.74 with SMTP id fe10mr152939584pad.151.1452174718435;
+        Thu, 07 Jan 2016 05:51:58 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.59
+        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jan 2016 05:51:59 -0800 (PST)
+        Thu, 07 Jan 2016 05:51:57 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283487>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,25 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t6032-merge-large-rename.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6002-rev-list-bisect.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t6032-merge-large-rename.sh b/t/t6032-merge-large-rename.sh
-index 0f79268..8077738 100755
---- a/t/t6032-merge-large-rename.sh
-+++ b/t/t6032-merge-large-rename.sh
-@@ -20,7 +20,7 @@ test_expect_success 'setup (initial)' '
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index 43ad772..3bf2759 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -27,9 +27,9 @@ test_bisection_diff()
+ 	# Test if bisection size is close to half of list size within
+ 	# tolerance.
+ 	#
+-	_bisect_err=`expr $_list_size - $_bisection_size \* 2`
+-	test "$_bisect_err" -lt 0 && _bisect_err=`expr 0 - $_bisect_err`
+-	_bisect_err=`expr $_bisect_err / 2` ; # floor
++	_bisect_err=$(expr $_list_size - $_bisection_size \* 2)
++	test "$_bisect_err" -lt 0 && _bisect_err=$(expr 0 - $_bisect_err)
++	_bisect_err=$(expr $_bisect_err / 2) ; # floor
  
- make_text() {
- 	echo $1: $2
--	for i in `count 20`; do
-+	for i in $(count 20); do
- 		echo $1: $i
- 	done
- 	echo $1: $3
+ 	test_expect_success \
+ 	"bisection diff $_bisect_option $_head $* <= $_max_diff" \
 -- 
 2.3.3.GIT
