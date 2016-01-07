@@ -1,176 +1,143 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/15] ref-filter: use parsing functions
-Date: Thu, 07 Jan 2016 10:43:41 -0800
-Message-ID: <xmqqvb7544de.fsf@gitster.mtv.corp.google.com>
-References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
-	<CAPig+cRjXHmBnnmHbbibeV-gcvwMFQc7-5ce4s2OHu+wQwMy4Q@mail.gmail.com>
-	<CAOLa=ZSi0c61G8oXsCC0UfprDhf3hESaqKw8eGNRZJ7MTvNY4g@mail.gmail.com>
+Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
+Date: Thu, 07 Jan 2016 11:37:11 -0800
+Message-ID: <xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com>
+References: <568BC8D1.3080201@gmail.com>
+	<20160105152436.GA1205@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 07 19:43:54 2016
+Cc: Jacek Wielemborek <d33tah@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 07 20:37:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHFXI-0005T3-K9
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 19:43:48 +0100
+	id 1aHGN9-0005cR-05
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 20:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbcAGSno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 13:43:44 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50199 "EHLO
+	id S1752248AbcAGThR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 14:37:17 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63667 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752707AbcAGSnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 13:43:43 -0500
+	with ESMTP id S1752120AbcAGThP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 14:37:15 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAF8139644;
-	Thu,  7 Jan 2016 13:43:42 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 059863833E;
+	Thu,  7 Jan 2016 14:37:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rYUbbOIYUR53+vKFbzj/3VhpXc8=; b=smbG+t
-	KoZw1eC4fgv6fmPXBBxRps9gRBOkz0NapGaWHhdiEy0NqfoELb4zXyeG+XyXMvVI
-	r5bUbO6hL6f4AgQZnq9riSIoBd5yBVQfeT9/lobF6xWRuz3HuIMCYDOEM8RW7paG
-	UvttAJ+KL5V0yDYfYJyz6IxVkR1/I2QpPwgos=
+	:content-type; s=sasl; bh=UiTjT3r643T+HxPXgZPxG/gqD8Y=; b=NXcNgJ
+	QhueMiEd6iE6n18qFMuRD8Ix6gVsp5uNsqKrL10doi4YEiQ41Dj2RjyTjexR4wJN
+	BVPaWl5PRuJ3SMgPyJkj+N2EThR7z3dNxwiODctgdn6cONaO3gbKFxFRRp+ozB/0
+	HaLmkfU2MKjV/EMguAZgndN0AfA/KUvv9XnRw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rEwUG2KA/FJW0wX0gi5THYrW3U6rzOoL
-	ysM+38LHQQ2PXTN6kiH43Vi5XPOBntCrf6/2Ix8vQtxzG1lKD1xyVrnlrLsIDtTN
-	jwGGLOC0tSM0sDaMBnoUEl2xBElKDf8Lu9vHzKJVHD27RXSVSFPiqPEW5d+ISi1/
-	kuqDmhzgpio=
+	:content-type; q=dns; s=sasl; b=Jq/1cOe4olg758Iu0tAOvsocpuVE5G8C
+	nV/kHflE0zLPcWg+QjszG7d1CMSXdN2Msbb3UX6Jyt7y/NkDNnUro+KLcopveFFD
+	1+XgdNjyY0CrpHMeMU+OhbBo8VUlGqq9/M6wGnevI3OieGFpSxbrfCKlOMSO/xd2
+	/2Yb7p6PV4k=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D276539643;
-	Thu,  7 Jan 2016 13:43:42 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE8693833D;
+	Thu,  7 Jan 2016 14:37:12 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 558C839642;
-	Thu,  7 Jan 2016 13:43:42 -0500 (EST)
-In-Reply-To: <CAOLa=ZSi0c61G8oXsCC0UfprDhf3hESaqKw8eGNRZJ7MTvNY4g@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 7 Jan 2016 19:55:41 +0530")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5F68D3833C;
+	Thu,  7 Jan 2016 14:37:12 -0500 (EST)
+In-Reply-To: <20160105152436.GA1205@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 5 Jan 2016 10:24:36 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9319EE0E-B56E-11E5-9862-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0C6F8CA8-B576-11E5-A0CC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283500>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> I don't understand the difficulty. It should be easy to manually skip
->> the 'deref' for this one particular case:
->>
->>     const char *name = atom->name;
->>     if (*name == '*')
->>         name++;
->>
->> Which would allow this unnecessarily complicated code from patch 14/15:
->>
->>     if (match_atom_name(atom->name, "subject", &buf) && !buf) {
->>         ...
->>         return;
->>     } else if (match_atom_name(atom->name, "body", &buf) && !buf) {
->>         ...
->>         return;
->>     } if (!match_atom_name(atom->name, "contents", &buf))
->>         die("BUG: parsing non-'contents'");
->>
->> to be simplified to the more easily understood form suggested during
->> review[1] of v2:
->>
->>     if (!strcmp(name, "subject")) {
->>         ...
->>         return;
->>     } else if (!strcmp(name, "body")) {
->>         ...
->>         return;
->>     } else if (!match_atom_name(name,"contents", &buf))
->>         die("BUG: expected 'contents' or 'contents:'");
->>
->> You could also just use (!strcmp("body") || !strcmp("*body")) rather
->> than skipping "*" manually, but the repetition makes that a bit
->> noisier and uglier.
->>
->> [1]: http://article.gmane.org/gmane.comp.version-control.git/282645
+> [1] I briefly ran your case under valgrind and got:
 >
-> Definitely not a difficulty per se. Just that it seems like something
-> match_atom_name()
-> seems to be fit for. As the function name suggests that we're matching
-> the atom name
-> and the check for '!buf' indicates that no options are to be included
-> for that particular atom.
+>     ==5409== Invalid read of size 4
+>     ==5409==    at 0x55F92A: nth_packed_object_offset (sha1_file.c:2464)
+>     ==5409==    by 0x55FBD4: find_pack_entry_one (sha1_file.c:2523)
+>     ==5409==    by 0x55FCF7: fill_pack_entry (sha1_file.c:2566)
+>     ==5409==    by 0x55FDE2: find_pack_entry (sha1_file.c:2604)
+>     ==5409==    by 0x5615BA: has_sha1_file_with_flags (sha1_file.c:3212)
+>     ==5409==    by 0x50FC38: has_sha1_file (cache.h:1049)
+>     ==5409==    by 0x51043B: parse_object (object.c:259)
+>     ==5409==    by 0x546BF9: get_reference (revision.c:254)
+>     ==5409==    by 0x54CA15: setup_revisions (revision.c:2342)
+>     ==5409==    by 0x4531DA: cmd_log_init_finish (log.c:156)
+>     ==5409==    by 0x453465: cmd_log_init (log.c:211)
+>     ==5409==    by 0x4547EB: cmd_log (log.c:672)
+>     ==5409==  Address 0x840244bc is not stack'd, malloc'd or (recently) free'd
 >
-> Also after Junio's suggestion[1], I think It looks better now[2]. But
-> either ways, I'm not
-> strongly against what you're saying, so my opinion on this matter is
-> quite flexible.
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/283404
-> [2]: http://article.gmane.org/gmane.comp.version-control.git/283449
+>     So I'd guess it's not the pack itself, but rather the .idx which is
+>     full of nonsense values. And that's always generated from scratch
+>     locally.
 
-Sorry, but I suspect I was looking at a leaf function without
-thinking about the larger picture.
+After I seeing your "it's not the pack itself but rather the .idx"
+without looking at (rather, conciously avoiding to look at) the
+valgrind trace, I checked the codepath that starts from
+read_packed_sha1().
 
-I suspect that the interface to customized parsing function called
-by parse_ref_filter_atom() is misdesigned.  I understand that the
-overall parsing that starts at verify_ref_format() goes like this:
+When we map in the .idx file, we do minimum sanity checks to make
+sure that .idx file itself has sorted fan-out.  We do not check if
+the object names are sorted, so a bogus .idx could tell us that an
+object does not exist when it exists in the matching .pack, but that
+is harmless.  Also an unsorted object names will not make our binary
+search run in circles while looking things up.  We do not check if
+the offset of individual objects are within the corresponding .pack
+file, either.
 
- * Iterate over the string and find a matching "%(",")" pair.
+And I arrived at nth_packed_object_offset(), so I think I am hitting
+the right nail.  There are a few values we read from the .idx file
+here that we would want to validate for sanity.
 
-   - For each such pair found, use parse_ref_filter_atom() on
-     what is inside that matching pair.
 
-     - parse_ref_filter_atom() iterates over the table of known
-       atoms, and finds the entry in that table.
+    off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+    {
+            const unsigned char *index = p->index_data;
+            index += 4 * 256;
+            if (p->index_version == 1) {
+                    return ntohl(*((uint32_t *)(index + 24 * n)));
 
-       Note that at this point, it knows that "%(" is followed by
-       'contents' or 'contents:' when it picked the "contents" atom
-       from the table, for example.
+This can return an offset that goes beyond the end of the packfile,
+possibly leading to a read access of unmapped region.
 
-     - if the entry we found in that table for the atom being parsed
-       has a custom parse function, that function is called, but the
-       calling convention does not pass the fact that we already
-       know what we are seeing inside "%(",")" pair is 'contents',
-       for example, and we know what argument it is given if any.
+            } else {
+                    uint32_t off;
+                    index += 8 + p->num_objects * (20 + 4);
+                    off = ntohl(*((uint32_t *)(index + 4 * n)));
+                    if (!(off & 0x80000000))
+                            return off;
 
-So it appears to me that match_atom_name() is a misguided helper
-function that you shouldn't have to use too often.  If the signature
-of parse() functions is changed to take not just the atom but the
-pointer to its argument (could be NULL, if we are seeing
-"%(contents)", for example) that is already available as "formatp"
-in the function, then contents_atom_parser() could become more like:
+This also can return an offset that goes beyond the end of the
+packfile.
 
-contents_atom_parser(struct used_atom *atom, const char *arg)
-{
-	if (args)
-        	atom->u.contents.option = C_BARE;
-	else if (!strcmp(arg, "body"))
-        	atom->u.contents.option = C_BODY;
-	...
-}
+Otherwise 'off' at this point gives an offset into the .idx file
+itself, that is the location of the 8-byte offset into the packfile.
 
-and there is no reason for this caller to even look at atom->name or
-worry about that it might have the dereferencing asterisk in front.
+                    index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
 
-If we really want to avoid having separate subject_atom_parser() and
-body_atom_parser(), they can be folded into the same function and it
-becomes necessary to switch on atom->name like you did in the code
-being discussed in the quoted part above.  For that, as Eric said,
-skipping '*' manually would not be a big deal, as that should not
-happen so often in the code _anyway_.  It is not a good idea to
-switch on atom->name inside contents_atom_parser() like you did.
-You are better off having separate {subject,body}_atom_parser()
-functions.
+And this computation can take us beyond the end of the .idx
 
-For one thing, you are not reusing or sharing any code by squishing
-these three functions into one.  A conceptually larger problem is
-that you are adding two extra !strcmp() calls to figure out the
-caller _already_ knows (notice I said this is "conceptual", this is
-not about performance).  parse_ref_filter_atom() knows that it is a
-"%(subject)" or "%(subject:...)" atom, but because you throw away
-that information and call contents_atom_parser() by saying that it
-is one of the contents, subject or body, the called function has to
-redo strcmp in order to figure it out itself.
+                    return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
+                                       ntohl(*((uint32_t *)(index + 4)));
+
+Or the value we read with this can take us beyond the end of the
+packfile.
+
+            }
+    }
+
+As long as the returned value is within the valid region of
+packfile, packed_object_info() and unpack_entry() should be
+responsible for ensuring that we do not read past the end of the
+data.  They should both begin by calling use_pack(), which already
+has the "offset beyond end of packfile" check, so I think that they
+would successfully catch a malicious .idx file that has handcrafted
+bad offsets if we fixed nth_packed_object_offset().
