@@ -1,104 +1,57 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [BUG?] worktree setup broken in subdirs with git alias
-Date: Thu, 7 Jan 2016 10:40:18 +0100
-Message-ID: <568E3282.1060508@drmicha.warpmail.net>
-References: <568E10A7.5050606@drmicha.warpmail.net>
- <CACsJy8CRJhdb9Gf+SkC+BSHuGa0DPEBZnCDRUa7zkJvrBK72kQ@mail.gmail.com>
+Date: Thu, 7 Jan 2016 16:48:21 +0700
+Message-ID: <CACsJy8BrvFi2uL1KVxrRDnPRAikpLwWcSSu8udfFBzEz7P6QMw@mail.gmail.com>
+References: <568E10A7.5050606@drmicha.warpmail.net> <CACsJy8CRJhdb9Gf+SkC+BSHuGa0DPEBZnCDRUa7zkJvrBK72kQ@mail.gmail.com>
+ <568E3282.1060508@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 07 10:40:36 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 07 10:49:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aH73b-0008FH-95
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 10:40:35 +0100
+	id 1aH7Bh-0006R6-PE
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 10:48:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbcAGJk2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2016 04:40:28 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:37368 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751121AbcAGJkU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 04:40:20 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id B015D21578
-	for <git@vger.kernel.org>; Thu,  7 Jan 2016 04:40:19 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Thu, 07 Jan 2016 04:40:19 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=Kq8rdvDRoPPY2Axv6SGNMI4c7ws=; b=RIklwN
-	zpb9imL5C5v+wVkZx4JKdAFnA6HOJd4kP3wuapsfoabnbYwij8lACRFPM8Q5MODM
-	6vUk03zsU2qtrXcF9xPCdujfMgSo9G705McsRsagmhZ8IusCV+KKHlb7QoyQbswg
-	lS5VrxoMxm45i+JKUoJyddgGEktAzwa4/To58=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Kq8rdvDRoPPY2Ax
-	v6SGNMI4c7ws=; b=BgiTtr+hJ/V50RK9s8INoSrU21EPH5aaCwrXFnO2Zi0jUKA
-	s3Y0HMzETyRIvo38bs3GFSe9c2ty896axXap36BieoyaMePdzSvvaL87fTZQzLor
-	nEjJAEWZV12JCcXitb/cQojaH7NFT/y7oUqXQ2fbIvnGkN3HlNIFz62/z8KI=
-X-Sasl-enc: bAcfHoIqQGV8LrwFblJfk99uD+5FoaYNQmETpYlBBbtA 1452159619
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 3C8D2C016DA;
-	Thu,  7 Jan 2016 04:40:19 -0500 (EST)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-In-Reply-To: <CACsJy8CRJhdb9Gf+SkC+BSHuGa0DPEBZnCDRUa7zkJvrBK72kQ@mail.gmail.com>
+	id S1752248AbcAGJsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 04:48:53 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:35451 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbcAGJsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 04:48:52 -0500
+Received: by mail-lb0-f180.google.com with SMTP id bc4so204094348lbc.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 01:48:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ervPtgLqdet6xUo7e57CD4JaSiUzCS1DiVPaf2c3h2Y=;
+        b=FYvCPhUKxSBsH4HbYNjfYyeIR5O5slZ/RlnjrLAYs6O3ENH2DGGRt2MrBzR/cmhHkm
+         6siyYjoY0xTBrceRFhvNoJ1F7nCLRF428l0LWInlSl4jy1J7HVOCYQJp3rQeOd9tq4aJ
+         zLPU8eLSM5O7CDSjXA+BChXeJi2wueC6aBs9OgpovZcuBPwmZxRjxE3qyTfX4XOMscSh
+         y0G72mBqSF7HMxnQpYaUU8SS4AojeP8BAhXey/uPr5p0ncaRFOxldD4Kda3fW6h8zfie
+         3qkRV5PiBJjxFe7vPeY0LDrpR6G5jjGNZ5YjmbhjksbWiRxhhSDvEeFlWTZL0ueblIl/
+         qAHg==
+X-Received: by 10.112.149.230 with SMTP id ud6mr14681155lbb.12.1452160130890;
+ Thu, 07 Jan 2016 01:48:50 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 7 Jan 2016 01:48:21 -0800 (PST)
+In-Reply-To: <568E3282.1060508@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283475>
 
-Duy Nguyen venit, vidit, dixit 07.01.2016 10:26:
-> On Thu, Jan 7, 2016 at 2:15 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Hi there,
->>
->> sorry I can't dig deeper now, but the worktree code from next seems =
-to
->> get confused now as soon as you cd to a subdir of a worktree (other =
-than
->> the main worktree) and use an alias:
->>
->> git help ss
->> `git ss' is aliased to `status -s -b'
->> [mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git status -s -b
->> ## exam
->> [mjg@skimbleshanks Biomath-WS15 (exam $)]=E2=9C=93 git ss
->> fatal: internal error: work tree has already been set
->=20
-> You forgot to mention what version you used. But it's probably relate=
-d
-> to d95138e (setup: set env $GIT_WORK_TREE when work tree is set, like
-> $GIT_DIR - 2015-06-26). This commit fixed your problem (and was
-> released) but it introduced some other regressions so it's been
-> reverted in 'next'. 'pu' has a re-fix on top of the revert.
+On Thu, Jan 7, 2016 at 4:40 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> As for the fix on pu, do you mean that one:
+> ac78663 (run-command: don't warn on SIGPIPE deaths, 2015-12-29)
 
-Well, I mentioned "from next", which I admit is not super-precise (it's
-next not older than a day or two, plus some local additions). In fact i=
-t is:
-
-ef7b32d (Sync with 2.7, 2016-01-04)
-
-which "has" d95138e (as per git branch contains) but also df1e6ea87
-which reverts it. (I guess --really-contains would be neat but difficul=
-t.)
-
-So while I didn't notice the problems that lead to the revert, I notice=
-d
-the problems the revert created... Early adopters' luck.
-
-As for the fix on pu, do you mean that one:
-ac78663 (run-command: don't warn on SIGPIPE deaths, 2015-12-29)
-
-I'll give it a shot then.
-
-Michael
+And the three commits before that, if you cherry-pick instead of
+merge, so 0d5466d to ac78663
+-- 
+Duy
