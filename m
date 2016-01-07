@@ -1,86 +1,110 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/10] t/t5900-repo-selection.sh: use the $( ... ) construct for command substitution
-Date: Thu,  7 Jan 2016 14:51:41 +0100
-Message-ID: <1452174710-28188-2-git-send-email-gitter.spiros@gmail.com>
-References: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 07 14:52:43 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 00/15] ref-filter: use parsing functions
+Date: Thu, 7 Jan 2016 19:55:41 +0530
+Message-ID: <CAOLa=ZSi0c61G8oXsCC0UfprDhf3hESaqKw8eGNRZJ7MTvNY4g@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com> <CAPig+cRjXHmBnnmHbbibeV-gcvwMFQc7-5ce4s2OHu+wQwMy4Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jan 07 15:26:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHAzP-0002EQ-Lg
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 14:52:32 +0100
+	id 1aHBW4-0003GI-KK
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Jan 2016 15:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752512AbcAGNv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 08:51:58 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36558 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbcAGNv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 08:51:57 -0500
-Received: by mail-pa0-f42.google.com with SMTP id yy13so166900361pab.3
-        for <git@vger.kernel.org>; Thu, 07 Jan 2016 05:51:57 -0800 (PST)
+	id S1751500AbcAGO0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 09:26:12 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:34056 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750722AbcAGO0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 09:26:11 -0500
+Received: by mail-vk0-f51.google.com with SMTP id a123so143539168vkh.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 06:26:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3JoCusfxOx+7ZF0jA9rVSEFN/WaiNJ57MODXuo3atLA=;
-        b=vogZYVoOj3vwlGZegbPtSnnLRACTfZOpNrQ0r09JrqcARddDWbftj8rr/hbQ7Xx2lc
-         2xi2pJ1LckIkJkKtydVw+styEfJCNBgglTc8CqCWjuvElfGRzoKq5bj3Oz/wcZpCmKVU
-         VYThKKnBsFRNIW4wkI+Vd2z25MmCmSlVeJkALkYvoFj4mqnN7SldVEmu1tMeusXqtROC
-         KqFmJzVZ+ETy8At8JvElaQeFrBk8nUC49f4rUpUrQuVcchBT0DqMT4UVIjUZLD1vsYmX
-         UpvCHwm9Su71PIZIcxw25eqmlq0heoRasHaITfJHsQe46NzyLFC8tUUdxrSLjJeDWSqt
-         EASA==
-X-Received: by 10.67.3.230 with SMTP id bz6mr151730451pad.118.1452174716902;
-        Thu, 07 Jan 2016 05:51:56 -0800 (PST)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id kk5sm140627824pab.16.2016.01.07.05.51.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Jan 2016 05:51:56 -0800 (PST)
-X-Mailer: git-send-email 2.3.3.GIT
-In-Reply-To: <1452174710-28188-1-git-send-email-gitter.spiros@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TzhmehSyp/+yG4JxM4Rvc6rCONn/itZrQR985T19Ch8=;
+        b=ZXSuJV1DX0yAvpS3QkyZvSAJRcCcwkr4sPPQrmWp8D8Y6o+TzxS0JZA4wQNIUgZY5M
+         wjXaN/oKjMYXjtJIXd/inpb+SSVd+TR6zjPLHar9fBl3kbVyWiLwmwQSGRgW/EQl4Gu0
+         HkhTOqiwDl+kcaDg4+BXIODmc7t+m6CBb40fbOACpxUVK03vVWSB9zFlZ2I1RuQNnOae
+         qEwb2hfCzWx5euBijZsQkp+Xwir691cVS6XpyTljHslA46CWb6GAMXO2L9FxoZLWrARs
+         Dccmhsa14zeeqvSbvxnzr9u/dE3118AHIG1CAascJTmjlqQtBJx6mlZ/tXSJ7ToPRI9y
+         ZZhg==
+X-Received: by 10.31.149.3 with SMTP id x3mr7898729vkd.46.1452176770707; Thu,
+ 07 Jan 2016 06:26:10 -0800 (PST)
+Received: by 10.103.82.146 with HTTP; Thu, 7 Jan 2016 06:25:41 -0800 (PST)
+In-Reply-To: <CAPig+cRjXHmBnnmHbbibeV-gcvwMFQc7-5ce4s2OHu+wQwMy4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283493>
 
-The Git CodingGuidelines prefer the $(...) construct for command
-substitution instead of using the backquotes `...`.
+On Thu, Jan 7, 2016 at 2:44 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Jan 5, 2016 at 3:02 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Eric suggested that I make match_atom_name() not return a value [0]. I
+>> haven't done that as we use match_atom_name() in [14/15] for matching
+>> 'subject' and 'body' in contents_atom_parser() and although Eric
+>> suggested I use strcmp() instead, this would not work as we need to
+>> check for derefernced 'subject' and 'body' atoms.
+>> [0]: http://article.gmane.org/gmane.comp.version-control.git/282701
+>
+> I don't understand the difficulty. It should be easy to manually skip
+> the 'deref' for this one particular case:
+>
+>     const char *name = atom->name;
+>     if (*name == '*')
+>         name++;
+>
+> Which would allow this unnecessarily complicated code from patch 14/15:
+>
+>     if (match_atom_name(atom->name, "subject", &buf) && !buf) {
+>         ...
+>         return;
+>     } else if (match_atom_name(atom->name, "body", &buf) && !buf) {
+>         ...
+>         return;
+>     } if (!match_atom_name(atom->name, "contents", &buf))
+>         die("BUG: parsing non-'contents'");
+>
+> to be simplified to the more easily understood form suggested during
+> review[1] of v2:
+>
+>     if (!strcmp(name, "subject")) {
+>         ...
+>         return;
+>     } else if (!strcmp(name, "body")) {
+>         ...
+>         return;
+>     } else if (!match_atom_name(name,"contents", &buf))
+>         die("BUG: expected 'contents' or 'contents:'");
+>
+> You could also just use (!strcmp("body") || !strcmp("*body")) rather
+> than skipping "*" manually, but the repetition makes that a bit
+> noisier and uglier.
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/282645
 
-The backquoted form is the traditional method for command
-substitution, and is supported by POSIX.  However, all but the
-simplest uses become complicated quickly.  In particular, embedded
-command substitutions and/or the use of double quotes require
-careful escaping with the backslash character.
+Definitely not a difficulty per se. Just that it seems like something
+match_atom_name()
+seems to be fit for. As the function name suggests that we're matching
+the atom name
+and the check for '!buf' indicates that no options are to be included
+for that particular atom.
 
-The patch was generated by:
+Also after Junio's suggestion[1], I think It looks better now[2]. But
+either ways, I'm not
+strongly against what you're saying, so my opinion on this matter is
+quite flexible.
 
-for _f in $(find . -name "*.sh")
-do
-	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
-done
+[1]: http://article.gmane.org/gmane.comp.version-control.git/283404
+[2]: http://article.gmane.org/gmane.comp.version-control.git/283449
 
-and then carefully proof-read.
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- t/t5900-repo-selection.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t5900-repo-selection.sh b/t/t5900-repo-selection.sh
-index 3d5b418..14e59c5 100755
---- a/t/t5900-repo-selection.sh
-+++ b/t/t5900-repo-selection.sh
-@@ -15,7 +15,7 @@ make_tree() {
- make_bare() {
- 	git init --bare "$1" &&
- 	(cd "$1" &&
--	 tree=`git hash-object -w -t tree /dev/null` &&
-+	 tree=$(git hash-object -w -t tree /dev/null) &&
- 	 commit=$(echo "$1" | git commit-tree $tree) &&
- 	 git update-ref HEAD $commit
- 	)
 -- 
-2.3.3.GIT
+Regards,
+Karthik Nayak
