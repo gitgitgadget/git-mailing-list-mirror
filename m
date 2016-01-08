@@ -1,142 +1,269 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 3/4] Provide a dirname() function when
- NO_LIBGEN_H=YesPlease
-Date: Fri, 8 Jan 2016 17:21:18 +0100 (CET)
-Message-ID: <4e1b6c602e0adccfc11152b00aa23d14b1bbd4a8.1452270051.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 4/4] t0060: verify that basename() and dirname() work as
+ expected
+Date: Fri, 8 Jan 2016 17:21:22 +0100 (CET)
+Message-ID: <eca740dbf6271bd69f2ccb14163175996ef7c837.1452270051.git.johannes.schindelin@gmx.de>
 References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de> <cover.1452270051.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 17:21:48 2016
+X-From: git-owner@vger.kernel.org Fri Jan 08 17:21:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHZnG-00076w-EA
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 17:21:38 +0100
+	id 1aHZnH-00076w-JN
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 17:21:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755877AbcAHQV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 11:21:28 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58913 "EHLO mout.gmx.net"
+	id S1755798AbcAHQVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 11:21:37 -0500
+Received: from mout.gmx.net ([212.227.15.15]:55114 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755450AbcAHQVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 11:21:25 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MGzwE-1aUD5p2fq6-00Dmlf; Fri, 08 Jan 2016 17:21:19
+	id S1755874AbcAHQV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 11:21:29 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M6ilI-1a35qZ14aK-00wYXS; Fri, 08 Jan 2016 17:21:23
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1452270051.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:hGmF4p2Rx9DyIIckNpJAljI4UCSFjVeyVdRaHAmZ2a39lAOuJnO
- 64udKMqoTQ5zthfGJzNCMBcdfW4aTeP+SAchs6HqUvnbRMh3ZF6w2nJwlZTXOoehUclUT5m
- XNHiA+njLabbRMET9joqTWffxD3Pyu2Xy/TAnD8AQ6UPonHuPg9fL9sXWGnp2c0t61yEkI6
- ar8VwXtSdkHlJIiNYG9UQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Oc4sB/xaZiM=:IRjhPOs9ipu5CozGhhQ/Kl
- BG8PbBK8LiR8wzX7c4KmF9nk4qUxQZth7MkawmRdE6aodvZCnIxV1K3ES3fXr8UT5egrUBnrT
- D4jOcHDSK7O8WCicO//FEZZhyzKWKsMtOF25VKkD5ORD65dUPVmpP2FN23qfcehsofQm+aD4q
- L8Mm8/hlE1f62uayVRrPLJwQbdK7+iUxczP/4jUZNo0EOkkNMe8oCIZ1o1i3MOBklRyf8fHLB
- XyiNgetrHsVVi04mflinE4LnJQRNUukQheHabVp56B8VKN4UEVv38Nn5ExWEP88UJxfPmotFT
- PMd7/gRzijRSRx3986ytKlsh2MJxi3C/IbeVOPXFGca95NW4etCsHLiAsVS39WRbq276u2qah
- qPzzCDV2ThMya/t10QJpqTGdIOqbASbwQ2RG5y3UdlzdJAp1NIDUiN92QkVyG3+yXEUn+3Hl6
- NT70uFTN/d099h6aze3+Jkf3wB0bWwVxkHnCbOLN1sl6OILk+OKRWBMdjgAEAWMlxH91F4uWW
- PgPfoNj3J1wKtd5qFq+4LKVfvqJeBMyJrvrsjJO7Cz5qE7oIdCj+hO9+lOLsTSxzVnBNnvsRR
- avp4MmxAsH3x+R1oR1QR2XulPgtuRer5+YXBbZ72sDfP+WLFlIsyb1kqgJDZXC/8ND2HMK4oI
- I+G/qLJSQil/+77dqd+XR1sOq1MilbgJVbvazk9FNQE6lP6zsQ2Is4xERqMKxaI0QG8UWSbBD
- eX/iFSIllAVisfhLGPBO3LwI7PTlYqdExkKQh4VUlazLja8mBMgZMYe2sEDEiKouLtM9rLfG 
+X-Provags-ID: V03:K0:r8QsT2mtJ1vtqcigPD0Y+FfTN3uKc8NiDsngT0Jhkk3Z9xM8242
+ omspdorO4wQbDArBf/QSnDypHAlsfnDWJEr2nWzM7vOCi+ryz0V1l7mgyi0WFE32avkXt5r
+ voUIPulVRAPPkMzRvAR1s5lAdLOE2rYbCN+cC+VKRnGxy7TbRZNUteMbdrDmZlLhHmYhBd3
+ YdP3x82ehUj08F6dAcyHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QWNddsEwHU4=:KqF8gUL0ZwQKtRhsmgLjre
+ L9ELFw2uhPCa+xGWDZN9hyRBlSDZNQG1kg9qFxhigers7sqOtM2rFIX7cBamNgrv3k9H0a0YW
+ ppPCE/b9L2Mm/6asLXtHMR17JrOY7DQThtvmsA0zYgjyc1LG24kmIQHMRwX8Fbev+SLiypCEd
+ KIesdTRCtgvbkKS8Na9A+7Z/VNVyS4UIvqLEgBUlY0j3/TJSfxW/zbvm8M4wU7w0XEoQqm1Ov
+ bMQN0uGo458DIRAiuq922yrEH9rGjeKTd9D3EqFq1aT/2/KwO5bk7v0f/rypyRVDy+6BjEaWa
+ RDkPbE9/MQ0TT4y4DKCCzPP0afNxnYhztqB+aOI0MUaw/dmWYhMO9FX9egP/WFLCTVvK0oaZ1
+ fscVulrAmNR8GSN1I7JCWrBupCqfGZHavVdywCldTS/7zb5TVWeznPSgU3jnu+zuhhgI4tYsg
+ Zgt0RWbIr+w/Cg3hZKgN9syq3NzVte26iYdfl7Eo5Jc8/hylxtzkTHEtmdHe029kcSy2Pl8Fj
+ EYTy+C1945ubGMdvtokKWhnZqjeHC4oHhSoxVN5MUWs8Ux/LPyOqKFYxca0ZoHkcAaRZO1pcw
+ AVq0agWMPUvqxtE467A/uE7pj9y7I+b92kZSjgIM2KFh4pMvWiYAUH00xQIVDEY0wfch1s7i/
+ f/y3r4Gw1RAQoaeEdHClrxzoc/enzem0CqJxnl7iJg7DKML/iYy+FVOuU/BQ8EdTklYlXdAWN
+ fHnu05U3FRKmvTv/BmZMAsQnnmOaeTMds3/FFC+llEPed0774PiP/hfmeswobalfTO+IISpw 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283565>
 
-When there is no `libgen.h` to our disposal, we miss the `dirname()`
-function.
+Unfortunately, some libgen implementations yield outcomes different from
+what Git expects. For example, mingw-w64-crt provides a basename()
+function, that shortens `path0/` to `path`!
 
-So far, we only had one user of that function: credential-cache--daemon
-(which was only compiled when Unix sockets are available, anyway). But
-now we also have `builtin/am.c` as user, so we need it.
+So let's verify that the basename() and dirname() functions we use conform
+to what Git expects.
 
-Since `dirname()` is a sibling of `basename()`, we simply put our very
-own `gitdirname()` implementation next to `gitbasename()` and use it
-if `NO_LIBGEN_H` has been set.
-
+Derived-from-code-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/basename.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h |  2 ++
- 2 files changed, 46 insertions(+)
+ t/t0060-path-utils.sh |   3 +
+ test-path-utils.c     | 168 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 171 insertions(+)
 
-diff --git a/compat/basename.c b/compat/basename.c
-index 0f1b0b0..0a2ed25 100644
---- a/compat/basename.c
-+++ b/compat/basename.c
-@@ -1,4 +1,5 @@
- #include "../git-compat-util.h"
-+#include "../strbuf.h"
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 627ef85..f0152a7 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -59,6 +59,9 @@ case $(uname -s) in
+ 	;;
+ esac
  
- /* Adapted from libiberty's basename.c.  */
- char *gitbasename (char *path)
-@@ -25,3 +26,46 @@ char *gitbasename (char *path)
- 	}
- 	return (char *)base;
++test_expect_success basename 'test-path-utils basename'
++test_expect_success dirname 'test-path-utils dirname'
++
+ norm_path "" ""
+ norm_path . ""
+ norm_path ./ ""
+diff --git a/test-path-utils.c b/test-path-utils.c
+index c67bf65..74e74c9 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -39,6 +39,168 @@ static void normalize_argv_string(const char **var, const char *input)
+ 		die("Bad value: %s\n", input);
  }
-+
-+char *gitdirname(char *path)
-+{
-+	char *p = path, *slash = NULL, c;
-+	int dos_drive_prefix;
-+
-+	if (!p)
-+		return ".";
-+
-+	if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p) {
-+		static struct strbuf buf = STRBUF_INIT;
-+
-+dot:
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
-+		return buf.buf;
-+	}
-+
-+	/*
-+	 * POSIX.1-2001 says dirname("/") should return "/", and dirname("//")
-+	 * should return "//", but dirname("///") should return "/" again.
-+	 */
-+	if (is_dir_sep(*p)) {
-+		if (!p[1] || (is_dir_sep(p[1]) && !p[2]))
-+			return path;
-+		slash = ++p;
-+	}
-+	while ((c = *(p++)))
-+		if (is_dir_sep(c)) {
-+			char *tentative = p - 1;
-+
-+			/* POSIX.1-2001 says to ignore trailing slashes */
-+			while (is_dir_sep(*p))
-+				p++;
-+			if (*p)
-+				slash = tentative;
-+		}
-+
-+	if (!slash)
-+		goto dot;
-+	*slash = '\0';
-+	return path;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 0d66f3a..94f311a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -253,6 +253,8 @@ struct itimerval {
- #else
- #define basename gitbasename
- extern char *gitbasename(char *);
-+#define dirname gitdirname
-+extern char *gitdirname(char *);
- #endif
  
- #ifndef NO_ICONV
++struct test_data {
++	char *from;  /* input:  transform from this ... */
++	char *to;    /* output: ... to this.            */
++};
++
++static int test_function(struct test_data *data, char *(*func)(char *input),
++	const char *funcname)
++{
++	int failed = 0, i;
++	static char buffer[1024];
++	char *to;
++
++	for (i = 0; data[i].to; i++) {
++		if (!data[i].from)
++			to = func(NULL);
++		else {
++			strcpy(buffer, data[i].from);
++			to = func(buffer);
++		}
++		if (strcmp(to, data[i].to)) {
++			error("FAIL: %s(%s) => '%s' != '%s'\n",
++				funcname, data[i].from, to, data[i].to);
++			failed++;
++		}
++	}
++	return !!failed;
++}
++
++static struct test_data basename_data[] = {
++	/* --- POSIX type paths --- */
++	{ NULL,              "."    },
++	{ "",                "."    },
++	{ ".",               "."    },
++	{ "..",              ".."   },
++	{ "/",               "/"    },
++#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
++	{ "//",              "//"   },
++	{ "///",             "//"   },
++	{ "////",            "//"   },
++#else
++	{ "//",              "/"    },
++	{ "///",             "/"    },
++	{ "////",            "/"    },
++#endif
++	{ "usr",             "usr"  },
++	{ "/usr",            "usr"  },
++	{ "/usr/",           "usr"  },
++	{ "/usr//",          "usr"  },
++	{ "/usr/lib",        "lib"  },
++	{ "usr/lib",         "lib"  },
++	{ "usr/lib///",      "lib"  },
++
++#if defined(__MINGW32__) || defined(_MSC_VER)
++
++	/* --- win32 type paths --- */
++	{ "\\usr",           "usr"  },
++	{ "\\usr\\",         "usr"  },
++	{ "\\usr\\\\",       "usr"  },
++	{ "\\usr\\lib",      "lib"  },
++	{ "usr\\lib",        "lib"  },
++	{ "usr\\lib\\\\\\",  "lib"  },
++	{ "C:/usr",          "usr"  },
++	{ "C:/usr",          "usr"  },
++	{ "C:/usr/",         "usr"  },
++	{ "C:/usr//",        "usr"  },
++	{ "C:/usr/lib",      "lib"  },
++	{ "C:usr/lib",       "lib"  },
++	{ "C:usr/lib///",    "lib"  },
++	{ "C:",              "."    },
++	{ "C:a",             "a"    },
++	{ "C:/",             "/"    },
++	{ "C:///",           "/"    },
++#if defined(NO_LIBGEN_H)
++	{ "\\",              "\\"   },
++	{ "\\\\",            "\\"   },
++	{ "\\\\\\",          "\\"   },
++#else
++
++	/* win32 platform variations: */
++#if defined(__MINGW32__)
++	{ "\\",              "/"    },
++	{ "\\\\",            "/"    },
++	{ "\\\\\\",          "/"    },
++#endif
++
++#if defined(_MSC_VER)
++	{ "\\",              "\\"   },
++	{ "\\\\",            "\\"   },
++	{ "\\\\\\",          "\\"   },
++#endif
++
++#endif
++#endif
++	{ NULL,              "."    },
++	{ NULL,              NULL   }
++};
++
++static struct test_data dirname_data[] = {
++	/* --- POSIX type paths --- */
++	{ NULL,              "."      },
++	{ "",                "."      },
++	{ ".",               "."      },
++	{ "..",              "."      },
++	{ "/",               "/"      },
++	{ "//",              "//"     },
++#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
++	{ "///",             "//"     },
++	{ "////",            "//"     },
++#else
++	{ "///",             "/"      },
++	{ "////",            "/"      },
++#endif
++	{ "usr",             "."      },
++	{ "/usr",            "/"      },
++	{ "/usr/",           "/"      },
++	{ "/usr//",          "/"      },
++	{ "/usr/lib",        "/usr"   },
++	{ "usr/lib",         "usr"    },
++	{ "usr/lib///",      "usr"    },
++
++#if defined(__MINGW32__) || defined(_MSC_VER)
++
++	/* --- win32 type paths --- */
++	{ "\\",              "\\"     },
++	{ "\\\\",            "\\\\"   },
++	{ "\\usr",           "\\"     },
++	{ "\\usr\\",         "\\"     },
++	{ "\\usr\\\\",       "\\"     },
++	{ "\\usr\\lib",      "\\usr"  },
++	{ "usr\\lib",        "usr"    },
++	{ "usr\\lib\\\\\\",  "usr"    },
++	{ "C:a",             "C:."    },
++	{ "C:/",             "C:/"    },
++	{ "C:///",           "C:/"    },
++	{ "C:/usr",          "C:/"    },
++	{ "C:/usr/",         "C:/"    },
++	{ "C:/usr//",        "C:/"    },
++	{ "C:/usr/lib",      "C:/usr" },
++	{ "C:usr/lib",       "C:usr"  },
++	{ "C:usr/lib///",    "C:usr"  },
++	{ "\\\\\\",          "\\"     },
++	{ "\\\\\\\\",        "\\"     },
++#if defined(NO_LIBGEN_H)
++	{ "C:",              "C:."    },
++#else
++
++	/* win32 platform variations: */
++#if defined(__MINGW32__)
++	/* the following is clearly wrong ... */
++	{ "C:",              "."      },
++#endif
++
++#if defined(_MSC_VER)
++	{ "C:",              "C:."    },
++#endif
++
++#endif
++#endif
++	{ NULL,              "."      },
++	{ NULL,              NULL     }
++};
++
+ int main(int argc, char **argv)
+ {
+ 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
+@@ -133,6 +295,12 @@ int main(int argc, char **argv)
+ 		return 0;
+ 	}
+ 
++	if (argc == 2 && !strcmp(argv[1], "basename"))
++		return test_function(basename_data, basename, argv[1]);
++
++	if (argc == 2 && !strcmp(argv[1], "dirname"))
++		return test_function(dirname_data, dirname, argv[1]);
++
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
 -- 
 2.6.3.windows.1.300.g1c25e49
