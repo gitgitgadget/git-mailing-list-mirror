@@ -1,107 +1,122 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 10/10] t/t9001-send-email.sh: get rid of unnecessary
- backquotes
-Date: Fri, 8 Jan 2016 21:07:48 +0100
-Message-ID: <56901714.60505@kdbg.org>
-References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
- <1452251188-12939-11-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Should notes handle replace commits?
+Date: Fri, 08 Jan 2016 12:09:45 -0800
+Message-ID: <xmqqh9in25py.fsf@gitster.mtv.corp.google.com>
+References: <20160108012830.GA2110@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 21:07:58 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Jan 08 21:09:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHdKG-0007qS-KK
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 21:07:56 +0100
+	id 1aHdM8-00014b-NQ
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 21:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755797AbcAHUHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 15:07:52 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:38738 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754641AbcAHUHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 15:07:51 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pcb851J4Zz5tlC;
-	Fri,  8 Jan 2016 21:07:48 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 6413451DD;
-	Fri,  8 Jan 2016 21:07:48 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <1452251188-12939-11-git-send-email-gitter.spiros@gmail.com>
+	id S1753460AbcAHUJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 15:09:49 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64663 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751700AbcAHUJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 15:09:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C6374390DB;
+	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LIWY6BlG2KRcf5mYjxrkCGpkSvU=; b=rrGWZ5
+	kqMMrohp7I3ztSiW0lfEcVQXZrPELQOwZLMM73O+3AQB8HRHyeWpMBkksY40R3m+
+	U02OD5DEYgoVMc4qbmkAhuySBxtFvXBPjw822GDMUKs5UisOOUrULOgIFRBTT2fm
+	cPFWmQaDCSSBrX+xKcN6PvqO0/cj73tiegqoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iLhe1JmUO23XsfWhjQNf/VG+iXeGb2Gl
+	kG4pHlLiYfztOmNmpQe9vYZXjh9eG6alJRu2s4e5df5oEiRobHAJaJkGGEtuGJ2a
+	fPvhTKQ71A0Ub7+0wfLQw/FajtVDHJyBVUPbBeD8oEYnoGPatUIe8lBEFffSKv+1
+	X0PdB78+Ops=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCB2F390DA;
+	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 191CD390D2;
+	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
+In-Reply-To: <20160108012830.GA2110@glandium.org> (Mike Hommey's message of
+	"Fri, 8 Jan 2016 10:28:30 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C3F28C72-B643-11E5-8A81-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283581>
 
-Am 08.01.2016 um 12:06 schrieb Elia Pinto:
-> Instead of making the shell expand 00* and invoke 'echo' with it,
-> and then capturing its output as command substitution, just use
-> the result of expanding 00* directly.
+Mike Hommey <mh@glandium.org> writes:
+
+> Assuming that the "first" commit on master is the same as the "real
+> third" on old, you can graft with:
 >
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->   t/t9001-send-email.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   $ git rev-parse master~ old | xargs > .git/info/grafts
 
-I notices there are two patches in this series that touch 
-t/t9001-send-email.sh. The other one is 9/10, and it claims to be an 
-automated conversion. But that cannot be true because it would have 
-removed the backquotes that are addressed in this patch.
+With "graft", you told Git that the parent of master~1 ("second") is
+not master~2 ("third") but is old ("real third").
 
+> And then:
+>   $ git log master --format='%s - %N'
+>   third - third note
 >
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 05949a1..bcbed38 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1488,7 +1488,7 @@ test_cover_addresses () {
->   	clean_fake_sendmail &&
->   	rm -fr outdir &&
->   	git format-patch --cover-letter -2 -o outdir &&
-> -	cover=`echo outdir/0000-*.patch` &&
+>   second - second note
+>
+>   real third - real third note
 
-This expands the pattern and stores the result in $cover, provided there 
-exists at least one file that matches the pattern. If such file does not 
-exist, the pattern is stored verbatim in $cover.
+So it is expected that after "second" you see "real third", as you
+are seeing the "real third" with its notes.
 
-> +	cover="outdir/0000-*.patch" &&
+> Now, if you try to do the same with replace:
+>
+>   $ rm .git/info/grafts
+>   $ git replace master~2 old
 
-This does not expand the pattern and stores the pattern verbatim in $cover.
+With "replace", you told Git that the contents (i.e. message, tree,
+etc.) of master~2 ("first") is not what it really is but is what
+appears in old ("real third").
 
->   	mv $cover cover-to-edit.patch &&
+>   $ git log master --format='%s - %N'
+>   third - third note
+>
+>   second - second note
+>
+>   real third - first note
 
-This line succeeds because there pattern is expanded and matches only 
-one file.
+Hence Git tries to show master~2, i.e. "first", here; its contents
+is replaced with that of "real third", but the object name of the
+commit shown after "second" is shown, as far as Git is concerned, is
+still that of "first", so it is not surprising that the note that is
+associated with it is shown here, as the whole point of "notes" is
+that it is kept outside the contents recorded _in_ the commit.
 
->   	perl -pe "s/^From:/$header: extra\@address.com\nFrom:/" cover-to-edit.patch >"$cover" &&
+>   real second - real second note
+>
+>   real first - real first note
+>
+> Note how "real third" now has "first note", instead of "real third
+> note".
 
-In this line, "$cover" is not expanded, and a file named '0000-*.patch' 
-will be dropped into subdirectory 'outdir'.
+So it is not a correct observation that '"real third" now has "first
+note"'.  You are still seeing "first", but its message, together
+with its tree and its parents, are replaced by those of "real
+third".
 
->   	git send-email \
+> So the question is, is this the behavior this should have?
 
-The command that is truncated here looks like this:
+The behaviour is a natural consequence of what graft and replace are
+about (i.e. "telling Git what the parents of a commit are" vs
+"telling Git what the contents of a commit are"), so the answer to
+the "should" question is a resounding "yes".
 
-         git send-email \
-                 --force \
-                 --from="Example <nobody@example.com>" \
-                 --no-to --no-cc \
-                 "$@" \
-                 --smtp-server="$(pwd)/fake.sendmail" \
-                 outdir/0000-*.patch \
-                 outdir/0001-*.patch \
-                 outdir/0002-*.patch \
-                 2>errors >out &&
-
-Since it uses a pattern that would match a the oddly named file and 
-since at this point the original 0000-whatever* file was moved away, the 
-pattern still matches only one 0000-* file. The test still succeeds, so 
-you did not notices that it has now slightly different behavior.
-
-As much as I would like to remove a sub-process, I think it is better to 
-keep the $(echo 0000-*) in this case.
+It is a separate issue if the behaviour is useful for the purpose
+you wanted to use "replace" for.
