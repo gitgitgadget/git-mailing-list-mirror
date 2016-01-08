@@ -1,67 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Revert "dir.c: don't exclude whole dir prematurely if neg
- pattern may match"
-Date: Fri, 8 Jan 2016 19:12:30 +0700
-Message-ID: <CACsJy8Bg+xnKxkq8-Da4-GKUWAOjGB6xyya+zzydhMWBEPPT8g@mail.gmail.com>
-References: <1452254725-22314-1-git-send-email-pclouds@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH/RFC v2 3/3] refs: always handle non-normal refs in files
+ backend
+Date: Fri, 08 Jan 2016 07:52:43 -0500
+Organization: Twitter
+Message-ID: <1452257563.24133.5.camel@twopensource.com>
+References: <567A5516.9070209@alum.mit.edu>
+	 <1452123719-22634-1-git-send-email-dturner@twopensource.com>
+	 <1452123719-22634-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 08 13:13:12 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Fri Jan 08 13:52:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHVup-0005Wq-JM
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:13:11 +0100
+	id 1aHWXC-0002pj-TT
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754357AbcAHMNB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2016 07:13:01 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:35937 "EHLO
-	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752795AbcAHMNB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2016 07:13:01 -0500
-Received: by mail-lf0-f53.google.com with SMTP id i124so6205273lfe.3
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:13:00 -0800 (PST)
+	id S1754763AbcAHMwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 07:52:47 -0500
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33858 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752033AbcAHMwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 07:52:46 -0500
+Received: by mail-qg0-f50.google.com with SMTP id 6so272611462qgy.1
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=LUw7c7iEtefG+Ssfmi5KZdvzsRSvqQ8sY+K7sBT9cuo=;
-        b=qm62uSWLQwnTY1O1quY2CFP6ylOnYZeZ+NWR4wq2v7rh/LFPNLHPhKJ31Mw/u97EbQ
-         2go9T0GsyZH+t/v1GpBm7OU2BrlWkY9rSI1P2exm73z+0UUifbBkNtc3zFwlP5tS7sNI
-         X/oboK82nnAlKOvX67UV6lk6skzxT1MZe2o+juAORTXqHTGaCpP/g3IvyBhCUmjcSw0G
-         XrGJiSTgj84NjXS3Kyz5dMuvbLlJ2+j7k4MOTDYkk4oJ5pBAg66T9JNMVfB89f/b57A/
-         fKhuzVCrS45t2jyPZwAsLl/IbUorFCqDESiOKEnKciU/m3Fn9OvReWCERr3UKzGUWtes
-         ULHw==
-X-Received: by 10.25.17.229 with SMTP id 98mr14877097lfr.3.1452255179690; Fri,
- 08 Jan 2016 04:12:59 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Fri, 8 Jan 2016 04:12:30 -0800 (PST)
-In-Reply-To: <1452254725-22314-1-git-send-email-pclouds@gmail.com>
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:organization
+         :content-type:mime-version:content-transfer-encoding;
+        bh=28Th2rD1oWrmE/GrdoUWw+f0oaxt5sRyTpe3icU9gx8=;
+        b=nDENjxk3iXNcPKpuBrIFSqd1NffpkYwu7K6NIyVuQv6XCtCby8ARrd5HeePOVD4NT/
+         pNyFKy1uBHL95sEJPc8TwFESRTbQM+FMttIqlkWmpR0av/LNW0KKY00zHG9913BtIO5D
+         2MJxqC5Wj1JBv5DRYoRkZj7smmbzxhnwhKbEcQZHl4vLSVVH3ssNszPa6qv7iDyCK4kF
+         ASLAKgNk5/BYaFgI0mkUk8qzmJgCnj/tj91/3jkcHIXM6Y7rJcjHbOq06J44f98SOvAZ
+         qjhDU1d5u5aWgbTTLUhz1ij1QgVtRaBx1VubVw4OSmQhn8q6KSEf1TdS4Zwo0gLsgHes
+         QY2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=28Th2rD1oWrmE/GrdoUWw+f0oaxt5sRyTpe3icU9gx8=;
+        b=IdNk8YVcZBEuqnxfVWT7S3c3IHfZ5pk4fD6ArjoWMT6sTBdaIPuNvpvFEMKH3yeihR
+         Jtar7W3XfiQopYHgRVjG4B2nKkF+EEVmE+jdheiLSgLK0u/DfvuDGCfFmjZFIHGA6NSZ
+         tL7fOsb5Dr+8oMiEcKKakTbOGRUb01jRYZLINMu6KfQZMBhpTAVy6IiTegyFUyBsgsRS
+         oo92feW3jtccKPVHiyl5qWNAbXgow29UJ+eg9Z/zxQwNiWb5JSz++AJ8zJsraS0Z19VZ
+         1Y725mboSuuT5G2Y9dUD2jljfJU0mJLM3L4bjUSglxPy+WMQjT9MduOXV6A0d0mIY8Ts
+         behg==
+X-Gm-Message-State: ALoCoQm9rDEmnL68rjfFUQ9Kyr5yCo2/LeAhVyV4KClf5JgF3TN4qVM+eG20SE4p4z1gIwqbCo2puU5F4WyvFieOtbHDBNmelA==
+X-Received: by 10.140.217.67 with SMTP id n64mr92489447qhb.26.1452257565607;
+        Fri, 08 Jan 2016 04:52:45 -0800 (PST)
+Received: from ubuntu ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id w14sm48292552qge.24.2016.01.08.04.52.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 08 Jan 2016 04:52:44 -0800 (PST)
+In-Reply-To: <1452123719-22634-3-git-send-email-dturner@twopensource.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283551>
 
-On Fri, Jan 8, 2016 at 7:05 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> patterns are too loose. The untracked listing and sparse-checkout
-> selection can become incorrect as a result.
+On Wed, 2016-01-06 at 18:41 -0500, David Turner wrote:
++		files_transaction->updates[files_transaction->nr++]
+> = update;
 
-These two lines should be this instead if you want to keep track of
-problem references. I amended the commit then forgot to format-patch
-again.
-
-patterns are too loose. The untracked listing [1] and sparse-checkout
-selection [2] can become incorrect as a result.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/283520
-[2] http://article.gmane.org/gmane.comp.version-control.git/283532
---=20
-Duy
+oops, need to allocate this (fixed on my branch).
