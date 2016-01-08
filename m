@@ -1,100 +1,84 @@
-From: "Micha Wiedenmann" <mw-u2@gmx.de>
-Subject: Behavior change in 2.7.0: With core.sparseCheckout some files have
- the skip-worktree bit set after a checkout.
-Date: Fri, 8 Jan 2016 11:35:23 +0100
-Message-ID: <trinity-5caa2985-5cf1-453b-9a9e-bcce057f8615-1452249323061@3capp-gmx-bs51>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Some issues when trying to set up a shallow git mirror server
+Date: Fri, 8 Jan 2016 17:44:30 +0700
+Message-ID: <CACsJy8CBj-oMTLrn8gVudhLPEixZfkwFv9BaN8LSNFvOHkqKkg@mail.gmail.com>
+References: <20160107165417.GB3397@logi.codethink.co.uk> <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
+ <20160108101903.GC3397@logi.codethink.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 11:35:32 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Richard Maw <richard.maw@codethink.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jan 08 11:45:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUOI-0002eA-4X
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 11:35:30 +0100
+	id 1aHUXj-0002C6-M6
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 11:45:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754505AbcAHKf0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2016 05:35:26 -0500
-Received: from mout.gmx.net ([212.227.17.20]:53832 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754329AbcAHKfY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2016 05:35:24 -0500
-Received: from [80.153.181.229] by 3capp-gmx-bs51.server.lan (via HTTP);
- Fri, 8 Jan 2016 11:35:23 +0100
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K0:cAlJXVhAr/P6nd9HW51dPFEMvEazTjE6QsmxT6OJI5p
- bLjquyPLTqgZ4YUMEBp3vXcqmPlA0i6wWV6r3W5k1+2w+mIq6F
- 4PDX5PH0WFlDUCo9vGNH185/5tNbDqjIfYVrfN+kxDl7F4GfgN
- qqH9XAZpEdzmXZfzWo6VuCclc7wRcut40puSTnWZwTP4r7JXjm
- onhyL4GSW0utZR12wQy5Md1n55yeQ7Tt6CN2Ic3/Ru9It7YAll
- jsE8jQrIKz71/j0NPBoEnws+gS7w3Gki5Z6SgpOZ6D9DlQ5Va8 g+pSwU=
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1MAwzT6XNOg=:fUkpDltufrZiktplj5F78q
- tgYR1p3iHeR+WKh0aNIk/ioyZSE7KIKH/E5bm0NpJYnET3nNBgfg6YuzLjEG+PJsLjetZo9Dn
- hpkj/c2gIFnxoRMb1wGprkAs0NDOHw+4Jxa30EoGo8408IWuD7y7aIaXSVWAXYn+t5NCjyFe6
- HhOWbHZn05fvWKqkPjWZKPaqn8CmlpwYvxDLpcOkYjXyw6eUM2BGcgynYpuLoX6Z0okVUPI8b
- ygLNQn0y+fewCUrS9q5ecjLQTQFoLGWkEGccf9HDaAjvu6MdWaITXGEhi1TdcbYmkjumiAiPr
- PqQqIm2YglmVOONMpkLxskW7io9o26TudFTqYN3cnw6M+0ZkGTP5CJMWN++5i4ZQDU4kXCtSy
- TPiTw6/omEZM3wOfFpG+2zvBel0nBzaN2z2d3Q2B/J0MVCNTlvKvY0Bd2kiWaB66OtSEIIW0N
- BmG2VXGu8Q==
+	id S1754329AbcAHKpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 05:45:03 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:34287 "EHLO
+	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbcAHKpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 05:45:01 -0500
+Received: by mail-lf0-f53.google.com with SMTP id d17so6745821lfb.1
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 02:45:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hyS/ZQ4PCov5/eCE5Z3fGwY74/POhDuJXD8sfKF3oSc=;
+        b=Mp/Z1uSmo0Oozn1IMKxFfiyy/dtrAcA1v4BIOoSRvjAqO+7D8SGeNRY5WLdTCb6m1e
+         kvrwRLgx2zRcyTUND+9/LVEjSlegIHzGwJIblG8YzMMaaD5SAiv8RCbUyfCnXngPFxOC
+         DjtPe+XtmT2i7XlD1Y4LM0OM/07TDNGp1DW28qcd1b9Ddpa8/bJgMwgc+Q/wk2b2YPL/
+         k4H3rW+Gxq9WaZ0OTesv+vFJBNhumWsAY7O+kVhqv+sbljSeuTLVXL4FMsQ+TPS9p+Y7
+         h015qWKSSm4SyiMRG4d+/IZLvROne65oOdXayMyFC6/IfkjBBs5N/BFkIXw41Q/pLkrn
+         1MOg==
+X-Received: by 10.25.161.144 with SMTP id k138mr31904428lfe.83.1452249900376;
+ Fri, 08 Jan 2016 02:45:00 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Fri, 8 Jan 2016 02:44:30 -0800 (PST)
+In-Reply-To: <20160108101903.GC3397@logi.codethink.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283533>
 
-Hi,
-=C2=A0
-I want to report a change in behavior Git 2.7.0. With `core.sparseCheck=
-out` set to true, `git checkout` results in some files with a set skip-=
-worktree bit, which was not the case in 2.6.4. (I am using Git for Wind=
-ows, but assume this is a Git issue, which is why I report it to this l=
-ist.)
-=C2=A0
-Please see my test case:
-=C2=A0
-#!/bin/bash
-git --version
-# git version 2.7.0.windows.1
-mkdir test-case
-cd test-case
-git init
-mkdir keep
-echo keep > keep/keep.txt
-echo foo > foo.txt
-git add -A
-git commit -m initial
-git config core.sparseCheckout true
-cat > .git/info/sparse-checkout <<EOF
-/*
-!/keep/tags/
-EOF
+On Fri, Jan 8, 2016 at 5:19 PM, Richard Maw <richard.maw@codethink.co.uk> wrote:
+> On Thu, Jan 07, 2016 at 10:00:07AM -0800, Junio C Hamano wrote:
+>> Richard Maw <richard.maw@codethink.co.uk> writes:
+>> > This is inconvenient for us,
+>> > as we were explicitly using refspecs which didn't force the fetch,
+>> > since we were using the "non fast-forward update" errors
+>> > to detect whether upstream force pushed important refs
+>> > which could be a sign of tampering.
+>> >
+>> > While the client doesn't have enough information
+>> > the server has those commits.
+>> > Would it make sense for the server to be able to tell the client
+>> > "trust me, that commit is a descendant of the previous one"?
+>>
+>> It does not in our security model, as you do not blindly trust the
+>> other side, whether you are a "client" or a "server".
+>
+> Fair enough.
+> I didn't know whether Git passed responsibility for that to the transport layer.
+>
+> Would a mode for fetch to also include the commit chain without the trees fit
+> the security model?
 
-git checkout
-git ls-files -v
-# H foo.txt
-# S keep/keep.txt
-# $ git --version
+It sounds a lot like what I did with narrow clone [2] prototype. A
+narrow clone only contains enough objects for certain paths so there's
+a chance that we just don't have enough to do a proper merge. A
+server-side command was added [1] to retrieve enough objects for the
+task. If you fetch commit chain without all necessary trees and
+objects, your repo is "broken" from Git point of view and you'll need
+to do some extra work to make sure your repo is not actually broken.
 
-# git version 2.6.4.windows.1
-# $ git checkout
-# $ git ls-files -v
-# # H foo.txt
-# # H keep/keep.txt
-# (Note that the result of keep/keep.txt is different)
-
-git read-tree @
-git ls-files -v
-# H foo.txt
-# H keep/keep.txt
-
-I noticed this, when all my tracked files where suddenly missing from t=
-he working directory.
-
-Hope that helps,
-Micha Wiedenmann
-=C2=A0
+[1] http://article.gmane.org/gmane.comp.version-control.git/154371
+[2] http://thread.gmane.org/gmane.comp.version-control.git/154343
+-- 
+Duy
