@@ -1,41 +1,41 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/10] t/t7700-repack.sh: use the $( ... ) construct for command substitution
-Date: Fri,  8 Jan 2016 12:06:25 +0100
-Message-ID: <1452251188-12939-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/10] t/t8003-blame-corner-cases.sh: use the $( ... ) construct for command substitution
+Date: Fri,  8 Jan 2016 12:06:26 +0100
+Message-ID: <1452251188-12939-9-git-send-email-gitter.spiros@gmail.com>
 References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 12:06:53 2016
+X-From: git-owner@vger.kernel.org Fri Jan 08 12:06:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUsd-0002wj-E2
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:51 +0100
+	id 1aHUse-0002wj-0j
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754746AbcAHLGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 06:06:42 -0500
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:32876 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754147AbcAHLGk (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754739AbcAHLGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 06:06:41 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:32966 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbcAHLGk (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Jan 2016 06:06:40 -0500
-Received: by mail-pa0-f65.google.com with SMTP id pv5so22446759pac.0
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:39 -0800 (PST)
+Received: by mail-pf0-f195.google.com with SMTP id e65so618868pfe.0
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1G7+N4juSZem60JxCA4Nf5kW/XgeRiGNdUnQzSnA/04=;
-        b=mN+R2FqGDOUrXHI5OcEvXHB9msXNWId1zKe+9GglJiNb6V4M5HGt8ixkh+2wLoaL7H
-         YbepKTbF18KWiA/pR21vJxuEDBa+0O2wtWsQ6YxXk34jN4PEPy7UeM8WcR2J4stoeWyQ
-         YoDWLMNd5orC+QrJmiF/7ui1B3GkIixl2dKHRHRu9/USZv81GsyMD1MPSydz+1QrUqIO
-         IRTL0yUyjO4iArnbYR0vomg+I7ptQ7G2Fx7B8AEa8ZZYvHMcp9APTlALj0u0MbP3/Pe6
-         hYxWKE85QbXINp0s5xeDZz7ZN/V/jn2UcmvBsWBknYGweE8XxOazrVEqozCs7aBx5mdH
-         bXoQ==
-X-Received: by 10.66.136.101 with SMTP id pz5mr28997628pab.91.1452251199609;
-        Fri, 08 Jan 2016 03:06:39 -0800 (PST)
+        bh=K1lQU6lHfeQKUyLiEGfwvlXl2oT5dtaRlmY1bobXVOs=;
+        b=rUD3KnbY/yehEufr/2ypqOjPiEKr8oQkP4UmWaTMTmaiLlBgei3Du5lMsEUfX5N3Sg
+         6dED2J2utqiL4w8GAiuPELyW1Pkyx+6DEEySe6/7f5Z1p6o0peDRtrg8SEEbZnTdYhnD
+         CZFaY6I0X0ZLBydzVVi4qDY0c8EjW25xWMHLpwvtwXZnPxzU+4699vWV2JwLcWPOVyQm
+         s3mR2qOiFFEJZmLVUv8C04WV7JHoSF+S2VtNhdCF9LUfEgxKBvT8328+dzrKl0xND9Mx
+         6Qa5kczewRcrUT6SDwwtfZ2O4udXdSCGPRgktlWMJckdczhSYQ6dnIMbho+tntMCwABZ
+         vuug==
+X-Received: by 10.98.9.75 with SMTP id e72mr3352643pfd.29.1452251200321;
+        Fri, 08 Jan 2016 03:06:40 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.38
+        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 08 Jan 2016 03:06:39 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283539>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,30 +66,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7700-repack.sh | 4 ++--
+ t/t8003-blame-corner-cases.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 021c547..6061a04 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -69,7 +69,7 @@ test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
- 
- test_expect_success 'loose objects in alternate ODB are not repacked' '
- 	mkdir alt_objects &&
--	echo `pwd`/alt_objects > .git/objects/info/alternates &&
-+	echo $(pwd)/alt_objects > .git/objects/info/alternates &&
- 	echo content3 > file3 &&
- 	objsha1=$(GIT_OBJECT_DIRECTORY=alt_objects git hash-object -w file3) &&
- 	git add file3 &&
-@@ -168,7 +168,7 @@ test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index 16f1442..6568429 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -153,7 +153,7 @@ test_expect_success 'blame path that used to be a directory' '
  '
  
- test_expect_success 'local packed unreachable obs that exist in alternate ODB are not loosened' '
--	echo `pwd`/alt_objects > .git/objects/info/alternates &&
-+	echo $(pwd)/alt_objects > .git/objects/info/alternates &&
- 	echo "$csha1" | git pack-objects --non-empty --all --reflog pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
+ test_expect_success 'blame to a commit with no author name' '
+-  TREE=`git rev-parse HEAD:` &&
++  TREE=$(git rev-parse HEAD:) &&
+   cat >badcommit <<EOF &&
+ tree $TREE
+ author <noname> 1234567890 +0000
+@@ -161,7 +161,7 @@ committer David Reiss <dreiss@facebook.com> 1234567890 +0000
+ 
+ some message
+ EOF
+-  COMMIT=`git hash-object -t commit -w badcommit` &&
++  COMMIT=$(git hash-object -t commit -w badcommit) &&
+   git --no-pager blame $COMMIT -- uno >/dev/null
+ '
+ 
 -- 
 2.3.3.GIT
