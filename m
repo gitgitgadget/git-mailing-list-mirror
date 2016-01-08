@@ -1,60 +1,86 @@
-From: Richard Maw <richard.maw@codethink.co.uk>
-Subject: Re: Some issues when trying to set up a shallow git mirror server
-Date: Fri, 8 Jan 2016 10:52:04 +0000
-Message-ID: <20160108105204.GD3397@logi.codethink.co.uk>
-References: <20160107165417.GB3397@logi.codethink.co.uk>
- <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
- <20160108101903.GC3397@logi.codethink.co.uk>
- <CACsJy8CBj-oMTLrn8gVudhLPEixZfkwFv9BaN8LSNFvOHkqKkg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 11:52:19 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] t/t7103-reset-bare.sh: use the $( ... ) construct for command substitution
+Date: Fri,  8 Jan 2016 12:06:19 +0100
+Message-ID: <1452251188-12939-2-git-send-email-gitter.spiros@gmail.com>
+References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 12:06:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUeX-00084c-P7
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 11:52:18 +0100
+	id 1aHUsS-0002qP-A5
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbcAHKwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 05:52:12 -0500
-Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:57771 "EHLO
-	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754615AbcAHKwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 05:52:09 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id B09E34624C0;
-	Fri,  8 Jan 2016 10:52:08 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
-Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
-	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hWGeOfs8S0XM; Fri,  8 Jan 2016 10:52:06 +0000 (GMT)
-Received: from logi.codethink.co.uk (unknown [10.24.1.141])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 5A523460245;
-	Fri,  8 Jan 2016 10:52:06 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CBj-oMTLrn8gVudhLPEixZfkwFv9BaN8LSNFvOHkqKkg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754621AbcAHLGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 06:06:37 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:32953 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754147AbcAHLGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 06:06:34 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e65so618782pfe.0
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=F6wRl9C7A1LBWLgYgZHmRGAsFA1ACDYo18rtutq5dXg=;
+        b=svqzXgr6saOi8cy0tBcu+kqU0OSAQTvq1PMI/8Tndg3EoEWkQs/wt6c/ZM2g0A1ny8
+         NTOZSQvgSjheGd3ue5ephL0HlCp8aWJgfm8n5pGML6LQ6uey1diDSysFi67CiPKv6dNE
+         2NxyjfkQtxHwC9fV0fHCOZhT59STO3XjYEpppxvv98CXGphg1VJcynxLfiqT5AosUnM1
+         fipE8H1eP02VX7tEMDiXv0hMti/yX1G74LZEofe2yInSUmA8/afX3kqja3CWh6DQe7AK
+         fR+FUkfkxCax+ShUph9Elk6OSR//mLzQVA0pkpNlAQlEBkNNbZ4ocPl0Ion+Y6bwXZDs
+         N/Ig==
+X-Received: by 10.98.9.70 with SMTP id e67mr3425601pfd.31.1452251194366;
+        Fri, 08 Jan 2016 03:06:34 -0800 (PST)
+Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
+        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 08 Jan 2016 03:06:33 -0800 (PST)
+X-Mailer: git-send-email 2.3.3.GIT
+In-Reply-To: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283536>
 
-On Fri, Jan 08, 2016 at 05:44:30PM +0700, Duy Nguyen wrote:
-> It sounds a lot like what I did with narrow clone [2] prototype. A
-> narrow clone only contains enough objects for certain paths so there's
-> a chance that we just don't have enough to do a proper merge. A
-> server-side command was added [1] to retrieve enough objects for the
-> task. If you fetch commit chain without all necessary trees and
-> objects, your repo is "broken" from Git point of view and you'll need
-> to do some extra work to make sure your repo is not actually broken.
-> 
-> [1] http://article.gmane.org/gmane.comp.version-control.git/154371
-> [2] http://thread.gmane.org/gmane.comp.version-control.git/154343
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-Thanks for the links. I'll have a read to see how it fits together.
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
+
+The patch was generated by:
+
+for _f in $(find . -name "*.sh")
+do
+	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
+done
+
+and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t7103-reset-bare.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t7103-reset-bare.sh b/t/t7103-reset-bare.sh
+index 1eef93c..afe36a5 100755
+--- a/t/t7103-reset-bare.sh
++++ b/t/t7103-reset-bare.sh
+@@ -63,7 +63,7 @@ test_expect_success '"mixed" reset is not allowed in bare' '
+ 
+ test_expect_success '"soft" reset is allowed in bare' '
+ 	git reset --soft HEAD^ &&
+-	test "`git show --pretty=format:%s | head -n 1`" = "one"
++	test "$(git show --pretty=format:%s | head -n 1)" = "one"
+ '
+ 
+ test_done
+-- 
+2.3.3.GIT
