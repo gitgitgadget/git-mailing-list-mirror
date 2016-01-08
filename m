@@ -1,118 +1,140 @@
-From: =?windows-1252?Q?Carlos_Mart=EDn_Nieto?= <cmn@dwim.me>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 Subject: Re: Git 2.7.0 gitignore behaviour regression
-Date: Fri, 8 Jan 2016 02:47:46 +0100
-Message-ID: <C4B28537-628F-4EF6-8284-BE071CA834BE@dwim.me>
-References: <4B0F686D-3DF9-4E5D-971D-DB106C6573FD@mikemcquaid.com> <20160105150602.GA4130@sigill.intra.peff.net> <CACsJy8AQ9s4VkFn+TNJLD55xJc40+-54BTYbC4Os71uSkL1QSA@mail.gmail.com> <5E517AD0-CD4E-4F85-8FEB-89B7A0183967@mikemcquaid.com> <CACsJy8CvPqYGRXB845+4fHjkXH_kSAWG684CoxtWAnXE-gM6ag@mail.gmail.com> <CAPc5daX+uGQfKEteT2dqax-m9dR76Gkg1YeiFjVU9dsTqnHDmw@mail.gmail.com> <20160107020406.GA9358@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Mike McQuaid <mike@mikemcquaid.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 08 02:55:13 2016
+Date: Fri, 8 Jan 2016 02:41:25 +0000
+Message-ID: <20160108024125.GD265296@vauxhall.crustytoothpaste.net>
+References: <4B0F686D-3DF9-4E5D-971D-DB106C6573FD@mikemcquaid.com>
+ <20160105150602.GA4130@sigill.intra.peff.net>
+ <20160107234455.GB265296@vauxhall.crustytoothpaste.net>
+ <CACsJy8C1R+JVmOXQ87eBP1COFNk3Vfqtb6AKzzT65catUhPczg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="u65IjBhB3TIa72Vp"
+Cc: Jeff King <peff@peff.net>, Mike McQuaid <mike@mikemcquaid.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 03:41:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHMGl-0000kM-Sb
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 02:55:12 +0100
+	id 1aHMzf-0003LZ-L2
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 03:41:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404AbcAHBzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Jan 2016 20:55:06 -0500
-Received: from hessy.dwim.me ([78.47.67.53]:53817 "EHLO hessy.dwim.me"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752634AbcAHBzF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 20:55:05 -0500
-X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Jan 2016 20:55:04 EST
-Received: from [IPv6:2001:6f8:900:8cd0:d8e5:7ea6:aa6b:bd16] (unknown [IPv6:2001:6f8:900:8cd0:d8e5:7ea6:aa6b:bd16])
-	by hessy.dwim.me (Postfix) with ESMTPSA id CAA0A80650;
-	Fri,  8 Jan 2016 02:47:48 +0100 (CET)
-In-Reply-To: <20160107020406.GA9358@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1753929AbcAHClc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 21:41:32 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:34856 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753408AbcAHCla (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jan 2016 21:41:30 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CDE42282CB;
+	Fri,  8 Jan 2016 02:41:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1452220887;
+	bh=CFjEszQdYO7WXPRu393eLYyADqbfLOh9Xw/EDvkPPlM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=slvt+AN5arqPQlcEKjWq3EuC+vObtPccHpNFsHyWi4XNdrIkddwrEB3ljAM+fPfxB
+	 0B7mEprR30a2RbjW5jZmq/dGhDvWjw5EH7SbwLfwtDx1hNFeCKHZuUuIY9z7IP07zR
+	 4OAdHOThU93965iYkBwiKi1MZMDbunuGdW1XNHmJDwXzeVro9PjF+516TGhyIpZ8b1
+	 OF2taqG1S8zIQypp6Nqf+EoroBOq+3G3PBh/oq8dGKej+gT0L1lt9IvO0U1ae4+UYt
+	 0kJJZOS3vBt+8gjcnz/i3uqS71XhGac90MT2AtMHbLlTrkIHgYZF+eBHoQ2tXQ3PKi
+	 R8SLT5eM7Jcqgfk3SKJ5JkJNtWYfIR4XwNROIMG9Mcynmm6DHsHZIO+ZZqnQ1QBPaG
+	 6F16NtZ6owax1/mZpHb2OuBS7gF3i5xcb8ukhrF8b1W8WCavl7cln7K7IM9TtHr2R0
+	 tGdBYx/qasB2sUqL+d8oqNOXNNTS2+lrswrT+MmZesuIK7jkAAx
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Mike McQuaid <mike@mikemcquaid.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CACsJy8C1R+JVmOXQ87eBP1COFNk3Vfqtb6AKzzT65catUhPczg@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.3.0-1-amd64)
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283524>
 
-On 07 Jan 2016, at 03:04, Jeff King <peff@peff.net> wrote:
 
-> [+cc Carlos and Shawn for libgit2/JGit talk]
+--u65IjBhB3TIa72Vp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Jan 08, 2016 at 07:38:58AM +0700, Duy Nguyen wrote:
+> On Fri, Jan 8, 2016 at 6:44 AM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > I think there's still a bug in the code here.  If you do
+> >
+> >   git init
+> >   mkdir -p base/a/
+> >   printf 'base/a/\n!base/a/b.txt\n' >.gitignore
 >=20
-> On Wed, Jan 06, 2016 at 10:58:37AM -0800, Junio C Hamano wrote:
+> Here we have the ignore rule "base/a/", but gitignore.txt, section
+> NOTES mentions this
 >=20
->> On Wed, Jan 6, 2016 at 2:03 AM, Duy Nguyen <pclouds@gmail.com> wrote=
-:
->>>=20
->>> Yeah.. it looks like libgit2's gitignore support was written new, n=
-ot
->>> imported from C Git, so behavior differences (especially in corner
->>> cases) and even lack of some feature ("**" support comes to mind). =
-=46or
->>> isolated features like gitignore, perhaps we can have an option to
->>> replace C Git code with libgit2 and therefore can test libgit2 agai=
-nst
->>> C Git test suite. It could be a good start for libgit2 to invade C
->>> Git. Not sure if anybody's interested in doing it though.
+>  - The rules to exclude the parent directory must not end with a
+>    trailing slash.
+
+The text here says, "To re-include files or directories when their
+parent directory is excluded, the following conditions must be met".  In
+other words, the text implies that it's required for re-inclusion to
+work, not exclusion.
+
+> >   git add .gitignore
+> >   git commit -m 'Add .gitignore'
+> >   >base/a/b.txt
+> >   git add base/a/b.txt
+> >   git commit -m 'Add base/a/b.txt'
+> >   >base/a/c.txt
+> >   git status --porcelain
+> >
+> > git status outputs base/a/c.txt as unknown, when it should be ignored.
+> > We saw this in a repository at $DAYJOB.
 >=20
-> Yeah, libgit2 is in the difficult position of trying to hit a moving
-> target. There's a good chance that it _was_ the same as git's behavio=
-r
-> when it was written. :)
+> If I delete that trailing slash, c.txt is ignored. So it's known
+> limitation. I think we can make trailing slash case work too, but if I
+> remember correctly it would involve a lot more changes, so I didn't do
+> it (there are other conditions to follow anyway to make it work).
 
-We did try to match the rules which git followed at the time when we ad=
-ded the functionality, but sometimes small changes in git mean large ch=
-anges for us. There=92s a couple of recent issues complaining that we d=
-on=92t match git where *git* doesn=92t quite seem to match the rules as=
- I know them.
+The case I'm seeing is that b.txt was already checked into the
+repository before being re-added, and c.txt was not.  So it didn't
+affect us that b.txt was ignored (as it was already in the repo), but
+c.txt not being ignored broke a whole bunch of scripts that checked that
+the repository was clean, simply because we upgraded Git.
 
-I don=92t recall the details of how we brought ignore support in, but w=
-hen we don=92t just copy the code from git, it=92s generally because it=
-=92s embedded into the rest of the code, or in some other way doesn=92t=
- make a lot of sense in a library API.
+I think regardless of whether b.txt is re-included, c.txt should be
+ignored.  If it isn't possible to re-include b.txt, that's fine, since
+that isn't a regression, but ignored files should remain ignored.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-We do (at least I do) want to test libgit2 more against the git test su=
-ite; this either involves porting it to our test suite (generally non-t=
-rivial since we can=92t use shell, making it harder to compare) or crea=
-ting a command which pretends to be git but uses libgit2. The latter is=
- what I think we=92ll have to do, as we keep hitting complex pieces whi=
-ch git keeps changing like crlf and ignore handling. There=92s been pla=
-ns to do this, but it=92s never been the top priority.
+--u65IjBhB3TIa72Vp
+Content-Type: application/pgp-signature; name="signature.asc"
 
->=20
-> JGit is in the same boat, and I wouldn't be surprised if they don't
-> handle "**" either (I didn't check). Note that git inherited that
-> feature (and probably some others) by importing a GPLv2 version of
-> wildmatch. That certainly isn't an option for JGit (because it's not
-> pure Java), and probably not for libgit2 (which would need the wildma=
-tch
-> authors to grant the linking exception).
->=20
->> Yup, an area that is reasonably isolated from the remainder of the s=
-ystem like
->> this might be a good starting point. But I suspect that the invasion=
- needs to
->> happen in the opposite direction in this particular case before it h=
-appens.
->> That is, if libgit2's implementation does not behave like how we do,=
- it needs to
->> be fixed, possibly by discarding what they did and instead importing=
- code from
->> us. After the behaviour of libgit2 is fixed, we can talk about the
->> invasion in the
->> opposite direction.
->=20
-> Unfortunately, "importing code from us" is not so easy. :(
->=20
-> They'll either need to contact the wildmatch authors, or rewrite
-> wildmatch from scratch.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.10 (GNU/Linux)
 
-Yeah, we currently use the fnmatch code from Android IIRC. I=92m not lo=
-oking forward to writing a variant of that for double-star. If the wild=
-match authors are receptive to allowing the linking exception, that wou=
-ld be ideal.
+iQIcBAEBCgAGBQJWjyHVAAoJEL9TXYEfUvaLRZIQAKux8GiLASWxgBAFEWq5L4yi
++cXJEOiDxTSXgx1elIJ1ew2NvCgzn06XylHAg+lG9wM9zNnnK6HXiJMLUSA4/F3x
+j99RRSo2VPDHLHYIypKih/xEi54yIn9dciRflKqrIlk972hqnUjz/H4/EhGg5+Yu
+vXSKqbNo2hYe44tc4QIbBn21DIjKZLAEaDBQ88k9Jx7CJWzedLHhYIMooPInAQ4M
+ty+fdYnqFdSXIltmJM0zNR+KX2dkHy/H9qZck3SoEjUfWsX/yh94+5lTY/NMlMAb
+icMoGEpmrUVysQ8JplFUp8bjc8d2IfGloMm1TPaNIQdi32mNf+DgsE/R0LcgEZUY
+zYaXbQdshmLB9zq772llQFMBYXY6v/0oIDmOtwDwqa54lZleLdOOZVd8CL3y1Z/3
+M3PDezUJBDv0HsW4XXuQAF+ilEBp+3eb6mFi1cfnjq70RXzsUB9+obDwAB5eIr1H
+GDPBYpQuxVPbhjKDfXbTQlr7gRimwjDS1Xy/FNHxEap3+gUK3RZ8SeNRDikBjaQC
+JWRYM+bsdyTGydmAvbEzbMT1ciycVPx0GrWMzAia/dXbEpa5+MB51B9fQRSo8/Y/
+o4iALtyJgPSD/8hdQgQIAf2qg1c9+/xlpJA36oUoaz8BK5wOXGUM3fVKCabOYbpe
+J8iYUHxD0udtJOI9mNFe
+=8lT2
+-----END PGP SIGNATURE-----
 
-   cmn
+--u65IjBhB3TIa72Vp--
