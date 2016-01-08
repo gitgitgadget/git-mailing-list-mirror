@@ -1,92 +1,73 @@
-From: pedro rijo <pedrorijo91@gmail.com>
-Subject: format-patch on empty commit
-Date: Fri, 8 Jan 2016 12:53:59 +0000
-Message-ID: <CAPMsMoAtSFnNuGGhVOmMx07B3QBCooZCLhyuE9iHDvL122+bmg@mail.gmail.com>
+From: Richard Ipsum <richard.ipsum@codethink.co.uk>
+Subject: Working towards a common review format for git
+Date: Fri, 8 Jan 2016 14:08:31 +0000
+Message-ID: <20160108140831.GA10200@salo>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Cc: Dave Borowitz <dborowitz@google.com>,
+	Stefan Beller <sbeller@google.com>,
+	Edwin Kempin <ekempin@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 13:54:52 2016
+X-From: git-owner@vger.kernel.org Fri Jan 08 15:09:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHWZ3-0004AT-0b
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:54:45 +0100
+	id 1aHXjO-0000yY-Gq
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 15:09:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698AbcAHMyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 07:54:41 -0500
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:36244 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751351AbcAHMyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 07:54:41 -0500
-Received: by mail-lf0-f48.google.com with SMTP id i124so6804355lfe.3
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:54:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=EbTfMMB+G4MXBCsQ42FQjzE1AyibeHSSuvmnAiU/sn0=;
-        b=G6qjqdZQ+MoAOImldq7aQJZM0GrKmwKIujIDIn3xEceuJHeeU8MjqeYp1I9dvCeC3N
-         ka5ZZ1ASzOs4UaAwEjc0JiTrK8Gqa26nGPSqP0G8NquSHiYhAFhLLi7vtAxRPPrCEKHD
-         V798F4t2qK1X0I6MRNmUaF8L31CcSWkYaJilTX2nQ3Ty1qV5VxDNK5ke6hreFdPqbkgU
-         ajY2F+hyvemGKg+GESYBnXMfnILnnBOcYYSKPkYPUR7asY19tpNyoPFtPjWIKr5fa4wS
-         8cLkcMNI9MwpZf5T2+8/oWmwxZ/a4n7D42LY1mDCG9tQ4Z2Pl0H94727/DU1uC+MLEte
-         o/CA==
-X-Received: by 10.25.79.143 with SMTP id d137mr32865186lfb.110.1452257679420;
- Fri, 08 Jan 2016 04:54:39 -0800 (PST)
-Received: by 10.112.85.134 with HTTP; Fri, 8 Jan 2016 04:53:59 -0800 (PST)
+	id S1755216AbcAHOJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 09:09:23 -0500
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:34404 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755434AbcAHOId (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 09:08:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 2BB5A4622BE;
+	Fri,  8 Jan 2016 14:08:31 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GvvGIkw0A3oy; Fri,  8 Jan 2016 14:08:27 +0000 (GMT)
+Received: from salo (salo.dyn.ducie.codethink.co.uk [10.24.2.138])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id D1608460A89;
+	Fri,  8 Jan 2016 14:08:27 +0000 (GMT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283553>
 
-Hi all,
+Hi,
 
-Couldn't find any explanation on git docs on this issue:
+In a prior email I mentioned in passing a library I've been working
+on to try to reach a common format for storing review content in git:
+perl-notedb.[1]
 
-If I create a dummy commit, with some dummy diff, I get a normal patch
-when I run
+I'm making reasonable progress with this but my work has uncovered
+necessary (and trivial) modifications to Notedb, the first[2] is a
+trivial modification to ensure the 'Status' trailer gets written
+to the commit when a change's status changes. The second[3] is an RFC
+where I suggest adding a 'Commit' trailer so that it is always
+possible to reference the commit under review by its sha.
 
-$ git format-patch -1 -o outgoing/ -p -k
+With these patches applied to gerrit it's possible for perl-notedb to parse
+all meta content from notedb and map it to the actual git content
+under review. However, my concern at present is that I'm already
+operating under a fork of notedb which defeats the objective of
+collaborating to produce a standard format, let's try to avoid[4]
 
-but if the last commit is an empty commit, generated by
+If the gerrit folks could let me know what I need to do to get
+these modifications merged, or else what we need to do to achieve
+equivalent functionality I'd really appreciate it.
 
-$ git commit --allow-empty "Some commit message"
+Thanks again,
+Richard Ipsum
 
-then the output of the format patch will be an empty patch. If the
-first case produces something like this:
-
->From 08cfdb2994554d834b89309ca96d9bf513e26a90 Mon Sep 17 00:00:00 2001
-From: pedrorijo91 <pedrorijo91@gmail.com>
-Date: Fri, 8 Jan 2016 12:44:57 +0000
-Subject: dummy commit
-
-
-diff --git a/lol.txt b/lol.txt
-new file mode 100644
-index 0000000..f944b38
---- /dev/null
-+++ b/lol.txt
-@@ -0,0 +1 @@
-+:)
---
-2.5.4 (Apple Git-61)
-
-
-
-then the second case shouldn't generate something like this instead ?
-
->From 2d486f25c48780e2e132047e681929fcccb7e60c Mon Sep 17 00:00:00 2001
-From: pedrorijo91 <pedrorijo91@gmail.com>
-Date: Fri Jan 8 12:43:55 2016 +0000
-Subject: Some commit message
-
-
-2.5.4 (Apple Git-61)
-
-
-
--- 
-Thanks,
-Pedro Rijo
+[1]: https://bitbucket.org/richardipsum/perl-notedb
+[2]: https://gerrit-review.googlesource.com/#/c/73436/
+[3]: https://gerrit-review.googlesource.com/#/c/73602/
+[4]: https://xkcd.com/927/
