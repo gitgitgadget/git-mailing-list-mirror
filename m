@@ -1,122 +1,173 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should notes handle replace commits?
-Date: Fri, 08 Jan 2016 12:09:45 -0800
-Message-ID: <xmqqh9in25py.fsf@gitster.mtv.corp.google.com>
-References: <20160108012830.GA2110@glandium.org>
+Subject: Re: Some issues when trying to set up a shallow git mirror server
+Date: Fri, 08 Jan 2016 13:37:02 -0800
+Message-ID: <xmqqd1tb21oh.fsf@gitster.mtv.corp.google.com>
+References: <20160107165417.GB3397@logi.codethink.co.uk>
+	<xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Jan 08 21:09:53 2016
+To: Richard Maw <richard.maw@codethink.co.uk>
+X-From: git-owner@vger.kernel.org Fri Jan 08 22:37:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHdM8-00014b-NQ
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 21:09:53 +0100
+	id 1aHeif-0005YE-EO
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 22:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbcAHUJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 15:09:49 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64663 "EHLO
+	id S1756725AbcAHVhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 16:37:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50515 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751700AbcAHUJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 15:09:48 -0500
+	with ESMTP id S1754560AbcAHVhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 16:37:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C6374390DB;
-	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 06BFE3A60A;
+	Fri,  8 Jan 2016 16:37:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LIWY6BlG2KRcf5mYjxrkCGpkSvU=; b=rrGWZ5
-	kqMMrohp7I3ztSiW0lfEcVQXZrPELQOwZLMM73O+3AQB8HRHyeWpMBkksY40R3m+
-	U02OD5DEYgoVMc4qbmkAhuySBxtFvXBPjw822GDMUKs5UisOOUrULOgIFRBTT2fm
-	cPFWmQaDCSSBrX+xKcN6PvqO0/cj73tiegqoA=
+	:content-type; s=sasl; bh=jpgTgYtHxE0DV8ti6t3OUqPI8zI=; b=Ns5jCQ
+	uZcR27t+HmdxF436UhKwkkG1LqBV8aHZLjxxnHfh34t/+mwrTns6kWJzt/tyBC7S
+	ZascG25yzQgqECcgYoFHn5P7XyJqzj6XKtNW1AFrbJ82r97/dunMM8NJCJposff1
+	aKfQdeRO+0pjgGCzIxEsUaHgJLaUcEITXVuCQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iLhe1JmUO23XsfWhjQNf/VG+iXeGb2Gl
-	kG4pHlLiYfztOmNmpQe9vYZXjh9eG6alJRu2s4e5df5oEiRobHAJaJkGGEtuGJ2a
-	fPvhTKQ71A0Ub7+0wfLQw/FajtVDHJyBVUPbBeD8oEYnoGPatUIe8lBEFffSKv+1
-	X0PdB78+Ops=
+	:content-type; q=dns; s=sasl; b=YXHzFufaldiH17TWZbNkvdjJf4f3D24j
+	Mxs5KX/kccnVTaoLxTfc0BX4JraLvz4A3Ktk47aMeDGFFEnRSOBONaS5MhTX3Cwp
+	YR9m44buYQ/W2enQbnBrHS+voKryhXcU1Bd85tDUf596v7Zp+FQ1D8qdXlGllc6o
+	gRN3qxXGymo=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCB2F390DA;
-	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F2CF93A604;
+	Fri,  8 Jan 2016 16:37:03 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 191CD390D2;
-	Fri,  8 Jan 2016 15:09:47 -0500 (EST)
-In-Reply-To: <20160108012830.GA2110@glandium.org> (Mike Hommey's message of
-	"Fri, 8 Jan 2016 10:28:30 +0900")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 608A83A5FF;
+	Fri,  8 Jan 2016 16:37:03 -0500 (EST)
+In-Reply-To: <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 07 Jan 2016 10:00:07 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C3F28C72-B643-11E5-8A81-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: F504D3B8-B64F-11E5-960B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283582>
 
-Mike Hommey <mh@glandium.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Assuming that the "first" commit on master is the same as the "real
-> third" on old, you can graft with:
+> Richard Maw <richard.maw@codethink.co.uk> writes:
 >
->   $ git rev-parse master~ old | xargs > .git/info/grafts
-
-With "graft", you told Git that the parent of master~1 ("second") is
-not master~2 ("third") but is old ("real third").
-
-> And then:
->   $ git log master --format='%s - %N'
->   third - third note
+>> This is inconvenient for us,
+>> as we were explicitly using refspecs which didn't force the fetch,
+>> since we were using the "non fast-forward update" errors
+>> to detect whether upstream force pushed important refs
+>> which could be a sign of tampering.
+>>
+>> While the client doesn't have enough information
+>> the server has those commits.
+>> Would it make sense for the server to be able to tell the client
+>> "trust me, that commit is a descendant of the previous one"?
 >
->   second - second note
->
->   real third - real third note
+> It does not in our security model, as you do not blindly trust the
+> other side, whether you are a "client" or a "server".
 
-So it is expected that after "second" you see "real third", as you
-are seeing the "real third" with its notes.
+Thinking about it more, I think my answer was flawed.  
 
-> Now, if you try to do the same with replace:
->
->   $ rm .git/info/grafts
->   $ git replace master~2 old
+A client may ask the server to give a history, and before it accepts
+the result, it must do its own consistency check.  A client may send
+its history, and before the server accepts it, the server must do
+its own consistency check.  This is the general principle around our
+consistency model (it is not limited to "security", but it is more
+about "correctness" in general).
 
-With "replace", you told Git that the contents (i.e. message, tree,
-etc.) of master~2 ("first") is not what it really is but is what
-appears in old ("real third").
+While that consistency principle must hold everywhere in our system,
+it does not mean a client cannot ask a server to do something whose
+result it has to trust, at least to some degree, because there is
+fundamentally no way to independenty verify the result.
 
->   $ git log master --format='%s - %N'
->   third - third note
->
->   second - second note
->
->   real third - first note
+I think what you were hinting falls into that category.  The client
+cannot verify that the new tip is a descendant of the old one
+without having the full history between these two points, but
+transfering that history would defeat the whole point of using a
+shallowed history.
 
-Hence Git tries to show master~2, i.e. "first", here; its contents
-is replaced with that of "real third", but the object name of the
-commit shown after "second" is shown, as far as Git is concerned, is
-still that of "first", so it is not surprising that the note that is
-associated with it is shown here, as the whole point of "notes" is
-that it is kept outside the contents recorded _in_ the commit.
+So in that sense I do think that such a protocol extension does make
+sense.  But it would involve some extra pieces of information that
+need to be sent between the client and the server, not just "I'll
+trust you".
 
->   real second - real second note
->
->   real first - real first note
->
-> Note how "real third" now has "first note", instead of "real third
-> note".
+In the current "git fetch" protocol, the sender gives the receiver a
+list of refs, and for each of these refs, the object name it points
+at.  Then the receiver asks the sender to give it the objects that
+appear in the history leading to a set of objects (aka "want"), and
+tells the sender what objects it completely has already (aka
+"have").  The idea is that the sender can exclude objects that are
+reachable from "have"s when it enumerates the objects that need to
+be sent.  When the receiver is shallow, it also tells the sender
+that its current history is truncated at such and such commits,
+lacking things before them.  After that exchange, the sender just
+gives the receiver a packfile that contains the objects requested.
+The receiver verifies that the packfile makes sense, e.g. it has all
+the "want" objects it asked for, and the objects that they refer to
+(recursively) are available, before updating its refs with (some of)
+the "want" objects.
 
-So it is not a correct observation that '"real third" now has "first
-note"'.  You are still seeing "first", but its message, together
-with its tree and its parents, are replaced by those of "real
-third".
+In the simplest case, for example, where you might have a single
+refs/heads/master that currently points at O and the other side has
+N at its refs/heads/master, the sender would say "I have N at
+refs/heads/master" and the receiver would say "I want N, and I have
+O".  A shallow receiver may also say "I do not have history behind
+O" and "I only want a history 1 commit deep".  And the sender would
+send objects that is necessary to satisfy the request, e.g. commit N
+itself and the trees and blobs in commit N that are not common with
+commit O.
 
-> So the question is, is this the behavior this should have?
+Notice that nowhere in this exchange the receiver tells the sender
+what it intends to do with the "want" objects?
 
-The behaviour is a natural consequence of what graft and replace are
-about (i.e. "telling Git what the parents of a commit are" vs
-"telling Git what the contents of a commit are"), so the answer to
-the "should" question is a resounding "yes".
+Because the receiver does not say "I want N and I intend to replace
+O I currently have refs/heads/master", there is no way for the
+sender to say "trust me, N is a descendant of O".  It simply does
+not know if the receiver _cares_ how N and O are related with each
+other.
 
-It is a separate issue if the behaviour is useful for the purpose
-you wanted to use "replace" for.
+So if you want to do this, a new protocol extension needs to allow
+your updated sender (upload-pack) and receiver (fetch-pack) to work
+more like this:
+
+ * The sender would advertise "I support that extension", while
+   giving the usual "here are my refs and its current values".
+
+ * The receiver would say "I want to use that extension", and to
+   each of its "want" (which usually consists of "want" followed by
+   an object name and nothing else), it optionally adds names of the
+   objects it wants to verify ancestry relationship with.
+
+   E.g. if you have O at the tip of the master branch and P at the
+   tip of the maint branch, the sender has N at both of these two
+   branches, and if you are updating your master and maint with
+   their master and maint, you would say something like "want N O P"
+   to tell the sender that you want history leading to N, and you
+   want to see if N is a descendant of O and if N is a descendant of
+   P.
+
+ * The receiver and the sender then does the usual "have"/"ack"
+   exchange, which does not have to change any behaviour with this
+   extension.
+
+ * Finally, when the sender sends out the resulting packfile, it
+   also has to tell the receiver which of the object pairs the
+   receiver asked it to check the ancestry relationship violate the
+   fast-forward rule.  In the earlier example of fast-forwarding O
+   and P with N, where the receiver asked "want N O P", the receiver
+   asked to check object pairs <N, O> and <N, P>.  If P fast-forwards
+   to N but O does not, then the sender would tell the receiver the
+   fact that "O does not fast forward to N".
+
+With such an extension, your updated receiver can receive the
+necessary objects to update your history to "N", but notice that it
+would result in non-ff update to update master (that used to be O)
+with the new commit N.
