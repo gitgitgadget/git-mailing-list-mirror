@@ -1,93 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to fetch entire heirarchy of refs from a remote?
-Date: Thu, 07 Jan 2016 15:45:56 -0800
-Message-ID: <xmqqfuy92bt7.fsf@gitster.mtv.corp.google.com>
-References: <CA+P7+xqexsOma5c9NfS5ma333UJV=5i1a4GhnwZuU75eaxRd=Q@mail.gmail.com>
-	<CA+P7+xra4hjskOLg=VhLMGazTSDH=ky8H+fj2VMCw+HoY2Frrg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Git 2.7.0 gitignore behaviour regression
+Date: Fri, 8 Jan 2016 07:38:58 +0700
+Message-ID: <CACsJy8C1R+JVmOXQ87eBP1COFNk3Vfqtb6AKzzT65catUhPczg@mail.gmail.com>
+References: <4B0F686D-3DF9-4E5D-971D-DB106C6573FD@mikemcquaid.com>
+ <20160105150602.GA4130@sigill.intra.peff.net> <20160107234455.GB265296@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git mailing list <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 00:46:10 2016
+Content-Type: text/plain; charset=UTF-8
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Mike McQuaid <mike@mikemcquaid.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 08 01:39:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHKFt-0004MU-Oo
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 00:46:10 +0100
+	id 1aHL5e-0004sT-Ni
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 01:39:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753798AbcAGXqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Jan 2016 18:46:01 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51720 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752721AbcAGXp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jan 2016 18:45:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1EEA63AA84;
-	Thu,  7 Jan 2016 18:45:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aD6pGiI2z370PUDebh5Lw5bHxS4=; b=jDk7ce
-	ou+BNyobvr9QBakv+eXjuDFLlcDcy38V7gk2dSr+v2jult2erZKEoCyHymjVftnK
-	HH0Rf5FOCFaNwSE9T1RFpm842dyjGRTlRNg95JE0GOEQLKUV0t5ZzMhwOyWHXaMV
-	nAh2Vzlqqz7RrGDYGIL9Xxt05AkERsB4yrIlk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fXePRbBcggbHePVo5vP3a1r+kA2DYLdR
-	YSXJW2MTWYih+6T117tnbENq7+1gSRm1zv8byiKFX0eMkVrxwYwXYirGrzYtOvOP
-	OEeOXWGGxhhFWeN6Tc2Cov+T8/LamMCRS6uYKFgMNXRCT1sUYehzmZpNCH9a4xNs
-	ooChFk8cn90=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1455B3AA82;
-	Thu,  7 Jan 2016 18:45:58 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 895AB3AA80;
-	Thu,  7 Jan 2016 18:45:57 -0500 (EST)
-In-Reply-To: <CA+P7+xra4hjskOLg=VhLMGazTSDH=ky8H+fj2VMCw+HoY2Frrg@mail.gmail.com>
-	(Jacob Keller's message of "Thu, 7 Jan 2016 15:36:30 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CC87AF6C-B598-11E5-A679-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753561AbcAHAjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Jan 2016 19:39:31 -0500
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:34177 "EHLO
+	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753538AbcAHAj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jan 2016 19:39:29 -0500
+Received: by mail-lf0-f46.google.com with SMTP id d17so245880lfb.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2016 16:39:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=IKoavIOW6pOLzXcJk4lTm6nMk+3sx+FcNWGId/cYmuA=;
+        b=fIxudxhjB0rvoXtFXXDDzx57mcTPJAoYmfvan4KPiY8P//H8KbIGJNqWQ7iAJ+VbQS
+         857jYQ49164OWpdvG0iYn5WQvTq83S8hPVK7IP0Q6ka417YscCKG1Ex5C9lVFY5/it1Y
+         /LG2rR8vQGYrRzj3ncFnFlDKunF93U2i46V7Mr+9xSPHmAU0ealaNq7lIzETr6lzOemE
+         bLZujfyVXft87RA3Gh4it+dXX3CxJToByMbNAincrK5MBsXfykxdsmr9VXQJiiHezzLn
+         TMDFnAaDXouqaV48UpzXT8uNYY9ndVf5tZG6QFE1CHbo2FJi+t5Hbd99trm4Lr0RRZaq
+         5XeA==
+X-Received: by 10.25.43.212 with SMTP id r203mr33585052lfr.162.1452213568266;
+ Thu, 07 Jan 2016 16:39:28 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 7 Jan 2016 16:38:58 -0800 (PST)
+In-Reply-To: <20160107234455.GB265296@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283522>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> On Thu, Jan 7, 2016 at 3:06 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+On Fri, Jan 8, 2016 at 6:44 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Tue, Jan 05, 2016 at 10:06:02AM -0500, Jeff King wrote:
+>> Thanks for giving a clear example. This bisects to Duy's 57534ee (dir.c:
+>> don't exclude whole dir prematurely if neg pattern may match,
+>> 2015-09-21). AFAICT (and I don't recall looking over this patch
+>> previously), what you are seeing is the intended effect of the patch.
 >>
->> But, git clone --mirror and git fetch have failed to pull every ref,
->> and only end up with heads and tags.
+>> Your final line unignores stuff inside of "a", so we're reporting it (if you gave
+>> "-uall", you'd see the actual file "a/b"). Older versions of git
+>> generally optimized out looking inside "a/" at all. This created a
+>> hassle when people wanted to do things like:
 >>
->> Regards,
->> Jake
+>>     a/
+>>     !a/precious-file
+>>
+>> in their .gitignore.
 >
-> It turns out that it *does* pull the refs, but they don't appear to
-> show up inside the "refs" folder.. is there a reason for this?
+> I think there's still a bug in the code here.  If you do
 >
-> ie:
->
-> ls .git/refs/changes
->
-> shows nothing,but
->
-> git ls-remote file:///path/to/repo
->
-> does show them? Any particular reason for why this is? I am confused
-> why refs aren't showing up inside the refs folder...
+>   git init
+>   mkdir -p base/a/
+>   printf 'base/a/\n!base/a/b.txt\n' >.gitignore
 
-Does
+Here we have the ignore rule "base/a/", but gitignore.txt, section
+NOTES mentions this
 
-	git for-each-ref refs/changes/
+ - The rules to exclude the parent directory must not end with a
+   trailing slash.
 
-in your local resulting repository show them?
+>   git add .gitignore
+>   git commit -m 'Add .gitignore'
+>   >base/a/b.txt
+>   git add base/a/b.txt
+>   git commit -m 'Add base/a/b.txt'
+>   >base/a/c.txt
+>   git status --porcelain
+>
+> git status outputs base/a/c.txt as unknown, when it should be ignored.
+> We saw this in a repository at $DAYJOB.
 
-There is nothing that says "ls -R .git/refs/" is the way to
-enumerate available refs (in fact it is a _wrong_ way that is
-guaranteed to give you wrong results).
-
-Hint: .git/packed-refs
+If I delete that trailing slash, c.txt is ignored. So it's known
+limitation. I think we can make trailing slash case work too, but if I
+remember correctly it would involve a lot more changes, so I didn't do
+it (there are other conditions to follow anyway to make it work).
+-- 
+Duy
