@@ -1,75 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 1/4] Refactor skipping DOS drive prefixes
-Date: Fri, 8 Jan 2016 16:51:11 -0500
-Message-ID: <CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com>
+Date: Fri, 08 Jan 2016 14:07:00 -0800
+Message-ID: <xmqq8u3z20aj.fsf@gitster.mtv.corp.google.com>
 References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de>
 	<cover.1452270051.git.johannes.schindelin@gmx.de>
 	<c70ed05f275a44fbfae831b4cb67e59a0ce05724.1452270051.git.johannes.schindelin@gmx.de>
+	<CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 08 22:51:18 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 23:07:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHewH-0001Ib-Gg
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 22:51:17 +0100
+	id 1aHfBe-0007H2-VM
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 23:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932806AbcAHVvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 16:51:13 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33081 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932634AbcAHVvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 16:51:13 -0500
-Received: by mail-vk0-f68.google.com with SMTP id n1so2771947vkb.0
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 13:51:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=aZxxTpqy3pjVKntBHdh7zmbFfJAbOD1/SYy0f0NgjJI=;
-        b=LQqZpRYnD9WCsYJ37P4v14zWXDD8aViA1P7JDlHVfFGVobqpmXtTsx/KwFxlpV1yO4
-         quM25lPSLh31JcAn94QKC8B5wQNs2+0PFosI/rP2nfnALmlQaTElKoONfsUkQPR48Yoy
-         oiNCJwqtSjhfW5OmhQgHb99aCn3aMkg3TLOWOxg4PVxgwQw0RuDCNw76Z4kzH8gP8uEz
-         9PbGh60EchLhtIL6Z3fsW75TVA77+QwROmn1aUR9rTpgXDY8NgNwxwk1q+O6nBjHSQ1N
-         9XJiwjG+lHbpVwAT+dlGKG+n4+tiP6VGqNwZ0hZ5YM8q2vgo9FHK6jziX2iwWCK6g265
-         7pKA==
-X-Received: by 10.31.58.142 with SMTP id h136mr79680452vka.115.1452289872007;
- Fri, 08 Jan 2016 13:51:12 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Fri, 8 Jan 2016 13:51:11 -0800 (PST)
-In-Reply-To: <c70ed05f275a44fbfae831b4cb67e59a0ce05724.1452270051.git.johannes.schindelin@gmx.de>
-X-Google-Sender-Auth: X5O-LsJtKAPPWEWSYDePY8TE9XQ
+	id S1753954AbcAHWHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 17:07:06 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63018 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752279AbcAHWHE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 17:07:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78C363AC8A;
+	Fri,  8 Jan 2016 17:07:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B+Fmqof8ZfYRVlTF3FERi6mLZho=; b=Gpy43E
+	ydVigNYzAVI+tPSEqgBgQLPeqNc4JrFENxYvNG5r3fO7m8xM9+f6UUhEK7m5ess8
+	a1oKmlHhwMPbe3GZuCUePawS0LtKNYR/Lg0OGKN8kXRjhkRkuIbf7Kv54aQL30OO
+	XP4XeSdgBWqCh0qSNp/Ms0VpOCshLz0fAWGyY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iW9LutOXRc1DihK/T6e1lQtURIPah5O8
+	c8nSqGKq5yDcWZ6MrKu5Ls/LxH7BK5jp2fUmtUOff/iYBA6khkOITlwPFhRQjkcW
+	Slso+GKBI6/GNLa2og6W1IZX4x68zYtvL4oQ/vCtU5Bdq6isDyZwfGPLe+0+0L6B
+	PI/u6VbLH34=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E3F73AC89;
+	Fri,  8 Jan 2016 17:07:03 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C17703AC88;
+	Fri,  8 Jan 2016 17:07:02 -0500 (EST)
+In-Reply-To: <CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 8 Jan 2016 16:51:11 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 258B4E6E-B654-11E5-AE48-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283584>
 
-On Fri, Jan 8, 2016 at 11:21 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Junio Hamano pointed out that there is an implicit assumption in pretty
-> much all the code calling has_dos_drive_prefix(): it assumes that the
-> DOS drive prefix is always two bytes long.
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> With this change, code such as:
 >
-> While this assumption is pretty safe, we can still make the code more
-> readable and less error-prone by introducing a function that skips the
-> DOS drive prefix safely.
+>     for (i = has_dos_drive_prefix(src); i > 0; i--)
+>         ...
 >
-> While at it, we change the has_dos_drive_prefix() return value: it now
-> returns the number of bytes to be skipped if there is a DOS drive prefix.
+> in path.c reads a bit oddly. Renaming the function might help. For instance:
+>
+>     for (i = dos_drive_prefix_len(src); i > 0; i--)
+>         ...
 
-With this change, code such as:
+Renaming may be unnecessary churn, but I do not think we mind an
+additional synonym, e.g.
 
-    for (i = has_dos_drive_prefix(src); i > 0; i--)
-        ...
+    #define has_dos_drive_prefix(x) dos_drive_prefix_len(x)
 
-in path.c reads a bit oddly. Renaming the function might help. For instance:
-
-    for (i = dos_drive_prefix_len(src); i > 0; i--)
-        ...
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+if some people prefer.
