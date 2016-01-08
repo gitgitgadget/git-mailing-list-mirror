@@ -1,80 +1,200 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Provide a dirname() function when
- NO_LIBGEN_H=YesPlease
-Date: Fri, 8 Jan 2016 17:18:51 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601081717430.2964@virtualbox>
-References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de> <560C30B1.3010508@ramsayjones.plus.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 1/4] Refactor skipping DOS drive prefixes
+Date: Fri, 8 Jan 2016 17:21:11 +0100 (CET)
+Message-ID: <c70ed05f275a44fbfae831b4cb67e59a0ce05724.1452270051.git.johannes.schindelin@gmx.de>
+References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de> <cover.1452270051.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 17:19:24 2016
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 17:21:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHZl4-00057U-Be
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 17:19:22 +0100
+	id 1aHZn4-0006u2-Ea
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 17:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371AbcAHQTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 11:19:13 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52903 "EHLO mout.gmx.net"
+	id S1755833AbcAHQVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 11:21:19 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54090 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932352AbcAHQTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 11:19:09 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LwXCt-1a8qG03RVf-018NMy; Fri, 08 Jan 2016 17:18:55
+	id S1755838AbcAHQVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 11:21:18 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M4CB5-1Zywjz2GyB-00rqcx; Fri, 08 Jan 2016 17:21:12
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <560C30B1.3010508@ramsayjones.plus.com>
+In-Reply-To: <cover.1452270051.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:nRMDr25PLiYNmtRxSicMsq2rSZ3NmfW4QMpC6lawN7e84TKgxgy
- OSO0frU7n1Juo6X6fHnYrxHyj9dfIxROvejcSUzpau87eaxpi/dYWDu4KaGby6guqXR2ed5
- Vf6mAWh1D6SvysTF4HI/eNGxVPGfGCf+YNOh4YL3ROOKLeoS9ow9j0POT95+0KjNpp52yq2
- 8uzGLeKqpJhvwjeNK1nDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+BTliSHF9uw=:zMVoGDCFLShFn6YC/jbUZD
- 6pgIBP+Z0oY56yapXuJw4iyVlZuIxOzfqEYEP1flFTDlbLPVUuGYHOnPUj0PAPaEkpP0ECN90
- lo3Rf9Ooyj4WCxOccAeAjD6eEum4zPLylsa/joCUo8wnL0Ya3LNtdfCqXH7gUt5GwSSLBLvsJ
- AcQ5ccOAv/YvxDZs4Fox3uhOVpxGOklIrYR9teziD90zzlNIBxUkozzJYYN5cioOrFtVpq2wk
- 0V/5cEsQxcX3+akZOvwRArs+lvb76aldvt5qN7VP5ch+mS8tkOPsnf3mVeTMTb2Lbh3VJg43l
- vVPleByKqZcpcn9Bg7QrxRk2u0N/U52bAPbgvGWvxsWUXuzOnCeQ8s19qE+LRw/0IRPD8a6GP
- shBU86y5HPd6di5uED9nPyzfBIfRhw+wpLD7cQscEaq6I5V2oBi4F1YZawv9xFYhlK5HXOpa3
- A6olNa/GEaMa8mXH8yQoETfpg7nubm5BK3VTpQTT+BHEuW6bTDS4tR8kvf50ShuXj2poN25xy
- RgWouq1To5+UOVXpJ4hzVhlWxtdZQVJWdiF4E+00Vty0LSWKGJZtx2YVuiXtvAYwMX+M7afXb
- LJXrj+d0v4IHpeMuO9V0fBbp+DdbwKVwNyHdaBB5qFHdEdTEPz1D9uucqWsSn9uMeGt7JWidQ
- iVqTley4uP/SMzLxYTVdKIood81oyO8BnGFRLHBFn/jmOC9CYb8hdOJ8Q8QghyEcETxdsnh4s
- YtrWB0HCs1QNTLCAwnsYkYcgswyTpubLMrgpKG4TSHym6miJGH59+gtf/4mhAITLR/7PfuD7 
+X-Provags-ID: V03:K0:gl5h4LgMO8s7MZMSdSmZ81iUEtyxG3Jjn/A3HStNyh7fn6/w+BG
+ cZBXkUbsXnrg5dnZdxpLQ8fJFGcGDa6yD0YaM3FdDdnNs4ECdOPiWsYD7sZ9814OiJcT/h4
+ 1bRaYk5IRP7/INVGOFaO4fub8kwAiyiUoDQckM/ljPmRp8gP1IXcYNA8vUH13foShwxx4PB
+ AogwfaRYScf9mz8sqfgZQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SCamzmctqtI=:plgx89rMf5O1b5dzkNfMlZ
+ Z0thi6e0rnc2yQ+G+qDjvcH8JqjmzfeJfCMJYX6QSJPGKPACNkadCZtTRO4zl5iH+BddnMAL6
+ GpiuNrG81mIV4L8qDNLktrBzZ2yYcMaJu3lrjsZilSzeiSUw1KhOHMWOt7GW3qShbM7o2SI5o
+ XW7bvLVCAFxgrZgKVwiS0AY9i+0FWtlqGhajZZHIY+lwwdG2tHHnFol+7jLBVJDRESur//UQ/
+ qDFzvb6YH6cvx7lB87/i6DqwgtGkU6ZIxCES94mFYgvrk8/53uluWYmrNZRmTORi164mIyo0d
+ oFv3nrwUAi58FNEbBjwBC6utuU68jwL7KKvXIW2hAQmRyYx7zBld9WFdSYKA8fbLZZPyhGbcd
+ InYcdHQhXJWYUfWMWxN4bDj/gys7uG7usi7LLVdm8RUkP1EQVWUKDxNzeP3r5/63CCf9etHlg
+ Y/NA1TQLq4leP4FHEmJ0CUHSCF+1Yw8PjlmfnYjqFzUAVDDkA7Ny8rNbDA9vL6px+cJ7gbyM9
+ bMLWVpGrq4sfu4DZdwc41kDQ7+t6ma195nEkWRg5WLBJMZpGXJb0jQsHpjLpqPkskvLRHkzAY
+ d9/TofACBUnhjZ+KvFtm3LUbxCqhMws0Rc4t9gjLmA/q6aDLf3O+GReSyVas2zmWvxb9gIJmg
+ 2+cVaHkMT1ymdaYlz/KG1aVtMxFOTTvZcw8tLqYxbu4jo4XzyVEhqhh6z530fSSfldQkmJCx1
+ ORwDDsilDW9Nkt4H0b5c1zcVXh18Kc8jwBPUVVa3f+5hiW7h29DApAsyi1NqsAUvBYtMnFs1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283563>
 
-Hi Ramsay,
+Junio Hamano pointed out that there is an implicit assumption in pretty
+much all the code calling has_dos_drive_prefix(): it assumes that the
+DOS drive prefix is always two bytes long.
 
-On Wed, 30 Sep 2015, Ramsay Jones wrote:
+While this assumption is pretty safe, we can still make the code more
+readable and less error-prone by introducing a function that skips the
+DOS drive prefix safely.
 
-> On 30/09/15 15:50, Johannes Schindelin wrote:
-> > When there is no `libgen.h` to our disposal, we miss the `dirname()`
-> > function.
-> > 
-> > So far, we only had one user of that function:
-> > credential-cache--daemon (which was only compiled when Unix sockets
-> > are available, anyway). But now we also have `builtin/am.c` as user,
-> > so we need it.
-> 
-> Yes, many moons ago (on my old 32-bit laptop) when I was still 'working'
-> with MinGW I noticed this same thing while looking into providing a win32
-> emulation of unix sockets. So, I had to look into this at the same time.
-> Since this didn't progress, I didn't mention the libgen issue.
-> 
-> Anyway, I still have a 'test-libgen.c' file (attached) from back then that
-> contains some tests.
+While at it, we change the has_dos_drive_prefix() return value: it now
+returns the number of bytes to be skipped if there is a DOS drive prefix.
 
-Awesome. Thank you! I integrated the tests back into test-path-utils.c
-(from where the framework clearly came) and made it part of the regression
-test suite in the upcoming v2.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/basename.c |  4 +---
+ compat/mingw.c    | 14 +++++---------
+ compat/mingw.h    | 10 +++++++++-
+ git-compat-util.h |  8 ++++++++
+ path.c            | 14 +++++---------
+ 5 files changed, 28 insertions(+), 22 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/compat/basename.c b/compat/basename.c
+index d8f8a3c..9f00421 100644
+--- a/compat/basename.c
++++ b/compat/basename.c
+@@ -4,9 +4,7 @@
+ char *gitbasename (char *path)
+ {
+ 	const char *base;
+-	/* Skip over the disk name in MSDOS pathnames. */
+-	if (has_dos_drive_prefix(path))
+-		path += 2;
++	skip_dos_drive_prefix(&path);
+ 	for (base = path; *path; path++) {
+ 		if (is_dir_sep(*path))
+ 			base = path + 1;
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 5edea29..1b3530a 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1934,26 +1934,22 @@ pid_t waitpid(pid_t pid, int *status, int options)
+ 
+ int mingw_offset_1st_component(const char *path)
+ {
+-	int offset = 0;
+-	if (has_dos_drive_prefix(path))
+-		offset = 2;
++	char *pos = (char *)path;
+ 
+ 	/* unc paths */
+-	else if (is_dir_sep(path[0]) && is_dir_sep(path[1])) {
+-
++	if (!skip_dos_drive_prefix(&pos) &&
++			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
+ 		/* skip server name */
+-		char *pos = strpbrk(path + 2, "\\/");
++		pos = strpbrk(pos + 2, "\\/");
+ 		if (!pos)
+ 			return 0; /* Error: malformed unc path */
+ 
+ 		do {
+ 			pos++;
+ 		} while (*pos && !is_dir_sep(*pos));
+-
+-		offset = pos - path;
+ 	}
+ 
+-	return offset + is_dir_sep(path[offset]);
++	return pos + is_dir_sep(*pos) - path;
+ }
+ 
+ int xutftowcsn(wchar_t *wcs, const char *utfs, size_t wcslen, int utflen)
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 57ca477..b3e5044 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -361,7 +361,15 @@ HANDLE winansi_get_osfhandle(int fd);
+  * git specific compatibility
+  */
+ 
+-#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
++#define has_dos_drive_prefix(path) \
++	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
++static inline int mingw_skip_dos_drive_prefix(char **path)
++{
++	int ret = has_dos_drive_prefix(*path);
++	*path += ret;
++	return ret;
++}
++#define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
+ #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+ static inline char *mingw_find_last_dir_sep(const char *path)
+ {
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2da0a75..0d66f3a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -335,6 +335,14 @@ static inline int git_has_dos_drive_prefix(const char *path)
+ #define has_dos_drive_prefix git_has_dos_drive_prefix
+ #endif
+ 
++#ifndef skip_dos_drive_prefix
++static inline int git_skip_dos_drive_prefix(const char **path)
++{
++	return 0;
++}
++#define skip_dos_drive_prefix git_skip_dos_drive_prefix
++#endif
++
+ #ifndef is_dir_sep
+ static inline int git_is_dir_sep(int c)
+ {
+diff --git a/path.c b/path.c
+index 3cd155e..8b7e168 100644
+--- a/path.c
++++ b/path.c
+@@ -782,13 +782,10 @@ const char *relative_path(const char *in, const char *prefix,
+ 	else if (!prefix_len)
+ 		return in;
+ 
+-	if (have_same_root(in, prefix)) {
++	if (have_same_root(in, prefix))
+ 		/* bypass dos_drive, for "c:" is identical to "C:" */
+-		if (has_dos_drive_prefix(in)) {
+-			i = 2;
+-			j = 2;
+-		}
+-	} else {
++		i = j = has_dos_drive_prefix(in);
++	else {
+ 		return in;
+ 	}
+ 
+@@ -943,11 +940,10 @@ const char *remove_leading_path(const char *in, const char *prefix)
+ int normalize_path_copy_len(char *dst, const char *src, int *prefix_len)
+ {
+ 	char *dst0;
++	int i;
+ 
+-	if (has_dos_drive_prefix(src)) {
++	for (i = has_dos_drive_prefix(src); i > 0; i--)
+ 		*dst++ = *src++;
+-		*dst++ = *src++;
+-	}
+ 	dst0 = dst;
+ 
+ 	if (is_dir_sep(*src)) {
+-- 
+2.6.3.windows.1.300.g1c25e49
