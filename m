@@ -1,77 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Revert "dir.c: don't exclude whole dir prematurely if neg pattern may match"
-Date: Fri, 08 Jan 2016 11:52:57 -0800
-Message-ID: <xmqqlh7z26hy.fsf@gitster.mtv.corp.google.com>
-References: <1452254725-22314-1-git-send-email-pclouds@gmail.com>
-	<CACsJy8Bg+xnKxkq8-Da4-GKUWAOjGB6xyya+zzydhMWBEPPT8g@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 10/10] t/t9001-send-email.sh: get rid of unnecessary
+ backquotes
+Date: Fri, 8 Jan 2016 21:07:48 +0100
+Message-ID: <56901714.60505@kdbg.org>
+References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
+ <1452251188-12939-11-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 20:53:14 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 21:07:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHd60-0002eO-B5
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 20:53:12 +0100
+	id 1aHdKG-0007qS-KK
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 21:07:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755570AbcAHTxJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2016 14:53:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61135 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933094AbcAHTxA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2016 14:53:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC2DE3ABE0;
-	Fri,  8 Jan 2016 14:52:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=l9hKm0YTI821
-	4U35NwoqukfPjks=; b=RL+U6y64ssWWO2sC7hE0O+VXWZboL5hmTPooS3Qg+ypY
-	/bjCuqWB2spqNt8Bt79D+tm3KkcarWPG1al8w84S7rOSE0JEc+UDnxAOqsQ3mQc9
-	mSw1cfRcpIzI/yHy8nJpTsDheAfK72/fHBZiQtkUzLa0PSoZJ/uORfhZR3wXToY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=k5P8yU
-	VxGJLl41FVKnmpnR7YKLVXmWV4NLCuk0C4EptBlwCI0lTPVDyfb3FKFjTVJZXcyt
-	0YpPWBNuLzTIshYNhxkOZIyrvjVdh52D0O+xie/bl6eveqpw23ck1sQ7IZG5NyGk
-	FYFCKfdP/ZPGzvNgWl9fFSe20dAdASwXiJVSs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A37F83ABDF;
-	Fri,  8 Jan 2016 14:52:59 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 215863ABDE;
-	Fri,  8 Jan 2016 14:52:59 -0500 (EST)
-In-Reply-To: <CACsJy8Bg+xnKxkq8-Da4-GKUWAOjGB6xyya+zzydhMWBEPPT8g@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 8 Jan 2016 19:12:30 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B26814A-B641-11E5-A409-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755797AbcAHUHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 15:07:52 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:38738 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754641AbcAHUHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 15:07:51 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pcb851J4Zz5tlC;
+	Fri,  8 Jan 2016 21:07:48 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 6413451DD;
+	Fri,  8 Jan 2016 21:07:48 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <1452251188-12939-11-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283580>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Am 08.01.2016 um 12:06 schrieb Elia Pinto:
+> Instead of making the shell expand 00* and invoke 'echo' with it,
+> and then capturing its output as command substitution, just use
+> the result of expanding 00* directly.
+>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>   t/t9001-send-email.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Fri, Jan 8, 2016 at 7:05 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy <pclouds@gmail.com> wrote:
->> patterns are too loose. The untracked listing and sparse-checkout
->> selection can become incorrect as a result.
->
-> These two lines should be this instead if you want to keep track of
-> problem references. I amended the commit then forgot to format-patch
-> again.
->
-> patterns are too loose. The untracked listing [1] and sparse-checkout
-> selection [2] can become incorrect as a result.
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/283520
-> [2] http://article.gmane.org/gmane.comp.version-control.git/283532
+I notices there are two patches in this series that touch 
+t/t9001-send-email.sh. The other one is 9/10, and it claims to be an 
+automated conversion. But that cannot be true because it would have 
+removed the backquotes that are addressed in this patch.
 
-Thanks.  I guess we need a 2.7.1 relatively soon now.
+>
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 05949a1..bcbed38 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -1488,7 +1488,7 @@ test_cover_addresses () {
+>   	clean_fake_sendmail &&
+>   	rm -fr outdir &&
+>   	git format-patch --cover-letter -2 -o outdir &&
+> -	cover=`echo outdir/0000-*.patch` &&
+
+This expands the pattern and stores the result in $cover, provided there 
+exists at least one file that matches the pattern. If such file does not 
+exist, the pattern is stored verbatim in $cover.
+
+> +	cover="outdir/0000-*.patch" &&
+
+This does not expand the pattern and stores the pattern verbatim in $cover.
+
+>   	mv $cover cover-to-edit.patch &&
+
+This line succeeds because there pattern is expanded and matches only 
+one file.
+
+>   	perl -pe "s/^From:/$header: extra\@address.com\nFrom:/" cover-to-edit.patch >"$cover" &&
+
+In this line, "$cover" is not expanded, and a file named '0000-*.patch' 
+will be dropped into subdirectory 'outdir'.
+
+>   	git send-email \
+
+The command that is truncated here looks like this:
+
+         git send-email \
+                 --force \
+                 --from="Example <nobody@example.com>" \
+                 --no-to --no-cc \
+                 "$@" \
+                 --smtp-server="$(pwd)/fake.sendmail" \
+                 outdir/0000-*.patch \
+                 outdir/0001-*.patch \
+                 outdir/0002-*.patch \
+                 2>errors >out &&
+
+Since it uses a pattern that would match a the oddly named file and 
+since at this point the original 0000-whatever* file was moved away, the 
+pattern still matches only one 0000-* file. The test still succeeds, so 
+you did not notices that it has now slightly different behavior.
+
+As much as I would like to remove a sub-process, I think it is better to 
+keep the $(echo 0000-*) in this case.
