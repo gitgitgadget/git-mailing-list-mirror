@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/10] t/t7504-commit-msg-hook.sh: use the $( ... ) construct for command substitution
-Date: Fri,  8 Jan 2016 12:06:22 +0100
-Message-ID: <1452251188-12939-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/10] t/t7602-merge-octopus-many.sh: use the $( ... ) construct for command substitution
+Date: Fri,  8 Jan 2016 12:06:24 +0100
+Message-ID: <1452251188-12939-7-git-send-email-gitter.spiros@gmail.com>
 References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 12:06:53 2016
+X-From: git-owner@vger.kernel.org Fri Jan 08 12:07:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUsc-0002wj-R6
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:51 +0100
+	id 1aHUsk-000370-Qa
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754722AbcAHLGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 06:06:40 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:32960 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673AbcAHLGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 06:06:37 -0500
-Received: by mail-pf0-f194.google.com with SMTP id e65so618823pfe.0
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:37 -0800 (PST)
+	id S1754756AbcAHLGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 06:06:55 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35158 "EHLO
+	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754660AbcAHLGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 06:06:39 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 65so618696pff.2
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OVO9tyoABpndJQU4IAbjhpkOd4HZPgDw0sLanlOOUz8=;
-        b=xZCbfol120sOkKYEvENBEB2zZM/XSPeA8r8OgK+35ZLJGaM6A9WJntS9Himxg/9VFf
-         O7t//HadxcNLe9Mckh8MXMkJ1edRHHwDJQNT/m/W+0XtrHsr0XzWpX54sMUD/SfVcn7B
-         l9GRqkgh0yQRvDKZwOAzky5xcyOhSf27oo517IeW0e01/6R1dG21zTxLQque5aqbsi9C
-         vtmeteXqk8Wl3GZpk0rw2DCO2xrGzW02Erp1A1mowS1es0NXLj9d3Iu4rDZ8S7HukOXL
-         XNtmqNfbRKqKZ++P45agL4SnnGU5duR11iUfgs7eVBJeZKDx+Gs/VYdljbhnGQekAyBa
-         zE1w==
-X-Received: by 10.98.13.77 with SMTP id v74mr3404093pfi.162.1452251196880;
-        Fri, 08 Jan 2016 03:06:36 -0800 (PST)
+        bh=1kDlf3VJciQqnffLvzsxaTsZXYzwkgW5/Cqzk1oUTnM=;
+        b=b6sDy6WBpjN2oJUK8cl3XvrP3UIsi3FTUaI1iREz8EY5MbMkHNqlpw6okveempT6Gh
+         f9a8HDIm2W72JbhefBAHsQCaiMVsv9qEVtyJ/3CmK8EiwNg1kYlMWcjaD8Zwo+ux792V
+         Q0h7u7GVaC3NBXhsmiTAuGAYRXf/y8G4maN1IOn/MomkgGBCkqg0rtVNZi/3JJeoQ405
+         eiyEAGcDwDDb3bnKpX4Wy+qhgGACXKLrjIhNFV7QD04FtbajAJKdhs5nXy6gpBzY89Kv
+         ZcCZliMnNFMI8WAL0drilmOlV1ZtxV7XA5Qabt98N32Zxih4npkYYPWM3FQAfKMGAL2P
+         sdEA==
+X-Received: by 10.98.64.16 with SMTP id n16mr3427040pfa.16.1452251198843;
+        Fri, 08 Jan 2016 03:06:38 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.36
+        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Jan 2016 03:06:36 -0800 (PST)
+        Fri, 08 Jan 2016 03:06:38 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283541>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,47 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7504-commit-msg-hook.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7602-merge-octopus-many.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-index 1f53ea8..8728db6 100755
---- a/t/t7504-commit-msg-hook.sh
-+++ b/t/t7504-commit-msg-hook.sh
-@@ -179,7 +179,7 @@ EOF
- chmod +x "$HOOK"
+diff --git a/t/t7602-merge-octopus-many.sh b/t/t7602-merge-octopus-many.sh
+index 955f09f..6abe441 100755
+--- a/t/t7602-merge-octopus-many.sh
++++ b/t/t7602-merge-octopus-many.sh
+@@ -19,7 +19,7 @@ test_expect_success 'setup' '
+ 		git add c$i.c &&
+ 		git commit -m c$i &&
+ 		git tag c$i &&
+-		i=`expr $i + 1` || return 1
++		i=$(expr $i + 1) || return 1
+ 	done
+ '
  
- commit_msg_is () {
--	test "`git log --pretty=format:%s%b -1`" = "$1"
-+	test "$(git log --pretty=format:%s%b -1)" = "$1"
- }
+@@ -30,7 +30,7 @@ test_expect_success 'merge c1 with c2, c3, c4, ... c29' '
+ 	while test $i -le 30
+ 	do
+ 		refs="$refs c$i"
+-		i=`expr $i + 1`
++		i=$(expr $i + 1)
+ 	done &&
+ 	git merge $refs &&
+ 	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
+@@ -38,14 +38,14 @@ test_expect_success 'merge c1 with c2, c3, c4, ... c29' '
+ 	while test $i -le 30
+ 	do
+ 		test "$(git rev-parse c$i)" = "$(git rev-parse HEAD^$i)" &&
+-		i=`expr $i + 1` || return 1
++		i=$(expr $i + 1) || return 1
+ 	done &&
+ 	git diff --exit-code &&
+ 	i=1 &&
+ 	while test $i -le 30
+ 	do
+ 		test -f c$i.c &&
+-		i=`expr $i + 1` || return 1
++		i=$(expr $i + 1) || return 1
+ 	done
+ '
  
- test_expect_success 'hook edits commit message' '
 -- 
 2.3.3.GIT
