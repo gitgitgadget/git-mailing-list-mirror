@@ -1,84 +1,58 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Some issues when trying to set up a shallow git mirror server
-Date: Fri, 8 Jan 2016 17:44:30 +0700
-Message-ID: <CACsJy8CBj-oMTLrn8gVudhLPEixZfkwFv9BaN8LSNFvOHkqKkg@mail.gmail.com>
-References: <20160107165417.GB3397@logi.codethink.co.uk> <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
- <20160108101903.GC3397@logi.codethink.co.uk>
+Subject: Re: Behavior change in 2.7.0: With core.sparseCheckout some files
+ have the skip-worktree bit set after a checkout.
+Date: Fri, 8 Jan 2016 17:49:29 +0700
+Message-ID: <CACsJy8A7LR0xmwuqCKxxiiGeApywYb+_Zxcp=PG=sHHfpeBZRg@mail.gmail.com>
+References: <trinity-5caa2985-5cf1-453b-9a9e-bcce057f8615-1452249323061@3capp-gmx-bs51>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Richard Maw <richard.maw@codethink.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jan 08 11:45:18 2016
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Micha Wiedenmann <mw-u2@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 08 11:50:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUXj-0002C6-M6
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 11:45:16 +0100
+	id 1aHUcS-0006Ey-3O
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 11:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbcAHKpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 05:45:03 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34287 "EHLO
-	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750794AbcAHKpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 05:45:01 -0500
-Received: by mail-lf0-f53.google.com with SMTP id d17so6745821lfb.1
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 02:45:01 -0800 (PST)
+	id S932137AbcAHKuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 05:50:01 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:33073 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932068AbcAHKuA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jan 2016 05:50:00 -0500
+Received: by mail-lb0-f180.google.com with SMTP id sv6so214965961lbb.0
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 02:49:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hyS/ZQ4PCov5/eCE5Z3fGwY74/POhDuJXD8sfKF3oSc=;
-        b=Mp/Z1uSmo0Oozn1IMKxFfiyy/dtrAcA1v4BIOoSRvjAqO+7D8SGeNRY5WLdTCb6m1e
-         kvrwRLgx2zRcyTUND+9/LVEjSlegIHzGwJIblG8YzMMaaD5SAiv8RCbUyfCnXngPFxOC
-         DjtPe+XtmT2i7XlD1Y4LM0OM/07TDNGp1DW28qcd1b9Ddpa8/bJgMwgc+Q/wk2b2YPL/
-         k4H3rW+Gxq9WaZ0OTesv+vFJBNhumWsAY7O+kVhqv+sbljSeuTLVXL4FMsQ+TPS9p+Y7
-         h015qWKSSm4SyiMRG4d+/IZLvROne65oOdXayMyFC6/IfkjBBs5N/BFkIXw41Q/pLkrn
-         1MOg==
-X-Received: by 10.25.161.144 with SMTP id k138mr31904428lfe.83.1452249900376;
- Fri, 08 Jan 2016 02:45:00 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Fri, 8 Jan 2016 02:44:30 -0800 (PST)
-In-Reply-To: <20160108101903.GC3397@logi.codethink.co.uk>
+         :cc:content-type:content-transfer-encoding;
+        bh=+1jRPldRbwvhaOHAGLQJT2op0u9E7lRq26pQQDO+46Q=;
+        b=bTL8EtXgzpez1xdSj8/rn9VQmXqKRvhr8kwVU6Qv4yNRuEaG4EXVZOo3spIDaiAuXh
+         iFddT928u4LTwI/iE+Ncyzcwt2qKpbrIWsCNZVXTlkXbNexAzrIXkpImBw91dZZzCA/l
+         a2uXIG6hlp9NoCP3K2XxmqnzrnsACIGLCqB5gE59HzUot7K7QpQkkYTbQHl4MlfCGwbo
+         ihfWv4mu6YwobBTYAxLsSW/xJVwxTfTrizJ5ZWIQoAn8AGAvJSZURSu8auG+rZT8xRe9
+         V5Xye5+aD4KGCRTQh9ld7NXiLE7IGZt+klt/M5DSZol9PLbEyTIA2QNP+vnWAfDacaeQ
+         Z40g==
+X-Received: by 10.112.141.97 with SMTP id rn1mr20690737lbb.80.1452250198932;
+ Fri, 08 Jan 2016 02:49:58 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Fri, 8 Jan 2016 02:49:29 -0800 (PST)
+In-Reply-To: <trinity-5caa2985-5cf1-453b-9a9e-bcce057f8615-1452249323061@3capp-gmx-bs51>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283534>
 
-On Fri, Jan 8, 2016 at 5:19 PM, Richard Maw <richard.maw@codethink.co.uk> wrote:
-> On Thu, Jan 07, 2016 at 10:00:07AM -0800, Junio C Hamano wrote:
->> Richard Maw <richard.maw@codethink.co.uk> writes:
->> > This is inconvenient for us,
->> > as we were explicitly using refspecs which didn't force the fetch,
->> > since we were using the "non fast-forward update" errors
->> > to detect whether upstream force pushed important refs
->> > which could be a sign of tampering.
->> >
->> > While the client doesn't have enough information
->> > the server has those commits.
->> > Would it make sense for the server to be able to tell the client
->> > "trust me, that commit is a descendant of the previous one"?
->>
->> It does not in our security model, as you do not blindly trust the
->> other side, whether you are a "client" or a "server".
+On Fri, Jan 8, 2016 at 5:35 PM, Micha Wiedenmann <mw-u2@gmx.de> wrote:
+> Hi,
 >
-> Fair enough.
-> I didn't know whether Git passed responsibility for that to the transport layer.
->
-> Would a mode for fetch to also include the commit chain without the trees fit
-> the security model?
+> I want to report a change in behavior Git 2.7.0. With `core.sparseCheckout` set to true, `git checkout` results in some files with a set skip-worktree bit, which was not the case in 2.6.4. (I am using Git for Windows, but assume this is a Git issue, which is why I report it to this list.)
 
-It sounds a lot like what I did with narrow clone [2] prototype. A
-narrow clone only contains enough objects for certain paths so there's
-a chance that we just don't have enough to do a proper merge. A
-server-side command was added [1] to retrieve enough objects for the
-task. If you fetch commit chain without all necessary trees and
-objects, your repo is "broken" from Git point of view and you'll need
-to do some extra work to make sure your repo is not actually broken.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/154371
-[2] http://thread.gmane.org/gmane.comp.version-control.git/154343
+I might know the reason (and I'm quickly becoming king of
+regressions). Checking...
 -- 
 Duy
