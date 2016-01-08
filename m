@@ -1,70 +1,264 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: [BUG] git add . after removing .git/ in a subdirectory triggers assertion failure
-Date: Fri, 08 Jan 2016 12:33:06 +0100
-Message-ID: <vpqvb74fgr1.fsf@anie.imag.fr>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] Revert "dir.c: don't exclude whole dir prematurely if neg pattern may match"
+Date: Fri,  8 Jan 2016 19:05:25 +0700
+Message-ID: <1452254725-22314-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 08 12:36:31 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 13:05:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHVLD-0001Q4-Hu
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:36:23 +0100
+	id 1aHVna-0008HR-69
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:05:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754585AbcAHLgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 06:36:19 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:52046 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754310AbcAHLgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 06:36:18 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u08BX5Zi007317
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 8 Jan 2016 12:33:05 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u08BX6RQ008415;
-	Fri, 8 Jan 2016 12:33:06 +0100
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 08 Jan 2016 12:33:05 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u08BX5Zi007317
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1452857585.8803@MDgglVkXcZaCG2nmt+/dmA
+	id S1754793AbcAHMFh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Jan 2016 07:05:37 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35715 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754623AbcAHMFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 07:05:36 -0500
+Received: by mail-pf0-f171.google.com with SMTP id 65so9134623pff.2
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:05:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=ziAJl0tD44ydBPhsRhRxzur1nDZ994ucv+Vme1b5Yc0=;
+        b=EaXBSt1oTnR2oNO831CwdIPs9XDOEeen2HmTo5n1ZF+ueQazYA42O619YH0uuZNbuD
+         +jEV6lsIxbfST9PGV+dlWcg9UF8WaYUrW29vbioinwRvmtFJyOeCuhJirQrDAreN39Hk
+         XDdtn5swTxxkBk+/6ALGjib6oODv8YKiZBSHeJYJSkjCt9UfiFVlxNu/ORLKjlbBLghN
+         dp9rXtc393Hk7cU9NttOYCH8E+pkhoCHV1sZI0i7tK1ISisEbRg7OvdsD3w9cCGpPYZu
+         donyw2Xk/0DhYFaVeybgrDKZfa13Yyi9QMm9xmfnuPcoV5gya+zPeBy3U0D+ccTk/qY7
+         psLw==
+X-Received: by 10.98.68.14 with SMTP id r14mr3799453pfa.73.1452254735692;
+        Fri, 08 Jan 2016 04:05:35 -0800 (PST)
+Received: from lanh ([171.233.231.79])
+        by smtp.gmail.com with ESMTPSA id yl1sm166909338pac.35.2016.01.08.04.05.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Jan 2016 04:05:33 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 08 Jan 2016 19:05:39 +0700
+X-Mailer: git-send-email 2.7.0.56.g46bc327
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283548>
 
-Hi,
+This reverts commit 57534ee77d22e725d971ee89c77dc6aad61c573f. The
+feature added in that commit requires that patterns behave the same way
+from anywhere. But some patterns can behave differently depending on
+current "working" directory. The conditions to catch and avoid these
+patterns are too loose. The untracked listing and sparse-checkout
+selection can become incorrect as a result.
 
-No time to debug this for now, but I have a reproduction script:
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/gitignore.txt        | 23 ++----------
+ dir.c                              | 76 +-----------------------------=
+--------
+ t/t3001-ls-files-others-exclude.sh | 25 -------------
+ 3 files changed, 6 insertions(+), 118 deletions(-)
 
-mkdir test && cd test
-git init sub   
-cd sub/
-touch foo && git add . && git commit -m"foo"
-cd ..
-git init
-git add sub 
-rm -fr sub/.git/
-cd sub/
-git add .
-
-In short, sub used to be a submodule, but we removed the .git/ and tried
-to "git add ." the result.
-
-The last line triggers this:
-
-git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len <= item->len && item->prefix <= item->len' failed.
-
-Cheers,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 79a1948..473623d 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -82,12 +82,12 @@ PATTERN FORMAT
+=20
+  - An optional prefix "`!`" which negates the pattern; any
+    matching file excluded by a previous pattern will become
+-   included again.
++   included again. It is not possible to re-include a file if a parent
++   directory of that file is excluded. Git doesn't list excluded
++   directories for performance reasons, so any patterns on contained
++   files have no effect, no matter where they are defined.
+    Put a backslash ("`\`") in front of the first "`!`" for patterns
+    that begin with a literal "`!`", for example, "`\!important!.txt`".
+-   It is possible to re-include a file if a parent directory of that
+-   file is excluded if certain conditions are met. See section NOTES
+-   for detail.
+=20
+  - If the pattern ends with a slash, it is removed for the
+    purpose of the following description, but it would only find
+@@ -141,21 +141,6 @@ not tracked by Git remain untracked.
+ To stop tracking a file that is currently tracked, use
+ 'git rm --cached'.
+=20
+-To re-include files or directories when their parent directory is
+-excluded, the following conditions must be met:
+-
+- - The rules to exclude a directory and re-include a subset back must
+-   be in the same .gitignore file.
+-
+- - The directory part in the re-include rules must be literal (i.e. no
+-   wildcards)
+-
+- - The rules to exclude the parent directory must not end with a
+-   trailing slash.
+-
+- - The rules to exclude the parent directory must have at least one
+-   slash.
+-
+ EXAMPLES
+ --------
+=20
+diff --git a/dir.c b/dir.c
+index d2a8f06..206393a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -882,25 +882,6 @@ int match_pathname(const char *pathname, int pathl=
+en,
+ 		 */
+ 		if (!patternlen && !namelen)
+ 			return 1;
+-		/*
+-		 * This can happen when we ignore some exclude rules
+-		 * on directories in other to see if negative rules
+-		 * may match. E.g.
+-		 *
+-		 * /abc
+-		 * !/abc/def/ghi
+-		 *
+-		 * The pattern of interest is "/abc". On the first
+-		 * try, we should match path "abc" with this pattern
+-		 * in the "if" statement right above, but the caller
+-		 * ignores it.
+-		 *
+-		 * On the second try with paths within "abc",
+-		 * e.g. "abc/xyz", we come here and try to match it
+-		 * with "/abc".
+-		 */
+-		if (!patternlen && namelen && *name =3D=3D '/')
+-			return 1;
+ 	}
+=20
+ 	return fnmatch_icase_mem(pattern, patternlen,
+@@ -909,48 +890,6 @@ int match_pathname(const char *pathname, int pathl=
+en,
+ }
+=20
+ /*
+- * Return non-zero if pathname is a directory and an ancestor of the
+- * literal path in a (negative) pattern. This is used to keep
+- * descending in "foo" and "foo/bar" when the pattern is
+- * "!foo/bar/.gitignore". "foo/notbar" will not be descended however.
+- */
+-static int match_neg_path(const char *pathname, int pathlen, int *dtyp=
+e,
+-			  const char *base, int baselen,
+-			  const char *pattern, int prefix, int patternlen,
+-			  int flags)
+-{
+-	assert((flags & EXC_FLAG_NEGATIVE) && !(flags & EXC_FLAG_NODIR));
+-
+-	if (*dtype =3D=3D DT_UNKNOWN)
+-		*dtype =3D get_dtype(NULL, pathname, pathlen);
+-	if (*dtype !=3D DT_DIR)
+-		return 0;
+-
+-	if (*pattern =3D=3D '/') {
+-		pattern++;
+-		patternlen--;
+-		prefix--;
+-	}
+-
+-	if (baselen) {
+-		if (((pathlen < baselen && base[pathlen] =3D=3D '/') ||
+-		     pathlen =3D=3D baselen) &&
+-		    !strncmp_icase(pathname, base, pathlen))
+-			return 1;
+-		pathname +=3D baselen + 1;
+-		pathlen  -=3D baselen + 1;
+-	}
+-
+-
+-	if (prefix &&
+-	    ((pathlen < prefix && pattern[pathlen] =3D=3D '/') &&
+-	     !strncmp_icase(pathname, pattern, pathlen)))
+-		return 1;
+-
+-	return 0;
+-}
+-
+-/*
+  * Scan the given exclude list in reverse to see whether pathname
+  * should be ignored.  The first match (i.e. the last on the list), if
+  * any, determines the fate.  Returns the exclude_list element which
+@@ -963,7 +902,7 @@ static struct exclude *last_exclude_matching_from_l=
+ist(const char *pathname,
+ 						       struct exclude_list *el)
+ {
+ 	struct exclude *exc =3D NULL; /* undecided */
+-	int i, matched_negative_path =3D 0;
++	int i;
+=20
+ 	if (!el->nr)
+ 		return NULL;	/* undefined */
+@@ -998,18 +937,7 @@ static struct exclude *last_exclude_matching_from_=
+list(const char *pathname,
+ 			exc =3D x;
+ 			break;
+ 		}
+-
+-		if ((x->flags & EXC_FLAG_NEGATIVE) && !matched_negative_path &&
+-		    match_neg_path(pathname, pathlen, dtype, x->base,
+-				   x->baselen ? x->baselen - 1 : 0,
+-				   exclude, prefix, x->patternlen, x->flags))
+-			matched_negative_path =3D 1;
+-	}
+-	if (exc &&
+-	    !(exc->flags & EXC_FLAG_NEGATIVE) &&
+-	    !(exc->flags & EXC_FLAG_NODIR) &&
+-	    matched_negative_path)
+-		exc =3D NULL;
++	}
+ 	return exc;
+ }
+=20
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
+rs-exclude.sh
+index da257c0..3fc484e 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -305,29 +305,4 @@ test_expect_success 'ls-files with "**" patterns a=
+nd no slashes' '
+ 	test_cmp expect actual
+ '
+=20
+-test_expect_success 'negative patterns' '
+-	git init reinclude &&
+-	(
+-		cd reinclude &&
+-		cat >.gitignore <<-\EOF &&
+-		/fooo
+-		/foo
+-		!foo/bar/bar
+-		EOF
+-		mkdir fooo &&
+-		cat >fooo/.gitignore <<-\EOF &&
+-		!/*
+-		EOF
+-		mkdir -p foo/bar &&
+-		touch abc foo/def foo/bar/ghi foo/bar/bar &&
+-		git ls-files -o --exclude-standard >../actual &&
+-		cat >../expected <<-\EOF &&
+-		.gitignore
+-		abc
+-		foo/bar/bar
+-		EOF
+-		test_cmp ../expected ../actual
+-	)
+-'
+-
+ test_done
+--=20
+2.7.0.56.g46bc327
