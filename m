@@ -1,73 +1,92 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH/RFC v2 3/3] refs: always handle non-normal refs in files
- backend
-Date: Fri, 08 Jan 2016 07:52:43 -0500
-Organization: Twitter
-Message-ID: <1452257563.24133.5.camel@twopensource.com>
-References: <567A5516.9070209@alum.mit.edu>
-	 <1452123719-22634-1-git-send-email-dturner@twopensource.com>
-	 <1452123719-22634-3-git-send-email-dturner@twopensource.com>
+From: pedro rijo <pedrorijo91@gmail.com>
+Subject: format-patch on empty commit
+Date: Fri, 8 Jan 2016 12:53:59 +0000
+Message-ID: <CAPMsMoAtSFnNuGGhVOmMx07B3QBCooZCLhyuE9iHDvL122+bmg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jan 08 13:52:57 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 08 13:54:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHWXC-0002pj-TT
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:52:51 +0100
+	id 1aHWZ3-0004AT-0b
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 13:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763AbcAHMwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 07:52:47 -0500
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33858 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752033AbcAHMwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 07:52:46 -0500
-Received: by mail-qg0-f50.google.com with SMTP id 6so272611462qgy.1
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:52:46 -0800 (PST)
+	id S1754698AbcAHMyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 07:54:41 -0500
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:36244 "EHLO
+	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351AbcAHMyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 07:54:41 -0500
+Received: by mail-lf0-f48.google.com with SMTP id i124so6804355lfe.3
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 04:54:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=28Th2rD1oWrmE/GrdoUWw+f0oaxt5sRyTpe3icU9gx8=;
-        b=nDENjxk3iXNcPKpuBrIFSqd1NffpkYwu7K6NIyVuQv6XCtCby8ARrd5HeePOVD4NT/
-         pNyFKy1uBHL95sEJPc8TwFESRTbQM+FMttIqlkWmpR0av/LNW0KKY00zHG9913BtIO5D
-         2MJxqC5Wj1JBv5DRYoRkZj7smmbzxhnwhKbEcQZHl4vLSVVH3ssNszPa6qv7iDyCK4kF
-         ASLAKgNk5/BYaFgI0mkUk8qzmJgCnj/tj91/3jkcHIXM6Y7rJcjHbOq06J44f98SOvAZ
-         qjhDU1d5u5aWgbTTLUhz1ij1QgVtRaBx1VubVw4OSmQhn8q6KSEf1TdS4Zwo0gLsgHes
-         QY2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=28Th2rD1oWrmE/GrdoUWw+f0oaxt5sRyTpe3icU9gx8=;
-        b=IdNk8YVcZBEuqnxfVWT7S3c3IHfZ5pk4fD6ArjoWMT6sTBdaIPuNvpvFEMKH3yeihR
-         Jtar7W3XfiQopYHgRVjG4B2nKkF+EEVmE+jdheiLSgLK0u/DfvuDGCfFmjZFIHGA6NSZ
-         tL7fOsb5Dr+8oMiEcKKakTbOGRUb01jRYZLINMu6KfQZMBhpTAVy6IiTegyFUyBsgsRS
-         oo92feW3jtccKPVHiyl5qWNAbXgow29UJ+eg9Z/zxQwNiWb5JSz++AJ8zJsraS0Z19VZ
-         1Y725mboSuuT5G2Y9dUD2jljfJU0mJLM3L4bjUSglxPy+WMQjT9MduOXV6A0d0mIY8Ts
-         behg==
-X-Gm-Message-State: ALoCoQm9rDEmnL68rjfFUQ9Kyr5yCo2/LeAhVyV4KClf5JgF3TN4qVM+eG20SE4p4z1gIwqbCo2puU5F4WyvFieOtbHDBNmelA==
-X-Received: by 10.140.217.67 with SMTP id n64mr92489447qhb.26.1452257565607;
-        Fri, 08 Jan 2016 04:52:45 -0800 (PST)
-Received: from ubuntu ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id w14sm48292552qge.24.2016.01.08.04.52.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 08 Jan 2016 04:52:44 -0800 (PST)
-In-Reply-To: <1452123719-22634-3-git-send-email-dturner@twopensource.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=EbTfMMB+G4MXBCsQ42FQjzE1AyibeHSSuvmnAiU/sn0=;
+        b=G6qjqdZQ+MoAOImldq7aQJZM0GrKmwKIujIDIn3xEceuJHeeU8MjqeYp1I9dvCeC3N
+         ka5ZZ1ASzOs4UaAwEjc0JiTrK8Gqa26nGPSqP0G8NquSHiYhAFhLLi7vtAxRPPrCEKHD
+         V798F4t2qK1X0I6MRNmUaF8L31CcSWkYaJilTX2nQ3Ty1qV5VxDNK5ke6hreFdPqbkgU
+         ajY2F+hyvemGKg+GESYBnXMfnILnnBOcYYSKPkYPUR7asY19tpNyoPFtPjWIKr5fa4wS
+         8cLkcMNI9MwpZf5T2+8/oWmwxZ/a4n7D42LY1mDCG9tQ4Z2Pl0H94727/DU1uC+MLEte
+         o/CA==
+X-Received: by 10.25.79.143 with SMTP id d137mr32865186lfb.110.1452257679420;
+ Fri, 08 Jan 2016 04:54:39 -0800 (PST)
+Received: by 10.112.85.134 with HTTP; Fri, 8 Jan 2016 04:53:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283552>
 
-On Wed, 2016-01-06 at 18:41 -0500, David Turner wrote:
-+		files_transaction->updates[files_transaction->nr++]
-> = update;
+Hi all,
 
-oops, need to allocate this (fixed on my branch).
+Couldn't find any explanation on git docs on this issue:
+
+If I create a dummy commit, with some dummy diff, I get a normal patch
+when I run
+
+$ git format-patch -1 -o outgoing/ -p -k
+
+but if the last commit is an empty commit, generated by
+
+$ git commit --allow-empty "Some commit message"
+
+then the output of the format patch will be an empty patch. If the
+first case produces something like this:
+
+>From 08cfdb2994554d834b89309ca96d9bf513e26a90 Mon Sep 17 00:00:00 2001
+From: pedrorijo91 <pedrorijo91@gmail.com>
+Date: Fri, 8 Jan 2016 12:44:57 +0000
+Subject: dummy commit
+
+
+diff --git a/lol.txt b/lol.txt
+new file mode 100644
+index 0000000..f944b38
+--- /dev/null
++++ b/lol.txt
+@@ -0,0 +1 @@
++:)
+--
+2.5.4 (Apple Git-61)
+
+
+
+then the second case shouldn't generate something like this instead ?
+
+>From 2d486f25c48780e2e132047e681929fcccb7e60c Mon Sep 17 00:00:00 2001
+From: pedrorijo91 <pedrorijo91@gmail.com>
+Date: Fri Jan 8 12:43:55 2016 +0000
+Subject: Some commit message
+
+
+2.5.4 (Apple Git-61)
+
+
+
+-- 
+Thanks,
+Pedro Rijo
