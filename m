@@ -1,80 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] Refactor skipping DOS drive prefixes
-Date: Fri, 08 Jan 2016 14:07:00 -0800
-Message-ID: <xmqq8u3z20aj.fsf@gitster.mtv.corp.google.com>
-References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de>
-	<cover.1452270051.git.johannes.schindelin@gmx.de>
-	<c70ed05f275a44fbfae831b4cb67e59a0ce05724.1452270051.git.johannes.schindelin@gmx.de>
-	<CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Should notes handle replace commits?
+Date: Sat, 9 Jan 2016 06:49:39 +0900
+Message-ID: <20160108214939.GA22801@glandium.org>
+References: <20160108012830.GA2110@glandium.org>
+ <xmqqh9in25py.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jan 08 23:07:11 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 08 23:12:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHfBe-0007H2-VM
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 23:07:11 +0100
+	id 1aHfGy-0003qM-K8
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 23:12:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753954AbcAHWHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 17:07:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63018 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752279AbcAHWHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 17:07:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78C363AC8A;
-	Fri,  8 Jan 2016 17:07:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B+Fmqof8ZfYRVlTF3FERi6mLZho=; b=Gpy43E
-	ydVigNYzAVI+tPSEqgBgQLPeqNc4JrFENxYvNG5r3fO7m8xM9+f6UUhEK7m5ess8
-	a1oKmlHhwMPbe3GZuCUePawS0LtKNYR/Lg0OGKN8kXRjhkRkuIbf7Kv54aQL30OO
-	XP4XeSdgBWqCh0qSNp/Ms0VpOCshLz0fAWGyY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iW9LutOXRc1DihK/T6e1lQtURIPah5O8
-	c8nSqGKq5yDcWZ6MrKu5Ls/LxH7BK5jp2fUmtUOff/iYBA6khkOITlwPFhRQjkcW
-	Slso+GKBI6/GNLa2og6W1IZX4x68zYtvL4oQ/vCtU5Bdq6isDyZwfGPLe+0+0L6B
-	PI/u6VbLH34=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E3F73AC89;
-	Fri,  8 Jan 2016 17:07:03 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C17703AC88;
-	Fri,  8 Jan 2016 17:07:02 -0500 (EST)
-In-Reply-To: <CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 8 Jan 2016 16:51:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 258B4E6E-B654-11E5-AE48-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755558AbcAHWMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 17:12:36 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:60262 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754749AbcAHWMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 17:12:36 -0500
+X-Greylist: delayed 1370 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Jan 2016 17:12:34 EST
+Received: from glandium by zenigata with local (Exim 4.86)
+	(envelope-from <mh@glandium.org>)
+	id 1aHeuh-0005zB-BI; Sat, 09 Jan 2016 06:49:39 +0900
+Content-Disposition: inline
+In-Reply-To: <xmqqh9in25py.fsf@gitster.mtv.corp.google.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283585>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Fri, Jan 08, 2016 at 12:09:45PM -0800, Junio C Hamano wrote:
+> > So the question is, is this the behavior this should have?
+> 
+> The behaviour is a natural consequence of what graft and replace are
+> about (i.e. "telling Git what the parents of a commit are" vs
+> "telling Git what the contents of a commit are"), so the answer to
+> the "should" question is a resounding "yes".
 
-> With this change, code such as:
->
->     for (i = has_dos_drive_prefix(src); i > 0; i--)
->         ...
->
-> in path.c reads a bit oddly. Renaming the function might help. For instance:
->
->     for (i = dos_drive_prefix_len(src); i > 0; i--)
->         ...
+It's not only about contents, except for a very broad definition of
+contents that includes ancestry. From my POV, replace is more about
+"telling Git that this commit (and its parents) is really that one (and
+its parents)".
 
-Renaming may be unnecessary churn, but I do not think we mind an
-additional synonym, e.g.
+Anyways, the dummy example is using different commit messages, and notes
+everywhere, to make what happens to commits and notes obvious.  In the
+real world, "first" would be "real third", so the commit messages would
+be as expected in all cases. The question is whether users expect the
+note of the non-replaced commit to show up. Would they expect no note at
+all in the case there is a note on the replacee, but not on the
+replaced?  Maybe the right thing to do would be for *both* notes to be
+concatenated? I don't know.
 
-    #define has_dos_drive_prefix(x) dos_drive_prefix_len(x)
-
-if some people prefer.
+Mike
