@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/10] t/t7505-prepare-commit-msg-hook.sh: use the $( ... ) construct for command substitution
-Date: Fri,  8 Jan 2016 12:06:23 +0100
-Message-ID: <1452251188-12939-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 03/10] t/t7408-submodule-reference.sh: use the $( ... ) construct for command substitution
+Date: Fri,  8 Jan 2016 12:06:21 +0100
+Message-ID: <1452251188-12939-4-git-send-email-gitter.spiros@gmail.com>
 References: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 08 12:07:09 2016
+X-From: git-owner@vger.kernel.org Fri Jan 08 12:07:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHUsj-000370-K9
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:06:58 +0100
+	id 1aHUss-0003EA-37
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Jan 2016 12:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754714AbcAHLGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Jan 2016 06:06:39 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35156 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754147AbcAHLGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jan 2016 06:06:38 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 65so618674pff.2
-        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:38 -0800 (PST)
+	id S1754762AbcAHLHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Jan 2016 06:07:00 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36431 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754548AbcAHLGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jan 2016 06:06:36 -0500
+Received: by mail-pf0-f196.google.com with SMTP id n128so618270pfn.3
+        for <git@vger.kernel.org>; Fri, 08 Jan 2016 03:06:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZKBH3rt0DizXXw1zfXEL8fBh/1xlP31H7Cku0xIDBgE=;
-        b=IUKoila1tZ7jp6hL1W+00gHPkJNLOQCGtt5PvGsclq625TfJi/djLxl9yWI+hwmHX1
-         H7JvpTr+QoYvhYTIA2WIDOtExsp9/DBMLacb+QV7wqY23W1Jh6Vwpk9LdTh1531oqPUA
-         7R5UWWv9mRbOQBpa7x6K7dQd2ov3xrOffFNl2CqE5Q5TMcYEkrOaeAMF23fkVf1Bzu0G
-         7pBVSE/nRN+tOwUKCyfuPPOCPLnxwSYwEnL5wMkJ96++ZhVWp8SC5d0y1Y6kx8hjIhfb
-         pMoNiONJyKBUoFx3WkTDSCauSs6m424B50WmqYhicsO1nHwAtXiofuFCahKpYuBs0u/n
-         gjIg==
-X-Received: by 10.98.19.146 with SMTP id 18mr3425768pft.59.1452251197735;
-        Fri, 08 Jan 2016 03:06:37 -0800 (PST)
+        bh=afO0fjhhkKQ64LAxFvWIxzMiSRIJ85n7KrZIR4Ly5v4=;
+        b=TWRJAg5AB9hv7Ywqc0ovKA6j3JB+AdQa8CyBKV7q4c+13lD3xga2CVSjiXaXUHXOep
+         Rdy2Q+tVabaRNNLQNjKKUxzAuK3Xx4q2CYwFAPdh6QYa9BiOlYWq0e3MS9i8KcFQ7jN7
+         S750gz/ydLuNzNkJLryI9d+mkyVqoY5ZI1A+Thf5ibeH+VEIBj0LfB49c0SFn4eL1Q0p
+         2K2kSJYqnYmefxFG5WQ3vThS4WIqa5b4eOdAPQHPlwVaRNkzS92ix+MvccGErL0InX5a
+         N87CzozY2WVCSbW7qCPwO09jmilw+48j9nhJzN7oJIr+ox/2/VwLHAV7jwzur6+QxeEn
+         w2pg==
+X-Received: by 10.98.75.143 with SMTP id d15mr3409285pfj.96.1452251196192;
+        Fri, 08 Jan 2016 03:06:36 -0800 (PST)
 Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.36
+        by smtp.gmail.com with ESMTPSA id fi16sm93143771pac.12.2016.01.08.03.06.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Jan 2016 03:06:37 -0800 (PST)
+        Fri, 08 Jan 2016 03:06:35 -0800 (PST)
 X-Mailer: git-send-email 2.3.3.GIT
 In-Reply-To: <1452251188-12939-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283546>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,138 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7505-prepare-commit-msg-hook.sh | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ t/t7408-submodule-reference.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-index 03dce09..b13f729 100755
---- a/t/t7505-prepare-commit-msg-hook.sh
-+++ b/t/t7505-prepare-commit-msg-hook.sh
-@@ -53,7 +53,7 @@ test_expect_success 'with hook (-m)' '
- 	echo "more" >> file &&
- 	git add file &&
- 	git commit -m "more" &&
--	test "`git log -1 --pretty=format:%s`" = "message (no editor)"
-+	test "$(git log -1 --pretty=format:%s)" = "message (no editor)"
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index b770b2f..eaea19b 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -6,7 +6,7 @@
+ test_description='test clone --reference'
+ . ./test-lib.sh
  
- '
+-base_dir=`pwd`
++base_dir=$(pwd)
  
-@@ -62,7 +62,7 @@ test_expect_success 'with hook (-m editor)' '
- 	echo "more" >> file &&
- 	git add file &&
- 	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -e -m "more more" &&
--	test "`git log -1 --pretty=format:%s`" = message
-+	test "$(git log -1 --pretty=format:%s)" = message
+ U=$base_dir/UPLOAD_LOG
  
- '
- 
-@@ -71,7 +71,7 @@ test_expect_success 'with hook (-t)' '
- 	echo "more" >> file &&
- 	git add file &&
- 	git commit -t "$(git rev-parse --git-dir)/template" &&
--	test "`git log -1 --pretty=format:%s`" = template
-+	test "$(git log -1 --pretty=format:%s)" = template
- 
- '
- 
-@@ -80,7 +80,7 @@ test_expect_success 'with hook (-F)' '
- 	echo "more" >> file &&
- 	git add file &&
- 	(echo more | git commit -F -) &&
--	test "`git log -1 --pretty=format:%s`" = "message (no editor)"
-+	test "$(git log -1 --pretty=format:%s)" = "message (no editor)"
- 
- '
- 
-@@ -89,17 +89,17 @@ test_expect_success 'with hook (-F editor)' '
- 	echo "more" >> file &&
- 	git add file &&
- 	(echo more more | GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -e -F -) &&
--	test "`git log -1 --pretty=format:%s`" = message
-+	test "$(git log -1 --pretty=format:%s)" = message
- 
- '
- 
- test_expect_success 'with hook (-C)' '
- 
--	head=`git rev-parse HEAD` &&
-+	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
- 	git commit -C $head &&
--	test "`git log -1 --pretty=format:%s`" = "$head (no editor)"
-+	test "$(git log -1 --pretty=format:%s)" = "$head (no editor)"
- 
- '
- 
-@@ -108,27 +108,27 @@ test_expect_success 'with hook (editor)' '
- 	echo "more more" >> file &&
- 	git add file &&
- 	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit &&
--	test "`git log -1 --pretty=format:%s`" = default
-+	test "$(git log -1 --pretty=format:%s)" = default
- 
- '
- 
- test_expect_success 'with hook (--amend)' '
- 
--	head=`git rev-parse HEAD` &&
-+	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
- 	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --amend &&
--	test "`git log -1 --pretty=format:%s`" = "$head"
-+	test "$(git log -1 --pretty=format:%s)" = "$head"
- 
- '
- 
- test_expect_success 'with hook (-c)' '
- 
--	head=`git rev-parse HEAD` &&
-+	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
- 	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head &&
--	test "`git log -1 --pretty=format:%s`" = "$head"
-+	test "$(git log -1 --pretty=format:%s)" = "$head"
- 
- '
- 
-@@ -141,7 +141,7 @@ test_expect_success 'with hook (merge)' '
- 	git commit -m other &&
- 	git checkout - &&
- 	git merge --no-ff other &&
--	test "`git log -1 --pretty=format:%s`" = "merge (no editor)"
-+	test "$(git log -1 --pretty=format:%s)" = "merge (no editor)"
- '
- 
- test_expect_success 'with hook and editor (merge)' '
-@@ -153,7 +153,7 @@ test_expect_success 'with hook and editor (merge)' '
- 	git commit -m other &&
- 	git checkout - &&
- 	env GIT_EDITOR="\"\$FAKE_EDITOR\"" git merge --no-ff -e other &&
--	test "`git log -1 --pretty=format:%s`" = "merge"
-+	test "$(git log -1 --pretty=format:%s)" = "merge"
- '
- 
- cat > "$HOOK" <<'EOF'
-@@ -164,7 +164,7 @@ EOF
- test_expect_success 'with failing hook' '
- 
- 	test_when_finished "git checkout -f master" &&
--	head=`git rev-parse HEAD` &&
-+	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
- 	test_must_fail env GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head
-@@ -174,7 +174,7 @@ test_expect_success 'with failing hook' '
- test_expect_success 'with failing hook (--no-verify)' '
- 
- 	test_when_finished "git checkout -f master" &&
--	head=`git rev-parse HEAD` &&
-+	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
- 	test_must_fail env GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify -c $head
 -- 
 2.3.3.GIT
