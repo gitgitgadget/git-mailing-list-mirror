@@ -1,132 +1,129 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: for-each-ref output order change in 2.7.0
-Date: Sat, 9 Jan 2016 22:51:03 +0530
-Message-ID: <CAOLa=ZT7n8qCoS81iijf9vswWV+S8n7=4kmbKP0EAMnOenXwSg@mail.gmail.com>
-References: <CAGyf7-FSP3Z7HO=LpoQck8q9sSj3fGYCx1=gNa6fXEkovxAxHw@mail.gmail.com>
- <1674931730.811704.1452354002885.JavaMail.zimbra@imag.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Should notes handle replace commits?
+Date: Sat, 9 Jan 2016 17:39:13 -0000
+Organization: OPDS
+Message-ID: <181337AE5CFC4AF09B82187B8E97095D@PhilipOakley>
+References: <20160108012830.GA2110@glandium.org><xmqqh9in25py.fsf@gitster.mtv.corp.google.com><20160108214939.GA22801@glandium.org><xmqqziwfzl2s.fsf@gitster.mtv.corp.google.com><20160109002510.GA30050@glandium.org> <xmqqmvsfzhq4.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Bryan Turner <bturner@atlassian.com>,
-	Git Users <git@vger.kernel.org>
-To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Jan 09 18:21:48 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Mike Hommey" <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Jan 09 18:39:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHxD1-0003k6-Jw
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jan 2016 18:21:47 +0100
+	id 1aHxUD-00017o-Qe
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jan 2016 18:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754888AbcAIRVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jan 2016 12:21:37 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34052 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754755AbcAIRVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jan 2016 12:21:33 -0500
-Received: by mail-vk0-f42.google.com with SMTP id a123so175760440vkh.1
-        for <git@vger.kernel.org>; Sat, 09 Jan 2016 09:21:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PrG++CWJyjHOMgE6eHIuCFlU4PKe8rjxkvQTKuTaDA8=;
-        b=VjBF+bvQAp6B+I+FnhY1YsOU8vOQSKp7eRBenOjJWd6A0IaIvTP8ZAecha2Oh7zfZR
-         xk9rnO0tWcU7FSZjbjD8Rdd+gN+Q7wjBHx5w5OGIkSoJiyWNUyfZ5PfNoOlB70K2Poee
-         5OeafcxgMEb8L0z2IZM1sh63YgB6r0PZ1O5MUMUZTtiZwdB55L+Dx0/vgNPG5jX0/e9N
-         yZ7a4OKG5JiFt7mmEJSabZ11iwAbzIdeprjsPp43Kr65Zz9S+JOVfEeK0FzE+i/1Bq/l
-         BriEfE96B1+IhuD/Ub1eaX4de2Vc/YhVRvr8dFD0fGLNpKeGaKz16vRHKiH45sozQbbh
-         K+1w==
-X-Received: by 10.31.159.136 with SMTP id i130mr51989128vke.144.1452360092764;
- Sat, 09 Jan 2016 09:21:32 -0800 (PST)
-Received: by 10.103.82.146 with HTTP; Sat, 9 Jan 2016 09:21:03 -0800 (PST)
-In-Reply-To: <1674931730.811704.1452354002885.JavaMail.zimbra@imag.fr>
+	id S1755690AbcAIRj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jan 2016 12:39:29 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:22937 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754682AbcAIRjQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jan 2016 12:39:16 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CQHQDXRJFWPO+cLFBVCRkBAQEBCwECAQEBAQGDClJth02BDLU8BxgKhWcBAwEBgRhNAQEBAQEBBwEBAQFBJBuELwUBAQEBAgEIAQEuFggBASEFBgIDBQIBAxUBCyUUAQQYAgYHAxQGAQcLCAIBAgMBDASFdYIQDAq3C4kuDAEghlaEf4Qtg3SBGwWNeYkaAYE2hAyFXIQYFjSMVYpeg3OCdRyBXT40AYQVgUsBAQE
+X-IPAS-Result: A2CQHQDXRJFWPO+cLFBVCRkBAQEBCwECAQEBAQGDClJth02BDLU8BxgKhWcBAwEBgRhNAQEBAQEBBwEBAQFBJBuELwUBAQEBAgEIAQEuFggBASEFBgIDBQIBAxUBCyUUAQQYAgYHAxQGAQcLCAIBAgMBDASFdYIQDAq3C4kuDAEghlaEf4Qtg3SBGwWNeYkaAYE2hAyFXIQYFjSMVYpeg3OCdRyBXT40AYQVgUsBAQE
+X-IronPort-AV: E=Sophos;i="5.20,545,1444690800"; 
+   d="scan'208";a="825468367"
+Received: from 80-44-156-239.dynamic.dsl.as9105.com (HELO PhilipOakley) ([80.44.156.239])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 09 Jan 2016 17:39:13 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283605>
 
-Hello,
 
-On Sat, Jan 9, 2016 at 9:10 PM, Matthieu Moy
-<matthieu.moy@grenoble-inp.fr> wrote:
-> Hi,
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Saturday, January 09, 2016 1:04 AM
+> Mike Hommey <mh@glandium.org> writes:
 >
-> Cc-ing Karthik to draw his attention on the message.
+>> So while `cat-file commit A` gives you what `cat-file commit Z` would,
+>> `notes show A` doesn't give you what `notes show Z` would. And that's
+>> this "inconsistency" that bothers me.
 >
+> In any case, 'notes' being a way to add extra information to an
+> existing object means that with your original "replace" that tells
+> Git to keep A in the history (and give Z's contents when contents of
+> A was asked),
+>     it is absolutely correct that notes for A is shown.
 
-Thanks, I didn't really notice it.
+This seems very wrong to me. Surely we have asked that _all_ references to A 
+be replaced by a reference to Z and thence onward to Z's contents.
 
-> ----- Original Message -----
->> In one of our tests, we have a set of branches whose names are all
->> special characters (%, @, etc). Most of them branches have identical
->> tip commits and just have different names. In 2.7.0, when ordering by
->> -committerdate, the branches are now returned in a different order. I
->> don't think this is a bug, based on the commit it bisects to, but I'm
->> wondering if someone can confirm.
->>
->> 2.6.5 and prior (tested all the way back to 1.7.6, so this was
->> consistent for a long time):
->>
->> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
->> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/@#$% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
->>
->> 2.7.0:
->>
->> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
->> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/@#$% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
->>
->> I've bisected this back to:
->>
->> bturner@ubuntu:~/Development/oss/git/git$ git bisect bad
->> 9e468334b41c1d1fc715de177ef1f61a36c1cf01 is the first bad commit
->> commit 9e468334b41c1d1fc715de177ef1f61a36c1cf01
->> Author: Karthik Nayak <karthik.188@gmail.com>
->> Date:   Fri Oct 30 14:15:28 2015 +0530
->>
->>     ref-filter: fallback on alphabetical comparison
->>
->> The message for that commit indicates that sorting numerics (which I
->> assume is the implementation for committerdate) now falls back on
->> alphabetical for identical values, suggesting this order change is
->> actually intentional and correct.
+That is, unless 'git --no-replace-objects' was given as an option.
+
+It is as if everything about the old 'A' has been deleted, and new content 
+'Z' replaces it.
+
+In this case surely we want the notes about the contents of the new Z. To 
+mix up the old and new will cause confusion, as evidenced by Mike's post.
+
+> It would make no sense if notes for Z "followed", because as long as
+> Git is concerned, you told Git to show A when your "git log master"
+> followed the history down thru B to its parent, which you did not
+> rewrite to be Z but kept to be A.  With the approach to replace B
+> with B' that has Z as its parent, when "git log master" follows the
+> history down thru C to its parent, Git thinks it is showing B but
+> reads B', and finds out its parent is Z and goes down to Z, and
+> notes for these two commits B and Z (not B' and Z) would be shown;
+> there is no need to "follow".
 >
-> And also that the previous order was arbitrary (just letting the sort
-> algorithm chose which one to put first in case of equality on the main
-> sorting criterion), so the fact that it was stable previously is more
-> or less just luck. Now it should be stable.
+> The true source of your confusion, I think, is that there is a
+> misunderstanding of what "replace A with Z" does.
 >
->> Is that right?
->>
+> It is not "whenever somebody refers to A, pretend as if it is
+> referring to Z".  If that _were_ the case, then I'd agree that
+> "whenever somebody else asks notes attached to A, pretend as if
+> notes attached to Z were asked" might make sense, but that does not
+> match the reality.
 
-Yup, absolutely.
+I think Mike is pointing out that it is only for notes that this alternate 
+reality unexpectedly happens.
 
->> (Note: The alphabetical-ness of the branch names is reversed, which
->> seems logical given my original sort was -committerdate. A
->> --sort=refname looks like this.
->>
->> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
->> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/@#$% - >Tue Jan 3 17:00:51 2012 +1100
->> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
->>
->> That's probably more correct too.)
->>
->> Best regards,
->> Bryan Turner
+>
+> It is not graft vs replace.  It is about what you replace with what
+> other thing: "replace" is a content replacement mechanism, not
+> identity replacement mechanism.
 
-This is correct as per the patch, But I'm wondering if this is desired.
-I.E when sorting in reverse order should the fallback (alphabetical sort)
-also be in reverse order?
+Part of the graft vs replace difficulty (historically) was that a graft 
+(easy to use) will keep all the commits, and add a traversal link, while 
+replace would essentially 'delete' one of the commits (users did not have a 
+spare commit to delete if linking histories). The newer --graft option is 
+now the appropriate method of creating an extra commit (that has the extra 
+traverse linkage) that can then be 'deleted' and replaced by the commit on 
+the other traverse chain.
 
--- 
-Regards,
-Karthik Nayak
+There is the case where we have a string of commits (A-B-C-D-E) and we 
+simply want to swap out commit C and replace it with a new commit C' to 
+create (A-B-C'-D-E). A new C' would be prepared, and then upon replacement 
+of C by C' we have to ask "What should be done about the old notes that were 
+attached to C?".
+
+I think that it maybe here that the issue lies. Some will think that the 
+notes of the old C should still be attached to that location in the string, 
+while others may think that it's for the user to both notice, and check the 
+veracity, and only then carry those old notes across to the new C' 
+(manually).
+
+--
+Philip
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
