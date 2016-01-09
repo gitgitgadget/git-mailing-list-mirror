@@ -1,68 +1,121 @@
-From: Johannes Schindelin <schindelin@wisc.edu>
-Subject: Re: [PATCH v2 2/4] compat/basename: make basename() conform to POSIX
-Date: Sat, 09 Jan 2016 15:53:54 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601091553310.2964@virtualbox>
-References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de>
- <cover.1452270051.git.johannes.schindelin@gmx.de>
- <abd20a9fb53d702cb878b8fa767881e7c1ef2148.1452270051.git.johannes.schindelin@gmx.de>
- <xmqqy4bz29mp.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: for-each-ref output order change in 2.7.0
+Date: Sat, 9 Jan 2016 16:40:02 +0100 (CET)
+Message-ID: <1674931730.811704.1452354002885.JavaMail.zimbra@imag.fr>
+References: <CAGyf7-FSP3Z7HO=LpoQck8q9sSj3fGYCx1=gNa6fXEkovxAxHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 09 16:54:07 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Users <git@vger.kernel.org>
+To: Bryan Turner <bturner@atlassian.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 09 17:06:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aHvqA-0001NB-3K
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Jan 2016 16:54:06 +0100
+	id 1aHw2A-0002k8-4p
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Jan 2016 17:06:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbcAIPyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jan 2016 10:54:00 -0500
-Received: from wmauth1.doit.wisc.edu ([144.92.197.141]:62728 "EHLO
-	smtpauth1.wiscmail.wisc.edu" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754033AbcAIPx7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jan 2016 10:53:59 -0500
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Jan 2016 10:53:59 EST
-Received: from avs-daemon.smtpauth1.wiscmail.wisc.edu by
- smtpauth1.wiscmail.wisc.edu
- (Oracle Communications Messaging Server 7.0.5.33.0 64bit (built Aug 27 2014))
- id <0O0O00000W1RYT00@smtpauth1.wiscmail.wisc.edu> for git@vger.kernel.org;
- Sat, 09 Jan 2016 08:53:58 -0600 (CST)
-X-Spam-PmxInfo: Server=avs-1, Version=6.2.1.2493963,
- Antispam-Engine: 2.7.2.2107409, Antispam-Data: 2016.1.9.144215,
- SenderIP=0.0.0.0
-X-Spam-Report: AuthenticatedSender=yes, SenderIP=0.0.0.0
-Received: from virtualbox (aftr-37-24-143-74.unit-ymedia.net [37.24.143.74])
- by smtpauth1.wiscmail.wisc.edu
- (Oracle Communications Messaging Server 7.0.5.33.0 64bit (built Aug 27 2014))
- with ESMTPSA id <0O0O00CPTXDVRP10@smtpauth1.wiscmail.wisc.edu>; Sat,
- 09 Jan 2016 08:53:57 -0600 (CST)
-X-X-Sender: virtualbox@virtualbox
-In-reply-to: <xmqqy4bz29mp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1755310AbcAIQG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jan 2016 11:06:26 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:58277 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754869AbcAIQGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jan 2016 11:06:25 -0500
+X-Greylist: delayed 1199 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Jan 2016 11:06:24 EST
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u09Fe1Ox030046
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 9 Jan 2016 16:40:01 +0100
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u09Fe3Gn029829;
+	Sat, 9 Jan 2016 16:40:03 +0100
+In-Reply-To: <CAGyf7-FSP3Z7HO=LpoQck8q9sSj3fGYCx1=gNa6fXEkovxAxHw@mail.gmail.com>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF38 (Linux)/8.0.9_GA_6191)
+Thread-Topic: for-each-ref output order change in 2.7.0
+Thread-Index: kCqcHHsqMevuHSZ8/sAXueNdVvsDnw==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 09 Jan 2016 16:40:01 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u09Fe1Ox030046
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1452958803.10657@vB6M7mbofJK9qQq8SrHtDQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283603>
 
-Hi Junio,
+Hi,
 
-On Fri, 8 Jan 2016, Junio C Hamano wrote:
+Cc-ing Karthik to draw his attention on the message.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+----- Original Message -----
+> In one of our tests, we have a set of branches whose names are all
+> special characters (%, @, etc). Most of them branches have identical
+> tip commits and just have different names. In 2.7.0, when ordering by
+> -committerdate, the branches are now returned in a different order. I
+> don't think this is a bug, based on the commit it bisects to, but I'm
+> wondering if someone can confirm.
 > 
-> > According to POSIX, basename("/path/") should return "path", not
-> > "path/". Likewise, basename(NULL) and basename("abc") should both
-> > return ".".
+> 2.6.5 and prior (tested all the way back to 1.7.6, so this was
+> consistent for a long time):
 > 
-> Did you mean basename("abc"), not basename(""), here?  
+> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
+> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/@#$% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
+> 
+> 2.7.0:
+> 
+> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
+> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/@#$% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
+> 
+> I've bisected this back to:
+> 
+> bturner@ubuntu:~/Development/oss/git/git$ git bisect bad
+> 9e468334b41c1d1fc715de177ef1f61a36c1cf01 is the first bad commit
+> commit 9e468334b41c1d1fc715de177ef1f61a36c1cf01
+> Author: Karthik Nayak <karthik.188@gmail.com>
+> Date:   Fri Oct 30 14:15:28 2015 +0530
+> 
+>     ref-filter: fallback on alphabetical comparison
+> 
+> The message for that commit indicates that sorting numerics (which I
+> assume is the implementation for committerdate) now falls back on
+> alphabetical for identical values, suggesting this order change is
+> actually intentional and correct.
 
-I don't understand: I wrote basename("abc")... ;-)
+And also that the previous order was arbitrary (just letting the sort
+algorithm chose which one to put first in case of equality on the main
+sorting criterion), so the fact that it was stable previously is more
+or less just luck. Now it should be stable.
 
-Ciao,
-Dscho
+> Is that right?
+> 
+> (Note: The alphabetical-ness of the branch names is reversed, which
+> seems logical given my original sort was -committerdate. A
+> --sort=refname looks like this.
+> 
+> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
+> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/@#$% - >Tue Jan 3 17:00:51 2012 +1100
+> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
+> 
+> That's probably more correct too.)
+> 
+> Best regards,
+> Bryan Turner
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
