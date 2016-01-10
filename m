@@ -1,140 +1,131 @@
-From: David Greene <greened@obbligato.org>
-Subject: [PATCH] Add a test for subtree rebase that loses commits
-Date: Sun, 10 Jan 2016 17:08:17 -0600
-Message-ID: <1452467297-16868-2-git-send-email-greened@obbligato.org>
-References: <1451968805-6948-2-git-send-email-greened@obbligato.org>
- <1452467297-16868-1-git-send-email-greened@obbligato.org>
-Cc: gitster@pobox.com, john@keeping.me.uk,
-	sandals@crustytoothpaste.net, peff@peff.net,
-	sunshine@sunshineco.com, j6t@kdbg.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 11 00:08:40 2016
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH V3 0/2] specify commit by negative pattern
+Date: Sun, 10 Jan 2016 23:36:38 -0000
+Organization: OPDS
+Message-ID: <72AF834F7D7B46D298EFE697EBF19E0E@PhilipOakley>
+References: <xmqq37u82apv.fsf@gitster.mtv.corp.google.com> <1452392429-2578-1-git-send-email-ischis2@cox.net> <1686181.AoEpo53h6D@thunderbird>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Duy Nguyen" <pclouds@gmail.com>
+To: "Stephen & Linda Smith" <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jan 11 00:36:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIP6G-0004Vt-9p
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 00:08:40 +0100
+	id 1aIPXZ-00036g-8V
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 00:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757624AbcAJXIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Jan 2016 18:08:36 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:53780 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757415AbcAJXIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jan 2016 18:08:34 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.us.cray.com)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1aIP7E-0004uE-Dz; Sun, 10 Jan 2016 17:09:40 -0600
-X-Mailer: git-send-email 2.6.1
-In-Reply-To: <1452467297-16868-1-git-send-email-greened@obbligato.org>
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1757595AbcAJXgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2016 18:36:49 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:38006 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757488AbcAJXgs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jan 2016 18:36:48 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2DqDQDg6pJWPCYvBlxeGQEBAQELAQIBAQECgwpSbYdNgQyxPYQABxgMhWUBAwEBgRQ9EAEBAQEBAQEGAQEBAUEkG4QvBQEBAQEDCAEBLhYIAQEhCwIDBQIBAxUDCSUUAQQYAgYHAxQGCAsIAgECAwEMBIgRCrVJiQkthlaEf4ghgRsFjT86iRoBgTaEDIl0SoxVhWSIbTmENT40AQEBhgMBAQE
+X-IPAS-Result: A2DqDQDg6pJWPCYvBlxeGQEBAQELAQIBAQECgwpSbYdNgQyxPYQABxgMhWUBAwEBgRQ9EAEBAQEBAQEGAQEBAUEkG4QvBQEBAQEDCAEBLhYIAQEhCwIDBQIBAxUDCSUUAQQYAgYHAxQGCAsIAgECAwEMBIgRCrVJiQkthlaEf4ghgRsFjT86iRoBgTaEDIl0SoxVhWSIbTmENT40AQEBhgMBAQE
+X-IronPort-AV: E=Sophos;i="5.20,550,1444690800"; 
+   d="scan'208";a="82876805"
+Received: from host-92-6-47-38.as43234.net (HELO PhilipOakley) ([92.6.47.38])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 11 Jan 2016 00:17:13 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283626>
 
-From: "David A. Greene" <greened@obbligato.org>
+From: "Stephen & Linda Smith" <ischis2@cox.net>
+> On Sunday, January 10, 2016 01:25:42 PM Philip Oakley wrote:
+>> From: "Stephen P. Smith" <ischis2@cox.net>
+>> > Add support for negative pattern matching in  <at> ^{/<pattern>} style
+>>
+>> Has this become mangled by replacing the '@' with ' <at> ' ?
+> It looks like the cover letter got mangled.  I will fix after I get any 
+> comments
+> on the patches themselves.
+>
 
-This test merges an external tree in as a subtree, makes some commits
-on top of it and splits it back out.  In the process the added commits
-are lost or the rebase aborts with an internal error.  The tests are
-marked to expect failure so that we don't forget to fix it.
+I think I was also confused between the extra ways of spelling @ (listed 
+first in revisions.txt), and the extra was of spelling <rev>, i.e. the 
+<rev>^{/<text>}, and then in patch 2/2 it actually being the :/<text> 
+syntax.
 
-Signed-off-by: David A. Greene <greened@obbligato.org>
----
- t/t3427-rebase-subtree.sh | 79 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
- create mode 100755 t/t3427-rebase-subtree.sh
-
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-new file mode 100755
-index 0000000..add3b79
---- /dev/null
-+++ b/t/t3427-rebase-subtree.sh
-@@ -0,0 +1,79 @@
-+#!/bin/sh
-+
-+test_description='git rebase tests for -Xsubtree
-+
-+This test runs git rebase and tests the subtree strategy.
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+check_equal() {
-+	test_debug 'echo'
-+	test_debug "echo \"check a:\" \"{$1}\""
-+	test_debug "echo \"      b:\" \"{$2}\""
-+	test "$1" = "$2"
-+}
-+
-+last_commit_message() {
-+	git log --pretty=format:%s -1
-+}
-+
-+test_expect_success 'setup' '
-+	test_commit README &&
-+	mkdir files &&
-+	(
-+		cd files &&
-+		git init &&
-+		test_commit master1 &&
-+		test_commit master2 &&
-+		test_commit master3
-+	) &&
-+	test_debug "echo Add project master to master" &&
-+	git fetch files master &&
-+	git branch files-master FETCH_HEAD &&
-+	test_debug "echo Add subtree master to master via subtree" &&
-+	git read-tree --prefix=files_subtree files-master &&
-+	git checkout -- files_subtree &&
-+	tree=$(git write-tree) &&
-+	head=$(git rev-parse HEAD) &&
-+	rev=$(git rev-parse --verify files-master^0) &&
-+	commit=$(git commit-tree -p $head -p $rev -m "Add subproject master" $tree) &&
-+	git reset $commit &&
-+	(
-+		cd files_subtree &&
-+		test_commit master4
-+	) &&
-+	test_commit files_subtree/master5
-+'
-+
-+# Does not preserve master4 and master5.
-+test_expect_failure 'Rebase -Xsubtree --preserve-merges --onto' '
-+	reset_rebase &&
-+	git checkout -b rebase-preserve-merges master &&
-+	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	git commit -m "Empty commit" --allow-empty &&
-+	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
-+	check_equal "$(last_commit_message)" "files_subtree/master5"
-+'
-+
-+# Does not preserve master4, master5 and empty.
-+test_expect_failure 'Rebase -Xsubtree --keep-empty --preserve-merges --onto' '
-+	reset_rebase &&
-+	git checkout -b rebase-keep-empty master &&
-+	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	git commit -m "Empty commit" --allow-empty &&
-+	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
-+	check_equal "$(last_commit_message)" "Empty commit"
-+'
-+
-+# fatal: Could not parse object
-+test_expect_failure 'Rebase -Xsubtree --onto' '
-+	reset_rebase &&
-+	git checkout -b rebase-onto master &&
-+	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	git commit -m "Empty commit" --allow-empty &&
-+	git rebase -Xsubtree=files_subtree --onto files-master master &&
-+	check_equal "$(last_commit_message)" "Empty commit"
-+'
-+
-+test_done
--- 
-2.6.1
+>>
+>> When I look at the update to revisions.txt it doesn't look like its 
+>> touching
+>> the '@' description.
+>> Is this '@^' a new (for the documenation) combination. Or has the example
+>> confused me?
+>>
+>> > revision specifiers. So now you can find the first commit whose message
+>> > doesn't match a pattern, complementing the existing positive matching.
+>> > e.g.:
+>> >
+>> >    $ git rebase -i  <at> ^{/!-^WIP}
+>> >
+>> > My use-case is in having a "work, work, work, rebase, push"-style
+>> > workflow, which generates a lot of "WIP foo" commits. While rebasing is
+>> > usually handled via "git rebase -i origin/master", occasionally I will
+>> > already have several "good, but not yet ready to push" commits hanging
+>> > around while I finish work on related commits. In these situations, the
+>> > ability to quickly "git diff  <at> ^{/!-^WIP}" to get an overview of 
+>> > all
+>> > changes "since the last one I was happy with", can be useful.
+>> >
+>> > This is the second version of the patch series. The previous attempt
+>> > used the notation  <at> ^{/!WIP}, rather than  <at> ^{/!-WIP}, so the
+>> > "modifier"
+>> > was the '!' character. Now, '!' is taken as an indicator that the
+>> > pattern is to be interpreted differently, and '-' is taken as an
+>> > indicator of how it is to be interpreted differently. This follows
+>> > recent discussion with "Junio C Hamano" <gitster <at> pobox.com> and
+>> > much-less
+>> > recent discussion archived at:
+>> >
+>> > http://thread.gmane.org/gmane.comp.version-control.git/40460/focus=40477
+>> >
+>> > In summary, '!' is to be used as an "escape hatch", for further
+>> > extension of the "name commit by pattern" functionality. Theorised 
+>> > future
+>> > extensions indicated things like "what was to be searched",
+>> > e.g.:  <at> ^{/!(a=author)}.  With only two interpretations of the '!'
+>> > leader, for now (including the '!!' literal notation), adding such a
+>> > verbose form, such as ' <at> ^{/!(negative)foo}', seemed inappropriate 
+>> > at
+>> > this
+>> > time. In the event that such verbose forms are ever implemented, this 
+>> > new
+>> > form may act as a shorthand, for a basic case.
+>> >
+>> > Will Palmer (2):
+>> >  test for '!' handling in rev-parse's named commits
+>> >  object name: introduce '^{/!-<negative pattern>}' notation
+>> >
+>> > Documentation/revisions.txt | 11 +++++-----
+>> > sha1_name.c                 | 20 ++++++++++++-----
+>> > t/t1511-rev-parse-caret.sh  | 53
+>> > ++++++++++++++++++++++++++++++++++++++++++++-
+>> > 3 files changed, 73 insertions(+), 11 deletions(-)
+>> >
+>> --
+>> Philip
+>>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
