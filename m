@@ -1,210 +1,181 @@
 From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH V3 2/2] object name: introduce '^{/!-<negative pattern>}' notation
-Date: Sat,  9 Jan 2016 19:23:03 -0700
-Message-ID: <1452392583-2708-1-git-send-email-ischis2@cox.net>
-References: <1452392429-2578-1-git-send-email-ischis2@cox.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Will Palmer <wmpalmer@gmail.com>,
+Subject: [PATCH v3] format-patch: introduce format.outputDirectory configuration
+Date: Sat,  9 Jan 2016 19:30:19 -0700
+Message-ID: <1452393019-2852-1-git-send-email-ischis2@cox.net>
+References: <CAPig+cTOG7QP25TyJbbm70NBXN6Z0nZPJyjxFp1y147WQmKEDg@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Alexander Kuleshov <kuleshovmail@gmail.com>,
 	"Stephen P . Smith" <ischis2@cox.net>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 10 03:22:25 2016
+X-From: git-owner@vger.kernel.org Sun Jan 10 03:30:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aI5eA-00015I-PJ
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jan 2016 03:22:23 +0100
+	id 1aI5m3-0007Cf-6J
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jan 2016 03:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756718AbcAJCWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jan 2016 21:22:19 -0500
-Received: from fed1rmfepo202.cox.net ([68.230.241.147]:52870 "EHLO
-	fed1rmfepo202.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756634AbcAJCWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jan 2016 21:22:18 -0500
-Received: from fed1rmimpo209 ([68.230.241.160]) by fed1rmfepo202.cox.net
+	id S1756699AbcAJC3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Jan 2016 21:29:47 -0500
+Received: from fed1rmfepo103.cox.net ([68.230.241.145]:48725 "EHLO
+	fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756668AbcAJC3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jan 2016 21:29:45 -0500
+Received: from fed1rmimpo305 ([68.230.241.173]) by fed1rmfepo103.cox.net
           (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160110022217.BTJK22785.fed1rmfepo202.cox.net@fed1rmimpo209>
-          for <git@vger.kernel.org>; Sat, 9 Jan 2016 21:22:17 -0500
+          id <20160110022945.WYJL11111.fed1rmfepo103.cox.net@fed1rmimpo305>
+          for <git@vger.kernel.org>; Sat, 9 Jan 2016 21:29:45 -0500
 Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo209 with cox
-	id 42NH1s0022tqoqC012NHef; Sat, 09 Jan 2016 21:22:17 -0500
+	by fed1rmimpo305 with cox
+	id 42Vk1s0062tqoqC012VkqX; Sat, 09 Jan 2016 21:29:44 -0500
 X-CT-Class: Clean
 X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020205.5691C059.0068,ss=1,re=0.000,fgs=0
+X-CT-RefID: str=0001.0A020204.5691C218.00BD,ss=1,re=0.000,fgs=0
 X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=RNFt6fe+ c=1 sm=1
+X-Authority-Analysis: v=2.0 cv=f8aW8pOM c=1 sm=1
  a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
- a=pGLkceISAAAA:8 a=TSbVqHtbAAAA:8 a=VMeQZgButWaJwkk0FOQA:9
+ a=pGLkceISAAAA:8 a=TSbVqHtbAAAA:8 a=JSNQmZlDd7ZuTQoTR7oA:9
  a=/Rt4pg3TtX3KzfzhvVoEow==:117
 X-CM-Score: 0.00
 Authentication-Results: cox.net; none
 Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 2131C13F7BB;
-	Sat,  9 Jan 2016 19:23:05 -0700 (MST)
+	by thunderbird (Postfix) with ESMTP id 8A19F13F7BB;
+	Sat,  9 Jan 2016 19:30:32 -0700 (MST)
 X-Mailer: git-send-email 2.7.0-rc2
-In-Reply-To: <1452392429-2578-1-git-send-email-ischis2@cox.net>
+In-Reply-To: <CAPig+cTOG7QP25TyJbbm70NBXN6Z0nZPJyjxFp1y147WQmKEDg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283612>
 
-From: Will Palmer <wmpalmer@gmail.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
 
-To name a commit, you can now say
+We can pass -o/--output-directory to the format-patch command to
+store patches not in the working directory. This patch introduces
+format.outputDirectory configuration option for same purpose.
 
-    $ git rev-parse HEAD^{/!-foo}
+The case of usage of this configuration option can be convinience
+to not pass everytime -o/--output-directory if an user has pattern
+to store all patches in the /patches directory for example.
 
-and it will return the hash of the first commit reachable from HEAD,
-whose commit message does not contain "foo". This is the opposite of the
-existing <rev>^{/<pattern>} syntax.
+The format.outputDirectory has lower priority than command line
+option, so if user will set format.outputDirectory and pass the
+command line option, a result will be stored in a directory that
+passed to command line option.
 
-The specific use-case this is intended for is to perform an operation,
-excluding the most-recent commits containing a particular marker. For
-example, if you tend to make "work in progress" commits, with messages
-beginning with "WIP", you work, then it could be useful to diff against
-"the most recent commit which was not a WIP commit". That sort of thing
-now possible, via commands such as:
-
-    $ git diff @^{/!-^WIP}
-
-The leader '/!-', rather than simply '/!', to denote a negative match,
-is chosen to leave room for additional modifiers in the future.
-
-Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 Signed-off-by: Stephen P. Smith <ischis2@cox.net>
 ---
 
 Notes:
-    Moved modref branch from 2/2 to the 1/2 patch as discussed in [1] and
-    [2].
+    Re-rolled patch by following review comments in:
     
-    [1] http://article.gmane.org/gmane.comp.version-control.git/271071
-    [2] http://article.gmane.org/gmane.comp.version-control.git/283573
+    http://article.gmane.org/gmane.comp.version-control.git/272199
+    http://article.gmane.org/gmane.comp.version-control.git/278354
+    http://article.gmane.org/gmane.comp.version-control.git/278365
+    
+    Changes include:
+    * Specifying the patches directory as an argument to ls
+    * Not initialize config_output_directory  to NULL
+    * Grammar fixes in documentation
+    * Use test_config rather than git config
 
- Documentation/revisions.txt | 11 ++++++-----
- sha1_name.c                 | 20 +++++++++++++++-----
- t/t1511-rev-parse-caret.sh  | 31 ++++++++++++++++++++++++++++++-
- 3 files changed, 51 insertions(+), 11 deletions(-)
+ Documentation/config.txt           |  4 ++++
+ Documentation/git-format-patch.txt |  6 +++++-
+ builtin/log.c                      |  7 +++++++
+ t/t4014-format-patch.sh            | 13 +++++++++++++
+ 4 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index d85e303..0c84d4f 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -176,11 +176,12 @@ existing tag object.
-   A colon, followed by a slash, followed by a text, names
-   a commit whose commit message matches the specified regular expression.
-   This name returns the youngest matching commit which is
--  reachable from any ref.  If the commit message starts with a
--  '!' you have to repeat that;  the special sequence ':/!',
--  followed by something else than '!', is reserved for now.
--  The regular expression can match any part of the commit message. To
--  match messages starting with a string, one can use e.g. ':/^foo'.
-+  reachable from any ref. The regular expression can match any part of the
-+  commit message. To match messages starting with a string, one can use
-+  e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
-+  is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
-+  literal '!' character, followed by 'foo'. Any other sequence beginning with
-+  ':/!' is reserved for now.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f617886..e92a0ee 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1243,6 +1243,10 @@ format.coverLetter::
+ 	format-patch is invoked, but in addition can be set to "auto", to
+ 	generate a cover-letter only when there's more than one patch.
  
- '<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
-   A suffix ':' followed by a path names the blob or tree
-diff --git a/sha1_name.c b/sha1_name.c
-index 892db21..a2c5303 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -848,8 +848,12 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
-  * through history and returning the first commit whose message starts
-  * the given regular expression.
-  *
-- * For future extension, ':/!' is reserved. If you want to match a message
-- * beginning with a '!', you have to repeat the exclamation mark.
-+ * For negative-matching, prefix the pattern-part with '!-', like: ':/!-WIP'.
-+ *
-+ * For a literal '!' character at the beginning of a pattern, you have to repeat
-+ * that, like: ':/!!foo'
-+ *
-+ * For future extension, all other sequences beginning with ':/!' are reserved.
-  */
++format.outputDirectory::
++	Set a custom directory to store the resulting files instead of the
++	current working directory.
++
+ filter.<driver>.clean::
+ 	The command which is used to convert the content of a worktree
+ 	file to a blob upon checkin.  See linkgit:gitattributes[5] for
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index e3cdaeb..7a76594 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -57,7 +57,11 @@ The names of the output files are printed to standard
+ output, unless the `--stdout` option is specified.
  
- /* Remember to update object flag allocation in object.h */
-@@ -878,12 +882,18 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+ If `-o` is specified, output files are created in <dir>.  Otherwise
+-they are created in the current working directory.
++they are created in the current working directory. The default path
++can be set with the setting 'format.outputDirectory' configuration option.
++If `-o` is specified and 'format.outputDirectory' is set, output files
++will be stored in a <dir> that passed to `-o`. When 'format.outputDirectory'
++is set, to get default behaviour back is to pass './' to the `-o`.
+ 
+ By default, the subject of a single patch is "[PATCH] " followed by
+ the concatenation of lines from the commit message up to the first blank
+diff --git a/builtin/log.c b/builtin/log.c
+index e00cea7..679ff76 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -707,6 +707,8 @@ enum {
+ 	COVER_AUTO
+ };
+ 
++static const char *config_output_directory;
++
+ static int git_format_config(const char *var, const char *value, void *cb)
  {
- 	struct commit_list *backup = NULL, *l;
- 	int found = 0;
-+	int negative = 0;
- 	regex_t regex;
- 
- 	if (prefix[0] == '!') {
--		if (prefix[1] != '!')
--			die ("Invalid search pattern: %s", prefix);
- 		prefix++;
-+
-+		if (prefix[0] == '-') {
-+			prefix++;
-+			negative = 1;
-+		} else if (prefix[0] != '!') {
-+			die ("Invalid search pattern: %s", prefix);
-+		}
+ 	if (!strcmp(var, "format.headers")) {
+@@ -777,6 +779,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
+ 		return 0;
  	}
++	if (!strcmp(var, "format.outputdirectory"))
++		return git_config_string(&config_output_directory, var, value);
  
- 	if (regcomp(&regex, prefix, REG_EXTENDED))
-@@ -903,7 +913,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
- 			continue;
- 		buf = get_commit_buffer(commit, NULL);
- 		p = strstr(buf, "\n\n");
--		matches = p && !regexec(&regex, p + 2, 0, NULL, 0);
-+		matches = p && (negative ^ !regexec(&regex, p + 2, 0, NULL, 0));
- 		unuse_commit_buffer(commit, buf);
+ 	return git_log_config(var, value, cb);
+ }
+@@ -1391,6 +1395,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (rev.show_notes)
+ 		init_display_notes(&rev.notes_opt);
  
- 		if (matches) {
-diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-index b2f90be..8a5983f 100755
---- a/t/t1511-rev-parse-caret.sh
-+++ b/t/t1511-rev-parse-caret.sh
-@@ -26,7 +26,10 @@ test_expect_success 'setup' '
- 	git branch expref &&
- 	echo changed >>a-blob &&
- 	git add -u &&
--	git commit -m Changed
-+	git commit -m Changed &&
-+	echo changed-again >>a-blob &&
-+	git add -u &&
-+	git commit -m Changed-again
++	if (!output_directory && !use_stdout)
++		output_directory = config_output_directory;
++
+ 	if (!use_stdout)
+ 		output_directory = set_outdir(prefix, output_directory);
+ 	else
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 646c475..5c6f128 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -40,6 +40,19 @@ test_expect_success setup '
+ 
  '
  
- test_expect_success 'ref^{non-existent}' '
-@@ -99,4 +102,30 @@ test_expect_success 'ref^{/!!Exp}' '
- 	test_cmp expected actual
- '
++test_expect_success "format-patch format.outputDirectory option" '
++	test_config format.outputDirectory "patches/" &&
++	git format-patch master..side &&
++	cnt=$(ls patches | wc -l) &&
++	test $cnt = 3
++'
++
++test_expect_success "format-patch format.outputDirectory overwritten with -o" '
++	test_config format.outputDirectory "patches/" &&
++	git format-patch master..side -o "." &&
++	test_path_is_missing patches/
++'
++
+ test_expect_success "format-patch --ignore-if-in-upstream" '
  
-+test_expect_success 'ref^{/!-}' '
-+	test_must_fail git rev-parse master^{/!-}
-+'
-+
-+test_expect_success 'ref^{/!-.}' '
-+	test_must_fail git rev-parse master^{/!-.}
-+'
-+
-+test_expect_success 'ref^{/!-non-existent}' '
-+	git rev-parse master >expected &&
-+	git rev-parse master^{/!-non-existent} >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'ref^{/!-Changed}' '
-+	git rev-parse expref >expected &&
-+	git rev-parse master^{/!-Changed} >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'ref^{/!-!Exp}' '
-+	git rev-parse modref >expected &&
-+	git rev-parse expref^{/!-!Exp} >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ 	git format-patch --stdout master..side >patch0 &&
 -- 
 2.7.0-rc2
