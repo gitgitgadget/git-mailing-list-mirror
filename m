@@ -1,140 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 4/4] t0060: verify that basename() and dirname() work
- as expected
-Date: Sat, 9 Jan 2016 23:17:58 -0500
-Message-ID: <CAPig+cRjy+xU7dZEbVfqD3LQ8YdzS2gWKL4tufSHfGSaUU-M1Q@mail.gmail.com>
-References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de>
-	<cover.1452270051.git.johannes.schindelin@gmx.de>
-	<eca740dbf6271bd69f2ccb14163175996ef7c837.1452270051.git.johannes.schindelin@gmx.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: for-each-ref output order change in 2.7.0
+Date: Sun, 10 Jan 2016 10:51:52 +0100
+Message-ID: <569229B8.9000009@kdbg.org>
+References: <CAGyf7-FSP3Z7HO=LpoQck8q9sSj3fGYCx1=gNa6fXEkovxAxHw@mail.gmail.com>
+ <1674931730.811704.1452354002885.JavaMail.zimbra@imag.fr>
+ <CAOLa=ZT7n8qCoS81iijf9vswWV+S8n7=4kmbKP0EAMnOenXwSg@mail.gmail.com>
+ <56914AD2.9060303@kdbg.org>
+ <CAOLa=ZTUcmAjpC4nf_o7ZAHC3Asj9iwfKOOrJr90_kAyMbd22A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 10 05:18:41 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Bryan Turner <bturner@atlassian.com>,
+	Git Users <git@vger.kernel.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 10 10:52:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aI7Si-0005BM-IP
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Jan 2016 05:18:40 +0100
+	id 1aICfs-0002Rv-MA
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Jan 2016 10:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756799AbcAJESA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Jan 2016 23:18:00 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:35094 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756794AbcAJER7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jan 2016 23:17:59 -0500
-Received: by mail-vk0-f65.google.com with SMTP id i129so4135951vkb.2
-        for <git@vger.kernel.org>; Sat, 09 Jan 2016 20:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=xxcOP1VD6DZgtOB8oGccsU5Orxvf1+MgEhqGGXiv22I=;
-        b=FEWmB8tfQtsVoKg06hr02QT6O8lIM7RkvLFU4r+460eIqj+ecPQRN+JRVXz87gqvp5
-         vp4+T1bnAOB2q1SZHKLECXFcuJ44KFjS/DA+CCdEEE5Y3Lj/4oWA4WPFxBxU//+0Yfob
-         ppR3e7a5DYYYciFCAuC9cOfT3c+/YAQI/ekzMuqhaKKloK/pUDhflSITt3/VuS5qBm1q
-         S5YRhrWpA1bjqsnXmntjgfykWWoTYRUsq76IjYfvqbyXSQkQ5dWEKWFJp2WmdCztVBpr
-         dAZZCh4Xv8UP3MgjHLwpI3WUNxE44PURkWV+PR4OgtvqR86QqhvAjVnb2BsLvnBFAGB/
-         lS4Q==
-X-Received: by 10.31.58.74 with SMTP id h71mr84006814vka.151.1452399478636;
- Sat, 09 Jan 2016 20:17:58 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sat, 9 Jan 2016 20:17:58 -0800 (PST)
-In-Reply-To: <eca740dbf6271bd69f2ccb14163175996ef7c837.1452270051.git.johannes.schindelin@gmx.de>
-X-Google-Sender-Auth: QVR6g1xn-waJ17MW8tmlB2N4uOQ
+	id S1754518AbcAJJv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Jan 2016 04:51:58 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:13098 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752368AbcAJJv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jan 2016 04:51:56 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pdYNT68Vtz5tl9;
+	Sun, 10 Jan 2016 10:51:53 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id E44975398;
+	Sun, 10 Jan 2016 10:51:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <CAOLa=ZTUcmAjpC4nf_o7ZAHC3Asj9iwfKOOrJr90_kAyMbd22A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283615>
 
-On Fri, Jan 8, 2016 at 11:21 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Unfortunately, some libgen implementations yield outcomes different from
-> what Git expects. For example, mingw-w64-crt provides a basename()
-> function, that shortens `path0/` to `path`!
+Am 09.01.2016 um 22:29 schrieb Karthik Nayak:
+> On Sat, Jan 9, 2016 at 11:30 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> Am 09.01.2016 um 18:21 schrieb Karthik Nayak:
+>>>>>
+>>>>> (Note: The alphabetical-ness of the branch names is reversed, which
+>>>>> seems logical given my original sort was -committerdate. A
+>>>>> --sort=refname looks like this.
+
+After reading up on branch sorting, I notice that the single dash in 
+front of committerdate is not a typo, but a request to sort in reverse. 
+Therefore, the resulting sort order, which was
+
+refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
+refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
+refs/heads/@#$% -> Tue Jan 3 17:00:51 2012 +1100
+refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
+refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
+
+is totally correct.
+
+>>>>>
+>>>>> refs/heads/!@#$% -> Tue Jan 3 17:00:51 2012 +1100
+>>>>> refs/heads/!@#% -> Tue Jan 3 17:04:06 2012 +1100
+>>>>> refs/heads/% -> Tue Jan 3 17:00:51 2012 +1100
+>>>>> refs/heads/@#$% - >Tue Jan 3 17:00:51 2012 +1100
+>>>>> refs/heads/@#% -> Tue Jan 3 17:00:51 2012 +1100
+>>>>>
+>>>>> That's probably more correct too.)
+
+But I don't know what would be "more" correct here. It's simply correct.
+
+>>> This is correct as per the patch, But I'm wondering if this is desired.
+>>> I.E when sorting in reverse order should the fallback (alphabetical sort)
+>>> also be in reverse order?
+>>
+>>
+>> IMO, the fallback sorting should be in reverse order only when the user
+>> explicitley asked for reverse order. Just because committer date implies
+>> some "reverse" ordering should not imply that refs with the same committer
+>> date should also be listed in reverse alphabetical order.
+
+I was wrong here. Sorting by committerdate does not imply reverse-ness. 
+I just did not know enough about the --sort options when I wrote this 
+paragraph.
+
 >
-> So let's verify that the basename() and dirname() functions we use conform
-> to what Git expects.
->
-> Derived-from-code-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/test-path-utils.c b/test-path-utils.c
-> @@ -39,6 +39,168 @@ static void normalize_argv_string(const char **var, const char *input)
-> +struct test_data {
-> +       char *from;  /* input:  transform from this ... */
-> +       char *to;    /* output: ... to this.            */
+> I was thinking along the same lines. But do we want to expose the fallback to
+> the user (i.e let them choose if its reversible or not)?
 
-Can these be 'const'? If I'm reading the code correctly, I don't think
-these values ever get passed directly to functions expecting non-const
-strings.
+No, we do not want to expose the fallback to the user. And as far as I 
+can see, no further change is required.
 
-> +};
-> +
-> +static int test_function(struct test_data *data, char *(*func)(char *input),
-> +       const char *funcname)
-> +{
-> +       int failed = 0, i;
-> +       static char buffer[1024];
-
-Why is this 'static'? It is never accessed outside of this scope.
-
-> +       char *to;
-> +
-> +       for (i = 0; data[i].to; i++) {
-> +               if (!data[i].from)
-> +                       to = func(NULL);
-> +               else {
-> +                       strcpy(buffer, data[i].from);
-> +                       to = func(buffer);
-> +               }
-> +               if (strcmp(to, data[i].to)) {
-> +                       error("FAIL: %s(%s) => '%s' != '%s'\n",
-> +                               funcname, data[i].from, to, data[i].to);
-> +                       failed++;
-
-Since 'failed' is only ever used as a boolean, it might be clearer to say:
-
-    failed = 1;
-
-> +               }
-> +       }
-> +       return !!failed;
-
-And then simply:
-
-    return failed;
-
-> +}
-> +
-> +static struct test_data basename_data[] = {
-> +       /* --- POSIX type paths --- */
-> +       { NULL,              "."    },
-
-NULL is tested here.
-
-> +       { "",                "."    },
-> +       { ".",               "."    },
-> [...]
-> +#endif
-> +       { NULL,              "."    },
-
-And also here. Is that intentional?
-
-> +       { NULL,              NULL   }
-> +};
-> +
-> +static struct test_data dirname_data[] = {
-> +       /* --- POSIX type paths --- */
-> +       { NULL,              "."      },
-> [...]
-> +#endif
-> +       { NULL,              "."      },
-
-Ditto.
-
-> +       { NULL,              NULL     }
-> +};
+-- Hannes
