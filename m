@@ -1,143 +1,82 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 3/4] Provide a dirname() function when
- NO_LIBGEN_H=YesPlease
-Date: Mon, 11 Jan 2016 19:30:00 +0100 (CET)
-Message-ID: <0bab11634c8f05751b2ed5879bc4100441bba4b9.1452536924.git.johannes.schindelin@gmx.de>
-References: <cover.1452270051.git.johannes.schindelin@gmx.de> <cover.1452536924.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 0/2] Correctly handle transient files in shared
+ repositories
+Date: Mon, 11 Jan 2016 19:35:42 +0100 (CET)
+Message-ID: <cover.1452537321.git.johannes.schindelin@gmx.de>
+References: <cover.1452085713.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
+	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 19:30:46 2016
+X-From: git-owner@vger.kernel.org Mon Jan 11 19:36:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIhEq-0008S0-9V
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 19:30:44 +0100
+	id 1aIhK4-0003Wh-Bn
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 19:36:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933355AbcAKSaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 13:30:12 -0500
-Received: from mout.gmx.net ([212.227.17.21]:63541 "EHLO mout.gmx.net"
+	id S933097AbcAKSgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 13:36:04 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50511 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933337AbcAKSaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 13:30:08 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M3MAG-1a0tIH0hs0-00r1MK; Mon, 11 Jan 2016 19:30:01
+	id S932451AbcAKSgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 13:36:02 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lgql4-1ZoG2D49Vm-00oDvL; Mon, 11 Jan 2016 19:35:44
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1452536924.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1452085713.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:UfwdqZDC6RPkyGlF7nUqU4cEM30vmMMsOt8Uvvh3YCLYZTQD7bx
- gjsYBUUMiSVZUHbVJIIhXKIzvU7/3GUzNQ+iTl1wOtNFfSIpn6C/d7E67HDO6l1L1s1HXws
- O1XEzBUJG5NOI1JtFQtjBtlyag5qB9MF5pQK8XR2eHNuHDGzMcWzjG2XruXoQ0phgT6N+Ki
- faZ4v0fKvXkuYN98WMBXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0vaTQ4boCwc=:i02lALcqaUgb2iA/laDXPS
- NnKzGhhuODDgvqK0JIUvDSbcysWbxp081vGpLe0RuZuryXF1HNYOveFH8FY6cF/yoXYk3PNFe
- kmcl5ic7+3OxJK+dDubXGyyobwBY97ozvW2SVtxnuG16BDxPTieqeNl4QhRKWq8RL8v68fY67
- Z3R61NyIEzKzEj7XIGAh/sFUHsB0bOXX3MN9VEYiKKXLe89OVDp8WE7BWSTj7iiPrQaIav5z0
- KDZ8YM8U9L7bK/UwPU1KeEd5K7R5hXXXQBBAuHjxDSGkIqQMARIZdet6gVpkAFtN5nmF55vUD
- PBQFX2gOlR9IvHIzd+dkxD3ZXSMcnb4qiIGeYYXLx5LI89vY4+LFS4tsYF1/gZOJG8gqatHrn
- z0S24G2LId0ffnsf548vB4/YJlZElKpr5kPwWJmZe7Y/xCiGZsTaYPMnvyqZ4QohpEgkHW6an
- ACWFUXrCIWedGSGvfbtN2GupEr1lWf1cDaqUx9qNoDU5aT7HwJqG3KbPXn7lswfzyKKJ7szrH
- k8mvPvHRd7dBxEe5kSYb06D+7AoiZajLEcb1EhQvDHM4DoLd4aZNzalM0zI6t9Jsmp4BLVJnc
- LsT+Jjsxombd67cSA0r41qXwvUfz3SpHAmZlToZQbyXrCouaGjnEV1MwA7LoSutx/Rm7eGDwi
- TFM/YxyTEy6842rHW9t1BgoA1j6pVseeDrBaHxqY6fq+E+A7f5wWVgAUGQgxTvmGcsVKkyxZ+
- BZHZYdchXHFjhEQgjKXdtuyRQi4J2jM7NPsoXMNT5fXpG0dg1fh0vP3OYwGDSJbJw+0sv16Y 
+X-Provags-ID: V03:K0:hB1uMoU/654yRcIb94uJ+ZnpqusrYm+5S8/2jg3C07Re4r7jpnl
+ EfqwzPQrPBNsmuV4qKD35PGezVhxLbx2G+rqv6ryJN7Rdz4bCgr2uhwYZTlyCj3VV+bT9+r
+ acXONVg3aVrHIJSL2xujttjvO05Zpe3vKgOjV1NpNGAXKorJyz0KRiMzSpTADpjd3qitsaz
+ xEQSaBf7PEdGEomoA5aZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:14yJjg/6wrI=:izQh8/vjUeYjZd4BHhAzML
+ e3o6bNCKE8LLNkT+Bb8e410xVmrBo+NrSdMD9HHchOTmh+4HbCjIfx4U/Ynhzur0KjE5Xd0jx
+ 60uN/R8ZKBezEJwYYiJ/HWuuuxUBKdEt/MLMCcy1hFk09gbRxJMffBB+ncXaNdwhssoCEkqPX
+ 8C8cdmaK+tocOnyhS2aLDThox95QvJK+pCKOlt6JYuQYqcY+2wxm6SAzYsOXz/W/6/t7OYF8e
+ xIOXcnBOF8VE8V85NlMb09dCzh84DUh6edSeBuEWWV0dWfblpNe7virHUL10KXOOs2435g9Sa
+ nNhSKdGfWOAe2kXPQHhEsusRzFnUzetHJ29X49peXjwCSoTI7dFivJFV55UEJ86dyVPGh2Kos
+ ikF1Xd3x1c6gZVaSr5cd4kwPOWH9SHsAm0inCamxT+TXBeK+rgvBtWo0FX/smopZXoSKuGN4I
+ u8WVLr7/MZSpJi5kMlfs03cefBmaA2sFx58x6f5FFWriuyHln59EyGUMQXl7T5w1yzu3iGIYQ
+ 7qMuQhUW7d+yVNx8jj133OY5F1OWXpBOIwpd/8fYOEEza1oz4+ZkNBcH4lHHEkB4PGJWy4KcJ
+ 8xjVBh6C8AS5X7dZCqKn6mVwWpxt3EdHyxgOEgeElXwejJ4mlw6MMbK3NL0S7YpASR+3ha5V0
+ lzikwyj6STluvRmcqPRmB0MFsweu/IGoo4+9CCsYoy/Mm39HUMd3gGCZL3nNOZ/lkG9/lhX4f
+ A4SphTIlnsJKOFDJb4sfruleTX/T0PWTvy9fmZo6QxAfgCpYiuZarTE2QpJH6KEGscyRWAdq 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283695>
 
-When there is no `libgen.h` to our disposal, we miss the `dirname()`
-function.
+Transient files, e.g. commit messages, are writable only by the owner,
+even in shared repositories, to avoid interference between competing
+users working on the same files.
 
-So far, we only had one user of that function: credential-cache--daemon
-(which was only compiled when Unix sockets are available, anyway). But
-now we also have `builtin/am.c` as user, so we need it.
+These files are typically not deleted after use. As a consequence, we
+have to delete such files before writing when they are owned by someone
+else than the current user.
 
-Since `dirname()` is a sibling of `basename()`, we simply put our very
-own `gitdirname()` implementation next to `gitbasename()` and use it
-if `NO_LIBGEN_H` has been set.
+The only change relative to v2 is that the second commit message
+clarifies why apply, fsck and fast-import are left unchanged.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/basename.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h |  2 ++
- 2 files changed, 46 insertions(+)
+Reported-by: Yaroslav Halchenko <yoh@onerussian.com>
 
-diff --git a/compat/basename.c b/compat/basename.c
-index 0f1b0b0..0a2ed25 100644
---- a/compat/basename.c
-+++ b/compat/basename.c
-@@ -1,4 +1,5 @@
- #include "../git-compat-util.h"
-+#include "../strbuf.h"
- 
- /* Adapted from libiberty's basename.c.  */
- char *gitbasename (char *path)
-@@ -25,3 +26,46 @@ char *gitbasename (char *path)
- 	}
- 	return (char *)base;
- }
-+
-+char *gitdirname(char *path)
-+{
-+	char *p = path, *slash = NULL, c;
-+	int dos_drive_prefix;
-+
-+	if (!p)
-+		return ".";
-+
-+	if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p) {
-+		static struct strbuf buf = STRBUF_INIT;
-+
-+dot:
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
-+		return buf.buf;
-+	}
-+
-+	/*
-+	 * POSIX.1-2001 says dirname("/") should return "/", and dirname("//")
-+	 * should return "//", but dirname("///") should return "/" again.
-+	 */
-+	if (is_dir_sep(*p)) {
-+		if (!p[1] || (is_dir_sep(p[1]) && !p[2]))
-+			return path;
-+		slash = ++p;
-+	}
-+	while ((c = *(p++)))
-+		if (is_dir_sep(c)) {
-+			char *tentative = p - 1;
-+
-+			/* POSIX.1-2001 says to ignore trailing slashes */
-+			while (is_dir_sep(*p))
-+				p++;
-+			if (*p)
-+				slash = tentative;
-+		}
-+
-+	if (!slash)
-+		goto dot;
-+	*slash = '\0';
-+	return path;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 0d66f3a..94f311a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -253,6 +253,8 @@ struct itimerval {
- #else
- #define basename gitbasename
- extern char *gitbasename(char *);
-+#define dirname gitdirname
-+extern char *gitdirname(char *);
- #endif
- 
- #ifndef NO_ICONV
+
+Johannes Schindelin (2):
+  commit: allow editing the commit message even in shared repos
+  Handle more file writes correctly in shared repos
+
+ builtin/commit.c      |  2 +-
+ builtin/fast-export.c |  2 +-
+ builtin/fetch.c       |  2 +-
+ git-compat-util.h     |  1 +
+ wrapper.c             | 13 +++++++++++++
+ 5 files changed, 17 insertions(+), 3 deletions(-)
+
 -- 
 2.6.3.windows.1.300.g1c25e49
