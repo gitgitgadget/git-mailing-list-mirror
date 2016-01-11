@@ -1,83 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] object name: introduce '^{/!-<negativepattern>}' notation
-Date: Mon, 11 Jan 2016 09:13:33 -0800
-Message-ID: <xmqqpox8xcn6.fsf@gitster.mtv.corp.google.com>
-References: <1433550295-15098-1-git-send-email-wmpalmer@gmail.com>
-	<1433550295-15098-3-git-send-email-wmpalmer@gmail.com>
-	<xmqqbngqcfxd.fsf@gitster.dls.corp.google.com>
-	<loom.20160108T065547-969@post.gmane.org>
-	<CACsJy8Dar9sCkTg_SQsDUOWYNQ1PHjmA0KcgrvpvmeY=yVXPMg@mail.gmail.com>
+From: Tobias Klauser <tklauser@distanz.ch>
+Subject: Re: [PATCH 2/2] interpret-trailers: add option for in-place editing
+Date: Mon, 11 Jan 2016 18:13:45 +0100
+Message-ID: <20160111171345.GA26950@distanz.ch>
+References: <1452519213-1819-1-git-send-email-tklauser@distanz.ch>
+ <1452519213-1819-3-git-send-email-tklauser@distanz.ch>
+ <vpqziwc3wjv.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stephen Smith <ischis2@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:13:41 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:13:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIg2G-0000zn-2C
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:13:40 +0100
+	id 1aIg2T-000192-9S
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934294AbcAKRNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 12:13:36 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53890 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934254AbcAKRNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 12:13:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB84B38A64;
-	Mon, 11 Jan 2016 12:13:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jcH4YiyYbDLpXcFVscKMi6w2Ptg=; b=Q2hept
-	qpucIPTGoHVOygnKdIjgxaqEwCh/UQII2vdjHaTuhrjHKyn5kTnBZCyaPbMtpOxa
-	mlC5HyKnB+i2T1DSbkHWso94tt5cIx0CwOi9V6e5BAcjf1PkQmpsGsUml7Omq/0n
-	pGMMBIAxkYIOWgSlPRtcg7bz1CwF6WJdeDtHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SQB8BcIYvSNxpu2IAHvfU1bL1xhLVWWI
-	M1HKyphpYDF2Bho0/trPlrD2pFtJDEbSm0N7EcPFdrxle9m7dzKAsxKIwoKtvfTs
-	zyj7ll/giV2ZYhopiXqvFKGYSldtW0EWwZL9rJ2ZT8AA8wz0hnIOK1Dq3BekjaAF
-	mpH9lT1o5XQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E310038A63;
-	Mon, 11 Jan 2016 12:13:34 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 598DC38A62;
-	Mon, 11 Jan 2016 12:13:34 -0500 (EST)
-In-Reply-To: <CACsJy8Dar9sCkTg_SQsDUOWYNQ1PHjmA0KcgrvpvmeY=yVXPMg@mail.gmail.com>
-	(Duy Nguyen's message of "Sat, 9 Jan 2016 09:18:11 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A557CD64-B886-11E5-BF0E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S934297AbcAKRNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 12:13:49 -0500
+Received: from sym2.noone.org ([178.63.92.236]:35311 "EHLO sym2.noone.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934254AbcAKRNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 12:13:48 -0500
+Received: by sym2.noone.org (Postfix, from userid 1002)
+	id 3pfM7v2DhnzQWhD; Mon, 11 Jan 2016 18:13:47 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <vpqziwc3wjv.fsf@anie.imag.fr>
+X-Editor: Vi IMproved 7.3
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283676>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Oops, I just realized I forgot the v2 in the subject line :-( Sorry
+about that.
 
-> On Fri, Jan 8, 2016 at 1:04 PM, Stephen Smith <ischis2@cox.net> wrote:
->>> > +test_expect_success 'ref^{/!-}' '
->>> > +   test_must_fail git rev-parse master^{/!-}
->>> > +'
->
-> Shouldn't it be ^{!/... instead of ^{/!... ? People could have a
-> pattern starting with "!" and /! will change its meaning. On the other
-> hand, anything else after { is still reserved and can safely be used.
+On 2016-01-11 at 17:33:56 +0100, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> Tobias Klauser <tklauser@distanz.ch> writes:
+> 
+> > @@ -843,7 +844,9 @@ static void free_all(struct trailer_item **first)
+> >  	}
+> >  }
+> >  
+> > -void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
+> > +static struct tempfile trailers_tempfile;
+> 
+> Does this need to be a static global? I'd rather have this be a local
+> variable of process_trailers.
 
-http://thread.gmane.org/gmane.comp.version-control.git/40460/focus=40477
-clarifies the above, I think.
+I'm using a static global in order to have it automatically zeroed out
+and according to the documentation in tempfile.h it can be reused. Also,
+all other users of struct tempfile (except for lockfile.h) are using it
+this way.
 
+> 
+> > +			die_errno(_("could not fdopen tempfile"));
+> 
+> I think you should spell it "could not open temporary file" to be more
+> user-friendly.
 
-Back then we seem to have been thinking only about ":" as the
-overall "search the history to name an object traversing from all
-tips" prefix, but the current one is described in terms of the more
-generally useful "<committish>^{/<pattern>}" syntax and the escape
-hatch applies--they are both handled by get_sha1_oneline() the same
-way.
+Ok, will adjust.
+
+> > @@ -872,5 +900,10 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
+> >  	/* Print the lines after the trailers as is */
+> >  	print_lines(outfile, lines, trailer_end, INT_MAX);
+> >  
+> > +	if (in_place) {
+> > +		if (rename_tempfile(&trailers_tempfile, file))
+> > +			die_errno(_("could not rename tempfile"));
+> > +	}
+> 
+> When this happens, I think you also want to try removing the temporary
+> file. Not sure, though: it may be nice to leave the tempfile for the
+> user to debug. What do we do in other places of the code?
+
+According to the comment in tempfile.h an atexit(3) handler is installed
+by prepare_tempfile_object() (which in turn is called by
+x?mks_tempfile_*) which will remove the file in this case. Or did I miss
+something here?
+
+AFAICS the two other current users of rename_tempfile() also don't
+explicitely treat the tempfile on error.
+
+> It may help the user to get "could not rename temporary file %s to %s"
+> in case this happens.
+
+I think if we keep the current semantics (where the tempfile will be
+deleted by the atexit(3) handler), it doesn't make sense to mention the
+filename in the error message as the file will be gone by the time the
+user has any chance to react. I'd suggest somethin like "could not
+rename temporary file to %s".
+
+> On overall, the split makes the series much more pleasant to review, and
+> other than these details, this sounds good to me. Thanks!
+
+Thanks a lot for your feedback!
