@@ -1,117 +1,62 @@
-From: pedro rijo <pedrorijo91@gmail.com>
-Subject: Re: git format-patch on empty commit
-Date: Mon, 11 Jan 2016 23:47:46 +0000
-Message-ID: <CAPMsMoBp6wdmHsyrG2yMmqSy92R2_Ne-5Kbz-6VFVhLJO_u8mg@mail.gmail.com>
-References: <CAPMsMoDOqWD+a1pj6BO-QgnknJu+JwnZgefJ=MyP8rEwZQGiPQ@mail.gmail.com>
- <20160111205347.GA14535@sigill.intra.peff.net> <xmqqegdnx1xx.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 5/5] Add test for rebase with merges amd redundant commits
+Date: Mon, 11 Jan 2016 18:50:06 -0500
+Message-ID: <CAPig+cQEF7w5rDQK3X9dRUEq_yewEEGA36tcOVMKjsN5hAT12g@mail.gmail.com>
+References: <1452488421-26823-1-git-send-email-greened@obbligato.org>
+	<1452488421-26823-6-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 00:48:33 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, chris@arachsys.com,
+	nhorman@tuxdriver.com
+To: David Greene <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Tue Jan 12 00:50:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aImCP-0002tB-Ca
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 00:48:33 +0100
+	id 1aImE2-0003sD-Ri
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 00:50:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762026AbcAKXs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 18:48:29 -0500
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:32959 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759067AbcAKXs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 18:48:27 -0500
-Received: by mail-lb0-f177.google.com with SMTP id x4so6285366lbm.0
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 15:48:27 -0800 (PST)
+	id S1762041AbcAKXuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 18:50:08 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35908 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762035AbcAKXuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 18:50:07 -0500
+Received: by mail-vk0-f67.google.com with SMTP id e64so2900133vkg.3
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 15:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NOkl1U4H1b3TvUUfAaT9CR9lSVXlUxg2tdkDbrSn4Ss=;
-        b=kicBpaH+mU4lUn7Eu529Ucj7ox9ke3lyxLC9eaPCC5rxhIPYOD8IFU+lClQgVV8WCp
-         yEOY5DwsfYr8N5jngqF7aXjPVVCjpAa1l/4bJOGXmJKrJ3ksfQTdLHpDryIZQ3ge1qCG
-         a/eIPKVRqu6sfZBNUvSxvLWrLtChLFCdrmoqj5GFB2b2BN/OnubVU1QD+vU3FkwtIAhG
-         mel/6WiEUcRAsDKGCnjqi8Lh9nH4xjLAnjI0OtT6Hi+BtBh6sU7/2+WlySzO2LOe8FGz
-         XZmkYw+P1aUMmazoXGm0mPZbgWuU5XGl1b/WNezX51dk3WsSj7lUwLTI/O+RSalFler/
-         fKpw==
-X-Received: by 10.112.133.68 with SMTP id pa4mr2677800lbb.83.1452556106417;
- Mon, 11 Jan 2016 15:48:26 -0800 (PST)
-Received: by 10.112.85.134 with HTTP; Mon, 11 Jan 2016 15:47:46 -0800 (PST)
-In-Reply-To: <xmqqegdnx1xx.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=pNRuRWLP5VN1vhLTHawxEn9OL1Gj9OYEVHFLuTB/J74=;
+        b=buu9/mJcVkuYBEtMxX6qVJbNZkqw+dzy3rFwKb/LpQuUqB3O0G9auW38+Qy5b9vB2X
+         e8xum8T98s/qMvTdTpJ7ydqRtLpuGsd5FdyL07GQklVpPt2nMLOrhHPpn02WoNDQQydB
+         FXRHGMBfby3E2241Op3AcRnKct0Er8jBon88ZxcLYbo2YOdhIm7sTpq3GhiWJCxQu7aO
+         sOsFvxNng4tDIwv0YNLqvHHUPIMaDLwHIM4c1Hb64T2j4YOVjBOJgAcc+P6Gk27AHbZp
+         MJelLvk1KNduVfTeXvH37OltZefSyZhJJiz9cnFVADJOMBtKlwub9/qfb6oiUgRBAYnl
+         0/Cw==
+X-Received: by 10.31.182.143 with SMTP id g137mr57742174vkf.45.1452556206577;
+ Mon, 11 Jan 2016 15:50:06 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 11 Jan 2016 15:50:06 -0800 (PST)
+In-Reply-To: <1452488421-26823-6-git-send-email-greened@obbligato.org>
+X-Google-Sender-Auth: 3buj2Y9EUC56-EoEvctXC97-vGQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283736>
 
-To be honest I've been playing a bit with some git features that I've
-never explored, and was trying to create a fairly simple 'email CLI'
-upon git send-email and other git commands (just because git can) just
-for the fun.
-
-Just like you said, there's seems not be a 'clear benefit from such
-change--it sounds more like a set of
-"because we could" not "because we need to" changes'. I was more
-curious to understand this git behavior than asking to fix the
-bug/implement the feature, so please feel free not to implement this.
-
-Thanks,
-Pedro Rijo
-
-2016-01-11 21:04 GMT+00:00 Junio C Hamano <gitster@pobox.com>:
-> Jeff King <peff@peff.net> writes:
+On Mon, Jan 11, 2016 at 12:00 AM, David Greene <greened@obbligato.org> wrote:
+> From: "David A. Greene" <greened@obbligato.org>
 >
->> On Mon, Jan 11, 2016 at 02:19:52PM +0000, pedro rijo wrote:
->>
->>> Couldn't find any explanation on git docs on this issue:
->>>
->>> If I create a dummy commit, with some dummy diff, I get a normal patch
->>> when I run
->>>
->>> $ git format-patch -1 -o outgoing/ -p -k
->>>
->>> but if the last commit is an empty commit, generated by
->>>
->>> $ git commit --allow-empty "Some commit message"
->>>
->>> then the output of the format patch will be an empty patch. If the
->>> first case produces something like this:
->>
->> I'm not sure if this is a bug or not.
->>
->> In the beginning, git's revision-traversal machinery generally does not
->> show commits which have no diff. Over the years, commands like "git log"
->> learned to set the "always_show_header" option to show even empty
->> commits. But format-patch never did.
->
-> The patch based workflow support is geared towards helping the
-> recipient of the patches a lot more than the contributors, and to
-> prevent mistakes while applying the patches, "am" would stop when it
-> sees such an empty e-mail as you saw (in the later part of message I
-> am not quoting).  After all, a "format-patch" output that does not
-> have any patch would be indistinguishable from discussion e-mail
-> messages and the recipient would not want to end up with no-op
-> commits that record such messages.
->
-> So I think skipping no-op commit from the output was done pretty
-> much deliberately and it is definitely not a bug.  I however do not
-> think it is incorrect to say that it is a lack of feature that
-> nobody so far found necessary or beneficial.
->
-> I would not refuse to consider adding a new option to "format-patch"
-> to emit such a no-op message, and add a "having no patch is OK, just
-> record a no-op commit" option to "am", though.  But I do not see a
-> clear benefit from such change--it sounds more like a set of
-> "because we could" not "because we need to" changes to me.
->
-> Thanks.
->
+> This tests rebase --preserve-merges in the presence of redundant
+> commits when there are actual erges being rebased.  It primarily
 
+s/erges/merges/
 
-
--- 
-Obrigado,
-
-Pedro Rijo
+> exercises the --skip-redundant-commits option.
+>
+> Signed-off-by: David A. Greene <greened@obbligato.org>
