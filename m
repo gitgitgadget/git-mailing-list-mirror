@@ -1,222 +1,190 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 3/3] builtin/grep: allow implicit --no-index
-Date: Mon, 11 Jan 2016 20:28:44 +0100
-Message-ID: <20160111192844.GD10612@hank>
-References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
- <1452435597-12099-4-git-send-email-t.gummerer@gmail.com>
- <xmqqh9ikxbv7.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Teach cherry-pick to skip redundant commits if asked
+Date: Mon, 11 Jan 2016 11:28:37 -0800
+Message-ID: <xmqqr3hnx6e2.fsf@gitster.mtv.corp.google.com>
+References: <1452488421-26823-1-git-send-email-greened@obbligato.org>
+	<1452488421-26823-2-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 20:28:42 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net, chris@arachsys.com,
+	nhorman@tuxdriver.com
+To: David Greene <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Mon Jan 11 20:28:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIi8v-0004TM-Lh
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:28:42 +0100
+	id 1aIi94-0004aG-Cf
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933932AbcAKT2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 14:28:37 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35949 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934548AbcAKT2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 14:28:21 -0500
-Received: by mail-wm0-f65.google.com with SMTP id l65so27696175wmf.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 11:28:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0PQPxKsYC9OQnf/O9NHmneNa8X0LX3N+ienw6MLE19Y=;
-        b=YQdVW985cco2WJO/Fu5XgxznMtIZTqhSWEamYd4Xt+qpMpYSoHi3seAuAGy2mr1dJv
-         qCO86QVM465ZZVdodlLTZdsbQzilQIYygoLUl4Avx8JmIOMkZWCV2nlgpyRmtJHTfVPi
-         xNNhm7DMfKKBBDbCgwD7xBywbed2oSvmukJSkC9UUt7ATDKXqOtS+b+sPYtKTXz7OREL
-         rNcygg1fovAMrufMtAtTxoCkS6EbPTIfgbA+L3qP5cxORK/SDlknMqUMbHh5UG3hMYSI
-         C49qSR69HIpFSFMOat5XWRqR5A/9Y0gqv/0C1vyrNP/veopc6onwF7t70AgKXhpCmUq1
-         ujNQ==
-X-Received: by 10.28.51.17 with SMTP id z17mr10567894wmz.26.1452540499554;
-        Mon, 11 Jan 2016 11:28:19 -0800 (PST)
-Received: from localhost (host143-106-dynamic.248-95-r.retail.telecomitalia.it. [95.248.106.143])
-        by smtp.gmail.com with ESMTPSA id c26sm14213943wmi.21.2016.01.11.11.28.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jan 2016 11:28:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqh9ikxbv7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+	id S934570AbcAKT2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 14:28:44 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934567AbcAKT2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 14:28:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E46EE3A113;
+	Mon, 11 Jan 2016 14:28:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tp03U0zqRCqvN9eqPpAuHLHSrRM=; b=mJ1KEp
+	zmYV0WUvdomSZQoAoR2PcUszaylBMxX3er9tdS0rYBSJfG62UEUo2xDxQH6+b4tJ
+	UcezNizfEgCCt/MPx567u4/kaVyfQuCOCTcBIPCe6G5jP/wSbn2k6VuFskHZEu49
+	HMvB1XYjJTSdO5sMD897Plud+wQtbMSs6Ee7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XQYm+fDm1U8qNtgaz335X4V2qD5Y49oc
+	zXMFggT+6Z6a8FBArmm6fPf+tptROk6+zSdrChdBNM//w3slWufq59xJ2/wSyzVJ
+	waLu/IQ1pjhGk6Mjyot87o3ktwDdYI8OdPQD1FRCcm5PHuEKmqKHDkNCUNxg3PcE
+	Tazki9IpnCM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D9FA73A112;
+	Mon, 11 Jan 2016 14:28:39 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 29F4A3A111;
+	Mon, 11 Jan 2016 14:28:39 -0500 (EST)
+In-Reply-To: <1452488421-26823-2-git-send-email-greened@obbligato.org> (David
+	Greene's message of "Sun, 10 Jan 2016 23:00:17 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8439B9B8-B899-11E5-93C1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283700>
 
-On 01/11, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
+David Greene <greened@obbligato.org> writes:
+
+> From: "David A. Greene" <greened@obbligato.org>
 >
-> > Currently when git grep is used outside of a git repository without the
-> > --no-index option git simply dies.  For convenience, implicitly make git
-> > grep behave like git grep --no-index when it is called outside of a git
-> > repository.
-> >
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> >  builtin/grep.c  | 32 ++++++++++++++++++++++++--------
-> >  t/t7810-grep.sh | 41 ++++++++++++++++++++++++++++++++++++++---
-> >  2 files changed, 62 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index 3a27bd5..a886af1 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -19,6 +19,9 @@
-> >  #include "dir.h"
-> >  #include "pathspec.h"
-> >
-> > +#define GREP_NO_INDEX_EXPLICIT 1
-> > +#define GREP_NO_INDEX_IMPLICIT 2
+> Add a "--skip-redundant-commits" option to cherry-pick to avoid
+> aborting if the cherry-picked commit becomes empty due to
+> conflict resolution.
 >
-> I am not sure this is the best way to do this.  For things like
-> this, the usual pattern is to initialize "no_index" to an "unknown"
-> value, allow "--no-index" to toggle it to true (by the way, I think
-> we should reject "--no-no-index", but that is a separate topic), and
-> then after command line parsing finishes, tweak the no_index if it
-> is still "unknown".
+> Signed-off-by: David A. Greene <greened@obbligato.org>
+> ---
+>  builtin/revert.c |  7 +++++++
+>  sequencer.c      | 23 +++++++++++++++++++++++
+>  sequencer.h      |  1 +
+>  3 files changed, 31 insertions(+)
+>
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 56a2c36..befd3ce 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -91,6 +91,12 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+>  			N_("option for merge strategy"), option_parse_x),
+>  		{ OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("key-id"),
+>  		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> +		/*
+> +		 * There must be enough OPT_END() here to match the
+> +		 * size of cp_extra below so that parse_options_concat
+> +		 * will work.
+> +		 */
 
-The reason for this (and the change in 02/03) is so we can distinguish
-whether there is an explicit no-index or not for the error messages.
-I think it would be okay to have more generic error messages
-("--cached or --untracked cannot be used without index" and
-"--untracked or no index mode cannot be used with revs").  What do you
-think?
+Good ;-)
 
-> >  static char const * const grep_usage[] = {
-> >  	N_("git grep [<options>] [-e] <pattern> [<rev>...] [[--] <path>...]"),
-> >  	NULL
-> > @@ -632,7 +635,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-> >  		OPT_BOOL(0, "cached", &cached,
-> >  			N_("search in index instead of in the work tree")),
-> >  		OPT_BIT(0, "no-index", &no_index,
-> > -			N_("find in contents not managed by git"), 1),
-> > +			N_("find in contents not managed by git"),
-> > +			GREP_NO_INDEX_EXPLICIT),
-> >  		OPT_BOOL(0, "untracked", &untracked,
-> >  			N_("search in both tracked and untracked files")),
-> >  		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
-> > @@ -755,9 +759,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-> >  			     PARSE_OPT_STOP_AT_NON_OPTION);
-> >  	grep_commit_pattern_type(pattern_type_arg, &opt);
-> >
-> > -	if (!no_index && !startup_info->have_repository)
-> > -		/* die the same way as if we did it at the beginning */
-> > -		setup_git_directory();
-> > +	if (!no_index && !startup_info->have_repository) {
-> > +		int nongit = 0;
-> > +
-> > +		setup_git_directory_gently(&nongit);
-> > +		if (nongit)
-> > +			no_index = GREP_NO_INDEX_IMPLICIT;
-> > +	}
-> >
-> >  	/*
-> >  	 * skip a -- separator; we know it cannot be
-> > @@ -873,13 +881,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-> >  	if (!show_in_pager && !opt.status_only)
-> >  		setup_pager();
-> >
-> > -	if (no_index && (untracked || cached))
-> > -		die(_("--cached or --untracked cannot be used with --no-index."));
-> > +	if (untracked || cached) {
-> > +		if (no_index == GREP_NO_INDEX_EXPLICIT)
-> > +			die(_("--cached or --untracked cannot be used with --no-index."));
-> > +		else if (no_index == GREP_NO_INDEX_IMPLICIT)
-> > +			die(_("--cached or --untracked cannot be used outside a git repository."));
-> > +	}
-> >
-> >  	if (no_index || untracked) {
-> >  		int use_exclude = (opt_exclude < 0) ? !no_index : !!opt_exclude;
-> > -		if (list.nr)
-> > -			die(_("--no-index or --untracked cannot be used with revs."));
-> > +		if (list.nr) {
-> > +			if (no_index == GREP_NO_INDEX_IMPLICIT)
-> > +				die(_("cannot use revs outside of a git repository."));
-> > +			else
-> > +				die(_("--no-index or --untracked cannot be used with revs."));
-> > +		}
-> >  		hit = grep_directory(&opt, &pathspec, use_exclude);
-> >  	} else if (0 <= opt_exclude) {
-> >  		die(_("--[no-]exclude-standard cannot be used for tracked contents."));
-> > diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> > index ab94716..4ba955d 100755
-> > --- a/t/t7810-grep.sh
-> > +++ b/t/t7810-grep.sh
-> > @@ -794,11 +794,9 @@ test_expect_success 'outside of git repository' '
-> >  		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-> >  		export GIT_CEILING_DIRECTORIES &&
-> >  		cd non/git &&
-> > -		test_must_fail git grep o &&
-> >  		git grep --no-index o >../actual.full &&
-> >  		test_cmp ../expect.full ../actual.full
-> >  		cd sub &&
-> > -		test_must_fail git grep o &&
-> >  		git grep --no-index o >../../actual.sub &&
-> >  		test_cmp ../../expect.sub ../../actual.sub
-> >  	) &&
-> > @@ -808,7 +806,6 @@ test_expect_success 'outside of git repository' '
-> >  		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-> >  		export GIT_CEILING_DIRECTORIES &&
-> >  		cd non/git &&
-> > -		test_must_fail git grep o &&
-> >  		git grep --no-index --exclude-standard o >../actual.full &&
-> >  		test_cmp ../expect.full ../actual.full &&
-> >
-> > @@ -821,6 +818,44 @@ test_expect_success 'outside of git repository' '
-> >  	)
-> >  '
-> >
-> > +test_expect_success 'outside of git repository without --no-index' '
-> > +	rm -fr non &&
-> > +	mkdir -p non/git/sub &&
-> > +	echo hello >non/git/file1 &&
-> > +	echo world >non/git/sub/file2 &&
-> > +	{
-> > +		echo file1:hello &&
-> > +		echo sub/file2:world
-> > +	} >non/expect.full &&
-> > +	echo file2:world >non/expect.sub &&
-> > +	(
-> > +		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-> > +		export GIT_CEILING_DIRECTORIES &&
-> > +		cd non/git &&
-> > +		git grep o >../actual.full &&
-> > +		test_cmp ../expect.full ../actual.full
-> > +		cd sub &&
-> > +		git grep o >../../actual.sub &&
-> > +		test_cmp ../../expect.sub ../../actual.sub
-> > +	) &&
-> > +
-> > +	echo ".*o*" >non/git/.gitignore &&
-> > +	(
-> > +		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-> > +		export GIT_CEILING_DIRECTORIES &&
-> > +		cd non/git &&
-> > +		git grep --exclude-standard o >../actual.full &&
-> > +		test_cmp ../expect.full ../actual.full &&
-> > +
-> > +		{
-> > +			echo ".gitignore:.*o*"
-> > +			cat ../expect.full
-> > +		} >../expect.with.ignored &&
-> > +		git grep --no-exclude o >../actual.full &&
-> > +		test_cmp ../expect.with.ignored ../actual.full
-> > +	)
-> > +'
-> > +
-> >  test_expect_success 'inside git repository but with --no-index' '
-> >  	rm -fr is &&
-> >  	mkdir -p is/git/sub &&
+> +		OPT_END(),
+>  		OPT_END(),
+>  		OPT_END(),
+>  		OPT_END(),
+> @@ -106,6 +112,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+>  			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+>  			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+>  			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+> +			OPT_BOOL(0, "skip-redundant-commits", &opts->skip_redundant_commits, N_("skip redundant, empty commits")),
+>  			OPT_END(),
+>  		};
 
---
-Thomas Gummerer
+This however makes me wonder what should happen when both are
+specified.  Shouldn't this patch change the keep_redundant_commits
+field from a bool to a tristate that tells us what to do with
+redundant ones?  int/enum opts.redundant_commit can take 0 (fail,
+which would be the default), 1 (keep) or 2 (skip), or something
+like that.
+
+
+
+> diff --git a/sequencer.c b/sequencer.c
+> index 8c58fa2..12361e7 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -185,6 +185,7 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+>  		else
+>  			advise(_("after resolving the conflicts, mark the corrected paths\n"
+>  				 "with 'git add <paths>' or 'git rm <paths>'\n"
+> +
+
+???
+
+>  				 "and commit the result with 'git commit'"));
+>  	}
+>  }
+> @@ -614,6 +615,28 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+>  		res = allow;
+>  		goto leave;
+>  	}
+> +
+> +	// If told, do not try to commit things that don't make any
+> +	// changes.
+
+No C++/C99 comments, please.
+
+> +	if (opts->skip_redundant_commits) {
+> +		int index_unchanged = is_index_unchanged();
+> +		if (index_unchanged < 0) {
+> +			// Something bad happened readhing HEAD or the
+> +			// index.  Abort.
+> +			res = index_unchanged;
+> +			goto leave;
+> +		}
+> +		if (index_unchanged) {
+> +			fputs(_("Skipping redundant commit "), stderr);
+> +			fputs(find_unique_abbrev(commit->object.oid.hash,
+> +						 GIT_SHA1_HEXSZ),
+> +			      stderr);
+> +			fputs("\n", stderr);
+
+This is a bad i18n; we do not know the sentence "Skipping commit X"
+is translated to have X at the end of the sentence in all languages.
+
+	fprintf(stderr, _("Skipping ... %s\n"), find_unique_abbrev(...));
+
+would allow it to be tranlated to "Commit X is getting skipped", for
+example.
+
+> +			res = 0;
+> +			goto leave;
+> +		}
+> +	}
+> +
+>  	if (!opts->no_commit)
+>  		res = run_git_commit(git_path_merge_msg(), opts, allow);
+>  
+> diff --git a/sequencer.h b/sequencer.h
+> index 5ed5cb1..ad6145d 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -34,6 +34,7 @@ struct replay_opts {
+>  	int allow_empty;
+>  	int allow_empty_message;
+>  	int keep_redundant_commits;
+> +	int skip_redundant_commits;
+
+Continuing from the top-part of the comments, this may be better to
+be:
+
+	enum {
+            REPLAY_REDUNDANT_FAIL = 0,
+            REPLAY_REDUNDANT_KEEP,
+            REPLAY_REDUNDANT_SKIP
+	} redundant_commits;
+
+or something like that.
+
+>  
+>  	int mainline;
