@@ -1,74 +1,97 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Draft of Git Rev News edition 11
-Date: Mon, 11 Jan 2016 15:36:14 +0100
-Message-ID: <CAP8UFD2eENdvYP5MMHf17C+fk8QNbHU0H2Z+2GVENC58h+6V+w@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git repository modified after migration
+Date: Mon, 11 Jan 2016 16:04:42 +0100
+Message-ID: <5693C48A.7060801@drmicha.warpmail.net>
+References: <CAFwKRnQ_EZ73DBfrb0HNks3dt3=YJbLRoHvB0mfsD9FA-ey6hA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 11 15:36:27 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Yang Yu <yang.yu.list@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 16:04:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIda0-0000Uk-Rl
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 15:36:21 +0100
+	id 1aIe1e-00069J-C0
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 16:04:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759002AbcAKOgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 09:36:17 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:35408 "EHLO
-	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757612AbcAKOgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 09:36:16 -0500
-Received: by mail-lf0-f53.google.com with SMTP id c192so214761923lfe.2
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 06:36:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=1XlOKHDil6l3bGWvo9LFOY9UXtlHBvsq7FjrO01VyMg=;
-        b=lQfILpwE/adDIuu5R8ZU9qg/6hRX1ZOa4P2PQL/vpK8U4gFGzFC0mVyULIBZC0cTXk
-         BGuJ6JPc6sSpaj11hKYE04UbhNJpJUjnzshE+pzdIiKguq0cGhtlxuvavIB05AlyGt0f
-         mb5TBXisM+RiQXOinfawX6aQkxGnDULh1svS9U6fgbDBzsn9oe/B0L0P30gI+KlkpksW
-         9DWP5RQVtTpiywVvOdkIJNIc5wz0NjO04IDxYWxQwVXfNKbktoriTHx4nGYrNnkI9gXs
-         W+zqN05uJpGi/mfkmbtI3WEPofS+E3V/2MpuJU8U+vRD4dU2ELt2yViK9Sn1ozwH9uqJ
-         hYBQ==
-X-Received: by 10.25.155.81 with SMTP id d78mr1228707lfe.77.1452522974826;
- Mon, 11 Jan 2016 06:36:14 -0800 (PST)
-Received: by 10.25.216.143 with HTTP; Mon, 11 Jan 2016 06:36:14 -0800 (PST)
+	id S1759323AbcAKPEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 10:04:45 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54492 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751825AbcAKPEo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2016 10:04:44 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id E395F20A1D
+	for <git@vger.kernel.org>; Mon, 11 Jan 2016 10:04:43 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Mon, 11 Jan 2016 10:04:43 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=y9rkqChVcplAqu4AdZLtgqlQoS8=; b=CkuXik
+	nbcCskNNz4nwOjMuqn5arY7Zs2PTvSDF9z4kNpANqu3xTSZsb7M+2TsxVQtdpsw7
+	PAFrnfeFpMgz1dDbp1HF6NcNBy6/7bEw9p3TlqTlMa2UTV6ZTDKcdR3BXoPrhGOT
+	QmIqE7KtH+mpokNlCFLgwLdQAVumRdIoumLNk=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=y9rkqChVcplAqu4
+	AdZLtgqlQoS8=; b=UHGIjG7f+Ls5wQUbZamqSDTKZNXSrKlgkVP1F+OKmPkOEHa
+	tYE1Spo2IULvYTJlFU5d+iU4eN4lMXTCYTZHOHdyNMJ3srp1TF6AB7w8GPFFeOwo
+	GCPCNlruPNXp2ROF/RdoVF42K3KqWnJ2L1e541eSo/cyLCf3kd1cTI3jYSyU=
+X-Sasl-enc: AKRqR5LdjfmjP++6NMMOJ+1o4z+5cTYvYcOnSq0p0k4A 1452524683
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 75620C016F3;
+	Mon, 11 Jan 2016 10:04:43 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <CAFwKRnQ_EZ73DBfrb0HNks3dt3=YJbLRoHvB0mfsD9FA-ey6hA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283656>
 
-Hi,
+Yang Yu venit, vidit, dixit 25.12.2015 21:49:
+> I migrated a 11G git repository converted from svn on a host with
+> Debian 8.2, reiserfs, git 2.1.4 to a host with Ubuntu 12.04.5 LTS,
+> xfs, git 2.6.4. After the migration, `git status` showing a good
+> amount of files modified.
+> 
+> I did the transfer with
+> 1) `rsync -azP`, after noticing the modified files I ran `rsync -avH
+> --delete` but it did not correct the problem
+> 2) tar zcf, then on the destination download the tar.gz (served by
+> nginx) with wget
+> 
+> Both had the same result. But the original repository was still clean.
+> 
+> I did some comparison between "modified" and original files
+> a) same hash (md5sum, shasum)
+> b) same permission (-rw-r--r-- 1 )
+> c) same encoding and line termination (UTF-8 Unicode (with BOM) text,
+> with CRLF line terminators)
+> d) no git attributes for either
+> 
+> 
+> On the destination host, I ran `git checkout` on each of those
+> modified files. After one pass I got less modified files. Repeating
+> `git checkout` on remaining files for a few more times, finally I got
+> a clean repository on the destination host.
+> 
+> What could have caused git to consider those files as modified? And
+> why multiple `git checkout` again the same file was necessary?
+> 
+> Thanks.
+> 
+> 
+> Yang
 
-A draft of Git Rev News edition 11 is available here:
+This happens whenever the "stat" information changes, e.g. due to
+changed device numbering and such. "git reset --hard" would have been
+the quickiest way to reset the stat cache/index - after git diff, of
+course ;)
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-11.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/117
-
-You can also reply to this email.
-
-I tried to cc everyone who appears in this edition but maybe I missed
-some people, sorry about that.
-
-Despite this draft being late, Thomas, Nicola and myself still plan to
-publish this edition on Wednesday the 13th of January.
-
-Thanks,
-Christian.
+Michael
