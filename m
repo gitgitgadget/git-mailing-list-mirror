@@ -1,82 +1,107 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 3/3] submodule: extend die message on failed checkout
- with depth argument
-Date: Mon, 11 Jan 2016 08:26:18 -0800
-Message-ID: <CAGZ79ka9+KxqbogbN1UnNxQ_G6U_incYKLiuadTroc90VmEWpA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] add test to demonstrate that shallow recursive
+ clones fail
+Date: Mon, 11 Jan 2016 08:29:18 -0800
+Message-ID: <CAGZ79kZz+U3FvYwsJ+v6BQP=z-Z-Y4-=6KxeiqzjTKxQXiFtDg@mail.gmail.com>
 References: <1450653595-22676-1-git-send-email-larsxschneider@gmail.com>
-	<1450653595-22676-4-git-send-email-larsxschneider@gmail.com>
+	<79770C7D-B6A1-4239-A1EF-0A986CCD24AA@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>
+	Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 17:26:28 2016
+X-From: git-owner@vger.kernel.org Mon Jan 11 17:29:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIfIY-00055B-QJ
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 17:26:27 +0100
+	id 1aIfLQ-0006xZ-0O
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 17:29:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933827AbcAKQ0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 11:26:21 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:34008 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933793AbcAKQ0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 11:26:19 -0500
-Received: by mail-ig0-f172.google.com with SMTP id ik10so126072785igb.1
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 08:26:18 -0800 (PST)
+	id S933840AbcAKQ3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 11:29:20 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:32834 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933700AbcAKQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 11:29:19 -0500
+Received: by mail-io0-f175.google.com with SMTP id q21so353801234iod.0
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 08:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=/xABX84BLgxr5rTUwhiMMHelaTolvXhT7qDs0pk2+JI=;
-        b=PFzgnAfSt9NjJqqWH007H4TC7kUCh5YIOTvXnWueRt2ojbjncFwC1aD7pwedZjo90/
-         Kri2RB1aZtwty536QYaHrxlux1lDnvFVe/at3oKFvNgpJ/3lAb9ws76OLcbz21fBMrzG
-         AjA8+NtdMmgX/ZKdB+oe0dtvsB+7IIuc7tZLPcUrMd1v5Uw46rg87mbsGhgHYRL6vpXZ
-         lmxZl0VdcnocWl1f8NDqRiGZWKuqcc/vSr5d1xvJUZBi8Dy38iZVMwuHKouS2s1EJbTZ
-         d3CqPfCgggJJSESUg39y1RIzTlkYk7qJeySdPTwNySEvKkSVGTjil1vDF6mLx045aNTZ
-         fALA==
+        bh=yjzeP3UuzKRtS+59vi5N8ex+jSmR+IX52XlFOUovILc=;
+        b=ORKdhccP6Iv7x3X6ggyz/4j3s9Rr4gyndN1YvSdqqWU3GoYYlApSkOHfmwIuYPvNsl
+         HtEpoAndNzS2+NIkThplVSDxtNyJk73J3d312qD8ynKBHPXst1CcpYBC1GvVeldliviR
+         nMKPrIHeXm+z3KshA72L/b1Nrpagn1O8ata/HV/IPbT6wVqXHVpPIjz49ivEsfV9HI6+
+         M0Mx+OIXF02YV3K5vDWEFAIU8QZge8pmP+Gq9c94j83gz/kz9dGC2yypIUQGbc6u/hmk
+         tQH0z6PVBCs3GGzwf2/haKGeO3tURP+TLwGbo24f303kYE8O/RG9Fsd6IKuKAdDgvArg
+         OPfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=/xABX84BLgxr5rTUwhiMMHelaTolvXhT7qDs0pk2+JI=;
-        b=Cfnima6SZlk5y9S9rhbVjJeH7EfRjnLuysJcv8wQ9wcBlz3mSw4GuSq+0CYXCjQ4Nd
-         bmpdk0/HdxA179xbUdDgWTdLKWKijvufAa45udCdOXPny3xqCbB/WvXI8w5cwHBArhE8
-         tWtMMGkPh2ar7mBXmun9LTjjdeSYMkAjENkhncChQ1ZhPNby8uvzVJyTppcSReZU7WPm
-         zaF8/T1g/359hxTFtTPQuk7jaEWFsY4ZOXx0I4g/YZYHxcIlQuuJ+CUoiO9HftmjCbUI
-         lmRjMfqQjXgq64ypIa4DG3IzIMw+0eqTNcmswQiwmwS3U8XGJat23ddwT397pTSnQPIl
-         w5vQ==
-X-Gm-Message-State: ALoCoQle1lJoQ3G2D0jSd+xVOZSSATLL/mJ+vlDju4JCO9EzpJ1pa7asQCkO1QtQTW1s8sxae0ouC/Ru9VhwnETzKlZqHXGvkj8zjYvr7CMAudB4407yN4E=
-X-Received: by 10.50.138.76 with SMTP id qo12mr5907082igb.85.1452529578258;
- Mon, 11 Jan 2016 08:26:18 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Mon, 11 Jan 2016 08:26:18 -0800 (PST)
-In-Reply-To: <1450653595-22676-4-git-send-email-larsxschneider@gmail.com>
+        bh=yjzeP3UuzKRtS+59vi5N8ex+jSmR+IX52XlFOUovILc=;
+        b=cuF0ZUNKfIGS03hhM8YHcRybHQiU354txEjG3klAEHoGrwxOWYpIPmYJAEnA/InJMG
+         pysS/eu3YdRtIJNLbTvPYYgny33Fq+KwbyR2gFSTRn9nX1nJzLhzHxlp6iJzkPZFY7l6
+         dT9ltJD1rtPrTHfDpVWfJ0oyD8/j3Tixx4guqgRQVgDFL1azomDZW+8dTVjf21t4+r1p
+         igBWRBeG8vWYTuSXwo5gsIOet39AH7YwJXf1eEpC8kFwrOURDjflu5X4emN667JlOBW7
+         rW11/Q5nQxQedgd+EMFmGQkDF63Qa/BClvgHA2pwMCFYYMWuMW/CZhhxCh8Ujn6H/d17
+         QwtA==
+X-Gm-Message-State: ALoCoQl+ebXE96e3mieTwET+LgTq1t7fkHslIGo5fMvy1Z00uu/oZVwhKz8+p/LZRh54XpxnfTHHtwTLv7AhO9MQ6Doi1ddptJ4fLIBQ15bGHRl67oQnYmk=
+X-Received: by 10.107.30.65 with SMTP id e62mr116110959ioe.110.1452529758799;
+ Mon, 11 Jan 2016 08:29:18 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Mon, 11 Jan 2016 08:29:18 -0800 (PST)
+In-Reply-To: <79770C7D-B6A1-4239-A1EF-0A986CCD24AA@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283666>
 
-On Sun, Dec 20, 2015 at 3:19 PM,  <larsxschneider@gmail.com> wrote:
-
-> +test_expect_success 'submodule update clone shallow submodule on non-default branch' '
-> +       git clone cloned super4 &&
-> +       pwd=$(pwd) &&
-> +       (cd super4 &&
-> +        sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
-> +        mv -f .gitmodules.tmp .gitmodules &&
-> +        test_must_fail git submodule update --init --depth=3 2>submodule.out &&
-
-Why do we choose a depth of 3 here?
-
-> +        test_i18ngrep --count "Commit is probably not on the default branch." submodule.out
-> +    )
->  '
+On Thu, Jan 7, 2016 at 1:50 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
+> Hi,
 >
->  test_expect_success 'submodule update --recursive drops module name before recursing' '
-> --
-> 2.5.1
+> does anyone have a few free cycles to take a look at this patch series?
+> I wonder if you deem it as not interesting or if it got lost.
+
+Patch 1&2 look good to me.
+
+>
+> Thank you,
+> Lars
+>
+>
+> On 21 Dec 2015, at 00:19, larsxschneider@gmail.com wrote:
+>
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>
+>> diff to v2:
+>> * remove workaround tests as suggested by Peff [1]
+>> * fix chain breakage introduced in 275cd18
+>> * add hints to the user if a submodule checkout fails while using the
+>>  depth argument [2]
+>>
+>> Thanks,
+>> Lars
+>>
+>> [1] http://article.gmane.org/gmane.comp.version-control.git/281237
+>> [2] http://article.gmane.org/gmane.comp.version-control.git/281420
+>>
+>> Lars Schneider (3):
+>>  submodule: add test to demonstrate that shallow recursive clones fail
+>>  submodule: fix &&-chain breakage
+>>  submodule: extend die message on failed checkout with depth argument
+>>
+>> git-submodule.sh               |  4 ++++
+>> t/t7406-submodule-update.sh    | 35 +++++++++++++++++++++++++---
+>> t/t7412-submodule-recursive.sh | 52 ++++++++++++++++++++++++++++++++++++++++++
+>> 3 files changed, 88 insertions(+), 3 deletions(-)
+>> create mode 100755 t/t7412-submodule-recursive.sh
+>>
+>> --
+>> 2.5.1
+>>
 >
