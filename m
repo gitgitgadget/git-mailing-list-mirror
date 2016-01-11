@@ -1,127 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] builtin/grep: rename use_index to no_index
-Date: Mon, 11 Jan 2016 09:33:25 -0800
-Message-ID: <xmqqd1t8xbq2.fsf@gitster.mtv.corp.google.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 3/3] builtin/grep: allow implicit --no-index
+Date: Mon, 11 Jan 2016 18:48:17 +0100
+Message-ID: <20160111174817.GC10612@hank>
 References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
-	<1452435597-12099-3-git-send-email-t.gummerer@gmail.com>
+ <1452435597-12099-4-git-send-email-t.gummerer@gmail.com>
+ <CACsJy8Bs3z0Gk3CjhyZGfOLA7R3pZQz7K5gk4BTytvYkZeyBtQ@mail.gmail.com>
+ <20160111111015.GA10612@hank>
+ <xmqqlh7wxc0y.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:33:35 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:48:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIgLW-0004cC-TU
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:33:35 +0100
+	id 1aIgZS-0005Hf-VP
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933882AbcAKRdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 12:33:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933793AbcAKRd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 12:33:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2955739006;
-	Mon, 11 Jan 2016 12:33:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hfxVOIbDaUsoyEDZWoGfC7uYVUU=; b=Le1m/W
-	yDBmJPHU+/XbKVDeicer09QOwUyJwTV7vWg/MbOyUfGKOzToTtsZbq3cxC9H3PMY
-	5JFVZQ1W+VZqe3fgro7ybvMVhWzekOIeYTD/SEfIQkeHp0/enCQ2tPkQfeYVyXOl
-	YeEkSUC7rbqz3xjio5dmt8Ew4b94soTKSrO0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NYVgXalTVjmbwlpN+JZU0/FwVweB8oSy
-	0mByyY4AKyXvxFJXtNaAi4/2+cD7Kg/SiVcLTpg2W+J7jb+wLHzNTPnl8smXhbrP
-	tDjdw0MQp2HSKQ2o6yVZq7x1KOxbCeErLa+jSJrKc/eC/3Fpr/8C7gugzGGA8xlm
-	X6FW8LqZtPs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2030239005;
-	Mon, 11 Jan 2016 12:33:27 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9558339004;
-	Mon, 11 Jan 2016 12:33:26 -0500 (EST)
-In-Reply-To: <1452435597-12099-3-git-send-email-t.gummerer@gmail.com> (Thomas
-	Gummerer's message of "Sun, 10 Jan 2016 15:19:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6BFB01B4-B889-11E5-9476-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1760876AbcAKRrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 12:47:55 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32924 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760266AbcAKRry (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 12:47:54 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u188so27310648wmu.0
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 09:47:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=SxBnkVqSbIUZFGBSmDKnyc9vMJqBJ5JcOHBkJLcHSsc=;
+        b=jyiN/ldBPg+J9xYkl8LDhHxNsDk2iHFzSLuJFrE3sqeesHLlD+D+W/Nu0lYXV7CVsh
+         KH5n9v8Rrn2TG+1AOrMBi3+bmJLrivgE7oIkwwd2xjMO3yzMiDm7ZjUfkOMU+7KspD5h
+         RexEMJJEYmsqsQ+XPvgA0fKS49ohVaecU3qO7dwuAc4H0X0uo9Icxu67H1sZGia71zE4
+         BACar6l95FV5S7xEAcSUUt1ad4eRC5/9F1YkIEoYKetTI5Cn+rhAC1GPk/tTdLIO6JX1
+         jkl90EzXhDaPpiHRMlEtVc/WgFNzKmub/JbilhwkDpKBzLw4kOnqKEKkBOm6hNCs9zbl
+         9j6g==
+X-Received: by 10.194.157.3 with SMTP id wi3mr23611512wjb.30.1452534472973;
+        Mon, 11 Jan 2016 09:47:52 -0800 (PST)
+Received: from localhost (host143-106-dynamic.248-95-r.retail.telecomitalia.it. [95.248.106.143])
+        by smtp.gmail.com with ESMTPSA id w73sm13805161wmw.21.2016.01.11.09.47.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jan 2016 09:47:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqlh7wxc0y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283682>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
-
-> Switch the OPT_NEGBIT argument to a OPT_BIT argument, and rename the
-> corresponding use_index variable to a no_index variable.  This will make
-> the following step easier to follow.  No functional changes intended.
+On 01/11, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 >
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  builtin/grep.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+> > On 01/11, Duy Nguyen wrote:
+> >> On Sun, Jan 10, 2016 at 9:19 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >> > Currently when git grep is used outside of a git repository without the
+> >> > --no-index option git simply dies.  For convenience, implicitly make git
+> >> > grep behave like git grep --no-index when it is called outside of a git
+> >> > repository.
+> >>
+> >> Should we have a line about this behavior in git-grep.txt, maybe the
+> >> description section?
+> >
+> > Yes good point, the behavior change should definitely be documented.
+> >
+> >> I wonder if anybody wants the old behavior (e.g.
+> >> non-zero exit code when running outside a repo). If there is such a
+> >> case (*), we may need an option to revert it back (--no-no-index seems
+> >> ridiculous, maybe --use-index). The safest way though, is introduce a
+> >> new option like --use-index=<always|optional|never> then you can make
+> >> an grep alias with --use-index=optional.
+> >
+> > You're right.  I couldn't think of a reason why someone would rely on
+> > the old behavior, but maybe I missed something.  I like the idea of
+> > introducing the --use-index=... option.
+>
+> I don't like that, though ;-)
+>
+> "We run 'git grep' in random places and relied on it to fail when
+> run in somewhere not under control of Git." feels so flawed at
+> multiple levels that I doubt it deserves to be kept working.  For
+> one thing, "git grep" is not the way to tell something is under
+> control of Git (rev-parse would be a better thing for scriptor to
+> use).  For another, how would such a script tell between "not a
+> git repository" and there was no hits?
 
-This makes the resulting code full of double negations, I am
-afraid.  Please do not do this.
+I agree that scripts don't deserve to be kept working in that case.
+What about a user though who accidentally runs git grep outside of a
+repository, and is usually warned by git failing quickly, whereas with
+the changed behavior some time might go by until the user realizes the
+error.  Not sure if we want to support this use case or not?
 
-I am open to turning "use_index" to a tristate, initialized to -1
-(unknown), set to 0 with OPT_SET_INT("no-index"), and optionally set
-to 1 with OPT_SET_INT("use-index").  Then after parsing the command
-line argument, if use_index is still -1 (i.e. no command line option),
-set it to 1 when we can use the index, or 0 (the new feature you
-want to add with 3/3).
+> So I do agree that automatic fallback needs to be documented and
+> advertised as a feature (or even a bugfix), I do not think we want
+> to add knobs to keep such a broken script working.
+>
+> > How should we handle priority between --no-index and --use-index,
+> > should we just give --no-index priority if it is set and ignore the
+> > new --use-index option, or is there some other way?
+> >
+> >> (*) I've been hitting really weird real-world use cases so I'm a bit paranoid..
+> >> --
+> >> Duy
 
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 4229cae..3a27bd5 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -625,14 +625,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  	struct string_list path_list = STRING_LIST_INIT_NODUP;
->  	int i;
->  	int dummy;
-> -	int use_index = 1;
-> +	int no_index = 0;
->  	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
->  
->  	struct option options[] = {
->  		OPT_BOOL(0, "cached", &cached,
->  			N_("search in index instead of in the work tree")),
-> -		OPT_NEGBIT(0, "no-index", &use_index,
-> -			 N_("find in contents not managed by git"), 1),
-> +		OPT_BIT(0, "no-index", &no_index,
-> +			N_("find in contents not managed by git"), 1),
->  		OPT_BOOL(0, "untracked", &untracked,
->  			N_("search in both tracked and untracked files")),
->  		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
-> @@ -755,7 +755,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  			     PARSE_OPT_STOP_AT_NON_OPTION);
->  	grep_commit_pattern_type(pattern_type_arg, &opt);
->  
-> -	if (use_index && !startup_info->have_repository)
-> +	if (!no_index && !startup_info->have_repository)
->  		/* die the same way as if we did it at the beginning */
->  		setup_git_directory();
->  
-> @@ -873,11 +873,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  	if (!show_in_pager && !opt.status_only)
->  		setup_pager();
->  
-> -	if (!use_index && (untracked || cached))
-> +	if (no_index && (untracked || cached))
->  		die(_("--cached or --untracked cannot be used with --no-index."));
->  
-> -	if (!use_index || untracked) {
-> -		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
-> +	if (no_index || untracked) {
-> +		int use_exclude = (opt_exclude < 0) ? !no_index : !!opt_exclude;
->  		if (list.nr)
->  			die(_("--no-index or --untracked cannot be used with revs."));
->  		hit = grep_directory(&opt, &pathspec, use_exclude);
+--
+Thomas Gummerer
