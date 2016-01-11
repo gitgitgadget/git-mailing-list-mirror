@@ -1,103 +1,69 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH 2/2] interpret-trailers: add option for in-place editing
-Date: Mon, 11 Jan 2016 18:13:45 +0100
-Message-ID: <20160111171345.GA26950@distanz.ch>
-References: <1452519213-1819-1-git-send-email-tklauser@distanz.ch>
- <1452519213-1819-3-git-send-email-tklauser@distanz.ch>
- <vpqziwc3wjv.fsf@anie.imag.fr>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] Korean l10n updates for Git 2.7.0 (maint branch)
+Date: Tue, 12 Jan 2016 01:20:00 +0800
+Message-ID: <CANYiYbHVUi3xftFuwTHkiXgS=7KZEv309dE5vyywsFVvSMcEEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:13:55 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Changwoo Ryu <cwryu@debian.org>
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:20:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIg2T-000192-9S
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:13:53 +0100
+	id 1aIg8X-0004u5-JO
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:20:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934297AbcAKRNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 12:13:49 -0500
-Received: from sym2.noone.org ([178.63.92.236]:35311 "EHLO sym2.noone.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934254AbcAKRNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 12:13:48 -0500
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3pfM7v2DhnzQWhD; Mon, 11 Jan 2016 18:13:47 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <vpqziwc3wjv.fsf@anie.imag.fr>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759978AbcAKRUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 12:20:03 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35204 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759969AbcAKRUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 12:20:02 -0500
+Received: by mail-wm0-f52.google.com with SMTP id f206so220668365wmf.0
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 09:20:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=+VXMc7WUD+EFskzbpQ1+nApRdq9+x8C4r65FlQ/R2pI=;
+        b=KCbK5/Untqx1wMZgciu2979WNIY0FlRrDZd1R7lri416jE8UMI3K+hBB2SpX0Xtx7w
+         +k874KisND6ucIi84Accfzh4Q6jiKUAkPj3umNnuTIf+NTwypM/BS1GgLssQS6bOFNCO
+         nGSmsPViJRoA1jZc2pZzVUSZ6khDo8m/z3cklnKxMhktxdhVw0kj5vM8RT0hBXPl4YxH
+         wY5jXxnsUygJ0wy5wC7nU7d7IqVsb5AgDANmVaPjj0JXbNkaRmTTpU2BjX/aUYEUMGBv
+         t+Anske9yUt5+5Y6t0M1Lt5vXRBh3mRZAKPIbXoxR60I4Tp6RBgoR+VTDoxOoRIEjcru
+         nWyg==
+X-Received: by 10.194.246.200 with SMTP id xy8mr131890501wjc.62.1452532800894;
+ Mon, 11 Jan 2016 09:20:00 -0800 (PST)
+Received: by 10.194.61.43 with HTTP; Mon, 11 Jan 2016 09:20:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283677>
 
-Oops, I just realized I forgot the v2 in the subject line :-( Sorry
-about that.
+Hi Junio,
 
-On 2016-01-11 at 17:33:56 +0100, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Tobias Klauser <tklauser@distanz.ch> writes:
-> 
-> > @@ -843,7 +844,9 @@ static void free_all(struct trailer_item **first)
-> >  	}
-> >  }
-> >  
-> > -void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
-> > +static struct tempfile trailers_tempfile;
-> 
-> Does this need to be a static global? I'd rather have this be a local
-> variable of process_trailers.
+Changwoo contributed a new language (Korean) l10n support, but missed the
+update window for Git 2.7.0.  Please merge this to the maint branch.
 
-I'm using a static global in order to have it automatically zeroed out
-and according to the documentation in tempfile.h it can be reused. Also,
-all other users of struct tempfile (except for lockfile.h) are using it
-this way.
+The following changes since commit 02103b328912d06d1b04cf42e408cad2218b1f9b:
 
-> 
-> > +			die_errno(_("could not fdopen tempfile"));
-> 
-> I think you should spell it "could not open temporary file" to be more
-> user-friendly.
+  l10n: de.po: translate 68 new messages (2015-12-29 19:53:17 +0100)
 
-Ok, will adjust.
+are available in the git repository at:
 
-> > @@ -872,5 +900,10 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
-> >  	/* Print the lines after the trailers as is */
-> >  	print_lines(outfile, lines, trailer_end, INT_MAX);
-> >  
-> > +	if (in_place) {
-> > +		if (rename_tempfile(&trailers_tempfile, file))
-> > +			die_errno(_("could not rename tempfile"));
-> > +	}
-> 
-> When this happens, I think you also want to try removing the temporary
-> file. Not sure, though: it may be nice to leave the tempfile for the
-> user to debug. What do we do in other places of the code?
+  git://github.com/git-l10n/git-po maint
 
-According to the comment in tempfile.h an atexit(3) handler is installed
-by prepare_tempfile_object() (which in turn is called by
-x?mks_tempfile_*) which will remove the file in this case. Or did I miss
-something here?
+for you to fetch changes up to c6cd26696c4312fbe3800edc61e4fb0851ee180b:
 
-AFAICS the two other current users of rename_tempfile() also don't
-explicitely treat the tempfile on error.
+  l10n: ko.po: Add Korean translation (2016-01-03 19:07:29 +0900)
 
-> It may help the user to get "could not rename temporary file %s to %s"
-> in case this happens.
+----------------------------------------------------------------
+Changwoo Ryu (1):
+      l10n: ko.po: Add Korean translation
 
-I think if we keep the current semantics (where the tempfile will be
-deleted by the atexit(3) handler), it doesn't make sense to mention the
-filename in the error message as the file will be gone by the time the
-user has any chance to react. I'd suggest somethin like "could not
-rename temporary file to %s".
-
-> On overall, the split makes the series much more pleasant to review, and
-> other than these details, this sounds good to me. Thanks!
-
-Thanks a lot for your feedback!
+ po/TEAMS |     4 +
+ po/ko.po | 11859 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 11863 insertions(+)
+ create mode 100644 po/ko.po
