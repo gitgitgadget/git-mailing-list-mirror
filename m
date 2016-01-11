@@ -1,78 +1,101 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/2] Correctly handle transient files in shared
- repositories
-Date: Mon, 11 Jan 2016 16:38:02 -0500
-Message-ID: <20160111213801.GB21131@sigill.intra.peff.net>
-References: <cover.1452085713.git.johannes.schindelin@gmx.de>
- <cover.1452537321.git.johannes.schindelin@gmx.de>
- <xmqqa8obx1ll.fsf@gitster.mtv.corp.google.com>
- <xmqq60yzx14w.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 2/2] builtin/grep: add grep.fallbackToNoIndex config
+Date: Mon, 11 Jan 2016 16:48:47 -0500
+Message-ID: <20160111214846.GC21131@sigill.intra.peff.net>
+References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
+ <1452547580-30687-1-git-send-email-t.gummerer@gmail.com>
+ <1452547580-30687-3-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 22:38:11 2016
+Cc: git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
+	gitster@pobox.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 22:48:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIkAF-0003M4-4p
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 22:38:11 +0100
+	id 1aIkKb-0001n0-Sy
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 22:48:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933932AbcAKViG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 16:38:06 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51638 "HELO cloud.peff.net"
+	id S934318AbcAKVsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 16:48:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51657 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933790AbcAKViF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 16:38:05 -0500
-Received: (qmail 15298 invoked by uid 102); 11 Jan 2016 21:38:04 -0000
+	id S932851AbcAKVst (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 16:48:49 -0500
+Received: (qmail 15787 invoked by uid 102); 11 Jan 2016 21:48:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:38:04 -0500
-Received: (qmail 5991 invoked by uid 107); 11 Jan 2016 21:38:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:48:49 -0500
+Received: (qmail 6112 invoked by uid 107); 11 Jan 2016 21:49:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:38:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jan 2016 16:38:02 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:49:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jan 2016 16:48:47 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqq60yzx14w.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1452547580-30687-3-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283727>
 
-On Mon, Jan 11, 2016 at 01:22:07PM -0800, Junio C Hamano wrote:
+On Mon, Jan 11, 2016 at 10:26:20PM +0100, Thomas Gummerer wrote:
 
->      - git fsck, when writing lost&found blobs (they are written in the
->        file under its object name, so an existing file with tighter
->        permission that you cannot write into is OK, because what you are
->        failing to write is the same contents that the file already has
->        anyway).
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 4229cae..5efe9bb 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -755,9 +755,20 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+>  	grep_commit_pattern_type(pattern_type_arg, &opt);
+>  
+> -	if (use_index && !startup_info->have_repository)
+> -		/* die the same way as if we did it at the beginning */
+> -		setup_git_directory();
+> +	if (use_index && !startup_info->have_repository) {
+> +		int fallback = 0;
+> +		git_config_get_bool("grep.fallbacktonoindex", &fallback);
+> +		if (fallback) {
+> +			int nongit = 0;
+> +
+> +			setup_git_directory_gently(&nongit);
+> +			if (nongit)
+> +				use_index = 0;
+> +		} else {
+> +			/* die the same way as if we did it at the beginning */
+> +			setup_git_directory();
+> +		}
+> +	}
 
-I'm not sure I buy this argument. Yes, you should not be writing
-anything else, but that does not change the fact that "fsck" will
-unceremoniously abort:
+Hmm. We used to have problems accessing config before calling
+setup_git_directory(). I am not sure if that is still the case, though.
 
-  $ git init
-  $ echo foo | git hash-object -w --stdin
-  $ git fsck --lost-found
-  notice: HEAD points to an unborn branch (master)
-  Checking object directories: 100% (256/256), done.
-  notice: No default references
-  dangling blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99
+I guess the startup sequence is muddied here, though. cmd_grep() is
+marked as RUN_SETUP_GENTLY, so we would have already run setup, and here
+we are following the "we are not in a repository" code path (i.e., we
+saw "!startup_info->have_repository").
 
-  $ chmod -w .git/lost-found/other/257cc5642cb1a054f08cc83f2d943e56fd3ebe99 
-  $ $ git fsck --lost-found
-  notice: HEAD points to an unborn branch (master)
-  Checking object directories: 100% (256/256), done.
-  notice: No default references
-  dangling blob 257cc5642cb1a054f08cc83f2d943e56fd3ebe99
-  fatal: Could not open '.git/lost-found/other/257cc5642cb1a054f08cc83f2d943e56fd3ebe99': Permission denied
+And the existing setup_git_directory() is just there to die(), as the
+comment explains. So what is the new setup_git_directory_gently() doing?
+We know we've already done setup, and that we're not in a git repo,
+right? Shouldn't we just be able to set use_index to 0 and keep going?
+Under what circumstances would it _not_ return "nongit == 1"?
 
-So I think this would be a reasonable candidate (or alternatively, to
-treat EPERM on an existing file as a soft error). I am totally fine not
-to address it as part of this series, though.
+> @@ -874,12 +885,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  		setup_pager();
+>  
+>  	if (!use_index && (untracked || cached))
+> -		die(_("--cached or --untracked cannot be used with --no-index."));
+> +		die(_("--cached or --untracked cannot be used with --no-index "
+> +		      "or outside of a git repository"));
+
+I'm lukewarm on this (and the other) change. What you've written is
+technically correct, but it's getting rather verbose. We've presented
+the option already as "turn on --no-index by default outside a
+repository", so I'm not sure we need to clarify it here. Since it's a
+feature people must turn on manually, presumably they would know that.
+
+I don't know, maybe it would help somebody. I'm not strongly opposed.
 
 -Peff
