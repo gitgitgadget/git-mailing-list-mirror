@@ -1,136 +1,101 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 3/4] Provide a dirname() function when NO_LIBGEN_H=YesPlease
-Date: Mon, 11 Jan 2016 15:33:49 -0500
-Message-ID: <CAPig+cQmhc=DmptyYWy1p3z4rz7_h-3XRrtFH7XxoW77z5Mz-A@mail.gmail.com>
-References: <cover.1452270051.git.johannes.schindelin@gmx.de>
-	<cover.1452536924.git.johannes.schindelin@gmx.de>
-	<0bab11634c8f05751b2ed5879bc4100441bba4b9.1452536924.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: git format-patch on empty commit
+Date: Mon, 11 Jan 2016 15:53:47 -0500
+Message-ID: <20160111205347.GA14535@sigill.intra.peff.net>
+References: <CAPMsMoDOqWD+a1pj6BO-QgnknJu+JwnZgefJ=MyP8rEwZQGiPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 11 21:34:34 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: pedro rijo <pedrorijo91@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 21:53:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIjAf-0005Jf-0s
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 21:34:33 +0100
+	id 1aIjTP-0000nB-2L
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 21:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932792AbcAKUe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 15:34:28 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:33547 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759567AbcAKUdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 15:33:50 -0500
-Received: by mail-vk0-f67.google.com with SMTP id n1so5011380vkb.0
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 12:33:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=t6prEF7RJ0CBbJYAKZXWFUvx1FjCOnL8bWY1l4993DI=;
-        b=RmQHcCQ6wgLdWNXb4a2Xi2gzVr7ESFKH0+D9ks3jGntVS+V3QNuoB5lRoNIJgtzvGS
-         gk8oK+2yEc4eWMWznLxpCDdYM3QEgQ8Rk2Vqrf5yhUQFd0I3lQ/HmfXH3wLwwaFIom8f
-         eVOeFK5N1oNvK48nlBnMymc9xz0xmMMCO3f9LvEtLOm+sICGf/Cg8jucyK0mybpToCKP
-         XshwZr6PUGFek5gmtD0y/bnDwHOnhEg4qmqTcmrFDqVIFl84L4Gupp0/2UsWCwBHdsJ6
-         7fUwS4HiQPbnCkUWJS/qa7TXOT2GkPc3Iabm1qCpe1kAppX3EYhZvmTaMSbLrDDa/3SR
-         tzDA==
-X-Received: by 10.31.141.2 with SMTP id p2mr65888031vkd.37.1452544429131; Mon,
- 11 Jan 2016 12:33:49 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 11 Jan 2016 12:33:49 -0800 (PST)
-In-Reply-To: <0bab11634c8f05751b2ed5879bc4100441bba4b9.1452536924.git.johannes.schindelin@gmx.de>
-X-Google-Sender-Auth: ah_7u99x9PJXQMItBlPrO8xtF5o
+	id S1759795AbcAKUxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 15:53:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51572 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758970AbcAKUxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 15:53:50 -0500
+Received: (qmail 13378 invoked by uid 102); 11 Jan 2016 20:53:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 15:53:49 -0500
+Received: (qmail 5168 invoked by uid 107); 11 Jan 2016 20:54:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 15:54:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jan 2016 15:53:47 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPMsMoDOqWD+a1pj6BO-QgnknJu+JwnZgefJ=MyP8rEwZQGiPQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283715>
 
-On Mon, Jan 11, 2016 at 1:30 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> When there is no `libgen.h` to our disposal, we miss the `dirname()`
-> function.
->
-> So far, we only had one user of that function: credential-cache--daemon
-> (which was only compiled when Unix sockets are available, anyway). But
-> now we also have `builtin/am.c` as user, so we need it.
->
-> Since `dirname()` is a sibling of `basename()`, we simply put our very
-> own `gitdirname()` implementation next to `gitbasename()` and use it
-> if `NO_LIBGEN_H` has been set.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/compat/basename.c b/compat/basename.c
-> @@ -25,3 +26,46 @@ char *gitbasename (char *path)
-> +char *gitdirname(char *path)
-> +{
-> +       char *p = path, *slash = NULL, c;
-> +       int dos_drive_prefix;
-> +
-> +       if (!p)
-> +               return ".";
-> +
-> +       if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p) {
-> +               static struct strbuf buf = STRBUF_INIT;
-> +
-> +dot:
-> +               strbuf_reset(&buf);
-> +               strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
-> +               return buf.buf;
-> +       }
-> +
-> +       /*
-> +        * POSIX.1-2001 says dirname("/") should return "/", and dirname("//")
-> +        * should return "//", but dirname("///") should return "/" again.
-> +        */
-> +       if (is_dir_sep(*p)) {
-> +               if (!p[1] || (is_dir_sep(p[1]) && !p[2]))
-> +                       return path;
-> +               slash = ++p;
-> +       }
-> +       while ((c = *(p++)))
-> +               if (is_dir_sep(c)) {
-> +                       char *tentative = p - 1;
-> +
-> +                       /* POSIX.1-2001 says to ignore trailing slashes */
-> +                       while (is_dir_sep(*p))
-> +                               p++;
-> +                       if (*p)
-> +                               slash = tentative;
-> +               }
-> +
-> +       if (!slash)
-> +               goto dot;
-> +       *slash = '\0';
-> +       return path;
-> +}
+On Mon, Jan 11, 2016 at 02:19:52PM +0000, pedro rijo wrote:
 
-I wonder if this would be a bit easier to follow if it was structured
-something like this:
+> Couldn't find any explanation on git docs on this issue:
+> 
+> If I create a dummy commit, with some dummy diff, I get a normal patch
+> when I run
+> 
+> $ git format-patch -1 -o outgoing/ -p -k
+> 
+> but if the last commit is an empty commit, generated by
+> 
+> $ git commit --allow-empty "Some commit message"
+> 
+> then the output of the format patch will be an empty patch. If the
+> first case produces something like this:
 
-    static struct strbuf buf = STRBUF_INIT;
+I'm not sure if this is a bug or not.
 
-    if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p)
-        goto dot;
+In the beginning, git's revision-traversal machinery generally does not
+show commits which have no diff. Over the years, commands like "git log"
+learned to set the "always_show_header" option to show even empty
+commits. But format-patch never did.
 
-    ...
-    if (is_dir_sep(*p)) {
-        ...
-    }
-    ...
-    while ((c = *(p++)))
-        ...
+It's pretty easy to do:
 
-    if (slash) {
-        *slash = '\0';
-        return path;
-    }
+diff --git a/builtin/log.c b/builtin/log.c
+index e00cea7..f132ce7 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1283,6 +1283,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.commit_format = CMIT_FMT_EMAIL;
+ 	rev.verbose_header = 1;
+ 	rev.diff = 1;
++	rev.always_show_header = 1;
+ 	rev.max_parents = 1;
+ 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
+ 	rev.subject_prefix = fmt_patch_subject_prefix;
 
-    dot:
-    strbuf_reset(&buf);
-    strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
-    return buf.buf;
+So on the one hand, it is probably better not to silently omit commits,
+and it would make format-patch consistent with log and other commands.
+And what is produced now is somewhat nonsensical. For "format-patch
+--stdout", omitting the header is OK; we just skip the commit entirely.
+But for writing patches to individual files, you end up with an empty
+file!
+
+On the other hand, the point of format-patch is generally to feed the
+output to "git am". And I don't think "am" handles such empty patches
+very well (it complains with "Patch is empty. Was it split wrong?", and
+there's no way to say "no, really, just apply the empty commit").
+
+So even if you generated such patches, I'm not sure what you would do
+with them.
+
+I'd be more sympathetic to a patch like the one above if "am" also
+learned about empty commits (even if it required the user to say "empty
+commits are OK, as we already do for "commit" and some other commands).
+Note that the patch above also seems to trigger a test failure in t3421
+(which is a rebase test, and rebase builds on "format-patch | am"). That
+would need to be investigated, too. I'm not sure if there's a subtle
+case I'm missing, or if the test script is simply a little too strict.
+
+-Peff
