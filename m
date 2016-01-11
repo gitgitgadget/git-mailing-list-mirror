@@ -1,169 +1,323 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Should notes handle replace commits?
-Date: Mon, 11 Jan 2016 08:50:24 -0800
-Message-ID: <xmqqy4bwxdpr.fsf@gitster.mtv.corp.google.com>
-References: <20160108012830.GA2110@glandium.org>
-	<xmqqh9in25py.fsf@gitster.mtv.corp.google.com>
-	<20160108214939.GA22801@glandium.org>
-	<xmqqziwfzl2s.fsf@gitster.mtv.corp.google.com>
-	<20160109002510.GA30050@glandium.org>
-	<xmqqmvsfzhq4.fsf@gitster.mtv.corp.google.com>
-	<181337AE5CFC4AF09B82187B8E97095D@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Mike Hommey" <mh@glandium.org>, <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Jan 11 17:50:38 2016
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v2 0/3] Introduce a --use-index command line argument in git grep
+Date: Mon, 11 Jan 2016 18:00:45 +0100
+Message-ID: <1452531648-16575-1-git-send-email-t.gummerer@gmail.com>
+References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
+Cc: pclouds@gmail.com, sunshine@sunshineco.com, gitster@pobox.com,
+	Thomas Gummerer <t.gummerer@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:00:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIffy-0003Zl-5V
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 17:50:38 +0100
+	id 1aIfph-0001LU-A8
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934189AbcAKQub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 11:50:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60528 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933630AbcAKQu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 11:50:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E7AF2383E3;
-	Mon, 11 Jan 2016 11:50:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fmm565/Ae/mH7FKPvRJ3upCUVPQ=; b=qsJD3L
-	xo1lHnSxUwGXqe13Po059lAnGvD2tzMRmFxaSFf/OCFdBkXj8dz2OL9XsnMiU6rg
-	P+g6mjW0cp48CLTeXUPC1FnB301ZYgFAeE+AFAKg5eiGx62oLKZqlUMjshI8VvFB
-	W3whAiWF91VWZDKcInsZhGP9ubckptQePTgiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aEr0I379f0vKTR0NielkeKURvpTWN3Rz
-	mgoAZpQnP+874vjE8ZMUiXI/M7cqiM6Zs24CwGjmsrRmJHuL6aH2YsqaPWrF1ncP
-	IiZQ2KMDuiQJqAW+K9/C0omjF/eSD/SQUTOTLIw7eqgjqXYBVxXCb1ahRgXxT9F4
-	ysnKZ2eidC4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE216383E2;
-	Mon, 11 Jan 2016 11:50:26 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 474A1383E0;
-	Mon, 11 Jan 2016 11:50:26 -0500 (EST)
-In-Reply-To: <181337AE5CFC4AF09B82187B8E97095D@PhilipOakley> (Philip Oakley's
-	message of "Sat, 9 Jan 2016 17:39:13 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 69FC9720-B883-11E5-93C1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1761385AbcAKRAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 12:00:36 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33695 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759065AbcAKRAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 12:00:35 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u188so27122052wmu.0
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 09:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Hj4C/undvdipq6UsmtRgc86vsEbAnz3/EQ8CL1j9FLE=;
+        b=TXxFdcHnUgd3Tqmmh7hDGsAWGTZIC0QkbqAAG2w6xY9YB43wQUl8OWzcfHZHlnTtSo
+         dsJSwpLSR5/a4TKDgFz5y/ZX0CEeV/QYW4yo+k1jTCuuJlOJmZuWdIMmKN/1yzz8rGX1
+         szIs/cqR4dhVi8zwskUMwqbfYULaY95p4ocdAFfgkdJwKsvPNlHeWzJjaDQaeEo5BCPG
+         xNdquwf9QQgYl+eVtkxwpVRkWZWxrSHcV4FEDZpb0G/7dfT2mwhkSsWjluxUmIkq7fm2
+         22LDMxNoauJnMIR2Os8zi4pEjuFJ7RUBsUCRO8GPHDObRe9quxu8A422OO0y0/p41A1v
+         kncQ==
+X-Received: by 10.28.65.85 with SMTP id o82mr15516873wma.23.1452531634058;
+        Mon, 11 Jan 2016 09:00:34 -0800 (PST)
+Received: from localhost (host143-106-dynamic.248-95-r.retail.telecomitalia.it. [95.248.106.143])
+        by smtp.gmail.com with ESMTPSA id jo6sm120680137wjb.48.2016.01.11.09.00.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Jan 2016 09:00:32 -0800 (PST)
+X-Mailer: git-send-email 2.6.0.rc0.160.g9ddbed8
+In-Reply-To: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283670>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+The first round is at $gmane/283619.  Thanks to Duy and Eric for the reviews.
 
-> From: "Junio C Hamano" <gitster@pobox.com>
-> Sent: Saturday, January 09, 2016 1:04 AM
->> Mike Hommey <mh@glandium.org> writes:
->>
->>> So while `cat-file commit A` gives you what `cat-file commit Z` would,
->>> `notes show A` doesn't give you what `notes show Z` would. And that's
->>> this "inconsistency" that bothers me.
->>
->> In any case, 'notes' being a way to add extra information to an
->> existing object means that with your original "replace" that tells
->> Git to keep A in the history (and give Z's contents when contents of
->> A was asked),
->>     it is absolutely correct that notes for A is shown.
->
-> This seems very wrong to me. Surely we have asked that _all_
-> references to A be replaced by a reference to Z and thence onward to
-> Z's contents.
+I decided to go with Duy's suggestion, introducing a new --use-index
+option, instead of modifying the behaviour of git grep outside of a
+git repository, as it seems to be the safer way to go.
 
-You didn't ask any such thing.
+Changes since the last version:
+01/03: Fix the && chain in this test as well.
+03/03:
+ - Introduced the new --no-index argument
+ - fixed the test thanks to the suggestion of Eric
+ - modified the test to use --use-index=optional and added a test that
+   uses --use-index=never.
+ - Fixed the if/else statements for the error messages to be more
+   consistent.
+ - Added documentation for the new option
 
-I already said:
+Interdiff below:
 
-    The true source of your confusion, I think, is that there is a
-    misunderstanding of what "replace A with Z" does.
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 4a44d6d..90ff643 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -25,6 +25,7 @@ SYNOPSIS
+ 	   [-W | --function-context]
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...]
++	   [--use-index=<always|optional|never>]
+ 	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
+ 	   [--] [<pathspec>...]
+ 
+@@ -66,6 +67,18 @@ OPTIONS
+ --no-index::
+ 	Search files in the current directory that is not managed by Git.
+ 
++--use-index::
++	Set the behavior of git grep when used in- or outside of a git
++	repository.  If set to always, the command can only be used
++	inside of a git repository, and will fail if it is used
++	outside of a git repository.  If set to never, it will work
++	both inside and outside of a git repository, but will not use
++	any information in the index if used inside of a repository.
++	If set to optional, it will work both inside and outside of a
++	git repository, using the information available in the index
++	if used inside a repository.  Always and optional can be
++	overridden by `--no-index`.
++
+ --untracked::
+ 	In addition to searching in the tracked files in the working
+ 	tree, search also in untracked files.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index a886af1..bb2add9 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -629,6 +629,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int dummy;
+ 	int no_index = 0;
++	const char *use_index = NULL;
+ 	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
+ 
+ 	struct option options[] = {
+@@ -637,6 +638,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0, "no-index", &no_index,
+ 			N_("find in contents not managed by git"),
+ 			GREP_NO_INDEX_EXPLICIT),
++		OPT_STRING(0, "use-index", &use_index, N_("always|optional|never"),
++			   N_("options for using the index")),
+ 		OPT_BOOL(0, "untracked", &untracked,
+ 			N_("search in both tracked and untracked files")),
+ 		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
+@@ -759,14 +762,29 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+ 	grep_commit_pattern_type(pattern_type_arg, &opt);
+ 
+-	if (!no_index && !startup_info->have_repository) {
+-		int nongit = 0;
++	if (use_index) {
++		if (!strcmp(use_index, "always")) {
++			/* same as git grep without --use-index */
++		} else if (!strcmp(use_index, "optional")) {
++			if (!no_index && !startup_info->have_repository) {
++				int nongit = 0;
+ 
+-		setup_git_directory_gently(&nongit);
+-		if (nongit)
+-			no_index = GREP_NO_INDEX_IMPLICIT;
++				setup_git_directory_gently(&nongit);
++				if (nongit)
++					no_index = GREP_NO_INDEX_IMPLICIT;
++			}
++		} else if (!strcmp(use_index, "never")) {
++			no_index = GREP_NO_INDEX_EXPLICIT;
++		} else {
++			die(_("invalid option \"%s\" for --use-index, expecting"
++			      " always, optional or never"), use_index);
++		}
+ 	}
+ 
++	if (!no_index && !startup_info->have_repository)
++		/* die the same way as if we did it at the beginning */
++		setup_git_directory();
++
+ 	/*
+ 	 * skip a -- separator; we know it cannot be
+ 	 * separating revisions from pathnames if
+@@ -881,11 +899,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (!show_in_pager && !opt.status_only)
+ 		setup_pager();
+ 
+-	if (untracked || cached) {
+-		if (no_index == GREP_NO_INDEX_EXPLICIT)
+-			die(_("--cached or --untracked cannot be used with --no-index."));
+-		else if (no_index == GREP_NO_INDEX_IMPLICIT)
+-			die(_("--cached or --untracked cannot be used outside a git repository."));
++	if (no_index && (untracked || cached)) {
++		if (no_index == GREP_NO_INDEX_IMPLICIT)
++			die(_("--cached or --untracked cannot be used outside "
++			      "of a git repository."));
++		else
++			die(_("--cached or --untracked cannot be used with "
++			      "--no-index or --no-index=never."));
+ 	}
+ 
+ 	if (no_index || untracked) {
+@@ -894,7 +914,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			if (no_index == GREP_NO_INDEX_IMPLICIT)
+ 				die(_("cannot use revs outside of a git repository."));
+ 			else
+-				die(_("--no-index or --untracked cannot be used with revs."));
++				die(_("--no-index, --use-index=never or "
++				      "--untracked cannot be used with revs."));
+ 		}
+ 		hit = grep_directory(&opt, &pathspec, use_exclude);
+ 	} else if (0 <= opt_exclude) {
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 4ba955d..9776f15 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -794,9 +794,11 @@ test_expect_success 'outside of git repository' '
+ 		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+ 		export GIT_CEILING_DIRECTORIES &&
+ 		cd non/git &&
++		test_must_fail git grep o &&
+ 		git grep --no-index o >../actual.full &&
+-		test_cmp ../expect.full ../actual.full
++		test_cmp ../expect.full ../actual.full &&
+ 		cd sub &&
++		test_must_fail git grep o &&
+ 		git grep --no-index o >../../actual.sub &&
+ 		test_cmp ../../expect.sub ../../actual.sub
+ 	) &&
+@@ -806,11 +808,12 @@ test_expect_success 'outside of git repository' '
+ 		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+ 		export GIT_CEILING_DIRECTORIES &&
+ 		cd non/git &&
++		test_must_fail git grep o &&
+ 		git grep --no-index --exclude-standard o >../actual.full &&
+ 		test_cmp ../expect.full ../actual.full &&
+ 
+ 		{
+-			echo ".gitignore:.*o*"
++			echo ".gitignore:.*o*" &&
+ 			cat ../expect.full
+ 		} >../expect.with.ignored &&
+ 		git grep --no-index --no-exclude o >../actual.full &&
+@@ -818,24 +821,67 @@ test_expect_success 'outside of git repository' '
+ 	)
+ '
+ 
+-test_expect_success 'outside of git repository without --no-index' '
++test_expect_success 'outside of git repository with --use-index=optional' '
+ 	rm -fr non &&
+ 	mkdir -p non/git/sub &&
+ 	echo hello >non/git/file1 &&
+ 	echo world >non/git/sub/file2 &&
+-	{
+-		echo file1:hello &&
+-		echo sub/file2:world
+-	} >non/expect.full &&
++	cat <<-\EOF >non/expect.full &&
++	file1:hello
++	sub/file2:world
++	EOF
++	echo file2:world >non/expect.sub &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=optional o >../actual.full &&
++		test_cmp ../expect.full ../actual.full &&
++		cd sub &&
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=optional o >../../actual.sub &&
++		test_cmp ../../expect.sub ../../actual.sub
++	) &&
++
++	echo ".*o*" >non/git/.gitignore &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=optional --exclude-standard o >../actual.full &&
++		test_cmp ../expect.full ../actual.full &&
++
++		{
++			echo ".gitignore:.*o*" &&
++			cat ../expect.full
++		} >../expect.with.ignored &&
++		git grep --use-index=optional --no-exclude o >../actual.full &&
++		test_cmp ../expect.with.ignored ../actual.full
++	)
++'
++
++test_expect_success 'outside of git repository with --use-index=never' '
++	rm -fr non &&
++	mkdir -p non/git/sub &&
++	echo hello >non/git/file1 &&
++	echo world >non/git/sub/file2 &&
++	cat <<-\EOF >non/expect.full &&
++	file1:hello
++	sub/file2:world
++	EOF
+ 	echo file2:world >non/expect.sub &&
+ 	(
+ 		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+ 		export GIT_CEILING_DIRECTORIES &&
+ 		cd non/git &&
+-		git grep o >../actual.full &&
+-		test_cmp ../expect.full ../actual.full
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=never o >../actual.full &&
++		test_cmp ../expect.full ../actual.full &&
+ 		cd sub &&
+-		git grep o >../../actual.sub &&
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=never o >../../actual.sub &&
+ 		test_cmp ../../expect.sub ../../actual.sub
+ 	) &&
+ 
+@@ -844,14 +890,15 @@ test_expect_success 'outside of git repository without --no-index' '
+ 		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+ 		export GIT_CEILING_DIRECTORIES &&
+ 		cd non/git &&
+-		git grep --exclude-standard o >../actual.full &&
++		test_must_fail git grep --use-index=always o &&
++		git grep --use-index=never --exclude-standard o >../actual.full &&
+ 		test_cmp ../expect.full ../actual.full &&
+ 
+ 		{
+-			echo ".gitignore:.*o*"
++			echo ".gitignore:.*o*" &&
+ 			cat ../expect.full
+ 		} >../expect.with.ignored &&
+-		git grep --no-exclude o >../actual.full &&
++		git grep --use-index=never --no-exclude o >../actual.full &&
+ 		test_cmp ../expect.with.ignored ../actual.full
+ 	)
+ '
 
-    It is NOT "whenever somebody refers to A, pretend as if it is
-    referring to Z".  If that _were_ the case, then I'd agree that
-    "whenever somebody else asks notes attached to A, pretend as if
-    notes attached to Z were asked" might make sense, but that does not
-    match the reality.
+Thomas Gummerer (3):
+  t7810: correct --no-index test
+  builtin/grep: rename use_index to no_index
+  builtin/grep: introduce --use-index argument
 
-but then didn't say what "the reality" is (because I already said it
-elsewhere upthread).
+ Documentation/git-grep.txt | 13 +++++++
+ builtin/grep.c             | 57 +++++++++++++++++++++++------
+ t/t7810-grep.sh            | 90 +++++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 146 insertions(+), 14 deletions(-)
 
-What you asked is that whenever information in A is asked, a tweaked
-version of the original information in A is returned.  The tweaked
-version happens to match what is in Z, but after the replacement,
-the object Z does not directly get into the picture---as you can see
-in the result of log (or rev-list) from C that shows "C B A Y X" (in
-tip-to-root order), the end user does not even have to be aware of
-Z's existence.
-
-Let's think about the example of grafting "old" history that starts
-at X, resurrected from archive since the history of the current
-project has already started at A and leading to C in real-world
-terms.  A would be like Linus's v2.6.12-rc2 in the Linux kernel
-project that does not have any parent.  Then you rebuild the "old"
-history from the archive that ends at the same v2.6.12-rc2, so your
-X Y Z history also ends with v2.6.12-rc2.  And you would "graft" it
-behind the true history.
-
-Commits A and Z would both have the same log message, record the
-same tree, made by the same author and committer with same
-timestamps.
-
-Now, think which one of A and Z do you think people would want to
-"survive" in the graft operation?  Everybody has built (and will
-continue to build) on the history that started at A whose tip is
-currently at C.
-
-If you have a way to tell Git "Earlier A was recorded as having NO
-parent, but I wish we had recorded Y as its parent.  So create a
-fake reality where A's parent is Y.", then you can keep the
-resulting world view consistent with the "recent-only" real history,
-i.e. B's parent is still A.  Some might even have notes on A, or
-commits made since A may reference the commit object A by name in
-its log, or another superproject may bind A as its subproject, but
-because we are not changing the identity/name of A with Z, all of
-these "external" references survive the grafting/replacing.
-
-Perhaps it would help if you stop thinking that you are somehow
-losing "Z" and "Z" is somehow precious.  It is not, at least in the
-"history grafting" context, at all precious.
-
-When you have the true history starting from v2.6.12-rc2 (that is "A
-B C"), the thing you REALLY want to do is to resurrect history that
-ends at one commit before v2.6.12-rc2 (that is "Y" in the example),
-and somehow tweak "A" so that its parent is "Y".  And the way you
-tweak "A" to make that happen is to replace its contents with the
-contents of a commit that records all the same information as "A"
-except that it has a parent that is "Y".  We could do "cat-file
-commit A" piped to sed to add a "parent Y" line to it and then
-"hash-object" to come up with such a replacement commit, and replace
-A with it, but "Z" happens to be such a commit already, so that is
-why replacing A with Z would graft Y just behind A.  The resulting
-history would show Y as the parent of A and Z won't even be in the
-consciousness of the end users.  The "old history resurrection"
-project does not even have to create "Z" in the first place.
-
-If the contents of "Z" is different from contents of "A" in some
-other way, other than their set of parents, or if "Z" has other
-external references that are precious (e.g. a note may refer to it,
-or a superproject may bind Z to its tree), then either replacing A
-with Z or replacing Z with A would not be a good way to connect the
-two histories.  As you would want to keep both, and the "external"
-references, such as notes and submodule gitlink bindings, want to
-keep refering to both.
-
-In such a case, the best you can do is to tweak A to have Z (instead
-of Y) as its fake parent, to make the resulting fake history read
-like "C B A Z Y X" (in tip-to-root order), having two copies of
-v2.6.12-rc2.  That way you would be able to see both notes for A and
-Z, and can tell which note was attached to the true history and
-which note was attached to the history resurrected from the archive.
+-- 
+2.7.0.3.g214d8d0.dirty
