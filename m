@@ -1,78 +1,91 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/2] Handle more file writes correctly in shared
- repos
-Date: Mon, 11 Jan 2016 10:28:28 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601111018550.2964@virtualbox>
-References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de> <cover.1452085713.git.johannes.schindelin@gmx.de> <c03e5a9d367b76d8a249680c752b4c4d935e9b91.1452085713.git.johannes.schindelin@gmx.de> <xmqq1t9t3vn8.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601081704280.2964@virtualbox> <xmqqbn8w2brm.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 1/4] Refactor skipping DOS drive prefixes
+Date: Mon, 11 Jan 2016 10:32:36 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601111029540.2964@virtualbox>
+References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de> <cover.1452270051.git.johannes.schindelin@gmx.de> <c70ed05f275a44fbfae831b4cb67e59a0ce05724.1452270051.git.johannes.schindelin@gmx.de>
+ <CAPig+cRRaMbEGibYnQBTfGFQT6fybNU8e6ZAkX11V-TLAo9AfA@mail.gmail.com> <xmqq8u3z20aj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
-	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Jeff King <peff@peff.net>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 10:29:15 2016
+X-From: git-owner@vger.kernel.org Mon Jan 11 10:32:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIYmn-00005j-VT
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 10:29:14 +0100
+	id 1aIYqJ-0001ry-N2
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 10:32:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758845AbcAKJ3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 04:29:09 -0500
-Received: from mout.gmx.net ([212.227.17.21]:65165 "EHLO mout.gmx.net"
+	id S1757743AbcAKJcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 04:32:48 -0500
+Received: from mout.gmx.net ([212.227.17.20]:60540 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758242AbcAKJ3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 04:29:06 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lm2lZ-1ZjDtG2iBt-00ZcwB; Mon, 11 Jan 2016 10:28:31
+	id S1750813AbcAKJcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 04:32:47 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MTfZc-1air9L0Ek4-00QWEC; Mon, 11 Jan 2016 10:32:39
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqbn8w2brm.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq8u3z20aj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Me5xvfMEBxf2US1Q+6HQkAX8gak9PnObSxVU0DmbF7QoV1UaK3s
- TlxfrhCYerEirLbF1yg4lYlyj9fyqdJbpixVYWkgOgIT2RBdrSRrjDV8OHq1ZbW3Hia0z2s
- naow9JHz5747pxKiQamoTvauwaB3JvbgnkpWvVBPZPj61ot3wcjCy/fbjE1VLx3ZR3sDrQr
- eShmYE3xxF1fdkaoYjwDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:X4hx8NIW4aA=:K7CYHdzmhcg0xo/IbXlbq6
- ViE9Y87AazF0Y3c9RYlCFzRZ2nORa6mq3cK3goQy/Jt8sVFhSqqwQh2sitlNCTk3denLezRq0
- D8QvK4wLAJmW/SlqZUcqykarAKgIqvOCx0XbOLLZC3kegtINJ2PlgGY9UWpoNtkFT/3YLRw8R
- vH+WQNmeDBf+vO8YxZQtlQJxOn8JiUUerrVcZevDx1TZI7p3f8LjnIRuQP/LdIyuOgGzZ+1i6
- kX/qiguntWrBcu+WFDS7pN4QC66cV0zGNOyoLdCnZS5JRDh5CEMaZ58Ij2XsveZarXIYWTfci
- Vu/cPSmvnWWA+dm3xfZIv3OiEvH/sUGCqGz2/utOeGZahN7CHxeVJpXtBIgUlV7WrNvc8lkd5
- J0aM0FwIavvKDkp+I3INn8tvnPNXtnhEXpNfFjiatAyoboim8LMqTpFwsTdHy/6ConcaEhgdS
- 0o9qv4gdTzkz1yf9pKNFCJ8E5xLt3fUoq5OQaLWhuKUrJAOh84w5aJFz37np7ri8ZFVHi/veD
- Hq6FA3Y34d1OtqEDpYEOvVJGLuULVZCigXHLb1wbjC05ckJ0Y6bxnodPCQlygMtYpsohUUyRY
- p+6+73w/8XnIXCS4Agz6JKfmporGO5gNCfoOx2AtJv1ex/RvLHSTYJttZdY/DFP4Kah847GdY
- UMHsjDyGvYbxymP+JMheE5BTkkoUQn5Gy35SGkhsg5XXqdZeAy+z4VgNxb46/wIpGtPCPMJr+
- pRumSqMXVNGmBfSnaVsyqWk44R8MWghhbVEQTGJDbTK2MIZNcS4klyPfasleBhMD2UPE1x+a 
+X-Provags-ID: V03:K0:AwJfm/HbwUCgHa65WIsGmc5FlyUrSfzw7V+/owIg1L4ZiOpXwrT
+ +GmMRzoiajnQMQxGfTip56zgj310j8v5/gYYJMjGbs6Jd86vZOw0biM6ortg8tJX3Z69JPk
+ ypkrIOJYhiPF6M80LifFmT+8rJ3+awCzm1H6NFBYChzQ//EHBHZXV5aLe62UlSkJeGOXIwd
+ GMQxF9kpsF0kd0imqtCAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xSNfBiBMTVA=:4r5MAjc/XQhsjOsV2Sk8Yb
+ YBY5sn/djuv/W+niTAJI34PMScNIiMWf934xc0l5HXlAW7ZSJDqy9Ly8nOLmUt9cfKenNsCnG
+ mOFnLa3nVeim7BgY3NLzQlua0niMu3/OdKoOxxGLZkNlmS+8fyHhs3O8Cs2lKP4F7hdsj6gXZ
+ ZjodyhM6TXgZuMryKSKxQ0lOWkaREEFczys6HB70WcGQOARQLOP6QjlajCgST1wRfj7KKtNNt
+ vIPI6NWCrpDpUbQFVoOGTOAeVZeOIAC8MdpI+vBr0TGSYZDZ3xixq6s6fXthHMlerkFw1BXK0
+ iJlQLU2wxCIT/jg1eOQ/n8sOzFGSqhipe+rzK7e1ctAXf3hVptbagJ+U+1yKhtRrFyoL1dCCd
+ PsJ6T6nDPoskBlAt7P3Hv2oe8AmFVTBYPbNejWU0wXGCW4F+jJk7B/nt/ib7lO8d/L5oePcFa
+ B38bxEhAha4TpCcCrArrC0iwtKtb02J0elb1AyNtMh1g9mrukQ5xKQqmzs6WJYjfwuIq3/4MA
+ znrhwHq9BOwOBnJgZASM5dj2nDHSFQeh0c/DNRso/vBeenHJliy/PmsyecSk3LgrBSkmAe0hw
+ +KsoG6nzAr2qoQW2LDr9ujApb5Qeu4nBCKu92seGKwQNLfe2p3GM/BDx2MfxGKdBjlORzvMH7
+ IG/Mbrk91Er3qYxA1h92/Ant6ljy2gV2vxpbZAQfwR9DJ4yHvKxkL3yQp90tyGNWZ6hf2sHm3
+ SfY55lEaB4niYCRqMQwf0NxC+yoRQpu7o2sey29xQ+k4CxJ5s6upLu1F4I4zEwHEEUXa++Y7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283642>
 
-Hi Junio,
+Hi Eric & Junio,
 
 On Fri, 8 Jan 2016, Junio C Hamano wrote:
 
-> I think it is correct not to touch this codepath in this patch,
-> because of the above two reasons, but more simply and generally, it
-> is correct not to touch this codepath because core.sharedRepository
-> is not about working tree files, and .rej is a file you use in your
-> working tree.
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > With this change, code such as:
+> >
+> >     for (i = has_dos_drive_prefix(src); i > 0; i--)
+> >         ...
+> >
+> > in path.c reads a bit oddly. Renaming the function might help. For instance:
+> >
+> >     for (i = dos_drive_prefix_len(src); i > 0; i--)
+> >         ...
+> 
+> Renaming may be unnecessary churn, but I do not think we mind an
+> additional synonym, e.g.
+> 
+>     #define has_dos_drive_prefix(x) dos_drive_prefix_len(x)
+> 
+> if some people prefer.
 
-I am happy to adjust the log message, but I am pretty certain that the
-`core.sharedRepository` setting actually also affects the working tree. At
-least in my hands, calling
+I am actually not so sure about this: if I read
+`dos_drive_prefix_len(path)` I would have assumed the return value to be
+-1 if `path` does not, in fact, have a DOS drive prefix.
 
-	git clone -c core.sharedRepository=group . test-shared
+Sure, returning the length of the DOS drive prefix when just asking
+whether it has one is a bit surprising at first, but it also makes sense:
+we already have that information, so we might just as well use it.
 
-results in all of the working tree files being group-writable.
-
-Therefore I am not convinced this is a sound line of reasoning.
+In any case, I think this change (if it is really considered desirable)
+could easily be an add-on patch by people who care about this ;-)
 
 Ciao,
 Dscho
