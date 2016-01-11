@@ -1,69 +1,108 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] Korean l10n updates for Git 2.7.0 (maint branch)
-Date: Tue, 12 Jan 2016 01:20:00 +0800
-Message-ID: <CANYiYbHVUi3xftFuwTHkiXgS=7KZEv309dE5vyywsFVvSMcEEA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] builtin/grep: allow implicit --no-index
+Date: Mon, 11 Jan 2016 09:26:53 -0800
+Message-ID: <xmqqlh7wxc0y.fsf@gitster.mtv.corp.google.com>
+References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
+	<1452435597-12099-4-git-send-email-t.gummerer@gmail.com>
+	<CACsJy8Bs3z0Gk3CjhyZGfOLA7R3pZQz7K5gk4BTytvYkZeyBtQ@mail.gmail.com>
+	<20160111111015.GA10612@hank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Changwoo Ryu <cwryu@debian.org>
-X-From: git-owner@vger.kernel.org Mon Jan 11 18:20:11 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 18:27:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIg8X-0004u5-JO
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:20:09 +0100
+	id 1aIgFB-0000d8-7W
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 18:27:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759978AbcAKRUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 12:20:03 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:35204 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759969AbcAKRUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 12:20:02 -0500
-Received: by mail-wm0-f52.google.com with SMTP id f206so220668365wmf.0
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 09:20:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=+VXMc7WUD+EFskzbpQ1+nApRdq9+x8C4r65FlQ/R2pI=;
-        b=KCbK5/Untqx1wMZgciu2979WNIY0FlRrDZd1R7lri416jE8UMI3K+hBB2SpX0Xtx7w
-         +k874KisND6ucIi84Accfzh4Q6jiKUAkPj3umNnuTIf+NTwypM/BS1GgLssQS6bOFNCO
-         nGSmsPViJRoA1jZc2pZzVUSZ6khDo8m/z3cklnKxMhktxdhVw0kj5vM8RT0hBXPl4YxH
-         wY5jXxnsUygJ0wy5wC7nU7d7IqVsb5AgDANmVaPjj0JXbNkaRmTTpU2BjX/aUYEUMGBv
-         t+Anske9yUt5+5Y6t0M1Lt5vXRBh3mRZAKPIbXoxR60I4Tp6RBgoR+VTDoxOoRIEjcru
-         nWyg==
-X-Received: by 10.194.246.200 with SMTP id xy8mr131890501wjc.62.1452532800894;
- Mon, 11 Jan 2016 09:20:00 -0800 (PST)
-Received: by 10.194.61.43 with HTTP; Mon, 11 Jan 2016 09:20:00 -0800 (PST)
+	id S1760890AbcAKR05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 12:26:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64153 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760053AbcAKR04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 12:26:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7669038E19;
+	Mon, 11 Jan 2016 12:26:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HzOE+lwTUjvv0dyoz/V76LzBBv8=; b=T4oKMR
+	kfLh5zRU0TgvxMi+M6qqoGO9VnQ/FHHB2FaVwXkp9Ivt28VXRbwA61WAdvMwsjOY
+	gDRlpFEDBOK7N1EOSyEsH0kgf8nMDEwe7/n3dJPcif04mesxdrmuLNo72Lz8isUN
+	FsMt+5zXWJfEgU8ih9sJpFInaZ8+2rcOykOnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T9Q6owiRMoSTRm4Oft8aNQOSWysZIDbl
+	wsdhm77X0jAXNlBIEBwrZjFoXCui3C6+pUnAiabW5gRemgHeZ0txj28Y50JeLwNS
+	x0V7WCEo3cy7eBKtMJ2ZgWkG6xQMLgV4YS5XNavg3/v0/+iCOewl8tyl5CK4mZVd
+	jBgpjfsN0nk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E0E238E18;
+	Mon, 11 Jan 2016 12:26:55 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DB29838E16;
+	Mon, 11 Jan 2016 12:26:54 -0500 (EST)
+In-Reply-To: <20160111111015.GA10612@hank> (Thomas Gummerer's message of "Mon,
+	11 Jan 2016 12:10:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 827F0F26-B888-11E5-A519-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283678>
 
-Hi Junio,
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Changwoo contributed a new language (Korean) l10n support, but missed the
-update window for Git 2.7.0.  Please merge this to the maint branch.
+> On 01/11, Duy Nguyen wrote:
+>> On Sun, Jan 10, 2016 at 9:19 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> > Currently when git grep is used outside of a git repository without the
+>> > --no-index option git simply dies.  For convenience, implicitly make git
+>> > grep behave like git grep --no-index when it is called outside of a git
+>> > repository.
+>>
+>> Should we have a line about this behavior in git-grep.txt, maybe the
+>> description section?
+>
+> Yes good point, the behavior change should definitely be documented.
+>
+>> I wonder if anybody wants the old behavior (e.g.
+>> non-zero exit code when running outside a repo). If there is such a
+>> case (*), we may need an option to revert it back (--no-no-index seems
+>> ridiculous, maybe --use-index). The safest way though, is introduce a
+>> new option like --use-index=<always|optional|never> then you can make
+>> an grep alias with --use-index=optional.
+>
+> You're right.  I couldn't think of a reason why someone would rely on
+> the old behavior, but maybe I missed something.  I like the idea of
+> introducing the --use-index=... option.
 
-The following changes since commit 02103b328912d06d1b04cf42e408cad2218b1f9b:
+I don't like that, though ;-)
 
-  l10n: de.po: translate 68 new messages (2015-12-29 19:53:17 +0100)
+"We run 'git grep' in random places and relied on it to fail when
+run in somewhere not under control of Git." feels so flawed at
+multiple levels that I doubt it deserves to be kept working.  For
+one thing, "git grep" is not the way to tell something is under
+control of Git (rev-parse would be a better thing for scriptor to
+use).  For another, how would such a script tell between "not a
+git repository" and there was no hits?
 
-are available in the git repository at:
+So I do agree that automatic fallback needs to be documented and
+advertised as a feature (or even a bugfix), I do not think we want
+to add knobs to keep such a broken script working.
 
-  git://github.com/git-l10n/git-po maint
-
-for you to fetch changes up to c6cd26696c4312fbe3800edc61e4fb0851ee180b:
-
-  l10n: ko.po: Add Korean translation (2016-01-03 19:07:29 +0900)
-
-----------------------------------------------------------------
-Changwoo Ryu (1):
-      l10n: ko.po: Add Korean translation
-
- po/TEAMS |     4 +
- po/ko.po | 11859 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 11863 insertions(+)
- create mode 100644 po/ko.po
+> How should we handle priority between --no-index and --use-index,
+> should we just give --no-index priority if it is set and ignore the
+> new --use-index option, or is there some other way?
+>
+>> (*) I've been hitting really weird real-world use cases so I'm a bit paranoid..
+>> --
+>> Duy
