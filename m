@@ -1,95 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] builtin/grep: allow implicit --no-index
-Date: Mon, 11 Jan 2016 11:35:38 -0800
-Message-ID: <xmqqmvsbx62d.fsf@gitster.mtv.corp.google.com>
-References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
-	<1452435597-12099-4-git-send-email-t.gummerer@gmail.com>
-	<xmqqh9ikxbv7.fsf@gitster.mtv.corp.google.com>
-	<20160111192844.GD10612@hank>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 20:35:48 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv7 1/8] submodule-config: keep update strategy around
+Date: Mon, 11 Jan 2016 11:41:54 -0800
+Message-ID: <1452541321-27810-2-git-send-email-sbeller@google.com>
+References: <1452541321-27810-1-git-send-email-sbeller@google.com>
+Cc: jrnieder@gmail.com, Jens.Lehmann@web.de
+To: sbeller@google.com, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 11 20:42:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIiFk-0000Si-SZ
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:35:45 +0100
+	id 1aIiMC-000520-W1
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933313AbcAKTfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 14:35:41 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64433 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757379AbcAKTfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 14:35:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D6FA63A324;
-	Mon, 11 Jan 2016 14:35:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=laG1dZas0IIUuFID9OYlGhE/5Zo=; b=p5E9FO
-	4eRh8aLoVQ9GAp589ltvLxyHaY+9t5z4KawOqnaZKfza58Gi3sxM3k3DaUoXr3WI
-	Jpt74biiFHufE31xKd0wvH0XesV5RY3oA9CsSK5yxI9l7W20QehcRvJgF/lz82AH
-	mWwFaG9eiHEkhHYhwsiLQqYCRyuZmn33yM7vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=umPIbxFe/ojZ3F4T6c9XWTfsgJxmQMDA
-	g/z4r66xOPwSMzNpGaDzdt7+Jxz5GUmsl4Goi3kAnvBCS3cFcozm/mz3WOOhMBWy
-	7WlU8UkhOYoPzCHfj6pZmrzwCMbTsRh1EsmpKWHlZiGx2TJE2IYtsjsSeJ0UJQ+H
-	ciNCVx70IWI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD89B3A323;
-	Mon, 11 Jan 2016 14:35:39 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4990B3A322;
-	Mon, 11 Jan 2016 14:35:39 -0500 (EST)
-In-Reply-To: <20160111192844.GD10612@hank> (Thomas Gummerer's message of "Mon,
-	11 Jan 2016 20:28:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7E99A18E-B89A-11E5-ACA9-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S933751AbcAKTmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 14:42:16 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:36727 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757379AbcAKTmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 14:42:15 -0500
+Received: by mail-pf0-f174.google.com with SMTP id n128so49340643pfn.3
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 11:42:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=tpyD8HB6GYjkKtDi3AxnlYoloWhupz+ZwBjG9VxDvyU=;
+        b=k0Pmy6XDdhhmy6EOiy7EgLlrFr/WNh8oM0y8p60DZxkW6Dc5lsSLmNVrgVM0Mb1pS/
+         5vr7NJC/dsBx8J8cs7kRbotMM9x30bSB4awsCxLv+Ql2BiczWdGqZFt/oibh58pUMxIs
+         FqKVTOCvKz1oFi1hAMasPG+OTMf7tlwI6G2/U3f7E5jVT6QbzAVvwspuO9E6BgvSZStt
+         f1QdHBzPkUHs35GEOZASFrQ/kKQWPCWcBOAYjKCFnszE2P8Ze3dpzadxUNagezRFm6IO
+         OQevWlwdeecpimpL0+QGPBu3DqXuQ3YejgM0+5qBtq7bX2bEGQCqNY+tL6z6BPilKDRw
+         cIiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=tpyD8HB6GYjkKtDi3AxnlYoloWhupz+ZwBjG9VxDvyU=;
+        b=Gus23LC97/U1ZIbzMjBcIiM18tMZbdwLsCrNU7f4QnyEeGIDG65IHWU4g1Kc58jZn8
+         v57WHMc5lcb6zIXE0PPwTjerq4jkyirAuHX4zOuO0McoBO5iG0EwpDnZs6Ty9qV8mJZJ
+         P7syDoLg3vWEVaH60ZHILv5wNB95qBXuXZp/qIJAKbnWtQAeffYPXmBm3RbxBBW2HK3q
+         aYFk0dN8Rx9ngTrzt1zsEqAsEIieknzVdIt0gT4INd3XNS6YMZa2NsjgkJBkFuRjTakP
+         ilS8FpR7UYMmp6UaBkqfoHKukD/2DRQywn5BTq7Dv5ncvRj7eTd8owBESooL1kpkBYRZ
+         lYDg==
+X-Gm-Message-State: ALoCoQkYRPb/D/BkZ9dI2m6E9HiJuuglAidwjVGBX2lebNHiZOaeYZ483NhzxTQ9cHLaoHSbLedIlyw7MdN0xghvsYidzIc0qg==
+X-Received: by 10.98.71.211 with SMTP id p80mr28440631pfi.135.1452541334752;
+        Mon, 11 Jan 2016 11:42:14 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:8d8c:9316:e7e7:6f4f])
+        by smtp.gmail.com with ESMTPSA id m77sm25075535pfi.54.2016.01.11.11.42.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 11 Jan 2016 11:42:13 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.rc1.7.gf4541cb.dirty
+In-Reply-To: <1452541321-27810-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283702>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+We need the submodule update strategies in a later patch.
 
->> > +#define GREP_NO_INDEX_EXPLICIT 1
->> > +#define GREP_NO_INDEX_IMPLICIT 2
->>
->> I am not sure this is the best way to do this.  For things like
->> this, the usual pattern is to initialize "no_index" to an "unknown"
->> value, allow "--no-index" to toggle it to true (by the way, I think
->> we should reject "--no-no-index", but that is a separate topic), and
->> then after command line parsing finishes, tweak the no_index if it
->> is still "unknown".
->
-> The reason for this (and the change in 02/03) is so we can distinguish
-> whether there is an explicit no-index or not for the error messages.
-> I think it would be okay to have more generic error messages
-> ("--cached or --untracked cannot be used without index" and
-> "--untracked or no index mode cannot be used with revs").  What do you
-> think?
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ submodule-config.c | 11 +++++++++++
+ submodule-config.h |  1 +
+ 2 files changed, 12 insertions(+)
 
-I can understand that you need three states (--no-index given
-explicitly from the command line, we fall back to --no-index when we
-found we are in a diretory not under control by Git, and we do want
-to use the index) to be able to give different messages between the
-first two cases.
-
-The usual way we do that is by making the variable tristate (which I
-outlined in the previous message, initialize use_index to -1
-"unspecified" and then fix it up when it is left unspecified after
-you check the config and the command line option).
-
-I however fail to see why that necessitates to change use_index to
-no_index, making the code harder to follow by introducing double
-negation.
+diff --git a/submodule-config.c b/submodule-config.c
+index afe0ea8..4239b0e 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -194,6 +194,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+ 
+ 	submodule->path = NULL;
+ 	submodule->url = NULL;
++	submodule->update = NULL;
+ 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+ 	submodule->ignore = NULL;
+ 
+@@ -311,6 +312,16 @@ static int parse_config(const char *var, const char *value, void *data)
+ 			free((void *) submodule->url);
+ 			submodule->url = xstrdup(value);
+ 		}
++	} else if (!strcmp(item.buf, "update")) {
++		if (!value)
++			ret = config_error_nonbool(var);
++		else if (!me->overwrite && submodule->update != NULL)
++			warn_multiple_config(me->commit_sha1, submodule->name,
++					     "update");
++		else {
++			free((void *) submodule->update);
++			submodule->update = xstrdup(value);
++		}
+ 	}
+ 
+ 	strbuf_release(&name);
+diff --git a/submodule-config.h b/submodule-config.h
+index 9061e4e..f9e2a29 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -14,6 +14,7 @@ struct submodule {
+ 	const char *url;
+ 	int fetch_recurse;
+ 	const char *ignore;
++	const char *update;
+ 	/* the sha1 blob id of the responsible .gitmodules file */
+ 	unsigned char gitmodules_sha1[20];
+ };
+-- 
+2.7.0.rc1.7.gf4541cb.dirty
