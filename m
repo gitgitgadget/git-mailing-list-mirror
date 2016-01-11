@@ -1,62 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git pull --rebase --autostash
-Date: Mon, 11 Jan 2016 16:03:34 -0500
-Message-ID: <20160111210334.GB14535@sigill.intra.peff.net>
-References: <CABKJOiy1+QAgp=_3ofr4CqNH7ZPP_eR4P71yGSgeAYLBz92AZQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git format-patch on empty commit
+Date: Mon, 11 Jan 2016 13:04:42 -0800
+Message-ID: <xmqqegdnx1xx.fsf@gitster.mtv.corp.google.com>
+References: <CAPMsMoDOqWD+a1pj6BO-QgnknJu+JwnZgefJ=MyP8rEwZQGiPQ@mail.gmail.com>
+	<20160111205347.GA14535@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Federico Bond <federico.bond@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 22:03:57 2016
+Content-Type: text/plain
+Cc: pedro rijo <pedrorijo91@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 11 22:04:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIjd5-0006wh-Ff
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 22:03:55 +0100
+	id 1aIjdy-0007YB-DW
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 22:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760426AbcAKVDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 16:03:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51584 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760328AbcAKVDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 16:03:37 -0500
-Received: (qmail 13810 invoked by uid 102); 11 Jan 2016 21:03:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:03:37 -0500
-Received: (qmail 5350 invoked by uid 107); 11 Jan 2016 21:03:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 16:03:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jan 2016 16:03:34 -0500
-Content-Disposition: inline
-In-Reply-To: <CABKJOiy1+QAgp=_3ofr4CqNH7ZPP_eR4P71yGSgeAYLBz92AZQ@mail.gmail.com>
+	id S1760566AbcAKVEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 16:04:46 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760540AbcAKVEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 16:04:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8570039C53;
+	Mon, 11 Jan 2016 16:04:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ulAOHyFBALAF8IVdFh3A39qoKV0=; b=QzJsnb
+	aHINYYnnptY7+SlU79MKrrEWvLltypFGSMHn8X0g08lp9Do3AT0r11Uxwg5u1kKA
+	66elC3LtaDd7FBu/TERPgMDXCuxcQ8tU2CdRTK9zuIYXRi6qQHCriNacRk7yJ062
+	5erfBmCwOrbRhANG14znKSUqWnHutzR1DtOCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MJGSB8aEsWOtN/KalWtfZfvsvZb+9Tzg
+	YvTTUSosNe0MdEarvDIt86uQQpcVDsOPCC9ccIHn6i8jh+TBjOvAYCuY2Ac9tf8x
+	fSB52vzgcyIIU4xDW+sHajSFQH677qVST8d0WkSfltgIlx0AaPO/ZL4CyYmVq7LS
+	38v0EnuVNM0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70AE739C51;
+	Mon, 11 Jan 2016 16:04:44 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D1FCD39C4E;
+	Mon, 11 Jan 2016 16:04:43 -0500 (EST)
+In-Reply-To: <20160111205347.GA14535@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 11 Jan 2016 15:53:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F0347C72-B8A6-11E5-B11E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283718>
 
-On Fri, Jan 08, 2016 at 12:24:09PM -0300, Federico Bond wrote:
+Jeff King <peff@peff.net> writes:
 
-> I was looking through the changes in 2.7 and learned about the very
-> useful autostash feature of git rebase which was present since git
-> 1.8.4.
-> 
-> I was wondering if there has been discussion about adding the same
-> flag(s) for use with git pull --rebase. It seems odd that git pull
-> --rebase honors the rebase.autostash config setting but there is no
-> way to override it with a flag.
-> 
-> If you are OK with this, I can work on a patch to add --[no-]autostash
-> to git pull.
+> On Mon, Jan 11, 2016 at 02:19:52PM +0000, pedro rijo wrote:
+>
+>> Couldn't find any explanation on git docs on this issue:
+>> 
+>> If I create a dummy commit, with some dummy diff, I get a normal patch
+>> when I run
+>> 
+>> $ git format-patch -1 -o outgoing/ -p -k
+>> 
+>> but if the last commit is an empty commit, generated by
+>> 
+>> $ git commit --allow-empty "Some commit message"
+>> 
+>> then the output of the format patch will be an empty patch. If the
+>> first case produces something like this:
+>
+> I'm not sure if this is a bug or not.
+>
+> In the beginning, git's revision-traversal machinery generally does not
+> show commits which have no diff. Over the years, commands like "git log"
+> learned to set the "always_show_header" option to show even empty
+> commits. But format-patch never did.
 
-I don't use either feature myself, but I agree that we generally like to
-have matching command line flags to countermand config options.
+The patch based workflow support is geared towards helping the
+recipient of the patches a lot more than the contributors, and to
+prevent mistakes while applying the patches, "am" would stop when it
+sees such an empty e-mail as you saw (in the later part of message I
+am not quoting).  After all, a "format-patch" output that does not
+have any patch would be indistinguishable from discussion e-mail
+messages and the recipient would not want to end up with no-op
+commits that record such messages.
 
-I seem to recall another thread recently where somebody wanted to pass
-an option to rebase via "git pull", but I can't seem to dig it up just
-now. Having a generic way to pass such options seems like it could be
-useful, though (e.g., "--keep-empty" might be useful).
+So I think skipping no-op commit from the output was done pretty
+much deliberately and it is definitely not a bug.  I however do not
+think it is incorrect to say that it is a lack of feature that
+nobody so far found necessary or beneficial.
 
--Peff
+I would not refuse to consider adding a new option to "format-patch"
+to emit such a no-op message, and add a "having no patch is OK, just
+record a no-op commit" option to "am", though.  But I do not see a
+clear benefit from such change--it sounds more like a set of
+"because we could" not "because we need to" changes to me.
+
+Thanks.
