@@ -1,85 +1,179 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
 Subject: Re: [PATCH 3/3] builtin/grep: allow implicit --no-index
-Date: Mon, 11 Jan 2016 12:10:15 +0100
-Message-ID: <20160111111015.GA10612@hank>
+Date: Mon, 11 Jan 2016 12:29:44 +0100
+Message-ID: <20160111112944.GB10612@hank>
 References: <1452435597-12099-1-git-send-email-t.gummerer@gmail.com>
  <1452435597-12099-4-git-send-email-t.gummerer@gmail.com>
- <CACsJy8Bs3z0Gk3CjhyZGfOLA7R3pZQz7K5gk4BTytvYkZeyBtQ@mail.gmail.com>
+ <CAPig+cRXy=CBZBTC7fU5wHA3d9Acqh_WYD54DmY1sHj7rob9Pw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 11 12:09:58 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 12:29:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIaMH-0007Bg-Ao
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 12:09:57 +0100
+	id 1aIaf6-0008Hi-W5
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 12:29:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759364AbcAKLJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 06:09:53 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35938 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759098AbcAKLJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 06:09:52 -0500
-Received: by mail-wm0-f68.google.com with SMTP id l65so25733601wmf.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 03:09:51 -0800 (PST)
+	id S1759686AbcAKL3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 06:29:21 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36817 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758960AbcAKL3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 06:29:20 -0500
+Received: by mail-wm0-f66.google.com with SMTP id l65so25808028wmf.3
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 03:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ty3I84j+mtX1tgtwochWbPOylfGwBxmQuih2ESDmsMs=;
-        b=gMy3cjpwDYVL5898aqAZxjXT4EcyW9ee4I2aWHDxY8f1LnylFuUnoUlBhjCg5b+4SG
-         GMm7rmeGeeRmHjmLHAFhmxLlq3UouYDuHCti9HS+cH/kYqXskug/6GFeAuM+ByjQXmVN
-         kZx9iNYeFXOLrZcxPN7DOJ41MaieUvChpWzYhdVoXAwvcCLvm8wumfAKUoPkWSve3Qgo
-         5U45LEPyLxapO4zmh8fkcs29YsehrrAvCI55UjqhudwCebS+VYOjYYF0/+0ZpkrF7R5E
-         m8D8tcLLGzGuCnY1uYiRLhr127Nju2RZjG4hifvPzrWVCbtBCi4YCnGFdVbCP6SyBTJ9
-         mB7g==
-X-Received: by 10.28.141.10 with SMTP id p10mr12534975wmd.83.1452510591321;
-        Mon, 11 Jan 2016 03:09:51 -0800 (PST)
+        bh=C84X3bvy1Jqbq/YakfIEWWZX9QeNJo2c3SrZcxfZOlU=;
+        b=G37MAi9aAzYZfV6PvBoOP5L3NPuBKruYkNInoBp5VQi6kLtwbZLcJIfJmKByuwZ7tB
+         aMRUNgK/1JMI+6/tJRTK3VeZS2wdMqcvnX9QyABoWNwCswY1i7mONuSu2b40j4tMWj8X
+         bmps3Qd0Uw0YG7/A2wKQ8up0BHn8U2m2eB1laR71vB7+PtlhOwBWkq9QrMs0fVUPr70x
+         awl8E7Df1XbrvPJ3JA6ZDQHVnbzC9eOOq7naz7H6JvkwC6vl59wadPhEbdig3j1vNWl+
+         La0xhQZ9EUXJcc8f2wf8V6DB9zKrUBruszrOX1awS6iHGETe8naOf7RtEWPa3kCT8dqd
+         P2wQ==
+X-Received: by 10.28.148.82 with SMTP id w79mr13513096wmd.71.1452511759271;
+        Mon, 11 Jan 2016 03:29:19 -0800 (PST)
 Received: from localhost (host143-106-dynamic.248-95-r.retail.telecomitalia.it. [95.248.106.143])
-        by smtp.gmail.com with ESMTPSA id bg10sm118934014wjb.46.2016.01.11.03.09.49
+        by smtp.gmail.com with ESMTPSA id w23sm12375016wmd.1.2016.01.11.03.29.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jan 2016 03:09:49 -0800 (PST)
+        Mon, 11 Jan 2016 03:29:17 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CACsJy8Bs3z0Gk3CjhyZGfOLA7R3pZQz7K5gk4BTytvYkZeyBtQ@mail.gmail.com>
+In-Reply-To: <CAPig+cRXy=CBZBTC7fU5wHA3d9Acqh_WYD54DmY1sHj7rob9Pw@mail.gmail.com>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283645>
 
-On 01/11, Duy Nguyen wrote:
-> On Sun, Jan 10, 2016 at 9:19 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On 01/10, Eric Sunshine wrote:
+> On Sun, Jan 10, 2016 at 9:19 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
 > > Currently when git grep is used outside of a git repository without the
 > > --no-index option git simply dies.  For convenience, implicitly make git
 > > grep behave like git grep --no-index when it is called outside of a git
 > > repository.
+> >
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > @@ -19,6 +19,9 @@
+> > +#define GREP_NO_INDEX_EXPLICIT 1
+> > +#define GREP_NO_INDEX_IMPLICIT 2
+> > @@ -873,13 +881,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+> >         if (!show_in_pager && !opt.status_only)
+> >                 setup_pager();
+> >
+> > -       if (no_index && (untracked || cached))
+> > -               die(_("--cached or --untracked cannot be used with --no-index."));
+> > +       if (untracked || cached) {
+> > +               if (no_index == GREP_NO_INDEX_EXPLICIT)
+> > +                       die(_("--cached or --untracked cannot be used with --no-index."));
+> > +               else if (no_index == GREP_NO_INDEX_IMPLICIT)
 >
-> Should we have a line about this behavior in git-grep.txt, maybe the
-> description section?
+> Just below here when checking --untracked, you use a simple 'else'
+> rather than 'else if' to handle the other case of explicit vs
+> implicit. Why the inconsistency? Also, the ordering of 'if/else' arms
+> is opposite.
 
-Yes good point, the behavior change should definitely be documented.
+The reason is that I removed the no_index check from the surrounding
+if block, and grep should only die if no_index is set, while in the
+block below it should also die if only untracked is set, but no_index
+isn't.  I agree however that it's a bit confusing, so I'll just leave
+the no_index check in the surrounding block and use the simple else
+here, so the block ends up like this:
 
-> I wonder if anybody wants the old behavior (e.g.
-> non-zero exit code when running outside a repo). If there is such a
-> case (*), we may need an option to revert it back (--no-no-index seems
-> ridiculous, maybe --use-index). The safest way though, is introduce a
-> new option like --use-index=<always|optional|never> then you can make
-> an grep alias with --use-index=optional.
+	if (no_index && (untracked || cached)) {
+		if (no_index == GREP_NO_INDEX_IMPLICIT)
+			die(_("--cached or --untracked cannot be used outside a git repository."));
+		else
+			die(_("--cached or --untracked cannot be used with --no-index."));
+	}
 
-You're right.  I couldn't think of a reason why someone would rely on
-the old behavior, but maybe I missed something.  I like the idea of
-introducing the --use-index=... option.
+> > +                       die(_("--cached or --untracked cannot be used outside a git repository."));
+> > +       }
+> >
+> >         if (no_index || untracked) {
+> >                 int use_exclude = (opt_exclude < 0) ? !no_index : !!opt_exclude;
+> > -               if (list.nr)
+> > -                       die(_("--no-index or --untracked cannot be used with revs."));
+> > +               if (list.nr) {
+> > +                       if (no_index == GREP_NO_INDEX_IMPLICIT)
+> > +                               die(_("cannot use revs outside of a git repository."));
+> > +                       else
+> > +                               die(_("--no-index or --untracked cannot be used with revs."));
+> > +               }
+> > diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> > @@ -821,6 +818,44 @@ test_expect_success 'outside of git repository' '
+> > +test_expect_success 'outside of git repository without --no-index' '
+> > +       rm -fr non &&
+> > +       mkdir -p non/git/sub &&
+> > +       echo hello >non/git/file1 &&
+> > +       echo world >non/git/sub/file2 &&
+> > +       {
+> > +               echo file1:hello &&
+> > +               echo sub/file2:world
+> > +       } >non/expect.full &&
+>
+> Isn't the above just a complicated way of saying:
+>
+>     cat <<-\EOF >non/expect.full &&
+>     file:hello
+>     sub/file2:world
+>     EOF
+>
+> ?
 
-How should we handle priority between --no-index and --use-index,
-should we just give --no-index priority if it is set and ignore the
-new --use-index option, or is there some other way?
+Yes, the test case is mostly copy paste from the test case above it
+where it is written like this.  Looking around in t7810, both the more
+complicated way as I used it, as well as the way you've written it are
+used, so I'll use the simpler way in the re-roll.  Thanks.
 
-> (*) I've been hitting really weird real-world use cases so I'm a bit paranoid..
-> --
-> Duy
+> > +       echo file2:world >non/expect.sub &&
+> > +       (
+> > +               GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+> > +               export GIT_CEILING_DIRECTORIES &&
+> > +               cd non/git &&
+> > +               git grep o >../actual.full &&
+> > +               test_cmp ../expect.full ../actual.full
+>
+> Broken &&-chain.
+>
+> > +               cd sub &&
+> > +               git grep o >../../actual.sub &&
+> > +               test_cmp ../../expect.sub ../../actual.sub
+> > +       ) &&
+> > +
+> > +       echo ".*o*" >non/git/.gitignore &&
+> > +       (
+> > +               GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
+> > +               export GIT_CEILING_DIRECTORIES &&
+> > +               cd non/git &&
+> > +               git grep --exclude-standard o >../actual.full &&
+> > +               test_cmp ../expect.full ../actual.full &&
+> > +
+> > +               {
+> > +                       echo ".gitignore:.*o*"
+>
+> Broken &&-chain.
+
+Thanks for catching these two, again the test is mostly a copy paste,
+so the chain is broken in the test before this one as well, will add
+the fix to my first cleanup patch for the other tests and fix these in
+the re-roll.
+
+Thanks for your review!
+
+> > +                       cat ../expect.full
+> > +               } >../expect.with.ignored &&
+> > +               git grep --no-exclude o >../actual.full &&
+> > +               test_cmp ../expect.with.ignored ../actual.full
+> > +       )
+> > +'
