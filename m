@@ -1,174 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] lock_ref_sha1_basic: handle REF_NODEREF with invalid refs
-Date: Mon, 11 Jan 2016 10:52:39 -0500
-Message-ID: <20160111155239.GB22778@sigill.intra.peff.net>
-References: <20160111154651.GA25338@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] Handle more file writes correctly in shared repos
+Date: Mon, 11 Jan 2016 07:57:03 -0800
+Message-ID: <xmqqio30yur4.fsf@gitster.mtv.corp.google.com>
+References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de>
+	<cover.1452085713.git.johannes.schindelin@gmx.de>
+	<c03e5a9d367b76d8a249680c752b4c4d935e9b91.1452085713.git.johannes.schindelin@gmx.de>
+	<xmqq1t9t3vn8.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601081704280.2964@virtualbox>
+	<xmqqbn8w2brm.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601111018550.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 11 16:52:54 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 11 16:57:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIem4-0000R3-VB
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 16:52:53 +0100
+	id 1aIeqR-0003KV-UL
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 16:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760614AbcAKPwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 10:52:44 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51235 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760587AbcAKPwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 10:52:41 -0500
-Received: (qmail 32286 invoked by uid 102); 11 Jan 2016 15:52:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 10:52:41 -0500
-Received: (qmail 776 invoked by uid 107); 11 Jan 2016 15:52:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 11 Jan 2016 10:52:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Jan 2016 10:52:39 -0500
-Content-Disposition: inline
-In-Reply-To: <20160111154651.GA25338@sigill.intra.peff.net>
+	id S1760669AbcAKP5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 10:57:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61214 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759403AbcAKP5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 10:57:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 010C1375B0;
+	Mon, 11 Jan 2016 10:57:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UTMC+GlIXTqDRnVdbkjdS439Lwo=; b=gwUIJ5
+	yskm1CqnL9fxh6oxGcawUEC97JcjHRQ9FmKzElq1LsYYCFDPsGD0kS4S7KxZRGQX
+	lzWKK6EE254gf4FvFJZrNuCByxdfvXmIuNXkcckesHL4xq6sOvA7Dan82LMSOAo1
+	lNwul+zv/WKXGmwdx66I3XxIPcl1I2C+D5gLw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vfhBk/KFzncm3uSe8h+aOMitRylb6/tp
+	U4TzgmIFAhGNLlFSXbYwXoCA+U3/PItNWFwhe1AGmhkF2T74Q8EitGTah8fM8/tv
+	LIY2XRn0JnnXCGoTjvGolTnQH5swxwDqU/btLz4CZ+Ppf+C1eJBS3XqpajcgxBKw
+	QQu1Snff2oc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC5BE375AC;
+	Mon, 11 Jan 2016 10:57:05 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6FE0D375A9;
+	Mon, 11 Jan 2016 10:57:05 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601111018550.2964@virtualbox> (Johannes
+	Schindelin's message of "Mon, 11 Jan 2016 10:28:28 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F6248B2A-B87B-11E5-B81E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283661>
 
-We sometimes call lock_ref_sha1_basic both with REF_NODEREF
-to operate directly on a symbolic ref. This is used, for
-example, to move to a detached HEAD, or when updating
-the contents of HEAD via checkout or symbolic-ref.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-However, the first step of the function is to resolve the
-refname to get the "old" sha1, and we do so without telling
-resolve_ref_unsafe() that we are only interested in the
-symref. As a result, we may detect a problem there not with
-the symref itself, but with something it points to.
+> On Fri, 8 Jan 2016, Junio C Hamano wrote:
+>
+>> I think it is correct not to touch this codepath in this patch,
+>> because of the above two reasons, but more simply and generally, it
+>> is correct not to touch this codepath because core.sharedRepository
+>> is not about working tree files, and .rej is a file you use in your
+>> working tree.
+>
+> I am happy to adjust the log message, but I am pretty certain that the
+> `core.sharedRepository` setting actually also affects the working tree. At
+> least in my hands, calling
+>
+> 	git clone -c core.sharedRepository=group . test-shared
+>
+> results in all of the working tree files being group-writable.
 
-The real-world example I found (and what is used in the test
-suite) is a HEAD pointing to a ref that cannot exist,
-because it would cause a directory/file conflict with other
-existing refs.  This situation is somewhat broken, of
-course, as trying to _commit_ on that HEAD would fail. But
-it's not explicitly forbidden, and we should be able to move
-away from it. However, neither "git checkout" nor "git
-symbolic-ref" can do so. We try to take the lock on HEAD,
-which is pointing to a non-existent ref. We bail from
-resolve_ref_unsafe() with errno set to EISDIR, and the lock
-code thinks we are attempting to create a d/f conflict.
+Interesting.  I have a suspicion that "clone" does not honor the
+configuration given that way, though.
 
-Of course we're not. The problem is that the lock code has
-no idea what level we were at when we got EISDIR, so trying
-to diagnose or remove empty directories for HEAD is not
-useful.
+ $ umask 077
+ $ git clone -c core.sharedRepository=group ~/w/git.git sharedtest
+ $ cd sharedtest
+ $ ls -l COPYING .git/index
+ -rw------- 1 jch eng 18765 Jan 11 07:43 COPYING
+ -rw------- 1 jch eng 272037 Jan 11 07:43 .git/index
 
-The most obvious solution would be to call
-resolve_ref_unsafe() with RESOLVE_REF_NO_RECURSE, so that we
-never look beyond the symref (and any problems we find must
-be attributable to it). However, that means we would not
-correctly gather the "old" sha1. We do not typically care
-about it for locking purposes with a symref (since the
-symref has no value on its own), but it does affect what we
-write into the HEAD reflog.
+Notice that the permission bits in the working tree is correct, but
+in the resulting .git/ they are bogus, so from this we cannot
+clearly see the reason why COPYING is not group-readable is because
+the checkout codepath (write_entry(), I think) is correctly omitting
+the call to adjust_perm(), or simply the configuration is ignored
+during the clone.
 
-Another possibility is to avoid the d/f check when
-REF_NORECURSE is set. But that would mean we fail to notice
-a real d/f conflict. This is impossible with HEAD, but we
-would not want to create refs/heads/origin/HEAD.lock if we
-already have refs/heads/origin/HEAD/foo.
+With a workaround to ensure that checkout happens definitely after
+the configuration gets in effect by doing config and pull/checkout
+as two separate steps:
 
-So instead, we attempt to resolve HEAD fully to get the old
-sha1, and only if that fails do we fallback to a
-non-recursive resolution. We lose nothing to the fallback,
-since we know the ref cannot be resolved, and thus we have
-no old sha1 in the first place. And we still get the benefit
-of the d/f-checking for the symref itself.
+ $ rm -fr sharedtest
+ $ umask 077
+ $ git init sharedtest && cd sharedtest
+ $ git config core.sharedRepository group
+ $ git pull ~/w/git.git/ master
+ $ ls -l COPYING .git/index
+ -rw------- 1 jch eng 18765 Jan 11 07:48 COPYING
+ -rw-rw---- 1 jch eng 272037 Jan 11 07:48 .git/index
 
-This does mean an extra round of filesystem lookups in some
-cases, but they should be rare. It only kicks in with
-REF_NODEREF, and then only when the existing ref cannot be
-resolved.
+we can see that the configuration affects only the $GIT_DIR/ files
+and not working tree.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is prepared on top of the jk/symbolic-ref topic. As shown by the
-tests, though, this can be triggered when checking out a detached HEAD,
-so it existed prior to that. The fix is independent, but some of the
-additions to the test suite rely on that topic.
-
-I can split it into separate patches, but I'm not sure it's worth the
-trouble. The only case I found that triggers it is quite obscure, and
-prior to the jk/symbolic-ref topic, you can recover using a non-detached
-checkout (or symbolic-ref).
-
- refs/files-backend.c             |  4 ++++
- t/t1401-symbolic-ref.sh          |  7 +++++++
- t/t2011-checkout-invalid-head.sh | 20 ++++++++++++++++++++
- 3 files changed, 31 insertions(+)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 180c837..ea67d82 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1901,6 +1901,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 
- 	refname = resolve_ref_unsafe(refname, resolve_flags,
- 				     lock->old_oid.hash, &type);
-+	if (!refname && (flags & REF_NODEREF))
-+		refname = resolve_ref_unsafe(orig_refname,
-+					     resolve_flags | RESOLVE_REF_NO_RECURSE,
-+					     lock->old_oid.hash, &type);
- 	if (!refname && errno == EISDIR) {
- 		/*
- 		 * we are trying to lock foo but we used to
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 5db876c..a713766 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -122,4 +122,11 @@ test_expect_success 'symbolic-ref does not create ref d/f conflicts' '
- 	test_must_fail git symbolic-ref refs/heads/df/conflict refs/heads/df
- '
- 
-+test_expect_success 'symbolic-ref handles existing pointer to invalid name' '
-+	head=$(git rev-parse HEAD) &&
-+	git symbolic-ref HEAD refs/heads/outer &&
-+	git update-ref refs/heads/outer/inner $head &&
-+	git symbolic-ref HEAD refs/heads/unrelated
-+'
-+
- test_done
-diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
-index 300f8bf..c6c11c4 100755
---- a/t/t2011-checkout-invalid-head.sh
-+++ b/t/t2011-checkout-invalid-head.sh
-@@ -19,4 +19,24 @@ test_expect_success 'checkout master from invalid HEAD' '
- 	git checkout master --
- '
- 
-+test_expect_success 'create ref directory/file conflict scenario' '
-+	git update-ref refs/heads/outer/inner master &&
-+
-+	# do not rely on symbolic-ref to get a known state,
-+	# as it may use the same code we are testing
-+	reset_to_df () {
-+		echo "ref: refs/heads/outer" >.git/HEAD
-+	}
-+'
-+
-+test_expect_failure 'checkout away from d/f HEAD (to branch)' '
-+	reset_to_df &&
-+	git checkout master
-+'
-+
-+test_expect_failure 'checkout away from d/f HEAD (to detached)' '
-+	reset_to_df &&
-+	git checkout --detach master
-+'
-+
- test_done
--- 
-2.7.0.368.g04bc9ee
+So you found a bug in clone, I think ;-)
