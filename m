@@ -1,233 +1,74 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH V3 2/2] object name: introduce '^{/!-<negative pattern>}' notation
-Date: Mon, 11 Jan 2016 18:10:00 -0000
-Organization: OPDS
-Message-ID: <ED12DDDA0C004D23BDDB14973C675800@PhilipOakley>
-References: <1452392429-2578-1-git-send-email-ischis2@cox.net> <1452392583-2708-1-git-send-email-ischis2@cox.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git repository modified after migration
+Date: Mon, 11 Jan 2016 10:19:26 -0800
+Message-ID: <xmqq4mekx9ld.fsf@gitster.mtv.corp.google.com>
+References: <CAFwKRnQ_EZ73DBfrb0HNks3dt3=YJbLRoHvB0mfsD9FA-ey6hA@mail.gmail.com>
+	<5693C48A.7060801@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Duy Nguyen" <pclouds@gmail.com>,
-	"Will Palmer" <wmpalmer@gmail.com>,
-	"Stephen P . Smith" <ischis2@cox.net>
-To: "Stephen P. Smith" <ischis2@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 11 19:10:11 2016
+Content-Type: text/plain
+Cc: Yang Yu <yang.yu.list@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Jan 11 19:19:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIguv-0003J1-O1
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 19:10:10 +0100
+	id 1aIh43-00018z-KD
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 19:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759607AbcAKSKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 13:10:03 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:28321 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758766AbcAKSKB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jan 2016 13:10:01 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2D1EADd7pNWPNYkFlxeGQEBAQELAQIBAQEBAYMKUm2HTYEMsU+EAAcYCoVnAQMBAYEoTQEBAQEBAQcBAQEBQSQbhC8GAQEECAEBLhYIAQEhCwIDBQIBAxUMJRQBBAgQAgYHAxQGAQcLCAIBAgMBDASHeAMWCrYShjANgwgBAQgCIYZWhH+CT4FOhASBGwWNPzqJGgGBNoQMhh6BfoFYSoxVhWSBDodfgnQdgV0+NAEBAYZCAQEB
-X-IPAS-Result: A2D1EADd7pNWPNYkFlxeGQEBAQELAQIBAQEBAYMKUm2HTYEMsU+EAAcYCoVnAQMBAYEoTQEBAQEBAQcBAQEBQSQbhC8GAQEECAEBLhYIAQEhCwIDBQIBAxUMJRQBBAgQAgYHAxQGAQcLCAIBAgMBDASHeAMWCrYShjANgwgBAQgCIYZWhH+CT4FOhASBGwWNPzqJGgGBNoQMhh6BfoFYSoxVhWSBDodfgnQdgV0+NAEBAYZCAQEB
-X-IronPort-AV: E=Sophos;i="5.20,554,1444690800"; 
-   d="scan'208";a="828092856"
-Received: from host-92-22-36-214.as13285.net (HELO PhilipOakley) ([92.22.36.214])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 11 Jan 2016 18:09:58 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S933159AbcAKSTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 13:19:31 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932541AbcAKSTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 13:19:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3849039BE7;
+	Mon, 11 Jan 2016 13:19:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Tzs5SEFpTn5/ZStzpTdZ1ZxCfUU=; b=RmoxY0
+	UOmrHDa7NdXBVEHBkmUpD/bAYQLrR9TUave68OiPXfKf/QsJFw3O5bB8S/Z2lW3h
+	rLVik+TcMFcmi8d99blGAZWt97DordWO0PAMAYy5irzHyMV7AUIJS2GTxyMPrQ0y
+	PMELHGEsmln8Aig4cGXxDf6qasaUyLJ7hj8CQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tk9gotx+9BqSlpHmKRlbkxh13Ycdt37W
+	NxmhYjf4WwAic1HD0oFwPqlIK+H+Sifl8zlas3pyRMxHtxwUq8dl4C3lgWBF7H3q
+	LMjQPcjcGOt9n7Ih1lMf3NzAWLVAggDpTeqrx/5A4FpFo3eNk6PSGoeh5Lh64Qhi
+	Ic/iyByMeoA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3024A39BE6;
+	Mon, 11 Jan 2016 13:19:29 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9AC1739BE4;
+	Mon, 11 Jan 2016 13:19:28 -0500 (EST)
+In-Reply-To: <5693C48A.7060801@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 11 Jan 2016 16:04:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DA4554D4-B88F-11E5-A385-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283688>
 
-From: "Stephen P. Smith" <ischis2@cox.net>
-> From: Will Palmer <wmpalmer@gmail.com>
->
-> To name a commit, you can now say
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-perhaps
-s|say|use the :/!-<negative pattern> regex style, and consequentially, say|
+> This happens whenever the "stat" information changes, e.g. due to
+> changed device numbering and such. "git reset --hard" would have been
+> the quickiest way to reset the stat cache/index - after git diff, of
+> course ;)
 
-Should the patch subject line also be updated to reflect the change?
+That does not quite explain why 'git status' reported modified files
+in the first place.  It would have refreshed the cached stat info in
+the index as the first thing to do.  "git status" I think is the
+recommended way these days ("update-index --refresh" for us old
+timers) to nondestructively correct the cached stat information
+discrepancy caused by "cp -R".
 
->
->    $ git rev-parse HEAD^{/!-foo}
->
-> and it will return the hash of the first commit reachable from HEAD,
-> whose commit message does not contain "foo". This is the opposite of the
-> existing <rev>^{/<pattern>} syntax.
->
-> The specific use-case this is intended for is to perform an operation,
-> excluding the most-recent commits containing a particular marker. For
-> example, if you tend to make "work in progress" commits, with messages
-> beginning with "WIP", you work, then it could be useful to diff against
-> "the most recent commit which was not a WIP commit". That sort of thing
-> now possible, via commands such as:
->
->    $ git diff @^{/!-^WIP}
->
-> The leader '/!-', rather than simply '/!', to denote a negative match,
-> is chosen to leave room for additional modifiers in the future.
->
-> Signed-off-by: Will Palmer <wmpalmer@gmail.com>
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
->
-> Notes:
->    Moved modref branch from 2/2 to the 1/2 patch as discussed in [1] and
->    [2].
->
->    [1] http://article.gmane.org/gmane.comp.version-control.git/271071
->    [2] http://article.gmane.org/gmane.comp.version-control.git/283573
->
-> Documentation/revisions.txt | 11 ++++++-----
-> sha1_name.c                 | 20 +++++++++++++++-----
-> t/t1511-rev-parse-caret.sh  | 31 ++++++++++++++++++++++++++++++-
-> 3 files changed, 51 insertions(+), 11 deletions(-)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index d85e303..0c84d4f 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -176,11 +176,12 @@ existing tag object.
->   A colon, followed by a slash, followed by a text, names
->   a commit whose commit message matches the specified regular expression.
->   This name returns the youngest matching commit which is
-> -  reachable from any ref.  If the commit message starts with a
-> -  '!' you have to repeat that;  the special sequence ':/!',
-> -  followed by something else than '!', is reserved for now.
-> -  The regular expression can match any part of the commit message. To
-> -  match messages starting with a string, one can use e.g. ':/^foo'.
-> +  reachable from any ref. The regular expression can match any part of 
-> the
-> +  commit message. To match messages starting with a string, one can use
-> +  e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to 
-> what
-> +  is matched. ':/!-foo' performs a negative match, while ':/!!foo' 
-> matches a
-> +  literal '!' character, followed by 'foo'. Any other sequence beginning 
-> with
-> +  ':/!' is reserved for now.
->
-> '<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
->   A suffix ':' followed by a path names the blob or tree
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 892db21..a2c5303 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -848,8 +848,12 @@ static int get_sha1_1(const char *name, int len, 
-> unsigned char *sha1, unsigned l
->  * through history and returning the first commit whose message starts
->  * the given regular expression.
->  *
-> - * For future extension, ':/!' is reserved. If you want to match a 
-> message
-> - * beginning with a '!', you have to repeat the exclamation mark.
-> + * For negative-matching, prefix the pattern-part with '!-', like: 
-> ':/!-WIP'.
-> + *
-> + * For a literal '!' character at the beginning of a pattern, you have to 
-> repeat
-> + * that, like: ':/!!foo'
-> + *
-> + * For future extension, all other sequences beginning with ':/!' are 
-> reserved.
->  */
->
-> /* Remember to update object flag allocation in object.h */
-> @@ -878,12 +882,18 @@ static int get_sha1_oneline(const char *prefix, 
-> unsigned char *sha1,
-> {
->  struct commit_list *backup = NULL, *l;
->  int found = 0;
-> + int negative = 0;
->  regex_t regex;
->
->  if (prefix[0] == '!') {
-> - if (prefix[1] != '!')
-> - die ("Invalid search pattern: %s", prefix);
->  prefix++;
-> +
-> + if (prefix[0] == '-') {
-> + prefix++;
-> + negative = 1;
-> + } else if (prefix[0] != '!') {
-> + die ("Invalid search pattern: %s", prefix);
-> + }
->  }
->
->  if (regcomp(&regex, prefix, REG_EXTENDED))
-> @@ -903,7 +913,7 @@ static int get_sha1_oneline(const char *prefix, 
-> unsigned char *sha1,
->  continue;
->  buf = get_commit_buffer(commit, NULL);
->  p = strstr(buf, "\n\n");
-> - matches = p && !regexec(&regex, p + 2, 0, NULL, 0);
-> + matches = p && (negative ^ !regexec(&regex, p + 2, 0, NULL, 0));
->  unuse_commit_buffer(commit, buf);
->
->  if (matches) {
-> diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-> index b2f90be..8a5983f 100755
-> --- a/t/t1511-rev-parse-caret.sh
-> +++ b/t/t1511-rev-parse-caret.sh
-> @@ -26,7 +26,10 @@ test_expect_success 'setup' '
->  git branch expref &&
->  echo changed >>a-blob &&
->  git add -u &&
-> - git commit -m Changed
-> + git commit -m Changed &&
-> + echo changed-again >>a-blob &&
-> + git add -u &&
-> + git commit -m Changed-again
-> '
->
-> test_expect_success 'ref^{non-existent}' '
-> @@ -99,4 +102,30 @@ test_expect_success 'ref^{/!!Exp}' '
->  test_cmp expected actual
-> '
->
-> +test_expect_success 'ref^{/!-}' '
-> + test_must_fail git rev-parse master^{/!-}
-> +'
-> +
-> +test_expect_success 'ref^{/!-.}' '
-> + test_must_fail git rev-parse master^{/!-.}
-> +'
-> +
-> +test_expect_success 'ref^{/!-non-existent}' '
-> + git rev-parse master >expected &&
-> + git rev-parse master^{/!-non-existent} >actual &&
-> + test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'ref^{/!-Changed}' '
-> + git rev-parse expref >expected &&
-> + git rev-parse master^{/!-Changed} >actual &&
-> + test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'ref^{/!-!Exp}' '
-> + git rev-parse modref >expected &&
-> + git rev-parse expref^{/!-!Exp} >actual &&
-> + test_cmp expected actual
-> +'
-> +
-> test_done
-> -- 
-> 2.7.0-rc2
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+If you need to resort to "reset --hard", then there is something
+else going on.
