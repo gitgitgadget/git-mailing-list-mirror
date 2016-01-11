@@ -1,79 +1,89 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 0/3] prepare_packed_git(): find more garbage
-Date: Mon, 11 Jan 2016 08:35:00 -0800
-Message-ID: <CAGZ79kZ=OSGVu5w7ZjZHhUKggSStp2ihV5iW2oawTYLG5htj7Q@mail.gmail.com>
-References: <20151215232534.GA30998@sigill.intra.peff.net>
-	<1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
-	<20151219020247.GA3098@sigill.intra.peff.net>
-	<20151219020324.GA3118@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] interpret-trailers: add option for in-place editing
+Date: Mon, 11 Jan 2016 17:33:56 +0100
+Message-ID: <vpqziwc3wjv.fsf@anie.imag.fr>
+References: <1452519213-1819-1-git-send-email-tklauser@distanz.ch>
+	<1452519213-1819-3-git-send-email-tklauser@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Doug Kelly <dougk.ff7@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 11 17:35:40 2016
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 11 17:40:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIfRR-0002cV-JQ
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 17:35:37 +0100
+	id 1aIfWE-0005nQ-Jb
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 17:40:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933053AbcAKQf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 11:35:27 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:33167 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933972AbcAKQfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 11:35:01 -0500
-Received: by mail-ig0-f170.google.com with SMTP id z14so122637330igp.0
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 08:35:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jyTRqqdw9/aOuW7TOvN+VSo6ts3lIcrDSefsk1OKLMk=;
-        b=bwhnOdHehBBwzNSCpJukNV7PB+HqykfVM2c1ms2Gp3NAHzyMxdNdAif4DTXvuEeA39
-         OkLylVZhzJXWvrffQuzQ9/jFJFfGbWBZ+YYGKPfIa3I4hCbsFsgt4/dWX/Bl36wkM3KR
-         QKuvygLRrB3ltCpSlnzXIpeS9A8n1EUAfTKMFhKtcqqyZqu2mwuc33JmUMJFOCzbRDrt
-         zECRoyTWw1uxfou5btjYr9YJHWTbJKHL2HSD9P/pCfKSoCGaVSvgGNpFW2XxUybk77dn
-         uN4UKEiozHh+e6cpX5n5WeFBtyhPpDVMA6sNamoR4LUzAcZHLZUjg1FO8qGTsinMJ2aD
-         uJ5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=jyTRqqdw9/aOuW7TOvN+VSo6ts3lIcrDSefsk1OKLMk=;
-        b=M7VwcPPZ7j1TgGCGXJgReEcjsYz4FYz/RYuLRuVgiQb3sRzZT3RX3aDOVMs4XCbCfn
-         QqUEagOJVCkrhMlnx786uZyvxPnV/OYS0UCnhgLRYM4sKr1HG0XwZE46hDbdXLDGjFr9
-         DkyatWk+ghnDnpyMP9Sg6LyXJIDzQ1hK/0yjgJRVAq+x5xOeQxvM3kZVIKSG+7Pc7i1f
-         NEk0nqWL8Oy5g0ysTAvhTrL1T9JraQz/kiNeg1o23ELvrix+xpokakQRq3CFITzKpC7R
-         ToEAsJeVjVCfKEEqQqRzKdgi5b6pZZAl7cOslHNE1w4nUIn+oC3JcODBNpAjLgWbOun0
-         GPjA==
-X-Gm-Message-State: ALoCoQlQePMjGHwGq4JL3h63g1X2c+4qkL8OE81Eul4518J/jEblz6zL8SQvNimcIfrqeVVYIeJpo1KYvQ4M3XkAlwtHirAwBr+/nvqP1qXkcfQ4aURfhOE=
-X-Received: by 10.50.77.81 with SMTP id q17mr8000180igw.93.1452530100126; Mon,
- 11 Jan 2016 08:35:00 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Mon, 11 Jan 2016 08:35:00 -0800 (PST)
-In-Reply-To: <20151219020324.GA3118@sigill.intra.peff.net>
+	id S1761185AbcAKQkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 11:40:31 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:52408 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761168AbcAKQka (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 11:40:30 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u0BGXsHi022388
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 11 Jan 2016 17:33:55 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0BGXudD002414;
+	Mon, 11 Jan 2016 17:33:56 +0100
+In-Reply-To: <1452519213-1819-3-git-send-email-tklauser@distanz.ch> (Tobias
+	Klauser's message of "Mon, 11 Jan 2016 14:33:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 11 Jan 2016 17:33:55 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u0BGXsHi022388
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1453134838.30094@qOQGN5bSG3Q+XYk3mYObag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283668>
 
-On Fri, Dec 18, 2015 at 6:03 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 18, 2015 at 09:02:47PM -0500, Jeff King wrote:
->
->> I left a few comments on 3/3. I don't think it's _wrong_, but I think we
->> can be a bit more thorough (and IMHO, a little more maintainable, but
->> others might disagree).
->
-> Oh, and I forgot to say thank you for working on this. :)
+Tobias Klauser <tklauser@distanz.ch> writes:
 
-Thanks for working on this from me, too!
-[PATCH 1/3] prepare_packed_git(): find more garbage looks good to me.
+> @@ -843,7 +844,9 @@ static void free_all(struct trailer_item **first)
+>  	}
+>  }
+>  
+> -void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
+> +static struct tempfile trailers_tempfile;
 
+Does this need to be a static global? I'd rather have this be a local
+variable of process_trailers.
 
->
-> -Peff
+> +			die_errno(_("could not fdopen tempfile"));
+
+I think you should spell it "could not open temporary file" to be more
+user-friendly.
+
+> @@ -872,5 +900,10 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
+>  	/* Print the lines after the trailers as is */
+>  	print_lines(outfile, lines, trailer_end, INT_MAX);
+>  
+> +	if (in_place) {
+> +		if (rename_tempfile(&trailers_tempfile, file))
+> +			die_errno(_("could not rename tempfile"));
+> +	}
+
+When this happens, I think you also want to try removing the temporary
+file. Not sure, though: it may be nice to leave the tempfile for the
+user to debug. What do we do in other places of the code?
+
+It may help the user to get "could not rename temporary file %s to %s"
+in case this happens.
+
+On overall, the split makes the series much more pleasant to review, and
+other than these details, this sounds good to me. Thanks!
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
