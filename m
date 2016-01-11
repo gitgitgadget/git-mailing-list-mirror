@@ -1,156 +1,78 @@
-From: David Greene <greened@obbligato.org>
-Subject: [PATCH 4/5] Add test for redundant rebase
-Date: Sun, 10 Jan 2016 23:00:20 -0600
-Message-ID: <1452488421-26823-5-git-send-email-greened@obbligato.org>
-References: <1452488421-26823-1-git-send-email-greened@obbligato.org>
-Cc: gitster@pobox.com, peff@peff.net, chris@arachsys.com,
-	nhorman@tuxdriver.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 11 06:01:52 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] Handle more file writes correctly in shared
+ repos
+Date: Mon, 11 Jan 2016 10:28:28 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601111018550.2964@virtualbox>
+References: <4aa11f02f4de113bf38152b8815658da42690f43.1450549280.git.johannes.schindelin@gmx.de> <cover.1452085713.git.johannes.schindelin@gmx.de> <c03e5a9d367b76d8a249680c752b4c4d935e9b91.1452085713.git.johannes.schindelin@gmx.de> <xmqq1t9t3vn8.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1601081704280.2964@virtualbox> <xmqqbn8w2brm.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>,
+	=?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 11 10:29:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIUby-0005cL-J2
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 06:01:46 +0100
+	id 1aIYmn-00005j-VT
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 10:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751036AbcAKFBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 00:01:05 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:53973 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751086AbcAKFAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 00:00:40 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.us.cray.com)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1aIUc0-0005H8-GN; Sun, 10 Jan 2016 23:01:48 -0600
-X-Mailer: git-send-email 2.6.1
-In-Reply-To: <1452488421-26823-1-git-send-email-greened@obbligato.org>
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1758845AbcAKJ3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 04:29:09 -0500
+Received: from mout.gmx.net ([212.227.17.21]:65165 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758242AbcAKJ3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 04:29:06 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lm2lZ-1ZjDtG2iBt-00ZcwB; Mon, 11 Jan 2016 10:28:31
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqbn8w2brm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Me5xvfMEBxf2US1Q+6HQkAX8gak9PnObSxVU0DmbF7QoV1UaK3s
+ TlxfrhCYerEirLbF1yg4lYlyj9fyqdJbpixVYWkgOgIT2RBdrSRrjDV8OHq1ZbW3Hia0z2s
+ naow9JHz5747pxKiQamoTvauwaB3JvbgnkpWvVBPZPj61ot3wcjCy/fbjE1VLx3ZR3sDrQr
+ eShmYE3xxF1fdkaoYjwDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X4hx8NIW4aA=:K7CYHdzmhcg0xo/IbXlbq6
+ ViE9Y87AazF0Y3c9RYlCFzRZ2nORa6mq3cK3goQy/Jt8sVFhSqqwQh2sitlNCTk3denLezRq0
+ D8QvK4wLAJmW/SlqZUcqykarAKgIqvOCx0XbOLLZC3kegtINJ2PlgGY9UWpoNtkFT/3YLRw8R
+ vH+WQNmeDBf+vO8YxZQtlQJxOn8JiUUerrVcZevDx1TZI7p3f8LjnIRuQP/LdIyuOgGzZ+1i6
+ kX/qiguntWrBcu+WFDS7pN4QC66cV0zGNOyoLdCnZS5JRDh5CEMaZ58Ij2XsveZarXIYWTfci
+ Vu/cPSmvnWWA+dm3xfZIv3OiEvH/sUGCqGz2/utOeGZahN7CHxeVJpXtBIgUlV7WrNvc8lkd5
+ J0aM0FwIavvKDkp+I3INn8tvnPNXtnhEXpNfFjiatAyoboim8LMqTpFwsTdHy/6ConcaEhgdS
+ 0o9qv4gdTzkz1yf9pKNFCJ8E5xLt3fUoq5OQaLWhuKUrJAOh84w5aJFz37np7ri8ZFVHi/veD
+ Hq6FA3Y34d1OtqEDpYEOvVJGLuULVZCigXHLb1wbjC05ckJ0Y6bxnodPCQlygMtYpsohUUyRY
+ p+6+73w/8XnIXCS4Agz6JKfmporGO5gNCfoOx2AtJv1ex/RvLHSTYJttZdY/DFP4Kah847GdY
+ UMHsjDyGvYbxymP+JMheE5BTkkoUQn5Gy35SGkhsg5XXqdZeAy+z4VgNxb46/wIpGtPCPMJr+
+ pRumSqMXVNGmBfSnaVsyqWk44R8MWghhbVEQTGJDbTK2MIZNcS4klyPfasleBhMD2UPE1x+a 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283641>
 
-From: "David A. Greene" <greened@obbligato.org>
+Hi Junio,
 
-Test that rebase --skip-redundant-commits works.
+On Fri, 8 Jan 2016, Junio C Hamano wrote:
 
-Signed-off-by: David A. Greene <greened@obbligato.org>
----
- t/t3428-rebase-redundant.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
- create mode 100755 t/t3428-rebase-redundant.sh
+> I think it is correct not to touch this codepath in this patch,
+> because of the above two reasons, but more simply and generally, it
+> is correct not to touch this codepath because core.sharedRepository
+> is not about working tree files, and .rej is a file you use in your
+> working tree.
 
-diff --git a/t/t3428-rebase-redundant.sh b/t/t3428-rebase-redundant.sh
-new file mode 100755
-index 0000000..eea63e9
---- /dev/null
-+++ b/t/t3428-rebase-redundant.sh
-@@ -0,0 +1,100 @@
-+#!/bin/sh
-+
-+test_description='git rebase tests for redundant commits
-+
-+This test runs git rebase and tests handling of redundant commits.
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+test_expect_success 'setup' '
-+	test_commit README &&
-+	git checkout -b empty &&
-+	test_commit empty1 &&
-+	test_commit empty2 &&
-+	git commit -m "Empty commit 1" --allow-empty &&
-+	test_commit empty3 &&
-+	git checkout -b onto master &&
-+	test_commit onto1 &&
-+	test_commit onto2 &&
-+	test_commit onto3 &&
-+	git checkout -b dev master &&
-+	test_commit dev1 &&
-+	test_commit dev2 &&
-+	test_commit dev3 &&
-+	git checkout -b redundant master &&
-+	test_commit onto1 onto1.t onto1 onto1-2 &&
-+	test_commit onto2 onto2.t onto2 onto2-2 &&
-+	test_commit onto3 onto3.t onto3 onto3-2 &&
-+	git checkout -b redundant-empty redundant &&
-+	git commit -m "Empty commit 2" --allow-empty &&
-+	test_commit empty4
-+'
-+
-+test_expect_success 'default rebase without empty commits' '
-+	reset_rebase &&
-+	git checkout -b default-non-empty dev &&
-+	git rebase --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'default rebase with empty commits' '
-+	reset_rebase &&
-+	git checkout -b default-empty empty &&
-+	git rebase --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'default rebase with redundant commits' '
-+	reset_rebase &&
-+	git checkout -b default-redundant redundant &&
-+	git rebase --preserve-merges --onto onto --root
-+'
-+
-+test_expect_success 'rebase --skip-redundant without empty commits' '
-+	reset_rebase &&
-+	git checkout -b skip-redundant-non-empty dev &&
-+	git rebase --skip-redundant-commits --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'rebase --skip-redundant with empty commits' '
-+	reset_rebase &&
-+	git checkout -b skip-redundant-empty empty &&
-+	git rebase --skip-redundant-commits --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'rebase --skip-redundant with redundant commits' '
-+	reset_rebase &&
-+	git checkout -b skip-redundant-redundant redundant &&
-+	git rebase --skip-redundant-commits --preserve-merges --onto onto --root
-+'
-+
-+test_expect_success 'rebase --skip-redundant with empty and redundant commits' '
-+	reset_rebase &&
-+	git checkout -b skip-redundant-empty-redundant redundant-empty &&
-+	git rebase --skip-redundant-commits --preserve-merges --onto onto --root
-+'
-+
-+test_expect_success 'rebase --keep-empty --skip-redundant without empty commits' '
-+	reset_rebase &&
-+	git checkout -b keep-empty-skip-redundant-non-empty dev &&
-+	git rebase --keep-empty --skip-redundant-commits --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'rebase --keep-empty --skip-redundant with empty commits' '
-+	reset_rebase &&
-+	git checkout -b keep-empty-skip-redundant-empty empty &&
-+	git rebase --keep-empty --skip-redundant-commits --preserve-merges --onto onto master
-+'
-+
-+test_expect_success 'rebase --keep-empty --skip-redundant with redundant commits' '
-+	reset_rebase &&
-+	git checkout -b keep-empty-skip-redundant-redundant redundant &&
-+	git rebase --keep-empty --skip-redundant-commits --preserve-merges --onto onto --root
-+'
-+
-+test_expect_success 'rebase --keep-empty --skip-redundant with empty and redundant commits' '
-+	reset_rebase &&
-+	git checkout -b keep-empty-skip-redundant-empty-redundant redundant-empty &&
-+	git rebase --skip-redundant-commits --preserve-merges --onto onto --root
-+'
-+
-+test_done
--- 
-2.6.1
+I am happy to adjust the log message, but I am pretty certain that the
+`core.sharedRepository` setting actually also affects the working tree. At
+least in my hands, calling
+
+	git clone -c core.sharedRepository=group . test-shared
+
+results in all of the working tree files being group-writable.
+
+Therefore I am not convinced this is a sound line of reasoning.
+
+Ciao,
+Dscho
