@@ -1,191 +1,193 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv7 3/8] submodule-config: remove name_and_item_from_var
-Date: Mon, 11 Jan 2016 11:41:56 -0800
-Message-ID: <1452541321-27810-4-git-send-email-sbeller@google.com>
+Subject: [PATCHv7 7/8] submodule update: expose parallelism to the user
+Date: Mon, 11 Jan 2016 11:42:00 -0800
+Message-ID: <1452541321-27810-8-git-send-email-sbeller@google.com>
 References: <1452541321-27810-1-git-send-email-sbeller@google.com>
 Cc: jrnieder@gmail.com, Jens.Lehmann@web.de
 To: sbeller@google.com, git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jan 11 20:42:31 2016
+X-From: git-owner@vger.kernel.org Mon Jan 11 20:42:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIiME-000520-3y
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:42:26 +0100
+	id 1aIiMM-00057R-RR
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Jan 2016 20:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934629AbcAKTmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 14:42:19 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36744 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934625AbcAKTmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 14:42:17 -0500
-Received: by mail-pf0-f180.google.com with SMTP id n128so49341143pfn.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 11:42:17 -0800 (PST)
+	id S964845AbcAKTmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 14:42:32 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35273 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964836AbcAKTmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 14:42:23 -0500
+Received: by mail-pf0-f177.google.com with SMTP id 65so49349806pff.2
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 11:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C/YI/HenPPapL95OqCYcFz50hcqLXtsajVCEkq8tI1U=;
-        b=UjSceCxShugcySxpqx8eclYMdiCJGsSeqNczQUfqvQ0PSKQimP8ODWvLUg/qbg57mp
-         LoYkhvXcPgTbTff8KYOZeTS5NubAy3CtEDBYA5z7PWQxKIVGRisghLvq0tkXKC1uLMji
-         mmhUcy8eSsmdthXXbzQVeh7YOx4P4Alo+zHAK5QOJRT3vg8JDeCXlUO/h3BRXVs89YYL
-         YYEc+u3yLrIPPznEqUuJx+NjQ9uadMSeSeOlo4LOHQjWbIVcyjBfpS+5fAU0ZgwUT5zF
-         o8oZbA/vn3GE4i4BXnGS5/ETONnwQfODda0i2vkAwjwCnUehhOIUoTvY5WsWfP62JXBH
-         Afjw==
+        bh=KMQVe6leVtvD21bSisvwswo2OYfUZ73A6fTtP1woQys=;
+        b=hYUCBj1D+hbd5cQaD4/E8M4eNUJGRgVMwFZsjYaq/MIMbxr8sdct8Pf4jDsYR+jr8H
+         XNYsGzAWSQJUgqSTTA4uwZNHAjkEgiI9ueIi+U0NRNjYYrRxwC+cJ5MVj5m01iUAx6gH
+         RiFAY/gh5AEvc4aJcM2Sq3fAEE9H431f4W0yvVxTx1oGMait2QS6Noab1vTl7Ez4lNXX
+         Iw6dFYCdkQKKJo/VTM4GdcdJUhNLvzgxl6mxaWE2Dv7Sb6ikKH1/8bNMZ2S3yiJR8MeX
+         Iwnme4fsg2z290Z1Xdi6zLxRc0qsZhjBqQ1/MOjM1MrlyeHeY6b1A+VyIBiyVLlRXyOA
+         B+3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=C/YI/HenPPapL95OqCYcFz50hcqLXtsajVCEkq8tI1U=;
-        b=NCoDHmEFVaLoEl1n0b34cyzbtzOUQo9oFY+rvpSjGKBpBcNMrtxLeZn3anr+cxNVuK
-         lF7mP3Ds3o/FyBIaYjtzTndWSrk85al/qXNC4nFnpWLg3Evi+0h0wHjyq7rr/ReWaz52
-         Th45k3vgqsxU1k/A9T5UImW/X5fwltbnoxc6MX/B+EZJkhPWKLAwuSIv6m83BjhMz4AF
-         +h8lMHCB1C3sqVf3corcilT+orB4wYvb18eoVlmecBgFU+MRz4iGRFAOrkBL0hVA/0hK
-         M7yMH8p4SddS5wVyn8bO1lhF2Rp7rzUcpRhhQnuBGBzQLJRaHgFYpOW0+/llY1ND53kn
-         aoaQ==
-X-Gm-Message-State: ALoCoQmiZEpdq+TCEnmUTM5SIBUlEUIh3o3txlm3UjxlBpEt1nHdxY/Jd+OwHIxIv/eDFChOsqhHPgaEv3fZTocIexshrqtYdQ==
-X-Received: by 10.98.80.135 with SMTP id g7mr19262146pfj.132.1452541337144;
-        Mon, 11 Jan 2016 11:42:17 -0800 (PST)
+        bh=KMQVe6leVtvD21bSisvwswo2OYfUZ73A6fTtP1woQys=;
+        b=YQRmuB1x7od5foCWR21c0WGNQPTQoIrxSCapuO7W5xumZsv+wLaWuOdhXGRr67HS9X
+         gPxnrsbW4XnvVleOt3/X+Gf0II9snut+4VRN6xFTL/YULGm4fUuW9JXxjHetfOjJ/bjt
+         xix+U/oHKkUAn0uJxROdLjjZMSW1bqBKSCyzruXH+/YHEMiwvEWoJfTW1we+OdZFADwQ
+         ev/3tP7TOBLV5U6T5deYI1zvPrXUKAQLuGBf0V34JvIO5qVQrZI/aECyalpueZvaXdVe
+         xH6GNI+b3Jwxa7N35rh4JTBbp0k4Rd3nTb4AxeyxTvDlp/9imi/qTzZRcHnOvFUjBIkX
+         bzDw==
+X-Gm-Message-State: ALoCoQnFcjhcwdrBKpTB1GeZe/uiY/6oyJmKfyOH/TiBtn96vFSpxGfCNVG+edIFyOSJW94qIJ7wvrAeVIyw7kW18G1CRYcJIQ==
+X-Received: by 10.98.68.193 with SMTP id m62mr28452374pfi.153.1452541342508;
+        Mon, 11 Jan 2016 11:42:22 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:8d8c:9316:e7e7:6f4f])
-        by smtp.gmail.com with ESMTPSA id 17sm25060496pfq.51.2016.01.11.11.42.16
+        by smtp.gmail.com with ESMTPSA id y18sm25070493pfi.84.2016.01.11.11.42.21
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 11 Jan 2016 11:42:16 -0800 (PST)
+        Mon, 11 Jan 2016 11:42:21 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc1.7.gf4541cb.dirty
 In-Reply-To: <1452541321-27810-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283707>
 
-`name_and_item_from_var` does not provide the proper abstraction
-we need here in a later patch.
+Expose possible parallelism either via the "--jobs" CLI parameter or
+the "submodule.fetchJobs" setting.
+
+By having the variable initialized to -1, we make sure 0 can be passed
+into the parallel processing machine, which will then pick as many parallel
+workers as there are CPUs.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule-config.c | 48 ++++++++++++++++--------------------------------
- 1 file changed, 16 insertions(+), 32 deletions(-)
+ Documentation/git-submodule.txt |  7 ++++++-
+ builtin/submodule--helper.c     | 18 ++++++++++++++----
+ git-submodule.sh                |  9 +++++++++
+ t/t7406-submodule-update.sh     | 12 ++++++++++++
+ 4 files changed, 41 insertions(+), 5 deletions(-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 6d01941..b826841 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -161,31 +161,17 @@ static struct submodule *cache_lookup_name(struct submodule_cache *cache,
- 	return NULL;
- }
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 1572f05..13adebf 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+ 	      [-f|--force] [--rebase|--merge] [--reference <repository>]
+-	      [--depth <depth>] [--recursive] [--] [<path>...]
++	      [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+@@ -377,6 +377,11 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+ 	clone with a history truncated to the specified number of revisions.
+ 	See linkgit:git-clone[1]
  
--static int name_and_item_from_var(const char *var, struct strbuf *name,
--				  struct strbuf *item)
--{
--	const char *subsection, *key;
--	int subsection_len, parse;
--	parse = parse_config_key(var, "submodule", &subsection,
--			&subsection_len, &key);
--	if (parse < 0 || !subsection)
--		return 0;
--
--	strbuf_add(name, subsection, subsection_len);
--	strbuf_addstr(item, key);
--
--	return 1;
--}
--
- static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
--		const unsigned char *gitmodules_sha1, const char *name)
-+						  const unsigned char *gitmodules_sha1,
-+						  const char *name_ptr, int name_len)
++-j <n>::
++--jobs <n>::
++	This option is only valid for the update command.
++	Clone new submodules in parallel with as many jobs.
++	Defaults to the `submodule.fetchJobs` option.
+ 
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 9441f20..8002187 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -426,6 +426,7 @@ static int update_clone_task_finished(int result,
+ 
+ static int update_clone(int argc, const char **argv, const char *prefix)
  {
- 	struct submodule *submodule;
- 	struct strbuf name_buf = STRBUF_INIT;
-+	char *name = xmemdupz(name_ptr, name_len);
++	int max_jobs = -1;
+ 	struct string_list_item *item;
+ 	struct submodule_update_clone pp = SUBMODULE_UPDATE_CLONE_INIT;
  
- 	submodule = cache_lookup_name(cache, gitmodules_sha1, name);
- 	if (submodule)
--		return submodule;
-+		goto out;
+@@ -446,6 +447,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "depth", &pp.depth, "<depth>",
+ 			   N_("Create a shallow clone truncated to the "
+ 			      "specified number of revisions")),
++		OPT_INTEGER('j', "jobs", &max_jobs,
++			    N_("parallel jobs")),
+ 		OPT__QUIET(&pp.quiet, N_("do't print cloning progress")),
+ 		OPT_END()
+ 	};
+@@ -467,10 +470,17 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	gitmodules_config();
+ 	/* Overlay the parsed .gitmodules file with .git/config */
+ 	git_config(git_submodule_config, NULL);
+-	run_processes_parallel(1, update_clone_get_next_task,
+-				  update_clone_start_failure,
+-				  update_clone_task_finished,
+-				  &pp);
++
++	if (max_jobs < 0)
++		max_jobs = config_parallel_submodules();
++	if (max_jobs < 0)
++		max_jobs = 1;
++
++	run_processes_parallel(max_jobs,
++			       update_clone_get_next_task,
++			       update_clone_start_failure,
++			       update_clone_task_finished,
++			       &pp);
  
- 	submodule = xmalloc(sizeof(*submodule));
- 
-@@ -201,7 +187,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
- 
- 	cache_add(cache, submodule);
--
-+out:
-+	free(name);
- 	return submodule;
- }
- 
-@@ -251,18 +238,18 @@ static int parse_config(const char *var, const char *value, void *data)
- {
- 	struct parse_config_parameter *me = data;
- 	struct submodule *submodule;
--	struct strbuf name = STRBUF_INIT, item = STRBUF_INIT;
--	int ret = 0;
-+	int subsection_len, ret = 0;
-+	const char *subsection, *key;
- 
--	/* this also ensures that we only parse submodule entries */
--	if (!name_and_item_from_var(var, &name, &item))
-+	if (parse_config_key(var, "submodule", &subsection,
-+			     &subsection_len, &key) < 0 || !subsection_len)
- 		return 0;
- 
- 	submodule = lookup_or_create_by_name(me->cache,
- 					     me->gitmodules_sha1,
--					     name.buf);
-+					     subsection, subsection_len);
- 
--	if (!strcmp(item.buf, "path")) {
-+	if (!strcmp(key, "path")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->path)
-@@ -275,7 +262,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->path = xstrdup(value);
- 			cache_put_path(me->cache, submodule);
- 		}
--	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+	} else if (!strcmp(key, "fetchrecursesubmodules")) {
- 		/* when parsing worktree configurations we can die early */
- 		int die_on_error = is_null_sha1(me->gitmodules_sha1);
- 		if (!me->overwrite &&
-@@ -286,7 +273,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->fetch_recurse = parse_fetch_recurse(
- 								var, value,
- 								die_on_error);
--	} else if (!strcmp(item.buf, "ignore")) {
-+	} else if (!strcmp(key, "ignore")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->ignore)
-@@ -302,7 +289,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->ignore);
- 			submodule->ignore = xstrdup(value);
- 		}
--	} else if (!strcmp(item.buf, "url")) {
-+	} else if (!strcmp(key, "url")) {
- 		if (!value) {
- 			ret = config_error_nonbool(var);
- 		} else if (!me->overwrite && submodule->url) {
-@@ -312,7 +299,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->url);
- 			submodule->url = xstrdup(value);
- 		}
--	} else if (!strcmp(item.buf, "update")) {
-+	} else if (!strcmp(key, "update")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->update)
-@@ -324,9 +311,6 @@ static int parse_config(const char *var, const char *value, void *data)
- 		}
- 	}
- 
--	strbuf_release(&name);
--	strbuf_release(&item);
--
- 	return ret;
- }
- 
+ 	if (pp.print_unmatched) {
+ 		printf("#unmatched\n");
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9f554fb..10c5af9 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -645,6 +645,14 @@ cmd_update()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		-j|--jobs)
++			case "$2" in '') usage ;; esac
++			jobs="--jobs=$2"
++			shift
++			;;
++		--jobs=*)
++			jobs=$1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -670,6 +678,7 @@ cmd_update()
+ 		${update:+--update "$update"} \
+ 		${reference:+--reference "$reference"} \
+ 		${depth:+--depth "$depth"} \
++		${jobs:+$jobs} \
+ 		"$@" | {
+ 	err=
+ 	while read mode sha1 stage just_cloned sm_path
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index dda3929..7fd5142 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -774,4 +774,16 @@ test_expect_success 'submodule update --recursive drops module name before recur
+ 	 test_i18ngrep "Submodule path .deeper/submodule/subsubmodule.: checked out" actual
+ 	)
+ '
++
++test_expect_success 'submodule update can be run in parallel' '
++	(cd super2 &&
++	 GIT_TRACE=$(pwd)/trace.out git submodule update --jobs 7 &&
++	 grep "7 tasks" trace.out &&
++	 git config submodule.fetchJobs 8 &&
++	 GIT_TRACE=$(pwd)/trace.out git submodule update &&
++	 grep "8 tasks" trace.out &&
++	 GIT_TRACE=$(pwd)/trace.out git submodule update --jobs 9 &&
++	 grep "9 tasks" trace.out
++	)
++'
+ test_done
 -- 
 2.7.0.rc1.7.gf4541cb.dirty
