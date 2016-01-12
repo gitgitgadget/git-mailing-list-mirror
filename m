@@ -1,270 +1,139 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 05/21] refs: add methods for reflog
-Date: Mon, 11 Jan 2016 20:22:04 -0500
-Message-ID: <1452561740-8668-6-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 12/21] refs: allow log-only updates
+Date: Mon, 11 Jan 2016 20:22:11 -0500
+Message-ID: <1452561740-8668-13-git-send-email-dturner@twopensource.com>
 References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>,
-	Ronnie Sahlberg <rsahlberg@google.com>
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jan 12 02:23:40 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 02:23:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIngS-0003lm-6e
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:23:40 +0100
+	id 1aIngK-0003hc-W8
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761728AbcALBWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 20:22:38 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:35776 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761337AbcALBWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 20:22:35 -0500
-Received: by mail-qk0-f171.google.com with SMTP id n135so233501550qka.2
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:34 -0800 (PST)
+	id S1761629AbcALBXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 20:23:30 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33949 "EHLO
+	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760548AbcALBWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 20:22:44 -0500
+Received: by mail-qk0-f179.google.com with SMTP id t64so492716qke.1
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QJQfeKtCs8J+3v8GqoA/tAjZ3Mgm2WWMyr9O5pHTztA=;
-        b=J7tOfWS67ICwIADrRdMlKvIgp6YvM/Ent1Hs26KONptB1agPU51sCdE9mV1Z5homS/
-         aix0Mj2B9OWqwa5TZ6TDiPwWHE4B68YPKEGBH8GaAU+cAe0VsH8Jyx9SELT5gyoDn4O8
-         0gN8o8asKqzMgu50PbUTHWM70RS5mgNN0OevnYa70/LkyyZ54PxBV+d7JsullNxVKSKx
-         URR3kzDLwt066WuDEtyc6ta/180coqbdRHZd35s1Hr0CjOAF0vaaYMbVkG/Hyx+4yCgU
-         mUYlrLksk7e75KINpDZgzBc6uSERShAHnBq9DZrCrVeSQGJ5coeBA09ZA1p+L9Bt6in+
-         JgTg==
+        bh=Yr1CbD6VJr2R8/fKvmbi/mFsAxo4AZ3ViOOKwYgNLWU=;
+        b=g1SFqnbBd7Ip9bZZCpzrgLLb1Pf+ISHmtTw39F5f1zcpx3H+C5FBOAXvdd/u3+8jwx
+         VTf5mAGnqSjUN+ljz4Tx4nqejXRZDurS8JKbaMRK470BdcUaWhX+h3Fmvh/SyRoRi6I6
+         tiWBNBNxYPDMDLtntnb5dSKXLmBowmbwRgN/giztKch/L15ZWYgxttwdRhbzDB2rxuQ7
+         mohbMRXyAfmAE/+sEMp/xpc8PFRcsZQ77V3QzX9riJn6hn5RUb4vl9fdfP0f94xp8ube
+         7aHtdQjnYuwDcHK6n2yAu/jDBPVucqNFMI87AGZRzkW/lg6LxLOtqhcdDW43dDm7b3L3
+         uHVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QJQfeKtCs8J+3v8GqoA/tAjZ3Mgm2WWMyr9O5pHTztA=;
-        b=ceEULiha2lTCWnrDceumRlO7QuYOfkqY6uJ/uawqQ+Y4aAlXcm709kwLotWVyO14R1
-         6KsqUHXOBS/xWDruHbWNEyOO/zztZNa5JymKeyYXWyHkPhU7M72t29THFJLCNgW1aRVn
-         5NaLGMy52WTr4lmp/blXsMbfjNUgneWBIU3SteDg1bb51MG5MVqiW3ASKpICxvESbTF0
-         4ff0p04sKxa6Q/K1CpxYY54QqHR1MSrU8IBar+HH/G18fBmUnP4j05d6mHHd2MpN0W89
-         HKmi2UyLKIQ/5QD3Sqz35MQpiVvIo+K0myA1ago8Y3wnup/B1aiun7p1BGyPoZgu8gHg
-         ScQQ==
-X-Gm-Message-State: ALoCoQmRj/P1/PlojqlslalpmWBv/+/Z4dhrk19TNzQXwQPxsE9fo3zgVzJ3wnOHIBcAaya7O12+ugKRU4RMTzCu3AMrq16DTA==
-X-Received: by 10.55.73.68 with SMTP id w65mr42992834qka.68.1452561754153;
-        Mon, 11 Jan 2016 17:22:34 -0800 (PST)
+        bh=Yr1CbD6VJr2R8/fKvmbi/mFsAxo4AZ3ViOOKwYgNLWU=;
+        b=K/U0RHWTrH5Ha92BEIWY9gVgiCFVGRP43VAvBWYd9VWRDGqnNFL/lPfNCjQJpjkPAN
+         lF2YAu4yLbNYJ4dYES0zm1kV4C2iIhMS0eCj/7LYBEqtIVNg10uAv7yJ7PaQSWVh0TSs
+         XP6wvNp28L1khQWf92w6o2N/VzzY+vnMrGJMh7CmzOEWlQi6pqVlBpIYy5BioGf73fiM
+         MXoHem0ORXg6RWrprK57HH4QcB78n2MD2OczKOFgsQxH46RPmani7Qa8Tky1s4jHEQ0Y
+         ekfn3Yrpf69DXhWTlT98tpNMoylGW4W3aaACF2fNh2U3+K1Y1VDDRpKJN1P9j8BnblYx
+         6QAQ==
+X-Gm-Message-State: ALoCoQndzm/2WlzAu5ECDQTsfsBF2D7Mi3e5HGQunYHDJUgX9aW1fNHngp80pTLF0kP2GxwAcFD1OVaJkaHodthRf6aJRT2AcQ==
+X-Received: by 10.55.78.75 with SMTP id c72mr165367924qkb.97.1452561764359;
+        Mon, 11 Jan 2016 17:22:44 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.32
+        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jan 2016 17:22:33 -0800 (PST)
+        Mon, 11 Jan 2016 17:22:43 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283758>
 
-In the file-based backend, the reflog piggybacks on the ref lock.
-Since other backends won't have the same sort of ref lock, ref backends
-must also handle reflogs.
+The refs infrastructure learns about log-only ref updates, which only
+update the reflog.  Later, we will use this to separate symbolic
+reference resolution from ref updating.
 
-Signed-off-by: Ronnie Sahlberg <rsahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c               | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- refs/files-backend.c | 36 ++++++++++++++++++++++++------------
- refs/refs-internal.h | 27 +++++++++++++++++++++++++++
- 3 files changed, 97 insertions(+), 12 deletions(-)
+ refs/files-backend.c | 15 ++++++++++-----
+ refs/refs-internal.h |  2 ++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 2deb2e0..f66484e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1201,3 +1201,49 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
- 	return the_refs_backend->for_each_replace_ref(fn, cb_data);
- }
-+
-+int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
-+				void *cb_data)
-+{
-+	return the_refs_backend->for_each_reflog_ent_reverse(refname, fn,
-+							     cb_data);
-+}
-+
-+int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
-+			void *cb_data)
-+{
-+	return the_refs_backend->for_each_reflog_ent(refname, fn, cb_data);
-+}
-+
-+int for_each_reflog(each_ref_fn fn, void *cb_data)
-+{
-+	return the_refs_backend->for_each_reflog(fn, cb_data);
-+}
-+
-+int reflog_exists(const char *refname)
-+{
-+	return the_refs_backend->reflog_exists(refname);
-+}
-+
-+int safe_create_reflog(const char *refname, int force_create,
-+		       struct strbuf *err)
-+{
-+	return the_refs_backend->create_reflog(refname, force_create, err);
-+}
-+
-+int delete_reflog(const char *refname)
-+{
-+	return the_refs_backend->delete_reflog(refname);
-+}
-+
-+int reflog_expire(const char *refname, const unsigned char *sha1,
-+		  unsigned int flags,
-+		  reflog_expiry_prepare_fn prepare_fn,
-+		  reflog_expiry_should_prune_fn should_prune_fn,
-+		  reflog_expiry_cleanup_fn cleanup_fn,
-+		  void *policy_cb_data)
-+{
-+	return the_refs_backend->reflog_expire(refname, sha1, flags,
-+					       prepare_fn, should_prune_fn,
-+					       cleanup_fn, policy_cb_data);
-+}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 1c9401f..520bf40 100644
+index 98a9958..37c26d9 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2643,7 +2643,8 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
- }
+@@ -2821,7 +2821,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			}
+ 		}
+ 	}
+-	if (commit_ref(lock)) {
++	if (!(flags & REF_LOG_ONLY) && commit_ref(lock)) {
+ 		error("Couldn't set %s", lock->ref_name);
+ 		unlock_ref(lock);
+ 		return -1;
+@@ -3175,7 +3175,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 			goto cleanup;
+ 		}
+ 		if ((update->flags & REF_HAVE_NEW) &&
+-		    !(update->flags & REF_DELETING)) {
++		    !(update->flags & REF_DELETING) &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			int overwriting_symref = ((update->type & REF_ISSYMREF) &&
+ 						  (update->flags & REF_NODEREF));
  
- 
--int safe_create_reflog(const char *refname, int force_create, struct strbuf *err)
-+static int files_create_reflog(const char *refname, int force_create,
-+			       struct strbuf *err)
- {
- 	int ret;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -2899,7 +2900,7 @@ static int files_create_symref(const char *ref_target,
- 	return 0;
- }
- 
--int reflog_exists(const char *refname)
-+static int files_reflog_exists(const char *refname)
- {
- 	struct stat st;
- 
-@@ -2907,7 +2908,7 @@ int reflog_exists(const char *refname)
- 		S_ISREG(st.st_mode);
- }
- 
--int delete_reflog(const char *refname)
-+static int files_delete_reflog(const char *refname)
- {
- 	return remove_path(git_path("logs/%s", refname));
- }
-@@ -2951,7 +2952,9 @@ static char *find_beginning_of_line(char *bob, char *scan)
- 	return scan;
- }
- 
--int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data)
-+static int files_for_each_reflog_ent_reverse(const char *refname,
-+					     each_reflog_ent_fn fn,
-+					     void *cb_data)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	FILE *logfp;
-@@ -3053,7 +3056,8 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
- 	return ret;
- }
- 
--int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data)
-+static int files_for_each_reflog_ent(const char *refname,
-+				     each_reflog_ent_fn fn, void *cb_data)
- {
- 	FILE *logfp;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -3115,7 +3119,7 @@ static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data
- 	return retval;
- }
- 
--int for_each_reflog(each_ref_fn fn, void *cb_data)
-+static int files_for_each_reflog(each_ref_fn fn, void *cb_data)
- {
- 	int retval;
- 	struct strbuf name;
-@@ -3425,12 +3429,12 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	return 0;
- }
- 
--int reflog_expire(const char *refname, const unsigned char *sha1,
--		 unsigned int flags,
--		 reflog_expiry_prepare_fn prepare_fn,
--		 reflog_expiry_should_prune_fn should_prune_fn,
--		 reflog_expiry_cleanup_fn cleanup_fn,
--		 void *policy_cb_data)
-+static int files_reflog_expire(const char *refname, const unsigned char *sha1,
-+			       unsigned int flags,
-+			       reflog_expiry_prepare_fn prepare_fn,
-+			       reflog_expiry_should_prune_fn should_prune_fn,
-+			       reflog_expiry_cleanup_fn cleanup_fn,
-+			       void *policy_cb_data)
- {
- 	static struct lock_file reflog_lock;
- 	struct expire_reflog_cb cb;
-@@ -3535,6 +3539,14 @@ struct ref_storage_be refs_be_files = {
- 	"files",
- 	files_transaction_commit,
- 
-+	files_for_each_reflog_ent,
-+	files_for_each_reflog_ent_reverse,
-+	files_for_each_reflog,
-+	files_reflog_exists,
-+	files_create_reflog,
-+	files_delete_reflog,
-+	files_reflog_expire,
+@@ -3205,7 +3206,9 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 				update->flags |= REF_NEEDS_COMMIT;
+ 			}
+ 		}
+-		if (!(update->flags & REF_NEEDS_COMMIT)) {
 +
- 	files_pack_refs,
- 	files_peel_ref,
- 	files_create_symref,
++		if (!(update->flags & REF_LOG_ONLY) &&
++		    !(update->flags & REF_NEEDS_COMMIT)) {
+ 			/*
+ 			 * We didn't have to write anything to the lockfile.
+ 			 * Close it to free up the file descriptor:
+@@ -3222,7 +3225,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+-		if (update->flags & REF_NEEDS_COMMIT) {
++		if (update->flags & REF_NEEDS_COMMIT ||
++		    update->flags & REF_LOG_ONLY) {
+ 			if (commit_ref_update(update->backend_data,
+ 					      update->new_sha1, update->msg,
+ 					      update->flags, err)) {
+@@ -3242,7 +3246,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 		struct ref_lock *lock = update->backend_data;
+ 
+-		if (update->flags & REF_DELETING) {
++		if (update->flags & REF_DELETING &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			if (delete_ref_loose(lock, update->type, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 2431579..7583f60 100644
+index 8f5b412..82e44ef 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -211,6 +211,25 @@ int rename_ref_available(const char *oldname, const char *newname);
- typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
- 				      struct strbuf *err);
+@@ -42,6 +42,8 @@
+  * value to ref_update::flags
+  */
  
-+/* reflog functions */
-+typedef int for_each_reflog_ent_fn(const char *refname,
-+				   each_reflog_ent_fn fn,
-+				   void *cb_data);
-+typedef int for_each_reflog_ent_reverse_fn(const char *refname,
-+					   each_reflog_ent_fn fn,
-+					   void *cb_data);
-+typedef int for_each_reflog_fn(each_ref_fn fn, void *cb_data);
-+typedef int reflog_exists_fn(const char *refname);
-+typedef int create_reflog_fn(const char *refname, int force_create,
-+			     struct strbuf *err);
-+typedef int delete_reflog_fn(const char *refname);
-+typedef int reflog_expire_fn(const char *refname, const unsigned char *sha1,
-+			     unsigned int flags,
-+			     reflog_expiry_prepare_fn prepare_fn,
-+			     reflog_expiry_should_prune_fn should_prune_fn,
-+			     reflog_expiry_cleanup_fn cleanup_fn,
-+			     void *policy_cb_data);
++#define REF_LOG_ONLY 0x80
 +
- /* misc methods */
- typedef int pack_refs_fn(unsigned int flags);
- typedef int peel_ref_fn(const char *refname, unsigned char *sha1);
-@@ -249,6 +268,14 @@ struct ref_storage_be {
- 	const char *name;
- 	ref_transaction_commit_fn *transaction_commit;
+ /* Include broken references in a do_for_each_ref*() iteration */
+ #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
  
-+	for_each_reflog_ent_fn *for_each_reflog_ent;
-+	for_each_reflog_ent_reverse_fn *for_each_reflog_ent_reverse;
-+	for_each_reflog_fn *for_each_reflog;
-+	reflog_exists_fn *reflog_exists;
-+	create_reflog_fn *create_reflog;
-+	delete_reflog_fn *delete_reflog;
-+	reflog_expire_fn *reflog_expire;
-+
- 	pack_refs_fn *pack_refs;
- 	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
 -- 
 2.4.2.749.g730654d-twtrsrc
