@@ -1,39 +1,39 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/10] t9114-git-svn-dcommit-merge.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 10:45:17 +0000
-Message-ID: <1452595518-38149-10-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/10] t9118-git-svn-funky-branch-names.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 10:45:18 +0000
+Message-ID: <1452595518-38149-11-git-send-email-gitter.spiros@gmail.com>
 References: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 11:46:34 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 11:46:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIwTB-00084D-AX
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:46:33 +0100
+	id 1aIwTF-00085X-Kf
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:46:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934846AbcALKpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 05:45:42 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33784 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934412AbcALKpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 05:45:31 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u188so30567907wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:31 -0800 (PST)
+	id S934844AbcALKpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 05:45:41 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33793 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934415AbcALKpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 05:45:32 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b14so30679414wmb.1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cvEsqHnIs3kA61M90qDKtarX/ghe2YYZJP+9X0kXCWk=;
-        b=JOKuABnk9sQdoDBw0WIVBJwyfedLSyjL+00sjQvt9UbIqVkQndeEIb6paHlNXP4eoO
-         Q002lMjnRx1H/31DmyBq6yLU8hKQk3+dknl4+m0JcYQ5iUr66Quwv2SAhU0ZVnELpcqt
-         CAeylc4/LpIOZmYeEUIXXiXAY5wx2Hy5grPs907uu5Vhs+CbrUJK3iYFcOrqvxgpk/HY
-         TzAnyCFUX2N0hK0f8RDxzLhc0N//np6nHuwfj449l0vWPi8QjutF7o43Us03pFkF6nXs
-         iUkop2DsF9CarnKcAWVDsAYUwNgQe+ZuVriAdIXbB5pq7ZiddWufUP2GRF/kXm6R8lNL
-         ZUOw==
-X-Received: by 10.28.55.76 with SMTP id e73mr19839887wma.53.1452595530756;
-        Tue, 12 Jan 2016 02:45:30 -0800 (PST)
+        bh=B6gTYmPsEQNEWNEPNybz/uJaDAvQiNPbJ3DguM00vqM=;
+        b=aXsDBsWXdzYIEJ685vsM6hms14XDLGqev5VVJ98rYZMtrQ693K3BEhZ1b0TUijvXXc
+         xYJqEQt8Cm8DFbW0WvZBV7ratOorbN1r5ydIgvIh6BCLIclmfWI80n8EDWHKbqhU0NfX
+         6XOND/ApusjfgM/6iojNnCPPXLcD+QP3bw66rRAgdxXhN1XNPRDINTPypcWjEzdij2ml
+         KgCb5su8Nl9mX1Z2qgu1LTlPwuc1B7NrCxQARmC4KmixKw3/9gatRYXQx1IkyL6Ma0bx
+         j0TZVLxftmJCmHQ6DjjP0d7SVB4seDuyAzKCpGlSp1si0Q8+D2HysJ8YWWsSdmpVTXSH
+         XWQQ==
+X-Received: by 10.28.189.11 with SMTP id n11mr19776678wmf.3.1452595531486;
+        Tue, 12 Jan 2016 02:45:31 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
         by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283799>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,38 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9114-git-svn-dcommit-merge.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t9118-git-svn-funky-branch-names.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
-index fb41876..a3d3882 100755
---- a/t/t9114-git-svn-dcommit-merge.sh
-+++ b/t/t9114-git-svn-dcommit-merge.sh
-@@ -68,8 +68,8 @@ test_expect_success 'setup git mirror and merge' '
- test_debug 'gitk --all & sleep 1'
+diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+index ed4d136..a221915 100755
+--- a/t/t9118-git-svn-funky-branch-names.sh
++++ b/t/t9118-git-svn-funky-branch-names.sh
+@@ -35,7 +35,7 @@ test_expect_success 'setup svnrepo' '
+ # SVN 1.7 will truncate "not-a%40{0]" to just "not-a".
+ # Look at what SVN wound up naming the branch and use that.
+ # Be sure to escape the @ if it shows up.
+-non_reflog=`svn_cmd ls "$svnrepo/pr ject/branches" | grep not-a | sed 's/\///' | sed 's/@/%40/'`
++non_reflog=$(svn_cmd ls "$svnrepo/pr ject/branches" | grep not-a | sed 's/\///' | sed 's/@/%40/')
  
- test_expect_success 'verify pre-merge ancestry' "
--	test x\`git rev-parse --verify refs/heads/svn^2\` = \
--	     x\`git rev-parse --verify refs/heads/merge\` &&
-+	test x\$(git rev-parse --verify refs/heads/svn^2) = \
-+	     x\$(git rev-parse --verify refs/heads/merge) &&
- 	git cat-file commit refs/heads/svn^ | grep '^friend$'
- 	"
- 
-@@ -80,10 +80,10 @@ test_expect_success 'git svn dcommit merges' "
- test_debug 'gitk --all & sleep 1'
- 
- test_expect_success 'verify post-merge ancestry' "
--	test x\`git rev-parse --verify refs/heads/svn\` = \
--	     x\`git rev-parse --verify refs/remotes/origin/trunk \` &&
--	test x\`git rev-parse --verify refs/heads/svn^2\` = \
--	     x\`git rev-parse --verify refs/heads/merge\` &&
-+	test x\$(git rev-parse --verify refs/heads/svn) = \
-+	     x\$(git rev-parse --verify refs/remotes/origin/trunk) &&
-+	test x\$(git rev-parse --verify refs/heads/svn^2) = \
-+	     x\$(git rev-parse --verify refs/heads/merge) &&
- 	git cat-file commit refs/heads/svn^ | grep '^friend$'
- 	"
- 
+ test_expect_success 'test clone with funky branch names' '
+ 	git svn clone -s "$svnrepo/pr ject" project &&
 -- 
 2.5.0
