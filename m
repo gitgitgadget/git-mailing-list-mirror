@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 12/12] t9901-git-web--browse.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:38 +0000
-Message-ID: <1452599378-47882-13-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 11/12] t9501-gitweb-standalone-http-status.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:37 +0000
+Message-ID: <1452599378-47882-12-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
@@ -11,29 +11,29 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxSd-0007nM-Jm
+	id 1aIxSc-0007nM-VK
 	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964936AbcALLty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:49:54 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35814 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964920AbcALLtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:51 -0500
-Received: by mail-wm0-f66.google.com with SMTP id f206so30919234wmf.2
+	id S964963AbcALLtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:49:55 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32921 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964819AbcALLtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 06:49:50 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u188so30861058wmu.0
         for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZON+mFlUGu03py+K1kWe7RiYQMcWkouFy2uBeJbJWx4=;
-        b=SpN0PiGjKdQu5cOL5EMMQdOSSFjzrV+7QGiFlcJ868pp/3keWcM9VP5w4D3I2kc+ej
-         mtn3iBXeXktvcxK1Utj054nObuJYqkSODKVnNGwADIwsk2tV4DwKPWWaL3GWOLwfnC0g
-         Rd7Zu/6v7VqGP6uAasUoNFzISvyv/SVCXJOdMlHXiIkDNb+fsWN+YuK7qCwg6KWPwjnD
-         gnHt+niYC2vh2qjP9/panWDk5X7k4EbbeLohDVzkBZzhwlkGnUdxZCyLM0i1w5h82TNr
-         PqlhoI+DahUwJbwXUC2JBak8jI3A32pPsbD+eHpgt1JYUIYscc0vGZiU/RexNBoANYAo
-         wg0A==
-X-Received: by 10.28.88.8 with SMTP id m8mr20215704wmb.73.1452599390361;
-        Tue, 12 Jan 2016 03:49:50 -0800 (PST)
+        bh=yF7+CKcRdZuUX0thL+mbw7XZasSZGS78XDOFtPv3sjc=;
+        b=PFbn4SdPNDkFoShOei+cSn1HB7XZ1V2Y1fgUzGpVsSdfv4TFhaSCfFtxwq2m+96pBg
+         zsnOpiBhzCo3EfXKvhFOiNWdWYmJQdCOgXzVYBXSgEHfi2qUm3e1XgWzOyzLYoFr8LfS
+         f25UOWd9E/FqC0FatNKWwRVQu+hhr+XKzb1o3JqPQepgkK74etw/8rxdl6iRtAPKoGTR
+         xOwoQ3aOrvzWhMvc6OgFU7YtZRGJmkpl/OS9TmaAmqsyhrq52WfuIbAd04Ui0M0YgNvB
+         KPvaNCGO8AUgt53NY+d1hDnn87Sx75TYLbFyJKRVNPKfhL+nMTNvexVUBL8WURIkTl8h
+         MUgg==
+X-Received: by 10.28.111.18 with SMTP id k18mr18077275wmc.86.1452599389723;
+        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
         by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283807>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,38 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9901-git-web--browse.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t9501-gitweb-standalone-http-status.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t9901-git-web--browse.sh b/t/t9901-git-web--browse.sh
-index b0a6bad..de7152f 100755
---- a/t/t9901-git-web--browse.sh
-+++ b/t/t9901-git-web--browse.sh
-@@ -43,7 +43,7 @@ test_expect_success \
- 	echo fake: "$@"
- 	EOF
- 	chmod +x "fake browser" &&
--	git config browser.w3m.path "`pwd`/fake browser" &&
-+	git config browser.w3m.path "$(pwd)/fake browser" &&
- 	test_web_browse w3m http://example.com/foo
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index d3a5bac..2a0ffed 100755
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -100,14 +100,14 @@ test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
+ 	echo object > tag-object &&
+ 	git add tag-object &&
+ 	test_tick && git commit -m "Object to be tagged" &&
+-	git tag tagged-object `git hash-object tag-object` &&
++	git tag tagged-object $(git hash-object tag-object) &&
+ 	gitweb_run "p=.git;a=snapshot;h=tagged-object;sf=tgz" &&
+ 	grep "400 - Object is not a tree-ish" gitweb.output
  '
+ test_debug 'cat gitweb.output'
  
+ test_expect_success 'snapshots: good object id' '
+-	ID=`git rev-parse --verify HEAD` &&
++	ID=$(git rev-parse --verify HEAD) &&
+ 	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
+ 	grep "Status: 200 OK" gitweb.output
+ '
+@@ -173,7 +173,7 @@ test_expect_success DATE_PARSER 'modification: snapshot if-modified-since (unmod
+ test_debug 'cat gitweb.headers'
+ 
+ test_expect_success DATE_PARSER 'modification: tree snapshot' '
+-	ID=`git rev-parse --verify HEAD^{tree}` &&
++	ID=$(git rev-parse --verify HEAD^{tree}) &&
+ 	HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
+ 	export HTTP_IF_MODIFIED_SINCE &&
+ 	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
 -- 
 2.5.0
