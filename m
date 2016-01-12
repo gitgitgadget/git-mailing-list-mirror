@@ -1,88 +1,65 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v4 2/2] builtin/grep: add grep.fallbackToNoIndex config
-Date: Tue, 12 Jan 2016 16:50:05 +0100
-Message-ID: <20160112155005.GG10612@hank>
-References: <1452547580-30687-1-git-send-email-t.gummerer@gmail.com>
- <1452595226-14616-1-git-send-email-t.gummerer@gmail.com>
- <1452595226-14616-3-git-send-email-t.gummerer@gmail.com>
- <20160112121106.GA18512@sigill.intra.peff.net>
+From: Tobias Preuss <tobias.preuss@googlemail.com>
+Subject: gitk: Follow renames
+Date: Tue, 12 Jan 2016 17:11:31 +0100
+Message-ID: <CADEaiE_tfegbD4VCHRUaYjAwWBV5H+wpJEnaCVEABOn8-9+5NA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 12 16:49:46 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Heiko Voigt <hvoigt@hvoigt.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 12 17:11:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ1Cc-000239-68
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 16:49:46 +0100
+	id 1aJ1Y4-0008WI-Uq
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 17:11:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933058AbcALPtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 10:49:42 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35175 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752562AbcALPtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 10:49:41 -0500
-Received: by mail-wm0-f65.google.com with SMTP id f206so32039167wmf.2
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 07:49:41 -0800 (PST)
+	id S1762503AbcALQLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 11:11:53 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:37400 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753539AbcALQLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 11:11:52 -0500
+Received: by mail-wm0-f49.google.com with SMTP id f206so328402850wmf.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 08:11:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IWdFslB/w3wql4MfEAuHfXHy4T6Qq/xugItm7P8TyBo=;
-        b=F6l7IrTd7xYnbBnl3QKouo2y79nvCfFWc3PY2WrPyNpICYRJxHUNGWF76MLGPlXjI0
-         nOIBOxa2mtsJZ4GM87W8eI42ZLPGI0ne+zZ4C1MINXG3EGoWxfeLNRplqtGZoBJYh8Cb
-         f0GbpFSWzdruJ+rZC3sIx9A+avz2lB76n6tTPiEdb6bsm6oQ2QauIdl3xi3+T+hgqoUu
-         rT50vLiN3Cik7Ke1t0i5P/VaSQnrdjABqW8dj6V3mL55A1SIcdiW1wamvwU3SMPE+3t1
-         4g0b8sjqtsxMdU7fp6by7QAFizd2Cs4f4/n2UixN/arUUGMcCw7F7PoBHSZmaN7VkVo4
-         jAMA==
-X-Received: by 10.28.57.214 with SMTP id g205mr10087346wma.20.1452613780395;
-        Tue, 12 Jan 2016 07:49:40 -0800 (PST)
-Received: from localhost (host214-63-dynamic.48-82-r.retail.telecomitalia.it. [82.48.63.214])
-        by smtp.gmail.com with ESMTPSA id bg10sm124752276wjb.46.2016.01.12.07.49.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jan 2016 07:49:38 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160112121106.GA18512@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        d=googlemail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=fEC4qVOGySs71//baxf1lF7wCK0PafktEsp09tkQqqI=;
+        b=TOg085eRusk2gXkgWyCyPN6ZDuX1tgNnLrX635/02iCn8jAQ2JyagodAlRDtPUq2Yo
+         +w84dkUMokn6wxW0YfZNkuZNvfkraVZazBpZ6tyk7Fn5hVYbSoGtz6k7nBYPWpVLVU7o
+         +a8yWCwQ0BbLWGJTRuJy3ylOWdfqVlOTIp2CTiOhnKTO2poZYRDAgOGMPOdSuBUskbR7
+         jijLO7sL4x3sfkvogCUUVsINimskA6DxoCuvvAd3bieGHecAnBhyF5zgowZ1q8+bLR04
+         JuznS0Xg0mFAnBMUjDR8iTG0r9v9PyXL9xlgxasTG3X1V6yUjLOBszkSKvpqMWw+JUDe
+         teLQ==
+X-Received: by 10.28.171.135 with SMTP id u129mr19228969wme.99.1452615111444;
+ Tue, 12 Jan 2016 08:11:51 -0800 (PST)
+Received: by 10.27.137.68 with HTTP; Tue, 12 Jan 2016 08:11:31 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283825>
 
-On 01/12, Jeff King wrote:
-> On Tue, Jan 12, 2016 at 11:40:26AM +0100, Thomas Gummerer wrote:
->
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index 4229cae..6b7add6 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -755,9 +755,15 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-> >  			     PARSE_OPT_STOP_AT_NON_OPTION);
-> >  	grep_commit_pattern_type(pattern_type_arg, &opt);
-> >
-> > -	if (use_index && !startup_info->have_repository)
-> > -		/* die the same way as if we did it at the beginning */
-> > -		setup_git_directory();
-> > +	if (use_index && !startup_info->have_repository) {
-> > +		int fallback = 0;
-> > +		git_config_get_bool("grep.fallbacktonoindex", &fallback);
-> > +		if (fallback)
-> > +			use_index = 0;
-> > +		else
-> > +			/* die the same way as if we did it at the beginning */
-> > +			setup_git_directory();
-> > +	}
-> >
-> >  	/*
-> >  	 * skip a -- separator; we know it cannot be
->
-> Nice. This turned out delightfully simple.
+Hello.
 
-Indeed, much simpler than I expected.  Thanks for the help getting it there.
+I am using gitk to lookup changes to specific files:
 
-> -Peff
+$ gitk example.txt
+
+I noticed that the history is cut off if I renamed or moved the file
+somewhen in the past.
+Although I use the --follow parameter gitk does not resolve the former
+file history:
+
+$ gitk --follow example.txt
+
+However, when I use git log --follow the full history is output:
+
+$ git log --follow example.txt
+
+Can you please let gitk resolve the full history as git log does already?
+
+Thank you for your work! I appreciate very much.
+Best regards, Tobias
