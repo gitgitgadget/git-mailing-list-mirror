@@ -1,70 +1,67 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Git doesn't save capitalization change in file names.
-Date: Tue, 12 Jan 2016 14:46:13 +1100
-Message-ID: <CAH5451=-RkyYs3UJHUvvYHSrNODzW4dmAQDHU_Jo-Wf4Oa7Dew@mail.gmail.com>
-References: <CAMkNX-K=GQ6LkZv2PS5Pfs+v2bN1ozi9P5ZN4Z60Ba-3JtuRkg@mail.gmail.com>
+From: =?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>
+Subject: [PATCH] gitweb: Remove "uninitialized value" Perl warning
+Date: Tue, 12 Jan 2016 04:31:56 +0100
+Message-ID: <1452569516-25657-1-git-send-email-sunny@sunbase.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Daniil S <ds98s3a@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 04:46:58 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jnareb@gmail.com, gitster@pobox.com,
+	=?UTF-8?q?=C3=98yvind=20A=2E=20Holm?= <sunny@sunbase.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 12 04:54:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIpv7-0002bt-Fq
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 04:46:57 +0100
+	id 1aIq2o-0007Xq-PX
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 04:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760449AbcALDqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 22:46:54 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:35738 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752650AbcALDqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 22:46:53 -0500
-Received: by mail-io0-f179.google.com with SMTP id 77so339721546ioc.2
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 19:46:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0Zzjl0giNCOGNUq+TmyE1f0nI7pWZmhfltH5hmbzILI=;
-        b=pQ0gh24wq3dUjy6CmocAL5Hq1KA90/geCKAj3UBG5E+NSnH5mu1ew2bvE7+6AmMz2E
-         mvx5DNrtQtHZBdbgBy64UWl4wipc6x3jM25CEUxCK9l0LDSxJ2Bt6ihYCi3t6SNKZFdD
-         +4PDDH3finmxQqARt1jIe7TlwGXP8LxRTrA4TLhYTxTb7eAaMZyPzMt6ntVzk+WjYaZ/
-         1oXFiAxfswAL3easPGThAbLvBUtcqrJx6QTPBcxlhEnNcuruucRIUUoey9EBsBW2MO+y
-         J6wvZ7t2Jrn0JRHTuMS7twBEAaHKN+NXozU2aT4WrNuJ7NQBrvHRLGs5VfrJTuHXSxuc
-         Yc7Q==
-X-Received: by 10.107.135.198 with SMTP id r67mr79758581ioi.103.1452570412500;
- Mon, 11 Jan 2016 19:46:52 -0800 (PST)
-Received: by 10.36.72.195 with HTTP; Mon, 11 Jan 2016 19:46:13 -0800 (PST)
-In-Reply-To: <CAMkNX-K=GQ6LkZv2PS5Pfs+v2bN1ozi9P5ZN4Z60Ba-3JtuRkg@mail.gmail.com>
+	id S1761230AbcALDyv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Jan 2016 22:54:51 -0500
+Received: from sunbase.org ([178.79.142.16]:55611 "EHLO linode"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1761203AbcALDyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 22:54:50 -0500
+X-Greylist: delayed 1367 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Jan 2016 22:54:49 EST
+Received: from sunny by linode with local (Exim 4.80)
+	(envelope-from <sunny@sunbase.org>)
+	id 1aIpgd-0006ia-2a; Tue, 12 Jan 2016 04:31:59 +0100
+X-Mailer: git-send-email 2.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283764>
 
-On 12 January 2016 at 13:06, Daniil S <ds98s3a@gmail.com> wrote:
->
-> So I've now encountered this with both GitHub and BitBucket, Windows and
-> Linux versions, so I'm fairly sure it's git's fault.
->
-> Example: if file named "Pathfinding.java" was renamed to "PathFinding.java"
-> and that change is then committed, filename won't change in repository.
->
+git_object(): Check if $type is defined before chomping it. This remove=
+s
+a Perl warning in the server error log:
 
-This actually comes down to the file system you use, as git itself
-does keep track of the capitalisation of file names; if the file
-system is case insensitive (Mac OSX being the typical example) then
-you can run into weird issues when files change case.
+  gitweb.cgi: Use of uninitialized value $type in scalar chomp at
+  [...]/gitweb.cgi line 7579., referer: [...]
 
-For example, the following two search results:
+when trying to access a non-existing commit, for example:
 
-https://stackoverflow.com/questions/10523849/changing-capitalization-of-filenames-in-git
+  http://HOST/?p=3DPROJECT.git;a=3Dcommit;h=3DNON_EXISTING_COMMIT
 
-https://ocroquette.wordpress.com/2014/07/08/git-capitalization-of-file-names-and-name-conflicts/
+Signed-off-by: =C3=98yvind A. Holm <sunny@sunbase.org>
+---
+ gitweb/gitweb.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards,
-
-Andrew Ardill
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7a5b23a..05d7910 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7576,7 +7576,7 @@ sub git_object {
+ 			git_cmd(), 'cat-file', '-t', $object_id) . ' 2> /dev/null'
+ 			or die_error(404, "Object does not exist");
+ 		$type =3D <$fd>;
+-		chomp $type;
++		defined $type && chomp $type;
+ 		close $fd
+ 			or die_error(404, "Object does not exist");
+=20
+--=20
+2.7.0
