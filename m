@@ -1,113 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2016, #02; Mon, 11)
-Date: Mon, 11 Jan 2016 19:04:07 -0800
-Message-ID: <xmqqh9ijv6qg.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlh7vvfxc.fsf@gitster.mtv.corp.google.com>
-	<20160112000612.GA32363@glandium.org>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: [PATCH 1/5] Teach cherry-pick to skip redundant commits if asked
+Date: Mon, 11 Jan 2016 21:10:45 -0600
+Message-ID: <87oacra3wq.fsf@waller.obbligato.org>
+References: <1452488421-26823-1-git-send-email-greened@obbligato.org>
+	<1452488421-26823-2-git-send-email-greened@obbligato.org>
+	<xmqqr3hnx6e2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jan 12 04:04:51 2016
+Cc: git@vger.kernel.org, peff@peff.net, chris@arachsys.com,
+	nhorman@tuxdriver.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 04:11:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIpGK-0000CN-NF
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 04:04:49 +0100
+	id 1aIpMe-0004cc-Vf
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 04:11:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758955AbcALDEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 22:04:12 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55057 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758017AbcALDEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 22:04:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 382A63B36A;
-	Mon, 11 Jan 2016 22:04:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2/6GsqNe5827sMbMw0Kr0PqNXiw=; b=N0xC1V
-	MhRAJoWbh3vn+Z2OB5+hfuDbLCzFdqRTJRj4I8f2qtRNIU0jfkjkkJkhEx5B2LsE
-	NWBo+U+WyvK+zmU+2JkrzwMYvVTFMtnu3IcJ/v1tJq8Xo0qpCWJPmyRVhzwv0cPa
-	9W7/h0mDCYpJjalSJp8q5OruIPiAySDftcmRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T071GyCa1sW3tvjj6VXH+iQgkoP3x+6t
-	yigWAhKqXNhmYs9tlbB4pR76bm3izO/23zpPpc7p/zUDBDvKPeabUh9saXkm1ci4
-	52ySrgeqBPS6zrWrFLVjnnopTgYmrt4KoFTl3cagEwYMw+wTrf5Y+o50CK3T5NyI
-	d7BvMIJCO0c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2060B3B369;
-	Mon, 11 Jan 2016 22:04:09 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8BC9B3B368;
-	Mon, 11 Jan 2016 22:04:08 -0500 (EST)
-In-Reply-To: <20160112000612.GA32363@glandium.org> (Mike Hommey's message of
-	"Tue, 12 Jan 2016 09:06:12 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 25C6E1A4-B8D9-11E5-894E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1761174AbcALDLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 22:11:15 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:56262 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1761070AbcALDLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 22:11:00 -0500
+Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	(Exim 4.85)
+	(envelope-from <greened@obbligato.org>)
+	id 1aIpNK-0007Tn-M2; Mon, 11 Jan 2016 21:12:02 -0600
+In-Reply-To: <xmqqr3hnx6e2.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 11 Jan 2016 11:28:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283762>
 
-Mike Hommey <mh@glandium.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Mon, Jan 11, 2016 at 03:45:35PM -0800, Junio C Hamano wrote:
->> * mh/notes-allow-reading-treeish (2015-10-08) 3 commits
->>   (merged to 'next' on 2015-10-23 at 8a697f0)
->>  + notes: allow treeish expressions as notes ref
->>  + Merge branch 'jk/notes-dwim-doc' into next
->>  + Merge branch 'jc/merge-drop-old-syntax' into next
->>  (this branch uses jc/merge-drop-old-syntax.)
->> 
->>  Some "git notes" operations, e.g. "git log --notes=<note>", should
->>  be able to read notes from any tree-ish that is shaped like a notes
->>  tree, but the notes infrastructure required that the argument must
->>  be a ref under refs/notes/.  Loosen it to require a valid ref only
->>  when the operation would update the notes (in which case we must
->>  have a place to store the updated notes tree, iow, a ref).
->> 
->>  As the patch was done on top of the 'drop old-syntax from merge',
->>  this has to wait until that other topic can graduate, unfortunately.
->>  It can be redone in a way that does not depend on that topic after
->>  this cycle, though.
+>> +		OPT_END(),
+>>  		OPT_END(),
+>>  		OPT_END(),
+>>  		OPT_END(),
+>> @@ -106,6 +112,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+>>  			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+>>  			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+>>  			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+>> +			OPT_BOOL(0, "skip-redundant-commits", &opts->skip_redundant_commits, N_("skip redundant, empty commits")),
+>>  			OPT_END(),
+>>  		};
 >
-> I'm not sure what you mean here. The patch applies just fine on top of
-> current master.
+> This however makes me wonder what should happen when both are
+> specified.  Shouldn't this patch change the keep_redundant_commits
+> field from a bool to a tristate that tells us what to do with
+> redundant ones?  int/enum opts.redundant_commit can take 0 (fail,
+> which would be the default), 1 (keep) or 2 (skip), or something
+> like that.
 
-I exactly mean what I wrote ;-).
+This makes good sense.
 
-IIRC, back when the patch was queued, it wasn't directly applicable
-to the tip of the master branch (I suspect that you made a patch
-against 'next'), and the two topics you can see merged above turned
-out to be the ones your change was textually depending on.  Because
-at least one of them was slated to be kept in 'next' during the 2.7
-cycle, and because we do not rewind 'next' in the middle of a cycle,
-this made the patch at the tip of this topic to be ineligible for
-merging to 'master' without dragging the other topics that were not
-meant for 'master'.
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 8c58fa2..12361e7 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -185,6 +185,7 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+>>  		else
+>>  			advise(_("after resolving the conflicts, mark the corrected paths\n"
+>>  				 "with 'git add <paths>' or 'git rm <paths>'\n"
+>> +
+>
+> ???
 
-Post release is a rare occasion that we can rewind and rebuild
-'next', so you can simply send an updated patch that would apply
-cleanly to the tip of 'master' (which is a lot newer than the tip of
-'master' back then, and possibly have merged quite a lot of changes
-from either of the two other topics your patch depends on) and tell
-me "Drop that old copy queued in 'next' and replace it with this new
-one when you rebuild 'next'".  If the old patch is identical to such
-a patch, then just telling me "When you rebuild 'next', rebuild the
-topic by just cherry-picking the tip of the topic directly to the
-tip of 'master', as all the prerequisite changes have been merged
-already" would be sufficient.
+Oops.  :)
 
-Which I guess you just did ;-).  I haven't checked if the
-changes you depended on are all in 'master' already, but if that is
-the case, then I'll do just that--if you see me forgetting to do so
-when I rewind 'next', please holler.
+>> @@ -614,6 +615,28 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+>>  		res = allow;
+>>  		goto leave;
+>>  	}
+>> +
+>> +	// If told, do not try to commit things that don't make any
+>> +	// changes.
+>
+> No C++/C99 comments, please.
 
-Thanks.
+Will fix.
+
+>> +	if (opts->skip_redundant_commits) {
+>> +		int index_unchanged = is_index_unchanged();
+>> +		if (index_unchanged < 0) {
+>> +			// Something bad happened readhing HEAD or the
+>> +			// index.  Abort.
+>> +			res = index_unchanged;
+>> +			goto leave;
+>> +		}
+>> +		if (index_unchanged) {
+>> +			fputs(_("Skipping redundant commit "), stderr);
+>> +			fputs(find_unique_abbrev(commit->object.oid.hash,
+>> +						 GIT_SHA1_HEXSZ),
+>> +			      stderr);
+>> +			fputs("\n", stderr);
+>
+> This is a bad i18n; we do not know the sentence "Skipping commit X"
+> is translated to have X at the end of the sentence in all languages.
+>
+> 	fprintf(stderr, _("Skipping ... %s\n"), find_unique_abbrev(...));
+>
+> would allow it to be tranlated to "Commit X is getting skipped", for
+> example.
+
+Ok, thank you for the guidance.
+
+>> diff --git a/sequencer.h b/sequencer.h
+>> index 5ed5cb1..ad6145d 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -34,6 +34,7 @@ struct replay_opts {
+>>  	int allow_empty;
+>>  	int allow_empty_message;
+>>  	int keep_redundant_commits;
+>> +	int skip_redundant_commits;
+>
+> Continuing from the top-part of the comments, this may be better to
+> be:
+>
+> 	enum {
+>             REPLAY_REDUNDANT_FAIL = 0,
+>             REPLAY_REDUNDANT_KEEP,
+>             REPLAY_REDUNDANT_SKIP
+> 	} redundant_commits;
+>
+> or something like that.
+
+Agreed.
+
+I've also resumed work on my earlier rebase --keep-redundant-commits
+change.  I think I'm going to reorganize things and send the cherry-pick
+changes separate from the rebase changes since the latter depends on the
+former.  Then all of the redundant commit work on rebase can be in one
+series for review.
+
+                        -David
