@@ -1,165 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] lock_ref_sha1_basic: handle REF_NODEREF with invalid
- refs
-Date: Tue, 12 Jan 2016 04:58:05 -0500
-Message-ID: <20160112095804.GB16501@sigill.intra.peff.net>
-References: <20160112095638.GA4773@sigill.intra.peff.net>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Git doesn't save capitalization change in file names.
+Date: Tue, 12 Jan 2016 10:58:16 +0100
+Message-ID: <5694CE38.5020503@web.de>
+References: <CAMkNX-K=GQ6LkZv2PS5Pfs+v2bN1ozi9P5ZN4Z60Ba-3JtuRkg@mail.gmail.com> <CAH5451=-RkyYs3UJHUvvYHSrNODzW4dmAQDHU_Jo-Wf4Oa7Dew@mail.gmail.com> <alpine.DEB.2.20.1601120900380.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 10:58:17 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Daniil S <ds98s3a@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 10:58:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIviR-0007Bi-2V
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 10:58:15 +0100
+	id 1aIvie-0007MV-NV
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 10:58:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934184AbcALJ6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 04:58:09 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52008 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933884AbcALJ6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 04:58:07 -0500
-Received: (qmail 21254 invoked by uid 102); 12 Jan 2016 09:58:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 04:58:07 -0500
-Received: (qmail 11558 invoked by uid 107); 12 Jan 2016 09:58:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 04:58:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 04:58:05 -0500
-Content-Disposition: inline
-In-Reply-To: <20160112095638.GA4773@sigill.intra.peff.net>
+	id S1753214AbcALJ6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 04:58:25 -0500
+Received: from mout.web.de ([212.227.17.11]:53934 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933279AbcALJ6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 04:58:23 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0Lpw6t-1ZevrX1XwF-00fixi; Tue, 12 Jan 2016 10:58:20
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <alpine.DEB.2.20.1601120900380.2964@virtualbox>
+X-Provags-ID: V03:K0:7IT+u5tIIEUmweUX1AtzumOx7wTZFjLwlGJia4q6rsi4wzykd9k
+ OOHZ2/EzehBr35mxHc1OwLd4C+dsFcEUuk+XojlhVyocmIFwEqlCwHvfuxGqvEvTBVM6eYn
+ zs+q36L/fk8E+B9pGWe7BEK0MeTooJ/hunVf4AYWqjPhJKKrOH2rXFbEDIR6iAit+2H1dZi
+ SaAJLGNRcxkKrVLtP2Y6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BgVxo/Gm+JM=:v7WogYFWMtOneRcDpEDrV5
+ cwoHGYj13BJ8xHFP0d0q4rYciiAMA+MQfM5wdBkn2Gnh3dBskhIuHQIpzdlQlNZJlkL4eHuON
+ BRX5gVSttcMafz3or9wkyNTbnGAm9hpKbFU+0KVOZQ1LmxP8OvCM3gQmbiDq0P7r6hyyV+BmB
+ e+y4gsGAh/qd+V0w2digjYa5xdTu0zQsK6rHVN0SAv6LM7hBUYbfgSypKL1yWDaIfkctcYA0w
+ gxb7f0WmOAdpI8iZH9D7fzcynue4wjh1vlbFAm4PFjir9TREb71kqTDTO6BIfYjy1Lxo+kkki
+ 5LARnyEuJwHtsjWNwxmNEepiLt8VMn25H9MZgQFo9f8A7IjofbAnFF7faGJicC65T38jNBO6o
+ VvIo8lPDdsKe/D5HyyL2I9vxYFHNhaarY8XrN9JxfUt3njJzSpw/vngEDMH/pNchBKMm0RH94
+ k2FfaVQn/Lg0zw8Oi1D41qGbFGqSV3lqv7X4rRv36SucOkM5tWQ/hSVYna71KsXGBv4Nal87p
+ 2NSy6GbGqm4dQVNYpQj4J2D0h9+LVWlmrmvyZ+PqnjeJHgIbIBAF1+uxFqcgbclC61s0bkl/A
+ 0G1hH/u64srW6uHXosUeLI5k9EeB6mP104eVIrQnh2xV6RiT+4wJ7M2nfvW8A+10wdHlIf+MF
+ AG6OznwKCt6vu1gX+y8jk5u7SfOHTTRa/6ZhRMYnGh0YfniuBkyh1MdsFelka68/O4kSaIpow
+ KRevC7DPxoEihFN7xOgC3YtrIWjj7t7YGVGWvm0Zfc2VvKneDmZcVFIO1fLhw6I12iGM4jR0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283785>
 
-We sometimes call lock_ref_sha1_basic with REF_NODEREF
-to operate directly on a symbolic ref. This is used, for
-example, to move to a detached HEAD, or when updating
-the contents of HEAD via checkout or symbolic-ref.
+On 01/12/2016 09:02 AM, Johannes Schindelin wrote:
+> Hi,
+>
+> On Tue, 12 Jan 2016, Andrew Ardill wrote:
+>
+>> On 12 January 2016 at 13:06, Daniil S <ds98s3a@gmail.com> wrote:
+>>> So I've now encountered this with both GitHub and BitBucket, Windows
+>>> and Linux versions, so I'm fairly sure it's git's fault.
+> I highly doubt that the Linux variety of Git displays this problem, unless
+> it is run on a case-insensitive file system.
+>
+>>> Example: if file named "Pathfinding.java" was renamed to
+>>> "PathFinding.java" and that change is then committed, filename won't
+>>> change in repository.
+>> This actually comes down to the file system you use, as git itself does
+>> keep track of the capitalisation of file names; if the file system is
+>> case insensitive (Mac OSX being the typical example) then you can run
+>> into weird issues when files change case.
+>>
+>> For example, the following two search results:
+>>
+>> https://stackoverflow.com/questions/10523849/changing-capitalization-of-filenames-in-git
+>>
+>> https://ocroquette.wordpress.com/2014/07/08/git-capitalization-of-file-names-and-name-conflicts/
+> I'd like to offer the most common work-around:
+>
+> git mv Pathfinding.java Pathfinding.java.rename
+> git mv Pathfinding.java.rename PathFinding.java
+>
 
-However, the first step of the function is to resolve the
-refname to get the "old" sha1, and we do so without telling
-resolve_ref_unsafe() that we are only interested in the
-symref. As a result, we may detect a problem there not with
-the symref itself, but with something it points to.
+Side note: That should no longer be needed: new versions of Git can 
+handle the rename these  days.
 
-The real-world example I found (and what is used in the test
-suite) is a HEAD pointing to a ref that cannot exist,
-because it would cause a directory/file conflict with other
-existing refs.  This situation is somewhat broken, of
-course, as trying to _commit_ on that HEAD would fail. But
-it's not explicitly forbidden, and we should be able to move
-away from it. However, neither "git checkout" nor "git
-symbolic-ref" can do so. We try to take the lock on HEAD,
-which is pointing to a non-existent ref. We bail from
-resolve_ref_unsafe() with errno set to EISDIR, and the lock
-code thinks we are attempting to create a d/f conflict.
-
-Of course we're not. The problem is that the lock code has
-no idea what level we were at when we got EISDIR, so trying
-to diagnose or remove empty directories for HEAD is not
-useful.
-
-The most obvious solution would be to call
-resolve_ref_unsafe() with RESOLVE_REF_NO_RECURSE, so that we
-never look beyond the symref (and any problems we find must
-be attributable to it). However, that means we would not
-correctly gather the "old" sha1. We do not typically care
-about it for locking purposes with a symref (since the
-symref has no value on its own), but it does affect what we
-write into the HEAD reflog.
-
-Another possibility is to avoid the d/f check when
-REF_NORECURSE is set. But that would mean we fail to notice
-a real d/f conflict. This is impossible with HEAD, but we
-would not want to create refs/heads/origin/HEAD.lock if we
-already have refs/heads/origin/HEAD/foo.
-
-So instead, we attempt to resolve HEAD fully to get the old
-sha1, and only if that fails do we fallback to a
-non-recursive resolution. We lose nothing to the fallback,
-since we know the ref cannot be resolved, and thus we have
-no old sha1 in the first place. And we still get the benefit
-of the d/f-checking for the symref itself.
-
-This does mean an extra round of filesystem lookups in some
-cases, but they should be rare. It only kicks in with
-REF_NODEREF, and then only when the existing ref cannot be
-resolved.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs/files-backend.c             |  4 ++++
- t/t1401-symbolic-ref.sh          |  7 +++++++
- t/t2011-checkout-invalid-head.sh | 20 ++++++++++++++++++++
- 3 files changed, 31 insertions(+)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 180c837..ea67d82 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1901,6 +1901,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 
- 	refname = resolve_ref_unsafe(refname, resolve_flags,
- 				     lock->old_oid.hash, &type);
-+	if (!refname && (flags & REF_NODEREF))
-+		refname = resolve_ref_unsafe(orig_refname,
-+					     resolve_flags | RESOLVE_REF_NO_RECURSE,
-+					     lock->old_oid.hash, &type);
- 	if (!refname && errno == EISDIR) {
- 		/*
- 		 * we are trying to lock foo but we used to
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 5db876c..a713766 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -122,4 +122,11 @@ test_expect_success 'symbolic-ref does not create ref d/f conflicts' '
- 	test_must_fail git symbolic-ref refs/heads/df/conflict refs/heads/df
- '
- 
-+test_expect_success 'symbolic-ref handles existing pointer to invalid name' '
-+	head=$(git rev-parse HEAD) &&
-+	git symbolic-ref HEAD refs/heads/outer &&
-+	git update-ref refs/heads/outer/inner $head &&
-+	git symbolic-ref HEAD refs/heads/unrelated
-+'
-+
- test_done
-diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
-index d444d5e..9c1fddf 100755
---- a/t/t2011-checkout-invalid-head.sh
-+++ b/t/t2011-checkout-invalid-head.sh
-@@ -25,4 +25,24 @@ test_expect_success 'checkout notices failure to lock HEAD' '
- 	test_must_fail git checkout -b other
- '
- 
-+test_expect_success 'create ref directory/file conflict scenario' '
-+	git update-ref refs/heads/outer/inner master &&
-+
-+	# do not rely on symbolic-ref to get a known state,
-+	# as it may use the same code we are testing
-+	reset_to_df () {
-+		echo "ref: refs/heads/outer" >.git/HEAD
-+	}
-+'
-+
-+test_expect_failure 'checkout away from d/f HEAD (to branch)' '
-+	reset_to_df &&
-+	git checkout master
-+'
-+
-+test_expect_failure 'checkout away from d/f HEAD (to detached)' '
-+	reset_to_df &&
-+	git checkout --detach master
-+'
-+
- test_done
--- 
-2.7.0.368.g04bc9ee
+However, when A) does the rename, pushes it to a central repo,
+B) pulls the changes, the file will stay un-renamed on the local disk.
+You can delete all worktree files, and do a reset --hard, (at your own risk)
