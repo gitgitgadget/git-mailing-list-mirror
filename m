@@ -1,78 +1,87 @@
-From: Stefan Monnier <monnier@iro.umontreal.ca>
-Subject: Re: Can't diff against the 00000000 revision
-Date: Tue, 12 Jan 2016 11:26:24 -0500
-Message-ID: <jwvr3hmwz1n.fsf-monnier+gmane.comp.version-control.git@gnu.org>
-References: <jwv4meiygrc.fsf-monnier+gmane.comp.version-control.git@gnu.org>
-	<20160112153239.GA8041@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10] ls-files: add eol diagnostics
+Date: Tue, 12 Jan 2016 09:50:37 -0800
+Message-ID: <xmqqd1t6vg9e.fsf@gitster.mtv.corp.google.com>
+References: <1452446203-20693-1-git-send-email-tboegi@web.de>
+	<xmqq8u3wxb0i.fsf@gitster.mtv.corp.google.com>
+	<56949C53.5030605@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 17:26:42 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 12 18:50:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ1mL-0001Iv-Fa
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 17:26:41 +0100
+	id 1aJ35o-0007ZW-0R
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 18:50:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932748AbcALQ0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 11:26:37 -0500
-Received: from plane.gmane.org ([80.91.229.3]:41629 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752062AbcALQ0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 11:26:37 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aJ1mF-0001Fj-CQ
-	for git@vger.kernel.org; Tue, 12 Jan 2016 17:26:35 +0100
-Received: from 184-175-3-20.dsl.teksavvy.com ([184.175.3.20])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 17:26:35 +0100
-Received: from monnier by 184-175-3-20.dsl.teksavvy.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 17:26:35 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 184-175-3-20.dsl.teksavvy.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.50 (gnu/linux)
-Cancel-Lock: sha1:LWwV2lNbmdNjIsTTbm3UbgVNlUM=
+	id S1763840AbcALRur convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jan 2016 12:50:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61440 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1763834AbcALRup convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jan 2016 12:50:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5283A38FB9;
+	Tue, 12 Jan 2016 12:50:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/6jCAJZTBe8N
+	+MpBYoKEFBnpNuo=; b=sN2y0geNQ0KIlxPO5dXmpL71bJszrWnN7BjIYsFcx8QA
+	YU2R+9tH1tPuE2aL/dlxEDcIr6k7iXHEXck2Eg1iHoKGn7EQh/pj5j1bj36YyKof
+	4MGPAMgQ+rW3YyWKGyA664BlKGc71uWj9gtdaFeAyAWASVI+OGvvlZF3DBjIiUs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=oB/FRV
+	t36IZvX+7CGa6VI35k67unVH5fcrbO8iXJI9tmBZX8UDBW0ZrGhZbplDZp27iVnL
+	+BzIk4gqtjr8nCXgJ3qR+uR05gijPw9dgv9m2eMxfA3mVRkQrPV7cDUNfw6CDshz
+	XimvqfYAb9XI9VhG5mAJcsjf2Qp69OXIbUWn4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AEF638FB6;
+	Tue, 12 Jan 2016 12:50:39 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C04D538FB5;
+	Tue, 12 Jan 2016 12:50:38 -0500 (EST)
+In-Reply-To: <56949C53.5030605@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 12 Jan 2016 07:25:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FD9DAE7A-B954-11E5-83E3-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283827>
 
->> I currently work around the problem by adding a dummy empty branch, but
->> being able to use the revision 00000000 as a known reference to an empty
->> tree would come in really handy, and since it's already used at various
->> places in Git (post-receive hook and "git show" output, at least), it
->> would seem like a natural extension.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> The empty tree also has a name:
+> On 01/11/2016 06:48 PM, Junio C Hamano wrote:
 >
->   $ git hash-object -t tree /dev/null
->   4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> Thanks for comments
+>>> +		if (line_terminator =3D=3D '\n')
+>>> +			printf("i/%-6s w/%-6s attr/%-9s ", i_txt, w_txt, a_txt);
+>> Can we do something better than these hard-coded constants?  Why
+>> can't the "one HT between each" approach be used for both?
+> v11 will make more clear, that currently "eol=3Dcrlf" is the same as
+> "text eol=3Dcrlf".
+> The shortest attr is then "", the longest "text eol=3Dcrlf".
+> Using '\t' as a separator makes the output cluttered for a human read=
+er.
+>
+> When parsing the output, the '\t' is much more convenient (and that's
+> what t0027 wil use).
+> Is there any chance to have a selection between human-friendly and
+> script-friendly ?
+> Would an option -e (eol info using spaces) vs --eol (eol info with
+> TABs) make sence ?
 
-Yay!
+I do not think so; what you have in v10 is infinitely better.
 
-   git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904..d59cfff346c3e210adc26501f8cebf8da5ab2e7d
-
-seems to give me the expected diff.
-Thanks!
-
-> And hopefully that explains why "000000" does not necessarily make a
-> good placeholder for "the empty thing". There are multiple empty things,
-> and it is not clear what:
-
->   git diff 0000000 1234abcd
-
-> means. Is 0000000 a tree? A blob?
-
-Well, Git is the one who uses 000000 to refer to an empty thing, but
-indeed it seems like it does inconsistently: it's sometimes used as the
-"empty blob" and sometimes as an "empty tree".
-
-
-        Stefan
+What I found disturbing the most was these hardcoded numbers 6,6,9
+in the printf format.
