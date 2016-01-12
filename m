@@ -1,166 +1,233 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 16/21] refs: check submodules ref storage config
-Date: Mon, 11 Jan 2016 20:22:15 -0500
-Message-ID: <1452561740-8668-17-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 14/21] refs: always handle non-normal refs in files backend
+Date: Mon, 11 Jan 2016 20:22:13 -0500
+Message-ID: <1452561740-8668-15-git-send-email-dturner@twopensource.com>
 References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:57 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aInfk-0003L8-TH
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:57 +0100
+	id 1aInfk-0003L8-5j
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761904AbcALBWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 20:22:52 -0500
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:35547 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761817AbcALBWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 20:22:51 -0500
-Received: by mail-qg0-f53.google.com with SMTP id o11so417844453qge.2
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:50 -0800 (PST)
+	id S1761876AbcALBWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 20:22:50 -0500
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:35835 "EHLO
+	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761817AbcALBWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 20:22:48 -0500
+Received: by mail-qk0-f172.google.com with SMTP id n135so233503238qka.2
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ct62rYp4wUxL0eiAHoLTnCuNuDM74LojSES4Ur5kHuc=;
-        b=dQhaqKQg/KKh0sUtmETbZyTqZvgWvIPmve39Zs8QExeLWHiTaltK0/qJ1r3MPNKUuU
-         JAQ1Da+yJ4suJW98sAkM81ElPtRP8xQky2q4dUU+zksW5ByDKVPX6+Up3BjQKic1fsWi
-         Sr8cA31G/vTJ5aGss3hnDQlKVFc2hoPZ+CpSGn6iHhWg5YbVHRjP2xwzWd2xEolB3JfA
-         pX7yDgD9UFdMhuFwr9SvcdDMhwEGX6OQ0fm3VhrbYqToY8zGbl5YkICTmU1HjZzIW1Al
-         tvu/UTUmEjqDWc0OssmmiTkbUEitEy84aGwMkbB1e+PmamzEZrjbnDK+Tb3rwHiAM/0n
-         tgPg==
+        bh=SXjM7bNH3ZrMApO34PV2iIbnsKSzSwTjjhFVPLlJoDM=;
+        b=XxuOBMgbsBsZsz/EKs8IFdxbDm36WXD+yJeddhEt/O1CqN8BhEBs8net6OlQ52awVj
+         WyPXPTJX7WCL/Pi5dQLQjWcwqPxaYC0gB7W7tYtpopGzqeR1pzzIvAaTO4IjcLS0SGEl
+         gIPBAyTXiXR0Tnb8xv8y9bmhW/PtYL1L6yGZ9LzLWVan7m0FBzqPmPWE/saywrUVN46X
+         oCENv7rf0/2og6c9nP0BXdgCZJNDbQ2kyuKqtZvjqeahnmhxYWdXcJ1pLqvILrEwHZzA
+         g6P3WT8aPXrULclCMAb8O8hSdZKz5EOeHVFrPhz4cbWugKVdt3RMXOU/cOjeAygyr5Gt
+         H/lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ct62rYp4wUxL0eiAHoLTnCuNuDM74LojSES4Ur5kHuc=;
-        b=gTiu2ybkaUuV3K6l62lvVakvvpxsxuiY3z7qY3aqyBygFrqKBKPqJLqiCY1ESaXMMq
-         oAcDn9l9fQPslt6WOwfvQIv0RpfUKdNDRxKUcfixCoxD04JwkRYNIwz5BK+tB0p2O8RN
-         FmknPqqavoxwvI+5947b0wbjGJQ8zXWppFxDBLX9s9MWVr7fAIf5pQG64y5+Kd9ML/T2
-         WqrRktaXy+1ettlhdbk2qzw/ejsRmTxvcBYwe6XsvEbAPjCazrVe0bpLyp5JHNRJJLCQ
-         XzgwiIZgWuhrjPEDEi+UOkoOJt4JHCQsjTe3+NWozQp9KU+fffow5NGPlaH14W1zr3ux
-         7c6g==
-X-Gm-Message-State: ALoCoQnY6d0bz3OoywYwlGQ5dJFZOaSlq577r/ouoNSJ5zuu3iL2ILeTmiQX+syVecm+9KxbiQcMtiZdVEUorpl3xviog9+EtQ==
-X-Received: by 10.141.6.131 with SMTP id i125mr46646558qhd.68.1452561770068;
-        Mon, 11 Jan 2016 17:22:50 -0800 (PST)
+        bh=SXjM7bNH3ZrMApO34PV2iIbnsKSzSwTjjhFVPLlJoDM=;
+        b=H38fOCoEz2xM0fPBvs1ZGdbbSOJ1ovjaq8Irm5EaDE5sqCRhLDX+NldNGSaVWswxu1
+         1FcQbFjAtJmzXWHUD/9QGDwlNtEIrKJ9HAAEIXWGTtJ20psfbh2G9HFZtM08JnCmpJL1
+         kyXdyIM28vpH+j3pMmJ5NCVh+nmJejPl0DV1taLaA3eF/WFK/SzhoB6jaBELZCRdxrY/
+         Qe2cKK9CIL3+2Rxs1f0wFNQ1zuC6HmPTSjQrSP8H0a1vfVBh98cBCZ1kH3vsgYoD7h77
+         5M8Sg6Z6ZUUWUMuwwiBVrbC8l9F11QU0hHHWzIyr+xiGwJ1AiNKgKinZ4INI9x3XQYPy
+         Ljvg==
+X-Gm-Message-State: ALoCoQnLZdQMxZgJtgKyXWXNAIY59koTKhkEcR8IYguz6E1jMf6RZH1Q5ijKjw69VOq9yEDkH/429XRcQ9eMQFp1eLurhq+MbA==
+X-Received: by 10.55.73.69 with SMTP id w66mr165799337qka.39.1452561767476;
+        Mon, 11 Jan 2016 17:22:47 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.49
+        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.46
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jan 2016 17:22:49 -0800 (PST)
+        Mon, 11 Jan 2016 17:22:46 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283746>
 
-All submodules must have the same ref storage (for now).  Confirm that
-this is so before attempting to do anything with submodule refs.
+Always handle non-normal (per-worktree or pseudo) refs in the files
+backend instead of alternate backends.
+
+Sometimes a ref transaction will update both a per-worktree ref and a
+normal ref.  For instance, an ordinary commit might update
+refs/heads/master and HEAD (or at least HEAD's reflog).
+
+Updates to normal refs continue to go through the chosen backend.
+
+Updates to non-normal refs are moved to a separate files backend
+transaction.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ refs.c               | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ refs/refs-internal.h |  2 ++
+ 2 files changed, 82 insertions(+), 2 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 07f1dab..1ccc7f6 100644
+index 1b17c15..d035feb 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -297,8 +297,43 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
- 	return for_each_ref_in("refs/tags/", fn, cb_data);
+@@ -9,6 +9,11 @@
+ #include "object.h"
+ #include "tag.h"
+ 
++static const char split_transaction_fail_warning[] =
++	"A ref transaction was split across two refs backends.  Part of the "
++	"transaction succeeded, but then the update to the per-worktree refs "
++	"failed.  Your repository may be in an inconsistent state.";
++
+ /*
+  * We always have a files backend and it is the default.
+  */
+@@ -780,6 +785,13 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 	free(transaction);
  }
  
-+static int submodule_backend(const char *key, const char *value, void *data)
++static void add_update_obj(struct ref_transaction *transaction,
++			   struct ref_update *update)
 +{
-+	char **path = data;
-+	if (!strcmp(key, "extensions.refstorage"))
-+		*path = xstrdup(value);
++	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
++	transaction->updates[transaction->nr++] = update;
 +}
 +
-+static void check_submodule_backend(const char *submodule)
+ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 				     const char *refname)
+ {
+@@ -787,8 +799,7 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 	struct ref_update *update = xcalloc(1, sizeof(*update) + len);
+ 
+ 	memcpy((char *)update->refname, refname, len); /* includes NUL */
+-	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
+-	transaction->updates[transaction->nr++] = update;
++	add_update_obj(transaction, update);
+ 	return update;
+ }
+ 
+@@ -1192,11 +1203,39 @@ static int dereference_symrefs(struct ref_transaction *transaction,
+ 	return 0;
+ }
+ 
++/*
++ * Move all non-normal ref updates into a specially-created
++ * files-backend transaction
++ */
++static int move_abnormal_ref_updates(struct ref_transaction *transaction,
++				     struct ref_transaction *files_transaction,
++				     struct strbuf *err)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	char *submodule_storage_backend = xstrdup("files");
++	int i;
 +
-+	if (!submodule)
-+		goto done;
++	for (i = 0; i < transaction->nr; i++) {
++		int last;
++		struct ref_update *update = transaction->updates[i];
 +
-+	strbuf_git_path_submodule(&sb, submodule, "%s", "");
++		if (ref_type(update->refname) == REF_TYPE_NORMAL)
++			continue;
 +
-+	if (!is_git_directory(sb.buf))
-+		goto done;
++		last = --transaction->nr;
++		transaction->updates[i] = transaction->updates[last];
++		add_update_obj(files_transaction, update);
++	}
 +
-+	strbuf_reset(&sb);
-+	strbuf_git_path_submodule(&sb, submodule, "config");
-+
-+	git_config_from_file(submodule_backend, sb.buf,
-+			     &submodule_storage_backend);
-+	if (strcmp(submodule_storage_backend, ref_storage_backend))
-+		die("Ref storage '%s' for submodule '%s' does not match our storage, '%s'",
-+		    submodule_storage_backend, submodule, ref_storage_backend);
-+
-+done:
-+	free(submodule_storage_backend);
-+	strbuf_release(&sb);
++	return 0;
 +}
 +
- int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
  {
-+	check_submodule_backend(submodule);
- 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+ 	int ret = -1;
+ 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
++	struct string_list files_affected_refnames = STRING_LIST_INIT_NODUP;
++	struct string_list_item *item;
++	struct ref_transaction *files_transaction = NULL;
+ 
+ 	assert(err);
+ 
+@@ -1212,6 +1251,26 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	if (ret)
+ 		goto done;
+ 
++	if (the_refs_backend != &refs_be_files) {
++		files_transaction = ref_transaction_begin(err);
++		if (!files_transaction)
++			goto done;
++
++		ret = move_abnormal_ref_updates(transaction, files_transaction,
++						err);
++		if (ret)
++			goto done;
++
++		/* files backend commit */
++		if (get_affected_refnames(files_transaction,
++						 &files_affected_refnames,
++						 err)) {
++			ret = TRANSACTION_GENERIC_ERROR;
++			goto done;
++		}
++	}
++
++	/* main backend commit */
+ 	if (get_affected_refnames(transaction, &affected_refnames, err)) {
+ 		ret = TRANSACTION_GENERIC_ERROR;
+ 		goto done;
+@@ -1219,8 +1278,24 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 
+ 	ret = the_refs_backend->transaction_commit(transaction,
+ 						   &affected_refnames, err);
++	if (ret)
++		goto done;
++
++	if (files_transaction) {
++		ret = refs_be_files.transaction_commit(files_transaction,
++						       &files_affected_refnames,
++						       err);
++		if (ret) {
++			warning(split_transaction_fail_warning);
++			goto done;
++		}
++	}
++
+ done:
+ 	string_list_clear(&affected_refnames, 0);
++	string_list_clear(&files_affected_refnames, 0);
++	if (files_transaction)
++		ref_transaction_free(files_transaction);
+ 	return ret;
  }
  
-@@ -309,6 +344,7 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+@@ -1276,6 +1351,9 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ int create_symref(const char *ref_target, const char *refs_heads_master,
+ 		  const char *logmsg)
  {
-+	check_submodule_backend(submodule);
- 	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
++	if (ref_type(ref_target) != REF_TYPE_NORMAL)
++		return refs_be_files.create_symref(ref_target, refs_heads_master,
++						   logmsg);
+ 	return the_refs_backend->create_symref(ref_target, refs_heads_master,
+ 					       logmsg);
  }
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 75d4dae..72c64e8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -321,4 +321,6 @@ struct ref_storage_be {
+ 	for_each_replace_ref_fn *for_each_replace_ref;
+ };
  
-@@ -319,6 +355,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- {
-+	check_submodule_backend(submodule);
- 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
- }
- 
-@@ -1369,6 +1406,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- int resolve_gitlink_ref(const char *path, const char *refname,
- 			unsigned char *sha1)
- {
-+	check_submodule_backend(path);
- 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
- }
- 
-@@ -1379,6 +1417,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
- 
- int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- {
-+	check_submodule_backend(submodule);
- 	return the_refs_backend->head_ref_submodule(submodule, fn, cb_data);
- }
- 
-@@ -1389,6 +1428,7 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- {
-+	check_submodule_backend(submodule);
- 	return the_refs_backend->for_each_ref_submodule(submodule, fn, cb_data);
- }
- 
-@@ -1407,6 +1447,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- int for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 			      each_ref_fn fn, void *cb_data)
- {
-+	check_submodule_backend(submodule);
- 	return the_refs_backend->for_each_ref_in_submodule(submodule, prefix,
- 							   fn, cb_data);
- }
++extern struct ref_storage_be refs_be_files;
++
+ #endif /* REFS_REFS_INTERNAL_H */
 -- 
 2.4.2.749.g730654d-twtrsrc
