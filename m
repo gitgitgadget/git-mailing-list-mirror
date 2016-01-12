@@ -1,268 +1,87 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 4/4] t0060: verify that basename() and dirname() work as
- expected
-Date: Tue, 12 Jan 2016 08:57:57 +0100 (CET)
-Message-ID: <7d73267984ab029df022477e341c536e111eafdd.1452585382.git.johannes.schindelin@gmx.de>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git doesn't save capitalization change in file names.
+Date: Tue, 12 Jan 2016 09:02:21 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601120900380.2964@virtualbox>
+References: <CAMkNX-K=GQ6LkZv2PS5Pfs+v2bN1ozi9P5ZN4Z60Ba-3JtuRkg@mail.gmail.com> <CAH5451=-RkyYs3UJHUvvYHSrNODzW4dmAQDHU_Jo-Wf4Oa7Dew@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 08:58:22 2016
+Cc: Daniil S <ds98s3a@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 09:02:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aItqK-0000xV-1C
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 08:58:16 +0100
+	id 1aItuN-0003rh-Os
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 09:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788AbcALH6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 02:58:07 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49293 "EHLO mout.gmx.net"
+	id S1759706AbcALICY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 03:02:24 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50240 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752208AbcALH6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 02:58:05 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MfEsY-1aYuIJ3pJC-00OpIO; Tue, 12 Jan 2016 08:57:58
+	id S1758017AbcALICX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 03:02:23 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LsChr-1aBvwg3S2R-013w1n; Tue, 12 Jan 2016 09:02:21
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1452585382.git.johannes.schindelin@gmx.de>
+In-Reply-To: <CAH5451=-RkyYs3UJHUvvYHSrNODzW4dmAQDHU_Jo-Wf4Oa7Dew@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:FGlNoL1MLox5BoJS37Hf7GP6a5RBj8tOeU89GRrvZWK/g7tzwtx
- Uz+CtmSVnf+5lLLdNOoMYZNiZJgoOwughd+MuDEpm688txuVBlcQFsWTf1QobeiDV4WFIa5
- O6qag3H5g5tOIekk1vKn0NerGHTE0yG4aL/V/Vd75ua0eJsBT4JKXuKDBjY7WBHHlqSWTo8
- bm28Hm8f/pREFwL0NcGvQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Q73HpltjyKA=:5dDSQNF/m3VkJHWym1ZKMW
- jbBRhQtbtQjE/aQl6hWmKTVUWGdXkFFvaV0jC01cuLbZqq10TcNiHMzLMj+qnxiCaRS/3WcjX
- vHrGi/lx1volj07Ls/WF7qJ7eD/i+MSPnz2w4LoXVi5C+eaTTRrRMnzDzGExpOT/KYg+ugNxt
- bGFSqdOIqSt4S0gRIOnRdkO567If4xCaMQr2ajmZ1ejWsZJFpdJXFju+B4ChKnUyCGLSAWsh5
- gHQzEVF4doQUiCAWXMzFP8E6Z4XdBqRHpC+LM4JSyw/qjFkWmbVTs2pA8YZ9h6nKJ/h95qEmJ
- sd6GzuiAWjR/9GrKjU75i2cW6jnlmX1bjOzJCf5vfGqvF/iVIfSul5KlXFQ5dzZsm6g9J6hHL
- ls6/c5/72k7Ea7an/ykjfHYWYNiRLdXjxhSGQ0Y9P7uHYY59LMQhI3Dfxd+uHlE9N7SoHcIyp
- xsZTsalqIEDkYCWxEvKaAQStqCy0fLS6pGshoPTB4cllR2z9LVe5w6fDrnvsISoj5VbZtEJLc
- UXKJWvLb7BDsDDiMzi+BYhytJaJixhWwCi3D3MU48GStnCOmwJ4LNutVlLjrZuMHdvZ0kGcJm
- j/Rc0HSobQwKNqbm8VJc3VHbiSHOkIeSzlwMkMiw+IySTVj7lJ+1SbML6qpt6p6LTTI/4R7q7
- mbGOKcbKrIdpU0NDtPsCxNW0iVhj7RD/S7b+g195rzDSkRVaLbzQLiEcvAzUXFrAEY2Whnemt
- nG3XSiyy3BfvvNfhkEleNrn1RWCMDmLw06XVEuho+R8mu25V4neoe0I1vvYJ+TzWHNSbnPXW 
+X-Provags-ID: V03:K0:eGrtV+NA7Uz5qyGNxqUB2ZxvS1fom3THSQPFwh9MJdqjYj8vppZ
+ xwJdv84W9dOTgxQYKbvUbXDqN7qNsrRp+cZIDOEPk6y9OBugUyyP8NaccePdJD3eks32HH6
+ SZHsswyTpb8Kn6NANlHDAFvovQWJ0hEsouw+OeQ7Zl1J3pGfT1apJqcpV3S5+LCQrr0d3Rx
+ a9K3kjb3rGRPdHcCD+gwQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Uickjcm6Ac8=:v2XzkNxw+LhlAOmhcSHv9G
+ X2/0wuD0iYRIU3eh4kbcttvC62cHhRRmi56Wv2PVjD+2sU52tezXDxn7rfbmshMziQD5nZHUK
+ I/iNKZiqBf5gI8pMN+SHtfNc3sqBxyhzQHJeYWFqpiD/Dd1N768yto15GxE7cwlcgfznEPKsQ
+ 7SpLDPRpK0BWhJUF5JYcPCpruA2yq4rysKdQsA9bshSZdKUePR8nxiKwea2wp1GDi9bq87WYl
+ P3TqLgskL+I6MgB/4w1d2XHz94DijbJkFFmkR9qzyr5gHxHI7PvkosRmicIU54fUWO2emJ7rc
+ 2amYB503uaDazHDfoayh6NwGPf4gMFWQfeXjyv9lK8kuktdvjT8t10k7ICgXkMcVih5gYKzcX
+ pi8l7Q2Hyt5MTjQaz/x8kLFdU61atbz6DyuXrtNMKulV3oQI+n8h/vjEewR09RU9niBgzmIvP
+ FSHsmgEZxe3Jmc4CTRk9incJp2LOpxZgclxADy3nPD1KbCnbPuaISh7Cq0vFRI21ZykHjcYHn
+ P79sODY/3pNiOJfN9Qm1qKqqbsHyio4MpyFSRliaaNEIG9OYlmT4hqoKwDjQh/7sl1z/Rr1G4
+ 3cy6by0UljBXeNClDX6bXYs9rFLUbpGSs9yFNKiXzSEomAmRLe4fe8OhQSsMHlJKgoeSapHyR
+ 34qEqh6KnQRdKXb1049vj61Ti5v4Hdy/iRv25fptv7BB/NhyFm9LY7NGXJrLIbeT1Y0GCi9Ig
+ C2HeJx5BYLG+f61ZaAWcnE1G3h1QfKRVsxjlZc+LGBb10YdxJEwszTd4uCN7rwgoj53JX+lM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283776>
 
-Unfortunately, some libgen implementations yield outcomes different
-from what Git expects. For example, mingw-w64-crt provides a basename()
-function, that shortens `path0/` to `path`!
+Hi,
 
-So let's verify that the basename() and dirname() functions we use
-conform to what Git expects.
+On Tue, 12 Jan 2016, Andrew Ardill wrote:
 
-Derived-from-code-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t0060-path-utils.sh |   3 +
- test-path-utils.c     | 166 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 169 insertions(+)
+> On 12 January 2016 at 13:06, Daniil S <ds98s3a@gmail.com> wrote:
+> >
+> > So I've now encountered this with both GitHub and BitBucket, Windows
+> > and Linux versions, so I'm fairly sure it's git's fault.
 
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 627ef85..f0152a7 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -59,6 +59,9 @@ case $(uname -s) in
- 	;;
- esac
- 
-+test_expect_success basename 'test-path-utils basename'
-+test_expect_success dirname 'test-path-utils dirname'
-+
- norm_path "" ""
- norm_path . ""
- norm_path ./ ""
-diff --git a/test-path-utils.c b/test-path-utils.c
-index c67bf65..4ab68ac 100644
---- a/test-path-utils.c
-+++ b/test-path-utils.c
-@@ -39,6 +39,166 @@ static void normalize_argv_string(const char **var, const char *input)
- 		die("Bad value: %s\n", input);
- }
- 
-+struct test_data {
-+	const char *from;  /* input:  transform from this ... */
-+	const char *to;    /* output: ... to this.            */
-+};
-+
-+static int test_function(struct test_data *data, char *(*func)(char *input),
-+	const char *funcname)
-+{
-+	int failed = 0, i;
-+	char buffer[1024];
-+	char *to;
-+
-+	for (i = 0; data[i].to; i++) {
-+		if (!data[i].from)
-+			to = func(NULL);
-+		else {
-+			strcpy(buffer, data[i].from);
-+			to = func(buffer);
-+		}
-+		if (strcmp(to, data[i].to)) {
-+			error("FAIL: %s(%s) => '%s' != '%s'\n",
-+				funcname, data[i].from, to, data[i].to);
-+			failed = 1;
-+		}
-+	}
-+	return failed;
-+}
-+
-+static struct test_data basename_data[] = {
-+	/* --- POSIX type paths --- */
-+	{ NULL,              "."    },
-+	{ "",                "."    },
-+	{ ".",               "."    },
-+	{ "..",              ".."   },
-+	{ "/",               "/"    },
-+#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
-+	{ "//",              "//"   },
-+	{ "///",             "//"   },
-+	{ "////",            "//"   },
-+#else
-+	{ "//",              "/"    },
-+	{ "///",             "/"    },
-+	{ "////",            "/"    },
-+#endif
-+	{ "usr",             "usr"  },
-+	{ "/usr",            "usr"  },
-+	{ "/usr/",           "usr"  },
-+	{ "/usr//",          "usr"  },
-+	{ "/usr/lib",        "lib"  },
-+	{ "usr/lib",         "lib"  },
-+	{ "usr/lib///",      "lib"  },
-+
-+#if defined(__MINGW32__) || defined(_MSC_VER)
-+
-+	/* --- win32 type paths --- */
-+	{ "\\usr",           "usr"  },
-+	{ "\\usr\\",         "usr"  },
-+	{ "\\usr\\\\",       "usr"  },
-+	{ "\\usr\\lib",      "lib"  },
-+	{ "usr\\lib",        "lib"  },
-+	{ "usr\\lib\\\\\\",  "lib"  },
-+	{ "C:/usr",          "usr"  },
-+	{ "C:/usr",          "usr"  },
-+	{ "C:/usr/",         "usr"  },
-+	{ "C:/usr//",        "usr"  },
-+	{ "C:/usr/lib",      "lib"  },
-+	{ "C:usr/lib",       "lib"  },
-+	{ "C:usr/lib///",    "lib"  },
-+	{ "C:",              "."    },
-+	{ "C:a",             "a"    },
-+	{ "C:/",             "/"    },
-+	{ "C:///",           "/"    },
-+#if defined(NO_LIBGEN_H)
-+	{ "\\",              "\\"   },
-+	{ "\\\\",            "\\"   },
-+	{ "\\\\\\",          "\\"   },
-+#else
-+
-+	/* win32 platform variations: */
-+#if defined(__MINGW32__)
-+	{ "\\",              "/"    },
-+	{ "\\\\",            "/"    },
-+	{ "\\\\\\",          "/"    },
-+#endif
-+
-+#if defined(_MSC_VER)
-+	{ "\\",              "\\"   },
-+	{ "\\\\",            "\\"   },
-+	{ "\\\\\\",          "\\"   },
-+#endif
-+
-+#endif
-+#endif
-+	{ NULL,              NULL   }
-+};
-+
-+static struct test_data dirname_data[] = {
-+	/* --- POSIX type paths --- */
-+	{ NULL,              "."      },
-+	{ "",                "."      },
-+	{ ".",               "."      },
-+	{ "..",              "."      },
-+	{ "/",               "/"      },
-+	{ "//",              "//"     },
-+#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
-+	{ "///",             "//"     },
-+	{ "////",            "//"     },
-+#else
-+	{ "///",             "/"      },
-+	{ "////",            "/"      },
-+#endif
-+	{ "usr",             "."      },
-+	{ "/usr",            "/"      },
-+	{ "/usr/",           "/"      },
-+	{ "/usr//",          "/"      },
-+	{ "/usr/lib",        "/usr"   },
-+	{ "usr/lib",         "usr"    },
-+	{ "usr/lib///",      "usr"    },
-+
-+#if defined(__MINGW32__) || defined(_MSC_VER)
-+
-+	/* --- win32 type paths --- */
-+	{ "\\",              "\\"     },
-+	{ "\\\\",            "\\\\"   },
-+	{ "\\usr",           "\\"     },
-+	{ "\\usr\\",         "\\"     },
-+	{ "\\usr\\\\",       "\\"     },
-+	{ "\\usr\\lib",      "\\usr"  },
-+	{ "usr\\lib",        "usr"    },
-+	{ "usr\\lib\\\\\\",  "usr"    },
-+	{ "C:a",             "C:."    },
-+	{ "C:/",             "C:/"    },
-+	{ "C:///",           "C:/"    },
-+	{ "C:/usr",          "C:/"    },
-+	{ "C:/usr/",         "C:/"    },
-+	{ "C:/usr//",        "C:/"    },
-+	{ "C:/usr/lib",      "C:/usr" },
-+	{ "C:usr/lib",       "C:usr"  },
-+	{ "C:usr/lib///",    "C:usr"  },
-+	{ "\\\\\\",          "\\"     },
-+	{ "\\\\\\\\",        "\\"     },
-+#if defined(NO_LIBGEN_H)
-+	{ "C:",              "C:."    },
-+#else
-+
-+	/* win32 platform variations: */
-+#if defined(__MINGW32__)
-+	/* the following is clearly wrong ... */
-+	{ "C:",              "."      },
-+#endif
-+
-+#if defined(_MSC_VER)
-+	{ "C:",              "C:."    },
-+#endif
-+
-+#endif
-+#endif
-+	{ NULL,              NULL     }
-+};
-+
- int main(int argc, char **argv)
- {
- 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
-@@ -133,6 +293,12 @@ int main(int argc, char **argv)
- 		return 0;
- 	}
- 
-+	if (argc == 2 && !strcmp(argv[1], "basename"))
-+		return test_function(basename_data, basename, argv[1]);
-+
-+	if (argc == 2 && !strcmp(argv[1], "dirname"))
-+		return test_function(dirname_data, dirname, argv[1]);
-+
- 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
- 		argv[1] ? argv[1] : "(there was none)");
- 	return 1;
--- 
-2.6.3.windows.1.300.g1c25e49
+I highly doubt that the Linux variety of Git displays this problem, unless
+it is run on a case-insensitive file system.
+
+> > Example: if file named "Pathfinding.java" was renamed to
+> > "PathFinding.java" and that change is then committed, filename won't
+> > change in repository.
+> 
+> This actually comes down to the file system you use, as git itself does
+> keep track of the capitalisation of file names; if the file system is
+> case insensitive (Mac OSX being the typical example) then you can run
+> into weird issues when files change case.
+> 
+> For example, the following two search results:
+> 
+> https://stackoverflow.com/questions/10523849/changing-capitalization-of-filenames-in-git
+> 
+> https://ocroquette.wordpress.com/2014/07/08/git-capitalization-of-file-names-and-name-conflicts/
+
+I'd like to offer the most common work-around:
+
+git mv Pathfinding.java Pathfinding.java.rename
+git mv Pathfinding.java.rename PathFinding.java
+
+Ciao,
+Johannes
