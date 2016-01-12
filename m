@@ -1,149 +1,217 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] lock_ref_sha1_basic: always fill old_oid while holding
- lock
-Date: Tue, 12 Jan 2016 16:44:39 -0500
-Message-ID: <20160112214439.GB2841@sigill.intra.peff.net>
+Subject: [PATCH 3/3] lock_ref_sha1_basic: handle REF_NODEREF with invalid refs
+Date: Tue, 12 Jan 2016 16:45:09 -0500
+Message-ID: <20160112214509.GC2841@sigill.intra.peff.net>
 References: <20160112214318.GA2527@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 22:45:02 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 22:45:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ6kG-0007Va-2j
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 22:44:52 +0100
+	id 1aJ6kj-0008En-VK
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 22:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934AbcALVon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 16:44:43 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52570 "HELO cloud.peff.net"
+	id S1754000AbcALVpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 16:45:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52577 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753882AbcALVom (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 16:44:42 -0500
-Received: (qmail 19619 invoked by uid 102); 12 Jan 2016 21:44:42 -0000
+	id S1751577AbcALVpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 16:45:11 -0500
+Received: (qmail 19667 invoked by uid 102); 12 Jan 2016 21:45:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:42 -0500
-Received: (qmail 18821 invoked by uid 107); 12 Jan 2016 21:44:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:45:11 -0500
+Received: (qmail 18840 invoked by uid 107); 12 Jan 2016 21:45:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 16:44:39 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:45:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 16:45:09 -0500
 Content-Disposition: inline
 In-Reply-To: <20160112214318.GA2527@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283848>
 
-Our basic strategy for taking a ref lock is:
+We sometimes call lock_ref_sha1_basic with REF_NODEREF
+to operate directly on a symbolic ref. This is used, for
+example, to move to a detached HEAD, or when updating
+the contents of HEAD via checkout or symbolic-ref.
 
-  1. Create $ref.lock to take the lock
+However, the first step of the function is to resolve the
+refname to get the "old" sha1, and we do so without telling
+resolve_ref_unsafe() that we are only interested in the
+symref. As a result, we may detect a problem there not with
+the symref itself, but with something it points to.
 
-  2. Read the ref again while holding the lock (during which
-     time we know that nobody else can be updating it).
+The real-world example I found (and what is used in the test
+suite) is a HEAD pointing to a ref that cannot exist,
+because it would cause a directory/file conflict with other
+existing refs.  This situation is somewhat broken, of
+course, as trying to _commit_ on that HEAD would fail. But
+it's not explicitly forbidden, and we should be able to move
+away from it. However, neither "git checkout" nor "git
+symbolic-ref" can do so. We try to take the lock on HEAD,
+which is pointing to a non-existent ref. We bail from
+resolve_ref_unsafe() with errno set to EISDIR, and the lock
+code thinks we are attempting to create a d/f conflict.
 
-  3. Compare the value we read to the expected "old_sha1"
+Of course we're not. The problem is that the lock code has
+no idea what level we were at when we got EISDIR, so trying
+to diagnose or remove empty directories for HEAD is not
+useful.
 
-The value we read in step (2) is returned to the caller via
-the lock->old_oid field, who may use it for other purposes
-(such as writing a reflog).
+To make things even more complicated, we only get EISDIR in
+the loose-ref case. If the refs are packed, the resolution
+may "succeed", giving us the pointed-to ref in "refname",
+but a null oid. Later, we say "ah, the null oid means we are
+creating; let's make sure there is room for it", but
+mistakenly check against the _resolved_ refname, not the
+original.
 
-If we have no "old_sha1" (i.e., we are unconditionally
-taking the lock), then we obviously must omit step 3. But we
-_also_ omit step 2. This seems like a nice optimization, but
-it means that the caller sees only whatever was left in
-lock->old_oid from previous calls to resolve_ref_unsafe(),
-which happened outside of the lock.
+We can fix this by making two tweaks:
 
-We can demonstrate this race pretty easily. Imagine you have
-three commits, $one, $two, and $three. One script just flips
-between $one and $two, without providing an old-sha1:
+  1. Call resolve_ref_unsafe() with RESOLVE_REF_NO_RECURSE
+     when REF_NODEREF is set. This means any errors
+     we get will be from the orig_refname, and we can act
+     accordingly.
 
-  while true; do
-    git update-ref -m one refs/heads/foo $one
-    git update-ref -m two refs/heads/foo $two
-  done
+     We already do this in the REF_DELETING case, but we
+     should do it for update, too.
 
-Meanwhile, another script tries to set the value to $three,
-also not using an old-sha1:
+  2. If we do get a "refname" return from
+     resolve_ref_unsafe(), even with RESOLVE_REF_NO_RECURSE
+     it may be the name of the ref pointed-to by a symref.
+     We already normalize this back to orig_refname before
+     taking the lockfile, but we need to do so before the
+     null_oid check.
 
-  while true; do
-    git update-ref -m three refs/heads/foo $three
-  done
-
-If these run simultaneously, we'll see a lot of lock
-contention, but each of the writes will succeed some of the
-time. The reflog may record movements between any of the
-three refs, but we would expect it to provide a consistent
-log: the "from" field of each log entry should be the same
-as the "two" field of the previous one.
-
-But if we check this:
-
-  perl -alne '
-    print "mismatch on line $."
-            if defined $last && $F[0] ne $last;
-    $last = $F[1];
-  ' .git/logs/refs/heads/foo
-
-we'll see many mismatches. Why?
-
-Because sometimes, in the time between lock_ref_sha1_basic
-filling lock->old_oid via resolve_ref_unsafe() and it taking
-the lock, there may be a complete write by another process.
-And the "from" field in our reflog entry will be wrong, and
-will refer to an older value.
-
-This is probably quite rare in practice. It requires writers
-which do not provide an old-sha1 value, and it is a very
-quick race. However, it is easy to fix: we simply perform
-step (2), the read-under-lock, whether we have an old-sha1
-or not. Then the value we hand back to the caller is always
-atomic.
+While we're rearranging the REF_NODEREF handling, we can
+also bump the initialization of lflags to the top of the
+function, where we are setting up other flags. This saves us
+from having yet another conditional block on REF_NODEREF
+just to set it later.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs/files-backend.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ refs/files-backend.c             | 19 ++++++++++---------
+ t/t1401-symbolic-ref.sh          |  7 +++++++
+ t/t2011-checkout-invalid-head.sh | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 9 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 180c837..69c3ecf 100644
+index 69c3ecf..81c92b4 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1840,12 +1840,17 @@ static int verify_lock(struct ref_lock *lock,
- 	if (read_ref_full(lock->ref_name,
- 			  mustexist ? RESOLVE_REF_READING : 0,
- 			  lock->old_oid.hash, NULL)) {
--		int save_errno = errno;
--		strbuf_addf(err, "can't verify ref %s", lock->ref_name);
--		errno = save_errno;
--		return -1;
-+		if (old_sha1) {
-+			int save_errno = errno;
-+			strbuf_addf(err, "can't verify ref %s", lock->ref_name);
-+			errno = save_errno;
-+			return -1;
-+		} else {
-+			hashclr(lock->old_oid.hash);
-+			return 0;
-+		}
+@@ -1887,7 +1887,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	const char *orig_refname = refname;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int type, lflags;
++	int type;
++	int lflags = 0;
+ 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
+ 	int resolve_flags = 0;
+ 	int attempts_remaining = 3;
+@@ -1898,10 +1899,11 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 
+ 	if (mustexist)
+ 		resolve_flags |= RESOLVE_REF_READING;
+-	if (flags & REF_DELETING) {
++	if (flags & REF_DELETING)
+ 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
+-		if (flags & REF_NODEREF)
+-			resolve_flags |= RESOLVE_REF_NO_RECURSE;
++	if (flags & REF_NODEREF) {
++		resolve_flags |= RESOLVE_REF_NO_RECURSE;
++		lflags |= LOCK_NO_DEREF;
  	}
--	if (hashcmp(lock->old_oid.hash, old_sha1)) {
-+	if (old_sha1 && hashcmp(lock->old_oid.hash, old_sha1)) {
- 		strbuf_addf(err, "ref %s is at %s but expected %s",
- 			    lock->ref_name,
- 			    sha1_to_hex(lock->old_oid.hash),
-@@ -1985,7 +1990,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 			goto error_return;
- 		}
- 	}
--	if (old_sha1 && verify_lock(lock, old_sha1, mustexist, err)) {
-+	if (verify_lock(lock, old_sha1, mustexist, err)) {
- 		last_errno = errno;
+ 
+ 	refname = resolve_ref_unsafe(refname, resolve_flags,
+@@ -1937,6 +1939,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 
  		goto error_return;
  	}
++
++	if (flags & REF_NODEREF)
++		refname = orig_refname;
++
+ 	/*
+ 	 * If the ref did not exist and we are creating it, make sure
+ 	 * there is no existing packed ref whose name begins with our
+@@ -1952,11 +1958,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 
+ 	lock->lk = xcalloc(1, sizeof(struct lock_file));
+ 
+-	lflags = 0;
+-	if (flags & REF_NODEREF) {
+-		refname = orig_refname;
+-		lflags |= LOCK_NO_DEREF;
+-	}
+ 	lock->ref_name = xstrdup(refname);
+ 	lock->orig_ref_name = xstrdup(orig_refname);
+ 	strbuf_git_path(&ref_file, "%s", refname);
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index 5db876c..a713766 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -122,4 +122,11 @@ test_expect_success 'symbolic-ref does not create ref d/f conflicts' '
+ 	test_must_fail git symbolic-ref refs/heads/df/conflict refs/heads/df
+ '
+ 
++test_expect_success 'symbolic-ref handles existing pointer to invalid name' '
++	head=$(git rev-parse HEAD) &&
++	git symbolic-ref HEAD refs/heads/outer &&
++	git update-ref refs/heads/outer/inner $head &&
++	git symbolic-ref HEAD refs/heads/unrelated
++'
++
+ test_done
+diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
+index d444d5e..c5501b0 100755
+--- a/t/t2011-checkout-invalid-head.sh
++++ b/t/t2011-checkout-invalid-head.sh
+@@ -25,4 +25,37 @@ test_expect_success 'checkout notices failure to lock HEAD' '
+ 	test_must_fail git checkout -b other
+ '
+ 
++test_expect_success 'create ref directory/file conflict scenario' '
++	git update-ref refs/heads/outer/inner master &&
++
++	# do not rely on symbolic-ref to get a known state,
++	# as it may use the same code we are testing
++	reset_to_df () {
++		echo "ref: refs/heads/outer" >.git/HEAD
++	}
++'
++
++test_expect_success 'checkout away from d/f HEAD (unpacked, to branch)' '
++	reset_to_df &&
++	git checkout master
++'
++
++test_expect_success 'checkout away from d/f HEAD (unpacked, to detached)' '
++	reset_to_df &&
++	git checkout --detach master
++'
++
++test_expect_success 'pack refs' '
++	git pack-refs --all --prune
++'
++
++test_expect_success 'checkout away from d/f HEAD (packed, to branch)' '
++	reset_to_df &&
++	git checkout master
++'
++
++test_expect_success 'checkout away from d/f HEAD (packed, to detached)' '
++	reset_to_df &&
++	git checkout --detach master
++'
+ test_done
 -- 
 2.7.0.368.g04bc9ee
