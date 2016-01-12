@@ -1,118 +1,149 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] checkout,clone: check return value of create_symref
-Date: Tue, 12 Jan 2016 16:44:16 -0500
-Message-ID: <20160112214415.GA2841@sigill.intra.peff.net>
+Subject: [PATCH 2/3] lock_ref_sha1_basic: always fill old_oid while holding
+ lock
+Date: Tue, 12 Jan 2016 16:44:39 -0500
+Message-ID: <20160112214439.GB2841@sigill.intra.peff.net>
 References: <20160112214318.GA2527@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 22:44:33 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 22:45:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ6jp-0007Q4-QP
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 22:44:26 +0100
+	id 1aJ6kG-0007Va-2j
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 22:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753347AbcALVoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 16:44:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52565 "HELO cloud.peff.net"
+	id S1753934AbcALVon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 16:44:43 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52570 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752762AbcALVoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 16:44:18 -0500
-Received: (qmail 19606 invoked by uid 102); 12 Jan 2016 21:44:18 -0000
+	id S1753882AbcALVom (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 16:44:42 -0500
+Received: (qmail 19619 invoked by uid 102); 12 Jan 2016 21:44:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:18 -0500
-Received: (qmail 18802 invoked by uid 107); 12 Jan 2016 21:44:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:42 -0500
+Received: (qmail 18821 invoked by uid 107); 12 Jan 2016 21:44:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 16:44:16 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:44:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 16:44:39 -0500
 Content-Disposition: inline
 In-Reply-To: <20160112214318.GA2527@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283847>
 
-It's unlikely that we would fail to create or update a
-symbolic ref (especially HEAD), but if we do, we should
-notice and complain. Note that there's no need to give more
-details in our error message; create_symref will already
-have done so.
+Our basic strategy for taking a ref lock is:
 
-While we're here, let's also fix a minor memory leak in
-clone.
+  1. Create $ref.lock to take the lock
+
+  2. Read the ref again while holding the lock (during which
+     time we know that nobody else can be updating it).
+
+  3. Compare the value we read to the expected "old_sha1"
+
+The value we read in step (2) is returned to the caller via
+the lock->old_oid field, who may use it for other purposes
+(such as writing a reflog).
+
+If we have no "old_sha1" (i.e., we are unconditionally
+taking the lock), then we obviously must omit step 3. But we
+_also_ omit step 2. This seems like a nice optimization, but
+it means that the caller sees only whatever was left in
+lock->old_oid from previous calls to resolve_ref_unsafe(),
+which happened outside of the lock.
+
+We can demonstrate this race pretty easily. Imagine you have
+three commits, $one, $two, and $three. One script just flips
+between $one and $two, without providing an old-sha1:
+
+  while true; do
+    git update-ref -m one refs/heads/foo $one
+    git update-ref -m two refs/heads/foo $two
+  done
+
+Meanwhile, another script tries to set the value to $three,
+also not using an old-sha1:
+
+  while true; do
+    git update-ref -m three refs/heads/foo $three
+  done
+
+If these run simultaneously, we'll see a lot of lock
+contention, but each of the writes will succeed some of the
+time. The reflog may record movements between any of the
+three refs, but we would expect it to provide a consistent
+log: the "from" field of each log entry should be the same
+as the "two" field of the previous one.
+
+But if we check this:
+
+  perl -alne '
+    print "mismatch on line $."
+            if defined $last && $F[0] ne $last;
+    $last = $F[1];
+  ' .git/logs/refs/heads/foo
+
+we'll see many mismatches. Why?
+
+Because sometimes, in the time between lock_ref_sha1_basic
+filling lock->old_oid via resolve_ref_unsafe() and it taking
+the lock, there may be a complete write by another process.
+And the "from" field in our reflog entry will be wrong, and
+will refer to an older value.
+
+This is probably quite rare in practice. It requires writers
+which do not provide an old-sha1 value, and it is a very
+quick race. However, it is easy to fix: we simply perform
+step (2), the read-under-lock, whether we have an old-sha1
+or not. Then the value we hand back to the caller is always
+atomic.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Same as before (but with the extra test added in v2, in case you didn't
-that up yet).
+ refs/files-backend.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
- builtin/checkout.c               |  3 ++-
- builtin/clone.c                  | 11 +++++++----
- t/t2011-checkout-invalid-head.sh |  6 ++++++
- 3 files changed, 15 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e8110a9..5af84a3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -661,7 +661,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
--		create_symref("HEAD", new->path, msg.buf);
-+		if (create_symref("HEAD", new->path, msg.buf) < 0)
-+			die("unable to update HEAD");
- 		if (!opts->quiet) {
- 			if (old->path && !strcmp(new->path, old->path)) {
- 				if (opts->new_branch_force)
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0b3cd9..a7c8def 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -636,9 +636,11 @@ static void update_remote_refs(const struct ref *refs,
- 		struct strbuf head_ref = STRBUF_INIT;
- 		strbuf_addstr(&head_ref, branch_top);
- 		strbuf_addstr(&head_ref, "HEAD");
--		create_symref(head_ref.buf,
--			      remote_head_points_at->peer_ref->name,
--			      msg);
-+		if (create_symref(head_ref.buf,
-+				  remote_head_points_at->peer_ref->name,
-+				  msg) < 0)
-+			die("unable to update %s", head_ref.buf);
-+		strbuf_release(&head_ref);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 180c837..69c3ecf 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1840,12 +1840,17 @@ static int verify_lock(struct ref_lock *lock,
+ 	if (read_ref_full(lock->ref_name,
+ 			  mustexist ? RESOLVE_REF_READING : 0,
+ 			  lock->old_oid.hash, NULL)) {
+-		int save_errno = errno;
+-		strbuf_addf(err, "can't verify ref %s", lock->ref_name);
+-		errno = save_errno;
+-		return -1;
++		if (old_sha1) {
++			int save_errno = errno;
++			strbuf_addf(err, "can't verify ref %s", lock->ref_name);
++			errno = save_errno;
++			return -1;
++		} else {
++			hashclr(lock->old_oid.hash);
++			return 0;
++		}
  	}
- }
- 
-@@ -648,7 +650,8 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 	const char *head;
- 	if (our && skip_prefix(our->name, "refs/heads/", &head)) {
- 		/* Local default branch link */
--		create_symref("HEAD", our->name, NULL);
-+		if (create_symref("HEAD", our->name, NULL) < 0)
-+			die("unable to update HEAD");
- 		if (!option_bare) {
- 			update_ref(msg, "HEAD", our->old_oid.hash, NULL, 0,
- 				   UPDATE_REFS_DIE_ON_ERR);
-diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
-index 300f8bf..d444d5e 100755
---- a/t/t2011-checkout-invalid-head.sh
-+++ b/t/t2011-checkout-invalid-head.sh
-@@ -19,4 +19,10 @@ test_expect_success 'checkout master from invalid HEAD' '
- 	git checkout master --
- '
- 
-+test_expect_success 'checkout notices failure to lock HEAD' '
-+	test_when_finished "rm -f .git/HEAD.lock" &&
-+	>.git/HEAD.lock &&
-+	test_must_fail git checkout -b other
-+'
-+
- test_done
+-	if (hashcmp(lock->old_oid.hash, old_sha1)) {
++	if (old_sha1 && hashcmp(lock->old_oid.hash, old_sha1)) {
+ 		strbuf_addf(err, "ref %s is at %s but expected %s",
+ 			    lock->ref_name,
+ 			    sha1_to_hex(lock->old_oid.hash),
+@@ -1985,7 +1990,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			goto error_return;
+ 		}
+ 	}
+-	if (old_sha1 && verify_lock(lock, old_sha1, mustexist, err)) {
++	if (verify_lock(lock, old_sha1, mustexist, err)) {
+ 		last_errno = errno;
+ 		goto error_return;
+ 	}
 -- 
 2.7.0.368.g04bc9ee
