@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/12] t9145-git-svn-master-branch.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:33 +0000
-Message-ID: <1452599378-47882-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/12] t9350-fast-export.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:36 +0000
+Message-ID: <1452599378-47882-11-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:01 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxSZ-0007lX-5W
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:49:59 +0100
+	id 1aIxSZ-0007lX-Nq
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964891AbcALLtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:49:50 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32899 "EHLO
+	id S964992AbcALLtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:49:55 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32917 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933971AbcALLts (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:48 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u188so30860894wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:47 -0800 (PST)
+	with ESMTP id S964801AbcALLtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 06:49:50 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u188so30861027wmu.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gkj2rY3uZospFnh3Qoi0FvLZGy50TK0Vi3qENC0RlZM=;
-        b=PxLk5fYHxEE08ZaQdXwlHJX593utLI/btlOz1ZN10aDfpTaM1lXo/xF8D/TzgJvKhb
-         SWteRT/r0pjm7rpVkBkJtpQzJUEXUQdorzy9qXcO3qhf26Lq0aoRWN6Y5KO8eETulmeV
-         W72gyOiVvTPwm47qN3L9802pwpYrjbAGWYHTLhROBb017L1blS4lH6bVMXGjd474VxwV
-         2Y9PmocLGMM2V461ezOYEywB2XkkYUMQM1ER3aN+1NwSWducHxB0nOyg6TUP6FZDceaw
-         NH5N3i0ujEm+dDs9yc2BwSgZJx30bRpNCH52DLa9HIu52H0+A0EjhhI5MXJEB7wwlafk
-         trhQ==
-X-Received: by 10.194.133.102 with SMTP id pb6mr8018807wjb.12.1452599386980;
-        Tue, 12 Jan 2016 03:49:46 -0800 (PST)
+        bh=nWo+tysdFxmrKm+omsCvlJQ4+ir/QWa0yA4L4C7gZb4=;
+        b=C1CM6+Pqb8nNZIAk6w2YfT0RdifcZWspvkfg5RxmRxJ/LqYYRGFjtporaHdDKBppwT
+         IoNOdZcLrvH/q08IvXtu9me1h2E51trSi7eOJtUeB88HrBhG94J4TGNgX3lAXb9zzHmy
+         YlxGRoCulXx1qlOz2MuAzysa9SVEiJrchkS9G0oaQLSUAYg3XYAKDn08w3dzIlkAj6lC
+         TZCUp7H/jVGu0kGv/oyVPUxRuFD9aOcJhgb3ab4s69jxdR+fxGSx+jh61On2mY7FMSMV
+         WsdmTNfmBIcpZulNLOFeTTcH2BR0E08MZDmQvYsZUdVL3c7gFtJAt30dAaBWtWrYdxMO
+         TGag==
+X-Received: by 10.28.146.8 with SMTP id u8mr18215251wmd.72.1452599389084;
+        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.46
+        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:46 -0800 (PST)
+        Tue, 12 Jan 2016 03:49:48 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283805>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,23 +66,39 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9145-git-svn-master-branch.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t9350-fast-export.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t9145-git-svn-master-branch.sh b/t/t9145-git-svn-master-branch.sh
-index 6559137..3bbf341 100755
---- a/t/t9145-git-svn-master-branch.sh
-+++ b/t/t9145-git-svn-master-branch.sh
-@@ -17,8 +17,8 @@ test_expect_success 'git svn clone --stdlayout sets up trunk as master' '
- 	git svn clone -s "$svnrepo" g &&
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 66c8b0a..b5149fd 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -163,7 +163,7 @@ test_expect_success 'setup submodule' '
+ 		git add file &&
+ 		git commit -m sub_initial
+ 	) &&
+-	git submodule add "`pwd`/sub" sub &&
++	git submodule add "$(pwd)/sub" sub &&
+ 	git commit -m initial &&
+ 	test_tick &&
  	(
- 		cd g &&
--		test x`git rev-parse --verify refs/remotes/origin/trunk^0` = \
--		     x`git rev-parse --verify refs/heads/master^0`
-+		test x$(git rev-parse --verify refs/remotes/origin/trunk^0) = \
-+		     x$(git rev-parse --verify refs/heads/master^0)
- 	)
- '
+@@ -377,7 +377,7 @@ test_expect_success 'full-tree re-shows unmodified files'        '
  
+ test_expect_success 'set-up a few more tags for tag export tests' '
+ 	git checkout -f master &&
+-	HEAD_TREE=`git show -s --pretty=raw HEAD | grep tree | sed "s/tree //"` &&
++	HEAD_TREE=$(git show -s --pretty=raw HEAD | grep tree | sed "s/tree //") &&
+ 	git tag    tree_tag        -m "tagging a tree" $HEAD_TREE &&
+ 	git tag -a tree_tag-obj    -m "tagging a tree" $HEAD_TREE &&
+ 	git tag    tag-obj_tag     -m "tagging a tag" tree_tag-obj &&
+@@ -422,7 +422,7 @@ test_expect_success 'directory becomes symlink'        '
+ test_expect_success 'fast-export quotes pathnames' '
+ 	git init crazy-paths &&
+ 	(cd crazy-paths &&
+-	 blob=`echo foo | git hash-object -w --stdin` &&
++	 blob=$(echo foo | git hash-object -w --stdin) &&
+ 	 git update-index --add \
+ 		--cacheinfo 100644 $blob "$(printf "path with\\nnewline")" \
+ 		--cacheinfo 100644 $blob "path with \"quote\"" \
 -- 
 2.5.0
