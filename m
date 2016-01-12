@@ -1,116 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Some issues when trying to set up a shallow git mirror server
-Date: Tue, 12 Jan 2016 10:29:27 -0800
-Message-ID: <xmqqy4butzw8.fsf@gitster.mtv.corp.google.com>
-References: <20160107165417.GB3397@logi.codethink.co.uk>
-	<xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
-	<xmqqd1tb21oh.fsf@gitster.mtv.corp.google.com>
-	<20160111155153.GE3397@logi.codethink.co.uk>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Malicously tampering git metadata?
+Date: Tue, 12 Jan 2016 10:39:07 -0800
+Message-ID: <CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
+References: <20151216032639.GA1901@LykOS>
+	<20151218231032.GA16904@thunk.org>
+	<20151219173018.GA1178@LykOS>
+	<20151220012835.GA3013@thunk.org>
+	<20160112182137.GE27334@LykOS>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Richard Maw <richard.maw@codethink.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 12 19:29:35 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 12 19:39:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ3hG-0000At-Nw
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 19:29:35 +0100
+	id 1aJ3qc-0006fI-Ty
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 19:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbcALS3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 13:29:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64966 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752740AbcALS3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 13:29:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 491373996C;
-	Tue, 12 Jan 2016 13:29:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5+xpwySs/PpHxgB3yqmylGSIFaI=; b=WIaxd/
-	wab3s6r1GGqKBU7gF5CGuqGqnA4IvGcIBLzPOouqnhQFNs7Xbi9Kru+weESMDiew
-	ynyzptbfq78TW8qCDpP2jZeBotOqEsJ2B4maiO/c9/TnzZDYq0cj3X/usciPPVB3
-	o3WBgzY+e5iwc55jl9WP2dJ2AUqszGFFYimBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hecG3QMa2feS5OrNUeUILMA5/KJlfcdW
-	ONrpfZ3ANQVfdY8tGge5SlQlAiSI9gboF9hWEPNbHj2wGyz0xnNPOA8FFwvsBljD
-	K7tyQr9jE2KMqfw3Y7baWo5HSz9jYnorunLuB5kVTBZ10QkWV0YJNZlfLZV5NuaN
-	jOEfLiZD9xg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D7B43996B;
-	Tue, 12 Jan 2016 13:29:29 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9F1703996A;
-	Tue, 12 Jan 2016 13:29:28 -0500 (EST)
-In-Reply-To: <20160111155153.GE3397@logi.codethink.co.uk> (Richard Maw's
-	message of "Mon, 11 Jan 2016 15:51:53 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6A5252C8-B95A-11E5-9DD5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752904AbcALSjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 13:39:09 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35612 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752307AbcALSjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 13:39:08 -0500
+Received: by mail-io0-f172.google.com with SMTP id 77so361931854ioc.2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 10:39:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=trYsUlsXpXc1mRT65TU6/7H4Ng06r9qaGmzBR5aFhak=;
+        b=SvCHKy2PVcR8fLNanZEHSDGDxpCu2WlH246K4PBhA7+bCwgquthJ3M0NOiqGfzOlNl
+         16+MrxtdeKserBU2OIG7BE7/leu2AOHKCsRC4rU6AqlHae6pvDk9qSP1+yLW0kPGNQt0
+         XlFh+HSbJKMxkMzgSFMwGkJGSl/yzXw1Idl7JkJay9HjmsRJd7tEE6Ns9FvebnvpSiOY
+         LkjfufbqoA7tt4TCA9cpT4eBLL2HcmVCxDYeSdMk/V3+wC/CvIbtHnDLMtDAPmd3i7Pt
+         yy64QbNHbfqjG2WezYbQPOxkKCp4b1hmiM/ByH3RuOg4qAHTtv/nko/YvASpPKYiM/Dh
+         virg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=trYsUlsXpXc1mRT65TU6/7H4Ng06r9qaGmzBR5aFhak=;
+        b=gTZ+wGAzIRkK+kZLsuuZko2TagyOrooG1ptieExXHpO5vVH6OfQppQvrgdTQV6m15B
+         VZuoULHM7x0yysVY2cyQ40ggHVX7n2M5Wh523koALANPtIdol4XcY/+rPkz51amUWwWJ
+         dAG9mpnmM48EglmjGMcmOWPUN75Itrk6vbF2XaFElnn83RqdiiyVnRORzQ4nr0bCbgif
+         NrgbcmO67czC8akuAmqxbb7Il0WlZa/oru4qVXQ116lPlyv/rgj2oBhJoJ5/NeGZBSZo
+         TLq5Ezw9wK5x8yeTgGkrBBWPuYBZnrrnsBwF2eewjF8NGBUZZ8Q+OTvtUFxAvxh4Chy5
+         w/Nw==
+X-Gm-Message-State: ALoCoQkT26NU840fVSogXVNOE9bpCkvOXbqA/ZTPIvcGDlITKFj6aUOihURj8kZgwN3EH3GZtQq8c52s8ndVRovn+scuXMqew6eUusNOK18PygkrnD7smJk=
+X-Received: by 10.107.137.68 with SMTP id l65mr3702270iod.110.1452623947399;
+ Tue, 12 Jan 2016 10:39:07 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Tue, 12 Jan 2016 10:39:07 -0800 (PST)
+In-Reply-To: <20160112182137.GE27334@LykOS>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283835>
 
-Richard Maw <richard.maw@codethink.co.uk> writes:
-
-> On Fri, Jan 08, 2016 at 01:37:02PM -0800, Junio C Hamano wrote:
-> ...
->> So if you want to do this, a new protocol extension needs to allow
->> your updated sender (upload-pack) and receiver (fetch-pack) to work
->> more like this:
->> ...
->>  * Finally, when the sender sends out the resulting packfile, it
->>    also has to tell the receiver which of the object pairs the
->>    receiver asked it to check the ancestry relationship violate the
->>    fast-forward rule.  In the earlier example of fast-forwarding O
->>    and P with N, where the receiver asked "want N O P", the receiver
->>    asked to check object pairs <N, O> and <N, P>.  If P fast-forwards
->>    to N but O does not, then the sender would tell the receiver the
->>    fact that "O does not fast forward to N".
+On Tue, Jan 12, 2016 at 10:21 AM, Santiago Torres <santiago@nyu.edu> wrote:
+> Hello Everyone,
 >
-> So this would be another step after the receiver communicates "done",
-> but before the pack file itself gets sent,
-> so the sender can determine that it doesn't need to tell the reciever
-> the relationship between two commits,
-> since it knows you can work it out yourself?
+> Thanks for the feedback regarding our attack scenario; it certainly shed some
+> light in what is the current state of git's metadata protection. We were
+> pleasantly surprised that attacks of this nature were considered, yet we think
+> we can improve on the current mechanisms.
 >
-> Otherwise if it can probably communicate the relationships before the have list
-> is sent, and extend the shallow-update part of the protocol instead, which
-> might be simpler.
-
-I left the detail as vague ;-).
-
-The new request does not have to piggyback on existing "want"
-message.  And thinking about it again, it probably is cleaner if it
-didn't.  After the use of the protocol extension "ancestry-check" is
-negotiated the usual way between the sender and the receiver, the
-receiver would send "check-ff N O" and "check-ff N P" after it sends
-all of its "want" messages but before it sends the "flush" to go
-into the "have"/"ack" common ancestry discovery.
-
-I do not have a strong opinion on where the sender should reply with
-"not-ff N O" in the protocol.  Immediately after the receiver says
-"I've done with my 'want's (and now 'check-ff's)" by flushing may be
-a good place to do so.
-
->> With such an extension, your updated receiver can receive the
->> necessary objects to update your history to "N", but notice that it
->> would result in non-ff update to update master (that used to be O)
->> with the new commit N.
+> We have been designing an extension that addresses this attack scenario (and
+> other similar attacks). Although originally it is not based on push
+> certificates, we feel that it works similar to them. The principal advantages
+> over push certificates are:
 >
-> Code-wise, does the following make sense?
+> 1) It doesn't require (although it could support it) a side channel. We store similar
+>     information about branch status (push status) on the repository itself.
 >
-> 1.  Add a field to `struct ref` to flag a "trusted fast-forward".
-> 2.  Change `find_common()` in `fetch-pack.c`
->     and `receive_needs()` in `upload-pack.c`
->     to communicate the relationships we're interested in as above,
->     and set the "trusted fast-forward" flag.
-> 3.  Change `update_local_ref()` in `builtin/fetch.c`
->     to check `ref->trusted_fast_forward || in_merge_bases(current, updated)`.
+> 2) It is backwards compatible, as it doesn't modify the existing metadata
+>     format.
+>
+> 3) Following Ted's email, it could be easily integrated in any git workflow.
+>     Although some workflows might be benefitted more than others, it doesn't
+>     get in the way of any existing workflow that we know of.
+>
+> 4) It covers a broader attack suurface (e.g., our malicious-merge scenario).
+>
+> To keep things simple (we can elaborate in further emails), our solution
+> basically works by keeping track of pushes by developers in an append only
+> file, so that, everytime a branch is pushed, the deloper signs his version of
+> the log and his "push entry" (similar to a push certificate). Right now, we
+> push this log to a separate branch called BSL (for Branch State Log), but
+> ideallly this could be part of the git metadata.
+
+Recently in another context (an alternative refs backend) there was a proposal
+by Shawn to keep the .git directory versioned by git itself, i.e.
+having only loose refs in
+.git/refs and then there is a repository tracking .git/refs as a
+directory structure.
+
+Using that idea of a refs back end, combined with signed tags in the
+refs repository
+would give you signed version of the log of possible push entries.
+
+>
+> Upon pulling/fetching, this push certificate chain (BSL) is also fetched
+> and used to verify whether all branches are pointing to a sensible
+> location (i.e., the location reported by the last user who
+> pushed/merged).This ensures that a malicious server can't change the
+> location to which branches point to.
+
+This is what push certs ought to solve already?
+AFAIU the main issue with untrustworthy servers is holding back the latest push.
+As Ted said, usually there is problem in the code and then the fix is pushed,
+but the malicious server would not advertise the update, but deliver the old
+unfixed version.
+
+This attack cannot be mitigated by having either a side channel (email
+announcements)
+or time outs (state is only good if push cert is newer than <amount of
+time>, but this may
+require empty pushes)
+
+
+>
+> Furthermore, upon fetching, users with write access also push an entry
+> indicating that they fetched the BSL. This avoids cases in which a malicious
+> attacker keeps older versions of the BSL and withhold changes to other users.
+
+This would make it a "be malicious to all or none" thing? So the
+attacker cannot attack
+a single target IIUC.
+
+I have a bad feeling about repository modifications upon fetching as
+software distribution
+is a highly asymmetric workflow (number of fetches is many orders of
+magnitudes larger than
+pushes), which may not scale well? (How would you serialize parallel
+fetches into the BSL?)
+
+Thanks,
+Stefan
