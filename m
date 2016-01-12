@@ -1,72 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Jan 2016, #02; Mon, 11)
-Date: Tue, 12 Jan 2016 16:49:09 -0500
-Message-ID: <20160112214909.GD2841@sigill.intra.peff.net>
-References: <xmqqlh7vvfxc.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601120939270.2964@virtualbox>
- <xmqqtwmitz2a.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GIT PULL] Korean l10n updates for Git 2.7.0 (maint branch)
+Date: Tue, 12 Jan 2016 15:05:51 -0800
+Message-ID: <xmqqwpres8j4.fsf@gitster.mtv.corp.google.com>
+References: <CANYiYbHVUi3xftFuwTHkiXgS=7KZEv309dE5vyywsFVvSMcEEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 22:49:21 2016
+Content-Type: text/plain
+Cc: Changwoo Ryu <cwryu@debian.org>, Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 00:06:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ6oW-0002IZ-ID
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 22:49:16 +0100
+	id 1aJ816-0003wA-Ps
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 00:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbcALVtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 16:49:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52588 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751302AbcALVtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 16:49:12 -0500
-Received: (qmail 19849 invoked by uid 102); 12 Jan 2016 21:49:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:49:11 -0500
-Received: (qmail 18950 invoked by uid 107); 12 Jan 2016 21:49:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 16:49:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 16:49:09 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqtwmitz2a.fsf@gitster.mtv.corp.google.com>
+	id S1753369AbcALXFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 18:05:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59272 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753169AbcALXFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 18:05:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 441163B031;
+	Tue, 12 Jan 2016 18:05:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vU8nC1WZAvCdKsR3LUiIalBexPk=; b=ukXN2e
+	dKusEp7y6ziI9gjakGh7XbYFCNAEaPknAMZSg+qivxQEMXkQGrk3i5cqEEOE35eQ
+	GqLSsjwGBbwTvNrwL3+T2Uf5wvaKGqgb1on3lKNXZP+hMrVpanh/SVixK3mvqH8E
+	JCp6whh59PhC3oVAI7bNCVnnV5l/lZyYuISq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JhubPmOuq8hT8R/KwMJbHp6216bPd9sW
+	PnytrNrNNTY2xu4pzWXEXQIBOUExmTexPuwkDq2GjorIKhNefD+DC1JA8hkvRK8i
+	IwN2ET5dc9susjQQcRdjmovmZHEuEkG+8yuRO9gfwm7NNOKMV59XpxaACH4DYmIy
+	qfRQnRE7tgM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 39ABD3B030;
+	Tue, 12 Jan 2016 18:05:53 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF5653B02F;
+	Tue, 12 Jan 2016 18:05:52 -0500 (EST)
+In-Reply-To: <CANYiYbHVUi3xftFuwTHkiXgS=7KZEv309dE5vyywsFVvSMcEEA@mail.gmail.com>
+	(Jiang Xin's message of "Tue, 12 Jan 2016 01:20:00 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 073265D0-B981-11E5-B575-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283850>
 
-On Tue, Jan 12, 2016 at 10:47:25AM -0800, Junio C Hamano wrote:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >>  Rerolled.
-> >>  Needs review.
-> >
-> > Actually, it waits for a re-roll ;-)
-> 
-> True.
-> 
-> I think strbuf_getline() that handles the payload as "text" without
-> having _crlf() suffix is an ideal endgame in the longer term, but I
-> do not think it is a good idea to do that as a flag-day change.  So
-> I am inclined not to change the function names around that feature
-> in this series.  Others can do the wholesale rename as a separate
-> follow-up topic when the tree is quiescent.
+> Changwoo contributed a new language (Korean) l10n support, but missed the
+> update window for Git 2.7.0.  Please merge this to the maint branch.
 
-Yeah, I think we would want to catch topics in flight. Should the end of
-this series then be to _remove_ strbuf_getline()? Callers should be
-using strbuf_getline_crlf() if they want text lines, and
-strbuf_getdelim() if they do not.
-
-Topics in flight will need fixed up, but that's OK; the breakage (and
-the fix) will be obvious.
-
-And then after a quiet period we can drop the "_crlf()" and have
-strbuf_getline() back.
-
--Peff
+Thanks, both.  Will do.
