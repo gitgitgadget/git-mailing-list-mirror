@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/12] t9132-git-svn-broken-symlink.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:30 +0000
-Message-ID: <1452599378-47882-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 03/12] t9130-git-svn-authors-file.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:29 +0000
+Message-ID: <1452599378-47882-4-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:32 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxT2-00082o-N4
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:29 +0100
+	id 1aIxT8-00085K-K1
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760204AbcALLuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:50:17 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32882 "EHLO
+	id S1752747AbcALLu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:50:28 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34362 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934368AbcALLtp (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753051AbcALLtp (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 12 Jan 2016 06:49:45 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u188so30860798wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:45 -0800 (PST)
+Received: by mail-wm0-f67.google.com with SMTP id b14so30973559wmb.1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vuR6n6sqCmBUFENlbnErn+t/j4dZUybZvEZ+yskO6bU=;
-        b=IUED3xRYe1JZJrJVZQkqAix0i5J6W1+WhGeo/T0twAQMeLHjTq8+uxGqPgDCAy/BmD
-         ix+4dewNgcKDzCop1COtAdUcuT0V9MzFf+yruG46LsnJC4kSZzsh5MbNQgqhmKGxYvg0
-         OJUI2rNlNKSkxASiE0jwT+pQHmTDrPHB7KwIV4RIh6z6LesHjD8ZNvnZfhpbsg4k+7un
-         eRjSpcE4qozUqrQGjhGq/ThyTs3j4pEnYVJSZ+U03kHdFK4MAEJUSNNsyhtj6nCgegW0
-         MxntA5RGr+QBkn15BwwlE66RVUmD4Fe8TCZELq3bPRpVqK0HCTe40cp9q/pi+dpAdvuq
-         wXbA==
-X-Received: by 10.195.13.129 with SMTP id ey1mr98209416wjd.132.1452599384871;
+        bh=0aHHNW+6b0eGFqzre5X6Wwnf2fVfdxzUWN6KvPG/Wi4=;
+        b=xVGzaRwABjv6w3EL/837n4CswbYc91hX7QzRnN83NyhcRWqDC+SPYpEFCfsHzPre0b
+         s5mXKLgS5Ycr8bUOgaCrj6tIlAPobT7wffgiNKfN7W+Ggp+QyLjNBEHveihFrAEBC05R
+         Tiz0vuQ2VhgliwK2UxHqZC3owXTOH13BPbYXNTIPBj2Vg+09zbxH9cN/B1sgYdXXdW+Z
+         2hpJGiapmiZF+IbdtvidoAGgO8IENpakrU2QUOLeqjRnAJ7D2jqZoAUEfkx1j9374vur
+         SCoAKciD2tJvLVrHtN0XqbzJxiHh84E7mTrdv20tCpir4ymcTR6UTiXbVHU75kyFMBVh
+         9G4g==
+X-Received: by 10.28.180.193 with SMTP id d184mr10961929wmf.64.1452599384152;
         Tue, 12 Jan 2016 03:49:44 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.44
+        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:44 -0800 (PST)
+        Tue, 12 Jan 2016 03:49:43 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283812>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,30 +66,52 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9132-git-svn-broken-symlink.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t9130-git-svn-authors-file.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t9132-git-svn-broken-symlink.sh b/t/t9132-git-svn-broken-symlink.sh
-index 6c4c90b..aeceffa 100755
---- a/t/t9132-git-svn-broken-symlink.sh
-+++ b/t/t9132-git-svn-broken-symlink.sh
-@@ -87,7 +87,7 @@ test_expect_success 'clone using git svn' 'git svn clone -r1 "$svnrepo" x'
+diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
+index c44de26..d306b77 100755
+--- a/t/t9130-git-svn-authors-file.sh
++++ b/t/t9130-git-svn-authors-file.sh
+@@ -26,7 +26,7 @@ test_expect_success 'start import with incomplete authors file' '
+ test_expect_success 'imported 2 revisions successfully' '
+ 	(
+ 		cd x
+-		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 2 &&
++		test "$(git rev-list refs/remotes/git-svn | wc -l)" -eq 2 &&
+ 		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
+ 		  grep "^author BBBBBBB BBBBBBB <bb@example\.com> " &&
+ 		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
+@@ -43,7 +43,7 @@ test_expect_success 'continues to import once authors have been added' '
+ 	(
+ 		cd x
+ 		git svn fetch --authors-file=../svn-authors &&
+-		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 4 &&
++		test "$(git rev-list refs/remotes/git-svn | wc -l)" -eq 4 &&
+ 		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
+ 		  grep "^author DDDDDDD DDDDDDD <dd@example\.com> " &&
+ 		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
+@@ -73,8 +73,8 @@ tmp_config_get () {
+ test_expect_success 'failure happened without negative side effects' '
+ 	(
+ 		cd aa-work &&
+-		test 6 -eq "`tmp_config_get svn-remote.svn.branches-maxRev`" &&
+-		test 6 -eq "`tmp_config_get svn-remote.svn.tags-maxRev`"
++		test 6 -eq "$(tmp_config_get svn-remote.svn.branches-maxRev)" &&
++		test 6 -eq "$(tmp_config_get svn-remote.svn.tags-maxRev)"
+ 	)
+ 	'
  
- test_expect_success SYMLINKS '"bar" is a symlink that points to "asdf"' '
- 	test -L x/bar &&
--	(cd x && test xasdf = x"`git cat-file blob HEAD:bar`")
-+	(cd x && test xasdf = x"$(git cat-file blob HEAD:bar)")
- '
+@@ -86,8 +86,8 @@ test_expect_success 'fetch continues after authors-file is fixed' '
+ 	(
+ 		cd aa-work &&
+ 		git svn fetch --authors-file=../svn-authors &&
+-		test 8 -eq "`tmp_config_get svn-remote.svn.branches-maxRev`" &&
+-		test 8 -eq "`tmp_config_get svn-remote.svn.tags-maxRev`"
++		test 8 -eq "$(tmp_config_get svn-remote.svn.branches-maxRev)" &&
++		test 8 -eq "$(tmp_config_get svn-remote.svn.tags-maxRev)"
+ 	)
+ 	'
  
- test_expect_success 'get "bar" => symlink fix from svn' '
-@@ -96,7 +96,7 @@ test_expect_success 'get "bar" => symlink fix from svn' '
- 
- test_expect_success SYMLINKS '"bar" remains a proper symlink' '
- 	test -L x/bar &&
--	(cd x && test xdoink = x"`git cat-file blob HEAD:bar`")
-+	(cd x && test xdoink = x"$(git cat-file blob HEAD:bar)")
- '
- 
- test_done
 -- 
 2.5.0
