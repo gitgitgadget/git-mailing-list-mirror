@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 11/12] t9501-gitweb-standalone-http-status.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:37 +0000
-Message-ID: <1452599378-47882-12-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/12] t9300-fast-import.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:35 +0000
+Message-ID: <1452599378-47882-10-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:04 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxSc-0007nM-VK
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:03 +0100
+	id 1aIxSo-0007u2-5B
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964963AbcALLtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:49:55 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32921 "EHLO
+	id S965006AbcALLuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:50:07 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32913 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964819AbcALLtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:50 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u188so30861058wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:50 -0800 (PST)
+	with ESMTP id S934878AbcALLtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 06:49:49 -0500
+Received: by mail-wm0-f67.google.com with SMTP id u188so30861000wmu.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yF7+CKcRdZuUX0thL+mbw7XZasSZGS78XDOFtPv3sjc=;
-        b=PFbn4SdPNDkFoShOei+cSn1HB7XZ1V2Y1fgUzGpVsSdfv4TFhaSCfFtxwq2m+96pBg
-         zsnOpiBhzCo3EfXKvhFOiNWdWYmJQdCOgXzVYBXSgEHfi2qUm3e1XgWzOyzLYoFr8LfS
-         f25UOWd9E/FqC0FatNKWwRVQu+hhr+XKzb1o3JqPQepgkK74etw/8rxdl6iRtAPKoGTR
-         xOwoQ3aOrvzWhMvc6OgFU7YtZRGJmkpl/OS9TmaAmqsyhrq52WfuIbAd04Ui0M0YgNvB
-         KPvaNCGO8AUgt53NY+d1hDnn87Sx75TYLbFyJKRVNPKfhL+nMTNvexVUBL8WURIkTl8h
-         MUgg==
-X-Received: by 10.28.111.18 with SMTP id k18mr18077275wmc.86.1452599389723;
-        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
+        bh=AyYKRCLznh0JD0N4OeS/yM+dknFZBqkYrid7TLbefqs=;
+        b=UQm3NOHB6ct2WdhLEMg/Qc7bv7htXHycJKwYAH3KyHUVfIuDYWLVow+DObgCaaPtpK
+         vhl9x5EjRBcdQtB7jR52msy5y8fllaXeYo0V/BkUHqiv3hiDXnBPsY6c/GfQdE7ZLkok
+         Q1ogi8kv1N9HJ1/xL7KylWTD8pRGtG2R3HoJZb9NxSGOdfcwtpv2NPk6oPAuHZYDVMU6
+         SgrukAjdOLKNMJb59HXIIyjfRtKJRE/A3fthudbel7oUbzP9sWbmyJsW/nNPct1LQs9V
+         wdUtwarWdgh9LUEDhbB5d0MA43kBJp0N5Wli+LpFmWHYvWMTE7YDL5Kug/OcfYJMwF7j
+         prBg==
+X-Received: by 10.194.103.234 with SMTP id fz10mr95925209wjb.31.1452599388368;
+        Tue, 12 Jan 2016 03:49:48 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.49
+        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
+        Tue, 12 Jan 2016 03:49:47 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283808>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,38 +66,238 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9501-gitweb-standalone-http-status.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t9300-fast-import.sh | 68 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
-diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
-index d3a5bac..2a0ffed 100755
---- a/t/t9501-gitweb-standalone-http-status.sh
-+++ b/t/t9501-gitweb-standalone-http-status.sh
-@@ -100,14 +100,14 @@ test_expect_success 'snapshots: bad tree-ish id (tagged object)' '
- 	echo object > tag-object &&
- 	git add tag-object &&
- 	test_tick && git commit -m "Object to be tagged" &&
--	git tag tagged-object `git hash-object tag-object` &&
-+	git tag tagged-object $(git hash-object tag-object) &&
- 	gitweb_run "p=.git;a=snapshot;h=tagged-object;sf=tgz" &&
- 	grep "400 - Object is not a tree-ish" gitweb.output
- '
- test_debug 'cat gitweb.output'
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 14a9384..4c5f3c9 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -171,10 +171,10 @@ test_expect_success 'A: verify tag/series-A-blob' '
  
- test_expect_success 'snapshots: good object id' '
--	ID=`git rev-parse --verify HEAD` &&
-+	ID=$(git rev-parse --verify HEAD) &&
- 	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
- 	grep "Status: 200 OK" gitweb.output
+ test_expect_success 'A: verify marks output' '
+ 	cat >expect <<-EOF &&
+-	:2 `git rev-parse --verify master:file2`
+-	:3 `git rev-parse --verify master:file3`
+-	:4 `git rev-parse --verify master:file4`
+-	:5 `git rev-parse --verify master^0`
++	:2 $(git rev-parse --verify master:file2)
++	:3 $(git rev-parse --verify master:file3)
++	:4 $(git rev-parse --verify master:file4)
++	:5 $(git rev-parse --verify master^0)
+ 	EOF
+ 	test_cmp expect marks.out
  '
-@@ -173,7 +173,7 @@ test_expect_success DATE_PARSER 'modification: snapshot if-modified-since (unmod
- test_debug 'cat gitweb.headers'
+@@ -264,8 +264,8 @@ test_expect_success 'A: verify diff' '
+ 	EOF
+ 	git diff-tree -M -r master verify--import-marks >actual &&
+ 	compare_diff_raw expect actual &&
+-	test `git rev-parse --verify master:file2` \
+-	    = `git rev-parse --verify verify--import-marks:copy-of-file2`
++	test $(git rev-parse --verify master:file2) \
++	    = $(git rev-parse --verify verify--import-marks:copy-of-file2)
+ '
  
- test_expect_success DATE_PARSER 'modification: tree snapshot' '
--	ID=`git rev-parse --verify HEAD^{tree}` &&
-+	ID=$(git rev-parse --verify HEAD^{tree}) &&
- 	HTTP_IF_MODIFIED_SINCE="Wed, 6 Apr 2005 22:14:13 +0000" &&
- 	export HTTP_IF_MODIFIED_SINCE &&
- 	test_when_finished "unset HTTP_IF_MODIFIED_SINCE" &&
+ test_expect_success 'A: export marks with large values' '
+@@ -364,7 +364,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG"' '
+ 		git prune" &&
+ 	git fast-import <input &&
+ 	test -f .git/TEMP_TAG &&
+-	test `git rev-parse master` = `git rev-parse TEMP_TAG^`
++	test $(git rev-parse master) = $(git rev-parse TEMP_TAG^)
+ '
+ 
+ test_expect_success 'B: accept empty committer' '
+@@ -473,8 +473,8 @@ test_expect_success 'B: fail on invalid committer (5)' '
+ ###
+ 
+ test_expect_success 'C: incremental import create pack from stdin' '
+-	newf=`echo hi newf | git hash-object -w --stdin` &&
+-	oldf=`git rev-parse --verify master:file2` &&
++	newf=$(echo hi newf | git hash-object -w --stdin) &&
++	oldf=$(git rev-parse --verify master:file2) &&
+ 	test_tick &&
+ 	cat >input <<-INPUT_END &&
+ 	commit refs/heads/branch
+@@ -499,13 +499,13 @@ test_expect_success 'C: verify pack' '
+ '
+ 
+ test_expect_success 'C: validate reuse existing blob' '
+-	test $newf = `git rev-parse --verify branch:file2/newf` &&
+-	test $oldf = `git rev-parse --verify branch:file2/oldf`
++	test $newf = $(git rev-parse --verify branch:file2/newf) &&
++	test $oldf = $(git rev-parse --verify branch:file2/oldf)
+ '
+ 
+ test_expect_success 'C: verify commit' '
+ 	cat >expect <<-EOF &&
+-	parent `git rev-parse --verify master^0`
++	parent $(git rev-parse --verify master^0)
+ 	author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 
+@@ -624,7 +624,7 @@ test_expect_success 'E: verify commit' '
+ ###
+ 
+ test_expect_success 'F: non-fast-forward update skips' '
+-	old_branch=`git rev-parse --verify branch^0` &&
++	old_branch=$(git rev-parse --verify branch^0) &&
+ 	test_tick &&
+ 	cat >input <<-INPUT_END &&
+ 	commit refs/heads/branch
+@@ -642,7 +642,7 @@ test_expect_success 'F: non-fast-forward update skips' '
+ 
+ 	test_must_fail git fast-import <input &&
+ 	# branch must remain unaffected
+-	test $old_branch = `git rev-parse --verify branch^0`
++	test $old_branch = $(git rev-parse --verify branch^0)
+ '
+ 
+ test_expect_success 'F: verify pack' '
+@@ -651,8 +651,8 @@ test_expect_success 'F: verify pack' '
+ 
+ test_expect_success 'F: verify other commit' '
+ 	cat >expect <<-EOF &&
+-	tree `git rev-parse branch~1^{tree}`
+-	parent `git rev-parse branch~1`
++	tree $(git rev-parse branch~1^{tree})
++	parent $(git rev-parse branch~1)
+ 	author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 
+@@ -667,7 +667,7 @@ test_expect_success 'F: verify other commit' '
+ ###
+ 
+ test_expect_success 'G: non-fast-forward update forced' '
+-	old_branch=`git rev-parse --verify branch^0` &&
++	old_branch=$(git rev-parse --verify branch^0) &&
+ 	test_tick &&
+ 	cat >input <<-INPUT_END &&
+ 	commit refs/heads/branch
+@@ -687,8 +687,8 @@ test_expect_success 'G: verify pack' '
+ '
+ 
+ test_expect_success 'G: branch changed, but logged' '
+-	test $old_branch != `git rev-parse --verify branch^0` &&
+-	test $old_branch = `git rev-parse --verify branch@{1}`
++	test $old_branch != $(git rev-parse --verify branch^0) &&
++	test $old_branch = $(git rev-parse --verify branch@{1})
+ '
+ 
+ ###
+@@ -763,7 +763,7 @@ test_expect_success 'I: export-pack-edges' '
+ 
+ test_expect_success 'I: verify edge list' '
+ 	cat >expect <<-EOF &&
+-	.git/objects/pack/pack-.pack: `git rev-parse --verify export-boundary`
++	.git/objects/pack/pack-.pack: $(git rev-parse --verify export-boundary)
+ 	EOF
+ 	sed -e s/pack-.*pack/pack-.pack/ edges.list >actual &&
+ 	test_cmp expect actual
+@@ -795,8 +795,8 @@ test_expect_success 'J: reset existing branch creates empty commit' '
+ 	git fast-import <input
+ '
+ test_expect_success 'J: branch has 1 commit, empty tree' '
+-	test 1 = `git rev-list J | wc -l` &&
+-	test 0 = `git ls-tree J | wc -l`
++	test 1 = $(git rev-list J | wc -l) &&
++	test 0 = $(git ls-tree J | wc -l)
+ '
+ 
+ test_expect_success 'J: tag must fail on empty branch' '
+@@ -838,8 +838,8 @@ test_expect_success 'K: reinit branch with from' '
+ 	git fast-import <input
+ '
+ test_expect_success 'K: verify K^1 = branch^1' '
+-	test `git rev-parse --verify branch^1` \
+-		= `git rev-parse --verify K^1`
++	test $(git rev-parse --verify branch^1) \
++		= $(git rev-parse --verify K^1)
+ '
+ 
+ ###
+@@ -929,7 +929,7 @@ test_expect_success 'L: nested tree copy does not corrupt deltas' '
+ 	git ls-tree L2 g/b/ >tmp &&
+ 	cat tmp | cut -f 2 >actual &&
+ 	test_cmp expect actual &&
+-	git fsck `git rev-parse L2`
++	git fsck $(git rev-parse L2)
+ '
+ 
+ ###
+@@ -1106,7 +1106,7 @@ test_expect_success 'N: copy dirty subdirectory' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	test `git rev-parse N2^{tree}` = `git rev-parse N3^{tree}`
++	test $(git rev-parse N2^{tree}) = $(git rev-parse N3^{tree})
+ '
+ 
+ test_expect_success 'N: copy directory by id' '
+@@ -1503,7 +1503,7 @@ test_expect_success 'O: comments are all skipped' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	test `git rev-parse N3` = `git rev-parse O1`
++	test $(git rev-parse N3) = $(git rev-parse O1)
+ '
+ 
+ test_expect_success 'O: blank lines not necessary after data commands' '
+@@ -1524,7 +1524,7 @@ test_expect_success 'O: blank lines not necessary after data commands' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	test `git rev-parse N3` = `git rev-parse O2`
++	test $(git rev-parse N3) = $(git rev-parse O2)
+ '
+ 
+ test_expect_success 'O: repack before next test' '
+@@ -1570,8 +1570,8 @@ test_expect_success 'O: blank lines not necessary after other commands' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	test 8 = `find .git/objects/pack -type f | wc -l` &&
+-	test `git rev-parse refs/tags/O3-2nd` = `git rev-parse O3^` &&
++	test 8 = $(find .git/objects/pack -type f | wc -l) &&
++	test $(git rev-parse refs/tags/O3-2nd) = $(git rev-parse O3^) &&
+ 	git log --reverse --pretty=oneline O3 | sed s/^.*z// >actual &&
+ 	test_cmp expect actual
+ '
+@@ -1631,7 +1631,7 @@ test_expect_success 'P: superproject & submodule mix' '
+ 	data <<DATAEND
+ 	[submodule "sub"]
+ 		path = sub
+-		url = "`pwd`/sub"
++		url = "$(pwd)/sub"
+ 	DATAEND
+ 
+ 	commit refs/heads/subuse1
+@@ -1691,7 +1691,7 @@ test_expect_success 'P: verbatim SHA gitlinks' '
+ 	data <<DATAEND
+ 	[submodule "sub"]
+ 		path = sub
+-		url = "`pwd`/sub"
++		url = "$(pwd)/sub"
+ 	DATAEND
+ 
+ 	commit refs/heads/subuse2
+@@ -1978,7 +1978,7 @@ test_expect_success 'Q: verify first note for third commit' '
+ 
+ test_expect_success 'Q: verify second notes commit' '
+ 	cat >expect <<-EOF &&
+-	parent `git rev-parse --verify refs/notes/foobar~2`
++	parent $(git rev-parse --verify refs/notes/foobar~2)
+ 	author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 
+@@ -2045,7 +2045,7 @@ test_expect_success 'Q: verify third note for first commit' '
+ 
+ test_expect_success 'Q: verify fourth notes commit' '
+ 	cat >expect <<-EOF &&
+-	parent `git rev-parse --verify refs/notes/foobar^`
++	parent $(git rev-parse --verify refs/notes/foobar^)
+ 	author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 
 -- 
 2.5.0
