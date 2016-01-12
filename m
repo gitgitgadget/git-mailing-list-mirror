@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/10] t9105-git-svn-commit-diff.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 10:45:12 +0000
-Message-ID: <1452595518-38149-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 07/10] t9109-git-svn-multi-glob.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 10:45:15 +0000
+Message-ID: <1452595518-38149-8-git-send-email-gitter.spiros@gmail.com>
 References: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 11:45:39 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 11:45:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIwSI-0007Xd-Fn
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:45:38 +0100
+	id 1aIwSR-0007cP-5j
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934446AbcALKpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 05:45:33 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35433 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752915AbcALKp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 05:45:28 -0500
-Received: by mail-wm0-f68.google.com with SMTP id f206so30625878wmf.2
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:27 -0800 (PST)
+	id S934850AbcALKpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 05:45:43 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35448 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934393AbcALKpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 05:45:30 -0500
+Received: by mail-wm0-f65.google.com with SMTP id f206so30625966wmf.2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=38SylP3mwKOjxdTquDfSwJjfBbvzGzgnzvGYg36NHlo=;
-        b=Jxgi63RrlTkvxUZ4NZmv+g29Oe+ZyqgAC9lrwEwYNS3MxuzWyqNytLsWeP/lM4MU3l
-         DCVbtQdEpORtBjKmI5Y7BiJCanwajx9hqVdpe2naHlvVztrF+y+inL1dIAxe51DWHnCM
-         Q+m9a0Kf/YYkWLwO0lho+ncH3bRuXghTJ6jw/UsTd5sWpcCS0EU5g/g6F7/2EwNO8EUN
-         zAjjJa5MvjNLlTAhGlhE+ds0Iyyw4OM++TvRz+Y6eh8PWTFNqnOo2/OQZW0ah2cP44sm
-         Ehg1ffqHY5Eu5t4Xtt8vylikgfIVtigEKVxrhtlcI0Lm1jHUdLPpmkByWbmqSY+xOJqN
-         pA/A==
-X-Received: by 10.28.218.78 with SMTP id r75mr13760774wmg.7.1452595527032;
-        Tue, 12 Jan 2016 02:45:27 -0800 (PST)
+        bh=LuV41Zncl2/DYjO900HHaUVIEH671ZRpSRgjpE4uu3Q=;
+        b=sdzKwcUgdQMqz1LdBgi0ZDwVlCdqLrEioeMXhZqiGykhUF6dUe2ACh4TBfiRdDq+a5
+         2bVAMORvC0wAGoXKittAPsA25D0qGIrjqoAdxULevvJs1lqBnDH8wKXpEIWC0AvaZV9m
+         LvVy2T7fYZl2UkZPhorSMnEoISR6hFbXBIPOeFyl172aIHiYbwH8ZQXHgt6b4P/yLEcm
+         aZzkG84R8e08mlp2GH7r/7SLGsm1W6L+jgj2QAqd8J+l8O5L2eWzoi5SzwV9HnEMasdo
+         fQz17UajQqxx2DAokPnXdM00QwWBcKrivjUFQURGqwsPdbyIEKVs63T0tcVaS53IyiE+
+         cmsw==
+X-Received: by 10.28.126.77 with SMTP id z74mr19789577wmc.3.1452595529103;
+        Tue, 12 Jan 2016 02:45:29 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.26
+        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 02:45:26 -0800 (PST)
+        Tue, 12 Jan 2016 02:45:28 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283792>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,23 +66,65 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9105-git-svn-commit-diff.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t9109-git-svn-multi-glob.sh | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/t/t9105-git-svn-commit-diff.sh b/t/t9105-git-svn-commit-diff.sh
-index 5d0afea..6ed5f74 100755
---- a/t/t9105-git-svn-commit-diff.sh
-+++ b/t/t9105-git-svn-commit-diff.sh
-@@ -18,8 +18,8 @@ test_expect_success 'initialize repo' '
- 	git commit -a -m "another"
+diff --git a/t/t9109-git-svn-multi-glob.sh b/t/t9109-git-svn-multi-glob.sh
+index c318f9f..f36b749 100755
+--- a/t/t9109-git-svn-multi-glob.sh
++++ b/t/t9109-git-svn-multi-glob.sh
+@@ -50,10 +50,10 @@ test_expect_success 'test refspec globbing' '
+ 	git log --pretty=oneline refs/remotes/tags/end | \
+ 	    sed -e "s/^.\{41\}//" > output.end &&
+ 	test_cmp expect.end output.end &&
+-	test "`git rev-parse refs/remotes/tags/end~1`" = \
+-		"`git rev-parse refs/remotes/branches/v1/start`" &&
+-	test "`git rev-parse refs/remotes/branches/v1/start~2`" = \
+-		"`git rev-parse refs/remotes/trunk`" &&
++	test "$(git rev-parse refs/remotes/tags/end~1)" = \
++		"$(git rev-parse refs/remotes/branches/v1/start)" &&
++	test "$(git rev-parse refs/remotes/branches/v1/start~2)" = \
++		"$(git rev-parse refs/remotes/trunk)" &&
+ 	test_must_fail git rev-parse refs/remotes/tags/end@3
  	'
  
--head=`git rev-parse --verify HEAD^0`
--prev=`git rev-parse --verify HEAD^1`
-+head=$(git rev-parse --verify HEAD^0)
-+prev=$(git rev-parse --verify HEAD^1)
- 
- # the internals of the commit-diff command are the same as the regular
- # commit, so only a basic test of functionality is needed since we've
+@@ -75,12 +75,12 @@ test_expect_success 'test left-hand-side only globbing' '
+ 		svn_cmd commit -m "try to try"
+ 	) &&
+ 	git svn fetch two &&
+-	test `git rev-list refs/remotes/two/tags/end | wc -l` -eq 6 &&
+-	test `git rev-list refs/remotes/two/branches/v1/start | wc -l` -eq 3 &&
+-	test `git rev-parse refs/remotes/two/branches/v1/start~2` = \
+-	     `git rev-parse refs/remotes/two/trunk` &&
+-	test `git rev-parse refs/remotes/two/tags/end~3` = \
+-	     `git rev-parse refs/remotes/two/branches/v1/start` &&
++	test $(git rev-list refs/remotes/two/tags/end | wc -l) -eq 6 &&
++	test $(git rev-list refs/remotes/two/branches/v1/start | wc -l) -eq 3 &&
++	test $(git rev-parse refs/remotes/two/branches/v1/start~2) = \
++	     $(git rev-parse refs/remotes/two/trunk) &&
++	test $(git rev-parse refs/remotes/two/tags/end~3) = \
++	     $(git rev-parse refs/remotes/two/branches/v1/start) &&
+ 	git log --pretty=oneline refs/remotes/two/tags/end | \
+ 	    sed -e "s/^.\{41\}//" > output.two &&
+ 	test_cmp expect.two output.two
+@@ -124,12 +124,12 @@ test_expect_success 'test another branch' '
+ 	git config --add svn-remote.four.tags \
+ 	                 "tags/*:refs/remotes/four/tags/*" &&
+ 	git svn fetch four &&
+-	test `git rev-list refs/remotes/four/tags/next | wc -l` -eq 5 &&
+-	test `git rev-list refs/remotes/four/branches/v2/start | wc -l` -eq 3 &&
+-	test `git rev-parse refs/remotes/four/branches/v2/start~2` = \
+-	     `git rev-parse refs/remotes/four/trunk` &&
+-	test `git rev-parse refs/remotes/four/tags/next~2` = \
+-	     `git rev-parse refs/remotes/four/branches/v2/start` &&
++	test $(git rev-list refs/remotes/four/tags/next | wc -l) -eq 5 &&
++	test $(git rev-list refs/remotes/four/branches/v2/start | wc -l) -eq 3 &&
++	test $(git rev-parse refs/remotes/four/branches/v2/start~2) = \
++	     $(git rev-parse refs/remotes/four/trunk) &&
++	test $(git rev-parse refs/remotes/four/tags/next~2) = \
++	     $(git rev-parse refs/remotes/four/branches/v2/start) &&
+ 	git log --pretty=oneline refs/remotes/four/tags/next | \
+ 	    sed -e "s/^.\{41\}//" > output.four &&
+ 	test_cmp expect.four output.four
 -- 
 2.5.0
