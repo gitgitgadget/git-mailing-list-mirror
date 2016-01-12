@@ -1,73 +1,117 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 0/3] Support `git pull --rebase=interactive`
-Date: Tue, 12 Jan 2016 16:22:06 +0100 (CET)
-Message-ID: <cover.1452612112.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Can't diff against the 00000000 revision
+Date: Tue, 12 Jan 2016 10:32:39 -0500
+Message-ID: <20160112153239.GA8041@sigill.intra.peff.net>
+References: <jwv4meiygrc.fsf-monnier+gmane.comp.version-control.git@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 16:23:33 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Stefan Monnier <monnier@iro.umontreal.ca>
+X-From: git-owner@vger.kernel.org Tue Jan 12 16:32:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ0nE-000140-AC
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 16:23:32 +0100
+	id 1aJ0wA-00079S-TI
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 16:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762783AbcALPX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 10:23:27 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54984 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752769AbcALPXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 10:23:24 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MLNeQ-1aJYji15Sk-000ZM2; Tue, 12 Jan 2016 16:22:08
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:o+lJaJp/+J5b7RK/qx+256qbj+FZWnTJmWgTNE+WlfWVcQV3We7
- FTakaFqb+uOxG21nM+HMudzcJbDKaG0/ciVk98dTiTNFG01t1uVVsPrqkO/CWp999S0vo9l
- zKcqwa9isPU0PCHh+R903B7TEBdiqv3BgELYZIMJKmr0YS1Uj336Lz7MXD7K4FqxxeFTYRf
- E/KDPYNzpdTBmQlnKtR0w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Qu6vtRIuTcI=:0j11gkDaw/z482WEXWVvqm
- nu4LT+YZtR9CsxDbQKU0iJXR+EdEFMbNA/WkaYmqipWz7rvn7Cg1t0IoIiEyZWITfiNBA4KwH
- bTY1HBL8epeXsDMUZ5r3U94HhkLBIWMDAdGzqeNrbLap/Z0CVEoiv94MQNRYRD9K3Y0zf2CLU
- mQDSuk+hCxg39kmzoO0is9fHOOMGQcOu24dHhl05VBC9StOj9wiXuyYQZ5iQMnWLcC0QTySCV
- I9QX5R3pzZJPOS3yBCxfn2RO5jCJ6UV7SUGU5jBW+qA7gDG6mTWS4KKs0v5/ko4Ngz7WZh3Qb
- xdGyD6+Bi6IQsnFX946tNL28nW04+UfRgM4VIDei2bgS4CLx2q5yh4v7fEBP1WftPBjmKrtGK
- zywMixxphdBk4mzo/I0XfIS8g9qgQS2aXC45vHgbeRaBxS/mYC8PzEeICzAcMdfUNWLM8n8eF
- ZzAnSSGilkB+k6i59aRau9izpjdk3ZLjDQn65OCLVjEmY0Z4KN/DSKUaBvrVdE3sWR6PQmb2U
- jgZdgLV5KW5iiTRPKBKIdtogBN3pWlPTPK1xuCifsHxI2SFrqO+Xr4+KY6nhgeMku+Rskg/F/
- maWoemDRaInmKCyGOj4rOK5wYlTYU/dHNo0Yl9wm6KrIsEKSu+jF639h7Tay4wi9GC98PE71z
- F5SEhaQggvU29sbTUQwjSYsNgkW5dbRuUy8l1HDVNJ7TT6R0qeVK4uYR1BC5TPW+6AFarA/9W
- 1DB8wvwiNnBrUcSpm5qR9AmAl+bzcBspEZOlq8BgaJHOS4NTraEHilZ6sjo7bXg2Btl4Up0T 
+	id S1752649AbcALPcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 10:32:43 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52281 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752222AbcALPcm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 10:32:42 -0500
+Received: (qmail 3490 invoked by uid 102); 12 Jan 2016 15:32:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 10:32:42 -0500
+Received: (qmail 15063 invoked by uid 107); 12 Jan 2016 15:32:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 10:32:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 10:32:39 -0500
+Content-Disposition: inline
+In-Reply-To: <jwv4meiygrc.fsf-monnier+gmane.comp.version-control.git@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283822>
 
-A couple of years ago, I found the need to collaborate on topic branches
-that were rebased all the time, and I really needed to see what I was
-rebasing when pulling, so I introduced an interactively-rebasing pull.
+On Tue, Jan 12, 2016 at 10:17:24AM -0500, Stefan Monnier wrote:
 
-This patch series ports that work to the builtin pull.
+> If I look at the initial commit on a branch, I see something like:
+> 
+>     % git show d59cfff346c3e210adc26501f8cebf8da5ab2e7d
+>     commit d59cfff346c3e210adc26501f8cebf8da5ab2e7d
+>     Author: Stefan Monnier <monnier@iro.umontreal.ca>
+>     Date:   Wed Dec 2 20:46:51 2015 -0500
+>     
+>         Initial release
+>     
+>     diff --git a/bugit b/bugit
+>     new file mode 100755
+>     index 0000000..681bd38
+>     --- /dev/null
+>     +++ b/bugit
+>     @@ -0,0 +1,512 @@
+>     ...
+> 
+> which is great.  But I can't get the same result with
+> 
+>     git diff 0000000..681bd38
+> 
+> because it complains:
+> 
+>     % git diff 0000000..681bd38
+>     fatal: ambiguous argument '0000000..681bd38': unknown revision or path not in the working tree.
+>     Use '--' to separate paths from revisions, like this:
+>     'git <command> [<revision>...] -- [<file>...]'
+>     %
 
+Right. There is no "000000" blob; it's just a syntactic placeholder.
 
-Johannes Schindelin (3):
-  Teach 'git pull' to handle --rebase=interactive
-  Teach 'git remote' that the config var branch.*.rebase can be
-    'interactive'
-  completion: add missing branch.*.rebase values
+If you want to diff against the empty blob, you can. Its name is:
 
- Documentation/config.txt               |  1 +
- Documentation/git-pull.txt             |  4 +++-
- builtin/pull.c                         |  7 ++++++-
- builtin/remote.c                       |  8 ++++++--
- contrib/completion/git-completion.bash |  2 +-
- t/t5520-pull.sh                        | 10 ++++++++++
- 6 files changed, 27 insertions(+), 5 deletions(-)
+  $ git hash-object -t blob /dev/null
+  e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 
--- 
-2.6.3.windows.1.300.g1c25e49
+> I bumped into this problem in a post-receive hook where I need to pay
+> attention to all newly added files, and where this problem means that
+> I can't use the same code for a newly added branch as for a push on
+> a pre-existing branch.
+
+Keep in mind that the "000000" in your example is showing the change in
+the _blob_, not the change in revisions. Even if it were not 0's, you
+could not run "git diff A..B" on it, because that syntax only works with
+commits.
+
+So the corner case you need to deal with is not about a newly added
+branch; it is about a newly added file (or in the opposite direction, a
+deleted file).
+
+Or from your description, maybe you are also running into the all-zero
+sha1 in the argument to the post-receive hook (where it is standing in
+for a commit sha1 on a newly-pushed branch).
+
+> I currently work around the problem by adding a dummy empty branch, but
+> being able to use the revision 00000000 as a known reference to an empty
+> tree would come in really handy, and since it's already used at various
+> places in Git (post-receive hook and "git show" output, at least), it
+> would seem like a natural extension.
+
+The empty tree also has a name:
+
+  $ git hash-object -t tree /dev/null
+  4b825dc642cb6eb9a060e54bf8d69288fbee4904
+
+and you can diff against that.
+
+And hopefully that explains why "000000" does not necessarily make a
+good placeholder for "the empty thing". There are multiple empty things,
+and it is not clear what:
+
+  git diff 0000000 1234abcd
+
+means. Is 0000000 a tree? A blob?
+
+-Peff
