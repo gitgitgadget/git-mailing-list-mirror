@@ -1,41 +1,41 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/10] t9104-git-svn-follow-parent.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 10:45:11 +0000
-Message-ID: <1452595518-38149-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 02/10] t9101-git-svn-props.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 10:45:10 +0000
+Message-ID: <1452595518-38149-3-git-send-email-gitter.spiros@gmail.com>
 References: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 11:45:48 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 11:45:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIwSR-0007cP-PC
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:45:48 +0100
+	id 1aIwSa-0007g2-VN
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:45:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964928AbcALKpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S964946AbcALKpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 12 Jan 2016 05:45:45 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33747 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934372AbcALKp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 05:45:27 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u188so30567620wmu.0
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33742 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933352AbcALKp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 05:45:26 -0500
+Received: by mail-wm0-f65.google.com with SMTP id u188so30567576wmu.0
         for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JpDsN3TxfIbe6uq5k8WAUp+4wQo2MHWLjWWlGj5u0rQ=;
-        b=FAbooM6FvEVmDIzdEUSsZ37W2FwFLHYugMEAw0zzCUE+6ohzvWxASaI7i+B1iW6LVP
-         rAgkzmkDQR3JVN2SBftoFk2Y/OxAoVc5wwPnWQIWg0Za9AR9FGF/v35HnXuaHX2FmUN5
-         5+yWFMs1hgnY+sOW5fXa+gzR9PLvubmiP3Vl4m5IQRLpmq+N7GYyJGIv2U2+9ThI4RZF
-         JIaaykXbC0yPiQ36C8ia0i3FLErX9ECAc9Fsh338/PU6E2uEFdnf96KFCISE58yekus/
-         4MgrMc9fDRHOhMX2MKuad3W8eppPoXe2CcWGTIZ46IoCPSzbol+HNrOQU7z7UMwSffHY
-         jUag==
-X-Received: by 10.28.227.67 with SMTP id a64mr18465098wmh.74.1452595526377;
-        Tue, 12 Jan 2016 02:45:26 -0800 (PST)
+        bh=0Hlg1rMQi+IavcNr5AGe0UlM1wNtdU5XIaA4XDdJDWk=;
+        b=WHn/IFKIsetDgtqrSW6NObJyXPNMMyjyZGnRsCB+XFPtDZH205NH8i3F6Jg+WAJeV4
+         FvaySvBuRYh4NKjAsKckZVdBdNeLDVAk8JvndomRKdyLbsSpWtf2kT0g01ebH94VCjVb
+         BMV690++OCzK+zilZYms/mDAG50LbQCASbH27kPaLb3cir9UDpb16xDsCifuPUQxdyuo
+         oNrHrwyFQfE4u75RlUwew1iMnfcwgqbEHXy+f0Rrs5LGlu/B8oHPL1r4hELbRw0lvwuk
+         EQX3oPnXLw8bQ/5owUZajRDMZ85H1t5/IuEGIpK3xe6qF/FBHSSE1vNDtoJdKc6A0ti2
+         rIjQ==
+X-Received: by 10.28.57.69 with SMTP id g66mr19849016wma.63.1452595525701;
+        Tue, 12 Jan 2016 02:45:25 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.25
+        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 12 Jan 2016 02:45:25 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283794>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,142 +66,81 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9104-git-svn-follow-parent.sh | 68 ++++++++++++++++++++--------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ t/t9101-git-svn-props.sh | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 83f17e1..872aa79 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -31,12 +31,12 @@ test_expect_success 'initialize repo' '
- test_expect_success 'init and fetch a moved directory' '
- 	git svn init --minimize-url -i thunk "$svnrepo"/thunk &&
- 	git svn fetch -i thunk &&
--	test "`git rev-parse --verify refs/remotes/thunk@2`" \
--           = "`git rev-parse --verify refs/remotes/thunk~1`" &&
--        test "`git cat-file blob refs/remotes/thunk:readme |\
--                 sed -n -e "3p"`" = goodbye &&
--	test -z "`git config --get svn-remote.svn.fetch \
--	         "^trunk:refs/remotes/thunk@2$"`"
-+	test "$(git rev-parse --verify refs/remotes/thunk@2)" \
-+           = "$(git rev-parse --verify refs/remotes/thunk~1)" &&
-+        test "$(git cat-file blob refs/remotes/thunk:readme |\
-+                 sed -n -e "3p")" = goodbye &&
-+	test -z "$(git config --get svn-remote.svn.fetch \
-+	         "^trunk:refs/remotes/thunk@2$")"
- 	'
+diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+index 8869f50..e8173d5 100755
+--- a/t/t9101-git-svn-props.sh
++++ b/t/t9101-git-svn-props.sh
+@@ -26,27 +26,27 @@ cd import
+ EOF
  
- test_expect_success 'init and fetch from one svn-remote' '
-@@ -46,10 +46,10 @@ test_expect_success 'init and fetch from one svn-remote' '
-         git config --add svn-remote.svn.fetch \
-           thunk:refs/remotes/svn/thunk &&
-         git svn fetch -i svn/thunk &&
--	test "`git rev-parse --verify refs/remotes/svn/trunk`" \
--           = "`git rev-parse --verify refs/remotes/svn/thunk~1`" &&
--        test "`git cat-file blob refs/remotes/svn/thunk:readme |\
--                 sed -n -e "3p"`" = goodbye
-+	test "$(git rev-parse --verify refs/remotes/svn/trunk)" \
-+           = "$(git rev-parse --verify refs/remotes/svn/thunk~1)" &&
-+        test "$(git cat-file blob refs/remotes/svn/thunk:readme |\
-+                 sed -n -e "3p")" = goodbye
-         '
+ 	printf "Hello\r\nWorld\r\n" > crlf
+-	a_crlf=`git hash-object -w crlf`
++	a_crlf=$(git hash-object -w crlf)
+ 	printf "Hello\rWorld\r" > cr
+-	a_cr=`git hash-object -w cr`
++	a_cr=$(git hash-object -w cr)
+ 	printf "Hello\nWorld\n" > lf
+-	a_lf=`git hash-object -w lf`
++	a_lf=$(git hash-object -w lf)
  
- test_expect_success 'follow deleted parent' '
-@@ -61,9 +61,9 @@ test_expect_success 'follow deleted parent' '
-           junk:refs/remotes/svn/junk &&
-         git svn fetch -i svn/thunk &&
-         git svn fetch -i svn/junk &&
--        test -z "`git diff svn/junk svn/trunk`" &&
--        test "`git merge-base svn/junk svn/trunk`" \
--           = "`git rev-parse svn/trunk`"
-+        test -z "$(git diff svn/junk svn/trunk)" &&
-+        test "$(git merge-base svn/junk svn/trunk)" \
-+           = "$(git rev-parse svn/trunk)"
-         '
+ 	printf "Hello\r\nWorld" > ne_crlf
+-	a_ne_crlf=`git hash-object -w ne_crlf`
++	a_ne_crlf=$(git hash-object -w ne_crlf)
+ 	printf "Hello\nWorld" > ne_lf
+-	a_ne_lf=`git hash-object -w ne_lf`
++	a_ne_lf=$(git hash-object -w ne_lf)
+ 	printf "Hello\rWorld" > ne_cr
+-	a_ne_cr=`git hash-object -w ne_cr`
++	a_ne_cr=$(git hash-object -w ne_cr)
  
- test_expect_success 'follow larger parent' '
-@@ -80,10 +80,10 @@ test_expect_success 'follow larger parent' '
-         git rev-parse --verify refs/remotes/larger &&
-         git rev-parse --verify \
- 	   refs/remotes/larger-parent &&
--        test "`git merge-base \
-+        test "$(git merge-base \
- 		 refs/remotes/larger-parent \
--                 refs/remotes/larger`" = \
--             "`git rev-parse refs/remotes/larger`"
-+                 refs/remotes/larger)" = \
-+             "$(git rev-parse refs/remotes/larger)"
-         '
+ 	touch empty
+-	a_empty=`git hash-object -w empty`
++	a_empty=$(git hash-object -w empty)
+ 	printf "\n" > empty_lf
+-	a_empty_lf=`git hash-object -w empty_lf`
++	a_empty_lf=$(git hash-object -w empty_lf)
+ 	printf "\r" > empty_cr
+-	a_empty_cr=`git hash-object -w empty_cr`
++	a_empty_cr=$(git hash-object -w empty_cr)
+ 	printf "\r\n" > empty_crlf
+-	a_empty_crlf=`git hash-object -w empty_crlf`
++	a_empty_crlf=$(git hash-object -w empty_crlf)
  
- test_expect_success 'follow higher-level parent' '
-@@ -106,8 +106,8 @@ test_expect_success 'follow deleted directory' '
- 	svn_cmd rm -m "remove glob" "$svnrepo"/glob &&
- 	git svn init --minimize-url -i glob "$svnrepo"/glob &&
- 	git svn fetch -i glob &&
--	test "`git cat-file blob refs/remotes/glob:blob/bye`" = hi &&
--	test "`git ls-tree refs/remotes/glob | wc -l `" -eq 1
-+	test "$(git cat-file blob refs/remotes/glob:blob/bye)" = hi &&
-+	test "$(git ls-tree refs/remotes/glob | wc -l )" -eq 1
- 	'
+ 	svn_cmd import --no-auto-props -m 'import for git svn' . "$svnrepo" >/dev/null
+ cd ..
+@@ -80,7 +80,7 @@ test_expect_success "$name" \
+ 	git pull . ${remotes_git_svn}'
  
- # ref: r9270 of the Subversion repository: (http://svn.collab.net/repos/svn)
-@@ -142,9 +142,9 @@ test_expect_success 'follow-parent avoids deleting relevant info' '
- 	git svn init --minimize-url -i r9270-t \
- 	  "$svnrepo"/r9270/trunk/subversion/bindings/swig/perl/native/t &&
- 	git svn fetch -i r9270-t &&
--	test `git rev-list r9270-t | wc -l` -eq 2 &&
--	test "`git ls-tree --name-only r9270-t~1`" = \
--	     "`git ls-tree --name-only r9270-t`"
-+	test $(git rev-list r9270-t | wc -l) -eq 2 &&
-+	test "$(git ls-tree --name-only r9270-t~1)" = \
-+	     "$(git ls-tree --name-only r9270-t)"
- 	'
+ expect='/* $Id$ */'
+-got="`sed -ne 2p kw.c`"
++got="$(sed -ne 2p kw.c)"
+ test_expect_success 'raw $Id$ found in kw.c' "test '$expect' = '$got'"
  
- test_expect_success "track initial change if it was only made to parent" '
-@@ -152,11 +152,11 @@ test_expect_success "track initial change if it was only made to parent" '
- 	git svn init --minimize-url -i r9270-d \
- 	  "$svnrepo"/r9270/drunk/subversion/bindings/swig/perl/native/t &&
- 	git svn fetch -i r9270-d &&
--	test `git rev-list r9270-d | wc -l` -eq 3 &&
--	test "`git ls-tree --name-only r9270-t`" = \
--	     "`git ls-tree --name-only r9270-d`" &&
--	test "`git rev-parse r9270-t`" = \
--	     "`git rev-parse r9270-d~1`"
-+	test $(git rev-list r9270-d | wc -l) -eq 3 &&
-+	test "$(git ls-tree --name-only r9270-t)" = \
-+	     "$(git ls-tree --name-only r9270-d)" &&
-+	test "$(git rev-parse r9270-t)" = \
-+	     "$(git rev-parse r9270-d~1)"
- 	'
+ test_expect_success "propset CR on crlf files" '
+@@ -107,8 +107,8 @@ done
+ cd test_wc
+ 	printf '$Id$\rHello\rWorld\r' > cr
+ 	printf '$Id$\rHello\rWorld' > ne_cr
+-	a_cr=`printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin`
+-	a_ne_cr=`printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin`
++	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
++	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
+ 	test_expect_success 'Set CRLF on cr files' \
+ 	'svn_cmd propset svn:eol-style CRLF cr &&
+ 	 svn_cmd propset svn:eol-style CRLF ne_cr &&
+@@ -119,8 +119,8 @@ cd ..
+ test_expect_success 'fetch and pull latest from svn' \
+ 	'git svn fetch && git pull . ${remotes_git_svn}'
  
- test_expect_success "follow-parent is atomic" '
-@@ -193,19 +193,19 @@ test_expect_success "follow-parent is atomic" '
- 	git svn fetch -i stunk &&
- 	git svn init --minimize-url -i flunked "$svnrepo"/flunked &&
- 	git svn fetch -i flunked &&
--	test "`git rev-parse --verify refs/remotes/flunk@18`" \
--	   = "`git rev-parse --verify refs/remotes/stunk`" &&
--	test "`git rev-parse --verify refs/remotes/flunk~1`" \
--	   = "`git rev-parse --verify refs/remotes/stunk`" &&
--	test "`git rev-parse --verify refs/remotes/flunked~1`" \
--	   = "`git rev-parse --verify refs/remotes/stunk~1`"
-+	test "$(git rev-parse --verify refs/remotes/flunk@18)" \
-+	   = "$(git rev-parse --verify refs/remotes/stunk)" &&
-+	test "$(git rev-parse --verify refs/remotes/flunk~1)" \
-+	   = "$(git rev-parse --verify refs/remotes/stunk)" &&
-+	test "$(git rev-parse --verify refs/remotes/flunked~1)" \
-+	   = "$(git rev-parse --verify refs/remotes/stunk~1)"
- 	'
+-b_cr="`git hash-object cr`"
+-b_ne_cr="`git hash-object ne_cr`"
++b_cr="$(git hash-object cr)"
++b_ne_cr="$(git hash-object ne_cr)"
  
- test_expect_success "track multi-parent paths" '
- 	svn_cmd cp -m "resurrect /glob" "$svnrepo"/r9270 "$svnrepo"/glob &&
- 	git svn multi-fetch &&
--	test `git cat-file commit refs/remotes/glob | \
--	       grep "^parent " | wc -l` -eq 2
-+	test $(git cat-file commit refs/remotes/glob | \
-+	       grep "^parent " | wc -l) -eq 2
- 	'
- 
- test_expect_success "multi-fetch continues to work" "
+ test_expect_success 'CRLF + $Id$' "test '$a_cr' = '$b_cr'"
+ test_expect_success 'CRLF + $Id$ (no newline)' "test '$a_ne_cr' = '$b_ne_cr'"
 -- 
 2.5.0
