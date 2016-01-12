@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/10] t9101-git-svn-props.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 10:45:10 +0000
-Message-ID: <1452595518-38149-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/10] t9107-git-svn-migrate.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 10:45:13 +0000
+Message-ID: <1452595518-38149-6-git-send-email-gitter.spiros@gmail.com>
 References: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 11:45:58 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 11:46:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIwSa-0007g2-VN
+	id 1aIwSb-0007g2-Hv
 	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 11:45:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964946AbcALKpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 05:45:45 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33742 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933352AbcALKp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 05:45:26 -0500
-Received: by mail-wm0-f65.google.com with SMTP id u188so30567576wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:26 -0800 (PST)
+	id S934854AbcALKpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 05:45:44 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33758 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758791AbcALKp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 05:45:29 -0500
+Received: by mail-wm0-f68.google.com with SMTP id u188so30567713wmu.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 02:45:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0Hlg1rMQi+IavcNr5AGe0UlM1wNtdU5XIaA4XDdJDWk=;
-        b=WHn/IFKIsetDgtqrSW6NObJyXPNMMyjyZGnRsCB+XFPtDZH205NH8i3F6Jg+WAJeV4
-         FvaySvBuRYh4NKjAsKckZVdBdNeLDVAk8JvndomRKdyLbsSpWtf2kT0g01ebH94VCjVb
-         BMV690++OCzK+zilZYms/mDAG50LbQCASbH27kPaLb3cir9UDpb16xDsCifuPUQxdyuo
-         oNrHrwyFQfE4u75RlUwew1iMnfcwgqbEHXy+f0Rrs5LGlu/B8oHPL1r4hELbRw0lvwuk
-         EQX3oPnXLw8bQ/5owUZajRDMZ85H1t5/IuEGIpK3xe6qF/FBHSSE1vNDtoJdKc6A0ti2
-         rIjQ==
-X-Received: by 10.28.57.69 with SMTP id g66mr19849016wma.63.1452595525701;
-        Tue, 12 Jan 2016 02:45:25 -0800 (PST)
+        bh=pPIt01eOLcSg6tRJTiOod3qtC8XLLmfspn781mwt21Q=;
+        b=M7DNRFtopc50nG+U+ITG4p/iBh4xab5y95C3vPV5WFh7h2w9LNxzWRvFqZJVml6tki
+         1SVrcusxaS9HAUZc6wAyVVyhcu7sApWT/y2H607ucYYsBijMHqwe4uz4TbN/BWtCkNMY
+         /imB0boksbCMgg0+g4nbz9SA6iSsgLeQ0WGKU6Zm7fOLFjywH3cchV2z+HkNVLMSuIju
+         D1fwWtvRTPR2uhydvofqkus+0QVTDpLrpHeL0lMrv/TJ4O0tfmVZODQCNMsAqPZeh1lN
+         vZDCtdOG3uewxUVKGhSr/61YbAS0WBcm0ZIW9ayFtNPnfETrblPyuqzFlzXjamFYkntj
+         BRGg==
+X-Received: by 10.194.63.40 with SMTP id d8mr74046451wjs.127.1452595527714;
+        Tue, 12 Jan 2016 02:45:27 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.24
+        by smtp.gmail.com with ESMTPSA id gb9sm96320537wjb.26.2016.01.12.02.45.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 02:45:25 -0800 (PST)
+        Tue, 12 Jan 2016 02:45:27 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452595518-38149-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283795>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,81 +66,85 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9101-git-svn-props.sh | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ t/t9107-git-svn-migrate.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index 8869f50..e8173d5 100755
---- a/t/t9101-git-svn-props.sh
-+++ b/t/t9101-git-svn-props.sh
-@@ -26,27 +26,27 @@ cd import
- EOF
+diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
+index 6e69fc4..155b8bf 100755
+--- a/t/t9107-git-svn-migrate.sh
++++ b/t/t9107-git-svn-migrate.sh
+@@ -24,10 +24,10 @@ test_expect_success 'setup old-looking metadata' '
+ 	git update-ref -d refs/${remotes_git_svn} refs/${remotes_git_svn}
+ 	'
  
- 	printf "Hello\r\nWorld\r\n" > crlf
--	a_crlf=`git hash-object -w crlf`
-+	a_crlf=$(git hash-object -w crlf)
- 	printf "Hello\rWorld\r" > cr
--	a_cr=`git hash-object -w cr`
-+	a_cr=$(git hash-object -w cr)
- 	printf "Hello\nWorld\n" > lf
--	a_lf=`git hash-object -w lf`
-+	a_lf=$(git hash-object -w lf)
+-head=`git rev-parse --verify refs/heads/git-svn-HEAD^0`
++head=$(git rev-parse --verify refs/heads/git-svn-HEAD^0)
+ test_expect_success 'git-svn-HEAD is a real HEAD' "test -n '$head'"
  
- 	printf "Hello\r\nWorld" > ne_crlf
--	a_ne_crlf=`git hash-object -w ne_crlf`
-+	a_ne_crlf=$(git hash-object -w ne_crlf)
- 	printf "Hello\nWorld" > ne_lf
--	a_ne_lf=`git hash-object -w ne_lf`
-+	a_ne_lf=$(git hash-object -w ne_lf)
- 	printf "Hello\rWorld" > ne_cr
--	a_ne_cr=`git hash-object -w ne_cr`
-+	a_ne_cr=$(git hash-object -w ne_cr)
+-svnrepo_escaped=`echo $svnrepo | sed 's/ /%20/'`
++svnrepo_escaped=$(echo $svnrepo | sed 's/ /%20/')
  
- 	touch empty
--	a_empty=`git hash-object -w empty`
-+	a_empty=$(git hash-object -w empty)
- 	printf "\n" > empty_lf
--	a_empty_lf=`git hash-object -w empty_lf`
-+	a_empty_lf=$(git hash-object -w empty_lf)
- 	printf "\r" > empty_cr
--	a_empty_cr=`git hash-object -w empty_cr`
-+	a_empty_cr=$(git hash-object -w empty_cr)
- 	printf "\r\n" > empty_crlf
--	a_empty_crlf=`git hash-object -w empty_crlf`
-+	a_empty_crlf=$(git hash-object -w empty_crlf)
+ test_expect_success 'initialize old-style (v0) git svn layout' '
+ 	mkdir -p "$GIT_DIR"/git-svn/info "$GIT_DIR"/svn/info &&
+@@ -38,7 +38,7 @@ test_expect_success 'initialize old-style (v0) git svn layout' '
+ 	git rev-parse --verify refs/${remotes_git_svn}^0 &&
+ 	git rev-parse --verify refs/remotes/svn^0 &&
+ 	test "$(git config --get svn-remote.svn.url)" = "$svnrepo_escaped" &&
+-	test `git config --get svn-remote.svn.fetch` = \
++	test $(git config --get svn-remote.svn.fetch) = \
+              ":refs/${remotes_git_svn}"
+ 	'
  
- 	svn_cmd import --no-auto-props -m 'import for git svn' . "$svnrepo" >/dev/null
- cd ..
-@@ -80,7 +80,7 @@ test_expect_success "$name" \
- 	git pull . ${remotes_git_svn}'
+@@ -46,10 +46,10 @@ test_expect_success 'initialize a multi-repository repo' '
+ 	git svn init "$svnrepo" -T trunk -t tags -b branches &&
+ 	git config --get-all svn-remote.svn.fetch > fetch.out &&
+ 	grep "^trunk:refs/remotes/origin/trunk$" fetch.out &&
+-	test -n "`git config --get svn-remote.svn.branches \
+-	            "^branches/\*:refs/remotes/origin/\*$"`" &&
+-	test -n "`git config --get svn-remote.svn.tags \
+-	            "^tags/\*:refs/remotes/origin/tags/\*$"`" &&
++	test -n "$(git config --get svn-remote.svn.branches \
++	            "^branches/\*:refs/remotes/origin/\*$")" &&
++	test -n "$(git config --get svn-remote.svn.tags \
++	            "^tags/\*:refs/remotes/origin/tags/\*$")" &&
+ 	git config --unset svn-remote.svn.branches \
+ 	                        "^branches/\*:refs/remotes/origin/\*$" &&
+ 	git config --unset svn-remote.svn.tags \
+@@ -75,28 +75,28 @@ test_expect_success 'multi-fetch works on partial urls + paths' "
+ 	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+ 		git rev-parse --verify refs/remotes/origin/\$i^0 >> refs.out || exit 1;
+ 	    done &&
+-	test -z \"\`sort < refs.out | uniq -d\`\" &&
++	test -z \"\$(sort < refs.out | uniq -d)\" &&
+ 	for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+ 	  for j in trunk a b tags/0.1 tags/0.2 tags/0.3; do
+ 		if test \$j != \$i; then continue; fi
+-	    test -z \"\`git diff refs/remotes/origin/\$i \
+-	                         refs/remotes/origin/\$j\`\" ||exit 1; done; done
++	    test -z \"\$(git diff refs/remotes/origin/\$i \
++	                         refs/remotes/origin/\$j)\" ||exit 1; done; done
+ 	"
  
- expect='/* $Id$ */'
--got="`sed -ne 2p kw.c`"
-+got="$(sed -ne 2p kw.c)"
- test_expect_success 'raw $Id$ found in kw.c' "test '$expect' = '$got'"
- 
- test_expect_success "propset CR on crlf files" '
-@@ -107,8 +107,8 @@ done
- cd test_wc
- 	printf '$Id$\rHello\rWorld\r' > cr
- 	printf '$Id$\rHello\rWorld' > ne_cr
--	a_cr=`printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin`
--	a_ne_cr=`printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin`
-+	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
-+	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
- 	test_expect_success 'Set CRLF on cr files' \
- 	'svn_cmd propset svn:eol-style CRLF cr &&
- 	 svn_cmd propset svn:eol-style CRLF ne_cr &&
-@@ -119,8 +119,8 @@ cd ..
- test_expect_success 'fetch and pull latest from svn' \
- 	'git svn fetch && git pull . ${remotes_git_svn}'
- 
--b_cr="`git hash-object cr`"
--b_ne_cr="`git hash-object ne_cr`"
-+b_cr="$(git hash-object cr)"
-+b_ne_cr="$(git hash-object ne_cr)"
- 
- test_expect_success 'CRLF + $Id$' "test '$a_cr' = '$b_cr'"
- test_expect_success 'CRLF + $Id$ (no newline)' "test '$a_ne_cr' = '$b_ne_cr'"
+ test_expect_success 'migrate --minimize on old inited layout' '
+ 	git config --unset-all svn-remote.svn.fetch &&
+ 	git config --unset-all svn-remote.svn.url &&
+ 	rm -rf "$GIT_DIR"/svn &&
+-	for i in `cat fetch.out`; do
+-		path=`expr $i : "\([^:]*\):.*$"`
+-		ref=`expr $i : "[^:]*:\(refs/remotes/.*\)$"`
++	for i in $(cat fetch.out); do
++		path=$(expr $i : "\([^:]*\):.*$")
++		ref=$(expr $i : "[^:]*:\(refs/remotes/.*\)$")
+ 		if test -z "$ref"; then continue; fi
+ 		if test -n "$path"; then path="/$path"; fi
+ 		( mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
+ 		echo "$svnrepo"$path > "$GIT_DIR"/svn/$ref/info/url ) || exit 1;
+ 	done &&
+ 	git svn migrate --minimize &&
+-	test -z "`git config -l | grep "^svn-remote\.git-svn\."`" &&
++	test -z "$(git config -l | grep "^svn-remote\.git-svn\.")" &&
+ 	git config --get-all svn-remote.svn.fetch > fetch.out &&
+ 	grep "^trunk:refs/remotes/origin/trunk$" fetch.out &&
+ 	grep "^branches/a:refs/remotes/origin/a$" fetch.out &&
 -- 
 2.5.0
