@@ -1,187 +1,166 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 09/21] refs: add method to rename refs
-Date: Mon, 11 Jan 2016 20:22:08 -0500
-Message-ID: <1452561740-8668-10-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 16/21] refs: check submodules ref storage config
+Date: Mon, 11 Jan 2016 20:22:15 -0500
+Message-ID: <1452561740-8668-17-git-send-email-dturner@twopensource.com>
 References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:51 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aInfe-0003Hj-7l
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:50 +0100
+	id 1aInfk-0003L8-TH
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761828AbcALBWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Jan 2016 20:22:48 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35803 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761448AbcALBWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 20:22:40 -0500
-Received: by mail-qk0-f179.google.com with SMTP id n135so233502297qka.2
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:40 -0800 (PST)
+	id S1761904AbcALBWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 20:22:52 -0500
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:35547 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761817AbcALBWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jan 2016 20:22:51 -0500
+Received: by mail-qg0-f53.google.com with SMTP id o11so417844453qge.2
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mJmd1nMiHeNcCYagjVN4eL0JF1A82gNgr/1pklyHD5Y=;
-        b=fWnFkHXAdR2kzk5IOCIwm+AVPw1aagzD2Nx7up8wgbKLFXsL1u8LyC7yZGrgZWBYkC
-         e4KDFVbyqsWNxUgPO6rL8pev3f4D64Tq7TzfDUOVlv9x5iBSIbohm5eqy3irUJHBGbfM
-         m26/x3RRGGuRzp1Y3m/Hq7uXSGSlS1tyfuLqsJLCtV2toYr0FEDVSOQ9Y7KsFwyavAOK
-         CJ1+/jcv9lXQWhIYNQ+aplXXiDUEsrk+TzEDR18jxQE4VAMaTmgd9lv874+P7tPutgAo
-         XWAkiwxGz8nMNJS75lzdexzDtY3qWJNnxZFT8uQLnjbtPureinhe87SZzXxJ1HfRUyS8
-         KkcQ==
+        bh=ct62rYp4wUxL0eiAHoLTnCuNuDM74LojSES4Ur5kHuc=;
+        b=dQhaqKQg/KKh0sUtmETbZyTqZvgWvIPmve39Zs8QExeLWHiTaltK0/qJ1r3MPNKUuU
+         JAQ1Da+yJ4suJW98sAkM81ElPtRP8xQky2q4dUU+zksW5ByDKVPX6+Up3BjQKic1fsWi
+         Sr8cA31G/vTJ5aGss3hnDQlKVFc2hoPZ+CpSGn6iHhWg5YbVHRjP2xwzWd2xEolB3JfA
+         pX7yDgD9UFdMhuFwr9SvcdDMhwEGX6OQ0fm3VhrbYqToY8zGbl5YkICTmU1HjZzIW1Al
+         tvu/UTUmEjqDWc0OssmmiTkbUEitEy84aGwMkbB1e+PmamzEZrjbnDK+Tb3rwHiAM/0n
+         tgPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mJmd1nMiHeNcCYagjVN4eL0JF1A82gNgr/1pklyHD5Y=;
-        b=gwoetEeP97qhr8oFV70wPaMQ5M/am4SGPxG22H9JeGbT6oRf6OcEZZx12GcDPCBNh1
-         BzoQZLN4SrCuxgukBke6S2hEHMyRwWSeb3TAjsfp1krGDwCMRH5DPkavGp0xTC1/Ftcm
-         hWgumUcVXAFEdvR0Pkgz0C+wapIae31Y/JFXldFgtzj4IKTH/nbAT7ch6oq+nNeGQpUO
-         fxS4HO4E9YnwvR5tG/Ch+dMkx63eyXYgxkNt1W18ARyULoJDnAUlIlnC/3qtPyn2ksTe
-         M4RWsZloyOcnDrfJC2Wfk1B/e81QvfBxL9A8mOAudT1zbVK5KSUn26L52faynnyEacN5
-         tYRg==
-X-Gm-Message-State: ALoCoQlm5M+kNrB6oc95CKOWq2AQ1kXaWoOmJyYgoo1dJegVnN6NuAyirj91i2OmyAyeLp/aH9Tgb/8NT8uHsf5K3OkavzQnbg==
-X-Received: by 10.55.79.17 with SMTP id d17mr149558491qkb.56.1452561759694;
-        Mon, 11 Jan 2016 17:22:39 -0800 (PST)
+        bh=ct62rYp4wUxL0eiAHoLTnCuNuDM74LojSES4Ur5kHuc=;
+        b=gTiu2ybkaUuV3K6l62lvVakvvpxsxuiY3z7qY3aqyBygFrqKBKPqJLqiCY1ESaXMMq
+         oAcDn9l9fQPslt6WOwfvQIv0RpfUKdNDRxKUcfixCoxD04JwkRYNIwz5BK+tB0p2O8RN
+         FmknPqqavoxwvI+5947b0wbjGJQ8zXWppFxDBLX9s9MWVr7fAIf5pQG64y5+Kd9ML/T2
+         WqrRktaXy+1ettlhdbk2qzw/ejsRmTxvcBYwe6XsvEbAPjCazrVe0bpLyp5JHNRJJLCQ
+         XzgwiIZgWuhrjPEDEi+UOkoOJt4JHCQsjTe3+NWozQp9KU+fffow5NGPlaH14W1zr3ux
+         7c6g==
+X-Gm-Message-State: ALoCoQnY6d0bz3OoywYwlGQ5dJFZOaSlq577r/ouoNSJ5zuu3iL2ILeTmiQX+syVecm+9KxbiQcMtiZdVEUorpl3xviog9+EtQ==
+X-Received: by 10.141.6.131 with SMTP id i125mr46646558qhd.68.1452561770068;
+        Mon, 11 Jan 2016 17:22:50 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.38
+        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jan 2016 17:22:38 -0800 (PST)
+        Mon, 11 Jan 2016 17:22:49 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283745>
+
+All submodules must have the same ref storage (for now).  Confirm that
+this is so before attempting to do anything with submodule refs.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c               | 37 +++++++++++++++++++++----------------
- refs/files-backend.c |  4 +++-
- refs/refs-internal.h |  9 +++++++++
- 3 files changed, 33 insertions(+), 17 deletions(-)
+ refs.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
 diff --git a/refs.c b/refs.c
-index af5f7a7..0b29b25 100644
+index 07f1dab..1ccc7f6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1089,22 +1089,6 @@ const char *find_descendant_ref(const char *dirname,
- 	return NULL;
+@@ -297,8 +297,43 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
  }
  
--int rename_ref_available(const char *oldname, const char *newname)
--{
--	struct string_list skip = STRING_LIST_INIT_NODUP;
--	struct strbuf err = STRBUF_INIT;
--	int ret;
--
--	string_list_insert(&skip, oldname);
--	ret = !verify_refname_available(newname, NULL, &skip, &err);
--	if (!ret)
--		error("%s", err.buf);
--
--	string_list_clear(&skip, 0);
--	strbuf_release(&err);
--	return ret;
--}
--
- /* backend functions */
- int refs_init_db(struct strbuf *err, int shared)
- {
-@@ -1122,6 +1106,11 @@ int delete_refs(struct string_list *refnames)
- 	return the_refs_backend->delete_refs(refnames);
- }
- 
-+int rename_ref(const char *oldref, const char *newref, const char *logmsg)
++static int submodule_backend(const char *key, const char *value, void *data)
 +{
-+	return the_refs_backend->rename_ref(oldref, newref, logmsg);
++	char **path = data;
++	if (!strcmp(key, "extensions.refstorage"))
++		*path = xstrdup(value);
 +}
 +
- const char *resolve_ref_unsafe(const char *ref, int resolve_flags,
- 			       unsigned char *sha1, int *flags)
- {
-@@ -1135,6 +1124,22 @@ int verify_refname_available(const char *refname, struct string_list *extra,
- 	return the_refs_backend->verify_refname_available(refname, extra, skip, err);
- }
- 
-+int rename_ref_available(const char *oldname, const char *newname)
++static void check_submodule_backend(const char *submodule)
 +{
-+	struct string_list skip = STRING_LIST_INIT_NODUP;
-+	struct strbuf err = STRBUF_INIT;
-+	int ret;
++	struct strbuf sb = STRBUF_INIT;
++	char *submodule_storage_backend = xstrdup("files");
 +
-+	string_list_insert(&skip, oldname);
-+	ret = !verify_refname_available(newname, NULL, &skip, &err);
-+	if (!ret)
-+		error("%s", err.buf);
++	if (!submodule)
++		goto done;
 +
-+	string_list_clear(&skip, 0);
-+	strbuf_release(&err);
-+	return ret;
++	strbuf_git_path_submodule(&sb, submodule, "%s", "");
++
++	if (!is_git_directory(sb.buf))
++		goto done;
++
++	strbuf_reset(&sb);
++	strbuf_git_path_submodule(&sb, submodule, "config");
++
++	git_config_from_file(submodule_backend, sb.buf,
++			     &submodule_storage_backend);
++	if (strcmp(submodule_storage_backend, ref_storage_backend))
++		die("Ref storage '%s' for submodule '%s' does not match our storage, '%s'",
++		    submodule_storage_backend, submodule, ref_storage_backend);
++
++done:
++	free(submodule_storage_backend);
++	strbuf_release(&sb);
 +}
 +
- int pack_refs(unsigned int flags)
+ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
  {
- 	return the_refs_backend->pack_refs(flags);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index e8e112c..fd4b530 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2478,7 +2478,8 @@ static int commit_ref_update(struct ref_lock *lock,
- 			     const unsigned char *sha1, const char *logmsg,
- 			     int flags, struct strbuf *err);
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+ }
  
--int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
-+static int files_rename_ref(const char *oldrefname, const char *newrefname,
-+			    const char *logmsg)
+@@ -309,6 +344,7 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
  {
- 	unsigned char sha1[20], orig_sha1[20];
- 	int flag = 0, logmoved = 0;
-@@ -3569,6 +3570,7 @@ struct ref_storage_be refs_be_files = {
- 	files_peel_ref,
- 	files_create_symref,
- 	files_delete_refs,
-+	files_rename_ref,
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
+ }
  
- 	files_resolve_ref_unsafe,
- 	files_verify_refname_available,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f3c2632..64c3092 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -53,6 +53,13 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
- 				 void *cb_data);
+@@ -319,6 +355,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
  
- /*
-+ * Check if the new name does not conflict with any existing refs
-+ * (other than possibly the old ref).  Return 0 if the ref can be
-+ * renamed to the new name.
-+ */
-+int rename_ref_available(const char *oldname, const char *newname);
-+
-+/*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
-  * example by causing a file that is not a reference to be deleted.
-@@ -246,6 +253,7 @@ typedef const char *resolve_ref_unsafe_fn(const char *ref,
- typedef int verify_refname_available_fn(const char *refname, struct string_list *extra, struct string_list *skip, struct strbuf *err);
- typedef int resolve_gitlink_ref_fn(const char *path, const char *refname,
- 				   unsigned char *sha1);
-+typedef int rename_ref_fn(const char *oldref, const char *newref, const char *logmsg);
+ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+ }
  
- /* iteration methods */
- typedef int head_ref_fn(each_ref_fn fn, void *cb_data);
-@@ -284,6 +292,7 @@ struct ref_storage_be {
- 	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
- 	delete_refs_fn *delete_refs;
-+	rename_ref_fn *rename_ref;
+@@ -1369,6 +1406,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ int resolve_gitlink_ref(const char *path, const char *refname,
+ 			unsigned char *sha1)
+ {
++	check_submodule_backend(path);
+ 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
+ }
  
- 	resolve_ref_unsafe_fn *resolve_ref_unsafe;
- 	verify_refname_available_fn *verify_refname_available;
+@@ -1379,6 +1417,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 
+ int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->head_ref_submodule(submodule, fn, cb_data);
+ }
+ 
+@@ -1389,6 +1428,7 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->for_each_ref_submodule(submodule, fn, cb_data);
+ }
+ 
+@@ -1407,6 +1447,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ int for_each_ref_in_submodule(const char *submodule, const char *prefix,
+ 			      each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->for_each_ref_in_submodule(submodule, prefix,
+ 							   fn, cb_data);
+ }
 -- 
 2.4.2.749.g730654d-twtrsrc
