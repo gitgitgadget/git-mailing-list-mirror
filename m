@@ -1,143 +1,143 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 0/4] Ensure that we can build without libgen.h
-Date: Tue, 12 Jan 2016 08:57:16 +0100 (CET)
-Message-ID: <cover.1452585382.git.johannes.schindelin@gmx.de>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v4 3/4] Provide a dirname() function when
+ NO_LIBGEN_H=YesPlease
+Date: Tue, 12 Jan 2016 08:57:36 +0100 (CET)
+Message-ID: <04a7a497f9a5771d4dbf5fd605f138607b2bae0a.1452585382.git.johannes.schindelin@gmx.de>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 12 08:57:47 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 08:57:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aItpq-0000ia-L5
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 08:57:47 +0100
+	id 1aItpw-0000nO-8R
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 08:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761846AbcALH5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 02:57:43 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60477 "EHLO mout.gmx.net"
+	id S1761924AbcALH5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 02:57:47 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51363 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761498AbcALH5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 02:57:41 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MYtId-1afk0T1zdL-00VjH4; Tue, 12 Jan 2016 08:57:18
+	id S1761870AbcALH5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 02:57:46 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LfSyv-1ZqOUr44BV-00p4fi; Tue, 12 Jan 2016 08:57:37
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1452536924.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1452585382.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Hr44GP5UNknjG/jArLj9TlobknDWPNPNOmEuDnIpVbtIqkll5t6
- NWanOllbIJwpBz1MzVWALyPXmZ0pDq7N/q3bNh6Lc10CJef9QiZAf9u1wewOH14Qj+IWl0A
- GGaT4vyW8n6CKmINHK9ms/867CYL1pWir0thcOk4HIrvvZiobGI5oLAvqoudfR51Ph/3lLM
- 2bav17+eEs2tJ4/oQKRUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YkKpC9k64uI=:DEGwKBebOsriMFuRg7MfXZ
- gk4RzbFBj/TYwEOsXr8FxAIWmpihIFwl0E8bWH1ZiFvFp9LDbjOvlCaKhXNSnvh64AdW+jogy
- pfRxVfLHoJBjRTa/qHmGPaiQQceMtVMWOULB4UogtyGCjMRM+8YP95oqxuSwJIaAWGDmVnbrh
- 2RrDksH6jcqMIbjTmQXYdTe3tNs19AzC0ay3jjCGFxf7tlWBfjxGWkAckF5/9p1Cut2K16Ad0
- sN48socR02/MLbBVB9l73XcMqS7yylWkym3tRCdEP1Fh8q1rZhsOwuheuLqlLCTv5okgZpPAh
- uSAhW3fwvMtddjXbxMFl7Am5TPelxDjl5zzimqkeDz0cffbl9U2LyVjBVSjw3UmOcnskzcyd1
- ZltJbadvK2vmZS73I1OyFq4JIi+fR77AsyEepYTrYhJ9zgEEQUNJESXPctNAf0jPeXinNgWf5
- hO2mQHLM2K6NlVjMYLUU02obCilo/SixTl8v8JoMwg86x5oGvLDaITWf2w2rE4Cm1mZUKSL96
- lyXQJM8srQaWxPTLpv7akB/OdLXqjRVO4+mwxiAd7R71c+E7gvp7RkfNpFgaxQDxBBvQYpevb
- W4fRrbDUhaN96izBTgJ46FfiR7G2kj0RzA6NqAQO1D96C9z2UWe21CuxomEmgj9TKGxLSa7Oh
- OUikrcBoSgcYXOp0PNAc95vnqeVTF3hS6qheJsz6dKpYsAUgma2MZL0W4tnHn1cux2wZgMAy8
- DD3+/n882uDGdWXHSfkh/il+GPf+XFmjZRXZ96woYch7s467UTZtaSjYZFqOw0WMIARwDJf7 
+X-Provags-ID: V03:K0:PcakcqPYnim1pHD77o3CwQ5yopCOHdghAzDIrVpyUk9RqjZOjb0
+ bk26K9F85BUh3uXy7/q+ZkLjBqOnhSBR3fcCeRhdKj8Z+h9o5xK786xRl4b7iOMU7dEEuYv
+ IAVaJqTR+b8gUCMzdGEUZTtPf6TItAVMHNK7s40jbNFM3Mifwjhkd9dux7bwahzJnQlP1lW
+ YwzTP0HwCcMiU0TSvuLcA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mP//J6uwjwU=:tZz8mWScTexMWidu5D4Q8y
+ fOoGLqPmckbYFAwvAZRdM7XhCUErU9Ndgu7W8ntwLC6BOEXvh0EGPKQUvw8d7oCCXNlpfjt5S
+ xWiNitWZrA6pNT4tvfauvjRqn6RZbpir30pqRiHsikmzwcW8lmq2L9czOB2gtqu/LJfzkZoI/
+ wakzPxFgH15WGFbxLmMQZERJ3KHOgmtVW1ltbZmezDekiC1d0QSy3ZthZR+rhNj/MZltoQ3+R
+ nl+ZCSGypqGmH+LmqFKxO70neGKv/VEpRINEpjI953e/qxRRiH1GHqw/JTKsPq2/L2+iwYADr
+ fyeot4JTDgwgiRWm2xIRxIyJSZ84/OzuelINWqg8Xzioza0XANftOab0b3xtQVrceloOsiUqH
+ W+0J3qujkEjQDGPrADZDR4Z7Z2n6ihTX0d+NyvTK1h8p6+FltXK3QxYIuKBvrV5Qi+Jor7j5x
+ KPkOUD2zgbgf5ut0Dv46LReAEM1mdb/BDDmehqD31PBAcLJn4BkkAjo86Qoxs1tqTKCZMQ814
+ FzvBm/wlThZP2ZkC18u6j1pnF1FtOL+ZFtosWRIlF3mtQCjid5txSGsJvN6dqFCXjDg6KgS+B
+ vBuHMfU9qs1w49zmXRrL1a0wd90WA4eFtEd5MOm9drceaEwA3LJJ958pXRG7gudal7fybkX7c
+ gE2QNCUYId19BWkUsYVaMiZxoFknJZ7cKLcrRe4sGY+EeF2RB2KtmdjgyvvssmeK4KQCfQlcm
+ aavdWygXUty2PldXljStz529xiDuqMJ4RUkv8muUtJcyh3i3NgvWYoD9IljiarZ/dCuhKobD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283774>
 
-This mini series adds a fall-back for the `dirname()` function that we use
-e.g. in git-am. This is necessary because not all platforms have a working
-libgen.h.
+When there is no `libgen.h` to our disposal, we miss the `dirname()`
+function.
 
-While at it, we ensure that our basename() drop-in conforms to the POSIX
-specifications.
+So far, we only had one user of that function: credential-cache--daemon
+(which was only compiled when Unix sockets are available, anyway). But
+now we also have `builtin/am.c` as user, so we need it.
 
-In addition to Eric's style improvement, v4 also fixes the signature
-of skip_dos_drive_prefix() in the non-Windows case.
+Since `dirname()` is a sibling of `basename()`, we simply put our very
+own `gitdirname()` implementation next to `gitbasename()` and use it
+if `NO_LIBGEN_H` has been set.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/basename.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h |  2 ++
+ 2 files changed, 46 insertions(+)
 
-Johannes Schindelin (4):
-  Refactor skipping DOS drive prefixes
-  compat/basename: make basename() conform to POSIX
-  Provide a dirname() function when NO_LIBGEN_H=YesPlease
-  t0060: verify that basename() and dirname() work as expected
-
- compat/basename.c     |  66 ++++++++++++++++++--
- compat/mingw.c        |  14 ++---
- compat/mingw.h        |  10 ++-
- git-compat-util.h     |  10 +++
- path.c                |  14 ++---
- t/t0060-path-utils.sh |   3 +
- test-path-utils.c     | 166 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 259 insertions(+), 24 deletions(-)
-
-Interdiff vs v3:
-
- diff --git a/compat/basename.c b/compat/basename.c
- index 0a2ed25..96bd953 100644
- --- a/compat/basename.c
- +++ b/compat/basename.c
- @@ -29,20 +29,15 @@ char *gitbasename (char *path)
-  
-  char *gitdirname(char *path)
-  {
- +	static struct strbuf buf = STRBUF_INIT;
-  	char *p = path, *slash = NULL, c;
-  	int dos_drive_prefix;
-  
-  	if (!p)
-  		return ".";
-  
- -	if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p) {
- -		static struct strbuf buf = STRBUF_INIT;
- -
- -dot:
- -		strbuf_reset(&buf);
- -		strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
- -		return buf.buf;
- -	}
- +	if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p)
- +		goto dot;
-  
-  	/*
-  	 * POSIX.1-2001 says dirname("/") should return "/", and dirname("//")
- @@ -64,8 +59,13 @@ dot:
-  				slash = tentative;
-  		}
-  
- -	if (!slash)
- -		goto dot;
- -	*slash = '\0';
- -	return path;
- +	if (slash) {
- +		*slash = '\0';
- +		return path;
- +	}
- +
- +dot:
- +	strbuf_reset(&buf);
- +	strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
- +	return buf.buf;
-  }
- diff --git a/git-compat-util.h b/git-compat-util.h
- index 94f311a..5f72f1c 100644
- --- a/git-compat-util.h
- +++ b/git-compat-util.h
- @@ -338,7 +338,7 @@ static inline int git_has_dos_drive_prefix(const char *path)
-  #endif
-  
-  #ifndef skip_dos_drive_prefix
- -static inline int git_skip_dos_drive_prefix(const char **path)
- +static inline int git_skip_dos_drive_prefix(char **path)
-  {
-  	return 0;
-  }
-
+diff --git a/compat/basename.c b/compat/basename.c
+index 0f1b0b0..96bd953 100644
+--- a/compat/basename.c
++++ b/compat/basename.c
+@@ -1,4 +1,5 @@
+ #include "../git-compat-util.h"
++#include "../strbuf.h"
+ 
+ /* Adapted from libiberty's basename.c.  */
+ char *gitbasename (char *path)
+@@ -25,3 +26,46 @@ char *gitbasename (char *path)
+ 	}
+ 	return (char *)base;
+ }
++
++char *gitdirname(char *path)
++{
++	static struct strbuf buf = STRBUF_INIT;
++	char *p = path, *slash = NULL, c;
++	int dos_drive_prefix;
++
++	if (!p)
++		return ".";
++
++	if ((dos_drive_prefix = skip_dos_drive_prefix(&p)) && !*p)
++		goto dot;
++
++	/*
++	 * POSIX.1-2001 says dirname("/") should return "/", and dirname("//")
++	 * should return "//", but dirname("///") should return "/" again.
++	 */
++	if (is_dir_sep(*p)) {
++		if (!p[1] || (is_dir_sep(p[1]) && !p[2]))
++			return path;
++		slash = ++p;
++	}
++	while ((c = *(p++)))
++		if (is_dir_sep(c)) {
++			char *tentative = p - 1;
++
++			/* POSIX.1-2001 says to ignore trailing slashes */
++			while (is_dir_sep(*p))
++				p++;
++			if (*p)
++				slash = tentative;
++		}
++
++	if (slash) {
++		*slash = '\0';
++		return path;
++	}
++
++dot:
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, "%.*s.", dos_drive_prefix, path);
++	return buf.buf;
++}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index fbb11bb..5f72f1c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -253,6 +253,8 @@ struct itimerval {
+ #else
+ #define basename gitbasename
+ extern char *gitbasename(char *);
++#define dirname gitdirname
++extern char *gitdirname(char *);
+ #endif
+ 
+ #ifndef NO_ICONV
 -- 
 2.6.3.windows.1.300.g1c25e49
