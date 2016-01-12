@@ -1,117 +1,71 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/12] t9130-git-svn-authors-file.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:29 +0000
-Message-ID: <1452599378-47882-4-git-send-email-gitter.spiros@gmail.com>
-References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:38 2016
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 2/2] builtin/grep: add grep.fallbackToNoIndex config
+Date: Tue, 12 Jan 2016 07:11:07 -0500
+Message-ID: <20160112121106.GA18512@sigill.intra.peff.net>
+References: <1452547580-30687-1-git-send-email-t.gummerer@gmail.com>
+ <1452595226-14616-1-git-send-email-t.gummerer@gmail.com>
+ <1452595226-14616-3-git-send-email-t.gummerer@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
+	gitster@pobox.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 12 13:11:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxT8-00085K-K1
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:34 +0100
+	id 1aIxnL-0001tO-NU
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 13:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752747AbcALLu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:50:28 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34362 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753051AbcALLtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:45 -0500
-Received: by mail-wm0-f67.google.com with SMTP id b14so30973559wmb.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0aHHNW+6b0eGFqzre5X6Wwnf2fVfdxzUWN6KvPG/Wi4=;
-        b=xVGzaRwABjv6w3EL/837n4CswbYc91hX7QzRnN83NyhcRWqDC+SPYpEFCfsHzPre0b
-         s5mXKLgS5Ycr8bUOgaCrj6tIlAPobT7wffgiNKfN7W+Ggp+QyLjNBEHveihFrAEBC05R
-         Tiz0vuQ2VhgliwK2UxHqZC3owXTOH13BPbYXNTIPBj2Vg+09zbxH9cN/B1sgYdXXdW+Z
-         2hpJGiapmiZF+IbdtvidoAGgO8IENpakrU2QUOLeqjRnAJ7D2jqZoAUEfkx1j9374vur
-         SCoAKciD2tJvLVrHtN0XqbzJxiHh84E7mTrdv20tCpir4ymcTR6UTiXbVHU75kyFMBVh
-         9G4g==
-X-Received: by 10.28.180.193 with SMTP id d184mr10961929wmf.64.1452599384152;
-        Tue, 12 Jan 2016 03:49:44 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:43 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
-In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
+	id S1753269AbcALMLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 07:11:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52147 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752003AbcALMLM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 07:11:12 -0500
+Received: (qmail 26881 invoked by uid 102); 12 Jan 2016 12:11:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 07:11:12 -0500
+Received: (qmail 13417 invoked by uid 107); 12 Jan 2016 12:11:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 12 Jan 2016 07:11:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Jan 2016 07:11:07 -0500
+Content-Disposition: inline
+In-Reply-To: <1452595226-14616-3-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283813>
 
-The Git CodingGuidelines prefer the $(...) construct for command
-substitution instead of using the backquotes `...`.
+On Tue, Jan 12, 2016 at 11:40:26AM +0100, Thomas Gummerer wrote:
 
-The backquoted form is the traditional method for command
-substitution, and is supported by POSIX.  However, all but the
-simplest uses become complicated quickly.  In particular, embedded
-command substitutions and/or the use of double quotes require
-careful escaping with the backslash character.
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 4229cae..6b7add6 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -755,9 +755,15 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+>  	grep_commit_pattern_type(pattern_type_arg, &opt);
+>  
+> -	if (use_index && !startup_info->have_repository)
+> -		/* die the same way as if we did it at the beginning */
+> -		setup_git_directory();
+> +	if (use_index && !startup_info->have_repository) {
+> +		int fallback = 0;
+> +		git_config_get_bool("grep.fallbacktonoindex", &fallback);
+> +		if (fallback)
+> +			use_index = 0;
+> +		else
+> +			/* die the same way as if we did it at the beginning */
+> +			setup_git_directory();
+> +	}
+>  
+>  	/*
+>  	 * skip a -- separator; we know it cannot be
 
-The patch was generated by:
+Nice. This turned out delightfully simple.
 
-for _f in $(find . -name "*.sh")
-do
-	perl -i -pe 'BEGIN{undef $/;} s/`(.+?)`/\$(\1)/smg'  "${_f}"
-done
-
-and then carefully proof-read.
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- t/t9130-git-svn-authors-file.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
-index c44de26..d306b77 100755
---- a/t/t9130-git-svn-authors-file.sh
-+++ b/t/t9130-git-svn-authors-file.sh
-@@ -26,7 +26,7 @@ test_expect_success 'start import with incomplete authors file' '
- test_expect_success 'imported 2 revisions successfully' '
- 	(
- 		cd x
--		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 2 &&
-+		test "$(git rev-list refs/remotes/git-svn | wc -l)" -eq 2 &&
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
- 		  grep "^author BBBBBBB BBBBBBB <bb@example\.com> " &&
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
-@@ -43,7 +43,7 @@ test_expect_success 'continues to import once authors have been added' '
- 	(
- 		cd x
- 		git svn fetch --authors-file=../svn-authors &&
--		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 4 &&
-+		test "$(git rev-list refs/remotes/git-svn | wc -l)" -eq 4 &&
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
- 		  grep "^author DDDDDDD DDDDDDD <dd@example\.com> " &&
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
-@@ -73,8 +73,8 @@ tmp_config_get () {
- test_expect_success 'failure happened without negative side effects' '
- 	(
- 		cd aa-work &&
--		test 6 -eq "`tmp_config_get svn-remote.svn.branches-maxRev`" &&
--		test 6 -eq "`tmp_config_get svn-remote.svn.tags-maxRev`"
-+		test 6 -eq "$(tmp_config_get svn-remote.svn.branches-maxRev)" &&
-+		test 6 -eq "$(tmp_config_get svn-remote.svn.tags-maxRev)"
- 	)
- 	'
- 
-@@ -86,8 +86,8 @@ test_expect_success 'fetch continues after authors-file is fixed' '
- 	(
- 		cd aa-work &&
- 		git svn fetch --authors-file=../svn-authors &&
--		test 8 -eq "`tmp_config_get svn-remote.svn.branches-maxRev`" &&
--		test 8 -eq "`tmp_config_get svn-remote.svn.tags-maxRev`"
-+		test 8 -eq "$(tmp_config_get svn-remote.svn.branches-maxRev)" &&
-+		test 8 -eq "$(tmp_config_get svn-remote.svn.tags-maxRev)"
- 	)
- 	'
- 
--- 
-2.5.0
+-Peff
