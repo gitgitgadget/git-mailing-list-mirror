@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/12] t9150-svk-mergetickets.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:34 +0000
-Message-ID: <1452599378-47882-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/12] t9138-git-svn-authors-prog.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:32 +0000
+Message-ID: <1452599378-47882-7-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:49:54 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 12:49:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxST-0007gs-Mk
+	id 1aIxSU-0007gs-AB
 	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964818AbcALLtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:49:49 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34398 "EHLO
+	id S964928AbcALLtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:49:51 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34382 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934877AbcALLts (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:48 -0500
-Received: by mail-wm0-f67.google.com with SMTP id b14so30973783wmb.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:48 -0800 (PST)
+	with ESMTP id S934874AbcALLtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 06:49:47 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b14so30973690wmb.1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Aytg0HDu+XoWp4Qn3sNKQToztDlvpaJTvCeYKhuCV2E=;
-        b=of1rSOsiIYZwiRU+t1Rm97Igu2EMRX2cY1sT0NE+5/XDiY74Uc3/wTTa6u3HW9KE+P
-         gAx4/aY50p3rte1hn+I7Hz2Nzh6/diLGEtthxZG+trFNGqkjs79RxnJzham0le8udjNW
-         TxbEUBzuzmF07E71mowxvyC+Sc3/GTQ8cetpaPPZ2iOL3tuNisXYgP7ETJqueqFErMiH
-         AsBqZWZn7+mm6tMPd4z1gpoTb1975M76nsx50qB89vAhrMxIbWp2Jo1wNqshdyOcn5gy
-         9SnHeCe12P08kh2xeivlNFRcx0H4SvxW3NQ885kT1Z8ecMoFir/LvW7RzchS2UrRyu1O
-         vAjA==
-X-Received: by 10.28.221.85 with SMTP id u82mr19887143wmg.95.1452599387576;
-        Tue, 12 Jan 2016 03:49:47 -0800 (PST)
+        bh=zYMwUUXaRieF0j9xHyIU0GREbliUtQ+AKdOqIfd6ONQ=;
+        b=Pnjx9NqxUVNtji8YjG2M2IPJe5G3OvnZ07+NPnhsKFf3MKACDB8Wicn7MTUO8QkoUZ
+         q/jwzl/PFTt9Opz2dF3vKTJw9GCwWIlNLbl88io5vh9rVOsHfFgXFTUMN3ut2oWRm+pw
+         maYZUtgmKY+7u4wa5lNG0t1qh5ddXSLD0zRvti7uYEKV4ozBOBvkStwUdVPYBEKGsWzb
+         ACRL1JD7wO47VNp5FX7hcheux5zJ4SKDYZofGReGhHsjXiQAv+0xg1sWad/lafpInFTb
+         CnfPBnf8FW2qRzG71QR1AHosi8HGcVoEMEAypI7E9eUT4h0cILJgAnIdzq2nQXrRbhQM
+         YMLg==
+X-Received: by 10.194.202.135 with SMTP id ki7mr122563932wjc.81.1452599386305;
+        Tue, 12 Jan 2016 03:49:46 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.47
+        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:47 -0800 (PST)
+        Tue, 12 Jan 2016 03:49:45 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283801>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,21 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9150-svk-mergetickets.sh | 2 +-
+ t/t9138-git-svn-authors-prog.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9150-svk-mergetickets.sh b/t/t9150-svk-mergetickets.sh
-index 24c2421..1bb676b 100755
---- a/t/t9150-svk-mergetickets.sh
-+++ b/t/t9150-svk-mergetickets.sh
-@@ -19,7 +19,7 @@ test_expect_success 'load svk depot' "
- uuid=b48289b2-9c08-4d72-af37-0358a40b9c15
+diff --git a/t/t9138-git-svn-authors-prog.sh b/t/t9138-git-svn-authors-prog.sh
+index 2937f4c..7d7e9d4 100755
+--- a/t/t9138-git-svn-authors-prog.sh
++++ b/t/t9138-git-svn-authors-prog.sh
+@@ -37,7 +37,7 @@ test_expect_success 'import authors with prog and file' '
+ test_expect_success 'imported 6 revisions successfully' '
+ 	(
+ 		cd x
+-		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 6
++		test "$(git rev-list refs/remotes/git-svn | wc -l)" -eq 6
+ 	)
+ '
  
- test_expect_success 'svk merges were represented coming in' "
--	[ `git cat-file commit HEAD | grep parent | wc -l` -eq 2 ]
-+	[ $(git cat-file commit HEAD | grep parent | wc -l) -eq 2 ]
- 	"
- 
- test_done
 -- 
 2.5.0
