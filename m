@@ -1,50 +1,50 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 10/12] t9350-fast-export.sh: use the $( ... ) construct for command substitution
-Date: Tue, 12 Jan 2016 11:49:36 +0000
-Message-ID: <1452599378-47882-11-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 12/12] t9901-git-web--browse.sh: use the $( ... ) construct for command substitution
+Date: Tue, 12 Jan 2016 11:49:38 +0000
+Message-ID: <1452599378-47882-13-git-send-email-gitter.spiros@gmail.com>
 References: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:02 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 12:50:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aIxSZ-0007lX-Nq
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:00 +0100
+	id 1aIxSd-0007nM-Jm
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 12:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964992AbcALLtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 06:49:55 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32917 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964801AbcALLtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 06:49:50 -0500
-Received: by mail-wm0-f67.google.com with SMTP id u188so30861027wmu.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:49 -0800 (PST)
+	id S964936AbcALLty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 06:49:54 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35814 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964920AbcALLtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 06:49:51 -0500
+Received: by mail-wm0-f66.google.com with SMTP id f206so30919234wmf.2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 03:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nWo+tysdFxmrKm+omsCvlJQ4+ir/QWa0yA4L4C7gZb4=;
-        b=C1CM6+Pqb8nNZIAk6w2YfT0RdifcZWspvkfg5RxmRxJ/LqYYRGFjtporaHdDKBppwT
-         IoNOdZcLrvH/q08IvXtu9me1h2E51trSi7eOJtUeB88HrBhG94J4TGNgX3lAXb9zzHmy
-         YlxGRoCulXx1qlOz2MuAzysa9SVEiJrchkS9G0oaQLSUAYg3XYAKDn08w3dzIlkAj6lC
-         TZCUp7H/jVGu0kGv/oyVPUxRuFD9aOcJhgb3ab4s69jxdR+fxGSx+jh61On2mY7FMSMV
-         WsdmTNfmBIcpZulNLOFeTTcH2BR0E08MZDmQvYsZUdVL3c7gFtJAt30dAaBWtWrYdxMO
-         TGag==
-X-Received: by 10.28.146.8 with SMTP id u8mr18215251wmd.72.1452599389084;
-        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
+        bh=ZON+mFlUGu03py+K1kWe7RiYQMcWkouFy2uBeJbJWx4=;
+        b=SpN0PiGjKdQu5cOL5EMMQdOSSFjzrV+7QGiFlcJ868pp/3keWcM9VP5w4D3I2kc+ej
+         mtn3iBXeXktvcxK1Utj054nObuJYqkSODKVnNGwADIwsk2tV4DwKPWWaL3GWOLwfnC0g
+         Rd7Zu/6v7VqGP6uAasUoNFzISvyv/SVCXJOdMlHXiIkDNb+fsWN+YuK7qCwg6KWPwjnD
+         gnHt+niYC2vh2qjP9/panWDk5X7k4EbbeLohDVzkBZzhwlkGnUdxZCyLM0i1w5h82TNr
+         PqlhoI+DahUwJbwXUC2JBak8jI3A32pPsbD+eHpgt1JYUIYscc0vGZiU/RexNBoANYAo
+         wg0A==
+X-Received: by 10.28.88.8 with SMTP id m8mr20215704wmb.73.1452599390361;
+        Tue, 12 Jan 2016 03:49:50 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.48
+        by smtp.gmail.com with ESMTPSA id k130sm3506702wmg.6.2016.01.12.03.49.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Jan 2016 03:49:48 -0800 (PST)
+        Tue, 12 Jan 2016 03:49:49 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.20.g4b9ab0e.dirty
 In-Reply-To: <1452599378-47882-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283806>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -66,39 +66,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9350-fast-export.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t9901-git-web--browse.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 66c8b0a..b5149fd 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -163,7 +163,7 @@ test_expect_success 'setup submodule' '
- 		git add file &&
- 		git commit -m sub_initial
- 	) &&
--	git submodule add "`pwd`/sub" sub &&
-+	git submodule add "$(pwd)/sub" sub &&
- 	git commit -m initial &&
- 	test_tick &&
- 	(
-@@ -377,7 +377,7 @@ test_expect_success 'full-tree re-shows unmodified files'        '
+diff --git a/t/t9901-git-web--browse.sh b/t/t9901-git-web--browse.sh
+index b0a6bad..de7152f 100755
+--- a/t/t9901-git-web--browse.sh
++++ b/t/t9901-git-web--browse.sh
+@@ -43,7 +43,7 @@ test_expect_success \
+ 	echo fake: "$@"
+ 	EOF
+ 	chmod +x "fake browser" &&
+-	git config browser.w3m.path "`pwd`/fake browser" &&
++	git config browser.w3m.path "$(pwd)/fake browser" &&
+ 	test_web_browse w3m http://example.com/foo
+ '
  
- test_expect_success 'set-up a few more tags for tag export tests' '
- 	git checkout -f master &&
--	HEAD_TREE=`git show -s --pretty=raw HEAD | grep tree | sed "s/tree //"` &&
-+	HEAD_TREE=$(git show -s --pretty=raw HEAD | grep tree | sed "s/tree //") &&
- 	git tag    tree_tag        -m "tagging a tree" $HEAD_TREE &&
- 	git tag -a tree_tag-obj    -m "tagging a tree" $HEAD_TREE &&
- 	git tag    tag-obj_tag     -m "tagging a tag" tree_tag-obj &&
-@@ -422,7 +422,7 @@ test_expect_success 'directory becomes symlink'        '
- test_expect_success 'fast-export quotes pathnames' '
- 	git init crazy-paths &&
- 	(cd crazy-paths &&
--	 blob=`echo foo | git hash-object -w --stdin` &&
-+	 blob=$(echo foo | git hash-object -w --stdin) &&
- 	 git update-index --add \
- 		--cacheinfo 100644 $blob "$(printf "path with\\nnewline")" \
- 		--cacheinfo 100644 $blob "path with \"quote\"" \
 -- 
 2.5.0
