@@ -1,134 +1,188 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 04/21] refs: add do_for_each_per_worktree_ref
-Date: Mon, 11 Jan 2016 20:22:03 -0500
-Message-ID: <1452561740-8668-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 08/21] refs: add methods to init refs db
+Date: Mon, 11 Jan 2016 20:22:07 -0500
+Message-ID: <1452561740-8668-9-git-send-email-dturner@twopensource.com>
 References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:46 2016
+X-From: git-owner@vger.kernel.org Tue Jan 12 02:22:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aInfY-0003CZ-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:44 +0100
+	id 1aInfd-0003Hj-LR
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Jan 2016 02:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761795AbcALBWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1761807AbcALBWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Jan 2016 20:22:42 -0500
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:36295 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761337AbcALBWj (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 11 Jan 2016 20:22:39 -0500
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:33517 "EHLO
-	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761753AbcALBWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jan 2016 20:22:33 -0500
-Received: by mail-qk0-f182.google.com with SMTP id p186so153619332qke.0
-        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:33 -0800 (PST)
+Received: by mail-qg0-f42.google.com with SMTP id e32so328823430qgf.3
+        for <git@vger.kernel.org>; Mon, 11 Jan 2016 17:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/rIW/82JrAZCkKFMtvnWXUsh+gRFenUGqdTCXrZSb8U=;
-        b=srXLJsZ/4eHW7OHFSQ5jBHkM+WZ++BcHuZNTNlBSebbhqHtHFKXIv7gOgIxrF9PRLl
-         6CTR8wYoBlDgKi5vcEeQaPrRJ27NUkFm4QvktUk8/mZ3sFQYlzts/iWSLyrjd4qRK3dl
-         O9GJ9B3CW77Un7cFFCrYF/e9rCEYVa8QGleo8kGlLdac0K3DzyA21tgwA1k4a608y1S4
-         Ic6FvlpYKpqFsUsyPRyquucW/d42iyh3aKfXyIbv2+iRQ1bFW8NzP2hjKUaethz2wT0t
-         sXiiS+Cw7nOOOGsrjKCiLFCdKL93B0ttYmXw5Iw3ulfW/9WGPfYJ3WrDUo6/6fh9Vfxh
-         gvHQ==
+        bh=3QPHH6XMUSgZvosAKikfaaC86uKYCIV9BqhrL4Pmt7s=;
+        b=jfAXw3Qt9GKE0yL+M464RWFX6ZQVNJP70FnkUyHKgx+Z2u/D+7Sdp/L9d5Zh5M9xns
+         uX6HsyVsbgmYd7LOnCpOL8UPDoyvFQNL1z984TungLzMvjhWgXRwX69wstohJywD5jQv
+         AiY4RLH0el+XfmZUw0+h6n39UEI5zTAy6KBzc96R1+j3cf7O27Qs75SKf7PQxBkpc+V/
+         kYc8MsvBoUz+00SNdI5Bluc+QHOyEtP4Rc99bW0wXBTQL88mlfUbsf54QnfVt14ONBCb
+         kdN4d67GdxkQ30WWSk02FSgbP3taFmrfVtuVf+wSZx7x8tzIcyLhBbdX1CW8VvrGM4dA
+         XjIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/rIW/82JrAZCkKFMtvnWXUsh+gRFenUGqdTCXrZSb8U=;
-        b=gmGG3ONQ3GMzDrnZ8/LdP76UWFl/fay8sjtV4Mw2JWYc3MrsZkOZ3EYA+hbRAcoHDd
-         34YxZUphyF4Ss1YvGbnxMV31gbDf2zMMEaPz9GuAwwTRUhT9iXLU+4zAFAfIHy8u8UYX
-         nyWienjrLE8glRtG0fzZibWTg284dsrH3cTeJj04y6nr6eN59Ssiolqwu/Ww/8iQsKFg
-         yISMnirZuhfov2GgdqbpShrhpa6SExiTaTl/mrHLWfuwE7a8MQVVCUS64/d58ZlCcNCt
-         6AtmuvPTBudr1SvWrtJkSlJy/amS4FK52Q+p07XRb64+d+QNCe7DVjnp/JQLi58+Y3DS
-         YG+g==
-X-Gm-Message-State: ALoCoQkA5oZnthZET0Adsv8ONuSDNFVhHzLWExYBbLLw6Kuq5fcrLbOUNJv+wbcv6v3ZM1KJ5egWAvYIkOBEhh/oJenZ1Qk//w==
-X-Received: by 10.55.40.3 with SMTP id o3mr27364344qkh.92.1452561752618;
-        Mon, 11 Jan 2016 17:22:32 -0800 (PST)
+        bh=3QPHH6XMUSgZvosAKikfaaC86uKYCIV9BqhrL4Pmt7s=;
+        b=PzfVAo5QmNl+LSkszeleksj6YBepp/B8drWD+LfP0CX1WtbH1n9KGvHVY/vNatW6pz
+         88cgOPfaG/v4QVnF8eUA5YWvLH72S/FtAjQluTvSrhWWKLldB8fI9D58TT5+uQ+53hia
+         n/wYbReNir+e37eyexFzH1HcHs2Qk54KakeUIDbReHrLc0tnUrhoLsR5/vsRk4hdwkGn
+         9Z/nnQqVzRuKpkYCLDRgmLftUWucWSoA7UHVm8XyAe/RzaPPB6FhR2LqC/NG5PAWu6VU
+         xeG1WHiTzrS/WAFjdH77lzi6TfI/y3XeSfQgumBdM8vfbXtOCJ5DuWPPD53X8CtKvs3I
+         meLQ==
+X-Gm-Message-State: ALoCoQnysCRTXfi7qWsM28pQS7Y9RoKgNhHsZ1MuqTJBK/5Pu0ianehz3C0aq8LroAw0Zwkk34UvcEpsoHYQI9iFlp3UpEK+JA==
+X-Received: by 10.140.170.212 with SMTP id q203mr43543633qhq.32.1452561758243;
+        Mon, 11 Jan 2016 17:22:38 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.31
+        by smtp.gmail.com with ESMTPSA id d64sm55362053qgd.48.2016.01.11.17.22.37
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 11 Jan 2016 17:22:31 -0800 (PST)
+        Mon, 11 Jan 2016 17:22:37 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283743>
 
-Alternate refs backends might still use files to store per-worktree
-refs.  So the files backend's ref-loading infrastructure should be
-available to those backends, just for use on per-worktree refs.  Add
-do_for_each_per_worktree_ref, which iterates over per-worktree refs.
+Alternate refs backends might not need the refs/heads directory and so
+on, so we make ref db initialization part of the backend.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs/files-backend.c | 15 ++++++++++++---
- refs/refs-internal.h | 10 ++++++++++
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ builtin/init-db.c    | 14 ++++----------
+ refs.c               |  5 +++++
+ refs.h               |  2 ++
+ refs/files-backend.c | 17 +++++++++++++++++
+ refs/refs-internal.h |  2 ++
+ 5 files changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b35dece..1c9401f 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -518,9 +518,6 @@ static void sort_ref_dir(struct ref_dir *dir)
- 	dir->sorted = dir->nr = i;
- }
- 
--/* Include broken references in a do_for_each_ref*() iteration: */
--#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 26e1cc3..4771e7e 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -178,13 +178,7 @@ static int create_default_files(const char *template_path)
+ 	char junk[2];
+ 	int reinit;
+ 	int filemode;
 -
- /*
-  * Return true iff the reference described by entry can be resolved to
-  * an object in the database.  Emit a warning if the referred-to
-@@ -568,6 +565,10 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
- 	struct ref_entry *old_current_ref;
- 	int retval;
+-	/*
+-	 * Create .git/refs/{heads,tags}
+-	 */
+-	safe_create_dir(git_path_buf(&buf, "refs"), 1);
+-	safe_create_dir(git_path_buf(&buf, "refs/heads"), 1);
+-	safe_create_dir(git_path_buf(&buf, "refs/tags"), 1);
++	struct strbuf err = STRBUF_INIT;
  
-+	if (data->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
-+	    ref_type(entry->name) != REF_TYPE_PER_WORKTREE)
-+		return 0;
+ 	/* Just look for `init.templatedir` */
+ 	git_config(git_init_db_config, NULL);
+@@ -208,11 +202,11 @@ static int create_default_files(const char *template_path)
+ 	 */
+ 	if (shared_repository) {
+ 		adjust_shared_perm(get_git_dir());
+-		adjust_shared_perm(git_path_buf(&buf, "refs"));
+-		adjust_shared_perm(git_path_buf(&buf, "refs/heads"));
+-		adjust_shared_perm(git_path_buf(&buf, "refs/tags"));
+ 	}
+ 
++	if (refs_init_db(&err, shared_repository))
++		die("failed to set up refs db: %s", err.buf);
 +
- 	if (!starts_with(entry->name, data->base))
- 		return 0;
- 
-@@ -1738,6 +1739,14 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
- 	return do_for_each_entry(refs, base, do_one_ref, &data);
+ 	/*
+ 	 * Create the default symlink from ".git/HEAD" to the "master"
+ 	 * branch, if it does not exist yet.
+diff --git a/refs.c b/refs.c
+index 0c61be5..af5f7a7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1106,6 +1106,11 @@ int rename_ref_available(const char *oldname, const char *newname)
  }
  
-+int do_for_each_per_worktree_ref(const char *submodule, const char *base,
-+				 each_ref_fn fn, int trim, int flags,
-+				 void *cb_data)
+ /* backend functions */
++int refs_init_db(struct strbuf *err, int shared)
 +{
-+	return do_for_each_ref(get_ref_cache(submodule), base, fn, trim,
-+			       flags | DO_FOR_EACH_PER_WORKTREE_ONLY, cb_data);
++	return the_refs_backend->init_db(err, shared);
 +}
 +
- static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
  {
- 	struct object_id oid;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index cd338f9..2431579 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -42,6 +42,16 @@
-  * value to ref_update::flags
-  */
+diff --git a/refs.h b/refs.h
+index 3464a79..df7bfc4 100644
+--- a/refs.h
++++ b/refs.h
+@@ -66,6 +66,8 @@ extern int ref_exists(const char *refname);
  
-+/* Include broken references in a do_for_each_ref*() iteration */
-+#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
-+
-+/* Only include per-worktree refs in a do_for_each_ref*() iteration */
-+#define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
-+
-+int do_for_each_per_worktree_ref(const char *submodule, const char *base,
-+				 each_ref_fn fn, int trim, int flags,
-+				 void *cb_data);
+ extern int is_branch(const char *refname);
+ 
++extern int refs_init_db(struct strbuf *err, int shared);
 +
  /*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
+  * If refname is a non-symbolic reference that refers to a tag object,
+  * and the tag can be (recursively) dereferenced to a non-tag object,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index b9c4604..e8e112c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3534,9 +3534,26 @@ static int files_reflog_expire(const char *refname, const unsigned char *sha1,
+ 	return -1;
+ }
+ 
++static int files_init_db(struct strbuf *err, int shared)
++{
++	/*
++	 * Create .git/refs/{heads,tags}
++	 */
++	safe_create_dir(git_path("refs"), 1);
++	safe_create_dir(git_path("refs/heads"), 1);
++	safe_create_dir(git_path("refs/tags"), 1);
++	if (shared) {
++		adjust_shared_perm(git_path("refs"));
++		adjust_shared_perm(git_path("refs/heads"));
++		adjust_shared_perm(git_path("refs/tags"));
++	}
++	return 0;
++}
++
+ struct ref_storage_be refs_be_files = {
+ 	NULL,
+ 	"files",
++	files_init_db,
+ 	files_transaction_commit,
+ 	files_initial_transaction_commit,
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index c26ce6b..f3c2632 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -208,6 +208,7 @@ const char *find_descendant_ref(const char *dirname,
+ int rename_ref_available(const char *oldname, const char *newname);
+ 
+ /* refs backends */
++typedef int ref_init_db_fn(struct strbuf *err, int shared);
+ typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
+ 				      struct strbuf *err);
+ 
+@@ -267,6 +268,7 @@ typedef int for_each_replace_ref_fn(each_ref_fn fn, void *cb_data);
+ struct ref_storage_be {
+ 	struct ref_storage_be *next;
+ 	const char *name;
++	ref_init_db_fn *init_db;
+ 	ref_transaction_commit_fn *transaction_commit;
+ 	ref_transaction_commit_fn *initial_transaction_commit;
+ 
 -- 
 2.4.2.749.g730654d-twtrsrc
