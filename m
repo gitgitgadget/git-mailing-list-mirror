@@ -1,81 +1,82 @@
-From: tboegi@web.de
-Subject: [PATCH/RFC] t0060: basename("//") is implementation defined
-Date: Wed, 13 Jan 2016 21:56:01 +0100
-Message-ID: <1452718561-32226-1-git-send-email-tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] pull: allow interactive rebase with --rebase=interactive
+Date: Wed, 13 Jan 2016 12:58:11 -0800
+Message-ID: <xmqqio2xmc2k.fsf@gitster.mtv.corp.google.com>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de>
+	<cover.1452668201.git.johannes.schindelin@gmx.de>
+	<2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
+	<xmqqd1t5pej1.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601131949060.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: tboegi@web.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 13 21:56:14 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 13 21:58:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJSSj-00054a-UD
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 21:56:14 +0100
+	id 1aJSUk-0006B9-4U
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 21:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758491AbcAMU4J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Jan 2016 15:56:09 -0500
-Received: from mout.web.de ([212.227.15.3]:55348 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753030AbcAMU4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 15:56:08 -0500
-Received: from snoopy.lan ([213.66.56.100]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0Mbydi-1aZTwR3sV4-00JK2d; Wed, 13 Jan 2016 21:56:06
- +0100
-X-Mailer: git-send-email 2.2.1.212.gc5b9256
-X-Provags-ID: V03:K0:asEQrQHxc4rorWaKN6jARUThEIdVeBVVuaGx0pYDhS7dQSGKZej
- RJs2D3vm776UPjSu7XmrJMKXSd7aVSyXgazNx+NpdsdQ2vYB0KfXquY0y8d/xRS+98o5lWO
- q59+8KjxyYaGUSBLGeeU6/GrulUn204LH7lpx3BB0RsTlUNYKZKMQe8eGJTIByKKgJ4pujz
- 6PXrUpSDx7tYWP6xTOiHA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:O5tKdDT9WFI=:rFrgbeIoMa9Ojrgg1W/aKo
- Geh0z6RbC9BDEo67OB/sy0rbNFXGpr31RhpfnNG1jRpDhWsuDrOEXibhWnSV3/3GXTnsubHUG
- 6eZ8yvyhsCV/g/RWsR9XsitAlZWfo7BNqOTq//7qgkdIjh/x8Ee5OQ7p4sYgQ87iap+tWziUc
- grhB5JT7Gv8+0yBAviRtEXw+7LOZlM+/PWRbe0nuSzvUzkljso2D2Kcm/aoA9outQEXfAvsMx
- HW7fm0DlFvAjRq8EaN8W/IIy9waBV8HDgoLCIyxlkSroTXhgx7fhfT0+xQMhhH9SrwTR34XlD
- zJ4UO6EEPsBI6AVFkFsZoQzZ5SvqeM7xzl3c0FPOVRkol1USVSG5nSvUls7gjzoOucew7D82D
- HAyvUUPYZY1244RTiCLC1/Cg8A41daNp72mgvv5ruoskdlhIvN73U/6tYGApZ0aR4jOGShH7k
- Sz+TKYhspDt7Rxh2MM1fjenCQR+UAX/S6nhSZlOU9XeBr4xv3uNBMq3BsxCD7v+tjGAgFFneF
- tkfzGWOvbdPUkKxeUF4tUQ97WHA9o6lfHUYIpc2mlN7XrY/Fr3OJE5MFvbUAt8ThqsePxXbU9
- 28IMZqBBHMuu6CsXPv5yRQ1jnpPXgE/Nmif4XqNJ7CaHXNXeX/VwKk4hvmvs7offdz7/rDdK2
- UP06dBt7tlULbirEoUggR5Lwlow59Z/bI0xf6S1S7+8O33J4loGCBUV6ZUoXvqmvmFLYg4B6z
- 4xjir8wE3dJeeJcjmRhxv8fX3cW65Vo0p3tMcDf0ACFoWdXYoOoUwWqZ5vsqD0sEPf2ckRLP 
+	id S1758795AbcAMU6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 15:58:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755077AbcAMU6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 15:58:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 39C153A1A8;
+	Wed, 13 Jan 2016 15:58:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XxGcG8WvmXsMbFidWVq4H3RwUso=; b=vhIPwz
+	LMAfxjsJMtUIglIye2v/t7eWE5NqcLq3n9sXeCorlHPF6T53U+q0S7HTRJVfjHBN
+	nkDsmA6v2jkM9uWkLcUeRCnXXpTihy5j3KuKtyXhdQVB9tGc6dbK3gn9Ul6o+UWS
+	pDvXAhEYnThJpVymxJG4OeF0RRJ+BRm8caBNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oithOeaOuZXQXFoILd0Sh1IQGZpnDJZE
+	vkVH8+5ajEXwZnK5pLE2mptfrhP1cYNhKkVQP8Jm4wuZ5LM0As/PXa3wje6iAUq8
+	eNy0Ql5Z2mxgR2JUm3nhg8w2oQj1Ay0z7HffSHdYJYq9jQGRQumG1vlDuLd38W5f
+	KsxiDZMavkA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3200D3A1A7;
+	Wed, 13 Jan 2016 15:58:13 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 879BF3A1A2;
+	Wed, 13 Jan 2016 15:58:12 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601131949060.2964@virtualbox> (Johannes
+	Schindelin's message of "Wed, 13 Jan 2016 19:50:00 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5BCB9B9A-BA38-11E5-914D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283987>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-=46rom
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/basename.html
-basename("//") may return either "//" or "/".
+> Hi Junio,
+>
+> On Wed, 13 Jan 2016, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>>     A couple of years ago, I found the need to collaborate on topic
+>>     branches that were rebased all the time, and I really needed to see
+>>     what I was rebasing when pulling, so I introduced an
+>>     interactively-rebasing pull.
+>> 
+>> [...] I may just insert these four lines at the beginning of the log
+>> message while queuing, or something.
+>
+> Oh, that's what you meant! Sorry for misunderstanding, and thanks for not
+> requiring a reroll.
 
-Linux returns "/", some systems like Mac OS X return "//".
-Skip the test unless NO_LIBGEN_H is set and gitbasename() from
-compat/basename is used.
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-My version of a hot fix
- test-path-utils.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/test-path-utils.c b/test-path-utils.c
-index 4ab68ac..db0bb39 100644
---- a/test-path-utils.c
-+++ b/test-path-utils.c
-@@ -142,7 +142,9 @@ static struct test_data dirname_data[] =3D {
- 	{ ".",               "."      },
- 	{ "..",              "."      },
- 	{ "/",               "/"      },
-+#if defined(NO_LIBGEN_H)
- 	{ "//",              "//"     },
-+#endif
- #if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
- 	{ "///",             "//"     },
- 	{ "////",            "//"     },
---=20
-2.7.0.278.g9379adb.dirty
+Heh, that is too early, as I haven't even read v3 yet.  There we may
+find other reasons that we would want to improve it before queuing.
