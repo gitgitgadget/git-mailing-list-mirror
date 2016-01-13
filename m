@@ -1,72 +1,154 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] pull: allow interactive rebase with
- --rebase=interactive
-Date: Wed, 13 Jan 2016 19:50:00 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601131949060.2964@virtualbox>
-References: <cover.1452612112.git.johannes.schindelin@gmx.de> <cover.1452668201.git.johannes.schindelin@gmx.de> <2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de> <xmqqd1t5pej1.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V4 2/2] object name: introduce '^{/!-<negative pattern>}' notation
+Date: Wed, 13 Jan 2016 11:15:05 -0800
+Message-ID: <xmqqh9ihnveu.fsf@gitster.mtv.corp.google.com>
+References: <ED12DDDA0C004D23BDDB14973C675800@PhilipOakley>
+	<1452660741-5616-1-git-send-email-ischis2@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 20:00:10 2016
+Content-Type: text/plain
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Will Palmer <wmpalmer@gmail.com>
+To: "Stephen P. Smith" <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 13 20:15:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJQeI-0004uZ-C6
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 20:00:02 +0100
+	id 1aJQt2-0006W1-QU
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 20:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757388AbcAMS7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 13:59:51 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59653 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756424AbcAMSuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 13:50:06 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MYP57-1afmps38xV-00VC8J; Wed, 13 Jan 2016 19:50:01
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqd1t5pej1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:z8/z5X11SM6xd/YY1DjWPI5mPYddW7QWXux/gsGFWpmA9wJrgvW
- IbRuEu9JJ1VW/s4uRloByFRDB5RUAXenTEcP80v2iTyb3l/jAA6sN6/SOzmpjrwDoUTTzJa
- bha1MRMcUi+Jj9G9fVNUkNmq33VEXM3ECrots5i0jHsOgwQtGLCFEdF0gyAR49UewpkZ3T4
- 5NcFFs21BaC9r0x/7vryg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hHiykMI+stc=:RFWX4UlE3H+JVunQItPbCY
- aKIy462sN0u+KmDOu6Pk8PMHugSIgqon6xmcO3/VXsHhYvZJTTcYuoD76hUUObbarsE6MeT1m
- 5PADkdsZpjr0zOOPLkAUWHPcWZob0sLwVhlHP3XIQft13BcE/JPsUa/+2f6cnSXH0XpX+MgYF
- qHRSYRnM7QPemoxFN4tsAxQbU3TbaavKfmU4rLwP6FEosunivpkoPstes3NxJI7lblVtn+CYL
- vLFbHE6BAoqTILrh62xqLZaaHe12xcBFBQHCQ5kvKxJfJzrlh028uS7A7vcJA9MKnSHQx+XHT
- h5RFQAM6DkC40GHTv0sNc3pSMghR57dnRjPY3MXrCMNoRKt/JG99zponim3sBlHzAedTtF6NS
- B38tmLG580q3J7VrYa5ij1r6/MqhUHBMfDAZoNpACmrQs36e50cVwGAdm6Q/3xlmUHXP0wsVa
- wxYM3byAoR1+/QCzE6GauvNPoZ5XCqm0NcaQkWpQHVsleCL4x4CPR4EVysS+RjtKYsIynxt+W
- ponA45BIvGYOASf0dVjfQqodinNI02yY7wCqglgL3orsyCi2LApMruBSZ39uGB1CqAsGYA/5I
- PpEurpSt+zfC4piL/RVtic50Uwpi4UtxoDFOZrx6r1k23fpuuuf/uoQidsozY/tRXtayZcv+W
- s1MlfnSpgWaDr4WiuBViRJpuWHzUqmgsT74kEzTk7QUIuj7+A4XYxBKqN5J76+hhvyH4NTtw/
- R73yGNP9jT7b+9X8TcUXtiJY2T9yEwVVSSE8q/62mPf6VKxCR5foj7MAnxHBIHRDCwNO0UJw 
+	id S932754AbcAMTPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 14:15:10 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51696 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752809AbcAMTPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 14:15:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2BD473A5EA;
+	Wed, 13 Jan 2016 14:15:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IufiBVNTOwQSaAmxNK0GoBXxv4c=; b=wKhE/+
+	0oSD8KPeuetMvjOzCtoRxkKCN4l7Gk0QyElR3jXrtRWdNbr7f7UbLl6mN6PLlcXD
+	IK9yLVKiQhmDta+J8FNEZ+4RP1DxcpKoacHpvAsh9xx/suIW/ep8cAsx1ZXWdSNe
+	AcSmz7x5FL6FCvmnNNsLu7l1gcT31sORHdegs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vkuGpIAXYV72tgcVFwXvYimQicmGW5dr
+	viYeL/CwljcfcxRaI8s+vb7bzfslMoS/LDQdO6TSFzHsud0MBJE+0JzJ0f6+9b0h
+	7WywoLtX47vHorL5UXSf3TjWSGFWO4ZIVfjm23O0NOEEB1Ar2XlIdlv0mWjAMzQ5
+	QlEDa8I8EyM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22AD53A5E9;
+	Wed, 13 Jan 2016 14:15:07 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7DE6C3A5E8;
+	Wed, 13 Jan 2016 14:15:06 -0500 (EST)
+In-Reply-To: <1452660741-5616-1-git-send-email-ischis2@cox.net> (Stephen
+	P. Smith's message of "Tue, 12 Jan 2016 21:52:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F4A0E94C-BA29-11E5-A11B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283971>
 
-Hi Junio,
+"Stephen P. Smith" <ischis2@cox.net> writes:
 
-On Wed, 13 Jan 2016, Junio C Hamano wrote:
+> From: Will Palmer <wmpalmer@gmail.com>
+>
+> To name a commit, you can now use the :/!-<negative pattern> regex
+> style, and consequentially, say
+>
+>     $ git rev-parse HEAD^{/!-foo}
+>
+> and it will return the hash of the first commit reachable from HEAD,
+> whose commit message does not contain "foo". This is the opposite of the
+> existing <rev>^{/<pattern>} syntax.
+>
+> The specific use-case this is intended for is to perform an operation,
+> excluding the most-recent commits containing a particular marker. For
+> example, if you tend to make "work in progress" commits, with messages
+> beginning with "WIP", you work, then it could be useful to diff against
+> "the most recent commit which was not a WIP commit". That sort of thing
+> now possible, via commands such as:
+>
+>     $ git diff @^{/!-^WIP}
+>
+> The leader '/!-', rather than simply '/!', to denote a negative match,
+> is chosen to leave room for additional modifiers in the future.
+>
+> Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+>
+> Notes:
+>     Changed |say|use the :/!-<negative pattern> regex style, and consequentially, say|.
+>     
+>     Chose not to chagne subject since it matches the end of
+>     git rev-parse HEAD^{/!-foo}
+>
+>     Mailing list web interface is again not working; therefore, I don't 
+>     have URLs for the earlier review comments.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->     A couple of years ago, I found the need to collaborate on topic
->     branches that were rebased all the time, and I really needed to see
->     what I was rebasing when pulling, so I introduced an
->     interactively-rebasing pull.
-> 
-> [...] I may just insert these four lines at the beginning of the log
-> message while queuing, or something.
+Thanks, this looks good (and it looked good already at the previous
+round).
 
-Oh, that's what you meant! Sorry for misunderstanding, and thanks for not
-requiring a reroll.
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index d85e303..0c84d4f 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -176,11 +176,12 @@ existing tag object.
+>    A colon, followed by a slash, followed by a text, names
+>    a commit whose commit message matches the specified regular expression.
+>    This name returns the youngest matching commit which is
+> -  reachable from any ref.  If the commit message starts with a
+> -  '!' you have to repeat that;  the special sequence ':/!',
+> -  followed by something else than '!', is reserved for now.
+> -  The regular expression can match any part of the commit message. To
+> -  match messages starting with a string, one can use e.g. ':/^foo'.
+> +  reachable from any ref. The regular expression can match any part of the
+> +  commit message. To match messages starting with a string, one can use
+> +  e.g. ':/^foo'. The special sequence ':/!' is reserved for modifiers to what
+> +  is matched. ':/!-foo' performs a negative match, while ':/!!foo' matches a
+> +  literal '!' character, followed by 'foo'. Any other sequence beginning with
+> +  ':/!' is reserved for now.
 
-Ciao,
-Dscho
+The original text reads as if ":/foo" looks for 'foo' anywhere in
+the log message while ":/!!foo" looks for '!foo' at the beginning,
+which was incorrect as far as I can tell, but the updated text
+corrects it.  Good.
+
+> @@ -903,7 +913,7 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
+>  			continue;
+>  		buf = get_commit_buffer(commit, NULL);
+>  		p = strstr(buf, "\n\n");
+> -		matches = p && !regexec(&regex, p + 2, 0, NULL, 0);
+> +		matches = p && (negative ^ !regexec(&regex, p + 2, 0, NULL, 0));
+>  		unuse_commit_buffer(commit, buf);
+
+Hmph, without "negative pattern match", if you asked for ":/foo" and
+the commit did not have any body (which I do not think the current
+version of Git allows to create by default, but there may be such
+commits created by older versions of Git or reimplementation of Git
+made by others), p could be NULL.  In such a case, any regex would
+not match, so I would expect that commit to be shown.
+
+In other words, I wonder if the above should be
+
+		matches = negative ^ (p && !regexec(&regex, p + 2, 0, NULL, 0));
+
+This would not make practical difference, but I would expect any
+change to introduce "negative patch" to an original logic that is
+
+	matches = ORIGINAL_LOGIC_TO_COMPUTE_MATCH
+
+to become
+
+	matches = negative ^ ORIGINAL_LOGIC_TO_COMPUTE_MATCH
