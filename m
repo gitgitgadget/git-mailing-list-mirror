@@ -1,86 +1,90 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] Makefile: describe XMALLOC_POISON
-Date: Wed, 13 Jan 2016 17:57:35 +0600
-Message-ID: <1452686255-8757-1-git-send-email-kuleshovmail@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 13:01:15 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase
+ can be 'interactive'
+Date: Wed, 13 Jan 2016 13:03:57 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601131302340.2964@virtualbox>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de> <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de> <vpq7fjdyfvu.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Paul Tan <pyokagan@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jan 13 13:08:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJK70-00014e-HE
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:01:14 +0100
+	id 1aJKE6-0005LA-GR
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753640AbcAMMBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 07:01:04 -0500
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:36266 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752610AbcAMMBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 07:01:03 -0500
-Received: by mail-lb0-f180.google.com with SMTP id oh2so289800771lbb.3
-        for <git@vger.kernel.org>; Wed, 13 Jan 2016 04:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Xj+T79JWqKxLvqQf0foZfnx3hcoU4oSOKFVId/h+aRo=;
-        b=fMWz5C9Bu8ge+KCQChiZLK7PR/EyLnwx3ZQWrvS/TmD+69dypkOyWlFB1cWDTAjhWg
-         s88V97qoSlHXJSnay1ZGysWkLkWH7TgjWnkmSFJuBg35kjlB6USnlLEt9/iey6NF+3co
-         /LC1mNec4CfVEXXUQNFb+xu9rzqTC5cBMDwWCUICOBjrjdzAydgWDK2g3/20fQ2zqspK
-         StMo9HWbSlsElwHHv4h+TmJJvfqiknRG7fRZEOswTCltcsAEG47Ca+32dw0RT4abLQw6
-         1tHO+6vrAGlCCaeC6V4XrERyK2tBVepeUo6zp7YBPTPXSZoUiPQ7YwHcT4Smx3ivwhRt
-         RmHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Xj+T79JWqKxLvqQf0foZfnx3hcoU4oSOKFVId/h+aRo=;
-        b=b+IhXSZhHm+mde0hoi0WpmTbobiYCcyN9nRCb7rol0flFTyakqA8zgI5EF3XKOjHKH
-         ItTIn1qtY6eKa95aWZObUWwrx55hSX12vur7FJaW9zM9guOErxbxXbb3VpJtUbdVQr9Q
-         APu9UDCp/rlVrN5NyqNCjLbX0CwwTY4HavdESvIFDoSHe3p+7L5YfqfpLHylw/R9Gxyb
-         F2c7XnLA2JFLC53Dx5+xiDCgcA6kjPeXyZ/ODkhRm6SR6IpA9xxCLHpyq/ikaqa58CFp
-         g1Il+PCqGlmrSUOfPLY38t/9pInlPIyKuUibPRwBCIbpCDjayd5d6XXEpFphsGKFQs1W
-         hS+g==
-X-Gm-Message-State: ALoCoQmvsIXmwsps3PaFwohGNEKO1vDe0QM41iOn7oQUBc7Fgwn1+kJzE2t3QPuqqZsibjZyw/yhnMhpaNr2Rl4rP962ytps/w==
-X-Received: by 10.112.147.1 with SMTP id tg1mr200075lbb.119.1452686459635;
-        Wed, 13 Jan 2016 04:00:59 -0800 (PST)
-Received: from localhost.localhost ([2.133.27.66])
-        by smtp.gmail.com with ESMTPSA id k189sm138069lfd.12.2016.01.13.04.00.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Jan 2016 04:00:58 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.302.g68e1027
+	id S932179AbcAMMIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 07:08:25 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50122 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932144AbcAMMIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 07:08:24 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MaJPk-1adBUA2wIK-00Jus0; Wed, 13 Jan 2016 13:08:10
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <vpq7fjdyfvu.fsf@anie.imag.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Z8ms0kAa+GqCTBw+EnEvEeD3MXd1QyQCRlnHTvUboKCrLGeVb8x
+ t0AhSvMhoFNSXMOznjpQzoPTY3Ky7zwRlsHidVF1UoPExmDtWw0WNk3TnJ9KM5QFzl9fXa5
+ RGKRx1+fT2EUJcoDNmFUqzJpQvPiAP7g7+w3oPEKQ7xrR7OlpSb2hszK0UsdmgQhA7XXt9X
+ vQ7Fn5q9BT9MPTq/bnVuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+nWaFNJxj10=:q+wnklYyOvAgaQx4CMvMGj
+ J7kUm5bGIPakA+k1/DJOLOvIDgJoPf2Lym1AtZBnAXGFEYfzIfUOntTCt9Cwx7OmybRKn0e/u
+ NRFM+UbK6pApPAsmbg0l7WqGC3g8ne8O4O+DfF8jv1Fub1CfaAcUBNpohaTZsA+EAt4rncMVc
+ Btm9m3JfpoQpqBWGqIKHtZ0VnTyKuqFgsa9nHikCGAsFF71RLXWDIiCjkAhzgOSwPdMR7Fnev
+ lF9OSwxHQVbvsFZwTIcJFpB08Ghw+7Um6fjtmEPIsTC6f6/apDg5syDPaPhu9nZWew1aoJUk/
+ UhgkhoJVmHA1CKNjgtiEighWn//gb8cT3wcHq94+6ZM2eerkypUIOEMUn03aZR5BH2CFPAleS
+ u69j2GV1lcxu5wvkBgvtgIfQXsbNDJpNTEaICuo/jN4Sz1J9bFC99FXkCRb/nxRrQENyEn5wp
+ s2QWRGa1Xdw+8a8DA2Q5GNMHN2rdA8vreOXyVtajMsW4sRH6Vpn+jcDz+w3NZyFHkTQEvbufh
+ hxnvBhHaoepuhT8rHmZvu8dMaj3Vq+ws244psvNQNdbkMpX6PjeL2fMUnqA0kwHWbn6EI/TtD
+ qRR5IA2gwTHT5+TPz5AHVo5ALyxxBVrwpNmXE/mcE1KCXOOntPB1eg5dDxziAy2BgMC5z7bGF
+ u10vwtj07n7Haq9WoL9BoQGBxUgnHgLDHI7dD98oJq1AUUL5vslQjgf7ikz3QX/EJrl+1w1Y5
+ lnoV99MiRMPd2EoNnUl3qHS/K4mULvEWcgXbum/sPw7gHbJnB6yLoSGz2u/wkmguVjxvLMUy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283902>
 
-The do_xmalloc() functions may fill an allocated buffer with the
-known value (0xA5) for debugging if we will pass the XMALLOC_POISON
-option during build.
+Hi Matthieu,
 
-This patch adds description of this option to the Makefile.
+On Wed, 13 Jan 2016, Matthieu Moy wrote:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/builtin/remote.c b/builtin/remote.c
+> > index 6694cf2..0af8300 100644
+> > --- a/builtin/remote.c
+> > +++ b/builtin/remote.c
+> >  static struct string_list branch_list;
+> > @@ -312,6 +312,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >  				info->rebase = v;
+> >  			else if (!strcmp(value, "preserve"))
+> >  				info->rebase = 1;
+> > +			else if (!strcmp(value, "interactive"))
+> > +				info->rebase = INTERACTIVE_REBASE;
+> 
+> What happens if one has branch.*.rebase=interactive, and wants to make
+> an exception? Does
+> 
+>   git pull --rebase=true
+> 
+> cancel the 'interactive' part?
 
-diff --git a/Makefile b/Makefile
-index f3325de..673c244 100644
---- a/Makefile
-+++ b/Makefile
-@@ -367,6 +367,10 @@ all::
- # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
- #
- # Define HAVE_GETDELIM if your system has the getdelim() function.
-+#
-+# Define XMALLOC_POISON if you are debugging the xmalloc(). In a XMALLOC_POISON
-+# build, each allocated buffer by the xmalloc() will be in known state. After
-+# memory allocation, a buffer will be filled with '0xA5' values.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
--- 
-2.7.0.25.gfc10eb5.dirty
+It is the same situation as before (just substitute a
+branch.*.rebase=preserve setting): yes, the config is parsed first, then
+the command line, so the command line wins.
+
+> I guess it is, but if so I think it should be tested and documented.
+
+Is this really necessary, given that the behavior has not changed from
+before?
+
+Ciao,
+Dscho
