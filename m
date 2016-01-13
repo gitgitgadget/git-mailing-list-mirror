@@ -1,96 +1,83 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 1/3] pull: allow interactive rebase with --rebase=interactive
-Date: Wed, 13 Jan 2016 18:33:10 +0800
-Message-ID: <CACRoPnS_CcAuu_jBo9zcjycSN4kvSQhCONNYnY1XRnarRF9Zmw@mail.gmail.com>
-References: <cover.1452612112.git.johannes.schindelin@gmx.de>
-	<cover.1452668201.git.johannes.schindelin@gmx.de>
-	<2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
+From: Richard Maw <richard.maw@codethink.co.uk>
+Subject: Re: Some issues when trying to set up a shallow git mirror server
+Date: Wed, 13 Jan 2016 11:37:43 +0000
+Message-ID: <20160113113743.GF3397@logi.codethink.co.uk>
+References: <20160107165417.GB3397@logi.codethink.co.uk>
+ <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
+ <xmqqd1tb21oh.fsf@gitster.mtv.corp.google.com>
+ <20160111155153.GE3397@logi.codethink.co.uk>
+ <xmqqy4butzw8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 13 11:33:27 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 12:37:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJIk2-00024k-Rz
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 11:33:27 +0100
+	id 1aJJkQ-0004hA-Bi
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 12:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933799AbcAMKdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 05:33:16 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:35525 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359AbcAMKdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 05:33:12 -0500
-Received: by mail-lf0-f66.google.com with SMTP id c134so6560913lfb.2
-        for <git@vger.kernel.org>; Wed, 13 Jan 2016 02:33:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=XwgSWDoSlu3sqJm00EWcyXj1NAF4Rs/+PCLaBmmmQ04=;
-        b=Z6nDArExDUB1bIcq5VmhbbUhQ7/Z1/zR8O8vMcu6Ws0yg4H/ZjYTDknifaNEtL23xn
-         ioeaC3EajvpbAVqWB0L6uazb9mlch7A1IuwSKTzqo4K6GJ9hG0XZl6CpaDjCpl11yWbx
-         6ypKJv3JVmvc8fh5mvvlXphjFCcItMDkb0faIJ2Su3+y6QgcwBCaXE6HripJ/uCJDBRt
-         3UbbpyDeGlVkBXaMh7crtRTf3WF2Z7GORRtLhtDcvdU6m3iavvjzvBMOZt051aHic/Mz
-         HHmzHx3im1z9/58SKv/NJo/Ts37HF67pLeSFvzt+ldYFlsj4l+VsgW9roMbXPziYywfW
-         eZgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=XwgSWDoSlu3sqJm00EWcyXj1NAF4Rs/+PCLaBmmmQ04=;
-        b=aMCCGEjRIzP/dr1QFLDmMl7LNOLBqn9lOCuwr6IRt2d9t9OcgRmGtSvzc8QC+ElNYW
-         AWNQywFGa0mQV2LLM29uB7VQpaDmmA0SnbsejtNLfl5gen0vHL6ZSDGAaj7e2J+aYWWD
-         O3+SmowEVlBmbBhxipehfAABnW1EZBnN1tpxTqtF+lEKbT2euOEwqWNjVlVNmMsQoO2c
-         pMSYJs/EEnYR53wUBXqI/yuQWOzkI3kbtdCf6P5a/esxrycaIBfKVglmrOTmvTfddiYR
-         xvVkiHMz5USAq7EMVjfGY4KmF4ZUX27NtAa+duA2/sLo3F/W9ZqAi9oF5DBgFjfnxvEb
-         VF8w==
-X-Gm-Message-State: ALoCoQnJblkteoDh8f7/E8fxCZyILjw3twrEX4pjXZtw7n/cZn5iwBN0dDZCg4xKBDMXJn7SRuNs+pEdRqyFOWccEegYlpNU7w==
-X-Received: by 10.25.87.5 with SMTP id l5mr30178289lfb.146.1452681190821; Wed,
- 13 Jan 2016 02:33:10 -0800 (PST)
-Received: by 10.112.82.162 with HTTP; Wed, 13 Jan 2016 02:33:10 -0800 (PST)
-In-Reply-To: <2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
+	id S1755512AbcAMLhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 06:37:50 -0500
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:43959 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbcAMLht (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 06:37:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 7BD8B462681;
+	Wed, 13 Jan 2016 11:37:47 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PmLfFdu0lwm3; Wed, 13 Jan 2016 11:37:45 +0000 (GMT)
+Received: from logi.codethink.co.uk (logi.dyn.ducie.codethink.co.uk [10.24.1.141])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 701F54623F5;
+	Wed, 13 Jan 2016 11:37:45 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqqy4butzw8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283899>
 
-Hi Dscho,
+On Tue, Jan 12, 2016 at 10:29:27AM -0800, Junio C Hamano wrote:
+> I left the detail as vague ;-).
+> 
+> The new request does not have to piggyback on existing "want"
+> message.  And thinking about it again, it probably is cleaner if it
+> didn't.  After the use of the protocol extension "ancestry-check" is
+> negotiated the usual way between the sender and the receiver, the
+> receiver would send "check-ff N O" and "check-ff N P" after it sends
+> all of its "want" messages but before it sends the "flush" to go
+> into the "have"/"ack" common ancestry discovery.
+> 
+> I do not have a strong opinion on where the sender should reply with
+> "not-ff N O" in the protocol.  Immediately after the receiver says
+> "I've done with my 'want's (and now 'check-ff's)" by flushing may be
+> a good place to do so.
 
-On Wed, Jan 13, 2016 at 2:57 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 07f7a3b..e5897e9 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -865,6 +865,7 @@ branch.<name>.rebase::
->         instead of merging the default branch from the default remote when
->         "git pull" is run. See "pull.rebase" for doing this in a non
->         branch-specific manner.
-> +       When the value is `interactive`, the rebase is run in interactive mode.
->  +
->  When preserve, also pass `--preserve-merges` along to 'git rebase'
->  so that locally committed merge commits will not be flattened
+In that case, I can think of two other useful times to do it:
 
-I think this change needs to be repeated for the section on
-"pull.rebase" as well.
+1.  Before any "want" requests.
 
-> [...]
-> --
-> 2.6.3.windows.1.300.g1c25e49
+    This would also let you extend ls-remote to let it display ancestry.
 
-Other than that, builtin/pull.c has the following option definition
-that needs to be updated:
+    This is complicated by the fact that normally the client responds
+    with which features it supports in the first "want",
+    so the sender would have to support "check-ff N O <FEATURES>"
+    if it advertised "ancestry-check".
 
-{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase, "false|true|preserve",
-N_("incorporate changes by rebasing rather than merging"),
+2.  After the pack is transferred.
 
-The "false|true|preserve" needs to be updated to
-"false|true|preserve|interactive", I think.
+    Then the receiver can check ancestry with the objects,
+    and only request ancestry if it's missing history.
 
-Regards,
-Paul
+    I'm not sure whether there's any value in not requesting it,
+    since while it would reduce the amount of work the sender needs to do,
+    it still means the sender has to wait for the client to do the check,
+    rather than hanging up and allowing it to process another connection.
