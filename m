@@ -1,99 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/subtree: unwrap tag refs
-Date: Wed, 13 Jan 2016 09:40:01 -0800
-Message-ID: <xmqq8u3tpedq.fsf@gitster.mtv.corp.google.com>
-References: <1447388144-23806-1-git-send-email-git@rob.dqd.com>
-	<87h9kqwm67.fsf@waller.obbligato.org>
-	<87d1t6p5ov.fsf@waller.obbligato.org>
+From: Richard Maw <richard.maw@codethink.co.uk>
+Subject: Re: Some issues when trying to set up a shallow git mirror server
+Date: Wed, 13 Jan 2016 17:43:32 +0000
+Message-ID: <20160113174331.GI3397@logi.codethink.co.uk>
+References: <20160107165417.GB3397@logi.codethink.co.uk>
+ <xmqq4mep5kyg.fsf@gitster.mtv.corp.google.com>
+ <xmqqd1tb21oh.fsf@gitster.mtv.corp.google.com>
+ <20160111155153.GE3397@logi.codethink.co.uk>
+ <xmqqy4butzw8.fsf@gitster.mtv.corp.google.com>
+ <20160113113743.GF3397@logi.codethink.co.uk>
+ <xmqqlh7tpfkt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Rob Mayoff <mayoff@dqd.com>, git@vger.kernel.org
-To: greened@obbligato.org (David A. Greene)
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:40:13 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:43:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJPP2-00086S-68
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:40:12 +0100
+	id 1aJPSQ-0001fu-Ia
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932077AbcAMRkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 12:40:07 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65070 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755192AbcAMRkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 12:40:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC6BE3AD52;
-	Wed, 13 Jan 2016 12:40:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FcgJl8AExXqABXs9buRTQShfWC0=; b=SjnF4I
-	niSYR3rgav/dPTeG64kJ3I+Hi3cyZr9m8sqjKYQa2OwYBolQx8LMPeOh81mP4jc7
-	u9gu2EqsPGbuYPGLoZEPJndxrXqeSqOZ7JINCfTQUh1VVAXKD3PxRC4HhbWuR5Kk
-	I4897I0BFrdxPV4wLqd8wpR+4w4OQXjIFfIkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LTWoDvBbUP5qXnsWkuRRybbkQ8Euf76H
-	y3c2lBlUtDhtfxuMm0hVl7V3ujyOIsM9lV8ine+NJTQfyvamt4ijjtr7zh2Ne3XQ
-	GgS0OHsEPNh4GBUnVvsRnt8AFwGPJI/10xTT1dXQS/Ryu6pLkqoOMMfpppDU3wi2
-	zPAbBmWDjWI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C1E543AD50;
-	Wed, 13 Jan 2016 12:40:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3E9D03AD46;
-	Wed, 13 Jan 2016 12:40:03 -0500 (EST)
-In-Reply-To: <87d1t6p5ov.fsf@waller.obbligato.org> (David A. Greene's message
-	of "Tue, 12 Jan 2016 20:35:28 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AD38ED82-BA1C-11E5-9900-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755455AbcAMRni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 12:43:38 -0500
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:55201 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753747AbcAMRnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 12:43:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id E84EE460D07;
+	Wed, 13 Jan 2016 17:43:35 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id i8BVznFh6W5U; Wed, 13 Jan 2016 17:43:33 +0000 (GMT)
+Received: from logi.codethink.co.uk (logi.dyn.ducie.codethink.co.uk [10.24.1.141])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id A52D3460B6D;
+	Wed, 13 Jan 2016 17:43:33 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqqlh7tpfkt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283954>
 
-greened@obbligato.org (David A. Greene) writes:
+On Wed, Jan 13, 2016 at 09:14:10AM -0800, Junio C Hamano wrote:
+> Richard Maw <richard.maw@codethink.co.uk> writes:
+> 
+> > 1.  Before any "want" requests.
+> >
+> >     This would also let you extend ls-remote to let it display ancestry.
+> >
+> >     This is complicated by the fact that normally the client responds
+> >     with which features it supports in the first "want",
+> >     so the sender would have to support "check-ff N O <FEATURES>"
+> >     if it advertised "ancestry-check".
+> 
+> Yes, that sounds like a good thing.  Actually, ls-remote is a
+> degenerated case of fetch that sends 0 "want" requests, so the above
+> may be identical to what I suggested in the message you are
+> responding to.
 
-> I am sorry I neglected to follow-up on this.
->
-> greened@obbligato.org (David A. Greene) writes:
->
->> Rob Mayoff <mayoff@dqd.com> writes:
->>
->>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->>> index 9f06571..b051600 100755
->>> --- a/contrib/subtree/git-subtree.sh
->>> +++ b/contrib/subtree/git-subtree.sh
->>> @@ -245,7 +245,10 @@ find_latest_squash()
->>>  		case "$a" in
->>>  			START) sq="$b" ;;
->>>  			git-subtree-mainline:) main="$b" ;;
->>> -			git-subtree-split:) sub="$b" ;;
->>> +			git-subtree-split:)
->>> +				sub="$b"
->>
->> Why include the above line?
->
-> My bad.  Missed the diff markers.  This is fine.
->
->>> +				sub="$(git rev-parse "$b^0")" || die "could not rev-parse split hash $b from commit $sq"
->>
->> This seems like odd quoting.  Would not this do the same?
->>
->> 				sub="$(git rev-parse $b^0)" || die "could not rev-parse split hash $b from commit $sq"
->>
->> Perhaps I am missing something.
->
-> Jeff explained it, so this is ok.
->
-> This all looks good to me.  Junio, please apply.
->
->                             -David
-
-Thanks, all.  Let's mark rm/subtree-unwrap-tags topic to be merged
-to 'next', then.
+Thanks. I've got a good idea of what I'd need to do now.
