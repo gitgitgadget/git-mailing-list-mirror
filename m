@@ -1,111 +1,583 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv7 0/8] Expose submodule parallelism to the user
-Date: Tue, 12 Jan 2016 15:59:09 -0800
-Message-ID: <CAGZ79kZO=qLXK=tDt=DT=9og=aNgxk+ukoO4e5qDT=OAJCCS2A@mail.gmail.com>
-References: <1452541321-27810-1-git-send-email-sbeller@google.com>
-	<xmqqoacqs6g7.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCHv3] submodule: Port resolve_relative_url from shell to C
+Date: Tue, 12 Jan 2016 16:10:08 -0800
+Message-ID: <1452643808-29384-1-git-send-email-sbeller@google.com>
+References: <1452641726-25625-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 00:59:19 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, j6t@kdbg.org, jens.lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 01:10:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJ8qJ-0008Nq-CY
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 00:59:15 +0100
+	id 1aJ911-00073a-QY
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 01:10:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003AbcALX7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 18:59:11 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:35905 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbcALX7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 18:59:10 -0500
-Received: by mail-ig0-f181.google.com with SMTP id z14so138825939igp.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 15:59:10 -0800 (PST)
+	id S1754162AbcAMAKN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Jan 2016 19:10:13 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:33301 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754147AbcAMAKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 19:10:11 -0500
+Received: by mail-pa0-f50.google.com with SMTP id cy9so347880079pac.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 16:10:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NeVTqxpusJxxdDX20cwjBXzPDNh5gDmOwyFhqhEYvtI=;
-        b=EVJWDiB937EUU37fD42iyXoeKq+qr7zGF1C1AU5grDB9csVwVP7mkaoWzdflivhNjB
-         ZnALKECxCbeyjTbYk8ex1HXx0bjeOqno6WlGVOJax7SvAO5qME6gRrBVpn05ON82QP94
-         4CrSQ+CBTDS73dZtv7iBvkLPAAjc0pt4dSk7NbXEHS535iRcScx+xqtPM/h8q6y7Yc1v
-         JDbpyr+LoBKzE2axB0s0B982/ZeIfDwDuEaR3NImTJlP+Sfm+NIRn/OJg/oOZ2t8WdYo
-         qeiN/SgTp4TWOiszBn3xSMYvz6oaku74EgDUZp2OHVnvRiK3pO6gwZxEKHxmyzi4mVEL
-         oKuw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=F8jEW/46tW4ruthzWjg/HfB+/wTwXpULsAvIEObJ/74=;
+        b=Yq7chDHl28+ccQ/WqBvFNIYpUi6MOyqRE4thKVpdCN12fYSg5OzhbCrq0LdEVoXv9S
+         iN7qO6hEsoVX7CPnVUKSYFNLRfydgy77x6OWMaa1z/nCl85BevNP6O6Mttn6LzWXvzQO
+         XYZ/3JwTL7kHVekhoxa3a6FB7G+ZOTNR4bB+dfpuNKM/I/JrFPMXIBsjg7tfj83GxzOR
+         s+UM9S/myCdP+VZwT4V1zOn+EkPOP+QCs/7rMJsNfF9FaEikC14+MtpilMbrQd2N1M3T
+         C8+ckR5Ir1d+MXcpdp5Aj0zpym4tMp8S6DWEQlJu0f2A+eZKUEc6qCfknqgT4RV4azvQ
+         oSyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=NeVTqxpusJxxdDX20cwjBXzPDNh5gDmOwyFhqhEYvtI=;
-        b=PfCjqPCe2LGezRUInaScPy6tTYPIZ0DnCGVF74BGdIOKI3hqbvEcc3QdN7PmNZZHKL
-         bbuLaqz9m4f/bEKrVinz5ffIkanagXhl8UeG4VACw+8cZkzEFZEg9s/qZZZvFz9CqhwH
-         SPUqekSQ7ifMOqcIrIKbp7uegyR4h/B1nD/AF+jvSUdd23jAt+qSSMeUIOvvwqEibhcJ
-         uCwQ15ljbFnZBrwfdPCCAP9R7IxKzKddV1lfGwchV6NnV/XzonsdHuHCizneVMvBRbGN
-         CL88xmY7njiMcDwJlLWXgWEKAAzXntXJmX3B5qi8OKRTsAENjeH3ziwtZJtviXFY7Z9p
-         h8sA==
-X-Gm-Message-State: ALoCoQnmt7h0NkjfE9Yhg0xQbzsLpcGKBSurb6hK2EPBU07GaKqd6qod+8p2ISb9Xf3Iqq5hf43BdHDP/yQNQ/eNuROf9rfi7d4INGuRevkhKcjBK6OKNzg=
-X-Received: by 10.50.66.179 with SMTP id g19mr21683648igt.94.1452643150025;
- Tue, 12 Jan 2016 15:59:10 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Tue, 12 Jan 2016 15:59:09 -0800 (PST)
-In-Reply-To: <xmqqoacqs6g7.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=F8jEW/46tW4ruthzWjg/HfB+/wTwXpULsAvIEObJ/74=;
+        b=CzNwMSI0vCUoNKTbjUvdDb0gUcCsQEMTbTK2qiSXU9Wu39k7+PISY8oJX2/7xK9b+j
+         rC2DpRmhHd7ZKjQgWl4MKT3HGxauV7HUs6pqaU1re6+L4pqUnPZLr3vOo7XP07oXIzKc
+         2KucA77O9WNEOimFrNA4wdqXUoYWzVQXCbXJ2HepA4mGovJZlmh/Q0m+/PWNUkvrmtqc
+         vA2Z5llt1qEq9a6IgUuwwM4eFucrUQM7qC9Y5++i3Kg06xiBjceuFNE8zrBGr5NrxK5t
+         bJZGXVustb8M2lklHBr/7i/lTBhQOx6xHlUruVaJsc1HbQDJHBwCHleyMJeldcQJle+u
+         DLzg==
+X-Gm-Message-State: ALoCoQl9ImbhTnjbrQorArhJTQyeoNGrbe1wgYp4qtg7PNA4tdsx8REgFAafdqkdbWg8ZtWR0Kg3SZxmkaJpKfQEszXltl4JDw==
+X-Received: by 10.66.65.109 with SMTP id w13mr191352068pas.142.1452643810817;
+        Tue, 12 Jan 2016 16:10:10 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:6038:d779:8402:c491])
+        by smtp.gmail.com with ESMTPSA id 63sm32869268pfp.82.2016.01.12.16.10.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 12 Jan 2016 16:10:10 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.9.g9d9d16f.dirty
+In-Reply-To: <1452641726-25625-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283858>
 
-On Tue, Jan 12, 2016 at 3:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This is a resend of sb/submodule-parallel-update and is available
->> at github[1] as well.  It applies on top of
->> sb/submodule-parallel-fetch
->>
->> What does it do?
->> ---
->> This series should finish the on going efforts of parallelizing
->> submodule network traffic. The patches contain tests for
->>   clone
->>   fetch
->>   submodule update
->> to use the actual parallelism both via command line as well as a
->> configured option. I decided to go with "submodule.fetchJobs" for
->> all three for now.
->>
->> What changed to v5,6?
->> ---
->> No major changes, I just made it compile again as the order of parameters
->> to the parallel processing engine changed.
->
-> OK, I am in the process of replacing it but I am also rewinding
-> 'next' and updating 'maint' today, so this update may not be
-> published until tomorrow's integration cycle.
->
-> Here are the changes I noticed, just to double check:
->
->  - There is no change in [1-3/8] relative to the previous round;
->    I'll keep the one that has been in my tree to preserve their
->    committer/author dates.
->
->  - In the log message of [4/8], the misspelt "submodule.jobs" in the
->    previous round now reads "submodule.fetchJobs".
->
->  - There is no change in [5-8/8] relative to the previous round.
+Later on we want to deprecate the `git submodule init` command and make
+it implicit in other submodule commands. As these other commands are
+written in C already, we'd need the init functionality in C, too.
+The `resolve_relative_url` function is a major part of that init
+functionality, so start by porting this function to C.
 
-Yeah that's it.
+As I was porting the functionality I noticed some odds with the inputs.
+To fully understand the situation I added some logging to the function
+temporarily to capture all calls to the function throughout the test
+suite. Duplicates have been removed and all unique testing inputs have
+been recorded into t0060.
 
-Additionally to that I needed to switch the order of arguments for the
-parallel processing calls, too, to make it compile again.
-I assume I just did that work twice as the previous version
-ought to compile, too.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+I tried considering an alternative implementation for `relative_url`,
+which is not a direct translation of the shell code. There are some
+advanced path/url functions, such as `normalize_path_copy`, however
+using that function is not straightforward as it seems. The idea would
+have been to use that on a concatenation of remoteurl and url, however
+there are cases like ("foo/." "../.") to result in "foo/.", so we reall=
+y
+need to count the slashes ourselves.
 
-But apart from these 2 things I did no other changes.
+This applies on top of current master (2.7.0).
 
->
-> Thanks.
+Thanks,
+Stefan
+
+Interdiff to v2 (sent half an hour ago):
+
+        diff --git a/builtin/submodule--helper.c b/builtin/submodule--h=
+elper.c
+        index db9d627..3dd8008 100644
+        --- a/builtin/submodule--helper.c
+        +++ b/builtin/submodule--helper.c
+        @@ -90,8 +90,8 @@ static char *relative_url(const char *remote_=
+url,
+                else {
+                        is_relative =3D 1;
+        =20
+        -               /* prepend a './' to ensure all relative remote=
+urls start with
+        -                * './' or '../' */
+        +               /* Prepend a './' to ensure all relative remote=
+urls start
+        +                * with './' or '../'. */
+                        if (!starts_with_dot_slash(remoteurl) &&
+                            !starts_with_dot_dot_slash(remoteurl)) {
+                                strbuf_reset(&sb);
+        @@ -100,8 +100,8 @@ static char *relative_url(const char *remot=
+e_url,
+                                remoteurl =3D strbuf_detach(&sb, NULL);
+                        }
+                }
+        -       /* When the url starts with '../', remove that and the =
+last directory
+        -        * in remoteurl */
+        +       /* When the url starts with '../', remove that and the
+        +        * last directory in remoteurl. */
+                while (url) {
+                        if (starts_with_dot_dot_slash(url)) {
+                                char *rfind;
+
+---
+ builtin/submodule--helper.c | 191 ++++++++++++++++++++++++++++++++++++=
+++++++++
+ git-submodule.sh            |  81 +------------------
+ t/t0060-path-utils.sh       |  41 ++++++++++
+ 3 files changed, 236 insertions(+), 77 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f4c3eff..3dd8008 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -9,6 +9,195 @@
+ #include "submodule-config.h"
+ #include "string-list.h"
+ #include "run-command.h"
++#include "remote.h"
++#include "refs.h"
++#include "connect.h"
++
++static char *get_default_remote(void)
++{
++	char *dest =3D NULL, *ret;
++	unsigned char sha1[20];
++	int flag;
++	struct strbuf sb =3D STRBUF_INIT;
++	const char *refname =3D resolve_ref_unsafe("HEAD", 0, sha1, &flag);
++
++	if (!refname)
++		die("No such ref: HEAD");
++
++	refname =3D shorten_unambiguous_ref(refname, 0);
++	strbuf_addf(&sb, "branch.%s.remote", refname);
++	if (git_config_get_string(sb.buf, &dest))
++		ret =3D xstrdup("origin");
++	else
++		ret =3D xstrdup(dest);
++
++	strbuf_release(&sb);
++	return ret;
++}
++
++static int starts_with_dot_slash(const char *str)
++{
++	return str[0] =3D=3D '.' && is_dir_sep(str[1]);
++}
++
++static int starts_with_dot_dot_slash(const char *str)
++{
++	return str[0] =3D=3D '.' && str[1] =3D=3D '.' && is_dir_sep(str[2]);
++}
++
++static char *last_dir_separator(char *str)
++{
++	char* p =3D str + strlen(str);
++	while (p-- !=3D str)
++		if (is_dir_sep(*p))
++			return p;
++	return NULL;
++}
++
++/*
++ * The `url` argument is the URL that navigates to the submodule origi=
+n
++ * repo. When relative, this URL is relative to the superproject origi=
+n
++ * URL repo. The `up_path` argument, if specified, is the relative
++ * path that navigates from the submodule working tree to the superpro=
+ject
++ * working tree. Returns the origin URL of the submodule.
++ *
++ * Return either an absolute URL or filesystem path (if the superproje=
+ct
++ * origin URL is an absolute URL or filesystem path, respectively) or =
+a
++ * relative file system path (if the superproject origin URL is a rela=
+tive
++ * file system path).
++ *
++ * When the output is a relative file system path, the path is either
++ * relative to the submodule working tree, if up_path is specified, or=
+ to
++ * the superproject working tree otherwise.
++ */
++static char *relative_url(const char *remote_url,
++				const char *url,
++				const char *up_path)
++{
++	int is_relative =3D 0;
++	int colonsep =3D 0;
++	char *out;
++	char *remoteurl =3D xstrdup(remote_url);
++	struct strbuf sb =3D STRBUF_INIT;
++	size_t len;
++
++	len =3D strlen(remoteurl);
++	if (is_dir_sep(remoteurl[len]))
++		remoteurl[len] =3D '\0';
++
++	if (!url_is_local_not_ssh(remoteurl) || is_absolute_path(remoteurl))
++		is_relative =3D 0;
++	else {
++		is_relative =3D 1;
++
++		/* Prepend a './' to ensure all relative remoteurls start
++		 * with './' or '../'. */
++		if (!starts_with_dot_slash(remoteurl) &&
++		    !starts_with_dot_dot_slash(remoteurl)) {
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "./%s", remoteurl);
++			free(remoteurl);
++			remoteurl =3D strbuf_detach(&sb, NULL);
++		}
++	}
++	/* When the url starts with '../', remove that and the
++	 * last directory in remoteurl. */
++	while (url) {
++		if (starts_with_dot_dot_slash(url)) {
++			char *rfind;
++			url +=3D 3;
++
++			rfind =3D last_dir_separator(remoteurl);
++			if (rfind)
++				*rfind =3D '\0';
++			else {
++				rfind =3D strrchr(remoteurl, ':');
++				if (rfind) {
++					*rfind =3D '\0';
++					colonsep =3D 1;
++				} else {
++					if (is_relative || !strcmp(".", remoteurl))
++						die(N_("cannot strip one component off url '%s'"), remoteurl);
++					else
++						remoteurl =3D ".";
++				}
++			}
++		} else if (starts_with_dot_slash(url)) {
++			url +=3D 2;
++		} else
++			break;
++	}
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
++
++	if (starts_with_dot_slash(sb.buf))
++		out =3D xstrdup(sb.buf + 2);
++	else
++		out =3D xstrdup(sb.buf);
++	strbuf_reset(&sb);
++
++	free(remoteurl);
++	if (!up_path || !is_relative)
++		return out;
++	else {
++		strbuf_addf(&sb, "%s%s", up_path, out);
++
++		free(out);
++		return strbuf_detach(&sb, NULL);
++	}
++}
++
++static int resolve_relative_url(int argc, const char **argv, const cha=
+r *prefix)
++{
++	char *remoteurl =3D NULL;
++	char *remote =3D get_default_remote();
++	const char *up_path =3D NULL;
++	char *res;
++	const char *url;
++	struct strbuf sb =3D STRBUF_INIT;
++
++	if (argc !=3D 2 && argc !=3D 3)
++		die("BUG: resolve_relative_url only accepts one or two arguments");
++
++	url =3D argv[1];
++	strbuf_addf(&sb, "remote.%s.url", remote);
++	free(remote);
++
++	if (git_config_get_string(sb.buf, &remoteurl))
++		/* the repository is its own authoritative upstream */
++		remoteurl =3D xgetcwd();
++
++	if (argc =3D=3D 3)
++		up_path =3D argv[2];
++
++	res =3D relative_url(remoteurl, url, up_path);
++	printf("%s\n", res);
++
++	free(res);
++	return 0;
++}
++
++static int resolve_relative_url_test(int argc, const char **argv, cons=
+t char *prefix)
++{
++	char *remoteurl, *res;
++	const char *up_path, *url;
++
++	if (argc !=3D 4)
++		die("BUG: resolve_relative_url only accepts three arguments: <up_pat=
+h> <remoteurl> <url>");
++
++	up_path =3D argv[1];
++	remoteurl =3D xstrdup(argv[2]);
++	url =3D argv[3];
++
++	if (!strcmp(up_path, "(null)"))
++		up_path =3D NULL;
++
++	res =3D relative_url(remoteurl, url, up_path);
++	printf("%s\n", res);
++
++	free(res);
++	return 0;
++}
+=20
+ struct module_list {
+ 	const struct cache_entry **entries;
+@@ -264,6 +453,8 @@ static struct cmd_struct commands[] =3D {
+ 	{"list", module_list},
+ 	{"name", module_name},
+ 	{"clone", module_clone},
++	{"resolve-relative-url", resolve_relative_url},
++	{"resolve-relative-url-test", resolve_relative_url_test},
+ };
+=20
+ int cmd_submodule__helper(int argc, const char **argv, const char *pre=
+fix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f..3e409af 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -46,79 +46,6 @@ prefix=3D
+ custom_name=3D
+ depth=3D
+=20
+-# The function takes at most 2 arguments. The first argument is the
+-# URL that navigates to the submodule origin repo. When relative, this=
+ URL
+-# is relative to the superproject origin URL repo. The second up_path
+-# argument, if specified, is the relative path that navigates
+-# from the submodule working tree to the superproject working tree.
+-#
+-# The output of the function is the origin URL of the submodule.
+-#
+-# The output will either be an absolute URL or filesystem path (if the
+-# superproject origin URL is an absolute URL or filesystem path,
+-# respectively) or a relative file system path (if the superproject
+-# origin URL is a relative file system path).
+-#
+-# When the output is a relative file system path, the path is either
+-# relative to the submodule working tree, if up_path is specified, or =
+to
+-# the superproject working tree otherwise.
+-resolve_relative_url ()
+-{
+-	remote=3D$(get_default_remote)
+-	remoteurl=3D$(git config "remote.$remote.url") ||
+-		remoteurl=3D$(pwd) # the repository is its own authoritative upstrea=
+m
+-	url=3D"$1"
+-	remoteurl=3D${remoteurl%/}
+-	sep=3D/
+-	up_path=3D"$2"
+-
+-	case "$remoteurl" in
+-	*:*|/*)
+-		is_relative=3D
+-		;;
+-	./*|../*)
+-		is_relative=3Dt
+-		;;
+-	*)
+-		is_relative=3Dt
+-		remoteurl=3D"./$remoteurl"
+-		;;
+-	esac
+-
+-	while test -n "$url"
+-	do
+-		case "$url" in
+-		../*)
+-			url=3D"${url#../}"
+-			case "$remoteurl" in
+-			*/*)
+-				remoteurl=3D"${remoteurl%/*}"
+-				;;
+-			*:*)
+-				remoteurl=3D"${remoteurl%:*}"
+-				sep=3D:
+-				;;
+-			*)
+-				if test -z "$is_relative" || test "." =3D "$remoteurl"
+-				then
+-					die "$(eval_gettext "cannot strip one component off url '\$remote=
+url'")"
+-				else
+-					remoteurl=3D.
+-				fi
+-				;;
+-			esac
+-			;;
+-		./*)
+-			url=3D"${url#./}"
+-			;;
+-		*)
+-			break;;
+-		esac
+-	done
+-	remoteurl=3D"$remoteurl$sep${url%/}"
+-	echo "${is_relative:+${up_path}}${remoteurl#./}"
+-}
+-
+ # Resolve a path to be relative to another path.  This is intended for
+ # converting submodule paths when git-submodule is run in a subdirecto=
+ry
+ # and only handles paths where the directory separator is '/'.
+@@ -281,7 +208,7 @@ cmd_add()
+ 		die "$(gettext "Relative path can only be used from the toplevel of =
+the working tree")"
+=20
+ 		# dereference source url relative to parent's url
+-		realrepo=3D$(resolve_relative_url "$repo") || exit
++		realrepo=3D$(git submodule--helper resolve-relative-url "$repo") || =
+exit
+ 		;;
+ 	*:*|/*)
+ 		# absolute url
+@@ -485,7 +412,7 @@ cmd_init()
+ 			# Possibly a url relative to parent
+ 			case "$url" in
+ 			./*|../*)
+-				url=3D$(resolve_relative_url "$url") || exit
++				url=3D$(git submodule--helper resolve-relative-url "$url") || exit
+ 				;;
+ 			esac
+ 			git config submodule."$name".url "$url" ||
+@@ -1190,9 +1117,9 @@ cmd_sync()
+ 			# guarantee a trailing /
+ 			up_path=3D${up_path%/}/ &&
+ 			# path from submodule work tree to submodule origin repo
+-			sub_origin_url=3D$(resolve_relative_url "$url" "$up_path") &&
++			sub_origin_url=3D$(git submodule--helper resolve-relative-url "$url=
+" "$up_path") &&
+ 			# path from superproject work tree to submodule origin repo
+-			super_config_url=3D$(resolve_relative_url "$url") || exit
++			super_config_url=3D$(git submodule--helper resolve-relative-url "$u=
+rl") || exit
+ 			;;
+ 		*)
+ 			sub_origin_url=3D"$url"
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 627ef85..2ae1bbd 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -19,6 +19,12 @@ relative_path() {
+ 	"test \"\$(test-path-utils relative_path '$1' '$2')\" =3D '$expected'=
+"
+ }
+=20
++test_submodule_relative_url() {
++	expected=3D"$4"
++	test_expect_success "test_submodule_relative_url: $1 $2 $3 =3D> $4" \
++	"test \"\$(git submodule--helper resolve-relative-url-test '$1' '$2' =
+'$3')\" =3D '$expected'"
++}
++
+ test_git_path() {
+ 	test_expect_success "git-path $1 $2 =3D> $3" "
+ 		$1 git rev-parse --git-path $2 >actual &&
+@@ -286,4 +292,39 @@ test_git_path GIT_COMMON_DIR=3Dbar config         =
+          bar/config
+ test_git_path GIT_COMMON_DIR=3Dbar packed-refs              bar/packed=
+-refs
+ test_git_path GIT_COMMON_DIR=3Dbar shallow                  bar/shallo=
+w
+=20
++test_submodule_relative_url "(null)" "../foo/bar" "../bar/a/b/c" "../f=
+oo/bar/a/b/c"
++test_submodule_relative_url "../../../" "../foo/bar" "../bar/a/b/c" ".=
+=2E/../../../foo/bar/a/b/c"
++test_submodule_relative_url "(null)" "../foo/bar" "../submodule" "../f=
+oo/submodule"
++test_submodule_relative_url "../" "../foo/bar" "../submodule" "../../f=
+oo/submodule"
++test_submodule_relative_url "(null)" "../foo/submodule" "../submodule"=
+ "../foo/submodule"
++test_submodule_relative_url "../" "../foo/submodule" "../submodule" ".=
+=2E/../foo/submodule"
++test_submodule_relative_url "(null)" "../foo" "../submodule" "../submo=
+dule"
++test_submodule_relative_url "../" "../foo" "../submodule" "../../submo=
+dule"
++test_submodule_relative_url "(null)" "./foo/bar" "../submodule" "foo/s=
+ubmodule"
++test_submodule_relative_url "../" "./foo/bar" "../submodule" "../foo/s=
+ubmodule"
++test_submodule_relative_url "(null)" "./foo" "../submodule" "submodule=
+"
++test_submodule_relative_url "../" "./foo" "../submodule" "../submodule=
+"
++test_submodule_relative_url "(null)" "//somewhere else/repo" "../subre=
+po" "//somewhere else/subrepo"
++test_submodule_relative_url "(null)" "/u//trash directory.t7406-submod=
+ule-update/subsuper_update_r" "../subsubsuper_update_r" "/u//trash dire=
+ctory.t7406-submodule-update/subsubsuper_update_r"
++test_submodule_relative_url "(null)" "/u//trash directory.t7406-submod=
+ule-update/super_update_r2" "../subsuper_update_r" "/u//trash directory=
+=2Et7406-submodule-update/subsuper_update_r"
++test_submodule_relative_url "(null)" "/u/trash directory.t3600-rm/." "=
+=2E./." "/u/trash directory.t3600-rm/."
++test_submodule_relative_url "(null)" "/u/trash directory.t3600-rm" "./=
+=2E" "/u/trash directory.t3600-rm/."
++test_submodule_relative_url "(null)" "/u/trash directory.t7400-submodu=
+le-basic/addtest" "../repo" "/u/trash directory.t7400-submodule-basic/r=
+epo"
++test_submodule_relative_url "../" "/u/trash directory.t7400-submodule-=
+basic/addtest" "../repo" "/u/trash directory.t7400-submodule-basic/repo=
+"
++test_submodule_relative_url "(null)" "/u/trash directory.t7400-submodu=
+le-basic" "./=C3=A5 =C3=A4=C3=B6" "/u/trash directory.t7400-submodule-b=
+asic/=C3=A5 =C3=A4=C3=B6"
++test_submodule_relative_url "(null)" "/u/trash directory.t7403-submodu=
+le-sync/." "../submodule" "/u/trash directory.t7403-submodule-sync/subm=
+odule"
++test_submodule_relative_url "(null)" "/u/trash directory.t7407-submodu=
+le-foreach/submodule" "../submodule" "/u/trash directory.t7407-submodul=
+e-foreach/submodule"
++test_submodule_relative_url "(null)" "/u/trash directory.t7409-submodu=
+le-detached-worktree/home2/../remote" "../bundle1" "/u/trash directory.=
+t7409-submodule-detached-worktree/home2/../bundle1"
++test_submodule_relative_url "(null)" "/u/trash directory.t7613-merge-s=
+ubmodule/submodule_update_repo" "./." "/u/trash directory.t7613-merge-s=
+ubmodule/submodule_update_repo/."
++test_submodule_relative_url "(null)" "file:///tmp/repo" "../subrepo" "=
+file:///tmp/subrepo"
++test_submodule_relative_url "(null)" "foo/bar" "../submodule" "foo/sub=
+module"
++test_submodule_relative_url "../" "foo/bar" "../submodule" "../foo/sub=
+module"
++test_submodule_relative_url "(null)" "foo" "../submodule" "submodule"
++test_submodule_relative_url "../" "foo" "../submodule" "../submodule"
++test_submodule_relative_url "(null)" "helper:://hostname/repo" "../sub=
+repo" "helper:://hostname/subrepo"
++test_submodule_relative_url "(null)" "ssh://hostname/repo" "../subrepo=
+" "ssh://hostname/subrepo"
++test_submodule_relative_url "(null)" "ssh://hostname:22/repo" "../subr=
+epo" "ssh://hostname:22/subrepo"
++test_submodule_relative_url "(null)" "user@host:path/to/repo" "../subr=
+epo" "user@host:path/to/subrepo"
++test_submodule_relative_url "(null)" "user@host:repo" "../subrepo" "us=
+er@host:subrepo"
++
+ test_done
+--=20
+2.7.0.9.g9d9d16f.dirty
