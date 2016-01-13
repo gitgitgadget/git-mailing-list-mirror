@@ -1,92 +1,141 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase can be 'interactive'
-Date: Wed, 13 Jan 2016 13:24:01 +0100
-Message-ID: <vpqziw9oefy.fsf@anie.imag.fr>
-References: <cover.1452612112.git.johannes.schindelin@gmx.de>
-	<8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de>
-	<vpq7fjdyfvu.fsf@anie.imag.fr>
-	<alpine.DEB.2.20.1601131302340.2964@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Paul Tan <pyokagan@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 13 13:27:25 2016
+From: Tobias Klauser <tklauser@distanz.ch>
+Subject: [PATCH v3 1/2] trailer: use fprintf instead of printf
+Date: Wed, 13 Jan 2016 13:43:08 +0100
+Message-ID: <1452688989-13746-2-git-send-email-tklauser@distanz.ch>
+References: <1452688989-13746-1-git-send-email-tklauser@distanz.ch>
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Jan 13 13:43:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJKWI-0007Xl-54
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:27:22 +0100
+	id 1aJKlu-000895-By
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756498AbcAMM1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 07:27:18 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:58946 "EHLO rominette.imag.fr"
+	id S1760070AbcAMMnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 07:43:19 -0500
+Received: from mail.zhinst.com ([212.126.164.98]:54484 "EHLO mail.zhinst.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753474AbcAMM1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 07:27:17 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u0DCNwsZ027889
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 13 Jan 2016 13:23:58 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0DCO1o4013517;
-	Wed, 13 Jan 2016 13:24:01 +0100
-In-Reply-To: <alpine.DEB.2.20.1601131302340.2964@virtualbox> (Johannes
-	Schindelin's message of "Wed, 13 Jan 2016 13:03:57 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jan 2016 13:23:58 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u0DCNwsZ027889
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1453292640.90669@j3nREpPlIwUXq3ObRfhvkg
+	id S1755570AbcAMMnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 07:43:16 -0500
+Received: from ziws06.zhinst.com ([10.42.0.7])
+	by mail.zhinst.com (Kerio Connect 9.0.1) with ESMTP;
+	Wed, 13 Jan 2016 13:43:08 +0100
+X-Mailer: git-send-email 2.7.0.1.g5e091f5
+In-Reply-To: <1452688989-13746-1-git-send-email-tklauser@distanz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283909>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Use fprintf instead of printf in trailer.c in order to allow printing
+to a file other than stdout. This will be needed to support in-place
+editing in git interpret-trailers.
 
-> Hi Matthieu,
->
-> On Wed, 13 Jan 2016, Matthieu Moy wrote:
->
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->> What happens if one has branch.*.rebase=interactive, and wants to make
->> an exception? Does
->> 
->>   git pull --rebase=true
->> 
->> cancel the 'interactive' part?
->
-> It is the same situation as before (just substitute a
-> branch.*.rebase=preserve setting): yes, the config is parsed first, then
-> the command line, so the command line wins.
->
->> I guess it is, but if so I think it should be tested and documented.
->
-> Is this really necessary, given that the behavior has not changed from
-> before?
+Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
+---
+ trailer.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-Well, before your patch, branch.*.rebase=interactive was not possible.
-It is not immediately clear to me that --rebase=true can mean "do the
-pull with rebasing, but without going interactive", as "do pull with
-rebase" and "rebase interactively" could be two independant things.
-Reading the current doc does not help much: "When true, rebase the
-current branch on top of the upstream branch after fetching" => it does
-not say that "true" also specifies which kind of rebase is performed.
-
-Actually, I was about to suggest having --rebase=non-interactive when I
-realized it was already there with the syntax --rebase=true.
-
-I can live without it, but I think a documentation improvement would
-make things clearer.
-
+diff --git a/trailer.c b/trailer.c
+index 6f3416febaba..176fac213450 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -108,23 +108,23 @@ static char last_non_space_char(const char *s)
+ 	return '\0';
+ }
+ 
+-static void print_tok_val(const char *tok, const char *val)
++static void print_tok_val(FILE *outfile, const char *tok, const char *val)
+ {
+ 	char c = last_non_space_char(tok);
+ 	if (!c)
+ 		return;
+ 	if (strchr(separators, c))
+-		printf("%s%s\n", tok, val);
++		fprintf(outfile, "%s%s\n", tok, val);
+ 	else
+-		printf("%s%c %s\n", tok, separators[0], val);
++		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
+ }
+ 
+-static void print_all(struct trailer_item *first, int trim_empty)
++static void print_all(FILE *outfile, struct trailer_item *first, int trim_empty)
+ {
+ 	struct trailer_item *item;
+ 	for (item = first; item; item = item->next) {
+ 		if (!trim_empty || strlen(item->value) > 0)
+-			print_tok_val(item->token, item->value);
++			print_tok_val(outfile, item->token, item->value);
+ 	}
+ }
+ 
+@@ -795,14 +795,15 @@ static int has_blank_line_before(struct strbuf **lines, int start)
+ 	return 0;
+ }
+ 
+-static void print_lines(struct strbuf **lines, int start, int end)
++static void print_lines(FILE *outfile, struct strbuf **lines, int start, int end)
+ {
+ 	int i;
+ 	for (i = start; lines[i] && i < end; i++)
+-		printf("%s", lines[i]->buf);
++		fprintf(outfile, "%s", lines[i]->buf);
+ }
+ 
+-static int process_input_file(struct strbuf **lines,
++static int process_input_file(FILE *outfile,
++			      struct strbuf **lines,
+ 			      struct trailer_item **in_tok_first,
+ 			      struct trailer_item **in_tok_last)
+ {
+@@ -818,10 +819,10 @@ static int process_input_file(struct strbuf **lines,
+ 	trailer_start = find_trailer_start(lines, trailer_end);
+ 
+ 	/* Print lines before the trailers as is */
+-	print_lines(lines, 0, trailer_start);
++	print_lines(outfile, lines, 0, trailer_start);
+ 
+ 	if (!has_blank_line_before(lines, trailer_start - 1))
+-		printf("\n");
++		fprintf(outfile, "\n");
+ 
+ 	/* Parse trailer lines */
+ 	for (i = trailer_start; i < trailer_end; i++) {
+@@ -849,6 +850,7 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
+ 	struct trailer_item *arg_tok_first;
+ 	struct strbuf **lines;
+ 	int trailer_end;
++	FILE *outfile = stdout;
+ 
+ 	/* Default config must be setup first */
+ 	git_config(git_trailer_default_config, NULL);
+@@ -857,18 +859,18 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
+ 	lines = read_input_file(file);
+ 
+ 	/* Print the lines before the trailers */
+-	trailer_end = process_input_file(lines, &in_tok_first, &in_tok_last);
++	trailer_end = process_input_file(outfile, lines, &in_tok_first, &in_tok_last);
+ 
+ 	arg_tok_first = process_command_line_args(trailers);
+ 
+ 	process_trailers_lists(&in_tok_first, &in_tok_last, &arg_tok_first);
+ 
+-	print_all(in_tok_first, trim_empty);
++	print_all(outfile, in_tok_first, trim_empty);
+ 
+ 	free_all(&in_tok_first);
+ 
+ 	/* Print the lines after the trailers as is */
+-	print_lines(lines, trailer_end, INT_MAX);
++	print_lines(outfile, lines, trailer_end, INT_MAX);
+ 
+ 	strbuf_list_free(lines);
+ }
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.7.0.1.g5e091f5
