@@ -1,78 +1,72 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v4 3/4] Provide a dirname() function when
- NO_LIBGEN_H=YesPlease
-Date: Wed, 13 Jan 2016 16:44:37 +0000
-Message-ID: <56967EF5.60202@ramsayjones.plus.com>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
- <cover.1452585382.git.johannes.schindelin@gmx.de>
- <04a7a497f9a5771d4dbf5fd605f138607b2bae0a.1452585382.git.johannes.schindelin@gmx.de>
- <5695A077.7070606@ramsayjones.plus.com>
- <alpine.DEB.2.20.1601130838430.2964@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] config.mak.uname: support MSys2
+Date: Wed, 13 Jan 2016 17:45:48 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601131745040.2964@virtualbox>
+References: <cover.1452691805.git.johannes.schindelin@gmx.de> <e63d391a79396e095d2ebb139bb44c390e50bb62.1452691805.git.johannes.schindelin@gmx.de> <20160113161128.GA11898@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 13 17:45:05 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 13 17:46:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJOXf-0007r8-JB
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 17:45:03 +0100
+	id 1aJOYn-0000G8-Ae
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 17:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754333AbcAMQo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 11:44:58 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:35729 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754235AbcAMQos (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 11:44:48 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout04 with smtp
-	id 5Ukj1s0074mu3xa01UkkJ1; Wed, 13 Jan 2016 16:44:46 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=EBOSESyhAAAA:8
- a=N659UExz7-8A:10 a=16BUaPhH4yHWLPlnF70A:9 a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-In-Reply-To: <alpine.DEB.2.20.1601130838430.2964@virtualbox>
+	id S1754666AbcAMQqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 11:46:07 -0500
+Received: from mout.gmx.net ([212.227.17.20]:49319 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754537AbcAMQqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 11:46:04 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LjLwB-1Zl8zo1MPn-00dUXn; Wed, 13 Jan 2016 17:45:51
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160113161128.GA11898@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:7UYYxqm59zikdtrXvTL5RbsLLfPYo9VhZHmAYIzsmXofDfIndH0
+ 2jgG7qr4TWqHmTR1p2/TvZ13rVvoNLsJNDg15r+tlI7J4RjhImiuPmk5IKLGD4h2BA2lpkS
+ 2bqsW8dBbIsHBHTB0ZZgstl1i+eqVT9AgvLXEGP5OMwO6eKvo1ZQVe5EgyGgqiqJz43BAiI
+ jkjsxBroqAXq9uUTFS3Yw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/k0DHlabSxM=:1DEaOnIo0OHmKtb9FZXxEV
+ 2lUqwl3judjjLSkDi4MnB2iKH4rrBV/ypdJuASU37aUYURlRvUtSDoXIGbTnCqoFhs6+Cx4oV
+ SBtVQHbDnnllqcguWWAVX+YxV3FKEW9S/pijxOpxK4gh6dATfA5Zn0LOfWMqfTTrNoZS37MXl
+ vqKmJvAKK4Dqr1Eowsux2Gt6IO8tyDQphq0ZoUENc//SxE2AEyTamx9WVycfMz3UhbzoAiXwK
+ u0p5ECQM5aiQeyFmTqCm9nKuY5J992eLHCvKLtRr8X5D7eeA2jGUj7jAdLF92y2Xr9uNcQ6jk
+ kYzwTyzj6L5/0J9IcthLR4cFgEFFt87I+TrgVZXeT20Ym+OF7qxCMXpw41XY7iT/6WClKe3kl
+ J53E6bRmguqKmgF67u1YK+QggnmEs1TwtQM4Ej7lKltcanns1E7T4li8VQkpVnc2Jd6nvC1ZD
+ TpiC60ncC0wvZhoE3EN77GLDcf81m/DcAHWk0XOy0LvoJEmjwMnf1MUnSaIeTZVUOfY6KNC31
+ ZJekTmDeRrD/qDKmq0wHMxPLUT7PEW7xko/FPHGsFmlzBvqoQ3ooPGMglEZ99Efpy3Lh7nW68
+ EAbwgRbM5s/TrsiZhtA3dJOT2HvQitjOx9CewL2i/XfJ3SK3XFGtj6OUtfhdAjoaIf23I8jpI
+ idEMIrLJ1nincmLqzsUYyAD9rwdio67JIq+4VRA83lRwejyyGvUO1phC8WAcNrqaSP4SH7sE3
+ 2cw2RVqmSsEkB4GHlMfh9IZ6BLnRBSyf4AaEkytQBPZnblMZQ6C6OZ9orE/E5QfJUL9igjyY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283931>
 
+Hi Peff,
 
+On Wed, 13 Jan 2016, Jeff King wrote:
 
-On 13/01/16 07:40, Johannes Schindelin wrote:
-> Hi Ramsay,
+> On Wed, Jan 13, 2016 at 02:30:53PM +0100, Johannes Schindelin wrote:
 > 
-> On Wed, 13 Jan 2016, Ramsay Jones wrote:
+> > For a long time, Git for Windows lagged behind Git's 2.x releases because
+> > the Git for Windows developers wanted to let that big jump coincide with
+> > a well-needed jump away from MSys to MSys2.
+> > [...]
 > 
->> Also, when compiling on Cygwin with NO_LIBGEN_H, I need to
->> include the following here:
->>
->> #undef basename
->>
->> in order to suppress approx 230 warnings about the redefinition
->> of the basename macro.
->>
->> (I suppose that should go in the previous commit. dunno)
-> 
-> I think this is an incorrect use of NO_LIBGEN_H (because Cygwin obviously
-> has it), but in any case, it is a completely independent issue from
-> fixing/testing basename()/dirname(), so your #undef basename should be in
-> a completely separate commit, methinks.
+> I can't say much about the patch itself, but I think this commit is
+> worth it for the message alone. Now I finally know the subtle
+> differences between all of those systems!
 
-OK. I think this worked fine on 32-bit cygwin, but the system headers
-have changed quite a bit on 64-bit cygwin and I only tried it for the
-first time yesterday. (It was helpful in the debugging process at one
-point to be able to build with NO_LIBGEN_H on all platforms ...)
+Thanks! I spent some quality time on reworking this particular commit
+message this morning, so I am extra glad about your positive feedback!
 
-ATB,
-Ramsay Jones
+Ciao,
+Dscho
