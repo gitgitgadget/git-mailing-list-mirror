@@ -1,76 +1,145 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 0/5] Fix compile errors with MSys2
-Date: Wed, 13 Jan 2016 14:30:45 +0100 (CET)
-Message-ID: <cover.1452691805.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 4/5] compat/mingw: support MSys2-based MinGW build
+Date: Wed, 13 Jan 2016 14:31:09 +0100 (CET)
+Message-ID: <5f66f66d4f3b693076bdf40cccfebd0ab032c779.1452691805.git.johannes.schindelin@gmx.de>
+References: <cover.1452691805.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 14:30:59 2016
+X-From: git-owner@vger.kernel.org Wed Jan 13 14:31:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJLVp-0002KV-BC
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 14:30:57 +0100
+	id 1aJLWF-0002Xz-7W
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 14:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758867AbcAMNax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 08:30:53 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50585 "EHLO mout.gmx.net"
+	id S1760676AbcAMNbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 08:31:18 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60855 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756487AbcAMNaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 08:30:52 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MeLKt-1aXIYz3mmN-00QCrs; Wed, 13 Jan 2016 14:30:46
+	id S1760653AbcAMNbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 08:31:15 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MZOan-1acGNH1YFh-00LH1L; Wed, 13 Jan 2016 14:31:10
  +0100
 X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1452691805.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:VRYTTQONLGGPhqfITFhLSxAb6el3XrA4OqvSQ/l7fz+ZYYheux7
- oTdwVIwWCHASbDPbTgL2IDyZ7QIP9pDzFDyC0zb+AjXmhH1fy37a5Achq8sc2ZxAhQvK6/2
- GPAsRpc80diMtaro3UpVHDmT4po1A3rhfTgzQrc+T3PnX+nFo/I2z3D+tyZju9g+Z6oNPBu
- UAEzdv3X4FdMP78EzleYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:l72ToE6xljA=:+W83yRZCpQy1KjoDo/xeJV
- fhZsWpwUQYofj0dYequRc4+A1ZJjCmmZH/HOx0G0XjMTiaJnYwsFuvB18CXj1ryk1omskriqE
- /b4qYsrZBASVZbyJNrkZ5oMBE0roZC9jSRpG90bRpmJ1sXvjYlaYPDmySRZd5olp2lqXtiHnX
- /EHi2QdEQuXNk66QZ2MBM9V5x82qXIc2KNTHnR3bgl1EjjlRttCYURcTLkWDhOl/k6id35fAr
- psPfz8nTejN0yANzUO/6XpML/V5QXGG97BdEBReFFS95pAaGAiD7kBUcvLQpp/odRiLt+OXMx
- 6oTI551bZ+fdQ438h8pxUg2wbpV1n+kdRrncYS949MMaNcWF/f66NTBD/VuFFkJoTZRd7sYqP
- R+wcH4+GQLlaO7MjCpIHjO2GpPxHZlUhVE8kqxSGpbC+XpshsnsckvYwMFy/MY52yHXRefZRC
- Afwfm0vPmbTKUWyl7xbiut0/cfyHvq8QeZyAGXiXIbUZvYZeXsOsglXJoi6D/dif2DJkvdUX4
- x6gb6osoUIC/Xi+c2Zb/h+v8GcKXv2OKQym0hvNh1PJTwUGROSvSFgEQpnS5f/0ViaI1n7b0E
- eRjbDG3mQl/aIaah8/R/8tWFuWIZcdzcwVFi2PCJKI7oEb2kni9oQsOq/nLsH9+wOYjj16K2p
- ybdoE+WSyoc6NeW+Uy7kZ0uvaCtlD0kA6qHjYlPuYr8SzxG5AgoaLLc9aH1ni++v4DDRq3mO7
- H082cMhjeukoJ+XE8OMuTUJMQ+ZET6bWQxePc1gucUscI/HoArLCFKO1uuE2IXuW7OWHiuG9 
+X-Provags-ID: V03:K0:ZabUYx4Fev9TRWDV0boHIar89Qj2wpdYrHQSW5B2+pH3t8gxsFH
+ 7KgfUmIUkEA3XzD/1cEIzlsGAUWfX/8KN12MzGpp6wWW8ZsDW+e7GsgHmDhm/FC59t5QmSB
+ ff0Cz116Onn5NLN7sLKJWa4+sGvoKpb/aDNqUaHO5Z7uJac7jWZQNDEfmCAi/Nfnh0Rr+3m
+ k/nKhRWg1ac8SsjxqSmng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j6axf/NLcds=:n853n7gVGJC+JtewklEcLb
+ /Ip+OUR/RetohEr/lvf8EHHN5BVxiGuX3VhjwcvgbG9NVwpcx6QACHRhLQUj2s6JEFO5u2+l4
+ 9nJ8HP+3J2npKmGXR/T7my2gQbZNr5xFtK2TeGJ5fRbrCTGJ+O3rhlf7LiLsyABlwgmuij9RA
+ PYgLtwln0ZZ+A/XMOfFG+cmwPqcMhSwMOcyKQ4SxO04Ckvv8CTpIge5F85xZJUGAwXNhu1n7M
+ /aG/IjxfFwyM7rxr8v0hU2kXmb042szLoeA68qh3ReWJPvJe+KttGwsx6oiZIEt7DVMtF81q4
+ h/NY+BpWCibVbyVrf+lINqtP2J8dq/cuDBUUPTcMlQnLNQX09heV5VDGctwtyu4ZUH8pqt1iX
+ 81GwLd0PixdFSMt4PTkOF3IoArhoO1fpAaF2gz62MewLxok3MtXIryRABGrunwfg31wp4+ipL
+ cmo7DiT0OwNagtPpNAnb9mQkJ/uOUnGWosEN+sqYKInQKZA/S8yIvMy/ANQuuOPevdGO+vdkz
+ txd0VQ5e7wfb1fHBsZyipwH6wJvEx27pB3DZl2bZXcJirjj401ffpKUZfrjseMtdqu0fAL4Ni
+ sdmSCqFN6pR30eTetrlcPjNVnHg2BNjLknWuUwlAm6WRY7+p8vQcDtEG7V0xBigZ+xWjzUFHJ
+ FMkrHrje0OidaKveFKooDx5riV7SrJUqWGPeO35xTFu4/NvLedlpVRAxQmptEeEgpzDCEtfOi
+ bIqE5xxIZ2+DwKvAJ2DI5XVx3o6pRiLlwkXYI9y9iNfjmqxk3lRE559JPO9aLemDKgBytpbW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283916>
 
-Git for Windows 2.x is based on MSys2, and its first official version
-was released already almost half a year ago, yet it is still impossible
-even to compile Git from the official, platform-independent Git source
-code.
+The excellent MSys2 project brings a substantially updated MinGW
+environment including newer GCC versions and new headers. To support
+compiling Git, let's special-case the new MinGW (tell-tale: the
+_MINGW64_VERSION_MAJOR constant is defined).
 
-This patch series merely fixes the compile errors, and will be followed
-by other patch series that fix the compile warnings and test failures.
-The idea is to move all Windows-specific patches of Git for Windows'
-fork to upstream Git proper.
+Note: this commit only addresses compile failures, not compile warnings
+(that task is left for a future patch).
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.h | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-Johannes Schindelin (5):
-  config.mak.uname: support MSys2
-  config.mak.uname: supporting 64-bit MSys2
-  nedmalloc: allow compiling with MSys2's compiler
-  compat/mingw: support MSys2-based MinGW build
-  compat/winansi: support compiling with MSys2
-
- compat/mingw.h              | 24 +++++++++++++++++++++++-
- compat/nedmalloc/malloc.c.h |  6 ++++++
- compat/winansi.c            |  2 ++
- config.mak.uname            | 31 ++++++++++++++++++++++++++++---
- 4 files changed, 59 insertions(+), 4 deletions(-)
-
+diff --git a/compat/mingw.h b/compat/mingw.h
+index b3e5044..a2da783 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -1,14 +1,26 @@
++#ifdef __MINGW64_VERSION_MAJOR
++#include <stdint.h>
++#include <wchar.h>
++typedef _sigset_t sigset_t;
++#endif
+ #include <winsock2.h>
+ #include <ws2tcpip.h>
+ 
++/* MinGW-w64 reports to have flockfile, but it does not actually have it. */
++#ifdef __MINGW64_VERSION_MAJOR
++#undef _POSIX_THREAD_SAFE_FUNCTIONS
++#endif
++
+ /*
+  * things that are not available in header files
+  */
+ 
+-typedef int pid_t;
+ typedef int uid_t;
+ typedef int socklen_t;
++#ifndef __MINGW64_VERSION_MAJOR
++typedef int pid_t;
+ #define hstrerror strerror
++#endif
+ 
+ #define S_IFLNK    0120000 /* Symbolic link */
+ #define S_ISLNK(x) (((x) & S_IFMT) == S_IFLNK)
+@@ -100,8 +112,10 @@ static inline int symlink(const char *oldpath, const char *newpath)
+ { errno = ENOSYS; return -1; }
+ static inline int fchmod(int fildes, mode_t mode)
+ { errno = ENOSYS; return -1; }
++#ifndef __MINGW64_VERSION_MAJOR
+ static inline pid_t fork(void)
+ { errno = ENOSYS; return -1; }
++#endif
+ static inline unsigned int alarm(unsigned int seconds)
+ { return 0; }
+ static inline int fsync(int fd)
+@@ -176,8 +190,10 @@ int pipe(int filedes[2]);
+ unsigned int sleep (unsigned int seconds);
+ int mkstemp(char *template);
+ int gettimeofday(struct timeval *tv, void *tz);
++#ifndef __MINGW64_VERSION_MAJOR
+ struct tm *gmtime_r(const time_t *timep, struct tm *result);
+ struct tm *localtime_r(const time_t *timep, struct tm *result);
++#endif
+ int getpagesize(void);	/* defined in MinGW's libgcc.a */
+ struct passwd *getpwuid(uid_t uid);
+ int setitimer(int type, struct itimerval *in, struct itimerval *out);
+@@ -301,8 +317,10 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
+ /*
+  * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
+  */
++#ifndef __MINGW64_VERSION_MAJOR
+ #define off_t off64_t
+ #define lseek _lseeki64
++#endif
+ 
+ /* use struct stat with 64 bit st_size */
+ #ifdef stat
+@@ -383,8 +401,12 @@ static inline char *mingw_find_last_dir_sep(const char *path)
+ int mingw_offset_1st_component(const char *path);
+ #define offset_1st_component mingw_offset_1st_component
+ #define PATH_SEP ';'
++#ifndef __MINGW64_VERSION_MAJOR
+ #define PRIuMAX "I64u"
+ #define PRId64 "I64d"
++#else
++#include <inttypes.h>
++#endif
+ 
+ void mingw_open_html(const char *path);
+ #define open_html mingw_open_html
 -- 
 2.6.3.windows.1.300.g1c25e49
