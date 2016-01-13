@@ -1,67 +1,77 @@
-From: greened@obbligato.org (David A. Greene)
-Subject: Re: [PATCH v2] contrib/subtree: unwrap tag refs
-Date: Tue, 12 Jan 2016 20:42:52 -0600
-Message-ID: <878u3up5cj.fsf@waller.obbligato.org>
-References: <1447435549-34410-1-git-send-email-mayoff@dqd.com>
-	<20151124215258.GC29185@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/4] Ensure that we can build without libgen.h
+Date: Tue, 12 Jan 2016 18:56:25 -0800
+Message-ID: <xmqq7fjeqjae.fsf@gitster.mtv.corp.google.com>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de>
+	<cover.1452585382.git.johannes.schindelin@gmx.de>
+	<56959DFA.9000704@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Rob Mayoff <mayoff@dqd.com>, git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 13 03:43:08 2016
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 03:56:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJBOt-0001lD-Ft
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 03:43:07 +0100
+	id 1aJBbs-0001er-BM
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 03:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754519AbcAMCnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Jan 2016 21:43:00 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:58462 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753443AbcAMCm7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jan 2016 21:42:59 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1aJBPv-0001Yx-Hk; Tue, 12 Jan 2016 20:44:11 -0600
-In-Reply-To: <20151124215258.GC29185@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 24 Nov 2015 16:52:58 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1753443AbcAMC43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Jan 2016 21:56:29 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752740AbcAMC42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jan 2016 21:56:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 86BB53BA0E;
+	Tue, 12 Jan 2016 21:56:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zv3naUgxAnPZRp6Wq6eSgzTUvTU=; b=eEaEM+
+	PQPlmJQ8BE8fjTOQQcj3eAY278JOclYc5XFR6m1lIPqo4aKj0KZnCShAqDyI+NzN
+	PIB01ex7iuGkCP9gFk9nO4GqHRZ2ecqDNwG9XNk29Uz2++owHZ6l9ZQScUCJyRix
+	FB3kcl272fGDDUJ5WM9VoehIx07zfNEzIhWqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wt8Ci5rb7ZffnfHRBYGtb8eZBCWre3Fb
+	MeTuJfdpkFPLLecirZTgOs8at8yNLhkun7aMtxsUyVV6ObSO913wwwbBoS8CTOEc
+	kIwOSU/8IabNC21kRv05+31IR7+83J8uXDNnSGiCRmvvqpvMHaMHSGSnDWk7NzfY
+	KzEjWf46yxY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7CC083BA0D;
+	Tue, 12 Jan 2016 21:56:27 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F27013BA0C;
+	Tue, 12 Jan 2016 21:56:26 -0500 (EST)
+In-Reply-To: <56959DFA.9000704@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Wed, 13 Jan 2016 00:44:42 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3D116B04-B9A1-11E5-989B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283871>
 
-Jeff King <peff@peff.net> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> On Fri, Nov 13, 2015 at 11:25:49AM -0600, Rob Mayoff wrote:
->
->> If a subtree was added using a tag ref, the tag ref is stored in
->> the subtree commit message instead of the underlying commit's ref.
->> To split or push subsequent changes to the subtree, the subtree
->> command needs to unwrap the tag ref.  This patch makes it do so.
->> 
->> The problem was described in a message to the mailing list from
->> Junio C Hamano dated 29 Apr 2014, with the subject "Re: git subtree
->> issue in more recent versions". The archived message can be found
->> at <http://comments.gmane.org/gmane.comp.version-control.git/247503>.> 
->> Signed-off-by: Rob Mayoff <mayoff@dqd.com>
->> ---
->> 
->> changes since v1:
->> 
->> * remove obsolete sub assignments
->> * wrap lines
->
-> Thanks.  David, can I get an Ack on this?
+> Hi Johannes,
+> ...
+> I was somewhat disappointed that you ignored the implementation of
+> gitbasename() and gitdirname() that was included in the test-libgen.c
+> file that I sent you. I had hoped they would be (at worst) a good starting
+> point if you found them to be lacking for your use case (ie. for the
+> 64-bit versions of MSVC/MinGW).
 
-Yep.  I'm sorry I missed this re-roll.
+Sorry to hear that, but the 'next' branch has just been rewound and
+rebuilt with this series, so it is too late to replace them with
+another round of reroll.  It however is never too late to improve
+with incremental updates, though, so please work together and send
+in a follow-up patch series as/if needed.
 
-                             -David
+Thanks.
