@@ -1,95 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2016, #02; Mon, 11)
-Date: Wed, 13 Jan 2016 15:44:29 -0800
-Message-ID: <xmqqpox5kpsy.fsf@gitster.mtv.corp.google.com>
-References: <xmqqlh7vvfxc.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1601120939270.2964@virtualbox>
-	<xmqqtwmitz2a.fsf@gitster.mtv.corp.google.com>
-	<20160112214909.GD2841@sigill.intra.peff.net>
-	<xmqqtwmhkrj2.fsf@gitster.mtv.corp.google.com>
-	<20160113232255.GA17937@sigill.intra.peff.net>
+From: Erik Johnson <palehose@gmail.com>
+Subject: Worktree "gitdir" file being mangled after upgrade to 2.7.0
+Date: Wed, 13 Jan 2016 17:47:53 -0600
+Message-ID: <20160113234753.GA26473@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 00:44:45 2016
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="r5Pyd7+fXNt84Ff3"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 14 00:48:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJV5n-0007Ff-3X
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 00:44:43 +0100
+	id 1aJV90-0000fv-05
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 00:48:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbcAMXoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 18:44:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60783 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753378AbcAMXoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 18:44:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 906143C656;
-	Wed, 13 Jan 2016 18:44:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ObVH76rg4+zUL0VwzI9rlHjeAj0=; b=omNIdD
-	g8YSUFw4soTVVM27rPhjQPrjvTQ3WefCOFpc+p6JEKoYO6+/TSV9QMVdiWdDbF0d
-	ka/C1epbZgJckC3TROcbgHSuKlmYh22hdotIklLMsVHHb1KuB8gp7yIjwwKNiy0e
-	+ANyITy5z916e5yhvwQKyL2CD4wijTmx14ARQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ep4VKsnpMRYl3vRafkTBliNHGbJ7EyCO
-	33hMGAX7d6sAVIiKb02S9kPNtPEbmRfn6iWv3+HQrh9EI4eLeHrnQCygALKssloD
-	RQ1tphDvjN0TA9HPh7QiDHjbQASG0beWzJ8eZyVPS5KTFLywnm9wQdKLMBH1tN+B
-	P3WLHWbpylY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B58E3C655;
-	Wed, 13 Jan 2016 18:44:31 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E08F33C654;
-	Wed, 13 Jan 2016 18:44:30 -0500 (EST)
-In-Reply-To: <20160113232255.GA17937@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 13 Jan 2016 18:22:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 975E1BDA-BA4F-11E5-A54C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753474AbcAMXr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 18:47:57 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:36155 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753391AbcAMXr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 18:47:56 -0500
+Received: by mail-io0-f177.google.com with SMTP id g73so241143264ioe.3
+        for <git@vger.kernel.org>; Wed, 13 Jan 2016 15:47:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=A3ts5bmH9W0JemtDGijvM/sDFLAZi5wCiQ5Kndt4+zU=;
+        b=T0Md/29P1Ixbs51VE8cCh58xngTInOTAo8mlepwoiU6dFBA/4+2Vm2mxRoU3O7wsLc
+         5N3fi/qvtG8FxGlP+N7VXFX06XpKBwxQ8y3Cha5cZFalUNxILbMmkg/ysjCMjkNXkV5K
+         M+jKicvWFXMDJwzeC9huKnJt9lG/EbTaN1cMtcZsQ9LDWM7Nm8GGQ0Xt1cppbM9PDcHG
+         gBHCTEee8Q2bScOmrJ17RZu7YE11cBKunMd82bHnpLKcQto/sSa65uwJtkFs6dFjCoR5
+         tf5mY0RHbl65ReihQTJdZzUAfAY+Uv+iwXpcAuQcWB7KqmHgDASWfcAXWCcBOsmrKTgP
+         isHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=A3ts5bmH9W0JemtDGijvM/sDFLAZi5wCiQ5Kndt4+zU=;
+        b=PPFDt0gz/pA2rlwXOfTcgmnLs68GOkdpwnBBMZjYP9gV48RSwUleKXoFEYBd9Htxk7
+         sdUSiIQIrlmDF46ioms9dXPY0EnCK6uMamnXsekPl8I05FQC6e41mmiQXIT7x3yNxwbN
+         dGvvvtgq2tyi68eyPwNxajKGwuVwQVvxQJHpEw0HtcwY8Ams1utPZ9fvAqweUu8vMhF2
+         nCQ1O2nhR7fm3TLKv/syFOoWBEmN0gu9I3vf3CQKqTIY/19Q3UAJMp7crrpYYSM7ChtN
+         53iAiD4fn81KF+qNWZzGGkQRXJH0Ey9E9LAnb/FZk8RJndcEWOz0s9EEwJ5xPcndydOf
+         uejA==
+X-Gm-Message-State: ALoCoQnSFCx+G68kA/AayyRGLzB/gc0Gz+j85TS0wlUTva+llvVj7ur9wLymhsjZ6JRxGiTClTCOhvBxO9C0GU5FgPZ6bFqEFw==
+X-Received: by 10.107.136.226 with SMTP id s95mr1591469ioi.38.1452728876180;
+        Wed, 13 Jan 2016 15:47:56 -0800 (PST)
+Received: from gmail.com (c-73-51-186-156.hsd1.il.comcast.net. [73.51.186.156])
+        by smtp.gmail.com with ESMTPSA id or1sm1763419igb.4.2016.01.13.15.47.54
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Jan 2016 15:47:55 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283998>
 
-Jeff King <peff@peff.net> writes:
 
-> I think you'll end up with some of the callers being a bit uglier. I.e.,
-> where we say:
->
->   strbuf_getline(&buf, in, delim);
->
-> and "delim" is set elsewhere. These will become:
->
->   if (delim == '\n') /* or maybe even "if (nul_terminate)" */
-> 	strbuf_getline_lf(&buf, in);
->   else
-> 	strbuf_getline_nul(&buf, in);
+--r5Pyd7+fXNt84Ff3
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-My plan is to use a function pointer to switch between them.  A code
-like the above in practice look more like
+Since upgrading to 2.7.0 last week, eventually I'll get to a point when
+I run 'git worktree list' where several worktrees are incorrectly
+reported as pointing to my main git checkout. Further analysis of the
+files in $GIT_DIR/worktrees/worktree_name/ shows that the gitdir file
+for the worktrees which display incorrectly contains ".git" instead of
+what it should contain (i.e. "/path/to/worktree/.git".
 
-(1) there is a config/option parser that sets line_terminator that
-    is typically a file-scope global.
+This was reported a couple days ago on Github:
 
-	if (z_option)
-        	line_terminator = '\0';
-	else
-        	line_terminator = '\n';
+https://github.com/git/git-scm.com/issues/650
 
-(2) the callsite calls getline with it
+Since the audiences for the mailing list and Github don't overlap
+completely, I figured I'd report it here to get this issue in front of
+as many eyes as possible.
 
-	strbuf_getline(..., line_terminator);
+--
 
-So we can introduce a file-scope global, (*getline_fn)(), and then
-tweak (1) by removing line_terminator and replacing the assignment
-with an assignment to getline_fn.
+-Erik
+
+"For me, it is far better to grasp the universe as it really is than to
+persist in delusion, however satisfying and reassuring."  --Carl Sagan
+
+
+--r5Pyd7+fXNt84Ff3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEUEARECAAYFAlaW4ikACgkQXlWDxDeAjz90lgCYgNn/A4jy4ZsIbmi3YmOb8GUd
+dACeMbWHbQIEA8ikTGOF8FMLCoeEbFw=
+=sONT
+-----END PGP SIGNATURE-----
+
+--r5Pyd7+fXNt84Ff3--
