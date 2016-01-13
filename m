@@ -1,134 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: describe XMALLOC_POISON
-Date: Wed, 13 Jan 2016 10:23:09 -0800
-Message-ID: <xmqqwprdnxte.fsf@gitster.mtv.corp.google.com>
-References: <1452686255-8757-1-git-send-email-kuleshovmail@gmail.com>
-	<1452704204-1928-1-git-send-email-kuleshovmail@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] docs: clarify that --depth for git-fetch works with newly
+ initialized repos
+Date: Wed, 13 Jan 2016 19:24:07 +0100
+Message-ID: <56969647.7020005@gmail.com>
+References: <n6j1cs$p4$1@ger.gmane.org> <568F8244.2030309@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 19:23:23 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 19:24:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJQ4n-0007hO-Ly
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 19:23:22 +0100
+	id 1aJQ5y-0008Gw-6W
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 19:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755908AbcAMSXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 13:23:18 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61168 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752652AbcAMSXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 13:23:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DFBC43A72F;
-	Wed, 13 Jan 2016 13:23:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4g2nhTqCHk/g7MBKKDA77vvMv5k=; b=j8k4xD
-	n2Nk4No63Q3aVQokJYiJVSDkkjFHY9HD8S6MFR/y0lP1VVTXQwj0i6FaijSfDH0j
-	kDdFc4ZyGGdLm5d5QkfrBiCOtQdjUyY+lVAWfYt59TpFXXF4Du4n7d0Lgblljf/m
-	9h5qVzm4s39ntMokoY6depwJeEJzxfs4DTmlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EG/ymmZC50Pk6bE+D8NMTJEoiqJyH2C6
-	RvnGkaHNXek+wA/ShuQXzW/obZKYo0c47+3NqOvDM/lJ3RpqcB1COQ7gQpz1luni
-	GmoL0N5cU98i/AQehMWRLYRp0/f/klUL7AH4AOQSl5vW5WP65VHyBrcPAVl0sIiX
-	xa2XDIeOmPQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D7A2E3A72E;
-	Wed, 13 Jan 2016 13:23:10 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 440793A72D;
-	Wed, 13 Jan 2016 13:23:10 -0500 (EST)
-In-Reply-To: <1452704204-1928-1-git-send-email-kuleshovmail@gmail.com>
-	(Alexander Kuleshov's message of "Wed, 13 Jan 2016 22:56:44 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B334E9D8-BA22-11E5-9D72-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755949AbcAMSYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 13:24:30 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:32806 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755941AbcAMSY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 13:24:29 -0500
+Received: by mail-wm0-f42.google.com with SMTP id f206so307332719wmf.0
+        for <git@vger.kernel.org>; Wed, 13 Jan 2016 10:24:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=4zYzOn5uM8VHIO7BiMFjaO/M/0CFZXr6SK21BaSZEv8=;
+        b=J1AQJAhn+sbUS/0Xt52Ih2odsRpLYJ7JwPFhPe469M2kK2jFArlCAC68hw12x5vfhx
+         qS9zQJ8wV7hg/V6FL1F9HHX8tV7iaB7ToIyo+8s7QkIlhjFz35Bbd76hJOBXXNK+B1zF
+         OsVzrxPL/q6dUAwGGDmI65UCCBCmJkldUUdMWCqAJqnwZGYez8C0DygZcwAeE/NVUxQN
+         8lA22YRzAeR9hIBgF4DTT0tQn6+/lBFqcsclnH57E+/5fAojruw6Zj4Y/J6zZ4x1TBSh
+         n/HFwPl7RGtT09hxNuh6zqWlP2mKzqgyj+ZrnCJesnbA0TZMsVJP02ejA2BtoNg0qWsM
+         BF0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=4zYzOn5uM8VHIO7BiMFjaO/M/0CFZXr6SK21BaSZEv8=;
+        b=OHTlM0xnvVHfNlAMQRzh/yZOso/yBFnZXK8vVkwprwPjkv1ajBUhS76UKW5IDxZcQ0
+         niJmYHjaJs9ARvXQtPrCVMmkilitLKm6hSSz8qFrYCqMIh16Ip1efOL5T+bVnJPXujVY
+         q7mecbA8cknX0z3FjCwm/Cc3h2joH70DREa6HVbsU+C3gbJhd8/EQpHtBWpaP2TqNSuk
+         DyA2SKqEXm5f66/PBBYKdrpOqHxNISQrBIj/Ms8TgXhocj5caU0vqnOL8R+EDL9E9gD1
+         Y2My9NjzUb86eddN5C4rqJwp556PRhks6aGIWQepLjyALHs1MC9lsQZlLFbCasXVSGsB
+         rfjg==
+X-Gm-Message-State: ALoCoQn14x9IbP5zOIhnruI5uFSg/i1ffwrKATXIRTc3GhVwLZs2Ca1V73e5kTji8ib6JZCYfpPIDrSul1Mou6O2zuysoZXp1g==
+X-Received: by 10.28.218.81 with SMTP id r78mr286498wmg.91.1452709467659;
+        Wed, 13 Jan 2016 10:24:27 -0800 (PST)
+Received: from [192.168.188.20] (p548D69D8.dip0.t-ipconnect.de. [84.141.105.216])
+        by smtp.googlemail.com with ESMTPSA id b127sm23333090wmh.9.2016.01.13.10.24.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Jan 2016 10:24:27 -0800 (PST)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
+ Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+In-Reply-To: <568F8244.2030309@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283962>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+On 08.01.2016 10:32, Sebastian Schuberth wrote:
 
-> The do_xmalloc() functions may fill an allocated buffer with the
-> known value (0xA5) for debugging if we will pass the XMALLOC_POISON
-> option during build.
+> The original wording sounded as if --depth could only be used to deepen or
+> shorten the history of existing repos. However, that is not the case. In a
+> workflow like
 >
-> This patch adds description of this option to the Makefile and
-> adds it to BASIC_CFLAGS if it was provided.
+>      $ git init
+>      $ git remote add origin https://github.com/git/git.git
+>      $ git fetch --depth=1
 >
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> ---
+> The newly initialized repo is properly created as a shallow repo.
 
-I am guessing that the message this one is a response to is
-(incomplete) v1 that I shouldn't look at, and this is v2 that is
-expected to be useful.
+Sorry for the missing sign-off, feel free to amend that in pu:
 
-XMALLOC_POISON is not about "if you are debugging the xmalloc()",
-though.  By filling the memory returned with a non-NUL byte, what we
-get is to catch callers that depended on the region of memory being
-NUL-filled (often happens in early in a short-lived program), so it
-is about catching more bugs in the callers of xmalloc() [*1*].
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 
->  Makefile | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index f3325de..3f942b5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -367,6 +367,10 @@ all::
->  # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
->  #
->  # Define HAVE_GETDELIM if your system has the getdelim() function.
-> +#
-> +# Define XMALLOC_POISON if you are debugging the xmalloc(). In a XMALLOC_POISON
-> +# build, each allocated buffer by the xmalloc() will be in known state. After
-> +# memory allocation, a buffer will be filled with '0xA5' values.
-
-"will be in known state" is not an interesting bit, and I do not
-think we want people relying on the exact contents of the
-uninitialized bytes.
-
-Personally, I feel that XMALLOC_POISON outlived its usefulness, with
-the availability of --valgrind tests and other forms of checks
-(including static analyzers) in the modern world.  While I do not
-think it hurts to allow people who know what they are doing to say
-"make XMALLOC_POISON=YesPlease", I suspect it would cause more harm
-to have a wrong description on what it is about here than the new
-makefile knob helps them.  Because of the above, this change is
-somewhere between "Meh" and "Perhaps a bad idea" to me.
-
-If you have a more compelling story to tell ("XMALLOC_POISON-enabled
-build allowed me to hunt down this and that kind of bug because I
-can scan the entire address space looking for regions filled with
-0xA5 to do X") and description based on that story is in the log
-message and also in the Makefile comment, on the other hand, my
-above assessment may become vastly move positive, though.  During
-the course of running the project since the XMALLOC_POISON was added
-in April 2006, I didn't encounter any such interesting debugging
-session that helped me myself.
-
-Thanks.
-
->  
-> +ifdef XMALLOC_POISON
-> +	BASIC_CFLAGS += -DXMALLOC_POISON
-> +endif
-> +
-
-
-[Footnote]
-
-*1* Another reason for choosing 0xA5 is because it is 'odd' and more
-likely to cause bus errors on architectures that do not allow
-unaligned access when the uninitialized value is used as a pointer,
-but its value is fairly limited.
+-- 
+Sebastian Schuberth
