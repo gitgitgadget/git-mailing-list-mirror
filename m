@@ -1,74 +1,100 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/4] am: release pack files before garbage-collecting
-Date: Wed, 13 Jan 2016 18:20:16 +0100 (CET)
-Message-ID: <999dc2556d5a4683722b4c63870f43c48d2a3211.1452705584.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/4] fetch: release pack files before garbage-collecting
+Date: Wed, 13 Jan 2016 18:20:11 +0100 (CET)
+Message-ID: <4fd3f0c6d02ec33a832b6c1688e9f348825d074e.1452705584.git.johannes.schindelin@gmx.de>
 References: <cover.1452705584.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:20:29 2016
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:20:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJP5w-0004nK-Ht
+	id 1aJP5v-0004nK-T5
 	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbcAMRUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 12:20:23 -0500
-Received: from mout.gmx.net ([212.227.15.18]:54935 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932176AbcAMRUU (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932182AbcAMRUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 13 Jan 2016 12:20:20 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MWBpJ-1ai0MK10hN-00XO68; Wed, 13 Jan 2016 18:20:17
+Received: from mout.gmx.net ([212.227.17.21]:55465 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932169AbcAMRUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 12:20:16 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MWkZL-1ahS883nBb-00Xw0k; Wed, 13 Jan 2016 18:20:11
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1452705584.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:/CIIC7ydOu4fi2bQ9uD1+AITJwedEb0ikBn3VIRrVXpEZxgMFNM
- ekQ+/8/pZv6Yet2ZvrRABLVL/134kuFsRZwRvLKiI5m4EUpoT9kAg/8Z0P/6LhGs+x7BD/o
- ATxtfqLhMRtiiNgyxxWxMoxnl/B4KGJxNFSLfDIYzRAkeOJ7ej7TC+mXjKZ0aR5OqL0RQq1
- g8TqKr4G9L8ABa1Jmhl6Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4S2wjUVOT/Q=:ugWTLOZnLVGDNUMRQ7X4A8
- ODUw+SRriARYfUNxhkJmFWV4Hg9gyc8g95V8iEtAz1znLJhzPOmxoZD5E4+t86qEH9+bhhrNl
- 4S+FmaJGQGjg9l+Ye/wcGny1HbYCH/ttS+kkXQZPONrNpz3lyHsLPsjeb0qF7HyoZI0zoF6sm
- pbVqQdPmtvOVxwjnOUnNbU77I94Ra6rnIvyGy13+GxaRtFl+Lu0czkgrGlcMs9S1bQjrJFA/1
- 7W7YIG7ozPn80EA0CBqa0hQ9EsTpmPnxBDZGGvcvN3Ad8AY1fIQnwgkLN9p88607R0UzULSxA
- ycpT2pBp45hpHZfNiJbDyFOkSgQULptL/KLPb7MH0Q7P+hLew0JHu9Gg4qRy8RnNHCBvsYue1
- Z+Nohgmtqe2JWf+K3Df8oQKo2ZQ+bSevXoGQyobBmO7XpDVfKenr4/v2GdIdshbd5QuQUUeAT
- rhiKWjnoul8iXxVmTZlMufFNL63W09TcfD/6gfamaDUHznMULfXMLUBzL0jfy4Vl2YA/wJBeM
- RnHq8mxZMC6/LwTu8Jg/88k6c6DFttmDRumjz5YoJ/txDDifrwOXovvb9kGr4GfHEUcdrbbG4
- YOCDQHoxxyU1Y8kAiGz1lXMgPtzTDYYCbNlwWDI+89vpO715skx1pEhFocUisUZ2fguKvda4F
- BjajaNudxrFJ74Kix5M+HUPAFAla+DP+aYqTVcSSPs5zUbrSlIRG77aEyLtoSG6TaLoPvl6g4
- 78hDyDxtYevp7dsWt3Siktev2D9arXg38pNIhqdqsdlxfB3ikH15DurSUmfC+6A16zIRpTFV 
+X-Provags-ID: V03:K0:po6lBeT5P1cvKYmsYbPTpFQx53ymmHsS0ib9M5TooWDKFyJk3Q7
+ 4IoXZ6AZc/amWrzD0FB0x8Y+Wl8K1UBihky2i2zMZqn5pG7aebZZeiMzRpq+y7+I8cBom7l
+ jBpIdxoWXiE+4Tf+jg824LD5YwOg/LnP6kRNabrqtImpvrQo2EgrTNGsbzkiavHUq3gSras
+ i/sUgzjv1CB1vDHHeOoxA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2OZGet0TzL8=:dRJl8Un+lnqopg6TvPoyGy
+ NoysBkkQ364ftFSL5WjyQOmpYl3502rxEUD16N21ybTEFK7OTpf3JUIEO1HIfO6vf4LFbuvGe
+ W+pxT7AJsA+nTD8hhondz4XBtGzjoeo+yVPZFEx+p1Ilznjt/BPoQJ4IH5XGYNUG+gEnZBgZy
+ H+nB5hkcLcP99OSqsSiN2/oHIy9ycJQtwr3ZiKQSKVONULxvcd/+ZrpPHCvXtfDDDL1R+iNIQ
+ /mJe9qk9a6Diz1XvFgAp9t2iyewkIDp8f7+gNvakVOYaMv5byitp3tk8tZkZoABvILYn6Ejq2
+ Mc8O1TzXDAfjZ051EII5xMHyqGEoqAOohpj77nDrZy3F1MDV5GS6BccOfqADsS1doYevXNRTW
+ Q+p7BKpGeaiIZ1MTVqCK/E9UZ+pO6OFEKWclHmO/0AmqBZSGiyoxnJ/EiLy/Ueo6xXRMz1rUD
+ SahGPeMQ4pPR0NPFTWqYaKdIiOBNP9fh1Tgq4ggnsGgR9JzJ0qF9HGDJ+j8rbJStv8JfJ1KX/
+ fqkLSkIygZtr8cvT6RKewQJ1seK+ROwNoWd6GOZ+THXWeMD+WsuQGJPHZlMgPfoEcH7IpVobb
+ +UdvKhvqXvJvBSEpUBuGZhFwX/TZ0UWBSp8hCiR/98eL/hh//mzWJgtqms85sHIq5gPnp3zuP
+ 8bgCiSygt3GAlUKoJZfVnNekaVwEjVMGsg0wyu35H8bOwSqfmN/jROv2EHmeEbUI7280NV05M
+ O6Yoknqs5xxthLQctA6o7abwOEx2iYMQRssfIaNpNCipw89xLhrmwFSpFZ4VelPiIkVMgu+q 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283949>
 
 Before auto-gc'ing, we need to make sure that the pack files are
 released in case they need to be repacked and garbage-collected.
 
+This fixes https://github.com/git-for-windows/git/issues/500
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/am.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/fetch.c  |  2 ++
+ t/t5510-fetch.sh | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 9fb42fd..de235cf 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1939,6 +1939,7 @@ next:
- 	 */
- 	if (!state->rebasing) {
- 		am_destroy(state);
-+		close_all_packs();
- 		run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
- 	}
- }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 33f04c1..8e74213 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1225,6 +1225,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	list.strdup_strings = 1;
+ 	string_list_clear(&list, 0);
+ 
++	close_all_packs();
++
+ 	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
+ 	if (verbosity < 0)
+ 		argv_array_push(&argv_gc_auto, "--quiet");
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 0ba9db0..e3ee4bd 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -708,4 +708,17 @@ test_expect_success 'fetching a one-level ref works' '
+ 	)
+ '
+ 
++test_expect_success 'fetching with auto-gc does not lock up' '
++	write_script askyesno <<-\EOF &&
++	echo "$*" &&
++	false
++	EOF
++	git clone "file://$D" auto-gc &&
++	test_commit test2 &&
++	cd auto-gc &&
++	git config gc.autoPackLimit 1 &&
++	GIT_ASK_YESNO="$D/askyesno" git fetch >fetch.out 2>&1 &&
++	! grep "Should I try again" fetch.out
++'
++
+ test_done
 -- 
 2.6.3.windows.1.300.g1c25e49
