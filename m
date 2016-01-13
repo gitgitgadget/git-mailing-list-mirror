@@ -1,89 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase
- can be 'interactive'
-Date: Wed, 13 Jan 2016 07:51:33 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601130751130.2964@virtualbox>
-References: <cover.1452612112.git.johannes.schindelin@gmx.de> <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de> <xmqqk2nes6cc.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] format-patch: introduce format.outputDirectory configuration
+Date: Wed, 13 Jan 2016 01:52:11 -0500
+Message-ID: <CAPig+cTCRq9VCT7t8E9yjk4QcHYB2_qeBwGB_31keB4nTjkLkA@mail.gmail.com>
+References: <CAPig+cRjBockaXKacYA-pxWQe_gzAAvjAwonQKn1kSANHORt1A@mail.gmail.com>
+	<1452660493-5430-1-git-send-email-ischis2@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 07:51:49 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alexander Kuleshov <kuleshovmail@gmail.com>
+To: "Stephen P. Smith" <ischis2@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 13 07:52:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJFHW-0002xe-Su
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 07:51:47 +0100
+	id 1aJFI1-0003KH-K9
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 07:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754877AbcAMGvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 01:51:42 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57791 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752037AbcAMGvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 01:51:39 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LaoHI-1ZusoQ1pWa-00kNpx; Wed, 13 Jan 2016 07:51:34
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqk2nes6cc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:/V8J/ERX5gxgnshQZ+UCzY7ueI7CTSjaQvD0IXNvD83PI6MUK4X
- lBpe127Dq5oZL7wPBDpzSG852Xvhqn7ifn2RsAQsgRyQ27g/g3P/y9v8IeZyN8aPvTk/RIK
- vBO44BdEROXTMJ6aI+qKmJZbpFv13Z8FhZocJYtnQHN8iMzl50N7QcX6sCNKhUpzdTd20kL
- B0y4LOg/4zwpFSk8Yz8Zg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ahjaF1bLWP0=:qLwBmnuZPELePGKflI2Zc7
- ZGARvAQq+9kyC2e6jjGUFki4hZoYem9Iil6gjNlFlVNgAtG6tuzCYJvlQcvw2jj2ZtHwfjKkG
- WOeB+NLYFff34DimnGCii3ZMXrW7x9whMmDopPNOy9gPNp1n//uitTLhYxON60A13Edxcg3gf
- TYvwlZhg+kF3PNRFGTGWZbYvUmOqzYt/gmvDLZZgy/ui16nKJOQJchOBrySSmNxpU+Ogy9fdJ
- 9WRm1vNwwFAEFhNdFLMPQRfm+lCPKThpWY95dI7jpIx34lKgZ18943Yh0zfGTo/jJt7B2WAWv
- egkS3CssQ8CtCMyGnpo8E+IqVizEV3wYHo8AqL45Ckc01SXIpIoFpWmosA/4GGMsVgnrGzDLB
- peMb+2s9l30Pj+myUo46REMKPpmIuojsg7uqvvCfmeIxEKB838f1MtO7gE5upYw62eImB74J1
- 3RNEY5P8zOBPW8HAKkXoXfP/Pci9meua/kqmtD823VxzcdpbIehtLVX64qLRtULEZL8M/WKlv
- /Hf7Pwr/PCcKbJEezdAJL2Ub9Y8bkZ6KTKt83/lmFwpeaeGdtH6sT2PRN4GZejemDaqY7wwMC
- i3qgr4lg9fkNKUGl6PmmYweShoqiua5i4paLm8+f8idZ+9X7Su5EqQAIXB8KkmzRNm3CB2nrA
- wMrvkugnqGGZCZi12psJOJQRF4DDlYS8XQOcuuHp4g2amw2Vqn6Pw5LtJo6AfccddcMLR0+oL
- LyzJ4G9Ry4iLTy2Gjn9OZUqvBS9dp5hGar3ojSUhUXSBUV0iwbG7QBL5/HOAyMBZvDYlsMI7 
+	id S1753793AbcAMGwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 01:52:14 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35071 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684AbcAMGwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 01:52:13 -0500
+Received: by mail-vk0-f67.google.com with SMTP id i129so7042588vkb.2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2016 22:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=uk2q1IULhDSzlmOmSzQZem9oYon9l/cW7fXKuAyk8Eo=;
+        b=SWnk8K98vVgf/RnQnsxfBxY+5dwx6FTvch3iNmoi5FyaHaQ5/l3VOcmMa8WPaZzUWd
+         UyZlXHLB87gnClYdwUfxh/RXcg1NUkErKMSETQlbEcjlMkSG3dK/y9h6GArecomIsx7c
+         dS+RG8OEJh6d8Ly7CU0Rm4PtxO2rX/OXrecrPrQuPjbHNAcRP0HavCF29SW8dd6v3nMX
+         v1xpUEPBQ8EdI767xHDITXrWQolgG57/ABUaBBkddz2lB+zXHcN4DSfSybm3mWWGWU9L
+         iuL81E0eu8o15hWgjze4NxDPQmOcVEfRmc+YCYAfZ/j4kUC/+SqUBbuEd2TNsCozonqe
+         8wmg==
+X-Received: by 10.31.164.78 with SMTP id n75mr63050459vke.14.1452667931954;
+ Tue, 12 Jan 2016 22:52:11 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 12 Jan 2016 22:52:11 -0800 (PST)
+In-Reply-To: <1452660493-5430-1-git-send-email-ischis2@cox.net>
+X-Google-Sender-Auth: 57o94Qti0ihMsdsZ7CEWms02q0w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283883>
 
-Hi Junio,
+On Tue, Jan 12, 2016 at 11:48 PM, Stephen P. Smith <ischis2@cox.net> wrote:
+> From: Alexander Kuleshov <kuleshovmail@gmail.com>
+>
+> We can pass -o/--output-directory to the format-patch command to store
+> patches in some place other than the working directory. This patch
+> introduces format.outputDirectory configuration option for same
+> purpose.
+>
+> The case of usage of this configuration option can be convinience
 
-On Tue, 12 Jan 2016, Junio C Hamano wrote:
+Mentioned several times already: s/convinience/convenience/
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/remote.c | 8 ++++++--
-> >  1 file changed, 6 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/remote.c b/builtin/remote.c
-> > index 6694cf2..0af8300 100644
-> > --- a/builtin/remote.c
-> > +++ b/builtin/remote.c
-> > @@ -251,7 +251,7 @@ static int add(int argc, const char **argv)
-> >  struct branch_info {
-> >  	char *remote_name;
-> >  	struct string_list merge;
-> > -	int rebase;
-> > +	enum { NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE } rebase;
-> >  };
-> >  
-> >  static struct string_list branch_list;
-> > @@ -312,6 +312,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >  				info->rebase = v;
-> >  			else if (!strcmp(value, "preserve"))
-> >  				info->rebase = 1;
-> 
-> This should become NORMAL_REBASE, I would think, even though the
-> resulting machine code should be identical.
+> to not pass every time -o/--output-directory if an user has pattern
+> to store all patches in the /patches directory for example.
+>
+> The format.outputDirectory has lower priority than command line
+> option, so if user will set format.outputDirectory and pass the
+> command line option, a result will be stored in a directory that
+> passed to command line option.
+>
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+> Notes:
+>     Fixed bug which was found when moving the tests to the end of the
+>     script by removing the hardcoded expected count and replacing with a
+>     computation of the number of actual patches.
 
-Fixed in v2.
+Thanks, this version looks better. Aside from the misspelling above
+and a minor comment below, this version is:
 
-Thanks,
-Dscho
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+
+>     Mailing list web interface is again not working; therefore, I don't
+>     have URLs for the earlier review comments.
+
+The full set of attempts is here [1].
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/272180
+
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -707,6 +707,8 @@ enum {
+>         COVER_AUTO
+>  };
+>
+> +static const char *config_output_directory;
+
+I don't care strongly, but I wonder why this new variable is placed
+below the enum rather than being grouped with other similar variables
+just above this enum. (Probably not worth a re-roll, though.)
+
+>  static int git_format_config(const char *var, const char *value, void *cb)
+>  {
+>         if (!strcmp(var, "format.headers")) {
