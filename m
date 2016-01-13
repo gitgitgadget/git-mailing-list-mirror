@@ -1,57 +1,57 @@
 From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: [PATCH 3/4] t5304: Ensure wanted files are not deleted
-Date: Wed, 13 Jan 2016 11:07:11 -0600
-Message-ID: <670a9d9268beb0d70fb877a7c62d769062babba9.1452704305.git.dougk.ff7@gmail.com>
+Subject: [PATCH 4/4] gc: Clean garbage .bitmap files from pack dir
+Date: Wed, 13 Jan 2016 11:07:12 -0600
+Message-ID: <8277e5f62991fce9524ea3020636fc8dafe926b4.1452704305.git.dougk.ff7@gmail.com>
 References: <1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
  <cover.1452704305.git.dougk.ff7@gmail.com>
 Cc: peff@peff.net, sbeller@google.com, Doug Kelly <dougk.ff7@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:07:39 2016
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:07:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJOtW-0005AV-Fy
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:07:38 +0100
+	id 1aJOtX-0005AV-2L
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:07:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755084AbcAMRHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 12:07:33 -0500
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:35345 "EHLO
+	id S1755076AbcAMRHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 12:07:32 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:33441 "EHLO
 	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754755AbcAMRHa (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751123AbcAMRHa (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 13 Jan 2016 12:07:30 -0500
-Received: by mail-oi0-f67.google.com with SMTP id e195so20083063oig.2
+Received: by mail-oi0-f67.google.com with SMTP id j3so5854278oig.0
         for <git@vger.kernel.org>; Wed, 13 Jan 2016 09:07:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=0aISxNq2TCqGaMJ+VstOmIHNsMO1fnVMy6b9Y1Qj+4Y=;
-        b=ui9dkY2gvI9udjoNdR0hHHtMjkqY9PdtbLAnzMmy93e+EUFCUEJnbQMx5H321vZyGN
-         qDkAvYGZ9BMvzsVtMSImhG9070B9M+Ti6fdV8ygE05qPD6PPrKvfLsVE5CzWoH6X389C
-         SNxIMcVXOWTL3OoXdYtVLNnw6v+hwRY49+9xqppVoRLIcJRGbfADlBWfB9SkwWQzKpXP
-         X5+t2KkRjF08ucEGPRQ3aW6oAXYmzDWihM++L082UMeBEY29SmIymhXWV98UQZJ+rgc0
-         o0UXLXdaQr0Udtaah6P3XUV+erofW8JD8mIoXgnLT9xLlwyd0dwGjEdl8B9DiWFIeM4L
-         ErxQ==
+        bh=74a8FYdeaoJHEdOvohpoeMWfGj+qyMAE0Y8aBTeHxK4=;
+        b=yeRTtSbUv90LYD0hQFGuHJ8P+NvBQDkRjYwMxZ6+55JRhlm7WETQ2o8F/iYYQPPWXH
+         Id8nTTyLNGvWhJPIaR3WKEuYzjWlSgezGlPzCkn0AP3YbOJvFjiDJfo7fxR2louD8G1q
+         u0OvbsaRZvAD6JkH7fpSWo2mJ5UXPzHgkYXjZEgy8ohU08chwQd0dvJbItPyEGx8b2yd
+         EHnW+8Rcd7+Hs7RDQl0S3fqmnXgGfgCktHIUX4KiobwqnJrIfMvowyveJu1DnSvg/SrV
+         EhnS5C38jdKAbboowqTGQeWbXew4CWd0VUnlxa1a8VJV4bLNhcxnnlvlkrks+4JRvSsS
+         iGYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=0aISxNq2TCqGaMJ+VstOmIHNsMO1fnVMy6b9Y1Qj+4Y=;
-        b=Wk1RZi6WHhN89LP2kZhdPNVIUjmLBW/wUa0OGgPvBlkXbfAJ8YVwE3FbXYY/RJ26LZ
-         dGI78DtuqLq/TfDxSI2Lu+osEzoSzxFu4GYrICLyaZoOMKoaAGtL8EvCFZ/zXUIDAvAX
-         vUhcj4Hb7n008HiIDYmW3U+g+x5o7WeC0HtZCPwYG4t3TJTzqwqboKHPGBA/FTZOnWmX
-         DXBSAjdLqXytJs2rUx5MFrlBZeleg0IVpl5r87g/0+WbuqoR8FfALyx/vhe0IOGdzFVS
-         uAmPK3t1nc5f4zlPwFI0kNX/k8ErSS05rrgFR8p4AJ1w33JnY3hV6N3LGx84iyhj8qZj
-         byBg==
-X-Gm-Message-State: ALoCoQnDapHtr7Dr2FmGZxAsAU1ja6NghQQyz6pi/W0zs9kIXghLfk7xb2HgJluXmUEEg2waOay3iSl7dUrRFzovvrQTi4g9iA==
-X-Received: by 10.202.201.77 with SMTP id z74mr101772579oif.24.1452704849756;
-        Wed, 13 Jan 2016 09:07:29 -0800 (PST)
+        bh=74a8FYdeaoJHEdOvohpoeMWfGj+qyMAE0Y8aBTeHxK4=;
+        b=UqDzWmU3n47lsA/kPMfvzVZcnvnJf+6v0rCPt7zKfOpy2RbKxr1dzu65OyIBAyjJYx
+         iOVukyERL2Ryxnm6GjSEiuUgbpcPJcXf9DCP5Ylo519/sF9hLvJFl5j8UWIerC22+11x
+         ny32jgyDlRrG9RAYMFBMJvZBfLZCYftHHQVJ11tu3EtDgCsmUsckRtNLxKgx3UDmR0g5
+         JGm0ZBcp7rZMf7E8z+DFYGeYNzSMrSYB/rT0Dt9jPFGXj9pOYcGxkF3LHzcv5l6LU92w
+         v1EI2h1asEiPB8yG6OtBDE5cItv0BC3EWI2svIhjLfs4JJJa67dhy/br6aRq5+isrXwz
+         Wj2A==
+X-Gm-Message-State: ALoCoQkEGFkc6sY10uUtsLA0DDTG0HR5JAnEdwWE+1jIfspRTUK5qArVpPBe9xiNrlSdDdTIG3di1zTZfEWxBXIxA8p7yqZ6Lg==
+X-Received: by 10.202.87.77 with SMTP id l74mr98954586oib.96.1452704850367;
+        Wed, 13 Jan 2016 09:07:30 -0800 (PST)
 Received: from localhost.localdomain ([204.77.163.41])
-        by smtp.gmail.com with ESMTPSA id dh8sm996371obb.2.2016.01.13.09.07.28
+        by smtp.gmail.com with ESMTPSA id dh8sm996371obb.2.2016.01.13.09.07.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Jan 2016 09:07:29 -0800 (PST)
+        Wed, 13 Jan 2016 09:07:30 -0800 (PST)
 X-Mailer: git-send-email 2.6.1
 In-Reply-To: <cover.1452704305.git.dougk.ff7@gmail.com>
 In-Reply-To: <cover.1452704305.git.dougk.ff7@gmail.com>
@@ -60,45 +60,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283939>
 
-Explicitly test for and ensure files that may be wanted are not
-deleted during a gc operation.  These include .pack without .idx
-(which may be in-flight), garbage in the directory, and .keep files
-the user created.
+Similar to cleaning up excess .idx files, clean any garbage .bitmap
+files that are not otherwise associated with any .idx/.pack files.
 
 Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
+Suggested-by: Jeff King <peff@peff.net>
 ---
- t/t5304-prune.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ builtin/gc.c     | 35 ++++++++++++++++++++++++++++++++++-
+ t/t5304-prune.sh |  2 +-
+ 2 files changed, 35 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c583aad..79e9886 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -58,8 +58,41 @@ static void clean_pack_garbage(void)
+ 
+ static void report_pack_garbage(unsigned seen_bits, const char *path)
+ {
+-	if (seen_bits == PACKDIR_FILE_IDX)
++	/* We know these are useless without the matching .pack */
++	if (ends_with(path, ".bitmap") || ends_with(path, ".idx")) {
+ 		string_list_append(&pack_garbage, path);
++		return;
++	}
++
++	/*
++	 * A pack without other files cannot be used, but should be saved,
++	 * as this is a recoverable situation (we may even see it racily
++	 * as new packs come into existence).
++	 */
++	if (ends_with(path, ".pack"))
++		return;
++
++	/*
++	 * A .keep file is useless without the matching pack, but it
++	 * _could_ contain information generated by the user. Let's keep it.
++	 * In the future, we may expand this to look for obvious leftover
++	 * receive-pack locks and drop them.
++	 */
++	if (ends_with(path, ".keep"))
++		return;
++
++	/*
++	 * A totally unrelated garbage file should be kept, to err
++	 * on the conservative side.
++	 */
++	if (seen_bits & PACKDIR_FILE_GARBAGE)
++		return;
++
++	/*
++	 * We have a file type that the garbage-reporting functions
++	 * know about but we don't. This function needs updating.
++	 */
++	die("BUG: report_pack_garbage confused");
+ }
+ 
+ static void git_config_date_string(const char *key, const char **output)
 diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 4fa6e7a..f7c380c 100755
+index f7c380c..cbcc0c0 100755
 --- a/t/t5304-prune.sh
 +++ b/t/t5304-prune.sh
-@@ -285,6 +285,23 @@ EOF
+@@ -257,7 +257,7 @@ EOF
  	test_cmp expected actual
  '
  
-+test_expect_success 'ensure unknown garbage kept with gc' '
-+	test_when_finished "rm -f .git/objects/pack/fake*" &&
-+	test_when_finished "rm -f .git/objects/pack/foo*" &&
-+	: >.git/objects/pack/foo.keep &&
-+	: >.git/objects/pack/fake.pack &&
-+	: >.git/objects/pack/fake2.foo &&
-+	git gc &&
-+	git count-objects -v 2>stderr &&
-+	grep "^warning:" stderr | sort >actual &&
-+	cat >expected <<\EOF &&
-+warning: garbage found: .git/objects/pack/fake2.foo
-+warning: no corresponding .idx or .pack: .git/objects/pack/foo.keep
-+warning: no corresponding .idx: .git/objects/pack/fake.pack
-+EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'prune .git/shallow' '
- 	SHA1=`echo hi|git commit-tree HEAD^{tree}` &&
- 	echo $SHA1 >.git/shallow &&
+-test_expect_failure 'clean pack garbage with gc' '
++test_expect_success 'clean pack garbage with gc' '
+ 	test_when_finished "rm -f .git/objects/pack/fake*" &&
+ 	test_when_finished "rm -f .git/objects/pack/foo*" &&
+ 	: >.git/objects/pack/foo.keep &&
 -- 
 2.6.1
