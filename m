@@ -1,106 +1,100 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Adding a commit to the front of my branch?
-Date: Wed, 13 Jan 2016 10:21:42 -0600
-Message-ID: <CAHd499Ay7cCANQavNpYN7EQDmeHgvZvVS2FP=udEVxf8KoBKcg@mail.gmail.com>
-References: <CAHd499B8gRMVWnUBZ0aO2RtokYqTm6fO7+7zfbsJNTnKw4MVsQ@mail.gmail.com>
-	<20160111141612.GK14056@serenity.lan>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2 16/21] refs: check submodules ref storage config
+Date: Wed, 13 Jan 2016 11:32:46 -0500
+Organization: Twitter
+Message-ID: <1452702766.16226.0.camel@twopensource.com>
+References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
+	 <1452561740-8668-17-git-send-email-dturner@twopensource.com>
+	 <xmqqtwmiqqk9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Jan 13 17:21:48 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 17:33:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJOBA-0008GD-By
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 17:21:48 +0100
+	id 1aJOLw-0007PR-4n
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 17:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753538AbcAMQVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 11:21:43 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:38066 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752665AbcAMQVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 11:21:42 -0500
-Received: by mail-ig0-f178.google.com with SMTP id mw1so152580208igb.1
-        for <git@vger.kernel.org>; Wed, 13 Jan 2016 08:21:42 -0800 (PST)
+	id S1753968AbcAMQcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 11:32:52 -0500
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:34813 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752929AbcAMQcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 11:32:50 -0500
+Received: by mail-qk0-f178.google.com with SMTP id t64so37225348qke.1
+        for <git@vger.kernel.org>; Wed, 13 Jan 2016 08:32:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GJs9CQQHZNwq6AR9m464vGHsVqIi453EPF0UtrnbURw=;
-        b=U8qC44ASqoO73UPzF/5A8Bj7jOGutSyak5r0UCPqx5SOifgpTl3Qk0iul+cN2emSz+
-         qNved/SBt+KjC0iCIhlXjTw/OItOPws1avCk+xstqFLA3iVFQtTRpasAdw2ht2gbTzeV
-         W/vHrw5PJJptPMLUuysq9/U5gJlW8NM0dIKnkxPnh5WaC9Xx/3PcBuW1l422hs/72JTw
-         yRnh4mxN+wurI/0c0fwNg+/5+4KgVS8Z0SvyxiHfRDUbqfWUreTnam6xtkdvIeFFqNPn
-         ZmfFGiIIDjFVkIaEXMcvR4JvGd8KrAdLOIuKP8SpG1jJFM1QDWuZzv2spiSAO+CPt9JH
-         nBKQ==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=WH1g8tH1y/h0ypAJ16QedT+LpeV5u7ukhK7dyGqECwY=;
+        b=pLu83KZSZ2RdXXqIvq4t1YAKAmeylXp/2cRJUDS7JV/yy9UNWOvIHVvybH69C265Ul
+         XnghZPThEkRbbmh2Mj/0EEM0iGnQDNNALQUhPemUSHaigm/0T5tR3txf56GgMAHjKDFb
+         QALqnEemruMA+MjaBdA95M8LMefOWox5dLonn/JBaoR8zuzksX7KK3ZmjAowAWZ+S2eY
+         N3+ocSTzHwKBM1i09D4CDwoU0Fy0wZ71io4mLvegWl+nwxqRHIdpHZLXsDX3IVkGpo+Y
+         HUJNvGr7bGAORZtu/6f8OiS2eKoLFx4zJvY7S02a7R1VdRMZWCdZGIssVXAd1PyasBxO
+         iaKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=GJs9CQQHZNwq6AR9m464vGHsVqIi453EPF0UtrnbURw=;
-        b=OCmAasNi9JSEavGPLLjNZ+neUW6oYVGE1NHTXE/KSHykOKE5V0EnVYmeNApSUu5uVu
-         lz8FFzkom+zqPDXcUOouFWmGL0f8Iy/JwstPiLmf/MQy0RW6q0pd+LvxhU/w70sVHW2i
-         VXGYPrF6E9e0FD8XIEyyZ3HpG9+eGFl+zo/V4hLM7/+d6nvj3D3SZQ28XatdhFdwyFWU
-         n0s1A/2rM1vp/f+GiuMdlUQA4aAdpUlqGdBODVDnmHDm3Mv/AjIyCxgLUnIaQtJVeM8b
-         HqyrmjaNOr+MHE47IGQFoU/auWzCmkIByvzsm96M7n26NK9q3aRCPZMN5CNLUuawKJWJ
-         hUnQ==
-X-Gm-Message-State: ALoCoQly12rtSCBDYYc7Z4NYHrrONdS4a+xEP7oO6sYarfoEzrrr1k3PA1fjUAajgC4FChA+vCp5MHdFEAGNKZ08Cu/ygE5+sw==
-X-Received: by 10.50.143.10 with SMTP id sa10mr23076846igb.91.1452702102247;
- Wed, 13 Jan 2016 08:21:42 -0800 (PST)
-Received: by 10.36.83.83 with HTTP; Wed, 13 Jan 2016 08:21:42 -0800 (PST)
-In-Reply-To: <20160111141612.GK14056@serenity.lan>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=WH1g8tH1y/h0ypAJ16QedT+LpeV5u7ukhK7dyGqECwY=;
+        b=KRpz6q9gYVnxRnFlGYkLvVmjAyluv73pg6N4AwFSyQNSJ4kg8jvJeVaufWOEgqMd+k
+         B1kUFcEJHdRK52fdNXAtiuGDUpVoQB+9igfYZ/J530iL0AJs7P+fSg17dO8Z3+ubM5X9
+         0q/MvaRdtFc+E/yq43iI65VLiXYpbwS/VMhib/P07mG4caN7FYwJ0bVAVrbEkLKVaJYn
+         CkksBQ47AKfQji9MngInHYM/wmvBvP8LmogyI58MMyoEV7C3ykWkzPs+nmrdYhkKKCHv
+         t+cjROQ15Wktoxf2L/Bb83n/lbKFYLXLOiXABjpAlPYE+M+Cf9mFVfMpPnhe2cfDXciX
+         t6Lg==
+X-Gm-Message-State: ALoCoQknntAcvckA1KscY78tZkBfIjbgP4efjjvJmuLQGfDNZxI2x4J0XdYZ4HJ5FEP2jcyoTX7XiCuv4ZytksZObpI87nnwNw==
+X-Received: by 10.55.76.84 with SMTP id z81mr87990673qka.17.1452702767988;
+        Wed, 13 Jan 2016 08:32:47 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id j69sm777710qkh.21.2016.01.13.08.32.46
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 13 Jan 2016 08:32:47 -0800 (PST)
+In-Reply-To: <xmqqtwmiqqk9.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283925>
 
-On Mon, Jan 11, 2016 at 8:16 AM, John Keeping <john@keeping.me.uk> wrote:
-> On Mon, Jan 11, 2016 at 07:36:25AM -0600, Robert Dailey wrote:
->> Normally to add commits on my branch, I perform an interactive rebase:
->>
->> $ git rebase -i origin/master
->>
->> I mark the commit I want to put the new commit on top of as 'edit'.
->> However, if I want to add a commit to the front of my branch, I don't
->> really have a commit to mark as "edit". I tried to be tricky with
->> this, and did:
->>
->> $ git rebase -i origin/master^
->>
->> However this doesn't work if my merge-base is a merge commit. I get a
->> ton of superfluous commits in my TODO file.
->>
->> Is there a built-in mechanism I can use, with relative ease, to
->> accomplish this goal? At the moment I have to run a series of a couple
->> of commands to do this, namely mark the oldest commit on my branch as
->> 'edit', reset it, stash it, add new commit, pop stash, commit again,
->> etc.
->>
->> Normally I'd add a new tip commit and reorder it to accomplish this,
->> however commits on my branch already alter this code and I don't want
->> to create unnecessary conflicts during rebase. The patch needs to be
->> based on merge-base.
->
-> Have you considered creating a new (temporary) branch based on master,
-> adding the new commit there and inserting "pick $new_commit_sha1" at the
-> start of the instruction sheet when rebasing the original branch?
+On Tue, 2016-01-12 at 16:19 -0800, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > All submodules must have the same ref storage (for now).  Confirm
+> > that
+> > this is so before attempting to do anything with submodule refs.
+> > 
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > ---
+> >  refs.c | 41 +++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 41 insertions(+)
+> > 
+> > diff --git a/refs.c b/refs.c
+> > index 07f1dab..1ccc7f6 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -297,8 +297,43 @@ int for_each_tag_ref(each_ref_fn fn, void
+> > *cb_data)
+> >  	return for_each_ref_in("refs/tags/", fn, cb_data);
+> >  }
+> >  
+> > +static int submodule_backend(const char *key, const char *value,
+> > void *data)
+> > +{
+> > +	char **path = data;
+> > +	if (!strcmp(key, "extensions.refstorage"))
+> > +		*path = xstrdup(value);
+> > +}
+> 
+> This should return "int" (namely 0).
 
-I think this functions but it lacks the simplicity I'm looking for. I
-mentioned I already had workarounds, what I'm really looking for is a
-built-in mechanism to do this.
-
-With your solution, I'd be doing this (best I can guess):
-
-1. $ git checkout -b temp [merge-base]
-2. hack hack hack
-3. $ git commit -am 'hacking'
-4. $ git checkout -
-5. $ git rebase -i [merge-base]
-6. Add the pick you mentioned here, at the top
-
-Still a bit messy and lots of steps. More steps might be necessary
-than I've shown, to establish the [merge-base] SHA1 to use.
+Fixed, thanks.
