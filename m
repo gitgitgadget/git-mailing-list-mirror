@@ -1,105 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5] format-patch: introduce format.outputDirectory configuration
-Date: Wed, 13 Jan 2016 01:52:11 -0500
-Message-ID: <CAPig+cTCRq9VCT7t8E9yjk4QcHYB2_qeBwGB_31keB4nTjkLkA@mail.gmail.com>
-References: <CAPig+cRjBockaXKacYA-pxWQe_gzAAvjAwonQKn1kSANHORt1A@mail.gmail.com>
-	<1452660493-5430-1-git-send-email-ischis2@cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] Teach 'git pull' to handle --rebase=interactive
+Date: Wed, 13 Jan 2016 07:52:27 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601130751560.2964@virtualbox>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de> <5ed91705cc70323dd3f175627acf86a4f594536c.1452612112.git.johannes.schindelin@gmx.de> <xmqqsi22s6x7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: "Stephen P. Smith" <ischis2@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jan 13 07:52:18 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 07:52:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJFI1-0003KH-K9
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 07:52:17 +0100
+	id 1aJFIO-0003Yj-2J
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 07:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753793AbcAMGwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 01:52:14 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:35071 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751684AbcAMGwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 01:52:13 -0500
-Received: by mail-vk0-f67.google.com with SMTP id i129so7042588vkb.2
-        for <git@vger.kernel.org>; Tue, 12 Jan 2016 22:52:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=uk2q1IULhDSzlmOmSzQZem9oYon9l/cW7fXKuAyk8Eo=;
-        b=SWnk8K98vVgf/RnQnsxfBxY+5dwx6FTvch3iNmoi5FyaHaQ5/l3VOcmMa8WPaZzUWd
-         UyZlXHLB87gnClYdwUfxh/RXcg1NUkErKMSETQlbEcjlMkSG3dK/y9h6GArecomIsx7c
-         dS+RG8OEJh6d8Ly7CU0Rm4PtxO2rX/OXrecrPrQuPjbHNAcRP0HavCF29SW8dd6v3nMX
-         v1xpUEPBQ8EdI767xHDITXrWQolgG57/ABUaBBkddz2lB+zXHcN4DSfSybm3mWWGWU9L
-         iuL81E0eu8o15hWgjze4NxDPQmOcVEfRmc+YCYAfZ/j4kUC/+SqUBbuEd2TNsCozonqe
-         8wmg==
-X-Received: by 10.31.164.78 with SMTP id n75mr63050459vke.14.1452667931954;
- Tue, 12 Jan 2016 22:52:11 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 12 Jan 2016 22:52:11 -0800 (PST)
-In-Reply-To: <1452660493-5430-1-git-send-email-ischis2@cox.net>
-X-Google-Sender-Auth: 57o94Qti0ihMsdsZ7CEWms02q0w
+	id S1754075AbcAMGwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 01:52:36 -0500
+Received: from mout.gmx.net ([212.227.17.21]:57976 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750856AbcAMGwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 01:52:35 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LlDx4-1ZjMJH1NkE-00b0VC; Wed, 13 Jan 2016 07:52:29
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqsi22s6x7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:qDc45sGyHAzWgl4KocR2Pz4FLanfYoOEfkNmCSAWkRgvgCC9esE
+ rhFD//m4cvRTQVLPTTTm7amd3BtCNRjNmFH3GCG/e1sTMj/k8bz/na8o8kga7M0Wd4ng7XC
+ 81dYTGoC7VxX8LZJDPlHW3DqlIBHk8Jdob4KLI17Xx6LcmV6jPEKlT3rD6jqNHjJabbuDU3
+ V9SAGx3w8PIxr8zcksAgQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2GAoOwKXZ3U=:xkpJ/OBDvl9RZxc6/2PNq+
+ G2+Vu+IYI9ZffxfA+FrVj25KcEhRKTP8DJXfK1hZfp9lDZjllaKisRyoTVrwhLDYux7Mj/iFG
+ sH6v8xa3P/IphMuWPbYNOqhBKTLtipCjbGNd6o8XPWe+VGQEILfk/g1Sw8b0cgbjfrg15MAIV
+ Gz+jlJchIk9sV4RWpYvcItccjj0Atr7ZlyRJKasVBMQHoeDELf3YVCVBeZuKACleL5lVowm+E
+ Tju4Rpx0L+6+n3aP74RHe9Oj1AHU8WDLN1nbvzDKfCAc8Iuv+xX95nwzpaqt3U8ghvsKMqIHM
+ 1ujzxWoEHbGHsLhpFQ/4IDNucBkj+K5IgEFYEF/RI4NPzeIXDGGfm7/e8mizhs/gD7eILw7Vz
+ kx06EjjNBMPZkRyqTVnBOIVjRdbcBLcsw1sxmuYw+RXTyAV0LMycOAvIxf6S2yrXEFvaqT6Hh
+ arCwt+U4V/IQ+ecsjsn7nFD3CozLR4WUoDlp/vDX7Ca6gOeqmNAIHRFXqgA+ZrUARhdHFaZPE
+ ae4a1+MtBBiJABJDcz9WoNt8MiX/iLV1P06sszmseODdCtBw5U3S0ryIjlDz13WYFznvZITMu
+ Q6FmlsvKuhm5chC/oGGyP6mtnt7jaXgH0Qza7YmWzITPEzY2JK9KKjNbypaT+YSmVCKS+0AOV
+ SjMK6+ylWIFEyQa68d1A3xoZfcdT7+g0CtzES28dtT7yVarvIFUtrWj4ZNF06Cqmdcid1AttR
+ 86V2qeI/PJLou0eZt4wjZ5/vIRdUpv8dxegiP3WxKor1Wln1GNlTYOtLMpBPAQY/m6lzJSvZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283884>
 
-On Tue, Jan 12, 2016 at 11:48 PM, Stephen P. Smith <ischis2@cox.net> wrote:
-> From: Alexander Kuleshov <kuleshovmail@gmail.com>
->
-> We can pass -o/--output-directory to the format-patch command to store
-> patches in some place other than the working directory. This patch
-> introduces format.outputDirectory configuration option for same
-> purpose.
->
-> The case of usage of this configuration option can be convinience
+Hi Junio,
 
-Mentioned several times already: s/convinience/convenience/
+On Tue, 12 Jan 2016, Junio C Hamano wrote:
 
-> to not pass every time -o/--output-directory if an user has pattern
-> to store all patches in the /patches directory for example.
->
-> The format.outputDirectory has lower priority than command line
-> option, so if user will set format.outputDirectory and pass the
-> command line option, a result will be stored in a directory that
-> passed to command line option.
->
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
-> Notes:
->     Fixed bug which was found when moving the tests to the end of the
->     script by removing the hardcoded expected count and replacing with a
->     computation of the number of actual patches.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > Subject: Re: [PATCH 1/3] Teach 'git pull' to handle --rebase=interactive
+> 
+> Subject: pull: allow interactive rebase with --rebase=interactive
+> 
+> or something?  The same comment applies for the other patches in
+> this series, and other recent patches from you in general.
 
-Thanks, this version looks better. Aside from the misspelling above
-and a minor comment below, this version is:
+Fixed in v2.
 
-Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> > The way builtin pull works, this incidentally also supports the value
+> > 'interactive' for the 'branch.<name>.rebase' config variable.
+> 
+> That, especially the "incidentally" part, makes it sound as if it is
+> "because we can easily", not "because it is useful in such and such
+> way, we must support it".  We definitely want to see patches that
+> fall into the latter category, and from the sound of 0/3, I think
+> this one should be advertised as such.
 
->     Mailing list web interface is again not working; therefore, I don't
->     have URLs for the earlier review comments.
+Also addressed in v2.
 
-The full set of attempts is here [1].
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/272180
-
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -707,6 +707,8 @@ enum {
->         COVER_AUTO
->  };
->
-> +static const char *config_output_directory;
-
-I don't care strongly, but I wonder why this new variable is placed
-below the enum rather than being grouped with other similar variables
-just above this enum. (Probably not worth a re-roll, though.)
-
->  static int git_format_config(const char *var, const char *value, void *cb)
->  {
->         if (!strcmp(var, "format.headers")) {
+Thanks,
+Dscho
