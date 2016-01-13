@@ -1,78 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-p4.py: add support for filetype change
-Date: Wed, 13 Jan 2016 09:07:25 -0800
-Message-ID: <xmqqpox5pfw2.fsf@gitster.mtv.corp.google.com>
-References: <1452602627-8402-1-git-send-email-romain.picard@oakbits.com>
-	<CAE5ih78XSq5kFmmOYKCw0zF-NEgWH8+HS-0cHse_-mGR8r355A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Romain Picard <romain.picard@oakbits.com>,
-	Git Users <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	git-owner@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Jan 13 18:07:36 2016
+From: Doug Kelly <dougk.ff7@gmail.com>
+Subject: [PATCH 3/4] t5304: Ensure wanted files are not deleted
+Date: Wed, 13 Jan 2016 11:07:11 -0600
+Message-ID: <670a9d9268beb0d70fb877a7c62d769062babba9.1452704305.git.dougk.ff7@gmail.com>
+References: <1450483600-64091-1-git-send-email-dougk.ff7@gmail.com>
+ <cover.1452704305.git.dougk.ff7@gmail.com>
+Cc: peff@peff.net, sbeller@google.com, Doug Kelly <dougk.ff7@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 13 18:07:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJOtR-00058X-9f
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:07:33 +0100
+	id 1aJOtW-0005AV-Fy
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 18:07:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755001AbcAMRHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755084AbcAMRHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 12:07:33 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:35345 "EHLO
+	mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754755AbcAMRHa (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 13 Jan 2016 12:07:30 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60855 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751123AbcAMRH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 12:07:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3A5BC3A556;
-	Wed, 13 Jan 2016 12:07:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vxOl1MucTGh9CfR7dMFWX1R++Eg=; b=v87+MH
-	fT13vpkFxFuXQqVH0exmSXt8q7X+4DEros8jfzGK1Ad6aS1zcEgaBu/4NwZ3VzWJ
-	eMBBTSqtcvOqm/ZiCd5p71bC2N+ijqdaq+jgQ309FHjAVmiOZ2/a2XAdm+MA1nhS
-	DJbbL741i/1MgApjbY/qeDAtJG98iIkomMZ7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q/faOtxgcIKxTKaw6ManO3AHiI1b4FcG
-	axV72B/wmmVEHED7u9wDrblHSwASSS9CnwSBPQFdbTwPTbk6uZo8k5xcOa9PMhdT
-	bkM64ss2viXneEPiThwEoGIRKuJTK4PUFFrr/OvS4TQDUChhlXI5VZ+T0zw3osmZ
-	bcSR4Vsfd2A=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 300743A555;
-	Wed, 13 Jan 2016 12:07:27 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 819EB3A552;
-	Wed, 13 Jan 2016 12:07:26 -0500 (EST)
-In-Reply-To: <CAE5ih78XSq5kFmmOYKCw0zF-NEgWH8+HS-0cHse_-mGR8r355A@mail.gmail.com>
-	(Luke Diamand's message of "Wed, 13 Jan 2016 07:02:57 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1EF7626E-BA18-11E5-8A02-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+Received: by mail-oi0-f67.google.com with SMTP id e195so20083063oig.2
+        for <git@vger.kernel.org>; Wed, 13 Jan 2016 09:07:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=0aISxNq2TCqGaMJ+VstOmIHNsMO1fnVMy6b9Y1Qj+4Y=;
+        b=ui9dkY2gvI9udjoNdR0hHHtMjkqY9PdtbLAnzMmy93e+EUFCUEJnbQMx5H321vZyGN
+         qDkAvYGZ9BMvzsVtMSImhG9070B9M+Ti6fdV8ygE05qPD6PPrKvfLsVE5CzWoH6X389C
+         SNxIMcVXOWTL3OoXdYtVLNnw6v+hwRY49+9xqppVoRLIcJRGbfADlBWfB9SkwWQzKpXP
+         X5+t2KkRjF08ucEGPRQ3aW6oAXYmzDWihM++L082UMeBEY29SmIymhXWV98UQZJ+rgc0
+         o0UXLXdaQr0Udtaah6P3XUV+erofW8JD8mIoXgnLT9xLlwyd0dwGjEdl8B9DiWFIeM4L
+         ErxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=0aISxNq2TCqGaMJ+VstOmIHNsMO1fnVMy6b9Y1Qj+4Y=;
+        b=Wk1RZi6WHhN89LP2kZhdPNVIUjmLBW/wUa0OGgPvBlkXbfAJ8YVwE3FbXYY/RJ26LZ
+         dGI78DtuqLq/TfDxSI2Lu+osEzoSzxFu4GYrICLyaZoOMKoaAGtL8EvCFZ/zXUIDAvAX
+         vUhcj4Hb7n008HiIDYmW3U+g+x5o7WeC0HtZCPwYG4t3TJTzqwqboKHPGBA/FTZOnWmX
+         DXBSAjdLqXytJs2rUx5MFrlBZeleg0IVpl5r87g/0+WbuqoR8FfALyx/vhe0IOGdzFVS
+         uAmPK3t1nc5f4zlPwFI0kNX/k8ErSS05rrgFR8p4AJ1w33JnY3hV6N3LGx84iyhj8qZj
+         byBg==
+X-Gm-Message-State: ALoCoQnDapHtr7Dr2FmGZxAsAU1ja6NghQQyz6pi/W0zs9kIXghLfk7xb2HgJluXmUEEg2waOay3iSl7dUrRFzovvrQTi4g9iA==
+X-Received: by 10.202.201.77 with SMTP id z74mr101772579oif.24.1452704849756;
+        Wed, 13 Jan 2016 09:07:29 -0800 (PST)
+Received: from localhost.localdomain ([204.77.163.41])
+        by smtp.gmail.com with ESMTPSA id dh8sm996371obb.2.2016.01.13.09.07.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 13 Jan 2016 09:07:29 -0800 (PST)
+X-Mailer: git-send-email 2.6.1
+In-Reply-To: <cover.1452704305.git.dougk.ff7@gmail.com>
+In-Reply-To: <cover.1452704305.git.dougk.ff7@gmail.com>
+References: <cover.1452704305.git.dougk.ff7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283938>
 
-Luke Diamand <luke@diamand.org> writes:
+Explicitly test for and ensure files that may be wanted are not
+deleted during a gc operation.  These include .pack without .idx
+(which may be in-flight), garbage in the directory, and .keep files
+the user created.
 
-> On 12 January 2016 at 12:43, Romain Picard <romain.picard@oakbits.com> wrote:
->> After changing the type of a file in the git repository, it is not possible to
->> "git p4 publish" the commit to perforce. This is due to the fact that the git
->> "T" status is not handled in git-p4.py. This can typically occur when replacing
->> an existing file with a symbolic link.
->>
->> The "T" modifier is now supported in git-p4.py. When a file type has changed,
->> inform perforce with the "p4 edit -f auto" command.
->
-> Looks good to me, thanks.
->
-> Ack.
+Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
+---
+ t/t5304-prune.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Thanks, both.  Will queue.
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 4fa6e7a..f7c380c 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -285,6 +285,23 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'ensure unknown garbage kept with gc' '
++	test_when_finished "rm -f .git/objects/pack/fake*" &&
++	test_when_finished "rm -f .git/objects/pack/foo*" &&
++	: >.git/objects/pack/foo.keep &&
++	: >.git/objects/pack/fake.pack &&
++	: >.git/objects/pack/fake2.foo &&
++	git gc &&
++	git count-objects -v 2>stderr &&
++	grep "^warning:" stderr | sort >actual &&
++	cat >expected <<\EOF &&
++warning: garbage found: .git/objects/pack/fake2.foo
++warning: no corresponding .idx or .pack: .git/objects/pack/foo.keep
++warning: no corresponding .idx: .git/objects/pack/fake.pack
++EOF
++	test_cmp expected actual
++'
++
+ test_expect_success 'prune .git/shallow' '
+ 	SHA1=`echo hi|git commit-tree HEAD^{tree}` &&
+ 	echo $SHA1 >.git/shallow &&
+-- 
+2.6.1
