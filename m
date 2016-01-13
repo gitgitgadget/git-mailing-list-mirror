@@ -1,178 +1,107 @@
-From: "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH v6] format-patch: introduce format.outputDirectory configuration
-Date: Wed, 13 Jan 2016 06:20:11 -0700
-Message-ID: <1452691211-15347-1-git-send-email-ischis2@cox.net>
-References: <CAPig+cTCRq9VCT7t8E9yjk4QcHYB2_qeBwGB_31keB4nTjkLkA@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>,
-	"Stephen P . Smith" <ischis2@cox.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 13 14:20:29 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase
+ can be 'interactive'
+Date: Wed, 13 Jan 2016 14:26:26 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601131422260.2964@virtualbox>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de> <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de> <vpq7fjdyfvu.fsf@anie.imag.fr> <alpine.DEB.2.20.1601131302340.2964@virtualbox> <vpqziw9oefy.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Paul Tan <pyokagan@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jan 13 14:27:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJLLd-0004ZI-BU
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 14:20:25 +0100
+	id 1aJLSG-00009o-Ee
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 14:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbcAMNUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 08:20:17 -0500
-Received: from fed1rmfepo203.cox.net ([68.230.241.148]:38862 "EHLO
-	fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754810AbcAMNUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 08:20:15 -0500
-Received: from fed1rmimpo109 ([68.230.241.158]) by fed1rmfepo203.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160113132013.DLOE26406.fed1rmfepo203.cox.net@fed1rmimpo109>
-          for <git@vger.kernel.org>; Wed, 13 Jan 2016 08:20:13 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo109 with cox
-	id 5RLD1s0052tqoqC01RLDrc; Wed, 13 Jan 2016 08:20:13 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020202.56964F0D.0170,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=LaPiHEji c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=7aQ_Q-yQQ-AA:10
- a=pGLkceISAAAA:8 a=TSbVqHtbAAAA:8 a=JSNQmZlDd7ZuTQoTR7oA:9
- a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id 9A0FD13F628;
-	Wed, 13 Jan 2016 06:20:15 -0700 (MST)
-X-Mailer: git-send-email 2.7.0-rc2
-In-Reply-To: <CAPig+cTCRq9VCT7t8E9yjk4QcHYB2_qeBwGB_31keB4nTjkLkA@mail.gmail.com>
+	id S933677AbcAMN1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 08:27:09 -0500
+Received: from mout.gmx.net ([212.227.17.21]:62065 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754543AbcAMN1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 08:27:07 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MSHax-1ale6i3N0d-00TYTh; Wed, 13 Jan 2016 14:26:27
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <vpqziw9oefy.fsf@anie.imag.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:EiwQ3965VolANrn32+f/4Izf1i+DB+O+BGcgErts4JKk/AVydz+
+ ZmkI7+8bVCT1PBax4JgNPuYhCUkLkxBM+i/woA8SpqMhzF1HEcIs/5wu2gyLJgQOln9v//g
+ 3jHWFhbV1Yv/haHPe1gD5CFFgAgLTxZGYUyVIYyw8KX6N2JRtglP5dnb6codL4hE/ver2Mh
+ ornN3gnNNfrfEfcqcNhZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2WeZoj5dSc4=:ymQ0lbPWsU08eOkxtdjjnV
+ QbLRn3MpBFay9oFZ678Gbt2V/Epg+XL1L8fEfbaUgHCGBMew+gSYH9WDrhZdjc0EmcIomJUjr
+ 00Ov1YGxsTgbRMSU5RF6eXFdVXGS1hFJ705Tgezhbs72RpAEC7kjwjRrj0oklZPfglddkPKlr
+ ZwlVOu5V9MHQK5EkpnQjHfxbQmtG0rG/dm0jadN9Dc+8oWZwkVgAZ3s4LKRVUivgB5+l2CnNy
+ D8V3AmV7ElypOw5tl7gBcN9LrIfZcRDby4Ro38qluSWuuxXfGekTp/YPOjccesmm5/wNkecZb
+ X9WDbTc9yeHc5LZuPysYSfFbpdwq2w9B8JbaeuIux5HsuQs3WWcZddD9AL7FEvxEHHVkptGJg
+ 1QYgE0+to5Pbxqp8e1nkda2xNPBi2v//rzf4PLAjwpl6fXIuLS6f2UNJlR1rlb4aFb5IdjF2G
+ Zq5R0NlfjwwbxfzTOeL1sKdJDIN7fRTqjQFFEDbJ0FSBQFb+GRwuto10++1VAcYCtTuVj2cIS
+ /+5oSsAQciSekX68+jcpvKdG0tfwX9cuZQJBbSFkDowh/SIK5ZqMpFTZ/voH3LVuEFH0arOGz
+ MRZqrkfnQlUpTE/V4RVxHfowIz98YFIGqzBFp7M/e4eyPWAjEUT9p4UusladbXaE68lrgbrnn
+ ijR/s5kc9rqmdQfRXqiw7NlldwZauZy5Aptg7Br/qwfpHdpsDXglHQ5rIqrcTBP17p6tHn/bH
+ MbH69YhF4HxWszbmzuTihO1cidt8pOI3OCSuorUpRjii21SHFhzTn2zRRHaj2LTvtETtyWkH 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283914>
 
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Hi Matthieu,
 
-We can pass -o/--output-directory to the format-patch command to store
-patches in some place other than the working directory. This patch
-introduces format.outputDirectory configuration option for same
-purpose.
+On Wed, 13 Jan 2016, Matthieu Moy wrote:
 
-The case of usage of this configuration option can be convenience
-to not pass every time -o/--output-directory if an user has pattern
-to store all patches in the /patches directory for example.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Wed, 13 Jan 2016, Matthieu Moy wrote:
+> >
+> >> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >>
+> >> What happens if one has branch.*.rebase=interactive, and wants to
+> >> make an exception? Does
+> >> 
+> >>   git pull --rebase=true
+> >> 
+> >> cancel the 'interactive' part?
+> >
+> > It is the same situation as before (just substitute a
+> > branch.*.rebase=preserve setting): yes, the config is parsed first,
+> > then the command line, so the command line wins.
+> >
+> >> I guess it is, but if so I think it should be tested and documented.
+> >
+> > Is this really necessary, given that the behavior has not changed from
+> > before?
+> 
+> Well, before your patch, branch.*.rebase=interactive was not possible.
 
-The format.outputDirectory has lower priority than command line
-option, so if user will set format.outputDirectory and pass the
-command line option, a result will be stored in a directory that
-passed to command line option.
+But branch.*.rebase=preserve was. And it is still different from
+branch.*.rebase=true. And as per v2.7.0, those config settings can be
+overridden via the command line.
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
+Seeing as I did not change that behavior, I would find it a bit odd to
+document that the command line can override the config setting.
 
-Notes:
-    Fixed s/convinience/convenience/
-    
-    Moved 'static const char *config_output_directory;' to be with othe
-    similarly typed variables.
-    
-    The full set of attempts is here [1].
-    
-    [1]: http://thread.gmane.org/gmane.comp.version-control.git/272180
+> It is not immediately clear to me that --rebase=true can mean "do the
+> pull with rebasing, but without going interactive", as "do pull with
+> rebase" and "rebase interactively" could be two independant things.
+> Reading the current doc does not help much: "When true, rebase the
+> current branch on top of the upstream branch after fetching" => it does
+> not say that "true" also specifies which kind of rebase is performed.
 
- Documentation/config.txt           |  4 ++++
- Documentation/git-format-patch.txt |  6 +++++-
- builtin/log.c                      |  6 ++++++
- t/t4014-format-patch.sh            | 15 +++++++++++++++
- 4 files changed, 30 insertions(+), 1 deletion(-)
+Again, I did not change that behavior, and the same confusion could arise
+with the "preserve" setting.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f617886..e92a0ee 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1243,6 +1243,10 @@ format.coverLetter::
- 	format-patch is invoked, but in addition can be set to "auto", to
- 	generate a cover-letter only when there's more than one patch.
- 
-+format.outputDirectory::
-+	Set a custom directory to store the resulting files instead of the
-+	current working directory.
-+
- filter.<driver>.clean::
- 	The command which is used to convert the content of a worktree
- 	file to a blob upon checkin.  See linkgit:gitattributes[5] for
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index e3cdaeb..64c2803 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -57,7 +57,11 @@ The names of the output files are printed to standard
- output, unless the `--stdout` option is specified.
- 
- If `-o` is specified, output files are created in <dir>.  Otherwise
--they are created in the current working directory.
-+they are created in the current working directory. The default path
-+can be set with the 'format.outputDirectory' configuration option.
-+The `-o` option takes precedence over `format.outputDirectory`.
-+To store patches in the current working directory even when
-+`format.outputDirectory` points elsewhere, use `-o .`.
- 
- By default, the subject of a single patch is "[PATCH] " followed by
- the concatenation of lines from the commit message up to the first blank
-diff --git a/builtin/log.c b/builtin/log.c
-index e00cea7..0d738d6 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -699,6 +699,7 @@ static int do_signoff;
- static const char *signature = git_version_string;
- static const char *signature_file;
- static int config_cover_letter;
-+static const char *config_output_directory;
- 
- enum {
- 	COVER_UNSET,
-@@ -777,6 +778,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.outputdirectory"))
-+		return git_config_string(&config_output_directory, var, value);
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -1391,6 +1394,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (rev.show_notes)
- 		init_display_notes(&rev.notes_opt);
- 
-+	if (!output_directory && !use_stdout)
-+		output_directory = config_output_directory;
-+
- 	if (!use_stdout)
- 		output_directory = set_outdir(prefix, output_directory);
- 	else
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 646c475..3b99434 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1445,4 +1445,19 @@ test_expect_success 'From line has expected format' '
- 	test_cmp from filtered
- '
- 
-+test_expect_success 'format-patch format.outputDirectory option' '
-+	test_config format.outputDirectory patches &&
-+	rm -fr patches &&
-+	git format-patch master..side &&
-+	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
-+'
-+
-+test_expect_success 'format-patch -o overrides format.outputDirectory' '
-+	test_config format.outputDirectory patches &&
-+	rm -fr patches patchset &&
-+	git format-patch master..side -o patchset &&
-+	test_path_is_missing patches &&
-+	test_path_is_dir patchset
-+'
-+
- test_done
--- 
-2.7.0-rc2
+But I do not really see the confusion, as `git rebase` (without -p and
+without -i) means: "perform a rebase", and everybody assumes that it is a
+non-interactive, non-merge-preserving rebase. Hence I would assume that
+users know that a rebase without any further adjective refers to the
+plain, non-interactive, non-merge-preserving one.
+
+Ciao,
+Dscho
