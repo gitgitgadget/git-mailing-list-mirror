@@ -1,90 +1,93 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase
- can be 'interactive'
-Date: Wed, 13 Jan 2016 13:03:57 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601131302340.2964@virtualbox>
-References: <cover.1452612112.git.johannes.schindelin@gmx.de> <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de> <vpq7fjdyfvu.fsf@anie.imag.fr>
+Subject: Re: [PATCH v2 1/3] pull: allow interactive rebase with
+ --rebase=interactive
+Date: Wed, 13 Jan 2016 13:13:57 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601131313270.2964@virtualbox>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de> <cover.1452668201.git.johannes.schindelin@gmx.de> <2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
+ <CACRoPnS_CcAuu_jBo9zcjycSN4kvSQhCONNYnY1XRnarRF9Zmw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Paul Tan <pyokagan@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 13 13:08:36 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 13:14:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJKE6-0005LA-GR
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:08:34 +0100
+	id 1aJKJn-0000DT-To
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 13:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932179AbcAMMIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 07:08:25 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50122 "EHLO mout.gmx.net"
+	id S1751000AbcAMMOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 07:14:23 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58399 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932144AbcAMMIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 07:08:24 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MaJPk-1adBUA2wIK-00Jus0; Wed, 13 Jan 2016 13:08:10
+	id S1750701AbcAMMOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 07:14:22 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MGBB1-1aMICH2Oj1-00FBAX; Wed, 13 Jan 2016 13:13:58
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <vpq7fjdyfvu.fsf@anie.imag.fr>
+In-Reply-To: <CACRoPnS_CcAuu_jBo9zcjycSN4kvSQhCONNYnY1XRnarRF9Zmw@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Z8ms0kAa+GqCTBw+EnEvEeD3MXd1QyQCRlnHTvUboKCrLGeVb8x
- t0AhSvMhoFNSXMOznjpQzoPTY3Ky7zwRlsHidVF1UoPExmDtWw0WNk3TnJ9KM5QFzl9fXa5
- RGKRx1+fT2EUJcoDNmFUqzJpQvPiAP7g7+w3oPEKQ7xrR7OlpSb2hszK0UsdmgQhA7XXt9X
- vQ7Fn5q9BT9MPTq/bnVuw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+nWaFNJxj10=:q+wnklYyOvAgaQx4CMvMGj
- J7kUm5bGIPakA+k1/DJOLOvIDgJoPf2Lym1AtZBnAXGFEYfzIfUOntTCt9Cwx7OmybRKn0e/u
- NRFM+UbK6pApPAsmbg0l7WqGC3g8ne8O4O+DfF8jv1Fub1CfaAcUBNpohaTZsA+EAt4rncMVc
- Btm9m3JfpoQpqBWGqIKHtZ0VnTyKuqFgsa9nHikCGAsFF71RLXWDIiCjkAhzgOSwPdMR7Fnev
- lF9OSwxHQVbvsFZwTIcJFpB08Ghw+7Um6fjtmEPIsTC6f6/apDg5syDPaPhu9nZWew1aoJUk/
- UhgkhoJVmHA1CKNjgtiEighWn//gb8cT3wcHq94+6ZM2eerkypUIOEMUn03aZR5BH2CFPAleS
- u69j2GV1lcxu5wvkBgvtgIfQXsbNDJpNTEaICuo/jN4Sz1J9bFC99FXkCRb/nxRrQENyEn5wp
- s2QWRGa1Xdw+8a8DA2Q5GNMHN2rdA8vreOXyVtajMsW4sRH6Vpn+jcDz+w3NZyFHkTQEvbufh
- hxnvBhHaoepuhT8rHmZvu8dMaj3Vq+ws244psvNQNdbkMpX6PjeL2fMUnqA0kwHWbn6EI/TtD
- qRR5IA2gwTHT5+TPz5AHVo5ALyxxBVrwpNmXE/mcE1KCXOOntPB1eg5dDxziAy2BgMC5z7bGF
- u10vwtj07n7Haq9WoL9BoQGBxUgnHgLDHI7dD98oJq1AUUL5vslQjgf7ikz3QX/EJrl+1w1Y5
- lnoV99MiRMPd2EoNnUl3qHS/K4mULvEWcgXbum/sPw7gHbJnB6yLoSGz2u/wkmguVjxvLMUy 
+X-Provags-ID: V03:K0:CdI75lfwnQ5oAPnnMDbdKR4nYYHMTAuLCaBXzlaihziM0x4Hjsw
+ a+g93ATEokwNGxCNeLFXgvK+EFYRAUNwE6SWpo73unJZ5o+feQ91KPSKfvBAmGhtBCXn+Fd
+ +WEYRH+lKhYmOKWs4SN/975nrDRWUL0mdil4xLrhcm68jVgn/NUi8d6v4qM6M7YuaKshOD+
+ ds7IC4ISiZ5xavkmTsSzA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6UDUhnflUrw=:gFpB+3wau8IOTS5ZdxmQBS
+ H7IkCWspjV0Y/zlmR5MR5LXftad0ARmCp8ToNMGYyj1OHuAHeZ8OYUiyCRVQY3ZxV3JCPtBH/
+ okJorrz+E6VsioKsi31Rky8WqdOJNAm5kYd2w4oG8HwDuonCSFSnQ2ELPRA8Hct/QGwNHckr0
+ /LL7z+S1UoSEPqlVOz+PQSLFZ4nxgYDu5F19XDNMWnjEROWvIK31cLdfCSCbp6AbhmWhUk5x8
+ K0zHLzbnYf4ePs0wJph48wndjaFsR8VHXYMZUeaYvq2kKNtmVpZ0S8ecO8SEZKWIg4p+MJJ3m
+ 8Etx6vK8nKfak1iLxIFu4MGnuYQzlFKp+1HefLmAbiE90yctIKeFZGmg1mafpx2z0gqh/6KdC
+ 0r4eEpuGTiLiJ/JIj38gagzdZ4sbBmQymipdd30vy04uDjeGWwwWvSblD1PvsEFNKnHuSHsWU
+ fUU6StdCUpyHVQX4xoHRLysLzrkfjNxHz68nErfI6KCewMniJDXq8UfUy8GKxxzvBKVmYTJ82
+ Ap65GmwrlxgcB/FjZ1C55+oe+m2M18IIewyxakrOTuR/yb7B1Qz2SftOvU7fSneFpjQD/39W3
+ i4aSjFMIYlh56K5qtKbkTdzc32Ax67YGc4xTLDeXHx3NRMbpjv4Pgh3i79fQZTg1D0gCVCRU0
+ 4iGH6LJTLcZ1EVHWUIARrOOf/0tqFfPNl8fOKt8F1OBA89m3tjFie1/rMTzJ6Ke3JggZepecy
+ zgC/2EEUQop6w8niq3MnhuHF3jtuL/7nJBwKlwhiJg1mQvQ3JOvi3F8ZMQFqCtSB1ZAwaT0A 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283903>
 
-Hi Matthieu,
+Hi Paul,
 
-On Wed, 13 Jan 2016, Matthieu Moy wrote:
+On Wed, 13 Jan 2016, Paul Tan wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On Wed, Jan 13, 2016 at 2:57 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index 07f7a3b..e5897e9 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -865,6 +865,7 @@ branch.<name>.rebase::
+> >         instead of merging the default branch from the default remote when
+> >         "git pull" is run. See "pull.rebase" for doing this in a non
+> >         branch-specific manner.
+> > +       When the value is `interactive`, the rebase is run in interactive mode.
+> >  +
+> >  When preserve, also pass `--preserve-merges` along to 'git rebase'
+> >  so that locally committed merge commits will not be flattened
 > 
-> > diff --git a/builtin/remote.c b/builtin/remote.c
-> > index 6694cf2..0af8300 100644
-> > --- a/builtin/remote.c
-> > +++ b/builtin/remote.c
-> >  static struct string_list branch_list;
-> > @@ -312,6 +312,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >  				info->rebase = v;
-> >  			else if (!strcmp(value, "preserve"))
-> >  				info->rebase = 1;
-> > +			else if (!strcmp(value, "interactive"))
-> > +				info->rebase = INTERACTIVE_REBASE;
+> I think this change needs to be repeated for the section on
+> "pull.rebase" as well.
 > 
-> What happens if one has branch.*.rebase=interactive, and wants to make
-> an exception? Does
+> > [...]
+> > --
+> > 2.6.3.windows.1.300.g1c25e49
 > 
->   git pull --rebase=true
+> Other than that, builtin/pull.c has the following option definition
+> that needs to be updated:
 > 
-> cancel the 'interactive' part?
+> { OPTION_CALLBACK, 'r', "rebase", &opt_rebase, "false|true|preserve",
+> N_("incorporate changes by rebasing rather than merging"),
+> 
+> The "false|true|preserve" needs to be updated to
+> "false|true|preserve|interactive", I think.
 
-It is the same situation as before (just substitute a
-branch.*.rebase=preserve setting): yes, the config is parsed first, then
-the command line, so the command line wins.
-
-> I guess it is, but if so I think it should be tested and documented.
-
-Is this really necessary, given that the behavior has not changed from
-before?
+Good points, both. Fixed in the upcoming v3.
 
 Ciao,
 Dscho
