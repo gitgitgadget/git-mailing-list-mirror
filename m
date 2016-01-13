@@ -1,81 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Always release pack files before calling gc --auto
-Date: Wed, 13 Jan 2016 19:52:05 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601131951040.2964@virtualbox>
-References: <cover.1452705584.git.johannes.schindelin@gmx.de> <20160113175237.GA13139@sigill.intra.peff.net>
+Subject: Re: [PATCH v4 4/4] t0060: verify that basename() and dirname() work
+ as expected
+Date: Wed, 13 Jan 2016 19:53:58 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601131953010.2964@virtualbox>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <7d73267984ab029df022477e341c536e111eafdd.1452585382.git.johannes.schindelin@gmx.de> <5695E4FB.2060705@web.de> <56967CA3.7040103@ramsayjones.plus.com>
+ <xmqqh9ihpfav.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 13 19:52:45 2016
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 13 19:54:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJQX9-00075p-3Q
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 19:52:39 +0100
+	id 1aJQZ4-00075p-7s
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 19:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933096AbcAMSwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 13:52:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:61270 "EHLO mout.gmx.net"
+	id S1756566AbcAMSyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 13:54:25 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59803 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933042AbcAMSwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 13:52:24 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LlpJU-1Zk5hv1OLI-00ZLjS; Wed, 13 Jan 2016 19:52:07
+	id S1754051AbcAMSyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 13:54:09 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M5tof-1ZzoAr3hgP-00xu9l; Wed, 13 Jan 2016 19:54:01
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160113175237.GA13139@sigill.intra.peff.net>
+In-Reply-To: <xmqqh9ihpfav.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:1pEwYSctLg9d4T4WFgvXYDu3d3S3cNb1ZvGII5xep6f5gkmx/iv
- yCRUS5hH9KgPuGMQA+JggWteEsq0E+5fjAmKuxyB/JNiPmLOFAH5SAnnnBbgF9+qY/zexKy
- 870FVFq1yGzQMBrqStkZ+DfA60ADceysg/VcJ5tqlhujp71TN8lRTAJUsEP3XU/LPPOE06U
- LVr+clICTTj+UEMfmL8Vg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HqN2TQdmWHQ=:Jt0FQsqUFaLSOnR0na0aQ5
- c3PEp0of07t5oUXA02v8XxuG7Mi1wf6rE55D6TQ+9BOXrD8+Blv2v3QRtVY5mAzWO/lvly4F9
- +Lb6AiGPVhahh1wdmr2jmsMziQojDyFiILqwQckj/n2oLJ1PzoqM9qvlC/0Yc4QL/7O6k/zqF
- 67U4ig7iWzksP+NdnbzdhJ3tAvzgy7q7Pb5ye1gJKO5kYMnElHQplXbkkcNDvYa5VNd/l10a/
- pAHFoEetgNvs38zL0lO+nVn3gkNpzEqSWX5TMbwApoHWwYRyQjx5RSthdBEvtX12Fj6jXhOmZ
- YEUPs7mlnSqtx7ZySAxrY2+xv4qOdoJiX1GY7tH55no4OS+U7wAafueoHA556HZZ0xBnuZujm
- df2KM3sj5wANJYGMPx0LtkPUlBZtLNPMuMTY6ydEvI52Pzj5IOHjujloMiz+ZKuVIcoTuEmkh
- YKesneR/kP7ELOwk6RKTjOq1pWygk4bzUEtgIlBqrGH0+Ay+Gi9Rk8g4pH+6r3imba5iDBQiP
- P5HaKbM8JkN00R/8O9SDRfeBzhTMroWJA644QyjOX6JOjZNpyAhaRbNCSgleWsNRcV6C5P6tW
- iLYUwJRM/psAtmnQla3SwV1s0oBozy0+0RUg1V9wRSjyjCXV/FIijHAihe6OScvaZWEEqNuh/
- Qi5m9ZUFeZuvkbOd0nNFsIZGmVX3Pke8x8i1yrNEYKFgA9hMG4j1M5+p6xRI9fukrMT2DvvoE
- CKZ8ikloKulICKs9WTohhkzbGIPyBxUOJ+SCzkTq/kdfpKY1jol2kqmgv/CRZaIBIJZZEkBT 
+X-Provags-ID: V03:K0:QAgbP0rGjKfqtDB08hNL5F7bZSbkL4eg+wCGmSQnJzsrKJ3V9yW
+ mAVNAPeGAOWxP+DDUpctBcsTQAl8zDVo/NaF42nlRIfpqJEDGN2WG0sePyQHObIew7T5m9T
+ OhvfIXRqrEWKX93fKgl0rwp0WdjZccz3b3PRid8QJNAfhuVbXcNW5FxVuN6lTbANGnFbi96
+ Uy07ambksCLConkN0t4eA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UssrygRCRbg=:z5tAQ/I/VBzQeRiH8kScvo
+ h1tLphGHYX43ANIoG6LHDIdYk9q1GR7b6X7rmmU6PRfLNJmqqRxgCG22VbrcD56hj90uRr58/
+ FMFQIxrkDC4PBXWB+0e2oV75K1iVY3Mm4dJMGKmLsPBmfJ8vn2X0PQ/grMFlxEuWBEPUgCD/9
+ GFdTOp1dQoDc7W588dEZcszC/KW/DjBABAMSWWa7V+tjv3/8DwqptXMHLCWgAjgtydf8bJtN3
+ f5zDg4fuB/pfZ3ssPRCZX0qiDDm8gmpV4RZKQD1qHa4n+yoBLT5Ugcroq8yarwXsG5dmzMcEX
+ WHRhOe68aiy1FpnGAeQul1vy9LozOkInNN8gKnBFgsIEibuSm9TS94LfC1hSLtvEKcQoipEak
+ bkwzj7zofVUzyW9G1CEZ0P2eCILlmY6JYeAqgwpNLaUXWkXNIyFB2OfuWqWo8Vohjqp6e+zKA
+ 4RwGobN2P6gRc58tjUfgvnxiZScjiju++OxAzA5z2nV51J88n6z0jMCMUDP2QuAurG90zE6i3
+ RtvYB+hGgbHY2YxwpeMuLENUxkp3EQoSiHK0HqaGxUzIilBwFspuLXcUEeQKFiplCoHa8V0s8
+ uhWLgFeO3hYvXh/kvhRrp7Ej3rGixwEK0abJ3m9ICUSdQU3QVjh5qof0FPu7zLScz1onctzcl
+ 0+XxtY4dj8SOxBQ9OQs9RuR2Wz2sog/SzUsu3rqUTVFl3PXp9/0d88XkfXA+q4rSCYN/pQvwt
+ 2iIeUoHaX9ETZJIJatG+R8wZC+TdRZBDtW8z6Uc7NdzDTKRjveQ4/uiIcp6EBfOWzI3+GnhO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283968>
 
-Hi Peff,
+Hi Junio,
 
-On Wed, 13 Jan 2016, Jeff King wrote:
+On Wed, 13 Jan 2016, Junio C Hamano wrote:
 
-> On Wed, Jan 13, 2016 at 06:20:02PM +0100, Johannes Schindelin wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 > 
-> > These patches are companions to 786b150 (clone --dissociate: avoid
-> > locking pack files, 2015-10-06), triggered by a bug report to the Git
-> > for Windows project.
-> > 
-> > Johannes Schindelin (4):
-> >   fetch: release pack files before garbage-collecting
-> >   am: release pack files before garbage-collecting
-> >   merge: release pack files before garbage-collecting
-> >   receive-pack: release pack files before garbage-collecting
+> > This particular section documents what is almost certainly a bug
+> > in the cygwin basename() and also documents my choice of 'fix'.  (ie.
+> > in my implementation I chose to return '/' for '//', which is one of
+> > the possible options that POSIX allows.)
+> > ...
+> > POSIX says, in part [1]:
+> >
+> >     If the string pointed to by path consists entirely of the '/'
+> >     character, basename() shall return a pointer to the string "/". If
+> >     the string pointed to by path is exactly "//", it is
+> >     implementation-defined whether '/' or "//" is returned.
+> >
+> > [1]
+> > http://pubs.opengroup.org/onlinepubs/9699919799/functions/basename.html
+> >
+> > So we should expect other systems to differ, even if they support POSIX. (and maybe
+> > not just this test case.)
 > 
-> [...]
->
-> I think all of the cases here are fine, for two reasons:
-> 
->   1. The new closing is right before the program would exit anyway, so
->      there's no interesting work left to do (and obviously that's where
->      we generally want to call "gc --auto", too)
+> Doesn't that mean the test shouldn't be insisting on the output
+> being one that you arbitrarily pick?  It feels to me that it is
+> wrong to say "We require // to become / unless we know we are on
+> such and such systems".  Instead, shouldn't it be doing "We feed //
+> to the function.  Either / or // is acceptable; any other value is a
+> bug"?
 
-This is actually what I checked, but of course I managed to forget to
-mention it in the cover letter :-(
+I guess that is the best solution of all. I'll try to modify
+test-path-utils.c accordingly tomorrow.
 
-Thanks for verifying, and for spelling it out.
+Ciao,
 Dscho
