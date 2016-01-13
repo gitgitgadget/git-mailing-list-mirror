@@ -1,90 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase can be 'interactive'
-Date: Wed, 13 Jan 2016 10:42:45 +0100
-Message-ID: <vpq7fjdyfvu.fsf@anie.imag.fr>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 1/3] pull: allow interactive rebase with --rebase=interactive
+Date: Wed, 13 Jan 2016 18:33:10 +0800
+Message-ID: <CACRoPnS_CcAuu_jBo9zcjycSN4kvSQhCONNYnY1XRnarRF9Zmw@mail.gmail.com>
 References: <cover.1452612112.git.johannes.schindelin@gmx.de>
-	<8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de>
+	<cover.1452668201.git.johannes.schindelin@gmx.de>
+	<2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Paul Tan <pyokagan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 13 10:46:39 2016
+X-From: git-owner@vger.kernel.org Wed Jan 13 11:33:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJI0i-0002IY-UG
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 10:46:37 +0100
+	id 1aJIk2-00024k-Rz
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 11:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933101AbcAMJqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 04:46:07 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:53058 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932277AbcAMJqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 04:46:03 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u0D9gga7030796
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 13 Jan 2016 10:42:43 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0D9gjVA009669;
-	Wed, 13 Jan 2016 10:42:45 +0100
-In-Reply-To: <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 12 Jan 2016 16:22:16 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jan 2016 10:42:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u0D9gga7030796
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1453282965.59389@fyO5DW/KcEofSM/Uf93Acg
+	id S933799AbcAMKdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 05:33:16 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35525 "EHLO
+	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932359AbcAMKdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 05:33:12 -0500
+Received: by mail-lf0-f66.google.com with SMTP id c134so6560913lfb.2
+        for <git@vger.kernel.org>; Wed, 13 Jan 2016 02:33:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=XwgSWDoSlu3sqJm00EWcyXj1NAF4Rs/+PCLaBmmmQ04=;
+        b=Z6nDArExDUB1bIcq5VmhbbUhQ7/Z1/zR8O8vMcu6Ws0yg4H/ZjYTDknifaNEtL23xn
+         ioeaC3EajvpbAVqWB0L6uazb9mlch7A1IuwSKTzqo4K6GJ9hG0XZl6CpaDjCpl11yWbx
+         6ypKJv3JVmvc8fh5mvvlXphjFCcItMDkb0faIJ2Su3+y6QgcwBCaXE6HripJ/uCJDBRt
+         3UbbpyDeGlVkBXaMh7crtRTf3WF2Z7GORRtLhtDcvdU6m3iavvjzvBMOZt051aHic/Mz
+         HHmzHx3im1z9/58SKv/NJo/Ts37HF67pLeSFvzt+ldYFlsj4l+VsgW9roMbXPziYywfW
+         eZgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=XwgSWDoSlu3sqJm00EWcyXj1NAF4Rs/+PCLaBmmmQ04=;
+        b=aMCCGEjRIzP/dr1QFLDmMl7LNOLBqn9lOCuwr6IRt2d9t9OcgRmGtSvzc8QC+ElNYW
+         AWNQywFGa0mQV2LLM29uB7VQpaDmmA0SnbsejtNLfl5gen0vHL6ZSDGAaj7e2J+aYWWD
+         O3+SmowEVlBmbBhxipehfAABnW1EZBnN1tpxTqtF+lEKbT2euOEwqWNjVlVNmMsQoO2c
+         pMSYJs/EEnYR53wUBXqI/yuQWOzkI3kbtdCf6P5a/esxrycaIBfKVglmrOTmvTfddiYR
+         xvVkiHMz5USAq7EMVjfGY4KmF4ZUX27NtAa+duA2/sLo3F/W9ZqAi9oF5DBgFjfnxvEb
+         VF8w==
+X-Gm-Message-State: ALoCoQnJblkteoDh8f7/E8fxCZyILjw3twrEX4pjXZtw7n/cZn5iwBN0dDZCg4xKBDMXJn7SRuNs+pEdRqyFOWccEegYlpNU7w==
+X-Received: by 10.25.87.5 with SMTP id l5mr30178289lfb.146.1452681190821; Wed,
+ 13 Jan 2016 02:33:10 -0800 (PST)
+Received: by 10.112.82.162 with HTTP; Wed, 13 Jan 2016 02:33:10 -0800 (PST)
+In-Reply-To: <2ebf99214ba600b63a39c58bcb9abb7941a7619d.1452668201.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283898>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Dscho,
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/remote.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index 6694cf2..0af8300 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -251,7 +251,7 @@ static int add(int argc, const char **argv)
->  struct branch_info {
->  	char *remote_name;
->  	struct string_list merge;
-> -	int rebase;
-> +	enum { NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE } rebase;
->  };
->  
->  static struct string_list branch_list;
-> @@ -312,6 +312,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
->  				info->rebase = v;
->  			else if (!strcmp(value, "preserve"))
->  				info->rebase = 1;
-> +			else if (!strcmp(value, "interactive"))
-> +				info->rebase = INTERACTIVE_REBASE;
+On Wed, Jan 13, 2016 at 2:57 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 07f7a3b..e5897e9 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -865,6 +865,7 @@ branch.<name>.rebase::
+>         instead of merging the default branch from the default remote when
+>         "git pull" is run. See "pull.rebase" for doing this in a non
+>         branch-specific manner.
+> +       When the value is `interactive`, the rebase is run in interactive mode.
+>  +
+>  When preserve, also pass `--preserve-merges` along to 'git rebase'
+>  so that locally committed merge commits will not be flattened
 
-What happens if one has branch.*.rebase=interactive, and wants to make
-an exception? Does
+I think this change needs to be repeated for the section on
+"pull.rebase" as well.
 
-  git pull --rebase=true
+> [...]
+> --
+> 2.6.3.windows.1.300.g1c25e49
 
-cancel the 'interactive' part? I guess it is, but if so I think it
-should be tested and documented.
+Other than that, builtin/pull.c has the following option definition
+that needs to be updated:
 
-Anyway, thanks for the patch.
+{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase, "false|true|preserve",
+N_("incorporate changes by rebasing rather than merging"),
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The "false|true|preserve" needs to be updated to
+"false|true|preserve|interactive", I think.
+
+Regards,
+Paul
