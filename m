@@ -1,95 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 4/4] t0060: verify that basename() and dirname() work
- as expected
-Date: Wed, 13 Jan 2016 10:27:36 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601131022410.2964@virtualbox>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <7d73267984ab029df022477e341c536e111eafdd.1452585382.git.johannes.schindelin@gmx.de> <5695E4FB.2060705@web.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/3] Teach 'git remote' that the config var branch.*.rebase can be 'interactive'
+Date: Wed, 13 Jan 2016 10:42:45 +0100
+Message-ID: <vpq7fjdyfvu.fsf@anie.imag.fr>
+References: <cover.1452612112.git.johannes.schindelin@gmx.de>
+	<8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1593712626-1452677258=:2964"
+Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jan 13 10:27:58 2016
+	Paul Tan <pyokagan@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 13 10:46:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJHid-0000SJ-QF
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 10:27:56 +0100
+	id 1aJI0i-0002IY-UG
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 10:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932788AbcAMJ1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 04:27:51 -0500
-Received: from mout.gmx.net ([212.227.15.18]:56167 "EHLO mout.gmx.net"
+	id S933101AbcAMJqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 04:46:07 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:53058 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932114AbcAMJ1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 04:27:48 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LiDrv-1ZoMxN1nvf-00nPwE; Wed, 13 Jan 2016 10:27:38
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <5695E4FB.2060705@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:LpLy6AtawakY8QxdrV7B/M0QnqPjoiiYfCPXMmnTFR5lNhnJFzT
- hgt8IAUv1O+bBfI9xUSisd1qjfIPLdCqTPFvXJx595fmfrimBvCeYzDQ/KiL99TFDB6vsEe
- OAaxI9z/ODWmDwiXKZgurjBOwm/YopBdiSoKtdEEQhFUOPNwOOFFRa+MS+BhcAzyFP4qjh3
- cXzU4CoRxVR/DD8g2Yygg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NbnuEXOGcbQ=:yRv14bsglA/Ve1zAjMXeCO
- 6NfPhdZqJNZWSSV3z5bg5SsP3e16QvgtgtbIjBJCqF4G7PNpUKoPfqgojWPpEx0jW7dMTmNLJ
- wuWVla54LwJumctYA7UsIA77H+hq+YLCWJKnJTT1xWpnXwlsazyRRPTO5zjjBUnXPvfFL6r8C
- pgdLh7my4Yx0+wl3a4Gq17N3cqn45GxYR6p5YgRj9gWWDtzPNSMGRsLivUX56AaOZbGAMVFyL
- 4fRvUIi4liJ/s6MN3rl/xrUnyed1rbjmqXgtrBlt7PzautzlCRhS6aqARFFDhHf4GexQLDGt1
- IGIt0rTu3lhPIk7H2V1yndp7P/WtZROvmUGXfUaJ6mK3g7Tnn8AQaS5nx5uUuDpmcWXiDg898
- Q7Tm+SzX22aR4b2eWC1aiTIsPb6sbQkv4da2jq7VRPCyXpK9ffuc+Y6Aauhpdzre5MPpf5XYZ
- iqRhFc3ldypw2AtZt47ybbuv5UcTNeUzwzjdR8EizU7aGPwFHVD4mgtdz1QvY+eYUyPnWEijO
- 0OOy27JsHM04sQtdmG7F3k6p2tSZVcm9YPh9hQphnOJqVChdG+wM35XDFa+mB+Y3aMVob4RNP
- khK+aR/w+9Dam2ZNtKwSZj5depozzQtNScOJkvNljlaqunVuYbCccP5KBDgLApIPD+KhXr/xR
- YiAkiiCAo5PzL7kI/iTeJIhRm8WbTJWuGq0imtPrFeWYaBnBbrHUGvZORYG2vAIhwnnflhQ4i
- +8lzZqVfz6zhNf7p97Z6v6ZJxcKnMzWMrwa6Vghvc9J/iRQWm+LEU3ptYjSmsuBCX8Ke7EzK 
+	id S932277AbcAMJqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 04:46:03 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u0D9gga7030796
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 13 Jan 2016 10:42:43 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0D9gjVA009669;
+	Wed, 13 Jan 2016 10:42:45 +0100
+In-Reply-To: <8c98523f8a3f2c6f2f3db1e4572e05c28f94688d.1452612112.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Tue, 12 Jan 2016 16:22:16 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Jan 2016 10:42:43 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u0D9gga7030796
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1453282965.59389@fyO5DW/KcEofSM/Uf93Acg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283897>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
---8323329-1593712626-1452677258=:2964
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/remote.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 6694cf2..0af8300 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -251,7 +251,7 @@ static int add(int argc, const char **argv)
+>  struct branch_info {
+>  	char *remote_name;
+>  	struct string_list merge;
+> -	int rebase;
+> +	enum { NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE } rebase;
+>  };
+>  
+>  static struct string_list branch_list;
+> @@ -312,6 +312,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+>  				info->rebase = v;
+>  			else if (!strcmp(value, "preserve"))
+>  				info->rebase = 1;
+> +			else if (!strcmp(value, "interactive"))
+> +				info->rebase = INTERACTIVE_REBASE;
 
-Hi Torsten,
+What happens if one has branch.*.rebase=interactive, and wants to make
+an exception? Does
 
-On Wed, 13 Jan 2016, Torsten B=F6gershausen wrote:
+  git pull --rebase=true
 
-> On 01/12/2016 08:57 AM, Johannes Schindelin wrote:
->=20
-> > +static struct test_data basename_data[] =3D {
-> > +=09/* --- POSIX type paths --- */
-> > +=09{ NULL,              "."    },
-> > +=09{ "",                "."    },
-> > +=09{ ".",               "."    },
-> > +=09{ "..",              ".."   },
-> > +=09{ "/",               "/"    },
-> > +#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
-> Why the !defined(NO_LIBGEN_H)
->=20
-> Shouldn't CYGWIN always behave the same ?
+cancel the 'interactive' part? I guess it is, but if so I think it
+should be tested and documented.
 
-One would assume... Alas, it does not.
+Anyway, thanks for the patch.
 
-I inherited the code in question and wondered the same. I opted for
-keeping the code as a documentation of the differing behavior.
-
-> The main problem is, that t0060 fails under Mac OS (with mac ports
-> installed):
-> expecting success: test-path-utils dirname
-> error: FAIL: dirname(//) =3D> '/' !=3D '//'
-
-See the patch I sent this morning.
-
-Ciao,
-Dscho
---8323329-1593712626-1452677258=:2964--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
