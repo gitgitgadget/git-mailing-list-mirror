@@ -1,84 +1,112 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 0/4] Ensure that we can build without libgen.h
-Date: Wed, 13 Jan 2016 08:02:51 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601130759300.2964@virtualbox>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <56959DFA.9000704@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 2/4] compat/basename: make basename() conform to
+ POSIX
+Date: Wed, 13 Jan 2016 08:14:09 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601130803440.2964@virtualbox>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <a7375faaba405354b30bc19c6edbdb1ef7c68ab1.1452585382.git.johannes.schindelin@gmx.de> <56959EFF.6050207@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Wed Jan 13 08:03:12 2016
+X-From: git-owner@vger.kernel.org Wed Jan 13 08:14:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJFSZ-0001nn-C2
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 08:03:11 +0100
+	id 1aJFdU-0000VW-Nv
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Jan 2016 08:14:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062AbcAMHDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 02:03:06 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50459 "EHLO mout.gmx.net"
+	id S1754419AbcAMHOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 02:14:25 -0500
+Received: from mout.gmx.net ([212.227.17.22]:64333 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752610AbcAMHDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 02:03:04 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lfolq-1Zr1792ZgI-00pKUY; Wed, 13 Jan 2016 08:02:53
+	id S1752353AbcAMHOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 02:14:24 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LlGoc-1ZjNBI0GLm-00b0bL; Wed, 13 Jan 2016 08:14:14
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56959DFA.9000704@ramsayjones.plus.com>
+In-Reply-To: <56959EFF.6050207@ramsayjones.plus.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:nV6NPNejpfoux7xGn/+/Uvrz5NAOL8IvXtYPP3mCVukxESJ6SE9
- EdUgMHHjdKiId4QGIFOa+uw0sQijtqsw6dqi1JRADpkqdlzLxBzEdSL35qUteU79lr7W9+T
- DqVMTaNc0v29HdkFCB7gU/y8fJwGBOJ90KbcdhFVftIHpryig9FRU32Gq4KdnzwYu+0zGhu
- 0hRrZYQRvSKFQ5UiexpbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5SJM8i6t3Jo=:9oguD2Q2kKSafTMs+z8RWn
- mNGBxckU9vPe9Kgz/rasu7jBhFu/KkG0jhXq1Pz21GGqehtvvKiroM8/WLsiF6XnJ3PamWOTB
- vs74AWxXYy7Jf9QiBDvsj8zHOnzB+Vr6K13XAtXkdlblIimoGxl+4jLJjr35KAZJPr6hxjwaC
- 0x44m7OqnZXAbR7Tg8tPaz65oGL2gWl2NEg6hS4HX/4wdSwld2aakH6ykLvvkhJvnjShwh0jN
- S2gHU72I3c2b7r3g91bD/mW6iMEro5wZB1A5pbL14+ljyA7B28dTWo1P4As32E3Dj8SoVVhcT
- F4zAmAdYtu+G6q3fo4/cufHXK7TtTPTLOCiPNV+uLXUkodZtsQ1KrNqaaNlU5JehIKfHFrLnK
- q99lTY9h9muwJrvCA3uuYzLbuerWUhQ5J64u1TFgjYpb2c+JQhpdQ7MrvM0LIc2C92zO0Em50
- 3gEw+JEKW4HPu8cQM3uSRMeTWjdWRSy4UXYVjDo0e9wGJpWXKYn0dvhItLQkk/7zTrvsGqaWz
- PPHDAQJCU1JmjSr2c2EdzTFIQ/67AyUqlZBTRoV3xgRBKSwgmT5gzXPPPQVyz9J/eplJ1G4Wy
- y7K/WC0tZnMR2f2Uym3Fp9rL3Y/QI4ym7/1H9onV8GWDWPkpCUKJW/uaGysU3bVm0PINBYFIb
- Fg2r1w36lygsnUoaQNamzoKQ4pwP/kLF8jwcN5WoGu0ume38ZRiFiRYZSzWZcnmmwZYoeIKRD
- flTWc9wiU4bldqu6rpuWzu1oAekxO/D8XjVGp3h3avQpZ3w0sU+6CEEOuJVcxuKQVoQ+JsEv 
+X-Provags-ID: V03:K0:o98sbpZnlEnCQX3wIcIKGnKZJUu5d2to4LV4OPPY1Hak5nlKRGy
+ 0G5IrlcHDV1vXB2p8cELbOALRw9J+2hFshh1iaUJq43qlBwEmPF97GCBvI4WqiCUTZ7uyIX
+ IPQzwHGSFlHQ7QxC0n9IrfHwrGoZo/KgN0jRILL7DOJJWstqRLzGaTyRGj1NyFBRJDR/J8R
+ 8OIBuKFHl9W/P45Q0JNiw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MMZynmhW7Ys=:zeYA94tFEuwhncj2IhMjf8
+ CYO6n53UDScXxQWddwmfuSEirJ4FcW2292jMZkQGnP1iSxJF6xULYjKeuHrs57Ppn4G5vPbXz
+ aeix7w1sGRGOcft+bLQie2hvUjef2CPDPic2ZAZNPloufb0O8Jdy3hQRPZpcTWsNmk+r1EFG1
+ iwsFixtJ9MLcYXti9q0u66HqB+k18tvOhXtFpqUAvYStaHq6LNNb06J+Orv/Jw/rUU54s8RY7
+ THayTDw20oIyq3sZdsB/sMnt7EGH/lVUU5XqMm/XA20EPspcp7QqsgMMXW0bucqMro70+Hbw4
+ limIL6sMidzdbSlR4wuuKgmtZ8j0PstqB8NsRCfjMYaO2iLOV4AkPAQauatq1A3QCrOkF/gEk
+ jLn09tt9ygDhCUQr/cQVeuFKBpvX2yvNuRl1B58Z7KwZKSrhywTBeZ4ZdA4Bgiw+pxgac/53S
+ C9ukLTqOjWA/HUakeHnD4ZpIAHKWq0/sYxqYhQ7QLaJPjiGYW+vUh0T7onSlkHnUIv5yf6dWF
+ DBBAyP0u0Rg5XnLi3wAeISiCl97VHJU3uk+o9BCh9Ft1M9Vd6FruRHvGjD/rb1+9fVIJ6OYdp
+ 36F6FEGpjlwyZAer639Uk2NXt02P49N33FgR0zaQhEiwvmmL54RO8gB3HIqSkFWZw5NX6z25w
+ ArnwuQzEVIBTnvTiIeJF3WCt+KXi3F4SLLnqYnaB7hMQzRbuBs+ybzqUOot9B0qQEAtkJx99p
+ 5jtCI1jNTJun7+8zf5rQczDCv/CUVG2PNDHhWlRReoiIjlVqnHAfkGXgR+3yM6TTmc3RWD48 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/283891>
 
 Hi Ramsay,
 
 On Wed, 13 Jan 2016, Ramsay Jones wrote:
 
 > On 12/01/16 07:57, Johannes Schindelin wrote:
-> > This mini series adds a fall-back for the `dirname()` function that we use
-> > e.g. in git-am. This is necessary because not all platforms have a working
-> > libgen.h.
+> > diff --git a/compat/basename.c b/compat/basename.c
+> > index 9f00421..0f1b0b0 100644
+> > --- a/compat/basename.c
+> > +++ b/compat/basename.c
+> > @@ -4,10 +4,24 @@
+> >  char *gitbasename (char *path)
+> >  {
+> >  	const char *base;
+> > -	skip_dos_drive_prefix(&path);
+> > +
+> > +	if (path)
+> > +		skip_dos_drive_prefix(&path);
+> > +
+> > +	if (!path || !*path)
+> > +		return ".";
+> > +
+> >  	for (base = path; *path; path++) {
+> > -		if (is_dir_sep(*path))
+> > -			base = path + 1;
+> > +		if (!is_dir_sep(*path))
+> > +			continue;
+> > +		do {
+> > +			path++;
+> > +		} while (is_dir_sep(*path));
+> > +		if (*path)
+> > +			base = path;
+> > +		else
+> > +			while (--path != base && is_dir_sep(*path))
+> > +				*path = '\0';
+> >  	}
+> >  	return (char *)base;
+> >  }
 > > 
-> > While at it, we ensure that our basename() drop-in conforms to the POSIX
-> > specifications.
 > 
-> I was somewhat disappointed that you ignored the implementation of
-> gitbasename() and gitdirname() that was included in the test-libgen.c
-> file that I sent you.
+> I don't suppose it makes much difference, but I find my version
+> slightly easier to read:
 
-I am sorry you feel that I ignored your work!
+Yours is better documented, yes, but as I said, I started from what Git
+already had and tried to provide as minimal changes as possible, to make
+reviewing easy. In any case, I am very reluctant when it comes to
+wholesale code replacements: in my experience, these frequently lead to
+new, entertaining and unintended behavior. I worked with somebody who (for
+the sake of charity) in the following I will reference only by his most
+frequent commit message: Dr "Completely new version" (and yes, this was
+the extent of the commit message). If you buy me a beer or three, I will
+gladly tell you all the fun I had trying to find the regressions in that
+code.
 
-My line of reasoning, however, was to go with the existing gitbasename()
-and with the gitdirname() I had come up with, because I was already
-familiar with them.
-
-Your tests included a couple of corner cases that neither handled
-correctly, and I was able to fix that, so I was happy.
-
-To be quite honest, I blindly deleted everything but the tests, noticed
-that the remaining code looked eerily similar to test-path-utils, and
-merged it there.
+In short: please accept that my decision to build on the existing code
+rather than replacing it had nothing to do with your code.
 
 Ciao,
 Dscho
