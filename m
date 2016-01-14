@@ -1,141 +1,101 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: [PATCH v4 1/2] trailer: allow to write to files other than stdout
-Date: Thu, 14 Jan 2016 17:57:54 +0100
-Message-ID: <1452790676-11937-2-git-send-email-tklauser@distanz.ch>
-References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:58:40 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PREVIEW v3 8/9] checkout-index: there are only two line terminators
+Date: Thu, 14 Jan 2016 09:13:54 -0800
+Message-ID: <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
+References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
+	<1452740590-16827-1-git-send-email-gitster@pobox.com>
+	<1452740590-16827-9-git-send-email-gitster@pobox.com>
+	<20160114101830.GC30772@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 14 18:14:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJlEL-0001Zt-S8
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:58:38 +0100
+	id 1aJlTI-0005LX-GY
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 18:14:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754051AbcANQ6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 11:58:31 -0500
-Received: from mail.zhinst.com ([212.126.164.98]:56268 "EHLO mail.zhinst.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753672AbcANQ6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 11:58:00 -0500
-Received: from ziws06.zhinst.com ([10.42.0.7])
-	by mail.zhinst.com (Kerio Connect 9.0.1) with ESMTP;
-	Thu, 14 Jan 2016 17:57:56 +0100
-X-Mailer: git-send-email 2.7.0.1.g5e091f5
-In-Reply-To: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
+	id S1755782AbcANRN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 12:13:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50358 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755702AbcANRN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 12:13:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 46D353AAB6;
+	Thu, 14 Jan 2016 12:13:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MCNVvHnmbkiG+VIEo/iS61Aoi9k=; b=HrESiM
+	PsOyfqFDAEBkJO1YcRbfgiG3FTW1zhy0rLSU4GvzJOIhFWNZkV9Z/1uTRJ4VEKpD
+	Mh85ZOOw9TtC/PuG8yLXCsTVegZnLdTDr/FfNabmbq2E7lBz4BJ5yC3vDCBEfE4Y
+	tRWURc3kDiBlPco9SnW9niOfnaKxBVuNtJ8P0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y+kRUzG2vWU5nFyCdSgqs+3IORSzg1wa
+	tUGx6HKXdCK4+Puwcf69nVC4WT3ScrpVW1bwdYMTFGW11dOc6QTTyHp95FX23YlQ
+	Gxuf5BuLYKBr5tBKm8tw8scjdt4okc099zTR7MVTBW8z05STeCKFZqJEWEHMCQZj
+	tfcjAG/EYDk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3ED103AAB5;
+	Thu, 14 Jan 2016 12:13:56 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B64913AAB4;
+	Thu, 14 Jan 2016 12:13:55 -0500 (EST)
+In-Reply-To: <20160114101830.GC30772@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Jan 2016 05:18:31 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 31539836-BAE2-11E5-88BF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284068>
 
-Use fprintf instead of printf in trailer.c in order to allow printing
-to a file other than stdout. This will be needed to support in-place
-editing in git interpret-trailers.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- trailer.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+> I see that we switch the line termination on the fly in option_parse_z.
+> But I'm having trouble seeing how we could actually have mixed inputs.
+> We don't actually look at the line-terminator until after all of the
+> options are parsed.
 
-diff --git a/trailer.c b/trailer.c
-index 6f3416febaba..176fac213450 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -108,23 +108,23 @@ static char last_non_space_char(const char *s)
- 	return '\0';
- }
- 
--static void print_tok_val(const char *tok, const char *val)
-+static void print_tok_val(FILE *outfile, const char *tok, const char *val)
- {
- 	char c = last_non_space_char(tok);
- 	if (!c)
- 		return;
- 	if (strchr(separators, c))
--		printf("%s%s\n", tok, val);
-+		fprintf(outfile, "%s%s\n", tok, val);
- 	else
--		printf("%s%c %s\n", tok, separators[0], val);
-+		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
- }
- 
--static void print_all(struct trailer_item *first, int trim_empty)
-+static void print_all(FILE *outfile, struct trailer_item *first, int trim_empty)
- {
- 	struct trailer_item *item;
- 	for (item = first; item; item = item->next) {
- 		if (!trim_empty || strlen(item->value) > 0)
--			print_tok_val(item->token, item->value);
-+			print_tok_val(outfile, item->token, item->value);
- 	}
- }
- 
-@@ -795,14 +795,15 @@ static int has_blank_line_before(struct strbuf **lines, int start)
- 	return 0;
- }
- 
--static void print_lines(struct strbuf **lines, int start, int end)
-+static void print_lines(FILE *outfile, struct strbuf **lines, int start, int end)
- {
- 	int i;
- 	for (i = start; lines[i] && i < end; i++)
--		printf("%s", lines[i]->buf);
-+		fprintf(outfile, "%s", lines[i]->buf);
- }
- 
--static int process_input_file(struct strbuf **lines,
-+static int process_input_file(FILE *outfile,
-+			      struct strbuf **lines,
- 			      struct trailer_item **in_tok_first,
- 			      struct trailer_item **in_tok_last)
- {
-@@ -818,10 +819,10 @@ static int process_input_file(struct strbuf **lines,
- 	trailer_start = find_trailer_start(lines, trailer_end);
- 
- 	/* Print lines before the trailers as is */
--	print_lines(lines, 0, trailer_start);
-+	print_lines(outfile, lines, 0, trailer_start);
- 
- 	if (!has_blank_line_before(lines, trailer_start - 1))
--		printf("\n");
-+		fprintf(outfile, "\n");
- 
- 	/* Parse trailer lines */
- 	for (i = trailer_start; i < trailer_end; i++) {
-@@ -849,6 +850,7 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
- 	struct trailer_item *arg_tok_first;
- 	struct strbuf **lines;
- 	int trailer_end;
-+	FILE *outfile = stdout;
- 
- 	/* Default config must be setup first */
- 	git_config(git_trailer_default_config, NULL);
-@@ -857,18 +859,18 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
- 	lines = read_input_file(file);
- 
- 	/* Print the lines before the trailers */
--	trailer_end = process_input_file(lines, &in_tok_first, &in_tok_last);
-+	trailer_end = process_input_file(outfile, lines, &in_tok_first, &in_tok_last);
- 
- 	arg_tok_first = process_command_line_args(trailers);
- 
- 	process_trailers_lists(&in_tok_first, &in_tok_last, &arg_tok_first);
- 
--	print_all(in_tok_first, trim_empty);
-+	print_all(outfile, in_tok_first, trim_empty);
- 
- 	free_all(&in_tok_first);
- 
- 	/* Print the lines after the trailers as is */
--	print_lines(lines, trailer_end, INT_MAX);
-+	print_lines(outfile, lines, trailer_end, INT_MAX);
- 
- 	strbuf_list_free(lines);
- }
--- 
-2.7.0.1.g5e091f5
+I do not think we are aiming for mixed inputs.  What I meant by
+"mixed" in my description was a possible future option to allow
+input and output using different line termination (e.g. via "-Z"
+you would control output line termination, while "-z" only affects
+the input line termination).
+
+After this step, there is still one call that is more natural to
+have line_termination that is either '\0' or '\n' and that is on the
+output side, which calls write_name_quoted_relative() to report the
+names of the temporary files that received the file contents to the
+standard output.
+
+Of course there is nothing wrong to do
+
+        write_name_quoted_relative(name, prefix, stdout,
+				   nul_term_lines ? '\0' : '\n');
+
+though.
+
+And I tend to think that it might even be a good idea to do so.  If
+somebody in the future really wants to introduce '-Z', then they can
+add a separate "output_line_termination" variable back (and it would
+likely be set to '\0' or '\n' via "-z" when "-Z" is not given), but
+until then, I agree that a simple bool for "-z" would be better.
+
+> I'm also not sure how "unset" would trigger here. If we have a long
+> option, we can use "--no-foo". But there isn't a long option for "-z".
+> Is there a way to negate short options?
+
+I do not think there is.  It merely future-proofs against those who
+try to add "--nul" as a longer synonym.  They would complain after
+they add "--nul" in builtin_checkout_index_options[] as a synonym if
+they see "--no-nul" does not negate the effect of an earlier "-z".
