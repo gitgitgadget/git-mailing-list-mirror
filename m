@@ -1,128 +1,212 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 04/21] mktree: there are only two possible line terminations
-Date: Thu, 14 Jan 2016 15:58:19 -0800
-Message-ID: <1452815916-6447-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 09/21] strbuf: give strbuf_getline() to the "most text friendly" variant
+Date: Thu, 14 Jan 2016 15:58:24 -0800
+Message-ID: <1452815916-6447-10-git-send-email-gitster@pobox.com>
 References: <1452740590-16827-1-git-send-email-gitster@pobox.com>
  <1452815916-6447-1-git-send-email-gitster@pobox.com>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 00:58:56 2016
+X-From: git-owner@vger.kernel.org Fri Jan 15 00:59:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJrn4-0003Dl-My
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 00:58:55 +0100
+	id 1aJrnD-0003Jp-Ll
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 00:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755648AbcANX6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 18:58:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50413 "EHLO
+	id S932106AbcANX67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 18:58:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56990 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755579AbcANX6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 18:58:45 -0500
+	with ESMTP id S1755730AbcANX6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 18:58:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 96E533CD63;
-	Thu, 14 Jan 2016 18:58:44 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3FD993CD79;
+	Thu, 14 Jan 2016 18:58:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=qiBj
-	ZO0yj2FOVDTW8JvKQGCbfA8=; b=hLs4NbKz9fQWF+S63xARjf9rNDhSxeHwmYD1
-	5H9QGZmYdSpHmlT+75jjMGeYJt9T+/GPZFyd9Z/FuXk1PxZiXlcX2d3WU5oxs6aP
-	/xAOYRHXyr8aUDuxtRUW3SKX89ZZImmy+zje/gYz0qFXgXyfgmKmGAm1kfxmgInQ
-	FiBt1bs=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=LPwj
+	v++cWM1U6obxvJvL8GS2b8g=; b=tIpZXV8emKPCfAiXw6rLgMz1r2ziua/KaLLZ
+	HPgaLGjJ2OiZbML70Z5VJoFbBbUFrHUEr7nyPEsf+jiOn8IFgmvG7Vw3O+Pc2LaU
+	59nBIrQpobDXQGV6vUNoVAEPJe5i2zwsWU7u6ABvdHX+hbhyaoCNAk5ik80Kewcd
+	tGaIL/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	RbUvewaRQtv00x1pBXxdSk1oumszRvDKBK+ZdkC6XlDmJjMb8GWKHqdFJ9tdt2wg
-	pl5kM5hvAjR8Y3IUkSYhvHuZ0N9M3bOiOrn7oqKSmKbzwPyo7BGDUm8XN5k7iArG
-	qkvmsyNyj3zk2O26VSGGVarrX4AVQM1/RVLrUi0Q61Y=
+	gwpgbNxlpZsPvvNqDYQiHqcplkUUVDzAv8BypCsXMBJACUEQqYtfTwRcOSKppjWq
+	iybyADmFUtRD7aq5JiTg3m5jCRRoUwBTjLZKHDpJHimz5J0YQnbHQg4eSD9wqD9S
+	OK+TYvHQX2mV6EOxZQLBGVv/307Ad44/eH5XzI2ch6k=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EE423CD62;
-	Thu, 14 Jan 2016 18:58:44 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 365763CD78;
+	Thu, 14 Jan 2016 18:58:53 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 108A53CD61;
-	Thu, 14 Jan 2016 18:58:43 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8949E3CD77;
+	Thu, 14 Jan 2016 18:58:52 -0500 (EST)
 X-Mailer: git-send-email 2.7.0-250-ge1b5ba3
 In-Reply-To: <1452815916-6447-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: BE4B2ABE-BB1A-11E5-978B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C35B8710-BB1A-11E5-8652-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284110>
 
-The program by default reads LF terminated lines, with an option to
-use NUL terminated records.  Instead of pretending that there can be
-other useful values for line_termination, use a boolean variable,
-nul_term_line, to tell if NUL terminated records are used, and
-switch between strbuf_getline_{lf,nul} based on it.
+Now there is no direct caller to strbuf_getline(), we can demote it
+to file-scope static private to strbuf.c implementation and rename
+it to strbuf_getdelim().  Rename strbuf_getline_crlf(), which is
+designed to be the most "text friendly" variant, and allow it to
+take over this simplest name, strbuf_getline(), so we can add more
+uses of it without having to type _crlf over and over again in the
+coming steps.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/mktree.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ builtin/am.c       |  8 ++++----
+ strbuf.c           |  8 ++++----
+ strbuf.h           | 25 ++++++++++++++-----------
+ transport-helper.c |  3 ++-
+ 4 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index a964d6b..a237caa 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -65,7 +65,7 @@ static const char *mktree_usage[] = {
- 	NULL
- };
+diff --git a/builtin/am.c b/builtin/am.c
+index 9063a4a..7b8351d 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -613,7 +613,7 @@ static int is_mail(FILE *fp)
+ 	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
+ 		die("invalid pattern: %s", header_regex);
  
--static void mktree_line(char *buf, size_t len, int line_termination, int allow_missing)
-+static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_missing)
+-	while (!strbuf_getline_crlf(&sb, fp)) {
++	while (!strbuf_getline(&sb, fp)) {
+ 		if (!sb.len)
+ 			break; /* End of header */
+ 
+@@ -660,7 +660,7 @@ static int detect_patch_format(const char **paths)
+ 
+ 	fp = xfopen(*paths, "r");
+ 
+-	while (!strbuf_getline_crlf(&l1, fp)) {
++	while (!strbuf_getline(&l1, fp)) {
+ 		if (l1.len)
+ 			break;
+ 	}
+@@ -681,9 +681,9 @@ static int detect_patch_format(const char **paths)
+ 	}
+ 
+ 	strbuf_reset(&l2);
+-	strbuf_getline_crlf(&l2, fp);
++	strbuf_getline(&l2, fp);
+ 	strbuf_reset(&l3);
+-	strbuf_getline_crlf(&l3, fp);
++	strbuf_getline(&l3, fp);
+ 
+ 	/*
+ 	 * If the second line is empty and the third is a From, Author or Date
+diff --git a/strbuf.c b/strbuf.c
+index 2ff898c..47ac045 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -501,7 +501,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ }
+ #endif
+ 
+-int strbuf_getline(struct strbuf *sb, FILE *fp, int term)
++static int strbuf_getdelim(struct strbuf *sb, FILE *fp, int term)
  {
- 	char *ptr, *ntr;
- 	unsigned mode;
-@@ -97,7 +97,7 @@ static void mktree_line(char *buf, size_t len, int line_termination, int allow_m
- 	*ntr++ = 0; /* now at the beginning of SHA1 */
+ 	if (strbuf_getwholeline(sb, fp, term))
+ 		return EOF;
+@@ -510,7 +510,7 @@ int strbuf_getline(struct strbuf *sb, FILE *fp, int term)
+ 	return 0;
+ }
  
- 	path = ntr + 41;  /* at the beginning of name */
--	if (line_termination && path[0] == '"') {
-+	if (!nul_term_line && path[0] == '"') {
- 		struct strbuf p_uq = STRBUF_INIT;
- 		if (unquote_c_style(&p_uq, path, NULL))
- 			die("invalid quoting");
-@@ -141,23 +141,25 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+-int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
++int strbuf_getline(struct strbuf *sb, FILE *fp)
  {
- 	struct strbuf sb = STRBUF_INIT;
- 	unsigned char sha1[20];
--	int line_termination = '\n';
-+	int nul_term_line = 0;
- 	int allow_missing = 0;
- 	int is_batch_mode = 0;
- 	int got_eof = 0;
-+	strbuf_getline_fn getline_fn;
+ 	if (strbuf_getwholeline(sb, fp, '\n'))
+ 		return EOF;
+@@ -524,12 +524,12 @@ int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
  
- 	const struct option option[] = {
--		OPT_SET_INT('z', NULL, &line_termination, N_("input is NUL terminated"), '\0'),
-+		OPT_BOOL('z', NULL, &nul_term_line, N_("input is NUL terminated")),
- 		OPT_SET_INT( 0 , "missing", &allow_missing, N_("allow missing objects"), 1),
- 		OPT_SET_INT( 0 , "batch", &is_batch_mode, N_("allow creation of more than one tree"), 1),
- 		OPT_END()
- 	};
+ int strbuf_getline_lf(struct strbuf *sb, FILE *fp)
+ {
+-	return strbuf_getline(sb, fp, '\n');
++	return strbuf_getdelim(sb, fp, '\n');
+ }
  
- 	ac = parse_options(ac, av, prefix, option, mktree_usage, 0);
-+	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+ int strbuf_getline_nul(struct strbuf *sb, FILE *fp)
+ {
+-	return strbuf_getline(sb, fp, '\0');
++	return strbuf_getdelim(sb, fp, '\0');
+ }
  
- 	while (!got_eof) {
- 		while (1) {
--			if (strbuf_getline(&sb, stdin, line_termination) == EOF) {
-+			if (getline_fn(&sb, stdin) == EOF) {
- 				got_eof = 1;
- 				break;
- 			}
-@@ -167,7 +169,7 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
- 					break;
- 				die("input format error: (blank line only valid in batch mode)");
- 			}
--			mktree_line(sb.buf, sb.len, line_termination, allow_missing);
-+			mktree_line(sb.buf, sb.len, nul_term_line, allow_missing);
- 		}
- 		if (is_batch_mode && got_eof && used < 1) {
- 			/*
+ int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
+diff --git a/strbuf.h b/strbuf.h
+index 5501743..220c541 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -354,8 +354,8 @@ extern void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm
+  *
+  * NOTE: The buffer is rewound if the read fails. If -1 is returned,
+  * `errno` must be consulted, like you would do for `read(3)`.
+- * `strbuf_read()`, `strbuf_read_file()` and `strbuf_getline()` has the
+- * same behaviour as well.
++ * `strbuf_read()`, `strbuf_read_file()` and `strbuf_getline_*()`
++ * family of functions have the same behaviour as well.
+  */
+ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
+ 
+@@ -380,26 +380,29 @@ extern int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
+ 
+ /**
+  * Read a line from a FILE *, overwriting the existing contents
+- * of the strbuf. The second argument specifies the line
+- * terminator character, typically `'\n'`.
++ * of the strbuf.  There are three public functions with this
++ * function signature, with different line termination convention.
+  * Reading stops after the terminator or at EOF.  The terminator
+  * is removed from the buffer before returning.  Returns 0 unless
+  * there was nothing left before EOF, in which case it returns `EOF`.
+  */
+-extern int strbuf_getline(struct strbuf *, FILE *, int);
+-
+ 
+ typedef int (*strbuf_getline_fn)(struct strbuf *, FILE *);
+ 
++/* Uses LF as the line terminator */
+ extern int strbuf_getline_lf(struct strbuf *sb, FILE *fp);
++
++/* Uses NUL as the line terminator */
+ extern int strbuf_getline_nul(struct strbuf *sb, FILE *fp);
+ 
+-/*
+- * Similar to strbuf_getline(), but uses '\n' as the terminator,
+- * and additionally treats a '\r' that comes immediately before '\n'
+- * as part of the terminator.
++/**
++ * Similar to strbuf_getline_lf(), but additionally treats
++ * a '\r' that comes immediately before '\n' as part of the
++ * terminator.  This is the most friendly version to be used
++ * to read "text" files that can come from platforms whose
++ * native text format is CRLF terminated.
+  */
+-extern int strbuf_getline_crlf(struct strbuf *, FILE *);
++extern int strbuf_getline(struct strbuf *, FILE *);
+ 
+ 
+ /**
+diff --git a/transport-helper.c b/transport-helper.c
+index 163e4b1..e45d88f 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -137,7 +137,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 	data->no_disconnect_req = 0;
+ 
+ 	/*
+-	 * Open the output as FILE* so strbuf_getline() can be used.
++	 * Open the output as FILE* so strbuf_getline_*() family of
++	 * functions can be used.
+ 	 * Do this with duped fd because fclose() will close the fd,
+ 	 * and stuff like taking over will require the fd to remain.
+ 	 */
 -- 
 2.7.0-250-ge1b5ba3
