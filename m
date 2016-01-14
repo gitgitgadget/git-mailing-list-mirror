@@ -1,168 +1,160 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PREVIEW v3 7/9] update-index: there are only two line terminators
-Date: Wed, 13 Jan 2016 19:03:07 -0800
-Message-ID: <1452740590-16827-8-git-send-email-gitster@pobox.com>
+Subject: [PREVIEW v3 9/9] strbuf: retire strbuf_getline() for now
+Date: Wed, 13 Jan 2016 19:03:10 -0800
+Message-ID: <1452740590-16827-11-git-send-email-gitster@pobox.com>
 References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
  <1452740590-16827-1-git-send-email-gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 04:03:49 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 04:03:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJYCR-0007kB-I8
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 04:03:47 +0100
+	id 1aJYCU-0007mh-HK
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 04:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbcANDDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 22:03:37 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58460 "EHLO
+	id S1752960AbcANDDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Jan 2016 22:03:46 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59702 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752869AbcANDDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 22:03:25 -0500
+	with ESMTP id S1752909AbcANDDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jan 2016 22:03:30 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2D533C447;
-	Wed, 13 Jan 2016 22:03:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=USdP
-	8A0eHwZ4cwEOu8Tp14h4EPg=; b=tjwFkqrlOh3YDBwofXW1baZzuOhEHimopR0V
-	QmV7QIWeLXCCMy3D1GEkN/TvV1oTy5qxOO+VvVyh3JBBn03A38xqrtC7w3EicDwo
-	XaxQN+96Y1PeqgCTfVTIbJqHa4ZVeY+LNCEqbvKPrC6gp++HR3niqF4IcWUZETU3
-	EnqZIJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	nHR79kHw80VHXZcHAZCIGonEVy9yQWAU3hQJZFWBWTfqLMbKBShDtiFzH/l7xNJv
-	5B28CaYBv0apzcl4LqRJFe4svtLFtz2panMrKiJG4GFZX2X1CswuXpF7RbbrpLaO
-	uWjQDjw7NvgDDOfxlCUheT0uV4t9X8HrAQGChVtZ7Co=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE81F3C457;
+	Wed, 13 Jan 2016 22:03:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=7Mel
+	fMRsgQVvo3Bs1Xav6geICDg=; b=WuXXZy2BRdfGgOdql6NGN1v1Uq3AuYDDEFIg
+	zzYbS0shrEjrNidV9z2p+NagPXiCbr+JtS7w9oNCZhcWHtA1dKF5syTyz4Kn67Lp
+	cxmj4IQ+/rXbnEb/mlqqa5qDsI0dDqnK7yMRDisZTm1AsPS233rZJbGsJiWRbERK
+	HpzwghQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=LyEiCn
+	ddEa/YuYNb5kzQOTb6DURnSoRJqxBlrpOIV7XXvcTupC7SD+EumyPrhEoMjsb/Un
+	1OiEBsW6jsjh+s9WgdnydBTphTiyZlAzdHNzUiBrhXWulIL5Clix94XP9wXOS0sw
+	lE3GHI9SsCCt93ZL1Ovf6ddVMTe2QqBGah0EI=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAF3C3C446;
-	Wed, 13 Jan 2016 22:03:24 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D79383C456;
+	Wed, 13 Jan 2016 22:03:29 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A28B3C440;
-	Wed, 13 Jan 2016 22:03:23 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 559CA3C453;
+	Wed, 13 Jan 2016 22:03:29 -0500 (EST)
 X-Mailer: git-send-email 2.7.0-242-gdd583c7
 In-Reply-To: <1452740590-16827-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 5F9E71D8-BA6B-11E5-8168-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 6338E9CC-BA6B-11E5-9519-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284011>
 
-The program by default works on LF terminated lines, with an option
-to use NUL terminated records, when reading the index-info and
-cacheinfo.  Instead of using line_termination that happens to take
-LF or NUL, use the value of nul_term_line and switch between
-strbuf_getline_{lf,nul} based on it.
+Now there is no direct caller to strbuf_getline(), so demote it
+to file-scope static private to strbuf.c implementation and rename
+it to strbuf_getdelim().
+
+Eventually, we may want to make this short and clean name a synonym
+to strbuf_getline_crlf(), but not now.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/update-index.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ strbuf.c           |  6 +++---
+ strbuf.h           | 21 +++++++++++----------
+ transport-helper.c |  3 ++-
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 7431938..6d90424 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -468,12 +468,14 @@ static void update_one(const char *path)
- 	report("add '%s'", path);
+diff --git a/strbuf.c b/strbuf.c
+index 2ff898c..a8641cb 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -501,7 +501,7 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ }
+ #endif
+ 
+-int strbuf_getline(struct strbuf *sb, FILE *fp, int term)
++static int strbuf_getdelim(struct strbuf *sb, FILE *fp, int term)
+ {
+ 	if (strbuf_getwholeline(sb, fp, term))
+ 		return EOF;
+@@ -524,12 +524,12 @@ int strbuf_getline_crlf(struct strbuf *sb, FILE *fp)
+ 
+ int strbuf_getline_lf(struct strbuf *sb, FILE *fp)
+ {
+-	return strbuf_getline(sb, fp, '\n');
++	return strbuf_getdelim(sb, fp, '\n');
  }
  
--static void read_index_info(int line_termination)
-+static void read_index_info(int nul_term_line)
+ int strbuf_getline_nul(struct strbuf *sb, FILE *fp)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf uq = STRBUF_INIT;
-+	strbuf_getline_fn getline_fn;
- 
--	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
-+	while (getline_fn(&buf, stdin) != EOF) {
- 		char *ptr, *tab;
- 		char *path_name;
- 		unsigned char sha1[20];
-@@ -522,7 +524,7 @@ static void read_index_info(int line_termination)
- 			goto bad_line;
- 
- 		path_name = ptr;
--		if (line_termination && path_name[0] == '"') {
-+		if (!nul_term_line && path_name[0] == '"') {
- 			strbuf_reset(&uq);
- 			if (unquote_c_style(&uq, path_name, NULL)) {
- 				die("git update-index: bad quoting of path name");
-@@ -844,12 +846,12 @@ static int cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- static int stdin_cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- 			      const struct option *opt, int unset)
- {
--	int *line_termination = opt->value;
-+	int *nul_term_line = opt->value;
- 
- 	if (ctx->argc != 1)
- 		return error("option '%s' must be the last argument", opt->long_name);
- 	allow_add = allow_replace = allow_remove = 1;
--	read_index_info(*line_termination);
-+	read_index_info(*nul_term_line);
- 	return 0;
+-	return strbuf_getline(sb, fp, '\0');
++	return strbuf_getdelim(sb, fp, '\0');
  }
  
-@@ -901,7 +903,7 @@ static int reupdate_callback(struct parse_opt_ctx_t *ctx,
+ int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
+diff --git a/strbuf.h b/strbuf.h
+index 5501743..ea2a51f 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -354,8 +354,8 @@ extern void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm
+  *
+  * NOTE: The buffer is rewound if the read fails. If -1 is returned,
+  * `errno` must be consulted, like you would do for `read(3)`.
+- * `strbuf_read()`, `strbuf_read_file()` and `strbuf_getline()` has the
+- * same behaviour as well.
++ * `strbuf_read()`, `strbuf_read_file()` and `strbuf_getline_*()`
++ * family of functions have the same behaviour as well.
+  */
+ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
  
- int cmd_update_index(int argc, const char **argv, const char *prefix)
- {
--	int newfd, entries, has_errors = 0, line_termination = '\n';
-+	int newfd, entries, has_errors = 0, nul_term_line = 0;
- 	int untracked_cache = -1;
- 	int read_from_stdin = 0;
- 	int prefix_length = prefix ? strlen(prefix) : 0;
-@@ -912,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	int split_index = -1;
- 	struct lock_file *lock_file;
- 	struct parse_opt_ctx_t ctx;
-+	strbuf_getline_fn getline_fn;
- 	int parseopt_state = PARSE_OPT_UNKNOWN;
- 	struct option options[] = {
- 		OPT_BIT('q', NULL, &refresh_args.flags,
-@@ -963,13 +966,13 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 			N_("add to index only; do not add content to object database"), 1),
- 		OPT_SET_INT(0, "force-remove", &force_remove,
- 			N_("remove named paths even if present in worktree"), 1),
--		OPT_SET_INT('z', NULL, &line_termination,
--			N_("with --stdin: input lines are terminated by null bytes"), '\0'),
-+		OPT_SET_INT('z', NULL, &nul_term_line,
-+			    N_("with --stdin: input lines are terminated by null bytes"), 1),
- 		{OPTION_LOWLEVEL_CALLBACK, 0, "stdin", &read_from_stdin, NULL,
- 			N_("read list of paths to be updated from standard input"),
- 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
- 			(parse_opt_cb *) stdin_callback},
--		{OPTION_LOWLEVEL_CALLBACK, 0, "index-info", &line_termination, NULL,
-+		{OPTION_LOWLEVEL_CALLBACK, 0, "index-info", &nul_term_line, NULL,
- 			N_("add entries from standard input to the index"),
- 			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
- 			(parse_opt_cb *) stdin_cacheinfo_callback},
-@@ -1057,6 +1060,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 	argc = parse_options_end(&ctx);
+@@ -380,24 +380,25 @@ extern int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
+ 
+ /**
+  * Read a line from a FILE *, overwriting the existing contents
+- * of the strbuf. The second argument specifies the line
+- * terminator character, typically `'\n'`.
++ * of the strbuf.  There are three public functions with this
++ * function signature, with different line termination convention.
+  * Reading stops after the terminator or at EOF.  The terminator
+  * is removed from the buffer before returning.  Returns 0 unless
+  * there was nothing left before EOF, in which case it returns `EOF`.
+  */
+-extern int strbuf_getline(struct strbuf *, FILE *, int);
+-
+ 
+ typedef int (*strbuf_getline_fn)(struct strbuf *, FILE *);
+ 
++/* Uses LF as the line terminator */
+ extern int strbuf_getline_lf(struct strbuf *sb, FILE *fp);
 +
-+	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
- 	if (preferred_index_format) {
- 		if (preferred_index_format < INDEX_FORMAT_LB ||
- 		    INDEX_FORMAT_UB < preferred_index_format)
-@@ -1073,9 +1078,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		struct strbuf buf = STRBUF_INIT, nbuf = STRBUF_INIT;
++/* Uses NUL as the line terminator */
+ extern int strbuf_getline_nul(struct strbuf *sb, FILE *fp);
  
- 		setup_work_tree();
--		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+		while (getline_fn(&buf, stdin) != EOF) {
- 			char *p;
--			if (line_termination && buf.buf[0] == '"') {
-+			if (!nul_term_line && buf.buf[0] == '"') {
- 				strbuf_reset(&nbuf);
- 				if (unquote_c_style(&nbuf, buf.buf, NULL))
- 					die("line is badly quoted");
+-/*
+- * Similar to strbuf_getline(), but uses '\n' as the terminator,
+- * and additionally treats a '\r' that comes immediately before '\n'
+- * as part of the terminator.
++/**
++ * Similar to strbuf_getline_lf(), but additionally treats
++ * a '\r' that comes immediately before '\n' as part of the
++ * terminator.
+  */
+ extern int strbuf_getline_crlf(struct strbuf *, FILE *);
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index 74eb217..d108336 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -137,7 +137,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 	data->no_disconnect_req = 0;
+ 
+ 	/*
+-	 * Open the output as FILE* so strbuf_getline() can be used.
++	 * Open the output as FILE* so strbuf_getline_*() family of
++	 * functions can be used.
+ 	 * Do this with duped fd because fclose() will close the fd,
+ 	 * and stuff like taking over will require the fd to remain.
+ 	 */
 -- 
 2.7.0-242-gdd583c7
