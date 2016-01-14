@@ -1,93 +1,138 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule: Port resolve_relative_url from shell to C
-Date: Thu, 14 Jan 2016 21:50:28 +0100
-Message-ID: <56980A14.1060605@web.de>
-References: <1452708927-9401-1-git-send-email-sbeller@google.com>
- <xmqq4mehm92b.fsf@gitster.mtv.corp.google.com>
- <CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 20/21] refs: add LMDB refs backend
+Date: Thu, 14 Jan 2016 15:52:59 -0500
+Message-ID: <20160114205259.GA10440@sigill.intra.peff.net>
+References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
+ <1452561740-8668-21-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-To: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:50:50 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:53:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJor3-0002sa-6F
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:50:49 +0100
+	id 1aJotI-0004fc-Aa
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:53:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbcANUup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:50:45 -0500
-Received: from mout.web.de ([212.227.15.3]:53036 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754432AbcANUuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:50:44 -0500
-Received: from [192.168.178.41] ([79.211.122.98]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MWS0g-1aeHHV20Ec-00XbTh; Thu, 14 Jan 2016 21:50:35
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
-X-Provags-ID: V03:K0:mXcrAiW62aqXO1XLgNf4ppcA/ly/VTXTPGmL1dHlB+mi6irnpK3
- yYYkOv0QpiEd4t9GbsCGUPWUtumL4hP8MVw2jTIrU4bCq1cy4AdXCKifHi4F3HfGxjdmC0D
- QXtE/MwRd9KjCKEXEO5t85zO+INALWwsU5FijxK1u4ECIRz3FFAXfTOOo5yBwaF83wnA5Ad
- xraMe1EQmQpwiwK/RhL8A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U8In+u+FuzU=:ztBnHMvWjmB6A7Tl4zWJQy
- 1P/7j1Dmk38Pa6xgslJ2+IlqrKrG+mM+TiX+GdcadWfqtORxE/AzfbrZTH0pZHyF2B64E/JnA
- wtxWfvdRqHlXjJaFTGPvKBsyVUtqxxugwM7jP7WiY8E9opM6o8IYuo8nrHi32WO7JgGH3mrN2
- HnoDvOR46SLM5MmU5WzzbvW7vybDbst+YPtBgg9RANDpFvVcsGOzDpMY40xTVSb+9K2Lf+YUH
- SKcuUF6Jkkl9XXmSsAM+Y4ZV2vnPUnycYin0Ho/rSBEJhcoyrbUQXTZYfaSWaL26VPZLKBAVL
- PPor7d7was8ZKF1Jahih6l+ATymCv/AyuUi7OpAuLYtRubwgX6NxXRl4J6adKJw2q27O8un+9
- SOnvl9DuCjA05gJ2/ith+w0eGTNv1VtsJCuuHkIyWEZZUVHjVJnGAWGmi4LXRjZhyjmsHEPxz
- QRcGkuU8hetHz44y6pPNjyQbo/9P6asliWGw7kgIY6tFfIJDba6lgdNLEg2nJky2s6Ebx/RIW
- qANOXdLjZ+4XxFyUC1Fxmvk+Sh991k/J/JT9SudbYjKaODp6C4AZfuZpRBm8Kz6Yhj/HdCoY0
- xi4aqT+PVZ4vs/zPdPgyrQKH+3JoAFN3m3vOriwWf1U6nB06J9MJfdIHzQlLEEZQq3qV66N6k
- /2Ngta4nx2ddnxXYDBpL4R0SWjPB0YrMxkO1464FmUgFZ9aK3B85iQR1Cpk48yLI/BHhANcJd
- aRgbYyu4PJiZPvLYRyeAlCYsFqDMwI7F18cTomc6cKbe32oQ9krAAug/wuhbSzygU9t3xNub 
+	id S1754116AbcANUxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:53:03 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53927 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750999AbcANUxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:53:01 -0500
+Received: (qmail 9315 invoked by uid 102); 14 Jan 2016 20:53:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:53:01 -0500
+Received: (qmail 11472 invoked by uid 107); 14 Jan 2016 20:53:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:53:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:52:59 -0500
+Content-Disposition: inline
+In-Reply-To: <1452561740-8668-21-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284091>
 
-Am 13.01.2016 um 23:47 schrieb Stefan Beller:
-> On Wed, Jan 13, 2016 at 2:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Later on we want to deprecate the `git submodule init` command and make
->>> it implicit in other submodule commands.
->>
->> I doubt there is a concensus for "deprecate" part to warrant the use
->> of "we want" here.  I tend to think that the latter half of the
->> sentence is uncontroversial, i.e. it is a good idea to make other
->> "submodule" subcommands internally call it when it makes sense, and
->> also make knobs available to other commands like "clone" and
->> possibly "checkout" so that the users do not have to do the
->> "submodule init" as a separate step, though.
->
-> Maybe I need to rethink my strategy here and deliver a patch series
-> which includes a complete port of `submodule init`, and maybe even
-> options in checkout (and clone) to run `submodule init`. That way the
-> immediate benefit would be clear on why the series is a good idea.
+On Mon, Jan 11, 2016 at 08:22:19PM -0500, David Turner wrote:
 
-I think that makes lots of sense. It looks to me like clone already
-has that option (as --recurse-submodules must init the submodules),
-but it might make sense to add such an option to checkout to init
-(and then also update) all newly appearing submodules (just like
-"git submodule update" has the --init option for the same purpose).
+> +static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+> +			     const char *email, unsigned long timestamp, int tz,
+> +			     const char *message, void *cb_data)
+> +{
+> +
+> +	const char *newrefname = cb_data;
+> +	MDB_val key, new_key, val;
+> +
+> +	assert(transaction.cursor);
+> +
+> +	if (mdb_cursor_get_or_die(transaction.cursor, &key, &val, MDB_GET_CURRENT))
+> +		die("renaming ref: mdb_cursor_get failed to get current");
+> +
+> +	new_key.mv_size = strlen(newrefname) + 5 + 1 + 8;
+> +	new_key.mv_data = xmalloc(new_key.mv_size);
+> +	strcpy(new_key.mv_data, "logs/");
+> +	strcpy((char *)new_key.mv_data + 5, newrefname);
+> +	memcpy((char *)new_key.mv_data + new_key.mv_size - 8,
+> +	       (const char *)key.mv_data + key.mv_size - 8, 8);
+> +	mdb_put_or_die(&transaction, &new_key, &val, 0);
+> +	mdb_cursor_del_or_die(transaction.cursor, 0);
+> +	free(new_key.mv_data);
+> +	return 0;
 
-> The current wording is mostly arguing to Jens, how to do the submodule
-> groups thing later on, but skipping the immediate steps.
+When you re-roll, do you mind avoiding strcpy here? I know that your
+malloc is big enough, but:
 
-I really believe that in the future a lot of users will hop on to the
-automatically-init-and-update-submodules train once we have it (and I
-think users of the groups feature want to be on that train by default).
+  1. Avoiding strcpy makes auditing easier.
 
-But I also believe we'll have to support the old school init-manually
-and update-when-I-want-to use cases for a very long time, as lots of
-work flows are built around that.
+  2. We can probably come up with a solution that avoids the magic
+     numbers, making it more pleasant to read.
+
+  3. Manual computation plus a strcpy can be vulnerable to integer
+     overflows in the size (I didn't check the types on MDB_val to see
+     if that is feasible or not, but again, it's nice to avoid for audit
+     purposes).
+
+Since we free the memory immediately-ish, I think using a strbuf would
+be a good fit. Something like:
+
+  struct strbuf path = STRBUF_INIT;
+  ...
+  strbuf_addf(&path, "logs/%s", newrefname);
+  strbuf_add(&path, (const char *)key.mv_data + key.mv_size - 8, 8);
+  new_key.mv_size = path.len;
+  new_key.mv_data = path.buf;
+  ... mdb_put, etc ...
+  strbuf_release(&path);
+
+(I hope I'm reading the 8-byte thing right; should we also be asserting
+that key.mv_size >= 8?).
+
+> +static int lmdb_for_each_reflog_ent_order(const char *refname,
+> +					  each_reflog_ent_fn fn,
+> +					  void *cb_data, int reverse)
+> +{
+> +	MDB_val key, val;
+> +	char *search_key;
+> +	char *log_path;
+> +	int len;
+> +	MDB_cursor *cursor;
+> +	int ret = 0;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	enum MDB_cursor_op direction = reverse ? MDB_PREV : MDB_NEXT;
+> +	uint64_t zero = 0ULL;
+> +
+> +	len = strlen(refname) + 6;
+> +	log_path = xmalloc(len);
+> +	search_key = xmalloc(len + 1);
+> +	sprintf(log_path, "logs/%s", refname);
+> +	strcpy(search_key, log_path);
+
+Ditto here (and for sprintf, too). You can do these with xstrfmt:
+
+  log_path = xstrfmt("logs/%s", refname);
+  len = strlen(log_path); /* or use a strbuf to avoid the extra strlen */
+
+The search_key one looks like an extra off-by-one, but the extra byte
+gets used below. So maybe:
+
+  /* \0 may be rewritten as \1 for reverse search below */
+  search_key = xstrfmt("%s\0", log_path);
+
+though I think:
+
+  if (reverse) {
+	/* explanation ... */
+	search_key = xstrfmt("%s\1", log_path);
+  } else {
+	search_key = xstrdup(log_path);
+  }
+
+might be clearer to a reader. There are a few other sprintfs and
+strcpys, but I think they can all use similar techniques.
+
+-Peff
