@@ -1,131 +1,167 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 07/20] refs: add method for delete_refs
-Date: Thu, 14 Jan 2016 11:26:04 -0500
-Message-ID: <1452788777-24954-8-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 16/20] refs: check submodules ref storage config
+Date: Thu, 14 Jan 2016 11:26:13 -0500
+Message-ID: <1452788777-24954-17-git-send-email-dturner@twopensource.com>
 References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:53 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:27:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJkjZ-0002BJ-52
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:49 +0100
+	id 1aJkjs-0002SK-KM
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:27:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755662AbcANQ0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 11:26:42 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:33271 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755618AbcANQ0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 11:26:40 -0500
-Received: by mail-qg0-f44.google.com with SMTP id b35so356507959qge.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:26:39 -0800 (PST)
+	id S1755784AbcANQ0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:26:54 -0500
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33417 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755606AbcANQ0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 11:26:49 -0500
+Received: by mail-qg0-f50.google.com with SMTP id b35so356512418qge.0
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e6/rJn+8xhiDdtoT8zt9NGiyO45qc2kyKdpwkUceDkg=;
-        b=MyOwL7lPyHq9D1zCOM0RiZrnQct8JVYDHek0oc88BLk7ZnNRWU2hpar/7H2D6S24su
-         gQ7PyaKe72tM7URbgVrw5M8UPYmnc7TqYN3+WforqtB9Fm+PlOlSXghZrljIFd0dlSnQ
-         HepXt3RGahYdA/9xN/z3Z9t3NlDDPT6kVQbhChIaZGsps2cu3y7cPhQjKHY08mgb7dsD
-         A+toiSm515T0M3WJ4IPAK5YYyueItpf4TIXyoog7mS33t3rouq9cRStKS62Ybn/He+3U
-         UxOBWHQLJQEGJlNVPOIFYhsiuqplP4jFtfTUi94ctkX4If2YvPDVLV8z10bF64plQY7T
-         2jOg==
+        bh=9Agd2SjSir1uVo7PqxqvO7IZ5klLcMTKg3N5APRPxfg=;
+        b=IiwV5DfWXKkjr8OptoqTBW0wCziOm+w3id+GSGq5SjeYzXgG4UEbIBQrilsdMqJx+v
+         422BbYq/Dt0idCF7t+T+91X3SP25rjJR8zljFw+d8enlnlszzt/LUBKfhP7IYmShgRJn
+         uWovPRmv3HbGxYWo/D/BVvu9qDll0QjZUy1h+RL3cEQH9oNe8CE3Ue3gT43zaA5XRw6u
+         1KBrMRtxsWTAbB90clAhc0sxWNx9HBSIyh6WeRUiykfjXeyTVG6S3K91fqE3rfNKN9i8
+         9/nQqKlRudXUjx4/OWkh/2igSxoHRh82FwcRhsi2y3RkpguZKF5bPIeZYGZ1t0MruHHj
+         JJQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=e6/rJn+8xhiDdtoT8zt9NGiyO45qc2kyKdpwkUceDkg=;
-        b=m1yUHox8kyViNouIbT9rCC8idupCd/s8FBdRMACNVEdIXbKcOooB3Z/CfByiDeP0kA
-         +T2fL4Obpp9MFRP9t8EoBpv2fYMc9c76oAsG3rrTNRr8hZffOAEgin7IblalBNvbDHld
-         r6bK0MMzzUf/nu/y7AVdx2w3ODDuALX4H86DdKN9irn8Qtchr7c/nty87n6bvOJFXVPl
-         Sq9GqGS71AqFLQriSopc0vuiK67twOHmi9lj1051qkkO8Y6aXbNo7m1aVZWMG92Q9XTY
-         VTw6eIcVDKSw1p86N0k5uGuR/iqCP6sCv8rk4zaoCV/5wf3BeBY4XEuKkFisfV749mAb
-         kWFQ==
-X-Gm-Message-State: ALoCoQkHqYVBRFSm4S9bAzB+csvx6BP7ENP+MZEvStvuBo7oJg/+VT4ziyc15UufBywx7xwwceZouggz+wvdDzh0pvEQqmdSvw==
-X-Received: by 10.140.25.169 with SMTP id 38mr6608529qgt.73.1452788799226;
-        Thu, 14 Jan 2016 08:26:39 -0800 (PST)
+        bh=9Agd2SjSir1uVo7PqxqvO7IZ5klLcMTKg3N5APRPxfg=;
+        b=eEWCDAjGebxzMD72FQ+EAO9uIsc0Rzt0vDfZ8Ci9PuDWg/OSes+zK1Qg07829KKwUy
+         FZCqXjOfTo013/cNRAFKu12i1uFzHnFYm+Lyqj6SCrOVZQDMmZnZH04CBupsYaacSRN2
+         /CeEIiwYF+v0SIraoJGpJNCDake99eBnHu+I1ilQQyz5ySWE0LIHSmvgiqYCLOAxZuXz
+         Cl56VaV/hhu/zehWw+9wJHstpPvE9WUPGy5P6Q8oA6iduEQQtm/A7LEqr2OJ+VnetcTN
+         oZ0Rbn9kLt4rmY+K4t3U9F2m+9/7lok8O9pM88MFTUoKwuNprQTZQBOH8ptw0bOIe0+l
+         TFhw==
+X-Gm-Message-State: ALoCoQneAUzGg+MdQ6Lu6qo8HffKPIOtzYhuPKc5HDEectAq5jjVV2xrdjGkhWpGuXRZRFf6xXsEC8YO1zAQdlehy2JycAsmLA==
+X-Received: by 10.140.42.20 with SMTP id b20mr6738015qga.16.1452788809182;
+        Thu, 14 Jan 2016 08:26:49 -0800 (PST)
 Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id b95sm2724213qge.47.2016.01.14.08.26.37
+        by smtp.gmail.com with ESMTPSA id b95sm2724213qge.47.2016.01.14.08.26.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jan 2016 08:26:38 -0800 (PST)
+        Thu, 14 Jan 2016 08:26:48 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284041>
 
-In the file-based backend, delete_refs has some special optimization
-to deal with packed refs.  In other backends, we might be able to make
-ref deletion faster by putting all deletions into a single
-transaction.  So we need a special backend function for this.
+All submodules must have the same ref storage (for now).  Confirm that
+this is so before attempting to do anything with submodule refs.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c               | 5 +++++
- refs/files-backend.c | 3 ++-
- refs/refs-internal.h | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ refs.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
 diff --git a/refs.c b/refs.c
-index f492fa3..f1c0601 100644
+index 9f946d0..3d4c0a6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1112,6 +1112,11 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	return the_refs_backend->transaction_commit(transaction, err);
+@@ -297,8 +297,44 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
  }
  
-+int delete_refs(struct string_list *refnames)
++static int submodule_backend(const char *key, const char *value, void *data)
 +{
-+	return the_refs_backend->delete_refs(refnames);
++	char **path = data;
++	if (!strcmp(key, "extensions.refstorage"))
++		*path = xstrdup(value);
++	return 0;
 +}
 +
- const char *resolve_ref_unsafe(const char *ref, int resolve_flags,
- 			       unsigned char *sha1, int *flags)
++static void check_submodule_backend(const char *submodule)
++{
++	struct strbuf sb = STRBUF_INIT;
++	char *submodule_storage_backend = xstrdup("files");
++
++	if (!submodule)
++		goto done;
++
++	strbuf_git_path_submodule(&sb, submodule, "%s", "");
++
++	if (!is_git_directory(sb.buf))
++		goto done;
++
++	strbuf_reset(&sb);
++	strbuf_git_path_submodule(&sb, submodule, "config");
++
++	git_config_from_file(submodule_backend, sb.buf,
++			     &submodule_storage_backend);
++	if (strcmp(submodule_storage_backend, ref_storage_backend))
++		die("Ref storage '%s' for submodule '%s' does not match our storage, '%s'",
++		    submodule_storage_backend, submodule, ref_storage_backend);
++
++done:
++	free(submodule_storage_backend);
++	strbuf_release(&sb);
++}
++
+ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
  {
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 748993f..f1cb4c9 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2362,7 +2362,7 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
  }
  
--int delete_refs(struct string_list *refnames)
-+static int files_delete_refs(struct string_list *refnames)
+@@ -309,6 +345,7 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
  {
- 	struct strbuf err = STRBUF_INIT;
- 	int i, result = 0;
-@@ -3557,6 +3557,7 @@ struct ref_storage_be refs_be_files = {
- 	files_pack_refs,
- 	files_peel_ref,
- 	files_create_symref,
-+	files_delete_refs,
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
+ }
  
- 	files_resolve_ref_unsafe,
- 	files_verify_refname_available,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 26b707e..b9c9b1d 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -236,6 +236,7 @@ typedef int peel_ref_fn(const char *refname, unsigned char *sha1);
- typedef int create_symref_fn(const char *ref_target,
- 			     const char *refs_heads_master,
- 			     const char *logmsg);
-+typedef int delete_refs_fn(struct string_list *refnames);
+@@ -319,6 +356,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
  
- /* resolution methods */
- typedef const char *resolve_ref_unsafe_fn(const char *ref,
-@@ -280,6 +281,7 @@ struct ref_storage_be {
- 	pack_refs_fn *pack_refs;
- 	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
-+	delete_refs_fn *delete_refs;
+ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+ }
  
- 	resolve_ref_unsafe_fn *resolve_ref_unsafe;
- 	verify_refname_available_fn *verify_refname_available;
+@@ -1366,6 +1404,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ int resolve_gitlink_ref(const char *path, const char *refname,
+ 			unsigned char *sha1)
+ {
++	check_submodule_backend(path);
+ 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
+ }
+ 
+@@ -1376,6 +1415,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 
+ int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->head_ref_submodule(submodule, fn, cb_data);
+ }
+ 
+@@ -1386,6 +1426,7 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->for_each_ref_submodule(submodule, fn, cb_data);
+ }
+ 
+@@ -1404,6 +1445,7 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ int for_each_ref_in_submodule(const char *submodule, const char *prefix,
+ 			      each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return the_refs_backend->for_each_ref_in_submodule(submodule, prefix,
+ 							   fn, cb_data);
+ }
 -- 
 2.4.2.749.g730654d-twtrsrc
