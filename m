@@ -1,132 +1,141 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 00/20] refs backend rebase on pu
-Date: Thu, 14 Jan 2016 11:25:57 -0500
-Message-ID: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 09/20] refs: add method to rename refs
+Date: Thu, 14 Jan 2016 11:26:06 -0500
+Message-ID: <1452788777-24954-10-git-send-email-dturner@twopensource.com>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:36 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJkjL-00023c-U8
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:36 +0100
+	id 1aJkjZ-0002BJ-Oh
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbcANQ0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 11:26:31 -0500
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:33145 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754218AbcANQ0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 11:26:31 -0500
-Received: by mail-qg0-f42.google.com with SMTP id b35so356504076qge.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:26:30 -0800 (PST)
+	id S1755700AbcANQ0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:26:45 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:35069 "EHLO
+	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755659AbcANQ0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 11:26:42 -0500
+Received: by mail-qk0-f169.google.com with SMTP id y67so42885969qkc.2
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:26:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=RPkNSWvK8rD1BKnaQ61SW8P0Q7HSZ58NS7Jh0jfL81Q=;
-        b=MhR+zaNo2OvXaDcy5iOQu/QpipYQGi2TVcWjl4hlQUNtIJlJq9BBBvjSoro92QOIIP
-         PEdnvJo2kXYg43BKHbPunJ2nC92txn1zgISz+92tszlVjC9njv8SAduyHlx6UPsSkWRO
-         U7T1Hzy0vqLzwe43UH7W2busTYwDYNskW8tvIEZx9DcfpTHEvrzSV9MABROWu5Qxu6Sd
-         O4YXtA98JWCHWqy5vFIFIE6JPU/twfX8NFDAaI/Ts2XtU5U2iWFbP45/CtYQ85O6hSIm
-         b9i0FRHiX4oBrMh0up8p+IJZkJ+BpmIWnZFDkAI2k8bvKpE4JSbuxSQKMPFy8hbUO+ZO
-         XCzg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=iaOwzNALJ7eT0FV49rx+T/GZt2F3jQ0mCLFnypdtFi8=;
+        b=hf4pj/C9WvtVxsw6DFWH2ThTfEtkLhUa8wL1wvDLvzbdG/0Hr6FTp+T8pnUK/9M5r9
+         y7/oZdoQ2vDgXIf8agWqSbIj45DekD31EkvdDyfFVLHFAa36pk79A+rs2UDxYtZzMokI
+         SCSAJcEmOtxi4lGQ+kAyydIAnIQ1TJ7utMw1f9G+Z8yLp88fGAYmYPkKR2KpyUxkzsF4
+         ykp8RAmMQuWOhGSaIv+pyDxS9oBm2xAiS8g3zJ81DVbp/MDlKZB3edQeslJBasxwfy2l
+         NZrgJWV6+EW1/wikIRf1qm8ul1Qon4iLs/Rdc1IUbeg8RXNsyssBzOsm/TwnnYESrdiG
+         Xc0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=RPkNSWvK8rD1BKnaQ61SW8P0Q7HSZ58NS7Jh0jfL81Q=;
-        b=Dx16ztqb/J/9gGFXSBviszOlfafJVFLyTG+7MksfGY2nM/k/0KOtkmmcR3wW1LiBNX
-         I6ltOnK8M7fRRFVZZWy1Pi6z2J/u/wZtFh6Fw9jewwcr/tIn+7RsOCuME3uT3l7sg5xa
-         kESsor8C4d/nlUDrB/5WGwr2G8Lq6XaCovMs0r6VLDMzoF4ooj60iinuqEymY0yRqThj
-         B+lVmhwkVrD8457QUzlz8ge3r8z88NrUIAgClYQ7eBtmdiYYscY18dO7lGCO4TT3OUjY
-         sarH1cC1KL7P8if6AC2TJTiQ9eRcO2DJvWQjKwVy3hzLW1tv0EZImBJJppwm2A5fHL4U
-         d89Q==
-X-Gm-Message-State: ALoCoQmA1ecAfa3TeDVb1fsPdPxdatfQrL08PQiZ6omJSKVYRk+Qxje+7BlpyRNQ2Mj9wuJmqAnFTrB97vV3KX2GKnIFrAxtNg==
-X-Received: by 10.140.220.207 with SMTP id q198mr7144713qhb.24.1452788790288;
-        Thu, 14 Jan 2016 08:26:30 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=iaOwzNALJ7eT0FV49rx+T/GZt2F3jQ0mCLFnypdtFi8=;
+        b=h2ByVSViOuRlvVdJj2PEoOzAXVCwrii6dhsgBpfeUZRyawJqfSpJ0T7fYrVddAHnL3
+         HPb63nNy2j8tVAH0aNpros+BVMDlEHFVf6GQKyLITwU9rcBja27wEYkByqx47ie3sAyl
+         3bLdDW+bcVbUfzd3OZ/riabmUo7RTA18C+hWRKvTJQOSei7qU88p67QOaQWCnE+mIRGk
+         hpP4qxfLBAeiFWuHVK/673P+zRfyU8FYcLu6Af4I7zamAkETnuxYVje1jA+acP8zmySx
+         GF2KtJZPgKy2dfrR8AFAeJuP26TTaC5NmiHwmgsxXZAaoeB/8uZFWDSxKh8U2hbiYo5C
+         KK8g==
+X-Gm-Message-State: ALoCoQlhpY1G7V0qZit8CmBEC4HCCiQ/VTuAinNxYtVVkrR2O8RvHjViMp6ldKkICoegKKJalgYIsD12TIvmqCKjmv3MCKjVmg==
+X-Received: by 10.55.195.67 with SMTP id a64mr7225647qkj.4.1452788801538;
+        Thu, 14 Jan 2016 08:26:41 -0800 (PST)
 Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id b95sm2724213qge.47.2016.01.14.08.26.29
+        by smtp.gmail.com with ESMTPSA id b95sm2724213qge.47.2016.01.14.08.26.40
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jan 2016 08:26:29 -0800 (PST)
+        Thu, 14 Jan 2016 08:26:40 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
+In-Reply-To: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284037>
 
-I rebased this on top of 20fabf9b194c4099d329582c734e433f9f6586a3 (the
-commit before the previous version of this series).
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ refs.c               | 5 +++++
+ refs/files-backend.c | 4 +++-
+ refs/refs-internal.h | 9 +++++++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-This entailed removing Michael Haggerty's patch to builtin/clone.c,
-since a patch by Stefan already did approximately the same thing.
-
-There was a somewhat hairy merge of "resolve symbolic refs first", but
-I think the new one is fine (the same tests all pass except for the
-one TODO noted in the lmdb code).
-
-David Turner (17):
-  refs: add do_for_each_per_worktree_ref
-  refs: add methods for reflog
-  refs: add method for initial ref transaction commit
-  refs: add method for delete_refs
-  refs: add methods to init refs db
-  refs: add method to rename refs
-  refs: make lock generic
-  refs: move duplicate check to common code
-  refs: allow log-only updates
-  refs: resolve symbolic refs first
-  refs: always handle non-normal refs in files backend
-  init: allow alternate backends to be set for new repos
-  refs: check submodules ref storage config
-  refs: allow ref backend to be set for clone
-  svn: learn ref-storage argument
-  refs: add LMDB refs backend
-  refs: tests for lmdb backend
-
-Ronnie Sahlberg (3):
-  refs: add a backend method structure with transaction functions
-  refs: add methods for misc ref operations
-  refs: add methods for the ref iterators
-
- .gitignore                                     |    1 +
- Documentation/config.txt                       |    7 +
- Documentation/git-clone.txt                    |    6 +
- Documentation/git-init-db.txt                  |    2 +-
- Documentation/git-init.txt                     |    7 +-
- Documentation/technical/refs-lmdb-backend.txt  |   52 +
- Documentation/technical/repository-version.txt |    5 +
- Makefile                                       |   12 +
- builtin/clone.c                                |    5 +
- builtin/init-db.c                              |   40 +-
- builtin/submodule--helper.c                    |    2 +-
- cache.h                                        |    2 +
- config.c                                       |   29 +
- configure.ac                                   |   33 +
- contrib/workdir/git-new-workdir                |    3 +
- git-submodule.sh                               |   13 +
- git-svn.perl                                   |    6 +-
- path.c                                         |   29 +-
- refs.c                                         |  451 +++++-
- refs.h                                         |   17 +
- refs/files-backend.c                           |  397 +++--
- refs/lmdb-backend.c                            | 2051 ++++++++++++++++++++++++
- refs/refs-internal.h                           |  128 +-
- setup.c                                        |   23 +-
- t/t0001-init.sh                                |   24 +
- t/t1460-refs-lmdb-backend.sh                   | 1109 +++++++++++++
- t/t1470-refs-lmdb-backend-reflog.sh            |  359 +++++
- t/t1480-refs-lmdb-submodule.sh                 |   85 +
- t/test-lib.sh                                  |    1 +
- test-refs-lmdb-backend.c                       |   64 +
- transport.c                                    |    7 +-
- 31 files changed, 4767 insertions(+), 203 deletions(-)
- create mode 100644 Documentation/technical/refs-lmdb-backend.txt
- create mode 100644 refs/lmdb-backend.c
- create mode 100755 t/t1460-refs-lmdb-backend.sh
- create mode 100755 t/t1470-refs-lmdb-backend-reflog.sh
- create mode 100755 t/t1480-refs-lmdb-submodule.sh
- create mode 100644 test-refs-lmdb-backend.c
-
+diff --git a/refs.c b/refs.c
+index b43d9ea..deeb7cf 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1122,6 +1122,11 @@ int delete_refs(struct string_list *refnames)
+ 	return the_refs_backend->delete_refs(refnames);
+ }
+ 
++int rename_ref(const char *oldref, const char *newref, const char *logmsg)
++{
++	return the_refs_backend->rename_ref(oldref, newref, logmsg);
++}
++
+ const char *resolve_ref_unsafe(const char *ref, int resolve_flags,
+ 			       unsigned char *sha1, int *flags)
+ {
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 7f8c3d1..f14b6f9 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2484,7 +2484,8 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			     const unsigned char *sha1, const char *logmsg,
+ 			     int flags, struct strbuf *err);
+ 
+-int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
++static int files_rename_ref(const char *oldrefname, const char *newrefname,
++			    const char *logmsg)
+ {
+ 	unsigned char sha1[20], orig_sha1[20];
+ 	int flag = 0, logmoved = 0;
+@@ -3575,6 +3576,7 @@ struct ref_storage_be refs_be_files = {
+ 	files_peel_ref,
+ 	files_create_symref,
+ 	files_delete_refs,
++	files_rename_ref,
+ 
+ 	files_resolve_ref_unsafe,
+ 	files_verify_refname_available,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 1373c02..36a5bf8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -67,6 +67,13 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
+ 				 each_ref_fn fn, int trim, int flags,
+ 				 void *cb_data);
+ 
++/*
++ * Check if the new name does not conflict with any existing refs
++ * (other than possibly the old ref).  Return 0 if the ref can be
++ * renamed to the new name.
++ */
++int rename_ref_available(const char *oldname, const char *newname);
++
+ enum peel_status {
+ 	/* object was peeled successfully: */
+ 	PEEL_PEELED = 0,
+@@ -246,6 +253,7 @@ typedef const char *resolve_ref_unsafe_fn(const char *ref,
+ typedef int verify_refname_available_fn(const char *refname, struct string_list *extra, struct string_list *skip, struct strbuf *err);
+ typedef int resolve_gitlink_ref_fn(const char *path, const char *refname,
+ 				   unsigned char *sha1);
++typedef int rename_ref_fn(const char *oldref, const char *newref, const char *logmsg);
+ 
+ /* iteration methods */
+ typedef int head_ref_fn(each_ref_fn fn, void *cb_data);
+@@ -284,6 +292,7 @@ struct ref_storage_be {
+ 	peel_ref_fn *peel_ref;
+ 	create_symref_fn *create_symref;
+ 	delete_refs_fn *delete_refs;
++	rename_ref_fn *rename_ref;
+ 
+ 	resolve_ref_unsafe_fn *resolve_ref_unsafe;
+ 	verify_refname_available_fn *verify_refname_available;
 -- 
 2.4.2.749.g730654d-twtrsrc
