@@ -1,96 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PREVIEW v3 8/9] checkout-index: there are only two line
- terminators
-Date: Thu, 14 Jan 2016 15:13:43 -0500
-Message-ID: <20160114201342.GB1985@sigill.intra.peff.net>
-References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
- <1452740590-16827-1-git-send-email-gitster@pobox.com>
- <1452740590-16827-9-git-send-email-gitster@pobox.com>
- <20160114101830.GC30772@sigill.intra.peff.net>
- <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/5] Fix compile errors with MSys2
+Date: Thu, 14 Jan 2016 12:21:42 -0800
+Message-ID: <xmqqmvs7kj3d.fsf@gitster.mtv.corp.google.com>
+References: <cover.1452691805.git.johannes.schindelin@gmx.de>
+	<cover.1452790142.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:13:53 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:21:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJoHG-0008VL-5c
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:13:50 +0100
+	id 1aJoOz-00065K-Hc
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754124AbcANUNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:13:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53894 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754112AbcANUNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:13:45 -0500
-Received: (qmail 7665 invoked by uid 102); 14 Jan 2016 20:13:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:13:45 -0500
-Received: (qmail 11132 invoked by uid 107); 14 Jan 2016 20:14:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:14:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:13:43 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
+	id S1751722AbcANUVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:21:45 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51282 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750964AbcANUVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:21:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 28FB43BB8A;
+	Thu, 14 Jan 2016 15:21:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wQ+sNAgQOSJNE7CU7ZhDtMcWXhc=; b=NcZNa6
+	8gp86ne+SrZR8FK8vE7fMADNVaz7bN+9q7PSkUNmqExzDBXm0RUzf533WnU5zg+F
+	k1ML2xPyXHqj7Ukb9kImnc/zkCyR4Yga+RQBLQPml1FIrStuGQ2Wr2u2/TY05pyi
+	/52re+JuZ1J9yWpzbmKzwsDby2rCKbyLWJfXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KDU/NkvMb2SJSeNZmlt5e6HcYZ6izbTM
+	IGjdffsR/lYexh8m+/ty8Z2hLtn0ojItDIezwGbkSQBT7LWY+7X2X196zN3Y07MW
+	t2c5EatJ6PMo9FeuoPNaz1fwHCL53qXITaUYofwRSQQ9HqYDk7agDKc/JMMwklvr
+	n6fcjDWiN4A=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FE4B3BB86;
+	Thu, 14 Jan 2016 15:21:44 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9333A3BB85;
+	Thu, 14 Jan 2016 15:21:43 -0500 (EST)
+In-Reply-To: <cover.1452790142.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Thu, 14 Jan 2016 17:51:14 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6D7DEE96-BAFC-11E5-AD67-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284086>
 
-On Thu, Jan 14, 2016 at 09:13:54AM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > I see that we switch the line termination on the fly in option_parse_z.
-> > But I'm having trouble seeing how we could actually have mixed inputs.
-> > We don't actually look at the line-terminator until after all of the
-> > options are parsed.
-> 
-> I do not think we are aiming for mixed inputs.  What I meant by
-> "mixed" in my description was a possible future option to allow
-> input and output using different line termination (e.g. via "-Z"
-> you would control output line termination, while "-z" only affects
-> the input line termination).
-
-Ah, I see.
-
-> After this step, there is still one call that is more natural to
-> have line_termination that is either '\0' or '\n' and that is on the
-> output side, which calls write_name_quoted_relative() to report the
-> names of the temporary files that received the file contents to the
-> standard output.
-> 
-> Of course there is nothing wrong to do
-> 
->         write_name_quoted_relative(name, prefix, stdout,
-> 				   nul_term_lines ? '\0' : '\n');
-> 
-> though.
-> 
-> And I tend to think that it might even be a good idea to do so.  If
-> somebody in the future really wants to introduce '-Z', then they can
-> add a separate "output_line_termination" variable back (and it would
-> likely be set to '\0' or '\n' via "-z" when "-Z" is not given), but
-> until then, I agree that a simple bool for "-z" would be better.
-
-Yeah, I agree with all of that.
-
-> > I'm also not sure how "unset" would trigger here. If we have a long
-> > option, we can use "--no-foo". But there isn't a long option for "-z".
-> > Is there a way to negate short options?
-> 
-> I do not think there is.  It merely future-proofs against those who
-> try to add "--nul" as a longer synonym.  They would complain after
-> they add "--nul" in builtin_checkout_index_options[] as a synonym if
-> they see "--no-nul" does not negate the effect of an earlier "-z".
-
-Makes sense. Better still if we can turn it into OPT_BOOL, though, and
-then it would Just Work. :)
-
--Peff
+Thanks.  Let's see if there is anything else people discover in this
+series and merge it to 'next'.
