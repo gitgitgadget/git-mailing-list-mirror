@@ -1,280 +1,71 @@
 From: Tobias Klauser <tklauser@distanz.ch>
-Subject: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
-Date: Thu, 14 Jan 2016 17:57:55 +0100
-Message-ID: <1452790676-11937-3-git-send-email-tklauser@distanz.ch>
-References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
+Subject: [PATCH v4 0/2] Add in-place editing support to git interpret-trailers
+Date: Thu, 14 Jan 2016 17:57:53 +0100
+Message-ID: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:58:09 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:58:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJlDs-0001Bv-Gk
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:58:09 +0100
+	id 1aJlEG-0001UO-NE
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406AbcANQ6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 11:58:03 -0500
-Received: from mail.zhinst.com ([212.126.164.98]:56269 "EHLO mail.zhinst.com"
+	id S1754284AbcANQ6C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:58:02 -0500
+Received: from mail.zhinst.com ([212.126.164.98]:56267 "EHLO mail.zhinst.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769AbcANQ6A (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753340AbcANQ6A (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 14 Jan 2016 11:58:00 -0500
 Received: from ziws06.zhinst.com ([10.42.0.7])
 	by mail.zhinst.com (Kerio Connect 9.0.1) with ESMTP;
 	Thu, 14 Jan 2016 17:57:56 +0100
 X-Mailer: git-send-email 2.7.0.1.g5e091f5
-In-Reply-To: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284066>
 
-Add a command line option --in-place to support in-place editing akin to
-sed -i.  This allows to write commands like the following:
+This patch series adds support for in-place editing to git
+interpret-trailers akin to sed -i, perl -i.
 
-  git interpret-trailers --trailer "X: Y" a.txt > b.txt && mv b.txt a.txt
+v3->v4:
+ - Reword a test title, as suggested by Eric Sunshine.
+ - Add a test to verify that the original file is not clobbered/deleted
+   on error, as suggested by Eric Sunshine.
+ - Move code specific to in-place editing from process_trailers() into a
+   separate function to keep the overall flow clean. Suggested by Eric
+   Sunshine.
+ - Drop unnecessary braces, as pointed out by Eric Sunshine.
+ - Use a more meaningful title for patch 1/2. Suggested by Junio Hamano.
 
-in a more concise way:
+v2->v3:
+ - Rephrase two error messages according to the suggestions by Matthieu
+   Moy.
 
-  git interpret-trailers --trailer "X: Y" --in-place a.txt
+v1->v2:
+ - Split patch to make review easier, as suggested by Matthieu Moy.
+ - Rename FILE * function parameters to a more readable name, as
+   suggested by Matthieu Moy.
+ - Write output to temporary file and rename after successfully written
+   in full to avoid losing the original file in case of an
+   error/interrupt. Pointed out by Eric Sunshine.
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- Documentation/git-interpret-trailers.txt | 24 ++++++++++++++++++-
- builtin/interpret-trailers.c             | 13 ++++++----
- t/t7513-interpret-trailers.sh            | 40 +++++++++++++++++++++++++++++++
- trailer.c                                | 41 +++++++++++++++++++++++++++++++-
- trailer.h                                |  3 ++-
- 5 files changed, 114 insertions(+), 7 deletions(-)
+Tobias Klauser (2):
+  trailer: allow to write to files other than stdout
+  interpret-trailers: add option for in-place editing
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 0ecd497c4de7..a77b901f1d7b 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -8,7 +8,7 @@ git-interpret-trailers - help add structured information into commit messages
- SYNOPSIS
- --------
- [verse]
--'git interpret-trailers' [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
-+'git interpret-trailers' [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -64,6 +64,9 @@ folding rules, the encoding rules and probably many other rules.
- 
- OPTIONS
- -------
-+--in-place::
-+	Edit the files in place.
-+
- --trim-empty::
- 	If the <value> part of any trailer contains only whitespace,
- 	the whole trailer will be removed from the resulting message.
-@@ -216,6 +219,25 @@ Signed-off-by: Alice <alice@example.com>
- Signed-off-by: Bob <bob@example.com>
- ------------
- 
-+* Use the '--in-place' option to edit a message file in place:
-++
-+------------
-+$ cat msg.txt
-+subject
-+
-+message
-+
-+Signed-off-by: Bob <bob@example.com>
-+$ git interpret-trailers --trailer 'Acked-by: Alice <alice@example.com>' --in-place msg.txt
-+$ cat msg.txt
-+subject
-+
-+message
-+
-+Signed-off-by: Bob <bob@example.com>
-+Acked-by: Alice <alice@example.com>
-+------------
-+
- * Extract the last commit as a patch, and add a 'Cc' and a
-   'Reviewed-by' trailer to it:
- +
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 46838d24a90a..b99ae4be8875 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -12,16 +12,18 @@
- #include "trailer.h"
- 
- static const char * const git_interpret_trailers_usage[] = {
--	N_("git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
-+	N_("git interpret-trailers [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
- 	NULL
- };
- 
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- {
-+	int in_place = 0;
- 	int trim_empty = 0;
- 	struct string_list trailers = STRING_LIST_INIT_DUP;
- 
- 	struct option options[] = {
-+		OPT_BOOL(0, "in-place", &in_place, N_("edit files in place")),
- 		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
- 		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
- 				N_("trailer(s) to add")),
-@@ -34,9 +36,12 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 	if (argc) {
- 		int i;
- 		for (i = 0; i < argc; i++)
--			process_trailers(argv[i], trim_empty, &trailers);
--	} else
--		process_trailers(NULL, trim_empty, &trailers);
-+			process_trailers(argv[i], in_place, trim_empty, &trailers);
-+	} else {
-+		if (in_place)
-+			die(_("no input file given for in-place editing"));
-+		process_trailers(NULL, in_place, trim_empty, &trailers);
-+	}
- 
- 	string_list_clear(&trailers, 0);
- 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 322c436a494c..aee785cffa8d 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -326,6 +326,46 @@ test_expect_success 'with complex patch, args and --trim-empty' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'in-place editing with basic patch' '
-+	cat basic_message >message &&
-+	cat basic_patch >>message &&
-+	cat basic_message >expected &&
-+	echo >>expected &&
-+	cat basic_patch >>expected &&
-+	git interpret-trailers --in-place message &&
-+	test_cmp expected message
-+'
-+
-+test_expect_success 'in-place editing with additional trailer' '
-+	cat basic_message >message &&
-+	cat basic_patch >>message &&
-+	cat basic_message >expected &&
-+	echo >>expected &&
-+	cat >>expected <<-\EOF &&
-+		Reviewed-by: Alice
-+	EOF
-+	cat basic_patch >>expected &&
-+	git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
-+	test_cmp expected message
-+'
-+
-+test_expect_success 'in-place editing on stdin disallowed' '
-+	test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place < basic_message
-+'
-+
-+test_expect_success 'in-place editing on non-existing file' '
-+	test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place nonexisting &&
-+	test_path_is_missing nonexisting
-+'
-+
-+test_expect_success POSIXPERM,SANITY "in-place editing doesn't clobber original file on error" '
-+	cat basic_message >message &&
-+	chmod -r message &&
-+	test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
-+	chmod +r message &&
-+	test_cmp message basic_message
-+'
-+
- test_expect_success 'using "where = before"' '
- 	git config trailer.bug.where "before" &&
- 	cat complex_message_body >expected &&
-diff --git a/trailer.c b/trailer.c
-index 176fac213450..94b387b49971 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -2,6 +2,7 @@
- #include "string-list.h"
- #include "run-command.h"
- #include "commit.h"
-+#include "tempfile.h"
- #include "trailer.h"
- /*
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-@@ -843,7 +844,38 @@ static void free_all(struct trailer_item **first)
- 	}
- }
- 
--void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
-+static struct tempfile trailers_tempfile;
-+
-+static FILE *create_in_place_tempfile(const char *file)
-+{
-+	struct stat st;
-+	struct strbuf template = STRBUF_INIT;
-+	const char *tail;
-+	FILE *outfile;
-+
-+	if (stat(file, &st))
-+		die_errno(_("could not stat %s"), file);
-+	if (!S_ISREG(st.st_mode))
-+		die(_("file %s is not a regular file"), file);
-+	if (!(st.st_mode & S_IWUSR))
-+		die(_("file %s is not writable by user"), file);
-+
-+	/* Create temporary file in the same directory as the original */
-+	tail = strrchr(file, '/');
-+	if (tail != NULL)
-+		strbuf_add(&template, file, tail - file + 1);
-+	strbuf_addstr(&template, "git-interpret-trailers-XXXXXX");
-+
-+	xmks_tempfile_m(&trailers_tempfile, template.buf, st.st_mode);
-+	strbuf_release(&template);
-+	outfile = fdopen_tempfile(&trailers_tempfile, "w");
-+	if (!outfile)
-+		die_errno(_("could not open temporary file"));
-+
-+	return outfile;
-+}
-+
-+void process_trailers(const char *file, int in_place, int trim_empty, struct string_list *trailers)
- {
- 	struct trailer_item *in_tok_first = NULL;
- 	struct trailer_item *in_tok_last = NULL;
-@@ -858,6 +890,9 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
- 
- 	lines = read_input_file(file);
- 
-+	if (in_place)
-+		outfile = create_in_place_tempfile(file);
-+
- 	/* Print the lines before the trailers */
- 	trailer_end = process_input_file(outfile, lines, &in_tok_first, &in_tok_last);
- 
-@@ -872,5 +907,9 @@ void process_trailers(const char *file, int trim_empty, struct string_list *trai
- 	/* Print the lines after the trailers as is */
- 	print_lines(outfile, lines, trailer_end, INT_MAX);
- 
-+	if (in_place)
-+		if (rename_tempfile(&trailers_tempfile, file))
-+			die_errno(_("could not rename temporary file to %s"), file);
-+
- 	strbuf_list_free(lines);
- }
-diff --git a/trailer.h b/trailer.h
-index 8eb25d565e28..36b40b81761f 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -1,6 +1,7 @@
- #ifndef TRAILER_H
- #define TRAILER_H
- 
--void process_trailers(const char *file, int trim_empty, struct string_list *trailers);
-+void process_trailers(const char *file, int in_place, int trim_empty,
-+		      struct string_list *trailers);
- 
- #endif /* TRAILER_H */
+ Documentation/git-interpret-trailers.txt | 24 ++++++++++-
+ builtin/interpret-trailers.c             | 13 ++++--
+ t/t7513-interpret-trailers.sh            | 40 ++++++++++++++++++
+ trailer.c                                | 69 +++++++++++++++++++++++++-------
+ trailer.h                                |  3 +-
+ 5 files changed, 129 insertions(+), 20 deletions(-)
+
 -- 
 2.7.0.1.g5e091f5
