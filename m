@@ -1,87 +1,226 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/4] t0060: verify that basename() and dirname() work
- as expected
-Date: Thu, 14 Jan 2016 07:09:01 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601140702260.2964@virtualbox>
-References: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de> <cover.1452270051.git.johannes.schindelin@gmx.de> <eca740dbf6271bd69f2ccb14163175996ef7c837.1452270051.git.johannes.schindelin@gmx.de>
- <CAO2U3QjYukb4mB414mVLX2=CxLPBnDaUyDRsfitE_bTZv8_zFQ@mail.gmail.com> <xmqqziw9mfil.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] t0060: loosen overly strict expectations
+Date: Thu, 14 Jan 2016 07:48:27 +0100 (CET)
+Message-ID: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: git@vger.kernel.org, Michael Blume <blume.mike@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 07:09:56 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 07:48:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJb6Z-0004jd-9l
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 07:09:55 +0100
+	id 1aJbiG-0006RG-KK
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 07:48:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbcANGJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 01:09:19 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49667 "EHLO mout.gmx.net"
+	id S1750778AbcANGst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 01:48:49 -0500
+Received: from mout.gmx.net ([212.227.15.19]:59475 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750816AbcANGJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 01:09:18 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LkxLZ-1ZjALK3Fcj-00ajbq; Thu, 14 Jan 2016 07:09:03
+	id S1750741AbcANGss (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 01:48:48 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MhhwJ-1aVvvL3nZj-00MwtP; Thu, 14 Jan 2016 07:48:29
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqziw9mfil.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:c8EglMSv9xk7IXPJ/sfLhIY3PeRd9SeI0FtpwqBG4KBhVNU1kKJ
- xUzBpdBSn/PZKUthI6SrD0XA9SHp4nUnGJp1Sxo7bBlLRlxQVdJezuV0YSWadI9QjFL0Di3
- zHwdCiOHRTkMqxQmTmjID2hMooAVI/diu8WkmDDWtENfYQWP0GSUC0jxVVPWRuYxqwzqT/H
- XObmIOAEaj4LMxgeDlx/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zTr3f5cmqW8=:T5gio6bqRlGUDUjZWHWhhw
- 5PMjJzPg64lsT0GPNZA/vwuyRUH1TTQWuig3xyrVYyTXKv50vaGTOEXiz3bWNO1X8xKe0u44x
- vE+k6IlMx6cGK+5PMpj0ceiouVyNnAGRyEXeutxHQ2K5HVp6SQIQ3plfjRgGk/Tk+LANODPlf
- z2PjUGN9X47/mgwMC8l/YhTfvQeEt/v/EowoSnaDTTEyZB5FhDxHjFtCeoZ/44KSAs6/M56n3
- wI3jsx0l7Nu3O6nst/NHxE4A2E3we5/OFNUOzAcv/R7/7NnR4fMqU3WEgC/ur34+U/hzu+mH8
- QACyWio8mgQbJPvKLyArhXkytlwfX87Y7OKVlcpemXK5JcsdEUuVs356M22jhFidlYFr6snpZ
- 0YgGbGF1RM4j36mb/Yq2L/d4wz6dg5dj29WoYXTnk5Uv/jDPAIftbRv/dgIFqDq3QWfgOnmcE
- 7GcOBy0vs27eufMMuF0p7g7JBu3NfzkqCbLFTpmhHsR00Tn7xlYBnukp40Nkcv5wwrXMta9rv
- vSFQcEnGl5ktSbvfS1bYeXswzdIPY6z6xArR1o0tQizD/Ex14z4+D3t3hZ/HqyzYxg2JrmCqe
- 1sz5wdM88Xx0uB8yGcH1WziUe2mbQcptaxFvtJ5qwnqWHR5yrmXifaYrdDkOtbtSJnvcDcEW2
- ObaP9m156DZNOOa5fCoxNmDyRePBirTysOe+xliu0kqKu2Mromn54UQj7D7NSe53D4yiq2NXd
- etqnBLHta8tnn1EDFZvzZhSxGrCfvS2FxP1Na7OhcTYfHfcNMlbR/aLYb9x/nWKHWmVMj6fJ 
+X-Provags-ID: V03:K0:2aO0KaspqygovgG3EVzNFrkI6jk23qfvz/AziAJHJP2BFxPvvmK
+ IyaRjLzh2nQxEcqPH14905XVZhMV1ZJRpnC0cqYuv8IXsSi6Mf60G6ywts3KpodR4vgjqKg
+ 983KYHE4Wn9yQgP4AWPY5Ik0KkkYB7LYE5XbdqlZHHCoRWcARCS1JfuYDXlHRVy9XNxXOEe
+ 9AvkDMQvp3Ct/NDEzrYiQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RCLjHrCUwE0=:YtfMVMkOHR6KkraT1m5PIy
+ PpokM4RaWC4cVf4eTOUKi7aFVcNUiVXEKIdX/A812Wkpv7e31WmZF3FHkJplpuA23qZkFZvUM
+ cA6JhQJeNqzjn6ihhIbX7+eVfDF8FnryaGSUmNsj3Us7tIfT57a5PtaCPVhBu8niCBtJPjgeb
+ QvSrT0zFeDIM/rCrs9g8jhwkzNcJiVHF8T2SPUeX2cGdar06O/jACKuOdWwf5tOFgqZIWm1RX
+ NCHKveKymMGOGs5LcInOM4vB2VpQ5QX+SX+iX7Y9fxV+YPj8nJAMMTKIThwxwmSJulWhsm7Pm
+ RexRPcwpTR6zjAT2YGnyeAqHWC1kH7YI8xdLwNfXYbkuuWDFVmb9wRuVcNypSVAOneoDsI6DY
+ fxKyGInMXtJS3d1oC+OB54117UcsYhq912iUHxH9HnBChgVNC2T6nfFvwV6yEDvq5O9JZHYV6
+ yXOxj5hAe3l1Hk+9XgXTnMgnfbEMvhbdSBW3C+oKT5QpqMpKj0RlBGRKx4B8UmAE0VGoFF558
+ YTvdEP2XRNRoLp3aMD4mT1qXXOAfLgsfZL1Q8qEGVwH/fFnk62/NC0MSQiQCSSXm6qgFLhyed
+ VsRc86VOaH/3ZkRbfQt/ar4HOyoH/8UIVaIbahhKyiwy5ipR3QRfmUMggqKkvfAYmcrmD/MFg
+ nZO8+CvjcNFxu5+ZNrm9vvUvY7UQUdecgawB1QWMq1Cy40Rn4AVdz+1Y1ULADv42j1pBOz167
+ Yy9Pixm4/N0lJ24JfpnPclHJRsd+V/jthnzj3dcZ1/hDXC32P1i8eJ1SjuzDkKBPAneFLOuI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284019>
 
-Hi,
+The dirname() tests file were developed and tested on only the five
+platforms available to the developer at the time, namely: Linux (both 32
+and 64bit), Windows XP 32-bit (MSVC), MinGW 32-bit and Cygwin 32-bit.
 
-[thanks, Junio, for culling the quoted text to the essential part]
+http://pubs.opengroup.org/onlinepubs/9699919799/functions/basename.html
+(i.e. the POSIX spec) says, in part:
 
-On Wed, 13 Jan 2016, Junio C Hamano wrote:
+	If the string pointed to by path consists entirely of the '/'
+	character, basename() shall return a pointer to the string "/".
+	If the string pointed to by path is exactly "//", it is
+	implementation-defined whether "/" or "//" is returned.
 
-> Michael Blume <blume.mike@gmail.com> writes:
-> 
-> > Test fails on my Mac:
-> >
-> > expecting success: test-path-utils dirname
-> > error: FAIL: dirname(//) => '/' != '//'
-> >
-> > not ok 2 - dirname
-> > #    test-path-utils dirname
-> 
-> Thanks for reporting.
-> 
-> Ramsay gave a nice analysis at
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/283928
-> 
-> and Dscho already is working on it, IIUC.
+The thinking behind testing precise, OS-dependent output values was to
+document that different setups produce different values. However, as the
+test failures on MacOSX illustrated eloquently: hardcoding pretty much each
+and every setup's expectations is pretty fragile.
 
-I already provided a hot fix:
-http://article.gmane.org/gmane.comp.version-control.git/283893
+This is not limited to the "//" vs "/" case, of course, other inputs are
+also allowed to produce multiple outpus by the POSIX specs.
 
-And yes, I also work on a proper fix.
+So let's just test for all allowed values and be done with it. This still
+documents that Git cannot rely on one particular output value in those
+cases, so the intention of the original tests is still met.
 
-Ciao,
-Dscho
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	This is the promised fix.
+
+ test-path-utils.c | 78 +++++++++++++++----------------------------------------
+ 1 file changed, 21 insertions(+), 57 deletions(-)
+
+diff --git a/test-path-utils.c b/test-path-utils.c
+index 4ab68ac..c3adcd8 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -42,6 +42,7 @@ static void normalize_argv_string(const char **var, const char *input)
+ struct test_data {
+ 	const char *from;  /* input:  transform from this ... */
+ 	const char *to;    /* output: ... to this.            */
++	const char *alternative; /* output: ... or this.      */
+ };
+ 
+ static int test_function(struct test_data *data, char *(*func)(char *input),
+@@ -58,11 +59,18 @@ static int test_function(struct test_data *data, char *(*func)(char *input),
+ 			strcpy(buffer, data[i].from);
+ 			to = func(buffer);
+ 		}
+-		if (strcmp(to, data[i].to)) {
++		if (!strcmp(to, data[i].to))
++			continue;
++		if (!data[i].alternative)
+ 			error("FAIL: %s(%s) => '%s' != '%s'\n",
+ 				funcname, data[i].from, to, data[i].to);
+-			failed = 1;
+-		}
++		else if (!strcmp(to, data[i].alternative))
++			continue;
++		else
++			error("FAIL: %s(%s) => '%s' != '%s', '%s'\n",
++				funcname, data[i].from, to, data[i].to,
++				data[i].alternative);
++		failed = 1;
+ 	}
+ 	return failed;
+ }
+@@ -74,15 +82,9 @@ static struct test_data basename_data[] = {
+ 	{ ".",               "."    },
+ 	{ "..",              ".."   },
+ 	{ "/",               "/"    },
+-#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
+-	{ "//",              "//"   },
+-	{ "///",             "//"   },
+-	{ "////",            "//"   },
+-#else
+-	{ "//",              "/"    },
+-	{ "///",             "/"    },
+-	{ "////",            "/"    },
+-#endif
++	{ "//",              "/", "//" },
++	{ "///",             "/", "//" },
++	{ "////",            "/", "//" },
+ 	{ "usr",             "usr"  },
+ 	{ "/usr",            "usr"  },
+ 	{ "/usr/",           "usr"  },
+@@ -92,7 +94,6 @@ static struct test_data basename_data[] = {
+ 	{ "usr/lib///",      "lib"  },
+ 
+ #if defined(__MINGW32__) || defined(_MSC_VER)
+-
+ 	/* --- win32 type paths --- */
+ 	{ "\\usr",           "usr"  },
+ 	{ "\\usr\\",         "usr"  },
+@@ -111,26 +112,9 @@ static struct test_data basename_data[] = {
+ 	{ "C:a",             "a"    },
+ 	{ "C:/",             "/"    },
+ 	{ "C:///",           "/"    },
+-#if defined(NO_LIBGEN_H)
+-	{ "\\",              "\\"   },
+-	{ "\\\\",            "\\"   },
+-	{ "\\\\\\",          "\\"   },
+-#else
+-
+-	/* win32 platform variations: */
+-#if defined(__MINGW32__)
+-	{ "\\",              "/"    },
+-	{ "\\\\",            "/"    },
+-	{ "\\\\\\",          "/"    },
+-#endif
+-
+-#if defined(_MSC_VER)
+-	{ "\\",              "\\"   },
+-	{ "\\\\",            "\\"   },
+-	{ "\\\\\\",          "\\"   },
+-#endif
+-
+-#endif
++	{ "\\",              "\\", "/" },
++	{ "\\\\",            "\\", "/" },
++	{ "\\\\\\",          "\\", "/" },
+ #endif
+ 	{ NULL,              NULL   }
+ };
+@@ -142,14 +126,9 @@ static struct test_data dirname_data[] = {
+ 	{ ".",               "."      },
+ 	{ "..",              "."      },
+ 	{ "/",               "/"      },
+-	{ "//",              "//"     },
+-#if defined(__CYGWIN__) && !defined(NO_LIBGEN_H)
+-	{ "///",             "//"     },
+-	{ "////",            "//"     },
+-#else
+-	{ "///",             "/"      },
+-	{ "////",            "/"      },
+-#endif
++	{ "//",              "/", "//" },
++	{ "///",             "/", "//" },
++	{ "////",            "/", "//" },
+ 	{ "usr",             "."      },
+ 	{ "/usr",            "/"      },
+ 	{ "/usr/",           "/"      },
+@@ -159,7 +138,6 @@ static struct test_data dirname_data[] = {
+ 	{ "usr/lib///",      "usr"    },
+ 
+ #if defined(__MINGW32__) || defined(_MSC_VER)
+-
+ 	/* --- win32 type paths --- */
+ 	{ "\\",              "\\"     },
+ 	{ "\\\\",            "\\\\"   },
+@@ -180,21 +158,7 @@ static struct test_data dirname_data[] = {
+ 	{ "C:usr/lib///",    "C:usr"  },
+ 	{ "\\\\\\",          "\\"     },
+ 	{ "\\\\\\\\",        "\\"     },
+-#if defined(NO_LIBGEN_H)
+-	{ "C:",              "C:."    },
+-#else
+-
+-	/* win32 platform variations: */
+-#if defined(__MINGW32__)
+-	/* the following is clearly wrong ... */
+-	{ "C:",              "."      },
+-#endif
+-
+-#if defined(_MSC_VER)
+-	{ "C:",              "C:."    },
+-#endif
+-
+-#endif
++	{ "C:",              "C:.", "." },
+ #endif
+ 	{ NULL,              NULL     }
+ };
+-- 
+2.6.3.windows.1.300.g1c25e49
