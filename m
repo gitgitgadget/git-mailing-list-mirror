@@ -1,131 +1,208 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: Re: Find main branch
-Date: Thu, 14 Jan 2016 12:12:35 -0700
-Message-ID: <CAGyf7-H2jSW0vJZ7ng1OcN7X5tvs+sEuGUH4yMSpJ_-wwUcoTQ@mail.gmail.com>
-References: <CAPMsMoDsay7_n53HY6cxHWEtv5vyugxYUZqwi9tU4dKLv6MGBg@mail.gmail.com>
-	<20160114213113.c700484c7e3acddc467d0e75@domain007.com>
-	<CAPMsMoBNzmK618NPP-VXP_70hTxTsa13O9f_usiCPJ-SUOUz_g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v11] ls-files: add eol diagnostics
+Date: Thu, 14 Jan 2016 11:34:14 -0800
+Message-ID: <xmqqr3hkj6q1.fsf@gitster.mtv.corp.google.com>
+References: <1452788241-9879-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: pedro rijo <pedrorijo91@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 20:13:15 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: tboegi@web.de
+X-From: git-owner@vger.kernel.org Thu Jan 14 20:34:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJnKd-0004Ar-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 20:13:15 +0100
+	id 1aJnfT-0003Wv-D4
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 20:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282AbcANTMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 14:12:38 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:34197 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753684AbcANTMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 14:12:37 -0500
-Received: by mail-wm0-f44.google.com with SMTP id u188so361594949wmu.1
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 11:12:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=72VFFg9KhQT41Qzrw50Cqnppib8XDYCAOhep6ECgkBQ=;
-        b=jMpMQSTHHHxiwjjMpDeaeymFDElgPZotiEKEHoHi13LDvJxY2HPlplGYuZcZvOFkAN
-         YHEh3Jtj7X37nEnhaQgQXm1pdfksp5Gd7Le0JgID1JpDJgEoVMvM0UJbOoY7ZPiTSXMG
-         N2kifxJMFYotOSknhaFmu0wVUxPMh73yxP2lDtMfGhDxmOi7NCz2/qGPwLe47p2EKFM2
-         Zwho+jGFyQGr1db9sGgB5xZYSUsrqz68DBWNrBhXmu+zhgcA20Yp5PNr0LsmYDGKWIp3
-         14/CHp1olCahfYVeRRMefhlFPWwIMZmjrxSScAxt+DViVoTYqtgo2kQYoTs+XLBpoVra
-         3fQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=72VFFg9KhQT41Qzrw50Cqnppib8XDYCAOhep6ECgkBQ=;
-        b=VRNUvNkQvc71qWSLPui+CBfHyR6aktzL67trBVjay+LSp5hZWiV0ydjG8HLnpAfsip
-         MaUhUSAE6usRHRqpC9Y+G2WV0SLkqp/hE1Enu5aImF+HPhGbf+K5z8xd8t1Ubds41Zab
-         qyv1i7mdb8kWzmQxbM4kMWbEvsYiVKS4HWaorIv1pXc3ljfQyZuq8ntIfs8DRHRRkO0F
-         REbTcIPQYDcBKeVdcqrYGAwTy6Zi1OcNRnpvdVL1SGTKwesH4roboqcqD3uRX4FdOMOM
-         JYCCrSLfNwoaR6In5Gh71GYF5NEfFNVa1OWAJMkgrNM48oChEmMO6w8a7jhJJr8jrrs9
-         y6qA==
-X-Gm-Message-State: ALoCoQlacxKvk6AF85TLrOcFlXbER1n4o47JsQnLboakuT3/+6wako5N9ZTkPbxsc5Dq3EESim+WC8DNlp8c4vdrlEjxtB/xowRHY4RDpv8uU8x4IsaKGNg=
-X-Received: by 10.194.60.231 with SMTP id k7mr5703905wjr.61.1452798755574;
- Thu, 14 Jan 2016 11:12:35 -0800 (PST)
-Received: by 10.28.137.2 with HTTP; Thu, 14 Jan 2016 11:12:35 -0800 (PST)
-In-Reply-To: <CAPMsMoBNzmK618NPP-VXP_70hTxTsa13O9f_usiCPJ-SUOUz_g@mail.gmail.com>
+	id S1753982AbcANTeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 14:34:23 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51433 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752702AbcANTeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 14:34:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2468E3ADD5;
+	Thu, 14 Jan 2016 14:34:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QpAwaELMJc27k1r/1Ac4+nJ3upI=; b=X1+pe2
+	S6huG+YutCHTLKXUsBu/F0qPST8g/kaE71B66psdS7LwEcQdPLfK3/+HGaQKdHMS
+	2CbCvrgAwKZGaVo2t/nKW5/egWR3AaFqGyPOgsuxqxLwvGITdt9b0JGq+lLVbuke
+	EHab+ofKvFLKxhieEpdpKOZ9MGQ0bVH0AqfGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mPnKl/eLlWfOwUd38QP+quE9Sei2s/dq
+	hYEkS99E5ks1+orZ4eVcfK2vIZRZakZKsa46tCfx+KCtiDcv+GGUXmj0hd6AcnTA
+	O8DvjYbEU7r9viX8vB5o70Ac6NUtX6Ks2j2Lxgls2YN5d+wSNGkYDlG8ZvqT9y/k
+	tMQpBMlfgPc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1A8B73ADD4;
+	Thu, 14 Jan 2016 14:34:16 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6A4383ADD3;
+	Thu, 14 Jan 2016 14:34:15 -0500 (EST)
+In-Reply-To: <1452788241-9879-1-git-send-email-tboegi@web.de> (tboegi@web.de's
+	message of "Thu, 14 Jan 2016 17:17:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CBDA0A1C-BAF5-11E5-8E29-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284083>
 
-On Thu, Jan 14, 2016 at 11:40 AM, pedro rijo <pedrorijo91@gmail.com> wrote:
-> Stefan Beller solution is based on the server, which may not be very
-> easy to do when dealing with Github/Bitbucket/Gitlab and other God
-> knows which provider.
->
-> Konstantin ls-remote solution is the one I'm already using, but if I
-> have several branches on that commit, I will not be able to decide.
->
-> I thought that the 'main' branch information was stored in git, and
-> possibly with some way to access it with a git command
+tboegi@web.de writes:
 
-It is, but unfortunately it's not stored in a way that a remote client
-can (easily) retrieve using porcelain commands. The HEAD ref on the
-remote is the "main" branch, but, as Konstantin's ls-remote command
-shows, the actual wire protocol data for HEAD is the SHA-1 of the tip
-commit for the branch, not the name.
+>  - removed src=crlf_false_attr as commented out in the review,
 
-As Stefan indicated, the way this is messaged to the client from the
-server is in the capabilities sent. There's generally not a good way
-to see this. However, one thing that you might try (assuming the
-you're using HTTPS to talk to the repository and you're on MacOS or
-Linux) is to manually run git-remote-https. For example, here's output
-for the atlassian/atlassian-refapp repository on Bitbucket:
+I probably missed that exchange; I do not recall seeing that comment.
 
-bturner@ubuntu:~$ git remote-https
-https://bitbucket.org/atlassian/atlassian-refapp.git
-https://bitbucket.org/atlassian/atlassian-refapp.git | head
-list
-@refs/heads/master HEAD
-d9330a80b50b92b91bb82834f052e9c86ed55452 refs/heads/2.14-beta1
-db3dbe4b6549d0ac1437415dbf1ffb750e33e28b
-refs/heads/JDEV-32966-fix-xsrfrequestvalidatortest
-e0331e00e5e73cd463f12c2947ef567edbb6b9f8 refs/heads/atlassian-refapp-2.2.7.x
-e0e562acf9fbdf5255a503a0916a06c52fc456be refs/heads/atlassian-refapp-2.2.x
+> +'git ls-files --eol' will show
+> +	i/<eolinfo><SPACES>w/<eolinfo><SPACES>attr/<eolattr><SPACES><file>
 
-(Note that the repetition of the remote URL here is necessary.) "git
-remote-https" is an interactive process, so when you first run it it
-won't do anything. "list" is a command I sent to the "git
-remote-https" process that's running. That leading "@refs/heads/master
-HEAD" means the remote HEAD is a symbolic ref pointing at the master
-branch. So master is the "main" branch.
+I think this should be:
 
-The same thing works for GitHub. Here's the hazelcast/hazelcast repository:
+    i/<eolinfo><SPACES>w/<eolinfo><SPACES>attr/<eolattr><SPACES><TAB><file>
 
-bturner@ubuntu:~$ git remote-https
-https://github.com/hazelcast/hazelcast.git
-https://github.com/hazelcast/hazelcast.git | head
-list
-@refs/heads/master HEAD
-988810c4b5c5195412c65357e06cbb0e51173258 refs/heads/3.1.8
-bddfb328e4779bccec6f7788c94960f6292b02c9 refs/heads/3.2-fix-eacg
-84e7d1006cd342c39afdf0ac520b5b04b8233d75 refs/heads/3.3.6
-2e4ffc4f593de0869f0db9f7224f964f72dac15d refs/heads/3.4-gem
-d0a7d416b1220ef4badd98e42991dabe34c7beeb refs/heads/3.5.1
-6a13721d33bdb07de23f5c505b689e2ee50d5abb refs/heads/3.5.3-ercssn
-56676b20baae8668e731f17c9f3b9844ddd486d0 refs/heads/3.5.4
+Whether you like it or not, people write scripts to parse textual
+output primarily meant for humans.  "ls-files -s" output, for
+example, uses tab just before the pathname even though it uses a
+space between the mode and the object name for this exact reason.
 
-I'm not aware of a simple equivalent for SSH. Also, note that this
-"git remote-https" trick won't work on Windows. When you hit Enter
-after "list" it writes a CRLF, so the "git-remote-https" process
-compares "listCR" against its list of known commands and finds no
-match.
+> +		/* Align the print for the longest possible values (see convert.c)
+> +			 i/binary w/binary attr/text eol=crlf */
 
-Hope this helps!
-Bryan Turner
+	/*
+         * We write our multi-line comments
+         * like this.
+         */
 
->
-> Thanks,
-> Pedro Rijo
->
+> +		if (line_terminator == '\n')
+> +			printf("i/%-6s w/%-6s attr/%-13s ", i_txt, w_txt, a_txt);
+> +		else
+> +			printf("i/%s\tw/%s\tattr/%s\t", i_txt, w_txt, a_txt);
+> +	}
+> +}
+
+
+
+> diff --git a/convert.c b/convert.c
+> index 814e814..ae766bd 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -13,6 +13,11 @@
+>   * translation when the "text" attribute or "auto_crlf" option is set.
+>   */
+>  
+> +/* Stat bits: When BIN is set, the txt bits are unset */
+> +#define CONVERT_STAT_BITS_TXT_LF    0x1
+> +#define CONVERT_STAT_BITS_TXT_CRLF  0x2
+> +#define CONVERT_STAT_BITS_BIN       0x4
+> +
+>  enum crlf_action {
+>  	CRLF_GUESS = -1,
+>  	CRLF_BINARY = 0,
+> @@ -75,26 +80,75 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+>  
+>  /*
+>   * The same heuristics as diff.c::mmfile_is_binary()
+> + * We treat files with bare CR as binary
+>   */
+> -static int is_binary(unsigned long size, struct text_stat *stats)
+> +static inline int convert_is_binary(unsigned long size, const struct text_stat *stats)
+
+Please articulate the justification for this inlining with data (or
+just keep it out-of-line as before).
+
+>  {
+> -
+> +	if (stats->cr != stats->crlf)
+> +		return 1;
+>  	if (stats->nul)
+>  		return 1;
+>  	if ((stats->printable >> 7) < stats->nonprintable)
+>  		return 1;
+> -	/*
+> -	 * Other heuristics? Average line length might be relevant,
+> -	 * as might LF vs CR vs CRLF counts..
+> -	 *
+> -	 * NOTE! It might be normal to have a low ratio of CRLF to LF
+> -	 * (somebody starts with a LF-only file and edits it with an editor
+> -	 * that adds CRLF only to lines that are added..). But do  we
+> -	 * want to support CR-only? Probably not.
+> -	 */
+>  	return 0;
+>  }
+>  
+> +static unsigned int gather_convert_stats(const char *data, unsigned long size)
+> +{
+> +	struct text_stat stats;
+> +	if (!data || !size)
+> +		return 0;
+> +	gather_stats(data, size, &stats);
+> +	if (convert_is_binary(size, &stats))
+> +		return CONVERT_STAT_BITS_BIN;
+> +	else if (stats.crlf && stats.crlf == stats.lf)
+> +		return CONVERT_STAT_BITS_TXT_CRLF;
+> +	else if (stats.crlf && stats.lf)
+> +		return CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_TXT_LF;
+> +	else if (stats.lf)
+> +		return CONVERT_STAT_BITS_TXT_LF;
+> +	else
+> +		return 0;
+> +}
+> +
+> +static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
+> +{
+> +	unsigned int convert_stats = gather_convert_stats(data, size);
+> +
+> +	if (convert_stats & CONVERT_STAT_BITS_BIN)
+> +		return "binary";
+
+It is true and correct that we do not do EOL conversion on text
+files that have a lone CR, but I think it is misleading to tell the
+users that such files are "binary".  We do not refrain from showing
+the textual diff for such files, for example.
+
+To put it another way, we do not do EOL conversion for truly
+'binary' files, but there are (mostly) text files that are not
+binary that we do not do EOL conversion on.  And you want to tell
+the user if EOL conversion would happen to each file.  It is not
+correct to label "this file is binary" merely because you do not do
+EOL conversion.  Perhaps define a new "literal" class that is a
+superset of "binary" and use that as the label?  I am not suggesting
+that "ls-files --eol" should show "i/binary" for truly binary files
+and "i/literal" for a non-binary file with lone CRs.  For the
+purpose of "--eol", you only care about "literal", so you do not
+even have to have "binary" class at all.
+
+> +# Should be the last test case: remove some files from the worktree
+> +# This test assumes that "rm" can remove staged files
+
+I do not see the point of the second line.  In what situation is
+"rm" allowed to refuse to remove files that are added to the index?
+
+> +test_expect_success 'ls-files --eol -d -z' '
+> +	rm crlf_false_attr__CRLF.txt crlf_false_attr__CRLF_mix_LF.txt crlf_false_attr__LF.txt .gitattributes &&
+> +	cat >expect <<-\EOF &&
+> +	i/crlf w/ crlf_false_attr__CRLF.txt
+> +	i/lf w/ .gitattributes
+> +	i/lf w/ crlf_false_attr__LF.txt
+> +	i/mixed w/ crlf_false_attr__CRLF_mix_LF.txt
+> +	EOF
+> +	git ls-files --eol -z -d |
+> +	tr "\000" "\n" |
+> +	sed -e "s!attr/[^	]*!!g" -e "s/	/ /g" -e "s/  */ /g" |
+> +	sort >actual &&
+> +	test_cmp expect actual &&
+> +	rm expect actual
+
+Please do not add useless "clean-up" like this last "rm".
+
+> +'
+> +
+>  test_done
