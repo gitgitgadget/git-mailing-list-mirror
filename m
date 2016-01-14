@@ -1,155 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: shorten glob error message
-Date: Thu, 14 Jan 2016 10:15:49 -0800
-Message-ID: <xmqqvb6wjacq.fsf@gitster.mtv.corp.google.com>
-References: <1452522358-16943-1-git-send-email-vleschuk@accesssoftek.com>
-	<20160113031601.GA28224@dcvr.yhbt.net>
-	<20160114040759.GA7671@dcvr.yhbt.net>
+From: pedro rijo <pedrorijo91@gmail.com>
+Subject: Find main branch
+Date: Thu, 14 Jan 2016 18:17:48 +0000
+Message-ID: <CAPMsMoDsay7_n53HY6cxHWEtv5vyugxYUZqwi9tU4dKLv6MGBg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, vleschuk@accesssoftek.com,
-	Victor Leschuk <vleschuk@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 19:16:02 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 14 19:18:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJmRB-0002TX-07
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 19:15:57 +0100
+	id 1aJmTh-0004Yk-W4
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 19:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756502AbcANSPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 13:15:54 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62493 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756476AbcANSPw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 13:15:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1CFE83B94A;
-	Thu, 14 Jan 2016 13:15:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Eb7tT5wOmN00sRNAdFi0+lkU/jE=; b=DTzUWe
-	AaN7uGPdCPUBYyMLRFXhDT220ZHh9o6JPd2hdajjqopJ/8sS0Xx/fU4qveXjMxFb
-	42CTbB2+MfzAdcmWBL94P4NaqcvZWib2MzX2BQzd2Y5Cc54ZpP8fpVLRyPjrWdlk
-	6iogJM3mOH6M2KcxEnxPXMXQSnbBXoHJOWkws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cm+PiU4kic1/e1uDNSy1dMhUJ/YexGW3
-	9rT+KiEoDXR9sk6UxlitIib+8vUfDxzsuJk9JSsGYdn2ySJ9k+yHtu1P0NZsw9/J
-	EwDPS7kNKxC5pIx0JZVfbow58h+7JlqzhGJZD2cXrLikU88lhY3nb7uDAhIoZigZ
-	q3fHNX4Lahs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 12D733B949;
-	Thu, 14 Jan 2016 13:15:51 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B9C53B947;
-	Thu, 14 Jan 2016 13:15:50 -0500 (EST)
-In-Reply-To: <20160114040759.GA7671@dcvr.yhbt.net> (Eric Wong's message of
-	"Thu, 14 Jan 2016 04:07:59 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D77F9054-BAEA-11E5-B0D2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756633AbcANSSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 13:18:30 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:35142 "EHLO
+	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754299AbcANSS3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 13:18:29 -0500
+Received: by mail-lf0-f53.google.com with SMTP id c192so268364926lfe.2
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 10:18:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Wwtec+7wj6SvNftHlvXLu5DW88V+EJFXOntpqL50KyM=;
+        b=oh03P4rS/PyE5HSSXU6nLONvD2x+RzAZ3uD5xi3GbHdOyhlqMo3fw/WCCN4kc2S2fm
+         cInsuIl/ODMLEGrZtMfLi1fIGYFawaSOOtv6P5WosvyIMAXDBYnS4LRzruezjNE20Au5
+         IhzxD5QmiX/D3iWo+0HO7NL70r7fbCWA5WJ7UUTEyJuHIVj2UrSqkYL6nzA2v4LCIpBr
+         qJ/qihC9kqDa0adyXU10dmwIgOLxPBgqX1MiyXu2dmR5pHnpSNwWmPWL7zoseiPyydYI
+         UUZ3wI+6XEHgb91EGG43Dv6CisJEUC6oaTaUpdx+jXqwhx5lX00y+LSM67C/rZlLEkqg
+         pDrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=Wwtec+7wj6SvNftHlvXLu5DW88V+EJFXOntpqL50KyM=;
+        b=BStbPCzVFU8fuej0c6LPtpqKGrgc9Lsk9T6pW0Mr41d03dAgS92rtT6aUUjQ9lPekD
+         tDdOusG6Dv3Pxt3GETF/IwGC0QNhM/i/agZcP3jH3CYFePgd5YvhrL5SoGX0A89u4P4Z
+         lHEonE1TJLaSz/BBpfPHfKO1tpTKyoT1lrTj9oxtwjPc8zOEzFb2VFrjH+8AgCIymxUH
+         SZZx4lKWRBAAy5IZ+/ptfgMbO3u/tg0d/vMm1VJqS3R2Px3d3wAIOc0ogsXRuuJFT5x1
+         sddRTinQCjHc+0Qmh51vKLI2L+SvtnCMyDDoQH3Ty48JX6A1G5C8F/h1yI5urxA4aFe8
+         pLsQ==
+X-Gm-Message-State: AG10YOSmz86ZSewG4YTJEMXtZv+lVzfc2b4rUZzXyaEfYGz0WSY16NqKEEo/VJK39qg1W0u9D8pUO6heiZMVlg==
+X-Received: by 10.25.170.203 with SMTP id t194mr829334lfe.48.1452795508505;
+ Thu, 14 Jan 2016 10:18:28 -0800 (PST)
+Received: by 10.112.167.2 with HTTP; Thu, 14 Jan 2016 10:17:48 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284075>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Hey,
 
-> Error messages should attempt to fit within the confines of
-> an 80-column terminal to avoid compatibility and accessibility
-> problems.  Furthermore the word "directories" can be misleading
-> when used in the context of git refnames.
->
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
->   Eric Wong <normalperson@yhbt.net> wrote:
->   > I also noticed the "Only one set of wildcard directories" error
->   > message is unnecessary long and "wildcard directories" should
->   > probably be shortened to "wildcards" to avoid wrapping in a terminal.
->   > That will probably be a separate patch for me.
->
->   There's likely more instances of this in git-svn, but I figured
->   we'll get this one fixed, first.
->
->   Also pushed to bogomips.org/git-svn.git
->   (commit dc6aa7e61e9d33856f54d63b7acb518383420373)
->   along with Victor's patch.
+If I clone a repo, the repo will be on a specific branch, the 'main'
+(typically 'master') branch.
 
-Thanks.
+Is there any direct command to find that main branch, since that
+information is present?
 
-I am not sure if it is a good idea to show */*/* as an example in
-the message (that is an anti-example of 'one set of wildcard' by
-having three stars, isn't it?), but that is not a new issue this
-change introduces.
+If so, is there any way to find it without actually cloning the repo
+(similar to git ls-remote)?
 
->  	my $state = "left";
-> -	my $die_msg = "Only one set of wildcard directories " .
-> -				"(e.g. '*' or '*/*/*') is supported: '$glob'\n";
-> +	my $die_msg = "Only one set of wildcards " .
-> +				"(e.g. '*' or '*/*/*') is supported: $glob\n";
->  	for my $part (split(m|/|, $glob)) {
->  		if ($pattern_ok && $part =~ /[{}]/ &&
->  			 $part !~ /^\{[^{}]+\}/) {
-> diff --git a/t/t9108-git-svn-glob.sh b/t/t9108-git-svn-glob.sh
-> index d732d31..29b363b 100755
-> --- a/t/t9108-git-svn-glob.sh
-> +++ b/t/t9108-git-svn-glob.sh
-> @@ -86,9 +86,12 @@ test_expect_success 'test left-hand-side only globbing' '
->  	test_cmp expect.two output.two
->  	'
->  
-> -echo "Only one set of wildcard directories" \
-> -     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
-> -echo "" >> expect.three
-> +test_expect_success 'prepare test disallow multi-globs' "
-> +cat >expect.three <<EOF
-> +Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/*/t/*
-> +
-> +EOF
-> +	"
->  
->  test_expect_success 'test disallow multi-globs' '
->  	git config --add svn-remote.three.url "$svnrepo" &&
-> diff --git a/t/t9109-git-svn-multi-glob.sh b/t/t9109-git-svn-multi-glob.sh
-> index c318f9f..d0b79fe 100755
-> --- a/t/t9109-git-svn-multi-glob.sh
-> +++ b/t/t9109-git-svn-multi-glob.sh
-> @@ -135,9 +135,12 @@ test_expect_success 'test another branch' '
->  	test_cmp expect.four output.four
->  	'
->  
-> -echo "Only one set of wildcard directories" \
-> -     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
-> -echo "" >> expect.three
-> +test_expect_success 'prepare test disallow multiple globs' "
-> +cat >expect.three <<EOF
-> +Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/*/t/*
-> +
-> +EOF
-> +	"
->  
->  test_expect_success 'test disallow multiple globs' '
->  	git config --add svn-remote.three.url "$svnrepo" &&
-> diff --git a/t/t9168-git-svn-partially-globbed-names.sh b/t/t9168-git-svn-partially-globbed-names.sh
-> index a7641dc..8b22f22 100755
-> --- a/t/t9168-git-svn-partially-globbed-names.sh
-> +++ b/t/t9168-git-svn-partially-globbed-names.sh
-> @@ -130,9 +130,10 @@ test_expect_success 'test prefixed globs match just prefix' '
->  	'
->  
->  test_expect_success 'prepare test disallow prefixed multi-globs' "
-> -	echo \"Only one set of wildcard directories\" \
-> -	     \"(e.g. '*' or '*/*/*') is supported: 'branches/b_*/t/*'\" >expect.four &&
-> -	echo \"\" >>expect.four
-> +cat >expect.four <<EOF
-> +Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/b_*/t/*
-> +
-> +EOF
->  	"
->  
->  test_expect_success 'test disallow prefixed multi-globs' '
+-- 
+Thanks,
+
+Pedro Rijo
