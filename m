@@ -1,94 +1,139 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: Worktree "gitdir" file being mangled after upgrade to 2.7.0
-Date: Thu, 14 Jan 2016 08:58:02 -0500
-Message-ID: <CANoM8SUB5hfZHkLenDEq1O1wFrZno1OUUSH2uwDfihC0z+tUkQ@mail.gmail.com>
-References: <20160113234753.GA26473@gmail.com> <xmqqh9iglwf3.fsf@gitster.mtv.corp.google.com>
- <CACsJy8D2Bz42kvBD1e=0oqxrYDry7_wCOy5Fi3oS-sGJxux4-w@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2 00/21] refs backend reroll
+Date: Thu, 14 Jan 2016 11:25:52 -0500
+Organization: Twitter
+Message-ID: <1452788752.16226.17.camel@twopensource.com>
+References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
+	 <xmqqbn8qqqfi.fsf@gitster.mtv.corp.google.com>
+	 <20160114092614.GA8533@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Erik Johnson <palehose@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 14:58:27 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJiPy-000132-UT
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 14:58:27 +0100
+	id 1aJkin-0001dO-O6
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbcANN6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 08:58:23 -0500
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:36501 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbcANN6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 08:58:22 -0500
-Received: by mail-oi0-f47.google.com with SMTP id o124so106250962oia.3
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 05:58:21 -0800 (PST)
+	id S1755378AbcANQZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:25:57 -0500
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:35662 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754362AbcANQZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 11:25:55 -0500
+Received: by mail-qg0-f49.google.com with SMTP id o11so486470937qge.2
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:25:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=L1kKGx8W+sV+dHt2jClJXpjC6+8Ex89ysy63ryBnUOU=;
-        b=awfle6DmbkqR5wBS9RB1VRv0gmQ3uaa9EvX2SNZQt6G3MyMRqGaZpYHgRbaqcib75G
-         7YKqunh/qZy2iM9EzxCByXDx6n69S8H06KKO9IV2di3jdE9HzVUaMBYhmLtpno0vu+8I
-         M1FRsUeKOiiLV8KWu6CubYZ33g8c2vhlL8PKfCmc+esKc0nuhqJ8Gui4aOi4t/u0DHdn
-         78fmnLVp+doxt6z6vUyezGFWXJ3bAGp+DWgXtjd1DwITHnYkBRFrhxEEtw130kmBQJj0
-         Nhxq0LUEbHt0iQ9JEW/1JyqzKKSjIK1b4USDO2SgpGb+c/hGXCvTGY6G2oZb5EbqO2sX
-         Fwng==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=9+x3zxhA12+Lr0kazrRHHxFTVP/+v7caekLAP3uGY7Y=;
+        b=E6foYLiIFPUdLwno1hLndR9Z4CJ88LQPVZWzZzcbw6pFfJBSNPvoXNMW/8O0cWvbu1
+         oSRPDH6LkknedJAnvi4WrjFpYhQBVHP4BJcWfP1VgdFQOLGL0yr2H4gLVb7pdA0ex9z1
+         UwGFsfHtZ82baUJHpFV+TcoOsOAjrQBWirOzazfiX/AftQH5Pw7MIueTEg/xeGxENy6A
+         tAQ6LaGR2AHeqcTdEpTLwjNylC2XMxnI4zg/vDpZ5sEOV5SXBB28ESDROFZLlvkw9PO1
+         FkqkikAX20WYdmA9DqzS1xpUpa2fjIcvpyslXpE5hu++3pCnj+RGKyC2R+W3Qyr4tMLb
+         wmRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=L1kKGx8W+sV+dHt2jClJXpjC6+8Ex89ysy63ryBnUOU=;
-        b=cCZ3OWpqmRDVP1VI1jO4C+u9IuojeAxOYG7b8uJ0pvrXqx0WVISotQWOK7eu3xWp1j
-         XlrnaZoTa5nCF8ZjI9BdJ0BtIx32CVIeTefE1e/k6i4Ck7c96U5MaRAMyzXS/8ZXvr5g
-         6CfqxR3wZJO/AWfqbJv0ZOZ+RlMLYkFHB53TmoH5GHUFGRYOGh4WUg5/CZEwRA8GIJq/
-         +14tPkV18ThKuQgTbg/nKG1jS+mgoa+B8ZmZS3CNMmL7ezV1vsEFrHY3p3pWbgsQw0xd
-         /QJtouqb8NkAXVGk3L8PTFx2XSiLcJK3zu+MYStghlYz9CsZ9JyKdtBWFhS+PiRBn+6H
-         mOyA==
-X-Gm-Message-State: ALoCoQlUptE0itlQa7f0Il6IjSQ9WBzFFlKexyc29p3Bm89F/2rrzIMOAY9GVaqT6nE8VweSqU9mx7J9j5kaGt/SxalGLQFx8g==
-X-Received: by 10.202.201.77 with SMTP id z74mr3319621oif.24.1452779901437;
- Thu, 14 Jan 2016 05:58:21 -0800 (PST)
-Received: by 10.76.80.168 with HTTP; Thu, 14 Jan 2016 05:58:02 -0800 (PST)
-In-Reply-To: <CACsJy8D2Bz42kvBD1e=0oqxrYDry7_wCOy5Fi3oS-sGJxux4-w@mail.gmail.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=9+x3zxhA12+Lr0kazrRHHxFTVP/+v7caekLAP3uGY7Y=;
+        b=OGLCT9EfFYLQiFJHgLsHOSLi1PXIpZpfWreQ9SOKmJi2DkDpK6ExGw4ykPxXp/Y4Ny
+         T57XbCt1Jaw3A9JcP6UzRsFZRixu8a0T0eF64jQ08USvayTr/gdciSjhruUZ6H0JKsIx
+         XpcEH5YF09/zXJcqsC+0N1jKoZGL/f6whcd+GoZDPZkf5OIYRgClhsEu/PrpJq2gtQZo
+         8rNhVgPmOXEHj+idzGTRdI4DBz31T5Ec+YAJNUQ1sdYHYQUR74zBgI2VnT+6y7ULyNuz
+         cVyjZ+CodIQlHcoafHRUKTkjGWbvI5p0ubVhj2gwDSspuvat+UdDymRsKGpUM2SMVL/d
+         zNYw==
+X-Gm-Message-State: AG10YOR0Tbuapqa4/MnEbzEuTWvvqqgG4d9itbR3bEuLu5Evp+mtc8MP3y8o32NL+KT+1A==
+X-Received: by 10.140.224.199 with SMTP id u190mr2773712qhb.33.1452788754614;
+        Thu, 14 Jan 2016 08:25:54 -0800 (PST)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id y127sm2759019qky.4.2016.01.14.08.25.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jan 2016 08:25:53 -0800 (PST)
+In-Reply-To: <20160114092614.GA8533@sigill.intra.peff.net>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284035>
 
-On Wed, Jan 13, 2016 at 10:29 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jan 14, 2016 at 9:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Erik Johnson <palehose@gmail.com> writes:
->>
->>> Since upgrading to 2.7.0 last week, eventually I'll get to a point when
->>> I run 'git worktree list' where several worktrees are incorrectly
->>> reported as pointing to my main git checkout. Further analysis of the
->>> files in $GIT_DIR/worktrees/worktree_name/ shows that the gitdir file
->>> for the worktrees which display incorrectly contains ".git" instead of
->>> what it should contain (i.e. "/path/to/worktree/.git".
->>>
->>> This was reported a couple days ago on Github:
->>>
->>> https://github.com/git/git-scm.com/issues/650
->>>
->>> Since the audiences for the mailing list and Github don't overlap
->>> completely, I figured I'd report it here to get this issue in front of
->>> as many eyes as possible.
->>
->> Thanks for relaying.  Duy, Michael, I think this is your area?
->
-> The only place that a relative path can be written is
-> update_linked_girdir() unless i'm mistaken. That function is being
-> deleted "soon" because it causes another problem
+On Thu, 2016-01-14 at 04:26 -0500, Jeff King wrote:
+> On Tue, Jan 12, 2016 at 04:22:09PM -0800, Junio C Hamano wrote:
+> 
+> > David Turner <dturner@twopensource.com> writes:
+> > 
+> > > This version incorporates many changes suggested by Michael
+> > > Haggerty,
+> > > Junio, Jonathan Nieder, Eric Sunshine, and Jeff King. I think I
+> > > have
+> > > addressed of the comments that were sent to me.  Those that I
+> > > chose
+> > > not to incorporate, I responded to on the mailing list.
+> > > 
+> > > Thanks for all of the feed back so far.
+> > 
+> > Unfortunately this did not compile for me X-< and with a trivial
+> > fix-up, I found that this overlaps with Peff's recent fixes to the
+> > locking of symbolic refs.  So for today's integration run, I
+> > punted.
+> > 
+> > I still will push out this topic to the broken-out repository I
+> > keep
+> > here:
+> > 
+> >     https://github.com/gitster/git
+> > 
+> > It's just 'pu' will not have this latest incarnation, but has the
+> > older one.
+> 
+> I took a look at David's changes. The conflicts come from "refs:
+> resolve symbolic refs first". I'm not sure I fully understand all
+> that
+> is going on in that patch, but it looks like after it, we are less
+> likely to handle ENOTDIR and d/f conflicts for symrefs, as we skip
+> that
+> whole code path for REF_ISSYMREF.
 
-`git worktree list` command does not modify the worktree gitdir file,
-so this is only a symptom of the problem.  If at all possible, we
-should move to get Duy's fix into the 2.7.1 release.  This problem
-almost makes git worktree list useless.
+We only get into the symref part of that codepath if there's already a
+symref present, meaning that d/f conflicts can't happen.
 
-> --
-> Duy
+> The rest of the conflicts are related to the fact that all of the
+> initial resolution is pulled out of lock_ref_sha1_basic(), and the
+> caller is supposed to do it. So I think if create_symref() is going
+> to
+> call lock_ref_sha1_basic(), as in my series, when combined with
+> David's
+> it should also be calling dereference_symrefs(). That uses a
+> ref_transaction, which we don't have in create_symref() right now,
+> but
+> it makes sense that we would ultimately want to push symref updates
+> through the same transaction/backend system.
+
+I don't think that's quite true.  create_symref *always* creates
+symrefs, and never creates underlying refs.  So it calls
+lock_ref_sha1_basic(), but since type_p is NULL, it doesn't go into the
+resolved-symlinks path; instead, we get into the original codepath.
+
+> So sorry, I don't have a quick resolution to this. I'm hoping David
+> can
+> make more sense of it than I did.
+
+I was totally convinced that we were doomed, but I think the stupid
+resolution basically works, with some minor tweaks.  I'm going to re
+-review that patch and resend the series (then go out of town until
+Tuesday).
+
+We will need to apply your new d/f conflict check to the LMDB backend's
+symref code (presently, it fails your new test), but I'm going to punt
+on that for now since d/f conflicts don't cause problems for the LMDB
+backend and this is a relatively minor case.  I've added a TODO to the
+code.
