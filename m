@@ -1,142 +1,93 @@
-From: David Ware <davidw@realtimegenomics.com>
-Subject: Re: [PATCH v5] contrib/subtree: fix "subtree split" skipped-merge bug
-Date: Fri, 15 Jan 2016 09:45:43 +1300
-Message-ID: <CAET=KiWjVr5h8nfU2DfUHGvzc7Tq7LoDWym7zXPq1Nvf+xHCCg@mail.gmail.com>
-References: <CAPig+cSfkz=SNOn+8yP-QN8gJ0ej1wo3HW+y3NO+QvUCOP=+8A@mail.gmail.com>
-	<1449695853-24929-1-git-send-email-davidw@realtimegenomics.com>
-	<87y4bunopj.fsf@waller.obbligato.org>
-	<CAET=KiVY5g41YgCbGqDqUaDjrd-Do9jNf=1L6xbBPcUoGcM2Kg@mail.gmail.com>
-	<87bn8o97mh.fsf@waller.obbligato.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule: Port resolve_relative_url from shell to C
+Date: Thu, 14 Jan 2016 21:50:28 +0100
+Message-ID: <56980A14.1060605@web.de>
+References: <1452708927-9401-1-git-send-email-sbeller@google.com>
+ <xmqq4mehm92b.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:45:51 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
+To: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:50:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJomD-0007QZ-5V
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:45:49 +0100
+	id 1aJor3-0002sa-6F
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034AbcANUpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:45:45 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:33032 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540AbcANUpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:45:44 -0500
-Received: by mail-vk0-f52.google.com with SMTP id i129so149421409vkb.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 12:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=si0zgWqq0O4W7j6oCaoQwOT1BH/pZXdpIXtOdR9qJ5M=;
-        b=ov5StI8VtFHi4l0tp9bcocW82xc5swRSGsHoWHSFPMkufA1l2lFhPUFKmwK+dgD9kI
-         jnC4wjajeCBJZJt0TSkt5RmOn3qtYp4paym3dPaPfWHVXYlLO2/XrJM3u/8RqrVu8Kf3
-         5K0Ot9NA4drbcH3Sf75wfulls9y+NYrDwubb+gE4trAV/4B1YVT11GZd+yY3Lisf29/7
-         JRD5JdmQZrz/+1NFoKda9Nu0qQf5RIu2SYVBgOSE7VFsM0yIkyL48aMl6kXhlN5Jq2tI
-         UogA5gN7cYkMwGcP8LmxsWJhz2CYPGzcROKffqqgn5A3Nsw4QUGMarQxGAsfEOag95i1
-         +NcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=si0zgWqq0O4W7j6oCaoQwOT1BH/pZXdpIXtOdR9qJ5M=;
-        b=XrVY3ZSCINz0qFh9LO02nwc+FM0FPuFUGGqQF9KHgCSZLQ1YUpuMa6VLvDUHMcW/11
-         EEQaTfe/XbLya0nUNpKI0ewqSENkqU0lhXJOD/9jv//VE/aWbfpfo7Q8KNBDrMDs9/Vp
-         2WGdPb0CzbG1db4yvYRe8BGZdNsxyCtmEP3XD5xYABSYlLBrz6Z8TwyNsyh3nM9efJ5/
-         2MZulUV/Vq2I7cOshFI55CDymKc+iFJEio7OeNdMOhcGAeBT7FjHpB/JCg2FQckrr0lT
-         F69j6GpJ9xEumvacjnZM5jCyiONMrJxngIYf1GC/j0NmMF2UvV26Mw1bBps3fyINrPgA
-         6Oug==
-X-Gm-Message-State: ALoCoQlfGqdIvqoKuRBtpkyZsio/E5w5SUryid/o1zFl9GKj537y45nisKnm68V7IkpGuPtnYCf9CtN0qWJyi1wPoOqQ79ZN3LQBMNlpGJ7l4QgAsf5yX1Y=
-X-Received: by 10.31.157.204 with SMTP id g195mr4702778vke.79.1452804343455;
- Thu, 14 Jan 2016 12:45:43 -0800 (PST)
-Received: by 10.31.161.206 with HTTP; Thu, 14 Jan 2016 12:45:43 -0800 (PST)
-In-Reply-To: <87bn8o97mh.fsf@waller.obbligato.org>
+	id S1755238AbcANUup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:50:45 -0500
+Received: from mout.web.de ([212.227.15.3]:53036 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754432AbcANUuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:50:44 -0500
+Received: from [192.168.178.41] ([79.211.122.98]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MWS0g-1aeHHV20Ec-00XbTh; Thu, 14 Jan 2016 21:50:35
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
+X-Provags-ID: V03:K0:mXcrAiW62aqXO1XLgNf4ppcA/ly/VTXTPGmL1dHlB+mi6irnpK3
+ yYYkOv0QpiEd4t9GbsCGUPWUtumL4hP8MVw2jTIrU4bCq1cy4AdXCKifHi4F3HfGxjdmC0D
+ QXtE/MwRd9KjCKEXEO5t85zO+INALWwsU5FijxK1u4ECIRz3FFAXfTOOo5yBwaF83wnA5Ad
+ xraMe1EQmQpwiwK/RhL8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:U8In+u+FuzU=:ztBnHMvWjmB6A7Tl4zWJQy
+ 1P/7j1Dmk38Pa6xgslJ2+IlqrKrG+mM+TiX+GdcadWfqtORxE/AzfbrZTH0pZHyF2B64E/JnA
+ wtxWfvdRqHlXjJaFTGPvKBsyVUtqxxugwM7jP7WiY8E9opM6o8IYuo8nrHi32WO7JgGH3mrN2
+ HnoDvOR46SLM5MmU5WzzbvW7vybDbst+YPtBgg9RANDpFvVcsGOzDpMY40xTVSb+9K2Lf+YUH
+ SKcuUF6Jkkl9XXmSsAM+Y4ZV2vnPUnycYin0Ho/rSBEJhcoyrbUQXTZYfaSWaL26VPZLKBAVL
+ PPor7d7was8ZKF1Jahih6l+ATymCv/AyuUi7OpAuLYtRubwgX6NxXRl4J6adKJw2q27O8un+9
+ SOnvl9DuCjA05gJ2/ith+w0eGTNv1VtsJCuuHkIyWEZZUVHjVJnGAWGmi4LXRjZhyjmsHEPxz
+ QRcGkuU8hetHz44y6pPNjyQbo/9P6asliWGw7kgIY6tFfIJDba6lgdNLEg2nJky2s6Ebx/RIW
+ qANOXdLjZ+4XxFyUC1Fxmvk+Sh991k/J/JT9SudbYjKaODp6C4AZfuZpRBm8Kz6Yhj/HdCoY0
+ xi4aqT+PVZ4vs/zPdPgyrQKH+3JoAFN3m3vOriwWf1U6nB06J9MJfdIHzQlLEEZQq3qV66N6k
+ /2Ngta4nx2ddnxXYDBpL4R0SWjPB0YrMxkO1464FmUgFZ9aK3B85iQR1Cpk48yLI/BHhANcJd
+ aRgbYyu4PJiZPvLYRyeAlCYsFqDMwI7F18cTomc6cKbe32oQ9krAAug/wuhbSzygU9t3xNub 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284090>
 
-On Thu, Jan 14, 2016 at 4:12 PM, David A. Greene <greened@obbligato.org> wrote:
-> David Ware <davidw@realtimegenomics.com> writes:
->> The commit was made against v2.6.3, when I try to apply the patch
->> against master it fails.
+Am 13.01.2016 um 23:47 schrieb Stefan Beller:
+> On Wed, Jan 13, 2016 at 2:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> Later on we want to deprecate the `git submodule init` command and make
+>>> it implicit in other submodule commands.
+>>
+>> I doubt there is a concensus for "deprecate" part to warrant the use
+>> of "we want" here.  I tend to think that the latter half of the
+>> sentence is uncontroversial, i.e. it is a good idea to make other
+>> "submodule" subcommands internally call it when it makes sense, and
+>> also make knobs available to other commands like "clone" and
+>> possibly "checkout" so that the users do not have to do the
+>> "submodule init" as a separate step, though.
 >
-> Any ideas why?
+> Maybe I need to rethink my strategy here and deliver a patch series
+> which includes a complete port of `submodule init`, and maybe even
+> options in checkout (and clone) to run `submodule init`. That way the
+> immediate benefit would be clear on why the series is a good idea.
 
-"git am" (a command I have never used before) Fails like so
+I think that makes lots of sense. It looks to me like clone already
+has that option (as --recurse-submodules must init the submodules),
+but it might make sense to add such an option to checkout to init
+(and then also update) all newly appearing submodules (just like
+"git submodule update" has the --init option for the same purpose).
 
-Applying: contrib/subtree: fix "subtree split" skipped-merge bug
-error: patch failed: contrib/subtree/t/t7900-subtree.sh:468
-error: contrib/subtree/t/t7900-subtree.sh: patch does not apply
+> The current wording is mostly arguing to Jens, how to do the submodule
+> groups thing later on, but skipping the immediate steps.
 
-It doesn't even put any files into a conflict state.
-I guess it's because of the hefty test refactoring you mentioned.
+I really believe that in the future a lot of users will hop on to the
+automatically-init-and-update-submodules train once we have it (and I
+think users of the groups feature want to be on that train by default).
 
->
->> However I can verify the test passes for me when applied against
->> v2.6.3, and it also passed if I merge my patched copy of v2.6.3 into
->> master.
->
-> I don't think the subtree split code has changed at all in that period
-> and the logs bear that out.  So there must be some change in
-> v2.6.3..master that confounds your patch.
->
-> Re-checking the patch submission guidelines, it looks like bugfixes
-> should be based against maint.  I did that and the test still fails with
-> your changes.  It seems like we ought to rebase to maint and continue
-> our investigation there.
->
-
-Hmm, the patch fails to apply for me there also. Same issue with
-contrib/subtree/t/t7900-subtree.sh
-
-I haven't worked with mailed patches at all before, so it is possible
-I'm not using the correct workflow (I just saved the raw email I
-received for the patch as txt and fed it to 'git am').
-Cherrypicking the commit onto maint works fine though, and the test
-passes for me in this situation.
-
->> The process I'm using to run the tests is a little strange though, it
->> seems I have to make git, then make contrib/subtree, then cp
->> git-subtree to the root before running the Makefile on the tests.  Let
->> me know if there's a less strange process for running the subtree
->> tests.
->
-> I actually have an update that makes this easier but I haven't submitted
-> it yet.  But yes, you've got the current process right.
->
-
-That will be nice.
-
-> Ok.  Your patch applied cleanly to maint and maint has the latest
-> version of the test file.  It should be just a matter of following what
-> the other tests do.  I'm more than happy to guide you through it.
->
->>>> +             git branch noop_branch &&
->>> [...]
->>>> +             git checkout noop_branch &&
->>>> +             echo moreText >anotherText.txt &&
->>>> +             git add . &&
->>>> +             git commit -m "irrelevant" &&
->>>
->>> This is unfortunate naming.  Why is the branch a no-op and why is the
->>> commit irrelevant?  Does the test test the same thing without them?  I
->>> not they should have different names.  If so, why are these needed in
->>> the test?
->>>
-
-As noted above I can't get the patch to apply cleanly to maint for me,
-but I suppose it doesn't matter since I'm about to mail in a new
-version created against maint.
-I've rewritten the test to use the repo/commit creation methods, and
-renamed that branch. I've also added the comments you requested, and
-changed the push to an ancestor check.
-I'll be submitting the new version of the patch shortly.
-
-Cheers,
-Dave Ware
+But I also believe we'll have to support the old school init-manually
+and update-when-I-want-to use cases for a very long time, as lots of
+work flows are built around that.
