@@ -1,97 +1,96 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 00/21] refs backend reroll
-Date: Thu, 14 Jan 2016 15:12:01 -0500
-Message-ID: <20160114201201.GA1985@sigill.intra.peff.net>
-References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
- <xmqqbn8qqqfi.fsf@gitster.mtv.corp.google.com>
- <20160114092614.GA8533@sigill.intra.peff.net>
- <1452788752.16226.17.camel@twopensource.com>
+Subject: Re: [PREVIEW v3 8/9] checkout-index: there are only two line
+ terminators
+Date: Thu, 14 Jan 2016 15:13:43 -0500
+Message-ID: <20160114201342.GB1985@sigill.intra.peff.net>
+References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
+ <1452740590-16827-1-git-send-email-gitster@pobox.com>
+ <1452740590-16827-9-git-send-email-gitster@pobox.com>
+ <20160114101830.GC30772@sigill.intra.peff.net>
+ <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:12:14 2016
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:13:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJoFg-0007HY-6O
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:12:12 +0100
+	id 1aJoHG-0008VL-5c
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:13:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414AbcANUMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:12:06 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53886 "HELO cloud.peff.net"
+	id S1754124AbcANUNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:13:46 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53894 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753314AbcANUME (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:12:04 -0500
-Received: (qmail 7568 invoked by uid 102); 14 Jan 2016 20:12:03 -0000
+	id S1754112AbcANUNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:13:45 -0500
+Received: (qmail 7665 invoked by uid 102); 14 Jan 2016 20:13:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:12:03 -0500
-Received: (qmail 11110 invoked by uid 107); 14 Jan 2016 20:12:22 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:13:45 -0500
+Received: (qmail 11132 invoked by uid 107); 14 Jan 2016 20:14:03 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:12:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:12:01 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:14:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:13:43 -0500
 Content-Disposition: inline
-In-Reply-To: <1452788752.16226.17.camel@twopensource.com>
+In-Reply-To: <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284085>
 
-On Thu, Jan 14, 2016 at 11:25:52AM -0500, David Turner wrote:
+On Thu, Jan 14, 2016 at 09:13:54AM -0800, Junio C Hamano wrote:
 
-> > I took a look at David's changes. The conflicts come from "refs:
-> > resolve symbolic refs first". I'm not sure I fully understand all
-> > that
-> > is going on in that patch, but it looks like after it, we are less
-> > likely to handle ENOTDIR and d/f conflicts for symrefs, as we skip
-> > that
-> > whole code path for REF_ISSYMREF.
+> Jeff King <peff@peff.net> writes:
 > 
-> We only get into the symref part of that codepath if there's already a
-> symref present, meaning that d/f conflicts can't happen.
-
-Ah, right, that makes sense.
-
-> > The rest of the conflicts are related to the fact that all of the
-> > initial resolution is pulled out of lock_ref_sha1_basic(), and the
-> > caller is supposed to do it. So I think if create_symref() is going
-> > to
-> > call lock_ref_sha1_basic(), as in my series, when combined with
-> > David's
-> > it should also be calling dereference_symrefs(). That uses a
-> > ref_transaction, which we don't have in create_symref() right now,
-> > but
-> > it makes sense that we would ultimately want to push symref updates
-> > through the same transaction/backend system.
+> > I see that we switch the line termination on the fly in option_parse_z.
+> > But I'm having trouble seeing how we could actually have mixed inputs.
+> > We don't actually look at the line-terminator until after all of the
+> > options are parsed.
 > 
-> I don't think that's quite true.  create_symref *always* creates
-> symrefs, and never creates underlying refs.  So it calls
-> lock_ref_sha1_basic(), but since type_p is NULL, it doesn't go into the
-> resolved-symlinks path; instead, we get into the original codepath.
+> I do not think we are aiming for mixed inputs.  What I meant by
+> "mixed" in my description was a possible future option to allow
+> input and output using different line termination (e.g. via "-Z"
+> you would control output line termination, while "-z" only affects
+> the input line termination).
 
-I'm not sure in which version of the code you mean here. I guess in the
-merged one, because in your original create_symref is still
-pre-lock_ref_sha1_basic. But I think...
+Ah, I see.
 
-> I was totally convinced that we were doomed, but I think the stupid
-> resolution basically works, with some minor tweaks.  I'm going to re
-> -review that patch and resend the series (then go out of town until
-> Tuesday).
+> After this step, there is still one call that is more natural to
+> have line_termination that is either '\0' or '\n' and that is on the
+> output side, which calls write_name_quoted_relative() to report the
+> names of the temporary files that received the file contents to the
+> standard output.
+> 
+> Of course there is nothing wrong to do
+> 
+>         write_name_quoted_relative(name, prefix, stdout,
+> 				   nul_term_lines ? '\0' : '\n');
+> 
+> though.
+> 
+> And I tend to think that it might even be a good idea to do so.  If
+> somebody in the future really wants to introduce '-Z', then they can
+> add a separate "output_line_termination" variable back (and it would
+> likely be set to '\0' or '\n' via "-z" when "-Z" is not given), but
+> until then, I agree that a simple bool for "-z" would be better.
 
-...the best thing for me to do is wait and see your revised patch. :)
+Yeah, I agree with all of that.
 
-Thanks for looking into it.
+> > I'm also not sure how "unset" would trigger here. If we have a long
+> > option, we can use "--no-foo". But there isn't a long option for "-z".
+> > Is there a way to negate short options?
+> 
+> I do not think there is.  It merely future-proofs against those who
+> try to add "--nul" as a longer synonym.  They would complain after
+> they add "--nul" in builtin_checkout_index_options[] as a synonym if
+> they see "--no-nul" does not negate the effect of an earlier "-z".
 
-> We will need to apply your new d/f conflict check to the LMDB backend's
-> symref code (presently, it fails your new test), but I'm going to punt
-> on that for now since d/f conflicts don't cause problems for the LMDB
-> backend and this is a relatively minor case.  I've added a TODO to the
-> code.
-
-Makes sense.
+Makes sense. Better still if we can turn it into OPT_BOOL, though, and
+then it would Just Work. :)
 
 -Peff
