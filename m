@@ -1,138 +1,62 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: shorten glob error message
-Date: Thu, 14 Jan 2016 04:07:59 +0000
-Message-ID: <20160114040759.GA7671@dcvr.yhbt.net>
-References: <1452522358-16943-1-git-send-email-vleschuk@accesssoftek.com>
- <20160113031601.GA28224@dcvr.yhbt.net>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Jan 2016, #03; Wed, 13)
+Date: Thu, 14 Jan 2016 06:26:07 +0100
+Message-ID: <5697316F.4080609@web.de>
+References: <xmqqy4btktjp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, vleschuk@accesssoftek.com,
-	Victor Leschuk <vleschuk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 05:08:40 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 14 06:26:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJZDB-0003Qw-I7
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 05:08:37 +0100
+	id 1aJaQc-00016D-0I
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 06:26:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751402AbcANEID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Jan 2016 23:08:03 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:54281 "EHLO dcvr.yhbt.net"
+	id S1755581AbcANF03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 00:26:29 -0500
+Received: from mout.web.de ([212.227.17.12]:58263 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750847AbcANEIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jan 2016 23:08:01 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF7221FD21;
-	Thu, 14 Jan 2016 04:07:59 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20160113031601.GA28224@dcvr.yhbt.net>
+	id S1753661AbcANF01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 00:26:27 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MGiUP-1aNesh0kxl-00DTY0; Thu, 14 Jan 2016 06:26:14
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <xmqqy4btktjp.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:a1q2MSXHolubbZkLzNleSF2fvgiF2XKFyQpOBU2ld6c224II77w
+ 0a+DQJ+7f5EV4hgA0z/QHDqUv2jBwn40WSc8VfsXD0kot2gmLyuNLKyaMAYS5AKE1DH3jdn
+ PP/eVTlyiG8bNOsf1Q0wFETc2HWQZ7NjpDH/ZE2wxlSCPepCV4QvbhWMsaYf4GEX1m2VLZd
+ N6pDFcOJeHW5TwKISa6hg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VXPih9Ee7pg=:zRcvmDFjm7JRVEalNNnqL2
+ 5F/167lkBeSbODtw75w4k0HCiiSaigWSVendUDqC+O8UGFIUy7lbMvEu6YMCQ8asfykwR+GUi
+ eHaBCaFNNXqttcCh98CshTiYGRJjg7rtrSvRywcDofP7KXeTcoxtVcijlScsg7GlYNFL6vl/U
+ jb8ZfcWJtz4ufrJVJxAPBixXSpnA7nIQzY1I1mCA0JSNzoC3O+w91pDke1kTvNn4DyneuC9ZD
+ Oh6FKbTENM8/4VS4jcRWrpMaFy6cb6Pz/tSoRFOJrBgdthbFjWHs1EfbZ74sa1pZZgSej4LBd
+ tRdqArSpCjoQ9TKhlvljA4wtvyEXUBhrEJeH7wxoOtM0NQU9leLDn7FOu66kh+IswK+WBjzGD
+ 0XP2HhH9a2Lz0VXk4I4W3R5KsVEFMvD6mU67EqdeGBFWNkcw3nEeiIF3TpSuutcwpFAanRz0Y
+ 5ZSYZubRhQ4aTM2dTiEbPMe0/rtaKa04N09mcm9VKZHvFGh9AhhJUfRHbzDac5J5EknqyebtJ
+ L/cVT1UxYxG5L2oqpiu/+JlHzjWC89I490jTH1Q0pB9AIPRu8RkBwEQFXXKB7dz2H0zXMe/9S
+ b2IVoUhejKXp/SnH9L/a8GEySdGz1pEc34I+81vqcYyCNmKcE/KTykyw67l1pDbQxANTgwm+S
+ NjNj/ruWOY2xvnemgBm5484O7lNzHqWFGyKFm7mJd+XutkP7meCxigHMDQBc6PErzD+15lzFD
+ noMqtPqDGf4u78yHBQ+DShMiMA1HLTS/ekZYU9BLFQVpbiVMdgDD/pBrKOIkDNh51qhBGoWb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284017>
 
-Error messages should attempt to fit within the confines of
-an 80-column terminal to avoid compatibility and accessibility
-problems.  Furthermore the word "directories" can be misleading
-when used in the context of git refnames.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
-  Eric Wong <normalperson@yhbt.net> wrote:
-  > I also noticed the "Only one set of wildcard directories" error
-  > message is unnecessary long and "wildcard directories" should
-  > probably be shortened to "wildcards" to avoid wrapping in a terminal.
-  > That will probably be a separate patch for me.
-
-  There's likely more instances of this in git-svn, but I figured
-  we'll get this one fixed, first.
-
-  Also pushed to bogomips.org/git-svn.git
-  (commit dc6aa7e61e9d33856f54d63b7acb518383420373)
-  along with Victor's patch.
-
- perl/Git/SVN/GlobSpec.pm                   | 4 ++--
- t/t9108-git-svn-glob.sh                    | 9 ++++++---
- t/t9109-git-svn-multi-glob.sh              | 9 ++++++---
- t/t9168-git-svn-partially-globbed-names.sh | 7 ++++---
- 4 files changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/perl/Git/SVN/GlobSpec.pm b/perl/Git/SVN/GlobSpec.pm
-index 4775026..a0a8d17 100644
---- a/perl/Git/SVN/GlobSpec.pm
-+++ b/perl/Git/SVN/GlobSpec.pm
-@@ -8,8 +8,8 @@ sub new {
- 	$re =~ s!/+$!!g; # no need for trailing slashes
- 	my (@left, @right, @patterns);
- 	my $state = "left";
--	my $die_msg = "Only one set of wildcard directories " .
--				"(e.g. '*' or '*/*/*') is supported: '$glob'\n";
-+	my $die_msg = "Only one set of wildcards " .
-+				"(e.g. '*' or '*/*/*') is supported: $glob\n";
- 	for my $part (split(m|/|, $glob)) {
- 		if ($pattern_ok && $part =~ /[{}]/ &&
- 			 $part !~ /^\{[^{}]+\}/) {
-diff --git a/t/t9108-git-svn-glob.sh b/t/t9108-git-svn-glob.sh
-index d732d31..29b363b 100755
---- a/t/t9108-git-svn-glob.sh
-+++ b/t/t9108-git-svn-glob.sh
-@@ -86,9 +86,12 @@ test_expect_success 'test left-hand-side only globbing' '
- 	test_cmp expect.two output.two
- 	'
- 
--echo "Only one set of wildcard directories" \
--     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
--echo "" >> expect.three
-+test_expect_success 'prepare test disallow multi-globs' "
-+cat >expect.three <<EOF
-+Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/*/t/*
-+
-+EOF
-+	"
- 
- test_expect_success 'test disallow multi-globs' '
- 	git config --add svn-remote.three.url "$svnrepo" &&
-diff --git a/t/t9109-git-svn-multi-glob.sh b/t/t9109-git-svn-multi-glob.sh
-index c318f9f..d0b79fe 100755
---- a/t/t9109-git-svn-multi-glob.sh
-+++ b/t/t9109-git-svn-multi-glob.sh
-@@ -135,9 +135,12 @@ test_expect_success 'test another branch' '
- 	test_cmp expect.four output.four
- 	'
- 
--echo "Only one set of wildcard directories" \
--     "(e.g. '*' or '*/*/*') is supported: 'branches/*/t/*'" > expect.three
--echo "" >> expect.three
-+test_expect_success 'prepare test disallow multiple globs' "
-+cat >expect.three <<EOF
-+Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/*/t/*
-+
-+EOF
-+	"
- 
- test_expect_success 'test disallow multiple globs' '
- 	git config --add svn-remote.three.url "$svnrepo" &&
-diff --git a/t/t9168-git-svn-partially-globbed-names.sh b/t/t9168-git-svn-partially-globbed-names.sh
-index a7641dc..8b22f22 100755
---- a/t/t9168-git-svn-partially-globbed-names.sh
-+++ b/t/t9168-git-svn-partially-globbed-names.sh
-@@ -130,9 +130,10 @@ test_expect_success 'test prefixed globs match just prefix' '
- 	'
- 
- test_expect_success 'prepare test disallow prefixed multi-globs' "
--	echo \"Only one set of wildcard directories\" \
--	     \"(e.g. '*' or '*/*/*') is supported: 'branches/b_*/t/*'\" >expect.four &&
--	echo \"\" >>expect.four
-+cat >expect.four <<EOF
-+Only one set of wildcards (e.g. '*' or '*/*/*') is supported: branches/b_*/t/*
-+
-+EOF
- 	"
- 
- test_expect_success 'test disallow prefixed multi-globs' '
--- 
-EW
+> * tb/ls-files-eol (2016-01-07) 1 commit
+>   - ls-files: add eol diagnostics
+>
+>   Add options to ls-files to help diagnose end-of-line problems.
+>
+>   Will merge to 'next'.
+>
+Is there a chance to to send a v11 before going to next?
+It is nearly ready, should come out the next days.
