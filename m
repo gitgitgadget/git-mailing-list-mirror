@@ -1,80 +1,169 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Find main branch
-Date: Thu, 14 Jan 2016 16:13:35 -0500
-Message-ID: <20160114211335.GB10825@sigill.intra.peff.net>
-References: <CAPMsMoDsay7_n53HY6cxHWEtv5vyugxYUZqwi9tU4dKLv6MGBg@mail.gmail.com>
- <20160114213113.c700484c7e3acddc467d0e75@domain007.com>
- <CAPMsMoBNzmK618NPP-VXP_70hTxTsa13O9f_usiCPJ-SUOUz_g@mail.gmail.com>
- <CAGyf7-H2jSW0vJZ7ng1OcN7X5tvs+sEuGUH4yMSpJ_-wwUcoTQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: pedro rijo <pedrorijo91@gmail.com>, Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 22:13:44 2016
+From: Dave Ware <davidw@realtimegenomics.com>
+Subject: [PATCH v6] contrib/subtree: fix "subtree split" skipped-merge bug
+Date: Fri, 15 Jan 2016 10:26:35 +1300
+Message-ID: <1452806795-26621-1-git-send-email-davidw@realtimegenomics.com>
+References: <87bn8o97mh.fsf@waller.obbligato.org>
+Cc: Dave Ware <davidw@realtimegenomics.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 14 22:27:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJpDD-0003qM-3B
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 22:13:43 +0100
+	id 1aJpQq-0006Bp-RJ
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 22:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755628AbcANVNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 16:13:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53949 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755524AbcANVNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 16:13:38 -0500
-Received: (qmail 10214 invoked by uid 102); 14 Jan 2016 21:13:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 16:13:38 -0500
-Received: (qmail 11732 invoked by uid 107); 14 Jan 2016 21:13:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 16:13:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 16:13:35 -0500
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-H2jSW0vJZ7ng1OcN7X5tvs+sEuGUH4yMSpJ_-wwUcoTQ@mail.gmail.com>
+	id S1754550AbcANV1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 16:27:38 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35574 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756692AbcANV1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 16:27:20 -0500
+Received: by mail-pa0-f54.google.com with SMTP id ho8so122125444pac.2
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 13:27:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dOcxVGKpJ2Ry5ar/GlC2/JwoDccXRVq0YypGyMPYT1Q=;
+        b=o9DVmDcSMJGusw3NXODwPd/KyTjoET1R0iErLSQy/PCYeX0qVDDdn8ttdieklYFBws
+         fSEA/pRF/3jRx5VVuyYyFp6r+G7oTy0whLgbuydSUk8vPtsMbYCp665WyYp6AsrOnmGH
+         pkoKvcKToMFPYD25VEV3oFtukCWhpWHCYXHtHYXCgkL/ZsG9RSRJpuIk4nS0jdKr4NXe
+         FwpjEL23TlCdr8j0NOhtVoe6Vb7qHIzgqk8J2QqOSzmmgAu2a+NEUjcRSuk66IFnc7eU
+         mWWXkNWf9PwDDQNHiW4Y1ZwPmpTtkY3aT2hV1u6+qiwKdjQ9HPQ7U01nGvCoQiDWOeH2
+         knhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=dOcxVGKpJ2Ry5ar/GlC2/JwoDccXRVq0YypGyMPYT1Q=;
+        b=IgsNWdqVL4GkcbGtluwwQoTVSLtFlUww2MfLtHJuKucc1Zhk3VM7ZYlZ0xdMpB2s3S
+         TBLh6xmFst6KRlibsNX/IJTo1jiUUqutM4GbA8GHwvwdTUpFlPfGmwJQI599G4yBVP3K
+         m6BhB8kcYNy7yVn/UFndz9xpVaEcKVsQktnfrexuO241jlmjI4/rt6l0oF6YQBiMGk5e
+         8kZLAr10QW4xSUGp5/EiGwzj1p+2YUopy+wzz9UQV+wZIvKEZCpNSfUMITA9iyMQ5O4L
+         Kjmh6YZiFRSdrmax/y7SoN95jPmYkDWXrjRyW7MARJCucGZQX4mx3uv1GHKU7Drw7N2F
+         WNRw==
+X-Gm-Message-State: ALoCoQny8eyjS0oZESj1cOze0o27V+VlJzlht9FUzsW1dZWdtd+qBJKy8Zude6SNQAM99e+aioyJkVhcaGjjLNNXnXtdKfTIPw==
+X-Received: by 10.66.220.170 with SMTP id px10mr9509663pac.145.1452806840130;
+        Thu, 14 Jan 2016 13:27:20 -0800 (PST)
+Received: from tinman.nz.realtimegenomics.com ([114.134.15.146])
+        by smtp.googlemail.com with ESMTPSA id b84sm11355009pfj.25.2016.01.14.13.27.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jan 2016 13:27:19 -0800 (PST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <87bn8o97mh.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284095>
 
-On Thu, Jan 14, 2016 at 12:12:35PM -0700, Bryan Turner wrote:
+'git subtree split' can incorrectly skip a merge even when both parents
+act on the subtree, provided the merge results in a tree identical to
+one of the parents. Fix by copying the merge if at least one parent is
+non-identical, and the non-identical parent is not an ancestor of the
+identical parent.
 
-> The same thing works for GitHub. Here's the hazelcast/hazelcast repository:
-> 
-> bturner@ubuntu:~$ git remote-https
-> https://github.com/hazelcast/hazelcast.git
-> https://github.com/hazelcast/hazelcast.git | head
-> list
-> @refs/heads/master HEAD
-> 988810c4b5c5195412c65357e06cbb0e51173258 refs/heads/3.1.8
-> bddfb328e4779bccec6f7788c94960f6292b02c9 refs/heads/3.2-fix-eacg
-> 84e7d1006cd342c39afdf0ac520b5b04b8233d75 refs/heads/3.3.6
-> 2e4ffc4f593de0869f0db9f7224f964f72dac15d refs/heads/3.4-gem
-> d0a7d416b1220ef4badd98e42991dabe34c7beeb refs/heads/3.5.1
-> 6a13721d33bdb07de23f5c505b689e2ee50d5abb refs/heads/3.5.3-ercssn
-> 56676b20baae8668e731f17c9f3b9844ddd486d0 refs/heads/3.5.4
-> 
-> I'm not aware of a simple equivalent for SSH. Also, note that this
-> "git remote-https" trick won't work on Windows. When you hit Enter
-> after "list" it writes a CRLF, so the "git-remote-https" process
-> compares "listCR" against its list of known commands and finds no
-> match.
+Also, add a test case which checks that a descendant remains a
+descendent on the subtree in this case.
 
-There's no equivalent for ssh, because you're hooking in at the
-remote-helper layer, and ssh (and git://) are builtins, and http is not.
+Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
+---
+ contrib/subtree/git-subtree.sh     | 12 ++++++--
+ contrib/subtree/t/t7900-subtree.sh | 60 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 2 deletions(-)
 
-I mentioned "git remote" elsewhere in the thread, which is probably the
-least gross way (it's just ugly because it writes to a file instead of
-to stdout). But you can also snoop on the protocol:
-
-  $ GIT_TRACE_PACKET=3 git ls-remote origin 3>&1 >/dev/null |
-    perl -lne '/symref=(\S+)/ and print $1'
-  HEAD:refs/heads/master
-
-It would be nice if "git ls-remote" just had some way of printing the
-capabilities.
-
--Peff
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index edf36f8..5c83727 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -479,8 +479,16 @@ copy_or_skip()
+ 			p="$p -p $parent"
+ 		fi
+ 	done
+-	
+-	if [ -n "$identical" ]; then
++
++	copycommit=
++	if [ -n "$identical" ] && [ -n "$nonidentical" ]; then
++		extras=$(git rev-list --count $identical..$nonidentical)
++		if [ "$extras" -ne 0 ]; then
++			# we need to preserve history along the other branch
++			copycommit=1
++		fi
++	fi
++	if [ -n "$identical" ] && [ -z "$copycommit" ]; then
+ 		echo $identical
+ 	else
+ 		copy_commit $rev $tree "$p" || exit $?
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 751aee3..c5089c3 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -1014,4 +1014,64 @@ test_expect_success 'push split to subproj' '
+ 	)
+ '
+ 
++#
++# This test covers 2 cases in subtree split copy_or_skip code
++# 1) Merges where one parent is a superset of the changes of the other
++#    parent regarding changes to the subtree, in this case the merge
++#    commit should be copied
++# 2) Merges where only one parent operate on the subtree, and the merge
++#    commit should be skipped
++#
++# (1) is checked by ensuring subtree_tip is a descendent of subtree_branch
++# (2) should have a check added (not_a_subtree_change shouldn't be present
++#     on the produced subtree)
++#
++# Other related cases which are not tested (or currently handled correctly)
++# - Case (1) where there are more than 2 parents, it will sometimes correctly copy
++#   the merge, and sometimes not
++# - Merge commit where both parents have same tree as the merge, currently
++#   will always be skipped, even if they reached that state via different
++#   set of commits.
++#
++
++next_test
++test_expect_success 'subtree descendant check' '
++	subtree_test_create_repo "$subtree_test_count" &&
++	test_create_commit "$subtree_test_count" folder_subtree/a &&
++	(
++		cd "$subtree_test_count" &&
++		git branch branch
++	) &&
++	test_create_commit "$subtree_test_count" folder_subtree/0 &&
++	test_create_commit "$subtree_test_count" folder_subtree/b &&
++	cherry=$(cd "$subtree_test_count"; git rev-parse HEAD) &&
++	(
++		cd "$subtree_test_count" &&
++		git checkout branch
++	) &&
++	test_create_commit "$subtree_test_count" commit_on_branch &&
++	(
++		cd "$subtree_test_count" &&
++		git cherry-pick $cherry &&
++		git checkout master &&
++		git merge -m "merge should be kept on subtree" branch &&
++		git branch no_subtree_work_branch
++	) &&
++	test_create_commit "$subtree_test_count" folder_subtree/d &&
++	(
++		cd "$subtree_test_count" &&
++		git checkout no_subtree_work_branch
++	) &&
++	test_create_commit "$subtree_test_count" not_a_subtree_change &&
++	(
++		cd "$subtree_test_count" &&
++		git checkout master
++		git merge -m "merge should be skipped on subtree" no_subtree_work_branch
++
++		git subtree split --prefix folder_subtree/ --branch subtree_tip master &&
++		git subtree split --prefix folder_subtree/ --branch subtree_branch branch
++		check_equal $(git rev-list --count subtree_tip..subtree_branch) 0
++	)
++'
++
+ test_done
+-- 
+1.9.1
