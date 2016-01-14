@@ -1,101 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PREVIEW v3 8/9] checkout-index: there are only two line terminators
-Date: Thu, 14 Jan 2016 09:13:54 -0800
-Message-ID: <xmqq8u3skrsd.fsf@gitster.mtv.corp.google.com>
-References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
-	<1452740590-16827-1-git-send-email-gitster@pobox.com>
-	<1452740590-16827-9-git-send-email-gitster@pobox.com>
-	<20160114101830.GC30772@sigill.intra.peff.net>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [RFC] Malicously tampering git metadata?
+Date: Thu, 14 Jan 2016 12:16:39 -0500
+Message-ID: <20160114171639.GB25541@LykOS>
+References: <20151216032639.GA1901@LykOS>
+ <20151218231032.GA16904@thunk.org>
+ <20151219173018.GA1178@LykOS>
+ <20151220012835.GA3013@thunk.org>
+ <20160112182137.GE27334@LykOS>
+ <CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 14 18:14:05 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 18:16:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJlTI-0005LX-GY
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 18:14:04 +0100
+	id 1aJlVv-0007VX-NM
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 18:16:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755782AbcANRN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 12:13:59 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50358 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755702AbcANRN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 12:13:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 46D353AAB6;
-	Thu, 14 Jan 2016 12:13:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MCNVvHnmbkiG+VIEo/iS61Aoi9k=; b=HrESiM
-	PsOyfqFDAEBkJO1YcRbfgiG3FTW1zhy0rLSU4GvzJOIhFWNZkV9Z/1uTRJ4VEKpD
-	Mh85ZOOw9TtC/PuG8yLXCsTVegZnLdTDr/FfNabmbq2E7lBz4BJ5yC3vDCBEfE4Y
-	tRWURc3kDiBlPco9SnW9niOfnaKxBVuNtJ8P0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y+kRUzG2vWU5nFyCdSgqs+3IORSzg1wa
-	tUGx6HKXdCK4+Puwcf69nVC4WT3ScrpVW1bwdYMTFGW11dOc6QTTyHp95FX23YlQ
-	Gxuf5BuLYKBr5tBKm8tw8scjdt4okc099zTR7MVTBW8z05STeCKFZqJEWEHMCQZj
-	tfcjAG/EYDk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3ED103AAB5;
-	Thu, 14 Jan 2016 12:13:56 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B64913AAB4;
-	Thu, 14 Jan 2016 12:13:55 -0500 (EST)
-In-Reply-To: <20160114101830.GC30772@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 14 Jan 2016 05:18:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 31539836-BAE2-11E5-88BF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756218AbcANRQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 12:16:44 -0500
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:34409 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754018AbcANRQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 12:16:42 -0500
+Received: by mail-qg0-f54.google.com with SMTP id 6so409133718qgy.1
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 09:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=ZIxmVIPM2RRb6oDjJWpV35aDiSnrdNcVJRicwrdtwwA=;
+        b=S9XgBjictIDnFF1RYVGPkTTGeAEwrUo0fQul26mwOwof/CT2Zn1B1ccQk6KaSxxT3u
+         uv9ceCxouHLcvjaF02VT4pyepGOfVeruW8OnmIWe7vUTH8ouetkQ/KXtot0a2/KVO7zu
+         V9gzBLC2yOLJpaEMS1mNO/NxZVwAoEqtDV76BnzCOEq8aL5VJOv6ooy9ALR03HI2V110
+         QwqVu/VkC+4/ItJX+qnqufyYDtLSDirrjHTXFAtCDwr1z04ZbSo8wNk6YPWde53cwNo0
+         e8iO8lpXNdGyZ8MghQsni0O5gIQok9oq79kxT/zLSNZkN5zk5EZLuYn++95kdHdiYRK4
+         j12Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to;
+        bh=ZIxmVIPM2RRb6oDjJWpV35aDiSnrdNcVJRicwrdtwwA=;
+        b=EWHwvXdQJ80+8sz4Ms8Zxc44Ps47mRTB7vQSBCAyqw19bc2Ho+5HAJob0Dl0hor+JW
+         uH1A3rSRU6MkV5YxlAbIxKir4c6LAE0pqlna+2fYPghH71mnzipBSnRGAn7rC9BRCtTt
+         F8tty9rWpj27IE2HbF9MFyrfoEt4cnGZ29WuA16oDForvd8SH7rmIx7ZKMXLVbWhz51M
+         hjShkefWlb65GUi2/ZfaIvTaSzGTdCf/9tV6dIjixmh8on2C8V2e/hFgPoH/UvoOaMG3
+         kQB0Xy2p9p7xw2rEfHhayc5XL9JNWwCNYBZT6UBdisjuAQly1sZ6qds9Ewp6aJA9Jj0K
+         DoIA==
+X-Gm-Message-State: ALoCoQn6qbIVqHaK4e7CRef7s/wscyNJiLnxAlB9z0UfWbQe+NiwiTk+aimEMk30y7fGFm7b7XAW0Q5r43Oqq3EOnyrpxt8EvA==
+X-Received: by 10.140.43.116 with SMTP id d107mr6947757qga.51.1452791801582;
+        Thu, 14 Jan 2016 09:16:41 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-18.NATPOOL.NYU.EDU. [216.165.95.7])
+        by smtp.gmail.com with ESMTPSA id r63sm2847331qkr.17.2016.01.14.09.16.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 14 Jan 2016 09:16:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284069>
 
-Jeff King <peff@peff.net> writes:
+Hello Stefan, thanks for your feedback again. 
 
-> I see that we switch the line termination on the fly in option_parse_z.
-> But I'm having trouble seeing how we could actually have mixed inputs.
-> We don't actually look at the line-terminator until after all of the
-> options are parsed.
+> This is what push certs ought to solve already?
 
-I do not think we are aiming for mixed inputs.  What I meant by
-"mixed" in my description was a possible future option to allow
-input and output using different line termination (e.g. via "-Z"
-you would control output line termination, while "-z" only affects
-the input line termination).
+Yes, they aim to solve the same issue. Unfortunately, push certificates
+don't solve all posible scenarios of metadata manipulation (e.g., a
+malicious server changing branch pointers to trick a user into merging
+unwanted changes).
 
-After this step, there is still one call that is more natural to
-have line_termination that is either '\0' or '\n' and that is on the
-output side, which calls write_name_quoted_relative() to report the
-names of the temporary files that received the file contents to the
-standard output.
+> AFAIU the main issue with untrustworthy servers is holding back the latest push.
+> As Ted said, usually there is problem in the code and then the fix is pushed,
+> but the malicious server would not advertise the update, but deliver the old
+> unfixed version.
+> 
+> This attack cannot be mitigated by having either a side channel (email
+> announcements)
+> or time outs (state is only good if push cert is newer than <amount of
+> time>, but this may
+> require empty pushes)
+> 
 
-Of course there is nothing wrong to do
+I'm sorry, did you mean to say "can"? 
 
-        write_name_quoted_relative(name, prefix, stdout,
-				   nul_term_lines ? '\0' : '\n');
+Yes, this is a possible solution to this issue. The solution I'm
+proposing here wouldn't require a side channel though. As long as users'
+keys are not compromised, the BSL could either expire (raise an alarm),
+or force an irreconcileable fork attack --- the user who submited the
+changes won't be able to push until this change makes it through.
 
-though.
+> 
+> >
+> > Furthermore, upon fetching, users with write access also push an entry
+> > indicating that they fetched the BSL. This avoids cases in which a malicious
+> > attacker keeps older versions of the BSL and withhold changes to other users.
+> 
+> This would make it a "be malicious to all or none" thing? So the
+> attacker cannot attack
+> a single target IIUC.
 
-And I tend to think that it might even be a good idea to do so.  If
-somebody in the future really wants to introduce '-Z', then they can
-add a separate "output_line_termination" variable back (and it would
-likely be set to '\0' or '\n' via "-z" when "-Z" is not given), but
-until then, I agree that a simple bool for "-z" would be better.
+Yes, this is true. The ides is that any attack to a single target is
+easy to identify.
 
-> I'm also not sure how "unset" would trigger here. If we have a long
-> option, we can use "--no-foo". But there isn't a long option for "-z".
-> Is there a way to negate short options?
+> 
+> I have a bad feeling about repository modifications upon fetching as
+> software distribution is a highly asymmetric workflow (number of
+> fetches is many orders of magnitudes larger than pushes), which may
+> not scale well? 
 
-I do not think there is.  It merely future-proofs against those who
-try to add "--nul" as a longer synonym.  They would complain after
-they add "--nul" in builtin_checkout_index_options[] as a synonym if
-they see "--no-nul" does not negate the effect of an earlier "-z".
+Yes, we were worried about the same ourselves. The upside is that, push
+and fetch entries in our scheme are also orders of magnitude smaller;
+fetch entries do not need to be signed and they can be as little as four
+bytes (they might be gc-able also). 
+
+
+> (How would you serialize parallel fetches into the BSL?)
+
+Yes, this would imply that locking needs to be performed on the server
+side. It is important to note that fetch entries are only relevant for
+users to have write access (as only they are beneffited by them). For
+read-only fetches, like an automated build, this feature could be
+disabled.
+
+> 
+> Thanks,
+> Stefan
+
+Thanks again!
+-Santiago.
