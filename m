@@ -1,182 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
-Date: Thu, 14 Jan 2016 12:45:01 -0800
-Message-ID: <xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
-References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
-	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
+From: David Ware <davidw@realtimegenomics.com>
+Subject: Re: [PATCH v5] contrib/subtree: fix "subtree split" skipped-merge bug
+Date: Fri, 15 Jan 2016 09:45:43 +1300
+Message-ID: <CAET=KiWjVr5h8nfU2DfUHGvzc7Tq7LoDWym7zXPq1Nvf+xHCCg@mail.gmail.com>
+References: <CAPig+cSfkz=SNOn+8yP-QN8gJ0ej1wo3HW+y3NO+QvUCOP=+8A@mail.gmail.com>
+	<1449695853-24929-1-git-send-email-davidw@realtimegenomics.com>
+	<87y4bunopj.fsf@waller.obbligato.org>
+	<CAET=KiVY5g41YgCbGqDqUaDjrd-Do9jNf=1L6xbBPcUoGcM2Kg@mail.gmail.com>
+	<87bn8o97mh.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Tobias Klauser <tklauser@distanz.ch>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:45:39 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:45:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJom2-0007Gt-D2
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:45:38 +0100
+	id 1aJomD-0007QZ-5V
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbcANUpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:45:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63575 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750964AbcANUpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:45:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EF0E3A110;
-	Thu, 14 Jan 2016 15:45:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6cOOZ7lo8AytX9shLw1xn4yLwjQ=; b=xzkjg/
-	3FgXdkPM1g85Df9lLSsiSVf2hePt5hnfgcutchCj/S8hXZqohiQ254xVTf/wB/im
-	IYbMitDruP59WiGpfyOj1io1dyiEJ+oO8XO8Ozni3Z/MP8vAeLQF1vT62HTCSDWr
-	ZREOWJi6QfyHg5EtbC5ljouqlmv/1F/dkbIQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jvn6FsZwdC62A0g3PXaHnM9fQM1pkPwg
-	haeFH3wbCYaDz44WYUlx+zGyPAexG5OzQt/6Shd5Uh+NnvCab+IN8ehjzShGP9Na
-	CytKxP/n5cv/se/mW/932jMQgtisxdR4PUruDkMhPFTFO8kvutapcY3CjucvFtKH
-	lsdQd3aWL9Q=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 837C63A10F;
-	Thu, 14 Jan 2016 15:45:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DAEDC3A10D;
-	Thu, 14 Jan 2016 15:45:02 -0500 (EST)
-In-Reply-To: <1452790676-11937-3-git-send-email-tklauser@distanz.ch> (Tobias
-	Klauser's message of "Thu, 14 Jan 2016 17:57:55 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AF941F3C-BAFF-11E5-A32F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753034AbcANUpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:45:45 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:33032 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbcANUpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:45:44 -0500
+Received: by mail-vk0-f52.google.com with SMTP id i129so149421409vkb.0
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 12:45:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=si0zgWqq0O4W7j6oCaoQwOT1BH/pZXdpIXtOdR9qJ5M=;
+        b=ov5StI8VtFHi4l0tp9bcocW82xc5swRSGsHoWHSFPMkufA1l2lFhPUFKmwK+dgD9kI
+         jnC4wjajeCBJZJt0TSkt5RmOn3qtYp4paym3dPaPfWHVXYlLO2/XrJM3u/8RqrVu8Kf3
+         5K0Ot9NA4drbcH3Sf75wfulls9y+NYrDwubb+gE4trAV/4B1YVT11GZd+yY3Lisf29/7
+         JRD5JdmQZrz/+1NFoKda9Nu0qQf5RIu2SYVBgOSE7VFsM0yIkyL48aMl6kXhlN5Jq2tI
+         UogA5gN7cYkMwGcP8LmxsWJhz2CYPGzcROKffqqgn5A3Nsw4QUGMarQxGAsfEOag95i1
+         +NcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=si0zgWqq0O4W7j6oCaoQwOT1BH/pZXdpIXtOdR9qJ5M=;
+        b=XrVY3ZSCINz0qFh9LO02nwc+FM0FPuFUGGqQF9KHgCSZLQ1YUpuMa6VLvDUHMcW/11
+         EEQaTfe/XbLya0nUNpKI0ewqSENkqU0lhXJOD/9jv//VE/aWbfpfo7Q8KNBDrMDs9/Vp
+         2WGdPb0CzbG1db4yvYRe8BGZdNsxyCtmEP3XD5xYABSYlLBrz6Z8TwyNsyh3nM9efJ5/
+         2MZulUV/Vq2I7cOshFI55CDymKc+iFJEio7OeNdMOhcGAeBT7FjHpB/JCg2FQckrr0lT
+         F69j6GpJ9xEumvacjnZM5jCyiONMrJxngIYf1GC/j0NmMF2UvV26Mw1bBps3fyINrPgA
+         6Oug==
+X-Gm-Message-State: ALoCoQlfGqdIvqoKuRBtpkyZsio/E5w5SUryid/o1zFl9GKj537y45nisKnm68V7IkpGuPtnYCf9CtN0qWJyi1wPoOqQ79ZN3LQBMNlpGJ7l4QgAsf5yX1Y=
+X-Received: by 10.31.157.204 with SMTP id g195mr4702778vke.79.1452804343455;
+ Thu, 14 Jan 2016 12:45:43 -0800 (PST)
+Received: by 10.31.161.206 with HTTP; Thu, 14 Jan 2016 12:45:43 -0800 (PST)
+In-Reply-To: <87bn8o97mh.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284089>
 
-Tobias Klauser <tklauser@distanz.ch> writes:
-
-> Add a command line option --in-place to support in-place editing akin to
-> sed -i.  This allows to write commands like the following:
+On Thu, Jan 14, 2016 at 4:12 PM, David A. Greene <greened@obbligato.org> wrote:
+> David Ware <davidw@realtimegenomics.com> writes:
+>> The commit was made against v2.6.3, when I try to apply the patch
+>> against master it fails.
 >
->   git interpret-trailers --trailer "X: Y" a.txt > b.txt && mv b.txt a.txt
+> Any ideas why?
+
+"git am" (a command I have never used before) Fails like so
+
+Applying: contrib/subtree: fix "subtree split" skipped-merge bug
+error: patch failed: contrib/subtree/t/t7900-subtree.sh:468
+error: contrib/subtree/t/t7900-subtree.sh: patch does not apply
+
+It doesn't even put any files into a conflict state.
+I guess it's because of the hefty test refactoring you mentioned.
+
 >
-> in a more concise way:
+>> However I can verify the test passes for me when applied against
+>> v2.6.3, and it also passed if I merge my patched copy of v2.6.3 into
+>> master.
 >
->   git interpret-trailers --trailer "X: Y" --in-place a.txt
+> I don't think the subtree split code has changed at all in that period
+> and the logs bear that out.  So there must be some change in
+> v2.6.3..master that confounds your patch.
 >
-> Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
-> ---
+> Re-checking the patch submission guidelines, it looks like bugfixes
+> should be based against maint.  I did that and the test still fails with
+> your changes.  It seems like we ought to rebase to maint and continue
+> our investigation there.
+>
 
-Thanks, will replace.  I found some micronits, none of which I think
-is big enough to require another reroll, but since I found them
-already, I'll just point them out.
+Hmm, the patch fails to apply for me there also. Same issue with
+contrib/subtree/t/t7900-subtree.sh
 
-> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-> index 322c436a494c..aee785cffa8d 100755
-> --- a/t/t7513-interpret-trailers.sh
-> +++ b/t/t7513-interpret-trailers.sh
-> @@ -326,6 +326,46 @@ test_expect_success 'with complex patch, args and --trim-empty' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'in-place editing with basic patch' '
-> +	cat basic_message >message &&
-> +	cat basic_patch >>message &&
-> +	cat basic_message >expected &&
-> +	echo >>expected &&
-> +	cat basic_patch >>expected &&
-> +	git interpret-trailers --in-place message &&
-> +	test_cmp expected message
-> +'
-> +
-> +test_expect_success 'in-place editing with additional trailer' '
-> +	cat basic_message >message &&
-> +	cat basic_patch >>message &&
-> +	cat basic_message >expected &&
-> +	echo >>expected &&
-> +	cat >>expected <<-\EOF &&
-> +		Reviewed-by: Alice
-> +	EOF
+I haven't worked with mailed patches at all before, so it is possible
+I'm not using the correct workflow (I just saved the raw email I
+received for the patch as txt and fed it to 'git am').
+Cherrypicking the commit onto maint works fine though, and the test
+passes for me in this situation.
 
-The "echo" is not needed, if you just include a leading blank line
-in the here-document you use with this "cat".
+>> The process I'm using to run the tests is a little strange though, it
+>> seems I have to make git, then make contrib/subtree, then cp
+>> git-subtree to the root before running the Makefile on the tests.  Let
+>> me know if there's a less strange process for running the subtree
+>> tests.
+>
+> I actually have an update that makes this easier but I haven't submitted
+> it yet.  But yes, you've got the current process right.
+>
 
-> +test_expect_success POSIXPERM,SANITY "in-place editing doesn't clobber original file on error" '
-> +	cat basic_message >message &&
-> +	chmod -r message &&
-> +	test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
-> +	chmod +r message &&
-> +	test_cmp message basic_message
-> +'
+That will be nice.
 
-If for some reason interpret-trailers fails to fail, this would
-leave an unreadable 'message' in the trash directory.  Maybe no
-other tests that come after this one want to be able to read the
-contents of the file right now, but this is an accident waiting to
-happen:
+> Ok.  Your patch applied cleanly to maint and maint has the latest
+> version of the test file.  It should be just a matter of following what
+> the other tests do.  I'm more than happy to guide you through it.
+>
+>>>> +             git branch noop_branch &&
+>>> [...]
+>>>> +             git checkout noop_branch &&
+>>>> +             echo moreText >anotherText.txt &&
+>>>> +             git add . &&
+>>>> +             git commit -m "irrelevant" &&
+>>>
+>>> This is unfortunate naming.  Why is the branch a no-op and why is the
+>>> commit irrelevant?  Does the test test the same thing without them?  I
+>>> not they should have different names.  If so, why are these needed in
+>>> the test?
+>>>
 
-	cat basic_message >message &&
-+       test_when_finished "chmod +r message" &&
-        chmod -r message &&
-        test_must_fail ... &&
-	chmod +r message &&
-        test_cmp ...
+As noted above I can't get the patch to apply cleanly to maint for me,
+but I suppose it doesn't matter since I'm about to mail in a new
+version created against maint.
+I've rewritten the test to use the repo/commit creation methods, and
+renamed that branch. I've also added the comments you requested, and
+changed the push to an ancestor check.
+I'll be submitting the new version of the patch shortly.
 
-> +	if (!S_ISREG(st.st_mode))
-> +		die(_("file %s is not a regular file"), file);
-> +	if (!(st.st_mode & S_IWUSR))
-> +		die(_("file %s is not writable by user"), file);
-
-Hmph, are these two necessary, and do they make sense?
-
-When doing an in-place thing, the primary thing you care about is
-that you can read from the file and you can deposit the result of
-the rewrite under the original name.  If for some reason a system
-allowed you to read from a non-regular file and interpret-trailers
-can do a sensible thing to the contents you read from there, do you
-have to insist that original must be S_ISREG()?  Also, a funny file
-(e.g. "interpret-trailers -i .") is likely to fail on the input
-side.
-
-For the latter,
-
-    $ chmod a-w COPYING
-    $ sed -i -e 's/a/b/' COPYING
-
-seems to succeed _and_ leave the permission bits intact, i.e.
-I get this before and after "sed -i"
-
-    $ ls -l COPYING
-    -r--r----- 1 jch eng 18765 Jan 14 12:34 COPYING
-
-which hints at two points:
-
- - The users (of "sed -i") may have demanded that in-place update of
-   read-only file must be allowed, and there may have been a good
-   reason for wanting to do so.  That reason may apply equally to us
-   here.
-
- - If we were to follow suit, then we should not forget to restore
-   the permission bits on the new file.
-
-In any case, these are something we could loosen after people gain
-experience with the feature, so I think it is OK as-is, at least for
-now.
-
-> +	if (in_place)
-> +		if (rename_tempfile(&trailers_tempfile, file))
-> +			die_errno(_("could not rename temporary file to %s"), file);
-> +
-
-I briefly wondered if this should be
-
-	if (in_place && rename_tempfile(...))
-		die_errno(...);
-
-to save one indentation level, but I think it is a bad idea,
-i.e. the above code should stay as-is.
+Cheers,
+Dave Ware
