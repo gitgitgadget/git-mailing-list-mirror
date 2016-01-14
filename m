@@ -1,139 +1,132 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 00/21] refs backend reroll
-Date: Thu, 14 Jan 2016 11:25:52 -0500
-Organization: Twitter
-Message-ID: <1452788752.16226.17.camel@twopensource.com>
-References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
-	 <xmqqbn8qqqfi.fsf@gitster.mtv.corp.google.com>
-	 <20160114092614.GA8533@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:06 2016
+Subject: [PATCH v3 00/20] refs backend rebase on pu
+Date: Thu, 14 Jan 2016 11:25:57 -0500
+Message-ID: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:26:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJkin-0001dO-O6
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:02 +0100
+	id 1aJkjL-00023c-U8
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:26:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755378AbcANQZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 11:25:57 -0500
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:35662 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754362AbcANQZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 11:25:55 -0500
-Received: by mail-qg0-f49.google.com with SMTP id o11so486470937qge.2
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:25:55 -0800 (PST)
+	id S1754577AbcANQ0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:26:31 -0500
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:33145 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754218AbcANQ0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 11:26:31 -0500
+Received: by mail-qg0-f42.google.com with SMTP id b35so356504076qge.0
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 08:26:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=9+x3zxhA12+Lr0kazrRHHxFTVP/+v7caekLAP3uGY7Y=;
-        b=E6foYLiIFPUdLwno1hLndR9Z4CJ88LQPVZWzZzcbw6pFfJBSNPvoXNMW/8O0cWvbu1
-         oSRPDH6LkknedJAnvi4WrjFpYhQBVHP4BJcWfP1VgdFQOLGL0yr2H4gLVb7pdA0ex9z1
-         UwGFsfHtZ82baUJHpFV+TcoOsOAjrQBWirOzazfiX/AftQH5Pw7MIueTEg/xeGxENy6A
-         tAQ6LaGR2AHeqcTdEpTLwjNylC2XMxnI4zg/vDpZ5sEOV5SXBB28ESDROFZLlvkw9PO1
-         FkqkikAX20WYdmA9DqzS1xpUpa2fjIcvpyslXpE5hu++3pCnj+RGKyC2R+W3Qyr4tMLb
-         wmRA==
+        h=from:to:cc:subject:date:message-id;
+        bh=RPkNSWvK8rD1BKnaQ61SW8P0Q7HSZ58NS7Jh0jfL81Q=;
+        b=MhR+zaNo2OvXaDcy5iOQu/QpipYQGi2TVcWjl4hlQUNtIJlJq9BBBvjSoro92QOIIP
+         PEdnvJo2kXYg43BKHbPunJ2nC92txn1zgISz+92tszlVjC9njv8SAduyHlx6UPsSkWRO
+         U7T1Hzy0vqLzwe43UH7W2busTYwDYNskW8tvIEZx9DcfpTHEvrzSV9MABROWu5Qxu6Sd
+         O4YXtA98JWCHWqy5vFIFIE6JPU/twfX8NFDAaI/Ts2XtU5U2iWFbP45/CtYQ85O6hSIm
+         b9i0FRHiX4oBrMh0up8p+IJZkJ+BpmIWnZFDkAI2k8bvKpE4JSbuxSQKMPFy8hbUO+ZO
+         XCzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=9+x3zxhA12+Lr0kazrRHHxFTVP/+v7caekLAP3uGY7Y=;
-        b=OGLCT9EfFYLQiFJHgLsHOSLi1PXIpZpfWreQ9SOKmJi2DkDpK6ExGw4ykPxXp/Y4Ny
-         T57XbCt1Jaw3A9JcP6UzRsFZRixu8a0T0eF64jQ08USvayTr/gdciSjhruUZ6H0JKsIx
-         XpcEH5YF09/zXJcqsC+0N1jKoZGL/f6whcd+GoZDPZkf5OIYRgClhsEu/PrpJq2gtQZo
-         8rNhVgPmOXEHj+idzGTRdI4DBz31T5Ec+YAJNUQ1sdYHYQUR74zBgI2VnT+6y7ULyNuz
-         cVyjZ+CodIQlHcoafHRUKTkjGWbvI5p0ubVhj2gwDSspuvat+UdDymRsKGpUM2SMVL/d
-         zNYw==
-X-Gm-Message-State: AG10YOR0Tbuapqa4/MnEbzEuTWvvqqgG4d9itbR3bEuLu5Evp+mtc8MP3y8o32NL+KT+1A==
-X-Received: by 10.140.224.199 with SMTP id u190mr2773712qhb.33.1452788754614;
-        Thu, 14 Jan 2016 08:25:54 -0800 (PST)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id y127sm2759019qky.4.2016.01.14.08.25.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=RPkNSWvK8rD1BKnaQ61SW8P0Q7HSZ58NS7Jh0jfL81Q=;
+        b=Dx16ztqb/J/9gGFXSBviszOlfafJVFLyTG+7MksfGY2nM/k/0KOtkmmcR3wW1LiBNX
+         I6ltOnK8M7fRRFVZZWy1Pi6z2J/u/wZtFh6Fw9jewwcr/tIn+7RsOCuME3uT3l7sg5xa
+         kESsor8C4d/nlUDrB/5WGwr2G8Lq6XaCovMs0r6VLDMzoF4ooj60iinuqEymY0yRqThj
+         B+lVmhwkVrD8457QUzlz8ge3r8z88NrUIAgClYQ7eBtmdiYYscY18dO7lGCO4TT3OUjY
+         sarH1cC1KL7P8if6AC2TJTiQ9eRcO2DJvWQjKwVy3hzLW1tv0EZImBJJppwm2A5fHL4U
+         d89Q==
+X-Gm-Message-State: ALoCoQmA1ecAfa3TeDVb1fsPdPxdatfQrL08PQiZ6omJSKVYRk+Qxje+7BlpyRNQ2Mj9wuJmqAnFTrB97vV3KX2GKnIFrAxtNg==
+X-Received: by 10.140.220.207 with SMTP id q198mr7144713qhb.24.1452788790288;
+        Thu, 14 Jan 2016 08:26:30 -0800 (PST)
+Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id b95sm2724213qge.47.2016.01.14.08.26.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jan 2016 08:25:53 -0800 (PST)
-In-Reply-To: <20160114092614.GA8533@sigill.intra.peff.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        Thu, 14 Jan 2016 08:26:29 -0800 (PST)
+X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284036>
 
-On Thu, 2016-01-14 at 04:26 -0500, Jeff King wrote:
-> On Tue, Jan 12, 2016 at 04:22:09PM -0800, Junio C Hamano wrote:
-> 
-> > David Turner <dturner@twopensource.com> writes:
-> > 
-> > > This version incorporates many changes suggested by Michael
-> > > Haggerty,
-> > > Junio, Jonathan Nieder, Eric Sunshine, and Jeff King. I think I
-> > > have
-> > > addressed of the comments that were sent to me.  Those that I
-> > > chose
-> > > not to incorporate, I responded to on the mailing list.
-> > > 
-> > > Thanks for all of the feed back so far.
-> > 
-> > Unfortunately this did not compile for me X-< and with a trivial
-> > fix-up, I found that this overlaps with Peff's recent fixes to the
-> > locking of symbolic refs.  So for today's integration run, I
-> > punted.
-> > 
-> > I still will push out this topic to the broken-out repository I
-> > keep
-> > here:
-> > 
-> >     https://github.com/gitster/git
-> > 
-> > It's just 'pu' will not have this latest incarnation, but has the
-> > older one.
-> 
-> I took a look at David's changes. The conflicts come from "refs:
-> resolve symbolic refs first". I'm not sure I fully understand all
-> that
-> is going on in that patch, but it looks like after it, we are less
-> likely to handle ENOTDIR and d/f conflicts for symrefs, as we skip
-> that
-> whole code path for REF_ISSYMREF.
+I rebased this on top of 20fabf9b194c4099d329582c734e433f9f6586a3 (the
+commit before the previous version of this series).
 
-We only get into the symref part of that codepath if there's already a
-symref present, meaning that d/f conflicts can't happen.
+This entailed removing Michael Haggerty's patch to builtin/clone.c,
+since a patch by Stefan already did approximately the same thing.
 
-> The rest of the conflicts are related to the fact that all of the
-> initial resolution is pulled out of lock_ref_sha1_basic(), and the
-> caller is supposed to do it. So I think if create_symref() is going
-> to
-> call lock_ref_sha1_basic(), as in my series, when combined with
-> David's
-> it should also be calling dereference_symrefs(). That uses a
-> ref_transaction, which we don't have in create_symref() right now,
-> but
-> it makes sense that we would ultimately want to push symref updates
-> through the same transaction/backend system.
+There was a somewhat hairy merge of "resolve symbolic refs first", but
+I think the new one is fine (the same tests all pass except for the
+one TODO noted in the lmdb code).
 
-I don't think that's quite true.  create_symref *always* creates
-symrefs, and never creates underlying refs.  So it calls
-lock_ref_sha1_basic(), but since type_p is NULL, it doesn't go into the
-resolved-symlinks path; instead, we get into the original codepath.
+David Turner (17):
+  refs: add do_for_each_per_worktree_ref
+  refs: add methods for reflog
+  refs: add method for initial ref transaction commit
+  refs: add method for delete_refs
+  refs: add methods to init refs db
+  refs: add method to rename refs
+  refs: make lock generic
+  refs: move duplicate check to common code
+  refs: allow log-only updates
+  refs: resolve symbolic refs first
+  refs: always handle non-normal refs in files backend
+  init: allow alternate backends to be set for new repos
+  refs: check submodules ref storage config
+  refs: allow ref backend to be set for clone
+  svn: learn ref-storage argument
+  refs: add LMDB refs backend
+  refs: tests for lmdb backend
 
-> So sorry, I don't have a quick resolution to this. I'm hoping David
-> can
-> make more sense of it than I did.
+Ronnie Sahlberg (3):
+  refs: add a backend method structure with transaction functions
+  refs: add methods for misc ref operations
+  refs: add methods for the ref iterators
 
-I was totally convinced that we were doomed, but I think the stupid
-resolution basically works, with some minor tweaks.  I'm going to re
--review that patch and resend the series (then go out of town until
-Tuesday).
+ .gitignore                                     |    1 +
+ Documentation/config.txt                       |    7 +
+ Documentation/git-clone.txt                    |    6 +
+ Documentation/git-init-db.txt                  |    2 +-
+ Documentation/git-init.txt                     |    7 +-
+ Documentation/technical/refs-lmdb-backend.txt  |   52 +
+ Documentation/technical/repository-version.txt |    5 +
+ Makefile                                       |   12 +
+ builtin/clone.c                                |    5 +
+ builtin/init-db.c                              |   40 +-
+ builtin/submodule--helper.c                    |    2 +-
+ cache.h                                        |    2 +
+ config.c                                       |   29 +
+ configure.ac                                   |   33 +
+ contrib/workdir/git-new-workdir                |    3 +
+ git-submodule.sh                               |   13 +
+ git-svn.perl                                   |    6 +-
+ path.c                                         |   29 +-
+ refs.c                                         |  451 +++++-
+ refs.h                                         |   17 +
+ refs/files-backend.c                           |  397 +++--
+ refs/lmdb-backend.c                            | 2051 ++++++++++++++++++++++++
+ refs/refs-internal.h                           |  128 +-
+ setup.c                                        |   23 +-
+ t/t0001-init.sh                                |   24 +
+ t/t1460-refs-lmdb-backend.sh                   | 1109 +++++++++++++
+ t/t1470-refs-lmdb-backend-reflog.sh            |  359 +++++
+ t/t1480-refs-lmdb-submodule.sh                 |   85 +
+ t/test-lib.sh                                  |    1 +
+ test-refs-lmdb-backend.c                       |   64 +
+ transport.c                                    |    7 +-
+ 31 files changed, 4767 insertions(+), 203 deletions(-)
+ create mode 100644 Documentation/technical/refs-lmdb-backend.txt
+ create mode 100644 refs/lmdb-backend.c
+ create mode 100755 t/t1460-refs-lmdb-backend.sh
+ create mode 100755 t/t1470-refs-lmdb-backend-reflog.sh
+ create mode 100755 t/t1480-refs-lmdb-submodule.sh
+ create mode 100644 test-refs-lmdb-backend.c
 
-We will need to apply your new d/f conflict check to the LMDB backend's
-symref code (presently, it fails your new test), but I'm going to punt
-on that for now since d/f conflicts don't cause problems for the LMDB
-backend and this is a relatively minor case.  I've added a TODO to the
-code.
+-- 
+2.4.2.749.g730654d-twtrsrc
