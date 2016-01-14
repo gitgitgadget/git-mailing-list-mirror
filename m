@@ -1,133 +1,94 @@
-From: =?UTF-8?B?6YOt6IW+6aOe?= <tfguo369@gmail.com>
-Subject: Re: [issue?]'git branch -D' case sensitive issue
-Date: Thu, 14 Jan 2016 21:28:30 +0800
-Message-ID: <CAB4fgE-UbTD6AkTaxyknJ+3ggtzRdYN43wgsamTXOYmGqDQ3_A@mail.gmail.com>
-References: <CAB4fgE81JHzU=KmN9e=pjsurboipQ3K-pMu-26j+o+FU5G7tQQ@mail.gmail.com>
-	<56978BA9.2010005@web.de>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: Worktree "gitdir" file being mangled after upgrade to 2.7.0
+Date: Thu, 14 Jan 2016 08:58:02 -0500
+Message-ID: <CANoM8SUB5hfZHkLenDEq1O1wFrZno1OUUSH2uwDfihC0z+tUkQ@mail.gmail.com>
+References: <20160113234753.GA26473@gmail.com> <xmqqh9iglwf3.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8D2Bz42kvBD1e=0oqxrYDry7_wCOy5Fi3oS-sGJxux4-w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 14 14:28:38 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Erik Johnson <palehose@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 14:58:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJhx5-0007aZ-Oe
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 14:28:36 +0100
+	id 1aJiPy-000132-UT
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 14:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224AbcANN2c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2016 08:28:32 -0500
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:34772 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752919AbcANN2b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jan 2016 08:28:31 -0500
-Received: by mail-qg0-f42.google.com with SMTP id 6so401188318qgy.1
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 05:28:30 -0800 (PST)
+	id S1752919AbcANN6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 08:58:23 -0500
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:36501 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751599AbcANN6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 08:58:22 -0500
+Received: by mail-oi0-f47.google.com with SMTP id o124so106250962oia.3
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 05:58:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Sqp1J+zPM8bZgmfCuxo04tRwcQctkadct3lhoqDxpYE=;
-        b=wNZFLaD7Wp8pDue2ejz0m3rFL0w6Xo4j7yRZC81pqjthB0ZYnHbMtCxxOMy4uKSIkT
-         gQwhDmb6jPnd02Nv1Ek0eTqTLg3uiWAyqgaRi9IhwMeONDRvQBm7TnQt18d++9JZJX0J
-         aE3pC4dn9JktJM3WWhMevX60oIzFj34SemeJO5RQf4qeRjNdg3kvnFZGTVKQEq6NW6Bm
-         +dTz0IcNgyNSPxTTmQ56TNUFH6+XQqjGT9JWYs00XhmCgnLiqA3V/H4/DUV13gDMueFJ
-         Etm3o2baZf9ES9HcrBc+NrH7Bbr1n+BUuHLqqTXwTUXIsp/IH4+MS7+I5EM6jnBqbOUv
-         2FMA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L1kKGx8W+sV+dHt2jClJXpjC6+8Ex89ysy63ryBnUOU=;
+        b=awfle6DmbkqR5wBS9RB1VRv0gmQ3uaa9EvX2SNZQt6G3MyMRqGaZpYHgRbaqcib75G
+         7YKqunh/qZy2iM9EzxCByXDx6n69S8H06KKO9IV2di3jdE9HzVUaMBYhmLtpno0vu+8I
+         M1FRsUeKOiiLV8KWu6CubYZ33g8c2vhlL8PKfCmc+esKc0nuhqJ8Gui4aOi4t/u0DHdn
+         78fmnLVp+doxt6z6vUyezGFWXJ3bAGp+DWgXtjd1DwITHnYkBRFrhxEEtw130kmBQJj0
+         Nhxq0LUEbHt0iQ9JEW/1JyqzKKSjIK1b4USDO2SgpGb+c/hGXCvTGY6G2oZb5EbqO2sX
+         Fwng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Sqp1J+zPM8bZgmfCuxo04tRwcQctkadct3lhoqDxpYE=;
-        b=MtM68DpPGdxK2fs1NcmZS9sNJHZSdwi7IAeHENjbAM23916o4laDy+meVtLBdyYUqp
-         QIIVZXbk4SUCri2aNujv/fLRx8/2FUt4IbLQi0b1WVlPR4FvztuYXGpyjGFPSouSA8vp
-         wA7pTxEE/3Xd21oCJ1TBNe/pJZuQQn8NvgKSnHnpEWM7OUgIwemxm1q/WMIwQ375dLCA
-         83n91tRrcm+YhMpV6KIdXZ91FauhAibqdx6B4pGaDUsidzXUbGqcKu/Dy97l6rCjpcBI
-         ZLmi8gOVnMcHQUcgmwLAQCo78hvMq0xFcKsAPuavGqf0cp4WZqNj8u/lryVyv9KaTQlM
-         9sLg==
-X-Gm-Message-State: ALoCoQmD24Fqw0ebENM3aJURW9THIqoIInkFaNy1nmGqlvD8Xl/zrwqVFDQjIa7/P1jOYnE6bnEjyZ7nhpbNoumrjm4oMOXIKg==
-X-Received: by 10.140.221.70 with SMTP id r67mr5840208qhb.84.1452778110519;
- Thu, 14 Jan 2016 05:28:30 -0800 (PST)
-Received: by 10.55.181.70 with HTTP; Thu, 14 Jan 2016 05:28:30 -0800 (PST)
-In-Reply-To: <56978BA9.2010005@web.de>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=L1kKGx8W+sV+dHt2jClJXpjC6+8Ex89ysy63ryBnUOU=;
+        b=cCZ3OWpqmRDVP1VI1jO4C+u9IuojeAxOYG7b8uJ0pvrXqx0WVISotQWOK7eu3xWp1j
+         XlrnaZoTa5nCF8ZjI9BdJ0BtIx32CVIeTefE1e/k6i4Ck7c96U5MaRAMyzXS/8ZXvr5g
+         6CfqxR3wZJO/AWfqbJv0ZOZ+RlMLYkFHB53TmoH5GHUFGRYOGh4WUg5/CZEwRA8GIJq/
+         +14tPkV18ThKuQgTbg/nKG1jS+mgoa+B8ZmZS3CNMmL7ezV1vsEFrHY3p3pWbgsQw0xd
+         /QJtouqb8NkAXVGk3L8PTFx2XSiLcJK3zu+MYStghlYz9CsZ9JyKdtBWFhS+PiRBn+6H
+         mOyA==
+X-Gm-Message-State: ALoCoQlUptE0itlQa7f0Il6IjSQ9WBzFFlKexyc29p3Bm89F/2rrzIMOAY9GVaqT6nE8VweSqU9mx7J9j5kaGt/SxalGLQFx8g==
+X-Received: by 10.202.201.77 with SMTP id z74mr3319621oif.24.1452779901437;
+ Thu, 14 Jan 2016 05:58:21 -0800 (PST)
+Received: by 10.76.80.168 with HTTP; Thu, 14 Jan 2016 05:58:02 -0800 (PST)
+In-Reply-To: <CACsJy8D2Bz42kvBD1e=0oqxrYDry7_wCOy5Fi3oS-sGJxux4-w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284034>
 
-Hi Torsten B=C3=B6gershausen, thank you for the quick reply.
-I'm working on Mac OS as I have mentioned in the previous email.
-
-=E2=9E=9C  my-emacs-conf git:(NIce) =E2=9C=97 sw_vers -productVersion
-10.11 OSX
-
-And besides, I use a case sensitive file system in OSX through the comm=
-and
-'hdiutil create -volname 'case_fs' -type SPARSE -fs 'Case-sensitive
-Journaled HFS+' -size 100g ~/case_fs.sparseimage'
-Is this a known issue?
-Thank you!
-
-BRs
-terry3
-
-2016-01-14 19:51 GMT+08:00 Torsten B=C3=B6gershausen <tboegi@web.de>:
-> On 01/14/2016 08:52 AM, =E9=83=AD=E8=85=BE=E9=A3=9E wrote:
+On Wed, Jan 13, 2016 at 10:29 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, Jan 14, 2016 at 9:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Erik Johnson <palehose@gmail.com> writes:
 >>
->> Hi All,
->> I encountered some issues when using 'git branch -D'.
->> It's strange, the command 'git branch -D' is case sensitive.
->> Here is the operated log.
+>>> Since upgrading to 2.7.0 last week, eventually I'll get to a point when
+>>> I run 'git worktree list' where several worktrees are incorrectly
+>>> reported as pointing to my main git checkout. Further analysis of the
+>>> files in $GIT_DIR/worktrees/worktree_name/ shows that the gitdir file
+>>> for the worktrees which display incorrectly contains ".git" instead of
+>>> what it should contain (i.e. "/path/to/worktree/.git".
+>>>
+>>> This was reported a couple days ago on Github:
+>>>
+>>> https://github.com/git/git-scm.com/issues/650
+>>>
+>>> Since the audiences for the mailing list and Github don't overlap
+>>> completely, I figured I'd report it here to get this issue in front of
+>>> as many eyes as possible.
 >>
->> =E2=9E=9C  my-emacs-conf git:(NIce) git branch -avv
->> * NIce                  fed5d9c Update js2-mode $ js-beautify.
->>    master                fed5d9c [origin/master] Update js2-mode $
->> js-beautify.
->>    remotes/origin/HEAD   -> origin/master
->>    remotes/origin/fake   8ec9cad fake.
->>    remotes/origin/mac13  13ae483 mac pro 13's config.
->>    remotes/origin/master fed5d9c Update js2-mode $ js-beautify.
->> =E2=9E=9C  my-emacs-conf git:(NIce)
->> =E2=9E=9C  my-emacs-conf git:(NIce) git branch -D NIce
->> error: Cannot delete the branch 'NIce' which you are currently on.
->> =E2=9E=9C  my-emacs-conf git:(NIce)
->> =E2=9E=9C  my-emacs-conf git:(NIce) git branch -D NICe
->> Deleted branch NICe (was fed5d9c).
->> =E2=9E=9C  my-emacs-conf git:(NIce) =E2=9C=97 git branch -avv
->>    master                fed5d9c [origin/master] Update js2-mode $
->> js-beautify.
->>    remotes/origin/HEAD   -> origin/master
->>    remotes/origin/fake   8ec9cad fake.
->>    remotes/origin/mac13  13ae483 mac pro 13's config.
->>    remotes/origin/master fed5d9c Update js2-mode $ js-beautify.
->>
->> Hope someone can give me a hint.
->>
->> =E2=9E=9C  my-emacs-conf git:(NIce) =E2=9C=97 git --version
->> git version 2.6.3
->> =E2=9E=9C  my-emacs-conf git:(NIce) =E2=9C=97 sw_vers -productVersio=
-n
->> 10.11 OSX
->>
->> BRs,
->> terry3
->> --
+>> Thanks for relaying.  Duy, Michael, I think this is your area?
 >
-> If you can give us a hint, under which OS you are working ?
->
-> I assume that you are on Windows or Mac OS ?
-> In this case the file system is part of the problem,
-> which treats NIce and NICe the same.
->
+> The only place that a relative path can be written is
+> update_linked_girdir() unless i'm mistaken. That function is being
+> deleted "soon" because it causes another problem
 
+`git worktree list` command does not modify the worktree gitdir file,
+so this is only a symptom of the problem.  If at all possible, we
+should move to get Duy's fix into the 2.7.1 release.  This problem
+almost makes git worktree list useless.
 
-
---=20
-
-________________________________
-Guo Tengfei
+> --
+> Duy
