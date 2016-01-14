@@ -1,60 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] Fix compile errors with MSys2
-Date: Thu, 14 Jan 2016 12:21:42 -0800
-Message-ID: <xmqqmvs7kj3d.fsf@gitster.mtv.corp.google.com>
-References: <cover.1452691805.git.johannes.schindelin@gmx.de>
-	<cover.1452790142.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] test-path-utils: use xsnprintf in favor of strcpy
+Date: Thu, 14 Jan 2016 15:26:08 -0500
+Message-ID: <20160114202608.GA8806@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:21:50 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:26:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJoOz-00065K-Hc
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:21:49 +0100
+	id 1aJoTK-0000pS-P3
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751722AbcANUVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:21:45 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51282 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750964AbcANUVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:21:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 28FB43BB8A;
-	Thu, 14 Jan 2016 15:21:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wQ+sNAgQOSJNE7CU7ZhDtMcWXhc=; b=NcZNa6
-	8gp86ne+SrZR8FK8vE7fMADNVaz7bN+9q7PSkUNmqExzDBXm0RUzf533WnU5zg+F
-	k1ML2xPyXHqj7Ukb9kImnc/zkCyR4Yga+RQBLQPml1FIrStuGQ2Wr2u2/TY05pyi
-	/52re+JuZ1J9yWpzbmKzwsDby2rCKbyLWJfXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KDU/NkvMb2SJSeNZmlt5e6HcYZ6izbTM
-	IGjdffsR/lYexh8m+/ty8Z2hLtn0ojItDIezwGbkSQBT7LWY+7X2X196zN3Y07MW
-	t2c5EatJ6PMo9FeuoPNaz1fwHCL53qXITaUYofwRSQQ9HqYDk7agDKc/JMMwklvr
-	n6fcjDWiN4A=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FE4B3BB86;
-	Thu, 14 Jan 2016 15:21:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9333A3BB85;
-	Thu, 14 Jan 2016 15:21:43 -0500 (EST)
-In-Reply-To: <cover.1452790142.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Thu, 14 Jan 2016 17:51:14 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6D7DEE96-BAFC-11E5-AD67-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754893AbcANU0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:26:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53910 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754237AbcANU0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:26:11 -0500
+Received: (qmail 8224 invoked by uid 102); 14 Jan 2016 20:26:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:26:11 -0500
+Received: (qmail 11308 invoked by uid 107); 14 Jan 2016 20:26:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:26:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:26:08 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284087>
 
-Thanks.  Let's see if there is anything else people discover in this
-series and merge it to 'next'.
+This strcpy will never overflow because it's copying from
+baked-in test data. But we would prefer to avoid strcpy
+entirely, as it makes it harder to audit for real security
+bugs.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I admit that an audit could probably just avoid looking at test-* in the
+first place, but not all do (coverity complained about this one, for
+example).
+
+This sort-of applies on top of js/dirname-basename, which is in next.
+Textually, it's fine, but that topic is based on v2.6.5, and xsnprintf
+was only added in the v2.7.0 cycle. The simplest thing is probably to
+wait for it to graduate to master, and then apply there as a new topic
+(if we do v2.6.6, it's OK for it not to have this patch).
+
+I can hold and resend in a week or two if that's easier.
+
+ test-path-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test-path-utils.c b/test-path-utils.c
+index 4ab68ac..b9ece10 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -55,7 +55,7 @@ static int test_function(struct test_data *data, char *(*func)(char *input),
+ 		if (!data[i].from)
+ 			to = func(NULL);
+ 		else {
+-			strcpy(buffer, data[i].from);
++			xsnprintf(buffer, sizeof(buffer), "%s", data[i].from);
+ 			to = func(buffer);
+ 		}
+ 		if (strcmp(to, data[i].to)) {
+-- 
+2.7.0.244.g0701a9d
