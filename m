@@ -1,71 +1,55 @@
-From: Tyler Freeman <shkkmo@gmail.com>
-Subject: Changing filename case causes inability to merge branch on OSX
-Date: Thu, 14 Jan 2016 14:04:16 -0800
-Message-ID: <CANOVqrZmeD7+yoGVNfsL8W2pM2iWurxRo_1umQnu+-LkRb4Vmg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] t0060: loosen overly strict expectations
+Date: Thu, 14 Jan 2016 23:14:26 +0100
+Message-ID: <56981DC2.6070706@kdbg.org>
+References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de>
+ <xmqqziw8jcbr.fsf@gitster.mtv.corp.google.com>
+ <5697E550.9020102@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 14 23:04:59 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Michael Blume <blume.mike@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 23:15:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJq0l-0000ul-Bw
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 23:04:55 +0100
+	id 1aJqAc-0000aU-Pd
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 23:15:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754755AbcANWEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 17:04:46 -0500
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35590 "EHLO
-	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750894AbcANWEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 17:04:46 -0500
-Received: by mail-oi0-f46.google.com with SMTP id p187so106413825oia.2
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 14:04:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=8yom4EqycT7pjLlvxnSJcD7vL2AF86yG/c6WhZju3rg=;
-        b=Vu8wCkSomKKdmIun2xMOi+LDr0STGQiOAMPMpEiH/4dvdVk3XChyE7vmEVM1NV2Hw9
-         PUYEx75bz3wIqHG1or88+nKcMKGNem2CMvDcYPorSyS/69N4TY8/FXdLZiCQ8tDZ1eAf
-         Xn/pCZStclOvTwV5otJ2ax2TozKqdvXtr62YWUjlPex1uk2I+zwLr/P1vsOdrdrhWEWm
-         ouytdtkkz4gH42/ORjd1+j6GqkhYM30fHkh+Oq+oiC0LEd940OLwtWcanKwnx8tZa7Ry
-         oiRnW8CS8ytk1z6OoUFcBXbBmwsRxYab1Mf5UbJdiE65pOuiOqTD+K4SMdZ4Fb6k0GPO
-         8kiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=8yom4EqycT7pjLlvxnSJcD7vL2AF86yG/c6WhZju3rg=;
-        b=jBLnMf+MFk7d6qOaOhx4bQDbiiAaNZwQ5jDPh2YXddlitv2AlVWpmGgzcO32IUF+pp
-         K5jcZeZRAuMrox2XnHVJsgW5BIqIABau0gfWNIPI1MMEFRaPRYZeAZtgAE7HdMo/9gqz
-         Qw1VcfvELrU624oAxq7kEHEQU2K9bM7ypVLTRP8AEarqmtKIeoJqpsCI+b93RwjWbng6
-         GmS0cyvhwBrlLB0N7jw1+52+MzT4qDc7To50D8bnA+u7aUbip5HvRwHy9tHAk0mixPQU
-         26oBnehtQk5BYuDNB6u/LkaiM0fByWCeRS4ZjId1nA0d59+2MFWAIzwB+lL6EFrKf7MY
-         5/uQ==
-X-Gm-Message-State: ALoCoQm5y0aMO3j0eOZnXJwKx8m85Z0Dgp0p5ZZNL96RcO7XUEE7HA91tah1B8T8j8rGbzp4dldpQ0fWGwozb2yw4TCMHyv9Lw==
-X-Received: by 10.202.73.69 with SMTP id w66mr5088647oia.85.1452809085596;
- Thu, 14 Jan 2016 14:04:45 -0800 (PST)
-Received: by 10.76.169.163 with HTTP; Thu, 14 Jan 2016 14:04:16 -0800 (PST)
+	id S1753907AbcANWOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 17:14:30 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:54215 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752392AbcANWO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 17:14:29 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3phKgR34Cvz5tlB;
+	Thu, 14 Jan 2016 23:14:27 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 87EAB51D6;
+	Thu, 14 Jan 2016 23:14:26 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <5697E550.9020102@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284099>
 
-Hi,
+Am 14.01.2016 um 19:13 schrieb Ramsay Jones:
+> Correct me if I'm wrong (quite possible), but
+> _each_ drive has a current working directory associated with
+> it in win32, so it's a bit difficult to use drive designators
+> with a relative path (eg. C:usr/lib).
 
-I am struggling with changing the case of a filename on OSX:
+As far as it matters for Git, such a path is still an absolute path, 
+because it is not anchored at $(pwd).
 
-http://stackoverflow.com/questions/34799472/how-to-correctly-change-filename-case-in-git-on-osx
-
-I found this thread which seems related, but don't seem to see any resolution:
-
-http://thread.gmane.org/gmane.comp.version-control.git/188469
-
-Let me know if there is any additional information that I can provide
-or if there is a known way to change the case of the filename without
-breaking the ability to merge branches that contain that change.
-
-Thanks,
-Tyler
+-- Hannes
