@@ -1,62 +1,76 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH v3 1/2] trailer: use fprintf instead of printf
-Date: Thu, 14 Jan 2016 10:33:45 +0100
-Message-ID: <20160114093345.GG26950@distanz.ch>
-References: <1452688989-13746-1-git-send-email-tklauser@distanz.ch>
- <1452688989-13746-2-git-send-email-tklauser@distanz.ch>
- <xmqqd1t5nv6j.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PREVIEW v3 7/9] update-index: there are only two line
+ terminators
+Date: Thu, 14 Jan 2016 05:09:08 -0500
+Message-ID: <20160114100907.GA30772@sigill.intra.peff.net>
+References: <1450303398-25900-1-git-send-email-gitster@pobox.com>
+ <1452740590-16827-1-git-send-email-gitster@pobox.com>
+ <1452740590-16827-8-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 10:34:17 2016
+X-From: git-owner@vger.kernel.org Thu Jan 14 11:09:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJeIK-0003pv-H7
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 10:34:16 +0100
+	id 1aJeqF-0000Ww-I2
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 11:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752515AbcANJdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 04:33:52 -0500
-Received: from sym2.noone.org ([178.63.92.236]:55765 "EHLO sym2.noone.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750955AbcANJds (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 04:33:48 -0500
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3ph0nl1P97zQWhH; Thu, 14 Jan 2016 10:33:46 +0100 (CET)
+	id S1753334AbcANKJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 05:09:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53548 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753013AbcANKJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 05:09:11 -0500
+Received: (qmail 14283 invoked by uid 102); 14 Jan 2016 10:09:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 05:09:11 -0500
+Received: (qmail 5465 invoked by uid 107); 14 Jan 2016 10:09:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 05:09:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 05:09:08 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqd1t5nv6j.fsf@gitster.mtv.corp.google.com>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1452740590-16827-8-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284026>
 
-On 2016-01-13 at 20:20:04 +0100, Junio C Hamano <gitster@pobox.com> wrote:
-> Tobias Klauser <tklauser@distanz.ch> writes:
-> 
-> > Use fprintf instead of printf in trailer.c in order to allow printing
-> > to a file other than stdout. This will be needed to support in-place
-> > editing in git interpret-trailers.
-> >
-> > Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
-> 
-> Thanks.  I won't bother to amend it myself or request you to reroll
-> only for this, but that is a rather suboptimal title.
+On Wed, Jan 13, 2016 at 07:03:07PM -0800, Junio C Hamano wrote:
 
-Agree.
+> -static void read_index_info(int line_termination)
+> +static void read_index_info(int nul_term_line)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+>  	struct strbuf uq = STRBUF_INIT;
+> +	strbuf_getline_fn getline_fn;
+>  
+> -	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+> +	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+> +	while (getline_fn(&buf, stdin) != EOF) {
+>  		char *ptr, *tab;
+>  		char *path_name;
+>  		unsigned char sha1[20];
+> @@ -522,7 +524,7 @@ static void read_index_info(int line_termination)
+>  			goto bad_line;
+>  
+>  		path_name = ptr;
+> -		if (line_termination && path_name[0] == '"') {
+> +		if (!nul_term_line && path_name[0] == '"') {
 
-> The distinction between fprintf/printf is an implementation detail;
-> what you want to do in this change is to allow writing to a file
-> other than the standard output, and that should be in the title.
+Yikes. The original used "line_termination" both as a character and as a
+boolean. I think the postimage is much more obvious here.
 
-Since I'll do a v4 anyhow to address Eric's review comments, I can
-change the title in the reroll.
+> -		OPT_SET_INT('z', NULL, &line_termination,
+> -			N_("with --stdin: input lines are terminated by null bytes"), '\0'),
+> +		OPT_SET_INT('z', NULL, &nul_term_line,
+> +			    N_("with --stdin: input lines are terminated by null bytes"), 1),
 
-Thanks
+Should this just become OPT_BOOL now?
+
+-Peff
