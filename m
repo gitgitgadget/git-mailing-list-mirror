@@ -1,78 +1,98 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [issue?]'git branch -D' case sensitive issue
-Date: Thu, 14 Jan 2016 17:42:19 +0100
-Message-ID: <5697CFEB.4090308@web.de>
-References: <CAB4fgE81JHzU=KmN9e=pjsurboipQ3K-pMu-26j+o+FU5G7tQQ@mail.gmail.com>
- <56978BA9.2010005@web.de>
- <CAB4fgE-UbTD6AkTaxyknJ+3ggtzRdYN43wgsamTXOYmGqDQ3_A@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 0/5] Fix compile errors with MSys2
+Date: Thu, 14 Jan 2016 17:51:14 +0100 (CET)
+Message-ID: <cover.1452790142.git.johannes.schindelin@gmx.de>
+References: <cover.1452691805.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: =?UTF-8?B?6YOt6IW+6aOe?= <tfguo369@gmail.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 14 17:42:28 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 17:51:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJkyh-00061o-Gx
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:42:27 +0100
+	id 1aJl7P-0004ZO-6G
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 17:51:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755038AbcANQmX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Jan 2016 11:42:23 -0500
-Received: from mout.web.de ([212.227.17.12]:61550 "EHLO mout.web.de"
+	id S1755066AbcANQvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 11:51:23 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60263 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754570AbcANQmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 11:42:23 -0500
-Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0M9GN8-1aT7pL0HrK-00CeRm; Thu, 14 Jan 2016 17:42:21
+	id S1752974AbcANQvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 11:51:22 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LjN0F-1Zki9D0UGt-00dUP4; Thu, 14 Jan 2016 17:51:16
  +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <CAB4fgE-UbTD6AkTaxyknJ+3ggtzRdYN43wgsamTXOYmGqDQ3_A@mail.gmail.com>
-X-Provags-ID: V03:K0:ptOa8SPVWVNpFFTLWzuN5hAmjvjCCjmejDnSl1vsUqFq+dya6oo
- XzrHC3zmbimFxMoxCij4qr3+ej3pZFDZ5vpcQIqf8+ITUiGwDMRrtMaeBMM0lmsiO+eer8g
- 0fpSn7uTr0veWXG/PBn1GnoUGny8gK/oCRKkeO+Me9CoDLCFtZX0Yw0IddCEsrR6+Bnwom4
- ncqA/dsoOdCoAXJeUoZKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QPGcalPEcwk=:QTsvav/eHTbdPr7ILZUP6a
- qHSg9hYF7zXWO17AYdUCDOpfHnF/4Uoh/xAQjzc0ZbpHtO1p3Q0nm+AoFHxEc0oCT8g+3f5aI
- kETaXnFFImwCkq4TZFZsQK1ayAErdeku4Isw/VDCbsBqgk3Qke8HnM5fTr+pWylMAvJ72NTL+
- AqByOUW0agWSTmfuC1vRCzdkFGUNaF8wbJyd1HVB7up5kb9iiCS8W8UYiysNXWXcAINOANj1s
- +4oOR/YVkYzMOlCvbrLtyhA5jLJ3gnJLN85SxMiKBgNwiAA0LdIUqO8k6CTNIVGz3Bf4m/Toy
- Zebkxf3XneqoGaAHbCb76gH1anc2GD7iPjm8BR0R4446Cr0f4/Cs4Jd9rn+vR8tIuhmRcYYsp
- n5hHq2xgbolnB5WzC81998KUQz7TfJWP1RnUdE01S4Zg1Ghp3Co9kLMhwIpO7pVwqzVrwc7Se
- Z5aOH7fXYiKnDW4uXTIi8ihB1bDKISDrte8P+MqQfJsT/DrWjnjQAegjEtbKSKz0i7pMAKpIc
- 2eWZCQ2FMjsj8hMGvh4m3Hr3+ggMsT+VaZO6RChrj9qIoB9L29Q2E/ebr4vR9JCXz4sBfUejx
- ++O/Sy0sgB9pLGXb+2njpJeMKVMPTOcbT5MeEN4crLdtmNt/T+/bzM7C3qcbNvobB2X908TZa
- Hh00NXe4rCsJKvLgzKGSzfUbA9FQ1RJ98rJ9Ugz+txFDvgwT0ZFIwDtWLo92EBn6QFqtJJP9M
- tacZ447UPcRxCc6yFzFnZyuFatx17N80ZoygVLgj8GCbX04857ZVXsXyLYcq5LqG6RF5hVs/ 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1452691805.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:c604rPYD1c46HPc7aCC91HcvDJ0+qGNAWcIMZCmafWd2MqPycT+
+ EDFmgvhAqfoEX3veajodC9pasxpvyPYTXMzgroekk5HFyDu9T3IZkokiUtJ3XArr8lmdrvc
+ P7jAqSFSGIlVR7imnblqVrjDD5tXRZz7Gok2V+9dl/fUI6ujGz6KnwwOJs4ixAT8bQo01Wk
+ JitBrIy5VQllEiQv1lo6Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BK/BKRphCgY=:RXLrlh1qcQ6tGKUo/AERlR
+ W7AUx0RYFhqbCL/vWv/99ru5ud5MGjrLmaZxMU5AdR8rLJhKGLGIX/tonG9uuNBKK7oDnAy7d
+ NebT3G2HQ5iOV7h8bLS+bBq8blFLBGhzvI+VDCOG8pKtESI1rjyetzot33kuGgY9gW3yBpQLG
+ 8oe+HIMhF+BJZ6uiNXo+9AWaMJYm2rDRfhuMPrQYCOV9J77aqjs7CzbREc1T3gVKC3txrBShI
+ qk9FpQ7eCQtEYBgZw3wcRHwTftOLZAHNoHmTaVLFZI9sDAK7IeHZQgGY59jECSaw7lKeZFJon
+ IL3G+eCZRNA98mudebuNXA5R+ilEk/lOi86eUwYYEP5zzxUnv69JiEmY9rQGn3CK+4RTIVPk/
+ qKyJxj97S9Om7gM89dR/1TbYL9D5RqSwBwvIZ5VAyoUee47e4D70xkK9vegYuPzjhFOSwVudM
+ eO+go0qwGKpjwGWNwHg3iC5JlwZax2EJGqGoPuMU43Gtp3ROYCJURkfMvGMEQIbzRf91+VwXF
+ SGPgZ8GLy+2euFKPdqBbvMcsru+V/eKJyGmJLtKTVwT/JiISPwesK1DNVF8ZiRW8MzYA9Qe8V
+ SEa50pTFZdNaIIzOiZ7wRr8mgZzkmQr93sY1HxPZcIR9VEdp6jMOiS4IumUn+ZLjAxvkZECuN
+ ISFWE8VfbdhNQy5fkxdN0CphO3xWPt6QJN3AhIEqLlw9JH+9WHTW9yRZlCFbKclz+atfLrLM4
+ Op1Stn2cj6g52Qd/IoZsro2vFAQPB+W3VCxMxgSzC6PUMJnrBZzvrYgPId1wWq8c4EdcaXiN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284059>
 
-On 14.01.16 14:28, =E9=83=AD=E8=85=BE=E9=A3=9E wrote:
-Please no top-posting on this list.
-> Hi Torsten B=C3=B6gershausen, thank you for the quick reply.
-> I'm working on Mac OS as I have mentioned in the previous email.
->=20
-> =E2=9E=9C  my-emacs-conf git:(NIce) =E2=9C=97 sw_vers -productVersion
-> 10.11 OSX
->=20
-> And besides, I use a case sensitive file system in OSX through the co=
-mmand
-> 'hdiutil create -volname 'case_fs' -type SPARSE -fs 'Case-sensitive
-> Journaled HFS+' -size 100g ~/case_fs.sparseimage'
-> Is this a known issue?
-> Thank you!
->=20
-> BRs
-> terry3
+Git for Windows 2.x is based on MSys2, and its first official version
+was released already almost half a year ago, yet it is still impossible
+even to compile Git from the official, platform-independent Git source
+code.
 
-No, this is typically what we observe on a case insensitive FS.
-And that make me wonder what
-git config core.ignorecase
-says ?
+This patch series merely fixes the compile errors, and will be followed
+by other patch series that fix the compile warnings and test failures.
+The idea is to move all Windows-specific patches of Git for Windows'
+fork to upstream Git proper.
+
+Relative to v1, I only removed the guards about the "#undef
+ReadWriteBarrier".
+
+Johannes Schindelin (5):
+  config.mak.uname: support MSys2
+  config.mak.uname: supporting 64-bit MSys2
+  nedmalloc: allow compiling with MSys2's compiler
+  compat/mingw: support MSys2-based MinGW build
+  compat/winansi: support compiling with MSys2
+
+ compat/mingw.h              | 24 +++++++++++++++++++++++-
+ compat/nedmalloc/malloc.c.h |  4 ++++
+ compat/winansi.c            |  2 ++
+ config.mak.uname            | 31 ++++++++++++++++++++++++++++---
+ 4 files changed, 57 insertions(+), 4 deletions(-)
+
+Interdiff vs v1:
+
+ diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+ index 18634e3..bf70037 100644
+ --- a/compat/nedmalloc/malloc.c.h
+ +++ b/compat/nedmalloc/malloc.c.h
+ @@ -1385,9 +1385,7 @@ LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
+  
+    /*** Atomic operations ***/
+    #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) > 40100
+ -    #ifdef __MINGW64_VERSION_MAJOR
+ -      #undef _ReadWriteBarrier
+ -    #endif
+ +    #undef _ReadWriteBarrier
+      #define _ReadWriteBarrier() __sync_synchronize()
+    #else
+      static __inline__ __attribute__((always_inline)) long __sync_lock_test_and_set(volatile long * const Target, const long Value)
+
+-- 
+2.7.0.windows.1.7.g55a05c8
