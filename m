@@ -1,138 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 20/21] refs: add LMDB refs backend
-Date: Thu, 14 Jan 2016 15:52:59 -0500
-Message-ID: <20160114205259.GA10440@sigill.intra.peff.net>
-References: <1452561740-8668-1-git-send-email-dturner@twopensource.com>
- <1452561740-8668-21-git-send-email-dturner@twopensource.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] submodule: Port resolve_relative_url from shell to C
+Date: Thu, 14 Jan 2016 21:57:44 +0100
+Message-ID: <56980BC8.90506@kdbg.org>
+References: <1452708927-9401-1-git-send-email-sbeller@google.com>
+ <xmqq4mehm92b.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jan 14 21:53:12 2016
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, jens.lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jan 14 21:58:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJotI-0004fc-Aa
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:53:08 +0100
+	id 1aJoyJ-0000F0-Eb
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Jan 2016 21:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116AbcANUxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 15:53:03 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53927 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750999AbcANUxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 15:53:01 -0500
-Received: (qmail 9315 invoked by uid 102); 14 Jan 2016 20:53:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:53:01 -0500
-Received: (qmail 11472 invoked by uid 107); 14 Jan 2016 20:53:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 14 Jan 2016 15:53:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Jan 2016 15:52:59 -0500
-Content-Disposition: inline
-In-Reply-To: <1452561740-8668-21-git-send-email-dturner@twopensource.com>
+	id S1755909AbcANU6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 15:58:08 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:21856 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755903AbcANU5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 15:57:48 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3phHyx6jl8z5tlC;
+	Thu, 14 Jan 2016 21:57:45 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 188A351ED;
+	Thu, 14 Jan 2016 21:57:45 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqq4mehm92b.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284092>
 
-On Mon, Jan 11, 2016 at 08:22:19PM -0500, David Turner wrote:
+Am 13.01.2016 um 23:03 schrieb Junio C Hamano:
+> Stefan Beller <sbeller@google.com> writes:
+>> +	while (url) {
+>> +		if (starts_with_dot_dot_slash(url)) {
+>> +			char *rfind;
+>> +			url += 3;
+>> +
+>> +			rfind = last_dir_separator(remoteurl);
+>> +			if (rfind)
+>> +				*rfind = '\0';
+>> +			else {
+>> +				rfind = strrchr(remoteurl, ':');
+>> +				if (rfind) {
+>> +					*rfind = '\0';
+>> +					colonsep = 1;
+>> +				} else {
+>> +					if (is_relative || !strcmp(".", remoteurl))
+>> +						die(_("cannot strip one component off url '%s'"), remoteurl);
+>> +					else
+>> +						remoteurl = xstrdup(".");
+>> +				}
+>> +			}
+>
+> It is somewhat hard to see how this avoids stripping one (or both)
+> slashes just after "http:" in remoteurl="http://site/path/", leaving
+> just "http:/" (or "http:").
+>
+> This codepath has overly deep nesting levels.  Is this the simplest
+> we can do?
 
-> +static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-> +			     const char *email, unsigned long timestamp, int tz,
-> +			     const char *message, void *cb_data)
-> +{
-> +
-> +	const char *newrefname = cb_data;
-> +	MDB_val key, new_key, val;
-> +
-> +	assert(transaction.cursor);
-> +
-> +	if (mdb_cursor_get_or_die(transaction.cursor, &key, &val, MDB_GET_CURRENT))
-> +		die("renaming ref: mdb_cursor_get failed to get current");
-> +
-> +	new_key.mv_size = strlen(newrefname) + 5 + 1 + 8;
-> +	new_key.mv_data = xmalloc(new_key.mv_size);
-> +	strcpy(new_key.mv_data, "logs/");
-> +	strcpy((char *)new_key.mv_data + 5, newrefname);
-> +	memcpy((char *)new_key.mv_data + new_key.mv_size - 8,
-> +	       (const char *)key.mv_data + key.mv_size - 8, 8);
-> +	mdb_put_or_die(&transaction, &new_key, &val, 0);
-> +	mdb_cursor_del_or_die(transaction.cursor, 0);
-> +	free(new_key.mv_data);
-> +	return 0;
+The code as written is quite easy to follow when compared to the 
+original shell code. I think that is a reasonable goal, and improvements 
+can into separate patches.
 
-When you re-roll, do you mind avoiding strcpy here? I know that your
-malloc is big enough, but:
+>
+> The final else { if .. else } can be made into else if .. else to
+> dedent the overlong die() by one level, but I am wondering if the
+> deep nesting is just a symptom of logic being unnecessarily complex.
+>
+>> +		} else if (starts_with_dot_slash(url)) {
+>> +			url += 2;
+>> +		} else
+>> +			break;
+>> +	}
 
-  1. Avoiding strcpy makes auditing easier.
+For example, the section that begins here...
 
-  2. We can probably come up with a solution that avoids the magic
-     numbers, making it more pleasant to read.
+>> +	strbuf_reset(&sb);
+>> +	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
+>> +
+>> +	if (starts_with_dot_slash(sb.buf))
+>> +		out = xstrdup(sb.buf + 2);
+>> +	else
+>> +		out = xstrdup(sb.buf);
+>> +	strbuf_reset(&sb);
+>> +
+>> +	free(remoteurl);
+>> +	if (!up_path || !is_relative)
+>> +		return out;
+>> +
+>> +	strbuf_addf(&sb, "%s%s", up_path, out);
+>> +	free(out);
+>> +	return strbuf_detach(&sb, NULL);
 
-  3. Manual computation plus a strcpy can be vulnerable to integer
-     overflows in the size (I didn't check the types on MDB_val to see
-     if that is feasible or not, but again, it's nice to avoid for audit
-     purposes).
 
-Since we free the memory immediately-ish, I think using a strbuf would
-be a good fit. Something like:
+... and ends here can easily be rewritten to become a single 
+strbuf_addf() without the xstrdup()s and without the early exit (at the 
+cost of some additional ?: conditionals in the arguments).
 
-  struct strbuf path = STRBUF_INIT;
-  ...
-  strbuf_addf(&path, "logs/%s", newrefname);
-  strbuf_add(&path, (const char *)key.mv_data + key.mv_size - 8, 8);
-  new_key.mv_size = path.len;
-  new_key.mv_data = path.buf;
-  ... mdb_put, etc ...
-  strbuf_release(&path);
-
-(I hope I'm reading the 8-byte thing right; should we also be asserting
-that key.mv_size >= 8?).
-
-> +static int lmdb_for_each_reflog_ent_order(const char *refname,
-> +					  each_reflog_ent_fn fn,
-> +					  void *cb_data, int reverse)
-> +{
-> +	MDB_val key, val;
-> +	char *search_key;
-> +	char *log_path;
-> +	int len;
-> +	MDB_cursor *cursor;
-> +	int ret = 0;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	enum MDB_cursor_op direction = reverse ? MDB_PREV : MDB_NEXT;
-> +	uint64_t zero = 0ULL;
-> +
-> +	len = strlen(refname) + 6;
-> +	log_path = xmalloc(len);
-> +	search_key = xmalloc(len + 1);
-> +	sprintf(log_path, "logs/%s", refname);
-> +	strcpy(search_key, log_path);
-
-Ditto here (and for sprintf, too). You can do these with xstrfmt:
-
-  log_path = xstrfmt("logs/%s", refname);
-  len = strlen(log_path); /* or use a strbuf to avoid the extra strlen */
-
-The search_key one looks like an extra off-by-one, but the extra byte
-gets used below. So maybe:
-
-  /* \0 may be rewritten as \1 for reverse search below */
-  search_key = xstrfmt("%s\0", log_path);
-
-though I think:
-
-  if (reverse) {
-	/* explanation ... */
-	search_key = xstrfmt("%s\1", log_path);
-  } else {
-	search_key = xstrdup(log_path);
-  }
-
-might be clearer to a reader. There are a few other sprintfs and
-strcpys, but I think they can all use similar techniques.
-
--Peff
+-- Hannes
