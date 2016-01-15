@@ -1,263 +1,78 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] submodule: Port init from shell to C
-Date: Fri, 15 Jan 2016 15:37:15 -0800
-Message-ID: <1452901035-1802-3-git-send-email-sbeller@google.com>
-References: <1452901035-1802-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/2] Port `git submodule init` from shell to C
+Date: Fri, 15 Jan 2016 15:37:13 -0800
+Message-ID: <1452901035-1802-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, j6t@kdbg.org, sunshine@sunshineco.com,
 	Jens.Lehmann@web.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 16 00:38:03 2016
+X-From: git-owner@vger.kernel.org Sat Jan 16 00:38:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKDwP-0007Sl-HX
+	id 1aKDwO-0007Sl-LN
 	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 00:38:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbcAOXhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 18:37:31 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34197 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbcAOXhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 18:37:21 -0500
-Received: by mail-pa0-f52.google.com with SMTP id uo6so386763420pac.1
-        for <git@vger.kernel.org>; Fri, 15 Jan 2016 15:37:21 -0800 (PST)
+	id S1751448AbcAOXhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 18:37:20 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34961 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801AbcAOXhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 18:37:18 -0500
+Received: by mail-pf0-f181.google.com with SMTP id 65so124859473pff.2
+        for <git@vger.kernel.org>; Fri, 15 Jan 2016 15:37:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tZDzMqj0iNvTr/WskWZdzVH7lgz1+PM+5E0Sie3cqtA=;
-        b=cdTGoSsjUSfJqh9LnoQOepbIofbFvkKQCz+F9GKp88+H7lospyUYgYFMkiRYLxC+Pl
-         CFyPc99dh0TSPx9Moeo7VplKxBCcqD2ZE2uDIWED9o1nR51gH7PSk4DM9nHeZD1ZH7DI
-         OkH5cnq28Ydm/ygrXKzxu0rS80B67K89qYlntDQOi+PiHte5QrHr7v4FRUBKx/heWBxj
-         YRl2/WqDIpFh3i2EUDyb41oYoenUPmR4MQqzvZl05u44RgwnaW1dde41vwsxpCURJ7Bm
-         UFIrUi/9lTp9Ao02Boh7+6uoCkb2P7/BeJhYp3ddxnDbSP6qJ5rRBGwaoAYGNsZKR7ZL
-         6XDg==
+        h=from:to:cc:subject:date:message-id;
+        bh=mXNzAob1iOl8k93c1VQ5tZq/lnqExtrIxN6z9Ncwlro=;
+        b=n8gGagX4FXNE1nxuWPSHTcvHrgTKQDH7tjdJcgMDqEZUyHRUG0ouG83IyzDBnFqhIz
+         EmwcL7SsJFIIEPUdO2uyzB1qjeaajyaNydOpn8d7ax22ccx8HVSFsCpdHF2C7kLNEs4m
+         QK6/Ow05qq5J4G+SGfCimj9oxVOyPJJ4tNXV5zxVUX3IUlVmHUc1S5kM4rhfbwjXXYo1
+         nM2DoQoQ7l0g85LefeAFp98/oLs8ll8RRMGJAWaRBtGPwl0IK67msO0hk7X1k4jW6TcA
+         x8SMhrzj2083oVOmTFftm9jo6fkGxsr1AQcGn0NeH96jMtBrqP3KUVtICxckHm5nGXBd
+         knfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tZDzMqj0iNvTr/WskWZdzVH7lgz1+PM+5E0Sie3cqtA=;
-        b=jA16KtaYC0XAc2+YiIpj6f7mep7+RHbGLyYq1JZdGTI59SOC4ud1DL1pQNI3/Thm06
-         ayHtitpZIL5ysz3/MbP1ACNZWUwy+0i8R6bGMRMPFIvQREwHzgmxHbdYqqL4Fbn005WT
-         9yGH9DNQCpVM0AnFElDaTJd/jcaJT6DEFGGssQz2g3oLfrGb6SOoTO4rx3nOdWqb+1Zw
-         FdeNbKobOsiM2VgdCFBkUjOaBF/D0v1SuipHLyhL5Jrb7jbvuC4rmjlCmpRRFXWH23Qt
-         kYNE5oFbmpR0oImteRdNxGfzfAzuAn0JOeNf79zncLEV5mFLqEwsm3/Ncw3mSD/BsKql
-         KfYQ==
-X-Gm-Message-State: ALoCoQngj2ILtvTYPUfXyfJtcw0rY3cXjOxa9IIl1OSiwD7XbrzpECFeKZY78K4xmNgKud8OPOpRM3rTZRQbuZojsTeQg0HmIQ==
-X-Received: by 10.66.148.167 with SMTP id tt7mr18955186pab.62.1452901040904;
-        Fri, 15 Jan 2016 15:37:20 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mXNzAob1iOl8k93c1VQ5tZq/lnqExtrIxN6z9Ncwlro=;
+        b=jcgaZKg9t6rHh8/GvSuwd4AMO/ey8xr6fF8vA+IiA0n9u6kr7MFfwGnLDgZ9uh2Q2g
+         VcNX37/ez3PMVkOKMUO8D+1gN4R3Slk1zZpXFzol6Rc58AHfpU9RxcaPD0yJwYVN702a
+         suJqiC8MKL5i8yEWXtfSnV1Bwk8VGjg5egn1+BiPHF3KL7p9RKh9PuUReCT7XU9GjyEf
+         x+VvVnCBWV+ilb7kBLdxgaaFz7A/GLbFt4ZQEm2rfWHVLRdPYNf/ibBFr0SuUvfV4W7r
+         42s3lV8l+nYmWalxptN0xTd9htGuW/SrYyd8KRfeYVffe0+iCkHcybNJp7FhkAkrCpE6
+         IFgA==
+X-Gm-Message-State: ALoCoQndqfAK5aojVrgcbwcm76HldWHFm7kfhtyu+ZMsE00AiuP6vdpRHyj2r1PhzHUXoKgBpB76lzsZQNLan1eyeMCk12sWWQ==
+X-Received: by 10.98.75.139 with SMTP id d11mr18505922pfj.57.1452901038257;
+        Fri, 15 Jan 2016 15:37:18 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:698b:ab72:c6a:e39c])
-        by smtp.gmail.com with ESMTPSA id v26sm17739198pfi.56.2016.01.15.15.37.20
+        by smtp.gmail.com with ESMTPSA id 89sm17806037pfi.2.2016.01.15.15.37.17
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 15 Jan 2016 15:37:20 -0800 (PST)
+        Fri, 15 Jan 2016 15:37:17 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.37.gb4a0220.dirty
-In-Reply-To: <1452901035-1802-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284234>
 
-By having the `init` functionality in C, we can reference it easier from
-other parts in the code.
+The first patch is a reroll of "[PATCH] submodule: Port resolve_relative_url
+from shell to C" and the second patch is new.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 115 ++++++++++++++++++++++++++++++++++++++++++--
- git-submodule.sh            |  39 +--------------
- 2 files changed, 111 insertions(+), 43 deletions(-)
+This applies on top of origin/sb/submodule-parallel-update, as it makes use
+of the recorded update strategy in the submodule configuration.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1484b36..c7bd38a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -221,6 +221,115 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
- 	return 0;
- }
- 
-+static int git_submodule_config(const char *var, const char *value, void *cb)
-+{
-+	return parse_submodule_config_option(var, value);
-+}
-+
-+static void init_submodule(const char *path, const char *prefix)
-+{
-+	const struct submodule *sub;
-+	struct strbuf sb = STRBUF_INIT;
-+	char *url = NULL;
-+	const char *upd = NULL;
-+	const char *displaypath = relative_path(xgetcwd(), prefix, &sb);;
-+
-+	/* Only loads from .gitmodules, no overlay with .git/config */
-+	gitmodules_config();
-+
-+	sub = submodule_from_path(null_sha1, path);
-+
-+	/*
-+	 * Copy url setting when it is not set yet.
-+	 * To look up the url in .git/config, we must not fall back to
-+	 * .gitmodules, so look it up directly.
-+	 */
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "submodule.%s.url", sub->name);
-+	if (git_config_get_string(sb.buf, &url)) {
-+		url = xstrdup(sub->url); // as overlayed by .gitmodules
-+
-+		if (!url)
-+			die(_("No url found for submodule path '%s' in .gitmodules"),
-+				displaypath);
-+
-+		/* Possibly a url relative to parent */
-+		if (starts_with_dot_dot_slash(url) ||
-+		    starts_with_dot_slash(url)) {
-+			char *remoteurl;
-+			char *remote = get_default_remote();
-+			struct strbuf remotesb = STRBUF_INIT;
-+			strbuf_addf(&remotesb, "remote.%s.url", remote);
-+			free(remote);
-+
-+			if (git_config_get_string(remotesb.buf, &remoteurl))
-+				/*
-+				 * The repository is its own
-+				 * authoritative upstream
-+				 */
-+				remoteurl = xgetcwd();
-+			url = relative_url(remoteurl, url, NULL);
-+			strbuf_release(&remotesb);
-+		}
-+
-+		if (git_config_set(sb.buf, url))
-+			die(_("Failed to register url for submodule path '%s'"),
-+			    displaypath);
-+
-+		printf(_("Submodule '%s' (%s) registered for path '%s'\n"),
-+			sub->name, url, displaypath);
-+		free(url);
-+	}
-+
-+	/* Copy "update" setting when it is not set yet */
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "submodule.%s.update", sub->name);
-+	if (git_config_get_string_const(sb.buf, &upd) && sub->update) {
-+		upd = sub->update;
-+		if (strcmp(sub->update, "checkout") &&
-+		    strcmp(sub->update, "rebase") &&
-+		    strcmp(sub->update, "merge") &&
-+		    strcmp(sub->update, "none")) {
-+			fprintf(stderr, _("warning: unknown update mode '%s' suggested for submodule '%s'\n"),
-+				upd, sub->name);
-+			upd = "none";
-+		}
-+		if (git_config_set(sb.buf, upd))
-+			die(_("Failed to register update mode for submodule path '%s'"), displaypath);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+static int module_init(int argc, const char **argv, const char *prefix)
-+{
-+	int quiet = 0;
-+	int i;
-+
-+	struct option module_init_options[] = {
-+		OPT_STRING(0, "prefix", &prefix,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT__QUIET(&quiet, "Suppress output for initialzing a submodule"),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper init [<path>]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_init_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (argc == 0)
-+		die(_("Pass at least one submodule"));
-+
-+	for (i = 0; i < argc; i++)
-+		init_submodule(argv[i], prefix);
-+
-+	return 0;
-+}
-+
- struct module_list {
- 	const struct cache_entry **entries;
- 	int alloc, nr;
-@@ -466,11 +575,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static int git_submodule_config(const char *var, const char *value, void *cb)
--{
--	return parse_submodule_config_option(var, value);
--}
--
- struct submodule_update_clone {
- 	/* states */
- 	int count;
-@@ -716,6 +820,7 @@ static struct cmd_struct commands[] = {
- 	{"update-clone", update_clone},
- 	{"resolve-relative-url", resolve_relative_url},
- 	{"resolve-relative-url-test", resolve_relative_url_test},
-+	{"init", module_init}
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 615ef9b..6fce0dc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -398,45 +398,8 @@ cmd_init()
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
--		name=$(git submodule--helper name "$sm_path") || exit
--
--		displaypath=$(relative_path "$sm_path")
--
--		# Copy url setting when it is not set yet
--		if test -z "$(git config "submodule.$name.url")"
--		then
--			url=$(git config -f .gitmodules submodule."$name".url)
--			test -z "$url" &&
--			die "$(eval_gettext "No url found for submodule path '\$displaypath' in .gitmodules")"
--
--			# Possibly a url relative to parent
--			case "$url" in
--			./*|../*)
--				url=$(git submodule--helper resolve-relative-url "$url") || exit
--				;;
--			esac
--			git config submodule."$name".url "$url" ||
--			die "$(eval_gettext "Failed to register url for submodule path '\$displaypath'")"
- 
--			say "$(eval_gettext "Submodule '\$name' (\$url) registered for path '\$displaypath'")"
--		fi
--
--		# Copy "update" setting when it is not set yet
--		if upd="$(git config -f .gitmodules submodule."$name".update)" &&
--		   test -n "$upd" &&
--		   test -z "$(git config submodule."$name".update)"
--		then
--			case "$upd" in
--			checkout | rebase | merge | none)
--				;; # known modes of updating
--			*)
--				echo >&2 "warning: unknown update mode '$upd' suggested for submodule '$name'"
--				upd=none
--				;;
--			esac
--			git config submodule."$name".update "$upd" ||
--			die "$(eval_gettext "Failed to register update mode for submodule path '\$displaypath'")"
--		fi
-+		git submodule--helper init ${GIT_QUIET:+--quiet} "$sm_path" || exit
- 	done
- }
- 
+Thanks,
+Stefan
+
+Stefan Beller (2):
+  submodule: Port resolve_relative_url from shell to C
+  submodule: Port init from shell to C
+
+ builtin/submodule--helper.c | 330 +++++++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh            | 118 +---------------
+ t/t0060-path-utils.sh       |  42 ++++++
+ 3 files changed, 370 insertions(+), 120 deletions(-)
+
 -- 
 2.7.0.rc0.37.gb4a0220.dirty
