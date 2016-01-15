@@ -1,75 +1,84 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 0/4] Fix compile warnings with MSys2's compiler
-Date: Fri, 15 Jan 2016 14:24:19 +0100 (CET)
-Message-ID: <cover.1452864241.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/4] mingw: avoid redefining S_* constants
+Date: Fri, 15 Jan 2016 14:24:29 +0100 (CET)
+Message-ID: <0049b80c17e14722a217d208e0400975c4d0a024.1452864241.git.johannes.schindelin@gmx.de>
+References: <cover.1452864241.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 14:25:01 2016
+X-From: git-owner@vger.kernel.org Fri Jan 15 14:25:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aK4Mf-0003Ti-MH
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 14:24:30 +0100
+	id 1aK4Mw-0003ar-3l
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 14:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161068AbcAONY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 08:24:26 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54155 "EHLO mout.gmx.net"
+	id S1161074AbcAONYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 08:24:36 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59161 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161062AbcAONYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 08:24:25 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MaIPo-1aZPOH0NvU-00Jthx; Fri, 15 Jan 2016 14:24:21
+	id S1161062AbcAONYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 08:24:35 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LcBBl-1ZusV11JI5-00jVph; Fri, 15 Jan 2016 14:24:30
  +0100
 X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1452864241.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:OVZWd/YlH8dJjDNqyZmipSsaVACvtMJWGoQnizr2a30ji2QR9oV
- oaxQkrJFjVqx9gxL5RbHk+5Hcvh5jnHY0SKTVSslbBzz/MbshwGDrYp+eDzXfT1xyUEXgEe
- SVPHLGJLkFnCrt8udYl9RPvJFjNRDZ+oHc7b1V3m66rnyO62SS30a/L1/v1wpL3gz8xR2Ci
- 0e33u9H3+q8fbMQcH1GQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iQIO3XqqU/c=:iwlWWaIrtzAMBZvCtuwbsY
- HuQWQ5PrRmihBDENA4k23os6iHpk5HIu2Ve0HuFRhCcGLpb0ztaWE0RpcyRaWG9sTKSUvwhxG
- pgQZDZwDmf3ARkhYUjzyx2dVcNtXap+VLqi54L6ycxItq9HjQTE5LPo/YH8lvMVgEMohKX1Dk
- g5QJyr2uAhxq5NmgIxnJwGKwu3TNtODQp+knRe0UFawLvw2z2pP8m0dQjgU6XFbu/IcQ2LJbD
- kVhGOsE3Lj0Mt012pJTd2whs40V0s2oGijYoY3N95HZMNVRHwo7+Ffpbxwpn+bBPRCkd6gxD6
- OAd2dkNpvRKwYU/+qKrnsZFo/97frV4U8pIici4AJVa8ww4iplgz4gu0W3fqyx7yaSAS+dYbz
- XapAqp23odkk6pZckoM0VYq17y3RM4JRD384iLGrLtI2EERxSDr79gRZgF4WQkiP1/AiAqnSG
- GcgpKixH1z8Jx1dNjx/qwR++pdvy4tksv3lXMkgFcqGinNDHhuMILdbrGUHjtTsyDDf8lMTez
- eSD3Ay7I3H1pP3q74K7ajhN2ekgtx+/rNBC6yIj2KxD3bZoZbbDUiImhviVXbdpI+ZeMtIlAH
- rSrKlatMswQ5aDJvMOuvgeiTVyrDGnLmOlJaBAh2ZNo34HoX/hiaLD35SgNHaW28sOpiWpPSr
- OGXx4KAFFdpiSf9juJn2Afc/PIolU4wfaN9BS7GutlVFdENGrgeGi1R9DtMcCEgziFuvurj4E
- sfpDwfMxFvTBIFP7Jvxfz+pVlI2bIIYfE7RLmZBrgcz2SkpPJJzmVI9XdH2oxcVmeEY6JkjC 
+X-Provags-ID: V03:K0:OivT+QHKHxlp4KCHB+xVVdjbDDnxSGcfe8KjqaFAeJ3q88itcLv
+ pFrCGy9H+EeYDpmH8Ot/d0vEPJFPnIQFhu0+mu+o956+3Kvq/iiy1ZQO7FDR9cbYKkFUP/n
+ 6Yt0T609g0AAUSGhBjNMnHPql1SaIUhH3s5ZfvVfWAmjH1opJTEdUp8uuhYoE90znfDno8U
+ BzMO4iMIHdEg5IyKLCsRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:N8c5t9xPWTA=:LYZT56B3GJ4uRm+mquyr0N
+ IR8v3VlwxiA2k5ysY3GvSPby4DjmzVjnueCMN6Yi4pMIl6xgWPHrquwKLW4/mmpmG97Iwn/jH
+ BYsXqm+3x02EbaCmtdktz+D6tkXi/4OrEgnot8tj+ecvoqfEebdyp4ndH5iPgBNCI+5cCjrzu
+ YcGnO9m3jAgtlJMg4ty7hKR1ticf734AWTLnq25xS0hRlK0UooqIjYwd4kc6Ytt9INeu6f94d
+ Dm7AnuCkoPIt3Ofvj0vwNsmO5urpkDSurckTDQPN9pO55XTYhQQeY0CUdDsgVvFMZFKIYMEcf
+ XT2UmyP4aCxgYeYJW8nSvw64XW1QNqdJ9rxBgFXdxMjFFZnSejHoQ7V5OhLsNhO2ydvLpt/J6
+ b3yiRj/VXelWWP7028UUJ/4tpy1oRJnldCKfnWiXUT81rTEcDvZumgXTFw1h9U7vW1pjECt/Z
+ hVuuNsCid/bP0RA600IDF+3gR8baEQaprdDJ6LfR3IA0BUbrVQEKwXZbXD5izJrhOUtNuxGDg
+ p0YwU4G0Ak53prQe+DwWjF1cmgmxLKGInTn64ptyjI/Elxq/0wGD6gDBkrwJYSgnLp27tyISP
+ Shzeapb/+w6s2nIW5C2JziB5sZ99iJVSgvJTO3ZFv4zm0uDDRRtnDeeafnjyBykPEJkxvK7Yp
+ QbrGJQ39KAC0GUvCeYRZBZzssxqvF8aT7MUACuDaSp1xW16ZJ1DEkj6e60QzjcCRYZlJaFIbP
+ SKO9St3YRKwUh/IWZB5se9gUa1CxGODmiX7dm0+HdBMUMbIY0yxybv8lEPCOYOpMIWZib1DV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284167>
 
-This is the second batch of Windows-specific patches from the Git for
-Windows project. Naturally, it is based on the first batch of patches
-that fixed the compile errors.
+When compiling with MSys2's compiler, these constants are already defined.
 
-Please note that this series does the *minimal* job of fixing the
-compile warnings. Don't try to run the tests, they will still fail. You
-have been warned.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-
-Johannes Schindelin (4):
-  mingw: avoid redefining S_* constants
-  mingw: avoid warnings when casting HANDLEs to int
-  mingw: squash another warning about a cast
-  mingw: uglify (a, 0) definitions to shut up warnings
-
- compat/mingw.c              | 9 ++++++---
- compat/mingw.h              | 4 ++++
- compat/nedmalloc/malloc.c.h | 3 ++-
- compat/poll/poll.c          | 2 +-
- compat/win32/pthread.h      | 7 +++++--
- compat/winansi.c            | 3 ++-
- 6 files changed, 20 insertions(+), 8 deletions(-)
-
+diff --git a/compat/mingw.h b/compat/mingw.h
+index b3e5044..3a404ff 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -14,14 +14,18 @@ typedef int socklen_t;
+ #define S_ISLNK(x) (((x) & S_IFMT) == S_IFLNK)
+ #define S_ISSOCK(x) 0
+ 
++#ifndef S_IRWXG
+ #define S_IRGRP 0
+ #define S_IWGRP 0
+ #define S_IXGRP 0
+ #define S_IRWXG (S_IRGRP | S_IWGRP | S_IXGRP)
++#endif
++#ifndef S_IRWXO
+ #define S_IROTH 0
+ #define S_IWOTH 0
+ #define S_IXOTH 0
+ #define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
++#endif
+ 
+ #define S_ISUID 0004000
+ #define S_ISGID 0002000
 -- 
 2.7.0.windows.1.7.g55a05c8
