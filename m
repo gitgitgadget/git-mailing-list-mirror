@@ -1,72 +1,83 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v11] ls-files: add eol diagnostics
-Date: Fri, 15 Jan 2016 05:51:35 +0100
-Message-ID: <56987AD7.2050707@web.de>
-References: <1452788241-9879-1-git-send-email-tboegi@web.de> <xmqqr3hkj6q1.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t0060: loosen overly strict expectations
+Date: Fri, 15 Jan 2016 07:34:21 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601150730440.2964@virtualbox>
+References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de> <xmqqziw8jcbr.fsf@gitster.mtv.corp.google.com> <5697E550.9020102@ramsayjones.plus.com> <56981DC2.6070706@kdbg.org> <5698415E.7070907@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Fri Jan 15 05:51:56 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Michael Blume <blume.mike@gmail.com>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 07:34:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJwMc-0000Zu-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 05:51:55 +0100
+	id 1aJxy1-0001xQ-1u
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 07:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbcAOEvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 23:51:51 -0500
-Received: from mout.web.de ([212.227.17.11]:54088 "EHLO mout.web.de"
+	id S1751236AbcAOGed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 01:34:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55778 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918AbcAOEvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 23:51:50 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LzKEH-1a729G3vXd-014VQO; Fri, 15 Jan 2016 05:51:44
+	id S1750897AbcAOGec (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 01:34:32 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MfEMs-1aVZbB0NSs-00OpIO; Fri, 15 Jan 2016 07:34:23
  +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <xmqqr3hkj6q1.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:NBw0VDE/gNsEca5fy/4jVocMkVPR8taPSYwOm19/iJfi7b54s/k
- OphMCd11c3+8EiCnLw2mJH9WesWE+lHB35/hjgN/pkyJlj+wrYmBEmA08A2B4IXToj9mFeK
- bRqSQTx7+QisR7Bw8SfV0y9mG3chxcmTl9EZ8OxMvOZW3JPnPmLw2M55Q0fgkbbLPAvPjUK
- DXrXqjLJGingyX8AubOrg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XEyPuBwcwp8=:4UqaTRGolzOPw7L20SXfHs
- kHBHGt98bY25Ad3jX/M24rEeICvBUOju+oW7z2YxhBXYxFce3fVb+ltGs3ztKK5FtGw0DRqTq
- WM6LRMgdql/7gGPVLouVmjWv3G9DBEaScVu0eermlPchqal9ASXBgHUktSlYZ/bARYYNXHXFJ
- 6AOZOyS6w0WKTDbyRNMNb4voNNWcg3aLYqEqcJhWnML1ZkmQvyLup9dqXWQ1qyQwREhULT1AU
- 15IGRH0OgZCgcTOZJAALBIL5Wnqgq+bxO93xTXDURkg85YMGeY5ozolJGrIZfGirhZQrtTZqV
- nZ76kJP9EzxvGqEEeaXIEc8W8SXVnPDnocOis5ggX8c4gS94ITHb/7wxHmru/+4+wRCtCiZl7
- u0wX7JApdVnxROwIHj8iguAWdC+cY90PhSOJBTO5PRFLL/31PgPeQAllNcgwDklRxZgwe9TsI
- oH09BIb2RuUEgNnqKE/LRFlSW0WBZyIYdEeB6csZ7S1uWBJN3+CfesgLiBe0r55yfvh1QK7Ng
- qPfx96xPfB5FKBf8PwgNiM1NWpUeP19Dlzk5SWxccwRwHiSvNvrnprZ1IQ4ueWSjr1TBiYXB8
- je2yG60HwFk/6C5BAUJmmqE1DNMCQT4GFm7dO92Xe0oEk3VbT0Rb+lCi+5id99Lmdw47AJI5t
- DBG2lMyJbuOlohAh7lydGYsZZ6NNKb75lQMCX00ubs3/NcNkNZEmPNHYzB51wCxYj3cy12bRp
- AAPc15ZySpmcuqlpYFjlimnx9x0PDolIVKnfCwyRoXjUlKBmnLvasJOCeZRAQMrkzJadSMQ4 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <5698415E.7070907@ramsayjones.plus.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:g5EWNYApV2qGbZVgEnlfuLLs++Sw5hNNV0ayezPfPm1K6QhFYrK
+ d1AHSXfEEfztJNxUHXoLY1y9mhignBLtTTPUPvDgom0hI5kFD8lLdOQ9TI0uFRuGQbZzOyr
+ Dc9lmKUyGkpxc9ZqMdFVBYgYnhnMX9gtCHvGFz1dR3KEbztsfyjuOGjt5eIrR0nUq+EBLIy
+ vL/geYMRk9zwoyq+roS7g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+ODWOmSzn5U=:usvIglpGqfe98bmnoHWkfn
+ WCNKiJZmlKniwDaikfQsQ3Il2vtHqpTpfxTl0tCutKOTQHk6ThwhT4/ajOZPBJBJE7JyxPyT/
+ JaK+97kDs4vv1GBDr+DixNPLFBKOTDENpsZbpYSR1LAq8EbvvonCopUB2n3zzLUX86mlhX4Q9
+ FvHf4a5Kk5wndcOqYObcGUgf1NH9+FSqO9E4WMaO+DJ/AhCk54wObhvzl3vSbq6BAR98Fo6ne
+ olNke4x9CKeyyIXDqftd8qmcCQeuwsV/uqMGbOAe19Noy/DvxEU9oKWVKfNJP9yJINHdlXExG
+ YOOHpo16ESY2Qx8I8e9ZG9UHlf+kYY0fwCeGTf/gvazNm9VOJ5ejnDP8pdm324kjl3ONc+NP9
+ 9e+bkgRGxYXOgSlcfTVN2yw6S0ewtSitqtsDgk60YIIrVsgtnfj9uTxLKK0FIWux4uhFjERWg
+ VsU+MxDE8a2ZFpBWt0nLGCY5wPf06/L2wnENRjNJurMtZLAT6iRd9OD5zTGRht78YRWJUbJzN
+ CX3sT9n1sQ9l1Hxv7GeG3RKH+9W66YAmSlT+MpFN6wYS/ZR24yULq/w317IoVomr5o9oLeJse
+ JYATzaRmJ+xb1PsUNGJW8yZA6Vq7IWmmyxedh9CEWmC+ma7wFJhU1ULteCR9+PjL/w+hFOSBZ
+ B9tejkC5NvoFCAWBLE866YufXYPRafd4SFrsQQplXbac+ybH3wVIJHS9XipB4ZxketCs4mZ9o
+ oEVbZcitRd7RpNLYHy8JBVxPgd1fv/Bat9AOMC3MwWwUOKWTvwKPiaWlqx2gAwc9Zkkv0FBN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284135>
 
-On 01/14/2016 08:34 PM, Junio C Hamano wrote:
-(OK with the rest of the comments, thanks)
-> +		return "binary";
-> It is true and correct that we do not do EOL conversion on text
-> files that have a lone CR, but I think it is misleading to tell the
-> users that such files are "binary".  We do not refrain from showing
-> the textual diff for such files, for example.
->
-> To put it another way, we do not do EOL conversion for truly
-> 'binary' files, but there are (mostly) text files that are not
-> binary that we do not do EOL conversion on.  And you want to tell
-> the user if EOL conversion would happen to each file.  It is not
-> correct to label "this file is binary" merely because you do not do
-> EOL conversion.  Perhaps define a new "literal" class that is a
-> superset of "binary" and use that as the label?  I am not suggesting
-> that "ls-files --eol" should show "i/binary" for truly binary files
-> and "i/literal" for a non-binary file with lone CRs.  For the
-> purpose of "--eol", you only care about "literal", so you do not
-> even have to have "binary" class at all.
-This makes sense, how about "-text" ?
+Hi Ramsay,
+
+On Fri, 15 Jan 2016, Ramsay Jones wrote:
+
+> On 14/01/16 22:14, Johannes Sixt wrote:
+> > Am 14.01.2016 um 19:13 schrieb Ramsay Jones:
+> >> Correct me if I'm wrong (quite possible), but _each_ drive has a
+> >> current working directory associated with it in win32, so it's a bit
+> >> difficult to use drive designators with a relative path (eg.
+> >> C:usr/lib).
+> > 
+> > As far as it matters for Git, such a path is still an absolute path,
+> > because it is not anchored at $(pwd).
+> 
+> [...] seems to contradict what you say above.
+> 
+> What am I missing?
+
+The missing bit is: while C:usr/lib is *not* anchored on $(pwd), it is
+*still* not an absolute path because it is anchored on the current
+directory of the C: drive (the entire idea that some drive state can
+change the meaning of "C:usr/lib" makes it a non-absolute one).
+
+Since this concept -- a path that is neither relative to $(pwd) nor
+absolute -- does not exist on Linux, I do not think that Git for Windows
+handles this case well at all.
+
+Ciao,
+Dscho
