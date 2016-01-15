@@ -1,126 +1,108 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 07/11] dir: add remove_untracked_cache()
-Date: Fri, 15 Jan 2016 07:59:48 +0100
-Message-ID: <1452841192-620-8-git-send-email-chriscool@tuxfamily.org>
-References: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Announcing git-cinnabar 0.3.0
+Date: Fri, 15 Jan 2016 17:56:58 +0900
+Message-ID: <20160115085658.GA15539@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 08:01:16 2016
+X-From: git-owner@vger.kernel.org Fri Jan 15 09:57:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJyNl-0005LO-6R
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 08:01:13 +0100
+	id 1aK0By-0000ab-Jh
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 09:57:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbcAOHBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 02:01:07 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37050 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755039AbcAOHAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 02:00:41 -0500
-Received: by mail-wm0-f42.google.com with SMTP id f206so10168677wmf.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 23:00:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/OBfuLfBXuPBOxGDtssWbEVRAIwgK1w39F4IFoilxuo=;
-        b=aSOi6UP8lwOKNReSsP5vvAxyo+NSS6kQe+MLCdav6o05BeX7I7IHlucBpvE4j4V0fQ
-         2NR3VVvyiaqi17Z3fvhBL75hNoNabc8VXxSJt5kyOi7tlHErrpsdleDLe+anBysuXFy/
-         H0/XESzy8UnvFPr6kMul2/cWmEAKczhH4z/CZEbMz2563bEonpR8JtaqNUm1TDgyyv9Q
-         zEUtKbk8mdGi4YCoNRzH9WLQNr+q+tcfhEF0AS1pFI1NBpXAFRy5ssdNeJDR6hgr02Ni
-         jdhRV2E97NWI1NW/bkYC1iPM3l0/NtyEOlCf6EhKKIALNSuBKRJptAmr4VS//KSDvHwG
-         f3ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/OBfuLfBXuPBOxGDtssWbEVRAIwgK1w39F4IFoilxuo=;
-        b=byvohb8XYWJKbJTX2c3yceRkN6DiXTYMETjVvmWlsmFw+D6WaYFhs6hP1cyCgXNB5B
-         hk1yVn3LpViqGwwE0mfluUO6P4H3Kor+NBS4STyG33L2ymxXPluxv0GT1BQwgEUYM0Sl
-         m/zqBxLEj9fRWMeTKfwCABeoKJR8h9ZaeW2LR44+hM8AVAJ/AoL8oX7gLKvDZbKRPeW4
-         kjYA3rmI9ILtaPdljKFdTD56YOoYY5yq6QHbTJjT/+ggzygSfVCVlERynPEHdaP96YRk
-         SYkVfNnKZm+WPpaKxlNHMJiTZmRUQz71bjoR1jWbgtLmMe6rca54vv5+ZUbTfOBbXWgb
-         A2XQ==
-X-Gm-Message-State: AG10YOR5D745waOJP3Cp6jwgXB2FLyCmJFKKBbj6GvUQXg8iOljReFSRgTY9rsEWNTXeNA==
-X-Received: by 10.28.150.215 with SMTP id y206mr1468737wmd.8.1452841240569;
-        Thu, 14 Jan 2016 23:00:40 -0800 (PST)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id f205sm1169733wme.4.2016.01.14.23.00.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Jan 2016 23:00:39 -0800 (PST)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.7.0.36.g20612a7
-In-Reply-To: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
+	id S1756203AbcAOI5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 03:57:06 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:53070 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754781AbcAOI5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 03:57:05 -0500
+Received: from glandium by zenigata with local (Exim 4.86)
+	(envelope-from <mh@glandium.org>)
+	id 1aK0Bm-00058Z-Pf
+	for git@vger.kernel.org; Fri, 15 Jan 2016 17:56:58 +0900
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284152>
 
-Factor out code into remove_untracked_cache(), which will be used
-in a later commit.
+Git-cinnabar is a git remote helper to interact with mercurial
+repositories. It allows to clone, pull and push from/to mercurial remote
+repositories, using git.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/update-index.c | 6 +-----
- dir.c                  | 9 +++++++++
- dir.h                  | 1 +
- 3 files changed, 11 insertions(+), 5 deletions(-)
+Code on https://github.com/glandium/git-cinnabar
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 5f8630c..d90154c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1126,11 +1126,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		add_untracked_cache(&the_index);
- 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
- 	} else if (untracked_cache == UC_DISABLE) {
--		if (the_index.untracked) {
--			free_untracked_cache(the_index.untracked);
--			the_index.untracked = NULL;
--			the_index.cache_changed |= UNTRACKED_CHANGED;
--		}
-+		remove_untracked_cache(&the_index);
- 		report(_("Untracked cache disabled"));
- 	}
- 
-diff --git a/dir.c b/dir.c
-index 31eae37..0d069c9 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1956,6 +1956,15 @@ void add_untracked_cache(struct index_state *istate)
- 	istate->cache_changed |= UNTRACKED_CHANGED;
- }
- 
-+void remove_untracked_cache(struct index_state *istate)
-+{
-+	if (istate->untracked) {
-+		free_untracked_cache(istate->untracked);
-+		istate->untracked = NULL;
-+		istate->cache_changed |= UNTRACKED_CHANGED;
-+	}
-+}
-+
- static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
- 						      int base_len,
- 						      const struct pathspec *pathspec)
-diff --git a/dir.h b/dir.h
-index cfd3636..a3dacdb 100644
---- a/dir.h
-+++ b/dir.h
-@@ -309,4 +309,5 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
- void add_untracked_ident(struct untracked_cache *);
- void add_untracked_cache(struct index_state *istate);
-+void remove_untracked_cache(struct index_state *istate);
- #endif
--- 
-2.7.0.36.g20612a7
+[ Previous announcements:
+  http://marc.info/?l=git&m=142837367709781
+  http://marc.info/?l=git&m=142364715001983
+  http://marc.info/?l=git&m=141781485726430 ]
+
+Development had been stalled for a few months, with many improvements in
+the `next` branch without any new release. I used some time during the
+new year break and after in order to straighten things up in order to
+create a new release, delaying many of the originally planned changes to
+a future 0.4.0 release.
+
+What's new since 0.2.2?
+
+- Speed and memory usage were improved when doing `git push`.
+- Now works on Windows, at least to some extent. See details[1].
+- Support for pre-0.1.0 git-cinnabar repositories was removed. You must
+  first use a git-cinnabar version between 0.1.0 and 0.2.2 to upgrade
+  its metadata.
+- It is now possible to attach/graft git-cinnabar metadata to existing
+  commits matching mercurial changesets. This allows to migrate from
+  some other hg-to-git tool to git-cinnabar while preserving the
+  existing git commits.  See an example of how this works with the git
+  clone of the Gecko mercurial repository[2]
+- Avoid mercurial printing its progress bar, messing up with
+  git-cinnabar's output.
+- It is now possible to fetch from an incremental mercurial bundle
+  (without a root changeset).
+- It is now possible to push to a new mercurial repository without `-f`.
+- By default, reject pushing a new root to a mercurial repository.
+- Make the connection to a mercurial repository through ssh respect the
+  `GIT_SSH` and `GIT_SSH_COMMAND` environment variables.
+- `git cinnabar` now has a proper argument parser for all its
+  subcommands.
+- A new `git cinnabar python` command allows to run python scripts or
+  open a python shell with the right sys.path to import the cinnabar
+  module.
+- All git-cinnabar metadata is now kept under a single ref (although for
+  convenience, other refs are created, but they can be derived if
+  necessary).
+- Consequently, a new `git cinnabar rollback` command allows to roll
+  back to previous metadata states.
+- git-cinnabar metadata now tracks the manifests DAG.
+- A new `git cinnabar bundle` command allows to create mercurial
+  bundles, mostly for debugging purposes, without requiring to hit a
+  mercurial server.
+- Updated git to 2.7.0 for the native helper.
+
+Development process changes
+
+Up to before this release closing in, the `master` branch was dedicated
+to releases, and development was happening on the `next` branch, until a
+new release happens.
+
+>From now on, the `release` branch will take dot-release fixes and new
+releases, while the `master` branch will receive all changes that are
+validated through testing (currently semi-automatically tested with
+out-of-tree tests based on four real-life mercurial repositories, with
+some automated CI based on in-tree tests used in the future).
+
+The `next` branch will receive changes to be tested in CI when things
+will be hooked up, and may have rewritten history as a consequence of
+wanting passing tests on every commit on `master`.
+
+Mike
+
+1. https://github.com/glandium/git-cinnabar/wiki/Windows-Support
+2. https://github.com/glandium/git-cinnabar/wiki/Mozilla:-Using-a-git-clone-of-gecko%E2%80%90dev-to-push-to-mercurial
