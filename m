@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 10/11] test-dump-untracked-cache: don't modify the untracked cache
-Date: Fri, 15 Jan 2016 07:59:51 +0100
-Message-ID: <1452841192-620-11-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v5 03/11] update-index: add --test-untracked-cache
+Date: Fri, 15 Jan 2016 07:59:44 +0100
+Message-ID: <1452841192-620-4-git-send-email-chriscool@tuxfamily.org>
 References: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -11,51 +11,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 08:01:06 2016
+X-From: git-owner@vger.kernel.org Fri Jan 15 08:01:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJyNc-0005DP-4s
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 08:01:04 +0100
+	id 1aJyNk-0005LO-HK
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 08:01:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782AbcAOHBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 02:01:01 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34533 "EHLO
+	id S1755065AbcAOHBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 02:01:08 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:35267 "EHLO
 	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754336AbcAOHAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 02:00:51 -0500
-Received: by mail-wm0-f49.google.com with SMTP id u188so11043193wmu.1
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 23:00:50 -0800 (PST)
+	with ESMTP id S1754949AbcAOHAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 02:00:32 -0500
+Received: by mail-wm0-f49.google.com with SMTP id f206so8314112wmf.0
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 23:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6kf0mps+7ifNSv0yg4gWpu4PYmNLSKpxaRC4wxAYrUI=;
-        b=VLLnUdlkxrXaGzFjYVH3Z8zsUIROoewe2o00e0peFcFFfSTkL0hJ27D2lkT2P9lN6o
-         l+xF3Nuy0LWYz7xvCvXgPrnCjTxzfo4vto4UCyDtCcCDhpkpypV5MjbK64pZgoDkFFT1
-         YvoHwuX8+U8YwIi1gzAvyG/oX3oIBzLfrku9e0sye9sBAI4ez+TV0k8zl4a3gnvTH2e8
-         /SZ38fbgqVpx8eg5Fb47NO4T/uXgk+eEvNyLfly9PnppmLaNcsVeFae9khBGGvy2ALRL
-         vH2XpjNJDsZ8CfdcbnlBRFIe4H4On6KY3BKnBShooI/TOtc546YXjWZe/YpUVk+HFXgS
-         EnPQ==
+        bh=JB/RHcJDQnv8P33XjXybZMddCvZ2NZO/DwnupE0O598=;
+        b=k3FWaP147bkHIEB87Urts6lTEhY/mif19cNEghkxIsy3wtxNdo7p/2Vuh2Rz+xa4kU
+         PfLhz2mgg4UlUj5QiCRf7Oq22QSFp8LhXY2xbre7E1K2rtUDikPI0iG95KBwd8Pu/q7s
+         2Lr4OW993Soa3HjI9TOIrCJtTqC2T+bgrIr+B0aE/KvioXrvKxcte5qHI0JyCO0XdYof
+         3rgE5iqRqSxTz4vbtbl5GDx979MGlex1Zry3aeOsozdlRfoSKJu64nWfBk8UQsvpQYsg
+         DWkNmz/OPq8HgZB8LQnh6dTYX1/mtF2rRMONSA3oLPpS1tUKJdn/8/kXqOPkWQhi73+2
+         KMRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=6kf0mps+7ifNSv0yg4gWpu4PYmNLSKpxaRC4wxAYrUI=;
-        b=Z0wz/3B+qTx768bC9HqJoLqN/hUnZfN0Bj6d9OTvRZDLBhj1rGwxpLJBjIx69lHZlj
-         vEsFm1jw79sngCl2oZQH+j3HiCvwHZqi/zrZOyXx0aN+F7td4eklrqhN9Fmb5fFNNvFL
-         Iy/syreiTxqMMU+DGZGyI8jNjvYqnC43O6hRNvTeQSKfj9T2bB5kt4gN4wQxFaHpz6Du
-         H6AeW/9Yfk/uCzTLmbZ7z5/axWov6cXe92TsykT1jo6cFkGjtgnBl9+B6fN7dY4NE722
-         LzLaNzihWnmnC12DVYFk7t6zqLJkcDTZtSnWU7MNYO/zlTx1w/sic7d+RZvuHiico9yI
-         5CJg==
-X-Gm-Message-State: ALoCoQk2+QF5jXT8cWqc6MB+b0HwAHjYSRl7trKLvNyIf5R8qBgVTGnz+GySJ+mJwbjZh5+LRhUA83D0MwcLXB9SJ47ZwYiMgg==
-X-Received: by 10.194.103.164 with SMTP id fx4mr8211380wjb.56.1452841250399;
-        Thu, 14 Jan 2016 23:00:50 -0800 (PST)
+        bh=JB/RHcJDQnv8P33XjXybZMddCvZ2NZO/DwnupE0O598=;
+        b=J+MiCjKEYZHkBQ43bDgdDhysD2Nef+mUmoLEuFd4aKYKZ0voqmsN21EGsNwjYVZuri
+         YatEfRmGPCJ4E6dFRz/v4C4JYDYbk2kGNv3/12q3yVy0y3ts5eecuXzfpUWq/Feacoci
+         9+c7rZelwmESAxFeH/XM2wxQvOlIuKIdMI/bYpf+MK8yXC2RXL7OzEp/K3OmiBcExXap
+         k1BhY3jn1edHuiN7oMSfexmlSqgtMRhm+CI0rSmlRY+V3uPNOC2UUpmBXLt4OrHzHblZ
+         DQOgGr9dEO+O8+RN6/8Khq8e5DJHz9zadcWOYMuyhLoc+06QmO0vNaOXc+UAftm8P5qK
+         pxpw==
+X-Gm-Message-State: AG10YOSOZPHG9lacTvtqoUfNgokgQf0XPXVeOpA4GLiYm2dBVqJM3U0/cYlpJmDQZfDaIw==
+X-Received: by 10.28.52.195 with SMTP id b186mr1489680wma.40.1452841230576;
+        Thu, 14 Jan 2016 23:00:30 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id f205sm1169733wme.4.2016.01.14.23.00.47
+        by smtp.gmail.com with ESMTPSA id f205sm1169733wme.4.2016.01.14.23.00.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Jan 2016 23:00:49 -0800 (PST)
+        Thu, 14 Jan 2016 23:00:29 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.36.g20612a7
 In-Reply-To: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
@@ -63,82 +63,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284149>
 
-To correctly perform its testing function,
-test-dump-untracked-cache should not change the state of the
-untracked cache in the index.
-
-As a previous patch makes read_index_from() change the untracked
-cache status and as test-dump-untracked-cache indirectly calls
-this function, we need a mechanism to prevent read_index_from()
-to change the untracked cache state when it's called from
-test-dump-untracked-cache.
+It is nice to just be able to test if untracked cache is
+supported without enabling it.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Helped-by: David Turner <dturner@twopensource.com>
 ---
- cache.h                     | 2 ++
- config.c                    | 3 +++
- environment.c               | 6 ++++++
- test-dump-untracked-cache.c | 2 ++
- 4 files changed, 13 insertions(+)
+ Documentation/git-update-index.txt | 12 +++++++++++-
+ builtin/update-index.c             |  5 +++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 59a15fd..89c7e10 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1605,6 +1605,8 @@ extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
- extern int git_config_get_untracked_cache(void);
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index f4e5a85..a0afe17 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 	     [--[no-]skip-worktree]
+ 	     [--ignore-submodules]
+ 	     [--[no-]split-index]
+-	     [--[no-|force-]untracked-cache]
++	     [--[no-|test-|force-]untracked-cache]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+ 	     [-z] [--stdin] [--index-version <n>]
+@@ -180,6 +180,16 @@ may not support it yet.
+ 	system must change `st_mtime` field of a directory if files
+ 	are added or deleted in that directory.
  
-+extern int ignore_untracked_cache_config;
++--test-untracked-cache::
++	Only perform tests on the working directory to make sure
++	untracked cache can be used. You have to manually enable
++	untracked cache using `--force-untracked-cache` (or
++	`--untracked-cache` but this will run the tests again)
++	afterwards if you really want to use it. If a test fails
++	the exit code is 1 and a message explains what is not
++	working as needed, otherwise the exit code is 0 and OK is
++	printed.
 +
- struct key_value_info {
- 	const char *filename;
- 	int linenr;
-diff --git a/config.c b/config.c
-index 647a15e..a4f70f7 100644
---- a/config.c
-+++ b/config.c
-@@ -1599,6 +1599,9 @@ int git_config_get_untracked_cache(void)
- 	int val = -1;
- 	const char *v;
+ --force-untracked-cache::
+ 	For safety, `--untracked-cache` performs tests on the working
+ 	directory to make sure untracked cache can be used. These
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1e546a3..62222dd 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -40,6 +40,7 @@ enum uc_mode {
+ 	UC_UNSPECIFIED = -1,
+ 	UC_DISABLE = 0,
+ 	UC_ENABLE,
++	UC_TEST,
+ 	UC_FORCE
+ };
  
-+	if (ignore_untracked_cache_config)
-+		return -1;
-+
- 	if (!git_config_get_maybe_bool("core.untrackedcache", &val))
- 		return val;
- 
-diff --git a/environment.c b/environment.c
-index 1cc4aab..74294ee 100644
---- a/environment.c
-+++ b/environment.c
-@@ -87,6 +87,12 @@ int auto_comment_line_char;
- /* Parallel index stat data preload? */
- int core_preload_index = 1;
- 
-+/*
-+ * This is to ensure that the untracked cache is not modified, for
-+ * example in test programs like test-dump-untracked-cache.
-+ */
-+int ignore_untracked_cache_config;
-+
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
- static char *work_tree;
-diff --git a/test-dump-untracked-cache.c b/test-dump-untracked-cache.c
-index 25d855d..8d1293c 100644
---- a/test-dump-untracked-cache.c
-+++ b/test-dump-untracked-cache.c
-@@ -44,6 +44,8 @@ int main(int ac, char **av)
- {
- 	struct untracked_cache *uc;
- 	struct strbuf base = STRBUF_INIT;
-+
-+	ignore_untracked_cache_config = 1;
- 	setup_git_directory();
- 	if (read_cache() < 0)
- 		die("unable to read index file");
+@@ -1004,6 +1005,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			N_("enable or disable split index")),
+ 		OPT_BOOL(0, "untracked-cache", &untracked_cache,
+ 			N_("enable/disable untracked cache")),
++		OPT_SET_INT(0, "test-untracked-cache", &untracked_cache,
++			    N_("test if the filesystem supports untracked cache"), UC_TEST),
+ 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
+ 			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
+ 		OPT_END()
+@@ -1119,6 +1122,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			setup_work_tree();
+ 			if (!test_if_untracked_cache_is_supported())
+ 				return 1;
++			if (untracked_cache == UC_TEST)
++				return 0;
+ 		}
+ 		if (!the_index.untracked) {
+ 			uc = xcalloc(1, sizeof(*uc));
 -- 
 2.7.0.36.g20612a7
