@@ -1,268 +1,132 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 15/20] init: allow alternate backends to be set for
- new repos
-Date: Fri, 15 Jan 2016 13:51:39 +0100
-Message-ID: <20160115125139.GI10612@hank>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
- <1452788777-24954-16-git-send-email-dturner@twopensource.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 2/4] mingw: avoid warnings when casting HANDLEs to int
+Date: Fri, 15 Jan 2016 14:24:34 +0100 (CET)
+Message-ID: <61a69db5495c2ea16f98fab58e160dc575f73179.1452864241.git.johannes.schindelin@gmx.de>
+References: <cover.1452864241.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 13:51:23 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 14:24:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aK3qb-0007L6-LI
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 13:51:22 +0100
+	id 1aK4Mw-0003ar-MG
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 14:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757570AbcAOMvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 07:51:17 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33134 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756057AbcAOMvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 07:51:16 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u188so2704200wmu.0
-        for <git@vger.kernel.org>; Fri, 15 Jan 2016 04:51:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZkQIlS7xqNqMlOyJ2A+aHr61lAxx8sp4J+SckeG3OiM=;
-        b=VPMx8KMv3fNacGF+gFiio59C/Sd+23f3nt9v5T6wg4CKNYdoLgfgNreGfqCA9LbgtO
-         qdMMuNVgkvmUemEJDEVcpG7/Lz7s26qfz56eJzQ0ZDTH78sdP0Kr46i9OZWxBROcNMYO
-         7loMh5NT3UUZ+m6e1nkDlvkLATjDo9+l62bu0JAZhcS4G/rYPAhc+67mB1NX1WRQOtU2
-         dJY+82az/IwYGVLHsongB7ejVBtHTYljNEIc54B5hQCZAM5cNwDpwHUL6h4aYuMP+s7w
-         J1MN5XZ9QYv6we354I2YeZZYgns3mBu7JsUN/UBH8wvwA2/4iIqB/rP2Q2yh3uymERMm
-         4hbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=ZkQIlS7xqNqMlOyJ2A+aHr61lAxx8sp4J+SckeG3OiM=;
-        b=BbG15T9fxj1IVhg6o1Lh5PmB8wFaC2Q/Ru8l8NutDNpTB65z4PTdgYUp75XIgK4d9l
-         ErFE1lglCphpXUW8nBFmim+ZXKqPVzCfbSg3otKXy3RTDjOd2NyR/uWC935qBkH4L5aW
-         escRxbIo5plAO7PzVSLzxFMtj50LuLHtZffQyglYi78pI/wx6F6zvQHOSyEUJG811veU
-         O2mTKPyhGGMrJj+Fc5oYAJckMulMTQCxqgdEK9szFmApx7jzYCDewLNxJtrG9wP6DZ0c
-         HrDyhFwEH10sTbh6KMYpsZc65f3zleGBz+Ev52Lz6rlQMJuhJZqNPLcTLb3aaz6e3XC+
-         daCg==
-X-Gm-Message-State: ALoCoQku+1KO78DOzLA6r63+5d8/AO/ERteyaaRUTxxTspEPiTvemylnzBSb5jbc5nYJ0sAr/URAWin2GOyf0kOGNr6o8vDA7w==
-X-Received: by 10.194.175.233 with SMTP id cd9mr9994949wjc.115.1452862274675;
-        Fri, 15 Jan 2016 04:51:14 -0800 (PST)
-Received: from localhost (host143-110-dynamic.40-79-r.retail.telecomitalia.it. [79.40.110.143])
-        by smtp.gmail.com with ESMTPSA id uo9sm10463463wjc.49.2016.01.15.04.51.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Jan 2016 04:51:12 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1452788777-24954-16-git-send-email-dturner@twopensource.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+	id S1161083AbcAONYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 08:24:41 -0500
+Received: from mout.gmx.net ([212.227.17.20]:61452 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161062AbcAONYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 08:24:40 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LfTC1-1ZnAKY2Ell-00p3N9; Fri, 15 Jan 2016 14:24:35
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1452864241.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:TskMWBgdhRl1lm0kFo2FGOrpT5MlK0mTwypVsd8OEVYn0LTm+0x
+ ZQTijZgNW5c9m76tEzgMhYX8V6RQjwQtGt/JZo74ztkmmapzRCUyALnfSjTVM9Y+lBea/Nw
+ PZZLRQx9axn4jf+4uTjd5AKobQVAGb79LM1gp/5vp6EJuqiYJb4gxAY9fIG3vRqGv3/UIIt
+ Q93xERCq2PBlGoVXflERQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QacZ2gjuAxs=:71kSDqQFg41pbSMlRp3qJ4
+ WJLZK7ba54DpZKpw9gF4AvkBK5Wn4D4p9uNXY41bLROCJY/NFoN/UETg8TAk2toRwmTJ52Oq/
+ r5I0m+hl7kr/RZP/0aAZa29m8bJK3Da/uCCSF5LJp5P2b4L76AklNL/aThnw74uEk+th1PQiI
+ TgDlwYwMgL2GkAvroruGuzkL1lq6JOvtrDQIkseBSL+rSBBuHKRsE2FIU6msPcxB7UlYOyEF0
+ TcxgKlCSltukEGRdfUo3Danzqt/z+3ozh7aoZaGiDoKFFJE8nnl9JvIsegbkeeOtADGlgK4Oy
+ oP02mHeo8c8euXgj64THk+v+TjHiDcdI5AEijsiUp43/UgWtXZIVOXMjaOXk+V+aQFVmmbLnL
+ eVUTHnMshhXbLy+h1e+95BF585WPhnXS3imj7ePnQ2EVP29+IcYzq0WAk7Ur3PoMKKFgEZruu
+ AXk9BUXCtzIBww71mnxvfBchsLaL4eDCXJfjqm/HBLtTXvT5yIACekokLlTWZFLj7Qls4X2aA
+ RLWgM+NrE8TS/BWpcxI+GcgWpN09AfAE+fOoNoZPFCOGGGLOqwDS+Fi4O3Wb5gl3kV6x/mUAP
+ EGAx8sPxKKp4VcTEOg70FxYgniS4MDPBiVBOZNMwRRMNhvGD5SJbq53xzwmG0iwwnqkUFz1KM
+ ufCjiMAwlhS2XKLWbchMDlPDpNvAhBoaS+1TzNA5j84ZtpOUcLz00bu0mmWBtq7pnrYrzcuG3
+ y2hJizdrM1mcc8bcsaC5qM7Y0qH0ZNuN2nI2b6EVSyZveoDEfiboIWz9hs0rDCO6GK7PNSVu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284165>
 
-On 01/14, David Turner wrote:
-> git init learns a new argument --ref-storage.  Presently, only
-> "files" is supported, but later we will add other backends.
->
-> When this argument is used, the repository's extensions.refStorage
-> configuration value is set (as well as core.repositoryformatversion),
-> and the refs backend's initdb function is used to set up the ref
-> database.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  Documentation/git-init-db.txt |  2 +-
->  Documentation/git-init.txt    |  7 ++++++-
->  builtin/init-db.c             | 31 ++++++++++++++++++++++++++-----
->  cache.h                       |  2 ++
->  path.c                        | 29 +++++++++++++++++++++++++++--
->  refs.c                        |  8 ++++++++
->  refs.h                        |  8 ++++++++
->  setup.c                       | 12 ++++++++++++
->  t/t0001-init.sh               | 24 ++++++++++++++++++++++++
->  9 files changed, 114 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
-> index 648a6cd..d03fb69 100644
-> --- a/Documentation/git-init-db.txt
-> +++ b/Documentation/git-init-db.txt
-> @@ -9,7 +9,7 @@ git-init-db - Creates an empty Git repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>] [--separate-git-dir <git dir>] [--shared[=<permissions>]]
-> +'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>] [--separate-git-dir <git dir>] [--shared[=<permissions>]] [--ref-storage=<name>]
->
->
->  DESCRIPTION
-> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-> index 8174d27..d2b150f 100644
-> --- a/Documentation/git-init.txt
-> +++ b/Documentation/git-init.txt
-> @@ -12,7 +12,7 @@ SYNOPSIS
->  'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
->  	  [--separate-git-dir <git dir>]
->  	  [--shared[=<permissions>]] [directory]
-> -
-> +	  [--ref-storage=<name>]
->
->  DESCRIPTION
->  -----------
-> @@ -113,6 +113,11 @@ does not exist, it will be created.
->
->  --
->
-> +--ref-storage=<name>::
-> +Type of refs storage backend. Default is to use the original "files"
-> +storage, which stores ref data in files in .git/refs and
-> +.git/packed-refs.
-> +
->  TEMPLATE DIRECTORY
->  ------------------
->
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 4771e7e..ebc747c 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -24,6 +24,7 @@ static int init_is_bare_repository = 0;
->  static int init_shared_repository = -1;
->  static const char *init_db_template_dir;
->  static const char *git_link;
-> +static char *requested_ref_storage_backend;
->
->  static void copy_templates_1(struct strbuf *path, struct strbuf *template,
->  			     DIR *dir)
-> @@ -179,6 +180,7 @@ static int create_default_files(const char *template_path)
->  	int reinit;
->  	int filemode;
->  	struct strbuf err = STRBUF_INIT;
-> +	int repo_version = 0;
->
->  	/* Just look for `init.templatedir` */
->  	git_config(git_init_db_config, NULL);
-> @@ -204,9 +206,6 @@ static int create_default_files(const char *template_path)
->  		adjust_shared_perm(get_git_dir());
->  	}
->
-> -	if (refs_init_db(&err, shared_repository))
-> -		die("failed to set up refs db: %s", err.buf);
-> -
->  	/*
->  	 * Create the default symlink from ".git/HEAD" to the "master"
->  	 * branch, if it does not exist yet.
-> @@ -214,14 +213,34 @@ static int create_default_files(const char *template_path)
->  	path = git_path_buf(&buf, "HEAD");
->  	reinit = (!access(path, R_OK)
->  		  || readlink(path, junk, sizeof(junk)-1) != -1);
-> -	if (!reinit) {
-> +	if (reinit) {
-> +		if (requested_ref_storage_backend &&
-> +		    strcmp(ref_storage_backend, requested_ref_storage_backend))
-> +			die("You can't change the refs storage type (was %s; you requested %s)",
-> +			    ref_storage_backend, requested_ref_storage_backend);
-> +	} else {
->  		if (create_symref("HEAD", "refs/heads/master", NULL) < 0)
->  			exit(1);
->  	}
->
-> +	if (requested_ref_storage_backend)
-> +		ref_storage_backend = requested_ref_storage_backend;
-> +	if (strcmp(ref_storage_backend, "files")) {
-> +		git_config_set("extensions.refStorage", ref_storage_backend);
-> +		git_config_set("core.repositoryformatversion", ref_storage_backend);
-> +#ifdef USE_LIBLMDB
-> +		register_ref_storage_backend(&refs_be_lmdb);
+HANDLE is defined internally as a void *, but in many cases it is
+actually guaranteed to be a 32-bit integer. In these cases, GCC should
+not warn about a cast of a pointer to an integer of a different type
+because we know exactly what we are doing.
 
-refs_be_lmdb is not yet defined at this point in the patch series.  It
-doesn't break anything, because USE_LIBLMDB doesn't leak through the
-makefile yet, but I still think it would make more sense to have the
-ifdef in 19/20.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c     | 9 ++++++---
+ compat/poll/poll.c | 2 +-
+ compat/winansi.c   | 3 ++-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-> +#endif
-> +		set_ref_storage_backend(ref_storage_backend);
-
-More importantly, there is no check whether setting the ref storage
-backend succeeds.  If a user accidentally sets an invalid value for
-the ref backend, a broken repository will be created without even
-warning the user.
-
-While the repository will still work fine at this point in the series,
-git will die with an invalid ref backend in the config after 19/20.
-It can be fixed by setting extensions.refStorage to files in the
-config, because the backend is initialized to the default files
-backend below when the ref backend cannot be set.
-
-I think it would be best to die() here, if setting the ref backend
-doesn't succeed, and clean up the files that were already written,
-instead of leaving the user with a broken repository.
-
-> +		repo_version = 1;
-> +	}
-> +
-> +	if (refs_init_db(&err, shared_repository))
-> +		die("failed to set up refs db: %s", err.buf);
-> +
->  	/* This forces creation of new config file */
->  	xsnprintf(repo_version_string, sizeof(repo_version_string),
-> -		  "%d", GIT_REPO_VERSION);
-> +		  "%d", repo_version);
->  	git_config_set("core.repositoryformatversion", repo_version_string);
->
->  	/* Check filemode trustability */
-> @@ -469,6 +488,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
->  		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
->  		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
->  			   N_("separate git dir from working tree")),
-> +		OPT_STRING(0, "ref-storage", &requested_ref_storage_backend,
-> +			   N_("name"), N_("name of backend type to use")),
->  		OPT_END()
->  	};
->
-
-[...]
-
-> +test_expect_success 'init with bogus storage backend fails' '
-> +
-> +	(
-> +		mkdir again2 &&
-> +		cd again2 &&
-> +		git init --ref-storage=test >out2 2>err2
-> +	)
-> +'
-
-I noticed the above mainly because of this test, which doesn't seem to
-test what it claims to test.  It only seems to test that git init
-succeeds, and writes something to out2 and err2, it's missing the
-checks that the contents are actually what they're supposed to be.
-
-> +
-> +test_expect_failure 'reinit with changed storage backend fails' '
-> +
-> +	(
-> +		mkdir again3 &&
-> +		cd again3 &&
-> +		git init >out1 2>err1 &&
-> +		git init --ref-storage=test >out2 2>err2
-> +	) &&
-> +	test_i18ngrep "Initialized empty" again3/out1 &&
-> +	test_i18ngrep "Reinitialized existing" again3/out2 &&
-> +	>again3/empty &&
-> +	test_i18ncmp again3/empty again3/err1 &&
-> +	test_i18ncmp again3/empty again3/err2
-> +'
-> +
->  test_expect_success 'init with --template' '
->  	mkdir template-source &&
->  	echo content >template-source/file &&
-> --
-> 2.4.2.749.g730654d-twtrsrc
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 1b3530a..8437c9a 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -6,6 +6,8 @@
+ #include "../run-command.h"
+ #include "../cache.h"
+ 
++#define HCAST(type, handle) ((type)(intptr_t)handle)
++
+ static const int delay[] = { 0, 1, 10, 20, 40 };
+ 
+ int err_win_to_posix(DWORD winerr)
+@@ -691,13 +693,13 @@ int pipe(int filedes[2])
+ 		errno = err_win_to_posix(GetLastError());
+ 		return -1;
+ 	}
+-	filedes[0] = _open_osfhandle((int)h[0], O_NOINHERIT);
++	filedes[0] = _open_osfhandle(HCAST(int, h[0]), O_NOINHERIT);
+ 	if (filedes[0] < 0) {
+ 		CloseHandle(h[0]);
+ 		CloseHandle(h[1]);
+ 		return -1;
+ 	}
+-	filedes[1] = _open_osfhandle((int)h[1], O_NOINHERIT);
++	filedes[1] = _open_osfhandle(HCAST(int, h[1]), O_NOINHERIT);
+ 	if (filedes[1] < 0) {
+ 		close(filedes[0]);
+ 		CloseHandle(h[1]);
+@@ -1846,7 +1848,8 @@ void mingw_open_html(const char *unixpath)
+ 		die("cannot run browser");
+ 
+ 	printf("Launching default browser to display HTML ...\n");
+-	r = (int)ShellExecute(NULL, "open", htmlpath, NULL, "\\", SW_SHOWNORMAL);
++	r = HCAST(int, ShellExecute(NULL, "open", htmlpath,
++				NULL, "\\", SW_SHOWNORMAL));
+ 	FreeLibrary(shell32);
+ 	/* see the MSDN documentation referring to the result codes here */
+ 	if (r <= 32) {
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index db4e03e..b10adc7 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -76,7 +76,7 @@
+ 
+ #ifdef WIN32_NATIVE
+ 
+-#define IsConsoleHandle(h) (((long) (h) & 3) == 3)
++#define IsConsoleHandle(h) (((long) (intptr_t) (h) & 3) == 3)
+ 
+ static BOOL
+ IsSocketHandle (HANDLE h)
+diff --git a/compat/winansi.c b/compat/winansi.c
+index ceff55b..4549848 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -452,7 +452,8 @@ static HANDLE duplicate_handle(HANDLE hnd)
+ 	HANDLE hresult, hproc = GetCurrentProcess();
+ 	if (!DuplicateHandle(hproc, hnd, hproc, &hresult, 0, TRUE,
+ 			DUPLICATE_SAME_ACCESS))
+-		die_lasterr("DuplicateHandle(%li) failed", (long) hnd);
++		die_lasterr("DuplicateHandle(%li) failed",
++			(long) (intptr_t) hnd);
+ 	return hresult;
+ }
+ 
+-- 
+2.7.0.windows.1.7.g55a05c8
