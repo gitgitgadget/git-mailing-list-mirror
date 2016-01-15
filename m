@@ -1,95 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: Port resolve_relative_url from shell to C
-Date: Fri, 15 Jan 2016 09:37:26 -0800
-Message-ID: <xmqqwpraiw15.fsf@gitster.mtv.corp.google.com>
-References: <1452708927-9401-1-git-send-email-sbeller@google.com>
-	<xmqq4mehm92b.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
+From: Tobias Klauser <tklauser@distanz.ch>
+Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place
+ editing
+Date: Fri, 15 Jan 2016 18:45:23 +0100
+Message-ID: <20160115174522.GD21205@distanz.ch>
+References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
+ <1452790676-11937-3-git-send-email-tklauser@distanz.ch>
+ <xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
+ <20160115103402.GC21205@distanz.ch>
+ <xmqqa8o6kb6m.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	Jens Lehmann <jens.lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 18:37:34 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 18:45:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aK8JZ-0005Gn-SF
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 18:37:34 +0100
+	id 1aK8RL-0003JG-MF
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 18:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbcAORh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 12:37:29 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751944AbcAORh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 12:37:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B94539676;
-	Fri, 15 Jan 2016 12:37:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EoR1pMvP+aFYHd1jzaRKSnukekA=; b=P5iijH
-	S3yuZxOPAZcfB2mp61o1Wdzqo397Siqxv+ZPhZPXWTBh3lk624m1WVzcm7FuV26u
-	JWfiFSX6K000naEqPR8yQyGLG3VCpmBed2/7vz1Mn/JUxxjRxv/zXCcPp/bwD9oA
-	H3mFs4892wli1qn7+npKdoWw24SrglYMeNSE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h5T3sHfe5kSwy4vVbYVEghGOB1szDvmJ
-	xreesmnFAugyoBSIa9qm23YtlprkqBycurF+kLv6NPzHBYfssbHMZfBZsaa2gZOY
-	dmDvK2iIor0eE67JNX290ctgmvueQBxEy4PIF2Q7RiHW1SMPbD5HeU3aqoAMR5N8
-	6gJP/BkgNfQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 32E7D39675;
-	Fri, 15 Jan 2016 12:37:28 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AB3173966D;
-	Fri, 15 Jan 2016 12:37:27 -0500 (EST)
-In-Reply-To: <CAGZ79ka0rxYK7GRSjh13XOsg887EgqYtc5B60z9qU=tAoJGERQ@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 13 Jan 2016 14:47:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A5543066-BBAE-11E5-9859-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752761AbcAORpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 12:45:30 -0500
+Received: from sym2.noone.org ([178.63.92.236]:35849 "EHLO sym2.noone.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750894AbcAORp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 12:45:26 -0500
+Received: by sym2.noone.org (Postfix, from userid 1002)
+	id 3phqfX4jYPzQWZ8; Fri, 15 Jan 2016 18:45:24 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqa8o6kb6m.fsf@gitster.mtv.corp.google.com>
+X-Editor: Vi IMproved 7.3
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284191>
 
-Stefan Beller <sbeller@google.com> writes:
+On 2016-01-15 at 18:24:49 +0100, Junio C Hamano <gitster@pobox.com> wrote:
+> Tobias Klauser <tklauser@distanz.ch> writes:
+> 
+> >> > +test_expect_success POSIXPERM,SANITY "in-place editing doesn't clobber original file on error" '
+> >> > +	cat basic_message >message &&
+> >> > +	chmod -r message &&
+> >> > +	test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
+> >> > +	chmod +r message &&
+> >> > +	test_cmp message basic_message
+> >> > +'
+> >> 
+> >> If for some reason interpret-trailers fails to fail, this would
+> >> leave an unreadable 'message' in the trash directory.  Maybe no
+> >> other tests that come after this one want to be able to read the
+> >> contents of the file right now, but this is an accident waiting to
+> >> happen:
+> >> 
+> >> 	cat basic_message >message &&
+> >> +       test_when_finished "chmod +r message" &&
+> >>         chmod -r message &&
+> >>         test_must_fail ... &&
+> >> 	chmod +r message &&
+> >>         test_cmp ...
+> >
+> > Indeed, I forgot about this. I saw you already folded in the missing
+> > 'chmod +r message' in your tree. Thanks for that!
+> 
+> I did no such thing, though.
 
-> On Wed, Jan 13, 2016 at 2:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>> +     while (url) {
->>> +             if (starts_with_dot_dot_slash(url)) {
->>> +                     char *rfind;
->>> +                     url += 3;
->>> +
->>> +                     rfind = last_dir_separator(remoteurl);
->>> +                     if (rfind)
->>> +                             *rfind = '\0';
->>> +                     else {
->>> +                             rfind = strrchr(remoteurl, ':');
->>> +                             if (rfind) {
->>> +                                     *rfind = '\0';
->>> +                                     colonsep = 1;
->>> +                             } else {
->>> +                                     if (is_relative || !strcmp(".", remoteurl))
->>> +                                             die(_("cannot strip one component off url '%s'"), remoteurl);
->>> +                                     else
->>> +                                             remoteurl = xstrdup(".");
->>> +                             }
->>> +                     }
->>
->> It is somewhat hard to see how this avoids stripping one (or both)
->> slashes just after "http:" in remoteurl="http://site/path/", leaving
->> just "http:/" (or "http:").
->
-> it would leave just 'http:/' if url were to be ../../some/where/else,
-> such that the constructed url below would be http://some/where/else.
+Sorry, my misunderstanding. I thought about "chmod +r" but of course the
+essential part is the
 
-Is that a good outcome, though?  Isn't it something we would want to
-catch as an error?
+  +       test_when_finished "chmod +r message" &&
+
+which isn't in your tree.
