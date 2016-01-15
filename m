@@ -1,66 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 00/21] Peace with CRLF
-Date: Fri, 15 Jan 2016 15:49:16 -0500
-Message-ID: <20160115204916.GJ11301@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/21] check-attr: there are only two possible line terminations
+Date: Fri, 15 Jan 2016 13:20:31 -0800
+Message-ID: <xmqq60yuh74w.fsf@gitster.mtv.corp.google.com>
 References: <1452740590-16827-1-git-send-email-gitster@pobox.com>
- <1452815916-6447-1-git-send-email-gitster@pobox.com>
+	<1452815916-6447-1-git-send-email-gitster@pobox.com>
+	<1452815916-6447-6-git-send-email-gitster@pobox.com>
+	<20160115191611.GB11301@sigill.intra.peff.net>
+	<20160115193640.GA19291@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 21:49:24 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 15 22:20:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKBJD-0006aB-2g
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 21:49:23 +0100
+	id 1aKBnS-0006ZB-Tu
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 22:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbcAOUtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 15:49:19 -0500
-Received: from cloud.peff.net ([50.56.180.127]:54685 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750897AbcAOUtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 15:49:18 -0500
-Received: (qmail 11569 invoked by uid 102); 15 Jan 2016 20:49:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 15:49:18 -0500
-Received: (qmail 23981 invoked by uid 107); 15 Jan 2016 20:49:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 15:49:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jan 2016 15:49:16 -0500
-Content-Disposition: inline
-In-Reply-To: <1452815916-6447-1-git-send-email-gitster@pobox.com>
+	id S1752317AbcAOVUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 16:20:35 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57299 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751314AbcAOVUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 16:20:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 10DC63BAF0;
+	Fri, 15 Jan 2016 16:20:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5BUkq1dhqTzlWQPhpJInKZ43Yug=; b=w6Gy3Q
+	SVDsPEhpwAcSgnlz4Uyo7kP2NA+eT0N5obgq7Jtnr/ZnRJtOF7IcasldXFacCxHE
+	BWm7QiCc7uboM2yqeFe8LJCIXKafJvnMAcCftJ+LU2VYuGgUg4IGAocHeJTVI6Qy
+	Ot2hBPlxfrMB3dBuzux8X3Gt6OrJxoe84nAUs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XxoX7kY9H57mIM4jX0e/KphbXl3n9A1y
+	X2vBGO8c/5U3n+Gxd3O/sjO/QddwozYKQikx+DN6vs4Yf6KcYMNQhx4VdbfsuzY0
+	gEx8LI8D8g4uE/YR0w1ewIT2WSOyedN+kZ9m2WgaGjC9ZBcTD9CnpmVe3dbNXZ1U
+	6847QlDKMMw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 074373BAEF;
+	Fri, 15 Jan 2016 16:20:33 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7F6243BAEE;
+	Fri, 15 Jan 2016 16:20:32 -0500 (EST)
+In-Reply-To: <20160115193640.GA19291@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 15 Jan 2016 14:36:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CF4DD61E-BBCD-11E5-91F5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284217>
 
-On Thu, Jan 14, 2016 at 03:58:15PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> This is a reroll of
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/282614
-> 
-> which is a continuation to $gmane/275735, which is filed in the
-> archive under another mailing list:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.msysgit/21773
+> Apparently we use this pattern in quite a few places (or they all copied
+> from each other). Here's a possible fixup that could go after your
+> series (it could go before, too, but it creates a lot of textual
+> conflicts with your stuff).
 
-I just read through the whole thing and made a few comments. Please feel
-free to ignore my "how about this on top" suggestions if you don't like
-them, or just don't want to deal with them. Patches I didn't respond to
-all looked good to me.
-
-There are a few "iffy" conversions where we take unconstrained input and
-there's no "usual" quoting mechanism available (you mentioned the one in
-"grep", and I pointed out a few more). I hate to break
-backwards-compatibility in any way, but I think in all of those cases
-that we are much more likely to be helping the user than hurting them.
-
-So I think it's a net benefit in all of the cases.
-
--Peff
+Sounds good, but I'm in favor of leaving this as an unrelated
+clean-up that happens to touch the same area.
