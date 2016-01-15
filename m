@@ -1,61 +1,55 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: SChannel support in Git for Windows
-Date: Fri, 15 Jan 2016 19:47:46 +0300
-Message-ID: <20160115194746.abcb4b7dab4653d222e0362c@domain007.com>
-References: <CA+1xWaokgVthDv-up76RP+s+r4pSv5ntmePtDVND+rsKuo+-YA@mail.gmail.com>
-	<20160115185923.1e9fe5220b623625fdbc8041@domain007.com>
-	<CA+1xWarcXz4RdgXd8p-43sQ5UeRAwXmrsU_JVqwewmro7rz2Gw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/6] shortlog fixes and optimizations
+Date: Fri, 15 Jan 2016 12:06:28 -0500
+Message-ID: <20160115170627.GA20983@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org
-To: Robert Labrie <robert.labrie@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 17:47:55 2016
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 15 18:06:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aK7XW-0007he-IS
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 17:47:54 +0100
+	id 1aK7pa-0005YF-WE
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 18:06:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754568AbcAOQrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 11:47:51 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:49554 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335AbcAOQru (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 11:47:50 -0500
-Received: from tigra.domain007.com ([192.168.2.102])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id u0FGlk2F021061;
-	Fri, 15 Jan 2016 19:47:47 +0300
-In-Reply-To: <CA+1xWarcXz4RdgXd8p-43sQ5UeRAwXmrsU_JVqwewmro7rz2Gw@mail.gmail.com>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+	id S1752551AbcAORGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 12:06:31 -0500
+Received: from cloud.peff.net ([50.56.180.127]:54461 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751831AbcAORGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 12:06:30 -0500
+Received: (qmail 2018 invoked by uid 102); 15 Jan 2016 17:06:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 12:06:30 -0500
+Received: (qmail 21302 invoked by uid 107); 15 Jan 2016 17:06:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 12:06:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jan 2016 12:06:28 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284180>
 
-On Fri, 15 Jan 2016 11:11:58 -0500
-Robert Labrie <robert.labrie@gmail.com> wrote:
+These are split out from my the shortlog-trailer series I sent a few
+weeks ago. The "trailer" parts still need some re-working, but there is
+no need to hold these fixes hostage.
 
-> You are correct, SChannel in NT 5.x is limited, but all those versions
-> are officially out of support.
-> 
-> When you're part of a Windows ecosystem, those root certs get pushed
-> into the local store by a GPO (usually), and you don't have to think
-> about it. That's the only reason I'm pushing.
-> 
-> Sounds like libcurl can't make it a run time consideration, and git
-> (understandably) doesn't want to worry about SChannel limitations in
-> very old versions of Windows.
-> 
-> Does git use libcurl for everything? I wonder if I could just drop my
-> own libraries with WinHTTP support?
+I also dropped the early part of the series, adding skip_prefix_icase().
+After digging into the history, I ended up reworking the first patch
+here to do a more thorough parse, so we don't need it anymore.
 
-I'd say you could fork the Git for Windows's SDK [1], hack it to build
-curl with the configuration you need and then create your own
-installer.  You'll need to rebase your patch each time a new GfW
-release will come out, but the patch should be small enough IMO.
+Thanks to Eric Sunshine for review on the first iteration; this
+incorporates his comments.
 
-1. https://github.com/git-for-windows/build-extra/releases/latest
+  [1/6]: shortlog: match both "Author:" and "author" on stdin
+  [2/6]: shortlog: use strbufs to read from stdin
+  [3/6]: shortlog: replace hand-parsing of author with pretty-printer
+  [4/6]: shortlog: optimize "--summary" mode
+  [5/6]: shortlog: optimize out useless "<none>" normalization
+  [6/6]: shortlog: optimize out useless string list
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/283091
