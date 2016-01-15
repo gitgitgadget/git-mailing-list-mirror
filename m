@@ -1,83 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] t0060: loosen overly strict expectations
-Date: Fri, 15 Jan 2016 07:34:21 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601150730440.2964@virtualbox>
-References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de> <xmqqziw8jcbr.fsf@gitster.mtv.corp.google.com> <5697E550.9020102@ramsayjones.plus.com> <56981DC2.6070706@kdbg.org> <5698415E.7070907@ramsayjones.plus.com>
+Date: Fri, 15 Jan 2016 07:35:34 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601150734460.2964@virtualbox>
+References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de> <CAPig+cRa9mk0U4iPim5GRWzFN-vHEA=rx8bb40oQyCJVZL7t3A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Michael Blume <blume.mike@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Michael Blume <blume.mike@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 07:34:38 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 07:35:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJxy1-0001xQ-1u
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 07:34:37 +0100
+	id 1aJxzD-0002sU-LO
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 07:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236AbcAOGed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 01:34:33 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55778 "EHLO mout.gmx.net"
+	id S1751222AbcAOGfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 01:35:47 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64021 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbcAOGec (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 01:34:32 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MfEMs-1aVZbB0NSs-00OpIO; Fri, 15 Jan 2016 07:34:23
+	id S1750772AbcAOGfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 01:35:46 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LiDrv-1Zps0w3OpH-00nPXV; Fri, 15 Jan 2016 07:35:37
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <5698415E.7070907@ramsayjones.plus.com>
+In-Reply-To: <CAPig+cRa9mk0U4iPim5GRWzFN-vHEA=rx8bb40oQyCJVZL7t3A@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:g5EWNYApV2qGbZVgEnlfuLLs++Sw5hNNV0ayezPfPm1K6QhFYrK
- d1AHSXfEEfztJNxUHXoLY1y9mhignBLtTTPUPvDgom0hI5kFD8lLdOQ9TI0uFRuGQbZzOyr
- Dc9lmKUyGkpxc9ZqMdFVBYgYnhnMX9gtCHvGFz1dR3KEbztsfyjuOGjt5eIrR0nUq+EBLIy
- vL/geYMRk9zwoyq+roS7g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+ODWOmSzn5U=:usvIglpGqfe98bmnoHWkfn
- WCNKiJZmlKniwDaikfQsQ3Il2vtHqpTpfxTl0tCutKOTQHk6ThwhT4/ajOZPBJBJE7JyxPyT/
- JaK+97kDs4vv1GBDr+DixNPLFBKOTDENpsZbpYSR1LAq8EbvvonCopUB2n3zzLUX86mlhX4Q9
- FvHf4a5Kk5wndcOqYObcGUgf1NH9+FSqO9E4WMaO+DJ/AhCk54wObhvzl3vSbq6BAR98Fo6ne
- olNke4x9CKeyyIXDqftd8qmcCQeuwsV/uqMGbOAe19Noy/DvxEU9oKWVKfNJP9yJINHdlXExG
- YOOHpo16ESY2Qx8I8e9ZG9UHlf+kYY0fwCeGTf/gvazNm9VOJ5ejnDP8pdm324kjl3ONc+NP9
- 9e+bkgRGxYXOgSlcfTVN2yw6S0ewtSitqtsDgk60YIIrVsgtnfj9uTxLKK0FIWux4uhFjERWg
- VsU+MxDE8a2ZFpBWt0nLGCY5wPf06/L2wnENRjNJurMtZLAT6iRd9OD5zTGRht78YRWJUbJzN
- CX3sT9n1sQ9l1Hxv7GeG3RKH+9W66YAmSlT+MpFN6wYS/ZR24yULq/w317IoVomr5o9oLeJse
- JYATzaRmJ+xb1PsUNGJW8yZA6Vq7IWmmyxedh9CEWmC+ma7wFJhU1ULteCR9+PjL/w+hFOSBZ
- B9tejkC5NvoFCAWBLE866YufXYPRafd4SFrsQQplXbac+ybH3wVIJHS9XipB4ZxketCs4mZ9o
- oEVbZcitRd7RpNLYHy8JBVxPgd1fv/Bat9AOMC3MwWwUOKWTvwKPiaWlqx2gAwc9Zkkv0FBN 
+X-Provags-ID: V03:K0:STRYRZ/aUV7QbzHZPVeBfEdiNtHCMZtJbjXlUZ878T3j/1iIpZ1
+ 9NNAA/qniAHvH+R915wyHtKYhAdNAfAEXl8uDY2dSAeQltbqT/rx1+bcGY6xNweTmMXS912
+ 2fCJZ/C3ofTS728WGb8treUsiJCKoFCQTKTnKrGJ+nysf5Z8MvCI+J3ppS0p8aoTMXpRORy
+ V8+72/qnUlkeRO8NcvweQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ssrVhEABhMM=:uRuLkNchA0GqMMbRDz+s09
+ aHaX+3cPaAhyokKDHrL4LEuIGrTYJ0LmGw8lD7qU6WvpZbkVF+rOAn4ZFotIjYg/3hYMPquw8
+ 5125bYM/cRDkNG2eLfnbJS27mohLIIEQMsTqBPhitsoPQceqDQu0tKGkNHxiByBU+Wa4HFXYo
+ xSnwDIOnYy5RyyVF9rEAUM8sVhzj1PLlPIO0eeEtr73ZfjPKaxbb3mdHe0tbKvzj4Vld1ppmy
+ zz2E0sDR+37K51DlqNHJ6RrnaxntYEDUJj8gV7DYeuQhgsQh0CvGFBlyhql5i7PjaXzd+Z80E
+ Zg3tFFAWmsOhN9LMC+LIIp+7kkOk8/rhB0rlljKiUxKbJSnSvfpMlJiu8j2NeylQru+ZWUW07
+ JLGKbCX8muDrys6q9J2iuBy+3N6zGzl5CCAKFz5uH59wa0WS8lOtstQgufgi9pu6evgksiPJz
+ 7iNd7PAacCIpIHoFMhODm7xCt7cXgy6FJ8tFnXC9clGg4hKCJRqM59zN1AxwIh5OO0FD7Gus5
+ +rYkAw6ixsho9wONSNHJ5gfDMgYrac1Nvx8UZI75kUdDVqoVhUq8VJhCluLfGphu14M980dJ+
+ WxM8TnQ8e66WTRdnM2OIdgA77sohXkJ+P+6rmKkbcaQC469/+zX8cluuDHrJZgDlUpxyWOFXq
+ ahJ649LtX/t2rD14XMcqs8oJBp+y5dJozQC1DTp1bGZpkZP2U11kuzkuv/ekN/lSkIosueZvE
+ N/cdYcL4m9kaXI66M/Z48VLDzmtSuoca9chb8y3F4OPAPCqgL/Oe/v6vr0HYZcmvkgU8X6wf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284136>
 
-Hi Ramsay,
+Hi Eric,
 
-On Fri, 15 Jan 2016, Ramsay Jones wrote:
+On Thu, 14 Jan 2016, Eric Sunshine wrote:
 
-> On 14/01/16 22:14, Johannes Sixt wrote:
-> > Am 14.01.2016 um 19:13 schrieb Ramsay Jones:
-> >> Correct me if I'm wrong (quite possible), but _each_ drive has a
-> >> current working directory associated with it in win32, so it's a bit
-> >> difficult to use drive designators with a relative path (eg.
-> >> C:usr/lib).
-> > 
-> > As far as it matters for Git, such a path is still an absolute path,
-> > because it is not anchored at $(pwd).
+> On Thu, Jan 14, 2016 at 1:48 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>
+> > [...]
+> >
+> > This is not limited to the "//" vs "/" case, of course, other inputs are
+> > also allowed to produce multiple outpus by the POSIX specs.
 > 
-> [...] seems to contradict what you say above.
-> 
-> What am I missing?
+> s/outpus/outputs/
 
-The missing bit is: while C:usr/lib is *not* anchored on $(pwd), it is
-*still* not an absolute path because it is anchored on the current
-directory of the C: drive (the entire idea that some drive state can
-change the meaning of "C:usr/lib" makes it a non-absolute one).
+Whoops.
 
-Since this concept -- a path that is neither relative to $(pwd) nor
-absolute -- does not exist on Linux, I do not think that Git for Windows
-handles this case well at all.
+Junio, would you terribly mind adjusting the commit message on your end?
 
 Ciao,
 Dscho
