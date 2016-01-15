@@ -1,101 +1,72 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 15/21] clone/sha1_file: read info/alternates with strbuf_getline()
-Date: Thu, 14 Jan 2016 20:52:49 -0500
-Message-ID: <CAPig+cSoi3S5HJVyVW4-qs8BsZ7E5iF_cq5Z3zJiMgk4O4LvZg@mail.gmail.com>
-References: <1452740590-16827-1-git-send-email-gitster@pobox.com>
-	<1452815916-6447-1-git-send-email-gitster@pobox.com>
-	<1452815916-6447-16-git-send-email-gitster@pobox.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v11] ls-files: add eol diagnostics
+Date: Fri, 15 Jan 2016 05:51:35 +0100
+Message-ID: <56987AD7.2050707@web.de>
+References: <1452788241-9879-1-git-send-email-tboegi@web.de> <xmqqr3hkj6q1.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 15 02:52:56 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
+X-From: git-owner@vger.kernel.org Fri Jan 15 05:51:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJtZP-00071R-Ak
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 02:52:55 +0100
+	id 1aJwMc-0000Zu-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 05:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbcAOBwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 20:52:51 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36625 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbcAOBwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 20:52:50 -0500
-Received: by mail-vk0-f65.google.com with SMTP id e64so6309236vkg.3
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 17:52:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=K9ZCaMvJyc68IHLOZfCZcb8JT8fRTKETGdd0cq9ZOoY=;
-        b=bZyulJ+P9sxBW0B0KQWRVNyFrIg7iFhyeoK4WK8VL6dh6NJT2IPDJLzGcbWQEI5l+R
-         wi6A29OEivGin0u4iug1HT0uN2bV61mjajld7HDI678a+tvUW+tHUkyN2HWmonOaaSCK
-         PM+H2Jfthi2eU71CmSPT5lKJxESSnTUemG/ET4byRw1rlgut0YcP9DQAFze25zs/KP5r
-         va6wH02u6wIya74/jL6WwuZTkpV62JO1wkkk64bjLULTEoYtlAbmgGVoUC74p4UdNVp7
-         wZU5PtWglDool1/9KcnQDOc03zK3zl9x5Zw1nRuJvBzI3UtjPbvB5bCKEh5MH+L/K/TC
-         h9RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=K9ZCaMvJyc68IHLOZfCZcb8JT8fRTKETGdd0cq9ZOoY=;
-        b=O27DBUNpw0f3CAJ9AgZBu0r1QkvewdjljTtI/uLPBZnNTTks2Cb4488dnJAF4Nwpso
-         mfVnloz1Vx46JzqCU+dmV+tpa2EdjaaMqVu/LnVAoJ5eBCY0Z+t891pihrzjKh2Zep19
-         TMf7PnmvyO5futMey7dOCyyhY7nEoQtigc0ewwnq2o6vpFVDdLY0iSa84wPC04ag2y21
-         Eq0mFIeHaDodjh5HV511b+b7kW9fVg1LQkl3iwhpDZwbdal9OHSRLgg5PQotObzDhi0D
-         OeKOu5IErV7dqKSKy6SSMhu+SKicipU2JLr22rn3yNB0VEi0nQTyGf0DSaE/ixaxyWEC
-         7XOQ==
-X-Gm-Message-State: ALoCoQmksg/fko0wdJxaj8FdnTgrHwUfx0A3hufoyyFvJcja3XmA8cZM3kTuX2zqUHx7hfPxBho8aVazPv0KlSXulMIEn5mdgQ==
-X-Received: by 10.31.47.130 with SMTP id v124mr5781229vkv.117.1452822770031;
- Thu, 14 Jan 2016 17:52:50 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 14 Jan 2016 17:52:49 -0800 (PST)
-In-Reply-To: <1452815916-6447-16-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: eUY3v1PlytwMhfP6nKqXBpyOEgs
+	id S1751998AbcAOEvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 23:51:51 -0500
+Received: from mout.web.de ([212.227.17.11]:54088 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750918AbcAOEvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 23:51:50 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LzKEH-1a729G3vXd-014VQO; Fri, 15 Jan 2016 05:51:44
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <xmqqr3hkj6q1.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:NBw0VDE/gNsEca5fy/4jVocMkVPR8taPSYwOm19/iJfi7b54s/k
+ OphMCd11c3+8EiCnLw2mJH9WesWE+lHB35/hjgN/pkyJlj+wrYmBEmA08A2B4IXToj9mFeK
+ bRqSQTx7+QisR7Bw8SfV0y9mG3chxcmTl9EZ8OxMvOZW3JPnPmLw2M55Q0fgkbbLPAvPjUK
+ DXrXqjLJGingyX8AubOrg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XEyPuBwcwp8=:4UqaTRGolzOPw7L20SXfHs
+ kHBHGt98bY25Ad3jX/M24rEeICvBUOju+oW7z2YxhBXYxFce3fVb+ltGs3ztKK5FtGw0DRqTq
+ WM6LRMgdql/7gGPVLouVmjWv3G9DBEaScVu0eermlPchqal9ASXBgHUktSlYZ/bARYYNXHXFJ
+ 6AOZOyS6w0WKTDbyRNMNb4voNNWcg3aLYqEqcJhWnML1ZkmQvyLup9dqXWQ1qyQwREhULT1AU
+ 15IGRH0OgZCgcTOZJAALBIL5Wnqgq+bxO93xTXDURkg85YMGeY5ozolJGrIZfGirhZQrtTZqV
+ nZ76kJP9EzxvGqEEeaXIEc8W8SXVnPDnocOis5ggX8c4gS94ITHb/7wxHmru/+4+wRCtCiZl7
+ u0wX7JApdVnxROwIHj8iguAWdC+cY90PhSOJBTO5PRFLL/31PgPeQAllNcgwDklRxZgwe9TsI
+ oH09BIb2RuUEgNnqKE/LRFlSW0WBZyIYdEeB6csZ7S1uWBJN3+CfesgLiBe0r55yfvh1QK7Ng
+ qPfx96xPfB5FKBf8PwgNiM1NWpUeP19Dlzk5SWxccwRwHiSvNvrnprZ1IQ4ueWSjr1TBiYXB8
+ je2yG60HwFk/6C5BAUJmmqE1DNMCQT4GFm7dO92Xe0oEk3VbT0Rb+lCi+5id99Lmdw47AJI5t
+ DBG2lMyJbuOlohAh7lydGYsZZ6NNKb75lQMCX00ubs3/NcNkNZEmPNHYzB51wCxYj3cy12bRp
+ AAPc15ZySpmcuqlpYFjlimnx9x0PDolIVKnfCwyRoXjUlKBmnLvasJOCeZRAQMrkzJadSMQ4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284134>
 
-On Thu, Jan 14, 2016 at 6:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> $GIT_OBJECT_DIRECTORY/info/alternates is a text file that can be
-> edited with a DOS editor.  We do not want to use the real path with
-> CR appeneded at the end.
-
-s/appeneded/appended/
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 29741f4..43b4c99 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -339,7 +339,7 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
->         FILE *in = fopen(src->buf, "r");
->         struct strbuf line = STRBUF_INIT;
+On 01/14/2016 08:34 PM, Junio C Hamano wrote:
+(OK with the rest of the comments, thanks)
+> +		return "binary";
+> It is true and correct that we do not do EOL conversion on text
+> files that have a lone CR, but I think it is misleading to tell the
+> users that such files are "binary".  We do not refrain from showing
+> the textual diff for such files, for example.
 >
-> -       while (strbuf_getline_lf(&line, in) != EOF) {
-> +       while (strbuf_getline(&line, in) != EOF) {
->                 char *abs_path;
->                 if (!line.len || line.buf[0] == '#')
->                         continue;
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 86b5e8c..aab1872 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -396,7 +396,7 @@ void add_to_alternates_file(const char *reference)
->                 struct strbuf line = STRBUF_INIT;
->                 int found = 0;
->
-> -               while (strbuf_getline_lf(&line, in) != EOF) {
-> +               while (strbuf_getline(&line, in) != EOF) {
->                         if (!strcmp(reference, line.buf)) {
->                                 found = 1;
->                                 break;
-> --
-> 2.7.0-250-ge1b5ba3
+> To put it another way, we do not do EOL conversion for truly
+> 'binary' files, but there are (mostly) text files that are not
+> binary that we do not do EOL conversion on.  And you want to tell
+> the user if EOL conversion would happen to each file.  It is not
+> correct to label "this file is binary" merely because you do not do
+> EOL conversion.  Perhaps define a new "literal" class that is a
+> superset of "binary" and use that as the label?  I am not suggesting
+> that "ls-files --eol" should show "i/binary" for truly binary files
+> and "i/literal" for a non-binary file with lone CRs.  For the
+> purpose of "--eol", you only care about "literal", so you do not
+> even have to have "binary" class at all.
+This makes sense, how about "-text" ?
