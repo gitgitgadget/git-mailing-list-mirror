@@ -1,85 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7] contrib/subtree: fix "subtree split" skipped-merge bug
-Date: Fri, 15 Jan 2016 18:24:26 -0500
-Message-ID: <CAPig+cTfH2JvPpG9mnv0L0oAdXmuHDCQVk_98VnOdiOVS4_Y1Q@mail.gmail.com>
-References: <1452806795-26621-1-git-send-email-davidw@realtimegenomics.com>
-	<1452818503-21079-1-git-send-email-davidw@realtimegenomics.com>
-	<xmqq4meeisas.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 08/21] checkout-index: there are only two possible line terminations
+Date: Fri, 15 Jan 2016 15:31:02 -0800
+Message-ID: <xmqq8u3qfmix.fsf@gitster.mtv.corp.google.com>
+References: <1452740590-16827-1-git-send-email-gitster@pobox.com>
+	<1452815916-6447-1-git-send-email-gitster@pobox.com>
+	<1452815916-6447-9-git-send-email-gitster@pobox.com>
+	<20160115200856.GC11301@sigill.intra.peff.net>
+	<xmqq1t9ih72f.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "David A. Greene" <greened@obbligato.org>,
-	Git List <git@vger.kernel.org>,
-	Dave Ware <davidw@realtimegenomics.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 00:24:39 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 16 00:31:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKDjN-000543-Fs
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 00:24:33 +0100
+	id 1aKDpn-0001zv-C0
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 00:31:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbcAOXYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 18:24:31 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:36070 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbcAOXY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 18:24:27 -0500
-Received: by mail-vk0-f66.google.com with SMTP id e64so7252786vkg.3
-        for <git@vger.kernel.org>; Fri, 15 Jan 2016 15:24:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=bKZ0I2sh6AqppG6QvWH81Jw3BrMqlXDkEwkqjwiNKmE=;
-        b=VpKxPqGR4DLbkucO+DfqFaA4ZnPZWi3xz0uBidrIDUNChCB5axF+tQ7GzC6gi+8wZu
-         /ckSd/Su4r5EjHhZGb48nBz+obAWf09Tu3Eq3LF51pcnDMdJLy92u3Yvt5l1YThrTOl+
-         2cQTVJzb7qDCfHAugLmtA0Bvahsjn/SDGl4DxmyEsyjovmLdZtA7uDkAyuFIL/EJI/ki
-         519ZdO2OzjkUDzzMNq0aU7ztb5hCzsa0hzQx30WwQ/thwcqDzpbNeVe5ajmTQFiUsllV
-         0nzoTvnQpjKpCOiProLxPXO2Q4bMt1FIbVvWPCL0oGcTBDsrwJpxQEefnw7iDaj5eUT3
-         9uww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=bKZ0I2sh6AqppG6QvWH81Jw3BrMqlXDkEwkqjwiNKmE=;
-        b=IoCsDZlzWZ1zn34dKigAxuObvVTYfkTV9ymcWWQeskodDB5Ubj4pe+3hSqlSJpOKuz
-         9D/yLUlGVU57sx/EqmFm1jd/onh8PGAHQ4ZhP2yn1sI+b/gL4vxTbq1XCxVSXOuX4hxQ
-         5IWbu93ZJgrm9VG9oTVhgGWl5Hr228YAUUTopflH9sEri+7l5FKciWGGQ+/rcXc2I7Bs
-         xZzfIGq3CJ1RWa7jv9v/zz+ok2wsaLu2O4KL2WD5bmtZh8ZLstivpjqt1cSZRZtMcdAb
-         AlBps3+zWnLP45Mbf835+SifE1raDWp+FSEqlARNESZMkZtC9/zn0VfHSae4caXgDukp
-         dwvg==
-X-Gm-Message-State: ALoCoQlx3ir93Vz2k/MQPXvgMKJ2WEVsxuIGbhhzIbS+KjNZDfDayZAGQv2Tfphs8F89NH3o01lzdZLZLBIMGh+sli8YYOtTng==
-X-Received: by 10.31.164.78 with SMTP id n75mr10029936vke.14.1452900266735;
- Fri, 15 Jan 2016 15:24:26 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Fri, 15 Jan 2016 15:24:26 -0800 (PST)
-In-Reply-To: <xmqq4meeisas.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: A4k5grkrl3Dj_p2x0xcYhsQVLrE
+	id S1751788AbcAOXbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 18:31:06 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57299 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751621AbcAOXbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 18:31:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ECC473C61A;
+	Fri, 15 Jan 2016 18:31:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OeKqgeFM9gnz96bYOZAlZJB1ya8=; b=s3mJnF
+	1+tvIJ+HskcA4SQ1GF8a3yJqN604QeXrvzt2//HI/j2RsCPC0+msrd34oiLWZLJy
+	Jfwws8U2AC9ybCCBAUoMdnLWb4Eek41qXTB0/A+6ZvNsGk2DxSQrO3TBU4C5vrM1
+	tXcJXyvODC9DVFxweYuT52dNQH5ZQwdEJFEQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I9bQKh1tkcVgZvjwmMeCiQCfYAPKBIyN
+	jjS2xdXTYJwRco5J1e0PSGugOVR9KGT4jxYK0qw2GXsDRTxzGdgI8UI8ONXCpU51
+	czWe2BBdgoI3zPuRd3+rBtTMSptLOX6bs1YNUnk9EAvY+zLg5PCGwTNTyDXUl3Sr
+	RY6y3EuK1s0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E325C3C619;
+	Fri, 15 Jan 2016 18:31:03 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 616D43C617;
+	Fri, 15 Jan 2016 18:31:03 -0500 (EST)
+In-Reply-To: <xmqq1t9ih72f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 15 Jan 2016 13:22:00 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0ADF3C4C-BBE0-11E5-A5AD-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284232>
 
-On Fri, Jan 15, 2016 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Dave Ware <davidw@realtimegenomics.com> writes:
->> 'git subtree split' can incorrectly skip a merge even when both parents
->> act on the subtree, provided the merge results in a tree identical to
->> one of the parents. Fix by copying the merge if at least one parent is
->> non-identical, and the non-identical parent is not an ancestor of the
->> identical parent.
->>
->> Also, add a test case which checks that a descendant remains a
->> descendent on the subtree in this case.
->>
->> Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
->> ---
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jeff King <peff@peff.net> writes:
 >
-> David, how does this round look?  Can we proceed with your (and Eric's)
-> Reviewed-by: with this version (with one grammo fix Eric pointed out)?
+>> On Thu, Jan 14, 2016 at 03:58:23PM -0800, Junio C Hamano wrote:
+>>
+>>> @@ -144,10 +145,7 @@ static int option_parse_u(const struct option *opt,
+>>>  static int option_parse_z(const struct option *opt,
+>>>  			  const char *arg, int unset)
+>>>  {
+>>> -	if (unset)
+>>> -		line_termination = '\n';
+>>> -	else
+>>> -		line_termination = 0;
+>>> +	nul_term_line = !unset;
+>>>  	return 0;
+>>>  }
+>>
+>> Is it worth doing this on top?
+>
+> Yes.
+>
+> To be bluntly honest, the above callback has no right to exist.  I
+> should have turned it from OPTION_CALLBACK to OPT_BOOL from the
+> start.
 
-As I'm not a subtree user, I'm not qualified to give a Reviewed-by:;
-my review comments were general, not specific to subtree
-functionality. At best, that might qualify for a Helped-by: if my
-comments had any value.
+Having said that, I'd leave this change out of my tree for now,
+until the patches 1-9, which I'll split out from the rest of the
+series into a separate topic, moves out of the way.
+
+I have this suspicion that "checkout-index" inherited the peculiar
+stance "update-index" took about the command line arguments and
+options (e.g. "update-index A --add B" and "update-index --add A B"
+do different things for path "A").
+
+As far as I can see, there is no reason why "-u", just like "-z"
+that you noticed, has to be processed immediately as it is read
+before processing the remainder of the command line.  And I think
+the change you suggested to stop using a callback for "-z" is better
+done with the same patch as the one that fixes "-u", whose log
+message would probably be:
+
+    checkout-index: simplify option parsing
+
+    For some reason, the command line parser for "-u" and "-z"
+    options tried to make the effect of the options as they are
+    processed by using OPTION_CALLBACK, but there is no reason
+    to do so.  Just flip the bit to remember that we have seen
+    these options while parsing the command line, and use them
+    after we are done parsing, just like all other options.
+
+or something.
