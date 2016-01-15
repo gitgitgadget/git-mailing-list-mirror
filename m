@@ -1,206 +1,168 @@
-From: Dave Ware <davidw@realtimegenomics.com>
-Subject: [PATCH v7] contrib/subtree: fix "subtree split" skipped-merge bug
-Date: Fri, 15 Jan 2016 13:41:43 +1300
-Message-ID: <1452818503-21079-1-git-send-email-davidw@realtimegenomics.com>
-References: <1452806795-26621-1-git-send-email-davidw@realtimegenomics.com>
-Cc: Dave Ware <davidw@realtimegenomics.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 01:42:27 2016
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] t0060: loosen overly strict expectations
+Date: Fri, 15 Jan 2016 00:46:22 +0000
+Message-ID: <5698415E.7070907@ramsayjones.plus.com>
+References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de>
+ <xmqqziw8jcbr.fsf@gitster.mtv.corp.google.com>
+ <5697E550.9020102@ramsayjones.plus.com> <56981DC2.6070706@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Michael Blume <blume.mike@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Jan 15 01:46:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJsTA-00032P-4X
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 01:42:24 +0100
+	id 1aJsXE-0006Hb-NK
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 01:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756263AbcAOAmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Jan 2016 19:42:19 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34516 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751923AbcAOAmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jan 2016 19:42:17 -0500
-Received: by mail-pa0-f49.google.com with SMTP id uo6so369931192pac.1
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 16:42:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GRx01ePaWspJwROLHFybUdWTz75P4NlKIUDkTEJtHxY=;
-        b=L/ddUksEAy39SICz5YkDgQwbK2A7hlCIOtE8tn4yM6UQ6zhnI1LQR3pIACdEYRVURJ
-         bzgdc6J1PF5Plys7BP0XgcioVziuL6jclfsqgGhksQhsMsRscaaIXqx2r71gwSpxLNlx
-         fx1YqRa7Ar+LBYC7reUQI7jqmiNToFgXhLMxIOMG0HrffbjIe3HykWCtrJqPokr7QKND
-         PEZlBdzZ9PFOOSVIW6U95rZQodIDECO/O24rEp4t9PISNujDTBd6nuExpUsGS1m2hhhc
-         YRH/p3nII8RFASeaJezIwlJC56RT5Zp7uWdiXKIae3lplPb/LFwV98jmpy/lmtJXPvGU
-         ZkIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=GRx01ePaWspJwROLHFybUdWTz75P4NlKIUDkTEJtHxY=;
-        b=MJ84QFzMGuahNkIYvEWdQykn9tYiqZ9G6/+5725u5crntD/hQ7OyMsQOpY2d7AhiRk
-         h6C2uxMCjwJvumlozU8IP6OYPaoFilwrnlW6s85L2+BClV0z7UuxVKAaKabYg4zWj/mF
-         3+hA2s/C0EIr/PF60FeMmFPJLHb0/LS/ohPA+ewmZFNrn6JwyJfAkGv9eB0qTckaj5kT
-         pQg86L2ka9SHRJ39kbfhlUOnhmQUu0LKbUUYBJgdAMXQaLDm6Ah8VfqaLRJUUXlQwey6
-         pLJIu146R0eX7TNoGHqXYU5PVPa9wd963eQXuJEcVlBxZUCLcvzlFE7NWRjowRM660xl
-         93fA==
-X-Gm-Message-State: ALoCoQkKC5pzMdqQ5va9bFBbnADfS+KWLsDsBui/a79XbP4dFGC2l/quj+3L9Jc2FBSzpFjJliorKl4XZWicxKVmjzs0ue+x/A==
-X-Received: by 10.66.136.101 with SMTP id pz5mr10504993pab.91.1452818536315;
-        Thu, 14 Jan 2016 16:42:16 -0800 (PST)
-Received: from tinman.nz.realtimegenomics.com ([114.134.15.146])
-        by smtp.googlemail.com with ESMTPSA id r12sm11843776pfi.9.2016.01.14.16.42.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 14 Jan 2016 16:42:15 -0800 (PST)
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1452806795-26621-1-git-send-email-davidw@realtimegenomics.com>
+	id S1756979AbcAOAqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Jan 2016 19:46:33 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:33842 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756947AbcAOAqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jan 2016 19:46:32 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout04 with smtp
+	id 60mQ1s0014mu3xa010mRHr; Fri, 15 Jan 2016 00:46:30 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=EBOSESyhAAAA:8
+ a=N659UExz7-8A:10 a=VZdTsbspDSk4Eld1VOEA:9 a=gsK-mB7ujOfF2UxA:21
+ a=XaQdSaMXUD6gfYJ7:21 a=Rzok8Zz9PyN6jWCt:21 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <56981DC2.6070706@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284126>
 
-'git subtree split' can incorrectly skip a merge even when both parents
-act on the subtree, provided the merge results in a tree identical to
-one of the parents. Fix by copying the merge if at least one parent is
-non-identical, and the non-identical parent is not an ancestor of the
-identical parent.
 
-Also, add a test case which checks that a descendant remains a
-descendent on the subtree in this case.
 
-Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
----
+On 14/01/16 22:14, Johannes Sixt wrote:
+> Am 14.01.2016 um 19:13 schrieb Ramsay Jones:
+>> Correct me if I'm wrong (quite possible), but
+>> _each_ drive has a current working directory associated with
+>> it in win32, so it's a bit difficult to use drive designators
+>> with a relative path (eg. C:usr/lib).
+> 
+> As far as it matters for Git, such a path is still an absolute path, 
+> because it is not anchored at $(pwd).
 
-Notes:
-    Many thanks to Eric Sunshine and Junio Hamano for adivce on this patch
-    Also many thanks to David A. Greene for help with subtree test style
+I have been using cygwin on windows since beta-18 (about 1995), in order
+to avoid most of the horrors of the windows command line, so I'm a little
+rusty. ;-)
+
+You know windows _much_ better than me, so could you please educate me
+on this point. I tried this (on windows 8.1):
+
+    ramsay@satellite $ cmd
+    Microsoft Windows [Version 6.3.9600]
+    (c) 2013 Microsoft Corporation. All rights reserved.
     
-    Changes since v6
-    - I forgot the notes when I sumbitted v6. (I have now set notes.rewriteRef,
-      so hopefully this wont happen again).
-    - Fixed some missing && in my test rewrite.
-    Changes since v5
-    - Rewrote test case to use subtree test repo and commit creation methods
-    - Added comments on what the test does and which bits are checked
-    - Added comments to test on related bugs which aren't fixed yet
-    Changes since v4
-    - Minor spelling and style fixes to test case
-    Changes since v3:
-    - Improvements to commit message
-    - Removed incorrect use of --boundary on rev-list
-    - Changed use of rev-list to use --count
-    Changes since v2:
-    - Minor improvements to commit message
-    - Changed space indentation to tab indentation in test case
-    - Changed use of rev-list for obtaining commit id to use rev-parse instead
-    Changes since v1:
-    - Minor improvements to commit message
-    - Added sign off
-    - Moved test case from own file into t7900-subtree.sh
-    - Added subshell to test around 'cd'
-    - Moved record of commit for cherry-pick to variable instead of dumping into file
+    C:\cygwin64\home\ramsay>cd junk
+    cd junk
     
-    [v6]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=284095
-    [v5]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282197
-    [v4]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282182
-    [v3]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282176
-    [v2]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282121
-    [v1]: http://thread.gmane.org/gmane.comp.version-control.git/282065
+    C:\cygwin64\home\ramsay\junk>dir
+    dir
+     Volume in drive C is TI31255200A
+     Volume Serial Number is 0024-4AC0
+    
+     Directory of C:\cygwin64\home\ramsay\junk
+    
+    15/01/2016  00:23    <DIR>          .
+    15/01/2016  00:23    <DIR>          ..
+    15/01/2016  00:23                 1 regular
+    15/01/2016  00:23    <DIR>          sub-1
+    15/01/2016  00:24    <DIR>          sub-2
+                   1 File(s)              1 bytes
+                   4 Dir(s)  800,988,291,072 bytes free
+    
+    C:\cygwin64\home\ramsay\junk>dir C:
+    dir C:
+     Volume in drive C is TI31255200A
+     Volume Serial Number is 0024-4AC0
+    
+     Directory of C:\cygwin64\home\ramsay\junk
+    
+    15/01/2016  00:23    <DIR>          .
+    15/01/2016  00:23    <DIR>          ..
+    15/01/2016  00:23                 1 regular
+    15/01/2016  00:23    <DIR>          sub-1
+    15/01/2016  00:24    <DIR>          sub-2
+                   1 File(s)              1 bytes
+                   4 Dir(s)  800,988,291,072 bytes free
+    
+    C:\cygwin64\home\ramsay\junk>dir C:.
+    dir C:.
+     Volume in drive C is TI31255200A
+     Volume Serial Number is 0024-4AC0
+    
+     Directory of C:\cygwin64\home\ramsay\junk
+    
+    15/01/2016  00:23    <DIR>          .
+    15/01/2016  00:23    <DIR>          ..
+    15/01/2016  00:23                 1 regular
+    15/01/2016  00:23    <DIR>          sub-1
+    15/01/2016  00:24    <DIR>          sub-2
+                   1 File(s)              1 bytes
+                   4 Dir(s)  800,988,291,072 bytes free
+    
+    C:\cygwin64\home\ramsay\junk>dir C:\
+    dir C:\
+     Volume in drive C is TI31255200A
+     Volume Serial Number is 0024-4AC0
+    
+     Directory of C:\
+    
+    17/09/2015  15:52    <DIR>          cygwin64
+    05/08/2015  10:10               383 ftconfig.ini
+    09/04/2014  05:41    <DIR>          Intel
+    22/08/2013  15:22    <DIR>          PerfLogs
+    06/10/2015  19:28    <DIR>          Program Files
+    26/12/2015  14:09    <DIR>          Program Files (x86)
+    18/05/2014  11:18                 0 Recovery.txt
+    03/12/2013  17:02    <DIR>          Toshiba
+    25/06/2014  18:15    <DIR>          UBIOS
+    26/12/2015  14:09    <DIR>          Users
+    27/08/2015  10:08    <DIR>          Windows
+                   2 File(s)            383 bytes
+                   9 Dir(s)  800,988,299,264 bytes free
+    
+    C:\cygwin64\home\ramsay\junk>dir C:sub-1
+    dir C:sub-1
+     Volume in drive C is TI31255200A
+     Volume Serial Number is 0024-4AC0
+    
+     Directory of C:\cygwin64\home\ramsay\junk\sub-1
+    
+    15/01/2016  00:23    <DIR>          .
+    15/01/2016  00:23    <DIR>          ..
+    15/01/2016  00:23                 1 bill
+    15/01/2016  00:23                 1 fred
+                   2 File(s)              2 bytes
+                   2 Dir(s)  800,988,299,264 bytes free
+    
+    C:\cygwin64\home\ramsay\junk>exit
+    exit
+    ramsay@satellite $ 
 
- contrib/subtree/git-subtree.sh     | 12 ++++++--
- contrib/subtree/t/t7900-subtree.sh | 60 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+), 2 deletions(-)
+... which seems to contradict what you say above.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index edf36f8..5c83727 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -479,8 +479,16 @@ copy_or_skip()
- 			p="$p -p $parent"
- 		fi
- 	done
--	
--	if [ -n "$identical" ]; then
-+
-+	copycommit=
-+	if [ -n "$identical" ] && [ -n "$nonidentical" ]; then
-+		extras=$(git rev-list --count $identical..$nonidentical)
-+		if [ "$extras" -ne 0 ]; then
-+			# we need to preserve history along the other branch
-+			copycommit=1
-+		fi
-+	fi
-+	if [ -n "$identical" ] && [ -z "$copycommit" ]; then
- 		echo $identical
- 	else
- 		copy_commit $rev $tree "$p" || exit $?
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 751aee3..3bf96a9 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -1014,4 +1014,64 @@ test_expect_success 'push split to subproj' '
- 	)
- '
- 
-+#
-+# This test covers 2 cases in subtree split copy_or_skip code
-+# 1) Merges where one parent is a superset of the changes of the other
-+#    parent regarding changes to the subtree, in this case the merge
-+#    commit should be copied
-+# 2) Merges where only one parent operate on the subtree, and the merge
-+#    commit should be skipped
-+#
-+# (1) is checked by ensuring subtree_tip is a descendent of subtree_branch
-+# (2) should have a check added (not_a_subtree_change shouldn't be present
-+#     on the produced subtree)
-+#
-+# Other related cases which are not tested (or currently handled correctly)
-+# - Case (1) where there are more than 2 parents, it will sometimes correctly copy
-+#   the merge, and sometimes not
-+# - Merge commit where both parents have same tree as the merge, currently
-+#   will always be skipped, even if they reached that state via different
-+#   set of commits.
-+#
-+
-+next_test
-+test_expect_success 'subtree descendant check' '
-+	subtree_test_create_repo "$subtree_test_count" &&
-+	test_create_commit "$subtree_test_count" folder_subtree/a &&
-+	(
-+		cd "$subtree_test_count" &&
-+		git branch branch
-+	) &&
-+	test_create_commit "$subtree_test_count" folder_subtree/0 &&
-+	test_create_commit "$subtree_test_count" folder_subtree/b &&
-+	cherry=$(cd "$subtree_test_count"; git rev-parse HEAD) &&
-+	(
-+		cd "$subtree_test_count" &&
-+		git checkout branch
-+	) &&
-+	test_create_commit "$subtree_test_count" commit_on_branch &&
-+	(
-+		cd "$subtree_test_count" &&
-+		git cherry-pick $cherry &&
-+		git checkout master &&
-+		git merge -m "merge should be kept on subtree" branch &&
-+		git branch no_subtree_work_branch
-+	) &&
-+	test_create_commit "$subtree_test_count" folder_subtree/d &&
-+	(
-+		cd "$subtree_test_count" &&
-+		git checkout no_subtree_work_branch
-+	) &&
-+	test_create_commit "$subtree_test_count" not_a_subtree_change &&
-+	(
-+		cd "$subtree_test_count" &&
-+		git checkout master &&
-+		git merge -m "merge should be skipped on subtree" no_subtree_work_branch &&
-+
-+		git subtree split --prefix folder_subtree/ --branch subtree_tip master &&
-+		git subtree split --prefix folder_subtree/ --branch subtree_branch branch &&
-+		check_equal $(git rev-list --count subtree_tip..subtree_branch) 0
-+	)
-+'
-+
- test_done
--- 
-1.9.1
+What am I missing?
+
+ATB,
+Ramsay Jones
+
+
+    
