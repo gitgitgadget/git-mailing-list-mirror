@@ -1,83 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] shortlog fixes and optimizations
-Date: Fri, 15 Jan 2016 14:11:18 -0800
-Message-ID: <xmqqpox2fq7t.fsf@gitster.mtv.corp.google.com>
-References: <20160115170627.GA20983@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [issue?]'git branch -D' case sensitive issue
+Date: Fri, 15 Jan 2016 17:28:00 -0500
+Message-ID: <20160115222800.GA32081@sigill.intra.peff.net>
+References: <CAB4fgE81JHzU=KmN9e=pjsurboipQ3K-pMu-26j+o+FU5G7tQQ@mail.gmail.com>
+ <56978BA9.2010005@web.de>
+ <CAB4fgE-UbTD6AkTaxyknJ+3ggtzRdYN43wgsamTXOYmGqDQ3_A@mail.gmail.com>
+ <5697CFEB.4090308@web.de>
+ <xmqq4megkrf9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 15 23:11:27 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	=?utf-8?B?6YOt6IW+6aOe?= <tfguo369@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 23:28:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKCab-0005g8-R4
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 23:11:26 +0100
+	id 1aKCrJ-0002vp-MD
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 23:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752660AbcAOWLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 17:11:22 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65150 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751825AbcAOWLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 17:11:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 645FC3B776;
-	Fri, 15 Jan 2016 17:11:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/BoFerMXwS7uThczTf0bq3PB4+0=; b=DipCRR
-	zG32WR0OS4g0dC601h3sFkllgQt6FqcQEw+63TTRLnXqvsxzFkynuiFxCn242Y2x
-	EZXWh3+Ccup0y7hyh2nCqaBH0s4yrLJCbyB8NMA0d/9LE6PspniML40zEdTSL45H
-	AluAt8GMgSnKZbl2vNTZMjc70TSA1NxB7j6w0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gnB3leR7xVi9lznH9FHNRxtBU/ZRswTH
-	X7yg4OYJKouK9S3OxsLJtVTYq+KmuNPKd7AyMU5biGUd8Em5L2c0LwXob3F4QEg1
-	saQLHxARnd8giNuZGs0dX/IPlt5LPNYn/l/f7LL2AG+i9+rAGOSTf/wgWG7oiypG
-	sJ0ZjWBCN0U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 554153B775;
-	Fri, 15 Jan 2016 17:11:20 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C51013B771;
-	Fri, 15 Jan 2016 17:11:19 -0500 (EST)
-In-Reply-To: <20160115170627.GA20983@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 15 Jan 2016 12:06:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E7A105D6-BBD4-11E5-AD19-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1750969AbcAOW2H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jan 2016 17:28:07 -0500
+Received: from cloud.peff.net ([50.56.180.127]:54751 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750723AbcAOW2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 17:28:04 -0500
+Received: (qmail 16131 invoked by uid 102); 15 Jan 2016 22:28:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 17:28:03 -0500
+Received: (qmail 25079 invoked by uid 107); 15 Jan 2016 22:28:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 15 Jan 2016 17:28:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Jan 2016 17:28:00 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq4megkrf9.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284225>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 14, 2016 at 09:21:46AM -0800, Junio C Hamano wrote:
 
-> These are split out from my the shortlog-trailer series I sent a few
-> weeks ago. The "trailer" parts still need some re-working, but there is
-> no need to hold these fixes hostage.
->
-> I also dropped the early part of the series, adding skip_prefix_icase().
-> After digging into the history, I ended up reworking the first patch
-> here to do a more thorough parse, so we don't need it anymore.
->
-> Thanks to Eric Sunshine for review on the first iteration; this
-> incorporates his comments.
->
->   [1/6]: shortlog: match both "Author:" and "author" on stdin
->   [2/6]: shortlog: use strbufs to read from stdin
->   [3/6]: shortlog: replace hand-parsing of author with pretty-printer
->   [4/6]: shortlog: optimize "--summary" mode
->   [5/6]: shortlog: optimize out useless "<none>" normalization
->   [6/6]: shortlog: optimize out useless string list
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/283091
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+> > No, this is typically what we observe on a case insensitive FS.
+>=20
+> There is an interesting bit in delete_branches::builtin/branch.c
+>=20
+> 	if (kinds =3D=3D FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
+> 		error(_("Cannot delete the branch '%s' "
+> 		      "which you are currently on."), bname.buf);
+> 		ret =3D 1;
+> 		continue;
+> 	}
+>=20
+> The strcmp() does not protect you from attempting to remove "FrOtZ"
+> branch when you are on (and more importantly, Git thinks you are on)
+> "frotz" branch.  A case-insensitive system then can tell Git that
+> the request to remove "refs/heads/FrOtZ" succeeded, even though in
+> reality it didn't have such file, and silently "refs/heads/frotz"
+> gets removed instead.  You can end up removing your current branch
+> that way.
 
-Thanks for resurrecting these patches.  They all look good.
+This seemed eerily familiar. And indeed, there's some discussion in:
 
-[PATCH 2/6] is a bit unfortunate timing-wise, but I think we can
-manage ;-).
+  http://article.gmane.org/gmane.comp.version-control.git/276506
+
+Changing that strcmp to strcmp_icase() is still wrong, though I suspect
+it's less wrong in practice (and errs on the side of caution). But I
+think there are probably a lot of similar problems lurking.
+
+-Peff
