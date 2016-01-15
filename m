@@ -1,11 +1,8 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 09/11] config: add core.untrackedCache
-Date: Fri, 15 Jan 2016 07:59:50 +0100
-Message-ID: <1452841192-620-10-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v5 10/11] test-dump-untracked-cache: don't modify the untracked cache
+Date: Fri, 15 Jan 2016 07:59:51 +0100
+Message-ID: <1452841192-620-11-git-send-email-chriscool@tuxfamily.org>
 References: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
@@ -14,52 +11,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 08:00:58 2016
+X-From: git-owner@vger.kernel.org Fri Jan 15 08:01:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aJyNU-000558-J9
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 08:00:57 +0100
+	id 1aJyNc-0005DP-4s
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 08:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322AbcAOHAw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Jan 2016 02:00:52 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:33096 "EHLO
+	id S1754782AbcAOHBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 02:01:01 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34533 "EHLO
 	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755307AbcAOHAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 02:00:49 -0500
-Received: by mail-wm0-f49.google.com with SMTP id f206so11027876wmf.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2016 23:00:48 -0800 (PST)
+	with ESMTP id S1754336AbcAOHAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 02:00:51 -0500
+Received: by mail-wm0-f49.google.com with SMTP id u188so11043193wmu.1
+        for <git@vger.kernel.org>; Thu, 14 Jan 2016 23:00:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=EyUJFdMylPm6KT6Mpwp1nakrgp1VPJAPF0dukbrXVeM=;
-        b=mmu2z5ccHVVKEWQJuvRnQiTN9Ku0VbfBHEnai9SByn2fF0gUosG7gXK1TVycyq66FT
-         mik+Qpbo7dqGpRqWKcmw3aus+/U6ZLDzROw/27ZtNxsTsuxNs1I/TcCUed0rGQc+MxS0
-         vUOU3bMvuju18LaDKnFiwHxZnWgfTWTURr2A3Zl2AeRSNpmq9ef/61EwLADeRMXb1+Bb
-         hk9LvSzEtxoNuwP7Q1Z/vEzXkptY6SqNTf60dizuDNqooWJ3yVD8DLVTF/w2fIGt+flP
-         +EJR/HK7FVgE9MKbMl9c/VhcYDXjuUTbn2qdomePd2vtMYlGMsteiBZPGFtIfKGVpR9+
-         vr8Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6kf0mps+7ifNSv0yg4gWpu4PYmNLSKpxaRC4wxAYrUI=;
+        b=VLLnUdlkxrXaGzFjYVH3Z8zsUIROoewe2o00e0peFcFFfSTkL0hJ27D2lkT2P9lN6o
+         l+xF3Nuy0LWYz7xvCvXgPrnCjTxzfo4vto4UCyDtCcCDhpkpypV5MjbK64pZgoDkFFT1
+         YvoHwuX8+U8YwIi1gzAvyG/oX3oIBzLfrku9e0sye9sBAI4ez+TV0k8zl4a3gnvTH2e8
+         /SZ38fbgqVpx8eg5Fb47NO4T/uXgk+eEvNyLfly9PnppmLaNcsVeFae9khBGGvy2ALRL
+         vH2XpjNJDsZ8CfdcbnlBRFIe4H4On6KY3BKnBShooI/TOtc546YXjWZe/YpUVk+HFXgS
+         EnPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=EyUJFdMylPm6KT6Mpwp1nakrgp1VPJAPF0dukbrXVeM=;
-        b=bZfn4v1ecTO/liTwuguxid4mt3FE8O+lsdnj6QY5ZehqmAWhqA7cDaCiytFgnkY6LT
-         lFuNXhnfckpSk3+PWguFFTaI+9O3hipMW/lzdb1eL/o5s+ozHjyyBBsWgCaUJlac8UMh
-         XoDJFh2DR0+9NzmzR2hdiIb/AeZSbSXsOE1PQO2vcfIhl89kk3eQZkJgiIjnIKgHvWlx
-         PTr/uwE/Wf4I7CeCmCwDZMSr5wY3QJf4dcfbKBt+7Sf0SNMmkqZ7R/DQA3gDxPsFUojK
-         jNN+hylSe3D7YK7CcsK1RtwuZpyin+freljCNSBzWNyXD5y7qsRL6JzYpaJenvcUFFmJ
-         hZog==
-X-Gm-Message-State: ALoCoQls/vrAGXhXyIwrBp97Qc+NHB8H2/M+UNl+6ZLfpCJF9F39cv0lXQrgkHtXepmwKTRwpPMl5wnjOX4SbMxId9TvujUuaQ==
-X-Received: by 10.194.118.36 with SMTP id kj4mr7763424wjb.88.1452841247743;
-        Thu, 14 Jan 2016 23:00:47 -0800 (PST)
+         :references;
+        bh=6kf0mps+7ifNSv0yg4gWpu4PYmNLSKpxaRC4wxAYrUI=;
+        b=Z0wz/3B+qTx768bC9HqJoLqN/hUnZfN0Bj6d9OTvRZDLBhj1rGwxpLJBjIx69lHZlj
+         vEsFm1jw79sngCl2oZQH+j3HiCvwHZqi/zrZOyXx0aN+F7td4eklrqhN9Fmb5fFNNvFL
+         Iy/syreiTxqMMU+DGZGyI8jNjvYqnC43O6hRNvTeQSKfj9T2bB5kt4gN4wQxFaHpz6Du
+         H6AeW/9Yfk/uCzTLmbZ7z5/axWov6cXe92TsykT1jo6cFkGjtgnBl9+B6fN7dY4NE722
+         LzLaNzihWnmnC12DVYFk7t6zqLJkcDTZtSnWU7MNYO/zlTx1w/sic7d+RZvuHiico9yI
+         5CJg==
+X-Gm-Message-State: ALoCoQk2+QF5jXT8cWqc6MB+b0HwAHjYSRl7trKLvNyIf5R8qBgVTGnz+GySJ+mJwbjZh5+LRhUA83D0MwcLXB9SJ47ZwYiMgg==
+X-Received: by 10.194.103.164 with SMTP id fx4mr8211380wjb.56.1452841250399;
+        Thu, 14 Jan 2016 23:00:50 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id f205sm1169733wme.4.2016.01.14.23.00.43
+        by smtp.gmail.com with ESMTPSA id f205sm1169733wme.4.2016.01.14.23.00.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Jan 2016 23:00:46 -0800 (PST)
+        Thu, 14 Jan 2016 23:00:49 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.36.g20612a7
 In-Reply-To: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
@@ -67,340 +63,82 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284148>
 
-When we know that mtime is fully supported by the environment, we
-might want the untracked cache to be always used by default without
-any mtime test or kernel version check being performed.
+To correctly perform its testing function,
+test-dump-untracked-cache should not change the state of the
+untracked cache in the index.
 
-Also when we know that mtime is not supported by the environment,
-for example because the repo is shared over a network file system,
-we might want the untracked-cache to be automatically remove from
-the index.
-
-The normal way to achieve the above in Git is to use a config
-variable. That's why this patch introduces "core.untrackedCache".
-
-This variable is a tristate, `keep`, `false` and `true`, which
-default to `keep`.
-
-When read_index_from() is called, it now adds or removes the
-untracked cache in the index to respect the value of this
-variable. So it does nothing if the value is `keep` or if the
-variable is unset; it adds the untracked cache if the value is
-`true`; and it removes the cache if the value is `false`.
-
-`git update-index --[no-|force-]untracked-cache` still adds or
-removes the untracked cache from the index, but this shows a
-warning if it goes against the value of core.untrackedCache,
-as the untracked cache will go back to its previous state the
-next time read_index_from() is called.
-
-Also `--untracked-cache` used to check that the underlying
-operating system and file system change `st_mtime` field of a
-directory if files are added or deleted in that directory. But
-those tests take a long time and there is now
-`--test-untracked-cache` to perform them.
-
-That's why, to be more consistent with other git commands, this
-patch prevents `--untracked-cache` to perform tests, so that
-after this patch there is no difference any more between
-`--untracked-cache` and `--force-untracked-cache`.
-
-This last change is backward incompatible and should be
-mentioned in the release notes.
+As a previous patch makes read_index_from() change the untracked
+cache status and as test-dump-untracked-cache indirectly calls
+this function, we need a mechanism to prevent read_index_from()
+to change the untracked cache state when it's called from
+test-dump-untracked-cache.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- Documentation/config.txt               |  9 +++++
- Documentation/git-update-index.txt     | 67 ++++++++++++++++++++++++++=
---------
- builtin/update-index.c                 | 35 ++++++++++++------
- cache.h                                |  1 +
- config.c                               | 20 ++++++++++
- contrib/completion/git-completion.bash |  1 +
- read-cache.c                           | 14 +++++++
- t/t7063-status-untracked-cache.sh      |  4 +-
- 8 files changed, 122 insertions(+), 29 deletions(-)
+ cache.h                     | 2 ++
+ config.c                    | 3 +++
+ environment.c               | 6 ++++++
+ test-dump-untracked-cache.c | 2 ++
+ 4 files changed, 13 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index beb18da..485aa5e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -308,6 +308,15 @@ core.trustctime::
- 	crawlers and some backup systems).
- 	See linkgit:git-update-index[1]. True by default.
-=20
-+core.untrackedCache::
-+	Determines what to do about the untracked cache feature of the
-+	index. It will be kept, if this variable is unset or set to
-+	`keep`. It will automatically be added if set to `true`. And
-+	it will automatically be removed, if set to `false`. Before
-+	setting it to `true`, you should check that mtime is working
-+	properly on your system.
-+	See linkgit:git-update-index[1]. `keep` by default.
-+
- core.checkStat::
- 	Determines which stat fields to match between the index
- 	and work tree. The user can set this to 'default' or
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-upd=
-ate-index.txt
-index a0afe17..5853dcd 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -174,27 +174,30 @@ may not support it yet.
-=20
- --untracked-cache::
- --no-untracked-cache::
--	Enable or disable untracked cache extension. This could speed
--	up for commands that involve determining untracked files such
--	as `git status`. The underlying operating system and file
--	system must change `st_mtime` field of a directory if files
--	are added or deleted in that directory.
-+	Enable or disable untracked cache feature. Please use
-+	`--test-untracked-cache` before enabling it.
-++
-+These options take effect whatever the value of the `core.untrackedCac=
-he`
-+configuration variable (see linkgit:git-config[1]). But a warning is
-+emitted when the change goes against the configured value, as the
-+configured value will take effect next time the index is read and this
-+will remove the intended effect of the option.
-=20
- --test-untracked-cache::
- 	Only perform tests on the working directory to make sure
- 	untracked cache can be used. You have to manually enable
--	untracked cache using `--force-untracked-cache` (or
--	`--untracked-cache` but this will run the tests again)
--	afterwards if you really want to use it. If a test fails
--	the exit code is 1 and a message explains what is not
--	working as needed, otherwise the exit code is 0 and OK is
--	printed.
-+	untracked cache using `--untracked-cache` or
-+	`--force-untracked-cache` or the `core.untrackedCache`
-+	configuration variable afterwards if you really want to use
-+	it. If a test fails the exit code is 1 and a message
-+	explains what is not working as needed, otherwise the exit
-+	code is 0 and OK is printed.
-=20
- --force-untracked-cache::
--	For safety, `--untracked-cache` performs tests on the working
--	directory to make sure untracked cache can be used. These
--	tests can take a few seconds. `--force-untracked-cache` can be
--	used to skip the tests.
-+	Same as `--untracked-cache`. Provided for backwards
-+	compatibility with older versions of Git where
-+	`--untracked-cache` used to imply `--test-untracked-cache` but
-+	this option would enable the extension unconditionally.
-=20
- \--::
- 	Do not interpret any more arguments as options.
-@@ -385,6 +388,37 @@ Although this bit looks similar to assume-unchange=
-d bit, its goal is
- different from assume-unchanged bit's. Skip-worktree also takes
- precedence over assume-unchanged bit when both are set.
-=20
-+Untracked cache
-+---------------
-+
-+This cache could speed up commands that involve determining untracked
-+files such as `git status`.
-+
-+This feature works by recording the mtime of the working tree
-+directories and then omitting reading directories and stat calls
-+against files in those directories whose mtime hasn't changed. For
-+this to work the underlying operating system and file system must
-+change the `st_mtime` field of directories if files in the directory
-+are added, modified or deleted.
-+
-+You can test whether the filesystem supports that with the
-+`--test-untracked-cache` option. The `--untracked-cache` option used
-+to implicitly perform that test in older versions of Git, but that's
-+no longer the case.
-+
-+If you want to enable (or disable) this feature, it is easier to use
-+the `core.untrackedCache` configuration variable (see
-+linkgit:git-config[1]) than using the `--untracked-cache` option to
-+`git update-index` in each repository, especially if you want to do so
-+across all repositories you use, because you can set the configuration
-+variable to `true` (or `false`) in your `$HOME/.gitconfig` just once
-+and have it affect all repositories you touch.
-+
-+When the `core.untrackedCache` configuration variable is changed, the
-+untracked cache is added to or removed from the index the next time a
-+command reads the index; while when `--[no-|force-]untracked-cache`
-+are used, the untracked cache is immediately added to or removed from
-+the index.
-=20
- Configuration
- -------------
-@@ -410,6 +444,9 @@ It can be useful when the inode change time is regu=
-larly modified by
- something outside Git (file system crawlers and backup systems use
- ctime for marking files processed) (see linkgit:git-config[1]).
-=20
-+The untracked cache extension can be enabled by the
-+`core.untrackedCache` configuration variable (see
-+linkgit:git-config[1]).
-=20
- SEE ALSO
- --------
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index d90154c..7a55334 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1115,19 +1115,32 @@ int cmd_update_index(int argc, const char **arg=
-v, const char *prefix)
- 		the_index.split_index =3D NULL;
- 		the_index.cache_changed |=3D SOMETHING_CHANGED;
- 	}
--	if (untracked_cache > UC_DISABLE) {
--		if (untracked_cache < UC_FORCE) {
--			setup_work_tree();
--			if (!test_if_untracked_cache_is_supported())
--				return 1;
--			if (untracked_cache =3D=3D UC_TEST)
--				return 0;
--		}
--		add_untracked_cache(&the_index);
--		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
--	} else if (untracked_cache =3D=3D UC_DISABLE) {
-+
-+	switch (untracked_cache) {
-+	case UC_UNSPECIFIED:
-+		break;
-+	case UC_DISABLE:
-+		if (git_config_get_untracked_cache() =3D=3D 1)
-+			warning("core.untrackedCache is set to true; "
-+				"remove or change it, if you really want to "
-+				"disable the untracked cache");
- 		remove_untracked_cache(&the_index);
- 		report(_("Untracked cache disabled"));
-+		break;
-+	case UC_TEST:
-+		setup_work_tree();
-+		return !test_if_untracked_cache_is_supported();
-+	case UC_ENABLE:
-+	case UC_FORCE:
-+		if (git_config_get_untracked_cache() =3D=3D 0)
-+			warning("core.untrackedCache is set to false; "
-+				"remove or change it, if you really want to "
-+				"enable the untracked cache");
-+		add_untracked_cache(&the_index);
-+		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
-+		break;
-+	default:
-+		die("Bug: bad untracked_cache value: %d", untracked_cache);
- 	}
-=20
- 	if (active_cache_changed) {
 diff --git a/cache.h b/cache.h
-index c63fcc1..59a15fd 100644
+index 59a15fd..89c7e10 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1603,6 +1603,7 @@ extern int git_config_get_bool(const char *key, i=
-nt *dest);
- extern int git_config_get_bool_or_int(const char *key, int *is_bool, i=
-nt *dest);
- extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest)=
-;
-+extern int git_config_get_untracked_cache(void);
-=20
+@@ -1605,6 +1605,8 @@ extern int git_config_get_maybe_bool(const char *key, int *dest);
+ extern int git_config_get_pathname(const char *key, const char **dest);
+ extern int git_config_get_untracked_cache(void);
+ 
++extern int ignore_untracked_cache_config;
++
  struct key_value_info {
  	const char *filename;
+ 	int linenr;
 diff --git a/config.c b/config.c
-index 86a5eb2..647a15e 100644
+index 647a15e..a4f70f7 100644
 --- a/config.c
 +++ b/config.c
-@@ -1594,6 +1594,26 @@ int git_config_get_pathname(const char *key, con=
-st char **dest)
- 	return ret;
- }
-=20
-+int git_config_get_untracked_cache(void)
-+{
-+	int val =3D -1;
-+	const char *v;
-+
-+	if (!git_config_get_maybe_bool("core.untrackedcache", &val))
-+		return val;
-+
-+	if (!git_config_get_value("core.untrackedcache", &v)) {
-+		if (!strcasecmp(v, "keep"))
-+			return -1;
-+
-+		error("unknown core.untrackedCache value '%s'; "
-+		      "using 'keep' default value", v);
+@@ -1599,6 +1599,9 @@ int git_config_get_untracked_cache(void)
+ 	int val = -1;
+ 	const char *v;
+ 
++	if (ignore_untracked_cache_config)
 +		return -1;
-+	}
 +
-+	return -1; /* default value */
-+}
+ 	if (!git_config_get_maybe_bool("core.untrackedcache", &val))
+ 		return val;
+ 
+diff --git a/environment.c b/environment.c
+index 1cc4aab..74294ee 100644
+--- a/environment.c
++++ b/environment.c
+@@ -87,6 +87,12 @@ int auto_comment_line_char;
+ /* Parallel index stat data preload? */
+ int core_preload_index = 1;
+ 
++/*
++ * This is to ensure that the untracked cache is not modified, for
++ * example in test programs like test-dump-untracked-cache.
++ */
++int ignore_untracked_cache_config;
 +
- NORETURN
- void git_die_config_linenr(const char *key, const char *filename, int =
-linenr)
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+ static char *work_tree;
+diff --git a/test-dump-untracked-cache.c b/test-dump-untracked-cache.c
+index 25d855d..8d1293c 100644
+--- a/test-dump-untracked-cache.c
++++ b/test-dump-untracked-cache.c
+@@ -44,6 +44,8 @@ int main(int ac, char **av)
  {
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index ab4da7f..de4b5ed 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2056,6 +2056,7 @@ _git_config ()
- 		core.sparseCheckout
- 		core.symlinks
- 		core.trustctime
-+		core.untrackedCache
- 		core.warnAmbiguousRefs
- 		core.whitespace
- 		core.worktree
-diff --git a/read-cache.c b/read-cache.c
-index 84616c8..1d5696c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1622,6 +1622,20 @@ int read_index_from(struct index_state *istate, =
-const char *path)
- 		return istate->cache_nr;
-=20
- 	ret =3D do_read_index(istate, path, 0);
+ 	struct untracked_cache *uc;
+ 	struct strbuf base = STRBUF_INIT;
 +
-+	switch (git_config_get_untracked_cache()) {
-+	case -1: /* keep: do nothing */
-+		break;
-+	case 0: /* false */
-+		remove_untracked_cache(istate);
-+		break;
-+	case 1: /* true */
-+		add_untracked_cache(istate);
-+		break;
-+	default: /* unknown value: do nothing */
-+		break;
-+	}
-+
- 	split_index =3D istate->split_index;
- 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
- 		check_ce_order(istate);
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untrack=
-ed-cache.sh
-index 0e8d0d4..253160a 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -8,10 +8,8 @@ avoid_racy() {
- 	sleep 1
- }
-=20
--# It's fine if git update-index returns an error code other than one,
--# it'll be caught in the first test.
- test_lazy_prereq UNTRACKED_CACHE '
--	{ git update-index --untracked-cache; ret=3D$?; } &&
-+	{ git update-index --test-untracked-cache; ret=3D$?; } &&
- 	test $ret -ne 1
- '
-=20
---=20
++	ignore_untracked_cache_config = 1;
+ 	setup_git_directory();
+ 	if (read_cache() < 0)
+ 		die("unable to read index file");
+-- 
 2.7.0.36.g20612a7
