@@ -1,70 +1,61 @@
-From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
-Subject: BUG: git subtree split gets confused on removed and readded directory
-Date: Fri, 15 Jan 2016 17:23:24 +0100
-Message-ID: <56991CFC.7060705@ruhr-uni-bochum.de>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: SChannel support in Git for Windows
+Date: Fri, 15 Jan 2016 19:47:46 +0300
+Message-ID: <20160115194746.abcb4b7dab4653d222e0362c@domain007.com>
+References: <CA+1xWaokgVthDv-up76RP+s+r4pSv5ntmePtDVND+rsKuo+-YA@mail.gmail.com>
+	<20160115185923.1e9fe5220b623625fdbc8041@domain007.com>
+	<CA+1xWarcXz4RdgXd8p-43sQ5UeRAwXmrsU_JVqwewmro7rz2Gw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 15 17:29:46 2016
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Konstantin Khomoutov <kostix+git@007spb.ru>, git@vger.kernel.org
+To: Robert Labrie <robert.labrie@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 15 17:47:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aK7Fx-0001Rr-QY
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 17:29:46 +0100
+	id 1aK7XW-0007he-IS
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Jan 2016 17:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870AbcAOQ3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 11:29:41 -0500
-Received: from out2.mail.ruhr-uni-bochum.de ([134.147.42.229]:59584 "EHLO
-	mx2.mail.ruhr-uni-bochum.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750942AbcAOQ3l (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jan 2016 11:29:41 -0500
-X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Jan 2016 11:29:40 EST
-Received: from mx2.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
-	by mx2.mail.ruhr-uni-bochum.de (Postfix mo-ext) with ESMTP id 3phnqx1sJcz4xJf
-	for <git@vger.kernel.org>; Fri, 15 Jan 2016 17:23:25 +0100 (CET)
-Received: from mx2.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
-	by mx2.mail.ruhr-uni-bochum.de (Postfix idis) with ESMTP id 3phnqx1DHkz4xSq
-	for <git@vger.kernel.org>; Fri, 15 Jan 2016 17:23:25 +0100 (CET)
-X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
-X-RUB-Notes: Internal origin=134.147.42.227
-Received: from mail1.mail.ruhr-uni-bochum.de (mail1.mail.ruhr-uni-bochum.de [134.147.42.227])
-	by mx2.mail.ruhr-uni-bochum.de (Postfix mi-int) with ESMTP id 3phnqx0MfYz4xSd
-	for <git@vger.kernel.org>; Fri, 15 Jan 2016 17:23:24 +0100 (CET)
-Received: from [192.168.142.173] (p5093a15e.dip0.t-ipconnect.de [80.147.161.94])
-	by mail1.mail.ruhr-uni-bochum.de (Postfix) with ESMTPSA id 3phnqw5ZkxzyTR
-	for <git@vger.kernel.org>; Fri, 15 Jan 2016 17:23:24 +0100 (CET)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-X-Virus-Scanned: clamav-milter 0.98.7 at mx2.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
+	id S1754568AbcAOQrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 11:47:51 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:49554 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753335AbcAOQru (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 11:47:50 -0500
+Received: from tigra.domain007.com ([192.168.2.102])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id u0FGlk2F021061;
+	Fri, 15 Jan 2016 19:47:47 +0300
+In-Reply-To: <CA+1xWarcXz4RdgXd8p-43sQ5UeRAwXmrsU_JVqwewmro7rz2Gw@mail.gmail.com>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284179>
 
-Hi,
+On Fri, 15 Jan 2016 11:11:58 -0500
+Robert Labrie <robert.labrie@gmail.com> wrote:
 
-I made a simple test repository showing the problem here:
-https://github.com/lambdafu/git-subtree-split-test
+> You are correct, SChannel in NT 5.x is limited, but all those versions
+> are officially out of support.
+> 
+> When you're part of a Windows ecosystem, those root certs get pushed
+> into the local store by a GPO (usually), and you don't have to think
+> about it. That's the only reason I'm pushing.
+> 
+> Sounds like libcurl can't make it a run time consideration, and git
+> (understandably) doesn't want to worry about SChannel limitations in
+> very old versions of Windows.
+> 
+> Does git use libcurl for everything? I wonder if I could just drop my
+> own libraries with WinHTTP support?
 
-After creating the master branch, I created the split/bar branch like this:
+I'd say you could fork the Git for Windows's SDK [1], hack it to build
+curl with the configuration you need and then create your own
+installer.  You'll need to rebase your patch each time a new GfW
+release will come out, but the patch should be small enough IMO.
 
-$ git subtree split -P bar -b split/bar
-
-The resulting history is confused by the directory "bar" which was
-added, removed and then re-added again.  The recent history up to adding
-the directory the second time is fine.  But then it seems to loose track
-and add the parent of that commit up to the initial commit in the history.
-
-I'd expect that the parent of the readding commit is an empty tree
-commit (which removed the last files in the directory), and that before
-that are commits that reflect the initial creation of that directory
-with its files, but rewritten as a subtree, of course.
-
-Thanks!
-Marcus
+1. https://github.com/git-for-windows/build-extra/releases/latest
