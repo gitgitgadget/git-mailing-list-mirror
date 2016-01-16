@@ -1,101 +1,127 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix auth parameter handling on SVN 1.9.0+
-Date: Sat, 16 Jan 2016 10:17:19 +0000
-Message-ID: <20160116101719.GA21147@dcvr.yhbt.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Announcing git-cinnabar 0.3.1
+Date: Sat, 16 Jan 2016 20:27:36 +0900
+Message-ID: <20160116112736.GA21994@glandium.org>
+References: <20160115085658.GA15539@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, 797705@bugs.debian.org,
-	Dair Grant <dair@feralinteractive.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 11:18:03 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 16 12:28:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKNvm-0004Gn-A0
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 11:18:02 +0100
+	id 1aKP1u-0001IE-1o
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 12:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbcAPKRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2016 05:17:23 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:42551 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751246AbcAPKRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2016 05:17:20 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 448FB2007D;
-	Sat, 16 Jan 2016 10:17:19 +0000 (UTC)
+	id S1751596AbcAPL1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2016 06:27:44 -0500
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:35850 "EHLO
+	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751485AbcAPL1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2016 06:27:43 -0500
+Received: from glandium by zenigata with local (Exim 4.86)
+	(envelope-from <mh@glandium.org>)
+	id 1aKP16-0005oF-JY
+	for git@vger.kernel.org; Sat, 16 Jan 2016 20:27:36 +0900
 Content-Disposition: inline
+In-Reply-To: <20160115085658.GA15539@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284240>
 
-For users with "store-passwords = no" set in the "[auth]" section of
-their ~/.subversion/config, SVN 1.9.0+ would fail with the
-following message when attempting to call svn_auth_set_parameter:
+This is a brown paper bag release. It turns out I managed to break the
+upgrade path only 10 commits before the release.
 
-  Value is not a string (or undef) at Git/SVN/Ra.pm
+What's new since 0.3.0?
 
-Ironically, this breakage was caused by r1553823 in subversion:
+- `git cinnabar fsck` doesn't fail to upgrade metadata.
+- The remote.$remote.cinnabar-draft config works again.
+- Don't fail to clone an empty repository.
+- Allow to specify mercurial configuration items in a .git/hgrc file.
 
-  "Make svn_auth_set_parameter() usable from Perl bindings."
+Mike
 
-Since 2007 (602015e0e6ec), git-svn has used a workaround to make
-svn_auth_set_parameter usable internally.  However this workaround
-breaks under SVN 1.9+, which deals properly with the type mapping
-and fails to recognize our workaround.
-
-For pre-1.9.0 SVN, we continue to use the existing workaround for
-the lack of proper type mapping in the bindings.
-
-Tested under subversion 1.6.17 and 1.9.3.
-
-I've also verified r1553823 was not backported to SVN 1.8.x:
-
-  BRANCH=http://svn.apache.org/repos/asf/subversion/branches/1.8.x
-  svn log -v $BRANCH/subversion/bindings/swig/core.i
-
-ref: https://bugs.debian.org/797705
-Cc: 797705@bugs.debian.org
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Thanks to the reporter (Bcc:-ed to protect their privacy) who
- notified Dair and I of this bug.
-
- Junio: this should also head to maint, thanks.
-
- perl/Git/SVN/Ra.pm | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
-index 4a499fc..e764696 100644
---- a/perl/Git/SVN/Ra.pm
-+++ b/perl/Git/SVN/Ra.pm
-@@ -81,7 +81,6 @@ sub prepare_config_once {
- 	SVN::_Core::svn_config_ensure($config_dir, undef);
- 	my ($baton, $callbacks) = SVN::Core::auth_open_helper(_auth_providers);
- 	my $config = SVN::Core::config_get_config($config_dir);
--	my $dont_store_passwords = 1;
- 	my $conf_t = $config->{'config'};
- 
- 	no warnings 'once';
-@@ -93,9 +92,14 @@ sub prepare_config_once {
- 	    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
- 	    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
- 	    1) == 0) {
-+		my $val = '1';
-+		if (::compare_svn_version('1.9.0') < 0) { # pre-SVN r1553823
-+			my $dont_store_passwords = 1;
-+			$val = bless \$dont_store_passwords, "_p_void";
-+		}
- 		SVN::_Core::svn_auth_set_parameter($baton,
- 		    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
--		    bless (\$dont_store_passwords, "_p_void"));
-+		    $val);
- 	}
- 	if (SVN::_Core::svn_config_get_bool($conf_t,
- 	    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
--- 
-EW
+On Fri, Jan 15, 2016 at 05:56:58PM +0900, Mike Hommey wrote:
+> Git-cinnabar is a git remote helper to interact with mercurial
+> repositories. It allows to clone, pull and push from/to mercurial remote
+> repositories, using git.
+> 
+> Code on https://github.com/glandium/git-cinnabar
+> 
+> [ Previous announcements:
+>   http://marc.info/?l=git&m=142837367709781
+>   http://marc.info/?l=git&m=142364715001983
+>   http://marc.info/?l=git&m=141781485726430 ]
+> 
+> Development had been stalled for a few months, with many improvements in
+> the `next` branch without any new release. I used some time during the
+> new year break and after in order to straighten things up in order to
+> create a new release, delaying many of the originally planned changes to
+> a future 0.4.0 release.
+> 
+> What's new since 0.2.2?
+> 
+> - Speed and memory usage were improved when doing `git push`.
+> - Now works on Windows, at least to some extent. See details[1].
+> - Support for pre-0.1.0 git-cinnabar repositories was removed. You must
+>   first use a git-cinnabar version between 0.1.0 and 0.2.2 to upgrade
+>   its metadata.
+> - It is now possible to attach/graft git-cinnabar metadata to existing
+>   commits matching mercurial changesets. This allows to migrate from
+>   some other hg-to-git tool to git-cinnabar while preserving the
+>   existing git commits.  See an example of how this works with the git
+>   clone of the Gecko mercurial repository[2]
+> - Avoid mercurial printing its progress bar, messing up with
+>   git-cinnabar's output.
+> - It is now possible to fetch from an incremental mercurial bundle
+>   (without a root changeset).
+> - It is now possible to push to a new mercurial repository without `-f`.
+> - By default, reject pushing a new root to a mercurial repository.
+> - Make the connection to a mercurial repository through ssh respect the
+>   `GIT_SSH` and `GIT_SSH_COMMAND` environment variables.
+> - `git cinnabar` now has a proper argument parser for all its
+>   subcommands.
+> - A new `git cinnabar python` command allows to run python scripts or
+>   open a python shell with the right sys.path to import the cinnabar
+>   module.
+> - All git-cinnabar metadata is now kept under a single ref (although for
+>   convenience, other refs are created, but they can be derived if
+>   necessary).
+> - Consequently, a new `git cinnabar rollback` command allows to roll
+>   back to previous metadata states.
+> - git-cinnabar metadata now tracks the manifests DAG.
+> - A new `git cinnabar bundle` command allows to create mercurial
+>   bundles, mostly for debugging purposes, without requiring to hit a
+>   mercurial server.
+> - Updated git to 2.7.0 for the native helper.
+> 
+> Development process changes
+> 
+> Up to before this release closing in, the `master` branch was dedicated
+> to releases, and development was happening on the `next` branch, until a
+> new release happens.
+> 
+> From now on, the `release` branch will take dot-release fixes and new
+> releases, while the `master` branch will receive all changes that are
+> validated through testing (currently semi-automatically tested with
+> out-of-tree tests based on four real-life mercurial repositories, with
+> some automated CI based on in-tree tests used in the future).
+> 
+> The `next` branch will receive changes to be tested in CI when things
+> will be hooked up, and may have rewritten history as a consequence of
+> wanting passing tests on every commit on `master`.
+> 
+> Mike
+> 
+> 1. https://github.com/glandium/git-cinnabar/wiki/Windows-Support
+> 2. https://github.com/glandium/git-cinnabar/wiki/Mozilla:-Using-a-git-clone-of-gecko%E2%80%90dev-to-push-to-mercurial
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
