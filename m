@@ -1,87 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG: git subtree split gets confused on removed and readded directory
-Date: Fri, 15 Jan 2016 15:44:19 -0800
-Message-ID: <xmqq4meeflws.fsf@gitster.mtv.corp.google.com>
-References: <56991CFC.7060705@ruhr-uni-bochum.de>
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Subject: Re: How do I get the contents of a directory in fast-import
+Date: Fri, 15 Jan 2016 20:59:59 -0500
+Message-ID: <jwvd1t270zv.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+References: <jwvio3d7152.fsf-monnier+gmane.comp.version-control.git.user@gnu.org>
+	<20160115223922.GB32081@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
-To: Dave Ware <davidw@realtimegenomics.com>,
-	"David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Sat Jan 16 00:44:28 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 16 03:01:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKE2d-0004JP-Fe
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 00:44:27 +0100
+	id 1aKGAv-0005Fl-Bk
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 03:01:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517AbcAOXoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Jan 2016 18:44:23 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56081 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753500AbcAOXoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jan 2016 18:44:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F3A333C8C0;
-	Fri, 15 Jan 2016 18:44:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JRZGA36/WANYFMOyiuU9D949fAc=; b=I7RgT+
-	bZZ6gEMIrCAiQ7hDxJftZP7DjbzMUO4ghDqU4JRbixmcZ3UTha3cVPICCxxAwQBj
-	QLDoEma9DyX3nE+FanjkgWctj20+pPYnpBgIgxETX1yL4Lc8dput8ey3WWfyKxHG
-	G7nakb1aGCsPY/vcJ8SR5+hz9WusRG5NCE2g0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dpOE+iKIy0rhasu9cwEKOT32m+KqGNPk
-	FMsWO/wZZu2+kMmgUUo4ZJtJfedaBcQ1ofhq1DSndqRChD26S/tuwdaHLu4plhhV
-	V/gxOeSMxAL+0/R/HCPllW9WRoyojiRT2Jtd+DgcQsvK6zgvri3i8mcCX8btxGwx
-	Xtr+zJnJw8o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA3743C8BF;
-	Fri, 15 Jan 2016 18:44:20 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 64B3C3C8BE;
-	Fri, 15 Jan 2016 18:44:20 -0500 (EST)
-In-Reply-To: <56991CFC.7060705@ruhr-uni-bochum.de> (Marcus Brinkmann's message
-	of "Fri, 15 Jan 2016 17:23:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E5EE1564-BBE1-11E5-972C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752361AbcAPCA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Jan 2016 21:00:57 -0500
+Received: from plane.gmane.org ([80.91.229.3]:35845 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752132AbcAPCAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jan 2016 21:00:15 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aKG9x-0004Ub-IR
+	for git@vger.kernel.org; Sat, 16 Jan 2016 03:00:09 +0100
+Received: from 23-91-143-239.cpe.pppoe.ca ([23.91.143.239])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Jan 2016 03:00:09 +0100
+Received: from monnier by 23-91-143-239.cpe.pppoe.ca with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 16 Jan 2016 03:00:09 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 23-91-143-239.cpe.pppoe.ca
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+Cancel-Lock: sha1:hgLlcKZMJD6YPKjt3u1Rn7nTaVI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284237>
 
-Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de> writes:
+>> So how do I get a directory listing from fast-import, i.e.
+>> like I can get with "git cat-file -p", but without having to fork
+>> a separate git process?
+> I'm not sure I understand your use case exactly, but is the directory
+> listing you want part of the newly-added objects from fast-import, or
+> does it already exist in the branches you are collecting from?
 
-> I made a simple test repository showing the problem here:
-> https://github.com/lambdafu/git-subtree-split-test
->
-> After creating the master branch, I created the split/bar branch like this:
->
-> $ git subtree split -P bar -b split/bar
->
-> The resulting history is confused by the directory "bar" which was
-> added, removed and then re-added again.  The recent history up to adding
-> the directory the second time is fine.  But then it seems to loose track
-> and add the parent of that commit up to the initial commit in the history.
->
-> I'd expect that the parent of the readding commit is an empty tree
-> commit (which removed the last files in the directory), and that before
-> that are commits that reflect the initial creation of that directory
-> with its files, but rewritten as a subtree, of course.
+For the most important cases, the relevant revision already exists
+before fast-import, yes.
 
-Thanks for a report.
+> If the latter, I wonder if a separate "cat-file --batch" process could
+> give you what you need (it's a separate process, but you can start a
 
-David, does this ring a bell?
+I'm not sure exactly how "git cat-file --batch" works internally
+(whether it tries to keep active revisions, like fast-import does), but
+I've indeed used it successfully (tho for files).
 
-Dave, does your fix "subtree split" we saw recently on the list
+> single process and make many queries of it; I assume your desire not to
+> add an extra process is to avoid the overhead).
 
-    http://article.gmane.org/gmane.comp.version-control.git/284125
+The overhead of starting a new process is one part, but another is the
+overhead of re-reading the refs (I can have tens of thousands of
+branches in my repository), etc..
 
-help this?
+> But I think it won't pretty-print trees for you; it will give you the
+> raw tree data
+
+Indeed.
+
+> (which I imagine is what you are getting from cat-blob, too).
+
+Actually no, "cat-blob" gives an error instead:
+
+    fatal: Object 2ca1672d50c9dbfe582dc53af3c7ce9891a7a664 is a tree but a blob was expected.
+
+> I'm not sure that's actually documented anywhere (it was part of
+> the original revisions of git, and hasn't changed since). But it is
+> basically:
+
+>   tree = tree_entry*
+>   tree_entry = mode SP path NUL sha1
+>   mode = ascii mode, in octal (e.g., "100644")
+>   path = <any byte except NUL>*
+>   sha1 = <any byte>{20}
+>   SP = ascii space (0x20)
+>   NUL = 0-byte
+
+Ah, thanks.  It'd be great if cat-blob could return this instead of
+signalling an error.
+
+> So it is pretty simple to parse.
+
+My program is written in /bin/sh so parsing the above is actually rather
+inconvenient, but it's much better than just getting an error.
+
+
+        Stefan
