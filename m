@@ -1,74 +1,69 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v5 00/11] Untracked cache improvements
-Date: Sat, 16 Jan 2016 15:57:42 +0100
-Message-ID: <569A5A66.3090907@web.de>
-References: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/4] Fix compile warnings with MSys2's compiler
+Date: Sat, 16 Jan 2016 18:00:09 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601161759190.2964@virtualbox>
+References: <cover.1452864241.git.johannes.schindelin@gmx.de> <xmqqh9iefnj2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 16 15:58:07 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 16 18:01:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKSIn-0007IG-HB
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 15:58:05 +0100
+	id 1aKUDl-0000UO-QD
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 18:01:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbcAPO6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2016 09:58:00 -0500
-Received: from mout.web.de ([212.227.15.3]:49469 "EHLO mout.web.de"
+	id S1752317AbcAPRAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2016 12:00:23 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53164 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751265AbcAPO57 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2016 09:57:59 -0500
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0Lo0YS-1ZelpC3Rsm-00g1oV; Sat, 16 Jan 2016 15:57:46
+	id S1752251AbcAPRAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2016 12:00:22 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LcBPV-1ZvYrP3eTN-00jZEV; Sat, 16 Jan 2016 18:00:10
  +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <1452841192-620-1-git-send-email-chriscool@tuxfamily.org>
-X-Provags-ID: V03:K0:gicPYEXUx+VhmtEVAPo1dirE7GamNwfuZiDS9zBMAZPj6cTs57x
- 1Roi3LLsoVfWW08dBxHVVTx9FL8Szr7D8FrvlQqYBfJLLwtDA3HltHzZwRNyBpWPsERsJas
- pclw32yfdZC8fQKTRUtWKO2ozEpfuDJzz/wM7OFlnCnAAv1bEX6ZQWhaSIWdXpfCxmZoroe
- wFtLnL+Oy3F3mi/duTNfg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qeA+HaCzXmw=:F4nzOBMp9AkPwS9isGLrRw
- FMzTFgYiY4VjJi8ZeIcmL8nKJGXJ301Qnwb63K89IkOoWzxarFkDoYsakaEXbqTYeo+uPltfQ
- +y0+JP7q+8LT2MSbbZVl/FLhz+ef+q0WyA581BLcJilr2DA60HOlFuRza0dA3GIKCQhujhSAg
- rEiCBg8gdMIO2+yD3I36tlD0gWAdA1LxZHgeyeFD3b0vTdhC9hgvsfjUD1bNxpp51w8kn9/OW
- obsTfwERwXHwsoE4AdwDwWOI3N7jAhuVRo87nUePcI9+eu+VyO8u+xv6C6L30FbfY2OZK3BSy
- sBYQdNrcaeY4zhhD8vhAD2xNgsjWQzaAiL7vfmH4sdp67AvHbf8fmOlwtDo9Xnx/Kigi3dPCk
- h5qKm5qV1ViKug0TN7GnktJeusA9BatrmyH+CpHtH00Fl2d0l7XdwxJOqC8DwefYWKW/bD7tM
- HlTEUECZm9EPGza+D5N1hUzTH8hqUTIu/9+8T4lg3v7Wa15WQkc0lqRkp8254K/QM0g/yWsEK
- H1C3M3Sfp4KNYsvvG3Gz63g1KrXWJywtb9duyvArSBuC+mMbNwr66+iFmV71JDxhX1taIclAQ
- 3k/t35k46aZwyD6JnqprScK5DWEI2AtLN20ugfLyabh9l+1WSL/W4yx0kdgTbAGJjY16UqCur
- NZvLfHm+jd5jzga1JgR5JVEWVwO9XZtz0/RY5cuK3Mk0KV8sRBs1DmfAcIo0ZkZJEkcoBI8Ym
- bFmoeWnEShRaA8Ys/7G7ak92vKCfzGb1lrA5Rskygnb6+aRrE0j/VIzQlJgHOggC6nEXNLDm 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqh9iefnj2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:0FD6RXZqd0Aa7I1Tj2NbF5bKqUyBoQ+3bD2rD70qSh+sHntCVwp
+ CKpljqWL53sc+CXSbmE5+Kk3uktgl/89au/eOhtKW1lsQ3tqJlA/VHatDG6wavTL9axMGKz
+ oAafT8sC6ZbhUwtjabuH2ZE83/RlhYNky5g/0Hl3PB0mlqaUzTRma3NL5zEAYITyNDrMTs6
+ Gp164CV3oZST3KLiwCCDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JZdRUowYCA4=:m6AhRWrn8gH/7Ql6pZRcR8
+ L/737C5ipsBVa9Taaz7ao2yILSWK+cFehQOhUXTfY6p6mJ4pcwNudrzZK5ADfjiP88sFjfIl6
+ 3SEcNmcyLlWU5fCLyC28czM8Llhs/8M0N41QMt4u3EFz0U43ibbEnGC7IN/zbGu9TLSEXoDwC
+ qE+PFHbyKPgCP8rPp+TtZynUbGnU5G2veQ1BtpdEUXKFldBpmzVqSEPN760KR7vSgmDWCjVEY
+ aetWWX8+4eKlSmDjbcRGlmaV6JkIF+UcCNcyi4BOSxcdjvcFQp5horrdAwDxXJMHQryPlSwmd
+ cCcsuYU+hZ/anDfX68/vlDLUtzMy/HsQN7GbAwi1AzopUykffvX01gfWAT3hdqtdFe6sVA7/j
+ 8SLD0ZE1CZ50sJPFRuksaXCdnf7JQdL9/akcr2AaOqi9QGh5mrpahhAbq3YIqHbE50mscDo+8
+ zEfWG9KfpU12BwjFZjlS8l/fI62p9/AGQr1ZvuDnAY3vc8jq0Ylh0JGxpnhn5rNjF1Ec8fEgg
+ xKAm99MqkSSgMmBFDNQ9wuRZTecs3TKYNTjBFkBVb7b47IWf4SY9fKWYF8nqjpXGHQofNs7T6
+ eLP8Y900U1crOyNnQvEEPGYB/e9szm0RcxJ2BtptajJO0whFWpWa7olZqzZcqkqsbgvmXlYae
+ Ppe2Ny/2Pr5A0dhsal63lnaFfkTFhQ2o+INHlWTS7vQaSmY7SfjnYeNfbxO/RGqib9vH/WKKN
+ Y2GOZ+WgWERCmXaInsBMkhG9hyhF7isVi/9JTVg69Cyllhuvx/MmVG/gwNkZGBV/1wepH8yK 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284245>
 
-General question after testing UC on a slow network share:
+Hi Junio,
 
-time ./git status
-On branch uc-notifs63
-Your branch is up-to-date with 'cc/uc-notifs63'.
+On Fri, 15 Jan 2016, Junio C Hamano wrote:
 
-It took 6.27 seconds to enumerate untracked files. 'status -uno'
-may speed it up, but you have to be careful not to forget to add
-new files yourself (see 'git help status').
-nothing to commit, working directory clean
+> Thanks, queued.
 
-real    0m19.159s
-user    0m0.085s
-sys     0m0.293s
-----------------------
-Does it makes sense  to hint the user about the untracked cache ?
+Thank you!
+
+> The last one does look ugly as you said; I do not think of a better
+> alternative to offer, though X-<.
+
+It makes me happy that I did not miss any obvious way to make this look
+better, and it makes me sad you cannot find a better alternative either
+;-)
+
+Ciao,
+Dscho
