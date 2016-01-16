@@ -1,127 +1,100 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Announcing git-cinnabar 0.3.1
-Date: Sat, 16 Jan 2016 20:27:36 +0900
-Message-ID: <20160116112736.GA21994@glandium.org>
-References: <20160115085658.GA15539@glandium.org>
+From: Thierry Vignaud <thierry.vignaud@gmail.com>
+Subject: Re: [PATCH] git-svn: fix auth parameter handling on SVN 1.9.0+
+Date: Sat, 16 Jan 2016 15:00:36 +0100
+Message-ID: <CAONrEtbEVwP8VxdYgar5oDtK4q94f5L_nAtFokSo8vVnp0ixog@mail.gmail.com>
+References: <20160116101719.GA21147@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 16 12:28:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	797705@bugs.debian.org, Dair Grant <dair@feralinteractive.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jan 16 15:01:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKP1u-0001IE-1o
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 12:28:26 +0100
+	id 1aKRQJ-0006Bj-Nj
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 15:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596AbcAPL1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2016 06:27:44 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:35850 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751485AbcAPL1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2016 06:27:43 -0500
-Received: from glandium by zenigata with local (Exim 4.86)
-	(envelope-from <mh@glandium.org>)
-	id 1aKP16-0005oF-JY
-	for git@vger.kernel.org; Sat, 16 Jan 2016 20:27:36 +0900
-Content-Disposition: inline
-In-Reply-To: <20160115085658.GA15539@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752147AbcAPOBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Jan 2016 09:01:36 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:36038 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757AbcAPOA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jan 2016 09:00:56 -0500
+Received: by mail-qg0-f48.google.com with SMTP id e32so440059803qgf.3
+        for <git@vger.kernel.org>; Sat, 16 Jan 2016 06:00:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gGXm2rkBPXGAM6tIWGWn5JkIJV7CsUrHlYMsaiFnDXk=;
+        b=begoAaLRtlaRZK+PXFqhYrn3zrBp94IpPQ8S36yEthH18H2m1HetVVg8X2k80PLNyd
+         W30/OP29AIGW1FPR6SdKrm5gBIHBN01phKnVyS6t6N+pFxS3L5OwN8HuFIIOp1wKrZds
+         fCuDlEmCpXpA2Ri5a2VIXqFAPITMJJBhdfBjvQWDPoioxgcN058Oh5pe0jAlXVAQEQiy
+         mPU87hOW730X3ws9vLnLgoVg6nKWGS3Xz6ei7V5FbU/K5mAk4Mn+09vBoBe3soacWbiR
+         tBdce4N1YTbiZRm13nW6umQftxDQ/BOQtrnkqOj6SEr4TGFzGp7HLMNl2245oSUTGTiF
+         wkcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=gGXm2rkBPXGAM6tIWGWn5JkIJV7CsUrHlYMsaiFnDXk=;
+        b=MDGmiHgrdXAYVQ4o1LNmupnDMxUhdcyKW/62L9NAlGcIQNtdJRW7Q4lowNK4qQy+7Y
+         l/qrcrYk3aMGrZPsmJEGD50/1oZziwl3TvgAq/1YrOO7xI+/mqdxM8Ys54ifOrM1dhPp
+         BjD8wjL3k78pvrLuwLiYwV9IvPd56BD4HwThA12rHkFpP8PsNC7/OyVkEg+zLr9ZnBDh
+         Uo4AIk+fRQge6vStoWu6+y8EHzcOZoWoU1/jSCkF8RE/pimADLnYw5dPfF3Ke07o87bt
+         VDuO5M/aYC6Zw8m40nZ5VYo/2lghS4u2Vi06Y5a8Si9NnFAzMsZbyXkq9XjkvxpQioYw
+         LYNw==
+X-Gm-Message-State: ALoCoQnRZY1jX29dByWgS+PZQXEaEuHCPSaGdXQEnTYsB3qSkr2E/2dzjHTJAQdyYqfZE8y9qTCHEvEL3GGmKD/IbV8HVxz3Uw==
+X-Received: by 10.140.82.11 with SMTP id g11mr19940291qgd.77.1452952855772;
+ Sat, 16 Jan 2016 06:00:55 -0800 (PST)
+Received: by 10.55.195.154 with HTTP; Sat, 16 Jan 2016 06:00:36 -0800 (PST)
+In-Reply-To: <20160116101719.GA21147@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284242>
 
-This is a brown paper bag release. It turns out I managed to break the
-upgrade path only 10 commits before the release.
+On 16 January 2016 at 11:17, Eric Wong <normalperson@yhbt.net> wrote:
+> For users with "store-passwords = no" set in the "[auth]" section of
+> their ~/.subversion/config, SVN 1.9.0+ would fail with the
+> following message when attempting to call svn_auth_set_parameter:
+>
+>   Value is not a string (or undef) at Git/SVN/Ra.pm
+>
+> Ironically, this breakage was caused by r1553823 in subversion:
+>
+>   "Make svn_auth_set_parameter() usable from Perl bindings."
+>
+> Since 2007 (602015e0e6ec), git-svn has used a workaround to make
+> svn_auth_set_parameter usable internally.  However this workaround
+> breaks under SVN 1.9+, which deals properly with the type mapping
+> and fails to recognize our workaround.
+>
+> For pre-1.9.0 SVN, we continue to use the existing workaround for
+> the lack of proper type mapping in the bindings.
+>
+> Tested under subversion 1.6.17 and 1.9.3.
+>
+> I've also verified r1553823 was not backported to SVN 1.8.x:
+>
+>   BRANCH=http://svn.apache.org/repos/asf/subversion/branches/1.8.x
+>   svn log -v $BRANCH/subversion/bindings/swig/core.i
+>
+> ref: https://bugs.debian.org/797705
+> Cc: 797705@bugs.debian.org
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  Thanks to the reporter (Bcc:-ed to protect their privacy) who
+>  notified Dair and I of this bug.
+>
+>  Junio: this should also head to maint, thanks.
 
-What's new since 0.3.0?
+Thanks, I confirm it fixed the issue.
+You can add the following if you want:
 
-- `git cinnabar fsck` doesn't fail to upgrade metadata.
-- The remote.$remote.cinnabar-draft config works again.
-- Don't fail to clone an empty repository.
-- Allow to specify mercurial configuration items in a .git/hgrc file.
-
-Mike
-
-On Fri, Jan 15, 2016 at 05:56:58PM +0900, Mike Hommey wrote:
-> Git-cinnabar is a git remote helper to interact with mercurial
-> repositories. It allows to clone, pull and push from/to mercurial remote
-> repositories, using git.
-> 
-> Code on https://github.com/glandium/git-cinnabar
-> 
-> [ Previous announcements:
->   http://marc.info/?l=git&m=142837367709781
->   http://marc.info/?l=git&m=142364715001983
->   http://marc.info/?l=git&m=141781485726430 ]
-> 
-> Development had been stalled for a few months, with many improvements in
-> the `next` branch without any new release. I used some time during the
-> new year break and after in order to straighten things up in order to
-> create a new release, delaying many of the originally planned changes to
-> a future 0.4.0 release.
-> 
-> What's new since 0.2.2?
-> 
-> - Speed and memory usage were improved when doing `git push`.
-> - Now works on Windows, at least to some extent. See details[1].
-> - Support for pre-0.1.0 git-cinnabar repositories was removed. You must
->   first use a git-cinnabar version between 0.1.0 and 0.2.2 to upgrade
->   its metadata.
-> - It is now possible to attach/graft git-cinnabar metadata to existing
->   commits matching mercurial changesets. This allows to migrate from
->   some other hg-to-git tool to git-cinnabar while preserving the
->   existing git commits.  See an example of how this works with the git
->   clone of the Gecko mercurial repository[2]
-> - Avoid mercurial printing its progress bar, messing up with
->   git-cinnabar's output.
-> - It is now possible to fetch from an incremental mercurial bundle
->   (without a root changeset).
-> - It is now possible to push to a new mercurial repository without `-f`.
-> - By default, reject pushing a new root to a mercurial repository.
-> - Make the connection to a mercurial repository through ssh respect the
->   `GIT_SSH` and `GIT_SSH_COMMAND` environment variables.
-> - `git cinnabar` now has a proper argument parser for all its
->   subcommands.
-> - A new `git cinnabar python` command allows to run python scripts or
->   open a python shell with the right sys.path to import the cinnabar
->   module.
-> - All git-cinnabar metadata is now kept under a single ref (although for
->   convenience, other refs are created, but they can be derived if
->   necessary).
-> - Consequently, a new `git cinnabar rollback` command allows to roll
->   back to previous metadata states.
-> - git-cinnabar metadata now tracks the manifests DAG.
-> - A new `git cinnabar bundle` command allows to create mercurial
->   bundles, mostly for debugging purposes, without requiring to hit a
->   mercurial server.
-> - Updated git to 2.7.0 for the native helper.
-> 
-> Development process changes
-> 
-> Up to before this release closing in, the `master` branch was dedicated
-> to releases, and development was happening on the `next` branch, until a
-> new release happens.
-> 
-> From now on, the `release` branch will take dot-release fixes and new
-> releases, while the `master` branch will receive all changes that are
-> validated through testing (currently semi-automatically tested with
-> out-of-tree tests based on four real-life mercurial repositories, with
-> some automated CI based on in-tree tests used in the future).
-> 
-> The `next` branch will receive changes to be tested in CI when things
-> will be hooked up, and may have rewritten history as a consequence of
-> wanting passing tests on every commit on `master`.
-> 
-> Mike
-> 
-> 1. https://github.com/glandium/git-cinnabar/wiki/Windows-Support
-> 2. https://github.com/glandium/git-cinnabar/wiki/Mozilla:-Using-a-git-clone-of-gecko%E2%80%90dev-to-push-to-mercurial
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Reported-by: Thierry Vignaud <thierry.vignaud@gmail.com>
+Tested-by: Thierry Vignaud <thierry.vignaud@gmail.com>
