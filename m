@@ -1,69 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Fix compile warnings with MSys2's compiler
-Date: Sat, 16 Jan 2016 18:00:09 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601161759190.2964@virtualbox>
-References: <cover.1452864241.git.johannes.schindelin@gmx.de> <xmqqh9iefnj2.fsf@gitster.mtv.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Pls Support Conservancy: https://sfconservancy.org/supporter/
+Date: Sun, 17 Jan 2016 07:08:28 +0100
+Message-ID: <569B2FDC.8090207@alum.mit.edu>
+References: <xmqqpoxyeajy.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 16 18:01:03 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jan 17 07:15:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKUDl-0000UO-QD
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Jan 2016 18:01:02 +0100
+	id 1aKgck-0002qn-9Q
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 07:15:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbcAPRAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Jan 2016 12:00:23 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53164 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752251AbcAPRAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jan 2016 12:00:22 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LcBPV-1ZvYrP3eTN-00jZEV; Sat, 16 Jan 2016 18:00:10
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqh9iefnj2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:0FD6RXZqd0Aa7I1Tj2NbF5bKqUyBoQ+3bD2rD70qSh+sHntCVwp
- CKpljqWL53sc+CXSbmE5+Kk3uktgl/89au/eOhtKW1lsQ3tqJlA/VHatDG6wavTL9axMGKz
- oAafT8sC6ZbhUwtjabuH2ZE83/RlhYNky5g/0Hl3PB0mlqaUzTRma3NL5zEAYITyNDrMTs6
- Gp164CV3oZST3KLiwCCDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JZdRUowYCA4=:m6AhRWrn8gH/7Ql6pZRcR8
- L/737C5ipsBVa9Taaz7ao2yILSWK+cFehQOhUXTfY6p6mJ4pcwNudrzZK5ADfjiP88sFjfIl6
- 3SEcNmcyLlWU5fCLyC28czM8Llhs/8M0N41QMt4u3EFz0U43ibbEnGC7IN/zbGu9TLSEXoDwC
- qE+PFHbyKPgCP8rPp+TtZynUbGnU5G2veQ1BtpdEUXKFldBpmzVqSEPN760KR7vSgmDWCjVEY
- aetWWX8+4eKlSmDjbcRGlmaV6JkIF+UcCNcyi4BOSxcdjvcFQp5horrdAwDxXJMHQryPlSwmd
- cCcsuYU+hZ/anDfX68/vlDLUtzMy/HsQN7GbAwi1AzopUykffvX01gfWAT3hdqtdFe6sVA7/j
- 8SLD0ZE1CZ50sJPFRuksaXCdnf7JQdL9/akcr2AaOqi9QGh5mrpahhAbq3YIqHbE50mscDo+8
- zEfWG9KfpU12BwjFZjlS8l/fI62p9/AGQr1ZvuDnAY3vc8jq0Ylh0JGxpnhn5rNjF1Ec8fEgg
- xKAm99MqkSSgMmBFDNQ9wuRZTecs3TKYNTjBFkBVb7b47IWf4SY9fKWYF8nqjpXGHQofNs7T6
- eLP8Y900U1crOyNnQvEEPGYB/e9szm0RcxJ2BtptajJO0whFWpWa7olZqzZcqkqsbgvmXlYae
- Ppe2Ny/2Pr5A0dhsal63lnaFfkTFhQ2o+INHlWTS7vQaSmY7SfjnYeNfbxO/RGqib9vH/WKKN
- Y2GOZ+WgWERCmXaInsBMkhG9hyhF7isVi/9JTVg69Cyllhuvx/MmVG/gwNkZGBV/1wepH8yK 
+	id S1751482AbcAQGPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2016 01:15:33 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:51799 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750987AbcAQGPc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jan 2016 01:15:32 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jan 2016 01:15:32 EST
+X-AuditID: 1207440d-f79136d00000402c-a0-569b2fdf4aff
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 6B.DC.16428.FDF2B965; Sun, 17 Jan 2016 01:08:31 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB0313.dip0.t-ipconnect.de [93.219.3.19])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u0H68SVZ025361
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 17 Jan 2016 01:08:29 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <xmqqpoxyeajy.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqHtff3aYwZqNrBZdV7qZLBp6rzBb
+	/GjpYbaYf2giqwOLx7PePYweFy8pe/w5v4fV4/MmuQCWKG6bpMSSsuDM9Dx9uwTujO0TfrIW
+	7Oep2Ht6OlMD4ySuLkZODgkBE4kdD9azQNhiEhfurWfrYuTiEBK4zCjxpO8DO4Rzlkniz8a1
+	TCBVwgJeErO7FzKD2CICeRK7J/5nB7GFBKwk1m6YDFbDJqArsainmQliqpxEb/cksA3MQPEH
+	HY/B4rwC2hLTFx4Ai7MIqErsuXwazBYVCJF4//U5K0SNoMTJmU+A4hwcnALWEjsv10CM0ZPY
+	cf0XK4QtL9G8dTbzBEbBWUg6ZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXSO9
+	3MwSvdSU0k2MkDDn3cH4f53MIUYBDkYlHt4X82aFCbEmlhVX5h5ilORgUhLllfsEFOJLyk+p
+	zEgszogvKs1JLT7EKMHBrCTCa80zO0yINyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUg
+	tQgmK8PBoSTBW6wH1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPiuD4YmAMg6R4
+	gPbOBGnnLS5IzAWKQrSeYtTlODb3xlomIZa8/LxUKXFeD5AiAZCijNI8uBWwpPaKURzoY2Fe
+	NmCKE+IBJkS4Sa+AljABLeENmA6ypCQRISXVwCj3dRFfcfH2Jy9kl57UUJCUn5OZn8gQVNpW
+	M6Wye+ciPz/xSf9/LPLXL+nON36uuYzzueU5QcsJ/nf77xyfof43lPPgnX/WDTtu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284246>
 
-Hi Junio,
+On 12/22/2015 05:02 PM, Junio C Hamano wrote:
+> [Jeff King, Shawn Pearce and myself represent the Git project to the
+> Conservancy, and here is a request for help from us.]
+> 
+> We apologize that we're interrupting the usual content on this
+> mailing list with a fundraising message, but the non-profit home of
+> the Git project, Software Freedom Conservancy, is in urgent need of
+> your immediate support: https://sfconservancy.org/supporter/
 
-On Fri, 15 Jan 2016, Junio C Hamano wrote:
+I agree that SFC is a great and worthwhile organization and I also
+encourage people who care about free and open-source software to become
+supporters.
 
-> Thanks, queued.
+> Git receives a myriad of important services (see
+> https://sfconservancy.org/members/services/ ) from Conservancy.  We
+> have relied on Conservancy since 2009 to provide them, and we ask
+> that you support them.  While Git gladly contributes 10% of our
+> project's gross revenue to Conservancy's general fund, (while
+> Conservancy maintains and administers the other 90% in collaboration
+> with us to advance the Git project), that 10% of contributions from
+> all Conservancy's member projects doesn't add up to enough to even
+> employ one full time person, let alone the already overworked staff
+> of three that Conservancy has.
 
-Thank you!
+Do we have an idea whether the Git project's 10% contribution is
+covering its own costs to the SFC? 10% sounds rather low to me, given
+the legal and administrative services that they provide.
 
-> The last one does look ugly as you said; I do not think of a better
-> alternative to offer, though X-<.
+Let's consider contributing more (e.g., 20%) of the Git project gross
+revenue to SFC.
 
-It makes me happy that I did not miss any obvious way to make this look
-better, and it makes me sad you cannot find a better alternative either
-;-)
+Michael
 
-Ciao,
-Dscho
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
