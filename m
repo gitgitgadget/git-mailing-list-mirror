@@ -1,98 +1,128 @@
-From: David Ware <davidw@realtimegenomics.com>
-Subject: Re: BUG: git subtree split gets confused on removed and readded directory
-Date: Mon, 18 Jan 2016 08:34:16 +1300
-Message-ID: <CAET=KiXJ4tkryy_UNWtD3dRSXXpBfL=7ZS5GNivmGi0Yx7Rv4A@mail.gmail.com>
-References: <56991CFC.7060705@ruhr-uni-bochum.de>
-	<xmqq4meeflws.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] ls-remote: add support for showing symrefs
+Date: Sun, 17 Jan 2016 14:14:15 -0800
+Message-ID: <xmqqwpr7etvs.fsf@gitster.mtv.corp.google.com>
+References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
+	<1453028643-13978-6-git-send-email-t.gummerer@gmail.com>
+	<20160117151510.GC15519@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "David A. Greene" <greened@obbligato.org>, git@vger.kernel.org,
-	Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 20:34:24 2016
+Content-Type: text/plain
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, bturner@atlassian.com,
+	pedrorijo91@gmail.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 17 23:18:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKt5i-0000fw-Nd
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 20:34:23 +0100
+	id 1aKveU-0003d6-KU
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 23:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbcAQTeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2016 14:34:18 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:35990 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752291AbcAQTeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2016 14:34:17 -0500
-Received: by mail-vk0-f48.google.com with SMTP id n1so167479849vkb.3
-        for <git@vger.kernel.org>; Sun, 17 Jan 2016 11:34:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=r3+DMTiS6mitxTiL0jgKcYHWOb68IBOaXQ+4YY8xFuY=;
-        b=I93iuAYjYSz1l0zFEQ6IXZDydZdVsDqCON0/RdoMYH90VvpfTqWznt2ofubbWGu93p
-         Ok1MX2nl+NJ/3WhQ84J1A71KLRben1kSOaFm6xOosZ/P1/mbyz9PtOtbT/Jbf2F33Qa0
-         ugpQF7vrwu6cruM6dGQr8/Hye1fzkh0lC/mD14a+FhgALHRYeV28HCSURU/CAkKsjosQ
-         p/9ODSNNT4z3+mga9mh0rmfKs4ZzBzNs12XmPvYXptEozeMOZ1Z9lf6o1IDOtqlQOTWF
-         DboMVwIs/EgZlfirM1L1L/P6FGQZl1BfcV2AUP8o6IHjAzLv8dpkbHKkDT75ILWQly7G
-         j8Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=r3+DMTiS6mitxTiL0jgKcYHWOb68IBOaXQ+4YY8xFuY=;
-        b=XzL/ql/jjjCanHo2ZFLiafB7iXavBmK+GjihUoh413copuG1NkmHt68itdf61tXhGe
-         J3vUmUVQfP5HBxMAWezPuOE8gxDttcUWCUcaIFN7a2rnNMAnBwyN1i8w2TzAXRJQHqXj
-         gjfuHaoBs6lOsAFa9fqUcR/8ohFrJcCQnti5vgnoSyiMXrJJPT/WFCFh0w2vfSiXAPKM
-         Gq7MjruhBZNFzEKLVcZg9P5sU8Nua7HmhQ+E8tgDdbwUdBV2cB0Uo+7zmaJO317yUx8A
-         Mb3zJzfTiqQoVj1QG8a1Xo/AHqOEndri8p+7/IDt92Ie0uZXyRc5h7DwJzqFTAgeqIWS
-         +log==
-X-Gm-Message-State: ALoCoQka/q2aZGdTP7oX+iR2SoMsZaLBJZc5yityVZWYHbVZFcWQjG3h9ub3ShZThtrPqaaueYPs4llEyvIgKTe7CAHhwKxNA2HlkuCAZTnKTieHF96RQe0=
-X-Received: by 10.31.185.196 with SMTP id j187mr12886899vkf.99.1453059256320;
- Sun, 17 Jan 2016 11:34:16 -0800 (PST)
-Received: by 10.31.161.206 with HTTP; Sun, 17 Jan 2016 11:34:16 -0800 (PST)
-In-Reply-To: <xmqq4meeflws.fsf@gitster.mtv.corp.google.com>
+	id S1755473AbcAQWOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2016 17:14:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755464AbcAQWOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2016 17:14:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5159F3C024;
+	Sun, 17 Jan 2016 17:14:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wjWl6fUZzpmuy6tERbhbCXOR7Pg=; b=fAl7wU
+	qXOnXlfDAYQAfDVfuuR0XW7Yf6peproK9vPTHsG7HGqPikvUW62++dhIOmNwx/XI
+	ruZvY+GL3uYL4N8zx1+YCvFQhgvBxqlfJD+AeCtHpjBwq0YQOeQG/rspGEPgvF6/
+	XiwW0o52583npoqxI/rAhfYqKzce/6IbAqnhM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O/iQMHnSHN9AOXKVsRWBfPNb8+K+6wba
+	ZrFQuv9AYzRdcg8DhVzbkmTwBXw0feVvrl/RIEB9EYNHTIE+Ohrwb0tPcfL4NfXu
+	oY8ZA+K75mRnkgQcF14bCX5E3lG4sGUpOvHY1eCEhOPXPaLgrEj6w+set7HLz7V9
+	Xf8GRE+NfTc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 499653C023;
+	Sun, 17 Jan 2016 17:14:17 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BF1143C022;
+	Sun, 17 Jan 2016 17:14:16 -0500 (EST)
+In-Reply-To: <20160117151510.GC15519@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 17 Jan 2016 10:15:10 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A5F0D9C4-BD67-11E5-83AE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284266>
 
-No my patch doesn't seem to fix this.
+Jeff King <peff@peff.net> writes:
 
-Cheers,
-Dave Ware
+> We could also do it as:
+>
+>   ref: refs/heads/master     HEAD
+>
+> which matches the symref format itself. I guess that doesn't really
+> matter here, but somehow it seems more aesthetically pleasing to me.
 
-(sorry if you're receiving this for the second time, I'm resending
-since the mailing list blocked my earlier reply for html content)
+Yes, I think this should be the way to go.
 
-On Sat, Jan 16, 2016 at 12:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de> writes:
+> The output would look a lot nicer for humans if we right-padded the
+> symref destination to match the 40-hex that is on all the other lines
+> (so all of the refnames line up).  But that makes machine-parsing a lot
+> harder. We could do something clever with isatty(1), but I don't think
+> it's worth the effort.
+
+And the target can be longer than 40-hex.  Don't play games with
+padding.
+
+>> +test_expect_success 'ls-remote with symrefs and refs combined' '
+>> +	cat >expect <<-EOF &&
+>> +	symref: refs/heads/master	HEAD
+>> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
+>> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
+>> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
+>> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
+>> +	EOF
 >
->> I made a simple test repository showing the problem here:
->> https://github.com/lambdafu/git-subtree-split-test
->>
->> After creating the master branch, I created the split/bar branch like this:
->>
->> $ git subtree split -P bar -b split/bar
->>
->> The resulting history is confused by the directory "bar" which was
->> added, removed and then re-added again.  The recent history up to adding
->> the directory the second time is fine.  But then it seems to loose track
->> and add the parent of that commit up to the initial commit in the history.
->>
->> I'd expect that the parent of the readding commit is an empty tree
->> commit (which removed the last files in the directory), and that before
->> that are commits that reflect the initial creation of that directory
->> with its files, but rewritten as a subtree, of course.
+> I expected there to be a:
 >
-> Thanks for a report.
+>   1bd44cb9d13204b0fe1958db0082f5028a16eb3a	HEAD
 >
-> David, does this ring a bell?
->
-> Dave, does your fix "subtree split" we saw recently on the list
->
->     http://article.gmane.org/gmane.comp.version-control.git/284125
->
-> help this?
+> line.
+
+Yes, there should be, as I would imagine the most natural
+interpretation of "--symrefs" by end users would be "show me ALSO
+the symref information.", not "show me ONLY the symref information"
+(if it were the latter we woudln't be seeing refs/tags/mark in the
+above output).
+
+I also suspect that this part of the patch is wrong (or at least
+misleading):
+
+@@ -98,6 +101,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (!dest && !quiet)
+ 		fprintf(stderr, "From %s\n", *remote->url);
+ 	for ( ; ref; ref = ref->next) {
++		if (symrefs && ref->symref)
++			printf("symref: %s	%s\n", ref->symref, ref->name);
++		if (symrefs && !flags)
++			continue;
+ 		if (!check_ref_type(ref, flags))
+ 			continue;
+ 		if (!tail_match(pattern, ref->name))
+
+It looks wrong that the usual filtering with check_ref_type() and
+tail_match() are bypassed for symbolic refs.  Even though the server
+side currently feeds reflog information for only "HEAD", the code
+should be prepared to do the sane thing in a future in which that
+server-side limitation is corrected, and allow the user to ask
+
+    ls-remote $there --symref refs/remotes/origin/HEAD
+
+to learn the information on one specific ref, without having to see
+the primary branch of $there repository, for example.
+
+Thanks.
