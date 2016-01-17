@@ -1,54 +1,155 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] ls-remote: document --quiet option
-Date: Sun, 17 Jan 2016 09:47:26 -0500
-Message-ID: <20160117144726.GB15519@sigill.intra.peff.net>
+Subject: Re: [PATCH 4/4] ls-remote: add support for showing symrefs
+Date: Sun, 17 Jan 2016 10:15:10 -0500
+Message-ID: <20160117151510.GC15519@sigill.intra.peff.net>
 References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
- <1453028643-13978-2-git-send-email-t.gummerer@gmail.com>
+ <1453028643-13978-6-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: bturner@atlassian.com, gitster@pobox.com, pedrorijo91@gmail.com,
 	git@vger.kernel.org
 To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 17 15:47:34 2016
+X-From: git-owner@vger.kernel.org Sun Jan 17 16:15:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKoc9-0001fT-EX
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 15:47:33 +0100
+	id 1aKp3b-0005Ul-JG
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 16:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603AbcAQOr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2016 09:47:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55088 "HELO cloud.peff.net"
+	id S1752672AbcAQPPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2016 10:15:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55095 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752499AbcAQOr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2016 09:47:29 -0500
-Received: (qmail 5457 invoked by uid 102); 17 Jan 2016 14:47:28 -0000
+	id S1752499AbcAQPPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2016 10:15:12 -0500
+Received: (qmail 6970 invoked by uid 102); 17 Jan 2016 15:15:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jan 2016 09:47:28 -0500
-Received: (qmail 1883 invoked by uid 107); 17 Jan 2016 14:47:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jan 2016 10:15:12 -0500
+Received: (qmail 1995 invoked by uid 107); 17 Jan 2016 15:15:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jan 2016 09:47:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jan 2016 09:47:26 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 17 Jan 2016 10:15:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Jan 2016 10:15:10 -0500
 Content-Disposition: inline
-In-Reply-To: <1453028643-13978-2-git-send-email-t.gummerer@gmail.com>
+In-Reply-To: <1453028643-13978-6-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284258>
 
-On Sun, Jan 17, 2016 at 12:03:59PM +0100, Thomas Gummerer wrote:
+On Sun, Jan 17, 2016 at 12:04:03PM +0100, Thomas Gummerer wrote:
 
-> cefb2a5e3 ("ls-remote: print URL when no repo is specified") added a
-> quiet option to ls-remote, but didn't add it to the documentation.  Add
-> it.
+> Sometimes it's useful to know the main branch of a git repository
+> without actually downloading the repository.  This can be done by
+> looking at the symrefs stored in the remote repository.  Currently git
+> doesn't provide a simple way to show the symrefs stored on the remote
+> repository, even though the information is available.  Add a --symrefs
+> command line argument to the ls-remote command, which shows the symrefs
+> on the remote repository.
+> 
+> The new argument works similar to the --heads and --tags arguments.
+> When only --symrefs is given, only the symrefs are shown.  It can
+> however be combined with the --refs, --heads or --tags arguments, to
+> show all refs, heads, or tags as well.
 
-Great. I love it when a patch series starts by tidying up the area.
+I would have expected --symrefs to be "also show symref destinations for
+refs we are showing" and not otherwise affect the set of refs we pick.
+That would make:
 
-The patch looks obviously correct. Should we do the same for "--refs",
-which looks like the only other undocumented option (aside from --exec,
-but I think that's just for historical compatibility).
+  git ls-remote --symrefs
+
+show everything, including symrefs and peeled tags (which I think is not
+possible with your patch). It would also make:
+
+  git ls-remote --symrefs --heads
+
+show symrefs and refs in refs/heads, but _not_ show symrefs outside
+of refs/heads.
+
+On the flip side, though, it does not provide a way to just get the
+symrefs without any other output. But I think if you just want a specific
+symref (say, HEAD), you can ask for it:
+
+  git ls-remote --symrefs $remote HEAD
+
+This is all somewhat moot, perhaps, as the server side currently only
+shares symref information for HEAD. But that may change in the future
+(it's a limitation of the current protocol).
+
+I'm also somewhat doubtful that people regularly use ls-remote much at
+all these days, let alone with "--heads" or "--tags". So it's hard to
+come up with concrete use cases for any of this. The above is just what
+I would expect for general flexibility and consistency with other
+commands.
+
+> ---
+>  Documentation/git-ls-remote.txt |  8 +++++++-
+>  builtin/ls-remote.c             |  9 ++++++++-
+>  t/t5512-ls-remote.sh            | 20 ++++++++++++++++++++
+
+Documentation _and_ tests. Yay. :)
+
+> @@ -98,6 +101,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+>  	if (!dest && !quiet)
+>  		fprintf(stderr, "From %s\n", *remote->url);
+>  	for ( ; ref; ref = ref->next) {
+> +		if (symrefs && ref->symref)
+> +			printf("symref: %s	%s\n", ref->symref, ref->name);
+
+I assume that's a raw tab in the string. Please use "\t", which makes it
+more obvious to readers what is going on.
+
+Since this output is only triggered by a new option, we're not
+constrained by compatibility in the output. But I think it's still a
+good idea to keep the general "<content>\t<refname>" pattern set by the
+other lines, as you did.
+
+Here's my obligatory bikeshedding for the format. Feel free to ignore.
+
+I wondered if just:
+
+  refs/heads/master       HEAD
+  1bd44cb9d13204b0fe1958db0082f5028a16eb3a       refs/heads/master
+
+would look nicer. It is technically ambiguous if a symref can point to a
+40-hex refname. They generally will start with refs/, but I'm not sure
+that is strict requirement. It also makes it harder to add other output
+later if we choose to. So some kind of keyword like "symref:" is a good
+idea.
+
+We could also do it as:
+
+  ref: refs/heads/master     HEAD
+
+which matches the symref format itself. I guess that doesn't really
+matter here, but somehow it seems more aesthetically pleasing to me.
+
+The output would look a lot nicer for humans if we right-padded the
+symref destination to match the 40-hex that is on all the other lines
+(so all of the refnames line up).  But that makes machine-parsing a lot
+harder. We could do something clever with isatty(1), but I don't think
+it's worth the effort.
+
+> +test_expect_success 'ls-remote with symrefs and refs combined' '
+> +	cat >expect <<-EOF &&
+> +	symref: refs/heads/master	HEAD
+> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
+> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
+> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
+> +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
+> +	EOF
+
+I expected there to be a:
+
+  1bd44cb9d13204b0fe1958db0082f5028a16eb3a	HEAD
+
+line. It's technically redundant, since the caller can dereference
+refs/heads/master themselves, but it potentially makes things easier for
+a caller. I realized why it isn't here, though. We print all symrefs,
+regardless of whether they match the flags, but "HEAD" doesn't match
+"--refs", so we don't show its value.  Under the semantics I proposed
+above, "ls-remote --symrefs" would show both.
 
 -Peff
