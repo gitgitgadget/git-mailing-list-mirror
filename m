@@ -1,180 +1,100 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 4/4] ls-remote: add support for showing symrefs
-Date: Sun, 17 Jan 2016 12:04:03 +0100
-Message-ID: <1453028643-13978-6-git-send-email-t.gummerer@gmail.com>
+Subject: Re: [PATCH 0/4] ls-remote: introduce symref argument
+Date: Sun, 17 Jan 2016 12:14:33 +0100
+Message-ID: <20160117111433.GA7100@hank>
 References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: bturner@atlassian.com, gitster@pobox.com, pedrorijo91@gmail.com,
-	git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+	git@vger.kernel.org
 To: peff@peff.net
-X-From: git-owner@vger.kernel.org Sun Jan 17 12:04:06 2016
+X-From: git-owner@vger.kernel.org Sun Jan 17 12:14:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aKl7s-0005Ap-2m
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 12:04:04 +0100
+	id 1aKlHm-0003ls-A1
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Jan 2016 12:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751861AbcAQLD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Jan 2016 06:03:59 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36062 "EHLO
+	id S1751257AbcAQLOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Jan 2016 06:14:09 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32829 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751548AbcAQLD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jan 2016 06:03:57 -0500
-Received: by mail-wm0-f65.google.com with SMTP id l65so11108039wmf.3
-        for <git@vger.kernel.org>; Sun, 17 Jan 2016 03:03:56 -0800 (PST)
+	with ESMTP id S1750970AbcAQLOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jan 2016 06:14:07 -0500
+Received: by mail-wm0-f65.google.com with SMTP id u188so11145993wmu.0
+        for <git@vger.kernel.org>; Sun, 17 Jan 2016 03:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZGeEe5YLJ0+b4QwZOPHkomVT1toYMD43M0T3r44VCNk=;
-        b=PEREsH6RJQNyCBCmuXiDZl1zbP+q80LHwBu87c2KigiDWJ/x3oQpVhUVuLX1adoHaz
-         0Oe+aGTFLBa/fQzxNq/GsLCkUVdo42z71L98l+oggxB8Tjvs0RKUh1XK7DtU5fXI68US
-         Ozv9WJbTfl3Apz2FI5eb1IsVpQ0ygajv3FpT6U7fLekzezs0ObgGbkysXQZfno6syH5Z
-         XC6pI0adrxqBJBI2VOiiVQ0qsj8D3ZgKdKpGgh4HMCOhtWToASkHqkmZHqmvEiwA8WkG
-         gVnRlPOD2yXgCUN0cZS2LV5rQZJyVJQ5htZROxbxngA3Z0OlIB2wfTuKLbbhdxCdLwvT
-         tjOQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=6yt+ImjbYAO1sqMo1eT4qTNvCeaibbNFW5GQgZL1AtE=;
+        b=R+7T8f6ZoRi+riRbwV/Q1MOvRpY6vtiHSHIkg2kjFutHE3nd7DZM3bbn41bXSFj7TV
+         YorXdFMrJsnVZ+4lXhaAW8Q8O8ulvWrjpFW+7NQ7gyozGcOiA0S3+fVrmWbKqAolKzz0
+         +8prXTHtou1ZpOXHKJ2snVqWbM2w1nWsjKSxn0iP8vpt5pjEU1kvP1n/bHODB80Z5egR
+         9/eRLUrY+2r77EeG3+JiMMsjJRiOXi/u5bpHX0bhfQBh6NDa3DCNYhHJ/jm380+5oCVp
+         P2OFRAuxAOVui3xRu/ItTPaici6z6fZakcerkbV2HtyPORG/XbvZLYyn8yWraXjh9p69
+         1Vyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ZGeEe5YLJ0+b4QwZOPHkomVT1toYMD43M0T3r44VCNk=;
-        b=c+fG7Et6FgiEDi/6L+E9GL9FApxHBK0S5NBrhBCsR30BVLSOnI6jKESM5Fuzt7c3MX
-         DM2wsFZGZY3e5G9h9CVeqVcV9HKbEUdyxX1wF/mVzxkKt9k4+AYuk+mepBdNjUL33miZ
-         7FFR907mWsN24G4KhaYyf2f458zTk4W8SUiNEEgTeMh9fvoe3DGQvZQNEPahrWLBIHhD
-         ormTWb/pAFmnwOT+zuiZmnRKnL8fO2xX6XtzD+zRpR6oqpIgQ4Ju9RVLUENJ6WnPwFiA
-         lzrKiK8tLNkMXR75hEmQmR8SsgDPsPGHVuJBn95y+IveWFxrwZ8lZoahb3dT5iCd8KNd
-         JSWg==
-X-Gm-Message-State: AG10YOQuo7P3h9FEhCmwCq9V1UwHRZkf5cAMd9j5+az5e+5I/rC86UWdjVY6liCRnoF6ZQ==
-X-Received: by 10.28.174.77 with SMTP id x74mr7125047wme.99.1453028635748;
-        Sun, 17 Jan 2016 03:03:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=6yt+ImjbYAO1sqMo1eT4qTNvCeaibbNFW5GQgZL1AtE=;
+        b=bGxIdWEbTilxSauwpg1xMptKm0H3mf6fYCLjbJewkGr4hzDTFGigumvbjfDCb4PUNN
+         xCUG9EncWGELdMf5PVXhpgVpTgWEXRHF56JE0Q2xax6vxSgNCCol0dn1dpf6tWPEKrDA
+         ZWYFti9YbEoMGm6AR03Ndze9Ph6TYK0XErjQo7vhsAjml2UO2E+wdf1jhfmieRNNXqYH
+         RGpU6i+MweZRCo3ws8gadGphI5CuN6ti+L2Zow0+d9x5pXk0Fi7PG6hP7DSl4nKdVghF
+         VES+X/aUXva6Fz3VZCbrM9VrvwlTtKtYz7R9sACXh1qECBV6Yxsu0BL+HcR073ErqpU/
+         Ntcg==
+X-Gm-Message-State: AG10YOTY9IT+f3oO8T7+QXoNAlkmlRUNI0065bS/GZFiQ6GJlAAdLq2M3nB8qzkmIdmMaA==
+X-Received: by 10.28.150.215 with SMTP id y206mr7353259wmd.8.1453029246724;
+        Sun, 17 Jan 2016 03:14:06 -0800 (PST)
 Received: from localhost ([95.233.44.41])
-        by smtp.gmail.com with ESMTPSA id u191sm10744864wmd.4.2016.01.17.03.03.54
+        by smtp.gmail.com with ESMTPSA id jo6sm18947995wjb.48.2016.01.17.03.14.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Jan 2016 03:03:54 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.14.g2b6d3d6
+        Sun, 17 Jan 2016 03:14:05 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284254>
 
-Sometimes it's useful to know the main branch of a git repository
-without actually downloading the repository.  This can be done by
-looking at the symrefs stored in the remote repository.  Currently git
-doesn't provide a simple way to show the symrefs stored on the remote
-repository, even though the information is available.  Add a --symrefs
-command line argument to the ls-remote command, which shows the symrefs
-on the remote repository.
+On 01/17, Thomas Gummerer wrote:
+> > I thought it might be nice for any porcelain which tries to wrap
+> > `ls-remote`, make some decision based on the capabilities, and then
+> > invoke another plumbing command. But I guess that is probably slightly
+> > crazy, and nobody is doing it.
+> >
+> > Something like `ls-remote --symrefs` probably would be a better place to
+> > start.
+>
+> Turns out adding this is pretty simple.
+>
+> The first two patches are documentation, which I noticed when reading
+> up about the command.  Patch three is a cleanup patch, which makes
+> ls-remote use the parse-options api instead of the hand-rolled option
+> parser.  Patch four is actually adding the option.
 
-The new argument works similar to the --heads and --tags arguments.
-When only --symrefs is given, only the symrefs are shown.  It can
-however be combined with the --refs, --heads or --tags arguments, to
-show all refs, heads, or tags as well.
+Sorry, I forgot to add --in-reply-to to git-send email.  For
+reference, the thread that got me to do this patch series is at
+http://thread.gmane.org/gmane.comp.version-control.git/284075.
 
-Suggested-by: pedro rijo <pedrorijo91@gmail.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-ls-remote.txt |  8 +++++++-
- builtin/ls-remote.c             |  9 ++++++++-
- t/t5512-ls-remote.sh            | 20 ++++++++++++++++++++
- 3 files changed, 35 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 31c1427..5b606dd 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-remote' [--heads] [--tags]  [--upload-pack=<exec>]
--	      [-q | --quiet] [--exit-code] [--get-url] [<repository> [<refs>...]]
-+	      [-q | --quiet] [--exit-code] [--get-url]
-+	      [--symrefs] [<repository> [<refs>...]]
- 
- DESCRIPTION
- -----------
-@@ -50,6 +51,11 @@ OPTIONS
- 	"url.<base>.insteadOf" config setting (See linkgit:git-config[1]) and
- 	exit without talking to the remote.
- 
-+--symrefs::
-+	Show the symrefs on the server.  Shows only the symrefs by
-+	default, and can be combined with --tags and --heads to show
-+	refs/heads and refs/tags as well.
-+
- <repository>::
- 	The "remote" repository to query.  This parameter can be
- 	either a URL or the name of a remote (see the GIT URLS and
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 6ee7b0e..f33ada9 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -5,7 +5,8 @@
- 
- static const char * const ls_remote_usage[] = {
- 	N_("git ls-remote [--heads] [--tags]  [--upload-pack=<exec>]\n"
--	   "                     [-q | --quiet] [--exit-code] [--get-url] [<repository> [<refs>...]]"),
-+	   "                     [-q | --quiet] [--exit-code] [--get-url]\n"
-+	   "                     [--symrefs] [<repository> [<refs>...]]"),
- 	NULL
- };
- 
-@@ -38,6 +39,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	int quiet = 0;
- 	int status = 0;
- 	int tags = 0, heads = 0, refs = 0;
-+	int symrefs = 0;
- 	const char *uploadpack = NULL;
- 	const char **pattern = NULL;
- 
-@@ -58,6 +60,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			    N_("take url.<base>.insteadOf into account"), 1),
- 		OPT_SET_INT(0, "exit-code", &status,
- 			    N_("exit with exit code 2 if no matching refs are found"), 2),
-+		OPT_BOOL(0, "symrefs", &symrefs, N_("show symrefs")),
- 		OPT_END()
- 	};
- 
-@@ -98,6 +101,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (!dest && !quiet)
- 		fprintf(stderr, "From %s\n", *remote->url);
- 	for ( ; ref; ref = ref->next) {
-+		if (symrefs && ref->symref)
-+			printf("symref: %s	%s\n", ref->symref, ref->name);
-+		if (symrefs && !flags)
-+			continue;
- 		if (!check_ref_type(ref, flags))
- 			continue;
- 		if (!tail_match(pattern, ref->name))
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index aadaac5..68a1429 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -163,4 +163,24 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
- 	grep refs/tags/magic actual
- '
- 
-+test_expect_success 'ls-remote --symrefs' '
-+	cat >expect <<-EOF &&
-+	symref: refs/heads/master	HEAD
-+	EOF
-+	git ls-remote --symrefs >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-remote with symrefs and refs combined' '
-+	cat >expect <<-EOF &&
-+	symref: refs/heads/master	HEAD
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/HEAD
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
-+	EOF
-+	git ls-remote --symrefs --refs >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.7.0.14.g2b6d3d6
+> Thomas Gummerer (4):
+>   ls-remote: document --quiet option
+>   ls-remote: fix synopsis
+>   ls-remote: use parse-options api
+>   ls-remote: add support for showing symrefs
+>
+>  Documentation/git-ls-remote.txt | 12 +++++-
+>  builtin/ls-remote.c             | 90 +++++++++++++++++------------------------
+>  t/t5512-ls-remote.sh            | 20 +++++++++
+>  3 files changed, 68 insertions(+), 54 deletions(-)
+>
+> --
+> 2.7.0.14.g2b6d3d6
+>
