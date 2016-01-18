@@ -1,54 +1,110 @@
-From: =?UTF-8?Q?Toralf_F=c3=b6rster?= <toralf.foerster@gmx.de>
-Subject: "git tag --contains <id>" is too chatty, if <id> is invalid
-Date: Mon, 18 Jan 2016 22:24:31 +0100
-Message-ID: <569D580F.4070302@gmx.de>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 2/5] ls-remote: document --refs option
+Date: Mon, 18 Jan 2016 22:39:46 +0100
+Message-ID: <20160118213946.GG7100@hank>
+References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
+ <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
+ <1453136238-19448-3-git-send-email-t.gummerer@gmail.com>
+ <20160118193140.GB1009@sigill.intra.peff.net>
+ <xmqqsi1ud5dk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 22:25:02 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	bturner@atlassian.com, pedrorijo91@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 18 22:39:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLHIJ-00047B-I1
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:24:59 +0100
+	id 1aLHWZ-0003lR-Hz
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932395AbcARVYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 16:24:37 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50315 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932282AbcARVYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 16:24:35 -0500
-Received: from [192.168.178.24] ([78.54.167.31]) by mail.gmx.com (mrgmx102)
- with ESMTPSA (Nemesis) id 0MdoR7-1aUoUG0OfF-00PeZm for <git@vger.kernel.org>;
- Mon, 18 Jan 2016 22:24:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-X-Provags-ID: V03:K0:+Sg0G8WPYioer8j9CfUHiDKQJ0h3krlsh+zSO14T2kbL08CYNF7
- 0LbT45jFWqD34pOnO6wlRsio7UKDz/ucRc9tsWEfN64mSLf3MT1kWXBcEW1XWq4gJG1rs1I
- qNTHDH+6q6B4+PlnTAcBXp1lU/n9bbzq/RtYcr9KSK783IxiNWq/n/RT1Ul3BYG2K3rhMUm
- 9ECH3pgUnHoIzyMqKfKBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vuJsX/w2dvY=:Q7r10FQzZo8FDefoVGmkZs
- FlXnV0tPqtPK398wi1gmZQvy/TKe48Jb6sXy80lWSiIcURTyHEtRKzU+xgp3cFpPAXIdFL5Cy
- E85VtDe4Rkpo/c5c8p4UWf+52xo+xT3/63g2q+RdWAZsG7BcfiS7AGcSzdE7RwJZlt1wVAxkJ
- wIaE8J/TC3n3pCtTr6Ma0LKuyEJpxfxySZPgbft5k5McQTY3hPBnj4sbBfbjlM/Q7VEr84rIe
- sbVp2nLCV/QVCVxhl2TMPFGSufZ8V2yb2mwh2x2OyAyuIMDwSgfisMOKd54D2YJVD/1tn7cRy
- ExNHrJejI6Gs8MHpaNrYNIeF8guvJ7MBF6kQ1D3F77IFoVKem+VkHgLmWCshhTwqPI9dnUT0K
- VPjJOYRL1TlFJj1SaH4JaaPfM1dPLuEsr2Vp9GGsTghRi0h97ZjSB6zpqtkAeCTPW40Su3SDi
- ubXNFxXdj5aoOYy+UHJ/3FaQ5KsAHtn5WnmB4Y2skZggSOx+Aam8wEij//177L64rrW2nUlcC
- wafJJz7QZbiPJp8zYQ2JL0jXPXPNo8+yO2Sf4nI7WzKwP43eyS6+1Xu4YoNgMikaDGjwGAmJV
- znIr6Cimmr2Zoj8imgy0SOw7wru8DAyVGmoR7RoWioqy9WkVAKkG8kNmAZ82K4nJUuW8HoIt1
- EpfGwLrg4DuZ8lKucYeRCeCUG5IS2GSwwqzBGBZZUUHRhzksILzxw9+vKBNudg7xdqCEkokDr
- WEUxsBsmMGIqQOE3uPb2rAa0tq9Z20wNeYf+Y87FfZXrvCwavCQNVDo0cLocgCRGsvhW2nc/ 
+	id S1756596AbcARVjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 16:39:23 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35487 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756530AbcARVjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 16:39:21 -0500
+Received: by mail-wm0-f66.google.com with SMTP id 123so11889206wmz.2
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 13:39:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KCcOt0sLcoZAHMl+Z7E1LgAjJmWmdP1CsrawLciilaE=;
+        b=0u53svHUE29ajeFTPNz0gpCUQVXtLHtqbD4HMhYWUEo3s1/xsMzZfc36KHoWalaaSD
+         FCMeFcui5Mm3XlWnw1ZkIGzxxgSqL5kISsYTvQWZj+6j3jZ1RBwrK2AOgcqd6chEEAXh
+         m7jRLFHOoTecwsXy3JZKN1BIjYyfbeAPmVQOrWAe3t3Xv0xoFrzwi5zm+4kBOHRDtc+W
+         IUpoOqGadTP9dvWEOBhiD1jssUJLz/6YSdOGO2PIvh6QPt4TRAn3zJJAOZGo8dXfmGVp
+         jZT7znUiBXGc1Hgc2HOSMk7AdQqAbsn+7rficZY/sWG3PBEgLv8LSmmleKC6Hy2ssVoJ
+         1h3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=KCcOt0sLcoZAHMl+Z7E1LgAjJmWmdP1CsrawLciilaE=;
+        b=Hqc+6B7bamFHZPNwITDhKP9hOo+SgT9E/jXrPwLhbRD0JbMYKjgEnGVaxile2ztvWJ
+         QqUnDEXr83VJauqPUHzl+qyZywWg+JFwCbADRtTnvuhU6pdHfiIqGOMHYvHXwNHxe8tj
+         keLMX83fwMb2KxQixmLTGQEg36kKGkh0mk9lUSwESaeWLhi09295d/z5BR0Kq1HP2qj8
+         vguNyoDfTVA4mDz33d+HEuPYJaw/oWK1930hbRcGO5Wouk7hKSrXVLpeYol6anpLjXaj
+         fvvZgueBhW3zrNogjJRf7+aaeuNuy1jOREqaBVXAN3/KYxhvA8icXGVAT5xdw7icfnpa
+         7xxg==
+X-Gm-Message-State: AG10YOThvnwBGnIgM5ZPv6vFrtmivvwf+ZGWpFRNqDi1u1bxn4oYw2cECV60x3NMlxHkzQ==
+X-Received: by 10.28.211.136 with SMTP id k130mr16011159wmg.84.1453153160120;
+        Mon, 18 Jan 2016 13:39:20 -0800 (PST)
+Received: from localhost (host113-108-dynamic.249-95-r.retail.telecomitalia.it. [95.249.108.113])
+        by smtp.gmail.com with ESMTPSA id gb9sm25581752wjb.26.2016.01.18.13.39.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jan 2016 13:39:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqsi1ud5dk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284324>
 
- very first line is "error: malformed object name <id>" which tells all, or ?
+On 01/18, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>
+> > On Mon, Jan 18, 2016 at 05:57:15PM +0100, Thomas Gummerer wrote:
+> >
+> >> +--refs::
+> >> +	Do not show peeled tags or pseudo-refs like HEAD or MERGE_HEAD
+> >> +	in the output.
+> >> +
+> >
+> > Minor nit: we show whatever the other side sends us, which is the refs,
+> > HEAD, and peeled tags. So mentioning MERGE_HEAD isn't wrong (if the
+> > server _did_ send it to us, we would omit it), but it is a bit
+> > misleading.
+> >
+> > I think saying "pseudo-refs like HEAD" is OK; even though we know it is
+> > only HEAD in the current server implementation, it better describes what
+> > the client side is doing.
 
--- 
-Toralf, pgp: C4EACDDE 0076E94E
+Makes sense, will change.
+
+>
+> Good point, I think.  We probably would want to fix the glossary
+> entry of the word that is not spelled with a dash in between the
+> two word components (or update the above to spell it as a single
+> word).
+>
+
+I'll update to spell it as a single word, as that seems to be more in
+line with how it was used throughout the history.
+
+$ git log | grep pseudo-ref | wc -l
+2
+$ git log | grep pseudoref | wc -l
+18
+
+Thanks, both.
+
+--
+Thomas
