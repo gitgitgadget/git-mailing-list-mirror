@@ -1,100 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
-Date: Mon, 18 Jan 2016 17:13:22 -0500
-Message-ID: <CAPig+cQ5X7r22pXyCs_n+-mXK3Lzh1CpAMQ_PbuhLT4C3S+v1Q@mail.gmail.com>
-References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
-	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
-	<xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
-	<CAPc5daWpnReWJzeTJjvZap78H0oZKG-YGEP19Neusyahu5A6cQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 5/5] ls-remote: add support for showing symrefs
+Date: Mon, 18 Jan 2016 17:20:12 -0500
+Message-ID: <20160118222012.GA24740@sigill.intra.peff.net>
+References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
+ <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
+ <1453136238-19448-6-git-send-email-t.gummerer@gmail.com>
+ <20160118195159.GD1009@sigill.intra.peff.net>
+ <20160118220913.GI7100@hank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tobias Klauser <tklauser@distanz.ch>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 23:13:28 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, bturner@atlassian.com, gitster@pobox.com,
+	pedrorijo91@gmail.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 18 23:20:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLI3E-0004Mg-Bg
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 23:13:28 +0100
+	id 1aLI9r-0007xT-UR
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 23:20:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932424AbcARWNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 17:13:25 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36670 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932415AbcARWNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 17:13:23 -0500
-Received: by mail-vk0-f65.google.com with SMTP id e64so9799769vkg.3
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 14:13:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=d5ZkArA4WA8DhtHR0S8yxf140Q5V+wUiysG6Z+DtHas=;
-        b=Rmdt5ltrHaKjXKXjvg6NJeB0dgq/QnA/RJmd2foUlwfKFCxV5i1e3D57M9BbP1T/me
-         ag7v1RpNq20GeEraoni2UDLGxxkrSiV3p/+Kr/GDTS7+6z5FFsuOEXVZ3GA0Q32VOkUo
-         y0vT8DHcu0PCr5diF7RvwJXPugZ4siePzMV3jQue4fr+Qrp3fGJ3kgZM2NL7FpcbLb/K
-         f+oFePBbmhcdkPctn26H3EUS5ywl88fzAgvzNTsTaefl7k7GeJcG82YD8IvUddhMBpHC
-         c6DtQuvPk30zWKcVLvlTaXA9rGnsrL3GIFI7TJYDZcaGsFVYWLOXDNGplI3ph3EvIA9R
-         6MNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=d5ZkArA4WA8DhtHR0S8yxf140Q5V+wUiysG6Z+DtHas=;
-        b=mCsnPpjxw8V3nuJL74inr/RXwQBqzQzHVIiMq/jUWcJ5CZGQ+/rDCDIOE7kPac70C5
-         moFjpfY/HCZMRxtv8+OjhkILJGOL0GAlI2VnpU3mpGcqxkECTGqz4mDN6KKE02kd+MbM
-         216x+RmW2WF9r0ypHbKQfHEsPqxp0LRLFLkxk21Tm6TUBXxbOKBwt2R7H28V2udbQqDj
-         N1rFxOuWt73L0ewbf07G/CMg3anzcV3FFBG0vNdNkNWMJwAACJ9II1mLyxsVCQhohHf6
-         47uagCUkf5PYpandFQ6PlEchTZmFNBKTNOzSVya6l+8Iv+ne4LYvWB1U08FCc2eMpcTY
-         BlGA==
-X-Gm-Message-State: ALoCoQmjgCaW1OTvOaCRF8dBe7vDahU2+XUiOKfazVtlWd7Kcy0G6Ew7ftCnF+ZvXEYQWtFq0MKYHnO3I9IGjk2yp4+ZsmM6HQ==
-X-Received: by 10.31.141.2 with SMTP id p2mr18431945vkd.37.1453155202924; Mon,
- 18 Jan 2016 14:13:22 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 18 Jan 2016 14:13:22 -0800 (PST)
-In-Reply-To: <CAPc5daWpnReWJzeTJjvZap78H0oZKG-YGEP19Neusyahu5A6cQ@mail.gmail.com>
-X-Google-Sender-Auth: M1kro7MTQr4jiEXkNV8wOUdieSs
+	id S932394AbcARWUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 17:20:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55740 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932372AbcARWUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 17:20:15 -0500
+Received: (qmail 8434 invoked by uid 102); 18 Jan 2016 22:20:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 17:20:14 -0500
+Received: (qmail 14657 invoked by uid 107); 18 Jan 2016 22:20:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 17:20:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2016 17:20:12 -0500
+Content-Disposition: inline
+In-Reply-To: <20160118220913.GI7100@hank>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284333>
 
-On Mon, Jan 18, 2016 at 4:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Jan 18, 2016 13:11, "Eric Sunshine" <sunshine@sunshineco.com> wrote:
->> On Thu, Jan 14, 2016 at 3:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> If for some reason interpret-trailers fails to fail, this would
->>> leave an unreadable 'message' in the trash directory.  Maybe no
->>> other tests that come after this one want to be able to read the
->>> contents of the file right now, but this is an accident waiting to
->>> happen:
->>>
->>>         cat basic_message >message &&
->>> +       test_when_finished "chmod +r message" &&
->>>         chmod -r message &&
->>>         test_must_fail ... &&
->>>         chmod +r message &&
->>
->> Don't forget to remove this (now unnecessary) "chmod +r" once you've
->> added the 'test_when_finished "chmod +r"'.
->>
->>>         test_cmp ...
->
-> It still is necessary for the test-cmp to work, no?
+On Mon, Jan 18, 2016 at 11:09:13PM +0100, Thomas Gummerer wrote:
 
-My bad. Ignore me.
+> > +test_expect_failure 'ls-remote with filtered symrefs (--heads)' '
+> > +	git symbolic-ref refs/heads/foo refs/tags/mark &&
+> > +	cat >expect <<-\EOF &&
+> > +	ref: refs/heads/bar	refs/tags/mark
+> > +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/foo
+> > +	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
+> > +	EOF
+> > +	git ls-remote --symrefs --heads . >actual &&
+> > +	test_cmp expect actual
+> > +'
+> 
+> I'm a bit confused by this.  Shouldn't the "ref: refs/heads/bar
+> refs/tags/mark" line only show up when we use --tags, not --heads?
+> Also should refs/heads/bar be refs/heads/foo?
 
-By the way, isn't the:
+Yes, sorry, I bungled this. It should expect:
 
-    cat basic_message >message &&
+  ref: refs/tags/mark\trefs/heads/foo
 
-in the above test just an unusual way to say:
+I changed my mind about which refs to use halfway through writing, and
+of course because it is marked to expect failure, running the test
+didn't clue me in. :)
 
-    cp basic_message message &&
-
-?
+-Peff
