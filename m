@@ -1,119 +1,130 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 3/6] worktree.txt: how to fix up after moving a worktree
-Date: Mon, 18 Jan 2016 18:21:31 +0700
-Message-ID: <1453116094-4987-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 5/6] setup.c: record the location of .git file
+Date: Mon, 18 Jan 2016 18:21:33 +0700
+Message-ID: <1453116094-4987-6-git-send-email-pclouds@gmail.com>
 References: <1453116094-4987-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <ericsunshine@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 12:04:08 2016
+X-From: git-owner@vger.kernel.org Mon Jan 18 12:04:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aL7bT-00044a-As
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 12:04:07 +0100
+	id 1aL7bb-00048i-28
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 12:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754677AbcARLD7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2016 06:03:59 -0500
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:34256 "EHLO
-	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754479AbcARLDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 06:03:54 -0500
-Received: by mail-pa0-f67.google.com with SMTP id yy13so32473976pab.1
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 03:03:53 -0800 (PST)
+	id S1754714AbcARLEJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2016 06:04:09 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33496 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754479AbcARLEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 06:04:05 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e65so11653007pfe.0
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 03:04:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ltnJ2tUSWdzgLVaVPWLdaDdyp7rqnEv1rKs1u3kQ/SE=;
-        b=s7jIucuP0599gWvEYwm2iI0hLOOPk+Mo3KUCOAJqCMC8o8O6afhvqXCSbM4UlpxMVm
-         Y7+VeFJP5Np9Av5SfX0Omf/fR8s2nNhTNnYFaL6VEI7V2WX+D7mDQ4mjsm3NrBW3sxgw
-         orev2Pmi1WFRRhMWyCQxQvFn24DgBG3KX9KpWkMPR+FZxHw8Rovx2sJAsJ/cAOntDgW+
-         ikha7woev++iplPEnLcy1KA+YlYby8IP/DWmuHGzjR69szgjI5Xsm5z6k/8V6Fd0WnjB
-         Fsv3W8QLv5GQ8bTOvEMu30fwlWa1knJzF3V3QhfoSFZfRVp2ihPFAesZgYWkmiYrDvo/
-         66Eg==
+        bh=dtyfn1AQeU4w7Jf3L1JZ43qQQwTB4d1ZDQLBWjHA0HE=;
+        b=OcWy73XHXHdVhUJ3/KrMeFo1YyLURDZoofRqPkjbz/hg4RGQP2tfg5B1kUqPP+4Skl
+         xd+TTl5R6FKKqGVSH/nRhH8nMcs/vudoA1MF4hPxaSJHITQNW5fiV8oJgjg0z2WrzKPi
+         1cpz5KcRBOmVzDbv1in91MiXQSkOwBOu5r1ZYvv5SThxCfgYX7Y8G2akUkxGF0oyS6Du
+         v14fvu2p9BGgX+3n5S+s+Xys1xbNzdUWVLSdYKHCV0NbSbeWwQQ9eUyGKh8nA5Vrv06q
+         GVpWzWktFJD0uAmeSxQGm1NoVt+xZEVNLlRUu1PSXW2CJMYRz/r/Efkj0pdx8kzQ+ySu
+         GwyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=ltnJ2tUSWdzgLVaVPWLdaDdyp7rqnEv1rKs1u3kQ/SE=;
-        b=iUKG6FCjk+frpU8eopdsfUSEAmkU5BYdkU6Q7rHO77ncbuFjDQAC5z35d05appxkd0
-         NCsKQLUGK+TOhOIzlGVW197hcuaB/AISb/fBCdOODkQAKDavHqWTQifAR9f1uFRVeY0N
-         dRZAGznbNRRbP1lWAqWOyGksTAZXjHfD7HI17/dNxNUILX+/B2zF7qz/lyAkOyUFefRo
-         yHF8VWLQafNBVxkAhAT8zbPHg2q/q+PBXXNAt/wIGTr+KkxNy5UEYhOTpRk6R6iMq2Yy
-         X4ntGyMBbJgnCBKHonKuZTf8QqDakIH9cP9YlUd0lboCwv5KZ+YC7cDvnDZuTS+T+I7R
-         0+gA==
-X-Gm-Message-State: ALoCoQk5/0BJ53rDTekV8Z1PeRR+JNR64fILtZcVFbT95NZLLEPf5loJ9Iqhn2c99dQGpt1VgK/KVCNa76ZVpWq0BVcjtg0OWA==
-X-Received: by 10.66.100.228 with SMTP id fb4mr35151062pab.84.1453115033641;
-        Mon, 18 Jan 2016 03:03:53 -0800 (PST)
+        bh=dtyfn1AQeU4w7Jf3L1JZ43qQQwTB4d1ZDQLBWjHA0HE=;
+        b=IwlZ7IsgTI8uK8BCJHXP3bzs1KSodWeaF4+ftnmhJ0tRfoZquoVoa1kErr8GfhXMAn
+         81UmgshytCl0cAWeYpQJUxTHshsZIc7/FBy5W2PfAtAF7wh1Vo68b3/1sx4nrra/qWPq
+         PZmkCNTyldksevNqjbr9WkUg7GIAJtc15Q4r/K8sp/NCpLMljUA8AnALJbu/ssHB2zXN
+         CViXY6F2Zw4alw9fK0M5ALroRQeeFGy6XIZvYfhSUTRsZ9UHnZ11z3gs7cPvR/BItb2H
+         IJGuICYxk1SbCY+RsDNW22U3lhIweQ8FY8vSByDHOPK0ODbFeD5CDTTf6JZS5tppr5py
+         xKCQ==
+X-Gm-Message-State: AG10YOTOHPYac7wJXVF/wohzbs4GQrvb8dWYJHg2XU03BxdFRn7NPhX/cAKN0orZrkLODQ==
+X-Received: by 10.98.40.131 with SMTP id o125mr14928716pfo.83.1453115045200;
+        Mon, 18 Jan 2016 03:04:05 -0800 (PST)
 Received: from lanh ([115.72.43.83])
-        by smtp.gmail.com with ESMTPSA id sv8sm33291571pab.13.2016.01.18.03.03.50
+        by smtp.gmail.com with ESMTPSA id g87sm33258054pfj.1.2016.01.18.03.04.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 03:03:52 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 18 Jan 2016 18:21:55 +0700
+        Mon, 18 Jan 2016 03:04:04 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 18 Jan 2016 18:22:07 +0700
 X-Mailer: git-send-email 2.7.0.96.g5373197
 In-Reply-To: <1453116094-4987-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284288>
-
-=46rom: Eric Sunshine <ericsunshine@gmail.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284289>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-worktree.txt | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ cache.h |  1 +
+ setup.c | 12 ++++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktre=
-e.txt
-index 4814f48..62c76c1 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -32,9 +32,9 @@ The working tree's administrative files in the reposi=
-tory (see
- `git worktree prune` in the main or any linked working tree to
- clean up any stale administrative files.
+diff --git a/cache.h b/cache.h
+index fbe29ac..c912afb 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1728,6 +1728,7 @@ const char *split_cmdline_strerror(int cmdline_er=
+rno);
+ struct startup_info {
+ 	int have_repository;
+ 	const char *prefix;
++	const char *first_gitfile;
+ };
+ extern struct startup_info *startup_info;
 =20
--If you move a linked working tree to another file system, or
--within a file system that does not support hard links, you need to upd=
-ate
--$GIT_DIR/worktrees/<id>/gitdir so that they do not get automatically p=
-runed.
-+If you move a linked working tree, you need to manually update the
-+administrative files so that they do not get pruned automatically. See
-+section "DETAILS" for more information.
+diff --git a/setup.c b/setup.c
+index 8b02429..0489f54 100644
+--- a/setup.c
++++ b/setup.c
+@@ -550,6 +550,8 @@ static const char *setup_explicit_git_dir(const cha=
+r *gitdirenv,
+ 	gitfile =3D (char*)read_gitfile(gitdirenv);
+ 	if (gitfile) {
+ 		gitfile =3D xstrdup(gitfile);
++		if (startup_info && !startup_info->first_gitfile)
++			startup_info->first_gitfile =3D real_path_dup(gitdirenv);
+ 		gitdirenv =3D gitfile;
+ 	}
 =20
- If a linked working tree is stored on a portable device or network sha=
-re
- which is not always mounted, you can prevent its administrative files =
-from
-@@ -135,6 +135,13 @@ thumb is do not make any assumption about whether =
-a path belongs to
- $GIT_DIR or $GIT_COMMON_DIR when you need to directly access something
- inside $GIT_DIR. Use `git rev-parse --git-path` to get the final path.
+@@ -834,9 +836,12 @@ static const char *setup_git_directory_gently_1(in=
+t *nongit_ok)
+ 		current_device =3D get_device_or_die(".", NULL, 0);
+ 	for (;;) {
+ 		gitfile =3D (char*)read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
+-		if (gitfile)
++		if (gitfile) {
+ 			gitdirenv =3D gitfile =3D xstrdup(gitfile);
+-		else {
++			if (startup_info && !startup_info->first_gitfile)
++				startup_info->first_gitfile =3D
++					real_path_dup(DEFAULT_GIT_DIR_ENVIRONMENT);
++		} else {
+ 			if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
+ 				gitdirenv =3D DEFAULT_GIT_DIR_ENVIRONMENT;
+ 		}
+@@ -885,6 +890,9 @@ const char *setup_git_directory_gently(int *nongit_=
+ok)
+ {
+ 	const char *prefix;
 =20
-+If you move a linked working tree, you need to update the 'gitdir' fil=
-e
-+in the entry's directory. For example, if a linked working tree is mov=
-ed
-+to `/newpath/test-next` and its `.git` file points to
-+`/path/main/.git/worktrees/test-next`, then update
-+`/path/main/.git/worktrees/test-next/gitdir` to reference `/newpath/te=
-st-next`
-+instead.
++	if (startup_info)
++		startup_info->first_gitfile =3D NULL;
 +
- To prevent a $GIT_DIR/worktrees entry from being pruned (which
- can be useful in some situations, such as when the
- entry's working tree is stored on a portable device), add a file named
+ 	prefix =3D setup_git_directory_gently_1(nongit_ok);
+ 	if (prefix)
+ 		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
 --=20
 2.7.0.96.g5373197
