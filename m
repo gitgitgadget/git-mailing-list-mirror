@@ -1,97 +1,54 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
-Date: Mon, 18 Jan 2016 16:11:11 -0500
-Message-ID: <CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
-References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
-	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
-	<xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Toralf_F=c3=b6rster?= <toralf.foerster@gmx.de>
+Subject: "git tag --contains <id>" is too chatty, if <id> is invalid
+Date: Mon, 18 Jan 2016 22:24:31 +0100
+Message-ID: <569D580F.4070302@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tobias Klauser <tklauser@distanz.ch>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 22:11:44 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 18 22:25:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLH5T-0004Ze-QV
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:11:44 +0100
+	id 1aLHIJ-00047B-I1
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932299AbcARVLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 16:11:13 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:33368 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756311AbcARVLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 16:11:12 -0500
-Received: by mail-vk0-f66.google.com with SMTP id n1so11990373vkb.0
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 13:11:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=oRbWBGTjYTrPClVMWh+tsyaQQ/1hBMkJGTIl3nfEE+o=;
-        b=VA9atnVlF5FuW2b0dN/RRAmGnvXauhHXi1KxvzxkZyQtG44PX0Vomr2DuodGEdxine
-         6KJVUM4s2gtXAfrxBQP74nV4vS3bi30VU0p5Jzj6tRp0JcqpyeIPSZ55DDQO3h7JeT6D
-         UlPwVbZQkneCrM/1emYzg5zzcwhvxYOzAPJd0syh5jh6Jmvu3dAVxgGgmAXIXVyUpO6t
-         f1EQ3kvdAvCE4MWqqPrJkcE0ycRQwkdDihdcpoxtsl6shaKZzgHwwYpzKE1cpAjaJFh+
-         OsE03G3hOimGZSYWwLnE0waQaqCmMSave4i3WVD2xIJefZnVJBqtlvBlZze8JEpWARlf
-         J1Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=oRbWBGTjYTrPClVMWh+tsyaQQ/1hBMkJGTIl3nfEE+o=;
-        b=bRkMSYlrIk6psrs+p1W/GzmwytMIrwrkn26RL7iGGJtgtbdDrCachZBlSeCbDSFjWW
-         J0/sv2dCB3m9c+2VFym3ZFhw9L58wghX9g14XG1klJzPN9AH1c4QTRVanaNmAsYMkSYO
-         fBuss8peaCnToC1OCmcadnAX+gpA7PlyJpI1Cw9VhVgG+TLNs0Xgy7JQ84E77RMARnEh
-         SZdo219bYiFiNmzd1ngEGPl9WOqj1V9oBCk0APl/WEszhYqmVYlHcG/EDxbo2/S5YmRY
-         Oo659eyRYv7tIxPLbkvxxufQJdcPfEuFkEuUzj3Fd8IeKbSURhIJGh+14FltncPjThVa
-         +jTQ==
-X-Gm-Message-State: ALoCoQnxBVjP2qaKfCuaVjRmS3gSNTmJBjIBhjniEwuPQQRc8BiPA5L1HYu6+Y6zJmddoV6eBr/+Y8JmHYonVM2uOXXcFXgnYA==
-X-Received: by 10.31.56.18 with SMTP id f18mr15666713vka.19.1453151471350;
- Mon, 18 Jan 2016 13:11:11 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 18 Jan 2016 13:11:11 -0800 (PST)
-In-Reply-To: <xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: zbmSGeZUgN2TfgGpkrdpEiKxt1E
+	id S932395AbcARVYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 16:24:37 -0500
+Received: from mout.gmx.net ([212.227.17.22]:50315 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932282AbcARVYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 16:24:35 -0500
+Received: from [192.168.178.24] ([78.54.167.31]) by mail.gmx.com (mrgmx102)
+ with ESMTPSA (Nemesis) id 0MdoR7-1aUoUG0OfF-00PeZm for <git@vger.kernel.org>;
+ Mon, 18 Jan 2016 22:24:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+X-Provags-ID: V03:K0:+Sg0G8WPYioer8j9CfUHiDKQJ0h3krlsh+zSO14T2kbL08CYNF7
+ 0LbT45jFWqD34pOnO6wlRsio7UKDz/ucRc9tsWEfN64mSLf3MT1kWXBcEW1XWq4gJG1rs1I
+ qNTHDH+6q6B4+PlnTAcBXp1lU/n9bbzq/RtYcr9KSK783IxiNWq/n/RT1Ul3BYG2K3rhMUm
+ 9ECH3pgUnHoIzyMqKfKBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vuJsX/w2dvY=:Q7r10FQzZo8FDefoVGmkZs
+ FlXnV0tPqtPK398wi1gmZQvy/TKe48Jb6sXy80lWSiIcURTyHEtRKzU+xgp3cFpPAXIdFL5Cy
+ E85VtDe4Rkpo/c5c8p4UWf+52xo+xT3/63g2q+RdWAZsG7BcfiS7AGcSzdE7RwJZlt1wVAxkJ
+ wIaE8J/TC3n3pCtTr6Ma0LKuyEJpxfxySZPgbft5k5McQTY3hPBnj4sbBfbjlM/Q7VEr84rIe
+ sbVp2nLCV/QVCVxhl2TMPFGSufZ8V2yb2mwh2x2OyAyuIMDwSgfisMOKd54D2YJVD/1tn7cRy
+ ExNHrJejI6Gs8MHpaNrYNIeF8guvJ7MBF6kQ1D3F77IFoVKem+VkHgLmWCshhTwqPI9dnUT0K
+ VPjJOYRL1TlFJj1SaH4JaaPfM1dPLuEsr2Vp9GGsTghRi0h97ZjSB6zpqtkAeCTPW40Su3SDi
+ ubXNFxXdj5aoOYy+UHJ/3FaQ5KsAHtn5WnmB4Y2skZggSOx+Aam8wEij//177L64rrW2nUlcC
+ wafJJz7QZbiPJp8zYQ2JL0jXPXPNo8+yO2Sf4nI7WzKwP43eyS6+1Xu4YoNgMikaDGjwGAmJV
+ znIr6Cimmr2Zoj8imgy0SOw7wru8DAyVGmoR7RoWioqy9WkVAKkG8kNmAZ82K4nJUuW8HoIt1
+ EpfGwLrg4DuZ8lKucYeRCeCUG5IS2GSwwqzBGBZZUUHRhzksILzxw9+vKBNudg7xdqCEkokDr
+ WEUxsBsmMGIqQOE3uPb2rAa0tq9Z20wNeYf+Y87FfZXrvCwavCQNVDo0cLocgCRGsvhW2nc/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284323>
 
-On Thu, Jan 14, 2016 at 3:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Tobias Klauser <tklauser@distanz.ch> writes:
->> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
->> @@ -326,6 +326,46 @@ test_expect_success 'with complex patch, args and --trim-empty' '
->> +test_expect_success POSIXPERM,SANITY "in-place editing doesn't clobber original file on error" '
+ very first line is "error: malformed object name <id>" which tells all, or ?
 
-I think POSIXPERM is all you need for this case; SANITY doesn't buy
-you anything, if I understand correctly.
-
->> +     cat basic_message >message &&
->> +     chmod -r message &&
->> +     test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
->> +     chmod +r message &&
->> +     test_cmp message basic_message
->> +'
->
-> If for some reason interpret-trailers fails to fail, this would
-> leave an unreadable 'message' in the trash directory.  Maybe no
-> other tests that come after this one want to be able to read the
-> contents of the file right now, but this is an accident waiting to
-> happen:
->
->         cat basic_message >message &&
-> +       test_when_finished "chmod +r message" &&
->         chmod -r message &&
->         test_must_fail ... &&
->         chmod +r message &&
-
-Don't forget to remove this (now unnecessary) "chmod +r" once you've
-added the 'test_when_finished "chmod +r"'.
-
->         test_cmp ...
+-- 
+Toralf, pgp: C4EACDDE 0076E94E
