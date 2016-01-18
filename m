@@ -1,229 +1,97 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 0/5] ls-remote: introduce symref argument
-Date: Tue, 19 Jan 2016 00:20:45 +0100
-Message-ID: <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 1/5] ls-remote: document --quiet option
+Date: Tue, 19 Jan 2016 00:20:46 +0100
+Message-ID: <1453159250-21298-2-git-send-email-t.gummerer@gmail.com>
 References: <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
+ <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
 Cc: peff@peff.net, bturner@atlassian.com, gitster@pobox.com,
 	pedrorijo91@gmail.com, Thomas Gummerer <t.gummerer@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 00:21:22 2016
+X-From: git-owner@vger.kernel.org Tue Jan 19 00:21:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLJ6v-0006iQ-MJ
+	id 1aLJ6w-0006iQ-EH
 	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 00:21:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754095AbcARXUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756597AbcARXUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 18:20:52 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33690 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869AbcARXUn (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 18 Jan 2016 18:20:43 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33682 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbcARXUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 18:20:41 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u188so19463984wmu.0
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 15:20:40 -0800 (PST)
+Received: by mail-wm0-f68.google.com with SMTP id u188so19464078wmu.0
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 15:20:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O/DMnDEBevYALbaaKeUPs5QunGj4UV1m5wxi/xoyMSI=;
-        b=KDnM9Q9Dvn0ERNkov5aQpMu5q9dk6jO9yUVNNNSOnOtkmBsI4Lyg08VPVRhx0lTKAO
-         ovTPhmR16BAvC1fQxn6Kt/cbUfBSgEi6bR70z917JneOntCDs/+llVb30gF+S+DTUXfw
-         2xM8pt0Nq6Nt/ZBnj+CgVFuCwgv0ZhSXMpKgLUHCX2oy5UduPk2rWBbRPZG4s7gNUZaI
-         lV0p5ypVK60SJfKZNkKSVqI4zkq5an+9YVFKfV72XD6Q998sqw5WtHshXVRQccmJm5E9
-         qno0rowwZX18t5fb8YkEePCHj26DYMfm0tgAbqwGr+CqGVFKdYMLBkYynBO/NXi3cJur
-         j9hA==
+        bh=2tzA7/jZowcbhNqJUwQk2IDabrQhIx0y3KgKDmNQESI=;
+        b=rxX5iPtcDYJehg7ubJdK4jz0XO9EVsaFJOAj9WyCdegNlYzPdQVlrl+0u/LuD5EYoX
+         UIPKkAxW1M1skg8vTiKUo0pa4Rpp6j6uay/sJCDw3oJeSYlqj316i+oY8PXD+/6J5PdR
+         yuA7CLa4bDGCyp11v49IccIzhxG5ylkiYpg5Q1Bq+OYWq/oeVxn+5vrmkLlmSP9WlBsa
+         DkdeHeYgX+GxIzdHhKtFucMSDh7Cy0edVFCNhs/NVaN8vQI4UhgozChDcO7qH2kRuG8L
+         0/umbRVVByIkQMatOSNRVb949BYKUj/3zrYXtyFdDGDQbbcboVuTE6ht3JCTEuXfJpbw
+         +2tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O/DMnDEBevYALbaaKeUPs5QunGj4UV1m5wxi/xoyMSI=;
-        b=cC5Y+HhnoKIPKC5CckajYtcMgJbCsM5m8M+VXrnNc1AI9UkVGLMvFEqHv3xF5fi8V6
-         ovF3N1iEn4n1D89I0/uIo44XXhkvsTSZqyp6sBZYqOwmymycMnZXNFV74Qj39aH4Q2H+
-         +50bRiFxzyPyRgekbbxnGOud7pdp9uGSbW+hiq8oQeTUQHiZDDg0dIr3sj1OprMO5w9H
-         nrve32yFQxaXpXHNRQm6kTFY6zYQ8VcEM7J+e55155gHf5TTQX1k9wUEZEyZ8pAhovIj
-         ebn27/Iv7cVmsdFyDe2ZU+oHZ1t7ZVt/rt7kAKaxNHlolWyUJmXN+YbRF6MCH/nszw9D
-         OymA==
-X-Gm-Message-State: ALoCoQnY8wC1Ys8UqBuPIDnY21vOBD+x1m8spnf+s/OZuo0Cd627fYqii5Go3waEdGc13F1qsQaxiWbcvLuz/OEKBPjvCSUI1A==
-X-Received: by 10.194.110.230 with SMTP id id6mr25532491wjb.67.1453159240179;
-        Mon, 18 Jan 2016 15:20:40 -0800 (PST)
+        bh=2tzA7/jZowcbhNqJUwQk2IDabrQhIx0y3KgKDmNQESI=;
+        b=GMR+7bVD3EKERqktVOGjmMQM9l9wzkBek/FpiRDBnQgGeWqiJGIH7B1kXIKxV65CwX
+         ftUldi1VMS1y8p7Wmd4ZrHZFuBhKakUGuzJ1FwoozRN3MRJM5IWaPt8HMk+Zy7cyPU9X
+         /qWtnLLketDZHr34rLl/GgjMUplwHwER7FzjlJjtaygPt7D5wPmNvnF8t9WnETdfmeNp
+         EC3cnpUoon3FopOPkNQby7U47soZK6mBOzyrDSdUtCdmTprmpvNHQBbS00AYwrZrYUnv
+         dqiZZ89A75S31hJIRyaMI+7+lVFmERftC6L49fIiDIA07UIbNzXDX7yrfFgzgg0M5r8w
+         pwFQ==
+X-Gm-Message-State: AG10YOT3AROBdR/NG/H/Bcg8MiSDaedtCPIEKPoC+ei1W+0GOYW8tQeK9nndEZSxPbib5g==
+X-Received: by 10.28.30.138 with SMTP id e132mr14773855wme.86.1453159242166;
+        Mon, 18 Jan 2016 15:20:42 -0800 (PST)
 Received: from localhost (host113-108-dynamic.249-95-r.retail.telecomitalia.it. [95.249.108.113])
-        by smtp.gmail.com with ESMTPSA id l2sm25843816wjf.15.2016.01.18.15.20.37
+        by smtp.gmail.com with ESMTPSA id ka4sm25839052wjc.47.2016.01.18.15.20.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 15:20:38 -0800 (PST)
+        Mon, 18 Jan 2016 15:20:41 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.30.g56a8654.dirty
-In-Reply-To: <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
+In-Reply-To: <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284337>
 
-The previous rounds are at $gmane/284248.  Thanks to Peff and Junio
-for reviewing and suggestions on the previous round.
+cefb2a5e3 ("ls-remote: print URL when no repo is specified") added a
+quiet option to ls-remote, but didn't add it to the documentation.  Add
+it.
 
-Changes from the previous round:
- - Slightly reworded the documentation for the --refs option
- - Small fix in the commit message of patch 4.
- - use <<-\EOF instead of <<-EOF in the tests
- - added a note about upload-pack only showing the HEAD symref
- - squashed in tests by peff
- - changed --symrefs option to --symref
- - reworded description and documentation of the option according to
-   comments from junio.
-
-Interdiff below:
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ Documentation/git-ls-remote.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 9356df2..5f2628c 100644
+index d510c05..27380de 100644
 --- a/Documentation/git-ls-remote.txt
 +++ b/Documentation/git-ls-remote.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
  [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
- 	      [-q | --quiet] [--exit-code] [--get-url]
--	      [--symrefs] [<repository> [<refs>...]]
-+	      [--symref] [<repository> [<refs>...]]
+ 'git ls-remote' [--heads] [--tags]  [--upload-pack=<exec>]
+-	      [--exit-code] <repository> [<refs>...]
++	      [-q | --quiet] [--exit-code] <repository> [<refs>...]
  
  DESCRIPTION
  -----------
-@@ -31,8 +31,7 @@ OPTIONS
+@@ -29,6 +29,10 @@ OPTIONS
+ 	both, references stored in refs/heads and refs/tags are
  	displayed.
  
- --refs::
--	Do not show peeled tags or pseudo-refs like HEAD or MERGE_HEAD
--	in the output.
-+	Do not show peeled tags or pseudorefs like HEAD	in the output.
- 
- -q::
- --quiet::
-@@ -55,8 +54,11 @@ OPTIONS
- 	"url.<base>.insteadOf" config setting (See linkgit:git-config[1]) and
- 	exit without talking to the remote.
- 
----symrefs::
--	Show the symrefs in addition to the other refs.
-+--symref::
-+	In addition to the object pointed by it, show the underlying
-+	ref pointed by it when showing a symbolic ref.  Currently,
-+	upload-pack only shows the symref HEAD, so it will be the only
-+	one shown by ls-remote.
- 
- <repository>::
- 	The "remote" repository to query.  This parameter can be
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index ea73d53..66cdd45 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -6,7 +6,7 @@
- static const char * const ls_remote_usage[] = {
- 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
- 	   "                     [-q | --quiet] [--exit-code] [--get-url]\n"
--	   "                     [--symrefs] [<repository> [<refs>...]]"),
-+	   "                     [--symref] [<repository> [<refs>...]]"),
- 	NULL
- };
- 
-@@ -38,7 +38,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	int get_url = 0;
- 	int quiet = 0;
- 	int status = 0;
--	int symrefs = 0;
-+	int show_symref_target = 0;
- 	const char *uploadpack = NULL;
- 	const char **pattern = NULL;
- 
-@@ -60,7 +60,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			 N_("take url.<base>.insteadOf into account")),
- 		OPT_SET_INT(0, "exit-code", &status,
- 			    N_("exit with exit code 2 if no matching refs are found"), 2),
--		OPT_BOOL(0, "symrefs", &symrefs, N_("show symrefs")),
-+		OPT_BOOL(0, "symref", &show_symref_target,
-+			 N_("show underlying ref in addition to the object pointed by it")),
- 		OPT_END()
- 	};
- 
-@@ -104,7 +105,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			continue;
- 		if (!tail_match(pattern, ref->name))
- 			continue;
--		if (symrefs && ref->symref)
-+		if (show_symref_target && ref->symref)
- 			printf("ref: %s\t%s\n", ref->symref, ref->name);
- 		printf("%s\t%s\n", oid_to_hex(&ref->old_oid), ref->name);
- 		status = 0; /* we found something */
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 3edbc9e..819b9dd 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -163,8 +163,8 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
- 	grep refs/tags/magic actual
- '
- 
--test_expect_success 'ls-remote --symrefs' '
--	cat >expect <<-EOF &&
-+test_expect_success 'ls-remote --symref' '
-+	cat >expect <<-\EOF &&
- 	ref: refs/heads/master	HEAD
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	HEAD
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
-@@ -172,17 +172,40 @@ test_expect_success 'ls-remote --symrefs' '
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/remotes/origin/master
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/tags/mark
- 	EOF
--	git ls-remote --symrefs >actual &&
-+	git ls-remote --symref >actual &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'ls-remote with filtered symrefs' '
--	cat >expect <<-EOF &&
-+test_expect_success 'ls-remote with filtered symref (refname)' '
-+	cat >expect <<-\EOF &&
- 	ref: refs/heads/master	HEAD
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	HEAD
- 	EOF
--	git ls-remote --symrefs . HEAD >actual &&
-+	git ls-remote --symref . HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_failure 'ls-remote with filtered symref (--heads)' '
-+	git symbolic-ref refs/heads/foo refs/tags/mark &&
-+	cat >expect <<-\EOF &&
-+	ref: refs/tags/mark	refs/heads/foo
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/foo
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
-+	EOF
-+	git ls-remote --symref --heads . >actual &&
-+	test_cmp expect actual
-+'
++-q::
++--quiet::
++	Do not print remote URL to stderr.
 +
-+test_expect_success 'ls-remote --symref omits filtered-out matches' '
-+	cat >expect <<-\EOF &&
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/foo
-+	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
-+	EOF
-+	git ls-remote --symref --heads . >actual &&
-+	test_cmp expect actual &&
-+	git ls-remote --symref . "refs/heads/*" >actual &&
-+	test_cmp expect actual
-+'
-+
-+
- test_done
-
-Thomas Gummerer (5):
-  ls-remote: document --quiet option
-  ls-remote: document --refs option
-  ls-remote: fix synopsis
-  ls-remote: use parse-options api
-  ls-remote: add support for showing symrefs
-
- Documentation/git-ls-remote.txt | 16 +++++++-
- builtin/ls-remote.c             | 90 +++++++++++++++++------------------------
- t/t5512-ls-remote.sh            | 45 +++++++++++++++++++++
- 3 files changed, 95 insertions(+), 56 deletions(-)
-
+ --upload-pack=<exec>::
+ 	Specify the full path of 'git-upload-pack' on the remote
+ 	host. This allows listing references from repositories accessed via
 -- 
 2.7.0.30.g56a8654.dirty
