@@ -1,88 +1,100 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v2 5/5] ls-remote: add support for showing symrefs
-Date: Mon, 18 Jan 2016 23:09:58 +0100
-Message-ID: <20160118220958.GJ7100@hank>
-References: <1453028643-13978-1-git-send-email-t.gummerer@gmail.com>
- <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
- <1453136238-19448-6-git-send-email-t.gummerer@gmail.com>
- <20160118195159.GD1009@sigill.intra.peff.net>
- <20160118195346.GA9337@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
+Date: Mon, 18 Jan 2016 17:13:22 -0500
+Message-ID: <CAPig+cQ5X7r22pXyCs_n+-mXK3Lzh1CpAMQ_PbuhLT4C3S+v1Q@mail.gmail.com>
+References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
+	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
+	<xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
+	<CAPc5daWpnReWJzeTJjvZap78H0oZKG-YGEP19Neusyahu5A6cQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bturner@atlassian.com, gitster@pobox.com,
-	pedrorijo91@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 18 23:09:37 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Tobias Klauser <tklauser@distanz.ch>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 18 23:13:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLHzT-0002MF-VM
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 23:09:36 +0100
+	id 1aLI3E-0004Mg-Bg
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 23:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756620AbcARWJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 17:09:33 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35516 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754871AbcARWJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 17:09:31 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 123so12012472wmz.2
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 14:09:31 -0800 (PST)
+	id S932424AbcARWNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 17:13:25 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:36670 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932415AbcARWNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 17:13:23 -0500
+Received: by mail-vk0-f65.google.com with SMTP id e64so9799769vkg.3
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 14:13:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ad/MfEl5VvOjV2N3YWhF4VcAYlvTnBWrIAA93cWQg5I=;
-        b=GBPZf/U4mz51LOiei3AkRpIYrU8I0FT4/UH2fzSq0aCWO3fxfJ0+JWi0jYSwNkWj6A
-         njGvPiM+wZgunH6+Kemx030meWb1bpJUqDZm1nNU0mppCks7P1HIIYzM01kXBKC2Uppg
-         srJWXhpYq9B/DBD1ArewfWK8QE7XAFvv82YfvcukkAHgQ25spkIvSyL0VTfH9Ls4G7Nq
-         8+mEsvHXYT3zfWmMjMeD6QFE18n5osqbwqHG4Q9D3ecmWUPSgk5PBz8IEeH730j9mMjy
-         xqsVUIdIeakynEbYZRg1+oTqfa+CxBJJZZJdqFTKCL+eE8jXTPynU+VG6zso1czdGACv
-         NhgA==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=d5ZkArA4WA8DhtHR0S8yxf140Q5V+wUiysG6Z+DtHas=;
+        b=Rmdt5ltrHaKjXKXjvg6NJeB0dgq/QnA/RJmd2foUlwfKFCxV5i1e3D57M9BbP1T/me
+         ag7v1RpNq20GeEraoni2UDLGxxkrSiV3p/+Kr/GDTS7+6z5FFsuOEXVZ3GA0Q32VOkUo
+         y0vT8DHcu0PCr5diF7RvwJXPugZ4siePzMV3jQue4fr+Qrp3fGJ3kgZM2NL7FpcbLb/K
+         f+oFePBbmhcdkPctn26H3EUS5ywl88fzAgvzNTsTaefl7k7GeJcG82YD8IvUddhMBpHC
+         c6DtQuvPk30zWKcVLvlTaXA9rGnsrL3GIFI7TJYDZcaGsFVYWLOXDNGplI3ph3EvIA9R
+         6MNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Ad/MfEl5VvOjV2N3YWhF4VcAYlvTnBWrIAA93cWQg5I=;
-        b=KQ0ujeWO1DoHjVIyfmFQQfKG17ZbIgTI7l26HJKAJ1L+JRxWjXrunT4wc/ulg2tliN
-         lOHHrbooWQzCiKd6eg1CoKN59W7r9q0+H+13mBKzKYv7BlF5zzEgyqcfefKiWcdTlZoP
-         RttwYA4U107iJN35w9Q5Y/nlwdM9UG3BkGYAvMKeHmcxnrZxvwIcvgqUX0SWw8LBTNnT
-         nRT/vMBZYQ3Cr8jS4P22vQlnBc2QW66P9yD1fJgaTLz7KEzNxcNcfwn50V1ZA16z2ttC
-         dUeCGTfP4LAV0ZL8HdNT9R2DiKEJ3YzYjhyqcKLbv/5mwXirHR7+c9H44GTD1pgXkbte
-         zBBg==
-X-Gm-Message-State: AG10YORqdxjNikl6k5XKECdFaQS/MUcumD/wjVI5AN3tgKpmiIRUkPSkwpTWYdenoa0v7g==
-X-Received: by 10.28.229.20 with SMTP id c20mr14618006wmh.79.1453154970643;
-        Mon, 18 Jan 2016 14:09:30 -0800 (PST)
-Received: from localhost (host113-108-dynamic.249-95-r.retail.telecomitalia.it. [95.249.108.113])
-        by smtp.gmail.com with ESMTPSA id w8sm25632181wjx.21.2016.01.18.14.09.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 14:09:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160118195346.GA9337@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=d5ZkArA4WA8DhtHR0S8yxf140Q5V+wUiysG6Z+DtHas=;
+        b=mCsnPpjxw8V3nuJL74inr/RXwQBqzQzHVIiMq/jUWcJ5CZGQ+/rDCDIOE7kPac70C5
+         moFjpfY/HCZMRxtv8+OjhkILJGOL0GAlI2VnpU3mpGcqxkECTGqz4mDN6KKE02kd+MbM
+         216x+RmW2WF9r0ypHbKQfHEsPqxp0LRLFLkxk21Tm6TUBXxbOKBwt2R7H28V2udbQqDj
+         N1rFxOuWt73L0ewbf07G/CMg3anzcV3FFBG0vNdNkNWMJwAACJ9II1mLyxsVCQhohHf6
+         47uagCUkf5PYpandFQ6PlEchTZmFNBKTNOzSVya6l+8Iv+ne4LYvWB1U08FCc2eMpcTY
+         BlGA==
+X-Gm-Message-State: ALoCoQmjgCaW1OTvOaCRF8dBe7vDahU2+XUiOKfazVtlWd7Kcy0G6Ew7ftCnF+ZvXEYQWtFq0MKYHnO3I9IGjk2yp4+ZsmM6HQ==
+X-Received: by 10.31.141.2 with SMTP id p2mr18431945vkd.37.1453155202924; Mon,
+ 18 Jan 2016 14:13:22 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 18 Jan 2016 14:13:22 -0800 (PST)
+In-Reply-To: <CAPc5daWpnReWJzeTJjvZap78H0oZKG-YGEP19Neusyahu5A6cQ@mail.gmail.com>
+X-Google-Sender-Auth: M1kro7MTQr4jiEXkNV8wOUdieSs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284332>
 
-On 01/18, Jeff King wrote:
-> On Mon, Jan 18, 2016 at 02:51:59PM -0500, Jeff King wrote:
+On Mon, Jan 18, 2016 at 4:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Jan 18, 2016 13:11, "Eric Sunshine" <sunshine@sunshineco.com> wrote:
+>> On Thu, Jan 14, 2016 at 3:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> If for some reason interpret-trailers fails to fail, this would
+>>> leave an unreadable 'message' in the trash directory.  Maybe no
+>>> other tests that come after this one want to be able to read the
+>>> contents of the file right now, but this is an accident waiting to
+>>> happen:
+>>>
+>>>         cat basic_message >message &&
+>>> +       test_when_finished "chmod +r message" &&
+>>>         chmod -r message &&
+>>>         test_must_fail ... &&
+>>>         chmod +r message &&
+>>
+>> Don't forget to remove this (now unnecessary) "chmod +r" once you've
+>> added the 'test_when_finished "chmod +r"'.
+>>
+>>>         test_cmp ...
 >
-> > It would be nice to also test that
-> > "git ls-remote --symrefs --heads" shows "refs/heads/foo" as a symref.
-> > But that cannot work with the current code, because upload-pack only
-> > tells us about the symref HEAD, and not any others.
->
-> Actually, I wonder if it is worth making a note of that in the new
-> "--symref" documentation, so people do not report it is a bug that
-> "ls-remote" does not show it. :)
+> It still is necessary for the test-cmp to work, no?
 
-I agree, I'll add that.  Thanks.
+My bad. Ignore me.
 
-> -Peff
+By the way, isn't the:
 
---
-Thomas
+    cat basic_message >message &&
+
+in the above test just an unusual way to say:
+
+    cp basic_message message &&
+
+?
