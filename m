@@ -1,91 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Don't use PGP/GPG signatures in mail that contains patches
-Date: Mon, 18 Jan 2016 16:48:58 -0500
-Message-ID: <20160118214857.GA24136@sigill.intra.peff.net>
-References: <569C3F73.3090805@pb.com>
+Subject: Re: "git tag --contains <id>" is too chatty, if <id> is invalid
+Date: Mon, 18 Jan 2016 16:54:33 -0500
+Message-ID: <20160118215433.GB24136@sigill.intra.peff.net>
+References: <569D580F.4070302@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Andrey Utkin <andrey.utkin@pb.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 22:49:07 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 18 22:54:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLHfd-0008Kj-UL
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:49:06 +0100
+	id 1aLHl2-0002lL-AU
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 22:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932368AbcARVtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 16:49:02 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55704 "HELO cloud.peff.net"
+	id S932408AbcARVyh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2016 16:54:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55710 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756597AbcARVtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 16:49:00 -0500
-Received: (qmail 6494 invoked by uid 102); 18 Jan 2016 21:49:00 -0000
+	id S932230AbcARVyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 16:54:36 -0500
+Received: (qmail 6858 invoked by uid 102); 18 Jan 2016 21:54:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 16:49:00 -0500
-Received: (qmail 14267 invoked by uid 107); 18 Jan 2016 21:49:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 16:54:36 -0500
+Received: (qmail 14292 invoked by uid 107); 18 Jan 2016 21:54:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 16:49:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2016 16:48:58 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 16:54:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2016 16:54:33 -0500
 Content-Disposition: inline
-In-Reply-To: <569C3F73.3090805@pb.com>
+In-Reply-To: <569D580F.4070302@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284328>
 
-On Mon, Jan 18, 2016 at 03:27:15AM +0200, Andrey Utkin wrote:
+On Mon, Jan 18, 2016 at 10:24:31PM +0100, Toralf F=C3=B6rster wrote:
 
-> ===== QUOTE =====
-> Don't use PGP/GPG signatures in mail that contains patches.
-> This breaks many scripts that read and apply the patches.
-> (This should be fixable.)
-> ===== END QUOTE =====
-> 
-> This is in Linux' Documentation/email-clients.txt since 2007, and still
-> almost nobody signs patch submissions. There are few brave people who
-> do, though, and seems it's not the end of world for any "scripts".
-> The broken scripts could be an excuse in 2007, but not today.
-> 
-> Proposal:
-> 1. Implement signing option in git-send-email.
-> 2. Figure out if anything fails to interoperate.
-> 3. Drop the quoted statement or change it to appreciate signing.
+>  very first line is "error: malformed object name <id>" which tells a=
+ll, or ?
 
-I don't know about other receiving scripts, but "git am" will handle
-signed PGP-MIME out of the box (I didn't try it with inline signatures,
-but I imagine it would stick the "BEGIN PGP MESSAGE" cruft into the
-commit message).
+Yeah, I agree that showing the "-h" help is a bit much.
 
-However, there's an open question of what to _do_ with such a signature.
-The email signature does not function as a valid git commit signature.
-So you are left with one of:
+This is a side effect of looking up in the commit in the parse-options
+callback. It has to signal an error to the option parser, and then the
+option parser always shows the help on an error.
 
-  1. The receiver can verify the origin of the email before applying the
-     patch.
+I think we'd need to do one of:
 
-  2. The receiver can keep a copy of the email "somewhere", so people
-     can later re-verify it, and then hand-verify that it matches what
-     got applied.
+  1. call die() in the option-parsing callback (this is probably a bad
+     precedent, as the callbacks might be reused from a place that want=
+s
+     to behave differently)
 
-     That "somewhere" may just be a mailing list archive, but you could
-     get fancy with scripts and associate it with the applied commit
-     (e.g., using "git notes").
+  2. have the callback just store the argument string, and then resolve
+     the commit later (and die or whatever if it doesn't exist). This
+     pushes more work onto the caller, but in this case it's all done b=
+y
+     the ref-filter code, so it could presumably happen during another
+     part of the ref-filter setup.
 
-But those are really questions for the project. If you are mailing your
-patches to Linus, does he actually care about (1)? My general impression
-of his past opinion is that it's more important to read the patch text
-than the "From" line. Of course subsystem maintainers and other projects
-may have different opinions.
+  3. teach parse-options to accept some specific non-zero return code
+     that means "return an error, but don't show the usage"
 
-I think (2) is more compelling, if only to create a better record in the
-mailing list archive. Assuming the receivers of your patches don't mind
-(and I know some people really _don't_ like things like PGP-MIME,
-because their mail readers are not good at replying in-line to the
-patches then), I don't it would be a bad thing to teach git-send-email
-an option to send it.
+I think any one of those would be a good project for somebody looking t=
+o
+get their feet wet in working on git. I think (2) is the cleanest.
 
 -Peff
