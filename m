@@ -1,93 +1,156 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/6] shortlog: use strbufs to read from stdin
-Date: Mon, 18 Jan 2016 15:02:44 -0500
-Message-ID: <20160118200244.GB15836@sigill.intra.peff.net>
+Subject: [PATCH 5/6] shortlog: optimize out useless "<none>" normalization
+Date: Mon, 18 Jan 2016 15:02:56 -0500
+Message-ID: <20160118200255.GE15836@sigill.intra.peff.net>
 References: <20160118200136.GA9514@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 18 21:02:53 2016
+X-From: git-owner@vger.kernel.org Mon Jan 18 21:03:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLG0p-00031h-8A
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 21:02:51 +0100
+	id 1aLG11-0003BQ-Cq
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 21:03:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932179AbcARUCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 15:02:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55638 "HELO cloud.peff.net"
+	id S932329AbcARUC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 15:02:59 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55654 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756395AbcARUCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 15:02:46 -0500
-Received: (qmail 32037 invoked by uid 102); 18 Jan 2016 20:02:46 -0000
+	id S932223AbcARUC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 15:02:58 -0500
+Received: (qmail 32113 invoked by uid 102); 18 Jan 2016 20:02:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 15:02:46 -0500
-Received: (qmail 13420 invoked by uid 107); 18 Jan 2016 20:03:06 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 15:02:58 -0500
+Received: (qmail 13474 invoked by uid 107); 18 Jan 2016 20:03:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 15:03:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2016 15:02:44 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 18 Jan 2016 15:03:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Jan 2016 15:02:56 -0500
 Content-Disposition: inline
 In-Reply-To: <20160118200136.GA9514@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284317>
 
-We currently use fixed-size buffers with fgets(), which
-could lead to incorrect results in the unlikely event that a
-line had something like "Author:" at exactly its 1024th
-character.
+If we are in --summary mode, we will always pass <none> to
+insert_one_record, which will then do some normalization
+(e.g., cutting out "[PATCH]"). There's no point in doing so
+if we aren't going to use the result anyway.
 
-But it's easy to convert this to a strbuf, and because we
-can reuse the same buffer through the loop, we don't even
-pay the extra allocation cost.
+This drops my best-of-five for "git shortlog -ns HEAD" on
+linux.git from:
+
+  real    0m5.257s
+  user    0m5.104s
+  sys     0m0.156s
+
+to:
+
+  real    0m5.194s
+  user    0m5.028s
+  sys     0m0.168s
+
+That's only 1%, but arguably the result is clearer to read,
+as we're able to group our variable declarations inside the
+conditional block. It also opens up further optimization
+possibilities for future patches.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/shortlog.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ builtin/shortlog.c | 63 +++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index ab25b44..6c0a72e 100644
+index 973b50d..a7708c3 100644
 --- a/builtin/shortlog.c
 +++ b/builtin/shortlog.c
-@@ -91,21 +91,24 @@ static void insert_one_record(struct shortlog *log,
- 
- static void read_from_stdin(struct shortlog *log)
+@@ -31,13 +31,9 @@ static void insert_one_record(struct shortlog *log,
+ 			      const char *author,
+ 			      const char *oneline)
  {
--	char author[1024], oneline[1024];
-+	struct strbuf author = STRBUF_INIT;
-+	struct strbuf oneline = STRBUF_INIT;
+-	const char *dot3 = log->common_repo_prefix;
+-	char *buffer, *p;
+ 	struct string_list_item *item;
+ 	const char *mailbuf, *namebuf;
+ 	size_t namelen, maillen;
+-	const char *eol;
+-	struct strbuf subject = STRBUF_INIT;
+ 	struct strbuf namemailbuf = STRBUF_INIT;
+ 	struct ident_split ident;
  
--	while (fgets(author, sizeof(author), stdin) != NULL) {
-+	while (strbuf_getline(&author, stdin, '\n') != EOF) {
- 		const char *v;
--		if (!skip_prefix(author, "Author: ", &v) &&
--		    !skip_prefix(author, "author ", &v))
-+		if (!skip_prefix(author.buf, "Author: ", &v) &&
-+		    !skip_prefix(author.buf, "author ", &v))
- 			continue;
--		while (fgets(oneline, sizeof(oneline), stdin) &&
--		       oneline[0] != '\n')
-+		while (strbuf_getline(&oneline, stdin, '\n') != EOF &&
-+		       oneline.len)
- 			; /* discard headers */
--		while (fgets(oneline, sizeof(oneline), stdin) &&
--		       oneline[0] == '\n')
-+		while (strbuf_getline(&oneline, stdin, '\n') != EOF &&
-+		       !oneline.len)
- 			; /* discard blanks */
--		insert_one_record(log, v, oneline);
-+		insert_one_record(log, v, oneline.buf);
- 	}
-+	strbuf_release(&author);
-+	strbuf_release(&oneline);
+@@ -59,34 +55,43 @@ static void insert_one_record(struct shortlog *log,
+ 	if (item->util == NULL)
+ 		item->util = xcalloc(1, sizeof(struct string_list));
+ 
+-	/* Skip any leading whitespace, including any blank lines. */
+-	while (*oneline && isspace(*oneline))
+-		oneline++;
+-	eol = strchr(oneline, '\n');
+-	if (!eol)
+-		eol = oneline + strlen(oneline);
+-	if (starts_with(oneline, "[PATCH")) {
+-		char *eob = strchr(oneline, ']');
+-		if (eob && (!eol || eob < eol))
+-			oneline = eob + 1;
+-	}
+-	while (*oneline && isspace(*oneline) && *oneline != '\n')
+-		oneline++;
+-	format_subject(&subject, oneline, " ");
+-	buffer = strbuf_detach(&subject, NULL);
+-
+-	if (dot3) {
+-		int dot3len = strlen(dot3);
+-		if (dot3len > 5) {
+-			while ((p = strstr(buffer, dot3)) != NULL) {
+-				int taillen = strlen(p) - dot3len;
+-				memcpy(p, "/.../", 5);
+-				memmove(p + 5, p + dot3len, taillen + 1);
++	if (log->summary)
++		string_list_append(item->util, xstrdup(""));
++	else {
++		const char *dot3 = log->common_repo_prefix;
++		char *buffer, *p;
++		struct strbuf subject = STRBUF_INIT;
++		const char *eol;
++
++		/* Skip any leading whitespace, including any blank lines. */
++		while (*oneline && isspace(*oneline))
++			oneline++;
++		eol = strchr(oneline, '\n');
++		if (!eol)
++			eol = oneline + strlen(oneline);
++		if (starts_with(oneline, "[PATCH")) {
++			char *eob = strchr(oneline, ']');
++			if (eob && (!eol || eob < eol))
++				oneline = eob + 1;
++		}
++		while (*oneline && isspace(*oneline) && *oneline != '\n')
++			oneline++;
++		format_subject(&subject, oneline, " ");
++		buffer = strbuf_detach(&subject, NULL);
++
++		if (dot3) {
++			int dot3len = strlen(dot3);
++			if (dot3len > 5) {
++				while ((p = strstr(buffer, dot3)) != NULL) {
++					int taillen = strlen(p) - dot3len;
++					memcpy(p, "/.../", 5);
++					memmove(p + 5, p + dot3len, taillen + 1);
++				}
+ 			}
+ 		}
+-	}
+ 
+-	string_list_append(item->util, buffer);
++		string_list_append(item->util, buffer);
++	}
  }
  
- void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ static void read_from_stdin(struct shortlog *log)
 -- 
 2.7.0.248.g5eafd77
