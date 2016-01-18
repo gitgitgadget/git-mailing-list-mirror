@@ -1,106 +1,94 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 0/6] Kill and replace update_linked_gitdir()
-Date: Mon, 18 Jan 2016 18:21:28 +0700
-Message-ID: <1453116094-4987-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 1/6] worktree.c: fix indentation
+Date: Mon, 18 Jan 2016 18:21:29 +0700
+Message-ID: <1453116094-4987-2-git-send-email-pclouds@gmail.com>
+References: <1453116094-4987-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 18 12:03:46 2016
+X-From: git-owner@vger.kernel.org Mon Jan 18 12:03:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aL7b4-0003s1-1C
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 12:03:42 +0100
+	id 1aL7bA-0003uN-Do
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Jan 2016 12:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478AbcARLDi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2016 06:03:38 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35095 "EHLO
-	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754273AbcARLDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 06:03:37 -0500
-Received: by mail-pf0-f196.google.com with SMTP id 65so11613841pff.2
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 03:03:36 -0800 (PST)
+	id S1754483AbcARLDn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Jan 2016 06:03:43 -0500
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36077 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754482AbcARLDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 06:03:42 -0500
+Received: by mail-pa0-f68.google.com with SMTP id a20so27400853pag.3
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 03:03:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=1jOBd4Qb3pRd9+r9N+bDxBiq7hEvwNOb38vvM0N+k7U=;
-        b=K0BJF/VQGlGM0y9/4uhZfZk83TX5JVKqNmh3CMjWe7fLhs34masutv1r2wOAZEVn95
-         vZZVNPLNcr2AJfQbAknR23H1ZtyINAyvoxiM2QVw1ZyX3kGjJ2cnzeE0oRnhhrarLot8
-         RXlCghBrvB3k67qvHL8CUuiwyCt3EDKeHWQv7O63Kvgs7CleW/eApO04P2QtUWImlItw
-         c/NhdaX5v64nSa3SZxVjlNkw8jkAtm/FTNtxXNPaXz+kOaWul+ACgIC8Rjm+n35aJ654
-         KqWIpWHtbWCWsBiGTguTOIahicE/8ZnA5GFWYKxCx+7do9MH8IV++3uRT2ZAc3r36pYE
-         U90Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/h8payXC2JtSesJ86I1oNY47lDaytaOr6dypVt31MSY=;
+        b=wQ92h0/rsIxQwDcDl8jBN/PlCfTnXWOztdLGXrNRuASX3WR1jQ32Pn33jKlJnEY5qz
+         XaaUoSVlJRSJ+plrjKQVB2AXHUsLDed2LrS5HXvN22xHqcAevaa1qXK+4HZVknoZTbMv
+         aPokNpI4IMP+CElhCx84lpegEe87APA+oPoBPSot+IJqIMvQD5KdYElz12eE2tF6VFVU
+         uQzAMRwrdwBI1sSVGw90zQ2F3+3yZbwK7TAgdi2nuVUaSqQ2LmngH5l2q7faEym1LFS9
+         o7nNvSqgqHPZQ4o9IeWNgNnwG93v5CZ9dnBOQH1tSqwiZ8wS1nLLSasNmfSDUxQNmwFU
+         kpww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=1jOBd4Qb3pRd9+r9N+bDxBiq7hEvwNOb38vvM0N+k7U=;
-        b=JNPz9l+MGW5ErAMqS3eUaEDu2h+n693HmTA5vMr/vPJJS7Ioiw9vo9IQz7SARNhCx+
-         wc0R7oD9vUrNmNE/QOs00ntsW20BbwiPWo0uAXy4b+lE6ed4TbX/dj13qr4xFOZOHAan
-         djLmsYshRUOJG3pDZqx1rr268jAp/vwRUCZfNK4AiYcs3t+x5iEhk0ythgY/UGlgFmR6
-         OFcVRTBVURiRgH0g9Jcm/MOGf0d9N1X5/kFLvT022Q4oauiDJ5gfS7tNjtOglxbChUBK
-         Ysmd/AxzTmHn9GHD2KrsgdPt2F96vKsUq507gmmriyVDjmwFBCXNzZrSDZj2b+GwLUcv
-         7gxw==
-X-Gm-Message-State: ALoCoQlEwswxBK+4GUS6iGzJ6xJgGOoyBjS2K8EyMn8c5vCanceI0T9K8xBSsApRXgl6kPaSp3m0C8UsCCym/6yQkUDjl+iMDA==
-X-Received: by 10.98.67.212 with SMTP id l81mr35477300pfi.90.1453115016474;
-        Mon, 18 Jan 2016 03:03:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=/h8payXC2JtSesJ86I1oNY47lDaytaOr6dypVt31MSY=;
+        b=dIHTI15efGKvYFtxkw4f3K+TTI/+/XQczzfzcnrdQmF2PacMZLmH05r7SJNrc0+xgR
+         VwGBi7B1Z5FjgHsBFdM0gQVixgYnONtcfPTeq3QPiL2xdFW/mwPbdvrmz44V+TY7tCr/
+         EHwMk/S73XW4NGr1UqzEFxYnO370dBjTqyuktOa4/yUGL8lT6bAKR5XHMYIljjYhjef2
+         kZH2VqAPqFR0G+7l8gE4urHn17nv2j3B8C/k/c3KhlsPf0T0gcHGk+A6S1jBywSwbbMt
+         ZnGRKypmqBNjaheSgXm6wrGZ59tJcxcDz/FBw13GjT9YokxziWcs5wUP9QdFsJD3Do/9
+         xzng==
+X-Gm-Message-State: ALoCoQn+QmCTtBwJOTdYqO4JKFcJ7JG+hhIWPO86/69WQzmKONSRbSG3QYPf9/ln49mqEdf0OcAXdBPd8vL1zQC5Bog+fxxIPA==
+X-Received: by 10.66.222.129 with SMTP id qm1mr35072533pac.10.1453115022217;
+        Mon, 18 Jan 2016 03:03:42 -0800 (PST)
 Received: from lanh ([115.72.43.83])
-        by smtp.gmail.com with ESMTPSA id v7sm33166585pfa.77.2016.01.18.03.03.33
+        by smtp.gmail.com with ESMTPSA id wa17sm33246809pac.38.2016.01.18.03.03.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 03:03:35 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 18 Jan 2016 18:21:38 +0700
+        Mon, 18 Jan 2016 03:03:41 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 18 Jan 2016 18:21:43 +0700
 X-Mailer: git-send-email 2.7.0.96.g5373197
+In-Reply-To: <1453116094-4987-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284285>
 
-There are a couple of problems with this function:
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ worktree.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- - premature design
- - create "gitdir" file outside multi-worktree context
- - update the file's content with relative path, with breaks "worktree =
-list"
-
-The first three patches kill it, as a result. They are relatively safe.
-
-The last three re-implement it in a new form, "worktree refresh",
-inspired by "update-index --refresh". For now the user can use this
-command to correct some internal data after moving a worktree. In
-future, we might do automatic refresh like we do with the index.
-
-The last three try out new design, so it will probably take more time
-to graduate than the first three, which may end up in the next release
-as worktree bug fix.
-
-Eric Sunshine (1):
-  worktree.txt: how to fix up after moving a worktree
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
-  worktree.c: fix indentation
-  worktree: stop supporting moving worktrees manually
-  abspath.c: add and use real_path_dup()
-  setup.c: record the location of .git file
-  worktree: new command to fix up worktree's info after moving
-
- Documentation/git-worktree.txt | 21 ++++++++++++++++-----
- abspath.c                      |  5 +++++
- builtin/clone.c                |  2 +-
- builtin/init-db.c              |  6 +++---
- builtin/worktree.c             | 18 ++++++++++++++++++
- cache.h                        |  2 ++
- setup.c                        | 26 +++++++++++---------------
- t/t1501-worktree.sh            |  9 +++++++++
- worktree.c                     |  8 ++++----
- 9 files changed, 69 insertions(+), 28 deletions(-)
-
+diff --git a/worktree.c b/worktree.c
+index 981f810..6181a66 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -176,10 +176,10 @@ struct worktree **get_worktrees(void)
+ 			if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+ 				continue;
+=20
+-				if ((linked =3D get_linked_worktree(d->d_name))) {
+-					ALLOC_GROW(list, counter + 1, alloc);
+-					list[counter++] =3D linked;
+-				}
++			if ((linked =3D get_linked_worktree(d->d_name))) {
++				ALLOC_GROW(list, counter + 1, alloc);
++				list[counter++] =3D linked;
++			}
+ 		}
+ 		closedir(dir);
+ 	}
 --=20
 2.7.0.96.g5373197
