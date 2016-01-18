@@ -1,97 +1,111 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 1/5] ls-remote: document --quiet option
-Date: Tue, 19 Jan 2016 00:20:46 +0100
-Message-ID: <1453159250-21298-2-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 2/5] ls-remote: document --refs option
+Date: Tue, 19 Jan 2016 00:20:47 +0100
+Message-ID: <1453159250-21298-3-git-send-email-t.gummerer@gmail.com>
 References: <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
  <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
 Cc: peff@peff.net, bturner@atlassian.com, gitster@pobox.com,
 	pedrorijo91@gmail.com, Thomas Gummerer <t.gummerer@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 00:21:24 2016
+X-From: git-owner@vger.kernel.org Tue Jan 19 00:21:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLJ6w-0006iQ-EH
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 00:21:22 +0100
+	id 1aLJ71-0006mm-Bg
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 00:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756597AbcARXUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 18:20:52 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33690 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753869AbcARXUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 18:20:43 -0500
-Received: by mail-wm0-f68.google.com with SMTP id u188so19464078wmu.0
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 15:20:42 -0800 (PST)
+	id S1756652AbcARXVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 18:21:20 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33697 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745AbcARXUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 18:20:45 -0500
+Received: by mail-wm0-f66.google.com with SMTP id u188so19464129wmu.0
+        for <git@vger.kernel.org>; Mon, 18 Jan 2016 15:20:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2tzA7/jZowcbhNqJUwQk2IDabrQhIx0y3KgKDmNQESI=;
-        b=rxX5iPtcDYJehg7ubJdK4jz0XO9EVsaFJOAj9WyCdegNlYzPdQVlrl+0u/LuD5EYoX
-         UIPKkAxW1M1skg8vTiKUo0pa4Rpp6j6uay/sJCDw3oJeSYlqj316i+oY8PXD+/6J5PdR
-         yuA7CLa4bDGCyp11v49IccIzhxG5ylkiYpg5Q1Bq+OYWq/oeVxn+5vrmkLlmSP9WlBsa
-         DkdeHeYgX+GxIzdHhKtFucMSDh7Cy0edVFCNhs/NVaN8vQI4UhgozChDcO7qH2kRuG8L
-         0/umbRVVByIkQMatOSNRVb949BYKUj/3zrYXtyFdDGDQbbcboVuTE6ht3JCTEuXfJpbw
-         +2tg==
+        bh=+UBTekMpf4pKiv1AHxsnRk1ALitSaFzRBaEN+ng7pK8=;
+        b=ahIL7duTaPHEq0m6jQl4/Dc3RY8bym5/gNR0hYy+lnXbnHmpGbMdvHxR8LJPxy7BDy
+         sLrZBV2NRJO0JsL1eWNMMi0itAIH+owxc0PJZJvMDNXNXUeoFkwCOi3gxUB25pfBzXB5
+         mdGB8XSVxXK44Pj03WmPE1BdEgF4Li0qSLiFCXrkDBXm/BG8s/CHuFGFGhql2ctlGcOs
+         OTPKVn8qVcEdLJjPvYQJvyHfe7UjQMUcVW6GsKHa/lnpHhQzecBzChCfPnzV1qwdQF1a
+         QwlcqwRiuzPdcz5AtDuMS/ot6RbuNCib2oAl5SVYF4bBXtO0hiDvcMnsPTW0EBH8pJH8
+         JcPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2tzA7/jZowcbhNqJUwQk2IDabrQhIx0y3KgKDmNQESI=;
-        b=GMR+7bVD3EKERqktVOGjmMQM9l9wzkBek/FpiRDBnQgGeWqiJGIH7B1kXIKxV65CwX
-         ftUldi1VMS1y8p7Wmd4ZrHZFuBhKakUGuzJ1FwoozRN3MRJM5IWaPt8HMk+Zy7cyPU9X
-         /qWtnLLketDZHr34rLl/GgjMUplwHwER7FzjlJjtaygPt7D5wPmNvnF8t9WnETdfmeNp
-         EC3cnpUoon3FopOPkNQby7U47soZK6mBOzyrDSdUtCdmTprmpvNHQBbS00AYwrZrYUnv
-         dqiZZ89A75S31hJIRyaMI+7+lVFmERftC6L49fIiDIA07UIbNzXDX7yrfFgzgg0M5r8w
-         pwFQ==
-X-Gm-Message-State: AG10YOT3AROBdR/NG/H/Bcg8MiSDaedtCPIEKPoC+ei1W+0GOYW8tQeK9nndEZSxPbib5g==
-X-Received: by 10.28.30.138 with SMTP id e132mr14773855wme.86.1453159242166;
-        Mon, 18 Jan 2016 15:20:42 -0800 (PST)
+        bh=+UBTekMpf4pKiv1AHxsnRk1ALitSaFzRBaEN+ng7pK8=;
+        b=V1yqEjtKE4vSXV9Jcf5nT1obk1NSV0WzlwVa7R3f689RLPoaSFKKEDROFHpyJkM2ny
+         IRxiAWfDxYhR4rjpSQrID2Er5Ur3B7zQBfFyxdq5x20DD1pAhbZ8m+gpeSQgTaMJCCpj
+         svRPHFbulPmy6/TF9E2TGO20xHvlhWwsetLfKmHDZUofzZqJw+XFB8KwLgYSXpcclOOo
+         prlHqKJFGsfxl/RizuB3D9uf6tRHZ2FohWhltDFfnpLOciJqz17yLZ81qhCf1o+Errqn
+         lCAbqZ5SUUZ2VkUMfCModGKGwW1EiO9SbtMEh0EzIwEObe/P3tpyAGBqiu301M2GVdh0
+         uD+A==
+X-Gm-Message-State: AG10YOTpEK32siZHqlydcFqP9TpmIW4ihYZux0nftcTcTUsdd5rChh6a6yYicVwMCjOrDg==
+X-Received: by 10.28.176.131 with SMTP id z125mr16796119wme.5.1453159244103;
+        Mon, 18 Jan 2016 15:20:44 -0800 (PST)
 Received: from localhost (host113-108-dynamic.249-95-r.retail.telecomitalia.it. [95.249.108.113])
-        by smtp.gmail.com with ESMTPSA id ka4sm25839052wjc.47.2016.01.18.15.20.40
+        by smtp.gmail.com with ESMTPSA id c203sm17759332wmd.5.2016.01.18.15.20.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 15:20:41 -0800 (PST)
+        Mon, 18 Jan 2016 15:20:43 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.30.g56a8654.dirty
 In-Reply-To: <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284338>
 
-cefb2a5e3 ("ls-remote: print URL when no repo is specified") added a
-quiet option to ls-remote, but didn't add it to the documentation.  Add
-it.
+The --refs option was originally introduced in 2718ff0 ("Improve
+git-peek-remote").  The ls-remote command was first documented in
+972b6fe ("ls-remote: drop storing operation and add documentation."),
+but the --refs option was never documented.  Fix this.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git-ls-remote.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/git-ls-remote.txt | 5 ++++-
+ builtin/ls-remote.c             | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index d510c05..27380de 100644
+index 27380de..7467162 100644
 --- a/Documentation/git-ls-remote.txt
 +++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
+@@ -9,7 +9,7 @@ git-ls-remote - List references in a remote repository
+ SYNOPSIS
  --------
  [verse]
- 'git ls-remote' [--heads] [--tags]  [--upload-pack=<exec>]
--	      [--exit-code] <repository> [<refs>...]
-+	      [-q | --quiet] [--exit-code] <repository> [<refs>...]
+-'git ls-remote' [--heads] [--tags]  [--upload-pack=<exec>]
++'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+ 	      [-q | --quiet] [--exit-code] <repository> [<refs>...]
  
  DESCRIPTION
- -----------
-@@ -29,6 +29,10 @@ OPTIONS
+@@ -29,6 +29,9 @@ OPTIONS
  	both, references stored in refs/heads and refs/tags are
  	displayed.
  
-+-q::
-+--quiet::
-+	Do not print remote URL to stderr.
++--refs::
++	Do not show peeled tags or pseudorefs like HEAD	in the output.
 +
- --upload-pack=<exec>::
- 	Specify the full path of 'git-upload-pack' on the remote
- 	host. This allows listing references from repositories accessed via
+ -q::
+ --quiet::
+ 	Do not print remote URL to stderr.
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index fa65a84..db21e52 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -4,7 +4,7 @@
+ #include "remote.h"
+ 
+ static const char ls_remote_usage[] =
+-"git ls-remote [--heads] [--tags]  [--upload-pack=<exec>]\n"
++"git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+ "                     [-q | --quiet] [--exit-code] [--get-url] [<repository> [<refs>...]]";
+ 
+ /*
 -- 
 2.7.0.30.g56a8654.dirty
