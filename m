@@ -1,76 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
-Date: Tue, 19 Jan 2016 09:52:00 -0800
-Message-ID: <xmqqio2pbgov.fsf@gitster.mtv.corp.google.com>
+Date: Tue, 19 Jan 2016 12:56:18 -0500
+Message-ID: <CAPig+cRi2knygjeaMtojAr65BE71B-z7q+s8V5rcGrV9Qja6jw@mail.gmail.com>
 References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
 	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
 	<xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
 	<CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
+	<xmqqio2pbgov.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Tobias Klauser <tklauser@distanz.ch>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jan 19 18:52:16 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 18:56:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLaRz-0002e6-KV
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 18:52:15 +0100
+	id 1aLaVz-0004gF-JP
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 18:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932592AbcASRwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 12:52:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60932 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932590AbcASRwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 12:52:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CE51E3B931;
-	Tue, 19 Jan 2016 12:52:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B00ysx4hfP/BqL2bGdkWxx54PXA=; b=JivYmU
-	oJnw6dWx5CWlxDltJMgMQLufznY8PJSNeAti3qCwQx+iuqfXXyY17DEJuYhipXOC
-	sBGBpoAuzPoQ5LKiNVi/Qh4yPjsX8SNMd3Ss0SXCVFesH6aAef4cmkeJOcFZUh2y
-	YUGRHHGpEeP/k6BWB+HyMTrkicdP6LysSl1cI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jAqFTd2sFDNrzU8L1MLPYgEufQLcPc8f
-	Xu9D16CQOP0iRxjzeCy3lh66gx9yFbp3soo3hY0rU53rk4nsNqV6yWIvik0ixw8S
-	DVfhSQiP7wavsFQneEoUjY9ywbEHaWCGNnyDhMbIZs4swcOlratlniM4fMw3d6fU
-	qEnfT1gaboA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C6F183B930;
-	Tue, 19 Jan 2016 12:52:02 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4CA803B92D;
-	Tue, 19 Jan 2016 12:52:02 -0500 (EST)
-In-Reply-To: <CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 18 Jan 2016 16:11:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 584A7896-BED5-11E5-B815-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932454AbcASR4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 12:56:20 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:33277 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932271AbcASR4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 12:56:19 -0500
+Received: by mail-vk0-f67.google.com with SMTP id n1so13134112vkb.0
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 09:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=X2OecK4QP3JaP8p3uR6mNy4WrzJyCvkB8t/3tBGMt0Y=;
+        b=YRknVQnX6IpMYAC0ECcBoGzEQB8H/6wodZziOUVfuS3IUmT1uhwLMFxXO+IwZiBRU1
+         0k9Zz0djSHFV0AM0vzvKDfM5/nXvMKnYxKMG4t32Kmb6/lFamPQJcCL2ESBzCEzwTFhj
+         jqYMoOatj23DsyehIW6Ka0zwt37CrjmkfSEFD+KknCAgoMaF2+GMpEJh55/pv7z3F0HR
+         /iMVaM/sHCRYWQatVdg9xTGvuU3eYrFuJNek5R+4VPMpBQeQn4IGSDGOlk6z7Lqod7Ui
+         S3M77PvemDbPWifCFkqyki/Oaiz2pCZLKUV8T91t82J5h7yFL7Qysc+mC1Td3h/s7iyW
+         c1Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=X2OecK4QP3JaP8p3uR6mNy4WrzJyCvkB8t/3tBGMt0Y=;
+        b=hv0BWozxeiCJ3em02Vzyy65gTquhn55gMy91/b0PZkGMaH4fJPKXO1HovcQGj7YjLY
+         xlSyG47aptL6L1E76cCKmSDIGz0Npzs9ie5ukJN3PyDxUVHikUYTNqxbjMWYqCJqG3Hr
+         WBM6Olr5laWuHxJaaSmLa6lvDRc+5Np8O2Gmi04pHgmM1CiFJgcgturyXDlpV2j1D+Wq
+         XBw+3gbYg8uqeKDOQMI97KRRWVmWDB18HNoi/zdEjjZJljQdaT5hkk3Z/e3pYCCzx6QD
+         TGV0+RGq76NIpXQWvMXdDq/+fEx60gzej5i4XWuBcxc+YYO5mhoV99lyUmq0n7qublVU
+         kMZQ==
+X-Gm-Message-State: ALoCoQnTer0WQLbodDz1TKksHTqd+DswlFeGvUj9k05vb2mUkPzcBtMHENGGwOqMNjqBTt8zRXbnMdNOSZ4SL1WQ7b/U+MG8sg==
+X-Received: by 10.31.58.74 with SMTP id h71mr21364557vka.151.1453226178373;
+ Tue, 19 Jan 2016 09:56:18 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 19 Jan 2016 09:56:18 -0800 (PST)
+In-Reply-To: <xmqqio2pbgov.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: f9Ik215R0P4MNsK6lOqssfFu3WY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284364>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> I think POSIXPERM is all you need for this case; SANITY doesn't buy
-> you anything, if I understand correctly.
+On Tue, Jan 19, 2016 at 12:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> I think POSIXPERM is all you need for this case; SANITY doesn't buy
+>> you anything, if I understand correctly.
+>>
+>>>> +     cat basic_message >message &&
+>>>> +     chmod -r message &&
+>>>> +     test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
 >
->>> +     cat basic_message >message &&
->>> +     chmod -r message &&
->>> +     test_must_fail git interpret-trailers --trailer "Reviewed-by: Alice" --in-place message &&
+> The purpose of "chmod -r message" is to force interpret-trailers to
+> fail due to its input being unreadable; without SANITY, i.e. running
+> this test as root, the command would happily read from message that
+> is marked as unreadable by anybody, and test_must_fail will not pass.
 
-The purpose of "chmod -r message" is to force interpret-trailers to
-fail due to its input being unreadable; without SANITY, i.e. running
-this test as root, the command would happily read from message that
-is marked as unreadable by anybody, and test_must_fail will not pass.
+Makes sense. I never run tests as root, thus wasn't thinking along those lines.
