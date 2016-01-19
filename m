@@ -1,94 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (Jan 2016, #02; Mon, 11)
-Date: Tue, 19 Jan 2016 08:07:23 +0100
-Message-ID: <569DE0AB.9050403@drmicha.warpmail.net>
-References: <xmqqlh7vvfxc.fsf@gitster.mtv.corp.google.com>
- <569CEA1C.90700@drmicha.warpmail.net>
- <20160118170655.GA24184@sigill.intra.peff.net>
- <20160118213957.GA25460@dcvr.yhbt.net>
+From: =?UTF-8?B?7J2A6rWQ?= <eunqyo@gmail.com>
+Subject: Can I change Git binary file's name when deploying Git-based product?
+Date: Tue, 19 Jan 2016 17:07:16 +0900
+Message-ID: <CACaY5-uUqFxsRdwPzxAjphc=wNQhM76YJFmCZu86SpGeG1fOrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 19 08:08:17 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 19 09:07:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLQOl-0003Ds-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 08:08:16 +0100
+	id 1aLRJz-0006Li-M1
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 09:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757256AbcASHIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 02:08:12 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33575 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752169AbcASHH0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2016 02:07:26 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5135B20B79
-	for <git@vger.kernel.org>; Tue, 19 Jan 2016 02:07:25 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Tue, 19 Jan 2016 02:07:25 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=9JhSbSKeFNSGgmG5HxxYBOshVmA=; b=SxLksb
-	1mZoCVjob0SuBCIAEnCqo+c5/IIXHPYsKvZ3UdqKWWU5ii3AavI11vuOYrSmNt1N
-	CinLN4QeDR70+opyegyz/KhNWzDpmAemsehTSotz0Ps3TSM28W1IctmYOpQ/ay2p
-	Sa58GZg9nYCEjAkRwXq0WJQ7WGaIB0ZeEqbaw=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=9JhSbSKeFNSGgmG
-	5HxxYBOshVmA=; b=j4zKk1vnJ3FcKOThzG1LJjmclLnzKyfjPZfMmaib6U3u4Hn
-	PdHu2h/lMj9D8JLvDEGF+8hkZ+PAkd/ybwyAwwoONVB4TLLL/0cuqaFliUYifQ/v
-	gyRQeiW1rZtL1NyFvk3Ygaa61lwklBk4rQyNeZSLex8Q6Z7Lj4YWNhH608P8=
-X-Sasl-enc: KFFZTGPbD+4RFBxbtA3QSAslc3m0vbUnV9ZnTnYy4fS0 1453187245
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A2089C01709;
-	Tue, 19 Jan 2016 02:07:24 -0500 (EST)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <20160118213957.GA25460@dcvr.yhbt.net>
+	id S932418AbcASIHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 03:07:20 -0500
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:36079 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757332AbcASIHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 03:07:18 -0500
+Received: by mail-lb0-f182.google.com with SMTP id oh2so359563618lbb.3
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 00:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=kgs0DdrQ1Bd7S3GCi3CA4SFsGduDW84kxwC7H5J1eQw=;
+        b=n2m9NJ9wbSB28Nsxz9FGiTE3E/TzgVSadY+yIrmMOROrwI+cHEtXvcI9hcPgQqTcwZ
+         zShkTQknzo2qmUVfjUFEvs5D3K9GbDQvImoQNagrPb7k1v+1/J9w9q+SX/vF/G1mpZ2D
+         R17iFrHiMD6OhNC5ZpUBaXIgn3/jrCfD5UVmMyzg3k5gx5kmsX4ARc9I6XHsunu54Oqy
+         PQyLz4WPXRDNtLLvL6kS5xgQQaE3daH501slhjH70ioVo46nVstXLdT5zIRlPTP0M/0I
+         h+ffV+I88+PMSH4ZZ758ivudWfTdZs7m1vW8lx0+spZFPaSeGgiSoQVHFZPDf/iYoUJy
+         1wsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=kgs0DdrQ1Bd7S3GCi3CA4SFsGduDW84kxwC7H5J1eQw=;
+        b=kj0AefsSEFZMS7T6uAJBAbikDsc60Qa5G2j3AfbwEVtzRZq655bcbP2L3GLvyjTNAC
+         86L0On48M01h/sm2oJs8QLTFq9G7a2qaDi3TkE1UbWUBJDUQhvU/LqZ8SPfjR9Jly+NI
+         3c0iNZPbdXYg0XG3SK9gYP02u99UMfSDXnuSHNQb8spyeeKSw9XUS/iCBVM8O2uBfG5X
+         9Ouv9ULK31gfXBh/0/Qjmz3uGD5mR69p6p0QCnXGuIC5ZMIhFwVPKNo/sVnYiluGjgUv
+         f7pixCReJ3ONyV3Fv8EqB3wUPi5WmfBQMcfIh3y5+FZv+cFHV75wEEYJgsQ1Oik3GKc0
+         ms3Q==
+X-Gm-Message-State: ALoCoQndW8Ugu3m397HjlK4VBt74B64sFAGZv9r8p7h9qNeOBY4wZO/de+SAboaTkeCCKEwFZpeofSItJCS9tipM1ScFFqA8Dg==
+X-Received: by 10.112.198.102 with SMTP id jb6mr9990427lbc.44.1453190837011;
+ Tue, 19 Jan 2016 00:07:17 -0800 (PST)
+Received: by 10.25.39.132 with HTTP; Tue, 19 Jan 2016 00:07:16 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284350>
 
-Eric Wong venit, vidit, dixit 18.01.2016 22:39:
-> Jeff King <peff@peff.net> wrote:
->> On Mon, Jan 18, 2016 at 02:35:24PM +0100, Michael J Gruber wrote:
->>> Junio C Hamano venit, vidit, dixit 12.01.2016 00:45:
->>>>
->>>> * mg/httpd-tests-update-for-apache-2.4 (2015-04-08) 2 commits
-> 
->>>>  Will discard.
->>>
->>> Oh, sorry. Work killing me plus I was waiting for help, too.
->>
->> FWIW, I took a look at them a few months ago, but I couldn't reproduce
->> the problems in the first place. I think it has to do with the default
->> apache setup given by my system (debian unstable) versus others.
-> 
-> Ugh, I was meaning to look into these too (after upgrading to
-> Debian Jessie), but maybe it needs to be tested on Fedora/RH-based
-> configs?
+Hi, my name is Jae Kwon Han.
+I am developing Version Control program for designers called 'Indegs'.
+Indegs is using Git binary file in my product to version control design files.
 
-It needs to be tested with a "default config" I think, in the sense of
-"apache 2.4 default". Fedora seems to use the default config which is
-different from earlier apaches' defaults.
+Problem is that whenever git command is executed, 'The Git command
+requires the command line developer tools. Would you like to install
+the tools now?' message comes out.
 
-Debian uses a config which is not the 2.4 default but makes switching
-from earlier apaches easier.
+I found out that when i change Git binary file's name that my product
+is executing, problem is solved. Since then i tried to read every
+licenses regarding Git but can't find a clear answer.
 
-Back then, I was only able to get half way to running the git svn tests
-over http. I think I got our test suite to start http and run the git
-over http tests that didn't run before on Fedora, but I couldn't get git
-svn over http tests to run (so that they are run via local protocol
-instead). I'll keep it in mind, though.
-
-Michael
+Can i change Git binary file's name to for example 'Git-indegs',
+'Indegs' when deploying my product?
