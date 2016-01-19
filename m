@@ -1,103 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] travis-ci: run previously failed tests first, then
- slowest to fastest
-Date: Tue, 19 Jan 2016 18:06:33 -0500
-Message-ID: <20160119230633.GA31142@sigill.intra.peff.net>
-References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
- <xmqqmvs19w5n.fsf@gitster.mtv.corp.google.com>
- <xmqqio2p89mb.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Port `git submodule init` from shell to C
+Date: Tue, 19 Jan 2016 15:17:11 -0800
+Message-ID: <xmqqa8o188i0.fsf@gitster.mtv.corp.google.com>
+References: <1452901035-1802-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: larsxschneider@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 00:06:41 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, j6t@kdbg.org, sunshine@sunshineco.com,
+	Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 00:17:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLfMG-0004XW-8i
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:06:40 +0100
+	id 1aLfWY-0008T4-Bm
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933218AbcASXGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 18:06:37 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56546 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933164AbcASXGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 18:06:36 -0500
-Received: (qmail 15858 invoked by uid 102); 19 Jan 2016 23:06:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Jan 2016 18:06:35 -0500
-Received: (qmail 27658 invoked by uid 107); 19 Jan 2016 23:06:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Jan 2016 18:06:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jan 2016 18:06:33 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqio2p89mb.fsf@gitster.mtv.corp.google.com>
+	id S933247AbcASXRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 18:17:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57184 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933156AbcASXRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 18:17:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0297D3D7E2;
+	Tue, 19 Jan 2016 18:17:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SqRWcIUADyUmA2jt0VAIxrCPTF4=; b=jSmJBf
+	IezqAXhqCgdngZ494lryWVhrMEWYXy3VmYwmFuHekvERF3HfaHHzA/Z2spQqi8Vv
+	L0QBZZerflz1cNmyfojlDfI9FOrRWkIAmTzbUxBAPbpA0TdcM8ghPkjGoZE0i/zg
+	o/YuJaUHWqyKZw5nk8lRaTlc+m7UwNpwnfp4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mQSiEftVFhsEx2WMOaDzuYUGPeuAiyHw
+	fvOulcuievZiBnjMbJ7rfIZlfxMcZkMKUM7XlQZUPq83v+bf4pOlFPepUrMCYifk
+	ZxlC1IoQkBIwEZMzkpU1uiutRwE2oDXbZUo4lgsLw8B6VLjKX4lc1IlMNl8a5wRM
+	3cpY5TBs9iw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EDB603D7E1;
+	Tue, 19 Jan 2016 18:17:12 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 722FD3D7E0;
+	Tue, 19 Jan 2016 18:17:12 -0500 (EST)
+In-Reply-To: <1452901035-1802-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 15 Jan 2016 15:37:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C5404E6C-BF02-11E5-97FA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284394>
 
-On Tue, Jan 19, 2016 at 02:53:00PM -0800, Junio C Hamano wrote:
+I've queued these with a bit of tweak in their log message.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > This is cute, but isn't it useful even outside Travis's context?  I
-> > am not suggesting to touch anything other than .travis.yml file in
-> > this patch, but if I wanted to get the benefit from the idea in this
-> > patch when I run my tests manually, I can just tell prove to use the
-> > cached states, no?
-> 
-> It seems that exporting something like
-> 
->     GIT_PROVE_OPTS="--timer --state=slow,save -j8" 
-> 
-> when running "make DEFAULT_TEST_TARGET=prove test" does give me the
-> same benefit by leaving the stats from the previous run in t/.prove
-> when making the test scheduling decisions.
-
-Yes, I've been using this on my local machine for years (which is why I
-suggested it to Lars for the Travis build). I have also noticed that my
-test runs take about as much time as the longest-running test, and do
-not fully utilize all of my processors. I suspect we could drop the
-run-time of the test suite substantially by splitting a few of the
-longer tests.
-
-You also wrote earlier:
-
-> IOW, I am confused by the beginning of the log message that says
-> this is taking advantage of "the Travis-CI cache feature".  This
-> improvement looks to me like using the feature of "prove" that
-> allows us to run slower tests first, and does not have much to do
-> with Travis.
-
-The interesting Travis feature we are using is that we are allowed to
-store some data from run-to-run. So we use the Travis feature that lets
-us use the prove feature. :)
-
-> One thing I noticed but didn't dig further to fix was that this
-> "prove --state" business did not seem to work well together with
-> 
->     make T="...list of tests..." test
-> 
-> that limits the set of tests to perform.
-
-Right, it does not do what you want.  The "prove --state" feature is not
-just about ordering, but also about selecting. When run via "make", we
-always give prove the full list of tests. But you can also do:
-
-  prove --state=failed
-
-manually to just run whatever failed on the last run.
-
-I don't know if there is a way to tell prove "use the state for
-ordering, but don't otherwise select from it", which would do what you
-want above.
-
-You can also note that if we ever delete a test script, it will still be
-mentioned in prove's state file. I think prove is smart enough to
-realize it went away and not bother you.
-
--Peff
+Thanks.
