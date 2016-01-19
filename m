@@ -1,69 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] travis-ci: run previously failed tests first, then slowest to fastest
-Date: Tue, 19 Jan 2016 15:26:04 -0800
-Message-ID: <xmqq60yp8837.fsf@gitster.mtv.corp.google.com>
-References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
-	<xmqqmvs19w5n.fsf@gitster.mtv.corp.google.com>
-	<xmqqio2p89mb.fsf@gitster.mtv.corp.google.com>
-	<20160119230633.GA31142@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Issue when changing staged files in a pre-commit hook
+Date: Wed, 20 Jan 2016 06:26:35 +0700
+Message-ID: <CACsJy8DxQnGV5JZnHuvA1Zbpf2BuGdmMF+YNiq51HNK+8vW56Q@mail.gmail.com>
+References: <CAPYEnzGfnRbajDQAwBTNE5XSaB0WbHKbf1heRV0bUgbq5w_A5g@mail.gmail.com>
+ <CACsJy8DhiYiie7+Cw3PkPJpSX7CGp-r2Mu98mLp4OMhhGdsXgQ@mail.gmail.com> <xmqq1t9dbe9y.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: larsxschneider@gmail.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 20 00:26:31 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Niek van der Kooy <niekvanderkooy@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 00:27:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLffR-00039b-4H
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:26:29 +0100
+	id 1aLfgQ-0003VD-3I
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933450AbcASX0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 18:26:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51042 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933258AbcASX0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 18:26:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 130893D980;
-	Tue, 19 Jan 2016 18:26:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EGdHsgjdzBaDpODThDOc31lQAIY=; b=Xx/luq
-	2vZ84DEcqK+YkxCsV9fmzppc0grY8jcppIVNhZtPmF6IdSHbNnC+0e0poUjcNAuD
-	Kw9BWXqaGjVnl5DlPGcsxfcB9tU22ranEh7Oyn2I7cTORxXN/7HGoX/psCIuJeV8
-	2a5weWB3BxhgVilUYF9aRIu45jGG1vgELg7IM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vz43aOHjBI5PZFKsMQjfmNkbi+rLKSFp
-	qACIM5BF2Du3sHhgW2nV8ruJZC/e3V8SagoODXRzI7n1rhSIzN8pl3ktLCZ8wUd5
-	hi2AeltQ0ajvgf5p5JU32ACVN44PTfUMbQIiR/FWOHa3v1VmjS9De6q1Varlowpa
-	Rc+IbjLTT/E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B1803D97F;
-	Tue, 19 Jan 2016 18:26:06 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 859EC3D97E;
-	Tue, 19 Jan 2016 18:26:05 -0500 (EST)
-In-Reply-To: <20160119230633.GA31142@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 19 Jan 2016 18:06:33 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 02FD8A5C-BF04-11E5-A4BA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S933503AbcASX1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 18:27:11 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:33637 "EHLO
+	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933499AbcASX1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 18:27:06 -0500
+Received: by mail-lf0-f47.google.com with SMTP id m198so201585512lfm.0
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 15:27:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2hSU5ulgBdlr5gSfP25JMxGqKBtnsfMZUGLHLRB/KpI=;
+        b=TmDt4PlvcIKOpLV9vzDm1fnh8t0aXOLBMfqV10rCEVba4nOW6FnIIk93tMgvidc7T0
+         4QwkWkZRHsE/l7K6HrC6pnnRq4T3JhJwTy3hmMjgs5MLrqum2CkfLDq07+HmciRHduXl
+         ndKEALP+GIdwW7Lc4uAnKVvTY6HYOTxKQElmTjcVXX3vX64MA3wv/qKNQC5w4YVLDIol
+         CaXMS4K6kPeM2QMb9ySLzCrfvyFA8VT0mcX7MT73V4QTq6qwOOVpOUFrdYjSxZBstvzQ
+         wVeAAzWLEin4NUMlyJGZTCYH1Sd78sHIWibWXIi8PJgxUlSnSt67Vtx9rI0t3yl/mhAb
+         vNig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=2hSU5ulgBdlr5gSfP25JMxGqKBtnsfMZUGLHLRB/KpI=;
+        b=N56bohjDBl9Zhx9+j6U5eTsdFZsOwH9xU+Vq5E7JC7q3feVccbGk1GZSAgEWI3UDLi
+         ElkPomyOwa45XmNAuwjrgtnwqHsLp4p0ZiMhVpMS7pNWorHWCX0oAUdXPYiY/Dc+w68L
+         nLugQSkp5LBQJDTsXiGqn6C/8Oj5peCzNGcw7GqjQfrDiMdsj/qMhaw8ElSSoHOwP2zs
+         h8l1uBFoBqrG+ZRkGa5dQZlIUPE+XakXFpjaoXD7d5JG+qCfoIZ+e0OFwdAEJUZvF9RV
+         NyQPdyP9c84NEq6XcMZ/h1/xYiZAv8QUfzjRIeaD7oCEvgEu7PYrtMi/RcNXgj6ikzJ0
+         kYwA==
+X-Gm-Message-State: ALoCoQmtq0LFZntXqcjR3Ll3ud3KuvQeJeyH3BwrhGdu0vre55Cnv2BtlfhNob5TrY7rUzgSs7+QWq0KDJhzzdoPOVUta3XkIg==
+X-Received: by 10.25.17.229 with SMTP id 98mr9671112lfr.3.1453246025076; Tue,
+ 19 Jan 2016 15:27:05 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Tue, 19 Jan 2016 15:26:35 -0800 (PST)
+In-Reply-To: <xmqq1t9dbe9y.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284396>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 20, 2016 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> I think it's the intended behavior.
+>
+> Yeah, pre-commit was designed for inspecting and rejecting, not for
+> tweaking and munging.  Perhaps "git commit" can be tightened to make
+> sure that pre-commit that returns successfully did not muck with the
+> working tree and the index?
 
-> You can also note that if we ever delete a test script, it will still be
-> mentioned in prove's state file. I think prove is smart enough to
-> realize it went away and not bother you.
+That was my impression from the docs, but then I saw this comment,
 
-The inverse might be more problematic.  When we add a new test
-script (which we still do from time to time), does prove notice
-that we asked it to run more tests than it already knows about?
+/*
+* Re-read the index as pre-commit hook could have updated it,
+* and write it out as a tree.  We must do this before we invoke
+* the editor and after we invoke run_status above.
+*/
+
+which comes from 2888605 (builtin-commit: fix partial-commit support -
+2007-11-18) that admits "the hook can modify it (the index)". And I
+was about to update the docs, but the other way around, about updating
+index and side effects.
+-- 
+Duy
