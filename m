@@ -1,130 +1,91 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 19/20] refs: add LMDB refs backend
-Date: Tue, 19 Jan 2016 13:55:33 -0500
-Organization: Twitter
-Message-ID: <1453229733.16226.33.camel@twopensource.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
-	 <1452788777-24954-20-git-send-email-dturner@twopensource.com>
-	 <20160115133317.GJ10612@hank>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Can I change Git binary file's name when deploying Git-based product?
+Date: Tue, 19 Jan 2016 10:57:05 -0800
+Message-ID: <xmqqwpr59z3y.fsf@gitster.mtv.corp.google.com>
+References: <CACaY5-uUqFxsRdwPzxAjphc=wNQhM76YJFmCZu86SpGeG1fOrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 19 19:55:42 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?7J2A6rWQ?= <eunqyo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 19:57:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLbRN-0006bZ-4x
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 19:55:41 +0100
+	id 1aLbSr-0007Fj-Ui
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 19:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757162AbcASSzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 13:55:37 -0500
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:35247 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755507AbcASSzf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 13:55:35 -0500
-Received: by mail-qg0-f47.google.com with SMTP id o11so586999316qge.2
-        for <git@vger.kernel.org>; Tue, 19 Jan 2016 10:55:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=85BsnnB0BtT6uP316IFegEa0GKsIUO/9E3xB/upB4yo=;
-        b=BSTgVXqC2q3XH94c4uocWqqDi1vEOZHUWT4fCGVrEnfWpUzBBvtGZN0tuTWcJbFs7n
-         EEy9SnnI9JmQSXT8VP/rqXzjcBOemimW0IEIgN+q4nPdEUw7DQ7w0pZ66T0lzhLoUCq0
-         E27JxpX5yEgw3QkRsiYk1TVLKe+OVMZNWCI1lFkJ6KAOXyesMQXBMttdRHCDRHbP+h9H
-         gEymcqdYavGZK3ZciKwC4M1GV4oy8EBQhGdVInfKjCbPTcB6qY5i+CfmEO6wWJAXKIK4
-         LYfwybbsjLnVpmrwH7tehrDzIii8BgqTi4AkrGC76oN3cXTtGtXfXnVB2Y2fUO8W7w1S
-         IgTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=85BsnnB0BtT6uP316IFegEa0GKsIUO/9E3xB/upB4yo=;
-        b=nM5sgWtICa6+r8pRuPYVQaIULFyVsPXYosKJDbPw/mwbkbljGq8/gfCzLZ8oVtVj/6
-         eU0+6l3/CHqw55OKuVABI5k6XsHygmNxS1klM713wwklcNAkPT6cIUsJP2b/JcJE3MeK
-         zpaocU03TAN/3faK9LugtT6iE9CyMjbqcRVYUK78fdS9TN2oFkwcAzGrjRRuv0PKxyVN
-         4mvfxWyV5rJys2OwsrqSfETTg8n4ItNWWyHq/qtKZfw6KmhCdN7q3k12pQdlicUlJfg3
-         s7AzFRf7W8ivS5xOnHDcur7RptK2vQ8SXUWO/SjIk+tEK6YQF38HzBZW2caj5Wo8bYfY
-         kFaA==
-X-Gm-Message-State: ALoCoQlh5iHpH/UxHGcYd4sy8MT8JGrtzIutcENvnd2AFFXyUnAFH5YfZXhud3HBK1pMcLYCE9KLXlJPtMRKMoPe00K4iLaDqA==
-X-Received: by 10.140.132.212 with SMTP id 203mr41075453qhe.102.1453229734946;
-        Tue, 19 Jan 2016 10:55:34 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id l139sm12670594qhc.24.2016.01.19.10.55.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 19 Jan 2016 10:55:34 -0800 (PST)
-In-Reply-To: <20160115133317.GJ10612@hank>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1757168AbcASS5K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Jan 2016 13:57:10 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54869 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756737AbcASS5I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2016 13:57:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DFD9E3C8FB;
+	Tue, 19 Jan 2016 13:57:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Q+Z0Ux3kle7D
+	z+oV961/V/OgOtc=; b=pywQ+HfokwZn3IXSkI7tnUFO4qeljAZDbHR4n1sysQoy
+	piLkOqS9OPWH0/WtSRseTXwQGl6+MznJ5mzmO2rcmUTc4YZ2OdYuIGrLarDtYC+C
+	HtdOS047GCZ6T28TeBnjLn2AulvI3TELtqIH30pxNbdkC1tOWyt8KWMqMMLrYkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=A37Xwp
+	+17HMCl5BdVrCweE54ho3QjUOnsCn2Dlea0dzHeHEtkTK6Wp9bHKQy6hqLwIZ1zw
+	oiPawad7CDYmiiJK+xXWftG7sf5d/Cpwz3qQzqoZ6/lRJe22NtNYYcjwSXGOI3+i
+	dJ8EDroccPHZmV+PPfBgwfM5PYW8Z/vsGEWMA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D85203C8FA;
+	Tue, 19 Jan 2016 13:57:06 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5E7E43C8F9;
+	Tue, 19 Jan 2016 13:57:06 -0500 (EST)
+In-Reply-To: <CACaY5-uUqFxsRdwPzxAjphc=wNQhM76YJFmCZu86SpGeG1fOrw@mail.gmail.com>
+	(=?utf-8?B?IuydgOq1kCIncw==?= message of "Tue, 19 Jan 2016 17:07:16 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6F4CBF6E-BEDE-11E5-88A7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284372>
 
-On Fri, 2016-01-15 at 14:33 +0100, Thomas Gummerer wrote:
-> [I don't know too much about the refs code, but was still interested
-> in this patch series, so below are the few things that I noticed
-> while
-> reading through it.]
+=EC=9D=80=EA=B5=90 <eunqyo@gmail.com> writes:
 
-Thanks for taking a look.
+> Problem is that whenever git command is executed, 'The Git command
+> requires the command line developer tools. Would you like to install
+> the tools now?' message comes out.
 
-> On 01/14, David Turner wrote:
+As far as I know, that is not a message Git produces, but likely to
+come from some magic wrapper (or "missing command handler") the
+distro gives its users.
 
-> > +exists.  The header has the same format as an ordinary reflog, but
-> > with
-> > +a timeztamp of all zeros and an empty value.
-> 
-> s/timeztamp/timestamp/
+> I found out that when i change Git binary file's name that my product
+> is executing, problem is solved. Since then i tried to read every
+> licenses regarding Git but can't find a clear answer.
+>
+> Can i change Git binary file's name to for example 'Git-indegs',
+> 'Indegs' when deploying my product?
 
-Fixed, thanks.
+The Git source code is licensed under GPLv2, and IIUC, there is
+nothing that forbids you from naming the resulting binary other than
+"git".
 
-> > +test "$(git config extensions.refstorage)" = "lmdb" && die "git
-> > -new-workdir is incompatible with the refs lmdb storage"
-> > +
-> 
-> Is it expected that other potential ref backends are compatible with
-> git-new-workdir?  Otherwise I think it would make more sense to
-> whitelist the files backend here instead of blacklisting the lmdb
-> backend, so we don't risk forgetting about this when adding another
-> backend.
-
-I no longer remember what the exact issue was, but we can be safe and
-restrict git-new-workdir to the files backend (since it looks likely
-that worktrees will replace it anyway).
-
-> >  case "$git_dir" in
-> >  .git)
-> >  	git_dir="$orig_git/.git"
-> 
-> [...]
-> 
-> > +static int lmdb_init_db(struct strbuf *err, int shared)
-> > +{
-> > +	/*
-> > +	 * To create a db, all we need to do is make a directory
-> > for
-> > +	 * it to live in; lmdb will do the rest.
-> > +	 */
-> > +
-> > +	if (!db_path)
-> > +		db_path =
-> > xstrdup(real_path(get_refdb_path(get_git_common_dir())));
-> 
-> I think we're leaking some memory from get_refdb_path() here.
-> get_refdb_path() uses strbuf_detach(), which according to its
-> docstring
-> makes its caller take care of the memory of the returned string.
-> real_path() then uses strbuf_addstr() to add the string to its
-> internal strbuf, but leaves the string we get from get_refdb_path()
-> alone, so it leaks.
-
-That only happens once per run, since db_path is set afterwards, but
-I'll change get_refdb_path() to return a pointer to a statically
-allocated string (as many similar funcs do).  That will be easier to
-read.
+It is completely a separate issue if merely renaming the binary from
+"git" to another name is sufficient to keep things working.  Many
+subcommands of Git are built into a single binary and I suspect that
+they would work regardless of what the name of that single binary
+is, but others invoke other Git subcommands while they are running,
+and when the do so they expect to find the other subcommand they are
+invoking are "git foo", not "hju foo", even if they were invoked as
+"hju".  That too is something you can modify under the licensing
+terms of GPLv2, i.e. if you make such a modification and ship the
+binaries based on that modified source, you must make the
+modification available to the recipients of the binaries in the
+source form under the same GPLv2 license.
