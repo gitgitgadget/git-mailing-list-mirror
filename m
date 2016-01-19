@@ -1,108 +1,79 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH] travis-ci: run previously failed tests first, then slowest to fastest
-Date: Tue, 19 Jan 2016 10:24:29 +0100
-Message-ID: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 10:24:49 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t0060: loosen overly strict expectations
+Date: Tue, 19 Jan 2016 10:40:43 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601191034000.2964@virtualbox>
+References: <eccf149d9557fd9afb591d9411ecb0b3460c9eb0.1452754049.git.johannes.schindelin@gmx.de> <CAPig+cRa9mk0U4iPim5GRWzFN-vHEA=rx8bb40oQyCJVZL7t3A@mail.gmail.com> <alpine.DEB.2.20.1601150734460.2964@virtualbox>
+ <xmqq60yukb49.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Michael Blume <blume.mike@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 10:41:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLSWq-0008VE-MN
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 10:24:45 +0100
+	id 1aLSml-0007bY-T9
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 10:41:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757501AbcASJYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 04:24:35 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:36344 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757322AbcASJYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 04:24:33 -0500
-Received: by mail-wm0-f44.google.com with SMTP id l65so129742663wmf.1
-        for <git@vger.kernel.org>; Tue, 19 Jan 2016 01:24:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=koTEoBPzQTYyGkMgTyPgoCvfZ2PI/MRUPHAgjGGcE+k=;
-        b=cZ3VLQGtFoltqckEL9smkqeGcLoSglpEIKKBpjo7A8IR8ok1/od/wGp79SZBPHZlt0
-         j/3KjbNanyBmwDISfvihKciyyt7WnNexYtCAqG+30qfrCEBFcugAcqfiFUKgDfuuUjba
-         g9kh3jwclWYLoAcT6gv68L3Qpw6gYmU9fF99H9odBFjJm3NR7mX1J1fyVPROsjfBldeM
-         McSPkX2VeAupLZtEdkYC58t5XgZcf2gnoIJxrQMLqkgWb2Zz8q0DHM4ZBqCGDAKBub6g
-         N7WflRC0z9c2zgvGkgwrCJcTCfHaGgCMlA0YEmfynNLR/OtkscOMqok26ckDNwvJ4TyN
-         DsQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=koTEoBPzQTYyGkMgTyPgoCvfZ2PI/MRUPHAgjGGcE+k=;
-        b=F/ncJv12M4PxnyOl/9P+cArCijZgYvLD2XNhYTB2h48/PnJj/kmULgdvIwgeje77as
-         CLnksZsLgFGQMG6j9iOjY84pJM2A0ElwDkzk7YGKJjiwNXATs9Zf1smBEXuOc/Ksi77O
-         NTOQhWOTjJfzwGjiwLvAiqLCaXex45t0avO/xY/fKW46iyeNjpS0FC2u739CcW58bkB6
-         jsnKaUWX6O/UOW3Zvd1/7VsDUGVUJ35tI/Uj6DjERnC/PmcSg1b66Lcldf2iMytRrWHs
-         lIN3bDgNRLsTKl6l74nxoBbOzxPZ84v8S9iiqcfCb9YBv8D3yRaullcRoYAWaqA5Ewgw
-         1hbg==
-X-Gm-Message-State: ALoCoQn+I5KfcmslrchVt6Bf+vMIh2M9IIBL0HteOJT6Czr5kxrImn7dBo11Ad0G5eFJlalMh9gAYq6rzfZleQaQvs5YQrSi2g==
-X-Received: by 10.194.23.232 with SMTP id p8mr33620255wjf.80.1453195471937;
-        Tue, 19 Jan 2016 01:24:31 -0800 (PST)
-Received: from slxBook3.fritz.box (p508BA6D2.dip0.t-ipconnect.de. [80.139.166.210])
-        by smtp.gmail.com with ESMTPSA id di8sm27511832wjc.34.2016.01.19.01.24.30
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 19 Jan 2016 01:24:31 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
+	id S1757897AbcASJlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 04:41:09 -0500
+Received: from mout.gmx.net ([212.227.15.19]:61427 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757895AbcASJlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 04:41:04 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M86PB-1ZzxoS3PEX-00vg1H; Tue, 19 Jan 2016 10:40:45
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq60yukb49.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:3CHg1MvpZaDqK5k+9Ff56Xm9fJyqJQ7U/3Fk4sM7P45wpEfwhPr
+ Fgup19YT/aRc9SOJ+6/YpJcKHqBt13k7yezP79eZgdNFSk4+1oVv7pcDJmdj8xhF9mpQNk9
+ JWhCGXUMnz83/iHCvH625nmgrVn+vIKAeMIf61MNtyVtueC1bpnavbi2p7vR9T4kQWcyl2o
+ gylGZR4MiJD7c7CTOvVDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xhidNUBT8LI=:3XIoLzANHR9ALdM/4butmY
+ FqLr/vkEnBCmxTjebScMdaG0/1vVs6ibrgWM8uwNKuHH4EDB3qQOc6cvdvAaHZeEi0JVn5jqw
+ eCV3za7fr4kHZUsn4K3KX+ne+PM/X81oPXCihOvPjDuniDZiSN3JkO9lDYWQu+bLtMfsqHQRB
+ MG8Ix4Sy1D/g2DI2ROM9DXc8qxDhY1ZOpwJbNViw8308FiwBuQB8NiY13FB7sY1VfyjO6bTYW
+ SDG5dvxULwZrgVGHmoDZhsz2d5cfwiCARG/xkHi2eYqikbpgNCBVC+VCveh1MrOsIogFyLHSa
+ buUv9kcx4ZvorrmUVmwSkhx/hOrrXBQda7iJzyXxRzr37gLzH6M0MLOvbjlUrH9pIoC/iR/J9
+ bAxSKjSDbyqoAxC3sSpLEFENE/2geJBXVP7m9j5crRiYuM1hlcCQa1te3RMfIWDeVK96An/t7
+ 5TBrqErOGU+6RBc+qo2g/YaiHBTtymThbPvE/WqyD/UyBRM78YGtNfLZwp8ctV07TEDN4bCqh
+ In8OoZranl9O8p9zs+aUFmp4+QL/Qzk8nfUyCVT+F6Hhrqdf66WShVWCDgfYlgIwYBWfSgDwx
+ +zpAbva77cBWMn5eyCZzIKZzo4AOyHKH9tDd+nZ7uMqqcbNxFeV8rrDOJav8XPQemhD+jGX6R
+ Oi3ONr9IbFg0PAChutT4S0V3/H9iyyS5cytcdB5ywNF6DdZ754G1yPOMACDay0im9C7cqXiYs
+ WHlWXZqfGljugvuew5ECUcg8gpN37KLRJU+3aC2xsx0o5Zn757t5YC0v0dIm5NTbHsUDKMK1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284353>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Hi Junio,
 
-Use the Travis-CI cache feature to store prove test results and make them
-available in subsequent builds. This allows to run previously failed tests
-first and run remaining tests in slowest to fastest order. As a result it
-is less likely that Travis-CI needs to wait for a single test at the end
-which speeds up the test suite execution by ~2 min.
+On Fri, 15 Jan 2016, Junio C Hamano wrote:
 
-Unfortunately the cache feature is only available (for free) on the
-Travis-CI Linux environment.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > This is not limited to the "//" vs "/" case, of course, other inputs are
+> >> > also allowed to produce multiple outpus by the POSIX specs.
+> >> 
+> >> s/outpus/outputs/
+> >
+> > Whoops.
+> >
+> > Junio, would you terribly mind adjusting the commit message on your end?
+> 
+> No problem.  Is this the only tweak that is necessary before it can
+> go to 'next' and then to 'master'?
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- .travis.yml | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Sorry to respond so late... Yes, this is the only tweak.
 
-diff --git a/.travis.yml b/.travis.yml
-index c3bf9c6..f34726b 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -1,5 +1,9 @@
- language: c
-
-+cache:
-+  directories:
-+    - $HOME/.prove-cache
-+
- os:
-   - linux
-   - osx
-@@ -18,7 +22,7 @@ env:
-     - P4_VERSION="15.2"
-     - GIT_LFS_VERSION="1.1.0"
-     - DEFAULT_TEST_TARGET=prove
--    - GIT_PROVE_OPTS="--timer --jobs 3"
-+    - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-     - GIT_TEST_OPTS="--verbose --tee"
-     - CFLAGS="-g -O2 -Wall -Werror"
-     - GIT_TEST_CLONE_2GB=YesPlease
-@@ -67,6 +71,8 @@ before_install:
-     p4 -V | grep Rev.;
-     echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)";
-     git-lfs version;
-+    mkdir -p $HOME/.prove-cache;
-+    ln -s $HOME/.prove-cache/.prove t/.prove;
-
- before_script: make --jobs=2
-
---
-2.5.1
+Ciao,
+Dscho
