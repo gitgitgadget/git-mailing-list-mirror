@@ -1,67 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Issue when changing staged files in a pre-commit hook
-Date: Tue, 19 Jan 2016 10:44:09 -0800
-Message-ID: <xmqq1t9dbe9y.fsf@gitster.mtv.corp.google.com>
-References: <CAPYEnzGfnRbajDQAwBTNE5XSaB0WbHKbf1heRV0bUgbq5w_A5g@mail.gmail.com>
-	<CACsJy8DhiYiie7+Cw3PkPJpSX7CGp-r2Mu98mLp4OMhhGdsXgQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Niek van der Kooy <niekvanderkooy@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 19 19:44:17 2016
+From: Lars Vogel <lars.vogel@gmail.com>
+Subject: [PATCH] Consistent usage of working tree in the git-add help
+Date: Tue, 19 Jan 2016 19:53:55 +0100
+Message-ID: <1453229636-16269-1-git-send-email-Lars.Vogel@vogella.com>
+Cc: Lars Vogel <Lars.Vogel@vogella.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 19 19:54:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLbGK-0001lS-Bm
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 19:44:16 +0100
+	id 1aLbPu-0005xW-JM
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 19:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755698AbcASSoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 13:44:13 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58108 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755254AbcASSoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 13:44:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E85973C62A;
-	Tue, 19 Jan 2016 13:44:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cbzZY0hebVmV3Z6BTMvfuuzPvw0=; b=J43Ls1
-	CT7SlmnDIcR8c9lmw3tTzCVPm/IGHa4UHOenzl6NgUVnoA6E3QpjSQJLi1wxy7U1
-	NvQFsUIACDalA7vWYX1c1aEUgAm6N6eTfhbJeHrFExL6Xshk2kR7xgkIBbWun4HP
-	P0BrmexOYp1tDYEN2hhIUNd5/BhugATpIoj50=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s/9JFDuvUvGpwfn2lPPqC4V9X0CBXs+/
-	nGfzjtSfY6dSQs7LHIQo0GEbzqfQSyolL4lyY8wsziV4QssVSm+XxvW+ce130jQ/
-	bWM3VImU8KqiCq7eqDk5T3YjkZYNkbUpKS214EEgrzPbISycI5cY4JFLom39qS8q
-	ExU59DEMDqQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0E273C629;
-	Tue, 19 Jan 2016 13:44:10 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 686E23C628;
-	Tue, 19 Jan 2016 13:44:10 -0500 (EST)
-In-Reply-To: <CACsJy8DhiYiie7+Cw3PkPJpSX7CGp-r2Mu98mLp4OMhhGdsXgQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 19 Jan 2016 19:20:36 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A0CB7F0A-BEDC-11E5-BD58-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1757345AbcASSyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 13:54:07 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37030 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757331AbcASSyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 13:54:05 -0500
+Received: by mail-wm0-f41.google.com with SMTP id n5so127460711wmn.0
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 10:54:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=WrX7Kpurz6EKGwB6W1kcX/KXMp67H97+nPngU+IxuHQ=;
+        b=ubYOfxoGGUo30jUxkO0OvrQNV4yxLxhjXBzjScR5tcagQvG5MCs7humgeLaCHv38kx
+         Mr2rjRdWC/HJrm9s8SX6eMLkNnDUGP5pt5aQGA+CNsQCudam9t/qsIMkIwh9gGzIyvI5
+         QOaFxT6KFsclF+NwysL3LzP+3U8wE6TeksuI0+rTy5IW4S2K/V6WdLgKa/V+KoXACU1y
+         K9Qj0NYWhHzwNSNP2ZyLCHP6WZEtyY0hpsBCNcRprIa/++arS90g2gD4gq6KQ7BmFXJT
+         cNz5Lg09PjpgxcRhpY5FZ9sKCfaq3VTmyThHY7TmNlkF1tPY1e2RffR22jTb0NC7BFRB
+         RUWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=WrX7Kpurz6EKGwB6W1kcX/KXMp67H97+nPngU+IxuHQ=;
+        b=YNwoHaRs3Fz7Gej37xInMg/BWkUUu+DfAEohb/KUVd7g5sAM3la97jAOutl1oSnwRz
+         g5HQVua204Oi4BLEP76WjdWZAQqTzGPNvoad2xKM/vC/zVxmxKlbtxsgxKG3ENtdouIp
+         jrgqHKaEECBkRvcTzay0vWAuyUjnbfb+H048BZA15fD/ieGzu47/l89p4zRDm8F2GB6w
+         abu/QfEQSniEFIAGVGmjU1A+YeIu5ROM7B46MKOAO+RbAGH5PCXl29e8Y2SssfIZHQUo
+         zLl5qTXDjdM8SCfBsdmzwwNl7leOAWgl+8U2IgicFyQrtaSyyp0ufbHOpr6qMZOPho1I
+         KVHQ==
+X-Gm-Message-State: ALoCoQn5Pct3OmvX/A37BsXAg00+jK9+STQojzkk6Eqp3hlqLtSYpy5+68//QnJFB0RAkLrZ0ECab5gRRigOW52k/9avEIpRIQ==
+X-Received: by 10.194.110.230 with SMTP id id6mr30275845wjb.67.1453229643271;
+        Tue, 19 Jan 2016 10:54:03 -0800 (PST)
+Received: from localhost.localdomain ([212.230.124.11])
+        by smtp.gmail.com with ESMTPSA id i196sm21627260wmf.23.2016.01.19.10.54.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 19 Jan 2016 10:54:02 -0800 (PST)
+X-Google-Original-From: Lars Vogel <Lars.Vogel@vogella.com>
+X-Mailer: git-send-email 2.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284370>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+The usage of working directory is inconsistent in the git add help.
+Also http://git-scm.com/docs/giit-clone speaks only about working tree.
+Remaining entry found by "git grep -B1 '^directory' git-add.txt" really
+relates to a directory.
 
-> I think it's the intended behavior.
+Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+---
+ Documentation/git-add.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Yeah, pre-commit was designed for inspecting and rejecting, not for
-tweaking and munging.  Perhaps "git commit" can be tightened to make
-sure that pre-commit that returns successfully did not muck with the
-working tree and the index?
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index fe5282f..cfef77b 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -24,7 +24,7 @@ remove paths that do not exist in the working tree anymore.
+ 
+ The "index" holds a snapshot of the content of the working tree, and it
+ is this snapshot that is taken as the contents of the next commit.  Thus
+-after making any changes to the working directory, and before running
++after making any changes to the working tree, and before running
+ the commit command, you must use the `add` command to add any new or
+ modified files to the index.
+ 
+@@ -85,7 +85,7 @@ OPTIONS
+ -p::
+ --patch::
+ 	Interactively choose hunks of patch between the index and the
+-	work tree and add them to the index. This gives the user a chance
++	working tree and add them to the index. This gives the user a chance
+ 	to review the difference before adding modified contents to the
+ 	index.
+ +
+-- 
+2.7.0
