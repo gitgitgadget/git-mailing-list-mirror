@@ -1,157 +1,149 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] shortlog: replace hand-parsing of author with pretty-printer
-Date: Mon, 18 Jan 2016 19:47:54 -0800
-Message-ID: <xmqqegdecjrp.fsf@gitster.mtv.corp.google.com>
-References: <20160118200136.GA9514@sigill.intra.peff.net>
-	<20160118200248.GC15836@sigill.intra.peff.net>
-	<20160118201337.GA15943@sigill.intra.peff.net>
-	<20160118230435.GA16898@sigill.intra.peff.net>
+Subject: Re: Is there interest in a n-sect tool?
+Date: Mon, 18 Jan 2016 19:54:21 -0800
+Message-ID: <xmqqziw2b4wi.fsf@gitster.mtv.corp.google.com>
+References: <20160118075653.GA13911@glandium.org>
+	<xmqq1t9fe0qw.fsf@gitster.mtv.corp.google.com>
+	<20160118085835.GA15642@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 19 04:48:08 2016
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Jan 19 04:54:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLNH6-0004a7-3P
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 04:48:08 +0100
+	id 1aLNNE-0007Nj-Ej
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 04:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755946AbcASDsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 22:48:03 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53944 "EHLO
+	id S1755963AbcASDyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 22:54:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61743 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755875AbcASDsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 22:48:02 -0500
+	with ESMTP id S1755740AbcASDyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 22:54:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CBC243D3BF;
-	Mon, 18 Jan 2016 22:47:55 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 786D23D511;
+	Mon, 18 Jan 2016 22:54:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eLsEe4KT77IUUSdwHb/7ghVBS+w=; b=UPlmwA
-	Osn9lLaUmTYKB/V9lkXu0j+wyNLPH5REiLjsLehzXsixnNkfoBG9/xw+z7mytpmc
-	wRzfL5g457eFJzYQPp95Tqro+h2M6NsTwqsZvChdTg7uVsYh8ALswqb9EeXHl4mq
-	+8kPSB9sOArpgHMVveF7cwl/S1areKbDnAEXc=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=aaoh0WYtycwbgSlXLaJcaWStIe8=; b=mZ/WKEFhO6blp8NpQQrx
+	TA7tHWEDpbd1xOMI5YQpZjPu21ocLTEFwyNw+St29HNZ+bfDBfuxMoFS3EzduMmC
+	L6KdmVYVLY8gp4HcfYr3fk11vsKscADUZbE+nmE1Gsr1u87HIoPms5IbDOkKc/te
+	EvwrY7+FcB3U1BUNnzmHMXY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l9k3/G8zNmxPU5T0nINIRuhLPKkmLzEe
-	6WdtH5+lyMnud3dwQFqRBe4OrnlR6UJIkPa152gsCsQrhnnxvuUATsYw5rKSkeXx
-	H2Infrnqz6ZrCWB34nvHMnNKUWXhMh12pwNvxzdvxRJwFDQ2VllHT5SWAJVfyu/V
-	EULfmiBfZPQ=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=oy4c77GT8dJk9gC6WWgm58rNTnYz9pbvgpmB9iv/T6U+OY
+	AbAnJaKznXd7cDQ7kphVOe4TkmXOubNkMbfKH6F/zuqePUbuxLkvi/lTcA85k/LK
+	BsWYUrZk863LAphIJLzXSvqGDGFbZGpeXjjqE4WXTqO48633aRdJ6izMbW52I=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3EB23D3BE;
-	Mon, 18 Jan 2016 22:47:55 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70B333D510;
+	Mon, 18 Jan 2016 22:54:23 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 492D83D3BD;
-	Mon, 18 Jan 2016 22:47:55 -0500 (EST)
-In-Reply-To: <20160118230435.GA16898@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 18 Jan 2016 18:04:35 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DB2AA3D50F;
+	Mon, 18 Jan 2016 22:54:22 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6C51B6D6-BE5F-11E5-9530-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 53585350-BE60-11E5-8268-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284345>
 
-Jeff King <peff@peff.net> writes:
+Mike Hommey <mh@glandium.org> writes:
 
-> After thinking on this, I'm in favor of removing this warning entirely.
-> My reasons are given in the commit message below, which can apply on top
-> of the series.  It could also be squashed in to 2/6, but given that it
-> is removing the test added by cd4f09e (shortlog: ignore commits with
-> missing authors, 2013-09-18), I think it's worth recording as a separate
-> commit.
+> On Mon, Jan 18, 2016 at 12:43:35AM -0800, Junio C Hamano wrote:
+> ...
+>> two).  If you have three states, black/gray/white, that linearly
+>> transitions states twice (i.e. one part of the history is
+>> continuously black, and at one boundary it turns gray and continues
+>> to be gray, until at another boundary it turns white and continues
+>> to be white to the other end), you would still "bi"-sect to find
+>> these two transition points....
+>> ...  Is that the kind of search you are talking about?
+>
+> Yes, it is. Somehow, I was thinking of the result once you're done
+> bisecting, not the process itself of cutting history in two parts.
 
-I agree 100% with the reasoning. Thanks for thinking things through.
+I am not sure what you meant by "Yes it is"; is the above (i.e. in a
+history whose one part is painted continuously in black, one part
+continuously in gray and the remainder in white where white and
+black never touch, find the transition between black and gray and
+the transition between gray and white) the kind of search you are
+talking about?  Judging from the remainder of your message, I had an
+impression that you are solving a different problem where you want
+to find transitions for N distinct traits (i.e. 2^N combinations,
+not N distinct colors like black-gray-white).
 
->
-> -- >8 --
-> Subject: [PATCH] shortlog: don't warn on empty author
->
-> Git tries to avoid creating a commit with an empty author
-> name or email. However, commits created by older, less
-> strict versions of git may still be in the history.  There's
-> not much point in issuing a warning to stderr for an empty
-> author. The user can't do anything about it now, and we are
-> better off to simply include it in the shortlog output as an
-> empty name/email, and let the caller process it however they
-> see fit.
->
-> Older versions of shortlog differentiated between "author
-> header not present" (which complained) and "author
-> name/email are blank" (which included the empty ident in the
-> output).  But since switching to format_commit_message, we
-> complain to stderr about either case (linux.git has a blank
-> author deep in its history which triggers this).
->
-> We could try to restore the older behavior (complaining only
-> about the missing header), but in retrospect, there's not
-> much point in differentiating these cases. A missing
-> author header is bogus, but as for the "blank" case, the
-> only useful behavior is to add it to the "empty name"
-> collection.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/shortlog.c  |  8 --------
->  t/t4201-shortlog.sh | 16 ----------------
->  2 files changed, 24 deletions(-)
->
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index adbf1fd..e32be39 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -149,13 +149,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
->  	ctx.output_encoding = get_log_output_encoding();
->  
->  	format_commit_message(commit, "%an <%ae>", &author, &ctx);
-> -	/* we can detect a total failure only by seeing " <>" in the output */
-> -	if (author.len <= 3) {
-> -		warning(_("Missing author: %s"),
-> -		    oid_to_hex(&commit->object.oid));
-> -		goto out;
-> -	}
-> -
->  	if (!log->summary) {
->  		if (log->user_format)
->  			pretty_print_commit(&ctx, commit, &oneline);
-> @@ -165,7 +158,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
->  
->  	insert_one_record(log, author.buf, oneline.len ? oneline.buf : "<none>");
->  
-> -out:
->  	strbuf_release(&author);
->  	strbuf_release(&oneline);
->  }
-> diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-> index 82b2314..f5e6367 100755
-> --- a/t/t4201-shortlog.sh
-> +++ b/t/t4201-shortlog.sh
-> @@ -178,22 +178,6 @@ test_expect_success !MINGW 'shortlog encoding' '
->  	git shortlog HEAD~2.. > out &&
->  test_cmp expect out'
->  
-> -test_expect_success 'shortlog ignores commits with missing authors' '
-> -	git commit --allow-empty -m normal &&
-> -	git commit --allow-empty -m soon-to-be-broken &&
-> -	git cat-file commit HEAD >commit.tmp &&
-> -	sed "/^author/d" commit.tmp >broken.tmp &&
-> -	commit=$(git hash-object -w -t commit --stdin <broken.tmp) &&
-> -	git update-ref HEAD $commit &&
-> -	cat >expect <<-\EOF &&
-> -	A U Thor (1):
-> -	      normal
-> -
-> -	EOF
-> -	git shortlog HEAD~2.. >actual &&
-> -	test_cmp expect actual
-> -'
-> -
->  test_expect_success 'shortlog with revision pseudo options' '
->  	git shortlog --all &&
->  	git shortlog --branches &&
+> That being said, while I can do these things locally with my own
+> scripts, as a user, I would have found it useful if git bisect (and
+> especially git bisect run) would support this out of the box. The
+> question remains whether it would be useful to more people than
+> just me.
+
+Hmm, sorry.  For the two-trait example I gave (that can be extended
+to N-trait), I can sort of see how the UI might look and I can say
+it might be useful [*1*], but not with this, and especially that you
+do not necessarily know all the traits whose transition points you
+might be interested in a-priori--all of that makes the problem
+definition fuzzy to me, and I cannot imagine what kind of user
+interaction you would be envisioning to solve what kind of problem,
+so I cannot even say it is a good idea or a bad idea.
+
+
+[Footnote]
+
+*1* I suppose a possible UI for the N-trait bisection might go like
+    this.  You start from just a single trait (good for your test #1
+    passing, bad for your test #1 failing).  You start with:
+
+    $ git bisect start
+    $ git bisect good A
+    $ git bisect bad Z
+
+    and Git would give you a commit (let's call it M) to test.  You
+    test and find that test #1 passes, but at the same time you find
+    that test #2 does not pass.  You do not know if test #2 passes
+    or fails at A nor Z.  At this point, you would decide to call
+    "test #2 passes" as good2, "test #2 fails" as bad2.  We now have
+    two independent traits (good/bad and good2/bad2), and mark M as
+    good and bad2:
+
+    $ git bisect add-trait new/old/unknown=good2/bad2/unknown2
+    $ git bisect state good bad2
+
+    Then Git would check out another one (let's call it G) for you
+    to test and you record the result from two tests.
+
+    $ git bisect state good good2
+
+    As you continue, Git will find the transition between good to
+    bad (or it may find the transition between good2 to bad2
+    earlier) and would tell you things like "commit F is the first
+    bad commit" or "commit K is the first bad2 commit".
+
+    If that is the kind of "out-of-box" behaviour for finding state
+    transitions for N-traits simultaneously, I can say that may be
+    interesting (note that interesting and useful are two different
+    things ;-).
+
+    If the cost to _prepare_ a revision to be tested is far greater
+    than an incremental cost to perform one more test after the
+    revision is already prepared to be tested, allowing a session
+    like that might be an overall win and it could even be a huge
+    win (i.e. imagine that compilation of the whole system to be
+    tested takes very long, but once the binary to be tested is
+    built, the time it takes to run each individual test is
+    negligible---if you have ten tests in your test suite, even if
+    you start out to find breakage in your test #1 like the above
+    example, it may be more efficient if you test all ten tests, not
+    just test #1, once you built the system to run test #1 for the
+    purpose of bisecting to find the breakage of that particular
+    test).
+
+    But I am not sure that is the kind of problem you are trying to
+    solve in the first place, so...
