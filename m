@@ -1,60 +1,118 @@
-From: John Fultz <jfultz@wolfram.com>
-Subject: git filter-branch not removing commits when it should in 2.7.0
-Date: Tue, 19 Jan 2016 14:48:40 -0600
-Message-ID: <AF975DD2-988F-47A8-BFC3-3BBC27419305@wolfram.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 21:54:23 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/2] interpret-trailers: add option for in-place editing
+Date: Tue, 19 Jan 2016 12:58:12 -0800
+Message-ID: <xmqqfuxt9ti3.fsf@gitster.mtv.corp.google.com>
+References: <1452790676-11937-1-git-send-email-tklauser@distanz.ch>
+	<1452790676-11937-3-git-send-email-tklauser@distanz.ch>
+	<xmqqio2vki0i.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cRRdca7PfkqppY2X7KSFpHX0yH19fxRL+w_=u9vg7NV9A@mail.gmail.com>
+	<xmqqio2pbgov.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cRi2knygjeaMtojAr65BE71B-z7q+s8V5rcGrV9Qja6jw@mail.gmail.com>
+	<CAPig+cRozqCKdC2+nyG-UM6xFo_sSqa7OhGgcycyyDQujZHtHA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Tobias Klauser <tklauser@distanz.ch>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 21:58:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLdI8-0004LS-9l
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 21:54:16 +0100
+	id 1aLdM4-00060N-OU
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 21:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757722AbcASUyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 15:54:11 -0500
-Received: from relay.wolfram.com ([140.177.205.37]:54211 "EHLO
-	relay-int.wolfram.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757717AbcASUyI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Jan 2016 15:54:08 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Jan 2016 15:54:08 EST
-Received: from [10.99.98.214] (unknown [10.99.98.214])
-	by relay-int.wolfram.com (Postfix) with ESMTPSA id 9A54DD1703
-	for <git@vger.kernel.org>; Tue, 19 Jan 2016 14:48:40 -0600 (CST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 relay-int.wolfram.com 9A54DD1703
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=wolfram.com; s=relay;
-	t=1453236520; bh=XrDx/ADuHT8DZx6BrTSVcfs0sLPxFq2a1YYHYzasjbk=;
-	h=From:Subject:Date:To:From;
-	b=zlcM3Bcy5IjVy2qEnd5NeELM/gIhRod1gLGJH0BV3YaZiesg3fs/weLn5DOUdrWfx
-	 AplwtSRs+OOSTswQ1DRZWuDrtpNrz3AySHAdxHatHrI2dYP2GiLepS++xCgTJkEZa+
-	 CIF6MLsFHF3SXswYQwKV3RqZATaLXYqjh1wQH3b8=
-X-Mailer: Apple Mail (2.3112)
+	id S1757732AbcASU6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 15:58:17 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57708 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757242AbcASU6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 15:58:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 070C73D583;
+	Tue, 19 Jan 2016 15:58:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NpBY907b3an+C9pIS9XvyKtLNoQ=; b=Inb1k2
+	gIVfwPwZPkNgox3449A4/EnpPimMHNTZFOuHV0T5MKgvgS51NxPBrjiE3i0gXsvW
+	gJoNSCuZNQ4zxFDeSt2+Ppy/h5Fnkh9bOkAvru8EkM6D8o+efKCGspyKM/Uk+Atc
+	HNupej5EOMhkAp36vjuZkqnCmTp8KKkbqw4xE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y03OJ/JuwzjqjfjWyH6nTF5157f1S8jG
+	NCT0+YAjLI98nZrHheaSYjtVhkw9RMyX3+sYmumA7wA7b0Qc6JedR4UrLM3Lnuvz
+	QxVo4rEi52psBQCjXVCYCL5WlmE7Vim7SUt647xqrqa5doHIiOh3rotMr7CG2gNm
+	XoVvh5D6K+E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F168D3D582;
+	Tue, 19 Jan 2016 15:58:13 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5AFC13D580;
+	Tue, 19 Jan 2016 15:58:13 -0500 (EST)
+In-Reply-To: <CAPig+cRozqCKdC2+nyG-UM6xFo_sSqa7OhGgcycyyDQujZHtHA@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 19 Jan 2016 13:10:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5ACD9C14-BEEF-11E5-B632-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284377>
 
-This seems to be a 2.7.0 regression in filter-branch.  The bug is reproducible on Mac/Windows (haven't tried Linux) in the 2.7.0 production releases.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Make an empty repo and put an empty commit in the history.  E.g.,
+> My understanding is that SANITY is an expectation that directory
+> permissions work in an expected POSIXy way: that is, a file can't be
+> deleted when its containing directory lacks 'write', and a file can't
+> be read/accessed when the directory has neither 'read' nor 'execute'.
+> This doesn't say anything about root not being allowed to read a file
+> when the file itself lacks 'read'.
 
-echo > foo && git add . && git commit -m "commit 1" && git commit --allow-empty -m "commit 2"
+In short, SANITY is "does looking at permission bits sufficient to
+anticipate what the filesystem would do?" while POSIXPERM is "can
+chmod be used to tweak permission bits of the filesystem" (a
+filesystem that lacks permission bits support would qualify as
+!POSIXPERM, as there is nothing to tweak in the first place).
 
-Now try to use filter-branch to remove the empty commit.  Both of the following methods leave master unchanged, but both worked in 2.6.4:
+I suspect the comment added by f400e51c and its patch description
+stressed too much about permission of a directory affecting what we
+can do to files inside the directory, and failed to describe another
+criteria for a sane environment: "files whose permission bits say
+you shouldn't be able to read or write cannot be read or written".
+Traditionally, running tests as root was one major way to break
+SANITY, but as f400e51c noticed, "can we write to '/'?", which was
+an old-fashioned way to catch the only case where SANITY does not
+hold on POSIX systems [*1*], cannot catch insanity on non-POSIX
+system like Cygwin.
 
-git filter-branch --prune-empty
-git filter-branch --commit-filter 'git_commit_non_empty_tree "$@"'
+POSIXPERM is more about "if we do chmod, does filesystem remember it
+so that ls -l reports the same?"  Output from "git grep POSIXPERM t"
+shows that some users of it also assume that it requires "we can
+make something executable by doing chmod +x and unexecutable by
+doing chmod -x" (and that is fine--running tests as root would not
+make an unexecutable file executable).  The tests that require
+POSIXPERM but not SANITY can be run by root (I am not saying that
+running tests as root is safe or sane, though) and are expected to
+produce the same result as they were run by a non-root user.
 
-Let me know if you need any more information.  Thanks.
 
-Sincerely,
+[Footnote]
 
-John Fultz
-jfultz@wolfram.com
-User Interface Group
-Wolfram Research, Inc.
+*1* This is an old-fashioned way back when everybody on UNIX was
+    sane and / had 0755 permission bits everywhere.  Some people
+    make their / owned by sysadmin group and give 0775 bits, and
+    "test -w /" would incorrectly say that the environment lacks
+    SANITY when run by non-root users in the sysadmin group, even
+    though our tests like "chmod -r file && ! cat file" (drop
+    readable bit, expect it to become unreadable) guarded by SANITY
+    can correctly run by them.
+
+    Back when f400e51c was written, checking `whoami` was suggested
+    as an alternative as a workaround for this "/ may be writable by
+    a non-root person and not a good SANITY check" issue, but that
+    was rejected because it obviously would not work on Cygwin.
