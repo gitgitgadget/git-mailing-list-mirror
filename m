@@ -1,85 +1,93 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Issue when changing staged files in a pre-commit hook
-Date: Wed, 20 Jan 2016 06:26:35 +0700
-Message-ID: <CACsJy8DxQnGV5JZnHuvA1Zbpf2BuGdmMF+YNiq51HNK+8vW56Q@mail.gmail.com>
-References: <CAPYEnzGfnRbajDQAwBTNE5XSaB0WbHKbf1heRV0bUgbq5w_A5g@mail.gmail.com>
- <CACsJy8DhiYiie7+Cw3PkPJpSX7CGp-r2Mu98mLp4OMhhGdsXgQ@mail.gmail.com> <xmqq1t9dbe9y.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] travis-ci: run previously failed tests first, then
+ slowest to fastest
+Date: Tue, 19 Jan 2016 18:27:10 -0500
+Message-ID: <20160119232710.GA31181@sigill.intra.peff.net>
+References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
+ <xmqqmvs19w5n.fsf@gitster.mtv.corp.google.com>
+ <xmqqio2p89mb.fsf@gitster.mtv.corp.google.com>
+ <20160119230633.GA31142@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Niek van der Kooy <niekvanderkooy@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 00:27:30 2016
+X-From: git-owner@vger.kernel.org Wed Jan 20 00:27:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLfgQ-0003VD-3I
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:27:30 +0100
+	id 1aLfgQ-0003VD-Lx
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 00:27:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933503AbcASX1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 18:27:11 -0500
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:33637 "EHLO
-	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933499AbcASX1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 18:27:06 -0500
-Received: by mail-lf0-f47.google.com with SMTP id m198so201585512lfm.0
-        for <git@vger.kernel.org>; Tue, 19 Jan 2016 15:27:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=2hSU5ulgBdlr5gSfP25JMxGqKBtnsfMZUGLHLRB/KpI=;
-        b=TmDt4PlvcIKOpLV9vzDm1fnh8t0aXOLBMfqV10rCEVba4nOW6FnIIk93tMgvidc7T0
-         4QwkWkZRHsE/l7K6HrC6pnnRq4T3JhJwTy3hmMjgs5MLrqum2CkfLDq07+HmciRHduXl
-         ndKEALP+GIdwW7Lc4uAnKVvTY6HYOTxKQElmTjcVXX3vX64MA3wv/qKNQC5w4YVLDIol
-         CaXMS4K6kPeM2QMb9ySLzCrfvyFA8VT0mcX7MT73V4QTq6qwOOVpOUFrdYjSxZBstvzQ
-         wVeAAzWLEin4NUMlyJGZTCYH1Sd78sHIWibWXIi8PJgxUlSnSt67Vtx9rI0t3yl/mhAb
-         vNig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=2hSU5ulgBdlr5gSfP25JMxGqKBtnsfMZUGLHLRB/KpI=;
-        b=N56bohjDBl9Zhx9+j6U5eTsdFZsOwH9xU+Vq5E7JC7q3feVccbGk1GZSAgEWI3UDLi
-         ElkPomyOwa45XmNAuwjrgtnwqHsLp4p0ZiMhVpMS7pNWorHWCX0oAUdXPYiY/Dc+w68L
-         nLugQSkp5LBQJDTsXiGqn6C/8Oj5peCzNGcw7GqjQfrDiMdsj/qMhaw8ElSSoHOwP2zs
-         h8l1uBFoBqrG+ZRkGa5dQZlIUPE+XakXFpjaoXD7d5JG+qCfoIZ+e0OFwdAEJUZvF9RV
-         NyQPdyP9c84NEq6XcMZ/h1/xYiZAv8QUfzjRIeaD7oCEvgEu7PYrtMi/RcNXgj6ikzJ0
-         kYwA==
-X-Gm-Message-State: ALoCoQmtq0LFZntXqcjR3Ll3ud3KuvQeJeyH3BwrhGdu0vre55Cnv2BtlfhNob5TrY7rUzgSs7+QWq0KDJhzzdoPOVUta3XkIg==
-X-Received: by 10.25.17.229 with SMTP id 98mr9671112lfr.3.1453246025076; Tue,
- 19 Jan 2016 15:27:05 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Tue, 19 Jan 2016 15:26:35 -0800 (PST)
-In-Reply-To: <xmqq1t9dbe9y.fsf@gitster.mtv.corp.google.com>
+	id S933505AbcASX1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 18:27:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56561 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933504AbcASX1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 18:27:13 -0500
+Received: (qmail 17273 invoked by uid 102); 19 Jan 2016 23:27:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Jan 2016 18:27:13 -0500
+Received: (qmail 27809 invoked by uid 107); 19 Jan 2016 23:27:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 19 Jan 2016 18:27:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Jan 2016 18:27:10 -0500
+Content-Disposition: inline
+In-Reply-To: <20160119230633.GA31142@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284397>
 
-On Wed, Jan 20, 2016 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> I think it's the intended behavior.
->
-> Yeah, pre-commit was designed for inspecting and rejecting, not for
-> tweaking and munging.  Perhaps "git commit" can be tightened to make
-> sure that pre-commit that returns successfully did not muck with the
-> working tree and the index?
+On Tue, Jan 19, 2016 at 06:06:33PM -0500, Jeff King wrote:
 
-That was my impression from the docs, but then I saw this comment,
+> > It seems that exporting something like
+> > 
+> >     GIT_PROVE_OPTS="--timer --state=slow,save -j8" 
+> > 
+> > when running "make DEFAULT_TEST_TARGET=prove test" does give me the
+> > same benefit by leaving the stats from the previous run in t/.prove
+> > when making the test scheduling decisions.
+> 
+> Yes, I've been using this on my local machine for years (which is why I
+> suggested it to Lars for the Travis build). I have also noticed that my
+> test runs take about as much time as the longest-running test, and do
+> not fully utilize all of my processors. I suspect we could drop the
+> run-time of the test suite substantially by splitting a few of the
+> longer tests.
 
-/*
-* Re-read the index as pre-commit hook could have updated it,
-* and write it out as a tree.  We must do this before we invoke
-* the editor and after we invoke run_status above.
-*/
+Here are the numbers for that:
 
-which comes from 2888605 (builtin-commit: fix partial-commit support -
-2007-11-18) that admits "the hook can modify it (the index)". And I
-was about to update the docs, but the other way around, about updating
-index and side effects.
--- 
-Duy
+  $ time make ;# configured to use prove --state=slow,save -j16
+  [...]
+  real    0m47.035s
+  user    1m6.884s
+  sys     0m19.892s
+
+  $ grep -v '^\.\.\.' .prove |
+    perl -MYAML -e '
+      local $/;
+      $x = YAML::Load(<>)->{tests};
+      print int($x->{$_}->{elapsed}), " $_\n" for keys(%$x)
+    ' |
+    sort -rn |
+    head
+  39 t3404-rebase-interactive.sh
+  29 t3421-rebase-topology-linear.sh
+  27 t9001-send-email.sh
+  16 t9500-gitweb-standalone-no-errors.sh
+  15 t3425-rebase-topology-merges.sh
+  14 t6030-bisect-porcelain.sh
+  13 t7610-mergetool.sh
+  13 t5572-pull-submodule.sh
+  13 t3426-rebase-submodule.sh
+  12 t3415-rebase-autosquash.sh
+
+So we're running t3404 for the majority of the time. I guess that
+doesn't tell us how full our pipelines are for the rest of the time,
+though. It could be worth splitting some of those long tests and seeing
+if that improves run-time, though.
+
+-Peff
