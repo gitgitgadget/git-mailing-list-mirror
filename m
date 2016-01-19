@@ -1,77 +1,92 @@
-From: Niek van der Kooy <niekvanderkooy@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: Issue when changing staged files in a pre-commit hook
-Date: Tue, 19 Jan 2016 12:53:55 +0100
-Message-ID: <CAPYEnzFLD8z3KXA7yWxaQss22VhcuL2Oc-=D_Qxs-s0q+pQ-mg@mail.gmail.com>
+Date: Tue, 19 Jan 2016 19:20:36 +0700
+Message-ID: <CACsJy8DhiYiie7+Cw3PkPJpSX7CGp-r2Mu98mLp4OMhhGdsXgQ@mail.gmail.com>
 References: <CAPYEnzGfnRbajDQAwBTNE5XSaB0WbHKbf1heRV0bUgbq5w_A5g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 12:54:22 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Niek van der Kooy <niekvanderkooy@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 13:21:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLUrd-0004kF-Gh
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 12:54:21 +0100
+	id 1aLVHi-000117-PC
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 13:21:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464AbcASLyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 06:54:18 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:36001 "EHLO
-	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476AbcASLyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 06:54:16 -0500
-Received: by mail-lf0-f43.google.com with SMTP id h129so142346486lfh.3
-        for <git@vger.kernel.org>; Tue, 19 Jan 2016 03:54:15 -0800 (PST)
+	id S1753165AbcASMVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 07:21:10 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34366 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496AbcASMVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 07:21:07 -0500
+Received: by mail-lf0-f51.google.com with SMTP id 17so135000994lfz.1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 04:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=kpqV3aOJbKRElv7D9862WD8mDELDupcVhi0dBxW7nXw=;
-        b=kmorQMTgjHrc5HagrkqukB/vxnDr4ucCUycoWzYXfv7urfH4ac+N0vnqDlssXEXW8f
-         psA/2lXenQOXraqlf2QRFKjuZff5Znt8NhDp12BMiI+ewZR/hFpDa1111tjCFvk+BzK5
-         oBwAzlksQUmfLsN/hAaNjoemIeEQ+Lp8FCIxbV+l7zdNeLaIWMM+Nc4kcaP1w3ltsa4U
-         vYX0nWlaF3jRSaU6vIXrJ4+rIjKDVJZk037Lms/VN5WHwLkLhzhNaXxUkKjyHkFDogsj
-         e3L8AQyv//5ptvPJ6zO35vrPlP7Z9n9AuCyNq06mtsR+O/E4e6LC7PvBX5iVxPXGSOG6
-         vH2w==
+         :cc:content-type;
+        bh=KO75FAFa3X/Bjo0pnNqqVTeZbspnVXPcPWXWKYPwvyU=;
+        b=wWzxIQHSOtLyaDnnFnBKammA3N+1fc18gCgAXFnX5nHgp7L+wdvIiiBZrDwqSSdNgd
+         TFXQM+QZvRq/I2ROvk6ONCXuHkMAHUY/qqPiWaCLPxNQsAwqJfPosBDyZvzMGQitHh+t
+         08A2hYWPMOffRo1FrIBNtymMSVxfODdyntywrhb6tZV1o591HuVUmMozANySae2sTCDg
+         zlW6Vg+PmNDDEpzlBwXIM4o19tF+AuDxe9lmQ5Fn625kxKpsQOpVMzgZM02hD5pazXQZ
+         xJOqnuKZIAGl1Xr628MXW16HtvnWvjxGtdiT/geoGM3zp1WEdDR8xAB/8SoP/qwcEpZ0
+         zZ5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=kpqV3aOJbKRElv7D9862WD8mDELDupcVhi0dBxW7nXw=;
-        b=muhUsViPZ8Iwm9JrLD4sWzhkMfzBsQeGFXK6XWEK0I3PG40VJg9W11hlxpaerrt228
-         m7Xh1JrEOHY7jd+pd04CrS9ksxyVdiP7YdBcHTUdRSu76IWCXSH+O3rOhMJlbIhD4u6e
-         5Yrye6aS9B9na4hJ4YbDMQuhaGTjreZZ5z9RpdJKRqSq5t83MXl7v4nEZjRPfhWbGC3b
-         bX5qw7fAq7X5OTSHMrREdtrpGtAxe1vrJf1hwEwubXuJU+Va/Wp7ItL+Wf4TYZHd0MuE
-         ZAYZKYme4aIzmIQzdMurdL4nj0buixLZtJyMSrxIccMo8Lz7TAQsxbM4tTpfp0E/QT4b
-         YK8w==
-X-Gm-Message-State: ALoCoQkXvSnNd42q7ydeHvJv6awulFkBtU577pebIquhqRo0uyTRF25nxTo/JpPFa3fJy4P8aTDxjyacRcVEqnqchP7inx3Meg==
-X-Received: by 10.25.18.89 with SMTP id h86mr8524404lfi.165.1453204454789;
- Tue, 19 Jan 2016 03:54:14 -0800 (PST)
-Received: by 10.25.198.3 with HTTP; Tue, 19 Jan 2016 03:53:55 -0800 (PST)
+         :message-id:subject:to:cc:content-type;
+        bh=KO75FAFa3X/Bjo0pnNqqVTeZbspnVXPcPWXWKYPwvyU=;
+        b=cr+WSBbJyrbkAKhilGvAAAmiT4GDuF2Ff8Anf9Wk5Y7ctzt+rC0ZzNtYQ0Q/EAy02o
+         gOPtCgA7IUzi76TrZusKSPWGnQWRHiKNavewHfVYLcDilekCOn6rJJ24TTXWzDT1UB/f
+         WfyPa4Jb2+QlfpLKXPEuOPPMSosjlZ6IrGEUddD4SboRf9nC3X9HNe3FJ7TF+ovVqxUr
+         jJJDUPZV58om3x/n66FTEUmRxwtnq4Hq/oZ1uJdOc1V00oroILvE0DrnaHYE+yMRvZaN
+         D9vajeo9Np1IafK801vnMcNFHuGAo2gE2AOJzTN/vVgv4YeuoqjX088AQRlOXLta0zrL
+         JwQw==
+X-Gm-Message-State: ALoCoQnRGpdqXT8K+2YrIFS1Rz+TXHTZx2GxyXlXMtcJVKf+mKH0p3fPQpVf1ZPobDltR1uqGr7+5ICjNKyQKCpnd9Dzg5tU3A==
+X-Received: by 10.25.144.17 with SMTP id s17mr10419071lfd.94.1453206065941;
+ Tue, 19 Jan 2016 04:21:05 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Tue, 19 Jan 2016 04:20:36 -0800 (PST)
 In-Reply-To: <CAPYEnzGfnRbajDQAwBTNE5XSaB0WbHKbf1heRV0bUgbq5w_A5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284357>
 
-A few weeks ago I sent below email, and was wondering if anyone can
-either confirm this as a bug or tell me the correct way to approach
-the problem.
-
-Regards,
-Niek van der Kooy
-
-On 28 December 2015 at 13:17, Niek van der Kooy
+On Mon, Dec 28, 2015 at 7:17 PM, Niek van der Kooy
 <niekvanderkooy@gmail.com> wrote:
 > I am having an issue where the default commit message is not changed
 > when adding staged files in a pre-commit hook.
 > Please see http://stackoverflow.com/questions/34492779/git-update-git-status-part-of-commit-message-after-pre-commit-hook
 > for details.
->
+
+you should probably copy the text here instead of putting a link.
+Sometimes I don't bother clicking another link. Make it easy for
+people to help you. Long story short, pre-commit hook adds a file,
+which ends up in the commit, but is not shown in git-status.
+
 > Is there a workaround / proper way to achieve what I am trying to do,
 > or is this a bug?
->
-> Regards,
-> Niek van der Kooy
+
+When you commit something, git may prepare a temporary index that
+contains what's to be in the commit, unless you do "git commit"
+without -a/-A, or paths... The pre-commit is set up to see this index.
+So if you make changes in this index, they will end up in the new
+commit. But the index will then be discarded. The main index,
+$GIT_DIR/index, may or may not be untouched the whole time. This is
+the index that is used by "git status". If you do "git commit" without
+-a/-A/paths they "git status" should be consistent because your hook
+sees $GIT_DIR/index instead of a temporary one.
+
+I think it's the intended behavior. I believe $GIT_DIR is exported to
+your hook, so in theory you could do an extra
+"GIT_INDEX_FILE=$GIT_DIR/index git add public" (i.e. you update _two_
+index files, one for committing, one for future git commands). But be
+careful. It may have unwanted effects. It's probably easier to make an
+alias that adds that 'public' file first then commits without hooks.
+-- 
+Duy
