@@ -1,86 +1,88 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 3/5] ls-remote: fix synopsis
-Date: Tue, 19 Jan 2016 00:20:48 +0100
-Message-ID: <1453159250-21298-4-git-send-email-t.gummerer@gmail.com>
-References: <1453136238-19448-1-git-send-email-t.gummerer@gmail.com>
- <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
-Cc: peff@peff.net, bturner@atlassian.com, gitster@pobox.com,
-	pedrorijo91@gmail.com, Thomas Gummerer <t.gummerer@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 19 00:21:35 2016
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: [PATCH v4 1/1] contrib/subtree: Add a test for subtree rebase that loses commits
+Date: Mon, 18 Jan 2016 20:53:39 -0600
+Message-ID: <87wpr6l1os.fsf@waller.obbligato.org>
+References: <CAPig+cTMAnbyT3-FFN4juUooosiydOCX-ETwTghpnKoOeXcMpQ@mail.gmail.com>
+	<047e625a28954b8fd79225b55cab7620cb5f3b1f.1453074191.git.greened@obbligato.org>
+	<CAPig+cS6ouc+kdJaz10M2AApPoDODDcgDX9Azz8ih=4zxxD2zg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jan 19 03:53:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLJ78-0006ow-9W
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 00:21:34 +0100
+	id 1aLMQc-0004HE-QK
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Jan 2016 03:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667AbcARXVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Jan 2016 18:21:23 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33710 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754668AbcARXUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Jan 2016 18:20:47 -0500
-Received: by mail-wm0-f66.google.com with SMTP id u188so19464264wmu.0
-        for <git@vger.kernel.org>; Mon, 18 Jan 2016 15:20:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i0ColAjLx+gElqkrBJ3kQh45C3EEGSZmAwBXhEwSZ1c=;
-        b=W5INa66x2dybudzH5ELVK7L6ErsLpiW+Lpzi/LLtkuiE0fvDhcogJaom/LF8lrdIXy
-         9ZIKZ+TBDZ0pSjkj/nXS68JRBYsPS0jJssxQVPkP5q37vr6pLekTCQJmQCzP+lLp/z2S
-         /kFW8nplav7cZuHAUxC9MpDzubTX9b/f3zvrwnRceqRWl4KwT3c6wTG8IUNNslF9Fh3q
-         HPv4SGoqWCjxZvrJE5Z7y+6Q+OWo1Km5ArWxUeypquLTzBy9J/Fv6rJcsqEqzssp1odD
-         sdPPckBu3ksZSQG+WGFYSSXf83IzXIdL9vBRzdwazXN0qCl8tZN8aGItap3it1pQ3oWy
-         M9rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=i0ColAjLx+gElqkrBJ3kQh45C3EEGSZmAwBXhEwSZ1c=;
-        b=mX1Sj2r5VIZyh24V+3oq8H4Of5srUCSMGF/fMXAyyf5VrzoIMtB3g6e6QoJlft4QuO
-         Bjq/Qw8yXOAizhJEsjlfbAgxhFL6/u5TwpzioOKWEwXnOgNy0kTPfAehlBg7kPWVUKKR
-         uLwgAdB54PrJ1UdiSdvBcF2qT6FFz2qjy2ylGH4bQksBYdzHWA/cuyGKgwrq6lNvzj7z
-         lLGONcoTQwv7JEuiNcaYgJenKPqz1x6n+fYm1Si9EswcJPeg8ailzM0bSlvAQP1Fh2dN
-         wutrY1VncwzWCjQT7QMC0cu/UHD7egOc+6RO4v3HPswS/Paaah0AGHNGH1iMQekQelmA
-         BWVA==
-X-Gm-Message-State: ALoCoQlLA0VJ/jt+yO7LZ3387k8p4P225dNz2/UA/FtFLas7HpYtorNgSTOnhvdJoIozQxWPEi1B+FS2QPnlnctebKn9lKkfdQ==
-X-Received: by 10.194.203.228 with SMTP id kt4mr26480643wjc.58.1453159246534;
-        Mon, 18 Jan 2016 15:20:46 -0800 (PST)
-Received: from localhost (host113-108-dynamic.249-95-r.retail.telecomitalia.it. [95.249.108.113])
-        by smtp.gmail.com with ESMTPSA id uo9sm25822823wjc.49.2016.01.18.15.20.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Jan 2016 15:20:45 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.30.g56a8654.dirty
-In-Reply-To: <1453159250-21298-1-git-send-email-t.gummerer@gmail.com>
+	id S1756941AbcASCxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Jan 2016 21:53:51 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:33716 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756882AbcASCxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jan 2016 21:53:49 -0500
+Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	(Exim 4.85)
+	(envelope-from <greened@obbligato.org>)
+	id 1aLMRu-00075V-G9; Mon, 18 Jan 2016 20:55:14 -0600
+In-Reply-To: <CAPig+cS6ouc+kdJaz10M2AApPoDODDcgDX9Azz8ih=4zxxD2zg@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 18 Jan 2016 13:10:36 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Eric Sunshine <sunshine@sunshineco.com> writes: > On Sun,
+   Jan 17, 2016 at 6:43 PM, David Greene <greened@obbligato.org> wrote: >> This
+    test merges an external tree in as a subtree, makes some commits >> on top
+    of it and splits it back out. In the process the added commits >> are lost
+    or the rebase aborts with an internal error. The tests are >> marked to expect
+    failure so that we don't forget to fix it. >> >> Signed-off-by: David A.
+   Greene <greened@obbligato.org> >> --- >> diff --git a/t/t3427-rebase-subtree.sh
+    b/t/t3427-rebase-subtree.sh > 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284342>
 
-git ls-remote takes an optional get-url argument, and specifying the
-repository is optional.  Fix the synopsis in the documentation to
-reflect this.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/git-ls-remote.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On Sun, Jan 17, 2016 at 6:43 PM, David Greene <greened@obbligato.org> wrote:
+>> This test merges an external tree in as a subtree, makes some commits
+>> on top of it and splits it back out.  In the process the added commits
+>> are lost or the rebase aborts with an internal error.  The tests are
+>> marked to expect failure so that we don't forget to fix it.
+>>
+>> Signed-off-by: David A. Greene <greened@obbligato.org>
+>> ---
+>> diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+>> @@ -0,0 +1,70 @@
+>> +# FAILURE: Does not preserve master4 and master5.
+>> +test_expect_failure 'Rebase -Xsubtree --preserve-merges --onto' '
+>> +       reset_rebase &&
+>> +       git checkout -b rebase-preserve-merges master &&
+>> +       git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
+>> +       git commit -m "Empty commit" --allow-empty &&
+>> +       git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
+>> +       verbose "$(last_commit_message)" "files_subtree/master5"
+>
+> Hmm, does this test succeed? If it does, it's only by accident.
+> verbose() is just a helper for printing the the expression being
+> tested upon failure, but you still need to supply a proper expression
+> for testing. It is intended to be used like this:
+>
+>     verbose test "$(last_commit_message)" = files_subtree/master5
+>
+> Same comment applies to the remaining tests.
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 7467162..453e93c 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
--	      [-q | --quiet] [--exit-code] <repository> [<refs>...]
-+	      [-q | --quiet] [--exit-code] [--get-url] [<repository> [<refs>...]]
- 
- DESCRIPTION
- -----------
--- 
-2.7.0.30.g56a8654.dirty
+Blast.  Yes, it did pass (expect failure) but it's definitely wrong.  On
+to v5!
+
+                           -David
