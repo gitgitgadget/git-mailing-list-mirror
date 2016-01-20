@@ -1,118 +1,112 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Is there interest in a n-sect tool?
-Date: Thu, 21 Jan 2016 07:34:29 +0900
-Message-ID: <20160120223429.GA28006@glandium.org>
-References: <20160118075653.GA13911@glandium.org>
- <xmqq1t9fe0qw.fsf@gitster.mtv.corp.google.com>
- <20160118085835.GA15642@glandium.org>
- <xmqqziw2b4wi.fsf@gitster.mtv.corp.google.com>
- <20160119045719.GA11680@glandium.org>
- <xmqqd1sv52l9.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/7] diff: add --rename-file
+Date: Wed, 20 Jan 2016 14:44:41 -0800
+Message-ID: <xmqq4me750rq.fsf@gitster.mtv.corp.google.com>
+References: <1453287968-26000-1-git-send-email-pclouds@gmail.com>
+	<1453287968-26000-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 23:34:43 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 23:45:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM1Ks-0001lt-C2
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 23:34:42 +0100
+	id 1aM1V4-00065e-5s
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 23:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934792AbcATWej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 17:34:39 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:53808 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758424AbcATWeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 17:34:37 -0500
-Received: from glandium by zenigata with local (Exim 4.86)
-	(envelope-from <mh@glandium.org>)
-	id 1aM1Kf-0007LF-Ef; Thu, 21 Jan 2016 07:34:29 +0900
-Content-Disposition: inline
-In-Reply-To: <xmqqd1sv52l9.fsf@gitster.mtv.corp.google.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1758518AbcATWpJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2016 17:45:09 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64306 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753989AbcATWor convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 17:44:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE86A3E1F1;
+	Wed, 20 Jan 2016 17:44:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ypjB8auwco+U
+	C1ZqrdjJcW+kcDE=; b=jyyDNNFakkRiJLJXgITVDBJj9iRWK210iHsO6JBvPb4F
+	zTg0vSn2gOtBEcT4CU2/Ey705jybv2PUr7bLmtMMruk4Kw/7+lRiOeVHbckjHOrA
+	OMLuZ1YCC4upZ9NmhMLZ2B+2j+c8nc/A31ZWKav1EMp1O1ZpPmhp4DTbUvcb5AI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hQUpkv
+	RJXKAtizlhtPI1BHvxqv8MHt2OqZ2CxfqSlPd70NIBo9VEhus+GUwIZRkLosEs3B
+	mnDCORROUmqNgkCKk09lqRgtYXkZPKY7JGqpxVqiIWfjsjb22v6l9LheOMmtYacf
+	xlcKviY+2AKd0eJZUpTZGfNuwSwV3ruikVeRc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4E173E1F0;
+	Wed, 20 Jan 2016 17:44:43 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 20B743E1EF;
+	Wed, 20 Jan 2016 17:44:43 -0500 (EST)
+In-Reply-To: <1453287968-26000-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 20
+ Jan 2016 18:06:04 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 65C4E75C-BFC7-11E5-A276-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284479>
 
-On Wed, Jan 20, 2016 at 02:05:22PM -0800, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > On Mon, Jan 18, 2016 at 07:54:21PM -0800, Junio C Hamano wrote:
-> >
-> >> Hmm, sorry.  For the two-trait example I gave (that can be extended
-> >> to N-trait), I can sort of see how the UI might look and I can say
-> >> it might be useful [*1*], but not with this, and especially that you
-> >> do not necessarily know all the traits whose transition points you
-> >> might be interested in a-priori--all of that makes the problem
-> >> definition fuzzy to me, and I cannot imagine what kind of user
-> >> interaction you would be envisioning to solve what kind of problem,
-> >> so I cannot even say it is a good idea or a bad idea.
-> >
-> > How about something like this:
-> >
-> > $ git bisect start
-> > $ git bisect state black A
-> > $ git bisect state white Z
-> >
-> > Git then gives you commit M to test, between A and Z. Now, you test M,
-> > and the result is that it's neither black or white, but gray, so you
-> > would do:
-> >
-> > $ git bisect state gray
-> 
-> Is it assumed throughout the bisect session that the only boundary
-> black touches is with gray (or some other color) and the only
-> boundaries gray touches are either with black or with white,
-> i.e. there is no path that goes from black to gray back to black and
-> then to white?  That is the parallel to the requirement a
-> bog-standard bisection has (i.e. "one side is all black, once you
-> cross the boundary to white, remainder is all white").
-> 
-> I just cannot see a realistic use case where that assumption holds
-> and still you do not know a-priori how many colors there are.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Well, that's exactly the use case I had. A simplified version of it is:
+> Git's heuristics to detect renames or copies works most of the time.
+> This option can be used to correct the result when it goes wrong.
+> Matching pairs get max rename score and override even exact rename
+> detection.
+>
+> Note that --rename-file does not try to break existing diff pairs. So
+> if you have "abc =3D> def" in your file, but they are already paired =
+up
+> (e.g. "abc =3D> abc" and "def =3D> def") and not broken down by -B, t=
+hen
+> nothing happens.
+>
+> An assumption is made in this patch, that the rename file only contai=
+ns
+> a couple rename pairs, not thousands of them. Looping through all
+> rename source and destination for each rename line will not affect
+> performance and we can keep the code simple.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
 
-Find all the git-cinnabar revisions that affected the git sha1 commits
-corresponding to mercurial changesets in a given repository. There are
-multiple changes in git-cinnabar that affected the sha1 of git commits
-because of changes in e.g. author munging, timezone munging, etc.
-But without looking at the git-cinnabar `git log` extensively, I don't
-remember how many such changes there were and how they affect some given
-repositories.
+> +--rename-file=3D<path>::
+> +	The given file contains explicit rename pairs that override
+> +	automatic detected renames. Each line contains a rename pair
+> +	in the following format:
+> ++
+> +<source path> <space> "=3D>" <space> <destination path>
+> +
 
-So, for example, with git-cinnabar commit A, mercurial changeset H
-would become git commit G, and with git-cinnabar commit B, mercurial
-changeset H would become git commit G'. With git-cinnabar commit A and B,
-mercurial changeset H2 would become git commit G2, but in git-cinnabar
-commit C, it would become git commit G2'. I'm looking for B and C, and
-all the others that could exist.
+Obviously this needs path-quoting support before it can get anywhere
+near 'next', but I found the basic idea outlined in the change in
+diffcore-rename.c in this patch OK.  The manual one comes even
+before the "look for identical ones" step, which is logically the
+right thing to do.
 
-> If that assmption holds, what you wrote would be a usable interface
-> and I suspect an implementable one.
+One small nit is that using MAX_SCORE may have unintended fallouts.
+The manually specified one is chosen among rename candidates not
+because it has the highest similarity score---it in fact may not
+have a good similarity score at all, but we pair the paths because
+the user tells us to (and the user knows better than we do).
 
-Considering I'm going to need this a couple more times, I'm likely to
-give it a spin. The main question that remains is how to make that work
-with `git bisect run`. I'm thinking something like this:
-
-$ git bisect state-number black
-0
-$ git bisect state-number white
-1
-$ git bisect state-number gray
-2
-
-The numbers would be assigned when the state is used for the first time.
-And the `bisect run` script could just do:
-
-exit $(git bisect state-number $state)
-
-`state-number` kind of sucks as a name, though.
-
-Mike
+I am just wondering if it is easy to make the similarity score shown
+at the beginning of diff displayed differently.  For manually paired
+paths, we can and should keep "rename from OLDPATH" and "rename to
+NEWPATH" entries, but I think "similarity index 100%" should ideally
+be not shown for them, and if we have to have the line (e.g. perhaps
+existing tools expect a line that begins with "similarity index" to
+exist), show something like "similarity index N/A" that is clearly
+different from "100%".
