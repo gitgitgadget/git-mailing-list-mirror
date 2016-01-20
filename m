@@ -1,82 +1,96 @@
-From: dis trans <humanoidanalog@gmail.com>
-Subject: Bug(ish) - Documentation of .gitattributes Globbing Syntax Whitespace Escapes
-Date: Wed, 20 Jan 2016 12:35:37 -0800
-Message-ID: <CAN1fZZGqERtA1FqSH1sxi4T74TB4sex7kBPBM8J4fVimQO1eSA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] travis-ci: run previously failed tests first, then slowest to fastest
+Date: Wed, 20 Jan 2016 12:35:56 -0800
+Message-ID: <xmqqfuxs56qb.fsf@gitster.mtv.corp.google.com>
+References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
+	<xmqqmvs19w5n.fsf@gitster.mtv.corp.google.com>
+	<711209F5-E034-459E-8E85-BF8BC32B2E86@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 21:35:47 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 20 21:36:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLzTi-00023K-Cu
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 21:35:42 +0100
+	id 1aLzU4-0002ES-4v
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 21:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753129AbcATUfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 15:35:39 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:33185 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752533AbcATUfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 15:35:38 -0500
-Received: by mail-ob0-f175.google.com with SMTP id is5so17342480obc.0
-        for <git@vger.kernel.org>; Wed, 20 Jan 2016 12:35:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=CMxlnc89+vYfvkYIs+KQ2e0gD76Qj7Qt47Mr3ouV/ZY=;
-        b=KqG5Im412+Q2PgLaEYW/zIoqaTjUXzIbt9ZTMd97uajzZZJpb+Sj91tzfkROIMAUVQ
-         WHF/CYmcsZwRPix7HLag6MbwJmfRrZhPN4oyKUhZWAp2A80AHmH/74MLHdsaDhRL+CIF
-         e9fd+/ccGB+GU6U6B/qcv8Tr0KjYY/VYMPCnopbv/cmXzGwqHwX/cTQponA4Ox/pvZb/
-         wIA/BA3U5LpLULyFxyqpqkIlq1wlqz0AKdSYkHWy4Ku3gh3qXIOsAl/XQOmTBjPSAx+h
-         mk0PzxwWVCT7VtGbVM7TIpMTnQhS64WEy5rXVXrFjCU3Uc7DvY0WMvZ+wss8WGEX5H4Z
-         Ml8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=CMxlnc89+vYfvkYIs+KQ2e0gD76Qj7Qt47Mr3ouV/ZY=;
-        b=Z8OfXm4ZW7SNBK8Tk/mRLIxrFe2lDGjbBR7Sg6nOqJbP2Yo8dqaj053r+78tDKI03K
-         YMfyO73uhhbeb/5Mzc1/BlQhi6Jj18gbec7q+cRMsY9wnsXFzCvKDXw1PQHC02FPUtN2
-         fI9kAf1lV1s7as4mbi+CDqh83ahwgo3GMQIWhNJ8CBTe+pCaeKZXt0QbvvvYAsQwxO5s
-         xvFLZ/QJc8GvhqUGFxwgUyN0ieO4g63SIh52fkOmb6/XGhyduXK8rJlccvhpIDR3IbkH
-         O5cKIi0+YNtvJLfUU5HcVkh8i627IpBDvIBTRkKP+zphN9gWSK0vl7VXxnP7YzgWVj7O
-         MsHw==
-X-Gm-Message-State: AG10YOS7OjDB+zrnl0YtYndQN/LBGmBm2oJCdz6IIpfY+u5AZLb/9X4aPTpyQJvUpSY1v2+/mv5ajnL5GvAaww==
-X-Received: by 10.182.33.101 with SMTP id q5mr27414563obi.28.1453322137345;
- Wed, 20 Jan 2016 12:35:37 -0800 (PST)
-Received: by 10.202.173.145 with HTTP; Wed, 20 Jan 2016 12:35:37 -0800 (PST)
+	id S1754362AbcATUgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 15:36:00 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63959 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753856AbcATUf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 15:35:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E1EBB3C441;
+	Wed, 20 Jan 2016 15:35:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zVB51e6++VoshbKOclAvcl6zxHY=; b=ibsKuF
+	E4YA4ZytylOkh9Hmazutt9cXylitaVhk5kBQ50+yMQWp7icyzqlhRu7DiY452UMe
+	vuCqArsPeLCwJ6B60vcITQevZqcnplMjXJ/R7NDXcgfAD6RTiBtrGbdVzC704HaG
+	+rBCyY/IJHBffeV9ErY6OTbeUFXHemYgv3R10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BYsB6e7uHn1jl+StIGJ515KatoscGrr+
+	uhsJSs4JukmZKU1sM86qjrn1Pv1ERDeAK91/QiD2e+iKn7SAVonYyF6fwH9Cqe43
+	4Dha7w9rKpP7GC5Qm32qpmtCCvkgBDxlRaT7fjl/eUDM7vfjBpAo0+nhPNgM+4Yd
+	AKcNYQfgDyY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D9F193C440;
+	Wed, 20 Jan 2016 15:35:57 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4E2453C43D;
+	Wed, 20 Jan 2016 15:35:57 -0500 (EST)
+In-Reply-To: <711209F5-E034-459E-8E85-BF8BC32B2E86@gmail.com> (Lars
+	Schneider's message of "Wed, 20 Jan 2016 10:04:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 68D319B2-BFB5-11E5-8CD2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284465>
 
-In the documentation for .gitattributes, "[[:space:]]" is mentioned in
-a code snippet but is
-not documented, and neither is the glob syntax escape from the
-documentation page for
-.gitignore ("\ ") not working with .gitattributes.
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-For example, in a .gitattributes file the first glob will work, but
-the second will not.
+> On 19 Jan 2016, at 21:00, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> IOW, I am confused by the beginning of the log message that says
+>> this is taking advantage of "the Travis-CI cache feature".  This
+>> improvement looks to me like using the feature of "prove" that
+>> allows us to run slower tests first, and does not have much to do
+>> with Travis.
+>> 
+>> You are relying on the assumption that things under $HOME/ is stable
+>> while things under t/ (or in our source tree in general) are not,
+>> and I think that is a sensible thing to take advantage of, but are
+>> we sure that they are running in an environment where "ln -s" would
+>> work?  Otherwise, it may be more robust to copy $HOME/.prove to
+>> t/.prove before starting to test and then copy it back once the
+>> tests are done.
+>
+> OK, looks like my wording was not ideal. One important thing to know is that 
+> $HOME is *not* stable. These TravisCI machines start *always* in a completely 
+> clean state.
 
-my[[:space:]]directory/**/*
-my\ directory/**/*
+Ah, that is what I missed.  Travis makes everything transient by
+default (which is a sensible thing to do for CI), but it lets you
+declare some things are to be made stable, and that is the "cache"
+feature you are taking advantage of in Travis.
 
-The opposite is true with .gitignore.
+The log message needs to be clarified in a reroll, but thanks for
+clarifying it for me in advance ;-)
 
-I got caught up for a number of minutes trying to figure out why my
-escapes weren't
-working in the fancy-pants .gitattributes I whipped up, and I'd
-figured it'd be worth saving
-someone else the trouble. It could very well be documented somewhere
-I'm not aware of
-beside the code snippet, but I wasn't able to find it seldom a github
-issues search, so I
-think it'd be worth putting on the .gitattributes page.
+That only leaves one question from me: Is 'ln -s' safe enough?
+Would copying back and forth make it more robust?
 
-PS -- Apologies for not having a diff to send to fix this, but I don't
-currently have the tools
-available to me.
+I am guessint the answers are Yes and No, in which case the patch
+text can (and should) stay as-is.
+
+Thanks.
