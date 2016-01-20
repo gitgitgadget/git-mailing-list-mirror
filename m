@@ -1,107 +1,80 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] travis-ci: run previously failed tests first, then
- slowest to fastest
-Date: Wed, 20 Jan 2016 09:26:06 +0900
-Message-ID: <20160120002606.GA9359@glandium.org>
-References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
- <20160119191234.GA17562@sigill.intra.peff.net>
- <xmqqegdd8997.fsf@gitster.mtv.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] filter-branch: resolve $commit^{tree} in no-index case
+Date: Tue, 19 Jan 2016 16:47:19 -0800
+Message-ID: <20160120004719.GC16090@google.com>
+References: <AF975DD2-988F-47A8-BFC3-3BBC27419305@wolfram.com>
+ <xmqqbn8h9squ.fsf@gitster.mtv.corp.google.com>
+ <xmqq7fj59rs2.fsf@gitster.mtv.corp.google.com>
+ <20160119213705.GA28656@sigill.intra.peff.net>
+ <xmqq37tt9r9g.fsf@gitster.mtv.corp.google.com>
+ <20160119215100.GB28656@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, larsxschneider@gmail.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 20 01:26:34 2016
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Fultz <jfultz@wolfram.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 01:48:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLgbZ-0007Rq-UH
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 01:26:34 +0100
+	id 1aLgwZ-0006VU-7A
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 01:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933302AbcATA0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 19:26:30 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:44734 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932414AbcATA03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 19:26:29 -0500
-Received: from glandium by zenigata with local (Exim 4.86)
-	(envelope-from <mh@glandium.org>)
-	id 1aLgb8-0003J2-Hs; Wed, 20 Jan 2016 09:26:06 +0900
+	id S933766AbcATArb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 19:47:31 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33355 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933506AbcATArW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 19:47:22 -0500
+Received: by mail-pf0-f194.google.com with SMTP id e65so13916306pfe.0
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 16:47:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=LGo/xTLIw/f3OkgjHdMcQHIxTmGL4mxe35hJIVryMd4=;
+        b=STODFRBGh4oKfqAGxheLcAv1WefLB6GZfORNhVGJoiKJ5dZsKgPPRZqr9SbofYKH1B
+         3N5UGb9FRDG+93wONKh6JjPh2An2APcSvvI6s000/it8CAEuFfPsm0iTUG/UwodH8Zoj
+         LnFLsgD3Nwln0j19WLUnl1KLkLnw5u0mwPROTEDM/9QD/S7uHHThHcHoEm/An5wicIjb
+         D5dqHaj1bw1LrG+70w73VvpJjg0MlkWZ4fe48+H1s902dfCeZptEOvj0Q2g7XgVw/wlF
+         aaOIUbI9s86zA3x7Tpnq4DIwU5jPiCb9GuO3KNFGOV2JidZ7uWRZeQJGPACO8KGgjZjR
+         NlLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=LGo/xTLIw/f3OkgjHdMcQHIxTmGL4mxe35hJIVryMd4=;
+        b=eozySdrCexkuv7JeaQI5t2dSkccahwdnOknqJYy/ntr2I9b/4pI9ONECEOjPcjHbJi
+         ytoQys01oy8Y9/j7CLRABOLoPpqmiQC8ERhd3gEsSccxR6PiJpmo2fKfR2jVeQvkF0un
+         37XaX0W71U6jQsVyIOv/R5SXjhVGcsQXGL1jXDOkd5xGL5h4aJ7w3c5ZsU0IDOH3ibu5
+         vFEOtO3wmKHTm7u/4msrAW1WymjiczBtDhlRAWB4ILxXWIRKXIyRORZNncUCkWe03ZKg
+         if0CCi/rJS/4a4vu9qqt0fkC09TiHsEiRZgHwwJaAHCTZPNNs0lluSYieEcd/tKwjlCt
+         kUeg==
+X-Gm-Message-State: ALoCoQka4cE5QTWSIRKB5NUGBpJXJgjDGHbchRW+Sjytx5xUHBE8wQBejE/N51br3GbAyLGBmoa1XGbQ8p8FF2M+V7TVhj4fRA==
+X-Received: by 10.98.65.203 with SMTP id g72mr48941964pfd.44.1453250841714;
+        Tue, 19 Jan 2016 16:47:21 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b491:2661:5545:c04e])
+        by smtp.gmail.com with ESMTPSA id z5sm44454488pas.29.2016.01.19.16.47.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 19 Jan 2016 16:47:21 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqegdd8997.fsf@gitster.mtv.corp.google.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20160119215100.GB28656@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284404>
 
-On Tue, Jan 19, 2016 at 03:00:52PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Jan 19, 2016 at 10:24:29AM +0100, larsxschneider@gmail.com wrote:
-> >
-> >> From: Lars Schneider <larsxschneider@gmail.com>
-> >> 
-> >> Use the Travis-CI cache feature to store prove test results and make them
-> >> available in subsequent builds. This allows to run previously failed tests
-> >> first and run remaining tests in slowest to fastest order. As a result it
-> >> is less likely that Travis-CI needs to wait for a single test at the end
-> >> which speeds up the test suite execution by ~2 min.
-> >
-> > Thanks, this makes sense, and the patch looks good.
-> >
-> >> @@ -18,7 +22,7 @@ env:
-> >>      - P4_VERSION="15.2"
-> >>      - GIT_LFS_VERSION="1.1.0"
-> >>      - DEFAULT_TEST_TARGET=prove
-> >> -    - GIT_PROVE_OPTS="--timer --jobs 3"
-> >> +    - GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-> >
-> > Have you tried bumping --jobs here? I usually use "16" on my local box.
-> 
-> I think 3 comes from this:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/279348/focus=279674
+Jeff King wrote:
 
-Having recently looked into this, the relevant travis-ci documentation
-is:
-https://docs.travis-ci.com/user/ci-environment/
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  git-filter-branch.sh     | 2 +-
+>  t/t7003-filter-branch.sh | 8 ++++++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
 
-which says all environments have 2 cores, so you won't get much from
-anything higher than -j3.
-
-The following document also says something slightly different:
-https://docs.travis-ci.com/user/speeding-up-the-build#Parallelizing-your-build-on-one-VM
-
-"Travis CI VMs run on 1.5 virtual cores."
-
-> > I also looked into the Travis "container" thing. It's not clear to me
-> > from their page:
-> >
-> >   https://docs.travis-ci.com/user/workers/container-based-infrastructure/
-> >
-> > whether we're using the new, faster container infrastructure or not.
-> > ...
-> > depends on when Travis "recognized" the repo, but I'm not quite sure
-> > what that means. Should we be adding "sudo: false" to the top-level of
-> > the yaml file?
-> 
-> In an earlier discussion
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/279348/focus=279495
-> 
-> I found that we were not eligible for container-based sandbox as the
-> version of travis-yaml back then used "sudo".  I do not seem to find
-> the use of sudo in the recent one we have in my tree, so it would be
-> beneficial if somebody interested in Travis CI look into this.
-
-The https://docs.travis-ci.com/user/ci-environment/ document says the
-default is "sudo: false" for repositories enabled in 2015 or later, which
-I assume is the case for the git repository. "sudo: required" is the
-default for repositories enabled before 2015.
-
-Mike
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
