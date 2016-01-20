@@ -1,11 +1,8 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 08/11] dir: simplify untracked cache "ident" field
-Date: Wed, 20 Jan 2016 10:59:41 +0100
-Message-ID: <1453283984-8979-9-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v6 07/11] dir: add remove_untracked_cache()
+Date: Wed, 20 Jan 2016 10:59:40 +0100
+Message-ID: <1453283984-8979-8-git-send-email-chriscool@tuxfamily.org>
 References: <1453283984-8979-1-git-send-email-chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
@@ -14,52 +11,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 11:06:40 2016
+X-From: git-owner@vger.kernel.org Wed Jan 20 11:06:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLpex-0007wT-Ag
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 11:06:39 +0100
+	id 1aLpew-0007wT-7j
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 11:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758513AbcATKGc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2016 05:06:32 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:33003 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933445AbcATKGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 05:06:21 -0500
-Received: by mail-wm0-f47.google.com with SMTP id 123so125785992wmz.0
-        for <git@vger.kernel.org>; Wed, 20 Jan 2016 02:06:20 -0800 (PST)
+	id S933929AbcATKG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 05:06:29 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:34864 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758217AbcATKGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 05:06:18 -0500
+Received: by mail-wm0-f43.google.com with SMTP id r129so124172810wmr.0
+        for <git@vger.kernel.org>; Wed, 20 Jan 2016 02:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=DYEuwjrvP2FI0TUo8WzjJ8gZRzRoOG6hSVqq6L/W31o=;
-        b=ksz+P50KnIVTsbnGmZVCGNQNgb/zG4YLa7dNZBQoAuDJCpIZf4yFuWbnW4RB/6PQme
-         P+5KqiKeyMsss89ZRnr3o86nn4R3qvZHkJsQRHpfsF0XEvOzbhy8nDYdzxsL5zdf55Ts
-         COBNNBqSMpc4ylQknrq8lOj5eXcWowOOhOjwt8XL76xjZI8IIyCEYXZx0Nz7FetceaXh
-         l0CjXmzQdHvYYSH5klr6NihFNtPWtkACR6/EGk8I+280aTEq3stxRDP9BGK9orTD5mXP
-         KUJlQIQ/ok9depX4jbshIygoJY9MC+MXBfUV3vviUHpWj+ov77/utjIES+xEtnsT+qqy
-         phqA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=rsqkoBdPOCsyw559v2vh2h/5iUPOMCqPIlckVJ5Xj04=;
+        b=fbpbbDiH4Hpywk00vcCbilSYyI8iRKnOcdQn0AoMz73pPIZp5tm5iRpDvI4oGS/aTf
+         4dkbIbZWFPi3gJniw+7n3cKTL/BywFjy3pTeFMPE6sq49zyVDGb1JzxsxoZwFMoUa9yl
+         3byk2a3NzjsrKD3bfBh4WqbZ9kzUbcaRD3JSJCBTNriIhrIe6C3LAmLzAK+QXdVnUJIx
+         C50sImKn4BimGt+XGUOQU6sb/om83/ZBYbiPDwfniLh3xs3+4MxpocG1274n+MY+O8Am
+         1673EGvECODzr0I74GnuuJggLPDkg2Viz7EpUACBPed3vACSkPZS68Y2xC+EtVRILyF4
+         Eu/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=DYEuwjrvP2FI0TUo8WzjJ8gZRzRoOG6hSVqq6L/W31o=;
-        b=JFWOgqddnoJFFLJV01zQdQHmramzQj1MEJF7sfc+VG/v3piFJ1si+n69xpZv9l+3Uv
-         jawD+ydfB9gie9F2QyFfgaCKVxDqMjpmxW8Ru1M2dmsnsjZdLgybsik4DNjvQqlCAfLg
-         RWcyLIh2WvSz4MW96Tofmv1aNCSEd7t5X9mi9pJ4z0D1+7NMalbZ8JNfJHfIafpwjABH
-         Wr50rK1zRf7trDCvJLvrE1wOV64j/mshP2NjE/ez3Kgixx6gl5Y5JbAbhQ4u97q343FB
-         ZSJM/QlaN3+RE9Yhe+ks1LUVdZXFc73Qf7L7Ek9nT/6JfEj0HpM+rpPJ4UA0uCYqvPT3
-         2cRw==
-X-Gm-Message-State: AG10YOS6x/A2+FAMvxhRmT80MbVd5Y8y+1J01HMv7URq3q/aQwHYQGnhiZUweut4klrKCA==
-X-Received: by 10.28.229.20 with SMTP id c20mr2821899wmh.79.1453284380357;
-        Wed, 20 Jan 2016 02:06:20 -0800 (PST)
+         :references;
+        bh=rsqkoBdPOCsyw559v2vh2h/5iUPOMCqPIlckVJ5Xj04=;
+        b=Uh6sr74diVImiOjNHQz85QrikfUXxW+Y1BeESJ6r1n4R8V1MAbDE2uEZJOfmJCHBdR
+         hWAIMYQNJbfiXZezIM3fuc7yhEk/qVO23BtNVf1T0J52mTvVs3HtSEiPrn/4udUbWh6m
+         mi8BdQM9KO7+LzngX8RRXNbPr2DdoFzaLITlA+wMOxHoM8SBRfSH9StyWZNxkCuNYLEL
+         5n6BIHpR3WV0kWMA1kTtMp1GowD52EZ9an/Ph5INird2LB3OaFl3yWkmjJ7BA/nHusD/
+         Uiip/O6snJbGYEh3mjfenI8Sd1NumpQy5KnZ1cgr1bF1RYN1RoqXmhVNllKIJdbsHUSM
+         IudA==
+X-Gm-Message-State: ALoCoQlZ1HK09/aMH21UwRBA3lWKVfqv8rd8OsJbdYU49QwgDIGx8zy0JpRGNydl2mki6OWEc1A7vMX1V7DFxeDF6gkG0+f2Kw==
+X-Received: by 10.194.175.104 with SMTP id bz8mr33197696wjc.8.1453284377384;
+        Wed, 20 Jan 2016 02:06:17 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id x6sm32305613wje.38.2016.01.20.02.06.17
+        by smtp.gmail.com with ESMTPSA id x6sm32305613wje.38.2016.01.20.02.06.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Jan 2016 02:06:19 -0800 (PST)
+        Wed, 20 Jan 2016 02:06:16 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.36.g6be5eef
 In-Reply-To: <1453283984-8979-1-git-send-email-chriscool@tuxfamily.org>
@@ -67,139 +63,64 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284442>
 
-It is not a good idea to compare kernel versions and disable
-the untracked cache if it changes, as people may upgrade and
-still want the untracked cache to work. So let's just
-compare work tree locations and kernel name to decide if we
-should disable it.
-
-Also storing many locations in the ident field and comparing
-to any of them can be dangerous if GIT_WORK_TREE is used with
-different values. So let's just store one location, the
-location of the current work tree.
-
-The downside is that untracked cache can only be used by one
-type of OS for now. Exporting a git repo to different clients
-via a network to e.g. Linux and Windows means that only one
-can use the untracked cache.
-
-If the location changed in the ident field and we still want
-an untracked cache, let's delete the cache and recreate it.
-
-Note that if an untracked cache has been created by a
-previous Git version, then the kernel version is stored in
-the ident field. As we now compare with just the kernel
-name the comparison will fail and the untracked cache will
-be disabled until it's recreated.
+Factor out code into remove_untracked_cache(), which will be used
+in a later commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- dir.c | 39 ++++++++++++++++++++++++---------------
- dir.h |  1 -
- 2 files changed, 24 insertions(+), 16 deletions(-)
+ builtin/update-index.c | 6 +-----
+ dir.c                  | 9 +++++++++
+ dir.h                  | 1 +
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 5f8630c..d90154c 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1126,11 +1126,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		add_untracked_cache(&the_index);
+ 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
+ 	} else if (untracked_cache == UC_DISABLE) {
+-		if (the_index.untracked) {
+-			free_untracked_cache(the_index.untracked);
+-			the_index.untracked = NULL;
+-			the_index.cache_changed |= UNTRACKED_CHANGED;
+-		}
++		remove_untracked_cache(&the_index);
+ 		report(_("Untracked cache disabled"));
+ 	}
+ 
 diff --git a/dir.c b/dir.c
-index 0d069c9..42d3b6b 100644
+index 31eae37..0d069c9 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1913,28 +1913,31 @@ static const char *get_ident_string(void)
- 		return sb.buf;
- 	if (uname(&uts) < 0)
- 		die_errno(_("failed to get kernel name and information"));
--	strbuf_addf(&sb, "Location %s, system %s %s %s", get_git_work_tree(),
--		    uts.sysname, uts.release, uts.version);
-+	strbuf_addf(&sb, "Location %s, system %s", get_git_work_tree(),
-+		    uts.sysname);
- 	return sb.buf;
+@@ -1956,6 +1956,15 @@ void add_untracked_cache(struct index_state *istate)
+ 	istate->cache_changed |= UNTRACKED_CHANGED;
  }
-=20
- static int ident_in_untracked(const struct untracked_cache *uc)
- {
--	const char *end =3D uc->ident.buf + uc->ident.len;
--	const char *p   =3D uc->ident.buf;
-+	/*
-+	 * Previous git versions may have saved many NUL separated
-+	 * strings in the "ident" field, but it is insane to manage
-+	 * many locations, so just take care of the first one.
-+	 */
-=20
--	for (p =3D uc->ident.buf; p < end; p +=3D strlen(p) + 1)
--		if (!strcmp(p, get_ident_string()))
--			return 1;
--	return 0;
-+	return !strcmp(uc->ident.buf, get_ident_string());
- }
-=20
--void add_untracked_ident(struct untracked_cache *uc)
-+static void set_untracked_ident(struct untracked_cache *uc)
- {
--	if (ident_in_untracked(uc))
--		return;
-+	strbuf_reset(&uc->ident);
- 	strbuf_addstr(&uc->ident, get_ident_string());
--	/* this strbuf contains a list of strings, save NUL too */
-+
-+	/*
-+	 * This strbuf used to contain a list of NUL separated
-+	 * strings, so save NUL too for backward compatibility.
-+	 */
- 	strbuf_addch(&uc->ident, 0);
- }
-=20
-@@ -1945,15 +1948,21 @@ static void new_untracked_cache(struct index_st=
-ate *istate)
- 	uc->exclude_per_dir =3D ".gitignore";
- 	/* should be the same flags used by git-status */
- 	uc->dir_flags =3D DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTO=
-RIES;
-+	set_untracked_ident(uc);
- 	istate->untracked =3D uc;
-+	istate->cache_changed |=3D UNTRACKED_CHANGED;
- }
-=20
- void add_untracked_cache(struct index_state *istate)
- {
- 	if (!istate->untracked) {
- 		new_untracked_cache(istate);
--	add_untracked_ident(istate->untracked);
--	istate->cache_changed |=3D UNTRACKED_CHANGED;
-+	} else {
-+		if (!ident_in_untracked(istate->untracked)) {
-+			free_untracked_cache(istate->untracked);
-+			new_untracked_cache(istate);
-+		}
+ 
++void remove_untracked_cache(struct index_state *istate)
++{
++	if (istate->untracked) {
++		free_untracked_cache(istate->untracked);
++		istate->untracked = NULL;
++		istate->cache_changed |= UNTRACKED_CHANGED;
 +	}
- }
-=20
- void remove_untracked_cache(struct index_state *istate)
-@@ -2022,7 +2031,7 @@ static struct untracked_cache_dir *validate_untra=
-cked_cache(struct dir_struct *d
- 		return NULL;
-=20
- 	if (!ident_in_untracked(dir->untracked)) {
--		warning(_("Untracked cache is disabled on this system."));
-+		warning(_("Untracked cache is disabled on this system or location.")=
-);
- 		return NULL;
- 	}
-=20
++}
++
+ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+ 						      int base_len,
+ 						      const struct pathspec *pathspec)
 diff --git a/dir.h b/dir.h
-index a3dacdb..cd46f30 100644
+index cfd3636..a3dacdb 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -307,7 +307,6 @@ void untracked_cache_add_to_index(struct index_stat=
-e *, const char *);
- void free_untracked_cache(struct untracked_cache *);
- struct untracked_cache *read_untracked_extension(const void *data, uns=
-igned long sz);
- void write_untracked_extension(struct strbuf *out, struct untracked_ca=
-che *untracked);
--void add_untracked_ident(struct untracked_cache *);
+@@ -309,4 +309,5 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+ void add_untracked_ident(struct untracked_cache *);
  void add_untracked_cache(struct index_state *istate);
- void remove_untracked_cache(struct index_state *istate);
++void remove_untracked_cache(struct index_state *istate);
  #endif
---=20
+-- 
 2.7.0.36.g6be5eef
