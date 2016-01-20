@@ -1,237 +1,889 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/7] log: add --rename-notes to correct renames per commit
-Date: Wed, 20 Jan 2016 15:29:56 -0800
-Message-ID: <xmqqoacf3k3v.fsf@gitster.mtv.corp.google.com>
-References: <1453287968-26000-1-git-send-email-pclouds@gmail.com>
-	<1453287968-26000-5-git-send-email-pclouds@gmail.com>
+Subject: What's cooking in git.git (Jan 2016, #04; Wed, 20)
+Date: Wed, 20 Jan 2016 15:33:37 -0800
+Message-ID: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 00:30:09 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 21 00:34:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM2CS-0007xa-6D
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 00:30:04 +0100
+	id 1aM2GH-0000yu-Nz
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 00:34:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752941AbcATXaA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2016 18:30:00 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54490 "EHLO
+	id S1758424AbcATXdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 18:33:46 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56046 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751821AbcATX36 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 18:29:58 -0500
+	with ESMTP id S1754630AbcATXdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 18:33:40 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E64473E8F6;
-	Wed, 20 Jan 2016 18:29:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3oF2szvpk5H6
-	EuTbpBFKsMjM6Do=; b=Y9n3y40ocnow4S/U1ZCaccvgI8z118i1ZNIDJ1SnvgeU
-	uygZBaQC3R/T6/xudQSju2TuB6PPFvU0DReEU/wLw4dPcqWpZw/KuaAaeVyPg1px
-	7X44q/KhsWZjg8gnnHWdjNaShl9yP0JdSk+jbwPdjFDplzDdeIHl1oDYX+A8nDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xjzdtZ
-	epSVJCcfV8EWGzGH9w6WZtIWdKbKAzN3Q5wAoiIA/a6NjBvRMQokfKVTwK9I4McK
-	McqQH4pLgmaulvycWgWLNmJiDlcB+Q6Zl+rvhUaL5fo2mBynTfxZ/6StV7Z19vir
-	TmeCRQdbV7iwPYG0dypr7k4kcB8ZIoDsruvnM=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E46303E974;
+	Wed, 20 Jan 2016 18:33:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=6
+	G2igoGKYFwBC3V+5Lt9K0t3kO8=; b=wsf4TNAKJoo0l9Yv3Mw3n3kj/phSnirMm
+	gXkOb84+Tt9S7leQfBHG21SSKy/y8e8ob2wmaLOIQQDrsSzsp0ronoEJOZnN/Exx
+	nxC7D+605qzWpQSad6hw1FlNpZLwFB3BXTxkyheiMSyLnA24Aa+23NcB/LM868M2
+	1CM3/ntJjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Q3x
+	vz7ZncdNyVq86hE5RYrf3OCje4PL+AOmw1G844bPEOLyvmqBlAdYGV3JEmarcEDq
+	+q4bJ0vVovKvnhleOh5kOhOY7g8LCNlfsYtcJpqCy74TBebEBzznpN3uYNrOLYu6
+	11DgSs4WTCknYT9OKbLayqQpNSE1dK/YfYUU6y4E=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DCC383E8F5;
-	Wed, 20 Jan 2016 18:29:57 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA1093E973;
+	Wed, 20 Jan 2016 18:33:39 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 497213E8F4;
-	Wed, 20 Jan 2016 18:29:57 -0500 (EST)
-In-Reply-To: <1453287968-26000-5-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 20
- Jan 2016 18:06:05 +0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 072DA3E972;
+	Wed, 20 Jan 2016 18:33:38 -0500 (EST)
+X-master-at: 3ee1e0fe11e2eb617170d0487fccfffc67f2b82b
+X-next-at: 9df04547ff2623b1b0f211cc82ef42c01b6dd101
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B78A2E7A-BFCD-11E5-8183-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 3BB3709E-BFCE-11E5-A0C4-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284484>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-> For simplicity, the note of commit A implies rename correction betwee=
-n
-> A^ and A. If parents are manipulated (e.g. "git log --reflog") then
-> the rename output may surprise people.
+The tip of 'master' now has second batch of topics merged, some of
+which should later be merged to 'maint'.  There are a few topics
+that are v2.7.0 regression fixes still cooking outside 'master',
+which also need to be merged to 'maint' for the maintenance release.
 
-I do not think "git log --reflog" attempts to show changes to bring
-the tree of @{2} into the shape of @{1}, even though for traversal
-purposes it pretends as if @{1}'s parent is @{2}.  So I am not sure
-what you are trying to say in the above sentence.
+You can find the changes described here in the integration branches of the
+repositories listed at
 
-A path limited "git log -- path1/ path2/..." also manipulates the
-commit->parents for traversal purposes, but I think the patch is
-still produced against the true parents (there is a call to
-get_saved_parents() in log_tree_diff() that shows the change for a
-given commit), and in that context, commit A that has notes about
-the change to bring the tree of commit A^ to its tree still makes
-sense.
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-I'd be more worried about "git log -m -p"--the diff against the
-second and subsequent parents would not want to use the notes that
-describes the change between the first parent and the resulting
-merge.
+--------------------------------------------------
+[Graduated to "master"]
+
+* dk/reflog-walk-with-non-commit (2016-01-05) 1 commit
+  (merged to 'next' on 2016-01-12 at 5f7b10e)
+ + reflog-walk: don't segfault on non-commit sha1's in the reflog
+
+ "git reflog" incorrectly assumed that all objects that used to be
+ at the tip of a ref must be commits, which caused it to segfault.
 
 
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Documentation/pretty-options.txt |  5 +++++
->  log-tree.c                       | 32 ++++++++++++++++++++++++++++++=
-++
->  revision.c                       | 10 ++++++++++
->  revision.h                       |  1 +
->  t/t4001-diff-rename.sh           | 24 ++++++++++++++++++++++++
->  5 files changed, 72 insertions(+)
->
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-=
-options.txt
-> index 4b659ac..15a2971 100644
-> --- a/Documentation/pretty-options.txt
-> +++ b/Documentation/pretty-options.txt
-> @@ -75,6 +75,11 @@ being displayed. Examples: "--notes=3Dfoo" will sh=
-ow only notes from
->  --[no-]standard-notes::
->  	These options are deprecated. Use the above --notes/--no-notes
->  	options instead.
-> +
-> +--rename-notes=3D<ref>::
-> +	Get per-commit rename instructions from notes. See option
-> +	`--rename-file` for more information. If both `--rename-notes`
-> +	and `--rename-file` are specified, the last one takes effect.
->  endif::git-rev-list[]
-> =20
->  --show-signature::
-> diff --git a/log-tree.c b/log-tree.c
-> index f70a30e..e5766a6 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -788,6 +788,36 @@ static int do_diff_combined(struct rev_info *opt=
-, struct commit *commit)
->  	return !opt->loginfo;
->  }
-> =20
-> +static void populate_rename_notes(struct rev_info *opt, const struct=
- object_id *oid)
-> +{
-> +	static char *last_note;
-> +	enum object_type type;
-> +	unsigned long size;
-> +	const unsigned char *sha1;
-> +
-> +	if (!opt->rename_notes)
-> +		return;
-> +
-> +	/*
-> +	 * "--rename-notes=3Dabc --rename-file=3Ddef" is specified in this
-> +	 * order, --rename-file wins.
-> +	 */
-> +	if (opt->diffopt.manual_renames !=3D NULL &&
-> +	    opt->diffopt.manual_renames !=3D last_note)
-> +		return;
-> +
-> +	free(last_note);
-> +	opt->diffopt.manual_renames =3D NULL;
-> +
-> +	sha1 =3D get_note(opt->rename_notes, oid->hash);
-> +	if (!sha1)
-> +		return;
-> +
-> +	last_note =3D read_sha1_file(sha1, &type, &size);
-> +	if (type =3D=3D OBJ_BLOB)
-> +		opt->diffopt.manual_renames =3D last_note;
-> +}
-> +
->  /*
->   * Show the diff of a commit.
->   *
-> @@ -805,6 +835,8 @@ static int log_tree_diff(struct rev_info *opt, st=
-ruct commit *commit, struct log
->  	parse_commit_or_die(commit);
->  	oid =3D &commit->tree->object.oid;
-> =20
-> +	populate_rename_notes(opt, &commit->object.oid);
-> +
->  	/* Root commit? */
->  	parents =3D get_saved_parents(opt, commit);
->  	if (!parents) {
-> diff --git a/revision.c b/revision.c
-> index 14daefb..20346c1 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1958,6 +1958,16 @@ static int handle_revision_opt(struct rev_info=
- *revs, int argc, const char **arg
->  		revs->notes_opt.use_default_notes =3D 1;
->  	} else if (!strcmp(arg, "--no-standard-notes")) {
->  		revs->notes_opt.use_default_notes =3D 0;
-> +	} else if (skip_prefix(arg, "--rename-notes=3D", &optarg)) {
-> +		struct strbuf buf =3D STRBUF_INIT;
-> +		struct notes_tree *nt;
-> +
-> +		strbuf_addstr(&buf, optarg);
-> +		expand_notes_ref(&buf);
-> +		revs->rename_notes =3D nt =3D xcalloc(1, sizeof(*nt));
-> +		init_notes(nt, buf.buf, NULL, 0);
-> +		strbuf_release(&buf);
-> +		revs->diffopt.manual_renames =3D NULL;
->  	} else if (!strcmp(arg, "--oneline")) {
->  		revs->verbose_header =3D 1;
->  		get_commit_format("oneline", revs);
-> diff --git a/revision.h b/revision.h
-> index 23857c0..db2f225 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -189,6 +189,7 @@ struct rev_info {
->  	/* diff info for patches and for paths limiting */
->  	struct diff_options diffopt;
->  	struct diff_options pruning;
-> +	struct notes_tree *rename_notes;
-> =20
->  	struct reflog_walk_info *reflog_info;
->  	struct decoration children;
-> diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-> index ab9a666..21d9378 100755
-> --- a/t/t4001-diff-rename.sh
-> +++ b/t/t4001-diff-rename.sh
-> @@ -189,4 +189,28 @@ test_expect_success 'manual rename correction' '
->  	)
->  '
-> =20
-> +test_expect_success 'rename correction from notes' '
-> +	(
-> +		cd correct-rename &&
-> +		git show --summary -M HEAD | grep rename >actual &&
-> +		cat >expected <<-\EOF &&
-> +		 rename old-one =3D> new-one (100%)
-> +		 rename old-two =3D> new-two (100%)
-> +		EOF
-> +		test_cmp expected actual &&
-> +
-> +		cat >correction <<-\EOF &&
-> +		old-one =3D> new-two
-> +		old-two =3D> new-one
-> +		EOF
-> +		git notes --ref=3Drename add -F correction HEAD &&
-> +		git show --summary -M --rename-notes=3Drename HEAD | grep rename >=
-actual &&
-> +		cat >expected <<-\EOF &&
-> +		 rename old-two =3D> new-one (100%)
-> +		 rename old-one =3D> new-two (100%)
-> +		EOF
-> +		test_cmp expected actual
-> +	)
-> +'
-> +
->  test_done
+* dw/signoff-doc (2016-01-05) 1 commit
+  (merged to 'next' on 2016-01-12 at 1b08b48)
+ + Expand documentation describing --signoff
+
+ The documentation has been updated to hint the connection between
+ the '--signoff' option and DCO.
+
+
+* ew/for-each-ref-doc (2016-01-05) 1 commit
+  (merged to 'next' on 2016-01-12 at e5c4e75)
+ + for-each-ref: document `creatordate` and `creator` fields
+
+
+* ew/send-email-mutt-alias-fix (2016-01-04) 1 commit
+  (merged to 'next' on 2016-01-12 at 84d1329)
+ + git-send-email: do not double-escape quotes from mutt
+
+ "git send-email" was confused by escaped quotes stored in the alias
+ files saved by "mutt", which has been corrected.
+
+
+* ho/gitweb-squelch-undef-warning (2016-01-12) 1 commit
+  (merged to 'next' on 2016-01-12 at ef4fc5f)
+ + gitweb: squelch "uninitialized value" warning
+
+ Asking gitweb for a nonexistent commit left a warning in the server
+ log.
+
+ Somebody may want to follow this up with a new test, perhaps?
+ IIRC, we do test that no Perl warnings are given to the server log,
+ so this should have been caught if our test coverage were good.
+
+
+* jk/clang-pedantic (2016-01-04) 2 commits
+  (merged to 'next' on 2016-01-12 at b5be271)
+ + bswap: add NO_UNALIGNED_LOADS define
+ + avoid shifting signed integers 31 bits
+
+ A few unportable C construct have been spotted by clang compiler
+ and have been fixed.
+
+
+* jk/pack-revindex (2015-12-21) 2 commits
+  (merged to 'next' on 2016-01-12 at 2e39a16)
+ + pack-revindex: store entries directly in packed_git
+ + pack-revindex: drop hash table
+
+ In-core storage of the reverse index for .pack files (which lets
+ you go from a pack offset to an object name) has been streamlined.
+
+
+* js/fopen-harder (2016-01-11) 2 commits
+  (merged to 'next' on 2016-01-12 at c6ef194)
+ + Handle more file writes correctly in shared repos
+ + commit: allow editing the commit message even in shared repos
+
+ Some codepaths used fopen(3) when opening a fixed path in $GIT_DIR
+ (e.g. COMMIT_EDITMSG) that is meant to be left after the command is
+ done.  This however did not work well if the repository is set to
+ be shared with core.sharedRepository and the umask of the previous
+ user is tighter.  They have been made to work better by calling
+ unlink(2) and retrying after fopen(3) fails with EPERM.
+
+
+* mh/notes-allow-reading-treeish (2016-01-12) 1 commit
+  (merged to 'next' on 2016-01-12 at 7aa311f)
+ + notes: allow treeish expressions as notes ref
+
+ Originally merged to 'next' on 2015-10-23
+
+ Some "git notes" operations, e.g. "git log --notes=<note>", should
+ be able to read notes from any tree-ish that is shaped like a notes
+ tree, but the notes infrastructure required that the argument must
+ be a ref under refs/notes/.  Loosen it to require a valid ref only
+ when the operation would update the notes (in which case we must
+ have a place to store the updated notes tree, iow, a ref).
+
+
+* nd/clear-gitenv-upon-use-of-alias (2015-12-29) 5 commits
+  (merged to 'next' on 2016-01-12 at 696b1f5)
+ + run-command: don't warn on SIGPIPE deaths
+ + git.c: make sure we do not leak GIT_* to alias scripts
+ + setup.c: re-fix d95138e (setup: set env $GIT_WORK_TREE when ..
+ + git.c: make it clear save_env() is for alias handling only
+ + Merge branch 'nd/stop-setenv-work-tree' into nd/clear-gitenv-upon-use-of-alias
+
+ d95138e6 (setup: set env $GIT_WORK_TREE when work tree is set, like
+ $GIT_DIR, 2015-06-26) attempted to work around a glitch in alias
+ handling by overwriting GIT_WORK_TREE environment variable to
+ affect subprocesses when set_git_work_tree() gets called, which
+ resulted in a rather unpleasant regression to "clone" and "init".
+ Try to address the same issue by always restoring the environment
+ and respawning the real underlying command when handling alias.
+
+
+* nd/dir-exclude-cleanup (2015-12-28) 1 commit
+  (merged to 'next' on 2016-01-12 at e6584c9)
+ + dir.c: clean the entire struct in clear_exclude_list()
+
+ The "exclude_list" structure has the usual "alloc, nr" pair of
+ fields to be used by ALLOC_GROW(), but clear_exclude_list() forgot
+ to reset 'alloc' to 0 when it cleared 'nr' to discard the managed
+ array.
+
+
+* nd/exclusion-regression-fix (2016-01-08) 1 commit
+  (merged to 'next' on 2016-01-12 at 0eb98a5)
+ + Revert "dir.c: don't exclude whole dir prematurely if neg pattern may match"
+
+ The ignore mechanism saw a few regressions around untracked file
+ listing and sparse checkout selection areas in 2.7.0; the change
+ that is responsible for the regression has been reverted.
+
+
+* nd/ita-cleanup (2015-12-28) 3 commits
+  (merged to 'next' on 2016-01-12 at 008a6e3)
+ + grep: make it clear i-t-a entries are ignored
+ + add and use a convenience macro ce_intent_to_add()
+ + blame: remove obsolete comment
+
+ Paths that have been told the index about with "add -N" are not
+ quite yet in the index, but a few commands behaved as if they
+ already are in a harmful way.
+
+
+* sg/t6050-failing-editor-test-fix (2016-01-05) 1 commit
+  (merged to 'next' on 2016-01-12 at dc08a19)
+ + t6050-replace: make failing editor test more robust
+
+
+* ss/clone-depth-single-doc (2016-01-08) 3 commits
+  (merged to 'next' on 2016-01-12 at 16ded8c)
+ + docs: clarify that --depth for git-fetch works with newly initialized repos
+ + docs: say "commits" in the --depth option wording for git-clone
+ + docs: clarify that passing --depth to git-clone implies --single-branch
+
+ Documentation for "git fetch --depth" has been updated for clarity.
+
+
+* ss/user-manual (2015-12-30) 4 commits
+  (merged to 'next' on 2016-01-12 at c7f0328)
+ + user-manual: add addition gitweb information
+ + user-manual: add section documenting shallow clones
+ + glossary: define the term shallow clone
+ + user-manual: remove temporary branch entry from todo list
+
+ Drop a few old "todo" items by deciding that the change one of them
+ suggests is not such a good idea, and doing the change the other
+ one suggested to do.
+
+
+* tg/grep-no-index-fallback (2016-01-12) 2 commits
+  (merged to 'next' on 2016-01-12 at 8960bdd)
+ + builtin/grep: add grep.fallbackToNoIndex config
+ + t7810: correct --no-index test
+
+ "git grep" by default does not fall back to its "--no-index"
+ behaviour outside a directory under Git's control (otherwise the
+ user may by mistake end up running a huge recursive search); with a
+ new configuration (set in $HOME/.gitconfig--by definition this
+ cannot be set in the config file per project), this safety can be
+ disabled.
+
+--------------------------------------------------
+[New Topics]
+
+* dg/subtree-rebase-test (2016-01-19) 1 commit
+ - contrib/subtree: Add a test for subtree rebase that loses commits
+
+ Reviewed up to v5.
+ Will be rerolled.
+ ($gmane/284426)
+
+
+* jk/shortlog (2016-01-19) 7 commits
+ - shortlog: don't warn on empty author
+ - shortlog: optimize out useless string list
+ - shortlog: optimize out useless "<none>" normalization
+ - shortlog: optimize "--summary" mode
+ - shortlog: replace hand-parsing of author with pretty-printer
+ - shortlog: use strbufs to read from stdin
+ - shortlog: match both "Author:" and "author" on stdin
+
+ "git shortlog" used to accumulate various pieces of information
+ regardless of what was asked to be shown in the final output.  It
+ has been optimized by noticing what need not to be collected
+ (e.g. there is no need to collect the log messages when showing
+ only the number of changes).
+
+ Will merge to 'next'.
+
+
+* jc/peace-with-crlf (2016-01-15) 12 commits
+ - test-sha1-array: read command stream with strbuf_getline()
+ - grep: read -f file with strbuf_getline()
+ - send-pack: read list of refs with strbuf_getline()
+ - column: read lines with strbuf_getline()
+ - cat-file: read batch stream with strbuf_getline()
+ - transport-helper: read helper response with strbuf_getline()
+ - clone/sha1_file: read info/alternates with strbuf_getline()
+ - remote.c: read $GIT_DIR/remotes/* with strbuf_getline()
+ - ident.c: read /etc/mailname with strbuf_getline()
+ - rev-parse: read parseopt spec with strbuf_getline()
+ - revision: read --stdin with strbuf_getline()
+ - hash-object: read --stdin-paths with strbuf_getline()
+ (this branch uses jc/strbuf-getline.)
+
+ Teach codepaths that communicate with users by reading text files
+ to be more lenient to editors that write CRLF-terminated lines.
+ Note that this is only about communication with Git, like feeding
+ list of object names from the standard input instead of from the
+ command line, and does not involve files in the working tree.
+
+ Will merge to 'next'.
+
+
+* dg/subtree-test (2016-01-19) 1 commit
+ - contrib/subtree: Make testing easier
+
+ Needs review.
+ ($gmane/284277)
+
+
+* jk/filter-branch-no-index (2016-01-19) 1 commit
+ - filter-branch: resolve $commit^{tree} in no-index case
+
+ A recent optimization to filter-branch in v2.7.0 introduced a
+ regression when --prune-empty filter is used, which has been
+ corrected.
+
+ Will merge to 'next'.
+
+
+* jk/sanity (2016-01-19) 1 commit
+ - test-lib: clarify and tighten SANITY
+
+ The description for SANITY prerequisite the test suite uses has
+ been clarified both in the comment and in the implementation.
+
+ Will merge to 'next'.
+
+
+* ls/travis-prove-order (2016-01-19) 1 commit
+ - travis-ci: run previously failed tests first, then slowest to fastest
+
+ By persisting runtime statistics of previous "prove" run, execute
+ tests that take longer before other ones, to reduce the total
+ wallclock time when running with Travis CI.
+
+ Waiting for a reroll.
+ ($gmane/284431)
+
+
+* nd/do-not-move-worktree-manually (2016-01-19) 2 commits
+ - worktree: stop supporting moving worktrees manually
+ - worktree.c: fix indentation
+
+ "git worktree" had a broken code that attempted to auto-fix
+ possible inconsistency that results from end-users moving a
+ worktree to different places without telling Git (the original
+ repository needs to maintain backpointers to its worktrees, but
+ "mv" run by end-users who are not familiar with that fact will
+ obviously not adjust them), which actually made things worse
+ when triggered.
+
+ Will merge to 'next'.
+
+
+* sb/submodule-init (2016-01-20) 2 commits
+ - submodule: port init from shell to C
+ - submodule: port resolve_relative_url from shell to C
+ (this branch uses sb/submodule-parallel-update.)
+
+ Needs review.
+ ($gmane/284419)
+
+--------------------------------------------------
+[Stalled]
+
+* kf/http-proxy-auth-methods (2015-11-04) 3 commits
+ . SQUASH???
+ . http: use credential API to handle proxy authentication
+ . http: allow selection of proxy authentication method
+
+ New http.proxyAuthMethod configuration variable can be used to
+ specify what authentication method to use, as a way to work around
+ proxies that do not give error response expected by libcurl when
+ CURLAUTH_ANY is used.  Also, the codepath for proxy authentication
+ has been taught to use credential API to store the authentication
+ material in user's keyrings.
+
+ I ejected this from pu for the moment, as it conflicts with the
+ pt/http-socks-proxy topic. That is now in master, so it can
+ be re-rolled on top.
+
+ Anybody wants to help rerolling this?  Otherwise will discard.
+
+
+* mg/httpd-tests-update-for-apache-2.4 (2015-04-08) 2 commits
+ - t/lib-git-svn: check same httpd module dirs as lib-httpd
+ - t/lib-httpd: load mod_unixd
+
+ This is the first two commits in a three-patch series $gmane/266962
+
+ Becoming tired of waiting for a reroll.
+ with updated log message ($gmane/268061).
+ Will discard.
+
+
+* jc/diff-b-m (2015-02-23) 5 commits
+ . WIPWIP
+ . WIP: diff-b-m
+ - diffcore-rename: allow easier debugging
+ - diffcore-rename.c: add locate_rename_src()
+ - diffcore-break: allow debugging
+
+ "git diff -B -M" produced incorrect patch when the postimage of a
+ completely rewritten file is similar to the preimage of a removed
+ file; such a resulting file must not be expressed as a rename from
+ other place.
+
+ The fix in this patch is broken, unfortunately.
+ Will discard.
+
+--------------------------------------------------
+[Cooking]
+
+* js/pull-rebase-i (2016-01-13) 3 commits
+  (merged to 'next' on 2016-01-20 at a0c5440)
+ + completion: add missing branch.*.rebase values
+ + remote: handle the config setting branch.*.rebase=interactive
+ + pull: allow interactive rebase with --rebase=interactive
+
+ "git pull --rebase" has been extended to allow invoking
+ "rebase -i".
+
+ Will merge to 'master'.
+
+
+* jk/ok-to-fail-gc-auto-in-rebase (2016-01-13) 1 commit
+  (merged to 'next' on 2016-01-20 at c9a8e82)
+ + rebase: ignore failures from "gc --auto"
+
+ "git rebase", unlike all other callers of "gc --auto", did not
+ ignore the exit code from "gc --auto".
+
+ Will merge to 'master'.
+
+
+* js/close-packs-before-gc (2016-01-13) 4 commits
+  (merged to 'next' on 2016-01-20 at 16cf87b)
+ + receive-pack: release pack files before garbage-collecting
+ + merge: release pack files before garbage-collecting
+ + am: release pack files before garbage-collecting
+ + fetch: release pack files before garbage-collecting
+
+ Many codepaths that run "gc --auto" before exiting kept packfiles
+ mapped and left the file descriptors to them open, which was not
+ friendly to systems that cannot remove files that are open.  They
+ now close the packs before doing so.
+
+ Will merge to 'master'.
+
+
+* js/msys2 (2016-01-15) 9 commits
+ - mingw: uglify (a, 0) definitions to shut up warnings
+ - mingw: squash another warning about a cast
+ - mingw: avoid warnings when casting HANDLEs to int
+ - mingw: avoid redefining S_* constants
+ - compat/winansi: support compiling with MSys2
+ - compat/mingw: support MSys2-based MinGW build
+ - nedmalloc: allow compiling with MSys2's compiler
+ - config.mak.uname: supporting 64-bit MSys2
+ - config.mak.uname: support MSys2
+
+ Beginning of the upstreaming process of Git for Windows effort.
+
+ Will merge to 'next'.
+
+
+* rp/p4-filetype-change (2016-01-13) 1 commit
+  (merged to 'next' on 2016-01-20 at 7b5954b)
+ + git-p4.py: add support for filetype change
+
+ Will merge to 'master'.
+
+
+* tk/interpret-trailers-in-place (2016-01-14) 2 commits
+ - interpret-trailers: add option for in-place editing
+ - trailer: allow to write to files other than stdout
+
+ "interpret-trailers" has been taught to optionally update a file in
+ place, instead of always writing the result to the standard output.
+
+ Will merge to 'next'.
+
+
+* js/dirname-basename (2016-01-15) 5 commits
+  (merged to 'next' on 2016-01-20 at d198512)
+ + t0060: loosen overly strict expectations
+  (merged to 'next' on 2016-01-12 at c3c970a)
+ + t0060: verify that basename() and dirname() work as expected
+ + compat/basename.c: provide a dirname() compatibility function
+ + compat/basename: make basename() conform to POSIX
+ + Refactor skipping DOS drive prefixes
+
+ dirname() emulation has been added, as Msys2 lacks it.
+
+ Will merge to 'master'.
+
+
+* wp/sha1-name-negative-match (2016-01-13) 2 commits
+ - object name: introduce '^{/!-<negative pattern>}' notation
+ - test for '!' handling in rev-parse's named commits
+
+ Introduce "<branch>^{/!-<pattern>}" notation to name a commit
+ reachable from <branch> that does not match the given <pattern>.
+
+ A questionable corner case where commit has no message remains.
+
+ Waiting for review.
+ ($gmane/283971)
+
+
+* ak/format-patch-odir-config (2016-01-13) 1 commit
+  (merged to 'next' on 2016-01-20 at 97c699b)
+ + format-patch: introduce format.outputDirectory configuration
+
+ Allow "-o <dir>" option to be omitted on the command line of "git
+ format-patch" if you always use the same directory in your
+ workflow.
+
+ Will merge to 'master'.
+
+
+* jk/notes-merge-from-anywhere (2016-01-17) 1 commit
+ - notes: allow merging from arbitrary references
+
+ "git notes merge" used to limit the source of the merged notes tree
+ to somewhere under refs/notes/ hierarchy, which was too limiting
+ when inventing a workflow to exchange notes with remote
+ repositories using remote-tracking notes trees (located in e.g.
+ refs/remote-notes/ or somesuch).
+
+ Will merge to 'next'.
+
+
+* dt/unpack-compare-entry-optim (2016-01-05) 1 commit
+  (merged to 'next' on 2016-01-20 at 180dccf)
+ + do_compare_entry: use already-computed path
+
+ Will merge to 'master'.
+
+
+* jk/symbolic-ref (2016-01-13) 6 commits
+  (merged to 'next' on 2016-01-20 at 30b5408)
+ + lock_ref_sha1_basic: handle REF_NODEREF with invalid refs
+ + lock_ref_sha1_basic: always fill old_oid while holding lock
+ + checkout,clone: check return value of create_symref
+ + create_symref: write reflog while holding lock
+ + create_symref: use existing ref-lock code
+ + create_symref: modernize variable names
+
+ The low-level code that is used to create symbolic references has
+ been updated to share more code with the code that deals with
+ normal references.
+
+ Will merge to 'master'.
+
+
+* ep/shell-command-substitution-style (2016-01-12) 92 commits
+  (merged to 'next' on 2016-01-20 at ae1b1d8)
+ + t9901-git-web--browse.sh: use the $( ... ) construct for command substitution
+ + t9501-gitweb-standalone-http-status.sh: use the $( ... ) construct for command substitution
+ + t9350-fast-export.sh: use the $( ... ) construct for command substitution
+ + t9300-fast-import.sh: use the $( ... ) construct for command substitution
+ + t9150-svk-mergetickets.sh: use the $( ... ) construct for command substitution
+ + t9145-git-svn-master-branch.sh: use the $( ... ) construct for command substitution
+ + t9138-git-svn-authors-prog.sh: use the $( ... ) construct for command substitution
+ + t9137-git-svn-dcommit-clobber-series.sh: use the $( ... ) construct for command substitution
+ + t9132-git-svn-broken-symlink.sh: use the $( ... ) construct for command substitution
+ + t9130-git-svn-authors-file.sh: use the $( ... ) construct for command substitution
+ + t9129-git-svn-i18n-commitencoding.sh: use the $( ... ) construct for command substitution
+ + t9119-git-svn-info.sh: use the $( ... ) construct for command substitution
+ + t9118-git-svn-funky-branch-names.sh: use the $( ... ) construct for command substitution
+ + t9114-git-svn-dcommit-merge.sh: use the $( ... ) construct for command substitution
+ + t9110-git-svn-use-svm-props.sh: use the $( ... ) construct for command substitution
+ + t9109-git-svn-multi-glob.sh: use the $( ... ) construct for command substitution
+ + t9108-git-svn-glob.sh: use the $( ... ) construct for command substitution
+ + t9107-git-svn-migrate.sh: use the $( ... ) construct for command substitution
+ + t9105-git-svn-commit-diff.sh: use the $( ... ) construct for command substitution
+ + t9104-git-svn-follow-parent.sh: use the $( ... ) construct for command substitution
+ + t9101-git-svn-props.sh: use the $( ... ) construct for command substitution
+ + t9100-git-svn-basic.sh: use the $( ... ) construct for command substitution
+ + t/t9001-send-email.sh: use the $( ... ) construct for command substitution
+ + t/t8003-blame-corner-cases.sh: use the $( ... ) construct for command substitution
+ + t/t7700-repack.sh: use the $( ... ) construct for command substitution
+ + t/t7602-merge-octopus-many.sh: use the $( ... ) construct for command substitution
+ + t/t7505-prepare-commit-msg-hook.sh: use the $( ... ) construct for command substitution
+ + t/t7504-commit-msg-hook.sh: use the $( ... ) construct for command substitution
+ + t/t7408-submodule-reference.sh: use the $( ... ) construct for command substitution
+ + t/t7406-submodule-update.sh: use the $( ... ) construct for command substitution
+ + t/t7103-reset-bare.sh: use the $( ... ) construct for command substitution
+ + t/t7006-pager.sh: use the $( ... ) construct for command substitution
+ + t/t7004-tag.sh: use the $( ... ) construct for command substitution
+ + t/t7003-filter-branch.sh: use the $( ... ) construct for command substitution
+ + t/t7001-mv.sh: use the $( ... ) construct for command substitution
+ + t/t6132-pathspec-exclude.sh: use the $( ... ) construct for command substitution
+ + t/t6032-merge-large-rename.sh: use the $( ... ) construct for command substitution
+ + t/t6015-rev-list-show-all-parents.sh: use the $( ... ) construct for command substitution
+ + t/t6002-rev-list-bisect.sh: use the $( ... ) construct for command substitution
+ + t/t6001-rev-list-graft.sh: use the $( ... ) construct for command substitution
+ + t/t5900-repo-selection.sh: use the $( ... ) construct for command substitution
+ + t/t5710-info-alternate.sh: use the $( ... ) construct for command substitution
+ + t/t5700-clone-reference.sh: use the $( ... ) construct for command substitution
+ + t/t5601-clone.sh: use the $( ... ) construct for command substitution
+ + t/t5570-git-daemon.sh: use the $( ... ) construct for command substitution
+ + t/t5550-http-fetch-dumb.sh: use the $( ... ) construct for command substitution
+ + t/t5538-push-shallow.sh: use the $( ... ) construct for command substitution
+ + t/t5537-fetch-shallow.sh: use the $( ... ) construct for command substitution
+ + t/t5532-fetch-proxy.sh: use the $( ... ) construct for command substitution
+ + t/t5530-upload-pack-error.sh: use the $( ... ) construct for command substitution
+ + t/t5522-pull-symlink.sh: use the $( ... ) construct for command substitution
+ + t/t5517-push-mirror.sh: use the $( ... ) construct for command substitution
+ + t/t5516-fetch-push.sh: use the $( ... ) construct for command substitution
+ + t/t5515-fetch-merge-logic.sh: use the $( ... ) construct for command substitution
+ + t/t5510-fetch.sh: use the $( ... ) construct for command substitution
+ + t/t5506-remote-groups.sh: use the $( ... ) construct for command substitution
+ + t/t5505-remote.sh: use the $( ... ) construct for command substitution
+ + t/t5500-fetch-pack.sh: use the $( ... ) construct for command substitution
+ + t/t5305-include-tag.sh: use the $( ... ) construct for command substitution
+ + t/t5304-prune.sh: use the $( ... ) construct for command substitution
+ + t/t5303-pack-corruption-resilience.sh: use the $( ... ) construct for command substitution
+ + t/t5100: no need to use 'echo' command substitutions for globbing
+ + t/t5302-pack-index.sh: use the $( ... ) construct for command substitution
+ + t/t5301-sliding-window.sh: use the $( ... ) construct for command substitution
+ + t/t5300-pack-object.sh: use the $( ... ) construct for command substitution
+ + t/t5100-mailinfo.sh: use the $( ... ) construct for command substitution
+ + t/t3700-add.sh: use the $( ... ) construct for command substitution
+ + t/t3600-rm.sh: use the $( ... ) construct for command substitution
+ + t/t3511-cherry-pick-x.sh: use the $( ... ) construct for command substitution
+ + t/t3403-rebase-skip.sh: use the $( ... ) construct for command substitution
+ + t/t3210-pack-refs.sh: use the $( ... ) construct for command substitution
+ + t/t3101-ls-tree-dirname.sh: use the $( ... ) construct for command substitution
+ + t/t3100-ls-tree-restrict.sh: use the $( ... ) construct for command substitution
+ + t/t3030-merge-recursive.sh: use the $( ... ) construct for command substitution
+ + t/t2102-update-index-symlinks.sh: use the $( ... ) construct for command substitution
+ + t/t2025-worktree-add.sh: use the $( ... ) construct for command substitution
+ + t/t1700-split-index.sh: use the $( ... ) construct for command substitution
+ + t/t1512-rev-parse-disambiguation.sh: use the $( ... ) construct for command substitution
+ + t/t1511-rev-parse-caret.sh: use the $( ... ) construct for command substitution
+ + t/t1410-reflog.sh: use the $( ... ) construct for command substitution
+ + t/t1401-symbolic-ref.sh: use the $( ... ) construct for command substitution
+ + t/t1100-commit-tree-options.sh: use the $( ... ) construct for command substitution
+ + unimplemented.sh: use the $( ... ) construct for command substitution
+ + test-sha1.sh: use the $( ... ) construct for command substitution
+ + t/lib-httpd.sh: use the $( ... ) construct for command substitution
+ + git-gui/po/glossary/txt-to-pot.sh: use the $( ... ) construct for command substitution
+ + contrib/thunderbird-patch-inline/appp.sh: use the $( ... ) construct for command substitution
+ + contrib/examples/git-revert.sh: use the $( ... ) construct for command substitution
+ + contrib/examples/git-repack.sh: use the $( ... ) construct for command substitution
+ + contrib/examples/git-merge.sh: use the $( ... ) construct for command substitution
+ + contrib/examples/git-fetch.sh: use the $( ... ) construct for command substitution
+ + contrib/examples/git-commit.sh: use the $( ... ) construct for command substitution
+
+ A shell script style update to change `command substitution` into
+ $(command substitution).  Coverts contrib/ and much of the t/
+ directory contents.
+
+ Will merge to 'master'.
+
+
+* cc/untracked (2016-01-20) 11 commits
+ - t7063: add tests for core.untrackedCache
+ - test-dump-untracked-cache: don't modify the untracked cache
+ - config: add core.untrackedCache
+ - dir: simplify untracked cache "ident" field
+ - dir: add remove_untracked_cache()
+ - dir: add {new,add}_untracked_cache()
+ - update-index: move 'uc' var declaration
+ - update-index: add untracked cache notifications
+ - update-index: add --test-untracked-cache
+ - update-index: use enum for untracked cache options
+ - dir: free untracked cache when removing it
+
+ Update the untracked cache subsystem and change its primary UI from
+ "git update-index" to "git config".
+
+ Will merge to 'next'.
+
+
+* dt/refs-backend-lmdb (2016-01-12) 22 commits
+ . DONTMERGE: compilation fix
+ . refs: tests for lmdb backend
+ . refs: add LMDB refs backend
+ . svn: learn ref-storage argument
+ . refs: allow ref backend to be set for clone
+ . clone: use child_process for recursive checkouts
+ . refs: check submodules ref storage config
+ . init: allow alternate backends to be set for new repos
+ . refs: always handle non-normal refs in files backend
+ . refs: resolve symbolic refs first
+ . refs: allow log-only updates
+ . refs: move duplicate check to common code
+ . refs: make lock generic
+ . refs: add method to rename refs
+ . refs: add methods to init refs db
+ . refs: add method for delete_refs
+ . refs: add method for initial ref transaction commit
+ . refs: add methods for reflog
+ . refs: add do_for_each_per_worktree_ref
+ . refs: add methods for the ref iterators
+ . refs: add methods for misc ref operations
+ . refs: add a backend method structure with transaction functions
+
+ Building on top of a few refs-backend preparatory series, LMDB
+ based refs backend has been plugged into the system.
+
+ Rerolled, but left out of 'pu' for now due to conflicts.
+
+
+* dw/subtree-split-do-not-drop-merge (2016-01-20) 1 commit
+ - contrib/subtree: fix "subtree split" skipped-merge bug
+
+ The "split" subcommand of "git subtree" (in contrib/) incorrectly
+ skipped merges when it shouldn't, which was corrected.
+
+ Will merge to 'next'.
+
+
+* kn/ref-filter-atom-parsing (2016-01-05) 15 commits
+ - ref-filter: introduce objectname_atom_parser()
+ - ref-filter: introduce contents_atom_parser()
+ - ref-filter: introduce remote_ref_atom_parser()
+ - ref-filter: align: introduce long-form syntax
+ - ref-filter: convert variable 'width' to an unsigned int
+ - ref-filter: introduce parse_align_position()
+ - ref-filter: introduce align_atom_parser()
+ - ref-filter: introduce color_atom_parser()
+ - ref-filter: skip deref specifier in match_atom_name()
+ - ref-fitler: bump match_atom() name to the top
+ - ref-filter: introduce parsing functions for each valid atom
+ - ref-filter: introduce struct used_atom
+ - ref-filter: bump 'used_atom' and related code to the top
+ - ref-filter: use strbuf_split_str_omit_term()
+ - strbuf: introduce strbuf_split_str_omit_term()
+
+ Refactoring of ref-filter's format-parsing code, in preparation
+ for "branch --format" and friends.
+
+ This replaces (for now) kn/for-each-ref-remainder, which will be built
+ on top.
+
+ Still being discussed and worked on.
+
+
+* bb/merge-marker-crlf (2015-11-24) 1 commit
+ - merge-file: consider core.crlf when writing merge markers
+
+ Write out merge markers using system end-of-line convention.
+
+ Waiting for a re-roll to handle gitattributes.
+ ($gmane/281701)
+
+
+* dk/gc-more-wo-pack (2016-01-13) 4 commits
+ - gc: clean garbage .bitmap files from pack dir
+ - t5304: ensure non-garbage files are not deleted
+ - t5304: test .bitmap garbage files
+ - prepare_packed_git(): find more garbage
+
+ Follow-on to dk/gc-idx-wo-pack topic, to clean up stale
+ .bitmap and .keep files.
+
+ Waiting for a reroll.
+ ($gmane/284368).
+
+
+* rm/subtree-unwrap-tags (2015-11-24) 1 commit
+  (merged to 'next' on 2016-01-20 at 6373d95)
+ + contrib/subtree: unwrap tag refs
+
+ "git subtree" (in contrib/) records the tag object name in the
+ commit log message when a subtree is added using a tag, without
+ peeling it down to the underlying commit.  The tag needs to be
+ peeled when "git subtree split" wants to work on the commit, but
+ the command forgot to do so.
+
+ Will merge to 'master'.
+
+
+* sg/sh-require-clean-orphan (2015-11-24) 2 commits
+ - sh-setup: make require_clean_work_tree() work on orphan branches
+ - Add tests for git-sh-setup's require_clean_work_tree()
+
+ Allow users of git-sh-setup to handle orphan branch state.
+
+ This series takes the conservative route of requiring scripts to opt
+ into the looser behavior, at the expense of carrying around a new
+ option-flag forever. I'm not sure if we need to do so.
+
+ Needs review.
+
+
+* tb/ls-files-eol (2016-01-18) 1 commit
+ - ls-files: add eol diagnostics
+
+ Add options to ls-files to help diagnose end-of-line problems.
+
+ Will merge to 'next'.
+
+
+* ec/annotate-deleted (2015-11-20) 1 commit
+ - annotate: skip checking working tree if a revision is provided
+
+ Usability fix for annotate-specific "<file> <rev>" syntax with deleted
+ files.
+
+ Waiting for review.
+
+
+* sb/submodule-parallel-update (2016-01-12) 8 commits
+ - clone: allow an explicit argument for parallel submodule clones
+ - submodule update: expose parallelism to the user
+ - git submodule update: have a dedicated helper for cloning
+ - fetching submodules: respect `submodule.fetchJobs` config option
+ - submodule-config: introduce parse_generic_submodule_config
+ - submodule-config: remove name_and_item_from_var
+ - submodule-config: drop check against NULL
+ - submodule-config: keep update strategy around
+ (this branch is used by sb/submodule-init.)
+
+ Builds on top of the "fetch --recurse-submodules" work to introduce
+ parallel downloading into multiple submodules for "submodule update".
+
+ Needs review.
+
+
+* jc/strbuf-getline (2016-01-15) 9 commits
+ - strbuf: give strbuf_getline() to the "most text friendly" variant
+ - checkout-index: there are only two possible line terminations
+ - update-index: there are only two possible line terminations
+ - check-ignore: there are only two possible line terminations
+ - check-attr: there are only two possible line terminations
+ - mktree: there are only two possible line terminations
+ - strbuf: introduce strbuf_getline_{lf,nul}()
+ - strbuf: make strbuf_getline_crlf() global
+ - strbuf: miniscule style fix
+ (this branch is used by jc/peace-with-crlf.)
+
+ The preliminary clean-up for jc/peace-with-crlf topic.
+
+ Will merge to 'next'.
+
+
+* js/am-3-merge-recursive-direct (2015-10-12) 2 commits
+ - am: make a direct call to merge_recursive
+ - merge_recursive_options: introduce the "gently" flag
+
+ The merge_recursive_generic() function has been made a bit safer to
+ call from inside a process.  "git am -3" was taught to make a direct
+ call to the function when falling back to three-way merge.
+
+ Being able to make a direct call would be good in general, but as a
+ performance thing, the change needs to be backed up by numbers.
+
+ Needs review.
+
+ I haven't gone through the "gently" change with fine toothed comb;
+ I can see that the change avoids calling die(), but I haven't made
+ sure that the program states (e.g. what's in the in-core index) are
+ adjusted sensibly when it returns to the caller instead of dying,
+ or the codepaths that used to die() are free of resource leaks.
+ The original code certainly did not care the program states at the
+ point of dying exactly because it knew it is going to exit, but now
+ they have to care, and they need to be audited.
+
+
+* ad/cygwin-wants-rename (2015-08-07) 1 commit
+ - config.mak.uname: Cygwin needs OBJECT_CREATION_USES_RENAMES
+
+ Will hold.
+ ($gmane/275680).
+
+
+* jc/rerere-multi (2015-09-14) 7 commits
+ - rerere: do use multiple variants
+ - t4200: rerere a merge with two identical conflicts
+ - rerere: allow multiple variants to exist
+ - rerere: delay the recording of preimage
+ - rerere: handle leftover rr-cache/$ID directory and postimage files
+ - rerere: scan $GIT_DIR/rr-cache/$ID when instantiating a rerere_id
+ - rerere: split conflict ID further
+
+ "git rerere" can encounter two or more files with the same conflict
+ signature that have to be resolved in different ways, but there was
+ no way to record these separate resolutions.
+
+ Needs review.
+
+
+* jc/merge-drop-old-syntax (2015-04-29) 1 commit
+ - merge: drop 'git merge <message> HEAD <commit>' syntax
+
+ Stop supporting "git merge <message> HEAD <commit>" syntax that has
+ been deprecated since October 2007.  It has been reported that
+ git-gui still uses the deprecated syntax, which needs to be fixed
+ before this final step can proceed.
+ ($gmane/282594)
