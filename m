@@ -1,105 +1,99 @@
-From: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
-Subject: GIT Question
-Date: Wed, 20 Jan 2016 21:28:59 +0000
-Message-ID: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/7] diff.c: take "prefix" argument in diff_opt_parse()
+Date: Wed, 20 Jan 2016 13:49:21 -0800
+Message-ID: <xmqqh9i753by.fsf@gitster.mtv.corp.google.com>
+References: <1453287968-26000-1-git-send-email-pclouds@gmail.com>
+	<1453287968-26000-3-git-send-email-pclouds@gmail.com>
+	<xmqqr3hc57at.fsf@gitster.mtv.corp.google.com>
+	<20160120202946.GA6092@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 20 22:44:49 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 20 22:49:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM0Yb-0004g9-6m
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 22:44:49 +0100
+	id 1aM0d7-0006kl-9W
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 22:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329AbcATVop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 16:44:45 -0500
-Received: from WDC-WSMAIL01.mercy.net ([170.29.68.82]:58281 "EHLO mercy.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751034AbcATVoo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 16:44:44 -0500
-X-Greylist: delayed 942 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jan 2016 16:44:43 EST
-Received: from STL-VMAILHUBP04.smrcy.com (unknown [170.29.71.18])
-	by Websense Email Security Gateway with ESMTPS id 77B342A751F6B
-	for <git@vger.kernel.org>; Wed, 20 Jan 2016 15:28:59 -0600 (CST)
-Received: from WDC-VMAILBOXP25.smrcy.com ([::1]) by STL-VMAILHUBP04.smrcy.com
- ([::1]) with mapi id 14.03.0266.001; Wed, 20 Jan 2016 15:29:00 -0600
-Thread-Topic: GIT Question
-Thread-Index: AdFTyZFAHIg8Y+CwSjy8gBRmO8kvHw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-cr-hashedpuzzle: jf8= AIG9 DzqM D6XI EeyZ Ef9N FVVT GN9I HrDS H+xV IH0q
- IIV5 J2HW LW+h MYxX
- MnxA;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{DA296E5B-856C-4B98-9F37-3F7E14026272};dABvAHIAaQAuAGQAcgBhAGcAZwBzAEAAbQBlAHIAYwB5AC4AbgBlAHQA;Wed,
- 20 Jan 2016 21:28:56 GMT;RwBJAFQAIABRAHUAZQBzAHQAaQBvAG4A
-x-cr-puzzleid: {DA296E5B-856C-4B98-9F37-3F7E14026272}
-x-originating-ip: [10.9.72.142]
+	id S1754388AbcATVtZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2016 16:49:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58026 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753223AbcATVtY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 16:49:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9D68B3C642;
+	Wed, 20 Jan 2016 16:49:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=f1dxhgy4m/VN
+	hG/9MSvZvLL/36g=; b=AXhk05S80xTNT5tTkqAAC383jQMuf+4NeMeaazL5lXo8
+	/O8naX4lbiAViaduP66pMBK2JCVuPoXONEEW3LMRW8shdZBfOER2/2f6DZgJSXqq
+	TMDNj3xbGJZQE7C74Xkc+g/virJzl0T4X3IWi8nteJK6FJMXDqNEgLLzDPiaoHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o8hwQP
+	6PCPdzlEDeRSpK77lSRidiZTahbparUPw/z76ZeQwo5rzEaA1vA0fWsiEMr6yFmk
+	XEQ5R+TYvtYpMoR1m/5GG5xFADE/kn49r+/5ncd48s0nyeXGMTZt6Bvhay+NpGz0
+	tu1Zde6WnTrF55yGKYeGiJOAXR4g6a3uk1NIw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9596B3C641;
+	Wed, 20 Jan 2016 16:49:23 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 120773C640;
+	Wed, 20 Jan 2016 16:49:23 -0500 (EST)
+In-Reply-To: <20160120202946.GA6092@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 20 Jan 2016 15:29:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AADC0058-BFBF-11E5-8AB9-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284474>
 
-Specs:
-MacBook Pro 
-OS X Yosemite
-2.6 GHz Intel Core i5, 8GN 1600 MHz DDR3
+Jeff King <peff@peff.net> writes:
 
-After selecting the Git option in a recent install of Visual Studio Code 2015 for MAC, my filesystem was removed. I can no longer access any of the local files stored on my machine. After researching many blogs/websites to no avail I am reaching out to you.  I contacted Apple Support who instructed me to contact the developers for GIT.
- 
-I am a struggling college student interested in a development career. After spending nearly a year to save up for my laptop - seeing everything gone after a few lines of code is more than devastating.  I am new to GIT and am overwhelmed by the breadth of information available.  If you could share your expertise and guide me to a resource that may address this issue I would be so very grateful.  This is my first real project and I was trying to get myself set up with Visual Studio Code 2015 for Mac.  I know that is not your concern, so getting back to my inquiry - specifically I am looking for information on rolling back a possible commit that removed my entire MacBook Pro file system. I have the .bash_history and am including it below. 
+> On Wed, Jan 20, 2016 at 12:23:38PM -0800, Junio C Hamano wrote:
+>
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>>=20
+>> > This will be important later when diff_opt_parse() accepts paths a=
+s
+>> > arguments. Paths must be prefixed before access because setup code
+>> > moves cwd but does not (and cannot) update command line options.
+>>=20
+>> The above sounds like a sensible thing to do (note: I didn't read
+>> the patch or remainder of the series), but makes me wonder how the
+>> existing --orderfile option works without this support.  Perhaps it
+>> is not working and needs to be updated to take advantage of this
+>> change, too?
+>
+> Yeah, I think it simply does not work.
+>
+>   $ >main-order
+>   $ mkdir subdir && >subdir/sub-order
+>   $ cd subdir
+>   $ git show -Osub-order
+>   fatal: failed to read orderfile 'sub-order': No such file or direct=
+ory
+>   $ git show -Omain-order
+>   [shows diff]
 
-git
-git status
-git log
-git rm
-git rm -r
---r
-git -r
---r git
-git
-git diff
-git log
-git status
-git log -diff-filter=D -summary
-git log -diff-filter=D -summary
-git log -diff-filter=D -author=Parent -summary
-gitcheckout <commit>~1 (I believe this is where things exploded)
-git fsck -lost-found
-ls  .git/lost-found/other
-ls.git/lost-found/other
-git fsck -lost-found ls .git/lost-found/other
-git stash
-git pull -rebase
-git stash pop
-git reflog
-git checkout -b branch-name c3a4103
-git fsck -lost-found ls unreachable
-open .git/lost-found/other
-cd .git/lost-found/othergit cat-file -p c3a4103
-git rm -rf
-git reset -hard
-git resert -hard
---help
-Help
-Restore
---restore
+Good.
 
---While there is more I don't believe it will assist with your investigation.  If the full file is needed, I would be more than happy to forward it to your attention.   
-
-
-
-
-Thank you again for your time and expertise.  
-
-Tori Draggs
-Tori.draggs@mercy.net
-Techgeek2013@gmail.com
-Github: https://github.com/gnugal314 
-
-This electronic mail and any attached documents are intended solely for the named addressee(s) and contain confidential information. If you are not an addressee, or responsible for delivering this email to an addressee, you have received this email in error and are notified that reading, copying, or disclosing this email is prohibited. If you received this email in error, immediately reply to the sender and delete the message completely from your computer system.
+Then 2/7 can be rerolled and advertised as "make -O to work from
+subdirectories", and can gradulate regardless of the remainder of
+the series.  Even if the rest needs rerolls to get it right (or
+takes until 2019 to mature ;-), we will have one less change to
+re-review in the process as we can push these early and obviously
+correct part out separately.
