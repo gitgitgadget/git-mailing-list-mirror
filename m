@@ -1,74 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 2/2] submodule: port init from shell to C
-Date: Wed, 20 Jan 2016 15:04:59 -0800
-Message-ID: <xmqqvb6n3l9g.fsf@gitster.mtv.corp.google.com>
-References: <1453255396-31942-3-git-send-email-sbeller@google.com>
-	<1453260274-31005-1-git-send-email-sbeller@google.com>
-	<xmqq60yo55jh.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kajF9zR_m0+hbvasf+rwQcuDeywCzmdjuT6C4M5MBvmUQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: git status during interactive rebase
+Date: Wed, 20 Jan 2016 15:21:47 -0800
+Message-ID: <CAGZ79kbUwJ+CN=YoQUP=rm=EhU=fU2ynt_7Q-cd7Dic-bsx+TA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 00:05:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 21 00:21:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM1oL-0005rq-MC
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 00:05:10 +0100
+	id 1aM24Z-0004Q2-DE
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 00:21:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370AbcATXFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 18:05:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58595 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751066AbcATXFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 18:05:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 07D273E590;
-	Wed, 20 Jan 2016 18:05:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bKz6+xm/Gxw7fcaU9ejbO3IjDz0=; b=C1HDCg
-	JX7OVCDS9Gd3rPv0V7MLJ47tiy57nSeaIL8bTM/+M0ml4UdPEsnIO3vFQbZbNXUV
-	AkoLCST3EKhAbCYo6M0CJrB/Vuqfw5MphmVlq0chayIbAuo8mTFfZRSQJLy/vYEy
-	TPye992Tv6QhCh/HJIAEja+qYV4J0Qbe7P8vQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V7z4tgMkYmnJuA39QKjBY2FrPMOu4AJG
-	DmNF47UwDtYO0u5Dg6zsi818DWLfotcq32EF+CoTdN02r67kk2exJQJTXIvJkxvT
-	Y6jKeA/SPiFn4oNDC05dAf2/oNtVEzR8vUNrVnXFuHHK+hGzEhvqVg4pxIy2a8iz
-	DDUSmtotPMY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F1A53E58E;
-	Wed, 20 Jan 2016 18:05:02 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DEF603E58C;
-	Wed, 20 Jan 2016 18:05:00 -0500 (EST)
-In-Reply-To: <CAGZ79kajF9zR_m0+hbvasf+rwQcuDeywCzmdjuT6C4M5MBvmUQ@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 20 Jan 2016 14:33:36 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3BAA5A3A-BFCA-11E5-A361-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1758598AbcATXVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 18:21:51 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:37261 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754630AbcATXVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 18:21:48 -0500
+Received: by mail-ig0-f175.google.com with SMTP id h5so22349210igh.0
+        for <git@vger.kernel.org>; Wed, 20 Jan 2016 15:21:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=2xpTh3TM8xSXQaLQeTZOPH0xxTDYy8pEBMtXz8IbVJw=;
+        b=iYedGaOQBNhcz53oVeO+mzrqYfy6mG1A9k1wlVdBqrS7CUnQIX+lDP5LlqeUGlBPgU
+         PIbHew76GMx7JucQTMdj1zElH7WUTKmycseD6Wd+Z+lv8uScF7PlakKclfEYHiAEM6vm
+         nUQmcluWAtCE3qc+G4lsF4p/xx+4CRY6lFBWP0gK/hIB5PcC7iR7VOFtR82UoqlRSrr/
+         TwLbvlBz4R4vczmq6JkGLnmAPap6irXwr5HA6D9j5JzdD377i3+JjqBQj0GPC0CbbDwc
+         +Hyix3p7TPVYMmfqkcD7zvpSOdBkPsY7kGr+Q5+kqbUc28SC/yMKxA+W75MRAM2miqLQ
+         0Auw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=2xpTh3TM8xSXQaLQeTZOPH0xxTDYy8pEBMtXz8IbVJw=;
+        b=VxVgi1Twc6Mwixphxy9xgfz6yuzPHVJz8guoXqX/D413mP/91KFEKw7Mx6Y6akz3u/
+         73kSSba8Uo39qMPubN1JcCkRUVv5/IZBFkXD04gr08JKTVeJrvx8TRVGxiwdfHT+u4tm
+         CcBSMXfqJM7Z4FQ16m+xbZrLhARUABIKn1uqbSVuAEY0cQk24zFyRFZb3ClWCcqh7u2e
+         rNAf64G+not3TSVRnRkcHbCLK2I0YXX8mlkl0UnhaQ+qA+/uksReSoujM6SmSJp2GBbT
+         1Toc+VVkj6Mm33PoxHntfy/Dl/HZ2W6sC1qgSDKW7SclwlhNIBXnu+gdA/Gthf6A4gq3
+         GCww==
+X-Gm-Message-State: AG10YOTBFPppfmna627qJxjqVtwZmcshnBLFNRSIWym00N/NmQpcQWew1HdECmvawK5bGSsCsBGpy9wBNIgYLNP2
+X-Received: by 10.50.28.105 with SMTP id a9mr270817igh.94.1453332107471; Wed,
+ 20 Jan 2016 15:21:47 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Wed, 20 Jan 2016 15:21:47 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284482>
 
-Stefan Beller <sbeller@google.com> writes:
+So I ran an interactive rebase, and while editing
+.git/rebase-merge/git-rebase-todo I tried to run
+`git status` in another terminal to inquire about a
+filename of an untracked file.
 
-> "say" respects the setting of GIT_QUIET, which is usually set when
-> --quiet is passed, so I think I want:
->
-> -  A faithful rewrite from shell to C including messages respecting
->    --quiet, such that the "say" behavior is kept.
->
-> - s/printf/fprintf(stderr, / for some messages
+However, I got:
 
-Yup, that is the correct order.  Thanks.
+$ git status
+On branch submodule-groups-v3
+fatal: Could not open file .git/rebase-merge/done for reading: No such
+file or directory
+
+Was this behavior always the case? (IIRC it worked a long time ago?)
+Would it make sense to not abort completely but give a limited status?
+
+Thanks,
+Stefan
