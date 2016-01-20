@@ -1,143 +1,121 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/4] Submodule Groups
-Date: Tue, 19 Jan 2016 19:34:36 -0800
-Message-ID: <1453260880-628-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 2/4] submodule-config: keep groups around
+Date: Tue, 19 Jan 2016 19:34:38 -0800
+Message-ID: <1453260880-628-3-git-send-email-sbeller@google.com>
+References: <1453260880-628-1-git-send-email-sbeller@google.com>
 Cc: Jens.Lehmann@web.de, jrnieder@gmail.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 20 04:34:50 2016
+X-From: git-owner@vger.kernel.org Wed Jan 20 04:34:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLjXl-0004br-Do
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 04:34:49 +0100
+	id 1aLjXq-0004dV-Lj
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 04:34:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935032AbcATDep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Jan 2016 22:34:45 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34112 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933912AbcATDeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jan 2016 22:34:44 -0500
-Received: by mail-pf0-f176.google.com with SMTP id q63so192074316pfb.1
-        for <git@vger.kernel.org>; Tue, 19 Jan 2016 19:34:44 -0800 (PST)
+	id S935040AbcATDev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Jan 2016 22:34:51 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34134 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935033AbcATDer (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jan 2016 22:34:47 -0500
+Received: by mail-pf0-f177.google.com with SMTP id q63so192074964pfb.1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2016 19:34:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=e4lQbgEAbEibmWTB+c5ckoz4w1dYM4m2/0D7dQ0Oy3k=;
-        b=BmOKpb3s0qEN2Sm+x9qNWNwUjH9p4UY15X9iTs3quOl9LH/Kp993HVAGU75ddD1qtH
-         ygw9gfZWDm0XXDrFojTm9keAvvQFOXjj3jYWzL0GfTbOOQZidnfGnFdX64GhxcyB+DBR
-         FEq0klL971fN9s8bo7Rsqg+OhJoysbiMYPzi5h2RqeaXuDThdZsYwbqTp8TwWZM+jqlk
-         UgOu6SnZeqFeW8Xj6kStna7//KAD3UZgWbZrjAuW6s26VE7BbEcIQBUNoX9aMFiU6L+Z
-         dLE64w4GDUtWi37RSuZ1d9WxVpjP49RK3K+Wq5v7gicoRz7EIzvi5ZYxdzLTWpl7G4T3
-         776A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kzLTmE8KHv+PmR+pIJ/EzvabmUFEFdmaGeVjv1NEgLw=;
+        b=UIGPmfOUHs7DBFYhIUL/SH4ERGiuogenfYl0uYVWAw3o9aJ81NW86cA/QI+ZR8tnbs
+         IIYi8BJTa69O7ydSslecn7mfcBSuomQP7QIAO8sqxpWPUJ7wGRMJO1nWH33gxWWclW3+
+         re/ETdIyv2tctuSUFK2YInEWTlCwSH/mNO3Z2kuojG1j3dglp/26DNyUt0zLLFofcmNJ
+         Fl9qL7OMPAyLVkgduFEohtUlW/kv8gS5PG4k7Jhaq3a4eFByD/GJQgry4LU5Vq0onuSm
+         JUDj241lW0TzFGHyr7MbTkbvhjg5tueOKjeblCXo0f0QR6xNegfRh/uklKyUyPPT+F2b
+         PUiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=e4lQbgEAbEibmWTB+c5ckoz4w1dYM4m2/0D7dQ0Oy3k=;
-        b=FAdQ6duw3PL6sMa/SljvEpmt2weBWLJQ3enLeUYZIay8iPaGFakkjPygdKfwkQp3Ml
-         hVDl8Vox3jjlOJEoh7j2IvPc8/JCA3/PUKIUYQiW2/9gM0oyWSDjO0hMCcII9Xh09TYz
-         gfPf79N+762/6gZeTJ2ey5fzXVaTT8f25OD1ZrImN+aZOG56Py2QAdb12KjmIqav34hb
-         OL5aATOcjutkYIJL8x/sT5vS5D1LOX1PI6OXzUrwGLuaUQZ/xvC9L8SNaMi45p5105ZF
-         14OjuCAKWOK4sNAG2w5rToYJZEFqI5U5oKD7LpvQZrZDWAwfL7jrzj0foqVa6xPjQ6Rm
-         T82g==
-X-Gm-Message-State: ALoCoQnZY7LMlFIIr02NZq2afdxkLhmmcFzIXs5kcl6KFSwwVuCrlS+jmu8Mff288FeIK5fWGNgXIz+lT945lJ5yDTMrJF24cw==
-X-Received: by 10.98.72.200 with SMTP id q69mr48822831pfi.159.1453260883667;
-        Tue, 19 Jan 2016 19:34:43 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=kzLTmE8KHv+PmR+pIJ/EzvabmUFEFdmaGeVjv1NEgLw=;
+        b=bj8scxiGYTojvBClBF6DReWCjKyU8wcWsT3FHXv9KeY4wlLRBTwTfHOgTG8k9nefrg
+         vNi2VHWMavg2HGot97z9I3wfsVe22Pl04igvG7GpVayhGLA//qPeCDRM498K7rXAaNMA
+         7U7dROF/SpR+W5XEqVU6aC91i1bhf2DtC2nv7/o93iolppj61vlcs0d6e8gkcN4R+PAz
+         jdekzGvnnlxacuvKbWN4UZVcJqRaGeOafk+OezOgXbVDf2oFvX9zyFk80uLEyyojhdbf
+         vJP28epEWXsABAYgNgjGkCbqi0QD4iBobPpTgEJEpNSy6mFPuxnx0ukzdvoR/E/Fl6hF
+         vB2w==
+X-Gm-Message-State: ALoCoQk/VnzGQY558HeVISbXIWfFcpKZx86+Qqg6SaJUEPvrkiKHz1e/UAaxS/qc2+5ifO3ZjBTKyehksniwI6TmpZnjQS+9Ug==
+X-Received: by 10.98.13.68 with SMTP id v65mr48903643pfi.54.1453260886627;
+        Tue, 19 Jan 2016 19:34:46 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:25db:c0:235a:551d])
-        by smtp.gmail.com with ESMTPSA id tm4sm45062673pab.3.2016.01.19.19.34.42
+        by smtp.gmail.com with ESMTPSA id ss5sm12622594pab.15.2016.01.19.19.34.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 19 Jan 2016 19:34:43 -0800 (PST)
+        Tue, 19 Jan 2016 19:34:45 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.41.g89994f2.dirty
+In-Reply-To: <1453260880-628-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284421>
 
-This applies on top of the updated sb/submodule-init branch.
+We need the submodule groups in a later patch.
 
-Why?
-====
-Consider having a real large software project in Git with each component
-in a submodule (such as an operating system, Android, Debian, Fedora,
-no toy OS such as https://github.com/gittup/gittup as that doesn't quite
-demonstrate the scale of the problem).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule-config.c | 13 +++++++++++++
+ submodule-config.h |  1 +
+ 2 files changed, 14 insertions(+)
 
-If you have lots of submodules, you probably don't need all of them at once,
-but you have functional units. Some submodules are absolutely required,
-some are optional and only for very specific purposes.
-
-This patch series adds meaning to a "groups" field in the .gitmodules file.
-
-So you could have a .gitmodules file such as:
-
-[submodule "gcc"]
-        path = gcc
-        url = git://...
-        groups = default
-        groups = devel
-[submodule "linux"]
-        path = linux
-        url = git://...
-        groups = default
-[submodule "nethack"]
-        path = nethack
-        url = git://...
-        groups = optional
-        groups = games
-
-and by this series you can work on an arbitrary subgroup of these submodules such
-using these commands:
+diff --git a/submodule-config.c b/submodule-config.c
+index a32259e..b5453d0 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -60,6 +60,8 @@ static void free_one_config(struct submodule_entry *entry)
+ {
+ 	free((void *) entry->config->path);
+ 	free((void *) entry->config->name);
++	if (entry->config->groups)
++		string_list_clear(entry->config->groups, 0);
+ 	free(entry->config);
+ }
  
-    git submodule add --group default --group devel git://... ..
-    # will add a submodule, adding 2 submodule
-    # groups to its entry in .gitmodule (default and devel)
-    
-    
-    git submodule update --groups
-    # All submodules as selected by groups (submodule.groups in .git/config)
-    # will be initialized if they are not, before updating.
-    
-    git clone --group default,default2 --group devel git://...
-    # will clone the superproject and recursively
-    # checkout any submodule being in at least one of the groups (default, default2, devel)
-
-
-Changes to v1
-=============
-
-* All entries are stored as separate lines (both in .git/config as well as in
-  the .gitmodules file)
-
-* No harm is done to `init` as it is implied by `update` now. :)
-
-* I tried to keep it as simple as possible (update and clone being the minimal set
-  of supported commands required, `add --group` being syntactic sugar for editing
-  the .gitmodules file.
-
-This is also available at https://github.com/stefanbeller/git/tree/submodule-groups-v2
-
-Thanks,
-Stefan
-
-
-Stefan Beller (4):
-  git submodule: Teach add to accept --group
-  submodule-config: keep groups around
-  submodule update: Initialize all group-selected submodules by default
-  builtin/clone: support submodule groups
-
- Documentation/git-clone.txt     |  13 +++++
- Documentation/git-submodule.txt |   8 ++-
- builtin/clone.c                 |  46 +++++++++++++++--
- builtin/submodule--helper.c     |  30 ++++++++++-
- git-submodule.sh                |  15 ++++++
- submodule-config.c              |  13 +++++
- submodule-config.h              |   1 +
- t/t7400-submodule-basic.sh      | 112 ++++++++++++++++++++++++++++++++++++++++
- 8 files changed, 233 insertions(+), 5 deletions(-)
-
+@@ -184,6 +186,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+ 	submodule->update = NULL;
+ 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+ 	submodule->ignore = NULL;
++	submodule->groups = NULL;
+ 
+ 	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
+ 
+@@ -324,6 +327,16 @@ static int parse_specific_submodule_config(const char *subsection, int subsectio
+ 			free((void *) submodule->update);
+ 			submodule->update = xstrdup(value);
+ 		}
++	} else if (!strcmp(key, "group")) {
++		if (!value)
++			ret = config_error_nonbool(var);
++		else {
++			if (!submodule->groups) {
++				submodule->groups = xmalloc(sizeof(*submodule->groups));
++				string_list_init(submodule->groups, 1);
++			}
++			string_list_insert(submodule->groups, value);
++		}
+ 	}
+ 
+ 	return ret;
+diff --git a/submodule-config.h b/submodule-config.h
+index d9bbf9a..332f5be 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -17,6 +17,7 @@ struct submodule {
+ 	const char *update;
+ 	/* the sha1 blob id of the responsible .gitmodules file */
+ 	unsigned char gitmodules_sha1[20];
++	struct string_list *groups;
+ };
+ 
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
 -- 
 2.7.0.rc0.41.g89994f2.dirty
