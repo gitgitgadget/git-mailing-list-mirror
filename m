@@ -1,62 +1,69 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH] completion: Add --word-diff-regex= to diff
-Date: Wed, 20 Jan 2016 18:34:58 +0100
-Message-ID: <569FC542.2060504@virtuell-zuhause.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation: remove unnecessary backslashes
+Date: Wed, 20 Jan 2016 13:24:21 -0500
+Message-ID: <20160120182421.GA27562@sigill.intra.peff.net>
+References: <1453310497-7971-1-git-send-email-kraai@ftbfs.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	=?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 20 18:53:23 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+	Matthew Kraai <matt.kraai@abbott.com>
+To: Matt Kraai <kraai@ftbfs.org>
+X-From: git-owner@vger.kernel.org Wed Jan 20 19:24:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aLwwb-0003ep-Ai
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 18:53:21 +0100
+	id 1aLxQl-0007aR-QZ
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Jan 2016 19:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298AbcATRxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 12:53:16 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:47796 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757133AbcATRxP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 12:53:15 -0500
-X-Greylist: delayed 1093 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Jan 2016 12:53:14 EST
-Received: from pd9fad860.dip0.t-ipconnect.de ([217.250.216.96] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1aLwep-0006H3-9E; Wed, 20 Jan 2016 18:34:59 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1453312395;7eddb633;
+	id S934760AbcATSY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 13:24:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57140 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934556AbcATSYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 13:24:24 -0500
+Received: (qmail 7565 invoked by uid 102); 20 Jan 2016 18:24:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jan 2016 13:24:24 -0500
+Received: (qmail 7590 invoked by uid 107); 20 Jan 2016 18:24:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 20 Jan 2016 13:24:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Jan 2016 13:24:21 -0500
+Content-Disposition: inline
+In-Reply-To: <1453310497-7971-1-git-send-email-kraai@ftbfs.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284458>
 
-Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Jan 20, 2016 at 09:21:37AM -0800, Matt Kraai wrote:
 
-diff --git a/contrib/completion/git-completion.bash
-b/contrib/completion/git-completion.bash
-index ab4da7f..d2a08dd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1169,7 +1169,7 @@ __git_diff_common_options="--stat --numstat
---shortstat --summary
- 			--no-prefix --src-prefix= --dst-prefix=
- 			--inter-hunk-context=
- 			--patience --histogram --minimal
--			--raw --word-diff
-+			--raw --word-diff --word-diff-regex=
- 			--dirstat --dirstat= --dirstat-by-file
- 			--dirstat-by-file= --cumulative
- 			--diff-algorithm=
--- 
-2.7.0.windows.1
+> From: Matthew Kraai <matt.kraai@abbott.com>
+> 
+> asciidoctor does not remove backslashes used to escape curly brackets from
+> the HTML output if the contents of the curly brackets are empty or contain
+> at least a <, -, or space.  asciidoc does not require the backslashes in
+> these cases, so just remove them.
+
+I think these backslashes may have been necessary in older versions of
+asciidoc, but I don't recall the details. Looks like we did a similar
+round of cleanups already in 4538a88256, so this is probably safe (and I
+verified with asciidoc 8.6.9 that the generated output is the same).
+
+> -'<refname>@\{<date>\}', e.g. 'master@\{yesterday\}', 'HEAD@\{5 minutes ago\}'::
+> +'<refname>@{<date>}', e.g. 'master@\{yesterday\}', 'HEAD@{5 minutes ago}'::
+
+I see you didn't tweak the middle one here, because it _does_ look like
+an attribute. Does asciidoctor actually remove the backslashes there?
+
+> -'<refname>@\{<n>\}', e.g. 'master@\{1\}'::
+> +'<refname>@{<n>}', e.g. 'master@\{1\}'::
+
+Ditto here for "1". IMHO asciidoctor's behavior is somewhat crazy, as it
+means you have to know arcane quoting rules to get correct output (you
+cannot just err on the side of quoting). But it's probably still worth
+working around.
+
+-Peff
