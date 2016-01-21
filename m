@@ -1,76 +1,131 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git status during interactive rebase
-Date: Thu, 21 Jan 2016 10:28:29 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601211016140.2964@virtualbox>
-References: <CAGZ79kbUwJ+CN=YoQUP=rm=EhU=fU2ynt_7Q-cd7Dic-bsx+TA@mail.gmail.com>
+From: Lars Vogel <lars.vogel@vogella.com>
+Subject: Re: [PATCH] Consistent usage of working tree in the git-add help
+Date: Thu, 21 Jan 2016 10:56:18 +0100
+Message-ID: <CACA4a_FtcJEPPEKDRqHFn_vtnPQfcFqN9uPChug=Fwh8B5bM3Q@mail.gmail.com>
+References: <1453229636-16269-1-git-send-email-Lars.Vogel@vogella.com>
+	<xmqqr3hb22zu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 10:28:42 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lars Vogel <lars.vogel@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 10:57:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMBXk-0002B0-Jb
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 10:28:40 +0100
+	id 1aMBz1-0004n7-J9
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 10:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758995AbcAUJ2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2016 04:28:36 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50590 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757467AbcAUJ2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2016 04:28:34 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MRB8F-1aZ9RQ0azP-00UcwU; Thu, 21 Jan 2016 10:28:31
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAGZ79kbUwJ+CN=YoQUP=rm=EhU=fU2ynt_7Q-cd7Dic-bsx+TA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:hVtPzY9DssInzfZtptxjyWzB+atprouIuXtkjYGsfrx+HkcNEdp
- cqeRphS+Elc3yZqmvbJQrALdNZu5yWF3ReN01ZFsU320o6xVmjkKGeHFDdB5f+PGkTCmyn0
- /Hfzlo4+vD5m041+rUlgU40MLjbud1c4K2qLORsC8Hav+MdNtzU6SwmmY/ww1P6rQx8mthD
- wHi6gYT/+roQTzynClXwA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DpUb2CSrPUM=:lHI0vALl2Bfracjlx/sFiE
- b0RE6lh15KJW4Gwo1w6AiT408T5SvLxgkIg/UaUpkxY7uVQ6jVFN+koOEIgJzjze2oElzbK3t
- minS+XtdKM6ORLNG/qdhqHOWCBtNf/MwA0J7rlvlI3MyahDIAUrT1tEK+fAp3LHeSaz/N8YhF
- PT9tq3x1jjDyxKlHvBDcrVlk2CESigyLF0HMvPXuYa74od5F8+PvIsfNB/VRPNzUqIrqZPuIz
- cKBqXH3QagWotG0Yz6xm43UMi/gmSZ8orWEDDybEnZAEVcXKGcyXhk9FVRNmsCdudmWtSUfsU
- LDnTOoQELcOIxfnmTImGLgDzzikBMgdC2DOQqM8BnqNKNnPAvo8aDlijCVYE5Rs7mJixLk0gt
- mLPPikyp7qXA+aqRwc9De0LlQcnOjGHZnmYiVbOfC3NSiWJeJKHR0XfMT3Lf1PYnxX8iVATmQ
- WRewapm0qvAoecQNxeXD6RvhPwf9DuR7jST6f20G+9BJ8CHg9KntxixfJIut2divMZkIBvyC4
- 5cF68j9kU5iq1EOEV6cNkLAknE+xx5rfsiZJFttQa6Mj+gOSVfZtGLvV3Xbo4WBBkgsfhCcdA
- cBIsS0JYpY0mcb5ytCgvtqA7oTFKChkXPGlKFrKSCD3S2sShxuOmvZPtXOeAPeLztEB1IMpTq
- +GSYBlvkMI7yEO/sdqqZcUgur932TFUfgY7geVpVeUXwyfHymsHY6iThI22nnbMRg2YQw7MTs
- IiQqoS0P2Ibn4VCD2ZUiJxyAQIOVpWpFRi3SG/396P7257txsat6uXmO+p/oqZTGVbP2ZTFH 
+	id S1759335AbcAUJ4l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2016 04:56:41 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38217 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759280AbcAUJ4U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2016 04:56:20 -0500
+Received: by mail-wm0-f41.google.com with SMTP id b14so71479356wmb.1
+        for <git@vger.kernel.org>; Thu, 21 Jan 2016 01:56:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=vogella-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Rc4xTOp+8slTZ3bA9L4L6rfRh2g52Gp4BF/D7IrJkTc=;
+        b=YTrP2nBKfRJ5h9tbqFb4aNRy2PN6BfjoFey4v3xOvzVWHWaNPZjt5+1zHYgturZIku
+         pJOHchS97gl3r7W4TykmdBWyCfm2bhFR67sUvioxur7dxnUsbDbFEhbdTQhIX4qUTLHl
+         Cx8NzdTSPdbBRUfz3/HB/37ha/H0FQ6Y+Idhn3nyJfy/oMVUxkO9Jt+xIU7Ctze5qgl2
+         rTRcR+vL/sMx/wnq9zUJhDdZX9maCp0egRPA2zj1uiUHzJfT3M+P1ex2FtaE25pGZ99t
+         iNPO8lc/kOy9V9mCUetjkOsJOoa32DlstlHzUPkDBwYzWHSpW8p/ohVEkP2t7Uni/+iw
+         QBWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Rc4xTOp+8slTZ3bA9L4L6rfRh2g52Gp4BF/D7IrJkTc=;
+        b=G83VgIwQtE/rkOaJxMfAlVZo41r6Rr7Z+SccHBdKXveVLo7q4CFELuoehQMfwNh/5j
+         8zN1gkNNs1Qg7jLc2GETCos6l70wZSGC/v1V2wDJst8L3+CZ+jAHcCoFdc0Gnk7RDfex
+         cE7r+TF3tJ3p8rplyvB7/KRae7LZhR17Gc9+MDR9KmM2L34uESUjilgG6KxWIawccFTv
+         ibxGCX6VXjOt4hLIAUT3G5cdTWfdvTSiNsXR55XXsQDd9dVC/EUcO/bkUFUMSjCSmSFF
+         b2voOhCcnN4tpTf0ttwba54MAGueOc5NYAJODlGxpMrSwlb73C4E5B0/J/F4LVpToeek
+         conA==
+X-Gm-Message-State: AG10YOS/E4Zjd7nNEPJQvAK8KNCM+wBd14FvYvQ0+wKyxOolWk0TtfPu813eAb0U7FnvLyxl1urB1TILgBILVg==
+X-Received: by 10.28.195.138 with SMTP id t132mr8861134wmf.61.1453370178910;
+ Thu, 21 Jan 2016 01:56:18 -0800 (PST)
+Received: by 10.28.216.73 with HTTP; Thu, 21 Jan 2016 01:56:18 -0800 (PST)
+In-Reply-To: <xmqqr3hb22zu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284509>
 
-Hi Stefan,
+Thanks Junio for the feedback. I send a new patch with only the first c=
+hange.
 
-On Wed, 20 Jan 2016, Stefan Beller wrote:
+On Thu, Jan 21, 2016 at 1:24 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Lars Vogel <lars.vogel@gmail.com> writes:
+>
+>> The usage of working directory is inconsistent in the git add help.
+>> Also http://git-scm.com/docs/giit-clone speaks only about working tr=
+ee.
+>> Remaining entry found by "git grep -B1 '^directory' git-add.txt" rea=
+lly
+>> relates to a directory.
+>>
+>> Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+>> ---
+>>  Documentation/git-add.txt | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+>> index fe5282f..cfef77b 100644
+>> --- a/Documentation/git-add.txt
+>> +++ b/Documentation/git-add.txt
+>> @@ -24,7 +24,7 @@ remove paths that do not exist in the working tree=
+ anymore.
+>>
+>>  The "index" holds a snapshot of the content of the working tree, an=
+d it
+>>  is this snapshot that is taken as the contents of the next commit. =
+ Thus
+>> -after making any changes to the working directory, and before runni=
+ng
+>> +after making any changes to the working tree, and before running
+>>  the commit command, you must use the `add` command to add any new o=
+r
+>>  modified files to the index.
+>>
+>> @@ -85,7 +85,7 @@ OPTIONS
+>>  -p::
+>>  --patch::
+>>       Interactively choose hunks of patch between the index and the
+>> -     work tree and add them to the index. This gives the user a cha=
+nce
+>> +     working tree and add them to the index. This gives the user a =
+chance
+>>       to review the difference before adding modified contents to th=
+e
+>>       index.
+>>  +
+>
+> Thanks.  While the first hunk looks to me a definite improvement, I
+> am lukewarm about s/work tree/working tree/ change.  Both terms are
+> used fairly commonly in our documentation set.  "Work tree" has ~70
+> hits vs ~350 for "working tree" (ignoring the case where these words
+> are split across lines, i.e. "work/working" at the end of the line
+> followed by a line that begins with "tree").
 
-> So I ran an interactive rebase, and while editing
-> .git/rebase-merge/git-rebase-todo I tried to run
-> `git status` in another terminal to inquire about a
-> filename of an untracked file.
 
-Heh, I don't think that anybody did that before, because the rebase has
-not even quite started yet...
 
-The cop-out would be to write an empty 'done' file before editing the
-todo, but it would give the wrong impression that it is safe to run `git
-rebase --continue` now... Interactive rebase is *definitely* not
-thread-safe ;-)
+--=20
+Eclipse Platform UI and e4 project co-lead
+CEO vogella GmbH
 
-So the proper fix might be to test for the presence of the "done" file and
-otherwise tell the user that this rebase has not even started yet.
-
-Ciao,
-Dscho
+Haindaalwisch 17a, 22395 Hamburg
+Amtsgericht Hamburg: HRB 127058
+Gesch=C3=A4ftsf=C3=BChrer: Lars Vogel, Jennifer Nerlich de Vogel
+USt-IdNr.: DE284122352
+=46ax (040) 5247 6322, Email: lars.vogel@vogella.com, Web: http://www.v=
+ogella.com
