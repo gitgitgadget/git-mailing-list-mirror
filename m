@@ -1,176 +1,97 @@
-From: <stefan.naewe@atlas-elektronik.com>
-Subject: Zombie tag
-Date: Thu, 21 Jan 2016 09:17:28 +0100
-Message-ID: <56A09418.1070201@atlas-elektronik.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v3 17/20] refs: allow ref backend to be set for clone
+Date: Thu, 21 Jan 2016 10:08:20 +0100
+Message-ID: <20160121100820.Horde.5-2HMBAP-1P3hWXbxgxeBsX@webmail.informatik.kit.edu>
+References: <1452857550-25887-1-git-send-email-szeder@ira.uka.de>
+ <1453223161.16226.24.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_56A094181070201atlaselektronikcom_"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 21 09:26:21 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 10:08:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMAZQ-0005E1-Bq
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 09:26:20 +0100
+	id 1aMBER-00034Y-2O
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 10:08:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758935AbcAUI0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2016 03:26:17 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:34428 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758587AbcAUI0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2016 03:26:15 -0500
-X-Greylist: delayed 513 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Jan 2016 03:26:15 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 833951015A
-	for <git@vger.kernel.org>; Thu, 21 Jan 2016 09:17:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SzolKb2mnhXg for <git@vger.kernel.org>;
-	Thu, 21 Jan 2016 09:17:29 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP
-	for <git@vger.kernel.org>; Thu, 21 Jan 2016 09:17:29 +0100 (CET)
-Received: from MSEXSRV3.atlas.de (msexsrv3.atlas.de [10.200.102.58])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 7589227171
-	for <git@vger.kernel.org>; Thu, 21 Jan 2016 09:17:29 +0100 (CET)
-Received: from MSSRVS3.atlas.de (10.200.101.73) by MSEXSRV3.atlas.de
- (10.200.102.58) with Microsoft SMTP Server (TLS) id 14.3.248.2; Thu, 21 Jan
- 2016 09:17:28 +0100
-Received: from MSSRVS4.atlas.de ([10.200.97.74]) by MSSRVS3.atlas.de
- ([10.200.101.73]) with mapi; Thu, 21 Jan 2016 09:17:28 +0100
-Thread-Topic: Zombie tag
-Thread-Index: AdFUJCqndeYLyJ/JQeqzpwtnItAuVA==
-Accept-Language: de-DE
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-x-enigmail-draft-status: N1110
-acceptlanguage: de-DE
-X-C2ProcessedOrg: 8e578ea2-b414-4638-aa54-659db1be7428
+	id S1758546AbcAUJIj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2016 04:08:39 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40325 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751224AbcAUJIc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2016 04:08:32 -0500
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1aMBED-00065a-Tx; Thu, 21 Jan 2016 10:08:29 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1aMBE4-0005Ix-1H; Thu, 21 Jan 2016 10:08:20 +0100
+Received: from x4db25724.dyn.telefonica.de (x4db25724.dyn.telefonica.de
+ [77.178.87.36]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Thu, 21 Jan 2016 10:08:20 +0100
+In-Reply-To: <1453223161.16226.24.camel@twopensource.com>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1453367309.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284507>
 
---_002_56A094181070201atlaselektronikcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-SSdtIGhhdmluZyB0cm91YmxlIHRvIGdldCByaWQgb2YgYSBkZWxldGVkIHRhZy4NCkhlcmUncyB3
-aGF0IEkgZGlkOg0KDQotIHB1c2ggbWFzdGVyIGJyYW5jaCBmcm9tIGEgbm9uLWJhcmUgcmVwbyAo
-UjEpIGludG8gYSBiYXJlIHJlcG8gKEIxKQ0KLSBwdXNoIGEgdGFnICh0YWctYSkgZnJvbSBSMSBp
-bnRvIHRoZSBzYW1lIEIxDQotIGZvcmNlLXB1c2ggbWFzdGVyIGZyb20gYW5vdGhlciBub24tYmFy
-ZSByZXBvIChSMikgaW50byBCMQ0KLSBkbyAnZ2l0IHB1c2ggQjEgOnRhZy1hJyBmcm9tIFIyIHRv
-IGRlbGV0ZSB0aGUgdGFnDQpOb3csIGluIEIxLCAnZ2l0IGZzY2snIHNob3dzIGEgZGFuZ2xpbmcg
-dGFnIHRoYXQgY2FuIGJlIGlkZW50aWZpZWQNCmFzICd0YWctYScgZnJvbSBhYm92ZS4gVGhlcmUn
-cyBvYnZpb3VzbHkgbm8gcmVmbG9nIGluIEIxLg0KSSBkb24ndCBrbm93IGhvdyB0byBnZXQgcmlk
-IG9mIHRoYXQgdGFnLg0KDQpBIGNsZWFuZWQtdXAgJ3NjcmlwdCcgc2Vzc2lvbiBvZiB0aGUgYWJv
-dmUgaXMgYXR0YWNoZWQuDQoNClRoZSBwcm9ibGVtIGluaXRpYWxseSBvY2N1cnJlZCBvbiBXaW5k
-b3dzIHdpdGggZ2l0IDIuNy4wIGJ1dCBjb3VsZA0KYmUgcmVwcm9kdWNlZCBvbiBhIExpbnV4IG1h
-Y2hpbmUgd2l0aCBnaXQgMi43LjAuDQoNCldoYXQncyBnb2luZyBvbiBoZXJlID8NCg0KVGhhbmtz
-LA0KICBTdGVmYW4NCi0tIA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KL2Rldi9yYW5kb20gc2F5czogUG9sbHMgc2hvdyB0
-aGF0IDkgb3V0IG9mIDYgc2NoaXpvcGhyZW5pY3MgYWdyZWUuDQpweXRob24gLWMgInByaW50ICc3
-Mzc0NjU2NjYxNmUyZTZlNjE2NTc3NjU0MDYxNzQ2YzYxNzMyZDY1NmM2NTZiNzQ3MjZmNmU2OTZi
-MmU2MzZmNmQnLmRlY29kZSgnaGV4JykiIA0KR1BHIEtleSBmaW5nZXJwcmludCA9IDJERjUgRTAx
-QiAwOUMzIDc1MDEgQkNBOSAgOTY2NiA4MjlCIDQ5QzUgOTIyMSAyN0FGDQo=
+Quoting David Turner <dturner@twopensource.com>:
 
---_002_56A094181070201atlaselektronikcom_
-Content-Type: text/plain; name="zombie-tag.typescript"
-Content-Description: zombie-tag.typescript
-Content-Disposition: attachment; filename="zombie-tag.typescript"; size=4733;
-	creation-date="Thu, 21 Jan 2016 08:17:28 GMT";
-	modification-date="Thu, 21 Jan 2016 08:17:28 GMT"
-Content-Transfer-Encoding: base64
+> Thanks for the suggestions.
+>
+> With your permission, I will add:
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+>
+> to all three of these patches post-squash.  Is that OK?
 
-fi90bXAvem9tYmllLXRhZyB+DQokIGdpdCBpbml0IHJlcG8xDQpJbml0aWFsaXplZCBlbXB0eSBH
-aXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9uYWV3ZV9zL3RtcC96b21iaWUtdGFnL3JlcG8xLy5naXQv
-DQokIGdpdCBpbml0IHJlcG8yDQpJbml0aWFsaXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAv
-aG9tZS9uYWV3ZV9zL3RtcC96b21iaWUtdGFnL3JlcG8yLy5naXQvDQokIGdpdCBpbml0IC0tYmFy
-ZSBiYXJlMS5naXQNCkluaXRpYWxpemVkIGVtcHR5IEdpdCByZXBvc2l0b3J5IGluIC9ob21lL25h
-ZXdlX3MvdG1wL3pvbWJpZS10YWcvYmFyZTEuZ2l0Lw0KJCBjZCByZXBvMQ0KJCBlY2hvIEEgPiBB
-IDsgZ2l0IGFkZCBBIDsgZ2l0IGNvbW1pdCAtbSJhZGQgQSINClttYXN0ZXIgKHJvb3QtY29tbWl0
-KSBkOWU1YmFmXSBhZGQgQQ0KIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKQ0KIGNyZWF0
-ZSBtb2RlIDEwMDY0NCBBDQokIGVjaG8gQiA+IEIgOyBnaXQgYWRkIEIgOyBnaXQgY29tbWl0IC1t
-ImFkZCBCIg0KW21hc3RlciAzODEwNzM4XSBhZGQgQgogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0
-aW9uKCspCiBjcmVhdGUgbW9kZSAxMDA2NDQgQgokIGdpdCB0YWcgLW0iaW5pdGlhbCIgaW5pdGlh
-bA0kIGdpdCBwdXNoIC4uL2JhcmUxLmdpdC8gbWFzdGVyIGluaXRpYWwNCkNvdW50aW5nIG9iamVj
-dHM6IDcsIGRvbmUuDQpEZWx0YSBjb21wcmVzc2lvbiB1c2luZyB1cCB0byAyIHRocmVhZHMuDQpD
-b21wcmVzc2luZyBvYmplY3RzOiAgMjUlICgxLzQpICAgDUNvbXByZXNzaW5nIG9iamVjdHM6ICA1
-MCUgKDIvNCkgICANQ29tcHJlc3Npbmcgb2JqZWN0czogIDc1JSAoMy80KSAgIA1Db21wcmVzc2lu
-ZyBvYmplY3RzOiAxMDAlICg0LzQpICAgDUNvbXByZXNzaW5nIG9iamVjdHM6IDEwMCUgKDQvNCks
-IGRvbmUuDQpXcml0aW5nIG9iamVjdHM6ICAxNCUgKDEvNykgICANV3JpdGluZyBvYmplY3RzOiAg
-MjglICgyLzcpICAgDVdyaXRpbmcgb2JqZWN0czogIDQyJSAoMy83KSAgIA1Xcml0aW5nIG9iamVj
-dHM6ICA1NyUgKDQvNykgICANV3JpdGluZyBvYmplY3RzOiAgNzElICg1LzcpICAgDVdyaXRpbmcg
-b2JqZWN0czogIDg1JSAoNi83KSAgIA1Xcml0aW5nIG9iamVjdHM6IDEwMCUgKDcvNykgICANV3Jp
-dGluZyBvYmplY3RzOiAxMDAlICg3LzcpLCA1NDggYnl0ZXMgfCAwIGJ5dGVzL3MsIGRvbmUuDQpU
-b3RhbCA3IChkZWx0YSAxKSwgcmV1c2VkIDAgKGRlbHRhIDApDQpUbyAuLi9iYXJlMS5naXQNCiAq
-IFtuZXcgYnJhbmNoXSAgICAgIG1hc3RlciAtPiBtYXN0ZXINCiAqIFtuZXcgdGFnXSAgICAgICAg
-IGluaXRpYWwgLT4gaW5pdGlhbA0KJCBjZCAuLi9yZXBvMg0KJCBmb3IgbiBpbiAxIDI7IGRvIGVj
-aG8gJG4gPiAkbiA7IGdpdCBhZGQgJG47IGdpdCBjb21taXQgLW0iYWRkICRuIjsgZG9uZQ0KW21h
-c3RlciAocm9vdC1jb21taXQpIGUyZWJjYzRdIGFkZCAxDQogMSBmaWxlIGNoYW5nZWQsIDEgaW5z
-ZXJ0aW9uKCspDQogY3JlYXRlIG1vZGUgMTAwNjQ0IDENClttYXN0ZXIgZjhkMTA3MV0gYWRkIDIN
-CiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykNCiBjcmVhdGUgbW9kZSAxMDA2NDQgMg0K
-JCBnaXQgcHVzaCAtZiAuLi9iYXJlMS5naXQvIG1hc3Rlcg0KQ291bnRpbmcgb2JqZWN0czogNiwg
-ZG9uZS4NCkRlbHRhIGNvbXByZXNzaW9uIHVzaW5nIHVwIHRvIDIgdGhyZWFkcy4NCkNvbXByZXNz
-aW5nIG9iamVjdHM6ICAzMyUgKDEvMykgICANQ29tcHJlc3Npbmcgb2JqZWN0czogIDY2JSAoMi8z
-KSAgIA1Db21wcmVzc2luZyBvYmplY3RzOiAxMDAlICgzLzMpICAgDUNvbXByZXNzaW5nIG9iamVj
-dHM6IDEwMCUgKDMvMyksIGRvbmUuDQpXcml0aW5nIG9iamVjdHM6ICAxNiUgKDEvNikgICANV3Jp
-dGluZyBvYmplY3RzOiAgMzMlICgyLzYpICAgDVdyaXRpbmcgb2JqZWN0czogIDUwJSAoMy82KSAg
-IA1Xcml0aW5nIG9iamVjdHM6ICA2NiUgKDQvNikgICANV3JpdGluZyBvYmplY3RzOiAgODMlICg1
-LzYpICAgDVdyaXRpbmcgb2JqZWN0czogMTAwJSAoNi82KSAgIA1Xcml0aW5nIG9iamVjdHM6IDEw
-MCUgKDYvNiksIDM4NCBieXRlcyB8IDAgYnl0ZXMvcywgZG9uZS4NClRvdGFsIDYgKGRlbHRhIDEp
-LCByZXVzZWQgMCAoZGVsdGEgMCkNClRvIC4uL2JhcmUxLmdpdA0KICsgMzgxMDczOC4uLmY4ZDEw
-NzEgbWFzdGVyIC0+IG1hc3RlciAoZm9yY2VkIHVwZGF0ZSkNCiQgZ2l0IHB1c2ggLi4vYmFyZTEu
-Z2l0LyA6aW5pdGlhbA0KVG8gLi4vYmFyZTEuZ2l0DQogLSBbZGVsZXRlZF0gICAgICAgICBpbml0
-aWFsDQokIGNkIC4uL2JhcmUxLmdpdC8NCiQgZ2l0IGxvZyAtLW9uZWxpbmUNCmY4ZDEwNzEgYWRk
-IDINCmUyZWJjYzQgYWRkIDENCg0kIGdpdCBmb3ItZWFjaC1yZWYNCmY4ZDEwNzE2ZmM4ODdkYTM2
-ZGY1M2Y1ODY2MGJmYWE3N2ZmNWE0MTEgY29tbWl0CXJlZnMvaGVhZHMvbWFzdGVyDQokIGdpdCBm
-c2NrDQpDaGVja2luZyBvYmplY3QgZGlyZWN0b3JpZXM6ICAgNSUgKDEzLzI1NikgICANQ2hlY2tp
-bmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAgMTElICgzMC8yNTYpICAgDUNoZWNraW5nIG9iamVjdCBk
-aXJlY3RvcmllczogIDEzJSAoMzUvMjU2KSAgIA1DaGVja2luZyBvYmplY3QgZGlyZWN0b3JpZXM6
-ICAyMiUgKDU3LzI1NikgICANQ2hlY2tpbmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAgNTMlICgxMzcv
-MjU2KSAgIA1DaGVja2luZyBvYmplY3QgZGlyZWN0b3JpZXM6ICA4MSUgKDIwOS8yNTYpICAgDUNo
-ZWNraW5nIG9iamVjdCBkaXJlY3RvcmllczogIDgzJSAoMjEzLzI1NikgICANQ2hlY2tpbmcgb2Jq
-ZWN0IGRpcmVjdG9yaWVzOiAgODUlICgyMTgvMjU2KSAgIA1DaGVja2luZyBvYmplY3QgZGlyZWN0
-b3JpZXM6ICA4NyUgKDIyMy8yNTYpICAgDUNoZWNraW5nIG9iamVjdCBkaXJlY3RvcmllczogIDg4
-JSAoMjI3LzI1NikgICANQ2hlY2tpbmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAgOTYlICgyNDYvMjU2
-KSAgIA1DaGVja2luZyBvYmplY3QgZGlyZWN0b3JpZXM6ICA5NyUgKDI0OS8yNTYpICAgDUNoZWNr
-aW5nIG9iamVjdCBkaXJlY3RvcmllczogMTAwJSAoMjU2LzI1NikgICANQ2hlY2tpbmcgb2JqZWN0
-IGRpcmVjdG9yaWVzOiAxMDAlICgyNTYvMjU2KSwgZG9uZS4NCmRhbmdsaW5nIHRhZyA4OGEyM2Ri
-NjcxZDIwZWI2YTQzODQyMDdiZjI0YjhlMGM2NjdhMjg4DQpkYW5nbGluZyBjb21taXQgMzgxMDcz
-ODg3YTgxMDgyMTI4Yjg0OTQ1ZmUwN2M5NmM0MDBlODZkYQ0KJCBnaXQgc2hvdyAgODhhMjNkYjY3
-MWQyMGUNCnRhZyBpbml0aWFsDQpUYWdnZXI6IFN0ZWZhbiBOYWV3ZSA8c3RlZmFuLm5hZXdlQHh5
-ei5jb20+DQpEYXRlOiAgIFRodSBKYW4gMjEgMDg6NTE6MDUgMjAxNiArMDEwMA0KDQppbml0aWFs
-DQoNCmNvbW1pdCBkOWU1YmFmNTJmNDcyYzQ5ZmQ0ZmQxZmFlYjZmMDc1MmRmZTM5ODBiDQpBdXRo
-b3I6IFN0ZWZhbiBOYWV3ZSA8c3RlZmFuLm5hZXdlQHh5ei5jb20+DQpEYXRlOiAgIFRodSBKYW4g
-MjEgMDg6NTA6NDEgMjAxNiArMDEwMA0KDQogICAgYWRkIEENCg0KZGlmZiAtLWdpdCBhL0EgYi9B
-DQpuZXcgZmlsZSBtb2RlIDEwMDY0NA0KaW5kZXggMDAwMDAwMC4uZjcwZjEwZQ0KLS0tIC9kZXYv
-bnVsbA0KKysrIGIvQQ0KQEAgLTAsMCArMSBAQA0KK0ENCg0kIGdpdCByZWZsb2cNCgokIGdpdCBn
-Yw0KQ291bnRpbmcgb2JqZWN0czogNiwgZG9uZS4NCkRlbHRhIGNvbXByZXNzaW9uIHVzaW5nIHVw
-IHRvIDIgdGhyZWFkcy4NCkNvbXByZXNzaW5nIG9iamVjdHM6ICAzMyUgKDEvMykgICANQ29tcHJl
-c3Npbmcgb2JqZWN0czogIDY2JSAoMi8zKSAgIA1Db21wcmVzc2luZyBvYmplY3RzOiAxMDAlICgz
-LzMpICAgDUNvbXByZXNzaW5nIG9iamVjdHM6IDEwMCUgKDMvMyksIGRvbmUuDQpXcml0aW5nIG9i
-amVjdHM6ICAxNiUgKDEvNikgICANV3JpdGluZyBvYmplY3RzOiAgMzMlICgyLzYpICAgDVdyaXRp
-bmcgb2JqZWN0czogIDUwJSAoMy82KSAgIA1Xcml0aW5nIG9iamVjdHM6ICA2NiUgKDQvNikgICAN
-V3JpdGluZyBvYmplY3RzOiAgODMlICg1LzYpICAgDVdyaXRpbmcgb2JqZWN0czogMTAwJSAoNi82
-KSAgIA1Xcml0aW5nIG9iamVjdHM6IDEwMCUgKDYvNiksIGRvbmUuDQpUb3RhbCA2IChkZWx0YSAx
-KSwgcmV1c2VkIDAgKGRlbHRhIDApDQoNCiQgZ2l0IGZzY2sNCkNoZWNraW5nIG9iamVjdCBkaXJl
-Y3RvcmllczogIDExJSAoMzAvMjU2KSAgIA1DaGVja2luZyBvYmplY3QgZGlyZWN0b3JpZXM6ICAx
-MyUgKDM1LzI1NikgICANQ2hlY2tpbmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAgMjIlICg1Ny8yNTYp
-ICAgDUNoZWNraW5nIG9iamVjdCBkaXJlY3RvcmllczogIDUzJSAoMTM3LzI1NikgICANQ2hlY2tp
-bmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAgODUlICgyMTgvMjU2KSAgIA1DaGVja2luZyBvYmplY3Qg
-ZGlyZWN0b3JpZXM6ICA5NiUgKDI0Ni8yNTYpICAgDUNoZWNraW5nIG9iamVjdCBkaXJlY3Rvcmll
-czogMTAwJSAoMjU2LzI1NikgICANQ2hlY2tpbmcgb2JqZWN0IGRpcmVjdG9yaWVzOiAxMDAlICgy
-NTYvMjU2KSwgZG9uZS4NCkNoZWNraW5nIG9iamVjdHM6ICAgMCUgKDAvNikgICANQ2hlY2tpbmcg
-b2JqZWN0czogMTAwJSAoNi82KSAgIA1DaGVja2luZyBvYmplY3RzOiAxMDAlICg2LzYpLCBkb25l
-Lg0KZGFuZ2xpbmcgdGFnIDg4YTIzZGI2NzFkMjBlYjZhNDM4NDIwN2JmMjRiOGUwYzY2N2EyODgN
-CmRhbmdsaW5nIGNvbW1pdCAzODEwNzM4ODdhODEwODIxMjhiODQ5NDVmZTA3Yzk2YzQwMGU4NmRh
-DQo=
+Sure...
 
---_002_56A094181070201atlaselektronikcom_--
+(But does such a trivial one-liner need a sign-off at all, when it's =20
+not a standalone patch?)
+
+
+> On Fri, 2016-01-15 at 12:32 +0100, SZEDER G=C3=A1bor wrote:
+>> Hi,
+>>
+>> This change is more about 'git clone' than about refs, therefore
+>> I think the subject line would be better as:
+>>
+>>   clone: allow setting alternate ref backend
+>>
+>> Could you please squash this in to keep the completion script up to
+>> date?
+>> Is there or will there be a way to list available ref backends, so w=
+e
+>> could complete possible options for --ref-storage=3D<TAB>, too?
+>>
+>> ------ >8 ------
+>>
+>> Subject: completion: git clone --ref-storage=3D
+>> ---
+>> diff --git a/contrib/completion/git-completion.bash
+>> b/contrib/completion/git-completion.bash
+>> index ab4da7f97917..c970d3c0d0a3 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -1092,6 +1092,7 @@ _git_clone ()
+>>  			--depth
+>>  			--single-branch
+>>  			--branch
+>> +			--ref-storage=3D
+>>  			"
+>>  		return
+>>  		;;
+>>
