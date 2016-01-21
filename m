@@ -1,114 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-trees: fix accidentally quadratic behavior
-Date: Wed, 20 Jan 2016 20:58:21 -0800
-Message-ID: <xmqq60ynzfyq.fsf@gitster.mtv.corp.google.com>
-References: <1453349156-12553-1-git-send-email-dturner@twopensource.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git status during interactive rebase
+Date: Thu, 21 Jan 2016 09:23:59 +0100
+Message-ID: <vpqpowvz6g0.fsf@anie.imag.fr>
+References: <CAGZ79kbUwJ+CN=YoQUP=rm=EhU=fU2ynt_7Q-cd7Dic-bsx+TA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 05:58:32 2016
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 09:24:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM7KG-000727-E4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 05:58:28 +0100
+	id 1aMAXJ-0004Sn-AP
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 09:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757489AbcAUE6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 23:58:25 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51716 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756680AbcAUE6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 23:58:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4824D3E6CD;
-	Wed, 20 Jan 2016 23:58:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=15+rI8xBZ/JaV/A1ZVoe9x6e2pc=; b=PWk1Xe
-	dA0XRzwie6cqIHnrO7dMXf56KjYSNRHh2561z5BoKhVdWdNwHdVDav1yoDwamMSu
-	XjBRhO1lR2KVvMTvRaCUP+z7dt4gNR2Jo+puG2Z+StxgwUKHEmeCT6L0TQTEVvQz
-	pnNYSZixbsrc++PYjaJNU7FB41A88jA7rl+NA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FS8AmAbc6QQCqFIPQj0DF1wYgi+5njdi
-	rDdubvfdk/5HC7zVJsX+ZU3uHPSrMMLKg72Rme1AreQ90Gj71jVFikeMbd3huhiz
-	0mDDvaXVo26kfGoCJu6ce8vOvo2++KhjRMXRM+jIwA5WT2wIVSYd8CqS6URjy2+q
-	dTFdB+SsD/4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F3633E6CC;
-	Wed, 20 Jan 2016 23:58:23 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B1A6F3E6CB;
-	Wed, 20 Jan 2016 23:58:22 -0500 (EST)
-In-Reply-To: <1453349156-12553-1-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 20 Jan 2016 23:05:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 98E3375E-BFFB-11E5-9555-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1758936AbcAUIYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2016 03:24:05 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:48668 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758931AbcAUIYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2016 03:24:03 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u0L8Nwdg011842
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 21 Jan 2016 09:23:58 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0L8NxVF008073;
+	Thu, 21 Jan 2016 09:23:59 +0100
+In-Reply-To: <CAGZ79kbUwJ+CN=YoQUP=rm=EhU=fU2ynt_7Q-cd7Dic-bsx+TA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 20 Jan 2016 15:21:47 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 21 Jan 2016 09:23:59 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u0L8Nwdg011842
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1453969439.05995@rvkq6iIYk7LmmSpHW3DF2Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284505>
 
-David Turner <dturner@twopensource.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> While unpacking trees (e.g. during git checkout), when we hit a cache
-> entry that's past and outside our path, we cut off iteration.
+> So I ran an interactive rebase, and while editing
+> .git/rebase-merge/git-rebase-todo I tried to run
+> `git status` in another terminal to inquire about a
+> filename of an untracked file.
 >
-> This provides about a 45% speedup on git checkout between master and
-> master^20000 on Twitter's monorepo.  Speedup in general will depend on
-> repostitory structure, number of changes, and packfile packing
-> decisions.
+> However, I got:
 >
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
-
-I haven't thought things through, but does this get fooled by the
-somewhat strange ordering rules of tree entries (i.e. a subtree
-sorts as if its name is suffixed with a '/' in a tree object)?
-
-Other than that, I like this.  "We know the list is sorted, and
-after seeing this entry we know there is nothing that will match" is
-an obvious optimization that we already use elsewhere.
-
-Thanks.
-
->  unpack-trees.c | 19 ++++++++++++++++++-
->  1 file changed, 18 insertions(+), 1 deletion(-)
+> $ git status
+> On branch submodule-groups-v3
+> fatal: Could not open file .git/rebase-merge/done for reading: No such
+> file or directory
 >
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 5f541c2..b18a611 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -695,8 +695,25 @@ static int find_cache_pos(struct traverse_info *info,
->  				++o->cache_bottom;
->  			continue;
->  		}
-> -		if (!ce_in_traverse_path(ce, info))
-> +		if (!ce_in_traverse_path(ce, info)) {
-> +			/*
-> +			 * Check if we can skip future cache checks
-> +			 * (because we're already past all possible
-> +			 * entries in the traverse path).
-> +			 */
-> +			if (info->prev && info->traverse_path) {
-> +				int prefix_cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
-> +				if (prefix_cmp > 0)
-> +					break;
-> +				else if (prefix_cmp == 0 &&
-> +					 ce_namelen(ce) >= info->pathlen &&
-> +					 strcmp(ce->name + info->pathlen,
-> +						 info->name.path) > 0) {
-> +					break;
-> +				}
-> +			}
->  			continue;
-> +		}
->  		ce_name = ce->name + pfxlen;
->  		ce_slash = strchr(ce_name, '/');
->  		if (ce_slash)
+> Was this behavior always the case? (IIRC it worked a long time ago?)
+
+>From the list of recipients, I guess you already found that the issue
+probably comes from 84e6fb9 (status: give more information during rebase
+-i, 2015-07-06), which introduced
+read_rebase_todolist("rebase-merge/done", &have_done); in wt-status.c.
+
+> Would it make sense to not abort completely but give a limited status?
+
+Yes.
+
+I guess read_rebase_todolist should be changed:
+
+static void read_rebase_todolist(const char *fname, struct string_list *lines)
+{
+	struct strbuf line = STRBUF_INIT;
+	FILE *f = fopen(git_path("%s", fname), "r");
+
+	if (!f)
+		die_errno("Could not open file %s for reading",
+			  git_path("%s", fname));
+
+This should return an empty string_list instead of dying when the file
+does not exist. The case of an empty list is already dealt with later:
+
+		if (have_done.nr == 0)
+			status_printf_ln(s, color, _("No commands done."));
+
+No time to work on a patch for now :-(.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
