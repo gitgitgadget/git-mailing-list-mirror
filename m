@@ -1,119 +1,270 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/5] config.mak.uname: supporting 64-bit MSys2
-Date: Thu, 21 Jan 2016 11:36:14 +0100
-Message-ID: <1453372574-20431-1-git-send-email-szeder@ira.uka.de>
-References: <a54e0357d8f274c7ffa49daa2c91ba371fa501ab.1452691805.git.johannes.schindelin@gmx.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/7] diff.c: take "prefix" argument in diff_opt_parse()
+Date: Thu, 21 Jan 2016 18:48:44 +0700
+Message-ID: <20160121114844.GA19318@lanh>
+References: <1453287968-26000-1-git-send-email-pclouds@gmail.com>
+ <1453287968-26000-3-git-send-email-pclouds@gmail.com>
+ <xmqqr3hc57at.fsf@gitster.mtv.corp.google.com>
+ <20160120202946.GA6092@sigill.intra.peff.net>
+ <xmqqh9i753by.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 21 11:36:53 2016
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 12:48:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMCbk-0003qe-Rk
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 11:36:53 +0100
+	id 1aMDjR-0006NO-1J
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 12:48:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759240AbcAUKgo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2016 05:36:44 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55712 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759233AbcAUKgm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2016 05:36:42 -0500
-Received: from x4db25724.dyn.telefonica.de ([77.178.87.36] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1aMCbX-0006NP-Mu; Thu, 21 Jan 2016 11:36:41 +0100
-X-Mailer: git-send-email 2.7.0.rc2.34.g28a1f98
-In-Reply-To: <a54e0357d8f274c7ffa49daa2c91ba371fa501ab.1452691805.git.johannes.schindelin@gmx.de>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1453372601.
+	id S1759436AbcAULsu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2016 06:48:50 -0500
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:33769 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759427AbcAULsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2016 06:48:47 -0500
+Received: by mail-pa0-f65.google.com with SMTP id pv5so1653957pac.0
+        for <git@vger.kernel.org>; Thu, 21 Jan 2016 03:48:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mJMLwSrO5ckAOKguSJcocf1RdiHcU/XXNhUGOarS+6w=;
+        b=KJ25H6A22qstxPzJl72vcSgxcsIqOCcb4Z5nECH419foXKFBtn5Qf3LWVCNbP1Oncg
+         HttRE5IdeOC85oho/0wsafXI3gAXpYsKZi6TP7fkErVXPrFNLnDsGMN8TwDS1/dyAXYx
+         wetnF5L6P4N/HlnYKmBDIBgzK/hjQU5+7hZwboVVM0DUmqILOKCFuTrREnPrPNV1815q
+         F2mwqMYPeqj7+68KYOjQUb6YuleAVArK7KcgHimTHgrDYP9b2/yrAMWbox9u/RlB9tMp
+         jeUaOLrHjFKjN2C3suqGX1ep5Z0XPb+NmlraXatZmXKAumBlHhZ6OVS4CgmqdRFc4d+D
+         9TFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=mJMLwSrO5ckAOKguSJcocf1RdiHcU/XXNhUGOarS+6w=;
+        b=ljaXa6vLNL+e/AuQjzdv3EpgWZjqGr6VE4Dfc8rKZWEXrABe+SGLwIckLuKo7texAy
+         3bE+tmu1jSQXCcclod6CvIP/XCHx66Fk29dqH+vzkcb2k3LGzdh+vSzIbTs3/xcw8Vi4
+         3ehIKk79NDkwPbzmWRqjslhIPV+DocIes7HYgS3AY+IptywLUwnf+rY1WUYaiWbOey5Y
+         5VGeo9J+bBVsNcleXqM12ENFV0KkPRMEap2VP64Ylbxke5DBlw7w6l9j7aB++QJwFJT2
+         ENvGWads7sVFbg9Jm6hHAPNqcxWdCKzBfAF9/UDI8YcNiYnCbfKTnSMvLp2F4xMpPhy+
+         f9tA==
+X-Gm-Message-State: ALoCoQmJlKi72Vi6W6F4bEXD7tPbAlRoZpVZP8FNhykGR1Ca1EEtUV2BpqhSIAKOVJ1g9kksjn/IsBCUqCYkFQRKw1KKXyUjEw==
+X-Received: by 10.66.144.37 with SMTP id sj5mr59702023pab.69.1453376927456;
+        Thu, 21 Jan 2016 03:48:47 -0800 (PST)
+Received: from lanh ([115.72.43.83])
+        by smtp.gmail.com with ESMTPSA id rt6sm2173595pab.17.2016.01.21.03.48.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Jan 2016 03:48:45 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 21 Jan 2016 18:48:44 +0700
+Content-Disposition: inline
+In-Reply-To: <xmqqh9i753by.fsf@gitster.mtv.corp.google.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284513>
 
-> This just makes things compile, the test suite needs extra tender lov=
-ing
-> care in addition to this change. We will address these issues in late=
-r
-> commits.
+On Wed, Jan 20, 2016 at 01:49:21PM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >=20
-> While at it, also allow building MSys2 Git (i.e. a Git that uses MSys=
-2's
-> POSIX emulation layer).
+> > On Wed, Jan 20, 2016 at 12:23:38PM -0800, Junio C Hamano wrote:
+> >
+> >> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> wri=
+tes:
+> >>=20
+> >> > This will be important later when diff_opt_parse() accepts paths=
+ as
+> >> > arguments. Paths must be prefixed before access because setup co=
+de
+> >> > moves cwd but does not (and cannot) update command line options.
+> >>=20
+> >> The above sounds like a sensible thing to do (note: I didn't read
+> >> the patch or remainder of the series), but makes me wonder how the
+> >> existing --orderfile option works without this support.  Perhaps i=
+t
+> >> is not working and needs to be updated to take advantage of this
+> >> change, too?
+> >
+> > Yeah, I think it simply does not work.
+> >
+> >   $ >main-order
+> >   $ mkdir subdir && >subdir/sub-order
+> >   $ cd subdir
+> >   $ git show -Osub-order
+> >   fatal: failed to read orderfile 'sub-order': No such file or dire=
+ctory
+> >   $ git show -Omain-order
+> >   [shows diff]
 >=20
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  config.mak.uname | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+> Good.
 >=20
-> diff --git a/config.mak.uname b/config.mak.uname
-> index b0592c1..4b2e1b8 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -518,13 +518,12 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->  	NO_INET_NTOP =3D YesPlease
->  	NO_POSIX_GOODIES =3D UnfortunatelyYes
->  	DEFAULT_HELP_FORMAT =3D html
-> -	COMPAT_CFLAGS +=3D -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/wi=
-n32
-> +	COMPAT_CFLAGS +=3D -DNOGDI -Icompat -Icompat/win32
->  	COMPAT_CFLAGS +=3D -DSTRIP_EXTENSION=3D\".exe\"
->  	COMPAT_OBJS +=3D compat/mingw.o compat/winansi.o \
->  		compat/win32/pthread.o compat/win32/syslog.o \
->  		compat/win32/dirent.o
->  	BASIC_CFLAGS +=3D -DPROTECT_NTFS_DEFAULT=3D1
-> -	BASIC_LDFLAGS +=3D -Wl,--large-address-aware
->  	EXTLIBS +=3D -lws2_32
->  	GITLIBS +=3D git.res
->  	PTHREAD_LIBS =3D
+> Then 2/7 can be rerolled and advertised as "make -O to work from
+> subdirectories", and can gradulate regardless of the remainder of
+> the series.  Even if the rest needs rerolls to get it right (or
+> takes until 2019 to mature ;-), we will have one less change to
+> re-review in the process as we can push these early and obviously
+> correct part out separately.
+>=20
 
-(On Windows I only used git, and only briefly, and it was back in the
-v1.9.x era, so please pardon my ignorance...)
+I didn't know there was already an option that takes a path. I read
+through the function and found another one. So here's the standalone
+patch that fixes both.
 
-I'm puzzled by the if statements in the hunk below:
+-- 8< --
+Subject: [PATCH] diff: make -O and --output work in subdirectory
 
-> @@ -545,8 +544,17 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
->  else
->  	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
->  		# MSys2
-> +		prefix =3D /usr/
-> +		ifeq (MINGW32,$(MSYSTEM))
-> +			prefix =3D /mingw32
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/am.c          |  2 +-
+ diff-no-index.c       |  3 ++-
+ diff.c                | 14 ++++++++++----
+ diff.h                |  2 +-
+ revision.c            |  2 +-
+ t/t4056-diff-order.sh |  6 ++++++
+ 6 files changed, 21 insertions(+), 8 deletions(-)
 
-Here prefix is set for 32 bit MSys2.  OK.
+diff --git a/builtin/am.c b/builtin/am.c
+index 9fb42fd..f009b6c 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1657,7 +1657,7 @@ static int fall_back_threeway(const struct am_sta=
+te *state, const char *index_pa
+=20
+ 		init_revisions(&rev_info, NULL);
+ 		rev_info.diffopt.output_format =3D DIFF_FORMAT_NAME_STATUS;
+-		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1);
++		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1, rev_info.pref=
+ix);
+ 		add_pending_sha1(&rev_info, "HEAD", our_tree, 0);
+ 		diff_setup_done(&rev_info.diffopt);
+ 		run_diff_index(&rev_info, 1);
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 8e0fd27..aa81a15 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -252,7 +252,8 @@ void diff_no_index(struct rev_info *revs,
+ 		else if (!strcmp(argv[i], "--"))
+ 			i++;
+ 		else {
+-			j =3D diff_opt_parse(&revs->diffopt, argv + i, argc - i);
++			j =3D diff_opt_parse(&revs->diffopt, argv + i, argc - i,
++					   revs->prefix);
+ 			if (j <=3D 0)
+ 				die("invalid diff option/value: %s", argv[i]);
+ 			i +=3D j;
+diff --git a/diff.c b/diff.c
+index 80eb0c2..2136b69 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3693,12 +3693,16 @@ static int parse_ws_error_highlight(struct diff=
+_options *opt, const char *arg)
+ 	return 1;
+ }
+=20
+-int diff_opt_parse(struct diff_options *options, const char **av, int =
+ac)
++int diff_opt_parse(struct diff_options *options,
++		   const char **av, int ac, const char *prefix)
+ {
+ 	const char *arg =3D av[0];
+ 	const char *optarg;
+ 	int argcount;
+=20
++	if (!prefix)
++		prefix =3D "";
++
+ 	/* Output format options */
+ 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch=
+")
+ 	    || opt_arg(arg, 'U', "unified", &options->context))
+@@ -3915,7 +3919,8 @@ int diff_opt_parse(struct diff_options *options, =
+const char **av, int ac)
+ 	else if (!strcmp(arg, "--pickaxe-regex"))
+ 		options->pickaxe_opts |=3D DIFF_PICKAXE_REGEX;
+ 	else if ((argcount =3D short_opt('O', av, &optarg))) {
+-		options->orderfile =3D optarg;
++		const char *path =3D prefix_filename(prefix, strlen(prefix), optarg)=
+;
++		options->orderfile =3D xstrdup(path);
+ 		return argcount;
+ 	}
+ 	else if ((argcount =3D parse_long_opt("diff-filter", av, &optarg))) {
+@@ -3954,9 +3959,10 @@ int diff_opt_parse(struct diff_options *options,=
+ const char **av, int ac)
+ 	else if (!strcmp(arg, "--no-function-context"))
+ 		DIFF_OPT_CLR(options, FUNCCONTEXT);
+ 	else if ((argcount =3D parse_long_opt("output", av, &optarg))) {
+-		options->file =3D fopen(optarg, "w");
++		const char *path =3D prefix_filename(prefix, strlen(prefix), optarg)=
+;
++		options->file =3D fopen(path, "w");
+ 		if (!options->file)
+-			die_errno("Could not open '%s'", optarg);
++			die_errno("Could not open '%s'", path);
+ 		options->close_file =3D 1;
+ 		return argcount;
+ 	} else
+diff --git a/diff.h b/diff.h
+index 893f446..4537e38 100644
+--- a/diff.h
++++ b/diff.h
+@@ -268,7 +268,7 @@ extern int parse_long_opt(const char *opt, const ch=
+ar **argv,
+ extern int git_diff_basic_config(const char *var, const char *value, v=
+oid *cb);
+ extern int git_diff_ui_config(const char *var, const char *value, void=
+ *cb);
+ extern void diff_setup(struct diff_options *);
+-extern int diff_opt_parse(struct diff_options *, const char **, int);
++extern int diff_opt_parse(struct diff_options *, const char **, int, c=
+onst char *);
+ extern void diff_setup_done(struct diff_options *);
+=20
+ #define DIFF_DETECT_RENAME	1
+diff --git a/revision.c b/revision.c
+index 0a282f5..14daefb 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2049,7 +2049,7 @@ static int handle_revision_opt(struct rev_info *r=
+evs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--ignore-missing")) {
+ 		revs->ignore_missing =3D 1;
+ 	} else {
+-		int opts =3D diff_opt_parse(&revs->diffopt, argv, argc);
++		int opts =3D diff_opt_parse(&revs->diffopt, argv, argc, revs->prefix=
+);
+ 		if (!opts)
+ 			unkv[(*unkc)++] =3D arg;
+ 		return opts;
+diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
+index c0460bb..43dd474 100755
+--- a/t/t4056-diff-order.sh
++++ b/t/t4056-diff-order.sh
+@@ -68,6 +68,12 @@ test_expect_success POSIXPERM,SANITY 'unreadable ord=
+erfile' '
+ 	test_must_fail git diff -Ounreadable_file --name-only HEAD^..HEAD
+ '
+=20
++test_expect_success "orderfile using option from subdir with --output"=
+ '
++	mkdir subdir &&
++	git -C subdir diff -O../order_file_1 --output ../actual --name-only H=
+EAD^..HEAD &&
++	test_cmp expect_1 actual
++'
++
+ for i in 1 2
+ do
+ 	test_expect_success "orderfile using option ($i)" '
+--=20
+2.7.0.125.g9eec362
 
-> +		endif
-> +		ifeq (MINGW64,$(MSYSTEM))
-> +			prefix =3D /mingw64
-
-Here prefix is set for 64 bit MSys2.  Still OK.
-
-> +		else
-> +			COMPAT_CFLAGS +=3D -D_USE_32BIT_TIME_T
-> +			BASIC_LDFLAGS +=3D -Wl,--large-address-aware
-
-But then these flags are set for any MSys2 that is not 64 bit, which
-also includes MINGW32, which we've already dealt with above
-explicitly.  Hmm.
-
-Is this intentional?  It would be easier to follow if the settings
-specific to MINGW32 weren't scattered in two discontinuous blocks.
-What values can MSYSTEM have here besides MINGW32 and MINGW64?
-
-Thanks,
-G=C3=A1bor
-
-> +		endif
->  		CC =3D gcc
-> -		prefix =3D /mingw32
->  		COMPAT_CFLAGS +=3D -D__USE_MINGW_ANSI_STDIO=3D0
->  		INSTALL =3D /bin/install
->  		NO_R_TO_GCC_LINKER =3D YesPlease
-> --=20
-> 2.6.3.windows.1.300.g1c25e49
+-- 8< --
