@@ -1,84 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] completion: Add --word-diff-regex= to diff
-Date: Wed, 20 Jan 2016 16:18:44 -0800
-Message-ID: <xmqqy4bj23a3.fsf@gitster.mtv.corp.google.com>
-References: <569FC542.2060504@virtuell-zuhause.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/4] submodule-config: keep groups around
+Date: Wed, 20 Jan 2016 16:20:57 -0800
+Message-ID: <CAGZ79kZXSUkMx=+P0+L4yastYzqeCAUf83L2t8H9=QAC1FwuiA@mail.gmail.com>
+References: <1453260880-628-1-git-send-email-sbeller@google.com>
+	<1453260880-628-3-git-send-email-sbeller@google.com>
+	<xmqqwpr43pyz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-X-From: git-owner@vger.kernel.org Thu Jan 21 01:18:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 01:21:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM2xf-0001zP-QT
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 01:18:52 +0100
+	id 1aM2zq-0002uC-KW
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 01:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbcAUASs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Jan 2016 19:18:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50217 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751182AbcAUASq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jan 2016 19:18:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 684203EFEE;
-	Wed, 20 Jan 2016 19:18:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OZIuo5peKQgwjrEUdaHfyATQ8+4=; b=R97ssk
-	S9UAfZhygKr1nmW1JpgG4eIBt2kyGlDymKta5wlzoVuF42ff7NQVU4FmPrDZ96w0
-	y0BZdLLUe4c0W7XEtwWM29C3TM3x1Yxho1yHwKdrxCkU/1HH7sUDWNAe1/H6mVp6
-	/oJ0f+3khEy3D48So8Pv/spPZ3TeYll7C3nkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BcibDee2DZt/7tNlc3twaglpUBopMjxo
-	0MEmrIjWUir5Lu6E+6l2RVU3jGcJuUf6pEjP7RLyCVIwuQf1hkrpciAq3yKEAg+s
-	dM0RzHK5J1/FSqDWLTIew6hO6YAEtCOQM724ZhJClp6Hw//psSBBWFQ7IUSswcCR
-	o2LJq2Xwe0c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5C4E73EFEC;
-	Wed, 20 Jan 2016 19:18:46 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AFB603EFEB;
-	Wed, 20 Jan 2016 19:18:45 -0500 (EST)
-In-Reply-To: <569FC542.2060504@virtuell-zuhause.de> (Thomas Braun's message of
-	"Wed, 20 Jan 2016 18:34:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 89030944-BFD4-11E5-95F3-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751905AbcAUAVC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 19:21:02 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:38679 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317AbcAUAU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 19:20:58 -0500
+Received: by mail-ig0-f180.google.com with SMTP id mw1so23480486igb.1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2016 16:20:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5CYQ/23nwr38ax2mhm/2JYcnccaIFW9hua5/kUyEgkY=;
+        b=P4gaN7DdFrO/RLe/QGy9pUYF93yQri08ldQX5Oj0LRm+LQTGwWloRZ92YY7Xf/RcLG
+         g2wuUED8/rq3hSbw706XFkZK8a1304+apRU06sKKPofWsDJ3xdu2VmEq9ePaGS8OIP02
+         ZF61z8ugeFLnAD9gr1I3OCfjKrIjAoSg+hYvz9SpCPENDRGLsfoB35K7HM/6FWrjolgs
+         d+zXxKcS1dXWVJz49KNFDe8S0dNzf05/GfBipvpCWELpvCj6w3EMszDbrYLlEwcv5U6T
+         l5HBkQ4t7mYLSusRNgD4hYa57NYviRdDq2fwfKMyBCVt0Pb7vCnUk7yBhsLyygQL91nE
+         5K1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=5CYQ/23nwr38ax2mhm/2JYcnccaIFW9hua5/kUyEgkY=;
+        b=MlU1wKb1SXpci6kwpgbOT9bIyC3GSQsH6Zr/jGwoFN4habYwg5Jy6KrD/mqV/bUJXy
+         h+WUWn5odtzNBkP5QuSWt2fsiOeDEFmlr4j7H6cg5KG66gWBt/siHuUBNG22mVxGgNWR
+         G9vJqjjiqig2HdrqqRd3Hmjq6+ouQTM5qVQ+JguM7EWwm7kBI5Ud0FbEjODckwSazBX8
+         06r31sepIQ7ahC+OvoStOA91uNiZUbrt3zfFDtQ+ggXG0uQdKA7N4ntBm9iS8tHQYaNw
+         bHNLfFmm8eBZYpxVUrZLIfrHlchBjF6lpl9kl7YTY/swQDbxF60+S1seByEhRdaCARCB
+         p+4Q==
+X-Gm-Message-State: AG10YOTIsGS8Yxc1gVQHWvnb1RqgxyrDCRTcpvfRfEbDAjfzzs2RdwMQmRiJ2q/clsXGMVh79/IUr0wV9xgv+NIq
+X-Received: by 10.50.28.105 with SMTP id a9mr482380igh.94.1453335657359; Wed,
+ 20 Jan 2016 16:20:57 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Wed, 20 Jan 2016 16:20:57 -0800 (PST)
+In-Reply-To: <xmqqwpr43pyz.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284492>
 
-Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
-
-> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Jan 20, 2016 at 1:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>       free((void *) entry->config->name);
+>> +     if (entry->config->groups)
+>> +             string_list_clear(entry->config->groups, 0);
 >
-> diff --git a/contrib/completion/git-completion.bash
-> b/contrib/completion/git-completion.bash
-> index ab4da7f..d2a08dd 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1169,7 +1169,7 @@ __git_diff_common_options="--stat --numstat
-> --shortstat --summary
->  			--no-prefix --src-prefix= --dst-prefix=
->  			--inter-hunk-context=
->  			--patience --histogram --minimal
-> -			--raw --word-diff
-> +			--raw --word-diff --word-diff-regex=
->  			--dirstat --dirstat= --dirstat-by-file
->  			--dirstat-by-file= --cumulative
->  			--diff-algorithm=
+> You are allocating entry->config->groups itself in the in the hunk
+> around ll.327, so that also need to be freed, I would think.
 
-Thanks; the patch was word-wrapped, but I fixed it up and managed to
-apply.
+done
+
+
+>>       unsigned char gitmodules_sha1[20];
+>> +     struct string_list *groups;
+>>  };
+>
+> Is there a case where you need to enumerate and show the groups a
+> submodule belongs to to the end users?  Using string_list_insert()
+> to manage this list would mean you will lose the original ordering
+> you saw the list of groups in their .gitmodules files, which may or
+> may not matter.  I'd assume that the ordering should not matter, but
+> that is something the user may want to see documented.
+
+In this patch series we only need to check the items of that list one by one,
+no need for a sorted version, so I'll change it to be unsorted and
+document that.
+
+>
+>>
+>>  int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
