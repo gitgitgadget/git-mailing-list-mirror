@@ -1,106 +1,120 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 01/15] strbuf: introduce strbuf_split_str_omit_term()
-Date: Thu, 21 Jan 2016 14:47:55 -0500
-Message-ID: <CAPig+cQ2-ddENz4dKsvTW-tOrwugUGa4g-3PySMTBsHsrtO93w@mail.gmail.com>
-References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
-	<1451980994-26865-2-git-send-email-Karthik.188@gmail.com>
-	<xmqq7fjnkexv.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZTKiGM1XLr7UuNVX_e_qN4RAGfvOh6daaxcOeZ9xa2TdA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] unpack-trees: fix accidentally quadratic behavior
+Date: Thu, 21 Jan 2016 11:51:50 -0800
+Message-ID: <xmqqpowuyall.fsf@gitster.mtv.corp.google.com>
+References: <1453349156-12553-1-git-send-email-dturner@twopensource.com>
+	<xmqq60ynzfyq.fsf@gitster.mtv.corp.google.com>
+	<1453403398.16226.40.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 21 20:48:05 2016
+Content-Type: text/plain
+Cc: git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 20:52:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMLD7-0001zL-Hi
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 20:48:01 +0100
+	id 1aMLH1-0003wG-AX
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 20:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbcAUTr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2016 14:47:58 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:34588 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905AbcAUTr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2016 14:47:56 -0500
-Received: by mail-vk0-f66.google.com with SMTP id e6so2122277vkh.1
-        for <git@vger.kernel.org>; Thu, 21 Jan 2016 11:47:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=wGZ3de+R6w3gwz68J14QFj60y0KC299Z1EuPqEE5fCw=;
-        b=rzXilPSCzTTvy5FSSLnbUFzoUOr2ptCbqXFqupI/42BL0I9o6XugtQ3UG1HoWlJLe7
-         E4jbI1rtkLny5RDhZovb8PVXfmB33oDETNXiT5Vy0y+ydUpW5/GO3vAnODlLPAq8Si+z
-         miQgoOQmv490WBNgBzSVG+LTCOWCqJU05VWHA/yF104FFyO2CiVzFJW+PTYarlXBgwVF
-         Ye4crVllckvay/XGgdXj+aBoVeP+bF4XYiDrui5h3X+kH7ojnueCZ02HlG01mlIn7ouf
-         mPuxIUVv+cCU6FtlmBTbDuqE8oTLJPZYc+R7xfXhYwScunPqxDDH6f6KY6BMCREj0utR
-         Gv9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=wGZ3de+R6w3gwz68J14QFj60y0KC299Z1EuPqEE5fCw=;
-        b=iZk/yd39rjVBM1pB8cKiim+Yv48KZyk79ZcXq39TlupOPCnlwt9nm5MjesMSQBZzFa
-         ul8xoH5LEJMFWq6OgsFMa9xCRXp384+j4KvLkPmPF5XCjcN3xJZkLEzveZaM3iUfOYnb
-         vFDpbTsP00Mu2zU7AqejxDh7aN5r0QY03A3JqlPqkmkj4hjw0E5K4Nb+l9qKY1jPhnCd
-         yVe+tLdMp12dKliuBYoIZb9OZB8HUEybx+3lyqpOl/q+4vzMAlkS0hb36moauOYX5+rQ
-         rXMZZUFUxX2YpNdNQnqNrBvu7ZA2ucRGIzvFwLv3HC3qZ4YNplOtu/6Se6XIN0wae6Fn
-         Qq5w==
-X-Gm-Message-State: ALoCoQm6WZvJR1kV7UT6tKksReW0OzNBa262VW/Y6HSwQ7Bsg+VuZZbo3CVgDTXhjTjI3netohiBhrulu8tndfFJTuorRbNecQ==
-X-Received: by 10.31.150.76 with SMTP id y73mr29742093vkd.84.1453405675862;
- Thu, 21 Jan 2016 11:47:55 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 21 Jan 2016 11:47:55 -0800 (PST)
-In-Reply-To: <CAOLa=ZTKiGM1XLr7UuNVX_e_qN4RAGfvOh6daaxcOeZ9xa2TdA@mail.gmail.com>
-X-Google-Sender-Auth: ixu-6HfADTbbuxAF0fLu7217bJU
+	id S1750866AbcAUTwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2016 14:52:00 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58222 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751307AbcAUTv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2016 14:51:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F48F3B11B;
+	Thu, 21 Jan 2016 14:51:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U/8Ag5UQ6YSwyeQ3UuNLiG4INQE=; b=iGSv29
+	j7TxGt6wsLn87sXHN+5ylvTuiI9glg4SOdiJpa7s7aJvp/RmQR2/9b1wli2ONzKg
+	lUdC2Nh/TAQcDmvtak0wQ+DFetAzAzHqxSvlEIEe/ibQRj79ljjsQPNbr3BjPUX5
+	9DCd0hAEiL0EZnWvLSRo8lN2Ku3xjoAu+z9dE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eyyPUSieoWD7l36zFzlpaVwQXyYFu2ud
+	X/weIgSqJXfnXsBdIKnu12iwKj5M0l3jG90BzpMe/kgEXBvi93k3Rs5/oo1jAOB5
+	CJJ3j2AoZzsJTStzY9JQCTmLgcfbVR2oJyGFrQB7gMPKHLbE4ispkmlo4mTOazu7
+	2Oda2hP7+3g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 668FD3B119;
+	Thu, 21 Jan 2016 14:51:52 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E345A3B118;
+	Thu, 21 Jan 2016 14:51:51 -0500 (EST)
+In-Reply-To: <1453403398.16226.40.camel@twopensource.com> (David Turner's
+	message of "Thu, 21 Jan 2016 14:09:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A767D72-C078-11E5-830E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284522>
 
-On Wed, Jan 6, 2016 at 2:27 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Wed, Jan 6, 2016 at 12:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>>       while (slen) {
->>>               int len = slen;
->>> +             const char *end = NULL;
->>>               if (max <= 0 || nr + 1 < max) {
->>> -                     const char *end = memchr(str, terminator, slen);
->>> +                     end = memchr(str, terminator, slen);
->>>                       if (end)
->>>                               len = end - str + 1;
->>>               }
->>>               t = xmalloc(sizeof(struct strbuf));
->>>               strbuf_init(t, len);
->>> -             strbuf_add(t, str, len);
->>> +             strbuf_add(t, str, len - !!end * !!omit_term);
->>
->> Perhaps using another variable would make it easier to follow?
->> Either using a boolean that tells us that the terminating byte
->> is to be omitted, i.e.
->>
->>         int len = slen;
->>         int omit = 0;
->>         if ( ... we are still splitting ... ) {
->>                 const char *end = memchr(...);
->>                 if (end) {
->>                         len = end - str + 1;
->>                         omit = !!omit_term;
->>                 }
->>         }
->>         strbuf_init(t, len - omit);
->>         strbuf_add(t, str, len - omit);
->>
->> or an integer "copylen" that tells us how many bytes to copy, which
->> often is the same as "len" but sometimes different by 1 byte?
+David Turner <dturner@twopensource.com> writes:
+
+> On Wed, 2016-01-20 at 20:58 -0800, Junio C Hamano wrote:
+>> David Turner <dturner@twopensource.com> writes:
+>> 
+>> > While unpacking trees (e.g. during git checkout), when we hit a
+>> > cache
+>> > entry that's past and outside our path, we cut off iteration.
+>> > 
+>> > This provides about a 45% speedup on git checkout between master
+>> > and
+>> > master^20000 on Twitter's monorepo.  Speedup in general will depend
+>> > on
+>> > repostitory structure, number of changes, and packfile packing
+>> > decisions.
+>> > 
+>> > Signed-off-by: David Turner <dturner@twopensource.com>
+>> > ---
+>> 
+>> I haven't thought things through, but does this get fooled by the
+>> somewhat strange ordering rules of tree entries (i.e. a subtree
+>> sorts as if its name is suffixed with a '/' in a tree object)?
+>> 
+>> Other than that, I like this.  "We know the list is sorted, and
+>> after seeing this entry we know there is nothing that will match" is
+>> an obvious optimization that we already use elsewhere.
+>> 
+>> Thanks.
 >
-> This is done based on Eric's suggestion [1]. Although its a little off normal
-> convention. I find it small and simple. So I'm okay with either, your suggested
-> change or the existing code.
+> I think this is correct, because we first do the more complicated check
+> (ce_in_traverse_path), and only check the ordering once that has
+> failed.  
 
-A "copylen" variable would probably result in the clearest code since
-it states explicitly what an otherwise opaque expression like (!!end *
-!!omit_term) means, thus is easier to reason about.
+But the patch does this:
+
+> +			if (info->prev && info->traverse_path) {
+> +				int prefix_cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
+> +				if (prefix_cmp > 0)
+> +					break;
+> +				else if (prefix_cmp == 0 &&
+> +					 ce_namelen(ce) >= info->pathlen &&
+> +					 strcmp(ce->name + info->pathlen,
+> +						 info->name.path) > 0) {
+> +					break;
+> +				}
+> +			}
+>  			continue;
+
+The first break is correct, but I am not sure about the "else if"
+part.  Shouldn't it be doing something similar to the logic to "keep
+looking" that talks about "t-i", "t" and "t/a" at the end of the
+loop?
+
+> The tests all pass, so this should be good.
+
+Please don't ever say that again.  The existing tests do not cover
+all corner cases, and they fundamentally cannot cover the corner
+cases future changes may introduce.
+
+Saying "Even test X breaks, so it is clearly broken.  Why did you
+send it out without testing?" is OK, though.
