@@ -1,100 +1,119 @@
-From: Andrew Stewart <boss@airbladesoftware.com>
-Subject: git-diff: unable to turn off diff.autorefreshindex with command line switch
-Date: Thu, 21 Jan 2016 10:29:49 +0000
-Message-ID: <4432B7DA-921D-4D1C-8DC5-55A4E3722F73@airbladesoftware.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 21 11:30:06 2016
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/5] config.mak.uname: supporting 64-bit MSys2
+Date: Thu, 21 Jan 2016 11:36:14 +0100
+Message-ID: <1453372574-20431-1-git-send-email-szeder@ira.uka.de>
+References: <a54e0357d8f274c7ffa49daa2c91ba371fa501ab.1452691805.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 21 11:36:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMCVB-0001Re-Q7
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 11:30:06 +0100
+	id 1aMCbk-0003qe-Rk
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 11:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759202AbcAUKaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2016 05:30:00 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55257 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935132AbcAUK3w convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jan 2016 05:29:52 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 61CEE207E1
-	for <git@vger.kernel.org>; Thu, 21 Jan 2016 05:29:51 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 21 Jan 2016 05:29:51 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	airbladesoftware.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=gxO2Bw3zsvVEW9JW4ddtkSkA19c=; b=tXLlix
-	LaivRa5yZjvm3JXK9BP4FLmQpkH6dPh60sClQv4HOuqaadfxPhoRZZv35gLV+hX0
-	EiLMY2iW9bznJZ3hR5onj4jv0ePPUWADbaFhVCgMhQ1qMupxZJN/pG0Oc098Nudu
-	EsNkOURwCvmPaoK+izSmp50tYyJ0mdNMNUbxs=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=gxO2Bw3zsvVEW9JW4ddtkSkA19c=; b=ixSZ8
-	wT58dZY+TdxuyY3gBYY9gZZZPKru2fo5eXkPiNN4DZ6sAIwhCoJF+raAYQmU/UnC
-	1lB4Gx0S2LOH2FUTlI6yzy1Mil1CW5pTC45Si5yFioQLeNFlS+23iT2BiANumflq
-	o3FAEj5fUd3BZ73cB+NtXZWfPWEntFPESogk+w=
-X-Sasl-enc: d67rqoJn++Y6ukyfswDFp30nEfaxhLwc8WJs2To9iA6Y 1453372191
-Received: from andrews-mbp.home (host81-153-212-242.range81-153.btcentralplus.com [81.153.212.242])
-	by mail.messagingengine.com (Postfix) with ESMTPA id DFF76C01714;
-	Thu, 21 Jan 2016 05:29:50 -0500 (EST)
-X-Mailer: Apple Mail (2.3112)
+	id S1759240AbcAUKgo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Jan 2016 05:36:44 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55712 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759233AbcAUKgm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2016 05:36:42 -0500
+Received: from x4db25724.dyn.telefonica.de ([77.178.87.36] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1aMCbX-0006NP-Mu; Thu, 21 Jan 2016 11:36:41 +0100
+X-Mailer: git-send-email 2.7.0.rc2.34.g28a1f98
+In-Reply-To: <a54e0357d8f274c7ffa49daa2c91ba371fa501ab.1452691805.git.johannes.schindelin@gmx.de>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1453372601.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284512>
 
-Hello,
+> This just makes things compile, the test suite needs extra tender lov=
+ing
+> care in addition to this change. We will address these issues in late=
+r
+> commits.
+>=20
+> While at it, also allow building MSys2 Git (i.e. a Git that uses MSys=
+2's
+> POSIX emulation layer).
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  config.mak.uname | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/config.mak.uname b/config.mak.uname
+> index b0592c1..4b2e1b8 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -518,13 +518,12 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>  	NO_INET_NTOP =3D YesPlease
+>  	NO_POSIX_GOODIES =3D UnfortunatelyYes
+>  	DEFAULT_HELP_FORMAT =3D html
+> -	COMPAT_CFLAGS +=3D -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/wi=
+n32
+> +	COMPAT_CFLAGS +=3D -DNOGDI -Icompat -Icompat/win32
+>  	COMPAT_CFLAGS +=3D -DSTRIP_EXTENSION=3D\".exe\"
+>  	COMPAT_OBJS +=3D compat/mingw.o compat/winansi.o \
+>  		compat/win32/pthread.o compat/win32/syslog.o \
+>  		compat/win32/dirent.o
+>  	BASIC_CFLAGS +=3D -DPROTECT_NTFS_DEFAULT=3D1
+> -	BASIC_LDFLAGS +=3D -Wl,--large-address-aware
+>  	EXTLIBS +=3D -lws2_32
+>  	GITLIBS +=3D git.res
+>  	PTHREAD_LIBS =3D
 
-I am seeing unexpected behaviour on my system with git-diff and stat-only changes: diff.autorefreshindex=0 only works when in a repo's config (./.git/config); it doesn't work via a -c switch.  Conversely -c diff.autorefreshindex=1 does indeed override a 0 setting in the repo's config.
+(On Windows I only used git, and only briefly, and it was back in the
+v1.9.x era, so please pardon my ignorance...)
 
-# First I remove all my normal configs.
-$ mv ~/.git* ~/stuff/
+I'm puzzled by the if statements in the hunk below:
 
-# Now some setup.
-$ mkdir foo && cd foo
-$ git init
-$ echo 123 > README
-$ git commit -am 'initial'
-[master (root-commit) 92e793c] initial
- ...[stuff about name and email address being auto-configured]...
- 1 file changed, 1 insertion(+)
- create mode 100644 README
-$ touch README
+> @@ -545,8 +544,17 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+>  else
+>  	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
+>  		# MSys2
+> +		prefix =3D /usr/
+> +		ifeq (MINGW32,$(MSYSTEM))
+> +			prefix =3D /mingw32
 
-# Now the strange behaviour: no output from the next command
-$ git -c diff.autorefreshindex=0 diff --raw -- README
+Here prefix is set for 32 bit MSys2.  OK.
 
-$ cat .git/config
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-	precomposeunicode = true
+> +		endif
+> +		ifeq (MINGW64,$(MSYSTEM))
+> +			prefix =3D /mingw64
 
-$ echo -e "[diff]\n  autorefreshindex = 0" >> .git/config
-$ touch README
+Here prefix is set for 64 bit MSys2.  Still OK.
 
-# Next command works as expected.
-$ git diff --raw -- README
-:100644 100644 190a180... 0000000... M  README
+> +		else
+> +			COMPAT_CFLAGS +=3D -D_USE_32BIT_TIME_T
+> +			BASIC_LDFLAGS +=3D -Wl,--large-address-aware
 
-# Next command produces no output as expected
-$ git -c diff.autorefreshindex=1 diff --raw -- README
+But then these flags are set for any MSys2 that is not 64 bit, which
+also includes MINGW32, which we've already dealt with above
+explicitly.  Hmm.
 
-I get this with both git v2.6.4 and v2.7.0 on my OS X 10.11.2.  I tried it on another system (Ubuntu 12.04 LTS, git 1.7.9.5) and everything worked as expected.  Somebody else tried it on their OS X 10.11.2 (as well as 10.10.something) with git 2.5.4 and everything worked as expected.
+Is this intentional?  It would be easier to follow if the settings
+specific to MINGW32 weren't scattered in two discontinuous blocks.
+What values can MSYSTEM have here besides MINGW32 and MINGW64?
 
-Any help would be much appreciated.  Thanks in advance!
+Thanks,
+G=C3=A1bor
 
-Yours,
-Andrew Stewart
+> +		endif
+>  		CC =3D gcc
+> -		prefix =3D /mingw32
+>  		COMPAT_CFLAGS +=3D -D__USE_MINGW_ANSI_STDIO=3D0
+>  		INSTALL =3D /bin/install
+>  		NO_R_TO_GCC_LINKER =3D YesPlease
+> --=20
+> 2.6.3.windows.1.300.g1c25e49
