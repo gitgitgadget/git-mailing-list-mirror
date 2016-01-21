@@ -1,112 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add tests for git-sh-setup's require_clean_work_tree()
-Date: Wed, 20 Jan 2016 20:52:48 -0800
-Message-ID: <xmqqa8nzzg7z.fsf@gitster.mtv.corp.google.com>
-References: <1448376345-27339-1-git-send-email-szeder@ira.uka.de>
-	<xmqqbn8f3iq5.fsf@gitster.mtv.corp.google.com>
-	<20160121022711.Horde.7Nh0N0fTAbd0JWIA99KKFQF@webmail.informatik.kit.edu>
+Subject: Re: [PATCH] unpack-trees: fix accidentally quadratic behavior
+Date: Wed, 20 Jan 2016 20:58:21 -0800
+Message-ID: <xmqq60ynzfyq.fsf@gitster.mtv.corp.google.com>
+References: <1453349156-12553-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Jan 21 05:52:56 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jan 21 05:58:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aM7Et-00055z-Pa
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 05:52:56 +0100
+	id 1aM7KG-000727-E4
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Jan 2016 05:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757495AbcAUEww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Jan 2016 23:52:52 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56924 "EHLO
+	id S1757489AbcAUE6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Jan 2016 23:58:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51716 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755552AbcAUEwv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jan 2016 23:52:51 -0500
+	with ESMTP id S1756680AbcAUE6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jan 2016 23:58:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C00D3E5D4;
-	Wed, 20 Jan 2016 23:52:50 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4824D3E6CD;
+	Wed, 20 Jan 2016 23:58:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AKyDl0iZKgLG
-	S4J2ThGnREZtmto=; b=aYdwWbjGge36U8QGuMxqXbi2cKtnkjeQ/cyFxK5bBTzE
-	9twRprJirm0NqdBuZiMmkup5E5xmG9NoTw3hMBVCpeAFzZZ26eF/ObrCcATSiwIh
-	F6QLNluL6UdC5hvwD6l0QT5bEadvtNDVOs17hQKoVh7l/PAwH2Y9ugfBjYLQZuE=
+	:content-type; s=sasl; bh=15+rI8xBZ/JaV/A1ZVoe9x6e2pc=; b=PWk1Xe
+	dA0XRzwie6cqIHnrO7dMXf56KjYSNRHh2561z5BoKhVdWdNwHdVDav1yoDwamMSu
+	XjBRhO1lR2KVvMTvRaCUP+z7dt4gNR2Jo+puG2Z+StxgwUKHEmeCT6L0TQTEVvQz
+	pnNYSZixbsrc++PYjaJNU7FB41A88jA7rl+NA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gQiLI3
-	7gzR7zY8z8nSWishTPY6Zyq3ODu+in35lyyEeXvDKRUZ09ouzVDWMUsx3I08GT/g
-	TGvuaw8tDaOvZGZgn7oEBdM1Ndv+TE+5NO7EmNyKvJz2y5T8w6ImobWDoex5XB9W
-	29NKQuLi0bFAENlpkAw3vb3Bnn5aMYq4nvogE=
+	:content-type; q=dns; s=sasl; b=FS8AmAbc6QQCqFIPQj0DF1wYgi+5njdi
+	rDdubvfdk/5HC7zVJsX+ZU3uHPSrMMLKg72Rme1AreQ90Gj71jVFikeMbd3huhiz
+	0mDDvaXVo26kfGoCJu6ce8vOvo2++KhjRMXRM+jIwA5WT2wIVSYd8CqS6URjy2+q
+	dTFdB+SsD/4=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 83D2F3E5D3;
-	Wed, 20 Jan 2016 23:52:50 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F3633E6CC;
+	Wed, 20 Jan 2016 23:58:23 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 00BE33E5D2;
-	Wed, 20 Jan 2016 23:52:49 -0500 (EST)
-In-Reply-To: <20160121022711.Horde.7Nh0N0fTAbd0JWIA99KKFQF@webmail.informatik.kit.edu>
-	("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 21 Jan 2016 02:27:11
- +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B1A6F3E6CB;
+	Wed, 20 Jan 2016 23:58:22 -0500 (EST)
+In-Reply-To: <1453349156-12553-1-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Wed, 20 Jan 2016 23:05:56 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D291B710-BFFA-11E5-BFE4-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 98E3375E-BFFB-11E5-9555-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284504>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> Quoting Junio C Hamano <gitster@pobox.com>:
+> While unpacking trees (e.g. during git checkout), when we hit a cache
+> entry that's past and outside our path, we cut off iteration.
 >
->>> +test_expect_success 'error on clean index and worktree while on =20
->>> orphan branch' '
->>> +	test_when_finished "git checkout master" &&
->>> +	git checkout --orphan orphan &&
->>> +	git reset --hard &&
->>> +	test_must_fail run_require_clean_work_tree
->>> +'
->>
->> The title is wrong.  Immediately after creating and getting on an
->> orphan branch, you have stuff in the index that is not committed to
->> the branch, so your index cannot be clean by definition.
+> This provides about a 45% speedup on git checkout between master and
+> master^20000 on Twitter's monorepo.  Speedup in general will depend on
+> repostitory structure, number of changes, and packfile packing
+> decisions.
 >
-> The index contains the file 'file', so it's not clean indeed.
->
->> The
->> contents of the working tree may or may not be clean immediately
->> after getting on a new orphan branch, but you are doing "reset
->> --hard" to make the index and the working tree agree,
->
-> ... and match HEAD, which in this case means both the index and the
-> worktree become empty.
->
-> 'git rm -r .' would have made the intent clearer.  Or 'git init empty=
-repo'.
->
->> so this is
->> testing the "clean working tree" case, I think.
->
-> So the question is, before we go any further: are an empty index and
-> empty worktree clean when HEAD doesn't point to a commit?  (either af=
-ter
-> the command sequence in the above test, or right after 'git init').
->
-> I do think they are clean.
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
 
-That is "rm -fr test && git init test && cd test" case, right?
+I haven't thought things through, but does this get fooled by the
+somewhat strange ordering rules of tree entries (i.e. a subtree
+sorts as if its name is suffixed with a '/' in a tree object)?
 
-It may be consistent to define it as clean, but I am not sure
-existing operations that require a clean working tree is useful in
-such a state (filter-branch, pull-rebase and rebase are the big
-users, and none of them is so useful with an unborn history), so
-loosening the definition would be not just helpful for them but
-would be harmful, as they (implicitly) rely on require-clean to
-stop the command early before they try to do something that needs
-an existing history.
+Other than that, I like this.  "We know the list is sorted, and
+after seeing this entry we know there is nothing that will match" is
+an obvious optimization that we already use elsewhere.
 
-So, I am not sure if it is a good idea.
+Thanks.
+
+>  unpack-trees.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+>
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 5f541c2..b18a611 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -695,8 +695,25 @@ static int find_cache_pos(struct traverse_info *info,
+>  				++o->cache_bottom;
+>  			continue;
+>  		}
+> -		if (!ce_in_traverse_path(ce, info))
+> +		if (!ce_in_traverse_path(ce, info)) {
+> +			/*
+> +			 * Check if we can skip future cache checks
+> +			 * (because we're already past all possible
+> +			 * entries in the traverse path).
+> +			 */
+> +			if (info->prev && info->traverse_path) {
+> +				int prefix_cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
+> +				if (prefix_cmp > 0)
+> +					break;
+> +				else if (prefix_cmp == 0 &&
+> +					 ce_namelen(ce) >= info->pathlen &&
+> +					 strcmp(ce->name + info->pathlen,
+> +						 info->name.path) > 0) {
+> +					break;
+> +				}
+> +			}
+>  			continue;
+> +		}
+>  		ce_name = ce->name + pfxlen;
+>  		ce_slash = strchr(ce_name, '/');
+>  		if (ce_slash)
