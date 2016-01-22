@@ -1,82 +1,106 @@
 From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: GIT Question
-Date: Fri, 22 Jan 2016 12:58:16 -0500
-Message-ID: <20160122175815.GA28871@LykOS>
-References: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
- <alpine.DEB.2.20.1601221750060.2964@virtualbox>
- <1E23015B9294604195E5EBA53602E115FCF59F@WDC-VMAILBOXP25.smrcy.com>
- <alpine.DEB.2.20.1601221803560.2964@virtualbox>
- <1E23015B9294604195E5EBA53602E115FCF5B7@WDC-VMAILBOXP25.smrcy.com>
+Subject: Re: [RFC] Malicously tampering git metadata?
+Date: Fri, 22 Jan 2016 13:00:08 -0500
+Message-ID: <20160122180007.GB28871@LykOS>
+References: <20151216032639.GA1901@LykOS>
+ <20151218231032.GA16904@thunk.org>
+ <20151219173018.GA1178@LykOS>
+ <20151220012835.GA3013@thunk.org>
+ <20160112182137.GE27334@LykOS>
+ <CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
+ <20160114171639.GB25541@LykOS>
+ <CAGZ79ka51e+-24RyMgUGAOUkBYXxnWZb8Pg7vrgjGHvvWU770Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 18:58:25 2016
+Cc: Git <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 19:00:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMfyZ-0005u7-P0
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:58:24 +0100
+	id 1aMg0O-0006eX-IG
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647AbcAVR6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 12:58:20 -0500
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:33810 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754415AbcAVR6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 12:58:19 -0500
-Received: by mail-qg0-f43.google.com with SMTP id 6so63051517qgy.1
-        for <git@vger.kernel.org>; Fri, 22 Jan 2016 09:58:18 -0800 (PST)
+	id S1754590AbcAVSAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 13:00:13 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:33468 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754276AbcAVSAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 13:00:10 -0500
+Received: by mail-qg0-f48.google.com with SMTP id b35so63141211qge.0
+        for <git@vger.kernel.org>; Fri, 22 Jan 2016 10:00:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to;
-        bh=zwSajkljyUxCP+DtFx0301rkTEmRQ+2Dr3fowbwzftU=;
-        b=LzwnUWsKt1pKq7+PTKOEuASKp0iw3TCJydL1bJcvbx6WSOvtxZj3lA4/uuBr5O6SLc
-         +6fjlPyK6SQwTX6DniPTzA4tmg2qOrBkFqdXKqbEc9MzPjmhVsZv/0SUdK98SiNQ3ewc
-         MgrZ/tzwtipKyumcD/cfKhQdKGDEDImewDsEnaMQzv8rgHGYzqqvqERAMnx2s/Va3QgS
-         xQn9nxBLxBDlL/3q1aH74WHaddEWibEAAK99VodO+GuP8RQg9hTm19kj65bfAqhq57ZT
-         h2jiddD93HcRZTXrejbbqTuM+k+BFZf4xot735FQ90O6wnluYRDoWO+iKH4jjuhRgaf0
-         oAaQ==
+        bh=4IbZCsrUk5L/uED25kz5U66sWLRzQ062a1PRRuYxroU=;
+        b=cLvUDk1B/y9c2VxNKKkhohM4CHCbB9QwjPj7U3tjXZ4og9+kG4GhrG1Q67AVfUX1m9
+         ndoRP6dWr22niDsFJMpPzaVY9aPqInaIWpSqxG33YSkHMB+WCmzRrUO9tR+TWM8uP2ED
+         BKKoZ6G8pkHsGMZBrRiU84ITGeIWsJv1ddz2B0CaKM5SfmsyDDPRquS8v5n4I9ZP8Lul
+         UZdjLigzazn9JUkKfglbs/8NajRP+XRyxqiEWc6iuSSfY60jiYZcHpPiiaYTxELy0H8S
+         WNxgiwSzif/RIL+Qb6SSx7yAQqzW4c0oepFCQYcs9rPPaXO8BNePetjhG5ffIKGjaE0E
+         0fpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to;
-        bh=zwSajkljyUxCP+DtFx0301rkTEmRQ+2Dr3fowbwzftU=;
-        b=Wube/LWi0lpHuGex6KFDIZzJwaGBnyqajsUJ2pISPWiCZXQSaOZEra9B8Glqp3jsZ9
-         mhEGIUf3RpGwaigOSElbAcV5PQRewOFisSZzX24PczhEoGmz5C8LrfgxNsw0mGc/BmM/
-         IKTRgKEdObzubDc41UOsIYWMA4wAvv/DEHMR00OsY/ZkSXF6KhIaiFE7H064LDpSLX7b
-         QcFmAUAeMdIM70ht5gzJHvfm0pgN22dtMxhd5tqp+r+n0lnmFw2gbi+891YCBFEjzRAo
-         pHNXAGg9uuHndGr8b75TzEezKYAS85p6nVYRvd8SNJOdndqpA/RMwLPoHDGhmOvnXvt2
-         pqUg==
-X-Gm-Message-State: AG10YORMVrfeWagJf6f8PLr0ZIiGGZXK+nHnIlnsiitN6ykutfQrx/vI0RBlGogGwOQUcgKH
-X-Received: by 10.140.86.85 with SMTP id o79mr5261505qgd.3.1453485498270;
-        Fri, 22 Jan 2016 09:58:18 -0800 (PST)
+        bh=4IbZCsrUk5L/uED25kz5U66sWLRzQ062a1PRRuYxroU=;
+        b=FuHwmdTrW9G0hduukuXixzKS+/46+/rZtGfdQeeZcqNEWGWL5VF8CoGZiiy4O/26cS
+         LJ4CAJRZtYi8971z9OcgobzJ1k9X4cltVNP4ynpXsIIONMzjz6bNsf9ytnerME4OyBKR
+         fz+SNauUPLNXSrXNWk1OPP2Nkp3bR7QT4HKlo02MLZSMktkQpP73leohLmASKJUXX6Zd
+         2eiImdD+RxHN2hCv/3/7DeeBJKc9ZSpjUqIruYT0mbU6vG1sqyM2xUDMM2LZ2hFLOKdm
+         yTWYLqIMXiifYFUh/ojwIHt1m4HBreoj5hxJnmn3LKvevRlLZN9AVhBMZb/x7UMOqPew
+         JxnQ==
+X-Gm-Message-State: AG10YOTNR7/q2g4xY/16TR2t0HoB2eoMxPNx03LkKPUutbevCjNjPJY5ACiffRAToFTlu+zD
+X-Received: by 10.140.228.69 with SMTP id y66mr5624481qhb.78.1453485609929;
+        Fri, 22 Jan 2016 10:00:09 -0800 (PST)
 Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-20.NATPOOL.NYU.EDU. [216.165.95.9])
-        by smtp.gmail.com with ESMTPSA id v74sm3229885qka.7.2016.01.22.09.58.17
+        by smtp.gmail.com with ESMTPSA id l77sm3240377qkh.11.2016.01.22.10.00.09
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 22 Jan 2016 09:58:17 -0800 (PST)
+        Fri, 22 Jan 2016 10:00:09 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1E23015B9294604195E5EBA53602E115FCF5B7@WDC-VMAILBOXP25.smrcy.com>
+In-Reply-To: <CAGZ79ka51e+-24RyMgUGAOUkBYXxnWZb8Pg7vrgjGHvvWU770Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284575>
 
-On Fri, Jan 22, 2016 at 05:22:16PM +0000, Draggs, Tori wrote:
-> I apologize, however my intent in reaching out was not to seek free of cost help desk services.
+On Thu, Jan 14, 2016 at 09:21:28AM -0800, Stefan Beller wrote:
+> On Thu, Jan 14, 2016 at 9:16 AM, Santiago Torres <santiago@nyu.edu> wrote:
+> > Hello Stefan, thanks for your feedback again.
+> >
+> >> This is what push certs ought to solve already?
+> >
+> > Yes, they aim to solve the same issue. Unfortunately, push certificates
+> > don't solve all posible scenarios of metadata manipulation (e.g., a
+> > malicious server changing branch pointers to trick a user into merging
+> > unwanted changes).
+> >
+> >> AFAIU the main issue with untrustworthy servers is holding back the latest push.
+> >> As Ted said, usually there is problem in the code and then the fix is pushed,
+> >> but the malicious server would not advertise the update, but deliver the old
+> >> unfixed version.
+> >>
+> >> This attack cannot be mitigated by having either a side channel (email
+> >> announcements)
+> >> or time outs (state is only good if push cert is newer than <amount of
+> >> time>, but this may
+> >> require empty pushes)
+> >>
+> >
+> > I'm sorry, did you mean to say "can"?
+> 
+> Yes, formulating that sentence took a while and I did not proofread it.
 
-Don't worry, just use reply to all so everyone can see and chime in if
-they can help.
+Sorry, Stefan. I didn't mean to come off as rude; I just wanted to make
+sure I understood correctly what you were proposing.
 
-> > Hi.  I am able to pull up Visual Studio Code.  But none of my local
-> > files.  I tried using the magnifying glass as well as the Go To feature
-> > and when performing a search I am informed that the file is not found. 
+Do you have any further insight? I think that, besides the supporting
+multiple workflows, maybe synchronizing concurrent fetches might be an
+issue to our solution.
 
-I see you were able to run git log, what do you see in it? as it might
-shed some light on what happened.
-
+Thanks a lot!
 -Santiago.
