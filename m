@@ -1,63 +1,88 @@
-From: Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH 0/2] Let merge-file write out conflict markers with
- correct EOLs
-Date: Fri, 22 Jan 2016 18:52:57 +0100
-Message-ID: <56A26C79.1000506@drbeat.li>
-References: <cover.1453482052.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2016, #04; Wed, 20)
+Date: Fri, 22 Jan 2016 09:57:18 -0800
+Message-ID: <xmqqtwm5v6o1.fsf@gitster.mtv.corp.google.com>
+References: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601221757290.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 18:54:40 2016
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 22 18:57:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMfuw-0004BW-QZ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:54:39 +0100
+	id 1aMfxe-0005UO-HR
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754679AbcAVRyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 12:54:35 -0500
-Received: from mx1.2b3w.ch ([92.42.186.250]:57877 "EHLO mx1.2b3w.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754415AbcAVRye (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 12:54:34 -0500
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-	by mx1.2b3w.ch (Postfix) with ESMTP id C94B0C3445;
-	Fri, 22 Jan 2016 18:54:30 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.2
-Received: from mcmini.bolli (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
-	by mx1.2b3w.ch (Postfix) with ESMTPSA id 9D21FC3442;
-	Fri, 22 Jan 2016 18:54:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <cover.1453482052.git.johannes.schindelin@gmx.de>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1754530AbcAVR5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 12:57:23 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55076 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754320AbcAVR5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 12:57:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A37423E576;
+	Fri, 22 Jan 2016 12:57:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bKaG5iDP36fr5Np4/Ov1FbUYIdQ=; b=I2jHWq
+	J5bODtbwLSQKnBAQcojvH16vvouYj3n1vJjUc2kbvaJtreL7tSFC1YBD/8qbGF/x
+	8gOmajN+h9hlMGmmKfSyYHusCHLRGDvDti20LX8l9I5kcuNcuG68maEaKP7qDYAS
+	+kjS2BrV3nXe+vInmFtsoc98LtEZ9eHnPkSXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M10C0eenQKUry6NJUXRLxK/oSm7fr0BX
+	ZbW9A+ryYO34B/+LHdUT9i8VgyKhW0rPQmA3I7oSyKCFVjat25gW+k6hlprnQgCY
+	TmM1cfscRCx1HRQdMHx0mWhFGuO7J60sZBwvOvae2ExytOMRMAKZsG5he0+19LOc
+	o0XR+qqFJWo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A6AD3E575;
+	Fri, 22 Jan 2016 12:57:20 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CEF4F3E572;
+	Fri, 22 Jan 2016 12:57:19 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601221757290.2964@virtualbox> (Johannes
+	Schindelin's message of "Fri, 22 Jan 2016 17:58:30 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 94CBB448-C131-11E5-BC99-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284573>
 
-On 22.01.16 18:01, Johannes Schindelin wrote:
-> The original patch was sent by Beat Bolli in
-> http://thread.gmane.org/gmane.comp.version-control.git/281600
-> 
-> My suggestion to extend it to respect gitattributes led to
-> changes that broke the original patch.
-> 
-> Since there have been a couple of "What's cooking" mails
-> containing unheard calls for updates on this patch, I took it
-> on myself to fix things.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks a lot! I was really stuck on the heuristics of eol_for_path(), so
-I'm very glad you took over.
+> On Wed, 20 Jan 2016, Junio C Hamano wrote:
+>
+>> * bb/merge-marker-crlf (2015-11-24) 1 commit
+>>  - merge-file: consider core.crlf when writing merge markers
+>> 
+>>  Write out merge markers using system end-of-line convention.
+>> 
+>>  Waiting for a re-roll to handle gitattributes.
+>>  ($gmane/281701)
+>
+> For the record, it is $gmane/281700.
 
-Regards,
-Beat
+Not quite; 281701 is a more correct reference than 281700 at two
+counts.  One of them is not your fault, as I haven't explained what
+these references _mean_.  These references are not about "Go there
+to get the original e-mail of the patch."  And 281700 is wrong by
+being off by 100, as the original patch is $gmane/281600, even if
+these references meant what you thought they did ;-).
+
+These are "Go there to learn more about the reason behind the
+statement above."  I (or anybody) visits 281701 and sees an
+unresolved comment in the discussion thread to realize that the
+maintainer is doing the right thing by not moving the version that
+is queued forward prematurely before issues are resolved.
+
+> I will send out a replacement series shortly.
+
+Thanks.
