@@ -1,70 +1,94 @@
-From: Andrew Stewart <boss@airbladesoftware.com>
-Subject: Re: git-diff: unable to turn off diff.autorefreshindex with command line switch
-Date: Fri, 22 Jan 2016 14:12:15 +0000
-Message-ID: <5BAA7C36-0059-4F0B-96B6-7B6E66D7C315@airbladesoftware.com>
-References: <4432B7DA-921D-4D1C-8DC5-55A4E3722F73@airbladesoftware.com> <20160121213801.GB6664@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 15:12:24 2016
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: Re: [PATCH] git-svn: shorten glob error message
+Date: Fri, 22 Jan 2016 16:07:32 +0000
+Message-ID: <1453478851657.1340@accesssoftek.com>
+References: <1452522358-16943-1-git-send-email-vleschuk@accesssoftek.com>
+ <20160113031601.GA28224@dcvr.yhbt.net> <20160114040759.GA7671@dcvr.yhbt.net>
+ <xmqqvb6wjacq.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Victor Leschuk <vleschuk@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jan 22 17:07:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMcRr-0003NG-Qu
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 15:12:24 +0100
+	id 1aMeFO-0002VF-Jy
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 17:07:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998AbcAVOMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 09:12:19 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:47492 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753540AbcAVOMR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 09:12:17 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id C512F2067A
-	for <git@vger.kernel.org>; Fri, 22 Jan 2016 09:12:16 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Fri, 22 Jan 2016 09:12:16 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	airbladesoftware.com; h=cc:content-transfer-encoding
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=s5kSh
-	RHWvjQ5Nodc1CzgFAaqe+E=; b=DP9z4FaVA+VTku894YCe4dYav8BxvH7FTykxy
-	JLrLJTmnSFYiNACDMCHnQw4Vb9skiT/HIcduNRKGoMKc4dxVPJ8iT8TO/88a9FHg
-	0WUmT1RCvuPuwXojq7Tk2HkPj0aXg76KXr8KfxC5MxIF82YyU/8uyzHWDA/yFuhO
-	vSqrEs=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=s5kShRHWvjQ5Nod
-	c1CzgFAaqe+E=; b=pFHw9MJjU9U5cRxreyOdTyBTVeQ7Ldsl0P2MzRLOfEJiN0q
-	dtGVszbcJ/c9O46X0RG6OnefuGF6Jt3+rnieRvKYeCFPHQBaTGIvOMY6NtjSutbb
-	2NuS+KunnNSaM2C7URIsqkHWp1nqke27msqfC4pWVzpayT44EYP36NvRK45M=
-X-Sasl-enc: vjiS8TVxDF8YMB4dJ8yec6wcg//qulxPr0F1kBfoALw6 1453471936
-Received: from andrews-mbp.home (host81-153-212-242.range81-153.btcentralplus.com [81.153.212.242])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 39C8AC01713;
-	Fri, 22 Jan 2016 09:12:16 -0500 (EST)
-In-Reply-To: <20160121213801.GB6664@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.3112)
+	id S1754182AbcAVQHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 11:07:34 -0500
+Received: from mail.accesssoftek.com ([12.202.173.242]:55600 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753459AbcAVQHc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2016 11:07:32 -0500
+Received: from vm-mail2k13.accesssoftek.com (172.16.0.242) by
+ vm-mail2k13.accesssoftek.com (172.16.0.242) with Microsoft SMTP Server (TLS)
+ id 15.0.1130.7; Fri, 22 Jan 2016 08:07:32 -0800
+Received: from vm-mail2k13.accesssoftek.com ([fe80::dcaa:287c:7b4f:2280]) by
+ vm-mail2k13.accesssoftek.com ([fe80::dcaa:287c:7b4f:2280%12]) with mapi id
+ 15.00.1130.005; Fri, 22 Jan 2016 08:07:32 -0800
+Thread-Topic: [PATCH] git-svn: shorten glob error message
+Thread-Index: AdFO+GHqrSN3NesxSJireobm7yEHmAGNoa2A
+In-Reply-To: <xmqqvb6wjacq.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+x-ms-exchange-imapappendstamp: vm-mail2k13.accesssoftek.com (15.00.1130.005)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [93.80.35.229]
+Content-ID: <D3AAA3C535803349A5923C9C68479D9F@accesssoftek.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284557>
 
-> On 21 Jan 2016, at 9:38 pm, Jeff King <peff@peff.net> wrote:
-> But note that your whole test is going to be racy, and possibly depend
-> on the resolution of your filesystem's timestamps. Did you run your test
-> as a single script, where the initial index write and the `touch` may
-> happen in the same second? If so, trying running it slowly by hand,
-> or inserting "sleep 1" between the commands.
+Hello all,
 
-I ran my tests by hand, taking more than 1s between commands.
+On 01/14/2016 09:15 PM, Junio C Hamano wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+>
+>> Error messages should attempt to fit within the confines of
+>> an 80-column terminal to avoid compatibility and accessibility
+>> problems.  Furthermore the word "directories" can be misleading
+>> when used in the context of git refnames.
+>>
+>> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+>> ---
+>>    Eric Wong <normalperson@yhbt.net> wrote:
+>>    > I also noticed the "Only one set of wildcard directories" error
+>>    > message is unnecessary long and "wildcard directories" should
+>>    > probably be shortened to "wildcards" to avoid wrapping in a terminal.
+>>    > That will probably be a separate patch for me.
+>>
+>>    There's likely more instances of this in git-svn, but I figured
+>>    we'll get this one fixed, first.
+>>
+>>    Also pushed to bogomips.org/git-svn.git
+>>    (commit dc6aa7e61e9d33856f54d63b7acb518383420373)
+>>    along with Victor's patch.
+> Thanks.
+>
+> I am not sure if it is a good idea to show */*/* as an example in
+> the message (that is an anti-example of 'one set of wildcard' by
+> having three stars, isn't it?), but that is not a new issue this
+> change introduces.
 
-I also used `stat README` and `ls -l README` on occasion to confirm that `touch` was updating the file's timestamps.
+I agree, this should be changed, however I think this should be done in 
+separate patch.
 
--- Andrew Stewart
+Do we have any questions left open before this could be merged into main 
+git repo?
+
+--
+Victor
