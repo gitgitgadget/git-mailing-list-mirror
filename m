@@ -1,88 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2016, #04; Wed, 20)
-Date: Fri, 22 Jan 2016 09:57:18 -0800
-Message-ID: <xmqqtwm5v6o1.fsf@gitster.mtv.corp.google.com>
-References: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1601221757290.2964@virtualbox>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: GIT Question
+Date: Fri, 22 Jan 2016 12:58:16 -0500
+Message-ID: <20160122175815.GA28871@LykOS>
+References: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+ <alpine.DEB.2.20.1601221750060.2964@virtualbox>
+ <1E23015B9294604195E5EBA53602E115FCF59F@WDC-VMAILBOXP25.smrcy.com>
+ <alpine.DEB.2.20.1601221803560.2964@virtualbox>
+ <1E23015B9294604195E5EBA53602E115FCF5B7@WDC-VMAILBOXP25.smrcy.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 22 18:57:27 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
+X-From: git-owner@vger.kernel.org Fri Jan 22 18:58:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMfxe-0005UO-HR
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:57:26 +0100
+	id 1aMfyZ-0005u7-P0
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:58:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754530AbcAVR5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 12:57:23 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55076 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754320AbcAVR5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 12:57:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A37423E576;
-	Fri, 22 Jan 2016 12:57:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bKaG5iDP36fr5Np4/Ov1FbUYIdQ=; b=I2jHWq
-	J5bODtbwLSQKnBAQcojvH16vvouYj3n1vJjUc2kbvaJtreL7tSFC1YBD/8qbGF/x
-	8gOmajN+h9hlMGmmKfSyYHusCHLRGDvDti20LX8l9I5kcuNcuG68maEaKP7qDYAS
-	+kjS2BrV3nXe+vInmFtsoc98LtEZ9eHnPkSXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M10C0eenQKUry6NJUXRLxK/oSm7fr0BX
-	ZbW9A+ryYO34B/+LHdUT9i8VgyKhW0rPQmA3I7oSyKCFVjat25gW+k6hlprnQgCY
-	TmM1cfscRCx1HRQdMHx0mWhFGuO7J60sZBwvOvae2ExytOMRMAKZsG5he0+19LOc
-	o0XR+qqFJWo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A6AD3E575;
-	Fri, 22 Jan 2016 12:57:20 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CEF4F3E572;
-	Fri, 22 Jan 2016 12:57:19 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1601221757290.2964@virtualbox> (Johannes
-	Schindelin's message of "Fri, 22 Jan 2016 17:58:30 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 94CBB448-C131-11E5-BC99-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754647AbcAVR6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 12:58:20 -0500
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33810 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754415AbcAVR6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 12:58:19 -0500
+Received: by mail-qg0-f43.google.com with SMTP id 6so63051517qgy.1
+        for <git@vger.kernel.org>; Fri, 22 Jan 2016 09:58:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=zwSajkljyUxCP+DtFx0301rkTEmRQ+2Dr3fowbwzftU=;
+        b=LzwnUWsKt1pKq7+PTKOEuASKp0iw3TCJydL1bJcvbx6WSOvtxZj3lA4/uuBr5O6SLc
+         +6fjlPyK6SQwTX6DniPTzA4tmg2qOrBkFqdXKqbEc9MzPjmhVsZv/0SUdK98SiNQ3ewc
+         MgrZ/tzwtipKyumcD/cfKhQdKGDEDImewDsEnaMQzv8rgHGYzqqvqERAMnx2s/Va3QgS
+         xQn9nxBLxBDlL/3q1aH74WHaddEWibEAAK99VodO+GuP8RQg9hTm19kj65bfAqhq57ZT
+         h2jiddD93HcRZTXrejbbqTuM+k+BFZf4xot735FQ90O6wnluYRDoWO+iKH4jjuhRgaf0
+         oAaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to;
+        bh=zwSajkljyUxCP+DtFx0301rkTEmRQ+2Dr3fowbwzftU=;
+        b=Wube/LWi0lpHuGex6KFDIZzJwaGBnyqajsUJ2pISPWiCZXQSaOZEra9B8Glqp3jsZ9
+         mhEGIUf3RpGwaigOSElbAcV5PQRewOFisSZzX24PczhEoGmz5C8LrfgxNsw0mGc/BmM/
+         IKTRgKEdObzubDc41UOsIYWMA4wAvv/DEHMR00OsY/ZkSXF6KhIaiFE7H064LDpSLX7b
+         QcFmAUAeMdIM70ht5gzJHvfm0pgN22dtMxhd5tqp+r+n0lnmFw2gbi+891YCBFEjzRAo
+         pHNXAGg9uuHndGr8b75TzEezKYAS85p6nVYRvd8SNJOdndqpA/RMwLPoHDGhmOvnXvt2
+         pqUg==
+X-Gm-Message-State: AG10YORMVrfeWagJf6f8PLr0ZIiGGZXK+nHnIlnsiitN6ykutfQrx/vI0RBlGogGwOQUcgKH
+X-Received: by 10.140.86.85 with SMTP id o79mr5261505qgd.3.1453485498270;
+        Fri, 22 Jan 2016 09:58:18 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-20.NATPOOL.NYU.EDU. [216.165.95.9])
+        by smtp.gmail.com with ESMTPSA id v74sm3229885qka.7.2016.01.22.09.58.17
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 22 Jan 2016 09:58:17 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1E23015B9294604195E5EBA53602E115FCF5B7@WDC-VMAILBOXP25.smrcy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284574>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Jan 22, 2016 at 05:22:16PM +0000, Draggs, Tori wrote:
+> I apologize, however my intent in reaching out was not to seek free of cost help desk services.
 
-> On Wed, 20 Jan 2016, Junio C Hamano wrote:
->
->> * bb/merge-marker-crlf (2015-11-24) 1 commit
->>  - merge-file: consider core.crlf when writing merge markers
->> 
->>  Write out merge markers using system end-of-line convention.
->> 
->>  Waiting for a re-roll to handle gitattributes.
->>  ($gmane/281701)
->
-> For the record, it is $gmane/281700.
+Don't worry, just use reply to all so everyone can see and chime in if
+they can help.
 
-Not quite; 281701 is a more correct reference than 281700 at two
-counts.  One of them is not your fault, as I haven't explained what
-these references _mean_.  These references are not about "Go there
-to get the original e-mail of the patch."  And 281700 is wrong by
-being off by 100, as the original patch is $gmane/281600, even if
-these references meant what you thought they did ;-).
+> > Hi.  I am able to pull up Visual Studio Code.  But none of my local
+> > files.  I tried using the magnifying glass as well as the Go To feature
+> > and when performing a search I am informed that the file is not found. 
 
-These are "Go there to learn more about the reason behind the
-statement above."  I (or anybody) visits 281701 and sees an
-unresolved comment in the discussion thread to realize that the
-maintainer is doing the right thing by not moving the version that
-is queued forward prematurely before issues are resolved.
+I see you were able to run git log, what do you see in it? as it might
+shed some light on what happened.
 
-> I will send out a replacement series shortly.
-
-Thanks.
+-Santiago.
