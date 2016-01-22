@@ -1,82 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status: be prepared for not-yet-started interactive rebase
-Date: Fri, 22 Jan 2016 10:38:27 -0800
-Message-ID: <xmqqio2lv4rg.fsf@gitster.mtv.corp.google.com>
-References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
-	<vpqlh7h5zrh.fsf@anie.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] merge-file: consider core.crlf when writing merge
+ markers
+Date: Fri, 22 Jan 2016 19:47:38 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601221937440.2964@virtualbox>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de> <c0c775ea7a9ba3244748b784241de685cefc73b1.1453482052.git.johannes.schindelin@gmx.de> <xmqqmvrxv5tn.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jan 22 19:38:47 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 19:47:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMgbd-0001bY-NQ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:38:46 +0100
+	id 1aMgkQ-0000D1-4C
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767AbcAVSib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 13:38:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64941 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754140AbcAVSia (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 13:38:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 65BCD3D2C0;
-	Fri, 22 Jan 2016 13:38:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cNUvZvmaOVe96kc01N33EO1ijrM=; b=iVsxrk
-	3jc96irzpCSFKPeJ44xuk54IvpMfXPE83mM262gLZSZ2GO4G+NSxWuDcl8CjbOhq
-	Zuk3QzXIQwl7xCuFHNdBU7xxJO/Bv6PaWzNEznldkXWF1li1DlJMrmYBUrzpKJff
-	0WPA8ua6R7OVfoyB52Fcn4pGTwjWjVplfWacs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vhZAEmhPs+JEf+ghnAkE8Rhbw8ep27TZ
-	1naxUCyVppe4aMKnoM59rJZls9AIqoATwUidhmkLpjW4r7+7881yxVeGs4jj6ahz
-	tVtXqZwr4GaCH7ED7+f8njVUitfF/mefpuBi2jwpRhyJaEBmq5GcQ+v0hIYPS+BZ
-	aRIQIk1sEzk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5C48C3D2BF;
-	Fri, 22 Jan 2016 13:38:29 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BEA2E3D2BE;
-	Fri, 22 Jan 2016 13:38:28 -0500 (EST)
-In-Reply-To: <vpqlh7h5zrh.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
-	22 Jan 2016 17:45:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 546FD658-C137-11E5-9FBD-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754584AbcAVSrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 13:47:46 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56635 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754389AbcAVSrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 13:47:45 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LeMij-1ZmkNS2qGT-00q9sj; Fri, 22 Jan 2016 19:47:39
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqmvrxv5tn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:o/JHbnsqomGNk+dBqk7DaKLnFikGO5rOBBDDoxr1V1UOUM32esL
+ CzEBgj8+PUhL6S8HjSE9IYsGofWu2BYF4OdRR7M2tvC8ti65LUYiU58oOUqlzKFIn9PHq91
+ +w31a9oO9+8LgR8z3RAmZZQGW6Opdfm/DvZ5tsqGF8FkYATHWw0HO7lz2KKc0rINzSCUecW
+ ZjWf9CZcXANZ2Z5lxk2qg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:w7xo0bCSMjw=:HLx9wADEnHDVavTWOqFqrn
+ 3LT12lUH5JQCuTyGhR0/hpojl69pwaFGT4X0Qd7Tvb7+PT0+g+/RtzJPK4cq0voY7PfR0MZh4
+ k923pw+DI5AjFdNlTmZ6A79QLgEKW/xBUtVtyVGCgCDhXiolz/HkGkAq5k93qMVchPzFwsFUE
+ 9uLDTTwXpkRX0JNcC2Gd4yw52FIT4K68QQ3QUnLc8Ml31s8iDRBO6qHfOteXq2PS2WkIghUym
+ 5Rp9KcrPJYsSxqIs2hv8pguxysDwJZWEp4wy6BGphJYMq1T6Al39PzEMMrJ4CMFYxZarAHPtX
+ U5ZJfvuKpkPG9G04zbFRuS4s64flQAdVaEaIgH5JqmOxcKhTpt7/ZtAS2pebH5281e4j46k6q
+ 9rt5ivEX+Xx7p/TEsXH+QG+HWrv0pvPfcJZLtUx/haRZw4W7Ufl05FlhqQFUaMJIfL1RMkMgU
+ aTH3OGcgMjv6wwV5NB44JVsW7LBoXeCu8wtn16qFxVh54FZkZ089DI+uECETRIwT4YUzg6mUk
+ 1m0wysptlWrshmH7QVzdqCMIs3iMLBPZ/8WDZ1vtzvhmiahbWLZ/SbCng2zqvgm/Juy+pjLL8
+ gLwociN+YwDKISGamlzSC2kB3uPXF5WIFh6kRWAaZfxcx0ZUr46XQNVh9Kxi8/+sehjx0A7xD
+ F7XHxzMCNtEcmnVJ99KPbgVXeX40e1gsg0j7dSnu47kvUtNuIVp/ZMwcyP8WyHJkyA1gliRoY
+ MoFDvNl7OgA4qGAMM8JGVp54hpSmWAOjhSvjR9gnAeWDAb4Z9Ju/A+HuOxGOOqXIC8DSfs6b 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284578>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi Junio,
+
+On Fri, 22 Jan 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->
->>  wt-status.c | 22 +++++++++++++++-------
->>  1 file changed, 15 insertions(+), 7 deletions(-)
->
-> Looks good to me. You may want to add a test by overriding $EDITOR to a
-> script doing "git status >actual" if you want to have fun with testing.
+> 
+> > The original version of this patch also modified ll_merge(), but that
+> > was incorrect: low-level merge operates on blobs, not on working
+> > files.  Therefore, the data passed to the low-level merge, as well as
+> > its result, is expected to have LF-only line endings.
+> >
+> > It is the duty of ll_merge()'s *caller* (in case of Git's `merge`
+> > command, the merge_content() function) to convert the merge result
+> > into the correct working file contents, and ll_merge() should not muck
+> > with line endings at all.
+> 
+> Hmph, aren't there people who use CRLF throughout their set-up (that is,
+> it is normal for both of their blobs and working tree files to use CRLF
+> line endings)?  Or is such a setting illegal and unsupported?
 
-I am unhappy that the code does not read 'rebase-todo' at all when
-'done' is missing.
+Good point.
 
-If we cannot read 'todo', that would mean we shouldn't be in this
-function in the first place, which is a sign of something more
-serious; somebody created 'interactive' but did not leave 'todo' to
-read for us--why?
+While I would love to simply not support such a case, it would be turning
+a blind eye to reality.
 
-A missing 'done' is much more benign and making us not to barf is a
-worthy thing to do, but we shouldn't be removing protection against
-a more serious error as its side effect.  That is what I am unhappy
-about this change.
+So I guess I need another patch like this (plus a test case):
+
+-- snipsnap --
+t a/ll-merge.c b/ll-merge.c
+index 0338630..4a565c8 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -111,6 +111,7 @@ static int ll_xdl_merge(const struct ll_merge_driver
+*drv_unused,
+ 		xmp.style = git_xmerge_style;
+ 	if (marker_size > 0)
+ 		xmp.marker_size = marker_size;
++	xmp.crlf = eol_for_path(NULL, src1->ptr, src1->size) == EOL_CRLF;
+ 	xmp.ancestor = orig_name;
+ 	xmp.file1 = name1;
+ 	xmp.file2 = name2;
