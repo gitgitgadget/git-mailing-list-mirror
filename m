@@ -1,76 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT Question
-Date: Fri, 22 Jan 2016 17:51:55 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601221750060.2964@virtualbox>
-References: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+Subject: Re: What's cooking in git.git (Jan 2016, #04; Wed, 20)
+Date: Fri, 22 Jan 2016 17:58:30 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601221757290.2964@virtualbox>
+References: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 17:52:12 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 17:58:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMewT-0007fM-LZ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 17:52:10 +0100
+	id 1aMf2s-0002RM-Kq
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 17:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbcAVQwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 11:52:05 -0500
-Received: from mout.gmx.net ([212.227.15.18]:64372 "EHLO mout.gmx.net"
+	id S1754451AbcAVQ6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 11:58:43 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57358 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752509AbcAVQwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 11:52:04 -0500
+	id S1754260AbcAVQ6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 11:58:42 -0500
 Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M39zL-1a5wvy3T9z-00sxhb; Fri, 22 Jan 2016 17:51:57
+ ESMTPSA (Nemesis) id 0McmFl-1aeSuM17wX-00Hz2l; Fri, 22 Jan 2016 17:58:31
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+In-Reply-To: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:JVicVToXqWy1pBciiYY3GI819WW3EdlqfJQ4nhvimU8FEJF++ZM
- FsTVnlbrFlTWQFCotQeYL6Qqcs94TCabrdYJUlLB2idtZ8Y8s940P6j2LRuuO0OuOWO+NKh
- EBCA02ZYsJVn9psxpSbUrDfFncGqXDYfuXVtOsypiTkZgaRrfAKlSyCSoTE007Y6/YvA28O
- mRaA8mtQFtw9nsNSJBy2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6JPfIrT4V8w=:DCj7/nW2dleiTOfD/ubbpk
- ENYB09MwZ9auy6Kb3bb3ws5x1zjrmash7HxK+/VMwn3a+6o6mFrfkbihraVl/I0MGBQhFFtb4
- 5FfiOSxlW06A9dlrpTz/ftCjBmWVjpHzy6Pca53pwRFK3BUpfIQpJDzPDLSaFKrOVPKl/EH8+
- j+htghpXNgu4q3PDZJJgDrpjVzWEJMfgNWefBwLwMMuwQsm+h7XE7YEbk+qeAWXEoJJgq5QAD
- j/Uc4ld8Di9VEJpJPsMUaPNebYzyVu/LBgoGKZscS0xY+U5JFmf8mn6dJ101YbyvpspGeXKiq
- sPrWcvOU32LL8oheXTjGGUpucJG+wnMZfQ0kHkivYGZcc148Y3mYVyliSjA/39Mgh1GxCnZWs
- F2KVDHEpaoDpB/Ipn8g2e6ZXI413PukG7s/70LEWo1sMTssg+wYB0DCIgXvGLEXvT0jBFZafL
- y2Q/Qcq17AtxECooS2JYRTf0HwG9RJw32M1G9PQ0KLS8PgOgsMFJV2FDbf525D2dc0OcZRjko
- blCqVWzitFF5gZpnfGv9h10Jh4GKw79I3oCXjleZkEwu9DtvMeTqMcDpEhs4bgHsDTFLTwOvk
- cQlpP54MwvplwVgF/fhD5jcYoG/pVcSiHudUwhjGCETwcP4EQ0Pf8T6aUp/sGYIc/cf6XN5jr
- t95oFnOvDF+M7123KN+xwoaYsUcyLwCAQVWzAUqupD7tVzC1jbPnaoK15EYyGW9G4dle/7rrw
- wkVn3O/FvcqMLK0S4gn+0vxBrRcUGDUXV3UWV4VeN0cU1YdfNG7lU46o9JCbfSvNd4j0xJxh 
+X-Provags-ID: V03:K0:HP7v8mfDz6QCbCw/3i+L29P0/i35juni1HBu2qfNeaFgDhSZkKQ
+ ZzEFai6fmhKizSU/fb+2vsV4OAq3QfOPmV8wX6x6GLJvmG1lQ7/L7oxiKm1kFGsIyFewO6Q
+ zLRnHd2pqfiS8Q2ZXPXoWmJMWd8kXSOPeIjmnpXpsR+F+ZYcYrGLx+wbWcvnD18sXZBBu+J
+ P87FmPgVDUzPbckNhSPuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hAHZBynBxi0=:GBcd77ygiEskdr6cQUonIW
+ wG3rg1MIcyxvnXk6c5FLsrDRemHIeCMQFFFqQiPOtcBBxs2sZ1xKhPMqZJtdqED/IImZEOgJZ
+ jW1BkMnUxAOfveyU8CHoXTIUXQkuoeWRtv3Dat5Q5ZnD4V8XNjJSMbAdMSryXJybV0xa4siQz
+ cDWeBUQ25Re853Wp0Wyuz/o5YmwvYoTDdkvkQL1+3Y71IMtKUX2oNRiITvu3yQcc5BFl4pK9o
+ ktY/tS6gRAUTE6sr5cx0N3DQUMBE49FPwuTBvkEwd9xlEUOz7w7xafvUBr0PLPOgTkNqSHnZL
+ msp5X8amO1RXQzDRYS6IOr2jmwGKMSE80i3A75mSW84T9hK+80ANpBNI4oRUT4/1h1wEnkjZ8
+ FFzVczIkgLbckfb/V6baDwg+uZPq+/2+C+KD9p3Bc7IaT/Zmw9uJiHbCvPF/dR667obY+001m
+ SmQOE8EEbmwMkIuP29AJLHUiTGukpevTs0wnERj706Jbts9i1PNgzum55TOJtF1pR6qJQ90qH
+ UmNy1iBxIMSwMjkS/hRG0NdvtasksdmocNJRw+IwOgBCgCKqO9XJMEybLXXTqWUR7fAvjWy0c
+ QOrdxnQwz6w+6/5roXbkCR4zSq9hu+kulyyMeuBbgmHRwxDYeBA+g4RiNrHyCqNF5EDYQ+a8B
+ l/PDRFxGRWOYDGUAelq3qipDQ+HIlrCPOQk6/RUrVjuXquSdz2XbVGlvMbd3bKALYumi98BHK
+ an2YYqNrIrHqUtII1ERh4Vxm6T+LnZvNKny2LLZdpmINnnGbiPG+Dee+74NXHVWJukcRoUPc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284562>
 
-Hi Tori,
+Hi Junio,
 
-On Wed, 20 Jan 2016, Draggs, Tori wrote:
+On Wed, 20 Jan 2016, Junio C Hamano wrote:
 
-> Specs:
-> MacBook Pro 
-> OS X Yosemite
-> 2.6 GHz Intel Core i5, 8GN 1600 MHz DDR3
+> * bb/merge-marker-crlf (2015-11-24) 1 commit
+>  - merge-file: consider core.crlf when writing merge markers
 > 
-> After selecting the Git option in a recent install of Visual Studio Code
-> 2015 for MAC, my filesystem was removed.
+>  Write out merge markers using system end-of-line convention.
+> 
+>  Waiting for a re-roll to handle gitattributes.
+>  ($gmane/281701)
 
-Can you call Visual Studio Code? If so, the filesystem was definitely not
-removed, so that's good news.
+For the record, it is $gmane/281700.
 
-> I can no longer access any of the local files stored on my machine.
-
-The most likely cause is that you are now looking somewhere else than
-where the files are actually. Could you use the magnifying glass on the
-upper right hand corner to search for a file name of the files you had
-previously?
+I will send out a replacement series shortly.
 
 Ciao,
-Johannes
+Dscho
