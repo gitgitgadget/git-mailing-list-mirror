@@ -1,119 +1,106 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] Documentation: remove unnecessary backslashes
-Date: Fri, 22 Jan 2016 02:46:12 +0000
-Message-ID: <20160122024612.GB686558@vauxhall.crustytoothpaste.net>
-References: <1453310497-7971-1-git-send-email-kraai@ftbfs.org>
- <20160120182421.GA27562@sigill.intra.peff.net>
- <xmqqmvs05722.fsf@gitster.mtv.corp.google.com>
- <20160120203430.GB6092@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 7/7] merge: add --rename-notes
+Date: Fri, 22 Jan 2016 10:35:56 +0700
+Message-ID: <CACsJy8D3-i4UpavWZz0QU6oJE3AK06ugjPPTMOtqUA+Sa7==qQ@mail.gmail.com>
+References: <1453287968-26000-1-git-send-email-pclouds@gmail.com>
+ <1453287968-26000-8-git-send-email-pclouds@gmail.com> <xmqqtwm6yg30.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WhfpMioaduB5tiZL"
-Cc: Junio C Hamano <gitster@pobox.com>, Matt Kraai <kraai@ftbfs.org>,
-	git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-	Matthew Kraai <matt.kraai@abbott.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 22 03:46:23 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 04:36:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMRjy-0004fn-3A
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 03:46:22 +0100
+	id 1aMSWW-0000Rw-KP
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 04:36:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbcAVCqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Jan 2016 21:46:18 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:59066 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751224AbcAVCqQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jan 2016 21:46:16 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2659F282CA;
-	Fri, 22 Jan 2016 02:46:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1453430774;
-	bh=wJlU8gpquwR9vUsmLIoYmmIAbHCImGeZXnshI70+grw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c7UHFVwXbFG8/5mwtkasjjz+Oufh+90ueVA188gNnLeljej30kuzv9dqIIPZHFF9b
-	 NslLtCPJ6x7SlCQEl6jVRAC4+61OdThllx4BwXVe1+KfqqzIocUsXCM/wb1WxycBC3
-	 8clo779+4Y7DPV1k7t64oF054HX2yu6lZQG6leZKB9+PrbxSsjq3mBWjRxt5HTpHD+
-	 DTBsuYwG6hMRlE4c9LobU7+E4cJrdSGlZzZM2qJhgsNTBCarSc19R8CwOpc4dXICz2
-	 /PN79684cvU5BzXaXk9yMCBpJzpjRV6+/WC7Ap94onZ69VMZxwVP0/zK53CYMRNEwi
-	 uJDD8+rQ7FtIF2GwdhoIvpLEbBGCy+6EiJ8sR8vj69YsCoMpQ7xK2YxQs2WE5kxKVk
-	 lewf6g8n+TcDTQF98OPEP0zJB1Y3vSO5Oma5X4DDOlmM6YVnniKtbJa6H3lD7fJbvu
-	 wwuVbjYJHaswhk0NbRp52du3LLEbnaHICFs2AQCTzFz0ymQGeLn
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Matt Kraai <kraai@ftbfs.org>, git@vger.kernel.org,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthew Kraai <matt.kraai@abbott.com>
-Content-Disposition: inline
-In-Reply-To: <20160120203430.GB6092@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.3.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	id S1751551AbcAVDg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Jan 2016 22:36:29 -0500
+Received: from mail-lb0-f196.google.com ([209.85.217.196]:34417 "EHLO
+	mail-lb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751433AbcAVDg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jan 2016 22:36:27 -0500
+Received: by mail-lb0-f196.google.com with SMTP id oe3so2952146lbb.1
+        for <git@vger.kernel.org>; Thu, 21 Jan 2016 19:36:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jklo46lVvRqcwOFfwT95HCRXovMXYBhzeluK5mrmku8=;
+        b=Ud3m+TEBSaYXBgF9Hd1dUbxNlelpe/ngpDqyidEbuPz07l7CfzHCy5ftB97bg9uR/N
+         gdHIBhfmlb0GZpbqbEC7INVxM+ojLMi4qqMSqeaTUNTXpeLKuGUraCAp889NkulPcC0H
+         hrAdjW8ujnSjlDgzTeYKAbdxRH+fmVvflBhYQJy2gCe9ofzLA0vkU91i6HOtBF54/R/G
+         RI98eo5WfWhxipdVMwyylm5plPJY08S3Gf41NV4fIAvrQx/tRZ/g6pnsfLZcAm1Wbpm3
+         fy+D2cEKinnQddIfxwLjUuvOno22MOw+fTIBJ696hHA+6E3wN5o2Fu7lKLldlx1t+ukt
+         AX/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=jklo46lVvRqcwOFfwT95HCRXovMXYBhzeluK5mrmku8=;
+        b=WaKCb5h8f1kUAMgXgMfWyHWphvIiXv+ni6z9cpRGURhmPHQUBhp5+UXV9w3wEcsJ+g
+         q87dewXPgxUQcx28kt0fMfiux1lAa9CDIQUiIidpEo/A4TQtqqvm6EPspMDF7TeIwA7G
+         Qk9r6Ec6ldcyRwFxO5feEG6vKbXHFrZKccIisKMx7Fm93o79VJaBLfg83uvaorQc737+
+         PYXHKgCo3z/jmdPAWQuPpl7gwiOLzvR+QB7NoyY0YLeIIjQofFDE+r/PHrtaWaODAVQI
+         sx6sYqMk6wh2bkSQvTU1ejxZ4LvO0VB91Doqs92vovG2iMQ5hpsHmS96QTLjADWafU0H
+         8ahQ==
+X-Gm-Message-State: AG10YOTYmc0gzCv/C4puLsbo+E42H+HntwDLr/UhT+8whtIi9BM7nrkbILSlyQBeOQKK1ZBGvb8sHFw0LutP1Q==
+X-Received: by 10.112.149.230 with SMTP id ud6mr300266lbb.12.1453433786382;
+ Thu, 21 Jan 2016 19:36:26 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 21 Jan 2016 19:35:56 -0800 (PST)
+In-Reply-To: <xmqqtwm6yg30.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284546>
 
+On Fri, Jan 22, 2016 at 12:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> This uses _all_ merge notes attached to _any_ commit in the history,
+> without even checking if the commit is involved in the current merge
+> being done?  How would that be useful?
+>
+> I also suspect that the data structure to keep track renames by
+> using notes needs a better design.  You seem to have a note per
+> commit and one note records a set of "this goes to that", and
+> that is the reason why you need to discriminately read everything
+> under the sun.
+>
+> I think the index into the notes tree for the purpose of this use
+> case should not be "which commit records this set of renames?",
+> but by "what is the destination blob of possible rename
+> operations?".  IOW, if a path that held blob X was moved to
+> another path that holds blob Z in commit A, and if a path that
+> held blob Y was moved to another path that holds blob Z in commit
+> B, attach a note to blob Z that records "moved from X in A" and
+> "moved from Y in B".
 
---WhfpMioaduB5tiZL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is exactly the output after merge_rename_notes() is done. A
+bunch of "rename this blob to that blob" pairs.
 
-On Wed, Jan 20, 2016 at 03:34:30PM -0500, Jeff King wrote:
-> On Wed, Jan 20, 2016 at 12:28:53PM -0800, Junio C Hamano wrote:
-> > On the other hand, if this line must be spelled like the above to
-> > please asciidoctor, i.e. the first and the last must not have
-> > backslashes and the second must have backslashes, I'd have to say
-> > we have a bigger problem.  Perhaps asciidoctor needs to be fixed
-> > until normal people like we can rely on it.
->=20
-> Yeah, that is the "insane" part I mentioned. It _does_ make sense
-> syntactically ("-1" cannot possibly be an attribute name, so it does not
-> parse as one), but I do not like the degree to which writers must know
-> all of the arcane syntax rules (and cannot rely on something simple like
-> "{ is special, so I must escape it, and over-escaping is not a
-> problem").
+The problem with indexing notes tree by blob is how the user will
+manage it. From the user perspective, I think it's natural to
+think "I have made this commit that renames this path to that
+path. But Git does not recognize it. I need to correct it by
+adding a note to the commit".
 
-The underlying issue is that both AsciiDoc and Asciidoctor use regexps
-to parse their data, which we all know is a bad idea.  Asciidoctor does
-less forward looking because it's much faster, so it's a bit less
-flexible with overescaping.
+The notes tree saves exactly that. Reading and updating can be
+done with existing tools. Exchanging git notes is something we
+have been avoiding looking at, but per-commit notes would make it
+easier to exchange too, I think.
 
-There are plans for Asciidoctor to move to a defined grammar at some
-point, which should hopefully make things a bit less insane.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+The information in that form may not be the best way to be
+consumed by Git. But that is what cache is for. We can either
+generate a secondary notes tree, indexed by blob, or naively a
+big "blob to blob" rename file that I did in this patch. But it
+does not have to be visible to the user.
 
---WhfpMioaduB5tiZL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.10 (GNU/Linux)
-
-iQIcBAEBCgAGBQJWoZfzAAoJEL9TXYEfUvaLujkP/RBlhVUTOrebJQqS7cl1iG71
-dDwp48vjN9F22ldb0udWKaQ52ELsS91YSmqeuqVQtDAbrPanu8KAKqAMsaEVYPLf
-Eop3rgHIX7lgpk1LoT2BWdBxx4eZCVZCOxIMSIgSkj8NarHDQnsmGsKPjqjOMKrn
-uY60cUQjGZW4BQUXYFIrVGlQxOBamNq9wlYTUU1vVqh3Kr9SMTzGadxuFgZeLibF
-r7zJb0s95cRV2Z107hT+yvJW5VphP+lW0rJCK4i3P6so3y6FnEWu5NLNo9YnCeM7
-R3zsPluCzW38oqvufrRrbarLVxVySJrHGRmhG8SLgptNcXIa0lQSAZB9afAZ7gHE
-BQ+SVh2ZCLqLcqggv3XginivWP+u+mZ0kvTdJ4zlMKXItwydxfzafc5HkKD7Lzbt
-hhsatTLH8lubnle+mK4J3UeN1gHVJn9sBn8TcVEs+bxzh20WBY/DcofsseE60PQ7
-g+eCX32hizQ6QXYOl4/SePBe9xFn19G86PbCNDb7RBpZKjVs0ZcapR0l9eFdodh7
-ZOGlneO/reZJNKma8CfIFlcCjTcaICc5K89Wu4ja4x0bGvyOxFqiFHlQ1xjU21rn
-AayX6UHLy3TThrcHucZU0X/vY+1s5e2zqYnDWVn5a/qo1YgAWpqFMXLMged67tKt
-/niFGw7VSmqNgOVRLsgN
-=tih5
------END PGP SIGNATURE-----
-
---WhfpMioaduB5tiZL--
+If notes-indexed-by-blob is exposed to the user, I think we need some
+more helper tools to edit and view them because blob SHA-1 is not
+something the user deals with, normally. It feels not as easy as
+editing a simple text file, to me.
+-- 
+Duy
