@@ -1,70 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] resolve_gitlink_ref: ignore non-repository paths
-Date: Fri, 22 Jan 2016 17:40:56 -0500
-Message-ID: <20160122224056.GA15965@sigill.intra.peff.net>
-References: <20160122222650.GA14772@sigill.intra.peff.net>
- <20160122222930.GB15560@sigill.intra.peff.net>
- <20160122223154.GA15635@sigill.intra.peff.net>
- <CAGZ79kYU_=w0VWFRNGamP_nnnjyF6AcOj+A8r8GfhyrJMQzi9w@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git versions
+Date: Fri, 22 Jan 2016 23:42:43 +0100
+Message-ID: <vpqk2n1z15o.fsf@anie.imag.fr>
+References: <loom.20160122T180812-568@post.gmane.org>
+	<20160122223753.GB15635@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 23:41:06 2016
+Content-Type: text/plain
+Cc: Ashish Yadav <ashish.yadav@firemon.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 22 23:42:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMkO7-00061t-7o
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 23:41:03 +0100
+	id 1aMkPv-0006sk-T0
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 23:42:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755274AbcAVWlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 17:41:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58985 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754870AbcAVWk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 17:40:58 -0500
-Received: (qmail 18297 invoked by uid 102); 22 Jan 2016 22:40:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jan 2016 17:40:58 -0500
-Received: (qmail 6798 invoked by uid 107); 22 Jan 2016 22:41:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 22 Jan 2016 17:41:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Jan 2016 17:40:56 -0500
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYU_=w0VWFRNGamP_nnnjyF6AcOj+A8r8GfhyrJMQzi9w@mail.gmail.com>
+	id S1754870AbcAVWmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 17:42:53 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:39589 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753931AbcAVWmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 17:42:51 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u0MMgeWL020559
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 22 Jan 2016 23:42:40 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0MMghag012015;
+	Fri, 22 Jan 2016 23:42:43 +0100
+In-Reply-To: <20160122223753.GB15635@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 22 Jan 2016 17:37:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 22 Jan 2016 23:42:40 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u0MMgeWL020559
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1454107361.26203@PmZpYTNSoPrEG/IHVRi9aw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284604>
 
-On Fri, Jan 22, 2016 at 02:36:54PM -0800, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
 
-> Impressive performance improvements. :)
+> On Fri, Jan 22, 2016 at 05:15:23PM +0000, Ashish Yadav wrote:
+>
+>> I am using git v1.7.12.4 w CentOS 6.5. Can I upgrade 1.7.1-3 to 2.7?
+>
+> Probably. :)
 
-"Accidentally quadratic" bugs are some of my favorites, because it's
-usually easy to show off the results. Of course, the repo in p7300 is
-pretty ridiculous, and most people won't see any speedup. I'll be
-curious to hear about Andreas's case, as it is a real-world one which
-may see some improvement.
+Surely ;-).
 
-> > BTW, what if you have
-> > precious content in a ".git" file?
-> 
-> I'd kindly ask to use a different version control in that case.
-> 
-> Q: What can you use Git for?
-> A: Everything including version control, backup, deploying software,
->     except when there is a file named .git with precious content.
-> 
-> ;)
+I have a CentOS 6.5 with Git 2.6 on it. It was installed from source
+(I'm not the one who installed it, but I think the installation was
+rather painless).
 
-Yeah, I think that is my attitude as well. Just because your ".git" file
-is not actually a real gitfile does not make it a good idea. We do not
-list it in "ls-files -o", but it is not like you could commit it,
-either; we explicitly prevent it from being added to the index.
+On the other hand, I don't think you'll find an RPM package, you'll need
+to compile it yourself.
 
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
