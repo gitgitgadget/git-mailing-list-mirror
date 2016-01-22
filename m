@@ -1,82 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Add post-worktree-add hook?
-Date: Fri, 22 Jan 2016 09:28:57 -0800
-Message-ID: <xmqqy4bhv7za.fsf@gitster.mtv.corp.google.com>
-References: <CACsJy8C9OELrkHZLzwoRx26AtzVvgouRA2+m0VH7GrJGSA8PCQ@mail.gmail.com>
+From: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
+Subject: RE: GIT Question
+Date: Fri, 22 Jan 2016 17:22:16 +0000
+Message-ID: <1E23015B9294604195E5EBA53602E115FCF5B7@WDC-VMAILBOXP25.smrcy.com>
+References: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+ <alpine.DEB.2.20.1601221750060.2964@virtualbox>
+ <1E23015B9294604195E5EBA53602E115FCF59F@WDC-VMAILBOXP25.smrcy.com>
+ <alpine.DEB.2.20.1601221803560.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 22 18:29:06 2016
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 22 18:38:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMfWE-0000Wc-00
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:29:06 +0100
+	id 1aMff5-0004zp-HQ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 18:38:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbcAVR3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 12:29:01 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54890 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754618AbcAVR27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 12:28:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE6743DBC9;
-	Fri, 22 Jan 2016 12:28:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UwQJI2kWcufGqxWBqtWsDk5AN/A=; b=SzXiOe
-	hARyU7rxRZrlv7TaTyIG6baIf85yS8W409OkkiP/+nTKZGGjjwOVE/Enkqv5Waui
-	vEo1pdebTm8/p5iq3xS6B8bTGtaQdu1E9FmVXPHkP+JgxGJqaP0CA6GxeDXWq+dn
-	Tus38tKFAcBttHVQKBUG/HDOXHpFt71EHeUeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yZ/kuVJwzPLWzj4f77ijtBlgenKCAj3n
-	Pe1zOPpg6ZTPOUVERR6qFirhxemSmUOXJK6/KjaUuy7e7hT5KOu6FvIGv3rRNUCZ
-	1aCJwPQsjODNhR9hdTmRrEJ6OSt8cbW2xIPD8hhEG8s4isIMDCt2Sdeh8dEki/RV
-	9u1wOY40FNA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B40543DBC8;
-	Fri, 22 Jan 2016 12:28:58 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 371523DBC7;
-	Fri, 22 Jan 2016 12:28:58 -0500 (EST)
-In-Reply-To: <CACsJy8C9OELrkHZLzwoRx26AtzVvgouRA2+m0VH7GrJGSA8PCQ@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 22 Jan 2016 16:45:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9E8CCB10-C12D-11E5-90C4-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754321AbcAVRiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 12:38:11 -0500
+Received: from STL-WSMAIL02.mercy.net ([170.29.3.81]:49988 "EHLO mercy.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753801AbcAVRiK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jan 2016 12:38:10 -0500
+X-Greylist: delayed 952 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Jan 2016 12:38:10 EST
+Received: from stl-vmailhubp02.smrcy.com (unknown [170.29.3.250])
+	by Websense Email Security Gateway with ESMTPS id 79849344F359B;
+	Fri, 22 Jan 2016 11:22:16 -0600 (CST)
+Received: from WDC-VMAILBOXP25.smrcy.com ([::1]) by stl-vmailhubp02.smrcy.com
+ ([::1]) with mapi id 14.03.0266.001; Fri, 22 Jan 2016 11:22:17 -0600
+Thread-Topic: GIT Question
+Thread-Index: AdFTyZFAHIg8Y+CwSjy8gBRmO8kvHwBnex+AAAyLSXD//6BNgIAAZGQg
+In-Reply-To: <alpine.DEB.2.20.1601221803560.2964@virtualbox>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.9.72.143]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284571>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+I apologize, however my intent in reaching out was not to seek free of cost help desk services.  After speaking with Apple they suggested that I contact both Git and Code developers for feedback on the commands I used prior to the potential file removal.  
 
-> I started moving my git work space to multi-worktree and found it
-> annoying that every time I add a new worktree, my first step must be
-> copy my config.mak over. Room for improvement. I see three options:
+I appreciate your assistance thus far and will reach out to the mailing list as you've described below.  Again thank you for your time and have a good day. 
 
-4) none of the above.
+-----Original Message-----
+From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+Sent: Friday, January 22, 2016 11:09 AM
+To: Draggs, Tori
+Cc: git@vger.kernel.org
+Subject: RE: GIT Question
 
-Everybody should learn to think before uttering post-X hook the
-following:
+Hi Tori,
 
- * Is X an end user initiated action?
+please reply-to-all. I really have no time to serve as your personal,
+free-of-cost help desk. But I am willing to help on the mailing list.
 
- * What does the hypothetical post-X hook need to decide what to do?
-   If it needs to change behaviour based on what X did, does it need
-   more than what it can get by observing its outcome (i.e. exit
-   status and what is left in the working tree and the repository)?
+On Fri, 22 Jan 2016, Draggs, Tori wrote:
 
- * Does the hypothetical post-X hook need other end-user supplied
-   customization beyond what argument the end user gave to run X?
+> Hi.  I am able to pull up Visual Studio Code.  But none of my local
+> files.  I tried using the magnifying glass as well as the Go To feature
+> and when performing a search I am informed that the file is not found. 
 
-The answer to these questions would often reveal that post-X hook is
-a bad idea and you are much better off with a wrapper script that
-runs X as the first thing (and the remainder can do different things
-based on the outcome of X if you wanted it to).
+Were your files inside the .app, or did you store them in your Documents/
+folder?
+
+Ciao,
+Johannes
+This electronic mail and any attached documents are intended solely for the named addressee(s) and contain confidential information. If you are not an addressee, or responsible for delivering this email to an addressee, you have received this email in error and are notified that reading, copying, or disclosing this email is prohibited. If you received this email in error, immediately reply to the sender and delete the message completely from your computer system.
