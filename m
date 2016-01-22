@@ -1,104 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
-Date: Fri, 22 Jan 2016 11:09:35 -0800
-Message-ID: <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
-	<cover.1452585382.git.johannes.schindelin@gmx.de>
-	<05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
-	<56A279DA.8080809@kdbg.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] merge-file: consider core.crlf when writing merge
+ markers
+Date: Fri, 22 Jan 2016 14:50:15 -0500
+Message-ID: <20160122195015.GA5897@flurp.local>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de>
+ <c0c775ea7a9ba3244748b784241de685cefc73b1.1453482052.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jan 22 20:09:49 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>,
+	git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 22 20:50:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMh5b-0006Ha-4H
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 20:09:43 +0100
+	id 1aMhj2-0002E3-Gx
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 20:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753877AbcAVTJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 14:09:39 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50427 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753758AbcAVTJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 14:09:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5319F3DD7F;
-	Fri, 22 Jan 2016 14:09:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2KE35lTpRmVEniSf4JIAsDo7lwk=; b=Pz1ZEf
-	0S7sYYZI2ZDb5sPiYeFYevrm8U0/+VIH/CdLw12aAz9VI+12BQ7uQJyOXQRW2z0g
-	1Na6G2S9iV2crFZRpA2JBO9U35JDNceQS2eDkxoi0lLedwvhAiOQqlnFc5rkaZa7
-	zyu+7kncNTNcmFcXyBTTo3JEM+plhtXqpDCCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DvbvZY/3ryVAfuoJxKVP0ffXUIJ5RGmY
-	jEBbAkh9aZyMa1QZgySndYhp7nHmIOTbNOVIQcZnnSCVGTK4/b/+pdzBTdpOIxbb
-	2hjZyb/27g4niTd5JUec82Rnvwk6RpvZSL0milglCjX1sJ+8SiBVyB+kDtj0X/nl
-	1AZ95BsaWpY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3A3973DD7E;
-	Fri, 22 Jan 2016 14:09:37 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7CA1F3DD71;
-	Fri, 22 Jan 2016 14:09:36 -0500 (EST)
-In-Reply-To: <56A279DA.8080809@kdbg.org> (Johannes Sixt's message of "Fri, 22
-	Jan 2016 19:50:02 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ADB0890C-C13B-11E5-8A03-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752669AbcAVTuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 14:50:25 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34130 "EHLO
+	mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752140AbcAVTuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 14:50:23 -0500
+Received: by mail-io0-f195.google.com with SMTP id k127so8399638iok.1
+        for <git@vger.kernel.org>; Fri, 22 Jan 2016 11:50:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0khqhKeEHjekVT7G2FqRE2Yw2TcXt3X1UEifcWGIedI=;
+        b=Hk6uHU1eKGafFy2hgCS3q+vBzGAaPKY0AwtJuVEFG5KrZyw1ddELtPo2V8fXW0Fv1x
+         2/Obgz6VQ8K+mGq2rKt4bXmEatfrAA76VBI+qGKROHAdhS3O9zRpodgUo1RCAD/+Lj2V
+         zzPbwOMOcj79QVnhuiEUs0njCSwUfTkr3FyyK9RrRHis6XjeJMZTtoga0lYdvFFmJIF5
+         CvJVY4WBhWIN3sI5ZqdrA9DgGcDXdJqIJYpWhURWB0lxKS0MUn3n4UfoWOk5s4qR0i/V
+         ZNV+WZmBtKvsnuNToO+fqgsUKZvpO5sgU1SsC7vl4ziyfr0YDG4K/eK14tSELKaMjsX1
+         m1pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=0khqhKeEHjekVT7G2FqRE2Yw2TcXt3X1UEifcWGIedI=;
+        b=brMRVADIxf/xSkIZHoHsQl/u56nlXVYWJojTsnKsZtc8nPMe9j5DFudse+CNxgVBbL
+         S4W/UV7g82hyvAoD44zJzyVoZ52XCJRyBW8g2W3OG6bR1p8aYz6EGDRur6fTzt+YAR/J
+         moQFgqgmFSytamr1NHS+ktlRVt1wPk28lbv7tbjQwsNDuKyDXEVZj5RnlV4MSWJjlW9c
+         jd3P9VI86iEA82V34vthi8pvSF9xQAU0xYsfQFaChjwNH9oBTWz1LZYvSQWm/IeHijyY
+         BaZohzAEtZsrCIzLqYVh+FMsGsZUBufWuOMDOhu4DMRBGENwYqEbb6PV/pP+/LGGzTtP
+         OdBQ==
+X-Gm-Message-State: AG10YOS3iUrQiLIRRF8l4NZ13/KBfFyyd/cGb2brBsGAWqjjGgIaXKE2wJyYBdL7QCDxlw==
+X-Received: by 10.107.19.160 with SMTP id 32mr5363517iot.104.1453492222612;
+        Fri, 22 Jan 2016 11:50:22 -0800 (PST)
+Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id 95sm3588993iop.35.2016.01.22.11.50.21
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 22 Jan 2016 11:50:21 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <c0c775ea7a9ba3244748b784241de685cefc73b1.1453482052.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284587>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Jan 22, 2016 at 06:01:25PM +0100, Johannes Schindelin wrote:
+> When merging files in repos with core.eol = crlf, git merge-file inserts
+> just a LF at the end of the merge markers. Files with mixed line endings
+> cause trouble in Windows editors and e.g. contrib/git-jump, where an
+> unmerged file in a run of "git jump merge" is reported as simply "binary
+> file matches".
+> [...]
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+> @@ -346,4 +346,18 @@ test_expect_success 'conflict at EOF without LF resolved by --union' \
+> +test_expect_success 'conflict markers contain CRLF when core.eol=crlf' '
+> +	test_must_fail git -c core.eol=crlf merge-file -p \
+> +		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
+> +	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 3
 
-> I suggest to move the function definition out of line:
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 10a51c0..0cebb61 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
->  	return -1;
->  }
->  
-> +int mingw_skip_dos_drive_prefix(char **path)
-> +{
-> +	int ret = has_dos_drive_prefix(*path);
-> +	*path += ret;
-> +	return ret;
-> +}
+The "\r" isn't recognized by 'sed' on Mac OS X or BSD. Perhaps use
+instead:
+
+    test $(cat output.txt | tr "\015" Q | sed -n "/\.txtQ$/p" | wc -l) = 3
+
+which works on Linux, Mac OS X, and BSD (in my tests).
+
+Or, implement a cr_to_q() to complement the existing q_to_cr() in
+t/test-lib-functions.sh.
+
+> +'
 > +
->  int mingw_offset_1st_component(const char *path)
->  {
->  	char *pos = (char *)path;
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 9b5db4e..2099b79 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
->  
->  #define has_dos_drive_prefix(path) \
->  	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> -static inline int mingw_skip_dos_drive_prefix(char **path)
-> -{
-> -	int ret = has_dos_drive_prefix(*path);
-> -	*path += ret;
-> -	return ret;
-> -}
-> +int mingw_skip_dos_drive_prefix(char **path);
->  #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
->  #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
->  static inline char *mingw_find_last_dir_sep(const char *path)
+> +test_expect_success 'conflict markers heed gitattributes over core.eol=crlf' '
+> +	git config core.eol crlf &&
+> +	echo "*.txt eol=lf" >>.gitattributes &&
+> +	test_must_fail git -c core.eol=crlf merge-file -p \
+> +		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
+> +	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 0
 
-This sounds good to me.  Dscho?
+Ditto.
+
+> +'
