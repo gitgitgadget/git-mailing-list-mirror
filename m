@@ -1,63 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] status: be prepared for not-yet-started interactive rebase
-Date: Fri, 22 Jan 2016 17:45:38 +0100
-Message-ID: <vpqlh7h5zrh.fsf@anie.imag.fr>
-References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT Question
+Date: Fri, 22 Jan 2016 17:51:55 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601221750060.2964@virtualbox>
+References: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 22 17:46:03 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Draggs, Tori" <Tori.Draggs@Mercy.Net>
+X-From: git-owner@vger.kernel.org Fri Jan 22 17:52:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMeqX-0004dW-0g
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 17:46:01 +0100
+	id 1aMewT-0007fM-LZ
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 17:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbcAVQp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 11:45:58 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:33610 "EHLO rominette.imag.fr"
+	id S1752568AbcAVQwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 11:52:05 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64372 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753701AbcAVQp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 11:45:56 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u0MGjbrA014545
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 22 Jan 2016 17:45:37 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u0MGjcMe008234;
-	Fri, 22 Jan 2016 17:45:38 +0100
-In-Reply-To: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Fri, 22 Jan 2016 17:28:40 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 22 Jan 2016 17:45:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u0MGjbrA014545
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1454085941.34187@aeCU9Ju14Nrxa7UfgjiGqw
+	id S1752509AbcAVQwE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 11:52:04 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M39zL-1a5wvy3T9z-00sxhb; Fri, 22 Jan 2016 17:51:57
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1E23015B9294604195E5EBA53602E115FCEE7D@WDC-VMAILBOXP25.smrcy.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:JVicVToXqWy1pBciiYY3GI819WW3EdlqfJQ4nhvimU8FEJF++ZM
+ FsTVnlbrFlTWQFCotQeYL6Qqcs94TCabrdYJUlLB2idtZ8Y8s940P6j2LRuuO0OuOWO+NKh
+ EBCA02ZYsJVn9psxpSbUrDfFncGqXDYfuXVtOsypiTkZgaRrfAKlSyCSoTE007Y6/YvA28O
+ mRaA8mtQFtw9nsNSJBy2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6JPfIrT4V8w=:DCj7/nW2dleiTOfD/ubbpk
+ ENYB09MwZ9auy6Kb3bb3ws5x1zjrmash7HxK+/VMwn3a+6o6mFrfkbihraVl/I0MGBQhFFtb4
+ 5FfiOSxlW06A9dlrpTz/ftCjBmWVjpHzy6Pca53pwRFK3BUpfIQpJDzPDLSaFKrOVPKl/EH8+
+ j+htghpXNgu4q3PDZJJgDrpjVzWEJMfgNWefBwLwMMuwQsm+h7XE7YEbk+qeAWXEoJJgq5QAD
+ j/Uc4ld8Di9VEJpJPsMUaPNebYzyVu/LBgoGKZscS0xY+U5JFmf8mn6dJ101YbyvpspGeXKiq
+ sPrWcvOU32LL8oheXTjGGUpucJG+wnMZfQ0kHkivYGZcc148Y3mYVyliSjA/39Mgh1GxCnZWs
+ F2KVDHEpaoDpB/Ipn8g2e6ZXI413PukG7s/70LEWo1sMTssg+wYB0DCIgXvGLEXvT0jBFZafL
+ y2Q/Qcq17AtxECooS2JYRTf0HwG9RJw32M1G9PQ0KLS8PgOgsMFJV2FDbf525D2dc0OcZRjko
+ blCqVWzitFF5gZpnfGv9h10Jh4GKw79I3oCXjleZkEwu9DtvMeTqMcDpEhs4bgHsDTFLTwOvk
+ cQlpP54MwvplwVgF/fhD5jcYoG/pVcSiHudUwhjGCETwcP4EQ0Pf8T6aUp/sGYIc/cf6XN5jr
+ t95oFnOvDF+M7123KN+xwoaYsUcyLwCAQVWzAUqupD7tVzC1jbPnaoK15EYyGW9G4dle/7rrw
+ wkVn3O/FvcqMLK0S4gn+0vxBrRcUGDUXV3UWV4VeN0cU1YdfNG7lU46o9JCbfSvNd4j0xJxh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284561>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Tori,
 
->  wt-status.c | 22 +++++++++++++++-------
->  1 file changed, 15 insertions(+), 7 deletions(-)
+On Wed, 20 Jan 2016, Draggs, Tori wrote:
 
-Looks good to me. You may want to add a test by overriding $EDITOR to a
-script doing "git status >actual" if you want to have fun with testing.
+> Specs:
+> MacBook Pro 
+> OS X Yosemite
+> 2.6 GHz Intel Core i5, 8GN 1600 MHz DDR3
+> 
+> After selecting the Git option in a recent install of Visual Studio Code
+> 2015 for MAC, my filesystem was removed.
 
-Thanks,
+Can you call Visual Studio Code? If so, the filesystem was definitely not
+removed, so that's good news.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> I can no longer access any of the local files stored on my machine.
+
+The most likely cause is that you are now looking somewhere else than
+where the files are actually. Could you use the magnifying glass on the
+upper right hand corner to search for a file name of the files you had
+previously?
+
+Ciao,
+Johannes
