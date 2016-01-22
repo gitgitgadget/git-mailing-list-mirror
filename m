@@ -1,129 +1,113 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
-Date: Fri, 22 Jan 2016 19:50:02 +0100
-Message-ID: <56A279DA.8080809@kdbg.org>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
- <cover.1452585382.git.johannes.schindelin@gmx.de>
- <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Malicously tampering git metadata?
+Date: Fri, 22 Jan 2016 10:51:09 -0800
+Message-ID: <CAGZ79kYOQ1sphdozTXGf+Q2n=kNpmGx1pvzLD5SHBqfhWDBA3Q@mail.gmail.com>
+References: <20151216032639.GA1901@LykOS>
+	<20151218231032.GA16904@thunk.org>
+	<20151219173018.GA1178@LykOS>
+	<20151220012835.GA3013@thunk.org>
+	<20160112182137.GE27334@LykOS>
+	<CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
+	<20160114171639.GB25541@LykOS>
+	<CAGZ79ka51e+-24RyMgUGAOUkBYXxnWZb8Pg7vrgjGHvvWU770Q@mail.gmail.com>
+	<20160122180007.GB28871@LykOS>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 22 19:50:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 22 19:51:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMgmh-0001wS-ST
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:50:12 +0100
+	id 1aMgnj-0002Zu-MK
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754140AbcAVSuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 13:50:08 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:9982 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751431AbcAVSuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 13:50:06 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pn8lv2Tlpz5tlC;
-	Fri, 22 Jan 2016 19:50:03 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id AB27151EA;
-	Fri, 22 Jan 2016 19:50:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
+	id S1754306AbcAVSvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 13:51:11 -0500
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34678 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751431AbcAVSvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 13:51:10 -0500
+Received: by mail-io0-f171.google.com with SMTP id 1so97222345ion.1
+        for <git@vger.kernel.org>; Fri, 22 Jan 2016 10:51:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=IH2xAdKH4twZoccAKEXkY1mOM5h2SkxNbKG9vTXViao=;
+        b=ZZmLWRzmrdc6zVyd8Pg8wouTiPqPOVas9nURGhmt3o8mDZolwG2wZUfGqroCo14btr
+         UpCyLWAybpxKmhJ7esW1tkMPLRAnAoqbdeGzdx6FLOPgAT14U3y9fiKAFWdEfJ3kiizz
+         r6/B7LVWNElpWq/4A5YjuiskYSZNxqOfGJya5BqgZHGaw0U7UDt8xof/sIA0/RhQ9VlT
+         6E80HWwAefQGzbxczgVQnGyNvq0VOwv8qL64wvQvsgUBFagtpUE5eBvVFSG+Lr3k30hS
+         m0XCfanhrY8vwaIZ8V0h5xDmnE2BBmmQqPbWXxIwHmVn7+M+F3oWt7iP64wqEZ2qjpJ/
+         xM7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=IH2xAdKH4twZoccAKEXkY1mOM5h2SkxNbKG9vTXViao=;
+        b=RsJLXJ0MehBeZ9kghJ/sRK98m7lXt6IZwTKf9V03PeAkuxqCMoeECxmsohXXlDCybX
+         lvB16IP79Cp70/yLwGz/+Qs6h8cetXGxVJPpKcYO/cnXSXlTFCXdIXyR4gQqOK7or4+9
+         cLas22D60OaPVUk69AmxWK8WFbtY4wpCLhhJ/KiCgmG5EdZTkRyNp406Nc8hRZyQxaai
+         bCGhjH3u74+HYGx65/dLmbWf48SJlFL98pw5cMVjW0ZQVIo7QbnkHnGiksJ8AlO04rlE
+         +4KMFJQUDqKp/laBDYA75AeC/CkX0Ux0GlatyUwVNebuYR1QEJQ9KzvZu4vZEJ2B392x
+         1W3Q==
+X-Gm-Message-State: AG10YOR1+BWz2eRIdo/efebfJfnEHEdnOkXMxEgmIu3HKYey58EkeUxcr+aGoOXOkpPIisfpVbXal+Q5JaJaMGix
+X-Received: by 10.107.168.203 with SMTP id e72mr5021220ioj.96.1453488669780;
+ Fri, 22 Jan 2016 10:51:09 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Fri, 22 Jan 2016 10:51:09 -0800 (PST)
+In-Reply-To: <20160122180007.GB28871@LykOS>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284581>
 
-Am 12.01.2016 um 08:57 schrieb Johannes Schindelin:
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 57ca477..b3e5044 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -361,7 +361,15 @@ HANDLE winansi_get_osfhandle(int fd);
->    * git specific compatibility
->    */
->   
-> -#define has_dos_drive_prefix(path) (isalpha(*(path)) && (path)[1] == ':')
-> +#define has_dos_drive_prefix(path) \
-> +	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> +static inline int mingw_skip_dos_drive_prefix(char **path)
-> +{
-> +	int ret = has_dos_drive_prefix(*path);
-> +	*path += ret;
-> +	return ret;
-> +}
-> +#define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
+On Fri, Jan 22, 2016 at 10:00 AM, Santiago Torres <santiago@nyu.edu> wrote:
+> On Thu, Jan 14, 2016 at 09:21:28AM -0800, Stefan Beller wrote:
+>> On Thu, Jan 14, 2016 at 9:16 AM, Santiago Torres <santiago@nyu.edu> wrote:
+>> > Hello Stefan, thanks for your feedback again.
+>> >
+>> >> This is what push certs ought to solve already?
+>> >
+>> > Yes, they aim to solve the same issue. Unfortunately, push certificates
+>> > don't solve all posible scenarios of metadata manipulation (e.g., a
+>> > malicious server changing branch pointers to trick a user into merging
+>> > unwanted changes).
+>> >
+>> >> AFAIU the main issue with untrustworthy servers is holding back the latest push.
+>> >> As Ted said, usually there is problem in the code and then the fix is pushed,
+>> >> but the malicious server would not advertise the update, but deliver the old
+>> >> unfixed version.
+>> >>
+>> >> This attack cannot be mitigated by having either a side channel (email
+>> >> announcements)
+>> >> or time outs (state is only good if push cert is newer than <amount of
+>> >> time>, but this may
+>> >> require empty pushes)
+>> >>
+>> >
+>> > I'm sorry, did you mean to say "can"?
+>>
+>> Yes, formulating that sentence took a while and I did not proofread it.
+>
+> Sorry, Stefan. I didn't mean to come off as rude; I just wanted to make
+> sure I understood correctly what you were proposing.
 
-This triggers
+Not at all, I just made a typo. :)
 
-    CC alloc.o
-In file included from git-compat-util.h:186,
-                 from cache.h:4,
-                 from alloc.c:12:
-compat/mingw.h: In function 'mingw_skip_dos_drive_prefix':
-compat/mingw.h:365: warning: implicit declaration of function 'isalpha'
+>
+> Do you have any further insight? I think that, besides the supporting
+> multiple workflows, maybe synchronizing concurrent fetches might be an
+> issue to our solution.
 
-when I build under the old MSYS environment. While I would understand
-that the old MSYS environment is end-of-lifed and not worth your time
-catering to, the error is still an indication of a problem.
+I did not think further about any issues there.
 
-Notice that mingw.h is #included in line 186 of git-compat-util.h,
-isalpha is only (re-)defined much later in line 790. That would explain
-the warning. What I do not understand is that you do not observe the
-same warning in your MSYS2/MINGWxx environment. It would mean that
-<ctype.h> is included somewhere.
+Thanks,
+Stefan
 
-At any rate, the resulting binary sometimes uses an isalpha
-implementation other than the one provided in git-compat-util.h. The
-result is most likely correct, but it is certainly not the intent,
-is it?
-
-I did not attempt to build with MSVC, but it is not unlikely that it
-shows the same error.
-
-I suggest to move the function definition out of line:
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 10a51c0..0cebb61 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
- 	return -1;
- }
- 
-+int mingw_skip_dos_drive_prefix(char **path)
-+{
-+	int ret = has_dos_drive_prefix(*path);
-+	*path += ret;
-+	return ret;
-+}
-+
- int mingw_offset_1st_component(const char *path)
- {
- 	char *pos = (char *)path;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 9b5db4e..2099b79 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
- 
- #define has_dos_drive_prefix(path) \
- 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
--static inline int mingw_skip_dos_drive_prefix(char **path)
--{
--	int ret = has_dos_drive_prefix(*path);
--	*path += ret;
--	return ret;
--}
-+int mingw_skip_dos_drive_prefix(char **path);
- #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
- #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
- static inline char *mingw_find_last_dir_sep(const char *path)
+>
+> Thanks a lot!
+> -Santiago.
