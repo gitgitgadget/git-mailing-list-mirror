@@ -1,113 +1,78 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC] Malicously tampering git metadata?
-Date: Fri, 22 Jan 2016 10:51:09 -0800
-Message-ID: <CAGZ79kYOQ1sphdozTXGf+Q2n=kNpmGx1pvzLD5SHBqfhWDBA3Q@mail.gmail.com>
-References: <20151216032639.GA1901@LykOS>
-	<20151218231032.GA16904@thunk.org>
-	<20151219173018.GA1178@LykOS>
-	<20151220012835.GA3013@thunk.org>
-	<20160112182137.GE27334@LykOS>
-	<CAGZ79kadpy9N0qEpxK-USVxCmNfYJm1g5xr8ZiFxf7sOVKZnEw@mail.gmail.com>
-	<20160114171639.GB25541@LykOS>
-	<CAGZ79ka51e+-24RyMgUGAOUkBYXxnWZb8Pg7vrgjGHvvWU770Q@mail.gmail.com>
-	<20160122180007.GB28871@LykOS>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] status: be prepared for not-yet-started interactive
+ rebase
+Date: Fri, 22 Jan 2016 20:02:45 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601222000040.2964@virtualbox>
+References: <99f6de4be107044fdf01ee796f42e124ac147891.1453480067.git.johannes.schindelin@gmx.de> <vpqlh7h5zrh.fsf@anie.imag.fr> <xmqqio2lv4rg.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Santiago Torres <santiago@nyu.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 22 19:51:25 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>,
+	Guillaume Pages <guillaume.pages@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 22 20:03:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMgnj-0002Zu-MK
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 19:51:16 +0100
+	id 1aMgzB-0001sX-KK
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Jan 2016 20:03:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754306AbcAVSvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 13:51:11 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34678 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431AbcAVSvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 13:51:10 -0500
-Received: by mail-io0-f171.google.com with SMTP id 1so97222345ion.1
-        for <git@vger.kernel.org>; Fri, 22 Jan 2016 10:51:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IH2xAdKH4twZoccAKEXkY1mOM5h2SkxNbKG9vTXViao=;
-        b=ZZmLWRzmrdc6zVyd8Pg8wouTiPqPOVas9nURGhmt3o8mDZolwG2wZUfGqroCo14btr
-         UpCyLWAybpxKmhJ7esW1tkMPLRAnAoqbdeGzdx6FLOPgAT14U3y9fiKAFWdEfJ3kiizz
-         r6/B7LVWNElpWq/4A5YjuiskYSZNxqOfGJya5BqgZHGaw0U7UDt8xof/sIA0/RhQ9VlT
-         6E80HWwAefQGzbxczgVQnGyNvq0VOwv8qL64wvQvsgUBFagtpUE5eBvVFSG+Lr3k30hS
-         m0XCfanhrY8vwaIZ8V0h5xDmnE2BBmmQqPbWXxIwHmVn7+M+F3oWt7iP64wqEZ2qjpJ/
-         xM7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=IH2xAdKH4twZoccAKEXkY1mOM5h2SkxNbKG9vTXViao=;
-        b=RsJLXJ0MehBeZ9kghJ/sRK98m7lXt6IZwTKf9V03PeAkuxqCMoeECxmsohXXlDCybX
-         lvB16IP79Cp70/yLwGz/+Qs6h8cetXGxVJPpKcYO/cnXSXlTFCXdIXyR4gQqOK7or4+9
-         cLas22D60OaPVUk69AmxWK8WFbtY4wpCLhhJ/KiCgmG5EdZTkRyNp406Nc8hRZyQxaai
-         bCGhjH3u74+HYGx65/dLmbWf48SJlFL98pw5cMVjW0ZQVIo7QbnkHnGiksJ8AlO04rlE
-         +4KMFJQUDqKp/laBDYA75AeC/CkX0Ux0GlatyUwVNebuYR1QEJQ9KzvZu4vZEJ2B392x
-         1W3Q==
-X-Gm-Message-State: AG10YOR1+BWz2eRIdo/efebfJfnEHEdnOkXMxEgmIu3HKYey58EkeUxcr+aGoOXOkpPIisfpVbXal+Q5JaJaMGix
-X-Received: by 10.107.168.203 with SMTP id e72mr5021220ioj.96.1453488669780;
- Fri, 22 Jan 2016 10:51:09 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Fri, 22 Jan 2016 10:51:09 -0800 (PST)
-In-Reply-To: <20160122180007.GB28871@LykOS>
+	id S1751344AbcAVTCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 14:02:55 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60090 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751091AbcAVTCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 14:02:54 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LfBX6-1ZlN671WDQ-00omGM; Fri, 22 Jan 2016 20:02:47
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqio2lv4rg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Dbe6RXMIqagGOfEFThG6I/lkV0k6LFHOAmhxh5Wi/8gjUVgxgvB
+ 8pfamW7h6Tg3qE0GzeFhmhBQU5Z53GNpQm3seNVE+oUxFcTKvmlI5KYQWayqXZ8gbaEh7eS
+ Svlm5Rr3tqUvkReePouwEacM1qRjTEjUcjbRNVFf5Q0QpGV3jzprjSNgHrfHQsATLRBBcdO
+ xIN/uf9g7VYSyKqRALfRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cnBtp7pVYvA=:GPn5hYo1qyscEx1vQL78OE
+ CzOB+jCDInOPN6N6Z6mcE3dxbsO3MMxfMswPg03tZ+g486wLrQohBUtImMYByZbNAZxgSdlvE
+ T9E90Sfp3nIRxh51SkfqbrnbTZ68PPhfN3Ao2feYgMnks/PW8dHGLv+y25heBm8Wq3VGdfN7x
+ RBoEm20tEUn/fGQJlgVK9k9eH1ZNWHTkffsc9P78wPOicaecXA1P/gYhUV8Plq4V1Lr1WPLtj
+ 0YUrrrk6Q/KqH6gMJZ16+thvQemXkf1ChfYTFVDb844WkV+R2CF3JpwHQ8sCpLxo1XdzFDp/W
+ Wr4B7b1Vso7lzm16PtfuxtWvaLS6ScZJSkkEn/gBMCXlTslwC/7sZJqA0Fm5Qd4BpVTNgLoB7
+ G27fbX2xk22omQOL/U0I76s5zmQD6v2JdGCw/pz3rAhjyposRvvSSiXWz2bMGtYq3IuPVWiz3
+ eKUFWkdv5ysg0zSvAoiDrBo15roPv7FzrQeggy6FvtLGERXhC4zwUq5E7/WkEdsPHDlVYQQ0B
+ wHjPYOWmTrwDrSYHMroJPmAhKgE43se9bnFlcpdphAK1bqmMnrySGG0HLmOStRbVMWX8s5UVU
+ ahGdqSUCJr0ysLYYQB30ZuQF3A6p6jtqp1E5wRv8C9TRA9C83xqvckWEC8KNbmnnc+q9vR1+Z
+ H7a23TJDTtKonL+HNLhMhZw/tO5evvXoObBRp3kSi78pvV5Rwwehemg6l5hTS4sAle2PD0dK2
+ IC4rn3wT1GqOr+J/Yqyc8PaM/a3W09k79nIXicvjJw31my8gnbHwPRm/KMRX7sn7dZznKH9a 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284582>
 
-On Fri, Jan 22, 2016 at 10:00 AM, Santiago Torres <santiago@nyu.edu> wrote:
-> On Thu, Jan 14, 2016 at 09:21:28AM -0800, Stefan Beller wrote:
->> On Thu, Jan 14, 2016 at 9:16 AM, Santiago Torres <santiago@nyu.edu> wrote:
->> > Hello Stefan, thanks for your feedback again.
->> >
->> >> This is what push certs ought to solve already?
->> >
->> > Yes, they aim to solve the same issue. Unfortunately, push certificates
->> > don't solve all posible scenarios of metadata manipulation (e.g., a
->> > malicious server changing branch pointers to trick a user into merging
->> > unwanted changes).
->> >
->> >> AFAIU the main issue with untrustworthy servers is holding back the latest push.
->> >> As Ted said, usually there is problem in the code and then the fix is pushed,
->> >> but the malicious server would not advertise the update, but deliver the old
->> >> unfixed version.
->> >>
->> >> This attack cannot be mitigated by having either a side channel (email
->> >> announcements)
->> >> or time outs (state is only good if push cert is newer than <amount of
->> >> time>, but this may
->> >> require empty pushes)
->> >>
->> >
->> > I'm sorry, did you mean to say "can"?
->>
->> Yes, formulating that sentence took a while and I did not proofread it.
->
-> Sorry, Stefan. I didn't mean to come off as rude; I just wanted to make
-> sure I understood correctly what you were proposing.
+Hi Junio,
 
-Not at all, I just made a typo. :)
+On Fri, 22 Jan 2016, Junio C Hamano wrote:
 
->
-> Do you have any further insight? I think that, besides the supporting
-> multiple workflows, maybe synchronizing concurrent fetches might be an
-> issue to our solution.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >
+> >>  wt-status.c | 22 +++++++++++++++-------
+> >>  1 file changed, 15 insertions(+), 7 deletions(-)
+> >
+> > Looks good to me. You may want to add a test by overriding $EDITOR to a
+> > script doing "git status >actual" if you want to have fun with testing.
+> 
+> I am unhappy that the code does not read 'rebase-todo' at all when
+> 'done' is missing.
 
-I did not think further about any issues there.
+At this point is virtually certain that the edit script is opened in an
+editor, and very likely to change. So it makes little sense to look at the
+todo.
 
-Thanks,
-Stefan
-
->
-> Thanks a lot!
-> -Santiago.
+Ciao,
+Dscho
