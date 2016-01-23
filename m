@@ -1,108 +1,81 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
-Date: Sat, 23 Jan 2016 20:02:12 +0100
-Message-ID: <56A3CE34.20808@kdbg.org>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
- <cover.1452585382.git.johannes.schindelin@gmx.de>
- <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
- <56A279DA.8080809@kdbg.org> <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601230924090.2964@virtualbox>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v1] t0027: Add tests for get_stream_filter()
+Date: Sat, 23 Jan 2016 18:29:41 -0500
+Message-ID: <CAPig+cTjLFFa+1mz222pKhoCjMbPwJwPSy1nWCfOd2SdKX1x-A@mail.gmail.com>
+References: <1453558101-6858-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 23 20:02:40 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "tboegi@web.de" <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jan 24 00:29:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aN3SI-0001UU-Tt
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 20:02:39 +0100
+	id 1aN7cq-0001rk-0P
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 00:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044AbcAWTCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2016 14:02:34 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:14496 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753553AbcAWTCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2016 14:02:16 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pnmzT0WHhz5tlH;
-	Sat, 23 Jan 2016 20:02:13 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 3D672513D;
-	Sat, 23 Jan 2016 20:02:12 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <alpine.DEB.2.20.1601230924090.2964@virtualbox>
+	id S1751592AbcAWX3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2016 18:29:44 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33232 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbcAWX3m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2016 18:29:42 -0500
+Received: by mail-vk0-f66.google.com with SMTP id n1so4392990vkb.0
+        for <git@vger.kernel.org>; Sat, 23 Jan 2016 15:29:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=dkIbWsqTezorJp/Gg8sk7IxpgtXZXwiuI9gb1S00nC0=;
+        b=wDCS2WDAPUR2zVPRVwnfxjdgMHfmHKxsrGA/tSJJ/QZ+ixcLuFkGkBc+lFtkKILqLa
+         oWkBs66qTdDff9mq2RxsCoyFQx0Bdf/lcoryYBGUIZjhVKoUVHjErUlTd5mYkWGUTh28
+         4aFHqD0oAzDUvioLlCcwswGCthOk6+QITT0sBdd5b+ox8O/BjJfyZ2zI2ZbStrb5AaeW
+         SW/C/W4z12rFfkPC/LWlP4euuO9IrXJWVuFa3GdcA8cRQ2sKBsIE9FX5xRFoAdzJWSGd
+         odfqcoPVWPFXi9lWpBISFvep8o2LT69qDEBfJEzlZQThyD3wZAzW1Rf0pfZZmaOlpoUd
+         0k1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=dkIbWsqTezorJp/Gg8sk7IxpgtXZXwiuI9gb1S00nC0=;
+        b=mkf/nVZaCvLD7tmzfeG5sVrENGdOR2po51F7ylqafwSacXLQyfNrzyN4heH3pt1ZTy
+         1kifVbhGmdytQGCirdQ3ASmduvJ+P08BJyFoHS9sP6ga7bCPrbKpDGh1zZHKD66pflSS
+         Au0GtJxYB4PQDApWjLqxXDEog+0P69Td0a2mq5TqAPqRMXPdi4tGp7c5NjYSZxMkWv9J
+         jV7ktygsYWVAcbjmf14cQ4z2NKZ/uz4UXO9XxoFQenldmfRmmWVtEjZNKypFqgsOLoja
+         42ZqXqmo4jlS0dYE8EkX8oi806odmJyfne6qFMpeFOVOiyNsUS0b6AKEkz32RVYU0+WB
+         1d7A==
+X-Gm-Message-State: AG10YOSK71Ihn0nKWffTIrayVXgVvq2m6nvH4Fy4LqM5gwzl7nxGPRjeoSrpe0fSPXC1izwA4jqdMLrbuid0yQ==
+X-Received: by 10.31.141.2 with SMTP id p2mr6827227vkd.37.1453591781891; Sat,
+ 23 Jan 2016 15:29:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 23 Jan 2016 15:29:41 -0800 (PST)
+In-Reply-To: <1453558101-6858-1-git-send-email-tboegi@web.de>
+X-Google-Sender-Auth: ons0HFCqHBBuiRZ33xI3-fQI6s8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284632>
 
-Am 23.01.2016 um 09:25 schrieb Johannes Schindelin:
-> Hi Junio,
+On Saturday, January 23, 2016, <tboegi@web.de> wrote:
+> When a filter is configured, a different code-path is used in
+> convert.c and entry.c via get_stream_filter(), but there are no test cases yet.
 >
-> On Fri, 22 Jan 2016, Junio C Hamano wrote:
+> Add tests for the filter API by configuring the ident filter.
+> The result of the SHA1 conversion is not checked, this is already
+> done in other TC.
 >
->> Johannes Sixt <j6t@kdbg.org> writes:
->>
->>> I suggest to move the function definition out of line:
->>>
->>> diff --git a/compat/mingw.c b/compat/mingw.c
->>> index 10a51c0..0cebb61 100644
->>> --- a/compat/mingw.c
->>> +++ b/compat/mingw.c
->>> @@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
->>>   	return -1;
->>>   }
->>>
->>> +int mingw_skip_dos_drive_prefix(char **path)
->>> +{
->>> +	int ret = has_dos_drive_prefix(*path);
->>> +	*path += ret;
->>> +	return ret;
->>> +}
->>> +
->>>   int mingw_offset_1st_component(const char *path)
->>>   {
->>>   	char *pos = (char *)path;
->>> diff --git a/compat/mingw.h b/compat/mingw.h
->>> index 9b5db4e..2099b79 100644
->>> --- a/compat/mingw.h
->>> +++ b/compat/mingw.h
->>> @@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
->>>
->>>   #define has_dos_drive_prefix(path) \
->>>   	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
->>> -static inline int mingw_skip_dos_drive_prefix(char **path)
->>> -{
->>> -	int ret = has_dos_drive_prefix(*path);
->>> -	*path += ret;
->>> -	return ret;
->>> -}
->>> +int mingw_skip_dos_drive_prefix(char **path);
->>>   #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
->>>   #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
->>>   static inline char *mingw_find_last_dir_sep(const char *path)
->>
->> This sounds good to me.  Dscho?
->
-> Yep, sounds good to me, too.
->
-> Personally, I have no inclination to add compatibility with the
-> now-safely-obsolete MSys to my responsibilities, but if Hannes wants to do
-> it, who am I to stand in his way? Especially when the fix is as trivial as
-> here.
+> Add a paramter to checkout_files() in t0027.
 
-This is not a matter of compatibility. I am VERY curious why you do not 
-see an error (or warning) without my proposed fixup. As I mentioned, 
-isalpha() is defined much later than the definition of 
-mingw_skip_dos_drive_prefix(). Where does your build get a declaration 
-of isalpha() from?
+s/paramter/parameter/
 
--- Hannes
+> While changing the signature, add another parameter for the eol= attribute.
+> This is currently unused,
+> tests for e.g. "* text=auto eol=lf" will be added in a separate commit.
+> ---
+
+Missing sign-off.
+
+>  t/t0027-auto-crlf.sh | 261 ++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 146 insertions(+), 115 deletions(-)
