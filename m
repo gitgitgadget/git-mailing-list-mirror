@@ -1,88 +1,111 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/2] convert: add a helper to determine the correct EOL
- for a given path
-Date: Sat, 23 Jan 2016 08:05:28 +0100
-Message-ID: <56A32638.9060802@web.de>
-References: <cover.1453482052.git.johannes.schindelin@gmx.de>
- <c4e6707b53d82cdeeb16c83bddf9c4870a53d9df.1453482052.git.johannes.schindelin@gmx.de>
- <xmqqegd9v4bl.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601222003360.2964@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
+Date: Sat, 23 Jan 2016 09:25:41 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601230924090.2964@virtualbox>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de> <56A279DA.8080809@kdbg.org>
+ <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 23 08:06:20 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 23 09:26:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMsH5-0002of-O5
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 08:06:20 +0100
+	id 1aMtWC-0006dx-68
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 09:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbcAWHFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2016 02:05:40 -0500
-Received: from mout.web.de ([212.227.17.12]:53170 "EHLO mout.web.de"
+	id S1752393AbcAWIZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2016 03:25:57 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59803 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750770AbcAWHFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2016 02:05:38 -0500
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MGicf-1aIBQ225PV-00DV9P; Sat, 23 Jan 2016 08:05:31
+	id S1751706AbcAWIZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2016 03:25:55 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lug8u-1ZwfX52Eue-00zr8i; Sat, 23 Jan 2016 09:25:43
  +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <alpine.DEB.2.20.1601222003360.2964@virtualbox>
-X-Provags-ID: V03:K0:yB6kbrCtaumJjfkgKEpb18PoWeoBUq7a/scWsnTmIwhesLtF5we
- aHQxlnl4BLK/sbRMEXaNE/glmWzA4xBo1L++U1CoGsJyuOv6EO2af1B8TmZBsKCLAqcsPFi
- o2/LsMsZUMtWlueHVYIRyUhvNYGsxy26Qm+fPFVmWys8TyAHbzqIpDCh5qriNAFy3oWB87z
- KI3JGrbvDQ4wTM/d/2Vdw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zc9cVvBOk+I=:koUgDpIYzvHdn9hquYFeVK
- lg8TgCEpoQ/vDs34nyxFRYS7HqKO+lTJvWgCLNp0pVsVoNRtE0hSYwXsQi/DqqXw264fWH9tZ
- iAeavkH/9P7YgfpVnNPDRX5c8dHgpKbtQkZJ5wTR7aykmVOj8mPlFW4/fjzurX3qeWeJfy4hx
- OX5G2yBCvbyqGZohL6LdYtb6Pw9iuh340t5k2o88aPFjBgEh+Ich4JDahX/LiSiegfZNC/IQZ
- QTtPTw6/3B++cVAvrXpS6Bxeo6msRDT0hSfY3MBOzSL4ZA4mIaW2e85WPCIO9wWEQE/w/1lrP
- eq6uEe3lub542zApBV/A3yiA7SUxbMvwLnbbsl9u0r3R1G9P+g0eptx3aCS0JAozv1DuGNs7w
- Kb9O9vK7qupB2+cLB0KinSpVk/eoUO2Uw+HH6eXlYsIyKx9bB8i4FuCi162dqHhSeWp8pK8Yq
- HjnHxgElmar9pae4zy1xQiIjdTao1FeN03tCJ25kz+sVbh0bZ+ypdJZLxmyo4P+R1asBgR8A9
- jLo1nYVwfOnx/4Rzq5YGg+MDfzyKnxdP4cB7YEpHyYQCWxCoALHBOK4pYwLtLZUGw1C8vbC+3
- 6Hcwgjo8qSZo1a8SSyTfzQi9XPLI77wdHedqXP1a3foM9CQ/p4FvPtzwB8FAaJoTNC7bKC0JF
- jdthq8AbVmGHxTE8eVnthMCuWe7ImEK+eQkt3cOiKxMW2NNLyTtRAqu5BliuPqhdtmk+gvnvu
- g9rCb5tucwrrcckjyO5ttMV6m5xpc6nXJ3uMb2GIX8c2/HHXU1o1+Gmf7chEHLxtxuBhrt9z 
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Aq//rUWCbRPYlbKhVGh/WwP2ES5A2uF4v7/d0RClyAtPSHPYKwN
+ DAUzUH0iXg9//gfc2UpwxnBKCH2GDkPGGFEaHx6qERUnhAiQreomNoYD/B9PYJ/6yx86ja4
+ lxoh69FhWaDtNBb3A90t2UN1sb7WkEDhFdgevP3mldvjy/oR/vI5K15wg7LL1ebDnNdBm02
+ /URx0k+Kw9tPDEO73mF5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lrAc7gcz18M=:MduinmWmWSOASq5qRUX/Bx
+ wSKaEZ+JJ0a4rr9qYf1jNnDAjZkkRwCmGXqIGx+EmE9Sjq0XBueyKefZGEyIOkIuUZChGJxdo
+ iXbUj77sGhGThJ0b7iZfzMWg5KoBx4Yp9dG8BE5xvaL8bbxawF7fLZEam6x1/BSxSASHnaveQ
+ IY9fFTX5bErNv8lBcbK3uQeKA8M9w6N+QWjrVrDtQaKRRVmGKUAikdY2UpwNsyahKlZC35mMh
+ eoElAwdGHmKYjohRZr5ls60tCmRkIuCWJgQXJNiu3P6Q/SD0Fm36LZ+BtKvgv/b3kzlnHb6hE
+ dBt/tx9vdp5jS5QvqI7E+F80B39akcnlWFu0hTSFjB9sROCH0d0ruTa0xOjcDmvpSNmo+4Rap
+ PjaDtantqewRFTEhkrrDAs1WI4nbxhRfI64eL2tRv9FXsMlwHK0q+nbeA5q4HBKPsX77dUrnA
+ 0n1cl5cnqPmmxzhUwEQ5LAH6YBdlOApFnbA6A1WZpMNbCyfcCUhaiGbMScQS/wen/UPoIMOYm
+ LIMtx+szQutLXgy6sDQFR00ii1Om7tKWxl9g42FTm21u0gQm2+A7XgoCqcZl8np0qehI3zG+G
+ V2e47udliywOfTuhcDyU2b+bMGoWwg0VNKjHmATRwc/7d88dbSkBDJMUTQo1XUEYHyF7xwASL
+ We3sTqIFis7WRNkOu7I8MYxWkcQQTA9mYOZy3iaPDSdzT6Z/ZUG2vPl/ynvGEchCVgxpz+WM5
+ wJkEJaBQccZFCDA1MFPndYH3UAvihbBqC6/+a8IL2gRvV2STN2NW2zPq59Mv3i+k6GR/HULC 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284626>
 
-On 2016-01-22 20.04, Johannes Schindelin wrote:
-> Hi Junio,
+Hi Junio,
+
+On Fri, 22 Jan 2016, Junio C Hamano wrote:
+
+> Johannes Sixt <j6t@kdbg.org> writes:
 > 
-> On Fri, 22 Jan 2016, Junio C Hamano wrote:
+> > I suggest to move the function definition out of line:
+> >
+> > diff --git a/compat/mingw.c b/compat/mingw.c
+> > index 10a51c0..0cebb61 100644
+> > --- a/compat/mingw.c
+> > +++ b/compat/mingw.c
+> > @@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
+> >  	return -1;
+> >  }
+> >  
+> > +int mingw_skip_dos_drive_prefix(char **path)
+> > +{
+> > +	int ret = has_dos_drive_prefix(*path);
+> > +	*path += ret;
+> > +	return ret;
+> > +}
+> > +
+> >  int mingw_offset_1st_component(const char *path)
+> >  {
+> >  	char *pos = (char *)path;
+> > diff --git a/compat/mingw.h b/compat/mingw.h
+> > index 9b5db4e..2099b79 100644
+> > --- a/compat/mingw.h
+> > +++ b/compat/mingw.h
+> > @@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
+> >  
+> >  #define has_dos_drive_prefix(path) \
+> >  	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+> > -static inline int mingw_skip_dos_drive_prefix(char **path)
+> > -{
+> > -	int ret = has_dos_drive_prefix(*path);
+> > -	*path += ret;
+> > -	return ret;
+> > -}
+> > +int mingw_skip_dos_drive_prefix(char **path);
+> >  #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
+> >  #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+> >  static inline char *mingw_find_last_dir_sep(const char *path)
 > 
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>
->> This change somehow ringed a bell and reminded me of your recent
->> ls-files stuff.  Are there things that these topics can use from
->> each other?
-> 
-> Quite possibly. I'll have a look tomorrow.
+> This sounds good to me.  Dscho?
 
-Something like this should do:
-(Fully untested)
+Yep, sounds good to me, too.
 
-enum eol eol_for_path(const char *path, const char *src, size_t len)
-{
-  struct conv_attrs ca;
-  if (!path)
-     path = "*"; /* catch * text=xxx */
-  convert_attrs(&ca, path);
-  ca.crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
+Personally, I have no inclination to add compatibility with the
+now-safely-obsolete MSys to my responsibilities, but if Hannes wants to do
+it, who am I to stand in his way? Especially when the fix is as trivial as
+here.
 
-  return output_eol(crlf_action);
-}
+Ciao,
+Dscho
