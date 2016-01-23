@@ -1,111 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
-Date: Sat, 23 Jan 2016 09:25:41 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601230924090.2964@virtualbox>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de> <56A279DA.8080809@kdbg.org>
- <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v6 02/11] update-index: use enum for untracked cache options
+Date: Sat, 23 Jan 2016 12:02:01 +0100
+Message-ID: <CAP8UFD3hcDqtZkwen+RJiHX-QKHpSpimzQxcb0+ujDL8XYU8gA@mail.gmail.com>
+References: <1453283984-8979-1-git-send-email-chriscool@tuxfamily.org>
+	<1453283984-8979-3-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8CeKdk4u6xppXFX0-k+9aP2BZZuiw5eqiZp=khBLbjjJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 23 09:26:01 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 23 12:02:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMtWC-0006dx-68
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 09:26:00 +0100
+	id 1aMvxZ-0000Jb-J5
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 12:02:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbcAWIZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Jan 2016 03:25:57 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59803 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706AbcAWIZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jan 2016 03:25:55 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lug8u-1ZwfX52Eue-00zr8i; Sat, 23 Jan 2016 09:25:43
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Aq//rUWCbRPYlbKhVGh/WwP2ES5A2uF4v7/d0RClyAtPSHPYKwN
- DAUzUH0iXg9//gfc2UpwxnBKCH2GDkPGGFEaHx6qERUnhAiQreomNoYD/B9PYJ/6yx86ja4
- lxoh69FhWaDtNBb3A90t2UN1sb7WkEDhFdgevP3mldvjy/oR/vI5K15wg7LL1ebDnNdBm02
- /URx0k+Kw9tPDEO73mF5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lrAc7gcz18M=:MduinmWmWSOASq5qRUX/Bx
- wSKaEZ+JJ0a4rr9qYf1jNnDAjZkkRwCmGXqIGx+EmE9Sjq0XBueyKefZGEyIOkIuUZChGJxdo
- iXbUj77sGhGThJ0b7iZfzMWg5KoBx4Yp9dG8BE5xvaL8bbxawF7fLZEam6x1/BSxSASHnaveQ
- IY9fFTX5bErNv8lBcbK3uQeKA8M9w6N+QWjrVrDtQaKRRVmGKUAikdY2UpwNsyahKlZC35mMh
- eoElAwdGHmKYjohRZr5ls60tCmRkIuCWJgQXJNiu3P6Q/SD0Fm36LZ+BtKvgv/b3kzlnHb6hE
- dBt/tx9vdp5jS5QvqI7E+F80B39akcnlWFu0hTSFjB9sROCH0d0ruTa0xOjcDmvpSNmo+4Rap
- PjaDtantqewRFTEhkrrDAs1WI4nbxhRfI64eL2tRv9FXsMlwHK0q+nbeA5q4HBKPsX77dUrnA
- 0n1cl5cnqPmmxzhUwEQ5LAH6YBdlOApFnbA6A1WZpMNbCyfcCUhaiGbMScQS/wen/UPoIMOYm
- LIMtx+szQutLXgy6sDQFR00ii1Om7tKWxl9g42FTm21u0gQm2+A7XgoCqcZl8np0qehI3zG+G
- V2e47udliywOfTuhcDyU2b+bMGoWwg0VNKjHmATRwc/7d88dbSkBDJMUTQo1XUEYHyF7xwASL
- We3sTqIFis7WRNkOu7I8MYxWkcQQTA9mYOZy3iaPDSdzT6Z/ZUG2vPl/ynvGEchCVgxpz+WM5
- wJkEJaBQccZFCDA1MFPndYH3UAvihbBqC6/+a8IL2gRvV2STN2NW2zPq59Mv3i+k6GR/HULC 
+	id S1751979AbcAWLCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Jan 2016 06:02:05 -0500
+Received: from mail-lb0-f196.google.com ([209.85.217.196]:34378 "EHLO
+	mail-lb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751735AbcAWLCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jan 2016 06:02:03 -0500
+Received: by mail-lb0-f196.google.com with SMTP id oe3so4697354lbb.1
+        for <git@vger.kernel.org>; Sat, 23 Jan 2016 03:02:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tIlZ48jmraclp45wvssSfXq2lStoLjQYlEnI36QIl10=;
+        b=vMpYxCg8Uz/jB4fbVtVD8xcbIzFtx3VmR+7ur0BWWMWF4b/9x6650/RkaFNMRyTKTx
+         QTeilMFh45fLF71KMHNFDHkZ8por9718ggJ1sNDVoZzXpXvSaqg3pE9gi4b5WcSWTNRa
+         8LQ3haISbzfYZ55rOjKJFFnbjbClTp1RtFBa7JJD6TqnUJL2ykMDdCJz4k/dzvzemJlj
+         RuxvBD17AXwAvXAEQchBS/G2Sh9xXsk6ufjnp50vsEteFd5w1NRdlI9zZBEgBkqMFPEn
+         lYB8j11FbBMjHw+LaDGjzq0svQCNWLOcg4tNizSV18UqDGDPr/nIqbzwWl8EP4LblaCo
+         6jXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=tIlZ48jmraclp45wvssSfXq2lStoLjQYlEnI36QIl10=;
+        b=QyaCtoIb/OshkHLvVvwWlttDdxa0ej4uJAibjBQnCnqFjoG7KYkktTdBcWWkBBXmTd
+         cD3g0AJ9/yMDXYtuPC+fUAX0YWt/1HxhfzUxxaF3urKXx6u+1USXr+EW2S4lB70JMjCW
+         lABwB9D7U9TJiOcGOpF9+ow/XTY6RQ406GXykpQUTKXZMq1seaRCNOuHKc5+Z2lOJKOd
+         uTzDvMu+qziucqQiqN1FcJbNXGVPSGBvPyfYd+KkNvBKEh1rdHsNTD8K9GC73AMeqbpJ
+         HL2whzI/xWkmSgNB+AiAnQn+blIWLJdyi3Gs1J1sGiaPrra282v5BmsbkFWW0RB40NOb
+         kqcA==
+X-Gm-Message-State: AG10YOQwZaYlWItbsaMhOJpaUs0xighCH4NJFKTiM7hM58twonrEY+VLgjAGty4NTBDlBJZGFyn5kvBomCX5+Q==
+X-Received: by 10.112.211.168 with SMTP id nd8mr2919338lbc.116.1453546921337;
+ Sat, 23 Jan 2016 03:02:01 -0800 (PST)
+Received: by 10.25.216.143 with HTTP; Sat, 23 Jan 2016 03:02:01 -0800 (PST)
+In-Reply-To: <CACsJy8CeKdk4u6xppXFX0-k+9aP2BZZuiw5eqiZp=khBLbjjJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284627>
 
-Hi Junio,
+On Sat, Jan 23, 2016 at 1:44 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Jan 20, 2016 at 4:59 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> Helped-by: Duy Nguyen <pclouds@gmail.com>
+>
+> Nit. I think usually your s-o-b comes last
 
-On Fri, 22 Jan 2016, Junio C Hamano wrote:
+Ok, I will resend a fixed version.
 
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > I suggest to move the function definition out of line:
-> >
-> > diff --git a/compat/mingw.c b/compat/mingw.c
-> > index 10a51c0..0cebb61 100644
-> > --- a/compat/mingw.c
-> > +++ b/compat/mingw.c
-> > @@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
-> >  	return -1;
-> >  }
-> >  
-> > +int mingw_skip_dos_drive_prefix(char **path)
-> > +{
-> > +	int ret = has_dos_drive_prefix(*path);
-> > +	*path += ret;
-> > +	return ret;
-> > +}
-> > +
-> >  int mingw_offset_1st_component(const char *path)
-> >  {
-> >  	char *pos = (char *)path;
-> > diff --git a/compat/mingw.h b/compat/mingw.h
-> > index 9b5db4e..2099b79 100644
-> > --- a/compat/mingw.h
-> > +++ b/compat/mingw.h
-> > @@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
-> >  
-> >  #define has_dos_drive_prefix(path) \
-> >  	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> > -static inline int mingw_skip_dos_drive_prefix(char **path)
-> > -{
-> > -	int ret = has_dos_drive_prefix(*path);
-> > -	*path += ret;
-> > -	return ret;
-> > -}
-> > +int mingw_skip_dos_drive_prefix(char **path);
-> >  #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
-> >  #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
-> >  static inline char *mingw_find_last_dir_sep(const char *path)
-> 
-> This sounds good to me.  Dscho?
-
-Yep, sounds good to me, too.
-
-Personally, I have no inclination to add compatibility with the
-now-safely-obsolete MSys to my responsibilities, but if Hannes wants to do
-it, who am I to stand in his way? Especially when the fix is as trivial as
-here.
-
-Ciao,
-Dscho
+Thanks!
