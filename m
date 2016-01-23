@@ -1,211 +1,194 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/5] submodule update: respect submodule.autoInitialize
-Date: Fri, 22 Jan 2016 16:31:42 -0800
-Message-ID: <1453509103-16470-5-git-send-email-sbeller@google.com>
+Subject: [PATCH 2/5] git submodule: Teach add to label submodules
+Date: Fri, 22 Jan 2016 16:31:40 -0800
+Message-ID: <1453509103-16470-3-git-send-email-sbeller@google.com>
 References: <1453509103-16470-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de,
 	jrnieder@gmail.com, sschuberth@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jan 23 01:32:00 2016
+X-From: git-owner@vger.kernel.org Sat Jan 23 01:32:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aMm7U-0006fU-Dh
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 01:32:00 +0100
+	id 1aMm7e-0006pu-L8
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Jan 2016 01:32:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693AbcAWAbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Jan 2016 19:31:55 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34828 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755601AbcAWAbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jan 2016 19:31:53 -0500
-Received: by mail-pf0-f171.google.com with SMTP id 65so50073561pff.2
-        for <git@vger.kernel.org>; Fri, 22 Jan 2016 16:31:53 -0800 (PST)
+	id S1755720AbcAWAb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Jan 2016 19:31:59 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36741 "EHLO
+	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755636AbcAWAbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jan 2016 19:31:50 -0500
+Received: by mail-pf0-f176.google.com with SMTP id n128so50002619pfn.3
+        for <git@vger.kernel.org>; Fri, 22 Jan 2016 16:31:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uY8Mn2MloDZFvs7frf6ho7lMdCU+3NwTyJcv9h8WlxU=;
-        b=ZaPJ4G5s4nMX+HmU7dBly1oJ/LTRBD0/WH7xx2p2zWBHvUo+PSbBjaVXpEGk23q6md
-         T/RXHClvny42nCcDuIZ/wUSR9YayYXCKoAVRYCZ8SaBOsuG6TVfWjz6tYulmRyKzXSpf
-         0Y+tblGNe0gkpwuqTmq5lc2zJe28oeW6JAbNFt8JRDSvlKvG1KhgwW17kR7aLQYDoU7v
-         yGKsYxJqv3j9lECK9Gy4rgZikL/3UAzWOGBxOHKaUbFTHD6qeGwi0HrgJytP8/0lHhSB
-         zMeFmRxvnt9kUc5tV0sS0d/PzB4iITaOiJneHLyUGIpaxidc475leTzqvUEnshHFMxEj
-         kJHg==
+        bh=QyLuFTVrNX6piKNrqOQJKBwhEyA9VxS/+pWu3TYGh5g=;
+        b=ecqd58WktSl823E4TcaxM8LSPgmHtLrKeylHhVpnrCof/ETeaKaR09OlVaPvm+azrf
+         BPZOEDJjie211nnwWawMQW/ZuI+itB2FOF425rMFE5ITQU2Qc1kDRQbPeDLJ3MQjsuqV
+         cfyUCDJZjj4QQ0L062bJ/2tFJro0R3RhK0d8u58HsMF0V+f8IQJ7m04Ox9veKFj8BOv7
+         eJ7G95bynUWvPNQRivzroFSCAZxfqVHtPKoZKzJ854EzCjSHHxSEpH3Jv3sKcJ/nAMUU
+         WvIk1mUxOvMQt0PKvxh4FQXqvDmu9LM2JTV+WRN+ReoJvc+jbIC9XZGN5pUKRQQhVdDf
+         05Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=uY8Mn2MloDZFvs7frf6ho7lMdCU+3NwTyJcv9h8WlxU=;
-        b=Sp53rzW3idO6AqaSL4BUs7JhwJLomEa8A/QgsrqOymFWL/rfjKebfzklPo8y/uwo9k
-         2nQCtRIdUofUllbBV0UQSDw71bJ73zlcVBwipX8Fx076PSnq9xemwJvI96fto018ywId
-         qyqD8+mppRhDSd8kj2T7piMoXRKquncEJl8lgBJiF7d5tPt3sSQc0GW1Fb42CJ6/VIG9
-         e8RIBbF7ctoZWvJova/86WC3mFbmEILX6c5OnVJJAdYMTLb75wVyQiTgtF4A7ViUa6+q
-         KURFI+Xg+hKLcf+TZFTVRIHsR/Nnj+Dx/3DdoDfBRiGxWGtQvDl1jKacQkbeyQU5EUDz
-         tDoA==
-X-Gm-Message-State: AG10YOQMeTGh4oTmd1qBnxToF9ehBNo25MZrmTEJyDfe6I8iETdhPaZj4fdNArlf6YuvzaKx
-X-Received: by 10.98.80.79 with SMTP id e76mr8518267pfb.126.1453509112734;
-        Fri, 22 Jan 2016 16:31:52 -0800 (PST)
+        bh=QyLuFTVrNX6piKNrqOQJKBwhEyA9VxS/+pWu3TYGh5g=;
+        b=X5pzOtaLEx9nRPsgkEp1Pf+eKNKj+0tJFNvz02fD+gM5mCGeyUU/R94jG+Du++QXqb
+         Nw4C2djMwTIQD3++QCdi+44CZv/sLc47fYPnaAIBS1HavSilPcNkwacxhB/N1Wko5dwu
+         z6vUUbqBXu08iiL2ws+Oa3As1i+A/30VptheNzPs1Q9yHBsTHyaE0ipwSuzaOqep0nP+
+         +6TjNB8QaWI2AW0BECXHfX2B5i86EsNGDduyuAlD9Ir2VNUZ6y0OrKJtZRSbra8/HPeO
+         2hoSkpAYBhW7RF4K0P8QwO7zjhrD9g1h4awIKB95mswQ0NJqx8V3GDoGGRYJyKLzeEPs
+         1GUA==
+X-Gm-Message-State: AG10YOS71jVmDa5S+Jot+7j0hwaIS0PkMp/Zsmqql1Re9EkIAbc8qdPOnexu3HOcAWhtNC0U
+X-Received: by 10.98.42.74 with SMTP id q71mr8385883pfq.18.1453509110141;
+        Fri, 22 Jan 2016 16:31:50 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:add1:48d1:6b77:ed16])
-        by smtp.gmail.com with ESMTPSA id dz8sm12265419pab.19.2016.01.22.16.31.51
+        by smtp.gmail.com with ESMTPSA id tv6sm12293060pab.4.2016.01.22.16.31.49
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 22 Jan 2016 16:31:52 -0800 (PST)
+        Fri, 22 Jan 2016 16:31:49 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.42.g77a36b9.dirty
 In-Reply-To: <1453509103-16470-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284615>
 
-All submodules which are selected via submodule.autoInitialize
-are initialized if they were not initialized before updating
-the submodules.
+When adding new submodules, you can specify the
+label(s) the submodule belongs to by giving one or more
+--label arguments. This will record each label in the
+.gitmodules file as a value of the key
+"submodule.$NAME.label".
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 56 ++++++++++++++++++++++++++++++++++++++++++++-
- t/t7400-submodule-basic.sh  | 32 ++++++++++++++++++++++++++
- 2 files changed, 87 insertions(+), 1 deletion(-)
+ Documentation/git-submodule.txt |  5 ++++-
+ git-submodule.sh                | 14 +++++++++++++-
+ t/t7400-submodule-basic.sh      | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 05c18a3..61e2488 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -579,9 +579,10 @@ struct submodule_update_clone {
- 	const char *prefix;
- 	struct module_list list;
- 	struct string_list projectlines;
-+	struct string_list *initialize;
- 	struct pathspec pathspec;
- };
--#define SUBMODULE_UPDATE_CLONE_INIT {0, 0, 0, NULL, NULL, NULL, NULL, NULL, MODULE_LIST_INIT, STRING_LIST_INIT_DUP}
-+#define SUBMODULE_UPDATE_CLONE_INIT {0, 0, 0, NULL, NULL, NULL, NULL, NULL, MODULE_LIST_INIT, STRING_LIST_INIT_DUP, NULL}
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 13adebf..c0744eb 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
++'git submodule' [--quiet] add [-b <branch>] [-f|--force] [-l|--label <label>]
+ 	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+@@ -101,6 +101,9 @@ is the superproject and submodule repositories will be kept
+ together in the same relative location, and only the
+ superproject's URL needs to be provided: git-submodule will correctly
+ locate the submodule using the relative URL in .gitmodules.
+++
++If at least one label argument was given, all labels are recorded in the
++.gitmodules file in the label fields.
  
- static void fill_clone_command(struct child_process *cp, int quiet,
- 			       const char *prefix, const char *path,
-@@ -624,6 +625,7 @@ static int update_clone_get_next_task(struct child_process *cp,
- 		const char *update_module = NULL;
- 		char *url = NULL;
- 		int needs_cloning = 0;
-+		int auto_init = 0;
+ status::
+ 	Show the status of the submodules. This will print the SHA-1 of the
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 6fce0dc..65b740c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
  
- 		if (ce_stage(ce)) {
- 			if (pp->recursive_prefix)
-@@ -667,6 +669,49 @@ static int update_clone_get_next_task(struct child_process *cp,
- 		strbuf_reset(&sb);
- 		strbuf_addf(&sb, "submodule.%s.url", sub->name);
- 		git_config_get_string(sb.buf, &url);
-+		if (pp->initialize) {
-+			if (sub->labels) {
-+				struct string_list_item *item;
-+				for_each_string_list_item(item, sub->labels) {
-+					strbuf_reset(&sb);
-+					strbuf_addf(&sb, "*%s", item->string);
-+					if (string_list_has_string(
-+					    pp->initialize, sb.buf)) {
-+						auto_init = 1;
-+						break;
-+					}
-+				}
-+			}
-+			if (sub->path) {
-+				/*
-+				 * NEEDSWORK: This currently works only for
-+				 * exact paths, but we want to enable
-+				 * inexact matches such wildcards.
-+				 */
-+				strbuf_reset(&sb);
-+				strbuf_addf(&sb, "./%s", sub->path);
-+				if (string_list_has_string(pp->initialize, sb.buf)) {
-+					auto_init = 1;
-+				}
-+			}
-+			if (sub->name) {
-+				/*
-+				 * NEEDSWORK: Same as with path. Do we want to
-+				 * support wildcards or such?
-+				 */
-+				strbuf_reset(&sb);
-+				strbuf_addf(&sb, ":%s", sub->name);
-+				if (string_list_has_string(pp->initialize, sb.buf)) {
-+					auto_init = 1;
-+				}
-+			}
-+			if (auto_init) {
-+				if (!url) {
-+					init_submodule(sub->path, pp->prefix, pp->quiet);
-+					url = xstrdup(sub->url);
-+				}
-+			}
-+		}
- 		if (!url) {
- 			/*
- 			 * Only mention uninitialized submodules when its
-@@ -733,6 +778,7 @@ static int update_clone_task_finished(int result,
- static int update_clone(int argc, const char **argv, const char *prefix)
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-l|--label <label>][--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+@@ -130,6 +130,7 @@ cmd_add()
  {
- 	int max_jobs = -1;
-+	const struct string_list *list;
- 	struct string_list_item *item;
- 	struct submodule_update_clone pp = SUBMODULE_UPDATE_CLONE_INIT;
+ 	# parse $args after "submodule ... add".
+ 	reference_path=
++	labels=
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -165,6 +166,13 @@ cmd_add()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		-l|--label)
++			labels="${labels} $2"
++			shift
++			;;
++		--label=*)
++			labels="${labels} ${1#--label=}"
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -292,6 +300,10 @@ Use -f if you really want to add it." >&2
  
-@@ -777,6 +823,14 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	/* Overlay the parsed .gitmodules file with .git/config */
- 	git_config(git_submodule_config, NULL);
- 
-+	list = git_config_get_value_multi("submodule.autoInitialize");
-+	if (list) {
-+		pp.initialize = xmalloc(sizeof(*pp.initialize));
-+		string_list_init(pp.initialize, 1);
-+		for_each_string_list_item(item, list)
-+			string_list_insert(pp.initialize, item->string);
-+	}
-+
- 	if (max_jobs < 0)
- 		max_jobs = config_parallel_submodules();
- 	if (max_jobs < 0)
+ 	git config -f .gitmodules submodule."$sm_name".path "$sm_path" &&
+ 	git config -f .gitmodules submodule."$sm_name".url "$repo" &&
++	for label in $labels
++	do
++		git config --add -f .gitmodules submodule."$sm_name".label "${label}"
++	done &&
+ 	if test -n "$branch"
+ 	then
+ 		git config -f .gitmodules submodule."$sm_name".branch "$branch"
 diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 01d54e3..e1ade1e 100755
+index 5991e3c..01d54e3 100755
 --- a/t/t7400-submodule-basic.sh
 +++ b/t/t7400-submodule-basic.sh
-@@ -1032,4 +1032,36 @@ test_expect_success 'submodule add records multiple lables' '
- 	test_cmp expected actual
+@@ -986,6 +986,7 @@ test_expect_success 'submodule with UTF-8 name' '
  '
  
-+cat <<EOF > expected
-+submodule
-+submodule1
-+submodule2
-+-submodule3
-+EOF
-+
-+test_expect_success 'submodule update auto-initializes submodules' '
-+	test_when_finished "rm -rf super super_clone" &&
+ test_expect_success 'submodule add clone shallow submodule' '
++	test_when_finished "rm -rf super" &&
+ 	mkdir super &&
+ 	pwd=$(pwd) &&
+ 	(
+@@ -999,5 +1000,36 @@ test_expect_success 'submodule add clone shallow submodule' '
+ 	)
+ '
+ 
++test_expect_success 'submodule add records a label' '
++	test_when_finished "rm -rf super" &&
 +	mkdir super &&
 +	pwd=$(pwd) &&
 +	(
 +		cd super &&
 +		git init &&
 +		git submodule add --label labelA file://"$pwd"/example2 submodule &&
-+		git submodule add --name specialSnowflake file://"$pwd"/example2 submodule1 &&
-+		git submodule add file://"$pwd"/example2 submodule2 &&
-+		git submodule add file://"$pwd"/example2 submodule3 &&
-+		git commit -a -m "create repository with 4 submodules, one is labeled"
-+	) &&
-+	git clone super super_clone &&
-+	(
-+		cd super_clone &&
-+		git config submodule.autoInitialize \*labelA &&
-+		git config --add submodule.autoInitialize :specialSnowflake &&
-+		git config --add submodule.autoInitialize ./submodule2 &&
-+		git submodule update &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp actual expected
++		git config -f .gitmodules submodule."submodule".label >actual &&
++		echo labelA >expected &&
++		test_cmp expected actual
++	)
 +'
 +
++cat >expected <<-EOF
++labelA
++labelB
++EOF
++
++test_expect_success 'submodule add records multiple lables' '
++	test_when_finished "rm -rf super" &&
++	mkdir super &&
++	pwd=$(pwd) &&
++	(
++		cd super &&
++		git init &&
++		git submodule add --label=labelA -l labelB file://"$pwd"/example2 submodule &&
++		git config --get-all -f .gitmodules submodule."submodule".label >../actual
++	) &&
++	test_cmp expected actual
++'
+ 
  test_done
 -- 
 2.7.0.rc0.42.g77a36b9.dirty
