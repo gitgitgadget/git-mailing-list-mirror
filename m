@@ -1,9 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 0/1] Let merge-file write out conflict markers with correct
- EOLs
-Date: Sun, 24 Jan 2016 11:48:27 +0100 (CET)
-Message-ID: <cover.1453632296.git.johannes.schindelin@gmx.de>
-References: <cover.1453482052.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 1/1] merge-file: let conflict markers match end-of-line
+ style of the context
+Date: Sun, 24 Jan 2016 11:48:46 +0100 (CET)
+Message-ID: <d71c7abddd4cba85b967f9fe1d33c7c843176ca2.1453632296.git.johannes.schindelin@gmx.de>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de> <cover.1453632296.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
@@ -11,379 +11,240 @@ Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 24 11:48:47 2016
+X-From: git-owner@vger.kernel.org Sun Jan 24 11:49:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNIDu-00059K-FU
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 11:48:47 +0100
+	id 1aNIEI-0005Jk-5m
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 11:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbcAXKsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 05:48:42 -0500
-Received: from mout.gmx.net ([212.227.15.15]:59339 "EHLO mout.gmx.net"
+	id S1751970AbcAXKtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 05:49:05 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51948 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751314AbcAXKsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 05:48:40 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MIdTM-1aPU4l0c5w-002DEa; Sun, 24 Jan 2016 11:48:32
+	id S1751380AbcAXKtC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 05:49:02 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M54fe-1aBgMB3Ge6-00zGep; Sun, 24 Jan 2016 11:48:50
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1453482052.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1453632296.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5TPNakWHj0yx4W0mAhsxQMlXM686jxq6CXlApQ3NrS6JwEX491O
- foygqOduKjTohhpqZTQzBM2fWbt2FldBjWwVY0kdt7AQucujM/McbtT56ySvVORwsBih2pP
- 0mw1168t0P/ilG/iUCQ5v0ArweR7BHTK3gUTI2rkrVBJ9B3o//i8L5x6xAmKtMGznrzUxsr
- tS6jQkiEYSBKQHtcVMt+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:E5YB9W5tGGM=:PpWF50Ua7V4Hj4D8JkOO0N
- Lk/Nw7FH1eXyEBfLfVquOMEx9x/LStn6xvBhiQnJSgIJkVRx5XIY5XBqkoa+G7Nz6uelP/jlN
- h3yzuLaOw7Q6dEIUaSvtgF1pCiXjWeIrw6O/BOFJSEL6le+8ymsjoYn59iMJ7vQF5Ak72VizC
- iMfajg4XoC1ykUFVBx13EQus2VuFXVAB8OydINP5DQY7dihCIMKrxJMPpzq0i4RdiV2UoJmbC
- CtUoqC0HXqtt/DrfU8FvM6i3NXmG4zyg0huT0EvY2I+LXqL6HEKfa08qZUVnD7ImlffmLIrjc
- eume1Uy6qFYLRiia5tTYdTLaG9FYwLRFoBtvYLZcrRcj5DQkgfgIVm7xsYVRfEtPvzdyQnjRd
- f/FvPR/xUgyo3bbDQpk+v3VZaVZn6ZvJM+XPsT059mNp7DPAvh/EKhW1yA2Ow3kryqCGJgf9N
- meWKLCyErdTs6nSLFt+gusptM3UhmTtv18zW0RkBWol0RS8aIFBwhI0R0/Pkgk3ovoL0X3ja0
- M8bVB1aBuqLhf1DsAXleVQVmV+R4GECe3oEe9/KvBiJU51U9NyZs+zWAnxILfhiwc9A3oyDQH
- 2WLZfK66fxPE0qfjAsfHPxfzb2wRndEasRpInuQvtUt3fOmkKHOGEOwxLVKkTZNmttGcqzNq2
- HZGOaw9JGiIwVs8w6/KXR/Kj1pfLZb9s/JQVVhOyueAy4PicaYHEbqbKC1IZ2QqMiaGyBsVw+
- JR5/OXnKf+K+vwsF2ofDispT63ZfDRSBvQPeMo/ayipL4MO87AjzKhYLQj1E5QPKJtT8Fv0f 
+X-Provags-ID: V03:K0:nMhuImCPAPthUKDtWsnHSp8v+H+PohLraZk7IDkG786m4pF7QKx
+ G21Eu++KXvffkm0HB759UmiMGu5PkFmZqD+xypVESbRpwdQ6t90WyPCO7wz5WwMHquvThdx
+ ZM0RXXlbOcSZj/yHtKwalI/s8cxnw59nhjVatLlo8I3yJJaC0C93wihxfVKmMk/2B4YuPaF
+ FHt7+RKj80yGIExHITnBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ub1fviGYTVA=:KDN1Xz0knMxcNveHyPQJbF
+ o9NU9BLWacv6znFgIE35vBCWa4t2LqyVy9RPjJcDctyjO/B2Fq/rHnmmYw+AaznDQZoJ0P4dS
+ Ad1PgWC28mHz0EohzijUSvMhFjZpCMF89k2W5klLijsoBvaCxbkpnDkvrBK2vs/sYBW6gznMI
+ rXhTVWCOpSd4DUkr+y+kW7iEWI3SxHTPshL4HDbqyVf04PJd0JgRxmgZ9C6I//+ouN6UqdYHN
+ GaAgZLiyeptodxg/0/WaWlu2Af7k+qWKHgJQpDsltPdL/5svhAK4Kweu18mDDranA/v2GboCa
+ YLQ5Q5aHA1VjIX9PG2fG7RYsc2eYHnkL+tmo5tzUXbKexXC3Hf2Jd1y7Rm1X8bjMrJThsP0+b
+ IXQ77eeWForhFuU4wdvhHAqJD2iI71y8HXPuP7IRIih1J2Ov/XrzL0uj9K3agdwT+wj/Jj7Az
+ PmEAxAnyVFU0g2TJOUkzEZwHZjR739tg4eEntTTUsudJpeQI/EvIUAQe+Lfe0w67HhBqyHZzr
+ bYmMdOXEOTG68yZ53C5OP24ZO3uKyTLNPLOJNluahi8o0QjGID1+AOn7brsrZtri2tbIW4E3d
+ Edaye7QJYZtkRBZ3vCX/2dezELhDAutdY4a84g2Lnx/Iyyz1irSj4AbsmnsPtZsttqJliRVK5
+ vOH429e9Jy1+BsvrJkv6wikSen1TeI5fKNJYVRhSgoaW/+t9mqpkMiRzsyq38e+2C6FWDM0ES
+ SPHQ26vprK5O4tVW4CUtVXCms3l/s7RYMjHFMf9yp34ctqq6I1lHJwx8ulkeFtCzaNOd6Y+/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284644>
 
-The original patch was sent by Beat Bolli in
-http://thread.gmane.org/gmane.comp.version-control.git/281600
+When merging files with CR/LF line endings, the conflict markers should
+match those, lest the output file has mixed line endings.
 
-My suggestion to extend it to respect gitattributes led to
-changes that broke the original patch. And they were misguided
-to begin with (see below).
+This is particularly of interest on Windows, where some editors get
+*really* confused by mixed line endings.
 
-Since there have been a couple of "What's cooking" mails
-containing unheard calls for updates on this patch, I took it
-on myself to fix things.
+The original version of this patch by Beat Bolli respected core.eol, and
+a subsequent improvement by this developer also respected gitattributes.
+This approach was suboptimal, though: `git merge-file` was invented as a
+drop-in replacement for GNU merge and as such has no problem operating
+outside of any repository at all!
 
-Junio's comment that we might look at blobs containing CR/LF
-line endings made me rethink the entire approach, and I am now
-convinced that we need to abandon the entire idea to make the
-conflict markers depend on config settings or attributes:
-after all, I introduced `git merge-file` as a replacement for
-GNU merge that can be used *outside* of any repository, by design.
+Another problem with the original approach was pointed out by Junio
+Hamano: legacy repositories might have their text files committed using
+CR/LF line endings (and core.eol and the gitattributes would give us a
+false impression there). Therefore, the much superior approach is to
+simply match the context's line endings, if any.
 
-The crucial idea hit me yesterday when I took a step back: all
-we need to do is to ensure that the end-of-line style is matched
-when *all* input files are LF-only, or when they are all CR/LF.
-In all other cases, we have mixed line endings anyway.
+We actually do not have to look at the *entire* context at all: if the
+files are all LF-only, or if they all have CR/LF line endings, it is
+sufficient to look at just a *single* line to match that style. And if
+the line endings are mixed anyway, it is *still* okay to imitate just a
+single line's eol: we will just add to the pile of mixed line endings,
+and there is nothing we can do about that.
 
-And to do that, it is sufficient to look at *one single line
-ending* in the context. Technically, it does not even have to be
-the context, but the first line endings of the first file would
-be enough, however it is so much more pleasant if the conflict
-marker's eol matches the one of the preceding line.
+So what we do is: we look at the line preceding the conflict, falling
+back to the line preceding that in case it was the last line and had no
+line ending, falling back to the first line, first in the first
+post-image, then the second post-image, and finally the pre-image.
+If we find consistent CR/LF (or undecided) end-of-line style, we match
+that, otherwise we use LF-only line endings for the conflict markers.
 
-To prevent my future self from repeating mistakes, I added a
-little bit of background to the commit message.
+Note that while it is true that there have to be at least two lines we
+can look at (otherwise there would be no conflict), the same is not true
+for line *endings*: the three files in question could all consist of a
+single line without any line ending, each. In this case we fall back to
+using LF-only.
 
-Since this is a complete rewrite, the interdiff is pretty useless
-and only included for the record.
-
-
-Johannes Schindelin (1):
-  merge-file: let conflict markers match end-of-line style of the
-    context
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t6023-merge-file.sh | 12 +++++++++++
  xdiff/xmerge.c        | 57 +++++++++++++++++++++++++++++++++++++++++++++++----
  2 files changed, 65 insertions(+), 4 deletions(-)
 
-Interdiff vs v1:
-
- diff --git a/builtin/merge-file.c b/builtin/merge-file.c
- index 9ce830a..5544705 100644
- --- a/builtin/merge-file.c
- +++ b/builtin/merge-file.c
- @@ -81,7 +81,6 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
-  					argv[i]);
-  	}
-  
- -	xmp.crlf = eol_for_path(names[0], NULL, 0) == EOL_CRLF;
-  	xmp.ancestor = names[1];
-  	xmp.file1 = names[0];
-  	xmp.file2 = names[2];
- diff --git a/convert.c b/convert.c
- index b458734..814e814 100644
- --- a/convert.c
- +++ b/convert.c
- @@ -758,35 +758,6 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
-  	}
-  }
-  
- -enum eol eol_for_path(const char *path, const char *src, size_t len)
- -{
- -	struct conv_attrs ca;
- -	struct text_stat stats;
- -
- -	if (!path) {
- -		memset(&ca, 0, sizeof(ca));
- -		ca.crlf_action = CRLF_AUTO;
- -		ca.eol_attr = EOL_UNSET;
- -	} else {
- -		convert_attrs(&ca, path);
- -		if (ca.eol_attr == EOL_UNSET)
- -			ca.eol_attr = output_eol(ca.crlf_action);
- -		if (ca.eol_attr != EOL_UNSET)
- -			return ca.eol_attr;
- -	}
- -	if (!len || (ca.crlf_action != CRLF_AUTO &&
- -				ca.crlf_action != CRLF_GUESS))
- -		return core_eol;
- -	ca.crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
- -	gather_stats(src, len, &stats);
- -	if (ca.crlf_action == CRLF_GUESS && stats.cr > stats.crlf)
- -		return core_eol;
- -	else if (stats.crlf)
- -		return EOL_CRLF;
- -	else
- -		return EOL_LF;
- -}
- -
-  int would_convert_to_git_filter_fd(const char *path)
-  {
-  	struct conv_attrs ca;
- diff --git a/convert.h b/convert.h
- index 1892867..d9d853c 100644
- --- a/convert.h
- +++ b/convert.h
- @@ -33,8 +33,6 @@ enum eol {
-  
-  extern enum eol core_eol;
-  
- -extern enum eol eol_for_path(const char *path, const char *src, size_t len);
- -
-  /* returns 1 if *dst was used */
-  extern int convert_to_git(const char *path, const char *src, size_t len,
-  			  struct strbuf *dst, enum safe_crlf checksafe);
- diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
- index a131749..f0cb9ce 100755
- --- a/t/t6023-merge-file.sh
- +++ b/t/t6023-merge-file.sh
- @@ -346,18 +346,16 @@ test_expect_success 'conflict at EOF without LF resolved by --union' \
-  	 printf "line1\nline2\nline3x\nline3y" >expect.txt &&
-  	 test_cmp expect.txt output.txt'
-  
- -test_expect_success 'conflict markers contain CRLF when core.eol=crlf' '
- +test_expect_success 'conflict markers match existing line endings' '
- +	append_cr <nolf-orig.txt >crlf-orig.txt &&
- +	append_cr <nolf-diff1.txt >crlf-diff1.txt &&
- +	append_cr <nolf-diff2.txt >crlf-diff2.txt &&
-  	test_must_fail git -c core.eol=crlf merge-file -p \
- -		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
- -	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 3
- -'
- -
- -test_expect_success 'conflict markers heed gitattributes over core.eol=crlf' '
- -	git config core.eol crlf &&
- -	echo "*.txt eol=lf" >>.gitattributes &&
- +		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
- +	test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) = 3 &&
-  	test_must_fail git -c core.eol=crlf merge-file -p \
- -		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
- -	test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 0
- +		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
- +	test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) = 0
-  '
-  
-  test_done
- diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
- index a5bea4a..c033991 100644
- --- a/xdiff/xdiff.h
- +++ b/xdiff/xdiff.h
- @@ -122,7 +122,6 @@ typedef struct s_xmparam {
-  	int level;
-  	int favor;
-  	int style;
- -	int crlf;
-  	const char *ancestor;	/* label for orig */
-  	const char *file1;	/* label for mf1 */
-  	const char *file2;	/* label for mf2 */
- diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
- index 4ff0db4..c852acc 100644
- --- a/xdiff/xmerge.c
- +++ b/xdiff/xmerge.c
- @@ -143,15 +143,56 @@ static int xdl_orig_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
-  	return xdl_recs_copy_0(1, xe, i, count, add_nl, dest);
-  }
-  
- +/*
- + * Returns 1 if the i'th line ends in CR/LF (if it is the last line and
- + * has no eol, the preceding line, if any), 0 if it ends in LF-only, and
- + * -1 if the line ending cannot be determined.
- + */
- +static int is_eol_crlf(xdfile_t *file, int i)
- +{
- +	long size;
- +
- +	if (i < file->nrec - 1)
- +		/* All lines before the last *must* end in LF */
- +		return (size = file->recs[i]->size) > 1 &&
- +			file->recs[i]->ptr[size - 2] == '\r';
- +	if (!file->nrec)
- +		/* Cannot determine eol style from empty file */
- +		return -1;
- +	if ((size = file->recs[i]->size) &&
- +			file->recs[i]->ptr[size - 1] == '\n')
- +		/* Last line; ends in LF; Is it CR/LF? */
- +		return size > 1 &&
- +			file->recs[i]->ptr[size - 2] == '\r';
- +	if (!i)
- +		/* The only line has no eol */
- +		return -1;
- +	/* Determine eol from second-to-last line */
- +	return (size = file->recs[i - 1]->size) > 1 &&
- +		file->recs[i - 1]->ptr[size - 2] == '\r';
- +}
- +
-  static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  			      xdfenv_t *xe2, const char *name2,
-  			      const char *name3,
- -			      int size, int i, int style, int crlf,
- +			      int size, int i, int style,
-  			      xdmerge_t *m, char *dest, int marker_size)
-  {
-  	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
-  	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
-  	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
- +	int needs_cr;
- +
- +	/* Match post-images' preceding, or first, lines' end-of-line style */
- +	needs_cr = is_eol_crlf(&xe1->xdf2, m->i1 ? m->i1 - 1 : 0);
- +	if (needs_cr)
- +		needs_cr = is_eol_crlf(&xe2->xdf2, m->i2 ? m->i2 - 1 : 0);
- +	/* Look at pre-image's first line, unless we already settled on LF */
- +	if (needs_cr)
- +		needs_cr = is_eol_crlf(&xe1->xdf1, 0);
- +	/* If still undecided, use LF-only */
- +	if (needs_cr < 0)
- +		needs_cr = 0;
-  
-  	if (marker_size <= 0)
-  		marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
- @@ -161,7 +202,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  			      dest ? dest + size : NULL);
-  
-  	if (!dest) {
- -		size += marker_size + 1 + crlf + marker1_size;
- +		size += marker_size + 1 + needs_cr + marker1_size;
-  	} else {
-  		memset(dest + size, '<', marker_size);
-  		size += marker_size;
- @@ -170,7 +211,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  			memcpy(dest + size + 1, name1, marker1_size - 1);
-  			size += marker1_size;
-  		}
- -		if (crlf)
- +		if (needs_cr)
-  			dest[size++] = '\r';
-  		dest[size++] = '\n';
-  	}
- @@ -182,7 +223,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  	if (style == XDL_MERGE_DIFF3) {
-  		/* Shared preimage */
-  		if (!dest) {
- -			size += marker_size + 1 + crlf + marker3_size;
- +			size += marker_size + 1 + needs_cr + marker3_size;
-  		} else {
-  			memset(dest + size, '|', marker_size);
-  			size += marker_size;
- @@ -191,7 +232,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  				memcpy(dest + size + 1, name3, marker3_size - 1);
-  				size += marker3_size;
-  			}
- -			if (crlf)
- +			if (needs_cr)
-  				dest[size++] = '\r';
-  			dest[size++] = '\n';
-  		}
- @@ -200,11 +241,11 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  	}
-  
-  	if (!dest) {
- -		size += marker_size + 1 + crlf;
- +		size += marker_size + 1 + needs_cr;
-  	} else {
-  		memset(dest + size, '=', marker_size);
-  		size += marker_size;
- -		if (crlf)
- +		if (needs_cr)
-  			dest[size++] = '\r';
-  		dest[size++] = '\n';
-  	}
- @@ -213,7 +254,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  	size += xdl_recs_copy(xe2, m->i2, m->chg2, 1,
-  			      dest ? dest + size : NULL);
-  	if (!dest) {
- -		size += marker_size + 1 + crlf + marker2_size;
- +		size += marker_size + 1 + needs_cr + marker2_size;
-  	} else {
-  		memset(dest + size, '>', marker_size);
-  		size += marker_size;
- @@ -222,7 +263,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
-  			memcpy(dest + size + 1, name2, marker2_size - 1);
-  			size += marker2_size;
-  		}
- -		if (crlf)
- +		if (needs_cr)
-  			dest[size++] = '\r';
-  		dest[size++] = '\n';
-  	}
- @@ -234,7 +275,7 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
-  				 const char *ancestor_name,
-  				 int favor,
-  				 xdmerge_t *m, char *dest, int style,
- -				 int crlf, int marker_size)
- +				 int marker_size)
-  {
-  	int size, i;
-  
- @@ -245,8 +286,8 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
-  		if (m->mode == 0)
-  			size = fill_conflict_hunk(xe1, name1, xe2, name2,
-  						  ancestor_name,
- -						  size, i, style, crlf, m,
- -						  dest, marker_size);
- +						  size, i, style, m, dest,
- +						  marker_size);
-  		else if (m->mode & 3) {
-  			/* Before conflicting part */
-  			size += xdl_recs_copy(xe1, i, m->i1 - i, 0,
- @@ -427,7 +468,6 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
-  	int level = xmp->level;
-  	int style = xmp->style;
-  	int favor = xmp->favor;
- -	int crlf = xmp->crlf;
-  
-  	if (style == XDL_MERGE_DIFF3) {
-  		/*
- @@ -563,7 +603,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
-  		int size = xdl_fill_merge_buffer(xe1, name1, xe2, name2,
-  						 ancestor_name,
-  						 favor, changes, NULL, style,
- -						 crlf, marker_size);
- +						 marker_size);
-  		result->ptr = xdl_malloc(size);
-  		if (!result->ptr) {
-  			xdl_cleanup_merge(changes);
- @@ -572,7 +612,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
-  		result->size = size;
-  		xdl_fill_merge_buffer(xe1, name1, xe2, name2,
-  				      ancestor_name, favor, changes,
- -				      result->ptr, style, crlf, marker_size);
- +				      result->ptr, style, marker_size);
-  	}
-  	return xdl_cleanup_merge(changes);
-  }
-
+diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+index 190ee90..f0cb9ce 100755
+--- a/t/t6023-merge-file.sh
++++ b/t/t6023-merge-file.sh
+@@ -346,4 +346,16 @@ test_expect_success 'conflict at EOF without LF resolved by --union' \
+ 	 printf "line1\nline2\nline3x\nline3y" >expect.txt &&
+ 	 test_cmp expect.txt output.txt'
+ 
++test_expect_success 'conflict markers match existing line endings' '
++	append_cr <nolf-orig.txt >crlf-orig.txt &&
++	append_cr <nolf-diff1.txt >crlf-diff1.txt &&
++	append_cr <nolf-diff2.txt >crlf-diff2.txt &&
++	test_must_fail git -c core.eol=crlf merge-file -p \
++		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
++	test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) = 3 &&
++	test_must_fail git -c core.eol=crlf merge-file -p \
++		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
++	test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) = 0
++'
++
+ test_done
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 625198e..c852acc 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -143,6 +143,35 @@ static int xdl_orig_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
+ 	return xdl_recs_copy_0(1, xe, i, count, add_nl, dest);
+ }
+ 
++/*
++ * Returns 1 if the i'th line ends in CR/LF (if it is the last line and
++ * has no eol, the preceding line, if any), 0 if it ends in LF-only, and
++ * -1 if the line ending cannot be determined.
++ */
++static int is_eol_crlf(xdfile_t *file, int i)
++{
++	long size;
++
++	if (i < file->nrec - 1)
++		/* All lines before the last *must* end in LF */
++		return (size = file->recs[i]->size) > 1 &&
++			file->recs[i]->ptr[size - 2] == '\r';
++	if (!file->nrec)
++		/* Cannot determine eol style from empty file */
++		return -1;
++	if ((size = file->recs[i]->size) &&
++			file->recs[i]->ptr[size - 1] == '\n')
++		/* Last line; ends in LF; Is it CR/LF? */
++		return size > 1 &&
++			file->recs[i]->ptr[size - 2] == '\r';
++	if (!i)
++		/* The only line has no eol */
++		return -1;
++	/* Determine eol from second-to-last line */
++	return (size = file->recs[i - 1]->size) > 1 &&
++		file->recs[i - 1]->ptr[size - 2] == '\r';
++}
++
+ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 			      xdfenv_t *xe2, const char *name2,
+ 			      const char *name3,
+@@ -152,6 +181,18 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	int marker1_size = (name1 ? strlen(name1) + 1 : 0);
+ 	int marker2_size = (name2 ? strlen(name2) + 1 : 0);
+ 	int marker3_size = (name3 ? strlen(name3) + 1 : 0);
++	int needs_cr;
++
++	/* Match post-images' preceding, or first, lines' end-of-line style */
++	needs_cr = is_eol_crlf(&xe1->xdf2, m->i1 ? m->i1 - 1 : 0);
++	if (needs_cr)
++		needs_cr = is_eol_crlf(&xe2->xdf2, m->i2 ? m->i2 - 1 : 0);
++	/* Look at pre-image's first line, unless we already settled on LF */
++	if (needs_cr)
++		needs_cr = is_eol_crlf(&xe1->xdf1, 0);
++	/* If still undecided, use LF-only */
++	if (needs_cr < 0)
++		needs_cr = 0;
+ 
+ 	if (marker_size <= 0)
+ 		marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+@@ -161,7 +202,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 			      dest ? dest + size : NULL);
+ 
+ 	if (!dest) {
+-		size += marker_size + 1 + marker1_size;
++		size += marker_size + 1 + needs_cr + marker1_size;
+ 	} else {
+ 		memset(dest + size, '<', marker_size);
+ 		size += marker_size;
+@@ -170,6 +211,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 			memcpy(dest + size + 1, name1, marker1_size - 1);
+ 			size += marker1_size;
+ 		}
++		if (needs_cr)
++			dest[size++] = '\r';
+ 		dest[size++] = '\n';
+ 	}
+ 
+@@ -180,7 +223,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	if (style == XDL_MERGE_DIFF3) {
+ 		/* Shared preimage */
+ 		if (!dest) {
+-			size += marker_size + 1 + marker3_size;
++			size += marker_size + 1 + needs_cr + marker3_size;
+ 		} else {
+ 			memset(dest + size, '|', marker_size);
+ 			size += marker_size;
+@@ -189,6 +232,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 				memcpy(dest + size + 1, name3, marker3_size - 1);
+ 				size += marker3_size;
+ 			}
++			if (needs_cr)
++				dest[size++] = '\r';
+ 			dest[size++] = '\n';
+ 		}
+ 		size += xdl_orig_copy(xe1, m->i0, m->chg0, 1,
+@@ -196,10 +241,12 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	}
+ 
+ 	if (!dest) {
+-		size += marker_size + 1;
++		size += marker_size + 1 + needs_cr;
+ 	} else {
+ 		memset(dest + size, '=', marker_size);
+ 		size += marker_size;
++		if (needs_cr)
++			dest[size++] = '\r';
+ 		dest[size++] = '\n';
+ 	}
+ 
+@@ -207,7 +254,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	size += xdl_recs_copy(xe2, m->i2, m->chg2, 1,
+ 			      dest ? dest + size : NULL);
+ 	if (!dest) {
+-		size += marker_size + 1 + marker2_size;
++		size += marker_size + 1 + needs_cr + marker2_size;
+ 	} else {
+ 		memset(dest + size, '>', marker_size);
+ 		size += marker_size;
+@@ -216,6 +263,8 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 			memcpy(dest + size + 1, name2, marker2_size - 1);
+ 			size += marker2_size;
+ 		}
++		if (needs_cr)
++			dest[size++] = '\r';
+ 		dest[size++] = '\n';
+ 	}
+ 	return size;
 -- 
 2.7.0.windows.1.7.g55a05c8
