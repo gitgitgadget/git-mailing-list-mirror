@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v7 05/11] update-index: move 'uc' var declaration
-Date: Sun, 24 Jan 2016 16:28:18 +0100
-Message-ID: <1453649304-18121-6-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v7 06/11] dir: add {new,add}_untracked_cache()
+Date: Sun, 24 Jan 2016 16:28:19 +0100
+Message-ID: <1453649304-18121-7-git-send-email-chriscool@tuxfamily.org>
 References: <1453649304-18121-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Stefan Beller <sbeller@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 24 16:29:44 2016
+X-From: git-owner@vger.kernel.org Sun Jan 24 16:29:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNMbg-0000zo-2K
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 16:29:36 +0100
+	id 1aNMbg-0000zo-L4
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 16:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbcAXP3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 10:29:31 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36302 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752595AbcAXP2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 10:28:49 -0500
-Received: by mail-wm0-f65.google.com with SMTP id l65so6785571wmf.3
-        for <git@vger.kernel.org>; Sun, 24 Jan 2016 07:28:48 -0800 (PST)
+	id S1753418AbcAXP3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 10:29:33 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33003 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597AbcAXP2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 10:28:51 -0500
+Received: by mail-wm0-f66.google.com with SMTP id u188so6828537wmu.0
+        for <git@vger.kernel.org>; Sun, 24 Jan 2016 07:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GuZrc5rauXIK2ruihj8DbSC+5GkcSmvyk6iH9Yp/eIQ=;
-        b=bxdgtHI5b6e34tm2pekQXJIopiTu6tMkWv5lZrQjD6kKIA4Hr8Ice4m1nzjUIz86Jw
-         ozE09k1rkz0dL+sqElOb23esCKvRoLfo5Y1yFBRBPNTQmza0irECbRPmc5vAu5RBP1+9
-         xnBKwo91mbpiP7Ot9X40zkqVTPfoFr4z+O2ij2i0fR4NKpUTkllFSemN0Y+Jb59QA3Dg
-         kWWbJm2Gr5QN8la3/V42Komvt9yB9hH8H4RUyUn+9xW3gogmnsua1BCPoTo2r8HKjLcq
-         Wndj48+Kv17F80fzOpSymQ6olTKstgTaz3xHEeDNLYyTqKJQNnojkIm4C3yumfYEefXV
-         D/BA==
+        bh=krr5lcFN4+efBOtNEQ8rLRGP3LPZKFqWSua3lpUmw48=;
+        b=RvPq/F8U5V7v1CXkgvxjfNMpprajgd0L7iWPh31yTRWOfU02pDovu418WlbtIlfkHA
+         9ehZaGp/x2jSQP+1QTEZDATWvbkEyiLAttVqDlaa2RXr8HdFMkrwGzHzT3qaar1SU8qf
+         C7VvfE3FagYY/4L2RO2WkxjrpTpRidkN0pnF2unD6Oskbc8DBW9/GFGNfb9JVlEFIbyj
+         YK9Ggnt/Ph9OOy7rwAvx7gO3/+3v84ZD6Dmfx3EbAflARs+wChYLbCtfIPXtE52F4Jeh
+         BSWLz89IsXcOMx8iqP2Zw1BG5/enKWjdVSqZtR2U8GMSEJXuhKx2vjE4+6a+6A72Em5l
+         /43g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GuZrc5rauXIK2ruihj8DbSC+5GkcSmvyk6iH9Yp/eIQ=;
-        b=d8lf3/GNfWBBd9JT4TlZlZdi4T0xq5rNuca4vARrcFLu8xPG+yHL9MddNJgWrSTC2B
-         TCVsyLGzmQVgeH3km4LtDAo/2UblYwweViUTg8qzdORIv2oEh+bY9vDqeTukpjgYg2ij
-         2pLQG0A2AJieNN6/CMmchGeZsLj6a4IrkOROJNrWWIT1qLl7RJqhJpNkH3J3Rzc9Y+5z
-         FBybeM0ahtuikfzr7f3SSLPQLK7tsTVyehUE59Vcbul4QBWavfETmPopVTLlzrjZdWGC
-         LhkSkFLNwh3cVNe84hwKtcg/wtNMrGvPur57GbJhtMgO8eyxPq+aGEL5SQ0CwQP+VJXh
-         jhYA==
-X-Gm-Message-State: AG10YOQv1CWpKP+7z1vN4YZfUr2BhiYyqxI7KmhbYvYs2TTRezRlal7H4m7IbC4oOp6HlA==
-X-Received: by 10.28.90.133 with SMTP id o127mr14517934wmb.101.1453649328337;
-        Sun, 24 Jan 2016 07:28:48 -0800 (PST)
+        bh=krr5lcFN4+efBOtNEQ8rLRGP3LPZKFqWSua3lpUmw48=;
+        b=edSn4YvNiNaGkx0tn9xyRWbrouEDA91s42s7BvayaOB9Ad/2uMKfnTnnVnUFCCX0/I
+         RBGRiBa4Vg9Sk5K/nHl1++MaZY5MvKdA0v6MdlwBsx0PRoNAX8JpV3aclP+zIw+57nzW
+         o2iJDI/nNdBvK4PTsCXc5aW8NC9laZq4iXnpuvDN3Yh6swJNOICsbmxh4gq39Yp91AZQ
+         8/x5/skGz6Ok+LtmwFY477bv+kapEVE7umE3phfJChxiCSWX6Bx6YenoJG9Luvmxx0jn
+         3PdJhHFtvfDGezTR+r+pH4PJgF/VxzdxxCyPeMGFpnz4n+BIa/Wk0hjLCoQ76Tc+cYxX
+         JH4A==
+X-Gm-Message-State: AG10YORGUzYR9VdPZBJKCOm/S2jE7jOi/Fxx/q/9UC50P8fMD9oQ0pevRP7E4hae2fltAA==
+X-Received: by 10.28.3.131 with SMTP id 125mr14470974wmd.14.1453649330112;
+        Sun, 24 Jan 2016 07:28:50 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id y8sm11900231wmg.9.2016.01.24.07.28.46
+        by smtp.gmail.com with ESMTPSA id y8sm11900231wmg.9.2016.01.24.07.28.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Jan 2016 07:28:47 -0800 (PST)
+        Sun, 24 Jan 2016 07:28:48 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.181.gd7ef666.dirty
 In-Reply-To: <1453649304-18121-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,34 +64,80 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284657>
 
+Factor out code into new_untracked_cache() and
+add_untracked_cache(), which will be used
+in later commits.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/update-index.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ builtin/update-index.c | 11 +----------
+ dir.c                  | 18 ++++++++++++++++++
+ dir.h                  |  1 +
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 369c207..fe7aaa3 100644
+index fe7aaa3..5f8630c 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -1116,8 +1116,6 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		the_index.cache_changed |= SOMETHING_CHANGED;
- 	}
- 	if (untracked_cache > UC_DISABLE) {
--		struct untracked_cache *uc;
--
- 		if (untracked_cache < UC_FORCE) {
- 			setup_work_tree();
- 			if (!test_if_untracked_cache_is_supported())
-@@ -1126,7 +1124,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+@@ -1123,16 +1123,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			if (untracked_cache == UC_TEST)
  				return 0;
  		}
- 		if (!the_index.untracked) {
--			uc = xcalloc(1, sizeof(*uc));
-+			struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
- 			strbuf_init(&uc->ident, 100);
- 			uc->exclude_per_dir = ".gitignore";
- 			/* should be the same flags used by git-status */
+-		if (!the_index.untracked) {
+-			struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
+-			strbuf_init(&uc->ident, 100);
+-			uc->exclude_per_dir = ".gitignore";
+-			/* should be the same flags used by git-status */
+-			uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+-			the_index.untracked = uc;
+-		}
+-		add_untracked_ident(the_index.untracked);
+-		the_index.cache_changed |= UNTRACKED_CHANGED;
++		add_untracked_cache(&the_index);
+ 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
+ 	} else if (untracked_cache == UC_DISABLE) {
+ 		if (the_index.untracked) {
+diff --git a/dir.c b/dir.c
+index 29aec12..8646b18 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1864,6 +1864,24 @@ void add_untracked_ident(struct untracked_cache *uc)
+ 	strbuf_addch(&uc->ident, 0);
+ }
+ 
++static void new_untracked_cache(struct index_state *istate)
++{
++	struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
++	strbuf_init(&uc->ident, 100);
++	uc->exclude_per_dir = ".gitignore";
++	/* should be the same flags used by git-status */
++	uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
++	istate->untracked = uc;
++}
++
++void add_untracked_cache(struct index_state *istate)
++{
++	if (!istate->untracked) {
++		new_untracked_cache(istate);
++	add_untracked_ident(istate->untracked);
++	istate->cache_changed |= UNTRACKED_CHANGED;
++}
++
+ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+ 						      int base_len,
+ 						      const struct pathspec *pathspec)
+diff --git a/dir.h b/dir.h
+index 7b5855d..cfd3636 100644
+--- a/dir.h
++++ b/dir.h
+@@ -308,4 +308,5 @@ void free_untracked_cache(struct untracked_cache *);
+ struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+ void add_untracked_ident(struct untracked_cache *);
++void add_untracked_cache(struct index_state *istate);
+ #endif
 -- 
 2.7.0.181.gd7ef666.dirty
