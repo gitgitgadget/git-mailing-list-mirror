@@ -1,230 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] tag: do not show ambiguous tag names as "tags/foo"
-Date: Sun, 24 Jan 2016 18:08:40 -0500
-Message-ID: <20160124230840.GB16455@sigill.intra.peff.net>
-References: <20160124230531.GB29115@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] tag: do not show ambiguous tag names as "tags/foo"
+Date: Sun, 24 Jan 2016 18:39:05 -0500
+Message-ID: <CAPig+cTq0j0ss=qw9Dx8-PqFA5WJwP0mpvoO+5=NXtOt2EUNww@mail.gmail.com>
+References: <CAAB=nN=RSQuDPdg6Y2heeBXpQVdWSwFAcDDTfxE=XRSOu5gGEg@mail.gmail.com>
+	<20160124071234.GA24084@sigill.intra.peff.net>
+	<20160124071815.GB24084@sigill.intra.peff.net>
+	<xmqqvb6iboxj.fsf@gitster.mtv.corp.google.com>
+	<20160124222736.GA29115@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pete Harlan <pgit@tento.net>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 00:08:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Pete Harlan <pgit@tento.net>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 25 00:39:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNTm3-0004IG-BP
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 00:08:47 +0100
+	id 1aNUG4-0001In-IP
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 00:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197AbcAXXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 18:08:43 -0500
-Received: from cloud.peff.net ([50.56.180.127]:59648 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752265AbcAXXIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 18:08:42 -0500
-Received: (qmail 15912 invoked by uid 102); 24 Jan 2016 23:08:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 24 Jan 2016 18:08:42 -0500
-Received: (qmail 13201 invoked by uid 107); 24 Jan 2016 23:09:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 24 Jan 2016 18:09:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Jan 2016 18:08:40 -0500
-Content-Disposition: inline
-In-Reply-To: <20160124230531.GB29115@sigill.intra.peff.net>
+	id S1752186AbcAXXjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 18:39:09 -0500
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:33605 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751971AbcAXXjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 18:39:07 -0500
+Received: by mail-vk0-f46.google.com with SMTP id e64so66268921vkg.0
+        for <git@vger.kernel.org>; Sun, 24 Jan 2016 15:39:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=wt4eoAhuBQWOFnYq9gBJbo82qBsWdJ+P/ZbpFCkYkW0=;
+        b=FnA5COWPPOPgm0NijgWe0S8vlmd3blligShjH05NFuOaDf4O0d2D+uVPsb0y7MxnDW
+         D8irhTbjavBMpYrNVh5H0EVdf/Fim9rC5P9CPW3a17g8xu3jhOaDiXgMT37c9GHfEeES
+         Rpq90u4wihEK7+Nq4yWI7mlAo7n5zDNwXghPnix+jPdtUyeDpTvKn65G4CF06v9W7NA+
+         BtXqp2lPOSIlPh0XjKXvbbAYgO7rrEXmU0iPk2aVPc1/r+OZiEQQaAO912aKUtq8t4YB
+         SyMCn9LjaPEjExOxk5UvMOk/DDyGjYSb7eE/4OkeZ4bd4OTx1jglsgR0zBW/jrNhkkl7
+         LSxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=wt4eoAhuBQWOFnYq9gBJbo82qBsWdJ+P/ZbpFCkYkW0=;
+        b=QT9FyM0Mz5qArQPt5mp78ryiKlfd6XufoM/+Ph0qZ9coeT/zAErGUn2QQv08SL2XC6
+         s6syVpiYu+kxu4b66E3wCKg7P8vG5JtTYntmBsezU6m8tTGqZOBQEwUmpoDrsU92iDGU
+         00zpOknpN65vYu3qIDuDgiLDXfMdtkyja84uGVchnwSQmPLE0vqSGiN890JK/nU7uVIF
+         YWY4rXAfLKTIE/2HvpoMsEtWe3oVhZFGDSAL41e53oXlbN97yKOFLYGoAZfbJq68FX+f
+         nOdJC/IM4DljvQTKFkAsfjk07Sqs438eavadE5SOQPezlaGa2gOotx2UnfivK9KOixJC
+         /7+Q==
+X-Gm-Message-State: AG10YOS8GpRcLM/rGTJMWSGCXO9oL6kLOISuoDgU9kCoWnbFzhpBOmiDBC2eCdiU3oRlBxm/rJ3U3sBVjUdYFw==
+X-Received: by 10.31.47.135 with SMTP id v129mr8857710vkv.115.1453678745693;
+ Sun, 24 Jan 2016 15:39:05 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 24 Jan 2016 15:39:05 -0800 (PST)
+In-Reply-To: <20160124222736.GA29115@sigill.intra.peff.net>
+X-Google-Sender-Auth: ukygqGz-SRc0b0Ly5mHwCnDQqwk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284704>
 
-Since b7cc53e9 (tag.c: use 'ref-filter' APIs, 2015-07-11),
-git-tag has started showing tags with ambiguous names (i.e.,
-when both "heads/foo" and "tags/foo" exists) as "tags/foo"
-instead of just "foo". This is both:
+On Sun, Jan 24, 2016 at 5:27 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Jan 24, 2016 at 02:19:52PM -0800, Junio C Hamano wrote:
+>> Perhaps strip=2 can be defined to "strip 2 levels of
+>> hierarchy prefix no matter what that is", and strip refs/tags/foo,
+>> refs/heads/foo and refs/remotes/origin/foo to foo, foo, origin/foo,
+>> respectively?  The filtering natively done by the listing mode of
+>> "branch" and "tags" would ensure the prefixes are always what we
+>> implicitly expect, so the case we need to worry about how we should
+>> signal errors becomes "what if there are not enough levels".  That
+>> may be simpler to handle.
+>
+> Yeah, "strip=2" would also get the job done, and extends more naturally
+> to the branch case.
+>
+> To be honest, I cannot imagine anybody using anything _but_ strip=2, but
+> maybe there are special cases, like:
+>
+>   git for-each-ref --format='%(refname:strip=3)' refs/heads/jk/
+>
+> to get my list of topics, sans initials.
 
-  - pointless; the output of "git tag" includes only
-    refs/tags, so we know that "foo" means the one in
-    "refs/tags".
+What if the option was named ":stripprefix=" in its most general form:
 
-and
+    %(refname:stripprefix=refs/tags/)
 
-  - ambiguous; in the original output, we know that the line
-    "foo" means that "refs/tags/foo" exists. In the new
-    output, it is unclear whether we mean "refs/tags/foo" or
-    "refs/tags/tags/foo".
+with plain:
 
-The reason this happens is that commit b7cc53e9 switched
-git-tag to use ref-filter's "%(refname:short)" output
-formatting, which was adapted from for-each-ref. This more
-general code does not know that we care only about tags, and
-uses shorten_unambiguous_ref to get the short-name. We need
-to tell it that we care only about "refs/tags/", and it
-should shorten with respect to that value.
+    %(refname:stripprefix)
 
-In theory, the ref-filter code could figure this out by us
-passing FILTER_REFS_TAGS. But there are two complications
-there:
-
-  1. The handling of refname:short is deep in formatting
-     code that does not even have our ref_filter struct, let
-     alone the arguments to the filter_ref struct.
-
-  2. In git v2.7.0, we expose the formatting language to the
-     user. If we follow this path, it will mean that
-     "%(refname:short)" behaves differently for "tag" versus
-     "for-each-ref" (including "for-each-ref refs/tags/"),
-     which can lead to confusion.
-
-Instead, let's add a new modifier to the formatting
-language, "strip", to remove a specific set of prefix
-components. This fixes "git tag", and lets users invoke the
-same behavior from their own custom formats (for "tag" or
-"for-each-ref") while leaving ":short" with its same
-consistent meaning in all places.
-
-We introduce a test in t7004 for "git tag", which fails
-without this patch. We also add a similar test in t3203 for
-"git branch", which does not actually fail. But since it is
-likely that "branch" will eventually use the same formatting
-code, the test helps defend against future regressions.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-for-each-ref.txt |  6 +++++-
- Documentation/git-tag.txt          |  2 +-
- builtin/tag.c                      |  4 ++--
- ref-filter.c                       | 13 ++++++++++++-
- t/t3203-branch-output.sh           |  8 ++++++++
- t/t6300-for-each-ref.sh            |  4 ++++
- t/t7004-tag.sh                     |  8 ++++++++
- 7 files changed, 40 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 06208c4..f15c817 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -92,7 +92,11 @@ refname::
- 	The name of the ref (the part after $GIT_DIR/).
- 	For a non-ambiguous short name of the ref append `:short`.
- 	The option core.warnAmbiguousRefs is used to select the strict
--	abbreviation mode.
-+	abbreviation mode. If `strip=<N>` is appended, strips `<N>`
-+	slash-separated path components from the front of the refname
-+	(e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
-+	If the ref has fewer components than `<N>`, the whole,
-+	unstripped `%(refname)` is printed.
- 
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 7220e5e..abab481 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -163,7 +163,7 @@ This option is only applicable when listing tags without annotation lines.
- 	A string that interpolates `%(fieldname)` from the object
- 	pointed at by a ref being shown.  The format is the same as
- 	that of linkgit:git-for-each-ref[1].  When unspecified,
--	defaults to `%(refname:short)`.
-+	defaults to `%(refname:strip=2)`.
- 
- --[no-]merged [<commit>]::
- 	Only list tags whose tips are reachable, or not reachable
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 8db8c87..1705c94 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -44,11 +44,11 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
- 	if (!format) {
- 		if (filter->lines) {
- 			to_free = xstrfmt("%s %%(contents:lines=%d)",
--					  "%(align:15)%(refname:short)%(end)",
-+					  "%(align:15)%(refname:strip=2)%(end)",
- 					  filter->lines);
- 			format = to_free;
- 		} else
--			format = "%(refname:short)";
-+			format = "%(refname:strip=2)";
- 	}
- 
- 	verify_ref_format(format);
-diff --git a/ref-filter.c b/ref-filter.c
-index 7bef7f8..9f54adc 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -909,12 +909,23 @@ static void populate_value(struct ref_array_item *ref)
- 		formatp = strchr(name, ':');
- 		if (formatp) {
- 			int num_ours, num_theirs;
-+			const char *arg;
- 
- 			formatp++;
- 			if (!strcmp(formatp, "short"))
- 				refname = shorten_unambiguous_ref(refname,
- 						      warn_ambiguous_refs);
--			else if (!strcmp(formatp, "track") &&
-+			else if (skip_prefix(formatp, "strip=", &arg)) {
-+				int strip = atoi(arg);
-+				const char *start = refname;
-+				while (strip && *start) {
-+					if (*start == '/')
-+						strip--;
-+					start++;
-+				}
-+				if (!strip)
-+					refname = start;
-+			} else if (!strcmp(formatp, "track") &&
- 				 (starts_with(name, "upstream") ||
- 				  starts_with(name, "push"))) {
- 
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index d3913f9..4261403 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -176,4 +176,12 @@ test_expect_success 'git branch --points-at option' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ambiguous branch/tag not marked' '
-+	git tag ambiguous &&
-+	git branch ambiguous &&
-+	echo "  ambiguous" >expect &&
-+	git branch --list ambiguous >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 859b237..1f3abeb 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -50,6 +50,10 @@ test_atom() {
- 
- test_atom head refname refs/heads/master
- test_atom head refname:short master
-+test_atom head refname:strip=0 refs/heads/master
-+test_atom head refname:strip=1 heads/master
-+test_atom head refname:strip=2 master
-+test_atom head refname:strip=3 refs/heads/master
- test_atom head upstream refs/remotes/origin/master
- test_atom head upstream:short origin/master
- test_atom head push refs/remotes/myfork/master
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 2797f22..cf3469b 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1558,4 +1558,12 @@ test_expect_success '--no-merged show unmerged tags' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ambiguous branch/tags not marked' '
-+	git tag ambiguous &&
-+	git branch ambiguous &&
-+	echo ambiguous >expect &&
-+	git tag -l ambiguous >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.7.0.427.g4c6e021
+shorthand for ":stripprefix=refs/*/" or something?
