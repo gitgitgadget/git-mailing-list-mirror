@@ -1,79 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 1/2] convert: add a helper to determine the correct EOL
  for a given path
-Date: Sun, 24 Jan 2016 11:41:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601241140190.2964@virtualbox>
-References: <cover.1453482052.git.johannes.schindelin@gmx.de> <c4e6707b53d82cdeeb16c83bddf9c4870a53d9df.1453482052.git.johannes.schindelin@gmx.de> <56A319B9.50900@web.de>
+Date: Sun, 24 Jan 2016 11:42:10 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601241141360.2964@virtualbox>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de> <c4e6707b53d82cdeeb16c83bddf9c4870a53d9df.1453482052.git.johannes.schindelin@gmx.de> <xmqqegd9v4bl.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1601222003360.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-587303583-1453632081=:2964"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Beat Bolli <dev+git@drbeat.li>
-To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 24 11:41:33 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 24 11:42:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNI6t-0001XA-JO
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 11:41:31 +0100
+	id 1aNI7g-0001xu-9a
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 11:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbcAXKl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 05:41:29 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59110 "EHLO mout.gmx.net"
+	id S1751190AbcAXKmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 05:42:17 -0500
+Received: from mout.gmx.net ([212.227.17.21]:58409 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751491AbcAXKl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 05:41:27 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MA9Yv-1aGvOa36HB-00BH7j; Sun, 24 Jan 2016 11:41:21
+	id S1751734AbcAXKmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 05:42:16 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LfTC1-1Zm0RZ1s3l-00p3Nd; Sun, 24 Jan 2016 11:42:12
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56A319B9.50900@web.de>
+In-Reply-To: <alpine.DEB.2.20.1601222003360.2964@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:HM063/Vzzc42eWAvpwi1CgCZQw3ARaSmwk/11wmuht7z+3AyzdA
- UlXllFTryM/KtwYFxG0iWUvVTsqo8tSveZMSWmJq/hUHwk+pjCA4TMaDO75DOFBadHI6BFQ
- 65/hsk6K9yv0ruoAfEuNPptBgGbbpiXdrsrkI3GkTYCoVTFW0uwzUZUDypyUG0BPxF7FFdx
- xDHVDS9n0GH7rjx614KdQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CoRS40kD4FA=:rGWfaK9aOPqe/yW/ThSdfc
- MQTJLCmGG2Yg3Juu7VFDso9kninvpjhb+FHapmwGFStNi3N7+CF6QEg/VfFfwIFYgJU67UI+d
- +26ZEcmG8R9dzomYORk43GZtcvqZlxLQx+Q3+JC+OFh+v2YJ/d1JSndE5kU6gt973HuWEOC3C
- zZ8VhirFeI6J4oYGD/705HTWLGiu2teZnkOvb4xPXA+jKoTy+FBpAV6A1dazT/CRTEwZNaXim
- 1ZKetUeqBI3wZKk57psswZlDdi6BpgR/14qX2KIi0uItOB69zBZQWujku87/fz3RMyNWWEgUJ
- QaDtM86uHI3rU6tDsTH+ghyQ7eu3LMMEJHvHcJ7Zktv6V3bgRrUpnd8+K6qYICIMip6pIBu7t
- dvTz+Q7c1NQtLDFKgdtP1ok8uQvDHBZxBTHuyI8lF/EuvN9znW83im9302ojMQWtkAPuivDfv
- +8lekuyOZQylvvLLrLghxkgpcZoLO/4m6ZR67tdF+2S7kRkxzc6o0w/5D+SQNELN0YIguIxMA
- pHRfg5zfe9ODiWvI/NTHvHW2id5RhxfFqssl7CzFcTJ3UIlOAglqhcoTJxzreOOC57FPcV9wW
- Q2kjHeVHuTLZ4VreqYYkSuk601AZGBttGHTk4hHwWzr5g/41f6Z5UqqMZw0goiW/6cluUbbaZ
- d3W1eGMop4RuJ/8AyDQpWm9S9Nh/UQMXnRiPxli3fohmvSek7oRZgin3k1RKjdvj1UYHVpADU
- OkdpOMrtzYpdO40o4Ro7HfgIb7gTiEkw+P1PtdhF5ELo9UJ/f4Q3wyyGmuQY+sFay+sWj+eD 
+X-Provags-ID: V03:K0:HZXxpIAI3QCWmIQ/qRBVl0Bhp5R20ggsgXtGLkyK8E49+A42ayM
+ dKgT45HpvW0r/gSo4BO8L7EL7BcqpDklGOHbHez8rIs8hAklOVU5MiburCUIo5EInTed6PG
+ Qb9AfQjRpO/7jxRpPj9FccQlofgikZgAxIE/cPzOzJGEUblVf9+D4/Tu08RBNlLBvu4b/FJ
+ dLcOjEdL8MAwnF+ERhohA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IO7nqPwUOnM=:aWsKYJiUZASclRG+JMpHYO
+ Vuk5513t6Tkvv6gV41p6G0hEGJiAuuvckcABsMO0OyOHKvQGjBbXCTqWyiZiHIoyS+IZQ5jQE
+ LV0nGh0X6e4ou2NMLrv9wly2gL+huU9pilQ9BYToFVFGRbFOZcAHtcU36wS/SJx2KYd4FmgXm
+ 6fBVPjdgm56Ert4EWkrd6sDZXHMd98LFW1glSH/BAvz1BL2FFgK9UHXy47pFECHWbwunhSDkJ
+ LMSvyQLPQ19ONhn/ObC8HY0qpodLVhqOwP0upBCW7Pm9PHG4nQB6UfDJqbLQjAe3pLNhIZMcr
+ 0idRVx5dHzrBjCxhJOBvII2LPvSboaKv3GXA4EeLBSqJuJslhE9A5XRj9Pgn/DYMoV+ajDehI
+ oL96XofCidwOHJFRZQfusKHEToSpieapbZb+QJneus8GnGqf5j2wr+U1nwN5Yd45CiBTx09qh
+ mdVipgIRN/ZNpnV8VpDIAldQ5zG5pl+Sn4+C+nQmpK/nAnFblqtD6YUQVr2lqOPkPqOYLQ7wA
+ dQCij/FCsEVON6fNkDFCKM/H6NGP69jcjcwdlWU7nI1XzgX2A2R/PEVaChZ3zDmn11y6WzDEs
+ wMUJNo79tZqvDo/J5eHxv29W9aJTucbJNM2H/voQqFz4pvFJpD8YW/JPUtbM49zlmku49hUaq
+ BAPsVfzgtTEWd0euYKzkFVToxKMy9/6eNTbe+c7jWU+gyp7EnMRnTBYsP0Tt3ru0nP/kkO20S
+ HEaB5RyFoWNl+Zhhr5p2dayQUwCF8oE2NZLP4iwzLhonPLtpDpsYXGBm/zP1hEszigxBKpT/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284641>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-587303583-1453632081=:2964
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Fri, 22 Jan 2016, Johannes Schindelin wrote:
 
-Hi Torsten,
+> On Fri, 22 Jan 2016, Junio C Hamano wrote:
+> 
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> > 
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > 
+> > This change somehow ringed a bell and reminded me of your recent
+> > ls-files stuff.  Are there things that these topics can use from
+> > each other?
+> 
+> Quite possibly. I'll have a look tomorrow.
 
-On Sat, 23 Jan 2016, Torsten B=F6gershausen wrote:
-
-> When path is NULL, can we set it to "*" to catch .gitattributes like
-> "* text=3Dauto"
-> ?
-
-The point of that part of the patch was to make things *independent* of
-the gitattributes because we operate not on working files, but on blob
-contents.
-
-In any case, this point will be moot with the upcoming iteration of the
-patch.
+I did, but could not quite finish reworking the patch until today. Will
+send out the result in a moment.
 
 Ciao,
 Dscho
---8323329-587303583-1453632081=:2964--
