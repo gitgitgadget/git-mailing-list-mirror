@@ -1,168 +1,160 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 09/19] mingw: accomodate t0060-path-utils for MSYS2
-Date: Sun, 24 Jan 2016 20:51:04 +0100
-Message-ID: <56A52B28.8010304@kdbg.org>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de>
- <12c030323940de4a0845eda9bdd7b67c4e90864a.1453650173.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] travis-ci: run previously failed tests first, then slowest to fastest
+Date: Sun, 24 Jan 2016 12:03:49 -0800
+Message-ID: <xmqqd1sqd9sq.fsf@gitster.mtv.corp.google.com>
+References: <1453195469-51696-1-git-send-email-larsxschneider@gmail.com>
+	<20160119191234.GA17562@sigill.intra.peff.net>
+	<xmqqegdd8997.fsf@gitster.mtv.corp.google.com>
+	<20160120002606.GA9359@glandium.org>
+	<xmqqfuxt6n00.fsf@gitster.mtv.corp.google.com>
+	<DBA834D2-BFC9-4A2F-94D9-A1D0D60377BD@gmail.com>
+	<20160122023359.GA686558@vauxhall.crustytoothpaste.net>
+	<20160122055255.GA14657@sigill.intra.peff.net>
+	<20160122060720.GA15681@sigill.intra.peff.net>
+	<20160124143403.GL7100@hank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 24 20:51:47 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 24 21:04:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNQhO-0005IQ-Io
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 20:51:46 +0100
+	id 1aNQtG-0003M7-1J
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 21:04:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbcAXTvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 14:51:09 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:52342 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751412AbcAXTvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 14:51:08 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3ppQ1N70VXz5tlD;
-	Sun, 24 Jan 2016 20:51:04 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 22AD951EF;
-	Sun, 24 Jan 2016 20:51:04 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <12c030323940de4a0845eda9bdd7b67c4e90864a.1453650173.git.johannes.schindelin@gmx.de>
+	id S1751947AbcAXUD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 15:03:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52017 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751412AbcAXUD5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 15:03:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 919A83D66C;
+	Sun, 24 Jan 2016 15:03:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZWVdqiC33KMpuWPWTpUb1K9lnRY=; b=ZIJuiV
+	Q5f2LmaWDVN0jF4lsewfW8ZL/Yw6to0wT3QSn8BHsSmi9PjfvNCP2l67Pi264Skj
+	t15WmaqkhRnYz3UUJ4ArLBfZIbHcuukJwXn0deAL5iBaStvsXc49w/m8b5B3sFv0
+	7Hv2MW5zEbV6bQAV9Nusm4wuh+E3AX0kq1pRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SkDQpzyR7yt5jN91Wd2PBDix9pJLUIsa
+	D4YybtOUPIeK7d20uYvG6aQEbVYFoy3ScK1Fp7DzfMcbTXaeKFbZ4weG49sy42uh
+	9+VXgkV8eIaQkaJVhAo7vf/81VbXLz8nLU2zEek9qTcakB2/nWuN69bBjWdu8cmt
+	gFlaY++m25M=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 89A123D66B;
+	Sun, 24 Jan 2016 15:03:51 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 066AC3D66A;
+	Sun, 24 Jan 2016 15:03:51 -0500 (EST)
+In-Reply-To: <20160124143403.GL7100@hank> (Thomas Gummerer's message of "Sun,
+	24 Jan 2016 15:34:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 965C188E-C2D5-11E5-B052-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284692>
 
-Am 24.01.2016 um 16:44 schrieb Johannes Schindelin:
-> On Windows, there are no POSIX paths, only Windows ones (an absolute
-> Windows path looks like "C:\Program Files\Git\ReleaseNotes.html", under
-> most circumstances, forward slashes are also allowed and synonymous to
-> backslashes).
-> 
-> So when a POSIX shell (such as MSYS2's Bash, which is used by Git for
-> Windows to execute all those shell scripts that are part of Git) passes
-> a POSIX path to test-path-utils.exe (which is not POSIX-aware), the path
-> is translated into a Windows path. For example, /etc/profile becomes
-> C:/Program Files/Git/etc/profile.
-> 
-> This path translation poses a problem when passing the root directory as
-> parameter to test-path-utils.exe, as it is not well defined whether the
-> translated root directory should end in a slash or not. MSys1 stripped
-> the trailing slash, but MSYS2 does not.
-> 
-> To work with both behaviors, we simply test what the current system does
-> in the beginning of t0060-path-utils.sh and then adjust the expected
-> longest ancestor length accordingly.
-> 
-> Originally, the Git for Windows project patched MSYS2's runtime to
-> accomodate Git's regression test, but we really should do it the other
-> way round.
-> 
-> Thanks to Ray Donnelly for his patient help with this issue.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Thomas Gummerer <t.gummerer@gmail.com> writes:
+
+> My analysis is in the commit message below.
+>
+> --->8---
+> Subject: [PATCH] entry: fix up to date marking
+>
+> write_entry always marks cache entries up to date when
+> state->refresh_cache is set.  This is however not always accurate,
+> if core.autocrlf is set in the config, a file with cr and lf line
+> endings exists and the file attribute is set to text or crlf in the
+> gitattributes.
+>
+> Most notably this makes t0025 flaky.  When calling deleting the files
+> that will be adjusted through the automated crlf handling, and then
+> calling `git read-tree --reset -u HEAD`, this leads to a race between
+> git read-tree and the filesystem.  The test currently only passes
+> most of the time, because the filesystem usually isn't synced between
+> the call to unpack_trees() and write_locked_index().
+>
+> Currently the sequence of 1) remove files with cr and lf as line
+> endings, 2) `git read-tree --reset -u HEAD` 3) checking the status of
+> the changed files succeeds, because the index and the files are written
+> at the same time, so they have the same mtime.  Thus when reading the
+> index the next time, the files are recognized as racy, and the actual
+> contents on the disk are checked for changes.
+>
+> If the index and the files have different mtimes however, the entry is
+> written to the index as up to date because of the flag set in
+> entry.c:write_entry(), and the contents on the filesystem are not
+> actually checked again, because the stat data in the index matches.
+>
+> The failures in t0025 can be consistently reproduced by introducing a
+> call to sync() between the call to unpack_trees() and
+> write_index_locked().
+>
+> Instead of blindly marking and entry up to date in write_entry(), check
+> if the contents may change on disk first, and strip the CE_UPTODATE flag
+> in that case.  Because the flag is not set, the cache entry will go
+> through the racy check when writing the index the first time, and
+> smudged if appropriate.
+
+Sorry, but I am confused by all of the above.
+
+We write the thing out with write_entry(), possibly applying smudge
+filters and eol conversion to the "git" representation to create the
+"working tree" representation in this codepath, right?  The resulting
+file matches what the user's configuration told us to produce.
+
+Until the working tree file is changed by somebody after the above
+happens, we shouldn't have to check the contents of the file to see
+if there is a difference.  By definition, that has to match the
+contents expected to be there by Git.
+
+The only case I can think of that the above does not hold is when
+the smuge/clean and the eol conversion are not a correct round-trip
+operation pairs, but that would be a misconfiguration.  Otherwise,
+we'd be _always_ comparing the contents without relying on the
+cached stat info for any paths whose in-core and working tree
+representations are different, not just those that are configured
+with misbehaving smudge/clean pair, no?
+
+Puzzled...  In this case, my hunch says that the patch is correct,
+your analysis also is and it is only me who is missing some crucial
+bits in the analysis and getting confused.
+
+Enlightenment, please?
+
+>
+> This fixes the flaky test as well as the underlying problem.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
->   t/t0060-path-utils.sh | 37 ++++++++++++++++++++++---------------
->   1 file changed, 22 insertions(+), 15 deletions(-)
-> 
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index f0152a7..89d03e7 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -7,6 +7,13 @@ test_description='Test various path utilities'
->   
->   . ./test-lib.sh
->   
-> +# On Windows, the root directory "/" is translated into a Windows directory.
-> +# As it is not well-defined whether that Windows directory should end in a
-> +# slash or not, let's test for that and adjust our expected longest ancestor
-> +# length accordingly.
-> +root_offset=0
-> +case "$(test-path-utils print_path /)" in ?*/) root_offset=-1;; esac
-> +
->   norm_path() {
->   	expected=$(test-path-utils print_path "$2")
->   	test_expect_success $3 "normalize path: $1 => $2" \
-
-In t0060-path-utils.sh, I currently find this:
-
-# On Windows, we are using MSYS's bash, which mangles the paths.
-# Absolute paths are anchored at the MSYS installation directory,
-# which means that the path / accounts for this many characters:
-rootoff=$(test-path-utils normalize_path_copy / | wc -c)
-# Account for the trailing LF:
-if test $rootoff = 2; then
-	rootoff=	# we are on Unix
-else
-	rootoff=$(($rootoff-1))
-fi
-
-ancestor() {
-	# We do some math with the expected ancestor length.
-	expected=$3
-	if test -n "$rootoff" && test "x$expected" != x-1; then
-		expected=$(($expected+$rootoff))
-	fi
-	test_expect_success "longest ancestor: $1 $2 => $expected" \
-	"actual=\$(test-path-utils longest_ancestor_length '$1' '$2') &&
-	 test \"\$actual\" = '$expected'"
-}
-
-Furthermore, since you are modifying only cases where the expected
-value is not -1 and we already have a check for this case in the
-helper function, wouldn't it be simpler to merge the offset that your
-case needs with the one that we already have?
-
-> @@ -112,30 +119,30 @@ norm_path /d1/.../d2 /d1/.../d2
->   norm_path /d1/..././../d2 /d1/d2
->   
->   ancestor / / -1
-> -ancestor /foo / 0
-> +ancestor /foo / $root_offset
->   ancestor /foo /fo -1
->   ancestor /foo /foo -1
->   ancestor /foo /bar -1
->   ancestor /foo /foo/bar -1
->   ancestor /foo /foo:/bar -1
-> -ancestor /foo /:/foo:/bar 0
-> -ancestor /foo /foo:/:/bar 0
-> -ancestor /foo /:/bar:/foo 0
-> -ancestor /foo/bar / 0
-> +ancestor /foo /:/foo:/bar $root_offset
-> +ancestor /foo /foo:/:/bar $root_offset
-> +ancestor /foo /:/bar:/foo $root_offset
-> +ancestor /foo/bar / $root_offset
->   ancestor /foo/bar /fo -1
-> -ancestor /foo/bar /foo 4
-> +ancestor /foo/bar /foo $((4+$root_offset))
->   ancestor /foo/bar /foo/ba -1
-> -ancestor /foo/bar /:/fo 0
-> -ancestor /foo/bar /foo:/foo/ba 4
-> +ancestor /foo/bar /:/fo $root_offset
-> +ancestor /foo/bar /foo:/foo/ba $((4+$root_offset))
->   ancestor /foo/bar /bar -1
->   ancestor /foo/bar /fo -1
-> -ancestor /foo/bar /foo:/bar 4
-> -ancestor /foo/bar /:/foo:/bar 4
-> -ancestor /foo/bar /foo:/:/bar 4
-> -ancestor /foo/bar /:/bar:/fo 0
-> -ancestor /foo/bar /:/bar 0
-> -ancestor /foo/bar /foo 4
-> -ancestor /foo/bar /foo:/bar 4
-> +ancestor /foo/bar /foo:/bar $((4+$root_offset))
-> +ancestor /foo/bar /:/foo:/bar $((4+$root_offset))
-> +ancestor /foo/bar /foo:/:/bar $((4+$root_offset))
-> +ancestor /foo/bar /:/bar:/fo $root_offset
-> +ancestor /foo/bar /:/bar $root_offset
-> +ancestor /foo/bar /foo $((4+$root_offset))
-> +ancestor /foo/bar /foo:/bar $((4+$root_offset))
->   ancestor /foo/bar /bar -1
->   
->   test_expect_success 'strip_path_suffix' '
-> 
+>  entry.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/entry.c b/entry.c
+> index 582c400..102fdfa 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -214,6 +214,8 @@ finish:
+>  		if (!fstat_done)
+>  			lstat(ce->name, &st);
+>  		fill_stat_cache_info(ce, &st);
+> +		if (would_convert_to_git(ce->name))
+> +			ce->ce_flags &= ~CE_UPTODATE;
+>  		ce->ce_flags |= CE_UPDATE_IN_BASE;
+>  		state->istate->cache_changed |= CE_ENTRY_CHANGED;
+>  	}
+> --
+> 2.7.0.75.g3ee1e0f.dirty
