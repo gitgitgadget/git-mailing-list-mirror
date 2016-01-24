@@ -1,113 +1,83 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 04/19] mingw: factor out Windows specific environment setup
-Date: Sun, 24 Jan 2016 16:43:31 +0100 (CET)
-Message-ID: <7edbc873fe214e1a49bbde4f040a35f9bccb151e.1453650173.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 01/19] mingw: let's use gettext with MSYS2
+Date: Sun, 24 Jan 2016 16:43:13 +0100 (CET)
+Message-ID: <7162dcb55e6a317cba840ef1176d09d99fc37f6b.1453650173.git.johannes.schindelin@gmx.de>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Karsten Blees <blees@dcon.de>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 24 16:44:04 2016
+X-From: git-owner@vger.kernel.org Sun Jan 24 16:44:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNMpf-0000ZT-DT
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 16:44:03 +0100
+	id 1aNMpc-0000ZT-HO
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 16:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753142AbcAXPn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 10:43:59 -0500
-Received: from mout.gmx.net ([212.227.15.19]:50077 "EHLO mout.gmx.net"
+	id S1752626AbcAXPny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 10:43:54 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63670 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752544AbcAXPnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 10:43:37 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LgHvY-1ZiU9x2bXo-00nfCi; Sun, 24 Jan 2016 16:43:33
+	id S1752450AbcAXPnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 10:43:22 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lr46Z-1ZtEzg2V8t-00eadn; Sun, 24 Jan 2016 16:43:15
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453650173.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:RoN3ZrdGX+wDuMDFhu5TOMfqqxmiHlwKSjzIgGKMRcPB8Fso0hr
- HwgZGzWDAtivkJFBCdL1yG+wgJqUnRCD5MjBzgvmz7mkj+G019Bri6l4AUE29yc/xGa3lgq
- ibuSQh66x+oTnbhdQEi7ApenUyRfBjdLiS7QWHuoYKPtz5xUBXO0bNeU4wC3qLKM9Lo65xH
- 4Anl9BcZh5owv78p+xFJw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mAsfk0+URkg=:1XUqoaXyelfu/Pq5c+zkL0
- juVcdiCQiMmgT58AYursER22jMiTKuRb1JsW76A88VDZCzw0K552xehLSohRI1wwBgm+vOt6m
- pakuKFWR7JZO35qENJX7wO9S+S+1jBPzSHfxzC6jFo6woVs3tZ0W9cVUoB8wcV3B4o1/mmhIe
- GHp29J0416fQ9h1OSQdKcvG6dg6/mXBFQLECFrGdN+9YRydSushv3DJxDVVBpM6MY9teGIAX6
- N0M2psfeIbu7xASJct85By1vXP07ZAlLgc3tybJNCLbxAeU58kA7BXJALLtMhGWQtRtg0iur5
- uXqIEUl1E1QZa8oA9BNTbmnrH88K0K9vzmXfX/m1Yujn6YiD9SFYOC75ziIlcUQ6giYAHbN8p
- yHyRoSr5Js6Tnz7lOPo2HxZjoqNrLHUzF0qSUSQvIbNQSYGKUvMSY0JEKCypEkhqG7T09IWKo
- iJWbpKG4EkbtvzEFrvJscOSuiIXC38tkHp/F4ojf2TVCVYgMnJxxqTw5hEIibN+xP8qQ6XT3g
- xayiCj4pvnt5Do4Msz6LhdVakrVSN59O9szMOfH4szHOcUY3DR94D3FVDgdFTcQ0JwuP7w4Rq
- DCaSN5U9ZQJ1YWMy40tpFZDMN0E+8AGGTN3PbxWDt+xEQfuiJU6J15PuS1JqyjJ9W/D6i63yj
- LeaKKNkvCl0AHPcT6WH1Fso36v0SoDYfeMuN3gYSiwPs0whZVdTUqtLuA/ZuoJ2q3pC04BKUH
- ifv61lqlwEjZuoK+KILXtKRy1xYYhejsA1qZNwifKVeOFCBopVs2ol0ngLJe1PWR2bDAEvz3 
+X-Provags-ID: V03:K0:7HJu5yi7oRD7Ed3A+vJues/+SR3niuPdwxStsEi1vwhVlPeG+Od
+ cyZcWZwfbvN9S0w3/hJ5Z8rj0GASMEF3kBdwyFI2/wOhve/fAQ5jCu7eG1XXr72YOWxRNev
+ mm0uuQe0/UYRWDPRhAWSXNN1lUXGlAJZ02Ah//zDdHvMNV+Q8byZY+WWHp291/vA8Iuh6aC
+ lD2HfnfnF9JWkAb9Fg3Zw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0ZjijBNBqT8=:FdkE23atiosjG/2xW6r161
+ 7sttQT1Dj9jmKr0mAIZXRBkeaL7TSSlKpXtHZp2JUnXKtKAkYwG2FI12ZZSlY+SOwnOdGqLqj
+ kLxQ9Uy7qHLlJt68qTVu+vbDIX97fDGnZmGxf3/YsuoKXQBRvz+Uk9uqLk5pEy0mzQw1tq8us
+ xVEey+N04zVY72nZYwGMkBmyB8FMHmg7sDXdtPIwCgFIyPo5gIpnKWMJjMJX75n5oY87boUBd
+ skGY1NxS+IeimjKdV9JurhmYbY1hzDnX0as53VABbrjA6WShwJYbVZMiyHw7zTEfo1vUNG57k
+ fmO3WOqe6unTKfEtpRRY9vRN70CFZdeq+Mpk3JTxnYSf4UxXCe8BfMFMdpnFapDvencQFZcnS
+ W/TL2pdgNCdLQKgjeJTINhsjbZDaNp4PztnpEJvdHNCly/kMWbM81UTXG4yjbqHF9TkKxVGm3
+ nRxuEpnP00exzaB8/AsIYGWheWi4xC3TqB/iHT+OFEuseTYzv2ZlQS4Nh+3Kc17tcaCRZ6bJj
+ v2FK86rzWxsI3+GHJCydJVqyH/0F74fwyfHGcOHP0s0tgoBIeD7L8j1bkhZFI+08gxnOXlRTI
+ pOpSpXq5eM+6HO0iDQ87cTQkT6RPw6EJWzirjBmvQQRhwi/fRFcICo7rfFrU1iXk1D9QkVgoL
+ uvKTfzm2L5BjH+LcNO4Bi95Q9pXVOrIuUMqt3NPpGP11WVJLpuQGItxrl50wdBUmq1e1SDZKF
+ o8eOiG2P0Ge3yJOZWYcUVza8gWsrE+nB4u69sNrtMBwG0sF9FvnsPCSlftFz2UcTcHmd0271 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284667>
 
-From: Karsten Blees <blees@dcon.de>
+This solves two problems:
 
-We will add more environment-related code to that new function
-in the next patch.
+- we now have proper localisation even on Windows
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
+- we sidestep the infamous "BUG: your vsnprintf is broken (returned -1)"
+  message when running "git init" (which otherwise prevents the entire
+  test suite from running)
+
+The latter issue is rather crucial, as *no* test passes in Git for
+Windows without this fix.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 8437c9a..a12197e 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2040,6 +2040,22 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
- 	return -1;
- }
- 
-+static void setup_windows_environment()
-+{
-+	/* on Windows it is TMP and TEMP */
-+	if (!getenv("TMPDIR")) {
-+		const char *tmp = getenv("TMP");
-+		if (!tmp)
-+			tmp = getenv("TEMP");
-+		if (tmp)
-+			setenv("TMPDIR", tmp, 1);
-+	}
-+
-+	/* simulate TERM to enable auto-color (see color.c) */
-+	if (!getenv("TERM"))
-+		setenv("TERM", "cygwin", 1);
-+}
-+
- /*
-  * Disable MSVCRT command line wildcard expansion (__getmainargs called from
-  * mingw startup code, see init.c in mingw runtime).
-@@ -2118,19 +2134,7 @@ void mingw_startup()
- 	qsort(environ, i, sizeof(char*), compareenv);
- 
- 	/* fix Windows specific environment settings */
--
--	/* on Windows it is TMP and TEMP */
--	if (!mingw_getenv("TMPDIR")) {
--		const char *tmp = mingw_getenv("TMP");
--		if (!tmp)
--			tmp = mingw_getenv("TEMP");
--		if (tmp)
--			setenv("TMPDIR", tmp, 1);
--	}
--
--	/* simulate TERM to enable auto-color (see color.c) */
--	if (!getenv("TERM"))
--		setenv("TERM", "cygwin", 1);
-+	setup_windows_environment();
- 
- 	/* initialize critical section for waitpid pinfo_t list */
- 	InitializeCriticalSection(&pinfo_cs);
+diff --git a/config.mak.uname b/config.mak.uname
+index 4b2e1b8..6b25661 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -560,7 +560,7 @@ else
+ 		NO_R_TO_GCC_LINKER = YesPlease
+ 		INTERNAL_QSORT = YesPlease
+ 		HAVE_LIBCHARSET_H = YesPlease
+-		NO_GETTEXT = YesPlease
++		NO_GETTEXT =
+ 		USE_LIBPCRE= YesPlease
+ 		NO_CURL =
+ 		USE_NED_ALLOCATOR = YesPlease
 -- 
 2.7.0.windows.1.7.g55a05c8
