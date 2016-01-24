@@ -1,127 +1,120 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/4] Refactor skipping DOS drive prefixes
-Date: Sun, 24 Jan 2016 11:56:26 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601241152060.2964@virtualbox>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de> <cover.1452585382.git.johannes.schindelin@gmx.de> <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de> <56A279DA.8080809@kdbg.org> <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601230924090.2964@virtualbox> <56A3CE34.20808@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 24 11:57:21 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH] convert: legitimately disable clean/smudge filter with an empty override
+Date: Sun, 24 Jan 2016 13:22:50 +0100
+Message-ID: <1453638170-52041-1-git-send-email-larsxschneider@gmail.com>
+Cc: peff@peff.net, jehan@orb.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 24 13:23:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNIMC-0000uN-B3
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 11:57:20 +0100
+	id 1aNJhi-0003Ch-3C
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Jan 2016 13:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbcAXK4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 05:56:43 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57071 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751338AbcAXK4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 05:56:41 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MMT1y-1aTLoT1vkU-008GV3; Sun, 24 Jan 2016 11:56:27
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56A3CE34.20808@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:X7HpH9mvt3ZqnuAE0HIGyFWMaxXOlLuqoF2mLNq4ipwVbdTVFNA
- MU9Gv38UydHoebNyZ7eG3Ub7HR8oOeF9Llxa+lwSotugwytoOwIeLGkB6872Se78VvYbscn
- vBkbiTk/ew/q/+1bSxjeBztCNwhjvqfA1nOA+l1U9cECXGiWV15erz2M3saZxLsp06DoFsC
- I8ucAMsXxLT6Uf7uyt/UA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yeSZNVg2HY8=:/HlPoOTfjsRmje7b2r6sro
- nII0ygjL/3lKwz5Z1PMP7CaWepSX38dWWk5A01ARp9mLZcGjLjX5OUxHB0M+OEZPtNbLgKcIw
- WNJkyHTJ7e4qKomwgejXJL71O9AxGGw96YFeYrd73oZG8vnHygStsUyTlLi+V1xlz6lVHr5VV
- wAPUO8eIoW0TY+p/B3SIenA75VAVbQTbSJokl9AT4pk9s6YImHk71HkDEyw5RI2/yXUv6J9Ou
- AdyvTR0BJxm0oxTfuHwK6p9+mgAaTYUnsSouIAdajd+jAgWu5psThB0DCUK+iTzMxKEIuHbEa
- KwEPa/ooJRKlwkwvcHt3TnvBzLBoaShe2ccaz4xORjX+vUW95h6EZrfpx2tt/OIaOA8dhqhtp
- 878ffaY/8PSLN8yhvA3kseQODodZjQoALzmsUHsX61otJDUpOJ6mwI/KlQ9+ld1ToJOt0O+Ce
- WPg6w4MmQZ9hJ/HXSjF7hx70EFB9+6+6ofNaxAf9FMfW7/EsDZaflyGi2bPI0t+j8DjQmFJ0D
- j+9mbxTuAqGMX0ZTC5FvnQ4nAvHaOv2rKEuCmnu3s0GceYJ3Ts+rONpfDqTSJxCCWG+n291OJ
- 4K1nJedq6BCSGDJSdEWqMQuEaLtPUkb+eRHs4/o+Q1T+RtYE2lNIAJ5udRa06L6c0bYmiMd8a
- Vq3imBvaRY9UsSsHEPjFgx+rgHv1J1fhMfoXz81GdgnheIq3hBxRD0+ncgKPVyEm965rhmZG7
- 4/kE229yAPeUdqONJ2WXZ4WQiyneOI4adNF6izd0RDyegSH4RSEhDPms08ern2tMH4d9cQIw 
+	id S1751894AbcAXMW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 07:22:56 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:34867 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbcAXMWy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 07:22:54 -0500
+Received: by mail-wm0-f43.google.com with SMTP id r129so34018787wmr.0
+        for <git@vger.kernel.org>; Sun, 24 Jan 2016 04:22:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=pzFP0+AalvLo4jSEZqvBoKs23941SqW/s0DWvcJXBKM=;
+        b=E8pDM6jyGVoR0cBBQU+Yz2sjfHFWrJAV7qQqcoCVAEyZ2iI0bU7Edkt9acuXB1/qOM
+         Q/FUO8ZBtT36pVwK3ZA75lv5fFyGkHhfZDtULBnWyR/hb83mP7RKZLkxbi2U8clGy4I0
+         tACF84BM2xHctYjn2fSVFdAYSOgOn3uiwTDdBasrh6B8dCG0MYhirVl3MXv0KVCTR3so
+         cFCtMkocgAa0O9jXlkagyNl7q4nbwx0RTLcBNRQCvReoguVTV/5qlyiRUlou2EKg/geU
+         0yQh5qrGl0mtDSeK0dRZde9sBOg7MzwXhsK52WxdCOc8cJ8v30xn2nuDElUY3uSM1a8t
+         NZuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=pzFP0+AalvLo4jSEZqvBoKs23941SqW/s0DWvcJXBKM=;
+        b=kgp14bjDKg66MvuKQdtWxeOprhU2eAoPmhqVEOzmsrTqfPn8xCdmcjgxLOB4co6ql6
+         TjK0Mzp9VYsUdhDMyPeTQUfz7dL8k5ELkO/8QCycJyNjV/uWsPxbPlhc2HP/ljmlfZEe
+         o9+ZcHXusEQst950OH1Q5SOlqq8m3Lh4XHhCaiXjEWDhYNHoZr98inETdTWGO5smTRTX
+         9YJYmPz1DIk2RXFd/EAwShK3aflWjVpShS3LQIQ0PKfFSIulqIHpQGH9veZFAw+dX+3y
+         GHjL53bF9Kf0OgbU3BLmp7qpASD/23NouhJz7t99bFYyNfT8zgwq9IhO+wSi5Z8JXeGs
+         pzxA==
+X-Gm-Message-State: AG10YORe4zCEgFfutg8x+6EZx1CIS71kExujc47pKEHgz/6YwHO1KjMEL34/5L/tuUr0YA==
+X-Received: by 10.28.53.193 with SMTP id c184mr12648965wma.4.1453638173018;
+        Sun, 24 Jan 2016 04:22:53 -0800 (PST)
+Received: from slxBook3.fritz.box (p5DDB4D5E.dip0.t-ipconnect.de. [93.219.77.94])
+        by smtp.gmail.com with ESMTPSA id ha9sm14329520wjc.3.2016.01.24.04.22.51
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 24 Jan 2016 04:22:52 -0800 (PST)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284646>
 
-Hi Hannes,
+From: Lars Schneider <larsxschneider@gmail.com>
 
-On Sat, 23 Jan 2016, Johannes Sixt wrote:
+A clean/smudge filter can be disabled if set to an empty string. However,
+Git will try to run the empty string as command which results in a error
+message per processed file.
 
-> Am 23.01.2016 um 09:25 schrieb Johannes Schindelin:
->
-> > On Fri, 22 Jan 2016, Junio C Hamano wrote:
-> >
-> > > Johannes Sixt <j6t@kdbg.org> writes:
-> > >
-> > > > I suggest to move the function definition out of line:
-> > > >
-> > > > diff --git a/compat/mingw.c b/compat/mingw.c
-> > > > index 10a51c0..0cebb61 100644
-> > > > --- a/compat/mingw.c
-> > > > +++ b/compat/mingw.c
-> > > > @@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int
-> > > > options)
-> > > >   	return -1;
-> > > >   }
-> > > >
-> > > > +int mingw_skip_dos_drive_prefix(char **path)
-> > > > +{
-> > > > +	int ret = has_dos_drive_prefix(*path);
-> > > > +	*path += ret;
-> > > > +	return ret;
-> > > > +}
-> > > > +
-> > > >   int mingw_offset_1st_component(const char *path)
-> > > >   {
-> > > >   	char *pos = (char *)path;
-> > > > diff --git a/compat/mingw.h b/compat/mingw.h
-> > > > index 9b5db4e..2099b79 100644
-> > > > --- a/compat/mingw.h
-> > > > +++ b/compat/mingw.h
-> > > > @@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
-> > > >
-> > > >   #define has_dos_drive_prefix(path) \
-> > > >   	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> > > > -static inline int mingw_skip_dos_drive_prefix(char **path)
-> > > > -{
-> > > > -	int ret = has_dos_drive_prefix(*path);
-> > > > -	*path += ret;
-> > > > -	return ret;
-> > > > -}
-> > > > +int mingw_skip_dos_drive_prefix(char **path);
-> > > >   #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
-> > > >   #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
-> > > >   static inline char *mingw_find_last_dir_sep(const char *path)
-> > >
-> > > This sounds good to me.  Dscho?
-> >
-> > Yep, sounds good to me, too.
-> >
-> > Personally, I have no inclination to add compatibility with the
-> > now-safely-obsolete MSys to my responsibilities, but if Hannes wants to do
-> > it, who am I to stand in his way? Especially when the fix is as trivial as
-> > here.
-> 
-> This is not a matter of compatibility. I am VERY curious why you do not see
-> an error (or warning) without my proposed fixup. As I mentioned, isalpha() is
-> defined much later than the definition of mingw_skip_dos_drive_prefix().
-> Where does your build get a declaration of isalpha() from?
+Teach Git to consider an empty clean/smudge filter as legitimately disabled
+and do not print an error message.
 
-$ grep -w isalpha /mingw32/i686-w64-mingw32/include/*.h
-/mingw32/i686-w64-mingw32/include/ctype.h:  _CRTIMP int __cdecl isalpha(int _C);
-/mingw32/i686-w64-mingw32/include/ctype.h:#define __iscsymf(_c) (isalpha(_c) || ((_c)=='_'))
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ convert.c             |  4 ++--
+ t/t0021-conversion.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-I guess that definition gets pulled in somehow.
+diff --git a/convert.c b/convert.c
+index 814e814..58af965 100644
+--- a/convert.c
++++ b/convert.c
+@@ -786,7 +786,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 	struct conv_attrs ca;
 
-Ciao,
-Dscho
+ 	convert_attrs(&ca, path);
+-	if (ca.drv) {
++	if (ca.drv && ca.drv->clean && strlen(ca.drv->clean)) {
+ 		filter = ca.drv->clean;
+ 		required = ca.drv->required;
+ 	}
+@@ -835,7 +835,7 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 	struct conv_attrs ca;
+
+ 	convert_attrs(&ca, path);
+-	if (ca.drv) {
++	if (ca.drv && ca.drv->smudge && strlen(ca.drv->smudge)) {
+ 		filter = ca.drv->smudge;
+ 		required = ca.drv->required;
+ 	}
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 718efa0..56e385c 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -252,4 +252,18 @@ test_expect_success "filter: smudge empty file" '
+ 	test_cmp expected filtered-empty-in-repo
+ '
+
++test_expect_success 'disable filter with empty override' '
++	git config filter.disable.smudge false &&
++	git config filter.disable.clean false &&
++
++	echo "*.disable filter=disable" >.gitattributes &&
++
++	echo test >test.disable &&
++	git -c filter.disable.clean= add test.disable 2>err &&
++	! test -s err &&
++	rm -f test.disable &&
++	git -c filter.disable.smudge= checkout -- test.disable 2>err &&
++	! test -s err
++'
++
+ test_done
+--
+2.5.1
