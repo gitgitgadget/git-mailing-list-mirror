@@ -1,82 +1,144 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] convert: legitimately disable clean/smudge filter with an empty override
-Date: Sun, 24 Jan 2016 17:25:57 -0800
-Message-ID: <xmqqr3h6bgbe.fsf@gitster.mtv.corp.google.com>
-References: <1453638170-52041-1-git-send-email-larsxschneider@gmail.com>
+Subject: Re: [PATCH 00/19] Let Git's tests pass on Windows
+Date: Sun, 24 Jan 2016 17:34:08 -0800
+Message-ID: <xmqqmvrubfxr.fsf@gitster.mtv.corp.google.com>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, jehan@orb.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jan 25 02:26:06 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 25 02:34:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNVuv-0006DT-Sb
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 02:26:06 +0100
+	id 1aNW2p-0001Fs-Ns
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 02:34:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655AbcAYB0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 20:26:01 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50121 "EHLO
+	id S1754557AbcAYBeM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Jan 2016 20:34:12 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60325 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752194AbcAYB0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 20:26:00 -0500
+	with ESMTP id S1752543AbcAYBeK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jan 2016 20:34:10 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8532C3FB3A;
-	Sun, 24 Jan 2016 20:25:59 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FC3B3FCA2;
+	Sun, 24 Jan 2016 20:34:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y0F29TFsHEjoZ+jQvpdkpUj6BiU=; b=d3ILkL
-	C4+nKobm51PHN1/m0xS6+0COZ4+1IU3/5cFFRWMa5hU99IKYtCqwcAl2PzSJ3XTa
-	WGO9AvpPC7fRYXbouOOdeQw7t7FUCDpUdzyoPVg3KhH5qB8VI95ktnfJNzjOqc7W
-	Z/LMieh2mtNgTrC876+RXikgpra6YCCg67HQI=
+	:content-type:content-transfer-encoding; s=sasl; bh=HcLvhGL0wr/P
+	dhpzxtnzOv29Zb4=; b=Jja2B4u5i1T3ul7yb4b1X+gZkfev5ZtG7l1/nurJGYmK
+	P1zmwHKTwVgAAWz9kTKfQaskkoTgU+QmTf9R7Kdtl0z84tl08Ur6Q1VFslZklu8z
+	pUphI1bTjyeNckMy9FtRpuIN++SJhxxvqqIhxXMgpsOJQPrXPi0y4PTZjogq7iw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xw/Jt/QNAteEk0SxoXGGk69M9qlCxL67
-	LWELjCTiXn+mj8njr4PMLql8ay+68/4wuLG5hvPbT9/0k5s3VHAibMDk1TnTLUpq
-	J73+mqtnFKUERaPiY1jPUbaM99bDtrDS11yBxI2FMaY8Kvv269UlbCi2EdcVc4qd
-	Y9ZjwwvqnxE=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dNyaT4
+	uD2DY6N6IbcZMQX5o1YKGdcCPHTFtKw1lw6LZAzwv4d/aA3CHVTX7CryUqbEvYTE
+	4bShP2BJlYgRzv3qA5SQucFpSweZwTeRlVFr3Pzh2P/iHKvS6qNw2A7LrgKK0WT3
+	LiPOv/KIsj4XHZ9fzhqyHQIvhV+gSopYCqCIY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C08F3FB37;
-	Sun, 24 Jan 2016 20:25:59 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 174843FCA1;
+	Sun, 24 Jan 2016 20:34:10 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 01EF43FB36;
-	Sun, 24 Jan 2016 20:25:58 -0500 (EST)
-In-Reply-To: <1453638170-52041-1-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Sun, 24 Jan 2016 13:22:50
-	+0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 898773FCA0;
+	Sun, 24 Jan 2016 20:34:09 -0500 (EST)
+In-Reply-To: <cover.1453650173.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Sun, 24 Jan 2016 16:43:06 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 96B127B6-C302-11E5-B26F-80A36AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: BB1604F4-C303-11E5-B69E-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284706>
 
-larsxschneider@gmail.com writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> This is a big milestone. With these modifications, Git's source code
+> does not only build without warnings in Git for Windows' SDK, but
+> passes the entire regression test suite.
+
+;-)
+
+It is somewhat surprising that with only these changes my tree is no
+longer behind the Git for Windows effort--all tests pass so everything
+should be working perfectly, right ;-)
+
+There were a few changes in the series that raised my eyebrows,
+which I'll respond separately, but overall it's a great
+achievement.
+
+Thanks.
+
 >
-> A clean/smudge filter can be disabled if set to an empty string. However,
-> Git will try to run the empty string as command which results in a error
-> message per processed file.
-
-The above two sentences do not make any sense to me.  You observe
-that the command refuses to work when the variable is set to an
-empty string--why then can you claim "filter can be disabled if set
-to an empty string"?  I'd consider that the system is not working
-with such a configuration, i.e. "filter cannot be disabled by
-setting it to empty; such a request will result in an error".
-
-> Teach Git to consider an empty clean/smudge filter as legitimately disabled
-> and do not print an error message.
-
-On the other hand, this does make sense to me, as I do not think of
-a good way to say "earlier configuration entry said we should use
-this filter, but we actually do not want to use that one (or any)"
-because a configuration, unlike attributes entry, cannot be reset.
-The closest you can do is to set it to empty, so it may be a good
-new feature to do this.
+> The patch series contains three different types of patches. First,
+> there are a couple of real fixes that were triggered by failures in
+> the regression tests. Then there are a couple of fixes to the
+> regression tests themselves. And finally, we have to disable a couple
+> of tests because we simply cannot make them work on Windows.
+>
+>
+> Johannes Schindelin (13):
+>   mingw: let's use gettext with MSYS2
+>   mingw: do not trust MSYS2's MinGW gettext.sh
+>   Git.pm: stop assuming that absolute paths start with a slash
+>   mingw: prepare the TMPDIR environment variable for shell scripts
+>   mingw: let lstat() fail with errno =3D=3D ENOTDIR when appropriate
+>   mingw: fix t5601-clone.sh
+>   mingw: accomodate t0060-path-utils for MSYS2
+>   mingw: disable mkfifo-based tests
+>   tests: turn off git-daemon tests if FIFOs are not available
+>   mingw: fix t9700's assumption about directory separators
+>   mingw: work around pwd issues in the tests
+>   mingw: skip a couple of git-svn tests that cannot pass on Windows
+>   mingw: do not bother to test funny file names
+>
+> Karsten Blees (2):
+>   mingw: factor out Windows specific environment setup
+>   mingw: do not use symlinks with SVN in t9100
+>
+> Pat Thoyts (1):
+>   mingw: avoid absolute path in t0008
+>
+> Thomas Braun (1):
+>   mingw: outsmart MSYS2's path substitution in t1508
+>
+> =EB=A7=88=EB=88=84=EC=97=98 (2):
+>   mingw: try to delete target directory before renaming
+>   mingw: fix git-svn tests that expect chmod to work
+>
+>  Makefile                              |  1 +
+>  compat/mingw.c                        | 91 +++++++++++++++++++++++++=
+++++------
+>  config.mak.uname                      |  3 +-
+>  perl/Git.pm                           |  3 +-
+>  t/lib-git-daemon.sh                   |  5 ++
+>  t/t0008-ignores.sh                    |  8 ++-
+>  t/t0060-path-utils.sh                 | 37 ++++++++------
+>  t/t1508-at-combinations.sh            | 13 ++++-
+>  t/t3300-funny-names.sh                |  1 +
+>  t/t3600-rm.sh                         |  3 +-
+>  t/t3703-add-magic-pathspec.sh         |  2 +-
+>  t/t3902-quoted.sh                     |  1 +
+>  t/t4016-diff-quote.sh                 |  1 +
+>  t/t4135-apply-weird-filenames.sh      |  3 +-
+>  t/t5601-clone.sh                      | 18 +++----
+>  t/t7800-difftool.sh                   | 14 +++---
+>  t/t9100-git-svn-basic.sh              | 29 +++++++----
+>  t/t9118-git-svn-funky-branch-names.sh | 12 +++--
+>  t/t9124-git-svn-dcommit-auto-props.sh | 20 ++++++--
+>  t/t9130-git-svn-authors-file.sh       |  2 +-
+>  t/t9200-git-cvsexportcommit.sh        |  2 +-
+>  t/t9400-git-cvsserver-server.sh       |  6 +--
+>  t/t9401-git-cvsserver-crlf.sh         |  6 +--
+>  t/t9402-git-cvsserver-refs.sh         |  6 +--
+>  t/t9700/test.pl                       |  2 +-
+>  t/t9903-bash-prompt.sh                |  2 +-
+>  t/test-lib.sh                         |  2 +-
+>  test-fake-ssh.c                       | 30 ++++++++++++
+>  28 files changed, 238 insertions(+), 85 deletions(-)
+>  create mode 100644 test-fake-ssh.c
