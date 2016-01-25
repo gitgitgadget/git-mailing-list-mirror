@@ -1,121 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 09/11] config: add core.untrackedCache
-Date: Mon, 25 Jan 2016 12:47:03 -0800
-Message-ID: <xmqqio2hfku0.fsf@gitster.mtv.corp.google.com>
-References: <1453649304-18121-1-git-send-email-chriscool@tuxfamily.org>
-	<1453649304-18121-10-git-send-email-chriscool@tuxfamily.org>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: [RFC] tag-ref and tag object binding
+Date: Mon, 25 Jan 2016 16:22:09 -0500
+Message-ID: <20160125212208.GB26169@LykOS>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gersh?= =?utf-8?Q?ausen?= 
-	<tboegi@web.de>, Stefan Beller <sbeller@google.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 21:47:21 2016
+Content-Type: text/plain; charset=us-ascii
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 25 22:22:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNo2e-00046h-Rj
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 21:47:17 +0100
+	id 1aNoaX-0004Zk-UY
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 22:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934093AbcAYUrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 15:47:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934085AbcAYUrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 15:47:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 816673F349;
-	Mon, 25 Jan 2016 15:47:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DbV17awoihU1nTw1v7owmUbRNRg=; b=nfPyNs
-	Yktlui+zSHAoZxULLmVEECaAU8G8pOcoGBqOsLoeKsmmqR4SzGTNJeqSleVkqwvf
-	FhG4uO9rMk2RTWbIvQ9xJ8p6lyt6zddyKaXgyYYPnL4wKuHZ8TE/jBXT8TKvNZ2J
-	+WKRNXgRUX/wYZ4oreByt91FvNalPn9Z33Xv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LiLUnI6f75UYz2liC4n5qXkQTftT9qvz
-	1Pa5nbRxs8alyC+9q/a9xyZU4rHmiSQujgH93c0TWo2aGI4FRmkmSWdkUAvbcf8n
-	HI3DPBxMOTGe+zaqJ8qPXmSivyAreNzY/JEkQBqbm7vihXSCziwWx39EQjL5X1Mm
-	glqdBJJJ5dI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 777BC3F348;
-	Mon, 25 Jan 2016 15:47:05 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D31793F345;
-	Mon, 25 Jan 2016 15:47:04 -0500 (EST)
-In-Reply-To: <1453649304-18121-10-git-send-email-chriscool@tuxfamily.org>
-	(Christian Couder's message of "Sun, 24 Jan 2016 16:28:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CAD26FF8-C3A4-11E5-B5E7-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S933193AbcAYVWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 16:22:13 -0500
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:34980 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932729AbcAYVWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 16:22:12 -0500
+Received: by mail-qg0-f54.google.com with SMTP id o11so119421622qge.2
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 13:22:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition;
+        bh=QLiiKL/CQ4d+zLupo9gT27vIICBHnlZUwloqFZUrMUU=;
+        b=GQG5jybWDKfWZ5H0Dsy9o8rHoXNo/TMulTrIUp/8xXyhxMXbuszVMZnX4HGebZicW/
+         bFNiWGXqI+YfqH6lPRTyNmAICb2PVtxEfe8o2aJHsAtHSDUV0c3+zQIKZE1k2fNJTV9Y
+         SKFWlhTyrHh5Iv1R723UxnF14oNADTWHA//Tucbhz/e8uKi0x/VC0aviDW79qkDYZMw0
+         1QmZiKLAVVtCEFm+Eg+eowlUWtDJQrKqSc3HMuupBeR++TCi72RMczD/o96Oxts64zjL
+         9INj3LX1VUtsQKl7iAPu2JP5Q1Sr6ZU6i1ZuvT4TurAkGkqZvpsgWgxME6QQVTpEsQrn
+         mKOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition;
+        bh=QLiiKL/CQ4d+zLupo9gT27vIICBHnlZUwloqFZUrMUU=;
+        b=WS7aqF0ax/DjARbI6jk2zGIjXiTqDDUA1PHH0x2R+XbpNaAzgS7Cj0lfogX8QpCsoq
+         L8yx1eG1zDc6dX18/cdsd/18Z0OjiipqEZX3S4tSG04dNhGOvrBXl302YM8c6VKXfK3c
+         FfUmf+7NZcuWNKTJWrPG7XQn0WvPJL6Ozoxt3Mz5r6yJwt/2tYLHbRRWUkfQd/+WoKpb
+         gLb1oHbVI4IkuiimDLf+IN2QlS8zy9ffRZ092XfC0kovuKAbO2VInlmkP//3Rq7ciksy
+         a+NEe6zj9Jljg684OkhRZoaBWcixaSl2yKrZvBPK1rFRoCRxyJ6ao2wKtxBFYnOnsBwk
+         NQDA==
+X-Gm-Message-State: AG10YOQWADomeLbxeizZeC5PWF1uXeFLtETsWnwpuLL2iTnCm7ghcLB9woeYUeLH49uV8xge
+X-Received: by 10.140.195.136 with SMTP id q130mr25205109qha.45.1453756931172;
+        Mon, 25 Jan 2016 13:22:11 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-18.NATPOOL.NYU.EDU. [216.165.95.7])
+        by smtp.gmail.com with ESMTPSA id u78sm9464129qge.27.2016.01.25.13.22.10
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 25 Jan 2016 13:22:10 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284757>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hello everyone.
 
-> diff --git a/read-cache.c b/read-cache.c
-> index 5be7cd1..a04ec8c 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1497,10 +1497,23 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
->  	return ce;
->  }
->  
-> -static void check_ce_order(struct index_state *istate)
-> +static void post_read_index_from(struct index_state *istate)
->  {
->  	unsigned int i;
->  
-> +	switch (git_config_get_untracked_cache()) {
-> +	case -1: /* keep: do nothing */
-> +		break;
-> +	case 0: /* false */
-> +		remove_untracked_cache(istate);
-> +		break;
-> +	case 1: /* true */
-> +		add_untracked_cache(istate);
-> +		break;
-> +	default: /* unknown value: do nothing */
-> +		break;
-> +	}
-> +
->  	for (i = 1; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce = istate->cache[i - 1];
->  		struct cache_entry *next_ce = istate->cache[i];
+I've done some further research on the security properties of git
+metadata and I think I've identified something that might be worth
+discussing. In this case, The issue is related to the refs that point to
+git tag objects. Specifically, the "loose" nature of tag refs might
+possibly trick people into installing the wrong revision (version?) of a
+file.
 
-Bad manners.
+To elaborate, the ref of a tag object can be moved around in the same
+way a branch can be moved around (either manually or by using git
+commands). If someone with write access can modify where this ref points
+to, and points it to another valid tag (e.g., an older, vulnerable
+version), then many tools that work under the assumption of static tags
+might mistakenly install/pull the wrong reivision of source code. I've
+verified that this is possible to pull off in package managers such as
+PIP, rubygems, gradle(maven), as well as git submodules tracking tags.
 
- * The new code added to an existing function, unless there is a
-   good reason, goes to the bottom.  In this case, the verification
-   of the ordering of cache entries and tweaking of UC extension are
-   two unrelated things that can be independently done, and there is
-   no justification why the new code has to come to top.
+In order to stay loyal to the way files in the .git directory are
+ordered, I don't think that making the ref file (or packed refs) files
+differently is an option. However, I think that it could be possible to
+store the "origin ref" in the git tag object, so tools can verify that
+they are looking at the appropriate tag. There might also be a simpler
+solution to this, and I would appreciate any feedback.
 
- * The old function name served as a good documentation of what it
-   does.  That is no longer the case.  Each unrelated segment of
-   this new function needs to be commented.  Even better, perhaps
-   leave the original check_ce_order() as-is, introduce a new
-   function tweak_uc_extension(), and make the post_read_index()
-   to be just two-liner function:
+What do you guys think?
 
-	static void post_read_index(struct index_state *istate)
-        {
-        	check_ce_order(istate);
-                tweak_uc_extension(istate);
-	}
-
-   That way the documentation value of each function that does one
-   specific thing and named specific to its task will be kept, and
-   there is no need for extra comments.
+Thanks!
+Santiago.
