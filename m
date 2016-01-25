@@ -1,128 +1,141 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH] travis-ci: run previously failed tests first, then
- slowest to fastest
-Date: Mon, 25 Jan 2016 15:42:50 +0100
-Message-ID: <20160125144250.GM7100@hank>
-References: <xmqqegdd8997.fsf@gitster.mtv.corp.google.com>
- <20160120002606.GA9359@glandium.org>
- <xmqqfuxt6n00.fsf@gitster.mtv.corp.google.com>
- <DBA834D2-BFC9-4A2F-94D9-A1D0D60377BD@gmail.com>
- <20160122023359.GA686558@vauxhall.crustytoothpaste.net>
- <20160122055255.GA14657@sigill.intra.peff.net>
- <20160122060720.GA15681@sigill.intra.peff.net>
- <20160124143403.GL7100@hank>
- <xmqqd1sqd9sq.fsf@gitster.mtv.corp.google.com>
- <xmqq8u3ed45r.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/19] mingw: accomodate t0060-path-utils for MSYS2
+Date: Mon, 25 Jan 2016 16:39:45 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601251638580.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <12c030323940de4a0845eda9bdd7b67c4e90864a.1453650173.git.johannes.schindelin@gmx.de> <56A52B28.8010304@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 15:42:30 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jan 25 16:40:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNiLc-0000C9-U3
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 15:42:29 +0100
+	id 1aNjFS-00056c-Jr
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 16:40:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbcAYOmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 09:42:24 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:35799 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932584AbcAYOmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 09:42:22 -0500
-Received: by mail-wm0-f46.google.com with SMTP id r129so66867483wmr.0
-        for <git@vger.kernel.org>; Mon, 25 Jan 2016 06:42:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Xa6GkHncWE9HE90BFviMW0JaFgVDq4dZZj1lNVp1ZAw=;
-        b=BnfqWLFNiUgv3j0abtIL+b4VWrW4Ifc0Uuvva/Qf5ZfURKm8+WAzTVG3yc4NI5YBGd
-         M3VGUwbJ7vHhCfWzaMlQTu21HXd4ewi64d+F5n8fBcUOzHxc51v1x8rFe3yzbJTy7OaM
-         2yRlt7qbR15PL4JfdSJzBRYn2SA1yPYR9byj8MEdL5Fdu4LOjhNX4KeFbTcwSrrCJFBA
-         +Bvf6O2gghkh3sguz5HzsEiMAUoAJz0sLVILOpoIAexKdhDwDab4+SGGddrKlpA8uC8U
-         HAph+aXo3VHJmTEgKl5GUim/CBQAl7nKydzy6ygrK/aAVyZcnqe9nNrIgNojkZCEHvdE
-         HrAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Xa6GkHncWE9HE90BFviMW0JaFgVDq4dZZj1lNVp1ZAw=;
-        b=VZ9TT9TCJKF5p2NcOYXHt/QI/UIGpU9u+q2rc9h9Kht1U83vCCNrtzUWsuD/9ctEZA
-         W31qu2O2GbBVSEx80sULeCxYEm5N+MXNDUm2VqLn3zzBsg35RZ9GNbfdPQSWVMB8kMJM
-         6UjvZwBrcS3bJ5I6PlPwwNP3lqBoNtdXe/RJpaI626MfGnZQmL4KYOLJpG1X4YVoIk+r
-         Bt5/7XWAUPUy26DvI4b8RPGAe5tIcxkthz0oOgwIX/+Kr511WRFa9Aznq78MGyCExo0Z
-         +ve+pWHQfPbQwiGJnumX/XpvwwP6K7pf60wK+nq+MomANZ/IryvOLHRrs/IVqPzql81F
-         LVpA==
-X-Gm-Message-State: AG10YOSWiDCUDDM0SN9Q/N8fy3NG6kHZ+zDT+Qrvz+g+bse9vZ9BeWnCo0BJvOIxuyTRkA==
-X-Received: by 10.194.200.106 with SMTP id jr10mr20585682wjc.100.1453732941507;
-        Mon, 25 Jan 2016 06:42:21 -0800 (PST)
-Received: from localhost (host146-106-dynamic.20-79-r.retail.telecomitalia.it. [79.20.106.146])
-        by smtp.gmail.com with ESMTPSA id v191sm16452072wme.1.2016.01.25.06.42.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jan 2016 06:42:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqq8u3ed45r.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+	id S1757389AbcAYPkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 10:40:00 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49158 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753549AbcAYPjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 10:39:55 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MZPer-1age4d0a33-00LH0n; Mon, 25 Jan 2016 16:39:46
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <56A52B28.8010304@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:fSxqHZHJIjPnZejAPnXdI9Of0tGDO8FHtT7Lz6cXvcqKLAxBhRf
+ FKSGreQ9leimjcaKN4zcQDm1lQQkWIBN0i+xfWZxByqEsez/KZKIZIq6RmBQx2DZlwqoniJ
+ pqgTSS2S7Yevw+ilKvBONb/bytp2KzjPo6SlCcAUAMWTdOw3BIZthZRrX+LZHWNZWNBjYco
+ d3bXbz/QK55Y+HVo5C96g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SgmGNGWDh5c=:oAyj8xBm85ycC37TB5JN/a
+ 6txTbhyhQW1psHPEMRJmYASyVEXK/lISLOY96yACBVlvDTB2Epcp4yVOKv1okJ/QkV7qkYlO/
+ f56dz7QLocHJDfdyQlU+NrUMvKFk0DUBV6yfYVJfaCzT2oqJVBgHhIpgQOXovaZ+TxjERK8Su
+ MZDMYeUrYD77jeEC1vj1T13MadjHtztj8eDdJPVFpAu0YNhmRqrcytUND9TMq4ZmmRuNL5K4y
+ l8DesHuI3+lgXLFrKKqpRsE9JbTJlvrdFw1feR7XdkUSDljJXs21J4yfml+B/sY3iKdTAnwfL
+ cq517p25G7ovPC4vvy9r3A27148A9lCGkE2nw/6OX2cdMppGuB+RbKg2uOxTmTO0emmBIZmA0
+ KNktJeh0K961CX1covFNFYC4xnfpKLmL8x2f3vNIOk2xk+4dvgYvOm2HXPoVlVlsrUIFA91+s
+ O8lTb6B1MJk8n4o7Zm+gT0CgHeeSv9qdMPT2+ouSIoGBWuAcouda2RVExTbcm1KpgV4X1sGA4
+ D57JRw2L5CIUDHRDNivOWXOuPOnzqkymekWoK4vmK+ofoxgSBuovarcAgUu09bu5D7Fu7uuW/
+ d8xvUeZOEN6tqp8HnlFTxcIs8Zc0XnB0A+nfJTFWniFPZnee8Z0y7ztVcjBuqt1u7szi8lMJc
+ ctL4j6trsKbU4U3e5nSRWrlg0zXnWYu8q19xcFC5/973G0ndDTFLhHomv+nI9uSNjWioXF7w9
+ Ri/XJj1YfguLhlVJxN5vzqo7Dp/nyiS2BgWlwVtL35br2pEZQHfF9VRDSg48F0D4gAhVZCTl 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284735>
 
-On 01/24, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Sorry, but I am confused by all of the above.
-> >
-> > We write the thing out with write_entry(), possibly applying smudge
-> > filters and eol conversion to the "git" representation to create the
-> > "working tree" representation in this codepath, right?  The resulting
-> > file matches what the user's configuration told us to produce.
-> >
-> > Until the working tree file is changed by somebody after the above
-> > happens, we shouldn't have to check the contents of the file to see
-> > if there is a difference.  By definition, that has to match the
-> > contents expected to be there by Git.
-> >
-> > The only case I can think of that the above does not hold is when
-> > the smuge/clean and the eol conversion are not a correct round-trip
-> > operation pairs, but that would be a misconfiguration.  Otherwise,
-> > we'd be _always_ comparing the contents without relying on the
-> > cached stat info for any paths whose in-core and working tree
-> > representations are different, not just those that are configured
-> > with misbehaving smudge/clean pair, no?
->
-> To put it differently, if a blob stored at path has CRLF line
-> endings and .gitattributes is changed after the fact to say that it
-> must have LF line endings, we should treat it as a broken transitory
-> state.
+Hi Hannes,
 
-Right, I wasn't considering this as a broken state, because t0025 uses
-just this to transition between the states.
+On Sun, 24 Jan 2016, Johannes Sixt wrote:
 
-> There may have to be a way to "fix" an already "wrong" blob
-> in the index that is milder than "rm --cached && add .", but I do
-> not think write_entry(), which is shared by all the normal codepaths
-> that writes out to the working tree, is the best place to do so, if
-> doing so forces the contents of the paths to be always re-checked,
-> just in case the user is in such a broken transitory state.
+> Am 24.01.2016 um 16:44 schrieb Johannes Schindelin:
+> > On Windows, there are no POSIX paths, only Windows ones (an absolute
+> > Windows path looks like "C:\Program Files\Git\ReleaseNotes.html", under
+> > most circumstances, forward slashes are also allowed and synonymous to
+> > backslashes).
+> > 
+> > So when a POSIX shell (such as MSYS2's Bash, which is used by Git for
+> > Windows to execute all those shell scripts that are part of Git) passes
+> > a POSIX path to test-path-utils.exe (which is not POSIX-aware), the path
+> > is translated into a Windows path. For example, /etc/profile becomes
+> > C:/Program Files/Git/etc/profile.
+> > 
+> > This path translation poses a problem when passing the root directory as
+> > parameter to test-path-utils.exe, as it is not well defined whether the
+> > translated root directory should end in a slash or not. MSys1 stripped
+> > the trailing slash, but MSYS2 does not.
+> > 
+> > To work with both behaviors, we simply test what the current system does
+> > in the beginning of t0060-path-utils.sh and then adjust the expected
+> > longest ancestor length accordingly.
+> > 
+> > Originally, the Git for Windows project patched MSYS2's runtime to
+> > accomodate Git's regression test, but we really should do it the other
+> > way round.
+> > 
+> > Thanks to Ray Donnelly for his patient help with this issue.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   t/t0060-path-utils.sh | 37 ++++++++++++++++++++++---------------
+> >   1 file changed, 22 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> > index f0152a7..89d03e7 100755
+> > --- a/t/t0060-path-utils.sh
+> > +++ b/t/t0060-path-utils.sh
+> > @@ -7,6 +7,13 @@ test_description='Test various path utilities'
+> >   
+> >   . ./test-lib.sh
+> >   
+> > +# On Windows, the root directory "/" is translated into a Windows directory.
+> > +# As it is not well-defined whether that Windows directory should end in a
+> > +# slash or not, let's test for that and adjust our expected longest ancestor
+> > +# length accordingly.
+> > +root_offset=0
+> > +case "$(test-path-utils print_path /)" in ?*/) root_offset=-1;; esac
+> > +
+> >   norm_path() {
+> >   	expected=$(test-path-utils print_path "$2")
+> >   	test_expect_success $3 "normalize path: $1 => $2" \
+> 
+> In t0060-path-utils.sh, I currently find this:
+> 
+> # On Windows, we are using MSYS's bash, which mangles the paths.
+> # Absolute paths are anchored at the MSYS installation directory,
+> # which means that the path / accounts for this many characters:
+> rootoff=$(test-path-utils normalize_path_copy / | wc -c)
+> # Account for the trailing LF:
+> if test $rootoff = 2; then
+> 	rootoff=	# we are on Unix
+> else
+> 	rootoff=$(($rootoff-1))
+> fi
+> 
+> ancestor() {
+> 	# We do some math with the expected ancestor length.
+> 	expected=$3
+> 	if test -n "$rootoff" && test "x$expected" != x-1; then
+> 		expected=$(($expected+$rootoff))
+> 	fi
+> 	test_expect_success "longest ancestor: $1 $2 => $expected" \
+> 	"actual=\$(test-path-utils longest_ancestor_length '$1' '$2') &&
+> 	 test \"\$actual\" = '$expected'"
+> }
+> 
+> Furthermore, since you are modifying only cases where the expected
+> value is not -1 and we already have a check for this case in the
+> helper function, wouldn't it be simpler to merge the offset that your
+> case needs with the one that we already have?
 
-Maybe I'm misunderstanding something, but the contents of the paths
-are only re-checked if we are in such a broken transition state, and
-the file stored in git has crlf line endings, and thus would be
-normalized.  In this case we currently re-check the contents of that
-file anyway, at least when the file and the index have the same mtime,
-and we actually show the correct output.
+Good points. I reworked the patch here (will be part of v2):
+https://github.com/dscho/git/commit/24767bd
 
-I'm not too familiar with the eol conversion code, so I might be
-missing something.
-
---
-Thomas
+Ciao,
+Dscho
