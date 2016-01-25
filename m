@@ -1,71 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GPL v2 authoritative answer on stored code as a derived work
-Date: Mon, 25 Jan 2016 11:06:37 -0800
-Message-ID: <xmqqzivtfphe.fsf@gitster.mtv.corp.google.com>
-References: <6D15DFBB73355B4E9EFB1AD5EF9FCA3184242757@NZ-EXCHANGE1.fphcare.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v7 01/11] dir: free untracked cache when removing it
+Date: Mon, 25 Jan 2016 11:16:47 -0800
+Message-ID: <CAGZ79kYoQFWQCxpGxze=v36PTrC7+EgVOwtfm0kgE_kQoekq1g@mail.gmail.com>
+References: <1453649304-18121-1-git-send-email-chriscool@tuxfamily.org>
+	<1453649304-18121-2-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Smith <Jonathan.Smith@fphcare.co.nz>
-X-From: git-owner@vger.kernel.org Mon Jan 25 20:06:46 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 20:16:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNmTN-00051O-6Z
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 20:06:45 +0100
+	id 1aNmdG-0001xT-1P
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 20:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757552AbcAYTGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 14:06:42 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50053 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754583AbcAYTGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 14:06:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 071CC3EC55;
-	Mon, 25 Jan 2016 14:06:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kFjLyCpksGhI+qA9E5+lB/vFQMA=; b=PdD9uo
-	SGQCSi/CN71ghNkMl8a4XW+3yf5hDpB6LSw4I7aR+ClsA9O94Go14TP+5O1szJeh
-	i/z9ihlUJqtsTJWBKT3Jd5FE8qSsywcsVTHv41pHCFYizCfjxKmTOwFd4057fLJn
-	p4aECEMhv8WsmIr6UvVYXL6PjIHqAhD8Bz0uw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P4jU7ykWdaod6t83tvnOjiiuaqfIxnfQ
-	AwE3Z5z+mdunNSA2/n3hw2Te3+25aU2iYMAM0rnWzM+GK7tCNPbPY0Mrf/c7a3CS
-	tFKjINQ2PeaFkcK3TbI0tCW2zwG+HAXwyqFDepjaXH+NAtqxAWIQR7wZfBitBPwE
-	Qi+VyJGO7oU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F28633EC54;
-	Mon, 25 Jan 2016 14:06:39 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71CC33EC4F;
-	Mon, 25 Jan 2016 14:06:39 -0500 (EST)
-In-Reply-To: <6D15DFBB73355B4E9EFB1AD5EF9FCA3184242757@NZ-EXCHANGE1.fphcare.com>
-	(Jonathan Smith's message of "Mon, 25 Jan 2016 03:08:28 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C35C8EBA-C396-11E5-8889-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1758138AbcAYTQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 14:16:52 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:34177 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758129AbcAYTQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 14:16:48 -0500
+Received: by mail-ig0-f169.google.com with SMTP id ik10so41362555igb.1
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 11:16:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jhZV7WS00qeUh+A8KxOkJj0KkGWsl+XLbDKH2hDbj3E=;
+        b=nxu1O6csGIwIdchvH51JhBWMjVs3v18W9hPu9UvH9HyAN9Xb5m2fdf01qoRDC2GAHg
+         NRAlym6abQWv8jRYW8B1RvPA7bjJRpqb7ldZEi6HBEPYTbYiQG81vKYVUvsIuRI8Ds9G
+         7C75FqZ4clWy36xaP7CLSQ9kN4kBhPyfFR3rwSfn99aLwew9xY73uy/Tanp60exA2rJ1
+         T/WBROy5TmFEvXAIWBq5qhuKtMdGUPZYTCWvNgScUapkP2Yh/boezyIG9tPKxBrJFrYD
+         9T00m09K+MIwKQ6Ba6LnDhTAoK5VgIgVvMSZE+gVFXijXVu5ZVWm8Is2J3XatXmDtUtf
+         ZETA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=jhZV7WS00qeUh+A8KxOkJj0KkGWsl+XLbDKH2hDbj3E=;
+        b=HDJ2CuMm2qVCWakkqtn4fphaUnib/v+70fN/uQWi973awBihYBp4J+08oquzuLYhgp
+         5GjNdea6nm2OKqieljgp+bATj/x+PAMTT55EfSOws5jzCk6A+t4rjSQIrezKx/0W7dhW
+         EOT25ws1QXs/SyYowUj9JuDtZ3ICmPXE6/iXrj8ZB4b3ePLq7ke9MI0YGxt6sm2v7ypY
+         eRSLYnKLl2DuMUaqTFaLuUHxDMl/Oc2+EbEPNsqsiOjve/wSXKtqcSS8TCWG7hWCPXVd
+         ZhuMSXCAWW+tfTkS91Mc17lu8Bmr2pYBFiygsHZf6gfqe4g6U9TV8Wi++iFXl18LSN1b
+         1C7Q==
+X-Gm-Message-State: AG10YOROipYY/MgR4AAa8CDESzKMA/siP9f39qM7c+s3MK8no7BmO31ISFHQKQmQZ/jWioO4ZYH7xJCpXnoLqPiS
+X-Received: by 10.50.88.74 with SMTP id be10mr17348811igb.93.1453749407559;
+ Mon, 25 Jan 2016 11:16:47 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Mon, 25 Jan 2016 11:16:47 -0800 (PST)
+In-Reply-To: <1453649304-18121-2-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284749>
 
-Jonathan Smith <Jonathan.Smith@fphcare.co.nz> writes:
-
-> It's pretty clear that code stored in a Git repository isn't
-> considered a derived work of Git, regardless of whether it is used
-> in a commercial context or otherwise.
+On Sun, Jan 24, 2016 at 7:28 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  builtin/update-index.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> However, I'm unable to find this stated in any authoritative and
-> unambiguous manner.
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 7431938..a6fff87 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -1123,6 +1123,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>                 add_untracked_ident(the_index.untracked);
+>                 the_index.cache_changed |= UNTRACKED_CHANGED;
+>         } else if (!untracked_cache && the_index.untracked) {
+> +               free_untracked_cache(the_index.untracked);
 
-Is it reasonable to ask for such a statement?  I doubt it,
-especially if "It's pretty clear".
+Do we need to free its members, too? (Or is it empty enough here,
+that there are no memleaks in there? If this were the case a hint in
+the commit message would be helpful)
 
-Without such a statement, I think we have already seen that the
-commercial adoption is already appealing.
+>                 the_index.untracked = NULL;
+>                 the_index.cache_changed |= UNTRACKED_CHANGED;
+>         }
+> --
+> 2.7.0.181.gd7ef666.dirty
+>
