@@ -1,87 +1,118 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 12/19] mingw: do not use symlinks with SVN in t9100
-Date: Mon, 25 Jan 2016 17:53:45 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601251752450.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <f016fde3118f5028b7e589f36bc9c916464a9de9.1453650173.git.johannes.schindelin@gmx.de> <xmqqegd6bf4j.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 13/19] mingw: outsmart MSYS2's path substitution in
+ t1508
+Date: Mon, 25 Jan 2016 18:04:40 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601251751350.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <1a4477f951edc9f58a24163d3935a7b35a3f14b2.1453650173.git.johannes.schindelin@gmx.de> <xmqqa8nubekj.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1601251727370.2964@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Karsten Blees <blees@dcon.de>, git@vger.kernel.org
+Cc: Thomas Braun <thomas.braun@byte-physics.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 17:54:19 2016
+X-From: git-owner@vger.kernel.org Mon Jan 25 18:05:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNkPD-0006qt-Ep
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 17:54:19 +0100
+	id 1aNkZT-0004jl-61
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 18:04:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933035AbcAYQxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 11:53:55 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60104 "EHLO mout.gmx.net"
+	id S1757524AbcAYREv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 12:04:51 -0500
+Received: from mout.gmx.net ([212.227.15.15]:58882 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932071AbcAYQxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 11:53:52 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MaaOf-1ahlBb0fRR-00KBwc; Mon, 25 Jan 2016 17:53:46
+	id S1757519AbcAYREq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 12:04:46 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lzc5y-1a1Hzu3R2Y-014nD2; Mon, 25 Jan 2016 18:04:40
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqegd6bf4j.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <alpine.DEB.2.20.1601251727370.2964@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:RtEoirdJXEVRzyebymSX/q9NCT+zda7Dz1kEOMZD1qnum5DaIa0
- U77J4pY3DoEz/46LMjtK0FvApl5OD7QhnwBwQnfsnDGxhJWhYyU6viPbsAmLb/qHWi2vmM7
- 2ccVY/0JxRX8kwiuAbDA0qKeWdDAD0u0R+4/6+9vwo6jnXX735GcvnDPmhVs6MdlUOJuZbT
- 2Wbcn/HEkso9O2IvCRkrg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VbMgOn40Drk=:irHdUVs5BYoyBSS4u8xJkG
- uUyHfDGJnzfnG0tTQe1eRWo5qTgycPw7GLuzemLMDgdU0wDqo0F0sarIpwCHYkJ3o1fAPXm5s
- YZJLWurx7QyJOTNlbZwAa0jAILAL+thdBQXqY05Hni6WCBgQ5x+wShbngSDz3JuP0WDxaDsOT
- YOdYrR5Kw31+oWVE+BPxLIVfVoZ/1eC6gL2ggq16xexnbZXtDh3bL6sZTUECI14z8qYnDbeFp
- MmN36lYmjxNlum6JtS/OzZ2Xh28Twb1UAexgie3XRpJMQcQ/khsbb8cYBOkkzUBvT90XTKBtv
- SgZFs2Ad3+LXpygmKx30hI12t0A2s3Qff8LcrAnFIHr2M7bcH5IdsbDUILPXSlMGEnFLidsMC
- qX1mgS/SRy8te4YvY1NsUmgqlCz1aqrJoA80ghW4bTo7mF1w8L5So6TPFNj2bb78hzDXdDMIF
- B6fV4eMIDfacwLPC5fxZyqAXnv9oEFJD0gx9O1plT4yxsvCWCQysvXHnt/wOr563eK4eoO+iW
- PDu1NNyVDQ0M2pLgld8wN+iLbgF91od2ivpixycQ6eoiXRsEC/eBWXUk6H1oHixR/xSK7UTaP
- t5eOMra2uU5xEzyjZT4yoZsBUNXplMjebZSD21voFjk4FUxsmgneXX+TljfToT1dh3DFenj6Y
- IGdxHsA66vZaisXvrdvO1z3ENBRsm/lTPckQ27Q8diSr5t2za9jEqYgM/ke5U5nkL1UCn3f5s
- lPNF37IlXYTsbFC2G6n8X1RNlh8ZmR+qr4GqHUF4mAbs2czJbJdEVVlqPsgc2Eh1Qd9qUVq0 
+X-Provags-ID: V03:K0:nZHo1oAh4SXlfUaN7yEijMLVl3d6UVGuoFnc4gpP3/RA0tjLTgI
+ t9MEMulBMyuEfCLWE22gY1Xj5V71F1ARo3L7eTOreUujcBOlzimP5mKAeYVmWTBOlBtYSoq
+ iej9iVYSwRHT/rKNgUIbllMJXJrnV0S2RrfZcC1Gm3DoX1mMzhEdEdLfvt6E6uzfs6IoGy0
+ 7hF4HrfRUVhZNs4VfBXmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ON6S66CVBjs=:hSyOXOt1y66nenZQMpHP4s
+ qJIs19zL40EXpqNchlQwCsm6qqa1HG2NxiMrFHIGfa+vMyDSSPJhkjUEhsEiD5j4g/vokFGoQ
+ /RJMCg8RiWizDf3QQiFlhcig0v+x3kftQ0Ji4P/W3tNOXUPeXT/luEDd+Rrg8RgL4tOpNVHXG
+ 4EzUA0JA0YY4jyEzAIPAhYfLV+h8W+GzmqrbjkjY7UthXJdYfxIG8KOOiKY4sXVBmAgwHKdEa
+ miskaqLXUr3wwqBR63KIY0rTpHIRNHDZyRTWq8vhOb9FQLKjkiVNASUCf/R3b1iBxgIeIy3Gh
+ nxUJamuJ/vISGsUlBFjBH+9vSot06wFUWGIEc5QXIeXbo4FNPqfeHfAATHPKoddFuYOdlAQ3l
+ 4HAAQSsfA3dsCBlDU2ri31GcETHSkTpBRRZszR+8EboBvIqAXjkcqrPmISKiH50gUWrU4IpSp
+ ejt+qqSNfgoTtmmmtz3nZxzwpsYPHYV5eIutzM3IWtp6ABG/i+42D6JolHrS+eLzJL/UqOmmt
+ No9Mtj6MfgZDgql6xTy+MMATslr3bmCEBO1s1cpPgkPBcuaM2giHRpW961BkCfY7cMy53OhCU
+ e8XL8Wuvv/stGdt/M/8Xlaab1RtvUwV8kfYO8m0FeYEwouQH2CfQmUPRgM3D4LlYrkpRsaa0c
+ UhScG3fNzZ6M/VYXtx7tm0+o2Gce0jQjQBhBDfQwBpviCj/58y95kT3NUs2q1UpBuzdyh6U61
+ SQN4YbFwn7EHJEVUD0/OBs4hXw3Hp2NZMN4MK/M0JQZZphMQd3WCO+k0mfWTLchs/eWnl0hr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284741>
 
 Hi Junio,
 
-On Sun, 24 Jan 2016, Junio C Hamano wrote:
+On Mon, 25 Jan 2016, Johannes Schindelin wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> On Sun, 24 Jan 2016, Junio C Hamano wrote:
 > 
-> > From: Karsten Blees <blees@dcon.de>
-> >
-> > The SVN library does not seem to support symlinks, even if symlinks are
-> > enabled in MSYS2 and Git. Use 'cp' instead of 'ln -s'.
-> >
-> > This partially fixes t/t9100-git-svn-basic.sh
-> >
-> > Signed-off-by: Karsten Blees <blees@dcon.de>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  t/t9100-git-svn-basic.sh | 9 ++++++++-
-> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> > 
+> > > From: Thomas Braun <thomas.braun@byte-physics.de>
+> > >
+> > > A string of the form "@/abcd" is considered a file path
+> > > by the msys layer and therefore translated to a Windows path.
+> > >
+> > > Here the trick is to double the slashes.
+> > >
+> > > The MSYS2 patch translation can be studied by calling
+> > >
+> > > 	test-path-utils print_path <path>
+> > >
+> > > Signed-off-by: Thomas Braun <thomas.braun@byte-physics.de>
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > 
+> > This feels wrong.
+> > 
+> > The point of this test is that you can ask to checkout a branch
+> > whose name is a strangely looking "@/at-test", and a ref whose name
+> > is "refs/heads/@/at-test" indeed is created.
+> > 
+> > The current "checkout" may be lazy and not signal an error for a
+> > branch name with two consecutive slashes, but I wouldn't be
+> > surprised if we tighten that later, and more importantly, I do not
+> > think we ever promised users if you asked a branch "a//b" to be
+> > created, we would create "refs/heads/a/b".
+> > 
+> > The new test hardcodes and promises such an incompatible behaviour,
+> > i.e. a request to create "@//b" results in "@/b" created, only to
+> > users on MINGW, fracturing the expectations of the Git userbase.
+> > 
+> > Wouldn't it be better to declare "On other people's Git, @/foo is
+> > just as normal a branch name as a/foo, but on MINGW @/foo cannot be
+> > used" by skipping some tests using prerequisites instead?
 > 
-> For the purpose of SVN test, is it important that foo.link is a link
-> to foo?  I am wondering what would be the fallout from making this
-> change without "only on MINGW do this".
+> As Eric points out, this is not so much a behavior on Git as of the MSYS2
+> Bash. In fact, if you call `git.exe checkout -b @/at-test` from a cmd
+> window, it works just as advertised.
+> 
+> But your comment made me inspect the entire t9100 again, wondering why
+> things work when we copy the contents instead of symlinking them. And you
+> know what, even if I could have sworn that I verified for every patch in
+> this series that it is actually necessary to pass the test suite, it is
+> *not* necessary.
+> 
+> So I backed it out and it won't be part of v2 anymore.
 
-(I originally sent the following response as a reply to 13/19 by mistake.)
+Whoops. This was meant to be a comment on your comment on 12/19. I'll
+reply to the appropriate mail...
 
-Your comment made me inspect the entire t9100 again, wondering why things
-work when we copy the contents instead of symlinking them. And you know
-what, even if I could have sworn that I verified for every patch in this
-series that it is actually necessary to pass the test suite, it is *not*
-necessary.
+As to the patch 13/19 that we are discussing here, I agree that it is
+better to simply skip the test with the offending argument. See
 
-So I backed it out and it won't be part of v2 anymore.
+	https://github.com/dscho/git/commit/ca5edbe
 
 Ciao,
 Dscho
