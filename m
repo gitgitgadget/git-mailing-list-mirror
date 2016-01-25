@@ -1,163 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 18/19] mingw: skip a couple of git-svn tests that cannot pass on Windows
-Date: Sun, 24 Jan 2016 18:16:46 -0800
-Message-ID: <xmqqwpqy9ze9.fsf@gitster.mtv.corp.google.com>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de>
-	<ff13c4125f268905baaa10a097ffdafe07eafb25.1453650173.git.johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] tag: do not show ambiguous tag names as "tags/foo"
+Date: Sun, 24 Jan 2016 18:26:50 -0800
+Message-ID: <xmqqsi1m9yxh.fsf@gitster.mtv.corp.google.com>
+References: <CAAB=nN=RSQuDPdg6Y2heeBXpQVdWSwFAcDDTfxE=XRSOu5gGEg@mail.gmail.com>
+	<20160124071234.GA24084@sigill.intra.peff.net>
+	<20160124071815.GB24084@sigill.intra.peff.net>
+	<xmqqvb6iboxj.fsf@gitster.mtv.corp.google.com>
+	<20160124222736.GA29115@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 25 03:16:55 2016
+Cc: Pete Harlan <pgit@tento.net>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 25 03:26:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNWi5-0003CT-KC
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:16:53 +0100
+	id 1aNWrr-0007mt-9X
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbcAYCQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 21:16:50 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60890 "EHLO
+	id S1754487AbcAYC0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 21:26:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50843 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754804AbcAYCQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 21:16:48 -0500
+	with ESMTP id S1753892AbcAYC0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 21:26:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 23F4C3F529;
-	Sun, 24 Jan 2016 21:16:48 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 782333F6ED;
+	Sun, 24 Jan 2016 21:26:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qlRkWORHacNZgfd6eBxzma8EfRg=; b=YbajCS
-	HIGVhFPsoKO15jD8Ki5X4zw1JHJhj+xfxFS8EwMgstHBOLjyY1RZ5StUsm7HkSLj
-	ybFHWWfdie7po9/vzy/OM+2tdU7nF/OfR9wgX3AF7GBq8AuFBw6pim20cz8jScGH
-	mfR2u+xtADcL1hRwbl+7Wygh4y+ciNaJRYwiA=
+	:content-type; s=sasl; bh=GYH25H5ToJjJN+6UAhpxojVR1P8=; b=qSqjqQ
+	7+YFR2UMYB1R6d8AmdqBk/EE9bNYnoc9dbUMQJxsGyBr3/CBB68YAZ+dJ8EtDErx
+	7tQSyG5CJiLgFJ41qCe0p7v8vNw46e2n/139aUfuQapFwtSsh/8V1mG3uCgSO2Jr
+	zOg2DtjAKYuuqZxroX+A1kxw78C3HFnusis/c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RnTV/oZSb4G+Fq/ujS1v6/GD916vvVBB
-	/Ty78f+/NLn80eo8coWGaaioajebXVoT1qsEV7jKMLFLCjF/MSeS2o2SuCb/f4Kx
-	GPz3rQrTT+0Jat/u1I1Gr46nxE/P4sfwgWJOdRBz06ciUHNNfRxlrOhrS7Qc3M//
-	xsZnI36XrsE=
+	:content-type; q=dns; s=sasl; b=koFkY3yvgdnweyQGJ63uW7xhZ19/5cVv
+	YC0z6x94C40/4vCgC+Fcb/4olLyv/Tzwle4vpt01A8IJfgVc3fCKpkubv+uyWVGS
+	Nt67S/a5xIh6SEvqgT3pQHJ9ySqs5emsqdHZXyVuKYKtCOQdoRwdmp313IO5tY64
+	sbTdR09v8P0=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1BC3A3F528;
-	Sun, 24 Jan 2016 21:16:48 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F8173F6EC;
+	Sun, 24 Jan 2016 21:26:52 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 96AB83F527;
-	Sun, 24 Jan 2016 21:16:47 -0500 (EST)
-In-Reply-To: <ff13c4125f268905baaa10a097ffdafe07eafb25.1453650173.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Sun, 24 Jan 2016 16:45:52 +0100
-	(CET)")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E9EB43F6EB;
+	Sun, 24 Jan 2016 21:26:51 -0500 (EST)
+In-Reply-To: <20160124222736.GA29115@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 24 Jan 2016 17:27:36 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AFCDBF96-C309-11E5-BED9-80A36AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1804F0CE-C30B-11E5-BDF0-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284714>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Some of the tests expect that executable bits can be toggled, others
-> expect that paths are POSIX paths (but when they come through git.exe,
-> they are converted into Windows paths and necessarily differ), yet
-> others expect symbolic links to be available.
-
-These skip the tests that cannot possibly pass in their entirety by
-protecting them with prerequisites, which feels the right thing to
-do.  The "executable bits" ones would need to become !POSIXPERM, and
-symlink ones !SYMLINKS, though.
-
-Thanks.
-
-> This lets t9100-git-svn-basic.sh and t9130-git-svn-authors-file.sh pass
-> in Git for Windows' SDK.
+> Yeah, "strip=2" would also get the job done, and extends more naturally
+> to the branch case.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t9100-git-svn-basic.sh        | 15 +++++++--------
->  t/t9130-git-svn-authors-file.sh |  2 +-
->  2 files changed, 8 insertions(+), 9 deletions(-)
->
-> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-> index bca7ec8..8c74ffa 100755
-> --- a/t/t9100-git-svn-basic.sh
-> +++ b/t/t9100-git-svn-basic.sh
-> @@ -127,7 +127,7 @@ test_expect_success "$name" '
->  
->  
->  name='remove executable bit from a file'
-> -test_expect_success "$name" '
-> +test_expect_success !MINGW "$name" '
->  	rm -f "$GIT_DIR"/index &&
->  	git checkout -f -b mybranch5 ${remotes_git_svn} &&
->  	chmod -x exec.sh &&
-> @@ -140,7 +140,7 @@ test_expect_success "$name" '
->  
->  
->  name='add executable bit back file'
-> -test_expect_success "$name" '
-> +test_expect_success !MINGW "$name" '
->  	chmod +x exec.sh &&
->  	git update-index exec.sh &&
->  	git commit -m "$name" &&
-> @@ -151,7 +151,7 @@ test_expect_success "$name" '
->  
->  
->  name='executable file becomes a symlink to file'
-> -test_expect_success "$name" '
-> +test_expect_success !MINGW "$name" '
->  	rm exec.sh &&
->  	ln -s file exec.sh &&
->  	git update-index exec.sh &&
-> @@ -163,8 +163,7 @@ test_expect_success "$name" '
->  
->  name='new symlink is added to a file that was also just made executable'
->  
-> -test_expect_success "$name" '
-> -	chmod +x file &&
-> +test_expect_success !MINGW "$name" '
->  	ln -s file exec-2.sh &&
->  	git update-index --add file exec-2.sh &&
->  	git commit -m "$name" &&
-> @@ -175,7 +174,7 @@ test_expect_success "$name" '
->  	test -h "$SVN_TREE"/exec-2.sh'
->  
->  name='modify a symlink to become a file'
-> -test_expect_success "$name" '
-> +test_expect_success !MINGW "$name" '
->  	echo git help >help &&
->  	rm exec-2.sh &&
->  	cp help exec-2.sh &&
-> @@ -191,7 +190,7 @@ test_expect_success "$name" '
->  name="commit with UTF-8 message: locale: $GIT_SVN_LC_ALL"
->  LC_ALL="$GIT_SVN_LC_ALL"
->  export LC_ALL
-> -test_expect_success UTF8 "$name" "
-> +test_expect_success !MINGW,UTF8 "$name" "
->  	echo '# hello' >> exec-2.sh &&
->  	git update-index exec-2.sh &&
->  	git commit -m '???????' &&
-> @@ -224,7 +223,7 @@ tree d667270a1f7b109f5eb3aaea21ede14b56bfdd6e
->  tree 8f51f74cf0163afc9ad68a4b1537288c4558b5a4
->  EOF
->  
-> -test_expect_success "$name" "test_cmp a expected"
-> +test_expect_success !MINGW "$name" "test_cmp a expected"
->  
->  test_expect_success 'exit if remote refs are ambigious' "
->          git config --add svn-remote.svn.fetch \
-> diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
-> index d306b77..4126481 100755
-> --- a/t/t9130-git-svn-authors-file.sh
-> +++ b/t/t9130-git-svn-authors-file.sh
-> @@ -91,7 +91,7 @@ test_expect_success 'fetch continues after authors-file is fixed' '
->  	)
->  	'
->  
-> -test_expect_success 'fresh clone with svn.authors-file in config' '
-> +test_expect_success !MINGW 'fresh clone with svn.authors-file in config' '
->  	(
->  		rm -r "$GIT_DIR" &&
->  		test x = x"$(git config svn.authorsfile)" &&
+> To be honest, I cannot imagine anybody using anything _but_ strip=2...
+
+I 100% agree, and I do consider this to be internal implementation
+detail for the listing modes of "tag" (and "branch"), which may be
+exposed to the user (by documenting that %(refname:X) is used by
+default), so perhaps even the flexibility of strip=2 is unwanted.
+
+I know what "remove-standard-prefix" is way too long for the value
+of X above, but then we can say "the command will error out if you
+allow your for-each-ref invocation to step outside of the area that
+has standard prefix to be removed." without having to worry about
+"what is the sensible thing to do when the prefixes are not what we
+expect (too short for strip=2 or no match for short=refs/tags/)".
