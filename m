@@ -1,145 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push --force-with-lease: Fix ref status reporting
-Date: Mon, 25 Jan 2016 11:37:33 -0800
-Message-ID: <xmqqvb6hfo1u.fsf@gitster.mtv.corp.google.com>
-References: <1453346248-4489-1-git-send-email-agwheeler@gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 1/1] merge-file: let conflict markers match end-of-line
+ style of the context
+Date: Mon, 25 Jan 2016 19:45:51 +0000
+Message-ID: <56A67B6F.60300@ramsayjones.plus.com>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de>
+ <cover.1453632296.git.johannes.schindelin@gmx.de>
+ <d71c7abddd4cba85b967f9fe1d33c7c843176ca2.1453632296.git.johannes.schindelin@gmx.de>
+ <56A4FB64.4010609@web.de> <alpine.DEB.2.20.1601250749580.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Andrew Wheeler <awheeler@motorola.com>
-To: Andrew Wheeler <agwheeler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 20:38:31 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Beat Bolli <dev+git@drbeat.li>, Jeff King <peff@peff.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jan 25 20:46:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNmy6-0004NM-R9
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 20:38:31 +0100
+	id 1aNn5O-00080p-Fj
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 20:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933185AbcAYTiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 14:38:18 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53540 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932843AbcAYThh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 14:37:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E03003F8A5;
-	Mon, 25 Jan 2016 14:37:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FAVGTClH0zt/Kv7TttWFKz2s5eg=; b=pGhESM
-	nIxAjaIRclORPlhE041ejze8UkWpBU2/f1utaQJiGE4XkvzUPh7zlS+P7OFl/aYI
-	k2XJ5ithV1hMPa2o1AgRAObUr3xYMCmjEfYqXYF5rWTVWo6rSaJhErO6qVTxvkUj
-	KbbnCW7z+bpwHEdoNrLxeDnzeTv3fzzq7BlC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F/9l5p9ccDMAD1V4wgFJ2o588yu8jxVC
-	6FxSPwsQpt/EPpHrUy32oQ/KVAK+Cnq5dfNxzAdO7HhhaqddYqy8lDUOWwf/kXZO
-	hyN0+0DPf4A9OfZpRYk9kXqAGAgQrAJ4sQl6prTWLE+eb4bbGfLsYHNd3WhLfFth
-	V5LqwZuTlos=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BDF153F8A4;
-	Mon, 25 Jan 2016 14:37:35 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F30CB3F8A3;
-	Mon, 25 Jan 2016 14:37:34 -0500 (EST)
-In-Reply-To: <1453346248-4489-1-git-send-email-agwheeler@gmail.com> (Andrew
-	Wheeler's message of "Wed, 20 Jan 2016 21:17:28 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1557DEA0-C39B-11E5-8CEF-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S964782AbcAYTp6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2016 14:45:58 -0500
+Received: from avasout07.plus.net ([84.93.230.235]:41926 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757653AbcAYTp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 14:45:57 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout07 with smtp
+	id AKlr1s0084mu3xa01KluYU; Mon, 25 Jan 2016 19:45:55 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=EBOSESyhAAAA:8
+ a=Q9fys5e9bTEA:10 a=s6qUwkWmM148HHDsFoYA:9 a=PUjeQqilurYA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <alpine.DEB.2.20.1601250749580.2964@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284753>
 
-Andrew Wheeler <agwheeler@gmail.com> writes:
 
-> From: Andrew Wheeler <awheeler@motorola.com>
->
-> The --force--with-lease push option leads to less
-> detailed status information than --force. In particular,
-> the output indicates that a reference was fast-forwarded,
-> even when it was force-updated.
->
-> Modify the --force-with-lease ref status logic to leverage
-> the --force ref status logic when the "lease" conditions
-> are met.
 
-The description of the observed problem makes sense.  Thanks for
-working on this.
+On 25/01/16 06:53, Johannes Schindelin wrote:
+> Hi Torsten,
+>=20
+> On Sun, 24 Jan 2016, Torsten B=F6gershausen wrote:
+>=20
+>> On 24.01.16 11:48, Johannes Schindelin wrote:
+>> (I had the same reasoning about the CRLF in the working tree:
+>> We don't need to look at core.autocrlf/attributes, so Ack from me)
+>>
+>>> +test_expect_success 'conflict markers match existing line endings'=
+ '
+>>> +	append_cr <nolf-orig.txt >crlf-orig.txt &&
+>>> +	append_cr <nolf-diff1.txt >crlf-diff1.txt &&
+>>> +	append_cr <nolf-diff2.txt >crlf-diff2.txt &&
+>>> +	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+>>> +		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
+>>> +	test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) =3D 3 &&
+>>> +	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+>>> +		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
+>>> +	test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) =3D 0
+>>> +'
+>>> +
+>>
+>> Minor remark:
+>>
+>> Ramsay suggested a test that doesn't use grep or wc and looks like t=
+his:
+>>
+>> test_expect_success 'conflict markers contain CRLF when core.eol=3Dc=
+rlf' '
+>>   test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+>>     nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
+>>   tr "\015" Q <output.txt | sed -n "/^[<=3D>|].*Q$/p" >out.txt &&
+>>   cat >expect.txt <<-\EOF &&
+>>   <<<<<<< nolf-diff1.txtQ
+>>   ||||||| nolf-orig.txtQ
+>>   =3D=3D=3D=3D=3D=3D=3DQ
+>>   >>>>>>> nolf-diff2.txtQ
+>>   EOF
+>>   test_cmp expect.txt out.txt
+>> '
+>=20
+> Probably he wrapped it at less than 192 columns per row, though ;-)
+>=20
+;-)
+> Seriously again, this longer version might test more, but it definite=
+ly
+> also tests more than what I actually want to test: I am simply intere=
+sted
+> to verify that the conflict markers end in CR/LF when appropriate.
 
-> Signed-off-by: Andrew Wheeler <awheeler@motorola.com>
-> ---
->  remote.c | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
->
-> diff --git a/remote.c b/remote.c
-> index 9d34b5a..bad6213 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1545,11 +1545,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
->  		}
->  
->  		/*
-> -		 * Bypass the usual "must fast-forward" check but
-> -		 * replace it with a weaker "the old value must be
-> -		 * this value we observed".  If the remote ref has
-> -		 * moved and is now different from what we expect,
-> -		 * reject any push.
-> +		 * If the remote ref has moved and is now different
-> +		 * from what we expect, reject any push.
->  		 *
+But you are only testing 3/4 conflict markers end in CR/LF. :-D
 
-This simplification of the comment makes sense, especially with the
-code that results from the change of the last "else if".
+>                                                                     R=
+ead: I
+> am uncertain that I want to spend the additional lines on testing mor=
+e
+> than actually necessary.
 
->  		 * It also is an error if the user told us to check
->  		 * with the remote-tracking branch to find the value
-> @@ -1560,10 +1557,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
->  			if (ref->expect_old_no_trackback ||
->  			    oidcmp(&ref->old_oid, &ref->old_oid_expect))
->  				reject_reason = REF_STATUS_REJECT_STALE;
-> +			else
-> +				/* If the ref isn't stale then force the update. */
-> +				force_ref_update = 1;
->  		}
->  
->  		/*
-> -		 * The usual "must fast-forward" rules.
-> +		 * If the update isn't already rejected then check
-> +		 * the usual "must fast-forward" rules.
->  		 *
->  		 * Decide whether an individual refspec A:B can be
->  		 * pushed.  The push will succeed if any of the
-> @@ -1580,9 +1581,10 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
->  		 *
->  		 * (4) it is forced using the +A:B notation, or by
->  		 *     passing the --force argument
-> +		 *
+If the here doc is too verbose for you, how about something like this
+(totally untested):
 
-This new blank line is probably unwanted.
+    test $(tr "\015" Q <crlf.txt | grep "^[<=3D>|].*Q$" | wc -l) -eq 4
 
->  		 */
->  
-> -		else if (!ref->deletion && !is_null_oid(&ref->old_oid)) {
-> +		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
->  			if (starts_with(ref->name, "refs/tags/"))
->  				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
->  			else if (!has_object_file(&ref->old_oid))
+instead?
 
-OK.  So the idea is that a successful force-with-lease push would
-have a zero reject_reason at this point, and the if/else cascade
-would still trigger and would set it to STATUS_REJECT_NEEDS_FORCE,
-just like a usual forced push without a lease.  And then because the
-local variable force_ref_update is set, it would report the forced
-success exactly the same way as the usual forced push.
+HTH
 
-Sounds very sensible.
-
-Do we want to make sure that other people will not break this fix in
-the future by adding a few tests, perhaps to t/t5533?
-
-Thanks.
+ATB,
+Ramsay Jones
