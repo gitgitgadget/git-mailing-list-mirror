@@ -1,111 +1,114 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] mingw: avoid linking to the C library's isalpha()
-Date: Mon, 25 Jan 2016 22:47:56 +0100
-Message-ID: <56A6980C.6040701@kdbg.org>
-References: <cover.1452536924.git.johannes.schindelin@gmx.de>
- <cover.1452585382.git.johannes.schindelin@gmx.de>
- <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
- <56A279DA.8080809@kdbg.org> <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1601230924090.2964@virtualbox> <56A3CE34.20808@kdbg.org>
- <alpine.DEB.2.20.1601241152060.2964@virtualbox> <56A4C534.6040503@kdbg.org>
- <xmqqzivubpac.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 10/15] ref-filter: introduce parse_align_position()
+Date: Mon, 25 Jan 2016 16:49:03 -0500
+Message-ID: <CAPig+cSUBQiW396qyiczcdPV9qU9o_8imuL89O6jLWLY8sX2-A@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
+	<1451980994-26865-11-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 25 22:48:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 22:50:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNozY-00028j-4Q
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 22:48:08 +0100
+	id 1aNp21-0003g1-IQ
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 22:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506AbcAYVsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 16:48:01 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:16389 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751259AbcAYVsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 16:48:00 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pq4Yn2d2tz5tlG;
-	Mon, 25 Jan 2016 22:47:57 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 0133351D9;
-	Mon, 25 Jan 2016 22:47:57 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <xmqqzivubpac.fsf@gitster.mtv.corp.google.com>
+	id S932163AbcAYVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 16:50:37 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:36607 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753293AbcAYVtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 16:49:04 -0500
+Received: by mail-vk0-f65.google.com with SMTP id e64so6393766vkg.3
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 13:49:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Qft1UOHDKV2hRVNz5FMooStyxbihyvHDJ5+LT2GraLw=;
+        b=IXaUM7vOFbYZSJ0rwGK/XVBP9IRZHln5WvMCnrVvd3vwVqoOb4G7ReWjC5VtQudksj
+         UYocDsRVmFQqYRJedP8xI319PGalZykx9wROY+2WEK9yJDiC+Ucb8B+YYowuKe1Chiqs
+         FxLdD1K+AU/B3Sc6uiIxllZjLZ+VFBVtjQRRAmQs3FqZ5cdQc8XeBzybWqdJfC2dTyTM
+         cwjWWL+wA9LSCWNVVfACYTvvBPgsWd8Dm451gKDzNbfhYWOTgHH/Lo8Q7+LLN97hmGXY
+         tJglE8Vgx0PRvHNekLw578NSnrUHF1AE6wt6TUn/G/IZtm7yjZGNQCW0t3AZfhC6dJ/B
+         1ivA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Qft1UOHDKV2hRVNz5FMooStyxbihyvHDJ5+LT2GraLw=;
+        b=hNcKKusHssNeEPkptHCdpV3m7Iy6x9fWMtDtb6N+Cv2QihFd6CAmmRSHma9qvGLA5N
+         x98BOj6gGunVRzzUrXWZsymI6fuRhei/g1QlXvjQbmHX84vgXoUJ6+mEK3X0Gy3Yx3uA
+         d2j3UBQG01qnLoBZ5X/fQtCr9wRyx5bXrCykZ4T2mXQKCog1kPZyormaR507mTK6EP+C
+         eXnIlehwvOfOLKBFx+RR+3xFsYhGuUWA/KEJEeJqL0XlgYzPjHfajZ+CL0L1VcRXFOB7
+         Av0wOlIHiNFkGyLZED3rqhb3S8cpEHcmzIby3egQHie2BaGXiVAVTKBz3VTVTuEnn+lz
+         Io1w==
+X-Gm-Message-State: AG10YOTXax6hDjmCx9snDdgWsaJkQIjicu4+KvtFMwClBw+dmIXHjBm5rMpSswTk1zmuHg6+GsL1/LIeXkzJZg==
+X-Received: by 10.31.41.20 with SMTP id p20mr5916642vkp.151.1453758543926;
+ Mon, 25 Jan 2016 13:49:03 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 25 Jan 2016 13:49:03 -0800 (PST)
+In-Reply-To: <1451980994-26865-11-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: tSWZtJOG_2qjalshKQDSImbSZKI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284759>
 
-The implementation of mingw_skip_dos_drive_prefix() calls isalpha() via
-has_dos_drive_prefix(). Since the definition occurs long before isalpha()
-is defined in git-compat-util.h, my build environment reports:
+On Tue, Jan 5, 2016 at 3:03 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> From align_atom_parser() form parse_align_position() which given a
+> string would give us the alignment position. This is a preparatory
+> patch as to introduce prefixes for the %(align) atom and avoid
+> redundancy in the code.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -74,6 +74,17 @@ static void color_atom_parser(struct used_atom *atom)
+> +static align_type parse_align_position(const char *s)
+> +{
+> +       if (!strcmp(s, "right"))
+> +               return ALIGN_RIGHT;
+> +       else if (!strcmp(s, "middle"))
+> +               return ALIGN_MIDDLE;
+> +       else if (!strcmp(s, "left"))
+> +               return ALIGN_LEFT;
+> +       return -1;
+> +}
 
-    CC alloc.o
-In file included from git-compat-util.h:186,
-                 from cache.h:4,
-                 from alloc.c:12:
-compat/mingw.h: In function 'mingw_skip_dos_drive_prefix':
-compat/mingw.h:365: warning: implicit declaration of function 'isalpha'
+This code was just moved in patch 9/15 and is being relocated again
+here in patch 10/15. If you change the order of the patches so that
+this preparatory refactoring is done first, the diff of the "introduce
+align_atom_parser()" patch will become smaller and be a bit easier to
+review. (Plus it just makes sense to do preparation first.)
 
-Dscho does not see a similar warning in his build and suspects that
-ctype.h is included somehow behind the scenes. This implies that his build
-links to the C library's isalpha() and does not use git's isalpha().
-
-To fix both the warning in my build and the inconsistency in Dscho's
-build, move the function definition to mingw.c. Then it picks up git's
-isalpha() because git-compat-util.h is included at the top of the file.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- compat/mingw.c | 7 +++++++
- compat/mingw.h | 7 +------
- 2 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 10a51c0..0cebb61 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
- 	return -1;
- }
- 
-+int mingw_skip_dos_drive_prefix(char **path)
-+{
-+	int ret = has_dos_drive_prefix(*path);
-+	*path += ret;
-+	return ret;
-+}
-+
- int mingw_offset_1st_component(const char *path)
- {
- 	char *pos = (char *)path;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 9b5db4e..2099b79 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
- 
- #define has_dos_drive_prefix(path) \
- 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
--static inline int mingw_skip_dos_drive_prefix(char **path)
--{
--	int ret = has_dos_drive_prefix(*path);
--	*path += ret;
--	return ret;
--}
-+int mingw_skip_dos_drive_prefix(char **path);
- #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
- #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
- static inline char *mingw_find_last_dir_sep(const char *path)
--- 
-2.7.0.118.g90056ae
+>  static void align_atom_parser(struct used_atom *atom)
+>  {
+>         struct align *align = &atom->u.align;
+> @@ -90,16 +101,13 @@ static void align_atom_parser(struct used_atom *atom)
+>         align->position = ALIGN_LEFT;
+>
+>         while (*s) {
+> +               int position;
+>                 buf = s[0]->buf;
+>
+>                 if (!strtoul_ui(buf, 10, (unsigned int *)&width))
+>                         ;
+> -               else if (!strcmp(buf, "left"))
+> -                       align->position = ALIGN_LEFT;
+> -               else if (!strcmp(buf, "right"))
+> -                       align->position = ALIGN_RIGHT;
+> -               else if (!strcmp(buf, "middle"))
+> -                       align->position = ALIGN_MIDDLE;
+> +               else if ((position = parse_align_position(buf)) >= 0)
+> +                       align->position = position;
+>                 else
+>                         die(_("unrecognized %%(align) argument: %s"), buf);
+>                 s++;
+> --
+> 2.6.4
