@@ -1,137 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 13/19] mingw: outsmart MSYS2's path substitution in t1508
-Date: Sun, 24 Jan 2016 18:03:40 -0800
-Message-ID: <xmqqa8nubekj.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 16/19] mingw: avoid absolute path in t0008
+Date: Sun, 24 Jan 2016 18:11:02 -0800
+Message-ID: <xmqq60yibe89.fsf@gitster.mtv.corp.google.com>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de>
-	<1a4477f951edc9f58a24163d3935a7b35a3f14b2.1453650173.git.johannes.schindelin@gmx.de>
+	<7c35a7b9c65d9febb6af1b50907988974bca3fbd.1453650173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Thomas Braun <thomas.braun@byte-physics.de>, git@vger.kernel.org
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 25 03:04:23 2016
+X-From: git-owner@vger.kernel.org Mon Jan 25 03:11:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNWVy-0005ym-Ju
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:04:22 +0100
+	id 1aNWcZ-0000dn-Pj
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754049AbcAYCDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 21:03:44 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52761 "EHLO
+	id S1754603AbcAYCLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 21:11:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59487 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752543AbcAYCDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 21:03:42 -0500
+	with ESMTP id S1754303AbcAYCLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 21:11:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 02BFD3F2C8;
-	Sun, 24 Jan 2016 21:03:42 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC0E53F459;
+	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I0D+S9kzVTsBhwM3FhtXiWGNlmc=; b=YyzohE
-	i6Oq/m6cC0R8aoXrv4j7zD+mCPrXB1KicVw3ZUETfMXv80nHiGcXuEXvMdBfc/zR
-	aNQheUmH6j+LxyFn9th4lQ6OIMPl6FQnxQXvXMCgmhNQCdDIGGBXV2bVpMu9Rt0A
-	M1eQENvXNLHhtOQl2wsse1gV2Lqs4tA6LAD10=
+	:content-type; s=sasl; bh=ESiSowAYutk2mY7f3mnp2WCgke8=; b=hQ0fo0
+	8oyQuDtiOAmROHoO+oph6cebWdV2038RaBNyMeqnMQ0ou8afGnL40PuHCXPYcHA8
+	pXiL5THqstRh5nxy4/mzogBxxtwJDpV4q0YadN/CY3xtx9FbTAONuKiSlJF1R9NJ
+	8CMTuPJ6w3ZidU5YeADpHxkHa+hmfNoJHo0a4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NMoXGCoMrX0+me8I2pmvhZ67xyMlLyMx
-	j5QqWJ7pTmErWOWLM1thGu2RgncAFDky94yLB9pHulVq6ZrdO6d6FcTYd+gUki+S
-	cVgokcnXlUIn98NtWv1R+a38P+6MVH9W0jR6b5IROgzAWwwPaM6RO8FhDekjcLfR
-	PSs8iIAaoOA=
+	:content-type; q=dns; s=sasl; b=Or8Roqs14aE1QlQpolKLANOxoLxCGT8p
+	kW5doHpz5B+O3ER7sCpuj4hE0x+uik7vehEXnvuH9DsZAaEE2hIMhBQ+hkXUFrH9
+	1bQSqweI4CU0U+H7VVU+ucvf5/fpWxcKlNcJn3Fw5LTO7//OKpEi0UI0WBNO7HSt
+	k8NNsI7XY5s=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E400C3F2C7;
-	Sun, 24 Jan 2016 21:03:41 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B26EF3F458;
+	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5522E3F2C5;
-	Sun, 24 Jan 2016 21:03:41 -0500 (EST)
-In-Reply-To: <1a4477f951edc9f58a24163d3935a7b35a3f14b2.1453650173.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Sun, 24 Jan 2016 16:45:09 +0100
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2867C3F456;
+	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
+In-Reply-To: <7c35a7b9c65d9febb6af1b50907988974bca3fbd.1453650173.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Sun, 24 Jan 2016 16:45:22 +0100
 	(CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DB27107C-C307-11E5-9F18-80A36AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E317DD7E-C308-11E5-9303-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284710>
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> From: Thomas Braun <thomas.braun@byte-physics.de>
+> From: Pat Thoyts <patthoyts@users.sourceforge.net>
 >
-> A string of the form "@/abcd" is considered a file path
-> by the msys layer and therefore translated to a Windows path.
+> The test separator char is a colon which means any absolute paths on
+> Windows confuse the tests that use global_excludes.
 >
-> Here the trick is to double the slashes.
->
-> The MSYS2 patch translation can be studied by calling
->
-> 	test-path-utils print_path <path>
->
-> Signed-off-by: Thomas Braun <thomas.braun@byte-physics.de>
+> Suggested-by: Karsten Blees <karsten.blees@gmail.com>
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
+>  t/t0008-ignores.sh | 8 +++++++-
 
-This feels wrong.
+Is the fact that $global_excludes is specified using an absolute
+path significant to the correctness of this test script?  This patch
+suggests me that it is not (i.e. if the tests chdir's around, then
+relative reference to global-excludes file would not work at all,
+but apparently tests run with MINGW prereq does not exhibit such an
+issue, so the remainder of the test would see the file we want it
+see with the relative reference just fine).
 
-The point of this test is that you can ask to checkout a branch
-whose name is a strangely looking "@/at-test", and a ref whose name
-is "refs/heads/@/at-test" indeed is created.
+And in that case, I think it would be more correct to use the
+"global-excludes in the current directory" definition regardless of
+MINGW prerequisite.  Adding a comment that says "The value of this
+variable is a colon separated list, so avoid absolute path, because
+..." is a very welcome addition while doing so.
 
-The current "checkout" may be lazy and not signal an error for a
-branch name with two consecutive slashes, but I wouldn't be
-surprised if we tighten that later, and more importantly, I do not
-think we ever promised users if you asked a branch "a//b" to be
-created, we would create "refs/heads/a/b".
+A larger question is if it would make more sense for Git ported to
+Windows environment to use semicolon (that is the element separator
+for %PATH% in the Windows land, right?) instead where POSIXy port
+would use colon as the separator.  A variable that is a list of
+locations (e.g. $PATH) makes little sense when elements can only be
+relative paths in practice.
 
-The new test hardcodes and promises such an incompatible behaviour,
-i.e. a request to create "@//b" results in "@/b" created, only to
-users on MINGW, fracturing the expectations of the Git userbase.
-
-Wouldn't it be better to declare "On other people's Git, @/foo is
-just as normal a branch name as a/foo, but on MINGW @/foo cannot be
-used" by skipping some tests using prerequisites instead?
-
-
->  t/t1508-at-combinations.sh | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 >
-> diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-> index 078e119..1d9fd7b 100755
-> --- a/t/t1508-at-combinations.sh
-> +++ b/t/t1508-at-combinations.sh
-> @@ -29,13 +29,22 @@ fail() {
->  	"$@" failure
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> index 4ef5ed4..68749f5 100755
+> --- a/t/t0008-ignores.sh
+> +++ b/t/t0008-ignores.sh
+> @@ -5,7 +5,13 @@ test_description=check-ignore
+>  . ./test-lib.sh
+>  
+>  init_vars () {
+> -	global_excludes="$(pwd)/global-excludes"
+> +	# On Windows, avoid using "C:" in the global-excludes paths.
+> +	if test_have_prereq MINGW
+> +	then
+> +		global_excludes="global-excludes"
+> +	else
+> +		global_excludes="$(pwd)/global-excludes"
+> +	fi
 >  }
 >  
-> +if test_have_prereq MINGW
-> +then
-> +	# MSYS2 interprets `@/abc` to be a file list, and wants to substitute
-> +	# the Unix-y path with a Windows one (e.g. @C:\msys64\abc)
-> +	AT_SLASH=@//at-test
-> +else
-> +	AT_SLASH=@/at-test
-> +fi
-> +
->  test_expect_success 'setup' '
->  	test_commit master-one &&
->  	test_commit master-two &&
->  	git checkout -b upstream-branch &&
->  	test_commit upstream-one &&
->  	test_commit upstream-two &&
-> -	git checkout -b @/at-test &&
-> +	git checkout -b $AT_SLASH &&
->  	git checkout -b @@/at-test &&
->  	git checkout -b @at-test &&
->  	git checkout -b old-branch &&
-> @@ -64,7 +73,7 @@ check "@{-1}@{u}@{1}" commit master-one
->  check "@" commit new-two
->  check "@@{u}" ref refs/heads/upstream-branch
->  check "@@/at-test" ref refs/heads/@@/at-test
-> -check "@/at-test" ref refs/heads/@/at-test
-> +check "$AT_SLASH" ref refs/heads/@/at-test
->  check "@at-test" ref refs/heads/@at-test
->  nonsense "@{u}@{-1}"
->  nonsense "@{0}@{0}"
+>  enable_global_excludes () {
