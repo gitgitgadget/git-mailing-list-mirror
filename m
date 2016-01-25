@@ -1,122 +1,93 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v2 1/1] merge-file: let conflict markers match end-of-line
- style of the context
-Date: Mon, 25 Jan 2016 19:45:51 +0000
-Message-ID: <56A67B6F.60300@ramsayjones.plus.com>
-References: <cover.1453482052.git.johannes.schindelin@gmx.de>
- <cover.1453632296.git.johannes.schindelin@gmx.de>
- <d71c7abddd4cba85b967f9fe1d33c7c843176ca2.1453632296.git.johannes.schindelin@gmx.de>
- <56A4FB64.4010609@web.de> <alpine.DEB.2.20.1601250749580.2964@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] merge-file: let conflict markers match end-of-line style of the context
+Date: Mon, 25 Jan 2016 12:12:47 -0800
+Message-ID: <xmqqr3h5fmf4.fsf@gitster.mtv.corp.google.com>
+References: <cover.1453632296.git.johannes.schindelin@gmx.de>
+	<cover.1453709205.git.johannes.schindelin@gmx.de>
+	<26c973eb3414a8634d515f3621c0ded77cf030ed.1453709205.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Beat Bolli <dev+git@drbeat.li>, Jeff King <peff@peff.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Jan 25 20:46:05 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
+	Jeff King <peff@peff.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 25 21:13:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNn5O-00080p-Fj
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 20:46:02 +0100
+	id 1aNnVU-0004SP-QK
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 21:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964782AbcAYTp6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Jan 2016 14:45:58 -0500
-Received: from avasout07.plus.net ([84.93.230.235]:41926 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757653AbcAYTp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 14:45:57 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout07 with smtp
-	id AKlr1s0084mu3xa01KluYU; Mon, 25 Jan 2016 19:45:55 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17 a=0Bzu9jTXAAAA:8
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=EBOSESyhAAAA:8
- a=Q9fys5e9bTEA:10 a=s6qUwkWmM148HHDsFoYA:9 a=PUjeQqilurYA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <alpine.DEB.2.20.1601250749580.2964@virtualbox>
+	id S1757523AbcAYUM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 15:12:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57968 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757166AbcAYUM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 15:12:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F1803E6D5;
+	Mon, 25 Jan 2016 15:12:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iUQnShX8jFjRx2YX8XMijqH1dlI=; b=XdFx7w
+	ieOC749mYtuunpvB3B2m5OlqDVDoVM56wCTJv9IeeOjgKhAGvoK1sqMXHViK3Fhs
+	RymCHJVm1cosv9kmOLNranSI6sXB9Xe5XQS3z+nTNDcFJ7yHCydzA2K1I0yVAVxq
+	znNbe4zQkQiDR+p0YPQjYk17VwNi3AqJAMLmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Uhv5i7aptmf1jJpedm3XFgUIAnJQphWV
+	KT3zt+DuE/LLlZpH2Emi9FlMrreYo6mLJI7fFHnKZMlsRxsTRD8eo31/yZBkdRRv
+	scl3NB+FN0JAhClayBaJmz7yj2APyXgD8EWzyGkYHAV1PlbdkCw+KxstX7p09f96
+	T2gWAermxRI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 541C73E6D3;
+	Mon, 25 Jan 2016 15:12:49 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8A6A3E6D2;
+	Mon, 25 Jan 2016 15:12:48 -0500 (EST)
+In-Reply-To: <26c973eb3414a8634d515f3621c0ded77cf030ed.1453709205.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 25 Jan 2016 09:07:04 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0147F0C6-C3A0-11E5-BCB4-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284754>
 
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
+> We actually do not have to look at the *entire* context at all: if the
+> files are all LF-only, or if they all have CR/LF line endings, it is
+> sufficient to look at just a *single* line to match that style. And if
+> the line endings are mixed anyway, it is *still* okay to imitate just a
+> single line's eol: we will just add to the pile of mixed line endings,
+> and there is nothing we can do about that.
 
-On 25/01/16 06:53, Johannes Schindelin wrote:
-> Hi Torsten,
->=20
-> On Sun, 24 Jan 2016, Torsten B=F6gershausen wrote:
->=20
->> On 24.01.16 11:48, Johannes Schindelin wrote:
->> (I had the same reasoning about the CRLF in the working tree:
->> We don't need to look at core.autocrlf/attributes, so Ack from me)
->>
->>> +test_expect_success 'conflict markers match existing line endings'=
- '
->>> +	append_cr <nolf-orig.txt >crlf-orig.txt &&
->>> +	append_cr <nolf-diff1.txt >crlf-diff1.txt &&
->>> +	append_cr <nolf-diff2.txt >crlf-diff2.txt &&
->>> +	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->>> +		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
->>> +	test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) =3D 3 &&
->>> +	test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->>> +		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
->>> +	test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) =3D 0
->>> +'
->>> +
->>
->> Minor remark:
->>
->> Ramsay suggested a test that doesn't use grep or wc and looks like t=
-his:
->>
->> test_expect_success 'conflict markers contain CRLF when core.eol=3Dc=
-rlf' '
->>   test_must_fail git -c core.eol=3Dcrlf merge-file -p \
->>     nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
->>   tr "\015" Q <output.txt | sed -n "/^[<=3D>|].*Q$/p" >out.txt &&
->>   cat >expect.txt <<-\EOF &&
->>   <<<<<<< nolf-diff1.txtQ
->>   ||||||| nolf-orig.txtQ
->>   =3D=3D=3D=3D=3D=3D=3DQ
->>   >>>>>>> nolf-diff2.txtQ
->>   EOF
->>   test_cmp expect.txt out.txt
->> '
->=20
-> Probably he wrapped it at less than 192 columns per row, though ;-)
->=20
-;-)
-> Seriously again, this longer version might test more, but it definite=
-ly
-> also tests more than what I actually want to test: I am simply intere=
-sted
-> to verify that the conflict markers end in CR/LF when appropriate.
+Isn't there one thing we can do still?  If we use CRLF for the
+marker lines when the content is already mixed, I'd think it would
+help Notepad (not necessary for Notepad2 or Wordpad IIUC) by making
+sure that they can see where the marker lines end correctly.
 
-But you are only testing 3/4 conflict markers end in CR/LF. :-D
+I do not care too deeply about this; just throwing it out as a
+possibility to help Windowsy folks a bit more.
 
->                                                                     R=
-ead: I
-> am uncertain that I want to spend the additional lines on testing mor=
-e
-> than actually necessary.
+> Note that while it is true that there have to be at least two lines we
+> can look at (otherwise there would be no conflict), the same is not true
+> for line *endings*: the three files in question could all consist of a
+> single line without any line ending, each. In this case we fall back to
+> using LF-only.
 
-If the here doc is too verbose for you, how about something like this
-(totally untested):
-
-    test $(tr "\015" Q <crlf.txt | grep "^[<=3D>|].*Q$" | wc -l) -eq 4
-
-instead?
-
-HTH
-
-ATB,
-Ramsay Jones
+Yeah, this is tricky, and from the same "helping Notepad that
+concatenates lines with LF-only" perspective I should perhaps be
+suggesting to use CRLF in such a case, too, but I would say we
+should not do so.  Three variants of a LF-only file may have
+conflict at the incomplete last line, and if we only look at their
+"no EOL"-ness and decide to add CRLF to the result, that would be
+irritatingly wrong.
