@@ -1,78 +1,87 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 06/19] mingw: try to delete target directory before
- renaming
-Date: Mon, 25 Jan 2016 07:59:49 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601250753470.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <d75b0dc0b76beefee9e705555ca4f2fa4f4b96ce.1453650173.git.johannes.schindelin@gmx.de> <4C2ED807DD184A168C87221809034B70@PhilipOakley>
+Subject: Re: [PATCH 2/2] merge-file: consider core.crlf when writing merge
+ markers
+Date: Mon, 25 Jan 2016 08:02:02 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601250801050.2964@virtualbox>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de> <c0c775ea7a9ba3244748b784241de685cefc73b1.1453482052.git.johannes.schindelin@gmx.de> <20160122195015.GA5897@flurp.local> <CAPig+cSf_Hac=4+F1bRaFeYdFrjo6SH=vApdUDkhep5BUve+Kw@mail.gmail.com>
+ <alpine.DEB.2.20.1601241137260.2964@virtualbox> <CAPig+cT4gQi=OhYT3AwKA=_UER4nC-wOu93U72QcSWtMoVxhMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-133259012-1453705191=:2964"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	nalla <nalla@hamal.uberspace.de>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Jan 25 08:00:07 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 08:02:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNb8A-0004Cw-2l
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 08:00:06 +0100
+	id 1aNbAH-0005Cj-Ro
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 08:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbcAYHAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 02:00:00 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58516 "EHLO mout.gmx.net"
+	id S1754641AbcAYHCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 02:02:14 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63988 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751226AbcAYG77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 01:59:59 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LqE5k-1ZsgA31Hkm-00djob; Mon, 25 Jan 2016 07:59:51
+	id S1752026AbcAYHCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 02:02:13 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MRXVc-1aYYQX28ca-00SjHm; Mon, 25 Jan 2016 08:02:05
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <4C2ED807DD184A168C87221809034B70@PhilipOakley>
+In-Reply-To: <CAPig+cT4gQi=OhYT3AwKA=_UER4nC-wOu93U72QcSWtMoVxhMg@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:0vI+jQ9uUYjCNI2vZuWo7KPYfjitsBIzDdzO26Ou5AM1ZRhv+zg
- QlkCsMjsucrizgGrXVOFpGZqhblrloT041sQNDOnHmjF9gMKjjGAfgKICKW4eBSSbSq4Fvy
- Xx+/IWIJM9FUsrvVQPBil2TAWWDBD2wp30071a7xFu3n5N2AjrLDARhQ8dzHXeJxvBS8Prp
- Ah1J+lHA1CVoqtl+VeOzg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vkHNXVJWB1w=:BuUMV/qkvskLSAiNoTEqf7
- /ziq2H+inS+y2+un8WzF3ZYTcRscbxEvZrbUoIser3w1mOt7pBQhqclVaULMOAEDAsumcg0vZ
- bsQWoz/V87+2Tr6Jq1cYiAzcq8fFDxrN/qQ4qjVKGNha2oJqZhSBhLSrmoI1GaR33njsw6VzZ
- 0Wx/YaLoTCRbFez7pqiFkvJZrf91fDjv6r/Oh/wMrTdps+N92LvSVwZPA/jCvfZpHTw7OucGY
- 5LP+yqckrkTdWOMUEX6NQmutCBSWJ5+byyye7+roL7Ha/XHoIGsGnFuRbttg5tQrSJdNX0Kvo
- +efbKTaqLitY0vwzS8Gb08qsDVLZjtyEXxt1w9hbfEbolg6csqPhdhHbF0tLw/G0goBi1dGU1
- BPDH/psYbfmhEMWetXq1oaHhc36kzDR6hVbUWVX3XWbCohsxbpGLxwy76Zr8axjbh3GyxCmXi
- 58L7SDqK2aBuVbwNmZNgiKzr9f+Sc1UTlu1gL+m162k2NdBeGM5hstzCv3nhNtdL1cj6fWits
- +02tLufEPeD3rescoU5Wbg7lqqt57WKw6/WH9oadk0Rrj2UK7N/ntb7yPc3KQevUzvdC7bQjG
- 4ODPokAq6RWAl4FkDAL2fKKamc5M9fMqYrl23Prqv5w+KqHbA2XQEHFIHtIlnbo5QQ4HvffAM
- XVwTeUPotlios+/Oyq8lsUr0w4R8RFa8ecvxbpjCvl4U73hxfGjSQbaFpPku8kGh/f4k0wrgf
- unZ9flv1GCCBpMSqavgeiC7h5gLLTMmPL6lBgdWDgXMHyi6nGFmhe4B9/yN1kHQNNXG+RIJ8 
+X-Provags-ID: V03:K0:M4ykho8EFogo02vB3F6HUZydBDi1I8wBmV7Lzjwj7K89cfn+ZK5
+ bLtfuxYKToR7P94Z3MQ7ysvCQf4W6IzLP5tMxMF5fZWkfEzs87Dni/tbdWlLyZC+Gop9wEu
+ ou39VywPjs6IdrDk4joAEWYYj3Aut40O6x9bZsS8+6Pl/CDRY8OsOISyyV9QQ3NI3c7+FqR
+ BckXEBC6aEDx5vfznamgg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7qH9rn53Ulg=:R6mgzIKNEU5/xx21PTdWeY
+ LvXl771GwbuY1MXxrS7lwRxRufBwz8HPoWjWpMUczdJ6htWDOzI86J3zMxVuTJHxnh3qyso9G
+ J1/OU9qpV75Ze+j+jFHo/rDImQGAWpLsQDsTXs3CPEF5UqGeIEyxca72la7kQOm4dk39N1ntw
+ 0QpOWKiXY4aI5rjz8ztRMiuFs+NUa1YaPtO6zGlcGR09bBRBreVtFQhP8DnPg6tmCSvbmj86U
+ /IKUGndIazlxNFCQoLCjsG+y4fOoWDnPNxEqjr8drCnSeI94Q9whi5z8YEdlZgjQscnGRaLez
+ 5i48tMElQd7a/Sx8DkEWcBBHzomNdxmelX9TvpKo5vmiDcqVywreGoILBTZWv5bbPyEDmMGxk
+ Cs8i5gKzjNzRo1cFhlkB6q47CSiQh86urw6uJMaRPlHBXQwwlr+Dog6BP/jlJJ/0KMmD89xJo
+ 8WCpNlt4IwhYoXsGaBUFx9VZpy2+Rd3rU1FamYEHgOzCNORdGh0r5mChncFBCEz+Sx8omOFGu
+ b+Ist1/5OczjtmK2sXMUhCWVBRuavwBacZcT9jmjJkX0GLUgKZfCpkdwicphTl1PRkshcQkkX
+ W/NNyM3nm2PxJiQXZbZofnWUa5u8MffLGa+4vP7ereoDhK6TjlT/w7M5319BPDFbv9y2mTYmP
+ 1bZ0VeTqzE0zdcnvJLEVUqReB6hmP73/sB2jLXyolw25mhj1tsc65kc62pq+GaS+/HvdW7UCT
+ sHdw69NN1gdvZrBZpn9rKyCNVI1YkI/fEvYOQ7qyMiRG2swy+wOneSCnnRViFWR1QeyiVJbY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284721>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Eric,
 
---8323329-133259012-1453705191=:2964
-Content-Type: text/plain; charset=ks_c_5601-1987
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sun, 24 Jan 2016, Eric Sunshine wrote:
 
-Hi Philip,
+> On Sun, Jan 24, 2016 at 5:37 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Fri, 22 Jan 2016, Eric Sunshine wrote:
+> >> On Fri, Jan 22, 2016 at 2:50 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> >> > On Fri, Jan 22, 2016 at 06:01:25PM +0100, Johannes Schindelin wrote:
+> >> >> +test_expect_success 'conflict markers contain CRLF when core.eol=crlf' '
+> >> >> +     test_must_fail git -c core.eol=crlf merge-file -p \
+> >> >> +             nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
+> >> >> +     test $(sed -n "/\.txt\r$/p" output.txt | wc -l) = 3
+> >> >
+> >> > The "\r" isn't recognized by 'sed' on Mac OS X or BSD. Perhaps use
+> >> > instead:
+> >> >
+> >> >     test $(cat output.txt | tr "\015" Q | sed -n "/\.txtQ$/p" | wc -l) = 3
+> >>
+> >> Or the 'sed' could even become at 'grep' at this point.
+> >
+> > Good point, thanks!
+> 
+> And, without the unnecessary 'cat', of course (don't know what I was thinking):
+> 
+>     test $(tr "\015" Q <output.txt | grep "\.txtQ$" | wc -l) = 3
 
-On Sun, 24 Jan 2016, Philip Oakley wrote:
-
-> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> >From: =B8=B6=B4=A9=BF=A4 <nalla@users.noreply.github.com>
->=20
-> Is this Nalla's preferred email, or just a carry over from cautions of th=
-e
-> Github interface?
-
-Neither. It is from the author field as recorded in the commit that I
-merged originally: https://github.com/dscho/git/pull/8
+Heh, I automatically removed the "cat" in my mind already, and as you can
+see from my v2, I used precisely the cat-less form you suggested.
 
 Ciao,
 Dscho
---8323329-133259012-1453705191=:2964--
