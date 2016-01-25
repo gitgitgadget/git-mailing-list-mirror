@@ -1,90 +1,111 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: [RFC] tag-ref and tag object binding
-Date: Mon, 25 Jan 2016 16:22:09 -0500
-Message-ID: <20160125212208.GB26169@LykOS>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] mingw: avoid linking to the C library's isalpha()
+Date: Mon, 25 Jan 2016 22:47:56 +0100
+Message-ID: <56A6980C.6040701@kdbg.org>
+References: <cover.1452536924.git.johannes.schindelin@gmx.de>
+ <cover.1452585382.git.johannes.schindelin@gmx.de>
+ <05cb9e00756e8a364f972cd227804764f6a6380c.1452585382.git.johannes.schindelin@gmx.de>
+ <56A279DA.8080809@kdbg.org> <xmqq60ylv3bk.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1601230924090.2964@virtualbox> <56A3CE34.20808@kdbg.org>
+ <alpine.DEB.2.20.1601241152060.2964@virtualbox> <56A4C534.6040503@kdbg.org>
+ <xmqqzivubpac.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 25 22:22:18 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 25 22:48:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNoaX-0004Zk-UY
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 22:22:18 +0100
+	id 1aNozY-00028j-4Q
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 22:48:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933193AbcAYVWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 16:22:13 -0500
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:34980 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932729AbcAYVWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 16:22:12 -0500
-Received: by mail-qg0-f54.google.com with SMTP id o11so119421622qge.2
-        for <git@vger.kernel.org>; Mon, 25 Jan 2016 13:22:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition;
-        bh=QLiiKL/CQ4d+zLupo9gT27vIICBHnlZUwloqFZUrMUU=;
-        b=GQG5jybWDKfWZ5H0Dsy9o8rHoXNo/TMulTrIUp/8xXyhxMXbuszVMZnX4HGebZicW/
-         bFNiWGXqI+YfqH6lPRTyNmAICb2PVtxEfe8o2aJHsAtHSDUV0c3+zQIKZE1k2fNJTV9Y
-         SKFWlhTyrHh5Iv1R723UxnF14oNADTWHA//Tucbhz/e8uKi0x/VC0aviDW79qkDYZMw0
-         1QmZiKLAVVtCEFm+Eg+eowlUWtDJQrKqSc3HMuupBeR++TCi72RMczD/o96Oxts64zjL
-         9INj3LX1VUtsQKl7iAPu2JP5Q1Sr6ZU6i1ZuvT4TurAkGkqZvpsgWgxME6QQVTpEsQrn
-         mKOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition;
-        bh=QLiiKL/CQ4d+zLupo9gT27vIICBHnlZUwloqFZUrMUU=;
-        b=WS7aqF0ax/DjARbI6jk2zGIjXiTqDDUA1PHH0x2R+XbpNaAzgS7Cj0lfogX8QpCsoq
-         L8yx1eG1zDc6dX18/cdsd/18Z0OjiipqEZX3S4tSG04dNhGOvrBXl302YM8c6VKXfK3c
-         FfUmf+7NZcuWNKTJWrPG7XQn0WvPJL6Ozoxt3Mz5r6yJwt/2tYLHbRRWUkfQd/+WoKpb
-         gLb1oHbVI4IkuiimDLf+IN2QlS8zy9ffRZ092XfC0kovuKAbO2VInlmkP//3Rq7ciksy
-         a+NEe6zj9Jljg684OkhRZoaBWcixaSl2yKrZvBPK1rFRoCRxyJ6ao2wKtxBFYnOnsBwk
-         NQDA==
-X-Gm-Message-State: AG10YOQWADomeLbxeizZeC5PWF1uXeFLtETsWnwpuLL2iTnCm7ghcLB9woeYUeLH49uV8xge
-X-Received: by 10.140.195.136 with SMTP id q130mr25205109qha.45.1453756931172;
-        Mon, 25 Jan 2016 13:22:11 -0800 (PST)
-Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-18.NATPOOL.NYU.EDU. [216.165.95.7])
-        by smtp.gmail.com with ESMTPSA id u78sm9464129qge.27.2016.01.25.13.22.10
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 25 Jan 2016 13:22:10 -0800 (PST)
-Content-Disposition: inline
+	id S1753506AbcAYVsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 16:48:01 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:16389 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751259AbcAYVsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 16:48:00 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pq4Yn2d2tz5tlG;
+	Mon, 25 Jan 2016 22:47:57 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 0133351D9;
+	Mon, 25 Jan 2016 22:47:57 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqqzivubpac.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284758>
 
-Hello everyone.
+The implementation of mingw_skip_dos_drive_prefix() calls isalpha() via
+has_dos_drive_prefix(). Since the definition occurs long before isalpha()
+is defined in git-compat-util.h, my build environment reports:
 
-I've done some further research on the security properties of git
-metadata and I think I've identified something that might be worth
-discussing. In this case, The issue is related to the refs that point to
-git tag objects. Specifically, the "loose" nature of tag refs might
-possibly trick people into installing the wrong revision (version?) of a
-file.
+    CC alloc.o
+In file included from git-compat-util.h:186,
+                 from cache.h:4,
+                 from alloc.c:12:
+compat/mingw.h: In function 'mingw_skip_dos_drive_prefix':
+compat/mingw.h:365: warning: implicit declaration of function 'isalpha'
 
-To elaborate, the ref of a tag object can be moved around in the same
-way a branch can be moved around (either manually or by using git
-commands). If someone with write access can modify where this ref points
-to, and points it to another valid tag (e.g., an older, vulnerable
-version), then many tools that work under the assumption of static tags
-might mistakenly install/pull the wrong reivision of source code. I've
-verified that this is possible to pull off in package managers such as
-PIP, rubygems, gradle(maven), as well as git submodules tracking tags.
+Dscho does not see a similar warning in his build and suspects that
+ctype.h is included somehow behind the scenes. This implies that his build
+links to the C library's isalpha() and does not use git's isalpha().
 
-In order to stay loyal to the way files in the .git directory are
-ordered, I don't think that making the ref file (or packed refs) files
-differently is an option. However, I think that it could be possible to
-store the "origin ref" in the git tag object, so tools can verify that
-they are looking at the appropriate tag. There might also be a simpler
-solution to this, and I would appreciate any feedback.
+To fix both the warning in my build and the inconsistency in Dscho's
+build, move the function definition to mingw.c. Then it picks up git's
+isalpha() because git-compat-util.h is included at the top of the file.
 
-What do you guys think?
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ compat/mingw.c | 7 +++++++
+ compat/mingw.h | 7 +------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-Thanks!
-Santiago.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 10a51c0..0cebb61 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1915,6 +1915,13 @@ pid_t waitpid(pid_t pid, int *status, int options)
+ 	return -1;
+ }
+ 
++int mingw_skip_dos_drive_prefix(char **path)
++{
++	int ret = has_dos_drive_prefix(*path);
++	*path += ret;
++	return ret;
++}
++
+ int mingw_offset_1st_component(const char *path)
+ {
+ 	char *pos = (char *)path;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 9b5db4e..2099b79 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -360,12 +360,7 @@ HANDLE winansi_get_osfhandle(int fd);
+ 
+ #define has_dos_drive_prefix(path) \
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+-static inline int mingw_skip_dos_drive_prefix(char **path)
+-{
+-	int ret = has_dos_drive_prefix(*path);
+-	*path += ret;
+-	return ret;
+-}
++int mingw_skip_dos_drive_prefix(char **path);
+ #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
+ #define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+ static inline char *mingw_find_last_dir_sep(const char *path)
+-- 
+2.7.0.118.g90056ae
