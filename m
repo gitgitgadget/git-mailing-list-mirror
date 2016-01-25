@@ -1,114 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 16/19] mingw: avoid absolute path in t0008
-Date: Sun, 24 Jan 2016 18:11:02 -0800
-Message-ID: <xmqq60yibe89.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 05/19] mingw: prepare the TMPDIR environment variable for
+ shell scripts
+Date: Sun, 24 Jan 2016 21:11:39 -0500
+Message-ID: <CAPig+cTF0r1Z_4wre57pZHvPXT00TvhYTKmdHfDfTBZzMwdo+A@mail.gmail.com>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de>
-	<7c35a7b9c65d9febb6af1b50907988974bca3fbd.1453650173.git.johannes.schindelin@gmx.de>
+	<80795bee09974f4bec6bda75fe9cb17a4326bed1.1453650173.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 25 03:11:12 2016
+X-From: git-owner@vger.kernel.org Mon Jan 25 03:11:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNWcZ-0000dn-Pj
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:11:12 +0100
+	id 1aNWd6-0000ue-6e
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Jan 2016 03:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbcAYCLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Jan 2016 21:11:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59487 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754303AbcAYCLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jan 2016 21:11:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC0E53F459;
-	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ESiSowAYutk2mY7f3mnp2WCgke8=; b=hQ0fo0
-	8oyQuDtiOAmROHoO+oph6cebWdV2038RaBNyMeqnMQ0ou8afGnL40PuHCXPYcHA8
-	pXiL5THqstRh5nxy4/mzogBxxtwJDpV4q0YadN/CY3xtx9FbTAONuKiSlJF1R9NJ
-	8CMTuPJ6w3ZidU5YeADpHxkHa+hmfNoJHo0a4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Or8Roqs14aE1QlQpolKLANOxoLxCGT8p
-	kW5doHpz5B+O3ER7sCpuj4hE0x+uik7vehEXnvuH9DsZAaEE2hIMhBQ+hkXUFrH9
-	1bQSqweI4CU0U+H7VVU+ucvf5/fpWxcKlNcJn3Fw5LTO7//OKpEi0UI0WBNO7HSt
-	k8NNsI7XY5s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B26EF3F458;
-	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2867C3F456;
-	Sun, 24 Jan 2016 21:11:04 -0500 (EST)
-In-Reply-To: <7c35a7b9c65d9febb6af1b50907988974bca3fbd.1453650173.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Sun, 24 Jan 2016 16:45:22 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E317DD7E-C308-11E5-9303-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754553AbcAYCLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Jan 2016 21:11:41 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:32786 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753892AbcAYCLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jan 2016 21:11:40 -0500
+Received: by mail-vk0-f67.google.com with SMTP id n1so5142772vkb.0
+        for <git@vger.kernel.org>; Sun, 24 Jan 2016 18:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=6VuqjHN75jZwLXEnnbSZ5sCfT82wqAgGOiRu9GDsNKY=;
+        b=ML9KxfEqRrGTDqR4kRCVFqcTfC/c1CCM2D1g8MUwm7BWBWnFfYQWWLIZ2gyUKzcTnH
+         XigsmQMKIzMBNyvxmaf+ut20IsGRZhRS4IHi1d8Z7CGwSPFAqFQiEPQPyjo/jQFH97c9
+         nM4+MWnFqbqZqcXh5PAPAMPwR+GRPbyY6Mp8Ko30nTn/eOvJBAdC+4J1cXoRK4I61BNc
+         Z7WvpcTrGp7fK0U2uJkNT1FXJIY4/LxmZPZcWfvpWvUq1HgMOsI9h3+YxA630g/DgxgX
+         JrLgcjl6ODNbqFcJZTq30LM8b8HrKzxZj81yNWZFy/eb+wuMGY9QQvcJDBSJmCG1W47L
+         xh2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=6VuqjHN75jZwLXEnnbSZ5sCfT82wqAgGOiRu9GDsNKY=;
+        b=EOM3JlpUo1bNvDTDq3YLBq3O4GZtNM7HqzXs/f4wGqKDDdu7MmM+i62h7y8uZ+Tgci
+         CJWOczbV0FVCQb2nya4+TIELED/RoUQYFOjqnlCsc85Ch66i0tSAz6TAl4t+ayvK9NTY
+         d8PM9jCxVhVo3rtnbj0QhQUMya7f4a48jAFEdQWbTXpLxBfiOmDyIG3j+sH2XauSl/Ia
+         DBorq0ZHiizs84TlcdDzbBy6afp7BXiWjJFD1Zis2iXrOjdi8tzn5Linnrl2Ly21OrqV
+         iCN/hTiMv2+lVBdwjXP8tF1RXh34vA3HPxVoeS6DSuOeJsJT4/li8hVAKbh8AKAKsGK0
+         9gIA==
+X-Gm-Message-State: AG10YORluiLZR8wgMPM48Yk0HGGX7dtO1f0ahjilhsEXDuFXSlfvga8ExaCnT8qA3CyDZM8h51kjoDa7BmirEw==
+X-Received: by 10.31.141.2 with SMTP id p2mr9485286vkd.37.1453687899147; Sun,
+ 24 Jan 2016 18:11:39 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 24 Jan 2016 18:11:39 -0800 (PST)
+In-Reply-To: <80795bee09974f4bec6bda75fe9cb17a4326bed1.1453650173.git.johannes.schindelin@gmx.de>
+X-Google-Sender-Auth: sqfSTu386PAY2xvFsDpbJqyyzZ8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284711>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> From: Pat Thoyts <patthoyts@users.sourceforge.net>
+On Sun, Jan 24, 2016 at 10:43 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> When shell scripts access a $TMPDIR variable containing backslashes,
+> they will be mistaken for escape characters. Let's not let that happen
+> by converting them to forward slashes.
 >
-> The test separator char is a colon which means any absolute paths on
-> Windows confuse the tests that use global_excludes.
+> This partially fixes t7800 with MSYS2.
 >
-> Suggested-by: Karsten Blees <karsten.blees@gmail.com>
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  t/t0008-ignores.sh | 8 +++++++-
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> @@ -2042,13 +2042,28 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
+>  static void setup_windows_environment()
+>  {
+> +       char *tmp = getenv("TMPDIR");
+> +
+>         /* on Windows it is TMP and TEMP */
+> -       if (!getenv("TMPDIR")) {
+> -               const char *tmp = getenv("TMP");
+> -               if (!tmp)
+> +       if (tmp) {
+> +               if (!(tmp = getenv("TMP")))
+>                         tmp = getenv("TEMP");
+> -               if (tmp)
+> +               if (tmp) {
+>                         setenv("TMPDIR", tmp, 1);
+> +                       tmp = getenv("TMPDIR");
+> +               }
+> +       }
 
-Is the fact that $global_excludes is specified using an absolute
-path significant to the correctness of this test script?  This patch
-suggests me that it is not (i.e. if the tests chdir's around, then
-relative reference to global-excludes file would not work at all,
-but apparently tests run with MINGW prereq does not exhibit such an
-issue, so the remainder of the test would see the file we want it
-see with the relative reference just fine).
+Let me see if I understand this...
 
-And in that case, I think it would be more correct to use the
-"global-excludes in the current directory" definition regardless of
-MINGW prerequisite.  Adding a comment that says "The value of this
-variable is a colon separated list, so avoid absolute path, because
-..." is a very welcome addition while doing so.
+In the original code, if TMPDIR was *not* set, it would assign the
+value of TMP or TEMP to TEMPDIR.
 
-A larger question is if it would make more sense for Git ported to
-Windows environment to use semicolon (that is the element separator
-for %PATH% in the Windows land, right?) instead where POSIXy port
-would use colon as the separator.  A variable that is a list of
-locations (e.g. $PATH) makes little sense when elements can only be
-relative paths in practice.
+The new code, however, checks TMP and TEMP only if TMPDIR is *already*
+set. Am I reading this correctly? Is this revised behavior correct?
 
->  1 file changed, 7 insertions(+), 1 deletion(-)
+> +       if (tmp) {
+> +               /*
+> +                * Convert all dir separators to forward slashes,
+> +                * to help shell commands called from the Git
+> +                * executable (by not mistaking the dir separators
+> +                * for escape characters).
+> +                */
+> +               for (; *tmp; tmp++)
+> +                       if (*tmp == '\\')
+> +                               *tmp = '/';
+
+This transformation is performed on whatever memory was returned by
+getenv(). It is also performed after setenv(), so presumably setenv()
+isn't making a copy of the incoming string. Is that correct? Is it a
+good idea to rely upon that detail of implementation (even if we
+control the implementation, which I suppose is the case here)?
+
+>         }
 >
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index 4ef5ed4..68749f5 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -5,7 +5,13 @@ test_description=check-ignore
->  . ./test-lib.sh
->  
->  init_vars () {
-> -	global_excludes="$(pwd)/global-excludes"
-> +	# On Windows, avoid using "C:" in the global-excludes paths.
-> +	if test_have_prereq MINGW
-> +	then
-> +		global_excludes="global-excludes"
-> +	else
-> +		global_excludes="$(pwd)/global-excludes"
-> +	fi
->  }
->  
->  enable_global_excludes () {
+>         /* simulate TERM to enable auto-color (see color.c) */
+> --
+> 2.7.0.windows.1.7.g55a05c8
