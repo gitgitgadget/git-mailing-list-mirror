@@ -1,122 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.c: fix help.autocorrect after 57ea712 breaks it
-Date: Tue, 26 Jan 2016 11:02:38 -0800
-Message-ID: <xmqqbn88cgfl.fsf@gitster.mtv.corp.google.com>
-References: <56A72235.9080602@drmicha.warpmail.net>
-	<1453814801-1925-1-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 19/19] mingw: do not bother to test funny file names
+Date: Tue, 26 Jan 2016 15:03:55 -0500
+Message-ID: <CAPig+cQXVwfyaEzf9fR2tFNon-Jq93iPCMwW9gsB8BnUVv5p3A@mail.gmail.com>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de>
+	<cover.1453818789.git.johannes.schindelin@gmx.de>
+	<47914e4ceb3ea51636dd5ae308679c9c92fcbef0.1453818790.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, git@drmicha.warpmail.net
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 20:02:45 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 26 21:04:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO8t2-00011Q-Sr
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 20:02:45 +0100
+	id 1aO9qL-0007i1-FJ
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 21:04:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbcAZTCm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2016 14:02:42 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58456 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752011AbcAZTCk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2016 14:02:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B538A3FDF3;
-	Tue, 26 Jan 2016 14:02:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=DXgo1bWe+t/C
-	HF2ps5kZZ2jfQlY=; b=G3SLq4e4fWFAZY+JoYTpriJLfDoHhaj0srNCyZGGL4df
-	OLVQWdTfvu6aiycNIXKFHQKp6Zdvk37NUCgGKGBcli8UJLq/dTni8L+9Suh3D1Pl
-	IHwgvrpSnrgUNDYohu7FNrp/H+sinBbwQEi0/FlLA/DbE1SaD9hxdCWKahaG+dc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IK8S40
-	GnChqON2eeTStizMMLquwy851CDKffUrf2ETsynHH2l/16/Ke6PGZP9t4edr4fwQ
-	TCVLLrNU9Ld8+A/kORcQLtQ7mhN0HTpM+HO0TEd3t8qtQ4JeoNpvZA9bsC/XGa1x
-	JzNsSWRFS6FT0zB6PmFjkQT8AoXfJyd47d0Hw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ABB513FDF1;
-	Tue, 26 Jan 2016 14:02:39 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2A2A53FDEB;
-	Tue, 26 Jan 2016 14:02:39 -0500 (EST)
-In-Reply-To: <1453814801-1925-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 26
- Jan 2016 20:26:41 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E8C99FC-C45F-11E5-A1B8-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751736AbcAZUD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 15:03:58 -0500
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:35013 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729AbcAZUD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 15:03:56 -0500
+Received: by mail-vk0-f68.google.com with SMTP id e185so7343449vkb.2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 12:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=8DPGZ2BPwYfdNf9qOOGlIyfbrX2rv0ZAypGXUyLfopE=;
+        b=Q4Prt7BMdpdrakAi/lFVfaj9gXxabj9NiOjJW2bxJlneJgX0mKjL/aofo9wic7Xy/J
+         rx9m2grBd7llF2YGu7D2WhuIwCbnEXS+0jIecaVQgvhDG+1n6bN3yRBlV08vecjfOy/q
+         rLZ0C/1jzomIeGIMdpktB/VA+IpQ4QIDF9XHOy8RimjknVx7Q9HFuJJrGFXABSy1+aJM
+         qRE1B47CLOe4t+DXVy+Gx2NnkbWexMw3RhUzXKRnoLlqOSnLjV1pFCslndm6zQ0uWi/X
+         m78jW5CGHedK/w3vW7Rj0OgHsnFOkKHRE9wTWbWT8rQbyAHU/QXrfUjfQwfIDJTUr06w
+         aDwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=8DPGZ2BPwYfdNf9qOOGlIyfbrX2rv0ZAypGXUyLfopE=;
+        b=ZY0U9K3ugzZcKg+ieCqyjA2V0EbpDkXJ5w84gjdhq2XZU7dn8CJpsy7VGwnbRhYEF9
+         SxQR/BMo06FkDlr+zM4x2SQkJA1UR6KPdixWWCms7/1lVI4JoSGFhQuya/HAkH69vVN4
+         925QPD46+WDG1GXCNXq0v+6QeLBd4yiIYndIsmzcNSjeqK4t3QndDgHJS37v5E1GiUoc
+         k+wZv15nLcTdquO0HLYqSNlBOj0IbVeSFKTTECMw73LEDacBRDTnfe9OMl+Hi+Bc2Dgl
+         Mcl0ew8OSf2VTOb58we8LkSiQav3NY0TO615+3Ae1ndUUrcT4USaN15w1KFkuOv81D2V
+         dZNA==
+X-Gm-Message-State: AG10YOQr8CMgTxJb2emKUoNHYte7SeO2yV0glMRXsgwRZId2FmnSGo7ArF+syX8O0FWVfEAS2R8hbrPVgloDvw==
+X-Received: by 10.31.164.78 with SMTP id n75mr16411222vke.14.1453838635530;
+ Tue, 26 Jan 2016 12:03:55 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 26 Jan 2016 12:03:55 -0800 (PST)
+In-Reply-To: <47914e4ceb3ea51636dd5ae308679c9c92fcbef0.1453818790.git.johannes.schindelin@gmx.de>
+X-Google-Sender-Auth: IjUGNQOCyhgqQAL5noRR0qluixg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284850>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> diff --git a/git.c b/git.c
-> index da278c3..cd733f7 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -25,14 +25,15 @@ static const char *env_names[] =3D {
->  	GIT_PREFIX_ENVIRONMENT
->  };
->  static char *orig_env[4];
-> -static int saved_env_before_alias;
-> +static int saved_env_before_alias, saved;
-
-Even for a file-local static, this name is a bit too generic, isn't
-it?  saved_env_count or something perhaps?
-
-
->  static void save_env_before_alias(void)
->  {
->  	int i;
-> -	if (saved_env_before_alias)
-> -		return;
-> +	if (saved)
-> +		die("BUG: uneven pair of save_env/restore_env calls");
->  	saved_env_before_alias =3D 1;
-> +	saved =3D 1;
->  	orig_cwd =3D xgetcwd();
->  	for (i =3D 0; i < ARRAY_SIZE(env_names); i++) {
->  		orig_env[i] =3D getenv(env_names[i]);
-> @@ -44,9 +45,13 @@ static void save_env_before_alias(void)
->  static void restore_env(int external_alias)
->  {
->  	int i;
-> +	if (saved !=3D 1)
-> +		die("BUG: uneven pair of save_env/restore_env calls");
->  	if (!external_alias && orig_cwd && chdir(orig_cwd))
->  		die_errno("could not move to %s", orig_cwd);
->  	free(orig_cwd);
-> +	orig_cwd =3D NULL;
-> +	saved =3D 0;
->  	for (i =3D 0; i < ARRAY_SIZE(env_names); i++) {
->  		if (external_alias &&
->  		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
-> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-> index 52678e7..3f95285 100755
-> --- a/t/t1300-repo-config.sh
-> +++ b/t/t1300-repo-config.sh
-> @@ -1201,4 +1201,12 @@ test_expect_success POSIXPERM,PERL 'preserves =
-existing permissions' '
->  	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) !=3D 060=
-0"
->  '
-> =20
-> +test_expect_success 'autocorrect and save_env/restore_env' '
-> +	git config alias.ss status &&
-> +	git config help.autocorrect 1 &&
-> +	git sss --porcelain | grep actual >actual &&
-> +	echo "?? actual" >expected &&
-> +	test_cmp expected actual
-> +'
+On Tue, Jan 26, 2016 at 9:35 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> MSYS2 actually allows to create files or directories whose names contain
+> tabs, newlines or colors, even if plain Win32 API cannot access them.
+> As we are using an MSYS2 bash to run the tests, such files or
+> directories are created successfully, but Git itself has no chance to
+> work with them because it is a regular Windows program, hence limited by
+> the Win32 API.
+> [...]
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+> @@ -14,7 +14,8 @@ test_expect_success \
+> -if touch -- 'tab       embedded' 'newline
 > +
->  test_done
+
+Is this new blank line intentional?
+
+> +if ! test_have_prereq MINGW && touch -- 'tab   embedded' 'newline
+> [...]
+> +test_have_prereq !MINGW &&
+
+Where negation is concerned, is there a non-obvious reason that this
+patch sometimes says:
+
+    ! test_have_prereq MINGW
+
+and sometimes:
+
+    test_have_prereq !MINGW
+
+? Is one form preferred over the other?
