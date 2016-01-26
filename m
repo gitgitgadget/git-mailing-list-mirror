@@ -1,114 +1,70 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/2] tag: do not show ambiguous tag names as "tags/foo"
-Date: Tue, 26 Jan 2016 09:55:08 +0530
-Message-ID: <CAOLa=ZRWGHf=Q3L6x5wf1Aiy2Q=T2117+YGPxMxM-weYkC+CoQ@mail.gmail.com>
-References: <20160124230531.GB29115@sigill.intra.peff.net> <20160124230840.GB16455@sigill.intra.peff.net>
- <xmqq60yhdx4v.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 12/15] ref-filter: align: introduce long-form syntax
+Date: Tue, 26 Jan 2016 06:16:24 +0100
+Message-ID: <CAP8UFD0NUoZtJxo_+M2U20AZcHEZiwPms6TBAU_xqBU0+zSk4Q@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
+	<1451980994-26865-13-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Pete Harlan <pgit@tento.net>,
-	Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 05:25:46 2016
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 06:16:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNvCJ-0005Z8-UT
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 05:25:44 +0100
+	id 1aNvzc-00056E-UO
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 06:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069AbcAZEZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 23:25:39 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:34748 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752057AbcAZEZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 23:25:38 -0500
-Received: by mail-vk0-f68.google.com with SMTP id e6so6517237vkh.1
-        for <git@vger.kernel.org>; Mon, 25 Jan 2016 20:25:38 -0800 (PST)
+	id S1750824AbcAZFQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 00:16:27 -0500
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:35697 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbcAZFQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 00:16:26 -0500
+Received: by mail-lb0-f173.google.com with SMTP id bc4so85682145lbc.2
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 21:16:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=8uho3MKp9qvex0qBJ1LTtXHn4WQ9W9XuLjjE/uye9jQ=;
-        b=MsPaBSt/fBT5U5nM+hgijz1xnDwi+G9wdWvyb9+T2xwIIhOk13IumwVAVAGlwR0Fao
-         llRr1EB+0M/hdCNJtO96vl/LvbLirOKF6eTy3JHPVmzZ8fxDqULEJErPK0yN/IKIku86
-         k5d+8hVGVwKQ0KfiOqx6TBry3O0glivFfLMjAHfGF2mTL3DPkSdwsw1SgBdLX9iFhia2
-         bqZ6g4IgQLMmQ/WN1EIsv7NSStaAgR2oySwhRnxrpY7FuM9/nT1ulnpRtAAsxXVgM2GJ
-         itKYRkXA4+w+z6I7RTgvB0p9AA01ua62DZOyuLa1mbnkVbRXOrdlkUERGbVsUx7VVzUw
-         5zCA==
+        bh=77x5JAXyIhJMDKg7XS9M8FSp7kryjg5z00fbbcwZjHE=;
+        b=dQHP59+b6akyWn2llsuQxH0Kuxntx6kyehq+BF28WOAZIeYjZWlJaNYWzfpSpZRt5q
+         lhhLH9iKam5fwjNpCWpn/b5Dpwk1TNtrviDSPyZ7XDioPkrxOH8Ln/w9rwML1R6/XpT6
+         ZODKbHQXJOXaTKQI+GzUaRejdJw+/2LResGIHUyx2bFNnVWa6DWFJ/e2oPMulCYF7yw3
+         bGlOL/x9DTMJejqVSMMNDrJFgEvEOa2ja8kM7RA1CgHgbxmhaeD7WKM3VRM3s/2yFWe5
+         WbGIl73bwzui5ivwhrlhowdLs1qa7gjDRRnz4EgmGqoTzHAG1ZMrLFcEpQjAvPQxVFW3
+         qB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=8uho3MKp9qvex0qBJ1LTtXHn4WQ9W9XuLjjE/uye9jQ=;
-        b=BOnemdWOsEAfzhRTtvD4L8/14mbm4l+n6vyQ6qIvmFQ4rGTO3s6XsTvS2dqiyaUX6V
-         /jrNHO6WAuV4dS00NaHzrzPdvE3AsN6wAjbeR8ukX7sA9JBZVn2AmBIGkUjvxBYCbcQV
-         yaOBGuERyBX0VNu8boROO3ZbLxWEWDiuAA9b967Q0Rr5SHyIp9yjtSLlJYVyiVyrBLEX
-         OnwsFW54DCjmOWEfWh2JYTMzbmMWiSlLypXlb+F+yFhnZgX3/IYvvY7MMMxU6DA7M+IH
-         nioWKB4JRXdxLNP+XMMBb3rE7RnHNwEBDswtXqtOoDHW5Iuh7jr+BztsZl6f+S/oIRN1
-         84NQ==
-X-Gm-Message-State: AG10YOSaK031fQCfxkMlhIHbY897vR5LD8ZFyFs5LyjU1CLHQNMo2Sg4Ib3SUYLovyTzPzEQPrsJjFQ2Cmz4qg==
-X-Received: by 10.31.54.75 with SMTP id d72mr3707043vka.30.1453782337602; Mon,
- 25 Jan 2016 20:25:37 -0800 (PST)
-Received: by 10.103.82.146 with HTTP; Mon, 25 Jan 2016 20:25:08 -0800 (PST)
-In-Reply-To: <xmqq60yhdx4v.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=77x5JAXyIhJMDKg7XS9M8FSp7kryjg5z00fbbcwZjHE=;
+        b=M6RuPaojlinXZPtkgvXDfHVIw8SfbI4YJUbJQMhonC06sVaidpFWLga2YlYYu2fEKi
+         6MiNe0QALhnkWgycJ/skWg+GJJ/D+zuittMonBnwFQT43ENytEHl0TLEygUUYnpXfB8z
+         tUa5DIUvBFnYcsdnj8lWj8Dm+37O9dkl0r56HTngQYg73kH5FXRfcY6mdJ6qqJw5ridC
+         eX6lCzZTDjl4u+f6xDGpHPQmENjpvNP6cLkT6i3mEo1hRo7p/mWC/8zJ1vImh0uwCz05
+         ZhZ32JBUu43AzpfyiXdYDsp2cwzQ6c1RQQ8V6OcZV2R4+DoAnv5Tlo8EBdPjHK+tMKiv
+         QFqA==
+X-Gm-Message-State: AG10YOSdLG7i1LrlodJLbCyx7YetkomgLzUKE2OYXHTZ84dxNQQp3dpLuliFyFlqFE8xpyHq7AHu4wSSJLdBig==
+X-Received: by 10.112.168.5 with SMTP id zs5mr8227773lbb.56.1453785384297;
+ Mon, 25 Jan 2016 21:16:24 -0800 (PST)
+Received: by 10.25.216.143 with HTTP; Mon, 25 Jan 2016 21:16:24 -0800 (PST)
+In-Reply-To: <1451980994-26865-13-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284777>
 
-On Tue, Jan 26, 2016 at 5:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+On Tue, Jan 5, 2016 at 9:03 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce optional prefixes "width=" and "position=" for the align atom
+> so that the atom can be used as "%(align:width=<width>,position=<position>)".
 >
->> Since b7cc53e9 (tag.c: use 'ref-filter' APIs, 2015-07-11),
->> git-tag has started showing tags with ambiguous names (i.e.,
->> when both "heads/foo" and "tags/foo" exists) as "tags/foo"
->> instead of just "foo". This is both:
->>
->>   - pointless; the output of "git tag" includes only
->>     refs/tags, so we know that "foo" means the one in
->>     "refs/tags".
->>
->> and
->>
->>   - ambiguous; in the original output, we know that the line
->>     "foo" means that "refs/tags/foo" exists. In the new
->>     output, it is unclear whether we mean "refs/tags/foo" or
->>     "refs/tags/tags/foo".
->>
->> The reason this happens is that commit b7cc53e9 switched
->> git-tag to use ref-filter's "%(refname:short)" output
->> formatting, which was adapted from for-each-ref.
->> ...
->
-> Karthik, getting a fix in for "git tag" regression is more important
-> than the topics parked in 'pu', so I'll queue this patch in the
-> early part of 'pu'.
->
-> I personally feel that "refname:strip=<n>" would be a good mechanism
-> for end users to specify a custom format, and it is unclear to me
-> what should happen when there are not enough elements to be
-> stripped, so I do not think we want to cast the "we will show the
-> whole thing" decision in stone prematurely only because we want to
-> push out the regression fix soon.  So I may ask Jeff to rework this
-> one (or I may end up trying to do so myself) not to squat on the
-> nice strip=<n> notation.  refname:strip-standard-prefix that removes
-> the known prefix ("refs/heads", "refs/remotes" and "refs/tags") if
-> present and does not touch the refname otherwise would leave us more
-> time to decide what strip=<n> should do in the error case.
->
-> Unfortunately, this means kn/ref-filter-atom-parsing topic from you
-> that were parked on 'pu' must be ejected for now, as any change in
-> this area overlaps with it, and the atom parsing code would need to
-> be updated to learn about the new attribute of the 'refname' atom
-> (be it 'remove-prefix=<glob>', 'strip=<n>', or something else) that
-> we would decide to use for the regression fix anyway.
+> Add Documetation and tests for the same.
 
-That should be fine, there are still changes to be done there so I'll rebase
-on this and send that series.
+s/Documetation/Documentation/
 
--- 
-Regards,
-Karthik Nayak
+Thanks!
