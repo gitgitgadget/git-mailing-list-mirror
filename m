@@ -1,73 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 18/19] mingw: skip a couple of git-svn tests that cannot
- pass on Windows
-Date: Tue, 26 Jan 2016 07:45:27 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601260733290.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <ff13c4125f268905baaa10a097ffdafe07eafb25.1453650173.git.johannes.schindelin@gmx.de> <xmqqwpqy9ze9.fsf@gitster.mtv.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v7 01/11] dir: free untracked cache when removing it
+Date: Tue, 26 Jan 2016 07:48:43 +0100
+Message-ID: <CAP8UFD2vkErMGpdBZU78PFGO71Jk8sq+TfBNAtOp0=REsv_N0g@mail.gmail.com>
+References: <1453649304-18121-1-git-send-email-chriscool@tuxfamily.org>
+	<1453649304-18121-2-git-send-email-chriscool@tuxfamily.org>
+	<CAGZ79kYoQFWQCxpGxze=v36PTrC7+EgVOwtfm0kgE_kQoekq1g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 07:45:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 07:48:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNxNr-0007Ii-E6
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 07:45:47 +0100
+	id 1aNxQn-0000OC-6l
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 07:48:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756077AbcAZGpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 01:45:45 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55992 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756036AbcAZGpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 01:45:40 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lu7a2-1Zw8xt47SY-011S64; Tue, 26 Jan 2016 07:45:28
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqwpqy9ze9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:pjvhFkLyqR48wspkv1FoVJMxA6zBWa1EBE8y0YbVX/d9iWGOSid
- gbmucO9/8A5Xp/LiBqPOhvDSkrkjnX/zMMTclU6I4iWnmOK4Br7bwj/rcFcLuXDYq54nsWG
- k7fW/kgzwkJ4e9dq+OVfzkv9kNY84srWTK/Ax7XcVPGcVJZMr0UQlN25d3rKRKPq1Nnkave
- NfBlxliHFjZYc7OjBM4MQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6wlW/GVJBF0=:dOeWKnUd8K8NqvYpMslkHe
- lxB6nPmXs3bn63/7bweh02sNLYg/Z3j3tdUHTiWI6P/wBoRDAQVUVAGFp0u6Uuw3cyn7hjTwH
- KplyOp2nnU4Jb5ahfNyHLRtpcRN9RkpEysEPBnVwAjPPvsmU/tZlZcb/Ts1G+Lx2mdHD1kwJg
- PqY6ydYrSFAxsmJRK+E6yvWXn7ixr5p/La+GUByAt/GCcloW4+4rAAf2KBQ/Q09v7OcJZBzmg
- wCxxU+mnFTATt9eKGn7IdJNJ6OWesHEi1HfhCAn2t+wq22w/xuMdQMFekZ7Iibkr2nOCxPWy+
- Tuw97U9ecAvGwH09kCnh8M9cbiry/HbZseUuNknG3QMcUQIPuSWZLhjtB44dGYi8QiUfEOj14
- 0QoJjEYWX11YWlSthF8KzEWxZa6+nyJOYUY692FyTeJpWx664atd2qQ3Zqr7rnnHeNPo9r6Hi
- f8q0gANbIwJPxeTQSD+6b1KTnPmvzVXpCMix8cENFJVxnBennpLzEh2PsmlYTbQ8FgLyOpSnX
- IZqO246yygrz5HKsMn/QI5DqjoaPo4QuwLT06JSN7qs/PLXyM/p94DGKZ3XMNvrWX5i0oGKxw
- kl+VMmEAQG7jEwNTJ2IFxwWVjd3fOHuRq06BK5r+MMgRjk6dNzrW+LfFZ22wB42RxNO5QxSS5
- WYRp1h+VzAZYK4nOlE7XJMbV1KXsCjzfvPuLSg4q99tLNwgu+jbBJCG+7PqCWINnwYKc5GTr/
- DA3IjPN9nrmVhYh459iEReHIfcdrgiR1XYbT1gR/MFg+2nXYDzFokbWBR3WEc6oV1niDuVfI 
+	id S1752838AbcAZGsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 01:48:46 -0500
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:36159 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750797AbcAZGso (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 01:48:44 -0500
+Received: by mail-lb0-f176.google.com with SMTP id oh2so86504511lbb.3
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 22:48:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+8bdCDLUnUtjJQXdcSnxXKuMjxyqOqOF99Nt9vSJ5p8=;
+        b=UWfzH46tS/JHjW8vtyjzClT4j4HxKTiv41XYUkx+/OdjMB2J3PFGjOMAZtUhXKSBY1
+         DaMTMgVgzofIrMEH6RiT/q28J8OlnHLpSiIRHlzjUcrGxvoihEZIRIF9pImn1nmaZ4Zp
+         9OJMQGJCKGy7dbifo/vsqgPGJl6ZwR4TV+5uebcIM1b2rslcH2RsZq53SV+L/uiIxcM8
+         ksWDYvbpzdajGAQRLAgY9E21VLpfbcgLX5vxMs4CS+HF1SbihaVbk5FjT5cu6u4iU9pQ
+         gzTxkXowJkD18N4cxaP/emGBd1goGIURptfbRG1QCjn8CoIHRwYa69VFMHn2sEsK7vvP
+         MN/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=+8bdCDLUnUtjJQXdcSnxXKuMjxyqOqOF99Nt9vSJ5p8=;
+        b=c2F6JUgz8j8ZwJOZRxKaoLpiOCkELXgWisV3hXlPjJE5064FWF9aw1hLOM9jkiJw2/
+         k7gCUZ0GtAf7uFEer7bb15n+4+/ABDCgwcmLrU0LbZjBp3gx2vJ7b6aSwkJTsWjuDGG8
+         0mcFjZQCygxV7TDcVMbyYpLIGTcKAJj634solnD1ga5P8wCbGKNBXXiis84URU1kKdU2
+         0WZzMLI7bChQIwDI/sT+Byvr8NJMzqDRn012lI8Vszo81ASFgRBmhtsMePFZcfg79d/U
+         KFjrbtaUeVby0hk0Dq3rMaz4c6zj9Xpj7Dtn3VKQMavbD940G+OUkIOYjKljh50Figlo
+         hxDw==
+X-Gm-Message-State: AG10YORA48WALrZ3/SB+GY2qeD+kaSPQiQlFZicf6WaWj0+Bm5gIDYDMRc5xQ6Sr5lOKOj/pOFL0AXNxDgWZLQ==
+X-Received: by 10.112.45.138 with SMTP id n10mr8017800lbm.100.1453790923378;
+ Mon, 25 Jan 2016 22:48:43 -0800 (PST)
+Received: by 10.25.216.143 with HTTP; Mon, 25 Jan 2016 22:48:43 -0800 (PST)
+In-Reply-To: <CAGZ79kYoQFWQCxpGxze=v36PTrC7+EgVOwtfm0kgE_kQoekq1g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284781>
 
-Hi Junio,
+On Mon, Jan 25, 2016 at 8:16 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sun, Jan 24, 2016 at 7:28 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/update-index.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/builtin/update-index.c b/builtin/update-index.c
+>> index 7431938..a6fff87 100644
+>> --- a/builtin/update-index.c
+>> +++ b/builtin/update-index.c
+>> @@ -1123,6 +1123,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>>                 add_untracked_ident(the_index.untracked);
+>>                 the_index.cache_changed |= UNTRACKED_CHANGED;
+>>         } else if (!untracked_cache && the_index.untracked) {
+>> +               free_untracked_cache(the_index.untracked);
+>
+> Do we need to free its members, too? (Or is it empty enough here,
+> that there are no memleaks in there? If this were the case a hint in
+> the commit message would be helpful)
 
-On Sun, 24 Jan 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Some of the tests expect that executable bits can be toggled, others
-> > expect that paths are POSIX paths (but when they come through git.exe,
-> > they are converted into Windows paths and necessarily differ), yet
-> > others expect symbolic links to be available.
-> 
-> These skip the tests that cannot possibly pass in their entirety by
-> protecting them with prerequisites, which feels the right thing to
-> do.  The "executable bits" ones would need to become !POSIXPERM, and
-> symlink ones !SYMLINKS, though.
-
-I reworked this in the same batch as the previous git-svn patch.
-
-Ciao,
-Dscho
+free_untracked_cache() takes care of freeing the members of the struct
+it is passed. If it doesn't free them all it's probably a bug. Many
+free_*() functions in the Git code base do the same thing. And yeah I
+think it is safer to free everything.
