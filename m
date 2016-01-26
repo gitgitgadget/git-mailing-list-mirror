@@ -1,119 +1,150 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 05/19] mingw: prepare the TMPDIR environment variable
- for shell scripts
-Date: Tue, 26 Jan 2016 09:38:05 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601260934040.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <80795bee09974f4bec6bda75fe9cb17a4326bed1.1453650173.git.johannes.schindelin@gmx.de> <CAPig+cTF0r1Z_4wre57pZHvPXT00TvhYTKmdHfDfTBZzMwdo+A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] merge-file: let conflict markers match end-of-line
+ style of the context
+Date: Tue, 26 Jan 2016 09:54:24 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601260951030.2964@virtualbox>
+References: <cover.1453482052.git.johannes.schindelin@gmx.de> <cover.1453632296.git.johannes.schindelin@gmx.de> <d71c7abddd4cba85b967f9fe1d33c7c843176ca2.1453632296.git.johannes.schindelin@gmx.de> <56A4FB64.4010609@web.de> <alpine.DEB.2.20.1601250749580.2964@virtualbox>
+ <56A67B6F.60300@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 09:38:23 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-325737745-1453798467=:2964"
+Cc: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Beat Bolli <dev+git@drbeat.li>, Jeff King <peff@peff.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 09:54:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNz8o-0005bh-Qt
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 09:38:23 +0100
+	id 1aNzOe-0005HT-O2
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 09:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932319AbcAZIiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 03:38:19 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56989 "EHLO mout.gmx.net"
+	id S933848AbcAZIym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 03:54:42 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58835 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752280AbcAZIiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 03:38:17 -0500
+	id S932511AbcAZIyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 03:54:39 -0500
 Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MVJze-1ablYX48Uw-00Ylg4; Tue, 26 Jan 2016 09:38:08
+ ESMTPSA (Nemesis) id 0Las1k-1ZiIvb1HlA-00kOUu; Tue, 26 Jan 2016 09:54:27
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cTF0r1Z_4wre57pZHvPXT00TvhYTKmdHfDfTBZzMwdo+A@mail.gmail.com>
+In-Reply-To: <56A67B6F.60300@ramsayjones.plus.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:YquParjSMAVNg/JfKT9QnZIkZ6j4/dKb+Y+BeUmLdqABSwi0jy4
- fbL9UyXdPMuaBZ9U0GVy+j6PzHhs5X2X3KghGbeoiCXOnnjBdZRLSP+n3ZLvlA7MaBnQMF4
- GEzFwLAt3k6WzF2OKug6pg79j1jNKKrYNzkYNYJRftvEwpC3PkJgk9S2+JhSHLleX0gikdk
- 5OzsVotmX61tkI+GW1r4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ycrau698oWI=:7DVLNzwU89mL/gGhu3894P
- /94ounLc0uUXc/rgIvOzanhFcTqNm7XiLP8bUfr5r3rHaTNlOl6jIoSzlo4MxGEq6zDsXsd3A
- +YgaxuITImuRiHJ6nNW23aZoef9zsPGaCIMwCC4ga9/cuj7O5j4DnBG4NgQe2uVIvhOR8qiVA
- 1L+VlPnrWzQMKCeph2Ww0T3WIHtXGjQy3BrPARHzOhhK+6mlE5CH36ixMvJ0LEDVc/h1uBr+9
- 5vtRWTr6YgGvJWYakYDYt9P/WCqa5LXUAA5pdPAA/3GH9FEKfmBHR2DIr+uVn4IN5YC95vnPD
- ayf19T22q9y+9wueyLeDnPlDRrtCIi6g2vXs8mG5Vrs6U+v3sYKEwmHb/Uw4EecHnyKJHYfy+
- lH/3ZKKdhLpzUzikYhT7j4AZA/G20GzlZ8p12nDaimvkslT6fexF46YgXqeSfEH9EXBfTOePl
- Neejp5eYWyh/H9KUOTxIJNQHRf8gA0E0bfT3p5wCjhSZDGawVkSOUn6N6reUce9YBhc5ksCrJ
- jUvkmh4QniKi5VWaGZd/ZA57n/AOiAR97BQtVQpQTLzVr6dwsSor3jxJQ6ZeqclM8V+5Dl+8r
- 03iPa7HT4KEubN+afccQsMWuEQLd1rfqCnS70VGFQemQbpUd2iTBHUs8gvr/qKB1RUkDfsBrZ
- gAwlX/LXue9XTbwBKT0QHCdJf55ZcZ5t+nGxJPy0e8AHES23RI9bCojap0H2A66c3wkakb5sB
- 64iR5NPGktVQlYmkIRaDrSedKrVBVq39w4SdonDzNAi5ubWxWKHvP9elkSfhJzAOYnKcz1CN 
+X-Provags-ID: V03:K0:cieJw19i+iDOM3f3TBOuWzbU7OqQUJRPuvW3ya5cmdLhZeVT06X
+ Ym4sAk5HC6nomtj2A1C3CuaKOc0bCl1QTOKrt+uxPwTgT5+fTpDVXK+x2FY3ghBWFuTvRjy
+ zKSYaIAme6QTHMwxBzWQ39jufkqvoTREATWQfCdAlCkh2vMcXK4EEwSrz1CRfdnU0Jl5YLA
+ qrI+9hg6zAZrTG1CTrgJQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LKuYMf7Oyd4=:xb1J5koB+383KUv+TjAE0+
+ SAM1GI5wamk8u7xnk3i8grmVQnuQHaITCoBLE3tJSrrkpLJlVqWQ02Aoh1ZPuESNeMWfjoyvh
+ KstvMHRPUMfAPhgj/Qs2YuXsu2UKGkNnVHg2rsxVPp71lFKNpbZBRHfLelWsCtSM2fvb2JIn4
+ QmV0Go9pz4np4Ho7ypoSVf8pvUTa0Lw8NTv2DYYlhz9qZYwX03qBoH3zR9D+ybmE0D6UhFuSJ
+ Yb+Jwx6g/lWnydaVw9qDFswYiWZxD3+EpfqvPysYFlw1MxwVJEjkLl2bnzlJ3Sst3KuMFRT08
+ AbHDwwtjmqy8SyrYgGcbgW7YknnL6z/ITNZc+hbeybOMZgUHTiqzXkYDP/MmscQy3VvlqQnnb
+ wzCi/M8KV2YwXwJoLcBfkXp5qtC+u7fFac4EU74NcbvW4AVPA+SLofJV+d73ANpdQYw7aIMMt
+ K4tpBc08ag3McumoX8/eDxv073c7kt6M9j2MRaE+Q4mzBD+MUlUxy2n7ipMcEnxQMhjVLzEi/
+ q96uRxirsTOR+3PN3vlyVm+bC7vuilz3VG+4JGjHKWCfX7fBZy3V4h8rklQAHjIwPmxQqbaII
+ hTynKw4RfONxm0TuirZ/ssOwxRWlFoeNQjE7nk0eKa7BpJHtG6uLMomxhD85vNjaiUoRY9gRG
+ J5sZxGOkjmnilB+NsRNyGcFbO9cCg0J8WEQtoXLM+7GWNKzrTYJyh4bPeZqhoyPFcjWkRvmhW
+ 5JrOkvhrEUEe2KPEHuL95uflMb6DNEL+27ynXwgpw5aQ1ndiCIXW4cwOqu6yOrhBaQEsjsBF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284788>
 
-Hi Eric,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, 24 Jan 2016, Eric Sunshine wrote:
+--8323329-325737745-1453798467=:2964
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Sun, Jan 24, 2016 at 10:43 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > When shell scripts access a $TMPDIR variable containing backslashes,
-> > they will be mistaken for escape characters. Let's not let that happen
-> > by converting them to forward slashes.
-> >
-> > This partially fixes t7800 with MSYS2.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/compat/mingw.c b/compat/mingw.c
-> > @@ -2042,13 +2042,28 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
-> >  static void setup_windows_environment()
-> >  {
-> > +       char *tmp = getenv("TMPDIR");
-> > +
-> >         /* on Windows it is TMP and TEMP */
-> > -       if (!getenv("TMPDIR")) {
-> > -               const char *tmp = getenv("TMP");
-> > -               if (!tmp)
-> > +       if (tmp) {
-> > +               if (!(tmp = getenv("TMP")))
-> >                         tmp = getenv("TEMP");
-> > -               if (tmp)
-> > +               if (tmp) {
-> >                         setenv("TMPDIR", tmp, 1);
-> > +                       tmp = getenv("TMPDIR");
-> > +               }
-> > +       }
-> 
-> Let me see if I understand this...
-> 
-> In the original code, if TMPDIR was *not* set, it would assign the
-> value of TMP or TEMP to TEMPDIR.
-> 
-> The new code, however, checks TMP and TEMP only if TMPDIR is *already*
-> set. Am I reading this correctly? Is this revised behavior correct?
+Hi Ramsay,
 
-Gaaah! When copy-pasting, I culled the exclamation point... Will be fixed
-in v2 (see https://github.com/dscho/git/commit/909b0a413)
+On Mon, 25 Jan 2016, Ramsay Jones wrote:
 
-> > +       if (tmp) {
-> > +               /*
-> > +                * Convert all dir separators to forward slashes,
-> > +                * to help shell commands called from the Git
-> > +                * executable (by not mistaking the dir separators
-> > +                * for escape characters).
-> > +                */
-> > +               for (; *tmp; tmp++)
-> > +                       if (*tmp == '\\')
-> > +                               *tmp = '/';
-> 
-> This transformation is performed on whatever memory was returned by
-> getenv(). It is also performed after setenv(), so presumably setenv()
-> isn't making a copy of the incoming string.
+> On 25/01/16 06:53, Johannes Schindelin wrote:
+> >=20
+> > On Sun, 24 Jan 2016, Torsten B=F6gershausen wrote:
+> >=20
+> >> On 24.01.16 11:48, Johannes Schindelin wrote:
+> >> (I had the same reasoning about the CRLF in the working tree:
+> >> We don't need to look at core.autocrlf/attributes, so Ack from me)
+> >>
+> >>> +test_expect_success 'conflict markers match existing line endings' '
+> >>> +=09append_cr <nolf-orig.txt >crlf-orig.txt &&
+> >>> +=09append_cr <nolf-diff1.txt >crlf-diff1.txt &&
+> >>> +=09append_cr <nolf-diff2.txt >crlf-diff2.txt &&
+> >>> +=09test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+> >>> +=09=09crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
+> >>> +=09test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) =3D 3 &&
+> >>> +=09test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+> >>> +=09=09nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
+> >>> +=09test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) =3D 0
+> >>> +'
+> >>> +
+> >>
+> >> Minor remark:
+> >>
+> >> Ramsay suggested a test that doesn't use grep or wc and looks like thi=
+s:
+> >>
+> >> test_expect_success 'conflict markers contain CRLF when core.eol=3Dcrl=
+f' '
+> >>   test_must_fail git -c core.eol=3Dcrlf merge-file -p \
+> >>     nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
+> >>   tr "\015" Q <output.txt | sed -n "/^[<=3D>|].*Q$/p" >out.txt &&
+> >>   cat >expect.txt <<-\EOF &&
+> >>   <<<<<<< nolf-diff1.txtQ
+> >>   ||||||| nolf-orig.txtQ
+> >>   =3D=3D=3D=3D=3D=3D=3DQ
+> >>   >>>>>>> nolf-diff2.txtQ
+> >>   EOF
+> >>   test_cmp expect.txt out.txt
+> >> '
+> >=20
+> > Probably he wrapped it at less than 192 columns per row, though ;-)
+> >=20
+> ;-)
+> > Seriously again, this longer version might test more, but it definitely
+> > also tests more than what I actually want to test: I am simply interest=
+ed
+> > to verify that the conflict markers end in CR/LF when appropriate.
+>=20
+> But you are only testing 3/4 conflict markers end in CR/LF. :-D
 
-Actually, I made sure to re-getenv() after setenv():
+The fact that ||| markers are present is the fault of previous test cases.
+I tried to make a point of *not* relying on such a side effect (so as to
+debug failures quicker by commenting out all previous test cases).
 
-	https://github.com/dscho/git/blob/909b0a413/compat/mingw.c#L2053
+So the fact that I am testing only 3 of the 4 conflict markers is very
+much by design.
 
-Thanks!
+> > Read: I am uncertain that I want to spend the additional lines on
+> > testing more than actually necessary.
+>=20
+> If the here doc is too verbose for you, how about something like this
+> (totally untested):
+>=20
+>     test $(tr "\015" Q <crlf.txt | grep "^[<=3D>|].*Q$" | wc -l) -eq 4
+>=20
+> instead?
+
+Hmm. I do not see the benefit over grepping for `txtQ$` it's essentially
+the same.
+
+> HTH
+
+How the hell?
+
+> ATB,
+> Ramsay Jones
+
+Authorization to Buy?
+
+Ciao,
 Dscho
+--8323329-325737745-1453798467=:2964--
