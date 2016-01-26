@@ -1,68 +1,102 @@
-From: Paul Wagland <paul@kungfoocoder.org>
-Subject: Re: [PATCH 2/2] Fix up the arguments for git stash.
-Date: Tue, 26 Jan 2016 07:21:06 +0100
-Message-ID: <C8776441-3B93-42D3-A759-0AA918F0F97C@kungfoocoder.org>
-References: <20160123012316.GA27965@wagland.net> <20160123013049.GB28197@wagland.net> <xmqqio2hdz48.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 17/19] mingw: fix git-svn tests that expect chmod to
+ work
+Date: Tue, 26 Jan 2016 07:31:27 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601251910080.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <9045a31ec16da672a74d9b1e0b65807d21ef277e.1453650173.git.johannes.schindelin@gmx.de> <xmqq1t96be2k.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-202260969-1453789888=:2964"
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 07:21:58 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 07:31:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNx0m-0003M1-7Y
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 07:21:56 +0100
+	id 1aNxAB-0008MH-PP
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 07:31:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755305AbcAZGVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 01:21:53 -0500
-Received: from cpsmtpb-ews10.kpnxchange.com ([213.75.39.15]:51061 "EHLO
-	cpsmtpb-ews10.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755173AbcAZGVw convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 01:21:52 -0500
-Received: from cpsps-ews08.kpnxchange.com ([10.94.84.175]) by cpsmtpb-ews10.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
-	 Tue, 26 Jan 2016 07:20:46 +0100
-Received: from CPSMTPM-cmt107.kpnxchange.com ([195.121.3.23]) by cpsps-ews08.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
-	 Tue, 26 Jan 2016 07:20:46 +0100
-Received: from kruimel.wagland.net ([86.85.102.39]) by CPSMTPM-cmt107.kpnxchange.com over TLS secured channel with Microsoft SMTPSVC(7.0.6002.18264);
-	 Tue, 26 Jan 2016 07:21:49 +0100
-Received: from [192.168.2.103] (mijnmodem.kpn.lan [192.168.2.254])
-	by kruimel.wagland.net (Postfix) with ESMTPSA id B2F6561C6F5;
-	Tue, 26 Jan 2016 07:21:36 +0100 (CET)
-X-Mailer: iPhone Mail (13E5191d)
-In-Reply-To: <xmqqio2hdz48.fsf@gitster.mtv.corp.google.com>
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	URIBL_BLOCKED autolearn=ham version=3.3.2
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kruimel
-X-OriginalArrivalTime: 26 Jan 2016 06:21:49.0650 (UTC) FILETIME=[D70B2B20:01D15801]
-X-RcptDomain: vger.kernel.org
+	id S1755396AbcAZGbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 01:31:36 -0500
+Received: from mout.gmx.net ([212.227.15.18]:62164 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755390AbcAZGbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 01:31:35 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M7Yhz-1a91Lb38WF-00xKkN; Tue, 26 Jan 2016 07:31:28
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq1t96be2k.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:zIjhcpAe6tBsIYp1iMMmPIwBBQRWk37gGkVbVi0d30LRXi0Ho+i
+ rfIkCuYYS+zPl97191siV7YSUgVQ+eOicDSsLueUGk/brCJdHSoYKTUYy8ZEu6Lfwmd+rEO
+ h4Bu53NZfQA++01/85nazKkF9wczE7SoapXN/Bpg4DjNnUxmefpXwmW84vsZSG1TeQeJ0db
+ 5NzboeKoyuxP9jSPN4jIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hUH49q8eMNc=:kPMKhjww+2f1f1shCuU/i+
+ UJmNXk3G6WskKJkUDs7H50E1k5ldlUU2XrAVaM/aYYVDM4ZdHcLGNNd0eRCCvxhs0aoPHmnt4
+ hc+FEgIKAnPUzhTJYzeo6SS+KirHPozjZ9GISNyApAOkIX7oT+sHJEO3Xv+0szPS+YYqAZ9a2
+ acqyd9ecabYaEKJO1zMt2QyXIj08+LoUT3OTQrucUm/g9HUyf5kXMfQ2jCaJZsNwvateCosGB
+ 1LSdOwda+5hxHZxHpnij3MmBg2SenWrdHE+1SkCiiQw6WGuBsU/SaAiidSOzFB/PHFq1Q+DuT
+ o1suFyIlcwjJxKAb7DDLECF2s5ajS/DOLSAI74QHcgc/Qz6UZd0vH7A7nvEaeQ9e7nIvW7SK4
+ k+pjJjUrtVknWTqXYQNgKHqiAwokHAUu3sGjHe/Y1uSEPxtVrmihkwMfuqW59s9NIo+lum+sa
+ EP+eP5uM5HJ2DbfHwz9sHBVqoXs/Enofn1FofdGShNLxHT7YQo4bmebIDcstuHlcdwbA1GQk9
+ UTL9kfybOQpdnE202TOVfxD5EfrPutuEwGuDVLZukkqoBdsKZeLxQWqjdd02SzChFbX177c0r
+ egx8khgxZkd7cjOXpMMqhUaX7mpNldKaB7Do41GX5/p76NVu75Cbrmr1XqTq6vxj7C+AadFEs
+ Cs0yOBZY0PlzeZiYVj8P6o4sxTUCnbmYjuLG1SKJgPXe9MvHtnvl9/RUJ+Vlsx2Wc2IolpkXe
+ sRWYZAyALVZLTmiWhvADfdWozVj8jWsh6E87X+xmlC0QyMEFfzx9P0gRh/1uIMQ6DDJXeN/E 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284779>
 
-Fair enough. I'll re-roll the patches with improved comments, and get these out to the list today. 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Cheers,
-Paul
+--8323329-202260969-1453789888=:2964
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Sent from my iPhone
+Hi Junio,
 
-> On 26 Jan 2016, at 00:21, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Paul Wagland <paul@kungfoocoder.org> writes:
-> 
->> Signed-off-by: Paul Wagland <paul@kungfoocoder.org>
->> ---
-> 
-> This needs a better explanation than just "Fix up" in the title.
-> What is broken in the current behaviour and what is the more desired
-> behaviour?
-> 
-> Thanks.
+On Sun, 24 Jan 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>=20
+> > From: =EB=A7=88=EB=88=84=EC=97=98 <nalla@users.noreply.github.com>
+> >
+> > Some git-svn tests expect that the executable bit of files can be
+> > toggled. On Windows, this is not possible because Windows' Access
+> > Control Lists are much more fine-grained than the POSIX permission
+> > concept. Let's just not try to flip the executable bit.
+>=20
+> Most of the changes are protected by !POSIXPERM but one of them
+> seems to use MINGW, which looks inconsistent and I suspect was not a
+> distinction made on purpose.  The above description sounds to me
+> that the !POSIXPERM prerequisite is the right thing to use.
+
+This is my fault: there are two MINGW prereqs, and they guard against
+trying to work with file names ending in a dot (which is illegal on
+Windows' file systems).
+
+My original plan was to split the patch into two, but I actually reworked
+the patch from scratch.
+
+> I am not sure if it is a good idea to sprinkle test-have-prereq and
+> make the test script test different things on different platforms,
+> though.
+
+I agree that this is not desirable, and I changed it where possible to
+simply skip the entire test case. In some cases, however, the 'setup' test
+case was affected, and of course we cannot skip that one, else everything
+falls apart.
+
+The result of my work consists of these three patches (which will be part
+of v2):
+
+=09https://github.com/dscho/git/compare/ea813597~3...ea813597
+
+Thanks,
+Dscho
+--8323329-202260969-1453789888=:2964--
