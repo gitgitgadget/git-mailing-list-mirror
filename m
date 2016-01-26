@@ -1,101 +1,115 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 17/19] mingw: avoid illegal filename in t9118
-Date: Tue, 26 Jan 2016 15:35:34 +0100 (CET)
-Message-ID: <53b4d33044a56b94837bba27441cb8467d1ef3ad.1453818790.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 18/19] mingw: handle the missing POSIXPERM prereq in
+ t9124
+Date: Tue, 26 Jan 2016 15:35:38 +0100 (CET)
+Message-ID: <4c38596ae3fdcc5906dba49521084fe2b1a6888d.1453818790.git.johannes.schindelin@gmx.de>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 15:36:14 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 15:36:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO4j4-000593-JL
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:36:10 +0100
+	id 1aO4j5-000593-5V
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:36:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966209AbcAZOf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 09:35:57 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50324 "EHLO mout.gmx.net"
+	id S966213AbcAZOgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 09:36:00 -0500
+Received: from mout.gmx.net ([212.227.17.21]:53018 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966119AbcAZOfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 09:35:43 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MYtId-1aaZa02Ekd-00VkzI; Tue, 26 Jan 2016 15:35:35
+	id S966101AbcAZOfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 09:35:42 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M9fLX-1aFamy1oIJ-00D2fk; Tue, 26 Jan 2016 15:35:39
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453818789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:ArLayWzPE6czzC/hACyV+QpYqgqWUpVj15mj4NG3t6/qJpueVUa
- YJBzVPgCZaNjhVBtSfSTsA4lkCTMWGpXdl4vfZn630TPZbKSHMGlhBLMqNS97TdyvoNf3cX
- 5UVQjij7W+ster05YObbQnGmGuY0mrZsxjyzOMOypqUG+PfQPgq0PUnmU/CT3YRjk8jkEZk
- KqHmqYQgyj/NpW3GXlkbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:veOidi69cPQ=:PicoGviwk58vjeWq/RcOKs
- zc3tF2zbfnKWpDdTDj805XB2qcdK/HXXRhJpw4rA1ON/IG5lXNq8re3FggaY7rh+5bqFZgDxL
- uJxqZb9LutZFuAoEteMhi0eEyPRLHQKwsu5z4iHcHqKH6L3qY737aBw/gU99P1+ZO8RVej0by
- vMxerQioPJKKg6jIh3P4UOg12rIXASRLhEWQU5EEvTAKZ7UWyimxWjlk+2E1lfkUV8bgQw6RT
- 2/OEOV57aZRq5zbp42/d+eMb8+fwbVkixk/RXj0470J0TK6eVgTSM9xpVrpm5MKiU0D4bzWBk
- C/4xo2+hWFZ5+Pk2ZyrHu/BpMjKkHlFu7AN3jFkmiEbwDfHr0lO0Dk6BNnZ4u5J1nzwxrESfw
- /mjuaVQZ8drWzuFbRW0IQeNimz7eZJ7rPQcLYRBumlRHrzZ7/WY/CCHmx1AiR55L/OzlmmwGc
- W3whiujyjRl0DBfNQhNSYyAucGIuHO1iRsK23ITsy8UqV9lWMVE+JVoGOuQEQfJtTwzsD4DKw
- 2vOZI0XiZ50kUzGqY6slsTQcn2dGP0uGtaZihpLoWhMhfW8ipA3txfeN8AQZ22JhwFJMaQqJ+
- HrFnL0w5JFTm10EWWPif0OVudg+TAbVyBXzNcyw97FuzQyumjyJJFV277a+O0LYcnJM9Jc53T
- XLt+0/aVV4QacRFcOzvoZsm8AoCYCd/O2UHKhVdYAbF/BlCLFYcjJdgkaPFfpeaLalzyRg6sr
- IY47CSFq63xjbCgw+nmsPISXWfLY/0QpAKwO8PolqlyXZd/twgha73W2wtVjIgzF/V7iY1xy 
+X-Provags-ID: V03:K0:AIeoyuXdumIMZTJEpJDJyjhCh3+FdYsIcg5ds0PRPH6m48FxPDV
+ 8dLu+akzBHXycP33Lrqh7BvhIhjA4PrLrAKzBzd4H0nK5FpWPB5nssBx+i2z7KgY4I9pptB
+ mSn3S4CMZWVryQ8Je3arR9zvcksDiealzv5WGYNgKMs+gY3yfRQ6FgIgp7AhHq4c8SRbonB
+ BMMhtNvCx4c69NkhvJp7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kDQSAHvI2lw=:EjGlPXg1F007/nbMXOh3zx
+ PIi9fXZubC3JKaExi7umRYJ+N+MIXHiC5fiVk+ALZyuHkLVqOJ2BrieGX+GT47zl71CpTRPkK
+ J7DzTs8Mz7N/QREKs89Zt4O1aJlRaSUmKTPZcrwJJKyg7cnrA9FroIRopEG4sno1dKuUqD8Yr
+ ABRAs9pmOlCun0UDdUNkEbtWTPILdH4xujK+QX2UIkiepttlz0TaTkG8SQshbzF7Wgtzu0oX3
+ vHaM3cdZcd5aqfrSC9H1F8j4hwp7tKoXkkbvBXNyQqaP7xRg/j86bChJfGUdBpUwCZSoj/nsY
+ LPLEzzOnjL66I6R4wI/efejmBQSC3NKrByIF9ls4MqHUMy5T9tm6YICr8Nr0kw6O9OUdRjPNq
+ wsSbhndodPlQV8Iik1QgSuG5AAEFnUU6WfE/KnxwXcDWE6NASpiwvF24WwUgwHnPC0vEYY9zK
+ /m9jLNqFuPDTikZ7bFCtKun0WkVj7PAfSwjsplvf5Vt3/3gZlikPUShEJu5Ew9IYdQBTNYSus
+ y1M1W9z639Aey7/wuuHOfPHqHbfvXtIyB4MiE5KTLjXdpSiP0WDc2YYh9dNH/hAJJ87FMI7D7
+ Ij93nRI3mWdxPktlgRGXfNeAR7+I/0bA8qw3xzGy3Z2ySaCzWDBzCJkRnWB7wkz7K+NDWFyBz
+ i7dNVeR+BCccVYUfH8UIH6AhH4bgKszgv/ItB6JrVDadKCVN1wEGcI5cMxqZQcO0ZAaefgKKV
+ D1wCIhBX6UYfytr5pquyBPadLDVJrOQNgR6Ah/dPgOWRCETf/ff9RziB13C7gfxXFddqKwnQ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284831>
 
-On Windows' file systems, file names with trailing dots are forbidden.
-The POSIX emulation layer used by Git for Windows' Subversion emulates
-those file names, therefore the test adding the file would actually
-succeed, but when we would ask git.exe (which does not leverage the
-POSIX emulation layer) to check out the tree, it would fail.
+On Windows, the permission system works completely differently than
+expected by some of the tests. So let's make sure that we do not test
+POSIX functionality on Windows.
 
-Let's just guard the test using a filename that is illegal on Windows
-by the MINGW prereq.
-
-This lets t9118-git-svn-funky-branch-names.sh pass in Git for Windows'
+This lets t9124-git-svn-dcommit-auto-props.sh pass in Git for Windows'
 SDK.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9118-git-svn-funky-branch-names.sh | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ t/t9124-git-svn-dcommit-auto-props.sh | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
-index a221915..ecb1fed 100755
---- a/t/t9118-git-svn-funky-branch-names.sh
-+++ b/t/t9118-git-svn-funky-branch-names.sh
-@@ -23,8 +23,11 @@ test_expect_success 'setup svnrepo' '
- 	              "$svnrepo/pr ject/branches/$scary_uri" &&
- 	svn_cmd cp -m "leading dot" "$svnrepo/pr ject/trunk" \
- 			"$svnrepo/pr ject/branches/.leading_dot" &&
--	svn_cmd cp -m "trailing dot" "$svnrepo/pr ject/trunk" \
--			"$svnrepo/pr ject/branches/trailing_dot." &&
-+	if test_have_prereq !MINGW
+diff --git a/t/t9124-git-svn-dcommit-auto-props.sh b/t/t9124-git-svn-dcommit-auto-props.sh
+index aa841e1..2be0805 100755
+--- a/t/t9124-git-svn-dcommit-auto-props.sh
++++ b/t/t9124-git-svn-dcommit-auto-props.sh
+@@ -34,8 +34,7 @@ test_expect_success 'enable auto-props config' '
+ '
+ 
+ test_expect_success 'add files matching auto-props' '
+-	echo "#!$SHELL_PATH" >exec1.sh &&
+-	chmod +x exec1.sh &&
++	printf "" | write_script exec1.sh &&
+ 	echo "hello" >hello.txt &&
+ 	echo bar >bar &&
+ 	git add exec1.sh hello.txt bar &&
+@@ -48,8 +47,7 @@ test_expect_success 'disable auto-props config' '
+ '
+ 
+ test_expect_success 'add files matching disabled auto-props' '
+-	echo "#$SHELL_PATH" >exec2.sh &&
+-	chmod +x exec2.sh &&
++	printf "" | write_script exec2.sh &&
+ 	echo "world" >world.txt &&
+ 	echo zot >zot &&
+ 	git add exec2.sh world.txt zot &&
+@@ -65,7 +63,10 @@ test_expect_success 'check resulting svn repository' '
+ 	cd svnrepo &&
+ 
+ 	# Check properties from first commit.
+-	test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
++	if test_have_prereq POSIXPERM
 +	then
-+		svn_cmd cp -m "trailing dot" "$svnrepo/pr ject/trunk" \
-+			"$svnrepo/pr ject/branches/trailing_dot."
++		test -z "$(svn_cmd propget svn:executable exec1.sh)"
 +	fi &&
- 	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
- 			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
- 	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
-@@ -45,7 +48,10 @@ test_expect_success 'test clone with funky branch names' '
- 		git rev-parse "refs/remotes/origin/more%20fun%20plugin!" &&
- 		git rev-parse "refs/remotes/origin/$scary_ref" &&
- 		git rev-parse "refs/remotes/origin/%2Eleading_dot" &&
--		git rev-parse "refs/remotes/origin/trailing_dot%2E" &&
-+		if test_have_prereq !MINGW
-+		then
-+			git rev-parse "refs/remotes/origin/trailing_dot%2E"
-+		fi &&
- 		git rev-parse "refs/remotes/origin/trailing_dotlock%2Elock" &&
- 		git rev-parse "refs/remotes/origin/$non_reflog"
- 	)
+ 	test "x$(svn_cmd propget svn:mime-type exec1.sh)" = \
+ 	     "xapplication/x-shellscript" &&
+ 	test "x$(svn_cmd propget svn:mime-type hello.txt)" = "xtext/plain" &&
+@@ -73,7 +74,10 @@ test_expect_success 'check resulting svn repository' '
+ 	test "x$(svn_cmd propget svn:mime-type bar)" = "x" &&
+ 
+ 	# Check properties from second commit.
+-	test "x$(svn_cmd propget svn:executable exec2.sh)" = "x*" &&
++	if test_have_prereq POSIXPERM
++	then
++		test -z "$(svn_cmd propget svn:executable exec2.sh)"
++	fi &&
+ 	test "x$(svn_cmd propget svn:mime-type exec2.sh)" = "x" &&
+ 	test "x$(svn_cmd propget svn:mime-type world.txt)" = "x" &&
+ 	test "x$(svn_cmd propget svn:eol-style world.txt)" = "x" &&
 -- 
 2.7.0.windows.1.7.g55a05c8
