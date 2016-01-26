@@ -1,140 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 18/19] mingw: handle the missing POSIXPERM prereq in t9124
-Date: Tue, 26 Jan 2016 14:05:58 -0800
-Message-ID: <xmqqfuxkatdl.fsf@gitster.mtv.corp.google.com>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de>
-	<cover.1453818789.git.johannes.schindelin@gmx.de>
-	<4c38596ae3fdcc5906dba49521084fe2b1a6888d.1453818790.git.johannes.schindelin@gmx.de>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: git archive should use vendor extension in pax header
+Date: Tue, 26 Jan 2016 23:06:25 +0100
+Message-ID: <56A7EDE1.1020909@web.de>
+References: <20160124155909.GA16847@fuz.su>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 26 23:06:11 2016
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: fuz@fuz.su, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 26 23:06:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOBkW-0004mp-4u
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 23:06:08 +0100
+	id 1aOBlF-0005Dm-8x
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 23:06:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479AbcAZWGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 17:06:04 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50967 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750756AbcAZWGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 17:06:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B43813F833;
-	Tue, 26 Jan 2016 17:06:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/G/gZMeaRY6SBG9eK6Zli7uwHrE=; b=l0ZPVU
-	W6HNS0zswIaIuGNxmnMsz8qd+Dlk19CLBTcNXiSUF3PDh116+klh2mwpiY4PcFAQ
-	KF3qVchI9dE9uBl8/9HNwt7W5jL9jduBJXF0dPcJuyFRjDde3+AP6gAjycGrpJmX
-	ycEl13Eu9aZBsQcnQh8RPJjd49XIZmCP0lBIM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lMynrtVcz5QYposTrxSZHVbHvIyVsqR/
-	IWw76qffSVzmoBzCde3Hyo6s84cpQgpDv5QU6qSP8WLNTcRUC41OC9OnFvpYfFmI
-	76onIRddJjudFpgnmE4iKWvjvDH0G4liY6l660+VmFTWAkeGRAu6XF7DjWX8613w
-	pnQW0Hr5iBs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A28A93F832;
-	Tue, 26 Jan 2016 17:06:00 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 017083F831;
-	Tue, 26 Jan 2016 17:05:59 -0500 (EST)
-In-Reply-To: <4c38596ae3fdcc5906dba49521084fe2b1a6888d.1453818790.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 26 Jan 2016 15:35:38 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FB8E7356-C478-11E5-B42A-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752651AbcAZWGq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2016 17:06:46 -0500
+Received: from mout.web.de ([212.227.17.12]:53165 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751524AbcAZWGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 17:06:42 -0500
+Received: from [192.168.178.36] ([79.237.59.34]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MZUS9-1agWtR1JjZ-00LHEP; Tue, 26 Jan 2016 23:06:40
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <20160124155909.GA16847@fuz.su>
+X-Provags-ID: V03:K0:smxVm55i4YQ1abWLHJXB3+YAI8g40EcVehJocC8G3gtifKsaql2
+ jvLvOvKDMbbn1kUxuOhxXaaN9Q9//gvAnFHRmf7DFK6WuL3yD+lczY7zh0Hap8zrnY0clAo
+ bqD3C/hd1y+Om3A/DHB1kjxcjGpgu8kjShxr2Z5AGVXH7KPRck0r/YoLZIabkAbyZekUBPu
+ iVRVmLMW5h5m8GhWzJ87Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f1xzHDjoeQ8=:8kWhAJm7/jb59zf/T0Fe4j
+ ylN5FCdmk7UyzSh5je3xaHwil5ghRgyAYZdPqZb6guCvLYWkJh7tvlilwh8rkHTTI3AOOUl2d
+ kla+PWknOPFp9e/+K4YY0GXcXyo5Ay6DDGACl/kXVZTlqkAViABdj3FHIShycene5hj8DdfmK
+ 0NomtAjKqsheGYxuOsUvQZaCZqbj+GX7AnJhU16Gw9awJR0cYsgN4aRlwgGCscKvDR45Fpluy
+ toFFEcWKFI1RnccimQfHK+74bXwEFNqBFjlix2iqPWTElbEiIkym5yGpbPv6P63kCdBLxJQxd
+ 2karAPn6VOGYMjPaxnxZOANxUXEGsSm1H6rDx8B6BI2MlBE03rqRn1lGbPZJb+Wcj2b/Cp7lB
+ It5VQh06PJMBGpL5oOEpEI61RM90VNMF1uk0aGcZ6kwqvlf+1U1JI4W7Cah27PCZKN46Mmkty
+ eNJtRgWqj5V/seQ0PMIET8ZmiciyuZF61vnTqS5pTPK3xF2fd4d+WV4HZ/P9b/6f+lSWd5BBf
+ Mt1lHyxP/foXr+4qCsCxHAVHQ/r+2Emt5SF1RLgMsdEY+tl/+T4uCiTY5KoknIlymzowillgv
+ F3gmeoN57wFRLrGliGjfVSZ9FJkdiu1uLtq8pdoUgT5rm6RSmfHCLVka+jwhqqkH9RICw7FbF
+ lQyN+5DI6VJM1Shon+BslPQ3U9M7aBZiRNUjYOA9YNrtXDDvkIBI8QsjOMOhySxiv/x0l8B2E
+ ZhJA5dcrQ7riH8SPTUQ69BbHt8y2WWm60QCNlEcs8ryKk1UMDanOK3/4Ke2NIM0cOt+6liyk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284862>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> On Windows, the permission system works completely differently than
-> expected by some of the tests. So let's make sure that we do not test
-> POSIX functionality on Windows.
+Am 24.01.2016 um 16:59 schrieb fuz@fuz.su:
+> Right now, git archive creates a pax global header of the form
 >
-> This lets t9124-git-svn-dcommit-auto-props.sh pass in Git for Windows'
-> SDK.
+>      comment=3D57ca140635bf157354124e4e4b3c8e1bde2832f1
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t9124-git-svn-dcommit-auto-props.sh | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
+> in tar archives it creates. This is suboptimal as as comments are
+> specified to be ignored by extraction software. It is impossible to
+> find out in an automatic way (short of guessing) that this is suppose=
+d
+> to be a commit hash.
+
+This is only a problem if you don't know how a given tar files was=20
+created (or modified later).  How did you get into this situation?  Or=20
+in other words: Please tell me more about your use case.
+
+> It would be much more useful if git created a
+> custom key. As per POSIX suggestions, something like this would be
+> appropriate:
 >
-> diff --git a/t/t9124-git-svn-dcommit-auto-props.sh b/t/t9124-git-svn-dcommit-auto-props.sh
-> index aa841e1..2be0805 100755
-> --- a/t/t9124-git-svn-dcommit-auto-props.sh
-> +++ b/t/t9124-git-svn-dcommit-auto-props.sh
-> @@ -34,8 +34,7 @@ test_expect_success 'enable auto-props config' '
->  '
->  
->  test_expect_success 'add files matching auto-props' '
-> -	echo "#!$SHELL_PATH" >exec1.sh &&
-> -	chmod +x exec1.sh &&
-> +	printf "" | write_script exec1.sh &&
+>      GIT.commit=3D57ca140635bf157354124e4e4b3c8e1bde2832f1
 
-That looks like a useless use of printf.  Why not
+This would be included in addition to the comment in order to avoid=20
+breaking existing users, I guess.
 
-	write_script exec1.sh </dev/null &&
+If you have a random archive and want to know if it was generated by gi=
+t=20
+then your next question might be which options and substitutions were=20
+used.  That reminds me of this thread regarding verifiable archives:
 
->  	echo "hello" >hello.txt &&
->  	echo bar >bar &&
->  	git add exec1.sh hello.txt bar &&
-> @@ -48,8 +47,7 @@ test_expect_success 'disable auto-props config' '
->  '
->  
->  test_expect_success 'add files matching disabled auto-props' '
-> -	echo "#$SHELL_PATH" >exec2.sh &&
-> -	chmod +x exec2.sh &&
-> +	printf "" | write_script exec2.sh &&
->  	echo "world" >world.txt &&
->  	echo zot >zot &&
->  	git add exec2.sh world.txt zot &&
-> @@ -65,7 +63,10 @@ test_expect_success 'check resulting svn repository' '
->  	cd svnrepo &&
->  
->  	# Check properties from first commit.
-> -	test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
-> +	if test_have_prereq POSIXPERM
-> +	then
-> +		test -z "$(svn_cmd propget svn:executable exec1.sh)"
+     http://article.gmane.org/gmane.comp.version-control.git/240244
 
-Why this change?
-
-		test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
-
-means "propget command gives a literal string that consists of a
-single asterisk".
-
-> +	fi &&
->  	test "x$(svn_cmd propget svn:mime-type exec1.sh)" = \
->  	     "xapplication/x-shellscript" &&
->  	test "x$(svn_cmd propget svn:mime-type hello.txt)" = "xtext/plain" &&
-> @@ -73,7 +74,10 @@ test_expect_success 'check resulting svn repository' '
->  	test "x$(svn_cmd propget svn:mime-type bar)" = "x" &&
->  
->  	# Check properties from second commit.
-> -	test "x$(svn_cmd propget svn:executable exec2.sh)" = "x*" &&
-> +	if test_have_prereq POSIXPERM
-> +	then
-> +		test -z "$(svn_cmd propget svn:executable exec2.sh)"
-
-Likewise.
-
-Please do not change things without understanding what they are doing.
-
-> +	fi &&
->  	test "x$(svn_cmd propget svn:mime-type exec2.sh)" = "x" &&
->  	test "x$(svn_cmd propget svn:mime-type world.txt)" = "x" &&
->  	test "x$(svn_cmd propget svn:eol-style world.txt)" = "x" &&
+Thanks,
+Ren=E9
