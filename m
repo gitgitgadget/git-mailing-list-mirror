@@ -1,108 +1,211 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] merge-file: let conflict markers match end-of-line
- style of the context
-Date: Tue, 26 Jan 2016 10:04:53 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601260955320.2964@virtualbox>
-References: <cover.1453632296.git.johannes.schindelin@gmx.de> <cover.1453709205.git.johannes.schindelin@gmx.de> <26c973eb3414a8634d515f3621c0ded77cf030ed.1453709205.git.johannes.schindelin@gmx.de> <xmqqr3h5fmf4.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 12/15] ref-filter: align: introduce long-form syntax
+Date: Tue, 26 Jan 2016 15:00:41 +0530
+Message-ID: <CAOLa=ZSQJQXEQ05+jqDBCp3QUBB9VYFVbaMT+k228HKKZkXKnA@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
+ <1451980994-26865-13-git-send-email-Karthik.188@gmail.com> <CAPig+cT56AiO-3GNzia7UsGZFM5zu5zsEC31XPuq-by1p4+sbw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
-	Jeff King <peff@peff.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 10:07:33 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 10:32:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNzb0-0003Ve-Im
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 10:07:30 +0100
+	id 1aNzyi-0007dB-E6
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 10:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933401AbcAZJHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 04:07:25 -0500
-Received: from mout.gmx.net ([212.227.17.21]:62765 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964906AbcAZJFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 04:05:09 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MCwbX-1aEKdf1NFj-009g4M; Tue, 26 Jan 2016 10:04:56
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqr3h5fmf4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:it5B4qjKv6hilut/9k+/JRgwO0P+nkZtgZuHLJ05xyRkdxeURPp
- dzdjn3s6vYDWIxKVeX4Dk3xOKf8cd9NWiDAonJQYYBSOjQlLibf+I46re4SD3sFA0dKNN3d
- SgOVnnP+fKv3fgKG96ou0S3cjbYG53+2/pUWv8sanFIgYpuaLRVupngvnN7hPUEqVx0199Q
- rh3Dsd31bgTu6LJw+DJeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qOTRNowt8ew=:VrdZfWP4j24YZCCMEVb4sj
- SP6El6hbsIgbEMAoIPlfYbm0FhjLFtldiBAt/mEhWIu9KNwUKfaM/wwWyWfdbleFUwLj0kxLu
- whXNIWbo/Hm+rlDaIoZ2soYfLDoXpa6Q7XfMH8PN/RauSQe6+NyAzEWTp7oQJa5SJyxT+HHCC
- 0DQkaIj1j1QIkSD/H9tQdwQNLqMbE1v7PYMEVcjFgZn5OMCUdMXMHOqRKCT9FN65Hg3yOZGJr
- WNfrhwxQ6LAcNBOIHAVGUdEVd4U4bIBAR7/R7ur1A96z5rJDJAyysZFe3EQ4NIGxEJvCQ907l
- ge6g6f8KL+L+bC7XBzIlwTE5WecgYqUBqXVeq/8GbGL3I4R9wut5bwiGAQheenft1m2Y4U6PN
- /rirK2oiyXHl+FiHkOwENBTjUbd15aVxsRpTe0UuEpGK4XXMaVmm9KTOrp0fU8h9kQwCsDNkU
- MRfAmJJ20cfO+tcY7vXaZ0dtbn1x9f88VKQuWVvnUFpS/175ld83kt7R8hLIQSMnYHIXzdmQu
- haf9PS/f6MJkwICyNyWe/6WpdMKtjpv/7nGGlg+HiHP2xOMWAToVKWWYQykft1qgwG98b6DTx
- thWI/fwxhPsDKWhT17HnKIXFp9Ob/QlILJEGMp9OtZbJ8H6YtODsOPmyH8+v+n28rgfB2tx8t
- HYS313j1Bu9KbJ9fETUaNuO/twUl74FZv26LcrkDLg9TVfmgj2y5PqdjYiV7rSmpfmc8Xd/pf
- 4pXyuYoOdTos2TjSVYdsFIX7e4ae494jGWxmoxebZGK0aePdlhSDd4pn5ipEiHQBjcV7RPDF 
+	id S934046AbcAZJbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 04:31:23 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:36041 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751007AbcAZJbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 04:31:12 -0500
+Received: by mail-vk0-f47.google.com with SMTP id n1so88273447vkb.3
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 01:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XDibM/VnLiFmnoSkoc1dbhTM5B7fVwEbC3+btc7OWEg=;
+        b=qu3hFE6usVGYA8ecezIx/HcamCQhW1mBmhvHktnW66+NItBrV/TGfyHHxypwf+7BK5
+         rXBQnnvceFefUvfJrGRHnXsNGHuYvABQXVxMLFVCWI9+uA3OQMLJpWxF+Yghbx7VG96T
+         V7O4S8ClGE6v1hUEPfGOML7+SreD5XCty0w8C45rfURlcq4UujG9LjixOwnLsukOdoDy
+         csYKFGrsvZrlWhvhA1mROCrRycDxRrBBnI/eh9A4fTYQJI4x9UJfCOvfNJCnAmFKnaSj
+         Da9TPv/RqTnkfWR4Mk5HC+P0/zVE7o8W7GKXcNXhce5E8UQEwp9JDj/PkqaK/YLbrGvR
+         ZXpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=XDibM/VnLiFmnoSkoc1dbhTM5B7fVwEbC3+btc7OWEg=;
+        b=AsR+P3FoceqGjvnLkuP+fbNIa05dIkpxi/pi0TD9VFHHKIG1jUrEbOtJq3/bqhm2Dg
+         mDP6gIIWLhPBcuHYMRGHBMJB8GMgWGYRohxJAHVg5lmc2GzD6bRJLrYKwlA9U3nsSMcJ
+         JfRHuWImtVnDbHi3GcTzP++KSuaDhKUfTwi03zbDjnE4hH288u7kSxT4UAq1kAWK0LCh
+         2VOfGxQ8IlB0kDkRvschqP4xaPc1qx418QsYJhifiE9xYUdEphA8tZ7eBjpPWXRikYKu
+         XAFVpTxAFVGHa6Jct7vdyfOthcw9mW3hCjDucT0y8FW4hfd745g/jYuEvCaZCVlUS6Bv
+         dzcQ==
+X-Gm-Message-State: AG10YOQZdWey5eGXVRQC7et5QwjUy4s5M5EsDp5Re94KMJ5jQWJQ+xIsvlklX9WFk2Bv2pWXbOKkGdsc5sfU2g==
+X-Received: by 10.31.159.136 with SMTP id i130mr13943043vke.144.1453800670939;
+ Tue, 26 Jan 2016 01:31:10 -0800 (PST)
+Received: by 10.103.82.146 with HTTP; Tue, 26 Jan 2016 01:30:41 -0800 (PST)
+In-Reply-To: <CAPig+cT56AiO-3GNzia7UsGZFM5zu5zsEC31XPuq-by1p4+sbw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284790>
 
-Hi Junio,
+On Tue, Jan 26, 2016 at 4:28 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Jan 5, 2016 at 3:03 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Introduce optional prefixes "width=" and "position=" for the align atom
+>> so that the atom can be used as "%(align:width=<width>,position=<position>)".
+>>
+>> Add Documetation and tests for the same.
+>>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+>> ---
+>> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+>> index fe4796c..0c4417f 100755
+>> --- a/t/t6302-for-each-ref-filter.sh
+>> +++ b/t/t6302-for-each-ref-filter.sh
+>> @@ -133,6 +133,47 @@ test_expect_success 'right alignment' '
+>> +cat >expect <<-\EOF
+>> +|       refname is refs/heads/master       |refs/heads/master
+>> +|        refname is refs/heads/side        |refs/heads/side
+>> +|         refname is refs/odd/spot         |refs/odd/spot
+>> +|     refname is refs/tags/double-tag      |refs/tags/double-tag
+>> +|        refname is refs/tags/four         |refs/tags/four
+>> +|         refname is refs/tags/one         |refs/tags/one
+>> +|     refname is refs/tags/signed-tag      |refs/tags/signed-tag
+>> +|        refname is refs/tags/three        |refs/tags/three
+>> +|         refname is refs/tags/two         |refs/tags/two
+>> +EOF
+>> +
+>> +test_align_permutations() {
+>
+> Style: in shell scripts, add space before ()
+>
 
-On Mon, 25 Jan 2016, Junio C Hamano wrote:
+Will change.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > We actually do not have to look at the *entire* context at all: if the
-> > files are all LF-only, or if they all have CR/LF line endings, it is
-> > sufficient to look at just a *single* line to match that style. And if
-> > the line endings are mixed anyway, it is *still* okay to imitate just a
-> > single line's eol: we will just add to the pile of mixed line endings,
-> > and there is nothing we can do about that.
-> 
-> Isn't there one thing we can do still?  If we use CRLF for the
-> marker lines when the content is already mixed, I'd think it would
-> help Notepad (not necessary for Notepad2 or Wordpad IIUC) by making
-> sure that they can see where the marker lines end correctly.
+>> +       while read -r option; do
+>
+> Style: drop semi-colon and place 'do' on its own line
 
-Not sure. You might end up with a very long line (containing plenty of LF
-"characters") and the conflict marker *at the end* of said line, with a
-CR/LF after it. I would not call that particularly helpful.
+Will change.
 
-Seeing as we really cannot do anything in this case, I thought it would be
-a good idea to avoid trying (and failing) to be smart here.
+>
+>> +               test_expect_success 'align permutations' '
+>
+> This title is not as illuminating as it could be. It would be better
+> to indicate which permutation is being tested. For instance:
+>
+>     test_expect_success "align:$option" ...
+>
+> Note the double-quotes. Or:
+>
+>     test_expect_success "align permutation: $option" ...
+>
+> or something.
+>
 
-> > Note that while it is true that there have to be at least two lines we
-> > can look at (otherwise there would be no conflict), the same is not true
-> > for line *endings*: the three files in question could all consist of a
-> > single line without any line ending, each. In this case we fall back to
-> > using LF-only.
-> 
-> Yeah, this is tricky, and from the same "helping Notepad that
-> concatenates lines with LF-only" perspective I should perhaps be
-> suggesting to use CRLF in such a case, too, but I would say we
-> should not do so.  Three variants of a LF-only file may have
-> conflict at the incomplete last line, and if we only look at their
-> "no EOL"-ness and decide to add CRLF to the result, that would be
-> irritatingly wrong.
+"align:$option" seems right, will change.
 
-Oh, but there is the fall-back to the first line. So if we have three
-variants of an LF-only file, the logic will figure out that LF-only
-end-of-lines are to be used.
+>> +               git for-each-ref --format="|%(align:$option)refname is %(refname)%(end)|%(refname)" >actual &&
+>
+> This is not wrong, per se, but referencing $option inside the
+> non-interpolating single-quote context of the test body makes it a bit
+> harder to understand than it need be. As it is, at the time that the
+> test body actually gets executed, $option still evaluates to the
+> desired permutation value so it works. However, it would show intent
+> more clearly and be more robust to use a double-quote context to
+> interpolate $option into the git-for-each-ref invocation directly
+> rather than allowing the test body to pick up the value at execution
+> time.
+>
+> Fixing this means using double- rather than single-quotes for the test
+> body, which means you'd also want to flip the  double-quotes wrapping
+> the --format= argument over to single-quotes. Also, for style
+> consistency, indent the test body. The end result should be something
+> like this:
+>
+>     test_align_permutations () {
+>         while ...
+>         do
+>             test_expect_success "align:$option" "
+>                 git for-each-ref --format='...$option...' >actual &&
+>                 ...
+>             "
+>         done
+>     }
+>
 
-So the *only* case where we really have to pick and choose is when all
-three files contain only one (or no) line that is not terminated by a line
-feed.
+After reading this and Junio's detailed description stating otherwise.
+It's safe to
+go with something similar to what Junio suggested :
 
-I briefly considered to choose EOL_NATIVE in that case, but I really do
-not like that unnecessary deviation from Linux Git.
+        for option in ...
+        do
+                test_expect_success "align:$option" '
+                        git for-each-ref --format="...$option..." &&
+                        ...
+                '
+        done
 
-Ciao,
-Dscho
+>> +               test_cmp expect actual
+>> +               '
+>> +       done;
+>
+> Style: drop the semi-colon
+>
+
+Will change.
+
+> More below...
+>
+>> +}
+>> +
+>> +test_align_permutations <<-\EOF
+>> +       middle,42
+>> +       42,middle
+>> +       position=middle,42
+>> +       42,position=middle
+>> +       middle,width=42
+>> +       width=42,middle
+>> +       position=middle,width=42
+>> +       width=42,position=middle
+>> +EOF
+>> +
+>> +# Last one wins (silently) when multiple arguments of the same type are given
+>> +
+>> +test_align_permutations <<-\EOF
+>> +       32,width=42,middle
+>> +       width=30,42,middle
+>> +       width=42,position=right,middle
+>> +       42,right,position=middle
+>> +EOF
+>
+> Overall, this version is much nicer now that the tests are
+> table-driven rather than each permutation being copied/pasted.
+>
+
+Thanks.
+
+> This is a tangent, but it's disappointing that this entire test script
+> is skipped if GPG is not installed, especially since none of these
+> tests seem to care at all about signed tags. By requiring GPG
+> (unnecessarily), these tests likely are not getting run as widely as
+> they ought to. Consequently, it probably would be a good idea to drop
+> the GPG requirement from the top of the file and have the "setup" test
+> create lightweight tags ("git tag ...") rather than signed ones ("git
+> tag -s ...").
+
+Maybe an independent patch post this series. I'll keep a note to myself.
+
+-- 
+Regards,
+Karthik Nayak
