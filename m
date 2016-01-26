@@ -1,115 +1,79 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 18/19] mingw: handle the missing POSIXPERM prereq in
- t9124
-Date: Tue, 26 Jan 2016 15:35:38 +0100 (CET)
-Message-ID: <4c38596ae3fdcc5906dba49521084fe2b1a6888d.1453818790.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 02/19] mingw: do not trust MSYS2's MinGW gettext.sh
+Date: Tue, 26 Jan 2016 15:34:30 +0100 (CET)
+Message-ID: <0511c0a72bddbdc6263ecd6fba2a8be23f59ff22.1453818790.git.johannes.schindelin@gmx.de>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 15:36:19 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 15:36:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO4j5-000593-5V
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:36:11 +0100
+	id 1aO4jL-0005Hb-Md
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966213AbcAZOgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 09:36:00 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53018 "EHLO mout.gmx.net"
+	id S966093AbcAZOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 09:36:22 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60437 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966101AbcAZOfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 09:35:42 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M9fLX-1aFamy1oIJ-00D2fk; Tue, 26 Jan 2016 15:35:39
+	id S966161AbcAZOeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 09:34:36 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LikE1-1ZpZlF0kFp-00cv2Z; Tue, 26 Jan 2016 15:34:32
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453818789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:AIeoyuXdumIMZTJEpJDJyjhCh3+FdYsIcg5ds0PRPH6m48FxPDV
- 8dLu+akzBHXycP33Lrqh7BvhIhjA4PrLrAKzBzd4H0nK5FpWPB5nssBx+i2z7KgY4I9pptB
- mSn3S4CMZWVryQ8Je3arR9zvcksDiealzv5WGYNgKMs+gY3yfRQ6FgIgp7AhHq4c8SRbonB
- BMMhtNvCx4c69NkhvJp7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kDQSAHvI2lw=:EjGlPXg1F007/nbMXOh3zx
- PIi9fXZubC3JKaExi7umRYJ+N+MIXHiC5fiVk+ALZyuHkLVqOJ2BrieGX+GT47zl71CpTRPkK
- J7DzTs8Mz7N/QREKs89Zt4O1aJlRaSUmKTPZcrwJJKyg7cnrA9FroIRopEG4sno1dKuUqD8Yr
- ABRAs9pmOlCun0UDdUNkEbtWTPILdH4xujK+QX2UIkiepttlz0TaTkG8SQshbzF7Wgtzu0oX3
- vHaM3cdZcd5aqfrSC9H1F8j4hwp7tKoXkkbvBXNyQqaP7xRg/j86bChJfGUdBpUwCZSoj/nsY
- LPLEzzOnjL66I6R4wI/efejmBQSC3NKrByIF9ls4MqHUMy5T9tm6YICr8Nr0kw6O9OUdRjPNq
- wsSbhndodPlQV8Iik1QgSuG5AAEFnUU6WfE/KnxwXcDWE6NASpiwvF24WwUgwHnPC0vEYY9zK
- /m9jLNqFuPDTikZ7bFCtKun0WkVj7PAfSwjsplvf5Vt3/3gZlikPUShEJu5Ew9IYdQBTNYSus
- y1M1W9z639Aey7/wuuHOfPHqHbfvXtIyB4MiE5KTLjXdpSiP0WDc2YYh9dNH/hAJJ87FMI7D7
- Ij93nRI3mWdxPktlgRGXfNeAR7+I/0bA8qw3xzGy3Z2ySaCzWDBzCJkRnWB7wkz7K+NDWFyBz
- i7dNVeR+BCccVYUfH8UIH6AhH4bgKszgv/ItB6JrVDadKCVN1wEGcI5cMxqZQcO0ZAaefgKKV
- D1wCIhBX6UYfytr5pquyBPadLDVJrOQNgR6Ah/dPgOWRCETf/ff9RziB13C7gfxXFddqKwnQ 
+X-Provags-ID: V03:K0:erJDbxz/+ZLUdVTzrApqgOtQ2rfPVRCMxr9pa4hkaHLOGYYBE/Z
+ AAlbQYX2lDkv2g4Zfe91PIRbVWu/1dQigRdGI0r4ZL3S+w9L3Pn0isIHOccUrxzEOqKz+da
+ MHbg+PiZuHzPVzba9gvRHJG3zjifsQJBIXPD46H1YE7ch1116T+SyV9+8qY7jd4y/dtz8Ua
+ wOXPH8WjK+3Ob1AdWpRgw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FYuuUNBcYP8=:8q6Ak51pR7OFn5sCgCzKv7
+ HgJMsWb6mLLcynx9SKTtKsOcpzhHId+6iF21b7v8Ofv+6WrAd+72fXl0IABtDbWcXaXUCg4f/
+ BiF3Rc3NiZmihuFPqKQaFvA4qK0lu4/1naRfzTpjIJ7jtyGzd+W5cPuK75HnIclhtTWBAewYP
+ tPDOnDR8qCO0j5Eu4IOwNsuag3vCxkUMTqLnc/M2Cv9FIUnhdraGG+wOxALnlw66JwjfMRV8R
+ gzZS80seFZR5oZRmKEOc9gIQNEWLtOU3f6OzkvYkwIMMeGlc3vb/isBeIkmjnnYxvzjxJMJNf
+ BGHgCQhGUsrZ9pVSv26Dd2Hs/FPqSvbiA0lIdmd+lUmGZK9ulkKKckrZPIvteur/2nKaOuhGn
+ MbDSWHscJVP+VFGaYWatZaOO4gHMiAy8kxrZpDWoDcq+OhEXz3U3Bv9bgPeo9TGWupEvlX8Dg
+ TjLCd285bqx130J74FFB7qODtpTb7jaB1yP9OZoEtT1/evaLcuuEm5Ti7vA/T9Z8VO8IwF/KR
+ Tt/YfxyLEpEIZQAGoPwAAdGS/oEbBMUK5eoOXRP4m/SivhM5ZqS/qUqQRpYb+NIAJte0UOQHE
+ EVC8owdhS+J9bs00Z9hJd0ck1pCeSTO8f/lT3nXkHBaavL6UkBUbiAUfAxtJpat90B7R/oy0a
+ UR6zc1+jd7yap/ZF7b7vCilX9bgtwtPbXrRCOsNvSf50MCqH+QlQsfhbTiit67bO3mwYGNT4e
+ 3EIqdNI7C+Sng2vSapL1K9T1B1ZRIIWiiv/e2P5ZKXFFyKwkAJib9TkkVjz4cMXTbW4P6FuO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284832>
 
-On Windows, the permission system works completely differently than
-expected by some of the tests. So let's make sure that we do not test
-POSIX functionality on Windows.
+It does not quite work because it produces DOS line endings which the
+shell does not like at all.
 
-This lets t9124-git-svn-dcommit-auto-props.sh pass in Git for Windows'
-SDK.
+This lets t0200-gettext-basic.sh, t0204-gettext-reencode-sanity.sh,
+t3406-rebase-message.sh, t3903-stash.sh, t7400-submodule-basic.sh,
+t7401-submodule-summary.sh, t7406-submodule-update.sh and
+t7407-submodule-foreach.sh pass in Git for Windows' SDK.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9124-git-svn-dcommit-auto-props.sh | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t9124-git-svn-dcommit-auto-props.sh b/t/t9124-git-svn-dcommit-auto-props.sh
-index aa841e1..2be0805 100755
---- a/t/t9124-git-svn-dcommit-auto-props.sh
-+++ b/t/t9124-git-svn-dcommit-auto-props.sh
-@@ -34,8 +34,7 @@ test_expect_success 'enable auto-props config' '
- '
- 
- test_expect_success 'add files matching auto-props' '
--	echo "#!$SHELL_PATH" >exec1.sh &&
--	chmod +x exec1.sh &&
-+	printf "" | write_script exec1.sh &&
- 	echo "hello" >hello.txt &&
- 	echo bar >bar &&
- 	git add exec1.sh hello.txt bar &&
-@@ -48,8 +47,7 @@ test_expect_success 'disable auto-props config' '
- '
- 
- test_expect_success 'add files matching disabled auto-props' '
--	echo "#$SHELL_PATH" >exec2.sh &&
--	chmod +x exec2.sh &&
-+	printf "" | write_script exec2.sh &&
- 	echo "world" >world.txt &&
- 	echo zot >zot &&
- 	git add exec2.sh world.txt zot &&
-@@ -65,7 +63,10 @@ test_expect_success 'check resulting svn repository' '
- 	cd svnrepo &&
- 
- 	# Check properties from first commit.
--	test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
-+	if test_have_prereq POSIXPERM
-+	then
-+		test -z "$(svn_cmd propget svn:executable exec1.sh)"
-+	fi &&
- 	test "x$(svn_cmd propget svn:mime-type exec1.sh)" = \
- 	     "xapplication/x-shellscript" &&
- 	test "x$(svn_cmd propget svn:mime-type hello.txt)" = "xtext/plain" &&
-@@ -73,7 +74,10 @@ test_expect_success 'check resulting svn repository' '
- 	test "x$(svn_cmd propget svn:mime-type bar)" = "x" &&
- 
- 	# Check properties from second commit.
--	test "x$(svn_cmd propget svn:executable exec2.sh)" = "x*" &&
-+	if test_have_prereq POSIXPERM
-+	then
-+		test -z "$(svn_cmd propget svn:executable exec2.sh)"
-+	fi &&
- 	test "x$(svn_cmd propget svn:mime-type exec2.sh)" = "x" &&
- 	test "x$(svn_cmd propget svn:mime-type world.txt)" = "x" &&
- 	test "x$(svn_cmd propget svn:eol-style world.txt)" = "x" &&
+diff --git a/config.mak.uname b/config.mak.uname
+index 6b25661..d6f7980 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -561,6 +561,7 @@ else
+ 		INTERNAL_QSORT = YesPlease
+ 		HAVE_LIBCHARSET_H = YesPlease
+ 		NO_GETTEXT =
++		USE_GETTEXT_SCHEME = fallthrough
+ 		USE_LIBPCRE= YesPlease
+ 		NO_CURL =
+ 		USE_NED_ALLOCATOR = YesPlease
 -- 
 2.7.0.windows.1.7.g55a05c8
