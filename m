@@ -1,76 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] merge-file: let conflict markers match end-of-line
- style of the context
-Date: Tue, 26 Jan 2016 09:22:38 -0800
-Message-ID: <CAPc5daVc9nQ+V5itEKMHOzBiHzEoTw1-aoA+rr2n+X1w-1yCnw@mail.gmail.com>
-References: <cover.1453632296.git.johannes.schindelin@gmx.de>
- <cover.1453709205.git.johannes.schindelin@gmx.de> <26c973eb3414a8634d515f3621c0ded77cf030ed.1453709205.git.johannes.schindelin@gmx.de>
- <xmqqr3h5fmf4.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1601260955320.2964@virtualbox>
+Subject: Re: [PATCH 17/19] mingw: fix git-svn tests that expect chmod to work
+Date: Tue, 26 Jan 2016 09:42:20 -0800
+Message-ID: <xmqqwpqwck5f.fsf@gitster.mtv.corp.google.com>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de>
+	<9045a31ec16da672a74d9b1e0b65807d21ef277e.1453650173.git.johannes.schindelin@gmx.de>
+	<xmqq1t96be2k.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601251910080.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Beat Bolli <dev+git@drbeat.li>, Jeff King <peff@peff.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 26 18:23:06 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 18:42:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO7Kb-00051W-My
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 18:23:06 +0100
+	id 1aO7dL-0007XY-Tj
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 18:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966969AbcAZRXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 12:23:01 -0500
-Received: from mail-ig0-f193.google.com ([209.85.213.193]:33837 "EHLO
-	mail-ig0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966830AbcAZRW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 12:22:58 -0500
-Received: by mail-ig0-f193.google.com with SMTP id ik10so7882179igb.1
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 09:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=ip9JHK5EdsFMlxi/AkgWu9lHy/Xjbj7/lkMMsIALOpY=;
-        b=TY4o7CUUUSQHRDpo51aawZk9kfPCpWU41wKu3OVfruEzrmVsGevgOH+NS04aSzLHK8
-         Z+fWeO2a3XtwnJ5tFliu9AqMQ7XnlABBvrPB/S68qguD5qrmXwDsgRk3hS3xxAZMiEkl
-         p/3GnBrvaDl34uERzRiUoer2bx6ghLq7Thc41fdAXnfr/RtQu1Xr7CQcovOtYom1Qvb2
-         9zWv285ZmGILiEJUAAoudGGpFebB07f0X9jdWd9T4sngiYlF3VgXXcwm0knh5cxwY/nd
-         L8Eh5gGWRDPPANrVcIi6qfOnAyVvSfUB+yGQokFLlmIKX0+RhubOOVzmcckPVk9IOg3C
-         hfPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-type;
-        bh=ip9JHK5EdsFMlxi/AkgWu9lHy/Xjbj7/lkMMsIALOpY=;
-        b=iYJwX8g2Q+g/8Wf8McEV9yvMTx8TnxrGtUA/x7naOYKBZEnyenyAnRYJSYbZmFRDb2
-         4b8WgFuvMHNZBqLcM8PyJR1zR7YW65Vo0YmfTqjxf4Rz3JCBR7g03cVJe+zaLvryBhzP
-         ge975MQlgf/prG4HC25OUCLY0Jzs5OhhX8W3iWd8vBDNfoVTr+wchBeyEKSaKsCSyAzc
-         OoIRL1x8HNOV2IALCmJw9p1F8ieLUHtn7Z13Hjv8HasA9xpzXBnQAoLaeZ7pJ4Lcxxf/
-         WxLnFwGbCtUy4AFoUw/Muj/csab64rxljm2Y8sVwRvAafI9sm+/lA5yk0cxbH4MaKTWN
-         IekA==
-X-Gm-Message-State: AG10YORbxUX5ung11c/hXS2psKrl+VczEMcOVUcv9mG8bqD8dAJDEW/NMatycshDyhMeLAdo+KruUMoBaoetzg==
-X-Received: by 10.50.178.178 with SMTP id cz18mr25081145igc.37.1453828977705;
- Tue, 26 Jan 2016 09:22:57 -0800 (PST)
-Received: by 10.36.144.133 with HTTP; Tue, 26 Jan 2016 09:22:38 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1601260955320.2964@virtualbox>
-X-Google-Sender-Auth: ZZSS5JlBH7PxIfKjiKBGT6nrYrM
+	id S965026AbcAZRmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 12:42:24 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58451 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932586AbcAZRmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 12:42:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1EAA63E18F;
+	Tue, 26 Jan 2016 12:42:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=a7w2SCuCVtKaVv8VmH8IjfkUWRQ=; b=v7VRnE
+	r68DGv9zEWM8zFSO/ENHadqtmicKF6W2Bpkkvlpea4lJJkH22/BCRBBm9FwXnC+a
+	C6YPd4nh2t+jqOUMeG7ziawuKxEutqphRd6uPQ+6MpJGRlRjHLNhfdXsfUfI6VWP
+	9BVr5jSA46QZG68S+pVEEy57F6pXoiXG3yjdo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NIdhJZDuD+i9rJtRhN0g7bEfN30rx4Pd
+	e7guAvO5DVgna3/oGwNyDBDNl6eVJjOWrMq9u/sZcIjUan4uKvWvlvmyrBI12zw8
+	I3NWCyx9KjZuyrsNS9iWFgIgGYjnDfkJxZe1vEmt1iW428veIXYnDIXu/R7bC4P1
+	jg/Wn1k8r+0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 169B83E18D;
+	Tue, 26 Jan 2016 12:42:22 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 88F103E18C;
+	Tue, 26 Jan 2016 12:42:21 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601251910080.2964@virtualbox> (Johannes
+	Schindelin's message of "Tue, 26 Jan 2016 07:31:27 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2706F500-C454-11E5-A53A-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284844>
 
-On Tue, Jan 26, 2016 at 1:04 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Not sure. You might end up with a very long line (containing plenty of LF
-> "characters") and the conflict marker *at the end* of said line, with a
-> CR/LF after it. I would not call that particularly helpful.
->
-> Seeing as we really cannot do anything in this case, I thought it would be
-> a good idea to avoid trying (and failing) to be smart here.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Nicely and clearly explained; thanks, and I agree with your reasoning.
+> This is my fault: there are two MINGW prereqs, and they guard against
+> trying to work with file names ending in a dot (which is illegal on
+> Windows' file systems).
+
+Ahh, I failed to notice that MINGW was protecting against the "dot"
+thing.  So I was wrong; that one cannot be !POSIXPERM.
+
+Thanks for clarifying.
