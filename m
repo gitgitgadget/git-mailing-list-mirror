@@ -1,95 +1,119 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 06/19] mingw: try to delete target directory before
- renaming
-Date: Tue, 26 Jan 2016 09:14:12 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601260900550.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <d75b0dc0b76beefee9e705555ca4f2fa4f4b96ce.1453650173.git.johannes.schindelin@gmx.de> <4C2ED807DD184A168C87221809034B70@PhilipOakley> <alpine.DEB.2.20.1601250753470.2964@virtualbox>
- <xmqq4me1h4k2.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 05/19] mingw: prepare the TMPDIR environment variable
+ for shell scripts
+Date: Tue, 26 Jan 2016 09:38:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601260934040.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <80795bee09974f4bec6bda75fe9cb17a4326bed1.1453650173.git.johannes.schindelin@gmx.de> <CAPig+cTF0r1Z_4wre57pZHvPXT00TvhYTKmdHfDfTBZzMwdo+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-446657084-1453796057=:2964"
-Cc: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org,
-	nalla <nalla@hamal.uberspace.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 09:15:25 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 09:38:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNymZ-00036Y-BW
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 09:15:23 +0100
+	id 1aNz8o-0005bh-Qt
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 09:38:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932557AbcAZIPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 03:15:19 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54364 "EHLO mout.gmx.net"
+	id S932319AbcAZIiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 03:38:19 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56989 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932090AbcAZIPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 03:15:17 -0500
+	id S1752280AbcAZIiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 03:38:17 -0500
 Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LkBPy-1ZqYcd2Gt8-00c5ZR; Tue, 26 Jan 2016 09:14:17
+ ESMTPSA (Nemesis) id 0MVJze-1ablYX48Uw-00Ylg4; Tue, 26 Jan 2016 09:38:08
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqq4me1h4k2.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAPig+cTF0r1Z_4wre57pZHvPXT00TvhYTKmdHfDfTBZzMwdo+A@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:X66TAceXNtQB/1/NUIsZ7UZutXsGgC7LDKDdvRqcyj273B/Qq/6
- zmwxUc/cV89UKfAY6ea2Jp8UxYVNICbGfwI7CzbRyfWApo980QUC5EIl6MBIrW7eCnwu+dB
- hP56MsxhgD2nBXP5Z9hbYHpk6gY6oxPATUhtuQzFtAL9VVNV/lhYo4ie8zCkloy8vsJ8hnm
- 3kU9IDf6mj4yCfXyrirjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qvVQU6bZC8Q=:UfsdbjGjQ+4jkfMLMy3FZ2
- r0NyDogOlvPlVUKpbqnShLYBkBy+tCZWey96Pt7+UGvDgrufjX6+W8QuG3cojhuDXeqx5N/Qr
- q6xajyGzNGAWyCvN6uwqVPtWmS81bxkuqWYGP+3OQ1v5O96mFbGxNCyqbiUmNFXvFP72ODpXE
- qGre8WvSiDtPiYOn/ziM6yGPpZM5u8z6lEvNNR45xYwTX3zmz81uMRph4cT1WO1oSIt5ycdut
- ja0sv15iKCPMxr4OTcbYgfyasXVybSQqOVAYFPRcZ7RBmzCzIsD4aCQ0x00H/3vvgo8Hy4Op2
- 4j6jU2Thz8yoS5A+3L5/HCi7LajFarKSm5JVX+ZnLN+Ra+2CliS/jbFArm+QWtjFQC44ELBUa
- fJb61GayXnad/pA03jaLAy289cMSzL0ZdrQ8v/nvRIw/qf4zwkd67G45deA43ID6PyZv5vdP4
- YY4NNsR2G3UdxUlY9hnA6iarXqCJyzYmWOuNzPiECCitGwM9xxm3eA9K6gGiRmjp2niF6mP1H
- Kv5O589vJSHomn5JjOZg1TCechdhcmzRJnUHHF15fUEo5M3eqXlN2SrrK37TRkf0ebnrzPcsM
- lbOlaZ2j6f04QpyK95yplh6ebzGtbmYxj/WdaOsHslPwot85Cj9vCK+4rOhm0X2XWfUQZRFMH
- hm6bShP0D67kWiHyZfX2joM5KY5YuIXK8ZPkEtY/LMLMrylcDyTgvZcU3sQOwJimbcQ1u2AFi
- Az7Mxa+7zcVCJamDm49PknsbsvU4tpl9MSOOxCKiE7TGUsGEXqoee1ZfSAuOXIcrNW+PyOkz 
+X-Provags-ID: V03:K0:YquParjSMAVNg/JfKT9QnZIkZ6j4/dKb+Y+BeUmLdqABSwi0jy4
+ fbL9UyXdPMuaBZ9U0GVy+j6PzHhs5X2X3KghGbeoiCXOnnjBdZRLSP+n3ZLvlA7MaBnQMF4
+ GEzFwLAt3k6WzF2OKug6pg79j1jNKKrYNzkYNYJRftvEwpC3PkJgk9S2+JhSHLleX0gikdk
+ 5OzsVotmX61tkI+GW1r4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ycrau698oWI=:7DVLNzwU89mL/gGhu3894P
+ /94ounLc0uUXc/rgIvOzanhFcTqNm7XiLP8bUfr5r3rHaTNlOl6jIoSzlo4MxGEq6zDsXsd3A
+ +YgaxuITImuRiHJ6nNW23aZoef9zsPGaCIMwCC4ga9/cuj7O5j4DnBG4NgQe2uVIvhOR8qiVA
+ 1L+VlPnrWzQMKCeph2Ww0T3WIHtXGjQy3BrPARHzOhhK+6mlE5CH36ixMvJ0LEDVc/h1uBr+9
+ 5vtRWTr6YgGvJWYakYDYt9P/WCqa5LXUAA5pdPAA/3GH9FEKfmBHR2DIr+uVn4IN5YC95vnPD
+ ayf19T22q9y+9wueyLeDnPlDRrtCIi6g2vXs8mG5Vrs6U+v3sYKEwmHb/Uw4EecHnyKJHYfy+
+ lH/3ZKKdhLpzUzikYhT7j4AZA/G20GzlZ8p12nDaimvkslT6fexF46YgXqeSfEH9EXBfTOePl
+ Neejp5eYWyh/H9KUOTxIJNQHRf8gA0E0bfT3p5wCjhSZDGawVkSOUn6N6reUce9YBhc5ksCrJ
+ jUvkmh4QniKi5VWaGZd/ZA57n/AOiAR97BQtVQpQTLzVr6dwsSor3jxJQ6ZeqclM8V+5Dl+8r
+ 03iPa7HT4KEubN+afccQsMWuEQLd1rfqCnS70VGFQemQbpUd2iTBHUs8gvr/qKB1RUkDfsBrZ
+ gAwlX/LXue9XTbwBKT0QHCdJf55ZcZ5t+nGxJPy0e8AHES23RI9bCojap0H2A66c3wkakb5sB
+ 64iR5NPGktVQlYmkIRaDrSedKrVBVq39w4SdonDzNAi5ubWxWKHvP9elkSfhJzAOYnKcz1CN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284787>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Eric,
 
---8323329-446657084-1453796057=:2964
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sun, 24 Jan 2016, Eric Sunshine wrote:
 
-Hi Junio,
-
-On Mon, 25 Jan 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
-> > On Sun, 24 Jan 2016, Philip Oakley wrote:
+> On Sun, Jan 24, 2016 at 10:43 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > When shell scripts access a $TMPDIR variable containing backslashes,
+> > they will be mistaken for escape characters. Let's not let that happen
+> > by converting them to forward slashes.
 > >
-> >> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> >> >From: =EB=A7=88=EB=88=84=EC=97=98 <nalla@users.noreply.github.com>
-> >>=20
-> >> Is this Nalla's preferred email, or just a carry over from cautions
-> >> of the Github interface?
+> > This partially fixes t7800 with MSYS2.
 > >
-> > Neither. It is from the author field as recorded in the commit that I
-> > merged originally: https://github.com/dscho/git/pull/8
->=20
-> If it is not recorded under the name/email that is preferred by the
-> author, as I am not pulling from you but will be applying a patch,
-> we can fix it to match the author's desire, if we wanted to.
->=20
-> Your "Neither" hints that it is the case, but it is unclear to me
-> what address is the desired one (I can guess hamal.uberspace might
-> be), so...
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/compat/mingw.c b/compat/mingw.c
+> > @@ -2042,13 +2042,28 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
+> >  static void setup_windows_environment()
+> >  {
+> > +       char *tmp = getenv("TMPDIR");
+> > +
+> >         /* on Windows it is TMP and TEMP */
+> > -       if (!getenv("TMPDIR")) {
+> > -               const char *tmp = getenv("TMP");
+> > -               if (!tmp)
+> > +       if (tmp) {
+> > +               if (!(tmp = getenv("TMP")))
+> >                         tmp = getenv("TEMP");
+> > -               if (tmp)
+> > +               if (tmp) {
+> >                         setenv("TMPDIR", tmp, 1);
+> > +                       tmp = getenv("TMPDIR");
+> > +               }
+> > +       }
+> 
+> Let me see if I understand this...
+> 
+> In the original code, if TMPDIR was *not* set, it would assign the
+> value of TMP or TEMP to TEMPDIR.
+> 
+> The new code, however, checks TMP and TEMP only if TMPDIR is *already*
+> set. Am I reading this correctly? Is this revised behavior correct?
 
-The author clarified to me that the noreply "address" was used only in the
-early patches, but the uberspace one is the preferred one.
+Gaaah! When copy-pasting, I culled the exclamation point... Will be fixed
+in v2 (see https://github.com/dscho/git/commit/909b0a413)
 
-I fixed it in my branch; v2 will have the fix.
+> > +       if (tmp) {
+> > +               /*
+> > +                * Convert all dir separators to forward slashes,
+> > +                * to help shell commands called from the Git
+> > +                * executable (by not mistaking the dir separators
+> > +                * for escape characters).
+> > +                */
+> > +               for (; *tmp; tmp++)
+> > +                       if (*tmp == '\\')
+> > +                               *tmp = '/';
+> 
+> This transformation is performed on whatever memory was returned by
+> getenv(). It is also performed after setenv(), so presumably setenv()
+> isn't making a copy of the incoming string.
 
-Ciao,
+Actually, I made sure to re-getenv() after setenv():
+
+	https://github.com/dscho/git/blob/909b0a413/compat/mingw.c#L2053
+
+Thanks!
 Dscho
---8323329-446657084-1453796057=:2964--
