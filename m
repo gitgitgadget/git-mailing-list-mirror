@@ -1,70 +1,68 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 12/15] ref-filter: align: introduce long-form syntax
-Date: Tue, 26 Jan 2016 06:16:24 +0100
-Message-ID: <CAP8UFD0NUoZtJxo_+M2U20AZcHEZiwPms6TBAU_xqBU0+zSk4Q@mail.gmail.com>
-References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
-	<1451980994-26865-13-git-send-email-Karthik.188@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 06:16:41 2016
+From: Paul Wagland <paul@kungfoocoder.org>
+Subject: Re: [PATCH 2/2] Fix up the arguments for git stash.
+Date: Tue, 26 Jan 2016 07:21:06 +0100
+Message-ID: <C8776441-3B93-42D3-A759-0AA918F0F97C@kungfoocoder.org>
+References: <20160123012316.GA27965@wagland.net> <20160123013049.GB28197@wagland.net> <xmqqio2hdz48.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 07:21:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNvzc-00056E-UO
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 06:16:41 +0100
+	id 1aNx0m-0003M1-7Y
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 07:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750824AbcAZFQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 00:16:27 -0500
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:35697 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750794AbcAZFQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 00:16:26 -0500
-Received: by mail-lb0-f173.google.com with SMTP id bc4so85682145lbc.2
-        for <git@vger.kernel.org>; Mon, 25 Jan 2016 21:16:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=77x5JAXyIhJMDKg7XS9M8FSp7kryjg5z00fbbcwZjHE=;
-        b=dQHP59+b6akyWn2llsuQxH0Kuxntx6kyehq+BF28WOAZIeYjZWlJaNYWzfpSpZRt5q
-         lhhLH9iKam5fwjNpCWpn/b5Dpwk1TNtrviDSPyZ7XDioPkrxOH8Ln/w9rwML1R6/XpT6
-         ZODKbHQXJOXaTKQI+GzUaRejdJw+/2LResGIHUyx2bFNnVWa6DWFJ/e2oPMulCYF7yw3
-         bGlOL/x9DTMJejqVSMMNDrJFgEvEOa2ja8kM7RA1CgHgbxmhaeD7WKM3VRM3s/2yFWe5
-         WbGIl73bwzui5ivwhrlhowdLs1qa7gjDRRnz4EgmGqoTzHAG1ZMrLFcEpQjAvPQxVFW3
-         qB0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=77x5JAXyIhJMDKg7XS9M8FSp7kryjg5z00fbbcwZjHE=;
-        b=M6RuPaojlinXZPtkgvXDfHVIw8SfbI4YJUbJQMhonC06sVaidpFWLga2YlYYu2fEKi
-         6MiNe0QALhnkWgycJ/skWg+GJJ/D+zuittMonBnwFQT43ENytEHl0TLEygUUYnpXfB8z
-         tUa5DIUvBFnYcsdnj8lWj8Dm+37O9dkl0r56HTngQYg73kH5FXRfcY6mdJ6qqJw5ridC
-         eX6lCzZTDjl4u+f6xDGpHPQmENjpvNP6cLkT6i3mEo1hRo7p/mWC/8zJ1vImh0uwCz05
-         ZhZ32JBUu43AzpfyiXdYDsp2cwzQ6c1RQQ8V6OcZV2R4+DoAnv5Tlo8EBdPjHK+tMKiv
-         QFqA==
-X-Gm-Message-State: AG10YOSdLG7i1LrlodJLbCyx7YetkomgLzUKE2OYXHTZ84dxNQQp3dpLuliFyFlqFE8xpyHq7AHu4wSSJLdBig==
-X-Received: by 10.112.168.5 with SMTP id zs5mr8227773lbb.56.1453785384297;
- Mon, 25 Jan 2016 21:16:24 -0800 (PST)
-Received: by 10.25.216.143 with HTTP; Mon, 25 Jan 2016 21:16:24 -0800 (PST)
-In-Reply-To: <1451980994-26865-13-git-send-email-Karthik.188@gmail.com>
+	id S1755305AbcAZGVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 01:21:53 -0500
+Received: from cpsmtpb-ews10.kpnxchange.com ([213.75.39.15]:51061 "EHLO
+	cpsmtpb-ews10.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755173AbcAZGVw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 01:21:52 -0500
+Received: from cpsps-ews08.kpnxchange.com ([10.94.84.175]) by cpsmtpb-ews10.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Tue, 26 Jan 2016 07:20:46 +0100
+Received: from CPSMTPM-cmt107.kpnxchange.com ([195.121.3.23]) by cpsps-ews08.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Tue, 26 Jan 2016 07:20:46 +0100
+Received: from kruimel.wagland.net ([86.85.102.39]) by CPSMTPM-cmt107.kpnxchange.com over TLS secured channel with Microsoft SMTPSVC(7.0.6002.18264);
+	 Tue, 26 Jan 2016 07:21:49 +0100
+Received: from [192.168.2.103] (mijnmodem.kpn.lan [192.168.2.254])
+	by kruimel.wagland.net (Postfix) with ESMTPSA id B2F6561C6F5;
+	Tue, 26 Jan 2016 07:21:36 +0100 (CET)
+X-Mailer: iPhone Mail (13E5191d)
+In-Reply-To: <xmqqio2hdz48.fsf@gitster.mtv.corp.google.com>
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	URIBL_BLOCKED autolearn=ham version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kruimel
+X-OriginalArrivalTime: 26 Jan 2016 06:21:49.0650 (UTC) FILETIME=[D70B2B20:01D15801]
+X-RcptDomain: vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284778>
 
-On Tue, Jan 5, 2016 at 9:03 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Introduce optional prefixes "width=" and "position=" for the align atom
-> so that the atom can be used as "%(align:width=<width>,position=<position>)".
->
-> Add Documetation and tests for the same.
+Fair enough. I'll re-roll the patches with improved comments, and get these out to the list today. 
 
-s/Documetation/Documentation/
+Cheers,
+Paul
 
-Thanks!
+Sent from my iPhone
+
+> On 26 Jan 2016, at 00:21, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Paul Wagland <paul@kungfoocoder.org> writes:
+> 
+>> Signed-off-by: Paul Wagland <paul@kungfoocoder.org>
+>> ---
+> 
+> This needs a better explanation than just "Fix up" in the title.
+> What is broken in the current behaviour and what is the more desired
+> behaviour?
+> 
+> Thanks.
