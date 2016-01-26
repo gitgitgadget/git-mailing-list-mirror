@@ -1,135 +1,89 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 12/15] ref-filter: align: introduce long-form syntax
-Date: Tue, 26 Jan 2016 15:10:44 +0530
-Message-ID: <CAOLa=ZSnDe=q8SpicYW6gNKmNts3K=FpCFq6q8t_pUv+8AZhnQ@mail.gmail.com>
-References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
- <1451980994-26865-13-git-send-email-Karthik.188@gmail.com>
- <CAPig+cT56AiO-3GNzia7UsGZFM5zu5zsEC31XPuq-by1p4+sbw@mail.gmail.com> <xmqqa8ntdxzs.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 10:41:29 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2016, #04; Wed, 20)
+Date: Tue, 26 Jan 2016 10:47:57 +0100
+Message-ID: <C1F7518D-3898-4F53-8BAD-60B5648D4B5B@gmail.com>
+References: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 10:48:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO07q-0003n1-Ob
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 10:41:27 +0100
+	id 1aO0EJ-000780-FP
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 10:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934103AbcAZJlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 04:41:18 -0500
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:33539 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934067AbcAZJlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 04:41:14 -0500
-Received: by mail-vk0-f46.google.com with SMTP id e64so89288431vkg.0
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 01:41:14 -0800 (PST)
+	id S964809AbcAZJsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 04:48:04 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:33122 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933692AbcAZJsA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2016 04:48:00 -0500
+Received: by mail-wm0-f54.google.com with SMTP id 123so98281829wmz.0
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 01:47:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=DEPoADYlgJTqcO+kHiMRkeRYsjGkXIgAOCs4U3Y/Mpo=;
-        b=WnD+vdicbOKL92RrMMy0VG+BHDfqTM+j3E91WPIhecrQ/dzwQXAnvA+WjT33JCWV91
-         aEqFNgzWdB/jCOunNRHR++Wha7YIF4UX85XqpyrUYibpU5GR5LGbliwP98qTfPRgDIPE
-         p3gvXKvXzqtddqBzlOUBAS4fBh0J5Qn2z3bQwkFv+GRTOkvNd6by7ZUH5JT99Wi355wE
-         ahpar6V/GdlMCkzuY+SSOiUD0iDIXsCguNUqlWyFvi2yudZ62harXM9jGrWAp8HiEXLm
-         tVCnmTTgM4SErT8dwzXGgmn9Z2JgBnIV+hDOT18j20XsWOyKVvR8dFoygthmQENK1b1y
-         ZAhg==
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=eiIKN8XW6p4aY0II+S1PjFjPDHstYcbNlcoRAye2HnM=;
+        b=e0dzPJfxMsT2tgOL6Dea7XIr7FZLqWe9C+bGPAmlIxuL2ToUS+77g3Dypi6k4/YJws
+         UG8CXSdrjMTbcceLb5JwsXIzm4CRDLcDZHmue9rlUGEblIMAnC0klQNPGr+5CxvSCMTc
+         MEUs2wQuQCCpbRMfc/QwPEphohDsuAiuZt6OYm8Oi4PjSTwj19vzYrn0a411urbk0a3a
+         Nc+ddBYeZCBNa78Ihg+QZXrkYK5W8gjsuC0NO8imGWcGB71bG5DC/dOCH5XnIiFz9sVU
+         bT4Ky1DrOgoAnX4ySaRMQHXFj4E8UpxEbjCjGf9viqBh3AuhjpxtnMTe+145vLaJxDO8
+         6IhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=DEPoADYlgJTqcO+kHiMRkeRYsjGkXIgAOCs4U3Y/Mpo=;
-        b=YdC4hh5v8mOl12SZZZRJyg6VEPm9CbDmVnEpdbVk1QkvHGsD9TVQCKANMjS/zkl4fd
-         QsapwCECIcC291gO4G95umvi2OMpOdoHcaMxAWdUYsQR5Ox+cKlBBmm5Sgr9KhOYFLqg
-         B6VsYMxxqPbnp3ZGVxF6NAardteDBwLblDVHjysPM8NLZ8ESMsFhXcWUC0pJZESSxrlU
-         1+U6PI6JjHGbOS/1qE8q1QP574UdN8iQxJagYLvFwOYGleVK2Nh3PfkUNNBT76W8C6kh
-         jUIZs89jCnJFBxKJvkhKU/sMQz0M5v//I9Ea6qnrfaOBUn/JN2g7jJIdcmieG8G+rzAG
-         ioaA==
-X-Gm-Message-State: AG10YOTQKbrjWgaiQUR/SsmXw5mgILzZqLnP+r0Vswl/BWgPK7feu3q/KmEfoS2MM1At8NqLvM2l7dDet2zSyg==
-X-Received: by 10.31.142.203 with SMTP id q194mr13668720vkd.95.1453801274019;
- Tue, 26 Jan 2016 01:41:14 -0800 (PST)
-Received: by 10.103.82.146 with HTTP; Tue, 26 Jan 2016 01:40:44 -0800 (PST)
-In-Reply-To: <xmqqa8ntdxzs.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=eiIKN8XW6p4aY0II+S1PjFjPDHstYcbNlcoRAye2HnM=;
+        b=QJvjHAkaVBoNN1UFJdM5gYFSNQTaOMew7cXqUyIxrSpBpDa9c4cshYLCdZ6P7vEE5Y
+         nPEI9/hi5bsIBFLbppN+ZG1ibOimoA09erYFYb7U5/NP6nLE1KFIuSxQXeMCiviWEs+N
+         I63sPmmIqdq/k84qeVkwYaLWA7IgTgdmOq+lq3rR8rs2MWtghiiQsvLAL4SyJHcY4tWB
+         xnO+9OA/oW2LlykgcO9K86XAu8Bt9QTQRjjK4lCNb3Esqlxuc7FNXwAWFoXw2zHUcAot
+         EOzfZBv7fztbhZngxCSXBJ6KE8nXYE5m/96W6Vpv1UMX64VrMlSZi5pNO+muGtQogDac
+         VDQg==
+X-Gm-Message-State: AG10YOSVK5/zD2OBNqSm09iLHKhnF4NvIO/4pmTZZ6WfWnW7rUYDxrIOZGHtkHJNJGgiNQ==
+X-Received: by 10.28.180.193 with SMTP id d184mr21937808wmf.64.1453801679029;
+        Tue, 26 Jan 2016 01:47:59 -0800 (PST)
+Received: from slxbook3.fritz.box (p508BA9B5.dip0.t-ipconnect.de. [80.139.169.181])
+        by smtp.gmail.com with ESMTPSA id i2sm561819wjx.42.2016.01.26.01.47.57
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 26 Jan 2016 01:47:58 -0800 (PST)
+In-Reply-To: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284797>
 
-On Tue, Jan 26, 2016 at 5:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->>> +               git for-each-ref --format="|%(align:$option)refname is %(refname)%(end)|%(refname)" >actual &&
->>
->> This is not wrong, per se, but referencing $option inside the
->> non-interpolating single-quote context of the test body makes it a bit
->> harder to understand than it need be. As it is, at the time that the
->> test body actually gets executed, $option still evaluates to the
->> desired permutation value so it works.
->
-> I think I said this in one of my recent reviews to somebody else,
-> but this needs repeating.
->
-> My position on this has been and still is a complete opposite.  It
-> is a designed behaviour that variable references made inside test
-> body that is quoted with sq pair can see the values of the variables
-> that are defined outside test_expect_success, and you can freely use
-> the global $TRASH_DIRECTORY, $_x40, etc. inside the test body that
-> is quoted with single quote.  The $option here is no different.
->
-> In fact, it is more desirable to avoid double-quoting the test body.
-> The problem with using double-quote around the test body and
-> formulating the executable shell script using variable interpolation
-> before test_expect_success even runs is that you would be tempted to
-> do something silly like this:
->
->     HEAD_SHA1=$(git rev-parse --verify HEAD)
->
->     test_expect_success "check something" "
->         HEAD_SHA1=$(git rev-parse --verify HEAD) &&
->         ... do other things that should not move the HEAD ... &&
->         test '$(git rev-parse HEAD)' = '$HEAD_SHA1' &&
->         test '$SOME_VAR' = '$OTHER_VAR' &&
->     "
->
-> It is not just error prone (if variable reference had a shell
-> metacharacter in it, e.g. a single-quote in OTHER_VAR's value, you'd
-> have a syntax error in the test body), but because two invocations
-> of rev-parse in the above are both made before test_expect_success
-> runs, and would yield the same value.  It is not even testing the
-> right thing.  If you broke rev-parse, the invocation will not fail
-> inside test_expect_success but outside when the arguments to that
-> helper is being prepared.
->
-> So please do not write something like this:
->
->>     test_align_permutations () {
->>         while ...
->>         do
->>             test_expect_success "align:$option" "
->>                 git for-each-ref --format='...$option...' >actual &&
->>                 ...
->>             "
->>         done
->>     }
->
-> but make it more like this:
->
->         for option in ...
->         do
->                 test_expect_success "align:$option" '
->                         git for-each-ref --format="...$option..." &&
->                         ...
->                 '
->         done
->
+On 21 Jan 2016, at 00:33, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks for this descriptive explanation, I shall use the suggested format.
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+> 
+> The tip of 'master' now has second batch of topics merged, some of
+> which should later be merged to 'maint'.  There are a few topics
+> that are v2.7.0 regression fixes still cooking outside 'master',
+> which also need to be merged to 'maint' for the maintenance release.
+> 
+> You can find the changes described here in the integration branches of the
+> repositories listed at
+> 
+>    http://git-blame.blogspot.com/p/git-public-repositories.html
 
--- 
-Regards,
-Karthik Nayak
+Hi Junio,
+
+Did you miss the topic "submodule: extend die message on failed checkout with depth argument" or do you not agree with it ($gmane/282779)? Stefan Beller reviewed the commits ($gmane/283666 and $gmane/283851).
+
+Thanks,
+Lars
