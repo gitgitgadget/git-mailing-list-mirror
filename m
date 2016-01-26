@@ -1,168 +1,337 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [RFC] tag-ref and tag object binding
-Date: Tue, 26 Jan 2016 16:44:51 -0500
-Message-ID: <20160126214449.GA5966@LykOS.WiFi.IPv4InfoBelow>
-References: <20160125212208.GB26169@LykOS>
- <56A73DE6.5050201@drmicha.warpmail.net>
- <20160126152941.GA31951@LykOS>
- <20160126202651.GA1090@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH 0/5] [WAS: Submodule Groups] Labels and submodule.autoInitialize
+Date: Tue, 26 Jan 2016 13:50:23 -0800
+Message-ID: <CAGZ79kapcGDFx+=VNCPvRMUGBJiTzJqGWv6UzPNgMOVBKgwXdw@mail.gmail.com>
+References: <1453509103-16470-1-git-send-email-sbeller@google.com>
+	<56A52818.8080808@web.de>
+	<CAGZ79kY1Wa7kHh7GaCTAAmyaRgrT4_91XLaHZFrko9umEbNYkw@mail.gmail.com>
+	<56A7DE2C.3020308@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 26 22:45:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 26 22:50:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOBQ6-0006ng-Bl
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 22:45:02 +0100
+	id 1aOBVP-0002ov-FK
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 22:50:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbcAZVo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 16:44:59 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:35369 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752280AbcAZVo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 16:44:57 -0500
-Received: by mail-yk0-f169.google.com with SMTP id u68so88853544ykd.2
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 13:44:56 -0800 (PST)
+	id S1751897AbcAZVu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 16:50:26 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35735 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725AbcAZVuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 16:50:24 -0500
+Received: by mail-io0-f175.google.com with SMTP id 77so200965864ioc.2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 13:50:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to;
-        bh=xr7ObgkORrd6+pDFMRhiKd+rPsxxSO4r2nFSvhunEec=;
-        b=C+NiIFEY/KQJ5Na4cH/YV6kSZ1PskbYhO9/x/Cvk24Xs/VokbRlIkqtWXuAh2Aw673
-         xLF35B6VcPsK8Jwoge2fGZqAe4/LQjw9X6K3QpdyDG2VruuYcVLlkiNdmH+lf4sk5vx+
-         ao5HAiVeB/LaM9yEc6jbREsm4uI8SZC7Z6Y+VN2fr/4s3biFMBVWGJloFIA3TOguFDO3
-         Fm4Mx+MDKdUplvjMHSHW344WkIGy0S/LacwM7lFFi+jKQ4aNII7PnIAKVDoOMQDk3vEc
-         aYhxs64oXOTbqQ76SEVokK3H7uulc+Mtwqdk4XBJuokmpiL7N/FJbzYpF8s+Cx3OniYT
-         1ivQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JXwB6MbdG4S9aWEmYBfAPgeJYASJ2R3WCDtZqb2R/io=;
+        b=P+FKtGDB8tuJ6llK2SufvNsTm/FFaAZzmTRmPDTXv/lcHwTSBSpOt7sSWN2ACcQRwk
+         Zf7UPpaAG1H6lkATrgcZNxImJ8IAlDDjNoCxrG1LJld6tmEeNv4dFAAy2lseF82O7GT1
+         y9CgaZ/laVKP8lfAwhx2OZdWs0nQx6f18lEry6BPGHtY8kP4u6jeKARmoR3g9WbYNfNz
+         IMtiPhNywM5PvwJuQc6DWpVVvLxwqMX3vSLO873fWrBaQ/knbAMUIRx46SwDzuJvNqwp
+         2Zgc8Z2gHxmju4sdcy+yJ3HJFFjsm2Pi842u3aVgHlMTuwO7v5GpduNOD8ACkKAfD7W8
+         xysQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to;
-        bh=xr7ObgkORrd6+pDFMRhiKd+rPsxxSO4r2nFSvhunEec=;
-        b=Qup3/2TzMF8FTKuXlRudtz+5YfgNBAA1WqDgcXwySlgxl9bpkelL5vLzb65IxSzdei
-         wdckvhUJA33tCn5YPfTUz4xv2Q3JUHy/1ZCP21q2vAKT+8whok83hMT9zSNeuOYKYX9+
-         feoi1/hjQXBQbbzfMmCbKkXzEOaNu60D21ET8c/en7f+eFqA+q3rm2y7hklx5bIy7E8C
-         uKlyAweVWqiPqNGvaAJiQeO8nf5jPRvgD1s62ZX4onl51UF+mdqyWQ6vt9/jczUDIBsk
-         +uFcawhoZfEJdhlf5g+7N6L6rH7ur/6NNcL5iuXUAeE4dxz/bXcLulHak+2CP6sWM2G2
-         wfyg==
-X-Gm-Message-State: AG10YOQq9ESHF81b0SXJCRfKWfsmgqS3ZxswuFFmmgm/+kZECd8Az7XTKcBpvMbN244UGuZG
-X-Received: by 10.129.136.195 with SMTP id y186mr6551405ywf.72.1453844696313;
-        Tue, 26 Jan 2016 13:44:56 -0800 (PST)
-Received: from LykOS.WiFi.IPv4InfoBelow (ool-4b7ff856.static.optonline.net. [75.127.248.86])
-        by smtp.gmail.com with ESMTPSA id y130sm2381155ywc.4.2016.01.26.13.44.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 26 Jan 2016 13:44:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160126202651.GA1090@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=JXwB6MbdG4S9aWEmYBfAPgeJYASJ2R3WCDtZqb2R/io=;
+        b=PZwEtlEzQ//qpcVm3M+NMfOTOWmvE2FmivXselHZcQ9OjzV3VRwD9ObYkDqEeG+VVP
+         zxmSd8Ywm5X9l7qj7n2Wbm3j6CsRKxejjFZmSv0Qnne28PkPjCdkyHLI7NYORNp6hMoV
+         /VRJJw8McG+v6bbkRU5Et/GWqqknFnTznTBDUkJhlzWSDEVO/HUldV1n6T+A80HjJqZf
+         t8bWZlXeyGxFGMb3EbGIfPRWU9JiXMrThylMh3XfZw5n4saDUaK2dD41NG0tbV6kaNUG
+         +xRVHVg7p8mE8EjirwGIpJroVe5UlBeDE7z/YkRztYuxEFEH+w6gxwhMmgVOVWoiRVmw
+         4XZQ==
+X-Gm-Message-State: AG10YOQ01fDJ6d9fukJku3Ooofhsa/kpjUK1JUdltUthKXwFfrdAmgIrfOdM3f6+JzFEIsOHBLPqRgkZkzVRZ9bK
+X-Received: by 10.107.168.203 with SMTP id e72mr24327475ioj.96.1453845023102;
+ Tue, 26 Jan 2016 13:50:23 -0800 (PST)
+Received: by 10.107.8.74 with HTTP; Tue, 26 Jan 2016 13:50:23 -0800 (PST)
+In-Reply-To: <56A7DE2C.3020308@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284858>
 
-On Tue, Jan 26, 2016 at 03:26:51PM -0500, Jeff King wrote:
-> On Tue, Jan 26, 2016 at 10:29:42AM -0500, Santiago Torres wrote:
-> 
-> > > If you cannot trust those with write access to a repo that you are
-> > > pulling and installing from you might want to re-check where you are
-> > > pulling or installing from ;)
-> > 
-> > Yeah, I see your point, but mechanisms to ensure the server's origin can
-> > be bypassed (e.g., a MITM). I don't think it would hurt to ensure the
-> > source pointed to is the source itself. The tag signature can help us do
-> > this.
-> 
-> Right. I think the more interesting use case here is "I trust the
-> upstream repository owner, but I do not trust their hosting site of
-> choice."
+On Tue, Jan 26, 2016 at 12:59 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 
-Yes, I think this is another possible scenario. Thanks for pointing it
-out.
+>>> Ok. Though we might wanna call it submodule.autoUpdate, as initializing
+>>> it is only the prerequisite for automatically updating submodules. And
+>>> I believe automatically updating is the thing we're after here, right?
+>>
+>>
+>> I am not sure here, too. I would not mind an occasional "git submodule
+>> update"
+>> for whenever I want upstream to come down on my disk.
+>
+>>
+>>
+>> However that's what I
+>> do with "git pull" in the non-submodule case, so you'd expect git pull to
+>> also run the update strategies for all submodules which are configured to
+>> autoUpdate?
+>>
+>> That makes sense to me. Though I never use "git pull" to begin with.
+>> I always use fetch and see how to go from there (merge or rebase
+>> after inspecting the code I fetched). That would mean we want to
+>> add the autoUpdate strategy to merge/rebase and the fetching of
+>> submodules to the fetch command?
+>
+>
+> Hmm, maybe autoUpdate promises too much.
 
-> 
-> > > Your best bet is checking the signature of signed tags. Now, if you're
-> > > worried about someone maliciously pointing you to the wrong, correctly
-> > > signed tag then you should verify that the tag object contains the tag
-> > > "name" that you expect (for example by using "git verify-tag -v" or "git
-> > > cat-file -p"), since that is part of the signed content.
-> > 
-> > Yep, this is my intuition behind my proposal. While someone can manually
-> > inspect a tag (git tag -v [ref]) to ensure he's getting the correct one,
-> > there's no mechanism to ensure that the ref is pointing to the intended
-> > tag. I do believe that package managers and git submodules could check
-> > whether the ref is pointing to the right tag with a small change in the
-> > tag header. Although it would be up to each tool to implement this
-> > check.
-> > 
-> > I don't think that an addition like this would get in the way of any
-> > existing git workflow, and should be backwards-compatible right?
-> 
-> Doesn't this already exist?
-> 
->   $ git cat-file tag v2.0.0
->   object e156455ea49124c140a67623f22a393db62d5d98
->   type commit
->   tag v2.0.0
->   tagger Junio C Hamano <gitster@pobox.com> 1401300269 -0700
-> 
->   Git 2.0
->   -----BEGIN PGP SIGNATURE-----
->   [...]
->   -----END PGP SIGNATURE-----
-> 
-> Tag objects already have a "tag" header, which is part of the signed
-> content. If you use "git verify-tag -v", you can check both that the
-> signature is valid and that the tag is the one you are expecting.
+Yes, this very much. I feel like I get burned whenever I send a large
+patch series.
+So I want to have this first feature be the smallest "operational
+unit" that makes sense.
 
-Oh, I inspected the tag object with cat-file, but I assumed this was
-being inserted by the command itself (by "pretty printing"). This is
-exactly what I was thinking.
+> After all this config is
+> just about which submodules are chosen to be updated on clone and
+> submodule update, not on all the other work tree manipulating
+> commands.
 
-> 
-> Of course, "verify-tag" could do this for you if you give it a refname,
-> too, but I think that may be the tip of the iceberg in terms of
-> automatic verification. 
+So you'd imagine that "git submodule update" would remove the
+submodule and setup an empty directory in case that submodule is
+not configured ? (after switching branches or when just having cloned
+that thing.)
 
-Yes, I think it could be a good first step though (maybe returning non-0
-if the tag header could help in this case).
+>
+> And it's similar to what sparse does. So what about calling that
+> "submodule.updateSparse"? Or maybe "submodule.sparseCheckout"?
+> Suggestions welcome.
 
-If this header exists, I think that package managers (and git
-submodules) should use it to verify this metadata attacks don't take
-place; it sounds rather simple.
+I'd only suggest when it's clear to me what that option actually does. :)
 
-> In particular, verify-tag knows it was signed by
-> _somebody_, but it doesn't know what the signing policy is. As a human,
-> _I_ know that Junio is the right person to be signing the release tag,
-> but no tool does.
+>
+>>> I'll try to explain why I believe we should be generous in initializing
+>>> submodules: If a submodule in one branch has a label configured to be
+>>> automatically updated and hasn't got the same label in another branch,
+>>> we still need to initialize the submodule even when we are on the latter
+>>> branch in case the user switches to the first branch, right?
+>>
+>>
+>> No. "git checkout" ought to autoInitalize the submodule in question when
+>> switching branches. I don't want to see initialized, but unused submodules
+>> around (neither empty dirs nor in the .git/config ideally)?
+>
+>
+> Why not? Empty dirs is what unpopulated submodules look like from day
+> one (and they make the user aware she cannot add a file of the same
+> name). And you'll see initialized, but unused submodules around every
+> time you switch to a branch that doesn't contain this submodule at all.
 
-Yes, shipping a keychain might be helpful, I know the folks at I2P[1] do
-that in their monotone repository. Maybe something similar could be an
-extension to git? (using hooks, possibly?)
+I see. We need to keep the dir around to block that file name from being
+added. That makes sense.
 
-> 
-> Git pretty much punts on all of these issues and assumes either a human
-> or a smarter tool is looking at the verification output. 
+Mentally I am still stuck in the "very large superproject tracking all the
+modules of an operating system" thing, where I'd find it annoying if you'd have
+100 top level directories, but you have one populated for your work.
 
-Yeah, I agree. This works pretty well in some workflows (e.g., the one
-in this very ML), but I have the feeling this is not the trend that
-newer users of the tool are adopting.
+But the reason for name blocking makes sense, so I'll follow with that.
 
-> But I don't think it would hurt to build in some features to let git
-> automatically check some things, if only to avoid callers duplicating
-> work to implement the checks themselves.
+>
+> And keeping them initialized even if they aren't currently checked out
+> is the only way they can keep their settings when the user is switching
+> between branches.
 
-Yeah, I think this check (and maybe others) could be quite simple to
-integrate and lessen the workload on the git user. Inspecting each git
-tag after recursively cloning might mitigate an attack like this, but it
-sounds burdensome.
+Right, but we could invent some non-initialized, but we keep the
+settings somewhere
+mode. But as I agree on having them initialized, I'll take this an an
+extra point to
+follow your reasoning.
 
-Thanks!
--Santiago.
+>
+>>> And the
+>>> fetch command needs to fetch submodule changes too when they happen in
+>>> a branch where this submodule is part of a label group configured to be
+>>> updated automatically, no matter what is currently found in the work
+>>> tree.
+>>
+>>
+>> Right, as said above fetch needs to fetch all the submodules as well. I
+>> wonder
+>> if it needs to fetch all submodule sha1s only or just try to get as
+>> much from the
+>> submodule as possible.
+>
+>
+> Right now we just do a simple fetch, but only fetching the SHA-1s could
+> be an optimization useful for busy submodules later on.
 
-[1]
-https://geti2p.net/en/get-involved/guides/monotone#setting-up-trust-evaluation-hooks
+I'd rather not call it optimisation, but a correctness thing. What if you
+force-pushed other content to the submodule (the sha1 is gone and
+maybe should not be reachable) or the other case where you want to
+clone the submodule with depth 1 (that is a serious case, which currently
+breaks). In the shallow submodule case you need to have the exact sha1
+for cloning, otherwise it doesn't work correctly.
+
+>
+>>> So I'd propose to:
+>>>
+>>> *) Initialize every submodule present on clone or newly fetched when
+>>>     the autoUpdate config is set.
+>>
+>>
+>> What if you clone branch A and then switch to B ? B has a submodule which
+>> was not initialized in A. I do not think initializing on clone/fetch
+>> is the right thing
+>> to do, but rather the branch switching command (checkout) shall make sure
+>> all its autoUpdate/autoInitialze submodules are setup properly, no?
+>
+>
+> I disagree. If you init all submodules on clone/fetch you might need
+> to change the upstream URL right after that. You can't do that on a
+> subsequent branch switch which needs to initialize the submodule again,
+> as the former deinit did nuke that configuration.
+
+So we need to keep the information around, which we do by keeping
+all the modules initialized all the time.
+
+>
+>>> *) Automatically fetch only those submodules that are changed in
+>>>     a commit where they have a label configured (in the commit's
+>>>     .gitmodules or locally) that is to be checked out.
+>>
+>>
+>> Not sure I follow here.
+>
+>
+> We could restrict fetch to not fetch everything but just those changes
+> needed for sparse submodule update. To be able to do that it would
+> have to examine the fetched superproject commits if a submodule changed
+> and if it is configured to be automatically updated in that commit.
+
+ok, that's an optimisation for later? (not strictly needed for the first series)
+
+>
+>>> *) Let "git submodule update" update only those submodules that
+>>>     have an autoupdate label configured.
+>>
+>>
+>> Why not update all initialized submodules? (In my imagination
+>> "all initialized submodules" are equal to "all submodules the user is
+>> interested in", i.e. when going from branch A to B, the checkout will
+>> (de-)init submodules as necessary.
+>
+>
+> And throw away any customization the user did (to the URL or other
+> configurations)?
+>
+> Without this sparse/label/group functionality, init is the way the
+> user tells us he is interested in a submodule. But when configuring
+> a label/name/path to update, the old meaning of init is obsolete
+> and superseded by the new mechanism.
+
+Or if we keep it at "--initSubmodule" only, which only initializes
+a subset of new submodules, the meaning is not superseded.
+
+By having the initSubmodule thing set, the user tells us "I am interested
+in all currently initialized submodules plus some more in the future, but
+these have not arrived yet. To know which submodules I mean in the future
+apply this pattern."
+
+Let's take the simplest case:
+
+A user is interested in all the submodules. So currently they clone
+and initialize all of them. When upstream adds a new submodule, their
+expectation is broken that all submodules are there and checked out.
+by having the autoInit option, we'd just initialize any new submodule
+and the user assumption "I have all the submodules" is true after
+any "submodule update".
+
+By that point of view, we would not need to keep all submodules initialized,
+but only those the user is interested in. No need to have complicated
+branch switching rules, but just as now "plus some futureproof rules
+to declare my interest of submodules".
+
+>
+>>> That will make switching between branches with different label
+>>> configurations work fine. Or am I missing something here?
+>>>
+>>> And we need to teach diff and status to complain about empty work
+>>> trees and missing initialization of submodules that are to be
+>>> automatically updated too.
+>>
+>>
+>> What about empty work trees?
+>>
+>> I'll add "git status" complaining about missing initialized submodules.
+>
+>
+> If they are to be updated on the next "git submodule update" ;-)
+
+right.
+
+>
+>>>
+>>>>       # The prefix * denotes a label as found in .gitmodules
+>>>>       # : goes before names
+>>>>       # path are prefixed ./ currently
+>>>>       # both path and names need work
+>>>
+>>>
+>>>
+>>> Question: how do I configure all submodules to be automatically
+>>> initialized without having to give them a label? "./*"? Or just
+>>> setting the option without a specific value?
+>>
+>>
+>> I'd guess ./* should do. Path wildcard patterns are not supported in this
+>> series, but I think it would be a viable way.
+>
+>
+> Ok.
+>
+>>>>       # no --init necessary, partially initializes submodules (only
+>>>> those
+>>>> which
+>>>>       # were specified by label, name or path)
+>>>>       $ git submodule update
+>>>
+>>>
+>>>
+>>> Yup. Just like they will be fetched if they haven't been yet they
+>>> should be initialized if they haven't been yet but are configured
+>>> to be automatically updated.
+>>>
+>>>>       # time passes, upstream may have added new submodules and we get
+>>>> them
+>>>> without
+>>>>       # extra commands!
+>>>>       $ git submodule update
+>>>>
+>>>>       # The above configuration can be given to git clone directly via:
+>>>>       $ git clone --init-submodule=*labelA ...
+>>>
+>>>
+>>>
+>>> Ok. Expecially nice is the ability to also give names and paths to
+>>> "--init-submodule". (but maybe that option should be called
+>>> "--autoupdate-submodule" for the reasons stated above?)
+>>
+>>
+>> If I can understand the discussion above a bit further, I'd be happy
+>> to rename the option.
+>>
+>> I think we have some different opinions on when
+>> submodules are initialized (the invariant of what an initalized submodules
+>> means), and resulting from that we also have different opinions on when
+>> to do the (de-)init.
+>
+>
+> Yes. But I hope my arguments will convince you ;-)
+
+--autoupdate-submodule seems to be one step ahead of my current understanding?
+
+Thanks,
+Stefan
