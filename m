@@ -1,241 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] tag: do not show ambiguous tag names as "tags/foo"
-Date: Mon, 25 Jan 2016 16:04:16 -0800
-Message-ID: <xmqq60yhdx4v.fsf@gitster.mtv.corp.google.com>
-References: <20160124230531.GB29115@sigill.intra.peff.net>
-	<20160124230840.GB16455@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 13/15] ref-filter: introduce remote_ref_atom_parser()
+Date: Mon, 25 Jan 2016 19:28:32 -0500
+Message-ID: <CAPig+cTLxhrh3d0ouGLGq+ke8mzFKqCz0ABAECSA4vS+=epv9Q@mail.gmail.com>
+References: <1451980994-26865-1-git-send-email-Karthik.188@gmail.com>
+	<1451980994-26865-14-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pete Harlan <pgit@tento.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 01:04:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 01:28:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNr7U-0004Zs-7P
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 01:04:28 +0100
+	id 1aNrUs-0000iO-00
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 01:28:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755926AbcAZAEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Jan 2016 19:04:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50544 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755600AbcAZAET (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jan 2016 19:04:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA45840F77;
-	Mon, 25 Jan 2016 19:04:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BzxMZbuJy/9tL4LNXKhZVBc/8+M=; b=K2bDIz
-	ohhS7Ac5NtqkpTu5YuHHNHrlQlSa+MRZHszmDn9iSQMqGd99dnFhFcRcWhHUxwYG
-	Ca2MsnhKNp+VUwCYEebeSdVYFyrfkfUiSdj4lAbWZ4pgoBfHqWYJ+f5miNOTWGtW
-	t6hmTrCgE8j3wBFUIlrNhnd3zgceEZkz/brn4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZRD6P7c45X9TwliqtdtegoIFywjOJISy
-	OJ9I00Uckt+OVljQjddL2/wspKuKDZ1fo4ZTBjE1Q+0/lRr+jgEKvG0MEzc/0oZt
-	w9sgFDnLb0S1Rae9nyZw4oO+z3csoh39rvc//ynWRbmMpAf0aHWvGtDOAImv8RJ9
-	MMnXMnQiqj4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A212040F76;
-	Mon, 25 Jan 2016 19:04:18 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E26040F75;
-	Mon, 25 Jan 2016 19:04:17 -0500 (EST)
-In-Reply-To: <20160124230840.GB16455@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 24 Jan 2016 18:08:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 57E925A6-C3C0-11E5-BE3A-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755899AbcAZA2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Jan 2016 19:28:35 -0500
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:34191 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752858AbcAZA2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jan 2016 19:28:33 -0500
+Received: by mail-vk0-f68.google.com with SMTP id e6so6362012vkh.1
+        for <git@vger.kernel.org>; Mon, 25 Jan 2016 16:28:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=fKhndKl5LViZefWAqsVmuqzsfFtT52eH3m2u+K0KR1A=;
+        b=gfQLywaYQeWg1UDwiiwr1q8vL97xmXFF/FNlLXGOJd4mtV1HJNScy2beoMEIfy6G91
+         zkB5eejPT3usC4xmmtZPLqvZf1knTVNcwjpIC6veqaMBwukW92nBUxywgEqTfXVnU02M
+         ku30wMkYdikJXlFYvKEKG0UzqBw/dp0Q9+N85PuBonMcL2g4+buo+ODRTQLL1DEPpG6g
+         SOJQ3g9k36ggqBYe8DlcBvUg7ziAWCvwJMaDio7tsIClM2ekhtiyhjOOfIMCdsZSHWAK
+         gvNuJQ0zWEunB4H7VCGEpWuZYdkCjTB298D6lixsdEsYYOa+qRvFj4RjrJnqrL/kM7bG
+         +OQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=fKhndKl5LViZefWAqsVmuqzsfFtT52eH3m2u+K0KR1A=;
+        b=mFgAu0fzf3XA9ZLtzgGkA3u5ZRXjJutaiFpHcPkMu4UUq5DutfFKRbbMIqBUXvJLkb
+         pOhy24QfHcJKKjaR1o2ywDniM+SST/Lw5VmgvqNWZkS/OiVIchlp2nRZHu6KCdcDAJjn
+         v0tHXvZpp9Ok9jZFpLMGJ42tG3k5ZcIAzUanrTmmnKSRd7/DIAAFP8ZJBTalD1lKiDzj
+         L2Xx1ZlEciEtyMx/qS5/2gD7wBl3hjgX+QeXfnntQzwWW1KLpgRm/2NerRMuhoB6Nf4W
+         hIYngD53cM3EPw/G7G/btQZbLaVpqxr8lfj/tP1zXHNaEwCgV3D5MKU3gDZ1cA0R0lMs
+         nAJA==
+X-Gm-Message-State: AG10YORrUedi5S0Msiq0eLQSP/X8Q6nxIZHNKt+jrDuQlq7aC8EFxkrIR77ZNz9Wb8zAM3ca6BiqTeFENATy8w==
+X-Received: by 10.31.182.143 with SMTP id g137mr12298436vkf.45.1453768112654;
+ Mon, 25 Jan 2016 16:28:32 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 25 Jan 2016 16:28:32 -0800 (PST)
+In-Reply-To: <1451980994-26865-14-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: Vt47iqCFMb89mUqywFIIkoYjaAI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284771>
 
-Jeff King <peff@peff.net> writes:
-
-> Since b7cc53e9 (tag.c: use 'ref-filter' APIs, 2015-07-11),
-> git-tag has started showing tags with ambiguous names (i.e.,
-> when both "heads/foo" and "tags/foo" exists) as "tags/foo"
-> instead of just "foo". This is both:
+On Tue, Jan 5, 2016 at 3:03 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
+> and '%(push)' atoms and store information into the 'used_atom'
+> structure based on the modifiers used along with the corresponding
+> atom.
 >
->   - pointless; the output of "git tag" includes only
->     refs/tags, so we know that "foo" means the one in
->     "refs/tags".
->
-> and
->
->   - ambiguous; in the original output, we know that the line
->     "foo" means that "refs/tags/foo" exists. In the new
->     output, it is unclear whether we mean "refs/tags/foo" or
->     "refs/tags/tags/foo".
->
-> The reason this happens is that commit b7cc53e9 switched
-> git-tag to use ref-filter's "%(refname:short)" output
-> formatting, which was adapted from for-each-ref.
-> ...
-
-Karthik, getting a fix in for "git tag" regression is more important
-than the topics parked in 'pu', so I'll queue this patch in the
-early part of 'pu'.
-
-I personally feel that "refname:strip=<n>" would be a good mechanism
-for end users to specify a custom format, and it is unclear to me
-what should happen when there are not enough elements to be
-stripped, so I do not think we want to cast the "we will show the
-whole thing" decision in stone prematurely only because we want to
-push out the regression fix soon.  So I may ask Jeff to rework this
-one (or I may end up trying to do so myself) not to squat on the
-nice strip=<n> notation.  refname:strip-standard-prefix that removes
-the known prefix ("refs/heads", "refs/remotes" and "refs/tags") if
-present and does not touch the refname otherwise would leave us more
-time to decide what strip=<n> should do in the error case.
-
-Unfortunately, this means kn/ref-filter-atom-parsing topic from you
-that were parked on 'pu' must be ejected for now, as any change in
-this area overlaps with it, and the atom parsing code would need to
-be updated to learn about the new attribute of the 'refname' atom
-(be it 'remove-prefix=<glob>', 'strip=<n>', or something else) that
-we would decide to use for the regression fix anyway.
-
-Thanks.
-
->  Documentation/git-for-each-ref.txt |  6 +++++-
->  Documentation/git-tag.txt          |  2 +-
->  builtin/tag.c                      |  4 ++--
->  ref-filter.c                       | 13 ++++++++++++-
->  t/t3203-branch-output.sh           |  8 ++++++++
->  t/t6300-for-each-ref.sh            |  4 ++++
->  t/t7004-tag.sh                     |  8 ++++++++
->  7 files changed, 40 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index 06208c4..f15c817 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -92,7 +92,11 @@ refname::
->  	The name of the ref (the part after $GIT_DIR/).
->  	For a non-ambiguous short name of the ref append `:short`.
->  	The option core.warnAmbiguousRefs is used to select the strict
-> -	abbreviation mode.
-> +	abbreviation mode. If `strip=<N>` is appended, strips `<N>`
-> +	slash-separated path components from the front of the refname
-> +	(e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
-> +	If the ref has fewer components than `<N>`, the whole,
-> +	unstripped `%(refname)` is printed.
->  
->  objecttype::
->  	The type of the object (`blob`, `tree`, `commit`, `tag`).
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 7220e5e..abab481 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -163,7 +163,7 @@ This option is only applicable when listing tags without annotation lines.
->  	A string that interpolates `%(fieldname)` from the object
->  	pointed at by a ref being shown.  The format is the same as
->  	that of linkgit:git-for-each-ref[1].  When unspecified,
-> -	defaults to `%(refname:short)`.
-> +	defaults to `%(refname:strip=2)`.
->  
->  --[no-]merged [<commit>]::
->  	Only list tags whose tips are reachable, or not reachable
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 8db8c87..1705c94 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -44,11 +44,11 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
->  	if (!format) {
->  		if (filter->lines) {
->  			to_free = xstrfmt("%s %%(contents:lines=%d)",
-> -					  "%(align:15)%(refname:short)%(end)",
-> +					  "%(align:15)%(refname:strip=2)%(end)",
->  					  filter->lines);
->  			format = to_free;
->  		} else
-> -			format = "%(refname:short)";
-> +			format = "%(refname:strip=2)";
->  	}
->  
->  	verify_ref_format(format);
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 7bef7f8..9f54adc 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -909,12 +909,23 @@ static void populate_value(struct ref_array_item *ref)
->  		formatp = strchr(name, ':');
->  		if (formatp) {
->  			int num_ours, num_theirs;
-> +			const char *arg;
->  
->  			formatp++;
->  			if (!strcmp(formatp, "short"))
->  				refname = shorten_unambiguous_ref(refname,
->  						      warn_ambiguous_refs);
-> -			else if (!strcmp(formatp, "track") &&
-> +			else if (skip_prefix(formatp, "strip=", &arg)) {
-> +				int strip = atoi(arg);
-> +				const char *start = refname;
-> +				while (strip && *start) {
-> +					if (*start == '/')
-> +						strip--;
-> +					start++;
-> +				}
-> +				if (!strip)
-> +					refname = start;
-> +			} else if (!strcmp(formatp, "track") &&
->  				 (starts_with(name, "upstream") ||
->  				  starts_with(name, "push"))) {
->  
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index d3913f9..4261403 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -176,4 +176,12 @@ test_expect_success 'git branch --points-at option' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'ambiguous branch/tag not marked' '
-> +	git tag ambiguous &&
-> +	git branch ambiguous &&
-> +	echo "  ambiguous" >expect &&
-> +	git branch --list ambiguous >actual &&
-> +	test_cmp expect actual
-> +'
+> @@ -841,6 +863,43 @@ static inline char *copy_advance(char *dst, const char *src)
+> +static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+> +                                   struct branch *branch, const char **s)
+> +{
+> +       int num_ours, num_theirs;
+> +       if (atom->u.remote_ref == RR_SHORTEN)
+> +               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> +       else if (atom->u.remote_ref == RR_TRACK) {
+> +               if (stat_tracking_info(branch, &num_ours,
+> +                                      &num_theirs, NULL))
+> +                       return;
 > +
->  test_done
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 859b237..1f3abeb 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -50,6 +50,10 @@ test_atom() {
->  
->  test_atom head refname refs/heads/master
->  test_atom head refname:short master
-> +test_atom head refname:strip=0 refs/heads/master
-> +test_atom head refname:strip=1 heads/master
-> +test_atom head refname:strip=2 master
-> +test_atom head refname:strip=3 refs/heads/master
->  test_atom head upstream refs/remotes/origin/master
->  test_atom head upstream:short origin/master
->  test_atom head push refs/remotes/myfork/master
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 2797f22..cf3469b 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -1558,4 +1558,12 @@ test_expect_success '--no-merged show unmerged tags' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'ambiguous branch/tags not marked' '
-> +	git tag ambiguous &&
-> +	git branch ambiguous &&
-> +	echo ambiguous >expect &&
-> +	git tag -l ambiguous >actual &&
-> +	test_cmp expect actual
-> +'
+> +               if (!num_ours && !num_theirs)
+> +                       *s = "";
+> +               else if (!num_ours)
+> +                       *s = xstrfmt("[behind %d]", num_theirs);
+> +               else if (!num_theirs)
+> +                       *s = xstrfmt("[ahead %d]", num_ours);
+> +               else
+> +                       *s = xstrfmt("[ahead %d, behind %d]",
+> +                                    num_ours, num_theirs);
+> +       } else if (atom->u.remote_ref == RR_TRACKSHORT) {
+> +               if (stat_tracking_info(branch, &num_ours,
+> +                                      &num_theirs, NULL))
+> +                       return;
 > +
->  test_done
+> +               if (!num_ours && !num_theirs)
+> +                       *s = "=";
+> +               else if (!num_ours)
+> +                       *s = "<";
+> +               else if (!num_theirs)
+> +                       *s = ">";
+> +               else
+> +                       *s = "<>";
+> +       } else if (atom->u.remote_ref == RR_NORMAL)
+> +               *s = refname;
+
+I think I mentioned this in a previous review: If the code falls past
+this final 'else if' for some reason (programmer error), then *s won't
+get assigned at all, which is probably undesirable. To protect against
+such a case, you might want either to add a final 'else':
+
+    else
+        die("BUG: ...");
+
+or just consider RR_NORMAL the catchall case, and turn the final 'else
+if' into a plain 'else':
+
+    else /* RR_NORMAL */
+        *s = refname;
+
+> +}
+> @@ -894,6 +953,8 @@ static void populate_value(struct ref_array_item *ref)
+>                         refname = branch_get_upstream(branch, NULL);
+>                         if (!refname)
+>                                 continue;
+> +                       fill_remote_ref_details(atom, refname, branch, &v->s);
+> +                       continue;
+
+There are now two 'continue' statements very close together here. Have
+you considered this instead?
+
+    if (refname)
+        fill_remote_ref_details(...);
+    continue;
+
+It might make the code a bit more straightforward. (Genuine question;
+I don't feel too strongly about it.)
+
+>                 } else if (starts_with(name, "push")) {
+>                         const char *branch_name;
+>                         if (!skip_prefix(ref->refname, "refs/heads/",
+> @@ -904,6 +965,8 @@ static void populate_value(struct ref_array_item *ref)
+>                         refname = branch_get_push(branch, NULL);
+>                         if (!refname)
+>                                 continue;
+> +                       fill_remote_ref_details(atom, refname, branch, &v->s);
+> +                       continue;
+
+Ditto.
+
+>                 } else if (starts_with(name, "color:")) {
+>                         v->s = atom->u.color;
+>                         continue;
