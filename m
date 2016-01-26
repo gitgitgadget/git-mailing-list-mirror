@@ -1,108 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [BUG] typo DWIMery with alias broken (cd to random dir)
-Date: Tue, 26 Jan 2016 08:37:25 +0100
-Message-ID: <56A72235.9080602@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 16/19] mingw: avoid absolute path in t0008
+Date: Tue, 26 Jan 2016 09:00:36 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601260758070.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <7c35a7b9c65d9febb6af1b50907988974bca3fbd.1453650173.git.johannes.schindelin@gmx.de> <xmqq60yibe89.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1601251747050.2964@virtualbox>
+ <xmqq1t95fgig.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 26 08:37:33 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 26 09:00:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aNyBx-00012B-0A
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 08:37:33 +0100
+	id 1aNyYa-0004yL-Ol
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 09:00:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595AbcAZHha convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Jan 2016 02:37:30 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48340 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755703AbcAZHh2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jan 2016 02:37:28 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 39BB4203FC
-	for <git@vger.kernel.org>; Tue, 26 Jan 2016 02:37:27 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Tue, 26 Jan 2016 02:37:27 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=TqP
-	ZMVMUvArGV+5g2n0V3n5SnlQ=; b=XZ22t8beJxjiN+oyvg10Ogh3Fy1D4Qo3yMN
-	fhaYWsYKYiND9PGRGI4dX8pEJQYxfgTumCnvwHRJB8WUDGcmNZ9y5S6SEf4wFQ8A
-	Dw2VX23DgB5qZcxwNc2w2qw5VJ6+eWU2yPS5M9Jj2LW+ximhlVugrvhQ5Rwmi5Qb
-	rKGVXF6A=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=TqPZMVMUvArGV+5g2n0V3n5SnlQ=; b=uT83N
-	SnFxGYKj9hifniPYYOowYjqbzHdCIa11FJIVthBPUZuchw4ApMNoGzWnJIXx6UNS
-	NoCi0uZAKiVsFFZWmPMotW9Vq/ujFKl4jVfvA8rmSGmwNWTNo5G6YU3kzFqp4HWa
-	hqtbSR0SidTJGoDKdtboCOAHq1jKRp6Iw9regc=
-X-Sasl-enc: y70ICjTgZb/7lr+WcSxzE8K/fOrjYVSytjugIlVQnDUt 1453793846
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B3571C01715;
-	Tue, 26 Jan 2016 02:37:26 -0500 (EST)
-X-Mozilla-News-Host: news://news.gmane.org:119
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S932460AbcAZIAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 03:00:53 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58364 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752280AbcAZIAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 03:00:51 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MWkep-1acbgk1yAd-00XvAu; Tue, 26 Jan 2016 09:00:37
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq1t95fgig.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:7V5XiDk1y2YXGXh1XGhuIgHfv45mgm7hQOtpfAPWiyLsiiTy5oZ
+ C1oXopGVnZm2SjWsDWJTHUbkFVVt+F37h0p2cknQrNGtcPHVW9TPwZJHW0dH03Ih1UybYsQ
+ YJ8PVxh4qcKTInrhbPZnKqr0pB+Tsiv9QRWFpQfsdwf7f7N8RuI+OKHMpVfc2cgTMtg7PWW
+ tc38NWWIm5OXtMgF6ofMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UXqR/8I2v60=:x2o06AlsALGqBnIrB7bEOB
+ DdwYPSqP1XtCus1GmPoAs7e64bcrUxVORkzmhRY+UI1eRL8L9N4bSiash1J4Gbb/52Ygi0hgh
+ Y3E6VT4Q92OAm2/NN4nKnnlNYQdNCjV1H9MRPpqWTDW+69/0P0DljLLi4+vZBm1IFKsavsKYn
+ ORrag8XSRXirpXr3ezIMS1u0D1jgkYKJP1iP+zhGbsDjfZ57sDX8f0C31kmfo/S4Iev8YDaYP
+ RwBHsTN5uSfKkv7/epO5OC31IwuGmDo+ZVgrkGojSiL9iKdXk9qJG2N/Zra6V0pC4keVOWyKh
+ bsKS1N0f5C/TQi7Bh3yfGX91TiiImHrqP00/ZpItg3nZufBk0uOEgErnoFU8tcczBfUPXwbX8
+ MnbSFV3jvQeD8R6RkjxlS6Hmml57P7387t/ONum60Z0oXTk0PIQoWsyQiqMBlOQWDV2s1/ooT
+ Hyce708aU+sfT1luc1DbOb1hXtWH8QoK+JcFW60r/yk88pWI5s8TMoDFomrjGFWd6/l4Zippq
+ Kit2S/RaLCxtVii8jX3JGyAZiAmkuQXTEdgUPxLCCpHz2YZE4hSaNMCtT+2ggfpDo9nDTdy5g
+ qkpIvCjuko5Rx4pqUguIq/3+9rTMoX/l42k28m1E6be9MCqhfHUmLN3zMpVn/pk8sF3uu3xlF
+ sYQ31UnIbyJNdFo2J1oklKs2KwGy9Pc2VATw5F+vn9UcTJGQ6lS3Pp7MveMS+ZZpFgzOAttrm
+ TEAGq6PoExis7lLBr5ZX1fP33i3kzPWMmTuKihRlIww3oT8d79bnIm4MpyMLz+p8+sTnBWPo 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284785>
 
-Hi there,
+Hi Junio,
 
-with current next (989ee58 plus local additions) it seems that typo
-DWIMery with aliases is broken, see below.
+On Mon, 25 Jan 2016, Junio C Hamano wrote:
 
-It appears that the typo DWIMery is broken only when there is a unique
-automatic DWIM substitution for a mistyped alias.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Is the fact that $global_excludes is specified using an absolute
+> >> path significant to the correctness of this test script?
+> >
+> > Apparently not. So I followed your suggestion and made this independent
+> > of the OS:
+> >
+> > 	https://github.com/dscho/git/commit/0b9eb308
+> 
+> I see many "cd" in the script, some of which come before the global
+> exclude file is enabled, but others ("--stdin from subdirectory",
+> for example) do run from a subdirectory.  It turns out that this
+> file is used as the value of core.excludesfile.  By the time that
+> file is read in setup_standard_excludes(), presumably we have
+> already done setup_git_directory() and moved back to the root of the
+> working tree, so I guess such a change would be harmless.
 
-I haven't bisected yet, but I suspect this to be related to recent
-changes regarding the environment in which commands/aliases are started
-(though this happens without extra work trees), so I'm cc'ing an expert
-in that area. Funny, though, that my user name shows up...
+Yeah, it appears that after the entire test ran, there is only one
+global-excludes file, and none of the `rm` commands removes any
+global-excludes file.
 
-I think the reason is that git.c's handle_alias() (or something else)
-calls restore_env() multiple times, and restore_env frees orig_cwd such
-that subsequent restore_env(0) with external_alias=3D0 tries to cd to a
-random location.
+> It somehow makes me feel dirty, though.  But that is not a specific
+> problem to mingw port.
 
-I have no idea whether orig_cwd=3D0 after freeing or something else wou=
-ld
-be the proper fix.
+Well, I found the entire file a little hard to read ;-) But yeah, I do not
+think that is specific to the Windows port.
 
-Michael
-
-LANG=3DC git sss
-WARNING: You called a Git command named 'sss', which does not exist.
-Continuing under the assumption that you meant 'ss'
-in 2.0 seconds automatically...
-fatal: could not move to git@drmicha.warpmail.net: No such file or dire=
-ctory
-[mjg@skimbleshanks git]=E2=9C=97 LANG=3DC git ss
-## HEAD (no branch)
-?? a
-?? a.patch
-?? c2d.sh
-[mjg@skimbleshanks git]=E2=9C=93 LANG=3DC git statu -sb
-git: 'statu' is not a git command. See 'git --help'.
-
-Did you mean one of these?
-        status
-        stage
-        stash
-[mjg@skimbleshanks git]=E2=9C=97 LANG=3DC git statuss -sb
-WARNING: You called a Git command named 'statuss', which does not exist=
-=2E
-Continuing under the assumption that you meant 'status'
-in 2.0 seconds automatically...
-## HEAD (no branch)
-?? a
-?? a.patch
-?? c2d.sh
+Ciao,
+Dscho
