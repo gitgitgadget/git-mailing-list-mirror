@@ -1,77 +1,85 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 02/19] mingw: do not trust MSYS2's MinGW gettext.sh
-Date: Tue, 26 Jan 2016 15:34:30 +0100 (CET)
-Message-ID: <0511c0a72bddbdc6263ecd6fba2a8be23f59ff22.1453818790.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 01/19] mingw: let's use gettext with MSYS2
+Date: Tue, 26 Jan 2016 15:34:16 +0100 (CET)
+Message-ID: <4473801e86c03bd48b79806029b61a3ba761d067.1453818790.git.johannes.schindelin@gmx.de>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 15:36:30 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 15:37:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO4jL-0005Hb-Md
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:36:28 +0100
+	id 1aO4k2-0005jG-0I
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966093AbcAZOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 09:36:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60437 "EHLO mout.gmx.net"
+	id S966081AbcAZOhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 09:37:04 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63833 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966161AbcAZOeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 09:34:36 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LikE1-1ZpZlF0kFp-00cv2Z; Tue, 26 Jan 2016 15:34:32
+	id S965973AbcAZOeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 09:34:22 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M5a9E-1aD21p1YDo-00xbz2; Tue, 26 Jan 2016 15:34:17
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453818789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:erJDbxz/+ZLUdVTzrApqgOtQ2rfPVRCMxr9pa4hkaHLOGYYBE/Z
- AAlbQYX2lDkv2g4Zfe91PIRbVWu/1dQigRdGI0r4ZL3S+w9L3Pn0isIHOccUrxzEOqKz+da
- MHbg+PiZuHzPVzba9gvRHJG3zjifsQJBIXPD46H1YE7ch1116T+SyV9+8qY7jd4y/dtz8Ua
- wOXPH8WjK+3Ob1AdWpRgw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FYuuUNBcYP8=:8q6Ak51pR7OFn5sCgCzKv7
- HgJMsWb6mLLcynx9SKTtKsOcpzhHId+6iF21b7v8Ofv+6WrAd+72fXl0IABtDbWcXaXUCg4f/
- BiF3Rc3NiZmihuFPqKQaFvA4qK0lu4/1naRfzTpjIJ7jtyGzd+W5cPuK75HnIclhtTWBAewYP
- tPDOnDR8qCO0j5Eu4IOwNsuag3vCxkUMTqLnc/M2Cv9FIUnhdraGG+wOxALnlw66JwjfMRV8R
- gzZS80seFZR5oZRmKEOc9gIQNEWLtOU3f6OzkvYkwIMMeGlc3vb/isBeIkmjnnYxvzjxJMJNf
- BGHgCQhGUsrZ9pVSv26Dd2Hs/FPqSvbiA0lIdmd+lUmGZK9ulkKKckrZPIvteur/2nKaOuhGn
- MbDSWHscJVP+VFGaYWatZaOO4gHMiAy8kxrZpDWoDcq+OhEXz3U3Bv9bgPeo9TGWupEvlX8Dg
- TjLCd285bqx130J74FFB7qODtpTb7jaB1yP9OZoEtT1/evaLcuuEm5Ti7vA/T9Z8VO8IwF/KR
- Tt/YfxyLEpEIZQAGoPwAAdGS/oEbBMUK5eoOXRP4m/SivhM5ZqS/qUqQRpYb+NIAJte0UOQHE
- EVC8owdhS+J9bs00Z9hJd0ck1pCeSTO8f/lT3nXkHBaavL6UkBUbiAUfAxtJpat90B7R/oy0a
- UR6zc1+jd7yap/ZF7b7vCilX9bgtwtPbXrRCOsNvSf50MCqH+QlQsfhbTiit67bO3mwYGNT4e
- 3EIqdNI7C+Sng2vSapL1K9T1B1ZRIIWiiv/e2P5ZKXFFyKwkAJib9TkkVjz4cMXTbW4P6FuO 
+X-Provags-ID: V03:K0:SlE/FmL2mb4TtMgyWd70cfgkhQ1QDhtBNutv3Uz/abJXR5SOFCo
+ iAJ6BTAJFjhmb0Lh7ELCBSNPs5t9Xj68B0vlIc645UDX2LTs0rCn+zKF8pERd1fn+DR5+r0
+ zdpnpKlcupOblqYCXm3FVdMrhJVaT1zpjBRjOTs51ClsLW07JFNF31augllN9idhYHeSeKz
+ cL6HYBuSyoqtQMsKaqsHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oKPlWft5Cik=:oShtFg90JJiCvekJaogzSy
+ BRj+iqo19Y2gqa38fM0lDaC0dCwiqq2sfa8G9FER9kgXLmKmHsvmLcaJusrcdU/aS/lOpc00o
+ znvK1+5Qg2yMkeZqdBRbXBliHOB31DGUjayibXxG62eHFSwSY4el5D+Kmehtb8fiag/kw00qo
+ pIoCWW1C843rfKsCEmrOKyg2IbztwhhY3B4pJOLOen/OImUXmyrvCdkC/FBPDCgbsPa3WWuK2
+ vN9d6Eq4a9h8f03klTM1dzqjOeO6LAGbVnfD3mzVsDfkzKdQyMlTgs2iFEJFZ9AjCYSqAWIxu
+ ZozHhTM8HWKy9HqDlpHVpY40KWFQeStTqSZCof9RsBkW+y19GPiIpHnL5ccWN2UR5198+pm1y
+ hPx+SPtgmidx5RoakLAPJwFNgCLrHoaTXls/hWo5iucJyfEF5X06+FDs/pdry2GxEUzqIMpB0
+ eteSf9ppW37Gzlw4DnaWpkWSHOH38J6GF9Z3pV0MrLqR4PNJS96rTRI1ffuAjlfQ75yJd7HAp
+ ri3hx7kZ4gY7cN6mynLCkXgBfyQqLcvrzorK3dRcIGGyS8h81+iLoPBZBaGz0gvms4iA1PJxZ
+ 3vtKU/pCQYCf7kXzd8IMaZRRcC+AlhL9KKBtWcvqnWchs2eWo/zR7I5sPBwU++NceFYC70IkF
+ BVSVIEiyTOXO3fcKOspXpRy4hJEaepLGCwQYmX/kHYYY8Vj7YflevavDKqQz3GyE8aUegHw45
+ yOlTIbGBlxzBPaJJFHZPTz7XAv87131ssbmQ1ZRdaBSNSlW5RdBDyEOibOPQk6bxWXA3Co5H 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284833>
 
-It does not quite work because it produces DOS line endings which the
-shell does not like at all.
+This solves two problems:
 
-This lets t0200-gettext-basic.sh, t0204-gettext-reencode-sanity.sh,
-t3406-rebase-message.sh, t3903-stash.sh, t7400-submodule-basic.sh,
-t7401-submodule-summary.sh, t7406-submodule-update.sh and
-t7407-submodule-foreach.sh pass in Git for Windows' SDK.
+- we now have proper localisation even on Windows
+
+- we sidestep the infamous "BUG: your vsnprintf is broken (returned -1)"
+  message when running "git init" (which otherwise prevents the entire
+  test suite from running) because libintl.h overrides vsnprintf() with
+  libintl_vsnprintf() [*1*]
+
+The latter issue is rather crucial, as *no* test passes in Git for
+Windows without this fix.
+
+Footnote *1*: gettext_git=http://git.savannah.gnu.org/cgit/gettext.git
+$gettext_git/tree/gettext-runtime/intl/libgnuintl.in.h#n380
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index 6b25661..d6f7980 100644
+index 4b2e1b8..6b25661 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -561,6 +561,7 @@ else
+@@ -560,7 +560,7 @@ else
+ 		NO_R_TO_GCC_LINKER = YesPlease
  		INTERNAL_QSORT = YesPlease
  		HAVE_LIBCHARSET_H = YesPlease
- 		NO_GETTEXT =
-+		USE_GETTEXT_SCHEME = fallthrough
+-		NO_GETTEXT = YesPlease
++		NO_GETTEXT =
  		USE_LIBPCRE= YesPlease
  		NO_CURL =
  		USE_NED_ALLOCATOR = YesPlease
