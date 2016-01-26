@@ -1,100 +1,87 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 06/19] mingw: try to delete target directory before
- renaming
-Date: Tue, 26 Jan 2016 15:34:47 +0100 (CET)
-Message-ID: <136a54ce9ad696a287b47bd2c9711c252a61f38c.1453818790.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 03/19] Git.pm: stop assuming that absolute paths start
+ with a slash
+Date: Tue, 26 Jan 2016 15:34:35 +0100 (CET)
+Message-ID: <1e53f292003d0e3ab81a5e26be63eb80bfd6cda7.1453818790.git.johannes.schindelin@gmx.de>
 References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-2058225587-1453818887=:2964"
-Cc: =?EUC-KR?B?uLa0qb+k?= <nalla@hamal.uberspace.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 15:35:02 2016
+X-From: git-owner@vger.kernel.org Tue Jan 26 15:35:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO4hx-0004XC-Dw
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:35:01 +0100
+	id 1aO4hv-0004XC-L7
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966282AbcAZOe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 09:34:56 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54922 "EHLO mout.gmx.net"
+	id S966160AbcAZOep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 09:34:45 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51666 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966162AbcAZOew (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 09:34:52 -0500
+	id S966274AbcAZOek (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 09:34:40 -0500
 Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MTkNU-1aWygh3ZnE-00QVWA; Tue, 26 Jan 2016 15:34:47
+ ESMTPSA (Nemesis) id 0Lj1Cw-1ZpIe53TsU-00dCM4; Tue, 26 Jan 2016 15:34:35
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453818789.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:f+hgeTz+KY1Ylrs6OSN0rP+TA4eUE1s43RN/eo+2q+Hr4WCDrQU
- uKL4StP/sRkAMvaRLJB/9ASilgCXyIdpfaMSCi1S+UWtQ15KB6LdJQh6NqUP82TY4WWAail
- NIWlhgpIa/HCXAnG20utzK8KyDerDW2wZSUCu1H+BC+o7G8ltZ5WGuICnLKT2VQ2GnNOSDi
- GafHj8SPbWjo2u4KIqh/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8J6IzVogro8=:R4Wyv09mbS9T1rvT4MQ/Ks
- gbr76VC8c21V6IleA2mp0Wiy6+5jwb+zde/rYFDlqQD5MZaprpQ2ZP91X7AezOA2cmmMRtND9
- CuKBQts+isMkaokHiwxm/GcDUWC3BnRSBNlHlA4yiIaCV+ujdlZVBJIcKjHrv/hQhFwtecruK
- PCp7zm5z73vZeVt8lCbe7VJCu1mH/9ShQ0+hySFvBkBk394oW/2vtKYiLq+xyZ7vQsWXU+rux
- slX37W8oL2QB5Uan8pY+KpLUuyoY8CECPrQLcleFppuOovcze68z54hWQiryEjqoqlVtapwcX
- KD1DF1SFkVeYsQnMcTE5pJUGIKWJcOtQMWDODoeLOIS6Q8N91BlxYHNsPzGWE9bSeKc9MlYAt
- KWSSeGmIiF3TSkDLIdi9GSHc3crkyHMZGR4m084gVRn5tgAKRFz59GSg+Gzq+moo4aePQz2YZ
- 9VmDYVCi2lVdEJlkfqIXHLFIF8unhlwvPusTD7ltAnQKjRKrhVVgnLG7VetNprzzKciGlI+e8
- OJgiomKJMsHaqvQ0gUw3M6Qj38ZH42BnHrBLlEm4QNgIemEoS/v4vQqgZPiqxqtPuJfpyxLY9
- xGBNyKYMaPN6jsmRkY9xItF7is1+FnAQ2eaCss0GNaA4V3ZSxQafcS2zWgTf6MGhvFbeMq+9z
- X4HAEj+9F/IYD1ZeR56SZFdaMFXHr9BO7pjCVYPGXGyXWUWqE0yhIMFLYajXXkTVxM6Di/6Up
- qTFznpQ6XvxtCp9j0JJ0bgcI/ZDwWJ8GFTtKjXR1FUAijCIxk4D5cm1/oWHXG09EP4GhVrgT 
+X-Provags-ID: V03:K0:KFEdTJ5wrXdmS2/VUwnqcLrpng2ja4vlyZCE/dkVSYFPHult1Rg
+ GCn2ce7+GKkyBUDfihREG7AAVZ1A541dM4IO3bysByp2RET4Lqa5Vynn3sPZvsOQ5CILP02
+ hzKIjNmv6skV9FMZDq4qtLc2uF8CVHbyIEx1fDf2pGQvvNhRv411gZNltgTPAJfro4BZ58Q
+ 2ywON2cuIoe/QQ6aNOC0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jyBRC9Y62KY=:CSFJUoeuYt2viWXpt3vhsk
+ 2TgPUg2sLtFgdu6T73G9YqsM3caTsyr5wSDVnzl2qxVjH16X5rAWxDk19WUyQjpBQ1VTQxDJh
+ AbgDhMbNLwiFGG+P9tbESsJ1epzKyYxSU6dxM+87lm1BZSn9TyJtG7i18ydACoNuA7xYyuzpw
+ hvxZbkSzZVAQcfoasmRGtLQz7ZG6rAfCWeDMbadZlAk+BltAnsC4MONbv7pS6tnCwXsKfSEBp
+ i4vxleOJRKDLkdtoTyj2S8RYnGPiTbDQE9uavIvrBjZvnYv20u57Ci6XWSM+CavNCDE5dtJI5
+ BPRMKmCWpwQhi5W5csYv8XjQKmxeD2C9DSBp3YhItlpOZ6Z5SsGjs7BtjhswkLnzRaCnBf+od
+ 6YqdCJHuwJiFVFom79ae5AGgjsjmoOnAKJr3BlaY12JqBor6fY4d7FY4cUTlt2Pxiazg3n7oF
+ GKKt58TcZ4vGOmYhTYhSkW+pC0GZwNXoWBiEU8PMkWv6hMivMPdLfsFWty1u21c3RYfZqsH8T
+ hpUp3xdOvaAp9siRq37J1GKWaE8ICG7PlCnGtPUUgTZJWCLrCZ8nMvD4BsYS1Pr2WxWYOJ/8a
+ Tp6v/UzOjlIkA6tUC24U9tTsOGF0orxsteQRMHEX6QKX/eAdF9UFbblwKHeigg/lTCBeKexc3
+ DpMdoNgsbLcg9R0B4AtcYdIS/aWeny3is3CW8e/sJE2CWx1V7SdnxvqMfri4OebE/kUk1xklF
+ 3cdIZHVKf8Pdj7iLT3OzS4oXN+VW3wQ9wFOyy01Ow9OVWAJEZ2LxJUcrAd2IIxyqvSZW3Q+f 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284818>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Windows, absolute paths never start with a slash, unless a POSIX
+emulation layer is used. The latter is the case for MSYS2's Perl that
+Git for Windows leverages. However, in the tests we also go through
+plain `git.exe`, which does *not* leverage the POSIX emulation layer,
+and therefore the paths we pass to Perl may actually be DOS-style paths
+such as C:/Program Files/Git.
 
---8323329-2058225587-1453818887=:2964
-Content-Type: text/plain; charset=EUC-KR
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+So let's just use Perl's own way to test whether a given path is
+absolute or not instead of home-brewing our own.
 
-From: =3D?UTF-8?q?=3DEB=3DA7=3D88=3DEB=3D88=3D84=3DEC=3D97=3D98?=3D <nalla@=
-hamal.uberspace.de>
+This patch partially fixes t7800 and t9700 when running in Git for
+Windows' SDK.
 
-When the rename() function tries to move a directory it fails if the
-target directory exists. It should check if it can delete the (possibly
-empty) target directory and then try again to move the directory.
-
-This partially fixes t9100-git-svn-basic.sh.
-
-Signed-off-by: =B8=B6=B4=A9=BF=A4 <nalla@hamal.uberspace.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ perl/Git.pm | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index ba6bdb5..11b905d 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1603,7 +1603,12 @@ repeat:
- =09if (gle =3D=3D ERROR_ACCESS_DENIED &&
- =09    (attrs =3D GetFileAttributesW(wpnew)) !=3D INVALID_FILE_ATTRIBUTES)=
- {
- =09=09if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
--=09=09=09errno =3D EISDIR;
-+=09=09=09DWORD attrsold =3D GetFileAttributesW(wpold);
-+=09=09=09if (attrsold =3D=3D INVALID_FILE_ATTRIBUTES ||
-+=09=09=09    !(attrsold & FILE_ATTRIBUTE_DIRECTORY))
-+=09=09=09=09errno =3D EISDIR;
-+=09=09=09else if (!_wrmdir(wpnew))
-+=09=09=09=09goto repeat;
- =09=09=09return -1;
- =09=09}
- =09=09if ((attrs & FILE_ATTRIBUTE_READONLY) &&
---=20
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 19ef081..49eb88a 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -188,7 +188,8 @@ sub repository {
+ 		};
+ 
+ 		if ($dir) {
+-			$dir =~ m#^/# or $dir = $opts{Directory} . '/' . $dir;
++			_verify_require();
++			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+ 			$opts{Repository} = abs_path($dir);
+ 
+ 			# If --git-dir went ok, this shouldn't die either.
+-- 
 2.7.0.windows.1.7.g55a05c8
-
-
---8323329-2058225587-1453818887=:2964--
