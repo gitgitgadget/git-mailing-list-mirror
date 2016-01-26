@@ -1,85 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 20/19] mingw: skip a test in t9130 that cannot pass on
- Windows
-Date: Tue, 26 Jan 2016 15:54:15 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601261551550.2964@virtualbox>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Tue, 26 Jan 2016 10:29:42 -0500
+Message-ID: <20160126152941.GA31951@LykOS>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 26 15:54:28 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jan 26 16:29:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aO50l-0005q4-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 15:54:27 +0100
+	id 1aO5Z3-0007RM-Bn
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Jan 2016 16:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966267AbcAZOyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Jan 2016 09:54:24 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55404 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965268AbcAZOyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jan 2016 09:54:21 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LeuUB-1Zkfag07uJ-00qioO; Tue, 26 Jan 2016 15:54:17
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:OrUKXJTPShtKI4DnIWPFXPvS18xQvkUumwizii57s8whc1WxTP2
- vGHs8kA/bejpN0KYAH16e9hDdBq2rLvbThp9zlgSPt5PhsnINiHbMjLJ0X425StfCif+xke
- YqJQwGxdLd1NQ66czh5DeCrEmRzga8bM7QHIik5HtOWcehC1UyGTROJE6yXbZ6TA77FraxP
- CtIr2H3F+tJf+6YwdhbUw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qLBlMZnFi8w=:rdVD55odthUoavE5Cl64D3
- bYrEgPsyKoJomkwafeI9TmEuNh9qhqErC8LMOCMLnvmyrPCEQHQEDFg6ILxFFO1sz7YGqLCIE
- hRJdiFicu9uPkw5Ntbplbsu/aSzhnPUcqcxdEFhffhaqYKHrQwCWkp+3thgdH/Vp5gUMJvxuc
- XOPVVnjHSLDc3SPYSQ9vPer7IOkV1ud/X+KCMHybfwFmIJIiB+0EBEGNAVVhjKSmPN+nSVDMe
- mdLr27Nge22Tl2f81SWq/WBp00VX44OQ70719qikVB/lrVz5+8QQ9kA7e9dmAr5M/3vYaKay3
- S3nj8ULaDJC8P2n+BQQqCU8XgBbnVQ5T4a1kU2FpsVo4Dridlw/GsVei71DYdyW0Hq+6d68a6
- Sd3nq68l75p9115e+njIUEzrKK8pY/l2K8nSXSaPY9oP19T0thqAQrdGjkPs6gfwmJmmeC3bu
- W/iX2C/EpZC9IurYBSoar/gcXd7rXqdVJ/E+q5K88it4xOXzINCxgtZgvIE5fIEPs2Br1BYzi
- PprKgYeJouYEw896O9CJ3hCU09ehmJK1/t06jebKrkw/IuDe5412zSPWeXyC6vyjQsatf0yzZ
- Yyl5ICvb6rZNXh8ccL07J5ns39dYXBmjW8DsedaeeWByfCQTYh6DY5C1ETnBjJ8QjVvP0Kie/
- U+AAt5Iv88A7mOrd9DC0xKTW5vk1lSqN/v2WcMvwCbRyoT63QKeE4QcM8EGuD3v5KVxlRX5Ia
- LaZjTFevTOBs9UPVbWjPXruQQ69qrzPDSY+4DOUlQsiLuV37sAsJk/q1qkrT/CJUeuOt3uH/ 
+	id S966359AbcAZP3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Jan 2016 10:29:49 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:36155 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966356AbcAZP3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jan 2016 10:29:45 -0500
+Received: by mail-qk0-f175.google.com with SMTP id s68so63913514qkh.3
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 07:29:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=uEjrwMhW7k4QAIqXb4weMtLvHUVRTrtKtgc8OO3Jnwk=;
+        b=iwJbgByYTJZtLerw1TeMIfXLS9N2+lhDt81Y+h1pHExkuBu1YJP6widkDZWG0oWmYx
+         5oLdFiBIEEgGmlTtnjx7Gn6jTSHY2nzsiZ/L1XEEiOCkean/KVD8KL8g3e+gL5OjlB3J
+         6Q4nlSWZi0xLymbOv6JloydVAwpC12ClFmNankC6wU3kvqZ3/Pce8lhtDa9v3san+b4J
+         CAyib+RdHj21fobDxruWD1OzYM6tQgPWlzT++BmVLlqRZc2MXXLb/zK6yGCT2NvsCg3Z
+         aUEp9hU9yqA1vrDnRCdVlP6gvzpCa+/CKyNzd/S0Ajx7g9l6GQGn6w2XXCj2PJ/7oBJA
+         ebZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to;
+        bh=uEjrwMhW7k4QAIqXb4weMtLvHUVRTrtKtgc8OO3Jnwk=;
+        b=hEbQI3kmQzDmpDNVow+2dJWGk5dXLPbYbL1wd1+oR/IqZWGlRrQ8U2oO4rRDQ5u/WG
+         ZTZe0dp5hY2Q7dLoutW+JFynnU/5THQDa//1b/ZSrnLKConjNzPXXAxJ2xGTWMJ93/6W
+         REKhknrD37OGLh27uPz/dPg/nK9Jw8Qm8ew5DrL+4jMbqUiZKHq9Ubbb6yeKs8zn/jKI
+         bj6qOsANGAemDeEWtA/BsX3DUpbNclHNTfJnkTciraA61R6vmgy5fplmkIhI9dBIs6Us
+         zRK/5CsRg9euFq90nKGBQEZ8uLHyp0kCg5mid1qrk8lK7mg47V0Kp/Kj5rTgQ/8oRDM1
+         Ijtw==
+X-Gm-Message-State: AG10YOQiVWWBPJKKMVozT+CaYqYFSaN0YCotrCUpUcvd8RHa0O9KxvmumH9RqR9lZO4sBg50
+X-Received: by 10.55.77.148 with SMTP id a142mr28592675qkb.44.1453822184732;
+        Tue, 26 Jan 2016 07:29:44 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-15.NATPOOL.NYU.EDU. [216.165.95.4])
+        by smtp.gmail.com with ESMTPSA id 11sm685733qgx.32.2016.01.26.07.29.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 26 Jan 2016 07:29:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <56A73DE6.5050201@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284840>
 
-On Windows, Git itself has no clue about POSIX paths, but its shell
-scripts do. In this instance, we get mixed paths as a result, and when
-comparing the path of the author file, we get a mismatch that is
-entirely due to the POSIX path vs Windows path clash.
+On Tue, Jan 26, 2016 at 10:35:34AM +0100, Michael J Gruber wrote:
+> Santiago Torres venit, vidit, dixit 25.01.2016 22:22:
+> > Hello everyone.
+> > 
+> > I've done some further research on the security properties of git
+> > metadata and I think I've identified something that might be worth
+> > discussing. In this case, The issue is related to the refs that point to
+> > git tag objects. Specifically, the "loose" nature of tag refs might
+> > possibly trick people into installing the wrong revision (version?) of a
+> > file.
+> > 
+> > To elaborate, the ref of a tag object can be moved around in the same
+> > way a branch can be moved around (either manually or by using git
+> > commands). If someone with write access can modify where this ref points
+> > to, and points it to another valid tag (e.g., an older, vulnerable
+> > version), then many tools that work under the assumption of static tags
+> > might mistakenly install/pull the wrong reivision of source code. I've
+> > verified that this is possible to pull off in package managers such as
+> > PIP, rubygems, gradle(maven), as well as git submodules tracking tags.
+> > 
+> > In order to stay loyal to the way files in the .git directory are
+> > ordered, I don't think that making the ref file (or packed refs) files
+> > differently is an option. However, I think that it could be possible to
+> > store the "origin ref" in the git tag object, so tools can verify that
+> > they are looking at the appropriate tag. There might also be a simpler
+> > solution to this, and I would appreciate any feedback.
+> > 
+> > What do you guys think?
+> > 
+> > Thanks!
+> > Santiago.
+> 
+> If you cannot trust those with write access to a repo that you are
+> pulling and installing from you might want to re-check where you are
+> pulling or installing from ;)
 
-Let's just skip this test so that t9130-git-svn-authors-file.sh passes
-in Git for Windows' SDK.
+Yeah, I see your point, but mechanisms to ensure the server's origin can
+be bypassed (e.g., a MITM). I don't think it would hurt to ensure the
+source pointed to is the source itself. The tag signature can help us do
+this.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> 
+> In fact, just like you shouldn't blindly download and install a tarball
+> (but check its signature) you shouldn't blindly pull and install from a
+> repo.
 
-	Oh crap. Of course I forgot this one... Ideally, this would have
-	been the second-to-last patch, i.e. between "mingw: handle the
-	missing POSIXPERM prereq in t9124" and "mingw: skip a test in
-	t9130 that cannot pass on Windows".
+Yep. As a matter of fact, many of these package managers can install
+from a specific commit, which should be safer. However, I do think that
+pointing to a tag is more "usable" given that they are human-readable.
+Also, tags are usually meant to point to releases, so it follows its
+design pattern doesn't it?. I think it wouldn't be a bad idea to provide
+a hard-binding between tag-refs and tags themselves.
 
- t/t9130-git-svn-authors-file.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Your best bet is checking the signature of signed tags. Now, if you're
+> worried about someone maliciously pointing you to the wrong, correctly
+> signed tag then you should verify that the tag object contains the tag
+> "name" that you expect (for example by using "git verify-tag -v" or "git
+> cat-file -p"), since that is part of the signed content.
 
-diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
-index d306b77..4126481 100755
---- a/t/t9130-git-svn-authors-file.sh
-+++ b/t/t9130-git-svn-authors-file.sh
-@@ -91,7 +91,7 @@ test_expect_success 'fetch continues after authors-file is fixed' '
- 	)
- 	'
- 
--test_expect_success 'fresh clone with svn.authors-file in config' '
-+test_expect_success !MINGW 'fresh clone with svn.authors-file in config' '
- 	(
- 		rm -r "$GIT_DIR" &&
- 		test x = x"$(git config svn.authorsfile)" &&
--- 
-2.7.0.windows.1.7.g55a05c8
+Yep, this is my intuition behind my proposal. While someone can manually
+inspect a tag (git tag -v [ref]) to ensure he's getting the correct one,
+there's no mechanism to ensure that the ref is pointing to the intended
+tag. I do believe that package managers and git submodules could check
+whether the ref is pointing to the right tag with a small change in the
+tag header. Although it would be up to each tool to implement this
+check.
+
+I don't think that an addition like this would get in the way of any
+existing git workflow, and should be backwards-compatible right?
+
+Thanks,
+-Santiago.
