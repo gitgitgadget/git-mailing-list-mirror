@@ -1,9 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v5 0/2] Let merge-file write out conflict markers with correct
- EOLs
-Date: Wed, 27 Jan 2016 17:37:25 +0100 (CET)
-Message-ID: <cover.1453912583.git.johannes.schindelin@gmx.de>
-References: <cover.1453819314.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v5 2/2] merge-file: ensure that conflict sections match eol
+ style
+Date: Wed, 27 Jan 2016 17:37:40 +0100 (CET)
+Message-ID: <758de0ea18bad0e830ca298440e67002171251d6.1453912583.git.johannes.schindelin@gmx.de>
+References: <cover.1453819314.git.johannes.schindelin@gmx.de> <cover.1453912583.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
@@ -12,123 +12,190 @@ Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
 	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 17:37:48 2016
+X-From: git-owner@vger.kernel.org Wed Jan 27 17:37:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOT6J-000881-IE
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:37:47 +0100
+	id 1aOT6T-0008Em-0z
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:37:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933565AbcA0Qho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 11:37:44 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55851 "EHLO mout.gmx.net"
+	id S933740AbcA0Qhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 11:37:54 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62352 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932256AbcA0Qhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 11:37:42 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MI5rO-1aNvfD1rgM-003saY; Wed, 27 Jan 2016 17:37:29
+	id S932256AbcA0Qhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 11:37:52 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lo2EO-1ZrKCk0ILw-00g1qu; Wed, 27 Jan 2016 17:37:42
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <cover.1453819314.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1453912583.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:gj1RUS34QQ/ag1l0dZH8Dhgmbxf9hDoVFnwO+cWfBu0a9f0/fwg
- hC8XGZWiN2h5a0neozHvaHH62o6l+9lAGCyaxFldVrXiL2vZSjZAxWZ+c32OuWyp0b1HGLx
- nluhncW8+6bYOvLJSe6of+DA5ahXf+W5fuV2Ht5q+YbCk3lv7ofWwqk+dYbcd5+PcHA74W1
- jH1GpynBqhewAW5fSGiXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:H9q639x2tKw=:MAdTRCBgbSEfudbqNOwRwH
- SHP73x6yT2jYNcE09ygbFz4eixFMsOYN/mhuB8n8D/jvBwsmovas01PJi9CBTbPn5lXwhtyMq
- 0QsEfJNzmdtpEzHPOzF9+ED18xjeV/ADBuhSRprbfLYu+9fpmTkCmV4PCEnsp4AwcGCL5iHYt
- 5PV5v4VHNkv2kykaMLRcvP/M4Rl7jrs5M0Dk58WSdXJyo8pHTGzO1EiW/pjKaZGdbL1p1QOh1
- KQpqUUyRojc+uidquGtVSKHGdG4i60aKOVXCka3zIyB9zchCmVfNdbuaywMXc3r8UyXZBN3gW
- UlbtzdlJb6llOjB0pPG1PMNsAWDswv14hnoe+dX3FMIerv3iPLAHFxTDNstw46dg5HxEiyVjJ
- DBvH1yei70q0nW4imeeqF2zdobgVyMLVa4LOQEp0PvrVJP1aUZUJV2cFzDRV24PSyXqBuljnS
- YBvS+6xOXeMMu7pdehpI733Du7joZXsQwfPdk/GrCIW64V0W1dQ94HH8sCqmOoFzo4YG7c11o
- NSHam3p8rDbGnH48fYw5Zz5Cwu9m3zfb9aAHLMR+9ElTVFT7V+kSk2ECDO/eG7eY1DfkOGe3r
- U6Nd0uRvZyqvUSsOlbd3fmVfXjthx9SAD/G5d7aEY5C8ihb+LstID0M9zDOr6jtSrniN45OvP
- eHTd02YUNyHIUtuSn9l7MKe42/em2Au6xXfSnEE3Ch3E+f5oAALRZsJcMlX68rp+VTBdsOKz8
- EeJzWdgs5PQz92MZDN2pxFfpIzYIUTjoNxJaOz+eSZXwghak1j6hFINsgD8AsG6SSejQzGWr 
+X-Provags-ID: V03:K0:U/Kx3iR/m0TY1CQvWmxG3fSSJhRMld+VFF9/7ugykSMM0wU0Usa
+ PSHwzFWByuvmFE473ayscVyB7+suuCDXeD12c9jU9lFrpIVkB7lSfvgM+t3iOuu5XH8OCM+
+ ZznscxZKKHOy+dpehwh6GR/XD1/9qsE1HzStcXdEadJcvdr+oYUhZpnOhHUi2rtJXKI5VaP
+ 1/jXpJ8uAQNQNIbPdF4hg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:P4fRxYqLGYI=:QPpsgJ+XSrUrLovhFG9DcS
+ F6NKJM0tFSC6iTBPbEzPrZQDlfD2RvWsHhgioQOy4grICdzictc1D07KP4pp0eCuIcGLIk+VJ
+ r4gDcSB7XkJY28gHp77I9SSxtO3vZsPVeIDendzO39qaT7qRurUyGn7+DJ/q9+VoWd26o2+YJ
+ dfYkRsvXRMfGL5mWw9QLvYxv/t2i+emaa7DBLPvJb2JVvbL/MRiThv+3tWSUqxFHxGBA6yN3l
+ 3SORkW9zUXDxop7sKCxwLZNBau6qgxWdjqJpjK/CKQRmDi22B3kasBYriWNraqznRbP5vAbK5
+ Ip6HZ5CClcC8aAv0iQUPXqd6yWfjuIqOO3+OEptdXRQGKa5F1JWR0M6gFYDqR337zwGtflPDP
+ fzWb+Av/L/YaZiUtJ+rLqgc7iABV2OHczVqnqUkmMTcaTcfG+UrkdPis9GdFTmdY0BwcgMNO5
+ aRYdARaqimiK+CdGKjBwmiAoF675NlLBHo9bx4GG+d+J8h4BGG2zMk2QCe5N65rsJxmL+DPg5
+ P3I7jK3dTrHR8TJ2Yhl0T6YOc46/9cj4p1WuU8pdjaKrgl/il+0T/wjqq6ytpDF0HO5nsM7zH
+ IAmyLU9kNrbBU+0LztRPPrWtOAKzqAgyifKIQZp6FaQNbIylkLTiCtMeNGA0iHjaHTKcjM1bc
+ ePoTQXirR3+0EG0BknYrmXirvhOSFDdoJBnFAdvx8YJWMgmvtSf6W6xDixUvOG7MTtesl6/55
+ HIK/HVRsv7v7Js3KSXH+vepYclm6xIDm0OUk1stZPFibW1Tk0l8TCol6Xgr9QFilcug5G8P4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284942>
 
-The original patch was sent by Beat Bolli in
-http://thread.gmane.org/gmane.comp.version-control.git/281600
+In the previous patch, we made sure that the conflict markers themselves
+match the end-of-line style of the input files. However, this still left
+out the conflicting text itself: if it lacks a trailing newline, we
+add one, and should add a carriage return when appropriate, too.
 
-My suggestion to extend it to respect gitattributes led to
-changes that broke the original patch. And they were misguided
-to begin with (see below).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t6023-merge-file.sh |  3 ++-
+ xdiff/xmerge.c        | 37 +++++++++++++++++++++++--------------
+ 2 files changed, 25 insertions(+), 15 deletions(-)
 
-Since there have been a couple of "What's cooking" mails
-containing unheard calls for updates on this patch, I took it
-on myself to fix things.
-
-Junio's comment that we might look at blobs containing CR/LF
-line endings made me rethink the entire approach, and I am now
-convinced that we need to abandon the entire idea to make the
-conflict markers depend on config settings or attributes:
-after all, I introduced `git merge-file` as a replacement for
-GNU merge that can be used *outside* of any repository, by design.
-
-The crucial idea hit me yesterday when I took a step back: all
-we need to do is to ensure that the end-of-line style is matched
-when *all* input files are LF-only, or when they are all CR/LF.
-In all other cases, we have mixed line endings anyway.
-
-And to do that, it is sufficient to look at *one single line
-ending* in the context. Technically, it does not even have to be
-the context, but the first line endings of the first file would
-be enough, however it is so much more pleasant if the conflict
-marker's eol matches the one of the preceding line.
-
-To prevent my future self from repeating mistakes, I added a
-little bit of background to the first commit message.
-
-Triggered by a comment by Junio, I realized that a second patch is
-needed: we need to make sure that the conflicting sections are also
-augmented by the appropriate line endings if they lack any.
-
-The change relative to v4 is that I now test the correct conflict
-markers: the merge-file call we add to t6023 actually produces four
-conflict markers because a previous test switched the conflict style
-to `diff3` mode. This is only a side effect, though, therefore I
-really wanted to avoid testing for it. However, I managed to test
-an *incorrect* subset of three, but this is now fixed. Thanks go
-to Ramsay Jones for poking my nose onto that issue.
-
-
-Johannes Schindelin (2):
-  merge-file: let conflict markers match end-of-line style of the
-    context
-  merge-file: ensure that conflict sections match eol style
-
- t/t6023-merge-file.sh | 13 +++++++
- xdiff/xmerge.c        | 98 +++++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 93 insertions(+), 18 deletions(-)
-
-Interdiff vs v4:
-
- diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
- index 1390548..20aee43 100755
- --- a/t/t6023-merge-file.sh
- +++ b/t/t6023-merge-file.sh
- @@ -352,11 +352,11 @@ test_expect_success 'conflict sections match existing line endings' '
-  	printf "1\\r\\n2\\r\\n5" >crlf-diff2.txt &&
-  	test_must_fail git -c core.eol=crlf merge-file -p \
-  		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
- -	test $(tr "\015" Q <crlf.txt | grep "\\.txtQ$" | wc -l) = 3 &&
- +	test $(tr "\015" Q <crlf.txt | grep "^[<=>].*Q$" | wc -l) = 3 &&
-  	test $(tr "\015" Q <crlf.txt | grep "[345]Q$" | wc -l) = 3 &&
-  	test_must_fail git -c core.eol=crlf merge-file -p \
-  		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
- -	test $(tr "\015" Q <nolf.txt | grep "\\.txtQ$" | wc -l) = 0
- +	test $(tr "\015" Q <nolf.txt | grep "^[<=>].*Q$" | wc -l) = 0
-  '
-  
-  test_done
-
+diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+index a082116..20aee43 100755
+--- a/t/t6023-merge-file.sh
++++ b/t/t6023-merge-file.sh
+@@ -346,13 +346,14 @@ test_expect_success 'conflict at EOF without LF resolved by --union' \
+ 	 printf "line1\nline2\nline3x\nline3y" >expect.txt &&
+ 	 test_cmp expect.txt output.txt'
+ 
+-test_expect_success 'conflict markers match existing line endings' '
++test_expect_success 'conflict sections match existing line endings' '
+ 	printf "1\\r\\n2\\r\\n3" >crlf-orig.txt &&
+ 	printf "1\\r\\n2\\r\\n4" >crlf-diff1.txt &&
+ 	printf "1\\r\\n2\\r\\n5" >crlf-diff2.txt &&
+ 	test_must_fail git -c core.eol=crlf merge-file -p \
+ 		crlf-diff1.txt crlf-orig.txt crlf-diff2.txt >crlf.txt &&
+ 	test $(tr "\015" Q <crlf.txt | grep "^[<=>].*Q$" | wc -l) = 3 &&
++	test $(tr "\015" Q <crlf.txt | grep "[345]Q$" | wc -l) = 3 &&
+ 	test_must_fail git -c core.eol=crlf merge-file -p \
+ 		nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >nolf.txt &&
+ 	test $(tr "\015" Q <nolf.txt | grep "^[<=>].*Q$" | wc -l) = 0
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 7b21a6b..d98f430 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -109,7 +109,7 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
+ 	return 0;
+ }
+ 
+-static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int needs_cr, int add_nl, char *dest)
+ {
+ 	xrecord_t **recs;
+ 	int size = 0;
+@@ -125,6 +125,12 @@ static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int add
+ 	if (add_nl) {
+ 		i = recs[count - 1]->size;
+ 		if (i == 0 || recs[count - 1]->ptr[i - 1] != '\n') {
++			if (needs_cr) {
++				if (dest)
++					dest[size] = '\r';
++				size++;
++			}
++
+ 			if (dest)
+ 				dest[size] = '\n';
+ 			size++;
+@@ -133,14 +139,14 @@ static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int add
+ 	return size;
+ }
+ 
+-static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++static int xdl_recs_copy(xdfenv_t *xe, int i, int count, int needs_cr, int add_nl, char *dest)
+ {
+-	return xdl_recs_copy_0(0, xe, i, count, add_nl, dest);
++	return xdl_recs_copy_0(0, xe, i, count, needs_cr, add_nl, dest);
+ }
+ 
+-static int xdl_orig_copy(xdfenv_t *xe, int i, int count, int add_nl, char *dest)
++static int xdl_orig_copy(xdfenv_t *xe, int i, int count, int needs_cr, int add_nl, char *dest)
+ {
+-	return xdl_recs_copy_0(1, xe, i, count, add_nl, dest);
++	return xdl_recs_copy_0(1, xe, i, count, needs_cr, add_nl, dest);
+ }
+ 
+ /*
+@@ -202,7 +208,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 		marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 
+ 	/* Before conflicting part */
+-	size += xdl_recs_copy(xe1, i, m->i1 - i, 0,
++	size += xdl_recs_copy(xe1, i, m->i1 - i, 0, 0,
+ 			      dest ? dest + size : NULL);
+ 
+ 	if (!dest) {
+@@ -221,7 +227,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	}
+ 
+ 	/* Postimage from side #1 */
+-	size += xdl_recs_copy(xe1, m->i1, m->chg1, 1,
++	size += xdl_recs_copy(xe1, m->i1, m->chg1, needs_cr, 1,
+ 			      dest ? dest + size : NULL);
+ 
+ 	if (style == XDL_MERGE_DIFF3) {
+@@ -240,7 +246,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 				dest[size++] = '\r';
+ 			dest[size++] = '\n';
+ 		}
+-		size += xdl_orig_copy(xe1, m->i0, m->chg0, 1,
++		size += xdl_orig_copy(xe1, m->i0, m->chg0, needs_cr, 1,
+ 				      dest ? dest + size : NULL);
+ 	}
+ 
+@@ -255,7 +261,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	}
+ 
+ 	/* Postimage from side #2 */
+-	size += xdl_recs_copy(xe2, m->i2, m->chg2, 1,
++	size += xdl_recs_copy(xe2, m->i2, m->chg2, needs_cr, 1,
+ 			      dest ? dest + size : NULL);
+ 	if (!dest) {
+ 		size += marker_size + 1 + needs_cr + marker2_size;
+@@ -294,21 +300,24 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
+ 						  marker_size);
+ 		else if (m->mode & 3) {
+ 			/* Before conflicting part */
+-			size += xdl_recs_copy(xe1, i, m->i1 - i, 0,
++			size += xdl_recs_copy(xe1, i, m->i1 - i, 0, 0,
+ 					      dest ? dest + size : NULL);
+ 			/* Postimage from side #1 */
+-			if (m->mode & 1)
+-				size += xdl_recs_copy(xe1, m->i1, m->chg1, (m->mode & 2),
++			if (m->mode & 1) {
++				int needs_cr = is_cr_needed(xe1, xe2, m);
++
++				size += xdl_recs_copy(xe1, m->i1, m->chg1, needs_cr, (m->mode & 2),
+ 						      dest ? dest + size : NULL);
++			}
+ 			/* Postimage from side #2 */
+ 			if (m->mode & 2)
+-				size += xdl_recs_copy(xe2, m->i2, m->chg2, 0,
++				size += xdl_recs_copy(xe2, m->i2, m->chg2, 0, 0,
+ 						      dest ? dest + size : NULL);
+ 		} else
+ 			continue;
+ 		i = m->i1 + m->chg1;
+ 	}
+-	size += xdl_recs_copy(xe1, i, xe1->xdf2.nrec - i, 0,
++	size += xdl_recs_copy(xe1, i, xe1->xdf2.nrec - i, 0, 0,
+ 			      dest ? dest + size : NULL);
+ 	return size;
+ }
 -- 
 2.7.0.windows.1.7.g55a05c8
