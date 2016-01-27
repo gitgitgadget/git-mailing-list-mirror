@@ -1,202 +1,149 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v8 11/11] t7063: add tests for core.untrackedCache
-Date: Wed, 27 Jan 2016 07:58:07 +0100
-Message-ID: <1453877887-11586-12-git-send-email-chriscool@tuxfamily.org>
-References: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Stefan Beller <sbeller@google.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 08:05:42 2016
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 08:23:02 +0100
+Message-ID: <56A87056.2010309@drmicha.warpmail.net>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net> <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Santiago Torres <santiago@nyu.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 27 08:23:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOKAb-0003in-KN
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:05:37 +0100
+	id 1aOKRe-00008Q-F8
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987AbcA0HEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 02:04:32 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:34482 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753969AbcA0HD7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 02:03:59 -0500
-Received: by mail-wm0-f51.google.com with SMTP id n5so13142631wmn.1
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=o5YfGBkyrXiqn8nhUP3HMJzCoCVXlcsf7s1Wvnj2/q0=;
-        b=Rs61O2ebwN1TtDCJyrLv+UwP3+vJKr00ufj1bsFV+iM+b47jCDw6OXqbl5HouEBvpq
-         J3aJVnSdFvYcv66UtUurhjLWbo4A6CCdTw3h/0Z77/Q2W8KrrpFEz4WYcdLa64w+6+bc
-         GGjqvf7F9jOMtBCn2LN8c2MZJy264FC4qmwKiQmv4j+X2ma9Hb2+uWzY9qf0rpjfPytq
-         NGdSbUWIiXbdzdnsX40g4rX2PFP3MXslXVQT11JjQXoZsSjwJHGl/GuYWagEgqbWRzSm
-         mII5RhDTY1al2hDPQipOncsV0g8X6oeEvWEITTEYbi3+zaFICJ9uLLulxmvPSK+O3E8W
-         5Zfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=o5YfGBkyrXiqn8nhUP3HMJzCoCVXlcsf7s1Wvnj2/q0=;
-        b=SomeGftydo6Ctm1PeK2fIqK2iiE3EYUSCOC/G60M7XjZ5vjz6PGMS7U/Lae7sBmQ7f
-         6jWOfwHG9U7Np6U1wJ3Va2Z2d4XH2dPWJIqCH77YMpNvHg77wl+kWX2tgH4KUpjbUzu5
-         3t9XCP7OV9zox5jXgKZZoV8U070jOksuLGoqRBAl5r8XHruILBvHvimJ/k5QPc9VjxVU
-         wEMi5KQtjonhRPRseYRojNSSXS5AD57SujZGtH52ooRaMQlUMTC+6ZizK9OZllmj0n3I
-         +4ycIhD6wBdAR1AQhvVs76MMlNl7mF1bIYJ3ceVsf4yFzKJEq9nAeCz8BfvaHdUxQF7r
-         tyJA==
-X-Gm-Message-State: AG10YORSrufyngodJc21i5Oupoo2fGD6pNzv3HUzdIrnEGkE967m1JdIMQrdlZ3xXMODig==
-X-Received: by 10.28.195.212 with SMTP id t203mr30526190wmf.46.1453878238523;
-        Tue, 26 Jan 2016 23:03:58 -0800 (PST)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Jan 2016 23:03:57 -0800 (PST)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.7.0.181.g07d31f8
-In-Reply-To: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
+	id S1753308AbcA0HXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 02:23:09 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:56318 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751629AbcA0HXF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2016 02:23:05 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 413DA2458E
+	for <git@vger.kernel.org>; Wed, 27 Jan 2016 02:23:04 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Wed, 27 Jan 2016 02:23:04 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=wB6jFhuQiJKQtWVDHqnpXWEHsPk=; b=b3CPnn
+	S2Cuu2+rgLOaHQY11KGkOoaQAfqANOJF7jmqMaewtfPdhtjnwnW98lG8ETYiFsU9
+	4TC+Oh2S44kTqKSqm7ifyXyrqRamNI0Yxeo5bszslMT5X7QISV11280Gp3iVqlYs
+	HSRbBbeM+WqqbQXXQ22u8t1TLc8Y7PB431Y1c=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=wB6jFhuQiJKQtWV
+	DHqnpXWEHsPk=; b=UmaOP85Tf/tfwtowBvBVe+RaOrxCAZIbHecAzMnkca3BC8Z
+	EIb+gCg+kd7YpRFLN7Z9PzOIMw4Q2cHtrA/4mKVOkSgpnna6KgjPi2gWaNK0A2QP
+	ZFqqWU7Aqd/XM9tp2ZUMhYyY/XdhQpWVwXh1+sPIl3K+ITpvgMMyk0R8rK9c=
+X-Sasl-enc: 71qCm9FV+xfO9Cdi0zcc8mIDYIYGHRW93D+cJhjhmDnK 1453879383
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 9670DC01718;
+	Wed, 27 Jan 2016 02:23:03 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <20160126202651.GA1090@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284888>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t7063-status-untracked-cache.sh | 85 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 81 insertions(+), 4 deletions(-)
+Jeff King venit, vidit, dixit 26.01.2016 21:26:
+> On Tue, Jan 26, 2016 at 10:29:42AM -0500, Santiago Torres wrote:
+> 
+>>> If you cannot trust those with write access to a repo that you are
+>>> pulling and installing from you might want to re-check where you are
+>>> pulling or installing from ;)
+>>
+>> Yeah, I see your point, but mechanisms to ensure the server's origin can
+>> be bypassed (e.g., a MITM). I don't think it would hurt to ensure the
+>> source pointed to is the source itself. The tag signature can help us do
+>> this.
+> 
+> Right. I think the more interesting use case here is "I trust the
+> upstream repository owner, but I do not trust their hosting site of
+> choice."
+> 
+>>> Your best bet is checking the signature of signed tags. Now, if you're
+>>> worried about someone maliciously pointing you to the wrong, correctly
+>>> signed tag then you should verify that the tag object contains the tag
+>>> "name" that you expect (for example by using "git verify-tag -v" or "git
+>>> cat-file -p"), since that is part of the signed content.
+>>
+>> Yep, this is my intuition behind my proposal. While someone can manually
+>> inspect a tag (git tag -v [ref]) to ensure he's getting the correct one,
+>> there's no mechanism to ensure that the ref is pointing to the intended
+>> tag. I do believe that package managers and git submodules could check
+>> whether the ref is pointing to the right tag with a small change in the
+>> tag header. Although it would be up to each tool to implement this
+>> check.
+>>
+>> I don't think that an addition like this would get in the way of any
+>> existing git workflow, and should be backwards-compatible right?
+> 
+> Doesn't this already exist?
+> 
+>   $ git cat-file tag v2.0.0
+>   object e156455ea49124c140a67623f22a393db62d5d98
+>   type commit
+>   tag v2.0.0
+>   tagger Junio C Hamano <gitster@pobox.com> 1401300269 -0700
+> 
+>   Git 2.0
+>   -----BEGIN PGP SIGNATURE-----
+>   [...]
+>   -----END PGP SIGNATURE-----
+> 
+> Tag objects already have a "tag" header, which is part of the signed
+> content. If you use "git verify-tag -v", you can check both that the
+> signature is valid and that the tag is the one you are expecting.
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 253160a..a971884 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -18,6 +18,10 @@ if ! test_have_prereq UNTRACKED_CACHE; then
- 	test_done
- fi
- 
-+test_expect_success 'core.untrackedCache is unset' '
-+	test_must_fail git config --get core.untrackedCache
-+'
-+
- test_expect_success 'setup' '
- 	git init worktree &&
- 	cd worktree &&
-@@ -30,13 +34,13 @@ test_expect_success 'setup' '
- 
- test_expect_success 'untracked cache is empty' '
- 	test-dump-untracked-cache >../actual &&
--	cat >../expect <<EOF &&
-+	cat >../expect-empty <<EOF &&
- info/exclude 0000000000000000000000000000000000000000
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
- flags 00000006
- EOF
--	test_cmp ../expect ../actual
-+	test_cmp ../expect-empty ../actual
- '
- 
- cat >../status.expect <<EOF &&
-@@ -506,7 +510,7 @@ EOF
- 
- test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
- 	test-dump-untracked-cache >../actual &&
--	cat >../expect <<EOF &&
-+	cat >../expect-from-test-dump <<EOF &&
- info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
- core.excludesfile 0000000000000000000000000000000000000000
- exclude_per_dir .gitignore
-@@ -525,7 +529,7 @@ file
- /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
- two
- EOF
--	test_cmp ../expect ../actual
-+	test_cmp ../expect-from-test-dump ../actual
- '
- 
- test_expect_success 'test sparse status again with untracked cache and subdir' '
-@@ -569,4 +573,77 @@ EOF
- 	test_cmp ../status.expect ../status.actual
- '
- 
-+test_expect_success '--no-untracked-cache removes the cache' '
-+	git update-index --no-untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	echo "no untracked cache" >../expect-no-uc &&
-+	test_cmp ../expect-no-uc ../actual
-+'
-+
-+test_expect_success 'git status does not change anything' '
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-no-uc ../actual
-+'
-+
-+test_expect_success 'setting core.untrackedCache to true and using git status creates the cache' '
-+	git config core.untrackedCache true &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-no-uc ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-from-test-dump ../actual
-+'
-+
-+test_expect_success 'using --no-untracked-cache does not fail when core.untrackedCache is true' '
-+	git update-index --no-untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-no-uc ../actual &&
-+	git update-index --untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-empty ../actual
-+'
-+
-+test_expect_success 'setting core.untrackedCache to false and using git status removes the cache' '
-+	git config core.untrackedCache false &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-empty ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-no-uc ../actual
-+'
-+
-+test_expect_success 'using --untracked-cache does not fail when core.untrackedCache is false' '
-+	git update-index --untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-empty ../actual
-+'
-+
-+test_expect_success 'setting core.untrackedCache to keep' '
-+	git config core.untrackedCache keep &&
-+	git update-index --untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-empty ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-from-test-dump ../actual &&
-+	git update-index --no-untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-no-uc ../actual &&
-+	git update-index --force-untracked-cache &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-empty ../actual &&
-+	git status &&
-+	test-dump-untracked-cache >../actual &&
-+	test_cmp ../expect-from-test-dump ../actual
-+'
-+
-+test_expect_success 'test ident field is working' '
-+	mkdir ../other_worktree &&
-+	cp -R done dthree dtwo four three ../other_worktree &&
-+	GIT_WORK_TREE=../other_worktree git status 2>../err &&
-+	echo "warning: Untracked cache is disabled on this system or location." >../expect &&
-+	test_cmp ../expect ../err
-+'
-+
- test_done
--- 
-2.7.0.181.g07d31f8
+Yes, that's what I described in my last paragraph, using the term
+(embedded) tag "name" which is technically wrong (it's not the tag
+object's name, which would be a sha1) but the natural term for users.
+
+> Of course, "verify-tag" could do this for you if you give it a refname,
+> too, but I think that may be the tip of the iceberg in terms of
+> automatic verification. In particular, verify-tag knows it was signed by
+> _somebody_, but it doesn't know what the signing policy is. As a human,
+> _I_ know that Junio is the right person to be signing the release tag,
+> but no tool does.
+> 
+> Git pretty much punts on all of these issues and assumes either a human
+> or a smarter tool is looking at the verification output. But I don't
+> think it would hurt to build in some features to let git automatically
+> check some things, if only to avoid callers duplicating work to
+> implement the checks themselves.
+
+That is really a can of worms for several reasons:
+
+- Do you fetch tags into refs/tags/ or refs/tags/upstream/ or wherever,
+and which part of the tag refname should we check for?
+
+We can DWIM that to the last part after / and allow "--tagname" to
+override, of course.
+
+- By all means, we need to avoid a false sense of security. "GOOD
+SIGNATURE" in gpg terms is bad enough with the usual trust model when
+users don't check who actually made that signature.
+
+If you don't *really* check the signature then anyone can shove a signed
+tag object under your nose with the *expected tag header* (tag "name")
+so that there is no gain at all, unless you envison a scenario where Man
+I. T. Middle can mess with refs but not objects.
+
+So, for those who shy away from for-each-ref and such, we may add the
+header check to verify-tag, with a big warning about the marginal gain
+in security (or the requirements for an actual gain).
+
+Michael
