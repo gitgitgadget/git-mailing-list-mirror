@@ -1,95 +1,95 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: GPL v2 authoritative answer on stored code as a derived work
-Date: Wed, 27 Jan 2016 23:58:03 -0000
-Organization: OPDS
-Message-ID: <C0429EC95C2F44528E2A1336FB7A2D98@PhilipOakley>
-References: <6D15DFBB73355B4E9EFB1AD5EF9FCA3184242757@NZ-EXCHANGE1.fphcare.com> <xmqqzivtfphe.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/2] merge-file: let conflict markers match end-of-line style of the context
+Date: Wed, 27 Jan 2016 11:32:50 -0800
+Message-ID: <xmqq8u3a95st.fsf@gitster.mtv.corp.google.com>
+References: <cover.1453709205.git.johannes.schindelin@gmx.de>
+	<cover.1453819314.git.johannes.schindelin@gmx.de>
+	<13379804ad901b53d78d741156677664924fc50d.1453819314.git.johannes.schindelin@gmx.de>
+	<xmqqoac8ci8o.fsf@gitster.mtv.corp.google.com>
+	<xmqqsi1kavr2.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601270856150.2964@virtualbox>
+	<xmqqio2e996c.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1601272011570.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Smith" <Jonathan.Smith@fphcare.co.nz>
-X-From: git-owner@vger.kernel.org Thu Jan 28 00:58:18 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 27 20:33:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOZyY-0000Yn-BG
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 00:58:14 +0100
+	id 1aOVps-0007cS-Id
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 20:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934950AbcA0X6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 18:58:10 -0500
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:27145 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933397AbcA0X6J (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2016 18:58:09 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CCKgBFWalWPHwTFlxeGQEBAQELAQIBAQEBAYMKUm2HTIELsBGDFiSFYQEBAgEDAQGBSU0BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHAxQGARIIAQEBAgMBA4d/DAq1Y4khhguENoddgQ8FjVyJEgGBOYQNlnaOPYRMPC4BAQGDNINJgUQBAQE
-X-IPAS-Result: A2CCKgBFWalWPHwTFlxeGQEBAQELAQIBAQEBAYMKUm2HTIELsBGDFiSFYQEBAgEDAQGBSU0BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHAxQGARIIAQEBAgMBA4d/DAq1Y4khhguENoddgQ8FjVyJEgGBOYQNlnaOPYRMPC4BAQGDNINJgUQBAQE
-X-IronPort-AV: E=Sophos;i="5.22,356,1449532800"; 
-   d="scan'208";a="610356876"
-Received: from host-92-22-19-124.as13285.net (HELO PhilipOakley) ([92.22.19.124])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 28 Jan 2016 00:37:58 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S965291AbcA0Tc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 14:32:56 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55094 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934864AbcA0Tcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 14:32:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53A4E3CBEF;
+	Wed, 27 Jan 2016 14:32:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XXQDUgEKK0cqc6ZRKTe3cKUrRgI=; b=v0cqzD
+	2Uub7Jw9DAUx/qFox4vdqhj3Ali7qpGm1NKRwZnN+K9e9ktlFf78oGtGBbvbXA6X
+	7FHga7SU/AsJLnoTlflLDOyF8RDimjMKvpRlGLI5sX57hGf6EdDxPfyY3SVJBvp3
+	pGfHAtd1P7PNRypi6QIic9pqgPu+nOBQM62Vk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GWNMrrgs57bziHT5Y9Ep+3SSCvTDGNES
+	5ncB3URqxXex/EcCBXvTun4u5cgdBzqLCdKZRWiBJ2gU2MsnBld3pHnhVEshHktk
+	j4vgiGG7eI65DrQVk2813/qqd6T8i/KNXoq1PP0mjoBlA9UQtyrdP6W9NNLRfBz9
+	f7HcNRsOnFk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BA973CBED;
+	Wed, 27 Jan 2016 14:32:52 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B972C3CBEC;
+	Wed, 27 Jan 2016 14:32:51 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1601272011570.2964@virtualbox> (Johannes
+	Schindelin's message of "Wed, 27 Jan 2016 20:12:38 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C163A548-C52C-11E5-814A-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284949>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Jonathan Smith <Jonathan.Smith@fphcare.co.nz> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+[administrivia: I finally managed to correct e-mail address of peff@,
+which has been giving me bounces for all the previous messages in
+the thread]
+
+> Your response is also an indicator to me that future myself will find the
+> same code just as confusing as you did, though.
 >
->> It's pretty clear that code stored in a Git repository isn't
->> considered a derived work of Git, regardless of whether it is used
->> in a commercial context or otherwise.
+> Maybe need_cr -> eol_is_crlf?
 
-I'm guessing here, but I suspect that while its 'pretty clear' to Jonathan, 
-that he has met others who aren't so clear or trusting, and it's that 
-distrustful community that would need convincing.
+The crucial question is how well the variable conveys its meaning
+when it has -1 as its value.  "need_cr? -- I don't know yet" is as
+clear as "eol_is_crlf? -- I don't know yet", if not clearer.  I
+personally do not think "eol_is_crlf" is an improvement.  It makes
+it unclear _whose_ eol the variable is talking about.  It can be
+misread as talking about one or more of the files that are being
+merged and mistaken as a statement of a fact (i.e. "we inspected
+and know the input file's eol is CRLF").
 
->>
->> However, I'm unable to find this stated in any authoritative and
->> unambiguous manner.
+Compared to that, it is clear that "need_cr" is talking about what
+the EOL convention the resulting file should be.
 
-The GPL2 FAQ's (search for 'data')
-http://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.en.html#TOCGPLOutput 
-(should link to "Is there some way that I can GPL the output people get from 
-use of my program? For example, if my program is used to develop hardware 
-designs, can I require that these designs must be free?") and 
-http://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.en.html#IfInterpreterIsGPL 
-both cover the fact that the repo (data) is not a derived work, and thus not 
-subject to GPL2.
-
->
-> Is it reasonable to ask for such a statement?  I doubt it,
-> especially if "It's pretty clear".
-
-(Rhet) If there were to be such a statement, where should it be placed, and 
-who could issue it? It couldn't be part of the COPYING licence file (because 
-it's not supposed to be modified).
-
-It could be in the User Manual, but that wouldn't carry much weight with the 
-already worried, or perhaps the git(1) man page [E.g. 'discusssion' section 
-maybe], or even in the git-scm.com 'book', but really it would need Jonathan 
-(and others with similar FUD issues) to suggest what they'd need.
-
->
-> Without such a statement, I think we have already seen that the
-> commercial adoption is already appealing.
->
-
-Hopefully the links can help Jonathan if he is having any local 
-difficulties.
-
---
-Philip 
+I briefly wondered if the if/if (need_cr)/... cascade that inspects
+(conditionally up to) three variants might become cleaner if the
+polarity of that variable is flipped (we are allowed to use CRLF
+only when we know that among all of the three variants that we can
+determine the line termination convention used, all of them use
+CRLF), but I didn't think it through seriously.
