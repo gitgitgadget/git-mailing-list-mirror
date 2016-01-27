@@ -1,154 +1,192 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Starting on a microproject for GSoC
-Date: Wed, 27 Jan 2016 17:18:39 -0800
-Message-ID: <CAGZ79kbKe8C6iDtRNXgNU4-8EAvgE4RvxVvi-Xzg5Tf++m7z3Q@mail.gmail.com>
-References: <56A96380.3020308@moritzneeb.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/3] git: remove an early return from save_env_before_alias()
+Date: Wed, 27 Jan 2016 15:18:36 -0800
+Message-ID: <xmqqy4ba627n.fsf_-_@gitster.mtv.corp.google.com>
+References: <56A72235.9080602@drmicha.warpmail.net>
+	<1453814801-1925-1-git-send-email-pclouds@gmail.com>
+	<xmqq60ygcd9a.fsf@gitster.mtv.corp.google.com>
+	<xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8DzHYpw3TT3i17W-8eiR9J9DOQUO6mkxffUEnGqT1u96Q@mail.gmail.com>
+	<xmqqtwlz8c4w.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Thu Jan 28 02:18:46 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 00:18:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aObET-00017S-7m
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 02:18:45 +0100
+	id 1aOZML-0002SL-AK
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 00:18:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966368AbcA1BSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 20:18:42 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:35262 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965598AbcA1BSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 20:18:40 -0500
-Received: by mail-ig0-f172.google.com with SMTP id t15so2550582igr.0
-        for <git@vger.kernel.org>; Wed, 27 Jan 2016 17:18:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WNwlfPvTGjWN99U1YeOBgUsTYTn7kQWnJ5xZdLFO7pM=;
-        b=TjHEj4d2vcud//lCxqB1/u/qGhvBVo05fz3QWWZ8dnMsWc2AmX8ky4txaEXXjwHooh
-         GhNVX79xkqqrBaYPaQaoY1CnD+X6Hpc6crlQkXsWQeG9x2tTBF5gYKG0zvVvJbRe72Lb
-         RYmkMnLRwFgt+VS6nJny1MX8v9uCkwFZqJd8DjiVDgB9ZUHZr46LK9vg73FkuOJ4WLNE
-         n9AkCRs4mWd0KYO/HCJ0togunUMSXpOjYHGTGO4zEvvhylfMojQ29aRMkNMveobjMsSc
-         7gg3Z+/B5CEtXPXVsGmPfZVOh7IzZJ5k7bJKVWYS+W5ysEw9oGH/u7rL6qRnKfrcN4lw
-         Ia7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WNwlfPvTGjWN99U1YeOBgUsTYTn7kQWnJ5xZdLFO7pM=;
-        b=QfOGPbzQluUHEqvgUzdL3ELLSg49weu9C2UutWfbbppJdYYn81PvrBmY5jwB9xCcY3
-         LT9GOeo5I0zzAuZ0RBYH+nW2ifRZUq9hOBG/rj4gNoWBX+eTjbXjznlfx+O3tlklCnH8
-         f6SLh8SXCl/3/YHZsvuYcks2mOqbhfcm1nSQIPLGoQHhV+/0QDkHYk0BXbOxJJhOV99R
-         Mvr0KoQp1/TZZMCHfi1HbolfPDlPT4R0BcTQS4spjf5EUj/HwZFr8d5mhnIddms44VpL
-         iLlaLb5SsErpqJ8SZHHRNg61vXJF0Ii82/kqYMufZ9eoZY+ZoMq+UqIi+bz9Bbil1FuH
-         IZ1A==
-X-Gm-Message-State: AG10YOS02U6EXbcFZ1e1gTEvFFdl5Kz5MxIJdhd313uqipoIZQYmzs/ZgMfTuqb0Y7cuahhwo3KMAAWMsIk0PREA
-X-Received: by 10.50.102.40 with SMTP id fl8mr215676igb.85.1453943919289; Wed,
- 27 Jan 2016 17:18:39 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Wed, 27 Jan 2016 17:18:39 -0800 (PST)
-In-Reply-To: <56A96380.3020308@moritzneeb.de>
+	id S1755241AbcA0XSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 18:18:41 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63728 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754465AbcA0XSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 18:18:39 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 97C943F175;
+	Wed, 27 Jan 2016 18:18:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+/b6BE87jiihwVPLA6XHBtTrCVk=; b=G6zvDE
+	DKPy7LMuViEYhl6t/anqCJOnpWZyqORulFlv2Keic+M87phL5oUx1c+sgwLAK+iV
+	xIlbYwmlY/ONyt3uT+9ZCBg3y9O6XGluD9z+IoUTQq8DaTaw253aD4YuRmQBugCF
+	VJSeNn546JseJoKdAGB340OBMnIq7mUzrqvhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Na5d/HI7G6fWiOsKEsczomv0BqzP2TgM
+	uYNINO+2aJ18DgRwM5kyuP2mxpMpl8KvctR/r7p7wgGiVWZH1ZZ5PQVBn8J+rRhO
+	DukewITP+GOgRjN5XdIfE1bxti89RildT6+UZYsPmbQJETDxGooYp2HLdGpekpve
+	EdvF4cG6QyA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8F14F3F174;
+	Wed, 27 Jan 2016 18:18:38 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0FB573F173;
+	Wed, 27 Jan 2016 18:18:37 -0500 (EST)
+In-Reply-To: <xmqqtwlz8c4w.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 27 Jan 2016 04:01:19 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4B930334-C54C-11E5-B2DF-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284965>
 
-On Wed, Jan 27, 2016 at 4:40 PM, Moritz Neeb <lists@moritzneeb.de> wrote:
-> Hi git developers,
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> the next Google Summer of Code is not too far away. I expect git to
-> apply for it and hopefully have some student spots which in turn I plan
-> to apply. It was recommended elsewhere and on this list as well, that it
-> is beneficial to engage with the community early, that's why I am
-> writing to you already now, before all this formal stuff has begun.
+>> On Wed, Jan 27, 2016 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> I spoke too soon, I am afraid.
+>>>> ...
+>>>> I wonder if this would be better done as a multi-part series that
+>>>> goes like this:
+>>>> ...
+>>>
+>>> So here is the first of the three-patch series to replace it.
+>>
+>> This is much better (the whole series, not just the first patch). We
+>> probably should add a test about help.autocorrect though, maybe in the
+>> first patch, because it's not tested at all in the test suite.
 >
-> Before I may introduce myself: I'm a Computer Science student in
-> Germany, coming towards the end of my Masters. I am an enthusiastic git
-> user that's why I'd like to give something back.
+> Patches welcome.  Thanks.
 
-Giving back is a noble thing. To have most fun at it, you need to ask yourself:
-What is the most obnoxious part of Git that you personally use? What was
-the latest problem you had, which you'd want to fix? If you identified
-that, is that the right size to fix it? (Usually it is way bigger than thought,
-but you can ask around if there are approaches for solving that problem ;)
+Here is an updated 1/3; this feature does not fit very well to any
+category (it is certainly not basic, or command that is primarily
+about objects or worktree; I just picked "Git tools" t9xxx as that
+is the closest thing to "direct end user support").
 
-> This would be my first
-> time to actually contribute to a FOSS project and I am quite excited
-> (also a bit frightened ;)).
+-- >8 --
+When help.autocorrect is in effect, an attempt to auto-execute an
+uniquely corrected result of a misspelt alias will result in an
+irrelevant error message.  The codepath that causes this calls
+save_env_before_alias() and restore_env() in handle_alias(), and
+that happens twice.  A global variable orig_cwd is allocated to hold
+the return value of getcwd() in save_env_before_alias(), which is
+then used in restore_env() to go back to that directory and finally
+free(3)'d there.
 
-Each FLOSS project is run differently. So in case your fright
-was the right instinct, go for some other project, it will be totally different.
+However, save_env_before_alias() is not prepared to be called twice.
+It returns early when it knows it has already been called, leaving
+orig_cwd undefined, which is then checked in the second call to
+restore_env(), and by that time, the memory that used to hold the
+contents of orig_cwd is either freed or reused to hold something
+else, and this is fed to chdir(2), causing it to fail.  Even if it
+did not fail (i.e. reading of the already free'd piece of memory
+yielded a directory path that we can chdir(2) to), it then gets
+free(3)'d.
 
->
-> As the list of available microprojects 2016 is still to be created, I
-> might need your help in finding a project to work on. I started to dig
-> through the archives along items of the list of 2015 [0] and so far
-> found out the following:
+Fix this by making sure save_env() does do the saving when called.
 
-Some smaller starter projects may be found at
-http://git-blame.blogspot.com/p/leftover-bits.html
-The size and difficulty of these projects may vary
-a bit more than the micro projects for GSoC though.
+While at it, add a minimal test for help.autocorrect facility.
 
->
-> The first task, to make "git -C '' cmd" not to barf seems to be solved.
-> I tried it with "git -C '' status" at least. I could not find the
-> related patch, maybe it did use other keywords. I would be interested.
->
-> The second task, to allow "-" as a short-hand for "@{-1}" in more places
-> seems to be still open for reset, although someone almost finished it
-> (cf. $gmane/265417). I suppose just fixing/revising this would be kind
-> of a too low hanging fruit? More interesting (also because I am a bit
-> earlier) might be to unify everything, as suggested by Junio in
-> $gmane/265260. Or implementing it for another branch command, e.g. rebase.
->
-> The other tasks I did not yet dig into.
->
-> If all of that is considered as not relevant, I might just go for a
-> newer idea, like converting strbuf_getline_lf() callers to
-> strbuf_getline(), as suggested in $gmane/284104.
->
-> Any thoughts?
->
-> A question regarding the process of "taking a task (or bug)" in general:
-> Is it solely organized through the mailing list?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git.c                       |  2 --
+ t/t9003-help-autocorrect.sh | 52 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 2 deletions(-)
+ create mode 100755 t/t9003-help-autocorrect.sh
 
-Yes, I'd say 95% of the discussion is done on the mailing list.
-(The remaining 5% is done on conferences,
-or privately for security related stuff I'd assume)
-
-> Suppose I start to work
-> on something, should I announce it to not risk work duplication?
-
-[In the context of fighting procrastination,] I recently read that announcing
-that you are going to work on $FOO is not necessarily helpful
-for actually doing it. Chances are lower that you actually finish a
-thing which you announced.
-
-However feel free to announce what you work on. Usually people don't.
-
-> Does it
-> happen often that more people accidentally work on the same task?
-
-It happens rarely for larger goals. For the GSoc micro projects however
-some students did the same thing with slight differences. (2015 we only
-had 2 spots to fill but a few more applicants (3-5?), but seeing
-how students approached the same problem helped on deciding whom
-to mentor. (Given different problems it would have been harder.)
-
->
-> Best,
-> Moritz
->
-> [0] http://git.github.io/SoC-2015-Microprojects.html
-
-I just realized there are some micro projects on the 2014 page
-as well which haven't been solved yet. (maybe, they are not
-striked through)
-
-Thanks,
-Stefan
+diff --git a/git.c b/git.c
+index 98d4412..a57a4cb 100644
+--- a/git.c
++++ b/git.c
+@@ -30,8 +30,6 @@ static int saved_env_before_alias;
+ static void save_env_before_alias(void)
+ {
+ 	int i;
+-	if (saved_env_before_alias)
+-		return;
+ 	saved_env_before_alias = 1;
+ 	orig_cwd = xgetcwd();
+ 	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
+diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
+new file mode 100755
+index 0000000..dfe95c9
+--- /dev/null
++++ b/t/t9003-help-autocorrect.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++test_description='help.autocorrect finding a match'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	# An alias
++	git config alias.lgf "log --format=%s --first-parent" &&
++
++	# A random user-defined command
++	write_script git-distimdistim <<-EOF &&
++		echo distimdistim was called
++	EOF
++
++	PATH="$PATH:." &&
++	export PATH &&
++
++	git commit --allow-empty -m "a single log entry" &&
++
++	# Sanity check
++	git lgf >actual &&
++	echo "a single log entry" >expect &&
++	test_cmp expect actual &&
++
++	git distimdistim >actual &&
++	echo "distimdistim was called" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'autocorrect showing candidates' '
++	git config help.autocorrect 0 &&
++
++	test_must_fail git lfg 2>actual &&
++	sed -e "1,/^Did you mean this/d" actual | grep lgf &&
++
++	test_must_fail git distimdist 2>actual &&
++	sed -e "1,/^Did you mean this/d" actual | grep distimdistim
++'
++
++test_expect_success 'autocorrect running commands' '
++	git config help.autocorrect -1 &&
++
++	git lfg >actual &&
++	echo "a single log entry" >expect &&
++	test_cmp expect actual &&
++
++	git distimdist >actual &&
++	echo "distimdistim was called" >expect &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+2.7.0-368-gb6e04f9
