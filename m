@@ -1,73 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/6] Split .git/config in multiple worktree setup
-Date: Wed, 27 Jan 2016 14:23:34 -0800
-Message-ID: <xmqq37ti7jbt.fsf@gitster.mtv.corp.google.com>
-References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
-	<1453808685-21235-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Need support with git credential storage
+Date: Wed, 27 Jan 2016 17:28:34 -0500
+Message-ID: <20160127222834.GA355@sigill.intra.peff.net>
+References: <CY1PR0701MB1836FFF6CEAC69DFB5E86DACB7D90@CY1PR0701MB1836.namprd07.prod.outlook.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, max@max630.net, git@drmicha.warpmail.net,
-	Jens.Lehmann@web.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 23:23:42 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Charles =?utf-8?B?QsOpbGFuZ2Vy?= <cbelanger@addenergie.ca>
+X-From: git-owner@vger.kernel.org Wed Jan 27 23:28:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOYV3-0006zI-BS
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 23:23:41 +0100
+	id 1aOYZu-00025N-21
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 23:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936257AbcA0WXi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2016 17:23:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934363AbcA0WXg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2016 17:23:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C96783E3F9;
-	Wed, 27 Jan 2016 17:23:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Zwmc5anhvRjq
-	0Il9N1iaNwljgRE=; b=N2ch4LRfREfDFEvUeB8n4XUpfByrh9/3cew/USJDHbqH
-	Xyi4VPSHHrnPQqmIpb8m5+aMV0X6HL9D2MXHkmu1n0eiD1UYpsLXdNJgAwUlJnDy
-	KgAyn+oa1iGoq4alCOe00FgHFi/0f07ufnj3wysPyWCciZ4K6YdfCfm3rFvj8Fk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aVYOqX
-	ALBK35py8a1qCN/UklplrRx7Uutg6Qb/1WRAyALPnDZX+sKRKJKqXA+yv2Sb4Mme
-	xFZ37Y+ryrHBOG+UyFhZB+bGIgUkGneoRpSTRWWnZSMWhHO16wE9ieoKBpZ834lf
-	MwVimdWCTgrXofNQFUeZzibqC9LFLlMYwQ+XM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B13533E3F8;
-	Wed, 27 Jan 2016 17:23:35 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0A5323E3F5;
-	Wed, 27 Jan 2016 17:23:35 -0500 (EST)
-In-Reply-To: <1453808685-21235-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 26
- Jan 2016 18:44:39 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9ADC6A64-C544-11E5-B22C-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S966275AbcA0W2i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2016 17:28:38 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33467 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965009AbcA0W2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 17:28:37 -0500
+Received: (qmail 19170 invoked by uid 102); 27 Jan 2016 22:28:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 17:28:36 -0500
+Received: (qmail 15756 invoked by uid 107); 27 Jan 2016 22:29:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 17:29:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jan 2016 17:28:34 -0500
+Content-Disposition: inline
+In-Reply-To: <CY1PR0701MB1836FFF6CEAC69DFB5E86DACB7D90@CY1PR0701MB1836.namprd07.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Wed, Jan 27, 2016 at 09:49:38PM +0000, Charles B=C3=A9langer wrote:
 
-> For any worktree, the new file .git/common/config is read first, then
-> either .git/config or .git/worktrees/xxx/config is read after. There'=
-s
-> no special per-worktree var list any more. Which is great. You want t=
-o
-> add per-worktree config vars, use "git config --local". You want to
-> add per-repo config vars, use (new) "git config --repo". You put a
-> variable in a wrong file, you're punished for it (and it's the same
-> today, say if you put core.worktree to /etc/gitconfig).
+> Here's the git clone command launch by a .sh script file called from =
+~/.profile:
+> git clone https://MyUserName@bitbucket.org/CompanyName/ProjectName.gi=
+t ~/Projects/SubFolderName/ProjectName
+>=20
+> Here's the error from bash .profile:
+> Fatal: unable to access 'https://MyUserName@bitbucket.org/CompanyName=
+/ProjectName.git/':
+> Could not resolve host: bitbucket.org
 
-I think this is saner than the one before.
+I don't think this is related to credentials. The credential code shoul=
+d
+never do a network hostname lookup. It looks more like git-clone is
+failing to contact the host in the first place.
+
+Try "ping bitbucket.org", which would presumably yield the same error.
+If so, you need to figure out why you cannot resolve the name, but
+that's beyond the scope of this list.
+
+> I followed the excellent Web page here:
+> https://git-scm.com/book/be/v2/Git-Tools-Credential-Storage
+>=20
+> Here's what I use as commands:
+> git credential-store --file ~/git.store store
+> protocol=3Dhttps
+> host=3Dbitbucket.org/CompanyName/ProjectName.git
+> username=3DMyUserName
+> password=3DMyPassword
+> (type enter on a blank line to exit)
+
+This comes from the "under the hood" section, I think. In normal use,
+you shouldn't need to run the credential-helper directly. Just configur=
+e
+it, via:
+
+  git config credential.helper "store --file ~/git.store"
+
+The first time git needs a password, it will prompt you on the terminal=
+,
+and then store the result in that file.
+
+If you do want to pre-seed the store, you can do so using a command lik=
+e
+the one above. But as you noted later, the "host" field should be _just=
+_
+the hostname, not the rest of the url path. That would go in the "path"
+field if you want it, but typically git does not even bother to store
+paths, and just keys on whole domains (see "credential.useHttpPath" in
+"git help config" for more details).
+
+You can also specify a URL using the special key "url", which is then
+parsed into its components. So for example:
+
+  $ git credential-store --file my-store store
+  url=3Dhttps://bitbucket.org/CompanyName/ProjectName.git
+  username=3Dfoo
+  password=3Dbar
+  [blank line to end]
+
+  $ cat my-store
+  https://foo:bar@bitbucket.org/CompanyName/ProjectName.git
+
+  $ git credential-store --file my-store get
+  url=3Dhttps://bitbucket.org/
+
+  [blank line ends our input, the rest is output]
+  username=3Dfoo
+  password=3Dbar
+
+> Here's what the ~/git.store file looks like:
+>         https://MyUserName:MyPassword@bitbucket.org%2fCompanyName%2fP=
+rojectName.git
+>=20
+> I tried changing the %2f by / inside the git.store file and also trie=
+d // but it's still showing the same fatal error.
+> Perhaps I don't use the host=3D  property correctly.
+
+Right. It should be:
+
+  https://MyUserName:MyPassword@bitbucket.org/CompanyName/ProjectName.g=
+it
+
+Though as before, you can omit "CompanyName/ProjectName.git" completely=
+,
+to cover the whole domain.
+
+-Peff
