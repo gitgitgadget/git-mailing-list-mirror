@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v8 01/11] dir: free untracked cache when removing it
-Date: Wed, 27 Jan 2016 07:57:57 +0100
-Message-ID: <1453877887-11586-2-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v8 02/11] update-index: use enum for untracked cache options
+Date: Wed, 27 Jan 2016 07:57:58 +0100
+Message-ID: <1453877887-11586-3-git-send-email-chriscool@tuxfamily.org>
 References: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Stefan Beller <sbeller@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 08:04:11 2016
+X-From: git-owner@vger.kernel.org Wed Jan 27 08:04:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOK9B-0002ie-Hc
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:04:09 +0100
+	id 1aOK9D-0002ie-7j
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:04:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930AbcA0HDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753978AbcA0HEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 02:04:08 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38319 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753312AbcA0HDo (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 27 Jan 2016 02:03:44 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:35802 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753854AbcA0HDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 02:03:42 -0500
-Received: by mail-wm0-f44.google.com with SMTP id r129so132999416wmr.0
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:41 -0800 (PST)
+Received: by mail-wm0-f51.google.com with SMTP id p63so11485832wmp.1
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ul8CqBzkMQ00/5sR82+JrXnDKo/2Foza5dSaHxEj6q4=;
-        b=Sy45tqUvoDq7TtBOt/Auwe5y8EA+IfA8AVwlr/gJ/ZKD05a3NnEFCuCnv4VNNfbu8k
-         XZiAs1PhE0EKDybjz2Jojr3jIJ9ccV9KSR19GQQ/qfZhiHvxcgOLyknXo1hW0ZNl0csQ
-         CHAHPJUlnYOUXY2WXH/WNlnCK28LjFOmLzQJgKKCEcKw8zAltU3oDEVcVXg04J7MoVJ+
-         O3AaKDChEIB0t+rOEst41QY2s0Jg7yP2oUGlxWkCVhtd6TkRDOnyhQsrg8y2VmpCOJvW
-         BeOnWcWUPjHgb3cVx+W/nwenr+pO1V+O88wP/5OAqRpA8lidBt8X6gfPCVgXlpXS+PbG
-         zUJA==
+        bh=J6x0CdW706W3MFC3KUu1RAp40K2Ct74+JkRwrB2Nl18=;
+        b=wbP9ZtFcFswMEpKu+pKdlrweVNMOFQPWDdP3GlJH+qXJjtZSiED79YZc5uZtBobZPw
+         uH3HLwGbLdk8tltEy7DixC5h9ATHYfVTurQW8MSDBpWV27fwohL3k+OxwX86ldoEaV06
+         +Xb72UnedOUgS+woCpE2GeBbzSd9FiXQr6Gx91DjQieiKR+TSHA+aXrV/eLdCZEt0fPH
+         cj9vYENisue+mqhjhU7funRyI+JprS+eaN5kHpH3GQL7AHnt8wLGjVLKT2nZI+RUt2Sv
+         6gsWzO5IxoytI2uHcQ4NLEq1mpajYhsiFsUY4FpwIluCI4gGuJd2ZS/1rtJf1/iKd5Xr
+         RGFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ul8CqBzkMQ00/5sR82+JrXnDKo/2Foza5dSaHxEj6q4=;
-        b=kOAD/sHPD5WwRe2bCyLQbIrwE7u2C/TkSj1ylwAD10H+x7cpit/jqmsX/u2jMbkSS5
-         O0TsEDp02p3SXcrrKNyKmA7VO/YOGMv/HPQq8GWKMk/MxCp747jTIIMk9iP6BsYSTnqJ
-         Xvqmcr6Z2gYGTwS5JTBySNA4nGX8QRl8Xvpq1yA1gN0yRKNIMSpCh2Hf17WeQ80DH3ii
-         qxveUShpJXMq1i1tZ97iAre8D4EsrhZfPaaAS7UFC/wUJGPdq4WWuwO5ZQf1tdyzrEk1
-         Op09HPhFtpe2P3j59DS4oZlIBOqo+pdMIiBGd4Qe9I51Lw+xZgl9B8f431X2kO+50kJn
-         vdHA==
-X-Gm-Message-State: AG10YOR39SeVwXteRjKXmibzpWLyqdzAjmpjJ8AAIpOBTn7oAMdkdKw192tZo/gL3VoW9A==
-X-Received: by 10.28.57.69 with SMTP id g66mr29965756wma.63.1453878221311;
-        Tue, 26 Jan 2016 23:03:41 -0800 (PST)
+        bh=J6x0CdW706W3MFC3KUu1RAp40K2Ct74+JkRwrB2Nl18=;
+        b=mKEFwK/5nIEXAS1LD4dENBYpeCGSGmQCECkaTpvAZBsRHWAu9Cq2SiFObaygexEuxx
+         S1+ZpgXfuVByng+qs86OkPsa40D52o7oeuEnWbidqjTUzKuUdla8uYD777hB4elZOLe4
+         FxUBKyM62dgZncAYzl5h0SmOD2gIY22/tiE6vUp9S6VMn8eQ1FZAaBF+75Ct9urJevQ3
+         HLlXiQLQtu0TJct+a4yLoERMT+DlU/THZh0msH3g6wl+GX8BdK7QxFU9OUnM1iRIA/y8
+         Qwpr682vsDvHbPmqtVwI9wnDoQBHLJRtbfuCm4rygubWBLTILEpzWnnJ6sNveLQ6r5fk
+         7HMQ==
+X-Gm-Message-State: AG10YOSG8lcaDToOXOKB33zwZ/VM4eNpukZrN0WCBCfOgEVF952r94FqKQu5OB2Limqu3g==
+X-Received: by 10.194.133.164 with SMTP id pd4mr32088668wjb.133.1453878223125;
+        Tue, 26 Jan 2016 23:03:43 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.39
+        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Jan 2016 23:03:40 -0800 (PST)
+        Tue, 26 Jan 2016 23:03:41 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.181.g07d31f8
 In-Reply-To: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,24 +64,72 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284877>
 
+Helped-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/update-index.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/update-index.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 7431938..a6fff87 100644
+index a6fff87..1e546a3 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -1123,6 +1123,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+@@ -35,6 +35,14 @@ static int mark_skip_worktree_only;
+ #define UNMARK_FLAG 2
+ static struct strbuf mtime_dir = STRBUF_INIT;
+ 
++/* Untracked cache mode */
++enum uc_mode {
++	UC_UNSPECIFIED = -1,
++	UC_DISABLE = 0,
++	UC_ENABLE,
++	UC_FORCE
++};
++
+ __attribute__((format (printf, 1, 2)))
+ static void report(const char *fmt, ...)
+ {
+@@ -902,7 +910,7 @@ static int reupdate_callback(struct parse_opt_ctx_t *ctx,
+ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ {
+ 	int newfd, entries, has_errors = 0, line_termination = '\n';
+-	int untracked_cache = -1;
++	enum uc_mode untracked_cache = UC_UNSPECIFIED;
+ 	int read_from_stdin = 0;
+ 	int prefix_length = prefix ? strlen(prefix) : 0;
+ 	int preferred_index_format = 0;
+@@ -997,7 +1005,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "untracked-cache", &untracked_cache,
+ 			N_("enable/disable untracked cache")),
+ 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
+-			    N_("enable untracked cache without testing the filesystem"), 2),
++			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
+ 		OPT_END()
+ 	};
+ 
+@@ -1104,10 +1112,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		the_index.split_index = NULL;
+ 		the_index.cache_changed |= SOMETHING_CHANGED;
+ 	}
+-	if (untracked_cache > 0) {
++	if (untracked_cache > UC_DISABLE) {
+ 		struct untracked_cache *uc;
+ 
+-		if (untracked_cache < 2) {
++		if (untracked_cache < UC_FORCE) {
+ 			setup_work_tree();
+ 			if (!test_if_untracked_cache_is_supported())
+ 				return 1;
+@@ -1122,7 +1130,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		}
  		add_untracked_ident(the_index.untracked);
  		the_index.cache_changed |= UNTRACKED_CHANGED;
- 	} else if (!untracked_cache && the_index.untracked) {
-+		free_untracked_cache(the_index.untracked);
+-	} else if (!untracked_cache && the_index.untracked) {
++	} else if (untracked_cache == UC_DISABLE && the_index.untracked) {
+ 		free_untracked_cache(the_index.untracked);
  		the_index.untracked = NULL;
  		the_index.cache_changed |= UNTRACKED_CHANGED;
- 	}
 -- 
 2.7.0.181.g07d31f8
