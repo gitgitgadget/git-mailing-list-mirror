@@ -1,86 +1,92 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 10/20] mingw: disable mkfifo-based tests
-Date: Wed, 27 Jan 2016 17:19:43 +0100 (CET)
-Message-ID: <8d21d835151c2b8ce4d8897a3fffaddba411959b.1453911367.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 12/20] mingw: skip test in t1508 that fails due to path
+ conversion
+Date: Wed, 27 Jan 2016 17:19:52 +0100 (CET)
+Message-ID: <a5809c91c0afb70955a70c9d2371c15ba6c79c39.1453911367.git.johannes.schindelin@gmx.de>
 References: <cover.1453818789.git.johannes.schindelin@gmx.de> <cover.1453911367.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 17:20:07 2016
+X-From: git-owner@vger.kernel.org Wed Jan 27 17:20:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOSp4-0002OW-IK
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:19:58 +0100
+	id 1aOSpM-0002e1-It
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933750AbcA0QTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 11:19:50 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63242 "EHLO mout.gmx.net"
+	id S933938AbcA0QUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 11:20:01 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58532 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933539AbcA0QTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 11:19:48 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MLj5z-1aPHtr23T1-000tPQ; Wed, 27 Jan 2016 17:19:44
+	id S932881AbcA0QTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 11:19:55 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LvzF3-1a1PDo0RAb-017pLx; Wed, 27 Jan 2016 17:19:53
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453911367.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:0AQo/s2PxwDAalFgKpL0yM9qIZqRKMkbLXtn3jXNsOKjw+zM+se
- QCj49mpiu92Cr6bag2iYStgVt2a1cOfFysX+rB3NhOg7WojFa8Ktx0slMsWL/gpC5pnP8tF
- E74i1WlyEP9drwQJ8pJ2+aKazxWFwMyf1XLuInCEvoKbqT9HPRqWNpfB0TBzd3a9t3Pz/ee
- g+ZQKuDOWiq3oQSW1NK7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1slmlK4y7w0=:bH2IB+xeELBrS0Ct9e2/kY
- 3jcbH54G4nLDcUa/lMKTGAZxfXmXX8Tc/nvBj4FEk51v4sQiYiykkMs3UBKT6u974N48RQ10X
- wNm2qwApwfWcqmaZtzFv7y/uuKokDbaa3xG7HwCSxsLgh7tmzY4Q3wrVRmN8HKDSEZG+ceygf
- nDax0vzmNPwvENE5U0+QgFmgsjZOex4PeY9TIhm54DlDsVaKmsemnulQ3MI7aGLyw3CEj9rYG
- E6EMC7lV+FhygeUJjN7UBiLclsIf3kUw03x6CzhfoG/V3YSAEINDfSnCzme+loRMvKcA3yggU
- EPxMTeNLIRd/IHFRaXxhZrYiH+e6RggAa4ECusr+qqmIsCdmE9Iz1RnFEXC47HXz/vj9gz/Sg
- Ktoi4F4CTDiKnCCV2Zrx3SNEp30MFCjdgySFC7Vroaq1tExPS7v2LKf6lh9K9625THY5Lww4e
- wkrypJQrte81hKQsEP3w5konnhHG6ACHmgFrqnbxVOpcY3A8KsEqzpZ/x0lssu+E2kA0dkMlm
- HtAA016mK7CgMggq4IdwC1avAiaPuQhnliMhXxFzKQGdBIEn5Zqn3maf78S0BQWyfzxq+XDab
- 8JBO54w0fx0VwuZ2R9qa5xoca4sFNyvUWb7H6D+o6YXuz0tRjq0igrXoaaEgWf2N3lClOdUxD
- Y7OLTaBYd4FODbiDZcbRqls4G1epmmxdquwUC/YfEjFLSA/C0wG69DwOkhm0k9VoNDaqjGUvd
- H18qH68DJ8PiJBhOHzQSQf43xKCOELrVHAIY0F9E9LuzwXzyVtyoAuV+JKE4eCi3EHBbZeQN 
+X-Provags-ID: V03:K0:gZIZLeewdgibMMfeTVRfjPsAVKPx1xhVftGL1dY9qfgBigVTyg6
+ Rm4GlOV1AaCrM0mHmwMREaGanm7s+ZcTECSlQ8rZgfwD0dtcwd1rbxJ8SP0MP8fCY8K30Ds
+ 8ERXq2m1kgqyuOMxbPts/9yULDn7GaeZD05oD2uRkYaAW+3wR3MnyJuAv+D2rsmctZ1XdBY
+ XkglRtvVjf5IOqkdfz7Tg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mChx07pq27I=:nBXu8sh5Sj00QpImm7KLJ5
+ xmMsdWykIpkcikA9itPqi9gbMqdc9sUdKsU4gdhqKf74Nmp9nxjdXa3HsjaSSc8L8FGynV9/H
+ fNafYKOR9uE1TllQfhXw2RJvDrUYf0Cl4a+S00mCEfieGzInj6ENG/fwqnKghKyR+l+A7MS6h
+ rzTDDkX8iIXoXJoWOFvvZBxOGh+g2dDTjMU2/HYH1YtrYj2Q+xM6G4BFNWri5uGw4B8NN/An7
+ EAtK1Ep4GpHv57NK1T/o0ZaIRA4WoLJF2BszKz7GhmufrsPwtak2Ohn6Z91FuU2+yUqG9h2BJ
+ FK+dKmSTrwI6vBshqMGcOMMmHSXEPzs3g8S8LCFzsBhTH/wZxsFLLZtW2EkagfWrX+xPG1knV
+ itEEscuIvXKNiuvf+LVYNMPfozZhUWaV+TNJeJ2hYKykntjpEYPnHjZ91je0Iqt14o0Xr9XM+
+ ggY+ScMtNN0wjLpJvvnmXLYWHE85Kw/ZtqikI2UoQTwaTgfoV59FGdXQAdCmpiuXGHgKxn8Xc
+ SYb+IZSuyxGP1tZN9ys3OXnZH0jo0H3SLUIYkz/ydJJ7tjis8banPXWyiq3vUPzlIAE9iM06z
+ bt2ViVmKAdfdyOkPWcmZyioOquaRtbn3le3sAPdNdgR1iRPpM7B7PGBvmGBg4/uv2caGIRy34
+ 5pI3kl09+DzNMojJVf583uMWlib3gi2cZFJddJd0kgVKPq6AKwoR/JmWATcjXXtmmPYdjOFOQ
+ z1UhDeEhj5y6minoYxrZiYkISB66Udkf7pjnaiv5vTxCYbUDf+QMFVwptWqHxCXzxQ6Drmeg 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284931>
 
-MSYS2 (the POSIX emulation layer used by Git for Windows' Bash) actually
-has a working mkfifo. The only problem is that it is only emulating
-named pipes through the MSYS2 runtime; The Win32 API has no idea about
-named pipes, hence the Git executable cannot access those pipes either.
+In Git for Windows, the MSYS2 POSIX emulation layer used by the Bash
+converts command-line arguments that looks like they refer to a POSIX
+path containing a file list (i.e. @<absolute-path>) into a Windows path
+equivalent when calling non-MSYS2 executables, such as git.exe.
 
-The symptom is that Git fails with a '<name>: No such file or directory'
-because MSYS2 emulates named pipes through special-crafted '.lnk' files.
-
-The solution is to tell the test suite explicitly that we cannot use
-named pipes when we want to test on Windows.
-
-This lets t4056-diff-order.sh, t9010-svn-fe.sh and t9300-fast-import.sh
-pass.
+Let's just skip the test that uses the parameter `@/at-test` that
+confuses the MSYS2 runtime.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1508-at-combinations.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bd4b02e..1470c8d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -998,7 +998,7 @@ test_i18ngrep () {
- test_lazy_prereq PIPE '
- 	# test whether the filesystem supports FIFOs
- 	case $(uname -s) in
--	CYGWIN*)
-+	CYGWIN*|MINGW*)
- 		false
- 		;;
- 	*)
+diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+index 078e119..4a9964e 100755
+--- a/t/t1508-at-combinations.sh
++++ b/t/t1508-at-combinations.sh
+@@ -35,7 +35,10 @@ test_expect_success 'setup' '
+ 	git checkout -b upstream-branch &&
+ 	test_commit upstream-one &&
+ 	test_commit upstream-two &&
+-	git checkout -b @/at-test &&
++	if test_have_prereq !MINGW
++	then
++		git checkout -b @/at-test
++	fi &&
+ 	git checkout -b @@/at-test &&
+ 	git checkout -b @at-test &&
+ 	git checkout -b old-branch &&
+@@ -64,6 +67,7 @@ check "@{-1}@{u}@{1}" commit master-one
+ check "@" commit new-two
+ check "@@{u}" ref refs/heads/upstream-branch
+ check "@@/at-test" ref refs/heads/@@/at-test
++test_have_prereq MINGW ||
+ check "@/at-test" ref refs/heads/@/at-test
+ check "@at-test" ref refs/heads/@at-test
+ nonsense "@{u}@{-1}"
 -- 
 2.7.0.windows.1.7.g55a05c8
