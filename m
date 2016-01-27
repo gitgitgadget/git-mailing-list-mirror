@@ -1,107 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/2] merge-file: let conflict markers match end-of-line
- style of the context
-Date: Wed, 27 Jan 2016 08:58:59 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601270856150.2964@virtualbox>
-References: <cover.1453709205.git.johannes.schindelin@gmx.de> <cover.1453819314.git.johannes.schindelin@gmx.de> <13379804ad901b53d78d741156677664924fc50d.1453819314.git.johannes.schindelin@gmx.de> <xmqqoac8ci8o.fsf@gitster.mtv.corp.google.com>
- <xmqqsi1kavr2.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 03:09:02 -0500
+Message-ID: <20160127080901.GA7651@sigill.intra.peff.net>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net>
+ <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+ <56A87056.2010309@drmicha.warpmail.net>
+ <20160127073357.GA7066@sigill.intra.peff.net>
+ <56A87764.9070101@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
-	Jeff King <peff@peff.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 08:59:27 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Santiago Torres <santiago@nyu.edu>, Git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 09:09:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOL0b-0007qk-F9
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:59:21 +0100
+	id 1aOLAA-000547-Vz
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 09:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753941AbcA0H7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 02:59:14 -0500
-Received: from mout.gmx.net ([212.227.15.15]:61080 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753580AbcA0H7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 02:59:10 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M6AbC-1a9X7H1vKc-00yARV; Wed, 27 Jan 2016 08:59:01
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqsi1kavr2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:Iq8m5KkARzHf7sGyTdbwhQf3s4IpGTYYUfBxL/J+on6xq6XNq0s
- V7ckyQaSlZdfhu/l70+axo+vaKOfbE947Y0KV5jJisyuscx5I+IcwXn9oyYH3yZyaegoTpm
- M/CmCOnMadMaLiZQmF8g72TFnZiurbo5+vgrqg/uCGvpnEn3F0EsbuDxEoOuYKoyFtyQsXw
- Jp3HuwNa/I6q0Q/lGveXg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bwaID5RDPCw=:+ht9p7fnL52KXwnsn5AZwy
- n/LgvyQMf/1Uq+3GqfF+r+qAdC8F6dCIA+oYM0RZ8zJHJ0TtFV2OyOBtbL6e5ndKPRGR15LNL
- RaQzl/bSHYY+l0qySBp1wgAlX8GWKjXDTL1ax6Bu+52PcKLhGGwbNVNfX/S5i3W+OwaaUsNa8
- iH7mTiOAFo1xOJ5W/997sqxzsYdhCme5EIZ+rmydsEgdxJsVycuaCJ29SGxp9/mGxgutfr51w
- 5DZwTcmXWs+Ed2+wOlIVilkXA1IMkyc8SXbHy5Mj5Y9CfXVLiuog+K/VOmJFV766ynQd26nbr
- xP6uNUid1MlcasQlx2MrNBLl83xzn5SGtZYIV3se92zRAM+vHfgtUqceJBw58+rc+GNxR69uq
- lyuUtlTSFxSV2uP8WFDuonHH3P4KF40ZRg7GbJnylqSV6d8W5603PYj/PfcrHmfEQwLh2R6sW
- pyvumzU+CziMLESALLLn/Gdtp6UTa0374vQrj+oj5OOkQPZgtuDkBRuiEqvdpMyR+C2OeJYpv
- JSty9ER8rlSrGTKkVGobd6GLxYBkCDsT5Asc734a0s8Iz0fN4renn4bEeG48eaFBKoyaxPhjC
- 9+hYGWV37lhEMPzxLAaIUqOAhfoZqB7G67u0F3VhaGhPko1py4vtbkW9Z+MZvPZRbIpO3t2Fl
- G1cM+YBsQZESi+x3rAtc3T3bwOpt7MsQyeG7BDLYOEDkhP/91u3+mM221rnw0nn4TNiQOvEMC
- ob1OluKGeivdleFN+0eI1U7drEsGVj3A6SQhuJrWIVWSYzgFqBrUtUHgjZl1Q4mhwmRM+zW/ 
+	id S1752239AbcA0IJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 03:09:06 -0500
+Received: from cloud.peff.net ([50.56.180.127]:32972 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751765AbcA0IJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 03:09:05 -0500
+Received: (qmail 11751 invoked by uid 102); 27 Jan 2016 08:09:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 03:09:04 -0500
+Received: (qmail 7976 invoked by uid 107); 27 Jan 2016 08:09:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 03:09:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jan 2016 03:09:02 -0500
+Content-Disposition: inline
+In-Reply-To: <56A87764.9070101@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284893>
 
-Hi Junio,
+On Wed, Jan 27, 2016 at 08:53:08AM +0100, Michael J Gruber wrote:
 
-On Tue, 26 Jan 2016, Junio C Hamano wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+> > Yeah, definitely. My thinking was that `verify-tag` could learn a series
+> > of optional consistency checks, enabled by command line options, and
+> > verifying programs (or humans) could turn them on to avoid having to
+> > replicate them manually. So something like:
+> > 
+> >   git verify-tag \
+> >     --verify-tagger-matches-key \
+> >     --verify-tag-matches-ref \ # or --verify-tag-matches=v2.0.0
+> >     v2.0.0
+> > 
+> > or to implement more specific policy, maybe an option to check for a
+> > _specific_ tagger, either by email (as provided by gpg) or even key-id.
+> > 
+> > Those are all things that are not _too_ hard to do if you're willing to
+> > parse gpg or git output, but we could make life easier for our callers.
+> > And hopefully by asking for specific, concrete checks, it doesn't
+> > introduce a false sense of security. I.e., we're not making a foolproof
+> > tool; we're making building blocks that one could use for a more
+> > foolproof tool.
 > 
-> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> >
-> >> +static int is_cr_needed(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m)
-> >> +{
-> >> +	int needs_cr;
-> >> +
-> >> +	/* Match post-images' preceding, or first, lines' end-of-line style */
-> >> +	needs_cr = is_eol_crlf(&xe1->xdf2, m->i1 ? m->i1 - 1 : 0);
-> >> +	if (needs_cr)
-> >> +		needs_cr = is_eol_crlf(&xe2->xdf2, m->i2 ? m->i2 - 1 : 0);
-> >> +	/* Look at pre-image's first line, unless we already settled on LF */
-> >> +	if (needs_cr)
-> >> +		needs_cr = is_eol_crlf(&xe1->xdf1, 0);
-> >> +	/* If still undecided, use LF-only */
-> >> +	return needs_cr < 0 ? 0 : needs_cr;
-> >> +}
-> >
-> > Retrying with other images when needs_cr is either -1 (unknown) or 1
-> > (known to be true) was tricky; I had to read it twice and think
-> > about it for 30 seconds before convincing myself that the code does
-> > what the log message specifies it should.
-> >
-> > That is probably because I was thinking in terms of "do we know that
-> > we need to add a CR?"; if I read "needs_cr" in my head as "we might
-> > want to add a CR", everything becomes much more clear, but perhaps
-> > it is just me.
-> >
-> > The return value of this function is definitely "do we need and want
-> > to add a CR", and it is appropriately named.
-> >
-> > Thanks.
+> OK, let's make a tool that helps fooling as well as proofing :)
 > 
-> Just in case it was unclear, none of the comment above means I want
-> any part of the patch redone--I am happy with this patch as-is.
+> I'll look into the tag header check. Maybe "--check-tagname"? "check"
+> seems to imply less than "verify".
 
-Thanks for saying that... I was about to try to make things clearer, but I
-could not think of a better term than "needs_cr". The existing code
-already has "add_nl" (which means: add a newline *iff* the block to be
-copied does not yet have a newline), which I also found confusing.
+Yeah, I think that is fine (I actually wrote --check originally; I'm not
+quite sure why I decided to change it).
 
-Oh wait, maybe "eol_is_crlf" instead of "needs_cr"?
+> As for the gpg related stuff: We provide the full diagnostic output from
+> gpg on request. But I think a mismatch between the signing key's uid and
+> the taggers' name/email is more common than not,
 
-Ciao,
-Dscho
+Is it? I'd think if you are using that name with a signed tag, you would
+bother to issue (and get people to sign) the matching uid. Certainly it
+is the case for git and linux signatures, but I admit that it a pretty
+small sampling size.
+
+The bigger issue is that gpg seems to give us only _one_ uid, when there
+may be several. E.g., Junio's v2.7.0 is signed by 96AFE6CB, which is a
+sub-key that has several uids associated with it. The one that "git
+verify-tag --raw" shows from gpg is gitster@pobox.com, which is good,
+but I think that's just because it happens to be the first uid. Or maybe
+there is some gpg arcana going on that I don't know about.
+
+> and on the other hand a
+> signature by a key identified by its uid is meaningless unless you keep
+> your keyring tidy... We could punt on that and let users identify the
+> key by any means that gpg allows, of course, and check that the
+> signature comes from whatever "gpg --list-key <userspecified>" gives as
+> long as it's unique.
+
+Right, I think it's an open question whether people actually participate
+in the web of trust. I don't have a good signature path to Junio's key,
+but I happen to know what it is based on past interaction.
+
+But then, I also do not really verify tags. Why would I? I routinely
+fetch and run "make" on the result, and there is no cryptographic
+protection there at all. Verifying tag signatures after a release seems
+all but pointless. :)
+
+I think for any of this to be useful, it has to be part of some tool
+that is very opinionated on policy. E.g., imagine a post-fetch hook that
+validated that each incoming commit was signed, and that the signer was
+part of a whitelisted group of keys that you "somehow" got hold of
+out-of-band for your project. That is not that useful for an open-source
+project, but I could see the appeal for a proprietary development
+environment.
+
+-Peff
