@@ -1,97 +1,82 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 19/19] mingw: do not bother to test funny file names
-Date: Wed, 27 Jan 2016 09:33:40 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601270859470.2964@virtualbox>
-References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de> <47914e4ceb3ea51636dd5ae308679c9c92fcbef0.1453818790.git.johannes.schindelin@gmx.de>
- <CAPig+cQXVwfyaEzf9fR2tFNon-Jq93iPCMwW9gsB8BnUVv5p3A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/19] Let Git's tests pass on Windows
+Date: Wed, 27 Jan 2016 09:38:46 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601270936440.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de> <xmqqbn88at2y.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 09:34:45 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 27 09:39:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOLYi-0006kT-3Z
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 09:34:36 +0100
+	id 1aOLcw-00029B-9a
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 09:38:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbcA0Idy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 03:33:54 -0500
-Received: from mout.gmx.net ([212.227.17.20]:62765 "EHLO mout.gmx.net"
+	id S1753629AbcA0Iiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 03:38:55 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54826 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751304AbcA0Idw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 03:33:52 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LeNGL-1ZjqrC0es9-00q9ql; Wed, 27 Jan 2016 09:33:43
+	id S1752262AbcA0Iix (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 03:38:53 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M0QAP-1a5s0A49Nt-00uayV; Wed, 27 Jan 2016 09:38:48
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cQXVwfyaEzf9fR2tFNon-Jq93iPCMwW9gsB8BnUVv5p3A@mail.gmail.com>
+In-Reply-To: <xmqqbn88at2y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:EK9qdgPQ9Yndav3JzybTX51jOLK8LTvVJLNZZpgAOCGPVXLzlRv
- K+mIao7GNv6E4KE9Hqr0xol5GQRLsnWbkNNNv+gOcxF2e0irRW1FHORKHVKHduHOqmP+ePg
- 1vKK/qVz2ACiMokm9HTq+aHw9qOFbtADm5Kdgb+oQ4BBRK+IN4T+qIymKM8BOQvGAiERnbe
- M2QR/VGsobPMFU2223q0Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ap5QQNcA0H0=:WXohwREibuod8Ii3vH9X1B
- kw5lFi3i1LqXhqOsggetHdhxQLPgpVLp+fbkMCyoThxCZzw5GY4VChR2+OusmS08wUQmGFnNK
- G96LAJ6FOYbCS59sEn0zGQ+xR7ynBRAIlUFfPlRK4M2Och+K6v20gj5eMU37sgs2hZcXDxCMK
- dPID+DhB8J1lBRITbiXLaXobh919WPzM/SLS4zsf1P/MoebDzhFqYDT/FiVm+eYj9GMOnWBHs
- 9i1SAzBaQh/xhJfI2CxZOLQplU3ZWdy9P6hBYL2RLMch7Wwa434xyuOu22xNocZzu5T432rqj
- mWAYMbRCAKSvIWvFjVqkREupjKkXq5G5pgpyaXRub93BoSxiBhw7KYhyKuNNt9LJkfzPkRFLW
- JziQwA/CEoQSdOSj8MNTMf0x53Iq/H0aQLWmaW47giI4P/P7LdtU9PnwsDzK9hwsx5xWm71tS
- 8ypoShEaUiKZKDvzLsoI4JmVsmUIQpGgYyb0DTnlxtY6D4woy3AtS6QgMC6hYhaWGMkzSqtzs
- cxEzZ/5F3ExKdzMeuo76DAJRod8s+v9rB4Dg6/VNsqsO61xDLlJEtmzc+NLFQ1HhftBv2c9Lu
- CdxeujE4KJB8lWFyJnECnP03noO2BVNScVMQMemKyCNbNxh0JpSTQoFA1IJc4A8uvKXP/cdI/
- /n+BOXpcdBjY8cHXcxJdHWIz1sgMGset+VUlX9G1ySQ8CejajB2UJqUVBhrlQEEXWEsM64ids
- sGNZ3Kwkfypfm9El/ZS569J4FUiZQ6thJ/r5vEbI5GsxdMvu2zF4iX1H8Gq/lA1gx2NyUDi4 
+X-Provags-ID: V03:K0:JfmKrUHqedZl+zxPYlueamAaSAj7Nz0XMZU/9M3VH1j2HDdIzSY
+ imwBlHThSvgCVsQcXoEtW2l2ctHPruLot+YqxDtUbMpE3E3HJzJ/z5txq90hECj4lw80z2g
+ tQh2WxsL12mTzshET1nKRF4ut4MzP0zunEX1bx9jG4BxXQw512Yy1/0BPKRBxsWkjEWv7/y
+ xkzUmS1Fk58WpgKcioPqA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Dkhbm1U0oHE=:XvRgP2EvG6+emYShdOywUc
+ m+IRhOW1yIsgh+wFVnYPZLz6JsTy8UC25rLYBL+a8XrEgKIJC4zlaHqJfOl1U1zsq8hcY9P36
+ twaHHGiJ01r1EC7cD95RqRzOAnen3Yy6OJRgETCLz4Luio0N05ycXiA2Ohm4ZmsafCJnBGkpo
+ LVjyiLc/9P+MeEHoP8aV1fpRtr6WpH8uoiZNAO1k5Pj0SA/K751yUyM7m53r0XXZZrmcquuDb
+ LjCUgvM9AojzgXwN5qxg3NY3Uem4mMihLNtY4s497gyS921poSlgmUsHpIr8rBcijqxi9tutb
+ wy/AdOyVpaSk4OgoE8J/TPe1JEWVKmBfjvaBlJb6i4YG7U2Y0eVCXDZuDImTEZsRssC39/sKz
+ 8z8+DQWgmUDov1IfnB/hRsO7d84yyighf1jw9aGiIJoV4P84bfG0L6SvqGpgeRrEPdK4ehmHm
+ FRPYNZjlU/f6gxUfTcjYxBcHNRbplRrTzPkikzsqrpUgDXsj/FtPKka4cJZMR5tGfICfkfS1j
+ z2lFdI7NyHG63wO6cLl15GBX2OzbCHGwrRNEuwGLSkfu2S2w02CSFa4TWzBVtCkKB7ydxprtK
+ YAQTepxhSB46iRjs38ZRLrK2UF+LLCU1G0Iw7jJBr9rSb9XoO+ZAfyA62wUagnAI9yKtLznIp
+ soHW73W+Rriz6hTWy9c2nYF7+ctHmcECFfrGbeRQjQgInO1l07lRvOTCAhL8glHtVhlWpljAc
+ lqEFTiUR/080vJ5MKoz8ZZk4lhq6ch0Thc5yZMWAEabDlPPqoNyZuSgfKEowRV5e0SvwhVoE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284895>
 
-Hi Eric,
+Hi Junio,
 
-On Tue, 26 Jan 2016, Eric Sunshine wrote:
+On Tue, 26 Jan 2016, Junio C Hamano wrote:
 
-> On Tue, Jan 26, 2016 at 9:35 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > MSYS2 actually allows to create files or directories whose names contain
-> > tabs, newlines or colors, even if plain Win32 API cannot access them.
-> > As we are using an MSYS2 bash to run the tests, such files or
-> > directories are created successfully, but Git itself has no chance to
-> > work with them because it is a regular Windows program, hence limited by
-> > the Win32 API.
-> > [...]
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-> > @@ -14,7 +14,8 @@ test_expect_success \
-> > -if touch -- 'tab       embedded' 'newline
-> > +
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Is this new blank line intentional?
+> > This is a big milestone. With these modifications, Git's source code
+> > does not only build without warnings in Git for Windows' SDK, but
+> > passes the entire regression test suite.
+> 
+> Thanks.
+> 
+> Without a few fixups, the result of applying these patches made
+> tests fail for me (so presumably for everybody !MINGW)
 
-Absolutely not! ;-) Fixed.
+Drats! I got lazy and did not re-test everything on Linux after a while
+(it really sloooowed me down and for a good while the tests all succeeded,
+so those regressions were incurred from working on this very patch
+series...)
 
-> > +if ! test_have_prereq MINGW && touch -- 'tab   embedded' 'newline
-> > [...]
-> > +test_have_prereq !MINGW &&
-> 
-> Where negation is concerned, is there a non-obvious reason that this
-> patch sometimes says:
-> 
->     ! test_have_prereq MINGW
-> 
-> and sometimes:
-> 
->     test_have_prereq !MINGW
-> 
-> ? Is one form preferred over the other?
+> which I think I fixed all, but I may have broken things on MINGW while
+> doing so.  Please re-fetch from my tree when I pushed the integration
+> result out with this merged somewhere on the 'pu' branch, retest, and if
+> I broke something please re-fix them ;-)
 
-Hysterical raisins. I changed all of them to the latter form, as suggested
-by Junio.
+I made a couple of other adjustments anyway, so expect a new iteration
+shortly. This time cross-checked on Linux.
 
 Ciao,
 Dscho
