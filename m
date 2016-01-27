@@ -1,61 +1,161 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2] t0027: Add tests for get_stream_filter()
-Date: Wed, 27 Jan 2016 10:05:17 +0100
-Message-ID: <56A8884D.3060605@web.de>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>	<1453622143-22038-1-git-send-email-tboegi@web.de> <xmqqio2fa5uc.fsf@gitster.mtv.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 10:14:17 +0100
+Message-ID: <56A88A69.6030503@drmicha.warpmail.net>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net> <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+ <56A87056.2010309@drmicha.warpmail.net>
+ <20160127073357.GA7066@sigill.intra.peff.net>
+ <56A87764.9070101@drmicha.warpmail.net>
+ <20160127080901.GA7651@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Wed Jan 27 10:07:03 2016
+Cc: Santiago Torres <santiago@nyu.edu>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 10:14:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOM3c-0003Ak-Fd
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 10:06:32 +0100
+	id 1aOMBL-0001e3-VT
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 10:14:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753853AbcA0JFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 04:05:48 -0500
-Received: from mout.web.de ([212.227.15.14]:53710 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752114AbcA0JFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 04:05:45 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M8QeQ-1aBejt02iY-00vydl; Wed, 27 Jan 2016 10:05:27
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <xmqqio2fa5uc.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:jnbiHOrBWTx2qFTMbOvn4dn5D9C1n/Sx9XzU7GXerMTVZpic7gp
- TMeo2v8XMCxoTXPo42j/P7rlY9pjg6P4RS1l6Mr95ZKKgGpL9TaKRsj7fmmIxkWZNHdJg5l
- hAQQo9DqW8V51RwagKI1P2FBRFZBuxtJkEW7z0eQfJql11xq2BgHUeCBVYI6/pY77RDFuY+
- 6lhxVBoeK931sOh4LNEUQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fmnO9JLoG20=:6lfR/TmiGFrM14ucl98ehZ
- z6xH6weneObzwPmfSwdgji7Tz0Nqe23lT/5puaYRn8V4LX2HG0UQUzFEy/ITTBW8bWeNeLu9d
- On8NoRDKGXHiGcRwYK267pCJqgvzeRv558Vkjw9iIScLqAUsRdmj4RK7pPYYAgg41avH+qR3r
- FVIbfYmdLoPcjdWJ48AGezBJcJP/Hdgs0z8Agr0CbDyU457Gw/YJ9Ozr593pahf3pdkvHuV2X
- 2E2/qG9hiHp08l9QG90jgaGuDq3g/bP8RZZ45SKxAsfYxdZ49ocEQNH4814qExqBj2E8xPJVh
- 5TRnYrNDS433BchZA/FqsYR+iOSApsoBtOoAy4hKXkRBRPTBhDN3MdrTRnXnylzBN24uoxKk5
- c5LflfQAnLZs/0hWErc1VIaELUeYA5gFx6OZNADwFUTa/yo1mcWugyWNs6FOm3zozuLURXbbH
- FrmoroDeCo5cmpLRHwQ96VJ6vlhZQDHBIXUrpg01BBYMC29Kl4GAEmg+XHt4EDkaKthwVNb1Z
- qVfPSBzFPARFkoNn0Yc/E9pQDuCWSEhWBJbV8zCfRLekU1vQ+1aU2K3trMoPm+ajPF+UyYDdS
- MKaVEv3k+WoeR7vmh7Hqz9t6RUPIF+Q4Niymb3r99Fei94PsSQdIQzsHK/PE7f7zQKNG2N+K3
- Rv+0Co1ahCuZlMNfEkpspYhPNyL/2qt2pUVWHYuA/H3lejlIS+0N7iBhud4EGLSdbshjRJ6th
- 90gbAZuy6KaxTo0j8Sv+taroYfZAmBvNMPDoY77H2dkvwT4l0EtpoDxPOh5ndFfk3hgPjeDN 
+	id S1752487AbcA0JO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 04:14:27 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:39961 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752114AbcA0JOU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2016 04:14:20 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 65C7C2ACC0
+	for <git@vger.kernel.org>; Wed, 27 Jan 2016 04:14:19 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 27 Jan 2016 04:14:19 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=29cp3692AS7/tCuzHZ0NhDdgWP8=; b=JxdVNh
+	/JoH5cBO3WIa6GtM98+Y+cABTvasrnYSK3Gu7mDELyFXaDJvW2T7jXIUODDLwYMU
+	U5BPiWFrW5f91NeX+G0ihF+s7RbBPyWAH44jV4Qlzy2B9Tn31UnPUiW9HCRzZSdu
+	B/iq5Wh1hetVleyLxyVnTeGfXRPwN1sJyNZ9Y=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=29cp3692AS7/tCu
+	zHZ0NhDdgWP8=; b=r+qRV9WERAT9+v2NXOcwxROFKdIC1xPtoQnkmMSdznwxLBq
+	vHDn4ayagX7PdEKNFVFZ2ONYx/824ByDnEsAh9zD3hfPcDT7wwfh4FawQmWRxZTz
+	8Kfwuc8qXB0jZARlTYq3DXioOo217k4DHmK0wiAd6AS9gJE60sz7axBf9Deo=
+X-Sasl-enc: Ara3zcPSzCvyO4zRJTlVDwzC33C0laY/sYL0sjNwmuP9 1453886059
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C4D4CC01715;
+	Wed, 27 Jan 2016 04:14:18 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <20160127080901.GA7651@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284899>
 
+Jeff King venit, vidit, dixit 27.01.2016 09:09:
+> On Wed, Jan 27, 2016 at 08:53:08AM +0100, Michael J Gruber wrote:
+> 
+>>> Yeah, definitely. My thinking was that `verify-tag` could learn a series
+>>> of optional consistency checks, enabled by command line options, and
+>>> verifying programs (or humans) could turn them on to avoid having to
+>>> replicate them manually. So something like:
+>>>
+>>>   git verify-tag \
+>>>     --verify-tagger-matches-key \
+>>>     --verify-tag-matches-ref \ # or --verify-tag-matches=v2.0.0
+>>>     v2.0.0
+>>>
+>>> or to implement more specific policy, maybe an option to check for a
+>>> _specific_ tagger, either by email (as provided by gpg) or even key-id.
+>>>
+>>> Those are all things that are not _too_ hard to do if you're willing to
+>>> parse gpg or git output, but we could make life easier for our callers.
+>>> And hopefully by asking for specific, concrete checks, it doesn't
+>>> introduce a false sense of security. I.e., we're not making a foolproof
+>>> tool; we're making building blocks that one could use for a more
+>>> foolproof tool.
+>>
+>> OK, let's make a tool that helps fooling as well as proofing :)
+>>
+>> I'll look into the tag header check. Maybe "--check-tagname"? "check"
+>> seems to imply less than "verify".
+> 
+> Yeah, I think that is fine (I actually wrote --check originally; I'm not
+> quite sure why I decided to change it).
+> 
+>> As for the gpg related stuff: We provide the full diagnostic output from
+>> gpg on request. But I think a mismatch between the signing key's uid and
+>> the taggers' name/email is more common than not,
+> 
+> Is it? I'd think if you are using that name with a signed tag, you would
+> bother to issue (and get people to sign) the matching uid. Certainly it
+> is the case for git and linux signatures, but I admit that it a pretty
+> small sampling size.
+> 
+> The bigger issue is that gpg seems to give us only _one_ uid, when there
+> may be several. E.g., Junio's v2.7.0 is signed by 96AFE6CB, which is a
+> sub-key that has several uids associated with it. The one that "git
+> verify-tag --raw" shows from gpg is gitster@pobox.com, which is good,
+> but I think that's just because it happens to be the first uid. Or maybe
+> there is some gpg arcana going on that I don't know about.
 
-- This needs to go on top of  tb/ls-files-eol
+You do not sign with a uid, you sign with a (sub)key, and the tag is
+signed with Junio's primary key. His subkey is encryption only.
 
-> With missing "separate commit", I am having a hard time to decide if
-> this is something I should pick up at this moment, or I should wait
-> until that separate commit materializes.  What is your intention?
->
-I send a serious including this patch the next days.
-If there are more review comments, they are welcome.
+uids do not identify keys, you can add and delete them at will without
+changing the primary key id. To help recognize ("identify") a key, gpg
+displays the uid with the most recent self-signature, which is usually
+the most "recent uid".
+
+You do sign a uid.
+
+So, if you want to be sure that a tag is signed "with a specific uid" by
+relying on signatures from a set of signers, you would really need to
+check that the key that signed the tag has a signature on the correct
+uid. Having a signed key with the right uid in it doesn't mean much
+unlss the right uid is signed.
+
+E.g., I have a key with many signatures, and I could have Junio's uid on
+it in a minute without invalidating any of those signatures.
+
+>> and on the other hand a
+>> signature by a key identified by its uid is meaningless unless you keep
+>> your keyring tidy... We could punt on that and let users identify the
+>> key by any means that gpg allows, of course, and check that the
+>> signature comes from whatever "gpg --list-key <userspecified>" gives as
+>> long as it's unique.
+> 
+> Right, I think it's an open question whether people actually participate
+> in the web of trust. I don't have a good signature path to Junio's key,
+> but I happen to know what it is based on past interaction.
+> 
+> But then, I also do not really verify tags. Why would I? I routinely
+> fetch and run "make" on the result, and there is no cryptographic
+> protection there at all. Verifying tag signatures after a release seems
+> all but pointless. :)
+
+No signature protects us from our own dogfood :)
+
+> I think for any of this to be useful, it has to be part of some tool
+> that is very opinionated on policy. E.g., imagine a post-fetch hook that
+> validated that each incoming commit was signed, and that the signer was
+> part of a whitelisted group of keys that you "somehow" got hold of
+> out-of-band for your project. That is not that useful for an open-source
+> project, but I could see the appeal for a proprietary development
+> environment.
+
+That one is easy already by setting "GNUPGHOME" to a special dir with a
+small keyring and tight trust settings (or having a dedicated account on
+the incoming side in the first place).
+
+Michael
