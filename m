@@ -1,83 +1,95 @@
-From: Andrey Chernyshov <chernyshov.andrey@gmail.com>
-Subject: Re: git for windows
-Date: Wed, 27 Jan 2016 14:51:59 +0300
-Message-ID: <56A8AF5F.5030707@gmail.com>
-References: <56A8AAD6.4070404@gmail.com> <56A8AB7F.8040101@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] optionally disable gitattributes
+Date: Wed, 27 Jan 2016 03:59:21 -0800
+Message-ID: <xmqqy4bb8c86.fsf@gitster.mtv.corp.google.com>
+References: <20160127095021.GA25281@ecki.hitronhub.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 12:52:08 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Jan 27 12:59:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOOdr-0000LV-UQ
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 12:52:08 +0100
+	id 1aOOky-0006Wu-LJ
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 12:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753013AbcA0LwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 06:52:04 -0500
-Received: from mga03.intel.com ([134.134.136.65]:14519 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752683AbcA0LwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 06:52:03 -0500
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP; 27 Jan 2016 03:52:01 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.22,354,1449561600"; 
-   d="scan'208";a="899267358"
-Received: from jfdmzpr05.jf.intel.com (HELO [10.7.210.24]) ([10.7.210.24])
-  by orsmga002.jf.intel.com with ESMTP; 27 Jan 2016 03:52:01 -0800
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <56A8AB7F.8040101@gmail.com>
+	id S1753010AbcA0L7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 06:59:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52896 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752259AbcA0L7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 06:59:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 070D23992A;
+	Wed, 27 Jan 2016 06:59:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/IArhpyf8snKeunEDsxaymNKEWY=; b=ITKdWN
+	TPpJICcr7PKbveQG7hkSHEEDJWCyz6oxr8iTMBHpSc29fMWevsJQyxqPpqJrAX3J
+	hDdGTVWZiFAng98FokZ4KJETKw+LbPisCFLr8WE4/GHas94l/zTkdY/EVQbDEUK0
+	b1hnLV5yWq+oP7JGAv/YMHGaaRwJ4uiyFOUf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q2E3xkT4J+Xgv/4NUVRRR8jcXbWyOpLd
+	OHFYg9TUejoE1aoxIPzzW+hbm8dIqYUrmmhgHRsw7l1BGsNsQqMRw9htkIX2z50W
+	fs/hzeBP/iqnjFBobKaKEt50CTS+PaYbLIyP6Qp91MKSzctpbKuJxcyNOPA5xFNO
+	fBOS71+E6Wc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F321239929;
+	Wed, 27 Jan 2016 06:59:22 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7780F39928;
+	Wed, 27 Jan 2016 06:59:22 -0500 (EST)
+In-Reply-To: <20160127095021.GA25281@ecki.hitronhub.home> (Clemens Buchacher's
+	message of "Wed, 27 Jan 2016 10:50:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 675B9C3E-C4ED-11E5-BCB3-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284909>
 
+Clemens Buchacher <drizzd@aon.at> writes:
 
+> If committed files are not normalized, adding gitattributes has the
+> side effect that such files are shown as modified, even though they
+> were not actually modified by the user, and the work tree matches
+> the committed file. This is because with gitattributes, the file is
+> modified on the fly when git reads it from disk, before it compares
+> with the index contents.
+>
+> This is desirable in most situations, because it makes the user
+> aware that files should be normalized. However, it can become an
+> issue for automation. Since Git considers the work tree to be
+> dirty, some operations such as git rebase or git cherry-pick refuse
+> to operate. Those commands offer no flag to force overwrite work
+> tree changes. The only options are to commit the changes, or to
+> remove gitattributes, but that changes the repository state, which
+> may be undesirable in a scripted context.
+>
+> Introduce an environment variable GIT_ATTRIBUTES_DISABLED, which if
+> set makes Git ignore any gitattributes.
+>
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+> ---
 
-On 1/27/2016 2:35 PM, Andrey Chernyshov wrote:
->
-> On 1/27/2016 2:32 PM, Andrey Chernyshov wrote:
->> Hi
->>
->> I'm using PHP storm with git for windows. Once I do a push to the 
->> github I get the following error
-> Problem signature:
->   Problem Event Name:    APPCRASH
->   Application Name:    git-remote-https.exe
->   Application Version:    2.7.0.0
->   Application Timestamp:    35316130
->   Fault Module Name:    libidn-11.dll
->   Fault Module Version:    0.0.0.0
->   Fault Module Timestamp:    00170158
->   Exception Code:    c0000005
->   Exception Offset:    00000000000046bc
->   OS Version:    6.3.9600.2.0.0.256.4
->   Locale ID:    1033
->   Additional Information 1:    a547
->   Additional Information 2:    a54764e1ee4f5613d3fc9395100a0ff4
->   Additional Information 3:    ac01
->   Additional Information 4:    ac010ce737711604ec050156caebd625
->
-> Read our privacy statement online:
-> http://go.microsoft.com/fwlink/?linkid=280262
->
-> If the online privacy statement is not available, please read our 
-> privacy statement offline:
->   C:\windows\system32\en-US\erofflps.txt
->
->> If I try to push with Git GUI, it's the same, so not a PHPStorm issue...
->>
->> -- 
->> Thanks, Andrey.
->
-> -- 
-> Thanks, Andrey.
+Is the problem you are trying to solve related to the issue we
+discussed recently in a nearby thread?
 
--- 
-Thanks, Andrey.
+That is, even after "reset --hard", if the result of converting the
+contents in the index to the working tree representation and then
+converting that result back to the normalized representation does
+not match what is in the index, Git would sometimes say that the
+working tree contents differ from the index?
+
+I think the change in this patch has some uses, and I think the
+issue we discussed recently in a nearby thread indeed is a problem,
+but I do not think there is an impedance mismatch beween the two, so
+I'd like to first make sure you are trying to solve the problem I
+think you are trying to solve.
