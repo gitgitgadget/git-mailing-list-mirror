@@ -1,77 +1,130 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] git.c: fix help.autocorrect after 57ea712 breaks it
-Date: Wed, 27 Jan 2016 16:14:52 +0700
-Message-ID: <CACsJy8DzHYpw3TT3i17W-8eiR9J9DOQUO6mkxffUEnGqT1u96Q@mail.gmail.com>
-References: <56A72235.9080602@drmicha.warpmail.net> <1453814801-1925-1-git-send-email-pclouds@gmail.com>
- <xmqq60ygcd9a.fsf@gitster.mtv.corp.google.com> <xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 18/19] mingw: handle the missing POSIXPERM prereq in
+ t9124
+Date: Wed, 27 Jan 2016 10:20:53 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601271010270.2964@virtualbox>
+References: <cover.1453650173.git.johannes.schindelin@gmx.de> <cover.1453818789.git.johannes.schindelin@gmx.de> <4c38596ae3fdcc5906dba49521084fe2b1a6888d.1453818790.git.johannes.schindelin@gmx.de> <xmqqfuxkatdl.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 10:15:50 2016
+X-From: git-owner@vger.kernel.org Wed Jan 27 10:21:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOMCL-0002S0-9A
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 10:15:33 +0100
+	id 1aOMHm-0006UM-Q0
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 10:21:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754166AbcA0JP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 04:15:28 -0500
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:33858 "EHLO
-	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbcA0JPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 04:15:23 -0500
-Received: by mail-lf0-f49.google.com with SMTP id 17so1827895lfz.1
-        for <git@vger.kernel.org>; Wed, 27 Jan 2016 01:15:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WgttwxhxyXOkLFnPacHr71TxbtJ3C6mahqYLqBoYm1s=;
-        b=LiAz/gXOOHw0VC+Qd0ewiFeRHsc2CiwpnIEbWFqQniPf7bMJSew1gSjv8+aAUENF5W
-         HP2MRxIqi0h/pWS9ThTuw/y6XZMWvMh8qBOgDVxLFwGATddNG38fuOkYHWo6at/sVh+B
-         YYh0xuJ/tEtnZdsAsf90lnebzasXJ7JtzAK25LXFUmyIPjEtC9S14WAIp//90LbdoNdd
-         1BTs14FCYf3dWcEa0WSmmKKMxfZo8oJ6THfnJ5OqP3QNjW1Me5Mvatgh4wFewZGZItSz
-         +v49Tfhsb7bVVJBOOhwsOn1wpku75d0GUndakbckn9dPec/LjSG1bLWmwGrvXEi9gh7n
-         mlbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=WgttwxhxyXOkLFnPacHr71TxbtJ3C6mahqYLqBoYm1s=;
-        b=fXeithAAUyXjfceHPF8hR9NQvpINwLpP/ZlkNObFc/KJBEBCepKD85dvSI7jIz4cir
-         2OvpdZuFZcv/FKFE1a926PnkuXwezt4aFYUqohAPXGdPF/yvvdKKmiV1VwB8aaBrF61l
-         vYYdScfgYkQovHpsZIqJg8sTO+brch8fpz1w+4PiVBjw0dXOIKRVapxmp/SoB+6yVBQG
-         Ooq8C0J45YqyFcpWgv8uOb88sQ7wMmWzYcX3lg7nLukXM5ZGtDC2bN27f15P4mJlxd6W
-         fPy4D4w09SdFyQUS3hwUFoqW/e/BhV5D5wSQL1BB1d1WuEAZND7GR/5n/X8mCSYTMD8Y
-         aX8w==
-X-Gm-Message-State: AG10YORWyUP15VVGzxxTZ9GrdbE69LwlyF2KN1N/J7AnMEZhziU3WPe0ifozeQFIGUA4kC4XcQa+E8Zy/6VdLA==
-X-Received: by 10.25.17.229 with SMTP id 98mr8319093lfr.3.1453886121604; Wed,
- 27 Jan 2016 01:15:21 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Wed, 27 Jan 2016 01:14:52 -0800 (PST)
-In-Reply-To: <xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
+	id S1753796AbcA0JVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 04:21:07 -0500
+Received: from mout.gmx.net ([212.227.15.19]:62080 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752487AbcA0JVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 04:21:00 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M4WuC-1aA0Dq3Buu-00yhz6; Wed, 27 Jan 2016 10:20:54
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqfuxkatdl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:vwhrXmcjSCdwnIdI4tHJwFZaUbNdP99MCUQIe7tEFw5VLKtDiPG
+ liO64EDbXHQjygph9pFG6KIZMRprNQKFgHbx4SAhCmGuKuNt2GX+zr3GIznjoTkAy2wUVFV
+ vcfF3TWMXtNGsS8UCzD8dM5J4yuyu0KopHlfS0rw4D6nU3veYfBVf0obxq+d7xD7ef30Z7y
+ 8JMmenHp6CqpTj8k/qq1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8w7kfNqOdzc=:LzMoRc6rC28HDoohCGsrHN
+ iKNr23Fy/92QkTIEShbIa8zKiPTAb7KNwx0mX3L6W9qw94zrKiFV5HTYjKuaA7JzyUcrCtQRN
+ /RR9ToGfGX+NUz0AAk4pJ/ffmKzauWqaWX7ue5PTh7bZp6H0hdC+E5WSCefpvFB6KgatcNRhA
+ nS4B8Z0nqvNqxpArvmjX+VWVkSXeCUUySABJecJV24YcTiClKxwwfLx86RlceHDkBef7OfAAV
+ B2VoWDQFjqwqODXLNDsW5NHzw0Uo4xZawVeC3d58mk1Q+e1VbBAxa0wO/LPna+fw7EXUWjEKa
+ UszQLHVigc/XTQgUMWJ6xJ6Ig0/aToACm0xgtGBNLmuuJGHpxWPl2g9+NS2Ck0BMk+nK4ezPj
+ 7TPkEWFs87sMHIGQ/kU8KmaDAzg5JAIkd9o705cyrXcwrRghsVcT/MTLyO+5e09QLlSzp+0uK
+ tL05xliwK/zfKefmBotpz1Qt5yhoNC51jH66lTJqtky98EkeXB6uVl7Eh7tfZKwiavqaPcsXn
+ NzZSgVCEw6T61rRhR3pym5i2Cj7OzaFzwD45jG2eexHIyCVVjYRohYv3p2US/dJZJjZQSHsk1
+ u6vyubQUD38cWWnYPPez1e3c/1KvZy+O8jx2F7WPXYYcF1XNr4QxUMoXVeb2X1+LmS8RUCgI2
+ 91P0n13iV++STGnCtMJuOhNaLL9mYFXAhS+HAv+E0tBVLRShBmL2aFr+dU/1xT+GYo5qX+SoJ
+ tNFveBo2PO/k3VoGSWbzrN/7mMnPvh1nP6zgvsVtKCEhobplMFIRWtZm1GoRI7RiYVHgxYHO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284901>
 
-On Wed, Jan 27, 2016 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I spoke too soon, I am afraid.
->> ...
->> I wonder if this would be better done as a multi-part series that
->> goes like this:
->> ...
->
-> So here is the first of the three-patch series to replace it.
+Hi Junio,
 
-This is much better (the whole series, not just the first patch). We
-probably should add a test about help.autocorrect though, maybe in the
-first patch, because it's not tested at all in the test suite.
--- 
-Duy
+On Tue, 26 Jan 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > On Windows, the permission system works completely differently than
+> > expected by some of the tests. So let's make sure that we do not test
+> > POSIX functionality on Windows.
+> >
+> > This lets t9124-git-svn-dcommit-auto-props.sh pass in Git for Windows'
+> > SDK.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/t9124-git-svn-dcommit-auto-props.sh | 16 ++++++++++------
+> >  1 file changed, 10 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/t/t9124-git-svn-dcommit-auto-props.sh b/t/t9124-git-svn-dcommit-auto-props.sh
+> > index aa841e1..2be0805 100755
+> > --- a/t/t9124-git-svn-dcommit-auto-props.sh
+> > +++ b/t/t9124-git-svn-dcommit-auto-props.sh
+> > @@ -34,8 +34,7 @@ test_expect_success 'enable auto-props config' '
+> >  '
+> >  
+> >  test_expect_success 'add files matching auto-props' '
+> > -	echo "#!$SHELL_PATH" >exec1.sh &&
+> > -	chmod +x exec1.sh &&
+> > +	printf "" | write_script exec1.sh &&
+> 
+> That looks like a useless use of printf.  Why not
+> 
+> 	write_script exec1.sh </dev/null &&
+
+Good point! I changed it, also in t9100.
+
+> >  	echo "hello" >hello.txt &&
+> >  	echo bar >bar &&
+> >  	git add exec1.sh hello.txt bar &&
+> > @@ -48,8 +47,7 @@ test_expect_success 'disable auto-props config' '
+> >  '
+> >  
+> >  test_expect_success 'add files matching disabled auto-props' '
+> > -	echo "#$SHELL_PATH" >exec2.sh &&
+> > -	chmod +x exec2.sh &&
+> > +	printf "" | write_script exec2.sh &&
+> >  	echo "world" >world.txt &&
+> >  	echo zot >zot &&
+> >  	git add exec2.sh world.txt zot &&
+> > @@ -65,7 +63,10 @@ test_expect_success 'check resulting svn repository' '
+> >  	cd svnrepo &&
+> >  
+> >  	# Check properties from first commit.
+> > -	test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
+> > +	if test_have_prereq POSIXPERM
+> > +	then
+> > +		test -z "$(svn_cmd propget svn:executable exec1.sh)"
+> 
+> Why this change?
+> 
+> 		test "x$(svn_cmd propget svn:executable exec1.sh)" = "x*" &&
+> 
+> means "propget command gives a literal string that consists of a
+> single asterisk".
+
+Oh wow... I blame it on lack of sleep. Would you believe that I totally
+overlooked the asterisk, in both cases? Wow.
+
+Sorry for the mess, cleaned it up locally and will resubmit as soon as the
+tests passed on both Windows & Linux, and as soon as I figure out how to
+change my charset to something else than unknown.
+
+My apologies,
+Dscho
+
+P.S.: Would you believe that the reason the tests passed on Linux was that
+I forgot to install Subversion? ;-)
