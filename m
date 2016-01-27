@@ -1,126 +1,144 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (Jan 2016, #04; Wed, 20)
-Date: Wed, 27 Jan 2016 10:03:00 -0800
-Message-ID: <CAGZ79kZQ725ErqLseb_3Mp-Yyc=X6dhRfHwARynXUzQigw5dvg@mail.gmail.com>
-References: <xmqqk2n33jxq.fsf@gitster.mtv.corp.google.com>
-	<C1F7518D-3898-4F53-8BAD-60B5648D4B5B@gmail.com>
-	<xmqqwpqw9cdk.fsf@gitster.mtv.corp.google.com>
-	<53B46FC1-7E34-49F1-9955-AE87E27519F5@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 10:10:02 -0800
+Message-ID: <xmqqmvrq99mt.fsf@gitster.mtv.corp.google.com>
+References: <20160125212208.GB26169@LykOS>
+	<56A73DE6.5050201@drmicha.warpmail.net> <20160126152941.GA31951@LykOS>
+	<20160126202651.GA1090@sigill.intra.peff.net>
+	<56A87056.2010309@drmicha.warpmail.net>
+	<20160127073357.GA7066@sigill.intra.peff.net>
+	<56A87764.9070101@drmicha.warpmail.net>
+	<20160127080901.GA7651@sigill.intra.peff.net>
+	<56A88A69.6030503@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 19:03:44 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Santiago Torres <santiago@nyu.edu>,
+	Git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 19:10:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOURS-0005Gn-PC
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 19:03:43 +0100
+	id 1aOUXj-0002b9-DL
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 19:10:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934266AbcA0SDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 13:03:39 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:36469 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934012AbcA0SDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 13:03:01 -0500
-Received: by mail-ig0-f181.google.com with SMTP id z14so89480440igp.1
-        for <git@vger.kernel.org>; Wed, 27 Jan 2016 10:03:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3n04GKP8QjF007nPUWdN5e53tXekuzciVuT6d/v6VMI=;
-        b=hqouAeuvuiZy1P1+CQPm11fp5pOSYBMdyoBO8bkI6KGeC1533LsrbP8RmnaFsOlyFs
-         ARNoC2xsovJG/ASB+FRAuZuQlC9Hc1x2UitxJHcx2TVfG/YzsCljC+lA8aotlAsoJ6+T
-         nPYCFt+Ae+WOILLF8jtKtw+qwg1UotmBwx9Cy2dTkpgx5mzb/W5CPSqWxq+7dAo91Tou
-         f0fR4/w9/mBA4ohpfwzsyxZLsKdFq58gdhvKtZRak/chUaWPa/zcdLMyhnyqZWwIrXYE
-         uMQWqVKi6zL+ck/z2S0i3JvBL2ZuAurLtOU6V3EIEM6HzDMCdRf9QmrHoO1KSA4Pga5l
-         wkaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=3n04GKP8QjF007nPUWdN5e53tXekuzciVuT6d/v6VMI=;
-        b=DAZjTBD7kXRpfnbC530XEQSN2qA4VifjfXBqgM1J7q4MFAXd8VW2sesLRlVBQOPK1M
-         VjN8znUfe5ZIs0jODvlxK6lNZksZrXYELNlie9AmFt/wDasL7QSuTf8H0JI0xSmiCA05
-         gIf3IW3Qx/S8nJ3Ge656HCJtmdeeqhPAw4AK8vS5ex74urFiZhdq6Bin3Ux7nQeiL+0i
-         JNUXsjK75UySBl/ZDF6fL5n3es+eXq+ntd9ApObFCuxCQr7npUlB4WRW/Ep+MOY2E7re
-         9SOzEc0BjHYLcmM23BjqEfAlVHh67HdTzlKHgvKhsAWclGJ1CsaTHVbNPMZdnovcsA4q
-         NBJA==
-X-Gm-Message-State: AG10YOTyV9l0eyFeqPZePe+VKnW2wGaa1Usjg2cBjHQFQI3RLauRnwkKkpFJzlaQOFQLQEZiiFBdT2TAcCgY0v8L
-X-Received: by 10.50.138.76 with SMTP id qo12mr31023880igb.85.1453917780807;
- Wed, 27 Jan 2016 10:03:00 -0800 (PST)
-Received: by 10.107.8.74 with HTTP; Wed, 27 Jan 2016 10:03:00 -0800 (PST)
-In-Reply-To: <53B46FC1-7E34-49F1-9955-AE87E27519F5@gmail.com>
+	id S934135AbcA0SKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 13:10:07 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51527 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933910AbcA0SKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 13:10:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F1403D07E;
+	Wed, 27 Jan 2016 13:10:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MMtoPsm1ZpEg21Fz4jTfFC+YOLs=; b=lgOERH
+	gx00xKCNfniG8jzs8DqDOPsgtP5XpHn0y9ZZAG2ylVJ9oAM42HB4ntonYePpp5li
+	wlsjiIrYbtZcdWkNY+zwKeuEe1GxqDcHIFyObJZA0PbayQ/NqsTR0iewKnyTnymw
+	HEKjcGllm6xTpoOuit01/SApDg2WpfrTrawtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WN9OtXsoeEzkttXUXZhrYEURamoLsPWT
+	nxqwOAh/C/CHrMKGTKyeMeieHCrulk5P+HL0L6ZIOsFPyrnhKkTe6upYaArcbN2C
+	Z45Ouy0jpz3VTv00Cf/TVzYeL+Zbz9q/ihBuSkJeIZSvaz3H3LK/dIIE9A3x2c+m
+	TjoYbeoBDfY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 658523D07D;
+	Wed, 27 Jan 2016 13:10:04 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D186E3D07C;
+	Wed, 27 Jan 2016 13:10:03 -0500 (EST)
+In-Reply-To: <56A88A69.6030503@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Wed, 27 Jan 2016 10:14:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 303FD7EA-C521-11E5-8815-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284945>
 
-On Wed, Jan 27, 2016 at 12:46 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
+> Jeff King venit, vidit, dixit 27.01.2016 09:09:
 >
-> On 26 Jan 2016, at 23:58, Junio C Hamano <gitster@pobox.com> wrote:
+>> The bigger issue is that gpg seems to give us only _one_ uid, when there
+>> may be several. E.g., Junio's v2.7.0 is signed by 96AFE6CB, which is a
+>> sub-key that has several uids associated with it. The one that "git
+>> verify-tag --raw" shows from gpg is gitster@pobox.com, which is good,
+>> but I think that's just because it happens to be the first uid. Or maybe
+>> there is some gpg arcana going on that I don't know about.
 >
->> Lars Schneider <larsxschneider@gmail.com> writes:
->>
->>> Hi Junio,
->>>
->>> Did you miss the topic "submodule: extend die message on failed
->>> checkout with depth argument" or do you not agree with it
->>> ($gmane/282779)? Stefan Beller reviewed the commits ($gmane/283666
->>> and $gmane/283851).
->>
->> No, these three are still in my inbox.
->>
->> Quite honestly, "test to demonstrate breakage" alone is not all that
->> interesting to me unless I get a firm impression that somebody is
->> (or will soon be) working on fixing the breakage--which would make
->> it worth keeping track of it in my tree, to allow the eventual fix
->> to be more easily verified and protected from getting broken again.
->> Also "these look good to me" without much explanation is not much of
->> a review, and such a comment on a "demonstrate breakage" did not add
->> to the sense of urgency to the issue, either.
->>
->> That was why it has been sitting near the bottom of the pile.
+> You do not sign with a uid, you sign with a (sub)key, and the tag is
+> signed with Junio's primary key. His subkey is encryption only.
+
+Hmm, actually I meant to sign my tags with signing subkey, not the
+primary one, but I may have made a mistake.
+
+> You do sign a uid.
 >
-> OK, I get your point. I got the impression that Stefan is on to a fix ($gmane/281260). Looks like he is not and I need to learn more about Git to tackle fixes of this scope.
-
-I was on it and I put it on hold as I wanted to prioritize
-sb/submodule-parallel-update,
-sb/submodule-init and the upcoming sb/submodule-groups (maybe that's called
-sb/submodule-autoInit, its scope is still being bikehedded)
-
-Coming back to $gmane/281260 with a fresh mind, I think
-this is what we want on the client side:
-
- 1) fetch as we always did. During this fetch we learn from the
-    servers capabilities list, if it supports fetching direct sha1s.
- 2) if the needed sha1 has been fetched in step 1, stop.
- 3) fetch the needed sha1 directly if the server supports it.
- 4) if the server doesn't support it, display a message like:
-    "Please ask your Git server admin, to run at least Git 2.4.0
-    and enable uploadpack.allowReachableSHA1InWant to have
-    submodules working properly"
-
-Currently we only perform step 1 and this yields the error when
-fetching too shallow to have the needed sha1 included.
-
-The server side should be ok as soon as uploadpack.allowReachableSHA1InWant
-is enabled. I thought we would need to add another option, but it
-looks like that
-option is exactly what we need here.
-
-If you want to give it a try, I'll be happy to review patches!
-(with more than "these look good to me" ;)
-
-Thanks,
-Stefan
-
-> Would it be an option for you to just drop patch 1/3 from this series and look at the remaining ones? 2/3 fixes an "&& chain issue" ($gmane/282776) and 3/3 prints a explanatory user warning instead of an incomprehensible error ($gmane/282777).
+> So, if you want to be sure that a tag is signed "with a specific uid" by
+> relying on signatures from a set of signers, you would really need to
+> check that the key that signed the tag has a signature on the correct
+> uid. Having a signed key with the right uid in it doesn't mean much
+> unlss the right uid is signed.
 >
-> Thanks,
-> Lars
+> E.g., I have a key with many signatures, and I could have Junio's uid on
+> it in a minute without invalidating any of those signatures.
+
+I have signatures on my primary key from others, and my signing key
+is signed by my primary key and by no other keys.  Here is an
+abbreviated output from running "gpg --list-sigs 96AFE6CB":
+
+pub   4096R/713660A7 2011-10-01
+uid                  Junio C Hamano <gitster@pobox.com>
+sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+sig          93674C40 2011-10-04  Theodore Y. Ts'o <tytso@mit.edu>
+sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+sig          C11804F0 2011-10-04  Theodore Ts'o <tytso@mit.edu>
+sig          02A80207 2011-10-05  Andrew Morton (akpm) <akpm@linux-foundation.org>
+uid                  Junio C Hamano <junio@pobox.com>
+sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+sig          C11804F0 2011-10-04  Theodore Ts'o <tytso@mit.edu>
+uid                  Junio C Hamano <jch@google.com>
+sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+sub   4096R/833262C4 2011-10-01
+sig          713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+sub   4096R/96AFE6CB 2011-10-03 [expires: 2017-09-20]
+sig          713660A7 2015-09-21  Junio C Hamano <gitster@pobox.com>
+sub   4096R/B3F7CAC9 2014-09-20 [expires: 2017-09-19]
+sig          713660A7 2014-09-20  Junio C Hamano <gitster@pobox.com>
+
+So I understand that the way you trust 96AFE6CB has to be indirect.
+You may have somebody's key you know belongs to that somebody you
+trust (say, Linus) in the list of signers of 713660A7 (my primary),
+and you know 96AFE6CB is a key I use because it is signed by my
+primary key.
+
+You can add a subkey to your keyring a uid that says "Junio", but
+the signature on that subkey would not have a signature by me you
+can verify by following the web of trust.  You are correct to point
+out that "this key claims to be by somebody, and it has some
+signature" is not a sufficient reason for you to trust it.
+
+> That one is easy already by setting "GNUPGHOME" to a special dir with a
+> small keyring and tight trust settings (or having a dedicated account on
+> the incoming side in the first place).
+
+Yes, I understand that the above is how automated services per
+project should be set up, with a dedicated verification keyring that
+holds keys the project trusts.
