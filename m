@@ -1,103 +1,100 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 05/20] mingw: prepare the TMPDIR environment variable for
- shell scripts
-Date: Wed, 27 Jan 2016 17:19:25 +0100 (CET)
-Message-ID: <99caadcf6af5619988792b47b50d70b691d355c3.1453911367.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 06/20] mingw: try to delete target directory before
+ renaming
+Date: Wed, 27 Jan 2016 17:19:29 +0100 (CET)
+Message-ID: <2185537d1ded7926241414b32e553d7ce4cd2935.1453911367.git.johannes.schindelin@gmx.de>
 References: <cover.1453818789.git.johannes.schindelin@gmx.de> <cover.1453911367.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; BOUNDARY="8323329-425594966-1453911570=:2964"
+Cc: =?UTF-8?B?66eI64iE7JeY?= <nalla@hamal.uberspace.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 17:19:40 2016
+X-From: git-owner@vger.kernel.org Wed Jan 27 17:19:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOSok-00026R-Iq
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:19:38 +0100
+	id 1aOSop-00029G-9w
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 17:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933700AbcA0QTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 11:19:34 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60336 "EHLO mout.gmx.net"
+	id S933550AbcA0QTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 11:19:37 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58187 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932476AbcA0QTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 11:19:32 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MfVzj-1aj1hk0mVP-00P6PY; Wed, 27 Jan 2016 17:19:27
+	id S932476AbcA0QTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 11:19:35 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Lk7T8-1ZnT6e3M1C-00c7JN; Wed, 27 Jan 2016 17:19:30
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1453911367.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:etLd4AP2QbZMFwlDusTKYoQi+le0s8OBB0H8AWZdYgb96cBBn2z
- qGnjyaAuE+ez1jACR3Z3MKbR7umlQDOxOrOgeGhqn3+C62ofQsMw52k8E30NDaC55qd4jeb
- rNs89nzScwkG/Rncjcu+3/cHMd7MqtRoEaQZTUHrJAJhfvvEpVmaNb43zxXA9YtpAtr/4OJ
- kp6ceiI/uZB5R49JpdXoQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EFFQyS5GU3I=:fAhHgHEo+TdtjF4nrsd8xp
- 2aaa4tabQ5ZMxyfz5aVI/UkxTM74a3XInbD/EAvxYTcAlgNQ7v+7EfS84TmgWOLkMlVBIZfh0
- U/Tk3sfXSJXHn8eLIN/irHJxPznVD0XIw6K4b8jQBd5x5kTKBmnDMvX/YtVNrLKok4qlxwZdd
- jh14B8gU7T1M8dd0Z2A6GSOvfL7P4jwfCYkHFEhhq8Z/0RmPT6RtZR5WdkWt7EZxYqIVNEVox
- RTnMK5LTU4nehFQ8nzZL2dDDpCkEWfqDIjeLxRjkKi6ZpJGbuxj5o8NwqOoBIHI/sIf0W2XBl
- n0ueLgyNOn1uvvPQZSaxpTW9L7O8upSdAHq5KEPNaH0MzDTh32dA8m5MnrYz+Ck9TgbIaV6Xc
- TO5qIvtqbN5/A+mvP83pBa2z+2KlrSHDaZY84nc/C8AA5JEI+/0yrv4KRzQZmWQySm6/zyUvb
- YvzsacfldUBOgVjcg0/wCetCgNSBuHYPMDZHHEFknwS4btEel0Q0XykIzId9l2etyRjPgPQRw
- Xf2AIQdvVDULFfCHtKhXBbOZVFxkOmEKcT/ohTgOYTwtCnRBSesvDFgnbUjaNW52+jjg6XWy3
- 1BsrTpr8kfAT7Xa+SLwHqtYB7xYX5fhlhRSwuY+lukYRwtnsrlWKpY8/SXg8AtntFoP/dLhFR
- ralrZaIpHsttALnyNa0umqdagezZhlpYmzpotXYnYkwaiMCKNiDsjjl9nEpHLIT7ndMaw6KPm
- yKLjSpyTpsUkZ1FuXuEivVJGX72PI1C0KPmoMZOY0hlIjxi1KkwyOsFYVoFaqmz71bbthAGs 
+X-Provags-ID: V03:K0:O660UOSG1GocQb81JZh5TIz7d2ovKCMbgM9S0OtY+y9TAKDL9iI
+ RDl0QTWHCM8Ws/W2cfibPua1yGMSx0IBMubb4SdsrtyiMt1xzEKi/+JJxjNdxXJ7YCk2DOK
+ jen5AaeZA5zoWzp3kbouZrZ5aVO7lI54m0BoSYHHg0lJkwj1Xf/qANKCBKSiPLp8aXZvOSt
+ wPPvrSuOucTFq2/Zvke+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zun9MH7k1Sw=:AZAU1YQRTEeokwh/3icslO
+ hjxxXhOF63o4qpZ/xRWJo0HTznZXdgzGWWkiWbjnSywtTILlfkOvYbeXpH3kOq/octaJI7ZzM
+ dmcuwqVHkB/qbtHeEpIl5gqQFQFtVs5C51bSfDY07VFsBkfQmsYm5Gr2rCKuDFYNW5ko6W/HM
+ hKUxmYtAy8q2k60zfTxHzifufxtaOihhsi6oHIc1J5zCInzcLBaxnJew0NgpAkMcTxXMT9K0Y
+ 2DeVeIkKJZZ18gP87vhbsaZRajFPJiPeiDkP81aqDc9FD0UF4fwBpl3Td2HKaRdZVkmRgv/In
+ z+BdH969D3RbE+SFEZTp3AhcGuPVdghKyMzWTw7LQFZQz2AKEUNbJU+slv8OgbUy6ZzQt4zKs
+ MeZGsD1CTnJy5kCuiZOzH0SJ3jwxWfWw34e7+gmE3MdBUqZtnrvw2YW8bfQV1h/hT65+nKtRk
+ UJVCbeo8tJKpJU+1D5uY96pYIw1Trcc1HTcIrrgRT6gopgS4lfofCYQY2xtmq3wMGYshQ0ZtF
+ tQJjF0bXJJr0e64qIxkSsXUjRJX8Pwl33qF3kxzLIDBu3QXeGZB+Gw5pcdES5hoFbwF9lAfuZ
+ UB3rTjSpFPmndk3QYnaStVRDmqW69BpnHcEzUf4rUpUOMG6ReUpGivkmRVdLncMkHXYYEwfA/
+ 5uJzNah6Pt8MkSplGAA4TMemqykhGLS7QLQbD1Ia9c1blXLE6wLHU4OQiXq+IFpad6/057p6S
+ KI1O4s6ekphDby8nZ40DIs7jW8WlkmlBBXVovCmqc2CQz5XmgV6liJs6P98z8a7bo9PyIl/m 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284925>
 
-When shell scripts access a $TMPDIR variable containing backslashes,
-they will be mistaken for escape characters. Let's not let that happen
-by converting them to forward slashes.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This partially fixes t7800 with MSYS2.
+--8323329-425594966-1453911570=:2964
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
+From: =3D?UTF-8?q?=3DEB=3DA7=3D88=3DEB=3D88=3D84=3DEC=3D97=3D98?=3D <nalla@=
+hamal.uberspace.de>
+
+When the rename() function tries to move a directory it fails if the
+target directory exists. It should check if it can delete the (possibly
+empty) target directory and then try again to move the directory.
+
+This partially fixes t9100-git-svn-basic.sh.
+
+Signed-off-by: =EB=A7=88=EB=88=84=EC=97=98 <nalla@hamal.uberspace.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ compat/mingw.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 8d52c73..ba5cb1c 100644
+index ba5cb1c..f37f8d5 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -2049,13 +2049,28 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
- 
- static void setup_windows_environment()
+@@ -1603,7 +1603,12 @@ repeat:
+ =09if (gle =3D=3D ERROR_ACCESS_DENIED &&
+ =09    (attrs =3D GetFileAttributesW(wpnew)) !=3D INVALID_FILE_ATTRIBUTES)=
  {
-+	char *tmp = getenv("TMPDIR");
-+
- 	/* on Windows it is TMP and TEMP */
--	if (!getenv("TMPDIR")) {
--		const char *tmp = getenv("TMP");
--		if (!tmp)
-+	if (!tmp) {
-+		if (!(tmp = getenv("TMP")))
- 			tmp = getenv("TEMP");
--		if (tmp)
-+		if (tmp) {
- 			setenv("TMPDIR", tmp, 1);
-+			tmp = getenv("TMPDIR");
-+		}
-+	}
-+
-+	if (tmp) {
-+		/*
-+		 * Convert all dir separators to forward slashes,
-+		 * to help shell commands called from the Git
-+		 * executable (by not mistaking the dir separators
-+		 * for escape characters).
-+		 */
-+		for (; *tmp; tmp++)
-+			if (*tmp == '\\')
-+				*tmp = '/';
- 	}
- 
- 	/* simulate TERM to enable auto-color (see color.c) */
--- 
+ =09=09if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
+-=09=09=09errno =3D EISDIR;
++=09=09=09DWORD attrsold =3D GetFileAttributesW(wpold);
++=09=09=09if (attrsold =3D=3D INVALID_FILE_ATTRIBUTES ||
++=09=09=09    !(attrsold & FILE_ATTRIBUTE_DIRECTORY))
++=09=09=09=09errno =3D EISDIR;
++=09=09=09else if (!_wrmdir(wpnew))
++=09=09=09=09goto repeat;
+ =09=09=09return -1;
+ =09=09}
+ =09=09if ((attrs & FILE_ATTRIBUTE_READONLY) &&
+--=20
 2.7.0.windows.1.7.g55a05c8
+
+
+--8323329-425594966-1453911570=:2964--
