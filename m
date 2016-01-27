@@ -1,122 +1,167 @@
-From: fuz@fuz.su
-Subject: Re: git archive should use vendor extension in pax header
-Date: Thu, 28 Jan 2016 00:25:34 +0100
-Message-ID: <20160127232534.GA5435@fuz.su>
-References: <20160124155909.GA16847@fuz.su>
- <56A7EDE1.1020909@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 3/3] git: simplify environment save/restore logic
+Date: Wed, 27 Jan 2016 15:22:11 -0800
+Message-ID: <xmqqoac6621o.fsf_-_@gitster.mtv.corp.google.com>
+References: <56A72235.9080602@drmicha.warpmail.net>
+	<1453814801-1925-1-git-send-email-pclouds@gmail.com>
+	<xmqq60ygcd9a.fsf@gitster.mtv.corp.google.com>
+	<xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
+	<xmqq37tja50t.fsf_-_@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 00:20:15 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, git@drmicha.warpmail.net
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 00:22:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOZNg-0003bC-OQ
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 00:20:09 +0100
+	id 1aOZPm-0005Qb-DG
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 00:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932213AbcA0XUE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Jan 2016 18:20:04 -0500
-Received: from fuz.su ([5.135.162.8]:60839 "EHLO fuz.su"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755242AbcA0XUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 18:20:03 -0500
-Received: by fuz.su (Postfix, from userid 1000)
-	id AC91220227; Thu, 28 Jan 2016 00:25:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <56A7EDE1.1020909@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932377AbcA0XWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 18:22:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51610 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932245AbcA0XWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 18:22:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 634EA3F258;
+	Wed, 27 Jan 2016 18:22:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s26m8EhMGycT5LY35jCDGZHVcTg=; b=sHAfig
+	AJi08541V3qbyQ37bD5+y8td+jNXkb83oQGZNjOTm4mTkY5kEipCUK5H65L7IfYJ
+	oyexWZ/r1vOm8+5JHYs46QQovaBLNLwROf5qKURwGST2StkizMJLkZEvXTPjiMUF
+	7vJ4LybADYgwuDH9lhBAttCFFNAeuavkWCuEU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JgBfLjV+08YcbuJs88nNpJg9mRpxikrZ
+	ncwnjX9oQYs1fE8qyeS9lzUeVwNiEJ0nZrD+eCaulJnz3K+PtGyh5jkUOnrDF6nO
+	gxIXMUHMtzD8zgsrn9AirafnO3V96H+Rep3ZHUUakLA9MJpBzm25qKSB8mThBUMr
+	09e8UbN6dh4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B9B73F257;
+	Wed, 27 Jan 2016 18:22:13 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D3F1A3F255;
+	Wed, 27 Jan 2016 18:22:12 -0500 (EST)
+In-Reply-To: <xmqq37tja50t.fsf_-_@gitster.mtv.corp.google.com> (Junio
+	C. Hamano's message of "Tue, 26 Jan 2016 22:52:02 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CB9B9424-C54C-11E5-99A5-80A36AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2016 at 11:06:25PM +0100, Ren=C3=A9 Scharfe wrote:
-> Am 24.01.2016 um 16:59 schrieb fuz@fuz.su:
-> >Right now, git archive creates a pax global header of the form
-> >
-> >     comment=3D57ca140635bf157354124e4e4b3c8e1bde2832f1
-> >
-> >in tar archives it creates. This is suboptimal as as comments are
-> >specified to be ignored by extraction software. It is impossible to
-> >find out in an automatic way (short of guessing) that this is suppos=
-ed
-> >to be a commit hash.
->=20
-> This is only a problem if you don't know how a given tar files was
-> created (or modified later).  How did you get into this situation?
-> Or in other words: Please tell me more about your use case.
+The only code that cares about the value of the global variable
+saved_env_before_alias after the previous fix is handle_builtin()
+that turns into a glorified no-op when the variable is true, so the
+logic could safely be lifted to its caller, i.e. the caller can
+refrain from calling it when the variable is set.
 
-My situation is that I'm interested in knowing if an archive was create=
-d
-by git so I can find out where the corresponding repository is and find
-out which commit this archive was created from.  Right now the only way
-is to open a hex editor or as archiving software is instructed to ignor=
-e
-the content of comment headers.  This is clearly a suboptimal situation=
-=2E
+This variable tells us if save_env_before_alias() was called (with
+or without matching restore_env()), but the sole caller of the
+function, handle_alias(), always calls it as the first thing, so we
+can consider that the variable essentially keeps track of the fact
+that handle_alias() has ever been called.
 
-> >It would be much more useful if git created a
-> >custom key. As per POSIX suggestions, something like this would be
-> >appropriate:
-> >
-> >     GIT.commit=3D57ca140635bf157354124e4e4b3c8e1bde2832f1
->=20
-> This would be included in addition to the comment in order to avoid
-> breaking existing users, I guess.
+It turns out that handle_builtin() and handle_alias() are called
+only from one function in a way that the value of the variable
+matters, which is run_argv(), and it already keeps track of the
+fact that it already called handle_alias().
 
-Good point.  I'm not sure how many user use the comment header at all.
+So we can simplify the whole thing by:
 
-> If you have a random archive and want to know if it was generated by
-> git then your next question might be which options and substitutions
-> were used.  That reminds me of this thread regarding verifiable
-> archives:
->=20
->     http://article.gmane.org/gmane.comp.version-control.git/240244
+- Change handle_builtin() to always make a direct call to the
+  builtin implementation it finds, and make sure the caller
+  refrains from calling it if handle_alias() has ever been
+  called;
 
-Good point.  Something like this should be enough to be enough to have
-reproducable archives if archives with a tree ID were to have a time
-stamp of 0 (1970-01-01) instead of the current date:
+- Remove saved_env_before_alias variable, and instead use the
+  local "done_alias" variable maintained inside run_argv() to
+  make the same decision.
 
-    comment=3D...    (for compatibility)
-    GIT.commit=3D... (like comment)
-    GIT.umask=3D...  (tar.umask)
-    GIT.prefix=3D... (--prefix=3D)
-    GIT.path=3D...   (see below
-    GIT.export-subst=3D1 (in extended header instead of global header)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-A different key such as GIT.treeish might be appropriate.  The
-GIT.export-subst key should be set only for those files where a
-substitution has taken place. Maybe there should also be an
-GIT.original-name key.
+ * Patches 2 and 3 are with updated log messages; their patch text
+   did not change.
 
-An option GIT.export-ignore is not required.  Instead it would be more
-useful to have a special file type G (for git) with the convention that
-the file name .gitattributes means =E2=80=9Cattributes that apply to th=
-is git
-archive.=E2=80=9D
+ git.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-The GIT.path option holds the paths that are being archived. It is a bi=
-t
-tricky to get right.  The intent of POSIX pax headers is that each key
-is an attribute that applies to a series of files.  In the case of a
-global header, each key applies until it is overridden with a new
-header or with a local header.  A GIT.path key should only apply to the
-files that correspond to this path operant to git archive.  Thus, a new
-GIT.path should be written frequently.  There should always be at least
-one GIT.path.
-
-It might be a good idea to be able to control the kind of metadata git
-adds to the archive as to be able to not leak any confidential
-information with git archive.  If you are interested I can try to make =
-a
-specification for these headers.
-
-Yours sincerely,
-Robert Clausecker
-
---=20
-()  ascii ribbon campaign - for an 8-bit clean world=20
-/\  - against html email  - against proprietary attachments
+diff --git a/git.c b/git.c
+index e39b972..c8d7b56 100644
+--- a/git.c
++++ b/git.c
+@@ -25,13 +25,11 @@ static const char *env_names[] = {
+ 	GIT_PREFIX_ENVIRONMENT
+ };
+ static char *orig_env[4];
+-static int saved_env_before_alias;
+ static int save_restore_env_balance;
+ 
+ static void save_env_before_alias(void)
+ {
+ 	int i;
+-	saved_env_before_alias = 1;
+ 
+ 	assert(save_restore_env_balance == 0);
+ 	save_restore_env_balance = 1;
+@@ -533,16 +531,8 @@ static void handle_builtin(int argc, const char **argv)
+ 	}
+ 
+ 	builtin = get_builtin(cmd);
+-	if (builtin) {
+-		/*
+-		 * XXX: if we can figure out cases where it is _safe_
+-		 * to do, we can avoid spawning a new process when
+-		 * saved_env_before_alias is true
+-		 * (i.e. setup_git_dir* has been run once)
+-		 */
+-		if (!saved_env_before_alias)
+-			exit(run_builtin(builtin, argc, argv));
+-	}
++	if (builtin)
++		exit(run_builtin(builtin, argc, argv));
+ }
+ 
+ static void execv_dashed_external(const char **argv)
+@@ -586,8 +576,17 @@ static int run_argv(int *argcp, const char ***argv)
+ 	int done_alias = 0;
+ 
+ 	while (1) {
+-		/* See if it's a builtin */
+-		handle_builtin(*argcp, *argv);
++		/*
++		 * If we tried alias and futzed with our environment,
++		 * it no longer is safe to invoke builtins directly in
++		 * general.  We have to spawn them as dashed externals.
++		 *
++		 * NEEDSWORK: if we can figure out cases
++		 * where it is safe to do, we can avoid spawning a new
++		 * process.
++		 */
++		if (!done_alias)
++			handle_builtin(*argcp, *argv);
+ 
+ 		/* .. then try the external ones */
+ 		execv_dashed_external(*argv);
+@@ -598,9 +597,9 @@ static int run_argv(int *argcp, const char ***argv)
+ 		 */
+ 		if (done_alias)
+ 			break;
++		done_alias = 1;
+ 		if (!handle_alias(argcp, argv))
+ 			break;
+-		done_alias = 1;
+ 	}
+ 
+ 	return done_alias;
+-- 
+2.7.0-368-gb6e04f9
