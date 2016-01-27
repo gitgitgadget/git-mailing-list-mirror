@@ -1,174 +1,103 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] optionally disable gitattributes
-Date: Wed, 27 Jan 2016 10:50:21 +0100
-Message-ID: <20160127095021.GA25281@ecki.hitronhub.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jan 2016, #05; Tue, 26)
+Date: Wed, 27 Jan 2016 11:21:29 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601271120150.2964@virtualbox>
+References: <xmqqr3h3amtk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 27 10:59:35 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 27 11:21:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOMsw-0000p5-8B
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 10:59:34 +0100
+	id 1aONEP-0007RF-Lx
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 11:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbcA0J7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 04:59:31 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:1757 "EHLO bsmtp5.bon.at"
+	id S1754247AbcA0KVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 05:21:41 -0500
+Received: from mout.gmx.net ([212.227.17.22]:59740 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754574AbcA0J72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 04:59:28 -0500
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jan 2016 04:59:28 EST
-Received: from bsmtp8.bon.at (unknown [192.168.181.102])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 3pr0c3694kz5vgn
-	for <git@vger.kernel.org>; Wed, 27 Jan 2016 10:53:07 +0100 (CET)
-Received: from [127.0.0.1] (ip5f5adbb8.dynamic.kabel-deutschland.de [95.90.219.184])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pr0bz1ZK8z5tlX;
-	Wed, 27 Jan 2016 10:53:02 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1754187AbcA0KVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 05:21:37 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0M4GND-1a7Wxs0BAh-00rqQk; Wed, 27 Jan 2016 11:21:31
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqr3h3amtk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:wBc/mgohtdn/aCL1BxqitY2JMY12dPT1C3EfFihkX9oJ751Szyk
+ z2gwBsbgaS3U3voxz4CEpnH9ei0L8099dvbtp04yg10JrasW+yA2Py0EQjllTT2E1+0DJM/
+ KEInGiSdT/dVmE633YNQOU+Dx0Fhvp8/0Xx9XaiX9torh2jgTIwnMxJq3w0AvvA3zGckccf
+ zrIEVoueBhOgqRMjgvG/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HOUpFW/3nKk=:7VZYZMnGsRcJS0NrSlrm3K
+ SCJHjwVeEzc2+e7L7bfBSL1vHRDfHsWirPIgXg7SPy4vf6Ybc9KrLrJA2o/Qe/ZNbgr2NWjIt
+ c3rDT0WtnmjrixlHuva+P8F7yfnbLg7ocfFtUzIlsDaAD8dV5RhUDzMHtBLS3kkHTiCUxbpyD
+ kVG/sfM4FtQBa94gJQot9Pll2zVl2lYpYVTJavYfBBZA7TLwLNnXCYFzM8teaQcdn7XlJiJMw
+ ooMvCXHLounqRomqlSugnC2ML9mPWr6oJ6gf2FY7cryZ288A5fePL8uQMIKWPX/HN5evU/3cN
+ isn7Lt/ZL5V1O8goZ8s4Hp8kMF7eP5oYnVIGGwfXfgFST3LqN7DgefjI4Ei1aZMefpbbPfRQR
+ wuPJt0bhyHTRPoCRaGs7pC6ITXBwrv5Qb0/J34Yuk5nnESO5ETmA6AQ0y1jHtFfyremL4AzGT
+ iLDpx/6JfbdFGbmkfokwgao2238y2jclYqH3TCokoiv7P3O5L0J1aSDNkXwHsqykW2Xod1NuM
+ Rb0/QE+RnCp4++CYy2NO4T/XKB11IVdS+k89rj6gRUpBxkCzFDNS2+LiQT9liqsBkre74UgbZ
+ rA8a9vte2KiW9uxqjHZN60s5kJEpXWYprAWsM97TwH5ePKq4x7cf51yjeBOZyvbPw85WDxuJw
+ be1bRrT4ITQaWaXVDshuL8xWRd2oiN8Zbv4r8TCctFBWiWbEoZDJBHc8orZaIdgB+FHJ6ZDOp
+ eFi/MvTvnaEtsCYoWhxbfmEUT/xNhZfRJSp8aUpjVWyreEuRgKiSyAwfqqvR/QwYuniI0idH 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284907>
 
-If committed files are not normalized, adding gitattributes has the
-side effect that such files are shown as modified, even though they
-were not actually modified by the user, and the work tree matches
-the committed file. This is because with gitattributes, the file is
-modified on the fly when git reads it from disk, before it compares
-with the index contents.
+Hi Junio,
 
-This is desirable in most situations, because it makes the user
-aware that files should be normalized. However, it can become an
-issue for automation. Since Git considers the work tree to be
-dirty, some operations such as git rebase or git cherry-pick refuse
-to operate. Those commands offer no flag to force overwrite work
-tree changes. The only options are to commit the changes, or to
-remove gitattributes, but that changes the repository state, which
-may be undesirable in a scripted context.
+On Tue, 26 Jan 2016, Junio C Hamano wrote:
 
-Introduce an environment variable GIT_ATTRIBUTES_DISABLED, which if
-set makes Git ignore any gitattributes.
+> * js/mingw-tests (2016-01-26) 20 commits
+>  - mingw: skip a test in t9130 that cannot pass on Windows
+>  - mingw: do not bother to test funny file names
+>  - mingw: handle the missing POSIXPERM prereq in t9124
+>  - mingw: avoid illegal filename in t9118
+>  - mingw: mark t9100's test cases with appropriate prereqs
+>  - Avoid absolute path in t0008
+>  - mingw: work around pwd issues in the tests
+>  - mingw: fix t9700's assumption about directory separators
+>  - mingw: skip test in t1508 that fails due to path conversion
+>  - tests: turn off git-daemon tests if FIFOs are not available
+>  - mingw: disable mkfifo-based tests
+>  - mingw: accomodate t0060-path-utils for MSYS2
+>  - mingw: fix t5601-clone.sh
+>  - mingw: let lstat() fail with errno == ENOTDIR when appropriate
+>  - mingw: try to delete target directory before renaming
+>  - mingw: prepare the TMPDIR environment variable for shell scripts
+>  - mingw: factor out Windows specific environment setup
+>  - Git.pm: stop assuming that absolute paths start with a slash
+>  - mingw: do not trust MSYS2's MinGW gettext.sh
+>  - mingw: let's use gettext with MSYS2
+>  (this branch uses js/msys2.)
+> 
+>  Updates test scripts to remove assumptions that are not portable
+>  between Git for POSIX and Git for Windows, or to skip ones with
+>  expectations that are not satisfiable on Git for Windows.
+> 
+>  Looks mostly done, but I had to tweak a few things, so
+>  Waiting for re-test.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- Documentation/git.txt           |  4 ++++
- Documentation/gitattributes.txt |  6 ++++++
- attr.c                          |  3 +++
- t/t0003-attributes.sh           | 43 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 56 insertions(+)
+Will re-submit with additional tweaks.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index bff6302..00f4e3b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -1132,6 +1132,10 @@ of clones and fetches.
- 	  - any external helpers are named by their protocol (e.g., use
- 	    `hg` to allow the `git-remote-hg` helper)
- 
-+'GIT_ATTRIBUTES_DISABLED'::
-+	If set, attributes are disabled for all paths. See
-+	linkgit:gitattributes[1] for more details on attributes.
-+
- 
- Discussion[[Discussion]]
- ------------------------
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index e3b1de8..f6a2b1d 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -996,6 +996,12 @@ frotz	unspecified
- ----------------------------------------------------------------
- 
- 
-+ENVIRONMENT
-+-----------
-+
-+GIT_ATTRIBUTES_DISABLED::
-+	If set, attributes are disabled for all paths.
-+
- SEE ALSO
- --------
- linkgit:git-check-attr[1].
-diff --git a/attr.c b/attr.c
-index 086c08d..0fa2f1a 100644
---- a/attr.c
-+++ b/attr.c
-@@ -547,6 +547,9 @@ static void prepare_attr_stack(const char *path, int dirlen)
- 	int len;
- 	const char *cp;
- 
-+	if (getenv("GIT_ATTRIBUTES_DISABLED"))
-+		return;
-+
- 	/*
- 	 * At the bottom of the attribute stack is the built-in
- 	 * set of attribute definitions, followed by the contents
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index f0fbb42..26e6766 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -13,6 +13,14 @@ attr_check () {
- 	test_line_count = 0 err
- }
- 
-+attr_check_disabled () {
-+	(
-+		GIT_ATTRIBUTES_DISABLED=t
-+		export GIT_ATTRIBUTES_DISABLED
-+		attr_check "$@" unspecified
-+	)
-+}
-+
- test_expect_success 'setup' '
- 	mkdir -p a/b/d a/c b &&
- 	(
-@@ -84,6 +92,41 @@ test_expect_success 'attribute test' '
- 	attr_check a/b/d/yes unspecified
- '
- 
-+test_expect_success 'gitattributes disabled' '
-+	attr_check_disabled f &&
-+	attr_check_disabled a/f &&
-+	attr_check_disabled a/c/f &&
-+	attr_check_disabled a/g &&
-+	attr_check_disabled a/b/g &&
-+	attr_check_disabled b/g &&
-+	attr_check_disabled a/b/h &&
-+	attr_check_disabled a/b/d/g &&
-+	attr_check_disabled onoff &&
-+	attr_check_disabled offon &&
-+	attr_check_disabled no &&
-+	attr_check_disabled a/b/d/no &&
-+	attr_check_disabled a/b/d/yes
-+'
-+
-+test_expect_success 'no changes if gitattributes disabled' '
-+	mkdir clean &&
-+	git init clean &&
-+	(
-+		cd clean &&
-+		printf "foo\r\n" >dos.txt &&
-+		git add dos.txt &&
-+		test_tick &&
-+		git commit -q -m dos.txt &&
-+		echo "*.txt text eol=lf" >.gitattributes &&
-+		git add .gitattributes &&
-+		test_tick &&
-+		git commit -q -m .gitattributes &&
-+		rm -f .git/index &&
-+		git reset &&
-+		GIT_ATTRIBUTES_DISABLED=t git diff --exit-code
-+	)
-+'
-+
- test_expect_success 'attribute matching is case sensitive when core.ignorecase=0' '
- 
- 	test_must_fail attr_check F f "-c core.ignorecase=0" &&
--- 
-2.7.0
+> * js/xmerge-maker-eol (2016-01-26) 2 commits
+>  - merge-file: ensure that conflict sections match eol style
+>  - merge-file: let conflict markers match end-of-line style of the context
+> 
+>  The low-level merge machinery has been taught to use CRLF line
+>  termination when inserting conflict markers to merged contents that
+>  are themselves CRLF line-terminated.
+> 
+>  Will merge to 'next'.
+
+There is one more tweak I introduced, and will resubmit: the test case did
+not test the intended 3 out of the 4 conflict markers.
+
+Ciao,
+Dscho
