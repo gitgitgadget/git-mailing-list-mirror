@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v8 07/11] dir: add remove_untracked_cache()
-Date: Wed, 27 Jan 2016 07:58:03 +0100
-Message-ID: <1453877887-11586-8-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v8 11/11] t7063: add tests for core.untrackedCache
+Date: Wed, 27 Jan 2016 07:58:07 +0100
+Message-ID: <1453877887-11586-12-git-send-email-chriscool@tuxfamily.org>
 References: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -18,45 +18,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOKAY-0003in-OR
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:05:35 +0100
+	id 1aOKAb-0003in-KN
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986AbcA0HER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 02:04:17 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37511 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753963AbcA0HDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 02:03:52 -0500
-Received: by mail-wm0-f44.google.com with SMTP id n5so11509259wmn.0
-        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:51 -0800 (PST)
+	id S1753987AbcA0HEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 02:04:32 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:34482 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753969AbcA0HD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 02:03:59 -0500
+Received: by mail-wm0-f51.google.com with SMTP id n5so13142631wmn.1
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4RUhsSYHXJ1tMZ/DXfoOSqfu7FSlrK2uG7OWRIJLCgk=;
-        b=Idxda6MRdnNZn1Auwa3R35freWmKG2va0V5S9W94AtLQHtsmb3iEHvvdp2hwtt3Q2J
-         Da+HajLd74GJcPB6VeXbJvF+9OZTlmJrgo7tRlzoYm1ymSqESdBHzMnYHZyl0yDLKYXD
-         Jc6Q6nkEaabve3i+SAt2o5K4tR6AJtfFDjU9pxYouv2sP8ADaluAtGg8SDP6mDStImFG
-         ZXpeTizh71kc3AJqNq0QicGswT4U0Ly3DtyIJQUXoYHuVbmskY4kBQxfF9S3Jnwd5kFq
-         ecv/gQ2ygc6v+Xe42VgIifgXUFUdAgtZXdroToeYYeqSVFkiAL7LLbi2St8MkTDmH2+A
-         egsw==
+        bh=o5YfGBkyrXiqn8nhUP3HMJzCoCVXlcsf7s1Wvnj2/q0=;
+        b=Rs61O2ebwN1TtDCJyrLv+UwP3+vJKr00ufj1bsFV+iM+b47jCDw6OXqbl5HouEBvpq
+         J3aJVnSdFvYcv66UtUurhjLWbo4A6CCdTw3h/0Z77/Q2W8KrrpFEz4WYcdLa64w+6+bc
+         GGjqvf7F9jOMtBCn2LN8c2MZJy264FC4qmwKiQmv4j+X2ma9Hb2+uWzY9qf0rpjfPytq
+         NGdSbUWIiXbdzdnsX40g4rX2PFP3MXslXVQT11JjQXoZsSjwJHGl/GuYWagEgqbWRzSm
+         mII5RhDTY1al2hDPQipOncsV0g8X6oeEvWEITTEYbi3+zaFICJ9uLLulxmvPSK+O3E8W
+         5Zfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4RUhsSYHXJ1tMZ/DXfoOSqfu7FSlrK2uG7OWRIJLCgk=;
-        b=G+Q9LGTMdJ8RLINexcg56FzdQ/eO+efnHLt3UIR+lMw3S16RqlazpsOJY4IkZyrbuJ
-         Ic+oBVefFvyHsJQ5qlrhVS9meD9kCI6v7p6+0aG3Uhg9+Rrhfc+RqWKAa2FwjA6KcAkv
-         joFMMhSYNu9VoW/MdiVto2/w9v78mPEkq4itDADDdodLK5El8FhZjGjGAitrz2Wb6rvP
-         xYoS2aQWU+afwzhNQ/d6jSEP96vLupjHl8qfYeSUqOD1q/Zpjl/RIyibDRZVQm4FKovc
-         vMpvQwNUH8kZlf9YMW7rclnW8rlR8ZsMBTC2pI2YggLk+kiMptS2ppixGR/9w9Uvp2CY
-         yldQ==
-X-Gm-Message-State: AG10YOSImkTUgAkjSm2+UruAtnylRmfNcPHcoJvXbl4NL71yb6+yxWZpOcGpYeXIv6tviA==
-X-Received: by 10.28.146.145 with SMTP id u139mr27476786wmd.81.1453878231052;
-        Tue, 26 Jan 2016 23:03:51 -0800 (PST)
+        bh=o5YfGBkyrXiqn8nhUP3HMJzCoCVXlcsf7s1Wvnj2/q0=;
+        b=SomeGftydo6Ctm1PeK2fIqK2iiE3EYUSCOC/G60M7XjZ5vjz6PGMS7U/Lae7sBmQ7f
+         6jWOfwHG9U7Np6U1wJ3Va2Z2d4XH2dPWJIqCH77YMpNvHg77wl+kWX2tgH4KUpjbUzu5
+         3t9XCP7OV9zox5jXgKZZoV8U070jOksuLGoqRBAl5r8XHruILBvHvimJ/k5QPc9VjxVU
+         wEMi5KQtjonhRPRseYRojNSSXS5AD57SujZGtH52ooRaMQlUMTC+6ZizK9OZllmj0n3I
+         +4ycIhD6wBdAR1AQhvVs76MMlNl7mF1bIYJ3ceVsf4yFzKJEq9nAeCz8BfvaHdUxQF7r
+         tyJA==
+X-Gm-Message-State: AG10YORSrufyngodJc21i5Oupoo2fGD6pNzv3HUzdIrnEGkE967m1JdIMQrdlZ3xXMODig==
+X-Received: by 10.28.195.212 with SMTP id t203mr30526190wmf.46.1453878238523;
+        Tue, 26 Jan 2016 23:03:58 -0800 (PST)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.49
+        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 26 Jan 2016 23:03:49 -0800 (PST)
+        Tue, 26 Jan 2016 23:03:57 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.7.0.181.g07d31f8
 In-Reply-To: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,64 +64,139 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284886>
-
-Factor out code into remove_untracked_cache(), which will be used
-in a later commit.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284887>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/update-index.c | 6 +-----
- dir.c                  | 9 +++++++++
- dir.h                  | 1 +
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ t/t7063-status-untracked-cache.sh | 85 +++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 81 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 5f8630c..d90154c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1126,11 +1126,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		add_untracked_cache(&the_index);
- 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
- 	} else if (untracked_cache == UC_DISABLE) {
--		if (the_index.untracked) {
--			free_untracked_cache(the_index.untracked);
--			the_index.untracked = NULL;
--			the_index.cache_changed |= UNTRACKED_CHANGED;
--		}
-+		remove_untracked_cache(&the_index);
- 		report(_("Untracked cache disabled"));
- 	}
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 253160a..a971884 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -18,6 +18,10 @@ if ! test_have_prereq UNTRACKED_CACHE; then
+ 	test_done
+ fi
  
-diff --git a/dir.c b/dir.c
-index 8646b18..f27b8b9 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1882,6 +1882,15 @@ void add_untracked_cache(struct index_state *istate)
- 	istate->cache_changed |= UNTRACKED_CHANGED;
- }
- 
-+void remove_untracked_cache(struct index_state *istate)
-+{
-+	if (istate->untracked) {
-+		free_untracked_cache(istate->untracked);
-+		istate->untracked = NULL;
-+		istate->cache_changed |= UNTRACKED_CHANGED;
-+	}
-+}
++test_expect_success 'core.untrackedCache is unset' '
++	test_must_fail git config --get core.untrackedCache
++'
 +
- static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
- 						      int base_len,
- 						      const struct pathspec *pathspec)
-diff --git a/dir.h b/dir.h
-index cfd3636..a3dacdb 100644
---- a/dir.h
-+++ b/dir.h
-@@ -309,4 +309,5 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
- void add_untracked_ident(struct untracked_cache *);
- void add_untracked_cache(struct index_state *istate);
-+void remove_untracked_cache(struct index_state *istate);
- #endif
+ test_expect_success 'setup' '
+ 	git init worktree &&
+ 	cd worktree &&
+@@ -30,13 +34,13 @@ test_expect_success 'setup' '
+ 
+ test_expect_success 'untracked cache is empty' '
+ 	test-dump-untracked-cache >../actual &&
+-	cat >../expect <<EOF &&
++	cat >../expect-empty <<EOF &&
+ info/exclude 0000000000000000000000000000000000000000
+ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+ flags 00000006
+ EOF
+-	test_cmp ../expect ../actual
++	test_cmp ../expect-empty ../actual
+ '
+ 
+ cat >../status.expect <<EOF &&
+@@ -506,7 +510,7 @@ EOF
+ 
+ test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
+ 	test-dump-untracked-cache >../actual &&
+-	cat >../expect <<EOF &&
++	cat >../expect-from-test-dump <<EOF &&
+ info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+@@ -525,7 +529,7 @@ file
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+ two
+ EOF
+-	test_cmp ../expect ../actual
++	test_cmp ../expect-from-test-dump ../actual
+ '
+ 
+ test_expect_success 'test sparse status again with untracked cache and subdir' '
+@@ -569,4 +573,77 @@ EOF
+ 	test_cmp ../status.expect ../status.actual
+ '
+ 
++test_expect_success '--no-untracked-cache removes the cache' '
++	git update-index --no-untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	echo "no untracked cache" >../expect-no-uc &&
++	test_cmp ../expect-no-uc ../actual
++'
++
++test_expect_success 'git status does not change anything' '
++	git status &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-no-uc ../actual
++'
++
++test_expect_success 'setting core.untrackedCache to true and using git status creates the cache' '
++	git config core.untrackedCache true &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-no-uc ../actual &&
++	git status &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-from-test-dump ../actual
++'
++
++test_expect_success 'using --no-untracked-cache does not fail when core.untrackedCache is true' '
++	git update-index --no-untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-no-uc ../actual &&
++	git update-index --untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-empty ../actual
++'
++
++test_expect_success 'setting core.untrackedCache to false and using git status removes the cache' '
++	git config core.untrackedCache false &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-empty ../actual &&
++	git status &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-no-uc ../actual
++'
++
++test_expect_success 'using --untracked-cache does not fail when core.untrackedCache is false' '
++	git update-index --untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-empty ../actual
++'
++
++test_expect_success 'setting core.untrackedCache to keep' '
++	git config core.untrackedCache keep &&
++	git update-index --untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-empty ../actual &&
++	git status &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-from-test-dump ../actual &&
++	git update-index --no-untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-no-uc ../actual &&
++	git update-index --force-untracked-cache &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-empty ../actual &&
++	git status &&
++	test-dump-untracked-cache >../actual &&
++	test_cmp ../expect-from-test-dump ../actual
++'
++
++test_expect_success 'test ident field is working' '
++	mkdir ../other_worktree &&
++	cp -R done dthree dtwo four three ../other_worktree &&
++	GIT_WORK_TREE=../other_worktree git status 2>../err &&
++	echo "warning: Untracked cache is disabled on this system or location." >../expect &&
++	test_cmp ../expect ../err
++'
++
+ test_done
 -- 
 2.7.0.181.g07d31f8
