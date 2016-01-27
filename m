@@ -1,170 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] git: simplify environment save/restore logic
-Date: Tue, 26 Jan 2016 22:52:02 -0800
-Message-ID: <xmqq37tja50t.fsf_-_@gitster.mtv.corp.google.com>
-References: <56A72235.9080602@drmicha.warpmail.net>
-	<1453814801-1925-1-git-send-email-pclouds@gmail.com>
-	<xmqq60ygcd9a.fsf@gitster.mtv.corp.google.com>
-	<xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, git@drmicha.warpmail.net
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 27 07:52:12 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v8 03/11] update-index: add --test-untracked-cache
+Date: Wed, 27 Jan 2016 07:57:59 +0100
+Message-ID: <1453877887-11586-4-git-send-email-chriscool@tuxfamily.org>
+References: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Stefan Beller <sbeller@google.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 27 08:04:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOJxa-0002Vl-Cu
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 07:52:10 +0100
+	id 1aOK9C-0002ie-Lg
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:04:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753746AbcA0GwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 01:52:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61415 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753647AbcA0GwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 01:52:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A4397324AF;
-	Wed, 27 Jan 2016 01:52:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QnxyrRg02m8fR+gIEHxEm2Xhnb4=; b=xR4A1h
-	L0iBEzHJJCL0jv70X4kPXRmZDdr/0GZEP7gXdCJUuKc3TT9r31d1BUcXi2mAiJpv
-	t8pIahn4uqG+Fyxc2YePE9Q0t1uTNNZyq/pW9ibd+AckXFOFiLcTTVt8wJ96mmWd
-	Rukce8f3NLIH5BzI0dx7Hs3DYXLAz+o+8tbrg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AFoq8CQmXsTS98EfB0Vgs75FbEXIKBbB
-	WlYew1eTeYTn0dUEyiaEmEGVA7KO7PKD87ttqcw5Bs0vQzi1eqmH/pb6VT/BtlLp
-	hol8AQ807kpsnEx8NH0Sy+Bu8g80WNrrqmQ726y+w4DOurAWvAny3Yk6y5PvQtiN
-	hJZEV2vzlqc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9AC8C324AD;
-	Wed, 27 Jan 2016 01:52:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 13B79324AB;
-	Wed, 27 Jan 2016 01:52:04 -0500 (EST)
-In-Reply-To: <xmqqbn87a54v.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 26 Jan 2016 22:49:36 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 793663A6-C4C2-11E5-BAEB-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753976AbcA0HEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 02:04:05 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33246 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753932AbcA0HDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 02:03:46 -0500
+Received: by mail-wm0-f41.google.com with SMTP id 123so137507668wmz.0
+        for <git@vger.kernel.org>; Tue, 26 Jan 2016 23:03:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Ju+80e3RFwrxn1dZg6E6wunwZibSnWL5r5AAg9MJUXY=;
+        b=KcVmDZPFQ4WI6trRxrJB8dLUcX2Xa4uuVX/FcONUD0ax5qwxNF43hceG0yYzBKm3pd
+         Q7in+UeSJ69beH1koP86uymi4ZUTuOT61gxki5vWCsv3lnY6eK/jsDPTsSnbA9KDdHp3
+         PtoeBNAXVD3K8g2XNwICfvD/+yv8kP1qw/qvKuw6cd3lSYyLQcRk4rcNSZfyEl048PG0
+         k4ajYubOad+ecO+EQpjW5mD2wmSiU0xugq3sEBVjXpkEZt+PsSjSN854hGLzFvCdktqu
+         ziAqvHUM32qGh43yreBaFaLWHXAZ2x8Rv6pstxYdnk+HzZkb8g19G+Kxumnj66flQBmH
+         jJug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Ju+80e3RFwrxn1dZg6E6wunwZibSnWL5r5AAg9MJUXY=;
+        b=deD8azVvH6ImhoutyIya7ZqcSTPko4fz+fHtkdBdGwYMIUF9CtntpyyNUcTFLK+XIg
+         gNYzejZ5E/EATTjBS2sx+lJ1w0+fEBJDBTs+n1GB7a5XsX+wo9YxKZCPtpDloJFjNtHE
+         fKRRniCuwq8u622cYYgRs2eJewAz8kw0d0rMOA5xTUCmfh42oLaGia8Tb2yJcf2sh/Xu
+         k+VuwEajt04yBvmLNAEMPFwuFMrvBZNhHSPPgu8PvvYioNIDdzAcwyLCPT4hAUiCazDi
+         jM49qX+Z6lPy6XbEi8esSH+V77M9+TAf4P6C9+UYdFdvfnqY+YstPqpnWTv2/gB/DoZ+
+         tUQw==
+X-Gm-Message-State: AG10YOQ+hCit72iAfK0nuIhdbPVRBDWRfAg/fLG5OJwjJS7AOuEcSnwyVyyd2wkP6xKApw==
+X-Received: by 10.194.80.65 with SMTP id p1mr31078947wjx.152.1453878224700;
+        Tue, 26 Jan 2016 23:03:44 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id 75sm6737569wmo.22.2016.01.26.23.03.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 26 Jan 2016 23:03:43 -0800 (PST)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.7.0.181.g07d31f8
+In-Reply-To: <1453877887-11586-1-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284875>
 
-The only code that cares about the value of the global variable
-saved_env_before_alias after the previous fix is handle_builtin()
-that turns into a glorified no-op when the variable is true, so the
-logic could safely be lifted to its caller, i.e. the caller can
-refrain from calling it when the variable is set.
+It is nice to just be able to test if untracked cache is
+supported without enabling it.
 
-This variable tells us if save_env_before_alias() was called (with
-or without matching restore_env()), but the sole caller of the
-function, handle_alias(), always calls it the first as thing, so it
-essentially keeps track of the fact that handle_alias() has ever
-been called.
-
-It turns out that handle_builtin() and handle_alias() are called
-only from one function in a way that the value of the variable
-matters, which is run_argv(), and it already keeps track of the fact
-that it called handle_alias().
-
-So we can simplify the whole thing by:
-
-- Change handle_builtin() to always make a direct call to the
-  builtin implementation it finds, and make sure the caller
-  refrains from calling it if handle_alias() has ever been
-  called;
-
-- Remove saved_env_before_alias variable, and instead use the
-  local "done_alias" variable maintained inside run_argv() to
-  make the above decision.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
+ Documentation/git-update-index.txt | 12 +++++++++++-
+ builtin/update-index.c             |  5 +++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
- * I do not mean to say that it is unnecessary to plug the leak,
-   which should be the fourth patch in this three-patch series, but
-   it should rather be obvious to implement, so I omitted from this
-   series, which is primarily meant to be "how about doing it this
-   way" illustration.
-
- git.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
-
-diff --git a/git.c b/git.c
-index e39b972..c8d7b56 100644
---- a/git.c
-+++ b/git.c
-@@ -25,13 +25,11 @@ static const char *env_names[] = {
- 	GIT_PREFIX_ENVIRONMENT
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index f4e5a85..a0afe17 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 	     [--[no-]skip-worktree]
+ 	     [--ignore-submodules]
+ 	     [--[no-]split-index]
+-	     [--[no-|force-]untracked-cache]
++	     [--[no-|test-|force-]untracked-cache]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+ 	     [-z] [--stdin] [--index-version <n>]
+@@ -180,6 +180,16 @@ may not support it yet.
+ 	system must change `st_mtime` field of a directory if files
+ 	are added or deleted in that directory.
+ 
++--test-untracked-cache::
++	Only perform tests on the working directory to make sure
++	untracked cache can be used. You have to manually enable
++	untracked cache using `--force-untracked-cache` (or
++	`--untracked-cache` but this will run the tests again)
++	afterwards if you really want to use it. If a test fails
++	the exit code is 1 and a message explains what is not
++	working as needed, otherwise the exit code is 0 and OK is
++	printed.
++
+ --force-untracked-cache::
+ 	For safety, `--untracked-cache` performs tests on the working
+ 	directory to make sure untracked cache can be used. These
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1e546a3..62222dd 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -40,6 +40,7 @@ enum uc_mode {
+ 	UC_UNSPECIFIED = -1,
+ 	UC_DISABLE = 0,
+ 	UC_ENABLE,
++	UC_TEST,
+ 	UC_FORCE
  };
- static char *orig_env[4];
--static int saved_env_before_alias;
- static int save_restore_env_balance;
  
- static void save_env_before_alias(void)
- {
- 	int i;
--	saved_env_before_alias = 1;
- 
- 	assert(save_restore_env_balance == 0);
- 	save_restore_env_balance = 1;
-@@ -533,16 +531,8 @@ static void handle_builtin(int argc, const char **argv)
- 	}
- 
- 	builtin = get_builtin(cmd);
--	if (builtin) {
--		/*
--		 * XXX: if we can figure out cases where it is _safe_
--		 * to do, we can avoid spawning a new process when
--		 * saved_env_before_alias is true
--		 * (i.e. setup_git_dir* has been run once)
--		 */
--		if (!saved_env_before_alias)
--			exit(run_builtin(builtin, argc, argv));
--	}
-+	if (builtin)
-+		exit(run_builtin(builtin, argc, argv));
- }
- 
- static void execv_dashed_external(const char **argv)
-@@ -586,8 +576,17 @@ static int run_argv(int *argcp, const char ***argv)
- 	int done_alias = 0;
- 
- 	while (1) {
--		/* See if it's a builtin */
--		handle_builtin(*argcp, *argv);
-+		/*
-+		 * If we tried alias and futzed with our environment,
-+		 * it no longer is safe to invoke builtins directly in
-+		 * general.  We have to spawn them as dashed externals.
-+		 *
-+		 * NEEDSWORK: if we can figure out cases
-+		 * where it is safe to do, we can avoid spawning a new
-+		 * process.
-+		 */
-+		if (!done_alias)
-+			handle_builtin(*argcp, *argv);
- 
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
-@@ -598,9 +597,9 @@ static int run_argv(int *argcp, const char ***argv)
- 		 */
- 		if (done_alias)
- 			break;
-+		done_alias = 1;
- 		if (!handle_alias(argcp, argv))
- 			break;
--		done_alias = 1;
- 	}
- 
- 	return done_alias;
+@@ -1004,6 +1005,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			N_("enable or disable split index")),
+ 		OPT_BOOL(0, "untracked-cache", &untracked_cache,
+ 			N_("enable/disable untracked cache")),
++		OPT_SET_INT(0, "test-untracked-cache", &untracked_cache,
++			    N_("test if the filesystem supports untracked cache"), UC_TEST),
+ 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
+ 			    N_("enable untracked cache without testing the filesystem"), UC_FORCE),
+ 		OPT_END()
+@@ -1119,6 +1122,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			setup_work_tree();
+ 			if (!test_if_untracked_cache_is_supported())
+ 				return 1;
++			if (untracked_cache == UC_TEST)
++				return 0;
+ 		}
+ 		if (!the_index.untracked) {
+ 			uc = xcalloc(1, sizeof(*uc));
 -- 
-2.7.0-368-g4610598
+2.7.0.181.g07d31f8
