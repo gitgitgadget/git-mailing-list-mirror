@@ -1,70 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git install Windows Server supported?
-Date: Wed, 27 Jan 2016 08:32:32 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601270830080.2964@virtualbox>
-References: <BEE1E8BD2C386E468098C656AB586520196D5E@ppsvr2.PP1.LOCAL>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 02:33:58 -0500
+Message-ID: <20160127073357.GA7066@sigill.intra.peff.net>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net>
+ <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+ <56A87056.2010309@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Sulzberger, Carl" <csulzberger@pandp.co.nz>
-X-From: git-owner@vger.kernel.org Wed Jan 27 08:32:48 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Santiago Torres <santiago@nyu.edu>, Git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 27 08:34:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOKat-0006aa-R7
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:32:48 +0100
+	id 1aOKc9-0007Rm-Qn
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 08:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905AbcA0Hcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 02:32:45 -0500
-Received: from mout.gmx.net ([212.227.17.21]:58212 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753851AbcA0Hcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 02:32:43 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mecqq-1ai3Kc2GD2-00ODun; Wed, 27 Jan 2016 08:32:34
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <BEE1E8BD2C386E468098C656AB586520196D5E@ppsvr2.PP1.LOCAL>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:6piq+AASabVUp82ZdsK925pOcpvKn7yCGCvdM3H1dfRwZrt2oXm
- SpcGU7aE3C6MmAUIXB8LWl83Sot1bJtp1F3BOxc+L06DYoh8zVJcO6NXdWHdT6HY4nvfmnP
- 9/OwgvCVP4+4ESlPmo7EJMPm60SqqyyVcyEK0vToByhQe7I7EjEdLy7SfFXy5k2hXKY9tw+
- b0xpSnowbn54Jv6ZKY4vA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yyawQKSseOg=:k2HIoq+c/fBYmQUqgglFnB
- JO/peVB+ITCs9sE3aHk02eZfbVZHdbmjnspDVBnyXSjulY/RSn+8PmQSV4IXL3vya8v3DrR6J
- 6YRpNqBHdpfiRyonpl/P5wVh8kX6iVgjLz2M4i2XA+5gxeEOy9ZbRnUGGy4lxggzkKIPzfz9E
- 8A9LNlHI2E7BzLW7CZw2teut55XBFDafnEH+nA0DA5SLZRSXz+BU8ufzMHflft985UTtw3TeS
- eFIy1HDTTZnHSTlxrfYtHZ9skdqGbVxwn/uI/EUDikO6sir0WNrR4vW7l2y0NKxSm6A5w/8wK
- c4emwef/BbPhbITgAOZH5M5bXLk7yQiBfUc6RsKrJoLxIydw/PvUOQJGe4i+4zZg7sccPPgEm
- T5bjgFWJ5s+7VeiZ7kvCyMA6m63DWQ39OlxJjK+SoyqRwss4+F3pwGCEBOwZtEE1McSOK5bNS
- UzY2k+YO+pdvhNA6OTYHnncZhvuvOPXNTwmO1E006C9RaTpeCZBuKox/rW9Y1AgrJXdhNwtWC
- hCHpzxWRQcX9gGAF7R4fJxuiX10ntz82bycU5gC3sjRfDzFKyCe6pnRyb0vIyZbUc7EwLSDwx
- XGUUp3UdpEutJZSM6X+O7SKjLPMGVL34nlex2ZvyLj/2C0KxUqxkesWXnLQ3KK62oB37rBJLQ
- O4nEKLa/OWY/n0fNiiSoJuZ1DStX5fHKQUhR363BgUcMJuahTPOgzX/zV3hy0NIBg3bgToSyT
- LvSXqMeFhBu7KOFLwPxw7lXMAA5ca4gVMIwDaPrYbTppgh+kgQHet8TTARDELA0mA5TJn8/S 
+	id S1753778AbcA0HeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 02:34:01 -0500
+Received: from cloud.peff.net ([50.56.180.127]:32957 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752487AbcA0HeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jan 2016 02:34:00 -0500
+Received: (qmail 10282 invoked by uid 102); 27 Jan 2016 07:34:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 02:34:00 -0500
+Received: (qmail 7773 invoked by uid 107); 27 Jan 2016 07:34:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jan 2016 02:34:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jan 2016 02:33:58 -0500
+Content-Disposition: inline
+In-Reply-To: <56A87056.2010309@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284890>
 
-Hi Carl,
+On Wed, Jan 27, 2016 at 08:23:02AM +0100, Michael J Gruber wrote:
 
-On Wed, 27 Jan 2016, Sulzberger, Carl wrote:
+> > Tag objects already have a "tag" header, which is part of the signed
+> > content. If you use "git verify-tag -v", you can check both that the
+> > signature is valid and that the tag is the one you are expecting.
+> 
+> Yes, that's what I described in my last paragraph, using the term
+> (embedded) tag "name" which is technically wrong (it's not the tag
+> object's name, which would be a sha1) but the natural term for users.
 
-> Does Git support being installing on Windows Server 2008 R2 or Server
-> 2012 R2 platforms as it does not list what is supported at download it
-> just says Windows.
+Indeed. I should have read further back in the quoting. :)
 
-In general, we try to support every Windows version that is not past its
-end-of-life. So Server 2008 R2 is supported.
+> > Git pretty much punts on all of these issues and assumes either a human
+> > or a smarter tool is looking at the verification output. But I don't
+> > think it would hurt to build in some features to let git automatically
+> > check some things, if only to avoid callers duplicating work to
+> > implement the checks themselves.
+> 
+> That is really a can of worms for several reasons:
+> [...]
+> So, for those who shy away from for-each-ref and such, we may add the
+> header check to verify-tag, with a big warning about the marginal gain
+> in security (or the requirements for an actual gain).
 
-There is a tiny exception to this rule: even if Windows XP is past
-end-of-life, we still try to keep things working (no guarantee, though).
-Note: if you need support for a certain Windows version, the safest bet is
-to help support it.
+Yeah, definitely. My thinking was that `verify-tag` could learn a series
+of optional consistency checks, enabled by command line options, and
+verifying programs (or humans) could turn them on to avoid having to
+replicate them manually. So something like:
 
-Ciao,
-Johannes
+  git verify-tag \
+    --verify-tagger-matches-key \
+    --verify-tag-matches-ref \ # or --verify-tag-matches=v2.0.0
+    v2.0.0
+
+or to implement more specific policy, maybe an option to check for a
+_specific_ tagger, either by email (as provided by gpg) or even key-id.
+
+Those are all things that are not _too_ hard to do if you're willing to
+parse gpg or git output, but we could make life easier for our callers.
+And hopefully by asking for specific, concrete checks, it doesn't
+introduce a false sense of security. I.e., we're not making a foolproof
+tool; we're making building blocks that one could use for a more
+foolproof tool.
+
+-Peff
