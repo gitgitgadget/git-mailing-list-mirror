@@ -1,95 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] merge-file: let conflict markers match end-of-line style of the context
-Date: Wed, 27 Jan 2016 11:32:50 -0800
-Message-ID: <xmqq8u3a95st.fsf@gitster.mtv.corp.google.com>
-References: <cover.1453709205.git.johannes.schindelin@gmx.de>
-	<cover.1453819314.git.johannes.schindelin@gmx.de>
-	<13379804ad901b53d78d741156677664924fc50d.1453819314.git.johannes.schindelin@gmx.de>
-	<xmqqoac8ci8o.fsf@gitster.mtv.corp.google.com>
-	<xmqqsi1kavr2.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1601270856150.2964@virtualbox>
-	<xmqqio2e996c.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1601272011570.2964@virtualbox>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Wed, 27 Jan 2016 21:09:31 +0100
+Message-ID: <56A923FB.4050308@drmicha.warpmail.net>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net> <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+ <56A87056.2010309@drmicha.warpmail.net>
+ <20160127073357.GA7066@sigill.intra.peff.net>
+ <56A87764.9070101@drmicha.warpmail.net>
+ <20160127080901.GA7651@sigill.intra.peff.net>
+ <56A88A69.6030503@drmicha.warpmail.net>
+ <xmqqmvrq99mt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 27 20:33:01 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Santiago Torres <santiago@nyu.edu>,
+	Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 27 21:09:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOVps-0007cS-Id
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 20:33:00 +0100
+	id 1aOWPP-0001z8-UV
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Jan 2016 21:09:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965291AbcA0Tc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 14:32:56 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55094 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934864AbcA0Tcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 14:32:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53A4E3CBEF;
-	Wed, 27 Jan 2016 14:32:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XXQDUgEKK0cqc6ZRKTe3cKUrRgI=; b=v0cqzD
-	2Uub7Jw9DAUx/qFox4vdqhj3Ali7qpGm1NKRwZnN+K9e9ktlFf78oGtGBbvbXA6X
-	7FHga7SU/AsJLnoTlflLDOyF8RDimjMKvpRlGLI5sX57hGf6EdDxPfyY3SVJBvp3
-	pGfHAtd1P7PNRypi6QIic9pqgPu+nOBQM62Vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GWNMrrgs57bziHT5Y9Ep+3SSCvTDGNES
-	5ncB3URqxXex/EcCBXvTun4u5cgdBzqLCdKZRWiBJ2gU2MsnBld3pHnhVEshHktk
-	j4vgiGG7eI65DrQVk2813/qqd6T8i/KNXoq1PP0mjoBlA9UQtyrdP6W9NNLRfBz9
-	f7HcNRsOnFk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BA973CBED;
-	Wed, 27 Jan 2016 14:32:52 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B972C3CBEC;
-	Wed, 27 Jan 2016 14:32:51 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1601272011570.2964@virtualbox> (Johannes
-	Schindelin's message of "Wed, 27 Jan 2016 20:12:38 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C163A548-C52C-11E5-814A-80A36AB36C07-77302942!pb-smtp0.pobox.com
+	id S967467AbcA0UJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Jan 2016 15:09:39 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:55655 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965741AbcA0UJe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jan 2016 15:09:34 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9E5F821923
+	for <git@vger.kernel.org>; Wed, 27 Jan 2016 15:09:33 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 27 Jan 2016 15:09:33 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=bJ6es9H6c+QBw2cs9yKoUfky/9U=; b=IoIjF1
+	wKYR0wo5Q3OSGplTdB5JzSMNHFzNphk75DCEux/G/IXrTfVozwmT/tesw+8OwHxI
+	1Cv9fnlLI4mBpblwXgKXJeEYIcuYZAxNGWcFB1c21Hmpbuy8pAQv+P9LUuuIkej2
+	qwh+vSItXzRNMttjmNVHZO47SZpOfYuwW+mmo=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=bJ6es9H6c+QBw2c
+	s9yKoUfky/9U=; b=AoyKr3VAMO+TZPF6gLTfwZiYSHMQ8CVSpPd+3gw0JOxgrYb
+	np/lnAvBFjCgUd6cDhPnYMdKtCqQIvxaOaGdxuOAZrMq9ghUFptvEKI9DhcmvFNc
+	Hbz8y27sTnBp5Cb7D3mHYvrhC92wbaU/usFMB0x/vv+POo3o/mkHZa/EBiMM=
+X-Sasl-enc: IxV5T1JUHY3ChhvRtnnoNXNRBR34e4AramUHTaI0J8BO 1453925373
+Received: from UltraSam.fritz.box (dslc-082-083-023-202.pools.arcor-ip.net [82.83.23.202])
+	by mail.messagingengine.com (Postfix) with ESMTPA id B870468014A;
+	Wed, 27 Jan 2016 15:09:32 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqqmvrq99mt.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano venit, vidit, dixit 27.01.2016 19:10:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Jeff King venit, vidit, dixit 27.01.2016 09:09:
+>>
+>>> The bigger issue is that gpg seems to give us only _one_ uid, when there
+>>> may be several. E.g., Junio's v2.7.0 is signed by 96AFE6CB, which is a
+>>> sub-key that has several uids associated with it. The one that "git
+>>> verify-tag --raw" shows from gpg is gitster@pobox.com, which is good,
+>>> but I think that's just because it happens to be the first uid. Or maybe
+>>> there is some gpg arcana going on that I don't know about.
+>>
+>> You do not sign with a uid, you sign with a (sub)key, and the tag is
+>> signed with Junio's primary key. His subkey is encryption only.
+> 
+> Hmm, actually I meant to sign my tags with signing subkey, not the
+> primary one, but I may have made a mistake.
 
-[administrivia: I finally managed to correct e-mail address of peff@,
-which has been giving me bounces for all the previous messages in
-the thread]
+Oops, I needed to refresh my copy of your key, sorry. You did sign 2.7.0
+with the subkey 0xB0B5E88696AFE6CB
 
-> Your response is also an indicator to me that future myself will find the
-> same code just as confusing as you did, though.
->
-> Maybe need_cr -> eol_is_crlf?
+>> You do sign a uid.
+>>
+>> So, if you want to be sure that a tag is signed "with a specific uid" by
+>> relying on signatures from a set of signers, you would really need to
+>> check that the key that signed the tag has a signature on the correct
+>> uid. Having a signed key with the right uid in it doesn't mean much
+>> unlss the right uid is signed.
+>>
+>> E.g., I have a key with many signatures, and I could have Junio's uid on
+>> it in a minute without invalidating any of those signatures.
+> 
+> I have signatures on my primary key from others, and my signing key
+> is signed by my primary key and by no other keys.  Here is an
+> abbreviated output from running "gpg --list-sigs 96AFE6CB":
+> 
+> pub   4096R/713660A7 2011-10-01
+> uid                  Junio C Hamano <gitster@pobox.com>
+> sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+> sig          93674C40 2011-10-04  Theodore Y. Ts'o <tytso@mit.edu>
+> sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+> sig          C11804F0 2011-10-04  Theodore Ts'o <tytso@mit.edu>
+> sig          02A80207 2011-10-05  Andrew Morton (akpm) <akpm@linux-foundation.org>
+> uid                  Junio C Hamano <junio@pobox.com>
+> sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+> sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+> sig          C11804F0 2011-10-04  Theodore Ts'o <tytso@mit.edu>
+> uid                  Junio C Hamano <jch@google.com>
+> sig 3        713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          F3119B9A 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sig          493BACE4 2011-10-04  H. Peter Anvin (hpa) <hpa@zytor.com>
+> sig          00411886 2012-07-20  Linus Torvalds <torvalds@linux-foundation.org>
+> sub   4096R/833262C4 2011-10-01
+> sig          713660A7 2011-10-01  Junio C Hamano <gitster@pobox.com>
+> sub   4096R/96AFE6CB 2011-10-03 [expires: 2017-09-20]
+> sig          713660A7 2015-09-21  Junio C Hamano <gitster@pobox.com>
+> sub   4096R/B3F7CAC9 2014-09-20 [expires: 2017-09-19]
+> sig          713660A7 2014-09-20  Junio C Hamano <gitster@pobox.com>
+> 
+> So I understand that the way you trust 96AFE6CB has to be indirect.
+> You may have somebody's key you know belongs to that somebody you
+> trust (say, Linus) in the list of signers of 713660A7 (my primary),
+> and you know 96AFE6CB is a key I use because it is signed by my
+> primary key.
+> 
+> You can add a subkey to your keyring a uid that says "Junio", but
+> the signature on that subkey would not have a signature by me you
+> can verify by following the web of trust.  You are correct to point
+> out that "this key claims to be by somebody, and it has some
+> signature" is not a sufficient reason for you to trust it.
 
-The crucial question is how well the variable conveys its meaning
-when it has -1 as its value.  "need_cr? -- I don't know yet" is as
-clear as "eol_is_crlf? -- I don't know yet", if not clearer.  I
-personally do not think "eol_is_crlf" is an improvement.  It makes
-it unclear _whose_ eol the variable is talking about.  It can be
-misread as talking about one or more of the files that are being
-merged and mistaken as a statement of a fact (i.e. "we inspected
-and know the input file's eol is CRLF").
+"subkey" and "uid" are different things. You bind a subkey to your
+primary key with that self-signature. subkeys don't carry any other
+signatures.
 
-Compared to that, it is clear that "need_cr" is talking about what
-the EOL convention the resulting file should be.
+A primary key "carries" the uids, and whenever someone "signs your key"
+they in fact sign a specific uid - usually all, resulting in multiple
+signatures, one for each uid of the (primary) key.
 
-I briefly wondered if the if/if (need_cr)/... cascade that inspects
-(conditionally up to) three variants might become cleaner if the
-polarity of that variable is flipped (we are allowed to use CRLF
-only when we know that among all of the three variants that we can
-determine the line termination convention used, all of them use
-CRLF), but I didn't think it through seriously.
+A key is usually considered trusted if it carries "a" signature from a
+trusted key.
+
+So, assuming my key carries a signature from a trusted key to at least
+one uid, it would be trusted no matter what (fake) uids I add to it later.
+
+>> That one is easy already by setting "GNUPGHOME" to a special dir with a
+>> small keyring and tight trust settings (or having a dedicated account on
+>> the incoming side in the first place).
+> 
+> Yes, I understand that the above is how automated services per
+> project should be set up, with a dedicated verification keyring that
+> holds keys the project trusts.
+
+Michael
