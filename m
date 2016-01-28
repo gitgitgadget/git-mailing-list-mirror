@@ -1,92 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 11/20] tests: turn off git-daemon tests if FIFOs are
- not available
-Date: Thu, 28 Jan 2016 09:40:43 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601280939170.2964@virtualbox>
-References: <cover.1453818789.git.johannes.schindelin@gmx.de> <cover.1453911367.git.johannes.schindelin@gmx.de> <35b05b7e0d01bf550b698d3c6ecc577eb80d4149.1453911367.git.johannes.schindelin@gmx.de>
- <CAPig+cRXV-nv1ZZv1MrujdF3YfZMgwusTcBHAXnyCRaYyXmRWg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 00/20] Let Git's tests pass on Windows
+Date: Thu, 28 Jan 2016 03:42:03 -0500
+Message-ID: <CAPig+cQR11JtTrcHNAWytTRfdWis4qmzODs-Key-8c+8fgKoUQ@mail.gmail.com>
+References: <cover.1453818789.git.johannes.schindelin@gmx.de>
+	<cover.1453911367.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 09:41:02 2016
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 28 09:42:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOi8U-0000bC-6p
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 09:41:02 +0100
+	id 1aOi9b-0001Nj-Ga
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 09:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934369AbcA1Ik6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 03:40:58 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63973 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933714AbcA1Ik4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 03:40:56 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MYLKn-1abaKV1K8v-00VD2I; Thu, 28 Jan 2016 09:40:46
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CAPig+cRXV-nv1ZZv1MrujdF3YfZMgwusTcBHAXnyCRaYyXmRWg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:UMUjAr4v8lZ8r09JBFR2G4lW+FvCDWZbQmhOap3pb7rokZjY/9P
- Dvy44vGSqua4oSzEhnenZ6E7fLXiMWHjuYPYEBOYh+6hoXIjDAF3RV7CmC4A42EzwQsPzW0
- KoMejqEG8LpN3ppKQJ2/lOjp+fGSEiaU4qjhbfqHFwEHmIjLTQ7QtQGBSfRHgmr5o3VtoAi
- D9jFh8MW0qxw2Vd/xvkSw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Tf+K/FoJRRQ=:9YfmTHS5U6HYDhwcX9rvfB
- 3Ozmq92p9f56wQhZk9otun0X3buo5ktOVrMgYqlJ7A2W9GsSVZ3zp/IttYYFVug+PJy1u41Y0
- 5eP35CIjn5geZt0hx3ESeBzEAvran51nlYYD1wTckWMmb/ysZdOxKiw0O9ASOCuCpiD9TXwQ0
- j+jTkND2Q2zH7wrSCqXxXhOV1uRKKrnXB8UvPw6LC+8+UIRneYhNBS4TJ/u1AfntZcMmqrIgg
- DUaSCiIzaGA+HerYYc0WheDdf57BrTDZlQPoDwq/BALtsaIYtgyWxyhO/hkjdcBT3ECcNtj1I
- 9E+wnOf2iiOIWpgOEDQ0kmP3sIoObgVB56P72nsRsZiQwBKQyRvxg7I9CICmY0HE+YF2lJh7l
- 7bDR0Sn5bjxmGzrnN2N5LKi5jkyaStwyBpSVbIrLjPAK9PpxkgtMi361Hl26jXHuc48FwOR9Z
- mVdyQVcSVS9S+377E4MywgqDo3gRaG1BTZvWGj8RnJ7ImmX+MKueJxeWkxgT7nYSa78kCYCAS
- RnGO2+Gl91N3S3DrPRsJqT1R6dmXUEUR6WKjT7+JvvP8b2hRXA9iUGzeUKeESfJD8bRiR24fm
- yWK8aH79fIizfG+PBhWIG1G94ORL3nkTt8wVmIV3d4mS6n/3c2qUZCjBa0NPsD7BSjdg1prHA
- FPbKMVWDiJg5A+CjXlDRUH9IPAqIY9PjDB0DHoB7sDKdk4TrA7x6NAF5NfaEjCP+SZYowP01g
- Jfe8PCfs54KjdGuPgJuycxupOTyt5Icb1Y3vJDl+qfSbWbUFowG1wRa3MEcbooMMPgFHzmE1 
+	id S967071AbcA1ImH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 03:42:07 -0500
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:36226 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934121AbcA1ImE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 03:42:04 -0500
+Received: by mail-vk0-f68.google.com with SMTP id e64so1263273vkg.3
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 00:42:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SDnsoVJ4i9lIERI8IlyKssnmHYO8o2znXeE9dR7pcTk=;
+        b=usPbNMr1UuXuUvondht+PakH8g4NGu0JMGr3E2Q+RQ4qrX4+f35c/fMCgxwVo3XnNv
+         96Df3thjijbp5VEMcPNPH0utvW8tx1A90aO16D6W9YvC3jjbfH/pdfe+fKWGQIWGHQUk
+         JIfX/iIP2Blec2MfSckGcvUvTfLFTgEhQDeewI6CUYhc7KcIuPUUr7OQuBOTradjhlHw
+         U0hfRzoqekRQVsXr/PNQVN1o3JZh1HnDVJPNXJnZiSrJF7J7Ukojn9ZxrRfWKH0PpHh9
+         ewsC6JD/PUN0mjPYwEaI6i7krc7DkCSk22p9ejKZIJf+wWxdBYNxv4QzX8IOm/zivaEh
+         h9EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SDnsoVJ4i9lIERI8IlyKssnmHYO8o2znXeE9dR7pcTk=;
+        b=hmKeDHIxFkLIKkdXw0aYe9YGpxRUQp5tGA/rPbhxkPLQpVbElcPK6P69fyfQXxZ+cC
+         b4q90AvTd/E3Yx6t1Ur9nV6+MGq+GUFO7k7aF2pjMWBlScSGShJTJXCArTvvD3udr+/I
+         dJN8YcHfMkesN6YSJedHXMZlXi8JdDvyBA7PZW9no3m2zOYlZTiYEs+vn3Z7JFpQqhtU
+         vULcjKsF1/gYCQQ7Y7ZztDQfMZS0OtlXBy/TkESrauv0VI45detyY61LgPpv18L/fYvn
+         0RchQfO2vqElVCC5jtghTtZHeTc9ZzUEHDgBARXzBauVEyzbp1NV/S+FrePVnNxDKEth
+         128A==
+X-Gm-Message-State: AG10YORzrIbquRnJTRSRStmipI1QdEgHYRJa1VCUaApyQFX196n8tXHNPINcvTBVeZ3sOdMAfijRSlVmDXyXEw==
+X-Received: by 10.31.47.135 with SMTP id v129mr1218250vkv.115.1453970523222;
+ Thu, 28 Jan 2016 00:42:03 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 28 Jan 2016 00:42:03 -0800 (PST)
+In-Reply-To: <cover.1453911367.git.johannes.schindelin@gmx.de>
+X-Google-Sender-Auth: E5VtpZWsmOMWgz1UCEaFJXdQcv4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284989>
 
-Hi Eric,
+On Wed, Jan 27, 2016 at 11:19 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Relative to v2, this fixes stupid typos that made the tests fail on
+> Linux, a stupid copy-paste error pointed out by Eric Sunshine,
+> unnecessary 'printf ""' calls pointed out by Junio Hamano, and I now
+> use `test_have_prereq !MINGW` consistently, as pointed out by both Eric
+> and Junio. This time, I also send the patch series with the character
+> set set (sic!) to UTF-8. Oh, and this time, I also made sure that the
+> regression tests pass on Windows & Linux alike.
 
-On Thu, 28 Jan 2016, Eric Sunshine wrote:
-
-> On Wed, Jan 27, 2016 at 11:19 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > The Git daemon tests create a FIFO first thing and will hang if said
-> > FIFO is not available.
-> >
-> > This is a problem with Git for Windows, where `mkfifo` is an MSYS2
-> > program that leverages MSYS2's POSIX emulation layer, but
-> > `git-daemon.exe` is a MINGW program that has not the first clue about
-> > that POSIX emulation layer and therefore blinks twice when it sees
-> > MSYS2's emulated FIFOs and then just stares into space.
-> >
-> > This lets t5570-git-daemon.sh and t5811-proto-disable-git.sh pass.
-> >
-> > Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-> > @@ -23,6 +23,11 @@ then
-> > +if ! test_have_prereq PIPE
-> 
-> Maybe:
-> 
->     if test_have_prereq !PIPE
-> 
-> ?
-
-Darn. Of course I only looked for '! .*MINGW', but I should have looked
-for '! test_have_prereq' in the patches.
-
-Junio, could you kindly fix up locally if this is the only remaining issue
-of this patch series?
-
-Thanks,
-Dscho
+For what it's worth, I ran the test suite on Mac OS X and FreeBSD, as
+well, with this series applied and didn't run across any problems. I
+also read through v3 and, other than the micro nit in patch 11/20,
+didn't find anything upon which to comment.
