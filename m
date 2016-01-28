@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v5 03/10] test-regex: expose full regcomp() to the command line
-Date: Thu, 28 Jan 2016 18:56:16 +0700
-Message-ID: <1453982183-24124-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v5 04/10] grep/icase: avoid kwsset on literal non-ascii strings
+Date: Thu, 28 Jan 2016 18:56:17 +0700
+Message-ID: <1453982183-24124-5-git-send-email-pclouds@gmail.com>
 References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,142 +10,136 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 12:56:50 2016
+X-From: git-owner@vger.kernel.org Thu Jan 28 12:56:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOlBy-0006lv-5R
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:56:50 +0100
+	id 1aOlC4-0006qT-Nt
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934632AbcA1L4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 06:56:47 -0500
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:33091 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932669AbcA1L4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 06:56:45 -0500
-Received: by mail-pa0-f66.google.com with SMTP id pv5so1894098pac.0
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 03:56:45 -0800 (PST)
+	id S934662AbcA1L4x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 06:56:53 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33491 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932669AbcA1L4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 06:56:52 -0500
+Received: by mail-pf0-f196.google.com with SMTP id x125so2006295pfb.0
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 03:56:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=BxehUYH9wB2auqqGUZpwCJQL4cXOVpJYSZ2715hIrds=;
-        b=h8nCM7R3w97IcxnAb7RqvryNdIsuDMVBKrvKGUxfSKHIbNSkjy/ECrieJb4jYxuGax
-         64sbpL1v0puK3P/RitZMyF/lyNbMHbsMDKZcmwxyMyElQcd0+rrF8IaQ6blKcGCiRllP
-         9wqijo7JYPi/R2O26LxncgWIe6ehRuetknmedRWLM+1DuodmptXFdyQN5fo/jj+V6nlK
-         0NFi5UASoEMtAR0UKdd2LJroZQx/98nK/xwPp1OfBQhWPCIh8ElEwQaYEVodElc62+aC
-         veXFiUBVmnj4kPzkbKlOaZzc1GtECgUisoaSGAhUInq4aqPYUF0ZqG1NYu4wwDvDKGo0
-         6vQw==
+        bh=jFCsxqHGPGkyzl4JeUl5IOELIdbPtq6xKCjNMvi9mUo=;
+        b=Tt4yfWdwfqd8ZGRNmJY8cC5UF2FlrgeIU70UVd9ZIVI3Rko5jtngA9E8qCgqWuCacc
+         cZcuZ9PE7ScUrYpeIlDVI+bexBVG3x6ETraPQ23dzp0IpHdTnUCUSy+fPLejN0t/P3Ni
+         cpUpFoImN4sKxSPHJ/JHS9wyc8oQNW3r2jlj5KAKDdEryNhDzUHq1E6yECaoGf+qJWfH
+         9fBUeTUCtIe6mHsT/Iz5F891YYKNvnuKeJ0r5cgiSfONTe+YDuxy8hU8QhcucfxShrEg
+         NIoa2oEXVWGjWcYpBjWl3+H7F7NaLSrHdjE4SuK7/zN5JCKgBAiO257o8ePMnHJavIhP
+         5hZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=BxehUYH9wB2auqqGUZpwCJQL4cXOVpJYSZ2715hIrds=;
-        b=XTKxvaqkVX0mTGpwb319iGC8X0GNtPR8Wv7f8Um//oJymlBhDkLXYO74i9M/T5TUe/
-         DsYBp+Pv/FTh487anSOmxTQdx82cba9mFs4YmR0Y23L0sIEpK1G5swfFeKbHgCrE9LZ4
-         nSg6kE/6oqsAPjpUCCWen7RVo2fbQmD0llGjJ6ORGr84bymmTZNNriy+8U8lc5vR+xRv
-         L/vlBbv/H+YTiwUXKjhwdZ3jQxfn6UStqn7Pyzw0JzWZCVkS0FP7V7BdDDoF1uI6lsxG
-         cJlBvvDWvj3jPn6mgwkBPQWW7tkmQ47mhSslL3lM5uE4BOw6e5S58eKhjy5phMB8kVaF
-         N/6Q==
-X-Gm-Message-State: AG10YORCdWJ3RDkKRpgxZ6XquKsoyu/oxy1aHju1FqYEeBqT9CDoby0PUw5iSpEZiWXrJg==
-X-Received: by 10.66.232.202 with SMTP id tq10mr3956774pac.14.1453982205559;
-        Thu, 28 Jan 2016 03:56:45 -0800 (PST)
+        bh=jFCsxqHGPGkyzl4JeUl5IOELIdbPtq6xKCjNMvi9mUo=;
+        b=FFtX6xfCsqYZvQEkVR4zNkZkG7P1pJQdwgX2Js7hTpA6mmXFFcNZCL8+ZFr6WptYp1
+         09pVDqi10y3nfO3RsITTR7Aevmi+vSnumvM0GFjlIfw2fbItVXbZibyw29wS1JqOupHd
+         YOd8XzwYHdciWLJFJ9Jg/APhLEMbflRptSraoHgAIu4KxMqz/3RWSdki8BZYsOwqjqg0
+         SAS9TswG/yiXRVjppAIJpSzKbPBCEpeNN688rHL5OyBnNGJ/7W8s1T3/mR0kMuM6dA+X
+         3Ry/JdoFs0gWm0w4cTpnI6jsjFcD2ErNlE7hepJczxBH5i08jkSZbgDAKg2TYBrBHO17
+         FUjg==
+X-Gm-Message-State: AG10YOSWvuP91N+idDcyDbAOPmQb401mvDkKSbjc4uV6owPF0Fsy2V6nwySBtYdJFIU+Gw==
+X-Received: by 10.98.19.215 with SMTP id 84mr2507067pft.22.1453982211902;
+        Thu, 28 Jan 2016 03:56:51 -0800 (PST)
 Received: from lanh ([115.76.235.75])
-        by smtp.gmail.com with ESMTPSA id x18sm15920110pfa.65.2016.01.28.03.56.42
+        by smtp.gmail.com with ESMTPSA id ux2sm15907483pac.46.2016.01.28.03.56.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jan 2016 03:56:44 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 28 Jan 2016 18:56:50 +0700
+        Thu, 28 Jan 2016 03:56:49 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 28 Jan 2016 18:56:56 +0700
 X-Mailer: git-send-email 2.7.0.288.g1d8ad15
 In-Reply-To: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285010>
 
+When we detect the pattern is just a literal string, we avoid heavy
+regex engine and use fast substring search implemented in kwsset.c.
+But kws uses git-ctype which is locale-independent so it does not know
+how to fold case properly outside ascii range. Let regcomp or pcre
+take care of this case instead. Slower, but accurate.
+
+Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Noticed-by: Plamen Totev <plamen.totev@abv.bg>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- test-regex.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++--=
-----
- 1 file changed, 50 insertions(+), 6 deletions(-)
+ grep.c                                   |  7 ++++++-
+ t/t7812-grep-icase-non-ascii.sh (new +x) | 23 +++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+ create mode 100755 t/t7812-grep-icase-non-ascii.sh
 
-diff --git a/test-regex.c b/test-regex.c
-index 0dc598e..3b5641c 100644
---- a/test-regex.c
-+++ b/test-regex.c
-@@ -1,19 +1,63 @@
- #include "git-compat-util.h"
-+#include "gettext.h"
-+
-+struct reg_flag {
-+	const char *name;
-+	int flag;
-+};
-+
-+static struct reg_flag reg_flags[] =3D {
-+	{ "EXTENDED",	 REG_EXTENDED	},
-+	{ "NEWLINE",	 REG_NEWLINE	},
-+	{ "ICASE",	 REG_ICASE	},
-+	{ "NOTBOL",	 REG_NOTBOL	},
-+#ifdef REG_STARTEND
-+	{ "STARTEND",	 REG_STARTEND	},
-+#endif
-+	{ NULL, 0 }
-+};
+diff --git a/grep.c b/grep.c
+index e739d20..f2180a2 100644
+--- a/grep.c
++++ b/grep.c
+@@ -4,6 +4,7 @@
+ #include "xdiff-interface.h"
+ #include "diff.h"
+ #include "diffcore.h"
++#include "commit.h"
 =20
- int main(int argc, char **argv)
+ static int grep_source_load(struct grep_source *gs);
+ static int grep_source_is_binary(struct grep_source *gs);
+@@ -398,12 +399,16 @@ static int is_fixed(const char *s, size_t len)
+=20
+ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
  {
--	char *pat =3D "[^=3D{} \t]+";
--	char *str =3D "=3D{}\nfred";
-+	const char *pat;
-+	const char *str;
-+	int flags =3D 0;
- 	regex_t r;
- 	regmatch_t m[1];
++	int icase_non_ascii;
+ 	int err;
 =20
--	if (regcomp(&r, pat, REG_EXTENDED | REG_NEWLINE))
-+	if (argc =3D=3D 1) {
-+		/* special case, bug check */
-+		pat =3D "[^=3D{} \t]+";
-+		str =3D "=3D{}\nfred";
-+		flags =3D REG_EXTENDED | REG_NEWLINE;
-+	} else {
-+		argv++;
-+		pat =3D *argv++;
-+		str =3D *argv++;
-+		while (*argv) {
-+			struct reg_flag *rf;
-+			for (rf =3D reg_flags; rf->name; rf++)
-+				if (!strcmp(*argv, rf->name)) {
-+					flags |=3D rf->flag;
-+					break;
-+				}
-+			if (!rf->name)
-+				die("do not recognize %s", *argv);
-+			argv++;
-+		}
-+		git_setup_gettext();
-+	}
+ 	p->word_regexp =3D opt->word_regexp;
+ 	p->ignore_case =3D opt->ignore_case;
++	icase_non_ascii =3D
++		(opt->regflags & REG_ICASE || p->ignore_case) &&
++		has_non_ascii(p->pattern);
+=20
+-	if (is_fixed(p->pattern, p->patternlen))
++	if (!icase_non_ascii && is_fixed(p->pattern, p->patternlen))
+ 		p->fixed =3D 1;
+ 	else if (opt->fixed) {
+ 		p->fixed =3D 1;
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
+scii.sh
+new file mode 100755
+index 0000000..6eff490
+--- /dev/null
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
 +
-+	if (regcomp(&r, pat, flags))
- 		die("failed regcomp() for pattern '%s'", pat);
--	if (regexec(&r, str, 1, m, 0))
--		die("no match of pattern '%s' to string '%s'", pat, str);
-+	if (regexec(&r, str, 1, m, 0)) {
-+		if (argc =3D=3D 1)
-+			die("no match of pattern '%s' to string '%s'", pat, str);
-+		return 1;
-+	}
-=20
- 	/* http://sourceware.org/bugzilla/show_bug.cgi?id=3D3957  */
--	if (m[0].rm_so =3D=3D 3) /* matches '\n' when it should not */
-+	if (argc =3D=3D 1 && m[0].rm_so =3D=3D 3) /* matches '\n' when it sho=
-uld not */
- 		die("regex bug confirmed: re-build git with NO_REGEX=3D1");
-=20
- 	exit(0);
++test_description=3D'grep icase on non-English locales'
++
++. ./lib-gettext.sh
++
++test_expect_success GETTEXT_LOCALE 'setup' '
++	printf "TILRAUN: Hall=C3=B3 Heimur!" >file &&
++	git add file &&
++	LC_ALL=3D"$is_IS_locale" &&
++	export LC_ALL
++'
++
++test_have_prereq GETTEXT_LOCALE &&
++test-regex "HALL=C3=93" "Hall=C3=B3" ICASE &&
++test_set_prereq REGEX_LOCALE
++
++test_expect_success REGEX_LOCALE 'grep literal string, no -F' '
++	git grep -i "TILRAUN: Hall=C3=B3 Heimur!" &&
++	git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
++'
++
++test_done
 --=20
 2.7.0.288.g1d8ad15
