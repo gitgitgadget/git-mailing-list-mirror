@@ -1,99 +1,53 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [RFC] tag-ref and tag object binding
-Date: Thu, 28 Jan 2016 16:09:02 -0500
-Message-ID: <20160128210902.GE9629@LykOS>
-References: <20160125212208.GB26169@LykOS>
- <56A73DE6.5050201@drmicha.warpmail.net>
- <20160126152941.GA31951@LykOS>
- <20160126202651.GA1090@sigill.intra.peff.net>
- <xmqqwpqwavtf.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
+Subject: AW: [PATCH 2/2] stash: use "stash--helper"
+Date: Thu, 28 Jan 2016 22:25:25 +0100
+Message-ID: <BLU436-SMTP572EDBE67B8D37ECADD616A5DA0@phx.gbl>
+References: <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>	<0000015289f33e85-713596a1-2718-4c3a-bf3c-4a0f1048d401-000000@eu-west-1.amazonses.com> <CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 22:09:11 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "'Stefan Beller'" <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:26:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOtoU-0005py-7Q
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 22:09:10 +0100
+	id 1aOu5F-0006ZJ-Or
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 22:26:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbcA1VJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 16:09:06 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:36722 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbcA1VJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 16:09:05 -0500
-Received: by mail-qk0-f172.google.com with SMTP id s68so16577539qkh.3
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 13:09:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to;
-        bh=FnaOUrlqjoUE6ChSFxJUOL7gOMA13s0vbM/KLKrQVfE=;
-        b=s6tkfl21rU9+Kuvih+DNQ1G5odoBLLJv+1lApsBFmmiGuchglbjlBte8pA8tfXRJIr
-         mfIUBEQ0Iayxvyvh6adAV9v0/ilNEZkd7wjtP8/RLOMk00y2TtJrg2nCW57ZjaW2/Udx
-         AGVhoqy6kJVXM/NVfVwHd1Zp803kjGIbWHc0ovG4wMLkKSOd3tinGQJHEE6fX2Ky5FiE
-         AjuMyFJs+kpEBDTwupG33p+W9tKZ0I4AOnbwMlvRy7/I9pLvXGaB/ArYwpS5TQaotSVc
-         IX9VzUCyVa/45S6Ryfxm9bQt9fEm1AlLJfjT02rA3V1bsE8b8Xpr+bEEFnq/7+alIB9K
-         wetA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to;
-        bh=FnaOUrlqjoUE6ChSFxJUOL7gOMA13s0vbM/KLKrQVfE=;
-        b=dq2xfnIC6TC1YBqks/r39gyLM434PrXHn9+VtinGmVP8xyGzapnWgrNjGdOK0xm0Fh
-         m6NuNE7FtcgL/lP0Wipf+4Uscm+hKCAvMjt7Ut+JpgoP9zDq14lLPDWKat7DSjjQAXSs
-         FrhNXKQYtXZUwf2x5ycMHavY4Y5zCDCcOJ3V+HxiARc1XE3cSkiD/4yXy8xph2mYvkgP
-         HDtpR43g7R2kpnGoW00Tg0BlbX7/OPfxY4ZOipbGcbw06x2e9rvF8Ow7HCyDVjnCUVIZ
-         2SxqNAjqdP8XwaASUfQA7UkLTXvNJkZvfKYTIpT6W0ha9440AdraA4spsEttUbvhG1lX
-         ECbQ==
-X-Gm-Message-State: AG10YOTjx6UPQDaUrWZeRdQrzm2HWo0UyEq1xemfXeDBp0VatlXzq/VmmTRPg/qykezFQo3r
-X-Received: by 10.55.76.73 with SMTP id z70mr6293111qka.105.1454015344395;
-        Thu, 28 Jan 2016 13:09:04 -0800 (PST)
-Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-12.NATPOOL.NYU.EDU. [216.165.95.1])
-        by smtp.gmail.com with ESMTPSA id x79sm4626623qka.37.2016.01.28.13.09.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Jan 2016 13:09:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqwpqwavtf.fsf@gitster.mtv.corp.google.com>
+	id S967768AbcA1V00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 16:26:26 -0500
+Received: from blu004-omc3s27.hotmail.com ([65.55.116.102]:65411 "EHLO
+	BLU004-OMC3S27.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S966022AbcA1V0Z convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 16:26:25 -0500
+Received: from BLU436-SMTP57 ([65.55.116.74]) by BLU004-OMC3S27.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
+	 Thu, 28 Jan 2016 13:26:24 -0800
+X-TMN: [+q9fAHhp4qlvZeMCTwht4qvK3/qMo3Zl]
+X-Originating-Email: [mha1993@live.de]
+In-Reply-To: <CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQFSRr5uEh5S4K1KMC5oGcLx3KQ3HgJ3eYkQAY0LrtWf725V8A==
+Content-Language: de
+X-OriginalArrivalTime: 28 Jan 2016 21:26:22.0885 (UTC) FILETIME=[893D1D50:01D15A12]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285032>
 
-On Tue, Jan 26, 2016 at 01:13:16PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Jan 26, 2016 at 10:29:42AM -0500, Santiago Torres wrote:
-> >
-> >> > If you cannot trust those with write access to a repo that you are
-> >> > pulling and installing from you might want to re-check where you are
-> >> > pulling or installing from ;)
-> >> 
-> >> Yeah, I see your point, but mechanisms to ensure the server's origin can
-> >> be bypassed (e.g., a MITM). I don't think it would hurt to ensure the
-> >> source pointed to is the source itself. The tag signature can help us do
-> >> this.
-> >
-> > Right. I think the more interesting use case here is "I trust the
-> > upstream repository owner, but I do not trust their hosting site of
-> > choice."
-> 
-> Yup, and push-certificate is there to help with that issue.
+> You had some good measurements in the coverletter, which is not going to be recorded in the projects history. This part however would be part of the commit.
+> So you could move the speed improvements here (as well as the other reasoning) on why this is a good idea. :)
 
-Yes, I agree, but wouldn't this provide an in-band solution to this
-very particular scenario. In order to provide the spureous tag, you have
-to provide the tagname it should be pointing to (or tamper with the tag
-object).
+I considered that, but I thought it would inflate the size of the commit message quite a bit and represents a  pretty temporary information as I'm planning to port more code. Any further progression on this would make the old meassurements kind of obsolete IMHO. I decided to move it to the coverletter, because it is only valid information if you consider both commits. If the general opinion on here is that I should add it to the commit message though, I'll gladly update it.
 
-Push certificates can address many other sorts of attacks, but are not
-in-band in this sense are they?
+>> https://github.com/git/git/pull/191
+>
+> Oh I see you're using the pull-request to email translator, cool! 
 
-Thanks!
--Santiago.
+Yes, I did. It definitly makes things easier if you are not used to mailing lists, but it was also a bit of a kerfuffle. I tried to start working on coverletter support, but I couldn't get it to accept the amazon SES credentials I provided. I ended up manually submiting the coverletter. It also didn't like my name.
+
+Thank you for your quick feedback. 
