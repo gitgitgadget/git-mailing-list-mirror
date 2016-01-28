@@ -1,89 +1,83 @@
-From: Marcus Brinkmann <m.brinkmann@semantics.de>
-Subject: Re: [PATCH] contrib/subtree: Split history with empty trees correctly
-Date: Thu, 28 Jan 2016 05:06:47 +0100
-Message-ID: <56A993D7.3000107@semantics.de>
-References: <56991CFC.7060705@ruhr-uni-bochum.de>
- <xmqq4meeflws.fsf@gitster.mtv.corp.google.com>
- <87twmbaizo.fsf@waller.obbligato.org> <569EE046.9040506@semantics.de>
- <871t9cvqsp.fsf@waller.obbligato.org> <56A4CC85.90705@semantics.de>
- <87fuxil8cw.fsf@waller.obbligato.org>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Starting on a microproject for GSoC
+Date: Thu, 28 Jan 2016 17:17:15 +1100
+Message-ID: <CAH5451=u1MB=LJyBv+Z9e4Y5ncHktMw+oEycOWV1YXASaawMDA@mail.gmail.com>
+References: <56A96380.3020308@moritzneeb.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dave Ware <davidw@realtimegenomics.com>, <git@vger.kernel.org>
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Thu Jan 28 05:09:19 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Moritz Neeb <lists@moritzneeb.de>
+X-From: git-owner@vger.kernel.org Thu Jan 28 07:18:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOdsC-0006ae-Ju
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 05:07:56 +0100
+	id 1aOfuT-0005ZS-3V
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 07:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966688AbcA1EHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Jan 2016 23:07:34 -0500
-Received: from smtp.semantics.de ([212.117.75.54]:4718 "EHLO
-	flusser.semantics.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965603AbcA1EHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jan 2016 23:07:32 -0500
-Received: from tarski.semantics.de ([192.168.1.3])
-	by flusser.semantics.de with esmtp (Exim 3.36 #1 (Debian))
-	id 1aOduL-0006qC-00; Thu, 28 Jan 2016 05:10:09 +0100
-Received: from LOCKE.semantics.de ([192.168.1.6]) by tarski.semantics.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 Jan 2016 05:06:50 +0100
-Received: from [192.168.142.172] (80.147.161.94) by Locke.semantics.de
- (192.168.1.6) with Microsoft SMTP Server (TLS) id 14.0.722.0; Thu, 28 Jan
- 2016 05:06:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <87fuxil8cw.fsf@waller.obbligato.org>
-X-OriginalArrivalTime: 28 Jan 2016 04:06:50.0204 (UTC) FILETIME=[503949C0:01D15981]
-X-semantics-MailScanner: Found to be clean
-X-semantics-MailScanner-From: m.brinkmann@semantics.de
+	id S932959AbcA1GR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 01:17:56 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:34891 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932605AbcA1GRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 01:17:55 -0500
+Received: by mail-io0-f177.google.com with SMTP id d63so27547267ioj.2
+        for <git@vger.kernel.org>; Wed, 27 Jan 2016 22:17:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3R0XLF0Sn2nyQgq2Co56qbUEIuj9v629DG+VGp77knU=;
+        b=LcKv53JXrOhLisg1oPK1+y3WsK2ScKkvphL8HtC1p9pPxxpfrxMKyfwn9Q7VoVvyZt
+         s+2h1z+H8x39LSebPtZajxgSgqZhs5l4LA93OaiWP8+41eWcdhjjzLlSeLB2Ol9CXG5P
+         Ks0VJkQc08OtNm+nKkm/Oyh8ILZlJnbm7y2W0vVhVdeep/kjIwOu6T/Ao1uMho6B3nrd
+         /f2h9u//yqT8jN8Pphvj7x5XsD09grmgwHn+tq140f/kSiGjgO/gyIteHNE/2GqS057G
+         IkgFMQKaNU/iY+V/LiI32V276pdt0AqIUn+VSSb06UC55eTDyP4p4iz6MPdhxFtF9yS0
+         Z6SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=3R0XLF0Sn2nyQgq2Co56qbUEIuj9v629DG+VGp77knU=;
+        b=AQXQn6e8JnA2bONlMzTkzWoPPYfhGkzebBoc6pKJgWihg80re1hzERsA61y+hIRtd0
+         e/hQLJ0j6BYWakV4+cuSINrQTmKi6tfRb1MrkwVlh2o3SJozlNqaRaob050qU2U17JSi
+         XLvqNpWNvAYm1yujBRO8y5e71ORD6FNRBrnmXGwsUEGD8WJaYHOTwEnSInQCjhz66maP
+         S414wZ29/MmJ7JcowUxsuvi5WwOtwQTVnUASMIawzsK0GhKlb6imr5ZQdKxJ8bmMZOST
+         X6yefDGkeEpIEg8AFeo/iQYwKHhYfyORlmwpJ8iaxWXNXWYBfd5Y+kzGwdrWmtiua9B5
+         87TQ==
+X-Gm-Message-State: AG10YOQFhDXrpRHDOi7Afx0VB/iCyCBbJcFADs+DxjvLdTa63ltLzLIUSPiYNJXiqPjZqKy0F7sihPhtGr71xw==
+X-Received: by 10.107.135.202 with SMTP id r71mr2398260ioi.129.1453961874489;
+ Wed, 27 Jan 2016 22:17:54 -0800 (PST)
+Received: by 10.36.72.195 with HTTP; Wed, 27 Jan 2016 22:17:15 -0800 (PST)
+In-Reply-To: <56A96380.3020308@moritzneeb.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284979>
 
-On 01/28/2016 03:56 AM, David A. Greene wrote:
-> Marcus Brinkmann <m.brinkmann@semantics.de> writes:
->
->> With my patch, "git subtree split -P" produces the same result (for my
->> data set) as "git filter-branch --subdirectory-filter", which is much
->> faster, because it selects the revisions to rewrite before rewriting.
->> As I am not using any of the advanced features of "git subtree", I will
->> just use "git filter-branch" instead.
->
-> Heh.  :)
->
-> I hope to replace all that ugly split code with filter-branch as you
-> describe but there are some cases where it differs.  It may be that your
-> changes fix some of that.
->
-> Are you still able to do a re-roll on this?
+On 28 January 2016 at 11:40, Moritz Neeb <lists@moritzneeb.de> wrote:
+> I suppose just fixing/revising this would be kind
+> of a too low hanging fruit?
 
-I have to admit that my interest has declined steeply since discovering 
-that subtree-split and filter-branch --subtree-filter give different 
-results from "git svn" on the subdirectory.  The reason is that git-svn 
-includes all commits for revisions that regular "svn log" gives on that 
-directory, which includes commits that serve as branch points only or 
-that are empty except for unhandled properties.
+I am in no way qualified to speak to the majority of your post, but I
+can't imagine anyone refusing your work because it was 'too low
+hanging fruit'.
 
-While empty commits for unhandled properties wouldn't be fatal, missing 
-branch points make "git svn" really unhappy when asked to rebuild .git/svn.
+Indeed, the general gist of getting people to start with a
+microproject has always appeared to help potential applicants
+understand what it takes to get a patch accepted in git. As long as
+the low hanging fruit is useful (your example of polishing a patchset
+to get it into master is definitely useful, assuming the patchset is
+useful) then I'd say go for it.
 
-As migration from SVN is my main motivation at this point to use a 
-subtree filter at this point (git-svn is just very slow - about one week 
-on our repository), I am somewhat stuck and back to using git-svn. 
-Although hacking up something with filter-branch seems like a remote 
-option, it's probably nothing that generalizes.
+In the worst case, if you feel your contribution was not 'meaty'
+enough, there is nothing to stop you working on some other problem, or
+extending the first further. That said, I do remember previous
+applicants trying to do as many microprojects as possible, leaving few
+for other people.
 
-It didn't help that "make test" in contrib/subtree gives me 27 out of 29 
-failed tests (with no indication how to figure out what exactly failed).
+Regards,
 
-Oh well :)
-
-Marcus
+Andrew Ardill
