@@ -1,100 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] push --force-with-lease: Fix ref status reporting
-Date: Thu, 28 Jan 2016 15:13:36 -0800
-Message-ID: <xmqqmvrpl2lb.fsf@gitster.mtv.corp.google.com>
-References: <1454012898-10138-1-git-send-email-agwheeler@gmail.com>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH 2/2] stash: use "stash--helper"
+Date: Thu, 28 Jan 2016 23:28:42 +0000
+Message-ID: <CAFY1edZGvdmESLdax1ErTdgyj+A7B+K9zKHsmF0Qb6d_XEk_mA@mail.gmail.com>
+References: <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>
+	<0000015289f33e85-713596a1-2718-4c3a-bf3c-4a0f1048d401-000000@eu-west-1.amazonses.com>
+	<CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
+	<BLU436-SMTP572EDBE67B8D37ECADD616A5DA0@phx.gbl>
+	<CAGZ79kYVRY+6zFnHe8LPp2E_W_gAs--Vog-HoqXW-Do_WgHGXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Andrew Wheeler <awheeler@motorola.com>
-To: Andrew Wheeler <agwheeler@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 00:13:48 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 00:28:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOvl5-000578-DB
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 00:13:47 +0100
+	id 1aOvzd-0003UD-Cd
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 00:28:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbcA1XNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 18:13:41 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62149 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750909AbcA1XNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 18:13:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FBAF3E8A7;
-	Thu, 28 Jan 2016 18:13:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mnao0pZrwf4JAke+GkXeicppbLY=; b=UrFJSI
-	5vP3jWeqNwjtCDXrmJUOQoN4rwSUg8NVSuHlwhVwYaV8EBX6j/otSYhlijRHozaI
-	ezECJHy8CnuOPkQbm+wZViYNySJ1Qh1/q8oqKT8aqBwxXa2wiA5o9XOKCs13ZUA3
-	foOsAmkUmuh/3i/jrSE2ZulRHQYj5bIY3ioj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=odu6sVBh9EDccG+36td8XukUVuFlCtyo
-	mOM45j7M9UbH+hwhqCIfFHKDxpVENJ66efSGrRxLoPKZeLX1Of0/PenB4OeBopd6
-	FWbPahPCRrFBRPhdBMTLbS8ckwl5h5VfLZVF0IxasWjhB9p4AI6i8VeBsqJ4CxFE
-	02Psj7tDZ18=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 876E83E89F;
-	Thu, 28 Jan 2016 18:13:38 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0DAE73E899;
-	Thu, 28 Jan 2016 18:13:37 -0500 (EST)
-In-Reply-To: <1454012898-10138-1-git-send-email-agwheeler@gmail.com> (Andrew
-	Wheeler's message of "Thu, 28 Jan 2016 14:28:18 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C32B1F62-C614-11E5-8142-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751393AbcA1X2q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 18:28:46 -0500
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:36588 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750897AbcA1X2n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2016 18:28:43 -0500
+Received: by mail-ig0-f195.google.com with SMTP id o2so2861526iga.3
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 15:28:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=CWvSRriJnRT/WNXgyHfvYPCXcL9RsZn58qaUTkngoE0=;
+        b=US6M1KRHTUZDwYZ4e6toIvM7uAFqmkAHF/lbZ2Aj0Q9ZtPRIWu0TcNdGYPTyK50rpz
+         CgWp2k7nNrO2xu1+hayiw1xh3neYgBxEISCJ8VMl1U174IKlbqIFXRY6fJH4yx6igzXS
+         LO5K0aqZLfDieJRuquNUNNfFChXei0Z4ZZdeg3kvILLgn9ufbY9ZM0FLC/fsLxLGANRn
+         xpWdEVsXHGxKPfc+nhVAWpZc8/KXmsI9r1nsvf3w8g8NiRJjrM3Xka5stBitZD8vs1bg
+         aYyVlhtGCQuhsWsQTBjv/q2gUbrPHVHLanswrDd3migwjlF88dYPLLSJDpPjDZjNHFq2
+         ShDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CWvSRriJnRT/WNXgyHfvYPCXcL9RsZn58qaUTkngoE0=;
+        b=KF6q0uhiykJrLN71G0zLZ3wRwAhBCVtZo32+Sbjh69ZuEHWVpCthIDYBcm19D9fSOk
+         pUgwWaqoePUBzdqL01DbVfsxZ9nawFczeUzRv0KrRfsT0B2HoJh1XchM96wchj9PhKtr
+         8/lp+lwngXA9qjHvrlqucbx5mSBSyuJ/ScNgE9WyVNs3T2WDkWo3oVRv+7tJtU00mYOo
+         8FXad5lMjT6C+Q1np5hntUzqv08i2aNez2MaIyha187BAyaXhLoTY7D2EVu/u4n+njjn
+         uPElH8qSdmc0rBj0uF1CdgWxLm/DrwrGu2mioa7UKurEGoH6eA/bG7Zv37mVcYwmPv8D
+         ORxg==
+X-Gm-Message-State: AG10YORvmSJR+/Rmb5z5O9uK95gJy9xOkKNHLE1hSEXxBlKf0YlGkeUc0P6ovvGuipWR55lW2zye2wdn3tsPnA==
+X-Received: by 10.50.138.5 with SMTP id qm5mr6758487igb.53.1454023722779; Thu,
+ 28 Jan 2016 15:28:42 -0800 (PST)
+Received: by 10.79.90.198 with HTTP; Thu, 28 Jan 2016 15:28:42 -0800 (PST)
+In-Reply-To: <CAGZ79kYVRY+6zFnHe8LPp2E_W_gAs--Vog-HoqXW-Do_WgHGXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285044>
 
-Andrew Wheeler <agwheeler@gmail.com> writes:
+On 28 January 2016 at 21:41, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Jan 28, 2016 at 1:25 PM, Matthias A=C3=9Fhauer <mha1993@live.=
+de> wrote:
+>>>> https://github.com/git/git/pull/191
+>>>
+>>> Oh I see you're using the pull-request to email translator, cool!
 
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index c402d8d..c65033f 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -101,7 +101,8 @@ test_expect_success 'push to update (allowed, tracking)' '
->  	(
->  		cd dst &&
->  		test_commit D &&
-> -		git push --force-with-lease=master origin master
-> +		git push --force-with-lease=master origin master 2>err &&
-> +		! grep "forced update" err
->  	) &&
->  	git ls-remote dst refs/heads/master >expect &&
->  	git ls-remote src refs/heads/master >actual &&
-> @@ -114,7 +115,8 @@ test_expect_success 'push to update (allowed even though no-ff)' '
->  		cd dst &&
->  		git reset --hard HEAD^ &&
->  		test_commit D &&
-> -		git push --force-with-lease=master origin master
-> +		git push --force-with-lease=master origin master 2>err &&
-> +		grep "forced update" err
->  	) &&
->  	git ls-remote dst refs/heads/master >expect &&
->  	git ls-remote src refs/heads/master >actual &&
-> @@ -147,7 +149,8 @@ test_expect_success 'push to delete (allowed)' '
->  	setup_srcdst_basic &&
->  	(
->  		cd dst &&
-> -		git push --force-with-lease=master origin :master
-> +		git push --force-with-lease=master origin :master 2>err &&
-> +		grep deleted err
->  	) &&
->  	>expect &&
->  	git ls-remote src refs/heads/master >actual &&
+Yay!
 
-These all look OK (I am not sure about message i18n, though).
+>> Yes, I did. It definitly makes things easier if you are not used to =
+mailing lists, but it was also a bit of a kerfuffle. I tried to start w=
+orking on coverletter support, but I couldn't get it to accept the amaz=
+on SES credentials I provided. I ended up manually submiting the coverl=
+etter. It also didn't like my name.
 
-Do we not test a case where --force-with-lease push is rejected due
-to REF_STATUS_REJECT_STALE?
+Apologies for that - https://github.com/rtyley/submitgit/pull/26 has
+just been deployed, which should resolve the encoding for non-US ASCII
+characters - if you feel like submitting another patch, and want to
+put the eszett back into your GitHub account display name, I'd be
+interested to know how that goes.
 
-Thanks.
+> Not sure if Roberto, the creator of that tool, follows the mailing
+> list.  I cc'd him.
+
+I don't closely follow the mailing list, so thanks for the cc!
+
+Roberto
