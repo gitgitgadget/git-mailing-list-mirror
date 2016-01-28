@@ -1,155 +1,163 @@
-From: Andrew Wheeler <agwheeler@gmail.com>
-Subject: [PATCH v3] push --force-with-lease: Fix ref status reporting
-Date: Thu, 28 Jan 2016 14:28:18 -0600
-Message-ID: <1454012898-10138-1-git-send-email-agwheeler@gmail.com>
-Cc: gitster@pobox.com, Andrew Wheeler <awheeler@motorola.com>
+From: Andrew Wheeler <awheeler@motorola.com>
+Subject: Re: [PATCH v2] push --force-with-lease: Fix ref status reporting
+Date: Thu, 28 Jan 2016 14:30:58 -0600
+Message-ID: <CAE=k0msr-5euhiKep9YgE_gvPXsQfLujoXGoq3=A3LnaRRBqgA@mail.gmail.com>
+References: <1454012410-10049-1-git-send-email-agwheeler@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 21:28:39 2016
+X-From: git-owner@vger.kernel.org Thu Jan 28 21:31:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOtBG-00009g-7X
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 21:28:38 +0100
+	id 1aOtDu-0002j0-Qm
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 21:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967691AbcA1U2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 15:28:30 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:36697 "EHLO
-	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933476AbcA1U2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 15:28:23 -0500
-Received: by mail-io0-f194.google.com with SMTP id h8so4846248ioe.3
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 12:28:22 -0800 (PST)
+	id S934374AbcA1UbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 15:31:19 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:32794 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbcA1UbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 15:31:18 -0500
+Received: by mail-vk0-f47.google.com with SMTP id e64so30968534vkg.0
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 12:31:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=v4v18FgSwsw0A5/l6AdzUZsMo3nqdJPCh1GvNriykgk=;
-        b=eM1BMzl9T+SsY/n6X4+PdY5MGJBx3TuaQXJOWFwpAenAApZ+0PxjNsh5s7FCMIXMPv
-         LFtNtsID6B4cU5GkISHRXpQl/kP6lSd44PqOZVvWzHOVggFF6y4zUzZSrRIFy3vw0qbg
-         XtWBGVjWO4m6pFYpAfsucKDGPquoDODqwQlc8WqQci/kbdrIlC5WubGTVhIG/m460n5N
-         RAJ15zGZ1tMOCd3MGMKa5SHcaIWT35tOEuMG9gGAYOeRJ6CuvqTXWcytHQx6UgMmVp7g
-         stTnHEmRTaU25cFte8LpyKHtuysAZ8X2HW4M8Rt5I4Ko+Tp+5q1Q9GOsnuxdb2oFrRTn
-         yMPQ==
+        d=motorola-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=2UYpg9fJ2cQ5IXR3ltOsHwN2ZZ2BbC3L7mZ1AxXi7DI=;
+        b=0X/FvmGdtjEwrh82bFqY/DXEOMlKlHfXNIZDhePgCYYTcrAEXIONA366AQpdlktL7o
+         08YytxUB69TO2Sj1tlOulTkAbuhDrNT6f7kaauoFxUmFmWvu1EVVFvzewXwgYa3618Gy
+         +VfFSN8a6gXL7uYGUfKIRlowS2m5+WUKe3FC/V52ACf13p7F9ZAiojlNS28WRo1P+yQu
+         wyw5Y15SJYfTq/yY7eCrxNS3i9d3Yj3gbWhTqMwuN6g7YXsCpfo09C7pMS+BrAt3k++i
+         eV5MmRadd6Ps3THy4PaHTRqKrmH3Dyvu2SjyRnDd74Q4v4FHPIan+eKj8jTVYuBK+CwN
+         8PnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=v4v18FgSwsw0A5/l6AdzUZsMo3nqdJPCh1GvNriykgk=;
-        b=Jl/Q2Ol0I0qYUsSO+QuhYT75TRDPmfafT4OXIRqV6liU7QDdhQpaTiJvzPZKn7kg/u
-         7j3j2RJM24QZ79nB2Gy31kQJmqq1yZZvnB4cAKhJGsxtyULSwomGQnz8qNcdg80Ronfg
-         Z3pxPNkEzE/Zjxai9YPmZbkcudrI1ZLU53i1orQElk/QFoQ7ZzlZMeThv9BL1uEc9jBv
-         FhDx3Qx3KAOPRMKYziPevoK6VQwFrWP4gJdtEULAtLPQA4PgBolsb3H1GOhfDT12ILhH
-         mrbSL1g7BE/gthT3e51+mWsPqDJGMeYFTvzyluSzwBeKnrsoDWNdW/U3KbSjIyEaNmJW
-         hB4w==
-X-Gm-Message-State: AG10YOS571DxuDqr2S6+gqf3kqMDRKEsVhydVlc4Fn+tZS+abYIuDHKm1WX/UGhfNyrWqQ==
-X-Received: by 10.107.186.86 with SMTP id k83mr4884795iof.135.1454012902019;
-        Thu, 28 Jan 2016 12:28:22 -0800 (PST)
-Received: from mba.mot.com.com ([144.188.128.4])
-        by smtp.gmail.com with ESMTPSA id i70sm5096438ioe.40.2016.01.28.12.28.21
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 28 Jan 2016 12:28:21 -0800 (PST)
-X-Mailer: git-send-email 1.7.11.2
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=2UYpg9fJ2cQ5IXR3ltOsHwN2ZZ2BbC3L7mZ1AxXi7DI=;
+        b=l4Rf/imCgfHMdq+cRN5p/Bnu0PCz6loimVuO365Kh5CQ1zG2dE3xjcKBx2gNWbPUIZ
+         6SLOConSxkc4sflrRbkAmQACSaeRsgEn6eXJtHPM1xZN25jgbQRSj3PCdrMENFHg1cZU
+         XRW1tbIgM2nzIoeFqMYjnJQDdK79TIm6HXoMSPccCahvGGkCGFTLNofoX/yupfekSzHg
+         tWm0eYy28PKz22gbL699HAoB0/qiA4mrX8Gb06UJYpEyBxmqtVglY3iE1z70KI1lcj5v
+         9eMvcW5ckGy+xHKyzTFPD8cu+gcu+jci8jsAIvezDF+l6C+g41OUylkWZy07pzkTLdr0
+         TJKg==
+X-Gm-Message-State: AG10YOQ5X+qSuU4k8jw0qrFx9kNW3dcSAszhuKGzv6K+XTkb9oj5ZhOkV2DTos+SatMfGe2WNrPWlnXDVJ+oa8dU
+X-Received: by 10.31.58.83 with SMTP id h80mr3444875vka.149.1454013077546;
+ Thu, 28 Jan 2016 12:31:17 -0800 (PST)
+Received: by 10.103.85.21 with HTTP; Thu, 28 Jan 2016 12:30:58 -0800 (PST)
+In-Reply-To: <1454012410-10049-1-git-send-email-agwheeler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285026>
 
-From: Andrew Wheeler <awheeler@motorola.com>
+Ignore -- I left an extra blank line. v3 is sent.
 
-The --force--with-lease push option leads to less
-detailed status information than --force. In particular,
-the output indicates that a reference was fast-forwarded,
-even when it was force-updated.
-
-Modify the --force-with-lease ref status logic to leverage
-the --force ref status logic when the "lease" conditions
-are met.
-
-Also, enhance tests to validate output status reporting.
-
-Signed-off-by: Andrew Wheeler <awheeler@motorola.com>
----
- remote.c            | 15 ++++++++-------
- t/t5533-push-cas.sh |  9 ++++++---
- 2 files changed, 14 insertions(+), 10 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 9d34b5a..3ceac07 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1545,11 +1545,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		}
- 
- 		/*
--		 * Bypass the usual "must fast-forward" check but
--		 * replace it with a weaker "the old value must be
--		 * this value we observed".  If the remote ref has
--		 * moved and is now different from what we expect,
--		 * reject any push.
-+		 * If the remote ref has moved and is now different
-+		 * from what we expect, reject any push.
- 		 *
- 		 * It also is an error if the user told us to check
- 		 * with the remote-tracking branch to find the value
-@@ -1560,10 +1557,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 			if (ref->expect_old_no_trackback ||
- 			    oidcmp(&ref->old_oid, &ref->old_oid_expect))
- 				reject_reason = REF_STATUS_REJECT_STALE;
-+			else
-+				/* If the ref isn't stale then force the update. */
-+				force_ref_update = 1;
- 		}
- 
- 		/*
--		 * The usual "must fast-forward" rules.
-+		 * If the update isn't already rejected then check
-+		 * the usual "must fast-forward" rules.
- 		 *
- 		 * Decide whether an individual refspec A:B can be
- 		 * pushed.  The push will succeed if any of the
-@@ -1582,7 +1583,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 *     passing the --force argument
- 		 */
- 
--		else if (!ref->deletion && !is_null_oid(&ref->old_oid)) {
-+		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
- 			if (starts_with(ref->name, "refs/tags/"))
- 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
- 			else if (!has_object_file(&ref->old_oid))
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index c402d8d..c65033f 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -101,7 +101,8 @@ test_expect_success 'push to update (allowed, tracking)' '
- 	(
- 		cd dst &&
- 		test_commit D &&
--		git push --force-with-lease=master origin master
-+		git push --force-with-lease=master origin master 2>err &&
-+		! grep "forced update" err
- 	) &&
- 	git ls-remote dst refs/heads/master >expect &&
- 	git ls-remote src refs/heads/master >actual &&
-@@ -114,7 +115,8 @@ test_expect_success 'push to update (allowed even though no-ff)' '
- 		cd dst &&
- 		git reset --hard HEAD^ &&
- 		test_commit D &&
--		git push --force-with-lease=master origin master
-+		git push --force-with-lease=master origin master 2>err &&
-+		grep "forced update" err
- 	) &&
- 	git ls-remote dst refs/heads/master >expect &&
- 	git ls-remote src refs/heads/master >actual &&
-@@ -147,7 +149,8 @@ test_expect_success 'push to delete (allowed)' '
- 	setup_srcdst_basic &&
- 	(
- 		cd dst &&
--		git push --force-with-lease=master origin :master
-+		git push --force-with-lease=master origin :master 2>err &&
-+		grep deleted err
- 	) &&
- 	>expect &&
- 	git ls-remote src refs/heads/master >actual &&
--- 
-1.7.11.2
+On Thu, Jan 28, 2016 at 2:20 PM, Andrew Wheeler <agwheeler@gmail.com> wrote:
+> From: Andrew Wheeler <awheeler@motorola.com>
+>
+> The --force--with-lease push option leads to less
+> detailed status information than --force. In particular,
+> the output indicates that a reference was fast-forwarded,
+> even when it was force-updated.
+>
+> Modify the --force-with-lease ref status logic to leverage
+> the --force ref status logic when the "lease" conditions
+> are met.
+>
+> Also, enhance tests to validate output status reporting.
+>
+> Signed-off-by: Andrew Wheeler <awheeler@motorola.com>
+> ---
+>  remote.c            | 16 +++++++++-------
+>  t/t5533-push-cas.sh |  9 ++++++---
+>  2 files changed, 15 insertions(+), 10 deletions(-)
+>
+> diff --git a/remote.c b/remote.c
+> index 9d34b5a..bad6213 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1545,11 +1545,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+>                 }
+>
+>                 /*
+> -                * Bypass the usual "must fast-forward" check but
+> -                * replace it with a weaker "the old value must be
+> -                * this value we observed".  If the remote ref has
+> -                * moved and is now different from what we expect,
+> -                * reject any push.
+> +                * If the remote ref has moved and is now different
+> +                * from what we expect, reject any push.
+>                  *
+>                  * It also is an error if the user told us to check
+>                  * with the remote-tracking branch to find the value
+> @@ -1560,10 +1557,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+>                         if (ref->expect_old_no_trackback ||
+>                             oidcmp(&ref->old_oid, &ref->old_oid_expect))
+>                                 reject_reason = REF_STATUS_REJECT_STALE;
+> +                       else
+> +                               /* If the ref isn't stale then force the update. */
+> +                               force_ref_update = 1;
+>                 }
+>
+>                 /*
+> -                * The usual "must fast-forward" rules.
+> +                * If the update isn't already rejected then check
+> +                * the usual "must fast-forward" rules.
+>                  *
+>                  * Decide whether an individual refspec A:B can be
+>                  * pushed.  The push will succeed if any of the
+> @@ -1580,9 +1581,10 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+>                  *
+>                  * (4) it is forced using the +A:B notation, or by
+>                  *     passing the --force argument
+> +                *
+>                  */
+>
+> -               else if (!ref->deletion && !is_null_oid(&ref->old_oid)) {
+> +               if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
+>                         if (starts_with(ref->name, "refs/tags/"))
+>                                 reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+>                         else if (!has_object_file(&ref->old_oid))
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index c402d8d..c65033f 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -101,7 +101,8 @@ test_expect_success 'push to update (allowed, tracking)' '
+>         (
+>                 cd dst &&
+>                 test_commit D &&
+> -               git push --force-with-lease=master origin master
+> +               git push --force-with-lease=master origin master 2>err &&
+> +               ! grep "forced update" err
+>         ) &&
+>         git ls-remote dst refs/heads/master >expect &&
+>         git ls-remote src refs/heads/master >actual &&
+> @@ -114,7 +115,8 @@ test_expect_success 'push to update (allowed even though no-ff)' '
+>                 cd dst &&
+>                 git reset --hard HEAD^ &&
+>                 test_commit D &&
+> -               git push --force-with-lease=master origin master
+> +               git push --force-with-lease=master origin master 2>err &&
+> +               grep "forced update" err
+>         ) &&
+>         git ls-remote dst refs/heads/master >expect &&
+>         git ls-remote src refs/heads/master >actual &&
+> @@ -147,7 +149,8 @@ test_expect_success 'push to delete (allowed)' '
+>         setup_srcdst_basic &&
+>         (
+>                 cd dst &&
+> -               git push --force-with-lease=master origin :master
+> +               git push --force-with-lease=master origin :master 2>err &&
+> +               grep deleted err
+>         ) &&
+>         >expect &&
+>         git ls-remote src refs/heads/master >actual &&
+> --
+> 1.7.11.2
+>
