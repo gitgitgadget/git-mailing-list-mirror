@@ -1,96 +1,108 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/6] worktree: new repo extension to manage worktree behaviors
-Date: Thu, 28 Jan 2016 19:11:00 +0700
-Message-ID: <CACsJy8ABj+_iohtobRJxeVd3WfRcufFVPC4ZCzGqJDz=wJkjyg@mail.gmail.com>
-References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-1-git-send-email-pclouds@gmail.com> <1453808685-21235-2-git-send-email-pclouds@gmail.com>
- <xmqqfuxi7jtn.fsf@gitster.mtv.corp.google.com>
+From: Anatoly Borodin <anatoly.borodin@gmail.com>
+Subject: Bugs in git filter-branch (git replace related)
+Date: Thu, 28 Jan 2016 14:46:40 +0000 (UTC)
+Message-ID: <loom.20160128T153147-396@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Max A.K." <max@max630.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 13:11:41 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 28 16:05:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOlQL-0001DS-2b
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 13:11:41 +0100
+	id 1aOo8T-0004hG-H3
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 16:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932625AbcA1MLd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 07:11:33 -0500
-Received: from mail-lb0-f196.google.com ([209.85.217.196]:33399 "EHLO
-	mail-lb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754888AbcA1MLb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 07:11:31 -0500
-Received: by mail-lb0-f196.google.com with SMTP id bc4so1735134lbc.0
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 04:11:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=8ve/6wQ1cP1G9apTMYJro0lMlK/3jQUJrhOPt0UiLAM=;
-        b=ic3cFFhHYVo8iBCafGRGgElmUM1HuKPSyBJbTlMqFxcSyuSl0iiqoyUuHTW974dFna
-         Rdvjz0M6xZmPMZhKafUrUdReW1oyQSmqFLBiK534eQByO497E0noyTl2sikshFgcW1yX
-         xMOBvZHw+WLmtOeoN7fWR8eIYEfZV8bpXEvz5Tkfzs4ttvGYN1DMz1IJ8gUDMqXA0yyQ
-         as7i2rdDRFPfOfUclqk5bUFo7q1yGj2D8nBMZJmLfBh6wZq/zsZapcbGHhjc73RAR8q2
-         e900FW3HOf7fB0Yu+tZCp/vgpoeHPCcN64QW+UPrP3zrg0Z10IMTdG7V5Kpr5tWzT3B0
-         lMRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=8ve/6wQ1cP1G9apTMYJro0lMlK/3jQUJrhOPt0UiLAM=;
-        b=W4EEq5sg/asezVJiJ+ArsvxgueYJDgO3AViijEzf1j0lONCHBBcwMWJhKUvMKbblHb
-         FBT1X9J7QmDOUAu6s0EFQelV0nUEjBXS0YnRrl/URdFcYNwcOd7dVmk2rzScBxWhXg8c
-         BVu+oTNnZF9brLkhAgvodHuNkQxh4I+CPGzAtsK9kEXEf6FhfeYja13m02nh9DfxMqtE
-         DwH5j7bUyoawl2JMaUN2gKpfeAYK6WnK7nC/f/8OoJfWiul/4PEYBSIBBnBRvW1VvSDG
-         /TsRWkxQLrsKNQ6mb3PsyaAADL6mKHVcUu8bdeo7CwEi8rTTGFweeVCvV4PpJ+SceXLm
-         YSRQ==
-X-Gm-Message-State: AG10YOQGkk4nYTHifktu8ZtAFml28HDvEZsztd4Bo/yzW78jQr81mQ6iaC4/fRnP++Ht6bdUbeG6WTTL9eFJjw==
-X-Received: by 10.112.141.97 with SMTP id rn1mr1094994lbb.80.1453983089737;
- Thu, 28 Jan 2016 04:11:29 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 28 Jan 2016 04:11:00 -0800 (PST)
-In-Reply-To: <xmqqfuxi7jtn.fsf@gitster.mtv.corp.google.com>
+	id S1755608AbcA1PFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 10:05:22 -0500
+Received: from plane.gmane.org ([80.91.229.3]:49807 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754785AbcA1PFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 10:05:20 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aOo87-0004NW-Hh
+	for git@vger.kernel.org; Thu, 28 Jan 2016 16:05:03 +0100
+Received: from fokus169149.fokus.fraunhofer.de ([194.95.169.149])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 16:05:03 +0100
+Received: from anatoly.borodin by fokus169149.fokus.fraunhofer.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 16:05:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 194.95.169.149 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285020>
 
-On Thu, Jan 28, 2016 at 5:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +WORKTREE VERSIONS AND MIGRATION
->> +-------------------------------
->> +Multiple worktree is still an experimental feature and evolving. Every
->> +time the behavior is changed, the "worktree version" is stepped
->> +up. Worktree version is stored as a configuration variable
->> +extensions.worktree.
->
-> s/stepped up/incremented/
->
-> More seriously, are we confident that the overall worktree support
-> is mature enough by now that once we add an experimental feature X
-> at version 1, we can promise to keep maintaining it forever at
-> version N for any positive integer N?  I hate to sound overly
-> negative, but I am getting an impression that we are not quite
-> there, and it is still not ready for production use.
+Hi All!
 
-I completely overlooked this config file issue in the first round, so
-there's a good chance I will fail to realize it's still incomplete
-again.
+There are two bugs in `git filter-branch`, present in the most recent
+versions (d10e2cb9d0299a26f43d57dd5bdcf2b3f86a30b3), as well as in the old
+ones (I couldn't find a version where it works properly).
 
-> It would be beneficial both for us and our users if we can keep our
-> hand untied for at least several more releases to allow us try
-> various random experimental features, fully intending to drop any of
-> them if the ideas do not pan out.
+The script:
 
-Yes it's best if we can somehow communicate with the users about that.
-If a line or two in release announcement is good enough, great.
-Otherwise maybe print a line every time the user executes "git
-worktree"?
--- 
-Duy
+#!/bin/sh
+
+set -e
+
+GIT_EXEC_PATH=/tmp/git
+export GIT_EXEC_PATH
+GIT=$GIT_EXEC_PATH/git
+
+rm -rf a
+mkdir a
+cd a
+$GIT init
+echo aaa > a.txt && $GIT add a.txt && $GIT commit -a -m a
+echo bbb > a.txt && $GIT add a.txt && $GIT commit -a -m b
+echo ccc > a.txt && $GIT add a.txt && $GIT commit -a -m c
+$GIT replace f761ec192d9f0dca3329044b96ebdb12839dbff6
+72943a16fb2c8f38f9dde202b7a70ccc19c52f34
+echo && echo One && $GIT filter-branch --prune-empty -- master
+echo && echo Two && $GIT filter-branch --prune-empty -- --all
+
+The output is:
+
+...
+One
+Rewrite 98af0305b778bf56e25a0d4f85acdf82f435f9b3 (3/3) (0 seconds passed,
+remaining 0 predicted)    
+WARNING: Ref 'refs/heads/master' is unchanged
+
+Two
+Rewrite 98af0305b778bf56e25a0d4f85acdf82f435f9b3 (3/3) (0 seconds passed,
+remaining 0 predicted)    
+WARNING: Ref 'refs/heads/master' is unchanged
+error: object 72943a16fb2c8f38f9dde202b7a70ccc19c52f34 is a blob, not a commit
+error: object 72943a16fb2c8f38f9dde202b7a70ccc19c52f34 is a blob, not a commit
+fatal: ambiguous argument
+'refs/replace/f761ec192d9f0dca3329044b96ebdb12839dbff6^0': unknown revision
+or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+WARNING: Ref 'refs/replace/f761ec192d9f0dca3329044b96ebdb12839dbff6' is
+unchanged
+
+
+The `git replace` makes the second commit empty (use the file content from
+the first commit). It should disappear after `git filter-branch`, but it
+doesn't happen.
+
+Bug 1: the empty commit stays.
+Bug 2: the replace refs are not ignored (they can epresent blobs, trees etc,
+but even if they represent commits - should they be rewritten?).
+
+Any ideas?
+
+PS I've found http://article.gmane.org/gmane.comp.version-control.git/220931
+, seems like the bug 1. But it's old!
