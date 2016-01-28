@@ -1,206 +1,131 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] attempt connects in parallel for IPv6-capable builds
-Date: Thu, 28 Jan 2016 11:57:21 +0000
-Message-ID: <20160128115720.GA1827@dcvr.yhbt.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v5 10/10] diffcore-pickaxe: support case insensitive match on non-ascii
+Date: Thu, 28 Jan 2016 18:56:23 +0700
+Message-ID: <1453982183-24124-11-git-send-email-pclouds@gmail.com>
+References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 12:57:53 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 28 12:57:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOlCo-0007O1-0E
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:57:42 +0100
+	id 1aOlCn-0007O1-Dt
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935253AbcA1L5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 06:57:31 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:43611 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935217AbcA1L5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 06:57:22 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5051F669;
-	Thu, 28 Jan 2016 11:57:21 +0000 (UTC)
-Content-Disposition: inline
+	id S935242AbcA1L5a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 06:57:30 -0500
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:33181 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935237AbcA1L5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 06:57:25 -0500
+Received: by mail-pa0-f65.google.com with SMTP id pv5so1894871pac.0
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 03:57:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ba3sCxzJaTtmryHIhkxMlTeq9ajyE4zMy0iw5rpkCtw=;
+        b=YwynhF1FsIsshFh0Qcpm2vKuoTjXhSH/5+tpdIns4+HgwwmgvmzCrmi5UPTlA12LBb
+         xJvFlxpzYkZ3nxaURHUf7+mGix32uZORBVMgB/tkBzG8KDJZJThRqK7IcufmzjCDlssY
+         j9LMdpUF/WqXRt88jq8eno0ktA7Qls6p/y5ehviJk1uXX8tuu6MbXLbxzPqzG2zFDQ35
+         BsvFQriS8y8OIJonLqOiVuvQbzmcf6NBQcd9tVA3D/2QMJTcYHc7IvOix8XYf8IFwlNo
+         uPONuZKZdm8YOG9/UowXDeZZcXGH5njwW8/olzVRP3WER+t99EuYWzK3voyQPBQLTsiK
+         wmUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=ba3sCxzJaTtmryHIhkxMlTeq9ajyE4zMy0iw5rpkCtw=;
+        b=ishwTFoUDUlRz+x24CES3ulZLURbMiLd97uUJEjxGNZYVQ1WVBPg2IB6aAIuGDiw1x
+         5zUwNMnnLcpdCfenUsjDRnQDb6Q2bMK8xVrpucvK6xkeg6PS748tqbmzEAozTcP9Gwuw
+         qtK9vL4fYsncGH1LANRbQGm/Ahs+BnKg1ONicSSse+y2QfsuEh4qM6Fa3xlqePW+GSCU
+         1nAQcxSlCrNDMs8fNFP/7bjh1iac1pyQCwuAHKhKuGcjKAZWlL1WAoDGP08+gzNLw7S9
+         6BikcBjsjo3pM3KT5tFQNBFxJqwmCfZZayYLcUlQCYpTKR4s4ZBuVFh/03KZKF69zFFE
+         PMHA==
+X-Gm-Message-State: AG10YOSt1t285SvleaXbTxJ5LbG59wGNB7QhSm86nYEXAghYMt7MEvUqytrcdx9qEZoKqw==
+X-Received: by 10.66.65.109 with SMTP id w13mr3784763pas.142.1453982245101;
+        Thu, 28 Jan 2016 03:57:25 -0800 (PST)
+Received: from lanh ([115.76.235.75])
+        by smtp.gmail.com with ESMTPSA id 26sm15926019pfo.55.2016.01.28.03.57.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Jan 2016 03:57:24 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 28 Jan 2016 18:57:30 +0700
+X-Mailer: git-send-email 2.7.0.288.g1d8ad15
+In-Reply-To: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285016>
 
-getaddrinfo() may return multiple addresses, not all of which
-are equally performant.  In some cases, a user behind a non-IPv6
-capable network may get an IPv6 address which stalls connect().
-Instead of waiting synchronously for a connect() to timeout, use
-non-blocking connect() in parallel and take the first successful
-connection.
+Similar to the "grep -F -i" case, we can't use kws on icase search
+outside ascii range, so we quote the string and pass it to regcomp as
+a basic regexp and let regex engine deal with case sensitivity.
 
-This may increase network traffic and server load slightly, but
-makes the worst-case user experience more bearable when one
-lacks permissions to edit /etc/gai.conf to favor IPv4 addresses.
+The new test is put in t7812 instead of t4209-log-pickaxe because
+lib-gettext.sh might cause problems elsewhere, probably..
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Noticed-by: Plamen Totev <plamen.totev@abv.bg>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- connect.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 104 insertions(+), 14 deletions(-)
+ diffcore-pickaxe.c              | 11 +++++++++++
+ t/t7812-grep-icase-non-ascii.sh |  7 +++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index fd7ffe1..74d2bb5 100644
---- a/connect.c
-+++ b/connect.c
-@@ -14,6 +14,42 @@
- static char *server_capabilities;
- static const char *parse_feature_value(const char *, const char *, int *);
- 
-+#ifdef SOCK_NONBLOCK /* Linux-only flag */
-+#  define GIT_SOCK_NONBLOCK SOCK_NONBLOCK
-+#else
-+#  define GIT_SOCK_NONBLOCK 0
-+#endif
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 69c6567..0a5f877 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -7,6 +7,8 @@
+ #include "diffcore.h"
+ #include "xdiff-interface.h"
+ #include "kwset.h"
++#include "commit.h"
++#include "quote.h"
+=20
+ typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
+ 			  struct diff_options *o,
+@@ -212,6 +214,15 @@ void diffcore_pickaxe(struct diff_options *o)
+ 			cflags |=3D REG_ICASE;
+ 		err =3D regcomp(&regex, needle, cflags);
+ 		regexp =3D &regex;
++	} else if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE) &&
++		   has_non_ascii(needle)) {
++		struct strbuf sb =3D STRBUF_INIT;
++		int cflags =3D REG_NEWLINE | REG_ICASE;
 +
-+static int socket_nb(int domain, int type, int protocol)
-+{
-+	static int flags = GIT_SOCK_NONBLOCK;
-+	int fd = socket(domain, type | flags, protocol);
++		basic_regex_quote_buf(&sb, needle);
++		err =3D regcomp(&regex, sb.buf, cflags);
++		strbuf_release(&sb);
++		regexp =3D &regex;
+ 	} else {
+ 		kws =3D kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
+ 			       ? tolower_trans_tbl : NULL);
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
+scii.sh
+index 8896410..a5475bb 100755
+--- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -61,4 +61,11 @@ test_expect_success REGEX_LOCALE 'grep string with r=
+egex, with -F' '
+ 	test_cmp expect2 debug2
+ '
+=20
++test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
++	git commit -m first &&
++	git log --format=3D%f -i -S"TILRAUN: HALL=C3=93 HEIMUR!" >actual &&
++	echo first >expected &&
++	test_cmp expected actual
++'
 +
-+	/* new headers, old kernel? */
-+	if (fd < 0 && errno == EINVAL && flags != 0) {
-+		flags = 0;
-+		fd = socket(domain, type, protocol);
-+	}
-+
-+	/* couldn't use SOCK_NONBLOCK, set non-blocking the old way */
-+	if (flags == 0 && fd >= 0) {
-+		int fl = fcntl(fd, F_GETFL);
-+
-+		if (fcntl(fd, F_SETFL, fl | O_NONBLOCK) < 0)
-+			die_errno("failed to set nonblocking flag\n");
-+	}
-+
-+	return fd;
-+}
-+
-+static void set_blocking(int fd)
-+{
-+	int fl = fcntl(fd, F_GETFL);
-+
-+	if (fcntl(fd, F_SETFL, fl & ~O_NONBLOCK) < 0)
-+		die_errno("failed to clear nonblocking flag\n");
-+}
-+
- static int check_ref(const char *name, unsigned int flags)
- {
- 	if (!flags)
-@@ -351,6 +387,9 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	struct addrinfo hints, *ai0, *ai;
- 	int gai;
- 	int cnt = 0;
-+	nfds_t n = 0, nfds = 0;
-+	struct pollfd *fds = NULL;
-+	struct addrinfo **inprogress = NULL;
- 
- 	get_host_and_port(&host, &port);
- 	if (!*port)
-@@ -371,20 +410,76 @@ static int git_tcp_connect_sock(char *host, int flags)
- 		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
- 
- 	for (ai0 = ai; ai; ai = ai->ai_next, cnt++) {
--		sockfd = socket(ai->ai_family,
--				ai->ai_socktype, ai->ai_protocol);
--		if ((sockfd < 0) ||
--		    (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0)) {
-+		size_t cur;
-+		int fd = socket_nb(ai->ai_family, ai->ai_socktype,
-+					ai->ai_protocol);
-+		if (fd < 0) {
- 			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
- 				    host, cnt, ai_name(ai), strerror(errno));
--			if (0 <= sockfd)
--				close(sockfd);
--			sockfd = -1;
- 			continue;
- 		}
-+
-+		if (connect(fd, ai->ai_addr, ai->ai_addrlen) < 0 &&
-+					errno != EINPROGRESS) {
-+			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
-+				host, cnt, ai_name(ai), strerror(errno));
-+			close(fd);
-+			continue;
-+		}
-+
- 		if (flags & CONNECT_VERBOSE)
--			fprintf(stderr, "%s ", ai_name(ai));
--		break;
-+			fprintf(stderr, "%s (started)\n", ai_name(ai));
-+
-+		nfds = n + 1;
-+		cur = n;
-+		ALLOC_GROW(fds, nfds, cur);
-+		cur = n;
-+		ALLOC_GROW(inprogress, nfds, cur);
-+		inprogress[n] = ai;
-+		fds[n].fd = fd;
-+		fds[n].events = POLLIN|POLLOUT;
-+		fds[n].revents = 0;
-+		n = nfds;
-+	}
-+
-+	/*
-+	 * nfds is tiny, no need to limit loop based on poll() retval,
-+	 * just do not let poll sleep forever if nfds is zero
-+	 */
-+	if (nfds > 0)
-+		poll(fds, nfds, -1);
-+
-+	for (n = 0; n < nfds && sockfd < 0; n++) {
-+		if (fds[n].revents & (POLLERR|POLLHUP))
-+			continue;
-+		if (fds[n].revents & POLLOUT) {
-+			int err;
-+			socklen_t len = (socklen_t)sizeof(err);
-+			int rc = getsockopt(fds[n].fd, SOL_SOCKET, SO_ERROR,
-+						&err, &len);
-+			if (rc != 0)
-+				die_errno("getsockopt errno=%s\n",
-+					strerror(errno));
-+			if (err == 0) { /* success! */
-+				sockfd = fds[n].fd;
-+				ai = inprogress[n];
-+			}
-+		}
-+	}
-+
-+	/* cleanup */
-+	for (n = 0; n < nfds; n++) {
-+		if (fds[n].fd != sockfd)
-+			close(fds[n].fd);
-+	}
-+	free(inprogress);
-+	free(fds);
-+
-+	if (sockfd >= 0) {
-+		enable_keepalive(sockfd);
-+		set_blocking(sockfd); /* the rest of git expects blocking */
-+		if (flags & CONNECT_VERBOSE)
-+			fprintf(stderr, "%s done.\n", ai_name(ai));
- 	}
- 
- 	freeaddrinfo(ai0);
-@@ -392,11 +487,6 @@ static int git_tcp_connect_sock(char *host, int flags)
- 	if (sockfd < 0)
- 		die("unable to connect to %s:\n%s", host, error_message.buf);
- 
--	enable_keepalive(sockfd);
--
--	if (flags & CONNECT_VERBOSE)
--		fprintf(stderr, "done.\n");
--
- 	strbuf_release(&error_message);
- 
- 	return sockfd;
--- 
-EW
+ test_done
+--=20
+2.7.0.288.g1d8ad15
