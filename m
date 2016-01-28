@@ -1,120 +1,178 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] stash: use "stash--helper"
-Date: Thu, 28 Jan 2016 12:59:41 -0800
-Message-ID: <CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
-References: <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>
-	<0000015289f33e85-713596a1-2718-4c3a-bf3c-4a0f1048d401-000000@eu-west-1.amazonses.com>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [RFC] tag-ref and tag object binding
+Date: Thu, 28 Jan 2016 16:06:34 -0500
+Message-ID: <20160128210634.GD9629@LykOS>
+References: <20160125212208.GB26169@LykOS>
+ <56A73DE6.5050201@drmicha.warpmail.net>
+ <20160126152941.GA31951@LykOS>
+ <20160126202651.GA1090@sigill.intra.peff.net>
+ <56A87056.2010309@drmicha.warpmail.net>
+ <20160127073357.GA7066@sigill.intra.peff.net>
+ <56A87764.9070101@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthias Asshauer <mha1993@live.de>
-X-From: git-owner@vger.kernel.org Thu Jan 28 21:59:47 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:06:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOtfP-00056p-5H
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 21:59:47 +0100
+	id 1aOtm7-0003ZZ-BO
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 22:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086AbcA1U7n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 15:59:43 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:33057 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752271AbcA1U7l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2016 15:59:41 -0500
-Received: by mail-io0-f176.google.com with SMTP id f81so68145699iof.0
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 12:59:41 -0800 (PST)
+	id S1752277AbcA1VGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 16:06:40 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:33515 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751211AbcA1VGh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 16:06:37 -0500
+Received: by mail-qk0-f175.google.com with SMTP id s5so16630864qkd.0
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 13:06:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=QSoRjrykGpCs89BoMKmqv630ymuElkWRCAmPFTjCVK4=;
-        b=N0iPcDaK9RYAUawKe4UUDZpV3lRZY3VyHtUoAxTKBUoG9Q1DiaoEog0mh8NIJl5/Dk
-         Ze6h1LvLnr0GXX2upuVc9oCjcWMtn9xZfOECSRtEhMvxFQ0fmgPn1ktHRvUAA1MxpfYa
-         C0wQs9ejJL5xPpep8Zl0lOcID5eh5EmwP6xC+4IciBD8w2XYuSulvZUhMpaP3BwWeGJ7
-         5svT88iHT4WPTm09UdMuB2wYJbo5+UoWyuNi7wlNSRGKVEYS8OT83VbgeOouvdUsoNcg
-         GuIkdVIL6qXemDrbTifTSgUVBzLXMY230uLzXzRC++nkl/D/WMS8qB44P8nfnz54R4TK
-         GPlQ==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to;
+        bh=VUD8mYv6r+MxYReaRlFBiqVv69TV2FxSkGv7pcNIBxA=;
+        b=hT+vw+68h3fe52VAg7pRy3LDJJrZi4TVJ9NWPgpjKuwtR2NVMkPVg9MGS637at79fD
+         SUy3/zvp7pWNfAKg6tvKmohuRZMi4y9L7THv4CWqnX+vQrGVTNaFBbSjqlzQ4AuePz1o
+         BdZbNeP8ip6U/PQ3Jbhf3Bp6lykXKDXYxDfLEokXbTRPPG8YQZ0DEIxP+5ovw9ifzLBs
+         tJ6BNZ5mwbxDIvuFuBWSDktzKTIje8ycPVOOeWXhLyz600Nd/XvevpRAFLuRejohd6Lq
+         oh9MjyduVE/vHAVeHtIzeH67TJJSaQIHTb+yMY/V0qHWJI9NWvLceawKDZJnUNtb0IzD
+         3L5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QSoRjrykGpCs89BoMKmqv630ymuElkWRCAmPFTjCVK4=;
-        b=EvZ9M2Btkr0xQ7dk51+oW3N2vdXqCr8k1/LwFVLRKIBjJ3RtqHrZKczIqNf0Hs+Eoa
-         jfSDLcs3rtSyyyzM2FaS4rTEjn02WEUuBXakzYLVcqGinPC+IBlDzlcwcJvhXnSrz59M
-         f66BwGDrujcAMkNXg6ccacU3d2YUdz0G/16rU1XVKfBSUe0xXQdvGkheRYPXtSUlib0B
-         4l9PJSWfxI4QDxqDqCMWKNiEBHJt54wVBpGPTa9NLxs//vafsohlMc6DlZ9XNPhnN1oy
-         Llp7G7S3oG1+tyL1oIi4ebQYj7bq4eFkN0uIvJV0YKE1u4QgTbliBQOu+q5gQ9w0PgK+
-         q83w==
-X-Gm-Message-State: AG10YORJQLP/ihBf7HQEwXqh+Fw9k0xG7UdEwmUvFbs+DX/xwraheLO4elDxZUcyhqroNXb1nffBBzRRQee5t1hA
-X-Received: by 10.107.168.149 with SMTP id e21mr2981642ioj.96.1454014781106;
- Thu, 28 Jan 2016 12:59:41 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Thu, 28 Jan 2016 12:59:41 -0800 (PST)
-In-Reply-To: <0000015289f33e85-713596a1-2718-4c3a-bf3c-4a0f1048d401-000000@eu-west-1.amazonses.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to;
+        bh=VUD8mYv6r+MxYReaRlFBiqVv69TV2FxSkGv7pcNIBxA=;
+        b=R/v05AsV0wqUUfz0d5Ft1y8qt+d3OiejxoVq4Mp2CSxO76ZPydVmgitD4dWo+U/H9h
+         UCcfG3KonHOfuo3/rbmDQ7PRDLAC2kEmgxcl0yr5O5AOhGi6eYGfhNZDdRHDIyVBxnH9
+         IdWBNBw0z/WmjmzQfnVzV+x/RWrHTFJ0RdpmX8vuQDdFmTAPHdxtsksiFz0b3FdO19n1
+         I20hdDCrkuQ0M33nKIiIcQso7O/1L83/Blmh9KPSRN+kZUFrXLuaBEuFLBfzBDnCenXJ
+         qM4nIfkhhvb+k73uc8wNKxPbyDgPqLjNN4q1D8XgDiO81+NOJCcm+u4z9X1fUgrfawU7
+         IIyA==
+X-Gm-Message-State: AG10YORCqBJxJYyVzA4p1jhXwOSpJI8vcKi1kErurgkbpiKES0WUaAOEfRlEA9o72SHCNKrc
+X-Received: by 10.55.76.134 with SMTP id z128mr6426835qka.90.1454015197080;
+        Thu, 28 Jan 2016 13:06:37 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-12.NATPOOL.NYU.EDU. [216.165.95.1])
+        by smtp.gmail.com with ESMTPSA id y104sm5579371qgd.33.2016.01.28.13.06.36
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Jan 2016 13:06:36 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <56A87764.9070101@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285030>
 
-On Thu, Jan 28, 2016 at 12:36 PM, Matthias Asshauer <mha1993@live.de> w=
-rote:
-> From: Matthias A=C3=9Fhauer <mha1993@live.de>
->
-> Use the new "git stash--helper" builtin. It should be faster than the=
- old shell code and is a first step to move
-> more shell code to C.
+Hello, sorry for being MIA yesterday among all this movement...
 
-You had some good measurements in the coverletter, which is not going t=
-o be
-recorded in the projects history. This part however would be part of th=
-e commit.
-So you could move the speed improvements here (as well as the other rea=
-soning)
-on why this is a good idea. :)
+On Wed, Jan 27, 2016 at 08:53:08AM +0100, Michael J Gruber wrote:
+> Jeff King venit, vidit, dixit 27.01.2016 08:33:
+> > On Wed, Jan 27, 2016 at 08:23:02AM +0100, Michael J Gruber wrote:
+> > 
+> >>> Tag objects already have a "tag" header, which is part of the signed
+> >>> content. If you use "git verify-tag -v", you can check both that the
+> >>> signature is valid and that the tag is the one you are expecting.
+> >>
+> >> Yes, that's what I described in my last paragraph, using the term
+> >> (embedded) tag "name" which is technically wrong (it's not the tag
+> >> object's name, which would be a sha1) but the natural term for users.
+> > 
+> > Indeed. I should have read further back in the quoting. :)
+> > 
+> >>> Git pretty much punts on all of these issues and assumes either a human
+> >>> or a smarter tool is looking at the verification output. But I don't
+> >>> think it would hurt to build in some features to let git automatically
+> >>> check some things, if only to avoid callers duplicating work to
+> >>> implement the checks themselves.
+> >>
+> >> That is really a can of worms for several reasons:
+> >> [...]
+> >> So, for those who shy away from for-each-ref and such, we may add the
+> >> header check to verify-tag, with a big warning about the marginal gain
+> >> in security (or the requirements for an actual gain).
+> > 
+> > Yeah, definitely. My thinking was that `verify-tag` could learn a series
+> > of optional consistency checks, enabled by command line options, and
+> > verifying programs (or humans) could turn them on to avoid having to
+> > replicate them manually. So something like:
+> > 
+> >   git verify-tag \
+> >     --verify-tagger-matches-key \
+> >     --verify-tag-matches-ref \ # or --verify-tag-matches=v2.0.0
+> >     v2.0.0
+> > 
+> > or to implement more specific policy, maybe an option to check for a
+> > _specific_ tagger, either by email (as provided by gpg) or even key-id.
+> > 
+> > Those are all things that are not _too_ hard to do if you're willing to
+> > parse gpg or git output, but we could make life easier for our callers.
+> > And hopefully by asking for specific, concrete checks, it doesn't
+> > introduce a false sense of security. I.e., we're not making a foolproof
+> > tool; we're making building blocks that one could use for a more
+> > foolproof tool.
+> 
+> OK, let's make a tool that helps fooling as well as proofing :)
+> 
+> I'll look into the tag header check. Maybe "--check-tagname"? "check"
+> seems to imply less than "verify".
 
->
-> Signed-off-by: Matthias A=C3=9Fhauer <mha1993@live.de>
-> ---
->  git-stash.sh | 10 +---------
->  1 file changed, 1 insertion(+), 9 deletions(-)
->
-> diff --git a/git-stash.sh b/git-stash.sh
-> index c7c65e2..973c77b 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -112,15 +112,7 @@ create_stash () {
->         then
->
->                 # state of the working tree
-> -               w_tree=3D$( (
-> -                       git read-tree --index-output=3D"$TMPindex" -m=
- $i_tree &&
-> -                       GIT_INDEX_FILE=3D"$TMPindex" &&
-> -                       export GIT_INDEX_FILE &&
-> -                       git diff --name-only -z HEAD -- >"$TMP-stagen=
-ames" &&
-> -                       git update-index -z --add --remove --stdin <"=
-$TMP-stagenames" &&
-> -                       git write-tree &&
-> -                       rm -f "$TMPindex"
-> -               ) ) ||
-> +               w_tree=3D$(git stash--helper --non-patch "$TMPindex" =
-$i_tree) ||
->                         die "$(gettext "Cannot save the current workt=
-ree state")"
->
->         else
->
-> --
-> https://github.com/git/git/pull/191
+This seems like exactly what I was thinking of. What I believe would be
+helpful is to provide upstream tools the means to automatically verify tags
+(--check-tagname could return non-0 if the tagname doesn't match), could
+this possibly be the default behavior (--no-check-tagname instead)?
+What worries me is something like this experiment with pip: 
 
-Oh I see you're using the pull-request to email translator, cool!
+(git-tag2) santiago@LykOS:~$ pip install -e git+https://github.com/santiagotorres/django/@1.8.3#egg=django
+Obtaining django from
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+git+https://github.com/santiagotorres/django/@1.8.3#egg=django
+  Cloning https://github.com/santiagotorres/django/ (to 1.8.3) to
+  ./.virtualenvs/git-tag2/src/django
+  Installing collected packages: django
+    Running setup.py develop for django
+Successfully installed django
+(git-tag2) santiago@LykOS:~$ django-admin.py --version
+1.4.10
+
+I only had to swap the tag refs and push for this simulation. Needless
+to say, this deprectated django version (1.4.10) is vulnerable to a wide
+range known exploits that include session hijacking, DoS, "MySQL
+typecasting" and XSS.  And the person who served this tampered tag could
+exploit the webserver right away (knows who got this vulnerable
+package).
+
+Of course, this could also trick a CI system and have people package the
+wrong version of django.
+
+I agree that nothing beats manual inspection of a paranoid developer,
+but these tools are widely used today and could avoid these edge cases.
+
+> 
+> As for the gpg related stuff: We provide the full diagnostic output from
+> gpg on request. But I think a mismatch between the signing key's uid and
+> the taggers' name/email is more common than not, and on the other hand a
+> signature by a key identified by its uid is meaningless unless you keep
+> your keyring tidy... We could punt on that and let users identify the
+> key by any means that gpg allows, of course, and check that the
+> signature comes from whatever "gpg --list-key <userspecified>" gives as
+> long as it's unique.
+> 
+> But maybe I'm biased by my zoo of uids/emails addresses/full name
+> spellings... and general paranoia regarding the term "verify" ;)
+
+Yeah, I believe the gpg related stuff might be a little out of scope. I
+think, for the sake of this RFC, that we could assume that tools/people
+have acess to the right key and could perform verification. As it was
+already pointed out, key distribution and a project-specific gpg
+keychain could be integrated.
+
+The problem I see is that, even with the right key and a proper
+signature, the tag metadata can still be modified and it wouldn't be
+detected.
+
+Thanks!
+-Santiago.
