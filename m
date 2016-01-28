@@ -1,102 +1,113 @@
-From: fuz@fuz.su
-Subject: Re: git archive should use vendor extension in pax header
-Date: Thu, 28 Jan 2016 10:14:18 +0100
-Message-ID: <20160128091418.GA6875@fuz.su>
-References: <20160124155909.GA16847@fuz.su>
- <56A7EDE1.1020909@web.de>
- <20160127114634.GA1976@fuz.su>
- <56A92913.3030909@web.de>
- <20160127234512.GA5453@fuz.su>
- <alpine.DEB.2.20.1601280906340.2964@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 28 10:08:57 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] convert: legitimately disable clean/smudge filter with an empty override
+Date: Thu, 28 Jan 2016 10:27:20 +0100
+Message-ID: <AB5433EB-2C86-4A71-9E9F-057AC3CC150A@gmail.com>
+References: <1453638170-52041-1-git-send-email-larsxschneider@gmail.com> <xmqqr3h6bgbe.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 10:28:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOiZU-0004Ct-K1
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 10:08:56 +0100
+	id 1aOisA-0000pW-Cb
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 10:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965214AbcA1JIw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 04:08:52 -0500
-Received: from fuz.su ([5.135.162.8]:32789 "EHLO fuz.su"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965240AbcA1JIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 04:08:46 -0500
-Received: by fuz.su (Postfix, from userid 1000)
-	id CCBCB20227; Thu, 28 Jan 2016 10:14:18 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1601280906340.2964@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S966808AbcA1J2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 04:28:10 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35520 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966785AbcA1J1Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jan 2016 04:27:24 -0500
+Received: by mail-wm0-f48.google.com with SMTP id r129so15624444wmr.0
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 01:27:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xTkF3EPWpBCLQRzMLbOjvOy1OTCAIgp0vysQlrXOkJs=;
+        b=JrjkKeCQEJxoHTJuzmcES6IewGsFPh3qwissDML0xlsyhiR6Rl5myBxH1orw9eQF8z
+         o1nZ/pzFzworWPIfQ5PM7vCgpKlH5MpaJAJIrQ2C121+48oK53Yx6jnEttHYZt1kJahh
+         q/9b889H+dpMrBZUv1BgjHDyOB8EZu0R6bM+pjiBptgRWfsW91MheSkjJNdTW7lUImzS
+         +/mkBoCQBE0aLGN9f0ad+MJq1PQxvNf4CnQgfsgPngILL0cT11WVV+CnoM+MDybdZict
+         ZyWcSL1A21NjE71jRnBPDfd2BfI3lfG+QrVldD2g3SU4rjFfm7QX9eZnHgaRhcUesmR3
+         FpGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=xTkF3EPWpBCLQRzMLbOjvOy1OTCAIgp0vysQlrXOkJs=;
+        b=dnxwRmHsEyh/jrkvZ+Muw5DiQxGyivH8MLZqnFl8coPK225FeFPxZTgCMFWSVLa1fu
+         Opspw9g7dm/ScGhtAELzFBAO0BCmVRgdN2i0nM0Z5QXjwghikRZrniF5oKtJambCo8MT
+         uH5uIgOg7YHx8+JMbSkuZQ//6IyyCAwfzRFNF5cBGAKvNlzElXqLlmUR8BAyHtRppD/B
+         50XIEBN/zTOK00n84mCdBqrPYcFM4+5QCYAqj18VdBX4QOj6iYSDnxGOzYKyHmd7DsED
+         iRk+1NDzteacj5RjHt7Eyfnq6TGqOgMYTHPhQGwE27SRZKlXCeAoZHw2SrjPddnnqTc/
+         errA==
+X-Gm-Message-State: AG10YOQYQybKvi/oGAwkd5MXt58X1sbmc7q3N1acupdShWIcP1LnI3bPt/1OgzHqCBTfnQ==
+X-Received: by 10.28.182.133 with SMTP id g127mr1854399wmf.61.1453973242973;
+        Thu, 28 Jan 2016 01:27:22 -0800 (PST)
+Received: from slxbook3.fritz.box (p508BA68D.dip0.t-ipconnect.de. [80.139.166.141])
+        by smtp.gmail.com with ESMTPSA id qs1sm10083702wjc.2.2016.01.28.01.27.21
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 28 Jan 2016 01:27:22 -0800 (PST)
+In-Reply-To: <xmqqr3h6bgbe.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285004>
 
-Hello,
 
-> > > Users can always go back to the original format.  At least I don'=
-t
-> > > expect this new format becoming the default too quickly.
->
-> This is the most crucial issue here, as far as I am concerned: there =
-are
-> already tons of .zip files out there that were created by git archive=
-, and
-> there will inevitably be loads of tons more *having the current pax h=
-eader
-> format*.
->=20
-> So tools wanting to deal with Git archives will have to handle those =
-as
-> well, i.e. do *precisely* as Ren=E9 suggested and use get-tar-commit-=
-id. As
-> such, the value of changing the format *now* is a bit like closing th=
-e
-> barn's door after pretty much all of the horses left (except the old =
-one
-> that has a few troubles getting up in the morning but that is too nic=
-e to
-> the kids to shoot).
+On 25 Jan 2016, at 02:25, Junio C Hamano <gitster@pobox.com> wrote:
 
-That's not really an argument.  The situation you describes applies to
-all file formats and it always ends in the same way:  A new file format
-is designed and then slowly adopted by the rest of the users, in case o=
-f
-git I imagine this to be a quick process taking maybe a year or two.
-Newly created files use the new file format and old files still hang
-around but their importance is dwindling until you can safely support
-only the new format.  But to get there, a new file format has to be
-adopted in the first place.
+> larsxschneider@gmail.com writes:
+> 
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> A clean/smudge filter can be disabled if set to an empty string. However,
+>> Git will try to run the empty string as command which results in a error
+>> message per processed file.
+> 
+> The above two sentences do not make any sense to me.  You observe
+> that the command refuses to work when the variable is set to an
+> empty string--why then can you claim "filter can be disabled if set
+> to an empty string"?  I'd consider that the system is not working
+> with such a configuration, i.e. "filter cannot be disabled by
+> setting it to empty; such a request will result in an error".
 
-> > Sure thing.  If this is going to be implemented, I would add option=
-s
-> > to choose what / what style of metadata to include.
->=20
-> Why not put your money where your mouth is? I.e. get your head down i=
-nto
-> the code and come up with a patch (because otherwise it is unlikely t=
-hat
-> your idea will go anywhere)?
+If I am not mistaken then Git exits with 0 (success) and an error message
+if the filter command is empty and the filter is not required. If the filter
+command is empty and the filter is required then Git will exit with 1 (error).
 
-I'd love to but I prefer to ask if there is interest in such a change i=
-n
-the first place.  I'm not going to waste my time implementing this and
-then being told that the git project is not interested in this kind of
-functionality.  So can someone give me a clear signal?
+How about this?
 
-> Ciao,
-> Johannes
+If the clean/smudge command of a Git filter driver (filter.<driver>.smudge and
+filter.<driver>.clean) is set to an empty string ("") and the filter driver is
+not required (filter.<driver>.required=false) then Git will run successfully.
+However, Git will print an error for every file that is affected by the filter.
 
-Yours sincerely,
-Robert Clausecker
+Teach Git to consider an empty clean/smudge filter as legitimately disabled
+and do not print an error message if the filter is not required.
 
---=20
-()  ascii ribbon campaign - for an 8-bit clean world=20
-/\  - against html email  - against proprietary attachments
+Thanks,
+Lars
+
+
+> 
+>> Teach Git to consider an empty clean/smudge filter as legitimately disabled
+>> and do not print an error message.
+> 
+> On the other hand, this does make sense to me, as I do not think of
+> a good way to say "earlier configuration entry said we should use
+> this filter, but we actually do not want to use that one (or any)"
+> because a configuration, unlike attributes entry, cannot be reset.
+> The closest you can do is to set it to empty, so it may be a good
+> new feature to do this.
+> 
+> 
