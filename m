@@ -1,96 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git for windows
-Date: Thu, 28 Jan 2016 09:56:48 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1601280949070.2964@virtualbox>
-References: <56A8AAD6.4070404@gmail.com> <56A8AB7F.8040101@gmail.com> <56A8AF5F.5030707@gmail.com> <alpine.DEB.2.20.1601271531190.2964@virtualbox> <56A9D3AA.7070306@gmail.com>
+Subject: Re: [PATCH v3 00/20] Let Git's tests pass on Windows
+Date: Thu, 28 Jan 2016 09:57:58 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601280957040.2964@virtualbox>
+References: <cover.1453818789.git.johannes.schindelin@gmx.de> <cover.1453911367.git.johannes.schindelin@gmx.de> <CAPig+cQR11JtTrcHNAWytTRfdWis4qmzODs-Key-8c+8fgKoUQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Andrey Chernyshov <chernyshov.andrey@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 09:56:57 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 09:58:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOiNs-0004Dl-Qx
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 09:56:57 +0100
+	id 1aOiPC-0005AY-Uo
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 09:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754640AbcA1I4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 03:56:53 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57077 "EHLO mout.gmx.net"
+	id S933533AbcA1I6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 03:58:16 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59876 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753197AbcA1I4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 03:56:52 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MJByE-1aN4UV1UJ0-002m3e; Thu, 28 Jan 2016 09:56:49
+	id S1752368AbcA1I6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 03:58:14 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LmKOI-1Zpvsg3I1K-00ZuLf; Thu, 28 Jan 2016 09:58:00
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56A9D3AA.7070306@gmail.com>
+In-Reply-To: <CAPig+cQR11JtTrcHNAWytTRfdWis4qmzODs-Key-8c+8fgKoUQ@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:GE9/zIX1hnWK6j4iD1wYUZv8uuuHtZXeoLzASD1AJXz1zdM/M4L
- pE22SujjLLzJggAx30S4AVP7lwsci7AFcNJPJOY2ugv+kGFLBdoUK4GN+BOQXmSa6wXVHKV
- J1cdf2KnfA4hxSI9XgvSc1WM+lIfZnl7HDiz15L4BLBeQGehfBNHIJcuPdHee9Vnj4wpvoM
- E9nhBLemRV968K4Chi1CQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ws/gXrLaQS4=:HSHqJM529VSzJ7Ki2Vndma
- bM+jShJA6gifEk5bx1B70l0tqB7HTumzjx19V/IhNfIOAOK6KoAmP0g87w6JweCH5Mf46Y2zF
- aAvMleByVXc32CdPiQtruBXxHWgFTN+Gax69gpv71XRl24wpisnV5c2Al+sWY3xFRhdLJxrg+
- 4KwFTRKn9z+W4G0ukcKjLAx2CI1J44nojBbLLP2rcsMtgRg5GqOE4WDwBDcO6RXyHMgFAwzCs
- jNNb78rm7wVLA+6CDw+S4V0+8P7dTQ+1dNuGY059zpz0mEANW8Pewu6i/nq9YpZfmJrVRu5ro
- 3kg2bQtCJloVdoeaaGeyizDCywfg9wsHp93VQBDwLEqll3mgGBaNCGdbf8Iu3n9Xul6VzBsjS
- zeTizbpYr4LbGytTJG6BrUPxMPsw9y3VC06fIq+NpmvtKO23Q77aB4YPVnwbhV3gmnpjiYGXW
- 4C3qWLzrk5cVy11saBuA2m7992ktxH8WctjWUyWQ0CluSJpAXjctEMR/PgBHsoTiyOfuYaOIv
- pm0lqUOsyELztNgCZHUvPEeIqdBYqyRqe2+FnJ/mSnbqd2tzgDPuY5+VSgnWNTpZvm1f+pzlh
- OS2oJTYgFFvl9Jjvpa5P1h2fLxZxSU/1GbaHSKD+IXQchLYf/LTSRJuLnmT2+3GJoe4JW1Bdz
- ZxDXqa2p3vt7bTrc1FEqD7DKI2Err3y+Mr6iYoo24/iem9po1scGi+hwquCnTD1GgINqNKZ90
- Pt+lmwpPCUJRBXEvSerViRDM1bZDwLPN2P1yymou/w7MH6oPx8C/837Ta4X7HXm0sLpBZI9X 
+X-Provags-ID: V03:K0:6fKNySv9LX4meb0O84y3IZBKIfMlYOtk8vfj43V3jKkihtmdjx/
+ E/84K4K2w6dSx5UgCgRxycGdeGdwYgM3sARGaBSDzboDpAfQsUKCDuntStQTWWQnaZxaktr
+ bcAiT23xYx0mNWWEjEvuB92JiBOLnACcD/6HePuOr0av8LRndGrHQ3/s1+4uAjcinBSF/Fh
+ +l4FRQf6cdwyCE3a12JSg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aHsWojCRVEg=:PIXplK1F0Fw7qpFuzu8q5k
+ n6f0gcXDej7KlQY/uUMvppqp05jkRHgAGruHzj636rOVtqmqZStHhCJTCRjDXv11bdFKR8Xdn
+ YwYU3XkD4M8CeZI888MEgjaqz9LhVJvORcc84Njp9IZnJaIJrQgVSPjUeieCGgVOePLKwuPbP
+ 2QQYesN1AHJckoj4Ume25UFp61ljAlTGkltPxm17APG84NFe44ojIQP5qED20nLqYrcWA6lN8
+ hZRRM7/4+Sgbg8ocgFvtjeetHf0hWNVdmDVSH0x2rXQvsE0DeWfYBXDnKf8dhFGlhaAgVsjC7
+ PwYMKvqbz3hnEbjHzA7mZRCmSR63rwaMLB6knWI4Ml8nRPh8ZpA+jHcelUSl1bQ1BTRPapxAW
+ A0uDuFNqvBGgVcTb25plw8sygyFj/mtaAT9e5VQjPdHWXRALviVRt6yi4raoCTE6eXpVN7Gjj
+ tijG71D84cng6Fa6dn9bvFMgROTGm2Ayc5yfKGwM5UoK7oFG7ExaTZF73z5o011SP1xMNEfdt
+ 3RUhdtD8H5uBfAec+e4HmPxYcSYqdXl+sXbGlZGpIUTtUrYzY/h0Z4cE3fPfImBBp+z0AMAaX
+ MG02F0CWYordhzKALqBCZo6Gv4lmD/ESAk2wblm7g2aAL4fQc2MPNTY2CwgZ08in4eYtrlkdI
+ 0wboBsetWH6F42THLQyZ5GA4NSqCrtv5uWCGf1tlh6q5LN7dItfP4B+CjtJJl/FwaBWTgEVWz
+ ZUQGIOUrxHSdkfgLRUS+pruysYwNSbDznTVwqyvLCLLSeD2jC744O+/rg/zsnFe/T//ou55i 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/284992>
 
-Hi Andrey,
+Hi Eric,
 
-on this mailing list, it is considered impolite to top-post, and it is
-also expected to reply-to-all unless there is a very good reason not to.
-Currently, you are trying to abuse me as a free help desk, which I do not
-appreciate.
+On Thu, 28 Jan 2016, Eric Sunshine wrote:
 
-This time I am re-Cc:ing the mailing list and reply inline.
+> On Wed, Jan 27, 2016 at 11:19 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > Relative to v2, this fixes stupid typos that made the tests fail on
+> > Linux, a stupid copy-paste error pointed out by Eric Sunshine,
+> > unnecessary 'printf ""' calls pointed out by Junio Hamano, and I now
+> > use `test_have_prereq !MINGW` consistently, as pointed out by both Eric
+> > and Junio. This time, I also send the patch series with the character
+> > set set (sic!) to UTF-8. Oh, and this time, I also made sure that the
+> > regression tests pass on Windows & Linux alike.
+> 
+> For what it's worth, I ran the test suite on Mac OS X and FreeBSD, as
+> well, with this series applied and didn't run across any problems. I
+> also read through v3 and, other than the micro nit in patch 11/20,
+> didn't find anything upon which to comment.
 
-On Thu, 28 Jan 2016, Andrey Chernyshov wrote:
+Thank you so much! I really appreciate your feedback, and I have a lot of
+respect for reviewers that go through a 19 or 20 strong patch series.
 
-> The reason for you not seeing 2 emails I was replying to is that
-> initially it was in HTML format which looks like are not acceptable for
-> your mail server.  So I hit 'reply' and converted to plan text.
-
-Okay, so you were lazy... ;-)
-
-> As for mcve I really have no idea what I could add. I'm not doing
-> anything special, just click Push in the GUI and get the error like
-> below.
-
-The idea of the "M" in "MCVE" is to make it easier for others to
-reproduce. For example, if you test only with PHPStorm and do not bother
-to test the plain command-line, then you are expecting others to install
-PHPStorm just to help you. You see, some people might take that as a
-perfect excuse not to help you at all! Count me in.
-
-And if you reproduce on the bare command-line, you do not even need to
-mention PHPStorm to begin with. But you do have to give a step-by-step
-list of what you did and what you expected to happen and what happened
-instead.
-
-You see, you really *want* to make it easy for others to help you.
-Generally a good resource is http://whathaveyoutried.com/ and I tried to
-come up with a separate list of good advice at
-https://github.com/git-for-windows/git/wiki/Issue-reporting-guidelines
-
-In your particular case, I would also recommend setting the environment
-variables GIT_TRACE=1 and GIT_CURL_VERBOSE=1 before re-trying and then
-pasting the entire text from the console into a reply (*after* seeing that
-nothing obvious sticks out).
-
-Ciao,
-Johannes
+Thanks!
+Dscho
