@@ -1,53 +1,118 @@
-From: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
-Subject: AW: [PATCH 2/2] stash: use "stash--helper"
-Date: Thu, 28 Jan 2016 22:25:25 +0100
-Message-ID: <BLU436-SMTP572EDBE67B8D37ECADD616A5DA0@phx.gbl>
-References: <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>	<0000015289f33e85-713596a1-2718-4c3a-bf3c-4a0f1048d401-000000@eu-west-1.amazonses.com> <CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] travis-ci: run previously failed tests first, then slowest to fastest
+Date: Thu, 28 Jan 2016 13:32:30 -0800
+Message-ID: <xmqqk2mtmlu9.fsf@gitster.mtv.corp.google.com>
+References: <20160122060720.GA15681@sigill.intra.peff.net>
+	<20160124143403.GL7100@hank>
+	<xmqqd1sqd9sq.fsf@gitster.mtv.corp.google.com>
+	<xmqq8u3ed45r.fsf@gitster.mtv.corp.google.com>
+	<20160125144250.GM7100@hank>
+	<xmqqk2mxa7ug.fsf@gitster.mtv.corp.google.com>
+	<xmqqegd5fht9.fsf@gitster.mtv.corp.google.com>
+	<20160127151602.GA1690@ecki.hitronhub.home>
+	<xmqqd1sm9730.fsf@gitster.mtv.corp.google.com>
+	<xmqqmvrq7nok.fsf@gitster.mtv.corp.google.com>
+	<20160128070959.GA6815@ecki.hitronhub.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "'Stefan Beller'" <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jan 28 22:26:31 2016
+Content-Type: text/plain
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, Jeff King <peff@peff.net>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Thu Jan 28 22:32:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOu5F-0006ZJ-Or
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 22:26:30 +0100
+	id 1aOuBD-0004NQ-Cp
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 22:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967768AbcA1V00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 16:26:26 -0500
-Received: from blu004-omc3s27.hotmail.com ([65.55.116.102]:65411 "EHLO
-	BLU004-OMC3S27.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S966022AbcA1V0Z convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 16:26:25 -0500
-Received: from BLU436-SMTP57 ([65.55.116.74]) by BLU004-OMC3S27.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Thu, 28 Jan 2016 13:26:24 -0800
-X-TMN: [+q9fAHhp4qlvZeMCTwht4qvK3/qMo3Zl]
-X-Originating-Email: [mha1993@live.de]
-In-Reply-To: <CAGZ79kaPQP+-LpW8ExM2wmfftW4_oa7tB5XdfsdC8XHwH4aFOA@mail.gmail.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQFSRr5uEh5S4K1KMC5oGcLx3KQ3HgJ3eYkQAY0LrtWf725V8A==
-Content-Language: de
-X-OriginalArrivalTime: 28 Jan 2016 21:26:22.0885 (UTC) FILETIME=[893D1D50:01D15A12]
+	id S1161300AbcA1Vcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 16:32:36 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50233 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161033AbcA1Vce (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 16:32:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D3D73EC4F;
+	Thu, 28 Jan 2016 16:32:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KfEAylD6blbg9ZESM4KiSeDn4C0=; b=JSddpo
+	wJqI1+F/EoBbFIxkBsgyLXi2IAOYc4bA91EDbuBdTsOf0ChL2VOjI4ZyHA8PSEPE
+	VDrJ6n1wzOSMJVlHVT2NBORZYno02lJ2BX1vVegJY3ROIoHdfkXcQejQiMQbTyB6
+	SbhV55VCoGfZsgvGoB2RENYRpNcRb0NWEMCFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BBOclHEmvs1mMsDPPwOlwahokNt8bzr3
+	iMs0b9PT/91/46Zvh53d9CoF98MGVszpUn+hsqCBG/82/LHhbuJJxYQ6bjEk4rYr
+	aWBxrWHk8+l9nyKmV5kyYx1zISfUSZ8IpNYoCXEYN1SjIHtQkk9Az18R8qh0nQMp
+	eCWUQzKXafw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 23BB93EC4E;
+	Thu, 28 Jan 2016 16:32:33 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8D3953EC4D;
+	Thu, 28 Jan 2016 16:32:32 -0500 (EST)
+In-Reply-To: <20160128070959.GA6815@ecki.hitronhub.home> (Clemens Buchacher's
+	message of "Thu, 28 Jan 2016 08:10:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A3E6F56C-C606-11E5-B5C5-B4986AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285033>
 
-> You had some good measurements in the coverletter, which is not going to be recorded in the projects history. This part however would be part of the commit.
-> So you could move the speed improvements here (as well as the other reasoning) on why this is a good idea. :)
+Clemens Buchacher <drizzd@aon.at> writes:
 
-I considered that, but I thought it would inflate the size of the commit message quite a bit and represents a  pretty temporary information as I'm planning to port more code. Any further progression on this would make the old meassurements kind of obsolete IMHO. I decided to move it to the coverletter, because it is only valid information if you consider both commits. If the general opinion on here is that I should add it to the commit message though, I'll gladly update it.
-
->> https://github.com/git/git/pull/191
+> On Wed, Jan 27, 2016 at 12:49:31PM -0800, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > I wonder what would break if we ask this question instead:
+>> >
+>> >     We do not know if the working tree file and the indexed data
+>> >     match.  Let's see if "git checkout" of that path would leave the
+>> >     same data as what currently is in the working tree file.
 >
-> Oh I see you're using the pull-request to email translator, cool! 
+> If we do this, then git diff should show the diff between
+> convert_to_worktree(index state) and the worktree state.
 
-Yes, I did. It definitly makes things easier if you are not used to mailing lists, but it was also a bit of a kerfuffle. I tried to start working on coverletter support, but I couldn't get it to accept the amazon SES credentials I provided. I ended up manually submiting the coverletter. It also didn't like my name.
+I agree with you that, when ce_compare_data(), i.e. "does the index
+match the working tree?", says "they match", "git diff" (show me the
+change to go from the index to the worknig tree) should show empty
+to be consistent, and for that to happen under the above definition
+of ce_compare_data(), "git diff" needs to be comparing the data in
+the index after converting it to the working tree representation
+with the data in the working tree.
 
-Thank you for your quick feedback. 
+And that unfortunately is a very good reason why this approach
+should not be taken.  "git diff" (show me the change to go from the
+index to the working tree) is a preview of what we would see in "git
+diff --cached" (show me the change to go from HEAD to the index) if
+we did "git add", and it is a preview of what we would see in "git
+show" (show me the change of what the last commit did) if we did
+"git commit -a".  It is crazy for these latter comparisons to happen
+in the working tree (aka "smudged") representation of the data, IOW,
+these two must compare the "clean" representation.  It also is crazy
+for "git diff" to be using different representation from these two.
+This alone makes the above idea a non-starter X-<.
+
+Besides, I do not think the above approach really solves the issue,
+either.  After "git reset --hard" to have the contents in the index
+dumped to the working tree, if your core.autocrlf is flipped, "git
+checkout" of the same path would result in a working tree
+representation of the data that is different from what you have in
+the working tree, so we would declare that the working tree is not
+clean, even though nobody actually touched them in the meantime.
+This is less of an issue than having data in the index that is
+inconsistent with the convert_to_git() setting (i.e. eol and clean
+filter conversion that happens when you "git add"), but it still is
+fundamentally the same issue.
+
+Oh, bummer, I thought it was a nice approach.
