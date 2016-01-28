@@ -1,136 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Starting on a microproject for GSoC
-Date: Thu, 28 Jan 2016 11:45:07 -0800
-Message-ID: <xmqqio2dij3w.fsf@junio.mtv.corp.google.com>
-References: <56A96380.3020308@moritzneeb.de>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Thu Jan 28 20:46:16 2016
+From: Andrew Wheeler <agwheeler@gmail.com>
+Subject: [PATCH v2] push --force-with-lease: Fix ref status reporting
+Date: Thu, 28 Jan 2016 14:20:10 -0600
+Message-ID: <1454012410-10049-1-git-send-email-agwheeler@gmail.com>
+Cc: gitster@pobox.com, Andrew Wheeler <awheeler@motorola.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 28 21:20:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOsWE-0002PW-9R
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 20:46:14 +0100
+	id 1aOt3H-0000dE-Qa
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 21:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161134AbcA1TqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 14:46:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50904 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S966953AbcA1TpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 14:45:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 088113DB7A;
-	Thu, 28 Jan 2016 14:45:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=C38nIgvb2bVBaF39lcQyyYcYd9M=; b=gRPiRA
-	fGScKyuErMQTzNnsVJo2UhbqoCELmDnGxdTDoGuBIFUHHBapSP5JKSxQT2U1CQ/B
-	z5NqShR/aJwgejP+lRtllC1zMRRmWhiBnhMkxFexsxseJp2plzyDxkSmxpN9B6y8
-	+t7V1RhY3/ETUPj+ESvRC4dW2DRAClFH5PQNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eL7Nt7b2hzCJsyV5D8nDxVvwiYS7y3sy
-	1/UBWgwHEB9Cyc1+43KDB+YG0MKiN4AXNniVBt5JTUwB7sqa8wz+M1RViQrNbcOd
-	NtIHa143vLNM8gOeHF1KgoNb55oay4VSVSRaf1GGERzgZm3S47ualTIY8iaJ3RiA
-	7lTmDk93Dv8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F31A53DB79;
-	Thu, 28 Jan 2016 14:45:08 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.88])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 513CF3DB76;
-	Thu, 28 Jan 2016 14:45:08 -0500 (EST)
-In-Reply-To: <56A96380.3020308@moritzneeb.de> (Moritz Neeb's message of "Thu,
-	28 Jan 2016 01:40:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A2CA85B8-C5F7-11E5-BD18-B4986AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755712AbcA1UUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 15:20:19 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:36761 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751602AbcA1UUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 15:20:18 -0500
+Received: by mail-io0-f196.google.com with SMTP id h8so4829244ioe.3
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 12:20:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=MHw3PrMUmkQmntWbd5yZ2/gsBxLSzEhH3pfa4bwBOkM=;
+        b=H783FB14j7CULYH00bv/gfaGGlx85mwJ4diPO0vr6kGAxZvzOTbhwvRVE7GbMbRwj+
+         gqH3qTg1Is/V3SAOi2I30CRDPI2NhotwHbuKWTZxsKjMwTiZgiD15lQjUL6C7BRTowm8
+         vQKyJSiPmpuDmqWaKNKeaLAfsfNw0BXzqlgYgHI2J8nMDuT0xDiWQT/EYBlxY0BOsnW4
+         Rtyy5vwfqwsh7LT6+glFe2nMwJTTVK7jMhOAcg8mB2O9W7dTAqgCUF/zN4Osc1Joj2kK
+         gwxMFBco6saYp9ugGIiE5AFsHKATOftoOND1iEk19NTuiVuSH0CwaJSZBGcqmiESMTmB
+         WwKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MHw3PrMUmkQmntWbd5yZ2/gsBxLSzEhH3pfa4bwBOkM=;
+        b=HXlC9SYr+xKeel1Qm++vPbEVO2Ya1Mn2rneqVJgVMuJaEi1CkpywQe2HeBpUwHVMdl
+         hTW0bzi7CXRUyTuxNU1G3cTuefcR+vSaeVK+Bo957R6RT8MbwARezV5ThIwCyy6DkF/V
+         HRTFkdf/pI9++3EL/2B8Bkav+SdkbczZdGBigUw2O/YaW06hns98ivAbxeRGzcw79DZm
+         ID4NVq6VNl2baIFZR1n0oQSfqLrV1tOKl0dhGETduxMvJzw2X8ZDHupARUDNwRVg5vsb
+         DnNoE3j346GQZg2igwvSR1ULFyw0vGm21BAwvx45Nrvxsuu8ZGdT1q5Ujh950jgJRJSp
+         DcJw==
+X-Gm-Message-State: AG10YOT3dNLmmnmH6ACUhozBPb5nI6VuOUNOYpLgmPGxDEnIDyihtKItQR6wp4ZoVhRZQA==
+X-Received: by 10.107.131.206 with SMTP id n75mr4080275ioi.189.1454012414731;
+        Thu, 28 Jan 2016 12:20:14 -0800 (PST)
+Received: from mba.mot.com.com ([144.188.128.4])
+        by smtp.gmail.com with ESMTPSA id q1sm1488088igg.17.2016.01.28.12.20.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 28 Jan 2016 12:20:14 -0800 (PST)
+X-Mailer: git-send-email 1.7.11.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285024>
 
-Moritz Neeb <lists@moritzneeb.de> writes:
+From: Andrew Wheeler <awheeler@motorola.com>
 
-> the next Google Summer of Code is not too far away. I expect git to
-> apply for it and hopefully have some student spots which in turn I plan
-> to apply. It was recommended elsewhere and on this list as well, that it
-> is beneficial to engage with the community early, that's why I am
-> writing to you already now, before all this formal stuff has begun.
+The --force--with-lease push option leads to less
+detailed status information than --force. In particular,
+the output indicates that a reference was fast-forwarded,
+even when it was force-updated.
 
-It is unknown if we are going to participate in GSoC this year.  One
-question you must ask yourself first: will you still be interested
-in hacking Git if we decide not to take GSoC students this year?
+Modify the --force-with-lease ref status logic to leverage
+the --force ref status logic when the "lease" conditions
+are met.
 
-The GSoC microprojects are not about seeing who writes great code.
-What we want to see primarily with them is how well candidates
-interact with the community, responding to reviewers, showing
-agreement or disagreement with received comments, making arguments
-in a constructive way when opinions differ, updating their
-submissions with suggested improvements in a timely matter to keep
-the ball rolling, etc.  GSoC micros are primarily designed to be
-small and can be finished within a short timeframe, but expected to
-still have enough iterations with reviewers that candidates can use
-as an opportunity to demonstrate how well they can work with the
-community.
+Also, enhance tests to validate output status reporting.
 
-Suppose a candidate already tackled a micro, went through multiple
-iterations with reviewers and came up with a polished solution.
-When another candidate comes late and sends in a very similar
-"answer" to the same micro, without meaningful interactions with the
-reviewers and the community, the latter candidate would not be
-demonstrating how good a "fit" s/he is in the community at all.
+Signed-off-by: Andrew Wheeler <awheeler@motorola.com>
+---
+ remote.c            | 16 +++++++++-------
+ t/t5533-push-cas.sh |  9 ++++++---
+ 2 files changed, 15 insertions(+), 10 deletions(-)
 
-On the other hand, if the latter candidate approaches the same micro
-somebody else attacked in a different way, s/he would have his or
-her own interactions with the reviewers and would be demonstrating
-his or her ability to work with us.
-
-So in that sense, they are not "quiz" that has a single right
-answer, and we do not necessarily have problems if multiple
-candidates attack the same micro.
-
-Now, if your answer to the "first" question is "No", then you might
-want to avoid wasting your effort investing too early in preparing
-for an event that may not happen.  You may want to stop reading here
-and wait until GSoC micros are posted (if we decide to participate
-this year, that is).
-
-If the answer is "Yes", then welcome to the Git development
-community ;-)
-
-The purpose of GSoC micro I explained above also means that people
-like you, who are interested in hacking Git, can start early and do
-their own things to demonstrate that they can work well with our
-community, which may give them a head start.  When they apply to be
-a GSoC student (if we participate this year), we would already have
-enough datapoint to convince ourselves that it would be a good idea
-to pick them (even without them doing GSoC micro).
-
-> The second task, to allow "-" as a short-hand for "@{-1}" in more
-> places seems to be still open for reset, although someone almost
-> finished it (cf. $gmane/265417). I suppose just fixing/revising
-> this would be kind of a too low hanging fruit?  More interesting
-> (also because I am a bit earlier) might be to unify everything, as
-> suggested by Junio in $gmane/265260. Or implementing it for
-> another branch command, e.g. rebase.
-
-This actually is a very tricky one to do well.
-
-> If all of that is considered as not relevant, I might just go for
-> a newer idea, like converting strbuf_getline_lf() callers to
-> strbuf_getline(), as suggested in $gmane/284104.
-
-It is a good sign that you are familiar with a recent list
-discussion.  There are other "once this topic settles, we would
-probably want to do this and that kind of cleanups on top" left
-behind that haven't made my "leftover bits" page (which I update
-only after the discussion dies on the list and there is no sign that
-others will be picking them up soonish).
-
-Have fun.
+diff --git a/remote.c b/remote.c
+index 9d34b5a..bad6213 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1545,11 +1545,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		}
+ 
+ 		/*
+-		 * Bypass the usual "must fast-forward" check but
+-		 * replace it with a weaker "the old value must be
+-		 * this value we observed".  If the remote ref has
+-		 * moved and is now different from what we expect,
+-		 * reject any push.
++		 * If the remote ref has moved and is now different
++		 * from what we expect, reject any push.
+ 		 *
+ 		 * It also is an error if the user told us to check
+ 		 * with the remote-tracking branch to find the value
+@@ -1560,10 +1557,14 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 			if (ref->expect_old_no_trackback ||
+ 			    oidcmp(&ref->old_oid, &ref->old_oid_expect))
+ 				reject_reason = REF_STATUS_REJECT_STALE;
++			else
++				/* If the ref isn't stale then force the update. */
++				force_ref_update = 1;
+ 		}
+ 
+ 		/*
+-		 * The usual "must fast-forward" rules.
++		 * If the update isn't already rejected then check
++		 * the usual "must fast-forward" rules.
+ 		 *
+ 		 * Decide whether an individual refspec A:B can be
+ 		 * pushed.  The push will succeed if any of the
+@@ -1580,9 +1581,10 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *
+ 		 * (4) it is forced using the +A:B notation, or by
+ 		 *     passing the --force argument
++		 *
+ 		 */
+ 
+-		else if (!ref->deletion && !is_null_oid(&ref->old_oid)) {
++		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
+ 			if (starts_with(ref->name, "refs/tags/"))
+ 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+ 			else if (!has_object_file(&ref->old_oid))
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index c402d8d..c65033f 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -101,7 +101,8 @@ test_expect_success 'push to update (allowed, tracking)' '
+ 	(
+ 		cd dst &&
+ 		test_commit D &&
+-		git push --force-with-lease=master origin master
++		git push --force-with-lease=master origin master 2>err &&
++		! grep "forced update" err
+ 	) &&
+ 	git ls-remote dst refs/heads/master >expect &&
+ 	git ls-remote src refs/heads/master >actual &&
+@@ -114,7 +115,8 @@ test_expect_success 'push to update (allowed even though no-ff)' '
+ 		cd dst &&
+ 		git reset --hard HEAD^ &&
+ 		test_commit D &&
+-		git push --force-with-lease=master origin master
++		git push --force-with-lease=master origin master 2>err &&
++		grep "forced update" err
+ 	) &&
+ 	git ls-remote dst refs/heads/master >expect &&
+ 	git ls-remote src refs/heads/master >actual &&
+@@ -147,7 +149,8 @@ test_expect_success 'push to delete (allowed)' '
+ 	setup_srcdst_basic &&
+ 	(
+ 		cd dst &&
+-		git push --force-with-lease=master origin :master
++		git push --force-with-lease=master origin :master 2>err &&
++		grep deleted err
+ 	) &&
+ 	>expect &&
+ 	git ls-remote src refs/heads/master >actual &&
+-- 
+1.7.11.2
