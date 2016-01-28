@@ -1,119 +1,206 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v5 09/10] diffcore-pickaxe: "share" regex error handling code
-Date: Thu, 28 Jan 2016 18:56:22 +0700
-Message-ID: <1453982183-24124-10-git-send-email-pclouds@gmail.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] attempt connects in parallel for IPv6-capable builds
+Date: Thu, 28 Jan 2016 11:57:21 +0000
+Message-ID: <20160128115720.GA1827@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 12:57:37 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 12:57:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOlCc-0007LB-69
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:57:30 +0100
+	id 1aOlCo-0007O1-0E
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935235AbcA1L5Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 06:57:24 -0500
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:36575 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932669AbcA1L5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 06:57:20 -0500
-Received: by mail-pa0-f68.google.com with SMTP id a20so1894804pag.3
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 03:57:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=lAHfluHYo7+scbjUCN/7XJgsfddre8cFPxUCbD+f8xQ=;
-        b=IDMYMmRe26g9G2QmMQc7UCBkJRIUdcOneZmhuoqjDRNNn7DABGDMjFFtmz/aGlEWHS
-         Z1XPzFLaE6hNb1puz2Z7Owr1y11pCtYmtwQn4qzSRkDNFx971NgwlU5w72o8O0TKoc0K
-         /y2OvbHHq+Y3yMScQsuYXnSsQTmN455yz/cgLxXlzewLBf68GMjRDbBdQbwwoE8AJZQe
-         QEkLH3tPrgGdlxYF9bnZiuMistlE+I58Eff1FtKwi872nRv1mOpvVw5nolwXvU+/da3L
-         2QliyZpRQ2RAMa8jz+Rso4X6aGNok23bm9SfmjlcZh/dQEGGKSyB+We0LJ3K/qM5QQXi
-         xWJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=lAHfluHYo7+scbjUCN/7XJgsfddre8cFPxUCbD+f8xQ=;
-        b=Rdi4nVM0d97bBMzkw+zm832z8cj0Jr0Wwcax67utZTk2CVdoyU6SMZNvWbCRLgNjik
-         bcRt+bkDSZu21VVmwcFFq3M4VvtlOW2LyRBuS+jpYTp3p3KzvFDwzEIYvV7bht+VXv7n
-         DnOpI+Xtku1Z53uMX2E3/iLkT+JndXAUS0G8Lch8ZWKOxuuwD8JDJXoxZhKKrGz8wgkr
-         KRjVSC75iDv8ZAZgPZVe1TE828Hg95pZZ65mwOMlM91l6ZUqWju46U//qoGNWQZbEoLE
-         ap7ny0JbE+wrdxo53lCHMVVtsHeSo4YX4Kbj3Yw1t3NUU0wKJTgcq//aJQTKFVgrjQFu
-         WkXw==
-X-Gm-Message-State: AG10YORivvjIGU+HGI0d0kkU84orG/htxPnmEfdcvVOGC0+UCKO+WGkTskbXK1ILP9NnLg==
-X-Received: by 10.66.235.36 with SMTP id uj4mr3833285pac.85.1453982239823;
-        Thu, 28 Jan 2016 03:57:19 -0800 (PST)
-Received: from lanh ([115.76.235.75])
-        by smtp.gmail.com with ESMTPSA id by2sm15992578pab.6.2016.01.28.03.57.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jan 2016 03:57:18 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 28 Jan 2016 18:57:25 +0700
-X-Mailer: git-send-email 2.7.0.288.g1d8ad15
-In-Reply-To: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+	id S935253AbcA1L5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 06:57:31 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:43611 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S935217AbcA1L5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 06:57:22 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5051F669;
+	Thu, 28 Jan 2016 11:57:21 +0000 (UTC)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285015>
 
-There's another regcomp code block coming in this function. By moving
-the error handling code out of this block, we don't have to add the
-same error handling code in the new block.
+getaddrinfo() may return multiple addresses, not all of which
+are equally performant.  In some cases, a user behind a non-IPv6
+capable network may get an IPv6 address which stalls connect().
+Instead of waiting synchronously for a connect() to timeout, use
+non-blocking connect() in parallel and take the first successful
+connection.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+This may increase network traffic and server load slightly, but
+makes the worst-case user experience more bearable when one
+lacks permissions to edit /etc/gai.conf to favor IPv4 addresses.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- diffcore-pickaxe.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ connect.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 104 insertions(+), 14 deletions(-)
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 7715c13..69c6567 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -204,20 +204,13 @@ void diffcore_pickaxe(struct diff_options *o)
- 	int opts =3D o->pickaxe_opts;
- 	regex_t regex, *regexp =3D NULL;
- 	kwset_t kws =3D NULL;
-+	int err =3D 0;
-=20
- 	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
--		int err;
- 		int cflags =3D REG_EXTENDED | REG_NEWLINE;
- 		if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE))
- 			cflags |=3D REG_ICASE;
- 		err =3D regcomp(&regex, needle, cflags);
--		if (err) {
--			/* The POSIX.2 people are surely sick */
--			char errbuf[1024];
--			regerror(err, &regex, errbuf, 1024);
--			regfree(&regex);
--			die("invalid regex: %s", errbuf);
--		}
- 		regexp =3D &regex;
- 	} else {
- 		kws =3D kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
-@@ -225,6 +218,13 @@ void diffcore_pickaxe(struct diff_options *o)
- 		kwsincr(kws, needle, strlen(needle));
- 		kwsprep(kws);
- 	}
-+	if (err) {
-+		/* The POSIX.2 people are surely sick */
-+		char errbuf[1024];
-+		regerror(err, &regex, errbuf, 1024);
-+		regfree(&regex);
-+		die("invalid regex: %s", errbuf);
+diff --git a/connect.c b/connect.c
+index fd7ffe1..74d2bb5 100644
+--- a/connect.c
++++ b/connect.c
+@@ -14,6 +14,42 @@
+ static char *server_capabilities;
+ static const char *parse_feature_value(const char *, const char *, int *);
+ 
++#ifdef SOCK_NONBLOCK /* Linux-only flag */
++#  define GIT_SOCK_NONBLOCK SOCK_NONBLOCK
++#else
++#  define GIT_SOCK_NONBLOCK 0
++#endif
++
++static int socket_nb(int domain, int type, int protocol)
++{
++	static int flags = GIT_SOCK_NONBLOCK;
++	int fd = socket(domain, type | flags, protocol);
++
++	/* new headers, old kernel? */
++	if (fd < 0 && errno == EINVAL && flags != 0) {
++		flags = 0;
++		fd = socket(domain, type, protocol);
 +	}
-=20
- 	/* Might want to warn when both S and G are on; I don't care... */
- 	pickaxe(&diff_queued_diff, o, regexp, kws,
---=20
-2.7.0.288.g1d8ad15
++
++	/* couldn't use SOCK_NONBLOCK, set non-blocking the old way */
++	if (flags == 0 && fd >= 0) {
++		int fl = fcntl(fd, F_GETFL);
++
++		if (fcntl(fd, F_SETFL, fl | O_NONBLOCK) < 0)
++			die_errno("failed to set nonblocking flag\n");
++	}
++
++	return fd;
++}
++
++static void set_blocking(int fd)
++{
++	int fl = fcntl(fd, F_GETFL);
++
++	if (fcntl(fd, F_SETFL, fl & ~O_NONBLOCK) < 0)
++		die_errno("failed to clear nonblocking flag\n");
++}
++
+ static int check_ref(const char *name, unsigned int flags)
+ {
+ 	if (!flags)
+@@ -351,6 +387,9 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 	struct addrinfo hints, *ai0, *ai;
+ 	int gai;
+ 	int cnt = 0;
++	nfds_t n = 0, nfds = 0;
++	struct pollfd *fds = NULL;
++	struct addrinfo **inprogress = NULL;
+ 
+ 	get_host_and_port(&host, &port);
+ 	if (!*port)
+@@ -371,20 +410,76 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 		fprintf(stderr, "done.\nConnecting to %s (port %s) ... ", host, port);
+ 
+ 	for (ai0 = ai; ai; ai = ai->ai_next, cnt++) {
+-		sockfd = socket(ai->ai_family,
+-				ai->ai_socktype, ai->ai_protocol);
+-		if ((sockfd < 0) ||
+-		    (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0)) {
++		size_t cur;
++		int fd = socket_nb(ai->ai_family, ai->ai_socktype,
++					ai->ai_protocol);
++		if (fd < 0) {
+ 			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
+ 				    host, cnt, ai_name(ai), strerror(errno));
+-			if (0 <= sockfd)
+-				close(sockfd);
+-			sockfd = -1;
+ 			continue;
+ 		}
++
++		if (connect(fd, ai->ai_addr, ai->ai_addrlen) < 0 &&
++					errno != EINPROGRESS) {
++			strbuf_addf(&error_message, "%s[%d: %s]: errno=%s\n",
++				host, cnt, ai_name(ai), strerror(errno));
++			close(fd);
++			continue;
++		}
++
+ 		if (flags & CONNECT_VERBOSE)
+-			fprintf(stderr, "%s ", ai_name(ai));
+-		break;
++			fprintf(stderr, "%s (started)\n", ai_name(ai));
++
++		nfds = n + 1;
++		cur = n;
++		ALLOC_GROW(fds, nfds, cur);
++		cur = n;
++		ALLOC_GROW(inprogress, nfds, cur);
++		inprogress[n] = ai;
++		fds[n].fd = fd;
++		fds[n].events = POLLIN|POLLOUT;
++		fds[n].revents = 0;
++		n = nfds;
++	}
++
++	/*
++	 * nfds is tiny, no need to limit loop based on poll() retval,
++	 * just do not let poll sleep forever if nfds is zero
++	 */
++	if (nfds > 0)
++		poll(fds, nfds, -1);
++
++	for (n = 0; n < nfds && sockfd < 0; n++) {
++		if (fds[n].revents & (POLLERR|POLLHUP))
++			continue;
++		if (fds[n].revents & POLLOUT) {
++			int err;
++			socklen_t len = (socklen_t)sizeof(err);
++			int rc = getsockopt(fds[n].fd, SOL_SOCKET, SO_ERROR,
++						&err, &len);
++			if (rc != 0)
++				die_errno("getsockopt errno=%s\n",
++					strerror(errno));
++			if (err == 0) { /* success! */
++				sockfd = fds[n].fd;
++				ai = inprogress[n];
++			}
++		}
++	}
++
++	/* cleanup */
++	for (n = 0; n < nfds; n++) {
++		if (fds[n].fd != sockfd)
++			close(fds[n].fd);
++	}
++	free(inprogress);
++	free(fds);
++
++	if (sockfd >= 0) {
++		enable_keepalive(sockfd);
++		set_blocking(sockfd); /* the rest of git expects blocking */
++		if (flags & CONNECT_VERBOSE)
++			fprintf(stderr, "%s done.\n", ai_name(ai));
+ 	}
+ 
+ 	freeaddrinfo(ai0);
+@@ -392,11 +487,6 @@ static int git_tcp_connect_sock(char *host, int flags)
+ 	if (sockfd < 0)
+ 		die("unable to connect to %s:\n%s", host, error_message.buf);
+ 
+-	enable_keepalive(sockfd);
+-
+-	if (flags & CONNECT_VERBOSE)
+-		fprintf(stderr, "done.\n");
+-
+ 	strbuf_release(&error_message);
+ 
+ 	return sockfd;
+-- 
+EW
