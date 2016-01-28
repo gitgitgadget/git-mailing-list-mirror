@@ -1,152 +1,110 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v5 07/10] gettext: add is_utf8_locale()
-Date: Thu, 28 Jan 2016 18:56:20 +0700
-Message-ID: <1453982183-24124-8-git-send-email-pclouds@gmail.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 4/6] worktree: new config file hierarchy
+Date: Thu, 28 Jan 2016 19:03:38 +0700
+Message-ID: <CACsJy8C3wXL-nE1TfS7V8BFNwaQTjMtkQibCswycpX_teaATpQ@mail.gmail.com>
+References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
+ <1453808685-21235-1-git-send-email-pclouds@gmail.com> <1453808685-21235-5-git-send-email-pclouds@gmail.com>
+ <xmqq7fiu7je7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 28 12:57:49 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Max A.K." <max@max630.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 28 13:04:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOlCo-0007O1-JQ
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 12:57:42 +0100
+	id 1aOlJ9-00042Q-Le
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 13:04:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935256AbcA1L5l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016 06:57:41 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34863 "EHLO
-	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934954AbcA1L5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 06:57:09 -0500
-Received: by mail-pf0-f194.google.com with SMTP id 66so1551645pfe.2
-        for <git@vger.kernel.org>; Thu, 28 Jan 2016 03:57:09 -0800 (PST)
+	id S933035AbcA1MEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 07:04:12 -0500
+Received: from mail-lb0-f193.google.com ([209.85.217.193]:36824 "EHLO
+	mail-lb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932671AbcA1MEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 07:04:10 -0500
+Received: by mail-lb0-f193.google.com with SMTP id ad5so1722883lbc.3
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 04:04:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=HDeTqL322iG/mGNMW6ZO6UEoIfbnDubPPAYIDDadsm0=;
-        b=AWRB3szPIPyBs/0LaslvHC+qP7ni8ciqXjNgahLlqIrvGn7igPWoSdxTYY7T/uCK12
-         wPIRT530Uc4BCYRdtmPmgNvw3GcGYgT4sOfRG2osm4BoHD5qZZi85dCZW5+zL8BFQSWm
-         ZNOptpdRqFpOBdzZFB3HhY+bTlWjaJRzSU8h/a8/Yxd08oYbyF+HcMurdB5voXaR7YGU
-         Q2rT1HtzKi1lw555z3SnylVYoJ6KzTFffCJhU7xaNLkHepYBKTWTllWYiWsFiZZ0ffA3
-         Tv9fW1saYIAqqH4k/ILlPJbVJBNyTBantXgQ9MpBA+bE+NiDSoqLP4QdZ2UZe6Km5yhx
-         KsXg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=z6SnVe99Uio3K+iD9SlOS85JVtK9AJ1fXpHrqCC/S2k=;
+        b=lS5w/OqJFXSNQVIrRAekpX8pVrODQ2YtAQDGVbDA6ZSbVvsdRTULPyoAwapdIQUlQS
+         GNbzY5aVuXyEJdtZUTRdC8GglZw7eAvYTclxZEOcoXIFn/yeWYXk3s6zE1Ti90ICfehf
+         esMWT9fN/drE/TdoGUg2kclyemOTK1YB0Gm1lGoPdj531MzppIKEsoMI/4AterY+1x3P
+         WlXF0sncJ45ECqAQMvcwACHPEEIgZUrE6kmpWrwm7Qo8B5iOCQFIbjiY2ooUaIWBDS/r
+         pB8KT1zJyF3vdA2ZpzNKa12DD3l4iCKt+jAKEBgpaQmKg/MfjiorfbyQx+auNXcIt3P1
+         +Hbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=HDeTqL322iG/mGNMW6ZO6UEoIfbnDubPPAYIDDadsm0=;
-        b=RZFhaZARlInFwt1fAiJQsebVmhId/jrcmUDLPKMLP2O5nvVqtnTX+KZ7l6AJhtOymM
-         RfcNi0YeDvlN2bh9lq1z1E/PPf7o5c884cpw9k2De7cQeB80RjV7IfXKirRBnSif95As
-         1EXJA8sY791M6zVxtwQK6HYmqmPHNJJe+9nE67BAYMtgtBA2vjVUFNEXmsnIkopfjzZi
-         GSqDKXACLaVl6cUc5D527pfpNEDG20Ms/mPeeHA8KViWlySIdP39OcyF1vLHK5dnmneM
-         UKjoSMURuLB0uWIq1zYaMQjr0yh/KLiB7WGaCrB9YXaSA/EESYeBkb8PXvddH9BCpiEJ
-         V7Wg==
-X-Gm-Message-State: AG10YOQcCXhb36xgw1aDOoI8nra6meLnayzKJUqv2j8LknY54jyJd9o1W0ZImKPFB0rLSw==
-X-Received: by 10.98.68.211 with SMTP id m80mr3823256pfi.117.1453982229331;
-        Thu, 28 Jan 2016 03:57:09 -0800 (PST)
-Received: from lanh ([115.76.235.75])
-        by smtp.gmail.com with ESMTPSA id 76sm3718872pft.44.2016.01.28.03.57.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jan 2016 03:57:07 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 28 Jan 2016 18:57:14 +0700
-X-Mailer: git-send-email 2.7.0.288.g1d8ad15
-In-Reply-To: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=z6SnVe99Uio3K+iD9SlOS85JVtK9AJ1fXpHrqCC/S2k=;
+        b=bxdMCvem2WUVI/2PH3e/4VGMRUAc8pYkS8AQHAKRvjvXU9lbYTw0p0b0kshZVGd1YT
+         WD6vAkMp6MwAs5237DeZsHTGkx2EkqKM/9ZO6GDXJvUTklj0Wolt1+nM3HC5Ve/5afIl
+         cfoiNVA4Jx/JtQXalKe5QP1Xq/oruZUvnQMAC5BaHu2bw2VQbgnBR1TZX4Gqmzg1DAY0
+         weaaBAyVCm7kQfRR3SaD1IvucRnd1DoktvxxWXrpgP8BUrQT77GgeFv7YZuEx6zWm2sI
+         RnwGVvhltSkdqisKmT2U/lZnSq0V0sr3uMRtOcQvXmwarTgL4xiEsX//NWPgoikHMbAK
+         JPZA==
+X-Gm-Message-State: AG10YOS6znZEehB04IxZ1A/dyXiaObn3NLHvRLsHWFJHcuV4FHHK29tOYJEZrwSWLobiTOl2/EWyHQJSGD3MNw==
+X-Received: by 10.112.209.99 with SMTP id ml3mr1002187lbc.26.1453982648227;
+ Thu, 28 Jan 2016 04:04:08 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 28 Jan 2016 04:03:38 -0800 (PST)
+In-Reply-To: <xmqq7fiu7je7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285018>
 
-This function returns true if git is running under an UTF-8
-locale. pcre in the next patch will need this.
+On Thu, Jan 28, 2016 at 5:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> With this patch, since worktree v1, the repo config file (or worktree
+>> config file in multi worktree context) is no longer shared. Main
+>> worktree reads $C/config.  Linked worktrees read $C/worktrees/xxx/config
+>> and a new file, $C/worktrees/config. Sharing is done via this new
+>> file. The read hierarchy for a worktree becomes
+>>
+>> 1) system config
+>> 2) XDG config
+>> 3) user config
+>> 4) $C/common/config
+>> 5) $C/worktrees/xxx/config (or $C/config for main worktree)
+>>
+>> Compare to an alternative scheme where $C/config contains both shared
+>> variables and main-worktree-only ones, this is a cleaner design.
+>>
+>> * We do not have to check every single variable name to see if it's
+>>   shared or per-worktree when reading config files.
+>>
+>> * We do not enforce any particular variable split. If a variable
+>>   is in $C/worktrees/config, it is shared. Putting core.worktree in
+>>   $C/worktrees/config is punished the same way the variable is put in
+>>   $HOME/.gitconfig, for example.
+>>
+>> * We will provide a new "git config --repo" to access this new config
+>>   file. In single-worktree context, or worktree v0, --repo is an alias
+>>   of --local.
+>>
+>> There is one problem though. We store worktree version in config file
+>> and expect that all worktrees must share the same version (i.e. read
+>> the same config file). But the share-ness of per-repo config files is
+>> changed based on worktree version. Where do we put extensions.worktree
+>> then?
+>
+> I cannot see why it cannot live in $C/common/config, which would be
+> read as the fourth alternative in your earlier enumeration.  What I
+> am missing?
 
-is_encoding_utf8() is used instead of strcmp() to catch both "utf-8"
-and "utf8" suffixes.
-
-When built with no gettext support, we peek in several env variables
-to detect UTF-8. pcre library might support utf-8 even if libc is
-built without locale support.. The peeking code is a copy from
-compat/regex/regcomp.c
-
-Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- gettext.c | 24 ++++++++++++++++++++++--
- gettext.h |  1 +
- 2 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/gettext.c b/gettext.c
-index a268a2c..db727ea 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -18,6 +18,8 @@
- #	endif
- #endif
-=20
-+static const char *charset;
-+
- /*
-  * Guess the user's preferred languages from the value in LANGUAGE env=
-ironment
-  * variable and LC_MESSAGES locale category if NO_GETTEXT is not defin=
-ed.
-@@ -65,7 +67,6 @@ static int test_vsnprintf(const char *fmt, ...)
- 	return ret;
- }
-=20
--static const char *charset;
- static void init_gettext_charset(const char *domain)
- {
- 	/*
-@@ -172,8 +173,27 @@ int gettext_width(const char *s)
- {
- 	static int is_utf8 =3D -1;
- 	if (is_utf8 =3D=3D -1)
--		is_utf8 =3D !strcmp(charset, "UTF-8");
-+		is_utf8 =3D is_utf8_locale();
-=20
- 	return is_utf8 ? utf8_strwidth(s) : strlen(s);
- }
- #endif
-+
-+int is_utf8_locale(void)
-+{
-+#ifdef NO_GETTEXT
-+	if (!charset) {
-+		const char *env =3D getenv("LC_ALL");
-+		if (!env || !*env)
-+			env =3D getenv("LC_CTYPE");
-+		if (!env || !*env)
-+			env =3D getenv("LANG");
-+		if (!env)
-+			env =3D "";
-+		if (strchr(env, '.'))
-+			env =3D strchr(env, '.') + 1;
-+		charset =3D xstrdup(env);
-+	}
-+#endif
-+	return is_encoding_utf8(charset);
-+}
-diff --git a/gettext.h b/gettext.h
-index 33696a4..7eee64a 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -90,5 +90,6 @@ const char *Q_(const char *msgid, const char *plu, un=
-signed long n)
- #endif
-=20
- const char *get_preferred_languages(void);
-+extern int is_utf8_locale(void);
-=20
- #endif
---=20
-2.7.0.288.g1d8ad15
+I wasn't clear. The last paragraph is about already released git
+binaries, which does not care about $C/common/config. Suppose you add
+a new worktree with new git binary, which will move common stuff out
+of .git/config to common/config, on a shared repo. If the old binary
+reads that repo, it does not see common config, but it does not know
+where common config is either.
+-- 
+Duy
