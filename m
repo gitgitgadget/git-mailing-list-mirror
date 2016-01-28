@@ -1,79 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/WIP PATCH 07/11] fetch-pack: use the configured transport protocol
-Date: Tue, 26 May 2015 15:19:50 -0700
-Message-ID: <xmqq617fj81l.fsf@gitster.dls.corp.google.com>
-References: <1432677675-5118-1-git-send-email-sbeller@google.com>
-	<1432677675-5118-8-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-NNTP-Posting-Date: Tue, 26 May 2015 22:19:59 +0000 (UTC)
-Cc: git@vger.kernel.org, pclouds@gmail.com, peff@peff.net
-To: Stefan Beller <sbeller@google.com>
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/9] Handle errors when setting configs
+Date: Thu, 28 Jan 2016 10:00:28 +0100
+Message-ID: <1453971637-22273-1-git-send-email-ps@pks.im>
+NNTP-Posting-Date: Thu, 28 Jan 2016 09:01:33 +0000 (UTC)
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=xKY64p3v4H1TBF+tLOQShTbdAy8uWSEgs1OTDlIFpw8=;
-        b=JcDuZHmRMY6hRKe+wmpHYtKpThawHwQSFOourapM9QXxzwLQPSa14hJqmTZAiH3mS/
-         Den/s681fzkLjsWyD0C2YNHHp//wDmI1DMldbNGDkXy/yqEB+wLIGXpVyIfBmCD78H2k
-         SVQBn9MxEq4/xYmzCpAh9j06HLlX06Xd/zJpfAa/VrDMXWSo2joWgBknwyJmvUuXWKqz
-         zsQkVPXZM9M2+Py4Kwm0xUcgziTVYTE6osQqtMNeBW/usFTKQMepk36I3AX3Y1/gS62W
-         rImAS+fC7/8srvkMN23CpmsJzaroEfErj+g9Rdv+j0yiZ+AGhDtSzWAj/MzqB33gZrzs
-         9VHQ==
-X-Received: by 10.50.138.232 with SMTP id qt8mr32655176igb.28.1432678791882;
-        Tue, 26 May 2015 15:19:51 -0700 (PDT)
-In-Reply-To: <1432677675-5118-8-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 26 May 2015 15:01:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=emDaVPvgtz7XejGKqWL+ZqD2oI
+	w=; b=M2ic5gvNEfNaDcOIT/MkMNJHwpwG7lxhP4PsPwqOBCOCwpfCxrw+OLDdRy
+	QK0XjdmLfCrJIxukiugOQePexaI8zaM0inWVHLPo1WtShTbcpqCQFTmeOgTUf9T1
+	ihN75UusHF46s5UyuEkFEVSKc1ALMoOUMTj0iLYe1FEu+7obs=
+X-Sasl-enc: SFc94WK8/kN3JiZbX4kYhPC6Ke2kEdTWbIlBPoSsjMy1 1453971639
+X-Mailer: git-send-email 2.7.0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/270000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285000>
 Received: from vger.kernel.org ([209.132.180.67]) by plane.gmane.org with
  esmtp (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id
- 1YxNCX-0002FZ-Vy for gcvg-git-2@plane.gmane.org; Wed, 27 May 2015 00:19:58
- +0200
+ 1aOiS6-0007A6-3N for gcvg-git-2@plane.gmane.org; Thu, 28 Jan 2016 10:01:18
+ +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751295AbbEZWTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 May 2015
- 18:19:53 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:38009 "EHLO
- mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751011AbbEZWTw (ORCPT <rfc822;git@vger.kernel.org>); Tue, 26 May
- 2015 18:19:52 -0400
-Received: by igcau1 with SMTP id au1so373204igc.1 for <git@vger.kernel.org>;
- Tue, 26 May 2015 15:19:52 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4485:3520:962f:d5a5]) by
- mx.google.com with ESMTPSA id 17sm6317948ioq.39.2015.05.26.15.19.51
- (version=TLSv1.2 cipher=RC4-SHA bits=128/128); Tue, 26 May 2015 15:19:51
- -0700 (PDT)
+ S1755216AbcA1JAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Jan 2016
+ 04:00:47 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:41977 "EHLO
+ out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S1755173AbcA1JAl (ORCPT <rfc822;git@vger.kernel.org>); Thu, 28
+ Jan 2016 04:00:41 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46]) by
+ mailout.nyi.internal (Postfix) with ESMTP id 656B521EE4 for
+ <git@vger.kernel.org>; Thu, 28 Jan 2016 04:00:40 -0500 (EST)
+Received: from frontend2 ([10.202.2.161]) by compute6.internal (MEProxy);
+ Thu, 28 Jan 2016 04:00:40 -0500
+Received: from localhost (f052174253.adsl.alicedsl.de [78.52.174.253]) by
+ mail.messagingengine.com (Postfix) with ESMTPA id E93C96800D1; Thu, 28 Jan
+ 2016 04:00:39 -0500 (EST)
 Sender: git-owner@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I've finally got around to producing version two of my previous
+patch to handle errors when setting configs. Back in September
+I've posted a single patch to handle errors when
+`install_branch_config` fails due to configuration failures [1].
 
-> @@ -175,7 +179,18 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->  		if (!conn)
->  			return args.diag_url ? 0 : 1;
->  	}
-> -	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
-> +
-> +	switch (args.version) {
-> +	default:
-> +	case 2:
-> +		get_remote_capabilities(fd[0], NULL, 0);
-> +		request_capabilities(fd[1]);
-> +		break;
-> +	case 1: /* fall through */
-> +	case 0:
-> +		get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
-> +		break;
-> +	}
+Failure to write the configuration file may be caused by multiple
+conditions, but the most common one will surely be the case where
+the configuration is locked because of a leftover lock file or
+because another process is currently writing to it. We used to
+ignore those errors in many cases, possibly leading to
+inconsistently configured repositories. More often than not git
+even pretended that everything was fine and that the settings
+have been applied when indeed they were not.
 
+Version two of this patch is somewhat more involved in that I
+tried to track down all relevant places where we set configs
+without checking for error conditions. My current approach to
+most of those cases is to just die with an error message, this
+remains up to discussion though for the individual cases.
+
+[1]: $gmane/278544
+
+Patrick Steinhardt (9):
+  config: introduce set_or_die wrappers
+  branch: return error code for install_branch_config
+  remote: handle config errors in set_url
+  clone: handle config errors in cmd_clone
+  branch: handle config errors when unsetting upstream
+  init-db: handle config errors
+  sequencer: handle config errors when saving opts
+  submodule--helper: handle config errors
+  compat: die when unable to set core.precomposeunicode
+
+ branch.c                    | 31 +++++++++++++++++++++----------
+ branch.h                    |  3 ++-
+ builtin/branch.c            |  4 ++--
+ builtin/clone.c             | 17 ++++++++++-------
+ builtin/init-db.c           | 20 ++++++++++----------
+ builtin/remote.c            | 11 ++++++-----
+ builtin/submodule--helper.c |  4 ++--
+ cache.h                     |  4 ++++
+ compat/precompose_utf8.c    |  3 ++-
+ config.c                    | 27 +++++++++++++++++++++++++++
+ sequencer.c                 | 22 +++++++++++-----------
+ t/t3200-branch.sh           | 16 +++++++++++++++-
+ t/t5505-remote.sh           |  9 +++++++++
+ transport.c                 | 11 ++++++-----
+ 14 files changed, 127 insertions(+), 55 deletions(-)
+
+-- 
+2.7.0
