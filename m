@@ -1,134 +1,70 @@
-From: Anatoly Borodin <anatoly.borodin@gmail.com>
-Subject: Re: Gitignore file exceptions are not applied to untarcked files
-Date: Fri, 29 Jan 2016 20:54:30 +0000 (UTC)
-Message-ID: <n8gji4$bf1$1@ger.gmane.org>
-References: <CAMrYpX5n1LHBnr+bMhV=8Eu1K2npKctVZrHxJcStBhSVC70OBg@mail.gmail.com> <xmqqd1skjkyp.fsf@gitster.mtv.corp.google.com>
+From: Andrew Wheeler <andrew@igmo.org>
+Subject: Re: [PATCH v3] push --force-with-lease: Fix ref status reporting
+Date: Fri, 29 Jan 2016 16:53:46 -0600
+Message-ID: <CAJay-wm=1Bf6HUvsZd-cRVh2ehU_aZ1SuiOBfBTQ2uafVnjNoQ@mail.gmail.com>
+References: <1454012898-10138-1-git-send-email-agwheeler@gmail.com>
+	<xmqqmvrpl2lb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 29 21:55:06 2016
+Cc: git@vger.kernel.org, Andrew Wheeler <awheeler@motorola.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 29 23:53:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPG4Q-0006YM-8F
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 21:55:06 +0100
+	id 1aPHvL-0006Dg-KJ
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 23:53:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756040AbcA2Uys convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Jan 2016 15:54:48 -0500
-Received: from plane.gmane.org ([80.91.229.3]:41646 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752157AbcA2Uyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2016 15:54:47 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aPG45-000674-31
-	for git@vger.kernel.org; Fri, 29 Jan 2016 21:54:45 +0100
-Received: from fokus169149.fokus.fraunhofer.de ([194.95.169.149])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2016 21:54:45 +0100
-Received: from anatoly.borodin by fokus169149.fokus.fraunhofer.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Jan 2016 21:54:45 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: fokus169149.fokus.fraunhofer.de
-User-Agent: tin/2.3.1-20141224 ("Tallant") (UNIX) (Linux/4.2.0-25-generic (x86_64))
+	id S1753171AbcA2Wxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2016 17:53:48 -0500
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:33875 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbcA2Wxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2016 17:53:47 -0500
+Received: by mail-ig0-f195.google.com with SMTP id ik10so5583156igb.1
+        for <git@vger.kernel.org>; Fri, 29 Jan 2016 14:53:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=fGQUWxbDz9lA67K2p+fWbVXATz+nm6nFx/1oPglgHak=;
+        b=JYofTKBvn58WUt01JH86gApZ9icguNiAZV7NaPY8MBWLqE6lzkT7XjTlZ0V6JE5ZZB
+         J8VhVJ/eZo7dSviMDsxzdQdJH84srq70SFGFmPGfMuqZaqLRZhQTX1EjMewyiBup9+em
+         KYQfTzuDhVVFTA32qfpdDXbtbKPDHSAia1/PXM78fQ90aLsXy5Wlh5VRDE6SwHeOCzDo
+         a3zKcaIOuX9URwsElsPUKtJekEnCN/kAN9umkO7oxEK35entKeeHQTuyuzIR96RJjYR6
+         7bIdN26BLsTWmZyqFRiBjpxfGBA895rkm1cAds8GNdBe501v1WhrSF3TXwoCdKjNx0Hw
+         VQmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=fGQUWxbDz9lA67K2p+fWbVXATz+nm6nFx/1oPglgHak=;
+        b=O4dShE+gwOqLVJ0wm3EcKv5aOoplKBixsOQFaIWrYRLS3AvWe2GguvQHQSAuuoNuFv
+         awSVMDRXiKxzK7yYbUrhiZx/wFYHUbMpC9JR+mCeqFSdI/lH/nuEBBpaLy4M3uPy4sc7
+         zgcPqQB0KI/JtLtAKZMpxfWobduQ3d4uKVLrQgR2tL+rh0xZ5HR5KKSsoBb3QVPASNWF
+         vOZLN/YFuRVaQsleZ7x37lazCRVuEsimBSzn58huLkgnnoJTxpho/oSxEAzO4jEsId40
+         1Pjs8wcSGPRPRQcKYAlJ4LlbHMOmFI1TDVDthYa2Sh3y1Xja4lrtbRIrsoiKneBggGFR
+         bxGg==
+X-Gm-Message-State: AG10YOSUKARoyvnQ0ONk+kWD6pHmy76aTIkc+JxSw4U0RK0q0jJSNywwWACf6t9tQCyJUNWuezz/MEdJPy55gw==
+X-Received: by 10.50.8.42 with SMTP id o10mr11941723iga.59.1454108026702; Fri,
+ 29 Jan 2016 14:53:46 -0800 (PST)
+Received: by 10.79.5.147 with HTTP; Fri, 29 Jan 2016 14:53:46 -0800 (PST)
+In-Reply-To: <xmqqmvrpl2lb.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: f_B0XICHVMkPB-Rfcd-0S2L-iDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285095>
 
-Hi Junio,
+> These all look OK (I am not sure about message i18n, though).
+>
+> Do we not test a case where --force-with-lease push is rejected due
+> to REF_STATUS_REJECT_STALE?
 
-
-I've tested it with many older versions of git, as well as with the rec=
-ent
-v2.7.0 - it seems like this feature has been never working properly.
-
-The script https://gist.github.com/anatolyborodin/9c581b50c584534fff28
-
-#!/bin/sh
-
-set -e
-
-# a
-# b
-# c
-# D/a
-# D/b
-# D/c
-# E/F/a
-# E/F/b
-# E/F/c
-
-mkdir -p D E/F
-touch a b c D/a D/b D/c E/F/a E/F/b E/F/c
-
-echo && echo '.gitignore' && echo '----------'
-echo '*\n!b\n!D/b\n!/D/b\n!/E/*/b' > .gitignore
-cat .gitignore
-
-echo && echo 'With `--ignored`' && echo '----------'
-git status --ignored
-
-echo && echo 'Without `--ignored`' && echo '----------'
-git status
+Good idea, new patch on the way.
 
 
-The output:
-
-
-=2Egitignore
-----------
-*
-!b
-/D/b
-!/D/b
-!/E/*/b
-
-With `--ignored`
-----------
-On branch master
-Your branch is up-to-date with 'origin/master'.
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        b
-
-Ignored files:
-  (use "git add -f <file>..." to include in what will be committed)
-
-        .gitignore
-        D/
-        E/
-        a
-        c
-
-nothing added to commit but untracked files present (use "git add" to t=
-rack)
-
-Without `--ignored`
-----------
-On branch master
-Your branch is up-to-date with 'origin/master'.
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        b
-
-nothing added to commit but untracked files present (use "git add" to t=
-rack)
-
-
-
-All files in the subdirectories are ignored, no matter what.
-
-
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen,
-Anatoly Borodin
+-andrew
