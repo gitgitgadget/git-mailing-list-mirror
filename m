@@ -1,191 +1,84 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2] convert: legitimately disable clean/smudge filter with an empty override
-Date: Fri, 29 Jan 2016 19:55:36 +0100
-Message-ID: <B8302383-658F-4FBD-965A-3330B9164A0E@gmail.com>
-References: <1454055697-6742-1-git-send-email-larsxschneider@gmail.com> <1454055697-6742-2-git-send-email-larsxschneider@gmail.com> <xmqqh9hwjlha.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, tboegi@web.de, sunshine@sunshineco.com,
-	peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 29 19:55:49 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/9] Handle errors when setting configs
+Date: Fri, 29 Jan 2016 10:55:52 -0800
+Message-ID: <xmqqsi1gi5af.fsf@gitster.mtv.corp.google.com>
+References: <1453971637-22273-1-git-send-email-ps@pks.im>
+	<20160129082036.GA8591@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 29 19:56:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPECw-0002ZX-Pq
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 19:55:47 +0100
+	id 1aPED8-0002p1-W3
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 19:55:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932816AbcA2Szm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2016 13:55:42 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34338 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932495AbcA2Szl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jan 2016 13:55:41 -0500
-Received: by mail-wm0-f68.google.com with SMTP id p63so11493537wmp.1
-        for <git@vger.kernel.org>; Fri, 29 Jan 2016 10:55:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:from:subject:date:to;
-        bh=6Nk2RkzAyZdFykCC/1q9y2IiSQTKIIFKYDVShVgBY5Y=;
-        b=pYhedQSsPhfkMGJAMmG53LZfzZ0ggbCVffWtrXFg4Ht3ks61DDTzeL6BimMazIpZTP
-         i0EM9eDkjIks/lesnpI4nkOSeJCScQaWIYj5H9/6fL+jvRmkfnbf0vJnapdyhiLzNXh4
-         dXYfO9rlgKbwZBITtg5Xw0jfnfDRsaALQnCRp9JECEsMpRck+jAbJG2h03ieHGgc0hwO
-         /wLAb58GR+KA8eaqPWh1fOXONlsoX+9cu82m86psC5m9fR1WZ99ngtzJ2ihDfi5+jYZ0
-         IJkV6iz5FnQLEcu6olk796I2i7CbgD9oaUYUZPdFY//3knbS1IudbKfo4GdffZpLKC23
-         9xOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:from:subject:date:to;
-        bh=6Nk2RkzAyZdFykCC/1q9y2IiSQTKIIFKYDVShVgBY5Y=;
-        b=f4O15S9htFJXHsQoKU+58Jw2aTzmEAuQ+SWNTnIIaz7pTi2lQVe9Zdj8zGymQxJzCk
-         Hscsp5xakk0bz3hBL+YvzgmagIkFny11dQVh8y0yF4veQshTCn4M4lkP9gG2EJuXgDa8
-         ei6xD92ZzuTq/1NbMZhKaVfaOnSrMM2BbQdvhPtBck4n0FAbBWGldWL8rz5zQ3cVkJKI
-         vwgrfFE76bkZg59L3QRPOfViLbb1nt0K8WnmkFtlrlAQ1Lc+1JMP4Ah+gJ7yCCnhHf1r
-         2ZLza3yNbFZ1D1EJC1qfLsG3wOsxuiTF+5PtPS6JalnV2JJTLWEuPvRQpc8d/6tzgqK9
-         GmzA==
-X-Gm-Message-State: AG10YOQuzo0s4sDmrAW96rYQxbPmKMCyst18J5cmpE+vEmOeEsn4ZnCrqJVPjBuZz0uhIQ==
-X-Received: by 10.28.17.8 with SMTP id 8mr9992752wmr.65.1454093740389;
-        Fri, 29 Jan 2016 10:55:40 -0800 (PST)
-Received: from [10.22.142.121] (tmo-107-68.customers.d1-online.com. [80.187.107.68])
-        by smtp.gmail.com with ESMTPSA id gl10sm16844673wjb.30.2016.01.29.10.55.38
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 29 Jan 2016 10:55:39 -0800 (PST)
-In-Reply-To: <xmqqh9hwjlha.fsf@gitster.mtv.corp.google.com>
-X-Mailer: iPhone Mail (13D15)
+	id S932838AbcA2Szz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2016 13:55:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55441 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932495AbcA2Szy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2016 13:55:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E2F4C3F97E;
+	Fri, 29 Jan 2016 13:55:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vDQHga+XPdrz2Wrr0LZN4wqOKK0=; b=mDLw9U
+	WPqJwDTi9uyGSQ7d546Wx8UiDX6uzxK885j7QaFAXhWWULXsmEoc6bL6ZsgB86z/
+	ztUW0W2CxDjLv34CV8p/ojAPvTTra8Re8obBezm+bNnQrwD2Wnakew3Uu9VRGg8F
+	uxhSElSPL6J6x89cao5GuNSRT6ip3vt7ROi1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F0JR56RO1wdnZNPdWyugjISRyKNqWEYp
+	Z3rA9yCmU4RaKeOMlIpdpnyXrN8uRNPhjzVRLEzBK4IK1P0RfMDswKJwBS4H/IoM
+	+hCEoSx5k/3UOazUkG5BihNjFLGC4+F0iknsKi6V/CgBX5Yx7noa1KJkkFzFOiFo
+	lsTyp0rOeCs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DBF843F97D;
+	Fri, 29 Jan 2016 13:55:53 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5B4873F97B;
+	Fri, 29 Jan 2016 13:55:53 -0500 (EST)
+In-Reply-To: <20160129082036.GA8591@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 29 Jan 2016 03:20:36 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EBE98C22-C6B9-11E5-9005-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285088>
 
+Jeff King <peff@peff.net> writes:
 
+> The end result is roughly the same, but it's a lot less churn, and it's
+> more likely for new callers to get it right, because they have to go the
+> extra mile to ignore the error. I say "roughly" because it treats cases
+> we missed as "die", whereas yours leaves them as "ignore". I find it
+> highly unlikely that any of them actually _want_ the ignore behavior,
+> though.
 
-> On 29 Jan 2016, at 19:20, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> larsxschneider@gmail.com writes:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> If the clean/smudge command of a Git filter driver (filter.<driver>.smudge and
->> filter.<driver>.clean) is set to an empty string ("") and the filter driver is
->> not required (filter.<driver>.required=false) then Git will run successfully.
->> However, Git will print an error for every file that is affected by the filter.
->> 
->> Teach Git to consider an empty clean/smudge filter as legitimately disabled
->> and do not print an error message if the filter is not required.
->> 
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> convert.c             |  2 +-
->> t/t0021-conversion.sh | 16 ++++++++++++++++
->> 2 files changed, 17 insertions(+), 1 deletion(-)
->> 
->> diff --git a/convert.c b/convert.c
->> index 814e814..02d5f1e 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -395,7 +395,7 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
->>    struct async async;
->>    struct filter_params params;
->> 
->> -    if (!cmd)
->> +    if (!cmd || !*cmd)
->>        return 0;
-> 
-> This is certainly simpler than v1.  I was initially worried about
-> the fact that slightly changes the semantics around the "required"
-> variable relative to v1, which said:
-> 
->    if (ca.drv && ca.drv->clean && *ca.drv->clean) {
->            filter = ca.drv->clean;
->                required = ca.drv->required;
->    }
->    ret |= apply_filter(path, src, len, -1, dst, filter);
->        if (!ret && required)
->            die;
-> 
-> but in v2, this part of the code is just as before, i.e.
-> 
->    if (ca.drv) {
->            filter = ca.drv->clean;
->                required = ca.drv->required;
->    }
->    ret |= apply_filter(path, src, len, -1, dst, filter);
->        if (!ret && required)
->            die;
-> 
-> So unlike v1, 'required' is set to true in the function, which is a
-> good thing, but because in v2, apply_filter knows that an extrernal
-> filter command that is an empty string is a no-op success, the above
-> codepath behaves identically to v1 when observed from outside, i.e.
-> "an empty string given as clean/smudge filter is a no-op success".
-> 
-> Good.
-> 
-> By the way, I find it somewhat annoying to see "legitimately" twice
-> in the log message.  It makes it sound like there are legitimate way
-> and not-so-kosher way to disable the filters.  Perhaps something
-> like this instead?
-> 
-> -- >8 --
-> convert: treat an empty string for clean/smudge filters as "cat"
-> 
-> Once a lower-priority configuration file defines a clean or smudge
-> filter, there is no convenient way to override it.  Even though the
-> configuration mechanism implements "the last one wins" semantics,
-> you cannot set them to an empty string and expect them to work, as
-> apply_filter() would try to run the empty string as an external
-> command and fail.  The conversion is not done, but the function
-> would still report a failure to convert.
-> 
-> Even though resetting the variable to "cat" (i.e. pass the data back
-> as-is and report success) is an obvious and a viable way to solve
-> this, it is wasteful to spawn an external process just as a
-> workaround.
-> 
-> Instead, teach apply_filter() to treat an empty string given as a
-> filter means the input must be returned as-is without conversion,
-> and the operation must always succeed.
-> -- >8 --
+Yes, I like this approach better.  It admittedly is more risky in
+that it would die if the conversion missed a case that should
+ignore, but I suspect that such a breakage would be found rather
+quickly (and the one that goes latent are the ones that do not
+matter in practice because people would not encounter them).
 
-That reads perfect. I am sorry that I caused so much work for you with this patch. 
+> I'm just pondering, though. I don't find the "or_die" variant bad at
+> all, so if you really prefer it, I don't mind.
+>
+> Just to get a sense of what the reverse would look like, I worked up the
+> patch below (which compiles but does not link, as I did not actually
+> implement the "gently" form). Some error-checking call-sites are
+> converted to the "die" form, because that's essentially what happens
+> anyway (and I'd venture to say that the config code can provide a much
+> better error message).
 
-I really appreciate your editing as this helps me to improve my commit message writing skills!
-
-Thanks,
-Lars
-
-> 
->> 
->>    if (!dst)
->> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
->> index 718efa0..7bac2bc 100755
->> --- a/t/t0021-conversion.sh
->> +++ b/t/t0021-conversion.sh
->> @@ -252,4 +252,20 @@ test_expect_success "filter: smudge empty file" '
->>    test_cmp expected filtered-empty-in-repo
->> '
->> 
->> +test_expect_success 'disable filter with empty override' '
->> +    test_config_global filter.disable.smudge false &&
->> +    test_config_global filter.disable.clean false &&
->> +    test_config filter.disable.smudge false &&
->> +    test_config filter.disable.clean false &&
->> +
->> +    echo "*.disable filter=disable" >.gitattributes &&
->> +
->> +    echo test >test.disable &&
->> +    git -c filter.disable.clean= add test.disable 2>err &&
->> +    test_must_be_empty err &&
->> +    rm -f test.disable &&
->> +    git -c filter.disable.smudge= checkout -- test.disable 2>err &&
->> +    test_must_be_empty err
->> +'
->> +
->> test_done
+This variant certainly looks nicer to me, for the reasons give above.
