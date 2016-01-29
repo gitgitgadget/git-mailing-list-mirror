@@ -1,77 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] attempt connects in parallel for IPv6-capable builds
-Date: Thu, 28 Jan 2016 19:04:34 -0800
-Message-ID: <xmqqtwlxjdbx.fsf@gitster.mtv.corp.google.com>
-References: <20160128115720.GA1827@dcvr.yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jan 29 04:04:44 2016
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] blame: display a more helpful error message if the file was deleted
+Date: Thu, 28 Jan 2016 20:09:31 -0700
+Message-ID: <1454036971-26287-1-git-send-email-alexhenrie24@gmail.com>
+Cc: Alex Henrie <alexhenrie24@gmail.com>
+To: tklauser@distanz.ch, gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 29 04:10:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aOzMY-0002lT-AM
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 04:04:42 +0100
+	id 1aOzRp-0000LI-2Y
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 04:10:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbcA2DEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Jan 2016 22:04:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50288 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751912AbcA2DEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jan 2016 22:04:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8AAD53FF72;
-	Thu, 28 Jan 2016 22:04:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YGVX32dRTx0wZwRZl5FJgnneCKE=; b=akgKMp
-	IghfHzNgoupKbCui3tZU1zdw965lG0w+1kncUquV8+fqwVeKzXfcwn/P6qmknL4d
-	l6EFmclkpERKMXsAmrptkTCXFZS9ZO6cMyPJdv5PdwP/xZ9wdQUFhKXwR7ryADxN
-	yuvg5hWgQ1/F6xwypahFKGOtolVjpxlDL5Bzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VSZ9yk39xm0zdSlQb0o/IshQbXg16X4W
-	jb2UT+RPdyM82DZSu6As8sRzGpHZk9BMRgtNMJNeRrVHVcOd84lg8wlKEkIhTRSX
-	BMSeicgVdag9JkSPumIPwf7WdROgAiHwz7oZYeoFhokMn5aanXYNaCYx/hFMvQa6
-	1NR30Kzy3UY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 822B93FF71;
-	Thu, 28 Jan 2016 22:04:36 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F23FC3FF6F;
-	Thu, 28 Jan 2016 22:04:35 -0500 (EST)
-In-Reply-To: <20160128115720.GA1827@dcvr.yhbt.net> (Eric Wong's message of
-	"Thu, 28 Jan 2016 11:57:21 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0724ADE4-C635-11E5-A84F-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751385AbcA2DJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Jan 2016 22:09:39 -0500
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:35369 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751228AbcA2DJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jan 2016 22:09:38 -0500
+Received: by mail-ob0-f170.google.com with SMTP id ny8so31290345obc.2
+        for <git@vger.kernel.org>; Thu, 28 Jan 2016 19:09:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=UVr2m1GD191nIB2NXCrAprinYvuTbNHKEMZZyt6Mr+o=;
+        b=VfL2986ZIcx7RpuPMAJviZjKlCCOdYo0UcqJpzOrrM75gIBhqvV209rKVcyzcKzI/S
+         gnZKUtay+iZApJ80UGUG5I6IZ7qI4QFLTUQiMbApVcFzil/GINXHV4YcGiygXq8sP4q1
+         3nI7TgWyjs8dYpGkG7LKlpfod6Ii+zgdgoRLC/G3o5xC5WGn12wiRAedDiHoCUKY76qj
+         aNiAfiuccvUhaJ3FeGxyHxqjZDbOmLEisnFzDYg8u/Fm+DLzmIm1OFOnZGY4ZzYRyGCm
+         fHnSE5Lcjt0WjvAiOq2/aE8IUoDgtTMBJBposHc5JJT7kPKOloAAJiLhM4GF+hdEUhY/
+         NDbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UVr2m1GD191nIB2NXCrAprinYvuTbNHKEMZZyt6Mr+o=;
+        b=DjWQurpNquGPWkv/LaEC1VD3uN/ykgB4AzZX0B7o/13MScnG5vLwFc2Bj3d2YTu3b5
+         YG0PwI8zhvoMXH0CQiY5frY4sGuOlZq/E0nSdIQ+P5CY02KC6+T8HWltNsR70mzn6ZVS
+         si4mvwjwprAfdO7DP/uQ7EIdGB1/ss6rqtV2UpAq2tD8RtnNCcOwl/yM38zwjgyqxncm
+         QEcrMAMYgV7eKTUKZdKjBzCDTkue6+QAZw7JpEutz5L+lYP/I2LaqW7FCwT6svXfzgKa
+         EsoEJsmnWQwRvxSPEzx1bRyn3MKWD55416kIL9w9hj7g2r0GHzVGakpRI6U57n7dbAx4
+         GyeQ==
+X-Gm-Message-State: AG10YORGtG83BIEuLejXrJQnE7t3mQnpIn/M7+CRDYbmN5iY82lbg4KxjV3xJT2A1BQoRQ==
+X-Received: by 10.60.134.202 with SMTP id pm10mr4782045oeb.50.1454036978123;
+        Thu, 28 Jan 2016 19:09:38 -0800 (PST)
+Received: from alex-wolverine.localdomain ([50.141.67.5])
+        by smtp.gmail.com with ESMTPSA id px4sm7069527oec.7.2016.01.28.19.09.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 28 Jan 2016 19:09:37 -0800 (PST)
+X-Mailer: git-send-email 2.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285055>
 
-Eric Wong <normalperson@yhbt.net> writes:
+`git blame 22414770 generate-cmdlist.perl` currently results in:
+    fatal: cannot stat path '22414770': No such file or directory
 
-> getaddrinfo() may return multiple addresses, not all of which
-> are equally performant.  In some cases, a user behind a non-IPv6
-> capable network may get an IPv6 address which stalls connect().
+This patch changes the error message to:
+    fatal: ambiguous argument 'generate-cmdlist.perl': unknown revision
+    or path not in the working tree.
+    Use '--' to separate paths from revisions, like this:
+    'git <command> [<revision>...] -- [<file>...]'"
 
-I'd assume that you are not solving a hypothetical problem, but you
-may (at least sometimes) have to reach outside world from such a
-network environment.  I further assume that git_tcp_connect() is not
-the only activity you do from such a network, and other network
-activities are similarly affected.
+That way, the user knows to rewrite the command as
+`git blame 22414770 -- generate-cmdlist.perl`.
 
-How do you work around the same issue for connections that do not go
-through git_tcp_connect()?  The same issue would affect Git traffic
-going over git-remote-curl, and also your usual Web browser traffic,
-no?
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ builtin/blame.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-What I am getting at is if it is saner to solve the issue like how
-curl(1) solves it with its -4/-6 command line options, e.g. by
-adding a pair of configuration variables "net.ipv[46] = true/false".
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 55bf5fa..9461a73 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2704,8 +2704,6 @@ parse_done:
+ 		argv[argc - 1] = "--";
+ 
+ 		setup_work_tree();
+-		if (!file_exists(path))
+-			die_errno("cannot stat path '%s'", path);
+ 	}
+ 
+ 	revs.disable_stdin = 1;
+-- 
+2.7.0
