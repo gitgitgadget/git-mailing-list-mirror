@@ -1,268 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/9] Handle errors when setting configs
-Date: Fri, 29 Jan 2016 03:20:36 -0500
-Message-ID: <20160129082036.GA8591@sigill.intra.peff.net>
-References: <1453971637-22273-1-git-send-email-ps@pks.im>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-X-From: git-owner@vger.kernel.org Fri Jan 29 09:20:48 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH v2] convert: legitimately disable clean/smudge filter with an empty override
+Date: Fri, 29 Jan 2016 09:21:36 +0100
+Message-ID: <1454055697-6742-1-git-send-email-larsxschneider@gmail.com>
+Cc: tboegi@web.de, sunshine@sunshineco.com, peff@peff.net,
+	gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 29 09:21:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aP4IO-0007DG-1v
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 09:20:44 +0100
+	id 1aP4JO-0008BC-Fi
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Jan 2016 09:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753677AbcA2IUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Jan 2016 03:20:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34188 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751944AbcA2IUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jan 2016 03:20:39 -0500
-Received: (qmail 7307 invoked by uid 102); 29 Jan 2016 08:20:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jan 2016 03:20:39 -0500
-Received: (qmail 28947 invoked by uid 107); 29 Jan 2016 08:21:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jan 2016 03:21:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jan 2016 03:20:36 -0500
-Content-Disposition: inline
-In-Reply-To: <1453971637-22273-1-git-send-email-ps@pks.im>
+	id S1753844AbcA2IVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Jan 2016 03:21:41 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33259 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192AbcA2IVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jan 2016 03:21:40 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r129so8377862wmr.0
+        for <git@vger.kernel.org>; Fri, 29 Jan 2016 00:21:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=cqgL7SH3i+liOQouLvNLUTR67sD4T1yHd7Ee4tCrA/0=;
+        b=PmdA+SGjF4gdTjopvetSkBx61RGHmX6tuQrumahi9tsI/7SE2uS1tItxgZm1qzIyFS
+         pNRYKOVfrMFshn/Cql2kag7MKvBfsH3N6KZJLpLFbNJn+2Pe80p1+DbrjHOfvOV7vbUm
+         tLyM+9GuC+2XgVutVMpXB/zAiZxApiQ+pOXi2DTWKy9KnYXyz8Lz9uhCQVD+JW2yx8E/
+         IsSQNDR4RoRYkf/aHDZodq81ajAFHFrI+Wp6eiHzPLI6Si5Uu/BlFov/gf68OIwbG+pS
+         5Q1paTZSyLaevzRqxmy4v0TB/Y5+luPL6Wo4F+14JbpgXFIjXMHS70g0a53TbgnU7Q9S
+         qDAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=cqgL7SH3i+liOQouLvNLUTR67sD4T1yHd7Ee4tCrA/0=;
+        b=YfnkQ5ayCBhm2L2/PlOl1lOCSWfwFHMSXb074VbPwPsSzpcqUFECsmgrucf+F0YXD1
+         gn0dSRyhk0uIGi72CR4K8wWbf0YkVcSUPEc4dyRaI/TU4is3gZ2ImvPt76AinJzlcobZ
+         rureUrGugMwZNcVRQnE0t7oKoVCnHbdb+276ExV+sj1Qk+LRYUCmiKIBgRKhzPGUvPWF
+         FQvWhtDFjdA1RywwBkbPaOydXiCHn1HEb0970gEcr4YWQzXYgA9d1l01mC+ZOI26hJaK
+         XUh8MXzZxMQgXnH9S7U+DkC5yQehKc6KfwEQIqFUWl1lEG4SCKv/LMxoVPXghXNzzcYH
+         ngcA==
+X-Gm-Message-State: AG10YORZD2i3NAQzQg7I6O6wa66hXZjkjw+2R1japYiZVHYeFBy1UocRqooMe6THhmF3Cg==
+X-Received: by 10.28.45.151 with SMTP id t145mr7929322wmt.88.1454055699844;
+        Fri, 29 Jan 2016 00:21:39 -0800 (PST)
+Received: from slxBook3.fritz.box (p508BA916.dip0.t-ipconnect.de. [80.139.169.22])
+        by smtp.gmail.com with ESMTPSA id i5sm14457681wja.23.2016.01.29.00.21.38
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 29 Jan 2016 00:21:38 -0800 (PST)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285071>
 
-On Thu, Jan 28, 2016 at 10:00:28AM +0100, Patrick Steinhardt wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> I've finally got around to producing version two of my previous
-> patch to handle errors when setting configs. Back in September
-> I've posted a single patch to handle errors when
-> `install_branch_config` fails due to configuration failures [1].
+diff to v1:
+* improve commit message (Thanks Junio & Torsten)
+* check for empty filter strings in apply_filter to catch all use cases (Thanks Peff)
+* use more idiomatic style to check for an empty string (Thanks Eric)
+* use test_config/test_config_global to set configs (Thanks Eric)
+* use test_must_be_empty to check for empty err file (Thanks Eric)
 
-Thanks for following up.
+Cheers,
+Lars
 
-Having read through the series, I don't see anything _too_ wrong with
-it. And certainly catching these errors and dying is better than letting
-them go unnoticed.
 
-Regarding this:
+Lars Schneider (1):
+  convert: legitimately disable clean/smudge filter with an empty
+    override
 
-> Version two of this patch is somewhat more involved in that I
-> tried to track down all relevant places where we set configs
-> without checking for error conditions. My current approach to
-> most of those cases is to just die with an error message, this
-> remains up to discussion though for the individual cases.
+ convert.c             |  2 +-
+ t/t0021-conversion.sh | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-I was a little surprised to see all of the effort in patch 2 to carry
-the return value up the call stack, just to die a little later. Having
-re-read our original thread, I did say that possibly "checkout -b"
-should not directly die when failing to set the upstream. But looking at
-the code again and thinking on it more, I don't really think that buys
-us anything interesting (unless it is to roll back the branch creation,
-but as before, I don't think it's really worth the effort).
-
-So I wondered if patch 2 could simply use the "or_die" variant.
-
-Which then made me wonder: doesn't basically everybody want to die if
-setting config fails? The exception might be builtin/config.c, just
-because it wants to return a custom exit code for some errors.
-
-So would this series be a lot more pleasant if we went the other way?
-That is, make git_config_set() die by default, and add a "_gently" form.
-
-The end result is roughly the same, but it's a lot less churn, and it's
-more likely for new callers to get it right, because they have to go the
-extra mile to ignore the error. I say "roughly" because it treats cases
-we missed as "die", whereas yours leaves them as "ignore". I find it
-highly unlikely that any of them actually _want_ the ignore behavior,
-though.
-
-I'm just pondering, though. I don't find the "or_die" variant bad at
-all, so if you really prefer it, I don't mind.
-
-Just to get a sense of what the reverse would look like, I worked up the
-patch below (which compiles but does not link, as I did not actually
-implement the "gently" form). Some error-checking call-sites are
-converted to the "die" form, because that's essentially what happens
-anyway (and I'd venture to say that the config code can provide a much
-better error message).
-
----
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 3f6c825..4ab8b35 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -570,7 +570,6 @@ static const char edit_description[] = "BRANCH_DESCRIPTION";
- 
- static int edit_branch_description(const char *branch_name)
- {
--	int status;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf name = STRBUF_INIT;
- 
-@@ -595,11 +594,10 @@ static int edit_branch_description(const char *branch_name)
- 	strbuf_stripspace(&buf, 1);
- 
- 	strbuf_addf(&name, "branch.%s.description", branch_name);
--	status = git_config_set(name.buf, buf.len ? buf.buf : NULL);
-+	git_config_set(name.buf, buf.len ? buf.buf : NULL);
- 	strbuf_release(&name);
- 	strbuf_release(&buf);
--
--	return status;
-+	return 0;
- }
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
-diff --git a/builtin/config.c b/builtin/config.c
-index adc7727..2e6fd3c 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -582,7 +582,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
--		ret = git_config_set_in_file(given_config_source.file, argv[0], value);
-+		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
- 		if (ret == CONFIG_NOTHING_SET)
- 			error("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
-@@ -637,7 +637,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			return git_config_set_multivar_in_file(given_config_source.file,
- 							       argv[0], NULL, argv[1], 0);
- 		else
--			return git_config_set_in_file(given_config_source.file,
-+			return git_config_set_in_file_gently(given_config_source.file,
- 						      argv[0], NULL);
- 	}
- 	else if (actions == ACTION_UNSET_ALL) {
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 2b2ff9b..0f69c30 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -197,8 +197,7 @@ static int add(int argc, const char **argv)
- 		die(_("'%s' is not a valid remote name"), name);
- 
- 	strbuf_addf(&buf, "remote.%s.url", name);
--	if (git_config_set(buf.buf, url))
--		return 1;
-+	git_config_set(buf.buf, url);
- 
- 	if (!mirror || mirror & MIRROR_FETCH) {
- 		strbuf_reset(&buf);
-@@ -215,16 +214,14 @@ static int add(int argc, const char **argv)
- 	if (mirror & MIRROR_PUSH) {
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "remote.%s.mirror", name);
--		if (git_config_set(buf.buf, "true"))
--			return 1;
-+		git_config_set(buf.buf, "true");
- 	}
- 
- 	if (fetch_tags != TAGS_DEFAULT) {
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "remote.%s.tagopt", name);
--		if (git_config_set(buf.buf,
--			fetch_tags == TAGS_SET ? "--tags" : "--no-tags"))
--			return 1;
-+		git_config_set(buf.buf,
-+		       fetch_tags == TAGS_SET ? "--tags" : "--no-tags");
- 	}
- 
- 	if (fetch && fetch_remote(name))
-@@ -689,9 +686,7 @@ static int mv(int argc, const char **argv)
- 		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
--			if (git_config_set(buf.buf, rename.new)) {
--				return error(_("Could not set '%s'"), buf.buf);
--			}
-+			git_config_set(buf.buf, rename.new);
- 		}
- 	}
- 
-@@ -789,10 +784,7 @@ static int rm(int argc, const char **argv)
- 				strbuf_reset(&buf);
- 				strbuf_addf(&buf, "branch.%s.%s",
- 						item->string, *k);
--				if (git_config_set(buf.buf, NULL)) {
--					strbuf_release(&buf);
--					return -1;
--				}
-+				git_config_set(buf.buf, NULL);
- 			}
- 		}
- 	}
-diff --git a/cache.h b/cache.h
-index dfc459c..a1c7782 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1507,8 +1507,9 @@ extern int git_config_bool(const char *, const char *);
- extern int git_config_maybe_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
--extern int git_config_set_in_file(const char *, const char *, const char *);
--extern int git_config_set(const char *, const char *);
-+extern void git_config_set_in_file(const char *, const char *, const char *);
-+extern int git_config_set_in_file_gently(const char *, const char *, const char *);
-+extern void git_config_set(const char *, const char *);
- extern int git_config_parse_key(const char *, char **, int *);
- extern int git_config_key_is_valid(const char *key);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
-diff --git a/config.c b/config.c
-index 86a5eb2..54c3f30 100644
---- a/config.c
-+++ b/config.c
-@@ -1825,15 +1825,15 @@ contline:
- 	return offset;
- }
- 
--int git_config_set_in_file(const char *config_filename,
-+void git_config_set_in_file(const char *config_filename,
- 			const char *key, const char *value)
- {
--	return git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
-+	git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
- }
- 
--int git_config_set(const char *key, const char *value)
-+void git_config_set(const char *key, const char *value)
- {
--	return git_config_set_multivar(key, value, NULL, 0);
-+	git_config_set_multivar(key, value, NULL, 0);
- }
- 
- /*
-diff --git a/submodule.c b/submodule.c
-index b83939c..b3fc6ac 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -69,7 +69,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	strbuf_addstr(&entry, "submodule.");
- 	strbuf_addstr(&entry, submodule->name);
- 	strbuf_addstr(&entry, ".path");
--	if (git_config_set_in_file(".gitmodules", entry.buf, newpath) < 0) {
-+	if (git_config_set_in_file_gently(".gitmodules", entry.buf, newpath) < 0) {
- 		/* Maybe the user already did that, don't error out here */
- 		warning(_("Could not update .gitmodules entry %s"), entry.buf);
- 		strbuf_release(&entry);
-@@ -1087,11 +1087,9 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
- 	/* Update core.worktree setting */
- 	strbuf_reset(&file_name);
- 	strbuf_addf(&file_name, "%s/config", git_dir);
--	if (git_config_set_in_file(file_name.buf, "core.worktree",
--				   relative_path(real_work_tree, git_dir,
--						 &rel_path)))
--		die(_("Could not set core.worktree in %s"),
--		    file_name.buf);
-+	git_config_set_in_file(file_name.buf, "core.worktree",
-+			       relative_path(real_work_tree, git_dir,
-+					     &rel_path));
- 
- 	strbuf_release(&file_name);
- 	strbuf_release(&rel_path);
+--
+2.5.1
