@@ -1,171 +1,79 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH v2] pass transport verbosity down to git_connect
-Date: Sat, 30 Jan 2016 08:50:56 +0000
-Message-ID: <20160130085056.GA20118@dcvr.yhbt.net>
-References: <20160128225123.GA20045@dcvr.yhbt.net>
- <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: fast-import fails in read-only tree
+Date: Sat, 30 Jan 2016 10:05:45 +0100
+Message-ID: <m2oac31lp2.fsf@linux-m68k.org>
+References: <jwvfuxhz72e.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+	<20160129060802.GA23106@sigill.intra.peff.net>
+	<jwv7fisxyhz.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+	<20160130051340.GA1677@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 09:51:37 2016
+Content-Type: text/plain
+Cc: Stefan Monnier <monnier@iro.umontreal.ca>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 30 10:06:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPRFH-0000Fm-OA
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 09:51:04 +0100
+	id 1aPRUG-0000ML-8z
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 10:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947AbcA3Iu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2016 03:50:58 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:50897 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752278AbcA3Iu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2016 03:50:57 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A41BA63380A;
-	Sat, 30 Jan 2016 08:50:56 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
+	id S1752818AbcA3JF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 04:05:58 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:48420 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752001AbcA3JFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 04:05:54 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3psqQ80gqLz3hjhT;
+	Sat, 30 Jan 2016 10:05:51 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3psqQ644TGzvh2G;
+	Sat, 30 Jan 2016 10:05:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id awowKoRp4bFt; Sat, 30 Jan 2016 10:05:49 +0100 (CET)
+X-Auth-Info: 2ENdbxwW2jw8AOYYdvA8YHqrnbL2JbnQJHvhc59EUiFz7FoONtoE/5wXdbcxdcZs
+Received: from linux.local (host-188-174-209-95.customer.m-online.net [188.174.209.95])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sat, 30 Jan 2016 10:05:49 +0100 (CET)
+Received: by linux.local (Postfix, from userid 501)
+	id 482541E5462; Sat, 30 Jan 2016 10:05:45 +0100 (CET)
+X-Yow: Content:  80% POLYESTER, 20% DACRON..  The waitress's
+ UNIFORM sheds TARTAR SAUCE like an 8'' by 10'' GLOSSY..
+In-Reply-To: <20160130051340.GA1677@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 30 Jan 2016 00:13:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285108>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Nice.  Can we demonstrate and protect this fix with simple tests?
+Jeff King <peff@peff.net> writes:
 
-I just added the tests to t5570 since we don't use git://
-much in the tests and I didn't want to introduce potential
-port conflicts.
+> If you're really going to do a lot of interactive back-and-forth access
+> of objects, though, I think you want to set up pipes to cat-file. It's a
+> little tedious to allocate fifos, but something like:
 
-----------------8<----------------
-Subject: [PATCH] pass transport verbosity down to git_connect
+With bash's coproc it's a bit less tedious:
 
-While working in connect.c to perform non-blocking connections,
-I noticed calling "git fetch -v" was not causing the progress
-messages inside git_tcp_connect_sock to be emitted as I
-expected.
+>   mkfifo in out
+>   (exec git cat-file --batch <in >out) &
+>   exec 8>in
+>   exec 9<out
+>   echo $sha >&8
+>   read mode type size <&9
 
-Looking at history, it seems connect_setup has never been called
-with the verbose parameter.  Since transport already has a
-"verbose" field, use that field instead of another parameter
-in connect_setup.
+    coproc CAT_FILE git cat-file --batch
+    echo $sha >&${CAT_FILE[1]}
+    read mode type size <&${CAT_FILE[0]}
 
-v2: add "-v" tests for clone/fetch/pull to t5570-git-daemon.sh
+Andreas.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/t5570-git-daemon.sh | 25 +++++++++++++++++++++++--
- transport.c           | 11 ++++++-----
- 2 files changed, 29 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index b7e2832..678c8ba 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -6,6 +6,13 @@ test_description='test fetching over git protocol'
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
- start_git_daemon
- 
-+check_verbose_connect () {
-+	grep -qF "Looking up 127.0.0.1 ..." stderr &&
-+	grep -qF "Connecting to 127.0.0.1 (port " stderr &&
-+	grep -qF "done." stderr &&
-+	rm stderr
-+}
-+
- test_expect_success 'setup repository' '
- 	git config push.default matching &&
- 	echo content >file &&
-@@ -24,18 +31,32 @@ test_expect_success 'create git-accessible bare repository' '
- '
- 
- test_expect_success 'clone git repository' '
--	git clone "$GIT_DAEMON_URL/repo.git" clone &&
-+	git clone -v "$GIT_DAEMON_URL/repo.git" clone 2>stderr &&
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'clone -v stderr is as expected' check_verbose_connect
-+
- test_expect_success 'fetch changes via git protocol' '
- 	echo content >>file &&
- 	git commit -a -m two &&
- 	git push public &&
--	(cd clone && git pull) &&
-+	(cd clone && git pull -v) 2>stderr &&
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'pull -v stderr is as expected' check_verbose_connect
-+
-+test_expect_success 'no-op fetch -v stderr is as expected' '
-+	(cd clone && git fetch -v) 2>stderr &&
-+	check_verbose_connect
-+'
-+
-+test_expect_success 'no-op fetch without "-v" is quiet' '
-+	(cd clone && git fetch) 2>stderr &&
-+	! test -s stderr
-+'
-+
- test_expect_success 'remote detects correct HEAD' '
- 	git push public master:other &&
- 	(cd clone &&
-diff --git a/transport.c b/transport.c
-index 67f3666..9ae7184 100644
---- a/transport.c
-+++ b/transport.c
-@@ -481,9 +481,10 @@ static int set_git_option(struct git_transport_options *opts,
- 	return 1;
- }
- 
--static int connect_setup(struct transport *transport, int for_push, int verbose)
-+static int connect_setup(struct transport *transport, int for_push)
- {
- 	struct git_transport_data *data = transport->data;
-+	int flags = transport->verbose > 0 ? CONNECT_VERBOSE : 0;
- 
- 	if (data->conn)
- 		return 0;
-@@ -491,7 +492,7 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
- 	data->conn = git_connect(data->fd, transport->url,
- 				 for_push ? data->options.receivepack :
- 				 data->options.uploadpack,
--				 verbose ? CONNECT_VERBOSE : 0);
-+				 flags);
- 
- 	return 0;
- }
-@@ -501,7 +502,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs;
- 
--	connect_setup(transport, for_push, 0);
-+	connect_setup(transport, for_push);
- 	get_remote_heads(data->fd[0], NULL, 0, &refs,
- 			 for_push ? REF_NORMAL : 0,
- 			 &data->extra_have,
-@@ -536,7 +537,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.update_shallow = data->options.update_shallow;
- 
- 	if (!data->got_remote_heads) {
--		connect_setup(transport, 0, 0);
-+		connect_setup(transport, 0);
- 		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
- 				 NULL, &data->shallow);
- 		data->got_remote_heads = 1;
-@@ -812,7 +813,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 
- 	if (!data->got_remote_heads) {
- 		struct ref *tmp_refs;
--		connect_setup(transport, 1, 0);
-+		connect_setup(transport, 1);
- 
- 		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
- 				 NULL, &data->shallow);
 -- 
-EW
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
