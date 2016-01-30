@@ -1,63 +1,55 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v3 5/6] config: select .git/common/config with --repo
-Date: Sun, 31 Jan 2016 00:10:10 +0200
-Message-ID: <20160130221010.GD4978@wheezy.local>
-References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-6-git-send-email-pclouds@gmail.com>
+From: Moritz Neeb <lists@moritzneeb.de>
+Subject: Re: Replacing strbuf_getline_lf() by strbuf_getline() in wt-status.c
+Date: Sat, 30 Jan 2016 23:49:13 +0100
+Message-ID: <56AD3DE9.2000004@moritzneeb.de>
+References: <56ACC916.8020008@moritzneeb.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	max@max630.net, git@drmicha.warpmail.net, Jens.Lehmann@web.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 23:11:00 2016
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 30 23:49:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPdjN-0004ax-8R
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 23:10:57 +0100
+	id 1aPeL5-0004ZD-5D
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 23:49:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756299AbcA3WKP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Jan 2016 17:10:15 -0500
-Received: from p3plsmtpa07-10.prod.phx3.secureserver.net ([173.201.192.239]:45894
-	"EHLO p3plsmtpa07-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754112AbcA3WKO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2016 17:10:14 -0500
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa07-10.prod.phx3.secureserver.net with 
-	id CNA81s00A5B68XE01NABdz; Sat, 30 Jan 2016 15:10:13 -0700
-Content-Disposition: inline
-In-Reply-To: <1453808685-21235-6-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756480AbcA3WtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 17:49:16 -0500
+Received: from moritzneeb.de ([78.47.1.106]:48605 "EHLO moritzneeb.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756299AbcA3WtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 17:49:15 -0500
+Received: from [192.168.1.11] (x4db33e5e.dyn.telefonica.de [77.179.62.94])
+	by moritzneeb.de (Postfix) with ESMTPSA id 5E5FE1C049
+	for <git@vger.kernel.org>; Sat, 30 Jan 2016 23:49:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
+	s=mail; t=1454194154;
+	bh=/8RwVYs5Lopu1vU7YgyMAtOFZqKE1dst4Myp/lMcUP0=;
+	h=Subject:To:References:From:Date:In-Reply-To:From;
+	b=lvBoNcH/xLN8PY/xZ2SPSLIJMXfXE0YBfkbR/CJAGq0FaED6ADxRQ1uRwA7pr5n/y
+	 6YYtHm3DweZ3lMvE5X7veuxNTt8Fz7AztvOroybWjE6IcVJCTr3dadKH6WgQs9pKxT
+	 UaVbsoo0TnInXDncORZK0Zb42eLPoV8KBf+/i7yY=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <56ACC916.8020008@moritzneeb.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285129>
 
-On Tue, Jan 26, 2016 at 06:44:44PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
-> This new option allows the user to write to or read from
-> .git/common/config in worktree v1. In worktree v0, --repo is an alias
-> of --local.
+On 01/30/2016 03:30 PM, Moritz Neeb wrote:
+> Currently I am working on replacing strbuf_getline_lf() by
+> strbuf_getline() in places where the input is trimmed immediately after
+> reading, cf. $gmane/284104, "Notes on the remaining strbuf_getline_lf()
+> callers", 2nd point.
 
-Looks like by default a value is always set in a local
-config, which might be dangerous for remote.* or gc.*
-parameters, for example. I think that even if reading is
-done uniformly setting could depend on the actual variable
-being set if no location specified.
+This thread turned obsolete, as I decided to post a patch to focus the
+discussion a bit more:
 
->  	if (use_global_config + use_system_config + use_local_config +
-> -	    !!given_config_source.file + !!given_config_source.blob > 1) {
-> +	    !!given_config_source.file + !!given_config_source.blob > 1 +
-> +	    use_repo_config) {
->  		error("only one config file at a time.");
+    http://thread.gmane.org/gmane.comp.version-control.git/285118
 
-Shouldn't "+ use_repo_config" do here to the left part of
-comparison?
-
---=20
-Max
+-Moritz
