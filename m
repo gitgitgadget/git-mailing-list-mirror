@@ -1,95 +1,171 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] travis-ci: run previously failed tests first, then
- slowest to fastest
-Date: Sat, 30 Jan 2016 09:13:06 +0100
-Message-ID: <20160130081306.GA2931@ecki.hitronhub.home>
-References: <xmqqd1sqd9sq.fsf@gitster.mtv.corp.google.com>
- <xmqq8u3ed45r.fsf@gitster.mtv.corp.google.com>
- <20160125144250.GM7100@hank>
- <xmqqk2mxa7ug.fsf@gitster.mtv.corp.google.com>
- <xmqqegd5fht9.fsf@gitster.mtv.corp.google.com>
- <20160127151602.GA1690@ecki.hitronhub.home>
- <xmqqd1sm9730.fsf@gitster.mtv.corp.google.com>
- <xmqqmvrq7nok.fsf@gitster.mtv.corp.google.com>
- <20160128070959.GA6815@ecki.hitronhub.home>
- <xmqqk2mtmlu9.fsf@gitster.mtv.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH v2] pass transport verbosity down to git_connect
+Date: Sat, 30 Jan 2016 08:50:56 +0000
+Message-ID: <20160130085056.GA20118@dcvr.yhbt.net>
+References: <20160128225123.GA20045@dcvr.yhbt.net>
+ <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, Jeff King <peff@peff.net>,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 09:16:43 2016
+X-From: git-owner@vger.kernel.org Sat Jan 30 09:51:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPQi1-0006W3-4y
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 09:16:41 +0100
+	id 1aPRFH-0000Fm-OA
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 09:51:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbcA3IP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2016 03:15:57 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:37361 "EHLO bsmtp8.bon.at"
+	id S1752947AbcA3Iu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 03:50:58 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:50897 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752114AbcA3IP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2016 03:15:56 -0500
-Received: from [127.0.0.1] (ip5f5ade73.dynamic.kabel-deutschland.de [95.90.222.115])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pspJK2fggz5tlG;
-	Sat, 30 Jan 2016 09:15:45 +0100 (CET)
+	id S1752278AbcA3Iu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 03:50:57 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id A41BA63380A;
+	Sat, 30 Jan 2016 08:50:56 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <xmqqk2mtmlu9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285107>
 
-On Thu, Jan 28, 2016 at 01:32:30PM -0800, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> 
-> > If we do this, then git diff should show the diff between
-> > convert_to_worktree(index state) and the worktree state.
-> 
-> And that unfortunately is a very good reason why this approach
-> should not be taken.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Nice.  Can we demonstrate and protect this fix with simple tests?
 
-Ok, then let's take a step back. I do not actually care if git diff and
-friends say the worktree is clean or not. But I know that I did not make
-any modifications to the worktree, because I just did git reset --hard.
-And now I want to use commands like cherry-pick and checkout without
-failure. But they can fail, because they essentially use git diff to
-check if there are worktree changes, and if so refuse to overwrite them.
+I just added the tests to t5570 since we don't use git://
+much in the tests and I didn't want to introduce potential
+port conflicts.
 
-So, if the check "Am I allowed to modify the worktree file?", would go
-the extra mile to also check if the worktree is clean in the sense that
-convert_to_worktree(index state) matches the worktree. If this is the
-case, then it is safe to modify the file because it is the committed
-state, and can be recovered.
+----------------8<----------------
+Subject: [PATCH] pass transport verbosity down to git_connect
 
-Regarding performance impact: We only need to do this extra check if the
-usual check convert_to_git(work tree) against index state fails, and
-conversion is in effect.
+While working in connect.c to perform non-blocking connections,
+I noticed calling "git fetch -v" was not causing the progress
+messages inside git_tcp_connect_sock to be emitted as I
+expected.
 
-> Besides, I do not think the above approach really solves the issue,
-> either.  After "git reset --hard" to have the contents in the index
-> dumped to the working tree, if your core.autocrlf is flipped,
+Looking at history, it seems connect_setup has never been called
+with the verbose parameter.  Since transport already has a
+"verbose" field, use that field instead of another parameter
+in connect_setup.
 
-Indeed, if the user configuration changes, then we cannot always detect
-this (at least if the filter is an external program, and the behavior of
-that changes). But the user is in control of that, and we can document
-this limitation.
+v2: add "-v" tests for clone/fetch/pull to t5570-git-daemon.sh
 
-On the other hand, a user who simply follows an upstream repository by
-doing git pull all the time, and who does not make changes to their
-configuration, can still run into this issue, because upstream could
-change .gitattributes. This part we could actually detect by hashing the
-attributes for each index entry, and if that changes we re-evaluate the
-file state.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ t/t5570-git-daemon.sh | 25 +++++++++++++++++++++++--
+ transport.c           | 11 ++++++-----
+ 2 files changed, 29 insertions(+), 7 deletions(-)
 
-This is also an issue only if a smudge filter is in place. The eol
-conversion which only acts in the convert_to_git direction is not
-affected.
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index b7e2832..678c8ba 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -6,6 +6,13 @@ test_description='test fetching over git protocol'
+ . "$TEST_DIRECTORY"/lib-git-daemon.sh
+ start_git_daemon
+ 
++check_verbose_connect () {
++	grep -qF "Looking up 127.0.0.1 ..." stderr &&
++	grep -qF "Connecting to 127.0.0.1 (port " stderr &&
++	grep -qF "done." stderr &&
++	rm stderr
++}
++
+ test_expect_success 'setup repository' '
+ 	git config push.default matching &&
+ 	echo content >file &&
+@@ -24,18 +31,32 @@ test_expect_success 'create git-accessible bare repository' '
+ '
+ 
+ test_expect_success 'clone git repository' '
+-	git clone "$GIT_DAEMON_URL/repo.git" clone &&
++	git clone -v "$GIT_DAEMON_URL/repo.git" clone 2>stderr &&
+ 	test_cmp file clone/file
+ '
+ 
++test_expect_success 'clone -v stderr is as expected' check_verbose_connect
++
+ test_expect_success 'fetch changes via git protocol' '
+ 	echo content >>file &&
+ 	git commit -a -m two &&
+ 	git push public &&
+-	(cd clone && git pull) &&
++	(cd clone && git pull -v) 2>stderr &&
+ 	test_cmp file clone/file
+ '
+ 
++test_expect_success 'pull -v stderr is as expected' check_verbose_connect
++
++test_expect_success 'no-op fetch -v stderr is as expected' '
++	(cd clone && git fetch -v) 2>stderr &&
++	check_verbose_connect
++'
++
++test_expect_success 'no-op fetch without "-v" is quiet' '
++	(cd clone && git fetch) 2>stderr &&
++	! test -s stderr
++'
++
+ test_expect_success 'remote detects correct HEAD' '
+ 	git push public master:other &&
+ 	(cd clone &&
+diff --git a/transport.c b/transport.c
+index 67f3666..9ae7184 100644
+--- a/transport.c
++++ b/transport.c
+@@ -481,9 +481,10 @@ static int set_git_option(struct git_transport_options *opts,
+ 	return 1;
+ }
+ 
+-static int connect_setup(struct transport *transport, int for_push, int verbose)
++static int connect_setup(struct transport *transport, int for_push)
+ {
+ 	struct git_transport_data *data = transport->data;
++	int flags = transport->verbose > 0 ? CONNECT_VERBOSE : 0;
+ 
+ 	if (data->conn)
+ 		return 0;
+@@ -491,7 +492,7 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
+ 	data->conn = git_connect(data->fd, transport->url,
+ 				 for_push ? data->options.receivepack :
+ 				 data->options.uploadpack,
+-				 verbose ? CONNECT_VERBOSE : 0);
++				 flags);
+ 
+ 	return 0;
+ }
+@@ -501,7 +502,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+ 	struct git_transport_data *data = transport->data;
+ 	struct ref *refs;
+ 
+-	connect_setup(transport, for_push, 0);
++	connect_setup(transport, for_push);
+ 	get_remote_heads(data->fd[0], NULL, 0, &refs,
+ 			 for_push ? REF_NORMAL : 0,
+ 			 &data->extra_have,
+@@ -536,7 +537,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.update_shallow = data->options.update_shallow;
+ 
+ 	if (!data->got_remote_heads) {
+-		connect_setup(transport, 0, 0);
++		connect_setup(transport, 0);
+ 		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
+ 				 NULL, &data->shallow);
+ 		data->got_remote_heads = 1;
+@@ -812,7 +813,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 
+ 	if (!data->got_remote_heads) {
+ 		struct ref *tmp_refs;
+-		connect_setup(transport, 1, 0);
++		connect_setup(transport, 1);
+ 
+ 		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
+ 				 NULL, &data->shallow);
+-- 
+EW
