@@ -1,99 +1,106 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: clones over rsync broken?
-Date: Sat, 30 Jan 2016 00:41:41 -0500
-Message-ID: <20160130054141.GB1677@sigill.intra.peff.net>
+Date: Sat, 30 Jan 2016 01:30:36 -0500
+Message-ID: <20160130063036.GC1677@sigill.intra.peff.net>
 References: <20160130051133.GA21973@dcvr.yhbt.net>
+ <20160130054141.GB1677@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Jan 30 06:41:58 2016
+X-From: git-owner@vger.kernel.org Sat Jan 30 07:31:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPOIE-0002ls-9I
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 06:41:54 +0100
+	id 1aPP44-00042v-Mr
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 07:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbcA3Flp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2016 00:41:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34752 "HELO cloud.peff.net"
+	id S1751583AbcA3Gak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 01:30:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:34758 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750981AbcA3Flo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2016 00:41:44 -0500
-Received: (qmail 15313 invoked by uid 102); 30 Jan 2016 05:41:44 -0000
+	id S1751151AbcA3Gaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 01:30:39 -0500
+Received: (qmail 18232 invoked by uid 102); 30 Jan 2016 06:30:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 30 Jan 2016 00:41:44 -0500
-Received: (qmail 6741 invoked by uid 107); 30 Jan 2016 05:42:09 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 30 Jan 2016 01:30:39 -0500
+Received: (qmail 6873 invoked by uid 107); 30 Jan 2016 06:31:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 30 Jan 2016 00:42:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Jan 2016 00:41:41 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 30 Jan 2016 01:31:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 30 Jan 2016 01:30:36 -0500
 Content-Disposition: inline
-In-Reply-To: <20160130051133.GA21973@dcvr.yhbt.net>
+In-Reply-To: <20160130054141.GB1677@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285102>
 
-On Sat, Jan 30, 2016 at 05:11:33AM +0000, Eric Wong wrote:
+On Sat, Jan 30, 2016 at 12:41:41AM -0500, Jeff King wrote:
 
-> I have not used rsync remotes in ages, but I was working on the
-> patch for -4/-6 support and decided to test it against rsync.kernel.org
-> 
-> Cloning git.git takes forever and failed with:
+> It looks like this has been broken since cd547b4 (fetch/push: readd
+> rsync support, 2007-10-01). The fix is just to ignore packed-refs
+> entries which duplicate loose ones. But given the length of time this
+> has been broken with nobody complaining, I have to wonder if it is
+> simply time to retire the rsync protocol. Even if was made to work, it
+> is a horribly inefficient protocol.
 
-No kidding. There are over 95,000 unreachable loose objects consuming a
-gigabyte. The rsync transport blindly pulls all of the data over, with
-no idea that it doesn't need most of it.
+I took a look at whether there would be an easy fix. There are three
+obvious ways to go about this:
 
-> $ git clone rsync://rsync.kernel.org/pub/scm/git/git.git
-> Checking connectivity... fatal: bad object ecdc6d8612df80e871ed34bb6c3b01b20b0b82e6
-> fatal: remote did not send all necessary objects
+  1. Use the loose/packed reading code from refs/files-backend.c.
 
-All those objects, and we still manage to miss one. :)
+     This would require some refactoring, as we currently assume we are
+     either reading the refs for _this_ repository, or for a submodule.
+     This is sort-of like reading a submodule, but I think there are a
+     few rough edges.
 
-Interestingly, that object does not seem to exist at all on the remote!
-I think this is the same bug as the one below. Read on...
+     Worse, though, is that the upcoming pluggable refs work will
+     probably require that submodules and the main repo have the same
+     ref backend. I'm a little dubious of that requirement in general,
+     but certainly it would be a show-stopper here.
 
-> However, trying to clone a smaller repo like pahole.git via rsync fails
-> differently; this looks more like a git bug:
-> 
-> $ git clone rsync://rsync.kernel.org/pub/scm/devel/pahole/pahole.git
-> fatal: Multiple updates for ref 'refs/remotes/origin/master' not allowed.
-> 
-> Using rsync(1) manually to grab pahole.git and inspecting the bare
-> repo with yields no anomalies with "git fsck --full".
-> $GIT_DIR/info/refs and $GIT_DIR/packed-refs both look fine, but
-> perhaps it's confused by the existence of $GIT_DIR/refs/heads/master
-> as a loose ref?
+  2. Create a "struct transport" for the tempdir holding the data we
+     rsynced from the other side, and just treat it like a local repo.
+     We already do something like this to handle object "alternates"
+     repositories (and we run "upload-pack" on the other directory and
+     parse it just like a real remote).
 
-Yes, that's exactly what's going on. In get_refs_via_rsync, we blindly
-concatenate the list of loose refs and packed refs. But that's not
-right, and never has been. If the same ref exists in both stores, the
-loose ref takes precedence (that is how we can write new refs without
-having to rewrite the whole packed-refs file).
+     Unfortunately, what we bring over in get_refs_via_pack is not
+     enough for this to work. It's _just_ the refs/ directories. We can
+     use "git init" to make it more like a real repo, but ultimately we
+     don't have any objects, so upload-pack will complain.
 
-So we erroneously believe that refs/heads/master exists _twice_ on the
-remote, with two different values (and try to store it twice as
-refs/remotes/origin/master). But we should be accepting only the loose
-value.
+     We could fix that by just rsyncing the objects down at this stage,
+     too. It's not like git is careful enough to do a real "what do we
+     need" walk like it does for dumb-http. But we would end up rsyncing
+     even in cases where we didn't need _any_ objects, though that is
+     probably a vast minority case.
 
-This explains the git.git problem, too. There are two entries for
-refs/heads/pu: one loose and one in packed-refs. The latter is a stale,
-older value, and should never be looked at. But because pu gets rewound,
-its older values are not necessarily reachable and may even have been
-pruned!
+  3. Just teach the local ad-hoc loose and packed readers to do the
+     proper deduplication. I started on this, but then realized that we
+     really do implement a from-scratch packed-refs reader here. And
+     it's missing some features, like parsing peeled tags.
 
-So no, we do not have ecdc6d86, but neither does the upstream, and
-nothing is referencing it.
+     So it really would want to call into the regular packed-refs
+     parsing code, which requires more refactoring as in (1).
 
-It looks like this has been broken since cd547b4 (fetch/push: readd
-rsync support, 2007-10-01). The fix is just to ignore packed-refs
-entries which duplicate loose ones. But given the length of time this
-has been broken with nobody complaining, I have to wonder if it is
-simply time to retire the rsync protocol. Even if was made to work, it
-is a horribly inefficient protocol.
+Of all of these, I think (2) is the closest to sane, because it lets
+upload-pack do the heavy-lifting, meaning we can understand whatever
+formats we rsync from the other side. But given that rsync is already
+naive about what objects it pulls (i.e., it gets everything), I have to
+really question whether there is any value in using git-over-rsync
+versus just:
+
+  rsync $src tmp/
+  git clone tmp my-repo ;# will hard-link, no extra space needed!
+  rm -rf $tmp
+
+I guess that doesn't handle subsequent fetches. But
+really...git-over-rsync is just an awful protocol. Nobody should be
+using it. Having looked at it in more detail, I'm more in favor than
+ever of removing it.
 
 -Peff
