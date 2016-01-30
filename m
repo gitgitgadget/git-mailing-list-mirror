@@ -1,66 +1,66 @@
-From: Moritz Neeb <lists@moritzneeb.de>
-Subject: [PATCH 4/5] remote: read $GIT_DIR/branches/* with strbuf_getline()
-Date: Sat, 30 Jan 2016 19:05:33 +0100
-Message-ID: <56ACFB6D.4040804@moritzneeb.de>
-References: <56ACF82B.2030005@moritzneeb.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 30 19:06:35 2016
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: [PATCH 0/3] Propagating push options to remote hooks
+Date: Sat, 30 Jan 2016 19:28:07 +0100
+Message-ID: <1454178490-17873-1-git-send-email-dennis@kaarsemaker.net>
+Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 30 19:34:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPZuo-0007bC-WE
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 19:06:31 +0100
+	id 1aPaLl-0007L8-J0
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 19:34:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933053AbcA3SFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2016 13:05:43 -0500
-Received: from moritzneeb.de ([78.47.1.106]:48373 "EHLO moritzneeb.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932987AbcA3SFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jan 2016 13:05:36 -0500
-Received: from [192.168.1.11] (x4db33e5e.dyn.telefonica.de [77.179.62.94])
-	by moritzneeb.de (Postfix) with ESMTPSA id 01E6B1C02A
-	for <git@vger.kernel.org>; Sat, 30 Jan 2016 19:05:33 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
-	s=mail; t=1454177134;
-	bh=ORkRHZADzQIRDQsTWzXt5yPySXls410ZWsVi+U/ppao=;
-	h=From:Subject:References:To:Date:In-Reply-To:From;
-	b=HT/65ro84mh/0KMxsANvM65LlTIPDHQkxKbeMya/p+BBbs7C8j4YZZ72W1h3Kj19V
-	 vnsfAM9VTmR4NW9vXT6N3h4tSA3sRkWc4k3e4uV7CHsZaFS2nqW9hQf7RmN2hK9QZ+
-	 871MI/Z8vlgggzoVSEXsUG/4p69HdkFB0I+Z2HPw=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <56ACF82B.2030005@moritzneeb.de>
+	id S932810AbcA3SeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 13:34:18 -0500
+Received: from koekblik.kaarsemaker.net ([141.138.139.206]:53719 "EHLO
+	koekblik.kaarsemaker.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932455AbcA3SeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 13:34:16 -0500
+Received: from spirit.home.kaarsemaker.net (unknown [145.132.209.114])
+	by koekblik.kaarsemaker.net (Postfix) with ESMTP id E9BB4828B1;
+	Sat, 30 Jan 2016 19:28:18 +0100 (CET)
+X-Mailer: git-send-email 2.7.0-91-gf04ef09
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285124>
 
-    The line read from the branch file is directly trimmed after
-    reading with strbuf_trim(). There is thus no logic expecting CR,
-    so strbuf_getline_lf() can be replaced by its CRLF counterpart.
+I have a few pre-receive hooks that are meant to catch mistakes. They are
+fairly strict, as the mistakes it catches can have some serious bad effects.
+However, sometimes they get it wrong (and can't really get it right) and it
+would be really useful to override them.
 
-Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
----
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Currently I do this by parseing the commit message, looking for 'Force: true',
+but it would be very useful if --force were propagated to the hook. Obviously,
+making --force skip all remote hooks would be a very bad way of doing this.
+Hooks should decide whether --force is respected or not.
 
-diff --git a/remote.c b/remote.c
-index 7d61dab..78f97f0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -281,7 +281,7 @@ static void read_branches_file(struct remote *remote)
- 	if (!f)
- 		return;
- -	strbuf_getline_lf(&buf, f);
-+	strbuf_getline(&buf, f);
- 	fclose(f);
- 	strbuf_trim(&buf);
- 	if (!buf.len) {
+Instead of that, we can pass options to receive-pack using a new capability,
+and receive-pack can make it available to hooks in their environment. That way
+we don't change behaviour of existing hooks and each hook can decide for itself
+whether it respects these options.
+
+The initial implementation only passes on --quiet and --force. I've been
+thinking of allowing the user of push to specify arbitrary values, but don't
+see the value of that yet. It would be easy to add though.
+
+Dennis Kaarsemaker (3):
+  connect.[ch]: make parse_feature_value non-static
+  receive-pack: add a capability for hook options
+  send-pack: propagate --force and --quiet to remote hooks
+
+ Documentation/technical/protocol-capabilities.txt |  9 ++++++
+ builtin/receive-pack.c                            | 19 ++++++++++--
+ connect.c                                         |  3 +-
+ connect.h                                         |  1 +
+ send-pack.c                                       | 10 ++++++
+ t/t5544-push-hook-options.sh                      | 37 +++++++++++++++++++++++
+ 6 files changed, 75 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5544-push-hook-options.sh
+
 -- 
-2.4.3
+2.7.0-91-gf04ef09
