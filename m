@@ -1,69 +1,56 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v3 1/6] worktree: new repo extension to manage worktree
- behaviors
-Date: Sat, 30 Jan 2016 16:20:39 +0200
-Message-ID: <20160130142039.GB4978@wheezy.local>
-References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-2-git-send-email-pclouds@gmail.com>
- <xmqqfuxi7jtn.fsf@gitster.mtv.corp.google.com>
+From: Moritz Neeb <lists@moritzneeb.de>
+Subject: Replacing strbuf_getline_lf() by strbuf_getline() in wt-status.c
+Date: Sat, 30 Jan 2016 15:30:46 +0100
+Message-ID: <56ACC916.8020008@moritzneeb.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, max@max630.net, git@drmicha.warpmail.net,
-	Jens.Lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 30 15:20:58 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 30 15:31:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPWOW-0006BI-Oq
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 15:20:57 +0100
+	id 1aPWYj-0005En-S5
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Jan 2016 15:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832AbcA3OUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Jan 2016 09:20:43 -0500
-Received: from p3plsmtpa09-05.prod.phx3.secureserver.net ([173.201.193.234]:54186
-	"EHLO p3plsmtpa09-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754382AbcA3OUm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jan 2016 09:20:42 -0500
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa09-05.prod.phx3.secureserver.net with 
-	id CELd1s0085B68XE01ELgRS; Sat, 30 Jan 2016 07:20:42 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqqfuxi7jtn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754492AbcA3Oat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Jan 2016 09:30:49 -0500
+Received: from moritzneeb.de ([78.47.1.106]:48230 "EHLO moritzneeb.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754213AbcA3Oas (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jan 2016 09:30:48 -0500
+Received: from [192.168.1.11] (x4db33e5e.dyn.telefonica.de [77.179.62.94])
+	by moritzneeb.de (Postfix) with ESMTPSA id D896E1C02A
+	for <git@vger.kernel.org>; Sat, 30 Jan 2016 15:30:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
+	s=mail; t=1454164247;
+	bh=41l5NjJaqvcHqD1M2ReFEqIoZZwSLaJq7iiT7PtTnRw=;
+	h=From:Subject:To:Date:From;
+	b=NrPYOtYYJTTeETCqw06c5o0X3SijiBInpHQNvAffy3DgD14o8zSWUIaVWuT9YjAz7
+	 sdl4wTh32wyP3+wNF+dTNAhFfOYrFRNWbaQw5NFULIokRqMMI9NUhTE8xI4FywIX+K
+	 vUJa+a4kJa+/hVQ9/uR8yRyJ65xYWWZHZHtilWPE=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285115>
 
-On Wed, Jan 27, 2016 at 02:12:52PM -0800, Junio C Hamano wrote:
-> More seriously, are we confident that the overall worktree support
-> is mature enough by now that once we add an experimental feature X
-> at version 1, we can promise to keep maintaining it forever at
-> version N for any positive integer N?  I hate to sound overly
-> negative, but I am getting an impression that we are not quite
-> there, and it is still not ready for production use.
+Currently I am working on replacing strbuf_getline_lf() by
+strbuf_getline() in places where the input is trimmed immediately after
+reading, cf. $gmane/284104, "Notes on the remaining strbuf_getline_lf()
+callers", 2nd point.
 
-The worktree feature has been used by several people
-already (me included), and do far the only issue which
-requires change in repository layout is the config
-separation. Isn't it enough to be confident?
+One instance I found was in wt-status.c. In read_rebase_todolist() the
+lines are read, checked for a comment_line_char and then trimmed. I
+wonder why the input is not trimmed before checking for this character?
+Is it safe to replace strbuf_getline_lf() by strbuf_getline() anyway?
 
-As I noted in another email, I would not expect to be N>2
-soon. At least not more likely than incompatible change
-because of some other reason. And the support for an older
-version can be as little as one-time upgrade to the current
-N (preferably with confirmation from user).
+The only case I can imagine that could lead to unexpected behaviour then
+would be when someone sets the comment_line_char to CR. How likely is that?
 
-> It would be beneficial both for us and our users if we can keep our
-> hand untied for at least several more releases to allow us try
-> various random experimental features, fully intending to drop any of
-> them if the ideas do not pan out.
-
-Users definitely would not benefit if there is release
-feature with note "anything you do can be lost after you
-install next version of git"
+Why is the trim after checking for the comment char anyway? Should
+something like "   # foobar" not be considered as comment?
