@@ -1,94 +1,70 @@
-From: Aaron Gray <aaronngray.lists@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
 Subject: Re: [bug] Possible Windows 'git mv' bug
-Date: Sun, 31 Jan 2016 15:38:06 +0000
-Message-ID: <CANkmNDedU90cHon13HaFfE+Ok=5ZtcBOa7mEkZm-eHNMFJd5KA@mail.gmail.com>
+Date: Sun, 31 Jan 2016 16:52:31 +0100
+Message-ID: <56AE2DBF.1010502@web.de>
 References: <CANkmNDd8GJmKGw9zToKS1ML3tg9Cx2iYQM0E8iHCO2TuQfwmAQ@mail.gmail.com>
- <56AE1F40.8060509@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 31 16:38:39 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Aaron Gray <aaronngray.lists@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 31 16:52:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPu59-0006VJ-TP
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 16:38:32 +0100
+	id 1aPuIt-0003ex-Bn
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 16:52:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468AbcAaPi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2016 10:38:28 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:34451 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757454AbcAaPi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 10:38:27 -0500
-Received: by mail-lb0-f181.google.com with SMTP id cl12so62650182lbc.1
-        for <git@vger.kernel.org>; Sun, 31 Jan 2016 07:38:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ybVqwd/O+CGtaQbAOkEUdAUmAEQnBbOrWNli2n3wI64=;
-        b=R4m8t9VoQne7E1KD+ogcDuXeqbnTPeKVaR/kArqAPUeUmdTkXE3mIotG85NhEQOK2R
-         gdwbTia8LRMhx9HfP+9Tn7lXw60OMj591493b6zPnHJzck6c8E+tE/+8NrUyFZHxLGgy
-         kcKPXGKljgZDcvxGxCEcu1KHEBodwhQkFPSLR1CJLxJvZWFrRh/JEJqU9jmrtkvHCn2f
-         cM+FvlfY4+ejAek0+sB59v2oPqQEN54gdSva9HvbgSP+chRydckKFi4Sc8GXuGgLkdqZ
-         KDyyhqfVpp54G8LThDx8FFHTOJ341b90Og0MU0r1gUsTs7uUNyETo7fD6YQjwPjqakDR
-         RZdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ybVqwd/O+CGtaQbAOkEUdAUmAEQnBbOrWNli2n3wI64=;
-        b=hqFNOoJrcJwvnIOBqu2bTCpYEwJA5kEcvD7jFQEbmkpeWe8DjETbWyXuXaEn7s0RUS
-         GPqSshCzVJLz896k0m5qYpZT+j93T0kldFbqjczxaFOtcZRUFT3DmrWeXjs0QyDRIvUl
-         23bRh9NkWBrIxHUkZPX1tm2SUdvIr6ZX1TeYNWUOkDFri9J7Kv46Seb7pz3kE912zL97
-         tn/H/nSisda5Gqq0K3AOTL5jU8fXjI4Xtz8sbKTWTx4/zZlKJKGEXdPfxcLkK+9XnS/5
-         awSueim1rODlQF3lqs2TuYtUeHT18A8TrjjXxhK8ViK5aB5ye5kDtFAyHpL3qCPJdOun
-         kQNw==
-X-Gm-Message-State: AG10YOQ/HCKrDqAc4tRxfigfFu6LuiDtRbahPG5G6jGinRJLO4GD4m8ydDAfuW+1gDLuJavdb2KMcYgCkAwdFw==
-X-Received: by 10.112.151.70 with SMTP id uo6mr6737421lbb.65.1454254706299;
- Sun, 31 Jan 2016 07:38:26 -0800 (PST)
-Received: by 10.25.207.195 with HTTP; Sun, 31 Jan 2016 07:38:06 -0800 (PST)
-In-Reply-To: <56AE1F40.8060509@kdbg.org>
+	id S1757554AbcAaPwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 10:52:39 -0500
+Received: from mout.web.de ([212.227.15.14]:65300 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754882AbcAaPwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 10:52:39 -0500
+Received: from macce.local ([79.223.121.144]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MVcvn-1aZZTX25hH-00Z0p5; Sun, 31 Jan 2016 16:52:36
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.5.1
+In-Reply-To: <CANkmNDd8GJmKGw9zToKS1ML3tg9Cx2iYQM0E8iHCO2TuQfwmAQ@mail.gmail.com>
+X-Provags-ID: V03:K0:pDAS7mCwvx4i7/sGi3KtXV3JrXLpZ3EfFCMBkOYlJq1KvNPF/2x
+ YnnSZN2J7REv3qcLCH3PUHqbkrxtMkT8+sSmtqANsktsMIP9d50Jc3EWdclsxMq2Ht6Ttbo
+ 1wWg8T+RaddJ0yY42HZ/p9Nn5OVk61kzQt+HrLe/8CvKWwIME2fumcjCmzjSqJzrnOGZKau
+ ObQV5foFCvZzkXgRNw/UQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hKToFB4hviw=:M/55Guxu2J26f5jIV3SkuU
+ eswZ2HhjM/Aox0czBxf//XL2wvu5/qO+bft8jS2sycRSuX4ckWtDwcPysG6e5JN6ucmspYDzV
+ uRcpRT+kg9SaYJEjm1Dv7weHKHCbgAW3nrTxXpOhHTzzwvoF8MvnmNA5bD6ed6YynXFH521D5
+ qPwx2ktfZqQgtqVgWaDzfe0S7iVa8fh87OTrvsaVPk7zaneq7xJkb8ZOMvdzpwAhuZacsj3Z9
+ uC+lJEPCCFp7HpVmGbTteIuwSfvWiLuGh0Hy+nvzsQLYjXlj9KqhSBeA66EMSkCBBm2hrSS+2
+ rNtSuQVhYt6wFxtYWtk1Wgmvyd/IcoIt5ZhJnJ4mR7tWG7C1hlB2GoCaXyRiuOJ3UeGpc+kfD
+ 3zWUNK/EgcxkskIw40x2BZIkeYXUjWJc/CZkcjpbL6m1jVdyHQfIzRw6ZqebYDwXLwkQpElDN
+ xTPSCu8Pnmqfz04xjqkRDCs8oaiwa+qYl3CXOrFexdpmKssT+v4Yp7J3LM1YDToy73Hhj/v+z
+ LcrIRLKU/Ln+ybwhfbeytlip7F3zUT/UB3YZ5j3zI3ZWs1sBWCbIA9eCl1U/SRHIoHqugrTHt
+ r7BDJzV7GH0nbxcZ+zoBMHWIlE2q/FmwS344oNL2RL/BlqvayBA7D5eMAdROHf+cTI/Yx1PlF
+ iAnGlDzXLM66hl87FpjoTf+bI32yW6habfEigKdY+003W6WvXnu9HCfT0mfZl1Aw9SM/Q7D7C
+ iRpiEXYgXmBrc9mRHbMk2TtXYrZ0j+HslphdBvZqLWWMhCts1cc9LCb9/ktWpvcnqye/F3qx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285153>
 
-On 31 January 2016 at 14:50, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 31.01.2016 um 15:03 schrieb Aaron Gray:
->>
->> Hi,
->>
->> I think I have found a possible difference in behaviour between
->> Windows git commandline distro and Linux git
->>
->> basically If I do a :-
->>
->>      git mv logger.h Logger.h
->>
->> I get the following :-
->>
->>      fatal: destination exists, source=lib/logger.h,
->> destination=lib/Logger.h
->>
->> It looks and smells like a bug to me !
->
->
-> Not really. When you attempt to overwrite an existing file with 'git mv',
-> you get this error message on both Windows and Linux.
->
-> The difference is that logger.h and Logger.h are the same file on Windows,
-> but they are not on Linux. Hence, when you attempt to overwrite Logger.h on
-> Windows, you see the error because it exists already (as logger.h).
->
-> As a work-around, you can use -f.
-
-Thanks Hannes !
-
-Still a bug though IMHO
-
-Aaron
+On 2016-01-31 15.03, Aaron Gray wrote:
+> Hi,
+> 
+> I think I have found a possible difference in behaviour between
+> Windows git commandline distro and Linux git
+> 
+> basically If I do a :-
+> 
+>     git mv logger.h Logger.h
+> 
+> I get the following :-
+> 
+>     fatal: destination exists, source=lib/logger.h, destination=lib/Logger.h
+> 
+> It looks and smells like a bug to me !
+Which version of Git are you using ?
+Because it is fixed in the latest version in Git and Git for Windows.
