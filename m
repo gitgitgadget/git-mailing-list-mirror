@@ -1,56 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 08/12] ref-filter: introduce align_atom_parser()
-Date: Sun, 31 Jan 2016 23:12:52 +0530
-Message-ID: <1454262176-6594-9-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 09/12] ref-filter: align: introduce long-form syntax
+Date: Sun, 31 Jan 2016 23:12:53 +0530
+Message-ID: <1454262176-6594-10-git-send-email-Karthik.188@gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 31 18:43:14 2016
+X-From: git-owner@vger.kernel.org Sun Jan 31 18:43:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPw1p-000094-FD
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:43:14 +0100
+	id 1aPw1m-00005d-EM
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932935AbcAaRnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2016 12:43:04 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34002 "EHLO
-	mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932518AbcAaRmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 12:42:37 -0500
-Received: by mail-pf0-f195.google.com with SMTP id 65so6417122pfd.1
-        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:42:36 -0800 (PST)
+	id S932954AbcAaRnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 12:43:06 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36378 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932527AbcAaRmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 12:42:39 -0500
+Received: by mail-pf0-f196.google.com with SMTP id n128so6395465pfn.3
+        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PtmQ8MtyoTO7yBZzS4y6jnoh5vadKmkvkZ/UUiViWjc=;
-        b=q73oQ4fZq07Gl0UGCmcS8YSRtOLx6AwUopcQkYGICkXRUPQo2Y+IJlkYrxKj9bqWdB
-         KQW/JHHMz/5f6Ti+lcMbNN47sAuywtjPdppAPE7J4fzUXz5n2h8XlMFoJRS4eZkOZqVd
-         cAu2k7nY8nSXpw4KWTPEkQO5zSseM8jVwUWr84+rEE+iuuCN0v0J/PEfz7afSy2vN6d4
-         Olxz8PWuwodf3XQmqlpduotpJIxwIDL64n/OQMuTD6BuKf9fUeFCK+af+ax5FP+L5uZz
-         G4T8UmkoS3lm3G3M7iCDnGr4bq2e6PaqkKssAgqvuaK43ghOuWSJ6QmlmtksDDEhxHkl
-         X5Hg==
+        bh=DH//YMAwTCLEkg2eZWhkAZGFIPe/QZUfdxQQOlUeqTo=;
+        b=b7hK3coCjodo2TMTPUhVZJVVebQmRJr8Hq++xZ9HOaOscXCF6zUNjxr7pgo8q5Lbcg
+         ZZMnsg+APC/V+0+Uir+UoyRcAtVhvBA+90njPRsxnjRonTEHxUxb9Tspwvu4qJispSZV
+         HC46xBhQQieYMWxnUuHboRJ1GVGbUGg6ZArxfZ1vUIAoOCL0q0dHlxkz24cy0tiB9c7Y
+         c+EWQEzOW9p7llwxd/zZbwsaW6h9m2J7kz/tXDK5YNLw6VRUS1WgGbirNMLVmN1tM5Wp
+         9rsABLne4MQ/xXoe68BKWq3UdAUJbjvKc/M7h2R2jTVOHjZkjFiwv3nqUKkeT2+WV+CP
+         y3pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=PtmQ8MtyoTO7yBZzS4y6jnoh5vadKmkvkZ/UUiViWjc=;
-        b=A5XwT0VRUu94/AahYw8pLlcfh4apzKr8hEo9NGkBSyHcNLnG/+bL0fnbpiSXdsRZyD
-         VNP5MoSc35ibrcnBlJm2Tvq1jN64T+MPqCp0Sdg8HinVkyQFsdjGVTazq3aI+hEpRDBL
-         3zjVNzFry654ZfcRtNpd8u8uvLsfWk3zQusTbWYwa/BdVLqm486JOJdhKGFLE6meWG5k
-         QHLPgaogFeZuEephQ180+9FKJw4gMyy3pdtZZw5Rx7Zf1qRtkco6nPRiaqdpkloqTqYK
-         EZOheTabIoqicis/ADHEuuJIp9PGliO5NxTJlX/a1IVSAl7N8/bfw8EN8f8DyLtlFrv6
-         ZDEw==
-X-Gm-Message-State: AG10YORrDJ5A5f23F/ZTpHMKAoZjNrudXuOKwUrmh21eSam9/PNXlvgsOo2LQ1dPg01wAg==
-X-Received: by 10.98.64.195 with SMTP id f64mr31747335pfd.103.1454262156694;
-        Sun, 31 Jan 2016 09:42:36 -0800 (PST)
+        bh=DH//YMAwTCLEkg2eZWhkAZGFIPe/QZUfdxQQOlUeqTo=;
+        b=POvBRRlopOqr2qLsktD4NLozoBrcsKktWM5QTkuTM6RLTOo11AQHS6F5lWs5quEZZu
+         26nNa0/7DmpXMNi7Pd7Lzvq7fAz0YwQI3/QDDaNvv9y0wSoLekuJH21G028g6MKFkakt
+         2kzN1/PciQtVwUmsoRhHPvkxqwpYkASaUMf3vCo9Ehi8IjbNO2CTX35TJ8djgEwSPTqm
+         RpebQpisK6MGV8iak6/OWlbCazlnwClKSUI0ND0LohIUXMhsm+VEig6s6yNDi9ELF4rf
+         Zvf3zmo7E9FvFXV6TiCAdrP/7u+8zHWw1tnYCnj8eOLoUoa/FdxvuVgMbZbTaMhs1Bzz
+         aenA==
+X-Gm-Message-State: AG10YOSNx6GYJlExihQLNR8JzIMYWXD70dJjBgDqVtfFcidFV/7rLjb9oi+AFgGZnX8pGA==
+X-Received: by 10.98.16.12 with SMTP id y12mr7996887pfi.6.1454262158881;
+        Sun, 31 Jan 2016 09:42:38 -0800 (PST)
 Received: from ashley.localdomain ([106.51.132.212])
-        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.42.34
+        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.42.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 31 Jan 2016 09:42:36 -0800 (PST)
+        Sun, 31 Jan 2016 09:42:38 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
@@ -58,170 +58,125 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285162>
 
-Introduce align_atom_parser() which will parse an 'align' atom and
-store the required alignment position and width in the 'used_atom'
-structure for further usage in populate_value().
+Introduce optional prefixes "width=" and "position=" for the align atom
+so that the atom can be used as "%(align:width=<width>,position=<position>)".
 
-Since this patch removes the last usage of match_atom_name(), remove
-the function from ref-filter.c.
+Add Documentation and tests for the same.
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 91 ++++++++++++++++++++++++++----------------------------------
- 1 file changed, 40 insertions(+), 51 deletions(-)
+ Documentation/git-for-each-ref.txt | 20 ++++++++++--------
+ ref-filter.c                       | 10 ++++++++-
+ t/t6302-for-each-ref-filter.sh     | 42 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 63 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 2e3e96f..012e8f9 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -133,14 +133,18 @@ color::
+ 
+ align::
+ 	Left-, middle-, or right-align the content between
+-	%(align:...) and %(end). The "align:" is followed by `<width>`
+-	and `<position>` in any order separated by a comma, where the
+-	`<position>` is either left, right or middle, default being
+-	left and `<width>` is the total length of the content with
+-	alignment. If the contents length is more than the width then
+-	no alignment is performed. If used with '--quote' everything
+-	in between %(align:...) and %(end) is quoted, but if nested
+-	then only the topmost level performs quoting.
++	%(align:...) and %(end). The "align:" is followed by
++	`width=<width>` and `position=<position>` in any order
++	separated by a comma, where the `<position>` is either left,
++	right or middle, default being left and `<width>` is the total
++	length of the content with alignment. For brevity, the
++	"width=" and/or "position=" prefixes may be omitted, and bare
++	<width> and <position> used instead.  For instance,
++	`%(align:<width>,<position>)`. If the contents length is more
++	than the width then no alignment is performed. If used with
++	'--quote' everything in between %(align:...) and %(end) is
++	quoted, but if nested then only the topmost level performs
++	quoting.
+ 
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
 diff --git a/ref-filter.c b/ref-filter.c
-index e6b6b55..79a7e07 100644
+index 79a7e07..58d433f 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -16,6 +16,11 @@
+@@ -77,7 +77,15 @@ static void align_atom_parser(struct used_atom *atom, const char *arg)
+ 		int position;
+ 		arg = s[0]->buf;
  
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-+struct align {
-+	align_type position;
-+	unsigned int width;
-+};
-+
- /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -31,6 +36,7 @@ static struct used_atom {
- 	cmp_type type;
- 	union {
- 		char color[COLOR_MAXLEN];
-+		struct align align;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -55,6 +61,37 @@ static align_type parse_align_position(const char *s)
- 	return -1;
- }
- 
-+static void align_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	struct align *align = &atom->u.align;
-+	struct strbuf **s, **to_free;
-+	unsigned int width = ~0U;
-+
-+	if (!arg)
-+		die(_("expected format: %%(align:<width>,<position>)"));
-+	s = to_free = strbuf_split_str_omit_term(arg, ',', 0);
-+
-+	align->position = ALIGN_LEFT;
-+
-+	while (*s) {
-+		int position;
-+		arg = s[0]->buf;
-+
-+		if (!strtoul_ui(arg, 10, &width))
-+			;
-+		else if ((position = parse_align_position(arg)) >= 0)
+-		if (!strtoul_ui(arg, 10, &width))
++		if (skip_prefix(arg, "position=", &arg)) {
++			position = parse_align_position(arg);
++			if (position < 0)
++				die(_("unrecognized position:%s"), arg);
 +			align->position = position;
-+		else
-+			die(_("unrecognized %%(align) argument: %s"), arg);
-+		s++;
-+	}
++		} else if (skip_prefix(arg, "width=", &arg)) {
++			if (strtoul_ui(arg, 10, &width))
++				die(_("unrecognized width:%s"), arg);
++		} else if (!strtoul_ui(arg, 10, &width))
+ 			;
+ 		else if ((position = parse_align_position(arg)) >= 0)
+ 			align->position = position;
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index fe4796c..f79355d 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -133,6 +133,48 @@ test_expect_success 'right alignment' '
+ 	test_cmp expect actual
+ '
+ 
++cat >expect <<-\EOF
++|       refname is refs/heads/master       |refs/heads/master
++|        refname is refs/heads/side        |refs/heads/side
++|         refname is refs/odd/spot         |refs/odd/spot
++|     refname is refs/tags/double-tag      |refs/tags/double-tag
++|        refname is refs/tags/four         |refs/tags/four
++|         refname is refs/tags/one         |refs/tags/one
++|     refname is refs/tags/signed-tag      |refs/tags/signed-tag
++|        refname is refs/tags/three        |refs/tags/three
++|         refname is refs/tags/two         |refs/tags/two
++EOF
 +
-+	if (width == ~0U)
-+		die(_("positive width expected with the %%(align) atom"));
-+	align->width = width;
-+	strbuf_list_free(to_free);
++test_align_permutations() {
++	while read -r option
++	do
++		test_expect_success "align:$option" '
++		git for-each-ref --format="|%(align:$option)refname is %(refname)%(end)|%(refname)" >actual &&
++		test_cmp expect actual
++		'
++	done
 +}
 +
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
-@@ -93,17 +130,12 @@ static struct {
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color", FIELD_STR, color_atom_parser },
--	{ "align" },
-+	{ "align", FIELD_STR, align_atom_parser },
- 	{ "end" },
- };
++test_align_permutations <<-\EOF
++	middle,42
++	42,middle
++	position=middle,42
++	42,position=middle
++	middle,width=42
++	width=42,middle
++	position=middle,width=42
++	width=42,position=middle
++EOF
++
++# Last one wins (silently) when multiple arguments of the same type are given
++
++test_align_permutations <<-\EOF
++	32,width=42,middle
++	width=30,42,middle
++	width=42,position=right,middle
++	42,right,position=middle
++EOF
++
+ # Individual atoms inside %(align:...) and %(end) must not be quoted.
  
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
- 
--struct align {
--	align_type position;
--	unsigned int width;
--};
--
- struct contents {
- 	unsigned int lines;
- 	struct object_id oid;
-@@ -287,22 +319,6 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	pop_stack_element(&state->stack);
- }
- 
--static int match_atom_name(const char *name, const char *atom_name, const char **val)
--{
--	const char *body;
--
--	if (!skip_prefix(name, atom_name, &body))
--		return 0; /* doesn't even begin with "atom_name" */
--	if (!body[0]) {
--		*val = NULL; /* %(atom_name) and no customization */
--		return 1;
--	}
--	if (body[0] != ':')
--		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
--	*val = body + 1; /* "atom_name:val" */
--	return 1;
--}
--
- /*
-  * In a format string, find the next occurrence of %(atom).
-  */
-@@ -844,7 +860,6 @@ static void populate_value(struct ref_array_item *ref)
- 		int deref = 0;
- 		const char *refname;
- 		const char *formatp;
--		const char *valp;
- 		struct branch *branch = NULL;
- 
- 		v->handler = append_atom;
-@@ -908,34 +923,8 @@ static void populate_value(struct ref_array_item *ref)
- 			else
- 				v->s = " ";
- 			continue;
--		} else if (match_atom_name(name, "align", &valp)) {
--			struct align *align = &v->u.align;
--			struct strbuf **s, **to_free;
--			int width = -1;
--
--			if (!valp)
--				die(_("expected format: %%(align:<width>,<position>)"));
--
--			s = to_free = strbuf_split_str_omit_term(valp, ',', 0);
--
--			align->position = ALIGN_LEFT;
--
--			while (*s) {
--				int position;
--
--				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
--					;
--				else if ((position = parse_align_position(s[0]->buf)) >= 0)
--					align->position = position;
--				else
--					die(_("improper format entered align:%s"), s[0]->buf);
--				s++;
--			}
--
--			if (width < 0)
--				die(_("positive width expected with the %%(align) atom"));
--			align->width = width;
--			strbuf_list_free(to_free);
-+		} else if (starts_with(name, "align")) {
-+			v->u.align = atom->u.align;
- 			v->handler = align_atom_handler;
- 			continue;
- 		} else if (!strcmp(name, "end")) {
+ test_expect_success 'alignment with format quote' "
 -- 
 2.7.0
