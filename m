@@ -1,81 +1,76 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 2/1] support -4 and -6 switches for remote operations
-Date: Sun, 31 Jan 2016 17:03:36 +0100
-Message-ID: <56AE3058.3060609@web.de>
-References: <20160128225123.GA20045@dcvr.yhbt.net>
- <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
- <20160130085056.GA20118@dcvr.yhbt.net> <20160130131353.GA20429@dcvr.yhbt.net>
- <56AD4887.3070207@web.de> <20160131000144.GA10117@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/6] worktree: new repo extension to manage worktree behaviors
+Date: Sun, 31 Jan 2016 08:42:49 -0800
+Message-ID: <xmqqh9htya2e.fsf@gitster.mtv.corp.google.com>
+References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
+	<1453808685-21235-1-git-send-email-pclouds@gmail.com>
+	<1453808685-21235-2-git-send-email-pclouds@gmail.com>
+	<xmqqfuxi7jtn.fsf@gitster.mtv.corp.google.com>
+	<20160130142039.GB4978@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Eric Wong <normalperson@yhbt.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 31 17:04:02 2016
+Content-Type: text/plain
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, git@drmicha.warpmail.net, Jens.Lehmann@web.de
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Sun Jan 31 17:43:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPuTp-00047a-Jh
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 17:04:01 +0100
+	id 1aPv5c-0007os-GZ
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 17:43:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757559AbcAaQD5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2016 11:03:57 -0500
-Received: from mout.web.de ([212.227.15.14]:55441 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757479AbcAaQD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 11:03:56 -0500
-Received: from macce.local ([79.223.121.144]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0M22Sh-1a63RA2lH1-00u1d2; Sun, 31 Jan 2016 17:03:39
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <20160131000144.GA10117@dcvr.yhbt.net>
-X-Provags-ID: V03:K0:2s+JMD9IJl2LJKemxTi7JGt0BOvOUjKLo90wxX7R7KdOefJoalt
- ia5mqmlG5bNZm3PNe8FC5bL6PSEHq1WavpjMSZK1ibDdwqo3DRk5zynQugF69Xm/qVs5g4w
- dlVXMvi3p+WrnwZyzNjHlTwX++fz25zUT6zF/mKz+OtTJQ1VOEX2XXFNZEKYbFDcLg9GqXI
- LCZB53pr3REAnzZpcHobw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FcoK2kWgJgE=:pdbvY2xB1gfAnJuJsF5y8m
- dNZ+mihWSA/dfG4A4a2AclNY3tYnUmov74E1IZd3gHDlKMjqg3mqTpVoKxRCREKIpFqhreO38
- FcGqBx6rCUtF0NSUJFcCYvPvceOCutuHVrmEyzLrTMcpzwyRrMBeMI1qOGcyJMNmZturJ4vX9
- 5F+rIq8Wr7tIWOmgN7YCfOQJzFIvu7g+IywRj19rXZELuxAsIRqd1ZYIXPvIESjv88DO7x+5e
- 71/pPb5/Xb9i/ccjZP64PQEzF1lRcgzxK0BUqjAjZOIqS77Bwu/X0PkgeYSVjIsFsWCmKYcZ5
- cFQtjMVp2fz9b3LFbUHu2aGnITYXhFJVBQWlOTwxBi5jVmq1mdPsTd7EmG4THccoJGcBsKsnN
- ba1n7jwuY39DtUV3cJdZj858ZD4ZbTMR6kkqoX5GiGyuuPKZicDzd0crniSKArz0asgfpCTvw
- q27An0zVfZJUxf9hJ1nU2QSksFItCfaOcSamOB0GegFC+E04bvDBOFw53ih7ZZ+Kak01NDIlf
- yGWo47Dw+jJBr2gKgSlgJUhFZnnCu2fGX8rX/U9QYRkgKnJ9Ys+jZOCYRvNPteu7YgrdwWWsH
- gwY/qQXuDxksdhla8Sn9sjPltkvnpat9AiknrIF3ZncMEtavGqdS3u+FahnVzavgBGoRz3JA1
- +JjF8G+N15Czers4bgVLPaobS82Pfx1O2Gopz6MlOoR7IRA5FLuwsglIfeupKccwiMu2dIJLT
- qxinnXQfgZlmM0jvNUv3XnMHz9rmbgkeIJ87F8OqRwZx5evcRxyPzZb3iDF3mLL4NofcIZNA 
+	id S1757243AbcAaQm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 11:42:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750854AbcAaQm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 11:42:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 90F453EFAC;
+	Sun, 31 Jan 2016 11:42:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z2+kZdIiXL59sSP2s8hZZvE7Lqw=; b=Cp3fZ+
+	LVXPOoOYnAD7r1Q09hb6jJrG2pWnx1ECRt0U0Mo6eOn+z4Tkvnv3yj5xTOaWR2Iv
+	Qs2+XDVowUt3IAbgE/HZRzE7k8dwp622MG+OHLmUX+h88zIWrTgRJWSnN7tsolT+
+	AawOstWBQlN2TWFcZMoMfNeJjBNhUd+Akqv2w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pKngS+D77KHaTr4owSJ1AOHeflfXNDMi
+	+1Ba16chNWRePe+rKScaJiiVPxRX9/a7QYMmx5uGIRq1MTbmKftI6ITUwHVvr2fl
+	M8wgGC3KOm5ZjrJghnSPL1hlN4zQLbv9MCHutY2zORzU1j7Z6ZY/P5kJzxLJfL/4
+	t6ZC9vu7pSc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8665F3EFAB;
+	Sun, 31 Jan 2016 11:42:51 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C10A3EFA6;
+	Sun, 31 Jan 2016 11:42:50 -0500 (EST)
+In-Reply-To: <20160130142039.GB4978@wheezy.local> (Max Kirillov's message of
+	"Sat, 30 Jan 2016 16:20:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AAE71A2E-C839-11E5-A963-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285155>
 
-On 2016-01-31 01.01, Eric Wong wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
->> On 2016-01-30 14.13, Eric Wong wrote:
->>> The ssh(1) command has an equivalent switches which we may
->>> pass when we run them.
->=20
->> Should we mention that putty and tortoiseplink don't have these opti=
-ons ?
->> At least in the commit message ?
+Max Kirillov <max@max630.net> writes:
 
-I may need to take that back;
-Just did a test with putty (under Debian)
+> The worktree feature has been used by several people
+> already (me included), and do far the only issue which
+> requires change in repository layout is the config
+> separation. Isn't it enough to be confident?
 
-And both -4 and -6 are supported, nice.
-
-I couldn't find it first, but here seems to be the latest documentation=
-,
-which mentions -4 and -6.
-http://the.earth.li/~sgtatham/putty/0.66/puttydoc.txt
-
-And even plink acceptes -4 and -6 (again under Debian)
-
-Sorry for the noise.
+One lessor key phrase above is "so far", I think, and another one
+you forgot to use is s/which requires/that we know &/, which to me
+is a more serious one.  IOW, I do think it is premature for us to
+say that that config split issue is the only thing, or to say that
+the issue is best solved by changing the layout in the way being
+discussed; the multiple-worktree feature needs more lab experience
+for us to gain confidence.
