@@ -1,56 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 05/12] ref-filter: introduce parsing functions for each valid atom
-Date: Sun, 31 Jan 2016 23:12:49 +0530
-Message-ID: <1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 02/12] ref-filter: use strbuf_split_str_omit_term()
+Date: Sun, 31 Jan 2016 23:12:46 +0530
+Message-ID: <1454262176-6594-3-git-send-email-Karthik.188@gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 31 18:43:25 2016
+X-From: git-owner@vger.kernel.org Sun Jan 31 18:43:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPw1v-0000Ku-Lr
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:43:20 +0100
+	id 1aPw24-0000aW-Mt
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932838AbcAaRnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2016 12:43:00 -0500
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:35001 "EHLO
-	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932166AbcAaRma (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 12:42:30 -0500
-Received: by mail-pa0-f67.google.com with SMTP id gi1so6165726pac.2
-        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:42:30 -0800 (PST)
+	id S932646AbcAaRm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 12:42:57 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36338 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932131AbcAaRmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 12:42:24 -0500
+Received: by mail-pf0-f193.google.com with SMTP id n128so6395237pfn.3
+        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:42:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EPzOx7/bZUin3FKZnSaV5j5DZUIKXkGlTgjjg2J01wo=;
-        b=OodEN/igb/NQgJuXuDzdaWzm/N5fhZ/AkZxpNKMSYOmGf5R9DYV9Zvk8X0GWNtt4E8
-         59sGkg7qIxOZheiOYuaclFBdsLKtuD9S+5Ol8xJy0ey6ikolCzu0xCUp2mZhfFh4OFvy
-         2hc3CLAD/3wOUZjMVqaxClBU5NAem7jSIkyAPuaSHtdJ1+gBvLstDmHWwdpaucINHmJ+
-         pdpI4YtVIHPgaT+NVvq1dMfmNS4JZui9Sk+wQhc9LXAL/ywNsfLOkNa937uBzabo9QxB
-         cCakMdpml44dLA54cJBhNW5//J/6tErmuIO//W/lWMHlyBiX/L0xHqvoDNaF/MA2tuJG
-         Dwug==
+        bh=k1zifAhRfSB6YAmA2Dos1WTje4qXSt/bHfPitiND8Ws=;
+        b=WjnyGWUCzeBa8bncgVAbyzqBkiAGzIULkUcV0z2k9ArWakl7yOGqDqEUwfHZgLajRI
+         6XX26pzwt8YaD16uv4E8jOjuEFl/6MCQlCo9AqjEPJmgIuYwHIIt4XRrnJreNy1DcHmW
+         KGBOxlt82hklWTBPtZyH84KcWjzU6kDHd8IZ3byNMSgVasB2Q5qCJK4ofBZ44/o2E9Av
+         wyvjRgYuJuIqCGBB2ilT8RBdpV53gb89npfdEjgXE9luT7e8xnfZNeHeKtkVv2LTLQbB
+         7+03yg+taFf0a4JXDvFPM7N++oYV1UflIhiFaP048uE+3qLPSoto/zhwzl2b+unjcMyA
+         BX0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EPzOx7/bZUin3FKZnSaV5j5DZUIKXkGlTgjjg2J01wo=;
-        b=TVwOKp2rWx9y4wTz/8EyccXE2fx7Oto8xTkDuutIoKopQq1WGQ9E1YV7smaVLCDHOk
-         BPuKwiKHuHj9LuKLl6xI1dhTgTkejNgqVnlT1bImwfcVFlU5VvPz8hffyZPnvDPZIoCl
-         s8mFfLBy6U97BT9WTwB+kWC44yvJEafl/YjAC+FHTZ1GZKKrFrzwf0LYRdnIAW8m61Zb
-         tzBt1E7RKrOjO/bwwcWz1i9RcetGZxO0KkrKXkqmrDAMrRfLISW3bA2nglzQFctYKbJv
-         Gi58pP3PqjNgHEqWhyc6jp1RReaOT/DFwuGwbH8u4hJ1gcfm9xAZ1YCO2O2DyWXo9s3v
-         AXJQ==
-X-Gm-Message-State: AG10YOTC3ktBvwyFo1MdJmu5fv92Qs/kT4lPrVgdWw1vPaJsz25v1PklPfq09wH5gUMLaQ==
-X-Received: by 10.66.235.162 with SMTP id un2mr31224924pac.17.1454262150198;
-        Sun, 31 Jan 2016 09:42:30 -0800 (PST)
+        bh=k1zifAhRfSB6YAmA2Dos1WTje4qXSt/bHfPitiND8Ws=;
+        b=MkJ+VhYln8Hz3ZPbo6NC03btdI1ozjeh5CXUav8I1vQsjYrPU8XJd8gOKW9Euue0Y2
+         8EqkrCTZXWwgzo2u4n9n1Hyg5KMjPyyeGTTeca7FPR7xyPal4J3u5S9HN1bGMZ8mJ9/D
+         vTd9HUwR8frUzprjJwGQOXIapwOZQM2/Fm4j3gfB7B2YsmT/aH9RqqZagMUdDVNmWFoz
+         J2dzmAebPLVLe3FXmin6bWJY+OIvh57TdrrmFP1cIGiCz3+QYqevOuO0Z3NQQtsOHmSr
+         9cYvCc9Q6N1qt/eBycwWzI45EgLBnfW3nOQCpJI6Oho0tCJG7kISMT+7+Krug88tOF7x
+         ScHQ==
+X-Gm-Message-State: AG10YOT5kgOWjJFXd5r+eW9Zn566cgKndcc6qFY3fYVDY1kjAGLpz/7krNTN9tCB7nvx9A==
+X-Received: by 10.98.13.68 with SMTP id v65mr31305115pfi.54.1454262143869;
+        Sun, 31 Jan 2016 09:42:23 -0800 (PST)
 Received: from ashley.localdomain ([106.51.132.212])
-        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.42.28
+        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.42.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 31 Jan 2016 09:42:29 -0800 (PST)
+        Sun, 31 Jan 2016 09:42:23 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
@@ -58,63 +58,40 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285166>
 
-Parsing atoms is done in populate_value(), this is repetitive and
-hence expensive. Introduce a parsing function which would let us parse
-atoms beforehand and store the required details into the 'used_atom'
-structure for further usage.
+Use the newly introduced strbuf_split_str_omit_term() rather than
+using strbuf_split_str() and manually removing the ',' terminator.
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ ref-filter.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 3736dc3..92b4419 100644
+index f097176..38f38d4 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -36,6 +36,7 @@ static int need_color_reset_at_eol;
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
-+	void (*parser)(struct used_atom *atom, const char *arg);
- } valid_atom[] = {
- 	{ "refname" },
- 	{ "objecttype" },
-@@ -114,6 +115,7 @@ struct atom_value {
- int parse_ref_filter_atom(const char *atom, const char *ep)
- {
- 	const char *sp;
-+	const char *arg;
- 	int i, at;
+@@ -892,18 +892,11 @@ static void populate_value(struct ref_array_item *ref)
+ 			if (!valp)
+ 				die(_("expected format: %%(align:<width>,<position>)"));
  
- 	sp = atom;
-@@ -138,10 +140,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 		 * shouldn't be used for checking against the valid_atom
- 		 * table.
- 		 */
--		const char *formatp = strchr(sp, ':');
--		if (!formatp || ep < formatp)
--			formatp = ep;
--		if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
-+		arg = memchr(sp, ':', ep - sp);
-+		if ((!arg || len == arg - sp) &&
-+		    !memcmp(valid_atom[i].name, sp, len))
- 			break;
- 	}
+-			/*
+-			 * TODO: Implement a function similar to strbuf_split_str()
+-			 * which would omit the separator from the end of each value.
+-			 */
+-			s = to_free = strbuf_split_str(valp, ',', 0);
++			s = to_free = strbuf_split_str_omit_term(valp, ',', 0);
  
-@@ -154,6 +155,10 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
- 	used_atom[at].name = xmemdupz(atom, ep - atom);
- 	used_atom[at].type = valid_atom[i].cmp_type;
-+	if (arg)
-+		arg = used_atom[at].name + (arg - atom) + 1;
-+	if (valid_atom[i].parser)
-+		valid_atom[i].parser(&used_atom[at], arg);
- 	if (*atom == '*')
- 		need_tagged = 1;
- 	if (!strcmp(used_atom[at].name, "symref"))
+ 			align->position = ALIGN_LEFT;
+ 
+ 			while (*s) {
+-				/*  Strip trailing comma */
+-				if (s[1])
+-					strbuf_setlen(s[0], s[0]->len - 1);
+ 				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
+ 					;
+ 				else if (!strcmp(s[0]->buf, "left"))
 -- 
 2.7.0
