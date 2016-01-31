@@ -1,102 +1,73 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: verify-tag is not plumbing
-Date: Sun, 31 Jan 2016 14:37:59 +0100
-Message-ID: <20160131143759.Horde.Ylcq6ydVoLduXCzBPzVjZMh@webmail.informatik.kit.edu>
-References: <60839686604d60632e1c80ef4fdd51eacb6b9290.1454244258.git.john@keeping.me.uk>
+From: Aaron Gray <aaronngray.lists@gmail.com>
+Subject: [bug] Possible Windows 'git mv' bug
+Date: Sun, 31 Jan 2016 14:03:17 +0000
+Message-ID: <CANkmNDd8GJmKGw9zToKS1ML3tg9Cx2iYQM0E8iHCO2TuQfwmAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Jan 31 14:38:25 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 31 15:04:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPsCs-0000sW-8v
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 14:38:22 +0100
+	id 1aPsbz-0001p5-TI
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 15:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757479AbcAaNiS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2016 08:38:18 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:45795 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757371AbcAaNiS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 08:38:18 -0500
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1aPsCm-0007Kj-Kf; Sun, 31 Jan 2016 14:38:16 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1aPsCV-0003Ti-D6; Sun, 31 Jan 2016 14:37:59 +0100
-Received: from x590d5d01.dyn.telefonica.de (x590d5d01.dyn.telefonica.de
- [89.13.93.1]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Sun, 31 Jan 2016 14:37:59 +0100
-In-Reply-To: <60839686604d60632e1c80ef4fdd51eacb6b9290.1454244258.git.john@keeping.me.uk>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1454247496.
+	id S1757481AbcAaODk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 09:03:40 -0500
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:34712 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757435AbcAaODj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 09:03:39 -0500
+Received: by mail-lf0-f43.google.com with SMTP id j78so11808618lfb.1
+        for <git@vger.kernel.org>; Sun, 31 Jan 2016 06:03:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=iZ5QtEsRRIvfQUNkk+u8wmNWodHcCWJl0S/3uNhR6ls=;
+        b=jgkdTh7U9i2CHz0C7khP4A2cnhKznwqYwfcCteS/DTflWBaNaqSR5OmBbAFd6RNpTc
+         cXbVWno0m8UsMgTSrjkhhzPS7phl2eda/Lz7VkiYcA7dfbfBrvh5u1V3zJCa+6Fu+8Mx
+         rdwHClXoO85cgL9pGxDNgi5DhpGdFSacQukq6h5kvAOIHn0bWyggY5tWfCpDv4fDSs/g
+         mLykeOUiPuHKeSkFFc6ZETN0D4eBIBnKG62TW1+QAMH2Rv+dfs469pUpWoprgEgGCXgG
+         TYzuTXGTCCXiyn9cTC+ZRTwBFSNLgOxM5NS3BSIpwKD9mrMWSImUfCaxUaTiP0s3R5rH
+         +xJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=iZ5QtEsRRIvfQUNkk+u8wmNWodHcCWJl0S/3uNhR6ls=;
+        b=kdREtnt4Z2QcolH4e3FpLujxePiw2HtAij4ItjHpNYNU0Af6b5776avPgwl5ELdnLc
+         2koAbLPIqzpRBAsj6UyrySVxu1q9Y7TT2xBFtBsBJAVAOsgQSib0jYp8RlBLIhxKiYU5
+         EHvEXfC+92gAKcxEeYFgpyuRv7wODNA7bORGDXI07okhFHPb3hxlHcTblB8glRf0zbxy
+         8vsyGw7S4MhJh9kICq2JAV6/mKY8W5cPPtH3+giMlDmiqzXsXY/mCmE+PhKN0mxcBynR
+         +eoSt115dGgKHpug6ju0n3h9/sXuplXggmvCZbLBhpNmhRqortBlK5fGLnJ03ent4/a5
+         /3ng==
+X-Gm-Message-State: AG10YORFizP5CD1Lj9TKaKQVNQopoy/blomZhKi5zL9sFf+2Y+a1mzkkU6pGzLUgN+e1LBlZwX2iVkRw/NDW5A==
+X-Received: by 10.25.167.74 with SMTP id q71mr5414349lfe.22.1454249016859;
+ Sun, 31 Jan 2016 06:03:36 -0800 (PST)
+Received: by 10.25.207.195 with HTTP; Sun, 31 Jan 2016 06:03:17 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285148>
 
+Hi,
 
-Quoting John Keeping <john@keeping.me.uk>:
+I think I have found a possible difference in behaviour between
+Windows git commandline distro and Linux git
 
-> According to command-list.txt, verify-tag is an ancillary interrogato=
-r,
-> which means that it should be completed by "git verify-<TAB>" in the
-> same way as verify-commit.
->
-> Remove it from the list of plumbing commands so that it is treated as
-> porcelain and completed.
+basically If I do a :-
 
-I'm not sure.  There are commands among the ancillary interrogators =20
-that are basically porcelains (e.g. blame), while some are more like =20
-plumbing (e.g. rerere, rev-parse).  In general the completion script =20
-supports the former but not the latter commands.
+    git mv logger.h Logger.h
 
-Now, the real porcelain-ish way to verify a tag is via 'git tag =20
--v|--verify', and according to a925c6f165a3 (bash: Classify more =20
-commends out of completion., 2007-02-04), the commit removing =20
-verify-tag from the completed commands, verify-tag was kept around for =
-=20
-backwards compatibility reasons.  OTOH verify-commit was introduced in =
-=20
-d07b00b7f31d (verify-commit: scriptable commit signature verification, =
-=20
-2014-06-23), and as the subject line states it was intended more as a =20
-plumbing command.
+I get the following :-
 
-So I think we should keep excluding verify-tag from the list of =20
-porcelain commands in the completion script, and it was an oversight =20
-not to exclude verify-commit as well when it was introduced.
+    fatal: destination exists, source=lib/logger.h, destination=lib/Logger.h
 
+It looks and smells like a bug to me !
 
-G=C3=A1bor
+Regards,
 
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
->  contrib/completion/git-completion.bash | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash =20
-> b/contrib/completion/git-completion.bash
-> index 51f5223..250788a 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -728,7 +728,6 @@ __git_list_porcelain_commands ()
->  		write-tree)       : plumbing;;
->  		var)              : infrequent;;
->  		verify-pack)      : infrequent;;
-> -		verify-tag)       : plumbing;;
->  		*) echo $i;;
->  		esac
->  	done
-> --=20
-> 2.7.0
+Aaron
