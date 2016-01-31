@@ -1,90 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Replacing strbuf_getline_lf() by strbuf_getline() in wt-status.c
-Date: Sun, 31 Jan 2016 08:59:55 -0800
-Message-ID: <xmqqd1shy99w.fsf@gitster.mtv.corp.google.com>
-References: <56ACC916.8020008@moritzneeb.de>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Sun Jan 31 18:00:06 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v4 01/12] strbuf: introduce strbuf_split_str_omit_term()
+Date: Sun, 31 Jan 2016 23:12:45 +0530
+Message-ID: <1454262176-6594-2-git-send-email-Karthik.188@gmail.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+Cc: gitster@pobox.com, sunshine@sunshineco.com,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 31 18:43:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPvM5-00020g-Ia
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:00:05 +0100
+	id 1aPw1c-0008By-2b
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:43:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757489AbcAaQ77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2016 11:59:59 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56226 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750901AbcAaQ76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 11:59:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 845663F37C;
-	Sun, 31 Jan 2016 11:59:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jKCazYjlxtw2Uk24+yQLLmlQuNA=; b=OLGv6e
-	uJS/tQ/8cbdIZYYJZB+1gciPeZJW1Ry1DbkrTxjL665916yvGkSZztRP5d4VRzYn
-	EetjozMDZwycslRFvHUQs7VUciaVMu9xCj/S/sTj/y8PvOA97YvZ2mxuzwmdd2mG
-	6KZLOnwcJdu1iHoRqIS3vFWZ26TbW1gRHSTKA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xmOlFtX3pnD1U1zVDsXGKw593JQi4Of0
-	CkIMBO2mTCBZaHQwpQs5WQ/31GrCqBf/F47T7UQvMyFT7WDls6PGvQDzkENtHjAt
-	3wb2NicaEAGE99BFQMTIpSqX2Q076W71ycwuVIbBYNNgW7ALTfvBDs4fzFw6GkYs
-	WrNa1X2j4ME=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B1FE3F37B;
-	Sun, 31 Jan 2016 11:59:57 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E5B963F37A;
-	Sun, 31 Jan 2016 11:59:56 -0500 (EST)
-In-Reply-To: <56ACC916.8020008@moritzneeb.de> (Moritz Neeb's message of "Sat,
-	30 Jan 2016 15:30:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0E61A522-C83C-11E5-891F-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S932165AbcAaRma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 12:42:30 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35361 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932066AbcAaRmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 12:42:22 -0500
+Received: by mail-pf0-f194.google.com with SMTP id 66so5969792pfe.2
+        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:42:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=M1l2InsDW60perTISjMo8FtRkuEavNFIU5YUduGGtJM=;
+        b=xvOghSA7SzbGuA9VWr2kg1UFzrUUOhqg5RjtzmfkHArnCGxO9aKwPfThPkRlHdUNi4
+         LqowJbZS9aN+5WCIeC4fd1yyVjN75aX+SXb6pHrp8HW2Oq7uj2mSfDmZ7Zpq6cqm4y4Y
+         PDgrv9/8KzcZyTxa20tc6G+70grHhJTesKVnhGqLXa0411TnPxDhjnvBZz1z+CaWGFN8
+         N17/wQDMNSNb1Y7RDyIAuDjPgOPM51m6xaotSUSyvKYAfE6RC3h8CxYjB5J+Kc4jqthc
+         cG9+wUXhSsTEUYEk9HhM5XqlE/XtwUnE4oL98i/JE6PDWdhOc99QVA9VF5ZqsZOeDWno
+         snbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=M1l2InsDW60perTISjMo8FtRkuEavNFIU5YUduGGtJM=;
+        b=Ov7o/BNPJLSIGGV6D9Z78Aiq8A+G9YUSKdsKMi0CefRGJFxGQCiRFwPhdjCwEfKzyZ
+         Sj5SuEKrzHxuFDJ2t4nS2p6payHIZ/mJwVG03qSGwclLjxXBf9h3HrtLpcFDMz8cOLqg
+         PVi9g9jpoTCNtqDVi/Hoi1iOsedLbudQddFPO+iYBmdswbgLuOTAp1JTmiBaAlOXhNoz
+         zVmmeDJ+MFD3mPmGjyvTX2/eAFazems16cCbDc38f1LutyOJLAClZAlHebu+wYVD4C9L
+         YJvP6t0EBsqwtQqTj9K9JPZPUvNfeMYGppnYfNF4VHhNSpSSeCD9eaX0E1oaeLFpAehX
+         MeNw==
+X-Gm-Message-State: AG10YOTVG9lMDQbIsmbxA8Fm9CM5Mdc259pyLDvYvaPj8y5n6bKGIerQwj9qRmjUryM2FA==
+X-Received: by 10.98.9.27 with SMTP id e27mr17941617pfd.59.1454262141680;
+        Sun, 31 Jan 2016 09:42:21 -0800 (PST)
+Received: from ashley.localdomain ([106.51.132.212])
+        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.42.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 31 Jan 2016 09:42:21 -0800 (PST)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.7.0
+In-Reply-To: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285157>
 
-Moritz Neeb <lists@moritzneeb.de> writes:
+The current implementation of 'strbuf_split_buf()' includes the
+terminator at the end of each strbuf post splitting. Add an option
+wherein we can drop the terminator if desired. In this context
+introduce a wrapper function 'strbuf_split_str_omit_term()' which
+splits a given string into strbufs without including the terminator.
 
-> Currently I am working on replacing strbuf_getline_lf() by
-> strbuf_getline() in places where the input is trimmed immediately after
-> reading, cf. $gmane/284104, "Notes on the remaining strbuf_getline_lf()
-> callers", 2nd point.
->
-> One instance I found was in wt-status.c. In read_rebase_todolist() the
-> lines are read, checked for a comment_line_char and then trimmed. I
-> wonder why the input is not trimmed before checking for this character?
-> Is it safe to replace strbuf_getline_lf() by strbuf_getline() anyway?
->
-> The only case I can imagine that could lead to unexpected behaviour then
-> would be when someone sets the comment_line_char to CR. How likely is that?
->
-> Why is the trim after checking for the comment char anyway? Should
-> something like "   # foobar" not be considered as comment?
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ strbuf.c | 14 +++++++++-----
+ strbuf.h | 25 ++++++++++++++++---------
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
-That is debatable, I would think, as "git commit" and others do not
-generally accept a line that does not begin with a comment char as a
-comment.
-
-I however think we made an exception for the rebase-i's insn file
-due to a mistake we made long time ago that allowed such line,
-caused people to build a workflow around the assumption that it is
-OK to prefix a comment line with whitespaces.
-
-  Cf. the last paragraph of 1db168ee (rebase-i: loosen over-eager
-      check_bad_cmd check, 2015-10-01).
-
-  Cf. http://thread.gmane.org/gmane.comp.version-control.git/278841
-
-So we probably want to be consistent with that in this codepath.
+diff --git a/strbuf.c b/strbuf.c
+index bab316d..4a93e2a 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -115,7 +115,7 @@ void strbuf_tolower(struct strbuf *sb)
+ }
+ 
+ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+-				 int terminator, int max)
++				 int terminator, int max, int omit_term)
+ {
+ 	struct strbuf **ret = NULL;
+ 	size_t nr = 0, alloc = 0;
+@@ -123,14 +123,18 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+ 
+ 	while (slen) {
+ 		int len = slen;
++		int copylen = len;
++		const char *end = NULL;
+ 		if (max <= 0 || nr + 1 < max) {
+-			const char *end = memchr(str, terminator, slen);
+-			if (end)
++			end = memchr(str, terminator, slen);
++			if (end) {
+ 				len = end - str + 1;
++				copylen = len - !!omit_term;
++			}
+ 		}
+ 		t = xmalloc(sizeof(struct strbuf));
+-		strbuf_init(t, len);
+-		strbuf_add(t, str, len);
++		strbuf_init(t, copylen);
++		strbuf_add(t, str, copylen);
+ 		ALLOC_GROW(ret, nr + 2, alloc);
+ 		ret[nr++] = t;
+ 		str += len;
+diff --git a/strbuf.h b/strbuf.h
+index f72fd14..6115e72 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -466,11 +466,12 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+ /**
+  * Split str (of length slen) at the specified terminator character.
+  * Return a null-terminated array of pointers to strbuf objects
+- * holding the substrings.  The substrings include the terminator,
+- * except for the last substring, which might be unterminated if the
+- * original string did not end with a terminator.  If max is positive,
+- * then split the string into at most max substrings (with the last
+- * substring containing everything following the (max-1)th terminator
++ * holding the substrings.  If omit_term is true, the terminator will
++ * be stripped from all substrings. Otherwise, substrings will include
++ * the terminator, except for the final substring, if the original
++ * string lacked a terminator.  If max is positive, then split the
++ * string into at most max substrings (with the last substring
++ * containing everything following the (max-1)th terminator
+  * character).
+  *
+  * The most generic form is `strbuf_split_buf`, which takes an arbitrary
+@@ -481,19 +482,25 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+  * For lighter-weight alternatives, see string_list_split() and
+  * string_list_split_in_place().
+  */
+-extern struct strbuf **strbuf_split_buf(const char *, size_t,
+-					int terminator, int max);
++extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
++					int terminator, int max, int omit_term);
++
++static inline struct strbuf **strbuf_split_str_omit_term(const char *str,
++							    int terminator, int max)
++{
++	return strbuf_split_buf(str, strlen(str), terminator, max, 1);
++}
+ 
+ static inline struct strbuf **strbuf_split_str(const char *str,
+ 					       int terminator, int max)
+ {
+-	return strbuf_split_buf(str, strlen(str), terminator, max);
++	return strbuf_split_buf(str, strlen(str), terminator, max, 0);
+ }
+ 
+ static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
+ 						int terminator, int max)
+ {
+-	return strbuf_split_buf(sb->buf, sb->len, terminator, max);
++	return strbuf_split_buf(sb->buf, sb->len, terminator, max, 0);
+ }
+ 
+ static inline struct strbuf **strbuf_split(const struct strbuf *sb,
+-- 
+2.7.0
