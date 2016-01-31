@@ -1,86 +1,113 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: git log -g bizarre behaviour
-Date: Sun, 31 Jan 2016 12:52:24 +0100
-Message-ID: <1454241144.2822.7.camel@kaarsemaker.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/6] give "nbuf" strbuf a more meaningful name
+Date: Sun, 31 Jan 2016 12:54:29 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1601311245170.2964@virtualbox>
+References: <20160131112215.GA4589@sigill.intra.peff.net> <20160131112526.GA5116@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 31 12:53:08 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 31 12:54:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPqYv-0007z8-Tg
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 12:53:02 +0100
+	id 1aPqaZ-0001vJ-PU
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 12:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757380AbcAaLwr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 Jan 2016 06:52:47 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:33547 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757375AbcAaLw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 06:52:26 -0500
-Received: by mail-wm0-f47.google.com with SMTP id l66so35346752wml.0
-        for <git@vger.kernel.org>; Sun, 31 Jan 2016 03:52:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:content-type:mime-version
-         :content-transfer-encoding;
-        bh=oSGRPQM7Q+R4FxqslnzgbOyI3XubD6d6JV5rpxOF0Ro=;
-        b=HE2TcUhyPmtZ1l007S2bCNxhVviNhPIhd3udAkUVI7XvcqUqghCIx3OIDLUpneNida
-         rXZ91kXCGEdJ5Dy+A86/rb2DV6spdVG7EWGazYc31rNMD+rQltWoCsG5fOJe5bicJIYO
-         JmN2nUi/5FRspOfRCN1Ek9cRfzpu812ZkQNfXgxa5XssES+oSJTeoGedu+iyPR8E+JSM
-         aMbRMt3S0ZUaCKuZwVrx2ekQ2oiPjiw8ASjxr3OGcTbvjAgysIVk0N62Zg3hicaEv2Sl
-         5PWGMfc6NPW9T1+8Oj9bNmibb7u+YP5rO74+VhvJ4xDVVD6lSwd9nE1aMz2PK+ZvW8nc
-         ItFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:content-type
-         :mime-version:content-transfer-encoding;
-        bh=oSGRPQM7Q+R4FxqslnzgbOyI3XubD6d6JV5rpxOF0Ro=;
-        b=HNEnCTttEdSHS9nYGQMVGzuLWZqpCOaaCoSw3DPYtYmeTxIE+0iaO7U74lHvGp4XDu
-         7YYEpn5fnvyxUiD588TJq2rEaazmCPPQ4wgbMqZpV63t3x/0tTVP4E5P8lqzEeCiaHnM
-         OpgROTaOCspsQbC9wA7JmLAusvgnIjKs7fJuiZobJirGoUQwCqwnyi68dpNeR96z/3DO
-         /fNvjDyxX5ljsSJJ77NqfQuUUBnOU4mwBrQ63EQt9NlbB7rcHFrdzZjmrAgbXiDlT+YB
-         b6tCDC+OAxePdG78OiMKKgHDy6akzui6LdOkqRrn6bfOAY+nV2xbUmmSCVGgXvJkgCoh
-         Ou5A==
-X-Gm-Message-State: AG10YOSqKhk87CsS9bufYz4BrfXfP3v+fpPHlSGuMgmFMEijg6LEmMrRebBYYLXx1c7oiQ==
-X-Received: by 10.28.142.8 with SMTP id q8mr6327083wmd.47.1454241145666;
-        Sun, 31 Jan 2016 03:52:25 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id g187sm6507187wmf.8.2016.01.31.03.52.24
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 31 Jan 2016 03:52:24 -0800 (PST)
-X-Mailer: Evolution 3.18.3-1ubuntu1 
+	id S1757319AbcAaLyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 06:54:40 -0500
+Received: from mout.gmx.net ([212.227.15.18]:60198 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757250AbcAaLyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 06:54:39 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LjaEi-1ZoJuZ2d8C-00bYUT; Sun, 31 Jan 2016 12:54:31
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160131112526.GA5116@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:Rwk/Hwtm8BQVAL9N/Uj5Kccte6ZI6vuA6ubt8lTO4/d61q8neh+
+ 6Icqe2jbpdgutKFoOb8iaK63Gkhe8M6K5zbcVVBDxc6StmqfqR19BF3GKctVv6F2hKWk6F+
+ ZOEROY4sVC5HnBokc8jAageFQ8P2kWX3G5T+5vPCWppAVLZBWPoC91BUOpi09L/f0f9qOZe
+ MQnrK5RUt0s/mRcMzjHkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Kzkh3hsmE0U=:Zk7KAmk7Tc7fQEN87+v5iR
+ /XpHfbUsM3BMjAWyfHo9FQGFd49aFKiFGG2/akCQpPPaohpT15n8vivm0MiROqd8Cwgm4P+LA
+ 6ioExUC5oeh9Hwd5j8WZjOE4g6V4BqiZIKYDa0oLrfOrkT/2Em8jGLMyJqVeYaqoFkjeDNh3P
+ iniQmoDL1n/dMSykUMCSDWGwF2UUsWBylC9Snz48fS3n3GxF8EXMj4Gh7CPy4U7Rwg9JZWLLr
+ kDONCnQ/BZqC5HUoPaB4MOfVFFe02ZfPRhpn+3lJvxX0QHGJ/xYIbHJHJefypTe2tsMhzDLxV
+ cL2Rg6Ie4HxYEqSbKYV0A2QmbnsctGDL8h9YQxNkjUrgDt/VeR32OgYN44SJbJdoihzqPUhHY
+ QOWPNPJSirCa0Sx5r4be2WG6iRXJ69QCCG2Vg1Lf3CdMau0P8bXC164M2p1Q26EjMzJIxtmTH
+ QiTyN/ysh9A1aHVsp0vYpPvk85n0rVWTY7dgU5Ju8zeAlWOga/9fVUyLYpjbez8xcNoBvrt24
+ xd+/Wk+JTD0K1xcBhT2jmjvgs8ynaaIIQ/JgfbVDSslBVVYG5HgLUmjkEgwLNjt/atPyGJBE0
+ 4R64mEw2uhWn4cJ4ENQLL1lfGsJzoBVKDt3sli8bz54dB5tPhzL1zHWP7AqwUbMAEhagcVvqQ
+ 0z09jaIc7KythhHdjB9hhYsGwrdcefW20B9iqtDiwNSHvx23/OOotCMA7L4lbdl14V9SIzPM4
+ K4Zp1NA8sq2Ug7tf+iUwZtXyljEwXOS7mfRgjz6v3ru5bKej19phTfsVl3kXyfG8eN5LXQfW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285142>
 
-I'm attempting to understand the log [-g] / reflog code enough to
-untangle them and make reflog walking work for more than just commit
-objects [see gmane 283169]. I found something which I think is wrong,
-and would break after my changes.
+Hi Peff,
 
-git log -g HEAD^ and git log -g v2.7.0^ give no output. This is
-expected, as those are not things that have a reflog. But git log -g
-v2.7.0 seems to ignore -g and gives the normal log. git reflog v2.7.0
-does something even more bizarre:
+On Sun, 31 Jan 2016, Jeff King wrote:
 
-$ GIT_PAGER=3D git reflog v2.7.0=C2=A0
-7548842 (tag: v2.7.0, seveas/master, origin/master, origin/HEAD) 3e9226=
-a 833e482 (tag: v2.6.5, gitster/maint-2.6) e3073cf e002527 e54d0f5 06b5=
-c93 34872f0 5863990 02103b3 503b1ef 28274d0 (tag: v2.7.0-rc3) aecb997 7=
-195733 e929264 ce858c0 5fa9ab8
+> > It's a shame that we can't just factor out this common
+> > code, but I don't think it's quite long enough to merit
+> > the boilerplate. The interesting part of each function
+> > happens inside the loop. If C had lambdas, we could do
+> > something like:
+> > 
+> >   foreach_path_from(stdin, nul_term_line) {
+> >         /* now do something interesting with "buf"
+> >            and some other local variables */
+> >   }
 
-Yes, that's a humongous line (I've only copied parts of it).
+Technically, we do not have to do lambdas for that paradigm, we could
+introduce a new data type and a reader, i.e. something like this:
 
-I'd like to make git log -g / git reflog abort early when trying to
-display a reflog of a ref that has no reflog. Objections?
+struct path_reader {
+	FILE *in;
+	int nul_term_line;
+	struct strbuf path;
+};
+#define PATH_READER_INIT { NULL, STRBUF_INIT };
 
---=20
-Dennis Kaarsemaker
-www.kaarsemaker.net
+int read_next_path(struct path_reader *reader, FILE *in, int nul_term_line)
+{
+	if (!reader->in) {
+		... [initialize] ...
+	}
+
+	... [read and possibly unquote path] ...
+}
+
+void cleanup_path_reader(struct path_reader *reader)
+{
+	if (reader->in) {
+		fclose(reader->in);
+		reader->in = NULL;
+	}
+
+	strbuf_release(&reader->buf);
+}
+
+And then the repeated code could be replaced by something like this:
+
+	struct path_reader path_reader = PATH_READER_INIT;
+
+	while (read_next_path(&reader, stdin, 1)) {
+		... [work with reader->path.buf] ...
+	}
+
+	cleanup_path_reader();
+
+Probably this is actually not limited to path names, so the functions
+should be renamed...
+
+(totally untested, of course...)
+
+Ciao,
+Dscho
