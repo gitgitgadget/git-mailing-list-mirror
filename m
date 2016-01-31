@@ -1,157 +1,107 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 12/12] ref-filter: introduce objectname_atom_parser()
-Date: Sun, 31 Jan 2016 23:12:56 +0530
-Message-ID: <1454262176-6594-13-git-send-email-Karthik.188@gmail.com>
-References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, sunshine@sunshineco.com,
-	Karthik Nayak <Karthik.188@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] t6302: drop unnecessary GPG requirement
+Date: Sun, 31 Jan 2016 15:19:22 -0500
+Message-ID: <1454271562-24291-1-git-send-email-sunshine@sunshineco.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 31 18:47:15 2016
+X-From: git-owner@vger.kernel.org Sun Jan 31 21:19:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aPw5i-0006lb-9Q
-	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 18:47:14 +0100
+	id 1aPyTF-0000Gp-RG
+	for gcvg-git-2@plane.gmane.org; Sun, 31 Jan 2016 21:19:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932845AbcAaRrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Jan 2016 12:47:10 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35755 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932527AbcAaRpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jan 2016 12:45:09 -0500
-Received: by mail-pf0-f193.google.com with SMTP id 66so5972048pfe.2
-        for <git@vger.kernel.org>; Sun, 31 Jan 2016 09:45:08 -0800 (PST)
+	id S933506AbcAaUTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Jan 2016 15:19:38 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:32909 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933471AbcAaUTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jan 2016 15:19:37 -0500
+Received: by mail-ig0-f171.google.com with SMTP id z14so22634642igp.0
+        for <git@vger.kernel.org>; Sun, 31 Jan 2016 12:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yrlA4ewRaoLQy9M8PWKdGDvuO1wWR8SiYowIe3nCZqA=;
-        b=GBNL4HvgnE+sw+mDgth1RZlMogAcSL0CRNl/omYkqGKOJZVN3BzVyncyTbAUHLakqR
-         UcJFktMCEIM/fdxGNQmhkB9DZX94BWKLi6GC+Wz4SVin8VaoMQsSf/ugS0BESQIC6p5l
-         k81aQMhK7WZU4yl2h5v9GPo0F+qs8XE/I+oY/DbUx7wN1YnmOOcPor279l+hfwgs26VZ
-         Wvhzw8kxlZafMtBZ9bnahji4VVUnAJg2C7oWqyjhQYX+UKjC9fI4PNPWXhEJZo+iU++1
-         A3zLZdqmnB0l7301+bjsJVzB3w9UI8S8CK1EDkha0vhNw6PAXpknUwZbMYxLNZC584E/
-         3Jlg==
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=AH4g6/zNHmii05Bp0xMMqwA0AJEe+HLHXnO3agyFs5M=;
+        b=sN+hwtol7NTG2ZQV8Tw6PLfvQMvMK80ML3ITK44MMOAshwk5JnhrcC49VMitrdZob7
+         pD9XU5jT7Olsxl9F/05fn6GFI6cuWJx1Y4jKN0m7dIrM/3e+cRDvBHQ4YrfdFi6ghtY0
+         yJiF4rQ4AuWKgrewwvbJ1GUFBijyMxAoCd8bUeIgXxKKOUFU+f/OEIhB/EHfSvzLlLbk
+         lq4KqB1LQtzeHt1iUOX+A2ZtwzZq3Avsin+bDgXNvYQN770NlshQRAqM+q9boEte18QJ
+         RhC64g+QOp+Z0tllXRdA/n6rxh/4xxJIAWjScWQZ6P4SoD04UQx1YCk1M3DzUepB0BNn
+         iwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yrlA4ewRaoLQy9M8PWKdGDvuO1wWR8SiYowIe3nCZqA=;
-        b=Ree0ViVqvsq/uWWs5dhg/ZAOqYEHhQ2SNCsDoyeCHSBgL/gY+cc+oJx3MuqaIkNpGv
-         DFp9EgZ8OsT7RmdIBU9XpG607EG2oo+VkakhCF76/1yfl/pMliUddFO7I5Pdn4vVlW84
-         NerqZ08kysKZP1oYZMSSWLKPoK/cD6bYE23cZUb9jvCFXmczqRyUap76J9Dm+aCh0dFb
-         B7+0kvCBfJ63REZ0cpFggC8fM8rBOY9kePS8B8QMxJdeclhVmYTERYTX4O2LV0I/p9SG
-         HcMDpPAwUciIrAriycAAnIghMzH68nlqpotjy4VqluscZib1lPYE8sKUlYW0M6QkSZ8s
-         B4Aw==
-X-Gm-Message-State: AG10YOQJXw6qso5I6WYS2D66jw/Nuyf3gPFv4qP2zetyHgs1Db6kueqlQH/e07dRgY6aDg==
-X-Received: by 10.98.71.136 with SMTP id p8mr31496598pfi.131.1454262308553;
-        Sun, 31 Jan 2016 09:45:08 -0800 (PST)
-Received: from ashley.localdomain ([106.51.132.212])
-        by smtp.gmail.com with ESMTPSA id v26sm37274012pfi.56.2016.01.31.09.45.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 31 Jan 2016 09:45:07 -0800 (PST)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
+        bh=AH4g6/zNHmii05Bp0xMMqwA0AJEe+HLHXnO3agyFs5M=;
+        b=JlZEoujY+ojOqXNUTIQC0c+kp2Ej8I607jlKg2X8b5hUQdg5UlzVx/l+5wk2+mm+d4
+         GlL14KzyymtEbicRkSPN7etlEGG7TVSK4SuX39Kry2WlVjHRn6qqlmr7TmgunkDBp+G4
+         /c81m43mFjBSViPq53LQA4KL8qHZhPC7iiDknNPA4RJ3kKj92eDOLV9GcgHnt/HGrUsx
+         1B6JyLgiYEMoQzJUkA1hsKVjR+Y4pCNSa68YTYmkpDPhdRuOs5sTPYn6IKtnJ2+yPi6n
+         9rvRlYfBtykcUfnelUbhG1S4hzd46Tik5BqM669aZ9TW+du/eQuhOci4V6XGcwJkn7sW
+         4OMg==
+X-Gm-Message-State: AG10YOQvWV6htI5zigGCvYBds6c0zFzoAXSfX9m3+ssVQ2JZShguJx84Tm1+e7j/XbtC8w==
+X-Received: by 10.50.43.228 with SMTP id z4mr7081837igl.33.1454271576594;
+        Sun, 31 Jan 2016 12:19:36 -0800 (PST)
+Received: from localhost.localdomain (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id p8sm3117532iga.10.2016.01.31.12.19.35
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 31 Jan 2016 12:19:35 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.333.g9c3d022
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285170>
 
-Introduce objectname_atom_parser() which will parse the
-'%(objectname)' atom and store information into the 'used_atom'
-structure based on the modifiers used along with the atom.
+These tests are concerned specifically with filtering, sorting,
+formatting behavior of git-for-each-ref, yet if GPG is not present, the
+entire test script is skipped even though none of the tests depend upon
+or care whether the tags are signed. This unnecessary dependency upon
+GPG may prevent these tests from being more widely run, so drop it.
 
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- ref-filter.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index b2043a0..d48e2a3 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -43,6 +43,7 @@ static struct used_atom {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
- 			unsigned int nlines;
- 		} contents;
-+		enum { O_FULL, O_SHORT } objectname;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -102,6 +103,16 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
- 		die(_("unrecognized %%(contents) argument: %s"), arg);
- }
+I noticed this while reviewing[1] v3 of Karthik's "optimize
+ref-filter.c:populate_value()" series when I tried to run tests the
+series added but couldn't due to missing GPG.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/284766
+
+t/t6302-for-each-ref-filter.sh | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index fe4796c..dea2a9e 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -3,13 +3,6 @@
+ test_description='test for-each-refs usage of ref-filter APIs'
  
-+static void objectname_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	if (!arg)
-+		atom->u.objectname = O_FULL;
-+	else if (!strcmp(arg, "short"))
-+		atom->u.objectname = O_SHORT;
-+	else
-+		die(_("unrecognized %%(objectname) argument: %s"), arg);
-+}
-+
- static align_type parse_align_position(const char *s)
- {
- 	if (!strcmp(s, "right"))
-@@ -160,7 +171,7 @@ static struct {
- 	{ "refname" },
- 	{ "objecttype" },
- 	{ "objectsize", FIELD_ULONG },
--	{ "objectname" },
-+	{ "objectname", FIELD_STR, objectname_atom_parser },
- 	{ "tree" },
- 	{ "parent" },
- 	{ "numparent", FIELD_ULONG },
-@@ -439,15 +450,17 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
- }
+ . ./test-lib.sh
+-. "$TEST_DIRECTORY"/lib-gpg.sh
+-
+-if ! test_have_prereq GPG
+-then
+-	skip_all="skipping for-each-ref tests, GPG not available"
+-	test_done
+-fi
  
- static int grab_objectname(const char *name, const unsigned char *sha1,
--			    struct atom_value *v)
-+			   struct atom_value *v, struct used_atom *atom)
- {
--	if (!strcmp(name, "objectname")) {
--		v->s = xstrdup(sha1_to_hex(sha1));
--		return 1;
--	}
--	if (!strcmp(name, "objectname:short")) {
--		v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
--		return 1;
-+	if (starts_with(name, "objectname")) {
-+		if (atom->u.objectname == O_SHORT) {
-+			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+			return 1;
-+		} else if (atom->u.objectname == O_FULL) {
-+			v->s = xstrdup(sha1_to_hex(sha1));
-+			return 1;
-+		} else
-+			die("BUG: unknown %%(objectname) option");
- 	}
- 	return 0;
- }
-@@ -471,7 +484,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 			v->s = xstrfmt("%lu", sz);
- 		}
- 		else if (deref)
--			grab_objectname(name, obj->oid.hash, v);
-+			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
- 	}
- }
- 
-@@ -995,7 +1008,7 @@ static void populate_value(struct ref_array_item *ref)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && grab_objectname(name, ref->objectname, v)) {
-+		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			const char *head;
+ test_expect_success 'setup some history and refs' '
+ 	test_commit one &&
+@@ -17,8 +10,8 @@ test_expect_success 'setup some history and refs' '
+ 	test_commit three &&
+ 	git checkout -b side &&
+ 	test_commit four &&
+-	git tag -s -m "A signed tag message" signed-tag &&
+-	git tag -s -m "Annonated doubly" double-tag signed-tag &&
++	git tag -m "A signed tag message" signed-tag &&
++	git tag -m "Annonated doubly" double-tag signed-tag &&
+ 	git checkout master &&
+ 	git update-ref refs/odd/spot master
+ '
 -- 
-2.7.0
+2.7.0.333.g9c3d022
