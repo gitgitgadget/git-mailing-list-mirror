@@ -1,112 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] apply, ls-files: simplify "-z" parsing
-Date: Mon, 01 Feb 2016 14:52:30 -0800
-Message-ID: <xmqqio28t55d.fsf@gitster.mtv.corp.google.com>
-References: <20160131112215.GA4589@sigill.intra.peff.net>
-	<20160131113546.GF5116@sigill.intra.peff.net>
-	<xmqqzivkt86j.fsf@gitster.mtv.corp.google.com>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: AW: [PATCH 1/2] stash--helper: implement "git stash--helper"
+Date: Mon, 1 Feb 2016 15:36:27 -0800
+Message-ID: <CAO2U3QhvibfEexCUuDJyj=4P+bebnrQhMaVq3VrgNBLbiTDNaA@mail.gmail.com>
+References: <BLU436-SMTP27D65F59A444FA678FFD8AA5DA0@phx.gbl>
+ <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>
+ <xmqqr3h1l2x8.fsf@gitster.mtv.corp.google.com> <BLU436-SMTP10996033F3EBFE2E8639F96A5DB0@phx.gbl>
+ <xmqqlh78ximf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 01 23:52:56 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
+	Git List <git@vger.kernel.org>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 00:36:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQNKn-000296-W8
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 23:52:38 +0100
+	id 1aQO1g-00074N-AA
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 00:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754317AbcBAWwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 17:52:35 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56853 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754298AbcBAWwc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 17:52:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 184A241A25;
-	Mon,  1 Feb 2016 17:52:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1tWbsh0PF9F9H2S7pWFAMshREsA=; b=d0uZl7
-	/dOeA8Ox/4Rb0ue6QPr0vLt7zSOPw/r7qjgHZVPvIijFX56v1091DoaTlF41ihfC
-	xEEWNFKOOGPXZg0Cd6rSt3q+n0i+ja6FDvoU6VkbSQBUrSxVnGyB/VTn7NMrg3dO
-	WYs8+WHbxoJEtU0U40lOqLL4Nhlquabk577zU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ct/uNOL8pvrmWPbqTf2y/I5IXHqe0+0T
-	AoK1vjtYgee6rtxs1EEkeOkC927exYlZIICfpnsoUsFjtehhAZ4WY5p4GDMABWZ5
-	0ELoCS7TW9OCM1lGqSbyZCuhU2cSxqAHkIcihMRgE2eMQVdGFQuE8DAAqEzaktR5
-	dGruV+ZRUxQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0EEEF41A24;
-	Mon,  1 Feb 2016 17:52:32 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7CC0941A23;
-	Mon,  1 Feb 2016 17:52:31 -0500 (EST)
-In-Reply-To: <xmqqzivkt86j.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 01 Feb 2016 13:47:00 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 79E6C278-C936-11E5-888D-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751441AbcBAXgt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2016 18:36:49 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:38393 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219AbcBAXgr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 18:36:47 -0500
+Received: by mail-ig0-f174.google.com with SMTP id mw1so45203000igb.1
+        for <git@vger.kernel.org>; Mon, 01 Feb 2016 15:36:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=afFtnsIOgXoBq2BfdbimAi2wKl/BkMNJ8NsVH/bzBTw=;
+        b=cawP1UVbBdgIthtQX8B51x7XLdUEmNsCy1EnQu29u5lWRCGeAxELZ0Fko4tOBGnkOQ
+         vkKPSSUGrWEFOe7s818U4TLb7yc1AhEQ0j8MBmPqYjHu4oEVyaBWvTL6fD13flax77Bg
+         2Im5K47P9K1vIInino13XJpj259d3HvDB/vZ3N/gsFo6X5ltGnbNWgRQ29fkLhlFOmQE
+         7qyaR0ikX21dtHGuqR2ESGYk7f5Ki1dz+32vGNUEF0vO52UJ5RJo7vrtrtokx5mPE2Kz
+         v6xA+agRddvHH723uiQO7S36FYhgDO+rray8jiN7QspFjKYdselA3KJWf3IyMHI3l6HP
+         oCTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=afFtnsIOgXoBq2BfdbimAi2wKl/BkMNJ8NsVH/bzBTw=;
+        b=GzzvdaUm/dwqk2HVVOVJGrGga0l+p3Ot+/a+Drzfz1YD/4+s+2JNcrPbhzY8oGkg0B
+         cUwFMJKIDs1U+GdCiPzjOtJCi7CAHSjcBkynEByiz+TlrhiHzUbyt0TOmtGRpk0tlrA5
+         HmutgT/OpJWXyCnZwFV3KXjgFpN+ZwBu1QN++LFQjhXNqU8NzUUaHL9saqiGct2VjEs+
+         XlpxuK8u7b/kHJWO4RhK8gUD5q8k4z2MAsrVxBsuY9aM3KRvEV2CUGg+C9lXxoYV7p1l
+         Be1cqytc3aJKp3Uhkv4VqdlX/Ge31I7IVZX+dZjhiTjO6UyYTF6zbdmbxfgV3mChBuBK
+         a0uA==
+X-Gm-Message-State: AG10YOSXNjTbv6EZhcAqpMPjFoBxhbjNApLrBv3Xix0A97X2sHwehdhUialhH2cCuaEVqploHsrgcTX2oF1uZQ==
+X-Received: by 10.50.102.40 with SMTP id fl8mr14041082igb.85.1454369806762;
+ Mon, 01 Feb 2016 15:36:46 -0800 (PST)
+Received: by 10.36.149.131 with HTTP; Mon, 1 Feb 2016 15:36:27 -0800 (PST)
+In-Reply-To: <xmqqlh78ximf.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285225>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 29, 2016 at 11:58 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+>
+> [administrivia: please wrap your lines to reasonable lengths]
+>
+>>> Honestly, I had high hopes after seeing the "we are rewriting it
+>>> in C" but I am not enthused after seeing this.  I was hoping that
+>>> the rewritten version would do this all in-core, by calling these
+>>> functions that we already have:
+>>
+>> These functions might be obvious to you, but I'm new to git's
+>> source code, ...
+>
+> Ahh, I didn't realize I was talking with somebody unfamiliar with
+> the codebase.  Apologies.
+>
+> Nevertheless, the list of functions I gave are a good starting
+> point; they are widely used building blocks in the codebase.
+>
+>> I'll be working on a v2 that incorporates the feedback from you,
+>> Thomas Gummerer and Stefan Beller then. Further feedback is of
+>> course welcome.
+>
+> Thanks.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-> Of course, a patch adding a "--nul" can be the one that does the
-> polarity flipping, so in that sense, this simplification is probably
-> OK, as long as there is some comment that warns a time-bomb you just
-> planted here ;-)
+Maybe this isn't important given that it looks like the patch is going
+to be rewritten, but I have
 
-I'll queue it with this tweak for now.
-
-The idea is to have them run "blame" to find the last paragraph of
-the commit log message.
-
-Thanks.
-
-    From: Jeff King <peff@peff.net>
-    Date: Sun, 31 Jan 2016 06:35:46 -0500
-    Subject: [PATCH] apply, ls-files: simplify "-z" parsing
-
-    As a short option, we cannot handle negation. Thus a callback
-    handling "unset" is overkill, and we can just use OPT_SET_INT
-    instead to handle setting the option.
-
- +  Anybody who adds "--nul" synonym to this later would need to be
- +  careful not to break "--no-nul", which should mean that lines are
- +  terminated with LF at the end.
-
-    Signed-off-by: Jeff King <peff@peff.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 565f3fd..d61ac65 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4536,6 +4536,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			 N_( "attempt three-way merge if a patch does not apply")),
- 		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
- 			N_("build a temporary index based on embedded index information")),
-+		/* Think twice before adding "--nul" synonym to this */
- 		OPT_SET_INT('z', NULL, &line_termination,
- 			N_("paths are separated with NUL character"), '\0'),
- 		OPT_INTEGER('C', NULL, &p_context,
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 59bad9b..467699b 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -400,6 +400,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	struct exclude_list *el;
- 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
- 	struct option builtin_ls_files_options[] = {
-+		/* Think twice before adding "--nul" synonym to this */
- 		OPT_SET_INT('z', NULL, &line_terminator,
- 			N_("paths are separated with NUL character"), '\0'),
- 		OPT_BOOL('t', NULL, &show_tag,
+stash.c:43:18: warning: incompatible pointer types assigning to 'const
+char *const *' from 'const char *'; take the address with &
+[-Wincompatible-pointer-types]
+                write_tree.env =3D prefix;
