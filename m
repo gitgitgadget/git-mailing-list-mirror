@@ -1,113 +1,138 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] completion: verify-tag is not plumbing
-Date: Mon, 1 Feb 2016 10:44:11 +0000
-Message-ID: <20160201104411.GD29880@serenity.lan>
-References: <60839686604d60632e1c80ef4fdd51eacb6b9290.1454244258.git.john@keeping.me.uk>
- <20160131143759.Horde.Ylcq6ydVoLduXCzBPzVjZMh@webmail.informatik.kit.edu>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFC/PATCH] Git doc: GPL2 does not apply to repo data
+Date: Mon, 1 Feb 2016 10:53:51 -0000
+Organization: OPDS
+Message-ID: <82BCD59FE1254625963FF9A6CB98DC51@PhilipOakley>
+References: <alpine.DEB.2.20.1601280913450.2964@virtualbox><1454274011-4880-1-git-send-email-philipoakley@iee.org> <xmqq8u35xv00.fsf@gitster.mtv.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Feb 01 11:44:27 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>,
+	"Jonathan Smith" <Jonathan.Smith@fphcare.co.nz>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 11:53:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQBy6-0005Re-FC
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 11:44:26 +0100
+	id 1aQC7I-00025a-ME
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 11:53:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108AbcBAKoW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2016 05:44:22 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:57551 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752838AbcBAKoV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 05:44:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 68DE1CDA614;
-	Mon,  1 Feb 2016 10:44:20 +0000 (GMT)
-X-Quarantine-ID: <YmH8UyYtGmWr>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id YmH8UyYtGmWr; Mon,  1 Feb 2016 10:44:19 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 70EC2CDA600;
-	Mon,  1 Feb 2016 10:44:13 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20160131143759.Horde.Ylcq6ydVoLduXCzBPzVjZMh@webmail.informatik.kit.edu>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1753405AbcBAKxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 05:53:53 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:30515 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753252AbcBAKxw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 05:53:52 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2DTWgDuN69WPN7OYAJdGQEBAQELAQIBAQEBAYMKUm2HTYELr0ZsgxgkhWEEBAKBM00BAQEBAQEHAQEBAUEkG0EBBAkBg2wFAQEBAQIBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBwMUBhMIAQEBAgMBiAIMCrQciCABAQgCHoYPhDeEFoNHgQ8Fh1OGCokSAYE5jWyHZ4UuimyDUoJkGYFRPC4BAQGDVoIugnYBAQE
+X-IPAS-Result: A2DTWgDuN69WPN7OYAJdGQEBAQELAQIBAQEBAYMKUm2HTYELr0ZsgxgkhWEEBAKBM00BAQEBAQEHAQEBAUEkG0EBBAkBg2wFAQEBAQIBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBwMUBhMIAQEBAgMBiAIMCrQciCABAQgCHoYPhDeEFoNHgQ8Fh1OGCokSAYE5jWyHZ4UuimyDUoJkGYFRPC4BAQGDVoIugnYBAQE
+X-IronPort-AV: E=Sophos;i="5.22,379,1449532800"; 
+   d="scan'208";a="860503030"
+Received: from host-2-96-206-222.as13285.net (HELO PhilipOakley) ([2.96.206.222])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 01 Feb 2016 10:53:49 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285196>
 
-On Sun, Jan 31, 2016 at 02:37:59PM +0100, SZEDER G=E1bor wrote:
->=20
-> Quoting John Keeping <john@keeping.me.uk>:
->=20
-> > According to command-list.txt, verify-tag is an ancillary interroga=
-tor,
-> > which means that it should be completed by "git verify-<TAB>" in th=
-e
-> > same way as verify-commit.
-> >
-> > Remove it from the list of plumbing commands so that it is treated =
-as
-> > porcelain and completed.
->=20
-> I'm not sure.  There are commands among the ancillary interrogators
-> that are basically porcelains (e.g. blame), while some are more like
-> plumbing (e.g. rerere, rev-parse).  In general the completion script
-> supports the former but not the latter commands.
->=20
-> Now, the real porcelain-ish way to verify a tag is via 'git tag
-> -v|--verify', and according to a925c6f165a3 (bash: Classify more
-> commends out of completion., 2007-02-04), the commit removing
-> verify-tag from the completed commands, verify-tag was kept around fo=
-r
-> backwards compatibility reasons.  OTOH verify-commit was introduced i=
-n
-> d07b00b7f31d (verify-commit: scriptable commit signature verification=
-,
-> 2014-06-23), and as the subject line states it was intended more as a
-> plumbing command.
->=20
-> So I think we should keep excluding verify-tag from the list of
-> porcelain commands in the completion script, and it was an oversight
-> not to exclude verify-commit as well when it was introduced.
+From: "Junio C Hamano" <gitster@pobox.com>
+> Philip Oakley <philipoakley@iee.org> writes:
+>
+>> diff --git a/Documentation/git.txt b/Documentation/git.txt
+>> index bff6302..137c89c 100644
+>> --- a/Documentation/git.txt
+>> +++ b/Documentation/git.txt
+>> @@ -1132,6 +1132,17 @@ of clones and fetches.
+>>    - any external helpers are named by their protocol (e.g., use
+>>      `hg` to allow the `git-remote-hg` helper)
+>>
+>> +Licencing: Your data, and the Git tool[[Licencing]]
+>> +---------------------------------------------------
+>> +
+>> +Git is an open source tool provided under GPL2.
+>> +Git was designed to be, and is, the version control system
+>> +for the Linux codebase.
+>> +Your respository data created by Git is not subject to Git's GNU2
+>> +licence, see GPL FAQs
+>> +http://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.en.html#TOCGPLOutput).
+>> +
+>> +User should apply a licence of their own choice to their repository 
+>> data.
+>>
+>>  Discussion[[Discussion]]
+>>  ------------------------
+>
+> While I know you mean well, and I do understand the sentiment behind
+> this addition,
+It was an RFC for that very sentiment.
 
-I can accept that argument about verify-commit and verify-tag, but
-listing verify-tag as plumbing is incorrect according to
-command-list.txt (and thus git(1)).  If we're going to classify
-commands, shouldn't we be consistent in how we do so?
+>             there are at least two reasons why I do not want to
+> (and why we should not) add any "clarification" or "interpretation"
+> like this.
+>
+> One is because such a statement is pointless.  Because we do not do
+> copyright assignment to the project, you are not the sole copyright
+> owner of Git.  Individual contributors hold copyright to the part
+> they wrote.  The above statement you made, even with an endorsement
+> by me as the project lead, does not have any power to assure that
+> the users will not get sued by one copyright holder, who is not you
+> or me, and at that point it is up to the court to interpret GPLv2.
+> We can call such a copyright holder crazy or call such a suit
+> frivolous, but that does not change the fact that the court is what
+> decides the matter, so having that statement does not help the user.
+>
+> Another is because we are amateurs.  Philip, you may or may not be a
+> lawyer yourself,
 
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> >  contrib/completion/git-completion.bash | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/contrib/completion/git-completion.bash
-> > b/contrib/completion/git-completion.bash
-> > index 51f5223..250788a 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -728,7 +728,6 @@ __git_list_porcelain_commands ()
-> >  		write-tree)       : plumbing;;
-> >  		var)              : infrequent;;
-> >  		verify-pack)      : infrequent;;
-> > -		verify-tag)       : plumbing;;
-> >  		*) echo $i;;
-> >  		esac
-> >  	done
-> > --
-> > 2.7.0
+Correct, but as an Engineer I do get to review terms & conditions and 
+specifications quite often..
+
+>    but I know you are not _our_ lawyer.  An amateurish
+> "interpretation" or "clarification" does not necessarily clarify the
+> text but it muddies it, especially when done carelessly.  Imagine a
+> case where a user creates a derived work of Git itself and stored it
+> in a Git repository.
+
+>      "Your respository data created by Git is not
+> subject to Git's GNU2"--really?  At least the phrasing must say that
+> the act of storing something in Git alone would not *MAKE* that
+> something governed under GPLv2.
+
+I can see the potential double meaning now you highlight it - I was thinking 
+of the 'if it's _your_ data, you can choose'; however if it's not your data, 
+the originator's restrictions would apply - that wasn't said.
+
+>     What the user puts in Git may
+> already be covered under GPLv2 for other reasons, and a statement
+> carelessly written like the above can be twisted to read as if we
+> are endorsing use of our code outside GPLv2 as long as they store it
+> in Git repository, which is not what you meant to say, but "that is
+> not what the copyright holder meant" is another thing the lawyer
+> need to argue in court to convince the judge, when we need to go
+> after a real copyright violator.
+>
+> We should leave the lawyering to real lawyers and we should not add
+> unnecessary work of interpreting our amateurish loose statement to
+> our laywers.
+
+Given Jonathan's question, and your earlier feedback, it did feel that a bit 
+of clear blue water would be useful between Git (the DVCS), and /.git/ (the 
+repo contents), even if it were only to clarify the issues...
+
+>
+> Thanks.
+>
+--
+Philip 
