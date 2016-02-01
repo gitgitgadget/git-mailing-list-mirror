@@ -1,120 +1,242 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [bug] Possible Windows 'git mv' bug
-Date: Mon, 1 Feb 2016 07:32:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602010723510.2964@virtualbox>
-References: <CANkmNDd8GJmKGw9zToKS1ML3tg9Cx2iYQM0E8iHCO2TuQfwmAQ@mail.gmail.com> <56AE2DBF.1010502@web.de>
+Subject: Re: [PATCH] t6302: drop unnecessary GPG requirement
+Date: Mon, 1 Feb 2016 08:24:34 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602010759480.2964@virtualbox>
+References: <1454271562-24291-1-git-send-email-sunshine@sunshineco.com> <xmqq4mdtxjxf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1115973888-1454308341=:2964"
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 01 07:32:30 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 01 08:24:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQ82G-0007cm-MK
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 07:32:29 +0100
+	id 1aQ8qx-00065J-1k
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 08:24:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbcBAGcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 01:32:24 -0500
-Received: from mout.gmx.net ([212.227.15.19]:62049 "EHLO mout.gmx.net"
+	id S1751726AbcBAHYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 02:24:46 -0500
+Received: from mout.gmx.net ([212.227.15.15]:61338 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750734AbcBAGcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 01:32:23 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MOwbP-1aT8ZG16nf-006LHV; Mon, 01 Feb 2016 07:32:21
+	id S1751233AbcBAHYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 02:24:45 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LlUZz-1ZpAGp0127-00bI2M; Mon, 01 Feb 2016 08:24:36
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <56AE2DBF.1010502@web.de>
+In-Reply-To: <xmqq4mdtxjxf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:a9tlAKTRAI1K7prQGAhQSaqU4nM9Zx0PT3i5uQzLHPnraYRsrbQ
- AF+645vn78XsG0HaipHu6TrDMVJwUJWWplhIludyEEtVkWGXX9fv05+8Onc+iT+QhQWy3gq
- PjuptcoM5gv0R9/PeZPjknPxU3N/AF568sRBmNncqrmtk+/03Ku13xXxyuoF7S/ejcprUFL
- lZKWzzxXgl1iZoWSz5stQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3zp652MHM5Q=:jHV2UhSRqEVvpo7DJFJ0KH
- +SNGu4V5yXMZpwIvQUVnr98311oZZ6mkw31j+skNJokwXUG//FZQmxkkK4RVwogSxvdh2Q46c
- r7jPsRCq1dwoq/d3WhXyIUfyoaJUOICBWM9o0Rp1Y6WekLmOKPVl02R/5vl1iCd1gaa9gbu3T
- jtPbVf4MrSAGeK8A6tzIONmwFE0gWmKFVD2xw54sny7wFpssj7YcHGam1K9IcbSerFT2ZCiMO
- 7Qj0MVIE1vJmCOoh2iffnaEyM2OWIXW1gdmDu+JHuRMg2NUmmo3+U2W75QFEnEjpHXFlMPkaT
- bPsl/g7xbJJpYGdIlJBDxs+Q7A5zwuBJPLj9dVR8pjhpMK7BI/Iy7ZVNPrzhiB+5V3h8XIQkS
- B093we1nGsmwC10rZA4s8VOqjjZvf+pykOV9fFwg1/dkGBEhZgLjW/kfTj5PNivHe/t5UYj2Y
- qSI41LGfAFIJ8cGFrrSSkykFAzbM9tyHie+/lcLd4TBQdir8M0kNmSUVy521Y+icFhfDT5jVY
- g+bwW/gmToDeCIdbl4PPd68rQDfnksnUp4Quj23gCBzA8MF8PNqKceOPck+j11dKa7pQedJch
- Aizp04HdWdd3470D1YcanojqdYwGZRjdTOpeLWb68EziqgjXOnUDOijgr2XmJlM492nQMjsdv
- iYf3Q8xAwpBthlTDfIRojD6PWRvLbI9igu9d1S97U0MFJ0OUNJLjaEIeZvYwhOUDUSG8aV4I1
- Z/Sjxr7aC3e69OnhAg5ta68aIy11zpWzbEcH1XSlCN1tmHRgU/PdGu7J5AYTpwGwbSqogZtx 
+X-Provags-ID: V03:K0:xmUcowDuXyMaAoDLjHBM2E2/pfHiavmaFNS06wlFJ5dGQJMlO3E
+ ul/SZDipJ51fo7evOFg/yO7XCEc44i5ufm6r1yDejMdId3tCcKl+thbOYZ88K3H10PbLPtT
+ UkIR/Gs4Z8DzmiNkHQRS4CnlygnVYyWmmY3DbzQ5+JW+ZrFfXp2yWwKV9rKuFrHagrymnhi
+ X1AuE4nk+ILctu0/ED8eA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OmPAY7fsSaI=:4xDRHGHaEExAshj3xK23A6
+ wGqRTR5hMSAcX58cPfQcHI6XGAjkekk55bZpIjdZjzA/HI2s6HuX0jvN/W4n9dnOOjE9zBIqd
+ PwOGwFTNfuFBJw12tcwhat9wbDQGfHb9U0Urfd/bjA1SgzO3gGJfiaCkRC+FMnMDfQP39vxPk
+ U22/YFRfxZvQ8fRSyuhtv9sFVaRCDJNBTCCkhCo7FpRfa74ae1ikm0HIdqt/6RoDt5PbX+kMS
+ YPGAhzcQEWr1vnzsA+VNF7Nlm2HwC1ShsVlneNGf9sUPnC/sLsDAipENA5LsawIow18NpDDVe
+ 1hLDugjCNNecvrOqXtw6lY/QVvRy7YDadNYn9zWyRJN3pZ5VFEM1Ojmqd1GLiF6dznMucmfaF
+ kNKojqfcpk1+PWK0dczkWWNJj+Sxdzul4hElC2OjivhKWqnhn0QIleMBGF8fvq6R0qeqYqwA5
+ nzH24fzo3+37Y3JnD5mrn0IISbFTMb1L2JyplGcC9UjGsJmFa7hMvdl0jYYXhVCxTXEwEhtTX
+ qX6qudF5Jpkuc5gAHKP/5WEGHlpMoArLSV9mahn/ghB9fOitKF1E38Tbbqy9a573U1OTC9PIb
+ F3WjcRDuf/eBCrTAs/dtzfcMJvbFfPHot6arICKcksPU0FB7wpCzuUbUzJgzKNq3UKx6jltKh
+ NTsDixnqoM8nQZ+oHsysVJxmgIKRrY7630ML8LP7pWVNuMNaBF7FqOder13bx7AXKudWWEmMQ
+ HqkxmuiAjN8NLTpTtirvaxniPrTlfPWQkVNjmT/JrWsQpESOcQMTvN3Xzro1si0o05ADHJjS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285190>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Eric & Junio,
 
---8323329-1115973888-1454308341=:2964
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sun, 31 Jan 2016, Junio C Hamano wrote:
 
-Hi Aaron,
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > These tests are concerned specifically with filtering, sorting,
+> > formatting behavior of git-for-each-ref, yet if GPG is not present,
+> > the entire test script is skipped even though none of the tests depend
+> > upon or care whether the tags are signed. This unnecessary dependency
+> > upon GPG may prevent these tests from being more widely run, so drop
+> > it.
+> 
+> [...]
+>
+> Would it make sense to introduce a helper function specific to this
+> script to be used to prepare the expected output, to replace cat <<,
+> that goes like this?
+> 
+> [...]
 
-On Sun, 31 Jan 2016, Torsten B=C3=B6gershausen wrote:
+An even easier solution might be to *not* set up the signed tags in the
+'setup' part, but only in the respective test case, and delete them right
+away after said test case?
 
-> On 2016-01-31 15.03, Aaron Gray wrote:
-> >=20
-> > I think I have found a possible difference in behaviour between
-> > Windows git commandline distro and Linux git
-> >=20
-> > basically If I do a :-
-> >=20
-> >     git mv logger.h Logger.h
-> >=20
-> > I get the following :-
-> >=20
-> >     fatal: destination exists, source=3Dlib/logger.h, destination=3Dlib=
-/Logger.h
-> >=20
-> > It looks and smells like a bug to me !
+Something like this (I even tested this with and without the GPG prereq):
 
-Thanks for your bug report. Having said that, I would like to suggest a
-couple improvements for future reference:
+-- snipsnap --
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Do not make t6302 depend on gpg wholesale
 
-Git for Windows' home page (https://git-for-windows.github.com/#contribute)
-asks explicitly to please open tickets on Git for Windows' bug tracker
-(https://github.com/git-for-windows/git/issues).
+There is but a single test case, in fact, that depends on gpg. Let's just
+make the other test cases independent of gpg and add the GPG prereq to
+said single test case.
 
-Also, at least one crucial bit of information is missing: the Git for
-Windows version. Typically this is enough, but the Windows version is
-often also crucial. To prevent crucial bits of information from missing, I
-highly recommend volunteering information up front (in my mind, a good
-rule of thumb is: spend as much care crafting your bug report and thinking
-about what to include as you would wish the combined readership would
-spend on helping you). If I may say so, I provided a good list of advices
-to help crafting bug reports:
-https://github.com/git-for-windows/git/wiki/Issue-reporting-guidelines
+Noticed by Eric Sunshine.
 
-> Which version of Git are you using ?
-> Because it is fixed in the latest version in Git and Git for Windows.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t6302-for-each-ref-filter.sh | 33 ++++-----------------------------
+ 1 file changed, 4 insertions(+), 29 deletions(-)
 
-Another piece of advice I detail in our issue reporting guidelines is to
-search the existing bug tracker (one purpose of the tracker is to keep
-track of what has been reported and what has not yet been reported, after
-all).
-
-And indeed, I opened this ticket:
-
-=09https://github.com/git-for-windows/git/issues/419
-
-=2E.. whose initial report incidentally also lacks the crucial information
-mentioned above! So I have to step up my own game, too.
-
-This report *also* includes detailed information, though, in particular
-that Torsten fixed this issue a long time ago, which suggests to me that
-you are somehow still stuck with the 1.x train (run `git version` to find
-out).
-
-Ciao,
-Johannes
---8323329-1115973888-1454308341=:2964--
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index fe4796c..e3a5636 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -5,20 +5,12 @@ test_description='test for-each-refs usage of ref-filter APIs'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ 
+-if ! test_have_prereq GPG
+-then
+-	skip_all="skipping for-each-ref tests, GPG not available"
+-	test_done
+-fi
+-
+ test_expect_success 'setup some history and refs' '
+ 	test_commit one &&
+ 	test_commit two &&
+ 	test_commit three &&
+ 	git checkout -b side &&
+ 	test_commit four &&
+-	git tag -s -m "A signed tag message" signed-tag &&
+-	git tag -s -m "Annonated doubly" double-tag signed-tag &&
+ 	git checkout master &&
+ 	git update-ref refs/odd/spot master
+ '
+@@ -33,7 +25,10 @@ test_expect_success 'filtering with --points-at' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'check signed tags with --points-at' '
++test_expect_success GPG 'check signed tags with --points-at' '
++	git tag -s -m "A signed tag message" signed-tag side &&
++	git tag -s -m "Annonated doubly" double-tag signed-tag &&
++	test_when_finished git tag -d signed-tag &&
+ 	sed -e "s/Z$//" >expect <<-\EOF &&
+ 	refs/heads/side Z
+ 	refs/tags/four Z
+@@ -58,9 +53,7 @@ test_expect_success 'filtering with --merged' '
+ test_expect_success 'filtering with --no-merged' '
+ 	cat >expect <<-\EOF &&
+ 	refs/heads/side
+-	refs/tags/double-tag
+ 	refs/tags/four
+-	refs/tags/signed-tag
+ 	EOF
+ 	git for-each-ref --format="%(refname)" --no-merged=master >actual &&
+ 	test_cmp expect actual
+@@ -71,9 +64,7 @@ test_expect_success 'filtering with --contains' '
+ 	refs/heads/master
+ 	refs/heads/side
+ 	refs/odd/spot
+-	refs/tags/double-tag
+ 	refs/tags/four
+-	refs/tags/signed-tag
+ 	refs/tags/three
+ 	refs/tags/two
+ 	EOF
+@@ -90,10 +81,8 @@ test_expect_success 'left alignment is default' '
+ 	refname is refs/heads/master  |refs/heads/master
+ 	refname is refs/heads/side    |refs/heads/side
+ 	refname is refs/odd/spot      |refs/odd/spot
+-	refname is refs/tags/double-tag|refs/tags/double-tag
+ 	refname is refs/tags/four     |refs/tags/four
+ 	refname is refs/tags/one      |refs/tags/one
+-	refname is refs/tags/signed-tag|refs/tags/signed-tag
+ 	refname is refs/tags/three    |refs/tags/three
+ 	refname is refs/tags/two      |refs/tags/two
+ 	EOF
+@@ -106,10 +95,8 @@ test_expect_success 'middle alignment' '
+ 	| refname is refs/heads/master |refs/heads/master
+ 	|  refname is refs/heads/side  |refs/heads/side
+ 	|   refname is refs/odd/spot   |refs/odd/spot
+-	|refname is refs/tags/double-tag|refs/tags/double-tag
+ 	|  refname is refs/tags/four   |refs/tags/four
+ 	|   refname is refs/tags/one   |refs/tags/one
+-	|refname is refs/tags/signed-tag|refs/tags/signed-tag
+ 	|  refname is refs/tags/three  |refs/tags/three
+ 	|   refname is refs/tags/two   |refs/tags/two
+ 	EOF
+@@ -122,10 +109,8 @@ test_expect_success 'right alignment' '
+ 	|  refname is refs/heads/master|refs/heads/master
+ 	|    refname is refs/heads/side|refs/heads/side
+ 	|      refname is refs/odd/spot|refs/odd/spot
+-	|refname is refs/tags/double-tag|refs/tags/double-tag
+ 	|     refname is refs/tags/four|refs/tags/four
+ 	|      refname is refs/tags/one|refs/tags/one
+-	|refname is refs/tags/signed-tag|refs/tags/signed-tag
+ 	|    refname is refs/tags/three|refs/tags/three
+ 	|      refname is refs/tags/two|refs/tags/two
+ 	EOF
+@@ -140,10 +125,8 @@ test_expect_success 'alignment with format quote' "
+ 	|'      '\''master| A U Thor'\''      '|
+ 	|'       '\''side| A U Thor'\''       '|
+ 	|'     '\''odd/spot| A U Thor'\''     '|
+-	|'        '\''double-tag| '\''        '|
+ 	|'       '\''four| A U Thor'\''       '|
+ 	|'       '\''one| A U Thor'\''        '|
+-	|'        '\''signed-tag| '\''        '|
+ 	|'      '\''three| A U Thor'\''       '|
+ 	|'       '\''two| A U Thor'\''        '|
+ 	EOF
+@@ -156,10 +139,8 @@ test_expect_success 'nested alignment with quote formatting' "
+ 	|'         master               '|
+ 	|'           side               '|
+ 	|'       odd/spot               '|
+-	|'     double-tag               '|
+ 	|'           four               '|
+ 	|'            one               '|
+-	|'     signed-tag               '|
+ 	|'          three               '|
+ 	|'            two               '|
+ 	EOF
+@@ -172,10 +153,8 @@ test_expect_success 'check `%(contents:lines=1)`' '
+ 	master |three
+ 	side |four
+ 	odd/spot |three
+-	double-tag |Annonated doubly
+ 	four |four
+ 	one |one
+-	signed-tag |A signed tag message
+ 	three |three
+ 	two |two
+ 	EOF
+@@ -188,10 +167,8 @@ test_expect_success 'check `%(contents:lines=0)`' '
+ 	master |
+ 	side |
+ 	odd/spot |
+-	double-tag |
+ 	four |
+ 	one |
+-	signed-tag |
+ 	three |
+ 	two |
+ 	EOF
+@@ -204,10 +181,8 @@ test_expect_success 'check `%(contents:lines=99999)`' '
+ 	master |three
+ 	side |four
+ 	odd/spot |three
+-	double-tag |Annonated doubly
+ 	four |four
+ 	one |one
+-	signed-tag |A signed tag message
+ 	three |three
+ 	two |two
+ 	EOF
+-- 
+2.7.0.windows.1.7.g55a05c8
