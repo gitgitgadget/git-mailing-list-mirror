@@ -1,66 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] Git doc: GPL2 does not apply to repo data
-Date: Mon, 1 Feb 2016 03:16:50 -0500
-Message-ID: <20160201081650.GB26215@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1601280913450.2964@virtualbox>
- <1454274011-4880-1-git-send-email-philipoakley@iee.org>
- <xmqq8u35xv00.fsf@gitster.mtv.corp.google.com>
- <6D15DFBB73355B4E9EFB1AD5EF9FCA31842442AA@NZ-EXCHANGE1.fphcare.com>
- <alpine.DEB.2.20.1602010827430.2964@virtualbox>
- <1591708020.2493723.1454312995839.JavaMail.zimbra@imag.fr>
- <20160201081431.GA26215@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] completion: verify-tag is not plumbing
+Date: Mon, 1 Feb 2016 10:44:11 +0000
+Message-ID: <20160201104411.GD29880@serenity.lan>
+References: <60839686604d60632e1c80ef4fdd51eacb6b9290.1454244258.git.john@keeping.me.uk>
+ <20160131143759.Horde.Ylcq6ydVoLduXCzBPzVjZMh@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Smith <Jonathan.Smith@fphcare.co.nz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	GitList <git@vger.kernel.org>
-To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 01 09:17:06 2016
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Feb 01 11:44:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQ9fR-0008JL-Uk
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 09:17:02 +0100
+	id 1aQBy6-0005Re-FC
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 11:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751675AbcBAIQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 03:16:54 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35374 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751616AbcBAIQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 03:16:53 -0500
-Received: (qmail 31151 invoked by uid 102); 1 Feb 2016 08:16:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Feb 2016 03:16:53 -0500
-Received: (qmail 22826 invoked by uid 107); 1 Feb 2016 08:17:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Feb 2016 03:17:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Feb 2016 03:16:50 -0500
+	id S1753108AbcBAKoW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2016 05:44:22 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:57551 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752838AbcBAKoV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 05:44:21 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 68DE1CDA614;
+	Mon,  1 Feb 2016 10:44:20 +0000 (GMT)
+X-Quarantine-ID: <YmH8UyYtGmWr>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id YmH8UyYtGmWr; Mon,  1 Feb 2016 10:44:19 +0000 (GMT)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 70EC2CDA600;
+	Mon,  1 Feb 2016 10:44:13 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <20160201081431.GA26215@sigill.intra.peff.net>
+In-Reply-To: <20160131143759.Horde.Ylcq6ydVoLduXCzBPzVjZMh@webmail.informatik.kit.edu>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285195>
 
-On Mon, Feb 01, 2016 at 03:14:31AM -0500, Jeff King wrote:
+On Sun, Jan 31, 2016 at 02:37:59PM +0100, SZEDER G=E1bor wrote:
+>=20
+> Quoting John Keeping <john@keeping.me.uk>:
+>=20
+> > According to command-list.txt, verify-tag is an ancillary interroga=
+tor,
+> > which means that it should be completed by "git verify-<TAB>" in th=
+e
+> > same way as verify-commit.
+> >
+> > Remove it from the list of plumbing commands so that it is treated =
+as
+> > porcelain and completed.
+>=20
+> I'm not sure.  There are commands among the ancillary interrogators
+> that are basically porcelains (e.g. blame), while some are more like
+> plumbing (e.g. rerere, rev-parse).  In general the completion script
+> supports the former but not the latter commands.
+>=20
+> Now, the real porcelain-ish way to verify a tag is via 'git tag
+> -v|--verify', and according to a925c6f165a3 (bash: Classify more
+> commends out of completion., 2007-02-04), the commit removing
+> verify-tag from the completed commands, verify-tag was kept around fo=
+r
+> backwards compatibility reasons.  OTOH verify-commit was introduced i=
+n
+> d07b00b7f31d (verify-commit: scriptable commit signature verification=
+,
+> 2014-06-23), and as the subject line states it was intended more as a
+> plumbing command.
+>=20
+> So I think we should keep excluding verify-tag from the list of
+> porcelain commands in the completion script, and it was an oversight
+> not to exclude verify-commit as well when it was introduced.
 
-> On a more serious note, this FAQ (and the one right after) might be
-> useful for convincing people:
-> 
->   http://www.gnu.org/licenses/gpl-faq.en.html#GPLOutput
-> 
-> Data that git stores is not strictly "output", but I think the answers
-> there are relevant. And presumably written or vetted by lawyers, too.
+I can accept that argument about verify-commit and verify-tag, but
+listing verify-tag as plumbing is incorrect according to
+command-list.txt (and thus git(1)).  If we're going to classify
+commands, shouldn't we be consistent in how we do so?
 
-Whoops, I just noticed this is the exact entry from Philip's patch. :-/
-
-Sorry for the noise (and I do think it is a good link to help answer
-this question, but I agree with Junio that we can let that FAQ stand on
-its own without adding our own amateur-lawyer language to it).
-
--Peff
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> >  contrib/completion/git-completion.bash | 1 -
+> >  1 file changed, 1 deletion(-)
+> >
+> > diff --git a/contrib/completion/git-completion.bash
+> > b/contrib/completion/git-completion.bash
+> > index 51f5223..250788a 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -728,7 +728,6 @@ __git_list_porcelain_commands ()
+> >  		write-tree)       : plumbing;;
+> >  		var)              : infrequent;;
+> >  		verify-pack)      : infrequent;;
+> > -		verify-tag)       : plumbing;;
+> >  		*) echo $i;;
+> >  		esac
+> >  	done
+> > --
+> > 2.7.0
