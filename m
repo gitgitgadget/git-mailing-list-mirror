@@ -1,67 +1,66 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] git-gui--askpass: generalize the window title
-Date: Mon, 1 Feb 2016 12:11:05 +0000
-Message-ID: <000001529cbe5436-285f0113-5761-49d8-8961-5a9df0180ed7-000000@eu-west-1.amazonses.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Plans for 2.7.1?
+Date: Mon, 1 Feb 2016 17:54:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602011740540.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 01 13:26:41 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 01 17:54:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQDYz-00011N-Mq
-	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 13:26:38 +0100
+	id 1aQHk7-0007Jw-GU
+	for gcvg-git-2@plane.gmane.org; Mon, 01 Feb 2016 17:54:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753836AbcBAM01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 07:26:27 -0500
-Received: from a6-245.smtp-out.eu-west-1.amazonses.com ([54.240.6.245]:40021
-	"EHLO a6-245.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754076AbcBAM0X (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 07:26:23 -0500
-X-Greylist: delayed 916 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Feb 2016 07:26:23 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1454328665;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=uCxiKTW+YEdw9SO/ypgRgmoNccC8XreNNTFP4qimqYg=;
-	b=iuX/TRuOuGybwpFrf3INHa7UYAvJ3fLtXnWcbrRoSwG1ArFl2I1pCw+inNKjJ+6N
-	9BKImGGj5To8NMBh8qoWeSzioLQyue5EVaeZNNl6KWZipX4Gxe7hyaGrqQLhPJmUIy8
-	3U9K8MTJy0f5+VoxuW7RustgUghAwCuwPp6ZKqyw=
-X-SES-Outgoing: 2016.02.01-54.240.6.245
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753736AbcBAQyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 11:54:19 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58503 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752896AbcBAQyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 11:54:18 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M8laO-1aECuJ0OaK-00C8wm; Mon, 01 Feb 2016 17:54:07
+ +0100
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:XoVIdq0fDm2qQM99kAkrAxJnpY4lrq9KzwkTwv6kHSudDZy4l/w
+ jxim96K5YN2qYy4x9CbhOJREsVsUrYEPVuEOc21OFMftydsau6pUsXfAbgVaWljwEBh/ooG
+ kRdy9txRD8yoUq25K/CyfcoeKFkoYUd6k/vmh1OxYO/OaJWNwGqEIBqrn0VDLvijadRd8Hn
+ l39+SQRgzMpctFz4UEwag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fg+Pkmw4G/w=:vOEQZdmITWCMH1Yj/YMTB3
+ Tsc26SCfakcJN62mgrJa7oLeuwC1p27gQcf1F9YmosetqbGyHimZomFoaBBljMhe3W/y8GT3E
+ jCdoCie6skDgl22q29P8J0GxweuDTXTwK8sN71DlvzCSM/Knc8LFBGylA/yGX2U/2goxzhmEJ
+ t/pXUoV0t6YmMCvjYFPfPrP7NvS0QjlcTeQvZamCblvqp1BtRLYoeaOL5AGCZjHqNMDsor/by
+ 8VoQj66gmgEyFC4/thNbpRvHD22LzOiCg5Zh7yWjoWHvvhRY7mykhLXWIRisXIM/jbCKmFm31
+ eAz3GTYRQMi+yk0S3jYs+ms6A5vEn3L1faVQ3PsOSkjs6JvJrx3Yem6RdBjHi/NLP7vCsd0Nk
+ C+w4gyGG5lNPcs9He08Bk4LX7ennautDPjexFoM0YIePt+b/N9ZX6WdnCL8lGhUB/pwQymTB+
+ XJzHEPb9l/0/4paBRiGOwV7qNx8xWeGFVhh47vQHmrEvc5UEp7wpn0oJM8noQzOZp/1ugjtlq
+ 5E2qB12grCc9KMM/hWa4du6X7zCBpCU9lRDKplfICyKOnjFCBRCjJSMJsO2kYb7IGhAS1YrB7
+ CxtWzGXm2LYEzws0tuGvF4E4bYlIJLCUHih9MAiicVWvQaNncjbeuFvCsKK+oIZPYWYh4/WgL
+ MNkLrvj1LHhdirCAVwAvIUHl/RFY7Pt3CM3IMTX0ojstlELnUNwlyRt4b/DOBGH7sO5N0WZUg
+ vea72NTDZbUQKwyJWwxsJySXFEnpbJxeGIe4am4mV2P7zsnKya2VJ7U2QZdL02zd8GIMjUBh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285201>
 
-From: Sebastian Schuberth <sschuberth@gmail.com>
+Hi Junio,
 
-git-gui--askpass is not only used for SSH authentication, but also for
-HTTPS. In that context it is confusing to have a window title of
-"OpenSSH". So generalize the title so that it also says which parent
-process, i.e. Git, requires authentication.
+at tinyurl.com/gitCal I see a pretty timeline regarding 2.8.0, but I do
+not see 2.7.1 planned anywhere.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- git-gui/git-gui--askpass | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Due to signature problems (I failed to realize that SHA-1 based .exe
+signatures are no longer considered valid starting from January 1st,
+2016), I got a metric ton of private and non-private bug reports regarding
+"corrupt signatures", and therefore I would like to prevent those reports
+from taking over my entire working hours by simply issuing a new release
+of Git for Windows.
 
-diff --git a/git-gui/git-gui--askpass b/git-gui/git-gui--askpass
-index 4277f30..1e5c325 100755
---- a/git-gui/git-gui--askpass
-+++ b/git-gui/git-gui--askpass
-@@ -60,7 +60,7 @@ proc finish {} {
- 	set ::rc 0
- }
- 
--wm title . "OpenSSH"
-+wm title . "Git Authentication"
- tk::PlaceWindow .
- vwait rc
- exit $rc
+Is 2.7.1 around the corner? Otherwise I'll just make a 2.7.0(2).
 
---
-https://github.com/git/git/pull/195
+Thanks,
+Dscho
