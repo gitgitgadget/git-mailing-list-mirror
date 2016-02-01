@@ -1,103 +1,107 @@
-From: Michael Blume <blume.mike@gmail.com>
-Subject: Re: AW: [PATCH 1/2] stash--helper: implement "git stash--helper"
-Date: Mon, 1 Feb 2016 15:36:27 -0800
-Message-ID: <CAO2U3QhvibfEexCUuDJyj=4P+bebnrQhMaVq3VrgNBLbiTDNaA@mail.gmail.com>
-References: <BLU436-SMTP27D65F59A444FA678FFD8AA5DA0@phx.gbl>
- <0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>
- <xmqqr3h1l2x8.fsf@gitster.mtv.corp.google.com> <BLU436-SMTP10996033F3EBFE2E8639F96A5DB0@phx.gbl>
- <xmqqlh78ximf.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git log -g bizarre behaviour
+Date: Mon, 01 Feb 2016 15:37:24 -0800
+Message-ID: <xmqqegcwt32j.fsf@gitster.mtv.corp.google.com>
+References: <1454241144.2822.7.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
-	Git List <git@vger.kernel.org>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 00:36:56 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 00:37:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQO1g-00074N-AA
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 00:36:56 +0100
+	id 1aQO2K-00085R-IQ
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 00:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbcBAXgt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Feb 2016 18:36:49 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:38393 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219AbcBAXgr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 18:36:47 -0500
-Received: by mail-ig0-f174.google.com with SMTP id mw1so45203000igb.1
-        for <git@vger.kernel.org>; Mon, 01 Feb 2016 15:36:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=afFtnsIOgXoBq2BfdbimAi2wKl/BkMNJ8NsVH/bzBTw=;
-        b=cawP1UVbBdgIthtQX8B51x7XLdUEmNsCy1EnQu29u5lWRCGeAxELZ0Fko4tOBGnkOQ
-         vkKPSSUGrWEFOe7s818U4TLb7yc1AhEQ0j8MBmPqYjHu4oEVyaBWvTL6fD13flax77Bg
-         2Im5K47P9K1vIInino13XJpj259d3HvDB/vZ3N/gsFo6X5ltGnbNWgRQ29fkLhlFOmQE
-         7qyaR0ikX21dtHGuqR2ESGYk7f5Ki1dz+32vGNUEF0vO52UJ5RJo7vrtrtokx5mPE2Kz
-         v6xA+agRddvHH723uiQO7S36FYhgDO+rray8jiN7QspFjKYdselA3KJWf3IyMHI3l6HP
-         oCTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=afFtnsIOgXoBq2BfdbimAi2wKl/BkMNJ8NsVH/bzBTw=;
-        b=GzzvdaUm/dwqk2HVVOVJGrGga0l+p3Ot+/a+Drzfz1YD/4+s+2JNcrPbhzY8oGkg0B
-         cUwFMJKIDs1U+GdCiPzjOtJCi7CAHSjcBkynEByiz+TlrhiHzUbyt0TOmtGRpk0tlrA5
-         HmutgT/OpJWXyCnZwFV3KXjgFpN+ZwBu1QN++LFQjhXNqU8NzUUaHL9saqiGct2VjEs+
-         XlpxuK8u7b/kHJWO4RhK8gUD5q8k4z2MAsrVxBsuY9aM3KRvEV2CUGg+C9lXxoYV7p1l
-         Be1cqytc3aJKp3Uhkv4VqdlX/Ge31I7IVZX+dZjhiTjO6UyYTF6zbdmbxfgV3mChBuBK
-         a0uA==
-X-Gm-Message-State: AG10YOSXNjTbv6EZhcAqpMPjFoBxhbjNApLrBv3Xix0A97X2sHwehdhUialhH2cCuaEVqploHsrgcTX2oF1uZQ==
-X-Received: by 10.50.102.40 with SMTP id fl8mr14041082igb.85.1454369806762;
- Mon, 01 Feb 2016 15:36:46 -0800 (PST)
-Received: by 10.36.149.131 with HTTP; Mon, 1 Feb 2016 15:36:27 -0800 (PST)
-In-Reply-To: <xmqqlh78ximf.fsf@gitster.mtv.corp.google.com>
+	id S1751498AbcBAXha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 18:37:30 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751488AbcBAXh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 18:37:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 625094141E;
+	Mon,  1 Feb 2016 18:37:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KeKkRV7rhc7P48kehFFTdCc6O3o=; b=RMNAoq
+	sh3CB6gDu9KRWb2dB3+8+1wzx3ovTP/+jZGCD32gX8cU12yBMjuiiSvpBj/yS1N+
+	yRBmdy4S1sNhfoP+vR+WqY8sZCIv4GxdwQ6ff9TO/c5kqJzOKPvaG6/F3Nn0/jlM
+	FGVSQniZvTr4KUsRm2G7UkQeW5RuEAvH5wG6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=trsbJEt/yONrMOEa6n9eLa3tyZHlie3I
+	RFj0S8eZu/XOxkg5Q3GhU0ZoS6uW5ik5uGL3MbUwS4SI5sjU4LzUC/0xdRaHoA/2
+	j2QjV/gYPdBMnIIMh8gvUVii/M5iJxgPo940007YMhtMgCnVl4EvPjORbKqVL4gg
+	5jTzLhKbmb8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 59DE44141D;
+	Mon,  1 Feb 2016 18:37:26 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CDE554141C;
+	Mon,  1 Feb 2016 18:37:25 -0500 (EST)
+In-Reply-To: <1454241144.2822.7.camel@kaarsemaker.net> (Dennis Kaarsemaker's
+	message of "Sun, 31 Jan 2016 12:52:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BFD92270-C93C-11E5-B5BF-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285226>
 
-On Fri, Jan 29, 2016 at 11:58 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Matthias A=C3=9Fhauer <mha1993@live.de> writes:
->
-> [administrivia: please wrap your lines to reasonable lengths]
->
->>> Honestly, I had high hopes after seeing the "we are rewriting it
->>> in C" but I am not enthused after seeing this.  I was hoping that
->>> the rewritten version would do this all in-core, by calling these
->>> functions that we already have:
->>
->> These functions might be obvious to you, but I'm new to git's
->> source code, ...
->
-> Ahh, I didn't realize I was talking with somebody unfamiliar with
-> the codebase.  Apologies.
->
-> Nevertheless, the list of functions I gave are a good starting
-> point; they are widely used building blocks in the codebase.
->
->> I'll be working on a v2 that incorporates the feedback from you,
->> Thomas Gummerer and Stefan Beller then. Further feedback is of
->> course welcome.
->
-> Thanks.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Maybe this isn't important given that it looks like the patch is going
-to be rewritten, but I have
+> I'm attempting to understand the log [-g] / reflog code enough to
+> untangle them and make reflog walking work for more than just commit
+> objects [see gmane 283169]. I found something which I think is wrong,
+> and would break after my changes.
+>
+> git log -g HEAD^ and git log -g v2.7.0^ give no output. This is
+> expected, as those are not things that have a reflog.
 
-stash.c:43:18: warning: incompatible pointer types assigning to 'const
-char *const *' from 'const char *'; take the address with &
-[-Wincompatible-pointer-types]
-                write_tree.env =3D prefix;
+OK.
+
+> But git log -g v2.7.0 seems to ignore -g and gives the normal
+> log.
+
+That sounds clearly broken, and I think I see how that happens from
+the hacky way the "-g" traversal was bolted onto the revision
+traversal machinery.
+
+I _think_ "git log -g" (and by extension "git reflog" which is just
+a short-hand to giving a few more options to that command) ought to
+
+ * Iterate over the _objects_ that used to be at the tip of the ref;
+ * Show each of these objects as if they were fed to "git show".
+
+This clearly is not possible without major surgery, including
+ripping out the hacky "-g" traversal from the revision traversal
+machinery and perhaps lifting it up a few levels in the callchain,
+as many functions in that callchain want to work on commits.
+
+Contrast these two:
+
+    $ git log -1 v2.7.0
+    $ git show v2.7.0
+
+> I'd like to make git log -g / git reflog abort early when trying to
+> display a reflog of a ref that has no reflog. Objections?
+
+Do you mean
+
+	$ git checkout -b testing
+        $ rm -f .git/logs/refs/heads/testing
+        $ git log -g testing
+
+will be changed from a silent no-op to an abort with error?
+
+I do not see a need for such a change--does that count as an
+objection?
+
+Thanks.
