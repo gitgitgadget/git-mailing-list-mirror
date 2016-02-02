@@ -1,119 +1,167 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 03/12] ref-filter: bump 'used_atom' and related code to the top
-Date: Wed,  3 Feb 2016 00:26:10 +0530
-Message-ID: <1454439370-2904-1-git-send-email-Karthik.188@gmail.com>
-References: <xmqqvb68t6j6.fsf@gitster.mtv.corp.google.com>
-Cc: gitster@pobox.com, sunshine@sunshineco.com,
-	Karthik Nayak <Karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 19:55:45 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: parse_object does check_sha1_signature but not parse_object_buffer?
+Date: Tue, 02 Feb 2016 11:25:44 -0800
+Message-ID: <xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
+References: <20160202015701.GA30444@glandium.org>
+	<xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
+	<20160202043628.GA10253@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Feb 02 20:26:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQg75-00060N-IP
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 19:55:43 +0100
+	id 1aQgaM-0001Wh-G3
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 20:25:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756909AbcBBSzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 13:55:38 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33532 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755583AbcBBSze (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 13:55:34 -0500
-Received: by mail-pa0-f53.google.com with SMTP id cy9so103569408pac.0
-        for <git@vger.kernel.org>; Tue, 02 Feb 2016 10:55:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=24n/sOCRe4dzN9P7Ik+SNo7OrY+j6ugaGv7GBqEqNIw=;
-        b=jymFGgGN8RcAZZFv4LxapsVXuFIjsGhSVeqXDF4gGUapPCbxFCt7gBxLk4GVl6p9d4
-         pc+atAtjoKuPt/WmoCIh7Tgc/yDuiPgdKkdLvl7bZ6oFKXQUUATgCjuhP8qGw5B5rrZM
-         d78c7CvN99R8Dafv2qSeRXkd1fqn7HbrU0mH51GYCGskaUegqerlo4Tzgdfn1G4Hn9O3
-         x0makSGhtjreLAvNHKpXY6ER7T6j/aZv8LNiY7B8V3dQ+hg6mLl73516Qza8/ZFNP+C/
-         3RDaj8ygmqJ8P788vAzW2slF3LH3XFkMscKUbKFDmRVDw57MTo7e4yPR6hfBbq9J6hZ9
-         Fd6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=24n/sOCRe4dzN9P7Ik+SNo7OrY+j6ugaGv7GBqEqNIw=;
-        b=fyWdyeYKQo6bKi66YT4mb3H7vFmM1UNONWcllVspXoKv6HnbG0RKfGDbj+d8sWV1Am
-         Uulxjefegu3L6gWBcbzBHPoCZtqfga/IXLckafz9mGuejLOQSvIUcUg6f+opMYtQywQh
-         izLXX5QH81DcK/XVfa+8aRxDk4qT7CwE2DRddJiQp0cc+aReqJwvTkWF3ygssBqcoFyw
-         oMuEMun3fqcOHpGk7KgXl/LqGQLLFOe5kjDHE0LyAH6HjwIfUAbqhO5POXChLhw9xyYj
-         so6wWuwl73n78QXyaTG7x8pmOtmWTHKizYTaMuMTash5riZ1f+Z0YdWTa9FR9CClNdAS
-         BBiA==
-X-Gm-Message-State: AG10YORRRoE7IX/IBF/kUG8baWwEhsM/n2KOpPsqXLFJr5vS/I9TOteaoRPut5Ne5P9Pbw==
-X-Received: by 10.66.122.97 with SMTP id lr1mr49149696pab.68.1454439334207;
-        Tue, 02 Feb 2016 10:55:34 -0800 (PST)
-Received: from ashley.localdomain ([106.51.240.0])
-        by smtp.gmail.com with ESMTPSA id s197sm4318991pfs.62.2016.02.02.10.55.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Feb 2016 10:55:33 -0800 (PST)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <xmqqvb68t6j6.fsf@gitster.mtv.corp.google.com>
+	id S1754939AbcBBTZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 14:25:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753880AbcBBTZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 14:25:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 578FD3F99B;
+	Tue,  2 Feb 2016 14:25:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=K1PEIMd90DqAAf3Djof7NsBZwug=; b=RwGhzU
+	ggSXPRnqvdRgYK17hd7HO3/Y2pVx+B/Q+ZB+e1yLYG7J2/9Gf1XCn/imGTbYEEkW
+	9PhrqcWFRLkPfxCZwdQ1sjIXZhLKf0Sa8eKFxsssnVOtQyvnwZKI4MDOZCcJ5GDa
+	NF7dlCV/e1ec8fU80YaYT/d+RocCecVKLMNOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X5+kuw8TQfX/cK7ygquV6wFrXqavi8zi
+	G5FqTuYqzqhQ0LbYHrsq0OO4GJI8sw0XI71YK3klq3ZXjtB9a7u9CIj5KJrbnXhR
+	3DLk/Z2AI5yflB4DUZGhFhuer8JHfPYaWSOd+vW4Isype2WiqcR5TBL4+otQ18Vf
+	0LfBk5qt4ks=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 41F7A3F99A;
+	Tue,  2 Feb 2016 14:25:47 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9A0FC3F998;
+	Tue,  2 Feb 2016 14:25:46 -0500 (EST)
+In-Reply-To: <20160202043628.GA10253@glandium.org> (Mike Hommey's message of
+	"Tue, 2 Feb 2016 13:36:28 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C26DEF56-C9E2-11E5-A425-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285299>
 
-Bump code to the top for usage in further patches.
+Mike Hommey <mh@glandium.org> writes:
 
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
----
- ref-filter.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+> On Mon, Feb 01, 2016 at 07:10:04PM -0800, Junio C Hamano wrote:
+>> Mike Hommey <mh@glandium.org> writes:
+>> 
+>> > Shouldn't parse_object_buffer also do check_sha1_signature?
+>> 
+>> In general, it shouldn't; its callers are supposed to do it as
+>> additional check when/if needed.  Callers like the one in fsck.c
+>> does not want to die after seeing one bad one.  We want to report
+>> and keep checking other things.
+>
+> Shouldn't some things like, at least, `git checkout`, still check
+> the sha1s, though?
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 38f38d4..c3a8372 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -16,6 +16,21 @@
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-+/*
-+ * An atom is a valid field atom listed below, possibly prefixed with
-+ * a "*" to denote deref_tag().
-+ *
-+ * We parse given format string and sort specifiers, and make a list
-+ * of properties that we need to extract out of objects.  ref_array_item
-+ * structure will hold an array of values extracted that can be
-+ * indexed with the "atom number", which is an index into this
-+ * array.
-+ */
-+static const char **used_atom;
-+static cmp_type *used_atom_type;
-+static int used_atom_cnt, need_tagged, need_symref;
-+static int need_color_reset_at_eol;
-+
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
-@@ -92,21 +107,6 @@ struct atom_value {
- };
- 
- /*
-- * An atom is a valid field atom listed above, possibly prefixed with
-- * a "*" to denote deref_tag().
-- *
-- * We parse given format string and sort specifiers, and make a list
-- * of properties that we need to extract out of objects.  ref_array_item
-- * structure will hold an array of values extracted that can be
-- * indexed with the "atom number", which is an index into this
-- * array.
-- */
--static const char **used_atom;
--static cmp_type *used_atom_type;
--static int used_atom_cnt, need_tagged, need_symref;
--static int need_color_reset_at_eol;
--
--/*
-  * Used to parse format string and sort specifiers
-  */
- int parse_ref_filter_atom(const char *atom, const char *ep)
--- 
-2.7.0
+That is a different issue--my answer was about the quoted question
+regarding parse_object_buffer().  Its callers are supposed to do
+additional check when/if needed, and there may be codepaths that
+currently use parse_object_buffer() that may want to do their own
+check, or call a different function that does the check for them.
+
+Having said that, I do not necessarily think "git checkout" should
+revalidate the object name.  The repository that you use for your
+daily work would have the same error/corruption rate as your working
+tree files, and I do not think you would constantly "validate" what
+is in your working tree by comparing their contents with what you
+think ought to be there.
+
+If you are working on extremely poor quality disks and SSDs, it
+might make sense to constantly revalidating the object data to catch
+corruption early, as that is what we can do (as opposed to the
+working tree files, corruption to which you probably do not have
+anything to catch bitflipping on).
+
+Unless you are placing your working tree on a filesystem with
+checksums, but your object data would also be protected against
+corruption in that case, so an extra revalidation at "git checkout"
+time would not buy you much if anything at all.
+
+http://article.gmane.org/gmane.comp.version-control.git/283380 (not
+necessarily the entire thread, but that exact article) is a
+reasonable summary that illustrates the way how we view the object
+integrity.
+
+    So "index-pack" is the enforcement point, and the rest of the
+    git commands generally assume that we can trust what is on disk
+    (as it is has either been generated by us, or checked by
+    index-pack).  The rest of the commands do not spend time
+    checking that the on-disk contents are sane (though you can run
+    git-fsck if you want to do that).
+
+If anything, we may want to reduce the number of codepaths that
+calls check_sha1_signature() on data that we know we have read from
+our own repository.  Even though I am not opposed to an idea to have
+a "paranoid" mode that revalidates the object name every time (and
+if "git checkout" does not currently, allow it to revalidate when we
+are operating under the "paranoid" mode), I do not think it should
+be on by default.
+
+In fact, I have this suspicion that the original justification to
+have the call to check_sha1_signature() in parse_object() might have
+been invalidated by the restructuring of the code over the past 10
+years.  e9eefa67 ([PATCH] Add function to parse an object of
+unspecified type (take 2), 2005-04-28) says
+
+    It also checks the hash of the file, due to its heritage as part
+    of fsck-cache.
+
+I.e. we do not need this call here, as long as we make sure that
+fsck codepath does not depend on the fact that parse_object() calls
+check_sha1_signature() to validate the consistency between the data
+and the object name.
+
+In fact, we do this, which is quite suboptimal:
+
+        static int fsck_sha1(const unsigned char *sha1)
+        {
+                struct object *obj = parse_object(sha1);
+                if (!obj) {
+                        errors_found |= ERROR_OBJECT;
+                        return error("%s: object corrupt or missing",
+                                     sha1_to_hex(sha1));
+                }
+                obj->flags |= HAS_OBJ;
+                return fsck_obj(obj);
+        }
+
+This function is called for each loose object file we find in
+fsck_object_dir(), and there are a few problems:
+
+ * The function parse_object() called from here would issue an error
+   message and returns NULL; then you get another "corrupt or
+   missing" error message, because this code cannot tell from the
+   NULL which is the case.
+
+ * The intent of the callchain to fsck_sha1() is to iterate over
+   loose object files xx/x{38} and validate what is contained in
+   them, but that behaviour is not guaranteed because it calls
+   parse_object(), which may get the object data from a packfile
+   if the loose object is also in the packfile.
+
+This function should instead take "path" (the only caller of this
+function fsck_loose() has it), read the data in the file, hash the
+data to validate that it matches "sha1" and then create the object
+out of that data it read by calling parse_object_buffer().
+
+I didn't check other callers of parse_object(), but I doubt that
+they need or want a check_sha1_signature() call in the function.
