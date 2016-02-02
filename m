@@ -1,278 +1,98 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 14/15] config: rename git_config_set to git_config_set_gently
-Date: Tue,  2 Feb 2016 12:51:55 +0100
-Message-ID: <1454413916-31984-15-git-send-email-ps@pks.im>
+Subject: [PATCH v4 10/15] clone: die on config error in cmd_clone
+Date: Tue,  2 Feb 2016 12:51:51 +0100
+Message-ID: <1454413916-31984-11-git-send-email-ps@pks.im>
 References: <1454413916-31984-1-git-send-email-ps@pks.im>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:33 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQZWV-0007bl-DQ
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:31 +0100
+	id 1aQZWb-0007mg-Rq
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755040AbcBBLx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 06:53:27 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33443 "EHLO
+	id S1754970AbcBBLxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 06:53:20 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55635 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755024AbcBBLxY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:24 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id DA506206AF
-	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:23 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1754957AbcBBLxT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:19 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 867FC2069A
+	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:18 -0500 (EST)
 Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Tue, 02 Feb 2016 06:53:23 -0500
+  by compute6.internal (MEProxy); Tue, 02 Feb 2016 06:53:18 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ElSY
-	zwR2sUd3Wosa5jecALiEqf8=; b=gYB4Cu4rKYRNktRsTPFX7VOJe+xfMESVXCzN
-	LAHVlYg26Ae80fhwjfjU3001nxnooVOzp7efhJezjeX+gYrPR4a0VlAo7Oa2rMfg
-	umLyG58ksSMJ+7MzEZfqD4ZCue3kNFDnqLsQiG9yZBZ6hYMlWpTYdR4+cPJxDQ8D
-	v56PjUo=
-X-Sasl-enc: //dnryvJKubyTufGStyS+jUIea54fHcwIbSef4FGWODl 1454414003
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=lLsS
+	JR6w2MIFwJ/znWDlrmv4ues=; b=P/b6M7PZ+Cm4LzcjZwRZfvhSwj3UKdc7gseN
+	QMcNcbUz5GpK7HiIKvtjZm6OEWVv0I5CgIhw+T7RRqXwDabUlh9ZjctqUisMel+1
+	3pMuzS5Kid7E6dXoWXV2YzOEmfkj1l8x0lPWGWdaF73hk/rX0vN0kRIaUDDSs7BR
+	I8S8WdM=
+X-Sasl-enc: r6LQyu5H/5A3cWhimqIKZBlQt8fd0PmbEk4B1DY63Wq5 1454413997
 Received: from localhost (f052008117.adsl.alicedsl.de [78.52.8.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 63EFCC00012;
-	Tue,  2 Feb 2016 06:53:23 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id DC637C0001B;
+	Tue,  2 Feb 2016 06:53:17 -0500 (EST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1454413916-31984-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285264>
 
-The desired default behavior for `git_config_set` is to die
-whenever an error occurs. Dying is the default for a lot of
-internal functions when failures occur and is in this case the
-right thing to do for most callers as otherwise we might run into
-inconsistent repositories without noticing.
+The clone command does not check for error codes returned by
+`git_config_set` functions. This may cause the user to end up
+with an inconsistent repository without any indication with what
+went wrong.
 
-As some code may rely on the actual return values for
-`git_config_set` we still require the ability to invoke these
-functions without aborting. Rename the existing `git_config_set`
-functions to `git_config_set_gently` to keep them available for
-those callers.
+Fix this problem by dying with an error message when we are
+unable to write the configuration files to disk.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c  |  2 +-
- builtin/config.c | 28 ++++++++++++++--------------
- builtin/remote.c |  2 +-
- cache.h          | 10 +++++-----
- config.c         | 29 +++++++++++++++--------------
- submodule.c      |  2 +-
- 6 files changed, 37 insertions(+), 36 deletions(-)
+ builtin/clone.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index f2a2f9a..dccfab3 100644
+index 81e238f..f2a2f9a 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -735,7 +735,7 @@ static int checkout(void)
+@@ -786,12 +786,12 @@ static void write_refspec_config(const char *src_ref_prefix,
+ 		/* Configure the remote */
+ 		if (value.len) {
+ 			strbuf_addf(&key, "remote.%s.fetch", option_origin);
+-			git_config_set_multivar(key.buf, value.buf, "^$", 0);
++			git_config_set_multivar_or_die(key.buf, value.buf, "^$", 0);
+ 			strbuf_reset(&key);
  
- static int write_one_config(const char *key, const char *value, void *data)
- {
--	return git_config_set_multivar(key, value ? value : "true", "^$", 0);
-+	return git_config_set_multivar_gently(key, value ? value : "true", "^$", 0);
- }
+ 			if (option_mirror) {
+ 				strbuf_addf(&key, "remote.%s.mirror", option_origin);
+-				git_config_set(key.buf, "true");
++				git_config_set_or_die(key.buf, "true");
+ 				strbuf_reset(&key);
+ 			}
+ 		}
+@@ -949,14 +949,14 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			src_ref_prefix = "refs/";
+ 		strbuf_addstr(&branch_top, src_ref_prefix);
  
- static void write_config(struct string_list *config)
-diff --git a/builtin/config.c b/builtin/config.c
-index adc7727..c26d6e7 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -582,7 +582,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
--		ret = git_config_set_in_file(given_config_source.file, argv[0], value);
-+		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
- 		if (ret == CONFIG_NOTHING_SET)
- 			error("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
-@@ -592,23 +592,23 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value, argv[2], 0);
-+		return git_config_set_multivar_in_file_gently(given_config_source.file,
-+							      argv[0], value, argv[2], 0);
+-		git_config_set("core.bare", "true");
++		git_config_set_or_die("core.bare", "true");
+ 	} else {
+ 		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
  	}
- 	else if (actions == ACTION_ADD) {
- 		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value,
--						       CONFIG_REGEX_NONE, 0);
-+		return git_config_set_multivar_in_file_gently(given_config_source.file,
-+							      argv[0], value,
-+							      CONFIG_REGEX_NONE, 0);
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
- 		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], value, argv[2], 1);
-+		return git_config_set_multivar_in_file_gently(given_config_source.file,
-+							      argv[0], value, argv[2], 1);
- 	}
- 	else if (actions == ACTION_GET) {
- 		check_argc(argc, 1, 2);
-@@ -634,17 +634,17 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_write();
- 		check_argc(argc, 1, 2);
- 		if (argc == 2)
--			return git_config_set_multivar_in_file(given_config_source.file,
--							       argv[0], NULL, argv[1], 0);
-+			return git_config_set_multivar_in_file_gently(given_config_source.file,
-+								      argv[0], NULL, argv[1], 0);
- 		else
--			return git_config_set_in_file(given_config_source.file,
--						      argv[0], NULL);
-+			return git_config_set_in_file_gently(given_config_source.file,
-+							     argv[0], NULL);
- 	}
- 	else if (actions == ACTION_UNSET_ALL) {
- 		check_write();
- 		check_argc(argc, 1, 2);
--		return git_config_set_multivar_in_file(given_config_source.file,
--						       argv[0], NULL, argv[1], 1);
-+		return git_config_set_multivar_in_file_gently(given_config_source.file,
-+							      argv[0], NULL, argv[1], 1);
- 	}
- 	else if (actions == ACTION_RENAME_SECTION) {
- 		int ret;
-diff --git a/builtin/remote.c b/builtin/remote.c
-index fe57f77..abd5f67 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1397,7 +1397,7 @@ static int update(int argc, const char **argv)
  
- static int remove_all_fetch_refspecs(const char *remote, const char *key)
- {
--	return git_config_set_multivar(key, NULL, NULL, 1);
-+	return git_config_set_multivar_gently(key, NULL, NULL, 1);
- }
+ 	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
+ 	strbuf_addf(&key, "remote.%s.url", option_origin);
+-	git_config_set(key.buf, repo);
++	git_config_set_or_die(key.buf, repo);
+ 	strbuf_reset(&key);
  
- static void add_branches(struct remote *remote, const char **branches,
-diff --git a/cache.h b/cache.h
-index c1f844d..a97f677 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1469,7 +1469,7 @@ extern int update_server_info(int);
- /* git_config_parse_key() returns these negated: */
- #define CONFIG_INVALID_KEY 1
- #define CONFIG_NO_SECTION_OR_NAME 2
--/* git_config_set(), git_config_set_multivar() return the above or these: */
-+/* git_config_set_gently(), git_config_set_multivar_gently() return the above or these: */
- #define CONFIG_NO_LOCK -1
- #define CONFIG_INVALID_FILE 3
- #define CONFIG_NO_WRITE 4
-@@ -1507,15 +1507,15 @@ extern int git_config_bool(const char *, const char *);
- extern int git_config_maybe_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
--extern int git_config_set_in_file(const char *, const char *, const char *);
-+extern int git_config_set_in_file_gently(const char *, const char *, const char *);
- extern void git_config_set_in_file_or_die(const char *, const char *, const char *);
--extern int git_config_set(const char *, const char *);
-+extern int git_config_set_gently(const char *, const char *);
- extern void git_config_set_or_die(const char *, const char *);
- extern int git_config_parse_key(const char *, char **, int *);
- extern int git_config_key_is_valid(const char *key);
--extern int git_config_set_multivar(const char *, const char *, const char *, int);
-+extern int git_config_set_multivar_gently(const char *, const char *, const char *, int);
- extern void git_config_set_multivar_or_die(const char *, const char *, const char *, int);
--extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
-+extern int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, int);
- extern void git_config_set_multivar_in_file_or_die(const char *, const char *, const char *, const char *, int);
- extern int git_config_rename_section(const char *, const char *);
- extern int git_config_rename_section_in_file(const char *, const char *, const char *);
-diff --git a/config.c b/config.c
-index 856f7d34..e7f42da 100644
---- a/config.c
-+++ b/config.c
-@@ -1825,10 +1825,10 @@ contline:
- 	return offset;
- }
- 
--int git_config_set_in_file(const char *config_filename,
--			const char *key, const char *value)
-+int git_config_set_in_file_gently(const char *config_filename,
-+				  const char *key, const char *value)
- {
--	return git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
-+	return git_config_set_multivar_in_file_gently(config_filename, key, value, NULL, 0);
- }
- 
- void git_config_set_in_file_or_die(const char *config_filename,
-@@ -1837,9 +1837,9 @@ void git_config_set_in_file_or_die(const char *config_filename,
- 	git_config_set_multivar_in_file_or_die(config_filename, key, value, NULL, 0);
- }
- 
--int git_config_set(const char *key, const char *value)
-+int git_config_set_gently(const char *key, const char *value)
- {
--	return git_config_set_multivar(key, value, NULL, 0);
-+	return git_config_set_multivar_gently(key, value, NULL, 0);
- }
- 
- void git_config_set_or_die(const char *key, const char *value)
-@@ -1961,9 +1961,10 @@ int git_config_key_is_valid(const char *key)
-  * - the config file is removed and the lock file rename()d to it.
-  *
-  */
--int git_config_set_multivar_in_file(const char *config_filename,
--				const char *key, const char *value,
--				const char *value_regex, int multi_replace)
-+int git_config_set_multivar_in_file_gently(const char *config_filename,
-+					   const char *key, const char *value,
-+					   const char *value_regex,
-+					   int multi_replace)
- {
- 	int fd = -1, in_fd = -1;
- 	int ret;
-@@ -2194,16 +2195,16 @@ void git_config_set_multivar_in_file_or_die(const char *config_filename,
- 				const char *key, const char *value,
- 				const char *value_regex, int multi_replace)
- {
--	if (git_config_set_multivar_in_file(config_filename, key, value,
--					    value_regex, multi_replace) < 0)
-+	if (git_config_set_multivar_in_file_gently(config_filename, key, value,
-+						   value_regex, multi_replace) < 0)
- 		die(_("Could not set '%s' to '%s'"), key, value);
- }
- 
--int git_config_set_multivar(const char *key, const char *value,
--			const char *value_regex, int multi_replace)
-+int git_config_set_multivar_gently(const char *key, const char *value,
-+				   const char *value_regex, int multi_replace)
- {
--	return git_config_set_multivar_in_file(NULL, key, value, value_regex,
--					       multi_replace);
-+	return git_config_set_multivar_in_file_gently(NULL, key, value, value_regex,
-+						      multi_replace);
- }
- 
- void git_config_set_multivar_or_die(const char *key, const char *value,
-diff --git a/submodule.c b/submodule.c
-index 589a82c..be8b5cc 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -69,7 +69,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	strbuf_addstr(&entry, "submodule.");
- 	strbuf_addstr(&entry, submodule->name);
- 	strbuf_addstr(&entry, ".path");
--	if (git_config_set_in_file(".gitmodules", entry.buf, newpath) < 0) {
-+	if (git_config_set_in_file_gently(".gitmodules", entry.buf, newpath) < 0) {
- 		/* Maybe the user already did that, don't error out here */
- 		warning(_("Could not update .gitmodules entry %s"), entry.buf);
- 		strbuf_release(&entry);
+ 	if (option_reference.nr)
 -- 
 2.7.0
