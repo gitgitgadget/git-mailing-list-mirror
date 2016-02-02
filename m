@@ -1,75 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: [ANNOUNCE] Git Developer Summit, April 4th, 2016, NYC
-Date: Tue, 2 Feb 2016 11:12:41 -0500
-Message-ID: <20160202161240.GA16870@sigill.intra.peff.net>
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Subject: Re: BuGit: File-less distributed issue tracking system with Git
+Date: Tue, 02 Feb 2016 11:13:34 -0500
+Message-ID: <jwvbn7zksha.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+References: <jwva8psr6vr.fsf-monnier+gmane.comp.version-control.git@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 17:12:49 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 17:13:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQdZQ-0004zu-5O
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 17:12:48 +0100
+	id 1aQdaT-0006QK-FM
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 17:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932841AbcBBQMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 11:12:44 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36212 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932281AbcBBQMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 11:12:43 -0500
-Received: (qmail 28739 invoked by uid 102); 2 Feb 2016 16:12:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 11:12:43 -0500
-Received: (qmail 16189 invoked by uid 107); 2 Feb 2016 16:12:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 11:12:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Feb 2016 11:12:41 -0500
-Content-Disposition: inline
+	id S933407AbcBBQNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 11:13:49 -0500
+Received: from plane.gmane.org ([80.91.229.3]:48570 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933392AbcBBQNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 11:13:48 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aQdaJ-0006E2-7Z
+	for git@vger.kernel.org; Tue, 02 Feb 2016 17:13:43 +0100
+Received: from modemcable022.171-203-24.mc.videotron.ca ([24.203.171.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 17:13:43 +0100
+Received: from monnier by modemcable022.171-203-24.mc.videotron.ca with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 17:13:43 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: modemcable022.171-203-24.mc.videotron.ca
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.50 (gnu/linux)
+Cancel-Lock: sha1:81j3x57J9l7YMlE8iZGoYoWkYO0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285271>
 
-I mentioned earlier[1] that plans were in the works for a developer
-summit as part of Git Merge this year. I'm pleased to announce that it's
-definitely happening, and it's time to RSVP so we can get an official
-headcount[2]:
+> So, see attached BuGit, an issue tracking system which stores its
+> database in Git to try and get "distributed operation for free".
 
-  https://www.ticketbase.com/events/git-merge-core-contributors-summit
+It's now hosted at https://gitlab.com/monnier/bugit
 
-It will be April 4th in New York City, from 11am-5pm, and is open to
-people who develop git or any of its alternate implementations, or tools
-that are closely tied to git.
+In the mean time it grew to 80KB, offers a read-only web UI, email
+notifications, and a fairly complete command line UI.
 
-We have a venue that holds 25 people max. That should be enough based on
-the responses I got to my earlier email. We can move to a larger venue,
-but I'd have to know _very soon_. So please sign up promptly, and if you
-need to wait to figure out your plans, let me know that you're maybe
-interested.
+It also changed its internal representation slightly, so it can now be
+used within the same Git repository as the project on which you're
+working (e.g. I cloned the BuGit source code and BuGit's bug database
+into the same repository, so I can use bugit directly from the source
+code directory to manipulate its bugs).
 
-There's no particular agenda for the meeting. People should show up with
-some topics for discussion or presentation. There should be appropriate
-seating for round-table discussion, and a projector.
+You can even host the bug database and the source code of your project
+in the same repository (the post-receive hook script can be told to pass
+the non-bugit-related changes to some other script).
 
-The rest of the Git Merge conference will be the following day, the 5th,
-with more formal talks to a bigger audience. I think there are still
-speaking slots left; let me know if you'd like to give a talk to the
-larger audience, and I can put you in touch with the organizers. Details
-for that day are still forthcoming, but will be at:
 
-  http://git-merge.com/
-
-when they are available.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/282634
-
-[2] You need a password to register. My plan is to withhold it from this
-    email but hand it out liberally to people who are git contributors,
-    and it can hopefully pass by word of mouth to those who need it
-    without generating any spammy registrations.  I'll send an email
-    shortly to everybody who responded to my previous announcement, but
-    please don't hesitate to ask for it if you would like to come.
+        Stefan
