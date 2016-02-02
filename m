@@ -1,99 +1,136 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 03/15] branch: die on config error when unsetting upstream
-Date: Tue,  2 Feb 2016 12:51:44 +0100
-Message-ID: <1454413916-31984-4-git-send-email-ps@pks.im>
+Subject: [PATCH v4 08/15] remote: die on config error when setting/adding branches
+Date: Tue,  2 Feb 2016 12:51:49 +0100
+Message-ID: <1454413916-31984-9-git-send-email-ps@pks.im>
 References: <1454413916-31984-1-git-send-email-ps@pks.im>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 12:52:34 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQZVV-000650-4K
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:52:29 +0100
+	id 1aQZWK-0007Sf-Lp
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754828AbcBBLwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 06:52:16 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:38431 "EHLO
+	id S1754953AbcBBLxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 06:53:17 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:38130 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754719AbcBBLwO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:52:14 -0500
+	by vger.kernel.org with ESMTP id S1754854AbcBBLxQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:16 -0500
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id C9D8F2132B
-	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:52:13 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Tue, 02 Feb 2016 06:52:13 -0500
+	by mailout.nyi.internal (Postfix) with ESMTP id BA96D20615
+	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:15 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Tue, 02 Feb 2016 06:53:15 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=OHgc
-	YhdmBv3lRF6fILFnM6YPzx0=; b=ac9yIv1KbWu9f2AqcHDnLQuf4anr+k8idiHh
-	Yl0qmQP7YS+4mV/wxEXVNXe+wDUAUYYeOMJ32SmSTgTUr9ckTWVecyYqJpKNGfJa
-	Fa8b+z+sLCNaq/CB9KVHA2iEOVWld/QSmv1omPeiD77zqES2v53hnhOgxzfy/Yaq
-	TgoGIJ0=
-X-Sasl-enc: DMaPTdfrrQqjSo1XIaJwQ5tSQIlj9vYj8z0wzwAae2c0 1454413933
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=qgpu
+	/KuhAI/N1j1X01Eltu0qi7I=; b=mEm3NtxGbgqHbA9Prp87netWojZ5uCs/5Skn
+	BGGZ+3nWoOBeEAoh64dYlVCs/aUKUBY2JWn3XWfubwyxjR4sfnGKJmu4i74VBltm
+	UQEp7CXUMrTQVuqwtORK/Fl0MauyP0WRLHn9y2d7YOd+8rktShFTzgSOStR/dt3c
+	RAIlz6A=
+X-Sasl-enc: 8Xdlj/DRzSZccR38BfuK629yuIridZ2oJEQX3HNrCARd 1454413995
 Received: from localhost (f052008117.adsl.alicedsl.de [78.52.8.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 5DC6B680195;
-	Tue,  2 Feb 2016 06:52:13 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 22352C0001A;
+	Tue,  2 Feb 2016 06:53:15 -0500 (EST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1454413916-31984-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285257>
 
-When we try to unset upstream configurations we do not check
-return codes for the `git_config_set` functions. As those may
-indicate that we were unable to unset the respective
-configuration we may exit successfully without any error message
-while in fact the upstream configuration was not unset.
+When we add or set new branches (e.g. by `git remote add -f` or
+`git remote set-branches`) we do not check for error codes when
+writing the branches to the configuration file. When persisting
+the configuration failed we are left with a remote that has none
+or not all of the branches that should have been set without
+notifying the user.
 
-Fix this by dying with an error message when we cannot unset the
-configuration.
+Fix this issue by dying early on configuration error.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/branch.c  | 4 ++--
- t/t3200-branch.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ builtin/remote.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 3f6c825..0978287 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -791,10 +791,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("Branch '%s' has no upstream information"), branch->name);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 8b78c3d..eeb6d2e 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -108,8 +108,8 @@ enum {
+ #define MIRROR_PUSH 2
+ #define MIRROR_BOTH (MIRROR_FETCH|MIRROR_PUSH)
  
- 		strbuf_addf(&buf, "branch.%s.remote", branch->name);
--		git_config_set_multivar(buf.buf, NULL, NULL, 1);
-+		git_config_set_multivar_or_die(buf.buf, NULL, NULL, 1);
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
--		git_config_set_multivar(buf.buf, NULL, NULL, 1);
-+		git_config_set_multivar_or_die(buf.buf, NULL, NULL, 1);
- 		strbuf_release(&buf);
- 	} else if (argc > 0 && argc <= 2) {
- 		struct branch *branch = branch_get(argv[0]);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index dd776b3..a897248 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -473,6 +473,13 @@ test_expect_success '--unset-upstream should fail if given a non-existent branch
- 	test_must_fail git branch --unset-upstream i-dont-exist
- '
+-static int add_branch(const char *key, const char *branchname,
+-		const char *remotename, int mirror, struct strbuf *tmp)
++static void add_branch(const char *key, const char *branchname,
++		       const char *remotename, int mirror, struct strbuf *tmp)
+ {
+ 	strbuf_reset(tmp);
+ 	strbuf_addch(tmp, '+');
+@@ -119,7 +119,7 @@ static int add_branch(const char *key, const char *branchname,
+ 	else
+ 		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
+ 				branchname, remotename, branchname);
+-	return git_config_set_multivar(key, tmp->buf, "^$", 0);
++	git_config_set_multivar_or_die(key, tmp->buf, "^$", 0);
+ }
  
-+test_expect_success '--unset-upstream should fail if config is locked' '
-+	test_when_finished "rm -f .git/config.lock" &&
-+	git branch --set-upstream-to locked &&
-+	>.git/config.lock &&
-+	test_must_fail git branch --unset-upstream
-+'
-+
- test_expect_success 'test --unset-upstream on HEAD' '
- 	git branch my14 &&
- 	test_config branch.master.remote foo &&
+ static const char mirror_advice[] =
+@@ -206,9 +206,8 @@ static int add(int argc, const char **argv)
+ 		if (track.nr == 0)
+ 			string_list_append(&track, "*");
+ 		for (i = 0; i < track.nr; i++) {
+-			if (add_branch(buf.buf, track.items[i].string,
+-				       name, mirror, &buf2))
+-				return 1;
++			add_branch(buf.buf, track.items[i].string,
++				   name, mirror, &buf2);
+ 		}
+ 	}
+ 
+@@ -1416,21 +1415,17 @@ static int remove_all_fetch_refspecs(const char *remote, const char *key)
+ 	return git_config_set_multivar(key, NULL, NULL, 1);
+ }
+ 
+-static int add_branches(struct remote *remote, const char **branches,
+-			const char *key)
++static void add_branches(struct remote *remote, const char **branches,
++			 const char *key)
+ {
+ 	const char *remotename = remote->name;
+ 	int mirror = remote->mirror;
+ 	struct strbuf refspec = STRBUF_INIT;
+ 
+ 	for (; *branches; branches++)
+-		if (add_branch(key, *branches, remotename, mirror, &refspec)) {
+-			strbuf_release(&refspec);
+-			return 1;
+-		}
++		add_branch(key, *branches, remotename, mirror, &refspec);
+ 
+ 	strbuf_release(&refspec);
+-	return 0;
+ }
+ 
+ static int set_remote_branches(const char *remotename, const char **branches,
+@@ -1449,10 +1444,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
+ 		strbuf_release(&key);
+ 		return 1;
+ 	}
+-	if (add_branches(remote, branches, key.buf)) {
+-		strbuf_release(&key);
+-		return 1;
+-	}
++	add_branches(remote, branches, key.buf);
+ 
+ 	strbuf_release(&key);
+ 	return 0;
 -- 
 2.7.0
