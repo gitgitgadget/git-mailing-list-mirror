@@ -1,171 +1,199 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 8/8] clone: allow an explicit argument for parallel submodule clones
-Date: Tue,  2 Feb 2016 09:51:37 -0800
-Message-ID: <1454435497-26429-9-git-send-email-sbeller@google.com>
+Subject: [PATCH 5/8] fetching submodules: respect `submodule.fetchJobs` config option
+Date: Tue,  2 Feb 2016 09:51:34 -0800
+Message-ID: <1454435497-26429-6-git-send-email-sbeller@google.com>
 References: <1454435497-26429-1-git-send-email-sbeller@google.com>
 Cc: Jens.Lehmann@web.de, Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue Feb 02 18:52:08 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 18:52:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQf7W-0002BP-Oh
+	id 1aQf7X-0002BP-B7
 	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 18:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933293AbcBBRwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 12:52:02 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35733 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933171AbcBBRv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 12:51:57 -0500
-Received: by mail-pa0-f45.google.com with SMTP id ho8so102596115pac.2
-        for <git@vger.kernel.org>; Tue, 02 Feb 2016 09:51:56 -0800 (PST)
+	id S933278AbcBBRwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 12:52:00 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:32958 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756480AbcBBRvx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 12:51:53 -0500
+Received: by mail-pf0-f170.google.com with SMTP id w123so16152416pfb.0
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 09:51:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IUZplBvaqWmtTj0K4k4MYWKcxZX4aNq62G/uH+7CocI=;
-        b=HaPP3HIhbGHA0YDwOQyihYx0CeH9RM352U/qTmhXS/tm92r5Yp9wBUlUR9azemK+v/
-         SW8Rg0ESboOMRPzvxzx/sNdbXLaoX8k/SManHP8njpMt8rvLi69pajVfvZaxpO1cgS7f
-         Ha+m8YUdT8BmUjIGg0QRaa0cr0ik8fmfFQS1Ge3qotw6PeC2YdnxjAIqnAyto5tn+iM7
-         PGCdW0b4r8YtY5rMb6hF1eEBhyxJUUmHY0Ge27GvQRxJVMINGvWkE5XvweyP5OpxJXeS
-         7QaGMV9HDqqp80b3cuPcxdpLcSUIjg1AC6ETaXipsCYoOFsyiFLrqskTOnx3jFs3dl49
-         7w7g==
+        bh=TSCTa59UVJcJiYCZvmPXnBY3OQWeYwpD8ZeIm1pKRXw=;
+        b=mjfVVzE4bjWKY88fB4GoXWTldLFvqlPAxaRU/GKfs/0CGAJaJsqMFIZWq8IkkAakny
+         wmcUxrQgeRxEKkGhlIjCIjnqq/H+iQecxt1GwWKvh3fKq1S0b0+IKxNSPDk0w4Nk/hdt
+         NkzCbl53GHQCiawAYNn92PXpTZxJWbSabMCSLILBKuHRgQYghEXVjjkD82Y7k4Rr39wA
+         WhyUL6KNjZ4glB3TpG1uqxdtxDFfEIBeWzw9qONOXQb2NHyAteD76jmGdSFJEdispRfr
+         S5fm5kovU/TOsKLosyZrq+HyKb/3Yd1PePws6MJOu91xeKdRYSGthybZ74nqBcTC29Dj
+         HQIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IUZplBvaqWmtTj0K4k4MYWKcxZX4aNq62G/uH+7CocI=;
-        b=kZb13qZEWCjmqr3LAjR84z7Wm6tu0D4Rmd0K2SUxxbyYsfiQNUTIs+Vkqv/GoUPqo6
-         R50ar8Xqbji/thdEYH58snQG5kGBxdEFW/yVesEzMimB3CAZ5BOjEtyhMmBUvRFfgVjq
-         kPl+lJRpn+KpUD2x2a8/gJg7GXt/nMW/bH7AbWYG/wcYEKw3KC4SF32yeDzSsig8FPmX
-         XWfdiicw+wpcPHhRuy+m1hnj7m2IyUhG9brHxNLyNTIg+RTWIfQJU5YzAkQqkXQtyHu4
-         67wKVBVI74y6/CaDVdyVQCGMl3dDaAq41Rk+m5aP8Xv/5jhGjvazzaIN+WTG7eSh/t2E
-         o19A==
-X-Gm-Message-State: AG10YOTmmJ94Wgmj+SIM9FC7PZszyAVpknEztUlyZC5cIkLiLe81zcYry8EkmiV05SYaUyTO
-X-Received: by 10.66.144.37 with SMTP id sj5mr48530803pab.69.1454435516332;
-        Tue, 02 Feb 2016 09:51:56 -0800 (PST)
+        bh=TSCTa59UVJcJiYCZvmPXnBY3OQWeYwpD8ZeIm1pKRXw=;
+        b=gK7JCIGlzQr/kzGabEYpe842sioOtayR21G7FBqLhJjKZJpR8c1X/nTJcu40C9cy5p
+         4J8pwfyJCASEEHi1+AvfpVNcoQUg41bnEWXTeHAvgatKbxsKjH7zqD0d2AuQV/coWqEY
+         pjB51D1zOUvi4Hp1cNXn85GutysZMHJXszj+anT+7y4p3y3bf9AMQXyXmCjcTO40BFNj
+         9amAmWy0YnmnpXrfZuEK3KIz0SxVfBMh6vj2mOANFqM1DKyA73tsNYO/b4WDRVHF25it
+         nibQnwivqlHz63zVfWOuqI8bV8U0cKK9OyjQUw9dJerR/eXig5KYcEKkWNQhyrtXBtyI
+         p2Cg==
+X-Gm-Message-State: AG10YOSG/F/+DVf7kB6BUp/DzSnEQO8cjRV9U2iIZ6oqu52Vfmz1TiUYIys65/evDIPdUDud
+X-Received: by 10.98.74.71 with SMTP id x68mr48666274pfa.80.1454435511973;
+        Tue, 02 Feb 2016 09:51:51 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:11e1:ff63:6d72:465a])
-        by smtp.gmail.com with ESMTPSA id kw10sm4188479pab.0.2016.02.02.09.51.55
+        by smtp.gmail.com with ESMTPSA id lq10sm4037044pab.36.2016.02.02.09.51.51
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 02 Feb 2016 09:51:55 -0800 (PST)
+        Tue, 02 Feb 2016 09:51:51 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.42.ge5f5e2d
 In-Reply-To: <1454435497-26429-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285289>
 
-Just pass it along to "git submodule update", which may pick reasonable
-defaults if you don't specify an explicit number.
+This allows to configure fetching and updating in parallel
+without having the command line option.
+
+This moved the responsibility to determine how many parallel processes
+to start from builtin/fetch to submodule.c as we need a way to communicate
+"The user did not specify the number of parallel processes in the command
+line options" in the builtin fetch. The submodule code takes care of
+the precedence (CLI > config > default)
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-clone.txt |  6 +++++-
- builtin/clone.c             | 19 +++++++++++++------
- t/t7406-submodule-update.sh | 15 +++++++++++++++
- 3 files changed, 33 insertions(+), 7 deletions(-)
+ Documentation/config.txt    |  7 +++++++
+ builtin/fetch.c             |  2 +-
+ submodule-config.c          | 15 +++++++++++++++
+ submodule-config.h          |  2 ++
+ submodule.c                 |  5 +++++
+ t/t5526-fetch-submodules.sh | 14 ++++++++++++++
+ 6 files changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 6bf000d..6db7b6d 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
--	  [--recursive | --recurse-submodules] [--] <repository>
-+	  [--recursive | --recurse-submodules] [--jobs <n>] [--] <repository>
- 	  [<directory>]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2d06b11..eda3276 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2646,6 +2646,13 @@ submodule.<name>.ignore::
+ 	"--ignore-submodules" option. The 'git submodule' commands are not
+ 	affected by this setting.
  
- DESCRIPTION
-@@ -221,6 +221,10 @@ objects from the source repository into a pack in the cloned repository.
- 	The result is Git repository can be separated from working
- 	tree.
++submodule.fetchJobs::
++	This is used to determine how many submodules will be
++	fetched/cloned at the same time. Specifying a positive integer
++	allows up to that number of submodules being fetched in parallel.
++	This is used in fetch and clone operations only. A value of 0 will
++	give some reasonable configuration. It defaults to 1.
++
+ tag.sort::
+ 	This variable controls the sort ordering of tags when displayed by
+ 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 586840d..5aa1c2d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+ static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int tags = TAGS_DEFAULT, unshallow, update_shallow;
+-static int max_children = 1;
++static int max_children = -1;
+ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+diff --git a/submodule-config.c b/submodule-config.c
+index 29e21b2..a32259e 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -32,6 +32,7 @@ enum lookup_type {
  
-+-j <n>::
-+--jobs <n>::
-+	The number of submodules fetched at the same time.
-+	Defaults to the `submodule.fetchJobs` option.
+ static struct submodule_cache cache;
+ static int is_cache_init;
++static int parallel_jobs = -1;
  
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0b3cd9..b004fb4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,6 +50,7 @@ static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
-+static int max_jobs = -1;
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -72,6 +73,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("initialize submodules in the clone")),
- 	OPT_BOOL(0, "recurse-submodules", &option_recursive,
- 		    N_("initialize submodules in the clone")),
-+	OPT_INTEGER('j', "jobs", &max_jobs,
-+		    N_("number of submodules cloned in parallel")),
- 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
- 		   N_("directory from which templates will be used")),
- 	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
-@@ -95,10 +98,6 @@ static struct option builtin_clone_options[] = {
- 	OPT_END()
- };
- 
--static const char *argv_submodule[] = {
--	"submodule", "update", "--init", "--recursive", NULL
--};
--
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
+ static int config_path_cmp(const struct submodule_entry *a,
+ 			   const struct submodule_entry *b,
+@@ -239,6 +240,15 @@ static int parse_generic_submodule_config(const char *key,
+ 					  const char *value,
+ 					  struct parse_config_parameter *me)
  {
- 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -724,8 +723,16 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive)
--		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-+	if (!err && option_recursive) {
-+		struct argv_array args = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+
-+		if (max_jobs != -1)
-+			argv_array_pushf(&args, "--jobs=%d", max_jobs);
-+
-+		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+		argv_array_clear(&args);
++	if (!strcmp(key, "fetchjobs")) {
++		parallel_jobs = strtol(value, NULL, 10);
++		if (parallel_jobs < 0) {
++			warning("submodule.fetchJobs not allowed to be negative.");
++			parallel_jobs = 1;
++			return 1;
++		}
 +	}
- 
- 	return err;
- }
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 7fd5142..090891e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -786,4 +786,19 @@ test_expect_success 'submodule update can be run in parallel' '
- 	 grep "9 tasks" trace.out
- 	)
- '
 +
-+test_expect_success 'git clone passes the parallel jobs config on to submodules' '
-+	test_when_finished "rm -rf super4" &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
-+	grep "7 tasks" trace.out &&
-+	rm -rf super4 &&
-+	git config --global submodule.fetchJobs 8 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules . super4 &&
-+	grep "8 tasks" trace.out &&
-+	rm -rf super4 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 9 . super4 &&
-+	grep "9 tasks" trace.out &&
-+	rm -rf super4
+ 	return 0;
+ }
+ 
+@@ -482,3 +492,8 @@ void submodule_free(void)
+ 	cache_free(&cache);
+ 	is_cache_init = 0;
+ }
++
++int config_parallel_submodules(void)
++{
++	return parallel_jobs;
++}
+diff --git a/submodule-config.h b/submodule-config.h
+index f9e2a29..d9bbf9a 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -27,4 +27,6 @@ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path);
+ void submodule_free(void);
+ 
++int config_parallel_submodules(void);
++
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/submodule.c b/submodule.c
+index b83939c..eb7d54b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -751,6 +751,11 @@ int fetch_populated_submodules(const struct argv_array *options,
+ 	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	/* default value, "--submodule-prefix" and its value are added later */
+ 
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = config_parallel_submodules();
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = 1;
++
+ 	calculate_changed_submodule_paths();
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 1241146..954d0e4 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -471,4 +471,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+ 	test_i18ncmp expect.err actual.err
+ '
+ 
++test_expect_success 'fetching submodules respects parallel settings' '
++	git config fetch.recurseSubmodules true &&
++	(
++		cd downstream &&
++		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
++		grep "7 tasks" trace.out &&
++		git config submodule.fetchJobs 8 &&
++		GIT_TRACE=$(pwd)/trace.out git fetch &&
++		grep "8 tasks" trace.out &&
++		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
++		grep "9 tasks" trace.out
++	)
 +'
 +
  test_done
