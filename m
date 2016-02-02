@@ -1,92 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] GPG-Signed pushes & commits: differentiating between no signature and an unknown key
-Date: Mon, 01 Feb 2016 19:17:16 -0800
-Message-ID: <xmqq1t8vu7gj.fsf@gitster.mtv.corp.google.com>
-References: <robbat2-20160201T220940-187080200Z@orbis-terrarum.net>
-	<xmqqmvrkt5ay.fsf@gitster.mtv.corp.google.com>
-	<robbat2-20160202T002257-169038640Z@orbis-terrarum.net>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 00/12] ref-filter: use parsing functions
+Date: Tue, 2 Feb 2016 10:05:49 +0530
+Message-ID: <CAOLa=ZTnCq1QCByj9vN9SzihNv5uYFnxJ1_qhMfY=UTSFQ7wFQ@mail.gmail.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+ <xmqqr3gwt6dp.fsf@gitster.mtv.corp.google.com> <CAPig+cTT2Ti5r73=ndF5uR6ovGi16PcYEBb89ik0rcYTVZiRDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Tue Feb 02 04:17:23 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 05:36:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQRT0-0005ly-Om
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 04:17:23 +0100
+	id 1aQShV-000777-2N
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 05:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752379AbcBBDRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 22:17:19 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63132 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751925AbcBBDRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 22:17:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC1894212F;
-	Mon,  1 Feb 2016 22:17:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CCVhfN7lWUyUfEe83tKGpKBlE5k=; b=bK7QLn
-	T7ZX+RXoYzPX+fK4ziTgWN0++OA97x7UMw8TzdtkMaAGSvTjec+uHltdxcf+BAE0
-	EhaRa4z2cPn20x3oDPuxWyKbX+ReMv1hPbgiF2xCw7mcem6nByCUKKWG7kz5RaAM
-	eyWexbQjCKSlsXjvJGf7EgsE4naAw9kio3Izg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ug0jyOJImaQZzRWX7HvNktftcXPzkQFU
-	dXh/EpzJHCE7Qo9LGaYSRY6kSJPhOINdz0ax4dCUFBpQp0dd4PnazwD695iYsAiG
-	KBponwT9VBbP5m634GONt/4LHiLyapeOno5im45kzSzlnDxHT9XLrHK9iGIFcf8k
-	VXeWcE1QrQc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B3C804212E;
-	Mon,  1 Feb 2016 22:17:17 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3612D4212D;
-	Mon,  1 Feb 2016 22:17:17 -0500 (EST)
-In-Reply-To: <robbat2-20160202T002257-169038640Z@orbis-terrarum.net> (Robin
-	H. Johnson's message of "Tue, 2 Feb 2016 00:43:30 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 768593DC-C95B-11E5-8D16-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752325AbcBBEgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 23:36:20 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:34325 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752111AbcBBEgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 23:36:20 -0500
+Received: by mail-vk0-f48.google.com with SMTP id e185so89662135vkb.1
+        for <git@vger.kernel.org>; Mon, 01 Feb 2016 20:36:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hGRKCmESkw/L83KHvaU0VfpzM/FsccI+0h7lwi/Udfk=;
+        b=XG3N8ZxFHTFV/mlpefwWeyYcmuLvR78rNehKJZCowv480a2XJYAblGMXoYB2rQF/Hl
+         ilElQcx5Ohf2H8gWyGm1dhVaWZwwPKT8HcEQwy+XalvcodPK+YcdHPv09cT0FeWlAPt5
+         h+wrcxO6WkdozcdBXNV74Qelr/agaVAdmc9pwf5J4QfGiCPXF8drLppqhWtGNwfSUSdl
+         kIydhJFJiCmn7Ti1Bt0P8YtOXQYNtX9kEyg0jXFXk2Whe+Ac+qV5D1bBCG3JI8lk7RfX
+         Va1mRNyVQjeDXwC2EBJCex3DnvgDj7ERJjsWHmB4P4KW5LJ3mlWvVwcVK9gj4JZXmqNK
+         i5YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=hGRKCmESkw/L83KHvaU0VfpzM/FsccI+0h7lwi/Udfk=;
+        b=RnQagXu+OycSJldDnGmZrkH4RzvQaXTcpK+/98GWPOhQ5lvhEP/fXePxz1H7L/SMQE
+         PUHDyhrFCna+xTyGpvkQEzf4xaXQQsoMRqE0ixc5T6vf/KsYywSiOEKjCKA3K0N4QGwd
+         APkzXOnWTa1HW5wxjZ5BgAsm8aTCmmXad4GeloqcYKPuSlwMe6hFpD+VDqKLtqqYoFRl
+         VDuOKrNGrkGOwzsmcRuuDGFE+ALPxFGKR8DRA/4IKnL8+rhPKTEQEBdZDVmxOqImN53o
+         L2VmKlR/5wkM++Z9v67aq6lFUQqh32bxVPV+WyOTf8W9/XPFJS+hvzkcH9vaXOMJU5EH
+         vaVQ==
+X-Gm-Message-State: AG10YOQwMephKiUuFfyo7VrLJ36xMqXU4aJQjjmxGb5nO2ooGlPkYq5ksXOwJSiN6vhyMxJr0Ek+fMvL4KnlYQ==
+X-Received: by 10.31.142.203 with SMTP id q194mr18075524vkd.95.1454387779090;
+ Mon, 01 Feb 2016 20:36:19 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Mon, 1 Feb 2016 20:35:49 -0800 (PST)
+In-Reply-To: <CAPig+cTT2Ti5r73=ndF5uR6ovGi16PcYEBb89ik0rcYTVZiRDw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285236>
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
-
-> On Mon, Feb 01, 2016 at 02:49:09PM -0800,  Junio C Hamano wrote:
->> Are you talking about something other than prepare_push_cert_sha1()?
-> I went and verified it, and what was reported to me was slightly wrong. Only
-> some of the field are empty, notably CERT_KEY and SIGNER.
+On Tue, Feb 2, 2016 at 6:07 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Feb 1, 2016 at 5:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> This series cleans up populate_value() in ref-filter, by moving out
+>>> the parsing part of atoms to separate parsing functions. This ensures
+>>> that parsing is only done once and also improves the modularity of the
+>>> code.
+>>>
+>>> v1: http://thread.gmane.org/gmane.comp.version-control.git/281180
+>>> v2: http://thread.gmane.org/gmane.comp.version-control.git/282563
+>>> v3: http://thread.gmane.org/gmane.comp.version-control.git/283350
+>>>
+>>> Changes:
+>>> * The parsing functions now take the arguments of the atom as
+>>> function parameteres, instead of parsing it inside the fucntion.
+>>> * Rebased on top of pu:jk/list-tag-2.7-regression
+>>> * In strbuf use a copylen variable rather than using multiplication
+>>> to perform a logical operation.
+>>> * Code movement for easier review and general improvement.
+>>> * Use COLOR_MAXLEN as the maximum size for the color variable.
+>>> * Small code changes.
+>>> * Documentation changes.
+>>> * Fixed incorrect style of test (t6302).
+>>>
+>>> Karthik Nayak (12):
+>>>   strbuf: introduce strbuf_split_str_omit_term()
+>>>   ref-filter: use strbuf_split_str_omit_term()
+>>>   ref-filter: bump 'used_atom' and related code to the top
+>>>   ref-filter: introduce struct used_atom
+>>>   ref-filter: introduce parsing functions for each valid atom
+>>>   ref-filter: introduce color_atom_parser()
+>>>   ref-filter: introduce parse_align_position()
+>>>   ref-filter: introduce align_atom_parser()
+>>>   ref-filter: align: introduce long-form syntax
+>>>   ref-filter: introduce remote_ref_atom_parser()
+>>>   ref-filter: introduce contents_atom_parser()
+>>>   ref-filter: introduce objectname_atom_parser()
+>>
+>> Hmm, 10/12 didn't make it to the list?
 >
-> Signed push with an unknown key:
-> ===
-> remote: No signature found
-> remote: Your push was not signed with a known key.
-> remote: You MUST use git push --signed with a known key.
-> remote: If you just updated your key, please wait 15 minutes for sync.
-> remote: git-receive-pack variables:
-> remote: GIT_PUSH_CERT='1c471177906014e65e2825ee71572bf749970c16'
-> remote: GIT_PUSH_CERT_KEY=''
-> remote: GIT_PUSH_CERT_NONCE='1454372558-35db7be4533958f14731'
-> remote: GIT_PUSH_CERT_NONCE_SLOP=''
-> remote: GIT_PUSH_CERT_NONCE_STATUS='OK'
-> remote: GIT_PUSH_CERT_SIGNER=''
-> remote: GIT_PUSH_CERT_STATUS='N'
+> Not surprising. Somehow, Karthik did git-add on the compiled
+> test-fake-ssh before committing, so the patch sent to the list
+> contains an rather huge binary resource. I did receive it since I was
+> a direct addressee of the email; I'll reply to the message on-list
+> without modifying anything (other than stripping out the binary
+> resource) so that other reviewers get a chance to see it.
 
-OK, this matches my expectation, and my earlier response to you is
-consistent with the above output, so there isn't much to add to the
-discussion from me.  I was primarily worried about GIT_PUSH_CERT not
-being passed, but that does not seem to be the case, which is good.
-We still give GIT_PUSH_CERT, which makes it possible to write a
-validation hook that lazily fetches unknown keys as needed to
-implement its own more advanced checks, while allowing validation
-hooks that rely on a set of a-priori known keys to be written in a
-less error-prone way by saying "N" for "unknown" case.
+Thanks Eric, i didn't notice doing that.
 
-Thanks.
+-- 
+Regards,
+Karthik Nayak
