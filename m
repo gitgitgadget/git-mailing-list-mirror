@@ -1,148 +1,107 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
-Date: Tue, 02 Feb 2016 15:08:54 -0500
-Organization: Twitter
-Message-ID: <1454443734.5545.1.camel@twopensource.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: git log -g bizarre behaviour
+Date: Tue, 02 Feb 2016 21:22:12 +0100
+Message-ID: <1454444532.2713.1.camel@kaarsemaker.net>
+References: <1454241144.2822.7.camel@kaarsemaker.net>
+	 <xmqqegcwt32j.fsf@gitster.mtv.corp.google.com>
+	 <1454401738.32711.7.camel@kaarsemaker.net>
+	 <xmqqsi1asyai.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Feb 02 21:09:02 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 21:22:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQhG2-0000o1-4A
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 21:09:02 +0100
+	id 1aQhSy-0004wy-S2
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 21:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757833AbcBBUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 15:08:58 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:34991 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754822AbcBBUI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 15:08:57 -0500
-Received: by mail-qk0-f171.google.com with SMTP id o6so71190249qkc.2
-        for <git@vger.kernel.org>; Tue, 02 Feb 2016 12:08:57 -0800 (PST)
+	id S1755058AbcBBUWT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2016 15:22:19 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33561 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752733AbcBBUWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 15:22:15 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r129so4071258wmr.0
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 12:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
          :content-type:mime-version:content-transfer-encoding;
-        bh=53ADwOCKaAd3seSRlHuz/hI0h5f8iOMKoNNa6Ig4iwU=;
-        b=fu8v5Jo7KzWZml9wB0LkZ0hCLQFO+BhCHswV6FYw2HSgY9UCsIWOVHhaLN0GVKRtLT
-         BGtycQMgxsx7iAcT4RSlDRYIfB7+FOQOE6zmk90Za3u8HGUdqfyL0EbRAqTu/16l7oZ8
-         XMGGxHaoegDsiBI3P49GLjKHZPDP1NumVCjCv20i9dxGVc33cIyXHCTrc8l8GjbroNtB
-         YeRIfEcLaRq/hcRnHgKw1Tcp8XwE37XIyvMkSJoo8gS5+0TrcIik9vItnlF5QUXE7nAQ
-         HVaCcUkOPQg1LbKJzvfn8dW+vVrDc9m6zQfHlvXB2soB/JDpcCfvOExd0HYbtMi5ilxA
-         2vAA==
+        bh=MzryDb/3RJ0m6EJ/Mzlm3uvXAaMlf5liOpy8Yoa29nc=;
+        b=vWhpZ4Ka7lKPlbIjAlS95QwCtqVf/KHZulEvEnmTc0E3kVY2g0dXYBG3xLwe9c3dzn
+         RpPQgxg7zLQPZdXvyD/8PgeDIj3biW8oYAvcm0ad5hEBTWld7AmStWPh7xNZSqyi22Dt
+         goG7uSvBK4agU4ZcG5jxqDVn1afupn65CGcRdMFhbX1Q4BxFOfSklgibE5tWXccsrWRP
+         B2ZuYXUoXki9psDs9+THiPdIArkUoOmmk+6xlu22P7YX8LxDilb4/dN5bafmZaqmN/4h
+         lYVFoFTvBo2TN79a6/pZYxX0k6Fr0EGNWXZ1lPZ/2OkQBo8Q5Ak1gZKkuGI7HyTwzqMx
+         pv6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=53ADwOCKaAd3seSRlHuz/hI0h5f8iOMKoNNa6Ig4iwU=;
-        b=Ce6yJdVvvDp1CBKVek5E9XZH3RzYL7GhRMB1XrK+z36+E1xmQI9q/CmCd86D3wt0cX
-         ZkWIMZSXoIjUcidCDET6sabS/jToKrvlkM5siXHkMqZwXmu6Sb5+se5u/jXrrifSr/K4
-         zdQ/afRxVyp3uCYUzzHOqwCvywtwS6uJMVZKbpTlNaQrotRrPlThkofvT5WMEHfGGgzF
-         g+82L3dL1kMycJ/Yx7kwgyk0lpAATVoT/MnqyheEdxsuMF+P9X7K/io3aBIDZpZMGAY4
-         hoxtg+tZysouBE78cswrGBeLX8Hd523mvWko6i8FTG4GPuXYTORolbSyE/fHV//dOpsF
-         VEEg==
-X-Gm-Message-State: AG10YOQpMYjcN0ngOmhIniUgku4hZ41q1XysvAmxLWQSYWkkg0KCx/rXK1Or76fjvVot0A==
-X-Received: by 10.55.78.198 with SMTP id c189mr37645892qkb.95.1454443736587;
-        Tue, 02 Feb 2016 12:08:56 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id p188sm1442879qhb.34.2016.02.02.12.08.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Feb 2016 12:08:55 -0800 (PST)
-In-Reply-To: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=MzryDb/3RJ0m6EJ/Mzlm3uvXAaMlf5liOpy8Yoa29nc=;
+        b=dDdeVpxA1sr3YR3rtfYgJ2RO+OAkVh/ea1boiWBnKWxTVAJqHO7fkiqQZKog9vFCid
+         7pelgnjj0XS0lp2D+/2+2fvv9GTtuH7mZO0yrI1yihM5U/6oW8Fm9snVYPSzA9f9d+HK
+         2KxQKhfbHeo4ee/Zr6NVdKXEPy8/T7U05uFmiAyiVQIbWBA7vim5TaE1+tM3MGeKs8Xj
+         GHgW+ofSEJ5r3Q+arY+wVT2tInq8OkNgoD+sdvAxctbKZ8XJTU+aBndzH+DlAnT+QX4+
+         QnpwlCrmwxwkcdmMClDh8mdz9N89BmWlVpCYz9QC19ze6dKJIltYoj/WOD2VVt9t1hXx
+         K1hg==
+X-Gm-Message-State: AG10YORUiIPNhc+5ajuG3+Qw+jrf3McZhDIgCBfFg4VgFlLuOWAhnXk3nkWShC1cEvHoHg==
+X-Received: by 10.194.243.103 with SMTP id wx7mr33719748wjc.136.1454444534425;
+        Tue, 02 Feb 2016 12:22:14 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id w8sm3085811wjx.21.2016.02.02.12.22.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Feb 2016 12:22:13 -0800 (PST)
+In-Reply-To: <xmqqsi1asyai.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.18.3-1ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285303>
 
-Are there any more reviews on this?  I do have some changes from this
-set, but they're pretty minor so I don't want to post a new one (unless
-folks would rather see those changes before reviewing).  Let me know.
+On di, 2016-02-02 at 11:32 -0800, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>=20
+> > On ma, 2016-02-01 at 15:37 -0800, Junio C Hamano wrote:
+> >=20
+> > > Do you mean
+> > >=20
+> > > 	$ git checkout -b testing
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0$ rm -f .git/logs=
+/refs/heads/testing
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0$ git log -g test=
+ing
+> > >=20
+> > > will be changed from a silent no-op to an abort with error?
+> > >=20
+> > > I do not see a need for such a change--does that count as an
+> > > objection?
+> >=20
+> > No, I'd like to change:
+> >=20
+> > $ ls .git/logs/refs/tags/v2.7.0
+> > ls: cannot access .git/logs/refs/tags/v2.7.0: No such file or
+> > directory
+> > $ git (log -g|reflog) v2.7.0
+> > From the bizarre behaviour above to a silent noop.
+>=20
+> When there is nothing to show, we do not show anything,=20
 
-Thanks.
+As I demonstrated in the text that you cut: that is not true.
+git log -g v2.7.0 and git reflog v2.7.0 are *not* silent, but buggy. I
+would like to make them silent.
 
-On Thu, 2016-01-14 at 11:25 -0500, David Turner wrote:
-> I rebased this on top of 20fabf9b194c4099d329582c734e433f9f6586a3
-> (the
-> commit before the previous version of this series).
-> 
-> This entailed removing Michael Haggerty's patch to builtin/clone.c,
-> since a patch by Stefan already did approximately the same thing.
-> 
-> There was a somewhat hairy merge of "resolve symbolic refs first",
-> but
-> I think the new one is fine (the same tests all pass except for the
-> one TODO noted in the lmdb code).
-> 
-> David Turner (17):
->   refs: add do_for_each_per_worktree_ref
->   refs: add methods for reflog
->   refs: add method for initial ref transaction commit
->   refs: add method for delete_refs
->   refs: add methods to init refs db
->   refs: add method to rename refs
->   refs: make lock generic
->   refs: move duplicate check to common code
->   refs: allow log-only updates
->   refs: resolve symbolic refs first
->   refs: always handle non-normal refs in files backend
->   init: allow alternate backends to be set for new repos
->   refs: check submodules ref storage config
->   refs: allow ref backend to be set for clone
->   svn: learn ref-storage argument
->   refs: add LMDB refs backend
->   refs: tests for lmdb backend
-> 
-> Ronnie Sahlberg (3):
->   refs: add a backend method structure with transaction functions
->   refs: add methods for misc ref operations
->   refs: add methods for the ref iterators
-> 
->  .gitignore                                     |    1 +
->  Documentation/config.txt                       |    7 +
->  Documentation/git-clone.txt                    |    6 +
->  Documentation/git-init-db.txt                  |    2 +-
->  Documentation/git-init.txt                     |    7 +-
->  Documentation/technical/refs-lmdb-backend.txt  |   52 +
->  Documentation/technical/repository-version.txt |    5 +
->  Makefile                                       |   12 +
->  builtin/clone.c                                |    5 +
->  builtin/init-db.c                              |   40 +-
->  builtin/submodule--helper.c                    |    2 +-
->  cache.h                                        |    2 +
->  config.c                                       |   29 +
->  configure.ac                                   |   33 +
->  contrib/workdir/git-new-workdir                |    3 +
->  git-submodule.sh                               |   13 +
->  git-svn.perl                                   |    6 +-
->  path.c                                         |   29 +-
->  refs.c                                         |  451 +++++-
->  refs.h                                         |   17 +
->  refs/files-backend.c                           |  397 +++--
->  refs/lmdb-backend.c                            | 2051
-> ++++++++++++++++++++++++
->  refs/refs-internal.h                           |  128 +-
->  setup.c                                        |   23 +-
->  t/t0001-init.sh                                |   24 +
->  t/t1460-refs-lmdb-backend.sh                   | 1109 +++++++++++++
->  t/t1470-refs-lmdb-backend-reflog.sh            |  359 +++++
->  t/t1480-refs-lmdb-submodule.sh                 |   85 +
->  t/test-lib.sh                                  |    1 +
->  test-refs-lmdb-backend.c                       |   64 +
->  transport.c                                    |    7 +-
->  31 files changed, 4767 insertions(+), 203 deletions(-)
->  create mode 100644 Documentation/technical/refs-lmdb-backend.txt
->  create mode 100644 refs/lmdb-backend.c
->  create mode 100755 t/t1460-refs-lmdb-backend.sh
->  create mode 100755 t/t1470-refs-lmdb-backend-reflog.sh
->  create mode 100755 t/t1480-refs-lmdb-submodule.sh
->  create mode 100644 test-refs-lmdb-backend.c
-> 
+> and that is just like "git log v2.7.0..v2.7.0" is silent.
+>=20
+> I do not find the silence bizarre at all.
+
+I'll take that as an agreement then :)
+--=20
+Dennis Kaarsemaker
+www.kaarsemaker.net
