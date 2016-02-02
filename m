@@ -1,136 +1,114 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 08/15] remote: die on config error when setting/adding branches
-Date: Tue,  2 Feb 2016 12:51:49 +0100
-Message-ID: <1454413916-31984-9-git-send-email-ps@pks.im>
+Subject: [PATCH v4 07/15] remote: die on config error when setting URL
+Date: Tue,  2 Feb 2016 12:51:48 +0100
+Message-ID: <1454413916-31984-8-git-send-email-ps@pks.im>
 References: <1454413916-31984-1-git-send-email-ps@pks.im>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:21 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQZWK-0007Sf-Lp
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:21 +0100
+	id 1aQZWJ-0007Sf-Kk
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754953AbcBBLxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 06:53:17 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:38130 "EHLO
+	id S1754923AbcBBLxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 06:53:15 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59428 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754854AbcBBLxQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:16 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id BA96D20615
-	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:15 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Tue, 02 Feb 2016 06:53:15 -0500
+	by vger.kernel.org with ESMTP id S1754854AbcBBLxO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:14 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 398E52037B
+	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:14 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 02 Feb 2016 06:53:14 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=qgpu
-	/KuhAI/N1j1X01Eltu0qi7I=; b=mEm3NtxGbgqHbA9Prp87netWojZ5uCs/5Skn
-	BGGZ+3nWoOBeEAoh64dYlVCs/aUKUBY2JWn3XWfubwyxjR4sfnGKJmu4i74VBltm
-	UQEp7CXUMrTQVuqwtORK/Fl0MauyP0WRLHn9y2d7YOd+8rktShFTzgSOStR/dt3c
-	RAIlz6A=
-X-Sasl-enc: 8Xdlj/DRzSZccR38BfuK629yuIridZ2oJEQX3HNrCARd 1454413995
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=10aY
+	5mu31l4pNf7ogW0l/vcO4/s=; b=Gr6LeCqMQHFr+G9SgB+hPunWLmmrIuKbcaFQ
+	38/JpZSEMVP2zPV+NY+xlSI0tlgXIJEZ1tpOTqIwO3nwjNFbbWNSkdB0E+14g6Ck
+	TN7Y++2IOc9Jd6KkU2NWLcnVlVzPhH/IZu9YOtvzwR9juAG05VN0NQpCAZIrKMrP
+	uVN98O4=
+X-Sasl-enc: s9ZIo9emnpBwiLqfBmCTME/d1a0UVq5NzcOOeSYU+kVN 1454413993
 Received: from localhost (f052008117.adsl.alicedsl.de [78.52.8.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 22352C0001A;
-	Tue,  2 Feb 2016 06:53:15 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id C01D6680179;
+	Tue,  2 Feb 2016 06:53:13 -0500 (EST)
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <1454413916-31984-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285258>
 
-When we add or set new branches (e.g. by `git remote add -f` or
-`git remote set-branches`) we do not check for error codes when
-writing the branches to the configuration file. When persisting
-the configuration failed we are left with a remote that has none
-or not all of the branches that should have been set without
-notifying the user.
+When invoking `git-remote --set-url` we do not check the return
+value when writing the actual new URL to the configuration file,
+pretending to the user that the configuration has been set while
+it was in fact not persisted.
 
-Fix this issue by dying early on configuration error.
+Fix this problem by dying early when setting the config fails.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Patrick Steinhardt
 ---
- builtin/remote.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+ builtin/remote.c  | 11 ++++++-----
+ t/t5505-remote.sh |  9 +++++++++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 8b78c3d..eeb6d2e 100644
+index 2b2ff9b..8b78c3d 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -108,8 +108,8 @@ enum {
- #define MIRROR_PUSH 2
- #define MIRROR_BOTH (MIRROR_FETCH|MIRROR_PUSH)
+@@ -1583,11 +1583,12 @@ static int set_url(int argc, const char **argv)
+ 	/* Special cases that add new entry. */
+ 	if ((!oldurl && !delete_mode) || add_mode) {
+ 		if (add_mode)
+-			git_config_set_multivar(name_buf.buf, newurl,
+-				"^$", 0);
++			git_config_set_multivar_or_die(name_buf.buf, newurl,
++						       "^$", 0);
+ 		else
+-			git_config_set(name_buf.buf, newurl);
++			git_config_set_or_die(name_buf.buf, newurl);
+ 		strbuf_release(&name_buf);
++
+ 		return 0;
+ 	}
  
--static int add_branch(const char *key, const char *branchname,
--		const char *remotename, int mirror, struct strbuf *tmp)
-+static void add_branch(const char *key, const char *branchname,
-+		       const char *remotename, int mirror, struct strbuf *tmp)
- {
- 	strbuf_reset(tmp);
- 	strbuf_addch(tmp, '+');
-@@ -119,7 +119,7 @@ static int add_branch(const char *key, const char *branchname,
+@@ -1608,9 +1609,9 @@ static int set_url(int argc, const char **argv)
+ 	regfree(&old_regex);
+ 
+ 	if (!delete_mode)
+-		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
++		git_config_set_multivar_or_die(name_buf.buf, newurl, oldurl, 0);
  	else
- 		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
- 				branchname, remotename, branchname);
--	return git_config_set_multivar(key, tmp->buf, "^$", 0);
-+	git_config_set_multivar_or_die(key, tmp->buf, "^$", 0);
- }
- 
- static const char mirror_advice[] =
-@@ -206,9 +206,8 @@ static int add(int argc, const char **argv)
- 		if (track.nr == 0)
- 			string_list_append(&track, "*");
- 		for (i = 0; i < track.nr; i++) {
--			if (add_branch(buf.buf, track.items[i].string,
--				       name, mirror, &buf2))
--				return 1;
-+			add_branch(buf.buf, track.items[i].string,
-+				   name, mirror, &buf2);
- 		}
- 	}
- 
-@@ -1416,21 +1415,17 @@ static int remove_all_fetch_refspecs(const char *remote, const char *key)
- 	return git_config_set_multivar(key, NULL, NULL, 1);
- }
- 
--static int add_branches(struct remote *remote, const char **branches,
--			const char *key)
-+static void add_branches(struct remote *remote, const char **branches,
-+			 const char *key)
- {
- 	const char *remotename = remote->name;
- 	int mirror = remote->mirror;
- 	struct strbuf refspec = STRBUF_INIT;
- 
- 	for (; *branches; branches++)
--		if (add_branch(key, *branches, remotename, mirror, &refspec)) {
--			strbuf_release(&refspec);
--			return 1;
--		}
-+		add_branch(key, *branches, remotename, mirror, &refspec);
- 
- 	strbuf_release(&refspec);
--	return 0;
- }
- 
- static int set_remote_branches(const char *remotename, const char **branches,
-@@ -1449,10 +1444,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 		strbuf_release(&key);
- 		return 1;
- 	}
--	if (add_branches(remote, branches, key.buf)) {
--		strbuf_release(&key);
--		return 1;
--	}
-+	add_branches(remote, branches, key.buf);
- 
- 	strbuf_release(&key);
+-		git_config_set_multivar(name_buf.buf, NULL, oldurl, 1);
++		git_config_set_multivar_or_die(name_buf.buf, NULL, oldurl, 1);
  	return 0;
+ }
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 1a8e3b8..e019f27 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -932,6 +932,15 @@ test_expect_success 'get-url on new remote' '
+ 	echo foo | get_url_test --push --all someremote
+ '
+ 
++test_expect_success 'remote set-url with locked config' '
++	test_when_finished "rm -f .git/config.lock" &&
++	git config --get-all remote.someremote.url >expect &&
++	>.git/config.lock &&
++	test_must_fail git remote set-url someremote baz &&
++	git config --get-all remote.someremote.url >actual &&
++	cmp expect actual
++'
++
+ test_expect_success 'remote set-url bar' '
+ 	git remote set-url someremote bar &&
+ 	echo bar >expect &&
 -- 
 2.7.0
