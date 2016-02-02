@@ -1,79 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Identify where a Git config is defined
-Date: Tue, 2 Feb 2016 05:15:51 -0500
-Message-ID: <20160202101551.GA17349@sigill.intra.peff.net>
-References: <3226E251-73F9-4410-84DE-49C8FFAD92EB@gmail.com>
+From: Lars Vogel <lars.vogel@vogella.com>
+Subject: Usage of staging area instead of index still the way to go?
+Date: Tue, 2 Feb 2016 11:30:12 +0100
+Message-ID: <CACA4a_Hmp-o2dDYRKd1tO0-nR5AebWOpgf5+VQ6vWV2Wcdd-NA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 11:22:04 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 11:31:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQY5w-0002qa-JH
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 11:22:00 +0100
+	id 1aQYEt-0005QM-0e
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 11:31:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754407AbcBBKV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 05:21:56 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36032 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754294AbcBBKVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 05:21:55 -0500
-Received: (qmail 13044 invoked by uid 102); 2 Feb 2016 10:21:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 05:21:55 -0500
-Received: (qmail 12044 invoked by uid 107); 2 Feb 2016 10:15:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 05:15:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Feb 2016 05:15:51 -0500
-Content-Disposition: inline
-In-Reply-To: <3226E251-73F9-4410-84DE-49C8FFAD92EB@gmail.com>
+	id S1754317AbcBBKbJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2016 05:31:09 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36768 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754604AbcBBKaO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 05:30:14 -0500
+Received: by mail-wm0-f44.google.com with SMTP id p63so110713730wmp.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 02:30:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=vogella-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=0T0BaihDtsCM73deWGl7z+bYtQuwW3BhGFhDFgm6uog=;
+        b=sSPtnDXPe+7NHeg0eIs2t3shniLXYzBx1CvINoC3o1K5S7VMhYsEYEFr8OOQ328pV7
+         PRATusqUxzJBTuMNdo9nW9E4sXvQYDDL09LUdJIawzZpcHRmAHRImfMSReSEfF4SDGJp
+         9vQgGE8xnA7CBAXc6m93/dKQslww6JLwWwd7oUHb5ohwxjr9OoH82jTNRJ8Nx+86mmrp
+         rPCLpi6ZlEnZ3IWSxy1qsEZWgufeZbXQvVqTktoLRviBuAhNP1gzgnmoM03vg3h3ufpe
+         wb+k4zU7G58WhtrttxTVZvKyXd7hvvJWegFlK5fRXa5c/LMBSEGphodY1WghnoKhfNno
+         lG+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=0T0BaihDtsCM73deWGl7z+bYtQuwW3BhGFhDFgm6uog=;
+        b=CNzZGm9FW93OsRQ9OaUvFpZ3h6+8Rk1HpRea58MgPCQ8wpflf8Iowj7tSLMwebk1bp
+         AZlWX6LZ91cnfSVCC3th2CAr1Uod21wIdpNhWMFKDhKGVy33vPW5BK7yJjtbhMKuuZ0i
+         em+pBjx+2aEr/4AyqbGzKY54u1cO0v9jtJ6qkofPe+JeQPOOKw1c63/FCfb1HQu+uAK2
+         7nbh4AkBEdys8daqlTiwJjStSwC3Dr91zWku0Xcd8xE3+HcbTOrwq3fRYSVSZUgAuYjb
+         nr0FrQM5TJXzSKG7vpeo17hcdu6xFHI70jVIcmd6+Tr5T9oS6Bd9mNlXLAsuhWQOsT5n
+         hpNw==
+X-Gm-Message-State: AG10YORxtgby0LKu3xHOy3/spdJd53p7eNbjDakp67F79fzhbBRHsMlFoDTiq2pLmrmN3R5DpiNJweRIkfV7SQ==
+X-Received: by 10.194.242.67 with SMTP id wo3mr26894811wjc.180.1454409013025;
+ Tue, 02 Feb 2016 02:30:13 -0800 (PST)
+Received: by 10.28.216.73 with HTTP; Tue, 2 Feb 2016 02:30:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285248>
 
-On Tue, Feb 02, 2016 at 10:27:06AM +0100, Lars Schneider wrote:
+Hi,
 
-> Using "git config --list" shows me all configs but sometimes I have a
-> hard time to figure out where a certain config is defined. This is
-> especially true on Windows as I found the system config in various
-> places. I wonder if other people would find it useful to enable
-> something like "git config --list --print-source" where every config
-> value is printed with the file where it originates from.
+I was about to send patches to the Eclipse Git project to replace the
+usage of "Index" with "Staging area" based on this thread:
+http://article.gmane.org/gmane.comp.version-control.git/233469/ which
+Matthias Sohn (Project lead of EGit) send me a while ago.
 
-We discussed this exact thing a while ago, and it looks like I started
-on a patch, but didn't pursue it much further. There's some discussion
-in there if you are interested in designing such a feature:
+But the Git help seem to use still heavily "index" instead of "staging
+area". Is "staging area" still considered as the correct term or has
+time proven that index is better?
 
-  http://thread.gmane.org/gmane.comp.version-control.git/190027/focus=190267
+Best regards,Lars
 
-It looks like I tweaked it at some point, and I've been carrying this in
-my tree (rebasing forward and using it in my normal build):
+--=20
+Eclipse Platform UI and e4 project co-lead
+CEO vogella GmbH
 
-  git fetch git://github.com/peff/git jk/config-sources
-
-Feel free to use it as a starting point if that's helpful. I don't
-recall offhand how close it is to ready.
-
-> If I read the source correctly this would mean I would need to change
-> "config_fn_t" to pass not only key and value but also the config
-> source file in addition. Since "config_fn_t" is used in many places
-> this would be a big change that probably is not worth the effort?!
-
-There's a global struct for the current config file.  In the patches
-above, I just added an accessor function. Hooray for single-threaded
-programs.
-
-> Alternatively I was thinking about "git config --print-source-files"
-> to print all config files that Git would parse. This would already
-> help to find the configs and would probably be a smaller change.
-
-I think the "--sources" option is more useful, because it can show
-included files, too.
-
--Peff
+Haindaalwisch 17a, 22395 Hamburg
+Amtsgericht Hamburg: HRB 127058
+Gesch=C3=A4ftsf=C3=BChrer: Lars Vogel, Jennifer Nerlich de Vogel
+USt-IdNr.: DE284122352
+=46ax (040) 5247 6322, Email: lars.vogel@vogella.com, Web: http://www.v=
+ogella.com
