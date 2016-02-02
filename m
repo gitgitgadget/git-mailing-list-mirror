@@ -1,90 +1,82 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] test-lib: limit the output of the yes utility
-Date: Tue, 2 Feb 2016 08:28:21 +0100
-Message-ID: <56B05A95.3000808@kdbg.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Plans for 2.7.1?
+Date: Tue, 2 Feb 2016 08:56:59 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602020845300.2964@virtualbox>
+References: <alpine.DEB.2.20.1602011740540.2964@virtualbox> <xmqqvb68utby.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 02 08:28:32 2016
+Content-Type: text/plain; CHARSET=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 08:57:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQVO3-0004LI-LE
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 08:28:32 +0100
+	id 1aQVpt-0005Uv-Uh
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 08:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbcBBH20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 02:28:26 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:47738 "EHLO bsmtp8.bon.at"
+	id S1753515AbcBBH5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 02:57:14 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55613 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753530AbcBBH2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 02:28:24 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pvd6G0zrGz5tlD;
-	Tue,  2 Feb 2016 08:28:22 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id AB8DE303E;
-	Tue,  2 Feb 2016 08:28:21 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S1752874AbcBBH5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 02:57:13 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MQdAP-1acnMP44hJ-00U6hq; Tue, 02 Feb 2016 08:57:01
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqvb68utby.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Content-ID: <alpine.DEB.2.20.1602020852371.2964@virtualbox>
+X-Provags-ID: V03:K0:kKJ/GnCp5SAAXJ5Vs0STVdFzIsFbgEpAahnvkU4+kn51Ag4oxfq
+ 3MzdaZhp0wmySRxbpsqud/LFc0UjnJyZ033JG2qXm/hGmgqG0MOmDA4NTxY2kqRpW+VtG5g
+ 1k19w1W3X3hVN5rY4YcIazpItLuJ92fVY6HYXjxcl6fqcvTSOhRJTtudZG8pUKmu3lLBc9g
+ gtmFgMRRxmojssTY4Dv0g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BQBOugC3xQA=:+BxgVrbjnnUvb+NgpnfDIj
+ sYFJGO7pTm/zdF3wwzllOEVE19l+gleBI3/L5yC4/E0qj9ttrs5MZf8qsaFI/Eev4OMPYTxoB
+ G/abDDnrAreafzz3b831LfvCQzExYoP7WpkwXJ9Gsdeje87VfMjCvP/H3dEjapWzO9nelCO+z
+ V3MZtb0Tj74tt4ai1L5TfylJQs/4qIJGmb6M0H/nROWRnJlDBXsJh/KE7zcXpZPuYA7jpF3JG
+ z8+1dDZ2ytTpRvK5mk2SAJ1TRX579JImOG2XT1Nf+4Ndnq6U5q/tulD18GEw26Jg+aYWb7mnO
+ ZWj7R80tbdZ4C4H3BZrPEPexmf7hsKsOs7hbL4ju950PvvVzHug05aVczuTo9Xjen5ACc7MqJ
+ uUIaNz67Caa01s9gf0a7TMrZjechbJMAV3Rvb1m1ZG6oX+eLcF8FDkH6DggfY+4GDvv8+gC4i
+ EYxtGujcR0dZLRY2UqBE2V32NX5kljTXUW8XJ+iQeD/3Z4sqv6G4+SRVMscRKlq3Mw48pXI6G
+ 49ocdNqKxrK7A5ta2DLkdQRYLB7iTfj+V5H+sdoxWC4/bD/TQVA034S7B4MRaNStLE5B5HNUY
+ jKTL4bhtSjx6mCAedCS5u4+ibijpbbRJpm/UsmiZw8JqEKO+vfHiNU5UsKNcROfXTKjkk6wbM
+ YFQpWomSEnZTT/qQcAIEbI7v6rJZ+S9hyJTwq08Z5lDpMFUw8PhYFbux10hiZeuZVj+vBGGLh
+ 4MHSRKmWem4WFDQcGUaNh0NUx3p2vUBIY/82nMjVWdwffVGi71r2CGnj0gsCqF8tFYc8SrDD 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285242>
 
-On Windows, there is no SIGPIPE. A consequence of this is that the
-upstream process of a pipe does not notice the death of the downstream
-process until the pipe buffer is full and writing more data returns an
-error. This behavior is the reason for an annoying delay during the
-execution of t7610-mergetool.sh: There are a number of test cases where
-'yes' is invoked upstream. Since the utility is basically an endless
-loop it runs, on Windows, until the pipe buffer is full. This does take
-a few seconds.
+Hi Junio,
 
-The test suite has its own implementation of 'yes'. Modify it to produce
-only a limited amount of output that is sufficient for the test suite.
-The amount chosen should be sufficiently high for any test case, assuming
-that future test cases will not exaggerate their demands of input from
-an upstream 'yes' invocation.
+On Mon, 1 Feb 2016, Junio C Hamano wrote:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- This does not fix an error, but only an unnecessary sink of CPU cycles
- and wasted wall clock time.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > at tinyurl.com/gitCal I see a pretty timeline regarding 2.8.0, but I
+> > do not see 2.7.1 planned anywhere.
+> 
+> Yup, because maintenance releases are inherently "not planned" ;-)
 
- t/test-lib.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Of course, I know. Though as you dropped a hint that it might be imminent
+in http://article.gmane.org/gmane.comp.version-control.git/283579 I
+thought it might be in that calendar somewhere.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bd4b02e..97e6491 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -902,15 +902,15 @@ fi
- yes () {
- 	if test $# = 0
- 	then
--		y=y
-+		set -- y
- 	else
--		y="$*"
-+		set -- "$*"
- 	fi
--
--	while echo "$y"
--	do
--		:
--	done
-+	# we do not need an infinite supply of output for tests
-+	set -- "$@" "$@" "$@" "$@"	# 4
-+	set -- "$@" "$@" "$@" "$@"	# 16
-+	set -- "$@" "$@" "$@" "$@"	# 64
-+	printf "%s\n" "$@"
- }
- 
- # Fix some commands on Windows
--- 
-2.7.0.118.g90056ae
+> Let me see what are slated for 'maint' in the current draft release
+> notes.
+>
+> [...]
+> 
+> I would want to see jk/list-tag-2.7-regression and ew/
+> svn-1.9.0-auth topics also in 2.7.x track soonish, but they
+> currently are still in 'next', so perhaps late this week or early
+> next week?
+
+No rush. I'll just do a 2.7.0(2) today.
+
+Thanks for the detailed information!
+Dscho
