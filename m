@@ -1,53 +1,59 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: parse_object does check_sha1_signature but not
- parse_object_buffer?
-Date: Tue, 2 Feb 2016 13:36:28 +0900
-Message-ID: <20160202043628.GA10253@glandium.org>
-References: <20160202015701.GA30444@glandium.org>
- <xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/6] apply, ls-files: simplify "-z" parsing
+Date: Tue, 2 Feb 2016 00:29:41 -0500
+Message-ID: <20160202052941.GB16983@sigill.intra.peff.net>
+References: <20160131112215.GA4589@sigill.intra.peff.net>
+ <20160131113546.GF5116@sigill.intra.peff.net>
+ <xmqqzivkt86j.fsf@gitster.mtv.corp.google.com>
+ <xmqqio28t55d.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 05:36:43 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 06:30:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQShl-0007Wj-P5
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 05:36:42 +0100
+	id 1aQTXu-0005AS-50
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 06:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbcBBEgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 23:36:38 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:41470 "EHLO
-	glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752718AbcBBEgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 23:36:37 -0500
-Received: from glandium by zenigata with local (Exim 4.86)
-	(envelope-from <mh@glandium.org>)
-	id 1aQShY-0002iJ-Tt; Tue, 02 Feb 2016 13:36:28 +0900
+	id S1750790AbcBBF3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 00:29:44 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35970 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750763AbcBBF3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 00:29:44 -0500
+Received: (qmail 25159 invoked by uid 102); 2 Feb 2016 05:29:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 00:29:43 -0500
+Received: (qmail 9267 invoked by uid 107); 2 Feb 2016 05:29:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 00:29:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Feb 2016 00:29:41 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqio28t55d.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285238>
 
-On Mon, Feb 01, 2016 at 07:10:04PM -0800, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
+On Mon, Feb 01, 2016 at 02:52:30PM -0800, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > Shouldn't parse_object_buffer also do check_sha1_signature?
+> > Of course, a patch adding a "--nul" can be the one that does the
+> > polarity flipping, so in that sense, this simplification is probably
+> > OK, as long as there is some comment that warns a time-bomb you just
+> > planted here ;-)
 > 
-> In general, it shouldn't; its callers are supposed to do it as
-> additional check when/if needed.  Callers like the one in fsck.c
-> does not want to die after seeing one bad one.  We want to report
-> and keep checking other things.
+> I'll queue it with this tweak for now.
+> 
+> The idea is to have them run "blame" to find the last paragraph of
+> the commit log message.
 
-Shouldn't some things like, at least, `git checkout`, still check
-the sha1s, though?
+That looks like a good compromise. Thanks.
 
-Mike
+-Peff
