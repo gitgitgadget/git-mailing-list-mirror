@@ -1,139 +1,250 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [RFC] GPG-Signed pushes & commits: differentiating between no
- signature and an unknown key
-Date: Tue, 2 Feb 2016 00:43:30 +0000
-Message-ID: <robbat2-20160202T002257-169038640Z@orbis-terrarum.net>
-References: <robbat2-20160201T220940-187080200Z@orbis-terrarum.net>
- <xmqqmvrkt5ay.fsf@gitster.mtv.corp.google.com>
-Reply-To: git@vger.kernel.org
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 10/12] ref-filter: introduce remote_ref_atom_parser()
+Date: Mon, 1 Feb 2016 19:59:02 -0500
+Message-ID: <20160202005902.GA1132@flurp.local>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+ <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 02 01:44:18 2016
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 01:59:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQP4m-00076C-32
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 01:44:12 +0100
+	id 1aQPJe-0003hP-Pu
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 01:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbcBBAnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 19:43:37 -0500
-Received: from smtp.gentoo.org ([140.211.166.183]:54419 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750960AbcBBAng convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Feb 2016 19:43:36 -0500
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id 1AA8D340C5E
-	for <git@vger.kernel.org>; Tue,  2 Feb 2016 00:43:31 +0000 (UTC)
-Received: (qmail 23958 invoked by uid 10000); 2 Feb 2016 00:43:30 -0000
+	id S1751354AbcBBA7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 19:59:12 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33400 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750973AbcBBA7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 19:59:11 -0500
+Received: by mail-io0-f196.google.com with SMTP id f81so13789iof.0
+        for <git@vger.kernel.org>; Mon, 01 Feb 2016 16:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=32D0vrskvd261f09RS8DV1ZH0QSYeBd3fN6WMxHFeZg=;
+        b=tx0mRSJXDDR8dd0kkceiCCuZSiU2IxG3jQXKIepdZz5D1SnsLtYOjBwDMOwsJh7HVf
+         bJIU7bGV9Bz3bADoT9fma3NYG/1KS8QTMhk6uvLaDDB1aFMhBKY9Ku7nxKz2BGwAGhS5
+         04FfyikRpp0j8vXrUyJGxvkUmPZVfCNjhxS4Je/o7ccaGcsegDKH+agKiM22TSOfyN9r
+         cH0INaRx/61tsjbxuMkkkQTxiZzcV6g01dyZGxTf50FjxbpiVzRlmXQaYT7B8aauclfw
+         ooFXuXYN0ah4/NTvIBLppAzsuSzMn805U+khXhxBNEmD1RpjoCYghMsnYss7giXYcHkd
+         x7rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=32D0vrskvd261f09RS8DV1ZH0QSYeBd3fN6WMxHFeZg=;
+        b=f30uKpXLny3QKTdxb76hwS3vDJWDE/ELHktjvth+NIMChGQhYM42G4NNBau4ZcaDzY
+         4zRQFjz1cO1V+crqbA/yhmgPOh6f8avuQlTVaPREk80kWxTE7vL8DTIJSTlVLXa7MOel
+         lA7txZasE6zVf7h9CENo6b8M0nPzcefTcx3wy5Q8A/RrbPpr2MR9RnE0R+OjU83eVpO9
+         9OGcU7IbSlMS7/r1hBaXzYlcx72HmW3QNq+jPCgu/LGxdAF+/usGGyNvaZcInI3qeiPI
+         W2IEbVWQTq87cKoZEGU2XLiL4WSFlFxVxR7e1IMOgOF3wPBaVVUIz8mmbCUu4Uz3lXjJ
+         WPgw==
+X-Gm-Message-State: AG10YOQu7SxPdI+h/Mvt8VfJG96OvrcpxPAHFp/u91JG85U45DEsJjRdaOzKztm/tevGPg==
+X-Received: by 10.107.35.65 with SMTP id j62mr17884037ioj.30.1454374746689;
+        Mon, 01 Feb 2016 16:59:06 -0800 (PST)
+Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id u99sm214449iou.11.2016.02.01.16.59.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 01 Feb 2016 16:59:06 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqmvrkt5ay.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285230>
 
-On Mon, Feb 01, 2016 at 02:49:09PM -0800,  Junio C Hamano wrote:
-> Are you talking about something other than prepare_push_cert_sha1()?
-I went and verified it, and what was reported to me was slightly wrong. Only
-some of the field are empty, notably CERT_KEY and SIGNER.
+This is a re-send of patch 10/12 on Karthik's behalf to give other
+reviewers a chance at it. The original did not make it to the mailing
+list since it contained a rather large binary resource Karthik
+accidentally included in the commit (which has been stripped from
+this re-send).
 
-Signed push with an unknown key:
-===
-remote: No signature found
-remote: Your push was not signed with a known key.
-remote: You MUST use git push --signed with a known key.
-remote: If you just updated your key, please wait 15 minutes for sync.
-remote: git-receive-pack variables:
-remote: GIT_PUSH_CERT='1c471177906014e65e2825ee71572bf749970c16'
-remote: GIT_PUSH_CERT_KEY=''
-remote: GIT_PUSH_CERT_NONCE='1454372558-35db7be4533958f14731'
-remote: GIT_PUSH_CERT_NONCE_SLOP=''
-remote: GIT_PUSH_CERT_NONCE_STATUS='OK'
-remote: GIT_PUSH_CERT_SIGNER=''
-remote: GIT_PUSH_CERT_STATUS='N'
-To git+ssh://git@git.gentoo.org/repo/gentoo
- ! [remote rejected] master -> master (pre-receive hook declined)
-===
-
-Unsigned push:
-===
-remote: Unknown GIT_PUSH_CERT_STATUS
-remote: Your push was not signed with a known key.
-remote: You MUST use git push --signed with a known key.
-remote: If you just updated your key, please wait 15 minutes for sync.
-remote: git-receive-pack variables:
-remote: GIT_PUSH_CERT=''
-remote: GIT_PUSH_CERT_KEY=''
-remote: GIT_PUSH_CERT_NONCE=''
-remote: GIT_PUSH_CERT_NONCE_SLOP=''
-remote: GIT_PUSH_CERT_NONCE_STATUS=''
-remote: GIT_PUSH_CERT_SIGNER=''
-remote: GIT_PUSH_CERT_STATUS=''
-To git+ssh://git@git.gentoo.org/repo/gentoo
- ! [remote rejected] master -> master (pre-receive hook declined)
-===
-
-Here's the raw blob, while it still exists.
-====
-certificate version 0.1
-pusher 0x55272E9740B89B54 1454372558 -0800
-pushee git+ssh://git.gentoo.org/repo/gentoo
-nonce 1454372558-35db7be4533958f14731
-
-99a4d87ed7b79ea050adb99f941accf33e4ba963 71535a9475cdd4949c4031676238dc9f60e1828a refs/heads/master
------BEGIN PGP SIGNATURE-----
-...
------END PGP SIGNATURE-----
-====
-
-
-> > In the case of the signed push with the unknown key, they should remain
-> > set.
+On Sun, Jan 31, 2016 at 11:12:54PM +0530, Karthik Nayak wrote:
+> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
+> and '%(push)' atoms and store information into the 'used_atom'
+> structure based on the modifiers used along with the corresponding
+> atom.
 > 
-> In any case, I think "should" is relative to the balance between
-> convenience and safety.  If you set up your receiving end to use a
-> keyring that holds trusted keys and nothing else, it makes it harder
-> to make mistakes in the script and accept something you shouldn't if
-> the validation script is fed "No, this is not good" if a push is
-> signed by unknown key, so showing "known to be bad" and "unsure if
-> it is good" the same way with 'N' is what "should" happen from that
-> point of view.
-Ok, at the very least, can we consider populating GIT_PUSH_CERT_KEY and
-GIT_PUSH_CERT_SIGNER even with GIT_PUSH_CERT_STATUS set to N?
-
-Then change the documentation to say 'No valid signature' rather than 'No
-signature'? (introducing another letter would be better I think).
-
+> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+>  ref-filter.c  | 103 ++++++++++++++++++++++++++++++++++------------------------
+>  test-fake-ssh | Bin 0 -> 4668264 bytes
+>  2 files changed, 61 insertions(+), 42 deletions(-)
+>  create mode 100755 test-fake-ssh
 > 
-> Of course, a set-up that fetches unknown keys lazily when they are
-> first encountered would need more work to do the verification
-> themselves, but as long as GIT_PUSH_CERT itself is exported that
-> should be possible (iow, we are trying to make simple way less error
-> prone, while allowing more advanced use possible, if harder).
-If it fetches the new key, and finds it be in some WOT or external trustdb, it
-could accept it.
-
-> If the blob object name is not exported depending on the validation
-> status, that certainly sounds like a bug, as that would make "more
-> advanced use" above impossible.  But I am not sure how that happens.
-I think the earlier blobs got GC'd, hence why I didn't find them.
-
-Advanced usage: Maybe record them to a ref of failed pushes (would be in the
-hook to check the signature).
-
-I think after this is cleaned up, I'll send the Gentoo require-signed-push hook
-for inclusion in contrib/.
-
--- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Infrastructure Lead, Foundation Trustee
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 58d433f..99c152d 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -37,6 +37,8 @@ static struct used_atom {
+>  	union {
+>  		char color[COLOR_MAXLEN];
+>  		struct align align;
+> +		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
+> +			remote_ref;
+>  	} u;
+>  } *used_atom;
+>  static int used_atom_cnt, need_tagged, need_symref;
+> @@ -50,6 +52,20 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
+>  		die(_("invalid color value: %s"), atom->u.color);
+>  }
+>  
+> +static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +	if (!arg) {
+> +		atom->u.remote_ref = RR_NORMAL;
+> +	} else if (!strcmp(arg, "short"))
+> +		atom->u.remote_ref = RR_SHORTEN;
+> +	else if (!strcmp(arg, "track"))
+> +		atom->u.remote_ref = RR_TRACK;
+> +	else if (!strcmp(arg, "trackshort"))
+> +		atom->u.remote_ref = RR_TRACKSHORT;
+> +	else
+> +		die(_("unrecognized format: %%(%s)"), atom->name);
+> +}
+> +
+>  static align_type parse_align_position(const char *s)
+>  {
+>  	if (!strcmp(s, "right"))
+> @@ -132,8 +148,8 @@ static struct {
+>  	{ "subject" },
+>  	{ "body" },
+>  	{ "contents" },
+> -	{ "upstream" },
+> -	{ "push" },
+> +	{ "upstream", FIELD_STR, remote_ref_atom_parser },
+> +	{ "push", FIELD_STR, remote_ref_atom_parser },
+>  	{ "symref" },
+>  	{ "flag" },
+>  	{ "HEAD" },
+> @@ -839,6 +855,43 @@ static const char *strip_ref_components(const char *refname, const char *nr_arg)
+>  	return start;
+>  }
+>  
+> +static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+> +				    struct branch *branch, const char **s)
+> +{
+> +	int num_ours, num_theirs;
+> +	if (atom->u.remote_ref == RR_SHORTEN)
+> +		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+> +	else if (atom->u.remote_ref == RR_TRACK) {
+> +		if (stat_tracking_info(branch, &num_ours,
+> +				       &num_theirs, NULL))
+> +			return;
+> +
+> +		if (!num_ours && !num_theirs)
+> +			*s = "";
+> +		else if (!num_ours)
+> +			*s = xstrfmt("[behind %d]", num_theirs);
+> +		else if (!num_theirs)
+> +			*s = xstrfmt("[ahead %d]", num_ours);
+> +		else
+> +			*s = xstrfmt("[ahead %d, behind %d]",
+> +				     num_ours, num_theirs);
+> +	} else if (atom->u.remote_ref == RR_TRACKSHORT) {
+> +		if (stat_tracking_info(branch, &num_ours,
+> +				       &num_theirs, NULL))
+> +			return;
+> +
+> +		if (!num_ours && !num_theirs)
+> +			*s = "=";
+> +		else if (!num_ours)
+> +			*s = "<";
+> +		else if (!num_theirs)
+> +			*s = ">";
+> +		else
+> +			*s = "<>";
+> +	} else /* RR_NORMAL */
+> +		*s = refname;
+> +}
+> +
+>  /*
+>   * Parse the object referred by ref, and grab needed value.
+>   */
+> @@ -890,8 +943,9 @@ static void populate_value(struct ref_array_item *ref)
+>  			branch = branch_get(branch_name);
+>  
+>  			refname = branch_get_upstream(branch, NULL);
+> -			if (!refname)
+> -				continue;
+> +			if (refname)
+> +				fill_remote_ref_details(atom, refname, branch, &v->s);
+> +			continue;
+>  		} else if (starts_with(name, "push")) {
+>  			const char *branch_name;
+>  			if (!skip_prefix(ref->refname, "refs/heads/",
+> @@ -902,6 +956,8 @@ static void populate_value(struct ref_array_item *ref)
+>  			refname = branch_get_push(branch, NULL);
+>  			if (!refname)
+>  				continue;
+> +			fill_remote_ref_details(atom, refname, branch, &v->s);
+> +			continue;
+>  		} else if (starts_with(name, "color:")) {
+>  			v->s = atom->u.color;
+>  			continue;
+> @@ -943,7 +999,6 @@ static void populate_value(struct ref_array_item *ref)
+>  
+>  		formatp = strchr(name, ':');
+>  		if (formatp) {
+> -			int num_ours, num_theirs;
+>  			const char *arg;
+>  
+>  			formatp++;
+> @@ -952,43 +1007,7 @@ static void populate_value(struct ref_array_item *ref)
+>  						      warn_ambiguous_refs);
+>  			else if (skip_prefix(formatp, "strip=", &arg))
+>  				refname = strip_ref_components(refname, arg);
+> -			else if (!strcmp(formatp, "track") &&
+> -				 (starts_with(name, "upstream") ||
+> -				  starts_with(name, "push"))) {
+> -
+> -				if (stat_tracking_info(branch, &num_ours,
+> -						       &num_theirs, NULL))
+> -					continue;
+> -
+> -				if (!num_ours && !num_theirs)
+> -					v->s = "";
+> -				else if (!num_ours)
+> -					v->s = xstrfmt("[behind %d]", num_theirs);
+> -				else if (!num_theirs)
+> -					v->s = xstrfmt("[ahead %d]", num_ours);
+> -				else
+> -					v->s = xstrfmt("[ahead %d, behind %d]",
+> -						       num_ours, num_theirs);
+> -				continue;
+> -			} else if (!strcmp(formatp, "trackshort") &&
+> -				   (starts_with(name, "upstream") ||
+> -				    starts_with(name, "push"))) {
+> -				assert(branch);
+> -
+> -				if (stat_tracking_info(branch, &num_ours,
+> -							&num_theirs, NULL))
+> -					continue;
+> -
+> -				if (!num_ours && !num_theirs)
+> -					v->s = "=";
+> -				else if (!num_ours)
+> -					v->s = "<";
+> -				else if (!num_theirs)
+> -					v->s = ">";
+> -				else
+> -					v->s = "<>";
+> -				continue;
+> -			} else
+> +			else
+>  				die("unknown %.*s format %s",
+>  				    (int)(formatp - name), name, formatp);
+>  		}
