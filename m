@@ -1,81 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: AW: [PATCH 1/2] stash--helper: implement "git stash--helper"
-Date: Mon, 01 Feb 2016 15:40:11 -0800
-Message-ID: <xmqqa8nkt2xw.fsf@gitster.mtv.corp.google.com>
-References: <BLU436-SMTP27D65F59A444FA678FFD8AA5DA0@phx.gbl>
-	<0000015289f33df4-d0095101-cfc0-4c41-b1e7-6137105b93fb-000000@eu-west-1.amazonses.com>
-	<xmqqr3h1l2x8.fsf@gitster.mtv.corp.google.com>
-	<BLU436-SMTP10996033F3EBFE2E8639F96A5DB0@phx.gbl>
-	<xmqqlh78ximf.fsf@gitster.mtv.corp.google.com>
-	<CAO2U3QhvibfEexCUuDJyj=4P+bebnrQhMaVq3VrgNBLbiTDNaA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 00/12] ref-filter: use parsing functions
+Date: Mon, 1 Feb 2016 19:37:59 -0500
+Message-ID: <CAPig+cTT2Ti5r73=ndF5uR6ovGi16PcYEBb89ik0rcYTVZiRDw@mail.gmail.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+	<xmqqr3gwt6dp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Git List <git@vger.kernel.org>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-To: Michael Blume <blume.mike@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 00:40:25 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 01:38:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQO4z-0003px-Lj
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 00:40:22 +0100
+	id 1aQOyq-00064W-MB
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 01:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751273AbcBAXkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Feb 2016 18:40:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750877AbcBAXkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Feb 2016 18:40:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 83C02414FC;
-	Mon,  1 Feb 2016 18:40:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uUCH1+vCm6hA63cNA1czAm1Yhrs=; b=TrPR4c
-	qpYmWPaN+X1+o+nS8MhtDfO9oRKYgfrmGp29UfY5Qu1Tvo0w2ZTGt5xskAGbCV/a
-	wZCsomeBRiWXfxbQXUECERP+z4ySf3X96ZEbQ41UwDR/Xp5+jqKAk+U6eIa5Qg1z
-	D3hzlqNoRUhxRwSDunEJQfo7nIK73+TCnqhaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cej8ftBVR6ujU6f4xXQ+XPMPSqylzGyU
-	pSG7xSXkJX/0HybfUn1adhR77zgk03yisY8kndt5QyccwdwDi8rBoRF/l7Tx62iI
-	hN1KrQGxCuIXasOSmq+RK59U/3qPmtyv1OzX8m49CPSBLdpoGT4ejOq+mQlvpHzX
-	Mx2Y5yNmvGE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B7C2414FB;
-	Mon,  1 Feb 2016 18:40:13 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E29AA414F9;
-	Mon,  1 Feb 2016 18:40:12 -0500 (EST)
-In-Reply-To: <CAO2U3QhvibfEexCUuDJyj=4P+bebnrQhMaVq3VrgNBLbiTDNaA@mail.gmail.com>
-	(Michael Blume's message of "Mon, 1 Feb 2016 15:36:27 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 237B49DE-C93D-11E5-AAC2-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751629AbcBBAiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Feb 2016 19:38:00 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:36571 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751561AbcBBAh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Feb 2016 19:37:59 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e64so5436765vkg.3
+        for <git@vger.kernel.org>; Mon, 01 Feb 2016 16:37:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=qavHUtcTeV4PiENucSsLneIgRZjA+xQ0V/wJDhY6+J4=;
+        b=GAKEDfmTbAmEI4R2OX9AgIug815Z2GvqbDJthSqMr/PdCBIz9WOCQ06wpUw9HiWKTD
+         OnGVJg5+2Dwe9PpsAp73Db8wKjTTspeuHCX/yLdb0rH8YPUQCW887bdBhxzCDX4fBk3a
+         PmdfYAcHDVN2O2sdAxfXCU69U6G/pLVW3TG57jPUABDNdRDxKXpiZdeSKZc8jI2cei58
+         HfuNx4Nlv3vGXWbN44XuvM4vTe/V9c5K/WpHyMG7BReRM9E9RGkwgVEbJkorKaUmaTlQ
+         9JKJoiIbUAPaNB9lTqsr38iNVN01HsBNErlvjDGzj1WPlae0MlxctPxaHEMQ0KvtV9jX
+         /7ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=qavHUtcTeV4PiENucSsLneIgRZjA+xQ0V/wJDhY6+J4=;
+        b=ivSGz+46yWV8QeWwSceW4zheUI39vvghs+Pg53zePzHftWysTY9V4r72/2MsbME2bm
+         G0WTCeFt9asb5+9aGXP62zsBZkpRO2KzfSE0P+j8BHBNN+UzEuCSbHAVlKx0XQVh3Dab
+         +FOV9sUkaoJpx2xs/IkolpreM9Y1tWpt91Rh5VTkXHIaJHMAif/nj++58v+LwTUUlhZU
+         FP+gAy889hgkwVq8rx03YC3xCGQubDcuX68cbu2umoh6ev4QboL7MlnAdyHOizAeOYY1
+         KsimtHRJ5q7eOEjIViHxGblgnt7F9jVYEUsqmpkLsgaxpM1n3u+9ciQ5Fvdfiv+NYYbS
+         wJuA==
+X-Gm-Message-State: AG10YOS7ECa87GZO8vmZwOM5JJJYZ52y2JeEyezxGhHtK0oJuzAeymbQaNZnAoqNTkq+t+WoeopXJm58TOXRZg==
+X-Received: by 10.31.47.135 with SMTP id v129mr18202975vkv.115.1454373479165;
+ Mon, 01 Feb 2016 16:37:59 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 1 Feb 2016 16:37:59 -0800 (PST)
+In-Reply-To: <xmqqr3gwt6dp.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: a2YmRy_-3ufAIgEG-qNY9dNcmq4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285228>
 
-Michael Blume <blume.mike@gmail.com> writes:
-
-> Maybe this isn't important given that it looks like the patch is going
-> to be rewritten, but I have
+On Mon, Feb 1, 2016 at 5:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> stash.c:43:18: warning: incompatible pointer types assigning to 'const
-> char *const *' from 'const char *'; take the address with &
-> [-Wincompatible-pointer-types]
->                 write_tree.env = prefix;
+>> This series cleans up populate_value() in ref-filter, by moving out
+>> the parsing part of atoms to separate parsing functions. This ensures
+>> that parsing is only done once and also improves the modularity of the
+>> code.
+>>
+>> v1: http://thread.gmane.org/gmane.comp.version-control.git/281180
+>> v2: http://thread.gmane.org/gmane.comp.version-control.git/282563
+>> v3: http://thread.gmane.org/gmane.comp.version-control.git/283350
+>>
+>> Changes:
+>> * The parsing functions now take the arguments of the atom as
+>> function parameteres, instead of parsing it inside the fucntion.
+>> * Rebased on top of pu:jk/list-tag-2.7-regression
+>> * In strbuf use a copylen variable rather than using multiplication
+>> to perform a logical operation.
+>> * Code movement for easier review and general improvement.
+>> * Use COLOR_MAXLEN as the maximum size for the color variable.
+>> * Small code changes.
+>> * Documentation changes.
+>> * Fixed incorrect style of test (t6302).
+>>
+>> Karthik Nayak (12):
+>>   strbuf: introduce strbuf_split_str_omit_term()
+>>   ref-filter: use strbuf_split_str_omit_term()
+>>   ref-filter: bump 'used_atom' and related code to the top
+>>   ref-filter: introduce struct used_atom
+>>   ref-filter: introduce parsing functions for each valid atom
+>>   ref-filter: introduce color_atom_parser()
+>>   ref-filter: introduce parse_align_position()
+>>   ref-filter: introduce align_atom_parser()
+>>   ref-filter: align: introduce long-form syntax
+>>   ref-filter: introduce remote_ref_atom_parser()
+>>   ref-filter: introduce contents_atom_parser()
+>>   ref-filter: introduce objectname_atom_parser()
+>
+> Hmm, 10/12 didn't make it to the list?
 
-The way posted patch tries to use the .env field when using the
-run-command API is totally bogus and this compilation error is a
-manifestation of that.
-
-But the good news is that this should become irrelevant when the
-patch is done by using internal calls ;-).
+Not surprising. Somehow, Karthik did git-add on the compiled
+test-fake-ssh before committing, so the patch sent to the list
+contains an rather huge binary resource. I did receive it since I was
+a direct addressee of the email; I'll reply to the message on-list
+without modifying anything (other than stripping out the binary
+resource) so that other reviewers get a chance to see it.
