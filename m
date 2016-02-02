@@ -1,167 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Identify where a Git config is defined
-Date: Tue, 2 Feb 2016 05:32:16 -0500
-Message-ID: <20160202103215.GA18074@sigill.intra.peff.net>
-References: <3226E251-73F9-4410-84DE-49C8FFAD92EB@gmail.com>
- <20160202101551.GA17349@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 11:32:25 2016
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 00/15] config: make git_config_set die on failure
+Date: Tue,  2 Feb 2016 12:51:41 +0100
+Message-ID: <1454413916-31984-1-git-send-email-ps@pks.im>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 02 12:52:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQYFz-0006oK-AK
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 11:32:23 +0100
+	id 1aQZVG-0005zE-KJ
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754393AbcBBKcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 05:32:19 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36049 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754369AbcBBKcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 05:32:18 -0500
-Received: (qmail 13741 invoked by uid 102); 2 Feb 2016 10:32:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 05:32:18 -0500
-Received: (qmail 12762 invoked by uid 107); 2 Feb 2016 10:32:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Feb 2016 05:32:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Feb 2016 05:32:16 -0500
-Content-Disposition: inline
-In-Reply-To: <20160202101551.GA17349@sigill.intra.peff.net>
+	id S1754578AbcBBLwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 06:52:10 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:48668 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754458AbcBBLwI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:52:08 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 25BE0211CE
+	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:52:08 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 02 Feb 2016 06:52:08 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=9KOvIBWZmTzcq/NkzI8DYQwWkG
+	Q=; b=ksCVoAQr+wqEDVaHW0puFWDm+e4uSnSa72CJSeKVLTk+Fdd8l504B5OXXl
+	MuprFTcucrqS1SI/niTafonitkCiE8A/ZubT0vGISVAuGBNQQZssxrJRCI22ncZG
+	Nm/oB3EhTqI/cKL23X7tIa18JMWu6Lp+cp23ckhJ67UM83x8A=
+X-Sasl-enc: +4PXXkWRxOxn+2+OVvHuU/Hshw8wgyI9medod8eNg7sN 1454413927
+Received: from localhost (f052008117.adsl.alicedsl.de [78.52.8.117])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8FEA0C00012;
+	Tue,  2 Feb 2016 06:52:07 -0500 (EST)
+X-Mailer: git-send-email 2.7.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285250>
 
-On Tue, Feb 02, 2016 at 05:15:51AM -0500, Jeff King wrote:
+This is the fourth version of my patch series. Version three of
+these patches can be found at [1]. These patches convert the
+`git_config_set` family of functions such that they die by
+default whenever an error is encountered in persisting configs.
+This catches a lot of cases where we wrote configs without
+checking the returned status code, thus leading to inconsistent
+state witouth even notifying the user.
 
-> It looks like I tweaked it at some point, and I've been carrying this in
-> my tree (rebasing forward and using it in my normal build):
-> 
->   git fetch git://github.com/peff/git jk/config-sources
-> 
-> Feel free to use it as a starting point if that's helpful. I don't
-> recall offhand how close it is to ready.
+This version combines both version 2 ([2]) and version 3 of this
+patch series in that we first introduce `git_config_set_or_die`
+wrappers and converting most call sites to use these. After the
+conversion is done, we rename `git_config_set` to
+`git_config_set_gently` and adjusting remaining call sites. The
+last step was to rename `git_config_set_or_die` to
+`git_config_set` in order to get the desired default behavior.
 
-Just to leave a record in the list archive, here's the patch itself:
+This back-and-forth should hopefully help easing the transition
+and review by breaking down the actual transition into small
+pieces.
 
--- >8 --
-Subject: [PATCH] show sources of config options (WIP)
+[1]: http://article.gmane.org/gmane.comp.version-control.git/285198
+[2]: http://article.gmane.org/gmane.comp.version-control.git/285000
 
- - needs tests
- - probably should complain when not LIST or getting a value
+Patrick Steinhardt (15):
+  config: introduce set_or_die wrappers
+  branch: die on error in setting up tracking branch
+  branch: die on config error when unsetting upstream
+  branch: die on config error when editing branch description
+  submodule: die on config error when linking modules
+  submodule--helper: die on config error when cloning module
+  remote: die on config error when setting URL
+  remote: die on config error when setting/adding branches
+  remote: die on config error when manipulating remotes
+  clone: die on config error in cmd_clone
+  init-db: die on config errors when initializing empty repo
+  sequencer: die on config error when saving replay opts
+  compat: die when unable to set core.precomposeunicode
+  config: rename git_config_set to git_config_set_gently
+  config: rename git_config_set_or_die to git_config_set
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/config.c | 32 ++++++++++++++++++++++++++++++++
- cache.h          |  1 +
- config.c         |  7 +++++++
- 3 files changed, 40 insertions(+)
+ branch.c                 | 13 +++++----
+ branch.h                 |  1 +
+ builtin/branch.c         |  5 ++--
+ builtin/clone.c          |  2 +-
+ builtin/config.c         | 28 +++++++++----------
+ builtin/init-db.c        |  2 +-
+ builtin/remote.c         | 70 +++++++++++++++++-------------------------------
+ cache.h                  | 14 ++++++----
+ compat/precompose_utf8.c |  3 ++-
+ config.c                 | 52 ++++++++++++++++++++++++++---------
+ submodule.c              | 10 +++----
+ t/t3200-branch.sh        | 16 ++++++++++-
+ t/t5505-remote.sh        |  9 +++++++
+ 13 files changed, 128 insertions(+), 97 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index adc7727..b8caf18 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -3,6 +3,7 @@
- #include "color.h"
- #include "parse-options.h"
- #include "urlmatch.h"
-+#include "quote.h"
- 
- static const char *const builtin_config_usage[] = {
- 	N_("git config [<options>]"),
-@@ -27,6 +28,7 @@ static int actions, types;
- static const char *get_color_slot, *get_colorbool_slot;
- static int end_null;
- static int respect_includes = -1;
-+static int show_sources;
- 
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -81,6 +83,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes, N_("respect include directives on lookup")),
-+	OPT_BOOL(0, "sources", &show_sources, N_("show source filenames of config")),
- 	OPT_END(),
- };
- 
-@@ -91,8 +94,35 @@ static void check_argc(int argc, int min, int max) {
- 	usage_with_options(builtin_config_usage, builtin_config_options);
- }
- 
-+/* output to either fp or buf; only one should be non-NULL */
-+static void show_config_source(struct strbuf *buf, FILE *fp)
-+{
-+	char term = '\t';
-+	const char *fn = current_config_filename();
-+
-+	if (!fn)
-+		fn = "";
-+
-+	if (!end_null)
-+		quote_c_style(fn, buf, fp, 0);
-+	else {
-+		term = '\0';
-+		if (fp)
-+			fprintf(fp, "%s", fn);
-+		else
-+			strbuf_addstr(buf, fn);
-+	}
-+
-+	if (fp)
-+		fputc(term, fp);
-+	else
-+		strbuf_addch(buf, term);
-+}
-+
- static int show_all_config(const char *key_, const char *value_, void *cb)
- {
-+	if (show_sources)
-+		show_config_source(NULL, stdout);
- 	if (!omit_values && value_)
- 		printf("%s%c%s%c", key_, delim, value_, term);
- 	else
-@@ -108,6 +138,8 @@ struct strbuf_list {
- 
- static int format_config(struct strbuf *buf, const char *key_, const char *value_)
- {
-+	if (show_sources)
-+		show_config_source(buf, NULL);
- 	if (show_keys)
- 		strbuf_addstr(buf, key_);
- 	if (!omit_values) {
-diff --git a/cache.h b/cache.h
-index dfc459c..95a7f65 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1528,6 +1528,7 @@ extern const char *get_log_output_encoding(void);
- extern const char *get_commit_output_encoding(void);
- 
- extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
-+extern const char *current_config_filename(void);
- 
- struct config_include_data {
- 	int depth;
-diff --git a/config.c b/config.c
-index 86a5eb2..b437002 100644
---- a/config.c
-+++ b/config.c
-@@ -2385,3 +2385,10 @@ int parse_config_key(const char *var,
- 
- 	return 0;
- }
-+
-+const char *current_config_filename(void)
-+{
-+	if (cf && cf->name)
-+		return cf->name;
-+	return NULL;
-+}
 -- 
-2.7.0.489.g6faad84
+2.7.0
