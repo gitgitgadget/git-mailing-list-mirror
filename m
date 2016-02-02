@@ -1,76 +1,87 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v3 6/6] worktree add: switch to worktree version 1
-Date: Tue, 2 Feb 2016 07:35:47 +0200
-Message-ID: <20160202053547.GF4978@wheezy.local>
-References: <1451186079-6119-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-1-git-send-email-pclouds@gmail.com>
- <1453808685-21235-7-git-send-email-pclouds@gmail.com>
- <20160201053333.GE4978@wheezy.local>
- <CACsJy8Am7rQ=pm0C7bw0gQ=aic3opmBos+3+1Awrko8TT2uHrg@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t6302: drop unnecessary GPG requirement
+Date: Tue, 2 Feb 2016 08:06:18 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602020805280.2964@virtualbox>
+References: <1454271562-24291-1-git-send-email-sunshine@sunshineco.com> <xmqq4mdtxjxf.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1602010759480.2964@virtualbox> <xmqq4mdsw949.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Max Kirillov <max@max630.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 06:35:57 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 02 08:06:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQTd5-00052r-Rs
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 06:35:56 +0100
+	id 1aQV34-0004am-5F
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 08:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbcBBFfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 00:35:52 -0500
-Received: from p3plsmtpa11-02.prod.phx3.secureserver.net ([68.178.252.103]:35572
-	"EHLO p3plsmtpa11-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750958AbcBBFfv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 00:35:51 -0500
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa11-02.prod.phx3.secureserver.net with 
-	id DHbm1s00D5B68XE01HbpLR; Mon, 01 Feb 2016 22:35:50 -0700
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Am7rQ=pm0C7bw0gQ=aic3opmBos+3+1Awrko8TT2uHrg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753662AbcBBHGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 02:06:46 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55379 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752929AbcBBHGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 02:06:44 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MHX4u-1aTntP2PNc-003Kbo; Tue, 02 Feb 2016 08:06:19
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqq4mdsw949.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:g8QrP2tj2fcW/61ky3jW895qqyKVR7GH3M4r3ZvJNOXtu51dyYo
+ CiHMBx3G8IlC3UrR66s4Pm36FL6IDq29Jw8A9T3S8uQ8Lf14QN5j6R7X1g96ZuDPA1+2FfF
+ p1gPH2utrm4dXeua5ZHpavIOVFedze5rZk+yPBDk843lmbrUmvScmva9chLmuxBOxtAK5Xa
+ ftYJ7EolKLJHKm4U38moQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+AffognbGUc=:E0cJR5Sy5Er3iQR3VODunb
+ fhugwE5dXvb5JSs04HrjAutGDqybucDGDXqkG2P/PnF21MMs1/EwwSKkwvyvrBXLo39rLd4IX
+ kGcVTLlgvRmy8e8fWDYWC0X6gv3KiEm/yBI0imu5H/I23dLNCDtb+o3jZ8E46xIQ6q5b9jXtx
+ H80d/gcMnEnMdR0JVDBJNqG9BQpCOSwLwyEmDNgk593/WIldxkh/t1epiDj1b5Dr21vzcOVFO
+ o6PmkIxnTCALsbp84TRngzlNifrD3fooWCtxIOnXi3yBgKyESbwe1LJBLGev85Y8VxnAEN+0R
+ jkQyXdQZ1jJDhXYNf5RQkK2xzE6kMmVTHaVU+zS6vJTnGLS5Qp6EV8kPs/eer6RtMeEDTYbnK
+ zxE5oF269Bg5XR2aLnFG67wDWSh7xAxV2o178RcxH9gieVdPV9R04r0tZ5V2RbF0dhYqfKl6N
+ vuNrmvsCb5l0w45nOkkaY5daz6b7YvP+IBxioGFAPIs69Ne48JNbPrUgBbd1yNqNy8Yz0kRYQ
+ YZBoqFXjnxYTgqy5G0dM2CJAw1Lm9/C76AttceqskhDxiR98vEvIBrITK6grKnOL9JQ6UGEnM
+ y5rhn/TzqpnwyUi0yqfOBuhrO6AJDdRjXvKK56MMP+UfSSd6YGtpf/WJgGc79StAhjooivL6A
+ +y4Zuy3SNeQDFUiSX80e/arW4d95d9yZOuWK7ye+NadWXP3veqP/FwUIjhdqsPNyMPBelJll5
+ NQQjjTl5Zdmn1my8yjhEttOENQgIeGSHG8MMDYRJtKxYQrgSPkEbWBIlBYIY06rLXzbFNlaJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285240>
 
-On Mon, Feb 01, 2016 at 01:05:05PM +0700, Duy Nguyen wrote:
-> On Mon, Feb 1, 2016 at 12:33 PM, Max Kirillov <max@max630.net> wrote:
->> 1. For submodules (which must be left per-worktree) this
->> approach is not going to work, because you don't know all
->> variables in advance. You could scan the config file and
->> match those actual keys which are there with patterns.
+Hi Junio,
 
-> Hmm.. we could keep existing submodule.* per-worktree. New variables
-> are per-worktree by default, unless you do "git config --repo" in
-> git-submodule.sh. Am I missing something?
+On Mon, 1 Feb 2016, Junio C Hamano wrote:
 
-Submodules in new worktree should be not initialized, and as
-far as I understand this means that submodule variables
-should be removed from common config.
-
-I used test from
-http://article.gmane.org/gmane.comp.version-control.git/266621
-to verify expectations for submodules.
-
->> 2. This migrates variables to the default (or current?)
->> worktree, what about others existing?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> In v0, $C/config contains all shared variables, once we move these
-> shared vars to $C/common/config, they will be visible to all other
-> worktrees. Or do you replicate per-worktree vars in $C/config to all
-> worktrees ?
+> > An even easier solution might be to *not* set up the signed tags in the
+> > 'setup' part, but only in the respective test case, and delete them right
+> > away after said test case?
+> 
+> After reading your patch, I do not find it an "easier solution", at
+> least with the definition of the word "solution" I would use.  It
+> stops testing signed or doubly signed tags everywhere, assuming that
+> future regressions can ever break only --points-at tests and no
+> other tests around signed tags.
 
-If would make sense for some variables definitely. For
-example, the submodule related variables.
+True.
 
--- 
-Max
+> > Something like this (I even tested this with and without the GPG prereq):
+> > ...
+> > -test_expect_success 'check signed tags with --points-at' '
+> > +test_expect_success GPG 'check signed tags with --points-at' '
+> > +	git tag -s -m "A signed tag message" signed-tag side &&
+> > +	git tag -s -m "Annonated doubly" double-tag signed-tag &&
+> > +	test_when_finished git tag -d signed-tag &&
+> 
+> Interestingly, double-tag is not removed here.
+
+Whooopsie.
+
+I retract the patch in any case ;-)
+
+Ciao,
+Dscho
