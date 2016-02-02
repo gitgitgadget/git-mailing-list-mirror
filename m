@@ -1,107 +1,109 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: git log -g bizarre behaviour
-Date: Tue, 02 Feb 2016 21:22:12 +0100
-Message-ID: <1454444532.2713.1.camel@kaarsemaker.net>
-References: <1454241144.2822.7.camel@kaarsemaker.net>
-	 <xmqqegcwt32j.fsf@gitster.mtv.corp.google.com>
-	 <1454401738.32711.7.camel@kaarsemaker.net>
-	 <xmqqsi1asyai.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't tried Negotiate
+Date: Tue, 02 Feb 2016 12:37:19 -0800
+Message-ID: <xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
+References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 02 21:22:26 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Feb 02 21:37:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQhSy-0004wy-S2
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 21:22:25 +0100
+	id 1aQhhW-0002FZ-Ov
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 21:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755058AbcBBUWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Feb 2016 15:22:19 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33561 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752733AbcBBUWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 15:22:15 -0500
-Received: by mail-wm0-f67.google.com with SMTP id r129so4071258wmr.0
-        for <git@vger.kernel.org>; Tue, 02 Feb 2016 12:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-type:mime-version:content-transfer-encoding;
-        bh=MzryDb/3RJ0m6EJ/Mzlm3uvXAaMlf5liOpy8Yoa29nc=;
-        b=vWhpZ4Ka7lKPlbIjAlS95QwCtqVf/KHZulEvEnmTc0E3kVY2g0dXYBG3xLwe9c3dzn
-         RpPQgxg7zLQPZdXvyD/8PgeDIj3biW8oYAvcm0ad5hEBTWld7AmStWPh7xNZSqyi22Dt
-         goG7uSvBK4agU4ZcG5jxqDVn1afupn65CGcRdMFhbX1Q4BxFOfSklgibE5tWXccsrWRP
-         B2ZuYXUoXki9psDs9+THiPdIArkUoOmmk+6xlu22P7YX8LxDilb4/dN5bafmZaqmN/4h
-         lYVFoFTvBo2TN79a6/pZYxX0k6Fr0EGNWXZ1lPZ/2OkQBo8Q5Ak1gZKkuGI7HyTwzqMx
-         pv6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=MzryDb/3RJ0m6EJ/Mzlm3uvXAaMlf5liOpy8Yoa29nc=;
-        b=dDdeVpxA1sr3YR3rtfYgJ2RO+OAkVh/ea1boiWBnKWxTVAJqHO7fkiqQZKog9vFCid
-         7pelgnjj0XS0lp2D+/2+2fvv9GTtuH7mZO0yrI1yihM5U/6oW8Fm9snVYPSzA9f9d+HK
-         2KxQKhfbHeo4ee/Zr6NVdKXEPy8/T7U05uFmiAyiVQIbWBA7vim5TaE1+tM3MGeKs8Xj
-         GHgW+ofSEJ5r3Q+arY+wVT2tInq8OkNgoD+sdvAxctbKZ8XJTU+aBndzH+DlAnT+QX4+
-         QnpwlCrmwxwkcdmMClDh8mdz9N89BmWlVpCYz9QC19ze6dKJIltYoj/WOD2VVt9t1hXx
-         K1hg==
-X-Gm-Message-State: AG10YORUiIPNhc+5ajuG3+Qw+jrf3McZhDIgCBfFg4VgFlLuOWAhnXk3nkWShC1cEvHoHg==
-X-Received: by 10.194.243.103 with SMTP id wx7mr33719748wjc.136.1454444534425;
-        Tue, 02 Feb 2016 12:22:14 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id w8sm3085811wjx.21.2016.02.02.12.22.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Feb 2016 12:22:13 -0800 (PST)
-In-Reply-To: <xmqqsi1asyai.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.18.3-1ubuntu1 
+	id S933678AbcBBUhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 15:37:23 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58284 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756016AbcBBUhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 15:37:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F224D40328;
+	Tue,  2 Feb 2016 15:37:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/qN4g2yINP8M1HdkV+D8+bbgFO8=; b=CepaIq
+	iLqT5/CDsKZlrdIVkOJIVapHto14ZtOdvgFvn1Cw7VZpkBfYD1dBKIwxrYZfXlh6
+	PyGo7omsDEb3HdAhmYujCv0Ts0uooBgcthw1Hpz2/GHUW3TP3jt6wWF6e7DGSgP/
+	XECoaODMVNfa7JajjnqtG42JXFOmFoE2mLdWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xTiURqE/t7H6o3SqIjj8phQLIMvkwyXo
+	5U8y6E/o3aWWxmrc9hiO8CEeKGI6euvI+qB+42vNStldVqkcufh/xoW0XPsOE/q3
+	iZnjgJ2HOe/x4xJw6GZ98xJt4ahDy42rcI63yPZTt0d2U9RUQbrEzK6ilon83Hzs
+	951VzUEN4S0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E86AC40327;
+	Tue,  2 Feb 2016 15:37:20 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 69FCD40325;
+	Tue,  2 Feb 2016 15:37:20 -0500 (EST)
+In-Reply-To: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
+	(Dmitry Vilkov's message of "Tue, 2 Feb 2016 12:11:24 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C1BC8680-C9EC-11E5-B178-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285304>
 
-On di, 2016-02-02 at 11:32 -0800, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
->=20
-> > On ma, 2016-02-01 at 15:37 -0800, Junio C Hamano wrote:
-> >=20
-> > > Do you mean
-> > >=20
-> > > 	$ git checkout -b testing
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0$ rm -f .git/logs=
-/refs/heads/testing
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0$ git log -g test=
-ing
-> > >=20
-> > > will be changed from a silent no-op to an abort with error?
-> > >=20
-> > > I do not see a need for such a change--does that count as an
-> > > objection?
-> >=20
-> > No, I'd like to change:
-> >=20
-> > $ ls .git/logs/refs/tags/v2.7.0
-> > ls: cannot access .git/logs/refs/tags/v2.7.0: No such file or
-> > directory
-> > $ git (log -g|reflog) v2.7.0
-> > From the bizarre behaviour above to a silent noop.
->=20
-> When there is nothing to show, we do not show anything,=20
+Dmitry Vilkov <dmitry.a.vilkov@gmail.com> writes:
 
-As I demonstrated in the text that you cut: that is not true.
-git log -g v2.7.0 and git reflog v2.7.0 are *not* silent, but buggy. I
-would like to make them silent.
+> This is fix of bug introduced by 4dbe66464 commit.
 
-> and that is just like "git log v2.7.0..v2.7.0" is silent.
->=20
-> I do not find the silence bizarre at all.
+That would be 4dbe6646 (remote-curl: fall back to Basic auth if
+Negotiate fails, 2015-01-08) that appears in v2.3.1 and onward.
 
-I'll take that as an agreement then :)
---=20
-Dennis Kaarsemaker
-www.kaarsemaker.net
+> The problem is that when username/password combination was not set,
+> the first HTTP(S) request will fail and user will be asked for
+> credentials. As a side effect of first HTTP(S) request, libcurl auth
+> method GSS-Negotiate will be disabled unconditionally. Although, we
+> haven't tried yet provided credentials for this auth method.
+
+Brian, comments?  Here is what you wrote in that commit:
+
+    If Basic and something else are offered, libcurl will never
+    attempt to use Basic, even if the other option fails.  Teach the
+    HTTP client code to stop trying authentication mechanisms that
+    don't use a password (currently Negotiate) after the first
+    failure, since if they failed the first time, they will never
+    succeed.
+
+Thanks.
+
+> Signed-off-by: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
+> ---
+>  http.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 0da9e66..707ea84 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -951,12 +951,15 @@ static int handle_curl_result(struct slot_results *results)
+>  		return HTTP_MISSING_TARGET;
+>  	else if (results->http_code == 401) {
+>  		if (http_auth.username && http_auth.password) {
+> +#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+> +			if (http_auth_methods & CURLAUTH_GSSNEGOTIATE) {
+> +				http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+> +				return HTTP_REAUTH;
+> +			}
+> +#endif
+>  			credential_reject(&http_auth);
+>  			return HTTP_NOAUTH;
+>  		} else {
+> -#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+> -			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+> -#endif
+>  			return HTTP_REAUTH;
+>  		}
+>  	} else {
