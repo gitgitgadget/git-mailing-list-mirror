@@ -1,125 +1,96 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 11/15] init-db: die on config errors when initializing empty repo
-Date: Tue,  2 Feb 2016 12:51:52 +0100
-Message-ID: <1454413916-31984-12-git-send-email-ps@pks.im>
+Subject: Re: [PATCH v4 07/15] remote: die on config error when setting URL
+Date: Tue, 2 Feb 2016 13:00:03 +0100
+Message-ID: <20160202120003.GA22942@pks-pc.localdomain>
 References: <1454413916-31984-1-git-send-email-ps@pks.im>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
+ <1454413916-31984-8-git-send-email-ps@pks.im>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 02 12:53:45 2016
+X-From: git-owner@vger.kernel.org Tue Feb 02 13:00:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQZWc-0007mg-EU
-	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 12:53:38 +0100
+	id 1aQZcz-0007sk-9T
+	for gcvg-git-2@plane.gmane.org; Tue, 02 Feb 2016 13:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755063AbcBBLxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 06:53:35 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:54128 "EHLO
+	id S1755165AbcBBMAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 07:00:07 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:54145 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754961AbcBBLxU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 06:53:20 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id D02C120364
-	for <git@vger.kernel.org>; Tue,  2 Feb 2016 06:53:19 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Tue, 02 Feb 2016 06:53:19 -0500
+	by vger.kernel.org with ESMTP id S1755163AbcBBMAG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Feb 2016 07:00:06 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9B3D720FC3
+	for <git@vger.kernel.org>; Tue,  2 Feb 2016 07:00:05 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 02 Feb 2016 07:00:05 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=3ArI
-	X0Ktvbnsmf0xFPC86rbeOec=; b=aH4jdqDI4VC23PXRXl5whbG+TXfxrF0CEtnu
-	xvyzxczJExnUBSpRrUQf8xxdI5YeUWCk/15fh36gp0scK1hJ8Cc5ii9KkOKiG15I
-	3xKcim03H5k8YyfLRzPJFr2vfdbCXTyzS5bC1ZVbfoMtuImtIAxmcWeo+QpIhZ0t
-	+GVV0PI=
-X-Sasl-enc: eH6mRP4RTBAb1knWWd3u4bCJ1x6Iu62XFVCyd9aTKbho 1454413999
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=eUWjEzwUHMFMaN6gHDH/UCnjaBM=; b=ZWpvq
+	eNeJ1zQVyg+1WA+H3NZMT31nJYFXNPP9+GDSviBH8epWlqtaIorvhY9wwT0sN9og
+	Vsos9m3bf4VZydlfpm+p3dZgR9LNESG+NfmdpWvWNwyCHbvrmwMbmcI4HL47e4f6
+	b+lP/G7nG/inYpgYJPNr044gjW5u8WRLetOAJo=
+X-Sasl-enc: z8LyNPZjqmkkaoJSJuG19Jl7gpZup/aWAq8De1qxRY4C 1454414405
 Received: from localhost (f052008117.adsl.alicedsl.de [78.52.8.117])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 672A768019F;
-	Tue,  2 Feb 2016 06:53:19 -0500 (EST)
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <1454413916-31984-1-git-send-email-ps@pks.im>
+	by mail.messagingengine.com (Postfix) with ESMTPA id 0D17AC0001D;
+	Tue,  2 Feb 2016 07:00:04 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1454413916-31984-8-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285266>
 
-When creating an empty repository with `git init-db` we do not
-check for error codes returned by `git_config_set` functions.
-This may cause the user to end up with an inconsistent repository
-without any indication for the user.
 
-Fix this problem by dying early with an error message when we are
-unable to write the configuration files to disk.
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Feb 02, 2016 at 12:51:48PM +0100, Patrick Steinhardt wrote:
+> When invoking `git-remote --set-url` we do not check the return
+> value when writing the actual new URL to the configuration file,
+> pretending to the user that the configuration has been set while
+> it was in fact not persisted.
+>=20
+> Fix this problem by dying early when setting the config fails.
+>=20
+> Signed-off-by: Patrick Steinhardt
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/init-db.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 07229d6..ef19048 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -227,7 +227,7 @@ static int create_default_files(const char *template_path)
- 	/* This forces creation of new config file */
- 	xsnprintf(repo_version_string, sizeof(repo_version_string),
- 		  "%d", GIT_REPO_VERSION);
--	git_config_set("core.repositoryformatversion", repo_version_string);
-+	git_config_set_or_die("core.repositoryformatversion", repo_version_string);
- 
- 	/* Check filemode trustability */
- 	path = git_path_buf(&buf, "config");
-@@ -241,18 +241,18 @@ static int create_default_files(const char *template_path)
- 		if (filemode && !reinit && (st1.st_mode & S_IXUSR))
- 			filemode = 0;
- 	}
--	git_config_set("core.filemode", filemode ? "true" : "false");
-+	git_config_set_or_die("core.filemode", filemode ? "true" : "false");
- 
- 	if (is_bare_repository())
--		git_config_set("core.bare", "true");
-+		git_config_set_or_die("core.bare", "true");
- 	else {
- 		const char *work_tree = get_git_work_tree();
--		git_config_set("core.bare", "false");
-+		git_config_set_or_die("core.bare", "false");
- 		/* allow template config file to override the default */
- 		if (log_all_ref_updates == -1)
--		    git_config_set("core.logallrefupdates", "true");
-+			git_config_set_or_die("core.logallrefupdates", "true");
- 		if (needs_work_tree_config(get_git_dir(), work_tree))
--			git_config_set("core.worktree", work_tree);
-+			git_config_set_or_die("core.worktree", work_tree);
- 	}
- 
- 	if (!reinit) {
-@@ -265,12 +265,12 @@ static int create_default_files(const char *template_path)
- 		    S_ISLNK(st1.st_mode))
- 			unlink(path); /* good */
- 		else
--			git_config_set("core.symlinks", "false");
-+			git_config_set_or_die("core.symlinks", "false");
- 
- 		/* Check if the filesystem is case-insensitive */
- 		path = git_path_buf(&buf, "CoNfIg");
- 		if (!access(path, F_OK))
--			git_config_set("core.ignorecase", "true");
-+			git_config_set_or_die("core.ignorecase", "true");
- 		probe_utf8_pathname_composition();
- 	}
- 
-@@ -386,8 +386,8 @@ int init_db(const char *template_dir, unsigned int flags)
- 			xsnprintf(buf, sizeof(buf), "%d", OLD_PERM_EVERYBODY);
- 		else
- 			die("BUG: invalid value for shared_repository");
--		git_config_set("core.sharedrepository", buf);
--		git_config_set("receive.denyNonFastforwards", "true");
-+		git_config_set_or_die("core.sharedrepository", buf);
-+		git_config_set_or_die("receive.denyNonFastforwards", "true");
- 	}
- 
- 	if (!(flags & INIT_DB_QUIET)) {
--- 
-2.7.0
+Sorry, borked up that signed-off-by. Will fix in a later revision
+(which I guess will be necessary anyway ;).
+
+Patrick
+
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWsJpDAAoJEBF8Z7aeq/Esl40P/356muzYE6Hvd5bkeqDOu620
+plerS++B0xDdVh3qA0FeTdHuTAi4yRxYhdpn6I3E3bRCjLgKnwH4EIifLzP1ceQJ
+xK0t9RjjREDO8CyN3kvYnXKITmpHrq15v/E2ztw97pAh8ZE3VmFYSzRDUpZ/1vkA
+5Y2ruChsVVtNFlD0DMdL3rJ6XBSaRstSKanKf+F0/5aysR19oM1sM4t0ptAaNU0F
+cLi/Ig9G1nMwEZx6G1Y+IX3VcPWaHIckmZ6jgWpn/iqZpocS/E9+3aXgmXhDpoaq
+kzxyP2+TnPYnxxX9ppxfa9BG5I+kTehkUq90bFNOcYEEOn9mtgp7adxunqBQONke
+6OZ4iwiFsjEx/co1ooq3PG5k1h97tYVUiTaukZnKF715V7miAG9+q7+eNogFtAPD
+jiU9r+L4r4IASYLUGxMHISiac5gAhPhFBhuD6LDaL5GxDS0cUjyiOGY4/2GEoGT1
+jEkku1BGmifAFmWaj+JrxaAb53OJZamYyEfwp4oex2KvMyM6JiOXUdyxyUZkfwfy
+2L6oLDDfY9U9nze2mSSapcg8VPW+swuCCXv1C1VUKhFkB88kSOrZY5Q9ULuV55VH
+s3DnBCYulMc1QKz/Cbhp8ue6rkqHR/GmmKF2Fe88x5z6oKeKBhHzaVIpbUahMVlR
+6Q1L9D3I967AuoN7RZhr
+=5omk
+-----END PGP SIGNATURE-----
+
+--liOOAslEiF7prFVr--
