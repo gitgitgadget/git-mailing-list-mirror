@@ -1,322 +1,165 @@
-From: Dan Aloni <alonid@gmail.com>
-Subject: [PATCH v3] Add user.explicit boolean for when ident shouldn't be
- guessed
-Date: Wed, 3 Feb 2016 21:22:27 +0200
-Message-ID: <20160203192227.GA13878@gmail.com>
-References: <1454442861-4879-1-git-send-email-alonid@gmail.com>
- <20160203035648.GA20732@sigill.intra.peff.net>
- <20160203082112.GA27454@gmail.com>
- <CAPig+cSWN-wpcooqmYtFfZoDYpkhLoezSeu6bm9rSTvZ72jSEQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 05/12] ref-filter: introduce parsing functions for each
+ valid atom
+Date: Wed, 3 Feb 2016 17:19:41 -0500
+Message-ID: <CAPig+cRmfNjP8PYoQFZ7YrECgt03aE1=QynG58-+cd9ORJneZw@mail.gmail.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+	<1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 20:22:37 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 23:19:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aR30e-0007Vm-UX
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 20:22:37 +0100
+	id 1aR5mD-0004HF-2d
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 23:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965792AbcBCTWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 14:22:33 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:37166 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965039AbcBCTWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2016 14:22:32 -0500
-Received: by mail-wm0-f51.google.com with SMTP id l66so85665111wml.0
-        for <git@vger.kernel.org>; Wed, 03 Feb 2016 11:22:31 -0800 (PST)
+	id S965614AbcBCWTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 17:19:45 -0500
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:35212 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965611AbcBCWTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 17:19:43 -0500
+Received: by mail-vk0-f68.google.com with SMTP id e185so1088887vkb.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2016 14:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=p94NFMmouJESabM2bwaIobCM62x87MIKSjYSF4q2Myc=;
-        b=tZFtmYlxRglvtN+FgbaP7eukn7Sa4WtFfunmd/N7ixoLzoM7ax5Jc3yzaAHMr99AtL
-         NDXIKSK2ouUgUCkRAiiq4VhDcTqvpxf4kxG/5LrISRsCOqMVKFHUW026rwAAKapkDrE/
-         zIQ6YIoa+nO/RXhvOYBlgbiyN3r/aJNoPGQetM44EujD/ewB7o0SqbxpilAxJJ5MieAp
-         b3NpaLqXxOfJmvjamd8vOU0nzkHvPEOAYuHKGWHKC0TdaNB9Tp3e76R/1dFIdpCrf5b5
-         REK/3lPafLr8R3OgMkNcL/A5Tn+RRiU2ZszCfmL33GktJyWACkTSMfOHeAiC1A9PJqBE
-         Vjww==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=C01b58AJfDJ6o4fEAJ9JKrQNWatm2a82qA1q0xk1+J0=;
+        b=b0IuwaZ18SNnpRgKLOlMY4zLrYPI9otLH00qrKGtdGS8/IdtjA67/8C7rfRh8KCOyF
+         15kcZsKsjECQ8iukSsep1HOQuiwC7/moSrQlJH4UubYGZJ8I6qSvTmn5PBxGO1F12rbq
+         PVu4lKtaYpt1P/Aaz0ud5cd/AuiHvjjY0jJqvYcM9uxB31NCAOKraR0tPQRlj3L7yloy
+         eZzOHfz8zvxedARutf2b+v4DlrqAkJCSl2FJfFI7O0YVBe4XzAzxEw/MTaC1xDv3c8uh
+         CQla0A1AG8DSEeo6ZpO4jWaxVFTBThwUyQjmukYNUmVwgE2KEf1L1RfvcpbSbxMV+RUo
+         Fwow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=p94NFMmouJESabM2bwaIobCM62x87MIKSjYSF4q2Myc=;
-        b=TtfbamcpUFMMni9rRwxMZv5GCsVwZOkHY/m3GIi+OeVxbox85HZ2ZbcpFEy84X1Aqs
-         G6LxsQsSTY1MYOGlvIWcOHNK8v6S/9TzHP5+0euwC/yttfCGC8zJlCpjqmrMCJWWpeqh
-         fhLT3IPh3xN7AFprkXMw6N9f6w2zokB4lnNdNGz2uc/ho50gYsoZJr4Bko1OSuOWM8vd
-         ctt2YbjJM338jfY1pYgI+pd9f6ykISmURERuNX+9yGb7C1V+FFwn+mqBgR+t0iCkBnuz
-         MmToI0yI++qOI/MXqXM0o5KhNLiHtpU1S16OjSPjdifzwt5ru8cNNGqfNadVbknkaC4P
-         ULDg==
-X-Gm-Message-State: AG10YOQQR2XI/pIrqVmVQlq0NiECtaJ/fq1wk365lJAnp8TAxuc6pNmHUyFpnACLrD7pFQ==
-X-Received: by 10.28.24.85 with SMTP id 82mr27401275wmy.58.1454527350501;
-        Wed, 03 Feb 2016 11:22:30 -0800 (PST)
-Received: from localhost ([31.210.180.167])
-        by smtp.gmail.com with ESMTPSA id b1sm7919323wjy.0.2016.02.03.11.22.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Feb 2016 11:22:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSWN-wpcooqmYtFfZoDYpkhLoezSeu6bm9rSTvZ72jSEQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=C01b58AJfDJ6o4fEAJ9JKrQNWatm2a82qA1q0xk1+J0=;
+        b=mWOQ9Df/UFS6laKDRuKX7cKHU9cCImToZQNu60tMRtQq6ZsNCyVoeur1zXaGjWktmv
+         ++BJ0U5pu1oT4G+tWGUtmRUWt55QqloVpjryFucPxtpmtjQeY5ObJAkF+TNtv0ETQi2u
+         kvQo1Ik4hDdjmcytGrvAatGofEM6VIEHLSL9snkd9g4Eqb0xl957AmAxoLQARF/Rbf76
+         ggyl+JXGF2/w6wgl6ExTF7w5Aojxu1nW5IqnLXG0BJud9UmNtMFqviBMRyz+AE2bsWCM
+         nbYJDn5Q/ycfKVRJ5CSiI0DU+sjzudwtNQHQLSCh0MVYDokh0pjrUfwPxK+K5tn4M/F8
+         yXzQ==
+X-Gm-Message-State: AG10YOTOhLjkImemb+d+XQPrMSlOaZJAYW84x+VD6Owrh4tVkrt3JJLQGbTYMlUBITh6SGO87WNJg+6e2aAXDQ==
+X-Received: by 10.31.47.135 with SMTP id v129mr3144281vkv.115.1454537981691;
+ Wed, 03 Feb 2016 14:19:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Wed, 3 Feb 2016 14:19:41 -0800 (PST)
+In-Reply-To: <1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: OHLUqjpAug7EYlpMymZ78h4ur8Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285375>
 
-On Wed, Feb 03, 2016 at 12:47:56PM -0500, Eric Sunshine wrote:
->[..]
-> * The final paragraph of the commit message appears to be outdated
-> since it still seems to be describing the approach taken by v1.
+On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Parsing atoms is done in populate_value(), this is repetitive and
+> hence expensive. Introduce a parsing function which would let us parse
+> atoms beforehand and store the required details into the 'used_atom'
+> structure for further usage.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -36,6 +36,7 @@ static int need_color_reset_at_eol;
+>  static struct {
+>         const char *name;
+>         cmp_type cmp_type;
+> +       void (*parser)(struct used_atom *atom, const char *arg);
 
-Revised.
+It's a little bit weird to pass in 'arg' as an additional argument
+considering that the parser already has access to the same information
+via the atom's 'name' field. I guess you're doing it as a convenience
+so that parsers don't have to do the strchr(':') or memchr(':')
+themselves (and because parse_ref_filter_atom() already has the
+information at hand), right? A typical parser interested in a
+(possibly optional) argument currently looks like this:
 
-> * Elsewhere, in the project, the spelling "email" is preferred over
-> "E-Mail"; that's true even in the files your patch is touching.
+    void parse_foo(struct used_atom *a, const char *arg) {
+        if (!arg)
+            /* default behavior: arg absent */
+        else
+            /* process arg */
+    }
 
-Done.
+That doesn't change much if you drop the 'arg' argument:
 
-> * In the documentation:s/mutiply/multiple/.
+    void parse_foo(struct used_atom *a) {
+        const char *arg = strchr(a->name, ':')
+        if (!arg)
+            /* default behavior: arg absent */
+        else
+            /* process arg */
+    }
 
-Done.
+It does mean a very minimal amount of duplicated code (the single
+strchr() line per parser), but it also would remove a bit of the
+complexity which this patch adds to parse_ref_filter_atom(). So, I
+dunno...
 
-> * The documentation doesn't seem to mention the default value of the
-> new config variable.
+>  } valid_atom[] = {
+>         { "refname" },
+>         { "objecttype" },
+> @@ -138,10 +140,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>                  * shouldn't be used for checking against the valid_atom
+>                  * table.
+>                  */
+> -               const char *formatp = strchr(sp, ':');
+> -               if (!formatp || ep < formatp)
+> -                       formatp = ep;
+> -               if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
+> +               arg = memchr(sp, ':', ep - sp);
 
-Done.
+Why this change from strchr() to memchr()? I understand that you're
+taking advantage of the fact that you know the extent of the string
+via 'sp' and 'ep', however, was the original strchr() doing extra
+work? Even if this change is desirable, it seems somewhat unrelated to
+the overall purpose of this patch, thus might deserves its own.
 
-> * The new config variable "user.explicit" has a more nebulous name
-> than Peff's suggestion of "user.guessIdent", which may make its intent
-> harder to determine without consulting documentation.
+Aside from that, although the "expensive" strchr() / memchr() resides
+within the loop, it will always return the same value since it doesn't
+depend upon any condition local to the loop. This implies that it
+ought to be hoisted out of the loop. (This problem is not new to this
+patch; it's already present in the existing code.)
 
-I wasn't sure about that, was waiting for input from Jeff. Kept it as
-it is.
+> +               if ((!arg || len == arg - sp) &&
+> +                   !memcmp(valid_atom[i].name, sp, len))
+>                         break;
+>         }
+>
+> @@ -154,6 +155,10 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>         REALLOC_ARRAY(used_atom, used_atom_cnt);
+>         used_atom[at].name = xmemdupz(atom, ep - atom);
+>         used_atom[at].type = valid_atom[i].cmp_type;
+> +       if (arg)
+> +               arg = used_atom[at].name + (arg - atom) + 1;
 
-> * Don't initialize static variables to 0 (let the .bss section do that
-> automatically).
+This is a harder to understand than it ought to be because it's
+difficult to tell at first glance that you don't actually care about
+'arg' in relation to the original incoming string, but instead use it
+only to compute an offset into the string which is ultimately stored
+in the newly allocated used_atom[]. Re-using 'arg' for a different
+purpose (in a manner of speaking) confuses the issue further.
 
-Done.
+The intention might be easier to follow if you made it clear that you
+were interested in the *offset* of the argument in the string, rather
+than a pointer into the incoming string which you ultimately don't
+use. A variable named 'arg_offset' might go a long way toward
+clarifying this intention.
 
-> * One space before && operator; not two.
-
-Done.
-
-> * Drop unnecessary braces.
-
-Done.
-
-> * Perhaps use test_config(), test_unconfig(), test_config_global() in
-> the test script rather than the manual git-config invocations in
-> subshells.
-
-Done, although test_unconfig_global was missing, so I revised.
-
-> * test_expect_failure() is for indicating that a test will fail
-> because some feature is known to be broken, not for when you expect a
-> git command to fail in a controlled fashion. Instead, use
-> test_expect_success, and then use test_must_fail() within the body of
-> the test.
-> 
->     test_expect_success '...' '
->         ... &&
->         test_must_fail git commit -m msg
->     '
-
-Done. Also refactored both aspects of the test to a function.
-
-> * Do these new tests really deserve a new test script, or would they
-> fit into an existing script? (Genuine question.)
-
-I am not sure. IMHO it makes sense to have a new test script for a new
-feature.
-
-> It's also reviewer-friendly to indicate the patch revision in the
-> subject "[PATCH v3]", and to describe what changed since the previous
-> version of the patch. Providing a gmane link to the previous version
-> is also very helpful.
-
-All changes from v2 to v3 listed above.
-
-http://article.gmane.org/gmane.comp.version-control.git/285340
-
--- >8 --
-Subject: Add user.explicit boolean for when ident shouldn't be guessed
-
-Previously, before 5498c57cdd63, many people did the following:
-
-   git config --global user.email "(none)"
-
-This was helpful for people with more than one email address,
-targeting different email addresses for different clones.
-as it barred git from creating commit unless the user.email
-config was set in the per-repo config to the correct email
-address.
-
-This commit provides the same functionality by adding a new
-configuration variable.
-
-Signed-off-by: Dan Aloni <alonid@gmail.com>
----
- Documentation/config.txt  |  9 +++++++++
- ident.c                   | 45 +++++++++++++++++++++++++++++++++++++++++++++
- t/t9904-per-repo-email.sh | 37 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 91 insertions(+)
- create mode 100755 t/t9904-per-repo-email.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 877cbc875ec3..d329ec9ac8d1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2791,6 +2791,15 @@ user.name::
- 	Can be overridden by the 'GIT_AUTHOR_NAME' and 'GIT_COMMITTER_NAME'
- 	environment variables.  See linkgit:git-commit-tree[1].
- 
-+user.explicit::
-+	This instruct Git to avoid trying to guess defaults for 'user.email'
-+	and 'user.name' other than strictly from environment or config.
-+	If you have multiple email addresses that you would like to set
-+	up per repository, you may want to set this to 'true' in the global
-+	config, and then Git would prompt you to set user.email separately,
-+	in each of the cloned repositories.
-+	Defaults to `false`.
-+
- user.signingKey::
- 	If linkgit:git-tag[1] or linkgit:git-commit[1] is not selecting the
- 	key you want it to automatically when creating a signed tag or
-diff --git a/ident.c b/ident.c
-index 9dd3ae345255..c950b5e3490f 100644
---- a/ident.c
-+++ b/ident.c
-@@ -18,6 +18,7 @@ static int default_name_is_bogus;
- #define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
- static int committer_ident_explicitly_given;
- static int author_ident_explicitly_given;
-+static int ident_explicit;
- 
- #ifdef NO_GECOS_IN_PWENT
- #define get_gecos(ignored) "&"
-@@ -373,6 +374,21 @@ const char *fmt_ident(const char *name, const char *email,
- 		die("unable to auto-detect email address (got '%s')", email);
- 	}
- 
-+	if (ident_explicit) {
-+		if (name == git_default_name.buf &&
-+		    !(committer_ident_explicitly_given & IDENT_NAME_GIVEN) &&
-+		    !(author_ident_explicitly_given & IDENT_NAME_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.name is not set, or environment is "
-+			    "not set");
-+		if (email == git_default_email.buf &&
-+		    !(committer_ident_explicitly_given & IDENT_MAIL_GIVEN) &&
-+		    !(author_ident_explicitly_given & IDENT_MAIL_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.email is not set, or environment is "
-+			    "not set");
-+	}
-+
- 	strbuf_reset(&ident);
- 	if (want_name) {
- 		strbuf_addstr_without_crud(&ident, name);
-@@ -405,6 +421,18 @@ const char *git_author_info(int flag)
- 		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
- 	if (getenv("GIT_AUTHOR_EMAIL"))
- 		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-+
-+	if (ident_explicit) {
-+		if (!(author_ident_explicitly_given & IDENT_NAME_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.name is not set, or GIT_AUTHOR_NAME "
-+			    "is not set");
-+		if (!(author_ident_explicitly_given & IDENT_MAIL_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.email is not set, or GIT_AUTHOR_EMAIL "
-+			    "is not set");
-+	}
-+
- 	return fmt_ident(getenv("GIT_AUTHOR_NAME"),
- 			 getenv("GIT_AUTHOR_EMAIL"),
- 			 getenv("GIT_AUTHOR_DATE"),
-@@ -417,6 +445,18 @@ const char *git_committer_info(int flag)
- 		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
- 	if (getenv("GIT_COMMITTER_EMAIL"))
- 		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-+
-+	if (ident_explicit) {
-+		if (!(committer_ident_explicitly_given & IDENT_NAME_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.name is not set, or GIT_COMMITTER_NAME "
-+			    "is not set");
-+		if (!(committer_ident_explicitly_given & IDENT_MAIL_GIVEN))
-+			die("requested explicitly given ident in config, "
-+			    "but user.email is not set, or GIT_COMMITTER_EMAIL "
-+			    "is not set");
-+	}
-+
- 	return fmt_ident(getenv("GIT_COMMITTER_NAME"),
- 			 getenv("GIT_COMMITTER_EMAIL"),
- 			 getenv("GIT_COMMITTER_DATE"),
-@@ -444,6 +484,11 @@ int author_ident_sufficiently_given(void)
- 
- int git_ident_config(const char *var, const char *value, void *data)
- {
-+	if (!strcmp(var, "user.explicit")) {
-+		ident_explicit = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "user.name")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
-new file mode 100755
-index 000000000000..f6f42288a10c
---- /dev/null
-+++ b/t/t9904-per-repo-email.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2016 Dan Aloni
-+#
-+
-+test_description='per-repo forced setting of email address'
-+
-+. ./test-lib.sh
-+
-+prepare () {
-+	echo "Initial" >foo &&
-+	git add foo &&
-+	unset GIT_AUTHOR_NAME &&
-+	unset GIT_AUTHOR_EMAIL &&
-+	test_unconfig --global user.name &&
-+	test_unconfig --global user.email &&
-+	test_unconfig user.name &&
-+	test_unconfig user.email &&
-+	test_config_global user.explicit true
-+}
-+
-+test_expect_success 'fails commiting if clone email is not set' '
-+        prepare &&
-+
-+	EDITOR=: VISUAL=: test_must_fail git commit -m msg
-+
-+'
-+
-+test_expect_success 'succeeds commiting if clone email is set' '
-+        prepare &&
-+
-+	test_config user.name "test" &&
-+	test_config user.email "test@ok.com" &&
-+	EDITOR=: VISUAL=: git commit -m msg
-+'
-+
-+test_done
--- 
-2.5.0
-
-
-
--- 
-Dan Aloni
+> +       if (valid_atom[i].parser)
+> +               valid_atom[i].parser(&used_atom[at], arg);
+>         if (*atom == '*')
+>                 need_tagged = 1;
+>         if (!strcmp(used_atom[at].name, "symref"))
+> --
+> 2.7.0
