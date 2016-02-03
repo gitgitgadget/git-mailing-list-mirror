@@ -1,92 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 4/4] restore_env(): free the saved environment variable once we are done
-Date: Tue, 02 Feb 2016 18:19:32 -0800
-Message-ID: <xmqqy4b2o7rf.fsf@gitster.mtv.corp.google.com>
-References: <56A72235.9080602@drmicha.warpmail.net>
-	<1453814801-1925-1-git-send-email-pclouds@gmail.com>
-	<xmqq60ygcd9a.fsf@gitster.mtv.corp.google.com>
-	<xmqqbn87a54v.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8DzHYpw3TT3i17W-8eiR9J9DOQUO6mkxffUEnGqT1u96Q@mail.gmail.com>
-	<xmqqtwlz8c4w.fsf@gitster.mtv.corp.google.com>
-	<xmqqy4ba627n.fsf_-_@gitster.mtv.corp.google.com>
-	<xmqqio26pt91.fsf_-_@gitster.mtv.corp.google.com>
-	<CAPig+cT8PhJU=9aS8NvkN9wx6imtACOS9rkgDJeJpN=CGikd7Q@mail.gmail.com>
+From: greened@obbligato.org (David A. Greene)
+Subject: Re: [PATCH] contrib/subtree: Split history with empty trees correctly
+Date: Tue, 02 Feb 2016 20:34:31 -0600
+Message-ID: <87egcu5xoo.fsf@waller.obbligato.org>
+References: <56991CFC.7060705@ruhr-uni-bochum.de>
+	<xmqq4meeflws.fsf@gitster.mtv.corp.google.com>
+	<87twmbaizo.fsf@waller.obbligato.org> <569EE046.9040506@semantics.de>
+	<871t9cvqsp.fsf@waller.obbligato.org> <56A4CC85.90705@semantics.de>
+	<87fuxil8cw.fsf@waller.obbligato.org> <56A993D7.3000107@semantics.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 03:19:41 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dave Ware <davidw@realtimegenomics.com>, <git@vger.kernel.org>
+To: Marcus Brinkmann <m.brinkmann@semantics.de>
+X-From: git-owner@vger.kernel.org Wed Feb 03 03:34:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQn2h-00016e-O0
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 03:19:40 +0100
+	id 1aQnHJ-0000Jh-Ry
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 03:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281AbcBCCTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Feb 2016 21:19:36 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64277 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755157AbcBCCTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Feb 2016 21:19:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 716C441EB4;
-	Tue,  2 Feb 2016 21:19:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Aou/J4eubyghpsOu2U1EKX837tc=; b=M4LXB2
-	CgzKhBsmRHLrykAySFrO7mdQEV7Z2rFvUyOwKY0BNYXBVQ1wiwAgz8CG8zKm2+G3
-	O+JqdXc2J7Ppv8ll0EfJP/vtWk3s3QBgci78mjto7bhKWKH8trTE+7/eyf0gAQNz
-	meUWTWIdBu1Ekjq1VCDJRfofZKdpjPRqKI+4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u2k9kixaPcoa0lDoLdM3RHkGKKDW8gtV
-	TmBAXcX1eAVQsK9br0bDGaCl+Xl2MeDuI7nkvHJn5UBx5rOPlb4wB74CaVrokSTV
-	e5u9v0i1UIM1G4OclwhnrIkTRFfNU9ZcwxTkkuk/EAKomLUodtOHNgXsmGTVRw1U
-	amu7SPN1BsM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E36941EB2;
-	Tue,  2 Feb 2016 21:19:34 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DA2E141EB1;
-	Tue,  2 Feb 2016 21:19:33 -0500 (EST)
-In-Reply-To: <CAPig+cT8PhJU=9aS8NvkN9wx6imtACOS9rkgDJeJpN=CGikd7Q@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 2 Feb 2016 20:47:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 90A266CA-CA1C-11E5-A22E-04C16BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755326AbcBCCem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Feb 2016 21:34:42 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:42477 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754965AbcBCCek (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Feb 2016 21:34:40 -0500
+Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	(Exim 4.85)
+	(envelope-from <greened@obbligato.org>)
+	id 1aQnJE-0005G2-2J; Tue, 02 Feb 2016 20:36:44 -0600
+In-Reply-To: <56A993D7.3000107@semantics.de> (Marcus Brinkmann's message of
+	"Thu, 28 Jan 2016 05:06:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: Spam detection software, running on the system "johnson.obbligato.org",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ Content preview:  Marcus Brinkmann <m.brinkmann@semantics.de> writes: >> Are
+    you still able to do a re-roll on this? > > I have to admit that my interest
+    has declined steeply since > discovering that subtree-split and filter-branch
+    --subtree-filter give > different results from "git svn" on the subdirectory.
+    The reason is > that git-svn includes all commits for revisions that regular
+    "svn log" > gives on that directory, which includes commits that serve as
+    branch > points only or that are empty except for unhandled properties. [...]
+ Content analysis details:  
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285325>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Marcus Brinkmann <m.brinkmann@semantics.de> writes:
 
->> diff --git a/git.c b/git.c
->> @@ -54,10 +54,12 @@ static void restore_env(int external_alias)
->>                 if (external_alias &&
->>                     !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
->>                         continue;
->> -               if (orig_env[i])
->> +               if (orig_env[i]) {
->>                         setenv(env_names[i], orig_env[i], 1);
->> -               else
->> +                       free(orig_env[i]);
+>> Are you still able to do a re-roll on this?
 >
-> Now that this is "well-protected"[1] against incorrect nesting, you
-> don't worry about the dangling pointers in static orig_env[], right?
-> (The same for the dangling pointer in static 'orig_cwd' after being
-> freed a bit earlier in this function, correct?)
+> I have to admit that my interest has declined steeply since
+> discovering that subtree-split and filter-branch --subtree-filter give
+> different results from "git svn" on the subdirectory.  The reason is
+> that git-svn includes all commits for revisions that regular "svn log"
+> gives on that directory, which includes commits that serve as branch
+> points only or that are empty except for unhandled properties.
 
-Correct.
+What do you mean by "branch points only?"
 
-I do not think we follow a style that requires "after freeing memory
-pointed at by a variable, the variable must be assigned NULL".
-Would it be a good idea?  I do not see a point in it.
+It's ok if you can't do a reroll.  I can't work on it right now but
+perhaps when I get back to cleaning up the split code I can take what
+you have and incoporate it.  I do very much appreciate your work on
+this!
 
-Thanks.
+> While empty commits for unhandled properties wouldn't be fatal,
+> missing branch points make "git svn" really unhappy when asked to
+> rebuild .git/svn.
+
+[ I may have misunderstood your intent, see below. ]
+
+I just want to make sure I understand your situation.  You used git-svn
+to mirror a project to git and then used git-subtree to incorporate that
+mirror into a larger project?
+
+Why is the split being done?  If there's an active Subversion repository
+being mirrors it's much better to commit changes back to the Subversion
+repository than to the git mirror.
+
+> As migration from SVN is my main motivation at this point to use a
+> subtree filter at this point (git-svn is just very slow - about one
+> week on our repository), I am somewhat stuck and back to using
+> git-svn. Although hacking up something with filter-branch seems like a
+> remote option, it's probably nothing that generalizes.
+
+Ok, maybe I misunderstood your situation.  Are you converting one big
+repository via git-svn and then trying to break out individual
+directories into smaller projects?
+
+git-svn + git-subtree/git-filter-branch is not the best way to do that.
+svn-all-fast-export is far superior for a one-off conversion and makes
+splitting repositories a breeze.  It happens during conversion rather
+than as a post-processing step.
+
+https://techbase.kde.org/Projects/MoveToGit/UsingSvn2Git
+
+> It didn't help that "make test" in contrib/subtree gives me 27 out of
+> 29 failed tests (with no indication how to figure out what exactly
+> failed).
+
+Huh.  I don't know why that would happen.  Did you build the git tools
+first?  A testing run using --debug and --verbose (see the Makefile in
+contrib/subtree/t) would be informative.  I understand if you don't have
+time to do that.  I haven't seen such failures before so I'm curious as
+to what happened.
+
+                      -David
