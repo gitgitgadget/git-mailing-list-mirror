@@ -1,65 +1,90 @@
-From: =?UTF-8?B?5a2Z5Lm+56iL?= <sunqiancheng0644@126.com>
-Subject: Git for Windows crashes on Windows 10
-Date: Wed, 3 Feb 2016 13:28:09 +0800 (CST)
-Message-ID: <34a86972.3610.152a59a27d0.Coremail.sunqiancheng0644@126.com>
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Re: Git for Windows crashes on Windows 10
+Date: Tue, 2 Feb 2016 23:03:19 -0700
+Message-ID: <CAGyf7-EReFk=UrfLfCjCYV8bjDRCs4WFbWxfKtJz2JQmtgBRFA@mail.gmail.com>
+References: <34a86972.3610.152a59a27d0.Coremail.sunqiancheng0644@126.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 03 06:59:20 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: =?UTF-8?B?5a2Z5Lm+56iL?= <sunqiancheng0644@126.com>
+X-From: git-owner@vger.kernel.org Wed Feb 03 07:03:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQqTG-0002Sm-Ck
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 06:59:18 +0100
+	id 1aQqXE-0000dC-TI
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 07:03:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755613AbcBCF7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 00:59:14 -0500
-Received: from m15-54.126.com ([220.181.15.54]:43057 "EHLO m15-54.126.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755468AbcBCF7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2016 00:59:13 -0500
-X-Greylist: delayed 1859 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2016 00:59:12 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=SBCq2
-	m+677D7iPmn2za5dcAh4+J0SfQB1n6nw05RDy0=; b=U3anxmaWyblT8iT3wVs4O
-	DQQ6Usbw+3kSM4kfS0DkgWeNEIjXzB8MlxOKZPE5gwDXoDL9Q5SMsqLOX8BkUb/7
-	Q1ZfcfkJdyouUiBtJiDPF7Aqc1JihvRPFpYO8F5KZcJzPPJ3DZC4zctWxkPAqZ8b
-	kFciJk4+j8oAO/XHyTvleo=
-Received: from sunqiancheng0644$126.com ( [117.147.183.81, 176.34.62.243,
- 10.144.1.72] ) by ajax-webmail-wmsvr54 (Coremail) ; Wed, 3 Feb 2016
- 13:28:09 +0800 (CST)
-X-Originating-IP: [117.147.183.81, 176.34.62.243, 10.144.1.72]
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20150911(74783.7961) Copyright (c) 2002-2016 www.mailtech.cn 126com
-X-CM-TRANSID: NsqowAAn0g3qj7FWidoaAA--.11277W
-X-CM-SenderInfo: 5vxq1xxdqfxvdqjqlkau6rjloofrz/1tbi4xoDflUw2o3eyQACsj
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+	id S1753316AbcBCGDV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2016 01:03:21 -0500
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:34507 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134AbcBCGDU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2016 01:03:20 -0500
+Received: by mail-qg0-f46.google.com with SMTP id u30so9015617qge.1
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 22:03:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=J+WBILmc+j4yI6+zZAGmTiBSevN91T6jNGE4Ihh6JoE=;
+        b=zvbbyDBrm6aJLclP+CTljRiK3XKM4TX5M3ddae09Tj2Y8+7lG2Y/kOJdNxIrqLaSih
+         Uee9TfOWDdwb/kopZgmwr85eM6g26GUBJpJ0m2FOEx9Gl1zViqHhuBtudS51YMUKWX0n
+         zc812Tb8oxw0bV8h3U+RpW3nLPj/uc9HjHPcaMKxKtOOv6jzrqfBCoNGE+qiD/5h+d0X
+         xGFJtDNfWkTMqnFV11a/IqhamF6pL4u7bu3OgRv21VKjPU8RR6wqmA5ndebcASzXMq4V
+         5VHp8ERz6XNGHjIcPEfZVzMXl+vuZWg79yE4/K1yw4ORxbqlKaaMtuKNNAg4acy9/3QH
+         rkCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=J+WBILmc+j4yI6+zZAGmTiBSevN91T6jNGE4Ihh6JoE=;
+        b=KsXB/+H48kJPVOGBuu5PNs1Jkp3oPqr8qW8CmTm0pgmsqYyRao0WgW3S5J8VVtdIy0
+         23jcIbIGBZRE6I4O6ByKiId6V70tsTXtzC8JobCwzW/xqDaPSfPjOfnN4oZvErwE0FO2
+         /cA6AXU8OrPjCh+uA29kgwwGuoljTsysQEzhxMSU7dWLkL8f7jq/+vIw+WtGfAMP9Za8
+         StUotdsz87Sd5uwX5Ynyyz4j7xZCwr/f9UUrIKq/l7QieeGb7lR/XPUzoklXzXcq5D2o
+         CH+vumaeWpu1t6ix4+hrYmw56fSWM/t/3EY+mGHbv0fd+wi7G7QfTWq5jQ/DD2sKJZ9x
+         XkjQ==
+X-Gm-Message-State: AG10YOS+AkBU/2xkwCv3oe25CA16j2ZS/n0rOXIGgO/TxGArARFouBcQm9JgdhDfb4HNqqhOWWRZ1lfbWpD4GjgH
+X-Received: by 10.140.94.50 with SMTP id f47mr8078231qge.0.1454479399668; Tue,
+ 02 Feb 2016 22:03:19 -0800 (PST)
+Received: by 10.55.157.21 with HTTP; Tue, 2 Feb 2016 22:03:19 -0800 (PST)
+In-Reply-To: <34a86972.3610.152a59a27d0.Coremail.sunqiancheng0644@126.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285335>
 
-SSdtIG5vdCBhIG5hdGl2ZSBFbmdsaXNoIHNwZWFrZXIuIEknbSBzb3JyeSBpZiBJIGRpZG4ndCBl
-eHBsYWluIHRoZSBwcm9ibGVtIGNsZWFybHkuCkknbSB1c2luZyBXaW5kb3dzIDEwIEVudGVycHJp
-c2UgSW5zaWRlciBQcmV2aWV3IChJJ2xsIHVzZSBXaW4xMCBpbnN0ZWFkIGJlbG93KS4gVW50aWwg
-eWVzdGVyZGF5LCBJJ20gdXNpbmcgV2luMTAgYnVpbGQgMTExMDIsIGFuZCBHaXQgZm9yIFdpbmRv
-d3Mgd29ya3Mgd2VsbC4gQnV0IHRvZGF5IEkgdXBncmFkZWQgbXkgc3lzdGVtIHRvIFdpbjEwIGJ1
-aWxkIDE0MjUxLCB0aGVuIHNvbWV0aGluZyB3cm9uZyBoYXBwZW5lZC4KSSBvcGVuZWQgYSAiY21k
-IiBpbiBteSByZXBvc2l0b3J5IGFuZCBlbnRlcmVkICJnaXQgcHVsbCIsIHRoZW4gYSBkaWFsb2cg
-d2luZG93IGFwcGVhcmVkLCBzYXlpbmcgIkdpdCBmb3IgV2luZG93cyBoYXMgc3RvcHBlZCB3b3Jr
-aW5nIi4KVGhlIHZlcnNpb24gb2YgdGhlIGdpdCBvbiBteSBzeXN0ZW0gd2FzIDIuNi40LCBhbmQg
-SSBmb3VuZCBvdXQgdGhhdCB0aGUgbGF0ZXN0IHZlcnNpb24gd2FzIDIuNy4wLjIuIFNvIEkgZG93
-bmxvYWRlZCBhIGluc3RhbGxlciBmcm9tICJodHRwczovL2dpdC1zY20uY29tLyIuIEkgb3BlbmVk
-IHRoZSBpbnN0YWxsZXIsIGJ1dCBhcyBzb29uIGFzIHRoZSBpbnN0YWxsYXRpb24gZmluaXNoZWQs
-IHRoZSBzYW1lIGVycm9yIGRpYWxvZyBhcHBlYXJlZC4gSSBjbG9zZWQgdGhlIGRpYWxvZywgYnV0
-IGl0IGFwcGVhcmVkIGFnYWluLCBzbyBJIGNsb3NlZCBpdCBhZ2Fpbi7CoEkgb3BlbmVkIGEgImNt
-ZCIgYW5kIGVudGVyZWQgImdpdCIsIG9mIGNvdXJzZSwgaXQgY3Jhc2hlcyBhbmQgdGhlIGVycm9y
-IGRpYWxvZyBhcHBlYXJlZC4KQnkgdGhlIHdheSwgSSBpbnN0YWxsZWQgR2l0SHViIGZvciBXaW5k
-b3dzIG9uIG15IHN5c3RlbSBhbmQgaXQgY3Jhc2hlcyB0b28gd2hlbiBJIHByZXNzZWQgdGhlICJT
-eW5jIiBidXR0b24gaW4gaXQuCkluIG15IHN1cnByaXNlLCBHaXRIdWIgRXh0ZW5zaW9uIGZvciBW
-aXN1YWwgU3R1ZGlvIHdvcmtzIGNvcnJlY3RseS4KCg==
+On Tue, Feb 2, 2016 at 10:28 PM, =E5=AD=99=E4=B9=BE=E7=A8=8B <sunqianch=
+eng0644@126.com> wrote:
+> I'm not a native English speaker. I'm sorry if I didn't explain the p=
+roblem clearly.
+> I'm using Windows 10 Enterprise Insider Preview (I'll use Win10 inste=
+ad below). Until yesterday, I'm using Win10 build 11102, and Git for Wi=
+ndows works well. But today I upgraded my system to Win10 build 14251, =
+then something wrong happened.
+
+I'm pretty sure you're running into
+https://github.com/git-for-windows/git/issues/627. Since it's a bug in
+Windows itself, there's not a fix in Git. Your options are:
+
+- Downgrade back to 11102
+- Wait for the next preview build after 14251
+- Downgrade to msysgit 1.9.5
+
+> I opened a "cmd" in my repository and entered "git pull", then a dial=
+og window appeared, saying "Git for Windows has stopped working".
+> The version of the git on my system was 2.6.4, and I found out that t=
+he latest version was 2.7.0.2. So I downloaded a installer from "https:=
+//git-scm.com/". I opened the installer, but as soon as the installatio=
+n finished, the same error dialog appeared. I closed the dialog, but it=
+ appeared again, so I closed it again. I opened a "cmd" and entered "gi=
+t", of course, it crashes and the error dialog appeared.
+> By the way, I installed GitHub for Windows on my system and it crashe=
+s too when I pressed the "Sync" button in it.
+> In my surprise, GitHub Extension for Visual Studio works correctly.
+>
