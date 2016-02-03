@@ -1,90 +1,74 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: Re: Git for Windows crashes on Windows 10
-Date: Tue, 2 Feb 2016 23:03:19 -0700
-Message-ID: <CAGyf7-EReFk=UrfLfCjCYV8bjDRCs4WFbWxfKtJz2JQmtgBRFA@mail.gmail.com>
-References: <34a86972.3610.152a59a27d0.Coremail.sunqiancheng0644@126.com>
+From: Wert Alexander <Alexander.Wert@novatec-gmbh.de>
+Subject: Bug: Wrong GitHub API result when retrieving repository information
+Date: Wed, 3 Feb 2016 06:58:36 +0000
+Message-ID: <7f00f77e5c8946ae8a17c76feb7dc98b@DGPR01.novatec-gmbh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
-To: =?UTF-8?B?5a2Z5Lm+56iL?= <sunqiancheng0644@126.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 07:03:26 2016
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 03 08:06:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQqXE-0000dC-TI
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 07:03:25 +0100
+	id 1aQrVv-0001X2-UA
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 08:06:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753316AbcBCGDV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2016 01:03:21 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:34507 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbcBCGDU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2016 01:03:20 -0500
-Received: by mail-qg0-f46.google.com with SMTP id u30so9015617qge.1
-        for <git@vger.kernel.org>; Tue, 02 Feb 2016 22:03:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=J+WBILmc+j4yI6+zZAGmTiBSevN91T6jNGE4Ihh6JoE=;
-        b=zvbbyDBrm6aJLclP+CTljRiK3XKM4TX5M3ddae09Tj2Y8+7lG2Y/kOJdNxIrqLaSih
-         Uee9TfOWDdwb/kopZgmwr85eM6g26GUBJpJ0m2FOEx9Gl1zViqHhuBtudS51YMUKWX0n
-         zc812Tb8oxw0bV8h3U+RpW3nLPj/uc9HjHPcaMKxKtOOv6jzrqfBCoNGE+qiD/5h+d0X
-         xGFJtDNfWkTMqnFV11a/IqhamF6pL4u7bu3OgRv21VKjPU8RR6wqmA5ndebcASzXMq4V
-         5VHp8ERz6XNGHjIcPEfZVzMXl+vuZWg79yE4/K1yw4ORxbqlKaaMtuKNNAg4acy9/3QH
-         rkCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=J+WBILmc+j4yI6+zZAGmTiBSevN91T6jNGE4Ihh6JoE=;
-        b=KsXB/+H48kJPVOGBuu5PNs1Jkp3oPqr8qW8CmTm0pgmsqYyRao0WgW3S5J8VVtdIy0
-         23jcIbIGBZRE6I4O6ByKiId6V70tsTXtzC8JobCwzW/xqDaPSfPjOfnN4oZvErwE0FO2
-         /cA6AXU8OrPjCh+uA29kgwwGuoljTsysQEzhxMSU7dWLkL8f7jq/+vIw+WtGfAMP9Za8
-         StUotdsz87Sd5uwX5Ynyyz4j7xZCwr/f9UUrIKq/l7QieeGb7lR/XPUzoklXzXcq5D2o
-         CH+vumaeWpu1t6ix4+hrYmw56fSWM/t/3EY+mGHbv0fd+wi7G7QfTWq5jQ/DD2sKJZ9x
-         XkjQ==
-X-Gm-Message-State: AG10YOS+AkBU/2xkwCv3oe25CA16j2ZS/n0rOXIGgO/TxGArARFouBcQm9JgdhDfb4HNqqhOWWRZ1lfbWpD4GjgH
-X-Received: by 10.140.94.50 with SMTP id f47mr8078231qge.0.1454479399668; Tue,
- 02 Feb 2016 22:03:19 -0800 (PST)
-Received: by 10.55.157.21 with HTTP; Tue, 2 Feb 2016 22:03:19 -0800 (PST)
-In-Reply-To: <34a86972.3610.152a59a27d0.Coremail.sunqiancheng0644@126.com>
+	id S933161AbcBCHGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 02:06:03 -0500
+Received: from mx1.novatec-gmbh.de ([193.37.149.230]:54046 "EHLO
+	mx1.novatec-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933047AbcBCHGB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2016 02:06:01 -0500
+X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2016 02:06:01 EST
+Received: from [10.60.1.11] (port=26936 helo=DGPR01.novatec-gmbh.de)
+	by mx1.novatec-gmbh.de with esmtps (TLSv1.2:AES256-SHA:256)
+	(Exim 4.82_1-5b7a7c0-XX)
+	(envelope-from <Alexander.Wert@novatec-gmbh.de>)
+	id 1aQrOg-0008UV-0u
+	for git@vger.kernel.org; Wed, 03 Feb 2016 07:58:38 +0100
+Received: from DGPR01.novatec-gmbh.de (10.60.1.11) by DGPR01.novatec-gmbh.de
+ (10.60.1.11) with Microsoft SMTP Server (TLS) id 15.0.1130.7; Wed, 3 Feb 2016
+ 07:58:36 +0100
+Received: from DGPR01.novatec-gmbh.de ([192.168.1.100]) by
+ DGPR01.novatec-gmbh.de ([192.168.1.100]) with mapi id 15.00.1130.005; Wed, 3
+ Feb 2016 07:58:36 +0100
+X-CTCH-RefID: str=0001.0A0C0203.56B1A51E.00FB,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+Thread-Topic: Bug: Wrong GitHub API result when retrieving repository
+ information
+Thread-Index: AdFeUEaoTLYJc6C5QU2+tnLVDipXfw==
+Accept-Language: en-GB, de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.70.3.10]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285336>
 
-On Tue, Feb 2, 2016 at 10:28 PM, =E5=AD=99=E4=B9=BE=E7=A8=8B <sunqianch=
-eng0644@126.com> wrote:
-> I'm not a native English speaker. I'm sorry if I didn't explain the p=
-roblem clearly.
-> I'm using Windows 10 Enterprise Insider Preview (I'll use Win10 inste=
-ad below). Until yesterday, I'm using Win10 build 11102, and Git for Wi=
-ndows works well. But today I upgraded my system to Win10 build 14251, =
-then something wrong happened.
+Dear GitHub Developers,
 
-I'm pretty sure you're running into
-https://github.com/git-for-windows/git/issues/627. Since it's a bug in
-Windows itself, there's not a fix in Git. Your options are:
+I'm using the GitHub API for retrieving statistics like stargazers_count or watchers_count.
+Unfortunately, an API call to https://api.github.com/users/<USER>/repos returns (as JSON) the same number for stargazers_count and watchers_count, although on the Website the numbers are different.
 
-- Downgrade back to 11102
-- Wait for the next preview build after 14251
-- Downgrade to msysgit 1.9.5
+Example:
+...
+"size": 5279,
+"stargazers_count": 51,
+"watchers_count": 51,
+"language": "Java",
+...
 
-> I opened a "cmd" in my repository and entered "git pull", then a dial=
-og window appeared, saying "Git for Windows has stopped working".
-> The version of the git on my system was 2.6.4, and I found out that t=
-he latest version was 2.7.0.2. So I downloaded a installer from "https:=
-//git-scm.com/". I opened the installer, but as soon as the installatio=
-n finished, the same error dialog appeared. I closed the dialog, but it=
- appeared again, so I closed it again. I opened a "cmd" and entered "gi=
-t", of course, it crashes and the error dialog appeared.
-> By the way, I installed GitHub for Windows on my system and it crashe=
-s too when I pressed the "Sync" button in it.
-> In my surprise, GitHub Extension for Visual Studio works correctly.
->
+
+The actual count on the website, however,  are 51 for stargazers and 20 for watchers.
+
+Any idea what could be the problem?
+
+Thank you in advance!
+
+Regards,
+Alexander Wert
