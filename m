@@ -1,74 +1,80 @@
-From: Wert Alexander <Alexander.Wert@novatec-gmbh.de>
-Subject: Bug: Wrong GitHub API result when retrieving repository information
-Date: Wed, 3 Feb 2016 06:58:36 +0000
-Message-ID: <7f00f77e5c8946ae8a17c76feb7dc98b@DGPR01.novatec-gmbh.de>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: git submodule should honor "-c credential.helper" command line argument
+Date: Tue, 2 Feb 2016 23:35:07 -0800
+Message-ID: <CA+P7+xq8sv6f8K8K0EEjXg=wdKpFg6z0K5F6P4SGEp+wKdU=rA@mail.gmail.com>
+References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 03 08:06:08 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 03 08:36:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQrVv-0001X2-UA
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 08:06:08 +0100
+	id 1aQryv-0006ir-HG
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 08:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933161AbcBCHGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 02:06:03 -0500
-Received: from mx1.novatec-gmbh.de ([193.37.149.230]:54046 "EHLO
-	mx1.novatec-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933047AbcBCHGB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2016 02:06:01 -0500
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2016 02:06:01 EST
-Received: from [10.60.1.11] (port=26936 helo=DGPR01.novatec-gmbh.de)
-	by mx1.novatec-gmbh.de with esmtps (TLSv1.2:AES256-SHA:256)
-	(Exim 4.82_1-5b7a7c0-XX)
-	(envelope-from <Alexander.Wert@novatec-gmbh.de>)
-	id 1aQrOg-0008UV-0u
-	for git@vger.kernel.org; Wed, 03 Feb 2016 07:58:38 +0100
-Received: from DGPR01.novatec-gmbh.de (10.60.1.11) by DGPR01.novatec-gmbh.de
- (10.60.1.11) with Microsoft SMTP Server (TLS) id 15.0.1130.7; Wed, 3 Feb 2016
- 07:58:36 +0100
-Received: from DGPR01.novatec-gmbh.de ([192.168.1.100]) by
- DGPR01.novatec-gmbh.de ([192.168.1.100]) with mapi id 15.00.1130.005; Wed, 3
- Feb 2016 07:58:36 +0100
-X-CTCH-RefID: str=0001.0A0C0203.56B1A51E.00FB,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-Thread-Topic: Bug: Wrong GitHub API result when retrieving repository
- information
-Thread-Index: AdFeUEaoTLYJc6C5QU2+tnLVDipXfw==
-Accept-Language: en-GB, de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.70.3.10]
+	id S933410AbcBCHf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 02:35:28 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35356 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933383AbcBCHf1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 02:35:27 -0500
+Received: by mail-ig0-f172.google.com with SMTP id hb3so5122670igb.0
+        for <git@vger.kernel.org>; Tue, 02 Feb 2016 23:35:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L2l/0RMJ0EiBry7CHww+/OLzUCTX46leHKHDPBjmK2g=;
+        b=jvLt4uwdey3/Q6g7EcK7JHKHXUYTh8W5bVi1PcEztGvmP8d9hkmylkpWjStfIJBSb4
+         arx6s99YJSOgVHSzXYsTahOZz6LPhkNQ6bN35962ZP+6UISoM07PT82Cju8fpm+IYOFv
+         zYOuQcdHVa778/Ia2zQfh3NYZMw0nMMCFk+gLd5tgbyFYX7B0v/rHFSZkEJOo3oQKGZ4
+         BPJjZ3s1XEo3kTnutfM0HyGFLf2SC9GOCyAdhUivmP39+s2fmtS8GzycygQU4sApWo2T
+         HiKdkjXXibjrJA6nDo7xxsCoUF/mv+MUrO9H5uQ/kqzvQR2MT4MTU2u5vZpAA1tEIo/D
+         l+jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=L2l/0RMJ0EiBry7CHww+/OLzUCTX46leHKHDPBjmK2g=;
+        b=JTYXFsFdIpwe6VyVbg5n2im+Py9AWDAK1+wqlDC/Mf4sJnQ3ARqNojo0llRi3s1j07
+         mtLJUoFGiXtD52qiehQLy46QbFqYIpSbb7RavR+F1g1wcHaCBui0zHg/r14hwAeLa8v1
+         08Gy4QmvlYpsvDJo5Tqc7ef2n2itjHKBZZ4VI00uv/j/RRC2bsyOW+Tcwrfud2IOPSrD
+         /JHaNJjrCXQzFcR0CCW8gmDeQl+dpH2hVgCshvVVWFXUqD0+NAFEhahbICKwensu51nF
+         /J6XIAXp+dXWhcHJZU8Rt9ACYX5lwDBqPatIWatxk5HyhHtWjI+H0OeDYTedTvWdnKhu
+         ky9Q==
+X-Gm-Message-State: AG10YOR2PVhS9cm331y0s0HgMDatSX54r3IP1NauBZRPQNp7c4VQnb27mu8OafhzkUXJ0uoDZeo0LEaQHBRQwA==
+X-Received: by 10.50.142.73 with SMTP id ru9mr22600415igb.92.1454484926884;
+ Tue, 02 Feb 2016 23:35:26 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Tue, 2 Feb 2016 23:35:07 -0800 (PST)
+In-Reply-To: <20160203042554.GA21179@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285337>
 
-Dear GitHub Developers,
+On Tue, Feb 2, 2016 at 8:25 PM, Jeff King <peff@peff.net> wrote:
+> I think the problem is that when git "switches" to working in the
+> submodule repository, it clears the environment, which includes any "-c"
+> command switches. This makes sense for some situations, but not for
+> others. This thread shows a similar problem:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/264840
+>
+> Jens suggested there adding an option to tell clone to pass specific
+> variables to the submodule, which I think makes sense. AFAIK, nobody has
+> done any work yet on that approach.
+>
 
-I'm using the GitHub API for retrieving statistics like stargazers_count or watchers_count.
-Unfortunately, an API call to https://api.github.com/users/<USER>/repos returns (as JSON) the same number for stargazers_count and watchers_count, although on the Website the numbers are different.
-
-Example:
-...
-"size": 5279,
-"stargazers_count": 51,
-"watchers_count": 51,
-"language": "Java",
-...
-
-
-The actual count on the website, however,  are 51 for stargazers and 20 for watchers.
-
-Any idea what could be the problem?
-
-Thank you in advance!
+This is something that I am also interested in, haven't had a chance
+to look at it just yet though. I may have some time soon to take a
+stab at this.
 
 Regards,
-Alexander Wert
+Jake
