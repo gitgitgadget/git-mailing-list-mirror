@@ -1,131 +1,126 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] Trick to force setup of a specific configured E-Mail per repo
-Date: Wed, 3 Feb 2016 12:47:56 -0500
-Message-ID: <CAPig+cSWN-wpcooqmYtFfZoDYpkhLoezSeu6bm9rSTvZ72jSEQ@mail.gmail.com>
-References: <1454442861-4879-1-git-send-email-alonid@gmail.com>
-	<20160203035648.GA20732@sigill.intra.peff.net>
-	<20160203082112.GA27454@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log -g: ignore revision parameters that have no reflog
+Date: Wed, 03 Feb 2016 10:32:22 -0800
+Message-ID: <xmqqd1sdodah.fsf@gitster.mtv.corp.google.com>
+References: <1454241144.2822.7.camel@kaarsemaker.net>
+	<1454455961-10640-1-git-send-email-dennis@kaarsemaker.net>
+	<xmqqegcuprrw.fsf@gitster.mtv.corp.google.com>
+	<1454502958.2713.13.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Dan Aloni <alonid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 03 18:48:03 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Wed Feb 03 19:32:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aR1X7-00043w-QT
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 18:48:02 +0100
+	id 1aR2EA-0005UR-NZ
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 19:32:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756258AbcBCRr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 12:47:58 -0500
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:34852 "EHLO
-	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755349AbcBCRr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2016 12:47:57 -0500
-Received: by mail-vk0-f53.google.com with SMTP id e6so19632430vkh.2
-        for <git@vger.kernel.org>; Wed, 03 Feb 2016 09:47:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=8AVZ18VTORQy1cWfYRzLGqwmxqa6ApzNg/PDh/4vF3g=;
-        b=xY2Bu96CbULZk0uE4+j4zduW5cPhagTf9txREk8IFu7SPBcQR2A6If0r3JvGTncp5m
-         L6xv3/BxK8zp6N+Yf5O2bTpORiLZx6Vt22gqOMZH0oEIc9c/kSFPRPj1aq078r9LQw/q
-         +jvUlHshMp05+GKlIIZiJfp/QCy57CbuM/ng4U5IzUcBA0aqanyW5hy/qUatDbV9icLy
-         hA70PGGDxWaJFsmvlx3xCAxvoDoJO+An5pb42jv4esX29gAk75/x8K8EylFYH2NJDigl
-         8dYWtp29ca06sCvWS1mp/vX7u3hCs9pxsUsXvvTZjfawgg/+cCuAFbrPozF4RjItaN5S
-         jbgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=8AVZ18VTORQy1cWfYRzLGqwmxqa6ApzNg/PDh/4vF3g=;
-        b=XmxH9345Vnoar/Cb9ggtPZynuyRTgXKOG1SMYvrynxSAbxFyHUT7AVDoz3osDyBKrm
-         E28ajudUbNV7qA4rGRkRAjxeHMoS6qZaV4SyCX1jdpSyUUcu+0fyw4PMEViuolfPc6lC
-         1UrB9+XD+5PIjy/BHnRGKgV5YK1dU5iIDcrYvBw1dMEOLJrQcpbVCFJlFVky7BMgTwNv
-         Md5ddQKs7J8BI/IO/IYbjduhaXOPPWM6C2lKy/h0b9JKRXAQGJ2rDl276kL34PYr0/oc
-         lld3dRK3Wy6isc0SgGFW8n/uDUNs3v+PPI4Ll8LAhqWoXpduLvX2mNX22fJMDUSUDE8o
-         LqLA==
-X-Gm-Message-State: AG10YORTxMwPe4QieOnTrT1WiLGOOHnfSRV6+cjPJNbIRvavsi7gW5Z6qTfP/WWsEGNo5pR1IQ619ZZ3PDC0FA==
-X-Received: by 10.31.146.71 with SMTP id u68mr1857673vkd.19.1454521676377;
- Wed, 03 Feb 2016 09:47:56 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Wed, 3 Feb 2016 09:47:56 -0800 (PST)
-In-Reply-To: <20160203082112.GA27454@gmail.com>
-X-Google-Sender-Auth: jlv-ijx3Cm16AwPnwSvopv4Qh3A
+	id S965726AbcBCSc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 13:32:27 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60040 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965344AbcBCScZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 13:32:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0AF753E69C;
+	Wed,  3 Feb 2016 13:32:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zFtwp0c3i16VLDk+kcrRj/PV+Sw=; b=N+ilZ7
+	LT5ZX0Be6au6OvEzMrv3d6axggmY2oQVpJpahvW8ig6tHIXpljDjQREGGacGArlZ
+	GFTFl6hOe9VcYy2VxW3SpRBJxb5XvvMNFxpIt4b7cxG1vNHbd7xqXDMT2zHYF3Iv
+	fF9ZokZiwayhjy/9Gu6zTl6owV/kPuHwSByPw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nQhotkfard1Uu+CDncSn2BRzPZCWs398
+	YU5Qkkz2KMDpLBBijOGCBS/1tFxLUwVyABack9Ina9dcgx/Mv5oVcqef/5D/zas9
+	EW7IACuBFBX5yKEyqp0SoKAY8uIEorTcJWRwyJUYmsm58ckEHRalClaCudryk4a1
+	GZBZTMpEWr4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 01C993E69B;
+	Wed,  3 Feb 2016 13:32:24 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7A5AD3E69A;
+	Wed,  3 Feb 2016 13:32:23 -0500 (EST)
+In-Reply-To: <1454502958.2713.13.camel@kaarsemaker.net> (Dennis Kaarsemaker's
+	message of "Wed, 03 Feb 2016 13:35:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 77A1393E-CAA4-11E5-943F-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285372>
 
-On Wed, Feb 3, 2016 at 3:21 AM, Dan Aloni <alonid@gmail.com> wrote:
-> On Tue, Feb 02, 2016 at 10:56:48PM -0500, Jeff King wrote:
->> On Tue, Feb 02, 2016 at 09:54:21PM +0200, Dan Aloni wrote:
->> > +   if (strict && email && !strcmp(email, "(per-repo)")) {
->> > +           die("email is '(per-repo)', suggesting to set specific email "
->> > +               "for the current repo");
->> > +   }
->>
->> I find it disappointing that we go back to looking for magic sequences
->> in the string. Could we perhaps do this more cleanly with a new config
->> option? Like a "user.guessIdent" which defaults to true, but people can
->> set to false. And without that, we do not do any automagic at all; we
->> get the values from the GIT_COMMITTER_* environment or the
->> user.{name,email} config variables, or we die().
->
-> Agreed. New patch attached, feel free to amend.
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Please re-send with the patch inline since reviewers will want to
-comment on on specific bits of code inline as well. When the patch is
-an attachment, this process becomes too onerous for reviewers, and
-most will simply ignore the patch. Thanks.
+> It is not, the code should look for @{, not @.
 
-Before sending v3 (inline), perhaps take note of the few issues below
-which I noticed while quickly scanning the attachment:
+Not exactly.
 
-* The final paragraph of the commit message appears to be outdated
-since it still seems to be describing the approach taken by v1.
+    $ git show -s --format='%h %s' 'HEAD^{/@{3}}' --
+    55d5d5b combine-diff.c: fix performance problem when folding ...
 
-* Elsewhere, in the project, the spelling "email" is preferred over
-"E-Mail"; that's true even in the files your patch is touching.
+The commit has a line with a string "@@@" on it and the regular
+expression asked for 3 '@', which shows that scanning for "@{" is
+not a good way forward--it merely opens another can of worms.
 
-* In the documentation:s/mutiply/multiple/.
+Hopefully by now you have realized that a band-aid to add an ad-hoc
+code that second-guesses what the existing code does for real while
+parsing the command line is not a good way forward.
 
-* The documentation doesn't seem to mention the default value of the
-new config variable.
+Perhaps we may want to step back a bit.
 
-* The new config variable "user.explicit" has a more nebulous name
-than Peff's suggestion of "user.guessIdent", which may make its intent
-harder to determine without consulting documentation.
+Where is the book-keeping information used for "-g" processing
+handled in the codechain?  Upon seeing "-g", the parser calls
+init_reflog_walk() to make revs->reflog_info non-NULL.
 
-* Don't initialize static variables to 0 (let the .bss section do that
-automatically).
+What are the codepaths that use this field?
 
-* One space before && operator; not two.
+We can see the function add_pending_object_with_path() refers to
+this revs->reflog_info field, when it calls add_reflog_for_walk(),
+with the "name" it receives, after some mangling.
 
-* Drop unnecessary braces.
+The called function, add_reflog_for_walk(), finds, from an object
+and its name, the ref whose log is going to be enumerated.  It looks
+at the name, optionally finds '@' in it, and eventually calls the
+function read_complete_reflog() [*1*].
 
-* Perhaps use test_config(), test_unconfig(), test_config_global() in
-the test script rather than the manual git-config invocations in
-subshells.
+We can infer that, by the time it does so, it must have figured out
+of which ref it wants to read the reflog.
 
-* test_expect_failure() is for indicating that a test will fail
-because some feature is known to be broken, not for when you expect a
-git command to fail in a controlled fashion. Instead, use
-test_expect_success, and then use test_must_fail() within the body of
-the test.
+And it already has calls to die() and a few "return -1" to signal a
+non-fatal error to the caller.  Perhaps instead of letting it to
+punt and resort to the normal history walking, the code should
+realize that some refs do not have reflog (and no non-refs has
+reflog) and diagnose it as an error and die()?
 
-    test_expect_success '...' '
-        ... &&
-        test_must_fail git commit -m msg
-    '
+Perhaps one of these two functions is a much better place to do your
+improvement?  The caller, add_pending_object_with_path(), does some
+mangling of "name" that is given by its caller before calling into
+the callee, add_reflog_for_walk().  It could be that name mangling
+that is leading to a wrong result.  More likely, the way the callee
+figures out which ref it needs to read the reflog for given the
+"name" may be what you need to fix.
 
-* Do these new tests really deserve a new test script, or would they
-fit into an existing script? (Genuine question.)
+UNLESS we are losing the information we got directly from the user
+at the command line before the control is passed down through the
+callchain to reach these two functions, that is.  In such a case,
+I'd agree that we would need additional checks much closer to the
+input.
 
-It's also reviewer-friendly to indicate the patch revision in the
-subject "[PATCH v3]", and to describe what changed since the previous
-version of the patch. Providing a gmane link to the previous version
-is also very helpful.
+But I think the callers of this callchain are passing what the user
+gave us pretty much verbatim down this callchain, so I would expect
+that the leaf callee in this discussion, add_reflog_for_walk(),
+would have enough information.
+
+
+[Footnote]
+
+*1* Yuck.
