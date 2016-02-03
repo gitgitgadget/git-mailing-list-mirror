@@ -1,99 +1,128 @@
-From: =?iso-8859-1?Q?Johnsen=2C_Per_J=F8rgen?= <perjorgen.johnsen@dnb.no>
-Subject: SV: Using Git for Cobol source
-Date: Wed, 3 Feb 2016 09:19:33 +0000
-Message-ID: <15b48134f6734b19a779269cf54d7c1c@ERFWEXM01.ERF01.NET>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/20] "git worktree move" preview
+Date: Wed,  3 Feb 2016 16:35:30 +0700
+Message-ID: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 03 10:20:09 2016
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 03 10:36:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aQtbT-0000Hw-1G
-	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 10:19:59 +0100
+	id 1aQtr2-0004ma-Fw
+	for gcvg-git-2@plane.gmane.org; Wed, 03 Feb 2016 10:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbcBCJTy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2016 04:19:54 -0500
-Received: from mailhost1.dnb.no ([185.68.171.22]:34779 "EHLO mailhost1.dnb.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751434AbcBCJTf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Feb 2016 04:19:35 -0500
-Authentication-Results: mailhost1.dnb.no; spf=None smtp.mailfrom=perjorgen.johnsen@dnb.no; spf=None smtp.helo=postmaster@ERFWEXM09.ERF01.NET
-Received-SPF: None (mailhost1.dnb.no: no sender authenticity
-  information available from domain of
-  perjorgen.johnsen@dnb.no) identity=mailfrom;
-  client-ip=10.182.43.19; receiver=mailhost1.dnb.no;
-  envelope-from="perjorgen.johnsen@dnb.no";
-  x-sender="perjorgen.johnsen@dnb.no"; x-conformance=spf_only
-Received-SPF: None (mailhost1.dnb.no: no sender authenticity
-  information available from domain of
-  postmaster@ERFWEXM09.ERF01.NET) identity=helo;
-  client-ip=10.182.43.19; receiver=mailhost1.dnb.no;
-  envelope-from="perjorgen.johnsen@dnb.no";
-  x-sender="postmaster@ERFWEXM09.ERF01.NET";
-  x-conformance=spf_only
-IronPort-PHdr: =?us-ascii?q?9a23=3AUjQngxAbw51JvcE8qw+BUyQJP3N1i/DPJgcQr6Af?=
- =?us-ascii?q?oPdwSP78osbcNUDSrc9gkEXOFd2CrakU1KyP7+u5AjdIyK3CmU5BWaQEbwUCh8?=
- =?us-ascii?q?QSkl5oK+++Imq/EsTXaTcnFt9JTl5v8iLzG0FUHMHjew+a+SXqvnYsExnyfTB4?=
- =?us-ascii?q?Ov7yUtaLyZ/niKbrp9aKOF4ArQH+SI0xBS3+lR/WuMgSjNkqAYcK4TyNnEF1ff?=
- =?us-ascii?q?9Lz3hjP1OZkkW0zM6x+Jl+73YY4Kp5pIYTGZn9Ku43TKBwEjsrKSY26dftuB2F?=
- =?us-ascii?q?ShGArDNIXWQKugRHDhKD7xzgWJr19Czgubwu9jOdOJjUSrAyQjmkq5BTRQXfqr?=
- =?us-ascii?q?cdODM/uDXPh9Zyi7hUrRTnpRt/xZXZZqmZMvA4eKSLLoBSfnZIQssED38JOYi7?=
- =?us-ascii?q?dYZaV+c=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2CpBABdxbFW/xMrtgpIFoR/iFWzOogCE?=
- =?us-ascii?q?AEBAQEBAQEBfguCLYIbgQsBM00mAQQbyCaGEYgvCBEBhFgFjV2JFGmFSYcUgWK?=
- =?us-ascii?q?EQohUjj8BN4QPiSU0fAEBAQ?=
-X-IPAS-Result: =?us-ascii?q?A2CpBABdxbFW/xMrtgpIFoR/iFWzOogCEAEBAQEBAQEBfgu?=
- =?us-ascii?q?CLYIbgQsBM00mAQQbyCaGEYgvCBEBhFgFjV2JFGmFSYcUgWKEQohUjj8BN4QPi?=
- =?us-ascii?q?SU0fAEBAQ?=
-X-IronPort-AV: E=Sophos;i="5.22,389,1449529200"; 
-   d="scan'208";a="22042302"
-Received: from smtp-scan.dnbnor.no (HELO ERFWEXM09.ERF01.NET) ([10.182.43.19])
-  by mailhost1.dnb.no with ESMTP; 03 Feb 2016 10:16:51 +0100
-Received: from ERFWEXM01.ERF01.NET (10.182.43.11) by ERFWEXM09.ERF01.NET
- (10.182.43.19) with Microsoft SMTP Server (TLS) id 15.0.1076.9; Wed, 3 Feb
- 2016 10:19:33 +0100
-Received: from ERFWEXM01.ERF01.NET ([10.182.42.100]) by ERFWEXM01.ERF01.NET
- ([10.182.42.100]) with mapi id 15.00.1076.000; Wed, 3 Feb 2016 10:19:33 +0100
-Thread-Topic: Using Git for Cobol source
-Thread-Index: AdFeYTnox4QhOfiYQl27a9oD0iUEbAAAi86gAAAcgKA=
-Accept-Language: nb-NO, en-GB, en-US
-Content-Language: nb-NO
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.182.43.7]
+	id S1753157AbcBCJf5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Feb 2016 04:35:57 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34855 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104AbcBCJfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 04:35:53 -0500
+Received: by mail-pf0-f170.google.com with SMTP id 65so11047395pfd.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2016 01:35:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=4ciDyAcmdAYlhPyCBCGTVeHglyxElrF3bO0a0hVOJDo=;
+        b=Tve7O9toLZr/m3ow9aZ3ZZveX+19OjunqOt8rZVmupy7g9UMjUJwh/qGdStf+MhwKA
+         tj/6iPbNQ3WKCa+xR4TZCnikns4623K+3TxjGk407k4WhQSNZZeAXJxu2NxotA5kBcOn
+         HwWeFwhLDuUpz4WHdKlBeDDE57gEv/oPkBrxSoDDmdTRLAZI4nsPXsE4N0udM23i3Ln/
+         lqG/Phwaz0o0CWloMQSRd9MZj8eLm808AXzPh7Uw7Wbv9AHBavVsrVPBBtKEqX3ISFCW
+         z4kJhY1DmC5sT3d+5gIrAlMhGKw+gOe8K8A8vaIiCxE6vlPnerAxe098pn5HYGRyKdqR
+         QItw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=4ciDyAcmdAYlhPyCBCGTVeHglyxElrF3bO0a0hVOJDo=;
+        b=Wk5WRRPUsSaK2ZuT43WRghxRAHhu8idw07xFO6ZxCyGC8nLUwdEp12w2tUnt7vPJmy
+         OP7p29fc9Jo89C19r/UXw5f9V6e/l49ZNB5hf+ZyeevXdZqsp+ijAHwLxjnJbkip6Fv4
+         w3rIjrkeDK5OFM2T1JXO3YQLH5BhDLqiCjjR6Au/j1ie5uxLQ2K5/s4KMum9MQ4Ifjwx
+         6OUsTvB0gma5Scl4PGRpDtK8SpidDrSyvNOxDRVRs9zzNt8EUF9hdFRy706D20icTpxI
+         nkziwo6hZ8rmzSdXURtQnub3QJ/sJ+aiit+Zqwo+iQXfqPz45j6IZGFSqR//72Y6U7L7
+         6wQQ==
+X-Gm-Message-State: AG10YOQoQRETvCstx0h5ygk3O0UC2xjt1IcuuJr+OaAqr6DF+PySRrFm/SN2S5ZJqXHeVA==
+X-Received: by 10.98.8.153 with SMTP id 25mr698290pfi.51.1454492152978;
+        Wed, 03 Feb 2016 01:35:52 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id t87sm8425924pfa.14.2016.02.03.01.35.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Feb 2016 01:35:51 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 03 Feb 2016 16:36:03 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285344>
 
-Hi
+This is the rough first cut of "git worktree move" for early
+feedback. The series adds "git worktree move" which can
 
-I wonder if it is ok to use Git for source control for Cobol programs a=
-nd take advantage of parallel development ?
+ - move a linked worktree to another place
+ - move .git repository away
 
-Today we are using VSS and needs to be replaced. Our Cobol development =
-is done by an Eclipse tool (Micro Focus Enterprise Developer)
+The first use case is obvious. The second less so.
 
-Regards
-_______________________________________________
+Main worktree has always been an odd ball because it does not always
+behave like a linked worktree. You can't move it (because you'll be
+moving the repo along), you don't know where it is from 'worktree
+list' because it's not tracked the same way. The move of .git dir will
+automatically convert the main worktree to linked one, making it equal
+to all other worktrees.
 
-Per J=F8rgen Johnsen | Technical Coordinator
+At the code level, it should be noted that I import copy_file() from
+busybox for whole directory copy that preserves file permission and
+stuff. Either that or I need to rely on POSIX command "cp" or "mv".
+But that would make Windows adaptation harder later on.
 
-DNB Bank ASA
-Norway
-________________________________
- This email with attachments may be confidential and intended solely fo=
-r the use of the individual or entity to whom it is addressed. The emai=
-l may contain legally protected information. If you have received this =
-communication in error, be aware that making use of the information, fo=
-rwarding it, copying it, or disclosing its content to other persons, is=
- strictly prohibited and may be punishable by law. Please inform the se=
-nder about the error in transmission immediately.
-________________________________
+A little off topic. The first two patches adds sys_error() that, like
+die_errno(), automatically do strerror(). There's a 38 patches series
+to convert error("...: %s", ..., strerror(errno)) to use it. I think
+it's a good idea. So unless somebody objects, I'll post it some time
+later.
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (20):
+  usage.c: move format processing out of die_errno()
+  usage.c: add sys_error() that prints strerror() automatically
+  path.c: add git_common_path() and strbuf_git_common_path()
+  path.c: add is_git_path_shared()
+  copy.c: add copy_dir_recursively()
+  worktree.c: use is_dot_or_dotdot()
+  worktree.c: store "id" instead of "git_dir"
+  worktree.c: add clear_worktree()
+  worktree.c: add find_worktree_by_path()
+  worktree.c: add is_main_worktree()
+  worktree.c: recognize no main worktree
+  worktree.c: add update_worktree_location()
+  worktree.c: add update_worktree_gitfile()
+  worktree.c: add collect_per_worktree_git_paths()
+  worktree: avoid 0{40}, too many zeroes, hard to read
+  worktree: simplify prefixing paths
+  worktree: add "move" commmand
+  worktree: refactor add_worktree()
+  worktree: move repo, simple case
+  worktree: move repo, convert main worktree
+
+ builtin/worktree.c                | 297 ++++++++++++++++++++++++------
+ cache.h                           |   6 +
+ copy.c                            | 371 ++++++++++++++++++++++++++++++=
+++++++++
+ git-compat-util.h                 |   1 +
+ path.c                            |  56 +++++-
+ t/t2028-worktree-move.sh (new +x) |  77 ++++++++
+ usage.c                           |  35 +++-
+ worktree.c                        | 161 +++++++++++++++--
+ worktree.h                        |  42 ++++-
+ 9 files changed, 963 insertions(+), 83 deletions(-)
+ create mode 100755 t/t2028-worktree-move.sh
+
+--=20
+2.7.0.377.g4cd97dd
