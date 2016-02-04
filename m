@@ -1,105 +1,80 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: git submodule should honor "-c credential.helper" command line argument
-Date: Wed, 3 Feb 2016 15:44:22 -0800
-Message-ID: <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
-References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
+Date: Wed, 03 Feb 2016 16:09:27 -0800
+Message-ID: <xmqqmvrhjpzc.fsf@gitster.mtv.corp.google.com>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+	<1454443734.5545.1.camel@twopensource.com>
+	<xmqq7fimrcab.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 00:45:41 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 01:09:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aR77B-0004b9-1Y
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 00:45:37 +0100
+	id 1aR7UM-0004GV-Ci
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 01:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbcBCXpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 18:45:32 -0500
-Received: from mail-io0-f182.google.com ([209.85.223.182]:33567 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932863AbcBCXon (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2016 18:44:43 -0500
-Received: by mail-io0-f182.google.com with SMTP id f81so74518314iof.0
-        for <git@vger.kernel.org>; Wed, 03 Feb 2016 15:44:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0fEet3zOKSSGVJo5j0jbpMt2DSfdF9HqvZdQE5QQXTs=;
-        b=0N1H55zTrx5bRU28UpMDY6h7zOLilYhZcCIXtUJkDSi3y0vDzLXl1PwPdY1UzwYBps
-         2F0FWuIeoJP75a05mIYiKM/RsGx/sXjfrDWuQSMB2D3U9svx6tE6QThtF45l55ZGWDuX
-         L4b6gJoEya7buz6lJjTMK8O6RHOXbrkaQsCg3Sk0iazf4SHqEYw+SWVcESNvnWJG7Eq/
-         atmwgGhFuOP6h0pkHKZyyrET16CURFvpz12F1eHnHOdI44S28fH2cQiJWjayrZVpoQJq
-         wZojZqa4KR8neFC8AR34u2ObHEwZ0DazUCJJ2YYJ9rXP854UphEGgrqbTlCZI8ekxa7O
-         GyOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=0fEet3zOKSSGVJo5j0jbpMt2DSfdF9HqvZdQE5QQXTs=;
-        b=ISDVMipnlS/nZ/EGGCM8AtjMLPO4Ubw6g87YJopA91TIcUFPSLZ3cV8+ogv2y4F14o
-         NPw1KD9E2yOHW9YPcOWVfH/veQgBhTCfnFjCC5WKto/wcnWS+VqxNPgDiCfdM6NqUJgS
-         PwhqJqOOrs89hu8y+cRPeFTW8bcCKNx8fuqvgv8mu9PG7XW9x+Jd+Bxf+HfqlNdiQpkR
-         UDEueIjPwgbdumbw/ZNUZojW7EZQs1jp0PLQcCxkiub6pVAP/ON2fCMNjZcxK9STdG9i
-         rSv8vEMmEMJHIYXwVFukimv58sHNLLDdBipCDYwWE7dLcU2x04NlfsZ9shU18+vLCLEl
-         bJ4Q==
-X-Gm-Message-State: AG10YOR/jy5MFzv+x2WmwEJ/20xTTY4k1/OFaZEUQGVysccxfqs52/SeJVCU/XBhKaRgydzi6UBIIzWRO6dIHA==
-X-Received: by 10.107.170.79 with SMTP id t76mr1687809ioe.71.1454543082256;
- Wed, 03 Feb 2016 15:44:42 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Wed, 3 Feb 2016 15:44:22 -0800 (PST)
-In-Reply-To: <20160203042554.GA21179@sigill.intra.peff.net>
+	id S1756625AbcBDAJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 19:09:31 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54782 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753383AbcBDAJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 19:09:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 221E041D51;
+	Wed,  3 Feb 2016 19:09:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xJiAcrtym4LWcSGTS0f9v25j4mQ=; b=EZd2jO
+	LsRCkw9M5aLCQ8RR7fpbgEinHnDYWm438I3hWzqFc6nwat4oZuOP6bwN8MOSyeea
+	la288P+mYha1NB14ENfg15xagyBUb7SmuupG0Pq3Y5iy64qMJI86kmbz5CTYNJV0
+	9fm3ItQEby6hOuL7E2nhK50Kw7yLN4qNz9204=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oQBYDI6YqLjO/5wnuzJIBMzup1o1nAJy
+	83awW9tgXDfAqJ03D6R7gcxWiIDlByhFr5DoIMNL5Wewd6To5oXklVasdl4b+8nG
+	9PScksgg+Wb9p0bv9doeiRHTJjXn/w5E1QaQ74t9JZRHPSv3mZWrrQrBNy5NRN+Q
+	pRFGm63JOnA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19B1841D50;
+	Wed,  3 Feb 2016 19:09:29 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 83AED41D4F;
+	Wed,  3 Feb 2016 19:09:28 -0500 (EST)
+In-Reply-To: <xmqq7fimrcab.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 02 Feb 2016 14:13:32 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8EB136EA-CAD3-11E5-9DB5-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285386>
 
-On Tue, Feb 2, 2016 at 8:25 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 02, 2016 at 06:13:14PM +0100, Marc Strapetz wrote:
->
->> git -c credential.helper=helper submodule update --init submodule
->>
->> does not invoke "helper", but falls back to the default strategies.
->> When configuring in ~/.gitconfig:
->>
->> [credential]
->>   helper=helper
->>
->> git submodule update --init submodule
->>
->> works fine. This behavior is somewhat unexpected -- is this a bug or by
->> intention? In case intention, what's the recommended way to "inject"
->> credentials helpers to work on submodules without modifying Git's config
->> files?
->>
->> Tested with Git 2.5.0 (Windows).
->
-> I think the problem is that when git "switches" to working in the
-> submodule repository, it clears the environment, which includes any "-c"
-> command switches. This makes sense for some situations, but not for
-> others. This thread shows a similar problem:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/264840
->
-> Jens suggested there adding an option to tell clone to pass specific
-> variables to the submodule, which I think makes sense. AFAIK, nobody has
-> done any work yet on that approach.
->
-> -Peff
-> --
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ok so I am not sure we even really need to use "-c" option in
-git-clone considering that we can just use the same flow we do for
-setting core.worktree values. I'll propose a patch with you two Cc'ed,
-which I think fixes the issue. There may actually be a set of
-configuration we want to include though, and the main issue I see is
-that it won't get updated correctly whenever the parent configuration
-changes.
+> David Turner <dturner@twopensource.com> writes:
+>
+>> Are there any more reviews on this?  I do have some changes from this
+>> set, but they're pretty minor so I don't want to post a new one (unless
+>> folks would rather see those changes before reviewing).  Let me know.
+>
+> Thanks for pinging.  As this is a rather wide-ranging topic, it was
+> not practical to intergrate with the rest of the topics in flight
+> back then, but now it seems that this needs only one topic that
+> still is in flight.  I'll queue this on top of a merge between
+> 'master' and the tip of 'sb/submodule-parallel-update' and include
+> in the daily integration cycle to make it easy for people to view
+> the changes in wider context as necessary.
 
-Thanks,
-Jake
+I've re-applied the patches to rebuild the topic; when merged to
+'pu' it seemed to break some tests, but I didn't look too deeply
+into it.
+
+Thanks.
