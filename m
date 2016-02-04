@@ -1,97 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/25] upload-pack: tighten number parsing at "deepen" lines
-Date: Thu, 04 Feb 2016 15:48:04 -0800
-Message-ID: <xmqqvb64doln.fsf@gitster.mtv.corp.google.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
-	<1454576641-29615-10-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 08/12] ref-filter: introduce align_atom_parser()
+Date: Thu, 4 Feb 2016 18:48:41 -0500
+Message-ID: <CAPig+cQXK6xENN864XuxYFQEKtw59FAO7qh=wEGv4maomKpCzA@mail.gmail.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+	<1454262176-6594-9-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 00:48:14 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 00:48:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRTdF-0007EZ-Nz
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 00:48:14 +0100
+	id 1aRTdn-0007tN-Ac
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 00:48:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933261AbcBDXsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 18:48:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61671 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932668AbcBDXsH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 18:48:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B0A94243A;
-	Thu,  4 Feb 2016 18:48:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=RyG3+535KMpi
-	tnD/yuJfokU/JYU=; b=YnX1daRvGSb8/7gKbXiqU4yPCUveR6EI6+yTdoU2Gcwp
-	YU+vN9NsiXOf2W5liqxZAQZowuACv1twZeYNLj3ebnmD25wICZCk9nxOUQlRsrxe
-	PKqwVmJv9Klu7T5yA93Jfzq/rWsh/3OcF/SiPObnCe8hN7cb3lZbdTxMmwV2UUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UWforJ
-	X/s1YyXnxrJqtuk0NRDuOZrEoZCEDIiBh7VlY9lwL5vu2iC9/maNdqrGqctc0p2Z
-	eJDbtS4FvxaoJhhB+4ZOZo/EPH4ZM1oUb63QvMOOQcyrPAbtOfkWiu2g8pUmMn80
-	lWW42tzH3sDI2x+lV/j0cND8l8CL5pmawexvM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 533FA42439;
-	Thu,  4 Feb 2016 18:48:06 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CE0CC42436;
-	Thu,  4 Feb 2016 18:48:05 -0500 (EST)
-In-Reply-To: <1454576641-29615-10-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 4 Feb
- 2016 16:03:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BC8F0724-CB99-11E5-A47E-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933337AbcBDXsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 18:48:43 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33824 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751951AbcBDXsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 18:48:42 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e6so2069386vkh.1
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 15:48:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=6Ed+jLXpgh/vXM/Wrs4qBzZ2Xb2FaDi0f42r7LEvOFg=;
+        b=hk9BW4NUBtZBSB87A3zZ4SQZt4/T9mKooQNtMjp3Rkh5sf63R2IZ9uI29eXXNhuF6U
+         8NYAugoBGyhD4KxeuA8xnA8CeO9VrXCVNlbqWlKqAsR5iBHjlaCh5Kv0ctBlbMQgG0Vf
+         MPqzOIdyizxgt5zpOzMRws8/bdsnSEblInDjdA7VrK7fwMNF862z6pADEqSAL3BjSnnU
+         nipmZs5CInqdndYX7eTzoPss4AGb32MqOq8NLBMFnL1dmadXd1lL5rYJDZeVR3GMMoss
+         T1UPOz9kX0I1GuIW1d9rA9B4wWQeOVcxBejAUoBh7gvy8W8W/JmITTyRE2VAwPMeGlDc
+         ssog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=6Ed+jLXpgh/vXM/Wrs4qBzZ2Xb2FaDi0f42r7LEvOFg=;
+        b=AOqy/mJQqBXPIMaAQlHRn2LZi7AYspjWft0yWULD6amtDW5QCS/LDzO/KGfTyvV8X3
+         /clE9mh822XDBQ8Hfup6GwM6n5llNXghLGTLsSX5rTb5iaWIbLIdlfpP9p6RqDPiwR3P
+         fpDSF55cGaTU8LIAF/NEA3cieAW7aMKf7uuKM3qQfrCQUs8KXDBd6rSW/Xdp1X0KxTeZ
+         bZyhG2daZ3NB3bTZAnm/U0UIqTGXugOhLWt7Q6ItbKHVktTnDqJ1lXUhdiKyw90lF9xH
+         dI8eWVm+l4MTKhddGyP+lbzS+6oKhXzKwzO6NCrkyUefF5GcGZiXS6DC72OFgEKEuSst
+         TEoA==
+X-Gm-Message-State: AG10YOSCrCLXe+HkeD7D+7XbuI17xpGJN6uGpMsmb+x2eKc7GMaQ/Er2s0xw3avADm8BnNP3PA4IY5fB+xWmqg==
+X-Received: by 10.31.150.76 with SMTP id y73mr7368592vkd.84.1454629721279;
+ Thu, 04 Feb 2016 15:48:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 4 Feb 2016 15:48:41 -0800 (PST)
+In-Reply-To: <1454262176-6594-9-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: 9jDP4LPt8jtxf1i3EgqyA2xOcTg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285523>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-
-Hmm, so "deepen 10-by-the-way-let-me-tell-you-something-else" was an
-acceptable input that some (third-party) version of "git fetch"
-could have used, but now we are rejecting it.
-
-That "let me tell you something else" part wouldn't have reached
-outside this code, so it is inconceivable that anybody would relied
-on that looseness as a "feature", so the only practical risk would
-be if somebody wrote a protocol driver, mumbling "on the Internet,
-the end of line is CRLF, just like SMTP does", that sends a "deepen
-10<CR><LF>".  We used not to notice, but now we reject such a
-reimplementation of Git.
-
->  upload-pack.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce align_atom_parser() which will parse an 'align' atom and
+> store the required alignment position and width in the 'used_atom'
+> structure for further usage in populate_value().
 >
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 257ad48..9f14933 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -641,9 +641,9 @@ static void receive_needs(void)
->  			continue;
->  		}
->  		if (skip_prefix(line, "deepen ", &arg)) {
-> -			char *end;
-> +			char *end =3D NULL;
->  			depth =3D strtol(arg, &end, 0);
-> -			if (end =3D=3D arg || depth <=3D 0)
-> +			if (!end || *end || depth <=3D 0)
->  				die("Invalid deepen: %s", line);
->  			continue;
->  		}
+> Since this patch removes the last usage of match_atom_name(), remove
+> the function from ref-filter.c.
+>
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+> ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -55,6 +61,37 @@ static align_type parse_align_position(const char *s)
+> +static void align_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +       struct align *align = &atom->u.align;
+> +       struct strbuf **s, **to_free;
+> +       unsigned int width = ~0U;
+> +
+> +       if (!arg)
+> +               die(_("expected format: %%(align:<width>,<position>)"));
+> +       s = to_free = strbuf_split_str_omit_term(arg, ',', 0);
+> +
+> +       align->position = ALIGN_LEFT;
+> +
+> +       while (*s) {
+> +               int position;
+> +               arg = s[0]->buf;
+
+It's confusing to see 'arg' being re-used here for a different
+purpose, and leads the reader to wonder if this is done because the
+s[0]->buf might be needed outside the loop (when, in fact, it isn't).
+It would be better to declare a new variable here in the scope of the
+'while' loop to hold this value.
+
+(I might have named the result of the strbuf split 'tokens' or even
+short-and-sweet 'v' -- for vector -- and then used 's' for the name of
+the new variable here in the 'while' loop, but these name suggestions
+aren't particularly important; it is important to declare a new
+variable here -- whatever you name it -- rather than re-using 'arg'.)
+
+> +
+> +               if (!strtoul_ui(arg, 10, &width))
+> +                       ;
+> +               else if ((position = parse_align_position(arg)) >= 0)
+> +                       align->position = position;
+> +               else
+> +                       die(_("unrecognized %%(align) argument: %s"), arg);
+> +               s++;
+> +       }
+> +
+> +       if (width == ~0U)
+> +               die(_("positive width expected with the %%(align) atom"));
+> +       align->width = width;
+> +       strbuf_list_free(to_free);
+> +}
