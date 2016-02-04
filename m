@@ -1,90 +1,110 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 15/15] t4032-diff-inter-hunk-context.sh: replace using expr for arithmetic operations with the equivalent shell builtin
-Date: Thu,  4 Feb 2016 10:20:59 +0000
-Message-ID: <1454581259-57095-2-git-send-email-gitter.spiros@gmail.com>
-References: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH] git-completion.bash: always swallow error output of
+ for-each-ref
+Date: Thu, 4 Feb 2016 11:34:59 +0100
+Message-ID: <56B32953.2010908@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: szeder@ira.uka.de, Junio C Hamano <gitster@pobox.com>,
+	tr@thomasrast.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 04 11:21:22 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 11:36:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRH2M-0002U6-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:21:18 +0100
+	id 1aRHGf-0003Hk-4L
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933486AbcBDKVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 05:21:12 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35977 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933439AbcBDKVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 05:21:05 -0500
-Received: by mail-wm0-f66.google.com with SMTP id 128so11459680wmz.3
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 02:21:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8egYww38iea4HCd7kovgDiAf2t4ilmFhTuhblSWEaZg=;
-        b=AriW2cp44VskN2X1Q5U6uv6zdbRzzQI0H0sscCOpeqMvlIYKi+TxwmBO8XZg9pqKTe
-         vZFu9Crmn2l3Grk06jkzQl87HK+YQLO7rKQwLpZ7gdbzOztkX9Lv+iSgsvrW9Mb0f0+h
-         dS+gE/CSRFrLwKbH4lg/ZD9n9KklJAQ6ANmuNDn0AA9ZEy+nAWTpJtpcX+G/QJHe6E9J
-         H3rmGcz8S5pXmqGpP3lF6MlGN9Tw31ct6WCJ59vX23R17N3M28Lnv/n2tik0oisVEghm
-         s8gQyu+z+fVdWnBCSEWbUDiRmqpcEP+DKDoDim6rT/6m8p3UzBqi5XuB1mKQqRF2I3uE
-         TMKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8egYww38iea4HCd7kovgDiAf2t4ilmFhTuhblSWEaZg=;
-        b=eTO8xm97DdzXlRTETI/N309+wVacXp9VeLsyo8T9wezx2eAaoMtXlW2KxoYFd4SpCw
-         TBFOLIbLFrKaKed01x+byGzD1OolqofGp7aCBOCHY2Flbm275dKoqjnIoA2iABNfG38g
-         WyrusSeYVhlPyoXHWTEgBgfDMg8wuuWzwWeRnRnw+7MW2vqTHd31WboraYtj8l8DWMOu
-         bTBECMzxtfCc26Qe+Kwg67gLILAEq6/dnUfTtfUPEP1m9TL8sPZ7wTzU7Zxb3nQyyn1I
-         RIsxFiNuckj3FXSTyF8yJGIAYtC3WIPTh8FeHmwEFXJtdjTpxDk2sgdyeR+DXQHM522B
-         syUQ==
-X-Gm-Message-State: AG10YORfCOkpdSzMGsqLs03Qab9rjSVS6L8N7jZWqD8u8Sqxzd8Xg5EZhzcfme0CAN0RYw==
-X-Received: by 10.195.17.198 with SMTP id gg6mr7233033wjd.15.1454581264118;
-        Thu, 04 Feb 2016 02:21:04 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id u4sm10636107wjz.4.2016.02.04.02.21.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 04 Feb 2016 02:21:03 -0800 (PST)
-X-Mailer: git-send-email 2.0.0.rc3.377.gb2ff043
-In-Reply-To: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
+	id S1753203AbcBDKgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 05:36:00 -0500
+Received: from plane.gmane.org ([80.91.229.3]:42072 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932974AbcBDKfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 05:35:06 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aRHFg-00022z-Hg
+	for git@vger.kernel.org; Thu, 04 Feb 2016 11:35:04 +0100
+Received: from 131.228.216.134 ([131.228.216.134])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:35:04 +0100
+Received: from sschuberth by 131.228.216.134 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:35:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 131.228.216.134
+X-Mozilla-News-Host: news://news.gmane.org:119
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285450>
 
-expr is considered generally antiquated. It is best to use for arithmetic operations
-the shell $((..)).
+This avoids output like
 
-To quote POSIX:
+    warning: ignoring broken ref refs/remotes/origin/HEAD
 
-    "The expr utility has a rather difficult syntax [...] In many cases, the arithmetic
-    and string features provided as part of the shell command language are easier to use
-    than their equivalents in expr. Newly written scripts should avoid expr in favor of
-    the new features within the shell."
+while completing branch names.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 ---
- t/t4032-diff-inter-hunk-context.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t4032-diff-inter-hunk-context.sh b/t/t4032-diff-inter-hunk-context.sh
-index e4e3e28..0b0b60f 100755
---- a/t/t4032-diff-inter-hunk-context.sh
-+++ b/t/t4032-diff-inter-hunk-context.sh
-@@ -10,7 +10,7 @@ f() {
- 	while test $i -le $2
- 	do
- 		echo $i
--		i=$(expr $i + 1)
-+		i=$(( $i + 1 ))
- 	done
- 	echo $3
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 15ebba5..7c0549d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -317,7 +317,7 @@ __git_heads ()
+ 	local dir="$(__gitdir)"
+ 	if [ -d "$dir" ]; then
+ 		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+-			refs/heads
++			refs/heads 2>/dev/null
+ 		return
+ 	fi
  }
+@@ -327,7 +327,7 @@ __git_tags ()
+ 	local dir="$(__gitdir)"
+ 	if [ -d "$dir" ]; then
+ 		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+-			refs/tags
++			refs/tags 2>/dev/null
+ 		return
+ 	fi
+ }
+@@ -355,14 +355,14 @@ __git_refs ()
+ 			;;
+ 		esac
+ 		git --git-dir="$dir" for-each-ref --format="%($format)" \
+-			$refs
++			$refs 2>/dev/null
+ 		if [ -n "$track" ]; then
+ 			# employ the heuristic used by git checkout
+ 			# Try to find a remote branch that matches the completion word
+ 			# but only output if the branch name is unique
+ 			local ref entry
+ 			git --git-dir="$dir" for-each-ref --shell --format="ref=%(refname:short)" \
+-				"refs/remotes/" | \
++				"refs/remotes/" 2>/dev/null | \
+ 			while read -r entry; do
+ 				eval "$entry"
+ 				ref="${ref#*/}"
+@@ -1835,7 +1835,7 @@ _git_config ()
+ 		remote="${remote%.push}"
+ 		__gitcomp_nl "$(git --git-dir="$(__gitdir)" \
+ 			for-each-ref --format='%(refname):%(refname)' \
+-			refs/heads)"
++			refs/heads 2>/dev/null)"
+ 		return
+ 		;;
+ 	pull.twohead|pull.octopus)
 -- 
-2.5.0
+2.7.0.windows.1
