@@ -1,61 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/15] git-am.sh: replace using expr for arithmetic operations with the equivalent shell builtin
-Date: Thu, 04 Feb 2016 11:33:13 -0800
-Message-ID: <xmqqoabwi83q.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 14/15] git-am.sh: replace using expr for arithmetic
+ operations with the equivalent shell builtin
+Date: Thu, 4 Feb 2016 14:39:49 -0500
+Message-ID: <CAPig+cRuNzQR_-dRQqV+KOqEaXhuTNB2RxX6rkXKzembbgWyKw@mail.gmail.com>
 References: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
+	<xmqqoabwi83q.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 20:33:21 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Elia Pinto <gitter.spiros@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 20:39:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRPea-0004WT-D4
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:33:20 +0100
+	id 1aRPkx-0004Hx-3u
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934105AbcBDTdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 14:33:16 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60704 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932976AbcBDTdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 14:33:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0A05441201;
-	Thu,  4 Feb 2016 14:33:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/0Bql9D+VdW1+Lqo2JxTW9dEX90=; b=RFYY9G
-	0HGKX+jEqoFQonh8ra4zgklksXXaiOslW7svZ5FKINwHLlgO7g3PC6ehtGjHU6Nf
-	SmajYIXRrLv8TFe0mNey2fiS5OuXTgeRrOSgqik6Jc1VBiHHa4zvguwRXrwIFjZN
-	N3ZDy3CSsqtKqeEPA7J8JlZoiA1PYLBWwkCb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yVgUAisdMQdDRGv9JC4ZSZzA67QytNdj
-	0OwwbebBQx3oSvwlfOcMs8PQAk7btK+ivfqOpiCyGk/pDHbDxEUFQQclgYZzqL0f
-	pJWozxSIeP+8yBxXXAXo7K/PPCaV8wzNqqzJ/BDFHkNXx/z3PS7yzLOS2pcSCTFh
-	drMbbPkE8Bo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0137F411FF;
-	Thu,  4 Feb 2016 14:33:15 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6F477411FE;
-	Thu,  4 Feb 2016 14:33:14 -0500 (EST)
-In-Reply-To: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Thu, 4 Feb 2016 10:20:58 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 222E7110-CB76-11E5-9F68-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S966090AbcBDTjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 14:39:51 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:32907 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965902AbcBDTju (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 14:39:50 -0500
+Received: by mail-vk0-f65.google.com with SMTP id n1so1910709vkb.0
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:39:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EKGDaP8agMVPopty03uUtan7ufivkaiCZix5MZTo2L0=;
+        b=Ext7rGvEYB9+Z6N7hFv8F31M2LDzvV2WYay5ryX+Aap9oy2fXYklUdQhgD2I5mRjm3
+         59DJ2XguANydvk1fp8dEc968MviDQbY1IfdWNrRrekZJ3R9iN1sXa/Jyb1x2bbtQfuPX
+         wYDGuGs5/q3q6DmQFDCV7yMSfl9x+O7bhKkNUy09VO3Ca9Y5XjB2iRGBG9iT2W6pHjXK
+         zhFosSEST+mmCUEwAi3BSIbc5lI1DilrbVKcH3q6n68iZ8NbG9td+s3yxxxOnHFx1Wl8
+         vjh1uMRq09Art1EXJlTJ08sPmLgEse/qBtdEdrl8Fo+MEg02cjKDMXi7qriBzrUqALb5
+         HgAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EKGDaP8agMVPopty03uUtan7ufivkaiCZix5MZTo2L0=;
+        b=KOLLw/fv9q/1FeHSrt6xtCOR5WWhJPjwMXm/gNbVGsrlBI7Kg1jYl5ldc5zXRgtMWO
+         IONapi/izCSvCTWURLQ9CNv37Jvf9Ql5rnUUMDOt45Av8UeF+ENZe0r6galr2KJOCv2F
+         QlhH6NnI7YEF5m59OkDKFVzzyUACSOuB44YH6uRebR8QOTmHRmkNZh0tgX/NBcNIZtil
+         t5toV05ktixe+jjjGquQFdFkLAtqiaxDTdkazT/9jq1Qr5ZD6F4lXR4KeGFv+AZBL2Xi
+         xddIN0Yv+kkeFbp+hztwWugPv4wXqpxekfQLZOm8Sui3op3iSKiE5oG/hULMNUL3GqDI
+         b7PA==
+X-Gm-Message-State: AG10YOQLf8fxrenrq6OydxJLqAfK3mdlP3DSnmASKAX7ljN0YiZs8EuMnE1ja21eotwpcgAhFp8yIL+SHWEOiQ==
+X-Received: by 10.31.168.76 with SMTP id r73mr6728992vke.117.1454614789688;
+ Thu, 04 Feb 2016 11:39:49 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 4 Feb 2016 11:39:49 -0800 (PST)
+In-Reply-To: <xmqqoabwi83q.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: ofrZ3jdgwMKbPjqqy2Hel2tVn7A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285483>
 
-As pointed out already, quoting of "$this" inside the arithmetic
-expansion would not work very well, so [14/15] needs fixing.
+On Thu, Feb 4, 2016 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> As pointed out already, quoting of "$this" inside the arithmetic
+> expansion would not work very well, so [14/15] needs fixing.
+>
+> I do not see 01/15 thru 13/15 here, by the way.  Is it just me?
 
-I do not see 01/15 thru 13/15 here, by the way.  Is it just me?
+I didn't receive them either, and they don't seem to be on gmane...
