@@ -1,133 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Thu, 4 Feb 2016 12:26:19 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602041216240.2964@virtualbox>
-References: <56B32953.2010908@gmail.com> <20160204111307.GA30495@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
+Date: Thu, 4 Feb 2016 18:42:56 +0700
+Message-ID: <CACsJy8Cau0mpz8zVjvz7RPt-s=xmaCCmz0p8OCup9-Q1MnwWCQ@mail.gmail.com>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com> <1454443734.5545.1.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
-	szeder@ira.uka.de, Junio C Hamano <gitster@pobox.com>,
-	tr@thomasrast.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 04 12:26:53 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 12:43:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRI3n-0002Ij-46
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:26:51 +0100
+	id 1aRIJz-0004A9-Gg
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:43:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757873AbcBDL0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 06:26:41 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60996 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755286AbcBDL0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 06:26:39 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lcj9b-1ZjfVg05hf-00k7ff; Thu, 04 Feb 2016 12:26:23
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160204111307.GA30495@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:wSEjNRYoitwJNPXafjoTVrVCFrYw7+Waii1Kqq7NMisjnycjaZS
- 8xt3e5fVgNKNuxR7Tct+OaS1KSD3nWgGCWligZKtzsLGfx0AOob09moVmHDaeg/vJ94uIuk
- uxJYKgew63bT2ZycBCzUFtKR0Tx/Ct4FfIB1yaW/SZBHLAszQCE6a7gIHuMdyCeMvTBfEUK
- mULDZOJmx+7WkSc1UA1Bg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:M3DMTYkvW2U=:1lz4/lkv6qxSC8f8HB7/IC
- iTh2SED53pa8pOMUrORu4Mu3sHZNkNaGs8ds/pZCnnnUbPKjkP824lwA3N+mwiTvcvBV/Um9f
- HiDQSmRRaBj+Ezb/2dwxSLX24+pmpAlrCqNH7E7KcFgy4UqWMHPTc9BP6p7O3dwf27MTtePF2
- dJQv3Z1lA5Xoc8moX4oOGvpmDbGOAtNv0h/jhrDRcZteh4rOwF4Vtgz63mkwYwRkFG1/kRoVt
- l8juIPexWLywNHvVqGx0QLxl9conNZe56J5/h1qN7SXxwRmysfU1jrIiwI/Os0u7qsLBu8EL9
- 0xbFI4vPcTARik9Y3R7wtY5864uUjMnnKM8MZxmo/02GmQeIH5ICGwHLWsElZKPbJx4nwcp/2
- Eq4ETSH8nd1TO61b8xsRjG7Ux4CQ39WAiVXUrfSyXcgez7TtT6eoeNZ/1O2RhkPiJwJnQPzc4
- LATQHH3iTQ0ooyK55U4tu4LchTlRpu7ZZgi4rT3TEzIlf6+9xRZaH/9TSfz8WqFj6R4ur50cc
- oN6JMtE1xDossbS0a2rQ/ThJgawPuqa9YiZCmOxK9WzXlxWsoQ/h0MG8qsMtWpMaF2qcvRDVE
- 4Jm5Wuj7s63O9Qt0frl6CytcGFUyXr7vWqZpklFq6ftjDWBfq9WDUpbCo2ieeYkMvOWrXTGyj
- WpQIKhLoOd4fyoIgYIj9ewgQNZqeMes4qjUlZu0d3yB3ddBz/bkXXgyEcwVzyuCfm3CPHvXkA
- i6SOLWNrviS+bQZGY17m8+8zL5atZToF24YHpXAHgq5zvwdicOg2mK0rDBGjzEnNvYJ5mgvU 
+	id S1754075AbcBDLna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 06:43:30 -0500
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:33089 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751873AbcBDLn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 06:43:27 -0500
+Received: by mail-lf0-f43.google.com with SMTP id m1so34809994lfg.0
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 03:43:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=eUr9VPkq+SKnuF3x4gy5FjAVCq7vbuOl91vv6l9T/eo=;
+        b=rr4vo99CjtYUyeTZkb1KZcH6wlyrdXJeBRU+UsIHmxYc63onLsSk4CKRSMI1K8+28U
+         WfWeJPJJNZ45iUfG0OrIcaBHEpkwA6I54A+4ySqDYIfv2TDVjyCh3dncnZLM7u2tsFpC
+         eH3K82PuhcVzRMN6Rkd1hZTMSxTbEBfivLTeoZ0Y5yz7T899Q0ciIO8lAjaDYM0Nhq2Q
+         uvSopFfr1rxn6xNHBfRWhrujijEd6/GtBWdmDTNqU1vpAFm4Dc+2vO7bOebOReadbuFj
+         EUYC+MCO7BTg8rs5XrMFf1/ZU+4gZlY4/1uvspwliILcLoWNDlHhWhQzJHGextGaizaI
+         tCaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=eUr9VPkq+SKnuF3x4gy5FjAVCq7vbuOl91vv6l9T/eo=;
+        b=ULSnsMMkyToijisKpG7rbWbuXGj/46s68EfMoREspoEbTw4D3H5Eg/XlZxzST7AW5U
+         BA/5yFFBxCMiRgIKCl383fJatJ8AnkFIWnXwlM6EHdm3ag6JdcPyRLj48pYyJse00MK9
+         PI/HCWZgRIFMsdEHIX6oD0+W+SiUyOFWjckL02v81lgp8BE3C6B4HHBAybDgFPDj3qbD
+         plk7+QVIwKfORUQHbZF0JK5/bjWfYJiCtL+r4IwikIZihP2UerIDwI/76MG+YjFvatyM
+         suc02IxqkYY3huGn6UDdaiNgaLMYmaZS2ivI4HXyBD2F5xFcNNE6RpEq67GI106N2jfq
+         qHoA==
+X-Gm-Message-State: AG10YOTU+gqagtJBPuA9su2KVLdob/iwuocQd+0+WoekgJEE/S4sGtcdjKZa3Kp22tPDEm6rw7GY5/nOAA+ndQ==
+X-Received: by 10.25.43.212 with SMTP id r203mr3335813lfr.162.1454586206432;
+ Thu, 04 Feb 2016 03:43:26 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 4 Feb 2016 03:42:56 -0800 (PST)
+In-Reply-To: <1454443734.5545.1.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285453>
 
-Hi Peff,
+On Wed, Feb 3, 2016 at 3:08 AM, David Turner <dturner@twopensource.com> wrote:
+> Are there any more reviews on this?  I do have some changes from this
+> set, but they're pretty minor so I don't want to post a new one (unless
+> folks would rather see those changes before reviewing).  Let me know.
 
-On Thu, 4 Feb 2016, Jeff King wrote:
-
-> On Thu, Feb 04, 2016 at 11:34:59AM +0100, Sebastian Schuberth wrote:
-> 
-> > This avoids output like
-> > 
-> >     warning: ignoring broken ref refs/remotes/origin/HEAD
-> > 
-> > while completing branch names.
-> 
-> Hmm. I feel like this case (HEAD points to a branch, then `fetch
-> --prune` deletes it) came up recently and we discussed quieting that
-> warning. But now I cannot seem to find it.
-
-I am pretty certain that it came up in my patch series:
-
-	http://thread.gmane.org/gmane.comp.version-control.git/278538
-
-> Anyway, I this is a reasonable workaround. Errors from bash completion
-> scripts are almost always going to be useless and get in the way of
-> reading your own prompt.
-
-Maybe we should just shut up the completions in more cases? Dunno...
-
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> > index 15ebba5..7c0549d 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -317,7 +317,7 @@ __git_heads ()
-> >  	local dir="$(__gitdir)"
-> >  	if [ -d "$dir" ]; then
-> >  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
-> > -			refs/heads
-> > +			refs/heads 2>/dev/null
-> >  		return
-> 
-> Not really related to your topic, but digging into it caused me to read
-> b7dd2d2 (for-each-ref: Do not lookup objects when they will not be used,
-> 2009-05-27), which is about making sure for-each-ref is very fast in
-> completion.
-> 
-> It looks like %(refname:short) is actually kind of expensive:
-
-Yep, this was reported on the Git for Windows bug tracker, too:
-
-	https://github.com/git-for-windows/git/issues/524
-
-> $ time git for-each-ref --format='%(refname)' refs/tags  >/dev/null
-> 
-> real    0m0.004s
-> user    0m0.000s
-> sys     0m0.004s
-> 
-> $ time git for-each-ref --format='%(refname:short)' refs/tags >/dev/null
-> 
-> real    0m0.009s
-> user    0m0.004s
-> sys     0m0.004s
-
-And the timings in the ticket I mentioned above are not pretty small:
-0.055s vs 1.341s
-
-> The upcoming refname:strip does much better:
-> 
-> $ time git for-each-ref --format='%(refname:strip=2)' refs/tags >/dev/null
-> 
-> real    0m0.004s
-> user    0m0.000s
-> sys     0m0.004s
-
-This is funny: after reading the commit message at
-https://github.com/git/git/commit/0571979b it eludes me why strip=2 should
-be so much faster than short...
-
-Ciao,
-Dscho
+Last note. Since this is new code, maybe you can wrap translatable
+strings with _(), basically any visible string that machines do not
+need to recognize.
+-- 
+Duy
