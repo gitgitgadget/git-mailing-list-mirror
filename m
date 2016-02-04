@@ -1,92 +1,71 @@
-From: John Keeping <john@keeping.me.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 0/3] Fix $((...)) coding style
-Date: Thu, 4 Feb 2016 12:14:37 +0000
-Message-ID: <20160204121437.GF29880@serenity.lan>
-References: <cover.1454587284.git.johannes.schindelin@gmx.de>
+Date: Thu, 4 Feb 2016 13:38:51 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602041334450.2964@virtualbox>
+References: <cover.1454587284.git.johannes.schindelin@gmx.de> <20160204121437.GF29880@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Elia Pinto <gitter.spiros@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 13:15:00 2016
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Feb 04 13:39:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRIoN-0005Kj-UQ
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:15:00 +0100
+	id 1aRJBe-0006eJ-Ey
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:39:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964882AbcBDMOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 07:14:53 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:44602 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964837AbcBDMOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 07:14:52 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 83809CDA54F;
-	Thu,  4 Feb 2016 12:14:51 +0000 (GMT)
-X-Quarantine-ID: <Mt2hjgA5zr7T>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Mt2hjgA5zr7T; Thu,  4 Feb 2016 12:14:50 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 0F1CECDA586;
-	Thu,  4 Feb 2016 12:14:39 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <cover.1454587284.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1754037AbcBDMjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 07:39:00 -0500
+Received: from mout.gmx.net ([212.227.15.15]:56869 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932604AbcBDMi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 07:38:57 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LoVBq-1ZpWS63ODi-00gV0U; Thu, 04 Feb 2016 13:38:52
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160204121437.GF29880@serenity.lan>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:0686XWmkCBBl7a8rr0Fg2JEPjAJjKPrXjfv5Is5rKff55hycD5o
+ xUHPlxCo/0h/3Ri0zamhXFPAcXRIh4mXgDhV8KwqIMnBwWNbNm+NzXm7oQA2Yhn4Qph855P
+ qxPPUcLEuwHoahF4MU69imasngOc08+Hk9rD6koUx2U0QwW9F3s3pJV9h7juft7nbAeOJrk
+ W8cseFUD/9+Va2OBdsB1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cudTxXIMubs=:rgw4faA6V63b6SijAELK/M
+ ThLUJ9cfFP+ymamCnfxPfmRiQUpPcmRW7M+0/CUz+XU9HYmdtvIRNXsHg/mA7KdlIGi+lgpxm
+ h5ix7TBRBiYcGrsCSsdvFNqHJF1YZnwriOzhl/W9h8gWASG6c8LAhTYIVacdLFFi/y1G0jR+z
+ ATdQHCRn+BXTPYZkm7OLhzEYTbkF7Qc/fKWL+s40YB/X0HGQawD7Tkb0/ZD/T88OU7/5I8j7e
+ Jy+v4wVuPcq8pRsybaeEObvJfH9vJH9+JhpMAPLorC8CndSb0PD1YUfyCd6yB9Q5WdZ0YXAD+
+ ZTNa8TlolGKVgwz0MvfXx0B/qPl/KU/iVMV+3yHq/czJ5/NQfOtGBLMFtZjSYwwatcMgwb1hM
+ TMMB6R4qRA6Hvu9huzTlYFqG4LdHo23K7mwiS5GuehNXxxF9Djq216w/YXzNBggmGLVQYj0iI
+ gXctPzVg2Vpi2bxbyHgC822XdAeL0nSYvzlDbNBbkFiHMwUKo3JDRKKhEiCfEUY16P0NHL7ka
+ Na4BFsM0JAs2VMhsQmEoy51ccYz1X6+Vto+Zx81swoMLXLUXT5jAx1QY6s9PD/T5CMCZ03eNg
+ WZwoehUB1RHBpd54n2Sum5Sk0y+lqBSjxxgF4srdYrGGqt+ZF6IOMI3FtAdlEi9xtE+kb3dTh
+ mVIK0UoOyxPk/P5eLrdOAogXGH4lYxh7MdloLjWx4tZV0k+SXHNQ6B2M5IDIovHC0nbqCx4ux
+ jYa+hCK9XPhDMVkCmCRBAV/4j3RLg350u7TWbPzubptF/rLaKRPLH37BPFjdKlBuTTSnJp4O 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285460>
 
-On Thu, Feb 04, 2016 at 01:01:39PM +0100, Johannes Schindelin wrote:
-> I noticed through a nearby patch series that was submitted by Elia that
-> some of the $((...)) expressions introduced in scripts that I introduced
-> to Git's source code did not match the existing code's convention:
-> previously these expressions did not contain any spaces, now *some* do.
-> 
-> This patch series tries to clean that up quickly before even more code
-> has to decide which one of the disagreeing coding conventions to use.
-> 
-> Note: For the sake of getting this patch series out, I skipped t/ and
-> contrib/. I do not care much about the latter, but t/ should probably be
-> fixed, too.
+Hi John,
 
-Should this be going this other way (i.e. standardising on having the
-spaces)?
+On Thu, 4 Feb 2016, John Keeping wrote:
 
-The current state (excluding contrib/ and t/) seems to favour spaces:
+> Using spaces around operators also matches our C coding style.
 
-$ git grep '\$((' -- ':/' ':!t/' ':!contrib/'
-Documentation/CodingGuidelines: - We use Arithmetic Expansion $(( ... )).
-Documentation/CodingGuidelines:   of them, as some shells do not grok $((x)) while accepting $(($x))
-generate-cmdlist.sh:    n=$(($n+1))
-git-filter-branch.sh:           elapsed=$(($now - $start_timestamp))
-git-filter-branch.sh:           remaining=$(( ($commits - $count) * $elapsed / $count ))
-git-filter-branch.sh:                   next_sample_at=$(( ($elapsed + 1) * $count / $elapsed ))
-git-filter-branch.sh:                   next_sample_at=$(($next_sample_at + 1))
-git-filter-branch.sh:   git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
-git-rebase--interactive.sh:     total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
-git-rebase--interactive.sh:             count=$(($(sed -n \
-git-rebase--interactive.sh:             lineno=$(( $lineno + 1 ))
-git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
-git-rebase--merge.sh:   eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
-git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
-git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
-git-submodule.sh:       n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-git-submodule.sh:                       total_commits=" ($(($total_commits + 0)))"
+Well, by that reasoning you should go the whole nine yards and write
 
-I make that 3 without spaces (including the git-rebase--interactive.sh
-case that wraps) and 12 that do have spaces around operators.  Using
-spaces around operators also matches our C coding style.
+	lineno = $(( $lineno + 1 ))
+
+Except you can't. Because shell code is inherently not like C code.
+
+What I found particularly interesting about 180bad3 (rebase -i: respect
+core.commentchar, 2013-02-11) was that it *snuck in* that coding style: it
+*changed* the existing one (without rationale in the commit message, too).
+
+Ciao,
+Johannes
