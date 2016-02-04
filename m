@@ -1,70 +1,119 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 14/15] git-am.sh: replace using expr for arithmetic
- operations with the equivalent shell builtin
-Date: Thu, 4 Feb 2016 14:39:49 -0500
-Message-ID: <CAPig+cRuNzQR_-dRQqV+KOqEaXhuTNB2RxX6rkXKzembbgWyKw@mail.gmail.com>
-References: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqoabwi83q.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Fix $((...)) coding style
+Date: Thu, 04 Feb 2016 11:43:17 -0800
+Message-ID: <xmqq1t8si7my.fsf@gitster.mtv.corp.google.com>
+References: <cover.1454587284.git.johannes.schindelin@gmx.de>
+	<20160204121437.GF29880@serenity.lan>
+	<alpine.DEB.2.20.1602041334450.2964@virtualbox>
+	<20160204130111.GG29880@serenity.lan>
+	<alpine.DEB.2.20.1602041411520.2964@virtualbox>
+	<20160204140609.GH29880@serenity.lan>
+	<alpine.DEB.2.20.1602041619430.2964@virtualbox>
+	<20160204155316.GI29880@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Elia Pinto <gitter.spiros@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 20:39:57 2016
+Content-Type: text/plain
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu Feb 04 20:43:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRPkx-0004Hx-3u
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:39:55 +0100
+	id 1aRPoL-0000Is-Go
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966090AbcBDTjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 14:39:51 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:32907 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965902AbcBDTju (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 14:39:50 -0500
-Received: by mail-vk0-f65.google.com with SMTP id n1so1910709vkb.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:39:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=EKGDaP8agMVPopty03uUtan7ufivkaiCZix5MZTo2L0=;
-        b=Ext7rGvEYB9+Z6N7hFv8F31M2LDzvV2WYay5ryX+Aap9oy2fXYklUdQhgD2I5mRjm3
-         59DJ2XguANydvk1fp8dEc968MviDQbY1IfdWNrRrekZJ3R9iN1sXa/Jyb1x2bbtQfuPX
-         wYDGuGs5/q3q6DmQFDCV7yMSfl9x+O7bhKkNUy09VO3Ca9Y5XjB2iRGBG9iT2W6pHjXK
-         zhFosSEST+mmCUEwAi3BSIbc5lI1DilrbVKcH3q6n68iZ8NbG9td+s3yxxxOnHFx1Wl8
-         vjh1uMRq09Art1EXJlTJ08sPmLgEse/qBtdEdrl8Fo+MEg02cjKDMXi7qriBzrUqALb5
-         HgAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EKGDaP8agMVPopty03uUtan7ufivkaiCZix5MZTo2L0=;
-        b=KOLLw/fv9q/1FeHSrt6xtCOR5WWhJPjwMXm/gNbVGsrlBI7Kg1jYl5ldc5zXRgtMWO
-         IONapi/izCSvCTWURLQ9CNv37Jvf9Ql5rnUUMDOt45Av8UeF+ENZe0r6galr2KJOCv2F
-         QlhH6NnI7YEF5m59OkDKFVzzyUACSOuB44YH6uRebR8QOTmHRmkNZh0tgX/NBcNIZtil
-         t5toV05ktixe+jjjGquQFdFkLAtqiaxDTdkazT/9jq1Qr5ZD6F4lXR4KeGFv+AZBL2Xi
-         xddIN0Yv+kkeFbp+hztwWugPv4wXqpxekfQLZOm8Sui3op3iSKiE5oG/hULMNUL3GqDI
-         b7PA==
-X-Gm-Message-State: AG10YOQLf8fxrenrq6OydxJLqAfK3mdlP3DSnmASKAX7ljN0YiZs8EuMnE1ja21eotwpcgAhFp8yIL+SHWEOiQ==
-X-Received: by 10.31.168.76 with SMTP id r73mr6728992vke.117.1454614789688;
- Thu, 04 Feb 2016 11:39:49 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 4 Feb 2016 11:39:49 -0800 (PST)
-In-Reply-To: <xmqqoabwi83q.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: ofrZ3jdgwMKbPjqqy2Hel2tVn7A
+	id S934127AbcBDTnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 14:43:21 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63516 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932372AbcBDTnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 14:43:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3E64B414AD;
+	Thu,  4 Feb 2016 14:43:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=Lifu+gor+L8i3KaTYfpnp/JHvis=; b=I5RWWlowQzeacmO3pR/t
+	l8D+/W6H+3ZYwx1FsC/wVpicaOT/by3BfcLqEDpZDy2btipwN2zcZIdL8Sk/rYmo
+	W0ZlCrKc6h7EqR9EyL04Cx/UuTxVbab3+sFXZStBEO61t1dcdo6Krn1kGfP7dJNq
+	ZuoXmGHv95AbttAMenawfC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=pcrIwDhyngCtsYhkvTM/0feW2LClwLvOoVSxUp/CDfpb89
+	Gt/5kf21NJs/nnCIgbMSB3P9u+E36EWkoefdsAUBa+u4udzmBnfj1Q42zz9PdV04
+	j5BmrIH1TuY52Z61o6kVHaSCc9E3a0X8T1N5mvPsRE5y2zH6JxZReIlFOHNfI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 342E1414AC;
+	Thu,  4 Feb 2016 14:43:19 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A50CD414AB;
+	Thu,  4 Feb 2016 14:43:18 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8A52E400-CB77-11E5-9415-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285484>
 
-On Thu, Feb 4, 2016 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> As pointed out already, quoting of "$this" inside the arithmetic
-> expansion would not work very well, so [14/15] needs fixing.
+John Keeping <john@keeping.me.uk> writes:
+
+> I avoided quoting CodingGuidelines in my previous message, but it says:
 >
-> I do not see 01/15 thru 13/15 here, by the way.  Is it just me?
+>  - Fixing style violations while working on a real change as a
+>    preparatory clean-up step is good, but otherwise avoid useless code
+>    churn for the sake of conforming to the style.
+>
+>    "Once it _is_ in the tree, it's not really worth the patch noise to
+>    go and fix it up."
+>    Cf. http://article.gmane.org/gmane.linux.kernel/943020
+>
+>> Also, we *did* document the policy in the CodingGuidelines:
+>> 
+>> 	As for more concrete guidelines, just imitate the existing code
+>
+> This is the first point I made.  To take one example, in
+> git-filter-branch.sh there are five occurrences of the sequence "$((";
+> your patch changes four of them to remove spaces.  If we standardise on
+> having spaces only one needs to change:
 
-I didn't receive them either, and they don't seem to be on gmane...
+I agree that our codebase seems to have a moderately strong
+preference for having SP around binary operators, i.e.
+
+	$term1 * $term2 + $term3
+
+over not having one:
+
+	$term1*$term2+$term3
+
+and I think that is OK to declare it as our style, primarily because
+that is how we encourage to write our expressions in C, as you
+mentioned earlier.
+
+One thing I was wondering about the $(( ... )) syntax while reading
+this thread was about the SP around the expression, i.e.
+
+	var=$(( $term1 * $term2 + $term3 ))
+
+vs
+
+	var=$(($term1 * $term2 + $term3))
+
+I personally do not have strong preference between the two, but I
+have a vague impression that we preferred the former because
+somebody in the past gave us a good explanation why we should.
+
+"git grep" however seems to tell us that we are not clearly decided
+between the two, so I probably am misremembering it and there is no
+preference either way.
+
+In any case, it is good to catch a patch that mixes style changes
+and other things during a review, and it also is good to clean up
+the style before you start working on a specific part of the code
+to make gradual improvement without stepping on others' toes.
+
+Thanks.
