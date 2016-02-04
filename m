@@ -1,125 +1,101 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
-Date: Thu, 04 Feb 2016 16:23:18 -0500
-Organization: Twitter
-Message-ID: <1454620998.5545.11.camel@twopensource.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
-	 <1454443734.5545.1.camel@twopensource.com>
-	 <CACsJy8Cau0mpz8zVjvz7RPt-s=xmaCCmz0p8OCup9-Q1MnwWCQ@mail.gmail.com>
-	 <1454617535.5545.10.camel@twopensource.com>
-	 <56B3B71C.1000907@ramsayjones.plus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/3] ident.c: cleanup wrt ident's source
+Date: Thu, 04 Feb 2016 13:33:27 -0800
+Message-ID: <xmqqd1scgnyw.fsf@gitster.mtv.corp.google.com>
+References: <1454577160-24484-1-git-send-email-alonid@gmail.com>
+	<1454577160-24484-4-git-send-email-alonid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 22:23:26 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Dan Aloni <alonid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 22:33:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRRN7-00077u-K2
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 22:23:25 +0100
+	id 1aRRWw-00032C-BK
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 22:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756254AbcBDVXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 16:23:21 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:32832 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091AbcBDVXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 16:23:20 -0500
-Received: by mail-qk0-f180.google.com with SMTP id s5so26730239qkd.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 13:23:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=IChPIZFhTgM5HRyLBiJm9jxzEKKu1mxVfODjfn+BDB0=;
-        b=QphVuneXBDyVGROG+6eNZ+dvzzDNuLKPZlTN6GD5Al8hdY6ZflbbwNKtMD2dD4NA8r
-         UqKnYSmeZI9C9KQVA6s5aYPB4lrXZ3Dbnh/t6SwIMJO1Vj9IIc7klwX0YVUHvvHfXy0+
-         ooWTHaesZDqG4fd6TmaFwHt6Zr+kfWwvRBi07oqGESN4P8Q/wGxLPeVywvXdKWJZONb4
-         m2nRhMy0ZIotqM2sg8KWTbho+BQiJc78Mxw5qPAVgQE18vmDzWzM8kY4/GLAVEXq3THq
-         ZdC0YO8+UgICL22sLhp1MjiE5WLQ9cEurxiknG7ugMGbetFDEGk8doN0FyOiJRHuVuG1
-         9dag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=IChPIZFhTgM5HRyLBiJm9jxzEKKu1mxVfODjfn+BDB0=;
-        b=KI2+RwDHVTgKxATj85+RYzkCfqF7vcPHD3wdVswNv1dHOq3/piGjR7ApPfecPEEDlf
-         3RdbFnccv8BBXIGXFZ7xIZyXBJEGIIpAVNbZLfj3x5H7HJ5e/HIPyrz3PMnJHQ6FLQZR
-         92t+bW9RRV4QIeJ26KkWXOB2i1VtnsVJtP6tiUJCoQsLFoHCw/NxykZCI6CLB8orL5iE
-         1GRKjVzBKL2JQFSju5FYIZruwlPFHUiYfQzQX1IxFln9Uaw8L7eg+0JI/mYYN0webn6j
-         LkF8m6JTEudjKAGawDSlAOE+zAaaYF3rzjAHkmU4SkprecKdL18Wj/5Ig0LwH8hIMQF1
-         mzsQ==
-X-Gm-Message-State: AG10YOSlGggn/EsUZ51CWnNN3nDBPowCpnpED/Ltd+AntN4f8pXiWPvIZMkiNL4GNFmC9w==
-X-Received: by 10.55.79.69 with SMTP id d66mr11978749qkb.76.1454620999989;
-        Thu, 04 Feb 2016 13:23:19 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id j7sm6175690qgd.2.2016.02.04.13.23.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Feb 2016 13:23:19 -0800 (PST)
-In-Reply-To: <56B3B71C.1000907@ramsayjones.plus.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S933466AbcBDVda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 16:33:30 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51714 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754455AbcBDVd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 16:33:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 17C2642281;
+	Thu,  4 Feb 2016 16:33:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0516d4G/4WPYqgTmTwJjdOdFH4Y=; b=avPdEz
+	WcRQrToFtUCUxlaFkOefKtUmWFIOjstfZzM6RTfTa9ON27GADwmfqq4p4WRB0IM9
+	sRLX7Wsx57AxBp0FKTDwQ66+DnYt64QYvGujf1rrbmuWdhcyF7GTfU+Xr3R853jK
+	YhXsOFy/qbmAsG1U4Fm0awMjxGHDPSSav9n4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kEUjbx8PxCY5NnZEPtzniGINYAnCp+z4
+	Oc5YNQun4Z+e06Z3rZ7exsIAmYRo3VX6A0RNwOF85H84fM/DYYprmrvXftHnzFCF
+	HYz+RKyMfAVD8u5+bo4pmpUYP4Y6y1XYMSyh2C7PZSOU1g8PI+U75jt9XFxeMzzK
+	k/FrH2iV3E8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0E36F42280;
+	Thu,  4 Feb 2016 16:33:29 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7DC114227F;
+	Thu,  4 Feb 2016 16:33:28 -0500 (EST)
+In-Reply-To: <1454577160-24484-4-git-send-email-alonid@gmail.com> (Dan Aloni's
+	message of "Thu, 4 Feb 2016 11:12:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EE1860F0-CB86-11E5-9ADA-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285495>
 
-On Thu, 2016-02-04 at 20:39 +0000, Ramsay Jones wrote:
-> 
-> On 04/02/16 20:25, David Turner wrote:
-> > On Thu, 2016-02-04 at 18:42 +0700, Duy Nguyen wrote:
-> > > On Wed, Feb 3, 2016 at 3:08 AM, David Turner <
-> > > dturner@twopensource.com> wrote:
-> > > > Are there any more reviews on this?  I do have some changes
-> > > > from
-> > > > this
-> > > > set, but they're pretty minor so I don't want to post a new one
-> > > > (unless
-> > > > folks would rather see those changes before reviewing).  Let me
-> > > > know.
-> > > 
-> > > Last note. Since this is new code, maybe you can wrap
-> > > translatable
-> > > strings with _(), basically any visible string that machines do
-> > > not
-> > > need to recognize.
-> > 
-> > Fixed, thanks. 
-> 
-> Another minor point, could you please squash this in:
-> 
-> diff --git a/refs.c b/refs.c
-> index 3d4c0a6..4858d94 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -17,7 +17,6 @@ static const char split_transaction_fail_warning[]
-> =
->  /*
->   * We always have a files backend and it is the default.
->   */
-> -struct ref_storage_be refs_be_files;
->  static struct ref_storage_be *the_refs_backend = &refs_be_files;
->  /*
->   * List of all available backends
-> 
-> The above (on Linux, anyway) is a 'tentative definition' of the
-> refs_be_files variable and so a common symbol definition is issued
-> in refs.o. This then gets 'combined' with the *actual* symbol
-> definition in  refs/files-backend.c. So everything 'works', except
-> that I have used some unix (let alone non-unix) systems which would
-> not output a common symbol for the above and would fail to link
-> with a 'multiple symbol definition' error.
-> 
-> [Also note that an external declaration is already in effect from
-> the refs/refs-internal.h header file! ;-) ]
-> 
-> ATB,
-> Ramsay Jones
+Dan Aloni <alonid@gmail.com> writes:
 
-Fixed, thanks.
+>  * Condense the variables that tells where we got the user's
+>    ident into single enum, instead of a collection of booleans.
+>  * Have {committer,author}_ident_sufficiently_given directly
+>    probe the environment and the afformentioned enum instead of
+>    relying on git_{committer,author}_info to do so.
+
+That looks quite different from how we write our proposed log
+messages.
+
+>
+> Signed-off-by: Dan Aloni <alonid@gmail.com>
+> ---
+>  ident.c | 122 ++++++++++++++++++++++++++++++++++++++++------------------------
+>  1 file changed, 77 insertions(+), 45 deletions(-)
+>
+> diff --git a/ident.c b/ident.c
+> index 1216079d0b0d..b9aad38e0621 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -10,17 +10,19 @@
+>  static struct strbuf git_default_name = STRBUF_INIT;
+>  static struct strbuf git_default_email = STRBUF_INIT;
+>  static struct strbuf git_default_date = STRBUF_INIT;
+> -static int default_email_is_bogus;
+> -static int default_name_is_bogus;
+> +
+> +enum ident_source {
+> +	IDENT_SOURCE_UNKNOWN = 0,
+> +	IDENT_SOURCE_CONFIG,
+> +	IDENT_SOURCE_ENVIRONMENT,
+> +	IDENT_SOURCE_GUESSED,
+> +	IDENT_SOURCE_GUESSED_BOGUS,
+> +};
+
+No trailing comma after the last enum (some compliers choke on this
+IIRC).
+
+I skimmed the remainder of the patch but I am no the fence--I cannot
+quite see how this improves the readability of the result.
+
+Thanks.
