@@ -1,122 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 7/7] convert.c: simplify text_stat
-Date: Thu, 04 Feb 2016 12:37:03 -0800
-Message-ID: <xmqqh9hogqkw.fsf@gitster.mtv.corp.google.com>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-	<Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-	<1454608200-5535-1-git-send-email-tboegi@web.de>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
+Date: Thu, 4 Feb 2016 20:39:56 +0000
+Message-ID: <56B3B71C.1000907@ramsayjones.plus.com>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+ <1454443734.5545.1.camel@twopensource.com>
+ <CACsJy8Cau0mpz8zVjvz7RPt-s=xmaCCmz0p8OCup9-Q1MnwWCQ@mail.gmail.com>
+ <1454617535.5545.10.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Thu Feb 04 21:37:17 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: David Turner <dturner@twopensource.com>,
+	Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 21:40:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRQeQ-000090-0X
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 21:37:14 +0100
+	id 1aRQhA-0003bf-R9
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 21:40:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195AbcBDUhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 15:37:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54407 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751411AbcBDUhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 15:37:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 95C144137C;
-	Thu,  4 Feb 2016 15:37:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ksHxYDX1451PJY1eNaGxhwK5WVE=; b=LNLek/
-	mq5QItykmVCnq5m0If5guIzZRl9OgXvCBDDPXa5GXwQVInLaMD4QNam1tgZPu6qH
-	l3GywJSfl94FLFff897nGv9Zx2XmH3UAMb+z1kVogZkqpeGvw9RAciMdLy8aZm5I
-	8R0xWX3aITiXG0+WFdKS3ydqksQCpa2uwUV7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QP5ZHNibrDvZpc5GVqyBcCvfoUXjEXqe
-	2oKOyFsEo0deWuUnoKMUGHTr6o1laEU57j4jOJ9gZmFz+DgA+P1S/N1SFUqUuj9Q
-	rMKb6mZrDrkL9Bj/0A6ZIhSTrqppfwzzCVLmz2ljj0OtiUjcZG1b1meAQ+6mBmod
-	ExagusJiVuY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D7FE4137B;
-	Thu,  4 Feb 2016 15:37:05 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F364841379;
-	Thu,  4 Feb 2016 15:37:04 -0500 (EST)
-In-Reply-To: <1454608200-5535-1-git-send-email-tboegi@web.de> (tboegi@web.de's
-	message of "Thu, 4 Feb 2016 18:50:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0D5CAE10-CB7F-11E5-B010-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933136AbcBDUkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 15:40:00 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:46233 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933045AbcBDUj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 15:39:59 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout04 with smtp
+	id ELfw1s0014mu3xa01LfxkH; Thu, 04 Feb 2016 20:39:57 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=6NG_XSeZAAAA:8 a=zh6Lpc9XrAXnAO6vC3IA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <1454617535.5545.10.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285493>
 
-tboegi@web.de writes:
 
->  static int convert_is_binary(unsigned long size, const struct text_stat *stats)
->  {
-> -	if (stats->cr != stats->crlf)
-> +	if (stats->lonecr)
->  		return 1;
 
-This is an equivalent conversion, but...
+On 04/02/16 20:25, David Turner wrote:
+> On Thu, 2016-02-04 at 18:42 +0700, Duy Nguyen wrote:
+>> On Wed, Feb 3, 2016 at 3:08 AM, David Turner <
+>> dturner@twopensource.com> wrote:
+>>> Are there any more reviews on this?  I do have some changes from
+>>> this
+>>> set, but they're pretty minor so I don't want to post a new one
+>>> (unless
+>>> folks would rather see those changes before reviewing).  Let me
+>>> know.
+>>
+>> Last note. Since this is new code, maybe you can wrap translatable
+>> strings with _(), basically any visible string that machines do not
+>> need to recognize.
+> 
+> Fixed, thanks. 
 
-> @@ -266,8 +267,8 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
->  
->  	check_safe_crlf(path, crlf_action, &stats, checksafe);
->  
-> -	/* Optimization: No CR? Nothing to convert, regardless. */
-> -	if (!stats.cr)
-> +	/* Optimization: No CRLF? Nothing to convert, regardless. */
-> +	if (!stats.crlf)
->  		return 0;
+Another minor point, could you please squash this in:
 
-... this is not.  In fact this is even better, as we used to try the
-remainder of the function when we saw a lone CR, but we no longer
-do.  I am of course assuming that the original turned into a no-op
-if we had a lone CR in the input--otherwise this patch changes the
-behaviour.
+diff --git a/refs.c b/refs.c
+index 3d4c0a6..4858d94 100644
+--- a/refs.c
++++ b/refs.c
+@@ -17,7 +17,6 @@ static const char split_transaction_fail_warning[] =
+ /*
+  * We always have a files backend and it is the default.
+  */
+-struct ref_storage_be refs_be_files;
+ static struct ref_storage_be *the_refs_backend = &refs_be_files;
+ /*
+  * List of all available backends
 
-However, I see this comment after the function returns with the
-above optimization:
+The above (on Linux, anyway) is a 'tentative definition' of the
+refs_be_files variable and so a common symbol definition is issued
+in refs.o. This then gets 'combined' with the *actual* symbol
+definition in  refs/files-backend.c. So everything 'works', except
+that I have used some unix (let alone non-unix) systems which would
+not output a common symbol for the above and would fail to link
+with a 'multiple symbol definition' error.
 
-       /*
-        * If we guessed, we already know we rejected a file with
-        * lone CR, and we can strip a CR without looking at what
-        * follow it.
-        */
+[Also note that an external declaration is already in effect from
+the refs/refs-internal.h header file! ;-) ]
 
-So the code around there used to have a reason to worry about a lone
-CR (i.e. it didn't want to lose them).  With the change in this hunk
-for the "optimization", it no longer is necessary to do so, i.e. we
-know we do not have a lone CR so every CR can be stripped because it
-must be followed by LF, isn't it?
-
-But I do not see a matching change to simplify that here.  Am I
-following the current code incorrectly or something?
-
-Puzzled...
-
->  	/*
-> @@ -315,21 +316,16 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
->  	gather_stats(src, len, &stats);
->  
->  	/* No LF? Nothing to convert, regardless. */
-> -	if (!stats.lf)
-> -		return 0;
-> -
-> -	/* Was it already in CRLF format? */
-> -	if (stats.lf == stats.crlf)
-> +	if (!stats.lonelf)
-
-Doesn't the comment above need adjustment?
-
->  		return 0;
-
-Otherwise, the output side looks correct to me.
+ATB,
+Ramsay Jones
