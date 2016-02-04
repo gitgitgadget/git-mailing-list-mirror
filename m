@@ -1,93 +1,91 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv8 4/9] submodule-config: slightly simplify lookup_or_create_by_name
-Date: Thu,  4 Feb 2016 14:09:31 -0800
-Message-ID: <1454623776-3347-5-git-send-email-sbeller@google.com>
-References: <1454623776-3347-1-git-send-email-sbeller@google.com>
-Cc: jrnieder@gmail.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 04 23:10:28 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git grep argument parser bug
+Date: Thu, 04 Feb 2016 14:18:01 -0800
+Message-ID: <xmqqzivgf7c6.fsf@gitster.mtv.corp.google.com>
+References: <CANzEV58SgS6P_qBequGSfA0vFy9s0-KM3xOFaU2DDz_S3OyN3g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Dylan Grafmyre <dylang@conversica.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 23:18:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRS6d-0007qL-9i
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 23:10:27 +0100
+	id 1aRSEI-0001UT-0M
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 23:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965790AbcBDWKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 17:10:14 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35257 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934313AbcBDWJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 17:09:50 -0500
-Received: by mail-pf0-f172.google.com with SMTP id 65so56788034pfd.2
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 14:09:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Qx6abqzNp1oI57lPPZdodDDROcI5l8k1Wa+lmFYJnX4=;
-        b=oaqbIwSFsJwnmZox3npIBwQL+NgcLc76OUyy+6BF/70PSd6KENXE7PKKf6tJe8PYRO
-         XI5wY53z5eupUrIl768UJywBWnP851zXzOUakxw70fKO08ZmPAx60LTNUHoZGsov1Clu
-         OtDHq4UQTw6RYLujGiYHvV/B58J1AcC3KaN2QJGW1nJPtA2HwEkm9dMYXi+qNOcVpuo/
-         S/UpqgDsz2C5fFF209zxMt2l7O5S60qKWA91QElxC6PhOuFhiJ2LlPI/w4hTzLRjTfn7
-         YKrOKpxzy6l/K7QjzSXhiDNr14JGVt6Wuq4JicnTh98x2bO4o2qi5JiM7kPXvznG80Ck
-         QLLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Qx6abqzNp1oI57lPPZdodDDROcI5l8k1Wa+lmFYJnX4=;
-        b=d/VS70iZD/R3/goZz4q4dPOysutbGqBVirCpytrML378eJMV1RjzyGRAe4i6cedLEr
-         c3ejd1owY4/Z/F/7OdbVsWg7Ob1jFKfLSPoAMc66Ytx92OgKWSALVgcaSrHQ3R7wnQWz
-         Tu8mwmuz+zmtfw2O9/bRNy2I0LMXUkJDm5caJenyyVa+ZmsgmTmO0ICJVV4p4zpTdH63
-         VIgAxI+Q47Pw5pjNGv4nTv7u+1fBqR6H8saDQuw0fz+exyHdKciWzEIhWFmZlhKzTsjx
-         qTSuf50CMVLVxZ2edcg225tznKjmSjtTIevGN6EvQ135C0NUQj1HOUPVBMYee7Pgggjk
-         7pFA==
-X-Gm-Message-State: AG10YOSSAdNriEO/w4IwJ1mqMHFYxjuPOUEYmOQV6qBvhbMO5GCqX+LtgTg57XAV4GppwMFP
-X-Received: by 10.98.34.198 with SMTP id p67mr14712652pfj.93.1454623789285;
-        Thu, 04 Feb 2016 14:09:49 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:5194:ebf5:4051:c1fd])
-        by smtp.gmail.com with ESMTPSA id b28sm19425730pfd.24.2016.02.04.14.09.48
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 04 Feb 2016 14:09:48 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.41.gd102984.dirty
-In-Reply-To: <1454623776-3347-1-git-send-email-sbeller@google.com>
+	id S1754080AbcBDWSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 17:18:07 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751093AbcBDWSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 17:18:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D50142D0B;
+	Thu,  4 Feb 2016 17:18:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aICuoUt7G+usQW1kJKWEh1sNaxI=; b=QwR2WS
+	3nfuCh66urElXCYBISxnl+gzX3uRoMqAioTgPABu/UbZoVDGbgA158sfj0F34d/I
+	nEpZoK5nm4CFTol2MCFjuhdK4blBpOKzeezJuse7z60QavUq5BQN40MW+pNkvA1N
+	MN8FWzgwHq1t/AhFTRBnnSPz/0sAMg85iiTrU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OTyQnhB2pp4+ZnoAQ57JOf53N4n5NhEi
+	wMifuh2Vvf57IDtZNNp6mJY4nJxCmpoTYmyAk5HUMPGxXd6s1Elk5yfCsF4+u8kE
+	p1X1P4eAeeJzNPlAOPfg+C4p6CXEMTMStlGCs9iGraE3gn0+0vGmYxh3FwAnbyv8
+	BTIZMCPn4Ow=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4554042D0A;
+	Thu,  4 Feb 2016 17:18:04 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E29B42D08;
+	Thu,  4 Feb 2016 17:18:03 -0500 (EST)
+In-Reply-To: <CANzEV58SgS6P_qBequGSfA0vFy9s0-KM3xOFaU2DDz_S3OyN3g@mail.gmail.com>
+	(Dylan Grafmyre's message of "Thu, 4 Feb 2016 14:02:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2848C67E-CB8D-11E5-AC30-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285510>
 
-No need for a strbuf, when all we use it for, is duplicating a string.
+Dylan Grafmyre <dylang@conversica.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+> In both ubuntu versions of git 1.9.1 and 2.7.0
+>
+>     git grep '-test'
+>     git grep '--help'
+>
+> Or any other expressions literal leading with a single dash or double
+> dash get interpreted as argument flags and not as search expressions.
+> ...
+> What I expect is grep results for the literal strings "-test" and "--help"
 
-diff --git a/submodule-config.c b/submodule-config.c
-index c08ee7f..e375730 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -165,7 +165,6 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 		const unsigned char *gitmodules_sha1, const char *name)
- {
- 	struct submodule *submodule;
--	struct strbuf name_buf = STRBUF_INIT;
- 
- 	submodule = cache_lookup_name(cache, gitmodules_sha1, name);
- 	if (submodule)
-@@ -173,9 +172,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 
- 	submodule = xmalloc(sizeof(*submodule));
- 
--	strbuf_addstr(&name_buf, name);
--	submodule->name = strbuf_detach(&name_buf, NULL);
--
-+	submodule->name = xstrdup(name);
- 	submodule->path = NULL;
- 	submodule->url = NULL;
- 	submodule->update = NULL;
--- 
-2.7.0.rc0.41.gd102984.dirty
+I think you'd need to adjust your expectations, then ;-).
+
+This is how "grep" (not "git grep") works, and you use "-e", i.e.
+
+	grep -e "-anything that begins with a dash" FILES...
+
+to disambiguate.  If you are scripting, if you do not know what you
+have in a variable, and if you are looking for the value in that
+variable, you would always do
+
+	grep -e "$variable" FILES...
+
+not
+
+        grep "$variable" FILES...
+
+I think all of the above is pretty much the standard practice and
+"git grep" merely follows suit, i.e.
+
+	git grep -e "-help"
+
+is designed to work that way to match users' expectations.
