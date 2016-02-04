@@ -1,88 +1,80 @@
-From: "Klinger, Xia" <Xia.Klinger@cognex.com>
-Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is
- set
-Date: Thu, 4 Feb 2016 13:22:07 +0000
-Message-ID: <43fbdf617f8d412db7b0d5c7d06df3ad@USNAEXCP2.pc.cognex.com>
-References: <9e3cc44087134954a3414fa8998c3ce6@USNAEXCP2.pc.cognex.com>
- <alpine.DEB.2.20.1602040844330.2964@virtualbox>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/3] Fix $((...)) coding style
+Date: Thu, 4 Feb 2016 14:06:09 +0000
+Message-ID: <20160204140609.GH29880@serenity.lan>
+References: <cover.1454587284.git.johannes.schindelin@gmx.de>
+ <20160204121437.GF29880@serenity.lan>
+ <alpine.DEB.2.20.1602041334450.2964@virtualbox>
+ <20160204130111.GG29880@serenity.lan>
+ <alpine.DEB.2.20.1602041411520.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Elia Pinto <gitter.spiros@gmail.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 14:22:24 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 15:07:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRJra-0005Xl-8X
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 14:22:22 +0100
+	id 1aRKYv-0006jh-Ga
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 15:07:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757639AbcBDNWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 08:22:12 -0500
-Received: from mx2.cognex.com ([198.232.29.14]:29080 "EHLO mx2.cognex.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757615AbcBDNWL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 08:22:11 -0500
-Received: from galileo.cognex.com ([10.10.128.32])
-  by mx2.cognex.com with ESMTP; 04 Feb 2016 08:22:07 -0500
-Received: from USNAEXCP2.pc.cognex.com (alt1adc1pip [10.10.128.111])
-	by galileo.cognex.com (8.14.3/8.14.3) with ESMTP id u14DM86c017457;
-	Thu, 4 Feb 2016 08:22:08 -0500 (EST)
-Received: from USNAEXCP2.pc.cognex.com (10.3.160.222) by
- USNAEXCP2.pc.cognex.com (10.3.160.222) with Microsoft SMTP Server (TLS) id
- 15.0.1044.25; Thu, 4 Feb 2016 08:22:08 -0500
-Received: from USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a]) by
- USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a%18]) with mapi id
- 15.00.1044.021; Thu, 4 Feb 2016 08:22:08 -0500
-Thread-Topic: git 2.7.0 crashes when top-down memory allocation preference is
- set
-Thread-Index: AdFemzxLzKR7onqfTxCtkbzxea41AwAGsZHQACUAXYAAAOGvwA==
-In-Reply-To: <alpine.DEB.2.20.1602040844330.2964@virtualbox>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.3.128.111]
+	id S1755811AbcBDOHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 09:07:03 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:56769 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752885AbcBDOHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 09:07:02 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id E9BDD866034;
+	Thu,  4 Feb 2016 14:06:57 +0000 (GMT)
+X-Quarantine-ID: <gyg4XgeTHwDK>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id gyg4XgeTHwDK; Thu,  4 Feb 2016 14:06:51 +0000 (GMT)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 87A0C86600D;
+	Thu,  4 Feb 2016 14:06:10 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1602041411520.2964@virtualbox>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285464>
 
-Hi Johannes,
+On Thu, Feb 04, 2016 at 02:13:47PM +0100, Johannes Schindelin wrote:
+> On Thu, 4 Feb 2016, John Keeping wrote:
+> 
+> > Although I don't think the historic context is useful in deciding which
+> > direction to go in the future.
+> 
+> Being a maintainer, I find that argument particularly hard to defend.
 
-I am not sure the Fast Track release means. Do you refer to Windows 10 builds (updates)? I am running Windows 7 x64 and haven't gone to Windows 10.
+I worded that badly, what I wanted to say is that how we got here is
+less interesting than where we are.  From a quick bit of grep'ing it
+looks to me like where we are is in favour of adding spaces around
+binary operators inside $(( )) constructs based on the majority of the
+uses in the code as it currently stands.
 
-Default memory allocation in Windows is bottom-up, which means the lowest addresses are consumed the first. This is all fine until the address is over 4GB on x64 OS with more than 4GB physical memories. Many applications don't handle it properly and will crash. Windows provides a registry key to force OS allocating memory from the highest address available first and going down the chain as a way to test application's memory management. That's what I did on my host to test our own software. And it affected Git 2.7.0.2 (latest build for Windows from 2/2/2016). 
+> But sure, you go ahead and prepare a patch series that turns everything
+> around, adding spaces around those operators.
+> 
+> Whatever the outcome, the inconsistency must be fixed.
 
-I had to rollback to Git 1.8.4 to work around this problem. 1.8.4 is a 32-bit build not 64-bit build. That's why it worked so far.
+I disagree.  Unless there are other changes in the same area, the noise
+isn't worth it.
 
-Thanks
-
-Xia
-
------Original Message-----
-From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-Sent: Thursday, February 04, 2016 2:46 AM
-To: Klinger, Xia
-Cc: git@vger.kernel.org
-Subject: Re: git 2.7.0 crashes when top-down memory allocation preference is set
-
-Hi,
-
-On Wed, 3 Feb 2016, Klinger, Xia wrote:
-
-> When the memory allocation preference is set to be Top-down on Windows 
-> and there are more than 4GB memory available, git will crash. The 
-> symptom is "Segmentation Fault".
-
-This might be related to https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_git-2Dfor-2Dwindows_git_issues_627&d=CwIBAg&c=VCWpAYkS3z1bOCIxc-BPGZarCq9MRCAVxZJE051VqH8&r=67DEVp3lXDRlQoHC5xXHqK4qsTItx9yvwX98R_Hn9tg&m=jBFYZYDLdCLg-WMJPpbvl9rXn4syBv9RAGsbi106m3Y&s=MaQ04pu8kp8pdAOjVSd1PCqEwsYMpxpsFiqZ100gkrk&e= 
-
-Do you have access to the Fast Track releases? If so, Windows 10 build
-14257 was released to it and purportedly fixes these issues.
-
-Ciao,
-Johannes
+However, I do think we need to agree on a policy so that new code can be
+consistent.  This should then be documented in CodingGuidelines.
