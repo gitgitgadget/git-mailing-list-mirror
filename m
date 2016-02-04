@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 11/25] fetch-pack: use skip_prefix() instead of starts_with() when possible
-Date: Thu,  4 Feb 2016 16:03:47 +0700
-Message-ID: <1454576641-29615-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 10/25] upload-pack: move rev-list code out of check_non_tip()
+Date: Thu,  4 Feb 2016 16:03:46 +0700
+Message-ID: <1454576641-29615-11-git-send-email-pclouds@gmail.com>
 References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,102 +11,169 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 04 10:05:51 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 10:05:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRFrK-0006rh-7n
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 10:05:50 +0100
+	id 1aRFrF-00063F-Vi
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 10:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965514AbcBDJFq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 04:05:46 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36725 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965441AbcBDJFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 04:05:16 -0500
-Received: by mail-pf0-f179.google.com with SMTP id n128so38161176pfn.3
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 01:05:16 -0800 (PST)
+	id S965262AbcBDJFQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 04:05:16 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34318 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965438AbcBDJFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 04:05:10 -0500
+Received: by mail-pf0-f182.google.com with SMTP id o185so38414387pfb.1
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 01:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=/7B2RnK7VIQ1tHFQjwyQb2pVsgVLzaOZcFYMUqSqej0=;
-        b=rOix4Hc04FJNQn5YKno06oZm2TR/IDmZcorRNdNx052o0EynjDFHjePHCis5v92l3t
-         21353SsQXJ9T8bxR1IWJ2rWWe3igcuUBHztrcr8HZlBUXLxM0VibhPY/rjTPG1BUQYLg
-         QjBd/HoHtxxEFaF9XNsTLMKyolHuqpI+svBv1kLYbYDgxxZUR2gNamPCdT2YGpqF9w1R
-         icdlQijdbQWSQbQyatk67viCPt7vsxrBq5Bir+RzxV13h+lPKkfNGAbuCEkao8FPeIHk
-         sVtT8XZRj0kCmWWjVteuKsLe97q5sMKQk+prqHVt86rhb4Q49402kt3fr3q7bZRHsx7C
-         hEwg==
+        bh=e2JjC+n4Xv8BOMEDNuu458Xprvl+w4QzV92lF0YdjEM=;
+        b=XMhhApRpZIB1RKhuFjpz5KctLNo7RMO2CYZaoCKjHECUDA/Xkuw0+rggCT/MSEZm4N
+         9MAojImAp0ib/QoAEx5LOul8HrI6RTeXw9d9DKI77BIjHq3cdnDy1qRzjyYp9PpyJE4A
+         6lsIrn9Cy/XBDYerdlu/Tp/IIIwYP4GZmy1Z1sY+3KAwe/4WtYkMx3Ak42lzLEphQF+2
+         SgblnF0DX5UMvoXjDxZxFFWVFUj1LMBiM6XIyuSDt6A8PeG+ZVKMV+j8Ya+eOIIW3LC5
+         nahyo+izLu7a1/XdTi+//Zp0H91a6pjYNVCsBGCR7K/pH17NmNyHsH8z0gvLshucsZDH
+         BgNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=/7B2RnK7VIQ1tHFQjwyQb2pVsgVLzaOZcFYMUqSqej0=;
-        b=bqDxRreMpaiiw73Je+ETLpDo9egiZbVEz6sd8ckldjn8jZx7DZWECTspgPmdcuEtdI
-         qRnS5OZ1e8OReNxr4m4p5Xu5u9qBb2GjLP3+bP49NIQ99gf34XgfNjlciCBoOO0BQKuD
-         mXLd2GgWHArkeBJuGQ4BfnOacWx5l0ckgJZImxp5balRGDZQ03A8INfKUx6+3AplhUpJ
-         lpeIYNRHdbsycZMghcH9u1wDwgy1X7Extf4Oqarikn8VfApkJO4yiBx9hO0pxYnn6Y+T
-         Db3TyKx/fiYbYsv0cDfmDMOQVkMBWfopkEdEAplZuFbMfKEng+/FOLADF5Wlht4QzG7K
-         GKZQ==
-X-Gm-Message-State: AG10YOQo/1sRXED+RDpZ2mgQOoxyIhLeN0ZLqex+khbHxGXOwHtBWiDB0cc0P6le7ehtUg==
-X-Received: by 10.98.64.83 with SMTP id n80mr9285293pfa.149.1454576716285;
-        Thu, 04 Feb 2016 01:05:16 -0800 (PST)
+        bh=e2JjC+n4Xv8BOMEDNuu458Xprvl+w4QzV92lF0YdjEM=;
+        b=AIP18aSU6h2wWbgObrDGxer8EceVt9EZG2XGhdwCMXcZUYY/OrgNsFn36i27kFvIgU
+         hlFNet6K3BEbznrfSnTsVaU1q8gEqCnYpw8qs1x1hE0ZP2ytwBMg8tWmPxva+W8cVGNg
+         OcDM2UO4j2LcfIP7adVftvQJezbipKWK07n6YerfwbQM+/Y0Y1aSGa2NeHx3/l6d/Oph
+         K0TfBvegMC6aNDOtt553TPxOCjnc0W0CjUXWpm1yKPoy01wXbfHKQiQjjLBDwcLf+98e
+         L2GwjHAZjNVwcAa/bIk7kPop8PTV4d9hrdoVxUErx4JmVx0q1Z//dXNc4bp4aDvmuzkO
+         H3fw==
+X-Gm-Message-State: AG10YOSpJF24LEmeauHJywc2NKOUpOUxkMcd/PqCQLmklgsa4Ly5DfPviM/9HivpQza54w==
+X-Received: by 10.98.70.80 with SMTP id t77mr9240723pfa.107.1454576710167;
+        Thu, 04 Feb 2016 01:05:10 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id p9sm15435423pfa.11.2016.02.04.01.05.12
+        by smtp.gmail.com with ESMTPSA id v75sm15391139pfa.39.2016.02.04.01.05.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Feb 2016 01:05:14 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 04 Feb 2016 16:05:28 +0700
+        Thu, 04 Feb 2016 01:05:09 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 04 Feb 2016 16:05:22 +0700
 X-Mailer: git-send-email 2.7.0.377.g4cd97dd
 In-Reply-To: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285424>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/fetch-pack.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ upload-pack.c | 44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 9b2a514..0482077 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -58,13 +58,14 @@ int cmd_fetch_pack(int argc, const char **argv, con=
-st char *prefix)
+diff --git a/upload-pack.c b/upload-pack.c
+index 9f14933..c8dafe8 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -451,7 +451,7 @@ static int is_our_ref(struct object *o)
+ 	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
+ }
 =20
- 	for (i =3D 1; i < argc && *argv[i] =3D=3D '-'; i++) {
- 		const char *arg =3D argv[i];
-+		const char *value;
+-static void check_non_tip(void)
++static int check_unreachable(struct object_array *src)
+ {
+ 	static const char *argv[] =3D {
+ 		"rev-list", "--stdin", NULL,
+@@ -461,14 +461,6 @@ static void check_non_tip(void)
+ 	char namebuf[42]; /* ^ + SHA-1 + LF */
+ 	int i;
 =20
--		if (starts_with(arg, "--upload-pack=3D")) {
--			args.uploadpack =3D arg + 14;
-+		if (skip_prefix(arg, "--upload-pack=3D", &value)) {
-+			args.uploadpack =3D value;
+-	/*
+-	 * In the normal in-process case without
+-	 * uploadpack.allowReachableSHA1InWant,
+-	 * non-tip requests can never happen.
+-	 */
+-	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
+CHABLE_SHA1))
+-		goto error;
+-
+ 	cmd.argv =3D argv;
+ 	cmd.git_cmd =3D 1;
+ 	cmd.no_stderr =3D 1;
+@@ -476,7 +468,7 @@ static void check_non_tip(void)
+ 	cmd.out =3D -1;
+=20
+ 	if (start_command(&cmd))
+-		goto error;
++		return 0;
+=20
+ 	/*
+ 	 * If rev-list --stdin encounters an unknown commit, it
+@@ -495,16 +487,16 @@ static void check_non_tip(void)
  			continue;
- 		}
--		if (starts_with(arg, "--exec=3D")) {
--			args.uploadpack =3D arg + 7;
-+		if (skip_prefix(arg, "--exec=3D", &value)) {
-+			args.uploadpack =3D value;
+ 		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+ 		if (write_in_full(cmd.in, namebuf, 42) < 0)
+-			goto error;
++			return 0;
+ 	}
+ 	namebuf[40] =3D '\n';
+-	for (i =3D 0; i < want_obj.nr; i++) {
+-		o =3D want_obj.objects[i].item;
++	for (i =3D 0; i < src->nr; i++) {
++		o =3D src->objects[i].item;
+ 		if (is_our_ref(o))
  			continue;
- 		}
- 		if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
-@@ -100,8 +101,8 @@ int cmd_fetch_pack(int argc, const char **argv, con=
-st char *prefix)
- 			args.verbose =3D 1;
- 			continue;
- 		}
--		if (starts_with(arg, "--depth=3D")) {
--			args.depth =3D strtol(arg + 8, NULL, 0);
-+		if (skip_prefix(arg, "--depth=3D", &value)) {
-+			args.depth =3D strtol(value, NULL, 0);
- 			continue;
- 		}
- 		if (!strcmp("--no-progress", arg)) {
+ 		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+ 		if (write_in_full(cmd.in, namebuf, 41) < 0)
+-			goto error;
++			return 0;
+ 	}
+ 	close(cmd.in);
+=20
+@@ -516,7 +508,7 @@ static void check_non_tip(void)
+ 	 */
+ 	i =3D read_in_full(cmd.out, namebuf, 1);
+ 	if (i)
+-		goto error;
++		return 0;
+ 	close(cmd.out);
+=20
+ 	/*
+@@ -525,15 +517,29 @@ static void check_non_tip(void)
+ 	 * even when it showed no commit.
+ 	 */
+ 	if (finish_command(&cmd))
+-		goto error;
++		return 0;
+=20
+ 	/* All the non-tip ones are ancestors of what we advertised */
+-	return;
++	return 1;
++}
++
++static void check_non_tip(void)
++{
++	int i;
++
++	/*
++	 * In the normal in-process case without
++	 * uploadpack.allowReachableSHA1InWant,
++	 * non-tip requests can never happen.
++	 */
++	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REA=
+CHABLE_SHA1))
++		;		/* error */
++	else if (check_unreachable(&want_obj))
++		return;
+=20
+-error:
+ 	/* Pick one of them (we know there at least is one) */
+ 	for (i =3D 0; i < want_obj.nr; i++) {
+-		o =3D want_obj.objects[i].item;
++		struct object *o =3D want_obj.objects[i].item;
+ 		if (!is_our_ref(o))
+ 			die("git upload-pack: not our ref %s",
+ 			    oid_to_hex(&o->oid));
 --=20
 2.7.0.377.g4cd97dd
