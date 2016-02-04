@@ -1,76 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Thu, 4 Feb 2016 06:45:06 -0500
-Message-ID: <20160204114506.GA1710@sigill.intra.peff.net>
-References: <56B32953.2010908@gmail.com>
- <20160204111307.GA30495@sigill.intra.peff.net>
- <alpine.DEB.2.20.1602041216240.2964@virtualbox>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 1/3] filter-branch: fix style of $((...) construct
+Date: Thu, 4 Feb 2016 13:02:00 +0100 (CET)
+Message-ID: <98c202fa82ce99367da1d616ca02cc7b48d1e04e.1454587284.git.johannes.schindelin@gmx.de>
+References: <cover.1454587284.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
-	szeder@ira.uka.de, Junio C Hamano <gitster@pobox.com>,
-	tr@thomasrast.ch
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 12:45:48 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>,
+	Gabor Bernat <gabor.bernat@gravityrd.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 13:02:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRIM8-0006OO-3w
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:45:48 +0100
+	id 1aRIc7-0007At-Kv
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933789AbcBDLpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 06:45:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37433 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932994AbcBDLpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 06:45:10 -0500
-Received: (qmail 28728 invoked by uid 102); 4 Feb 2016 11:45:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:45:10 -0500
-Received: (qmail 2468 invoked by uid 107); 4 Feb 2016 11:45:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:45:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 06:45:06 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1602041216240.2964@virtualbox>
+	id S1756189AbcBDMCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 07:02:16 -0500
+Received: from mout.gmx.net ([212.227.17.22]:55692 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753977AbcBDMCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 07:02:15 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lr32V-1ZmzuL2jnH-00eeIH; Thu, 04 Feb 2016 13:02:02
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <cover.1454587284.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:WdNTH4fv561LSWfrdkurQFkJMfelz+lZsN9ryozU+PTm1CiXKKK
+ NC9c5NzyRWRZDOtm/NYuGOzAvJNXX00sMS9d4pZOwlyI+2MtIBLTbI9ZEsj99aKXVx+txsn
+ smhQYMMc0bDEGXIwz5zvynfEnPCEZgTjfZuz7mz02Gi0Zka9kjE7HIdi+2Fn43ByB+wVU4c
+ Sfb2IzoWymeg7R0CB3BhQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ma1C4y03QRw=:sBjrT+2dyDG6BnaZ4sOvXm
+ xyKSR7plJdIoNIVMmIDVB8Hdnxs46EtgYjT2uZIedz9H6ax5963MObIZFViC8XBR8L1Z7epL5
+ 1p/ov3tQSahJg/J7F94vD3gRImh9gRW2atXwlW+audLkA6Qgs1ppis+QcW6rrjSwBrVRAEHZ2
+ 7ybuuhxZeDng0K+lEWya+IjpPV4rezNpvAtVH+E88cZlKy2KNTwtLhlGO0dqru51w2K17dTlA
+ rMJxpI2KCB+XmwD0rQsSC5NdCJda4e8S9jJk0TrSN/7GVoT+9oCyY8nnsqb2295IEGxNmKNcl
+ 3NGpL1g2Rp9Ei7BWDCkGw3FAcR0SMwgLEIrsUtgLVFD0Oda7Qi3Q+OIFyyGdF0YittbA7SmDy
+ X5NraAYKt6C0B3Wlj0NDXVVSLfKLSUft7EKaglHwqPdDu3LqVLQRBjx2fLAd9TjGt5rkNhidd
+ HXGKZ6azZQa2rO/wH5H8XkZHbxiSDBfj8N1mwTua/oDuRl7tpmuiywwvJP664XLjyukWU/cH2
+ zSqohAytOTz2G/sVBefGr+5bYyKGWHJf3mkYfTm9k272kLbawRrgm/E/AyYXPVizPdfkWbpkX
+ 3svm8c4BkS0zMAwijYfqbFiv06uleqWDKw/Y9EjW+kYXlz9WqmRGy1T9I9ibCqNew1Tvi5ugo
+ XmEhvpBB6TNiwEh4COHZOGGIl5LWw160VNvwhg4ueX8LiowF8kCd1td4IH5J64/ud47YzUhC+
+ x6BHXW5u23PQAzyJspSHa8LkRhfz43xptIGPlbXqQDYZuvre0hGdqRzVUOKPxC+isIGhEieQ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 04, 2016 at 12:26:19PM +0100, Johannes Schindelin wrote:
+In 6a9d16a (filter-branch: add passed/remaining seconds on progress,
+2015-09-07) we introduced a new style to write $((...) expressions: with
+spaces in the arithmetic expression. We actually introduced *two* new
+styles, even: some of the $((...)) expressions had spaces after the two
+opening and before the two closing parentheses, but others did not.
 
-> > Hmm. I feel like this case (HEAD points to a branch, then `fetch
-> > --prune` deletes it) came up recently and we discussed quieting that
-> > warning. But now I cannot seem to find it.
-> 
-> I am pretty certain that it came up in my patch series:
-> 
-> 	http://thread.gmane.org/gmane.comp.version-control.git/278538
+There had been an arithmetic expression in that script, though, and it
+matched the coding style of the rest of Git's source code: $((...))
+expressions simply do not contain spaces.
 
-Good, I'm not going crazy! But my search skills are apparently
-atrophying. :)
+Let's adjust the style to the previously existing code.
 
-It looks like we just addressed the git-gc issue there. for-each-ref
-uses the "rawref" interface, so it gets fed broken things and warns
-about them.
+Cc: Gabor Bernat <gabor.bernat@gravityrd.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-filter-branch.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I'm tempted to say that it should just silently ignore broken symrefs,
-as they're kind-of a normal thing. But I also think Sebastian's patch to
-squelch stderr during completion is quite reasonable, too.
-
-> This is funny: after reading the commit message at
-> https://github.com/git/git/commit/0571979b it eludes me why strip=2 should
-> be so much faster than short...
-
-:short is slow because it checks for ambiguity. So it has to walk the
-dwim_ref() rules backwards, checking if each possibility is an existing
-ref.
-
-Whereas strip=2 is literally just skipping past the early bits of the
-refname string.
-
--Peff
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 86b2ff1..1067785 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -283,13 +283,13 @@ report_progress ()
+ 		count=$git_filter_branch__commit_count
+ 
+ 		now=$(date +%s)
+-		elapsed=$(($now - $start_timestamp))
+-		remaining=$(( ($commits - $count) * $elapsed / $count ))
++		elapsed=$(($now-$start_timestamp))
++		remaining=$((($commits-$count)*$elapsed/$count))
+ 		if test $elapsed -gt 0
+ 		then
+-			next_sample_at=$(( ($elapsed + 1) * $count / $elapsed ))
++			next_sample_at=$((($elapsed+1)*$count/$elapsed))
+ 		else
+-			next_sample_at=$(($next_sample_at + 1))
++			next_sample_at=$(($next_sample_at+1))
+ 		fi
+ 		progress=" ($elapsed seconds passed, remaining $remaining predicted)"
+ 	fi
+-- 
+2.7.0.windows.1.7.g55a05c8
