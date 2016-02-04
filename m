@@ -1,183 +1,122 @@
 From: tboegi@web.de
-Subject: [PATCH v2 3/7] convert.c: Remove input_crlf_action()
-Date: Thu,  4 Feb 2016 18:49:53 +0100
-Message-ID: <1454608193-5378-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v2 4/7] convert.c: Use text_eol_is_crlf()
+Date: Thu,  4 Feb 2016 18:49:54 +0100
+Message-ID: <1454608194-5417-1-git-send-email-tboegi@web.de>
 References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 04 18:49:12 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 18:49:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRO1n-0001Qh-C6
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 18:49:11 +0100
+	id 1aRO1g-0001FL-ON
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 18:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758035AbcBDRs5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 12:48:57 -0500
-Received: from mout.web.de ([212.227.17.12]:63539 "EHLO mout.web.de"
+	id S1758041AbcBDRs6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 12:48:58 -0500
+Received: from mout.web.de ([212.227.17.12]:52651 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758015AbcBDRsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 12:48:53 -0500
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MQedF-1adIgI2Snl-00U4H6; Thu, 04 Feb 2016 18:48:51
+	id S1758005AbcBDRsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 12:48:55 -0500
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0M8Qtq-1a4mjn30za-00w1Hp; Thu, 04 Feb 2016 18:48:53
  +0100
 X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
 In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-X-Provags-ID: V03:K0:tPb0b+QVPURHGFLKBxtpJqPK63eXt8aLsEV531hqx+RpqciNuOk
- Uyp6cBnQd/4jA0zLcrIajSnTInHiSjz1vxCvpAxquFK44jRYC/xfCmpH1IrW7kmlo9WkeGp
- vYb1wXZ7MtDtTGFgz/n6wN8UEZnSMY8DbxmUxrSGnnQQ8ML6RoO9tRllavDiIrA1XNWevzy
- a/Mqm8gru8365ZmSjesqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0dY3n9arXic=:H++1c3Zr9nFgVxVOJ/OHZp
- pmG0rCqmpRHPFgOL/2EQH7BfE2TuBBB8tKHwv0kBurGYyQZneopbVJuvn8RyElUy6glkWc9Yp
- 36Szc8l4pePZqXArbSYv4WCci82cPi59MIEdgshSR/pIlHnkldAJjMifsxJq6aQA7/Iswq3JO
- m7xNbuB4ihfwjV9rwai/VsynUw6+j4Ew2cULn+IM5AIZbB0h1iFnLsZy3w0qa2f0dC/+BgpFy
- +acMJpjiHVWZuoX3ve066tmpHMpCu7o//gSEvv6ZEwhMc5SfjFsrDXRBitMYduzKMdLENLWpb
- s51eEAwCSNi2vr/66pk6xlcg+U2UgLZXgwUYZSUdB9MpJrQHdDJ9jv669wZ/leVIvKRsf/A/M
- SnvF5LTrde2MbydIcIEFoIPnY4us6FDrn13go7Owh4sxFnKCKqvW8fjRBgXn2dl2OEPxGa8EY
- 02bENuujRwQUx90km+uoLSZRUMvouW7TPggP9KfDxQrfvitAq2Qq+Gk/OzSyf97hbTEOizOfr
- eaFiuGaH6tXwReVpoCaQex0y7NR7enpHaZ664+7zoKF6/7gETEJv1bCw3SPtUb5SuNbCqbRZq
- VseE6s37lgJV5QWR4hf+GpRAQKS4GiPr+x/6InWR83VNuJC7bJw1cnzx/R64kCG5vhkHGRvZR
- WarYo4yLXvii1RXLhDC+NL1EnppA8BX3hZKC6HIlHDiWrzP7pSxm6Zcg9CQBtGlKcMYZzR8pV
- U0B2i3wdp2l0VgssTVlwQORrGVgnZoxURLM4TAI7VdGj5IwuAPdqb8bI2dhXm90xhLYMkiTU 
+X-Provags-ID: V03:K0:YO7yrlTD+vGFMtOOnCSrd/AYz6bqjMcekDYKrP68hcA9J6mg96O
+ kltHuMRV2eju8Gdyyk6cIDzNlKIjtmCfEfpovpqJ1+EYL0qB05YupS4N5pVTxNWeA5unaCv
+ ezb3HccS43H7e724uL8S9DtZfc+JN+UT1B5eiDZg/CefTfBMJ8C0wClEsFgffr5Ksn5WN9E
+ F600yod/OpdBZKQaK8N3w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uule235FlKY=:LL4jOa38T/Q7QpWVwBf4tn
+ PXgynWdtXh3zU5SqgzXEEtly5bzb1h1+6jBuTj29kel9cnSFkdPzZozo+OAdrwxuAIMehv/iW
+ fKOvCSS5YO8YSMUf9J4sIVNlBY43/7nhzRlAcVZF/di/iO6U6HqXXvF1sIfsUP/M1rinezDiw
+ F215DUqGOJMyOBHypdv1IxYwRNyKson+eAqc5BrNiFwFYdZ+S2Qi+92edPYsYas8ZPARMvWEE
+ 6+tXIEsG3ys03yJIAVB0c3uTLtAG9xhz5VejoXtEXvwK4lBffJssfepmjKejFxaaSnYYw3z5W
+ gOTaWCWcjWcmEa+c3Ax2pYPrnU74ZDELxERDLAj3LrCE5DSkz+rfmqnDBNtx4nEK+86OrEy7J
+ UuToxDj3uHm75J6+VWDdTDUJ/TMKt0aWpNkdK5XhX2iwSPFw+OFfRowE5Zxjb3ZGJd0Mt9r2K
+ nXgKWgqFwpOoeYskkvvFgb2HSVuWGdd9k0usFY6mZKYypdAnf3eLiB87mHqUyjkQamcO0qTAV
+ axLjCuesnJUpSsSYUty0l7vb2wEXhETZc/of9m1R9fKVqYMU/tGflqtwe1w8oreFymIIvnpNs
+ S8+eLIUKiOQeTwYmJITy0mUOiT26dwIGA6aL1XbtZDmAYtANoKKuz48MhM6zyQxGRnpN9oBBv
+ 5cErMeHuIL1RzxMcspKS8CCpSPVcG+O2BMpzTRThhfZT5Kvm0XgDl8TlmWKPod9KRly5CaeJF
+ gGoS8UmtgAFpuk3li9bjv36U+fW023SJQh8LSxUYXxYA2nlidyZFH45+UYLKczE0TuEc01em 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285474>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Integrate the code of input_crlf_action() into convert_attrs(),
-so that ca.crlf_action is always valid after calling convert_attrs().
-Keep a copy of crlf_action in attr_action, this is needed for
-get_convert_attr_ascii().
-
-Remove eol_attr from struct conv_attrs, as it is now used temporally.
+Add a helper function to find out, which line endings
+text files should get at checkout, depending on
+core.autocrlf and core.eol
 
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- convert.c | 37 ++++++++++++++-----------------------
- 1 file changed, 14 insertions(+), 23 deletions(-)
+ convert.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index a24c2a2..d0c8c66 100644
+index d0c8c66..9ffd043 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -746,21 +746,10 @@ static int git_path_check_ident(struct git_attr_c=
-heck *check)
- 	return !!ATTR_TRUE(value);
+@@ -149,6 +149,19 @@ const char *get_wt_convert_stats_ascii(const char =
+*path)
+ 	return ret;
  }
 =20
--static enum crlf_action input_crlf_action(enum crlf_action text_attr, =
-enum eol eol_attr)
--{
--	if (text_attr =3D=3D CRLF_BINARY)
--		return CRLF_BINARY;
--	if (eol_attr =3D=3D EOL_LF)
--		return CRLF_INPUT;
--	if (eol_attr =3D=3D EOL_CRLF)
--		return CRLF_CRLF;
--	return text_attr;
--}
--
- struct conv_attrs {
- 	struct convert_driver *drv;
--	enum crlf_action crlf_action;
--	enum eol eol_attr;
-+	enum crlf_action attr_action; /* What attr says */
-+	enum crlf_action crlf_action; /* When no attr is set, use core.autocr=
-lf */
- 	int ident;
- };
-=20
-@@ -782,16 +771,23 @@ static void convert_attrs(struct conv_attrs *ca, =
-const char *path)
- 	}
-=20
- 	if (!git_check_attr(path, NUM_CONV_ATTRS, ccheck)) {
--		ca->crlf_action =3D git_path_check_crlf( ccheck + 4);
-+		enum eol eol_attr;
-+		ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
- 		if (ca->crlf_action =3D=3D CRLF_GUESS)
- 			ca->crlf_action =3D git_path_check_crlf(ccheck + 0);
-+		ca->attr_action =3D ca->crlf_action;
- 		ca->ident =3D git_path_check_ident(ccheck + 1);
- 		ca->drv =3D git_path_check_convert(ccheck + 2);
--		ca->eol_attr =3D git_path_check_eol(ccheck + 3);
-+		if (ca->crlf_action =3D=3D CRLF_BINARY)
-+			return;
-+		eol_attr =3D git_path_check_eol(ccheck + 3);
-+		if (eol_attr =3D=3D EOL_LF)
-+			ca->crlf_action =3D CRLF_INPUT;
-+		else if (eol_attr =3D=3D EOL_CRLF)
-+			ca->crlf_action =3D CRLF_CRLF;
- 	} else {
- 		ca->drv =3D NULL;
- 		ca->crlf_action =3D CRLF_GUESS;
--		ca->eol_attr =3D EOL_UNSET;
- 		ca->ident =3D 0;
- 	}
- }
-@@ -818,11 +814,9 @@ int would_convert_to_git_filter_fd(const char *pat=
-h)
- const char *get_convert_attr_ascii(const char *path)
++static int text_eol_is_crlf(void)
++{
++	if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
++		return 1;
++	else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
++		return 0;
++	if (core_eol =3D=3D EOL_CRLF)
++		return 1;
++	if (core_eol =3D=3D EOL_UNSET && EOL_NATIVE =3D=3D EOL_CRLF)
++		return 1;
++	return 0;
++}
++
+ static enum eol output_eol(enum crlf_action crlf_action)
  {
- 	struct conv_attrs ca;
--	enum crlf_action crlf_action;
-=20
- 	convert_attrs(&ca, path);
--	crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
--	switch (crlf_action) {
-+	switch (ca.attr_action) {
- 	case CRLF_GUESS:
- 		return "";
- 	case CRLF_BINARY:
-@@ -861,7 +855,6 @@ int convert_to_git(const char *path, const char *sr=
-c, size_t len,
- 		src =3D dst->buf;
- 		len =3D dst->len;
+ 	switch (crlf_action) {
+@@ -164,12 +177,7 @@ static enum eol output_eol(enum crlf_action crlf_a=
+ction)
+ 		/* fall through */
+ 	case CRLF_TEXT:
+ 	case CRLF_AUTO:
+-		if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
+-			return EOL_CRLF;
+-		else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
+-			return EOL_LF;
+-		else if (core_eol =3D=3D EOL_UNSET)
+-			return EOL_NATIVE;
++		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
  	}
--	ca.crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
- 	ret |=3D crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe);
- 	if (ret && dst) {
- 		src =3D dst->buf;
-@@ -882,7 +875,6 @@ void convert_to_git_filter_fd(const char *path, int=
- fd, struct strbuf *dst,
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv->clean))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
-=20
--	ca.crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
- 	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe)=
-;
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
+ 	return core_eol;
  }
-@@ -912,7 +904,6 @@ static int convert_to_working_tree_internal(const c=
-har *path, const char *src,
- 	 * is a smudge filter.  The filter might expect CRLFs.
- 	 */
- 	if (filter || !normalizing) {
--		ca.crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
- 		ret |=3D crlf_to_worktree(path, src, len, dst, ca.crlf_action);
- 		if (ret) {
- 			src =3D dst->buf;
-@@ -1381,7 +1372,7 @@ struct stream_filter *get_stream_filter(const cha=
+@@ -1378,8 +1386,9 @@ struct stream_filter *get_stream_filter(const cha=
 r *path, const unsigned char *s
- 	if (ca.ident)
- 		filter =3D ident_filter(sha1);
-=20
--	crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
-+	crlf_action =3D ca.crlf_action;
-=20
- 	if ((crlf_action =3D=3D CRLF_BINARY) || (crlf_action =3D=3D CRLF_INPU=
-T) ||
  	    (crlf_action =3D=3D CRLF_GUESS && auto_crlf =3D=3D AUTO_CRLF_FALS=
 E))
+ 		filter =3D cascade_filter(filter, &null_filter_singleton);
+=20
+-	else if (output_eol(crlf_action) =3D=3D EOL_CRLF &&
+-		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS))
++	else if ((crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUE=
+SS))
++		;
++	else if (output_eol(crlf_action) =3D=3D EOL_CRLF)
+ 		filter =3D cascade_filter(filter, lf_to_crlf_filter());
+=20
+ 	return filter;
 --=20
 2.7.0.303.g2c4f448.dirty
