@@ -1,95 +1,85 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
-Date: Wed, 03 Feb 2016 20:12:32 -0500
-Organization: Twitter
-Message-ID: <1454548352.5545.2.camel@twopensource.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
-	 <1454443734.5545.1.camel@twopensource.com>
-	 <xmqq7fimrcab.fsf@gitster.mtv.corp.google.com>
-	 <xmqqmvrhjpzc.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/12] ref-filter: introduce parsing functions for each valid atom
+Date: Wed, 03 Feb 2016 17:17:40 -0800
+Message-ID: <xmqqa8nhjmtn.fsf@gitster.mtv.corp.google.com>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+	<1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cRmfNjP8PYoQFZ7YrECgt03aE1=QynG58-+cd9ORJneZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 02:13:12 2016
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 02:17:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aR8Tv-0001VU-CC
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 02:13:11 +0100
+	id 1aR8YN-00088v-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 02:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964860AbcBDBNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Feb 2016 20:13:07 -0500
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34871 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964842AbcBDBMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Feb 2016 20:12:35 -0500
-Received: by mail-qg0-f53.google.com with SMTP id o11so30218312qge.2
-        for <git@vger.kernel.org>; Wed, 03 Feb 2016 17:12:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=UJpK8hO1wAnC3gT+ImnhncbMp6+wjGp89i5JsBasPiA=;
-        b=T36VglB/p7dpKfzWBSftLqVcVs4pELO+WIphkMF0p61bM9IX2cTKBB4PlsKFTqB/iG
-         NY/fr+1FXqnh8n3fCY8qK5cMvlJdj4pteqPMKopSZj4JA3zI6N8Gw6IrThPHmf1cAvJZ
-         Xn/9lMbgRbBeER5S1H1ssVONFb9jNBQc11F9tgl7xR6GFQRY/GUtBqQ/8IEYEjIBRhNg
-         8TefuvkQ1IcJZFdYGbsnKjQhMkz35k0QuCQlTpcQHk7VB8HxxzcMxROmznA8QQ+dIVkO
-         CGBsGlCdtduqrsB+Ei5V3cQ/PWz9WevWOIrfuHJJr2Jo7CnGAO3u0ltte4g2ZB95oWZT
-         mTqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=UJpK8hO1wAnC3gT+ImnhncbMp6+wjGp89i5JsBasPiA=;
-        b=UfREZlrQ3X4XcgAG1oOIIzwpA/+XBscuj7fIukHRKhVR6qj2+7V/A+Bp2HuPfuPP90
-         5FC8dnsZGkmEHP/jc7tvr6eEi9TUQTp/eiIn0XG2MLprej7QLDqrGOC4fyEzXUcATsrX
-         sMLjWQ4J5eAfn9iLk+/ypyxlPhJOF9HvynZejHZsY6ePTqcGJtHc3N6EE1Ww+EDFuqgd
-         5LF4arJa7JqarGMPC11XLBR7dOv82eHC/SZpNfLepExkQTYnxi2/fj/P4T7H5HHCHrVM
-         pSMAUAHnK2xXHmQuQobrlz2lV7MGbQIrl3L1lKKBn+slyHMIql57kRoBooi21d9zKHxJ
-         jPpQ==
-X-Gm-Message-State: AG10YOTyUZWOI1Lm5KxnYHVhzAXD0mdUisSBAgRlJ9QbyAuylZ1XtKQCUECe5V1hdQO31A==
-X-Received: by 10.140.178.195 with SMTP id y186mr6086404qhy.100.1454548354369;
-        Wed, 03 Feb 2016 17:12:34 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id v187sm3662651qhb.27.2016.02.03.17.12.33
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 03 Feb 2016 17:12:33 -0800 (PST)
-In-Reply-To: <xmqqmvrhjpzc.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S933456AbcBDBRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Feb 2016 20:17:44 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59485 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932723AbcBDBRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Feb 2016 20:17:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 98C2C42B63;
+	Wed,  3 Feb 2016 20:17:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J+gX6IbhySQy70uzudeGfX5pjFc=; b=wMn+vg
+	bw+9uuR2S9fkpLhaFa0SUhKunZxXH7E/Zo34T45yIk8i5E2x3D/2nJDZK3xE3DYT
+	dbHG1DG1+CyR/nySnc3leqg50uPcipMU7sYCuEBoRiUYLGhIcgKELNjFEEhZtliC
+	2ysMY+3dS/rq0KVxVWjTXHJbydaCNofjucDic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D9cwu404cj0O0X2XSuJStXdCr8Dj26M5
+	vm/l4FGyHzZR6733utKYFhff9Zra47/V0LxlIY68+b7OEiWaGgYcGu5YBJoO6R61
+	Zmqc7Pk0XCDne5DUhRhuR9YuZVImuIRmbj5ut2EA92IwfVjRu9UQQk2SqUaeyisn
+	cKKkTC4S5lw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FAD142B62;
+	Wed,  3 Feb 2016 20:17:42 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0833D42B60;
+	Wed,  3 Feb 2016 20:17:41 -0500 (EST)
+In-Reply-To: <CAPig+cRmfNjP8PYoQFZ7YrECgt03aE1=QynG58-+cd9ORJneZw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 3 Feb 2016 17:19:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 169AABF0-CADD-11E5-8DCA-04C16BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285390>
 
-On Wed, 2016-02-03 at 16:09 -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > David Turner <dturner@twopensource.com> writes:
-> > 
-> > > Are there any more reviews on this?  I do have some changes from
-> > > this
-> > > set, but they're pretty minor so I don't want to post a new one
-> > > (unless
-> > > folks would rather see those changes before reviewing).  Let me
-> > > know.
-> > 
-> > Thanks for pinging.  As this is a rather wide-ranging topic, it was
-> > not practical to intergrate with the rest of the topics in flight
-> > back then, but now it seems that this needs only one topic that
-> > still is in flight.  I'll queue this on top of a merge between
-> > 'master' and the tip of 'sb/submodule-parallel-update' and include
-> > in the daily integration cycle to make it easy for people to view
-> > the changes in wider context as necessary.
-> 
-> I've re-applied the patches to rebuild the topic; when merged to
-> 'pu' it seemed to break some tests, but I didn't look too deeply
-> into it.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-They were working for me as-of the time I sent them.  I guess something
-must have broken since.  I'll rebase, test, and send a new series.
+>> @@ -138,10 +140,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>>                  * shouldn't be used for checking against the valid_atom
+>>                  * table.
+>>                  */
+>> -               const char *formatp = strchr(sp, ':');
+>> -               if (!formatp || ep < formatp)
+>> -                       formatp = ep;
+>> -               if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
+>> +               arg = memchr(sp, ':', ep - sp);
+>
+> Why this change from strchr() to memchr()? I understand that you're
+> taking advantage of the fact that you know the extent of the string
+> via 'sp' and 'ep', however, was the original strchr() doing extra
+> work? Even if this change is desirable, it seems somewhat unrelated to
+> the overall purpose of this patch, thus might deserves its own.
+
+I think the original strchr() is a bug.  If you are given a
+substring as a range, you shouldn't be allowing strchr() to go
+beyond ep to find a NUL that may or may not exist.  That is not a
+performance thing, but more about the best practice to ensure
+correctness.  The caller of this function may not have such a
+problem, but imagine the case where the bytes beyond ep did not have
+any NUL and there is an unmapped page after that.
