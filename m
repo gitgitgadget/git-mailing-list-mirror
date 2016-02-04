@@ -1,89 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of for-each-ref
-Date: Thu, 04 Feb 2016 11:06:58 -0800
-Message-ID: <xmqqwpqki9bh.fsf@gitster.mtv.corp.google.com>
-References: <56B32953.2010908@gmail.com>
-	<20160204111307.GA30495@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1602041216240.2964@virtualbox>
+Subject: Re: COPYING tabs vs whitespaces
+Date: Thu, 04 Feb 2016 11:15:08 -0800
+Message-ID: <xmqqsi18i8xv.fsf@gitster.mtv.corp.google.com>
+References: <56B32BDA.4010909@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	git@vger.kernel.org, szeder@ira.uka.de, tr@thomasrast.ch
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 20:07:10 2016
+Cc: git@vger.kernel.org
+To: Petr Stodulka <pstodulk@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 20:15:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRPFF-0005rf-TA
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:07:10 +0100
+	id 1aRPN9-0007WR-G6
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:15:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965623AbcBDTHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 14:07:04 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55703 "EHLO
+	id S1756984AbcBDTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 14:15:12 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52432 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965225AbcBDTHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 14:07:03 -0500
+	with ESMTP id S1756943AbcBDTPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 14:15:11 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFE773FAE1;
-	Thu,  4 Feb 2016 14:07:01 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 701CE3FD8A;
+	Thu,  4 Feb 2016 14:15:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gRwU7zz14NF5/4EPFIewuudwdgw=; b=xWfW6U
-	iR5+9K5sAzviD3zylIjQdCnC+DmANymwflbHcSHaFcswq3WDllEzLo3HDUymT5RW
-	yCS5NjNj0s5/qQEqweWUQHWZhfbDqUjgJoZcmAul2HbNAF9KM/0j2USxR80LynTD
-	D6XCFL3Ed0fI9ITBBuBtNo/JbszTJDdmp906I=
+	:content-type; s=sasl; bh=29gPU53tscFxuFJlojGcN5yu6pI=; b=gj6eDU
+	b/G9iPl5yk+/diD8H0vr4lZmM1ZBJG+cvQCMhCamtitKZO409V+KuUUsfqr4p8zz
+	eu1xQc9CQb7pnOzNIPcwHL5hPaXV0uhxPcyljoVFgi0fIlVCDQNh5IB/Rc/v73OK
+	WC+dn7kBPcLD1eK4NxQwm3n/Ob1hb8L1QonyA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ia2u/h+SrHzgWAwc+1d42HvhkczxSxdN
-	JQouiSCQ54010t6pHaJYvtkMBldkr3lL4NnV2m072aJdHD5ARwwkVKI+MUow++LW
-	ajWb8ALIqdtvHtTLFHSAwCEXG92g45s/lMoc9Vse4ot0SsyR4pM2w2Ike+uKHLT5
-	xsysjPVFuCM=
+	:content-type; q=dns; s=sasl; b=uo8NpTYgq9AXUXZrI4XbEsFM66zpT1jc
+	BcUGt1QiRrUxNR0p1B4Q5ouvLe0b4qRvAquMbbpVK7EzxtmRiKYIJoxVja2igdKG
+	6JP0W0VrQtZ5cJXYaQe8cFKg/nQKrinc4rKAer73Yg4vi4ZVNcPJOShiTeA4l6e6
+	9FxoC9gT9PU=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3FD553FAE0;
-	Thu,  4 Feb 2016 14:07:01 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 671853FD89;
+	Thu,  4 Feb 2016 14:15:10 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 33EC53FADD;
-	Thu,  4 Feb 2016 14:07:00 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1602041216240.2964@virtualbox> (Johannes
-	Schindelin's message of "Thu, 4 Feb 2016 12:26:19 +0100 (CET)")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C15093FD87;
+	Thu,  4 Feb 2016 14:15:09 -0500 (EST)
+In-Reply-To: <56B32BDA.4010909@redhat.com> (Petr Stodulka's message of "Thu, 4
+	Feb 2016 11:45:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 77E54740-CB72-11E5-AA2C-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9BAB3D50-CB73-11E5-905E-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285479>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Petr Stodulka <pstodulk@redhat.com> writes:
 
->> $ time git for-each-ref --format='%(refname:short)' refs/tags >/dev/null
->> 
->> real    0m0.009s
->> user    0m0.004s
->> sys     0m0.004s
->
-> And the timings in the ticket I mentioned above are not pretty small:
-> 0.055s vs 1.341s
->
->> The upcoming refname:strip does much better:
->> 
->> $ time git for-each-ref --format='%(refname:strip=2)' refs/tags >/dev/null
->> 
->> real    0m0.004s
->> user    0m0.000s
->> sys     0m0.004s
->
-> This is funny: after reading the commit message at
-> https://github.com/git/git/commit/0571979b it eludes me why strip=2 should
-> be so much faster than short...
+> I found that license file COPYING is different as compared with
+> http://www.gnu.org/licenses/gpl-2.0.txt If I pass over with
+> Linus's preamble, change is only about whitespaces - tabs
+> vs. space.  Probably it's minor non-essential change, but some
+> projects do this change, so rather I ask about that.
 
-"short" tries to ensure that the result is not ambiguous within the
-repository, so when asked to shorten refs/heads/foo, it needs to
-check if refs/tags/foo exists.  "strip=2" textually strips two
-levels from the top without worrying about ambiguity across
-different hierarchies.
+Interesting.  I cannot quite connect "some projects do this change"
+and "so rather I ask".  Are you asking why this project changed it?
+
+After running "diff" between the two, I think the changes are only
+on the indented section title lines, and "git blame" tells us that
+the section title lines in the copy we have has always been that way
+since Linus added to it at 075b845a (Add a COPYING notice, making it
+explicit that the license is GPLv2., 2005-04-11).
+
+So, perhaps the copy Linus got originally had leading runs of spaces
+that are multiples-of-8-long unexpanded to leading tabs back then,
+or perhaps he did that unexpanding himself.
