@@ -1,104 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Thu, 4 Feb 2016 06:13:07 -0500
-Message-ID: <20160204111307.GA30495@sigill.intra.peff.net>
-References: <56B32953.2010908@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 14/15] git-am.sh: replace using expr for arithmetic
+ operations with the equivalent shell builtin
+Date: Thu, 4 Feb 2016 12:14:27 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602041204430.2964@virtualbox>
+References: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, szeder@ira.uka.de,
-	Junio C Hamano <gitster@pobox.com>, tr@thomasrast.ch
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 12:13:23 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 12:14:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRHqf-0004KS-TR
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:13:18 +0100
+	id 1aRHrz-0005d7-1u
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933559AbcBDLNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 06:13:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37409 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932869AbcBDLNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 06:13:10 -0500
-Received: (qmail 26685 invoked by uid 102); 4 Feb 2016 11:13:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:13:10 -0500
-Received: (qmail 2001 invoked by uid 107); 4 Feb 2016 11:13:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:13:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 06:13:07 -0500
-Content-Disposition: inline
-In-Reply-To: <56B32953.2010908@gmail.com>
+	id S933222AbcBDLOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 06:14:34 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51894 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932869AbcBDLOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 06:14:30 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MJjvw-1aSOKO1eYm-0016hM; Thu, 04 Feb 2016 12:14:28
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:rSPsKjwNT9oKob8+/ZHBhYAExpx5XWu5gWNsse+2Vn4sQGtqwcQ
+ SkAE+TfElBz9qSkk6S/7E3upHiwxZ20+WK7Nu6Xnqdf8TI/WKbRVJvwgO6Wd6QcE2a6QTyP
+ EZA/C5dWQrqaVSIOjrO885QLuDvTQ9pV+PL+lqgCA0CZndTCoiMbA+23DY66WMPs3x4VoLQ
+ TR2dog/C0vWg6j8c+UuyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kA008DqigjU=:bB9qEKQ/GOv42YHYAaMwhW
+ kWwQ5IEC4PYvjG2SJZqMVor1AFWzLRIBzMc6jtqUUaCBqBdoJ9Hwj56De0g3OwmOon2EY47rp
+ 0Ke0A41TSI/iPfaLmQw54wFJHhLlQB5vTF5zim36EqfsIzn5YE/KlpzGkJRuYkErkDiO7FOFy
+ awHV3wUnDJKLU+vr9IZNLGToamCEdr/dBV2yXnKdJzGPAviYfGhk0zkY310LQiX35j9DAXXLe
+ pooBygQDwdywPxXiWDKjIFvNnfXZdOWRCdlXjAV0boVI3BmVz5pjlLgGmgKMWj5wXl1Lpk3i6
+ eZSaebyu9COQy8o2aAttggpPaJmiHjPNnRxV1oTQm4HPvgYspAvBs0pP+wZqKPkMb5XLiNrPN
+ EOc53l0GMJAsz/RUUuYUvP6morBAvFkprxGBq4FE9sX5yJa57r5v/5a6bGIftUbUnbqjohDLl
+ deKY9xbXUZwRqE8dZEr7/sTu9rwj6QZNBO6o89PRYYf8I0PIRjeDHx60bpd8Wc49oFrTuH9yC
+ KXVEscf/T5JwUbZjPNVrMjJAoXx2d6lohAkvmJsWCk8Hh/V22ynfJAdxk+o2SaA+qXNZvut21
+ gxaCz0VtpM3Jxr3L6v4r8QYGzhDiiRXELEhedVbvnIVHC8VZ4Qodb1bmBwSxm6wnrbaeVRnw8
+ M0Oj9z8fGBH/Rhi5FrNntAh+kZXt3Jy2XJw+6yvu/vMGdBopzL6ZH4jp/raOvxO6iSNkhXYmg
+ Xq/zNpyzYrkN78G340woMKuau0K3TwwJeScASKYGxw9/BeuNEL2ot5D2mBs3gYKp5uLfZGip 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 04, 2016 at 11:34:59AM +0100, Sebastian Schuberth wrote:
+Hi Elia,
 
-> This avoids output like
-> 
->     warning: ignoring broken ref refs/remotes/origin/HEAD
-> 
-> while completing branch names.
+On Thu, 4 Feb 2016, Elia Pinto wrote:
 
-Hmm. I feel like this case (HEAD points to a branch, then `fetch
---prune` deletes it) came up recently and we discussed quieting that
-warning. But now I cannot seem to find it.
+> -			this=$(expr "$this" + 1)
+> +			this=$(( "$this" + 1 ))
 
-Anyway, I this is a reasonable workaround. Errors from bash completion
-scripts are almost always going to be useless and get in the way of
-reading your own prompt.
+Why the funny spaces? We do not do that anywhere in the existing code
+except in three places (2x filter-branch, 1x rebase--interactive, all
+three *not* my fault) and in some tests.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 15ebba5..7c0549d 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -317,7 +317,7 @@ __git_heads ()
->  	local dir="$(__gitdir)"
->  	if [ -d "$dir" ]; then
->  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
-> -			refs/heads
-> +			refs/heads 2>/dev/null
->  		return
+Also, I am *pretty* certain that the quotes break this code:
 
-Not really related to your topic, but digging into it caused me to read
-b7dd2d2 (for-each-ref: Do not lookup objects when they will not be used,
-2009-05-27), which is about making sure for-each-ref is very fast in
-completion.
+	me@work MINGW64 /usr/src/git (master)
+	$ this=1
 
-It looks like %(refname:short) is actually kind of expensive:
+	me@work MINGW64 /usr/src/git (master)
+	$ this=$(( "$this" + 1 ))
+	bash: "1" + 1 : syntax error: operand expected (error token is ""1" + 1 ")
 
-$ time git for-each-ref --format='%(refname)' refs/tags  >/dev/null
+Whereas if you do *not* add the superfluous spaces and quotes, it works:
 
-real    0m0.004s
-user    0m0.000s
-sys     0m0.004s
+	me@work MINGW64 /usr/src/git (master)
+	$ this=1
 
-$ time git for-each-ref --format='%(refname:short)' refs/tags >/dev/null
+	me@work MINGW64 /usr/src/git (master)
+	$ this=$(($this+1))
 
-real    0m0.009s
-user    0m0.004s
-sys     0m0.004s
+	me@work MINGW64 /usr/src/git (master)
+	$ echo $this
+	2
 
-The upcoming refname:strip does much better:
+Maybe this is only a problem with Bash 4.3.42 in MSYS2, but I do not think
+so.
 
-$ time git for-each-ref --format='%(refname:strip=2)' refs/tags >/dev/null
+*Clicketyclick*
 
-real    0m0.004s
-user    0m0.000s
-sys     0m0.004s
+Nope. It also happens in Ubuntu's Bash 4.3.42:
 
-Obviously these are pretty small timings from my git.git with ~600 tags,
-but you can see that refname:short really does cost more.  On a more
-ridiculous example repository I have with about 10 million refs, the
-timings are more like 5s, 66s, 5.5s.
+	me@ubuntu-vm  ~/git (master)
+	$ this=1
 
-Just thought I'd throw that our there in case any completion people feel
-like poking around with it.
+	me@ubuntu-vm  ~/git (master)
+	$ this=$(( "$this" + 1 ))
+	bash: "1" + 1 : syntax error: operand expected (error token is ""1" + 1 ")
 
--Peff
+	me@ubuntu-vm  ~/git (master)
+	$ bash --version
+	GNU bash, version 4.3.42(1)-release (x86_64-pc-linux-gnu)
+	Copyright (C) 2013 Free Software Foundation, Inc.
+	License GPLv3+: GNU GPL version 3 or later
+	<http://gnu.org/licenses/gpl.html>
+
+	This is free software; you are free to change and redistribute it.
+	There is NO WARRANTY, to the extent permitted by law.
+
+... which makes me wonder in which environment you tested this?
+
+Ciao,
+Dscho
