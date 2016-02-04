@@ -1,112 +1,92 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/3] rebase --merge: adjust $((...)) coding style
-Date: Thu, 4 Feb 2016 13:03:00 +0100 (CET)
-Message-ID: <6c243cf13271ed285409063e501ec67c19df767d.1454587284.git.johannes.schindelin@gmx.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/3] Fix $((...)) coding style
+Date: Thu, 4 Feb 2016 12:14:37 +0000
+Message-ID: <20160204121437.GF29880@serenity.lan>
 References: <cover.1454587284.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 13:03:15 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 04 13:15:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRId0-0008Ap-IQ
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:03:14 +0100
+	id 1aRIoN-0005Kj-UQ
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300AbcBDMDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 07:03:11 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60270 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751333AbcBDMDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 07:03:09 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Mdrph-1ahYp132cv-00Pen0; Thu, 04 Feb 2016 13:03:02
- +0100
-X-X-Sender: virtualbox@virtualbox
+	id S964882AbcBDMOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 07:14:53 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:44602 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964837AbcBDMOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 07:14:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 83809CDA54F;
+	Thu,  4 Feb 2016 12:14:51 +0000 (GMT)
+X-Quarantine-ID: <Mt2hjgA5zr7T>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Mt2hjgA5zr7T; Thu,  4 Feb 2016 12:14:50 +0000 (GMT)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 0F1CECDA586;
+	Thu,  4 Feb 2016 12:14:39 +0000 (GMT)
+Content-Disposition: inline
 In-Reply-To: <cover.1454587284.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:CqV0CHQKdrkk6ePEU4GV4avxIzDtGiHcBZ2Rnt1uZGEs1HuFl4d
- zcyetmWrsNIwPUeweAgUJYWtpiuiZC9G4Bfsfp0KffCu7hiRYYfw8fGbjnSqylEF4UqIOY7
- 6CFqvuu+AexTg1tCO63Kgec+yU5SHGfU/7DXDFXbSfGfijj0A+hXRESQlcTRVt9fxhiKoMB
- rV55MW3GToDAjs5T/O1Wg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:REPKF+jXm14=:K2ldRhCpDhoxvRNs5RlDZG
- 5IlkTkGq5oGUi+/9tzrosLWifc/2msA31lZwu5lnJN59Rd3h0wQlGlRcC4H3KbljPgwgSapqW
- YTUDAs0wlXADO3Zf/D6Ouen64h5eCYlwaQGh/+m6gFnGggvg2CbtkQe6hHIuTstDNsN+9DqRM
- m4L3DEfW+DwevnYQDdiXyNGbFadv8Vapb6g5VfdwNXphL1F6Re/jjVGBrPT+EnaiQEY65xsT1
- /aGq1egUyHSmGvRLEn3W1C+2LS+a9PlTwPAUVqPYXiFWeaycr12oTTwNnTfCaQw3umU32eXIb
- 4SULZxm6EVXVTfIZRp5x4XRs9a6TUJcoge9ScxmRqE3sBuuQ6DJP9qF78hENRP0bMpURbv7EU
- sHivMicVg+8RPu41wQxuMtJGnG4RzXuanKQCMKu09LjInU4CG8482z+V6bZXOiU48zgDj7rmD
- 6/z85T0v0TEx7evuwN0BtRExA8vN5Aqf7Boen1ZfBAFBat5hU7rU0m/3v5RZzXFiBmjA1ovZt
- Ph3x5FifDTxBHEAMgm5x+jbCxVEimi2MisUYuuEFrAj2aAgTyYqdbN3wE6drWEAPa9/08FlZT
- 5b1tJaf+3dgGle0e/10LD9hsdE0SN/jcN2i++f5LisiU+wzzOiDHw89anLCPjp9jrjc0ktOWh
- HE6UL4TZoGzsLXk1aX+8tQHXiA2LPnYtDqwxsQmURO+zGZrp1bzv3v1b8O8oApTHVRJOU+OXY
- Jg5VFupgBq9A1wdHXeuxzib8JANkptgrRCtEyDjqdShQKjBlXQT92AtS3Atgpho6yXpfsH4k 
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285459>
 
-In 58634db (rebase: Allow merge strategies to be used when rebasing,
-2006-06-21) we introduced $((...)) expressions containing spaces,
-disagreeing with Git's existing source code's convention.
+On Thu, Feb 04, 2016 at 01:01:39PM +0100, Johannes Schindelin wrote:
+> I noticed through a nearby patch series that was submitted by Elia that
+> some of the $((...)) expressions introduced in scripts that I introduced
+> to Git's source code did not match the existing code's convention:
+> previously these expressions did not contain any spaces, now *some* do.
+> 
+> This patch series tries to clean that up quickly before even more code
+> has to decide which one of the disagreeing coding conventions to use.
+> 
+> Note: For the sake of getting this patch series out, I skipped t/ and
+> contrib/. I do not care much about the latter, but t/ should probably be
+> fixed, too.
 
-Naturally, 0bb733c (Use branch names in 'git-rebase -m' conflict hunks.,
-2006-12-28) repeated the convention set forth in git-rebase--merge.sh.
+Should this be going this other way (i.e. standardising on having the
+spaces)?
 
-Let's make the coding style consistent again.
+The current state (excluding contrib/ and t/) seems to favour spaces:
 
-Cc: Eric Wong <normalperson@yhbt.net>
-Cc: Shawn O. Pearce <spearce@spearce.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-rebase--merge.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+$ git grep '\$((' -- ':/' ':!t/' ':!contrib/'
+Documentation/CodingGuidelines: - We use Arithmetic Expansion $(( ... )).
+Documentation/CodingGuidelines:   of them, as some shells do not grok $((x)) while accepting $(($x))
+generate-cmdlist.sh:    n=$(($n+1))
+git-filter-branch.sh:           elapsed=$(($now - $start_timestamp))
+git-filter-branch.sh:           remaining=$(( ($commits - $count) * $elapsed / $count ))
+git-filter-branch.sh:                   next_sample_at=$(( ($elapsed + 1) * $count / $elapsed ))
+git-filter-branch.sh:                   next_sample_at=$(($next_sample_at + 1))
+git-filter-branch.sh:   git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
+git-rebase--interactive.sh:     total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
+git-rebase--interactive.sh:             count=$(($(sed -n \
+git-rebase--interactive.sh:             lineno=$(( $lineno + 1 ))
+git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
+git-rebase--merge.sh:   eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
+git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
+git-rebase--merge.sh:   msgnum=$(($msgnum + 1))
+git-submodule.sh:       n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
+git-submodule.sh:                       total_commits=" ($(($total_commits + 0)))"
 
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 2cc2a6d..a9bd39a 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -48,7 +48,7 @@ continue_merge () {
- 	GIT_PAGER='' git log --format=%s -1 "$cmt"
- 
- 	# onto the next patch:
--	msgnum=$(($msgnum + 1))
-+	msgnum=$(($msgnum+1))
- 	echo "$msgnum" >"$state_dir/msgnum"
- }
- 
-@@ -59,7 +59,7 @@ call_merge () {
- 	echo "$cmt" > "$state_dir/current"
- 	hd=$(git rev-parse --verify HEAD)
- 	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
--	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
-+	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end-$msgnum))"'
- 	eval GITHEAD_$hd='$onto_name'
- 	export GITHEAD_$cmt GITHEAD_$hd
- 	if test -n "$GIT_QUIET"
-@@ -126,7 +126,7 @@ continue)
- skip)
- 	read_state
- 	git rerere clear
--	msgnum=$(($msgnum + 1))
-+	msgnum=$(($msgnum+1))
- 	while test "$msgnum" -le "$end"
- 	do
- 		call_merge "$msgnum"
-@@ -144,7 +144,7 @@ write_basic_state
- msgnum=0
- for cmt in $(git rev-list --reverse --no-merges "$revisions")
- do
--	msgnum=$(($msgnum + 1))
-+	msgnum=$(($msgnum+1))
- 	echo "$cmt" > "$state_dir/cmt.$msgnum"
- done
- 
--- 
-2.7.0.windows.1.7.g55a05c8
+I make that 3 without spaces (including the git-rebase--interactive.sh
+case that wraps) and 12 that do have spaces around operators.  Using
+spaces around operators also matches our C coding style.
