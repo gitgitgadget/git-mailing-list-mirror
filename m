@@ -1,152 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/7] convert.c: Use text_eol_is_crlf()
-Date: Thu, 04 Feb 2016 12:13:00 -0800
-Message-ID: <xmqqlh70groz.fsf@gitster.mtv.corp.google.com>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-	<Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-	<1454608194-5417-1-git-send-email-tboegi@web.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 6/8] git submodule update: have a dedicated helper for cloning
+Date: Thu, 4 Feb 2016 12:22:28 -0800
+Message-ID: <CAGZ79kb-G=GHdtcH323LbHQ4V_azif04eHVuf8Z3gCeb-e=iKQ@mail.gmail.com>
+References: <1454435497-26429-1-git-send-email-sbeller@google.com>
+	<1454435497-26429-7-git-send-email-sbeller@google.com>
+	<xmqqr3gtjs23.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbeDBf=AfA2RUhkfjwJqJ7pr30xW3UTXqiha_EPpisvnw@mail.gmail.com>
+	<xmqqegctjnvm.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Thu Feb 04 21:13:09 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 21:22:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRQH7-0003vd-Bc
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 21:13:09 +0100
+	id 1aRQQF-00079d-Lt
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 21:22:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbcBDUNF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 15:13:05 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55472 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752655AbcBDUND convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 15:13:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6347041D09;
-	Thu,  4 Feb 2016 15:13:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=R6U3nPyqEyjw
-	cClEwMTJ53o7DnY=; b=BZ46Ddj8Xx7y63A0e9qHntHVL0RLw6Glnj6AfSnjBFqi
-	kxq4z6WuJ3BNkY0asXAbzJcOk4qilnN6EPofVhas6YWpJ540rkJ72ugf3P7JG5lH
-	UcNcb6HGsbPiCxjQptIpTZGQ7UocgGNSA6ZS8THQ4caGJnbEGs5GfpTdPF/zhmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pviaze
-	PLQXuS/BideJ1qvlvIfHYyBggfPw3yslfldSOddHycQ+kTQFI7PU9OkzTRJue2Pb
-	U5NVtIgPVEg+IcMP+p8apKBVgwSseVVYxE7bPu3gAtqji1VM/JLryzS0J8BfYMSh
-	U/IfvP4JmKBLv6+QTNpJNaDtwJpadnpabEBIE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B85441D08;
-	Thu,  4 Feb 2016 15:13:02 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B8A9341D04;
-	Thu,  4 Feb 2016 15:13:01 -0500 (EST)
-In-Reply-To: <1454608194-5417-1-git-send-email-tboegi@web.de> (tboegi@web.de's
-	message of "Thu, 4 Feb 2016 18:49:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B11F9B06-CB7B-11E5-A01F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933296AbcBDUWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 15:22:31 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:36584 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933136AbcBDUW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 15:22:29 -0500
+Received: by mail-ig0-f172.google.com with SMTP id xg9so34061965igb.1
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 12:22:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=lxYlBvtTwC/Sw4vca4mLPMaXb25GWa1gjSuLDE1amxc=;
+        b=mfX90W/n4DFomxlR9PJ1MVwSA5tzp+YWSYBtfvZAxnrhKbXlUrN5OgDRVA78qu1xc2
+         aSUZHfmP+1iwWsNSMZxINPn3l+RKg4qahLIqSK0vL/CMUf0rCOOXa70l98Fo9k802pp/
+         qwzBT6MWY3iw7co+BdtnfFM6lqXke7qYQNiZSJbN5RhWzjI71A5Fp2llVZoGlR0HH1mR
+         8Buo5geTbwHnlkOaBIkRuAHUKwGc2QfPFlqV7iA1lR+Nx33Z4fldhQ4ZQ6ZkBwMOajs4
+         2jZL5pp5mKOopKSUbdYum4qiZ8EE7HY+0ptXFEdAMfKXK62TpZczXD+TbrpPIan3g/N5
+         sTkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=lxYlBvtTwC/Sw4vca4mLPMaXb25GWa1gjSuLDE1amxc=;
+        b=gXq3yviN/Mu7I2M8P1CWYen3n0VYMeZBcxyj0zSX8/iVaBSJuaBPTCRjLOJftWOFjy
+         GSbxHxUX1huwh1e7WCGWl3F4kKHf3JMPNScNi8vBdIVshXYFEXIppwqSdAsiszkfPseJ
+         NlCF5K0Jfvzo2E28SOZN5Xsrvpof1+oKTWMaugn+VCgWe/Xi41YQp9btZiNYvzuJA/Yi
+         opON3vGgLsNYDrL9FGNtQVOSDdDuM3FmgHhiTU4M+06dIdkGLoDIFxrYmD37eeimn2sy
+         wnNw2izj0JbOn/WXe3B8mDYYpKFNxYj2+5vvQkRq482xU3nkfYnSCUFLuP0CzAwJS3Y7
+         4lNQ==
+X-Gm-Message-State: AG10YOQXGsphCSocBfa3K8R6T4tqBYhm3LrLAjHQL6XrXotXMFm/R3UGfgJaDExgHO9gzzCr61wtL2y1bSd4o0jq
+X-Received: by 10.50.102.40 with SMTP id fl8mr11600630igb.85.1454617349015;
+ Thu, 04 Feb 2016 12:22:29 -0800 (PST)
+Received: by 10.107.4.210 with HTTP; Thu, 4 Feb 2016 12:22:28 -0800 (PST)
+In-Reply-To: <xmqqegctjnvm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285490>
 
-tboegi@web.de writes:
-
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Wed, Feb 3, 2016 at 4:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Add a helper function to find out, which line endings
-> text files should get at checkout, depending on
-> core.autocrlf and core.eol
+>> On Wed, Feb 3, 2016 at 3:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>> +             if (ce_stage(ce)) {
+>>>> +                     if (pp->recursive_prefix)
+>>>> +                             strbuf_addf(err, "Skipping unmerged submodule %s/%s\n",
+>>>> +                                     pp->recursive_prefix, ce->name);
+>>
+>> As a side question: Do we care about proper visual directory
+>> separators in Windows?
 >
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  convert.c | 25 +++++++++++++++++--------
->  1 file changed, 17 insertions(+), 8 deletions(-)
+> You know I do not do Windows ;-)  I'll leave the question for others
+> to answer (I am trying not to be one of the the only small number of
+> people who review code around here).
 >
-> diff --git a/convert.c b/convert.c
-> index d0c8c66..9ffd043 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -149,6 +149,19 @@ const char *get_wt_convert_stats_ascii(const cha=
-r *path)
->  	return ret;
->  }
-> =20
-> +static int text_eol_is_crlf(void)
-> +{
-> +	if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
-> +		return 1;
-> +	else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
-> +		return 0;
-> +	if (core_eol =3D=3D EOL_CRLF)
-> +		return 1;
-> +	if (core_eol =3D=3D EOL_UNSET && EOL_NATIVE =3D=3D EOL_CRLF)
-> +		return 1;
-> +	return 0;
-> +}
-> +
->  static enum eol output_eol(enum crlf_action crlf_action)
->  {
->  	switch (crlf_action) {
-> @@ -164,12 +177,7 @@ static enum eol output_eol(enum crlf_action crlf=
-_action)
->  		/* fall through */
->  	case CRLF_TEXT:
->  	case CRLF_AUTO:
-> -		if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
-> -			return EOL_CRLF;
-> -		else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
-> -			return EOL_LF;
-> -		else if (core_eol =3D=3D EOL_UNSET)
-> -			return EOL_NATIVE;
-> +		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
->  	}
->  	return core_eol;
->  }
-> @@ -1378,8 +1386,9 @@ struct stream_filter *get_stream_filter(const c=
-har *path, const unsigned char *s
->  	    (crlf_action =3D=3D CRLF_GUESS && auto_crlf =3D=3D AUTO_CRLF_FA=
-LSE))
->  		filter =3D cascade_filter(filter, &null_filter_singleton);
-> =20
-> -	else if (output_eol(crlf_action) =3D=3D EOL_CRLF &&
-> -		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS))
-> +	else if ((crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_G=
-UESS))
-> +		;
-> +	else if (output_eol(crlf_action) =3D=3D EOL_CRLF)
->  		filter =3D cascade_filter(filter, lf_to_crlf_filter());
-> =20
->  	return filter;
+>> I never run into this BUG after having proper initialization, so maybe it's not
+>> worth carrying this code around. (We have many other places where
+>> submodule_from_{path, name} is used unchecked, so why would this place
+>> be special?)
+>
+> That is why I wondered if moudule_list() is a better place to do so.
+> That is where the list of everybody works on come from.
 
-I am a bit slow today so let me talk this change through aloud.
+I do not think that is a better place as not every consumer of module_list
+(and module_list_compute as the nested function) will need to use the
+submodule caching API. So these consumers are not interested in possible
+bugs in the submodule cache API nor do they want the performance hit
+which comes from checking unrelated stuff in there.
 
-The condition under which we called cascade_filter() used to be that
-output_eol(crlf_action) yields EOL_CRLF and crlf_action is not set
-to one of these two values.  Now, we say if crlf_action is one of
-these two values, we wouldn't call it, and then we check
-output_eol().
-
-So they do the same thing, even though it smells that this change is
-outside the scope of "Add a helper and use it" theme of the patch.
-
-While I do not think this new "split" conditions particularly easier
-to read compared to the previous one, if you plan to do something
-different in later patches when crlf_action is set to specific
-values, ignoring what output_eol() says, a patch to implement such a
-change would become easier to understand what is going on with this
-preparatory rewrite.  So if such a preparatory rewrite is coming (I
-haven't checked 5-7/7 yet), perhaps have this hunk as a single patch
-that is separate from "add a helper text_eol_is_crlf()" patch.
-
-By the way, your new 1/7 has s/: Remove/: remove/ applied to the
-subject, but not other ones like this one.  Intended, or you forgot
-to do s/: Use/: use/ here?
+As said, I only saw this bug when the cache was not initialized properly,
+and then such a bug is to be expected. I'd rather remove it in a reroll.
