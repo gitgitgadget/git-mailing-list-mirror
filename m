@@ -1,70 +1,130 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
-Date: Thu, 4 Feb 2016 18:42:56 +0700
-Message-ID: <CACsJy8Cau0mpz8zVjvz7RPt-s=xmaCCmz0p8OCup9-Q1MnwWCQ@mail.gmail.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com> <1454443734.5545.1.camel@twopensource.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH 14/15] git-am.sh: replace using expr for arithmetic
+ operations with the equivalent shell builtin
+Date: Thu, 4 Feb 2016 12:53:27 +0100
+Message-ID: <CA+EOSB=ky8E7J0Fa26DjgT=5-X9N09=4kRbGvWZo5K7PhwS7hg@mail.gmail.com>
+References: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
+	<alpine.DEB.2.20.1602041204430.2964@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 12:43:35 2016
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 04 12:53:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRIJz-0004A9-Gg
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:43:35 +0100
+	id 1aRITd-0006sd-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075AbcBDLna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 06:43:30 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:33089 "EHLO
-	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873AbcBDLn1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 06:43:27 -0500
-Received: by mail-lf0-f43.google.com with SMTP id m1so34809994lfg.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 03:43:27 -0800 (PST)
+	id S1755316AbcBDLxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 06:53:30 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:35461 "EHLO
+	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753036AbcBDLx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 06:53:29 -0500
+Received: by mail-vk0-f65.google.com with SMTP id e185so1538188vkb.2
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 03:53:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=eUr9VPkq+SKnuF3x4gy5FjAVCq7vbuOl91vv6l9T/eo=;
-        b=rr4vo99CjtYUyeTZkb1KZcH6wlyrdXJeBRU+UsIHmxYc63onLsSk4CKRSMI1K8+28U
-         WfWeJPJJNZ45iUfG0OrIcaBHEpkwA6I54A+4ySqDYIfv2TDVjyCh3dncnZLM7u2tsFpC
-         eH3K82PuhcVzRMN6Rkd1hZTMSxTbEBfivLTeoZ0Y5yz7T899Q0ciIO8lAjaDYM0Nhq2Q
-         uvSopFfr1rxn6xNHBfRWhrujijEd6/GtBWdmDTNqU1vpAFm4Dc+2vO7bOebOReadbuFj
-         EUYC+MCO7BTg8rs5XrMFf1/ZU+4gZlY4/1uvspwliILcLoWNDlHhWhQzJHGextGaizaI
-         tCaQ==
+        bh=B85LfHrYbGej2C8cKNpBknmw+DXmZo11xNxIITtflGc=;
+        b=MbbFfpSq60vkOb7vQ+OTcIP0cMHE4Fl9du1EbSD8T9VmoNdL/Rd/CIKst4i1mOE7OT
+         ha/YhIA1oBnmrmuAHj8ygJEvgjkSZDm9YS0vN7FAziGaHV4ZcWGFIiMMREjiH60Gs8v5
+         Yf0uwQlBGlBY0jY4SNc3TWKpfV3hbASBtByQnMZ/adtiGbqh3RcAiP+nCkf/FhkjaYW5
+         BBIiT+f1LiJIbj2vp/rA+9bH2JEGUV9Yv8i+IH6NuXDDNveBL9w3vN73gMV/X9mtemZ+
+         G92Sd2bjUV/V7lgWVqBBY6+1wkcYlV75/d7Uz60Zoa88FNwIEyLwq/FMCDfWviNIYvEF
+         qpAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=eUr9VPkq+SKnuF3x4gy5FjAVCq7vbuOl91vv6l9T/eo=;
-        b=ULSnsMMkyToijisKpG7rbWbuXGj/46s68EfMoREspoEbTw4D3H5Eg/XlZxzST7AW5U
-         BA/5yFFBxCMiRgIKCl383fJatJ8AnkFIWnXwlM6EHdm3ag6JdcPyRLj48pYyJse00MK9
-         PI/HCWZgRIFMsdEHIX6oD0+W+SiUyOFWjckL02v81lgp8BE3C6B4HHBAybDgFPDj3qbD
-         plk7+QVIwKfORUQHbZF0JK5/bjWfYJiCtL+r4IwikIZihP2UerIDwI/76MG+YjFvatyM
-         suc02IxqkYY3huGn6UDdaiNgaLMYmaZS2ivI4HXyBD2F5xFcNNE6RpEq67GI106N2jfq
-         qHoA==
-X-Gm-Message-State: AG10YOTU+gqagtJBPuA9su2KVLdob/iwuocQd+0+WoekgJEE/S4sGtcdjKZa3Kp22tPDEm6rw7GY5/nOAA+ndQ==
-X-Received: by 10.25.43.212 with SMTP id r203mr3335813lfr.162.1454586206432;
- Thu, 04 Feb 2016 03:43:26 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 4 Feb 2016 03:42:56 -0800 (PST)
-In-Reply-To: <1454443734.5545.1.camel@twopensource.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=B85LfHrYbGej2C8cKNpBknmw+DXmZo11xNxIITtflGc=;
+        b=OZfAyNH6c5QV0YsQk4Ra+JRKBMSKIKXLRwn3lXTvNn8g6ItqgtuDNeDybC44Ue0qie
+         dUhSYGsOvK+zpiU0oceGij+T718EushVV8hHbqJso4hjSp+lD2NTQIAZl1rgDWGKu0+V
+         IGdbmvYMLcqJJ1Df90n3gpHgkwANf492A4vOLSXwuz5L6PaaD1gHAgQJ2W3a+vn+Fd/+
+         FmSwRPZXQ73gsrzZ1PrsBJLNtOK1BYOWitE4vzXGiiFxyPgBYXUviGsg8qcTdCuoD96Y
+         xvAA78v4Kosh2wrRt6EEsNDJGSUN1mSC1zOirkGkYw6cC5aEHYC8ZtXZYkgns2p6dyAE
+         kC5Q==
+X-Gm-Message-State: AG10YORl0yKYa4TMEpdJCabrRMtClwkmy2mRW+50wklug2DmHCHYUAs00I1ZfKH6xCTIxlhMzelvL4zYBZW4XQ==
+X-Received: by 10.31.47.207 with SMTP id v198mr5051921vkv.6.1454586807945;
+ Thu, 04 Feb 2016 03:53:27 -0800 (PST)
+Received: by 10.31.56.10 with HTTP; Thu, 4 Feb 2016 03:53:27 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1602041204430.2964@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285454>
 
-On Wed, Feb 3, 2016 at 3:08 AM, David Turner <dturner@twopensource.com> wrote:
-> Are there any more reviews on this?  I do have some changes from this
-> set, but they're pretty minor so I don't want to post a new one (unless
-> folks would rather see those changes before reviewing).  Let me know.
+2016-02-04 12:14 GMT+01:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi Elia,
+>
+> On Thu, 4 Feb 2016, Elia Pinto wrote:
+>
+>> -                     this=$(expr "$this" + 1)
+>> +                     this=$(( "$this" + 1 ))
+>
+> Why the funny spaces? We do not do that anywhere in the existing code
+> except in three places (2x filter-branch, 1x rebase--interactive, all
+> three *not* my fault) and in some tests.
+>
+> Also, I am *pretty* certain that the quotes break this code:
+>
+>         me@work MINGW64 /usr/src/git (master)
+>         $ this=1
+>
+>         me@work MINGW64 /usr/src/git (master)
+>         $ this=$(( "$this" + 1 ))
+>         bash: "1" + 1 : syntax error: operand expected (error token is ""1" + 1 ")
+>
+> Whereas if you do *not* add the superfluous spaces and quotes, it works:
+>
+>         me@work MINGW64 /usr/src/git (master)
+>         $ this=1
+>
+>         me@work MINGW64 /usr/src/git (master)
+Thanks for noticing.
 
-Last note. Since this is new code, maybe you can wrap translatable
-strings with _(), basically any visible string that machines do not
-need to recognize.
--- 
-Duy
+You are right. I ran the test but did not notice mistakes, my fault.
+
+I will resend. Thanks again.
+
+Best
+
+>         $ this=$(($this+1))
+>
+>         me@work MINGW64 /usr/src/git (master)
+>         $ echo $this
+>         2
+>
+> Maybe this is only a problem with Bash 4.3.42 in MSYS2, but I do not think
+> so.
+>
+> *Clicketyclick*
+>
+> Nope. It also happens in Ubuntu's Bash 4.3.42:
+>
+>         me@ubuntu-vm  ~/git (master)
+>         $ this=1
+>
+>         me@ubuntu-vm  ~/git (master)
+>         $ this=$(( "$this" + 1 ))
+>         bash: "1" + 1 : syntax error: operand expected (error token is ""1" + 1 ")
+>
+>         me@ubuntu-vm  ~/git (master)
+>         $ bash --version
+>         GNU bash, version 4.3.42(1)-release (x86_64-pc-linux-gnu)
+>         Copyright (C) 2013 Free Software Foundation, Inc.
+>         License GPLv3+: GNU GPL version 3 or later
+>         <http://gnu.org/licenses/gpl.html>
+>
+>         This is free software; you are free to change and redistribute it.
+>         There is NO WARRANTY, to the extent permitted by law.
+>
+> ... which makes me wonder in which environment you tested this?
+>
+> Ciao,
+> Dscho
