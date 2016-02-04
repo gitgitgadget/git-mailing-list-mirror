@@ -1,97 +1,112 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/3] rebase--interactive: adjust the coding style of
- $((...))
-Date: Thu, 4 Feb 2016 13:02:30 +0100 (CET)
-Message-ID: <dbd8ee3b1de55b7414c91bf203be2aaa77b78822.1454587284.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/3] rebase --merge: adjust $((...)) coding style
+Date: Thu, 4 Feb 2016 13:03:00 +0100 (CET)
+Message-ID: <6c243cf13271ed285409063e501ec67c19df767d.1454587284.git.johannes.schindelin@gmx.de>
 References: <cover.1454587284.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Cc: git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
+	Eric Wong <normalperson@yhbt.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 13:02:51 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 13:03:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRIca-0007d9-Ii
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:02:48 +0100
+	id 1aRId0-0008Ap-IQ
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 13:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbcBDMCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 07:02:44 -0500
-Received: from mout.gmx.net ([212.227.15.18]:63080 "EHLO mout.gmx.net"
+	id S1752300AbcBDMDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 07:03:11 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60270 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750808AbcBDMCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 07:02:43 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lh7sF-1ZfG9v0ChT-00oUsq; Thu, 04 Feb 2016 13:02:32
+	id S1751333AbcBDMDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 07:03:09 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Mdrph-1ahYp132cv-00Pen0; Thu, 04 Feb 2016 13:03:02
  +0100
 X-X-Sender: virtualbox@virtualbox
 In-Reply-To: <cover.1454587284.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:4+NUiNZ8BHcSOmw3V4ej/apfVMhkBlZtTNhfYWRdqlbvrSUfynn
- yYvtTI2Rqsd7OBGOrvmHSFbkZ2VzUAizzc2upmER5iAICQy+7E8TmqxmRLPEueIydejh2Ad
- TtWv0n4nBq/XZX0SCulBTFPv1hXzhmuPSmumSsRCcYJFVyR+TvaQZzZR6BtwtNvY4jfo0Uh
- jbMJSCOg2BGz1p8gXH2uw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mNpR8lIyj4U=:uDV/ThrKXX7yLZOVpX0TYA
- +xIV/AQgRJ24qVf/xTf2BNtWHlaJvt3mPwqz/dCJAgWfRyCNHRKhhSfAiQrR9PuAVZdFgIsUS
- OXXeN4Dl1D9Ptus56GE1EapB2qXRRsE4Nshx0M0/6FzbaYlcYuj3C4MZ4OQ2NgaUtlyJKVKyk
- c/wC4xkOQ+MUWrf7y8QNktO2q/19GOpCXmZ/Ucjo6GAYIUzLXZY7Q8Wc3GMLYFDATf0dzMxqh
- fLa7A0Do9WztshyRDOyUpbmzf+jP82OeqZgnUBcuXB/rj4uZPNcsp9MSOKg5L6P6c12PlzaXu
- 23TUydZiM0iC2XyicgsAGYiVjPX2AwY7Sft84kGcztSWlF2tIWuwspRp3WgaU09re/KAvY0hu
- bWuo+eq5jx7UYSXGZ3IYXNf9fxVlou3sRgw8Gs/iZO5+YdpRbNa9zMA7Xu9ZGYAHC3bg2F+K1
- vw6yG2Av/GFYTXE8CIAiwIYwhip2Xo5h8l9uUKyLjokiOuta9Yx+xb1ZWxpC2hMqxWyz8X9JA
- uMysLeIPZAwqjHV/SNnMeQtmdeUWCzvlIUk1GwkhHCCS4ENyRla3wcyjLJusWXPltvlKtTNRE
- P69Cq+iT8wyZpZlZnJFO/CbJTor/Bf3C7/oDXPihlYGE7L7hU7+4oN8xLXSNpsib7I+ZdETrE
- wW1NDYP/40/JACgHn7/W1Crj/OKxdOE5wawUztoTFj+gHJqyvAVFCDiP10kV/lMs2I0ETQVqu
- XS8xHKVTYFr9Rsyt/wu8fn+7oiG67D0gn+GhxTCPGNnD7DXQH50mn0NxyCRUV3Ov4jrDZ9dt 
+X-Provags-ID: V03:K0:CqV0CHQKdrkk6ePEU4GV4avxIzDtGiHcBZ2Rnt1uZGEs1HuFl4d
+ zcyetmWrsNIwPUeweAgUJYWtpiuiZC9G4Bfsfp0KffCu7hiRYYfw8fGbjnSqylEF4UqIOY7
+ 6CFqvuu+AexTg1tCO63Kgec+yU5SHGfU/7DXDFXbSfGfijj0A+hXRESQlcTRVt9fxhiKoMB
+ rV55MW3GToDAjs5T/O1Wg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:REPKF+jXm14=:K2ldRhCpDhoxvRNs5RlDZG
+ 5IlkTkGq5oGUi+/9tzrosLWifc/2msA31lZwu5lnJN59Rd3h0wQlGlRcC4H3KbljPgwgSapqW
+ YTUDAs0wlXADO3Zf/D6Ouen64h5eCYlwaQGh/+m6gFnGggvg2CbtkQe6hHIuTstDNsN+9DqRM
+ m4L3DEfW+DwevnYQDdiXyNGbFadv8Vapb6g5VfdwNXphL1F6Re/jjVGBrPT+EnaiQEY65xsT1
+ /aGq1egUyHSmGvRLEn3W1C+2LS+a9PlTwPAUVqPYXiFWeaycr12oTTwNnTfCaQw3umU32eXIb
+ 4SULZxm6EVXVTfIZRp5x4XRs9a6TUJcoge9ScxmRqE3sBuuQ6DJP9qF78hENRP0bMpURbv7EU
+ sHivMicVg+8RPu41wQxuMtJGnG4RzXuanKQCMKu09LjInU4CG8482z+V6bZXOiU48zgDj7rmD
+ 6/z85T0v0TEx7evuwN0BtRExA8vN5Aqf7Boen1ZfBAFBat5hU7rU0m/3v5RZzXFiBmjA1ovZt
+ Ph3x5FifDTxBHEAMgm5x+jbCxVEimi2MisUYuuEFrAj2aAgTyYqdbN3wE6drWEAPa9/08FlZT
+ 5b1tJaf+3dgGle0e/10LD9hsdE0SN/jcN2i++f5LisiU+wzzOiDHw89anLCPjp9jrjc0ktOWh
+ HE6UL4TZoGzsLXk1aX+8tQHXiA2LPnYtDqwxsQmURO+zGZrp1bzv3v1b8O8oApTHVRJOU+OXY
+ Jg5VFupgBq9A1wdHXeuxzib8JANkptgrRCtEyDjqdShQKjBlXQT92AtS3Atgpho6yXpfsH4k 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285458>
 
-In 180bad3 (rebase -i: respect core.commentchar, 2013-02-11) we changed
-the coding style of an arithmetic expression to introduce spaces. The
-existing $((...)) expression did not use that convention, though, and
-neither was it the habit of the other shell scripts in Git's source code.
+In 58634db (rebase: Allow merge strategies to be used when rebasing,
+2006-06-21) we introduced $((...)) expressions containing spaces,
+disagreeing with Git's existing source code's convention.
 
-Later, 1db168e (rebase-i: loosen over-eager check_bad_cmd check,
-2015-10-01) repeated the same coding style, again not matching the rest of
-the source code's style.
+Naturally, 0bb733c (Use branch names in 'git-rebase -m' conflict hunks.,
+2006-12-28) repeated the convention set forth in git-rebase--merge.sh.
 
 Let's make the coding style consistent again.
 
-Cc: John Keeping <john@keeping.me.uk>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+Cc: Eric Wong <normalperson@yhbt.net>
+Cc: Shawn O. Pearce <spearce@spearce.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-rebase--interactive.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-rebase--merge.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c0cfe88..3e2bd1b 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -122,7 +122,7 @@ mark_action_done () {
- 	mv -f "$todo".new "$todo"
- 	new_count=$(git stripspace --strip-comments <"$done" | wc -l)
- 	echo $new_count >"$msgnum"
--	total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
-+	total=$(($new_count+$(git stripspace --strip-comments <"$todo" | wc -l)))
- 	echo $total >"$end"
- 	if test "$last_count" != "$new_count"
- 	then
-@@ -895,7 +895,7 @@ check_bad_cmd_and_sha () {
- 	lineno=0
- 	while read -r command rest
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index 2cc2a6d..a9bd39a 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -48,7 +48,7 @@ continue_merge () {
+ 	GIT_PAGER='' git log --format=%s -1 "$cmt"
+ 
+ 	# onto the next patch:
+-	msgnum=$(($msgnum + 1))
++	msgnum=$(($msgnum+1))
+ 	echo "$msgnum" >"$state_dir/msgnum"
+ }
+ 
+@@ -59,7 +59,7 @@ call_merge () {
+ 	echo "$cmt" > "$state_dir/current"
+ 	hd=$(git rev-parse --verify HEAD)
+ 	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
+-	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
++	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end-$msgnum))"'
+ 	eval GITHEAD_$hd='$onto_name'
+ 	export GITHEAD_$cmt GITHEAD_$hd
+ 	if test -n "$GIT_QUIET"
+@@ -126,7 +126,7 @@ continue)
+ skip)
+ 	read_state
+ 	git rerere clear
+-	msgnum=$(($msgnum + 1))
++	msgnum=$(($msgnum+1))
+ 	while test "$msgnum" -le "$end"
  	do
--		lineno=$(( $lineno + 1 ))
-+		lineno=$(($lineno+1))
- 		case $command in
- 		"$comment_char"*|''|noop|x|exec)
- 			# Doesn't expect a SHA-1
+ 		call_merge "$msgnum"
+@@ -144,7 +144,7 @@ write_basic_state
+ msgnum=0
+ for cmt in $(git rev-list --reverse --no-merges "$revisions")
+ do
+-	msgnum=$(($msgnum + 1))
++	msgnum=$(($msgnum+1))
+ 	echo "$cmt" > "$state_dir/cmt.$msgnum"
+ done
+ 
 -- 
 2.7.0.windows.1.7.g55a05c8
