@@ -1,82 +1,121 @@
-From: "Klinger, Xia" <Xia.Klinger@cognex.com>
-Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is
- set
-Date: Thu, 4 Feb 2016 16:27:55 +0000
-Message-ID: <9854ccd81e624ee9a8f721a871bda4b2@USNAEXCP2.pc.cognex.com>
-References: <9e3cc44087134954a3414fa8998c3ce6@USNAEXCP2.pc.cognex.com>
- <alpine.DEB.2.20.1602040844330.2964@virtualbox>
- <43fbdf617f8d412db7b0d5c7d06df3ad@USNAEXCP2.pc.cognex.com>
- <alpine.DEB.2.20.1602041628180.2964@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: parse_object does check_sha1_signature but not parse_object_buffer?
+Date: Thu, 04 Feb 2016 09:40:54 -0800
+Message-ID: <xmqq60y4jrvd.fsf@gitster.mtv.corp.google.com>
+References: <20160202015701.GA30444@glandium.org>
+	<xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
+	<20160202043628.GA10253@glandium.org>
+	<xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
+	<20160204071919.GA14032@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 17:28:31 2016
+Content-Type: text/plain
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 04 18:41:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRMlc-000513-6n
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 17:28:24 +0100
+	id 1aRNtv-0008VI-4w
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 18:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965346AbcBDQ2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 11:28:01 -0500
-Received: from mx2.cognex.com ([198.232.29.14]:11619 "EHLO mx2.cognex.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934265AbcBDQ15 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 11:27:57 -0500
-Received: from galileo.cognex.com ([10.10.128.32])
-  by mx2.cognex.com with ESMTP; 04 Feb 2016 11:27:56 -0500
-Received: from USNAEXCP2.pc.cognex.com (alt1adc1pip [10.10.128.111])
-	by galileo.cognex.com (8.14.3/8.14.3) with ESMTP id u14GRuBP026148;
-	Thu, 4 Feb 2016 11:27:56 -0500 (EST)
-Received: from USNAEXCP2.pc.cognex.com (10.3.160.222) by
- USNAEXCP2.pc.cognex.com (10.3.160.222) with Microsoft SMTP Server (TLS) id
- 15.0.1044.25; Thu, 4 Feb 2016 11:27:56 -0500
-Received: from USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a]) by
- USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a%18]) with mapi id
- 15.00.1044.021; Thu, 4 Feb 2016 11:27:55 -0500
-Thread-Topic: git 2.7.0 crashes when top-down memory allocation preference is
- set
-Thread-Index: AdFemzxLzKR7onqfTxCtkbzxea41AwAGsZHQACUAXYAAAOGvwAAPTLAAAAiHh5A=
-In-Reply-To: <alpine.DEB.2.20.1602041628180.2964@virtualbox>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.3.128.111]
+	id S1753688AbcBDRk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 12:40:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62068 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750885AbcBDRk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 12:40:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78C16403B0;
+	Thu,  4 Feb 2016 12:40:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EXmGgtfldr00/EXZJ7Fxx1h9+nA=; b=Mr9Mc3
+	MICqmhppRoxXrO73ySiOhyO50Wt8h0n0d8VWQaoobaKot+8nWDU1kwPYA7iTZIbx
+	ph8SEYw/mu8BxYpXygZI5ii17MYM2iqk5AHAszL9EOKTDS7uxdkWj8LK82cUknXY
+	OfQv3AR269+h1OC87MHvzDYmMz1s1I8CUgR9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IKTr5mst6yy+QDEIYUY636Lbq2/0DVua
+	clypx2YiIlRFclojCfZjpjSOOvX5tYzg9hr1JMth73B5NHmaiLoplGEjL/oBI2uP
+	A8YYzTG2G/m3SRc6XQjEA9KjqsyS0vM+pZHO0CPivisO9D0DJt2GgjxYCBCSBRGC
+	dGBI7So4Uz0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F5BE403AF;
+	Thu,  4 Feb 2016 12:40:56 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D8DC3403AE;
+	Thu,  4 Feb 2016 12:40:55 -0500 (EST)
+In-Reply-To: <20160204071919.GA14032@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 4 Feb 2016 02:19:19 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 71AE7286-CB66-11E5-874C-BE4D6BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285469>
 
-Thanks for confirming it. I hope a fix is available soon. I am using a very old version of Git at the moment to work around this issue, which doesn't comply to the requirement of our Stash Git Server from Atlassian.
+Jeff King <peff@peff.net> writes:
 
-Best regards,
+> For local repository operations, most of them are about reading data.
+> And there I generally favor performance over extra validation, with the
+> caveat that we should always be aware of the tradeoff. An extra
+> comparison to make sure we are not going out-of-bounds on a pack .idx
+> pointer is cheap. Loading a blob just to make sure its sha1 is valid
+> before we mention it in `diff --raw` output is stupid. Checking the sha1
+> on objects we are otherwise accessing is somewhere in between. :)
+>
+> For local write operations, like repacking, we should err on the careful
+> side. And I think we do a good job of balancing performance and
+> validation there (e.g., we reuse deltas without reconstructing the
+> object, but _with_ a crc check on the delta data itself).
 
-Xia
+OK, that is a reasonable set of rules.  We can say "checkout" is
+writing out the contents to the filesystem, and make the "somewhere
+in between" be closer to the "error on the careful side".
 
------Original Message-----
-From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-Sent: Thursday, February 04, 2016 10:29 AM
-To: Klinger, Xia
-Cc: git@vger.kernel.org
-Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is set
+>> In fact, we do this, which is quite suboptimal:
+>> 
+>>         static int fsck_sha1(const unsigned char *sha1)
+>>         {
+>>                 struct object *obj = parse_object(sha1);
+>>                 if (!obj) {
+>>                         errors_found |= ERROR_OBJECT;
+>>                         return error("%s: object corrupt or missing",
+>>                                      sha1_to_hex(sha1));
+>>                 }
+>>                 obj->flags |= HAS_OBJ;
+>>                 return fsck_obj(obj);
+>>         }
+>> 
+>> This function is called for each loose object file we find in
+>> fsck_object_dir(), and there are a few problems:
+>> 
+>>  * The function parse_object() called from here would issue an error
+>>    message and returns NULL; then you get another "corrupt or
+>>    missing" error message, because this code cannot tell from the
+>>    NULL which is the case.
+>> 
+>>  * The intent of the callchain to fsck_sha1() is to iterate over
+>>    loose object files xx/x{38} and validate what is contained in
+>>    them, but that behaviour is not guaranteed because it calls
+>>    parse_object(), which may get the object data from a packfile
+>>    if the loose object is also in the packfile.
+>> 
+>> This function should instead take "path" (the only caller of this
+>> function fsck_loose() has it), read the data in the file, hash the
+>> data to validate that it matches "sha1" and then create the object
+>> out of that data it read by calling parse_object_buffer().
+>
+> Yeah, I agree. I think as it is written, we also end up loading the
+> loose objects twice (once in parse_object, and then later again in
+> fsck_object to do the real work). Your solution would fix that, too.
+> ...
+> I guess nobody has really noticed either issue, because repositories
+> large enough for it to make a difference will usually be packed.
 
-Hi,
-
-On Thu, 4 Feb 2016, Klinger, Xia wrote:
-
-> I am not sure the Fast Track release means. Do you refer to Windows 10 
-> builds (updates)? I am running Windows 7 x64 and haven't gone to 
-> Windows 10.
-
-The Fast Track release to which I referred is indeed Windows 10. In the meantime, I verified that the problem you described still exists on Windows 10, but has nothing to do with the issue 627 in Git for Windows'
-bug tracker.
-
-Ciao,
-Johannes
+I'll throw it in the leftover-bits list, then ;-)
