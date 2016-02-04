@@ -1,116 +1,104 @@
-From: Santiago Torres <santiago@nyu.edu>
-Subject: Re: [PATCH v3 4/4] tag: use pgp_verify_function in tag -v call
-Date: Mon, 4 Apr 2016 00:12:04 -0400
-Message-ID: <20160404041203.GE28933@LykOS>
-References: <1459638975-17705-1-git-send-email-santiago@nyu.edu>
- <1459638975-17705-5-git-send-email-santiago@nyu.edu>
- <20160403045600.GD1519@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-completion.bash: always swallow error output of
+ for-each-ref
+Date: Thu, 4 Feb 2016 06:13:07 -0500
+Message-ID: <20160204111307.GA30495@sigill.intra.peff.net>
+References: <56B32953.2010908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 04 06:12:16 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, szeder@ira.uka.de,
+	Junio C Hamano <gitster@pobox.com>, tr@thomasrast.ch
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 12:13:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1amvs7-0004YI-KW
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Apr 2016 06:12:15 +0200
+	id 1aRHqf-0004KS-TR
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 12:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbcDDEMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Apr 2016 00:12:08 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:33361 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbcDDEMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Apr 2016 00:12:07 -0400
-Received: by mail-qk0-f180.google.com with SMTP id s5so58334744qkd.0
-        for <git@vger.kernel.org>; Sun, 03 Apr 2016 21:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1HznTSn1bTYI7Feg42aB2A/2XIjPt1ezNIqrnkrLjcs=;
-        b=IFFI8gAD41Op0NaeFKhY7LUBA9aFC20lPxBV7ATB/X68W8LihgDzmRO2ar20hjHD8X
-         v5HHnqgQr4jzIyS58PoIZJFYfo5PgtNrazI8iJL7g8ytSY76NdDTQiggs096MiYKuX3E
-         agcOAQymGpYUURc9jIdwbchu/47Ra57qGIkyvM3W6PpDeQwS9hAaUb7sbb6dqH8P1Neq
-         1rcROPPy5duS0VVBT9J/ZUc0XgHl56hTY87rB5J3B6XQl/MKRWtteqNOX+EQnExCh/bl
-         GtXvWWDXMDtzLTlFfZrLRd8VBT18PJ5BU2UcFBI3y8mL9FHFs4Jz+ktgTJaJ5UDhuoXR
-         h/pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1HznTSn1bTYI7Feg42aB2A/2XIjPt1ezNIqrnkrLjcs=;
-        b=hL0BvUsiHD7GYGbJoKSRSm5CgJlDQvR+unsQnFGTiYF8cthp+lcxZ+taosCdBcE1HI
-         LtnjdEWt1LXR42IrprUdEM36qhCv19ADLZDucjYyAUeef0S0k5tuweDe1lI6jG/9LvAQ
-         Rackpsh1qKI8kLrzaPVTgoDyomhoWtOK4blnaJ5ud1JdZYRR+Jn3uaf96LlwUUf9uqtq
-         zHrcMZTL6/VZYVjVbu1A99yjnA893oeh0kOMm6mCKME3zvZ0zrI7yTXGgjj/7pik4HsY
-         Y/pPAq95y/TCMfj6hvwYTupdXOOmniszSop5YiNCrMqEssQPdudtPd58k47CqBjJJAZp
-         kKaw==
-X-Gm-Message-State: AD7BkJI1yj2fV3BRmr761phUPtYixRGVHgB527a3Q5+vJk8WG3l2sN0ArAHJzeyyU4zt2XPQ
-X-Received: by 10.55.82.6 with SMTP id g6mr6287376qkb.40.1459743126834;
-        Sun, 03 Apr 2016 21:12:06 -0700 (PDT)
-Received: from LykOS ([2604:2000:8183:da00:b6b6:76ff:fe46:8151])
-        by smtp.gmail.com with ESMTPSA id x189sm11509863qhb.43.2016.04.03.21.12.05
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Apr 2016 21:12:06 -0700 (PDT)
+	id S933559AbcBDLNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 06:13:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37409 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932869AbcBDLNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 06:13:10 -0500
+Received: (qmail 26685 invoked by uid 102); 4 Feb 2016 11:13:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:13:10 -0500
+Received: (qmail 2001 invoked by uid 107); 4 Feb 2016 11:13:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 06:13:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 06:13:07 -0500
 Content-Disposition: inline
-In-Reply-To: <20160403045600.GD1519@sigill.intra.peff.net>
+In-Reply-To: <56B32953.2010908@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/290671>
 
-> > diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-> > index f776778..8abc357 100644
-> > --- a/builtin/verify-tag.c
-> > +++ b/builtin/verify-tag.c
-> > @@ -30,6 +30,8 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
-> >  {
-> >  	int i = 1, verbose = 0, had_error = 0;
-> >  	unsigned flags = 0;
-> > +	unsigned char sha1[20];
-> > +	const char *name;
-> >  	const struct option verify_tag_options[] = {
-> >  		OPT__VERBOSE(&verbose, N_("print tag contents")),
-> >  		OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VERIFY_RAW),
-> > @@ -46,8 +48,16 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
-> >  	if (verbose)
-> >  		flags |= GPG_VERIFY_VERBOSE;
-> >  
-> > -	while (i < argc)
-> > -		if (pgp_verify_tag(argv[i++], flags))
-> > +	while (i < argc) {
-> > +		name = argv[i++];
-> > +		if (get_sha1(name, sha1)) {
-> > +			error("tag '%s' not found.", name);
-> >  			had_error = 1;
-> > +		}
-> > +
-> > +		if (pgp_verify_tag(name, NULL, sha1, flags))
-> > +			had_error = 1;
-> > +
-> > +	}
+On Thu, Feb 04, 2016 at 11:34:59AM +0100, Sebastian Schuberth wrote:
+
+> This avoids output like
 > 
-> So this is a good example of the rippling I mentioned earlier.
+>     warning: ignoring broken ref refs/remotes/origin/HEAD
 > 
-> As a side note, it might actually be an improvement for pgp_verify_tag
-> to take a sha1 (so that git-tag is sure that it is verifying the same
-> object that it is printing), but that refactoring should probably come
-> separately, I think.
-> 
-> -Peff
+> while completing branch names.
 
-Just to be sure, this refactoring is something we should still include
-in this set of patches, right? I think that otherwise we'd lose the
-desambigutaion that git tag -v does in this patch.
+Hmm. I feel like this case (HEAD points to a branch, then `fetch
+--prune` deletes it) came up recently and we discussed quieting that
+warning. But now I cannot seem to find it.
 
-I also think that most of the rippling is gone if we use and adaptor as
-you suggested. Should I add a patch on top of this to support a sha1 as
-part for gpg_verify_tag()?
+Anyway, I this is a reasonable workaround. Errors from bash completion
+scripts are almost always going to be useless and get in the way of
+reading your own prompt.
 
-Thanks!
--Santiago.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 15ebba5..7c0549d 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -317,7 +317,7 @@ __git_heads ()
+>  	local dir="$(__gitdir)"
+>  	if [ -d "$dir" ]; then
+>  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+> -			refs/heads
+> +			refs/heads 2>/dev/null
+>  		return
+
+Not really related to your topic, but digging into it caused me to read
+b7dd2d2 (for-each-ref: Do not lookup objects when they will not be used,
+2009-05-27), which is about making sure for-each-ref is very fast in
+completion.
+
+It looks like %(refname:short) is actually kind of expensive:
+
+$ time git for-each-ref --format='%(refname)' refs/tags  >/dev/null
+
+real    0m0.004s
+user    0m0.000s
+sys     0m0.004s
+
+$ time git for-each-ref --format='%(refname:short)' refs/tags >/dev/null
+
+real    0m0.009s
+user    0m0.004s
+sys     0m0.004s
+
+The upcoming refname:strip does much better:
+
+$ time git for-each-ref --format='%(refname:strip=2)' refs/tags >/dev/null
+
+real    0m0.004s
+user    0m0.000s
+sys     0m0.004s
+
+Obviously these are pretty small timings from my git.git with ~600 tags,
+but you can see that refname:short really does cost more.  On a more
+ridiculous example repository I have with about 10 million refs, the
+timings are more like 5s, 66s, 5.5s.
+
+Just thought I'd throw that our there in case any completion people feel
+like poking around with it.
+
+-Peff
