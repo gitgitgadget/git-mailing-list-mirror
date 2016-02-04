@@ -1,115 +1,82 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/3] Fix $((...)) coding style
-Date: Thu, 4 Feb 2016 15:53:16 +0000
-Message-ID: <20160204155316.GI29880@serenity.lan>
-References: <cover.1454587284.git.johannes.schindelin@gmx.de>
- <20160204121437.GF29880@serenity.lan>
- <alpine.DEB.2.20.1602041334450.2964@virtualbox>
- <20160204130111.GG29880@serenity.lan>
- <alpine.DEB.2.20.1602041411520.2964@virtualbox>
- <20160204140609.GH29880@serenity.lan>
- <alpine.DEB.2.20.1602041619430.2964@virtualbox>
+From: "Klinger, Xia" <Xia.Klinger@cognex.com>
+Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is
+ set
+Date: Thu, 4 Feb 2016 16:27:55 +0000
+Message-ID: <9854ccd81e624ee9a8f721a871bda4b2@USNAEXCP2.pc.cognex.com>
+References: <9e3cc44087134954a3414fa8998c3ce6@USNAEXCP2.pc.cognex.com>
+ <alpine.DEB.2.20.1602040844330.2964@virtualbox>
+ <43fbdf617f8d412db7b0d5c7d06df3ad@USNAEXCP2.pc.cognex.com>
+ <alpine.DEB.2.20.1602041628180.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Elia Pinto <gitter.spiros@gmail.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 04 16:53:38 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 17:28:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRMDw-0004fN-Po
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 16:53:37 +0100
+	id 1aRMlc-000513-6n
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 17:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933909AbcBDPxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 10:53:33 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:49215 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933893AbcBDPxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 10:53:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id E20CDCDA587;
-	Thu,  4 Feb 2016 15:53:31 +0000 (GMT)
-X-Quarantine-ID: <HeNwV8noz9e8>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id HeNwV8noz9e8; Thu,  4 Feb 2016 15:53:29 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 6792ECDA595;
-	Thu,  4 Feb 2016 15:53:18 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1602041619430.2964@virtualbox>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S965346AbcBDQ2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 11:28:01 -0500
+Received: from mx2.cognex.com ([198.232.29.14]:11619 "EHLO mx2.cognex.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934265AbcBDQ15 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 11:27:57 -0500
+Received: from galileo.cognex.com ([10.10.128.32])
+  by mx2.cognex.com with ESMTP; 04 Feb 2016 11:27:56 -0500
+Received: from USNAEXCP2.pc.cognex.com (alt1adc1pip [10.10.128.111])
+	by galileo.cognex.com (8.14.3/8.14.3) with ESMTP id u14GRuBP026148;
+	Thu, 4 Feb 2016 11:27:56 -0500 (EST)
+Received: from USNAEXCP2.pc.cognex.com (10.3.160.222) by
+ USNAEXCP2.pc.cognex.com (10.3.160.222) with Microsoft SMTP Server (TLS) id
+ 15.0.1044.25; Thu, 4 Feb 2016 11:27:56 -0500
+Received: from USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a]) by
+ USNAEXCP2.pc.cognex.com ([fe80::2d91:f69e:a2bf:334a%18]) with mapi id
+ 15.00.1044.021; Thu, 4 Feb 2016 11:27:55 -0500
+Thread-Topic: git 2.7.0 crashes when top-down memory allocation preference is
+ set
+Thread-Index: AdFemzxLzKR7onqfTxCtkbzxea41AwAGsZHQACUAXYAAAOGvwAAPTLAAAAiHh5A=
+In-Reply-To: <alpine.DEB.2.20.1602041628180.2964@virtualbox>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.3.128.111]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285468>
 
-On Thu, Feb 04, 2016 at 04:27:49PM +0100, Johannes Schindelin wrote:
-> On Thu, 4 Feb 2016, John Keeping wrote:
-> 
-> > On Thu, Feb 04, 2016 at 02:13:47PM +0100, Johannes Schindelin wrote:
-> > > Whatever the outcome, the inconsistency must be fixed.
-> > 
-> > I disagree.  Unless there are other changes in the same area, the noise
-> > isn't worth it.
-> > 
-> > However, I do think we need to agree on a policy so that new code can be
-> > consistent.  This should then be documented in CodingGuidelines.
-> 
-> If you want to enforce it in the future, how can you possibly be against
-> fixing the inconsistency in the existing code? Sorry, I am really unable
-> to understand this.
+Thanks for confirming it. I hope a fix is available soon. I am using a very old version of Git at the moment to work around this issue, which doesn't comply to the requirement of our Stash Git Server from Atlassian.
 
-I avoided quoting CodingGuidelines in my previous message, but it says:
+Best regards,
 
- - Fixing style violations while working on a real change as a
-   preparatory clean-up step is good, but otherwise avoid useless code
-   churn for the sake of conforming to the style.
+Xia
 
-   "Once it _is_ in the tree, it's not really worth the patch noise to
-   go and fix it up."
-   Cf. http://article.gmane.org/gmane.linux.kernel/943020
+-----Original Message-----
+From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+Sent: Thursday, February 04, 2016 10:29 AM
+To: Klinger, Xia
+Cc: git@vger.kernel.org
+Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is set
 
-> Also, we *did* document the policy in the CodingGuidelines:
-> 
-> 	As for more concrete guidelines, just imitate the existing code
-> 
-> So. There you are. By that token, my patch series was the correct thing to
-> do because the first arithmetic expression introduced into a shell script
-> in Git's source code had no spaces.
+Hi,
 
-This is the first point I made.  To take one example, in
-git-filter-branch.sh there are five occurrences of the sequence "$((";
-your patch changes four of them to remove spaces.  If we standardise on
-having spaces only one needs to change:
+On Thu, 4 Feb 2016, Klinger, Xia wrote:
 
-$ git grep -F '$((' origin/master -- git-filter-branch.sh
-origin/master:git-filter-branch.sh:             elapsed=$(($now - $start_timestamp))
-origin/master:git-filter-branch.sh:             remaining=$(( ($commits - $count) * $elapsed / $count ))
-origin/master:git-filter-branch.sh:                     next_sample_at=$(( ($elapsed + 1) * $count / $elapsed ))
-origin/master:git-filter-branch.sh:                     next_sample_at=$(($next_sample_at + 1))
-origin/master:git-filter-branch.sh:     git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
+> I am not sure the Fast Track release means. Do you refer to Windows 10 
+> builds (updates)? I am running Windows 7 x64 and haven't gone to 
+> Windows 10.
 
-I chose git-filter-branch.sh simply because it was touched by this patch
-set but it is not an outlier in this regard.  Some crude statistics
-across all of git.git:
+The Fast Track release to which I referred is indeed Windows 10. In the meantime, I verified that the problem you described still exists on Windows 10, but has nothing to do with the issue 627 in Git for Windows'
+bug tracker.
 
-# No space after plus
-$ git grep -F '$((' | grep '\+[\$0-9]' | wc -l
-34
-
-# With space after plus
-$ git grep -F '$((' | grep '\+ [\$0-9]' | wc -l
-96
+Ciao,
+Johannes
