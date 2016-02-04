@@ -1,110 +1,85 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Thu, 4 Feb 2016 11:34:59 +0100
-Message-ID: <56B32953.2010908@gmail.com>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: COPYING tabs vs whitespaces
+Date: Thu, 4 Feb 2016 11:45:46 +0100
+Message-ID: <56B32BDA.4010909@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: szeder@ira.uka.de, Junio C Hamano <gitster@pobox.com>,
-	tr@thomasrast.ch
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="2lMvqMI6vNnGAlKgr0TCkaL7h9W2wRIeq"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 04 11:36:08 2016
+X-From: git-owner@vger.kernel.org Thu Feb 04 11:46:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRHGf-0003Hk-4L
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:36:05 +0100
+	id 1aRHQe-0006hF-FG
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753203AbcBDKgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 05:36:00 -0500
-Received: from plane.gmane.org ([80.91.229.3]:42072 "EHLO plane.gmane.org"
+	id S1757868AbcBDKqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 05:46:07 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:41323 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932974AbcBDKfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 05:35:06 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aRHFg-00022z-Hg
-	for git@vger.kernel.org; Thu, 04 Feb 2016 11:35:04 +0100
-Received: from 131.228.216.134 ([131.228.216.134])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:35:04 +0100
-Received: from sschuberth by 131.228.216.134 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:35:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 131.228.216.134
-X-Mozilla-News-Host: news://news.gmane.org:119
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+	id S1757979AbcBDKpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 05:45:52 -0500
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (Postfix) with ESMTPS id 0621A5275B
+	for <git@vger.kernel.org>; Thu,  4 Feb 2016 10:45:52 +0000 (UTC)
+Received: from [10.34.4.171] (unused-4-171.brq.redhat.com [10.34.4.171])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u14Ajowb005102
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 4 Feb 2016 05:45:51 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.5.0
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285451>
 
-This avoids output like
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--2lMvqMI6vNnGAlKgr0TCkaL7h9W2wRIeq
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-    warning: ignoring broken ref refs/remotes/origin/HEAD
+Hi,
 
-while completing branch names.
+I found that license file COPYING is different as compared with http://ww=
+w.gnu.org/licenses/gpl-2.0.txt
+If I pass over with Linus's preamble, change is only about whitespaces - =
+tabs vs. space.
+Probably it's minor non-essential change, but some projects do this chang=
+e, so rather I ask about that.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- contrib/completion/git-completion.bash | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 15ebba5..7c0549d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -317,7 +317,7 @@ __git_heads ()
- 	local dir="$(__gitdir)"
- 	if [ -d "$dir" ]; then
- 		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
--			refs/heads
-+			refs/heads 2>/dev/null
- 		return
- 	fi
- }
-@@ -327,7 +327,7 @@ __git_tags ()
- 	local dir="$(__gitdir)"
- 	if [ -d "$dir" ]; then
- 		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
--			refs/tags
-+			refs/tags 2>/dev/null
- 		return
- 	fi
- }
-@@ -355,14 +355,14 @@ __git_refs ()
- 			;;
- 		esac
- 		git --git-dir="$dir" for-each-ref --format="%($format)" \
--			$refs
-+			$refs 2>/dev/null
- 		if [ -n "$track" ]; then
- 			# employ the heuristic used by git checkout
- 			# Try to find a remote branch that matches the completion word
- 			# but only output if the branch name is unique
- 			local ref entry
- 			git --git-dir="$dir" for-each-ref --shell --format="ref=%(refname:short)" \
--				"refs/remotes/" | \
-+				"refs/remotes/" 2>/dev/null | \
- 			while read -r entry; do
- 				eval "$entry"
- 				ref="${ref#*/}"
-@@ -1835,7 +1835,7 @@ _git_config ()
- 		remote="${remote%.push}"
- 		__gitcomp_nl "$(git --git-dir="$(__gitdir)" \
- 			for-each-ref --format='%(refname):%(refname)' \
--			refs/heads)"
-+			refs/heads 2>/dev/null)"
- 		return
- 		;;
- 	pull.twohead|pull.octopus)
--- 
-2.7.0.windows.1
+
+Regards,
+Petr
+
+
+--2lMvqMI6vNnGAlKgr0TCkaL7h9W2wRIeq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWsyvaAAoJEPiGu5hNgNqPb6IP/jBRECfA2p4q/mAoDMlaUDKH
+DPpBk96kJA2YQRAAJG/BJqNddongGdmW1WjPGfl2ifc3ScZ/iIiapObA1aiktO01
+xqSdf2PgSb3vGRNBuf8pLb5CfnTxhvCgVp2jFO20poy3tK+4YZIvDMAjMYi5UjEH
+Ki4wZA8SMR5sN7tuh/FgebExWgLcFRADdg+y+6XB4xCdEGaZYQyEfpleTb6CaeJG
+VkVbzYLhbtMuwZjrtailo0iWOwbWMNPC+nrR1K9nCDiOIY3PdIEhCrSEHBxi5KG9
+VVY16HHy6kwyq1BbZiLzfVFiw64iCUuOQLibv+3QlYu22x24c9BbAcjYtzO/W3aa
+wKrHdBOOQ0YHWKw41qZV+v1jO3HeCrT+8+Nr50MTNC0Kke9PVngDjQDzfehITjx9
+M3v9cdL4wwvCsviELKlfyoziWyoSwdgO7s7EmdQeHkvR1XTEb2IwTAEgpTEr1KgL
+tcVKci4Dz5SF44pQkFO76Qv7EXgFPKlLwtTagL/L/+IQjhJvnXEMOZwUfBtg6jS5
+skeHqDYw7EK3uHup3CzBK3M9z14wIhrOl14EH78b0vuNoh0AsJ7dxgRrtm8dqgva
+Bp0gWTpuqy0fOTAJ/LC7gUfxnTE9n/KxVnyhbt22tK2u/8/fohzK+hBRbsXpxLIx
+S89MCCksI73sQA1kiX0/
+=A0LO
+-----END PGP SIGNATURE-----
+
+--2lMvqMI6vNnGAlKgr0TCkaL7h9W2wRIeq--
