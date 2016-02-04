@@ -1,111 +1,154 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] Add user.explicit boolean for when ident shouldn't be
- guessed
-Date: Thu, 4 Feb 2016 00:50:35 -0500
-Message-ID: <20160204055035.GA13537@sigill.intra.peff.net>
-References: <1454442861-4879-1-git-send-email-alonid@gmail.com>
- <20160203035648.GA20732@sigill.intra.peff.net>
- <20160203082112.GA27454@gmail.com>
- <CAPig+cSWN-wpcooqmYtFfZoDYpkhLoezSeu6bm9rSTvZ72jSEQ@mail.gmail.com>
- <20160203192227.GA13878@gmail.com>
- <20160204040111.GA27371@sigill.intra.peff.net>
- <20160204053646.GA24453@gmail.com>
+Subject: Re: parse_object does check_sha1_signature but not
+ parse_object_buffer?
+Date: Thu, 4 Feb 2016 02:19:19 -0500
+Message-ID: <20160204071919.GA14032@sigill.intra.peff.net>
+References: <20160202015701.GA30444@glandium.org>
+ <xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
+ <20160202043628.GA10253@glandium.org>
+ <xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Dan Aloni <alonid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 06:50:43 2016
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 08:19:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRCoU-0002nL-Ve
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 06:50:43 +0100
+	id 1aRECO-0006zA-6p
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 08:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932475AbcBDFuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 00:50:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37179 "HELO cloud.peff.net"
+	id S1750834AbcBDHTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 02:19:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37228 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750774AbcBDFui (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 00:50:38 -0500
-Received: (qmail 8996 invoked by uid 102); 4 Feb 2016 05:50:38 -0000
+	id S1750724AbcBDHTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 02:19:23 -0500
+Received: (qmail 13826 invoked by uid 102); 4 Feb 2016 07:19:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 00:50:38 -0500
-Received: (qmail 31463 invoked by uid 107); 4 Feb 2016 05:50:37 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:19:23 -0500
+Received: (qmail 32291 invoked by uid 107); 4 Feb 2016 07:19:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 00:50:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 00:50:35 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:19:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 02:19:19 -0500
 Content-Disposition: inline
-In-Reply-To: <20160204053646.GA24453@gmail.com>
+In-Reply-To: <xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285400>
 
-On Thu, Feb 04, 2016 at 07:36:46AM +0200, Dan Aloni wrote:
+On Tue, Feb 02, 2016 at 11:25:44AM -0800, Junio C Hamano wrote:
 
-> > In a sense, that encourages a nice workflow for your intended feature.
-> > You have to do:
-> > 
-> >   git clone -c user.name=... -c user.email=... clone ...
-> > 
-> > to set up your ident in the newly-cloned repository, or else clone will
-> > yell at you. But it's a little unfriendly. If you are just cloning to
-> > view and not make commits, you don't need your ident set up. And worse,
-> > if you forget to add your "-c" ident, clone will go through the trouble
-> > to copy all of the objects, and only then complain about your ident.
+> Having said that, I do not necessarily think "git checkout" should
+> revalidate the object name.  The repository that you use for your
+> daily work would have the same error/corruption rate as your working
+> tree files, and I do not think you would constantly "validate" what
+> is in your working tree by comparing their contents with what you
+> think ought to be there.
+
+No, but there is a question of how much it costs to do so.
+
+In the past, I've spent a lot of time trying to speed up object access,
+but it was usually about replacing `parse_object` with
+`lookup_object` or similar to avoid loading from disk in the first
+place, as most of the time goes to zlib. If we are accessing the object
+already (and obviously we have to for something like checkout), I'm not
+sure what the marginal cost is of computing the sha1 on the data as it
+passes through.
+
+It might be significant, but I don't have numbers.
+
+If it's not, then I think it's a nice feature that we would notice
+problems earlier rather than later.
+
+> If you are working on extremely poor quality disks and SSDs, it
+> might make sense to constantly revalidating the object data to catch
+> corruption early, as that is what we can do (as opposed to the
+> working tree files, corruption to which you probably do not have
+> anything to catch bitflipping on).
+
+Hopefully if your working tree files bit-flip, then you notice via `git
+diff`. I guess you wouldn't for stat-clean ones. But if a bit flips in
+the forest, and it's not stat-dirty enough for anyone to hear it, does
+it make a sound?
+
+> http://article.gmane.org/gmane.comp.version-control.git/283380 (not
+> necessarily the entire thread, but that exact article) is a
+> reasonable summary that illustrates the way how we view the object
+> integrity.
 > 
-> I think that forcing to give the configuration in 'git clone' could be
-> problematic for automated tools (e.g. o build) that invoke 'git clone'
-> just for building purposes (i.e. read-only) to a tool-managed directory.
-> And what about sub-modules clones? It would be hard to distinguish manual
-> clones and automatic clones anyway.
+>     So "index-pack" is the enforcement point, and the rest of the
+>     git commands generally assume that we can trust what is on disk
+>     (as it is has either been generated by us, or checked by
+>     index-pack).  The rest of the commands do not spend time
+>     checking that the on-disk contents are sane (though you can run
+>     git-fsck if you want to do that).
 
-Yeah. I sort of assumed that people with automated tools _wouldn't_ set
-user.explicit. But even with that assumption, I think it's too
-unfriendly to continue.
+I think that's me your quoting. I was specifically talking about
+malicious tampering there. Which isn't to say I disagree with the
+world-view you're proposing, but I think for random errors it's a little
+more complicated. We certainly should be checking incoming data (and we
+do).
 
-> > So I'd argue that this should only kick in for the strict case. Which
-> > means the check _has_ to go into fmt_ident, and we have to somehow
-> > inform fmt_ident of the four cases:
-> [...]
+For local repository operations, most of them are about reading data.
+And there I generally favor performance over extra validation, with the
+caveat that we should always be aware of the tradeoff. An extra
+comparison to make sure we are not going out-of-bounds on a pack .idx
+pointer is cheap. Loading a blob just to make sure its sha1 is valid
+before we mention it in `diff --raw` output is stupid. Checking the sha1
+on objects we are otherwise accessing is somewhere in between. :)
+
+For local write operations, like repacking, we should err on the careful
+side. And I think we do a good job of balancing performance and
+validation there (e.g., we reuse deltas without reconstructing the
+object, but _with_ a crc check on the delta data itself).
+
+> In fact, we do this, which is quite suboptimal:
 > 
-> Looks like an enum type would be better here instead of a set of booleans.
-
-Yeah, if we can actually split the state space into the 4 cases, I agree
-an enum would be easier to follow. I'm not 100% sure that my cases map
-completely to what the code does now, though.
-
-> > I also wonder if we could simply expose the 4 levels of above in a
-> > variable, and default it to type-3. That would let people loosen or
-> > tighten as they see fit. But it would be a more complicated patch, so if
-> > nobody really cares about it beyond this use case, it may be overkill.
+>         static int fsck_sha1(const unsigned char *sha1)
+>         {
+>                 struct object *obj = parse_object(sha1);
+>                 if (!obj) {
+>                         errors_found |= ERROR_OBJECT;
+>                         return error("%s: object corrupt or missing",
+>                                      sha1_to_hex(sha1));
+>                 }
+>                 obj->flags |= HAS_OBJ;
+>                 return fsck_obj(obj);
+>         }
 > 
-> I get the impression from this and your later E-Mails that there are
-> much more cases to cover when testing this feature (and I would not
-> like to break stuff implementing this, obviously).
+> This function is called for each loose object file we find in
+> fsck_object_dir(), and there are a few problems:
 > 
-> The code should be cleaned up anyway. I only delved into that code for
-> the first time two days ago, so it would take me more time to come up
-> with a new one (though reading your overview here of the cases is going
-> to be helpful, thanks).
+>  * The function parse_object() called from here would issue an error
+>    message and returns NULL; then you get another "corrupt or
+>    missing" error message, because this code cannot tell from the
+>    NULL which is the case.
+> 
+>  * The intent of the callchain to fsck_sha1() is to iterate over
+>    loose object files xx/x{38} and validate what is contained in
+>    them, but that behaviour is not guaranteed because it calls
+>    parse_object(), which may get the object data from a packfile
+>    if the loose object is also in the packfile.
+> 
+> This function should instead take "path" (the only caller of this
+> function fsck_loose() has it), read the data in the file, hash the
+> data to validate that it matches "sha1" and then create the object
+> out of that data it read by calling parse_object_buffer().
 
-Feel free to look into this direction, but having pushed a little
-further towards the "simple" approach (with the 2 patches I just sent),
-I think that does what you want without too much complication. I'd be
-fine, too, if you wanted to pick those up[1] and put the finishing
-touches on the second one.
+Yeah, I agree. I think as it is written, we also end up loading the
+loose objects twice (once in parse_object, and then later again in
+fsck_object to do the real work). Your solution would fix that, too.
+
+It looks like we _don't_ load loose commits twice, though. We never turn
+off save_commit_buffer, so we happily cache the buffer for every single
+commit, even though we won't need it again after fsck_object returns.
+
+I guess nobody has really noticed either issue, because repositories
+large enough for it to make a difference will usually be packed.
 
 -Peff
-
-[1] To clarify, since you are new to the git.git workflow: I'd expect
-    you to use `git am` to pick up my two patches. Leave me as the
-    author of the first cleanup patch. Squash your additions onto the
-    second one using `cherry-pick`, `commit --amend`, or whatever, and
-    make sure to `commit --reset-author` so that you're the author. Post
-    both as part of the v4 re-roll.
-
-    But that's just "here is what I meant", not "what you have to do". :)
