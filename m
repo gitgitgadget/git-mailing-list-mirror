@@ -1,77 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: COPYING tabs vs whitespaces
-Date: Thu, 04 Feb 2016 11:15:08 -0800
-Message-ID: <xmqqsi18i8xv.fsf@gitster.mtv.corp.google.com>
-References: <56B32BDA.4010909@redhat.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 13/20] refs: resolve symbolic refs first
+Date: Thu, 04 Feb 2016 14:24:43 -0500
+Organization: Twitter
+Message-ID: <1454613883.5545.4.camel@twopensource.com>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+	 <1452788777-24954-14-git-send-email-dturner@twopensource.com>
+	 <20160204073742.GA20162@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Petr Stodulka <pstodulk@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 20:15:20 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 04 20:24:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRPN9-0007WR-G6
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:15:19 +0100
+	id 1aRPWO-0002WG-1C
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 20:24:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756984AbcBDTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 14:15:12 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52432 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756943AbcBDTPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 14:15:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 701CE3FD8A;
-	Thu,  4 Feb 2016 14:15:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=29gPU53tscFxuFJlojGcN5yu6pI=; b=gj6eDU
-	b/G9iPl5yk+/diD8H0vr4lZmM1ZBJG+cvQCMhCamtitKZO409V+KuUUsfqr4p8zz
-	eu1xQc9CQb7pnOzNIPcwHL5hPaXV0uhxPcyljoVFgi0fIlVCDQNh5IB/Rc/v73OK
-	WC+dn7kBPcLD1eK4NxQwm3n/Ob1hb8L1QonyA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uo8NpTYgq9AXUXZrI4XbEsFM66zpT1jc
-	BcUGt1QiRrUxNR0p1B4Q5ouvLe0b4qRvAquMbbpVK7EzxtmRiKYIJoxVja2igdKG
-	6JP0W0VrQtZ5cJXYaQe8cFKg/nQKrinc4rKAer73Yg4vi4ZVNcPJOShiTeA4l6e6
-	9FxoC9gT9PU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 671853FD89;
-	Thu,  4 Feb 2016 14:15:10 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C15093FD87;
-	Thu,  4 Feb 2016 14:15:09 -0500 (EST)
-In-Reply-To: <56B32BDA.4010909@redhat.com> (Petr Stodulka's message of "Thu, 4
-	Feb 2016 11:45:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9BAB3D50-CB73-11E5-905E-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S966181AbcBDTYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 14:24:47 -0500
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:35424 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966176AbcBDTYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 14:24:46 -0500
+Received: by mail-qg0-f47.google.com with SMTP id o11so50057554qge.2
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 11:24:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=gFkU+fx4XVLiBYFlz/t1EoHC91hQxDWb4jyfYvnRCYc=;
+        b=xfnyrZOd66p7DQhaECT/+2kZ0hDr2URdixVLrLxvkNCijCnJCepbpk3inPYJkD9FUf
+         47a4eo97kIPgeTcn1KS0aebSXZwXEXp5qkZavrhs36oN8o29ZPAEE94gofPXIy4W2Sk+
+         OAW4X1mI54JzYkscqMV0Nud+IMVc/BRczLlBmmxtYJqTgx7PbtPodcMVzaY2FM7BwG9I
+         ZXlfeY01v+fH2O1zzKjInBnCidWRJ+S+qm+Vn+QrvBINYynZivG3k2jigWiEJBmqEJsq
+         E17Qfd/Qc63FAVvFuDkAf7gIMj3tfeO36bFhNyJrMHGKV2febFFJo1tzxi7NHdUhdiPa
+         R8Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=gFkU+fx4XVLiBYFlz/t1EoHC91hQxDWb4jyfYvnRCYc=;
+        b=aV/YKz50olSPZLfPmX+NHfa8a0ZnsajHn3Vb3+USUuhPN4ZSlqngA1BkZ/B+2dnV60
+         J/LKwgzPywFxWtaUUjror/A07ZFnR0Z5pNx8zY5LraNl3Q7fmMdNY1C4wWU8qO4Uv6lu
+         rvhfCDHENeDL34H5lanVWUN8/QOUtcpqPjVL7eHEc7kCGdjU9fy/ek13DXHKfzwkra3/
+         RxePXxEQAUDSAMUegTWT4fqsKC5PvkKcgx+Bu2mAJtCxINZxbX8VDCprw/nBlL/EZpDu
+         cx6Hu5WSqp2PVUAGdxv/mRShev1gCfxeXuSGhBX+fO+5CaU6im5Tl2QBnLyH0C4OCp1d
+         9FcQ==
+X-Gm-Message-State: AG10YORUGt+rAH06i9exIqe1YDGOsE0ySfEHsm0PnXr3vRn9h7ksYBpds61YFV2bdRd+Tw==
+X-Received: by 10.140.131.17 with SMTP id 17mr12095801qhd.12.1454613885300;
+        Thu, 04 Feb 2016 11:24:45 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id s81sm5901582qkl.36.2016.02.04.11.24.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 04 Feb 2016 11:24:44 -0800 (PST)
+In-Reply-To: <20160204073742.GA20162@sigill.intra.peff.net>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285480>
 
-Petr Stodulka <pstodulk@redhat.com> writes:
+On Thu, 2016-02-04 at 02:37 -0500, Jeff King wrote:
+> On Thu, Jan 14, 2016 at 11:26:10AM -0500, David Turner wrote:
+> 
+> > +static int dereference_symrefs(struct ref_transaction
+> > *transaction,
+> > +			       struct strbuf *err)
+> > +{
+> > +	int i;
+> > +	int nr = transaction->nr;
+> > +
+> > +	for (i = 0; i < nr; i++) {
+> > +		struct ref_update *update = transaction
+> > ->updates[i];
+> > +		const char *resolved;
+> > +		unsigned char sha1[20];
+> > +		int resolve_flags = 0;
+> > +		int mustexist = (update->old_sha1 &&
+> > +				 !is_null_sha1(update->old_sha1));
+> 
+> Coverity complains about this last line, as "update->old_sha1" is an
+> array. I think you want to check "update->flags & REF_HAVE_OLD"
+> instead?
 
-> I found that license file COPYING is different as compared with
-> http://www.gnu.org/licenses/gpl-2.0.txt If I pass over with
-> Linus's preamble, change is only about whitespaces - tabs
-> vs. space.  Probably it's minor non-essential change, but some
-> projects do this change, so rather I ask about that.
-
-Interesting.  I cannot quite connect "some projects do this change"
-and "so rather I ask".  Are you asking why this project changed it?
-
-After running "diff" between the two, I think the changes are only
-on the indented section title lines, and "git blame" tells us that
-the section title lines in the copy we have has always been that way
-since Linus added to it at 075b845a (Add a COPYING notice, making it
-explicit that the license is GPLv2., 2005-04-11).
-
-So, perhaps the copy Linus got originally had leading runs of spaces
-that are multiples-of-8-long unexpanded to leading tabs back then,
-or perhaps he did that unexpanding himself.
+Yeah, that's right.  Thanks.
