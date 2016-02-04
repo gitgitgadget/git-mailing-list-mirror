@@ -1,75 +1,104 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 00/20] refs backend rebase on pu
-Date: Thu, 4 Feb 2016 17:09:48 +0700
-Message-ID: <CACsJy8Cw9CM+EBw85KM1RcDAsRY8LbTFWFUq0dLSHWY0NLPZMA@mail.gmail.com>
-References: <1452788777-24954-1-git-send-email-dturner@twopensource.com> <1454443734.5545.1.camel@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 11:10:31 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 14/15] git-am.sh: replace using expr for arithmetic operations with the equivalent shell builtin
+Date: Thu,  4 Feb 2016 10:20:58 +0000
+Message-ID: <1454581259-57095-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 04 11:21:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRGru-0007IA-Vn
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:10:31 +0100
+	id 1aRH2L-0002U6-Od
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 11:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327AbcBDKKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 05:10:25 -0500
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:33708 "EHLO
-	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754355AbcBDKKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 05:10:19 -0500
-Received: by mail-lf0-f45.google.com with SMTP id m1so33275628lfg.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 02:10:18 -0800 (PST)
+	id S933633AbcBDKVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 05:21:07 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33160 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933304AbcBDKVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 05:21:04 -0500
+Received: by mail-wm0-f66.google.com with SMTP id r129so11462507wmr.0
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 02:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=135YvpoO4e5hkgm9UaT1sgaU0hZxz+wHY0aFTft14sM=;
-        b=ogofD6XjHYIgLKpw9zGh52x2n590CDBOBDmtj1c96SyUOIzx16wt6U2emCVRoLWmEt
-         pDWX6MABciEgKoiTpI7YJ4RMEsRX8ss4aCXFRZj1aSXHWU/TyL/d6K8pvMDYzDVMzqFh
-         JMVEjmr1QzSs+usfVhIKJTZIt2EO7uWzAE3UyxToIQw1g4R1FkZ0xcZvpHqtuYwFcNzT
-         JbKCRnXecbJzplyPEX/d+o2avo/H5fkJMm6ObaEGlqq08Bk9GAVRpFcORvY9QJ9hHovv
-         tSngPX47q3XZ/+7SbuQetUe3avK0BZTcuKc9qYDi7hB3cUh5L7NtJOInqtODbRkGOtQJ
-         Hezg==
+        h=from:to:cc:subject:date:message-id;
+        bh=La/9od9o8YY0A6772xliWHwrzWlVsaEOVAHz9eAkVyk=;
+        b=hheh7EZWBVEnfqmz9HSYutKBUFWA4P5tnPj3pX7HH7hW0iUf607SgXZkbdO7CzhajW
+         ufuPOkYv67ry8/0ItEhzSFG22RMaz/TZfqVge8VKqhyUkZr0hW8i94OdMsc4sKRE46M7
+         haM/dJnZOVso9yybj/N2jbbNV4QtcU83pDv8Pm4bi47hGBjssBuoNcUMe6XRZc9CWcEA
+         kuRrEcDlcRpvwlsP4ht0bStgLQiRjkXYlwyvSKwgUaIURiKuRIQkqrzWOc2koRTEfnKN
+         nWA2xelOWHU/ZJYUR0BdiyYfZV0lZaV9HqQIWcuXzOP+EC8N013SgV0p9++AOHxZPtDB
+         Q5Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=135YvpoO4e5hkgm9UaT1sgaU0hZxz+wHY0aFTft14sM=;
-        b=eL7eBmrTsDK+ZO/MPSOxr2N777VlGwHdRB4ke7TAfS9rzdVuMERgrh2SzYqjAG73ff
-         GPI+kVri6q6nWbh/+XYLJ50PriyC/wnRxSbizWPvmCcqU+sh4c8mB54imQl3TYRIF8SZ
-         /N1E4cce+Rnyo+45P/1Va2xyT2p+k5CzqwJf62zM1WDemtHNslxvh9CuJFh7iWKWM2uL
-         /Qq5YezGQqfiHCf9BuCqxRaoBvHzO5/tr+IwTZg2lLbd2pB/31aLRpdqBcUbCma7ukQr
-         RaQpyYDls+kB6arq1iIIVvVYZmn7N4HXSY2I3amIktz6Ck99xwUxHUFalTHChuEbyBxv
-         UHNw==
-X-Gm-Message-State: AG10YOSys2HmmCVhQOMSlQr2NQ20CHknn1+Mp9pzjGXeq+vy3MRf0uXGsK4koai1REWqpGDYErQ7krzauh/Mwg==
-X-Received: by 10.25.43.212 with SMTP id r203mr3155945lfr.162.1454580617696;
- Thu, 04 Feb 2016 02:10:17 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 4 Feb 2016 02:09:48 -0800 (PST)
-In-Reply-To: <1454443734.5545.1.camel@twopensource.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=La/9od9o8YY0A6772xliWHwrzWlVsaEOVAHz9eAkVyk=;
+        b=KOBZin5EZTxN7q/J+3axMObv5cxFUlmhqyyNnTPxxGe2IL2l7Y98AvkjF36aWRJ7rQ
+         qNvsgrwOOH5QXUBI/PzXNuVqhkPD+vycU83Xut7DyGLYCt1xZI3Ht79iNpU9DT3YbKpf
+         Y33xSR7r62in2fT41P9KMfjZzGMd4s2HWN3sAEXtPO9AZDrVUf0a/lwK164LOn6uWLEz
+         7u8rdqvvBfhgilgo1c7X5qRcqnviIE+bfgXv8oIS2U8WI+6ADtnBdLMchewyRJ+uJpft
+         K16xss1eTgbTAB9+v5GCO1UpX1kfdQGWN86cOATaR7xuDM1r+76Qovbp89sf87e3W7Vx
+         XuEg==
+X-Gm-Message-State: AG10YOR/q5b0E4suK5OCnqILLt87rKqViws/f4ojXcdpF5b4aXyY6fFLCxlpmR8FK7zV2w==
+X-Received: by 10.28.111.10 with SMTP id k10mr21585699wmc.86.1454581263368;
+        Thu, 04 Feb 2016 02:21:03 -0800 (PST)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
+        by smtp.gmail.com with ESMTPSA id u4sm10636107wjz.4.2016.02.04.02.21.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 04 Feb 2016 02:21:02 -0800 (PST)
+X-Mailer: git-send-email 2.0.0.rc3.377.gb2ff043
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285448>
 
-On Wed, Feb 3, 2016 at 3:08 AM, David Turner <dturner@twopensource.com> wrote:
-> Are there any more reviews on this?  I do have some changes from this
-> set, but they're pretty minor so I don't want to post a new one (unless
-> folks would rather see those changes before reviewing).  Let me know.
+expr is considered generally antiquated. It is best to use for arithmetic operations
+the shell $((..)).
 
-I think you need to keep "refs" directory back somehow. Without it
-(e.g. "git init --ref-storage=lmdb" does not create "refs"),
-is_git_directory() from _old_ git versions fails to recognize this is
-a good repository. So instead of dying on finding an unsupported
-repository, setup code keeps on looking for another repository in
-parent directories. If I accidentally run "git add something" with an
-old binary, "something" could be added to a wrong repository. Very
-confusing.
+To quote POSIX:
+
+"The expr utility has a rather difficult syntax [...] In many cases, the arithmetic
+and string features provided as part of the shell command language are easier to use
+than their equivalents in expr. Newly written scripts should avoid expr in favor of
+the new features within the shell."
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ git-am.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index ee61a77..4f8148e 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -298,7 +298,7 @@ split_patches () {
+ 		this=0
+ 		for stgit in "$@"
+ 		do
+-			this=$(expr "$this" + 1)
++			this=$(( "$this" + 1 ))
+ 			msgnum=$(printf "%0${prec}d" $this)
+ 			# Perl version of StGIT parse_patch. The first nonemptyline
+ 			# not starting with Author, From or Date is the
+@@ -656,14 +656,14 @@ last=$(cat "$dotest/last")
+ this=$(cat "$dotest/next")
+ if test "$skip" = t
+ then
+-	this=$(expr "$this" + 1)
++	this=$(( "$this" + 1 ))
+ 	resume=
+ fi
+ 
+ while test "$this" -le "$last"
+ do
+ 	msgnum=$(printf "%0${prec}d" $this)
+-	next=$(expr "$this" + 1)
++	next=$(( "$this" + 1 ))
+ 	test -f "$dotest/$msgnum" || {
+ 		resume=
+ 		go_next
 -- 
-Duy
+2.5.0
