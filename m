@@ -1,154 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: parse_object does check_sha1_signature but not
- parse_object_buffer?
-Date: Thu, 4 Feb 2016 02:19:19 -0500
-Message-ID: <20160204071919.GA14032@sigill.intra.peff.net>
-References: <20160202015701.GA30444@glandium.org>
- <xmqq60y7u7sj.fsf@gitster.mtv.corp.google.com>
- <20160202043628.GA10253@glandium.org>
- <xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 13/20] refs: resolve symbolic refs first
+Date: Thu, 4 Feb 2016 02:37:42 -0500
+Message-ID: <20160204073742.GA20162@sigill.intra.peff.net>
+References: <1452788777-24954-1-git-send-email-dturner@twopensource.com>
+ <1452788777-24954-14-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 04 08:19:29 2016
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 04 08:37:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRECO-0006zA-6p
-	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 08:19:28 +0100
+	id 1aREUB-0006t2-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 04 Feb 2016 08:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbcBDHTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 02:19:24 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37228 "HELO cloud.peff.net"
+	id S1755080AbcBDHhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 02:37:46 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37233 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750724AbcBDHTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 02:19:23 -0500
-Received: (qmail 13826 invoked by uid 102); 4 Feb 2016 07:19:23 -0000
+	id S1754873AbcBDHhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 02:37:45 -0500
+Received: (qmail 14592 invoked by uid 102); 4 Feb 2016 07:37:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:19:23 -0500
-Received: (qmail 32291 invoked by uid 107); 4 Feb 2016 07:19:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:37:45 -0500
+Received: (qmail 32408 invoked by uid 107); 4 Feb 2016 07:37:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:19:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 02:19:19 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Feb 2016 02:37:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Feb 2016 02:37:42 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqwpqmsymf.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1452788777-24954-14-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285401>
 
-On Tue, Feb 02, 2016 at 11:25:44AM -0800, Junio C Hamano wrote:
+On Thu, Jan 14, 2016 at 11:26:10AM -0500, David Turner wrote:
 
-> Having said that, I do not necessarily think "git checkout" should
-> revalidate the object name.  The repository that you use for your
-> daily work would have the same error/corruption rate as your working
-> tree files, and I do not think you would constantly "validate" what
-> is in your working tree by comparing their contents with what you
-> think ought to be there.
+> +static int dereference_symrefs(struct ref_transaction *transaction,
+> +			       struct strbuf *err)
+> +{
+> +	int i;
+> +	int nr = transaction->nr;
+> +
+> +	for (i = 0; i < nr; i++) {
+> +		struct ref_update *update = transaction->updates[i];
+> +		const char *resolved;
+> +		unsigned char sha1[20];
+> +		int resolve_flags = 0;
+> +		int mustexist = (update->old_sha1 &&
+> +				 !is_null_sha1(update->old_sha1));
 
-No, but there is a question of how much it costs to do so.
-
-In the past, I've spent a lot of time trying to speed up object access,
-but it was usually about replacing `parse_object` with
-`lookup_object` or similar to avoid loading from disk in the first
-place, as most of the time goes to zlib. If we are accessing the object
-already (and obviously we have to for something like checkout), I'm not
-sure what the marginal cost is of computing the sha1 on the data as it
-passes through.
-
-It might be significant, but I don't have numbers.
-
-If it's not, then I think it's a nice feature that we would notice
-problems earlier rather than later.
-
-> If you are working on extremely poor quality disks and SSDs, it
-> might make sense to constantly revalidating the object data to catch
-> corruption early, as that is what we can do (as opposed to the
-> working tree files, corruption to which you probably do not have
-> anything to catch bitflipping on).
-
-Hopefully if your working tree files bit-flip, then you notice via `git
-diff`. I guess you wouldn't for stat-clean ones. But if a bit flips in
-the forest, and it's not stat-dirty enough for anyone to hear it, does
-it make a sound?
-
-> http://article.gmane.org/gmane.comp.version-control.git/283380 (not
-> necessarily the entire thread, but that exact article) is a
-> reasonable summary that illustrates the way how we view the object
-> integrity.
-> 
->     So "index-pack" is the enforcement point, and the rest of the
->     git commands generally assume that we can trust what is on disk
->     (as it is has either been generated by us, or checked by
->     index-pack).  The rest of the commands do not spend time
->     checking that the on-disk contents are sane (though you can run
->     git-fsck if you want to do that).
-
-I think that's me your quoting. I was specifically talking about
-malicious tampering there. Which isn't to say I disagree with the
-world-view you're proposing, but I think for random errors it's a little
-more complicated. We certainly should be checking incoming data (and we
-do).
-
-For local repository operations, most of them are about reading data.
-And there I generally favor performance over extra validation, with the
-caveat that we should always be aware of the tradeoff. An extra
-comparison to make sure we are not going out-of-bounds on a pack .idx
-pointer is cheap. Loading a blob just to make sure its sha1 is valid
-before we mention it in `diff --raw` output is stupid. Checking the sha1
-on objects we are otherwise accessing is somewhere in between. :)
-
-For local write operations, like repacking, we should err on the careful
-side. And I think we do a good job of balancing performance and
-validation there (e.g., we reuse deltas without reconstructing the
-object, but _with_ a crc check on the delta data itself).
-
-> In fact, we do this, which is quite suboptimal:
-> 
->         static int fsck_sha1(const unsigned char *sha1)
->         {
->                 struct object *obj = parse_object(sha1);
->                 if (!obj) {
->                         errors_found |= ERROR_OBJECT;
->                         return error("%s: object corrupt or missing",
->                                      sha1_to_hex(sha1));
->                 }
->                 obj->flags |= HAS_OBJ;
->                 return fsck_obj(obj);
->         }
-> 
-> This function is called for each loose object file we find in
-> fsck_object_dir(), and there are a few problems:
-> 
->  * The function parse_object() called from here would issue an error
->    message and returns NULL; then you get another "corrupt or
->    missing" error message, because this code cannot tell from the
->    NULL which is the case.
-> 
->  * The intent of the callchain to fsck_sha1() is to iterate over
->    loose object files xx/x{38} and validate what is contained in
->    them, but that behaviour is not guaranteed because it calls
->    parse_object(), which may get the object data from a packfile
->    if the loose object is also in the packfile.
-> 
-> This function should instead take "path" (the only caller of this
-> function fsck_loose() has it), read the data in the file, hash the
-> data to validate that it matches "sha1" and then create the object
-> out of that data it read by calling parse_object_buffer().
-
-Yeah, I agree. I think as it is written, we also end up loading the
-loose objects twice (once in parse_object, and then later again in
-fsck_object to do the real work). Your solution would fix that, too.
-
-It looks like we _don't_ load loose commits twice, though. We never turn
-off save_commit_buffer, so we happily cache the buffer for every single
-commit, even though we won't need it again after fsck_object returns.
-
-I guess nobody has really noticed either issue, because repositories
-large enough for it to make a difference will usually be packed.
+Coverity complains about this last line, as "update->old_sha1" is an
+array. I think you want to check "update->flags & REF_HAVE_OLD" instead?
 
 -Peff
