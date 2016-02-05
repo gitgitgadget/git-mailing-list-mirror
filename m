@@ -1,146 +1,85 @@
-From: Dan Aloni <alonid@gmail.com>
-Subject: [PATCH v8 1/2] fmt_ident: refactor strictness checks
-Date: Sat,  6 Feb 2016 00:28:56 +0200
-Message-ID: <1454711337-25508-2-git-send-email-alonid@gmail.com>
-References: <1454711337-25508-1-git-send-email-alonid@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 23:29:28 2016
+From: Britton Kerin <britton.kerin@gmail.com>
+Subject: Re: no luck with colors for branch names in gitk yet
+Date: Fri, 5 Feb 2016 13:29:26 -0900
+Message-ID: <CAC4O8c81h-JEGN2mS=SgUnBQM+A-RojDBOY65f=Jmubo6CZCwA@mail.gmail.com>
+References: <CAC4O8c-MPwrJ2H+iHjQxk+XoX4_vPm80Lz1=wbuHHd2gsB8R0Q@mail.gmail.com>
+	<B88DD991725D43E19185D46EED20FDDF@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 23:29:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRosY-0001Y5-QS
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 23:29:27 +0100
+	id 1aRosd-0001fr-Jf
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 23:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608AbcBEW3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 17:29:20 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:35472 "EHLO
+	id S1754648AbcBEW32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 17:29:28 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:35559 "EHLO
 	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753145AbcBEW3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 17:29:19 -0500
-Received: by mail-wm0-f42.google.com with SMTP id r129so45592874wmr.0
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 14:29:18 -0800 (PST)
+	with ESMTP id S1754592AbcBEW31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 17:29:27 -0500
+Received: by mail-wm0-f42.google.com with SMTP id r129so45595791wmr.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 14:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UXmBoPNLCNAP7mZtrc//rPdn6serjiyONnJaxlXWgG8=;
-        b=bs60JbpMOVEmJ4POmpK5HZ6vw35fbnX5sKGkyGd2mSz7+3Avs+LkiimyfytR/RWKc3
-         8l8ey5C3eEgh4tBtdPYqvzrFE4Lt0jrfawhFmedquh/Al28hZ0It8enJNSC5oO7zPHb0
-         y0c7a8bFgru5WgxLzAlKyhWXTO1VqijUt+REsVN0ycOH/B3p46Xm80tABjAUZ95RbyW6
-         F4hdKkz0NAWWmBBFF7q5N/2Qd7tyILIpqpNWKob5HZ4FIAJtbofVvfFjqBV39/0kmMfv
-         WzRz07XBcRZ1qXPkZa0hplZJCtM9Ayz/srXQEEPVgtgwbrRq+LeSqMduipbREHc6osfO
-         WiXg==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YzatfSeaAQs2khecD9OKK56QKhDx/5zS2UeSX7uRuPU=;
+        b=lgZO45ID3geDlsUldwy/RKlHYdTj5eIL2CYHjCrtCYWcccjMYlC1efNjHE8bJHg8Qj
+         zca7T6fHlSzdDXAbo2SfFdsmtp2MjWPb6tk8ed70rH1aJETb2i4bVda2BYj1DDGCiNh7
+         xjrV0VWvdnFNz8NvTMMhXqDAmliPa6nCFiZk/BsLrkuhRul7Yo+1xXpP785welp4KqGp
+         uW2sDqzR2VvXSTtqzALuabhmcmkrjiEi2DbWIFGXOUrlbMtW2p07bE1eO1mQSema4mAq
+         7maAg9ClZyOsFhv5k5e0QDBPOCEJqzcuGxsTkWWocCZPGzM6R5qsbv+caY3D+u0ZngIc
+         5ylQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UXmBoPNLCNAP7mZtrc//rPdn6serjiyONnJaxlXWgG8=;
-        b=jh2vHayQTKV3q9UFYVxaQKl5sYmh94Dg7+JvSjLpbx/HUmgxiUBpU8mBK1K3IriZ9b
-         mkd/5jCq6n+iSnHqVy0Vj7miPs/B+xgDjKuV5nbhkgbzxAXKm/IpvLyTf1Oe5NjksiPK
-         Ath4y5VEwH1LuhGIHZPNydlwhE4x/4Lgx7R3S08mwjJ1+BtcQ6un3bTsC+EwrbAabjIA
-         0qsnwUP6l93LTN51Um+3Y627uUKTBKh17BBEyuWDGftkKVpNeWLyECwpMGU+93QVdcRh
-         Voz3+iEtyQXudOy2M66tSRrJtL3Pc+L0rVbWJLiJliYJnpdZc5HUdiHyYwd5RzOiVFqS
-         4FyA==
-X-Gm-Message-State: AG10YOQmDgrv66cZ64ZnSlQ7GzxGyfFs+ZrIbAY3yuN4JSgrD+hQL9XM7c56y5+LIvdYQQ==
-X-Received: by 10.194.52.37 with SMTP id q5mr16363995wjo.123.1454711357929;
-        Fri, 05 Feb 2016 14:29:17 -0800 (PST)
-Received: from nitrogen.home.aloni.org ([31.210.180.167])
-        by smtp.gmail.com with ESMTPSA id t3sm17729626wjz.11.2016.02.05.14.29.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 14:29:17 -0800 (PST)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1454711337-25508-1-git-send-email-alonid@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=YzatfSeaAQs2khecD9OKK56QKhDx/5zS2UeSX7uRuPU=;
+        b=kPdOLpmT+00yWwVW1S9ztWkzFZo98fzTjnQsqsMm5tCX3zoDubv1z8Ftob+NNdDo2k
+         EXub7qg7E2aL2DjeWAwM+s6SagVjh4hIJW+LMKTPK/i48y9MIwZslCn/Xci4lhDUBkUz
+         hyPgfIANpx78rMt3qeXd+xTeg0gGUewjsOR9kd79qsc3lM0EEnABBJfE7fCdrf7ytIAQ
+         Tv5Ad+zYYE5D1499d+fWKuqvKzXt4kb82XyW17nwvJUza3EMMtNc0dXBr2FCzThd6K36
+         kqX0y8bpH8kYBxBSGc8qZrwWddDCmNDuhqA/8ZDNsNzNvHHbOl5s1W3tqlitSHo6czsU
+         E9xA==
+X-Gm-Message-State: AG10YOS2LVNLgvWBJc9gxz9s91xFzFAbu4HNlueY1zgILGtg24zAGFcHPeZWxtTZAsmRWlwVwNYzPizfBNsZ7g==
+X-Received: by 10.28.90.133 with SMTP id o127mr19895405wmb.101.1454711366248;
+ Fri, 05 Feb 2016 14:29:26 -0800 (PST)
+Received: by 10.194.178.161 with HTTP; Fri, 5 Feb 2016 14:29:26 -0800 (PST)
+In-Reply-To: <B88DD991725D43E19185D46EED20FDDF@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285648>
 
-From: Jeff King <peff@peff.net>
+On Fri, Feb 5, 2016 at 12:25 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Britton Kerin" <britton.kerin@gmail.com>
+>>
+>> Someone suggested using color.branch.upstream, I tried like this and
+>> variants
+>>
+>> [color "branch"]
+>>  local = red bold
+>>  upstream = red bold
+>>
+>> Doesn't seem to matter what I put in for upstream, including invalid
+>> colors, gitk just ignores it and does the dark green for local
+>> branches
+>> --
+>
+> Alternate, try
+> https://github.com/oumu/mintty-color-schemes/blob/master/base16-mintty/base16-default.minttyrc
+> (or any of the other colour schemes) and copy them into your .minttyrc file
+> (works for me on g4w : git version 2.7.0.windows.1 )
 
-This function has evolved quite a bit over time, and as a
-result, the logic for "is this an OK ident" has been
-sprinkled throughout. This ends up with a lot of redundant
-conditionals, like checking want_name repeatedly. Worse,
-we want to know in many cases whether we are using the
-"default" ident, and we do so by comparing directly to the
-global strbuf, which violates the abstraction of the
-ident_default_* functions.
+I'm on linux so I think mintty is not an option.  Also, I'm a little
+surprised in affects the rendering of branch tags in gitk, I would
+have thought that would be an X or window system thing.
 
-Let's reorganize the function into a hierarchy of
-conditionals to handle similar cases together. The only
-case that doesn't just work naturally for this is that of an
-empty name, where our advice is different based on whether
-we came from ident_default_name() or not. We can use a
-simple flag to cover this case.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- ident.c | 46 ++++++++++++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index 3da555634290..f3a431f738cc 100644
---- a/ident.c
-+++ b/ident.c
-@@ -345,32 +345,34 @@ const char *fmt_ident(const char *name, const char *email,
- 	int want_date = !(flag & IDENT_NO_DATE);
- 	int want_name = !(flag & IDENT_NO_NAME);
- 
--	if (want_name && !name)
--		name = ident_default_name();
--	if (!email)
--		email = ident_default_email();
--
--	if (want_name && !*name) {
--		struct passwd *pw;
--
--		if (strict) {
--			if (name == git_default_name.buf)
-+	if (want_name) {
-+		int using_default = 0;
-+		if (!name) {
-+			name = ident_default_name();
-+			using_default = 1;
-+			if (strict && default_name_is_bogus) {
- 				fputs(env_hint, stderr);
--			die("empty ident name (for <%s>) not allowed", email);
-+				die("unable to auto-detect name (got '%s')", name);
-+			}
-+		}
-+		if (!*name) {
-+			struct passwd *pw;
-+			if (strict) {
-+				if (using_default)
-+					fputs(env_hint, stderr);
-+				die("empty ident name (for <%s>) not allowed", email);
-+			}
-+			pw = xgetpwuid_self(NULL);
-+			name = pw->pw_name;
- 		}
--		pw = xgetpwuid_self(NULL);
--		name = pw->pw_name;
--	}
--
--	if (want_name && strict &&
--	    name == git_default_name.buf && default_name_is_bogus) {
--		fputs(env_hint, stderr);
--		die("unable to auto-detect name (got '%s')", name);
- 	}
- 
--	if (strict && email == git_default_email.buf && default_email_is_bogus) {
--		fputs(env_hint, stderr);
--		die("unable to auto-detect email address (got '%s')", email);
-+	if (!email) {
-+		email = ident_default_email();
-+		if (strict && default_email_is_bogus) {
-+			fputs(env_hint, stderr);
-+			die("unable to auto-detect email address (got '%s')", email);
-+		}
- 	}
- 
- 	strbuf_reset(&ident);
--- 
-2.5.0
+Britton
