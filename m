@@ -1,244 +1,268 @@
-From: Dan Aloni <alonid@gmail.com>
-Subject: [PATCH v6 2/3] ident: add user.useConfigOnly boolean for when ident shouldn't be guessed
-Date: Fri,  5 Feb 2016 09:42:27 +0200
-Message-ID: <1454658148-3031-3-git-send-email-alonid@gmail.com>
-References: <1454658148-3031-1-git-send-email-alonid@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+From: larsxschneider@gmail.com
+Subject: [PATCH v1] config: add '--sources' option to print the source of a config value
+Date: Fri,  5 Feb 2016 09:42:30 +0100
+Message-ID: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
+Cc: peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 05 08:43:09 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 09:43:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRb2q-0006eC-Ni
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 08:43:09 +0100
+	id 1aRbyo-00067x-KK
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 09:43:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbcBEHnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 02:43:04 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37382 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082AbcBEHm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 02:42:56 -0500
-Received: by mail-wm0-f44.google.com with SMTP id g62so14913409wme.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 23:42:55 -0800 (PST)
+	id S1750815AbcBEImf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 03:42:35 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34825 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbcBEIme (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 03:42:34 -0500
+Received: by mail-wm0-f68.google.com with SMTP id g62so1939023wme.2
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 00:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EO8CYofmZlkwdVnMbnSjZQRs5ssiQphVrQx9qBXrzxI=;
-        b=zqjL/uBwEKf14sATxcIPMVVrDfHJSOkzXEvXNrsRVoH4WqDxTHXVTML1jiScl8LpZB
-         S/YA3VjfsgWot0uuA1MHMUT3Itb3zFmuChgUiKi4eu037hdsn8NmJmEvaHHrKKoZQzw7
-         HNHJYlqn2L5pGvERryPju9USmyxPDCBzVw2qeJLOnRh7L7ghDh+yStt9ixwWnT1GbTrG
-         Appm8qDu06foG1himiHH9w9DIchIcRsxj0GfAUuXSB3dFze0kAOE0Sb7b17qRBQAkmaW
-         ZAFXLpHXzRSl/pLJm38iw6sLmgtpdigV4QD/PPUk6LFeCMMRiS8T/yfHn9x70BqI0Qw9
-         dUCg==
+        h=from:to:cc:subject:date:message-id;
+        bh=+AHAtkratICrbXDOCtJumW/EZ0xkuVyRYsG1C72apNA=;
+        b=NaC5I0kl9aifGN4ZPLULCqcl/XAvMb+1AwsNumrEt0WVp9pdYVr5Mx1ss/rMWR1mwo
+         x2nBUrRdw0oYbKsRyKWr0DX+EaYyP3ymPKjeKhdYquhSyko0EVD5gFR3Rdwy4WoT2cFI
+         Mev1/bprlMU/Jxuf++W3ifPoJtRVBtEs0TdKcs2D9H76qm1Qu1aet7xHp5cUfXMoH2jA
+         1vCINSIr73MJtLoE5U7FPWOLQ9NQG3pNhsjsoTh8UNl2FMLM69R6uz11bAqAfq7af2pS
+         sTH7Z0PIcitKQHMKamSNeKFGKe/E3eH6+PB+xBUdS3kJW2tSMsssXDJqv8LYE8KYYn4E
+         GtyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=EO8CYofmZlkwdVnMbnSjZQRs5ssiQphVrQx9qBXrzxI=;
-        b=Q2a3ZdpZBL0GqSAb8bv1Ak/fR8ZQGPEsQK7+Xb637GTUi7tZnUA+vqUHUIA3aSLdBZ
-         SvyzejXDKxDiSyLeZ0Lu4UDVF6nzyMXTDCgqEECD+p6UIl7rmBe+a303mH2PGDUZe2i+
-         q1t+simbpmD5GOyv4wOpjc0eTMuBEUFSHQvbnQC2Jutt+fTxnQqQhRm2CGtM5tR0URqW
-         DQRzgtwlg+6CzbWnndmt5VjFQWCXsDGT9PbSyde4q94oBhA7hnOHgwCYIM6Z7lVg6QVJ
-         VDcWSRIKrRBGxxsMzAP9LsjaEzo8Kb+hnfUrRikf6mLRHMKZ4sQPqfg739xrZXkP94Qw
-         gkXg==
-X-Gm-Message-State: AG10YOR7aVrVFFmfxOOzHj+kAUfWOcJMfaPUG5wKTcf6DSr2ZS8pnqtL9Z1bHCH3FHjyEQ==
-X-Received: by 10.28.210.143 with SMTP id j137mr34480734wmg.13.1454658175365;
-        Thu, 04 Feb 2016 23:42:55 -0800 (PST)
-Received: from nitrogen.home.aloni.org ([31.210.180.167])
-        by smtp.gmail.com with ESMTPSA id w66sm16062302wmd.2.2016.02.04.23.42.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Feb 2016 23:42:54 -0800 (PST)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1454658148-3031-1-git-send-email-alonid@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+AHAtkratICrbXDOCtJumW/EZ0xkuVyRYsG1C72apNA=;
+        b=ko6ROXAsaJcfSJDm1hrhHV5H+svMeO8tee/lphwnyXbw5zW58U2ETZ0+UDL8Kqrj8g
+         FdfeSJPUYU6FcKcNCTyrvCeuNquKQxBKHJoq4hVuFOncoAF6teLgdyeUajn1bt93i/TI
+         jJNmTB3gK4uAQlxUCKNj7CsIep4N8sUu8cJzOSzCm/OK2qC9lKGCdrfwD0d7On9vwKPa
+         XtKYTbW+RkSKQM3h/CVimzBVYFuxDHOVC2s2KDhyiFsPT/DKNgHnAQBVmosN6ZoR1wUk
+         I3lXgZJWEjklQoHSs63WArjCzykL0L9wnKuRquejo13P+6zfyoxgpAXWXi62PsLEMBB8
+         RAtg==
+X-Gm-Message-State: AG10YORJ4jldgU4ORAYYsFZhU4AtnG22cNKajzBZqUBrhQOt49KsV6KUgyjAo4Yw0fOwmw==
+X-Received: by 10.28.223.67 with SMTP id w64mr36289161wmg.28.1454661753270;
+        Fri, 05 Feb 2016 00:42:33 -0800 (PST)
+Received: from slxBook3.fritz.box (p508BACEA.dip0.t-ipconnect.de. [80.139.172.234])
+        by smtp.gmail.com with ESMTPSA id az10sm14867639wjc.28.2016.02.05.00.42.31
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 Feb 2016 00:42:32 -0800 (PST)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285553>
 
-It used to be that:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-   git config --global user.email "(none)"
+If config values are queried using 'git config' (e.g. via '--list' flag
+or the '--get*' flags) then it is sometimes hard to find the
+configuration file where the values were defined.
 
-was a viable way for people to force themselves to set user.email in
-each repository.  This was helpful for people with more than one
-email address, targeting different email addresses for different
-clones, as it barred git from creating commit unless the user.email
-config was set in the per-repo config to the correct email address.
+Teach 'git config' the '--sources' option to print the source
+configuration file for every printed value.
 
-A recent change, 19ce497c (ident: keep a flag for bogus
-default_email, 2015-12-10), however declared that an explicitly
-configured user.email is not bogus, no matter what its value is, so
-this hack no longer works.
-
-Provide the same functionality by adding a new configuration
-variable user.useConfigOnly; when this variable is set, the
-user must explicitly set user.email configuration.
-
-Signed-off-by: Dan Aloni <alonid@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>
+Based-on-patch-by: Jeff King <peff@peff.net>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- Documentation/config.txt  |  9 ++++++++
- ident.c                   | 16 +++++++++++++
- t/t9904-per-repo-email.sh | 58 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 83 insertions(+)
- create mode 100755 t/t9904-per-repo-email.sh
+ builtin/config.c       | 42 ++++++++++++++++++++++++++++++++
+ cache.h                |  1 +
+ config.c               |  7 ++++++
+ t/t1300-repo-config.sh | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 115 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 02bcde6bb596..25cf7ce4e83a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2821,6 +2821,15 @@ user.name::
- 	Can be overridden by the 'GIT_AUTHOR_NAME' and 'GIT_COMMITTER_NAME'
- 	environment variables.  See linkgit:git-commit-tree[1].
+diff --git a/builtin/config.c b/builtin/config.c
+index adc7727..f5dc79c 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -3,6 +3,7 @@
+ #include "color.h"
+ #include "parse-options.h"
+ #include "urlmatch.h"
++#include "quote.h"
  
-+user.useConfigOnly::
-+	This instruct Git to avoid trying to guess defaults for 'user.email'
-+	and 'user.name' other than strictly from environment or config.
-+	If you have multiple email addresses that you would like to set
-+	up per repository, you may want to set this to 'true' in the global
-+	config, and then Git would prompt you to set user.email separately,
-+	in each of the cloned repositories.
-+	Defaults to `false`.
+ static const char *const builtin_config_usage[] = {
+ 	N_("git config [<options>]"),
+@@ -27,6 +28,7 @@ static int actions, types;
+ static const char *get_color_slot, *get_colorbool_slot;
+ static int end_null;
+ static int respect_includes = -1;
++static int show_sources;
+ 
+ #define ACTION_GET (1<<0)
+ #define ACTION_GET_ALL (1<<1)
+@@ -81,6 +83,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
+ 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+ 	OPT_BOOL(0, "includes", &respect_includes, N_("respect include directives on lookup")),
++	OPT_BOOL(0, "sources", &show_sources, N_("show source filenames of config")),
+ 	OPT_END(),
+ };
+ 
+@@ -91,8 +94,34 @@ static void check_argc(int argc, int min, int max) {
+ 	usage_with_options(builtin_config_usage, builtin_config_options);
+ }
+ 
++/* output to either fp or buf; only one should be non-NULL */
++static void show_config_source(struct strbuf *buf, FILE *fp)
++{
++	const char *fn = current_config_filename();
++	if (!fn)
++		return;
 +
- user.signingKey::
- 	If linkgit:git-tag[1] or linkgit:git-commit[1] is not selecting the
- 	key you want it to automatically when creating a signed tag or
-diff --git a/ident.c b/ident.c
-index f3a431f738cc..9bd6ac69bfe8 100644
---- a/ident.c
-+++ b/ident.c
-@@ -13,11 +13,14 @@ static struct strbuf git_default_date = STRBUF_INIT;
- static int default_email_is_bogus;
- static int default_name_is_bogus;
- 
-+static int ident_use_config_only;
-+
- #define IDENT_NAME_GIVEN 01
- #define IDENT_MAIL_GIVEN 02
- #define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
- static int committer_ident_explicitly_given;
- static int author_ident_explicitly_given;
-+static int ident_config_given;
- 
- #ifdef NO_GECOS_IN_PWENT
- #define get_gecos(ignored) "&"
-@@ -354,6 +357,9 @@ const char *fmt_ident(const char *name, const char *email,
- 				fputs(env_hint, stderr);
- 				die("unable to auto-detect name (got '%s')", name);
- 			}
-+			if (strict && ident_use_config_only &&
-+			    !(ident_config_given & IDENT_NAME_GIVEN))
-+				die("user.useConfigOnly set but no name given");
- 		}
- 		if (!*name) {
- 			struct passwd *pw;
-@@ -373,6 +379,9 @@ const char *fmt_ident(const char *name, const char *email,
- 			fputs(env_hint, stderr);
- 			die("unable to auto-detect email address (got '%s')", email);
- 		}
-+		if (strict && ident_use_config_only
-+		    && !(ident_config_given & IDENT_MAIL_GIVEN))
-+			die("user.useConfigOnly set but no mail given");
- 	}
- 
- 	strbuf_reset(&ident);
-@@ -446,6 +455,11 @@ int author_ident_sufficiently_given(void)
- 
- int git_ident_config(const char *var, const char *value, void *data)
- {
-+	if (!strcmp(var, "user.useconfigonly")) {
-+		ident_use_config_only = git_config_bool(var, value);
-+		return 0;
++	char term = '\t';
++	if (!end_null)
++		quote_c_style(fn, buf, fp, 0);
++	else {
++		term = '\0';
++		if (fp)
++			fprintf(fp, "%s", fn);
++		else
++			strbuf_addstr(buf, fn);
 +	}
 +
- 	if (!strcmp(var, "user.name")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -453,6 +467,7 @@ int git_ident_config(const char *var, const char *value, void *data)
- 		strbuf_addstr(&git_default_name, value);
- 		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
- 		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
-+		ident_config_given |= IDENT_NAME_GIVEN;
- 		return 0;
- 	}
- 
-@@ -463,6 +478,7 @@ int git_ident_config(const char *var, const char *value, void *data)
- 		strbuf_addstr(&git_default_email, value);
- 		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
- 		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-+		ident_config_given |= IDENT_MAIL_GIVEN;
- 		return 0;
- 	}
- 
-diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
-new file mode 100755
-index 000000000000..0430f2e38434
---- /dev/null
-+++ b/t/t9904-per-repo-email.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2016 Dan Aloni
-+#
-+
-+test_description='per-repo forced setting of email address'
-+
-+. ./test-lib.sh
-+
-+prepare () {
-+	# Have a non-empty repository
-+	rm -fr .git
-+	git init
-+	echo "Initial" >foo &&
-+	git add foo &&
-+	git commit -m foo &&
-+
-+	# Setup a likely user.useConfigOnly use case
-+	sane_unset GIT_AUTHOR_NAME &&
-+	sane_unset GIT_AUTHOR_EMAIL &&
-+	test_unconfig --global user.name &&
-+	test_unconfig --global user.email &&
-+	test_config user.name "test" &&
-+	test_unconfig user.email &&
-+	test_config_global user.useConfigOnly true
++	if (fp)
++		fputc(term, fp);
++	else
++		strbuf_addch(buf, term);
 +}
 +
-+about_to_commit () {
-+	echo "Second" >>foo &&
-+	git add foo
+ static int show_all_config(const char *key_, const char *value_, void *cb)
+ {
++	if (show_sources)
++		show_config_source(NULL, stdout);
+ 	if (!omit_values && value_)
+ 		printf("%s%c%s%c", key_, delim, value_, term);
+ 	else
+@@ -108,6 +137,8 @@ struct strbuf_list {
+ 
+ static int format_config(struct strbuf *buf, const char *key_, const char *value_)
+ {
++	if (show_sources)
++		show_config_source(buf, NULL);
+ 	if (show_keys)
+ 		strbuf_addstr(buf, key_);
+ 	if (!omit_values) {
+@@ -538,6 +569,17 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		error("--name-only is only applicable to --list or --get-regexp");
+ 		usage_with_options(builtin_config_usage, builtin_config_options);
+ 	}
++
++	const int is_query_action = actions & (
++		ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST|
++		ACTION_GET_COLOR|ACTION_GET_COLORBOOL|ACTION_GET_URLMATCH
++	);
++
++	if (show_sources && !is_query_action) {
++		error("--sources is only applicable to --list or --get-* actions");
++		usage_with_options(builtin_config_usage, builtin_config_options);
++	}
++
+ 	if (actions == ACTION_LIST) {
+ 		check_argc(argc, 0, 0);
+ 		if (git_config_with_options(show_all_config, NULL,
+diff --git a/cache.h b/cache.h
+index c63fcc1..c5111ea 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1525,6 +1525,7 @@ extern const char *get_log_output_encoding(void);
+ extern const char *get_commit_output_encoding(void);
+ 
+ extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
++extern const char *current_config_filename(void);
+ 
+ struct config_include_data {
+ 	int depth;
+diff --git a/config.c b/config.c
+index 86a5eb2..b437002 100644
+--- a/config.c
++++ b/config.c
+@@ -2385,3 +2385,10 @@ int parse_config_key(const char *var,
+ 
+ 	return 0;
+ }
++
++const char *current_config_filename(void)
++{
++	if (cf && cf->name)
++		return cf->name;
++	return NULL;
 +}
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 52678e7..2444d8a 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1201,4 +1201,69 @@ test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
+ 	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
+ '
+ 
++test_expect_success '--sources' '
++	>.git/config &&
++	>"$HOME"/.gitconfig &&
++	INCLUDE_DIR="$HOME/include" &&
++	mkdir -p "$INCLUDE_DIR" &&
++	cat >"$INCLUDE_DIR"/include.conf <<-EOF &&
++		[user]
++			include = true
++	EOF
++	cat >"$HOME"/file.conf <<-EOF &&
++		[user]
++			custom = true
++	EOF
++	test_config_global user.global "true" &&
++	test_config_global user.override "global" &&
++	test_config_global include.path "$INCLUDE_DIR"/include.conf &&
++	test_config user.local "true" &&
++	test_config user.override "local" &&
 +
-+test_expect_success 'fails committing if clone email is not set' '
-+	prepare && about_to_commit &&
++	cat >expect <<-EOF &&
++		$HOME/.gitconfig	user.global=true
++		$HOME/.gitconfig	user.override=global
++		$HOME/.gitconfig	include.path=$INCLUDE_DIR/include.conf
++		$INCLUDE_DIR/include.conf	user.include=true
++		.git/config	user.local=true
++		.git/config	user.override=local
++		user.cmdline=true
++	EOF
++	git -c user.cmdline=true config --list --sources >output &&
++	test_cmp expect output &&
 +
-+	test_must_fail git commit -m msg
++	cat >expect <<-EOF &&
++		$HOME/.gitconfigQuser.global
++		trueQ$HOME/.gitconfigQuser.override
++		globalQ$HOME/.gitconfigQinclude.path
++		$INCLUDE_DIR/include.confQ$INCLUDE_DIR/include.confQuser.include
++		trueQ.git/configQuser.local
++		trueQ.git/configQuser.override
++		localQuser.cmdline
++		trueQ
++	EOF
++	git -c user.cmdline=true config --null --list --sources | nul_to_q >output &&
++	echo >>output &&
++	test_cmp expect output &&
++
++	cat >expect <<-EOF &&
++		.git/config	local
++	EOF
++	git config --sources user.override >output &&
++	test_cmp expect output &&
++
++	cat >expect <<-EOF &&
++		$HOME/file.conf	user.custom=true
++	EOF
++	git config --file "$HOME"/file.conf --sources --list >output &&
++	test_cmp expect output &&
++
++	cat >expect <<-EOF &&
++		a9d9f9e555b5c6f07cbe09d3f06fe3df11e09c08	user.custom=true
++	EOF
++	blob=$(git hash-object -w "$HOME"/file.conf) &&
++	git config --blob=$blob --sources --list >output &&
++	test_cmp expect output
 +'
 +
-+test_expect_success 'fails committing if clone email is not set, but EMAIL set' '
-+	prepare && about_to_commit &&
-+
-+	test_must_fail env EMAIL=test@fail.com git commit -m msg
-+'
-+
-+test_expect_success 'succeeds committing if clone email is set' '
-+	prepare && about_to_commit &&
-+
-+	test_config user.email "test@ok.com" &&
-+	git commit -m msg
-+'
-+
-+test_expect_success 'succeeds cloning if global email is not set' '
-+	prepare &&
-+
-+	git clone . clone
-+'
-+
-+test_done
+ test_done
 -- 
-2.5.0
+2.5.1
