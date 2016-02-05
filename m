@@ -1,220 +1,164 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 14/21] refs: always handle non-normal refs in files backend
-Date: Fri,  5 Feb 2016 14:44:15 -0500
-Message-ID: <1454701462-3817-15-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 19/21] refs: add register_ref_storage_backends()
+Date: Fri,  5 Feb 2016 14:44:20 -0500
+Message-ID: <1454701462-3817-20-git-send-email-dturner@twopensource.com>
 References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Feb 05 20:45:20 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 20:45:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRmJj-0001Xn-Ml
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:45:20 +0100
+	id 1aRmJs-0001hL-1e
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755386AbcBETpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 14:45:12 -0500
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:36046 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755178AbcBETpA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 14:45:00 -0500
-Received: by mail-qg0-f53.google.com with SMTP id y9so71847433qgd.3
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 11:44:59 -0800 (PST)
+	id S1755408AbcBETpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 14:45:23 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:36121 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755342AbcBETpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 14:45:05 -0500
+Received: by mail-qg0-f48.google.com with SMTP id y9so71849896qgd.3
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 11:45:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RwSDOws+L4jIOd+yNMGDPafCEFran/RN98GWIba1dSQ=;
-        b=sziId2F+Q1FYVygeQGO2kQKnLwJkeL00Pu5CbS4YYbrwrwF18fSr3ILXKMOPdUJ8EN
-         Szk+1BnitqEkIPJiiaV+toL4U6EwWHO41FVBMvj76bfHaG+oXcqD0eo+9NIqfscnrbpf
-         C4fhYoHVms63ifthBWMzfG/IjyZL8PTSXS8gkHJv1n/abrBVci54hygpfy6/3+rwtVDm
-         qQlCYh/slvMbpcoLq60GJD3li0Xoze2silUGXXt58n3538mO5bx946YSrcWgpYq0AbYd
-         zvUb6V9TpqBC96OnQTSFa4nIySB9kUmpS0G0KhrQSP6Ws9nN5dQkbhNVKQ2UArROPeRS
-         a05g==
+        bh=MwjLmmy9gKEV+3q+ygKz8tE9TG2j59e9ioRuy/C9hlI=;
+        b=nZosQx9NADXmnEdo/3JXmC2Y3qQxZOUTDzGUoi9mFMzC8TasCFhiRF0ifxOnTn8r0e
+         6Gb+40ep1KGKo12LaIpo84s/d5T96KRP9SLffP5XaEeCPKuiTCv6bbL/HzHAN+SOY7oc
+         RWSIvizQ6GYdpimBOC2Jf78sM3GzI5/oWENPBegXPzk4c0b+RMOEXGV9FmiNVZbEyo9e
+         tsse/SGV/V72fWDt97fqzw393e6WF6wyZkImTaBcrK55DF7UHh0A/K6brlq0clID2Bhg
+         KWv1QBOnvZ8RfvKquSZRvo8AgKxXGpXe2es39qWJDKsmkhs9LGwkFaBnDmITB9CXBMVp
+         QmGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RwSDOws+L4jIOd+yNMGDPafCEFran/RN98GWIba1dSQ=;
-        b=A0mTyYJBsHHgO6038pJDHP52nTyuKuxzMYBEIVvlqnduQV0vbeBMNjbLuzW72A5jJR
-         Upqz9IcCSBamWV9EnqlH7eeulpLVFAZ/fUffOkoBr5fwdbqopAnuXJf2o+h2sJby5AXz
-         mHl2pmhCIL3696KE6iMPChEe4EPElR53H18aAnX/kcQKsP6DtVW2N3XHRg8SxXnwnz6v
-         xwGiODixpD0j33jD71qw+KNvW0lq615xZzJ+bGdTuCkv3yNCjKRpgf/GdfhkB2dYnzYb
-         AaFUsmAzUJ8HeIS4ax53YRHUrqigYw0yQ6WxLPuNVlkXCvPBxDttIA/Mzdt3KFWInnyb
-         Y+bw==
-X-Gm-Message-State: AG10YOQUluHoiWRZHxgsSR59m9f5fjbgZqfscTLajT0i+tFys2NYsPMJGo3R1w2q2kRvCw==
-X-Received: by 10.140.236.68 with SMTP id h65mr19906943qhc.13.1454701499122;
-        Fri, 05 Feb 2016 11:44:59 -0800 (PST)
+        bh=MwjLmmy9gKEV+3q+ygKz8tE9TG2j59e9ioRuy/C9hlI=;
+        b=fuXJ0L/Lx7dj/b9Oe16gY+oMZFBMOoAJW/TeSX7R8ZAM4r+8nH7ZtGfbfLwEva/GU+
+         28wNQtj3MxVssJ0HjpMUggHtmTGXmf4x14ThWW0EUIR03jwKJ6EtI+EwUmyvJsfORNWx
+         J5E5Q5/XduWfiZTaLnO0GE/fRe4C5IFVjOA4UJgiCwlt7p5eZtzG57+7GXa7Nm+ThfN6
+         cFztlmbiybwAtq7FztBwEK/VMX3rUZRA0X5qJkd6vgLW/XQk5w/YrDIS41E2HBHLJKGR
+         An2QfX31KWXSkjzfTOjuYFBGxYz1EYeNmpXBB4SSxGTC5OF4XxFsp6Ezf7mcPTV+wy/8
+         9apw==
+X-Gm-Message-State: AG10YORWHNKs5s4lO8gpX7P3bNmOmA2ixW7Ln9tdyd/bwX6cbDu+V+EQ9GvvSLB1jH9Xbw==
+X-Received: by 10.140.25.169 with SMTP id 38mr18612248qgt.73.1454701504602;
+        Fri, 05 Feb 2016 11:45:04 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g109sm8565535qgg.40.2016.02.05.11.44.57
+        by smtp.gmail.com with ESMTPSA id g109sm8565535qgg.40.2016.02.05.11.45.03
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Feb 2016 11:44:58 -0800 (PST)
+        Fri, 05 Feb 2016 11:45:03 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
 In-Reply-To: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285613>
 
-Always handle non-normal (per-worktree or pseudo) refs in the files
-backend instead of alternate backends.
-
-Sometimes a ref transaction will update both a per-worktree ref and a
-normal ref.  For instance, an ordinary commit might update
-refs/heads/master and HEAD (or at least HEAD's reflog).
-
-Updates to normal refs continue to go through the chosen backend.
-
-Updates to non-normal refs are moved to a separate files backend
-transaction.
+This new function will register all known ref storage backends... once
+there are any other than the default.  For now, it's a no-op.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 79 insertions(+), 2 deletions(-)
+ builtin/init-db.c |  3 +++
+ config.c          | 25 +++++++++++++++++++++++++
+ refs.c            |  8 ++++++++
+ refs.h            |  2 ++
+ 4 files changed, 38 insertions(+)
 
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index d331ce8..4209b67 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -226,6 +226,7 @@ static int create_default_files(const char *template_path)
+ 	if (strcmp(ref_storage_backend, "files")) {
+ 		git_config_set("extensions.refStorage", ref_storage_backend);
+ 		git_config_set("core.repositoryformatversion", ref_storage_backend);
++		register_ref_storage_backends();
+ 		if (set_ref_storage_backend(ref_storage_backend))
+ 			die(_("Unknown ref storage backend %s"),
+ 			    ref_storage_backend);
+@@ -503,6 +504,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+ 
++	register_ref_storage_backends();
++
+ 	if (requested_ref_storage_backend &&
+ 	    !ref_storage_backend_exists(requested_ref_storage_backend))
+ 		die(_("Unknown ref storage backend %s"),
+diff --git a/config.c b/config.c
+index b95ac3a..b9ef223 100644
+--- a/config.c
++++ b/config.c
+@@ -11,6 +11,7 @@
+ #include "strbuf.h"
+ #include "quote.h"
+ #include "hashmap.h"
++#include "refs.h"
+ #include "string-list.h"
+ #include "utf8.h"
+ 
+@@ -1207,6 +1208,30 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ 	}
+ 
+ 	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
++		char *storage = NULL;
++
++		/*
++		 * make sure we always read the ref storage config
++		 * from the extensions section on startup
++		 */
++		ret += git_config_from_file(ref_storage_backend_config,
++					    repo_config, &storage);
++
++		register_ref_storage_backends();
++		if (!storage)
++			storage = xstrdup("");
++
++		if ((!*storage) ||
++		    (!strcmp(storage, "files"))) {
++			/* default backend, nothing to do */
++			free(storage);
++		} else {
++			ref_storage_backend = storage;
++			if (set_ref_storage_backend(ref_storage_backend))
++				die(_("Unknown ref storage backend %s"),
++				    ref_storage_backend);
++		}
++
+ 		ret += git_config_from_file(fn, repo_config, data);
+ 		found += 1;
+ 	}
 diff --git a/refs.c b/refs.c
-index 227c018..18ba356 100644
+index 715a492..e50cca0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -9,6 +9,11 @@
- #include "object.h"
- #include "tag.h"
- 
-+static const char split_transaction_fail_warning[] = N_(
-+	"A ref transaction was split across two refs backends.  Part of the "
-+	"transaction succeeded, but then the update to the per-worktree refs "
-+	"failed.  Your repository may be in an inconsistent state.");
-+
- /*
-  * We always have a files backend and it is the default.
-  */
-@@ -791,6 +796,13 @@ void ref_transaction_free(struct ref_transaction *transaction)
- 	free(transaction);
- }
- 
-+static void add_update_obj(struct ref_transaction *transaction,
-+			   struct ref_update *update)
-+{
-+	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
-+	transaction->updates[transaction->nr++] = update;
-+}
-+
- static struct ref_update *add_update(struct ref_transaction *transaction,
- 				     const char *refname)
- {
-@@ -798,8 +810,7 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	struct ref_update *update = xcalloc(1, sizeof(*update) + len);
- 
- 	memcpy((char *)update->refname, refname, len); /* includes NUL */
--	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
--	transaction->updates[transaction->nr++] = update;
-+	add_update_obj(transaction, update);
- 	return update;
- }
- 
-@@ -1217,11 +1228,38 @@ static int dereference_symrefs(struct ref_transaction *transaction,
- 	return 0;
- }
- 
-+/*
-+ * Move all non-normal ref updates into a specially-created
-+ * files-backend transaction
-+ */
-+static int move_abnormal_ref_updates(struct ref_transaction *transaction,
-+				     struct ref_transaction *files_transaction,
-+				     struct strbuf *err)
-+{
-+	int i;
-+
-+	for (i = 0; i < transaction->nr; i++) {
-+		int last;
-+		struct ref_update *update = transaction->updates[i];
-+
-+		if (ref_type(update->refname) == REF_TYPE_NORMAL)
-+			continue;
-+
-+		last = --transaction->nr;
-+		transaction->updates[i] = transaction->updates[last];
-+		add_update_obj(files_transaction, update);
-+	}
-+
-+	return 0;
-+}
-+
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
- 	int ret = -1;
- 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
-+	struct string_list files_affected_refnames = STRING_LIST_INIT_NODUP;
-+	struct ref_transaction *files_transaction = NULL;
- 
- 	assert(err);
- 
-@@ -1237,6 +1275,26 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	if (ret)
- 		goto done;
- 
-+	if (the_refs_backend != &refs_be_files) {
-+		files_transaction = ref_transaction_begin(err);
-+		if (!files_transaction)
-+			goto done;
-+
-+		ret = move_abnormal_ref_updates(transaction, files_transaction,
-+						err);
-+		if (ret)
-+			goto done;
-+
-+		/* files backend commit */
-+		if (get_affected_refnames(files_transaction,
-+						 &files_affected_refnames,
-+						 err)) {
-+			ret = TRANSACTION_GENERIC_ERROR;
-+			goto done;
-+		}
-+	}
-+
-+	/* main backend commit */
- 	if (get_affected_refnames(transaction, &affected_refnames, err)) {
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto done;
-@@ -1244,8 +1302,24 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 	ret = the_refs_backend->transaction_commit(transaction,
- 						   &affected_refnames, err);
-+	if (ret)
-+		goto done;
-+
-+	if (files_transaction) {
-+		ret = refs_be_files.transaction_commit(files_transaction,
-+						       &files_affected_refnames,
-+						       err);
-+		if (ret) {
-+			warning(split_transaction_fail_warning);
-+			goto done;
-+		}
-+	}
-+
- done:
+@@ -1554,3 +1554,11 @@ done:
  	string_list_clear(&affected_refnames, 0);
-+	string_list_clear(&files_affected_refnames, 0);
-+	if (files_transaction)
-+		ref_transaction_free(files_transaction);
  	return ret;
  }
++
++void register_ref_storage_backends(void) {
++	/*
++	 * No need to register the files backend; it's registered by
++	 * default. Add register_ref_storage_backend(ptr-to-backend)
++	 * entries below when you add a new backend.
++	 */
++}
+diff --git a/refs.h b/refs.h
+index 680a535..81aab6b 100644
+--- a/refs.h
++++ b/refs.h
+@@ -525,4 +525,6 @@ int ref_storage_backend_exists(const char *name);
  
-@@ -1285,6 +1359,9 @@ int peel_ref(const char *refname, unsigned char *sha1)
- int create_symref(const char *ref_target, const char *refs_heads_master,
- 		  const char *logmsg)
- {
-+	if (ref_type(ref_target) != REF_TYPE_NORMAL)
-+		return refs_be_files.create_symref(ref_target, refs_heads_master,
-+						   logmsg);
- 	return the_refs_backend->create_symref(ref_target, refs_heads_master,
- 					       logmsg);
- }
+ void register_ref_storage_backend(struct ref_storage_be *be);
+ 
++void register_ref_storage_backends(void);
++
+ #endif /* REFS_H */
 -- 
 2.4.2.749.g730654d-twtrsrc
