@@ -1,125 +1,115 @@
-From: Dan Aloni <alonid@gmail.com>
-Subject: Re: [PATCH v7 2/2] ident: add user.useConfigOnly boolean for when
- ident shouldn't be guessed
-Date: Sat, 6 Feb 2016 00:03:25 +0200
-Message-ID: <20160205220325.GA19465@gmail.com>
-References: <1454707746-18672-1-git-send-email-alonid@gmail.com>
- <1454707746-18672-3-git-send-email-alonid@gmail.com>
- <20160205214832.GA10052@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Clarification on the git+ssh and ssh+git schemes
+Date: Fri, 05 Feb 2016 14:11:52 -0800
+Message-ID: <xmqq1t8qdcyf.fsf@gitster.mtv.corp.google.com>
+References: <62DF0D5B-83DF-465D-9786-A4E7DA97F2BA@dwim.me>
+	<20160205193027.GC7245@sigill.intra.peff.net>
+	<CA+55aFyWqK0bu2V1SYagrYCBGpj0=2orobK2vT-KRkqpq=kgtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 05 23:03:39 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Feb 05 23:12:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRoTb-0000xo-EF
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 23:03:39 +0100
+	id 1aRobg-0003ZM-7Y
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 23:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbcBEWDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 17:03:30 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:35252 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752107AbcBEWD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 17:03:29 -0500
-Received: by mail-wm0-f47.google.com with SMTP id r129so44984712wmr.0
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 14:03:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=BZgqrfSctZrAxPOQg/FTMettyDIyBs6Z+/Ek/mdgQjI=;
-        b=BjTmxn7NHAQB3VUSPMxTmJJfv111Qfz7tOHSP5jQ7QBbRfUVdalhdy3t10ML4qpu7p
-         EG8XdE6YbedJOsv9LWsvjGA7+wScpFPiOkqTjrXbzuOXLAN6gDv/ZE+BX6unU+SkYt9U
-         hCDBeeDB2Pn/swfzNbYBP5ebRox9orzZxIv5jAb1+ON9JL+Zu85hMQrOVTVZ8iytJM/3
-         lA0iC8285HFiYkVYAUfMz3cayu1tQyGa/4KYJAw3bLB04T89dpeSYCzXhBZ5146o+upn
-         qHG8ldj1Pegph4LtgxQLqT2wnLsPJ0haqq/2gNQACggFY4sLc93Jx2D4COqsRHDtrrbX
-         KZhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=BZgqrfSctZrAxPOQg/FTMettyDIyBs6Z+/Ek/mdgQjI=;
-        b=mlOodzOWmf3g2ityRzm1dB+kCO/3VPD4zkKAqbMKYnE+8sivRaMXbx7ElcE9fUGjJs
-         vtpGlzYwlwYB7G6Er+votTnZxGET1lCEOgkhLcB+QNwvk0E350adojKAdAsO8O93q9Gs
-         xcHpRqFt5NjpM/EVb0g57n0wNmZiE30th8cy5zEnMf/G7QZujz6StVNBUZ5IM5nRaeES
-         lGhXIvU+g71gjLcz90QVaeilHQo9IEXdo6ntf3uboj/BY2ke9XzSK8wZiiDB7CIzuPH/
-         h4zxOT4IeRIBswBxy57mabRgaVg+nKsWVy/4QJ1hJL4stdZqHhPF5SzjeIUY/vHiveO0
-         oJPg==
-X-Gm-Message-State: AG10YORpUGVmrUb+kGlrTrohhz/W1hJ88+ELyxeRrQ7msWtIWbKs790dH6H3x4TnIBR3tg==
-X-Received: by 10.28.47.23 with SMTP id v23mr19178740wmv.7.1454709807569;
-        Fri, 05 Feb 2016 14:03:27 -0800 (PST)
-Received: from localhost ([31.210.180.167])
-        by smtp.gmail.com with ESMTPSA id i1sm2751146wjs.45.2016.02.05.14.03.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 14:03:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160205214832.GA10052@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1753542AbcBEWL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 17:11:56 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56340 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751637AbcBEWLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 17:11:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9F78F412BD;
+	Fri,  5 Feb 2016 17:11:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RrylQhnr32yZ3FVhGR3Clo4QqJw=; b=fqc8iJ
+	I+yEEnJaapsjUkhAThZaAusYPxAyFghKAfxK+W7fFQn4tnDUM1FT8xioiSmEVe4q
+	lnWd2NDXLI7UmCL62mw0CfWA/IqjHbA0Mq578UIoNX5m6G4I6mVTaJdEloGlcGSi
+	Uxxp18xvFDCT7Tj+blWQSkanGQ70e9oRX7XCA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QHcTYZyPABk6wJTEW89o7aYgcpZ4X/Uy
+	vBxW0e0sY3y5bV9rtfpxtW2NLfrpO9mYKsD613MY2GmBb+CHMII4YXEtYnpA4/gG
+	3WHhQsjzPt2GYOyS7tm6DsYHe+1LSbn7qTAdUZ8fY74d4RfvcSbeUbLgP6wXem+E
+	mbDO5c/m/74=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 961BD412BC;
+	Fri,  5 Feb 2016 17:11:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 12AD8412BB;
+	Fri,  5 Feb 2016 17:11:54 -0500 (EST)
+In-Reply-To: <CA+55aFyWqK0bu2V1SYagrYCBGpj0=2orobK2vT-KRkqpq=kgtw@mail.gmail.com>
+	(Linus Torvalds's message of "Fri, 5 Feb 2016 11:36:25 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 76BAA5C0-CC55-11E5-BD55-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285643>
 
-On Fri, Feb 05, 2016 at 04:48:33PM -0500, Jeff King wrote:
-> On Fri, Feb 05, 2016 at 11:29:06PM +0200, Dan Aloni wrote:
-> 
-> > diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
-> > new file mode 100755
-> > index 000000000000..f2b33881e46b
-> > --- /dev/null
-> > +++ b/t/t9904-per-repo-email.sh
-> 
-> Is t9904 the right place for this? Usually t99xx is for very separate
-> components.
-> 
-> This is sort-of about "commit", which would put it in the t75xx range.
-> But in some ways, it is even more fundamental than that. We don't seem
-> to have a lot of tests for ident stuff. The closest is the strict ident
-> stuff in t0007.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Will move to t7517. IMHO it's better to verify the commit operation
-itself before running further tests that rely on its proper function.
+> On Fri, Feb 5, 2016 at 11:30 AM, Jeff King <peff@peff.net> wrote:
+>>
+>> I suspect they were not really documented because nobody wanted to
+>> encourage their use. I don't think it would be wrong to document that
+>> they exist and are deprecated, though.
+>
+> They exist because some people seemed to think that people shouldn't
+> use "ssh://" since they thought that only ssh should use that.
+>
+> Which is obviously bullshit, since by that logic all the other formats
+> should have that idiotic "git+" format too ("git+https", anybody?). It
+> doesn't actually help anything, and it only pushes somebodys broken
+> agenda.
+>
+> So there was a push for that silly thing by a couple of people, but it
+> was always wrong. Don't even document it.
 
->[..]
-> > +reprepare () {
-> > +	git reset --hard initial
-> > +}
-> 
-> Do we need this reprepare stuff at all now? The tests don't care which
-> commit we're at when they start.
-> 
-> > +test_expect_success setup '
-> > +	# Initial repo state
-> > +	echo "Initial" >foo &&
-> > +	git add foo &&
-> > +	git commit -m foo &&
-> > +	git tag initial &&
-> 
-> A shorter way of saying this is "test_commit foo".
-> 
-> I almost thought we could get rid of this part entirely; the commit
-> tests don't care. But we do still need _a_ commit for the clone test,
-> since we want to make sure a reflog is written. It would be nice to push
-> it down there, but our test environment doesn't allow creating commits,
-> because of of useConfigOnly. So it's probably fine to leave it here.
-> 
-> Technically, the final "commit" test does make a commit for us to push,
-> but we do generally try to avoid unnecessary dependencies between the
-> individual tests.
-> 
-> So all together, maybe:
->[..]
+"git+https://" is actually an interesting thing to think about.
 
-Yes, shorted is better.
+Those who argued that "ssh://" should only be used by ssh would say
+for the same reason that "http://" is OK only when Git is using the
+old "commit walker" aka "dumb" HTTP transport, and the modern "Git
+protocol over HTTP" aka "smart" HTTP should not use "http://".
 
-I'm squashing in these changes and adding you as Signed-off for v8.
+Which is a problematic stance to take.  It would force inconvenience
+on our users, especially when the server side support for the modern
+"Git over HTTP" is done in such a way that it can co-exist with the
+commit walker transport.
 
--- 
-Dan Aloni
+So in that sense, "git+https://" does not help anybody.  I however
+wouldn't use such strong words like you did ;-)
+
+ - If we see "hg+http://" or "svn+http://" URL, that would help
+   people to immediately know that "git clone" would not work
+   against them, so for us who live in Git world, "git+http:// does
+   not buy anything (assuming that we know better than assuming all
+   "http://" are clonable, e.g. "git clone http://nytimes.com"), it
+   would help if others marked their non-Git URL as such.
+
+ - During technical discussion inside Git circle when we need to
+   differentiate the "smart" and "dump" HTTP transports, it may help
+   to be able to say "git+http://" and "http://".  And people who
+   heard such a conversation may be tempted to say "git+http://" to
+   talk to a Git repository that is known to talk the "smart HTTP"
+   protocol.
+
+Devil's advocate mode off.
+
+> Leave it in the source code as an option, and maybe add a comment
+> about "This is stupid, but we support it for hysterical raisins".
+
+Sounds good.
