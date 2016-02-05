@@ -1,92 +1,133 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 10/12] ref-filter: introduce remote_ref_atom_parser()
-Date: Thu, 4 Feb 2016 19:05:06 -0500
-Message-ID: <20160205000506.GA6417@flurp.local>
+Subject: Re: [PATCH v4 11/12] ref-filter: introduce contents_atom_parser()
+Date: Thu, 4 Feb 2016 19:22:17 -0500
+Message-ID: <CAPig+cQ+jsAdJSB6J_P8h+zDbiGpr4JGv=Vj1vEMSLdHERi0pw@mail.gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
- <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
+	<1454262176-6594-12-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 01:05:24 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 01:22:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRTtq-0003y2-Im
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 01:05:22 +0100
+	id 1aRUAJ-0000oj-57
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 01:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933788AbcBEAFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 19:05:16 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33995 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933739AbcBEAFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 19:05:12 -0500
-Received: by mail-io0-f196.google.com with SMTP id k127so5136463iok.1
-        for <git@vger.kernel.org>; Thu, 04 Feb 2016 16:05:12 -0800 (PST)
+	id S1756864AbcBEAWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 19:22:19 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:33392 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753953AbcBEAWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 19:22:18 -0500
+Received: by mail-vk0-f67.google.com with SMTP id c3so35347vkb.0
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 16:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=D1iFVY9aZqKkOXxmDRjdOpOIehUPWtxJN76wPhIDiTs=;
-        b=bJfs7u9CfWu/WA/hkqQQuuC4QwMzHeYd/9LbGI3HoIUOFfwf3wjyzLH9HK6xgvPhZ5
-         Ptxnhxfzb7FnZ/1crcigxqsqW7xAv0akd6ODInY0+JvkU/aPQmHD1UcBqFOLakUHTriY
-         1TGo06r6lfD42e96PcyYZUaZw9xVImdt7OMt9ouTkRT4aJAX4n1cqwCmFaGLJNp8v/KY
-         dvDWDsa714MkxxbZ6ExWj/4d6pVcfG4QrXZ23Mp+mIQKvx/WXWQTT68wRxVHmlOJMd+G
-         z3HASkPLtvhN1M3E7mtdTtn3V0kW2HGxI7MSq2keS+V/YTld5Mx4gnc6Nj4AK/s+acU4
-         ivYw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=hMNmFSePp9tU2cfGrFUbkFtPigbVX0GVnU5kLqFxOK8=;
+        b=yz+L6HyOT7J5yVPeA2BwleGZrUgnbmKeeF2uWkdlfYoDLpPesMc4CkzI2aPPfR1nNO
+         i6h0OcX3gOyOtpBdThCjvcDn9+89SWWUxSi9+6VD9mkylQzDKtCdnr3/GwZ4Hsa07hHn
+         NBiGfxvXao+yG1QvqYn6ev7LkbLVvemvga8zLX24GGeYgZktZjij+AEjfz6zxjUlDlAX
+         RbNU0rIucpv+5zdsgdIFmo4n/niuIS7cVB5F+H442Wh+gMSLPyh2cg8pwdJ4wzRhDMGe
+         8zmoSn9U9vlpUrRFxaiMUSh2lyI3KizexwYVQxEWA1tEOxEAdMb7TF7ESmBMI3oqtzq/
+         zAEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=D1iFVY9aZqKkOXxmDRjdOpOIehUPWtxJN76wPhIDiTs=;
-        b=RuERjYXnKMzfc6IM30wZvP+il/a5RYqtG7nzfJFiD6ghqzQDgRMXvSvp5GrLudfD/i
-         3CnNTc/p+/POy8c8GurQF6K2LtGaPXji+pgiLKj7vlzNi4PlrdoKNVLyN87MZZlDGXM8
-         yGe3BaZJs00ZYdhnx9+J8p3vK2px/TvxMC8ZOiceGnxFxbMTee+H6tebZSnt/2v5jiMj
-         ruqHCtfTryCgxVtTjvoETGHeV7ue5BXVHPH+xlJsJZrZPwDKoK5RlcxdjlMSYOW8X8r0
-         FtEGpKErL9DGlTA6KnfSwnUYMasSdYnxWIXx8TE9cfoZq1qWV4jnEPqQkzJEa27L/x6A
-         jhHg==
-X-Gm-Message-State: AG10YOR9jtZQPHkoR/6LCVeWmeyjEDO7PmxlDCHRJooyIhfqjrySH2YHGPS1zdfuGost+Q==
-X-Received: by 10.107.133.151 with SMTP id p23mr11864988ioi.16.1454630711649;
-        Thu, 04 Feb 2016 16:05:11 -0800 (PST)
-Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
-        by smtp.gmail.com with ESMTPSA id o14sm10868292igi.21.2016.02.04.16.05.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 04 Feb 2016 16:05:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=hMNmFSePp9tU2cfGrFUbkFtPigbVX0GVnU5kLqFxOK8=;
+        b=XBSgKHv274VGKXCb4iwvWhrpPFLSNTLaCqGAcRJ9mKcTGbjB+LOHqiUXdWOGGw16o8
+         rL7IMtCm+3J4DEiJaQq1u5/pYzsh/tHR4lzb8E9OdYR3I7PFakILiarPsg5r8hvFFrM/
+         Qp1uHUN/hIGlhCwHwfqgDuPWYRmGFMZDkADaiIcYhsiw/NFx+EqWEF+RGa9PaWIB01zu
+         RDCjwF3QqVOlzR7drdrB2QKYUicFOv5k0qJCqwTRZklJ/84pXNaOkYbr/kcqoPPr+/zR
+         ZTo0bSMe8VlftauKrvE9AiWnuw/s7goMTKGZKLUfC38hElIsRmDWFcRaZIHzhC9qmQW3
+         Cy5w==
+X-Gm-Message-State: AG10YOTUYfr44//shkREMm8lB669SC/bRn5j9oTMgxPz4rnLlhZmVYxiO+NvKtcNRKhXbryTEe1PV9ggjl5xTg==
+X-Received: by 10.31.182.143 with SMTP id g137mr7462496vkf.45.1454631737743;
+ Thu, 04 Feb 2016 16:22:17 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 4 Feb 2016 16:22:17 -0800 (PST)
+In-Reply-To: <1454262176-6594-12-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: 0o1dANS8zNS-iYVkA4V8Cv_AnwI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285530>
 
-On Sun, Jan 31, 2016 at 11:12:54PM +0530, Karthik Nayak wrote:
-> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
-> and '%(push)' atoms and store information into the 'used_atom'
-> structure based on the modifiers used along with the corresponding
-> atom.
-> 
+On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Introduce contents_atom_parser() which will parse the '%(contents)'
+> atom and store information into the 'used_atom' structure based on the
+> modifiers used along with the atom. Also introduce body_atom_parser()
+> and subject_atom_parser() for parsing atoms '%(body)' and '%(subject)'
+> respectively.
+
+These latter two parsers are conceptually distinct from introduction
+of the %(contents) parser, thus could be done in a follow-on patch or
+two (though I don't care strongly enough to insist upon it).
+
 > Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
 > diff --git a/ref-filter.c b/ref-filter.c
-> @@ -50,6 +52,20 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
-> +static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+> @@ -66,6 +70,38 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+> +static void body_atom_parser(struct used_atom *atom, const char *arg)
 > +{
-> +	if (!arg) {
-> +		atom->u.remote_ref = RR_NORMAL;
-> +	} else if (!strcmp(arg, "short"))
+> +       if (arg)
+> +               die("%%(body) atom does not take arguments");
 
-Style: drop unnecessary braces
+None of the other error messages bothers saying "atom" literally
+following a %(foo). For consistency, this likely should say merely:
 
-> +		atom->u.remote_ref = RR_SHORTEN;
-> +	else if (!strcmp(arg, "track"))
-> +		atom->u.remote_ref = RR_TRACK;
-> +	else if (!strcmp(arg, "trackshort"))
-> +		atom->u.remote_ref = RR_TRACKSHORT;
-> +	else
-> +		die(_("unrecognized format: %%(%s)"), atom->name);
+    %(body) does not take arguments
+
+> +       atom->u.contents.option = C_BODY_DEP;
 > +}
+> +
+> +static void subject_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +       if (arg)
+> +               die("%%(subject) atom does not take arguments");
+
+Ditto.
+
+> +       atom->u.contents.option = C_SUB;
+> +}
+> @@ -733,19 +763,15 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+>
+>         for (i = 0; i < used_atom_cnt; i++) {
+>                 const char *name = used_atom[i].name;
+> +               struct used_atom *atom = &used_atom[i];
+
+Not a big deal, but if you re-order these two lines, then the second,
+which extracts name, could do so from the variable declared by the
+first:
+
+    struct used_atom *atom = &used_atom[i];
+    const char *name = atom->name;
+
+>                 struct atom_value *v = &val[i];
+> -               const char *valp = NULL;
+>                 if (!!deref != (*name == '*'))
+>                         continue;
+>                 if (deref)
+>                         name++;
+>                 if (strcmp(name, "subject") &&
+>                     strcmp(name, "body") &&
+> -                   strcmp(name, "contents") &&
+> -                   strcmp(name, "contents:subject") &&
+> -                   strcmp(name, "contents:body") &&
+> -                   strcmp(name, "contents:signature") &&
+> -                   !starts_with(name, "contents:lines="))
+> +                   !starts_with(name, "contents"))
+>                         continue;
+
+This changes behavior in that it will also now match
+"contentsanything", whereas the original was much more strict. Is that
+desirable? (Genuine question.)
+
+>                 if (!subpos)
+>                         find_subpos(buf, sz,
