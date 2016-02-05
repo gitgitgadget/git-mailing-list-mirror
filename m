@@ -1,110 +1,108 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't
- tried Negotiate
-Date: Fri, 5 Feb 2016 21:06:24 +0000
-Message-ID: <20160205210623.GC7403@vauxhall.crustytoothpaste.net>
-References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
- <xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
- <20160202232952.GA6503@vauxhall.crustytoothpaste.net>
- <CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
- <20160205204648.GA7403@vauxhall.crustytoothpaste.net>
- <xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
+From: Dan Aloni <alonid@gmail.com>
+Subject: Re: [PATCH v6 2/3] ident: add user.useConfigOnly boolean for when
+ ident shouldn't be guessed
+Date: Fri, 5 Feb 2016 23:14:35 +0200
+Message-ID: <20160205211435.GB7245@gmail.com>
+References: <1454658148-3031-1-git-send-email-alonid@gmail.com>
+ <1454658148-3031-3-git-send-email-alonid@gmail.com>
+ <xmqqio23c5t5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9Ek0hoCL9XbhcSqy"
-Cc: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 22:06:38 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 22:14:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRnaO-0000lO-CE
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 22:06:36 +0100
+	id 1aRniJ-0003KT-AQ
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 22:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757217AbcBEVGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 16:06:31 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:54598 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757161AbcBEVG3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2016 16:06:29 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2A102282CA;
-	Fri,  5 Feb 2016 21:06:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1454706387;
-	bh=WATOErQ4nv5D53EPHocZPMlZ0k4/N+9N0Oz3KaR31t8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=whBKSW19P0pcrzrhNzFH7BuunzzmXFU8Ng9kpieaKy6kY7EChaRHHUMHks/1IEPm0
-	 LKK9PE9rFiDlKFYGpe+1inOX6p8BZEngAZ3Op1GsvIu1PyPyWcLD6Sm62i7pw89l55
-	 5kTc1ipXv4fATC9n6fFkne6qdqzJZ2WP6pE+LlkC2wKJIOSy9ITClUGqdELxdD10PD
-	 5+5tyUk+kA+f9++O1y64YV3q7Yc5yGC3GmUR3om2S2ji67nidp68F3BQfzMlRxk0aq
-	 LNklPquwZfZa3wzbn7NxiALoMwZpSqWbptRcIyoGTVdmmAQqqkN7NRtuat33qOsmue
-	 9vBgZoHGPeCCeOWOr6La6IyR1DF5iYLS3vq5ea5sP6xg4OHB1JettWNAeAPaVuJ7Kp
-	 CglFapmsQOFw45Akmf+6OatlpvBEPNAkosY5CjJyrdU/4WTVFMrN7e0xKRCnFOeWOA
-	 qpu7tNA2EBsgBHsPWTXnxI5Z+gh0pb2AjBjqPPGmuWF2RPzPxO7
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>, git@vger.kernel.org
+	id S1757489AbcBEVOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 16:14:41 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35218 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755990AbcBEVOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 16:14:38 -0500
+Received: by mail-wm0-f48.google.com with SMTP id r129so43721088wmr.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 13:14:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=OI2QWxM9glptAETZgnVrx3mRJ/FNMhN3YPIiI3Bj0Og=;
+        b=uzGlFpHTWsbMk2jINjMPgCsfisEmNC2KiRlVAFwl5BB3e3jyx0Z8+XPyLqqFOKfDe2
+         P6HPjb7JJuX6Xb0R339JlgtAFQs69gptXrXjoTALk/dy+lUXZuok5hJR4OwBtJFjZn5U
+         CBrqj5Hwnrw5EuKtxkosytxlNxt0h/KCq/01p/K+cyR0rhOCtI/HaWdp7ALxWEJc6peD
+         f2mqelm0NChxr/fPDOND4W5WIiOFevN8l9vdHT/FU2LGNPUZ/gd2k8SmsbxuLdDNPLg7
+         oWkIYBfSVQhvhAsKFPevU36z87ywIAe0B3KaS7GmuJCcR3zDcJB6VzFqb3Q/ORNPckiC
+         u0vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=OI2QWxM9glptAETZgnVrx3mRJ/FNMhN3YPIiI3Bj0Og=;
+        b=S4fSUQ7s99lBwsWDAdshF57ffmNLmImV3zN3gN8dRtDDM7EYHmuRqta3QjkKd/9ubA
+         iWa+wuoPwmkzyw9LN46Yi1kGpeld7qgUF/UyVl2c+01Wq0k+FpnDY8AcXluH0d55brjP
+         /1+9UF+BBTe4ktnmkQ/x6TNFKycRiQaMCHTw1MxhLZhEUYVeg+UaDvl3wGHPo2frfIcR
+         lLnnNv2Mh4pCmqd7gEvhRIBCO8a92c1Gmkn6i8HqJcBWIJrxTCQLPdLNN1ifiwZQEXIC
+         Mn7YjMELTMFbYIQnSkSk2BHjjtCsbk7Npmrxc6gSl2nyJ8kwg35b+fmqK+UvawVQnno5
+         oo3g==
+X-Gm-Message-State: AG10YORgEWUm6xtYYRALraIzHPzz6UksRNuCiknqmhpFAeUYR53yux9xngS9BtbMXzV0RQ==
+X-Received: by 10.194.59.200 with SMTP id b8mr465408wjr.99.1454706877415;
+        Fri, 05 Feb 2016 13:14:37 -0800 (PST)
+Received: from localhost ([31.210.180.167])
+        by smtp.gmail.com with ESMTPSA id ko2sm17494058wjc.9.2016.02.05.13.14.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Feb 2016 13:14:36 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.3.0-1-amd64)
+In-Reply-To: <xmqqio23c5t5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285634>
 
+On Fri, Feb 05, 2016 at 11:31:34AM -0800, Junio C Hamano wrote:
+> > +	If you have multiple email addresses that you would like to set
+> > +	up per repository, you may want to set this to 'true' in the global
+> > +	config, and then Git would prompt you to set user.email separately,
+> > +	in each of the cloned repositories.
+> 
+> The first sentence mentioned both name and email, but here the
+> example is only about email.  A first time reader might be led into
+> thinking this is only about email and not name, but I am assuming
+> that is not the intention (i.e. this is merely showing just one use
+> case).
+>[..]
 
---9Ek0hoCL9XbhcSqy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Going to revise per yours and Jeff's suggestions.
 
-On Fri, Feb 05, 2016 at 01:02:58PM -0800, Junio C Hamano wrote:
-> Hmph, so documenting that <emptyname>:<emptypassword>@<repository>
-> as a supported way might be an ugly-looking solution to the original
-> problem.  A less ugly-looking solution might be a boolean that can
-> be set per URL (we already have urlmatch-config infrastructure to
-> help us do so) to tell us to pass the empty credential to lubCurl,
-> bypassing the step to ask the user for password that we do not use.
->=20
-> The end-result of either of these solution would strictly be better
-> than the patch we discussed in that the end user will not have to
-> interact with the prompt at all, right?
+>[..]
+> I can read the split expression either with && hanging at the end of
+> line or && leading the next line just fine, but you'd want to be
+> consistent especially when you are writing two almost identical
+> things.
 
-Yes, that's true.  I'll try to come up with a patch this weekend that
-implements that (maybe remote.forceAuth =3D true or somesuch).
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Sure.
 
---9Ek0hoCL9XbhcSqy
-Content-Type: application/pgp-signature; name="signature.asc"
+>[..]
+> 	test_expect_success 'suceed with config' '
+>         	test_when_finished reprepare &&
+> 		test_config user.email test@ok.com &&
+>                 test_must_fail git commit -m msg
+> 	'
+> 
+> Note that you do not need "test_unconfig user.email" in reprepare,
+> as the variable is set in one test with test_config, which uses
+> test_when_finished to arrange the variable to be removed after
+> running the test.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
+Alright. It was worth to understand the differing behavior between
+'test_config' and 'git config'.
 
-iQIcBAEBCgAGBQJWtQ7PAAoJEL9TXYEfUvaLn78P/iq+QpCJmQr71Di4ZlPAivcL
-d57B+jdJ/yiMLg0hY3M9UpVX8m2kkbNObI+UpJN63zexMqRU/2vr1SOB9CpgdDJ2
-5Y9dJB9yQkSpIebIwlOfmOtyPRLyVO2/FWzc3R28i5EdqrUcmuFn4nFhCRrB8T1l
-fZ2P8exT7u1vb3f1iUcUo2wCFPKtjMhH/R6/YhO2FfwYiSEneuTOWwj5HjsZl/mf
-5VLcr1gfjj3q1z94CKtPl7H+sUX6rhaemoXOOpQt4mZJoxP/ejgL4mIWCxjxeXBC
-QjoB8UP1OU7U2b9G3G3e0A9WyM/Ahc1R9ZBvSeLsEgBXAg5u/32m5thehZb4Y5W0
-qwG1egzq3HIrHxBh279SX/2yoUJaJGQqUd45Hg0tLUsrLQOYNiviaA2vhlYg954W
-HqacQhjxYhK1dWvMaU1vbIhAg2WnY7LXomqUxZG+R/zY3bBgoC0qOgT6VErV1ToJ
-yJ3LCs8EQllxjHuzMW3oQkwX5VERNqZFdsgrvmY5ge/sQV6SG8FUD8wfSDLW1adu
-J7SEYL3XsbqnY9+cZXMiLFt3atz+H6bZq2gxssG8/Dkrk26gtlJxMfNYr31ZUy/O
-Na/pWLo53z0qHDi/hhGEJcd4YedUQrSyGVGu2OhAKWa8mDgm01aTwSESZl2GARqx
-Zrd4uGPtXMtfydS5l+Ge
-=OuU8
------END PGP SIGNATURE-----
-
---9Ek0hoCL9XbhcSqy--
+-- 
+Dan Aloni
