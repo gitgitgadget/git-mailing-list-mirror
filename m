@@ -1,76 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 2/2] ident: add user.useConfigOnly boolean for when ident shouldn't be guessed
-Date: Fri, 05 Feb 2016 15:19:50 -0800
-Message-ID: <xmqqsi16bv8p.fsf@gitster.mtv.corp.google.com>
-References: <1454711337-25508-1-git-send-email-alonid@gmail.com>
-	<1454711337-25508-3-git-send-email-alonid@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/8] pack-objects: produce a stable pack when --skip is given
+Date: Sat, 6 Feb 2016 06:25:56 +0700
+Message-ID: <CACsJy8CkQPX4zqW39gpODSkU+habM7TGTJ85MU-S0UuNPk9SCw@mail.gmail.com>
+References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
+ <1454662677-15137-3-git-send-email-pclouds@gmail.com> <xmqq1t8rdmky.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Dan Aloni <alonid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 00:20:03 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 00:26:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRpfW-0003Ct-Sr
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 00:20:03 +0100
+	id 1aRplo-0003Ra-9Y
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 00:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750728AbcBEXT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 18:19:58 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61973 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750699AbcBEXT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 18:19:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C6EF424FE;
-	Fri,  5 Feb 2016 18:19:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lUUqIRqvpBXdiWYFvRk7N2oO7w8=; b=ec8EbP
-	RAj6O29uaaOdh1vpsenfOjknuxgLK2uR5PTEuVXizMu6YP87Qf2rb1Y0NrthfkGO
-	UQmk8aaGNtJJF3KSiqP9CLFl/AdMeUOlueGNmso/gvamYweTIEkpQCEuL+kjW+I+
-	QQ+FBVZsFfqVflInLdNiGHelboTOlLU05sEKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wIIm2vLm7jqBYwtcI7aT6qp6QFduvll/
-	mVNsHqkGJT2GJQhck3S6gAU9Y8aL/ktMSFXRZ+svzvAfDl0SfcS3DU/RQusTWt3Z
-	1zQArUfyWO4WS1UBkMiwid3nBs1N/eYYvVTaItSj4I7GzWE/AflGIaT0UIiTP9i7
-	aeDfPCi2aSc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21E9D424FD;
-	Fri,  5 Feb 2016 18:19:52 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 99764424FC;
-	Fri,  5 Feb 2016 18:19:51 -0500 (EST)
-In-Reply-To: <1454711337-25508-3-git-send-email-alonid@gmail.com> (Dan Aloni's
-	message of "Sat, 6 Feb 2016 00:28:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F523BB32-CC5E-11E5-BD1A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1750883AbcBEX02 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 18:26:28 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:33523 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbcBEX01 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2016 18:26:27 -0500
+Received: by mail-lb0-f171.google.com with SMTP id x4so58824407lbm.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 15:26:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=TfWh3NHB21nipql1GvFaaRUTIZcGfNqkZcSfNb3pDO0=;
+        b=OKPVaoAcGsEnxeQEgg+MueeZB/cQbW9hqqVeJ6l85Nv26+XjXOcgTRWxEUf44NPFAP
+         Y4yWHq+awToSmfEfqiR9uEGhk0j1GXlatHufQWlv1nljPwAwfWAkofVTwinBgJf5cXtq
+         +3i7c554Yy8x7SoHzN9UNWpsS3LdaZ1DjNsL+tf67YtUADTDas6b77FakhllJSiEPYj+
+         bbDH1xXjsAJzkqq6tJvjOVTcdFM5+idSoUe97Ayj+Q7WIkNQzH3fBAmIzRKNOJyi9nnR
+         p00vSnWXmBQUwHDGJfeqFJ/Dev5ze5lGRPzWqPC0Sb6vukt7s9GU1sfZMFsVF9TXg3oF
+         UFhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=TfWh3NHB21nipql1GvFaaRUTIZcGfNqkZcSfNb3pDO0=;
+        b=TPynNISFXrviGDecF93vGi5FbHxKJAoVDqfeWRTPz9q+jlCn+1ktCzRMVMEO2moan6
+         7ZY61Fp3+bToHzW38uojFgolmpLnK5l+j73B1h36IP0K3RBXFo9+MDZiPjceiIW/BMTQ
+         SpLyAaTJym0Na+iACAcTve2wTUxeTwlLkPJzDsBfxz+cQ+D5h0lsPCVm2P85M4H0avzI
+         F4bfhAUwrxnN+flp8Vmw6smQEupoimicIyzVJoxp+nAYrCB+InPYgYpQo0lgBSyWsYac
+         S9z3eZwQzGfYUQfZ/cX20L+ik2YZhHmtrDOMcgO3CSkcS1ujm6bozyd1dgX/+1+QSLqy
+         +rww==
+X-Gm-Message-State: AG10YOQS7SeOXK/ZgzpidQsegU0GZFCHovEXwNAVKBjyrIcYv1geYRr+2tZ8lZD6Vky6dqZzlL9KNFIK+z1fow==
+X-Received: by 10.112.64.42 with SMTP id l10mr7066471lbs.137.1454714785900;
+ Fri, 05 Feb 2016 15:26:25 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Fri, 5 Feb 2016 15:25:56 -0800 (PST)
+In-Reply-To: <xmqq1t8rdmky.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285652>
 
-Dan Aloni <alonid@gmail.com> writes:
+On Sat, Feb 6, 2016 at 1:43 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>> index 417c830..c58a9cb 100644
+>> --- a/builtin/pack-objects.c
+>> +++ b/builtin/pack-objects.c
+>> @@ -2709,6 +2709,11 @@ int cmd_pack_objects(int argc, const char **a=
+rgv, const char *prefix)
+>>                       if (get_oid_hex(skip_hash_hex, &skip_hash))
+>>                               die(_("%s is not SHA-1"), skip_hash_he=
+x);
+>>               }
+>> +
+>> +             /*
+>> +              * Parallel delta search can't produce stable packs.
+>> +              */
+>> +             delta_search_threads =3D 1;
+>>       }
+>>
+>>       argv_array_push(&rp, "pack-objects");
+>
+> A multi-threaded packing is _one_ source of regenerating the same
+> pack for the same set of objects, but we shouldn't be tying our
+> hands by promising it will forever be the _only_ source of it by
+> doing things like this.  We may want to dynamically tweak the
+> packing behaviour depending on the load of the minute and such for
+> example.
 
-> +user.useConfigOnly::
-> +	Instruct Git to avoid trying to guess defaults for 'user.email'
-> +	and 'user.name', and instead retrieve the values only from the
-> +	configuration. For example, if you have multiple email addresses
-> +	and would like to use a different one for each repository, then
-> +	with this configuration option set to `true` in the global config
-> +	along with a name, Git will prompt you to set up an email upon
-> +	making new commits in a newly cloned repository.
+You noticed that tying the behavior only happens when the user asks
+for it, right? I don't expect people to do resumable fetch/clone by
+default. There are tradeoffs to make and they decide it, we offer
+options. So, it does not really tie our hands in the normal case.
 
-I do not think this is wrong per-se, but s/upon/before/ may be more
-accurate and would assure the users more that no commits with a
-wrong identity will be created.
+> I think a more sensible approach for "resuming" is to attack cloning
+> first.  Take a reasonable baseline snapshot periodically (depending
+> on the activity level of the project, the interval may span between
+> 12 hours to 2 weeks and you would want to make it configurable) to
+> create a bundle, teach "clone" to check the bundle first and perform
+> a resumable and bulk transfer for the stable part of the history
+> (e.g. up to the latest tag or a branch that does not rewind, the set
+> of refs to use as the stable anchors you would want to make
+> configurable), and then fill the gap between that baseline snapshot
+> and up-to-date state by doing another round of "git fetch" and then
+> you'd have solved the most serious problem already.
 
-Other than that, these two patches look very good to me.
+_most_. On a troubled connection, fetch can fail as well, especially
+when the repo is not uptodate. What about shallow clone? I don't think
+you want to prepare snapshots for all depths (or some "popular"
+depths). Cloning full then cutting it shallow locally might work, but
+we're wasting bandwidth and disk space.
 
-Thanks.
+> This is an indication that the approach this series takes is taking
+> us in a wrong direction.
+
+The way I see it, the two approaches complement each other. Snapshots,
+like pack bitmaps, helps tremendously, but it has corner cases that
+can be covered by this.
+--=20
+Duy
