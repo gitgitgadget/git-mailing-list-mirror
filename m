@@ -1,170 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 13/25] fetch-pack: use a separate flag for fetch in deepening mode
-Date: Thu, 04 Feb 2016 16:03:25 -0800
-Message-ID: <xmqqh9hodnw2.fsf@gitster.mtv.corp.google.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
-	<1454576641-29615-14-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 10/12] ref-filter: introduce remote_ref_atom_parser()
+Date: Thu, 4 Feb 2016 19:05:06 -0500
+Message-ID: <20160205000506.GA6417@flurp.local>
+References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
+ <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 01:03:33 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 01:05:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRTs5-0001bM-0R
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 01:03:33 +0100
+	id 1aRTtq-0003y2-Im
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 01:05:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758268AbcBEAD3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 19:03:29 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50106 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755869AbcBEAD2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 19:03:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A33EE428EC;
-	Thu,  4 Feb 2016 19:03:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=OFhNJsdVAuOI
-	OSSmBAiiDeqmmOM=; b=TDKAgXbvX/csz2agXTKc2Qyv9vB+yepk7KLRCnTfFzKV
-	oFIYOE2aE/WzIiSrEEWmmuHsi/wl6W4V/ANILJYyeP6KFipbwScW6PzZ1joJOCdV
-	WkePHtPRgJrSm88tRcvSdzcIxiQa3WJr6zjN9qvWcKFiULekpKrmUCX9R8KY2ms=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NRVRqi
-	QkBeXgggqw9RgGf0+m23FHvqZR0f+JYo69HdUK/PLcPE0a6osmuZJ6xydJkNOj3Q
-	Ry5/XbIXSAo8ZOfL0j6T+7YWgz8gMOr4ixbn2Hd0lHVYtYk1Rskifj3vtDpeAdah
-	qmQeZ3306as2JqCMhjWVFHfow8f6uxPsk7YNY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9916E428EB;
-	Thu,  4 Feb 2016 19:03:27 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 10E51428EA;
-	Thu,  4 Feb 2016 19:03:26 -0500 (EST)
-In-Reply-To: <1454576641-29615-14-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 4 Feb
- 2016 16:03:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E1A677CA-CB9B-11E5-AF4F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933788AbcBEAFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Feb 2016 19:05:16 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:33995 "EHLO
+	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933739AbcBEAFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Feb 2016 19:05:12 -0500
+Received: by mail-io0-f196.google.com with SMTP id k127so5136463iok.1
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 16:05:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=D1iFVY9aZqKkOXxmDRjdOpOIehUPWtxJN76wPhIDiTs=;
+        b=bJfs7u9CfWu/WA/hkqQQuuC4QwMzHeYd/9LbGI3HoIUOFfwf3wjyzLH9HK6xgvPhZ5
+         Ptxnhxfzb7FnZ/1crcigxqsqW7xAv0akd6ODInY0+JvkU/aPQmHD1UcBqFOLakUHTriY
+         1TGo06r6lfD42e96PcyYZUaZw9xVImdt7OMt9ouTkRT4aJAX4n1cqwCmFaGLJNp8v/KY
+         dvDWDsa714MkxxbZ6ExWj/4d6pVcfG4QrXZ23Mp+mIQKvx/WXWQTT68wRxVHmlOJMd+G
+         z3HASkPLtvhN1M3E7mtdTtn3V0kW2HGxI7MSq2keS+V/YTld5Mx4gnc6Nj4AK/s+acU4
+         ivYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=D1iFVY9aZqKkOXxmDRjdOpOIehUPWtxJN76wPhIDiTs=;
+        b=RuERjYXnKMzfc6IM30wZvP+il/a5RYqtG7nzfJFiD6ghqzQDgRMXvSvp5GrLudfD/i
+         3CnNTc/p+/POy8c8GurQF6K2LtGaPXji+pgiLKj7vlzNi4PlrdoKNVLyN87MZZlDGXM8
+         yGe3BaZJs00ZYdhnx9+J8p3vK2px/TvxMC8ZOiceGnxFxbMTee+H6tebZSnt/2v5jiMj
+         ruqHCtfTryCgxVtTjvoETGHeV7ue5BXVHPH+xlJsJZrZPwDKoK5RlcxdjlMSYOW8X8r0
+         FtEGpKErL9DGlTA6KnfSwnUYMasSdYnxWIXx8TE9cfoZq1qWV4jnEPqQkzJEa27L/x6A
+         jhHg==
+X-Gm-Message-State: AG10YOR9jtZQPHkoR/6LCVeWmeyjEDO7PmxlDCHRJooyIhfqjrySH2YHGPS1zdfuGost+Q==
+X-Received: by 10.107.133.151 with SMTP id p23mr11864988ioi.16.1454630711649;
+        Thu, 04 Feb 2016 16:05:11 -0800 (PST)
+Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id o14sm10868292igi.21.2016.02.04.16.05.10
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 04 Feb 2016 16:05:11 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1454262176-6594-11-git-send-email-Karthik.188@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285529>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> The shallow repo could be deepened or shortened when then user gives
-> --depth. But in future that won't be the only way to deepen/shorten a
-> repo. Stop relying on args->depth in this mode. Future deepening
-> methods can simply set this flag on instead of updating all these if
-> expressions.
->
-> The new name "deepen" was chosen after the command to define shallow
-> boundary in pack protocol. New commands also follow this tradition.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+On Sun, Jan 31, 2016 at 11:12:54PM +0530, Karthik Nayak wrote:
+> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
+> and '%(push)' atoms and store information into the 'used_atom'
+> structure based on the modifiers used along with the corresponding
+> atom.
+> 
+> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 > ---
+> diff --git a/ref-filter.c b/ref-filter.c
+> @@ -50,6 +52,20 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
+> +static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+> +{
+> +	if (!arg) {
+> +		atom->u.remote_ref = RR_NORMAL;
+> +	} else if (!strcmp(arg, "short"))
 
-OK.  Up to here things look more-or-less sensible overall.
+Style: drop unnecessary braces
 
-Thanks.
-
->  fetch-pack.c | 14 ++++++++------
->  fetch-pack.h |  1 +
->  2 files changed, 9 insertions(+), 6 deletions(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 16917f9..e947514 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -197,7 +197,7 @@ enum ack_type {
-> =20
->  static void consume_shallow_list(struct fetch_pack_args *args, int f=
-d)
->  {
-> -	if (args->stateless_rpc && args->depth > 0) {
-> +	if (args->stateless_rpc && args->deepen) {
->  		/* If we sent a depth we will get back "duplicate"
->  		 * shallow and unshallow commands every time there
->  		 * is a block of have lines exchanged.
-> @@ -348,7 +348,7 @@ static int find_common(struct fetch_pack_args *ar=
-gs,
->  	packet_buf_flush(&req_buf);
->  	state_len =3D req_buf.len;
-> =20
-> -	if (args->depth > 0) {
-> +	if (args->deepen) {
->  		char *line;
->  		const char *arg;
->  		unsigned char sha1[20];
-> @@ -557,7 +557,7 @@ static void filter_refs(struct fetch_pack_args *a=
-rgs,
->  		}
-> =20
->  		if (!keep && args->fetch_all &&
-> -		    (!args->depth || !starts_with(ref->name, "refs/tags/")))
-> +		    (!args->deepen || !starts_with(ref->name, "refs/tags/")))
->  			keep =3D 1;
-> =20
->  		if (keep) {
-> @@ -627,7 +627,7 @@ static int everything_local(struct fetch_pack_arg=
-s *args,
->  		}
->  	}
-> =20
-> -	if (!args->depth) {
-> +	if (!args->deepen) {
->  		for_each_ref(mark_complete_oid, NULL);
->  		for_each_alternate_ref(mark_alternate_complete, NULL);
->  		commit_list_sort_by_date(&complete);
-> @@ -813,6 +813,8 @@ static struct ref *do_fetch_pack(struct fetch_pac=
-k_args *args,
-> =20
->  	if ((args->depth > 0 || is_repository_shallow()) && !server_support=
-s("shallow"))
->  		die("Server does not support shallow clients");
-> +	if (args->depth > 0)
-> +		args->deepen =3D 1;
->  	if (server_supports("multi_ack_detailed")) {
->  		print_verbose(args, "Server supports multi_ack_detailed");
->  		multi_ack =3D 2;
-> @@ -873,7 +875,7 @@ static struct ref *do_fetch_pack(struct fetch_pac=
-k_args *args,
-> =20
->  	if (args->stateless_rpc)
->  		packet_flush(fd[1]);
-> -	if (args->depth > 0)
-> +	if (args->deepen)
->  		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
->  					NULL);
->  	else if (si->nr_ours || si->nr_theirs)
-> @@ -940,7 +942,7 @@ static void update_shallow(struct fetch_pack_args=
- *args,
->  	int *status;
->  	int i;
-> =20
-> -	if (args->depth > 0 && alternate_shallow_file) {
-> +	if (args->deepen && alternate_shallow_file) {
->  		if (*alternate_shallow_file =3D=3D '\0') { /* --unshallow */
->  			unlink_or_warn(git_path_shallow());
->  			rollback_lock_file(&shallow_lock);
-> diff --git a/fetch-pack.h b/fetch-pack.h
-> index bb7fd76..4d0adb0 100644
-> --- a/fetch-pack.h
-> +++ b/fetch-pack.h
-> @@ -25,6 +25,7 @@ struct fetch_pack_args {
->  	unsigned self_contained_and_connected:1;
->  	unsigned cloning:1;
->  	unsigned update_shallow:1;
-> +	unsigned deepen:1;
->  };
-> =20
->  /*
+> +		atom->u.remote_ref = RR_SHORTEN;
+> +	else if (!strcmp(arg, "track"))
+> +		atom->u.remote_ref = RR_TRACK;
+> +	else if (!strcmp(arg, "trackshort"))
+> +		atom->u.remote_ref = RR_TRACKSHORT;
+> +	else
+> +		die(_("unrecognized format: %%(%s)"), atom->name);
+> +}
