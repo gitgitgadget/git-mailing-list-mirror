@@ -1,109 +1,138 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v1] config: add '--sources' option to print the source of
- a config value
-Date: Fri, 5 Feb 2016 12:31:15 +0100
-Message-ID: <56B48803.9080909@gmail.com>
-References: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
- <20160205112001.GA13397@sigill.intra.peff.net>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH 8/8] one ugly test to verify basic functionality
+Date: Fri, 5 Feb 2016 12:57:53 +0100
+Message-ID: <CA+EOSBnZVuHThXLg9+VftPVaKy5wqqxp=iQtP1ZUtxkKq32HMQ@mail.gmail.com>
+References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
+	<1454662677-15137-9-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Fri Feb 05 12:31:25 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 12:57:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRebj-0000P6-FB
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 12:31:23 +0100
+	id 1aRf1S-0006F4-Rk
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 12:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752452AbcBELbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 06:31:19 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36629 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbcBELbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 06:31:18 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 128so2558907wmz.3
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 03:31:18 -0800 (PST)
+	id S1751920AbcBEL5z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 06:57:55 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:33260 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbcBEL5y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Feb 2016 06:57:54 -0500
+Received: by mail-vk0-f66.google.com with SMTP id c3so393945vkb.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 03:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=xxxsQUAQRS55znuzQFE3yADpHtZeVavUScZOu9MJ+Bk=;
-        b=TiDCbwG7Fr1Gx4JSBFnV9UKoGGhYzcOztzO/TbCJMPGVvbvathMXU0slmwRWY7qkbT
-         JgdInrOFusrA/vwUVVpwHJ5Ftu4nlivLV/A3cVas/q1sJTlriY+vgB0CkkGxCgniHbkA
-         G1+k4ZCd/a68HXk/sNkv1mNk/GdmdBFZp74VUsmt/D/QF1tTtUtzpmpPvZ2HOwxWnj3i
-         DOL4vI7UDRuW7oCdzJnJeFw7hN6KPrV0bju0Gb0DsNAquIFqZKcEzz05LnblMSCQf+n9
-         CqSmJjjAe7aClyF5MCe71iqJfyk8QoE6X2ZZuCwV39ZmWhhn9dclcowoYMacKeVJ7yth
-         yy0Q==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=xt3gUPNnv64fgWHtd+Eo9zdQ4KQaRsdaXWQmPQxuYV0=;
+        b=htYZ7LmR+UMyXXm84AEenLs1d22WwpbK3tKcvnkudLSY8P+bJ3/dFkBljZDjRm1wab
+         NHcqMBwFujEW9rLkP1HJlWGt9ag/9a0jSsYVEP70qBM4SdsHI5SDimCN6IGnJ0sUslop
+         bKhXCQuURW4+GODmXbyuSWkdiEWCW0FgfZSGfvgxxQ1JBXLlnNaUfGfVvl1Jd28r1t1a
+         rx9dASdliNenH2UBxakDkRi9LkU9/O3BLHVlurRGDXrSaUUfnqrc5S+2B39eMao0Xnz7
+         wgwfrL9OdLfWO1WSC5c/zNAkk6NjHkO1tujtM8fFLzVPbhGrl3hQjJrzm9m3H04QXcFa
+         LafA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=xxxsQUAQRS55znuzQFE3yADpHtZeVavUScZOu9MJ+Bk=;
-        b=RVYW/y1nJR9glj/z6g0s+rgNwwjQe3FWfHWNWBFeJT9JDed4Rfz2eARF6aLYHlwob9
-         WgeOcAZeR74hrswyDLrai7Xoudx4Vfh7AYaDBUPBiDD57CTYiHXlfBFQwFewA7tQTFuq
-         0NjWJ4SK/9rSEWZ2imjqMByE82eo/m0CpPsFeRKRALV+X1zzy790dX71xv8Th+cCwU96
-         ylM3NsKwHBsImwXPKC6QQpJXbDdCWJ4+A1ddZ5mtyTsq4u0G1tLSJuwAebAYSAh8zX3P
-         Pm2OlNxOlBe1O7MoGY3oEFuWJ3GuOZrLZkHvfj/RMgze7xTcHuETUwYAeJdr2c/dbSQS
-         2TOg==
-X-Gm-Message-State: AG10YOSfOASTN8Utf9gXiKjtzORyO8mcS+VUQG/1Ga0FXUQIXrMfwqSsuI9/O38qVHGx/A==
-X-Received: by 10.28.11.73 with SMTP id 70mr15606015wml.40.1454671877248;
-        Fri, 05 Feb 2016 03:31:17 -0800 (PST)
-Received: from [10.223.62.214] ([131.228.216.134])
-        by smtp.googlemail.com with ESMTPSA id i1sm575448wjs.45.2016.02.05.03.31.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Feb 2016 03:31:16 -0800 (PST)
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <20160205112001.GA13397@sigill.intra.peff.net>
+        bh=xt3gUPNnv64fgWHtd+Eo9zdQ4KQaRsdaXWQmPQxuYV0=;
+        b=hAIOcuciVZfA62+XU3VXLlhkQNoSx8kZiLSbuwv3SloUVSLXeOTa0MPe/Vha5Y5pPX
+         huZMx+bOTWnHq/8YEiPZyOAFY1UOMayRBvXV8nqnBkeEs+WXYL5wvsiNbez9+trEvS2X
+         1de4qMJNVguvL0In2KIHxshkUmQRZgTp1PJ6wLSEN9EIH+GLvp1eVcxDqgp6a9i3kaiJ
+         UbLp1r+moYeOC0cGq3AGhxzA1QBxVuxEeLyRkWmnDXhlySVTsV8LGqDf7p08BShkljqW
+         mlPi5OCJTuc3+WNlkw5t3+mfiLbSIaTo9wRrQEz4xnIUauoWRMy6su7BTTWY5fbznqWw
+         L2RA==
+X-Gm-Message-State: AG10YOQDAFGo9M15wd0GeDiBT98MLoVJGt74a8UseKNQGu7II13EldUcw4XDhLgnUn8aIVrvJHFRQk+MjAv/Sg==
+X-Received: by 10.31.141.2 with SMTP id p2mr9265640vkd.37.1454673473364; Fri,
+ 05 Feb 2016 03:57:53 -0800 (PST)
+Received: by 10.31.56.10 with HTTP; Fri, 5 Feb 2016 03:57:53 -0800 (PST)
+In-Reply-To: <1454662677-15137-9-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285573>
 
-On 2/5/2016 12:20, Jeff King wrote:
-
-> Hmm. I had originally envisioned this only being used with "--list", but
-> I guess it makes sense to say "--sources --get" to show where the value
-> for a particular option is coming from.
-
-Being able to use "--sources --get" is a feature that I'd definitely 
-like to see, too.
-
-> I'm not sure returning here is the best idea. We won't have a config
-> filename if we are reading from "-c", but if we return early from this
-> function, it parses differently than every other line. E.g., with your
-> patch, if I do:
+2016-02-05 9:57 GMT+01:00 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pc=
+louds@gmail.com>:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  t/t5544-fetch-resume.sh (new +x) | 42 ++++++++++++++++++++++++++++++=
+++++++++++
+>  1 file changed, 42 insertions(+)
+>  create mode 100755 t/t5544-fetch-resume.sh
 >
->    git config -c foo.bar=true config --sources --list
+> diff --git a/t/t5544-fetch-resume.sh b/t/t5544-fetch-resume.sh
+> new file mode 100755
+> index 0000000..dfa033d
+> --- /dev/null
+> +++ b/t/t5544-fetch-resume.sh
+> @@ -0,0 +1,42 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'what'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'what' '
+> +       test_commit one &&
+> +       git clone --no-local .git abc &&
+> +       (
+> +       cd abc &&
+> +       mv `ls .git/objects/pack/*.pack` pack &&
+
+No, please. From the git coding guideline : "We prefer $( ... ) for
+command substitution; unlike ``, it properly nests.
+It should have been the way Bourne spelled it from day one, but
+unfortunately isn't."
+
+http://stackoverflow.com/questions/4708549/whats-the-difference-between=
+-command-and-command-in-shell-programming
+
+Thank you
+> +       git unpack-objects < pack &&
+> +       rm pack &&
+> +       git fsck
+> +       ) &&
+> +       test_commit two &&
+> +       test_commit three &&
+> +       (
+> +       cd abc &&
+> +       git fetch --resume-pack=3Dfoo origin HEAD &&
+> +       git log --format=3D%s origin/master >actual &&
+> +       echo one >expected &&
+> +       test_cmp expected actual &&
+> +       rm .git/FETCH_HEAD &&
+> +       mv `ls .git/objects/pack/*.pack` pack &&
+> +       head -c 123 pack >tmp &&
+> +       git fetch --resume-pack=3Dtmp origin &&
+> +       test_path_is_missing tmp &&
+> +       cmp pack .git/objects/pack/*.pack &&
+> +       git fsck &&
+> +       git log --format=3D%s origin/master >actual &&
+> +       cat >expected <<EOF &&
+> +three
+> +two
+> +one
+> +EOF
+> +       test_cmp expected actual
+> +       )
+> +'
+> +
+> +test_done
+> --
+> 2.7.0.377.g4cd97dd
 >
-> I'll get:
->
->    /home/peff/.gitconfig <tab> user.name=Jeff King
->    /home/peff/.gitconfig <tab> user.email=peff@peff.net
->    ...etc...
->    foo.bar=true
->
-> If somebody is parsing this as a tab-delimited list, then instead of the
-> source field for that line being empty, it is missing (and it looks like
-> "foo.bar=true" is the source file). I think it would be more friendly to
-> consumers of the output to have a blank (i.e., set "fn" to the empty
-> string and continue in the function).
-
-Or to come up with a special string to denote config values specified on 
-the command line. Maybe somehting like
-
-     <command line> <tab> foo.bar=true
-
-I acknowledge that "<command line>" would be a valid filename on some 
-filesystems, but I think the risk is rather low that someone would 
-actually be using that name for a Git config file.
-
-Regards,
-Sebastian
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
