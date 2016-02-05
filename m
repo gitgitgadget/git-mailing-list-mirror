@@ -1,155 +1,120 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 00/20] refs backend
-Date: Fri,  5 Feb 2016 14:44:01 -0500
-Message-ID: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>
+Subject: [PATCH v4 06/21] refs: add method for initial ref transaction commit
+Date: Fri,  5 Feb 2016 14:44:07 -0500
+Message-ID: <1454701462-3817-7-git-send-email-dturner@twopensource.com>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Ronnie Sahlberg <rsahlberg@google.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Feb 05 20:44:47 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 20:44:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRmJC-0000lo-PR
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:44:47 +0100
+	id 1aRmJO-00012d-BG
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934AbcBETom convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 14:44:42 -0500
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:34225 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753977AbcBETol (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 14:44:41 -0500
-Received: by mail-qg0-f45.google.com with SMTP id u30so76273903qge.1
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 11:44:41 -0800 (PST)
+	id S1755214AbcBEToy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 14:44:54 -0500
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:34153 "EHLO
+	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755125AbcBETou (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 14:44:50 -0500
+Received: by mail-qk0-f171.google.com with SMTP id x1so38254352qkc.1
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 11:44:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=J21exaBspsYul1z8WeEjKnQuF27W8DgCfO6nrJyp+jc=;
-        b=fN8aVeDxJp7grrY5tOnUC2ziNz9XsmzDwo9Q3PBree1DJAUOVF/cVwWYhWEkpxYQGD
-         Qdjjo1YxQ757hG5uehklfFCt8NZj3cekZCKoS365MhZd4o4PVZRI5vBqOy8q8hHXyP9K
-         FAHeIDNg7yEaNZpt0/LMpTHBNuEcr2+GkgWrOHSlDNEUmtzN2zp9/1SklvO7kYzjgsDh
-         i9egXqLVp9AkefR+VdYwpCXtsPX815v49032Bn7fr8n6PLaobdA+hPOA/49jeYi+0d4h
-         Ux7X68U+96MiU7T5pR77u/NZVWVDIPdatneX0DWA3yeemOlqOY7xzR+f0Nxn8f+u4wUz
-         uhvA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Ft/RM9kJ/Ur244F1SxddL/jo5bWSJ4+BwWbwZHbenjA=;
+        b=n/gFR8KOa3l8rDoHSK0qRL1O9xHQnpnOptYNFivwePkmL0/Eqv6hRvjoztckQdt8xk
+         AD9wRFwdkv+j9E1mXhjXqrrOydV4Uyp3XAh6nAY4LYXQ+zHDUu8vDqfWlPZhw0uglc9V
+         u40reTbb3PwnHXU1N2FXf2kZoEQ1+Tpp16qMWQO5VX+5g+wjc/NXE/FKEcnBWHzeujn0
+         JF/FnHjxp7D1oxrI6jEAD6s5dgEqhCesyhNGtQAarMKv8vMCkJc9kQl+wimbOkM4SHcg
+         hFT2+vO6NZyx0hNJySQXQKlZt+0gzwQ49DaLfGYiA8jsW58ZwGYKMdUcMB/VQs4ETFAu
+         bthg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=J21exaBspsYul1z8WeEjKnQuF27W8DgCfO6nrJyp+jc=;
-        b=CmQrwfzH2a/t1U4Kwl5N90MSgtst1qCd1Ij1hroSugNMPJdMJFqPZsL0eXa0Ug0OE1
-         l/lJUaA4MHtgcR8gClWZ6GRgOjtZf6xVuLauzgwBRydgMdSDNsJfosMVvqPIq10SBkDn
-         YIbsCB4d3Vwy0VgKsIdcLxf0bF79l5cApuTQ2w44vgnx5aZjCFny7ysBmwPOh4VGBuhE
-         cL9k9uudw/XmhZ7P/L4Rmcz0kRDv9du45dxbYmH1+UrVQaE/hZrGg5CSD5tnPzWgn9wK
-         xuBnINhucbl33TMprdZBg6/lnPVfQ7q2owUH+St+m/XBE0zpaDS8DEALpI+gKInI6rXW
-         Pgww==
-X-Gm-Message-State: AG10YORlRXiAmIOqJjjT4TotMPbTWv5wH6Yqf1EbZmxk1y94bl25OrqKPvWrqX+QSE1qpg==
-X-Received: by 10.140.250.138 with SMTP id v132mr19947764qhc.0.1454701480574;
-        Fri, 05 Feb 2016 11:44:40 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Ft/RM9kJ/Ur244F1SxddL/jo5bWSJ4+BwWbwZHbenjA=;
+        b=hNWGvOJaSdAtZiE4Z4Qrf2BySSIfml7KYMTnNvffkTymFpR5jJw6GsiZ2fIv95bk7l
+         qJNfGjKk7l465JfpO+y9F9LLwrOz3+oKe5VdWE/YbVYmKtmyVvntoqHIRoEaObU2P9ny
+         jhRBueJXbbB4il+doHKI7LCfli0loyjwrbVlLIWH6FQgNnP5If6w0yOayAOdbndwSj7U
+         MELtrR3vVOVVe8OBuq8PBlifE8zAfPsIM+XF8G6+qsJGCc996z2Nsl3LQTZ8+svVW1F2
+         KNRhessvA9o8j+o9807+op4VpkF3u9AM7X9554I1jBu5Bt58OqWuv64xD2myuuDGQ8Qs
+         jzJw==
+X-Gm-Message-State: AG10YOQcfXmcGFl6EK/6CuOsmj2uRWaJhOI0vOG7nv0wA300TfkNW+0SniU+0CwCLT0r8Q==
+X-Received: by 10.55.73.74 with SMTP id w71mr19282625qka.60.1454701489736;
+        Fri, 05 Feb 2016 11:44:49 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id g109sm8565535qgg.40.2016.02.05.11.44.39
+        by smtp.gmail.com with ESMTPSA id g109sm8565535qgg.40.2016.02.05.11.44.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Feb 2016 11:44:39 -0800 (PST)
+        Fri, 05 Feb 2016 11:44:48 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g730654d-twtrsrc
+In-Reply-To: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285605>
 
-Changes to this version:
-re-rolled on top of pu as-of 9db66d9f1aa.
+Signed-off-by: Ronnie Sahlberg <rsahlberg@google.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ refs.c               | 6 ++++++
+ refs/files-backend.c | 5 +++--
+ refs/refs-internal.h | 1 +
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-Bug fixes include:
-=46or submodules: memory leaks; segfault on bad config. (thanks to Peff=
-)
-In symref splitting: check that would always succeed (thanks to Peff)
-A bogus double-declaration of a var (thanks to Ramsay Jones)
-Two memory leaks (thanks to Thomas Gummerer)
-An unused var (thanks to Duy Nguyen)
-
-Other improvements are:
-Strings prepped for 18n (thanks to Duy Nguyen)
-Cleaner submodule handling (thanks to Peff)
-Whitelisting instead of blacklisting in git-new-workdir (thanks to
-  Thomas Gummerer)
-Allow older gits to recognize lmdb-backend git repos (thanks to Duy Ngu=
-yen)
-Tab completion and cleaner commit messages (thanks SZEDER G=C3=A1bor)
-Removed some #ifdefs, moving all backend setup to one place (thanks to =
-Duy
-Nguyen)
-
-Thanks to all for reviews.
-
-David Turner (18):
-  refs: add do_for_each_per_worktree_ref
-  refs: add methods for reflog
-  refs: add method for initial ref transaction commit
-  refs: add method for delete_refs
-  refs: add methods to init refs db
-  refs: add method to rename refs
-  refs: make lock generic
-  refs: move duplicate check to common code
-  refs: allow log-only updates
-  refs: resolve symbolic refs first
-  refs: always handle non-normal refs in files backend
-  init: allow alternate ref strorage to be set for new repos
-  refs: check submodules ref storage config
-  clone: allow ref storage backend to be set for clone
-  svn: learn ref-storage argument
-  refs: add register_ref_storage_backends()
-  refs: add LMDB refs storage backend
-  refs: tests for lmdb backend
-
-Ronnie Sahlberg (3):
-  refs: add a backend method structure with transaction functions
-  refs: add methods for misc ref operations
-  refs: add methods for the ref iterators
-
- .gitignore                                     |    1 +
- Documentation/config.txt                       |    7 +
- Documentation/git-clone.txt                    |    6 +
- Documentation/git-init-db.txt                  |    2 +-
- Documentation/git-init.txt                     |    7 +-
- Documentation/technical/refs-lmdb-backend.txt  |   52 +
- Documentation/technical/repository-version.txt |    5 +
- Makefile                                       |   12 +
- builtin/clone.c                                |    5 +
- builtin/init-db.c                              |   57 +-
- builtin/submodule--helper.c                    |    2 +-
- cache.h                                        |    2 +
- config.c                                       |   25 +
- configure.ac                                   |   33 +
- contrib/completion/git-completion.bash         |    6 +-
- contrib/workdir/git-new-workdir                |    3 +
- git-submodule.sh                               |   13 +
- git-svn.perl                                   |    6 +-
- path.c                                         |   29 +-
- refs.c                                         |  486 +++++-
- refs.h                                         |   21 +
- refs/files-backend.c                           |  404 ++---
- refs/lmdb-backend.c                            | 2052 ++++++++++++++++=
-++++++++
- refs/refs-internal.h                           |  128 +-
- setup.c                                        |   23 +-
- t/t0001-init.sh                                |   25 +
- t/t1460-refs-lmdb-backend.sh                   | 1109 +++++++++++++
- t/t1470-refs-lmdb-backend-reflog.sh            |  359 +++++
- t/t1480-refs-lmdb-submodule.sh                 |   85 +
- t/test-lib.sh                                  |    1 +
- test-refs-lmdb-backend.c                       |   64 +
- transport.c                                    |    7 +-
- 32 files changed, 4825 insertions(+), 212 deletions(-)
- create mode 100644 Documentation/technical/refs-lmdb-backend.txt
- create mode 100644 refs/lmdb-backend.c
- create mode 100755 t/t1460-refs-lmdb-backend.sh
- create mode 100755 t/t1470-refs-lmdb-backend-reflog.sh
- create mode 100755 t/t1480-refs-lmdb-submodule.sh
- create mode 100644 test-refs-lmdb-backend.c
-
---=20
+diff --git a/refs.c b/refs.c
+index 3254378..d481a94 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1258,3 +1258,9 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 					       prepare_fn, should_prune_fn,
+ 					       cleanup_fn, policy_cb_data);
+ }
++
++int initial_ref_transaction_commit(struct ref_transaction *transaction,
++				   struct strbuf *err)
++{
++	return the_refs_backend->initial_transaction_commit(transaction, err);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index b3372e6..723127e 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3337,8 +3337,8 @@ static int ref_present(const char *refname,
+ 	return string_list_has_string(affected_refnames, refname);
+ }
+ 
+-int initial_ref_transaction_commit(struct ref_transaction *transaction,
+-				   struct strbuf *err)
++static int files_initial_transaction_commit(struct ref_transaction *transaction,
++					    struct strbuf *err)
+ {
+ 	int ret = 0, i;
+ 	int n = transaction->nr;
+@@ -3562,6 +3562,7 @@ struct ref_storage_be refs_be_files = {
+ 	NULL,
+ 	"files",
+ 	files_transaction_commit,
++	files_initial_transaction_commit,
+ 
+ 	files_for_each_reflog_ent,
+ 	files_for_each_reflog_ent_reverse,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index ee2bea6..142c663 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -267,6 +267,7 @@ struct ref_storage_be {
+ 	struct ref_storage_be *next;
+ 	const char *name;
+ 	ref_transaction_commit_fn *transaction_commit;
++	ref_transaction_commit_fn *initial_transaction_commit;
+ 
+ 	for_each_reflog_ent_fn *for_each_reflog_ent;
+ 	for_each_reflog_ent_reverse_fn *for_each_reflog_ent_reverse;
+-- 
 2.4.2.749.g730654d-twtrsrc
