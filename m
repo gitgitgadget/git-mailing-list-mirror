@@ -1,104 +1,76 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [RFC] On the --depth argument when fetching with submodules
-Date: Fri, 5 Feb 2016 14:48:43 -0800
-Message-ID: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 2/2] ident: add user.useConfigOnly boolean for when ident shouldn't be guessed
+Date: Fri, 05 Feb 2016 15:19:50 -0800
+Message-ID: <xmqqsi16bv8p.fsf@gitster.mtv.corp.google.com>
+References: <1454711337-25508-1-git-send-email-alonid@gmail.com>
+	<1454711337-25508-3-git-send-email-alonid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 05 23:48:49 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Dan Aloni <alonid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 00:20:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRpBI-0002Pp-TC
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 23:48:49 +0100
+	id 1aRpfW-0003Ct-Sr
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 00:20:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754656AbcBEWsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 17:48:45 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:32783 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754081AbcBEWso (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 17:48:44 -0500
-Received: by mail-ig0-f174.google.com with SMTP id rs20so51454387igc.0
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 14:48:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=BrFFL4ygsNY8wPvBVNgNqwfc2fgvtF+ZX7XuEqhBmoQ=;
-        b=ESg67LUM1wjHjv4fLuqknhf3NXDzQrfzJT4ylX9+WKXZdlFlc5mCZb4ryVz4/7j9kK
-         nd23mI14/5trPNAonXrxijm/KOUHIDg4saYvOsAV8k4ecRu8J9zXBPEWPXpjJ0xsMfDp
-         HPkXVgcVhnSWA+r5vng66ZSEigoW2SdR9K87UghgFQ98F684DFtJ9+HZFCxyDgevrDQ0
-         ZcXgaUJyoBevJhBvT/vTEhUA1Fp894LxTjCMU5AkwLGA+qLgsvqv6OQ9EJc/ffAlw35R
-         803PX1xDg4JAT9tFqTqz0XaJgx+cjmTtEEkkSLeHmYXKiZLL2Ftcy5xpsLj0WWj42S5H
-         kN9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=BrFFL4ygsNY8wPvBVNgNqwfc2fgvtF+ZX7XuEqhBmoQ=;
-        b=PBNIXdzjY8HOvGKRPKGXnksjHd6kxxM1LzSWj8BicHuRVdzjTO45d96K9COhRaqVV9
-         99U8YdWeFB1ASEowyvaOrjfZiOsf6P0vamO5nObosJxNX/3ULc7iMiyHvp1t/p5pCSUu
-         Nfp/tWtQpK5FC36xvZMHosnlYi/zxORIe/wgUpbDD8lzAsFavRnx9fHLCKdevBSzOj2j
-         p8zc/o1g5HPeeQV2g/Z7M5Z+ZIZEVLHxZ6/K2XvPRIT1xn6fmfUaICy7dBiRYjijpljG
-         RDyuBaWQWK/3Hj85/NTnjC5+yKNQGqKi5bAjeLJUYYvHNh267dUE36wVd/MYGTW6Nr95
-         UJCw==
-X-Gm-Message-State: AG10YOS/hj4eFHKugPKZjRm4/zpRISkbiLotie21nwD5hmEsF80xYxXFZX8HMfKxmGwiLDlUiQXJ1sXVpFZ98Hma
-X-Received: by 10.50.88.74 with SMTP id be10mr12616098igb.93.1454712523600;
- Fri, 05 Feb 2016 14:48:43 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Fri, 5 Feb 2016 14:48:43 -0800 (PST)
+	id S1750728AbcBEXT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 18:19:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61973 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750699AbcBEXT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 18:19:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C6EF424FE;
+	Fri,  5 Feb 2016 18:19:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lUUqIRqvpBXdiWYFvRk7N2oO7w8=; b=ec8EbP
+	RAj6O29uaaOdh1vpsenfOjknuxgLK2uR5PTEuVXizMu6YP87Qf2rb1Y0NrthfkGO
+	UQmk8aaGNtJJF3KSiqP9CLFl/AdMeUOlueGNmso/gvamYweTIEkpQCEuL+kjW+I+
+	QQ+FBVZsFfqVflInLdNiGHelboTOlLU05sEKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wIIm2vLm7jqBYwtcI7aT6qp6QFduvll/
+	mVNsHqkGJT2GJQhck3S6gAU9Y8aL/ktMSFXRZ+svzvAfDl0SfcS3DU/RQusTWt3Z
+	1zQArUfyWO4WS1UBkMiwid3nBs1N/eYYvVTaItSj4I7GzWE/AflGIaT0UIiTP9i7
+	aeDfPCi2aSc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21E9D424FD;
+	Fri,  5 Feb 2016 18:19:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 99764424FC;
+	Fri,  5 Feb 2016 18:19:51 -0500 (EST)
+In-Reply-To: <1454711337-25508-3-git-send-email-alonid@gmail.com> (Dan Aloni's
+	message of "Sat, 6 Feb 2016 00:28:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F523BB32-CC5E-11E5-BD1A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285651>
 
-Currently when cloning a project, including submodules, the --depth argument
-is passed on recursively, i.e. when cloning with "--depth 2", both the
-superproject as well as the submodule will have a depth of 2.  It is not
-garantueed that the commits as specified by the superproject are included
-in these 2 commits of the submodule.
+Dan Aloni <alonid@gmail.com> writes:
 
-Illustration:
-(superproject with depth 2, so A would have more parents, not shown)
+> +user.useConfigOnly::
+> +	Instruct Git to avoid trying to guess defaults for 'user.email'
+> +	and 'user.name', and instead retrieve the values only from the
+> +	configuration. For example, if you have multiple email addresses
+> +	and would like to use a different one for each repository, then
+> +	with this configuration option set to `true` in the global config
+> +	along with a name, Git will prompt you to set up an email upon
+> +	making new commits in a newly cloned repository.
 
-superproject/master: A <- B
-                    /      \
-submodule/master:  C <- D <- E <- F <- G
+I do not think this is wrong per-se, but s/upon/before/ may be more
+accurate and would assure the users more that no commits with a
+wrong identity will be created.
 
-(Current behavior is to fetch G and F)
+Other than that, these two patches look very good to me.
 
-The submodule is referenced at C and E from the two superproject commits.
-So it is a reasonable expectation to have C and E included when fetching
-the superproject with depth of 2.
-
-So to fetch the correct submodule commits, we need to
-* traverse the superproject and list all submodule commits.
-* fetch these submodule commits (C and E) by sha1
-* in case of shallow clones, I'd propose to have the submodules be shallowed
-  with depth 1, i.e. to fetch C and E and no parents thereof
-* we need to think of a way to preserve the commits in the submodule for
-  later use (i.e. gc must not delete those commits)
-
-For the later I propose to use a ref in the submodule (refs/meta/superproject ?)
-which will be an evil merge of all relevant commits to be preserved for the
-superproject. It is an evil merge commit as we do not need to store any worktree
-at all, but we only care about the parents relationship preventing the gc to
-collect data required from the superproject. The parents should contain all
-branches or in case of disjoint shallow histories (like in the example above)
-all the relevant commits.
-
-Using these ideas we can go a step further in submodules and not need branches,
-but only detached heads, which are directed from the superproject.
-
-As for the implementation of these ideas, whenever you commit in the
-superproject
-with modification to a submodule, the superproject would need to modify the
-refs/meta/superproject submodule branch to make sure the submodule is
-safe against
-garbage collection.
-
-Thanks,
-Stefan
+Thanks.
