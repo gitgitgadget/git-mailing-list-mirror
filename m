@@ -1,145 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 2/2] ident: add user.useConfigOnly boolean for when
- ident shouldn't be guessed
-Date: Fri, 5 Feb 2016 16:48:33 -0500
-Message-ID: <20160205214832.GA10052@sigill.intra.peff.net>
-References: <1454707746-18672-1-git-send-email-alonid@gmail.com>
- <1454707746-18672-3-git-send-email-alonid@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't tried Negotiate
+Date: Fri, 05 Feb 2016 13:52:23 -0800
+Message-ID: <xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
+References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
+	<xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
+	<20160202232952.GA6503@vauxhall.crustytoothpaste.net>
+	<CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
+	<20160205204648.GA7403@vauxhall.crustytoothpaste.net>
+	<xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
+	<20160205210623.GC7403@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Dan Aloni <alonid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 22:48:40 2016
+Content-Type: text/plain
+Cc: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Fri Feb 05 22:52:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRoF5-0006Lm-Ti
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 22:48:40 +0100
+	id 1aRoIs-0002vd-4d
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 22:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750837AbcBEVsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 16:48:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:38461 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750713AbcBEVsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 16:48:35 -0500
-Received: (qmail 4013 invoked by uid 102); 5 Feb 2016 21:48:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Feb 2016 16:48:35 -0500
-Received: (qmail 19658 invoked by uid 107); 5 Feb 2016 21:48:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Feb 2016 16:48:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Feb 2016 16:48:33 -0500
-Content-Disposition: inline
-In-Reply-To: <1454707746-18672-3-git-send-email-alonid@gmail.com>
+	id S1751201AbcBEVw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 16:52:29 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751131AbcBEVw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 16:52:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 316BD40C4C;
+	Fri,  5 Feb 2016 16:52:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XCwcvLYL3eJ/48W+xWxzbatY47A=; b=lW0bBE
+	Wx0FwMTyRlCvQSy0xrNCS4jlf6VD9mRY4MwWPPVZxNzb02/bh8luFKvCbyA6OROW
+	edTspRTjonkJmu18msvdnOX4gnpszXGfteWlWB0RQh3cxqHoV3yqwdkg02FmywAj
+	Od9z0G+4a7mtEZF1QkNmCrJo5Nn66KN9TcOaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t6TV07dgdqKY14EC88vJSvNrhD7v9sVb
+	IKuO3POHbE7wV/7+5qKkMcHCC9y5rTUHn9cxJCzCxbNWQAnqoTWTU1SGAl3HBBUa
+	eOG4Oukif0iWYXGPXj7VP7JY2CTTNTMU6ETDwC2bMx8C7UX8USQOY1LJvQUYZ+KW
+	CncpFoP1tos=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2894540C4B;
+	Fri,  5 Feb 2016 16:52:25 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9EDF440C4A;
+	Fri,  5 Feb 2016 16:52:24 -0500 (EST)
+In-Reply-To: <20160205210623.GC7403@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 5 Feb 2016 21:06:24 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BDB2C92E-CC52-11E5-BB73-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285640>
 
-On Fri, Feb 05, 2016 at 11:29:06PM +0200, Dan Aloni wrote:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
-> new file mode 100755
-> index 000000000000..f2b33881e46b
-> --- /dev/null
-> +++ b/t/t9904-per-repo-email.sh
+> On Fri, Feb 05, 2016 at 01:02:58PM -0800, Junio C Hamano wrote:
+>> Hmph, so documenting that <emptyname>:<emptypassword>@<repository>
+>> as a supported way might be an ugly-looking solution to the original
+>> problem.  A less ugly-looking solution might be a boolean that can
+>> be set per URL (we already have urlmatch-config infrastructure to
+>> help us do so) to tell us to pass the empty credential to lubCurl,
+>> bypassing the step to ask the user for password that we do not use.
+>> 
+>> The end-result of either of these solution would strictly be better
+>> than the patch we discussed in that the end user will not have to
+>> interact with the prompt at all, right?
+>
+> Yes, that's true.  I'll try to come up with a patch this weekend that
+> implements that (maybe remote.forceAuth = true or somesuch).
 
-Is t9904 the right place for this? Usually t99xx is for very separate
-components.
+Thanks.
 
-This is sort-of about "commit", which would put it in the t75xx range.
-But in some ways, it is even more fundamental than that. We don't seem
-to have a lot of tests for ident stuff. The closest is the strict ident
-stuff in t0007.
+I think the configuration should live inside http.* namespace, as
+there are already things like http[.<url>].sslCert and friends.
 
-> +reprepare () {
-> +	git reset --hard initial
-> +}
-
-Do we need this reprepare stuff at all now? The tests don't care which
-commit we're at when they start.
-
-> +test_expect_success setup '
-> +	# Initial repo state
-> +	echo "Initial" >foo &&
-> +	git add foo &&
-> +	git commit -m foo &&
-> +	git tag initial &&
-
-A shorter way of saying this is "test_commit foo".
-
-I almost thought we could get rid of this part entirely; the commit
-tests don't care. But we do still need _a_ commit for the clone test,
-since we want to make sure a reflog is written. It would be nice to push
-it down there, but our test environment doesn't allow creating commits,
-because of of useConfigOnly. So it's probably fine to leave it here.
-
-Technically, the final "commit" test does make a commit for us to push,
-but we do generally try to avoid unnecessary dependencies between the
-individual tests.
-
-So all together, maybe:
-
-diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
-index f2b3388..5694b84 100755
---- a/t/t9904-per-repo-email.sh
-+++ b/t/t9904-per-repo-email.sh
-@@ -7,48 +7,31 @@ test_description='per-repo forced setting of email address'
- 
- . ./test-lib.sh
- 
--reprepare () {
--	git reset --hard initial
--}
--
--test_expect_success setup '
--	# Initial repo state
--	echo "Initial" >foo &&
--	git add foo &&
--	git commit -m foo &&
--	git tag initial &&
--
--	# Setup a likely user.useConfigOnly use case
-+test_expect_success 'setup a likely user.useConfigOnly use case' '
-+	# we want to make sure a reflog is written, since that needs
-+	# a non-strict ident. So be sure we have an actual commit.
-+	test_commit foo &&
-+
- 	sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
- 	sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
- 	git config user.name "test" &&
--	git config --global user.useConfigOnly true &&
--
--	reprepare
-+	git config --global user.useConfigOnly true
- '
- 
- test_expect_success 'fails committing if clone email is not set' '
--	test_when_finished reprepare &&
--
- 	test_must_fail git commit --allow-empty -m msg
- '
- 
- test_expect_success 'fails committing if clone email is not set, but EMAIL set' '
--	test_when_finished reprepare &&
--
- 	test_must_fail env EMAIL=test@fail.com git commit --allow-empty -m msg
- '
- 
- test_expect_success 'succeeds committing if clone email is set' '
--	test_when_finished reprepare &&
--
- 	test_config user.email "test@ok.com" &&
- 	git commit --allow-empty -m msg
- '
- 
- test_expect_success 'succeeds cloning if global email is not set' '
--	test_when_finished reprepare &&
--
- 	git clone . clone
- '
- 
+I do not have a good suggestion on the name of the leaf-level
+variable.  ForceAuth sounds as if you are forcing authentication
+even when the other side does not require it, though.
