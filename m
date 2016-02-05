@@ -1,135 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv8 6/9] fetching submodules: respect `submodule.fetchJobs` config option
-Date: Thu, 04 Feb 2016 19:29:48 -0800
-Message-ID: <xmqqa8nfeswj.fsf@gitster.mtv.corp.google.com>
-References: <1454623776-3347-1-git-send-email-sbeller@google.com>
-	<1454623776-3347-7-git-send-email-sbeller@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 12/25] fetch-pack: use a common function for verbose printing
+Date: Thu, 4 Feb 2016 23:03:58 -0500
+Message-ID: <CAPig+cQCyH8nRViwt=_9SHT-5a_m4xDomu4xcGcWpKu2X2mPgQ@mail.gmail.com>
+References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
+	<1454576641-29615-13-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 04:31:15 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 05:04:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRX74-00084F-Jb
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 04:31:14 +0100
+	id 1aRXdS-0002AX-9E
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 05:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbcBEDa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Feb 2016 22:30:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50973 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750722AbcBEDaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Feb 2016 22:30:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D356242D3B;
-	Thu,  4 Feb 2016 22:30:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VzjLTgLw/cRKeLEQAnirmhEJR6Y=; b=MZNXSu
-	Boea7/zEpz20hnn2pjPoMzfaHKMy72rP9IicoQ1FOMDkSAy5Xkwdl//owENEFwxV
-	5sbpVsgXGFsBA+gS9UaPtCbp4LNOCPjIlac/U0LT4pmsW3v8vWZHLWe6D5Nyp+GM
-	tO7W2EwJ5CXY44LThJq6OV3LFw35+/5xOF+VM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J1AxpJjO5y0fVISuDK4JSlZdOzSLHIOK
-	04J+DlBlCP7Q2iDrt5FYNwsXKqsUmRK/TB3GykXvd7n09FW2l49ob6izLhBacPiH
-	sJBXUjKMfleARXb4tGNX0pCKu1RikvgzQuhHrfOyxd2yJqcq8oUm72bcWiTaIxVW
-	NETUYcriQew=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CAE3C42D3A;
-	Thu,  4 Feb 2016 22:30:53 -0500 (EST)
-Received: from pobox.com (unknown [104.133.3.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3C90242D39;
-	Thu,  4 Feb 2016 22:30:53 -0500 (EST)
-In-Reply-To: <1454623776-3347-7-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Thu, 4 Feb 2016 14:09:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DC26C0BC-CBB8-11E5-8A02-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751156AbcBEED7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Feb 2016 23:03:59 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:34194 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750910AbcBEED6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Feb 2016 23:03:58 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e6so2188162vkh.1
+        for <git@vger.kernel.org>; Thu, 04 Feb 2016 20:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=AJTlS2Ju+oY6/uofeWBzri7DuL7xKcM/wx2F4/YQXQc=;
+        b=Qx39D3pmuoNyqBlbK/ZIRpAiYactuZoFbW+4z6yIrhuOR7YgMITm+QRRW1QqVHmbTK
+         gsBgohoaRL/UIyaBEJNfB4OO/ml3h0y5APwDTK2fGDHEwkzjCpf8PeACSQ5rvSTAYC8W
+         wWv0/lgo5xy/i1IQGuIv4vkUOu9eOFIMA+BeuCBxm5Np/qkiS3pzdM84nVjvz5cXl7Lb
+         xlwNnN+pKzsvNRBAy6avqcQRxFgY1DMXhQshkpl1ZYz/rIP9JBOlvK2RO2qA0KvGb/zI
+         aP35/SHwCOyNi2ObL5Z2iTNVPxn6DT5MWJwap6q4snNu0HA9v5NFWMa45mwLSrdj+zkw
+         gWkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AJTlS2Ju+oY6/uofeWBzri7DuL7xKcM/wx2F4/YQXQc=;
+        b=E77MHp0O+5LEAlAVsQaXCFsoFVDc8nOv1ZN0/XDycH4cxT/sOLiFoFCBcFTTgis/LM
+         E4GnQIvcDIba3bjHkmFblLhouTBWhlDNZy82tC2chMx4TSD6fc5Jcj80dNhi7jna68kB
+         jf5UwBbyuFjBpPZ4/pM8jvoMQWM+okMNR4NNJNG0Eqf+SstnIszu3Na3IooeK+eJ13fv
+         P0AsV+g4AVfLFxMK7BBI968B3WASDhvrhTcozL91eEjqO+XhUK7XMsFn+DRkTE7V9aGa
+         Dyy5fqhUkvf4Zlwpldym5cuGd9Ithd1U/XiEtHhmzpotAnkSs+hgeMj4nU8l6oP/dRji
+         WUSA==
+X-Gm-Message-State: AG10YOQaf8V+vVi3A+N8qsYF7HPI8H2o0G4bgSKy80XNQnsQjlID2q9G3sBh7yQRPstO0ViIsEcYj3krfrDfZA==
+X-Received: by 10.31.168.76 with SMTP id r73mr8069483vke.117.1454645038105;
+ Thu, 04 Feb 2016 20:03:58 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 4 Feb 2016 20:03:58 -0800 (PST)
+In-Reply-To: <1454576641-29615-13-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: NuDivGLOkZrJIQA0CyWOdC2caHE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285536>
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Feb 4, 2016 at 4:03 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> This reduces the number of "if (verbose)" which makes it a bit easier
+> to read imo. It also makes it easier to redirect all these printouts,
+> to a file for example.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> @@ -810,39 +814,32 @@ static struct ref *do_fetch_pack(struct fetch_p=
+ack_args *args,
+>         else if (server_supports("side-band")) {
+> -               if (args->verbose)
+> -                       fprintf(stderr, "Server supports side-band\n"=
+);
+> +               print_verbose(args, "Server supports side-band");
+>                 use_sideband =3D 1;
+>         }
+>         if (server_supports("allow-tip-sha1-in-want")) {
+> -               if (args->verbose)
+> -                       fprintf(stderr, "Server supports allow-tip-sh=
+a1-in-want\n");
+> +               print_verbose(args, "Server supports allow-tip-sha1-i=
+n-want");
+>                 allow_unadvertised_object_request |=3D ALLOW_TIP_SHA1=
+;
+>         }
+>         if (server_supports("allow-reachable-sha1-in-want")) {
+> -               if (args->verbose)
+> -                       fprintf(stderr, "Server supports allow-reacha=
+ble-sha1-in-want\n");
+> +               print_verbose(args, "Server supports allow-reachable-=
+sha1-in-want\n");
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 586840d..5aa1c2d 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
->  static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
->  static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
->  static int tags = TAGS_DEFAULT, unshallow, update_shallow;
-> -static int max_children = 1;
-> +static int max_children = -1;
+I think you want to drop the newline here as you did with all the
+other call-sites since print_verbose() adds its own.
 
-This makes sense as you would later be doing "If left unspecified,
-i.e. -1, then fall back to blah" ...
-
-g> diff --git a/submodule-config.c b/submodule-config.c
-> index 2841c5e..339b59d 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -32,6 +32,7 @@ enum lookup_type {
->  
->  static struct submodule_cache cache;
->  static int is_cache_init;
-> +static unsigned long parallel_jobs = -1;
-
-... but I do not think this does.  For one thing, you would not be
-doing "If parallel_jobs < -1, then that is unspecified yet" for the
-unsigned long variable, and for another, I do not think you would be
-behaving differently for the first time (i.e. "unspecified yet" case).
-
-I think you want to initialize this to 1, if your "not configured at
-all" default is supposed to be 1.
-
-> @@ -233,6 +234,13 @@ static int parse_generic_submodule_config(const char *key,
->  					  const char *value,
->  					  struct parse_config_parameter *me)
->  {
-> +	if (!strcmp(key, "fetchjobs")) {
-> +		if (!git_parse_ulong(value, &parallel_jobs)) {
-> +			warning(_("Error parsing submodule.fetchJobs; Defaulting to 1."));
-> +			parallel_jobs = 1;
-
-Hmph, this is not a die() because...?  Not a rhetorical question.
-
-> +unsigned long config_parallel_submodules(void)
-> +{
-> +	return parallel_jobs;
-> +}
-
-It is not a crime to make this return "int", as the code that
-eventually uses it will assign it to a variable that will be
-passed to run_processes_parallel() that takes an "int".
-
-In fact, returning "int" would be preferrable.  You are causing
-truncation somewhere in the callchain anyway.  If the truncation
-bothers you, this function or immediately after calling
-git_parse_ulong() would be a good place to do a range check.  The
-variable parallel_jobs has to stay "unsigned long" in any case as
-you are calling git_parse_ulong().
-
-> diff --git a/submodule.c b/submodule.c
-> index b83939c..eb7d54b 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -751,6 +751,11 @@ int fetch_populated_submodules(const struct argv_array *options,
->  	argv_array_push(&spf.args, "--recurse-submodules-default");
->  	/* default value, "--submodule-prefix" and its value are added later */
->  
-> +	if (max_parallel_jobs < 0)
-> +		max_parallel_jobs = config_parallel_submodules();
-> +	if (max_parallel_jobs < 0)
-> +		max_parallel_jobs = 1;
-> +
->  	calculate_changed_submodule_paths();
->  	run_processes_parallel(max_parallel_jobs,
->  			       get_next_submodule,
+>                 allow_unadvertised_object_request |=3D ALLOW_REACHABL=
+E_SHA1;
+>         }
+>         if (!server_supports("thin-pack"))
