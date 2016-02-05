@@ -1,76 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] pack-objects: add --skip and --skip-hash
-Date: Fri, 5 Feb 2016 10:20:47 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602051019580.2964@virtualbox>
-References: <1454662677-15137-1-git-send-email-pclouds@gmail.com> <1454662677-15137-2-git-send-email-pclouds@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v1] config: add '--sources' option to print the source of
+ a config value
+Date: Fri, 5 Feb 2016 12:13:04 +0100
+Message-ID: <56B483C0.6070906@gmail.com>
+References: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-241332531-1454664048=:2964"
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 10:21:25 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 05 12:13:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRcZw-0000aS-MY
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 10:21:25 +0100
+	id 1aReK9-0004Gd-Ux
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 12:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbcBEJVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 04:21:20 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57829 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752422AbcBEJUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 04:20:50 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Me8di-1agPra17Da-00Pv3K; Fri, 05 Feb 2016 10:20:48
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1454662677-15137-2-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:xJ7z9TLtyHslg5Z1OrIL/qvnKtHipCS4xp+SBA3f6r9k5KWRRWo
- HC3dq5aI8veOTUN6hwPhFGZkN7V4LIqhMCylr9gm8F4+RZS4eiLiqrDQcxUNAQU8j/kajpX
- NvONVlVMV5KKErIpe54xxTD7rRJW5cRyYS1uyjDVfIFGFy12Mac7p0rvEx86teuLo06k0uJ
- 9kAqY1rpuOJcTH5hE2A+Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+zH/JUXm3e0=:JkfQNH0yBIX6beJmD/mhVJ
- 6cqHIrmcRlII/3F2L19pv/WBX9Xx8ONqjn2fHkS0KKkDqT1gz1gZCKg4vNqp7tbhqJvvxsgyB
- 4Wy4skmSnsQDnzAGBcnnlQKRIfNAumU4gV/UjZtFcgPjqKwmcYZEJUU5IRzW00hsdysMQudS2
- 2VEcf89QdaVgBeChhVq5YAIeRMcNSPsEFK2+yWGfk3YWxSI5Z7K/XA+d+oU9gEgoz52sC+u/S
- QtKyknuz2ou2mDPTbGjsare7b2LnRef86aMPiG9rtLIY6/auoh44PwHAFLIfmCA5Dqagcr2of
- UMMPXhgXv0X2etLkTnXclHfiBLT6b9drI8LfO7qa101LJVLNWYJTF38rVSpPnXq/ljalfWr06
- CkJLVU7sbjyDWdOZeXhAFKEE/csARHO5FbkbAdFMr022PweieYNH6FZsQui/dNhC4AGdgUz7K
- EsR3PDj5n9VxAsrXKZxa7t8C9lx8pbHja/39npIVYo3yJs8fdp+UZ5TEGoi98jnNRwNgsTI33
- fTb9qBNV1The0uCINgilQDO93cp+qcCa3PtHef6MMpsHPs3PS/4tvuvYxPCZzTu1kkb2j1YQ+
- WNerJKw3g3HutY6VNZXltjhIHQD7dymvAlnMMn8JEUXB1rPmbtdseHSsCpcKd04MoMowdIL3G
- GGxKOi/2dH8OBT/d8IuvvfhaYSp4ZRxKmYUgPxs4g5mIhh7mn0fxHISI8OIGP8O+2rSze2y6b
- QxheAQux1E1gFD1qQ0N3NvAsOvpuSiAavdnfwxEW+xl75mMFBj7BqDPGPbRi+dahbu91DQ1e 
+	id S1751920AbcBELNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 06:13:09 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35397 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827AbcBELNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 06:13:07 -0500
+Received: by mail-wm0-f66.google.com with SMTP id g62so2489508wme.2
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 03:13:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=ZTIiAIXe8twIzKvkkbrJIF5yA3onTei38l6DI82k+cM=;
+        b=xX2Q0L4EeK/SX6gS5wVsbR5e8+4fetcP6eqLAhqw4oEW+uHJu+ZN9agtrrqIh2Oa/+
+         VVwIRnEJUilTEwnsaA4LEBCHqn21UcPMCcxPKk0KIlMDF27s8OL8sh53L410UUJGhQW1
+         bC8IPxGM5nunnpeQftcdbDTCaJJM7JetMGRQreLTfZTs1l59wp3nO+cYD08xyEeDEMOT
+         O1UawXNENeWvwj8G2NZUMLOkkYYZAcsWGpc7G3/uKIJ6KPYLa61JvePwTaGIqYv7Npop
+         N4zfvJcthPeV7O2cnlgxlE6FqqhoFQcELzgDJ0yGF3qmgdBAR10yBVNVS/b5F7lQLWH0
+         37Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ZTIiAIXe8twIzKvkkbrJIF5yA3onTei38l6DI82k+cM=;
+        b=nNWWaTSEIZ2v77GCiz0NBbqbZegGBZ2lrW4HQuK1B1wrdU4HlS3Mj03LKnHjZgdCAt
+         fB1HcqpTlWSIRwAlYDkzRGjmQxJ50DJkfdn7vuEDnzOhkokAqGE8pRrRYXL8TQrOEK/d
+         IRnp46AOrhhh2CU+GwV62RGioU5anG2cO9VM9kSBc/MUhfh2vDdIiJSWX/dnwmZ2srWJ
+         T9DqEJL4n9AQCjme0UAMEJ3cXleaIse1qriODZyjCY9zlnMFZvVu4bGSKRrafzof6vOB
+         zH6vkLAjEujS3+oiBm7CE1XOyTkCb+apUeYbyuUhSdqJZ+4aF9W4Tsw0Hv+Ek4CStfDa
+         C/jg==
+X-Gm-Message-State: AG10YORVK1SOpYTvNu2jeKFMkBG7ol3GEd6B4RD/vVDIeFWlgjtGPTUMhU3WezUSBKCHfw==
+X-Received: by 10.28.180.84 with SMTP id d81mr3762501wmf.42.1454670786181;
+        Fri, 05 Feb 2016 03:13:06 -0800 (PST)
+Received: from [10.223.62.214] ([131.228.216.134])
+        by smtp.googlemail.com with ESMTPSA id t195sm30600180wme.13.2016.02.05.03.13.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Feb 2016 03:13:05 -0800 (PST)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285567>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2/5/2016 9:42, larsxschneider@gmail.com wrote:
 
---8323329-241332531-1454664048=:2964
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Teach 'git config' the '--sources' option to print the source
+> configuration file for every printed value.
 
-Hi Duy,
+Yay, not being able to see where a config setting originates from has 
+bothered me in the past, too. So thanks for working on this.
 
-On Fri, 5 Feb 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+However, the naming of the '--sources' option sounds a bit misleading to 
+me. It has nothing to do with source code. So maybe better name it 
+'--origin', or even more verbose '--show-origin' or '--show-filename'?
 
-> The idea is, a pack is requested the first time with --skip=3D0. If pack
-> transfer is interrupted, the client will ask for the same pack again,
-> but this time it asks the server not to send what it already has. The
-> client hashes what it has and sends the SHA-1 to the server. If the
-> server finds out the skipped part does not match, it can abort early.
-
-Ah, here it is. This description should definitely go into Documentation/,
-methinks. Maybe elaborate a little bit more on the "what it has" part?
-
-Ciao,
-Dscho
---8323329-241332531-1454664048=:2964--
+Regards,
+Sebastian
