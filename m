@@ -1,61 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/8] upload-pack: new capability to pass --skip* to
- pack-objects
-Date: Fri, 5 Feb 2016 10:18:38 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602051017210.2964@virtualbox>
-References: <1454662677-15137-1-git-send-email-pclouds@gmail.com> <1454662677-15137-5-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 1/8] pack-objects: add --skip and --skip-hash
+Date: Fri, 5 Feb 2016 10:20:47 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602051019580.2964@virtualbox>
+References: <1454662677-15137-1-git-send-email-pclouds@gmail.com> <1454662677-15137-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-933935907-1454663918=:2964"
+Content-Type: multipart/mixed; BOUNDARY="8323329-241332531-1454664048=:2964"
 Cc: git@vger.kernel.org
 To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
 	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 05 10:18:54 2016
+X-From: git-owner@vger.kernel.org Fri Feb 05 10:21:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRcXU-00066U-Kx
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 10:18:52 +0100
+	id 1aRcZw-0000aS-MY
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 10:21:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752291AbcBEJSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 04:18:46 -0500
-Received: from mout.gmx.net ([212.227.15.15]:62377 "EHLO mout.gmx.net"
+	id S1752410AbcBEJVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 04:21:20 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57829 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752169AbcBEJSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 04:18:41 -0500
+	id S1752422AbcBEJUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 04:20:50 -0500
 Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LgptO-1ZeneK3f4o-00oEUF; Fri, 05 Feb 2016 10:18:38
+ ESMTPSA (Nemesis) id 0Me8di-1agPra17Da-00Pv3K; Fri, 05 Feb 2016 10:20:48
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1454662677-15137-5-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1454662677-15137-2-git-send-email-pclouds@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:xZNbZFAsRk6VoaWxSuJfvfkHpuzXnT7VpsEGzvnySzhYy4VIGLd
- 5Eq1GxgGsGKYrZhIaYhPEpbp3UUWByrHyvweaKuffe1mJyHUY3G/fWtlb6bCNFkO+iD+ops
- bMU74gEOrLd9hJaifvSlFIr5Xy11zxe9FNi4Cyq8xRa/M5265qS13GQo2P155ml19KOWuDw
- veR6AnH/NoBpRtDKZboXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QSRZgVb4e6c=:dsr5PFDh/oYNe0njZbJkIg
- lNagDRyiDbKllj7rO/Au52/JgZOH1IjCGInwhBkuHiGM6srT9cEx+fNtUyrYtSMEVj/4ofPPC
- uVIUrru5vlbv3G4GDkmZ6O2PxW4Jqq0K5nQV8UQDssOXjLJjLihXQzO1RZ0A1iP3PEQatOtfF
- RtprrsJhCYQvP+m41i5wFsFQE6eZSVCiQ3zx08VZx4VX8hZH5Zn0infUE+tMB0cC73ujt5D7C
- +c3Z3lY4+xRanoHVq4FwjDBuj4eJBaXvSoYSKKHxhQUVka5AKWzdI+ntHdRgd7InnjYrxKPv4
- v6/VJb1PLcZ/IePRqE0YyfJzkD2R7VbyY+Z+zlEnzv/F52Z1LTG1QFr3PibJSrMEeURpwEBuj
- VswTnxAZ+5lrl+E41O3lMsXzBbdH7lMdhwZQgx+rnLOfrw+H5z9gd5r1BL9VKf+8rG+spzw9T
- EN42dfoLhKXJDHwJnb8V6yRXvVMgluwbB2N2n2/CDMowxKN++6k7u7SEC+3i4vk/Ht+yaVDlu
- Vg97SiO79+DtPAjwbWCbaCuSkWo0NllY5yzkJvoz7GDtIctw0yOCIKCXIb2V2tHl/3tYbkF9C
- K2OGUb7UnL48/qzidaaUh5u79PMCR+97SA8pH0/0noXxcZCPwuXeDv42SdKV0ZeWgJkhAxlv3
- PuYEA1YiX6Wws+r0/LK/E3+2TH6iCZudjrGwXoeWZhoN+xtM8GPgTLbk7VuoPLwZvaw1qg3zn
- 1m9VhSlE2vUp12r8dT6imEoa+c14EXrV577iKJR6r/73DVz3dwTT5YtsvOy64k/A8zq+5y4l 
+X-Provags-ID: V03:K0:xJ7z9TLtyHslg5Z1OrIL/qvnKtHipCS4xp+SBA3f6r9k5KWRRWo
+ HC3dq5aI8veOTUN6hwPhFGZkN7V4LIqhMCylr9gm8F4+RZS4eiLiqrDQcxUNAQU8j/kajpX
+ NvONVlVMV5KKErIpe54xxTD7rRJW5cRyYS1uyjDVfIFGFy12Mac7p0rvEx86teuLo06k0uJ
+ 9kAqY1rpuOJcTH5hE2A+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+zH/JUXm3e0=:JkfQNH0yBIX6beJmD/mhVJ
+ 6cqHIrmcRlII/3F2L19pv/WBX9Xx8ONqjn2fHkS0KKkDqT1gz1gZCKg4vNqp7tbhqJvvxsgyB
+ 4Wy4skmSnsQDnzAGBcnnlQKRIfNAumU4gV/UjZtFcgPjqKwmcYZEJUU5IRzW00hsdysMQudS2
+ 2VEcf89QdaVgBeChhVq5YAIeRMcNSPsEFK2+yWGfk3YWxSI5Z7K/XA+d+oU9gEgoz52sC+u/S
+ QtKyknuz2ou2mDPTbGjsare7b2LnRef86aMPiG9rtLIY6/auoh44PwHAFLIfmCA5Dqagcr2of
+ UMMPXhgXv0X2etLkTnXclHfiBLT6b9drI8LfO7qa101LJVLNWYJTF38rVSpPnXq/ljalfWr06
+ CkJLVU7sbjyDWdOZeXhAFKEE/csARHO5FbkbAdFMr022PweieYNH6FZsQui/dNhC4AGdgUz7K
+ EsR3PDj5n9VxAsrXKZxa7t8C9lx8pbHja/39npIVYo3yJs8fdp+UZ5TEGoi98jnNRwNgsTI33
+ fTb9qBNV1The0uCINgilQDO93cp+qcCa3PtHef6MMpsHPs3PS/4tvuvYxPCZzTu1kkb2j1YQ+
+ WNerJKw3g3HutY6VNZXltjhIHQD7dymvAlnMMn8JEUXB1rPmbtdseHSsCpcKd04MoMowdIL3G
+ GGxKOi/2dH8OBT/d8IuvvfhaYSp4ZRxKmYUgPxs4g5mIhh7mn0fxHISI8OIGP8O+2rSze2y6b
+ QxheAQux1E1gFD1qQ0N3NvAsOvpuSiAavdnfwxEW+xl75mMFBj7BqDPGPbRi+dahbu91DQ1e 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285566>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-933935907-1454663918=:2964
+--8323329-241332531-1454664048=:2964
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
@@ -63,37 +62,15 @@ Hi Duy,
 
 On Fri, 5 Feb 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> [... empty commit message body...]
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->
-> [...]
-> diff --git a/Documentation/technical/protocol-capabilities.txt b/Document=
-ation/technical/protocol-capabilities.txt
-> index eaab6b4..0567970 100644
-> --- a/Documentation/technical/protocol-capabilities.txt
-> +++ b/Documentation/technical/protocol-capabilities.txt
-> @@ -275,3 +275,12 @@ to accept a signed push certificate, and asks the <n=
-once> to be
->  included in the push certificate.  A send-pack client MUST NOT
->  send a push-cert packet unless the receive-pack server advertises
->  this capability.
-> +
-> +partial
-> +------
-> +
-> +This capability adds "skip" line to the protocol, which passes --skip
-> +and --skip-hash to pack-objects. When "skip" line is present, given
-> +the same set of input from the client (e.g. have, want and shallow
-> +lines, "skip" line excluded), the exact same pack must be produced.
-> +
+> The idea is, a pack is requested the first time with --skip=3D0. If pack
+> transfer is interrupted, the client will ask for the same pack again,
+> but this time it asks the server not to send what it already has. The
+> client hashes what it has and sends the SHA-1 to the server. If the
+> server finds out the skipped part does not match, it can abort early.
 
-Would you care to elaborate on this idea a bit more? The commit message
-would make an excellent place for describing the underlying idea, as well
-as comparing it to the alternatives.
+Ah, here it is. This description should definitely go into Documentation/,
+methinks. Maybe elaborate a little bit more on the "what it has" part?
 
 Ciao,
 Dscho
---8323329-933935907-1454663918=:2964--
+--8323329-241332531-1454664048=:2964--
