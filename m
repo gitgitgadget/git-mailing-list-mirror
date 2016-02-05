@@ -1,100 +1,247 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 2/3] ident: add user.useConfigOnly boolean for when
- ident shouldn't be guessed
-Date: Fri, 5 Feb 2016 14:30:46 -0500
-Message-ID: <CAPig+cRuRiL1_44tVFSP8k64aMhf6Tu0PeXfN8HUV7wX8=vLzA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 2/3] ident: add user.useConfigOnly boolean for when ident shouldn't be guessed
+Date: Fri, 05 Feb 2016 11:31:34 -0800
+Message-ID: <xmqqio23c5t5.fsf@gitster.mtv.corp.google.com>
 References: <1454658148-3031-1-git-send-email-alonid@gmail.com>
 	<1454658148-3031-3-git-send-email-alonid@gmail.com>
-	<20160205191805.GA7245@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Dan Aloni <alonid@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 05 20:30:55 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Dan Aloni <alonid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 20:31:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRm5k-0007g9-Hp
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:30:52 +0100
+	id 1aRm6Y-0000Jg-H8
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 20:31:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057AbcBETas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 14:30:48 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36514 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753733AbcBETar (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 14:30:47 -0500
-Received: by mail-vk0-f65.google.com with SMTP id e64so2780753vkg.3
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 11:30:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JKovq1ld/F/WhIs7+8rHeZ4VvRkMJoKzOPs8CLvddAA=;
-        b=V1vSblROoIBaejQX2PKEwXt15SO3qthKpsHfDNBJ7EjVRhOr9b5EfEHMM7S+rAzjpY
-         EfwBTPYdFKXcsS+rj0+PjRdvXwFacxPOZkIGXr29DEEJsWV9nCkTbJUuL7lOErnw7b1a
-         RLJpYpvISAMTglPnAwNZ+HLibs6fcRLLRxodzz2BmbA614TncJQskr+hOHENceWvffgI
-         oqykBeFrOoIR85X5Iw9I0imziWd/dyk/7Q686M91s0DOfsoTsbEZmug42Clpldi1qxbk
-         XREbwqPbdvpOwkNaysxKym4MnGB8eqLEqaOBmtuwusavdO7vnW7r2VVHDj1uoir5oVep
-         QZCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=JKovq1ld/F/WhIs7+8rHeZ4VvRkMJoKzOPs8CLvddAA=;
-        b=JqC4DUwQiWD2cu/3EELJcnoevg5ueaf4u2rqUodvQNokW4ATRE4JQDXOdPwOIDtviL
-         0ywNnCCBCO9LkTXKEg+Q/ywJyQUHdw9akqAGHcV7UejO6PsC6fLvcx1LCrHZsexszPVS
-         cm0u3o65oo+0L1eLKgY6KGWEbHAcCvQ800yoxH3sGbvqzQTTmWuSTAePDefOCR1P485d
-         nAwyIoeLdpMzQhBMfBE9sEwtY72MskMKQwap2McLjiNFNTr8QpufTnTD7AhhplfzscvT
-         Z8S3VeHggs2LjoGuNDb3uKxDCHZsMeoxtZAw5W+IHY9iKviEE2opaoizWxy7OjnkWxMU
-         paVg==
-X-Gm-Message-State: AG10YORRRM7PEWM72KmZvBKBbLdutzWpqa6zic5TyjZ7rUkzxPcwl0Bju3nd0t8G71hPJQ7gHhifBBy4nPFtdg==
-X-Received: by 10.31.146.71 with SMTP id u68mr9530992vkd.19.1454700646792;
- Fri, 05 Feb 2016 11:30:46 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Fri, 5 Feb 2016 11:30:46 -0800 (PST)
-In-Reply-To: <20160205191805.GA7245@sigill.intra.peff.net>
-X-Google-Sender-Auth: 0w-DOpjqJprIMUhAjmfZG7HPJ0w
+	id S1754381AbcBETbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 14:31:38 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55262 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754258AbcBETbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 14:31:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D0AC402EE;
+	Fri,  5 Feb 2016 14:31:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M1DKAPZPSEfv9tqqQfWXAGMAKRs=; b=x7zhGb
+	d71zRNnqXb/ORtwXEtj3+t/d9uSDuFYeL8+ddjx5XtnwtORDM1QjjWyv1EpKE2M0
+	mMwPipz15n98DUfj0YHEs/4jdz+ID2hw10AeTfGmV6QzaWmQDW2Hxm+uysOjKjWL
+	h/2QHI7inz2ZllH5B7VQYnT0EijsMkBWRjewg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lBEVnIhQDrT9eWDWcTzHyBPe8UidjdVn
+	srbHiNLW2iwkXNrlDxEw3U7ctt36dSCF8YbJkz6Qjb05OrVo8UWlezVnVgiCRCfW
+	Oh0c9wyZQFTpxTicDFm0DgolZPZb+CfwNAO58tB2M5Fl6/pWbwy12tO19nxXayOY
+	Pwp7YXv8GbY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5453B402ED;
+	Fri,  5 Feb 2016 14:31:36 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A0B89402E7;
+	Fri,  5 Feb 2016 14:31:35 -0500 (EST)
+In-Reply-To: <1454658148-3031-3-git-send-email-alonid@gmail.com> (Dan Aloni's
+	message of "Fri, 5 Feb 2016 09:42:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 11B43774-CC3F-11E5-8C2F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285600>
 
-On Fri, Feb 5, 2016 at 2:18 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Feb 05, 2016 at 09:42:27AM +0200, Dan Aloni wrote:
->> +prepare () {
->> +     # Have a non-empty repository
->> +     rm -fr .git
->> +     git init
->> +     echo "Initial" >foo &&
->> +     git add foo &&
->> +     git commit -m foo &&
->> +
->> +     # Setup a likely user.useConfigOnly use case
->> +     sane_unset GIT_AUTHOR_NAME &&
->> +     sane_unset GIT_AUTHOR_EMAIL &&
->> +     test_unconfig --global user.name &&
->> +     test_unconfig --global user.email &&
->> +     test_config user.name "test" &&
->> +     test_unconfig user.email &&
->> +     test_config_global user.useConfigOnly true
->> +}
->
-> The flow of this test script is a bit different than what we usually
-> write. Typically we have some early test_expect_success blocks do setup
-> for the whole script, and then progress through a sequence (and we rely
-> on the test harness to do things like "git init").
->
-> IOW, most of your "prepare" would go in the first block, and then the
-> rest of the tests rely on it.
->
-> The only thing I really see that needs to be repeated for each test is
-> setting up the "about to commit" scenario. But you can simply use
-> "commit --allow-empty" so that the tests work no matter what state the
-> previous test left us in. We care about the ident, not what gets
-> committed.
+Dan Aloni <alonid@gmail.com> writes:
 
-I was going to make all the same suggestions, so thanks. One thing to
-add is that the &&-chain is broken in the prepare() function.
+> +user.useConfigOnly::
+> +	This instruct Git to avoid trying to guess defaults for 'user.email'
+> +	and 'user.name' other than strictly from environment or config.
+
+OK.
+
+> +	If you have multiple email addresses that you would like to set
+> +	up per repository, you may want to set this to 'true' in the global
+> +	config, and then Git would prompt you to set user.email separately,
+> +	in each of the cloned repositories.
+
+The first sentence mentioned both name and email, but here the
+example is only about email.  A first time reader might be led into
+thinking this is only about email and not name, but I am assuming
+that is not the intention (i.e. this is merely showing just one use
+case).
+
+> +	Defaults to `false`.
+> +
+>  user.signingKey::
+>  	If linkgit:git-tag[1] or linkgit:git-commit[1] is not selecting the
+>  	key you want it to automatically when creating a signed tag or
+> diff --git a/ident.c b/ident.c
+> index f3a431f738cc..9bd6ac69bfe8 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -13,11 +13,14 @@ static struct strbuf git_default_date = STRBUF_INIT;
+>  static int default_email_is_bogus;
+>  static int default_name_is_bogus;
+>  
+> +static int ident_use_config_only;
+> +
+>  #define IDENT_NAME_GIVEN 01
+>  #define IDENT_MAIL_GIVEN 02
+>  #define IDENT_ALL_GIVEN (IDENT_NAME_GIVEN|IDENT_MAIL_GIVEN)
+>  static int committer_ident_explicitly_given;
+>  static int author_ident_explicitly_given;
+> +static int ident_config_given;
+>  
+>  #ifdef NO_GECOS_IN_PWENT
+>  #define get_gecos(ignored) "&"
+> @@ -354,6 +357,9 @@ const char *fmt_ident(const char *name, const char *email,
+>  				fputs(env_hint, stderr);
+>  				die("unable to auto-detect name (got '%s')", name);
+>  			}
+> +			if (strict && ident_use_config_only &&
+> +			    !(ident_config_given & IDENT_NAME_GIVEN))
+> +				die("user.useConfigOnly set but no name given");
+>  		}
+>  		if (!*name) {
+>  			struct passwd *pw;
+> @@ -373,6 +379,9 @@ const char *fmt_ident(const char *name, const char *email,
+>  			fputs(env_hint, stderr);
+>  			die("unable to auto-detect email address (got '%s')", email);
+>  		}
+> +		if (strict && ident_use_config_only
+> +		    && !(ident_config_given & IDENT_MAIL_GIVEN))
+> +			die("user.useConfigOnly set but no mail given");
+
+I can read the split expression either with && hanging at the end of
+line or && leading the next line just fine, but you'd want to be
+consistent especially when you are writing two almost identical
+things.
+
+> diff --git a/t/t9904-per-repo-email.sh b/t/t9904-per-repo-email.sh
+> new file mode 100755
+> index 000000000000..0430f2e38434
+> --- /dev/null
+> +++ b/t/t9904-per-repo-email.sh
+> @@ -0,0 +1,58 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2016 Dan Aloni
+> +#
+> +
+> +test_description='per-repo forced setting of email address'
+> +
+> +. ./test-lib.sh
+> +
+> +prepare () {
+> +	# Have a non-empty repository
+> +	rm -fr .git
+> +	git init
+
+Hmm, do we do something drastic like this in any of our existing
+tests?
+
+When your test script starts by dot-sourcing test-lib.sh, you will
+be given an initial repository with an empty history, so I'd expect
+that you would be able to use that without calling "prepare" over
+and over again.  The usual convention is to do this kind of setup
+to establish a reasonable baseline in the first test titled 'setup'.
+I think the part up to where you unset the environment variables (by
+the way, don't you need to unset GIT_COMMITTER_* variables, too?)
+belongs to the 'setup' that is done only once at the beginning of
+this script.
+
+Each of your tests will make changes to the state by setting or
+unsetting configuration variables and possibly making commits, that
+would affect the state of the repository that will be used by the
+next and subsequent tests.  test_when_finished helper can register
+the clean-up procedure to revert these possible state changes, and
+you can further avoid code duplication by calling that same clean-up
+procedure at the end of the setup test.
+
+So if this followed the style of a typical existing test, we would
+probably do something along these lines:
+
+	reprepare () {
+		git reset --hard initial &&
+                echo Second >foo &&
+                git add foo
+	}
+
+	test_expect_success setup '
+		echo Initial >foo &&
+                git add foo &&
+                git commit -m foo &&
+                git tag initial &&
+
+		sane_unset GIT_AUTHOR_NAME GIT_COMMITTER_NAME ... &&
+                git config --global user.name test &&
+                git config --global user.useConfigOnly true &&
+		reprepare
+        '
+
+	test_expect_success 'fail without email anywhere' '
+        	test_when_finished reprepare &&
+                test_must_fail git commit -m msg
+	'
+
+	test_expect_success 'suceed with config' '
+        	test_when_finished reprepare &&
+		test_config user.email test@ok.com &&
+                test_must_fail git commit -m msg
+	'
+
+Note that you do not need "test_unconfig user.email" in reprepare,
+as the variable is set in one test with test_config, which uses
+test_when_finished to arrange the variable to be removed after
+running the test.
+
+> +	echo "Initial" >foo &&
+> +	git add foo &&
+> +	git commit -m foo &&
+> +
+> +	# Setup a likely user.useConfigOnly use case
+> +	sane_unset GIT_AUTHOR_NAME &&
+> +	sane_unset GIT_AUTHOR_EMAIL &&
+> +	test_unconfig --global user.name &&
+> +	test_unconfig --global user.email &&
+> +	test_config user.name "test" &&
+> +	test_unconfig user.email &&
+> +	test_config_global user.useConfigOnly true
+> +}
+> +
+> +about_to_commit () {
+> +	echo "Second" >>foo &&
+> +	git add foo
+> +}
+
+> +test_expect_success 'fails committing if clone email is not set' '
+> +	prepare && about_to_commit &&
+> +
+> +	test_must_fail git commit -m msg
+> +'
+
+> +test_expect_success 'fails committing if clone email is not set, but EMAIL set' '
+> +	prepare && about_to_commit &&
+> +
+> +	test_must_fail env EMAIL=test@fail.com git commit -m msg
+> +'
+> +
+> +test_expect_success 'succeeds committing if clone email is set' '
+> +	prepare && about_to_commit &&
+> +
+> +	test_config user.email "test@ok.com" &&
+> +	git commit -m msg
+> +'
+> +
+> +test_expect_success 'succeeds cloning if global email is not set' '
+> +	prepare &&
+> +
+> +	git clone . clone
+> +'
+> +
+> +test_done
