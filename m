@@ -1,89 +1,89 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH 8/8] one ugly test to verify basic functionality
-Date: Fri, 5 Feb 2016 14:38:14 +0100
-Message-ID: <CA+EOSBn_HB8LABaN497zkr6tvCdqoQXhK=ecsLMx2c5CaJRg1A@mail.gmail.com>
-References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
-	<1454662677-15137-9-git-send-email-pclouds@gmail.com>
-	<CA+EOSBnZVuHThXLg9+VftPVaKy5wqqxp=iQtP1ZUtxkKq32HMQ@mail.gmail.com>
-	<alpine.DEB.2.20.1602051417490.2964@virtualbox>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1] config: add '--sources' option to print the source of
+ a config value
+Date: Fri, 5 Feb 2016 08:58:55 -0500
+Message-ID: <20160205135855.GA19154@sigill.intra.peff.net>
+References: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
+ <20160205112001.GA13397@sigill.intra.peff.net>
+ <56B48803.9080909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 05 14:38:27 2016
+Content-Type: text/plain; charset=utf-8
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 05 14:59:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRgaf-0006zD-PS
-	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 14:38:26 +0100
+	id 1aRgud-0006Xb-A2
+	for gcvg-git-2@plane.gmane.org; Fri, 05 Feb 2016 14:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729AbcBENiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 08:38:20 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:35550 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753622AbcBENiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 08:38:15 -0500
-Received: by mail-vk0-f65.google.com with SMTP id e185so2506049vkb.2
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 05:38:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EHo91MUDfIg2M9Gh53LFo6+NLz3EEmSj6ZZYMNYG1Ew=;
-        b=Vg80+hz9OWOBomQ2dgIyb/BApmEM4J1rNe7OJjTRc7Lc8ICvI/L7FhVYxMpWxc6Dn3
-         dq1LDnM2kcLVjt2xgxgiDJGsNda8ZRMpCH1r8LDQm/RIwi62Z3Pxuzb8Aw3V55cBsmAz
-         Dv72Jj+qTL8Ens3h2FTdBqhRNiUVZrfqVkX7Gc6IfxZcEoSK6CtGVzWuMrxN/SgrDeO7
-         zZ716NSbBCkXZVSILgJmLJo67qIlSk51MgIQ5L3R3oSIibyjluFfnwWBaRwcn0dYcelB
-         FHep20r0sCBfjdkmPWXXO/GkK5jgAQl24dFx38XgXUfsQ+OJNmU6Z4acobPYZ9PajmYn
-         GBhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EHo91MUDfIg2M9Gh53LFo6+NLz3EEmSj6ZZYMNYG1Ew=;
-        b=ELotmW8AtoWyT2/WsX2Bw4R/urFwoGZP+EbaKb1EwGhTpaAiEYhwqPeaJlbQ/+wMaU
-         QAPvkc0JL1/JmF/BIf2lAiFbM5ivnzW9vAQ3LI8hGZEpDDrIcqTpPKmzAXOYt/Oh5A03
-         zYfUYJW9lgosud7IkQI0I1Ly4/LAMy79SNRQymWgPXpDM2n/nZWrMdyq15/8eF+VsY/Q
-         2QgtNHlGYuGeK/PW3LSCeop1gpN0pAvmOm8zzvB3Rs/TqZLidXw6XR9tjXRBg27Okn6R
-         NnpzXa8kpyQmksxf+PHTP0TnC1QR+V+BrDjj77YQhnYrFVG0WVcIIbf5EnDjFrK80qjD
-         C76Q==
-X-Gm-Message-State: AG10YOTzlifgJfPk7ZTQf5wcgIz3XQpJyqwahtTLq0Bj62OpekeKakJXwX7a5u3gGCwLylMwZutiohQBM5ggmA==
-X-Received: by 10.31.180.85 with SMTP id d82mr8432350vkf.83.1454679494961;
- Fri, 05 Feb 2016 05:38:14 -0800 (PST)
-Received: by 10.31.56.10 with HTTP; Fri, 5 Feb 2016 05:38:14 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1602051417490.2964@virtualbox>
+	id S1753344AbcBEN67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 08:58:59 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38129 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753179AbcBEN66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 08:58:58 -0500
+Received: (qmail 13211 invoked by uid 102); 5 Feb 2016 13:58:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Feb 2016 08:58:57 -0500
+Received: (qmail 14312 invoked by uid 107); 5 Feb 2016 13:58:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Feb 2016 08:58:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Feb 2016 08:58:55 -0500
+Content-Disposition: inline
+In-Reply-To: <56B48803.9080909@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285579>
 
-2016-02-05 14:20 GMT+01:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi Elia,
->
-> On Fri, 5 Feb 2016, Elia Pinto wrote:
->
->> From the git coding guideline : "We prefer $( ... ) for command
->> substitution; unlike ``, it properly nests.  It should have been the way
->> Bourne spelled it from day one, but unfortunately isn't."
->
-> There was only one time in my life as a developer when I had to change a
-> $(...) to a `...` construct. I do not really remember all the details, but
-> I think it was on MacOSX, and it was inside a case ... esac and the
-> closing parentheses was mistaken for a case arm (the $(...) construct
-> might have been multi-line, is the only thing that would make sense in my
-> mind.
->
-> Did you hear of similar problems?
+On Fri, Feb 05, 2016 at 12:31:15PM +0100, Sebastian Schuberth wrote:
 
-I not personally. The autoconf manual does not seem to me (for that i
-can remember) to mention this possible incompatibility, for example.
+> >I'm not sure returning here is the best idea. We won't have a config
+> >filename if we are reading from "-c", but if we return early from this
+> >function, it parses differently than every other line. E.g., with your
+> >patch, if I do:
+> >
+> >   git config -c foo.bar=true config --sources --list
+> >
+> >I'll get:
+> >
+> >   /home/peff/.gitconfig <tab> user.name=Jeff King
+> >   /home/peff/.gitconfig <tab> user.email=peff@peff.net
+> >   ...etc...
+> >   foo.bar=true
+> >
+> >If somebody is parsing this as a tab-delimited list, then instead of the
+> >source field for that line being empty, it is missing (and it looks like
+> >"foo.bar=true" is the source file). I think it would be more friendly to
+> >consumers of the output to have a blank (i.e., set "fn" to the empty
+> >string and continue in the function).
+> 
+> Or to come up with a special string to denote config values specified on the
+> command line. Maybe somehting like
+> 
+>     <command line> <tab> foo.bar=true
+> 
+> I acknowledge that "<command line>" would be a valid filename on some
+> filesystems, but I think the risk is rather low that someone would actually
+> be using that name for a Git config file.
 
-Best
+Yeah, I agree it's unlikely. And the output is already ambiguous, as the
+first field could be a blob (though I guess the caller knows if they
+passed "--blob" or not). If we really wanted an unambiguous output, we
+could have something like "file:...", "blob:...", etc. But that's a bit
+less readable for humans, and I don't think solves any real-world
+problems.
 
->
-> Ciao,
-> Dscho
+So I think it would be OK to use "<command line>" here, as long as the
+token is documented.
+
+Are there any other reasons why current_config_filename() would return
+NULL, besides command-line config? I don't think so. It looks like we
+can read config from stdin, but we use the token "<stdin>" there for the
+name field (another ambiguity!).
+
+-Peff
