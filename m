@@ -1,77 +1,282 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] Ignore generated test executable
-Date: Sat, 6 Feb 2016 15:42:49 +0100 (CET)
-Message-ID: <d6bde03c5989dc7a619251166134e64b97f2711c.1454768585.git.johannes.schindelin@gmx.de>
+From: fuz@fuz.su
+Subject: Re: git archive should use vendor extension in pax header
+Date: Sat, 6 Feb 2016 15:57:26 +0100
+Message-ID: <20160206145726.GA27001@fuz.su>
+References: <20160124155909.GA16847@fuz.su>
+ <56A7EDE1.1020909@web.de>
+ <20160127114634.GA1976@fuz.su>
+ <56A92913.3030909@web.de>
+ <20160127234512.GA5453@fuz.su>
+ <56B5F3BF.7080601@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 15:43:00 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 15:51:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aS44i-0003qt-7l
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 15:43:00 +0100
+	id 1aS4DH-0007Zp-5I
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 15:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286AbcBFOm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2016 09:42:56 -0500
-Received: from mout.gmx.net ([212.227.17.21]:57997 "EHLO mout.gmx.net"
+	id S1752655AbcBFOvr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 09:51:47 -0500
+Received: from fuz.su ([5.135.162.8]:36817 "EHLO fuz.su"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752158AbcBFOmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 09:42:55 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MC8iq-1aJId82e6S-008pgd; Sat, 06 Feb 2016 15:42:50
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:2GyB+ELTih075jr5+OtVM2923DJ5UmmIf7KMAFKI8lcpsJs5OYu
- KJWMGihEN0IPldAlbqCYCWuACUfeQ056WiC52jEW2k+7zy+lnT2YwLz3OyNC92yJkVWREZC
- NxkpPFCirwcdMBIC7zu0LFR3BClK5VKuvwuTgVFFrhknJa04htZDeGUdTj/Z0prou3ZiAaO
- 70bKRHU47UlTeHagOlfdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OcbN/cdQPkE=:Ds70jVFZXWXDvufV5mYmAS
- FB/7I+EMJYSSYHheEu2YNmc9Y6FsZKZFKJXQPXzPx2jXa1wq3u/AMXn/D2z7PzlytHOUJe23r
- hjeD3hMDqr21edgYJv+giqFcXIXzpK/tE5GwRkgZAtqpGzlwuhxSTjH/8sqc+XVuEsp7XeQQG
- xjdRLfYT9H7im2wqdWty7/pTiE5qMtKtj78i5AFObSwFttoeiusyPD44MqyBAVORzZIiICMyO
- O9C9wYQuu0eSi61GbsLKAnR4dIQR+3JUAshF/9TbhupUVIYOI0sK2bJ9E04qhgFqo0QuF8TEn
- jkZF2IcD5o+ItWiIZB8V7v4WraUleWxqOVTxYUc0W9Y/dE32+neYsA2Y+1D+g7dfGjxgEgIvy
- YP8dB2y+QCLPZRrmU9uCJBI90lkPqtCozTUHZuda0IISUB41S0PIVQLr6vbGcWe7ZprNL6jW6
- WiR7Xmk09hnrnoT2ipOAq4+7/j37Goyx1aiIdZraotpqH82DAfSVVijSZE9eLN4N8k2iPUCmc
- 7vcGoI9H+5RW/BxR8FvgYG1As+boyg72ToNuPvRmIAXHxysw78CzunU28pRT19D+eywqqzQiG
- CV7CvSyRmZkAOqJmPdhmtPdKhdwpaL9QtHyzurSmmGPS2nD+LZGfsvya87qk5csQwJxr4GSuQ
- Y8IPb7LeBQwkoGt/BF4Q+5OcJGzVJc/TZVe9FhkLl/G2ON/4kcTz0lUmq9zITZb+o2mTCY+GB
- /EoWjqz2koO5ldEq9M31BNRTcc0ZOHKJ3ibpAKdGIoWt5AqNck06PbYlZx0wyTO3giWMJUXR 
+	id S1752073AbcBFOvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2016 09:51:46 -0500
+Received: by fuz.su (Postfix, from userid 1000)
+	id BB26920228; Sat,  6 Feb 2016 15:57:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <56B5F3BF.7080601@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285693>
 
-In "mingw: fix t5601-clone.sh", this developer introduced a new test
-executable, test-fake-ssh. Naturally, he forgot to update the .gitignore
-file accordingly. This patch fixes that.
+On Sat, Feb 06, 2016 at 02:23:11PM +0100, Ren=C3=A9 Scharfe wrote:
+> Am 28.01.2016 um 00:45 schrieb fuz@fuz.su:
+> >>There is git get-tar-commit-id, which prints the commit ID if it
+> >>finds a comment entry which looks like a hexadecimal SHA-1 hash.
+> >>It's better than a hex editor at least. :)
+> >
+> >This is incredibly fuzzy and can get wrong for a pleothora of reason=
+s.
+> >I hope you agree though that the situation is suboptimal, git is doi=
+ng
+> >the equivalent of using a custom file format without an easily
+> >recognizable magic number.
+>=20
+> It is fuzzy in theory. But which other programs allow writing a
+> comment header?  I'm not aware of any, but I have to admit that I
+> didn't look too hard.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Well, let's say what happens if the Mercurial folks were to implement
+the same thing? Suddenly there is a conflict. Yes, of course, right now
+there might be no program that uses the comment field for its own
+purpose but such design decisions tend to be not future proof. There is
+a very good reason why file formats typically have magic numbers and
+don't just rely on people knowing that the file has a certain type and
+that is the same reason why git should mark its meta data in a unique
+fashion.
 
-	This is on top of 'next', of course. My apologies that I did not
-	catch this earlier.
+> >>But I'm still interested how you got a collection of tar files with
+> >>unknown origin.  Just curious.
+> >
+> >Easy: Just download the (source) distribution archives of a distribu=
+tion
+> >of choice and try to verify that the tarballs they use to compile th=
+eir
+> >packages actually come from the project's public git repositories.
+>=20
+> OK, that's easier than calculating checksums and comparing them with
+> those published by the respective projects, but also less
+> trustworthy.
 
- .gitignore | 1 +
- 1 file changed, 1 insertion(+)
+If you have a known trusted archive, you could use it directly, no need
+for cross-verification. The intent is to be able to check if archives
+generated by someone from some sources could have plausibly been
+generated from these sources.
 
-diff --git a/.gitignore b/.gitignore
-index 1c2f832..5087ce1 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -187,6 +187,7 @@
- /test-dump-cache-tree
- /test-dump-split-index
- /test-dump-untracked-cache
-+/test-fake-ssh
- /test-scrap-cache-tree
- /test-genrandom
- /test-hashmap
--- 
-2.7.0.windows.1.7.g55a05c8
+> >There are other reasons why an easily detectable git hash might be
+> >useful.  For example, file(1) could show that the archive comes from
+> >git.  Other utilities could use this to work around git-specific bug=
+s.
+> >An unpacker could add corresponding meta-data when unpacking the fil=
+e.
+>=20
+> file(1) could use the same heuristic as git get-tar-commit-id.
+> Something like this would work (the first line is already shipped
+> with file):
+>=20
+> 	257	string	ustar\0 POSIX tar archive
+> 	>156	string	g
+> 	>>512	string	52\ comment=3D
+> 	>>>523	regex	[0-9a-f]{40}	\b, git commit %s
+>=20
+> NB: With Ian Darwin's file you need to use -e tar in order to turn
+> off its internal tar test.
+
+Same issues as above.
+
+> I'm very interested in hearing about any git specific bugs.
+
+I don't know any. Bugs tens to be known only after 1000s of buggy
+archives have been published (just as with some GNU tar bugs). It's
+great to have a way to detect that the archive might be affected by
+a bug so you know that you need to work around it.
+
+> >>>>>It would be much more useful if git created a
+> >>>>>custom key. As per POSIX suggestions, something like this would =
+be
+> >>>>>appropriate:
+> >>>>>
+> >>>>>     GIT.commit=3D57ca140635bf157354124e4e4b3c8e1bde2832f1
+> >>>>
+> >>>>This would be included in addition to the comment in order to avo=
+id
+> >>>>breaking existing users, I guess.
+> >>>
+> >>>Good point.  I'm not sure how many user use the comment header at =
+all.
+> >>
+> >>Apart from git get-tar-commit-id I don't know any program for
+> >>extracting pax comments.  And I don't know how widely used that is,
+> >>but I assume there is *someone* out there, extracting commit IDs
+> >>with it.
+> >
+> >Neither do I.  But remember, POSIX explicitly specifies that program=
+s
+> >that parse pax file must ignore pax comments so an unpacker that
+> >interpretes the content of such a comment in any way is in violation=
+ of
+> >the pax specification.
+>=20
+> Almost right: The spec says that *pax* shall ignore comments.  Which
+> is good -- we can use this field to transport anything without pax
+> complaining.
+
+The intent of the committee is that comments shall be ignored by all
+software that processes tar files. Of course you can put metadata into
+the comments, but that is just a perversion of the file format. POSIX
+explicitly states that unknown keys in extended headers are to be
+ignored by extractors, so using these should be fine, too. But you are
+right, some research needs to be done as to how different archivers dea=
+l
+with unexpected keys in pax headers.
+
+> >>>Maybe there should also be an
+> >>>GIT.original-name key.
+> >>
+> >>What would it be used for?
+> >
+> >In case an export substition changes the file name so the implementa=
+tion
+> >can verify that the original file could plausibly have been substitu=
+ted
+> >into the current name.  Also for the case where multiple files
+> >substitute into the same name to tell which file git should check
+> >equivalency with.
+>=20
+> Stupid question: Could you please provide an example?  The only
+> possibility for name changes that I'm aware of is using --prefix.
+
+I was under the impression that export substitutions also apply to file
+names but it seems like I'm wrong about this.
+
+> >>>An option GIT.export-ignore is not required.  Instead it would be =
+more
+> >>>useful to have a special file type G (for git) with the convention=
+ that
+> >>>the file name .gitattributes means =E2=80=9Cattributes that apply =
+to this git
+> >>>archive.=E2=80=9D
+> >>
+> >>That would be a non-standard extension.  Archivers would extract
+> >>these as regular files.  Storing a list of excluded paths (in
+> >>GIT.exclude or so) might be a better idea.
+> >
+> >No, that's not a good idea as pax headers are interpreted as =E2=80=9C=
+attributes
+> >pertaining to a file.=E2=80=9D  A file doesn't have the attribute th=
+at other
+> >files have been omitted.  Making this a special file type is useful =
+as
+> >it allows archivers that don't implement git extensions to recover t=
+his
+> >information in a useful way (after all, the .gitattributes file took
+> >part in creating the archive) and, more importantly, reserves a file
+> >type for future git extensions.
+>=20
+> We can interpret our own keywords as we see fit.  Other programs
+> will ignore them (or at most print a warning).  There are precedents
+> for global headers pertaining to the whole archive, e.g.
+> SCHILY.archtype of star by J=C3=B6rg Schilling.
+
+Since a tar archive is semantically a concatenation of individual file
+records, it makes sense that each file has the attribute =E2=80=9Cthis =
+file has
+star extensions.=E2=80=9D
+
+Thinking about the problem a bit more and discussion with the
+aforementioned J=C3=B6rg Schilling we came to the conclusion that the b=
+est
+way to deal with an =E2=80=9Cfile omitted=E2=80=9D attribute is to atta=
+ch it to the
+directory that would normally contain the omitted file.
+
+> Letting archivers extract meta data as regular files is annoying to
+> those that are not interested in it.  Extended headers themselves
+> (type g) are bad enough already in this regard for those stuck with
+> old tar versions.
+
+I think we can safely assume that systems support pax headers 15 years
+after they have been standardized. I was actually unable to find a
+non-historical version of a serious archiver that claims to support tar
+archives but doesn't support pax headers.
+
+> >>>The GIT.path option holds the paths that are being archived. It is=
+ a bit
+> >>>tricky to get right.  The intent of POSIX pax headers is that each=
+ key
+> >>>is an attribute that applies to a series of files.  In the case of=
+ a
+> >>>global header, each key applies until it is overridden with a new
+> >>>header or with a local header.  A GIT.path key should only apply t=
+o the
+> >>>files that correspond to this path operant to git archive.  Thus, =
+a new
+> >>>GIT.path should be written frequently.  There should always be at =
+least
+> >>>one GIT.path.
+> >>
+> >>That's for the optional path parameters of git archive, right?  A
+> >>list of included paths (GIT.include) would be simpler and should
+> >>suffice, no?
+> >
+> >No.  Again: An attribute in a pax header pertains a file.  It's meta=
+data
+> >attached to a file, not metadata attached to the whole archive, even=
+ when
+> >part of a global header.  Thus each file should have attached what p=
+ath
+> >operand it came from.  A file doesn't have the attribute what other =
+path
+> >operands git received, only the path operand that caused the inclusi=
+on of
+> >that one file is an attribute of the file.
+>=20
+> Not an issue; we can make our own rules for our own keywords.
+
+Well, yes, but they should still stick to the semantic concept POSIX
+imposes for extended headers: headers pertain to files and the only
+difference between a g header and an x header is that the former applie=
+s
+until it is revoked by a new g header or overridden by an x header.
+Not sticking to this concept can lead to weird problems with programs
+that modify tar archives (like GNU-tar) and is not future proof. Better
+stick to the standard.
+
+> >>Users can always go back to the original format.  At least I don't
+> >>expect this new format becoming the default too quickly.
+> >
+> >Sure thing.  If this is going to be implemented, I would add options
+> >to choose what / what style of metadata to include.
+>=20
+> Alright.  (An environment requiring these options sounds scary, thoug=
+h.)
+
+Always remember: https://xkcd.com/1172/
+
+> Ren=C3=A9
+
+Yours,
+Robert Clausecker
+
+--=20
+()  ascii ribbon campaign - for an 8-bit clean world=20
+/\  - against html email  - against proprietary attachments
