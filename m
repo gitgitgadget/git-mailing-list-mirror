@@ -1,98 +1,103 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] setup.c: make check_filename() return 0 on ENAMETOOLONG
-Date: Sun,  7 Feb 2016 06:23:12 +0700
-Message-ID: <1454800992-15953-1-git-send-email-pclouds@gmail.com>
-References: <CA+4vN7w2=JWusWDhhGNzAkJbE-s44G4WoXdvf26yzvtYfpktfQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Sun, 7 Feb 2016 06:48:39 +0700
+Message-ID: <CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+References: <6A7D4447-AC25-4591-9DA7-CD153198EC64@jetbrains.com>
+ <alpine.DEB.2.20.1602061518220.2964@virtualbox> <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+ <alpine.DEB.2.20.1602061708220.2964@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ole@tange.dk,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 07 00:24:05 2016
+Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 07 00:49:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSCCy-0003pF-Eh
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 00:24:04 +0100
+	id 1aSCbr-0005R4-F9
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 00:49:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbcBFXXZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 18:23:25 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36125 "EHLO
-	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbcBFXXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 18:23:24 -0500
-Received: by mail-pf0-f170.google.com with SMTP id n128so88370004pfn.3
-        for <git@vger.kernel.org>; Sat, 06 Feb 2016 15:23:24 -0800 (PST)
+	id S1750948AbcBFXtL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 18:49:11 -0500
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:35733 "EHLO
+	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbcBFXtK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2016 18:49:10 -0500
+Received: by mail-lf0-f42.google.com with SMTP id l143so77158483lfe.2
+        for <git@vger.kernel.org>; Sat, 06 Feb 2016 15:49:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=gdyX1w3oQ9PfbKEHRSR7Czcwh+Uwkw18+kPj9+VAVps=;
-        b=E73HUYomlQ/CAoGtdDz+R43m+5pVbfGeykV6RZdYqz5fESAjBEPsGAEJony1rWoD39
-         VHFQPl+ruT9oyMQlDvKjBpcS5LOguUUlwMD2blgNyZf3BrPtV5PydNKdz9MmVy8S4hxg
-         Cft1wnmldZUob4xnkC31xDxqYzbXjV0ZyZRnQx6x8ZafIjsC5zA3UbzxnuZV9+yPyWfJ
-         7e0E9kRi6/qxlYoNXpnhgcZQno4eAiB5ChzVGqMCFmPl10IbP/axnp8i9fTyDQu5l9Qu
-         0/6AjYAq22LHIpZYgD6RWMoQWLRt8rJgg6HXmO4OPqlZXFz8dvRqu9ks5bZsdDcN0GZf
-         HV9w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=kKwX1UrFsTZdzmXu4zQycqfdk17sR2LBBlYMM1LfFl8=;
+        b=BXkeJPeUXCexooP6Bqq1lZPsw2n0VjsNWemM3L5HbKovAsSlIJnx5U/KJGZKPRXGZc
+         td4Ad9HMslWSnTwvy5rVHM5cU3SyfVPl6BPVmJ4xOndFtnahaWzwGx6F3plDcMzz1wiz
+         rBjjoZZ1DJi2eNDbTA/PD5e+Jz09GR51RZnRLMSqz+cnGd8Rm7Jsd48TVU27YWYp4/XQ
+         5JHLUVuCC9GofFykP6MfX84BcoesCKmekggvvwHrXhvwvoP9Mlf8W3ffzyad0TRNSNJL
+         3DCISL0jR3yZ5i0AcWbha/QbJYf09CEKD/dfP/fCz6FEfx7YuqqHT02HP9uXTad9r3VF
+         1Xfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=gdyX1w3oQ9PfbKEHRSR7Czcwh+Uwkw18+kPj9+VAVps=;
-        b=M3R/mQU9d5BhcI2Y69DI616EKdGyr0a+OXRKWYnAE3Ghrq8NCra/CjYm/ZX5D4iWLH
-         lrjCzs0TibyiFMIhpxz0uTVXVwqtdXKa5rmuJbI8Yzxzdq465cRyMjFqwOoQnMDrNP7b
-         EvTODLqXjjOcR0Yx5KDGMD9LDqSBiY1SdR5dJnJxejgrebjKlen0LGT6qQH7Ih7feZWs
-         xMTZm/gBM6wkXjWk0fxV7lgY4QV3y+G62uRLu0Aw4xY0WSJC3BuR+tZqek1CU7p9MqUM
-         eG6Bt75YVXlDUaF6OwqEcL9mAxPkwzEYnrE9XN136fo0Adj30uq+yrSMaT0LHPargRQi
-         7Gtg==
-X-Gm-Message-State: AG10YOQcP5L9heNjamPJmY122brx4+qc5BbNAo5u02v2XFfPpDkz4TaDzhW/PRVKQCC3mA==
-X-Received: by 10.98.34.25 with SMTP id i25mr31128325pfi.26.1454801003886;
-        Sat, 06 Feb 2016 15:23:23 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id f12sm33418885pfd.87.2016.02.06.15.23.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Feb 2016 15:23:22 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 07 Feb 2016 06:23:38 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <CA+4vN7w2=JWusWDhhGNzAkJbE-s44G4WoXdvf26yzvtYfpktfQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=kKwX1UrFsTZdzmXu4zQycqfdk17sR2LBBlYMM1LfFl8=;
+        b=k35jX58i0pJOTNbVFDd6OfaSqRApCeTUPZGtAm+D/wUyh70EdUvKeS9lG6KPT+bMUI
+         cKbYUs9M/zCMdDAmX/FPFUpzx0H3WOO1O7PCgyqGmsJBF375rR3hi57kaUTQUhyMmkQd
+         nV2iGdXJvicZccMmPVp/7NmJy1I6+cYrO+vD8Tw7j/A8YDIXn4Tb4wLzUVtrPMXM0WMH
+         5e4p4QnjGVAsHQOViqffdjOYsboF4ukF6o7ZYn4Tfxh8ugf/pyTe5GTonJ7yYs78JGaM
+         cy+4spKEwhW6t123cgrBuJHJDqF9Y8lUKtEvkQv5GKrRvgRnh0cZj3nT69sU5HQMaNRq
+         2LRA==
+X-Gm-Message-State: AG10YOR8AlC/5no5ZMbWRcc4WYyhDdlgtTC7WIvLRRv0vkdxD8tS2om8advqjHIoL8JRiQxOLlv54NGPi8c3vA==
+X-Received: by 10.25.212.11 with SMTP id l11mr8637119lfg.118.1454802548681;
+ Sat, 06 Feb 2016 15:49:08 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Sat, 6 Feb 2016 15:48:39 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1602061708220.2964@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285707>
 
-Noticed-by: Ole Tange <ole@tange.dk>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Sun, Feb 7, 2016 at 4:56 AM, Ole Tange <ole@tange.dk> wrote:
- > If file name too long it should just try to see if it is a reference
- > to a revision.
+On Sat, Feb 6, 2016 at 11:10 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Kirill,
+>
+> On Sat, 6 Feb 2016, Kirill Likhodedov wrote:
+>
+>> > On 06 Feb 2016, at 17:21 , Johannes Schindelin <Johannes.Schindeli=
+n@gmx.de> wrote:
+>> >
+>> > This is expected behavior of the Bash you are using. The commands =
+that I
+>> > think would reflect your intentions would be:
+>> >
+>> >     git init brackets
+>> >     cd brackets
+>> >     echo 'asd' > 'bra[ckets].txt'
+>> >     git add 'bra[ckets].txt'
+>> >     git commit -m initial
+>> >     git show 'HEAD:bra[ckets].txt=E2=80=99
+>>
+>>
+>> Nope. This command sequence doesn=E2=80=99t work for me: the same er=
+ror is returned:
+>>
+>>     # git show 'HEAD:bra[ckets].txt'
+>>     fatal: ambiguous argument 'HEAD:bra[ckets].txt': both revision a=
+nd filename
+>
+> Whoops. Sorry. I actually ran those commands now and it is true that =
+it
+> still does not work, which is funny. Especially since
+>
+>         git show 'HEAD:bra[ckets].txt' --
+>
+> actually *does* work.
 
- Looks easy enough to fix.
-
- setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/setup.c b/setup.c
-index 2c4b22c..ab8f85d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -147,7 +147,7 @@ int check_filename(const char *prefix, const char *=
-arg)
- 		name =3D arg;
- 	if (!lstat(name, &st))
- 		return 1; /* file exists */
--	if (errno =3D=3D ENOENT || errno =3D=3D ENOTDIR)
-+	if (errno =3D=3D ENOENT || errno =3D=3D ENOTDIR || errno =3D=3D ENAME=
-TOOLONG)
- 		return 0; /* file does not exist */
- 	die_errno("failed to stat '%s'", arg);
- }
+It's from 28fcc0b (pathspec: avoid the need of "--" when wildcard is
+used - 2015-05-02)
 --=20
-2.7.0.377.g4cd97dd
+Duy
