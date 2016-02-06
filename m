@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 09/11] grep/pcre: support utf-8
-Date: Sat,  6 Feb 2016 09:03:08 +0700
-Message-ID: <1454724190-14063-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 10/11] diffcore-pickaxe: "share" regex error handling code
+Date: Sat,  6 Feb 2016 09:03:09 +0700
+Message-ID: <1454724190-14063-11-git-send-email-pclouds@gmail.com>
 References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
  <1454724190-14063-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,129 +13,110 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 06 03:04:24 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 03:04:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRsEY-0004OY-Oe
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 03:04:23 +0100
+	id 1aRsEe-0004Yv-Vv
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 03:04:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbcBFCET convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 21:04:19 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36155 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbcBFCES (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 21:04:18 -0500
-Received: by mail-pf0-f171.google.com with SMTP id n128so77476344pfn.3
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 18:04:17 -0800 (PST)
+	id S1751320AbcBFCEZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 21:04:25 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35872 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751218AbcBFCEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 21:04:24 -0500
+Received: by mail-pa0-f54.google.com with SMTP id yy13so42945664pab.3
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 18:04:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=YdBQgn/DRpQS3smsbdf86MAJfV4eDRR5ohHX8fNJf94=;
-        b=PALyyXAjF6xrmWINKGu0Fmik7UgAdAnxI0Jl4wKLAoNLKOE2sOfbuldbUJKO7LDFu5
-         7hDKkFcBoI4J5k4FcUwjRGTL0zHCjQ0dSpo8CXrfmDp2t9LEiaIElHaqAjA7F50PCsW5
-         S0Xj6IsmCLiRFWz1H4iw1cn1nvLGbhxbq3NRwozys62LX2e0FZZmLxJzl46435y8zfRE
-         3MBuaVOoa3cqwJbW+KxIKJeNt7rdqr3v81nsRpJZXaiIr+7LKBqXmdILRz+DZgFEwXMw
-         ddURqFzZkQe5EjbodMrTBd4M4Kes/a4Gq4rn0OHyzJMweqofu8dVQhFQ2e5ncFUunOHa
-         cCzQ==
+        bh=PXvfHdRJTWkbnNzkRMExruyoNoc3Ac0XhRKUYFyLbMI=;
+        b=LWYfHsd8xStJ2iLGJIWLB7MG6kX17TyzxBtw4i6tHpZfyxgx4JL5OR/abaMFaINeGi
+         DjtLBO3RzdkV3lQow5QEIGIoje5DfdLXFMFoW4sIDESGGFuZa+OB4mtvCb3Wigd0ECn8
+         bTcVCNMftoc/dFFz+sGj21ARdB2LRHHA8v/chri55meuXJMsOntNCre7Gyxq149Lfk3M
+         sWGLeFDPbDvH/VRceV8HosjtO+RfGa7q1roJghgVPDRts7chrC2uv7X67gJVhkaxkeUl
+         kT9UwvZ6jSOqauGGVuxQQP9c/+Q6A0AKtUX++l6b1Ohg080J9vc4vlKCFmB1f3s58cHO
+         fqsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=YdBQgn/DRpQS3smsbdf86MAJfV4eDRR5ohHX8fNJf94=;
-        b=GMwme6/ZQ0TgUgfmqopIsM4e2nyCAw4uEdkuraQ0LB+X2Egwkl+UMLRpiGxgZliJkb
-         t/LyjDueOIjY3OrhT7F6RFx04B8E9jU6exRDYsvKqY9ZJSBIxN2x+v4QcfZqYZf7/dLU
-         UyGtPNaQ+biAYaKsy+EmF+qNO2ThZuw43KNyAqyj7+NUQ4SqboFYsJZNixDjq0zp27w4
-         wHOD/RIVBnlj7OXrHCt5dhhpyV64hau/42jgsF+1cQvUBEnUzrepJEgffm+/PUtojGGH
-         IYsyR7nEh4eNO+meNmPegYPRscWfcFnFWPIGsoEAJUNpgvA3terO2OKiGkNUiKuod48b
-         VpIw==
-X-Gm-Message-State: AG10YOSWtEEMFAV92uVSpmBlewORXo0znPGHaGty1xKXVC/qEmm48FH4SmLXWDguWgJIjA==
-X-Received: by 10.98.87.80 with SMTP id l77mr24423426pfb.101.1454724257393;
-        Fri, 05 Feb 2016 18:04:17 -0800 (PST)
+        bh=PXvfHdRJTWkbnNzkRMExruyoNoc3Ac0XhRKUYFyLbMI=;
+        b=RqAiKyZEF/wuEkZjK7fwiA5UicNCOBxqdp0ZZgYm50UA00dmAuxuJCH7RBFGQaofiw
+         YTKWR5LGlzFsP2ih1ksIlPbGNbzWInXVYAAQ9XikbZTgd7euhjcPpbOeg37dJRm3lYIi
+         JczgmyoQApSxM7FpcJgtMDcKFUqZ+l3sqJ8kmt0rUJ/1OeAeIMYFgysqUcksfyfvX4q7
+         Bn0PB+5tXQZq+UWP621UppxYlw2HnFurT6JiGEyAtIQvg8zW7G3kvxalL6XimyDh7P61
+         eACil4okEikbly4np2nInSAG/wY3zViH1LiBMBMDulWBVFtyad0CAVmN6lK0VmGYkM7w
+         B2yg==
+X-Gm-Message-State: AG10YORC9cyq9XJb9NBSJOl36iilSwfS7BDmIPocaSn11w56Fz+C1MZDyG/xltScv0BxvQ==
+X-Received: by 10.66.252.136 with SMTP id zs8mr24353594pac.110.1454724263783;
+        Fri, 05 Feb 2016 18:04:23 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id x1sm27213854pfi.42.2016.02.05.18.04.13
+        by smtp.gmail.com with ESMTPSA id 74sm27234350pfs.33.2016.02.05.18.04.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 18:04:15 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 06 Feb 2016 09:04:31 +0700
+        Fri, 05 Feb 2016 18:04:22 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 06 Feb 2016 09:04:37 +0700
 X-Mailer: git-send-email 2.7.0.377.g4cd97dd
 In-Reply-To: <1454724190-14063-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285675>
 
-In the previous change in this function, we add locale support for
-single-byte encodings only. It looks like pcre only supports utf-* as
-multibyte encodings, the others are left in the cold (which is
-fine).
+There's another regcomp code block coming in this function. By moving
+the error handling code out of this block, we don't have to add the
+same error handling code in the new block.
 
-We need to enable PCRE_UTF8 so pcre can find character boundary
-correctly. It's needed for case folding (when --ignore-case is used)
-or '*', '+' or similar syntax is used.
-
-The "has_non_ascii()" check is to be on the conservative side. If
-there's non-ascii in the pattern, the searched content could still be
-in utf-8, but we can treat it just like a byte stream and everything
-should work. If we force utf-8 based on locale only and pcre validates
-utf-8 and the file content is in non-utf8 encoding, things break.
-
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
-Helped-by: Plamen Totev <plamen.totev@abv.bg>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- grep.c                          |  2 ++
- t/t7812-grep-icase-non-ascii.sh | 15 +++++++++++++++
- 2 files changed, 17 insertions(+)
+ diffcore-pickaxe.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/grep.c b/grep.c
-index 843e180..aed4fe0 100644
---- a/grep.c
-+++ b/grep.c
-@@ -329,6 +329,8 @@ static void compile_pcre_regexp(struct grep_pat *p,=
- const struct grep_opt *opt)
- 			p->pcre_tables =3D pcre_maketables();
- 		options |=3D PCRE_CASELESS;
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 7715c13..69c6567 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -204,20 +204,13 @@ void diffcore_pickaxe(struct diff_options *o)
+ 	int opts =3D o->pickaxe_opts;
+ 	regex_t regex, *regexp =3D NULL;
+ 	kwset_t kws =3D NULL;
++	int err =3D 0;
+=20
+ 	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
+-		int err;
+ 		int cflags =3D REG_EXTENDED | REG_NEWLINE;
+ 		if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE))
+ 			cflags |=3D REG_ICASE;
+ 		err =3D regcomp(&regex, needle, cflags);
+-		if (err) {
+-			/* The POSIX.2 people are surely sick */
+-			char errbuf[1024];
+-			regerror(err, &regex, errbuf, 1024);
+-			regfree(&regex);
+-			die("invalid regex: %s", errbuf);
+-		}
+ 		regexp =3D &regex;
+ 	} else {
+ 		kws =3D kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
+@@ -225,6 +218,13 @@ void diffcore_pickaxe(struct diff_options *o)
+ 		kwsincr(kws, needle, strlen(needle));
+ 		kwsprep(kws);
  	}
-+	if (is_utf8_locale() && has_non_ascii(p->pattern))
-+		options |=3D PCRE_UTF8;
++	if (err) {
++		/* The POSIX.2 people are surely sick */
++		char errbuf[1024];
++		regerror(err, &regex, errbuf, 1024);
++		regfree(&regex);
++		die("invalid regex: %s", errbuf);
++	}
 =20
- 	p->pcre_regexp =3D pcre_compile(p->pattern, options, &error, &erroffs=
-et,
- 				      p->pcre_tables);
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
-scii.sh
-index 5832684..842b26a 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -20,6 +20,21 @@ test_expect_success REGEX_LOCALE 'grep literal strin=
-g, no -F' '
- 	git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
- '
-=20
-+test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre utf-8 icase' '
-+	git grep --perl-regexp    "TILRAUN: H.ll=C3=B3 Heimur!" &&
-+	git grep --perl-regexp -i "TILRAUN: H.ll=C3=B3 Heimur!" &&
-+	git grep --perl-regexp -i "TILRAUN: H.LL=C3=93 HEIMUR!"
-+'
-+
-+test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre utf-8 string wit=
-h "+"' '
-+	printf "TILRAUN: Hall=C3=B3=C3=B3 Heimur!" >file2 &&
-+	git add file2 &&
-+	git grep -l --perl-regexp "TILRAUN: H.ll=C3=B3+ Heimur!" >actual &&
-+	echo file >expected &&
-+	echo file2 >>expected &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success REGEX_LOCALE 'grep literal string, with -F' '
- 	git grep --debug -i -F "TILRAUN: Hall=C3=B3 Heimur!"  2>&1 >/dev/null=
- |
- 		 grep fixed >debug1 &&
+ 	/* Might want to warn when both S and G are on; I don't care... */
+ 	pickaxe(&diff_queued_diff, o, regexp, kws,
 --=20
 2.7.0.377.g4cd97dd
