@@ -1,137 +1,269 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] On the --depth argument when fetching with submodules
-Date: Fri, 05 Feb 2016 16:05:01 -0800
-Message-ID: <xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
+Subject: A note from the maintainer
+Date: Fri, 05 Feb 2016 16:07:53 -0800
+Message-ID: <xmqqegcqbt0m.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 01:05:13 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 06 01:08:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRqNE-0006lj-U2
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 01:05:13 +0100
+	id 1aRqPx-0002A7-BJ
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 01:08:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbcBFAFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 19:05:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54801 "EHLO
+	id S1750760AbcBFAH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 19:07:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64504 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750699AbcBFAFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 19:05:04 -0500
+	with ESMTP id S1750737AbcBFAH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 19:07:56 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B05D842E98;
-	Fri,  5 Feb 2016 19:05:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TuTLZiWVKKeYQU0bIzF+7tmgbS0=; b=avZx95
-	iqfROcB05rP4SsIan+biAtBzsWRJWm2idJDTkLWJ0fc4bgoCMdsc96pznDr9GUJE
-	TF4VTFeLmO6sDMMq3jlxdXTzyKwGdEyteprfATOOAjQy9vG9bJIdHoOnhz/qCgPv
-	0X8V+dpJhSCmPn9XtQLR3wGnCiiH4L4SEIWMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dY7TGpkv/HYMcSQpe712lt0HsKmsE23c
-	eaRMRssTHUooxAtT82T0vaVeOcl6mWqpGd0S6QQH6niLjOih4Bl+ck902Shi3R3Y
-	9pSKHmk6zA31K3h3mgpCkBO0Zc0TlcbXHDmfgWuyYtOj/mRzauTUWlf1gogF4ioe
-	hFW1K+EH/14=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C067742F2B;
+	Fri,  5 Feb 2016 19:07:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=1
+	/deOZdmyI4tcHgykfSQEKi/11g=; b=CdTTPCtytdh/7HmMbidAS1F1c/XG47dMp
+	UETb8uhbwQmUCEWnqF1ww+pUfFtZLyVJ5FVPzRQpyKZg5Anl/4uOK8xC8SQBtypB
+	0YRMtS8n+gL10BVb+3n/Y3E2trhuQ/J8lu3rXuE8NwZBfgDoMr2S+PrSulHcIOIo
+	V8A2GkvBl8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=KqG
+	SSV4JMaeBKGZ6bcbjNn+e2vLcAiF/9nqzxTLGsRDTeWPJOWPMW1uueKKlCWHxG7R
+	Jl7HyWNkdTc1f21+GtcnrF8qNNy9g4qkuVm3uooalwLLCjxteCrEpjQJw1wRYwgZ
+	Z4YdAbr1dhYGE2uxRuu6h3uTXfKI5IBY2q+wpmbE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A6D7F42E96;
-	Fri,  5 Feb 2016 19:05:03 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B750F42F2A;
+	Fri,  5 Feb 2016 19:07:55 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E49642E94;
-	Fri,  5 Feb 2016 19:05:03 -0500 (EST)
-In-Reply-To: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 5 Feb 2016 14:48:43 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 16D1442F29;
+	Fri,  5 Feb 2016 19:07:55 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 45517CC4-CC65-11E5-9F5B-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: ABD1909C-CC65-11E5-8025-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285656>
 
-Stefan Beller <sbeller@google.com> writes:
+Welcome to the Git development community.
 
-> Currently when cloning a project, including submodules, the --depth argument
-> is passed on recursively, i.e. when cloning with "--depth 2", both the
-> superproject as well as the submodule will have a depth of 2.  It is not
-> garantueed that the commits as specified by the superproject are included
-> in these 2 commits of the submodule.
->
-> Illustration:
-> (superproject with depth 2, so A would have more parents, not shown)
->
-> superproject/master: A <- B
->                     /      \
-> submodule/master:  C <- D <- E <- F <- G
->
-> (Current behavior is to fetch G and F)
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-I think the issue is deeper than merely "--depth 2", and you would
-be better off stepping back and think about various use cases to
-make sure that we know what kind of behaviour we want to support
-before delving into one particular corner case.  We currently pass
-the depth recursively, and I do not think it makes much sense, but I
-view it as a secondary question "among the behaviours we want to
-support, which one should be the default?"  It may turn out that not
-passing it recursively at all, or even passing a different depth, is
-a better default, but we wouldn't know until we know what are the
-desirable behaviour in various workflows.
+* Mailing list and the community
 
-If you are actively working on the superproject plus some submodules
-but you are merely using the submodule you depicted above, not
-working on changing it, even when you want the full history of the
-superproject (i.e. no "--depth 2"), you may not want history of the
-submodule.  Even though we have a way to say "I am not interested in
-this submodule AT ALL" by not doing "submodule init", not having
-anything at all at the path submodule/ may not allow you to build
-the whole thing, and we currently lack a way to express "I am not
-interested in the history of this thing, but I need at least the
-tree that matches the commit referred to by the superproject".
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-If you are working on a single submodule, trying to fix a bug in the
-context of the whole project, you might want to have a single-depth
-clone of the superproject and all other submodules, plus the whole
-history of the single submodule.
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-In either of these examples, the top-level "--depth" does not have
-much to do with what depth the user wants to use when cloning or
-fetching the submodule repositories.
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-I have a feeling (but I would not be surprised if somebody who uses
-submodules heavily has a counter-example from real life) that
-regardless of "--depth" or full clone, fetching the tip of matching
-branch is not a good default behaviour.  In your picture, even when
-depth is not given at all, there isn't much point fetching F or G.
+The list archive is available at a few public sites:
 
-> So to fetch the correct submodule commits, we need to
-> * traverse the superproject and list all submodule commits.
-> * fetch these submodule commits (C and E) by sha1
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
 
-I do not think requiring that C to be fetched when the superproject
-is cloned with --depth=2 (hence A and B are present in the result)
-is a good definition of "correct submodule commits".  The initial
-clone could be "superproject follows --depth, all submodules are
-cloned with --depth=1 at the commits referenced by the superproject
-tree"--by that definition, you need E but you do not want C.
+For those who prefer to read it over NNTP:
 
-As a specification of the behaviour, the above two might work, but I
-do not think that should be the implementation.  In other words,
-"The implementation should behave as if it did the above two" is OK,
-and it is also OK to qualify with further conditions to help the
-implementation.  For example, the current structure assumes that E
-and C are reachable from "some" ref in submodule, so that at least a
-whole clone of the submodule would give them to you--otherwise you
-would not be able to even build the superproject at A or B.  Perhaps
-it is OK to further require that, when you are working in a single
-branch mode and working on 'master', you are required to have
-commits C and E reachable on the 'master' branch in the submodule,
-and that may lets you limit the need for such scanning of the
-history?
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
+
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+
+
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+Also GitHub shows the manual pages formatted in HTML (with a
+formatting backend different from the one that is used to create the
+above) at:
+
+  http://git-scm.com/docs/git
+
+
+* How various branches are used.
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.7.0 done on Jan 4th, 2016. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a
+feature release are applied to this branch and maintenance releases
+are cut from it.  The maintenance releases used to be named with four
+dotted decimal, named after the feature release they are updates to
+(e.g. "1.8.5.1" was the first maintenance release for "1.8.5" feature
+release).  These days, maintenance releases are named by incrementing
+the last digit of three-dotted decimal name (e.g. "2.6.3" is the
+third maintenance release for the "2.6" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
