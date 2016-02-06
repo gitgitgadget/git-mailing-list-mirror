@@ -1,95 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 03/25] transport-helper.c: do not send null option to
- remote helper
-Date: Sat, 6 Feb 2016 16:38:15 +0700
-Message-ID: <CACsJy8Az9rx_D0V+p2fEdNi64YJb2g_o0npUk2=wqCL2_moBPQ@mail.gmail.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
- <1454576641-29615-4-git-send-email-pclouds@gmail.com> <xmqqh9hof4bx.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Subject: git show doesn't work on file names with square brackets
+Date: Sat, 6 Feb 2016 16:16:35 +0300
+Message-ID: <6A7D4447-AC25-4591-9DA7-CD153198EC64@jetbrains.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 10:39:27 2016
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 06 14:17:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRzKu-0007fZ-SB
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 10:39:25 +0100
+	id 1aS2jo-0005Vg-Jn
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 14:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbcBFJit convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 04:38:49 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34675 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804AbcBFJir convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2016 04:38:47 -0500
-Received: by mail-lf0-f68.google.com with SMTP id 78so3616109lfy.1
-        for <git@vger.kernel.org>; Sat, 06 Feb 2016 01:38:46 -0800 (PST)
+	id S1752185AbcBFNQl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 08:16:41 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34893 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061AbcBFNQk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2016 08:16:40 -0500
+Received: by mail-lf0-f51.google.com with SMTP id l143so72647567lfe.2
+        for <git@vger.kernel.org>; Sat, 06 Feb 2016 05:16:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=b1ZEceigp8rOmNMXO1QAdLlW9TNbux7WhfoMMk5Wptk=;
-        b=LUnA3tpwWGowKa0iUmEk5h6nSIexbKQqmaSUcVj/+i+iJAYg/AD4iLM4hLmKwrhCu9
-         99KpxkgzlQUV2SD6UTyuUQMbKLT5QnbcVEJkATPMs5+LH9Pika4eB3vKvTVgRAdzN4sF
-         WHp8+ZsIE6zzNEEhYvLPonWT5guHAD2ctyHj2vw4Soy3ASmVG2WqbcLUBSdjVTj71x15
-         gzaLI5TyYFtyjkH17n63LF6gQYu31sWOxgvT2Qb9IRIheqbgsq0Cemi5AhCkiemM3jDy
-         VhBK38VBjCxjmTXysLGUVM45/nB+vPSBzC9oQtghRZilhUNZzSpvWDGUvvJHn74C6c5a
-         pRyQ==
+        d=jetbrains-com.20150623.gappssmtp.com; s=20150623;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=GPTWh+G4GykZxuYZAIBGo4zEoIAzLyUF8oHf3IvB8ME=;
+        b=W5Y1v3FLpkIe1+rggoPhZPNR+msG36JDWSt31Hdwvwe/sKc/N2vpUvbLmwf3gAis7v
+         0GNfrebonfSnCpCiKe+g6wLbdXRiSC6mpX7A1bmo7zDGwXFGDG/I3bCJuIiYpm6kkPoj
+         p+gWFk33z3LhM1yIYza9BfgQshOFOGSv92NOm4qpnFJg9AkRd2qTdPz8P/c1e2IRa7DB
+         kSPRzGGmcuJD8Tz+coFEUZO7oZTgJ27989MYzweeeGsaD91qCHZmCa9ah0eDHx6YXvTw
+         iDYyt1LEcgDjquXzFvYuqKVafvF4t7ivKhSC77s+kNYfhkYhCjrXhcob9faA4ViBvAfP
+         uQAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=b1ZEceigp8rOmNMXO1QAdLlW9TNbux7WhfoMMk5Wptk=;
-        b=dkOE2n6TopQjfjKV2rIOoh+TMJC50gLsCp/gosMPf8YRu0UeveOGrD1s9s+RcD9PlP
-         0hQQQ+WX834xaZRuzUBETsL8u7ulnqxEbWKwpfCVEWyccMUgZ4ZTTwRmgFBkm5coYB/x
-         6Ukw3YylesdtL7chfmDNov/T2xEawXcEGtVky49xHG+PFYAGSwzKk8WhJAB/flBo82cp
-         WIm48gXARlhBBeTf8lJ49MkiAFC6RVyAUui7He0GwE5SoI3PLMp235LuSQ6WfHO6ilxp
-         sR0kKgxFLXjamufcSwT5r3eJ85Cr+TuPRZ7T/VJRUewnmE+4orwQSN/jS59pdcZbv3q/
-         gTjw==
-X-Gm-Message-State: AG10YOQdmU1QMBO7k/sxG1ph7iqorkHOjq4JdQG1vZ9GJL/t6aWSfGs6fVJ5DAoXqAXveLsHgjBMf8wjHnWaXQ==
-X-Received: by 10.25.212.11 with SMTP id l11mr7745268lfg.118.1454751526056;
- Sat, 06 Feb 2016 01:38:46 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Sat, 6 Feb 2016 01:38:15 -0800 (PST)
-In-Reply-To: <xmqqh9hof4bx.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:content-type:content-transfer-encoding
+         :subject:message-id:date:to:mime-version;
+        bh=GPTWh+G4GykZxuYZAIBGo4zEoIAzLyUF8oHf3IvB8ME=;
+        b=dpYE4pfuFNHv//AnloCrwaf1OAplEve79eNDtWlWNftUl7fk56vdvtMkUjDR0qve5U
+         GNj4Iaue4tFU9uTFCgUesBlafli3H2K4Lr8MqQ3N77aUBv8jVlugFe5CcduHbIUHl5SI
+         Ay8eMMKwKXiXvoXwpCeN5dm2IKkBJnc7+MrbDAv2h7aVaxREOpl7pDOzvPgM2uCGL5HM
+         2J6JwXXCbCsew9BmJHSAtXpb3zQh6j463LdJGEUchAyDMkWPTjqcKDUMYL9yd7uZasyT
+         QKbyF2JA6WHWZkVJAO05AluCxTzn+PYzgWAjmDfAJRj2O4/IN6sauFQsEHqIbSYCoPpj
+         D2oA==
+X-Gm-Message-State: AG10YOQ4kQ6H3K8nXdUJ2v5kL123kmDODg8bs2fv1zPTtMB4A0phSxcvMo2NJN+KQVuHUNFq
+X-Received: by 10.25.154.20 with SMTP id c20mr6956088lfe.79.1454764598122;
+        Sat, 06 Feb 2016 05:16:38 -0800 (PST)
+Received: from loki.labs.intellij.net ([80.76.244.114])
+        by smtp.gmail.com with ESMTPSA id rx3sm2732352lbb.35.2016.02.06.05.16.36
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 06 Feb 2016 05:16:37 -0800 (PST)
+X-Google-Original-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-Mailer: Apple Mail (2.3096.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285686>
 
-On Fri, Feb 5, 2016 at 6:22 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->
-> This is even more strange.  Are the current callers broken and some
-> sends value=3D=3DNULL for an option that is not is_bool, resulting in
-> a call to quote_c_style() with NULL?  I somehow find it hard to
-> believe as that would lead to an immediate segfault.
->
-> Assuming that no current caller passes NULL to value when is_bool is
-> not in effect, there needs an explanation why future new callers may
-> need to do so.  An alternative for a valueless option could be to
-> send "option name\n" instead of the usual "option name value\n", but
-> without such an explanation, readers cannot tell why not sending
-> anything about "name", which is what this patch chooses to implement,
-> is a better idea.
+I=E2=80=99ve faced a problem that `git show <rev>:<filename>` returns a=
+n error when <filename> contains square brackets.
 
-The source is backfill_tags() which, in future, resets some transport
-options back to defaults. The current set_option() in there only deals
-with booleans or number (depth). But in future it resets deepen-since,
-which is a string.
+Interestingly, the problem is reproducible on "GNU bash, version 3.2.57=
+(1)-release (x86_64-apple-darwin15)", but not on "zsh 5.0.7 (x86_64-pc-=
+linux-gnu)=E2=80=9D. The problem is also reproducible when called from =
+a Java program by forking a process with given parameters.
 
-I think the main reason is, we do not have a way to reset (or unset) a
-transport option. Should I keep this commit and explain about this, or
-have a new transport API to reset option?
---=20
-Duy
+Is it a bug or I just didn=E2=80=99t find the proper way to escape the =
+brackets?=20
+
+Steps to reproduce:
+
+    git init brackets
+    cd brackets/
+    echo =E2=80=98asd=E2=80=99 > bra[ckets].txt
+    git add bra\[ckets\].txt
+    git commit -m initial
+    git show HEAD:bra[ckets].txt
+
+Error:
+fatal: ambiguous argument 'HEAD:bra[ckets].txt': both revision and file=
+name
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]=E2=80=99
+
+Neither escaping, not quoting doesn=E2=80=99t help:
+    git show HEAD:bra\[ckets\].txt
+returns the same error
+
+    git show "HEAD:bra\[ckets\].txt=E2=80=9D
+returns empty output
+
+Thanks a lot!
+-- Kirill
