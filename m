@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 03/11] test-regex: isolate the bug test code
-Date: Sat,  6 Feb 2016 09:03:02 +0700
-Message-ID: <1454724190-14063-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 04/11] test-regex: expose full regcomp() to the command line
+Date: Sat,  6 Feb 2016 09:03:03 +0700
+Message-ID: <1454724190-14063-5-git-send-email-pclouds@gmail.com>
 References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
  <1454724190-14063-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,113 +13,133 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 06 03:03:46 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 03:03:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRsDy-0003Yu-5g
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 03:03:46 +0100
+	id 1aRsE3-0003eH-7p
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 03:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbcBFCDm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 21:03:42 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35634 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbcBFCDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 21:03:41 -0500
-Received: by mail-pa0-f43.google.com with SMTP id ho8so42986692pac.2
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 18:03:41 -0800 (PST)
+	id S1751172AbcBFCDs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 21:03:48 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:34055 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbcBFCDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 21:03:47 -0500
+Received: by mail-pa0-f49.google.com with SMTP id uo6so43737101pac.1
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 18:03:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=9QWTd4yHlzDh1+RwiljaOmHaAjgrdpm2PEF/uepoYiQ=;
-        b=p9sAoymowSh4LxL9ggzcbeHpqfn6dCOCd688hbBKylbrIZHWMdVXQMhJeO55HaDH3R
-         JezvtiKrp5TyojcxO3IuqG9u4Ez6VwR8Umc8yA3f0wLT20Q8JHkDyESq2dDovP9j5l6K
-         PfALODwif2uB6O20FvwuVNYIOQvTzc4TiEOHm509NQ5dhcHp+qvkD0jOYJeJkvorPlDC
-         ZE+eQlF5CvgXJ0BbeG0oEipNAzD7wObcPT3Nh+k7jUX6PxuqR76mavghGVFSJrh9dy1S
-         HRHYFioIcco9QImME0adoM+NF6ONxFQjyzYwUURh06hk4KDZAtIMQGuYZ3RPEM7DChOh
-         sjWQ==
+        bh=QQhd+UZLUTU8+cihV7ci/f2eZ42BrWLcwHUzDoguvZw=;
+        b=i4XXSV0+tXV48ojmBzUKV7Q+atTlgbx/8IUaroTFmjhG6AmOdRaa5mGrcJSz7WXW1U
+         LSj+cY4UVD2uaoE2ANIwzDsQkW8895pL0EtI1sWO3dlE4p6Tz6F77UTicWrvnJ1aGALn
+         gmdFpS5MHBvaqVpAXJR4oDKcCJjWb9CxuNVRzG6TNBrSXLB+ieouxX4lzH0nO7f7fQ7d
+         7RNvlBgAQXzjhDc8cDA9WQIJ5ewCrfrqxfVOH+Cm0tXd0QZCa6FtCgcaR7InbIOSl2aD
+         +ee3l6Sk7EX6krFbi1Hj55Zaki2PxWvqyGSq/kaiX7ZvLuUdjw4uG0P2I4Bpzlzz7Ctc
+         AiQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=9QWTd4yHlzDh1+RwiljaOmHaAjgrdpm2PEF/uepoYiQ=;
-        b=c2STtJhZjHUjNEYCZx6j5JJcMeduMPX89A39chG5Zc/pNq6VX9MDhRuLNkdppjM9tI
-         465FDweuOxt3QVu82/MZbjCx2Y7BmXDgnPEXVB/EZbSi0b2tqy50IeUcvo00Po4ONAbk
-         t+ybWasopw+B0N1v5qPCAc7wo16ZwJhULDN1fSp8/sTl4rIdwrd+j7NVuvaNeAEUutOl
-         jXVYRjiECULJ5C62IOZXYrqTyPrPS2BdNlao4e2czgxRXKEoYi49LIhj2CndNxiYQT9M
-         w1EAOgNZEsO0JRyYyfF3pnw0Md7WBbUXVWQqv9jC39LwtfJuxNhnr0yJbRVb5VC2FJfm
-         ZkUg==
-X-Gm-Message-State: AG10YOQABobu5kbgPMvCl919lN5F54lAOnH72eN9gdEbY1dg6vpmSpVpeDTW4ZTRDtozvg==
-X-Received: by 10.66.218.73 with SMTP id pe9mr24322782pac.91.1454724220982;
-        Fri, 05 Feb 2016 18:03:40 -0800 (PST)
+        bh=QQhd+UZLUTU8+cihV7ci/f2eZ42BrWLcwHUzDoguvZw=;
+        b=QVB/+QGG4bm6PcOhD7t8YBqCW6dPpGinTDrvm/Pt4gVYQJYPn/KKSbB3kYHWf+NlUk
+         Jl0dCrxujtJHSHCkCohF0yqoAyJx3OrcZIpFn46r0c5I3W5g6X1sbxv/j4EEQ9LJ5Lli
+         nU90VkVAXgiVexf/9G4xNEH+A6CY3JGgMqv3/Efk8tFhUDpKOwSn1Xxavht4cSoqvgu2
+         Dldhed2r3EI3L+ar2dD4Kvtvpu/ZIGXghbt5KvTbdDzOYQxp54A67xMpIHxIvjlZoenA
+         xFJGg+RFt0yvCYvn6kgMvFR3tYiIicz3oS7ooUhq19VOJdV572FW1AodhRm0lDJ7EkxR
+         hR/A==
+X-Gm-Message-State: AG10YOT3rhdwa3RImY1uzFxdqV/KxkeQEEjf5m/eERGTcukjkZ4n3ojM7Bw61mE9rXZqBw==
+X-Received: by 10.66.63.104 with SMTP id f8mr24467865pas.41.1454724226776;
+        Fri, 05 Feb 2016 18:03:46 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id 191sm27245259pfa.23.2016.02.05.18.03.36
+        by smtp.gmail.com with ESMTPSA id r77sm27197637pfa.47.2016.02.05.18.03.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 18:03:39 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 06 Feb 2016 09:03:54 +0700
+        Fri, 05 Feb 2016 18:03:45 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 06 Feb 2016 09:04:01 +0700
 X-Mailer: git-send-email 2.7.0.377.g4cd97dd
 In-Reply-To: <1454724190-14063-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285669>
 
-This is in preparation to turn test-regex into some generic regex
-testing command.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t0070-fundamental.sh |  2 +-
- test-regex.c           | 12 ++++++++++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ test-regex.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-index 5ed69a6..991ed2a 100755
---- a/t/t0070-fundamental.sh
-+++ b/t/t0070-fundamental.sh
-@@ -31,7 +31,7 @@ test_expect_success 'git_mkstemps_mode does not fail =
-if fd 0 is not open' '
-=20
- test_expect_success 'check for a bug in the regex routines' '
- 	# if this test fails, re-build git with NO_REGEX=3D1
--	test-regex
-+	test-regex --bug
- '
-=20
- test_done
 diff --git a/test-regex.c b/test-regex.c
-index 0dc598e..8c51f5a 100644
+index 8c51f5a..d1a952c 100644
 --- a/test-regex.c
 +++ b/test-regex.c
-@@ -1,6 +1,6 @@
+@@ -1,4 +1,21 @@
  #include "git-compat-util.h"
-=20
--int main(int argc, char **argv)
-+static int test_regex_bug(void)
- {
- 	char *pat =3D "[^=3D{} \t]+";
- 	char *str =3D "=3D{}\nfred";
-@@ -16,5 +16,13 @@ int main(int argc, char **argv)
- 	if (m[0].rm_so =3D=3D 3) /* matches '\n' when it should not */
- 		die("regex bug confirmed: re-build git with NO_REGEX=3D1");
-=20
--	exit(0);
-+	return 0;
-+}
++#include "gettext.h"
 +
-+int main(int argc, char **argv)
-+{
-+	if (argc =3D=3D 2 && !strcmp(argv[1], "--bug"))
-+		return test_regex_bug();
-+	else
-+		die("must be used with --bug");
++struct reg_flag {
++	const char *name;
++	int flag;
++};
++
++static struct reg_flag reg_flags[] =3D {
++	{ "EXTENDED",	 REG_EXTENDED	},
++	{ "NEWLINE",	 REG_NEWLINE	},
++	{ "ICASE",	 REG_ICASE	},
++	{ "NOTBOL",	 REG_NOTBOL	},
++#ifdef REG_STARTEND
++	{ "STARTEND",	 REG_STARTEND	},
++#endif
++	{ NULL, 0 }
++};
+=20
+ static int test_regex_bug(void)
+ {
+@@ -21,8 +38,38 @@ static int test_regex_bug(void)
+=20
+ int main(int argc, char **argv)
+ {
++	const char *pat;
++	const char *str;
++	int flags =3D 0;
++	regex_t r;
++	regmatch_t m[1];
++
+ 	if (argc =3D=3D 2 && !strcmp(argv[1], "--bug"))
+ 		return test_regex_bug();
+-	else
+-		die("must be used with --bug");
++	else if (argc < 3)
++		die("usage: test-regex --bug\n"
++		    "       test-regex <pattern> <string> [<options>]");
++
++	argv++;
++	pat =3D *argv++;
++	str =3D *argv++;
++	while (*argv) {
++		struct reg_flag *rf;
++		for (rf =3D reg_flags; rf->name; rf++)
++			if (!strcmp(*argv, rf->name)) {
++				flags |=3D rf->flag;
++				break;
++			}
++		if (!rf->name)
++			die("do not recognize %s", *argv);
++		argv++;
++	}
++	git_setup_gettext();
++
++	if (regcomp(&r, pat, flags))
++		die("failed regcomp() for pattern '%s'", pat);
++	if (regexec(&r, str, 1, m, 0))
++		return 1;
++
++	return 0;
  }
 --=20
 2.7.0.377.g4cd97dd
