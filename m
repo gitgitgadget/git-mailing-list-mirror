@@ -1,116 +1,95 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 06/12] ref-filter: introduce color_atom_parser()
-Date: Sat, 6 Feb 2016 16:51:30 +0100
-Message-ID: <CAP8UFD0BMNYiL-N=eTwXvyMX4_exwURzufesW_xYktZoVPaoGA@mail.gmail.com>
-References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
-	<1454262176-6594-7-git-send-email-Karthik.188@gmail.com>
-	<CAPig+cTemTCwOUoyO9p+d544iDcxeYw0gh9DtEkL9hoHVLmuEQ@mail.gmail.com>
-	<CAOLa=ZRPbk+uOVhwKumE2eiKDWdkKqtG_mbrNmr4Rn1POdGNdw@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Sat, 6 Feb 2016 17:10:54 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602061708220.2964@virtualbox>
+References: <6A7D4447-AC25-4591-9DA7-CD153198EC64@jetbrains.com> <alpine.DEB.2.20.1602061518220.2964@virtualbox> <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 16:51:47 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-114684782-1454775055=:2964"
+Cc: git <git@vger.kernel.org>
+To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 17:11:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aS59F-000667-ND
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 16:51:46 +0100
+	id 1aS5SY-0000Tm-56
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 17:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbcBFPve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2016 10:51:34 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:34774 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752525AbcBFPvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 10:51:31 -0500
-Received: by mail-lb0-f181.google.com with SMTP id cw1so64063204lbb.1
-        for <git@vger.kernel.org>; Sat, 06 Feb 2016 07:51:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1dCp9auQ7vX9oDp4eWIJva/fzoPNNKdlFhEKsIy5Av0=;
-        b=lqmRnO6FOjtdqSdXn/dHyiEn48B5A+VVJe28M7n8VkgyXdZn6tu3tdRhLCaLB51DNN
-         6tXhq/Beyf3GrOdiUUmKyQ82Of6kvffN6MxlxL2y9N6FafLRuU0OiSAftQIzTft89ILE
-         s2nOPg2f0tg2e+n9+ghOjf5Rj6335BoXoY1hYARMjQRLIlUl3nxv4jBccUogV8WO3Jwm
-         kq4qE5172Uqr8YtfC76pfr9wLe4pezvXSn7acKuxM57ysfLuElWED54s3NBeX9/EKb0p
-         iiPgEbfShLz4BYWmePMq4O3/6jGKjhpVBVyBKqq6narEBvxfG37MFD+A4bK5Vbt661uJ
-         9XJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1dCp9auQ7vX9oDp4eWIJva/fzoPNNKdlFhEKsIy5Av0=;
-        b=MgsDjIiH6wear9a8GupbAEJORIKlmHtVPQNpZZLgnDLjSjMbMfO3P13TiYNTTxqQXm
-         AHLhMFJMeXMcvFrs5gyF8PQTAUBwHxZoYCJE9seUJq1X93pNmLhuJXe2VReJlRXup9bV
-         mxJc3oKcx+xMETlCrZgP1fCax1Cds0rAYFf5xxmJqWwnMluy+Glp/f7Qq7aFSlupA9n5
-         ml39LjMbkV5H/8tGoIequnRfuUyJGN31hTrKxuwmhZBT7E2J16xpgpQbIZqzNaCKjUQ1
-         pyU1mO4WSFdblmmq3XhecMxC4C7OBOQNiHAtFZNFs5sLzQPVHaY+aCzGm1v6cSUYMfJ4
-         Gytw==
-X-Gm-Message-State: AG10YOTESfFFEKVEIL6bQgNb9wn7TUaplNiioXyWWhDRmx4c3TndGA+zdg6Q5mNczsv2n5DPCwpesbFMwBsN/g==
-X-Received: by 10.112.198.231 with SMTP id jf7mr7981386lbc.16.1454773890101;
- Sat, 06 Feb 2016 07:51:30 -0800 (PST)
-Received: by 10.25.152.199 with HTTP; Sat, 6 Feb 2016 07:51:30 -0800 (PST)
-In-Reply-To: <CAOLa=ZRPbk+uOVhwKumE2eiKDWdkKqtG_mbrNmr4Rn1POdGNdw@mail.gmail.com>
+	id S1751553AbcBFQK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2016 11:10:59 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50459 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888AbcBFQK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2016 11:10:58 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M24ap-1aCblE2Kpn-00u3Bw; Sat, 06 Feb 2016 17:10:55
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:sQ0aQx4Hm/ALJUL6uVpkGVdX68mIK4Pxu0aBlXQMHLCXQHg3Ul4
+ C1Rv3FzdsT9LiWuCFQ5dlil1cvsrzzieuJC+l+bW4MvSbQlk1oT1RREC7gTAD1ohJPiWLeK
+ rhEnnQ6uSZ0WpmBhszb6lWz3cr7pOJNP4pwLRqgFNyygK71vqizlQ+j87ZvMGF9Od2uG/jU
+ eFmM6vAsfkk0uZg6NjsfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Iuusjt4YlTI=:/BPgssKQskUoxtgF8KwrTh
+ EspgXyheCr0iBk2fwSQygmF0paVs6bHZSytfI++jNILTGUvt+TuiFTe6UKMUUQYeoj4zE5cez
+ 3XVQRgcZEXZHCvgy/PhNaEt5QQ54PNphZbyKPQCfuQ9uryjFtnwY5lV7669n63ZyvgN0Nrm3T
+ LfsxfecyYMvULZlP2erP9WE8t6dFMeVg664Mrd1r9Yzu+tyvggV0spjLchJ0Zgc9AjPVZZMxN
+ /zX6mgz5gDUw95ajv8m3rEqhsW4HpE8HvUmbS+qz4S7PJ1djA2Ii386pROCD+pZCZvRDfSc+h
+ 7chSalf6EWxVK3SHU+v3gTNCZtdMPQE1fdwth4bG5c9Wh9CSSSq56R9sUeWFQaYSTlbvbvKR/
+ ZSZXy/UyEhYrMqz4xMUnQNKRgUuAKFK7ckxEHUXxW0wUHS0NyHQcGWgnOXiWW7+sn3+LnM2hZ
+ by25J+42uYZwrpHunVMn31sZH6MFfKzpg/IBru9BZKB7KD70yD0UG67TxqbDYg0+j4Sy8CJOm
+ DlIUSlOVRLPQYtMjyr8lo9h/9TE4Ng9piVKKRfV3LC/cGiXKb783SGh0FUzPgS7FwejYND+wQ
+ qG85xySstnJPc+o42D/MD9v/sty7opW7w1E6HvE5EebFX24plDUCCAAwPewq7PrpBY8sYeBZ5
+ uQK16KmBXsNE0WOr2Pm5bW8ZjxePHhxuh3y6F/vElFn/CLysmm40Y8o3jA2A0WNAus9H14uAg
+ 3HhITLnOfnBguV/YBPWaAy3Bei8uH7WzdS1uHe30zkaHhybytdJ1/H83u/C1Vc24YpnaZITM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285698>
 
-On Sat, Feb 6, 2016 at 4:20 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Fri, Feb 5, 2016 at 3:55 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> Introduce color_atom_parser() which will parse a "color" atom and
->>> store its color in the "used_atom" structure for further usage in
->>> populate_value().
->>>
->>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->>> ---
->>> diff --git a/ref-filter.c b/ref-filter.c
->>> @@ -29,10 +29,21 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
->>>  static struct used_atom {
->>>         const char *name;
->>>         cmp_type type;
->>> +       union {
->>> +               char color[COLOR_MAXLEN];
->>> +       } u;
->>>  } *used_atom;
->>>  static int used_atom_cnt, need_tagged, need_symref;
->>>  static int need_color_reset_at_eol;
->>>
->>> +static void color_atom_parser(struct used_atom *atom, const char *color_value)
->>> +{
->>> +       if (!color_value)
->>> +               die(_("expected format: %%(color:<color>)"));
->>> +       if (color_parse(color_value, atom->u.color) < 0)
->>> +               die(_("invalid color value: %s"), atom->u.color);
->>
->> Shouldn't this be:
->>
->>     die(_("invalid color value: %s"), color_value);
->>
->> ?
->
-> Oops. You're right, it should.
-> Also the error is reported already in color_parse(...), so seems duplicated.
->
-> e.g.
->
-> git for-each-ref  --format="%(color:sfadf)%(align:middle,30)%(refname)%(end)"
-> error: invalid color value: sfadf
-> fatal: invalid color value: sfadf
->
-> What would be an ideal way around this?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Maybe it has already been discussed a lot and I missed the discussion,
-but if possible the argument, the parameter or the atom itself might
-just be ignored with a warning instead of dying when an atom argument,
-format or parameter is not recognized, because in the next Git
-versions we might want to add new arguments, formats and parameter and
-it would be sad if old versions of Git die when those new things are
-passed to them.
+--8323329-114684782-1454775055=:2964
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Kirill,
+
+On Sat, 6 Feb 2016, Kirill Likhodedov wrote:
+
+> > On 06 Feb 2016, at 17:21 , Johannes Schindelin <Johannes.Schindelin@gmx=
+=2Ede> wrote:
+> >=20
+> > This is expected behavior of the Bash you are using. The commands that =
+I
+> > think would reflect your intentions would be:
+> >=20
+> > =09git init brackets
+> > =09cd brackets
+> > =09echo 'asd' > 'bra[ckets].txt'
+> > =09git add 'bra[ckets].txt'
+> > =09git commit -m initial
+> > =09git show 'HEAD:bra[ckets].txt=E2=80=99
+>=20
+>=20
+> Nope. This command sequence doesn=E2=80=99t work for me: the same error i=
+s returned:
+>=20
+>     # git show 'HEAD:bra[ckets].txt'
+>     fatal: ambiguous argument 'HEAD:bra[ckets].txt': both revision and fi=
+lename
+
+Whoops. Sorry. I actually ran those commands now and it is true that it
+still does not work, which is funny. Especially since
+
+=09git show 'HEAD:bra[ckets].txt' --
+
+actually *does* work.
+
+Ciao,
+Johannes
+--8323329-114684782-1454775055=:2964--
