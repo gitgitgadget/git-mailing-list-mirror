@@ -1,116 +1,95 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: [RFC] On the --depth argument when fetching with submodules
-Date: Sat, 6 Feb 2016 08:41:38 +0100
-Message-ID: <20160206074138.GA30443@paksenarrion.iveqy.com>
-References: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
- <xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 03/25] transport-helper.c: do not send null option to
+ remote helper
+Date: Sat, 6 Feb 2016 16:38:15 +0700
+Message-ID: <CACsJy8Az9rx_D0V+p2fEdNi64YJb2g_o0npUk2=wqCL2_moBPQ@mail.gmail.com>
+References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
+ <1454576641-29615-4-git-send-email-pclouds@gmail.com> <xmqqh9hof4bx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 08:41:26 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 10:39:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRxUj-00086Y-TV
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 08:41:26 +0100
+	id 1aRzKu-0007fZ-SB
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 10:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbcBFHlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2016 02:41:22 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:33704 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750754AbcBFHlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 02:41:20 -0500
-Received: by mail-lf0-f50.google.com with SMTP id m1so71124296lfg.0
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 23:41:20 -0800 (PST)
+	id S1750867AbcBFJit convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Feb 2016 04:38:49 -0500
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:34675 "EHLO
+	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750804AbcBFJir convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Feb 2016 04:38:47 -0500
+Received: by mail-lf0-f68.google.com with SMTP id 78so3616109lfy.1
+        for <git@vger.kernel.org>; Sat, 06 Feb 2016 01:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=MzVZnQuKOLPnWhBLmAtB5tQhabdlKnXPfAemmeCcFa8=;
-        b=u61px7x024lYkJyhaA9oiZxbHqRKO5k2QSnff3+IKVz1+lJhibL+AD3xCMvEjQs8Ax
-         72wlLXSxRk/rjogZVSZk1kRZenWm8yoyaAFFvRO82V1QmhdXT9ZhVg64eAL4kZ+0Sbaz
-         in71eBfh+pal6k+LBEtzQ/AzOCWUuWckiDv/e6Y+GBCRgrlcRZN96yzAV6bRnCi1Eq+t
-         OXHAL4Vbu/3XAAW/uCiFSCdOaoEpeLrrSyKwKMcJr/nplw/UMGkOTp9EnIQE18xeRlXJ
-         SlRXrnboUNMS/sLXZPkmS6HzLouS1y85RQwCRSUqaJBNteDk7y9iNeZP/RaoOOgnNtqV
-         EcnA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=b1ZEceigp8rOmNMXO1QAdLlW9TNbux7WhfoMMk5Wptk=;
+        b=LUnA3tpwWGowKa0iUmEk5h6nSIexbKQqmaSUcVj/+i+iJAYg/AD4iLM4hLmKwrhCu9
+         99KpxkgzlQUV2SD6UTyuUQMbKLT5QnbcVEJkATPMs5+LH9Pika4eB3vKvTVgRAdzN4sF
+         WHp8+ZsIE6zzNEEhYvLPonWT5guHAD2ctyHj2vw4Soy3ASmVG2WqbcLUBSdjVTj71x15
+         gzaLI5TyYFtyjkH17n63LF6gQYu31sWOxgvT2Qb9IRIheqbgsq0Cemi5AhCkiemM3jDy
+         VhBK38VBjCxjmTXysLGUVM45/nB+vPSBzC9oQtghRZilhUNZzSpvWDGUvvJHn74C6c5a
+         pRyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=MzVZnQuKOLPnWhBLmAtB5tQhabdlKnXPfAemmeCcFa8=;
-        b=A2MGXFVRH7AhQuhNy7m2M49PoOiHnDGXhUD3I/+q2ognHQNMk7RT9fL9ABq7k5hW4G
-         QeHvVVrSR2PLjS3lTlBjUGBk8Dq4Dx9+Dc02qKZ7u7Rv1GcnUr/bXSLNi7CJdw46qpDV
-         IWQ9LRTOaOJlWWQsRDVel0+mNHJBxF6yB13tVJxG0KHjbg+cClV+SEeoOxPgjsBGZBlf
-         P+B9DvsBS24W9NV2zWZZI+nDc+odMRlwiDD+KZl0MhsssxLaxBYK7JaTHv+pGOeoL/An
-         AES9n0tj9mRKiXMYMWHuDkl8GDLNaarY+TuqKXsq8lH0yxTTTKgCovw0lA692ov0dl+H
-         CfIw==
-X-Gm-Message-State: AG10YOTCkO7Suovc175TXAA0Xz8/dwXsSLgffHx73fjqQCBaT/n8fmXIuz5eGjGskLIHWw==
-X-Received: by 10.25.39.134 with SMTP id n128mr8242730lfn.54.1454744479440;
-        Fri, 05 Feb 2016 23:41:19 -0800 (PST)
-Received: from debian (c83-249-17-125.bredband.comhem.se. [83.249.17.125])
-        by smtp.gmail.com with ESMTPSA id ax1sm2667265lbc.20.2016.02.05.23.41.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 23:41:18 -0800 (PST)
-Received: from iveqy by debian with local (Exim 4.84)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1aRxUw-0001l1-Lo; Sat, 06 Feb 2016 08:41:38 +0100
-Content-Disposition: inline
-In-Reply-To: <xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=b1ZEceigp8rOmNMXO1QAdLlW9TNbux7WhfoMMk5Wptk=;
+        b=dkOE2n6TopQjfjKV2rIOoh+TMJC50gLsCp/gosMPf8YRu0UeveOGrD1s9s+RcD9PlP
+         0hQQQ+WX834xaZRuzUBETsL8u7ulnqxEbWKwpfCVEWyccMUgZ4ZTTwRmgFBkm5coYB/x
+         6Ukw3YylesdtL7chfmDNov/T2xEawXcEGtVky49xHG+PFYAGSwzKk8WhJAB/flBo82cp
+         WIm48gXARlhBBeTf8lJ49MkiAFC6RVyAUui7He0GwE5SoI3PLMp235LuSQ6WfHO6ilxp
+         sR0kKgxFLXjamufcSwT5r3eJ85Cr+TuPRZ7T/VJRUewnmE+4orwQSN/jS59pdcZbv3q/
+         gTjw==
+X-Gm-Message-State: AG10YOQdmU1QMBO7k/sxG1ph7iqorkHOjq4JdQG1vZ9GJL/t6aWSfGs6fVJ5DAoXqAXveLsHgjBMf8wjHnWaXQ==
+X-Received: by 10.25.212.11 with SMTP id l11mr7745268lfg.118.1454751526056;
+ Sat, 06 Feb 2016 01:38:46 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Sat, 6 Feb 2016 01:38:15 -0800 (PST)
+In-Reply-To: <xmqqh9hof4bx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285685>
 
-On Fri, Feb 05, 2016 at 04:05:01PM -0800, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
-> 
-> > Currently when cloning a project, including submodules, the --depth argument
-> > is passed on recursively, i.e. when cloning with "--depth 2", both the
-> > superproject as well as the submodule will have a depth of 2.  It is not
-> > garantueed that the commits as specified by the superproject are included
-> > in these 2 commits of the submodule.
-> >
-> > Illustration:
-> > (superproject with depth 2, so A would have more parents, not shown)
-> >
-> > superproject/master: A <- B
-> >                     /      \
-> > submodule/master:  C <- D <- E <- F <- G
-> >
-> > (Current behavior is to fetch G and F)
-> 
+On Fri, Feb 5, 2016 at 6:22 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>
+> This is even more strange.  Are the current callers broken and some
+> sends value=3D=3DNULL for an option that is not is_bool, resulting in
+> a call to quote_c_style() with NULL?  I somehow find it hard to
+> believe as that would lead to an immediate segfault.
+>
+> Assuming that no current caller passes NULL to value when is_bool is
+> not in effect, there needs an explanation why future new callers may
+> need to do so.  An alternative for a valueless option could be to
+> send "option name\n" instead of the usual "option name value\n", but
+> without such an explanation, readers cannot tell why not sending
+> anything about "name", which is what this patch chooses to implement,
+> is a better idea.
 
-The --depth option to git submodule is something I've wondered for some
-time if it was correct to implement it or not. It's clearly not a
-complete feature yet and it has some weaknesses, the most obvious one
-stated above.
+The source is backfill_tags() which, in future, resets some transport
+options back to defaults. The current set_option() in there only deals
+with booleans or number (depth). But in future it resets deepen-since,
+which is a string.
 
-The reason for implementing --depth in submodules was for people having
-huge (or many) submodules, that they aren't interested in developing in,
-but need to download to  build their project. So they want to save time
-and bandwidth.
-
-My first thought was to implement depth from the sha1 the superproject
-refered sha1. However, when implementing this, git didn't support
-fetching a sha1 from a remote repository for security reasons (you
-should never be allowed to fetch a commit that is not reachable from a
-branch or tag).
-
-Waiting for this to be supported (an (expensive) check could be done if
-the sha1 asked for exists in any branch or tag), the --depth was added
-and it's a guessing game on how deep you should fetch.
--- 
-Fredrik Gustafsson
-
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
+I think the main reason is, we do not have a way to reset (or unset) a
+transport option. Should I keep this commit and explain about this, or
+have a new transport API to reset option?
+--=20
+Duy
