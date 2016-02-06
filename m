@@ -1,100 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv8 3/9] submodule-config: remove name_and_item_from_var
-Date: Fri, 5 Feb 2016 17:21:50 -0800
-Message-ID: <CAGZ79kaY7+vfTdtjT_Mty+pu75wX7dktaWoULoUOnzZC5QGDzw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv8 5/9] submodule-config: introduce
+ parse_generic_submodule_config
+Date: Fri, 5 Feb 2016 17:23:06 -0800
+Message-ID: <20160206012306.GD28749@google.com>
 References: <1454623776-3347-1-git-send-email-sbeller@google.com>
-	<1454623776-3347-4-git-send-email-sbeller@google.com>
-	<20160206004615.GB28749@google.com>
+ <1454623776-3347-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 02:21:57 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Feb 06 02:23:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRrZT-0004kf-1Q
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 02:21:55 +0100
+	id 1aRrak-0006VS-D4
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 02:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750867AbcBFBVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 20:21:51 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33414 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbcBFBVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 20:21:50 -0500
-Received: by mail-io0-f173.google.com with SMTP id f81so146492661iof.0
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 17:21:50 -0800 (PST)
+	id S1751132AbcBFBXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 20:23:10 -0500
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33719 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748AbcBFBXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 20:23:09 -0500
+Received: by mail-pa0-f53.google.com with SMTP id cy9so42714605pac.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 17:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=V9ubCPxcIs5b16X8V/KlKKJ5IbH0V2jo8UCmJu6UR/U=;
-        b=F7hXDrevs13eoxwzo+hXThZyyMDvUvABW4yigvuQmwxymk/pp5IzoYMval6qNMSm54
-         D8WesFRxgCYqZWA9oC4lcmYjyhGZMlI+n/PPufn9lFRQ9LzIt6FxJmDafdjvL2Ato9Va
-         LYeiePI+AhJ9eRMxwGaicJAaxC2kT430QH8Eq+HgGYXhlYUjaiuCHA48AEkT5bdLMzlZ
-         djyv5X3NrWVfOpmxWrIsGYnGMZY7LimPO8y4Ht2+UooyrbAb6lKvp7jxJhRET9/CBotx
-         ReoScpfuXLHg/y7l455tIQLb5QTMje+6daoP+GCdS8F01dbzm3cdsHB4z0kCu6sJ45iI
-         PI+w==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ClCftmChrx17NnnyGBB1cs2YNd2aKbwye5uG8/CDlhQ=;
+        b=ZVP59LvxQYb+DGehe2LqKPhKlQyhKoyeOgGEiYzpAKwWftvkPQnkwlbAfmFMZfSezl
+         mib8VoLspcmyM5G0P6S6jif8mma1Wo2c3GIqPl8QnCppJj39ZlF6dTxg6uNXe5Wqreic
+         TDChCsEOLAi0LvkevmugSsgpW9wstcSpOv7bT1DJZYCaomCSaTtJDNgfbW6poa+VrAgh
+         r7Ta9IxoGKX/35h89kf4VAXZouoYRcw4aU2eIciHmh8DAA2WH7sNX/ZwM487/8zNgh2f
+         WiaP9N/bf8h5PFiaDdO1zGCZx+hj+mHnFE8hiYJPQqmKRcumrbu5yx/CbCbsXHcW94h6
+         Kzfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=V9ubCPxcIs5b16X8V/KlKKJ5IbH0V2jo8UCmJu6UR/U=;
-        b=XbkYKhe4wX6pwD6Fx1OlYMGpor1dSfNYzMrBonWWCwgIpZwM0Oc2C6NG3P3jneRdoN
-         +RN2Nk+cABjhVpCT6KsAQEmFq+fb77xYyNFlcRSGdVy5APufHviy4TonvXLzyIhNGrRU
-         Ycnqzj/a9X4PvIAAEcBzmSlBUTwgeBWT7xALP1f7xCMGjIa9dA/Cq3rs1KRzCUJ/WVTz
-         xV18k+pQvkVsLofyc1RKT8abb02aSk8gFd77KqdVQkhBv+nENCeaNzTOx51sVeUBbjAd
-         as2YigCiPIHzycpmet6BpMWJb+vR4hluV8gwBAgJGSMHp3OZkf/vE569DBs0D5R+9jRn
-         qorQ==
-X-Gm-Message-State: AG10YOS9t7yv9x5r5wMED8hnN2cz2j0GKG8drUQSnpUjqsB6btOa1bpf3eDyVcAuRyDQaDo5c9G1stxvC3n1As//
-X-Received: by 10.107.137.100 with SMTP id l97mr20454353iod.110.1454721710150;
- Fri, 05 Feb 2016 17:21:50 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Fri, 5 Feb 2016 17:21:50 -0800 (PST)
-In-Reply-To: <20160206004615.GB28749@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=ClCftmChrx17NnnyGBB1cs2YNd2aKbwye5uG8/CDlhQ=;
+        b=hp4uFNLjGHARd6LBExkjkcbYxNiUPX2OAEp/qTqQ2r24+oV3mQRLYBzaj7fCtyJmEf
+         dSCxK4EFziBybFG94ps/2X4Bi+q9fK1vDj6bHlXxVtO1wvoe+cQfocA1/i8G3QN6+h9q
+         M5MZdj/RouDl1X63uwXFN4z1LnrsSZFCOGsyJALKdohxI9fhwqQVuHIyJY4i+TexESiu
+         14PveH/SJdsNz2142e5dYNA2//jpWg2/m7LPNbmxaQDpyBIbmvNBLXKWy6ZbKyclNtXj
+         7xG9egZ+ZKNcRTNf+4OujUVU6udBsmEvEsbjX0i+z/nwUg8SPP6pmphpNR16/BvvueXt
+         A3Wg==
+X-Gm-Message-State: AG10YOQmtgS+Ji8mVnSFkFcIk94Zh+mLHtXo5L01pWlgc+4Fsjqh+jjCPv2lJ6xXJhnd8A==
+X-Received: by 10.67.14.168 with SMTP id fh8mr24244951pad.11.1454721788715;
+        Fri, 05 Feb 2016 17:23:08 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:d5a0:f713:2934:4c2])
+        by smtp.gmail.com with ESMTPSA id ud8sm20174274pac.11.2016.02.05.17.23.07
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 05 Feb 2016 17:23:08 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1454623776-3347-6-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285663>
 
-On Fri, Feb 5, 2016 at 4:46 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Stefan Beller wrote:
->
->> --- a/submodule-config.c
->> +++ b/submodule-config.c
->> @@ -251,18 +235,19 @@ static int parse_config(const char *var, const char *value, void *data)
->>  {
->>       struct parse_config_parameter *me = data;
->>       struct submodule *submodule;
->> -     struct strbuf name = STRBUF_INIT, item = STRBUF_INIT;
->> -     int ret = 0;
->> +     int subsection_len, ret = 0;
->> +     const char *subsection, *key;
->>
->> -     /* this also ensures that we only parse submodule entries */
->> -     if (!name_and_item_from_var(var, &name, &item))
->> +     if (parse_config_key(var, "submodule", &subsection,
->> +                          &subsection_len, &key) < 0 || !subsection)
->>               return 0;
->>
->> +     subsection = xmemdupz(subsection, subsection_len);
->
-> This appears to be leaked.
+Hi,
 
-Good point, will fix.
+Stefan Beller wrote:
 
-Though the impact is negligible, as this code goes away the next
-patch and there is a free included.
+> This rewrites parse_config to distinguish between configs specific to
+> one submodule and configs which apply generically to all submodules.
+> We do not have generic submodule configs yet, but the next patch will
+> introduce "submodule.fetchJobs".
+
+Does this mean that options like submodule.fetchJobs can be specified
+in either .gitmodules or .git/config, like the submodule.<name>.*
+options?
+
+I would expect a good value for fetchJobs to be machine-specific.
+Would it work to put the submodule.fetchJobs handling in
+submodule.c::submodule_config alongside fetch.recurseModules instead?
 
 Thanks,
-Stefan
-
->
-> Thanks,
-> Jonathan
+Jonathan
