@@ -1,106 +1,110 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 06/12] ref-filter: introduce color_atom_parser()
-Date: Sat, 6 Feb 2016 20:50:49 +0530
-Message-ID: <CAOLa=ZRPbk+uOVhwKumE2eiKDWdkKqtG_mbrNmr4Rn1POdGNdw@mail.gmail.com>
+Subject: Re: [PATCH v4 08/12] ref-filter: introduce align_atom_parser()
+Date: Sat, 6 Feb 2016 20:56:35 +0530
+Message-ID: <CAOLa=ZRGFFE0QZXM8gsFCO7iGShq491DX_bnKj+nXg8Eq4WtgQ@mail.gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
- <1454262176-6594-7-git-send-email-Karthik.188@gmail.com> <CAPig+cTemTCwOUoyO9p+d544iDcxeYw0gh9DtEkL9hoHVLmuEQ@mail.gmail.com>
+ <1454262176-6594-9-git-send-email-Karthik.188@gmail.com> <CAPig+cQXK6xENN864XuxYFQEKtw59FAO7qh=wEGv4maomKpCzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 16:21:44 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 16:27:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aS4gB-0005u5-FN
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 16:21:43 +0100
+	id 1aS4lU-00050R-Fk
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 16:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbcBFPVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2016 10:21:20 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:33024 "EHLO
+	id S1751669AbcBFP1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Feb 2016 10:27:07 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:33843 "EHLO
 	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174AbcBFPVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 10:21:20 -0500
-Received: by mail-vk0-f67.google.com with SMTP id c3so1285578vkb.0
-        for <git@vger.kernel.org>; Sat, 06 Feb 2016 07:21:19 -0800 (PST)
+	with ESMTP id S1751174AbcBFP1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Feb 2016 10:27:05 -0500
+Received: by mail-vk0-f67.google.com with SMTP id e6so3341848vkh.1
+        for <git@vger.kernel.org>; Sat, 06 Feb 2016 07:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=0ywSl5XSnAKMFA2m+rtg/dYcN8pJNOnVDkPWxef+UC4=;
-        b=tEjJxjnMia7ozcnIYBLxROU2c5mWmBmXvz3k0tKA36L1gk2iqpFqlE1e/yXUQFu0vl
-         0cj3eKvPJtZYK7Kj90Wunzk9PNUJTMPTqesdGCjgz8AH4LU2xAq4r4451wCmUYAuw5wT
-         GdCblhbz5WLyStr78dCYPewxcwa4b96qTO8C44SIPpOgkss/W/3Il00XL2qk+NwWzbpn
-         gOXg+9vpHWhyI+zVgSN6X6/+YWv0zf85LEI2P2b5cPVIfgrMDU9bmHTyy54KHke1lEUg
-         QcI7qwAy3w3nB1k5/2L0GKcpDDSWFi0JOvBzJAipBsqrf5omNzp1hV21KUPcRtzfqaKe
-         RVLA==
+        bh=b0Xpx9lv5eimNXAaS0zPi2Fhc8K/JuCcfL5Cv0Do9aY=;
+        b=vQlHNnY+T6fl4Gzg5VpVr5NK6N4c1MqcWb7aSwBp1H2obPYdAiYG7LUyibWyn1QKWR
+         GaeKQyrUvnsvzuMBzvGdUy5kJf0JidU7VmHZEBb1jWaEMzT3C6dDNQG+Z28YyXkcDdfB
+         nlT3ZSTUrBZAaZAkzF9DydpHv+z+R2Xpci6F0N6gk7kRBZx/kiFrK73bywxh/pLrt5nB
+         rg4jGEUlWzBn7LOjOnF2ntaXQUO5WMmbZn4t1gALfKMBSLexlegO0MedzivIaI8F52U1
+         8wyDBsghZclt30e1v+Ke4Dof5k2eEAhHZTUVFi+I3L6JP9uNiVQUJ6ntfD5YLl+wOTpu
+         eheA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=0ywSl5XSnAKMFA2m+rtg/dYcN8pJNOnVDkPWxef+UC4=;
-        b=XXIUU5w7KvP55qQ5tKCWdbJMudGbqXON3jiwvxRJmi5BIFxVFailW/352Lqz596QW0
-         n16taUSxd4xtjD6//8Q45ZYn35w3ZV8vOaeK47tSkZmVaQEGb+4Eg8/NBG7F6X9yr16a
-         UU+dPAvLfA7P65URjd2vNUG13XH3RF+HNYQJoBNaMM76RuZvlYhyJfgQoNl0XtussxN0
-         Y2C/ba4SgzVxzYF1x+USnxqy5zb9elCqKtq6L/2HsZoFN0+Tq27ycGA+qDY8ifpfDGy1
-         NKjTkN56ydwsUAvEG2xFozXJLqs2OJSc8PyAw3xF24Vmrp+JeOhqgLxgkZdozWi8Sn8z
-         lOsw==
-X-Gm-Message-State: AG10YORgvKFNfpyHxZW37E2ld77sxwZyDOJy4X7BD0jBSCzi892Z1pZ+B8EXM6DIZa341r2VE2rXZL0aShxNcA==
-X-Received: by 10.31.159.136 with SMTP id i130mr13582844vke.144.1454772079221;
- Sat, 06 Feb 2016 07:21:19 -0800 (PST)
-Received: by 10.103.82.133 with HTTP; Sat, 6 Feb 2016 07:20:49 -0800 (PST)
-In-Reply-To: <CAPig+cTemTCwOUoyO9p+d544iDcxeYw0gh9DtEkL9hoHVLmuEQ@mail.gmail.com>
+        bh=b0Xpx9lv5eimNXAaS0zPi2Fhc8K/JuCcfL5Cv0Do9aY=;
+        b=dgk5c+KwIb3iEyRYMCk5Zcu9iGcHKw4vORVZeIucRkslW1Qjd/PbSrohdjaYnREkLa
+         iJ/LPWHDEBExOJp+UQJQLDONFLkZWF9gfmGwtWUlhaY2MgrnqM9MJEn2MkPyqZFfrcD5
+         aCWr9HMfoqPeESS7qtil+ug40PrwXmNuS9Nususf1xHwn1UPGOske2G8w6CP5IDgT5+h
+         1DPXpgZj3kuMSoY2wyhu7+PVdm2beMY6kb9KArtxoWjVFDPpiu8d5ExOLMCHVJmR1buf
+         BllfQqXbNz4UdghN1dTJ4zKM8rUfMw5aezoS4UZlV+lGLLzSgHnwG+uUug/90Mw9Dc0u
+         KOfw==
+X-Gm-Message-State: AG10YOQmgJVpe+YHTHHzpwjWItu2uwP6K3wEzXygWzDF16TN0lGSozxZpjDLJ4wGnayOTFdkPSNXSWgjLZf2Qg==
+X-Received: by 10.31.16.218 with SMTP id 87mr12567510vkq.106.1454772424741;
+ Sat, 06 Feb 2016 07:27:04 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Sat, 6 Feb 2016 07:26:35 -0800 (PST)
+In-Reply-To: <CAPig+cQXK6xENN864XuxYFQEKtw59FAO7qh=wEGv4maomKpCzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285696>
 
-On Fri, Feb 5, 2016 at 3:55 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Fri, Feb 5, 2016 at 5:18 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce color_atom_parser() which will parse a "color" atom and
->> store its color in the "used_atom" structure for further usage in
->> populate_value().
+>> Introduce align_atom_parser() which will parse an 'align' atom and
+>> store the required alignment position and width in the 'used_atom'
+>> structure for further usage in populate_value().
+>>
+>> Since this patch removes the last usage of match_atom_name(), remove
+>> the function from ref-filter.c.
 >>
 >> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 >> ---
 >> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -29,10 +29,21 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
->>  static struct used_atom {
->>         const char *name;
->>         cmp_type type;
->> +       union {
->> +               char color[COLOR_MAXLEN];
->> +       } u;
->>  } *used_atom;
->>  static int used_atom_cnt, need_tagged, need_symref;
->>  static int need_color_reset_at_eol;
->>
->> +static void color_atom_parser(struct used_atom *atom, const char *color_value)
+>> @@ -55,6 +61,37 @@ static align_type parse_align_position(const char *s)
+>> +static void align_atom_parser(struct used_atom *atom, const char *arg)
 >> +{
->> +       if (!color_value)
->> +               die(_("expected format: %%(color:<color>)"));
->> +       if (color_parse(color_value, atom->u.color) < 0)
->> +               die(_("invalid color value: %s"), atom->u.color);
+>> +       struct align *align = &atom->u.align;
+>> +       struct strbuf **s, **to_free;
+>> +       unsigned int width = ~0U;
+>> +
+>> +       if (!arg)
+>> +               die(_("expected format: %%(align:<width>,<position>)"));
+>> +       s = to_free = strbuf_split_str_omit_term(arg, ',', 0);
+>> +
+>> +       align->position = ALIGN_LEFT;
+>> +
+>> +       while (*s) {
+>> +               int position;
+>> +               arg = s[0]->buf;
 >
-> Shouldn't this be:
+> It's confusing to see 'arg' being re-used here for a different
+> purpose, and leads the reader to wonder if this is done because the
+> s[0]->buf might be needed outside the loop (when, in fact, it isn't).
+> It would be better to declare a new variable here in the scope of the
+> 'while' loop to hold this value.
 >
->     die(_("invalid color value: %s"), color_value);
+> (I might have named the result of the strbuf split 'tokens' or even
+> short-and-sweet 'v' -- for vector -- and then used 's' for the name of
+> the new variable here in the 'while' loop, but these name suggestions
+> aren't particularly important; it is important to declare a new
+> variable here -- whatever you name it -- rather than re-using 'arg'.)
 >
-> ?
 
-Oops. You're right, it should.
-Also the error is reported already in color_parse(...), so seems duplicated.
+You're right, that is indeed confusing, I should stop reusing variables
+and trying to micromanage.
 
-e.g.
-
-git for-each-ref  --format="%(color:sfadf)%(align:middle,30)%(refname)%(end)"
-error: invalid color value: sfadf
-fatal: invalid color value: sfadf
-
-What would be an ideal way around this?
+I also like the naming scheme you suggested, so will stick to that.
+Thanks.
 
 -- 
 Regards,
