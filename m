@@ -1,134 +1,148 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v6 11/11] diffcore-pickaxe: support case insensitive match on non-ascii
-Date: Sat,  6 Feb 2016 09:03:10 +0700
-Message-ID: <1454724190-14063-12-git-send-email-pclouds@gmail.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
- <1454724190-14063-1-git-send-email-pclouds@gmail.com>
+From: Britton Kerin <britton.kerin@gmail.com>
+Subject: strange behavior with nonexistant or partially populated ~/.config/git/gitk
+Date: Fri, 5 Feb 2016 18:16:59 -0900
+Message-ID: <CAC4O8c8qEjcLASu7JwNhyLX+h3uFSUiHAV2yqJhgE+N5-gC0Yw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 06 03:04:35 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 04:17:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRsEk-0004bx-It
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 03:04:34 +0100
+	id 1aRtNV-0003Hv-EV
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 04:17:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbcBFCEb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Feb 2016 21:04:31 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34413 "EHLO
-	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbcBFCEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 21:04:30 -0500
-Received: by mail-pf0-f178.google.com with SMTP id o185so77925916pfb.1
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 18:04:30 -0800 (PST)
+	id S1750815AbcBFDRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 22:17:02 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36973 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750754AbcBFDRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 22:17:00 -0500
+Received: by mail-wm0-f46.google.com with SMTP id g62so51058284wme.0
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 19:17:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=F+oFWcbXegoB1To+BxHC8KQgCw+Z1a0uo4FPSNJaZ50=;
-        b=NUcCBtJwFNtbAmfgjh0UHFHXjNApX89sZgkExPBjwYGJ6erYvkBPZxkPkWqJHLdASO
-         zZlRJ1HUDKn2f5PRnlIUOWJbwcVvA98RXRzPosaZGuI2TilKagjEvFbrtJfHtMDc+5+Y
-         W6Vvs6OtMCmMMJ6dzD1gCaTYmLAhIVzK3ksfHd93rVGL2giLW9V6hT+kNqKYLdXUAbtM
-         pH/ZGsB1I29S1+IUQqq6h2gl3up/ZdmYvCofBrga6zOLy/iOm3rihkenTEbIaz1O2kqH
-         /8hvAWQPq4jRNRX6gWX/D+O4e1bvFyRvjjFB1beNvON+wwE85KDvHWts2Vkq4htKb79T
-         HGsw==
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=gNs0ohO3fL+s3NHktgsL/0kYe4H1yHKkyiLTyVluZJM=;
+        b=by369OlPooJFB64qdnhBUMc9MYFeiBo263EftbVTpdcdd88oF8NteuGZR3qBTLyAr8
+         KkEdSdbetv4tWCWAlQ3FGMI3UTgXDhZNHyvyoqE4yIeOoVH1yG67cFai6wmvXPsk007n
+         bh2MUNj07UOaa23XK0Jd9IDbJ6mSF9am+BySRv3H/HM4fnGv2iqWmhRysZWkqRYtnUPz
+         cWxWu+SzR22QPTRZbWNaK6bGu93wvKQsLe2wopTmfdSC4XISxv0U9MOp79peDSLO3RFY
+         PGbWz4ZM4FKZqjszpXfvpLU6R0r2NR/Jy8dM//YVlA544PyziFsawsk3jMAfCd/IouE6
+         X8oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=F+oFWcbXegoB1To+BxHC8KQgCw+Z1a0uo4FPSNJaZ50=;
-        b=JX3AhO9QXvxet44w7uopyZ6d2Wg1Cac8ceRaj3yUb7Sq41p6IVzY/nvsnisRyc7gUE
-         jvbjpOTRkaZ8GqGGupOrLWhsrHAjit9sWNKJT+DWZnGMElKaXVYsuY0OxUSgbK9uvh+A
-         zMZ1zAPoSmbj3ecB7MoVZfbq3NGROiEHmSBPgvmii01hYGPgj+Kq79gI2RK/1aNOc28z
-         GLExDZIB8x5r+Wk8hji4RA85LLOJ/OnTIRcrAXXAy7N4bVV+xwCu4pAB35/UQakiSagN
-         P2Y2pYAtc1UPtg+RcWMQMDN2LwbACx9dqfPPIOiJB+ArwDmUd/ZbNrAU056ZfhUn5Egr
-         7Z8w==
-X-Gm-Message-State: AG10YOQUFjWlL11QPc/nm6605OHiObfG7otG7k+X+Rahd7hJQ768GfzPj1euRy1FuTn57w==
-X-Received: by 10.98.8.200 with SMTP id 69mr24886376pfi.39.1454724269906;
-        Fri, 05 Feb 2016 18:04:29 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id n84sm27219369pfa.45.2016.02.05.18.04.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Feb 2016 18:04:28 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 06 Feb 2016 09:04:44 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <1454724190-14063-1-git-send-email-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=gNs0ohO3fL+s3NHktgsL/0kYe4H1yHKkyiLTyVluZJM=;
+        b=G0NKgQrP/l/Y6PnVDIfbzyplJYpkhnJ+JRfQyjdo7IGAnIfYJACAoEGDprTt9lyrG4
+         0j/qDfgCgIdl5n60qgGIsZy1pEP0G9oz0qc/4WwX8xS/umkSdMDUYyKxhxcUcyWQkMDp
+         rx7M/mel+7enSlMvL9OWckAM7TheymFwzC88iByQ3ALVL3ViFOuj1+J9UZsMI7iZe5Ob
+         h34F8VnKtaRkZc9sUZd6hmKOxOWxbReDvsDeZVyKu9jFQnO0h/WpovWf11FTA4qsIYGz
+         j9my41207ro38dVxDGXa170l9gtMW3+TTs+5bRWBwC4VRapZnjkrpo53Qce/zEm7p0i1
+         5wGg==
+X-Gm-Message-State: AG10YOTU620bp+xLLQJzPCZt8oTFWE6OAWg/523Asn/76evIykGWXWifbJNGuc6XauimcVbvH5Jq/ZUmoXJKrQ==
+X-Received: by 10.194.19.164 with SMTP id g4mr16913291wje.120.1454728619154;
+ Fri, 05 Feb 2016 19:16:59 -0800 (PST)
+Received: by 10.194.178.161 with HTTP; Fri, 5 Feb 2016 19:16:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285677>
 
-Similar to the "grep -F -i" case, we can't use kws on icase search
-outside ascii range, so we quote the string and pass it to regcomp as
-a basic regexp and let regex engine deal with case sensitivity.
+If ~/.config/git/gitk doesn't exist, I get small fonts (fine) and ugly
+hard-to-read dark green branch labels.
 
-The new test is put in t7812 instead of t4209-log-pickaxe because
-lib-gettext.sh might cause problems elsewhere, probably.
+The fix for the dark green problem is here:
 
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- diffcore-pickaxe.c              | 11 +++++++++++
- t/t7812-grep-icase-non-ascii.sh |  7 +++++++
- 2 files changed, 18 insertions(+)
+     http://stackoverflow.com/questions/26025810/gtk-apps-show-green-too-dark
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 69c6567..0a5f877 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -7,6 +7,8 @@
- #include "diffcore.h"
- #include "xdiff-interface.h"
- #include "kwset.h"
-+#include "commit.h"
-+#include "quote.h"
-=20
- typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
- 			  struct diff_options *o,
-@@ -212,6 +214,15 @@ void diffcore_pickaxe(struct diff_options *o)
- 			cflags |=3D REG_ICASE;
- 		err =3D regcomp(&regex, needle, cflags);
- 		regexp =3D &regex;
-+	} else if (DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE) &&
-+		   has_non_ascii(needle)) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+		int cflags =3D REG_NEWLINE | REG_ICASE;
-+
-+		basic_regex_quote_buf(&sb, needle);
-+		err =3D regcomp(&regex, sb.buf, cflags);
-+		strbuf_release(&sb);
-+		regexp =3D &regex;
- 	} else {
- 		kws =3D kwsalloc(DIFF_OPT_TST(o, PICKAXE_IGNORE_CASE)
- 			       ? tolower_trans_tbl : NULL);
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
-scii.sh
-index 842b26a..4176625 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -61,4 +61,11 @@ test_expect_success REGEX_LOCALE 'grep string with r=
-egex, with -F' '
- 	test_cmp expect2 debug2
- '
-=20
-+test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
-+	git commit -m first &&
-+	git log --format=3D%f -i -S"TILRAUN: HALL=C3=93 HEIMUR!" >actual &&
-+	echo first >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
---=20
-2.7.0.377.g4cd97dd
+But after doing:
+
+      echo 'set headbgcolor lime' >~/.config/git/gitk ; gitk
+
+I end up with a much more extensive ~/.config/git/gitk that changes
+fonts, window geometry, etc. to be different than the defaults that
+you get if you don't have ~/.config/git/gik.  This is weird.
+
+It should work one of these ways:
+
+     1.  Any setting in ~/.config/git/gitk override the defaults, but
+the file is not required, and running gitk doesn't create it or change
+with it's contents.
+
+     2.  ~/.config/git/gitk is always created if it doesn't exist or
+isn't fully populated, and it gets the default values for anything not
+defined.
+
+The full ~/.config/git/gitk that gets created for me is below.  I
+don't know where the setting that get used if it doesn't exist come
+from.
+
+set mainfont {sans 9}
+set textfont {monospace 9}
+set uifont {sans 9 bold}
+set tabstop 8
+set findmergefiles 0
+set maxgraphpct 50
+set maxwidth 16
+set cmitmode patch
+set wrapcomment none
+set autoselect 1
+set autosellen 40
+set showneartags 1
+set maxrefs 20
+set visiblerefs {"master"}
+set hideremotes 0
+set showlocalchanges 1
+set datetimeformat {%Y-%m-%d %H:%M:%S}
+set limitdiffs 1
+set uicolor grey85
+set want_ttk 1
+set bgcolor white
+set fgcolor black
+set uifgcolor black
+set uifgdisabledcolor #999
+set colors {lime red blue magenta darkgrey brown orange}
+set diffcolors {red "#00a000" blue}
+set mergecolors {red blue lime purple brown "#009090" magenta
+"#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0"
+"#f0b070" "#ff70b0"}
+set markbgcolor #e0e0ff
+set diffcontext 3
+set selectbgcolor gray85
+set foundbgcolor yellow
+set currentsearchhitbgcolor orange
+set extdifftool meld
+set perfile_attrs 0
+set headbgcolor lime
+set headfgcolor black
+set headoutlinecolor black
+set remotebgcolor #ffddaa
+set tagbgcolor yellow
+set tagfgcolor black
+set tagoutlinecolor black
+set reflinecolor black
+set filesepbgcolor #aaaaaa
+set filesepfgcolor black
+set linehoverbgcolor #ffff80
+set linehoverfgcolor black
+set linehoveroutlinecolor black
+set mainheadcirclecolor yellow
+set workingfilescirclecolor red
+set indexcirclecolor lime
+set circlecolors {white blue gray blue blue}
+set linkfgcolor blue
+set circleoutlinecolor black
+set geometry(main) 1837x989+5+53
+set geometry(state) normal
+set geometry(topwidth) 1837
+set geometry(topheight) 300
+set geometry(pwsash0) "680 1"
+set geometry(pwsash1) "1020 1"
+set geometry(botwidth) 850
+set geometry(botheight) 684
+set permviews {}
