@@ -1,93 +1,77 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv8 3/9] submodule-config: remove name_and_item_from_var
-Date: Fri, 5 Feb 2016 16:46:15 -0800
-Message-ID: <20160206004615.GB28749@google.com>
+Subject: Re: [PATCHv8 4/9] submodule-config: slightly simplify
+ lookup_or_create_by_name
+Date: Fri, 5 Feb 2016 16:48:53 -0800
+Message-ID: <20160206004852.GC28749@google.com>
 References: <1454623776-3347-1-git-send-email-sbeller@google.com>
- <1454623776-3347-4-git-send-email-sbeller@google.com>
+ <1454623776-3347-5-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Feb 06 01:46:25 2016
+X-From: git-owner@vger.kernel.org Sat Feb 06 01:49:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aRr15-0005gV-JL
-	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 01:46:23 +0100
+	id 1aRr3b-0000nG-Lf
+	for gcvg-git-2@plane.gmane.org; Sat, 06 Feb 2016 01:49:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbcBFAqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Feb 2016 19:46:19 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34878 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbcBFAqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Feb 2016 19:46:18 -0500
-Received: by mail-pf0-f181.google.com with SMTP id c10so10772705pfc.2
-        for <git@vger.kernel.org>; Fri, 05 Feb 2016 16:46:18 -0800 (PST)
+	id S1750804AbcBFAs4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Feb 2016 19:48:56 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34833 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbcBFAsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Feb 2016 19:48:55 -0500
+Received: by mail-pf0-f177.google.com with SMTP id c10so10798406pfc.2
+        for <git@vger.kernel.org>; Fri, 05 Feb 2016 16:48:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=u6CDBN+TbEfpD/UwgaOGKZb3x7lvRwGg90VxlUlD1y4=;
-        b=ybgjNeHkDEzPUP9a/jXPtO3KTBwMVEwUamCl/iPGE463njFDkuNPpMyFWZvEC58iGT
-         7fObzyXDwHk2zlW2P/ONSaIpWoP+MoBuvpoeD1Q8jw11pmmGZtPESJmV1emdfQf2Hgfp
-         PpweBl35uCd5x/1eYBhhtGGAT67Rw7rR03qvFLH0IIwEj5R+vSpfTGiJt3RZfwsbG4fO
-         GFu+jP1wUF4HqiAnnJNoc6Zke7dzD0R00ePue7b4NaUcbIcn4c10OxgyIzchT9K2pznA
-         MmrxxFOBnZYV4Gh+25i2EGaHmWjYIBa0FkNpIWqwFmgHdWYllgcHFRa1gg/Z9qt58y61
-         pQzw==
+        bh=S273Rh55L/dfL9lQ2nv5SUc7Kmkpq5zAB/B4zWfrT7U=;
+        b=tMGlsoIKTzZrZLw5Kzq3gi7nYUPgdUaHGz7c8c8NfftZMejd1Kw27W5WfQnsYuSqVq
+         EFLXFMuUx4w20pnP5zDQy+mSnun5hjLRoYM6qxKlfasUc4LBC0eBTgu9NaDkgqgeXNmT
+         64UjfNRD0Ldz49hBkPrHfG/ryqmXHQXXIy6HVaieOiWMsUSZffNZmYRVvW2BxTVLbs+G
+         lfkhsbrhztmYelcfK9wP+PqL4N+iuzP4pZR3GRFpx72VsaK4+l6n/cCExjrmeys/8VSC
+         AumAlHG7h7sn2fhkJqXTieW350ftNv+D6GPp8kkqOHh2FiYUj6WUnFmtp9Jeooeej6i5
+         4feQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=u6CDBN+TbEfpD/UwgaOGKZb3x7lvRwGg90VxlUlD1y4=;
-        b=ZhnasoarreXPajwb4M/CclpjupcosExmzrHg8OIt37cLItjdtAKGNPteVJT1H3Q7H5
-         pAEWGsFl72nvfhlGYqZ4bh5intsjhthVYTwZNCflFdGkck4PeZ9XHXga+xLfjFiaBK7q
-         0UL9nxv0FxHQ4SwnHH3n1yCg8qneHkFz4YaNdrz4yKs+O+VTT2/gUYXbi8q0tJ/IrKK4
-         G5i9lIL5jbR4aITvlNpEJ46LZjItijAJ+xa5U1oSzrpsnrCzWTZJnr1DIEa0G6Tqezr0
-         lkRKq4d4ZGIZk+BD9QyZsTyL/mVwu3l6/b7mp8TbtiPiAyQ7ehkr/GXYdOTFjP84ky7v
-         3csw==
-X-Gm-Message-State: AG10YOTNqJdsVNqG4MSBfYX3MaUOg5AIfUL7PU/Ew8y/AuU+NPgX4W1GyoP/73qtXoKccg==
-X-Received: by 10.98.64.4 with SMTP id n4mr11207238pfa.58.1454719578424;
-        Fri, 05 Feb 2016 16:46:18 -0800 (PST)
+        bh=S273Rh55L/dfL9lQ2nv5SUc7Kmkpq5zAB/B4zWfrT7U=;
+        b=KTgpiIbhjRYOhhYWLiBzsEK/Lw119SdZmTe0DYP5hpvfDy6OWiX0aL4wHzQ18VNDjz
+         cUSo/Dx5G8WUtZ6CS+2Z1cCtitN/V9kvAQHU5Ym9JPFo+pkAUHR9O7dPqwNjhrwi8Iic
+         qgrPprMhDvdO5tKnl7AEH1IW+t1Y6Nb7dW8p8NEDSuPoP/JRPp9AhTQBQ1StcuRkVgHs
+         KqFvryaDuTLb6MmIzs7MI8iJXaNmH+sLyYNXcz/ByPAFFzCq7foB9efZPxpaxBMSIF3l
+         fdgPVcp0D+vmFORstTHiwALVAkl8o9KLkVLjIlvXCh+bmNPxKNvtTZvPyqVaM4ShIFMs
+         WQLg==
+X-Gm-Message-State: AG10YORv8TBzimC64esZjo2fjFSuox9v6TFRh2THhRNS+jujYbpo61zXf1t4BZVKBS3Cww==
+X-Received: by 10.98.66.81 with SMTP id p78mr24176324pfa.43.1454719735309;
+        Fri, 05 Feb 2016 16:48:55 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:d5a0:f713:2934:4c2])
-        by smtp.gmail.com with ESMTPSA id 1sm27077240pfm.10.2016.02.05.16.46.17
+        by smtp.gmail.com with ESMTPSA id 89sm27097637pfi.2.2016.02.05.16.48.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 05 Feb 2016 16:46:17 -0800 (PST)
+        Fri, 05 Feb 2016 16:48:54 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1454623776-3347-4-git-send-email-sbeller@google.com>
+In-Reply-To: <1454623776-3347-5-git-send-email-sbeller@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285659>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285660>
 
 Stefan Beller wrote:
 
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -251,18 +235,19 @@ static int parse_config(const char *var, const char *value, void *data)
->  {
->  	struct parse_config_parameter *me = data;
->  	struct submodule *submodule;
-> -	struct strbuf name = STRBUF_INIT, item = STRBUF_INIT;
-> -	int ret = 0;
-> +	int subsection_len, ret = 0;
-> +	const char *subsection, *key;
->  
-> -	/* this also ensures that we only parse submodule entries */
-> -	if (!name_and_item_from_var(var, &name, &item))
-> +	if (parse_config_key(var, "submodule", &subsection,
-> +			     &subsection_len, &key) < 0 || !subsection)
->  		return 0;
->  
-> +	subsection = xmemdupz(subsection, subsection_len);
+> No need for a strbuf, when all we use it for, is duplicating a string.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  submodule-config.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
 
-This appears to be leaked.
-
-Thanks,
-Jonathan
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
