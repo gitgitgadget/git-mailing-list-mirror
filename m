@@ -1,139 +1,149 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH v4 05/12] ref-filter: introduce parsing functions for each
  valid atom
-Date: Sun, 7 Feb 2016 14:31:59 +0530
-Message-ID: <CAOLa=ZTFVLxiP5PXszwmS3xueitQJd3FhJ968hf58yvWX=qmGA@mail.gmail.com>
+Date: Sun, 7 Feb 2016 14:33:36 +0530
+Message-ID: <CAOLa=ZTd2bvhwkCmySWB06ng5hmNH4aRBcgTC+J1xHRZPxwgxA@mail.gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
- <1454262176-6594-6-git-send-email-Karthik.188@gmail.com> <CAOLa=ZQxbCYd_bpf4PSpRVvejOgi=farNPtHgP_mZZypOf6cnQ@mail.gmail.com>
- <CAPig+cSt9Dub88ywP8mc8dPq6pXFvn4OTSJmEWbAiTeirRB7xA@mail.gmail.com>
+ <1454262176-6594-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRmfNjP8PYoQFZ7YrECgt03aE1=QynG58-+cd9ORJneZw@mail.gmail.com>
+ <CAOLa=ZT6aHxT6C5jc9x=YT+AaeTq7=WCcsWHjAYeg3pWF9sVVA@mail.gmail.com> <CAPig+cQo---uvFJeiR1FRO3hmyHFV+on6ajwcmrAeYU4uScu5Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 10:02:38 2016
+X-From: git-owner@vger.kernel.org Sun Feb 07 10:04:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSLEq-0007vv-Ff
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 10:02:36 +0100
+	id 1aSLGS-0001oN-L4
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 10:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328AbcBGJCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2016 04:02:31 -0500
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:33887 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751499AbcBGJC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2016 04:02:29 -0500
-Received: by mail-vk0-f49.google.com with SMTP id e185so79640821vkb.1
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 01:02:29 -0800 (PST)
+	id S1753075AbcBGJEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 04:04:11 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:34250 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751499AbcBGJEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 04:04:07 -0500
+Received: by mail-vk0-f48.google.com with SMTP id e185so79650664vkb.1
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 01:04:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Psw9BLIj2rsTrYUlXvQ/1Aysi0unHjaHhd2Fo9ypQsc=;
-        b=Z+huhKTgxoudrl274AthPA2NzvhU/+sdyn+ycdvoPBc8pgfhIamiutTtLV1mKurRXF
-         pKXrLI6lVO6BXugw7FJYAo6S3FINKnc3I9NQW5kggVfO4Ope2wNFmI3Q6vnAuYZ7zFNx
-         hLNE3P8d8cwflZytdZx+n9ItN+n57NsTjRTTfqKz+o6hZ8E/4x73yEHPUaXft1Nr9Ryi
-         y9EuHuP9W1rpWf38GcoKBkMz/plven9PlQfSBeWN9l9l0Xw9JXlNoXt+4RMbB8TJTcnY
-         ouXcm9Y/K6uWQojaWpBdAMXUdrle+QiNBSGYMJ0/QqG9/egWEs9gGrPJcpTqMqwDtspn
-         UvkA==
+        bh=Ru+RYTcNhtxxPXwkIczK3xKNAZy1f5MTaAVjHMjHysk=;
+        b=x41ICdEQR8tzuQQaZtahuT3Dugsm4cYZF5HRjhN5GqBzhkMOryz9YDHpd7HFHEjlU7
+         HxEvRSp9BkRZBfQlPWGWiBph23p6xFi3Hys/mgi7MV66jtAapBg6Iv8U/IVOF5kga6RV
+         Zvin+U8BrgG79eLaNCwOMeIr1AmeFHSPXimCXHaax4J3MeQssb9IO0+tMGVOxVMxC8XD
+         +7LIrW+bxRpSZLhitylzprXF3VSA73IrI7URbxagJ+aDASHgdNnVgO4MwIClIkAXeMyC
+         MTm3bvnR4LozXLmZ4SpIlUVMB68KsTD4tOHNonRzuYh6OXDOqVehNRNN+TPKMcd5Dbwx
+         wTZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=Psw9BLIj2rsTrYUlXvQ/1Aysi0unHjaHhd2Fo9ypQsc=;
-        b=Jj98IQWbY3oAY2ixOFBSicfhUaR9RJGb/WyDrgKTUAlVyZNTR/cpeS0Jgqwcv0T2OH
-         /JeG11xsIeGGF5Wy6rDHkVOVabc9JOlsLdLPFARmPslOlG6PJ6t0COHWl3kbs1BsA/gc
-         X0DKu+68bYiRanP00Jscwt4Q8PYC2P7pzaaPwsqixdzGkuaICk83XCVtyjETh6aLxR5q
-         r//D/7UQ7NqM/URUptpY68O1mmnBWBMi6FudREafyfCXdzQvcoPYlSuxg21qT5ZOcXaT
-         USK9eZDYvBJkFa14KrPIzmPCPIXPW1W3/8n8ZYpO+J/vmMeKq/suVbH0VzJoIdqeFNHP
-         Naxg==
-X-Gm-Message-State: AG10YOQmtKPLzVnNL4uXiNvX13kylJFbKCxOturSBJ7Jo21vg1etKCBslgBAeyNhK1xRl79vQX1nhfM9fMe18Q==
-X-Received: by 10.31.16.37 with SMTP id g37mr15165742vki.97.1454835748757;
- Sun, 07 Feb 2016 01:02:28 -0800 (PST)
-Received: by 10.103.82.133 with HTTP; Sun, 7 Feb 2016 01:01:59 -0800 (PST)
-In-Reply-To: <CAPig+cSt9Dub88ywP8mc8dPq6pXFvn4OTSJmEWbAiTeirRB7xA@mail.gmail.com>
+        bh=Ru+RYTcNhtxxPXwkIczK3xKNAZy1f5MTaAVjHMjHysk=;
+        b=QRXphJM7vmn5ZbY3H7p3E59kXM6jAgSzaX3NweNSZkTEbaR+YfrumUliTyUC6UgUvp
+         tcfZ1rtFfprchLEg9e1IfQKlwigTo9NaZCUFnnz/paJuOYy5Mk3UZHJNCFv5W0coND15
+         KLFle8pVPbk1AcDbcOmBQvFf6yiRjxURQS7NAHDWO1PFJI3gZwmInmu/3XaYjpRauzkD
+         nJO8YGUo1z41DZXb41pH/al+dtPAYWqDWfP3JOzV3viY1jVILs/jl83ZvAFmNkuzf7TD
+         LCEulJK+j3Z1oB8ecskEKrJrXb677Q5BAHri5P20604xzseVcQxckc7kQ2tae7fs+0F2
+         hJLg==
+X-Gm-Message-State: AG10YOTEVUzZ2JSI0xeRS9/Ibyx8mdIj9lcBQmD1H+KyQegEBpZ4D2pmxHnhC1aUlrB0Rwxg0VXOlfOoreyE8w==
+X-Received: by 10.31.16.218 with SMTP id 87mr14591119vkq.106.1454835845785;
+ Sun, 07 Feb 2016 01:04:05 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Sun, 7 Feb 2016 01:03:36 -0800 (PST)
+In-Reply-To: <CAPig+cQo---uvFJeiR1FRO3hmyHFV+on6ajwcmrAeYU4uScu5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285723>
 
-On Sun, Feb 7, 2016 at 12:03 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Feb 6, 2016 at 10:15 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> On Sun, Jan 31, 2016 at 11:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> @@ -138,10 +140,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
->>>                  * shouldn't be used for checking against the valid_atom
->>>                  * table.
->>>                  */
->>> -               const char *formatp = strchr(sp, ':');
->>> -               if (!formatp || ep < formatp)
->>> -                       formatp = ep;
->>> -               if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
->>> +               arg = memchr(sp, ':', ep - sp);
->>> +               if ((!arg || len == arg - sp) &&
->>> +                   !memcmp(valid_atom[i].name, sp, len))
->>>                         break;
->>>         }
+On Sun, Feb 7, 2016 at 12:33 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Feb 6, 2016 at 9:36 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Thu, Feb 4, 2016 at 3:49 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>>> -               const char *formatp = strchr(sp, ':');
+>>>> -               if (!formatp || ep < formatp)
+>>>> -                       formatp = ep;
+>>>> -               if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
+>>>> +               arg = memchr(sp, ':', ep - sp);
+>>>
+>>> Why this change from strchr() to memchr()? I understand that you're
+>>> taking advantage of the fact that you know the extent of the string
+>>> via 'sp' and 'ep', however, was the original strchr() doing extra
+>>> work? Even if this change is desirable, it seems somewhat unrelated to
+>>> the overall purpose of this patch, thus might deserves its own.
+>>>
+>>> Aside from that, although the "expensive" strchr() / memchr() resides
+>>> within the loop, it will always return the same value since it doesn't
+>>> depend upon any condition local to the loop. This implies that it
+>>> ought to be hoisted out of the loop. (This problem is not new to this
+>>> patch; it's already present in the existing code.)
 >>
->> Also having a look at this, this breaks the previous error checking we
->> had at parse_ref_filter_atom().
->> e.g: git for-each-ref --format="%(refnameboo)" would not throw an error.
+>> I'm thinking I'll make a patch for that separately. i.e remove strchr()
+>> and introduce memchr() outside the loop.
+>
+> I'd almost suggest making it two patches: (1) change strchr() to
+> memchr(), and (2) hoist it outside the loop. However, it would be nice
+> to see this series land with v5, and adding more refactoring patches
+> could delay its landing if problems are found with those new patches.
+> Consequently, it might make sense to forego any additional refactoring
+> for now and just keep the patch as is, except for fixing the
+> relatively minor issues (and bug or two) raised in the v4 review. If
+> you take that approach, then hoisting memchr() out of the loop can be
+> done as a follow-up patch after this series lands.
+>
+
+That makes sense too, I'll keep it the way it is in v4 and send a patch
+post this series. Thanks
+
+>>>> +               if ((!arg || len == arg - sp) &&
+>>>> +                   !memcmp(valid_atom[i].name, sp, len))
+>>>>                         break;
+>>>>         }
+>>>>
+>>>> @@ -154,6 +155,10 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>>>>         REALLOC_ARRAY(used_atom, used_atom_cnt);
+>>>>         used_atom[at].name = xmemdupz(atom, ep - atom);
+>>>>         used_atom[at].type = valid_atom[i].cmp_type;
+>>>> +       if (arg)
+>>>> +               arg = used_atom[at].name + (arg - atom) + 1;
+>>>
+>>> This is a harder to understand than it ought to be because it's
+>>> difficult to tell at first glance that you don't actually care about
+>>> 'arg' in relation to the original incoming string, but instead use it
+>>> only to compute an offset into the string which is ultimately stored
+>>> in the newly allocated used_atom[]. Re-using 'arg' for a different
+>>> purpose (in a manner of speaking) confuses the issue further.
+>>>
+>>> The intention might be easier to follow if you made it clear that you
+>>> were interested in the *offset* of the argument in the string, rather
+>>> than a pointer into the incoming string which you ultimately don't
+>>> use. A variable named 'arg_offset' might go a long way toward
+>>> clarifying this intention.
 >>
->> I think the code needs to be changed to:
+>> I hope you mean something like this.
 >>
->> -               if ((!arg || len == arg - sp) &&
->> +               if ((arg || len == ep - sp) &&
->> +                   (!arg || len == arg - sp) &&
+>> if (arg) {
+>>     int arg_offset;
+>>
+>>     arg_offset = (arg - atom) + 1;
+>>     arg = used_atom[at].name + arg_offset;
+>> }
 >
-> For completeness, for people reading the mailing list archive, a
-> couple alternate fixes were presented elsewhere[1], with a personal
-> bias toward:
->
->     arg = memchr(...);
->     if (!arg)
->         arg = ep;
->     if (len == arg - sp && !memcmp(...))
->         ...
->
-> [1]: http://git.661346.n2.nabble.com/PATCH-ref-filter-c-don-t-stomp-on-memory-tp7647432p7647433.html
+> That's one way, but I was actually thinking about computing arg_offset
+> earlier in the "is it a valid atom?" loop, which would make it clear
+> that you care only about the offset at that point, rather than the
+> pointer to the ':' in the original string (since that pointer is never
+> itself used other than to compute the offset). However, having tried
+> it myself, the code ends up being nosier, thus not necessarily a win,
+> so maybe just leave this as is for now.
 
-There is a slight issue with this solution though, as you see 'arg'
-gets modified
-here, hence 'arg' passed to parser functions will never will null.
+True, letting it be seems to make sense.
 
-We could do something like
-if (arg ==ep)
-    arg = NULL;
-if (arg)
-    arg = used_atom[at].name + (arg - atom) + 1;
-if (valid_atom[i].parser)
-    valid_atom[i].parser(&used_atom[at], arg);
-
-Else we could avoid this assignment and re-assignment by letting 'arg'
-hold the value it gets from memcmp(...) and use the solution provided
-by me or Ramsay (preferably)
-
-Ramsay's solution being
-
- ref-filter.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index d48e2a3..c98065e 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -260,7 +260,8 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
-                 * table.
-                 */
-                arg = memchr(sp, ':', ep - sp);
--               if ((!arg || len == arg - sp) &&
-+               if ((( arg && len == arg - sp)  ||
-+                    (!arg && len == ep - sp )) &&
-                    !memcmp(valid_atom[i].name, sp, len))
-                        break;
-        }
+Thanks.
 
 -- 
 Regards,
