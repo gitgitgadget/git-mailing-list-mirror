@@ -1,156 +1,100 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 11/12] ref-filter: introduce contents_atom_parser()
-Date: Sun, 7 Feb 2016 10:28:11 +0530
-Message-ID: <CAOLa=ZQksDyyiukDZVZFX6113nOr=V_yCaBswtm5xDrLe5vrig@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 05/12] ref-filter: introduce parsing functions for each
+ valid atom
+Date: Sun, 7 Feb 2016 01:33:50 -0500
+Message-ID: <CAPig+cSt9Dub88ywP8mc8dPq6pXFvn4OTSJmEWbAiTeirRB7xA@mail.gmail.com>
 References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
- <1454262176-6594-12-git-send-email-Karthik.188@gmail.com> <CAPig+cQ+jsAdJSB6J_P8h+zDbiGpr4JGv=Vj1vEMSLdHERi0pw@mail.gmail.com>
+	<1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
+	<CAOLa=ZQxbCYd_bpf4PSpRVvejOgi=farNPtHgP_mZZypOf6cnQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 05:59:26 2016
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 07:34:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSHRS-0000UP-UZ
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 05:59:23 +0100
+	id 1aSIvX-00029q-S6
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 07:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211AbcBGE6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Feb 2016 23:58:43 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:34502 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752199AbcBGE6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Feb 2016 23:58:41 -0500
-Received: by mail-vk0-f65.google.com with SMTP id e6so3646337vkh.1
-        for <git@vger.kernel.org>; Sat, 06 Feb 2016 20:58:41 -0800 (PST)
+	id S1751053AbcBGGdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 01:33:52 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:35804 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbcBGGdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 01:33:51 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e185so3667313vkb.2
+        for <git@vger.kernel.org>; Sat, 06 Feb 2016 22:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Eba6pZ5bBi7E42kHnX8T7dCNmiBZELWysDxhzQ1xQuM=;
-        b=k94bMuJ2b+U0iCwmbfqIHgUlYuwTPCDYlGURunChOoV8wGRe5gAJsL5onp2o70WbIJ
-         jtcFbj1QcZzv74XTShgMOnUZQqZbTmA+0P7szr1qRY0MKjaWVTk/KvzlEcv5joe/pwJI
-         7w4Bij0tHCUbFHesHx8TMMCsRnpN/VBnqKm3GJkdCwxr0YeEYxXpt3h2hzCQgtod8AGx
-         1KghSsJKq4Ah3NbmEhZJIhxY63DOs/BLzGjbxQhaTxDOBWlTMisgZQqKXkJFInr2TT81
-         hEiWb9qcbeI15Dy7G2NwLqw81meJeIb1x+Mo9mR6BY7hMS8jNLd5Yz7kyCp1UnKh7TMC
-         OX7w==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=wpftd0lcG8M8VEelrxJ9NmKTEhvVfnWxZAHyfN2be/c=;
+        b=iFEcycU51JlOWJfmgaRaZZZngBX9bynk9F5gLe0oy2tZLh3NnRzMXJh1cTdbp3BlNV
+         x/J8mA/FyXeuAD16LKxZvPk0L2p6QnFPQ0Hjx9YLi6yr71co40G3duMExaJknjGFU8Gz
+         Suvi0a9+2gddC9rXbV8ZqMY5sJ90o7XeV7a4DCN+xT/P/+0B/ltxNUJY1zNCf+XE309b
+         AwM125RjjFs6+vKvWY2lWb5oTexDF+goK30HWUS9MgvAng+IIPHVInK0xmVsjojatfgJ
+         huLdH5jfG1KxNsypxulEA4TkasVpzE0hRz1Dlse/lSYq3m40JhcdwGOwB74ZGMLvfRu7
+         u15w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=Eba6pZ5bBi7E42kHnX8T7dCNmiBZELWysDxhzQ1xQuM=;
-        b=TTciGYxWYZhCX2QO5dNdzggr+agn5AjQDwfgChsUKo+mKk2uoVlzQjBKrCGNnV0qYP
-         LpQP6XKrBzCcJcIGVIct8WTDyntdyPffx1lpc07ABH4kXaNlrViHVIlBE0kvY/273Fu/
-         A8pHuCyxsSFYj0fP6UZaIcwZlkhjDZY3Jfus0dw5D4C4bWOLu8PjBVGz9aCehTua+hrx
-         Tvu3F75AEB8UKbLHENanwG3xRe/BOFbUU5Qw20gmqaF+fsyb0On1/nsI5yMQ62IgveF5
-         gbBo5DlhlFmltYWr8FAodS/xmdlq6RAUB6cx7ltBX/0EjLjvERKod48ZOhJyNfLtKSkG
-         NmdA==
-X-Gm-Message-State: AG10YOQb2gN+OhbH9a4+JEetxQRGj/NtCrgePA1kNU/1VEcQbt27YvOPQtF5ILR3wbiAz00JfCN45eiskJJ3gQ==
-X-Received: by 10.31.16.218 with SMTP id 87mr14187982vkq.106.1454821121130;
- Sat, 06 Feb 2016 20:58:41 -0800 (PST)
-Received: by 10.103.82.133 with HTTP; Sat, 6 Feb 2016 20:58:11 -0800 (PST)
-In-Reply-To: <CAPig+cQ+jsAdJSB6J_P8h+zDbiGpr4JGv=Vj1vEMSLdHERi0pw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=wpftd0lcG8M8VEelrxJ9NmKTEhvVfnWxZAHyfN2be/c=;
+        b=SGY8V12Z3bb3Xf4oy9EQbqzLB2PaIW0XbAKRuFske1pTvJTrzrb4Z6Np4FDgFBRIyJ
+         +IgYnCh3uR6ns9CVDr8QaLI/RI0TbJZG1gPhXg/Ksr0BE5lTHT1uhiRsXZ21AgKqxXgu
+         1QpaFXWOciKqgzLsOEyDfXlgruIospl6ZmZ0OXBbJGNFs9EN3h+T1VqgPU4PWzOmVNjn
+         gskTU0EDb9AS0+eC+oMlB5SraRUZW6DCpDkpATDdxK6+hl6EFGZjC9O+RSQrK5+Sm/um
+         auT35745novLTqRCC6Fby+0hsRmRwQIggGeAwqouGVBRDmmefaRt0GoOWs3gk3kqUB/X
+         pDew==
+X-Gm-Message-State: AG10YOTebF/m/sgf74M8gfjnu0RU5s/82fZ+vaOYyC5WVQddMU9NS41RfrIA3rxXgMFMTwQ8kuS4TKauL9Seww==
+X-Received: by 10.31.164.78 with SMTP id n75mr15615005vke.14.1454826830770;
+ Sat, 06 Feb 2016 22:33:50 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 6 Feb 2016 22:33:50 -0800 (PST)
+In-Reply-To: <CAOLa=ZQxbCYd_bpf4PSpRVvejOgi=farNPtHgP_mZZypOf6cnQ@mail.gmail.com>
+X-Google-Sender-Auth: WL1b-pAcQSA-ImpF6l-RSUJ5zlA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285713>
 
-On Fri, Feb 5, 2016 at 5:52 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Jan 31, 2016 at 12:42 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce contents_atom_parser() which will parse the '%(contents)'
->> atom and store information into the 'used_atom' structure based on the
->> modifiers used along with the atom. Also introduce body_atom_parser()
->> and subject_atom_parser() for parsing atoms '%(body)' and '%(subject)'
->> respectively.
+On Sat, Feb 6, 2016 at 10:15 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Sun, Jan 31, 2016 at 11:12 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> @@ -138,10 +140,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+>>                  * shouldn't be used for checking against the valid_atom
+>>                  * table.
+>>                  */
+>> -               const char *formatp = strchr(sp, ':');
+>> -               if (!formatp || ep < formatp)
+>> -                       formatp = ep;
+>> -               if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
+>> +               arg = memchr(sp, ':', ep - sp);
+>> +               if ((!arg || len == arg - sp) &&
+>> +                   !memcmp(valid_atom[i].name, sp, len))
+>>                         break;
+>>         }
 >
-> These latter two parsers are conceptually distinct from introduction
-> of the %(contents) parser, thus could be done in a follow-on patch or
-> two (though I don't care strongly enough to insist upon it).
+> Also having a look at this, this breaks the previous error checking we
+> had at parse_ref_filter_atom().
+> e.g: git for-each-ref --format="%(refnameboo)" would not throw an error.
 >
+> I think the code needs to be changed to:
+>
+> -               if ((!arg || len == arg - sp) &&
+> +               if ((arg || len == ep - sp) &&
+> +                   (!arg || len == arg - sp) &&
 
-I think they go together, considering they use the same contents structure in
-used_atom, Introducing separate patches would leave us in a grey area where
-%(contents:...) uses used_atom->contents whereas body and subject don't.
-So I'd prefer them being together.
+For completeness, for people reading the mailing list archive, a
+couple alternate fixes were presented elsewhere[1], with a personal
+bias toward:
 
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -66,6 +70,38 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
->> +static void body_atom_parser(struct used_atom *atom, const char *arg)
->> +{
->> +       if (arg)
->> +               die("%%(body) atom does not take arguments");
->
-> None of the other error messages bothers saying "atom" literally
-> following a %(foo). For consistency, this likely should say merely:
->
->     %(body) does not take arguments
->
+    arg = memchr(...);
+    if (!arg)
+        arg = ep;
+    if (len == arg - sp && !memcmp(...))
+        ...
 
-Will change.
-
->> +       atom->u.contents.option = C_BODY_DEP;
->> +}
->> +
->> +static void subject_atom_parser(struct used_atom *atom, const char *arg)
->> +{
->> +       if (arg)
->> +               die("%%(subject) atom does not take arguments");
->
-> Ditto.
->
-
-Will change.
-
->> +       atom->u.contents.option = C_SUB;
->> +}
->> @@ -733,19 +763,15 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->>
->>         for (i = 0; i < used_atom_cnt; i++) {
->>                 const char *name = used_atom[i].name;
->> +               struct used_atom *atom = &used_atom[i];
->
-> Not a big deal, but if you re-order these two lines, then the second,
-> which extracts name, could do so from the variable declared by the
-> first:
->
->     struct used_atom *atom = &used_atom[i];
->     const char *name = atom->name;
->
-
-Seems good, will incorporate.
-
->>                 struct atom_value *v = &val[i];
->> -               const char *valp = NULL;
->>                 if (!!deref != (*name == '*'))
->>                         continue;
->>                 if (deref)
->>                         name++;
->>                 if (strcmp(name, "subject") &&
->>                     strcmp(name, "body") &&
->> -                   strcmp(name, "contents") &&
->> -                   strcmp(name, "contents:subject") &&
->> -                   strcmp(name, "contents:body") &&
->> -                   strcmp(name, "contents:signature") &&
->> -                   !starts_with(name, "contents:lines="))
->> +                   !starts_with(name, "contents"))
->>                         continue;
->
-> This changes behavior in that it will also now match
-> "contentsanything", whereas the original was much more strict. Is that
-> desirable? (Genuine question.)
->
-
-Well, we wont have something like that come through because
-parse_ref_filter_atom()
-would throw an error for %(contentsanything), but if in the future
-sometime if we
-introduce an atom %(contentsfoo) this might end up being a problem.
-
--- 
-Regards,
-Karthik Nayak
+[1]: http://git.661346.n2.nabble.com/PATCH-ref-filter-c-don-t-stomp-on-memory-tp7647432p7647433.html
