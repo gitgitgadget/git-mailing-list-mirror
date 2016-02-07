@@ -1,100 +1,99 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 05/12] ref-filter: introduce parsing functions for each
- valid atom
-Date: Sun, 7 Feb 2016 04:12:16 -0500
-Message-ID: <CAPig+cSvjd6hX3B1SEXW176Nr3Hz9wSLfkNubA6O6d47zbYSEg@mail.gmail.com>
-References: <1454262176-6594-1-git-send-email-Karthik.188@gmail.com>
-	<1454262176-6594-6-git-send-email-Karthik.188@gmail.com>
-	<CAOLa=ZQxbCYd_bpf4PSpRVvejOgi=farNPtHgP_mZZypOf6cnQ@mail.gmail.com>
-	<CAPig+cSt9Dub88ywP8mc8dPq6pXFvn4OTSJmEWbAiTeirRB7xA@mail.gmail.com>
-	<CAOLa=ZTFVLxiP5PXszwmS3xueitQJd3FhJ968hf58yvWX=qmGA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] setup.c: make check_filename() return 0 on
+ ENAMETOOLONG
+Date: Sun, 7 Feb 2016 13:23:49 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602071317330.2964@virtualbox>
+References: <CA+4vN7w2=JWusWDhhGNzAkJbE-s44G4WoXdvf26yzvtYfpktfQ@mail.gmail.com> <1454800992-15953-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 10:12:29 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-1586373786-1454847484=:2964"
+Cc: git@vger.kernel.org, ole@tange.dk
+To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 13:24:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSLOP-0004nq-3Q
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 10:12:29 +0100
+	id 1aSOOA-00053p-Ih
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 13:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753551AbcBGJMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2016 04:12:23 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:36257 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbcBGJMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2016 04:12:17 -0500
-Received: by mail-vk0-f68.google.com with SMTP id k196so760123vka.3
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 01:12:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=YqK4qtl2d+6EvR37+szzNvON0GI24PU9O4mGOCwbbxo=;
-        b=tQqvJr/y5oMb7tnEYHik6otHLTbfiS7VwLifTxyfEWSCC6xLQB2eZ2MvnC1LKDj1fY
-         NNMbgfzcqs6OgtPZjf5OUr8qbDpAFo2fLzJ1xfDJXVzMRMVPFt49xMwacNeBVesBkf9X
-         8P1TlebsLUONJqyT+42mkKp85jDe+blTesBUsqUiYpnC1ksI/q1FntRdaMpGEP6o4NdT
-         1Vrrhu3Rv0OxV0rsKkfQq+/26vSNsE6q/1v7wl3FM9Tfra7fb3MqjKboVYB6gmm2PQty
-         /NgHb2+gE0j2aN31IFDvFySg74xAWUpIN64j0c3ipT7puqQsF2IhJImN13OQXUP02x2M
-         0LvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=YqK4qtl2d+6EvR37+szzNvON0GI24PU9O4mGOCwbbxo=;
-        b=S9meiy9iIQk2Hi/v+GT9v6tr18xz/SJOCIEsptp5BD0I1oiiBdmW6vqV23RJFiltM0
-         DdL2vggviVMy4hRHoK3amU4MS+64vFzINGNUvggrvWOcsfA4e6/yU6pr9B9VQd+SY4lp
-         D//GWzwbjCNp8cG21fkZFHGwBoCN5xkCaCU+UV5byfBa0g862eL0Iy2Be4Ta58CzkPT0
-         A4DxmOvGrUj74sa66EMn0nUVKipEgKAZtyv4OU7OgHBkcmOcCsF8r/bXD5PSJDzrgMos
-         NRJkLobkPHnoe7TLbJPyD3gGiQ1RLS8UxtY8RRwmo/5CXVvCrepYO88ZYylzMb54rrXr
-         GxSw==
-X-Gm-Message-State: AG10YOSlv/vSVXJlPUGpTr0T4rJIJF2bu8r7FLc3sanKizV21yNpl0H9VQaQExjw8fDyHqt/HHdWOQAgE3PRiA==
-X-Received: by 10.31.164.78 with SMTP id n75mr15918905vke.14.1454836336445;
- Sun, 07 Feb 2016 01:12:16 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 7 Feb 2016 01:12:16 -0800 (PST)
-In-Reply-To: <CAOLa=ZTFVLxiP5PXszwmS3xueitQJd3FhJ968hf58yvWX=qmGA@mail.gmail.com>
-X-Google-Sender-Auth: XcistL9x8pUWTiPSYmspPuE9n2c
+	id S1753453AbcBGMX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 07:23:56 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63959 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753257AbcBGMXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 07:23:55 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MOwY7-1aM2iW1v9D-006KaP; Sun, 07 Feb 2016 13:23:51
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1454800992-15953-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Content-ID: <alpine.DEB.2.20.1602071318200.2964@virtualbox>
+X-Provags-ID: V03:K0:4jSRxoYfWnXu5EWYX247xuGhDNTvSqYbnUY0cVTS/m7RECOlU1p
+ vN24VU5FTi+2SmN3O2QXozbsm4QB/VcYTQ8BXdokha1frDiKr2LnA2oSaaEd9VBxktWySfC
+ lOaO1LO79AHE/Px0RY8BzjIuKF3J8dmLCmHfB2VnczmI012xx/eDZ3G3LfvAGsHzojC1SJ8
+ hBIqylWor7lE48FMbLY3A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lT/P8JHANrA=:aItevb+LkgJAomdNU5PhFO
+ 0cbUDoy81z/7CKYSC5R3mJWH/D6OuqpxX9YB+6nLiKZ28q2IVnMlfsGVbH8REpf0IIRhPZmOt
+ wSMMe/IkHD6oALavXCA7OBeUKl1QV0vteB2rC/ho11Ai9kCNj2DFhwvgTsg+s5pX7QWF3wZFr
+ toB0Fh9fVAVNpcRQrqHsUvfttVGay4gjDgQP4C/zzjZngshVHXP8HSyWPBSHp8vewlgvRwqo9
+ jFGYkE6b6w8m3yW4lH6kwSBeeWTpi0T270xZQzvU7oyj/HV1t2kIzbQ8v1h+mww+ma0f20v/u
+ X4APofM6JgKF0CEpD8fHDmBtPDyUwI/c3qmvdRHiqt7b1A+ZXEuPdnlDIQM8Xb03SZU4zcsbu
+ fKrHOmbbBIF7l426aAJaYkZWxpRdwOyYVMXLEyhiwTvOFzyOBheMixlPftHzHtyRx+u/1oXHt
+ mv+jq8hawnxdG7YNJD4O9b8tkW/H9XhTr9yGNCKR0wM+PZDlkyMjSdOUEEd0ne9Zuf8qP1PsO
+ PEPrA3ARmiaqUeXhWFXnUhqmfkZe6M9ghIXtw0RnwnGN+YrWB3WaT4YKSxerbNQcBxyuS3LS1
+ pYlwIIBumZGKH2VRLvR80bR2glzcWt5e6elkmANWHH6d8uwPGO38ItlAdKueYrH0w1vYr3IC3
+ 1mThvV3NswKRJx8iunYthTcMwXtHCP55HR8k3RsqrwFjRP4rS+FRrMTUhQtcVa8wpW7YYfSyM
+ j91OEO8tosC/I37jT3s6VtfSrdjry/nYk7bA5QlaBf0BLMy35BEWlkkIPfWMGctrZSdGTg2p 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285726>
 
-On Sun, Feb 7, 2016 at 4:01 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Sun, Feb 7, 2016 at 12:03 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sat, Feb 6, 2016 at 10:15 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> I think the code needs to be changed to:
->>>
->>> -               if ((!arg || len == arg - sp) &&
->>> +               if ((arg || len == ep - sp) &&
->>> +                   (!arg || len == arg - sp) &&
->>
->> For completeness, for people reading the mailing list archive, a
->> couple alternate fixes were presented elsewhere[1], with a personal
->> bias toward:
->>
->>     arg = memchr(...);
->>     if (!arg)
->>         arg = ep;
->
-> There is a slight issue with this solution though, as you see 'arg'
-> gets modified
-> here, hence 'arg' passed to parser functions will never will null.
-> [...]
-> Else we could avoid this assignment and re-assignment by letting 'arg'
-> hold the value it gets from memcmp(...) and use the solution provided
-> by me or Ramsay (preferably)
->
-> Ramsay's solution being
->
->                 arg = memchr(sp, ':', ep - sp);
-> -               if ((!arg || len == arg - sp) &&
-> +               if ((( arg && len == arg - sp)  ||
-> +                    (!arg && len == ep - sp )) &&
->                     !memcmp(valid_atom[i].name, sp, len))
->                         break;
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yep, Ramsey's fix is preferable.
+--8323329-1586373786-1454847484=:2964
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.20.1602071318201.2964@virtualbox>
+
+Hi Duy,
+
+On Sun, 7 Feb 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> Noticed-by: Ole Tange <ole@tange.dk>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  On Sun, Feb 7, 2016 at 4:56 AM, Ole Tange <ole@tange.dk> wrote:
+>  > If file name too long it should just try to see if it is a reference
+>  > to a revision.
+>=20
+>  Looks easy enough to fix.
+
+Maybe with a little bit more informative commit message? ;-)
+
+Something like
+
+=09Avoid interpreting too-long parameter as file name
+
+=09Even if it is easier to write HEAD~2000, it is legal to write
+=09HEAD^^^... (repeats "^" 2000 times in total). However, such a
+=09string is too long to be a legal filename (and on Windows, by
+=09default even much, much shorter strings are still illegal
+=09because they exceed MAX_PATH).
+
+=09Therefore, if the check_filename() function encounters too long
+=09a command-line parameter, it should interpet the error code
+=09ENAMETOOLONG as a strong hint that this is not a file name
+=09instead of dying with an error message.
+
+=09Noticed-by: ...
+
+What do you think?
+Dscho
+--8323329-1586373786-1454847484=:2964--
