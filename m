@@ -1,73 +1,85 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 00/11] Fix icase grep on non-ascii
-Date: Sun, 7 Feb 2016 03:48:47 -0500
-Message-ID: <CAPig+cSU9g28a7tnXJvoGJ4MkmnuWmcsy+vGUiY6L8+9v6iusg@mail.gmail.com>
-References: <1453982183-24124-1-git-send-email-pclouds@gmail.com>
-	<1454724190-14063-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 5/8] fetch-pack.c: send "skip" line to pack-objects
+Date: Sun, 7 Feb 2016 03:57:28 -0500
+Message-ID: <CAPig+cT8G3q4uug4TObyb2jAYvTPPLdhEV2+GpzVKmA6KxsJ_A@mail.gmail.com>
+References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
+	<1454662677-15137-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 09:48:53 2016
+X-From: git-owner@vger.kernel.org Sun Feb 07 09:58:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSL1Y-00062B-PP
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 09:48:53 +0100
+	id 1aSLAX-0001qb-0V
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 09:58:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257AbcBGIst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2016 03:48:49 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36151 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104AbcBGIss convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2016 03:48:48 -0500
-Received: by mail-vk0-f65.google.com with SMTP id k196so753068vka.3
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 00:48:47 -0800 (PST)
+	id S1752104AbcBGI5a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2016 03:57:30 -0500
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:33446 "EHLO
+	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751267AbcBGI53 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2016 03:57:29 -0500
+Received: by mail-vk0-f68.google.com with SMTP id c3so1668297vkb.0
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 00:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=eOQI3n6BdYdBwD+GcOKpwi/E5dpWgBvU6gpZ9kuVD5I=;
-        b=ATGrqXn+jvb4a7R+EuZkww0v1g4AFKtrs4pNPC2CY318P8ZSJM+7xw7zg9s/WqRSyE
-         vxprgGnCfjkMa2jK+u7jcOhiYxuMi5RufUaENyxz8kj8chBxsdFhIL+Sjpt5/Iv+kExm
-         Vznz97DWku7cH42j+AVieCQOa/T4dHFnH8O4lx+EqvCKDrK1Nqr5rLco38ptdM4A21cV
-         KjKn89zhdXklmWXMimHdGqY6E1CwC7eTfvFs4t/WdUvgw9jtZaKC42nxLjWD/I/Wz6FP
-         UsQu7U9upDoIRDGl/nCWcpoKPx5d900AqIrJtMJhA7SNJjJ929ZqWAZRxI9f0gFLGG0a
-         DifA==
+        bh=N4LzP/9PzOYCiYkAs+YzwM2m4IgP0rBEzuRPIDLzBck=;
+        b=lRDTJ4ec2tiUEWtZla0XiXk33iNi+rpwUz5+jpL81IDOlzgp1Z/zuibiJqDZT3jjOt
+         5Mydh9FSRWw9OBmSdv6YOWEeycOt9HLpLr/Pn9mIblss3DgvMo3K+GlFY9OLHAoQ6uQS
+         behVZrcG8HXqzetHbW5QFHgV+65nYEyMWL2i5oDvWZknZjtjDz6AODC/Lya0f/CfrnPk
+         HLAqGpY9rnnhKhdmRlRISPGZdDE2TSP7wfEZT3poS7s5LI2CrLvGJFKw73JsY8wya+AV
+         uP4OK9O+ePeoodTuLPFluATlTfU03usXeg2f7wbgP3hD24Auxu2YT0v38WvcBgcy4hhB
+         QJmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=eOQI3n6BdYdBwD+GcOKpwi/E5dpWgBvU6gpZ9kuVD5I=;
-        b=HerdP7GfcZTIOpkRYXY+dup7NOnFTs7gmhd+DSEHNPdt8YYM5tWuTOlB3AznnwHay5
-         /cvieu3++zfx+PnBAa/8eSNsBnedDwh4RykCtF7GTkfWo5BLHMDNORE38ygIr9gAIyvS
-         dm+FU0r6UaEuVDvfe/cMnV6bi3Wx6hBXteMJZ/ZxxPls7nbC7DcuzX2OHsXOIipXM6ji
-         FBZDVjgID0b9mhFbRhkfEw8Aa9uHmzO7Bs01SppO865EmzauG0M/9tmpZ/0lkfWVUW1N
-         bIXozFCxv+R4W8mY4cVN/ZaN1lfwVYPLBUGm/sgzxvQvEkdIk4cEuLaE9hZ6fFOE58t4
-         a5iw==
-X-Gm-Message-State: AG10YOQttWjcWYig9spSoNgClflvns7rSGAJIOeAJIgfaAOcWkmvgz/Oaf//w+sRiofpB6DDQ/k83gqsQAY0Wg==
-X-Received: by 10.31.146.71 with SMTP id u68mr13723518vkd.19.1454834927701;
- Sun, 07 Feb 2016 00:48:47 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 7 Feb 2016 00:48:47 -0800 (PST)
-In-Reply-To: <1454724190-14063-1-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: Xst6d3rROusJpKJ_r6XC-GwQDWA
+        bh=N4LzP/9PzOYCiYkAs+YzwM2m4IgP0rBEzuRPIDLzBck=;
+        b=T8Ka2DviAC4x2PLm5cspFURaTMxqZaEqIt8jtgkyNoYMiXJxWkZO995m4JztsSI0pa
+         FG9qb+RL34WCsoQbkZSnU4kgKXxB42E2TIBBtKjBTV4NoiGTdUhlJKaIXjlEjjcKX6vx
+         2rO2KdnE8eGmuuhr3lWD9P2FKYMy+AYuOqxLBevFaj36Ijj4tCwJhJoLqJlfbHgbeQ/6
+         orRFywILymjM5AVigPdjfX4qr7qWgfKoAbGv3FWSLAvpfU6vyxwM6gLvSj3tBnmp6mpc
+         L2dD6rc/2pCf1+y6n0PpTi4UUtuxAH6oNSOj+L3PvTggn4Ez+mYC6lkYQu3O5GKz4jGb
+         jluw==
+X-Gm-Message-State: AG10YORupbRuwY7xuCsNuP7XYMOw9s+gXtW3HwxdeNmVioeSZ4BsPwf2KLgzHw25FSpZTf2k31YqH+GifPFbwQ==
+X-Received: by 10.31.150.76 with SMTP id y73mr15562003vkd.84.1454835448319;
+ Sun, 07 Feb 2016 00:57:28 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 7 Feb 2016 00:57:28 -0800 (PST)
+In-Reply-To: <1454662677-15137-6-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: HLnHeqREyNxywL2nQWNHjW_exc8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285720>
 
-On Fri, Feb 5, 2016 at 9:02 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+On Fri, Feb 5, 2016 at 3:57 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
 uy <pclouds@gmail.com> wrote:
-> v6 fixes comments from Ramsay and Eric. Interdiff below. The only
-> thing to add is, I decided not to replace !icase_non_ascii with
-> icase_ascii_only. I went with spelling out "!icase || ascii_only". I
-> think it expresses the intention better.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> @@ -856,6 +864,8 @@ static struct ref *do_fetch_pack(struct fetch_pac=
+k_args *args,
+>                         fprintf(stderr, "Server supports ofs-delta\n"=
+);
+>         } else
+>                 prefer_ofs_delta =3D 0;
+> +       if (args->resume_path && !server_supports("partial"))
+> +               die(_("Server does not support resume capability\n"))=
+;
 
-v6 appears to address all the comments raised in my v5 review. Thanks.
+Drop "\n" from die() message.
+
+>         if ((agent_feature =3D server_feature_value("agent", &agent_l=
+en))) {
+>                 agent_supported =3D 1;
