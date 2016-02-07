@@ -1,99 +1,182 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] setup.c: make check_filename() return 0 on
- ENAMETOOLONG
-Date: Sun, 7 Feb 2016 13:23:49 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602071317330.2964@virtualbox>
-References: <CA+4vN7w2=JWusWDhhGNzAkJbE-s44G4WoXdvf26yzvtYfpktfQ@mail.gmail.com> <1454800992-15953-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1586373786-1454847484=:2964"
-Cc: git@vger.kernel.org, ole@tange.dk
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 07 13:24:27 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC] On the --depth argument when fetching with submodules
+Date: Sun, 7 Feb 2016 14:32:26 +0100
+Message-ID: <FA2DA97F-D944-4784-8297-E2885F197AC0@gmail.com>
+References: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com> <xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Stefan Beller <sbeller@google.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 14:32:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSOOA-00053p-Ih
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 13:24:26 +0100
+	id 1aSPS7-0004Es-UM
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 14:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453AbcBGMX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2016 07:23:56 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63959 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753257AbcBGMXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2016 07:23:55 -0500
-Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MOwY7-1aM2iW1v9D-006KaP; Sun, 07 Feb 2016 13:23:51
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1454800992-15953-1-git-send-email-pclouds@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-Content-ID: <alpine.DEB.2.20.1602071318200.2964@virtualbox>
-X-Provags-ID: V03:K0:4jSRxoYfWnXu5EWYX247xuGhDNTvSqYbnUY0cVTS/m7RECOlU1p
- vN24VU5FTi+2SmN3O2QXozbsm4QB/VcYTQ8BXdokha1frDiKr2LnA2oSaaEd9VBxktWySfC
- lOaO1LO79AHE/Px0RY8BzjIuKF3J8dmLCmHfB2VnczmI012xx/eDZ3G3LfvAGsHzojC1SJ8
- hBIqylWor7lE48FMbLY3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lT/P8JHANrA=:aItevb+LkgJAomdNU5PhFO
- 0cbUDoy81z/7CKYSC5R3mJWH/D6OuqpxX9YB+6nLiKZ28q2IVnMlfsGVbH8REpf0IIRhPZmOt
- wSMMe/IkHD6oALavXCA7OBeUKl1QV0vteB2rC/ho11Ai9kCNj2DFhwvgTsg+s5pX7QWF3wZFr
- toB0Fh9fVAVNpcRQrqHsUvfttVGay4gjDgQP4C/zzjZngshVHXP8HSyWPBSHp8vewlgvRwqo9
- jFGYkE6b6w8m3yW4lH6kwSBeeWTpi0T270xZQzvU7oyj/HV1t2kIzbQ8v1h+mww+ma0f20v/u
- X4APofM6JgKF0CEpD8fHDmBtPDyUwI/c3qmvdRHiqt7b1A+ZXEuPdnlDIQM8Xb03SZU4zcsbu
- fKrHOmbbBIF7l426aAJaYkZWxpRdwOyYVMXLEyhiwTvOFzyOBheMixlPftHzHtyRx+u/1oXHt
- mv+jq8hawnxdG7YNJD4O9b8tkW/H9XhTr9yGNCKR0wM+PZDlkyMjSdOUEEd0ne9Zuf8qP1PsO
- PEPrA3ARmiaqUeXhWFXnUhqmfkZe6M9ghIXtw0RnwnGN+YrWB3WaT4YKSxerbNQcBxyuS3LS1
- pYlwIIBumZGKH2VRLvR80bR2glzcWt5e6elkmANWHH6d8uwPGO38ItlAdKueYrH0w1vYr3IC3
- 1mThvV3NswKRJx8iunYthTcMwXtHCP55HR8k3RsqrwFjRP4rS+FRrMTUhQtcVa8wpW7YYfSyM
- j91OEO8tosC/I37jT3s6VtfSrdjry/nYk7bA5QlaBf0BLMy35BEWlkkIPfWMGctrZSdGTg2p 
+	id S1753925AbcBGNcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 08:32:31 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37921 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753516AbcBGNca convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2016 08:32:30 -0500
+Received: by mail-wm0-f51.google.com with SMTP id p63so83818338wmp.1
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 05:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=V0wTKmzfKz2i6Jw7VjEFf8eOgQTjTBx13lB1Sh04zEs=;
+        b=R1xFSxPLJvPR7WYwVIsbtHIb4usJBxPFkETmVAp0kYDYPY3pDVvbhJlThRLrT64enJ
+         rPs9tLFW/drj09toSD3FgVebbuA0MhAL7enQTGZgJqsdCzwi7/HryayCcfQ+YLeeNo1Q
+         SdzRh83Rx4sugr4NMdEPjlzCxZVbWN8n8X1QTEnTo34hxbjjNuDL0HsVZ2O5J88wf0MR
+         +XfxgE6pmbHi49rN5a8xBhwKy050PYEDyfDMNhWYJo5Sjx+QXqRvqOU5t5hZezam8o1t
+         JKQL9OC9U3g60vR8sKlh2QozKjyO9vb+x5+SZ66ird3qonqjf0fRVL80M1Fx+TQ0XXBl
+         tOoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=V0wTKmzfKz2i6Jw7VjEFf8eOgQTjTBx13lB1Sh04zEs=;
+        b=eRZZwnH70SybnFF4Qd5QBDyxtI0xIE/uz6OlqjrJSFfsO6/DQDM+VPTimgKqv6pXcl
+         AdrIOeseFEmKeOkxN1uxJnvULfjWL83Mgha16LxCRqIJAxGBFk/T4qhlLbGWwpxPqebW
+         id+fYpvHjVXqt8Ae9IbqSqKOca3C/Bnqmq4JPaWTwuMnCuQ7iNIdzYOfLueV8r++Whln
+         37oFIDK9Uw4pHg9QsbGz2goH3Y3i8bDHugtby+Xbo5BZtF11t5A8WfNptq2mXytBsUVF
+         3HvVJvEnKP0wggIACkAvaS/dDFkLDHs4J9YkwYLfP1yfyFpstpW16McPyYkdvfXrrs1o
+         9AAQ==
+X-Gm-Message-State: AG10YORJV3LWPD30JtIJBr8XecBHX4QIdZ3ZJaf3h/UV3AyJQnLX3WMOX77//R0IsDvbEA==
+X-Received: by 10.28.6.213 with SMTP id 204mr25273797wmg.47.1454851949318;
+        Sun, 07 Feb 2016 05:32:29 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB606F.dip0.t-ipconnect.de. [93.219.96.111])
+        by smtp.gmail.com with ESMTPSA id g3sm24908794wjw.31.2016.02.07.05.32.27
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 07 Feb 2016 05:32:28 -0800 (PST)
+In-Reply-To: <xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285727>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1586373786-1454847484=:2964
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1602071318201.2964@virtualbox>
+On 06 Feb 2016, at 01:05, Junio C Hamano <gitster@pobox.com> wrote:
 
-Hi Duy,
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> Currently when cloning a project, including submodules, the --depth argument
+>> is passed on recursively, i.e. when cloning with "--depth 2", both the
+>> superproject as well as the submodule will have a depth of 2.  It is not
+>> garantueed that the commits as specified by the superproject are included
+>> in these 2 commits of the submodule.
+>> 
+>> Illustration:
+>> (superproject with depth 2, so A would have more parents, not shown)
+>> 
+>> superproject/master: A <- B
+>>                    /      \
+>> submodule/master:  C <- D <- E <- F <- G
+>> 
+>> (Current behavior is to fetch G and F)
+> 
+> I think the issue is deeper than merely "--depth 2", and you would
+> be better off stepping back and think about various use cases to
+> make sure that we know what kind of behaviour we want to support
+> before delving into one particular corner case.  We currently pass
+> the depth recursively, and I do not think it makes much sense, but I
+> view it as a secondary question "among the behaviours we want to
+> support, which one should be the default?"  It may turn out that not
+> passing it recursively at all, or even passing a different depth, is
+> a better default, but we wouldn't know until we know what are the
+> desirable behaviour in various workflows.
+> 
+> If you are actively working on the superproject plus some submodules
+> but you are merely using the submodule you depicted above, not
+> working on changing it, even when you want the full history of the
+> superproject (i.e. no "--depth 2"), you may not want history of the
+> submodule.  Even though we have a way to say "I am not interested in
+> this submodule AT ALL" by not doing "submodule init", not having
+> anything at all at the path submodule/ may not allow you to build
+> the whole thing, and we currently lack a way to express "I am not
+> interested in the history of this thing, but I need at least the
+> tree that matches the commit referred to by the superproject".
+> 
+> If you are working on a single submodule, trying to fix a bug in the
+> context of the whole project, you might want to have a single-depth
+> clone of the superproject and all other submodules, plus the whole
+> history of the single submodule.
+> 
+> In either of these examples, the top-level "--depth" does not have
+> much to do with what depth the user wants to use when cloning or
+> fetching the submodule repositories.
+> 
+> I have a feeling (but I would not be surprised if somebody who uses
+> submodules heavily has a counter-example from real life) that
+> regardless of "--depth" or full clone, fetching the tip of matching
+> branch is not a good default behaviour.  In your picture, even when
+> depth is not given at all, there isn't much point fetching F or G.
 
-On Sun, 7 Feb 2016, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+I really wonder in what cases people use the "--depth" option, too. 
+For instance I have never used it in either one of the two cases you
+described above. I don't worry about a long running "clone" as it 
+usually is a one-time operation.
 
-> Noticed-by: Ole Tange <ole@tange.dk>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  On Sun, Feb 7, 2016 at 4:56 AM, Ole Tange <ole@tange.dk> wrote:
->  > If file name too long it should just try to see if it is a reference
->  > to a revision.
->=20
->  Looks easy enough to fix.
+However, in case of a continuous integration system that starts with
+a clean state in the beginning of every run (e.g. Travis CI) a
+"clone" operation is no one-time operation anymore. In this case the
+"--depth 1" option makes very much sense to me. This was the situation
+where I realized the problem that Stefan wants to tackle here and I
+tried to make it tangible with a test case [1]. 
 
-Maybe with a little bit more informative commit message? ;-)
+On top of that I think Git's error message is really confusing if
+you clone a repo with "--depth" that has submodules and Git is not
+fetching the necessary submodule commits:
 
-Something like
+Unable to checkout '$SHA' in submodule path 'path/to/submodule'
 
-=09Avoid interpreting too-long parameter as file name
+I tried to tackle that with [2] which would detect this case and
+print the following error instead (slightly changed from the patch):
 
-=09Even if it is easier to write HEAD~2000, it is legal to write
-=09HEAD^^^... (repeats "^" 2000 times in total). However, such a
-=09string is too long to be a legal filename (and on Windows, by
-=09default even much, much shorter strings are still illegal
-=09because they exceed MAX_PATH).
+Unable to checkout '$SHA' in submodule path '/path/to/commit'.
+Try to remove the '--depth' argument on clone!
 
-=09Therefore, if the check_filename() function encounters too long
-=09a command-line parameter, it should interpet the error code
-=09ENAMETOOLONG as a strong hint that this is not a file name
-=09instead of dying with an error message.
+[1] https://www.mail-archive.com/git%40vger.kernel.org/msg82614.html
+[2] https://www.mail-archive.com/git%40vger.kernel.org/msg82613.html
 
-=09Noticed-by: ...
 
-What do you think?
-Dscho
---8323329-1586373786-1454847484=:2964--
+> 
+>> So to fetch the correct submodule commits, we need to
+>> * traverse the superproject and list all submodule commits.
+>> * fetch these submodule commits (C and E) by sha1
+> 
+> I do not think requiring that C to be fetched when the superproject
+> is cloned with --depth=2 (hence A and B are present in the result)
+> is a good definition of "correct submodule commits".  The initial
+> clone could be "superproject follows --depth, all submodules are
+> cloned with --depth=1 at the commits referenced by the superproject
+> tree"--by that definition, you need E but you do not want C.
+> 
+> As a specification of the behaviour, the above two might work, but I
+> do not think that should be the implementation.  In other words,
+> "The implementation should behave as if it did the above two" is OK,
+> and it is also OK to qualify with further conditions to help the
+> implementation.  For example, the current structure assumes that E
+> and C are reachable from "some" ref in submodule, so that at least a
+> whole clone of the submodule would give them to you--otherwise you
+> would not be able to even build the superproject at A or B.  Perhaps
+> it is OK to further require that, when you are working in a single
+> branch mode and working on 'master', you are required to have
+> commits C and E reachable on the 'master' branch in the submodule,
+> and that may lets you limit the need for such scanning of the
+> history?
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
