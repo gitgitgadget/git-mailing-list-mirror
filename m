@@ -1,152 +1,74 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Test failures with GNU grep 2.23
-Date: Sun, 7 Feb 2016 16:25:40 +0000
-Message-ID: <20160207162540.GK29880@serenity.lan>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Sun, 7 Feb 2016 18:10:55 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602071809440.2964@virtualbox>
+References: <6A7D4447-AC25-4591-9DA7-CD153198EC64@jetbrains.com> <alpine.DEB.2.20.1602061518220.2964@virtualbox> <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com> <alpine.DEB.2.20.1602061708220.2964@virtualbox>
+ <CABCFD40-C1B8-412C-90E3-24147AA6AFA5@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 07 17:31:28 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Sun Feb 07 18:11:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSSF5-00080z-At
-	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 17:31:19 +0100
+	id 1aSSra-0007VO-69
+	for gcvg-git-2@plane.gmane.org; Sun, 07 Feb 2016 18:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754450AbcBGQbO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2016 11:31:14 -0500
-Received: from mta1-jackal.aluminati.org ([72.9.247.211]:36211 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754445AbcBGQbL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2016 11:31:11 -0500
-X-Greylist: delayed 322 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Feb 2016 11:31:11 EST
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id DA32ACDA555
-	for <git@vger.kernel.org>; Sun,  7 Feb 2016 16:25:47 +0000 (GMT)
-X-Quarantine-ID: <rQ6G1R4wwD9q>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id rQ6G1R4wwD9q for <git@vger.kernel.org>;
-	Sun,  7 Feb 2016 16:25:45 +0000 (GMT)
-Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 33371CDA56C
-	for <git@vger.kernel.org>; Sun,  7 Feb 2016 16:25:42 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1754461AbcBGRLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 12:11:01 -0500
+Received: from mout.gmx.net ([212.227.17.21]:51199 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754449AbcBGRK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 12:10:59 -0500
+Received: from virtualbox ([37.24.143.74]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LoJDJ-1Zqu7t2pab-00gIzO; Sun, 07 Feb 2016 18:10:56
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <CABCFD40-C1B8-412C-90E3-24147AA6AFA5@jetbrains.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:+/i6F1H6yuKbQ1WguWc2Ykjy5LfPi65uNptauozr29Jl+nfeqae
+ 7zaUIll06O8BFhcuohTxRSjWN3v4tFsElH9Ku3KQ5ZfAYVUAABpeQlL8WpIKY1TwXVutnYS
+ T+Z8D7XFzVPMyV6p1ItY2hM1GCREo0QARAnIOxQ37uTZnKhpO7NI3bPGEEJArj0Lh9GQvE8
+ g+I7qjsCFVtGsBYj14hVw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TgxjqR80Gqs=:TxahfoxdfzL1xbqOcZ7JbR
+ mls810SQkwm8YHeB4ly2PuFCKy8BC8DPey5awfHuBQYHvWAxqz1ynVsf3Nlsl8I1ss6HSEoAG
+ IxMFQINPGta5RcUNP4A4SP1jrXcLyyDQbwm9ajfSvZ8yozzrNjfTuJ3VEoquzgb+UMPO0rw03
+ JbyQXt3q+0DW2Os6cEdQ06+yYgd9IxTcuyh6E49+XovPFblodP62mPRWoGjRZMQQ7Iu/n2w+I
+ JGFag56TtmwA7rgA7yj75QXAucrNTve9NGUGzH+kIGYnGMsTgLAyzI/9+u6ivYHGB5628FjjK
+ tYxuMyVwa8XP6BltgK8YnFqdUREnf5yP7BhXcjf8HLkaFnN07AY+Ar28W41w55o+se5jXaKQj
+ H/YzlDpAc02RrJeV2lyXRIdvC51IvPPgr3WqYZwZnxTW2lxSTghXMMH5hLWhkeSCdBGW4iIUo
+ UCDLGrahGk35Lr1zIaKtApAJJIUAHK92yOoKmT5/Dop+TqGvSeqF7JgIZyeMCKxEWO770CqZD
+ 1Y3eY6e5+FvEc9+36XQsTXDon+QUd1d5/3ekbat7R7cFrxOxa9tj/2RYmzIXKrZ79SxmlI4Jz
+ wdgogr7wQbwy0G1yd/ZyhotRtB7x24cyLjfv0Ctpj4J5pVsn/eW+NjHG0Xlrcg34OPNXeq4oG
+ KTpVwdy3lVyg6Whaa1M86dIC34hVHm2Bky8++UnJZp90YeeEEYuvX3OPVNbRjSlQtRmOkOrpz
+ 8tgQicjqA7Q3ySov8SBtu9XlR4w2v3i9l++GwAKkOt8Zo1iPZq2Y5nDVgaXnG0Zo7mOobbiE 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285734>
 
-It seems that binary file detection has changed in GNU grep 2.23 as a
-result of commit 40ed879 (grep: fix bug with with invalid unibyte
-sequence).
+Hi Kirill,
 
-This causes a couple of test failures in t8005 and t9200 (the t9200 cas=
-e
-is less obvious so I'm only including t8005 here):
+On Sun, 7 Feb 2016, Kirill Likhodedov wrote:
 
--- >8 --
-$ ./t8005-blame-i18n.sh -v -i
-[snip]
-expecting success:=20
-        git blame --incremental file | \
-                egrep "^(author|summary) " > actual &&
-        test_cmp actual expected
+> > On 06 Feb 2016, at 19:10 , Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > 	git show 'HEAD:bra[ckets].txt' --
+> > 
+> 
+> Nice catch! It works for me even without quotes.
 
---- actual      2016-02-07 16:14:55.372510307 +0000
-+++ expected    2016-02-07 16:14:55.359510341 +0000
-@@ -1 +1,6 @@
--Binary file (standard input) matches
-+author =EF=BF=BDR=EF=BF=BDc =EF=BF=BD=EF=BF=BD=EF=BF=BDY
-+summary =EF=BF=BDu=EF=BF=BD=EF=BF=BD=EF=BF=BD[=EF=BF=BD=EF=BF=BD=EF=BF=
-=BD=CC=83e=EF=BF=BDX=EF=BF=BDg=EF=BF=BD=C5=82=EF=BF=BD=EF=BF=BDB
-+author =EF=BF=BDR=EF=BF=BDc =EF=BF=BD=EF=BF=BD=EF=BF=BDY
-+summary =EF=BF=BDu=EF=BF=BD=EF=BF=BD=EF=BF=BD[=EF=BF=BD=EF=BF=BD=EF=BF=
-=BD=CC=83e=EF=BF=BDX=EF=BF=BDg=EF=BF=BD=C5=82=EF=BF=BD=EF=BF=BDB
-+author =EF=BF=BDR=EF=BF=BDc =EF=BF=BD=EF=BF=BD=EF=BF=BDY
-+summary =EF=BF=BDu=EF=BF=BD=EF=BF=BD=EF=BF=BD[=EF=BF=BD=EF=BF=BD=EF=BF=
-=BD=CC=83e=EF=BF=BDX=EF=BF=BDg=EF=BF=BD=C5=82=EF=BF=BD=EF=BF=BDB
-not ok 2 - blame respects i18n.commitencoding
-#
-#               git blame --incremental file | \
-#                       egrep "^(author|summary) " > actual &&
-#               test_cmp actual expected
-#
--- 8< --
+Only by chance. Once you have a HEAD:brat.txt file in the current working
+directory, it will break.
 
-The following patch fixes the tests for me, but I wonder if "-a" is
-supported on all target platforms (it's not in POSIX, which specifies
-that the "input files shall be text files") or whether we should do
-something more comprehensive to provide sane_{e,f,}grep which guarantee
-to treat input as text.
+> Anyway, thanks a lot for finding the workaround.
 
-I also tried setting POSIXLY_CORRECT but that doesn't affect the
-text/binary decision.
+I would not exactly call this a work-around, but a precise way to specify
+that you are *not* talking about a file.
 
--- >8 --
-diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
-index 847d098..3b6e697 100755
---- a/t/t8005-blame-i18n.sh
-+++ b/t/t8005-blame-i18n.sh
-@@ -36,7 +36,7 @@ EOF
- test_expect_success !MINGW \
- 	'blame respects i18n.commitencoding' '
- 	git blame --incremental file | \
--		egrep "^(author|summary) " > actual &&
-+		egrep -a "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
-=20
-@@ -53,7 +53,7 @@ test_expect_success !MINGW \
- 	'blame respects i18n.logoutputencoding' '
- 	git config i18n.logoutputencoding eucJP &&
- 	git blame --incremental file | \
--		egrep "^(author|summary) " > actual &&
-+		egrep -a "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
-=20
-@@ -69,7 +69,7 @@ EOF
- test_expect_success !MINGW \
- 	'blame respects --encoding=3DUTF-8' '
- 	git blame --incremental --encoding=3DUTF-8 file | \
--		egrep "^(author|summary) " > actual &&
-+		egrep -a "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
-=20
-@@ -85,7 +85,7 @@ EOF
- test_expect_success !MINGW \
- 	'blame respects --encoding=3Dnone' '
- 	git blame --incremental --encoding=3Dnone file | \
--		egrep "^(author|summary) " > actual &&
-+		egrep -a "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
-=20
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcomm=
-it.sh
-index 5cfb9cf..f05578a 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -35,7 +35,7 @@ exit 1
-=20
- check_entries () {
- 	# $1 =3D=3D directory, $2 =3D=3D expected
--	grep '^/' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
-+	grep -a '^/' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
- 	if test -z "$2"
- 	then
- 		>expected
+Ciao,
+Johannes
