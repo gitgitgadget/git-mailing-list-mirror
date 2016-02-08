@@ -1,88 +1,70 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/8] pack-objects: produce a stable pack when --skip is given
-Date: Mon, 8 Feb 2016 12:23:34 +0700
-Message-ID: <CACsJy8CyFnUGdBQ4XQ5jvfc7GY08jQkB-z70bDSdSNAPigYDvQ@mail.gmail.com>
-References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
- <1454662677-15137-3-git-send-email-pclouds@gmail.com> <xmqq1t8rdmky.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CkQPX4zqW39gpODSkU+habM7TGTJ85MU-S0UuNPk9SCw@mail.gmail.com> <CAPc5daXmci5TTc0zqKe+izbrQ5XmHd75V=ZKjoWN8hMPTJPSTQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 06:24:44 2016
+From: Daniel Egger <daniel@eggers-club.de>
+Subject: git worktree loses path information after git reset --hard
+Date: Mon, 8 Feb 2016 09:07:10 +0100
+Message-ID: <A1270C54-3868-42F4-8F7E-8F444631078F@eggers-club.de>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 08 09:07:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSeJX-0006h4-MT
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 06:24:44 +0100
+	id 1aSgrR-0004pp-Qq
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 09:07:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750876AbcBHFYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 00:24:08 -0500
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:36071 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbcBHFYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 00:24:06 -0500
-Received: by mail-lb0-f177.google.com with SMTP id dx2so76876609lbd.3
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 21:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=HbacY3fl8K1CKxea2K14Y1FM7b5z9RGMtKu6E8Vb0To=;
-        b=0FWs+HKwmVGFv/zbPH+UliQukDl/KLTStdotjnIbF1GiXx3cZ5xnw8dYJC1kxfU2Vc
-         4LPTs4o1oChLpJimEzjUe+aSTqx/IFbdiBPxoN63+gOHeQPGG1QPuAoJasCLtZwY5x7L
-         D050RU7MjGZdSLvHo1Oy2OprMauXtGWNrBpxWt/WvV2BdFnDMB3Ne40y2gYpE8ndV6mM
-         jk3tPcSQtOPS6z8q4HeX1dKk7Glbc6XYWExk1HaznGj50DGOMF50IpEO0n3FcGPIV7FF
-         O7fobaiQiKi9ubuYUs9CMtuuwirG3p5Kpr/AsPxqHsNcgdNmMkjAPSx6ST5Io87jiTN7
-         CaKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=HbacY3fl8K1CKxea2K14Y1FM7b5z9RGMtKu6E8Vb0To=;
-        b=k0UKGEDDpKQwkqQozU6TwAiRlj+FDgn3pF+SaEthRPVhcWbLl6tyZ+4oIg3DDLOUaT
-         Uax9ki39OzoaZlpsThUOX919zyGe9CwyUccI7qIXsXHZUOawLpJRGrm/NwNl+ZhRlJ7L
-         YB+WeVy7k59ZrFJqOi2F5LBRPgEXS8vrea9vdXsdHrGX2JewPMNdk9eeiT1QO2bdQaH7
-         Vv/xeoLXOetj000pXqWPUAofBYcQGp8Pu2Qz1NB6YC2IOXvie9Mr+BSaCH7mabq2rWgD
-         0Vh8ih99Th2bnwiBm0KNRuHq93huewsRK+/5bXCv7WbythM96OnJctfVQ1bS3vHGGvTY
-         NGOg==
-X-Gm-Message-State: AG10YOTvzkBVA4gBT/UPWbcgbGe1pocBnBiimbb7yyW8S+nOrgFeAx5YyLwD4pKZOTD3+iVPA1IOtBXz+37l+A==
-X-Received: by 10.112.209.99 with SMTP id ml3mr10247811lbc.26.1454909044577;
- Sun, 07 Feb 2016 21:24:04 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Sun, 7 Feb 2016 21:23:34 -0800 (PST)
-In-Reply-To: <CAPc5daXmci5TTc0zqKe+izbrQ5XmHd75V=ZKjoWN8hMPTJPSTQ@mail.gmail.com>
+	id S1755542AbcBHIHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 03:07:15 -0500
+Received: from mx2.eggers-club.de ([78.47.14.144]:52680 "EHLO
+	mx2.eggers-club.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755278AbcBHIHP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2016 03:07:15 -0500
+Received: from mail.eggers-club.de (unknown [IPv6:2001:4dd0:ff75:1:219:d1ff:fe6a:8121])
+	by mx2.eggers-club.de (Postfix) with ESMTPA id 66D0C3983BDE
+	for <git@vger.kernel.org>; Mon,  8 Feb 2016 09:07:13 +0100 (CET)
+Received: from [10.0.0.165] (unknown [88.217.248.30])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.eggers-club.de (Postfix) with ESMTPSA id 70960501BB
+	for <git@vger.kernel.org>; Mon,  8 Feb 2016 09:07:17 +0100 (CET)
+X-Mailer: Apple Mail (2.3112)
+X-eggers-club-de-MailScanner-ID: 70960501BB.A3337
+X-eggers-club-de-MailScanner: Found to be clean
+X-eggers-club-de-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+	score=-1, required 6, ALL_TRUSTED -1.00)
+X-eggers-club-de-MailScanner-From: daniel@eggers-club.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285751>
 
-On Sat, Feb 6, 2016 at 7:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> You noticed that tying the behavior only happens when the user asks
->> for it, right? I don't expect people to do resumable fetch/clone by
->> default. There are tradeoffs to make and they decide it, we offer
->> options. So, it does not really tie our hands in the normal case.
->
-> You misread me. I do not want to see us having to add
-> "disable_this_feature = 1" next to that "delta_search_thread = 1"
-> in this block, and then supporting code to actually disable that
-> feature, only to support this block. You are declaring that "to
-> support this mode, we must always have a way to produce a
-> byte-for-byte identical output and keep supporting it forever".
+Hi guys,
 
-My last defense is, this is an extension, not part of the core
-protocol. If the burden becomes real we can always remove it.
-Modem-quality connection users may yell a bit, but the majority of
-broadband users won't notice a thing. But I understand if the answer
-is still 'no'.
+I stumbled across a problem with worktrees recently; I incorrectly opened a ticket a GitHub for that and it was suggested that it might be fixed in 2.7.1 so I held off reporting it here but as it turned out it is still broken in 2.7.1 so here we go.
 
-I find it unlikely that this cause much maintenance burden though, the
-packing algorithm has not changed for a very long time (most related
-change is pack bitmaps, which technically happen before pack-objects).
-The next big change (at least in public) may be pack v4. We haven't
-found a good algorithm for pack-objects on v4 yet, so there's a chance
-of problems there.
--- 
-Duy
+The problem is that the paths of the worktrees in $GIT_DIR/worktrees/worktree_name/gitdir are rewritten to read .git instead of /path/to/worktree/root/.git after a git reset --hard (and potentially other operations) which causes all worktrees in git worktree list to point to the current worktree instead of the main repository path.
+
+Let me demonstrate:
+
+# git worktree list
+/Users/user/Desktop/Source/Product          2991e32 [master]
+/Users/user/Desktop/Source/Product-2.1      3fc1082 [releases/master-2.1]
+/Users/user/Desktop/Source/Product-2.2      3ccc3fe [releases/master-2.2]
+/Users/user/Desktop/Source/Product-2.3      4044881 [releases/master-2.3]
+# cd /Users/user/Desktop/Source/Product-2.1
+# git reset --hard
+# cd /Users/user/Desktop/Source/Product-2.2
+# git reset --hard
+# cd /Users/user/Desktop/Source/Product
+# git worktree list
+/Users/user/Desktop/Source/Product          2991e32 [master]
+/Users/user/Desktop/Source/Product          3fc1082 [releases/master-2.1]
+/Users/user/Desktop/Source/Product          3ccc3fe [releases/master-2.2]
+/Users/user/Desktop/Source/Product-2.3      4044881 [releases/master-2.3]
+
+Servus,
+      Daniel
