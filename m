@@ -1,103 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/25] transport-helper.c: do not send null option to remote helper
-Date: Mon, 08 Feb 2016 12:53:59 -0800
-Message-ID: <xmqqziva7wk8.fsf@gitster.mtv.corp.google.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
-	<1454576641-29615-4-git-send-email-pclouds@gmail.com>
-	<xmqqh9hof4bx.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8Az9rx_D0V+p2fEdNi64YJb2g_o0npUk2=wqCL2_moBPQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Mon, 8 Feb 2016 15:56:38 -0500
+Message-ID: <20160208205637.GA13732@sigill.intra.peff.net>
+References: <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+ <alpine.DEB.2.20.1602061708220.2964@virtualbox>
+ <CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+ <32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
+ <CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
+ <20160208141552.GC27054@sigill.intra.peff.net>
+ <20160208150709.GA13664@sigill.intra.peff.net>
+ <xmqqpow7807l.fsf@gitster.mtv.corp.google.com>
+ <20160208195230.GA30693@sigill.intra.peff.net>
+ <20160208202043.GA6002@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 21:54:15 2016
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 21:56:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSsp1-0008Sg-QL
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:54:12 +0100
+	id 1aSsrV-0003Ci-S6
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755868AbcBHUyG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2016 15:54:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52783 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754956AbcBHUyD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2016 15:54:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF75942938;
-	Mon,  8 Feb 2016 15:54:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zSJSMb/Y1Nvw
-	2kxHkNWdGtczwko=; b=mVFytTx6K3rZb6TCe6JU7JnBry0nyqyokRHqAyphmQ/0
-	G0yH8UctszxwkYE33jUUsPFYKZsI7G4/LHVLHSrLxtj9m4j03O4aKRZJU8OqfaRS
-	tOi1x7VfUqxoVMyXIQc2hMyw7TuM3hM62+jqti+xwinuhFpCkDVyIMXPgeGi+hk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kklVUn
-	JZnk7PHQRn4wdlhmJfhsWcLEh9EIWlWywCvqL4Yv9fZYpTbkU7wEmDVyFqwDTlyA
-	kdvahFgcei9eWu5iKRJx3GEz/yMxoYQ9wxlor0WR2xScZVWSBYjKefHy0Y/6znA/
-	hA0U0pP3RrvDh/eYsACfNxeNgwth8Q8Ggv0J8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C587D42937;
-	Mon,  8 Feb 2016 15:54:02 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4472A42936;
-	Mon,  8 Feb 2016 15:54:02 -0500 (EST)
-In-Reply-To: <CACsJy8Az9rx_D0V+p2fEdNi64YJb2g_o0npUk2=wqCL2_moBPQ@mail.gmail.com>
-	(Duy Nguyen's message of "Sat, 6 Feb 2016 16:38:15 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 155CAFB4-CEA6-11E5-BE4F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756053AbcBHU4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 15:56:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39461 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755218AbcBHU4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 15:56:40 -0500
+Received: (qmail 20802 invoked by uid 102); 8 Feb 2016 20:56:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 15:56:40 -0500
+Received: (qmail 9194 invoked by uid 107); 8 Feb 2016 20:56:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 15:56:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2016 15:56:38 -0500
+Content-Disposition: inline
+In-Reply-To: <20160208202043.GA6002@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285805>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Mon, Feb 08, 2016 at 03:20:43PM -0500, Jeff King wrote:
 
-> On Fri, Feb 5, 2016 at 6:22 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
-s:
->>
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> ---
->>
->> This is even more strange.  Are the current callers broken and some
->> sends value=3D=3DNULL for an option that is not is_bool, resulting i=
-n
->> a call to quote_c_style() with NULL?  I somehow find it hard to
->> believe as that would lead to an immediate segfault.
->>
->> Assuming that no current caller passes NULL to value when is_bool is
->> not in effect, there needs an explanation why future new callers may
->> need to do so.  An alternative for a valueless option could be to
->> send "option name\n" instead of the usual "option name value\n", but
->> without such an explanation, readers cannot tell why not sending
->> anything about "name", which is what this patch chooses to implement=
-,
->> is a better idea.
->
-> The source is backfill_tags() which, in future, resets some transport
-> options back to defaults. The current set_option() in there only deal=
-s
-> with booleans or number (depth). But in future it resets deepen-since=
-,
-> which is a string.
->
-> I think the main reason is, we do not have a way to reset (or unset) =
-a
-> transport option. Should I keep this commit and explain about this, o=
-r
-> have a new transport API to reset option?
+> On Mon, Feb 08, 2016 at 02:52:30PM -0500, Jeff King wrote:
+> 
+> > Here is my patch again, with that part removed, and the tests fixed up.
+> > Though on reflection, I do think it would be better if we could simply
+> > expand the wildcard globs to say "does this match anything in the file
+> > system". That makes a nice, simple rule that follows the spirit of the
+> > original. I'm not sure if it would be easy to apply magic like ":(top)"
+> > there, but even if we don't, we're not worse off than we are today
+> > (where that requires "--" unless it happens to have a wildcard, as
+> > above).
+> 
+> So here is a hacky attempt at that. It uses glob(), which is not quite
+> right for the reasons below, though I suspect works OK in practice.
+> 
+> I think doing it correctly would require actually calling our
+> read_directory() function. That feels kind of heavy-weight for this
+> case, but I guess in theory the pathspec limits it (and it's not like
+> glob() does not have to walk the filesystem, too). So maybe it's not so
+> bad.
 
-Addition of new API is OK, but if this commit remains in the
-history, it itself has to explain why it is necessary.
+And here that is. It does end up traversing quite a bit for something as
+simple as "*.foo", because that doesn't let fill_directory() limit us at
+all.
+
+But having looked at this, I can't help but wonder if the rule should
+not be "does the file exist" in the first place, but "is the file in the
+index". This dwimmery is about commands like "log" that are reading
+existing commits. I cannot think of a case where we would want to
+include something that exists in the filesystem but not in the index.
+
+---
+diff --git a/setup.c b/setup.c
+index 2c4b22c..1a40516 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "dir.h"
++#include "pathspec.h"
+ #include "string-list.h"
+ 
+ static int inside_git_dir = -1;
+@@ -130,6 +131,33 @@ int path_inside_repo(const char *prefix, const char *path)
+ 	return 0;
+ }
+ 
++/*
++ * Return true if a file exists that matches the pattern
++ * glob.
++ */
++static int pathspec_exists(const char *one_pathspec)
++{
++	struct dir_struct dir;
++	const char *pathspec_v[] = { one_pathspec, NULL };
++	struct pathspec pathspec;
++	int ret = 0;
++	int i;
++
++	memset(&dir, 0, sizeof(dir));
++	parse_pathspec(&pathspec, 0, 0, "", pathspec_v);
++
++	fill_directory(&dir, &pathspec);
++	for (i = 0; i < dir.nr; i++) {
++		if (dir_path_match(dir.entries[i], &pathspec, 0, NULL)) {
++			ret = 1;
++			break;
++		}
++	}
++
++	free(dir.entries);
++	return ret;
++}
++
+ int check_filename(const char *prefix, const char *arg)
+ {
+ 	const char *name;
+@@ -139,12 +167,14 @@ int check_filename(const char *prefix, const char *arg)
+ 		if (arg[2] == '\0') /* ":/" is root dir, always exists */
+ 			return 1;
+ 		name = arg + 2;
+-	} else if (!no_wildcard(arg))
+-		return 1;
+-	else if (prefix)
++	} else if (prefix)
+ 		name = prefix_filename(prefix, strlen(prefix), arg);
+ 	else
+ 		name = arg;
++
++	if (!no_wildcard(arg))
++		return pathspec_exists(name);
++
+ 	if (!lstat(name, &st))
+ 		return 1; /* file exists */
+ 	if (errno == ENOENT || errno == ENOTDIR)
