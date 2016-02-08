@@ -1,108 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: update_linked_gitdir writes relative path to .git/worktrees/<id>/gitdir
-Date: Sun, 07 Feb 2016 15:56:06 -0800
-Message-ID: <xmqqlh6w9isp.fsf@gitster.mtv.corp.google.com>
-References: <1454789548.23898.223.camel@mattmccutchen.net>
+From: Andrey Utkin <andrey.utkin@corp.bluecherry.net>
+Subject: Re: "git send-email" thru Gmail incurs few minutes delay
+Date: Mon, 8 Feb 2016 02:22:50 +0200
+Message-ID: <CAM_ZknWNZFxhz8ELf+sc1X3gO=H3F+GYuNkornhU9qouffj6Hw@mail.gmail.com>
+References: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Matt McCutchen <matt@mattmccutchen.net>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 00:56:19 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrey Utkin <andrey.od.utkin@gmail.com>,
+	Jeff Merkey <linux.mdb@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 08 01:23:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSZBj-0003pQ-2Q
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 00:56:19 +0100
+	id 1aSZc4-0007sT-Qh
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 01:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754121AbcBGX4P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Feb 2016 18:56:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63523 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752807AbcBGX4O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Feb 2016 18:56:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5FBC9434F4;
-	Sun,  7 Feb 2016 18:56:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=35gFFlRZxFXR
-	7AnbPpzI5fqxlfk=; b=kEDRm+OHtYB8PpQBWubisfb5AATgMtLJJVrkOACQ65du
-	YP+RmZRNp+Q4TWSnDjxsZRaIoo3LC7QXeZiX8LQTsNGY0j/HWpvMZzvKCiafA/Ul
-	ebp00J/IO9u0XJloOFXlQ7hYJbQZRntkM+SWEhQe/kmkR1smnd36i894wrZqbUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=knbiUh
-	T9RSz9irHVGqYXQa21oCcdupsrNpWkBIDfQpErp/Dm1VVN3WJRbG1lSN31QwBkHv
-	eVtca4sLI238ItzctwHPBQcTlJk5gSRmBE+SzmKBpzNqRekaBHIvPhZC4me4ys+Z
-	9SNURsJUGy9xaZ1wgeX2xbMCB6J4pZW5Fj6tY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5727D434F3;
-	Sun,  7 Feb 2016 18:56:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D0746434F2;
-	Sun,  7 Feb 2016 18:56:07 -0500 (EST)
-In-Reply-To: <1454789548.23898.223.camel@mattmccutchen.net> (Matt McCutchen's
-	message of "Sat, 06 Feb 2016 15:12:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5B18AE8C-CDF6-11E5-BD8C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754863AbcBHAWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 19:22:52 -0500
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34757 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754627AbcBHAWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 19:22:51 -0500
+Received: by mail-io0-f171.google.com with SMTP id 9so180946575iom.1
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 16:22:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=corp-bluecherry-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=XhqYAnSXMl3RbrlppEyMWudD9ytttQOoPl6xkzA4+Vg=;
+        b=gnQCoT+CdzDQXVajDnhmMOwFAcvIeU4QIeGUDTVw9tNTM0WkI6DINZ39mLCn9dENlX
+         xRTmqFaP8JLk+3n0jrnIWF0MBO6nd9bGHS04glUw8Frp5c8fSAH7Sgvo20toPPjItRHp
+         +AK2GG+YDJyVnOGuHMgigUhCLO6ebKn+Ny9WVCJGkzpk6VqMQVxymFZBqh01BWA06vF+
+         5Lj5vwAv22CBqg8ACxpDJoEU+DpXpIxGZelrN569iE9uv8MAd4a8ozQShf1cBfObzhLJ
+         ygeWUHcOJn4UDQvarjiDX4NqZPmhVcpms1sJVpOEp6yNToXVFIa/+F+zFAuTA9uFpJJx
+         Hi3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=XhqYAnSXMl3RbrlppEyMWudD9ytttQOoPl6xkzA4+Vg=;
+        b=bnQ5OaUHynQaLR4T5JZ2Fpj4iVhKR8VRDuu/mteDAok9kGSymce5vnB24D8pW0BvXB
+         8wiyQLY1N5wsrLvWCRCiPVzvksrquNJBDG1cuIGq8QbxoHduXct6Ohq/hTH/ckXgRTiT
+         T+FtuEgQsv/Ko6C43iqWBQMG2aKNGxQJPLjEvuJl18WZ7fc49k0No+x0kIJdvjbdfPgv
+         3m92yaxtcMU8MpD04fy8UvrS/nrPbZc2wEErd+/IEllBL/JRNzPchASShVMx2vBaDSmS
+         MqUXOdBK1QDviK+mpgpL1S0inuzDMHSno/BsBV6xzPHO9Edd8Pq2On64gnpdcQW7yEWw
+         gIGw==
+X-Gm-Message-State: AG10YOQAqv3R9iVIroJR68GUlwtjS34PK76EtcoIhaBbvO+OwXqzs8CuNHsiddHAlqgIE628siaDf2AUg+EqP/ZO
+X-Received: by 10.107.9.106 with SMTP id j103mr25488448ioi.104.1454890970924;
+ Sun, 07 Feb 2016 16:22:50 -0800 (PST)
+Received: by 10.107.6.206 with HTTP; Sun, 7 Feb 2016 16:22:50 -0800 (PST)
+In-Reply-To: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285740>
 
-Matt McCutchen <matt@mattmccutchen.net> writes:
+On Sun, Jan 3, 2016 at 3:52 PM, Andrey Utkin
+<andrey.utkin@corp.bluecherry.net> wrote:
+> After "Send this email? ([y]es|[n]o|[q]uit|[a]ll): y" prompt and
+> before "Password for 'smtp://XXX@gmail.com@smtp.gmail.com:587':"
+> prompt I always have a delay of 2-3 minutes. It is weird! "Unsafe
+> clients" are allowed in Gmail settings.
+> I experience this both with @gmail.com mailbox and with gmail-based
+> company domain mail.
+> I noticed this happening the first time several months ago.
+> Has anybody else experienced this? Any solution?
+> My git version is 2.6.4.
 
-> I noticed that when update_linked_gitdir chooses to update
-> .git/worktrees/<id>/gitdir, the path it writes is relative, at least
-> under some circumstances. =C2=A0This contradicts the gitrepository-la=
-yout
-> man page, which says:
+Tested more with fresh git version 2.7.1.380.g0fea050 (from git's git)
+ # equery list '*' | grep -i smtp
+dev-perl/Net-SMTP-SSL-1.30.0
+mail-mta/ssmtp-2.64-r3
 
-Duy, is it safe to say that the fix has already been cooking in
-'next' as nd/do-not-move-worktree-manually topic, we are about to
-solve this by merging down to 'master', _and_ it is very much
-appreciated when reporting bugs people check if a presumed fix is
-already cooking in 'next', try it to verify if it really fixes their
-problem, and send in a "OK fix is good" / "No that does not fix my
-case"?
-
->
-> worktrees/<id>/gitdir::
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0A text file containin=
-g the absolute path back to the .git file
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0that points to here.
->
-> IIUC, this behavior defeats one of the three safeguards that is
-> supposed to prevent "git worktree prune" from pruning information for
-> worktrees that still exist.
->
-> A simple script to reproduce:
->
-> #!/bin/bash
-> set -e -x
-> rm -rf repo worktree2
-> git init repo
-> cd repo
-> touch foo
-> git add foo
-> git commit -m 'dummy commit'
-> git worktree add ../worktree2 -b branch2
-> cat .git/worktrees/worktree2/gitdir
-> touch -d '2 days ago' .git/worktrees/worktree2/gitdir
-> (cd ../worktree2 && git status)
-> cat .git/worktrees/worktree2/gitdir
->
-> Trying this on master as of earlier today (ff4ea60), I get:
->
-> [...]
-> /PATH/REDACTED/worktree2/.git
-> [...]
-> .git
->
-> Matt
+It seems the delay is caused by git-send-email trying to resolve
+workstation's FQDN.
+When I add "smtpdomain = localhost.localdomain" to [sendmail] section
+in gitconfig, it proceeds immediately.
+The same behavior (including workaround case) happens with
+openmailbox.org and fastmail.com for me.
+BTW "smtpEncryption = tls" in gitconfig seems to mean STARTTLS, so
+using fastmail's TLS port 465 doesn't work at all, you need to use
+587.
