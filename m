@@ -1,82 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] On the --depth argument when fetching with submodules
-Date: Mon, 08 Feb 2016 12:18:10 -0800
-Message-ID: <xmqq8u2v7y7x.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
-	<xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
-	<FA2DA97F-D944-4784-8297-E2885F197AC0@gmail.com>
-	<CAGZ79kYT8EWv6T=3bW_fH+_Q8p74p=JyzbErB+TOPO2VtVQHgQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Mon, 8 Feb 2016 15:20:43 -0500
+Message-ID: <20160208202043.GA6002@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1602061518220.2964@virtualbox>
+ <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+ <alpine.DEB.2.20.1602061708220.2964@virtualbox>
+ <CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+ <32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
+ <CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
+ <20160208141552.GC27054@sigill.intra.peff.net>
+ <20160208150709.GA13664@sigill.intra.peff.net>
+ <xmqqpow7807l.fsf@gitster.mtv.corp.google.com>
+ <20160208195230.GA30693@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 21:18:30 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 21:20:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSsGT-0004pa-E9
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:18:29 +0100
+	id 1aSsIk-0007mQ-T6
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:20:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755276AbcBHUSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 15:18:14 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58766 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752699AbcBHUSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 15:18:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D94EA4200E;
-	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RPq2/dBx4ORuaJIg7kcQ7tXSmi0=; b=GXiOO2
-	H5Cqjm/zgpmTFNsXDxVmzqv2kMBMjKJsYWMM7mEokBowza2nACkE5LLKcyqLfRjS
-	6yCnNeCztlR+VqkSoE1HefaztSCRfdACJPIiYfIqAnviDs8Y/MwPS7tPtvidVUWr
-	uyZHK/26fGv5n3QGRwg0HxEiD56tiQqkypNiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xe8nX5R95lGhuIcab5hRBU9hjd7Sk5kC
-	+xBg3oY/CbDYiEFI+PJwR5rX14rx1Mf3DLzJgqDofGBSoqKTHmd7QIBkhVhveMC+
-	3JIsIj+kyMBHb9izAPQzUwjEBP4k2evO14PbODn7+FlYthPFKBxSFd/zcpJ/nfl4
-	AgL9uRKhdC8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0C204200D;
-	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 543904200C;
-	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
-In-Reply-To: <CAGZ79kYT8EWv6T=3bW_fH+_Q8p74p=JyzbErB+TOPO2VtVQHgQ@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 8 Feb 2016 10:27:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 13E68510-CEA1-11E5-B8D7-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753563AbcBHUUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 15:20:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39434 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750781AbcBHUUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 15:20:46 -0500
+Received: (qmail 16504 invoked by uid 102); 8 Feb 2016 20:20:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 15:20:45 -0500
+Received: (qmail 8828 invoked by uid 107); 8 Feb 2016 20:20:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 15:20:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2016 15:20:43 -0500
+Content-Disposition: inline
+In-Reply-To: <20160208195230.GA30693@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285801>
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Feb 08, 2016 at 02:52:30PM -0500, Jeff King wrote:
 
-> ... Instead of the branch, you can just pass
-> a sha1 to git fetch and it sometimes works (if the server permits fetching
-> arbitrary or hidden sha1s. Though Jonathan noted this check may be in
-> the client only and the server trusts the client on not wanting arbitrary
-> sha1s?)
+> Here is my patch again, with that part removed, and the tests fixed up.
+> Though on reflection, I do think it would be better if we could simply
+> expand the wildcard globs to say "does this match anything in the file
+> system". That makes a nice, simple rule that follows the spirit of the
+> original. I'm not sure if it would be easy to apply magic like ":(top)"
+> there, but even if we don't, we're not worse off than we are today
+> (where that requires "--" unless it happens to have a wildcard, as
+> above).
 
-allowtipsha1inwant and allowreachablesha1inwant are the server side
-controls that are by default off.
+So here is a hacky attempt at that. It uses glob(), which is not quite
+right for the reasons below, though I suspect works OK in practice.
 
-> So for fetching I think we need to have a "--try-to-get-commit <sha1>"
-> argument for fetch, which depending on the server capabilities and
-> the history obtained otherwise may try again to fetch the exact sha1.
+I think doing it correctly would require actually calling our
+read_directory() function. That feels kind of heavy-weight for this
+case, but I guess in theory the pathspec limits it (and it's not like
+glob() does not have to walk the filesystem, too). So maybe it's not so
+bad.
 
-Hmph, "try"?  t5516 seems to show how to do this.
-
-I however have to wonder how we disambiguate a 40-hex that is an
-object name and a branch whose name happens to be 40-hex.
+---
+diff --git a/setup.c b/setup.c
+index 2c4b22c..d8a7b9d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "dir.h"
+ #include "string-list.h"
++#include <glob.h>
+ 
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
+@@ -130,6 +131,26 @@ int path_inside_repo(const char *prefix, const char *path)
+ 	return 0;
+ }
+ 
++/*
++ * Return true if a file exists that matches the pattern
++ * glob. Note that this _should_ use our regular wildmatch
++ * pattern matches, but there is no ready-made glob()
++ * function there. This is a cheap hack that makes
++ * simple things like "*.c" work without having to
++ * use a "--" disambiguator.
++ *
++ * A custom glob() could also do this more efficiently; we don't
++ * care about collecting the results, and can quit as soon as
++ * we see one.
++ */
++static int glob_exists(const char *pattern)
++{
++	glob_t data;
++	int r = glob(pattern, GLOB_NOSORT, NULL, &data);
++	globfree(&data);
++	return !r;
++}
++
+ int check_filename(const char *prefix, const char *arg)
+ {
+ 	const char *name;
+@@ -139,12 +160,14 @@ int check_filename(const char *prefix, const char *arg)
+ 		if (arg[2] == '\0') /* ":/" is root dir, always exists */
+ 			return 1;
+ 		name = arg + 2;
+-	} else if (!no_wildcard(arg))
+-		return 1;
+-	else if (prefix)
++	} else if (prefix)
+ 		name = prefix_filename(prefix, strlen(prefix), arg);
+ 	else
+ 		name = arg;
++
++	if (!no_wildcard(arg))
++		return glob_exists(name);
++
+ 	if (!lstat(name, &st))
+ 		return 1; /* file exists */
+ 	if (errno == ENOENT || errno == ENOTDIR)
