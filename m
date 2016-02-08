@@ -1,101 +1,108 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Timezone with DATE_STRFTIME
-Date: Mon, 8 Feb 2016 15:46:43 +0000
-Message-ID: <20160208154643.GQ29880@serenity.lan>
-References: <20160208143317.GN29880@serenity.lan>
- <20160208152858.GA17226@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t9100: fix breakage when SHELL_PATH is not /bin/sh
+Date: Mon, 8 Feb 2016 17:34:14 +0100
+Message-ID: <CAA19uiRsdc0eyZDqGtjpAcLyn=hyO4DXbhDbd=hoj8OxK2GK3A@mail.gmail.com>
+References: <982f6f499c988e1063275e2951c9856d622a83f3.1454872161.git.git@drmicha.warpmail.net>
+	<20160208135013.GA27054@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 08 16:46:57 2016
+X-From: git-owner@vger.kernel.org Mon Feb 08 17:34:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSo1g-0002WY-MG
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 16:46:57 +0100
+	id 1aSolc-0002is-S1
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 17:34:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144AbcBHPqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 10:46:53 -0500
-Received: from mta1-jackal.aluminati.org ([72.9.247.211]:41787 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755140AbcBHPqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 10:46:51 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id ED4F6CDA525;
-	Mon,  8 Feb 2016 15:46:50 +0000 (GMT)
-X-Quarantine-ID: <sPZh-Fci0xaP>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id sPZh-Fci0xaP; Mon,  8 Feb 2016 15:46:50 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 801D9CDA55F;
-	Mon,  8 Feb 2016 15:46:44 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20160208152858.GA17226@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1754134AbcBHQeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 11:34:20 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:42675 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752996AbcBHQeQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2016 11:34:16 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 968A020930
+	for <git@vger.kernel.org>; Mon,  8 Feb 2016 11:34:15 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 08 Feb 2016 11:34:15 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=CB8qJ
+	T+FykvelRlTS0ZWXwybgf0=; b=k57kPhGJ1JSWw76Nw2Hj31Oa8vyUSrK0WZEOC
+	UW1V1GjsD2yiZ1o+e24lwk/sKwTlfApqFi1rg8tI0+CqVHF6z2Dl2xdv2f3+haJP
+	C3pGcw2p0u7fAzuxsgnPultqUDwV8Hf739BsgUuInPB4Q0vYOARxUNU0kK2MPzGo
+	4aLBEU=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=CB8qJT+FykvelRlTS0ZWXwybgf0=; b=Cm9YP
+	dhp01OE6phXZlN3xD5dcYPCdhCsf8+0IvR8PqcTb9LAfa+UzVrtCTok4pFTmUZpX
+	aYAGIj3OYbVaFsnAejhPNdRRi6ARksxlspJGUHh+2C1LXQMoQNHrBqwfS80lYZPF
+	9ClvKQ06oL5CyGQuGGzSPCvE/lI9FpnAHO0BXU=
+X-Sasl-enc: YP40g+XZJLwM0TPkMjxOTIseLzR1/l4uDX54cTSirvrL 1454949255
+Received: from mail-wm0-f44.google.com (mail-wm0-f44.google.com [74.125.82.44])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2D2D8C0001A
+	for <git@vger.kernel.org>; Mon,  8 Feb 2016 11:34:15 -0500 (EST)
+Received: by mail-wm0-f44.google.com with SMTP id p63so123492326wmp.1
+        for <git@vger.kernel.org>; Mon, 08 Feb 2016 08:34:15 -0800 (PST)
+X-Gm-Message-State: AG10YORzkcXEkTqVUrw23oULDh5ZM+oCJ238n2mxeLJwwcHecwdOFE2KPNzg4cnQ1zfqtKVEdLJ7UjTDb735Cg==
+X-Received: by 10.194.123.228 with SMTP id md4mr28906492wjb.6.1454949254410;
+ Mon, 08 Feb 2016 08:34:14 -0800 (PST)
+Received: by 10.194.81.69 with HTTP; Mon, 8 Feb 2016 08:34:14 -0800 (PST)
+In-Reply-To: <20160208135013.GA27054@sigill.intra.peff.net>
+X-Gmail-Original-Message-ID: <CAA19uiRsdc0eyZDqGtjpAcLyn=hyO4DXbhDbd=hoj8OxK2GK3A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285780>
 
-On Mon, Feb 08, 2016 at 10:28:58AM -0500, Jeff King wrote:
-> On Mon, Feb 08, 2016 at 02:33:17PM +0000, John Keeping wrote:
-> 
-> > I have just noticed that with DATE_STRFTIME, the timezone in the output
-> > is likely to be incorrect.
-> > 
-> > For all other time formats, we print the string ourselves and use the
-> > correct timezone from the input, but with DATE_STRFTIME strftime(3) will
-> > always use the system timezone.
-> 
-> You mean here that the "%z" formatting will not be correct, right?
-> AFAICT the time shown is generally correct for the original of the
-> author, and we simply need to communicate the zone to strftime.
-> 
-> Taking the current tip of master, for instance, I get:
-> 
->   $ for i in \
->       default \
->       local \
->       "format:%H:%M %z" \
->       "format-local:%H:%M %z"; do
->             git log -1 --format=%ad --date="$i" ff4ea6004
->     done
->   Fri Feb 5 15:24:02 2016 -0800
->   Fri Feb 5 18:24:02 2016
->   15:24 +0000
->   18:24 +0000
-> 
-> You can see that my system is in -0500, three hours ahead of the author.
-> And as expected, strftime shows the time in the original author's
-> timezone. The %z information is totally bogus, but I don't think it has
-> anything to do with the system time. It is simply that we don't provide
-> it (...but having just looked at _your_ local timezone from your email,
-> I can guess how you got confused :) ).
-> 
-> So I think the fix is probably just that we need to feed the zone
-> information to strftime via the "struct tm".
+[warning: experimenting with forwarding to and replying from gmail...]
+2016-02-08 14:50 GMT+01:00 Jeff King <peff@peff.net>:
+> On Sun, Feb 07, 2016 at 08:11:37PM +0100, Michael J Gruber wrote:
+>
+>> bcb11f1 (mingw: mark t9100's test cases with appropriate prereqs, 2016-01-27)
+>> replaced "/bin/sh" in exec.sh by the shell specified in SHELL_PATH, but
+>> that breaks the subtest which checks for a specific checksum of a tree
+>> containing.
+>>
+>> Revert that change that was not explained in the commit message anyways
+>> (exec.sh is never executed).
+>
+> I think this just re-breaks things on Windows. That first setup test
+> used "chmod +x" (which is brought back by your patch), without having
+> the POSIXPERM prerequisite.
+>
+> We probably do not want to mark the whole setup test as POSIXPERM, as
+> that would effectively break all of the other tests on Windows. The rest
+> of the tests need to be able to work whether or not the "chmod +x" was
+> run. It may be simpler to just break the executable-bit tests, including
+> setup, out to their own section of the script.
+>
 
-If "struct tm" had a standard field for that...
+The commit message does not explain that part of the patch at all - to
+me it looks as if the direct "echo" and "chmod +x" is simply replaced
+by calling a function which does just that, or more exactly, not quite:
 
-Obviously "struct tm" does have a field for the offset (which is how we
-end up in +0000 above, because our "struct tm" comes from gmtime(3)),
-but it's not standardized so I don't think we can rely on it.
+> That being said, t9100 seems to pass for me, even at bcb11f1. Can you
+> show us the breakage you are seeing?
+>
+> -Peff
 
-AFAICT the only way to pass the timezone into the C library time
-functions is via $TZ or the global "timezone" variable, but from looking
-at a couple of implementations I don't think strftime() will actually
-look at those (the timezone is instead embedded when the "struct tm" is
-generated).
+SHELL_PATH=/bin/dash (in config.mak)
+
+As I explained in my commit message, the problem arises when
+SHELL_PATH is not "/bin/sh" and, consequently,
+the generated "exec.sh" results in a blob with a different sha1.
+
+Just try "/usr/bin/sh" for good measure...
+
+Michael
+
+[This time plain text, hopefully, and thus vger-palatable. How do I
+make this default...]
