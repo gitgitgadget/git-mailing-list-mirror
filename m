@@ -1,91 +1,88 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
 Subject: Re: [PATCH v1] config: add '--sources' option to print the source of
  a config value
-Date: Mon, 8 Feb 2016 12:22:01 +0100
-Message-ID: <CAHGBnuOcWDhxn+poXhxasFW3gSon7fv8sugZqPjGZFMxNyf7Ng@mail.gmail.com>
+Date: Mon, 8 Feb 2016 12:25:58 +0100
+Message-ID: <56B87B46.6050304@gmail.com>
 References: <1454661750-85703-1-git-send-email-larsxschneider@gmail.com>
-	<56B483C0.6070906@gmail.com>
-	<20160205112240.GA18581@sigill.intra.peff.net>
-	<DF57DD4F-630F-421D-A379-0A451F6509DF@gmail.com>
+ <20160205112001.GA13397@sigill.intra.peff.net> <56B48803.9080909@gmail.com>
+ <20160205135855.GA19154@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 12:22:11 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 08 12:26:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSjtQ-0002l5-Ue
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 12:22:09 +0100
+	id 1aSjxH-0007OW-2X
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 12:26:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbcBHLWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 06:22:04 -0500
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:35000 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbcBHLWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 06:22:02 -0500
-Received: by mail-vk0-f54.google.com with SMTP id e6so92784917vkh.2
-        for <git@vger.kernel.org>; Mon, 08 Feb 2016 03:22:01 -0800 (PST)
+	id S1751046AbcBHL0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 06:26:01 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34378 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890AbcBHL0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 06:26:01 -0500
+Received: by mail-wm0-f67.google.com with SMTP id p63so15037995wmp.1
+        for <git@vger.kernel.org>; Mon, 08 Feb 2016 03:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7Q7lQoXwxLMqL1maQ+DyBujY+Gc0ZNAyeVJ0zfBBwH0=;
-        b=JhpAx4K35wYnKD7SFO8qnEoXP3+uAtPpY4OtwLLk8mfGCEA2WvOmD1FHTweHxxzNRY
-         q19HLe0C/ZRiwrryzqOfDQooZ4y32tMxlSs6aTqsfZWp47VFVEHpaSogxQDDQVQ39X3z
-         QW29bPOVzko4K3hpiHFxqcFvmvghVPsLf0JE2jjE4Xw6nY1AdswKsReI1+fe2Xg6GmOd
-         WL8TgXWpkP7n+w9Z0rnhal5yynCO5eotMU/nTWQkYKkEjuJy/VlB0eYi4NoMqN02naOG
-         fNjwYHT90GVmlWInN9mQG8xcelggcTGdPIGJyYNr902TVGkRLVHIamI1yvO2rx2L9BLS
-         0XmQ==
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=8towDdi3cKrx0G1GavFVGLRwO2++B4nHCrHCN/Qh06A=;
+        b=sL4alcnK4vEKNRnYBgXdhKs0301u0rX+FHniEPAhK5rk6pr37UCXANrl1WMXiQwnvN
+         X+eW96GrR3/sU4tz8JzHnT+d+ggVOvfGrgh3y9c97WruMPHJLXfrkPFpLg5e7ncdjoJC
+         bh5Z8UcAOZcN1yCMHT8/ZOyNXdoRp1id0MQpAsNAGGcq9Q/6iN2YhEJb3g6KCqMdZlpW
+         v4r89lp/hbl0IaM6OIZ0ymks4flffXcY/qHh/P4L4NweXFl8HyQHmVMD8/iv4mjvlWMt
+         elHkyzJrQ5a0mgHYX1dSPnlFfzoiiNUhEJfUvrdehgY/boT19OuRjHNv5g4+ecZRzJQs
+         f7iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=7Q7lQoXwxLMqL1maQ+DyBujY+Gc0ZNAyeVJ0zfBBwH0=;
-        b=CDwQilVTdDxxpxMuRiQcfqszCwQXlCN7cvPAN6rz64Ia5Ep5huekjwbIgFvlGeT3Z5
-         FjRV8k/7OF9PSL0v6V153x0NMjcJbs6dJUcSrNGPaRIXAFCgo66DRpnJwKvSiOq2WSZf
-         HdSUEgDHqOcuEBMHnAtHthU4HfW9zIBV4FPmvOwDq09e5KzN6yr+kfIL8h/KvAKx8PXI
-         EYM2Ga+mb7JwiJmjT8uB9/dmceyalo84WPUemPl6sZCrg9lHD1hk1KD0n8NGcb4GMEY7
-         q7DT6ubxNXSVes+zryO9wGKgN5kq3bK48Azu55ePUP43TPNmoH8sKfnE65smFfhPIspN
-         sdLQ==
-X-Gm-Message-State: AG10YOSfWHc/9PwHv47hwxqB5LUd2mdSUI7hm+GAx3iu+dBK2VZ9FSZBmQw9qzOo7rqYfk1FA5ZMTd0OLnVltA==
-X-Received: by 10.31.178.134 with SMTP id b128mr17942322vkf.112.1454930521381;
- Mon, 08 Feb 2016 03:22:01 -0800 (PST)
-Received: by 10.176.68.6 with HTTP; Mon, 8 Feb 2016 03:22:01 -0800 (PST)
-In-Reply-To: <DF57DD4F-630F-421D-A379-0A451F6509DF@gmail.com>
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=8towDdi3cKrx0G1GavFVGLRwO2++B4nHCrHCN/Qh06A=;
+        b=Pvj3nPo5r7XLiYiv289Gh77Bn83eiZLgXNVEVMKg+MutltDKnPzEI/jPhZeqTq9MF4
+         82eVRgGPWPu/8N6kxDF2MYmHvWpfrgmNLUI8DGqRsXLLTC5NItudiXHkc/iqTzTOpPHh
+         9z5GgVWf/ggDkrZunhOrMdWS0MfEjBBRL7e5g1eqNFtRgdlv1CXfxiO2ADXBb2MWFGn5
+         yrjeBDB1TUKde5SAsJ7XelBijfMVVy4N8LMVo9prlaKrej94jkRWaBpV/bdMQkXKeUo4
+         uJYUc3VexsRLcWMmjj2K6BDPmbcX0HcNW8hUudSDp6RKSHvGZJ8pEBprlxarVFXefAug
+         bc0g==
+X-Gm-Message-State: AG10YOS17KLEUrAk8N0zYfezHqugTAhV9nkezvyuqm/qRsKAMcPuoIo+QG+6gFsEdf3c/w==
+X-Received: by 10.28.182.136 with SMTP id g130mr23710064wmf.10.1454930759955;
+        Mon, 08 Feb 2016 03:25:59 -0800 (PST)
+Received: from [10.223.62.214] ([131.228.216.134])
+        by smtp.googlemail.com with ESMTPSA id 73sm12229839wmm.7.2016.02.08.03.25.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 08 Feb 2016 03:25:59 -0800 (PST)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <20160205135855.GA19154@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285756>
 
-On Sun, Feb 7, 2016 at 8:28 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
+On 2/5/2016 14:58, Jeff King wrote:
 
->>> However, the naming of the '--sources' option sounds a bit misleading to me.
->>> It has nothing to do with source code. So maybe better name it '--origin',
->>> or even more verbose '--show-origin' or '--show-filename'?
->>
->> I think he inherited the "--sources" name from me. :) I agree it could
->> be better. I think "--show-filename" is not right as there are
->> non-filename cases.  Just "--origin" sounds funny to me, perhaps because
->> of git's normal use of the word "origin".
->>
->> I like "--show-origin" the best of the ones suggested.
+> Yeah, I agree it's unlikely. And the output is already ambiguous, as the
+> first field could be a blob (though I guess the caller knows if they
+> passed "--blob" or not). If we really wanted an unambiguous output, we
+> could have something like "file:...", "blob:...", etc. But that's a bit
+> less readable for humans, and I don't think solves any real-world
+> problems.
 >
-> I understand your reasoning and I agree that "--show-origin" is better than
-> "--sources". However, I think just the word "origin" could be misleading in
-> this context because people associate it with Git remotes. How about
-> "--show-config-origin" then? Or would that be too verbose?
+> So I think it would be OK to use "<command line>" here, as long as the
+> token is documented.
 
-Well, "origin" just happens to be the name of the default remote.
-AFAIK all options that deal with remotes have "remote" and not
-"origin" in their name, so I think the risk of confusion is rather
-low. But I'd be fine with "--show-config-origin", too. Although it's
-verbose, it's probably not used very often, so personally I could live
-with typing the extra character. Esp. if you add Bash completion
-support for it :-)
+Thinking about it again, I actually do like Peff's prefix solution 
+better. It would solve the real-world problem that my proposed "<command 
+line>" marker could in fact be a file name.
 
--- 
-Sebastian Schuberth
+Regards,
+Sebastian
