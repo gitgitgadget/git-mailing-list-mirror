@@ -1,109 +1,88 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Avoid interpreting too-long parameter as file name
-Date: Mon,  8 Feb 2016 12:16:28 +0700
-Message-ID: <1454908588-22475-1-git-send-email-pclouds@gmail.com>
-References: <alpine.DEB.2.20.1602071317330.2964@virtualbox>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/8] pack-objects: produce a stable pack when --skip is given
+Date: Mon, 8 Feb 2016 12:23:34 +0700
+Message-ID: <CACsJy8CyFnUGdBQ4XQ5jvfc7GY08jQkB-z70bDSdSNAPigYDvQ@mail.gmail.com>
+References: <1454662677-15137-1-git-send-email-pclouds@gmail.com>
+ <1454662677-15137-3-git-send-email-pclouds@gmail.com> <xmqq1t8rdmky.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CkQPX4zqW39gpODSkU+habM7TGTJ85MU-S0UuNPk9SCw@mail.gmail.com> <CAPc5daXmci5TTc0zqKe+izbrQ5XmHd75V=ZKjoWN8hMPTJPSTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ole@tange.dk, Johannes.Schindelin@gmx.de,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 08 06:16:45 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 06:24:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSeBm-0004sz-Ik
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 06:16:42 +0100
+	id 1aSeJX-0006h4-MT
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 06:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbcBHFQf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2016 00:16:35 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33643 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbcBHFQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 00:16:20 -0500
-Received: by mail-pf0-f176.google.com with SMTP id q63so25954pfb.0
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 21:16:19 -0800 (PST)
+	id S1750876AbcBHFYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 00:24:08 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:36071 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711AbcBHFYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 00:24:06 -0500
+Received: by mail-lb0-f177.google.com with SMTP id dx2so76876609lbd.3
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 21:24:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=m60N3emFlkrg6C7A3hcPd/2bPHipD+IHJ1ehUdyUJyU=;
-        b=aGyEXnF7QCGbpa1A7q+twBYpTxrn5l9BRKKJXbs7y02Bt7JOAdESyHWEEh0gkgpvu0
-         iEw3ojudJZuzGWahieSJX/FBFxzM2WiC6xtjDDUtSIewXQUeiy1SJUB/HO5P8wmBTeLR
-         F8O6bq+zYgY01KUp2dD2Cwz8k+z0W5TqHkIL5urpw3pJU80WpZ85gOIs6iFUcS+TRg/Z
-         bI4UpW8HikR4189ER1CvLmbIijcytljxADlqmgxe0eGHhJI8pMitQu1kuMWp9zLLu3IC
-         j8l0Fr7EZyIv7A60vUv6Cm1R4W6coac+/eF5PUeSNBZOmgb/mWWH3/Z3Nfnq4AXo5LnX
-         Imlg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HbacY3fl8K1CKxea2K14Y1FM7b5z9RGMtKu6E8Vb0To=;
+        b=0FWs+HKwmVGFv/zbPH+UliQukDl/KLTStdotjnIbF1GiXx3cZ5xnw8dYJC1kxfU2Vc
+         4LPTs4o1oChLpJimEzjUe+aSTqx/IFbdiBPxoN63+gOHeQPGG1QPuAoJasCLtZwY5x7L
+         D050RU7MjGZdSLvHo1Oy2OprMauXtGWNrBpxWt/WvV2BdFnDMB3Ne40y2gYpE8ndV6mM
+         jk3tPcSQtOPS6z8q4HeX1dKk7Glbc6XYWExk1HaznGj50DGOMF50IpEO0n3FcGPIV7FF
+         O7fobaiQiKi9ubuYUs9CMtuuwirG3p5Kpr/AsPxqHsNcgdNmMkjAPSx6ST5Io87jiTN7
+         CaKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=m60N3emFlkrg6C7A3hcPd/2bPHipD+IHJ1ehUdyUJyU=;
-        b=GNJkT8ZmUhNSprvnrKqG1wxz1Y7rvsHJz63GDMtyjA+VdjzUk38BbyISELoSDrhfIu
-         I93YTxfFSxOL4u1c5P2tgMPRW/CxF6KNFl0J6NySu5US55Bl3lUBWjmyFQGez2wAn0iq
-         Y0Y5yvsv6pq6dKI06kpKuPHG2FZCOQabZ5zkg5Fq6vRBkSKpERUkVsIkowlC89YduDfn
-         B/aZfZIKcE+zJTMDdEM0NhEHhBtzdXcTsc+W1Hj8EXy2JYEW4TdrDdeVPQYl/8e/AYTm
-         n9/uigjeHAftE6Ry3TamUd7mn6ymkfVHXlxHFuKkwnZvlX16NhG08lWYc8xcb/JgtqZX
-         phTg==
-X-Gm-Message-State: AG10YOSbXRXISOZYGwkphJdRVyt8fyAW4r+pJCwzB3dg2MLiQdBc8TxNwozkCIwMSGFApg==
-X-Received: by 10.98.86.67 with SMTP id k64mr40244342pfb.50.1454908579616;
-        Sun, 07 Feb 2016 21:16:19 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id l62sm39861072pfj.7.2016.02.07.21.16.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Feb 2016 21:16:18 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 08 Feb 2016 12:16:35 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <alpine.DEB.2.20.1602071317330.2964@virtualbox>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=HbacY3fl8K1CKxea2K14Y1FM7b5z9RGMtKu6E8Vb0To=;
+        b=k0UKGEDDpKQwkqQozU6TwAiRlj+FDgn3pF+SaEthRPVhcWbLl6tyZ+4oIg3DDLOUaT
+         Uax9ki39OzoaZlpsThUOX919zyGe9CwyUccI7qIXsXHZUOawLpJRGrm/NwNl+ZhRlJ7L
+         YB+WeVy7k59ZrFJqOi2F5LBRPgEXS8vrea9vdXsdHrGX2JewPMNdk9eeiT1QO2bdQaH7
+         Vv/xeoLXOetj000pXqWPUAofBYcQGp8Pu2Qz1NB6YC2IOXvie9Mr+BSaCH7mabq2rWgD
+         0Vh8ih99Th2bnwiBm0KNRuHq93huewsRK+/5bXCv7WbythM96OnJctfVQ1bS3vHGGvTY
+         NGOg==
+X-Gm-Message-State: AG10YOTvzkBVA4gBT/UPWbcgbGe1pocBnBiimbb7yyW8S+nOrgFeAx5YyLwD4pKZOTD3+iVPA1IOtBXz+37l+A==
+X-Received: by 10.112.209.99 with SMTP id ml3mr10247811lbc.26.1454909044577;
+ Sun, 07 Feb 2016 21:24:04 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Sun, 7 Feb 2016 21:23:34 -0800 (PST)
+In-Reply-To: <CAPc5daXmci5TTc0zqKe+izbrQ5XmHd75V=ZKjoWN8hMPTJPSTQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285749>
 
-Even if it is easier to write HEAD~2000, it is legal to write
-HEAD^^^... (repeats "^" 2000 times in total). However, such a string is
-too long to be a legal filename (and on Windows, by default even much,
-much shorter strings are still illegal because they exceed MAX_PATH).
+On Sat, Feb 6, 2016 at 7:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> You noticed that tying the behavior only happens when the user asks
+>> for it, right? I don't expect people to do resumable fetch/clone by
+>> default. There are tradeoffs to make and they decide it, we offer
+>> options. So, it does not really tie our hands in the normal case.
+>
+> You misread me. I do not want to see us having to add
+> "disable_this_feature = 1" next to that "delta_search_thread = 1"
+> in this block, and then supporting code to actually disable that
+> feature, only to support this block. You are declaring that "to
+> support this mode, we must always have a way to produce a
+> byte-for-byte identical output and keep supporting it forever".
 
-Therefore, if the check_filename() function encounters too long a
-command-line parameter, it should interpet the error code ENAMETOOLONG
-as a strong hint that this is not a file name instead of dying with an
-error message.
+My last defense is, this is an extension, not part of the core
+protocol. If the burden becomes real we can always remove it.
+Modem-quality connection users may yell a bit, but the majority of
+broadband users won't notice a thing. But I understand if the answer
+is still 'no'.
 
-Noticed-by: Ole Tange <ole@tange.dk>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Note, git grep ENOENT.*ENOTDIR reveals a couple more matches, but I
- didn't check if they should receive the same treatment.
-
- Another option is just use file_exists() here instead, but I guess
- that's too relaxing.
-
- setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/setup.c b/setup.c
-index 2c4b22c..ab8f85d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -147,7 +147,7 @@ int check_filename(const char *prefix, const char *=
-arg)
- 		name =3D arg;
- 	if (!lstat(name, &st))
- 		return 1; /* file exists */
--	if (errno =3D=3D ENOENT || errno =3D=3D ENOTDIR)
-+	if (errno =3D=3D ENOENT || errno =3D=3D ENOTDIR || errno =3D=3D ENAME=
-TOOLONG)
- 		return 0; /* file does not exist */
- 	die_errno("failed to stat '%s'", arg);
- }
---=20
-2.7.0.377.g4cd97dd
+I find it unlikely that this cause much maintenance burden though, the
+packing algorithm has not changed for a very long time (most related
+change is pack bitmaps, which technically happen before pack-objects).
+The next big change (at least in public) may be pack v4. We haven't
+found a good algorithm for pack-objects on v4 yet, so there's a chance
+of problems there.
+-- 
+Duy
