@@ -1,100 +1,100 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 06/15] submodule--helper: die on config error when
- cloning module
-Date: Mon, 8 Feb 2016 15:05:51 +0100
-Message-ID: <20160208140551.GC697@pks-xps>
-References: <1454413916-31984-1-git-send-email-ps@pks.im>
- <1454413916-31984-7-git-send-email-ps@pks.im>
- <CAPig+cSLoXGHFXm96dpfjmkZkpXOFezEFZek-Jry85XkCwOsWA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Mon, 8 Feb 2016 09:15:53 -0500
+Message-ID: <20160208141552.GC27054@sigill.intra.peff.net>
+References: <6A7D4447-AC25-4591-9DA7-CD153198EC64@jetbrains.com>
+ <alpine.DEB.2.20.1602061518220.2964@virtualbox>
+ <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+ <alpine.DEB.2.20.1602061708220.2964@virtualbox>
+ <CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+ <32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
+ <CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="HG+GLK89HZ1zG0kk"
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 15:05:59 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 15:16:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSmRy-00061S-11
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 15:05:58 +0100
+	id 1aSmbf-0000Gb-U1
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 15:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbcBHOFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 09:05:54 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:57703 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751738AbcBHOFx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Feb 2016 09:05:53 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 486E1207E7
-	for <git@vger.kernel.org>; Mon,  8 Feb 2016 09:05:53 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Mon, 08 Feb 2016 09:05:53 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=Fk4IXNNaXbKXWIi6afi5UCImaM8=; b=YwOhu
-	yxxpVNpYF8gTv9KiqSRWz4t02OebUaFKc6yU4XxDYo95ftMEPysA7GgKhpNFp8hw
-	NoKMRzhLuXBjOgA9ErE7hCw7ph3py8icqXOFWN7qOMhA65I0CGM6Lpu4E92Ci+i9
-	fB+TCKmM379rvlXUcwYxclPcomGiLDLRivq+DU=
-X-Sasl-enc: kx127GjBBh6dh/OfTsDKX5WtKks3BJdra+yVJuvD9MvE 1454940352
-Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 98C77C00016;
-	Mon,  8 Feb 2016 09:05:52 -0500 (EST)
+	id S1751075AbcBHOP4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2016 09:15:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39190 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750922AbcBHOPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 09:15:55 -0500
+Received: (qmail 30852 invoked by uid 102); 8 Feb 2016 14:15:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 09:15:54 -0500
+Received: (qmail 5230 invoked by uid 107); 8 Feb 2016 14:15:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 09:15:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2016 09:15:53 -0500
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSLoXGHFXm96dpfjmkZkpXOFezEFZek-Jry85XkCwOsWA@mail.gmail.com>
+In-Reply-To: <CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285768>
 
+On Mon, Feb 08, 2016 at 12:06:44PM +0700, Duy Nguyen wrote:
 
---HG+GLK89HZ1zG0kk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 02, 2016 at 01:45:50PM -0500, Eric Sunshine wrote:
-> On Tue, Feb 2, 2016 at 6:51 AM, Patrick Steinhardt <ps@pks.im> wrote:
-> > When setting the 'core.worktree' option for a newly cloned
-> > submodule we ignore the return value of `git_config_set_in_file`.
-> > As this leaves the submodule in an inconsistent state, we instaed
-> > we want to inform the user that something has gone wrong by
->=20
-> s/instaed/instead/
->=20
-> Also, there are too many "we"s, so dropping one would be a good idea:
-> either "we instead" or "instead we".
->=20
-> > printing an error and aborting the program.
+> On Sun, Feb 7, 2016 at 10:11 PM, Kirill Likhodedov
+> <kirill.likhodedov@jetbrains.com> wrote:
+> > Hi Duy,
 > >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> >> It's from 28fcc0b (pathspec: avoid the need of "--" when wildcard =
+is
+> >> used - 2015-05-02)
+> >
+> > v2.5.0 is the first release which contains 28fcc0b.
+> > I can confirm that older versions of Git work correctly without =E2=
+=80=9C--=E2=80=9C:
+> >
+> > # /opt/local/bin/git version
+> > git version 1.7.1.1
+> > # /opt/local/bin/git show HEAD:bra[ckets].txt
+> > asd
+> >
+> > Looks like a regression?
+>=20
+> No it's a deliberate trade-off. With that change, you can use
+> wildcards in pathspec without "--" (e.g. "git log 'a*'" instead of
+> "git log -- 'a*'"). And I still believe that happens a lot more often
+> than this case. Putting "--" is _the_ way to avoid ambiguation when
+> git fails to do it properly. Though in future we may make git smarter
+> at solving ambiguation (e.g. it could do glob() to test if a wildcard
+> pattern matches any path).
 
-Thanks, fixed now.
+It's still sort-of a regression; we changed the rule and now things tha=
+t
+used to work don't. Using "--" is a good protection, but people who
+didn't have to use "--" in some cases now do.
 
---HG+GLK89HZ1zG0kk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+I wonder if we could fix this pretty simply, though, by skipping the
+"does it have a wildcard" check when we see a colon in the path. That i=
+s
+a good indication that we are using one of git's special rev syntaxes
+(either "tree:path", or ":path", or ":/search string". That breaks
+anybody who really wanted to look for "path:with:colons.*", but that
+seems a lot less likely to me.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+It doesn't cover:
 
-iQIcBAEBCAAGBQJWuKC/AAoJEBF8Z7aeq/EsyXsP/Rxadro/mr9Rmhmz9xnO8Tbz
-10wQBhTEOXcEHHWEoQkmiDquMmcAjJ97rgMa9sRbj3wbskZWajCXJsK3j1X+47HL
-5n8yd5VaH7gP6iQC6JwucqNhaatR+ZyX/cnpHRq1zSm97/rnog0G7dU67Y5ugFgu
-FVa6pVLT0x4rjvQQbxx6lD3TislUE4j+/n65UXTqy57pe7Fa1gksqYzbLB4dZUVy
-6qJdEqIlmkLq1gdXCXwieukgJYmOgALL0nzgFO/swo7WSZr/Hykwew1BusTnQf/h
-suBfagvb8DMpjJqFJ+NQCUHF/pq+DmmPm2UPIpUbiFJHoHyCg0+l0QbNlAD72Bbg
-z7uYtWoMc5616Ij2Rx+dipz65vFB7zZ8W6vKRkGBSKm7O7MqWM0aGL0zdjjvMB//
-l4EWcNBHZF1uermn/dBfBrFT1q74f2NEobchKPxh45gCbpxMi/hBBMiHPCsXDYcB
-YEsBPPZrC3ihgrbmf6Iop4Kh2rh/F1aMxALT2MF0ushxyOzB3GfMvBECXONYlokV
-dDe9pKxmfgtxRekiWWG8plWM0WjOmss7btRk9sLNJXOgOSyEkPqX8srLb5ga8iBo
-rpRXuvPcS84/Yuc/rrk5JMGDt04x/S13nx8uGHbdobSUydpwXI9r/FNYbPRNRDJS
-lz0VAvlWLg40nlBj6K+u
-=Gu4N
------END PGP SIGNATURE-----
+  git log 'HEAD^{/Merge.*}'
 
---HG+GLK89HZ1zG0kk--
+which is similarly affected by 28fcc0b. Perhaps "^{" should be such a
+magic string, as well. We can be liberal with such strings as they are
+really just limiting the impact of 28fcc0b; we would fall back in those
+cases to the usual "can it be resolved, or is it a path?" rule.
+
+-Peff
