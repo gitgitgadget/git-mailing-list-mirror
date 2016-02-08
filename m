@@ -1,76 +1,101 @@
-From: Andrey Utkin <andrey.utkin@corp.bluecherry.net>
-Subject: Re: "git send-email" thru Gmail incurs few minutes delay
-Date: Mon, 8 Feb 2016 05:15:55 +0200
-Message-ID: <CAM_ZknUrVOyCdM32qbxOD_JVfKoqUdeo5Hywyxo3b1KfG=XhEQ@mail.gmail.com>
-References: <CAM_ZknWuOSbQcGvXaCDUKAJX7hR5FxJO3a8axPYS4ekyRiczCQ@mail.gmail.com>
-	<CAM_ZknWNZFxhz8ELf+sc1X3gO=H3F+GYuNkornhU9qouffj6Hw@mail.gmail.com>
-	<CAO6TR8UGwqtsXSoYkxgjMy34rrkHAFJ+ALf0ufSaA8uDrDmxqQ@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: git submodule should honor "-c credential.helper" command line argument
+Date: Sun, 7 Feb 2016 19:44:34 -0800
+Message-ID: <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
+References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
+ <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
+ <CA+P7+xr4gQFPsUiuqSzMsUJP6_W8FnXBwX1Xes=XjksuTs=+hQ@mail.gmail.com> <56B74B17.4040304@syntevo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Andrey Utkin <andrey.od.utkin@gmail.com>
-To: Jeff Merkey <linux.mdb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 04:16:02 2016
+Cc: Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 04:44:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aScIy-0000Vh-PV
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 04:16:01 +0100
+	id 1aScl0-00057w-DR
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 04:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755518AbcBHDP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Feb 2016 22:15:57 -0500
-Received: from mail-io0-f177.google.com ([209.85.223.177]:35862 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755440AbcBHDP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Feb 2016 22:15:56 -0500
-Received: by mail-io0-f177.google.com with SMTP id g73so182796705ioe.3
-        for <git@vger.kernel.org>; Sun, 07 Feb 2016 19:15:56 -0800 (PST)
+	id S1754582AbcBHDoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Feb 2016 22:44:54 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:36624 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394AbcBHDox (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Feb 2016 22:44:53 -0500
+Received: by mail-ig0-f169.google.com with SMTP id xg9so47815008igb.1
+        for <git@vger.kernel.org>; Sun, 07 Feb 2016 19:44:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=corp-bluecherry-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=kn8M5nTd5LDZBys8hO4BGhLTgPvggsB0iu6IRrmMSJo=;
-        b=YbrOyS4j2PPLtv9VeKn8o/7eH7aEQTltkrM9VZWo8NoV8DttxlSvtPWfkl9uD3VrKJ
-         q3/qw7RZK/mhVcrkJXT5HktZaMB8+oosohZDbeFPjdsgQHlPoKNIMpJwedCZXiJx5An8
-         SaD0IY/zegzS8Y565mcUD6MYKnnz27SKxfHOgxsHq0DcNEBXgM78ENGn2X3pxYjvJ1wZ
-         rMFqaWcO2tZ3asjhSzCRphq3kdzNJbsxcyenwvebK+z93a7YluuueYio1leTWuuej+Is
-         cnYjN6IX6wt+y36tiLmu9/P+KNnyatjkW1et3eCR264zmKpWZCUimVNTObFXM8lh+kTz
-         W8Sw==
+        bh=FslKtjvLXl9Dm+fUBgLNezSbtUR9TB92Oo/aNtSuSyE=;
+        b=RZ3v9ln6RXbgNc0HcO5iT+AZPoS6U0xFD02Gdr0w+m67jn9QkEG6DTdWWCBmcYf0db
+         ITQnqAmSSsxJujDEyjjjlbxBDux8hzrmwbFCsXHhG1VcKOfFzQgtQS9eriLFiU3tgEXx
+         9uJlar1TJ4KwXi1Td6FdDmfAlnpU1nqqp8UmXuTtri59s3aX0IGGe5er8DMAmYJBJWyc
+         S89uCmWlmj9BIjUGzlxYsSD91fdhPDNu0buYxiib/rNDsao0oh7xLK+V92gEAn23vHw9
+         5rwuz702donEOEtPU0yoNNaTrYogxPByFx4mRK+dtjEA8OAVBg5mQguDI/6SrMjglwet
+         p2aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=kn8M5nTd5LDZBys8hO4BGhLTgPvggsB0iu6IRrmMSJo=;
-        b=VYRYnZLUM5QPMZbcxaKs5UiUhWD/63WC3aApb/+l1aQtKqenDgRK4xuH3332Haunt5
-         5aSCz43ARAF/K1HvHAsuUUw+h2IhXdHT/tcQvWBcN96Aes9c5saQNtA2cwhb2/D53nvX
-         vuWEnRTKqfJwxX+GDd8OUeHgFKxdYM6LapKrd9VYe8BRCm9m7lAkbc0Qi72puKbd0HWf
-         DBjllZ1qx5xGITqVbOecblfwOj3yUfdmetrYhBWUFgG+CHgObeN93nUFH99RED4opDDF
-         ASeTyMI6Wiof1+UEAWsVuVsUVJgEiPbZENis88+1IVDXX8qEcKxQ8nFvQuED7nywylIG
-         gcNQ==
-X-Gm-Message-State: AG10YOS4RyMdelInnHMF/WEtwUhEqFVvmpAFxBanZVjuUasM26v5aGLEqDI4TksoHL1mpZtMgc1UK5+0hKLxLq/I
-X-Received: by 10.107.134.208 with SMTP id q77mr28869827ioi.34.1454901355787;
- Sun, 07 Feb 2016 19:15:55 -0800 (PST)
-Received: by 10.107.6.206 with HTTP; Sun, 7 Feb 2016 19:15:55 -0800 (PST)
-In-Reply-To: <CAO6TR8UGwqtsXSoYkxgjMy34rrkHAFJ+ALf0ufSaA8uDrDmxqQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=FslKtjvLXl9Dm+fUBgLNezSbtUR9TB92Oo/aNtSuSyE=;
+        b=iA6owF92lyeYiiG3zWKu/0kLwTi3sq4FLeznCK9vbzUul/TubAuFc3YzKpkX4JP5RA
+         YA5b7+5q61Wt5wWoiJEiOwXn+mpsXx5ZUeOYKVCtBqbASekxmm+ebghCDzYbQAo8y+6E
+         yh959u72PWdqJUnjCEj7fx1nRc1kzdd3y7/GIPgJ9vtYGS15wR0IY5aJ24yNBC4mrSN1
+         IDYzVQ6tqdBOaAKcrCcvz22oNNDhAtMZrKlXQ16IFCaHqhvK6iEQYmdYtG1DXARVCwyd
+         FMK28smisPfuGek8BXCYLzkss0zpeOu1LIQjA/dLDxgPmgPRw9xKnsMnoeXtORvy//xB
+         HZ1w==
+X-Gm-Message-State: AG10YOQcSjfCsY7hNoVLJn+L/6gKWVVa2gMtuOIxE/c+vGXojJcMyk7vXEDJpexeyiuYCJdwqK4EIEn+wJ2H0g==
+X-Received: by 10.50.142.73 with SMTP id ru9mr22135587igb.92.1454903093406;
+ Sun, 07 Feb 2016 19:44:53 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Sun, 7 Feb 2016 19:44:34 -0800 (PST)
+In-Reply-To: <56B74B17.4040304@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285745>
 
-On Mon, Feb 8, 2016 at 2:42 AM, Jeff Merkey <linux.mdb@gmail.com> wrote:
-> Try this page.  Some good gmail config info.
+On Sun, Feb 7, 2016 at 5:48 AM, Marc Strapetz <marc.strapetz@syntevo.com> wrote:
+> On 07.02.2016 05:41, Jacob Keller wrote:
+>>
+>> On Wed, Feb 3, 2016 at 3:44 PM, Jacob Keller <jacob.keller@gmail.com>
+>> wrote:
+>>>
+>>> Ok so I am not sure we even really need to use "-c" option in
+>>> git-clone considering that we can just use the same flow we do for
+>>> setting core.worktree values. I'll propose a patch with you two Cc'ed,
+>>> which I think fixes the issue. There may actually be a set of
+>>> configuration we want to include though, and the main issue I see is
+>>> that it won't get updated correctly whenever the parent configuration
+>>> changes.
+>>>
+>>> Thanks,
+>>> Jake
+>>
+>>
+>> I tried adding the config as part of module_clone in
+>> submodule--helper.c but it didn't pass the test I added. I haven't had
+>> time to look at this in the last few days, but I am stuck as to why
+>> submodule--helper.c appeared to not use module_clone as I thought.
 >
-> http://kernelnewbies.org/FirstKernelPatch
 >
-> Jeff
+> I've tried to just comment out clearing of environment variables in
+> git-sh-setup.sh, clear_local_git_env(). I've noticed that "-c
+> credentials-helper ..." is stored in $GIT_CONFIG_PARAMETERS and with
+> existing code is reset there. If not clearing the environment variables, at
+> least "git submodule init" is working properly. I didn't try with other
+> commands nor to run tests.
+>
+> -Marc
+>
+>
 
-Thanks Jeff, but I believe there's nothing new for me. I have
-successfully sent my first kernel patch a long time ago.
-Also my gitconfig sendemail section follows exactly the gmail-based
-example from git-send-email manpage.
+I'll have to dig more into this next week.
 
--- 
-Bluecherry developer.
+Regards,
+Jake
