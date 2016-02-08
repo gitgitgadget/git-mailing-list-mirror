@@ -1,74 +1,101 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Add Cc,Tested-by list while 'git commit'
-Date: Mon, 8 Feb 2016 13:25:00 +0100
-Message-ID: <CAP8UFD3-rBUxM=6F41-6BCiRhfO5BFO5_ds4xBfYt6_QeceAmQ@mail.gmail.com>
-References: <CAD6G_RQyTYPzFBb5Sm9zzAXAe48Ln08Jd7W0aecUN-hYoVy+gg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1] travis-ci: override CFLAGS properly, add
+ -Wdeclaration-after-statement
+Date: Mon, 8 Feb 2016 07:25:51 -0500
+Message-ID: <20160208122551.GD24217@sigill.intra.peff.net>
+References: <1454921958-53129-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jagan Teki <jteki@openedev.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 13:25:13 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon Feb 08 13:25:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSksQ-0006TS-Ah
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 13:25:11 +0100
+	id 1aSktC-0007Qq-Eg
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 13:25:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752480AbcBHMZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 07:25:03 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:33557 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbcBHMZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 07:25:01 -0500
-Received: by mail-lb0-f171.google.com with SMTP id x4so82972846lbm.0
-        for <git@vger.kernel.org>; Mon, 08 Feb 2016 04:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=VsE4mvT2bk47PKHvE0Na8XMtb1fAvGqTFkXJJm+Gbrs=;
-        b=BWSrlOo1CLYuZe5w0F3XPJrlkm/6kYCtnVs7+u03UM1Ka2+3f1jkqzkbZyrlyT1a7X
-         lpMcPjxQ/53rUSxoEjB4oV9Sd/9ep+jJMpDe/KL+Phse3FHSz3yrMKW1cCiFxhxNDbpC
-         J4Xpl0LPq3UjZKS2GsRg0orVckcjtAqMmCNnVJoGeMEZWIIOkJ/Xd1leGPY8NgQDzhrd
-         rOYQGG6nb1+tuyAOG4xs24OMBqPGHMGu4UakWcYbsxnaWN4KYRI8yBPUFje0g4/7IYhf
-         6LA1GpuFYqWuOrilG4lq4bq9HaWkC/Pu+8ivV0f51Hqkyh2bGs6PwNzchtcet98MJe0y
-         aEsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=VsE4mvT2bk47PKHvE0Na8XMtb1fAvGqTFkXJJm+Gbrs=;
-        b=NI7Cxo85iNdmoXi5nS+FgZ8/1SP1v+FBP5BQYaKLOazv23SXJoRYpjSnd43vBA1UT6
-         FpNVAEwAbDPbSvtqCTV/wlyuPZco2vbgvoa62Ah3+zsVxSUIW7Kmd0hZSQEKFjceLX9k
-         kgT/xS+WthP6BKA7eGJExLneeYz6Nafovhuf0IzAoe7t7SQWrRbqp5nfQZy+L1rx9vPW
-         9mKMFDnZiH/Uy38L5U7TFYeGw96K8ww0poQ78c7jJ33d7Te+7OKMEU5w4Xf4Tf8O0Bjn
-         C61yQubuYhAEqKf17kD+PQQUQkbc+q/MgBcsrNrRdCat8VKRxoIBXlwdnBvrYgUc50XD
-         6j3A==
-X-Gm-Message-State: AG10YOTtjkU8cqncPsyjZJFtZ7siGKYyjJOq0DcpcGOgVPmCO33vVhZwlWv/2MUqMdha6oo5qAmIfqPN57HXgA==
-X-Received: by 10.112.168.5 with SMTP id zs5mr11963438lbb.56.1454934300291;
- Mon, 08 Feb 2016 04:25:00 -0800 (PST)
-Received: by 10.25.152.199 with HTTP; Mon, 8 Feb 2016 04:25:00 -0800 (PST)
-In-Reply-To: <CAD6G_RQyTYPzFBb5Sm9zzAXAe48Ln08Jd7W0aecUN-hYoVy+gg@mail.gmail.com>
+	id S1752211AbcBHMZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 07:25:55 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39153 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751552AbcBHMZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 07:25:54 -0500
+Received: (qmail 24832 invoked by uid 102); 8 Feb 2016 12:25:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 07:25:53 -0500
+Received: (qmail 4526 invoked by uid 107); 8 Feb 2016 12:25:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 07:25:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2016 07:25:51 -0500
+Content-Disposition: inline
+In-Reply-To: <1454921958-53129-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285761>
 
-On Sun, Feb 7, 2016 at 4:23 PM, Jagan Teki <jteki@openedev.com> wrote:
-> Do we have any git config options to add Cc and Tested-by list like
-> Signed-off-by is fetched from git config.
->
-> example:
->
-> $ git commit -s
->
-> Cc: Arjun Ani <arjun.ani@abcd.com>
-> Tested-by: Jagan Teki <jteki@openedev.com>
-> Signed-off-by: Jagan Teki <jteki@openedev.com>
->
-> Please share if we have any inputs to solve this.
+On Mon, Feb 08, 2016 at 09:59:18AM +0100, larsxschneider@gmail.com wrote:
 
-You may want to take a look at 'git interpret-trailers'.
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> The global Travis-CI environment variable CFLAGS did not override the
+> CFLAGS variable in the makefile. Pass CFLAGS as make variable to
+> override it properly.
+
+Makes sense.
+
+> In addition to that, add '-Wdeclaration-after-statement' to make a
+> Travis-CI build fail (because of '-Werror') if the code does not adhere
+> to the Git coding style.
+
+I think this is a good step, but is probably the tip of the iceberg. I
+typically use:
+
+  -Wall -Werror -Wdeclaration-after-statement
+  -Wpointer-arith -Wstrict-prototypes -Wvla
+  -Wold-style-declaration -Wold-style-definition
+
+Junio does his integration testing with a similar set, which I think you
+can find in one of the scripts in his "todo" branch.
+
+> I made this patch because Peff pointed out to me that "git style doesn't
+> allow declaration-after-statement" [1]. I wonder if it would make sense
+> to add this check even in the makefile [2]?
+
+I think we keep the default CFLAGS to a pretty tame set, so that we
+build out of the box on a large number of compilers. I know I have run
+into problems with -Wold-style-* on clang (though perhaps that is no
+longer the case, as I haven't tried recently), let alone truly antique
+compilers.
+
+I have, however, wondered if it would make sense to codify this
+knowledge in the Makefile with an optional knob. E.g., let DEVELOPER=1
+roughly mean "you are a git dev, you have a reasonably modern compiler,
+and want to be as careful as possible before sending your patches".
+
+> I am no make expert, but I
+> also wonder why we don't use the override directive [3] for the CFLAGS?
+> AFAIK this would allow a make invocation like this:
+> 
+> make target CFLAGS+=-Wdeclaration-after-statement
+
+I think it is rather the opposite. If we used:
+
+  override CFLAGS+= ...
+
+in the Makefile, then if a user did:
+
+  make CFLAGS=...
+
+we would add to their CFLAGS (whereas without the override, our
+appending is ignored). Our Makefile solves that in a different way,
+though. We pass $(ALL_CFLAGS) to the compiler, and that in turn is made
+up of $(CFLAGS) and $(BASIC_CFLAGS). We assume the user tweaks the
+former, and we set the latter based on Makefile knobs (e.g., NO_CURL,
+etc).
+
+-Peff
