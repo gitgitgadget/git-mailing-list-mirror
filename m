@@ -1,8 +1,7 @@
 From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
-Subject: [PATCH 1/2] git-svn: enable "svn.pathnameencoding" on dcommit
-Date: Tue, 9 Feb 2016 00:20:31 +0900
-Message-ID: <56B8B23F.2020901@f2.dion.ne.jp>
-References: <56B8B1EA.5020901@f2.dion.ne.jp>
+Subject: [PATCH 0/2] enable "svn.pathnameencoding" on dcommit
+Date: Tue, 9 Feb 2016 00:19:06 +0900
+Message-ID: <56B8B1EA.5020901@f2.dion.ne.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
@@ -14,56 +13,58 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSnku-0006Ge-Or
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 16:29:37 +0100
+	id 1aSnkv-0006Ge-Nf
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 16:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788AbcBHP3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 10:29:33 -0500
-Received: from mail-ae0-f61.auone-net.jp ([106.187.230.61]:38584 "EHLO
+	id S1754786AbcBHP3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 10:29:32 -0500
+Received: from mail-ae2-f141.auone-net.jp ([111.87.219.141]:46793 "EHLO
 	dmta02.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754439AbcBHP30 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1754495AbcBHP30 (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 8 Feb 2016 10:29:26 -0500
-X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Feb 2016 10:29:26 EST
-Received: from amlmta050.auone-net.jp (amlmta050-MM [10.188.23.89])
-	by dmta02.auone-net.jp (au one net mail) with ESMTP id B2B424001DF
-	for <git@vger.kernel.org>; Tue,  9 Feb 2016 00:24:09 +0900 (JST)
+Received: from amlmta048.auone-net.jp (amlmta048-MM [10.188.23.63])
+	by dmta02.auone-net.jp (au one net mail) with ESMTP id 7393340025C
+	for <git@vger.kernel.org>; Tue,  9 Feb 2016 00:23:53 +0900 (JST)
 Received: from [0.0.0.0] ([77.247.181.163])
-	by amlmta050.auone-net.jp id 56b8b3160004f780000055dd000064fca00008b3cc6b;
-	Tue, 09 Feb 2016 00:24:06 +0900
+	by amlmta048.auone-net.jp id 56b8b305000f2db900006fcb00007176200007fd3cf8;
+	Tue, 09 Feb 2016 00:23:49 +0900
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.5.1
-In-Reply-To: <56B8B1EA.5020901@f2.dion.ne.jp>
 X-MXM-DELIVERY-TYPE: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285776>
 
-Without the initialization of $self->{pathnameencoding}, conversion in
-repo_path() is always skipped as $self->{pathnameencoding} is undefined
-even if "svn.pathnameencoding" is configured.
+These are small fixes to problems I encountered using git-svn with
+svn.pathnameencoding configuration (cp932 in my case). The problems
+happen only when sending changes on non-ASCII paths.
 
-The lack of conversion results in mysterious failure of dcommit (e.g.
-"Malformed XML") which happen only when a commit involves a change on
-non-ASCII path.
+I'm sorry not coming with test scripts, but I couldn't figure out how to
+write tests to reproduce problems happen only with non-UTF-8 paths while
+the tests seems to be run on UTF-8 locale.
 
-Signed-off-by: Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>
----
- perl/Git/SVN/Editor.pm | 1 +
- 1 file changed, 1 insertion(+)
+I just ran existing tests with these fixes and there was no breakage
+(with UTF-8 locale).
 
-diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
-index c50176e..d9d9bdf 100644
---- a/perl/Git/SVN/Editor.pm
-+++ b/perl/Git/SVN/Editor.pm
-@@ -41,6 +41,7 @@ sub new {
- 	                       "$self->{svn_path}/" : '';
- 	$self->{config} = $opts->{config};
- 	$self->{mergeinfo} = $opts->{mergeinfo};
-+	$self->{pathnameencoding} = Git::config('svn.pathnameencoding');
- 	return $self;
- }
- 
+I think sending these fixes as-is is better than not sending because of
+my lack of ability to write such tests. I also expect that these fixes
+can be applied as-is because there were some small fixes without tests
+in the history of file perl/Git/SVN/Editor.pm.
+
+The first one is an updated fix of an very old but not applied patch.
+http://comments.gmane.org/gmane.comp.version-control.git/164166#o2
+
+The second one can be seen as a separate fix, but it takes effect only
+after the first one.
+
+Kazutoshi SATODA (2):
+  git-svn: enable "svn.pathnameencoding" on dcommit
+  git-svn: apply "svn.pathnameencoding" before URL encoding
+
+ perl/Git/SVN/Editor.pm | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
 -- 
 2.7.0
