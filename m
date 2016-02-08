@@ -1,100 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9100: fix breakage when SHELL_PATH is not /bin/sh
-Date: Mon, 08 Feb 2016 12:12:27 -0800
-Message-ID: <xmqqd1s77yhg.fsf@gitster.mtv.corp.google.com>
-References: <982f6f499c988e1063275e2951c9856d622a83f3.1454872161.git.git@drmicha.warpmail.net>
-	<20160208135013.GA27054@sigill.intra.peff.net>
-	<CAA19uiRSu_6Os3b498obSNec7b2uiYv20SZ=y93CkjsWqhqHzA@mail.gmail.com>
-	<20160208163700.GA22929@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1602082027550.2964@virtualbox>
-	<20160208193509.GA30554@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1602082056410.2964@virtualbox>
+Subject: Re: [RFC] On the --depth argument when fetching with submodules
+Date: Mon, 08 Feb 2016 12:18:10 -0800
+Message-ID: <xmqq8u2v7y7x.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kbt2-Vm94eTQY0PmJrNwqyTa36FJy5Q+2YBsxu6uYdTmQ@mail.gmail.com>
+	<xmqqoabubt5e.fsf@gitster.mtv.corp.google.com>
+	<FA2DA97F-D944-4784-8297-E2885F197AC0@gmail.com>
+	<CAGZ79kYT8EWv6T=3bW_fH+_Q8p74p=JyzbErB+TOPO2VtVQHgQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 08 21:12:36 2016
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Feb 08 21:18:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSsAk-0005j6-IR
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:12:34 +0100
+	id 1aSsGT-0004pa-E9
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 21:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbcBHUMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 15:12:30 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54145 "EHLO
+	id S1755276AbcBHUSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 15:18:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58766 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751435AbcBHUM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 15:12:29 -0500
+	with ESMTP id S1752699AbcBHUSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 15:18:13 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B5FCC41EB0;
-	Mon,  8 Feb 2016 15:12:28 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D94EA4200E;
+	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N2UzQylGRuGisvWlatMWyFxVP24=; b=VvMzBO
-	fHeyOB0Egshg0RYkQZrAUyM+QACacGygnh6cPeLz0wNg7IZ93cgyTAkq4otf7vp4
-	lZFfJMoAu0lGcID7JdgzBfGQUCtvkUpAC9c1tqDcC9URAmXVG6OhEjeGGrjH+vBM
-	TtC/PH9ZWIcfpE0SDOD2VWNksT0iMbeGLf8fk=
+	:content-type; s=sasl; bh=RPq2/dBx4ORuaJIg7kcQ7tXSmi0=; b=GXiOO2
+	H5Cqjm/zgpmTFNsXDxVmzqv2kMBMjKJsYWMM7mEokBowza2nACkE5LLKcyqLfRjS
+	6yCnNeCztlR+VqkSoE1HefaztSCRfdACJPIiYfIqAnviDs8Y/MwPS7tPtvidVUWr
+	uyZHK/26fGv5n3QGRwg0HxEiD56tiQqkypNiM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i+r5AzzbNW5RKYUVzFPSi2lLIN928OnM
-	hAy1/BT/bw/uqVYa5MdWgSeGGXBixNFe/cWN87JcjVqyLXxZ07WwkvwBxqdwKuiI
-	xSRuzJMRcOm4VKvAd13+n2QBBmRaM2xvu3sOVNecz2/khOR2QXj+KLBmVqqm7JD6
-	hwAJ5kMgATk=
+	:content-type; q=dns; s=sasl; b=xe8nX5R95lGhuIcab5hRBU9hjd7Sk5kC
+	+xBg3oY/CbDYiEFI+PJwR5rX14rx1Mf3DLzJgqDofGBSoqKTHmd7QIBkhVhveMC+
+	3JIsIj+kyMBHb9izAPQzUwjEBP4k2evO14PbODn7+FlYthPFKBxSFd/zcpJ/nfl4
+	AgL9uRKhdC8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ABFDB41EAE;
-	Mon,  8 Feb 2016 15:12:28 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0C204200D;
+	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C26241EAC;
-	Mon,  8 Feb 2016 15:12:28 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1602082056410.2964@virtualbox> (Johannes
-	Schindelin's message of "Mon, 8 Feb 2016 20:59:31 +0100 (CET)")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 543904200C;
+	Mon,  8 Feb 2016 15:18:12 -0500 (EST)
+In-Reply-To: <CAGZ79kYT8EWv6T=3bW_fH+_Q8p74p=JyzbErB+TOPO2VtVQHgQ@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 8 Feb 2016 10:27:41 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 46C31A62-CEA0-11E5-B206-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 13E68510-CEA1-11E5-B8D7-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285800>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> write_script is a semantically unambiguous way to specify what we *want*.
-> And it would allow us to handle chmod specifically for Windows *in one
-> place only*.
+> ... Instead of the branch, you can just pass
+> a sha1 to git fetch and it sometimes works (if the server permits fetching
+> arbitrary or hidden sha1s. Though Jonathan noted this check may be in
+> the client only and the server trusts the client on not wanting arbitrary
+> sha1s?)
 
-Correct.  write_script, for the intended target of the helper, is a
-way to write a script that can later be invoked by the test with the
-name "$1".  It is conceivable for write_script on UNIX to be writing
-into "$1" while Windows version to be writing into "$1.bat" and the
-script, i.e. the user of the write_script helper, to do this
+allowtipsha1inwant and allowreachablesha1inwant are the server side
+controls that are by default off.
 
-	write_script foo <<EOF &&
-        ...
-        EOF
-	...
-        foo
+> So for fetching I think we need to have a "--try-to-get-commit <sha1>"
+> argument for fetch, which depending on the server capabilities and
+> the history obtained otherwise may try again to fetch the exact sha1.
 
-which may result in foo.bat running on Windows without us having to
-adjust the test script.  So it indeed is a very nice abstraction to
-have.
+Hmph, "try"?  t5516 seems to show how to do this.
 
-But the way the test uses this exec.sh script is not consistent with
-that.  exec.sh for this test is merely a data, whose content must
-exactly match what later tests expect, i.e. it wants it to begin
-with "#!/bin/sh" and its execute bit on, even though the test does
-not have no intention to run it as a script.
-
-So I think it was doubly wrong for me to suggest write_script
-without realizing that this is _not_ writing a script in the usual
-sense for us to write with write_script.
-
-
-
-        	
+I however have to wonder how we disambiguate a 40-hex that is an
+object name and a branch whose name happens to be 40-hex.
