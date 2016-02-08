@@ -1,98 +1,112 @@
-From: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
-Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't
- tried Negotiate
-Date: Mon, 8 Feb 2016 12:11:57 +0300
-Message-ID: <CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
-References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
-	<xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
-	<20160202232952.GA6503@vauxhall.crustytoothpaste.net>
-	<CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
-	<20160205204648.GA7403@vauxhall.crustytoothpaste.net>
-	<xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
-	<20160205210623.GC7403@vauxhall.crustytoothpaste.net>
-	<xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: Re: COPYING tabs vs whitespaces
+Date: Mon, 8 Feb 2016 10:24:30 +0100
+Message-ID: <56B85ECE.4020607@redhat.com>
+References: <56B32BDA.4010909@redhat.com>
+ <xmqqsi18i8xv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="IttCg6xR051xv8ThwgAsR7GNVaccKt5Is"
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 08 10:12:08 2016
+X-From: git-owner@vger.kernel.org Mon Feb 08 10:24:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aShrc-0000LL-3z
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 10:12:08 +0100
+	id 1aSi3r-0004j1-3H
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 10:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363AbcBHJMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 04:12:01 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:33532 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbcBHJL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 04:11:58 -0500
-Received: by mail-ob0-f175.google.com with SMTP id is5so143746508obc.0
-        for <git@vger.kernel.org>; Mon, 08 Feb 2016 01:11:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=wmWhBcfrR+V5ClpwSHP7IrqNphxhCerNhxUehOE151Y=;
-        b=U9RVjBHd2wJugS0HJ1OzBLy09K0+Wy18RmJOy/DkZ4I/x2sAsPaou7zTYT7CLXPXIj
-         71AR2OYKMVBsEg25qC43D7Br8uJFgtkt0qBln/ZTM5elToaTe7IbQJ0oicU4DVCztaPi
-         v0/yHVGsE/8Alz1pRwittLmnGsdS/1V8JH6+Vi+3wilg4OP4XeCUsCx//P7nN9eCkUTT
-         NcazfcEw9rWhtdTEK1cRXfZL+HshWZZCKEDohRqYRqPsLEtxTHQkwtVdf/O/bQxfbItw
-         cAc/QTO6AgQO8gcAWRCixqPTt+B17LdddKWPxvF2hEuXziBMWMRcsTlSVosKRG5nH4VQ
-         fYwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=wmWhBcfrR+V5ClpwSHP7IrqNphxhCerNhxUehOE151Y=;
-        b=W/eWgJYxGdLEmkkKPYbeMk/eT7wOEnQ138vkldGeGsVZg2kTGvc25iPv8v67NQaTj9
-         rduyGcNxmYeVJ5qyEwvzOXZqLYhyP9YfSvmX58HJ3uKOer8jEIZuFaOgBuVnVwoc4qjt
-         Mu1FpEcWDpXJSLpmOZz6UtKLWA7Dw44JsEFqs9/FQ1XDzrfN5QFdw4q7A1LlfqeWqv5l
-         uKl5QwGBNZMJIlT9+SWj4aanvcKyGSSdJ8iJ6x50Su+YChi22JaIXH/0iblM3HuHKxTt
-         t14CGZVXI9juWCqclJ25jPfBWQBn1w7Q6VqMUzkSPlgdLE/bdcna0aiYpfIjQ0ilUuIO
-         2gFw==
-X-Gm-Message-State: AG10YOQq7z9yrLvhJveH73oCnZtVKeeG0c0rsQq4GtdxkHFU8qHgQiu6SWXEdEA4niZcThM3uFIuiTK4Kp5mow==
-X-Received: by 10.60.162.102 with SMTP id xz6mr11638208oeb.62.1454922717935;
- Mon, 08 Feb 2016 01:11:57 -0800 (PST)
-Received: by 10.76.35.162 with HTTP; Mon, 8 Feb 2016 01:11:57 -0800 (PST)
-In-Reply-To: <xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: FUHyeW9k9jdVTERoDxBraQNsjek
+	id S1751393AbcBHJYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 04:24:43 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:55177 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751098AbcBHJYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 04:24:40 -0500
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (Postfix) with ESMTPS id 90DFE8F4E1;
+	Mon,  8 Feb 2016 09:24:40 +0000 (UTC)
+Received: from [10.34.4.171] (unused-4-171.brq.redhat.com [10.34.4.171])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u189OcFl032592
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Feb 2016 04:24:39 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqqsi18i8xv.fsf@gitster.mtv.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285754>
 
-2016-02-06 0:52 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> On Fri, Feb 05, 2016 at 01:02:58PM -0800, Junio C Hamano wrote:
->>> Hmph, so documenting that <emptyname>:<emptypassword>@<repository>
->>> as a supported way might be an ugly-looking solution to the original
->>> problem.  A less ugly-looking solution might be a boolean that can
->>> be set per URL (we already have urlmatch-config infrastructure to
->>> help us do so) to tell us to pass the empty credential to lubCurl,
->>> bypassing the step to ask the user for password that we do not use.
->>>
->>> The end-result of either of these solution would strictly be better
->>> than the patch we discussed in that the end user will not have to
->>> interact with the prompt at all, right?
->>
->> Yes, that's true.  I'll try to come up with a patch this weekend that
->> implements that (maybe remote.forceAuth = true or somesuch).
->
-> Thanks.
->
-> I think the configuration should live inside http.* namespace, as
-> there are already things like http[.<url>].sslCert and friends.
->
-> I do not have a good suggestion on the name of the leaf-level
-> variable.  ForceAuth sounds as if you are forcing authentication
-> even when the other side does not require it, though.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--IttCg6xR051xv8ThwgAsR7GNVaccKt5Is
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-That would be great! Definitely it will be much better solution than
-patch I've proposed.
+
+
+On 4.2.2016 20:15, Junio C Hamano wrote:
+> Petr Stodulka <pstodulk@redhat.com> writes:
+>=20
+>> I found that license file COPYING is different as compared with
+>> http://www.gnu.org/licenses/gpl-2.0.txt If I pass over with
+>> Linus's preamble, change is only about whitespaces - tabs
+>> vs. space.  Probably it's minor non-essential change, but some
+>> projects do this change, so rather I ask about that.
+>=20
+> Interesting.  I cannot quite connect "some projects do this change"
+> and "so rather I ask".  Are you asking why this project changed it?
+
+Nope. I apologize for my czenglish. It means: From my colleagues I hear,
+that some projects had same differences (tabs vs. spaces) in their copy
+of the license file and they make it later equivalent with the one in
+gnu.org. So I ask rather here / point out this difference, if you know
+about that or you want to have same one.
+
+Yes, I know, it's just about whitespaces.
+
+Petr.
+
+>=20
+> After running "diff" between the two, I think the changes are only
+> on the indented section title lines, and "git blame" tells us that
+> the section title lines in the copy we have has always been that way
+> since Linus added to it at 075b845a (Add a COPYING notice, making it
+> explicit that the license is GPLv2., 2005-04-11).
+>=20
+> So, perhaps the copy Linus got originally had leading runs of spaces
+> that are multiples-of-8-long unexpanded to leading tabs back then,
+> or perhaps he did that unexpanding himself.
+>=20
+>=20
+
+
+--IttCg6xR051xv8ThwgAsR7GNVaccKt5Is
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWuF7OAAoJEPiGu5hNgNqPvP4P/AmLw+iW35wiUTQN4NIetxqt
+HUy1tZmpvA1hnZ6WnpceKJOdpQlohcvxa4DVYUrj5+31ytNuzpMeZfg1ofuQ37mR
+++tIxU/m5vLqgaMYZOnUCcgbKt35inGfX0+6TTVhDshivbEO4cbk79TTkkk6R/Ml
+QJOMW1zWo+Sab8i6KEPI4zajNH4n1pUiQJO4XLhGxvmYOePGyg7gfPDHF7iQfUZl
+lauwdNYmSN+jsqw8D7aHP5+lhpbiN+e4t7Oqi+KKFygGP/rCWNLl2rhK7ZBdLdBH
+g2qGkZWRZOwU6ymTB9OuwaTUpGUNPcon9Hzgf39mCi53xKLBQdJQTPPr7GiUmN+m
+E1LVNMuLI0mPs6uT6fB9Bj5fRaxi9QBIvkDlhvCd/a/VV2A09oHO4BW4zkmoPQtu
+1o9rq8R9UXFktNiauFmWY3tVlqBJucYJWd3imfod1wJM4BsxF73Br9tE1dA4rS1w
+xLmcKfAYnHBkfIgr2U4Y5GH0a1TFmO+MYsJcRpfvLbvna4USI1ZtqzO/sglP7zNn
+757am060NurZ3AwB2fFI2pMaBTlupG7ib8QE1K7Bl5q2SwI1JS5emGxpaaks258f
+i+Jr898p8CDq6R+qU5pg/B53Vpwm7bfEBNh/Yizosmb6NI6PHatQ4F7IgxFGyrIm
+UMW3Zr4NWsQb458Zo2XM
+=ub0E
+-----END PGP SIGNATURE-----
+
+--IttCg6xR051xv8ThwgAsR7GNVaccKt5Is--
