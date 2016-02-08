@@ -1,77 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Timezone with DATE_STRFTIME
-Date: Mon, 8 Feb 2016 10:28:58 -0500
-Message-ID: <20160208152858.GA17226@sigill.intra.peff.net>
-References: <20160208143317.GN29880@serenity.lan>
+From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+Subject: [PATCH 1/2] git-svn: enable "svn.pathnameencoding" on dcommit
+Date: Tue, 9 Feb 2016 00:20:31 +0900
+Message-ID: <56B8B23F.2020901@f2.dion.ne.jp>
+References: <56B8B1EA.5020901@f2.dion.ne.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Feb 08 16:29:07 2016
+Content-Transfer-Encoding: 7bit
+Cc: normalperson@yhbt.net, alex.crezoff@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 08 16:29:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSnkR-0005aG-3L
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 16:29:07 +0100
+	id 1aSnku-0006Ge-Or
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 16:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbcBHP3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 10:29:02 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39250 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753833AbcBHP3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 10:29:01 -0500
-Received: (qmail 1752 invoked by uid 102); 8 Feb 2016 15:29:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 10:29:00 -0500
-Received: (qmail 5939 invoked by uid 107); 8 Feb 2016 15:29:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Feb 2016 10:29:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Feb 2016 10:28:58 -0500
-Content-Disposition: inline
-In-Reply-To: <20160208143317.GN29880@serenity.lan>
+	id S1754788AbcBHP3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 10:29:33 -0500
+Received: from mail-ae0-f61.auone-net.jp ([106.187.230.61]:38584 "EHLO
+	dmta02.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754439AbcBHP30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 10:29:26 -0500
+X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Feb 2016 10:29:26 EST
+Received: from amlmta050.auone-net.jp (amlmta050-MM [10.188.23.89])
+	by dmta02.auone-net.jp (au one net mail) with ESMTP id B2B424001DF
+	for <git@vger.kernel.org>; Tue,  9 Feb 2016 00:24:09 +0900 (JST)
+Received: from [0.0.0.0] ([77.247.181.163])
+	by amlmta050.auone-net.jp id 56b8b3160004f780000055dd000064fca00008b3cc6b;
+	Tue, 09 Feb 2016 00:24:06 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <56B8B1EA.5020901@f2.dion.ne.jp>
+X-MXM-DELIVERY-TYPE: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285775>
 
-On Mon, Feb 08, 2016 at 02:33:17PM +0000, John Keeping wrote:
+Without the initialization of $self->{pathnameencoding}, conversion in
+repo_path() is always skipped as $self->{pathnameencoding} is undefined
+even if "svn.pathnameencoding" is configured.
 
-> I have just noticed that with DATE_STRFTIME, the timezone in the output
-> is likely to be incorrect.
-> 
-> For all other time formats, we print the string ourselves and use the
-> correct timezone from the input, but with DATE_STRFTIME strftime(3) will
-> always use the system timezone.
+The lack of conversion results in mysterious failure of dcommit (e.g.
+"Malformed XML") which happen only when a commit involves a change on
+non-ASCII path.
 
-You mean here that the "%z" formatting will not be correct, right?
-AFAICT the time shown is generally correct for the original of the
-author, and we simply need to communicate the zone to strftime.
+Signed-off-by: Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>
+---
+ perl/Git/SVN/Editor.pm | 1 +
+ 1 file changed, 1 insertion(+)
 
-Taking the current tip of master, for instance, I get:
-
-  $ for i in \
-      default \
-      local \
-      "format:%H:%M %z" \
-      "format-local:%H:%M %z"; do
-            git log -1 --format=%ad --date="$i" ff4ea6004
-    done
-  Fri Feb 5 15:24:02 2016 -0800
-  Fri Feb 5 18:24:02 2016
-  15:24 +0000
-  18:24 +0000
-
-You can see that my system is in -0500, three hours ahead of the author.
-And as expected, strftime shows the time in the original author's
-timezone. The %z information is totally bogus, but I don't think it has
-anything to do with the system time. It is simply that we don't provide
-it (...but having just looked at _your_ local timezone from your email,
-I can guess how you got confused :) ).
-
-So I think the fix is probably just that we need to feed the zone
-information to strftime via the "struct tm".
-
--Peff
+diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+index c50176e..d9d9bdf 100644
+--- a/perl/Git/SVN/Editor.pm
++++ b/perl/Git/SVN/Editor.pm
+@@ -41,6 +41,7 @@ sub new {
+ 	                       "$self->{svn_path}/" : '';
+ 	$self->{config} = $opts->{config};
+ 	$self->{mergeinfo} = $opts->{mergeinfo};
++	$self->{pathnameencoding} = Git::config('svn.pathnameencoding');
+ 	return $self;
+ }
+ 
+-- 
+2.7.0
