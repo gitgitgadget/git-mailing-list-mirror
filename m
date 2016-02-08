@@ -1,94 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git show doesn't work on file names with square brackets
-Date: Mon, 08 Feb 2016 14:36:32 -0800
-Message-ID: <xmqqlh6u6d8v.fsf@gitster.mtv.corp.google.com>
-References: <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
-	<alpine.DEB.2.20.1602061708220.2964@virtualbox>
-	<CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
-	<32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
-	<CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
-	<20160208141552.GC27054@sigill.intra.peff.net>
-	<20160208150709.GA13664@sigill.intra.peff.net>
-	<xmqqpow7807l.fsf@gitster.mtv.corp.google.com>
-	<20160208195230.GA30693@sigill.intra.peff.net>
-	<20160208202043.GA6002@sigill.intra.peff.net>
-	<20160208205637.GA13732@sigill.intra.peff.net>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] Documentation/git-clean.txt: don't mention deletion of
+ .git/modules/*
+Date: Mon, 08 Feb 2016 17:36:50 -0500
+Message-ID: <1454971010.2511.89.camel@mattmccutchen.net>
+References: <1454790889.23898.225.camel@mattmccutchen.net>
+	 <xmqqvb5y6dx2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 08 23:36:42 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Mikko Rapeli <mikko.rapeli@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Feb 08 23:37:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSuQD-00044x-B2
-	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 23:36:41 +0100
+	id 1aSuQW-0004VT-0g
+	for gcvg-git-2@plane.gmane.org; Mon, 08 Feb 2016 23:37:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221AbcBHWgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 17:36:36 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56062 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752997AbcBHWgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 17:36:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF3434240F;
-	Mon,  8 Feb 2016 17:36:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XRTJufBJAb1knWmItpjIgdTyYTE=; b=Sg3X4V
-	Ge8OwtQHjZHBh5PU9Io9xJeDr7rwpVx0lNpxqOJ1C4GO82kTDw0GkWQ4yiKl0rRP
-	pnTxuWwbPL/Mx32YOyiLt/co4VqdTHspsHYcoXeYLa1KBS0zE+oFmyjmxLhX6ASt
-	Gmf3hETZ8T4PM4eGNS6c9nFjVLYy8hUp0RHzc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c9Rg82uoppcT30oeztAppLnSqCahtNKe
-	hy2jCi48VeCR47Aw8hea1yFF6D60XLB8p37lJWaFfrO6RgOnOGCQU7Z25Tzx2cL9
-	Q5jMtA7GUQNL82wqcUf5oRuUYinn1IQKJ7frp2iIR1YCuBW6zl7gGSf9Hm8cU6U+
-	59Jjm2N2eB8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D49AC4240E;
-	Mon,  8 Feb 2016 17:36:34 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1755491AbcBHWg4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2016 17:36:56 -0500
+Received: from homie.mail.dreamhost.com ([208.97.132.208]:50920 "EHLO
+	homiemail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752997AbcBHWgz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 Feb 2016 17:36:55 -0500
+Received: from homiemail-a5.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a5.g.dreamhost.com (Postfix) with ESMTP id 07A37704063;
+	Mon,  8 Feb 2016 14:36:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+	message-id:subject:from:to:cc:date:in-reply-to:references
+	:content-type:mime-version:content-transfer-encoding; s=
+	mattmccutchen.net; bh=Bq+g6oH9NIhjZvFwqzRWufnqI04=; b=jACsbSByAn
+	pof0+Yl8Q+X+3qEkeFyqGdgj2o1UtS5/N200XHr8Gs7P7ftgL4KpHZxe0ncX1LWq
+	jBHXrfdQTlKTtTeso3TYMy33MYkAkYVfO81yO2tSeC3qm+v/PonaX11EnshrOxgq
+	A9mpyq6xkZkN2TF1Pimwy7cxfptwtmsJI=
+Received: from main (30-9-161.wireless.csail.mit.edu [128.30.9.161])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 58F334240C;
-	Mon,  8 Feb 2016 17:36:34 -0500 (EST)
-In-Reply-To: <20160208205637.GA13732@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 8 Feb 2016 15:56:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 684A26F8-CEB4-11E5-BE82-79226BB36C07-77302942!pb-smtp0.pobox.com
+	(Authenticated sender: matt@mattmccutchen.net)
+	by homiemail-a5.g.dreamhost.com (Postfix) with ESMTPSA id 8644D70406E;
+	Mon,  8 Feb 2016 14:36:54 -0800 (PST)
+In-Reply-To: <xmqqvb5y6dx2.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.18.4 (3.18.4-1.fc23) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285819>
 
-Jeff King <peff@peff.net> writes:
+On Mon, 2016-02-08 at 14:22 -0800, Junio C Hamano wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+>=20
+> > I found no evidence of such behavior in the source code.
+> >=20
+> > Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+> > ---
+>=20
+> That was added last year at bcd57cb9 (Documentation/git-clean.txt:
+> document that -f may need to be given twice, 2015-02-26).=C2=A0=C2=A0=
+It would
+> be better to know what got changed since then--that is, was the
+> additional text unnecessary even back then, or we made changes to
+> the system since then and forgot to remove the added text.
+>=20
+> Mikko, is this need to give -f twice still the case?
 
-> But having looked at this, I can't help but wonder if the rule should
-> not be "does the file exist" in the first place, but "is the file in the
-> index". This dwimmery is about commands like "log" that are reading
-> existing commits. I cannot think of a case where we would want to
-> include something that exists in the filesystem but not in the index.
+I know you probably want confirmation from Mikko, but I'll offer my
+understanding. =C2=A0There were two statements added in=C2=A0bcd57cb9:
 
-Yeah, checking in the index, once it is loaded, is reasonably quick
-check.  A path that is not in the index or the current HEAD may or
-may not exist on the filesystem, so at some point you would need an
-explicit disambiguation anyway, and the reason why we check the
-filesystem is not because that is conceptually better than checking
-in the index but merely because "does lstat(2) tell us the path is
-there?" check was fairly a cheap way on the platform the system was
-primarily developed on initially.  Looking it up from HEAD would be
-a lot more heavyweight and would not buy us anything, but looking it
-up in the index may turn out to be comparable to a single lstat(2).
+1. -f may need to be given twice to delete nested worktrees and
+embedded repositories. =C2=A0This is still true.
 
-I dunno.  I have a suspicion that anything conceptually more
-expensive than a single lstat(2) is probably not worth doing, as
-this "sometimes you do not have to give --" is merely a usability
-hack, and we have to always do "git log -- removed-sometime-ago"
-to find where in the history a certain path was lost.
+2. Deletion of submodule repositories under .git/modules is conditional
+on -f being given twice. =C2=A0AFAICT, this was wrong even back then: "=
+git
+clean" has never deleted such repositories under any conditions.
+
+My patch is only removing #2.
+
+Matt
