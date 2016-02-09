@@ -1,111 +1,84 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv9 1/6] submodule-config: keep update strategy around
-Date: Tue, 9 Feb 2016 14:19:42 -0800
-Message-ID: <CAGZ79kYm79C7tLECeJCrS3JoCudUT-8geovoMpT8qoHpYBjUAg@mail.gmail.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-	<1455051274-15256-2-git-send-email-sbeller@google.com>
-	<xmqqh9hh382i.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] stripspace: Call U+0020 a "space" instead of a "blank"
+Date: Tue, 09 Feb 2016 14:24:30 -0800
+Message-ID: <xmqqvb5x1q01.fsf@gitster.mtv.corp.google.com>
+References: <1454037056-26355-1-git-send-email-alexhenrie24@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 23:19:49 2016
+Content-Type: text/plain
+Cc: tklauser@distanz.ch, Alex Henrie <alexhenrie24@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 09 23:24:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTGdQ-0001cS-Lu
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:19:49 +0100
+	id 1aTGi5-0006YJ-RP
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933043AbcBIWTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 17:19:44 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36063 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932434AbcBIWTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 17:19:43 -0500
-Received: by mail-io0-f171.google.com with SMTP id l127so2763562iof.3
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 14:19:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/v4XB+nbBfDtCJ3Gwmj4ipdwvbvW5Zz/qHEBTY5o2MQ=;
-        b=AFPmf3dYbbhsuhQ+eVZ8CFIF7yYfXjW4WrjMq+9NFAVMLGKXQ6Lr2Aoz6pUysM/99Z
-         Mgy+PXwV7Y1jbUj5xq8PAlU/cv4/sS+QxZp4IPXEKJdh8GEc23QAOzSTOVNrYbiyqlP2
-         mzlbY3fpKMQ//ZDBsmHReSwawmBpOjrcXcbBeEnwi+WrRU6fTqRe3dUVeEDZQ/FhI2rY
-         /vab1KXQ+sJXojl+AchUd5yQHLbON6EO8BW+2Xd8NOA62t0+Mhp0FDKikmA5woKA2TZo
-         XXLCudWBwHXI7aJxKew69RHxrTQL2bZubIGrqu2uyV2H447QBDFw/obNo55OZFOwyBeZ
-         EkTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=/v4XB+nbBfDtCJ3Gwmj4ipdwvbvW5Zz/qHEBTY5o2MQ=;
-        b=A2zg5+PwjRmwNH6BGnluGns3uLmbV7Jz37HT5DyG4FI4E5J1g1uXf9v3az9ngiHVCq
-         mLpCGNaLUbNd+58KwBzRBNXesU25DcNtWYUSzHIxJUOTTWKd0Hu1fIJFji5ReHFaOiN3
-         Frz+oJl5kHFF4L+eSOce8Cc2/BjTJQkKc9Kn3Klng9tPe8/5ShOVHxpYoJMP6zz9Xml1
-         sJIR242npruMa6fsbcy+0PZ7mloHHGSRYKLlLzICkUVj1QQY5A2f94YI9MQaN6LLAzin
-         mJvfGONLDLnn1VwpCd08xcv2H9sfxPN88gfhREiOWGVrjVWBnmU6D7W0tf+yv3ThFwwc
-         TTtQ==
-X-Gm-Message-State: AG10YOQvmj81Vw+fsF/viZ9g9XgQUBWYbzb5G2H+eUd7B5M2fZPcR/BWxlkAoIR1X0EC0Cb7Qm8MAIqSXsdLiTCk
-X-Received: by 10.107.168.149 with SMTP id e21mr34957942ioj.96.1455056382995;
- Tue, 09 Feb 2016 14:19:42 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Tue, 9 Feb 2016 14:19:42 -0800 (PST)
-In-Reply-To: <xmqqh9hh382i.fsf@gitster.mtv.corp.google.com>
+	id S933133AbcBIWYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 17:24:34 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60894 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932434AbcBIWYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 17:24:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD8A14239D;
+	Tue,  9 Feb 2016 17:24:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uZQ5p6w964gAWVOVkD1AIOKc+G0=; b=q/+NRR
+	bWxxcqahjKYyguKhh4aDvGsBXEkihKJWzzNoBlwiFfJbn0zInkA+yPuqssCvJwhX
+	+cFh5iLquBJohipHg65D7Kh3xJMeMXP10iFSz1GNwoQB/2V+FoMKpTTM+n1IT4bc
+	v4Ozohw9hHv4YzQu9jV1z/4lZApT0LwSgKE9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dQrcr3EhHfY8TA193rudUHrMPeSk3QbG
+	f/HP7OTY8B2tJDAdwaXXPNx7avZE76KZjz7VbnWXtLLapMddrD0HiEHGaKTpJM3/
+	4rTeZ3w2DYHhouDWYVlGSwVV5emvpVtpthZn2Bib+hOOJdsctrg1Y2HsQ+yizH84
+	86P8M4x+Hl4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B51A84239C;
+	Tue,  9 Feb 2016 17:24:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2D85F4239B;
+	Tue,  9 Feb 2016 17:24:32 -0500 (EST)
+In-Reply-To: <1454037056-26355-1-git-send-email-alexhenrie24@gmail.com> (Alex
+	Henrie's message of "Thu, 28 Jan 2016 20:10:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E440A74C-CF7B-11E5-83E7-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285876>
 
-On Tue, Feb 9, 2016 at 1:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> +     } else if (!strcmp(item.buf, "update")) {
->> +             if (!value)
->> +                     ret = config_error_nonbool(var);
->> +             else if (!me->overwrite &&
->> +                 submodule->update != SM_UPDATE_UNSPECIFIED)
+Alex Henrie <alexhenrie24@gmail.com> writes:
+
+> I couldn't find any other examples of people referring to this character
+> as a "blank".
 >
-> Funny indentation here (locally fixable).
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
 
-I looked through the code base and reread our CodingGuidelines
-to find out what is considered correct. (I assumed we had a gnu-ish
-coding style w.r.t. breaking overly long lines in conditions, which is
-having the next line be indented with 4 spaces.)
+Any comments on this from anybody other than the author that I
+missed to support this change?
 
-So I assume by funny you mean "the next line doesn't start below the
-opening parenthesis"?
-
-That would seem to be consistent as it fits both the 4 space indentation
-which is always found below "if (", but we have more than 4 spaces in
-other places such as overly long return statements, i.e. refs.c, l 610
-(@origin/master)
-        return starts_with(refname, "refs/heads/") ||
-                starts_with(refname, "refs/remotes/") ||
-                starts_with(refname, "refs/notes/") ||
-                !strcmp(refname, "HEAD");
-
-which also doesn't seem to align perfectly to me.
-
-Looking for places, which have the pattern "else if (..." with line
-break, I found several different styles.
-
-builtin/mv.c (@origin/master) has two occurrences of
-
-    else if (...
-    <2 additional tabs> condition continues here
-
-and another of
-
-    else if (...
-    <1 tab + 1 SP> condition nearly aligned to statement below
-
-Looking at remote.c, I can find 1 tab, plus 3 spaces.
-...
-Giving up to come up with an idea for space based rule other than
-"visually align it below the original statement".
-
-Puzzled,
-Stefan
+>  builtin/stripspace.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+> index 7ff8434..15e716e 100644
+> --- a/builtin/stripspace.c
+> +++ b/builtin/stripspace.c
+> @@ -35,7 +35,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
+>  			    N_("skip and remove all lines starting with comment character"),
+>  			    STRIP_COMMENTS),
+>  		OPT_CMDMODE('c', "comment-lines", &mode,
+> -			    N_("prepend comment character and blank to each line"),
+> +			    N_("prepend comment character and space to each line"),
+>  			    COMMENT_LINES),
+>  		OPT_END()
+>  	};
