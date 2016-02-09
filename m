@@ -1,89 +1,168 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t9100: fix breakage when SHELL_PATH is not /bin/sh
-Date: Tue, 9 Feb 2016 11:00:43 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602091054430.2964@virtualbox>
-References: <982f6f499c988e1063275e2951c9856d622a83f3.1454872161.git.git@drmicha.warpmail.net> <20160208135013.GA27054@sigill.intra.peff.net> <CAA19uiRSu_6Os3b498obSNec7b2uiYv20SZ=y93CkjsWqhqHzA@mail.gmail.com> <20160208163700.GA22929@sigill.intra.peff.net>
- <alpine.DEB.2.20.1602082027550.2964@virtualbox> <20160208193509.GA30554@sigill.intra.peff.net> <xmqqlh6v7zu0.fsf@gitster.mtv.corp.google.com> <20160208195630.GB30693@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1] travis-ci: override CFLAGS properly, add -Wdeclaration-after-statement
+Date: Tue, 9 Feb 2016 11:06:17 +0100
+Message-ID: <9FBB5AFB-D44C-43A1-A0C5-A5A45675A122@gmail.com>
+References: <1454921958-53129-1-git-send-email-larsxschneider@gmail.com> <20160208122551.GD24217@sigill.intra.peff.net>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
+	Git Users <git@vger.kernel.org>, linux.mdb@gmail.com,
+	Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 09 11:01:06 2016
+X-From: git-owner@vger.kernel.org Tue Feb 09 11:06:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aT56Y-00085I-EV
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 11:01:06 +0100
+	id 1aT5Bl-0004z2-R5
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 11:06:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754852AbcBIKBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 05:01:01 -0500
-Received: from mout.gmx.net ([212.227.17.20]:62104 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751861AbcBIKA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 05:00:58 -0500
-Received: from virtualbox ([89.204.153.48]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lurin-1a2IzG47n7-010881; Tue, 09 Feb 2016 11:00:48
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160208195630.GB30693@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:z4HkYRYZ64oesmNjkaTrN2z4am+anG/svi3jPDVvNVfOb+5zD3l
- SutETNrnYLnDxXqx5yZLgYdCO6/4tpl3zdbD2PITZ0XyZ6g9I+NB61yFE+kgccWd7axs3jO
- 80uYDoZX1cSzNul4zuloluJfaYJ+zIQJNd0j4GESP4ckFWxVffw0uLOMymLfVNcFNJIIsaA
- m+mzTOyqHZv83+wY0x32Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GFvzmQTrpys=:dOAOqtkxyvdMS0gb8mOkNL
- Ft95Bz5vdg7Z6IY+y7sQVSc5U7V+vjRjxTjlsaRM6R7lbJOT9VjgavjF3+Yiu9t4TIX+QF9TF
- NKy/ZwUS6QPRvqQTQjBai87ISK11z3AAMOtRqTlhiLpffEssFCUKcQf4HpwMFUXqyY95XVlZG
- 9XeX80oyfTMHxtNFS1PUnfSslHN1hJD9nAi/nCH+RpEgXO63k8prpaTcy1JmnkpqdTBnfC03t
- 3t4kwIaLIHbvlBl8IrktdsvKwESTnTWovpPsgBXD1EioVHCbNh7IS0vH09UeP7EDSCw5Vkkz/
- LCfoVxxMG4//76oIbgoTR63w9AW1sEk7vCHNayil6nUE3P8vPUJgXiSc4oZzum6gHqpgdm+m1
- 2okZcuSWkH78zB22DX2pbEZB4fvkALxv0y/i5qVj29t2apHHC1HhH1+uzhZlqUjMCrMzZB4Hp
- 0CP9jR1WWzURHlB2GWyXHcLViWKdoK1X1k6tNwlBifMR5p0OJnbqO9MzS4gub/GCFDEROU/DL
- uBHeyQf6zif5lmj91w0F2EWDrljh6Wy+1JuTjWn68rd83uUaGEsmmFnJcl3ww6/xKyXExQkIO
- k1t3OvCpdsPKJ3o80ftNUQGONpgmAThogD6QWuV1VqYJLP9Fjps4XKiefh4eDIPGgIf//mIbu
- 9691fFb/dz0YfRz3Fnw6o4EsaJt7Y39YGFkDDiCkjd/HzQsEmL2x14CwWHiZzrftNFu94Xq9Q
- yOK3/NSgx9+CBP879K3376+TVrUllcryUBmw3gN3ZBUFvwDf/fexQB8JoSiVb50k6nVZ6cyH 
+	id S1756004AbcBIKG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 05:06:26 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:37332 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754751AbcBIKGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 05:06:22 -0500
+Received: by mail-wm0-f49.google.com with SMTP id g62so16048218wme.0
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 02:06:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DhO8K25dwgLs2xJti2NwVZC3tEuxw70KsoKZwFMwmlM=;
+        b=Mg37M7veoVb2ZeamzCBMxAGR24Jz0MfgSVMNI03Zb/l5LrmkndAqUa9xiuC4du6R+A
+         bAFB0/CUSOQ3VvdSfy9oon8dRPpqJH4cPGDSrMrXcegGoNwHmDH+3ECSzRzspaUXRizp
+         I+l0GDRE5pVnoo6MdhvwgCcrrV/wBlXFMswqYL9+s6TmHhYZKmuL9KQF1PA0fZoh9dOi
+         FLfHgAKJbtyC8i2yxb/rDsMf0SYKZZqpUyoCIBhAXgxmd6wrJUJm/CiHsQGuRl1qAp9Q
+         mgDANbgyvHTvib9DatTImrIwgjpH9DkJcIWMT2te0ISbe1g9NuZTcoX0WwkFSFt2uogN
+         ufcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=DhO8K25dwgLs2xJti2NwVZC3tEuxw70KsoKZwFMwmlM=;
+        b=mJTmmYDkN0TwcMg6rgNa1mS1EpKb8H1DMNKcD6PiqFTIGcEtqZTeclNBrR/zkFB26+
+         yNc323bL5QkGv3h04rfgacei39Qu0UF5FduDq+WzozHBDYhJYp1GOnTLry9i3kEhp1Kf
+         mzBTiWO8zbqROunvC32h1LwxdB6+nHmnfkh5+1/+D4DOj4A/LEgZfFf8g5WMQKQjKXPv
+         B18BDUzNYyclfhBtM9hsT7LVrjs20WfEbho0AYALQuLApb0CKXdVx3gqX1eHgunsTGTG
+         +3IGfP1yTkuHoxl4jtiSNCvIyEwwr2qPs8zrZB3HbgnBHASk7aTqqoBliEEpdCETyXQS
+         /T0Q==
+X-Gm-Message-State: AG10YOTBwtfwOyhwBuHAyYWdeiM3SzFgldVUDu9Em6Jni5wEpM6k8vBAOTNM5ZiIs6KkVA==
+X-Received: by 10.28.180.193 with SMTP id d184mr3677797wmf.64.1455012381190;
+        Tue, 09 Feb 2016 02:06:21 -0800 (PST)
+Received: from slxbook3.fritz.box (p508BABD1.dip0.t-ipconnect.de. [80.139.171.209])
+        by smtp.gmail.com with ESMTPSA id k4sm16737541wmc.12.2016.02.09.02.06.19
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 09 Feb 2016 02:06:20 -0800 (PST)
+In-Reply-To: <20160208122551.GD24217@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285834>
 
-Hi Peff (and other interested parties),
 
-On Mon, 8 Feb 2016, Jeff King wrote:
+On 08 Feb 2016, at 13:25, Jeff King <peff@peff.net> wrote:
 
-> On Mon, Feb 08, 2016 at 11:43:19AM -0800, Junio C Hamano wrote:
+> On Mon, Feb 08, 2016 at 09:59:18AM +0100, larsxschneider@gmail.com wrote:
 > 
-> > The version in 'master' that does
-> > 
-> >                 echo "#!/bin/sh" >exec.sh &&
-> >                 chmod +x exec.sh &&
-> > 
-> > should be equivalent, so dropping that hunk from the patch is the
-> > right resolution perhaps?
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> The global Travis-CI environment variable CFLAGS did not override the
+>> CFLAGS variable in the makefile. Pass CFLAGS as make variable to
+>> override it properly.
 > 
-> Yeah, but I still don't understand why the original did not work on
-> Windows, once all the other hunks from bcb11f1 are applied.
+> Makes sense.
+> 
+>> In addition to that, add '-Wdeclaration-after-statement' to make a
+>> Travis-CI build fail (because of '-Werror') if the code does not adhere
+>> to the Git coding style.
+> 
+> I think this is a good step, but is probably the tip of the iceberg. I
+> typically use:
+> 
+>  -Wall -Werror -Wdeclaration-after-statement
+>  -Wpointer-arith -Wstrict-prototypes -Wvla
+>  -Wold-style-declaration -Wold-style-definition
+> 
+> Junio does his integration testing with a similar set, which I think you
+> can find in one of the scripts in his "todo" branch.
 
-And indeed it passes. With MSYS2. Because it simply ignores that chmod +x
-cannot flip an executable bit.
+I collected the warnings from Junio's Make [1] script and merged them with 
+yours. This is the resulting warning list for clang and gcc:
 
-The original patch (the one that guarded the chmod behind the MINGW
-prereq) originated in the MSys (AKA MSys1) times, where 1) chmod would
-fail, and 2) POSIXPERM did not yet exist.
+-Wdeclaration-after-statement -Wno-format-zero-length -Wold-style-definition 
+-Woverflow -Wpointer-arith -Wstrict-prototypes -Wunused -Wvla
 
-Besides, I am pretty certain that there is a test in t9100 that *does*
-test the executable bit, properly requiring POSIXPERM.
+Gcc processes one extra warning that clang doesn't like:
+-Wold-style-declaration
 
-So I still would be in favor of using write_script: 1) our *intention* is
-to write a script, even if we do not currently execute it, and 2) if
-anybody is interested in supporting MSys1 (*cough* Hannes & Sebastian
-*cough*), they have a *much* easier time to fix it.
+The build runs clean with all these checks enabled.
 
-Ciao,
-Dscho
+[1] https://github.com/git/git/blob/todo/Make
+
+
+>> I made this patch because Peff pointed out to me that "git style doesn't
+>> allow declaration-after-statement" [1]. I wonder if it would make sense
+>> to add this check even in the makefile [2]?
+> 
+> I think we keep the default CFLAGS to a pretty tame set, so that we
+> build out of the box on a large number of compilers. I know I have run
+> into problems with -Wold-style-* on clang (though perhaps that is no
+> longer the case, as I haven't tried recently), let alone truly antique
+> compilers.
+> 
+> I have, however, wondered if it would make sense to codify this
+> knowledge in the Makefile with an optional knob. E.g., let DEVELOPER=1
+> roughly mean "you are a git dev, you have a reasonably modern compiler,
+> and want to be as careful as possible before sending your patches".
+
+That make sense. However, in "development mode" I don't like Werror.
+How about two knobs? One called DEVELOPER which enables all the warnings
+above and one called CONTINUOUS_INTEGRATION that enables Werror
+in addition?
+
+
+>> I am no make expert, but I
+>> also wonder why we don't use the override directive [3] for the CFLAGS?
+>> AFAIK this would allow a make invocation like this:
+>> 
+>> make target CFLAGS+=-Wdeclaration-after-statement
+> 
+> I think it is rather the opposite. If we used:
+> 
+>  override CFLAGS+= ...
+> 
+> in the Makefile, then if a user did:
+> 
+>  make CFLAGS=...
+> 
+> we would add to their CFLAGS (whereas without the override, our
+> appending is ignored). Our Makefile solves that in a different way,
+> though. We pass $(ALL_CFLAGS) to the compiler, and that in turn is made
+> up of $(CFLAGS) and $(BASIC_CFLAGS). We assume the user tweaks the
+> former, and we set the latter based on Makefile knobs (e.g., NO_CURL,
+> etc).
+I see. Thanks for the explanation.
+
+Regarding CI checks:
+
+Jeff Merkey made me aware of http://kernelnewbies.org/FirstKernelPatch [2]
+where I found checkpatch.pl [3]. Would it make sense to check all commits
+that are not in next/master/maint with this script on Travis-CI?
+
+Stefan Beller recently mentioned "Adhere to the common coding style of 
+Git" [4] where he removed explicit NULL checks. This kind of stuff could be
+checked automatically with checkpatch.pl as far as I can see.
+
+[2] http://www.spinics.net/lists/git/msg267445.html
+[3] https://github.com/torvalds/linux/blob/master/scripts/checkpatch.pl
+[4] http://permalink.gmane.org/gmane.comp.version-control.git/280842
+
+Thanks,
+Lars
