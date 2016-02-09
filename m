@@ -1,93 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv9 0/6] Expose submodule parallelism to the user
-Date: Tue, 09 Feb 2016 14:03:13 -0800
-Message-ID: <xmqqziv91qzi.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv9 1/6] submodule-config: keep update strategy around
+Date: Tue, 9 Feb 2016 14:19:42 -0800
+Message-ID: <CAGZ79kYm79C7tLECeJCrS3JoCudUT-8geovoMpT8qoHpYBjUAg@mail.gmail.com>
 References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-	<xmqq4mdh36o8.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYt9bw9MreiBhA_ZQNjS+1Xi71aNGwkjcfC1hwxkOoyYA@mail.gmail.com>
+	<1455051274-15256-2-git-send-email-sbeller@google.com>
+	<xmqqh9hh382i.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 23:03:21 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 23:19:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTGNV-00024B-1m
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:03:21 +0100
+	id 1aTGdQ-0001cS-Lu
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207AbcBIWDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 17:03:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54914 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932560AbcBIWDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 17:03:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A63DD43E4A;
-	Tue,  9 Feb 2016 17:03:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LASbC6IMNguaWSmSduwrYzn15nk=; b=rbit20
-	/og31brc7TDK5DUktFDg3fc30KGkaB7sEJqoe44uf+iDCgt8YXUo0DX2iWCnpt5B
-	DS6Zyu2+UVHPQtVXns5xC/sqbD6RVUG0/R3vYTJLoFZo3HkCtCllhuF04Z4KlT2r
-	A9RQ+0BWUz+FZNvKlanQd/KNUETLwtv6s3opk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IfQnw3hpgh4T4sor7Z1mSEmD+xTThVIq
-	/MrzxDtntCxnXm1aKe/bcyg2U7YYASmWiOxYmR1Bav6cvOKaYazOvo99Sc2IIjfL
-	d6msdyPUIOUZgLENbBPrVidwG8P8MYcA2clZrGuHoS2P3iSxdzeV3njCBbwv1EP+
-	jyzMsiaBDv8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9D74543E48;
-	Tue,  9 Feb 2016 17:03:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2102E43E46;
-	Tue,  9 Feb 2016 17:03:15 -0500 (EST)
-In-Reply-To: <CAGZ79kYt9bw9MreiBhA_ZQNjS+1Xi71aNGwkjcfC1hwxkOoyYA@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 9 Feb 2016 13:46:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EB117716-CF78-11E5-843A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933043AbcBIWTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 17:19:44 -0500
+Received: from mail-io0-f171.google.com ([209.85.223.171]:36063 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932434AbcBIWTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 17:19:43 -0500
+Received: by mail-io0-f171.google.com with SMTP id l127so2763562iof.3
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 14:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/v4XB+nbBfDtCJ3Gwmj4ipdwvbvW5Zz/qHEBTY5o2MQ=;
+        b=AFPmf3dYbbhsuhQ+eVZ8CFIF7yYfXjW4WrjMq+9NFAVMLGKXQ6Lr2Aoz6pUysM/99Z
+         Mgy+PXwV7Y1jbUj5xq8PAlU/cv4/sS+QxZp4IPXEKJdh8GEc23QAOzSTOVNrYbiyqlP2
+         mzlbY3fpKMQ//ZDBsmHReSwawmBpOjrcXcbBeEnwi+WrRU6fTqRe3dUVeEDZQ/FhI2rY
+         /vab1KXQ+sJXojl+AchUd5yQHLbON6EO8BW+2Xd8NOA62t0+Mhp0FDKikmA5woKA2TZo
+         XXLCudWBwHXI7aJxKew69RHxrTQL2bZubIGrqu2uyV2H447QBDFw/obNo55OZFOwyBeZ
+         EkTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=/v4XB+nbBfDtCJ3Gwmj4ipdwvbvW5Zz/qHEBTY5o2MQ=;
+        b=A2zg5+PwjRmwNH6BGnluGns3uLmbV7Jz37HT5DyG4FI4E5J1g1uXf9v3az9ngiHVCq
+         mLpCGNaLUbNd+58KwBzRBNXesU25DcNtWYUSzHIxJUOTTWKd0Hu1fIJFji5ReHFaOiN3
+         Frz+oJl5kHFF4L+eSOce8Cc2/BjTJQkKc9Kn3Klng9tPe8/5ShOVHxpYoJMP6zz9Xml1
+         sJIR242npruMa6fsbcy+0PZ7mloHHGSRYKLlLzICkUVj1QQY5A2f94YI9MQaN6LLAzin
+         mJvfGONLDLnn1VwpCd08xcv2H9sfxPN88gfhREiOWGVrjVWBnmU6D7W0tf+yv3ThFwwc
+         TTtQ==
+X-Gm-Message-State: AG10YOQvmj81Vw+fsF/viZ9g9XgQUBWYbzb5G2H+eUd7B5M2fZPcR/BWxlkAoIR1X0EC0Cb7Qm8MAIqSXsdLiTCk
+X-Received: by 10.107.168.149 with SMTP id e21mr34957942ioj.96.1455056382995;
+ Tue, 09 Feb 2016 14:19:42 -0800 (PST)
+Received: by 10.107.4.210 with HTTP; Tue, 9 Feb 2016 14:19:42 -0800 (PST)
+In-Reply-To: <xmqqh9hh382i.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285875>
 
-Stefan Beller <sbeller@google.com> writes:
-
->>> * This seems to clash with 00/20] refs backend.
->>>> Applied this on top of a merge between the current 'master' and
->>>> 'sb/submodule-parallel-update' topic to untangle the dependency;
->>>> otherwise there is no way for this topic to make progress X-<.
->>>
->>> Anything I can do to help with easing the clash?
->>
->> Perhaps try to rebase the series on top of such a merge (with this
->> updated series) yourself and propose it as a basis for the next
->> reroll for David?  In short, working together with topic(s) that
->> touch the same area?
+On Tue, Feb 9, 2016 at 1:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +     } else if (!strcmp(item.buf, "update")) {
+>> +             if (!value)
+>> +                     ret = config_error_nonbool(var);
+>> +             else if (!me->overwrite &&
+>> +                 submodule->update != SM_UPDATE_UNSPECIFIED)
 >
-> Ok, I'll see if I can find a better commit to base this series on.
+> Funny indentation here (locally fixable).
 
-That is not what I meant.  I meant rebasing the refs-backend series
-on top of a merge between this one and 'master', just like the way I
-queued the refs-backend series on top of a merge between the
-previous round of this series and 'master'.
+I looked through the code base and reread our CodingGuidelines
+to find out what is considered correct. (I assumed we had a gnu-ish
+coding style w.r.t. breaking overly long lines in conditions, which is
+having the next line be indented with 4 spaces.)
 
-These two topics want to update the same piece of code, so another
-possibility is to rebase this series on top of a merge between
-refs-backend and 'master', but the current iteration of refs-backend
-already depends on the previous round of this topic.  Rebasing this
-on top of refs-backend would involve first adjusting parts of
-refs-backend that touched the same code as the previous round of
-submodule-parallel-update touched so that refs-backend would work
-directly on top of 'master', and then including the necessary change
-to the refs-backend code while rebuilding submodule-parallel-update
-on top of the result.  So I do not think you would go in that
-direction.
+So I assume by funny you mean "the next line doesn't start below the
+opening parenthesis"?
+
+That would seem to be consistent as it fits both the 4 space indentation
+which is always found below "if (", but we have more than 4 spaces in
+other places such as overly long return statements, i.e. refs.c, l 610
+(@origin/master)
+        return starts_with(refname, "refs/heads/") ||
+                starts_with(refname, "refs/remotes/") ||
+                starts_with(refname, "refs/notes/") ||
+                !strcmp(refname, "HEAD");
+
+which also doesn't seem to align perfectly to me.
+
+Looking for places, which have the pattern "else if (..." with line
+break, I found several different styles.
+
+builtin/mv.c (@origin/master) has two occurrences of
+
+    else if (...
+    <2 additional tabs> condition continues here
+
+and another of
+
+    else if (...
+    <1 tab + 1 SP> condition nearly aligned to statement below
+
+Looking at remote.c, I can find 1 tab, plus 3 spaces.
+...
+Giving up to come up with an idea for space based rule other than
+"visually align it below the original statement".
+
+Puzzled,
+Stefan
