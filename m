@@ -1,145 +1,105 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv9 1/6] submodule-config: keep update strategy around
-Date: Tue,  9 Feb 2016 12:54:29 -0800
-Message-ID: <1455051274-15256-2-git-send-email-sbeller@google.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org,
-	Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Tue Feb 09 21:55:13 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: update_linked_gitdir writes relative path to .git/worktrees/<id>/gitdir
+Date: Tue, 09 Feb 2016 13:02:11 -0800
+Message-ID: <xmqqoabp38do.fsf@gitster.mtv.corp.google.com>
+References: <1454789548.23898.223.camel@mattmccutchen.net>
+	<xmqqlh6w9isp.fsf@gitster.mtv.corp.google.com>
+	<1454893478.2511.5.camel@mattmccutchen.net>
+	<20160208135607.GB27054@sigill.intra.peff.net>
+	<xmqqziva6e6e.fsf@gitster.mtv.corp.google.com>
+	<1455048354.2511.199.camel@mattmccutchen.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Matt McCutchen <matt@mattmccutchen.net>
+X-From: git-owner@vger.kernel.org Tue Feb 09 22:02:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTFJY-00021I-V6
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 21:55:13 +0100
+	id 1aTFQP-0000qe-TW
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 22:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568AbcBIUys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 15:54:48 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35095 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754747AbcBIUyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 15:54:46 -0500
-Received: by mail-pa0-f44.google.com with SMTP id ho8so96905471pac.2
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 12:54:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=g676k1ZU1SS3EjqerAr3mHik1/u82R50nTizZcZ3Ues=;
-        b=TFGAg+ytyWKVPf812gfTG3tA2ORUxsvmwqHCkJueqUmFC29oT4COcOKZH43O45n6Fx
-         bPh4Oju/3RSJufCnqmej8n81ABWvKYyXKrMZswVjFNPWhfeXopKzSuy5AfRMTL3XNIiQ
-         UtyGYjd5LIFchd5/QsNfN7qDuwpN1gd8ttikir1lKnPZxlE91i0lbMrlabffPsjbgKVg
-         hmgpcKpPOb1sn4RUQ8WKxj3BHJyIbjNkETH54poB1kxJ0W6hmyXftfHiDjEllK5guy7V
-         tmkEba+dS4av2DrrQ05+oAnLRRcZh7r35vf3J2Jy/6qZ57ELjnAA/qBZc4QB509aKH4A
-         0aNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=g676k1ZU1SS3EjqerAr3mHik1/u82R50nTizZcZ3Ues=;
-        b=AxqADQtpZpAX9FT9ZoH7pd/1KuSH7AdIRuP7VhBtuAYFyjXQWs8Foi5jNUy0KMf1bQ
-         AppXdPcsthapKRb6QYEXlwNHi0j+sPk2kEWd9mo2offC9m2fWGr+uEedHaWPseX87FgK
-         Qgke7dJLAALBzrLGvGpUhmT/2wxHxBmdYK4F0w3BbhfiwaVvcvb3AZcPPzBBURjMCZxy
-         24LB5Be/k+NUx1gn0Rq6aR26KLOM8D7EiPh/4e+Vo/W0PtVnl6cDxl8TgvrTHADh8XTW
-         GPbMIqi6V/rJrA9ACW+PtANp0wiRHb4lhOoG8EfS5/0B5OlvRDCHpvipELAeD1WOGD8z
-         462w==
-X-Gm-Message-State: AG10YOTfd1EmFt4QLgmLL0sazhBVgH21LGT74Ivrq2yJDSVXjl9UWkF3nZbya5H+jg8CUBPC
-X-Received: by 10.66.187.145 with SMTP id fs17mr53700641pac.81.1455051285730;
-        Tue, 09 Feb 2016 12:54:45 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:9085:4567:f3b3:63e9])
-        by smtp.gmail.com with ESMTPSA id g10sm52555784pfd.92.2016.02.09.12.54.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 Feb 2016 12:54:45 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.35.gb0f7869.dirty
-In-Reply-To: <1455051274-15256-1-git-send-email-sbeller@google.com>
+	id S932965AbcBIVCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 16:02:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57230 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932360AbcBIVCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 16:02:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D3BF442EF6;
+	Tue,  9 Feb 2016 16:02:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=F7KaA7SuMpeRQ7+O4lYpzHlxTls=; b=RFpYLv
+	MwsVZ+upD+Gf7vHvTckI48DqekX4+1WiJVGKagQWJU3fXhBpYV3wKKJ5z7buoFBA
+	jP4+HEhSkuPWdQgAgSgqszWHLaOZfuQYKcKWqVFezqBILsKiiRhKXOTzW5dz558e
+	zwp1b+aJBcLrcJUMvLcXpel/mlOe+wbg19wfA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KXe6gTqI/yAOWyYxQtqKOx539uIrnJDB
+	N3/qO+EmEOARQVZb3Vgh35I7q6BstvR7IYPukXovU3ti8B5lTme6O2nnS1ie4F+J
+	9jK08+so6S8URRjMi3+fYDvqk4NKls4BTCAaamVf/yrnrdPSYbMuFTrriWkVGirI
+	khiT2/CoNt0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C869D42EF5;
+	Tue,  9 Feb 2016 16:02:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3D3F842EF4;
+	Tue,  9 Feb 2016 16:02:12 -0500 (EST)
+In-Reply-To: <1455048354.2511.199.camel@mattmccutchen.net> (Matt McCutchen's
+	message of "Tue, 09 Feb 2016 15:05:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 63D1A760-CF70-11E5-AD8E-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285866>
 
-Currently submodule.<name>.update is only handled by git-submodule.sh.
-C code will start to need to make use of that value as more of the
-functionality of git-submodule.sh moves into library code in C.
+Matt McCutchen <matt@mattmccutchen.net> writes:
 
-Add the update field to 'struct submodule' and populate it so it can
-be read as sm->update or from sm->update_command.
+> See my revised proposed text here:
+>
+> https://github.com/git/git-scm.com/pull/676/files
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 22 ++++++++++++++++++++++
- submodule-config.h | 11 +++++++++++
- 2 files changed, 33 insertions(+)
+If somebody says "The ancient version I use has this bug, it does
+not reproduce with 'next'", the first thing we would ask would be
+"Does it still happen on 'master'?"  Even though it is often clear
+from the context and the nature of the bug which topic in 'next' is
+likely to have fixed it, if the reporter skipped 'master', we would
+end up scratching our head which topic in 'next' that is not
+'master' fixed it as a side effect.  And because not everything on
+'next' is ready for 'master', we cannot just merge everything ;-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index afe0ea8..a1af5de 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -194,6 +194,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 
- 	submodule->path = NULL;
- 	submodule->url = NULL;
-+	submodule->update = SM_UPDATE_UNSPECIFIED;
-+	submodule->update_command = NULL;
- 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
- 	submodule->ignore = NULL;
- 
-@@ -311,6 +313,26 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->url);
- 			submodule->url = xstrdup(value);
- 		}
-+	} else if (!strcmp(item.buf, "update")) {
-+		if (!value)
-+			ret = config_error_nonbool(var);
-+		else if (!me->overwrite &&
-+		    submodule->update != SM_UPDATE_UNSPECIFIED)
-+			warn_multiple_config(me->commit_sha1, submodule->name,
-+					     "update");
-+		else {
-+			submodule->update_command = NULL;
-+			if (!strcmp(value, "none"))
-+				submodule->update = SM_UPDATE_NONE;
-+			else if (!strcmp(value, "checkout"))
-+				submodule->update = SM_UPDATE_CHECKOUT;
-+			else if (!strcmp(value, "rebase"))
-+				submodule->update = SM_UPDATE_REBASE;
-+			else if (!strcmp(value, "merge"))
-+				submodule->update = SM_UPDATE_MERGE;
-+			else if (!skip_prefix(value, "!", &submodule->update_command))
-+				die(_("invalid value for %s"), var);
-+		}
- 	}
- 
- 	strbuf_release(&name);
-diff --git a/submodule-config.h b/submodule-config.h
-index 9061e4e..e3bd56e 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -4,6 +4,15 @@
- #include "hashmap.h"
- #include "strbuf.h"
- 
-+enum submodule_update_type {
-+	SM_UPDATE_CHECKOUT,
-+	SM_UPDATE_REBASE,
-+	SM_UPDATE_MERGE,
-+	SM_UPDATE_NONE,
-+	SM_UPDATE_COMMAND,
-+	SM_UPDATE_UNSPECIFIED
-+};
-+
- /*
-  * Submodule entry containing the information about a certain submodule
-  * in a certain revision.
-@@ -14,6 +23,8 @@ struct submodule {
- 	const char *url;
- 	int fetch_recurse;
- 	const char *ignore;
-+	enum submodule_update_type update;
-+	const char *update_command;
- 	/* the sha1 blob id of the responsible .gitmodules file */
- 	unsigned char gitmodules_sha1[20];
- };
--- 
-2.7.0.rc0.35.gb0f7869.dirty
+On the other hand, if somebody says "The ancient version I use has
+this bug, it does not reproduce with 'master'", we would likely not
+to say anything other than "Oh, that's good for you.".
+
+If somebody says "The ancient version I use has this bug, it still
+reproduces with 'master'", then we would ask 'next' to be tried.
+
+For these reasons, I'd say "try the 'master' branch".  Trying 'next'
+is highly appreciated, but not without trying 'master'.
+
+> I left a mention of providing feedback on pending fixes but thought it
+> would be too much to go into the details of how to identify whether
+> there is a pending fix.
+
+What is in 'master' relative to the version of Git the bug reporter
+has can be seen by reading through RelNotes of the released versions
+since the version reporter used, and RelNotes in the 'master'.
+Every time an updated 'master' is pushed out, the changes made by
+the topics merged to it are added to update RelNotes.
+
+"What's cooking" report, issued once or twice a week, summarizes the
+topics that are still not in 'master' (the description in there are
+used to update RelNotes when topics graduate to 'master').
+
+Also "Git Rev News" may cover recent efforts on tackling interesting
+bugs.
+
+Thanks.
