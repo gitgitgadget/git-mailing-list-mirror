@@ -1,129 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stripspace: Call U+0020 a "space" instead of a "blank"
-Date: Tue, 09 Feb 2016 15:00:56 -0800
-Message-ID: <xmqqbn7p1obb.fsf@gitster.mtv.corp.google.com>
-References: <1454037056-26355-1-git-send-email-alexhenrie24@gmail.com>
-	<xmqqvb5x1q01.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kao-DWwn2j4aO8ArSPHAX65KeL7NyD=ONkB6qjOrDZNSQ@mail.gmail.com>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH v1] travis-ci: override CFLAGS properly, add -Wdeclaration-after-statement
+Date: Tue, 9 Feb 2016 23:03:40 +0000
+Message-ID: <CAFY1edbCSPZg892=pVQ=TDo6PRhUdees36Jp7LQ2YB3_jQd4uQ@mail.gmail.com>
+References: <1454921958-53129-1-git-send-email-larsxschneider@gmail.com>
+	<20160208122551.GD24217@sigill.intra.peff.net>
+	<9FBB5AFB-D44C-43A1-A0C5-A5A45675A122@gmail.com>
+	<xmqq4mdh4tel.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Tobias Klauser <tklauser@distanz.ch>,
-	Alex Henrie <alexhenrie24@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 00:01:18 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>,
+	linux.mdb@gmail.com, Stefan Beller <sbeller@google.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 00:03:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTHHV-0001U5-Ut
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 00:01:14 +0100
+	id 1aTHJx-00040g-U2
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 00:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756953AbcBIXBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 18:01:01 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53897 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756932AbcBIXA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 18:00:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 92E9242C01;
-	Tue,  9 Feb 2016 18:00:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=svUhZEfbXucg4B+/blXaenMN0+M=; b=bmb9e/
-	f9dApY3YH2zHMkqAeVhatXf4C1rqK0wQmBxIMJBiMU7OTUsnsMv5NzZGnExYPXBM
-	SRutKAhsv4Z0vm5Zm7wak67kVt2Z1sHEh/Zs9FWLx6RK5II7qGYjxaNAlt0kyUqh
-	3jKDqvc4EJdhjaBHQD6t02T6O7snGevQr1jB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aciK1BHZnPn4InauPUuR2Ni9QT5cimQ8
-	o4LfQUc2J5ptviUbsXwhEkFLJRKHrZC2e+HZeObeVn4Mt9brS4AhHi+qgekc+EgY
-	LR4NPw6+ZV+ESO+gpW8w1qm7x+XPyLe09faie5vAWRrCOmjMODhXMbBK2w6W6O8M
-	Wum0zDCBZt8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8984B42C00;
-	Tue,  9 Feb 2016 18:00:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0089642BFF;
-	Tue,  9 Feb 2016 18:00:57 -0500 (EST)
-In-Reply-To: <CAGZ79kao-DWwn2j4aO8ArSPHAX65KeL7NyD=ONkB6qjOrDZNSQ@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 9 Feb 2016 14:53:19 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FB19857E-CF80-11E5-B2DB-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752830AbcBIXDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 18:03:41 -0500
+Received: from mail-ig0-f194.google.com ([209.85.213.194]:35956 "EHLO
+	mail-ig0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbcBIXDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 18:03:40 -0500
+Received: by mail-ig0-f194.google.com with SMTP id 5so248193igt.3
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 15:03:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dtBK5ZrbudDQMuUjWOOEqt2cVXPzSbyxyqU0gQJgUVU=;
+        b=nLU3S5fsJ9HgJIq9cL4IzJNoj22nAgfgae5FHaBPymwNnJ96pYJSCRePDrWQJuZncC
+         /b08fYbC335jY7Y4MK/Cn0PBhsl8ruEsYrbpvWUK9PkGq2BKPpxwUyqOs1usokQmCyBc
+         cYr4G3z5qxJAQiz0FtpQ5hOCEch4F7FjoBbZ0EmwmWZrvX6yqQWNkl3zUeYj+Kzs9TWG
+         67Qo6TnIhyYDmB1OiaCzYjPRfY0bhnMBvMWy40Tw92AxOIJmW5EuPuGj0LXg7wrFgjf8
+         QniDr/IGtFK5TXj4iwXkfPd4SBeDSMPObW8vLKmibOPHtQippCngZi0NtedlD5JoiECa
+         r59Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=dtBK5ZrbudDQMuUjWOOEqt2cVXPzSbyxyqU0gQJgUVU=;
+        b=XaUHq5O92oS2MA31lGQQIO9oLXPWvYmCPsbYg/MnKWJrfbmlzd9ZxplDb//utzDzpe
+         JMTYBv0jK2gAE6+1x7u0pJhBLmpr/bAQU9jqrGafWcu8TSRMYhcmRUo5yI6aqX0AOA34
+         zsHca2LjlUxgMwiM9MADPphqRBw+ofjPuSPszx+E8GaruBM3ui4vB5ZhwlEQewV9Lg8D
+         SSm6iqZQUw9n0nbIM8Cy5wuygnn2TN+eRsECSHi0F4oNc51pVC+DotOh81XqStYAQbho
+         4s2ES64QCZX5V5oz21uiBrRsgQi/AoaBQU/XWrKIA1EXm1l8tiPNjj4CNYqW0OCwEabL
+         7snA==
+X-Gm-Message-State: AG10YOTPRKn9SUztfTQegbZSUgpYUJ0cqROxs3mE0mgoJZ0CNOhk2KqBXqCzYoLFeX8bxvkDlrlXOTx6DavsZA==
+X-Received: by 10.50.39.107 with SMTP id o11mr7152773igk.21.1455059020093;
+ Tue, 09 Feb 2016 15:03:40 -0800 (PST)
+Received: by 10.79.90.198 with HTTP; Tue, 9 Feb 2016 15:03:40 -0800 (PST)
+In-Reply-To: <xmqq4mdh4tel.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285883>
 
-Stefan Beller <sbeller@google.com> writes:
+On 9 February 2016 at 18:42, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>> Jeff Merkey made me aware of http://kernelnewbies.org/FirstKernelPatch [2]
+>> where I found checkpatch.pl [3]. Would it make sense to check all commits
+>> that are not in next/master/maint with this script on Travis-CI?
+>
+> That does not help very much.  These changes are already shown to
+> people and dirtied their eyes, and most likely I've already have
+> wasted time tweaking the glitches out locally.  The damage has
+> already been done.
+>
+> It would make a lot of sense if the checkpatch is called inside
+> Roberto Tyley's "pull-request-to-patch-submission" thing, though.
 
-> On Tue, Feb 9, 2016 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Alex Henrie <alexhenrie24@gmail.com> writes:
->>
->>> I couldn't find any other examples of people referring to this character
->>> as a "blank".
->>>
->>> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
->>> ---
->>
->> Any comments on this from anybody other than the author that I
->> missed to support this change?
->
-> I remember "blank" being used in my early days of computing.
->
-> The blank was somehow more accurate as it described the exact
-> thing (i.e. char U+0020 as commonly produced via the space bar
-> on the key board)
->
-> A space however could refer to any kind of indentation.
->  * tabs would qualify for that
->  * other tricks of your (wordprocessor-) editor would qualify for that
->    (indent by 2 inches in footer section or other weeirdness)
->  * any other character not using any ink in a printer[1]
->
-> [1] https://www.cs.tut.fi/~jkorpela/chars/spaces.html
->
-> Looking at that table in there, U+0020 is officially called "space",
-> so I guess the patch is technically correct.
+I've not personally run checkpatch.pl (as Peff mentioned, it's not
+actually a documented part of the Git project's recommend contribution
+workflow) - I'm still trying to understand whether it will restrict
+it's errors to just the things that are introduced in a patch, or if
+it will indiscriminately mention existing problems too (of which I
+guess there are many already present in the live Git codebase?). If it
+mentions _existing_ problems, I wouldn't personally want it in any
+automated flow until it can be tuned to find the trees of master/maint
+totally clean. At that point it could be added to the Travis build,
+and GitHub would automatically reflect the Travis status in any
+git/git PR.
 
-So the "blank" is correct because we just want a gap between the
-comment char and the text, and use of " " is merely an
-implementation detail.  The "space" is correct because that happens
-to be the byte used as the implementation detail of leaving that gap
-between the comment char and the text.
-
-;-)
-
-
-
->
-> Orthogonal to this discussion, I'd suggest adding an "a"
-> into the string
->
->      N_("prepend a comment character and a {space, blank} to each line"),
->
->>
->>>  builtin/stripspace.c | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/builtin/stripspace.c b/builtin/stripspace.c
->>> index 7ff8434..15e716e 100644
->>> --- a/builtin/stripspace.c
->>> +++ b/builtin/stripspace.c
->>> @@ -35,7 +35,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
->>>                           N_("skip and remove all lines starting with comment character"),
->>>                           STRIP_COMMENTS),
->>>               OPT_CMDMODE('c', "comment-lines", &mode,
->>> -                         N_("prepend comment character and blank to each line"),
->>> +                         N_("prepend comment character and space to each line"),
->>>                           COMMENT_LINES),
->>>               OPT_END()
->>>       };
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I like the idea of giving helpful guidance to users on how to make
+their patches cleaner - I'm not that enthusiastic about submitGit
+invoking the checkpatch.pl script directly at this point, given that
+it lives in a separate project (the linux kernel) and the version
+Junio uses is patched off _that_ - I'm lazy enough to not want to try
+to get that all to work reliably on a little transient Heroku box.
