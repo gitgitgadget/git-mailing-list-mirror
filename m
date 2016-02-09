@@ -1,116 +1,113 @@
-From: Stephen & Linda Smith <ischis2@cox.net>
-Subject: Re: Bug report: 'git commit --dry-run' corner case: returns error  ("nothing to commit") when all conflicts resolved to HEAD
-Date: Mon, 08 Feb 2016 18:55:17 -0700
-Message-ID: <72756249.nAoBccgOj7@thunderbird>
-References: <1649296.sC1eN3ni6k@thunderbird>
+From: Mikko Rapeli <mikko.rapeli@iki.fi>
+Subject: Re: [PATCH] Documentation/git-clean.txt: don't mention deletion of
+ .git/modules/*
+Date: Tue, 9 Feb 2016 09:55:53 +0200
+Message-ID: <20160209075553.GI6104@lakka.kapsi.fi>
+References: <1454790889.23898.225.camel@mattmccutchen.net>
+ <xmqqvb5y6dx2.fsf@gitster.mtv.corp.google.com>
+ <1454971010.2511.89.camel@mattmccutchen.net>
+ <20160208224739.GH6104@lakka.kapsi.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-To: Ovidiu Gheorghioiu <ovidiug@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 02:55:12 2016
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matt McCutchen <matt@mattmccutchen.net>
+X-From: git-owner@vger.kernel.org Tue Feb 09 08:56:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSxWH-0001n2-Lt
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 02:55:10 +0100
+	id 1aT39b-0006WS-9j
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 08:56:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754580AbcBIBzC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Feb 2016 20:55:02 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:55822 "EHLO
-	fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753564AbcBIBzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 20:55:01 -0500
-Received: from fed1rmimpo305 ([68.230.241.173]) by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
-          id <20160209015500.KUVX17588.fed1rmfepo103.cox.net@fed1rmimpo305>
-          for <git@vger.kernel.org>; Mon, 8 Feb 2016 20:55:00 -0500
-Received: from thunderbird ([68.231.74.134])
-	by fed1rmimpo305 with cox
-	id G1v01s0012tqoqC011v0nA; Mon, 08 Feb 2016 20:55:00 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A020203.56B946F4.006F,ss=1,re=0.000,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.0 cv=f8aW8pOM c=1 sm=1
- a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=jFJIQSaiL_oA:10 a=pGLkceISAAAA:8
- a=TSbVqHtbAAAA:8 a=7kFP1d7yrrZWZ7r2cTMA:9 a=CjuIK1q_8ugA:10
- a=/Rt4pg3TtX3KzfzhvVoEow==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from thunderbird.localnet (thunderbird [127.0.0.1])
-	by thunderbird (Postfix) with ESMTP id ABA4513F6F5;
-	Mon,  8 Feb 2016 18:55:17 -0700 (MST)
-User-Agent: KMail/5.0.2 (Linux/4.4.0-2-generic; KDE/5.15.0; x86_64; ; )
-In-Reply-To: <1649296.sC1eN3ni6k@thunderbird>
+	id S1752830AbcBIH4B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Feb 2016 02:56:01 -0500
+Received: from mail.kapsi.fi ([217.30.184.167]:39118 "EHLO mail.kapsi.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751734AbcBIH4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 02:56:01 -0500
+Received: from lakka.kapsi.fi ([2001:1bc8:1004::1] ident=Debian-exim)
+	by mail.kapsi.fi with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <mikko.rapeli@iki.fi>)
+	id 1aT39N-00027i-PW; Tue, 09 Feb 2016 09:55:53 +0200
+Received: from mcfrisk by lakka.kapsi.fi with local (Exim 4.80)
+	(envelope-from <mikko.rapeli@iki.fi>)
+	id 1aT39N-0005bb-Lu; Tue, 09 Feb 2016 09:55:53 +0200
+Content-Disposition: inline
+In-Reply-To: <20160208224739.GH6104@lakka.kapsi.fi>
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: mikko.rapeli@iki.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285830>
 
-Ovidiu Gheorghioiu <ovidiug@gmail.com> wrote:
->  Hi git guys,
->
-> The bug is fairly simple: if we have a conflicted merge, AND all the
-> conflicts have been resolved to the version in HEAD, the commit
-> --dry-run error code says nothing to commit. As expected, git commit
-> goes through.
-> 
-> The commit message IS correct (-ish), just not the error code:
-> 
-> """
-> All conflicts fixed but you are still merging.
->   (use "git commit" to conclude merge)
-> 
-> nothing to commit, working directory clean
-> """
-> 
-> The script below demonstrates the problem; version tested was 2.5.0.
-> Let me know if you need any more details.
-> 
-> Best,
-> Ovidiu
-> 
-> ------
-> #!/bin/bash
-> mkdir test-repository || exit 1
-> cd test-repository
-> git init
-> echo "Initial contents, unimportant" > test-file
-> git add test-file
-> git commit -m "Initial commit"
-> echo "commit-1-state" > test-file
-> git commit -m "commit 1" -i test-file
-> git tag commit-1
-> git checkout -b branch-2 HEAD^1
-> echo "commit-2-state" > test-file
-> git commit -m "commit 2" -i test-file
-> 
-> # Creates conflicted state.
-> git merge --no-commit commit-1
-> 
-> # Resolved entirely to commit-2, aka HEAD.
-> echo "commit-2-state" > test-file
-> # If we'd set to commit-1=state, all would work as expected (changes vs HEAD).
-> git add test-file
-> 
-> # =====  Bug is here.
-> git commit --dry-run && echo "Git said something to commit" \
->         || echo "Git said NOTHING to commit"
-> 
-> git commit -m "Something to commit after all" && echo "Commit went through"
-> 
-> git log --pretty=oneline
-> 
-> cd ..
+On Tue, Feb 09, 2016 at 12:47:39AM +0200, Mikko Rapeli wrote:
+> On Mon, Feb 08, 2016 at 05:36:50PM -0500, Matt McCutchen wrote:
+> > On Mon, 2016-02-08 at 14:22 -0800, Junio C Hamano wrote:
+> > > Matt McCutchen <matt@mattmccutchen.net> writes:
+> > >=20
+> > > > I found no evidence of such behavior in the source code.
+> > > >=20
+> > > > Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+> > > > ---
+> > >=20
+> > > That was added last year at bcd57cb9 (Documentation/git-clean.txt=
+:
+> > > document that -f may need to be given twice, 2015-02-26).=A0=A0It=
+ would
+> > > be better to know what got changed since then--that is, was the
+> > > additional text unnecessary even back then, or we made changes to
+> > > the system since then and forgot to remove the added text.
+> > >=20
+> > > Mikko, is this need to give -f twice still the case?
+> >=20
+> > I know you probably want confirmation from Mikko, but I'll offer my
+> > understanding. =A0There were two statements added in=A0bcd57cb9:
+> >=20
+> > 1. -f may need to be given twice to delete nested worktrees and
+> > embedded repositories. =A0This is still true.
+> >
+> > 2. Deletion of submodule repositories under .git/modules is conditi=
+onal
+> > on -f being given twice. =A0AFAICT, this was wrong even back then: =
+"git
+> > clean" has never deleted such repositories under any conditions.
+>=20
+> This is the use case which I've used double -f at work with several b=
+uild
+> jobs but with older 1:1.7.9.5-1ubuntu0.2 (Ubuntu 12.04) and 1:1.9.1-1=
+ubuntu0.2
+> (Ubuntu 14.04) versions of git.
 
-I've reproduced the bug with git 2.7.1. [1]
-I plan on adding a test case and a patch to fix this.
+Sorry, can't reproduce the problem where submodules stayed in the tree =
+until
+git clean was called with two -f's.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/276591
+You are right in removing the second part.
 
-I would have responded to the original email but 
-the gmane "follow-up" is not sending out the email.
+> But I can confirm that git version 1:2.7.0~rc3-1 (Debian unstable) is=
+ no
+> longer removing the git submodule trees from .git/modules with double=
+ -f.
+>=20
+> At work, we really want to remove the .git/modules subtrees since we =
+want to
+> test changes to .git/modules structure via normal commits to the git =
+trees.
+> Thus we need a way removing all non-tracked files from the git tree
+> which includes obsolete (or for test only) git submodule trees.
+
+This usecase does not exists in git then. Using gerrit topics git branc=
+hes
+to test changes to submodule structure does not work since there is no =
+way of
+undoing these changes from the working tree.
+
+I should not have started using submodules in the first place, sigh.
+
+-Mikko
