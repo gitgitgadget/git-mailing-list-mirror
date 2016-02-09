@@ -1,172 +1,431 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv9 6/6] clone: allow an explicit argument for parallel submodule clones
-Date: Tue,  9 Feb 2016 12:54:34 -0800
-Message-ID: <1455051274-15256-7-git-send-email-sbeller@google.com>
+Subject: [PATCHv9 4/6] git submodule update: have a dedicated helper for cloning
+Date: Tue,  9 Feb 2016 12:54:32 -0800
+Message-ID: <1455051274-15256-5-git-send-email-sbeller@google.com>
 References: <1455051274-15256-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org,
 	Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Tue Feb 09 21:55:07 2016
+X-From: git-owner@vger.kernel.org Tue Feb 09 21:55:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTFJS-0001uO-EJ
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 21:55:07 +0100
+	id 1aTFJM-0001kw-1G
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 21:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932962AbcBIUzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 15:55:00 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33066 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932714AbcBIUyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 15:54:53 -0500
-Received: by mail-pf0-f171.google.com with SMTP id q63so29501712pfb.0
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 12:54:52 -0800 (PST)
+	id S932949AbcBIUyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 15:54:55 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:36178 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752997AbcBIUyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 15:54:50 -0500
+Received: by mail-pa0-f52.google.com with SMTP id yy13so96812480pab.3
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 12:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+gfcheamkTuWRFd0xPxb277IjhzA528t7ogBHFLDkDc=;
-        b=MQgx82SXlsN+Wgg6U4lpLysrvX0Hul2Kl1ppm5KHkM9Db6bw8wpo+Ylr0hJxFrwvK/
-         dDILPR7DDKBuyJQJg25HYZzdVj5B+CoiwRzFL9VbhVKMgkuML5yQDrhNfytTIdmI49ba
-         45c7UCWcKRVu6X/JM6m1mwac/8m0zUeWBuEccsWY28FeJIk0cK1GIDbYE1i/95q3B0Uj
-         i83dAlIHg0m7xfcICMRfrv4cJ5RsIfXiGsMHu0vq/Zy9x0tSjDlViPLfvu5SJ9Zq/8Uy
-         +QsQJXgSHETQak/CxsoCyzJ5xVxmlnKCQESQUaP18vHlCXPUvKoT7IRUobs8+dBxV3d5
-         7YNg==
+        bh=sSpXaOI6JnuDAFHxUEhiEN2ARZZYuGBahYBW3AYcs6w=;
+        b=Lo3I9LvDj0nUHhFLup5brMtdJ9LS0Ftg7t1rrqy5L4hdZppxfjyO498j6sBZh+YOqL
+         gw8a2A+JAfzUiu4mTkfWko26c8pkY3LdrLVYZqzLlzqszEpTQeIf1g3dNS5a0Ra+pPVQ
+         GzAeaRBmLerw546XvBO0Knl5Ejuz8mTpWSK9JmpTbJoaNo1kOOE2LzsnxV0bCWfusOYE
+         9t/rrPxw4fvck7KZED3rkHje6u2Ty1uRzCHuaVYKUvLXS9M9wLwW/k8DzvfyYL/Cne79
+         1/YaMtt9zYymbNGkRBWamZE3OAip7PgRKu0ebITWN7tkUv3z3KKOk3qOU4ADaVvPQLiq
+         85RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+gfcheamkTuWRFd0xPxb277IjhzA528t7ogBHFLDkDc=;
-        b=m2t/wJcK7mFD50Wk26G1fUNow1comPRQBc8cASCM+pNdwpTd6qSdwlJBKTNjt3Y17s
-         oPXfPWbr7WAM2aueGnZMG7BKE7n3ONQVLVRiKSzukaZ3wjV9DsHc2EomwEcLI+FVbddM
-         sXcj+D6w9FWU+KuPEBFsh59sEn52srAZ2uNYmESaX35eVqVqtycVLc3S3QCqUZA/M0xF
-         2A7JqIRdaNtrkAUWiOdkzqWDl8fnhBPtvMA7eGXAhEHH1RYE0lqGGRozga6tUihIlCIQ
-         aeEGLOzfL+1/0K9+CR0vC3qFEgWbHERtf0ZoTUkc8NDcMwgNpZ689JcHH/5LYQ65WYip
-         MfzA==
-X-Gm-Message-State: AG10YORsuX+Lp5H96Gu54iNFMr6bDxezY+b4kJpHEdKS9maGZ1AQEsFc/LBUyz63up3yOlhK
-X-Received: by 10.98.16.12 with SMTP id y12mr53476130pfi.6.1455051292518;
-        Tue, 09 Feb 2016 12:54:52 -0800 (PST)
+        bh=sSpXaOI6JnuDAFHxUEhiEN2ARZZYuGBahYBW3AYcs6w=;
+        b=iTfth85oTg75608piyS6iOcMzE5gVqwnnCIAC50JhUxVp0E/mmSl76vAElmDGosS0o
+         H4m4fk+s+0v5rIPSWD3ODXeBFrcKBuyLBaTWhK/yv/WJFQ0ZPG4vtyBzm42T51N5Qf11
+         /wxz/SMSEum0Vz6yvaVUNhGZzAxkG7J6K5y5jEQ2pzUhid3JXS6WsZa1wpb23KtWSwJe
+         BY9JhgeXYUEos5++A1mJoeccfWPo0w5ntfHnXH0Qfh7xdbdOADVoaLVlpF6SLC34pa7K
+         Zltu0AhhV7PFRpvZCVzERRiP0uaT4mujVqR1u5Bo2QUeJfn73UJs8Z47QBGjqTTZbngM
+         mnKg==
+X-Gm-Message-State: AG10YORvwGSt4ctLlWFDdp1WaUBLm6T/WzP7E0aqkGjlnvSQLBR/toU1VNP3E4b3A10A1otB
+X-Received: by 10.66.187.77 with SMTP id fq13mr35670148pac.25.1455051289888;
+        Tue, 09 Feb 2016 12:54:49 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:9085:4567:f3b3:63e9])
-        by smtp.gmail.com with ESMTPSA id lt14sm52649259pab.39.2016.02.09.12.54.51
+        by smtp.gmail.com with ESMTPSA id x88sm31230557pfi.66.2016.02.09.12.54.48
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 Feb 2016 12:54:51 -0800 (PST)
+        Tue, 09 Feb 2016 12:54:49 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.35.gb0f7869.dirty
 In-Reply-To: <1455051274-15256-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285864>
 
-Just pass it along to "git submodule update", which may pick reasonable
-defaults if you don't specify an explicit number.
+This introduces a new helper function in git submodule--helper
+which takes care of cloning all submodules, which we want to
+parallelize eventually.
+
+Some tests (such as empty URL, update_mode=none) are required in the
+helper to make the decision for cloning. These checks have been
+moved into the C function as well (no need to repeat them in the
+shell script).
+
+As we can only access the stderr channel from within the parallel
+processing engine, we need to reroute the error message for
+specified but initialized submodules to stderr. As it is an error
+message, this should have gone to stderr in the first place, so it
+is a bug fix along the way.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-clone.txt |  6 +++++-
- builtin/clone.c             | 19 +++++++++++++------
- t/t7406-submodule-update.sh | 15 +++++++++++++++
- 3 files changed, 33 insertions(+), 7 deletions(-)
+ builtin/submodule--helper.c | 230 ++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  45 +++------
+ t/t7400-submodule-basic.sh  |   4 +-
+ 3 files changed, 243 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 6bf000d..6db7b6d 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
--	  [--recursive | --recurse-submodules] [--] <repository>
-+	  [--recursive | --recurse-submodules] [--jobs <n>] [--] <repository>
- 	  [<directory>]
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f4c3eff..53356dc 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -255,6 +255,235 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
- DESCRIPTION
-@@ -221,6 +221,10 @@ objects from the source repository into a pack in the cloned repository.
- 	The result is Git repository can be separated from working
- 	tree.
- 
-+-j <n>::
-+--jobs <n>::
-+	The number of submodules fetched at the same time.
-+	Defaults to the `submodule.fetchJobs` option.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0b3cd9..b004fb4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,6 +50,7 @@ static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
-+static int max_jobs = -1;
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -72,6 +73,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("initialize submodules in the clone")),
- 	OPT_BOOL(0, "recurse-submodules", &option_recursive,
- 		    N_("initialize submodules in the clone")),
-+	OPT_INTEGER('j', "jobs", &max_jobs,
-+		    N_("number of submodules cloned in parallel")),
- 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
- 		   N_("directory from which templates will be used")),
- 	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
-@@ -95,10 +98,6 @@ static struct option builtin_clone_options[] = {
- 	OPT_END()
++static int git_submodule_config(const char *var, const char *value, void *cb)
++{
++	return submodule_config(var, value, cb);
++}
++
++struct submodule_update_clone {
++	/* states */
++	int count;
++	int print_unmatched;
++	/* configuration */
++	int quiet;
++	const char *reference;
++	const char *depth;
++	const char *update;
++	const char *recursive_prefix;
++	const char *prefix;
++	struct module_list list;
++	struct string_list projectlines;
++	struct pathspec pathspec;
++};
++#define SUBMODULE_UPDATE_CLONE_INIT {0, 0, 0, NULL, NULL, NULL, NULL, NULL, MODULE_LIST_INIT, STRING_LIST_INIT_DUP}
++
++static void fill_clone_command(struct child_process *cp, int quiet,
++			       const char *prefix, const char *path,
++			       const char *name, const char *url,
++			       const char *reference, const char *depth)
++{
++	cp->git_cmd = 1;
++	cp->no_stdin = 1;
++	cp->stdout_to_stderr = 1;
++	cp->err = -1;
++	argv_array_push(&cp->args, "submodule--helper");
++	argv_array_push(&cp->args, "clone");
++	if (quiet)
++		argv_array_push(&cp->args, "--quiet");
++
++	if (prefix)
++		argv_array_pushl(&cp->args, "--prefix", prefix, NULL);
++
++	argv_array_pushl(&cp->args, "--path", path, NULL);
++	argv_array_pushl(&cp->args, "--name", name, NULL);
++	argv_array_pushl(&cp->args, "--url", url, NULL);
++	if (reference)
++		argv_array_push(&cp->args, reference);
++	if (depth)
++		argv_array_push(&cp->args, depth);
++}
++
++static int update_clone_get_next_task(struct child_process *cp,
++				      struct strbuf *err,
++				      void *pp_cb,
++				      void **pp_task_cb)
++{
++	struct submodule_update_clone *pp = pp_cb;
++
++	for (; pp->count < pp->list.nr; pp->count++) {
++		const struct submodule *sub = NULL;
++		const struct cache_entry *ce = pp->list.entries[pp->count];
++		struct strbuf displaypath_sb = STRBUF_INIT;
++		struct strbuf sb = STRBUF_INIT;
++		const char *displaypath = NULL;
++		char *url = NULL;
++		int needs_cloning = 0;
++
++		if (ce_stage(ce)) {
++			if (pp->recursive_prefix)
++				strbuf_addf(err,
++					"Skipping unmerged submodule %s/%s\n",
++					pp->recursive_prefix, ce->name);
++			else
++				strbuf_addf(err,
++					"Skipping unmerged submodule %s\n",
++					ce->name);
++			goto cleanup_and_continue;
++		}
++
++		sub = submodule_from_path(null_sha1, ce->name);
++
++		if (pp->recursive_prefix)
++			displaypath = relative_path(pp->recursive_prefix,
++						    ce->name, &displaypath_sb);
++		else
++			displaypath = ce->name;
++
++		if ((pp->update && !strcmp(pp->update, "none")) ||
++		    (!pp->update && sub->update == SM_UPDATE_NONE)) {
++			strbuf_addf(err, "Skipping submodule '%s'\n",
++				    displaypath);
++			goto cleanup_and_continue;
++		}
++
++		/*
++		 * Looking up the url in .git/config.
++		 * We must not fall back to .gitmodules as we only want
++		 * to process configured submodules.
++		 */
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, "submodule.%s.url", sub->name);
++		git_config_get_string(sb.buf, &url);
++		if (!url) {
++			/*
++			 * Only mention uninitialized submodules when its
++			 * path have been specified
++			 */
++			if (pp->pathspec.nr)
++				strbuf_addf(err,
++					    _("Submodule path '%s' not initialized\n"
++					    "Maybe you want to use 'update --init'?"),
++					    displaypath);
++			goto cleanup_and_continue;
++		}
++
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, "%s/.git", ce->name);
++		needs_cloning = !file_exists(sb.buf);
++
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, "%06o %s %d %d\t%s\n", ce->ce_mode,
++				sha1_to_hex(ce->sha1), ce_stage(ce),
++				needs_cloning, ce->name);
++		string_list_append(&pp->projectlines, sb.buf);
++
++		if (needs_cloning) {
++			fill_clone_command(cp, pp->quiet, pp->prefix,
++					   ce->name, sub->name, strdup(url),
++					   pp->reference, pp->depth);
++			pp->count++;
++		}
++
++cleanup_and_continue:
++		free(url);
++		strbuf_reset(&displaypath_sb);
++		strbuf_reset(&sb);
++
++		if (needs_cloning)
++			return 1;
++	}
++	return 0;
++}
++
++static int update_clone_start_failure(struct child_process *cp,
++				      struct strbuf *err,
++				      void *pp_cb,
++				      void *pp_task_cb)
++{
++	struct submodule_update_clone *pp = pp_cb;
++
++	strbuf_addf(err, "error when starting a child process");
++	pp->print_unmatched = 1;
++
++	return 1;
++}
++
++static int update_clone_task_finished(int result,
++				      struct child_process *cp,
++				      struct strbuf *err,
++				      void *pp_cb,
++				      void *pp_task_cb)
++{
++	struct submodule_update_clone *pp = pp_cb;
++
++	if (!result) {
++		return 0;
++	} else {
++		strbuf_addf(err, "error in one child process");
++		pp->print_unmatched = 1;
++		return 1;
++	}
++}
++
++static int update_clone(int argc, const char **argv, const char *prefix)
++{
++	struct string_list_item *item;
++	struct submodule_update_clone pp = SUBMODULE_UPDATE_CLONE_INIT;
++
++	struct option module_list_options[] = {
++		OPT_STRING(0, "prefix", &prefix,
++			   N_("path"),
++			   N_("path into the working tree")),
++		OPT_STRING(0, "recursive_prefix", &pp.recursive_prefix,
++			   N_("path"),
++			   N_("path into the working tree, across nested "
++			      "submodule boundaries")),
++		OPT_STRING(0, "update", &pp.update,
++			   N_("string"),
++			   N_("update command for submodules")),
++		OPT_STRING(0, "reference", &pp.reference, "<repository>",
++			   N_("Use the local reference repository "
++			      "instead of a full clone")),
++		OPT_STRING(0, "depth", &pp.depth, "<depth>",
++			   N_("Create a shallow clone truncated to the "
++			      "specified number of revisions")),
++		OPT__QUIET(&pp.quiet, N_("do't print cloning progress")),
++		OPT_END()
++	};
++
++	const char *const git_submodule_helper_usage[] = {
++		N_("git submodule--helper list [--prefix=<path>] [<path>...]"),
++		NULL
++	};
++	pp.prefix = prefix;
++
++	argc = parse_options(argc, argv, prefix, module_list_options,
++			     git_submodule_helper_usage, 0);
++
++	if (module_list_compute(argc, argv, prefix, &pp.pathspec, &pp.list) < 0) {
++		printf("#unmatched\n");
++		return 1;
++	}
++
++	gitmodules_config();
++	/* Overlay the parsed .gitmodules file with .git/config */
++	git_config(git_submodule_config, NULL);
++	run_processes_parallel(1, update_clone_get_next_task,
++				  update_clone_start_failure,
++				  update_clone_task_finished,
++				  &pp);
++
++	if (pp.print_unmatched) {
++		printf("#unmatched\n");
++		return 1;
++	}
++
++	for_each_string_list_item(item, &pp.projectlines)
++		utf8_fprintf(stdout, "%s", item->string);
++
++	return 0;
++}
++
+ struct cmd_struct {
+ 	const char *cmd;
+ 	int (*fn)(int, const char **, const char *);
+@@ -264,6 +493,7 @@ static struct cmd_struct commands[] = {
+ 	{"list", module_list},
+ 	{"name", module_name},
+ 	{"clone", module_clone},
++	{"update-clone", update_clone}
  };
  
--static const char *argv_submodule[] = {
--	"submodule", "update", "--init", "--recursive", NULL
--};
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f..9f554fb 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -664,17 +664,18 @@ cmd_update()
+ 		cmd_init "--" "$@" || return
+ 	fi
+ 
+-	cloned_modules=
+-	git submodule--helper list --prefix "$wt_prefix" "$@" | {
++	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
++		${wt_prefix:+--prefix "$wt_prefix"} \
++		${prefix:+--recursive_prefix "$prefix"} \
++		${update:+--update "$update"} \
++		${reference:+--reference "$reference"} \
++		${depth:+--depth "$depth"} \
++		"$@" | {
+ 	err=
+-	while read mode sha1 stage sm_path
++	while read mode sha1 stage just_cloned sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+-		if test "$stage" = U
+-		then
+-			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
+-			continue
+-		fi
++
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+ 		branch=$(get_submodule_config "$name" branch master)
+@@ -691,27 +692,10 @@ cmd_update()
+ 
+ 		displaypath=$(relative_path "$prefix$sm_path")
+ 
+-		if test "$update_module" = "none"
+-		then
+-			echo "Skipping submodule '$displaypath'"
+-			continue
+-		fi
 -
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
- {
- 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -724,8 +723,16 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
+-		if test -z "$url"
+-		then
+-			# Only mention uninitialized submodules when its
+-			# path have been specified
+-			test "$#" != "0" &&
+-			say "$(eval_gettext "Submodule path '\$displaypath' not initialized
+-Maybe you want to use 'update --init'?")"
+-			continue
+-		fi
+-
+-		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
++		if test $just_cloned -eq 1
+ 		then
+-			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+-			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
++			update_module=checkout
+ 		else
+ 			subsha1=$(clear_local_git_env; cd "$sm_path" &&
+ 				git rev-parse --verify HEAD) ||
+@@ -751,13 +735,6 @@ Maybe you want to use 'update --init'?")"
+ 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
+ 			fi
  
--	if (!err && option_recursive)
--		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-+	if (!err && option_recursive) {
-+		struct argv_array args = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+
-+		if (max_jobs != -1)
-+			argv_array_pushf(&args, "--jobs=%d", max_jobs);
-+
-+		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+		argv_array_clear(&args);
-+	}
+-			# Is this something we just cloned?
+-			case ";$cloned_modules;" in
+-			*";$name;"*)
+-				# then there is no local change to integrate
+-				update_module=checkout ;;
+-			esac
+-
+ 			must_die_on_failure=
+ 			case "$update_module" in
+ 			checkout)
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 540771c..5991e3c 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -462,7 +462,7 @@ test_expect_success 'update --init' '
+ 	git config --remove-section submodule.example &&
+ 	test_must_fail git config submodule.example.url &&
  
- 	return err;
- }
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 7fd5142..090891e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -786,4 +786,19 @@ test_expect_success 'submodule update can be run in parallel' '
- 	 grep "9 tasks" trace.out
- 	)
- '
-+
-+test_expect_success 'git clone passes the parallel jobs config on to submodules' '
-+	test_when_finished "rm -rf super4" &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
-+	grep "7 tasks" trace.out &&
-+	rm -rf super4 &&
-+	git config --global submodule.fetchJobs 8 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules . super4 &&
-+	grep "8 tasks" trace.out &&
-+	rm -rf super4 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 9 . super4 &&
-+	grep "9 tasks" trace.out &&
-+	rm -rf super4
-+'
-+
- test_done
+-	git submodule update init > update.out &&
++	git submodule update init 2> update.out &&
+ 	cat update.out &&
+ 	test_i18ngrep "not initialized" update.out &&
+ 	test_must_fail git rev-parse --resolve-git-dir init/.git &&
+@@ -480,7 +480,7 @@ test_expect_success 'update --init from subdirectory' '
+ 	mkdir -p sub &&
+ 	(
+ 		cd sub &&
+-		git submodule update ../init >update.out &&
++		git submodule update ../init 2>update.out &&
+ 		cat update.out &&
+ 		test_i18ngrep "not initialized" update.out &&
+ 		test_must_fail git rev-parse --resolve-git-dir ../init/.git &&
 -- 
 2.7.0.rc0.35.gb0f7869.dirty
