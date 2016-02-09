@@ -1,99 +1,116 @@
-From: Anatoly Borodin <anatoly.borodin@gmail.com>
-Subject: A different bug in git-filter-branch (v2.7.0)
-Date: Mon, 8 Feb 2016 23:55:37 +0000 (UTC)
-Message-ID: <n9b9tp$gbr$1@ger.gmane.org>
-References: <loom.20160128T153147-396@post.gmane.org> <20160129061820.GB23106@sigill.intra.peff.net> <n8gao5$3c6$1@ger.gmane.org> <20160129231127.GA31798@sigill.intra.peff.net>
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Re: Bug report: 'git commit --dry-run' corner case: returns error  ("nothing to commit") when all conflicts resolved to HEAD
+Date: Mon, 08 Feb 2016 18:55:17 -0700
+Message-ID: <72756249.nAoBccgOj7@thunderbird>
+References: <1649296.sC1eN3ni6k@thunderbird>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 09 00:55:57 2016
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org
+To: Ovidiu Gheorghioiu <ovidiug@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 02:55:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aSvet-0001sw-GP
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 00:55:55 +0100
+	id 1aSxWH-0001n2-Lt
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 02:55:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756404AbcBHXzt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Feb 2016 18:55:49 -0500
-Received: from plane.gmane.org ([80.91.229.3]:59736 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756366AbcBHXzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Feb 2016 18:55:47 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aSvei-0001ds-4w
-	for git@vger.kernel.org; Tue, 09 Feb 2016 00:55:44 +0100
-Received: from x4db398ac.dyn.telefonica.de ([77.179.152.172])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 00:55:44 +0100
-Received: from anatoly.borodin by x4db398ac.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 00:55:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x4db398ac.dyn.telefonica.de
-User-Agent: tin/2.3.2-20151224 ("Glenavullen") (UNIX) (FreeBSD/10.2-STABLE (i386))
+	id S1754580AbcBIBzC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Feb 2016 20:55:02 -0500
+Received: from fed1rmfepo103.cox.net ([68.230.241.145]:55822 "EHLO
+	fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753564AbcBIBzB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Feb 2016 20:55:01 -0500
+Received: from fed1rmimpo305 ([68.230.241.173]) by fed1rmfepo103.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20160209015500.KUVX17588.fed1rmfepo103.cox.net@fed1rmimpo305>
+          for <git@vger.kernel.org>; Mon, 8 Feb 2016 20:55:00 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo305 with cox
+	id G1v01s0012tqoqC011v0nA; Mon, 08 Feb 2016 20:55:00 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020203.56B946F4.006F,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=f8aW8pOM c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=jFJIQSaiL_oA:10 a=pGLkceISAAAA:8
+ a=TSbVqHtbAAAA:8 a=7kFP1d7yrrZWZ7r2cTMA:9 a=CjuIK1q_8ugA:10
+ a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id ABA4513F6F5;
+	Mon,  8 Feb 2016 18:55:17 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.4.0-2-generic; KDE/5.15.0; x86_64; ; )
+In-Reply-To: <1649296.sC1eN3ni6k@thunderbird>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285829>
 
-Hi Jeff,
+Ovidiu Gheorghioiu <ovidiug@gmail.com> wrote:
+>  Hi git guys,
+>
+> The bug is fairly simple: if we have a conflicted merge, AND all the
+> conflicts have been resolved to the version in HEAD, the commit
+> --dry-run error code says nothing to commit. As expected, git commit
+> goes through.
+> 
+> The commit message IS correct (-ish), just not the error code:
+> 
+> """
+> All conflicts fixed but you are still merging.
+>   (use "git commit" to conclude merge)
+> 
+> nothing to commit, working directory clean
+> """
+> 
+> The script below demonstrates the problem; version tested was 2.5.0.
+> Let me know if you need any more details.
+> 
+> Best,
+> Ovidiu
+> 
+> ------
+> #!/bin/bash
+> mkdir test-repository || exit 1
+> cd test-repository
+> git init
+> echo "Initial contents, unimportant" > test-file
+> git add test-file
+> git commit -m "Initial commit"
+> echo "commit-1-state" > test-file
+> git commit -m "commit 1" -i test-file
+> git tag commit-1
+> git checkout -b branch-2 HEAD^1
+> echo "commit-2-state" > test-file
+> git commit -m "commit 2" -i test-file
+> 
+> # Creates conflicted state.
+> git merge --no-commit commit-1
+> 
+> # Resolved entirely to commit-2, aka HEAD.
+> echo "commit-2-state" > test-file
+> # If we'd set to commit-1=state, all would work as expected (changes vs HEAD).
+> git add test-file
+> 
+> # =====  Bug is here.
+> git commit --dry-run && echo "Git said something to commit" \
+>         || echo "Git said NOTHING to commit"
+> 
+> git commit -m "Something to commit after all" && echo "Commit went through"
+> 
+> git log --pretty=oneline
+> 
+> cd ..
 
+I've reproduced the bug with git 2.7.1. [1]
+I plan on adding a test case and a patch to fix this.
 
-unfortunately, `--tree-filter true` doesn't solve the problem with the
-repo at my work: not all old blobs are replaced with the new ones. I've
-made a test repository to demonstrate it; it's a huge one (115M), but I
-couldn't make it much smaller, because the bug fails to reproduce if th=
-e
-repo is not big enough:
+[1] http://article.gmane.org/gmane.comp.version-control.git/276591
 
-https://github.com/anatolyborodin/git-filter-branch-bug
-
-There are some description and instructions in `README.md`. I hope you
-will be able to reproduce it on your machine, if not - just add more
-files :)
-
-I've debugged the test case and found the place where `git diff-index`
-behaves differently regarding `aa/bb.dat`:
-
-read-cache.c +351	ie_match_stat():
-=2E..
-	if (!changed && is_racy_timestamp(istate, ce)) {
-		if (assume_racy_is_modified)
-			changed |=3D DATA_CHANGED;
-		else
-			changed |=3D ce_modified_check_fs(ce, st);
-	}
-=2E..
-
-After `git-checkout-index` the blob hash for `aa/bb.dat` in the index i=
-s
-88a0f09b9b2e4ccf2faec89ab37d416fba4ee79d (the huge binary), but the fil=
-e
-on disk is a text file "This file was to big, and it has been removed."
-with the hash 16e0939430610600301680d5bf8a24a22ff8b6c4.
-
-In the case of a "good behaving" commit, the timestamps of the index an=
-d
-the cache entry are the same, is_racy_timestamp() returns 1, and
-ce_modified_check_fs() finds that the content of the file has changed.
-`git diff-index` lists the file `aa/bb.dat`.
-
-In the case of a "bad behaving" commit, the timestamps of the index and
-the cache entry are different (the index is 1 second newer),
-is_racy_timestamp() returns 0, and the file is assumed unchanged; `git
-diff-index` prints nothing.
-
-I don't know if it should be considered to be a bug in in the logic of
-`git checkout-index`, or `git diff-index` / `git update-index`.
-
-
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen,
-Anatoly Borodin
+I would have responded to the original email but 
+the gmane "follow-up" is not sending out the email.
