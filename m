@@ -1,177 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv9 3/6] fetching submodules: respect `submodule.fetchJobs`
- config option
-Date: Tue, 9 Feb 2016 14:34:00 -0800
-Message-ID: <20160209223400.GI28749@google.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
- <1455051274-15256-4-git-send-email-sbeller@google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] stripspace: Call U+0020 a "space" instead of a "blank"
+Date: Tue, 9 Feb 2016 14:53:19 -0800
+Message-ID: <CAGZ79kao-DWwn2j4aO8ArSPHAX65KeL7NyD=ONkB6qjOrDZNSQ@mail.gmail.com>
+References: <1454037056-26355-1-git-send-email-alexhenrie24@gmail.com>
+	<xmqqvb5x1q01.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Feb 09 23:34:11 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	Alex Henrie <alexhenrie24@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 09 23:53:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTGrK-0007aE-O4
-	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:34:11 +0100
+	id 1aTH9z-00026k-KY
+	for gcvg-git-2@plane.gmane.org; Tue, 09 Feb 2016 23:53:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933077AbcBIWeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 17:34:06 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36563 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932719AbcBIWeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 17:34:04 -0500
-Received: by mail-pf0-f180.google.com with SMTP id e127so879282pfe.3
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 14:34:03 -0800 (PST)
+	id S1755534AbcBIWxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 17:53:23 -0500
+Received: from mail-io0-f170.google.com ([209.85.223.170]:36489 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933080AbcBIWxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 17:53:20 -0500
+Received: by mail-io0-f170.google.com with SMTP id l127so3527651iof.3
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 14:53:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=sJ6yRSeVEoFkzZddzU9d9ZctH1AwsBuWSwZlExKKq7A=;
-        b=VRq1qRwQ8vn9m/Y+p3zRWHcwsntSyXRtCQ6djIWA+o83QFsZ3T4pEfS9kJnIqtcaVg
-         o59/m8RzXV55xqOOBdCuTkrH7f7IAiu2/yGFx82DF8ch4XRf37ihEaAYZfxprLqPTOGJ
-         dCTDXsjm0v8j/P6BTQfrqwHgRiqMQSmJpRvtqqb1z2uzzcwL/br5TRlwjaIHBT2WxIbx
-         +yGYn/Wuih+dOrHR8hg8eKBtUnK8LNwIaYdjgUY9uAbw5d4O/SJAK5uwsxjZgJGr0+ko
-         cptwL5lDkZSW92GImTaRXyKChy0dHu+w8Dcn+SJpj7KxP/C0QuCo2dMrV3oouBFET/2v
-         NZNA==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ZdY+jbm4z/aSUXTHvd7VpI9Ic9xQOdJnj2lokUHpeZc=;
+        b=Cm+Sy/5SNSGeu3i0HaNOFm9Y2uC8xD9h+F46tHLcjIhapB/5jX0QBnyrswVBISVqyp
+         SFQGHNhUocwpkC/PMU2PTGwHFBeA6nVmQgQNvqTJhZjGv4wSpI+ufps8p60oLnfs0ltw
+         D/oc73mVNXjW1M5RyaTQu6cVzhPA0sDyj75XjP9CxmwYZwd73ztct54i725V1JaBJot9
+         gwOKAjSmK+9ViTew99S4RzuWe7/5BCjHbUNUJad7a4TTXR/pKA8tGJBLc9dzKSwF/LM7
+         J+7MXWASE4w/D9zBqVSPXdjgMY/GAdtPZoYvM15g5DwrAaOasbhYwTTMXml9CItgA1Z5
+         JI7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=sJ6yRSeVEoFkzZddzU9d9ZctH1AwsBuWSwZlExKKq7A=;
-        b=FWHd2jw6T54VQLbHwr+5e8zDnQf7GUBy14PCkdUxz6Gwv5qOW3tHUzI89wAQYKLeK+
-         Uu8o2wvD1d0DBMQ44RnwMYABbKCPGEjeCR4SP4ptwrTETZH+rj7eAwjPplN2gS+fMvCt
-         CKqphY8/J2rzyi+3r8ixZJtzIGMC17RS45uTkae4/BokF6Tpcbi8TbSvLvKYJ8Dy9Mc7
-         GzES2AuUqqSK2pzBJyvtsRmJLCWLdJ6zKLga9MLXSaqq9weyLjrDegx6BO9vqVZpQois
-         x5kzFgxmri3HWAL/rK5Ro7CwBq3yEG6Cs3mbwJcJMVZbUtw+b8Sdga1kuCasENX+po9L
-         k4hg==
-X-Gm-Message-State: AG10YOQjcTJH4AJi1vSmvBuP1Lx8KViOL3/n85+KvkShoYIDPyAwGBsY2g5MKv/kbgn8yA==
-X-Received: by 10.98.74.93 with SMTP id x90mr33894329pfa.80.1455057243530;
-        Tue, 09 Feb 2016 14:34:03 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:609c:fa:6497:fd10])
-        by smtp.gmail.com with ESMTPSA id w89sm158072pfi.13.2016.02.09.14.34.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 09 Feb 2016 14:34:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1455051274-15256-4-git-send-email-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ZdY+jbm4z/aSUXTHvd7VpI9Ic9xQOdJnj2lokUHpeZc=;
+        b=a2+qAt0uuxUamCVuxm6S9b6QkbpCFd+sQ8T4IuoNJOhKFoaHQ0ZNVbLj/8vmH+msRb
+         ZH+jm14ruxoChIJCarXX18WMlv+BycUx6QqjlY2QaRVs+W3D8URvo3vfogf8xGkVSNuD
+         H3X8bUkgpwR3+8SpnV5NjX1LgytRLid44VEkyQBuwMiLskOcJlwHkBZQO89fQafYITXp
+         Ti8jAurplzOW6mJdlUV3+hXmwNz1GWKq/0cYchxPJG6m8+LQrkd796RDlQNWCePEnMKY
+         d/OkIDPT6Jo1WaqswBK7xoFkdswVlE71ai0l9IdS2Z8tdwno71Jm3RVxBLxwE+HMbBvN
+         +14w==
+X-Gm-Message-State: AG10YOQEqXuljsu5ZNqin2H7Uji1OTNNoL+THeWyf6x16tDrtAXbtMbqlY35AwbCuuQBV35v6VNSUwzjJt/HDSul
+X-Received: by 10.107.158.81 with SMTP id h78mr14221857ioe.174.1455058399957;
+ Tue, 09 Feb 2016 14:53:19 -0800 (PST)
+Received: by 10.107.4.210 with HTTP; Tue, 9 Feb 2016 14:53:19 -0800 (PST)
+In-Reply-To: <xmqqvb5x1q01.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285881>
 
-Hi,
+On Tue, Feb 9, 2016 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+>> I couldn't find any other examples of people referring to this character
+>> as a "blank".
+>>
+>> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+>> ---
+>
+> Any comments on this from anybody other than the author that I
+> missed to support this change?
 
-Stefan Beller wrote:
+I remember "blank" being used in my early days of computing.
 
-> +++ b/submodule.c
-[...]
-> @@ -169,7 +170,13 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
->  
->  int submodule_config(const char *var, const char *value, void *cb)
->  {
-> -	if (starts_with(var, "submodule."))
-> +	if (!strcmp(var, "submodule.fetchjobs")) {
-> +		unsigned long val;
-> +		if (!git_parse_ulong(value, &val) || 0 > val || val >= INT_MAX)
-> +			die(_("Error parsing submodule.fetchJobs %s"), value);
+The blank was somehow more accurate as it described the exact
+thing (i.e. char U+0020 as commonly produced via the space bar
+on the key board)
 
-'val < 0' would be more idiomatic than '0 > val'.  More importantly,
-val is an unsigned long.  How could it be negative?
+A space however could refer to any kind of indentation.
+ * tabs would qualify for that
+ * other tricks of your (wordprocessor-) editor would qualify for that
+   (indent by 2 inches in footer section or other weeirdness)
+ * any other character not using any ink in a printer[1]
 
-Is it intended that val == INT_MAX is not permitted?  I would have
-expected something like the following to work:
+[1] https://www.cs.tut.fi/~jkorpela/chars/spaces.html
 
-		unsigned long val = git_config_ulong(var, value);
-		if (val > INT_MAX) {
-			errno = ERANGE;
-			die_bad_number(var, value);
-		}
+Looking at that table in there, U+0020 is officially called "space",
+so I guess the patch is technically correct.
 
-(using die_bad_number from config.c).  Or config.c could gain a
-git_config_nonnegative_int helper:
+Orthogonal to this discussion, I'd suggest adding an "a"
+into the string
 
-	static int git_parse_nonnegative_int(const char *value, int *ret)
-	{
-		uintmax_t tmp;
-		if (!git_parse_unsigned(value, &tmp, maximum_signed_value_of_type(int)))
-			return 0;
-		*ret = tmp;
-		return 1;
-	}
+     N_("prepend a comment character and a {space, blank} to each line"),
 
-	int git_config_nonnegative_int(const char *name, const char *value)
-	{
-		int ret;
-		if (!git_parse_nonnegative_int(value, &ret))
-			die_bad_number(name, value);
-		return ret;
-	}
-
-allowing
-
-		parallel_jobs = git_config_nonnegative_int(var, val);
-		return 0;
-
-[...]
-> @@ -751,6 +758,9 @@ int fetch_populated_submodules(const struct argv_array *options,
->  	argv_array_push(&spf.args, "--recurse-submodules-default");
->  	/* default value, "--submodule-prefix" and its value are added later */
->  
-> +	if (max_parallel_jobs < 0)
-> +		max_parallel_jobs = parallel_jobs;
-
-Makes sense.
-
-[...]
-> @@ -1097,3 +1107,8 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
->  	strbuf_release(&rel_path);
->  	free((void *)real_work_tree);
->  }
-> +
-> +int parallel_submodules(void)
-> +{
-> +	return parallel_jobs;
-> +}
-
-Is this helper used?
-
-[...]
-> +++ b/submodule.h
-> @@ -41,5 +41,6 @@ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_nam
->  		struct string_list *needs_pushing);
->  int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
->  void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
-> +int parallel_submodules(void);
-
-optional trick: one way to avoid merge conflicts is to add each function
-at some logical place in the file instead of at the end.  Another nice
-side-effect is that it makes it easier to read through the header since
-functions appear in some appropriate order.
-
-E.g. this method could go near the config functions, I suppose.
-
-> --- a/t/t5526-fetch-submodules.sh
-> +++ b/t/t5526-fetch-submodules.sh
-> @@ -471,4 +471,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
->  	test_i18ncmp expect.err actual.err
->  '
->  
-> +test_expect_success 'fetching submodules respects parallel settings' '
-
-Makes sense.  Same trick about inserting in some appropriate place in
-the middle of the file applies here, too.  In tests it also ends up
-being useful for finding when tests overlap or when there's a gap in
-coverage.
-
-The documentation says that '0' does something appropriate (DWIM or
-something?  I didn't understand it).  Perhaps a test for that behavior
-would be useful, too.
-
-Thanks,
-Jonathan
+>
+>>  builtin/stripspace.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+>> index 7ff8434..15e716e 100644
+>> --- a/builtin/stripspace.c
+>> +++ b/builtin/stripspace.c
+>> @@ -35,7 +35,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
+>>                           N_("skip and remove all lines starting with comment character"),
+>>                           STRIP_COMMENTS),
+>>               OPT_CMDMODE('c', "comment-lines", &mode,
+>> -                         N_("prepend comment character and blank to each line"),
+>> +                         N_("prepend comment character and space to each line"),
+>>                           COMMENT_LINES),
+>>               OPT_END()
+>>       };
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
