@@ -1,109 +1,91 @@
-From: tboegi@web.de
-Subject: [PATCH v4 4/6] convert.c: use text_eol_is_crlf()
-Date: Wed, 10 Feb 2016 17:24:40 +0100
-Message-ID: <1455121480-16390-1-git-send-email-tboegi@web.de>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] config: add '--sources' option to print the source of
+ a config value
+Date: Wed, 10 Feb 2016 11:24:08 -0500
+Message-ID: <20160210162408.GD19867@sigill.intra.peff.net>
+References: <1455099198-11515-1-git-send-email-larsxschneider@gmail.com>
+ <20160210125429.GA8078@sigill.intra.peff.net>
+ <CAHGBnuMMN_xEVDJ_dqWgL6QCGK08hy=ggg=6PzkSCinHr=QeFg@mail.gmail.com>
+ <20160210154006.GA19867@sigill.intra.peff.net>
+ <CAHGBnuMDCYePJyEU4yHjGjEzyZn8mRBE73WC3qsRqbb6Amhyog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 17:23:36 2016
+Content-Type: text/plain; charset=utf-8
+Cc: larsxschneider@gmail.com, Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 17:24:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTXYF-0000rS-19
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 17:23:35 +0100
+	id 1aTXYu-0001dj-QO
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 17:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbcBJQXb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2016 11:23:31 -0500
-Received: from mout.web.de ([212.227.15.3]:54813 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752487AbcBJQXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 11:23:30 -0500
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MQ6KJ-1aOKTl1hpL-005Dvr; Wed, 10 Feb 2016 17:23:18
- +0100
-X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
-In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-X-Provags-ID: V03:K0:wpavO4di5SoagrFPqHYipKlwq5QptIE6SC6mWhEfCdIOxs9CdQa
- 4SM2U+GlDkK5Lcj9CqmCI9m3UbNwy1eEGmnAL8XnbAgxovz6na6ecopH/uZ0UIGx958qmjG
- +H/y8Eskl8ck9RDrRRjsyLyhadmdf0T/69xXJbtvFsU1ihTKN0JqNWDUR/vu9AEaSD7oy08
- nmECvJ5wccsKFFyN2Oi4g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dOwHnr5Us0o=:5wNba32i7k1oktM9DkrlqU
- 5/X5r9nXRNMfB6Eu4cpWvXZxwF4YBXrgVsP89u18lFAtJ6VhhV1p4QGA7defs1o4y2b7T71BC
- 9K4PrCMLAQ3b06RWhFzK/plXiECAm2risAKmj7yAdMISoDP33JhuN4OrYoWcQdUjLyqrxkosZ
- hJMv2v4ujdaotthu/EkgNtX8pZNCfln/qH8n7pOnwHjX0u7bKAU7MmnA1LkK2XlHMopyYfLRn
- DV869ID1k+mIHALhuX7YtOsLyzgiRyNSbveHK886+Pyi0uLhpTcnVA9vKYTSTApF1d3DTVpfC
- Y4SUW6gpYkZJd4vIQfWHhxCYKsM0u5pJK9vextG7q4RkS086JPMh05P4kd/ESgaWaIb6gfoZr
- 2/UPKrGD/JzFtQTOos+6MG1DlYYxUDVMCfKR6JZf05QwTrNWU17VSld8wnQ8CK6UA5U4ytYwn
- hEjDUkgODFxPuyMcfrdztDM0nvIAknuIRkA+v1h3ElsvXrKJsMwOZoF6SmxHpBIc1yTPtraa7
- OmNqBB9071Nex4jq4jzGt6zsJzenoHjm/UKyeE/VzS4xQFvb66wBUJrvn4VcpfMq6p9oCKPbJ
- qs66waBPvemWinax+LhxIypdltgc7bRNHorkAFqwTd9pKt9VGL7N3X+eE7r1z8kFKGSk91MKk
- Sd+vC1+Vw6aY1mm4VcPf44Psv9D8xqmr6A0dZODTU7Kcwgnt9fuJt2ioNcLVhfjxp4NvgROOw
- yxz4qqCfcCt1FslbITdwN7yRUWM5Dxe0Hh3TQUiWuMWsCJIYRLKqypb8Xy1BfV1/uPNULdoN 
+	id S1752761AbcBJQYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 11:24:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39820 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752487AbcBJQYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 11:24:11 -0500
+Received: (qmail 2783 invoked by uid 102); 10 Feb 2016 16:24:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 11:24:10 -0500
+Received: (qmail 29238 invoked by uid 107); 10 Feb 2016 16:24:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 11:24:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 11:24:08 -0500
+Content-Disposition: inline
+In-Reply-To: <CAHGBnuMDCYePJyEU4yHjGjEzyZn8mRBE73WC3qsRqbb6Amhyog@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285915>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Wed, Feb 10, 2016 at 04:57:00PM +0100, Sebastian Schuberth wrote:
 
-Add a helper function to find out, which line endings text files
-should get at checkout, depending on core.autocrlf and core.eol
-configuration variables.
+> >> I also would have expected sopme like the latter, except that I'd also
+> >> expect a colon after "stdin" and "cmd" (or "cmdline", as said above).
+> >> I.e. the colon should be part of the prefix to mark it as such.
+> >
+> > Yeah, I waffled on that. Having a colon means you can definitely parse
+> > to the first ":" without looking at what the prefix is. But if you don't
+> > know what the prefix is, I don't know what good that does you. IOW, I'd
+> 
+> IMO that's asking the wrong question. The question should not be "what
+> good does it do if we add the colons also there", but "what
+> justification do we have to introduce an inconsistency by not adding
+> them".
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- convert.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+But I think it is only an inconsistency if your mental model of the
+format is "the source field is a prefix, a colon, and then an argument;
+sometimes we omit the colon if there is no argument". If your mental
+model is "the source field contains a type, followed by type-specific
+data", then it is not an inconsistency. It is simply context-sensitive.
 
-diff --git a/convert.c b/convert.c
-index d0c8c66..557e574 100644
---- a/convert.c
-+++ b/convert.c
-@@ -149,6 +149,19 @@ const char *get_wt_convert_stats_ascii(const char =
-*path)
- 	return ret;
- }
-=20
-+static int text_eol_is_crlf(void)
-+{
-+	if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
-+		return 1;
-+	else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
-+		return 0;
-+	if (core_eol =3D=3D EOL_CRLF)
-+		return 1;
-+	if (core_eol =3D=3D EOL_UNSET && EOL_NATIVE =3D=3D EOL_CRLF)
-+		return 1;
-+	return 0;
-+}
-+
- static enum eol output_eol(enum crlf_action crlf_action)
- {
- 	switch (crlf_action) {
-@@ -164,12 +177,7 @@ static enum eol output_eol(enum crlf_action crlf_a=
-ction)
- 		/* fall through */
- 	case CRLF_TEXT:
- 	case CRLF_AUTO:
--		if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
--			return EOL_CRLF;
--		else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
--			return EOL_LF;
--		else if (core_eol =3D=3D EOL_UNSET)
--			return EOL_NATIVE;
-+		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
- 	}
- 	return core_eol;
- }
---=20
-2.7.0.303.g2c4f448.dirty
+Now you can argue that context-sensitive things are bad, and I might
+agree with that. :)
+
+> I agree the option wording mostly is personal preference. On the other
+> hand, I find discussions like these often prematurely waved aside as
+> bikeshedding, just because e.g. Perl can parse the one as good as the
+> other. But it's not about Perl, it's about humans. IMO Git has
+> historically made many mistakes by not caring enough about consistency
+> in docs, command and command line option naming, so I don't see it as
+> wasted time to discuss about things like this.
+
+Oh, I agree that formats are worth discussing. It's just that I do not
+think either of the mental models above is better than the other.
+
+My point in mentioning perl is not that perl can do it, but rather the
+opposite: that _any_ language can do it. And I would even go so far as
+to say that humans parse context-sensitive things better than machines,
+because we simultaneously apply the semantic and syntactic parsing (so
+you see "stdin" and know because of its meaning that there is nothing
+left to parse; you don't need a trailing colon to tell you that). Or
+perhaps you mean "humans write the programs that machines use to parse,
+and we must make things regular and easy for them". I can somewhat buy
+that argument, though again, I think either is easy; it is mostly a
+matter of documenting the format's mental model.
+
+-Peff
