@@ -1,129 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] get_sha1: don't die() on bogus search strings
-Date: Wed, 10 Feb 2016 16:19:25 -0500
-Message-ID: <20160210211925.GC5799@sigill.intra.peff.net>
-References: <20160210211206.GA5755@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
+Date: Wed, 10 Feb 2016 13:22:07 -0800
+Message-ID: <20160210212207.GB10155@google.com>
+References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
+ <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
+ <CAGZ79kZMvxa5Np4GbShv_A6NZwVAqff94+d8MFTZwrZS+2CqeQ@mail.gmail.com>
+ <xmqqh9hgz3km.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 22:19:50 2016
+X-From: git-owner@vger.kernel.org Wed Feb 10 22:22:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTcAw-0007rP-7L
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:19:50 +0100
+	id 1aTcDH-0001iX-IB
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbcBJVTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 16:19:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40012 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750759AbcBJVT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 16:19:27 -0500
-Received: (qmail 16392 invoked by uid 102); 10 Feb 2016 21:19:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:19:27 -0500
-Received: (qmail 31802 invoked by uid 107); 10 Feb 2016 21:19:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:19:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 16:19:25 -0500
+	id S1750905AbcBJVWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 16:22:12 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36341 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759AbcBJVWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 16:22:10 -0500
+Received: by mail-pa0-f47.google.com with SMTP id yy13so17722257pab.3
+        for <git@vger.kernel.org>; Wed, 10 Feb 2016 13:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=xjAOX8BhZ2OYbfB/azvm2sLIe3HpJCZBOe6o9tra2FE=;
+        b=mj12sgbuNhNhUcxD94sA6feao+XQIjx49blfmbSEIgX2aC4b5Q8yXrn7NUujhlLfYy
+         DlzkT1RGH9YL2yzC/9jJ14jRXT/i40tsw4W7h8XeHm1BNGuPxMx9dUaBz0vdTlOkU5+U
+         wHCKKSg/6amBx9BRZhJbEUfn55kRuFqnES2IA2xmYpz5D/p0J17lcamlRYUy1CJzJCH/
+         vrc1Lh1v9yAuXVV2THjWkt3ereNWUqkTAZo7UFsw7ph2GeVew3tmeMaC7SgMPAFPJgve
+         R/gjnsgufvqXuyyUekvjmwdXYrGdS/80/xzEo0hjyKlvzyAtVwp/JWXQOTPhMgSEzvlr
+         KPYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=xjAOX8BhZ2OYbfB/azvm2sLIe3HpJCZBOe6o9tra2FE=;
+        b=Gh/jR4bYbEXeaWG8E0PjsGaTZc7Pa7Mk9DiqR39VaqPa6zL/WszZRfYphlrqeOWaVF
+         XbRg/s6aHwzxsGzg6YOmfuNKSU63TSsTKlIJJIxY5NASPI/wVi90rmW5y2s0u0IZBE7/
+         pVmnfuD0frWvoM9yv9RW7Y/YhtDZAO2SyhGA9015uEm473DpZTX5nY6zhZlVqU3QvC9L
+         YQkERcd/1sKEsHOE0T4LxPFKPUFoYmta5OPnfwfLkYfVutPscDnIK8ZUosEVBwsXtrgB
+         QbHLHFfpHLgCBHAATAxc3lq+QUZYkKswX46kNbBtZGjlTnyVuB96lWvHVq9gDl/lY027
+         fi/Q==
+X-Gm-Message-State: AG10YOR8ap9cMnSyhCwTRNwhcWR3eTozyYI+K55ka+oMtD0ZNYlhuOUtOdpyNLHrVkhE1A==
+X-Received: by 10.66.102.40 with SMTP id fl8mr61359860pab.136.1455139330103;
+        Wed, 10 Feb 2016 13:22:10 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:986b:44f8:244c:add9])
+        by smtp.gmail.com with ESMTPSA id dg12sm7253523pac.47.2016.02.10.13.22.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 10 Feb 2016 13:22:09 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20160210211206.GA5755@sigill.intra.peff.net>
+In-Reply-To: <xmqqh9hgz3km.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285932>
 
-The get_sha1() function generally returns an error code
-rather than dying, and we sometimes speculatively call it
-with something that may be a revision or a pathspec, in
-order to see which one it might be.
+Junio C Hamano wrote:
 
-If it sees a bogus ":/" search string, though, it complains,
-without giving the caller the opportunity to recover. We can
-demonstrate this in t6133 by looking for ":/*.t", which
-should mean "*.t at the root of the tree", but instead dies
-because of the invalid regex (the "*" has nothing to operate
-on).
+> I somehow doubt it.  Both index-pack and lost-found need to trace
+> "object A depends on object B", but the similarity ends there.
 
-We can fix this by returning an error rather than calling
-die(). Unfortunately, the tradeoff is that the error message
-is slightly worse in cases where we _do_ know we have a rev.
-E.g., running "git log ':/*.t' --" before yielded:
+You already responded about this in another side-thread, so the
+following is mostly redundant. :)  I think this message can still be
+useful to future readers since it more explicitly goes through the
+trade-offs.
 
-  fatal: Invalid search pattern: *.t
+The relevant similarity is that both index-pack and lost-found need to
+inflate all commit, tag, and tree objects.
 
-and now we get only:
+This is the same idea that led to the introduction of "git index-pack
+--strict".
 
-  fatal: bad revision ':/*.t'
+[...]
+> I am not quite sure if that is an advantage, though.  The second
+> message proposes that the lost-found computation to be done by the
+> client using *.pack, but any client, given the same *.pack, will
+> compute the same result, so if the result is computed on the server
+> side just once when the *.pack is prepared and downloaded to the
+> client, it would give us a better overall resource utilization.  And
+> in essence, that was what the *.info file in the first message was.
 
-There's not a simple way to fix this short of passing a
-"quiet" flag all the way through the get_sha1() stack.
+Advantages of not providing the list of roots:
+ 1. only need one round-trip to serve the packfile as-is
+ 2. less data sent over the wire (not important unless the list of roots
+    is long)
+ 3. can be enabled on the server for existing repositories without an
+    extra step of generating .info files
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-To be honest, I'm not sure this is worth it. Part of me wants to say
-that get_sha1() is simply wrong for dying. And it is, but given how
-infrequently this would come up, it's perhaps a practical tradeoff to
-get the more accurate error message.
+Advantage of providing the list of roots:
+- speedup because the client does not have to compute the list of roots
 
-And while it does confuse ":/*.t", which is obviously a pathspec, that's
-just one specific case, that works because of the bogus regex. Something
-like ":/foo.*" could mean "find foo.* at the root" or it could mean
-"find a commit message with foo followed by anything", and we literally
-do not know which.
+For a client that is already iterating over all objects and inspecting
+FLAG_LINK, the advantage (3) seems compelling enough to prefer the
+protocol that doesn't sent a list of roots.
 
-We're likely to treat that one as a rev (assuming you use "foo" in your
-commit messages, but who doesn't?). So you'd need to use "--" in the
-general case anyway.
+Except when people pass --depth, "git clone" sets
+'check_self_contained_and_connected = 1'.  That means clients that
+already iterate over all objects and inspect FLAG_LINK are the usual
+case.
 
- sha1_name.c                  |  4 ++--
- t/t6133-pathspec-rev-dwim.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 892db21..d61b3b9 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -882,12 +882,12 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
- 
- 	if (prefix[0] == '!') {
- 		if (prefix[1] != '!')
--			die ("Invalid search pattern: %s", prefix);
-+			return -1;
- 		prefix++;
- 	}
- 
- 	if (regcomp(&regex, prefix, REG_EXTENDED))
--		die("Invalid search pattern: %s", prefix);
-+		return -1;
- 
- 	for (l = list; l; l = l->next) {
- 		l->item->object.flags |= ONELINE_SEEN;
-diff --git a/t/t6133-pathspec-rev-dwim.sh b/t/t6133-pathspec-rev-dwim.sh
-index 8e5b338..a290ffc 100755
---- a/t/t6133-pathspec-rev-dwim.sh
-+++ b/t/t6133-pathspec-rev-dwim.sh
-@@ -35,4 +35,14 @@ test_expect_success '@{foo} with metacharacters dwims to rev' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success ':/*.t from a subdir dwims to a pathspec' '
-+	mkdir subdir &&
-+	(
-+		cd subdir &&
-+		git log -- ":/*.t" >expect &&
-+		git log    ":/*.t" >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-2.7.1.545.gfd1d4e5
+Thanks for your thoughtfulness,
+Jonathan
