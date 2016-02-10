@@ -1,207 +1,179 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv9 3/6] fetching submodules: respect `submodule.fetchJobs`
- config option
-Date: Tue, 9 Feb 2016 16:11:14 -0800
-Message-ID: <CAGZ79kazD22FLv19CvmG+-dzGEP-uwr=fC_1VXB=sdzPBU_uww@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv9 4/6] git submodule update: have a dedicated helper for
+ cloning
+Date: Tue, 9 Feb 2016 16:37:41 -0800
+Message-ID: <20160210003741.GJ28749@google.com>
 References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-	<1455051274-15256-4-git-send-email-sbeller@google.com>
-	<20160209223400.GI28749@google.com>
+ <1455051274-15256-5-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 01:11:23 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 01:37:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTINN-00048r-QM
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 01:11:22 +0100
+	id 1aTIn3-0004j5-OO
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 01:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326AbcBJALR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Feb 2016 19:11:17 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:35508 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754173AbcBJALP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Feb 2016 19:11:15 -0500
-Received: by mail-io0-f174.google.com with SMTP id d63so5178214ioj.2
-        for <git@vger.kernel.org>; Tue, 09 Feb 2016 16:11:15 -0800 (PST)
+	id S932293AbcBJAht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Feb 2016 19:37:49 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33202 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932135AbcBJAhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Feb 2016 19:37:45 -0500
+Received: by mail-pf0-f173.google.com with SMTP id q63so2491000pfb.0
+        for <git@vger.kernel.org>; Tue, 09 Feb 2016 16:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=B0J64C5gd4zmsXWK0fPKhsQ2TiwPuIEMXGFM+HBjCyI=;
-        b=DuECfRTPlRdjf+5i/ddAJSStrDjL6pUrGYedEs/687OXsFkM4MrgGBwdOtpa/KvXF+
-         m1HeEwg89rUIReYguDwUKi4+6FMlKK3lKBXe6LtPqt2kMmPDZsrTLLJ6Bi5uf5k9nVsm
-         yRx+KBtY/BKQiZeBipTx3/EHyAQzc7g/Siyb87qUd0KPfC4LPLptsYjpZQ+5Ym+DnBdt
-         J5G638mk+LGGbmh0LB9l0QusGOtH7CE9ctM0EJJ6eUKsW84WwmIBz0mQq+Zrakhn4Xux
-         PDgNH11VMH3ovzKbnnJ8SNDiORYfR4h+B19ZPuH/WoIgHioxjAajZX/4CSJKS3n7HXwf
-         gZxg==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=M6N/ZmO5enzqUwBud4CF3wjKsm6Z+v8MMo+CNwlORss=;
+        b=tW5+5KFiDHMd08QDsZKtgAaB/XybBRVbjIeocCAgtqkbTW8f80SYaU0AznLddiIg8o
+         FhWsh0iRMTG3Np2KhZpZnH3s5PHWoYpqZk3/lpGMVxlSavePpIJDuXNkoosJLzfMoZ7d
+         dwcdShQHQOuJB38WeNnkXP++w6Gxxfbq6GAcJZmlbf18tz0UKBdZviArSMBuOAb3aPnE
+         F9YAfHPhglBIktOkAYdM8QoIf7nxhsvdu+0uRI6HpJH96NiaH9LaH2LG1BYaH7Iqixnd
+         S9sP+0/6lLxSnDaSwY1WTYPlM7pJk3gvtQTeKwqxckms4UzGlzZnyP34pLkWRxHqoT5n
+         ncAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=B0J64C5gd4zmsXWK0fPKhsQ2TiwPuIEMXGFM+HBjCyI=;
-        b=Sjpi9i2THhvrsIzmSwbmg1FuStkcd2abRFa1lXpsrsh4bB0dWnnTd5/wPNmlfRa3Vl
-         nKtHGGjc1b5S6mP9ZFYWoZ5yfvLFPdNdd8C8rYdF1hhzprC9+/3mByQpP0PcvtCDKKsO
-         DnoOp8qthugKx/g7kw4XXZDTBuLxrdSxkKXhjrO71gwC92oVfj7wj0d9eHFA1K+9bX6n
-         FWdyb2iqxrq3XkqU88dmMf9EMjj1IKnmJyaY0OL8iRGThaLF+ccuVhatSwMJtTAcW05s
-         gsLJIk1re8sHRghvlfKKiYQXDXjDCNUKVRkp2Xo4IqOJNUtbJXeAQIqRu2pvD4sdGh/5
-         qBWg==
-X-Gm-Message-State: AG10YOR0hIc5ksQQrjIyimEEEW1j6ui3AloIHHV0IPPJh7Z6ZlFXRgPyTYYdK0efrM+WZqPFUzOQZT3ZDeGS1uW6
-X-Received: by 10.107.137.100 with SMTP id l97mr41389831iod.110.1455063074955;
- Tue, 09 Feb 2016 16:11:14 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Tue, 9 Feb 2016 16:11:14 -0800 (PST)
-In-Reply-To: <20160209223400.GI28749@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=M6N/ZmO5enzqUwBud4CF3wjKsm6Z+v8MMo+CNwlORss=;
+        b=cNRsdsaHyqNmX8/C8MgGB6BTpl6+kmeV6Gq+JowhiMhBdzKtRar08o1Aug4p0FwHd+
+         gXlU/g7JsOvCp5qqKLEnWWnKjQwZx9coTxL2mm2VFRQozgysnGnJkBhnxvPbk7N4cI6r
+         Spid4RGa7Oq94IofVzfhNIy5xIHz2UyE+G/+Z3K0mticeWW1F2OskOZm8GrCHTk+FISp
+         LGuV/3GjL8j3IoSSyVTr8eKzqB/QL1cOvdRuNt9qgKMRlRmr/zyTjofdDhVx/QR4TCGE
+         iiOCX5cI3co2tueMfj3iCxeyDueGgKR62G65M+3gZDCFdkZweMCNdQ6VZAXRN1sW/Ews
+         UBaA==
+X-Gm-Message-State: AG10YOT/2Eu6xk7VMfOTXt+H2Q0U8Aek/bCUzM19jXJRgUMjqGv8BPloFFcNlRm5UUMYNg==
+X-Received: by 10.98.34.25 with SMTP id i25mr54682720pfi.26.1455064664147;
+        Tue, 09 Feb 2016 16:37:44 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:609c:fa:6497:fd10])
+        by smtp.gmail.com with ESMTPSA id 89sm477692pfi.2.2016.02.09.16.37.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 09 Feb 2016 16:37:43 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1455051274-15256-5-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285887>
 
-On Tue, Feb 9, 2016 at 2:34 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Stefan Beller wrote:
->
->> +++ b/submodule.c
-> [...]
->> @@ -169,7 +170,13 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
->>
->>  int submodule_config(const char *var, const char *value, void *cb)
->>  {
->> -     if (starts_with(var, "submodule."))
->> +     if (!strcmp(var, "submodule.fetchjobs")) {
->> +             unsigned long val;
->> +             if (!git_parse_ulong(value, &val) || 0 > val || val >= INT_MAX)
->> +                     die(_("Error parsing submodule.fetchJobs %s"), value);
->
-> 'val < 0' would be more idiomatic than '0 > val'.  More importantly,
-> val is an unsigned long.  How could it be negative?
->
-> Is it intended that val == INT_MAX is not permitted?  I would have
-> expected something like the following to work:
->
->                 unsigned long val = git_config_ulong(var, value);
->                 if (val > INT_MAX) {
->                         errno = ERANGE;
->                         die_bad_number(var, value);
->                 }
->
-> (using die_bad_number from config.c).  Or config.c could gain a
-> git_config_nonnegative_int helper:
->
->         static int git_parse_nonnegative_int(const char *value, int *ret)
->         {
->                 uintmax_t tmp;
->                 if (!git_parse_unsigned(value, &tmp, maximum_signed_value_of_type(int)))
->                         return 0;
->                 *ret = tmp;
->                 return 1;
->         }
->
->         int git_config_nonnegative_int(const char *name, const char *value)
->         {
->                 int ret;
->                 if (!git_parse_nonnegative_int(value, &ret))
->                         die_bad_number(name, value);
->                 return ret;
->         }
->
-> allowing
->
->                 parallel_jobs = git_config_nonnegative_int(var, val);
->                 return 0;
+Stefan Beller wrote:
 
-And I thought we wanted to prevent inventing yet another helper?
-Although this looks very appealing, so let's do that instead.
+> This introduces a new helper function in git submodule--helper
+> which takes care of cloning all submodules, which we want to
+> parallelize eventually.
 
->
-> [...]
->> @@ -751,6 +758,9 @@ int fetch_populated_submodules(const struct argv_array *options,
->>       argv_array_push(&spf.args, "--recurse-submodules-default");
->>       /* default value, "--submodule-prefix" and its value are added later */
->>
->> +     if (max_parallel_jobs < 0)
->> +             max_parallel_jobs = parallel_jobs;
->
-> Makes sense.
->
-> [...]
->> @@ -1097,3 +1107,8 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
->>       strbuf_release(&rel_path);
->>       free((void *)real_work_tree);
->>  }
->> +
->> +int parallel_submodules(void)
->> +{
->> +     return parallel_jobs;
->> +}
->
-> Is this helper used?
+Neat.
 
-Not yet, but I rather want to introduce it here as it is easier to review here
-than in a later patch?
+[...]
+> As we can only access the stderr channel from within the parallel
+> processing engine, we need to reroute the error message for
+> specified but initialized submodules to stderr. As it is an error
+> message, this should have gone to stderr in the first place, so it
+> is a bug fix along the way.
 
->
-> [...]
->> +++ b/submodule.h
->> @@ -41,5 +41,6 @@ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_nam
->>               struct string_list *needs_pushing);
->>  int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
->>  void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
->> +int parallel_submodules(void);
->
-> optional trick: one way to avoid merge conflicts is to add each function
-> at some logical place in the file instead of at the end.  Another nice
-> side-effect is that it makes it easier to read through the header since
-> functions appear in some appropriate order.
->
-> E.g. this method could go near the config functions, I suppose.
+In principle this could have happened in a separate preparatory patch
+(so that the move to C would have no functional effect) but I don't
+think that benefit alone is worth the churn of going back and doing
+that.
 
-I was not sure how relevant this is to configuration as it seems a bit
-special w.r.t. submodules to me (it's not configured in .gitmodules, but a
-standard configuration in .git/config after all).
+[...]
+> +++ b/builtin/submodule--helper.c
+> @@ -255,6 +255,235 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  	return 0;
+>  }
+>  
+> +static int git_submodule_config(const char *var, const char *value, void *cb)
+> +{
+> +	return submodule_config(var, value, cb);
+> +}
 
->
->> --- a/t/t5526-fetch-submodules.sh
->> +++ b/t/t5526-fetch-submodules.sh
->> @@ -471,4 +471,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
->>       test_i18ncmp expect.err actual.err
->>  '
->>
->> +test_expect_success 'fetching submodules respects parallel settings' '
->
-> Makes sense.  Same trick about inserting in some appropriate place in
-> the middle of the file applies here, too.  In tests it also ends up
-> being useful for finding when tests overlap or when there's a gap in
-> coverage.
->
-> The documentation says that '0' does something appropriate (DWIM or
-> something?  I didn't understand it).  Perhaps a test for that behavior
-> would be useful, too.
-
-The 0 is currently using 'online_cpus()' by default as a 'something
-appropriate',
-which is not really appropriate though. The documentation is worded
-such that people should not rely on certain behaviors of '0'.
-
-Maybe instead we could just hardcode 0 to 2 for now and test for that
-instead. My reasoning for '2':
-* provides the least amount of parallelism
-* when fetching/cloning you have phases when the server works or when
-   the client works. In absence of any good metric, I estimate the work load
-   to be split 50:50. If that is the case the actual optimal number is 2 with
-   these two jobs being shifted such that each client and server are
-   loaded all the time.
+Can callers use submodule_config directly?
 
 
->
-> Thanks,
-> Jonathan
+> +struct submodule_update_clone {
+> +	/* states */
+> +	int count;
+> +	int print_unmatched;
+
+I'd add a blank line here.
+
+> +	/* configuration */
+> +	int quiet;
+> +	const char *reference;
+> +	const char *depth;
+> +	const char *update;
+> +	const char *recursive_prefix;
+> +	const char *prefix;
+> +	struct module_list list;
+> +	struct string_list projectlines;
+> +	struct pathspec pathspec;
+> +};
+> +#define SUBMODULE_UPDATE_CLONE_INIT {0, 0, 0, NULL, NULL, NULL, NULL, NULL, MODULE_LIST_INIT, STRING_LIST_INIT_DUP}
+
+What is this struct used for?  Maybe this would be clearer if it
+appeared immediately before the function that used it.
+
+This is the shared cb object passed to run_processes_parallel, right?
+Some name like parallel_clone_opts or parallel_clone_cb might work.
+
+What do the fields represent?  E.g., what is count a count of, what
+does it mean when print_unmatched is true, etc?
+
+Would it make sense to put the options in a separate struct from the
+state fields (so e.g. it could be const)?  The options are easier to
+understand because they correspond to command-line options, while the
+state fields are something different and internal.
+
+[...]
+> +static int update_clone_get_next_task(struct child_process *cp,
+> +				      struct strbuf *err,
+> +				      void *pp_cb,
+> +				      void **pp_task_cb)
+> +{
+> +	struct submodule_update_clone *pp = pp_cb;
+> +
+> +	for (; pp->count < pp->list.nr; pp->count++) {
+
+Could some of this loop body be factored out into separate functions?
+(e.g. whether to skip a submodule, getting the display path, ...).
+
+[...]
+> +		/*
+> +		 * Looking up the url in .git/config.
+> +		 * We must not fall back to .gitmodules as we only want
+> +		 * to process configured submodules.
+> +		 */
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, "submodule.%s.url", sub->name);
+> +		git_config_get_string(sb.buf, &url);
+> +		if (!url) {
+
+I can see how the submodule API would be overkill for this.  But it's
+still tempting to use it.  'struct submodule' could gain a field
+representing whether the submodule is initialized (i.e., whether it
+appears in .git/config).
+
+I wonder whether the strbuf_reset + addf idiom would be a good thing
+to factor out into a mkpath()-like function --- i.e., something like
+
+		git_config_get_string(fmt(&sb, "submodule.%s.url", sub->name), &url);
+
+That's a little less risky than mkpath was because it explicitly
+mentions &sb but maybe it's too magical.
+
+[...]
+> +static int update_clone_start_failure(struct child_process *cp,
+
+Will review the rest when I get home.
 
 Thanks,
-Stefan
+Jonathan
