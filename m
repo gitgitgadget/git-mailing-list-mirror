@@ -1,139 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Wed, 10 Feb 2016 14:17:58 -0800
-Message-ID: <20160210221758.GC10155@google.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
- <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
- <20160210214945.GA5853@sigill.intra.peff.net>
+From: Mark Parker <godefroi@gmail.com>
+Subject: git-svn clone error
+Date: Wed, 10 Feb 2016 15:22:11 -0700
+Message-ID: <CAN4RHdFEyWL57NkTi4-HGs4NhYBzujgLrbNWzFmTH47b8NF1pg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 10 23:18:10 2016
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 10 23:22:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTd5M-0004ce-As
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 23:18:08 +0100
+	id 1aTd9N-0000CI-L2
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 23:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbcBJWSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 17:18:04 -0500
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33685 "EHLO
-	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595AbcBJWSC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 17:18:02 -0500
-Received: by mail-pf0-f173.google.com with SMTP id q63so18727185pfb.0
-        for <git@vger.kernel.org>; Wed, 10 Feb 2016 14:18:01 -0800 (PST)
+	id S1751071AbcBJWWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 17:22:13 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33572 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbcBJWWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 17:22:12 -0500
+Received: by mail-wm0-f41.google.com with SMTP id g62so46190521wme.0
+        for <git@vger.kernel.org>; Wed, 10 Feb 2016 14:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=O09uwd7DvXSLQr/H5NlsIlG08hcAH9zwtsTFgw/Z9K4=;
-        b=SexEcb5TEWAU4JbAW151jP2hmxUMYknvpSlRNGNK7Pb+rDKn1U8Y/VGludhnG53M69
-         y1D4Go7ZMlSv9LIYX43tJ/yaRkwS87y2uZRaJ+jYY+BJ+btkZeB65OcumU6r+roMHclO
-         48H8DppChqt7mvhMW77ECOZhW+JXfpheynGcjLJgMmIwIsiPQ1WOPbmOGsSZAnbGgRrL
-         kS5FLhvLviuLnMQBlRcHrOyQciORz3ktV/JuNEqPpNONmZ6v/jzTDlTzsB0Ary+kBpJO
-         hZ1lM4B9qmt9/+Mrc+BYvuvGCfZTgZH7MVGBL2em7ncNCi5MGm3zUSsmfTXh+cODh2O4
-         mOHQ==
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ZzMrUvfNJWpAFNg5YdXkBeSY6fX5tPpBg31in8O6R6M=;
+        b=OuhoMzDKdMyD3pMlB32fHM4Xm829ifD/5ae1YZY8cYcgKd5VggdUd4EA4eWnVGeAJ6
+         4EJtArVwro9e7Jpc+oTHhfjHD4cwtqg9XGNXTPLqTxnK3KMUhBJOEGlVHz+T8RXGZtLx
+         eFcbUE4ThIfa5fr/Mo9Fy3rfu8bRJVcTj+9PiRwht/SpwhQy6a8neBH3T6HubjDmnLYm
+         lT6sr3ugtIs2h4GMPwmBAPF18WMELm8MZuwviWgn8FCrqFT7/kntUIIDS+lHTvW05R4i
+         ISSeEfyJFFy5VHaoDf8zqYCZn0Q5qeK9XeKcn0YZA2w9VN1GTF8a7RR2ojKCHApLH/mZ
+         PyYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=O09uwd7DvXSLQr/H5NlsIlG08hcAH9zwtsTFgw/Z9K4=;
-        b=BzyEaDuBU3TXELAwACHOgOaHmL5VGxWmuNw3J9w/4qA228Vft9qbFdWYxAfysRRhuS
-         7tzMZRODrcUmWVyyTzBKOO7ZKKCBWWqtDzQWnRaZ6Ok8WKgXiyM/gDGbm0JlHkKQhvNS
-         t5yTZWdhX1bHlH7qisSfwF/qj9j5hqDqcKAYvcEopzE3KZxGQPbvrtJdyweHx+KL0bK9
-         DZy9zu4KvxQjTlyM82jbn1krxTWxCOP9V69zDqeiZKJIDFOtqwnXS9rLQ8Vca+W4MDEX
-         OiHaLpuwgmTHnxvjbEd+I2uGTBjH3V0/vP4VBQ2NipIh/4hBia1eBrMuViJ+jPCZZT6M
-         19WQ==
-X-Gm-Message-State: AG10YOTP6V0YVUMIJE9JqWjoAEz0WR2svjxCZguufNZ2X2JINnFtAs7c9CAXXAn12iKbhQ==
-X-Received: by 10.98.15.17 with SMTP id x17mr20635063pfi.52.1455142681510;
-        Wed, 10 Feb 2016 14:18:01 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:986b:44f8:244c:add9])
-        by smtp.gmail.com with ESMTPSA id d22sm7417735pfj.32.2016.02.10.14.18.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Feb 2016 14:18:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160210214945.GA5853@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=ZzMrUvfNJWpAFNg5YdXkBeSY6fX5tPpBg31in8O6R6M=;
+        b=lXo+GRE8vP39VwswyrufxiLit+r/GJ9S4W8TzcLbrzFvbpjzsLj6pihBieCFbnOHoq
+         Q3TyNiXYLA7uftP2W/mlId8PZnxxG0vHLEi0QLYJsA4i4znRIOBs/XI7RuTUVT1ZSoE7
+         vDZE7RXnOFn6zJ/6slOsdJqTQPph59L1SFei7KKETu8HM7IPfOw1Zc7IBoQ8boVzIIkV
+         L6G6wUc0Q6s2S9bKHaap7l06sxaUbNZb5LSAGKWKEUVQl9YY/CIUymFcdAs6VR94aJOL
+         DyVFAZRku3zaaBlE59q0dVIsiDc4ZlPRw5WkPRtvFYrYp3woXb2iUMUVM5dpeZP+DUsb
+         sz0w==
+X-Gm-Message-State: AG10YOR8Qora0daaq/iLqCEsb7oyLio6CJaWgWyYwiZoeak8/q9Qx9GeLsFq5Q2r6aWnj0GGoZEtSzHpvrA0xw==
+X-Received: by 10.194.23.232 with SMTP id p8mr49175015wjf.80.1455142931376;
+ Wed, 10 Feb 2016 14:22:11 -0800 (PST)
+Received: by 10.194.9.163 with HTTP; Wed, 10 Feb 2016 14:22:11 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285938>
 
-Jeff King wrote:
-> On Wed, Feb 10, 2016 at 12:11:46PM -0800, Shawn Pearce wrote:
+I'm attempting to git-svn clone a subversion repository that contains
+a space in the name of a branch. This is the result (after many many
+revisions):
 
->> Several of us at $DAY_JOB talked about this more today and thought a
->> variation makes more sense:
->>
->> 1. Clients attempting clone ask for /info/refs?service=git-upload-pack
->> like they do today.
->>
->> 2. Servers that support resumable clone include a "resumable"
->> capability in the advertisement.
->
-> Because the magic happens in the git protocol, that would mean this does
-> not have to be limited to git-over-http. It could be "resumable=<url>"
-> to point the client anywhere (the same server over a different protocol,
-> another server, etc).
+r148627 = fafd5730f356dcb80f72c9b93f976d9707755a03
+(refs/remotes/origsvn/2.0_PriorToStuff)
+Found possible branch point:
+http://svn/repos/Products/my.product/branches/2.0 =>
+http://svn/repos/Products/my.product/branches/2.0%20my_branch_name,
+145211
+W: Refspec glob conflict (ref: refs/remotes/origsvn/trunk):
+expected path: Products/my.product/branches/trunk
+    real path: Products/my.product/trunk
+Continuing ahead with Products/my.product/trunk
+Found branch parent: (refs/remotes/origsvn/2.0 my_branch_name)
+5117c44d2cb5ee97d53f93f9c324d6f95ee5fdb5
+Following parent with do_switch
+Successfully followed parent
+r148644 = da01bf418f28e2383a0fbbd7a73a6df0b0b800f6
+(refs/remotes/origsvn/2.0 my_branch_name)
+Found possible branch point:
+http://svn/repos/Products/my.product/branches/2.0%20my_branch_name =>
+http://svn/repos/Products/my.product/branches/2.0_branchname, 148650
+fatal: Not a valid object name refs/remotes/origsvn/2.0 my_branch_name
+cat-file commit refs/remotes/origsvn/2.0 my_branch_name: command
+returned error: 128
 
-Thanks for bringing this up.  A worry with putting the URL in the
-capabilities line is that it makes it easy to run into the 1000-byte
-limit.  It's been a while since v1.8.3-rc0~148^2~6 (pkt-line: provide
-a LARGE_PACKET_MAX static buffer, 2013-02-20) but we still can't
-rely on clients having that applied.
+Indeed, if I do "git cat-file commit refs/remotes/origsvn/2.0
+my_branch_name" I get the help for git cat-file. If I escape the name,
+i.e. "git cat-file commit refs/remotes/origsvn/2.0%20my_branch_name" I
+get what I assume is the correct information.
 
-(I also haven't checked whether current versions of git are able to
-handle longer capability strings with that patch applied.)
-
-Another nice thing about using a 302 is that you can set cookies
-during the redirect, which might make authenticated access easier.
-(That said, authenticated access through e.g. signed URLs can work
-fine without that.)
-
-[...]
-> Clients do not have to _just_ fetch a packfile. They could get a bundle
-> file that contains the roots along with the packfile. I know that one of
-> your goals is not duplicating the storage of the packfile on the server,
-> but it would not be hard for the server to store the packfile and the
-> bundle header separately, and concatenate them on the fly.
-
-Doesn't that prevent using a git-unaware file transfer service to
-serve the files?
-
-It also means the client can't use the downloaded file as-is --- they
-need to separate the root list from the packfile (that's not a big
-deal; just some added complication to switch files at the appropriate
-moment during download if you want to avoid temporarily using twice
-the space).
-
-That said, both these problems are avoided by serving the 'split
-bundle' you described as-is instead of concatenating.
-
-[...]
-> And you'll notice, too, that all of the bundle-http magic kicks in
-> during step 2 because the client sees they're grabbing a bundle. Which
-> means that the <url> in step 1 doesn't _have_ to be a bundle. It can be
-> "go fetch from kernel.org, then come back to me".
-
-I think that use case brings in complications that make it not
-necessarily worth it.  In this example, if kernel.org is serving pack
-files, why shouldn't I point directly at the advertised pack CDN URL
-instead of adding an extra hop that puts added load on kernel.org
-servers?
-
-Allowing an arbitrary "fetch from here first" capability is very
-flexible.  I guess my fear comes from not knowing what the flexibility
-buys beyond aesthetics.  (My motivation comes from the example of
-alternates: it is pretty and very flexible and ended up as a support
-and maintenance headache instead of being widely useful.  I think what
-you are proposing is more harmless but I'd still want to have an
-example of what it's used for before going in that direction.)
+I'm using Git for Windows, version 2.7.0. If this is a
+Windows-specific issue, I'm happy to report it over there.
 
 Thanks,
-Jonathan
+Mark
