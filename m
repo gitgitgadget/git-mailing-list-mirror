@@ -1,115 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Wed, 10 Feb 2016 13:22:07 -0800
-Message-ID: <20160210212207.GB10155@google.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
- <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
- <CAGZ79kZMvxa5Np4GbShv_A6NZwVAqff94+d8MFTZwrZS+2CqeQ@mail.gmail.com>
- <xmqqh9hgz3km.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] checkout: reorder check_filename conditional
+Date: Wed, 10 Feb 2016 13:31:53 -0800
+Message-ID: <xmqq8u2sz1yu.fsf@gitster.mtv.corp.google.com>
+References: <20160210211206.GA5755@sigill.intra.peff.net>
+	<20160210211234.GA5799@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <sbeller@google.com>,
-	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 22:22:16 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 10 22:32:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTcDH-0001iX-IB
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:22:15 +0100
+	id 1aTcMj-0002ae-0S
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:32:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbcBJVWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 16:22:12 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36341 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbcBJVWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 16:22:10 -0500
-Received: by mail-pa0-f47.google.com with SMTP id yy13so17722257pab.3
-        for <git@vger.kernel.org>; Wed, 10 Feb 2016 13:22:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xjAOX8BhZ2OYbfB/azvm2sLIe3HpJCZBOe6o9tra2FE=;
-        b=mj12sgbuNhNhUcxD94sA6feao+XQIjx49blfmbSEIgX2aC4b5Q8yXrn7NUujhlLfYy
-         DlzkT1RGH9YL2yzC/9jJ14jRXT/i40tsw4W7h8XeHm1BNGuPxMx9dUaBz0vdTlOkU5+U
-         wHCKKSg/6amBx9BRZhJbEUfn55kRuFqnES2IA2xmYpz5D/p0J17lcamlRYUy1CJzJCH/
-         vrc1Lh1v9yAuXVV2THjWkt3ereNWUqkTAZo7UFsw7ph2GeVew3tmeMaC7SgMPAFPJgve
-         R/gjnsgufvqXuyyUekvjmwdXYrGdS/80/xzEo0hjyKlvzyAtVwp/JWXQOTPhMgSEzvlr
-         KPYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xjAOX8BhZ2OYbfB/azvm2sLIe3HpJCZBOe6o9tra2FE=;
-        b=Gh/jR4bYbEXeaWG8E0PjsGaTZc7Pa7Mk9DiqR39VaqPa6zL/WszZRfYphlrqeOWaVF
-         XbRg/s6aHwzxsGzg6YOmfuNKSU63TSsTKlIJJIxY5NASPI/wVi90rmW5y2s0u0IZBE7/
-         pVmnfuD0frWvoM9yv9RW7Y/YhtDZAO2SyhGA9015uEm473DpZTX5nY6zhZlVqU3QvC9L
-         YQkERcd/1sKEsHOE0T4LxPFKPUFoYmta5OPnfwfLkYfVutPscDnIK8ZUosEVBwsXtrgB
-         QbHLHFfpHLgCBHAATAxc3lq+QUZYkKswX46kNbBtZGjlTnyVuB96lWvHVq9gDl/lY027
-         fi/Q==
-X-Gm-Message-State: AG10YOR8ap9cMnSyhCwTRNwhcWR3eTozyYI+K55ka+oMtD0ZNYlhuOUtOdpyNLHrVkhE1A==
-X-Received: by 10.66.102.40 with SMTP id fl8mr61359860pab.136.1455139330103;
-        Wed, 10 Feb 2016 13:22:10 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:986b:44f8:244c:add9])
-        by smtp.gmail.com with ESMTPSA id dg12sm7253523pac.47.2016.02.10.13.22.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 10 Feb 2016 13:22:09 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqh9hgz3km.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750991AbcBJVb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 16:31:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61886 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750870AbcBJVb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 16:31:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 959CE43056;
+	Wed, 10 Feb 2016 16:31:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MFkYelZG29tdjJzCYHQVN74/Ml4=; b=vtcl43
+	BcDPHsXvbTgWOXCHOY6yADr1aVzviD0GORcjLtsargf8Mfikrs++Hn1n5lDZAG9S
+	pWfFbMNQe1PrhjYL7HhiRB4w6BjbkhxYxVg5ouWoRL4YvvDE4LcfNp1FwWbGTw6o
+	JTF01evHwGTv71aR7Y6i3fOkqe53gJYoR9xp8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L4G/5a+btepJjTTZLjhwnlWe3z1IoyXC
+	YQdwvUhrHywcdod9DwfuR8atoOo2bTMNjYIhNCdJzaXbooXIm0xFOjAbQtBjNIOe
+	itK4wqxpzc08+Pk/Hg/ef+MVvK/MK8XAnvzzs686l0XKsjoEa5CHK8ZYk9G0FM2g
+	uWFoxf8pzgI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D8DE43055;
+	Wed, 10 Feb 2016 16:31:55 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1102143054;
+	Wed, 10 Feb 2016 16:31:54 -0500 (EST)
+In-Reply-To: <20160210211234.GA5799@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Feb 2016 16:12:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B4E01218-D03D-11E5-A815-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285933>
 
-Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I somehow doubt it.  Both index-pack and lost-found need to trace
-> "object A depends on object B", but the similarity ends there.
+> If we have a "--" flag, we should not be doing DWIM magic
+> based on whether arguments can be filenames. Reorder the
+> conditional to avoid the check_filename() call entirely in
+> this case. The outcome is the same, but the short-circuit
+> makes the dependency more clear.
 
-You already responded about this in another side-thread, so the
-following is mostly redundant. :)  I think this message can still be
-useful to future readers since it more explicitly goes through the
-trade-offs.
+It also allows check_filename() to die(), and lets the user to
+prevent it with "--"---"Don't check when we do not have to" is the
+right thing to do.
 
-The relevant similarity is that both index-pack and lost-found need to
-inflate all commit, tag, and tree objects.
+Thanks.
 
-This is the same idea that led to the introduction of "git index-pack
---strict".
-
-[...]
-> I am not quite sure if that is an advantage, though.  The second
-> message proposes that the lost-found computation to be done by the
-> client using *.pack, but any client, given the same *.pack, will
-> compute the same result, so if the result is computed on the server
-> side just once when the *.pack is prepared and downloaded to the
-> client, it would give us a better overall resource utilization.  And
-> in essence, that was what the *.info file in the first message was.
-
-Advantages of not providing the list of roots:
- 1. only need one round-trip to serve the packfile as-is
- 2. less data sent over the wire (not important unless the list of roots
-    is long)
- 3. can be enabled on the server for existing repositories without an
-    extra step of generating .info files
-
-Advantage of providing the list of roots:
-- speedup because the client does not have to compute the list of roots
-
-For a client that is already iterating over all objects and inspecting
-FLAG_LINK, the advantage (3) seems compelling enough to prefer the
-protocol that doesn't sent a list of roots.
-
-Except when people pass --depth, "git clone" sets
-'check_self_contained_and_connected = 1'.  That means clients that
-already iterate over all objects and inspect FLAG_LINK are the usual
-case.
-
-Thanks for your thoughtfulness,
-Jonathan
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/checkout.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 5af84a3..f6a2809 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -982,7 +982,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+>  		 */
+>  		int recover_with_dwim = dwim_new_local_branch_ok;
+>  
+> -		if (check_filename(NULL, arg) && !has_dash_dash)
+> +		if (!has_dash_dash && check_filename(NULL, arg))
+>  			recover_with_dwim = 0;
+>  		/*
+>  		 * Accept "git checkout foo" and "git checkout foo --"
