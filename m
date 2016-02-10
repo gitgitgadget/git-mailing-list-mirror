@@ -1,93 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] checkout: reorder check_filename conditional
-Date: Wed, 10 Feb 2016 13:31:53 -0800
-Message-ID: <xmqq8u2sz1yu.fsf@gitster.mtv.corp.google.com>
-References: <20160210211206.GA5755@sigill.intra.peff.net>
-	<20160210211234.GA5799@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
+Date: Wed, 10 Feb 2016 16:49:46 -0500
+Message-ID: <20160210214945.GA5853@sigill.intra.peff.net>
+References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
+ <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 10 22:32:02 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 10 22:49:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTcMj-0002ae-0S
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:32:01 +0100
+	id 1aTce2-0003FT-At
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbcBJVb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 16:31:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61886 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750870AbcBJVb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 16:31:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 959CE43056;
-	Wed, 10 Feb 2016 16:31:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MFkYelZG29tdjJzCYHQVN74/Ml4=; b=vtcl43
-	BcDPHsXvbTgWOXCHOY6yADr1aVzviD0GORcjLtsargf8Mfikrs++Hn1n5lDZAG9S
-	pWfFbMNQe1PrhjYL7HhiRB4w6BjbkhxYxVg5ouWoRL4YvvDE4LcfNp1FwWbGTw6o
-	JTF01evHwGTv71aR7Y6i3fOkqe53gJYoR9xp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L4G/5a+btepJjTTZLjhwnlWe3z1IoyXC
-	YQdwvUhrHywcdod9DwfuR8atoOo2bTMNjYIhNCdJzaXbooXIm0xFOjAbQtBjNIOe
-	itK4wqxpzc08+Pk/Hg/ef+MVvK/MK8XAnvzzs686l0XKsjoEa5CHK8ZYk9G0FM2g
-	uWFoxf8pzgI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D8DE43055;
-	Wed, 10 Feb 2016 16:31:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1102143054;
-	Wed, 10 Feb 2016 16:31:54 -0500 (EST)
-In-Reply-To: <20160210211234.GA5799@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 10 Feb 2016 16:12:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B4E01218-D03D-11E5-A815-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752141AbcBJVtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 16:49:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40032 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751935AbcBJVts (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 16:49:48 -0500
+Received: (qmail 18101 invoked by uid 102); 10 Feb 2016 21:49:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:49:48 -0500
+Received: (qmail 32102 invoked by uid 107); 10 Feb 2016 21:49:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:49:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 16:49:46 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285934>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 10, 2016 at 12:11:46PM -0800, Shawn Pearce wrote:
 
-> If we have a "--" flag, we should not be doing DWIM magic
-> based on whether arguments can be filenames. Reorder the
-> conditional to avoid the check_filename() call entirely in
-> this case. The outcome is the same, but the short-circuit
-> makes the dependency more clear.
+> On Wed, Feb 10, 2016 at 10:59 AM, Shawn Pearce <spearce@spearce.org> wrote:
+> >
+> > ... Thoughts?
+> 
+> Several of us at $DAY_JOB talked about this more today and thought a
+> variation makes more sense:
+> 
+> 1. Clients attempting clone ask for /info/refs?service=git-upload-pack
+> like they do today.
+> 
+> 2. Servers that support resumable clone include a "resumable"
+> capability in the advertisement.
 
-It also allows check_filename() to die(), and lets the user to
-prevent it with "--"---"Don't check when we do not have to" is the
-right thing to do.
+Because the magic happens in the git protocol, that would mean this does
+not have to be limited to git-over-http. It could be "resumable=<url>"
+to point the client anywhere (the same server over a different protocol,
+another server, etc).
 
-Thanks.
+> 3. Updated clients on clone request GET /info/refs?service=git-resumable-clone.
+> 
+> 4. The server may return a 302 Redirect to its current "mostly whole"
+> pack file. This can be more flexible than "refs/heads/*", it just
+> needs to be a mostly complete pack file that contains a complete graph
+> from any arbitrary roots.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/checkout.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 5af84a3..f6a2809 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -982,7 +982,7 @@ static int parse_branchname_arg(int argc, const char **argv,
->  		 */
->  		int recover_with_dwim = dwim_new_local_branch_ok;
->  
-> -		if (check_filename(NULL, arg) && !has_dash_dash)
-> +		if (!has_dash_dash && check_filename(NULL, arg))
->  			recover_with_dwim = 0;
->  		/*
->  		 * Accept "git checkout foo" and "git checkout foo --"
+And with "resumable=<url>", the client does not have to hit the server
+to do a redirect; it can go straight to the final URL, saving a
+round-trip.
+
+> 5. Clients fetch the file using standard HTTP GET, possibly with
+> byte-ranges to resume.
+> 
+> 6. Once stored and indexed with .idx, clients run `git fsck
+> --lost-found` to discover the roots of the pack it downloaded. These
+> are saved as temporary references.
+
+Clients do not have to _just_ fetch a packfile. They could get a bundle
+file that contains the roots along with the packfile. I know that one of
+your goals is not duplicating the storage of the packfile on the server,
+but it would not be hard for the server to store the packfile and the
+bundle header separately, and concatenate them on the fly.
+
+Right now the clients can't clone from bundles directly via HTTP. I
+wrote patches for that ages ago, but got stuck on this very issue
+(basically that I had to spool the bundle and then clone from it, which
+temporarily doubled the client's disk space requirements). One
+alternative would be to amend the bundle format so that rather than a
+single file, you get a bundle header whose end says "...and my matching
+packfile is 1234-abcd". And then the client knows that they can fetch
+that separately from the same source.
+
+It's an extra HTTP request, but it makes the code for client _and_
+server way simpler. So the whole thing is basically then:
+
+  0. During gc, server generates pack-1234abcd.pack. It writes matching
+     tips into pack-1234abcd.info, which is essentially a bundle file
+     whose final line says "pack-1234abcd.pack".
+
+  1. Client contacts server via any git protocol. Server says
+     "resumable=<url>". Let's says that <url> is
+     https://example.com/repo/clones/1234abcd.bundle.
+
+  2. Client goes to <url>. They see that they are fetching a bundle,
+     and know not to do the usual smart-http or dumb-http protocols.
+     They can fetch the bundle header resumably (though it's tiny, so it
+     doesn't really matter).
+
+  3. After finishing the bundle header, they see they need to grab the
+     packfile. Based on the bundle header's URL and the filename
+     contained within it, they know to get
+     https://example.com/repo/clones/pack-1234abcd.pack". This is
+     resumable, too.
+
+  4. Client clones from bundled pack as normal; no root-finding magic
+     required.
+
+  5. Client runs incremental fetch against original repo from step 1.
+
+And you'll notice, too, that all of the bundle-http magic kicks in
+during step 2 because the client sees they're grabbing a bundle. Which
+means that the <url> in step 1 doesn't _have_ to be a bundle. It can be
+"go fetch from kernel.org, then come back to me".
+
+> An advantage to this process is its much more flexible for the server.
+> There is no additional pack-*.info file required. GC can organize
+> packs anyway it wants, etc.
+
+Yes, it's much better than your original email, at least for GitHub
+servers. We're not very flexible with GC tricks, because we need bitmaps
+to work, and because we get a lot of benefit from sharing the object
+storage for forks of a single repository.
+
+> To make step 4 really resume well, clients may need to save the first
+> Location header it gets back from
+> /info/refs?service=git-resumable-clone and use that on resume. Servers
+> are likely to embed the pack SHA-1 in the Location header, and the
+> client wants to use this on subsequent GET attempts to abort early if
+> the server has deleted the pack the client is trying to obtain.
+
+You could possibly do away with this trick if the server hands out a
+unique URL in its "resumable" header. Though I imagine it might be
+convenient for server admins to always point to a generic url, and
+put the logic in the HTTP layer.
+
+OTOH, if you do the "split bundle" thing I mentioned above, then this
+happens for free. The client caches the bundle header it grabs in my
+step 2, and then that contains the unique pack name to fetch in step 3.
+
+-Peff
