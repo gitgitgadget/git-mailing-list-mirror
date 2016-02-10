@@ -1,91 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] config: add '--sources' option to print the source of
- a config value
-Date: Wed, 10 Feb 2016 11:24:08 -0500
-Message-ID: <20160210162408.GD19867@sigill.intra.peff.net>
-References: <1455099198-11515-1-git-send-email-larsxschneider@gmail.com>
- <20160210125429.GA8078@sigill.intra.peff.net>
- <CAHGBnuMMN_xEVDJ_dqWgL6QCGK08hy=ggg=6PzkSCinHr=QeFg@mail.gmail.com>
- <20160210154006.GA19867@sigill.intra.peff.net>
- <CAHGBnuMDCYePJyEU4yHjGjEzyZn8mRBE73WC3qsRqbb6Amhyog@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Wed, 10 Feb 2016 09:35:46 -0800
+Message-ID: <xmqqpow4zcwd.fsf@gitster.mtv.corp.google.com>
+References: <25D155FA-6F05-425C-AB2D-7F0B44E0D1C5@jetbrains.com>
+	<alpine.DEB.2.20.1602061708220.2964@virtualbox>
+	<CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+	<32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
+	<CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
+	<20160208141552.GC27054@sigill.intra.peff.net>
+	<20160208150709.GA13664@sigill.intra.peff.net>
+	<xmqqpow7807l.fsf@gitster.mtv.corp.google.com>
+	<20160208195230.GA30693@sigill.intra.peff.net>
+	<xmqqziv939ir.fsf@gitster.mtv.corp.google.com>
+	<20160210161548.GC19867@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: larsxschneider@gmail.com, Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 17:24:17 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 10 18:35:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTXYu-0001dj-QO
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 17:24:17 +0100
+	id 1aTYgJ-0006EY-4x
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 18:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752761AbcBJQYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 11:24:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39820 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752487AbcBJQYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 11:24:11 -0500
-Received: (qmail 2783 invoked by uid 102); 10 Feb 2016 16:24:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 11:24:10 -0500
-Received: (qmail 29238 invoked by uid 107); 10 Feb 2016 16:24:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 11:24:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 11:24:08 -0500
-Content-Disposition: inline
-In-Reply-To: <CAHGBnuMDCYePJyEU4yHjGjEzyZn8mRBE73WC3qsRqbb6Amhyog@mail.gmail.com>
+	id S1752234AbcBJRfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 12:35:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50139 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751961AbcBJRfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 12:35:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6FEDA4360C;
+	Wed, 10 Feb 2016 12:35:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jj2SxtkbxMdIbr0ZJOfOnKow7EI=; b=NSXZpO
+	Pwittk9T7Jc42T4uLEz8xhjuRWyLvheqpA4DD0LzRVwrkZzb1xPLpXNsBXTn55h1
+	euKFsQdK1bZPz0ft+griX8ATmbj76pZmT+DG/jbvxOmVIBT4RNjG2mAq0RNv2SqQ
+	GdFVs4tMJ6kzGLN00DQfbuYMI5vgdqHaRINuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I1jdrk1sIvM34X4C3kYSOOc7H6c7o2JO
+	f1jAtfHPysscB3ULBDzrYJeDx/OcGZORpr1TcokmzUakZ7AFrasqdlJ9Z71YIs4h
+	fTcXj8TW89It5L3ROjN65TnLFMTrVA9AamO0gDgWKnORlovQYTJeVjxe2vJwLhLz
+	Op5XrMz4yV8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D6E84360B;
+	Wed, 10 Feb 2016 12:35:48 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D2E9F4360A;
+	Wed, 10 Feb 2016 12:35:47 -0500 (EST)
+In-Reply-To: <20160210161548.GC19867@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Feb 2016 11:15:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B8900EDE-D01C-11E5-B042-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285916>
 
-On Wed, Feb 10, 2016 at 04:57:00PM +0100, Sebastian Schuberth wrote:
+Jeff King <peff@peff.net> writes:
 
-> >> I also would have expected sopme like the latter, except that I'd also
-> >> expect a colon after "stdin" and "cmd" (or "cmdline", as said above).
-> >> I.e. the colon should be part of the prefix to mark it as such.
-> >
-> > Yeah, I waffled on that. Having a colon means you can definitely parse
-> > to the first ":" without looking at what the prefix is. But if you don't
-> > know what the prefix is, I don't know what good that does you. IOW, I'd
-> 
-> IMO that's asking the wrong question. The question should not be "what
-> good does it do if we add the colons also there", but "what
-> justification do we have to introduce an inconsistency by not adding
-> them".
+> Yes, because ":/" is treated specially in check_filename(), and avoids
+> kicking in the wildcard behavior. That is certainly preferring revs to
+> pathspecs, but I think preferring one over the other is preferable to
+> barfing. If the user wants carefulness, they should use "--"
+> unconditionally. If they want to DWIM, we should make it as painless as
+> possible, even if we sometimes guess wrong.
 
-But I think it is only an inconsistency if your mental model of the
-format is "the source field is a prefix, a colon, and then an argument;
-sometimes we omit the colon if there is no argument". If your mental
-model is "the source field contains a type, followed by type-specific
-data", then it is not an inconsistency. It is simply context-sensitive.
+OK, I think that is sensible.
 
-Now you can argue that context-sensitive things are bad, and I might
-agree with that. :)
+> But I have a feeling from what you've written that you do not agree with
+> the "err and allow something possibly ambiguous" philosophy.
 
-> I agree the option wording mostly is personal preference. On the other
-> hand, I find discussions like these often prematurely waved aside as
-> bikeshedding, just because e.g. Perl can parse the one as good as the
-> other. But it's not about Perl, it's about humans. IMO Git has
-> historically made many mistakes by not caring enough about consistency
-> in docs, command and command line option naming, so I don't see it as
-> wasted time to discuss about things like this.
+Not anymore ;-)
 
-Oh, I agree that formats are worth discussing. It's just that I do not
-think either of the mental models above is better than the other.
+>> I actually think that no_wildcard() check added in check_filename()
+>> was the original mistake.  If we revert the check_filename() to a
+>> simple "Is this a filename?" and move the "does this thing have a
+>> wildcard" aka "can this be a pathspec even when check_filename()
+>> says there is no file with that exact name?" to the code that tries
+>> to allow users omit "--", i.e. the caller of check_filename(), would
+>> that make the code structure and the semantics much cleaner, I
+>> wonder...
+>
+> Yes. After writing the above, I was envisioning pushing the "err on this
+> side" logic into check_filename() with a flag. The main callers are
+> verify_filename() and verify_non_filename(), and they would use opposite
+> flags from each other.  But pulling that logic out to the caller would
+> be fine, too.
+>
+> IOW, something like this implements the "permissive" thing I wrote above
+> (i.e., be inclusive when seeing if something could plausibly be a
+> filename, but exclusive when complaining that it _could_ be one):
 
-My point in mentioning perl is not that perl can do it, but rather the
-opposite: that _any_ language can do it. And I would even go so far as
-to say that humans parse context-sensitive things better than machines,
-because we simultaneously apply the semantic and syntactic parsing (so
-you see "stdin" and know because of its meaning that there is nothing
-left to parse; you don't need a trailing colon to tell you that). Or
-perhaps you mean "humans write the programs that machines use to parse,
-and we must make things regular and easy for them". I can somewhat buy
-that argument, though again, I think either is easy; it is mostly a
-matter of documenting the format's mental model.
+Yup, I think that is probably a better first step.
 
--Peff
+> diff --git a/setup.c b/setup.c
+> index 2c4b22c..995e924 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -139,9 +139,7 @@ int check_filename(const char *prefix, const char *arg)
+>  		if (arg[2] == '\0') /* ":/" is root dir, always exists */
+>  			return 1;
+>  		name = arg + 2;
+> -	} else if (!no_wildcard(arg))
+> -		return 1;
+> -	else if (prefix)
+> +	} else if (prefix)
+>  		name = prefix_filename(prefix, strlen(prefix), arg);
+>  	else
+>  		name = arg;
+> @@ -202,7 +200,7 @@ void verify_filename(const char *prefix,
+>  {
+>  	if (*arg == '-')
+>  		die("bad flag '%s' used after filename", arg);
+> -	if (check_filename(prefix, arg))
+> +	if (check_filename(prefix, arg) || !no_wildcard(arg))
+>  		return;
+>  	die_verify_filename(prefix, arg, diagnose_misspelt_rev);
+>  }
