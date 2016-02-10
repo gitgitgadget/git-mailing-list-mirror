@@ -1,90 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Wed, 10 Feb 2016 14:40:24 -0800
-Message-ID: <xmqqwpqcxk87.fsf@gitster.mtv.corp.google.com>
+Date: Wed, 10 Feb 2016 18:03:07 -0500
+Message-ID: <20160210230307.GA6633@sigill.intra.peff.net>
 References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
-	<CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
-	<20160210214945.GA5853@sigill.intra.peff.net>
+ <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
+ <20160210214945.GA5853@sigill.intra.peff.net>
+ <20160210221758.GC10155@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 10 23:40:32 2016
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 00:03:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTdR1-00014k-R8
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 23:40:32 +0100
+	id 1aTdn3-00063o-1f
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 00:03:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751093AbcBJWk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 17:40:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56538 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750788AbcBJWk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 17:40:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43A4A441C8;
-	Wed, 10 Feb 2016 17:40:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MnXpieQa8MgPvCoLbOJobkodpOg=; b=OJqfkk
-	ijIFzs1Clkpk5aU4JHRYByGmnJKukBSnqWftDeW9r5tSj/gupALo+CfY95Cf4Dge
-	t6DYYIaB+T+8KTA2xmeetQTeEIQ76EW0E22djIHe93Ycp27l69wzGeAzERRmOGpo
-	ebeL+g7sgxp+qrnsq9YObDVNfDwtcDg8/J8Cs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sUy2T5lTtgq/mSlU+mDWzdsC/ZpECW4u
-	XoUULG720dMWh2RJUuGV/+gs3La2yfnxhQK99FLOqcEz+i1mTjZQnE8EXlVaMtOT
-	1HEb4ZAm702jfn/diCpRJ+mm1o/C8VvI9e36SNCXg4aejAj3oUEwN8PxlprmR+m/
-	dT7Q9gLq4ik=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AFEA441C7;
-	Wed, 10 Feb 2016 17:40:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B37D7441C6;
-	Wed, 10 Feb 2016 17:40:25 -0500 (EST)
-In-Reply-To: <20160210214945.GA5853@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 10 Feb 2016 16:49:46 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 47059FB0-D047-11E5-BE0C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752583AbcBJXDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 18:03:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40079 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752564AbcBJXDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 18:03:09 -0500
+Received: (qmail 21610 invoked by uid 102); 10 Feb 2016 23:03:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 18:03:09 -0500
+Received: (qmail 32723 invoked by uid 107); 10 Feb 2016 23:03:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 18:03:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 18:03:07 -0500
+Content-Disposition: inline
+In-Reply-To: <20160210221758.GC10155@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285940>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 10, 2016 at 02:17:58PM -0800, Jonathan Nieder wrote:
 
-> Clients do not have to _just_ fetch a packfile. They could get a bundle
-> file that contains the roots along with the packfile. I know that one of
-> your goals is not duplicating the storage of the packfile on the server,
-> but it would not be hard for the server to store the packfile and the
-> bundle header separately, and concatenate them on the fly.
+> > Because the magic happens in the git protocol, that would mean this does
+> > not have to be limited to git-over-http. It could be "resumable=<url>"
+> > to point the client anywhere (the same server over a different protocol,
+> > another server, etc).
+> 
+> Thanks for bringing this up.  A worry with putting the URL in the
+> capabilities line is that it makes it easy to run into the 1000-byte
+> limit.  It's been a while since v1.8.3-rc0~148^2~6 (pkt-line: provide
+> a LARGE_PACKET_MAX static buffer, 2013-02-20) but we still can't
+> rely on clients having that applied.
 
-Yeah, I was wondering about that.  Just storing them as separate
-two-file pair on the server side and serving it as if it is a single
-file to the client does not sound like a rocket science, and a
-reasonable webserver should be able to serve even a byte-range
-request out of such a thing.
+I hadn't considered that, but I'm not sure how much of a problem it is
+in practice. The first line is 40-hex sha1, space, HEAD, NUL, then
+capabilities. The current capabilities string from github.com on a
+sample repo (which has a rather large agent string, and a normal-sized
+symref pointer for HEAD) is 188 bytes. So that's still over 750 bytes
+available for a URL. The space isn't infinite, and we may want to add
+more capabilities later. But I'd think that devoting even 256 bytes to a
+url would be reasonable, and leave us with fair room to grow.
 
-Of course, updating the clients to understand such a two-file pair
-as a valid bundle is a good thing to do, and I like that step 0. you
-outlined below.
+> Another nice thing about using a 302 is that you can set cookies
+> during the redirect, which might make authenticated access easier.
+> (That said, authenticated access through e.g. signed URLs can work
+> fine without that.)
 
->   0. During gc, server generates pack-1234abcd.pack. It writes matching
->      tips into pack-1234abcd.info, which is essentially a bundle file
->      whose final line says "pack-1234abcd.pack".
->
->   1. Client contacts server via any git protocol. Server says
->      "resumable=<url>". Let's says that <url> is
->      https://example.com/repo/clones/1234abcd.bundle.
->
->   2. Client goes to <url>. They see that they are fetching a bundle,
->      and know not to do the usual smart-http or dumb-http protocols.
->      They can fetch the bundle header resumably (though it's tiny, so it
->      doesn't really matter).
-> ...
+Yeah, I can see there are advantages to assuming all the world is HTTP,
+but it just doesn't seem that practical to me.
+
+> > Clients do not have to _just_ fetch a packfile. They could get a bundle
+> > file that contains the roots along with the packfile. I know that one of
+> > your goals is not duplicating the storage of the packfile on the server,
+> > but it would not be hard for the server to store the packfile and the
+> > bundle header separately, and concatenate them on the fly.
+> 
+> Doesn't that prevent using a git-unaware file transfer service to
+> serve the files?
+
+Sort of. They would just need to serve the combined file. But _if_ you
+have a git-unaware service (rsync?) _and_ its hitting the same storage
+(so you could in theory not store the packfile twice), _and_ it cannot
+be taught to do any kind of concatenation, then yes, it would be a
+problem.
+
+I do think I favor the "split bundle" anyway, though, just for
+simplicity on both ends.
+
+> > And you'll notice, too, that all of the bundle-http magic kicks in
+> > during step 2 because the client sees they're grabbing a bundle. Which
+> > means that the <url> in step 1 doesn't _have_ to be a bundle. It can be
+> > "go fetch from kernel.org, then come back to me".
+> 
+> I think that use case brings in complications that make it not
+> necessarily worth it.  In this example, if kernel.org is serving pack
+> files, why shouldn't I point directly at the advertised pack CDN URL
+> instead of adding an extra hop that puts added load on kernel.org
+> servers?
+
+Sure, that would be more efficient if kernel.org is providing such a CDN
+URL. But they aren't now, because it doesn't exist yet, and this feature
+can be used by you without having to coordinate their use of the
+feature. And you can replace kernel.org in my example with any other
+server that happens to be preferable to fetching from you, for whatever
+reason.
+
+> My motivation comes from the example of
+> alternates: it is pretty and very flexible and ended up as a support
+> and maintenance headache instead of being widely useful.
+
+I guess one man's trash is another's treasure. Alternates are in wide
+use at GitHub, and are pretty much what make our data model feasible.
+I'm pretty sure that git.or.cz uses them for similar purposes, too.
+
+> I think what
+> you are proposing is more harmless but I'd still want to have an
+> example of what it's used for before going in that direction.
+
+Unless there is a big immediate downside, I'd rather err in the opposite
+direction: keep orthogonal concerns separate (e.g., redirecting to X
+versus protocol details of X).
+
+-Peff
