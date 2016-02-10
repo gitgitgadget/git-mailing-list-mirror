@@ -1,125 +1,164 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Wed, 10 Feb 2016 18:03:07 -0500
-Message-ID: <20160210230307.GA6633@sigill.intra.peff.net>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
- <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
- <20160210214945.GA5853@sigill.intra.peff.net>
- <20160210221758.GC10155@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Interim "What's cooking"
+Date: Wed, 10 Feb 2016 15:43:11 -0800
+Message-ID: <xmqqsi10xhbk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 00:03:18 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 00:43:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTdn3-00063o-1f
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 00:03:17 +0100
+	id 1aTePn-0002nQ-74
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 00:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583AbcBJXDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 18:03:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40079 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752564AbcBJXDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 18:03:09 -0500
-Received: (qmail 21610 invoked by uid 102); 10 Feb 2016 23:03:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 18:03:09 -0500
-Received: (qmail 32723 invoked by uid 107); 10 Feb 2016 23:03:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 18:03:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 18:03:07 -0500
-Content-Disposition: inline
-In-Reply-To: <20160210221758.GC10155@google.com>
+	id S1750816AbcBJXnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 18:43:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53694 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750728AbcBJXnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 18:43:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3A3444E2B;
+	Wed, 10 Feb 2016 18:43:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=9
+	CEJ9wgqIfKFFT6Pt0LqfXpEzqI=; b=JI7jQzfL2AfcAV31fAkx2ERlFgfD3mQDj
+	avfbTt88k6Hxstj7uOJFJgANB4CkhPrGZ5qvDGyIhNfQR+CJPFjiIJjt0Z7WqAhJ
+	wNd22VwMpUdn6vmAKeGn/vHvsnnivNvxLUYMi19Xp928UqHaEWC7tXWImiFYIOyg
+	GNDdLUXZ6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=GE/
+	Hf+5WnS51vnIQv7ACYALx9dR4U3VKjUWR/bsialW84/UgImAv3HYZ6bupyfyKAFt
+	yARL/CcdBdhWMDmA4rNFbDbheDbBDe1CsCPDVdJqPQ+HkdtyBI7X489KIyNogtnN
+	lAF0Uqra1fpeKmbp63Zw7JNxelVQLXWfTrwsWFGs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A07044E2A;
+	Wed, 10 Feb 2016 18:43:13 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1A84044E29;
+	Wed, 10 Feb 2016 18:43:13 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0C8DC822-D050-11E5-B17F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285941>
 
-On Wed, Feb 10, 2016 at 02:17:58PM -0800, Jonathan Nieder wrote:
+In today/tonight's pushout, the 'master' branch will have these
+topics merged.
 
-> > Because the magic happens in the git protocol, that would mean this does
-> > not have to be limited to git-over-http. It could be "resumable=<url>"
-> > to point the client anywhere (the same server over a different protocol,
-> > another server, etc).
-> 
-> Thanks for bringing this up.  A worry with putting the URL in the
-> capabilities line is that it makes it easy to run into the 1000-byte
-> limit.  It's been a while since v1.8.3-rc0~148^2~6 (pkt-line: provide
-> a LARGE_PACKET_MAX static buffer, 2013-02-20) but we still can't
-> rely on clients having that applied.
+Thanks for contributing ;-)
 
-I hadn't considered that, but I'm not sure how much of a problem it is
-in practice. The first line is 40-hex sha1, space, HEAD, NUL, then
-capabilities. The current capabilities string from github.com on a
-sample repo (which has a rather large agent string, and a normal-sized
-symref pointer for HEAD) is 188 bytes. So that's still over 750 bytes
-available for a URL. The space isn't infinite, and we may want to add
-more capabilities later. But I'd think that devoting even 256 bytes to a
-url would be reasonable, and leave us with fair room to grow.
 
-> Another nice thing about using a 302 is that you can set cookies
-> during the redirect, which might make authenticated access easier.
-> (That said, authenticated access through e.g. signed URLs can work
-> fine without that.)
+[Graduated to "master"]
 
-Yeah, I can see there are advantages to assuming all the world is HTTP,
-but it just doesn't seem that practical to me.
+* aw/push-force-with-lease-reporting (2016-02-01) 1 commit
+  (merged to 'next' on 2016-02-03 at facd28f)
+ + push: fix ref status reporting for --force-with-lease
 
-> > Clients do not have to _just_ fetch a packfile. They could get a bundle
-> > file that contains the roots along with the packfile. I know that one of
-> > your goals is not duplicating the storage of the packfile on the server,
-> > but it would not be hard for the server to store the packfile and the
-> > bundle header separately, and concatenate them on the fly.
-> 
-> Doesn't that prevent using a git-unaware file transfer service to
-> serve the files?
+ "git push --force-with-lease" has been taught to report if the push
+ needed to force (or fast-forwarded).
 
-Sort of. They would just need to serve the combined file. But _if_ you
-have a git-unaware service (rsync?) _and_ its hitting the same storage
-(so you could in theory not store the packfile twice), _and_ it cannot
-be taught to do any kind of concatenation, then yes, it would be a
-problem.
 
-I do think I favor the "split bundle" anyway, though, just for
-simplicity on both ends.
+* cc/untracked (2016-01-27) 11 commits
+  (merged to 'next' on 2016-02-01 at 8203631)
+ + t7063: add tests for core.untrackedCache
+ + test-dump-untracked-cache: don't modify the untracked cache
+ + config: add core.untrackedCache
+ + dir: simplify untracked cache "ident" field
+ + dir: add remove_untracked_cache()
+ + dir: add {new,add}_untracked_cache()
+ + update-index: move 'uc' var declaration
+ + update-index: add untracked cache notifications
+ + update-index: add --test-untracked-cache
+ + update-index: use enum for untracked cache options
+ + dir: free untracked cache when removing it
 
-> > And you'll notice, too, that all of the bundle-http magic kicks in
-> > during step 2 because the client sees they're grabbing a bundle. Which
-> > means that the <url> in step 1 doesn't _have_ to be a bundle. It can be
-> > "go fetch from kernel.org, then come back to me".
-> 
-> I think that use case brings in complications that make it not
-> necessarily worth it.  In this example, if kernel.org is serving pack
-> files, why shouldn't I point directly at the advertised pack CDN URL
-> instead of adding an extra hop that puts added load on kernel.org
-> servers?
+ Update the untracked cache subsystem and change its primary UI from
+ "git update-index" to "git config".
 
-Sure, that would be more efficient if kernel.org is providing such a CDN
-URL. But they aren't now, because it doesn't exist yet, and this feature
-can be used by you without having to coordinate their use of the
-feature. And you can replace kernel.org in my example with any other
-server that happens to be preferable to fetching from you, for whatever
-reason.
 
-> My motivation comes from the example of
-> alternates: it is pretty and very flexible and ended up as a support
-> and maintenance headache instead of being widely useful.
+* ew/connect-verbose (2016-01-28) 1 commit
+  (merged to 'next' on 2016-02-03 at ceac37e)
+ + pass transport verbosity down to git_connect
 
-I guess one man's trash is another's treasure. Alternates are in wide
-use at GitHub, and are pretty much what make our data model feasible.
-I'm pretty sure that git.or.cz uses them for similar purposes, too.
+ There were a few "now I am doing this thing" progress messages in
+ the TCP connection code that can be triggered by setting a verbose
+ option internally in the code, but "git fetch -v" and friends never
+ passed the verbose option down to that codepath.
 
-> I think what
-> you are proposing is more harmless but I'd still want to have an
-> example of what it's used for before going in that direction.
+ There was a brief discussion about the impact on the end-user
+ experience by not limiting this to "fetch -v -v", but I think the
+ conclusion is that this is OK to enable with a single "-v" as it is
+ not too noisy.
 
-Unless there is a big immediate downside, I'd rather err in the opposite
-direction: keep orthogonal concerns separate (e.g., redirecting to X
-versus protocol details of X).
 
--Peff
+* jk/options-cleanup (2016-02-01) 6 commits
+  (merged to 'next' on 2016-02-03 at a78d89d)
+ + apply, ls-files: simplify "-z" parsing
+ + checkout-index: disallow "--no-stage" option
+ + checkout-index: handle "--no-index" option
+ + checkout-index: handle "--no-prefix" option
+ + checkout-index: simplify "-z" option parsing
+ + give "nbuf" strbuf a more meaningful name
+
+ Various clean-ups to the command line option parsing.
+
+
+* js/test-lib-windows-emulated-yes (2016-02-02) 1 commit
+  (merged to 'next' on 2016-02-03 at bf6b42c)
+ + test-lib: limit the output of the yes utility
+
+ The emulated "yes" command used in our test scripts has been
+ tweaked not to spend too much time generating unnecessary output
+ that is not used, to help those who test on Windows where it would
+ not stop until it fills the pipe buffer due to lack of SIGPIPE.
+
+
+* js/xmerge-marker-eol (2016-01-27) 2 commits
+  (merged to 'next' on 2016-02-01 at 05d91a4)
+ + merge-file: ensure that conflict sections match eol style
+ + merge-file: let conflict markers match end-of-line style of the context
+
+ The low-level merge machinery has been taught to use CRLF line
+ termination when inserting conflict markers to merged contents that
+ are themselves CRLF line-terminated.
+
+
+* ls/clean-smudge-override-in-config (2016-01-29) 1 commit
+  (merged to 'next' on 2016-02-03 at 5962354)
+ + convert: treat an empty string for clean/smudge filters as "cat"
+
+ Clean/smudge filters defined in a configuration file of lower
+ precedence can now be overridden to be a pass-through no-op by
+ setting the variable to an empty string.
+
+
+* nd/do-not-move-worktree-manually (2016-01-22) 2 commits
+  (merged to 'next' on 2016-01-26 at c539221)
+ + worktree: stop supporting moving worktrees manually
+ + worktree.c: fix indentation
+
+ "git worktree" had a broken code that attempted to auto-fix
+ possible inconsistency that results from end-users moving a
+ worktree to different places without telling Git (the original
+ repository needs to maintain backpointers to its worktrees, but
+ "mv" run by end-users who are not familiar with that fact will
+ obviously not adjust them), which actually made things worse
+ when triggered.
+
+
+* wp/sha1-name-negative-match (2016-02-01) 2 commits
+  (merged to 'next' on 2016-02-03 at 89fa5ef)
+ + object name: introduce '^{/!-<negative pattern>}' notation
+ + test for '!' handling in rev-parse's named commits
+
+ A new "<branch>^{/!-<pattern>}" notation can be used to name a
+ commit that is reachable from <branch> that does not match the
+ given <pattern>.
