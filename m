@@ -1,92 +1,90 @@
-From: Mark Parker <godefroi@gmail.com>
-Subject: git-svn clone error
-Date: Wed, 10 Feb 2016 15:22:11 -0700
-Message-ID: <CAN4RHdFEyWL57NkTi4-HGs4NhYBzujgLrbNWzFmTH47b8NF1pg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
+Date: Wed, 10 Feb 2016 14:40:24 -0800
+Message-ID: <xmqqwpqcxk87.fsf@gitster.mtv.corp.google.com>
+References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
+	<CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
+	<20160210214945.GA5853@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 23:22:20 2016
+Content-Type: text/plain
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 10 23:40:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTd9N-0000CI-L2
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 23:22:18 +0100
+	id 1aTdR1-00014k-R8
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 23:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbcBJWWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 17:22:13 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:33572 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbcBJWWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 17:22:12 -0500
-Received: by mail-wm0-f41.google.com with SMTP id g62so46190521wme.0
-        for <git@vger.kernel.org>; Wed, 10 Feb 2016 14:22:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ZzMrUvfNJWpAFNg5YdXkBeSY6fX5tPpBg31in8O6R6M=;
-        b=OuhoMzDKdMyD3pMlB32fHM4Xm829ifD/5ae1YZY8cYcgKd5VggdUd4EA4eWnVGeAJ6
-         4EJtArVwro9e7Jpc+oTHhfjHD4cwtqg9XGNXTPLqTxnK3KMUhBJOEGlVHz+T8RXGZtLx
-         eFcbUE4ThIfa5fr/Mo9Fy3rfu8bRJVcTj+9PiRwht/SpwhQy6a8neBH3T6HubjDmnLYm
-         lT6sr3ugtIs2h4GMPwmBAPF18WMELm8MZuwviWgn8FCrqFT7/kntUIIDS+lHTvW05R4i
-         ISSeEfyJFFy5VHaoDf8zqYCZn0Q5qeK9XeKcn0YZA2w9VN1GTF8a7RR2ojKCHApLH/mZ
-         PyYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=ZzMrUvfNJWpAFNg5YdXkBeSY6fX5tPpBg31in8O6R6M=;
-        b=lXo+GRE8vP39VwswyrufxiLit+r/GJ9S4W8TzcLbrzFvbpjzsLj6pihBieCFbnOHoq
-         Q3TyNiXYLA7uftP2W/mlId8PZnxxG0vHLEi0QLYJsA4i4znRIOBs/XI7RuTUVT1ZSoE7
-         vDZE7RXnOFn6zJ/6slOsdJqTQPph59L1SFei7KKETu8HM7IPfOw1Zc7IBoQ8boVzIIkV
-         L6G6wUc0Q6s2S9bKHaap7l06sxaUbNZb5LSAGKWKEUVQl9YY/CIUymFcdAs6VR94aJOL
-         DyVFAZRku3zaaBlE59q0dVIsiDc4ZlPRw5WkPRtvFYrYp3woXb2iUMUVM5dpeZP+DUsb
-         sz0w==
-X-Gm-Message-State: AG10YOR8Qora0daaq/iLqCEsb7oyLio6CJaWgWyYwiZoeak8/q9Qx9GeLsFq5Q2r6aWnj0GGoZEtSzHpvrA0xw==
-X-Received: by 10.194.23.232 with SMTP id p8mr49175015wjf.80.1455142931376;
- Wed, 10 Feb 2016 14:22:11 -0800 (PST)
-Received: by 10.194.9.163 with HTTP; Wed, 10 Feb 2016 14:22:11 -0800 (PST)
+	id S1751093AbcBJWk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 17:40:28 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56538 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750788AbcBJWk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 17:40:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43A4A441C8;
+	Wed, 10 Feb 2016 17:40:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MnXpieQa8MgPvCoLbOJobkodpOg=; b=OJqfkk
+	ijIFzs1Clkpk5aU4JHRYByGmnJKukBSnqWftDeW9r5tSj/gupALo+CfY95Cf4Dge
+	t6DYYIaB+T+8KTA2xmeetQTeEIQ76EW0E22djIHe93Ycp27l69wzGeAzERRmOGpo
+	ebeL+g7sgxp+qrnsq9YObDVNfDwtcDg8/J8Cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sUy2T5lTtgq/mSlU+mDWzdsC/ZpECW4u
+	XoUULG720dMWh2RJUuGV/+gs3La2yfnxhQK99FLOqcEz+i1mTjZQnE8EXlVaMtOT
+	1HEb4ZAm702jfn/diCpRJ+mm1o/C8VvI9e36SNCXg4aejAj3oUEwN8PxlprmR+m/
+	dT7Q9gLq4ik=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AFEA441C7;
+	Wed, 10 Feb 2016 17:40:26 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B37D7441C6;
+	Wed, 10 Feb 2016 17:40:25 -0500 (EST)
+In-Reply-To: <20160210214945.GA5853@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Feb 2016 16:49:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 47059FB0-D047-11E5-BE0C-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285939>
 
-I'm attempting to git-svn clone a subversion repository that contains
-a space in the name of a branch. This is the result (after many many
-revisions):
+Jeff King <peff@peff.net> writes:
 
-r148627 = fafd5730f356dcb80f72c9b93f976d9707755a03
-(refs/remotes/origsvn/2.0_PriorToStuff)
-Found possible branch point:
-http://svn/repos/Products/my.product/branches/2.0 =>
-http://svn/repos/Products/my.product/branches/2.0%20my_branch_name,
-145211
-W: Refspec glob conflict (ref: refs/remotes/origsvn/trunk):
-expected path: Products/my.product/branches/trunk
-    real path: Products/my.product/trunk
-Continuing ahead with Products/my.product/trunk
-Found branch parent: (refs/remotes/origsvn/2.0 my_branch_name)
-5117c44d2cb5ee97d53f93f9c324d6f95ee5fdb5
-Following parent with do_switch
-Successfully followed parent
-r148644 = da01bf418f28e2383a0fbbd7a73a6df0b0b800f6
-(refs/remotes/origsvn/2.0 my_branch_name)
-Found possible branch point:
-http://svn/repos/Products/my.product/branches/2.0%20my_branch_name =>
-http://svn/repos/Products/my.product/branches/2.0_branchname, 148650
-fatal: Not a valid object name refs/remotes/origsvn/2.0 my_branch_name
-cat-file commit refs/remotes/origsvn/2.0 my_branch_name: command
-returned error: 128
+> Clients do not have to _just_ fetch a packfile. They could get a bundle
+> file that contains the roots along with the packfile. I know that one of
+> your goals is not duplicating the storage of the packfile on the server,
+> but it would not be hard for the server to store the packfile and the
+> bundle header separately, and concatenate them on the fly.
 
-Indeed, if I do "git cat-file commit refs/remotes/origsvn/2.0
-my_branch_name" I get the help for git cat-file. If I escape the name,
-i.e. "git cat-file commit refs/remotes/origsvn/2.0%20my_branch_name" I
-get what I assume is the correct information.
+Yeah, I was wondering about that.  Just storing them as separate
+two-file pair on the server side and serving it as if it is a single
+file to the client does not sound like a rocket science, and a
+reasonable webserver should be able to serve even a byte-range
+request out of such a thing.
 
-I'm using Git for Windows, version 2.7.0. If this is a
-Windows-specific issue, I'm happy to report it over there.
+Of course, updating the clients to understand such a two-file pair
+as a valid bundle is a good thing to do, and I like that step 0. you
+outlined below.
 
-Thanks,
-Mark
+>   0. During gc, server generates pack-1234abcd.pack. It writes matching
+>      tips into pack-1234abcd.info, which is essentially a bundle file
+>      whose final line says "pack-1234abcd.pack".
+>
+>   1. Client contacts server via any git protocol. Server says
+>      "resumable=<url>". Let's says that <url> is
+>      https://example.com/repo/clones/1234abcd.bundle.
+>
+>   2. Client goes to <url>. They see that they are fetching a bundle,
+>      and know not to do the usual smart-http or dumb-http protocols.
+>      They can fetch the bundle header resumably (though it's tiny, so it
+>      doesn't really matter).
+> ...
