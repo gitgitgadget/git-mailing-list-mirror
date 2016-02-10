@@ -1,203 +1,311 @@
 From: tboegi@web.de
-Subject: [PATCH v4 6/6] convert.c: simplify text_stat
-Date: Wed, 10 Feb 2016 17:24:43 +0100
-Message-ID: <1455121483-16470-1-git-send-email-tboegi@web.de>
+Subject: [PATCH v4 5/6] convert.c: refactor crlf_action
+Date: Wed, 10 Feb 2016 17:24:41 +0100
+Message-ID: <1455121481-16429-1-git-send-email-tboegi@web.de>
 References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 10 17:23:30 2016
+X-From: git-owner@vger.kernel.org Wed Feb 10 17:23:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTXY9-0000im-DS
+	id 1aTXY8-0000im-M8
 	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 17:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594AbcBJQX0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2016 11:23:26 -0500
-Received: from mout.web.de ([212.227.15.3]:60584 "EHLO mout.web.de"
+	id S1752559AbcBJQXY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Feb 2016 11:23:24 -0500
+Received: from mout.web.de ([212.227.15.14]:58100 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752487AbcBJQXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 11:23:23 -0500
+	id S1752115AbcBJQXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 11:23:21 -0500
 Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0M0f1C-1aAN0B2OUw-00uqzd; Wed, 10 Feb 2016 17:23:21
+ ESMTPSA (Nemesis) id 0MdpWf-1afKAH0713-00Pf8j; Wed, 10 Feb 2016 17:23:20
  +0100
 X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
 In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 In-Reply-To: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
 References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-X-Provags-ID: V03:K0:unq2UA2aCWOywwT5swt0y24Pq1fWSmPTvxiF3m7fBiAsjItGq/Q
- bcOwdHPQqF1L7bLCSQuLZyGG1AXbxKrNE66/sNJ9G5u4ggMTvhRUpKcMGcrkp/iurTRgdig
- WOrt4fZG0R9Fdvnt/JZ+pf3Wdu9kKfplVFQrKLWbKHItvEH3BjL1kQym2yfPUOMu7WLndJu
- nDVXhykJuXq+yaEc9rtqg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vihErS0XFvI=:D6qCLeoji4pPJn7eYi/pa0
- mnHs2XjjgylB89LlG074QAn3tbb5WBgx7/ks4FAtJq6UQM4gwIJKgRsY5sG5Rv2Apl9dgEmrd
- kWZpth64JXHewRXDuquMhdP5+oG4PH46ra0iBReqWVlGGhGd4rrjr7xqJx2DPSCAEZBN6j8eD
- 1HPNNEeBcjObGrHc8Xym/819yyDYLeoJCk7V9ujgy54vLTR/v0eYHJ/T+6vkzhyNlOKl/sw4M
- hSFvo0zKUZHtA2CdR3nGFaKvjwuEuqdPauFOwm7Ts6P2TfFPM+Qumh26AAaNjWDIAUwTn4/aS
- VWcBAVOi0pbGAd5wA+PeXa7T6IetrEbSDEXsguQNwhhYCnV6fNL2G+bUUmH/yvOj/m7vOkJuQ
- SsBM2V+pyRFAW2smK1rnzg/7OlNuJAw/23SqRaggKj1ZyvCS92WzV+j9giXjBhWwYiUmFugG6
- BMhZ9yzATy24zMdh+frHnBzrckC9mjf+GThDAj8k+m9sLUdYs4MxSVGQftxlruYCby7ie5MJv
- i9GRmujcncoUEK+J3dymCF9K/r0owJ4wOEOFoKlR9TIfGzVLi/c3QmA3KOp9iU9/TQaPQZ1aW
- Vu0ue1CjO5vFFeNepXE919mY+1e0FXC2Q5Y2eJIf62wKCnLhLJJzZd2vSUF9Q58ykg2Sq3Inq
- WATRUcxMWezlFn2/9lwRppU7O5RwO/b79nJOJe3R/tmTjHIKx7FDlDIIYHtd7/qGWqCtaTLgf
- AqHYhHNNahPpcXrnbK1XJ2o5egryAFycMfPrN8M9kU1QjeS6V8qVFJxN3wCHyeoHdSKXqgc0 
+X-Provags-ID: V03:K0:nlVN2bfNbppHSN1GunObIRNEB1LrhXokj89ptYWNBKc2gpwk310
+ uM8ya5WOb4ATFstuYxYJM9tC/yp1Zc+V5EuFMxildUar9Yp2sTMKG2zurt4G3YA0p3BsKCS
+ 0NmTIKBujru/IJ7kpjxxc9JZTSuPPSagqEtogUXPGAPfMBu8dUQZdKMiNJMw2yH7C9SdrSm
+ HE/vgXWp7BA2PNtv08YQQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g7XbQtzB0Ns=:8GdtdRZHAAu6um2iulAiTN
+ DJOEd/fgubfZQ7mvP54TeKk9ApY2Ok/rY3S7+G2XDqPyBZssBL+rfnev5yFU/OYo3T5XnPGWj
+ MrtiIjnL0v+xJW0ReatVa48QcvG9Md9lzu7tn4OaL0b7VvUnq5zUxGb8hz28ImQ8yz2T/tyaU
+ UllKR5K0cUGe6Q9iypFWg1adEs0ieaeCPyaHtNRxp5Ok/3ByzhQVPu2YVM62ePLBc96EWjRl0
+ y+7LCwdmV4JP/++zdVG9796AxrHezyGlLOxFpZvWt3njNcWaueT65MxqWAJu+HyusND5NAJvY
+ V5xwt27cd+Ue5Cw+eW4ooZIFtubUFs0LzE2exiPt+i7OObnJpZ+a3PkKFaY/k5iZi805ne4hM
+ nV4cT/deCUp/n5NbFY/xMl5TDq1S4iQViN2LuGC8AW3JPheEdEcpRJmsrrBEB14MbhWRcdi4R
+ hXDSM476g4Bx819E1aceH9TpwEE73s74m8QIPfhtd5+c/G5J6PsohY6kxaqpLwuO6J00P8HYk
+ NXT4/BSIMxzusSOnCbVilfgBV2wT1uHBOs8c+jzmuz30rk450JHMnJbexv1wCyDUE87wP6trH
+ mChHrA8jzYFwQmb4QayEVGGTFFrzhpmgoPWZzsBPpQhmUwfWnDgXqgB1dvJ+fLDq2TffzPYhm
+ LIzqBl5BlCKXtNWF+juAQ88V5IrJ1V1m4hAXURbM+8S1EOZ8P4QpZIZJSwVXNAOBLj61QTv5d
+ r4cjHqcKiLyX8vVxBLTapo29LoyYTKtt8EtCVhK8SosqzqCY+DgOVnMKEWiirG2XW3gOLRrO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285913>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Simplify the statistics:
-lonecr counts the CR which is not followed by a LF,
-lonelf counts the LF which is not preceded by a CR,
-crlf counts CRLF combinations.
-This simplifies the evaluation of the statistics.
+Refactor the determination and usage of crlf_action.
+Today, when no "crlf" attribute are set on a file, crlf_action is set t=
+o
+CRLF_GUESS. Use CRLF_UNDEFINED instead, and search for "text" or "eol" =
+as
+before.
+After searching for line ending attributes, save the value in
+struct conv_attrs.crlf_action attr_action,
+so that get_convert_attr_ascii() is able report the attributes.
+
+Replace the old CRLF_GUESS usage:
+CRLF_GUESS && core.autocrlf=3Dtrue -> CRLF_AUTO_CRLF
+CRLF_GUESS && core.autocrlf=3Dfalse -> CRLF_BINARY
+CRLF_GUESS && core.autocrlf=3Dinput -> CRLF_AUTO_INPUT
+
+Save the action in conv_attrs.crlf_action (as before) and change
+all callers.
+
+Make more clear, what is what, by defining:
+
+- CRLF_UNDEFINED : No attributes set. Temparally used, until core.autoc=
+rlf
+                   and core.eol is evaluated and one of CRLF_BINARY,
+                   CRLF_AUTO_INPUT or CRLF_AUTO_CRLF is selected
+- CRLF_BINARY    : No processing of line endings.
+- CRLF_TEXT      : attribute "text" is set, line endings are processed.
+- CRLF_TEXT_INPUT: attribute "input" or "eol=3Dlf" is set. This implies=
+ text.
+- CRLF_TEXT_CRLF : attribute "eol=3Dcrlf" is set. This implies text.
+- CRLF_AUTO      : attribute "auto" is set.
+- CRLF_AUTO_INPUT: core.autocrlf=3Dinput (no attributes)
+- CRLF_AUTO_CRLF : core.autocrlf=3Dtrue  (no attributes)
 
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- convert.c | 47 ++++++++++++++++++++++-------------------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ convert.c | 77 ++++++++++++++++++++++++++++++++++++++-----------------=
+--------
+ 1 file changed, 46 insertions(+), 31 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index e4e2877..18af685 100644
+index 557e574..e4e2877 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -31,7 +31,7 @@ enum crlf_action {
+@@ -19,12 +19,14 @@
+ #define CONVERT_STAT_BITS_BIN       0x4
+=20
+ enum crlf_action {
+-	CRLF_GUESS =3D -1,
+-	CRLF_BINARY =3D 0,
++	CRLF_UNDEFINED,
++	CRLF_BINARY,
+ 	CRLF_TEXT,
+-	CRLF_INPUT,
+-	CRLF_CRLF,
+-	CRLF_AUTO
++	CRLF_TEXT_INPUT,
++	CRLF_TEXT_CRLF,
++	CRLF_AUTO,
++	CRLF_AUTO_INPUT,
++	CRLF_AUTO_CRLF
+ };
 =20
  struct text_stat {
- 	/* NUL, CR, LF and CRLF counts */
--	unsigned nul, cr, lf, crlf;
-+	unsigned nul, lonecr, lonelf, crlf;
-=20
- 	/* These are just approximations! */
- 	unsigned printable, nonprintable;
-@@ -46,13 +46,15 @@ static void gather_stats(const char *buf, unsigned =
-long size, struct text_stat *
- 	for (i =3D 0; i < size; i++) {
- 		unsigned char c =3D buf[i];
- 		if (c =3D=3D '\r') {
--			stats->cr++;
--			if (i+1 < size && buf[i+1] =3D=3D '\n')
-+			if (i+1 < size && buf[i+1] =3D=3D '\n') {
- 				stats->crlf++;
-+				i++;
-+			} else
-+				stats->lonecr++;
- 			continue;
- 		}
- 		if (c =3D=3D '\n') {
--			stats->lf++;
-+			stats->lonelf++;
- 			continue;
- 		}
- 		if (c =3D=3D 127)
-@@ -86,7 +88,7 @@ static void gather_stats(const char *buf, unsigned lo=
-ng size, struct text_stat *
-  */
- static int convert_is_binary(unsigned long size, const struct text_sta=
-t *stats)
- {
--	if (stats->cr !=3D stats->crlf)
-+	if (stats->lonecr)
- 		return 1;
- 	if (stats->nul)
- 		return 1;
-@@ -98,19 +100,18 @@ static int convert_is_binary(unsigned long size, c=
-onst struct text_stat *stats)
- static unsigned int gather_convert_stats(const char *data, unsigned lo=
-ng size)
- {
- 	struct text_stat stats;
-+	int ret =3D 0;
- 	if (!data || !size)
- 		return 0;
- 	gather_stats(data, size, &stats);
- 	if (convert_is_binary(size, &stats))
--		return CONVERT_STAT_BITS_BIN;
--	else if (stats.crlf && stats.crlf =3D=3D stats.lf)
--		return CONVERT_STAT_BITS_TXT_CRLF;
--	else if (stats.crlf && stats.lf)
--		return CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_TXT_LF;
--	else if (stats.lf)
--		return CONVERT_STAT_BITS_TXT_LF;
--	else
--		return 0;
-+		ret |=3D CONVERT_STAT_BITS_BIN;
-+	if (stats.crlf)
-+		ret |=3D CONVERT_STAT_BITS_TXT_CRLF;
-+	if (stats.lonelf)
-+		ret |=3D  CONVERT_STAT_BITS_TXT_LF;
-+
-+	return ret;
+@@ -167,18 +169,19 @@ static enum eol output_eol(enum crlf_action crlf_=
+action)
+ 	switch (crlf_action) {
+ 	case CRLF_BINARY:
+ 		return EOL_UNSET;
+-	case CRLF_CRLF:
++	case CRLF_TEXT_CRLF:
+ 		return EOL_CRLF;
+-	case CRLF_INPUT:
++	case CRLF_TEXT_INPUT:
+ 		return EOL_LF;
+-	case CRLF_GUESS:
+-		if (!auto_crlf)
+-			return EOL_UNSET;
+-		/* fall through */
++	case CRLF_UNDEFINED:
++	case CRLF_AUTO_CRLF:
++	case CRLF_AUTO_INPUT:
+ 	case CRLF_TEXT:
+ 	case CRLF_AUTO:
++		/* fall through */
+ 		return text_eol_is_crlf() ? EOL_CRLF : EOL_LF;
+ 	}
++	warning("Illegal crlf_action %d\n", (int)crlf_action);
+ 	return core_eol;
  }
 =20
- static const char *gather_convert_stats_ascii(const char *data, unsign=
-ed long size)
-@@ -207,7 +208,7 @@ static void check_safe_crlf(const char *path, enum =
-crlf_action crlf_action,
- 		 * CRLFs would be added by checkout:
- 		 * check if we have "naked" LFs
- 		 */
--		if (stats->lf !=3D stats->crlf) {
-+		if (stats->lonelf) {
- 			if (checksafe =3D=3D SAFE_CRLF_WARN)
- 				warning("LF will be replaced by CRLF in %s.\nThe file will have it=
-s original line endings in your working directory.", path);
- 			else /* i.e. SAFE_CRLF_FAIL */
-@@ -266,8 +267,8 @@ static int crlf_to_git(const char *path, const char=
+@@ -235,7 +238,6 @@ static int crlf_to_git(const char *path, const char=
  *src, size_t len,
+ 	char *dst;
 =20
- 	check_safe_crlf(path, crlf_action, &stats, checksafe);
-=20
--	/* Optimization: No CR? Nothing to convert, regardless. */
--	if (!stats.cr)
-+	/* Optimization: No CRLF? Nothing to convert, regardless. */
-+	if (!stats.crlf)
+ 	if (crlf_action =3D=3D CRLF_BINARY ||
+-	    (crlf_action =3D=3D CRLF_GUESS && auto_crlf =3D=3D AUTO_CRLF_FALS=
+E) ||
+ 	    (src && !len))
  		return 0;
 =20
- 	/*
-@@ -314,19 +315,15 @@ static int crlf_to_worktree(const char *path, con=
-st char *src, size_t len,
+@@ -248,11 +250,11 @@ static int crlf_to_git(const char *path, const ch=
+ar *src, size_t len,
 =20
  	gather_stats(src, len, &stats);
 =20
--	/* No LF? Nothing to convert, regardless. */
--	if (!stats.lf)
--		return 0;
--
--	/* Was it already in CRLF format? */
--	if (stats.lf =3D=3D stats.crlf)
-+	/* No "naked" LF? Nothing to convert, regardless. */
-+	if (!stats.lonelf)
+-	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS) {
++	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
+T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
+ 		if (convert_is_binary(len, &stats))
+ 			return 0;
+=20
+-		if (crlf_action =3D=3D CRLF_GUESS) {
++		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
+TO_CRLF) {
+ 			/*
+ 			 * If the file in the index has any CR in it, do not convert.
+ 			 * This is the new safer autocrlf handling.
+@@ -279,7 +281,7 @@ static int crlf_to_git(const char *path, const char=
+ *src, size_t len,
+ 	if (strbuf_avail(buf) + buf->len < len)
+ 		strbuf_grow(buf, len - buf->len);
+ 	dst =3D buf->buf;
+-	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS) {
++	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
+T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
+ 		/*
+ 		 * If we guessed, we already know we rejected a file with
+ 		 * lone CR, and we can strip a CR without looking at what
+@@ -320,8 +322,8 @@ static int crlf_to_worktree(const char *path, const=
+ char *src, size_t len,
+ 	if (stats.lf =3D=3D stats.crlf)
  		return 0;
 =20
- 	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
+-	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS) {
+-		if (crlf_action =3D=3D CRLF_GUESS) {
++	if (crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_INPU=
 T || crlf_action =3D=3D CRLF_AUTO_CRLF) {
- 		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
++		if (crlf_action =3D=3D CRLF_AUTO_INPUT || crlf_action =3D=3D CRLF_AU=
 TO_CRLF) {
  			/* If we have any CR or CRLF line endings, we do not touch it */
  			/* This is the new safer autocrlf-handling */
--			if (stats.cr > 0 || stats.crlf > 0)
-+			if (stats.lonecr || stats.crlf )
- 				return 0;
- 		}
+ 			if (stats.cr > 0 || stats.crlf > 0)
+@@ -709,16 +711,16 @@ static enum crlf_action git_path_check_crlf(struc=
+t git_attr_check *check)
+ 	const char *value =3D check->value;
 =20
-@@ -338,7 +335,7 @@ static int crlf_to_worktree(const char *path, const=
- char *src, size_t len,
- 	if (src =3D=3D buf->buf)
- 		to_free =3D strbuf_detach(buf, NULL);
+ 	if (ATTR_TRUE(value))
+-		return CRLF_TEXT;
++		return text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
+ 	else if (ATTR_FALSE(value))
+ 		return CRLF_BINARY;
+ 	else if (ATTR_UNSET(value))
+ 		;
+ 	else if (!strcmp(value, "input"))
+-		return CRLF_INPUT;
++		return CRLF_TEXT_INPUT;
+ 	else if (!strcmp(value, "auto"))
+ 		return CRLF_AUTO;
+-	return CRLF_GUESS;
++	return CRLF_UNDEFINED;
+ }
 =20
--	strbuf_grow(buf, len + stats.lf - stats.crlf);
-+	strbuf_grow(buf, len + stats.lonelf);
- 	for (;;) {
- 		const char *nl =3D memchr(src, '\n', len);
- 		if (!nl)
+ static enum eol git_path_check_eol(struct git_attr_check *check)
+@@ -781,7 +783,7 @@ static void convert_attrs(struct conv_attrs *ca, co=
+nst char *path)
+ 	if (!git_check_attr(path, NUM_CONV_ATTRS, ccheck)) {
+ 		enum eol eol_attr;
+ 		ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
+-		if (ca->crlf_action =3D=3D CRLF_GUESS)
++		if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
+ 			ca->crlf_action =3D git_path_check_crlf(ccheck + 0);
+ 		ca->attr_action =3D ca->crlf_action;
+ 		ca->ident =3D git_path_check_ident(ccheck + 1);
+@@ -790,14 +792,22 @@ static void convert_attrs(struct conv_attrs *ca, =
+const char *path)
+ 			return;
+ 		eol_attr =3D git_path_check_eol(ccheck + 3);
+ 		if (eol_attr =3D=3D EOL_LF)
+-			ca->crlf_action =3D CRLF_INPUT;
++			ca->crlf_action =3D CRLF_TEXT_INPUT;
+ 		else if (eol_attr =3D=3D EOL_CRLF)
+-			ca->crlf_action =3D CRLF_CRLF;
++			ca->crlf_action =3D CRLF_TEXT_CRLF;
+ 	} else {
+ 		ca->drv =3D NULL;
+-		ca->crlf_action =3D CRLF_GUESS;
++		ca->crlf_action =3D CRLF_UNDEFINED;
+ 		ca->ident =3D 0;
+ 	}
++	if (ca->crlf_action =3D=3D CRLF_TEXT)
++		ca->crlf_action =3D text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_=
+INPUT;
++	if (ca->crlf_action =3D=3D CRLF_UNDEFINED && auto_crlf =3D=3D AUTO_CR=
+LF_FALSE)
++		ca->crlf_action =3D CRLF_BINARY;
++	if (ca->crlf_action =3D=3D CRLF_UNDEFINED && auto_crlf =3D=3D AUTO_CR=
+LF_TRUE)
++		ca->crlf_action =3D CRLF_AUTO_CRLF;
++	if (ca->crlf_action =3D=3D CRLF_UNDEFINED && auto_crlf =3D=3D AUTO_CR=
+LF_INPUT)
++		ca->crlf_action =3D CRLF_AUTO_INPUT;
+ }
+=20
+ int would_convert_to_git_filter_fd(const char *path)
+@@ -825,18 +835,22 @@ const char *get_convert_attr_ascii(const char *pa=
+th)
+=20
+ 	convert_attrs(&ca, path);
+ 	switch (ca.attr_action) {
+-	case CRLF_GUESS:
++	case CRLF_UNDEFINED:
+ 		return "";
+ 	case CRLF_BINARY:
+ 		return "-text";
+ 	case CRLF_TEXT:
+ 		return "text";
+-	case CRLF_INPUT:
++	case CRLF_TEXT_INPUT:
+ 		return "text eol=3Dlf";
+-	case CRLF_CRLF:
+-		return "text=3Dauto eol=3Dcrlf";
++	case CRLF_TEXT_CRLF:
++		return "text eol=3Dcrlf";
+ 	case CRLF_AUTO:
+ 		return "text=3Dauto";
++	case CRLF_AUTO_CRLF:
++		return "text=3Dauto eol=3Dcrlf"; /* This is not supported yet */
++	case CRLF_AUTO_INPUT:
++		return "text=3Dauto eol=3Dlf"; /* This is not supported yet */
+ 	}
+ 	return "";
+ }
+@@ -1382,12 +1396,13 @@ struct stream_filter *get_stream_filter(const c=
+har *path, const unsigned char *s
+=20
+ 	crlf_action =3D ca.crlf_action;
+=20
+-	if ((crlf_action =3D=3D CRLF_BINARY) || (crlf_action =3D=3D CRLF_INPU=
+T) ||
+-	    (crlf_action =3D=3D CRLF_GUESS && auto_crlf =3D=3D AUTO_CRLF_FALS=
+E))
++	if ((crlf_action =3D=3D CRLF_BINARY) ||
++			crlf_action =3D=3D CRLF_AUTO_INPUT ||
++			(crlf_action =3D=3D CRLF_TEXT_INPUT))
+ 		filter =3D cascade_filter(filter, &null_filter_singleton);
+=20
+ 	else if (output_eol(crlf_action) =3D=3D EOL_CRLF &&
+-		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_GUESS))
++		 !(crlf_action =3D=3D CRLF_AUTO || crlf_action =3D=3D CRLF_AUTO_CRLF=
+))
+ 		filter =3D cascade_filter(filter, lf_to_crlf_filter());
+=20
+ 	return filter;
 --=20
 2.7.0.303.g2c4f448.dirty
