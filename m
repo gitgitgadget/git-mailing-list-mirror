@@ -1,76 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Wed, 10 Feb 2016 13:07:43 -0800
-Message-ID: <xmqqd1s4z334.fsf@gitster.mtv.corp.google.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
-	<CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
-	<CAGZ79kZMvxa5Np4GbShv_A6NZwVAqff94+d8MFTZwrZS+2CqeQ@mail.gmail.com>
-	<20160210210115.GA10155@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git show doesn't work on file names with square brackets
+Date: Wed, 10 Feb 2016 16:12:06 -0500
+Message-ID: <20160210211206.GA5755@sigill.intra.peff.net>
+References: <CACsJy8ChZzYWXePSwF6D8vPZMuz3dQe1=jtw6rSG7M1oC+RiNw@mail.gmail.com>
+ <32B9BD70-F06C-49C4-B672-24173E69B99F@jetbrains.com>
+ <CACsJy8AMEgk8UXF==VmvLXsL4R67u0+U4MiUGPtO6HX0Y30oXg@mail.gmail.com>
+ <20160208141552.GC27054@sigill.intra.peff.net>
+ <20160208150709.GA13664@sigill.intra.peff.net>
+ <xmqqpow7807l.fsf@gitster.mtv.corp.google.com>
+ <20160208195230.GA30693@sigill.intra.peff.net>
+ <xmqqziv939ir.fsf@gitster.mtv.corp.google.com>
+ <20160210161548.GC19867@sigill.intra.peff.net>
+ <xmqqpow4zcwd.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 10 22:07:51 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 10 22:12:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTbzK-0004xF-Am
-	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:07:50 +0100
+	id 1aTc3b-0000l9-BG
+	for gcvg-git-2@plane.gmane.org; Wed, 10 Feb 2016 22:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbcBJVHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Feb 2016 16:07:46 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58739 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750770AbcBJVHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Feb 2016 16:07:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 00CF844950;
-	Wed, 10 Feb 2016 16:07:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3nfcfJej3NjGDD+FA8hEFgo6i/0=; b=pzbqF7
-	EVVtYVCV21KLLKZSMJow3CnWL4Bgyp7aTscxDLgOI//oIEcfmqrtSgc8l+s8bG4U
-	4ogSl5EEbL2s5nGgToIT6u/nWPZ0mQbAsuQhNKjbgtI0hdHFltgO2lKFVD1VUB/4
-	uCM3uBlRiFV2zBAosxFcVLys53VRpBsAbzYjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KJwOUVgnY1HR5EJ1tV9s4o+jfquyIA1/
-	Sa+NBjWUqyjjWeGJ767vXF8HWdJdknnHDl5etBhAWmUIEYbcfRGdNK5V8kCIwhg2
-	QvzdmX3UG1BUVQGX1v01kTOxn/qEyB6Dpr2lLgWJ1IpY+1egb1DkKzDkIF8tuA3J
-	aJo6C22WMwg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA31A4494E;
-	Wed, 10 Feb 2016 16:07:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6EE884494A;
-	Wed, 10 Feb 2016 16:07:44 -0500 (EST)
-In-Reply-To: <20160210210115.GA10155@google.com> (Jonathan Nieder's message of
-	"Wed, 10 Feb 2016 13:01:15 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 543E3122-D03A-11E5-BBB3-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751014AbcBJVMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Feb 2016 16:12:10 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39982 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750799AbcBJVMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Feb 2016 16:12:09 -0500
+Received: (qmail 15915 invoked by uid 102); 10 Feb 2016 21:12:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:12:08 -0500
+Received: (qmail 31653 invoked by uid 107); 10 Feb 2016 21:12:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Feb 2016 16:12:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Feb 2016 16:12:06 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqpow4zcwd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285928>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Wed, Feb 10, 2016 at 09:35:46AM -0800, Junio C Hamano wrote:
 
-> --strict + --check-self-contained-and-connected check that the pack
-> is self-contained.  In the process they mark each object that is
-> reachable from another object in the pack with FLAG_LINK.
->
-> The objects not marked with FLAG_LINK are the roots.
+> > IOW, something like this implements the "permissive" thing I wrote above
+> > (i.e., be inclusive when seeing if something could plausibly be a
+> > filename, but exclusive when complaining that it _could_ be one):
+> 
+> Yup, I think that is probably a better first step.
 
-Ahh, OK, if we already have the code that does it, I have no
-objection.  At some point before finalizing the pack on the disk we
-would want to run fsck on all objects anyway, so having to pass
-"--strict" to find objects that lack FLAG_LINK does not sound too
-big a downside.
+Thanks. And thank you for the discussion. I read your response last
+night and almost just said "OK, let's just scrap my patches, this isn't
+worth the trouble". But after reading it again this morning, I think it
+forced me to look at the problem in a new way. And while I did scrap my
+original patches here, I think the result is accomplishing the same
+thing in a much saner way.
 
-Thanks.
+Here's what I came up with.
+
+  [1/3]: checkout: reorder check_filename conditional
+  [2/3]: check_filename: tighten dwim-wildcard ambiguity
+  [3/3]: get_sha1: don't die() on bogus search strings
+
+The first is a minor preparatory cleanup, the second is the meat we've
+been discussing, and the third is a bonus, though it has some tradeoffs.
+
+-Peff
