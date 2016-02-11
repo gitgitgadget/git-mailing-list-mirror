@@ -1,100 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/22] argv-array.h: use the FORMATPRINTF macro to declare the gcc function attribute 'format printf'
-Date: Thu, 11 Feb 2016 12:53:45 -0800
-Message-ID: <xmqqd1s3vuhy.fsf@gitster.mtv.corp.google.com>
-References: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
-	<1455194339-859-4-git-send-email-gitter.spiros@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v4 09/21] refs: add method to rename refs
+Date: Thu, 11 Feb 2016 16:12:42 -0500
+Organization: Twitter
+Message-ID: <1455225162.29013.10.camel@twopensource.com>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+	 <1454701462-3817-10-git-send-email-dturner@twopensource.com>
+	 <56BC4D94.4040003@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 21:53:53 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 22:12:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTyFN-0007NF-Aw
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 21:53:53 +0100
+	id 1aTyXh-0005ge-I9
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 22:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751233AbcBKUxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 15:53:49 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50422 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751103AbcBKUxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 15:53:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 42C624249F;
-	Thu, 11 Feb 2016 15:53:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J1mOCeaIQiJHztfz98OIN0L7WWY=; b=UhIMnD
-	ScIlORh//PDJDAxerKW1jS1iQK+JL3VqkmeF+cZtEZ8w+3iKBKB397AbTR2dyHTz
-	5PG/bZ0RcoIxn5O/XtXgxTKHDJNufxfYmgT+9/E++f1KC1fUeoqkQ9GtSOqqT7/i
-	5y5ObKRr0f9vbFbkLJyN2ktygVb/zF/naNq+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tqu6136O7aAX0nfAYW7jE2TGEVT+I2dz
-	DSa7m8+BnMG9cYVryvGtt8BXRobfDsoXD/p89dagCaEpLGwHi42a1OFgmgnj6Gn5
-	834VUGk9qBp2AZAXeMgU7ANMUldeaDR48RzP328cRAkH+yB1uRzgfRidwgkEjhJ9
-	qNcQuK5/wtE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29B7C4249D;
-	Thu, 11 Feb 2016 15:53:47 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8510E4249A;
-	Thu, 11 Feb 2016 15:53:46 -0500 (EST)
-In-Reply-To: <1455194339-859-4-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Thu, 11 Feb 2016 12:38:40 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8B386766-D101-11E5-8939-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751242AbcBKVMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 16:12:45 -0500
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:32909 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751067AbcBKVMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 16:12:44 -0500
+Received: by mail-qg0-f50.google.com with SMTP id b35so48240463qge.0
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 13:12:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:organization
+         :content-type:mime-version:content-transfer-encoding;
+        bh=1hBdcEGBnRkEbA9V4pALLF01R+l4ULrAlT+1uD/9mq0=;
+        b=kFs/cAjexDeW3Q7uI/qR5HHe6a6CpFDQvOWuToewQ/0U2ob8HCIZtbMw9LUrdijJbv
+         rI+Sf2Y/yweF0vbVtNOxeKf4PoMuY1w1WQj/mV9beCqD0rdX/8Z2pL7oDFcOS5kpcpqh
+         1AmRciuMbpD5QvIP9IcVO0YEm96VC2r/fr9+S441iFR5ANR13B01dZ+D5ZCENkomUV17
+         Rm0d04Kn+Y2QUdtffc5IZoEAxech05gUNZAQTHfxbXLvOeRdDZ9BG/cmdmB+LUuO0di6
+         KOER59EW4qcysE9/Ffx/AZWBcnEzMm6pW1HVK67+7q96hFC9/ci7xDA+svtKb8lkYzTi
+         oLqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=1hBdcEGBnRkEbA9V4pALLF01R+l4ULrAlT+1uD/9mq0=;
+        b=e/rC8hc3jyqVGdnDv5VqPGlnckgx9iZ3VAt0chclvLuAscp72mkYvqi5OhF1H1g6I1
+         jpiNGqqqDP3qo5N4BI3of/gY1a1M3W03EklKUICdSCUZdbBhcm3JBn82VG10V1kQPhJJ
+         CP78Tpmf3vGJR7cTwlkNJdPyO4rY6qjKXINhaIdRUpXghYm0nUDNJL0PYuqtSm1WGFG0
+         IhBmH5+a+T8+E//2ZGIog15+1VqwWAwcYAGMKKfG1CpYY77l+AdtqUcYv7jKsaIMqAPY
+         mWFDmiecyykbY9pPm1xLY6xKS2C6SzWJZX4vmMgTy5sPRfMQ2l60Cs1CgMHqszVS+V6C
+         IYzQ==
+X-Gm-Message-State: AG10YOT2HYDZQCk57Et881PV8YtVFJt1KNFxB7DURsPq4KRxgd7lBUtzEEtIt85sEgmG+w==
+X-Received: by 10.140.143.68 with SMTP id 65mr62862403qhp.25.1455225163713;
+        Thu, 11 Feb 2016 13:12:43 -0800 (PST)
+Received: from ubuntu ([8.25.196.25])
+        by smtp.gmail.com with ESMTPSA id 7sm4136465qkw.8.2016.02.11.13.12.42
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 11 Feb 2016 13:12:42 -0800 (PST)
+In-Reply-To: <56BC4D94.4040003@alum.mit.edu>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285999>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+On Thu, 2016-02-11 at 10:00 +0100, Michael Haggerty wrote:
+> On 02/05/2016 08:44 PM, David Turner wrote:
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > ---
+> >  refs.c               | 5 +++++
+> >  refs/files-backend.c | 4 +++-
+> >  refs/refs-internal.h | 9 +++++++++
+> >  3 files changed, 17 insertions(+), 1 deletion(-)
+> > 
+> > [...]
+> > diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> > index 5768fee..15fa99c 100644
+> > --- a/refs/refs-internal.h
+> > +++ b/refs/refs-internal.h
+> > @@ -67,6 +67,13 @@ int do_for_each_per_worktree_ref(const char
+> > *submodule, const char *base,
+> >  				 each_ref_fn fn, int trim, int
+> > flags,
+> >  				 void *cb_data);
+> >  
+> > +/*
+> > + * Check if the new name does not conflict with any existing refs
+> > + * (other than possibly the old ref).  Return 0 if the ref can be
+> > + * renamed to the new name.
+> > + */
+> > +int rename_ref_available(const char *oldname, const char
+> > *newname);
+> 
+> Thanks for adding a docstring for this function. But this function
+> already has a declaration later in the file so you should remove one
+> or
+> the other.
 
-> Use the new FORMATPRINTF macro (in git-compat-util.h) to declare the gcc function
-> attribute 'format printf'
->
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->  argv-array.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/argv-array.h b/argv-array.h
-> index a2fa0aa..e303dfd 100644
-> --- a/argv-array.h
-> +++ b/argv-array.h
-> @@ -13,7 +13,7 @@ struct argv_array {
->  
->  void argv_array_init(struct argv_array *);
->  void argv_array_push(struct argv_array *, const char *);
-> -__attribute__((format (printf,2,3)))
-> +FORMATPRINTF(2,3)
->  void argv_array_pushf(struct argv_array *, const char *fmt, ...);
->  LAST_ARG_MUST_BE_NULL
->  void argv_array_pushl(struct argv_array *, ...);
-
-OK, this may answer my previous question.
-
-It might be pleasing to the eyes when these two macros appearing
-together in all CAPS, making them look similar and consistent,
-perhaps with two more tweaks:
-
- - Imitate LAST_ARG_MUST_BE_NULL and spell it FORMAT_PRINTF;
-
- - Consistently have SP after comma, i.e. FORMAT_PRINTF(2, 3),
-   or to make it obvious that this thing is a special magic, drop SP
-   (i.e. this patch would stay the same but some other patches left
-   a space after comma, which made them look more inconsistent).
-
-Thanks.  I am not 100% sold on this yet, though.
-
-
-
- 
+Fixed, thanks.
