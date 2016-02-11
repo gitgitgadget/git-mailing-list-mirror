@@ -1,118 +1,95 @@
-From: tboegi@web.de
-Subject: [PATCH 3/3] convert.c: Optimize convert_cmp_checkout() for changed file len
-Date: Thu, 11 Feb 2016 17:16:13 +0100
-Message-ID: <1455207373-24970-1-git-send-email-tboegi@web.de>
-References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/22] add the FORMATPRINTF macro to declare the gcc function
+Date: Thu, 11 Feb 2016 09:59:21 -0800
+Message-ID: <xmqq37szxh52.fsf@gitster.mtv.corp.google.com>
+References: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 17:15:03 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 18:59:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTttU-0007j7-VW
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 17:15:01 +0100
+	id 1aTvWg-0004Rj-8J
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 18:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbcBKQOw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 11:14:52 -0500
-Received: from mout.web.de ([212.227.17.12]:64984 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751548AbcBKQOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 11:14:50 -0500
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MJCSM-1aSFzm3tU2-002mLO; Thu, 11 Feb 2016 17:14:49
- +0100
-X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
-In-Reply-To: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:VIKvbJJ7Bhj8rQ9D3ZY3xpl0EHG96ODQ2O9Pbea1G8b8iNIczKA
- XPgyzRLKYNVxedee/PTKB3gjTHA+Ea/mUUn7kKGz7BdhvfGlEMGh9A4xM0YxEf4PJAQYAcw
- 9OwLo1d6Y6c+EzrWGfazj4VbqjSxp7M/wyeQgPvx3tZrY4aN7GJ0Jm2WznXmz/xALXSAEUs
- do/tI/Thrz6WMbzSATLww==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Q8RF/oM0pE=:SYPGrwZFaeDqXu+cFyhora
- DmEpFdw675e8Jh6sdo6KBMfuWYiYNDMbhO+5/yy6BfYcuwxBCvZDYCSvmJc9TGe5WrlaxdmRB
- hoO0VSpJiFi1aaRqhBFscw8SMKzJV/DfIoYowljo73r5AKgRbiZJvOlrF/bgtJbv0P4YnQWvA
- M1gwqiQr0nl8UvDgew9Y7DYUnmPZ/0Q80w0EwlQEklL52Vof1JfYF05i/yHO+vw6wp9bPT+LC
- FIhURtHfG60NH41YZPxpUroVkx+ti6/0/wmQ+SJHaN9q8Sm07xWAJWaUAAtCr8lRW+RJEQVxH
- P9p5PNXFM7n3yy2wtZQ/kA/x1ZD0zRHjpiHD+suZvAHX3ePjiw95QHyRZCaLGXt71L8kcXjtE
- ieZL/V+LUuVjXYfcfeEVA2RJ9IxSI1x/HxVkyjHoan9xTIrwYfFqk+9PqI/Z/SibJMmImuB0N
- UAla3i3MeKe4ox0M99sFzpn4hTPKSYUkGxtmyJ44Qu+U7ncxwtGX9mgS/NzmgzQvhFGzNJKX6
- NOCpZ5CmXAxXkhoFcCo1p2SY9rDyBUsHuTOnjlMjmeL51dgETO5IZrouuyE3gDZr3b1tQ8DuY
- mj7PX9qvdApL4KtDNP3D8h2tX2NTJEtoxgmss0jhP1CFZ+GMFAVuMMnrXZvER6tjovQ5gmChz
- g8t1u1sal728eMi9X6mu+9vg7dDP7DzsXCsdpcky5IjrAiWsrf4yvlOF4km8c8883XshFpvml
- UBqLKOM9QVobXRJhmBkrXLYS+H0dfA944gXmF4EdmdIVtGm9vEinnQsWarPxnriwPyf4LLyd 
+	id S1751019AbcBKR7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 12:59:30 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61143 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750787AbcBKR73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 12:59:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1836C3F425;
+	Thu, 11 Feb 2016 12:59:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z6KWw1YX6+HQhgdIbE4VSybr6+w=; b=rp0bbJ
+	NmqDk+hLRWkWRxarzvv5aGJf6STW8Riu47SMFpLJIWdGJvSgOQut/w2cWn2x/DF3
+	qZuOMDs3HmUSNJp9Q5RU7nvm8budXrDm7QfmrhYDQzEymBqgmZSCknDCUYRnv+0z
+	R2xp0iboVx8bj3iJSXkyplKMGMg/7Q1gpDLcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VfVv9hrJSc7fllz0wa47PyPq8JxGjw0d
+	29TfHKnQBys3q41nVt6UIFIyeo7+Iva9Wztwz5OzeWqd8h3Tkv3aGy9wL2H4MChA
+	xVLkAetz1WUAV4t+lLDw+CY0uaOdqZ6cmA65rNxQrVWcP2C5eftmvseQayQNvNGY
+	yA27QNO+4VI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 101043F423;
+	Thu, 11 Feb 2016 12:59:23 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 79CA13F421;
+	Thu, 11 Feb 2016 12:59:22 -0500 (EST)
+In-Reply-To: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Thu, 11 Feb 2016 12:38:37 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2E29DB94-D0E9-11E5-ABED-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285987>
 
-=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Whenever the size of data from convert_to_working_tree() is different
-from the length of the file in the working tree, the must be different
-and compare_with_fd() can be skipped.
+> Add the FORMATPRINTF macro for declaring the gcc function attribute 'format printf'
+> for code style consistency with similar macro that git already use for other gcc
+> attributes. And use it where necessary.
+>
+> Elia Pinto (22):
+>   git-compat-util.h: add the FORMATPRINTF macro
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- convert.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+Hmm.  Given that we already have
 
-diff --git a/convert.c b/convert.c
-index 9cbc62c..2593367 100644
---- a/convert.c
-+++ b/convert.c
-@@ -838,30 +838,30 @@ static void convert_attrs(struct conv_attrs *ca, =
-const char *path)
- int convert_cmp_checkout(const char *path)
- {
- 	struct conv_attrs ca;
--	int match =3D -1; /* no match */
--	int fd;
-+	size_t sz;
-+	void *data;
-+	int match =3D -1; /* no match, or unknown */
- 	convert_attrs(&ca, path);
- 	if (ca.crlf_action =3D=3D CRLF_BINARY && !ca.drv && !ca.ident)
- 	  return -1; /* No eol conversion, no ident, no filter */
-=20
--	fd =3D open(path, O_RDONLY);
--	if (fd >=3D 0) {
--		unsigned long sz;
--		void *data;
--		data =3D read_blob_data_from_cache(path, &sz);
--		if (!data)
--			match =3D -1;
--		else {
--			struct strbuf worktree =3D STRBUF_INIT;
--			if (convert_to_working_tree(path, data, sz, &worktree)) {
--				free(data);
--				data =3D strbuf_detach(&worktree, &sz);
-+	data =3D read_blob_data_from_cache(path, &sz);
-+	if (data) {
-+		struct strbuf worktree =3D STRBUF_INIT;
-+		struct stat st;
-+		if (convert_to_working_tree(path, data, sz, &worktree)) {
-+			free(data);
-+			data =3D strbuf_detach(&worktree, &sz);
-+		}
-+		if (!lstat(path, &st) && sz =3D=3D xsize_t(st.st_size)) {
-+			int fd =3D open(path, O_RDONLY);
-+			if (fd >=3D 0) {
-+				if (!compare_with_fd(data, sz, fd))
-+					match =3D 0;
-+				close(fd);
- 			}
--			if (!compare_with_fd(data, sz, fd))
--				match =3D 0;
- 		}
- 		free(data);
--		close(fd);
- 	}
- 	return match;
- }
---=20
-2.7.0.303.g2c4f448.dirty
+#ifndef __GNUC__
+#ifndef __attribute__
+#define __attribute__(x)
+#endif
+#endif
+
+in git-compat-util.h, it is really between:
+
+    __attribute__((format (printf, 1, 2)))
+    void advise(const char *advice, ...);
+
+    __attribute__((format (printf,2,3)))
+    extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
+
+and
+
+    FORMATPRINTF(1,2)
+    void advise(const char *advice, ...);
+
+    FORMATPRINTF(2,3)
+    extern void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
+
+
+Perhaps I am biased for staring at our source code for too long, but
+somehow the latter looks unnecessarily loud, spelled in all caps.
+
+I dunno.  What does this really buy us?
