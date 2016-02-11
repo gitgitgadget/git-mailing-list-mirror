@@ -1,83 +1,83 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 20/22] transport-helper.c: use the FORMATPRINTF macro to declare the gcc function attribute 'format printf'
-Date: Thu, 11 Feb 2016 12:38:57 +0000
-Message-ID: <1455194339-859-21-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 12/22] fsck.c: use the FORMATPRINTF macro to declare the gcc function attribute 'format printf'
+Date: Thu, 11 Feb 2016 12:38:49 +0000
+Message-ID: <1455194339-859-13-git-send-email-gitter.spiros@gmail.com>
 References: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 13:39:47 2016
+X-From: git-owner@vger.kernel.org Thu Feb 11 13:39:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTqXC-000869-R2
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 13:39:47 +0100
+	id 1aTqXB-000869-Mb
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 13:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbcBKMjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 07:39:40 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33784 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752979AbcBKMje (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 07:39:34 -0500
-Received: by mail-wm0-f65.google.com with SMTP id c200so10464520wme.0
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 04:39:33 -0800 (PST)
+	id S1752983AbcBKMjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 07:39:33 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33706 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816AbcBKMj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 07:39:28 -0500
+Received: by mail-wm0-f66.google.com with SMTP id c200so10464035wme.0
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 04:39:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zXLMpb+JVXEzAR9zBpa55kWiHH3PvWuI+Wpop44ROtI=;
-        b=KSzS/upzBbkK96qTkLO6oPSOrGmFIzmUt0hhmnUAquNYr+Q7oULABkPZMjnE6Gsdv/
-         yFM+7f/eHzpHK0nRPpE7IbQ4gHHv0I0c6BPPmWGLagUUX7DnzP023exsp3nFuGHqNuTH
-         tMG4bcP2ZyPNRquDEZxigDR2doWbW85mlm8UKj8ZXFvshTd9Eo2lDwqoGoUK/oqtt6uH
-         p8hmmRPiP8RyQ8NQrMqkjoJC8sIfmR8NIrhHYjLMWE4ytEQ0+YHGQcRDHSgERf65HdWL
-         Gz/met7DUCnMmuO0LiEgGDezJ+Asb6XCn77rs/JQ/8B1dJJ1A9nh2YRXvSLUwW7pLyXy
-         c5GQ==
+        bh=CK1r6PHa1Bddv4VXYqnU0eL4rFhNIyRR4Bw63yacUeo=;
+        b=t7fU3XFAyLSrg1PRB/aWe5rt+vynigNns9X+1Vd2Y0fcf8hShV1FfzozO1MuRfQRR+
+         7e7OV3KEO7C6uYiwgGF66sHpqoODzWtD/P9o7KbnnFbC3ipe6pspDdH2apkmi4pDoCG8
+         gk0EkCJOJ+oqCZlHjL/gTP2PkuV1SUN51Zo72jwBZCelc37YA5kGvw3TBtCmOzIkWU7s
+         6a13u7/swwHjDoHrE8CMwyyXO52Ow8fMDUxo2JENT511YdBCfuk96CMqL2RC0WR/Tspc
+         dkKfayGBXAiSfi3OO2Vip13Qd6OKkJ+32iV9j+4rY2LKdDS/KKe0/PmasZBByUvUv39B
+         YWVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zXLMpb+JVXEzAR9zBpa55kWiHH3PvWuI+Wpop44ROtI=;
-        b=DN4ZRJAkxlYmcmzGod6+PZ0sxf85O1aTTvq1rVmUXy9leOpMi3eQcNPH9GydCJ5IR+
-         v4nXmZaIGabjS0i1q2KR+Z56rL+THVFW05vM8BAvolmAXtchD8SfJrQqgdIejiMVHQta
-         LnbsBeM3qgnx39Msax4aUzHVbgoMqbgyolgWSPcVh645/RMlpIbUGhNGoIIHTMcbWvlt
-         AlmF08TiV5lSN/f3hky3RrACogBeEziEft9qH1Ju2vUyxTlNzYXsA8WBCpPoH3pv6SH3
-         g+Ujvcs7OXGuUOl68vLlzu6+nOXSXz1ehdtz3tRxHXst959m1U53XG0O7lXFVIhRQai6
-         W2Cg==
-X-Gm-Message-State: AG10YOQ+sBpXZ3U8nvrcco1T/RU7LeDEBo8AzmiuZ5MCMICsRIRTo3EnYYXUE3juxvTwZA==
-X-Received: by 10.28.93.140 with SMTP id r134mr18121840wmb.80.1455194373207;
-        Thu, 11 Feb 2016 04:39:33 -0800 (PST)
+        bh=CK1r6PHa1Bddv4VXYqnU0eL4rFhNIyRR4Bw63yacUeo=;
+        b=gEIIgPXarF6yONOjpluj5qS5AAfZHyEM0w3p7PRGYc3ctYx0TUF4rcrHmbOrzghqvJ
+         MksU8KO9aF21Wzn+Mz+/PKhO8T0KLuM7pc/KJN97d5MSbckKDVKz2O+YzIO5CI0wCOHF
+         USBZWnJdnmB92zRRZYeLp0ffloXLDpRsA5IsDuo6DVxRGZy1LzORTZirC6JG5koYzXhD
+         Cr8VIHpnH9Ae9bdIg4htXmPOw8AwbpIp3GpmJmKhWVeLZzMJJ902vx47t2xEA8e0bO6e
+         5nQiHyfWZBmw6U+2zIgxiHT7uApFlLu3tLhrYwuzb7Sykqc5wHDTo66IBVEiUHHRZ78j
+         N0xg==
+X-Gm-Message-State: AG10YOSAX41eDKxtpASPHnXGlI7fkGEjtdaCsr5xuFh3sN3NSNij9PcjT1Y8TtQxCdyzcA==
+X-Received: by 10.28.99.69 with SMTP id x66mr17964482wmb.95.1455194367352;
+        Thu, 11 Feb 2016 04:39:27 -0800 (PST)
 Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id gt7sm7457368wjc.1.2016.02.11.04.39.32
+        by smtp.gmail.com with ESMTPSA id gt7sm7457368wjc.1.2016.02.11.04.39.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Feb 2016 04:39:32 -0800 (PST)
+        Thu, 11 Feb 2016 04:39:26 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.327.gff4ea60.dirty
 In-Reply-To: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285962>
 
 Use the new FORMATPRINTF macro (in git-compat-util.h) to declare the gcc function
 attribute 'format printf'
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- transport-helper.c | 2 +-
+ fsck.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index a6bff8b..94c7aab 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1069,7 +1069,7 @@ int transport_helper_init(struct transport *transport, const char *name)
- #define PBUFFERSIZE 8192
+diff --git a/fsck.c b/fsck.c
+index c637f66..953b8e4 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -264,7 +264,7 @@ static void append_msg_id(struct strbuf *sb, const char *msg_id)
+ 	strbuf_addstr(sb, ": ");
+ }
  
- /* Print bidirectional transfer loop debug message. */
--__attribute__((format (printf, 1, 2)))
-+FORMATPRINTF(1,2)
- static void transfer_debug(const char *fmt, ...)
+-__attribute__((format (printf, 4, 5)))
++FORMATPRINTF(4,5)
+ static int report(struct fsck_options *options, struct object *object,
+ 	enum fsck_msg_id id, const char *fmt, ...)
  {
- 	va_list args;
 -- 
 2.5.0
