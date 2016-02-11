@@ -1,93 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv9 1/6] submodule-config: keep update strategy around
-Date: Thu, 11 Feb 2016 12:00:08 -0800
-Message-ID: <xmqqpow3vwzb.fsf@gitster.mtv.corp.google.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-	<1455051274-15256-2-git-send-email-sbeller@google.com>
-	<xmqqfux11pm8.fsf@gitster.mtv.corp.google.com>
+From: Dickson Wong <dicksonwong@gmail.com>
+Subject: Re: [PATCH] mergetool: reorder vim/gvim buffers in three-way diffs
+Date: Thu, 11 Feb 2016 12:10:33 -0800
+Message-ID: <CAB8-sypQmomwbq6Fv5OKUbdtBBK5mnuwWg2eAbun9L_K0QcUmA@mail.gmail.com>
+References: <1454033894-49954-1-git-send-email-dicksonwong@gmail.com>
+	<xmqq1t90jkcr.fsf@gitster.mtv.corp.google.com>
+	<xmqqr3gl1pyw.fsf@gitster.mtv.corp.google.com>
+	<56BB4BDF.3010407@drmicha.warpmail.net>
+	<xmqqlh6szcfk.fsf@gitster.mtv.corp.google.com>
+	<56BCAC69.8030909@drmicha.warpmail.net>
+	<xmqqbn7nxmhe.fsf@gitster.mtv.corp.google.com>
+	<CAB8-syo8dCjDfCH3gAFvC1cnuB-wm9hxtmVb1OhZ7NT0Pw+EbQ@mail.gmail.com>
+	<xmqqtwlfvyau.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: jrnieder@gmail.com, git@vger.kernel.org, Jens.Lehmann@web.de
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 21:00:19 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 21:10:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTxPW-0006FY-LK
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 21:00:19 +0100
+	id 1aTxZW-00068s-GG
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 21:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750917AbcBKUAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 15:00:13 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58202 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750752AbcBKUAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 15:00:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 971C3416AF;
-	Thu, 11 Feb 2016 15:00:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w4UJbQP7ajrqQcFLrgw9jaxQnoQ=; b=tNZYkB
-	4MnXtxS+coG7fPGleBf/udHrepUAhB21T+Vuh5RWj7rROK+TFV9BWs5160VtHxpf
-	vi6Gm8qttwr72Zvomqj+aj27Fp8WQ9LASx2zq9XQkDUzqVynUcNR/qnSpNGxyiws
-	tfPT7bPGNGvd4h8DvOx075n0oWzdVNPq1q8C4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sBbj+/rE51Og8d79LExOHqrRv20n9u9H
-	n0x4+h43Hdplonn46QzTJWPDuM8xzQ4ByVwzpVsWjCRR5B83iFRrOyYerkJGPS2p
-	kdPpfh94LzEoZKPaO6tTlVJIf/KNcRJ4l/mmm/smR5357NCgE5uVRapEqYHLg0Lz
-	9nmJVJ023Ag=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C0CF416AE;
-	Thu, 11 Feb 2016 15:00:10 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EA872416AD;
-	Thu, 11 Feb 2016 15:00:09 -0500 (EST)
-In-Reply-To: <xmqqfux11pm8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 09 Feb 2016 14:32:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0DFCACDC-D0FA-11E5-9634-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751019AbcBKUKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 15:10:34 -0500
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:35455 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbcBKUKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 15:10:33 -0500
+Received: by mail-ob0-f169.google.com with SMTP id xk3so90648498obc.2
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 12:10:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NToePWcMhK8RWTYpudkxLNVOlb8v4xIsr9Bn3mkkKE8=;
+        b=cqFRPwET4qmfoB3GkgGKjCEDRaaxJIrwWS4nXLYhax1aM+dveZgVlgUM3QBSRHTnTl
+         3Z6jo/y3blxYb5JK6g1fZ+iQKk9ASGd2aPaaU+1uPZo9dJL0/H3RRR6nHbUK0wNp3j/n
+         uTQAmvrHuJBWtcXQ3SjXmlE1lJ1AHTgONtKquyOJwpsi4MoDUGfMV4QeippNLwuxiK/R
+         Rhf/7iOrAauYuQ9LeeZyQx+z8iie3aQTp+vf/dkzAwbeHTWi/v/arL/EbcQ1cQuRQ62L
+         e+9aclVMct6zEeEtAdJeGd6LJFX5BP8KKBWPFqsbU/dwzZ1oc6iWwGV3lQF4U1p0hZJO
+         m0gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=NToePWcMhK8RWTYpudkxLNVOlb8v4xIsr9Bn3mkkKE8=;
+        b=QD/IZEmVXiij1ZbZ5MkqZk+/mxB995IwznNmHJm39hPH8t4vExjnoeS1WDejvGrbah
+         2zr57KUVjJ8k7BHNwHudt1rERwR4WK2X3PneWrt0oKGtAsSonjj6mREZYTcaEetWUqwj
+         olrPaKZBbTm2etvY/nZoaAJViqVt6H4laZyTQP6Tb26bgJ0fz0CdvlXpXbt4p5gmLKum
+         yKPRJwDaYd/JXzss5V2U4BUCQ/UCe5i+ibUT0roV1QNhPiXy6+1NX7C5FimEV6EQ9uso
+         kBF04kweX54Wj9tZwToa3D9JjTMcj85YpAWi4JID6yznIsjpjDPnHQR14vG7oYA6CXZb
+         f2Lw==
+X-Gm-Message-State: AG10YOSfRpAqsDvwPCgEEs3ZtnWXvWqS5brav8Kq/461xwOW0ZA6tHFP+FljPKtD3SC2zRHYi974x7VcFyMsZg==
+X-Received: by 10.182.92.234 with SMTP id cp10mr47470537obb.79.1455221433356;
+ Thu, 11 Feb 2016 12:10:33 -0800 (PST)
+Received: by 10.157.34.134 with HTTP; Thu, 11 Feb 2016 12:10:33 -0800 (PST)
+In-Reply-To: <xmqqtwlfvyau.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285994>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 11 February 2016 at 11:31, Junio C Hamano <gitster@pobox.com> wrote:
+> So it should suffice to mention it in the release notes as one
+> bullet item that describes one positive change, among all other
+> updates described in a simlar way.  And there is no special
+> "warnings for existing users" necessary, I would say.
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> +		else {
->> +			submodule->update_command = NULL;
->> +			if (!strcmp(value, "none"))
->> +				submodule->update = SM_UPDATE_NONE;
->> +			else if (!strcmp(value, "checkout"))
->> +				submodule->update = SM_UPDATE_CHECKOUT;
->> +			else if (!strcmp(value, "rebase"))
->> +				submodule->update = SM_UPDATE_REBASE;
->> +			else if (!strcmp(value, "merge"))
->> +				submodule->update = SM_UPDATE_MERGE;
->> +			else if (!skip_prefix(value, "!", &submodule->update_command))
->> +				die(_("invalid value for %s"), var);
->> +		}
->
-> I think this "string to enum" parser can become a separate helper
-> function in this patch, so that later patch can use it to parse the
-> "--update" option in the update_clone() function.
->
-> That would solve the slight inconsistency we have seen
->
-> +		if ((pp->update && !strcmp(pp->update, "none")) ||
-> +		    (!pp->update && sub->update == SM_UPDATE_NONE)) {
->
-> in that patch.
-
-In addition, you would eventually want the reverse translation,
-i.e. SM_UPDATE_ENUM to string, when you rebase the second patch of
-your sb/submodule-init series (I just tried it myself and realized
-that a patch to refactor the above part would be the best place to
-add such a helper).
+It's unlikely anyone would move the merged window to the top as a
+preference only without being aware of the original inconsistency.
+If someone has been using a workaround, it would be fairly obvious
+as to what has changed, and definitely more so than when they first
+encountered the original behavior. Any adjustments to the new behavior
+would probably be a workflow change rather than a system configuration
+or scripting change.
