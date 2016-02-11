@@ -1,77 +1,94 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCHv9 4/6] git submodule update: have a dedicated helper for cloning
-Date: Wed, 10 Feb 2016 23:46:37 -0800
-Message-ID: <CA+P7+xq5ckQ02OZ5O2vR8BT37EiThrNUdY4-WcRVJYr1sSDGbw@mail.gmail.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
- <1455051274-15256-5-git-send-email-sbeller@google.com> <CA+P7+xo=GK79DRvV6ZYds3wx6bayoWHC49UmkWL20=xo=jpS2g@mail.gmail.com>
- <CAGZ79kb70tXVsb0DCpwdU9QJB2PQh_4zxZ6Ab7CLQkxCHG6Xuw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 02/21] refs: add methods for misc ref operations
+Date: Thu, 11 Feb 2016 08:45:12 +0100
+Message-ID: <56BC3C08.2080003@alum.mit.edu>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+ <1454701462-3817-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 08:47:04 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 08:52:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTlxu-0005wY-Mu
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 08:47:03 +0100
+	id 1aTm35-00029Y-R3
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 08:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbcBKHq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 02:46:58 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:34616 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905AbcBKHq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 02:46:57 -0500
-Received: by mail-io0-f176.google.com with SMTP id 9so46879727iom.1
-        for <git@vger.kernel.org>; Wed, 10 Feb 2016 23:46:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=i0VfK1cg/9S/Xcra4mYxSykgj809dPo2yiCbCev5ITg=;
-        b=Li7lVbs8KMXHowwWkKbGIfbffnNM/L7cEnCKd9ZuXbCAPlY9OiIMyq8uNIXtY4ScZJ
-         U9NHPCnti7JTLqlZtvl2sJ+eQ50u8xkWIDyBp3Dql+YpP8cchd68pfC+S72LBYyvj3uo
-         5p2YD/onlhu+/Rc+oap2lkvXZV+zlHT01pax2XJluMsPw3oigrfLgEu0y1Vo2gtcaQPO
-         Zs1DMpCGMfB0oNmuqtamcI6SiGrCX/WOOszxIMLWHz3J6onDLeCl0MhJ4idQbiyS81Kk
-         TztUFbqMBvruMJFn/yMJ36wZA9JYVD5Qv0HEQvb7ANyUPu3+AbbZvRPM+8EyQrkTPPcp
-         RhfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=i0VfK1cg/9S/Xcra4mYxSykgj809dPo2yiCbCev5ITg=;
-        b=kOiKQKoQrPoa7em39J6bgvIM+5Qg+3Cn9H3HQAg2t0S6MLrlTquj3TEE04yEZOfDSo
-         rYchhdEbooTSTT5Q1YKu8F6ID+eyp8t55rTHvts6G1OgRVEM2BhCNfEy4miMUVqEbRX1
-         BNBv1cmljbKLrIy5q83fCNZ3mJOJarG6thZYdm5uOOE6rl5k4R/y4J+lwKkiVOr8dbdS
-         kqLbdebH1X2CByAmz82wJdZLQpVoBEFuGNu/0yHQmQhiGcym2TeJOCXcyTG762wModpd
-         aPw+T3yOMrItRXPF5rTgy2AyVqWrtlclzTTpO6pNzzQYHQqAvC/hjFld3ABq3auwvVeX
-         ORZQ==
-X-Gm-Message-State: AG10YOSAaU9aKyojHcfiSjig9bKD1IgAhMdaxXBlH02w+Wl/fIL2Z4sFYvMubyYqcOJWYlzwxzliLPi/SY/eLg==
-X-Received: by 10.107.170.79 with SMTP id t76mr27446235ioe.71.1455176816901;
- Wed, 10 Feb 2016 23:46:56 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Wed, 10 Feb 2016 23:46:37 -0800 (PST)
-In-Reply-To: <CAGZ79kb70tXVsb0DCpwdU9QJB2PQh_4zxZ6Ab7CLQkxCHG6Xuw@mail.gmail.com>
+	id S1751340AbcBKHwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 02:52:20 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:62603 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751147AbcBKHwT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2016 02:52:19 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Feb 2016 02:52:18 EST
+X-AuditID: 1207440f-d9fff70000007e44-60-56bc3c0b4b87
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id FC.91.32324.B0C3CB65; Thu, 11 Feb 2016 02:45:15 -0500 (EST)
+Received: from [192.168.69.130] (p548D69E5.dip0.t-ipconnect.de [84.141.105.229])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1B7jDWe030397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 11 Feb 2016 02:45:14 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <1454701462-3817-3-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqMttsyfM4OovK4v5m04wWnRd6Way
+	+DehxoHZY8GmUo8Fz++ze3zeJBfAHMVtk5RYUhacmZ6nb5fAnbF//j/Ggi0cFbu3T2FqYHzH
+	1sXIwSEhYCIxd3F4FyMXh5DAVkaJ/cf+MEM4F5gk3l9sBnI4OYQF3CVO737HAmKLCDhIXN51
+	FKqolVHi7o1+dpAEs4CmxIm3d9lAbDYBXYlFPc1MILaEgJxEb/cksGZeAW2JjZ1XwOIsAqoS
+	l3buYwSxRQVCJN5/fc4KUSMocXLmE7B6TgEPibWPGtgg5utJ7Lj+ixXClpdo3jqbeQKjwCwk
+	LbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6JXm5miV5qSukmRkjo8u9g7Fov
+	c4hRgINRiYf3R83uMCHWxLLiytxDjJIcTEqivC8+AYX4kvJTKjMSizPii0pzUosPMUpwMCuJ
+	8O54DJTjTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwiljvCRMSLEpN
+	T61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VqfDEwWkFSPEB7P1gBtfMWFyTmAkUhWk8x
+	KkqJ814FSQiAJDJK8+DGwhLSK0ZxoC+FebeBVPEAkxlc9yugwUwgD33fBTK4JBEhJdXA6L2S
+	YfJpHsN/lgUy0hKvpu7WE5L/FFIWHDg36MB1PgWLzimvJ3594ir+7qps2cEaHo38kN5ZH0TW
+	HXgwfY9/adyPs5uK+697CE/9bjqxYfLSpC+fX69kCE4UXr3l4dXAe/Oc32bX9LZs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285948>
 
-On Wed, Feb 10, 2016 at 9:49 AM, Stefan Beller <sbeller@google.com> wrote:
-> Do you mean the separate bug fix patch as proposed by Jonathan or
-> this patch in general helps your idea of passing settings?
->
-> Thanks,
-> Stefan
+On 02/05/2016 08:44 PM, David Turner wrote:
+> From: Ronnie Sahlberg <sahlberg@google.com>
+> 
+> Add ref backend methods for:
+> resolve_ref_unsafe, verify_refname_available, pack_refs, peel_ref,
+> create_symref, resolve_gitlink_ref.
+> 
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  builtin/init-db.c    |  1 +
+>  refs.c               | 36 ++++++++++++++++++++++++++++++++++++
+>  refs/files-backend.c | 33 +++++++++++++++++++++++----------
+>  refs/refs-internal.h | 23 +++++++++++++++++++++++
+>  4 files changed, 83 insertions(+), 10 deletions(-)
+> 
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index 07229d6..26e1cc3 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -8,6 +8,7 @@
+>  #include "builtin.h"
+>  #include "exec_cmd.h"
+>  #include "parse-options.h"
+> +#include "refs.h"
 
-This patch in general, I think.
+You can't see it in this diff's context, but there is already an
+'#include "refs.h"' in this file.
 
-I didn't mean to reply to the whole thread.
+> [...]
 
-Thanks,
-Jake
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
