@@ -1,96 +1,119 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v4 12/21] refs: allow log-only updates
-Date: Thu, 11 Feb 2016 16:23:23 -0500
-Organization: Twitter
-Message-ID: <1455225803.29013.13.camel@twopensource.com>
-References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
-	 <1454701462-3817-13-git-send-email-dturner@twopensource.com>
-	 <56BC5C8C.8060201@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
+Date: Thu, 11 Feb 2016 13:32:22 -0800
+Message-ID: <xmqq4mdfvspl.fsf@gitster.mtv.corp.google.com>
+References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
+	<CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
+	<20160210214945.GA5853@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Feb 11 22:23:35 2016
+Content-Type: text/plain
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 11 22:32:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTyi5-0005yw-FY
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 22:23:33 +0100
+	id 1aTyqk-0004qB-Bq
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 22:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729AbcBKVX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 16:23:28 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:35795 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751388AbcBKVX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 16:23:26 -0500
-Received: by mail-qk0-f176.google.com with SMTP id o6so24395362qkc.2
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 13:23:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=W9odTqJXWwONEYaNJJo+iXRFK7jTmYrsnG4nzwoZ8wQ=;
-        b=GOi+wZXBa8hwkj95k8wsCLBjwzbdpbUfz0lRrZYVlr+cexlXTDO2hQN7nlsSMmA6JA
-         mfsSNwdQt229XbRXT3OKLX+ZqfVGo00t/OpfjcGYPKSUTRny1zg1YyoJ6wnD/5DzTbI7
-         H1P8oafkC1bPidlgJ6VSiNn3Hd7tdeCQvaUFqvCfHOdD6yDuFSCEiM9vyJsH3YIFXKR3
-         hraiGVnSLAcOmsptf7d6pjvETgIcz6I6kfuIlWVzo8+Dn7NL1AbUp/0N9pErTMyzWhHr
-         i8V6LL29eMa6GugIf+oZx6+qJ+tXgeL4F8dOxYJwE6jifesiw9bZ8Ggkf5PaQonJ6SCj
-         Q5KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=W9odTqJXWwONEYaNJJo+iXRFK7jTmYrsnG4nzwoZ8wQ=;
-        b=dcSIECZVLzvY6KImKLy8q4eWA34Wa90KDVb12Q2LVjFd3qp5D2DHI3icnqx/CCS6Wg
-         ma46eH2ksqknxdmhyvEI+nkgMaF0YcHY7hrFCUyhsSAoEEYK4YLy/IxZOBepuCGy5UgN
-         QuRTP3ldtPJApCktaYOyEwrdCBWVQDQQPjxXM78YxTOiE4MwXjo1q8WN6hrYWvpVlLZx
-         iT1IatYcDtIjm3tHmVrGZQx9D2tpGsPk+AvR1wb+whV72N6mZgyZAqO9vMocdzOmEja+
-         G9YVmd6CNmNscuUL/0taDODj5H5kbPniCXvxqdaGVI9VVxmGF7Xow1AKugReJnhAyYmW
-         pWSA==
-X-Gm-Message-State: AG10YORbsVb2kdOEaBUv15OYeufOJnIAYzbk8CI/zsgvwvcEgVTDFvRwg9tc5pNhJF56tQ==
-X-Received: by 10.55.74.86 with SMTP id x83mr58373499qka.89.1455225805477;
-        Thu, 11 Feb 2016 13:23:25 -0800 (PST)
-Received: from ubuntu ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id t103sm4125804qgd.37.2016.02.11.13.23.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 11 Feb 2016 13:23:24 -0800 (PST)
-In-Reply-To: <56BC5C8C.8060201@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751847AbcBKVc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 16:32:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63251 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751422AbcBKVcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 16:32:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B07F42E89;
+	Thu, 11 Feb 2016 16:32:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=F1M/VnPR8yt98dAYFQTNs0LLdN0=; b=GdYEEv
+	Nv8S7IuJu9U4DLPzKliAjyKT8e8IeIqZYiJ9it7Im3XJvDnBuiuf872IThU+r4KF
+	Vg3lAiWOa97ktncrwTRLQvYQe9Lzv31bWfqd26YLjoqp8c1ceqIfb64B97uG65V2
+	XiEcEenQAcnY3ijNeG6+BMGXgXXD1YFEDLX2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LnmyFydzaGUozhjY1aszxPaKK7EF8jML
+	GzRs89fYAe/SeCpfC1+5oBjEH1p0aKyBQJdDD7SlhcisJieKQ1YaiotSYAYf6vLK
+	kFf2UdraV1bPEKS1rkmofAOqs/MSwktYhk4CvLJ8mKH6xoGuRALZEBW9nYGAfjSJ
+	QkCJstJF7sE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FB3742E86;
+	Thu, 11 Feb 2016 16:32:24 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 81E4C42E85;
+	Thu, 11 Feb 2016 16:32:23 -0500 (EST)
+In-Reply-To: <20160210214945.GA5853@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Feb 2016 16:49:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F0413C82-D106-11E5-83EA-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286004>
 
-On Thu, 2016-02-11 at 11:03 +0100, Michael Haggerty wrote:
-> On 02/05/2016 08:44 PM, David Turner wrote:
-> > The refs infrastructure learns about log-only ref updates, which
-> > only
-> > update the reflog.  Later, we will use this to separate symbolic
-> > reference resolution from ref updating.
-> 
-> This looks good. I assume it will get some testing later in the
-> series.
+Jeff King <peff@peff.net> writes:
 
-The existing tests cover this pretty well, I think.  It's not intended
-to have user-visible results, so it's hard to specifically test. 
+> ... One
+> alternative would be to amend the bundle format so that rather than a
+> single file, you get a bundle header whose end says "...and my matching
+> packfile is 1234-abcd". And then the client knows that they can fetch
+> that separately from the same source.
 
-> > [...]
-> > diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> > index fc5d1db..b5d0ab8 100644
-> > --- a/refs/refs-internal.h
-> > +++ b/refs/refs-internal.h
-> > @@ -42,6 +42,8 @@
-> >   * value to ref_update::flags
-> >   */
-> >  
-> > +#define REF_LOG_ONLY 0x80
-> > +
-> 
-> Please add a comment explaining the meaning/purpose of this flag.
+I would imagine that we would introduce bundle v3 format for this.
 
-Commented, thanks.
+It may want to say "my matching packfiles are these" to accomodate a
+set of packs split at max-pack-size, but I am perfectly fine to say
+you must create a single pack when you use a bundle with separate
+header to keep things simpler.
+
+> It's an extra HTTP request, but it makes the code for client _and_
+> server way simpler. So the whole thing is basically then:
+>
+>   0. During gc, server generates pack-1234abcd.pack. It writes matching
+>      tips into pack-1234abcd.info, which is essentially a bundle file
+>      whose final line says "pack-1234abcd.pack".
+
+OK.
+
+>   1. Client contacts server via any git protocol. Server says
+>      "resumable=<url>". Let's says that <url> is
+>      https://example.com/repo/clones/1234abcd.bundle.
+>
+>   2. Client goes to <url>. They see that they are fetching a bundle,
+>      and know not to do the usual smart-http or dumb-http protocols.
+>      They can fetch the bundle header resumably (though it's tiny, so it
+>      doesn't really matter).
+
+Might be in megabytes range, though, with many refs.  It still is
+tiny, though ;-).
+
+>   3. After finishing the bundle header, they see they need to grab the
+>      packfile. Based on the bundle header's URL and the filename
+>      contained within it, they know to get
+>      https://example.com/repo/clones/pack-1234abcd.pack". This is
+>      resumable, too.
+
+OK.
+
+>   4. Client clones from bundled pack as normal; no root-finding magic
+>      required.
+
+I like this part the most.
+
+>   5. Client runs incremental fetch against original repo from step 1.
+>
+> And you'll notice, too, that all of the bundle-http magic kicks in
+> during step 2 because the client sees they're grabbing a bundle. Which
+> means that the <url> in step 1 doesn't _have_ to be a bundle. It can be
+> "go fetch from kernel.org, then come back to me".
+
+Or it could be a packfile (and the client discovers roots), as you
+mentioned in a separate message.  I personally do not think it buys
+us much, as long as we do a bundle represented as a header and a
+separate pack.
