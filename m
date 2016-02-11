@@ -1,101 +1,106 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v4 09/21] refs: add method to rename refs
-Date: Thu, 11 Feb 2016 16:12:42 -0500
-Organization: Twitter
-Message-ID: <1455225162.29013.10.camel@twopensource.com>
-References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
-	 <1454701462-3817-10-git-send-email-dturner@twopensource.com>
-	 <56BC4D94.4040003@alum.mit.edu>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool: reorder vim/gvim buffers in three-way diffs
+Date: Thu, 11 Feb 2016 13:15:09 -0800
+Message-ID: <20160211211509.GA14667@gmail.com>
+References: <1454033894-49954-1-git-send-email-dicksonwong@gmail.com>
+ <xmqq1t90jkcr.fsf@gitster.mtv.corp.google.com>
+ <xmqqr3gl1pyw.fsf@gitster.mtv.corp.google.com>
+ <56BB4BDF.3010407@drmicha.warpmail.net>
+ <xmqqlh6szcfk.fsf@gitster.mtv.corp.google.com>
+ <56BCAC69.8030909@drmicha.warpmail.net>
+ <xmqqbn7nxmhe.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 22:12:51 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Dickson Wong <dicksonwong@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 22:15:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTyXh-0005ge-I9
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 22:12:49 +0100
+	id 1aTya9-0007lQ-Cy
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 22:15:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242AbcBKVMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 16:12:45 -0500
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:32909 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067AbcBKVMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 16:12:44 -0500
-Received: by mail-qg0-f50.google.com with SMTP id b35so48240463qge.0
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 13:12:44 -0800 (PST)
+	id S1751466AbcBKVPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 16:15:14 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34485 "EHLO
+	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbcBKVPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 16:15:13 -0500
+Received: by mail-pf0-f172.google.com with SMTP id x65so35435921pfb.1
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 13:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=1hBdcEGBnRkEbA9V4pALLF01R+l4ULrAlT+1uD/9mq0=;
-        b=kFs/cAjexDeW3Q7uI/qR5HHe6a6CpFDQvOWuToewQ/0U2ob8HCIZtbMw9LUrdijJbv
-         rI+Sf2Y/yweF0vbVtNOxeKf4PoMuY1w1WQj/mV9beCqD0rdX/8Z2pL7oDFcOS5kpcpqh
-         1AmRciuMbpD5QvIP9IcVO0YEm96VC2r/fr9+S441iFR5ANR13B01dZ+D5ZCENkomUV17
-         Rm0d04Kn+Y2QUdtffc5IZoEAxech05gUNZAQTHfxbXLvOeRdDZ9BG/cmdmB+LUuO0di6
-         KOER59EW4qcysE9/Ffx/AZWBcnEzMm6pW1HVK67+7q96hFC9/ci7xDA+svtKb8lkYzTi
-         oLqg==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=gXnXoEkXgTkuUKW92n+dMso2J0ifwgC+3wlL9lq+8t0=;
+        b=mu5kP8XMDiwqieo6ATlDYdijWNpET8Sjs4JVMw4is/afDIt2N+jBHDtY/wEsIouiX8
+         W4PEJ19NcwswR5/6Ft1AqLzSr4o7hM0Ux0Rq6C/oDKaNsoMZEz8BUxyNT1sn4J+pwbtQ
+         3YjxWUlLFyZRQimlzaasXbp1/WQHmTXVlXFCb/NBqs5AgMV72mDTxBUq2X4rQs9F7nJg
+         s6M8QmB6mQrpmiOPfMPtKc6/ruT2UMrZnuinxhlAeYGsTeraARu9gbJbCbudi1jLKO2H
+         eZWoxgd6ciHMlPyVPcSOQmI+DDd6pNFoKxwUJor1lCGuWkX2G7CE0aSMZXVdm7UCjGmG
+         leJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=1hBdcEGBnRkEbA9V4pALLF01R+l4ULrAlT+1uD/9mq0=;
-        b=e/rC8hc3jyqVGdnDv5VqPGlnckgx9iZ3VAt0chclvLuAscp72mkYvqi5OhF1H1g6I1
-         jpiNGqqqDP3qo5N4BI3of/gY1a1M3W03EklKUICdSCUZdbBhcm3JBn82VG10V1kQPhJJ
-         CP78Tpmf3vGJR7cTwlkNJdPyO4rY6qjKXINhaIdRUpXghYm0nUDNJL0PYuqtSm1WGFG0
-         IhBmH5+a+T8+E//2ZGIog15+1VqwWAwcYAGMKKfG1CpYY77l+AdtqUcYv7jKsaIMqAPY
-         mWFDmiecyykbY9pPm1xLY6xKS2C6SzWJZX4vmMgTy5sPRfMQ2l60Cs1CgMHqszVS+V6C
-         IYzQ==
-X-Gm-Message-State: AG10YOT2HYDZQCk57Et881PV8YtVFJt1KNFxB7DURsPq4KRxgd7lBUtzEEtIt85sEgmG+w==
-X-Received: by 10.140.143.68 with SMTP id 65mr62862403qhp.25.1455225163713;
-        Thu, 11 Feb 2016 13:12:43 -0800 (PST)
-Received: from ubuntu ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id 7sm4136465qkw.8.2016.02.11.13.12.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 11 Feb 2016 13:12:42 -0800 (PST)
-In-Reply-To: <56BC4D94.4040003@alum.mit.edu>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=gXnXoEkXgTkuUKW92n+dMso2J0ifwgC+3wlL9lq+8t0=;
+        b=ddmjg/PFGBAoi6eKwkl3T1uLX3llEyE3jYa8fQA4F2087diDy7xnwuj6IEuIAaMawT
+         iaSaHduOdXAZRQZlZzbReWpUfyU+179oDIEgXCXsFORCEQLhzhcr887m2VVv8Xd/8Faj
+         JX5g3S5XVXdDEYi0mgp1xXE0nBvxXuNuVyO/EZtdw/rCaN928GPwfRqUADqqsjeI6fpR
+         eCOjIx3nKHE7BC3obREH+OTqbljqNg4Siwk+4tLm33HPQqw9A0GUQSqeKJQGd7PHHhS+
+         6wExfJLo8DxJ1ec1xL1Cbr9oyYwo7qWABHkgYUyBl4CzVUAh4ov1x2o9zzuSyLPL9Tv+
+         emRQ==
+X-Gm-Message-State: AG10YOTMY1vjIUWCpolg66SkyeCBj4q+bfAtx8sloMLUj9f6jEN5PkAIWTd43zMz4dWoeg==
+X-Received: by 10.98.19.12 with SMTP id b12mr68817684pfj.29.1455225313096;
+        Thu, 11 Feb 2016 13:15:13 -0800 (PST)
+Received: from gmail.com (w.disneyanimation.com. [198.187.190.241])
+        by smtp.gmail.com with ESMTPSA id 3sm4629173pfn.59.2016.02.11.13.15.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Feb 2016 13:15:12 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqbn7nxmhe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286000>
 
-On Thu, 2016-02-11 at 10:00 +0100, Michael Haggerty wrote:
-> On 02/05/2016 08:44 PM, David Turner wrote:
-> > Signed-off-by: David Turner <dturner@twopensource.com>
-> > ---
-> >  refs.c               | 5 +++++
-> >  refs/files-backend.c | 4 +++-
-> >  refs/refs-internal.h | 9 +++++++++
-> >  3 files changed, 17 insertions(+), 1 deletion(-)
-> > 
-> > [...]
-> > diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> > index 5768fee..15fa99c 100644
-> > --- a/refs/refs-internal.h
-> > +++ b/refs/refs-internal.h
-> > @@ -67,6 +67,13 @@ int do_for_each_per_worktree_ref(const char
-> > *submodule, const char *base,
-> >  				 each_ref_fn fn, int trim, int
-> > flags,
-> >  				 void *cb_data);
-> >  
-> > +/*
-> > + * Check if the new name does not conflict with any existing refs
-> > + * (other than possibly the old ref).  Return 0 if the ref can be
-> > + * renamed to the new name.
-> > + */
-> > +int rename_ref_available(const char *oldname, const char
-> > *newname);
+On Thu, Feb 11, 2016 at 08:03:57AM -0800, Junio C Hamano wrote:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> Thanks for adding a docstring for this function. But this function
-> already has a declaration later in the file so you should remove one
-> or
-> the other.
+> >> Does this mean that I should warn in the release notes that some
+> >> existing users might get their expectation broken but we are going
+> >> ahead anyway because we think most people read left to right and
+> >> then top down?  I am OK with saying that--I just wanted to make sure
+> >> we know that it is what we are doing.
+> >
+> > I would claim that anyone who notices the difference in buffer numbering
+> > would be positively surprised.
+> 
+> Thanks. I, being a non-user of vim, was wondering if people who had
+> their own user-defined commands (macros? and possibly short-cut keys
+> to invoke them) built around the old (and odd) numbering need to
+> adjust--in which case we may need to forewarn.
+> 
+> > In any case, the buffer numbering is not the same (it is local remote
+> > base merge) but it doesn't matter in this case because only one window
+> > is displayed, so there is no visual association.
+> 
+> OK, thanks.
 
-Fixed, thanks.
+Sorry for not noticing this thread earlier.
+The change and the rationale sound good to me.
+
+FWIW,
+
+Acked-by: David Aguilar <davvid@gmail.com>
+
+
+ciao,
+-- 
+David
