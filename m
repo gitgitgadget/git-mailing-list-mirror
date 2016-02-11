@@ -1,72 +1,124 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is
- set
-Date: Thu, 11 Feb 2016 14:30:05 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602111429200.2964@virtualbox>
-References: <9e3cc44087134954a3414fa8998c3ce6@USNAEXCP2.pc.cognex.com> <alpine.DEB.2.20.1602040844330.2964@virtualbox> <43fbdf617f8d412db7b0d5c7d06df3ad@USNAEXCP2.pc.cognex.com> <alpine.DEB.2.20.1602041628180.2964@virtualbox> <9854ccd81e624ee9a8f721a871bda4b2@USNAEXCP2.pc.cognex.com>
- <alpine.DEB.2.20.1602050048570.2964@virtualbox>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] mergetool: reorder vim/gvim buffers in three-way diffs
+Date: Thu, 11 Feb 2016 16:44:41 +0100
+Message-ID: <56BCAC69.8030909@drmicha.warpmail.net>
+References: <1454033894-49954-1-git-send-email-dicksonwong@gmail.com>
+ <xmqq1t90jkcr.fsf@gitster.mtv.corp.google.com>
+ <xmqqr3gl1pyw.fsf@gitster.mtv.corp.google.com>
+ <56BB4BDF.3010407@drmicha.warpmail.net>
+ <xmqqlh6szcfk.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Klinger, Xia" <Xia.Klinger@cognex.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 14:30:34 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+	Dickson Wong <dicksonwong@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 16:44:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTrKK-0007Ce-JG
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 14:30:32 +0100
+	id 1aTtQK-00050M-0U
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 16:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595AbcBKNa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 08:30:29 -0500
-Received: from mout.gmx.net ([212.227.15.15]:63034 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752530AbcBKNa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 08:30:28 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MLeoF-1aUgfe3ZVD-000qJF; Thu, 11 Feb 2016 14:30:21
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <alpine.DEB.2.20.1602050048570.2964@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:H64HT7LUUnhLyEBMk2soZ8EDBF1/tgK0oB0JIF24hQDnpbVgq1o
- AP0v3FgIWHMg4+vPNgjOC/mUc+3wrzeWch/GEIJlQe11H9ccxfCsM/up9qI1WHgbsmMzFU+
- bfZtDAyk4Fxys/vilKsY987nTxLYlcyD/AeDy0AYcAHXYejsr3c/1k+yCgm6LVxVw9yLy8O
- bSyN3NB5UHmzTPQXinYAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6GH/HMZ9JNs=:YGH+jPsQHyKIk9REbqRR/e
- LwtkKpv33pNCQcQLSgRnYxGSHWsTqPdIirj3SZONDcrFBK/SCLO5GpkfH7TjV56YcIgVmSN/o
- gwcU83RGf1yXtpQA94F5cqLS1nU36Nawbs7i/8cf77ud7XYTxU91mlCVvRPG7NQGAfqDOcdNh
- rebJRauZHfqb9nBRL/3SQn5DEzti2Qotje3aLLGWoW001oq/gfKGUkIL0ZKTOqkRxf9q25TW9
- sEb4txNxESZjAMRw2o0rWBB4xv5Lyju3gv+o4blxfN3p9Kx4P19n4gR2o+JfnY1sBfJf4MGCA
- 8TjXiiRV0L3AYHxlNwZFtpsRAWy8ALir8oUR+jwmTATYSMcVJQUW4nFUlK9mcudNlUmD2MFQI
- 2F4tQJYx4DKq9jjDwjRdNyAWXF6JFQNlH5XrD4LXZ3MnATQZ5Xk0qfa6xs3yT5s+IaqPREt0S
- 12xn/Cg6nf7Y8V9br2FASP6Pb4Im/5EBAqq7fjEk2eqMZiy4iW4//DpRo0iDuvRvW8te7J7rj
- slZ0uAEEpZC36xKMICdBR3v77MbFvyM/hfPtkUSx4hVT/BRcQK3msvAYifJ5w5X1xPRLhXeVl
- NoHp/DKqvluIs1RIuLfk8DVNP7c5M7eeyn/p+wiKhG1xIIMjaex7IvOpxZ02rjstBe6V6NzIP
- LUiwbrxzzFGq9ru/czfpAlQOTh2j8WbjOej/E5EMs9i5SrGseHsphbsUtGSj3mpLg+J1V2KKA
- xX2iY+gZLGVpweVeLKQs7UloyqP3M1TN6p9evBS81RnlF6V9NsGpXDWU2WCeNqAlE7gAx5EX 
+	id S1751467AbcBKPor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 10:44:47 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:33683 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751435AbcBKPoq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2016 10:44:46 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 00A03208A2
+	for <git@vger.kernel.org>; Thu, 11 Feb 2016 10:44:45 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 11 Feb 2016 10:44:46 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=N6wkT9Ami56c9LPviVtj/LEJr/I=; b=YjdYjz
+	SCV6UZm//c+zXKJyWFnEnkRAOiCHqU6UlXnMD4y0lSPBbpY0qjVmcYezx34GzWxb
+	+UYoKAm26cyT7el24Y6y64c/8i/6pa/lef2Tduw/d+lidu1FYklNHhVv4PsIvwR1
+	l/APHLtAqdVIDCJ3Arh7VNeqop25UwHpsa9jw=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=N6wkT9Ami56c9LP
+	viVtj/LEJr/I=; b=gJU5KdGbopm4nfonV1IFEGe24VwSi+Omh2k1DeuWRD9p6XY
+	GTg0tV2/3UMFF23mIt6h0p7uokyF17JVoV7lXx2AydbpBmp64++9ksJtOIOdIHYE
+	WkiF0etCgQU4EWVYTVmg6DO+JmcLKs9cYt5Se7ckRDPDMMWaTn+jm3/BfW7c=
+X-Sasl-enc: SHqol63BeJD+k1eVrZhdpj6V3zir691lt2SZ8051lUEl 1455205484
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 50A84C0001A;
+	Thu, 11 Feb 2016 10:44:43 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqqlh6szcfk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285981>
 
-Hi,
-
-On Fri, 5 Feb 2016, Johannes Schindelin wrote:
-
-> On Thu, 4 Feb 2016, Klinger, Xia wrote:
+Junio C Hamano venit, vidit, dixit 10.02.2016 18:45:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> > Thanks for confirming it. I hope a fix is available soon. I am using a
-> > very old version of Git at the moment to work around this issue, which
-> > doesn't comply to the requirement of our Stash Git Server from
-> > Atlassian.
+>>> Second call for help.  Any comments on this from anybody other than
+>>> the author that I missed to support this change?
+>>
+>> OK, applied it (on top of next), looks sane and improves the situation
+>> for the majority of people who read left to right, then top down and
+>> assign buffers 1 2 3 4 "mentally" to local base remote merge windows
+>> based on that. Their expectation is met now. Thanks!
 > 
-> [...] I worked on a fix for part of the day.
+> Thanks.
+> 
+> Does this mean that I should warn in the release notes that some
+> existing users might get their expectation broken but we are going
+> ahead anyway because we think most people read left to right and
+> then top down?  I am OK with saying that--I just wanted to make sure
+> we know that it is what we are doing.
 
-Judging from our past interaction, I would guess that you missed that
-2.7.1 fixes this. Just wanted to let you know.
+I would claim that anyone who notices the difference in buffer numbering
+would be positively surprised.
 
-Ciao,
-Johannes
+>> (Also, the other vim variants don't need a corresponding change.)
+> 
+> A stupid question while I am here.  What are these different
+> variants?  When reviewing this patch for the first time I tried to
+> find where they are documented, but didn't spot anything.
+> 
+> I can see from the code that vimdiff2 variant does not do anything
+> special when it is doing a 3-way merge,
+
+It is "vimdiff" without the base window.
+
+> but vimdiff3 variant does
+> behave differently when it has $BASE.  It does not need a change
+> like this because it already arranges and numbers the windows
+> sensibly (in other words, we can label this patch as aligning the
+> behaviour of vimdiff to that of vimdiff3)?
+
+git log mergetools/vimdiff3
+commit 7c147b77d34f072c40b912fafba499727921fa6e
+Author: Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sun Apr 20 19:24:20 2014 -0500
+
+    mergetools: add vimdiff3 mode
+
+    It's similar to the default, except that the other windows are hidden.
+    This ensures that removed/added colors are still visible on the main
+    merge window, but the other windows not visible.
+
+    Specially useful with merge.conflictstyle=diff3.
+
+
+I have to say I'm still not sure what it is about (even after trying it
+out, even with the conflictstyle config)).
+
+In any case, the buffer numbering is not the same (it is local remote
+base merge) but it doesn't matter in this case because only one window
+is displayed, so there is no visual association.
+
+Michael
