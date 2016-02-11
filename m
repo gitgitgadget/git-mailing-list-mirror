@@ -1,110 +1,113 @@
 From: tboegi@web.de
-Subject: [PATCH 1/3] git reset --hard gives clean working tree
-Date: Thu, 11 Feb 2016 17:16:06 +0100
-Message-ID: <1455207366-24892-1-git-send-email-tboegi@web.de>
+Subject: [PATCH 2/3] Factor out convert_cmp_checkout() into convert.c
+Date: Thu, 11 Feb 2016 17:16:09 +0100
+Message-ID: <1455207369-24931-1-git-send-email-tboegi@web.de>
 References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 17:14:52 2016
+X-From: git-owner@vger.kernel.org Thu Feb 11 17:15:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTttL-0007dw-72
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 17:14:51 +0100
+	id 1aTttU-0007j7-7X
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 17:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751051AbcBKQOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 11:14:46 -0500
-Received: from mout.web.de ([212.227.17.11]:50616 "EHLO mout.web.de"
+	id S1751565AbcBKQOu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 11:14:50 -0500
+Received: from mout.web.de ([212.227.17.11]:49528 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750771AbcBKQOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 11:14:44 -0500
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MYeys-1aYrfl0Zak-00VS6n; Thu, 11 Feb 2016 17:14:43
+	id S1750771AbcBKQOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 11:14:47 -0500
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0LxOQ2-1ZxL481146-016zom; Thu, 11 Feb 2016 17:14:46
  +0100
 X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
 In-Reply-To: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:HtpCWpkP31N5XUQhvlyzq8jYRQ/9FAP7ampoo0DWm2+aL013xdU
- 4LwUutEnnA4K872FK58PBw2hAr2KuIRyK/yHho3gcNspfB2jKH1XgVh5/CTauNHr2ZmImt6
- vtaSfWVRI5fZTuq+t7Sbp41C4w0uGSHyuw8K5T0s8qlf13lxnD/x5pDyHH6o8R6akhtFC+g
- 5jM7rVSlj1Ovu0D4mZDdQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g/3+Qmg6OCk=:DyOzL6ELP73O4q1SUTEtwB
- emqu4zfJqwN7CD+Bp1+NqIFMoha4AcdBOkxWrxeVWHUK/MGmflrDE5lhIBW5n6ukQbUMhqBu0
- psrS7jBIlEgQxPF+fCP+D04Vi2eZU5L+Ng2fsG1I2X10EEM5sUgak38iBcVciboG70x+m6ebp
- B3U2yCVdKMhBj1S4L4uyaQGppuc3lcfUOa8KAAnWKuFaApVUO6TKlgD/hiPjWbfcPLd1YT1yh
- xo7hHIt9UqjnrocHx1EHX/D/eHTUGIcGpyKdPTHCH9GbLNKlvw9jWuwQvGW6U/nwzRzhfswmv
- CN1awDCI7y8MPyVx1pw6Wc7E9irALkdQ+o3zYRd4GaTha44PrksLcXCtiXaccUYmeMaNUO9/d
- 6SiwiL5ZzZesFtOYvG9mQP8DWdfQ0JNH8F2s50n7eEwulAzxpMyzrSmAEw7YNHuau7gd6gGXm
- EVBwhqYrtrHy1rJd8BUqKYPo5d28uhwdp8PnK59dtehC/ewS9XkIbBWeQhxaCojRjqu/G51Oi
- 1EgMJROgj37ty3TJy68WXfEXXqhdevzIAT8IVHGW3Ma01Qo3XSpGbFxMzEgYGbret/oYQYSw1
- fDiNpggZfCsCieIu+xZybpfNvVCH6MzGYRjUvLuecueK0P4gkN03hoKad0iFBGnC0twSQ9JM6
- jv9djQoQJK/BMB/y4zDwNwZuNgf1qVYcoIRNGpIK97R/8KxuE6l+G1snQXro/EnTCPeh8duXt
- CRRRuHzofyWC5KEdz9mDNwCZN0taNv+MVqxqvxhxQ5vOXO1D5Uw6OoAUA3rAreFAMEB78Gpz 
+X-Provags-ID: V03:K0:uLodl8k7JGYEbBpviw26uBJLKlKtgZSsUftljfHTvGMxJkrbICK
+ 70MGet8qYcn+UOA6xIm+UPS62jOQ5jOfJW0AE4iQTfQ2v3dpjhsftX5abOMpbs4Wo7q8onI
+ Vaqwgj19sh0yfCOx5QAB1IswzmxymtBVeWiboLI1U8leYfKpTrgNqzZ4yvAggwK6Gwpoo7P
+ NCI1aG7SH5RojMAAwrKGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q60Zn5ha+6U=:XjHu9EkRrYOQCmc5Ps2E8X
+ zFWKyzG1PelkKivMFiXty/QJFQuestt37vL4gRHzd70LrOVhCWKfuxtPpeO8G0rKkUTSzVLQ4
+ PWO4UTr+aa4Fc7kqSglx6ycJLvCf2NNxwtoQeK9lkmQ/aE7ZJmfTm+ca3mF+gnkVt+bKy2ULn
+ pJr8AGwby0JMT5siJBIXpTZYOyQgui7Hvjas0mCRTD3pEox6zhdP412jzJ/JsSTTWv22oGqxe
+ K/6BLsM7v7r4Er4UWQFb+S5JUv2k0MFRk3eDvb40/2rwd8saxaAiUBTY5aUkuxJ8iUA3FPpxV
+ R3YEpQ9O+8QEZL+wEamSsdk9UtohFY9F97gZL8MNOXaTdzaIZX7kk9+1p0mNMf3XcVZ3RmUmA
+ 8uV6A/LVRpgIXZKIsZnJIYJXh5cy9yD07bfdtpREialepo0Lh1z87roLCA7/7qXUozMZPOkGS
+ q6axEEEUPjHt6z3CNIWuPvHyAQ9CNKRi97f9LkhQ+nGuxW7Rk4wFEsFiLNy0BKYGsfiQMB+X5
+ ZWe1CVpEdARm6fpe+hGWZYdQ43Guv9mRLE1tUa8KCx7aBV279ZCGVIPErD1Ws6JpSck+s/wK0
+ 5hQbCJ8JI/9tgBOZPmt07/qHaLanr74M8tivvdNXYLzqD0X3bErqo3gdA7mwyKnHJHtxeNUp/
+ rILWAOlFEBSyoSW6w6tWo5gD40vlQXLK40vp64wZst+V8rQUzNFeMIZBzocJjwTrdvtvOJeN5
+ naDA24EYOcZDyIFse4Bh0IFiJgN7/u5pIb4AiJxDh5aE6gG47hK5YaTJfeK5tC8wAFBn+hBk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285985>
 
 =46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-We define the working tree file is clean if either:
+=46actor out the code  from read_cache.c retrieveing the blob, converti=
+ng to
+worktree format and comparing with the file on disc into convert.c.
 
-  * the result of running convert_to_git() on the working tree
-    contents matches what is in the index (because that would mean
-    doing another "git add" on the path is a no-op); OR
+Move static compare_with_fd() from read_cache.c to convert.c as well.
 
-  * the result of running convert_to_working_tree() on the content
-    in the index matches what is in the working tree (because that
-    would mean doing another "git checkout -f" on the path is a
-    no-op).
+Add a shortcut in convert_cmp_checkout(): When no converting attributes=
+ are
+set, no filters defined and core.autocrlf is false, skip the additional=
+ compare.
 
-Add an extra check in ce_compare_data() in read_cache.c, and adjust
-the test cases in t0025:
-When a file has CRLF in the index, and is checked out into the working =
-tree,
-but left unchabged, it is not normalized at the next commit.
-Whenever the file is changed in the working tree, a line is added/delet=
-ed
-or dos2unix is run, it may be normalized at the next commit,
-depending on .gitattributes.
+To avoid that attributes needs to be searched on the file system twice,=
+ change
+convert_to_working_tree_internal() to take an additional parameter conv=
+_attrs*.
 
-This patch is a result of a longer discussion on the mailing list,
-how to fix the flaky t0025.
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
-This is my attempt to help to fix flaky t0025:
- - steal the code from Junio
- - Add test case, change the existing if needed.
- - Spice with some optimizations
-The commit messages may be in the state "improvable".
+ cache.h      |  2 ++
+ convert.c    | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++-=
+--------
+ read-cache.c | 21 +--------------
+ 3 files changed, 78 insertions(+), 32 deletions(-)
 
- read-cache.c         | 58 ++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- t/t0025-crlf-auto.sh | 57 ++++++++++++++++++++++++++++++++++++++++++++=
-+------
- 2 files changed, 109 insertions(+), 6 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 394ce14..2948b8f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -156,17 +156,75 @@ void fill_stat_cache_info(struct cache_entry *ce,=
- struct stat *st)
- 		ce_mark_uptodate(ce);
+diff --git a/cache.h b/cache.h
+index 22ef4f1..a0dfa5e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -568,6 +568,8 @@ extern int ce_same_name(const struct cache_entry *a=
+, const struct cache_entry *b
+ extern void set_object_name_for_intent_to_add_entry(struct cache_entry=
+ *ce);
+ extern int index_name_is_other(const struct index_state *, const char =
+*, int);
+ extern void *read_blob_data_from_index(struct index_state *, const cha=
+r *, unsigned long *);
++extern int convert_cmp_checkout(const char *);
++
+=20
+ /* do stat comparison even if CE_VALID is true */
+ #define CE_MATCH_IGNORE_VALID		01
+diff --git a/convert.c b/convert.c
+index 18af685..9cbc62c 100644
+--- a/convert.c
++++ b/convert.c
+@@ -217,6 +217,34 @@ static void check_safe_crlf(const char *path, enum=
+ crlf_action crlf_action,
+ 	}
  }
 =20
 +/*
 + * Compare the data in buf with the data in the file pointed by fd and
 + * return 0 if they are identical, and non-zero if they differ.
 + */
-+static int compare_with_fd(const char *input, ssize_t len, int fd)
++static int compare_with_fd(const char *input, unsigned long len, int f=
+d)
 +{
 +	for (;;) {
 +		char buf[1024 * 16];
@@ -128,186 +131,155 @@ index 394ce14..2948b8f 100644
 +	}
 +}
 +
- static int ce_compare_data(const struct cache_entry *ce, struct stat *=
-st)
+ static int has_cr_in_index(const char *path)
  {
- 	int match =3D -1;
- 	int fd =3D open(ce->name, O_RDONLY);
+ 	unsigned long sz;
+@@ -807,6 +835,37 @@ static void convert_attrs(struct conv_attrs *ca, c=
+onst char *path)
+ 		ca->crlf_action =3D CRLF_AUTO_INPUT;
+ }
 =20
-+	/*
-+	 * Would another "git add" on the path change what is in the
-+	 * index for the path?
-+	 */
- 	if (fd >=3D 0) {
- 		unsigned char sha1[20];
- 		if (!index_fd(sha1, fd, st, OBJ_BLOB, ce->name, 0))
- 			match =3D hashcmp(sha1, ce->sha1);
- 		/* index_fd() closed the file descriptor already */
- 	}
-+	if (!match)
-+		return match;
++int convert_cmp_checkout(const char *path)
++{
++	struct conv_attrs ca;
++	int match =3D -1; /* no match */
++	int fd;
++	convert_attrs(&ca, path);
++	if (ca.crlf_action =3D=3D CRLF_BINARY && !ca.drv && !ca.ident)
++	  return -1; /* No eol conversion, no ident, no filter */
 +
-+	/*
-+	 * Would another "git checkout -f" out of the index change
-+	 * what is in the working tree file?
-+	 */
-+	fd =3D open(ce->name, O_RDONLY);
++	fd =3D open(path, O_RDONLY);
 +	if (fd >=3D 0) {
-+		enum object_type type;
-+		unsigned long size;
-+		void *data =3D read_sha1_file(ce->sha1, &type, &size);
-+
-+		if (type =3D=3D OBJ_BLOB) {
++		unsigned long sz;
++		void *data;
++		data =3D read_blob_data_from_cache(path, &sz);
++		if (!data)
++			match =3D -1;
++		else {
 +			struct strbuf worktree =3D STRBUF_INIT;
-+			if (convert_to_working_tree(ce->name, data, size,
-+																	&worktree)) {
++			if (convert_to_working_tree(path, data, sz, &worktree)) {
 +				free(data);
-+				data =3D strbuf_detach(&worktree, &size);
++				data =3D strbuf_detach(&worktree, &sz);
 +			}
-+			if (!compare_with_fd(data, size, fd))
++			if (!compare_with_fd(data, sz, fd))
 +				match =3D 0;
 +		}
 +		free(data);
 +		close(fd);
 +	}
- 	return match;
++	return match;
++}
++
+ int would_convert_to_git_filter_fd(const char *path)
+ {
+ 	struct conv_attrs ca;
+@@ -898,22 +957,21 @@ void convert_to_git_filter_fd(const char *path, i=
+nt fd, struct strbuf *dst,
+ 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
  }
 =20
-diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
-index c164b46..4a7e5c0 100755
---- a/t/t0025-crlf-auto.sh
-+++ b/t/t0025-crlf-auto.sh
-@@ -14,6 +14,8 @@ test_expect_success setup '
+-static int convert_to_working_tree_internal(const char *path, const ch=
+ar *src,
++static int convert_to_working_tree_internal(const char *path,
++					    struct conv_attrs *ca,
++					    const char *src,
+ 					    size_t len, struct strbuf *dst,
+ 					    int normalizing)
+ {
+ 	int ret =3D 0, ret_filter =3D 0;
+ 	const char *filter =3D NULL;
+ 	int required =3D 0;
+-	struct conv_attrs ca;
+-
+-	convert_attrs(&ca, path);
+-	if (ca.drv) {
+-		filter =3D ca.drv->smudge;
+-		required =3D ca.drv->required;
++	if (ca->drv) {
++		filter =3D ca->drv->smudge;
++		required =3D ca->drv->required;
+ 	}
 =20
- 	for w in Hello world how are you; do echo $w; done >LFonly &&
- 	for w in I am very very fine thank you; do echo ${w}Q; done | q_to_cr=
- >CRLFonly &&
-+	cp CRLFonly CRLFonly1 &&
-+	cp CRLFonly CRLFonly2 &&
- 	for w in Oh here is a QNUL byte how alarming; do echo ${w}; done | q_=
-to_nul >LFwithNUL &&
- 	git add . &&
+-	ret |=3D ident_to_worktree(path, src, len, dst, ca.ident);
++	ret |=3D ident_to_worktree(path, src, len, dst, ca->ident);
+ 	if (ret) {
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+@@ -923,7 +981,7 @@ static int convert_to_working_tree_internal(const c=
+har *path, const char *src,
+ 	 * is a smudge filter.  The filter might expect CRLFs.
+ 	 */
+ 	if (filter || !normalizing) {
+-		ret |=3D crlf_to_worktree(path, src, len, dst, ca.crlf_action);
++		ret |=3D crlf_to_worktree(path, src, len, dst, ca->crlf_action);
+ 		if (ret) {
+ 			src =3D dst->buf;
+ 			len =3D dst->len;
+@@ -932,19 +990,24 @@ static int convert_to_working_tree_internal(const=
+ char *path, const char *src,
 =20
-@@ -23,6 +25,28 @@ test_expect_success setup '
- 	CRLFonly=3D$(git rev-parse HEAD:CRLFonly) &&
- 	LFwithNUL=3D$(git rev-parse HEAD:LFwithNUL) &&
+ 	ret_filter =3D apply_filter(path, src, len, -1, dst, filter);
+ 	if (!ret_filter && required)
+-		die("%s: smudge filter %s failed", path, ca.drv->name);
++		die("%s: smudge filter %s failed", path, ca->drv->name);
 =20
-+	cp CRLFonly CRLFonly.orig &&
-+	for w in I am very very fine thank YOU; do echo ${w}Q; done | q_to_cr=
- >CRLFonly.changed &&
-+	cat >expnorm  <<-EOF &&
-+		MIQ
-+		MamQ
-+		MveryQ
-+		MveryQ
-+		MfineQ
-+		MthankQ
-+		MyouQ
-+		PI
-+		Pam
-+		Pvery
-+		Pvery
-+		Pfine
-+		Pthank
-+		PYOU
-+	EOF
-+	cat >expunor  <<-EOF &&
-+		MyouQ
-+		PYOUQ
-+	EOF
- 	echo happy.
- '
+ 	return ret | ret_filter;
+ }
 =20
-@@ -39,7 +63,7 @@ test_expect_success 'default settings cause no change=
-s' '
- 	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
+ int convert_to_working_tree(const char *path, const char *src, size_t =
+len, struct strbuf *dst)
+ {
+-	return convert_to_working_tree_internal(path, src, len, dst, 0);
++	struct conv_attrs ca;
++	convert_attrs(&ca, path);
++	return convert_to_working_tree_internal(path, &ca, src, len, dst, 0);
+ }
 =20
--test_expect_success 'crlf=3Dtrue causes a CRLF file to be normalized' =
-'
-+test_expect_success 'crlf=3Dtrue causes an unchanged CRLF file not to =
-be normalized' '
+ int renormalize_buffer(const char *path, const char *src, size_t len, =
+struct strbuf *dst)
+ {
+-	int ret =3D convert_to_working_tree_internal(path, src, len, dst, 1);
++	struct conv_attrs ca;
++	int ret;
++	convert_attrs(&ca, path);
++	ret =3D convert_to_working_tree_internal(path, &ca, src, len, dst, 1)=
+;
+ 	if (ret) {
+ 		src =3D dst->buf;
+ 		len =3D dst->len;
+diff --git a/read-cache.c b/read-cache.c
+index 2948b8f..35481b0 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -206,26 +206,7 @@ static int ce_compare_data(const struct cache_entr=
+y *ce, struct stat *st)
+ 	 * Would another "git checkout -f" out of the index change
+ 	 * what is in the working tree file?
+ 	 */
+-	fd =3D open(ce->name, O_RDONLY);
+-	if (fd >=3D 0) {
+-		enum object_type type;
+-		unsigned long size;
+-		void *data =3D read_sha1_file(ce->sha1, &type, &size);
+-
+-		if (type =3D=3D OBJ_BLOB) {
+-			struct strbuf worktree =3D STRBUF_INIT;
+-			if (convert_to_working_tree(ce->name, data, size,
+-																	&worktree)) {
+-				free(data);
+-				data =3D strbuf_detach(&worktree, &size);
+-			}
+-			if (!compare_with_fd(data, size, fd))
+-				match =3D 0;
+-		}
+-		free(data);
+-		close(fd);
+-	}
+-	return match;
++	return convert_cmp_checkout(ce->name);
+ }
 =20
- 	# Backwards compatibility check
- 	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
-@@ -49,10 +73,10 @@ test_expect_success 'crlf=3Dtrue causes a CRLF file=
- to be normalized' '
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr CRLFonly &&
- 	CRLFonlydiff=3D$(git diff CRLFonly) &&
--	test -n "$CRLFonlydiff"
-+	test -z "$CRLFonlydiff"
- '
-=20
--test_expect_success 'text=3Dtrue causes a CRLF file to be normalized' =
-'
-+test_expect_success 'text=3Dtrue causes an unchanged CRLF file not to =
-be normalized' '
-=20
- 	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	echo "CRLFonly text" > .gitattributes &&
-@@ -61,7 +85,7 @@ test_expect_success 'text=3Dtrue causes a CRLF file t=
-o be normalized' '
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr CRLFonly &&
- 	CRLFonlydiff=3D$(git diff CRLFonly) &&
--	test -n "$CRLFonlydiff"
-+	test -z "$CRLFonlydiff"
- '
-=20
- test_expect_success 'eol=3Dcrlf gives a normalized file CRLFs with aut=
-ocrlf=3Dfalse' '
-@@ -114,7 +138,7 @@ test_expect_success 'autocrlf=3Dtrue does not norma=
-lize CRLF files' '
- 	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
-=20
--test_expect_success 'text=3Dauto, autocrlf=3Dtrue _does_ normalize CRL=
-=46 files' '
-+test_expect_success 'text=3Dauto, autocrlf=3Dtrue  causes an unchanged=
- CRLF file not to be normalized' '
-=20
- 	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf true &&
-@@ -126,7 +150,7 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue _=
-does_ normalize CRLF files' '
- 	LFonlydiff=3D$(git diff LFonly) &&
- 	CRLFonlydiff=3D$(git diff CRLFonly) &&
- 	LFwithNULdiff=3D$(git diff LFwithNUL) &&
--	test -z "$LFonlydiff" -a -n "$CRLFonlydiff" -a -z "$LFwithNULdiff"
-+	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
-=20
- test_expect_success 'text=3Dauto, autocrlf=3Dtrue does not normalize b=
-inary files' '
-@@ -152,4 +176,25 @@ test_expect_success 'eol=3Dcrlf _does_ normalize b=
-inary files' '
- 	test -z "$LFwithNULdiff"
- '
-=20
-+test_expect_success 'crlf=3Dtrue causes a changed CRLF file to be norm=
-alized' '
-+	git config core.autocrlf false &&
-+	echo "CRLFonly1 crlf" > .gitattributes &&
-+	# Note, "normalized" means that git will normalize it if added
-+	cp CRLFonly.changed CRLFonly1 &&
-+	git add CRLFonly1 &&
-+	git diff --cached CRLFonly1 |
-+	tr "\015" Q | sed -ne "/^[+-][a-zA-Z]/p" | tr "+-" PM >actual1 &&
-+	test_cmp expnorm actual1
-+'
-+
-+test_expect_success 'autocrlf=3Dtrue causes a changed CRLF file not to=
- be normalized' '
-+	git config core.autocrlf true &&
-+	echo > .gitattributes &&
-+	# Note, "normalized" means that git will normalize it if added
-+	cp CRLFonly.changed CRLFonly2 &&
-+	git add CRLFonly2 &&
-+	git diff --cached CRLFonly2 |
-+	tr "\015" Q  | sed -ne "/^[+-][a-zA-Z]/p" |	tr "+-" PM >actual2 &&
-+	test_cmp expunor actual2
-+'
- test_done
+ static int ce_compare_link(const struct cache_entry *ce, size_t expect=
+ed_size)
 --=20
 2.7.0.303.g2c4f448.dirty
