@@ -1,7 +1,7 @@
-From: Dickson Wong <dicksonwong@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] mergetool: reorder vim/gvim buffers in three-way diffs
-Date: Thu, 11 Feb 2016 11:24:07 -0800
-Message-ID: <CAB8-syo8dCjDfCH3gAFvC1cnuB-wm9hxtmVb1OhZ7NT0Pw+EbQ@mail.gmail.com>
+Date: Thu, 11 Feb 2016 11:31:37 -0800
+Message-ID: <xmqqtwlfvyau.fsf@gitster.mtv.corp.google.com>
 References: <1454033894-49954-1-git-send-email-dicksonwong@gmail.com>
 	<xmqq1t90jkcr.fsf@gitster.mtv.corp.google.com>
 	<xmqqr3gl1pyw.fsf@gitster.mtv.corp.google.com>
@@ -9,71 +9,76 @@ References: <1454033894-49954-1-git-send-email-dicksonwong@gmail.com>
 	<xmqqlh6szcfk.fsf@gitster.mtv.corp.google.com>
 	<56BCAC69.8030909@drmicha.warpmail.net>
 	<xmqqbn7nxmhe.fsf@gitster.mtv.corp.google.com>
+	<CAB8-syo8dCjDfCH3gAFvC1cnuB-wm9hxtmVb1OhZ7NT0Pw+EbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 20:24:14 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Dickson Wong <dicksonwong@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 20:31:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTwqb-0002WT-V0
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 20:24:14 +0100
+	id 1aTwxt-0008Un-L4
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 20:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750825AbcBKTYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 14:24:09 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:36486 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735AbcBKTYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 14:24:08 -0500
-Received: by mail-ob0-f173.google.com with SMTP id ba1so88367665obb.3
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 11:24:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=yB18AFCsbVQOd469fYTzxeh2xyv6EbdlXtlHiLPV+tU=;
-        b=Y/5kT68q1B1v6khwzyksBRbDeTj/PnwGqQPMdwJI0Sd3+VHliQGYHJlhlkx5n9dxES
-         mQ1glIczcXmiRkdzpN6+pZ7wC/deMrI4+mczfAkn2/tzCkcV8lwVoTcqQMOae+GDE5ap
-         Ph9G/FU2rxGwsRxUtNFAIi6G3eHZO56JjlP2OhdDbPI8wNvxfXjwRhSBaFJMROP1dkiO
-         IoAYpAx8TCpHh99TI4gGhx1Tjiw5k3+jiTTUpmReIhXt17YiYolUiCFhTcmmp+7JASn0
-         wvCOQ3UhCK4zFI2ooxn2VDawlJIzEkRvg7KNuE3U4ywAMv8KIh1gcSTew1KEPRG/PPqN
-         ludA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=yB18AFCsbVQOd469fYTzxeh2xyv6EbdlXtlHiLPV+tU=;
-        b=JfvGszp1Mug+h/JJEloVoicdIWErEku0BvzyJ7M/xr9LQHU4i0rvbOMoMGTyLgRzPg
-         kbXQ9wWSsKVcBwfdW+ePBjsOF5LlJ5xF4PCx/V882ta7WMuHLGBk/ZzDP7Xbu3gu6oEp
-         6kR5rv8UKX5hLA2QlC4JNW89osxYsUbB6NrkAyeQwjJs3mRKucShYtbClzYg7epjf3Pi
-         Ncl01BGt8gSAPlMv6F+6qeUGkLqtYqZdHSoICYAneRLY92XgElWqb5s5Q/jY7DcyH5zq
-         7kGueCTiv4Y6YP9Grr/tzs1EFGn4TbT0V3M3qaJfG8e1scE1FkfOFz3lCC8VStfnx+Ea
-         Bokg==
-X-Gm-Message-State: AG10YORIDQ0ZmswgSa3JPjXoqykildM3N/HsKjD4jzHvsa4ys4siQ1G+MauKIG4VC/hjjx1BGChbp2lxMksUMg==
-X-Received: by 10.182.117.225 with SMTP id kh1mr51058035obb.29.1455218647636;
- Thu, 11 Feb 2016 11:24:07 -0800 (PST)
-Received: by 10.157.34.134 with HTTP; Thu, 11 Feb 2016 11:24:07 -0800 (PST)
-In-Reply-To: <xmqqbn7nxmhe.fsf@gitster.mtv.corp.google.com>
+	id S1750858AbcBKTbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 14:31:41 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56755 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750735AbcBKTbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 14:31:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 704C340FD9;
+	Thu, 11 Feb 2016 14:31:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fK7Cbv0OSqVklcS8r0g5Rb5gaok=; b=VAbJfg
+	tyCJZs0hQ3REWPPzy949gqlxUmEf81dXX5NnkIcEByO21OBddAyICG88qlRUer5/
+	vrCX3rGpimm+MOw0FiUqA6mWXGRu47WD3EnmFUHvy+YXCl9c8LhDEWFxi9UJzkOx
+	4cp3QSf+Ct4mIebiCa9i4060aQNBYwgjCO51k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SU6T4Q0KBVmTrc14gmQxqvZnPY2i/OT1
+	2LErP7sY+FMJa1azaVAVDMMu+N690IeOuMuLmzvlBoZbGbf7K2QTD/PkHWxrI3YD
+	mEPb4N4lMRvbXRqR4DWDDzkrketto5nMKxEo1NOKKtIkxm7zN8YmadOu0VgMCfPR
+	Qu85y0e6vPw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B88340FD8;
+	Thu, 11 Feb 2016 14:31:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CCA9C40FD7;
+	Thu, 11 Feb 2016 14:31:38 -0500 (EST)
+In-Reply-To: <CAB8-syo8dCjDfCH3gAFvC1cnuB-wm9hxtmVb1OhZ7NT0Pw+EbQ@mail.gmail.com>
+	(Dickson Wong's message of "Thu, 11 Feb 2016 11:24:07 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 12140558-D0F6-11E5-AE09-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285991>
 
-Thanks for looking into the patch.
+Dickson Wong <dicksonwong@gmail.com> writes:
 
-> Thanks. I, being a non-user of vim, was wondering if people who had
-> their own user-defined commands (macros? and possibly short-cut keys
-> to invoke them) built around the old (and odd) numbering need to
-> adjust--in which case we may need to forewarn.
->
+> Thanks for looking into the patch.
 
-Vim buffers are not reorderable and windows are always numbered from
-top-left to bottom-right. However, I can see someone who is familiar with
-the old behavior issue a "CTRL-W_K" command to move the merged window from
-the bottom to the top, making the merged window the first window and
-consistent with buffer indexes. If they use this command after the patch,
-the indexes would no longer be consistent. The command would most likely be
-issued manually and not through a vim startup script.
+No.  Thank _you_ for contributing ;-)
+
+> Vim buffers are not reorderable and windows are always numbered from
+> top-left to bottom-right. However, I can see someone who is familiar with
+> the old behavior issue a "CTRL-W_K" command to move the merged window from
+> the bottom to the top, making the merged window the first window and
+> consistent with buffer indexes. If they use this command after the patch,
+> the indexes would no longer be consistent. The command would most likely be
+> issued manually and not through a vim startup script.
+
+So it should suffice to mention it in the release notes as one
+bullet item that describes one positive change, among all other
+updates described in a simlar way.  And there is no special
+"warnings for existing users" necessary, I would say.
+
+Thanks.
