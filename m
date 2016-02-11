@@ -1,91 +1,90 @@
-From: Dingyuan Wang <abcdoyle888@gmail.com>
-Subject: Re: assert failed in pathspec.c
-Date: Thu, 11 Feb 2016 16:56:32 +0800
-Message-ID: <56BC4CC0.1090209@gmail.com>
-References: <56BC0714.1010007@gmail.com> <56BC4535.6070301@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 09/21] refs: add method to rename refs
+Date: Thu, 11 Feb 2016 10:00:04 +0100
+Message-ID: <56BC4D94.4040003@alum.mit.edu>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+ <1454701462-3817-10-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 09:56:49 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 10:00:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTn3R-0004xB-3F
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 09:56:49 +0100
+	id 1aTn6w-0008CX-5n
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 10:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752512AbcBKI4k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 03:56:40 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:36036 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661AbcBKI4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 03:56:39 -0500
-Received: by mail-pa0-f44.google.com with SMTP id yy13so25804491pab.3
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 00:56:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=gl+1WX6gN3sE/iibsHCKQfShYQmJuFioBdPFqpJly60=;
-        b=icdrZ9tjD4WeifiIdz+wySGHRmrjBir6mWfPKajHsQtBYWZM9Kssy65LOk5891roT1
-         nVV+6+X4D5IdWAHMhU/MM3w4w+Uq1kBao/JA7VXK7n5E1gX+PxL/cRvCtgCYRozCqw7R
-         UJK/DHS5Mg4iNAx/L34kjRJO4uftwy8O3FVlb0NO0rEpkKW3u1Cqd1LMNj3qXropTV1m
-         l928PK89vZ67+dMuVu+qqqcZn2johwY50lj6zlgoF3bvQkoyXNTlGMra5aEyqLlY9S05
-         M6Lz5OL8jH04h/nXR2nV9reyxZA8o7V7wWNn0c/Ig0zkULZeO7wnmria+wEV28oCPuFI
-         MRxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=gl+1WX6gN3sE/iibsHCKQfShYQmJuFioBdPFqpJly60=;
-        b=gQRznGPj0RX0MgkZtdZnkmX5Rbn+r124TaL0y6bhysbfg+5Rr+91JGVcMP5II/4z3G
-         fzdd+/EK4/4TfaMKCFh0y7DSH6R7PU3qZqgDW7xGObVA7+jGQxmk5Z5MbmfVnbr1mE77
-         cxuOt7BLkg+eJU2X3GWsigEd3zQ0nuJH9xECp/hQHk63AC8NUq0hUQgSE7BCaZhi9ybN
-         e+yaiuA8SgzrZmqojI7c7aMKZhjlD5bITA1fMK7ouGtigEBMKGBJPZsHGF1XZ8bUgVFw
-         AZ/vvHKfHuRTagAWIFPJN/9wgDdoSgzkYPjgLtNuXxrbvmLyvImSlwgN8jMreNHZuQCd
-         UlIg==
-X-Gm-Message-State: AG10YOSrlXO9jv8Rt53Si8uOVVMUJTTUgjGWCL3JPv7rwwOGriiWV9nNdSo61ZOE4jRA6g==
-X-Received: by 10.66.251.68 with SMTP id zi4mr12454301pac.113.1455180998818;
-        Thu, 11 Feb 2016 00:56:38 -0800 (PST)
-Received: from [192.168.1.12] ([114.85.11.215])
-        by smtp.gmail.com with ESMTPSA id vy6sm10524172pac.38.2016.02.11.00.56.35
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 11 Feb 2016 00:56:38 -0800 (PST)
-X-Enigmail-Draft-Status: N1110
+	id S1752825AbcBKJAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 04:00:19 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64326 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751450AbcBKJAQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2016 04:00:16 -0500
+X-AuditID: 1207440c-c0bff70000002d40-9d-56bc4d960467
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 15.D6.11584.69D4CB65; Thu, 11 Feb 2016 04:00:06 -0500 (EST)
+Received: from [192.168.69.130] (p548D69E5.dip0.t-ipconnect.de [84.141.105.229])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1B904GX000786
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 11 Feb 2016 04:00:05 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Icedove/38.5.0
-In-Reply-To: <56BC4535.6070301@web.de>
+In-Reply-To: <1454701462-3817-10-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsUixO6iqDvNd0+YwbVdlhbzN51gtOi60s3k
+	wOSx4Pl9do/Pm+QCmKK4bZISS8qCM9Pz9O0SuDPWPb/OUnCMo2LChCcsDYzX2LoYOTkkBEwk
+	vrT0ANlcHEICWxkltrfvYIZwLjBJvLxxnaWLkYNDWMBW4sa9cpAGEQEHicu7jkLVtDFKTF35
+	jxUkwSagK7Gop5kJxOYV0Jb4+GIjI4jNIqAqsfbpQzBbVCBE4v3X56wQNYISJ2c+AZvPKeAp
+	sfCHBEiYWUBPYsf1X6wQtrzE9rdzmCcw8s1C0jELSdksJGULGJlXMcol5pTm6uYmZuYUpybr
+	Ficn5uWlFuka6uVmluilppRuYoQEHs8Oxm/rZA4xCnAwKvHw/qjZHSbEmlhWXJl7iFGSg0lJ
+	lPeg254wIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8zrZAOd6UxMqq1KJ8mJQ0B4uSOK/qEnU/
+	IYH0xJLU7NTUgtQimKwMB4eSBK+ND1CjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlG
+	PCjy4ouBsQeS4gHaKwfSzltckJgLFIVoPcWoKCXOawaSEABJZJTmwY2FpZNXjOJAXwrz7gCp
+	4gGmIrjuV0CDmYAG7/i+C2RwSSJCSqqBcXF+xLH1kr4SRk1Owo67ddjP/fe4oVmbJxR+po0v
+	hu+t591iMXM/ufebA9yuR8V/mhCRkMzbkXZ5qZLCv1MFfza/c+U5uiZ/Y6Tc58mv//w6a3Ty
+	gDtv6utmFdOodVtza7zXHZ1W6HFo5y7GHcv7Fhk0fJSoOxqSFua6iE/7z7X/1pob 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285954>
 
-git version 2.7.0.GIT (latest git master)
+On 02/05/2016 08:44 PM, David Turner wrote:
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  refs.c               | 5 +++++
+>  refs/files-backend.c | 4 +++-
+>  refs/refs-internal.h | 9 +++++++++
+>  3 files changed, 17 insertions(+), 1 deletion(-)
+> 
+> [...]
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 5768fee..15fa99c 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -67,6 +67,13 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
+>  				 each_ref_fn fn, int trim, int flags,
+>  				 void *cb_data);
+>  
+> +/*
+> + * Check if the new name does not conflict with any existing refs
+> + * (other than possibly the old ref).  Return 0 if the ref can be
+> + * renamed to the new name.
+> + */
+> +int rename_ref_available(const char *oldname, const char *newname);
 
-Sorry, I have found out that this problem is exactly the same as the
-previous post I mentioned.
+Thanks for adding a docstring for this function. But this function
+already has a declaration later in the file so you should remove one or
+the other.
 
-When I created the repo, scripts/ was a subrepo, and then I moved
-scripts/.git out. If I add files in the scripts/ dir, SIGABRT.
+> [...]
 
-=E5=9C=A8 2016=E5=B9=B402=E6=9C=8811=E6=97=A5 16:24, Torsten B=C3=B6ger=
-shausen =E5=86=99=E9=81=93:
-> On 02/11/2016 04:59 AM, Dingyuan Wang wrote:
-> []
->=20
-> Thanks for the bug report.
->=20
-> What does
-> git --version
-> give you ?
->=20
-> And what happens, if you run the latest version of Git ?
->=20
+Michael
 
---=20
-Dingyuan Wang
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
