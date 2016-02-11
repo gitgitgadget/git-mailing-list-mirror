@@ -1,85 +1,141 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 0/5] drop "struct name_path" and path_name()
-Date: Thu, 11 Feb 2016 17:23:15 -0500
-Message-ID: <20160211222314.GA31625@sigill.intra.peff.net>
+Subject: [PATCH 1/5] http-push: stop using name_path
+Date: Thu, 11 Feb 2016 17:23:48 -0500
+Message-ID: <20160211222347.GA586@sigill.intra.peff.net>
+References: <20160211222314.GA31625@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 23:23:23 2016
+X-From: git-owner@vger.kernel.org Thu Feb 11 23:23:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTzdy-0003TL-5r
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 23:23:22 +0100
+	id 1aTzeU-0003wF-UC
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 23:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752019AbcBKWXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 17:23:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40749 "HELO cloud.peff.net"
+	id S1751946AbcBKWXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 17:23:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40752 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751671AbcBKWXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 17:23:17 -0500
-Received: (qmail 24403 invoked by uid 102); 11 Feb 2016 22:23:17 -0000
+	id S1751671AbcBKWXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 17:23:50 -0500
+Received: (qmail 24443 invoked by uid 102); 11 Feb 2016 22:23:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Feb 2016 17:23:17 -0500
-Received: (qmail 11689 invoked by uid 107); 11 Feb 2016 22:23:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Feb 2016 17:23:50 -0500
+Received: (qmail 11718 invoked by uid 107); 11 Feb 2016 22:23:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Feb 2016 17:23:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Feb 2016 17:23:15 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Feb 2016 17:23:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Feb 2016 17:23:48 -0500
 Content-Disposition: inline
+In-Reply-To: <20160211222314.GA31625@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286009>
 
-The graph traversal code in list-objects.c uses "struct name_path" to
-build a linked list of path components, which it then feeds to the
-callbacks. This is meant to be efficient, because we keep pointers into
-the actual tree data for each name. However, there are two things that
-work against this:
+The graph traversal code here passes along a name_path to
+build up the pathname at which we find each blob. But we
+never actually do anything with the resulting names, making
+it a waste of code and memory.
 
-  1. In some cases, we keep in parallel a strbuf with the running
-     pathname, so that we can feed it to tree_entry_interesting().
+This usage came in aa1dbc9 (Update http-push functionality,
+2006-03-07), and originally the result was passed to
+"add_object" (which stored it, but didn't really use it,
+either). But we stopped using that function in 1f1e895 (Add
+"named object array" concept, 2006-06-19) in favor of
+storing just the objects themselves.
 
-  2. The ultimate fate of this linked list is often to get concatenated
-     into a single buffer anyway, via path_name().
+Moreover, the generation of the name in process_tree() is
+buggy. It sticks "name" onto the end of the name_path linked
+list, and then passes it down again as it recurses (instead
+of "entry.path"). So it's a good thing this was unused, as
+the resulting path for "a/b/c/d" would end up as "a/a/a/a".
 
-So it's really not buying us much efficiency over just using
-strbuf_addstr() and strbuf_setlen() in the first place. And it's extra
-code that is slightly tricky to get right, especially with respect to
-size_t and integer overflow (compare path_name() and
-show_object_with_path() before and after).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ http-push.c | 23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
-This series drops the whole thing in favor of using a strbuf. Because I
-wanted to make sure we weren't regressing performance, I measured two
-cases before and after (and of course verified that they produce
-identical output):
-
-  1. "git rev-list --objects --all", which prints the name of each tree
-     and blob we find directly from the linked list (without ever
-     constructing the whole string), and does not use
-     tree_entry_interesting (and so does not otherwise need to keep the
-     running strbuf). So we'd see any negative effects of the strategy
-     here.
-
-  2. "git prune --dry-run", which walks the complete graph but does
-     not do anything useful with the pathnames. So it would not
-     otherwise need to assemble or look at the path components at all.
-
-Both of them showed no measurable difference in their best-of-five times
-when run on git.git. I didn't measure peak memory usage. For the reasons
-explained in patch 3, it will actually be slightly _better_ for a normal
-repo like git.git. But you could construct a pathological case where it
-is worse (e.g., if you had a tree with a 500MB path-name, the old code
-would need 500MB to run rev-list, and the new code will need 2*500MB
-during the callback). I think the cleanup is worth it.
-
-  [1/5]: http-push: stop using name_path
-  [2/5]: show_object_with_name: simplify by using path_name()
-  [3/5]: list-objects: convert name_path to a strbuf
-  [4/5]: list-objects: drop name_path entirely
-  [5/5]: list-objects: pass full pathname to callbacks
-
--Peff
+diff --git a/http-push.c b/http-push.c
+index d857b13..bd60668 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1277,9 +1277,7 @@ static struct object_list **add_one_object(struct object *obj, struct object_lis
+ }
+ 
+ static struct object_list **process_blob(struct blob *blob,
+-					 struct object_list **p,
+-					 struct name_path *path,
+-					 const char *name)
++					 struct object_list **p)
+ {
+ 	struct object *obj = &blob->object;
+ 
+@@ -1293,14 +1291,11 @@ static struct object_list **process_blob(struct blob *blob,
+ }
+ 
+ static struct object_list **process_tree(struct tree *tree,
+-					 struct object_list **p,
+-					 struct name_path *path,
+-					 const char *name)
++					 struct object_list **p)
+ {
+ 	struct object *obj = &tree->object;
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+-	struct name_path me;
+ 
+ 	obj->flags |= LOCAL;
+ 
+@@ -1310,21 +1305,17 @@ static struct object_list **process_tree(struct tree *tree,
+ 		die("bad tree object %s", oid_to_hex(&obj->oid));
+ 
+ 	obj->flags |= SEEN;
+-	name = xstrdup(name);
+ 	p = add_one_object(obj, p);
+-	me.up = path;
+-	me.elem = name;
+-	me.elem_len = strlen(name);
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 
+ 	while (tree_entry(&desc, &entry))
+ 		switch (object_type(entry.mode)) {
+ 		case OBJ_TREE:
+-			p = process_tree(lookup_tree(entry.sha1), p, &me, name);
++			p = process_tree(lookup_tree(entry.sha1), p);
+ 			break;
+ 		case OBJ_BLOB:
+-			p = process_blob(lookup_blob(entry.sha1), p, &me, name);
++			p = process_blob(lookup_blob(entry.sha1), p);
+ 			break;
+ 		default:
+ 			/* Subproject commit - not in this repository */
+@@ -1343,7 +1334,7 @@ static int get_delta(struct rev_info *revs, struct remote_lock *lock)
+ 	int count = 0;
+ 
+ 	while ((commit = get_revision(revs)) != NULL) {
+-		p = process_tree(commit->tree, p, NULL, "");
++		p = process_tree(commit->tree, p);
+ 		commit->object.flags |= LOCAL;
+ 		if (!(commit->object.flags & UNINTERESTING))
+ 			count += add_send_request(&commit->object, lock);
+@@ -1362,11 +1353,11 @@ static int get_delta(struct rev_info *revs, struct remote_lock *lock)
+ 			continue;
+ 		}
+ 		if (obj->type == OBJ_TREE) {
+-			p = process_tree((struct tree *)obj, p, NULL, name);
++			p = process_tree((struct tree *)obj, p);
+ 			continue;
+ 		}
+ 		if (obj->type == OBJ_BLOB) {
+-			p = process_blob((struct blob *)obj, p, NULL, name);
++			p = process_blob((struct blob *)obj, p);
+ 			continue;
+ 		}
+ 		die("unknown pending object %s (%s)", oid_to_hex(&obj->oid), name);
+-- 
+2.7.1.550.gf5fcbd3
