@@ -1,84 +1,132 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 12/21] refs: allow log-only updates
-Date: Thu, 11 Feb 2016 11:03:56 +0100
-Message-ID: <56BC5C8C.8060201@alum.mit.edu>
-References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
- <1454701462-3817-13-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 11:11:24 2016
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 00/22] add the FORMATPRINTF macro to declare the gcc function
+Date: Thu, 11 Feb 2016 12:38:37 +0000
+Message-ID: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 11 13:39:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aToDb-0007X0-Gh
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 11:11:23 +0100
+	id 1aTqWw-0007te-I9
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 13:39:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbcBKKLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 05:11:18 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:58841 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750725AbcBKKLO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2016 05:11:14 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Feb 2016 05:11:14 EST
-X-AuditID: 12074414-8b3ff70000005020-8e-56bc5c8ef848
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 4F.71.20512.E8C5CB65; Thu, 11 Feb 2016 05:03:58 -0500 (EST)
-Received: from [192.168.69.130] (p548D69E5.dip0.t-ipconnect.de [84.141.105.229])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1BA3uMZ003456
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 11 Feb 2016 05:03:58 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.5.0
-In-Reply-To: <1454701462-3817-13-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixO6iqNsXsyfMoP2zqcX8TScYLbqudDM5
-	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7owTT56zFhxnrfjw/TN7A+MWli5GTg4JAROJ
-	w4u2MXcxcnEICWxllLi4bgUThHOBSeLCtPvsIFXCAlYSM97tBrNFBBwkLu86CtXRxihx+vVp
-	JpAEm4CuxKKeZjCbV0Bb4tCHDrAGFgFViWUftzOC2KICIRLvvz5nhagRlDg58wnYGZwCnhIb
-	lj4Cs5kF9CR2XP/FCmHLS2x/O4d5AiPfLCQts5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5x
-	cmJeXmqRroVebmaJXmpK6SZGSPCJ7GA8clLuEKMAB6MSD++Pmt1hQqyJZcWVuYcYJTmYlER5
-	D7rtCRPiS8pPqcxILM6ILyrNSS0+xCjBwawkwvsgGijHm5JYWZValA+TkuZgURLn/bZY3U9I
-	ID2xJDU7NbUgtQgmK8PBoSTB2wPSKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K
-	vvhiYPyBpHiA9i4D21tckJgLFIVoPcWoy7Hgx+21TEIsefl5qVLivFtBigRAijJK8+BWwFLN
-	K0ZxoI+FecWBiUeIB5im4Ca9AlrCBLRkx/ddIEtKEhFSUg2MKSsTTl68cW2n1Pz6l8oTs7rj
-	lhRoWLC7q6uzLFTh/pIp15ko0X25X+/HZfnVFsLPb6i+TTgd8Plurqvpim3dy/oVFl/hkXr9
-	0yDGgrch590/K9MjAlXfzJs5760Vfb1sw8/Pi3kPM3MvDGa82n1dS/634bT8c8Yf 
+	id S1752233AbcBKMjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 07:39:19 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36071 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751017AbcBKMjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 07:39:18 -0500
+Received: by mail-wm0-f66.google.com with SMTP id 128so10425660wmz.3
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 04:39:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=EeGfg4NxN4YTmTKBsu0FnB7nIyV4Yq7ImvH/BNwCmd0=;
+        b=x2TdyD7+0BzKOfugFF5MyOYLcMGDAPXLEfHjATxZ2RkLeuy+Ta5iQP3h1zlS6CC7vu
+         k/brsv5pJI5Lc/g/hfEMlIcCmyzsZDZ/nvVzyvMvh0m8c1+FiT2fkmPST6oy9MB1MPPg
+         kmIw3BWo5vQD1t9GGX0g7/NoFoCv5Z+HEo1ujt0bYOut45sRVrW09OJ/I/JHgLCm68Im
+         7l56Matc6lvWmufLCIe8zRH/XceCxaHKpEeSEprnOacS4TciS3oJDyxxEa4rzXUYcFU5
+         y+kmyt1+ENimcU5Aqjt7IcSpNgEzw9LGkplartGJQ0ghOKXj00ykSbDGbbA85ttMgMkv
+         eAmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EeGfg4NxN4YTmTKBsu0FnB7nIyV4Yq7ImvH/BNwCmd0=;
+        b=Ej44cvYkN9IkVZ+VkR8Kyc/9VPc7+zQggC+NxSpUvdNEWYU9JoPXozdSZITCtoL5xB
+         eMVefo3K6HA46J0EER/iEzHhX3RY0FvIKvyq2ak5m4XMnYcrqywIAZ75GMIlgLS9bOZ/
+         cSWOZS7R0QtFGQEYUk6oMH3gTKJ/nt+i3rCflw74FywWu26bmIKjnHGKQmRzIuRps5ll
+         5DM9OmTqkowoCCXqcY0sz7HcFnj4KCLcYoN6qywL6oTDNbhRv5ontMMee0hrK3SZMgCy
+         taCZp9A2Fy4QlinhaeFLP9MHm0aVDkmIIrcuK1J65unWXbPkekb4pcOlrTVfvaLg84u7
+         vDUQ==
+X-Gm-Message-State: AG10YOQ8UbOSfGSDqEzQLrshZaX7n0AEEAT5Fb1dOWvIyEY5zx1UZDRbX2hPduXzHz3zWw==
+X-Received: by 10.28.176.133 with SMTP id z127mr18048778wme.22.1455194357851;
+        Thu, 11 Feb 2016 04:39:17 -0800 (PST)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
+        by smtp.gmail.com with ESMTPSA id gt7sm7457368wjc.1.2016.02.11.04.39.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 11 Feb 2016 04:39:17 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.327.gff4ea60.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285957>
 
-On 02/05/2016 08:44 PM, David Turner wrote:
-> The refs infrastructure learns about log-only ref updates, which only
-> update the reflog.  Later, we will use this to separate symbolic
-> reference resolution from ref updating.
+Add the FORMATPRINTF macro for declaring the gcc function attribute 'format printf'
+for code style consistency with similar macro that git already use for other gcc
+attributes. And use it where necessary.
 
-This looks good. I assume it will get some testing later in the series.
+Elia Pinto (22):
+  git-compat-util.h: add the FORMATPRINTF macro
+  advice.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  argv-array.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  builtin/index-pack.c: use the FORMATPRINTF macro to declare the gcc
+    function attribute 'format printf'
+  builtin/receive-pack.c: use the FORMATPRINTF macro to declare the gcc
+    function attribute 'format printf'
+  builtin/update-index.c: use the FORMATPRINTF macro to declare the gcc
+    function attribute 'format printf'
+  builtin/upload-archive.c: use the FORMATPRINTF macro to declare the
+    gcc function attribute 'format printf'
+  cache.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  color.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  config.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  daemon.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  fsck.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  http-backend.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  imap-send.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  merge-recursive.c: use the FORMATPRINTF macro to declare the gcc
+    function attribute 'format printf'
+  pkt-line.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  remote.c: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  strbuf.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  trace.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  transport-helper.c: use the FORMATPRINTF macro to declare the gcc
+    function attribute 'format printf'
+  utf8.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
+  wt-status.h: use the FORMATPRINTF macro to declare the gcc function
+    attribute 'format printf'
 
-> [...]
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index fc5d1db..b5d0ab8 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -42,6 +42,8 @@
->   * value to ref_update::flags
->   */
->  
-> +#define REF_LOG_ONLY 0x80
-> +
-
-Please add a comment explaining the meaning/purpose of this flag.
-
-> [...]
-
-Michael
+ advice.h                 |  3 +--
+ argv-array.h             |  2 +-
+ builtin/index-pack.c     |  2 +-
+ builtin/receive-pack.c   |  4 ++--
+ builtin/update-index.c   |  2 +-
+ builtin/upload-archive.c |  2 +-
+ cache.h                  | 22 +++++++++++-----------
+ color.h                  |  4 ++--
+ config.c                 |  2 +-
+ daemon.c                 |  4 ++--
+ fsck.c                   |  2 +-
+ git-compat-util.h        | 14 ++++++++------
+ http-backend.c           |  6 +++---
+ imap-send.c              | 10 +++++-----
+ merge-recursive.c        |  2 +-
+ pkt-line.h               |  4 ++--
+ remote.c                 |  2 +-
+ strbuf.h                 | 14 +++++++-------
+ trace.h                  | 16 ++++++++--------
+ transport-helper.c       |  2 +-
+ utf8.h                   |  2 +-
+ wt-status.h              |  4 ++--
+ 22 files changed, 63 insertions(+), 62 deletions(-)
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.5.0
