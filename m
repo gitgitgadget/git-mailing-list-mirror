@@ -1,84 +1,72 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/22] advice.h: use the FORMATPRINTF macro to declare the gcc function attribute 'format printf'
-Date: Thu, 11 Feb 2016 12:38:39 +0000
-Message-ID: <1455194339-859-3-git-send-email-gitter.spiros@gmail.com>
-References: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 11 13:40:55 2016
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: git 2.7.0 crashes when top-down memory allocation preference is
+ set
+Date: Thu, 11 Feb 2016 14:30:05 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602111429200.2964@virtualbox>
+References: <9e3cc44087134954a3414fa8998c3ce6@USNAEXCP2.pc.cognex.com> <alpine.DEB.2.20.1602040844330.2964@virtualbox> <43fbdf617f8d412db7b0d5c7d06df3ad@USNAEXCP2.pc.cognex.com> <alpine.DEB.2.20.1602041628180.2964@virtualbox> <9854ccd81e624ee9a8f721a871bda4b2@USNAEXCP2.pc.cognex.com>
+ <alpine.DEB.2.20.1602050048570.2964@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Klinger, Xia" <Xia.Klinger@cognex.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 14:30:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTqYH-0000cq-Pk
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 13:40:54 +0100
+	id 1aTrKK-0007Ce-JG
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 14:30:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752487AbcBKMjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 07:39:21 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33806 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752212AbcBKMjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 07:39:20 -0500
-Received: by mail-wm0-f66.google.com with SMTP id p63so10438077wmp.1
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 04:39:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4mwhH+5lRASgBmDVjgFlw+MCEEmhj+lno3Pozq0noic=;
-        b=LPRLKqm2+8oYaOJ9QbqXQUTNtlJcVzA/5li/9JURUHj8dBcMrP5BW8f/F+FRG714DS
-         7hk6Cm2yhxXhxD3253WeM8S9wU1h9JW8Fb0GiTldTVG8EorFXORQaiXmxMoqsxgDmiW3
-         Wn/LNr+zvBm4fnJKKc2uyrelrKCygADbbEK4DfJPFNj6QmRhITFv/vDPurnGOJMqgrNR
-         LuNCB+Pj78C5ArLR0sCacqtNmrmcw4RUICOyWi733GInFe5KM4zBYQUpPsnpwVlk5cGx
-         bCG6IgpVppzSdvKGwxUdS+vZJE56kLWNzQB3bsi7Lwv9pf11fcNNGYAfUuYB99oQ3SDB
-         yhtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4mwhH+5lRASgBmDVjgFlw+MCEEmhj+lno3Pozq0noic=;
-        b=fkh1jXNPHUymkeTGseItAyuZLedYASeIlnlTcfMiA6TVqj3IGGP+7JXkJgP8bBJMLU
-         lQpYzBZkhn69Q9ue7VHcp0loduc720SgrTzBiRsEZoTb5eQ5BCq4TQ+Swr9VjrtSdfeU
-         E5UjsX1rre4YkrMFYj8BpTIIzjE1DYIBGZ0Ym/VtyDJYP9lOzwVvQcSRgtI6buqkbOmo
-         lRqyJ8RzYKrdTNBrQsKkEv5Wp7hws4T6OO2SjEk7Tqotmv/uh9eRlBKMll9EsocPPiZq
-         ANF82c/a4nDyFWbZo14MDGsVbOSu+q8kXjTe8Z9wahKgB5R8Vryq1Oyggw5YCNfqVGuC
-         o5DA==
-X-Gm-Message-State: AG10YOTZLUxaTJZKb/FtN6xiBr+vhTesYrhCXg5vmfjrq9nyUI4N8xsbk2S1xbqVfCSYfQ==
-X-Received: by 10.195.11.100 with SMTP id eh4mr49933967wjd.83.1455194359268;
-        Thu, 11 Feb 2016 04:39:19 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id gt7sm7457368wjc.1.2016.02.11.04.39.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Feb 2016 04:39:18 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.327.gff4ea60.dirty
-In-Reply-To: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
+	id S1752595AbcBKNa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 08:30:29 -0500
+Received: from mout.gmx.net ([212.227.15.15]:63034 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752530AbcBKNa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 08:30:28 -0500
+Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MLeoF-1aUgfe3ZVD-000qJF; Thu, 11 Feb 2016 14:30:21
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <alpine.DEB.2.20.1602050048570.2964@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:H64HT7LUUnhLyEBMk2soZ8EDBF1/tgK0oB0JIF24hQDnpbVgq1o
+ AP0v3FgIWHMg4+vPNgjOC/mUc+3wrzeWch/GEIJlQe11H9ccxfCsM/up9qI1WHgbsmMzFU+
+ bfZtDAyk4Fxys/vilKsY987nTxLYlcyD/AeDy0AYcAHXYejsr3c/1k+yCgm6LVxVw9yLy8O
+ bSyN3NB5UHmzTPQXinYAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6GH/HMZ9JNs=:YGH+jPsQHyKIk9REbqRR/e
+ LwtkKpv33pNCQcQLSgRnYxGSHWsTqPdIirj3SZONDcrFBK/SCLO5GpkfH7TjV56YcIgVmSN/o
+ gwcU83RGf1yXtpQA94F5cqLS1nU36Nawbs7i/8cf77ud7XYTxU91mlCVvRPG7NQGAfqDOcdNh
+ rebJRauZHfqb9nBRL/3SQn5DEzti2Qotje3aLLGWoW001oq/gfKGUkIL0ZKTOqkRxf9q25TW9
+ sEb4txNxESZjAMRw2o0rWBB4xv5Lyju3gv+o4blxfN3p9Kx4P19n4gR2o+JfnY1sBfJf4MGCA
+ 8TjXiiRV0L3AYHxlNwZFtpsRAWy8ALir8oUR+jwmTATYSMcVJQUW4nFUlK9mcudNlUmD2MFQI
+ 2F4tQJYx4DKq9jjDwjRdNyAWXF6JFQNlH5XrD4LXZ3MnATQZ5Xk0qfa6xs3yT5s+IaqPREt0S
+ 12xn/Cg6nf7Y8V9br2FASP6Pb4Im/5EBAqq7fjEk2eqMZiy4iW4//DpRo0iDuvRvW8te7J7rj
+ slZ0uAEEpZC36xKMICdBR3v77MbFvyM/hfPtkUSx4hVT/BRcQK3msvAYifJ5w5X1xPRLhXeVl
+ NoHp/DKqvluIs1RIuLfk8DVNP7c5M7eeyn/p+wiKhG1xIIMjaex7IvOpxZ02rjstBe6V6NzIP
+ LUiwbrxzzFGq9ru/czfpAlQOTh2j8WbjOej/E5EMs9i5SrGseHsphbsUtGSj3mpLg+J1V2KKA
+ xX2iY+gZLGVpweVeLKQs7UloyqP3M1TN6p9evBS81RnlF6V9NsGpXDWU2WCeNqAlE7gAx5EX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285980>
 
-Use the new FORMATPRINTF macro (in git-compat-util.h) to declare the gcc function
-attribute 'format printf'
+Hi,
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- advice.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Fri, 5 Feb 2016, Johannes Schindelin wrote:
 
-diff --git a/advice.h b/advice.h
-index b341a55..eef82e1 100644
---- a/advice.h
-+++ b/advice.h
-@@ -20,8 +20,7 @@ extern int advice_object_name_warning;
- extern int advice_rm_hints;
- 
- int git_default_advice_config(const char *var, const char *value);
--__attribute__((format (printf, 1, 2)))
--void advise(const char *advice, ...);
-+FORMATPRINTF(1,2) void advise(const char *advice, ...);
- int error_resolve_conflict(const char *me);
- extern void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
--- 
-2.5.0
+> On Thu, 4 Feb 2016, Klinger, Xia wrote:
+> 
+> > Thanks for confirming it. I hope a fix is available soon. I am using a
+> > very old version of Git at the moment to work around this issue, which
+> > doesn't comply to the requirement of our Stash Git Server from
+> > Atlassian.
+> 
+> [...] I worked on a fix for part of the day.
+
+Judging from our past interaction, I would guess that you missed that
+2.7.1 fixes this. Just wanted to let you know.
+
+Ciao,
+Johannes
