@@ -1,133 +1,100 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv9 0/6] Expose submodule parallelism to the user
-Date: Thu, 11 Feb 2016 12:33:40 -0800
-Message-ID: <CAGZ79kZE51PwFMtZL2BaUtiD87QbGJ67gBnxE2rK7LWzJbnoFA@mail.gmail.com>
-References: <1455051274-15256-1-git-send-email-sbeller@google.com>
-	<xmqq4mdh36o8.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYt9bw9MreiBhA_ZQNjS+1Xi71aNGwkjcfC1hwxkOoyYA@mail.gmail.com>
-	<xmqqziv91qzi.fsf@gitster.mtv.corp.google.com>
-	<xmqqlh6rvvwb.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/22] argv-array.h: use the FORMATPRINTF macro to declare the gcc function attribute 'format printf'
+Date: Thu, 11 Feb 2016 12:53:45 -0800
+Message-ID: <xmqqd1s3vuhy.fsf@gitster.mtv.corp.google.com>
+References: <1455194339-859-1-git-send-email-gitter.spiros@gmail.com>
+	<1455194339-859-4-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 11 21:33:47 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 11 21:53:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aTxvu-0008GH-0R
-	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 21:33:46 +0100
+	id 1aTyFN-0007NF-Aw
+	for gcvg-git-2@plane.gmane.org; Thu, 11 Feb 2016 21:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbcBKUdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 15:33:42 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:33040 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbcBKUdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 15:33:41 -0500
-Received: by mail-ig0-f169.google.com with SMTP id y8so19380423igp.0
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 12:33:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dK5LQq7U7HznspYg+eYK775HLNqo2BKBsTjLD8zaQ30=;
-        b=edFVGSc1338mq2yVRDHbblmu3L8ab+IWuwyFdMnzfKCILwkZofU9sQqSOIya6tCelp
-         VjFwwtS1upF932/zrR2HFjf0lfqWqt2PPjYULPa9X5YN7xD8Kgd5+sErH2tSAtoe8qsJ
-         1GeWmWv2WUIEdwzjaCkaM3V99b0xZelSmAr2Ux+tScpZLdTFRwPo7t/LUZdFaxhCz1Jm
-         mePSwyn9EPspvcFBmZIRCd7HMKUAfBCqz/ucw/DnHORJ+tnPIrogw/mjJiHFxaJc3+h0
-         57TOzOIQjJphvQwcJIP4CTgQQRtZ6SXMOTG3kViyD8b8O3JJ7L6kOOelOvJxk/llu0VY
-         cTlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=dK5LQq7U7HznspYg+eYK775HLNqo2BKBsTjLD8zaQ30=;
-        b=Eft16ni/xfrDt0LwcQinAvR3QvIn7kNQ7gN6heY0CldqDmUW5TizJ8JMdgIv6trzTa
-         3qZS1psF577ui5x07nzP76eifvpbMi1pHHjop0R6e22YliXkXKnfnsHf2tG10MN8/qnZ
-         kI9UzdptiauA13hlXqr32yGR5bJYYuHY4i2r+3HwrRpsrJ2e+GyZTcouSKAkpm/Eeftg
-         vhkWXYiK2iWs+GLiVPj9rJQgRBKSqSs+C9vTXeufyPORhvQf46C6HkrF9Jnx9o28uVrF
-         9i4cvf97xATLijmBt1qEDbJKjzn5XD5oNookdnG6/WLqqANqCHLDiUolyGDVYo+ltQ2w
-         V9og==
-X-Gm-Message-State: AG10YOT2gf4QtAD28Hu9S+HEYDzp35FOalMPb7PeIdZbohbBGR9FUCvKL/S1S4XFZvzl2MbdgWrDLdypuTcvNxim
-X-Received: by 10.50.88.74 with SMTP id be10mr441263igb.93.1455222820706; Thu,
- 11 Feb 2016 12:33:40 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Thu, 11 Feb 2016 12:33:40 -0800 (PST)
-In-Reply-To: <xmqqlh6rvvwb.fsf@gitster.mtv.corp.google.com>
+	id S1751233AbcBKUxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 15:53:49 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751103AbcBKUxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 15:53:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 42C624249F;
+	Thu, 11 Feb 2016 15:53:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J1mOCeaIQiJHztfz98OIN0L7WWY=; b=UhIMnD
+	ScIlORh//PDJDAxerKW1jS1iQK+JL3VqkmeF+cZtEZ8w+3iKBKB397AbTR2dyHTz
+	5PG/bZ0RcoIxn5O/XtXgxTKHDJNufxfYmgT+9/E++f1KC1fUeoqkQ9GtSOqqT7/i
+	5y5ObKRr0f9vbFbkLJyN2ktygVb/zF/naNq+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Tqu6136O7aAX0nfAYW7jE2TGEVT+I2dz
+	DSa7m8+BnMG9cYVryvGtt8BXRobfDsoXD/p89dagCaEpLGwHi42a1OFgmgnj6Gn5
+	834VUGk9qBp2AZAXeMgU7ANMUldeaDR48RzP328cRAkH+yB1uRzgfRidwgkEjhJ9
+	qNcQuK5/wtE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29B7C4249D;
+	Thu, 11 Feb 2016 15:53:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8510E4249A;
+	Thu, 11 Feb 2016 15:53:46 -0500 (EST)
+In-Reply-To: <1455194339-859-4-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Thu, 11 Feb 2016 12:38:40 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8B386766-D101-11E5-8939-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/285998>
 
-On Thu, Feb 11, 2016 at 12:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Elia Pinto <gitter.spiros@gmail.com> writes:
+
+> Use the new FORMATPRINTF macro (in git-compat-util.h) to declare the gcc function
+> attribute 'format printf'
 >
->> Stefan Beller <sbeller@google.com> writes:
->>
->>>>> * This seems to clash with 00/20] refs backend.
->>>>>> Applied this on top of a merge between the current 'master' and
->>>>>> 'sb/submodule-parallel-update' topic to untangle the dependency;
->>>>>> otherwise there is no way for this topic to make progress X-<.
->>>>>
->>>>> Anything I can do to help with easing the clash?
->>>>
->>>> Perhaps try to rebase the series on top of such a merge (with this
->>>> updated series) yourself and propose it as a basis for the next
->>>> reroll for David?  In short, working together with topic(s) that
->>>> touch the same area?
->>>
->>> Ok, I'll see if I can find a better commit to base this series on.
->>
->> That is not what I meant.  I meant rebasing the refs-backend series
->> on top of a merge between this one and 'master', just like the way I
->> queued the refs-backend series on top of a merge between the
->> previous round of this series and 'master'.
->>
->> These two topics want to update the same piece of code, so another
->> possibility is to rebase this series on top of a merge between
->> refs-backend and 'master', but the current iteration of refs-backend
->> already depends on the previous round of this topic.  Rebasing this
->> on top of refs-backend would involve first adjusting parts of
->> refs-backend that touched the same code as the previous round of
->> submodule-parallel-update touched so that refs-backend would work
->> directly on top of 'master', and then including the necessary change
->> to the refs-backend code while rebuilding submodule-parallel-update
->> on top of the result.  So I do not think you would go in that
->> direction.
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  argv-array.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Having said that, at least for this round, I do not think there is
-> nothing to do at this point on your end; I just created a merge
-> between master and your updated sb/submodule-parallel-update and
-> then rebased the LMDB series on top of it.  It at least applies
-> cleanly and I expect it would test OK as well (the test is still
-> running).
+> diff --git a/argv-array.h b/argv-array.h
+> index a2fa0aa..e303dfd 100644
+> --- a/argv-array.h
+> +++ b/argv-array.h
+> @@ -13,7 +13,7 @@ struct argv_array {
+>  
+>  void argv_array_init(struct argv_array *);
+>  void argv_array_push(struct argv_array *, const char *);
+> -__attribute__((format (printf,2,3)))
+> +FORMATPRINTF(2,3)
+>  void argv_array_pushf(struct argv_array *, const char *fmt, ...);
+>  LAST_ARG_MUST_BE_NULL
+>  void argv_array_pushl(struct argv_array *, ...);
 
-I was about to send another round of this series with all the discussion
-addressed and then take a look how to resolve any conflicts if any.
+OK, this may answer my previous question.
 
-This sounds promising.
+It might be pleasing to the eyes when these two macros appearing
+together in all CAPS, making them look similar and consistent,
+perhaps with two more tweaks:
 
->
-> On your plate is to adjust the submodule-init topic so that it knows
-> that the .update field no longer is a string (but is now an enum).
+ - Imitate LAST_ARG_MUST_BE_NULL and spell it FORMAT_PRINTF;
 
-After the reroll of this series.
+ - Consistently have SP after comma, i.e. FORMAT_PRINTF(2, 3),
+   or to make it obvious that this thing is a special magic, drop SP
+   (i.e. this patch would stay the same but some other patches left
+   a space after comma, which made them look more inconsistent).
 
->
-> I did try doing that myself to see the extent of necessary changes
-> but did not finish it myself, because I suspect that
-> sb/submodule-parallel-update may need further updates.
+Thanks.  I am not 100% sold on this yet, though.
 
-I would hope to address that all within the next round, as the review
-discussion seemed to have died down and I'll be fixing all the issues
-pointed at.
 
-Thanks,
-Stefan
 
->
-> Thanks.
+ 
