@@ -1,74 +1,77 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Fri, 12 Feb 2016 06:53:42 +0700
-Message-ID: <CACsJy8DLYjXW1VBsxLYwcpjFV2s3MKqw9FL_2S7dMXpZigc2kA@mail.gmail.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
- <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
- <CAGZ79kZMvxa5Np4GbShv_A6NZwVAqff94+d8MFTZwrZS+2CqeQ@mail.gmail.com> <20160210210115.GA10155@google.com>
+Subject: Re: Git config depth option?
+Date: Fri, 12 Feb 2016 07:16:54 +0700
+Message-ID: <CACsJy8DV5HCMtphbyft6Jc6sk3+rutvQY9sqs3jQjf3aD4tUZw@mail.gmail.com>
+References: <CAG7bRqy=eMhr7G_7ODUcXGCHQ97uZYicTiav8-vL8hVKkSV_gg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 00:54:20 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Gary Mort <gary@sherodesigns.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 01:17:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aU13x-0000C7-G9
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 00:54:17 +0100
+	id 1aU1QP-0001qs-3U
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 01:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467AbcBKXyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 18:54:15 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:35362 "EHLO
-	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273AbcBKXyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 18:54:13 -0500
-Received: by mail-lf0-f43.google.com with SMTP id l143so42119171lfe.2
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 15:54:12 -0800 (PST)
+	id S1750981AbcBLAR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 19:17:26 -0500
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:33857 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbcBLARY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 19:17:24 -0500
+Received: by mail-lb0-f182.google.com with SMTP id uq3so1186663lbc.1
+        for <git@vger.kernel.org>; Thu, 11 Feb 2016 16:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=28jtkRtLPr7CcbK1xwLEyCPbfngwUvZt5qMCcCZpivc=;
-        b=o8xuZcMod7ZkeyuqGle0b3iSir0YVvpxtQUnF7pkV7BLVbgbCsGzMYyj5dOB4CJtZQ
-         2fgo+JIZLX0LF9WXYZQDfkd01n36TfqLHuVTJzVAwXFkQQo6PUi600iiecF+jRnSkLqx
-         g8zlEsJpdW6dwwuuaIVco8IjN/omX8MAKk7P5jy+oEPIpqr4RLubyATKrsE+mrWEz+55
-         +L0ZITXegf8T/IIn1xq1ZB2chIacEu2ocpbu8BahpJkq6X61r0sw4BbZFbernLgDP6vd
-         qJ8m6th2gIirimv2cLvG13MQlxjQ9zUGx9OHc3y3Kg9RHRER+UH5Wo7MlZjPL+d2LS99
-         5xiQ==
+        bh=ccQXniLOQHVOzx+pCOvWr6CgAhr/brZiGSW1KMGJqt8=;
+        b=IhCjzR0XtUPIBf5KcL2XwXVniA5xm4CTjpJWCsPeUo50wrGm0rPUTZeOalwVrMknhh
+         0zFiTYi68J5Mton1GTZJInFofpi/NKWF3RF5wQlwFDhnlMrQd3aMdpw/KskKVALE5+x6
+         DF/+hCbwS84YNbREM9yxBRVs91coztSq93Y8qZhPkxj9jpwPi18wTek+6sf57b12tCOJ
+         A8qieoGSN7Lk6uu8u++ESoZ/EHN8BBPdNThg4DZ+LhlV96O02+IwyyIo3wqr3MZB/esS
+         Q9WVDI0sXixsqscn+Y5pB/I1ZMg4+iqjTuRg3fytkb+8QLdFtUqsW9xnEbWf7eVpC8Dj
+         voIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=28jtkRtLPr7CcbK1xwLEyCPbfngwUvZt5qMCcCZpivc=;
-        b=nNAWnDNya12O+Yhpx8puYHY0+cJ0XqQmI6Z/MOX6IHc3NWTCFmKkbsifCpZR79NaZ7
-         jkVHzD9l1/Q3yVBUztVLxxS98LN/5RmKKcmAMwnjbUkYR1deTuEm8OUv8raXgU9WwFeJ
-         t0U0QpdznxKH2OTOCUOfFmFinOE+B6J8Zn2AcXt0+k/iubHU8bIC25zcJrFM3YeODNfa
-         g6Jxz0tXq35IHYVLRDEblA4NUwh9g6YuXWX++gVAu8e6hTfNIlxfaNzOWLCMw0UPenaj
-         nqN8b9zHgotQLtq9z0NM4uuuJcgltCmGlyFiO+/wOh4vjzhhUNX0vqVro/OlHgjE4dAu
-         Mp/g==
-X-Gm-Message-State: AG10YOSeC3QOZZNG9S7Enh4qHYH0wu8FMAyDyJwyRutTrpWF/G9iL3UY+rvG/jjLWAqdz5Kh7ikyEDhpjg9lsg==
-X-Received: by 10.25.159.68 with SMTP id i65mr9357409lfe.94.1455234851988;
- Thu, 11 Feb 2016 15:54:11 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 11 Feb 2016 15:53:42 -0800 (PST)
-In-Reply-To: <20160210210115.GA10155@google.com>
+        bh=ccQXniLOQHVOzx+pCOvWr6CgAhr/brZiGSW1KMGJqt8=;
+        b=jlYT02SVnvH5wE2wvvUmTjYUJdA79MxqvXMW5oIF9SkRpZHyfnw8khCV839hQHkbF2
+         WFsRLBvgUsCmpdnmPocaQNry2VxeUsIx8okx+qhDmun3qHJtqoj29/sX2HFxYsdnl8Cg
+         mWt3l9zpEws2nArnsRenuBpiWqb6L+Piix8LWTEDQzJE9Io0Wdz3srQXqM381KC1O969
+         Q7V/SqJnBY4z7v3uTx6LCLeROUSRBorvTvFQ5wCBbRS+Ut8X9BA5/H5rSuri8lUFvB6D
+         UFuI+3MmpGFySMS6og/uPrvwqEYu/IG9oDrix2IHE3FaKEsVjbXBvHqxDPsmFg503hd4
+         IMkA==
+X-Gm-Message-State: AG10YOSBmqBASlDIBPNyQBgewNpTmZkphvloOiZQbkIrx1zGCmelu0cwVk94aVqPFmTk5Hhk4XCvCvXK4P+L/g==
+X-Received: by 10.112.130.41 with SMTP id ob9mr19220401lbb.81.1455236243609;
+ Thu, 11 Feb 2016 16:17:23 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 11 Feb 2016 16:16:54 -0800 (PST)
+In-Reply-To: <CAG7bRqy=eMhr7G_7ODUcXGCHQ97uZYicTiav8-vL8hVKkSV_gg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286022>
 
-On Thu, Feb 11, 2016 at 4:01 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> ....
+On Thu, Feb 11, 2016 at 12:57 AM, Gary Mort <gary@sherodesigns.com> wrote:
+> I checked the documentation and scanned through the source code for clone:
+> https://github.com/git/git/blob/master/builtin/clone.c
 >
-> I really like this design.  I'm tempted to implement it (since it
-> lacks a bunch of the downsides of clone.bundle).
+> And nothing jumps out at me as a way to specify a default depth using
+> a global git configuration file.  I see the option defined at
+> https://github.com/git/git/blob/master/builtin/clone.c#L87
+>
+> Since c is not my primary programming language, it may well be that
+> there is some common parsing function/file which automatically maps
+> command options to config file options.  So, is there a way to set a
+> default depth for the clone command?
 
-A bit disappointed we still do not address resumable fetch. But I'm
-happy that it makes people excited and one of them even tempted to
-implement. This thread sounds like we'll see resumable clone before
-2017 :)
+No. But it it necessary the _clone_ command? I mean, would this alias suffice?
+
+git config --global c1 'clone --depth 1'
 -- 
 Duy
