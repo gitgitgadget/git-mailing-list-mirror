@@ -1,80 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of for-each-ref
-Date: Fri, 12 Feb 2016 12:26:24 -0800
-Message-ID: <xmqqoablu13j.fsf@gitster.mtv.corp.google.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] git-completion.bash: always swallow error output of
+ for-each-ref
+Date: Fri, 12 Feb 2016 22:40:48 +0100
+Message-ID: <20160212224048.Horde.IpOeDKLAMM4a11F2xyIeY4M@webmail.informatik.kit.edu>
 References: <56B32953.2010908@gmail.com>
-	<20160204111307.GA30495@sigill.intra.peff.net>
-	<xmqqsi0xu2ac.fsf@gitster.mtv.corp.google.com>
-	<20160212201002.GA21598@sigill.intra.peff.net>
+ <20160204111307.GA30495@sigill.intra.peff.net>
+ <xmqqsi0xu2ac.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org,
-	szeder@ira.uka.de, tr@thomasrast.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 12 21:26:33 2016
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+Cc: Jeff King <peff@peff.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	git@vger.kernel.org, tr@thomasrast.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 12 22:41:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUKIR-0001ch-OL
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 21:26:32 +0100
+	id 1aULSv-0008J3-74
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 22:41:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbcBLU03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 15:26:29 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58037 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751239AbcBLU01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 15:26:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6035240B25;
-	Fri, 12 Feb 2016 15:26:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=48HQqdgH3AUwJd5zKaBtOXUo23o=; b=W9Q1kv
-	wWYNt7zx1+314LtkteZ3Jw5RAtsFBC5vvvYj75s2jBGllfcMwYdGJ4bv/OgN/Y0g
-	Yl/tXuSKBPLEL/flp4qu2XkP6iPk6R9Qy8dTvTr0dE+OhaMqL0stdsHfPfc6SDuZ
-	P9F6B6Izo6Ttaf2/N9VtUDVtG6uCFfrVIV2tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ocfpcW+BUsVHb+T7HD/J5Tmc/93pTkNR
-	721hX+mrM4mR0WvuELuorMvv+iwC6TT/sAfAM7QXM8RfEaytRP2nNurw1n2zoHdL
-	yFhBWbRKL94feWKWsMf9Zzy71p8zczAajGbECrZiV4Nm6CjszK3YXCm8LJCrX9cm
-	v4k6JQqqy6k=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5751140B23;
-	Fri, 12 Feb 2016 15:26:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF9B840B22;
-	Fri, 12 Feb 2016 15:26:25 -0500 (EST)
-In-Reply-To: <20160212201002.GA21598@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 12 Feb 2016 15:10:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E3A0CC0C-D1C6-11E5-8BC3-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751171AbcBLVlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 16:41:21 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59570 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750904AbcBLVlU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2016 16:41:20 -0500
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1aULSk-0002Bu-Vk; Fri, 12 Feb 2016 22:41:15 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1aULSK-0001tW-OX; Fri, 12 Feb 2016 22:40:48 +0100
+Received: from x590d742f.dyn.telefonica.de (x590d742f.dyn.telefonica.de
+ [89.13.116.47]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Fri, 12 Feb 2016 22:40:48 +0100
+In-Reply-To: <xmqqsi0xu2ac.fsf@gitster.mtv.corp.google.com>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1455313275.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286078>
 
-Jeff King <peff@peff.net> writes:
 
-> I agree it's a lot more pleasant, assuming there are no cases where we
-> would want to pass through an error. But I really cannot think of one.
-> Even explosive "woah, your git repo is totally corrupted" messages
-> probably should be suppressed in the prompt.
+Quoting Junio C Hamano <gitster@pobox.com>:
+
+> Jeff King <peff@peff.net> writes:
 >
->> @@ -320,7 +320,7 @@ __git_heads ()
->>  			refs/heads
->>  		return
->>  	fi
->> -}
->> +} 2>/dev/null
+>> On Thu, Feb 04, 2016 at 11:34:59AM +0100, Sebastian Schuberth wrote:
+>>
+>>> This avoids output like
+>>>
+>>>     warning: ignoring broken ref refs/remotes/origin/HEAD
+>>>
+>>> while completing branch names.
+>>
+>> Hmm. I feel like this case (HEAD points to a branch, then `fetch
+>> --prune` deletes it) came up recently and we discussed quieting that
+>> warning. But now I cannot seem to find it.
+>>
+>> Anyway, I this is a reasonable workaround. Errors from bash completion
+>> scripts are almost always going to be useless and get in the way of
+>> reading your own prompt.
 >
-> Today I learned about yet another fun corner of POSIX shell.
+> I think that is absolutely the right stance to take, but then I
+> wonder if it is a sensible execution to sprinkle 2>/dev/null
+> everywhere.
+>
+> For example, couldn't we do something like this instead?
+>
+> This is just for illustration and does not remove all 2>/dev/null
+> and replace them with a single redirection that covers the entire
+> shell function body, but something along this line smells a lot more
+> pleasant.  I dunno.
 
-I may have learned about this soon after I started learning bash,
-but I admit that this was the first time I found a practical use
-case for it ;-).
+Please no :)
+
+First, we don't have to redirect stderr of every completion function,
+it's sufficient to do so only for the two "main" entry point functions
+__git_main() and __gitk_main().
+
+But:
+
+  * It would swallow even those errors that we are interested in,
+    e.g. (note the missing quotes around $foo):
+
+       $ func () { if [ $foo = y ] ; then echo "foo is y" ; fi ; }
+       $ foo=
+       $ func 2>/dev/null
+       $ func
+       bash: [: =: unary operator expected
+
+    Something like this should not happen, it's a bug in the
+    completion script that should be fixed, and we should get a bug
+    report.
+
+  * I often find myself tracing/debugging the completion script
+    through stderr by scattering
+
+       echo >&2 "foo: '$foo'"
+
+    and the like all over the place.  If completion functions' stderr
+    were redirected, then I would have to disable that redirection
+    first to be able do this kind of poor man's tracing.
+
+  * I have a WIP patch series that deals with errors from git
+    commands.
+    It's a mixed bag of __gitdir()-related cleanups, fixes and
+    optimizations, which factors out all git executions into a
+    __git() wrapper function and redirects stderr only in that
+    function, thereby eliminating most of the 2>/dev/null
+    redirections in the completion script.
+    It still needs some work to iron out a wrinkle or two around
+    corner cases, though.
+
+
+
+>  contrib/completion/git-completion.bash | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash  
+> b/contrib/completion/git-completion.bash
+> index ba4137d..637c42d 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -47,14 +47,14 @@ __gitdir ()
+>  		elif [ -d .git ]; then
+>  			echo .git
+>  		else
+> -			git rev-parse --git-dir 2>/dev/null
+> +			git rev-parse --git-dir
+>  		fi
+>  	elif [ -d "$1/.git" ]; then
+>  		echo "$1/.git"
+>  	else
+>  		echo "$1"
+>  	fi
+> -}
+> +} 2>/dev/null
+>
+>  # The following function is based on code from:
+>  #
+> @@ -320,7 +320,7 @@ __git_heads ()
+>  			refs/heads
+>  		return
+>  	fi
+> -}
+> +} 2>/dev/null
+>
+>  __git_tags ()
+>  {
+> @@ -330,7 +330,7 @@ __git_tags ()
+>  			refs/tags
+>  		return
+>  	fi
+> -}
+> +} 2>/dev/null
+>
+>  # __git_refs accepts 0, 1 (to pass to __gitdir), or 2 arguments
+>  # presence of 2nd argument means use the guess heuristic employed
+> @@ -389,7 +389,7 @@ __git_refs ()
+>  			"refs/remotes/$dir/" 2>/dev/null | sed -e "s#^$dir/##"
+>  		;;
+>  	esac
+> -}
+> +} 2>/dev/null
+>
+>  # __git_refs2 requires 1 argument (to pass to __git_refs)
+>  __git_refs2 ()
