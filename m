@@ -1,103 +1,108 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv11 2/7] submodule-config: drop check against NULL
-Date: Fri, 12 Feb 2016 15:34:35 -0800
-Message-ID: <1455320080-14648-3-git-send-email-sbeller@google.com>
-References: <1455320080-14648-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv11 0/7] Expose submodule parallelism to the user
+Date: Fri, 12 Feb 2016 15:34:33 -0800
+Message-ID: <1455320080-14648-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
 	Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Sat Feb 13 00:34:52 2016
+X-From: git-owner@vger.kernel.org Sat Feb 13 00:34:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUNEh-0005Qz-JP
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 00:34:51 +0100
+	id 1aUNEg-0005Qz-4a
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 00:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518AbcBLXet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 18:34:49 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35051 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbcBLXer (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 18:34:47 -0500
-Received: by mail-pa0-f43.google.com with SMTP id ho8so54086687pac.2
-        for <git@vger.kernel.org>; Fri, 12 Feb 2016 15:34:47 -0800 (PST)
+	id S1751115AbcBLXep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 18:34:45 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35771 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbcBLXeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 18:34:44 -0500
+Received: by mail-pf0-f180.google.com with SMTP id c10so55558403pfc.2
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 15:34:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gg0OL6+fO3Ckq4gIAbC2f2nr/mZBK2z/h4hobytx6Q4=;
-        b=h6gTZJ+KBHTR2T0LtfQh/VRSUAxjTYtmGTeLInUB8sYDbCDaXQSKdzvbLSZpQo/9Ao
-         mox9/Xcc74W83aDfynDMd5O2uyKNsvz+k5JkrChreIKmZFpfonSYIbn1gBPn4SFpBEiG
-         Mk+1/rWoha1sVuDzwNdbi/5fnDVDRu9DBIr1Qs2/Mi8vI9Ti1nagSQlr0T2zNCTv/Xiu
-         PKnoaVvwQ2iZgfwqJZBVZCi7GxBO/2NN53I4ibClr4GomCm33fUPdiuux5Io+qPxa2y/
-         ZXhLHeKrh65r6ilayYlcA1iqrOeZFimCah0RWfTHk0m/C3BxTwVKv6Q5q8uJ7ZiBv6ku
-         b8/w==
+        h=from:to:cc:subject:date:message-id;
+        bh=KOd6RWnIpl/PBN9tcUh/hQhDXzofYYBcqKpWXAGqAms=;
+        b=ez7Nkrn1upkhFeW7kgLt+zRbC/Mpm1/IP3PVU+uZUtE0eeeX/hhecCea5F7uKl16wt
+         hCKEFWFSH7h5oHY358UsM0NMZtroTFjOSMx30LSj5GzIpr10Fm0xEIT3QnXV+AUqlV2D
+         jjDN3k2LVQvLzWUqvn7tIrP027d0RJgaVZUU028ubuBmAKTa19fY7wmhAGNawTRUkPO1
+         oUDSaYnF4nNHJ4C762LSfU9XtjngWEkpy7yl/+9wcpscE/UweqIA/eO5jqBPcjRcvUS7
+         J5p+Qh0vditU2vcNhIBgDaSXejr5X7ifVv+44c7O7LW4tjqAufaTaflYyP/sPt3FCiJy
+         nlZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gg0OL6+fO3Ckq4gIAbC2f2nr/mZBK2z/h4hobytx6Q4=;
-        b=SldBos1HaAEHumXIHiv4kbmaXlVrW0USv1om8+TlpK0I8ZNnu1CKanVpEQLt70Bwnr
-         hpQb51QEaRvewThC2EifpB8oI1QMhbvdQxFBt3AdIaA3hGqkN7gmAhnzo4FCmIVezEDZ
-         zfP1LQ+YKSyBh5o0xXrOlj6GyNT0nN+wwRAiAVl+Utafa8RMzP4ziHIrbmA3WZsxb96S
-         ql3jippAxljOc6vDmp9SXPzUcdMH8DatQHN92IGrdlBb6rQ4ZSurPurLpK1YKJ2NjBmf
-         jqefPouTFB1gh4suQIq1m00Rx8s/HzNrP9m7+kuxRht28JLUxlaPa8pD6wjMpoKyPfi3
-         c8rg==
-X-Gm-Message-State: AG10YOQ1R2yX0HV8P7jPakqMj1e4gCG43ZhGEPk4BM5XiO6wEQ+O9yGxaUVvbPGox/EUo+/T
-X-Received: by 10.66.237.38 with SMTP id uz6mr5988925pac.136.1455320086831;
-        Fri, 12 Feb 2016 15:34:46 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=KOd6RWnIpl/PBN9tcUh/hQhDXzofYYBcqKpWXAGqAms=;
+        b=OHWvbpVI+KL+rE9gfKEFUv2zt2rSoQM4+rtmSqfxqhuD1SoHgwZY5kPwGo55MsMb/f
+         JbaXksy9UoHyUl/PsYNkQn0Zn1k+vGNZnzJrzjj5x9g6cd+3QJqOminuARfBYjmFXABV
+         f/CfsWOgpgINTJn+rMxWf52793/FSBaFTjH/1yZd+OubQAnktfgyomZnRRaEPJe8CQP9
+         MwQ1H10Qru9DYspSZ83sG8mYo2Ee5uV+3aFIopCZ7tpQsQ3x42VCwSPjFpIVUya1t3eE
+         5yCk5+joS285IXt95yrIuCyVKmxKMw3V+gP9bb7dmSCnDqvR/wxRuKpVsr8FI8krq87g
+         ghOw==
+X-Gm-Message-State: AG10YOTQ/YPIETNrjg87nopxrXGsWuuIAXGGv9l7/vrdLKdjmkT6NJeQU/SJJ1pWF9o2H1g/
+X-Received: by 10.98.73.205 with SMTP id r74mr6035115pfi.118.1455320083892;
+        Fri, 12 Feb 2016 15:34:43 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:f1e7:203f:9d1e:8193])
-        by smtp.gmail.com with ESMTPSA id 87sm15449156pfq.93.2016.02.12.15.34.45
+        by smtp.gmail.com with ESMTPSA id e79sm21825528pfb.76.2016.02.12.15.34.42
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 12 Feb 2016 15:34:45 -0800 (PST)
+        Fri, 12 Feb 2016 15:34:42 -0800 (PST)
 X-Mailer: git-send-email 2.7.1.292.g18a4ced.dirty
-In-Reply-To: <1455320080-14648-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286085>
 
-Adhere to the common coding style of Git and not check explicitly
-for NULL throughout the file. There are still other occurrences in the
-code base but that is usually inside of conditions with side effects.
+> This replaces origin/sb/submodule-parallel-update
+> and is based on origin/master
+>
+> * broke out the patch for redirecting errors to stderr in "submodule update"
+>   (Thanks Jonathan, Jacob)
+> * use git_config_int and manually check for less than 0.
+>   (Thanks Junio)
+> * use an enum consistently now for submodule update strategy
+>   (Thanks Junio)
+> * fixed the funny indentation
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+* removed the indirect call to submodule_config, but made it directly
+  (Thanks Jonathan)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 254067b..afd294b 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -295,7 +295,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 	if (!strcmp(item.buf, "path")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
--		else if (!me->overwrite && submodule->path != NULL)
-+		else if (!me->overwrite && submodule->path)
- 			warn_multiple_config(me->commit_sha1, submodule->name,
- 					"path");
- 		else {
-@@ -319,7 +319,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 	} else if (!strcmp(item.buf, "ignore")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
--		else if (!me->overwrite && submodule->ignore != NULL)
-+		else if (!me->overwrite && submodule->ignore)
- 			warn_multiple_config(me->commit_sha1, submodule->name,
- 					"ignore");
- 		else if (strcmp(value, "untracked") &&
-@@ -335,7 +335,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 	} else if (!strcmp(item.buf, "url")) {
- 		if (!value) {
- 			ret = config_error_nonbool(var);
--		} else if (!me->overwrite && submodule->url != NULL) {
-+		} else if (!me->overwrite && submodule->url) {
- 			warn_multiple_config(me->commit_sha1, submodule->name,
- 					"url");
- 		} else {
+> 
+> I haven't looked at how this integrates with Davids refs backend, I'll take a
+> look at the merge tomorrow
+>
+> Sorry for the long turn around time,
+> Thanks,
+> Stefan
+
+
+Stefan Beller (7):
+  submodule-config: keep update strategy around
+  submodule-config: drop check against NULL
+  fetching submodules: respect `submodule.fetchJobs` config option
+  submodule update: direct error message to stderr
+  git submodule update: have a dedicated helper for cloning
+  submodule update: expose parallelism to the user
+  clone: allow an explicit argument for parallel submodule clones
+
+ Documentation/config.txt        |   6 +
+ Documentation/git-clone.txt     |   6 +-
+ Documentation/git-submodule.txt |   7 +-
+ builtin/clone.c                 |  19 +++-
+ builtin/fetch.c                 |   2 +-
+ builtin/submodule--helper.c     | 239 ++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh                |  54 ++++-----
+ submodule-config.c              |  18 ++-
+ submodule-config.h              |   2 +
+ submodule.c                     |  35 +++++-
+ submodule.h                     |  18 +++
+ t/t5526-fetch-submodules.sh     |  14 +++
+ t/t7400-submodule-basic.sh      |   4 +-
+ t/t7406-submodule-update.sh     |  27 +++++
+ 14 files changed, 402 insertions(+), 49 deletions(-)
+
 -- 
 2.7.1.292.g18a4ced.dirty
