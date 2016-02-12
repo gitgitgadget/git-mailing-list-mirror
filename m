@@ -1,38 +1,34 @@
 From: Christoph Egger <christoph@christoph-egger.org>
-Subject: Re: [PATCH] Implement https public key pinning
-Date: Fri, 12 Feb 2016 02:15:29 +0100
-Organization: Privat
-Message-ID: <87oabmg24u.fsf@mitoraj.siccegge.de>
-References: <20160211225437.GA33955@mitoraj.siccegge.de>
-	<alpine.DEB.2.20.1602120030120.5268@tvnag.unkk.fr>
+Subject: [PATCH v2] Implement https public key pinning
+Date: Fri, 12 Feb 2016 02:18:34 +0100
+Message-ID: <20160212011834.GA3322@mitoraj.siccegge.de>
+References: <87oabmg24u.fsf@mitoraj.siccegge.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Fri Feb 12 02:15:56 2016
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 02:18:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aU2Kx-0006aL-1D
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 02:15:55 +0100
+	id 1aU2Ne-0000Iz-TJ
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 02:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbcBLBPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Feb 2016 20:15:43 -0500
-Received: from chadwick.siccegge.de ([185.44.107.74]:42823 "EHLO
+	id S1751312AbcBLBSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 20:18:39 -0500
+Received: from chadwick.siccegge.de ([185.44.107.74]:35086 "EHLO
 	chadwick.siccegge.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062AbcBLBPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 20:15:42 -0500
+	with ESMTP id S1751291AbcBLBSi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 20:18:38 -0500
 Received: by chadwick.siccegge.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
 	(Exim 4.86 (FreeBSD))
 	(envelope-from <christoph@christoph-egger.org>)
-	id 1aU2Kd-000Ha6-RN; Fri, 12 Feb 2016 01:15:40 +0000
-In-Reply-To: <alpine.DEB.2.20.1602120030120.5268@tvnag.unkk.fr>
-	(sfid-20160212_003034_201980_7AA25BC7) (Daniel Stenberg's message of "Fri,
-	12 Feb 2016 00:30:57 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/kfreebsd)
+	id 1aU2NY-000HaX-0R
+	for git@vger.kernel.org; Fri, 12 Feb 2016 01:18:36 +0000
+Content-Disposition: inline
+In-Reply-To: <87oabmg24u.fsf@mitoraj.siccegge.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 X-SA-Exim-Connect-IP: 95.90.220.243
 X-SA-Exim-Mail-From: christoph@christoph-egger.org
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on chadwick.siccegge.de
@@ -45,52 +41,73 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286028>
 
---=-=-=
-Content-Type: text/plain
+Add the http.pinnedpubkey configuration option for public key
+pinning. It allows any string supported by libcurl --
+base64(sha256(pubkey)) or filename of the full public key.
 
-Daniel Stenberg <daniel@haxx.se> writes:
-> On Thu, 11 Feb 2016, Christoph Egger wrote:
->> +#if LIBCURL_VERSION_NUM >= 0x074400
->
-> That should probably be 0x072c00 ...
+Signed-off-by: Christoph Egger <christoph@christoph-egger.org>
+---
+ Documentation/config.txt |  6 ++++++
+ http.c                   | 11 +++++++++++
+ 2 files changed, 17 insertions(+)
 
-This is, of course, right.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 27f02be..35b4495 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1727,6 +1727,12 @@ http.sslCAPath::
+ 	with when fetching or pushing over HTTPS. Can be overridden
+ 	by the 'GIT_SSL_CAPATH' environment variable.
+ 
++http.pinnedpubkey::
++	Public key of the https service. It may either be the filename of
++	a PEM or DER encoded public key file or a string starting with
++	'sha256//' followed by the base64 encoded sha256 hash of the
++	public key. See also libcurl 'CURLOPT_PINNEDPUBLICKEY'.
++
+ http.sslTry::
+ 	Attempt to use AUTH SSL/TLS and encrypted data transfers
+ 	when connecting via regular FTP protocol. This might be needed
+diff --git a/http.c b/http.c
+index dfc53c1..5549fe5 100644
+--- a/http.c
++++ b/http.c
+@@ -57,6 +57,9 @@ static const char *ssl_key;
+ #if LIBCURL_VERSION_NUM >= 0x070908
+ static const char *ssl_capath;
+ #endif
++#if LIBCURL_VERSION_NUM >= 0x072c00
++static const char *ssl_pinnedkey;
++#endif
+ static const char *ssl_cainfo;
+ static long curl_low_speed_limit = -1;
+ static long curl_low_speed_time = -1;
+@@ -239,6 +242,10 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	if (!strcmp("http.sslcapath", var))
+ 		return git_config_pathname(&ssl_capath, var, value);
+ #endif
++#if LIBCURL_VERSION_NUM >= 0x072c00
++	if (!strcmp("http.pinnedpubkey", var))
++		return git_config_pathname(&ssl_pinnedkey, var, value);
++#endif
+ 	if (!strcmp("http.sslcainfo", var))
+ 		return git_config_pathname(&ssl_cainfo, var, value);
+ 	if (!strcmp("http.sslcertpasswordprotected", var)) {
+@@ -499,6 +506,10 @@ static CURL *get_curl_handle(void)
+ 	if (ssl_capath != NULL)
+ 		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
+ #endif
++#if LIBCURL_VERSION_NUM >= 0x072c00
++	if (ssl_pinnedkey != NULL)
++		curl_easy_setopt(result, CURLOPT_PINNEDPUBLICKEY, ssl_pinnedkey);
++#endif
+ 	if (ssl_cainfo != NULL)
+ 		curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
+ 
+-- 
+2.7.0
 
-I used 7.44 / 0x072c00 as base because it has robust support for this
-feature (including the sha256// variant). One could lower that depending
-on the compromises one is willing to take FWIW
 
-  Added in 7.39.0 for OpenSSL, GnuTLS and GSKit. Added in 7.43.0 for NSS
-  and wolfSSL/CyaSSL. Added for mbedtls in 7.47.0, sha256 support added
-  in 7.44.0 for OpenSSL, GnuTLS, NSS and wolfSSL/CyaSSL. Other SSL
-  backends not supported.
-
-Also some people suggested that git should fail if this option is
-requested in the config but not supported by the libcurl version instead
-of falling back to just not pin the key. I'm undecided about that.
-
-  Christoph
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJWvTIxAAoJEKv/7bJACMb5Cf0P/2a3q3znawDyWdJmwWdGpYpQ
-QXuX2OYHLRaI5knePBaH1zhZkapE0qk2CPqomGd4kG6Vd8ysno0tD5HuAtvpMVr4
-cFn82+WZ/3ugOQW6nvL81983/3u7tLisH55B9paZrRuKSmPeAxuxR3fophraQO4v
-+Xav7AaK7AE0ifO4ZmUCwdzAc+EoP+TbrpqZkIk/Z0rl0UlNIiJJH//kB6WfjS/O
-sbOvThRGy52xLOBSTyfuCT9aXqP0flEibv9sNPwCU2GLLtscWFloOXEUD8hU3Do2
-FJic1/k55DTTjKl0uIsmpYIGQVhaWh2k5aSHL3rsY2RvR5U2lH3jFpZpFagTjspG
-3a2YcaQaCeqHsjPDhaQbQZpia/EuawTF7GehI5Sh0CSWkyBOVrHDVkWkFe4+E+/X
-zLXEJcRMChCAZ7FuU5TKg14x8wA+tMYJtRMQsboFYZbWCgvLhHPZGGh8jEnvDd2I
-3nGFQVwdSADc1AvtTRMhzZl6AHK8BvVzFlWLBl+kAnY4mFTpBpN+6NhxieEFBHbA
-0O+UWQ1/XTqxu3j7YMVWRhxrSmjGfv7uIfU81xT5Mo+TJn5QnisgK5otpdY8uGrr
-CIUVM9e+Pqr3cDn4NsUAWcqUhEgScAo4zik/7TX/to+l2B0aBL9edF89YHm1Gze3
-evK+zF48AJZl9mojaUzr
-=tcbc
------END PGP SIGNATURE-----
---=-=-=--
+-- 
