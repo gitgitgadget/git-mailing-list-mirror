@@ -1,133 +1,73 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] rev-parse: take prefix into account in --git-common-dir
-Date: Fri, 12 Feb 2016 11:31:45 +0700
-Message-ID: <1455251505-20685-1-git-send-email-pclouds@gmail.com>
-References: <20160212034723.GA20739@glandium.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 12 Feb 2016 08:10:34 +0100
+Message-ID: <vpqd1s2e74l.fsf@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr>
+	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: mh@glandium.org,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 05:31:51 2016
+Content-Type: text/plain
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 12 08:11:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aU5OV-0006Ya-TZ
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 05:31:48 +0100
+	id 1aU7tB-00045C-Jm
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 08:11:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910AbcBLEbo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 23:31:44 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34876 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543AbcBLEbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Feb 2016 23:31:41 -0500
-Received: by mail-pf0-f177.google.com with SMTP id c10so41584571pfc.2
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 20:31:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=kPvpdnHiWAWuyrfw51mehGXpeGCtjTj9zW+H0UM2BxI=;
-        b=VfILZaEamm0XxPZQMW+EGhxGFkyEXS61r4cmBWHT+FzrHXtZm037Ah2kAInDE4G3Dy
-         PUJ3FE69wsKPoLtekBfDfYtDYrY0dwDjdxCqoC6cN/Qg0Nrvp987USuXSwxmQq37sKPd
-         OHYQL3yyRUk/MtE18+65eizKlAgK1zpmQbruJDkYN5KwP/mLiT/KpxHI3VlQ/5qRLDN4
-         HY3lvHqIO9u/DH4GWAqx+zHop/L62+lracgT06ywTcA3ftYy0uUWIpE+06AdFfeRBgS2
-         qeJweZhz4Qk9QQvNpIrRsmVTfnAm9B829XEo92UDyQklPt9oXseuYK83Yc3w7rsMBQ3L
-         cR2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=kPvpdnHiWAWuyrfw51mehGXpeGCtjTj9zW+H0UM2BxI=;
-        b=aBm1V3eUYZRiltYqb5Gk607XjAc6/4B5YpuXVwijaa0bRK0JzuxnAwiHvuAorU9IqE
-         dTvSwNguQeSAu4UbN1Ap+AP0irjXn2tPM1FMMcB3UFVRL/ESUBNU9JgnjHn0KyduSEzQ
-         MwmZytkN79kbMvEiYj3cY+YKYax9TxlrslSkmgywuSd7Wx2+N+wAw9RL6W6PrZmi1fis
-         72yblr/SN3lFpgwvMkOf12zs0wFbQk7VHMdEeSG9qtZAfk9uXCDGiYEdSiyiDQuYEyh3
-         dOxSXuR2brhApLn3wfsh+DJtLzbH6yeyZK7IBFOf+2PrHgXVTeJa9C6gYicF88Iw+b1I
-         M27Q==
-X-Gm-Message-State: AG10YORBm8seBqtvlD+qT2s9iaitzTBkG5cd6uXnAQTmU46a0b5SGIyqWYq75eCG//YTTg==
-X-Received: by 10.98.70.139 with SMTP id o11mr71857622pfi.123.1455251501085;
-        Thu, 11 Feb 2016 20:31:41 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id 195sm15646852pfa.5.2016.02.11.20.31.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Feb 2016 20:31:39 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 12 Feb 2016 11:32:00 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <20160212034723.GA20739@glandium.org>
+	id S1750966AbcBLHLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 02:11:04 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:37212 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750945AbcBLHKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 02:10:48 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1C7AXH0014519
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 12 Feb 2016 08:10:34 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1C7AY06015359;
+	Fri, 12 Feb 2016 08:10:34 +0100
+In-Reply-To: <CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
+	(Christian Couder's message of "Thu, 11 Feb 2016 09:36:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 12 Feb 2016 08:10:34 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1C7AXH0014519
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1455865836.55436@bnHh7Utw88iO0oNVR69vfg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286039>
 
-Most of the time, get_git_common_dir() returns an absolute path so
-prefix is irrelevant. If it returns a relative path (e.g. from the
-main worktree) then prefixing is required.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Noticed-by: Mike Hommey <mh@glandium.org>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Fri, Feb 12, 2016 at 10:47 AM, Mike Hommey <mh@glandium.org> wrote:
- > Hi,
- >
- > In a worktree, git rev-parse --git-common-dir returns the non
- > worktree-specific git directory. e.g. .git instead of
- > .git/worktrees/name. The problem is that while it returns the right
- > thing from a subdirectory of a worktree, it doesn't from a subdirect=
-ory
- > of the "main" work tree. In the latter case it returns ".git" instea=
-d
- > of the full path to it.
-=20
- Oops. Fixed.
+> Hi,
+>
+> On Wed, Feb 10, 2016 at 10:31 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>
+>> So, the first question is: are there volunteers to be GSoC mentors this
+>> year?
+>
+> I can co-mentor this year too, with you or someone else.
+> With you I think it will work out even if you have less time than last year.
 
- builtin/rev-parse.c      |  3 ++-
- t/t2027-worktree-list.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+So, that makes it 4 possible co-mentors, i.e. 2 potential slots. Not
+much, but it starts looking like last year ... ;-).
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index bd16876..cf8487b 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -763,7 +763,8 @@ int cmd_rev_parse(int argc, const char **argv, cons=
-t char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--git-common-dir")) {
--				puts(get_git_common_dir());
-+				const char *pfx =3D prefix ? prefix : "";
-+				puts(prefix_filename(pfx, strlen(pfx), get_git_common_dir()));
- 				continue;
- 			}
- 			if (!strcmp(arg, "--resolve-git-dir")) {
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 75ebb1b..1b1b65a 100755
---- a/t/t2027-worktree-list.sh
-+++ b/t/t2027-worktree-list.sh
-@@ -8,6 +8,16 @@ test_expect_success 'setup' '
- 	test_commit init
- '
-=20
-+test_expect_success 'rev-parse --git-common-dir on main worktree' '
-+	git rev-parse --git-common-dir >actual &&
-+	echo .git >expected &&
-+	test_cmp expected actual &&
-+	mkdir sub &&
-+	git -C sub rev-parse --git-common-dir >actual2 &&
-+	echo sub/.git >expected2 &&
-+	test_cmp expected2 actual2
-+'
-+
- test_expect_success '"list" all worktrees from main' '
- 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) =
-[$(git symbolic-ref --short HEAD)]" >expect &&
- 	test_when_finished "rm -rf here && git worktree prune" &&
---=20
-2.7.0.377.g4cd97dd
+Peff, would you be willing to co-admin with me (that would be cool, you
+are the one with most experience here and you know the SFC stuff for
+payment)? Are there any other co-admin volunteer?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
