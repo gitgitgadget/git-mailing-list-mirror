@@ -1,164 +1,192 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Sat, 13 Feb 2016 00:21:22 +0100
-Message-ID: <20160213002122.Horde.mxoPmZIuCikpV2PO97l11AI@webmail.informatik.kit.edu>
-References: <56B32953.2010908@gmail.com>
- <20160204111307.GA30495@sigill.intra.peff.net>
- <alpine.DEB.2.20.1602041216240.2964@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
-Cc: Jeff King <peff@peff.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	tr@thomasrast.ch
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 13 00:22:00 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv11 1/7] submodule-config: keep update strategy around
+Date: Fri, 12 Feb 2016 15:34:34 -0800
+Message-ID: <1455320080-14648-2-git-send-email-sbeller@google.com>
+References: <1455320080-14648-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	Jens.Lehmann@web.de
+X-From: git-owner@vger.kernel.org Sat Feb 13 00:34:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUN2G-0004lF-36
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 00:22:00 +0100
+	id 1aUNEg-0005Qz-Rv
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 00:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbcBLXVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 18:21:53 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:60864 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751965AbcBLXVv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2016 18:21:51 -0500
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1aUN24-0000lq-Np; Sat, 13 Feb 2016 00:21:48 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1aUN1e-00054V-FS; Sat, 13 Feb 2016 00:21:22 +0100
-Received: from x590d742f.dyn.telefonica.de (x590d742f.dyn.telefonica.de
- [89.13.116.47]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Sat, 13 Feb 2016 00:21:22 +0100
-In-Reply-To: <alpine.DEB.2.20.1602041216240.2964@virtualbox>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1455319308.
+	id S1751390AbcBLXer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 18:34:47 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:35043 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbcBLXep (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 18:34:45 -0500
+Received: by mail-pa0-f50.google.com with SMTP id ho8so54086453pac.2
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 15:34:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=F3Xsw5kvw92xAkTPp2OqeHGGvhYjK7SN6Li+bRwrvss=;
+        b=e4nIIuHtJp3vK+NFu4q/rgrtYxqQ3r3ixXiu+F1gZ5vEXzZL5syHMSkGASL9mJSEdp
+         Ghrp744N0CatkC9wBnE54jx6ktwmhMznKJxA4GnesveBx9Gq+PDhftfHQ5Uc7Fl2R9gu
+         Oud8br97ZoB4/frXuA89UM7do8L55iDMx0gXUIzr/UgBTGoXwGkC5JOIzvrlsy31HF0N
+         mxzqazcTvnVIPiaaTjWhy9jWUCffW+VjwRmzUg+gHxK56TvtRdqyatTpezAZx5OZIpMH
+         3tS/kk98htC0N9bEu2smR0iMq5d0hCo0yQDuNRv3Gfze5TAqAmNh0zsp5QTstFXeETER
+         4SrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=F3Xsw5kvw92xAkTPp2OqeHGGvhYjK7SN6Li+bRwrvss=;
+        b=YyrgvwAJiexe6IbViduXJX+qXiEoVHBV9C/7p59ZrH8xcwfstQ7gwq+8FkXDxs0ymm
+         weBEMXpkangJgToi6QHq3ya8pMhLgKVdHbmll5xmvM7F7dLzR1m1HVNJkJcotlVf43ec
+         GYFinWse42/v2hBRe78dgrogVf3qAacaMVTrcBnhwKnqDgrNuHSzW5dnHFkdhZMHWSi9
+         2GG7JF2cUcZ5u+DwrBQZRQnyr1x3Amg10xtwn2hklNWrTrs34a4uMwfZjpQDOkRKP5KC
+         JIv+NY3Nu5mmrbLSO+pkrAtcII/yRTGhknWmwhWNgxDdW0O9aayob/I4Lfu2iSqp7bHd
+         JN2Q==
+X-Gm-Message-State: AG10YOREvQsbQx0ShAkDzGiE18CIF8YrlzFPeKGrQOjxydUnit/3Qj0MDjTYIv4UpkJkaCMf
+X-Received: by 10.66.159.161 with SMTP id xd1mr5924540pab.104.1455320085434;
+        Fri, 12 Feb 2016 15:34:45 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:f1e7:203f:9d1e:8193])
+        by smtp.gmail.com with ESMTPSA id dz8sm21879399pab.19.2016.02.12.15.34.44
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 12 Feb 2016 15:34:44 -0800 (PST)
+X-Mailer: git-send-email 2.7.1.292.g18a4ced.dirty
+In-Reply-To: <1455320080-14648-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286083>
 
+Currently submodule.<name>.update is only handled by git-submodule.sh.
+C code will start to need to make use of that value as more of the
+functionality of git-submodule.sh moves into library code in C.
 
-Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+Add the update field to 'struct submodule' and populate it so it can
+be read as sm->update or from sm->update_command.
 
-> Hi Peff,
->
-> On Thu, 4 Feb 2016, Jeff King wrote:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule-config.c | 12 ++++++++++++
+ submodule-config.h |  2 ++
+ submodule.c        | 19 +++++++++++++++++++
+ submodule.h        | 16 ++++++++++++++++
+ 4 files changed, 49 insertions(+)
 
->> > diff --git a/contrib/completion/git-completion.bash  
->> b/contrib/completion/git-completion.bash
->> > index 15ebba5..7c0549d 100644
->> > --- a/contrib/completion/git-completion.bash
->> > +++ b/contrib/completion/git-completion.bash
->> > @@ -317,7 +317,7 @@ __git_heads ()
->> >  	local dir="$(__gitdir)"
->> >  	if [ -d "$dir" ]; then
->> >  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
->> > -			refs/heads
->> > +			refs/heads 2>/dev/null
->> >  		return
->>
->> Not really related to your topic, but digging into it caused me to read
->> b7dd2d2 (for-each-ref: Do not lookup objects when they will not be used,
->> 2009-05-27), which is about making sure for-each-ref is very fast in
->> completion.
->>
->> It looks like %(refname:short) is actually kind of expensive:
->
-> Yep, this was reported on the Git for Windows bug tracker, too:
->
-> 	https://github.com/git-for-windows/git/issues/524
->
->> $ time git for-each-ref --format='%(refname)' refs/tags  >/dev/null
->>
->> real    0m0.004s
->> user    0m0.000s
->> sys     0m0.004s
->>
->> $ time git for-each-ref --format='%(refname:short)' refs/tags >/dev/null
->>
->> real    0m0.009s
->> user    0m0.004s
->> sys     0m0.004s
->
-> And the timings in the ticket I mentioned above are not pretty small:
-> 0.055s vs 1.341s
-
-It's ironic that 'refname:short' came about because it was faster than
-'refname' plus removing 'refs/{heads,tags,remotes}/' in a shell loop, at
-least on Linux.
-
-However, 'refname:short' performs a lot more stat() calls per ref to check
-ambiguity, especially since many ref races got fixed.  In a repo with a
-single master branch:
-
-   $ strace git for-each-ref --format='%(refname)' refs/heads/master  
-2>&1 |grep 'stat("\.git.*\(master\|packed-refs\)'
-   stat(".git/refs/heads/master", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-   lstat(".git/refs/heads/master", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-
-   $ strace git for-each-ref --format='%(refname:short)'  
-refs/heads/master 2>&1 |grep 'stat("\.git.*\(master\|packed-refs\)'
-   stat(".git/refs/heads/master", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-   lstat(".git/refs/heads/master", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-   lstat(".git/master", 0x7fff6dac9610)    = -1 ENOENT (No such file  
-or directory)
-   stat(".git/packed-refs", 0x7fff6dac9460) = -1 ENOENT (No such file  
-or directory)
-   lstat(".git/refs/master", 0x7fff6dac9610) = -1 ENOENT (No such file  
-or directory)
-   stat(".git/packed-refs", 0x7fff6dac9460) = -1 ENOENT (No such file  
-or directory)
-   lstat(".git/refs/tags/master", 0x7fff6dac9610) = -1 ENOENT (No such  
-file or directory)
-   stat(".git/packed-refs", 0x7fff6dac9460) = -1 ENOENT (No such file  
-or directory)
-   lstat(".git/refs/remotes/master", 0x7fff6dac9610) = -1 ENOENT (No  
-such file or directory)
-   stat(".git/packed-refs", 0x7fff6dac9460) = -1 ENOENT (No such file  
-or directory)
-   lstat(".git/refs/remotes/master/HEAD", 0x7fff6dac9610) = -1 ENOENT  
-(No such file or directory)
-   stat(".git/packed-refs", 0x7fff6dac9460) = -1 ENOENT (No such file  
-or directory)
-
-Since stat()s were never a strong side of Windows, I'm afraid 'refname:short'
-fired backwards and made things much slower over there.  Ouch.
-
-I think in this case we should opt for performance instead of correctness,
-and use Peff's 'refname:strip=2'.  Ambiguous refs will only hurt you, if,
-well, your repo actually has ambiguous refs AND you happen to want to do
-something with one of those refs.  I suspect that's rather uncommon, and
-even then you could simply rename one of those refs.  OTOH, as shown in
-the ticket, you don't need that many refs to make refs completion
-unacceptably slow on Windows, and it will bite every time you attempt to
-complete a ref.
-
-Now, if 'git for-each-ref' could understand '**' globbing, not just
-fnmatch...
-
-
->> The upcoming refname:strip does much better:
->>
->> $ time git for-each-ref --format='%(refname:strip=2)' refs/tags >/dev/null
->>
->> real    0m0.004s
->> user    0m0.000s
->> sys     0m0.004s
->
-> This is funny: after reading the commit message at
-> https://github.com/git/git/commit/0571979b it eludes me why strip=2 should
-> be so much faster than short...
->
-> Ciao,
-> Dscho
+diff --git a/submodule-config.c b/submodule-config.c
+index fe8ceab..254067b 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -194,6 +194,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+ 
+ 	submodule->path = NULL;
+ 	submodule->url = NULL;
++	submodule->update_strategy.type = SM_UPDATE_UNSPECIFIED;
++	submodule->update_strategy.command = NULL;
+ 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+ 	submodule->ignore = NULL;
+ 
+@@ -340,6 +342,16 @@ static int parse_config(const char *var, const char *value, void *data)
+ 			free((void *) submodule->url);
+ 			submodule->url = xstrdup(value);
+ 		}
++	} else if (!strcmp(item.buf, "update")) {
++		if (!value)
++			ret = config_error_nonbool(var);
++		else if (!me->overwrite &&
++			 submodule->update_strategy.type != SM_UPDATE_UNSPECIFIED)
++			warn_multiple_config(me->commit_sha1, submodule->name,
++					     "update");
++		else if (parse_submodule_update_strategy(value,
++			 &submodule->update_strategy) < 0)
++				die(_("invalid value for %s"), var);
+ 	}
+ 
+ 	strbuf_release(&name);
+diff --git a/submodule-config.h b/submodule-config.h
+index 9bfa65a..e4857f5 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -2,6 +2,7 @@
+ #define SUBMODULE_CONFIG_CACHE_H
+ 
+ #include "hashmap.h"
++#include "submodule.h"
+ #include "strbuf.h"
+ 
+ /*
+@@ -14,6 +15,7 @@ struct submodule {
+ 	const char *url;
+ 	int fetch_recurse;
+ 	const char *ignore;
++	struct submodule_update_strategy update_strategy;
+ 	/* the sha1 blob id of the responsible .gitmodules file */
+ 	unsigned char gitmodules_sha1[20];
+ };
+diff --git a/submodule.c b/submodule.c
+index b83939c..8fd4512 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -210,6 +210,25 @@ void gitmodules_config(void)
+ 	}
+ }
+ 
++int parse_submodule_update_strategy(const char *value,
++		struct submodule_update_strategy *dst)
++{
++	dst->command = NULL;
++	if (!strcmp(value, "none"))
++		dst->type = SM_UPDATE_NONE;
++	else if (!strcmp(value, "checkout"))
++		dst->type = SM_UPDATE_CHECKOUT;
++	else if (!strcmp(value, "rebase"))
++		dst->type = SM_UPDATE_REBASE;
++	else if (!strcmp(value, "merge"))
++		dst->type = SM_UPDATE_MERGE;
++	else if (skip_prefix(value, "!", &dst->command))
++		dst->type = SM_UPDATE_COMMAND;
++	else
++		return -1;
++	return 0;
++}
++
+ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 				  const char *arg)
+ {
+diff --git a/submodule.h b/submodule.h
+index e06eaa5..9a86124 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -14,6 +14,20 @@ enum {
+ 	RECURSE_SUBMODULES_ON = 2
+ };
+ 
++enum submodule_update_type {
++	SM_UPDATE_UNSPECIFIED = 0,
++	SM_UPDATE_CHECKOUT,
++	SM_UPDATE_REBASE,
++	SM_UPDATE_MERGE,
++	SM_UPDATE_NONE,
++	SM_UPDATE_COMMAND
++};
++
++struct submodule_update_strategy {
++	enum submodule_update_type type;
++	const char *command;
++};
++
+ int is_staging_gitmodules_ok(void);
+ int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+ int remove_path_from_gitmodules(const char *path);
+@@ -22,6 +36,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
+ 		const char *path);
+ int submodule_config(const char *var, const char *value, void *cb);
+ void gitmodules_config(void);
++int parse_submodule_update_strategy(const char *value,
++		struct submodule_update_strategy *dst);
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+-- 
+2.7.1.292.g18a4ced.dirty
