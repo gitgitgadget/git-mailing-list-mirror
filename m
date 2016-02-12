@@ -1,87 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Fri, 12 Feb 2016 10:11:20 +0100
-Message-ID: <vpqio1ucmyv.fsf@anie.imag.fr>
-References: <vpqoabox66p.fsf@anie.imag.fr>
-	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
-	<vpqd1s2e74l.fsf@anie.imag.fr>
-	<ED514A90-08AB-4EBC-BA17-ABAA06FE64FE@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] git-completion.bash: always swallow error output of
+ for-each-ref
+Date: Fri, 12 Feb 2016 10:23:27 +0100
+Message-ID: <56BDA48F.6020305@gmail.com>
+References: <56B32953.2010908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 10:11:50 2016
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: szeder@ira.uka.de, Junio C Hamano <gitster@pobox.com>,
+	tr@thomasrast.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 10:23:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aU9lV-0004cW-79
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 10:11:49 +0100
+	id 1aU9wx-0005Cd-DQ
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 10:23:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbcBLJLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 04:11:43 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:49956 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750963AbcBLJLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 04:11:36 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1C9BJeV018373
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 12 Feb 2016 10:11:19 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1C9BKvL018607;
-	Fri, 12 Feb 2016 10:11:20 +0100
-In-Reply-To: <ED514A90-08AB-4EBC-BA17-ABAA06FE64FE@gmail.com> (Lars
-	Schneider's message of "Fri, 12 Feb 2016 09:29:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 12 Feb 2016 10:11:20 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1C9BJeV018373
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1455873084.01195@2yY6IydDa3in0Dz4f3V/Yg
+	id S1751367AbcBLJXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 04:23:36 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:37284 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751187AbcBLJXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 04:23:33 -0500
+Received: by mail-wm0-f44.google.com with SMTP id g62so11126777wme.0
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 01:23:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=Tl2hAGtrcG6qQde7GcfSox6SLMfl+SEts61ZmW4gbcA=;
+        b=tJFKmm1X0SIe9de6N3/9fK8KlWcJu62HwL0R1h3AVMq4GjwUdD6lzAAthzDxR9vLkt
+         sMhYL6L6ah/m07p3fEqEmlQ+e/U+w7bM8cwsFZiq3oSjvLRwwPGY3pIsJKXTHyJVXGIJ
+         chRTMPAwx+IC8MEF2vSSOzw33bBbK7qLdeM5MOc4jMZ9qhMxn6QfdcO01gPzEeKoOwDj
+         Fw1+4bHCpdXjKF/keXIUYIJU3FXdN88SCDjvmsS/f7f+4Rn4RJMY7Mob9rRorW2g7nmU
+         33Ry9PPwrKtonfBolNrOGpb7+ht52FSCQDip+6upv1O4lY+8LHGdOjGCJsg7XXczN0bW
+         Fekw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Tl2hAGtrcG6qQde7GcfSox6SLMfl+SEts61ZmW4gbcA=;
+        b=avGY4p2sFlOY/3RBQqTCp6GubfR6dF3XIjzW+klsK4z6C2gGAU5oFQ5EL4/kcbYT4p
+         HoK9ZX5sV1jhMWpHkio1GU18GV9faumseqLMD+RkchU3ptqfqZrbYLjcN9Q6VhA5AJZT
+         WRfUU3iILXzAcGZdf2Eomc0c6tY9wUgZrY6gnQ4OgsPFezbuiyAmfIfMgL+hqmxlK+bM
+         vEiJbcZRyv/FxVUiDk9WVOX9biAU82+9nxtYscUkwFwnGqEfd7gxdqY4QWWU7O0RG1W7
+         DawcWUgUfz7XocrTeAENbRTAExyWJgQQqx/AuSSkWCDqZ3vjMccYmJU3g+8J3KrMa9cQ
+         0v+g==
+X-Gm-Message-State: AG10YOSiesfTlFA1C5z+Rt+c726Cn10WqoX19kDlV8zXm0rHm4/TAnWFTojwUMMVGEUnow==
+X-Received: by 10.28.90.133 with SMTP id o127mr1910624wmb.101.1455269012115;
+        Fri, 12 Feb 2016 01:23:32 -0800 (PST)
+Received: from [192.168.188.20] (p508EAD77.dip0.t-ipconnect.de. [80.142.173.119])
+        by smtp.googlemail.com with ESMTPSA id di1sm11158484wjc.3.2016.02.12.01.23.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 12 Feb 2016 01:23:31 -0800 (PST)
+Newsgroups: gmane.comp.version-control.git
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
+ Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+In-Reply-To: <56B32953.2010908@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286042>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+On 04.02.2016 11:34, Sebastian Schuberth wrote:
 
-> I don't know what level of Git development knowledge and what amount of time
-> is necessary but I would be available as junior co-mentor :-)
+> This avoids output like
+>
+>      warning: ignoring broken ref refs/remotes/origin/HEAD
+>
+> while completing branch names.
+>
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 
-AFAICT, you don't have much experience with Git's codebase itself (if I
-don't count git-p4 as "Git itself"), but you've already been involved in
-typical reviewing cycles (just the discussions on Travis-CI were a good
-example), and that is something at least as important as knowing the
-codebase well. It's up to you to decide whether you feel experienced
-enough, but I think you are welcome as a co-mentor!
-
-As a mentor, to me, the most important things are:
-
-* Give advice on how to interact with the Git community. Students can be
-  shy, and then repeating "you should post more to the mailing-list" can
-  be useful. They sometimes make mistakes, and explaining off-list
-  "there's nothing wrong with what you did, but the custom here is
-  to ..." can help.
-
-* Give advice on how to get useful code merged. My usual advice is:
-  "don't be too ambitious", which translates to "git this part done,
-  reviewed and possibly merged, you'll work on the bells and whistles
-  later".
-
-* Avoid overloading the list with reviews. Getting your own GSoC
-  tee-shirt and letting the list do the work is unfair ;-). Off-list
-  reviews are good to eliminate straightforwards issues, and then
-  mentors should actively participate to the on-list review. That is
-  probably what takes most time.
+The discussion got a bit off the point with the "short" vs. "strip=2" 
+stuff, but I guess the patch itself if good to apply?
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sebastian Schuberth
