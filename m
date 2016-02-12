@@ -1,96 +1,128 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.7.1(2)
-Date: Fri, 12 Feb 2016 15:10:03 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602121509420.2964@virtualbox>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 13/21] refs: resolve symbolic refs first
+Date: Fri, 12 Feb 2016 15:09:04 +0100
+Message-ID: <56BDE780.2030407@alum.mit.edu>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+ <1454701462-3817-14-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-75981132-1455286235=:2964"
-To: git-for-windows@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 15:10:44 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 15:16:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUEQk-00038Q-RU
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 15:10:43 +0100
+	id 1aUEWN-0007Va-O4
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 15:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbcBLOKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 09:10:38 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53414 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752447AbcBLOKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 09:10:37 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0McmFl-1alUAE1Vz7-00Hxal; Fri, 12 Feb 2016 15:10:35
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:c/oppeKV2uOmtdTvU+x4vTUSCliA+uJOOSJ/lLRVnhHQtL8ethf
- dvhtH765W9uTJ+U+Ivmzi08gItTPSnyzX5i44lSCZMlzSVGhlMrlUswC2jIHLJM1EIyhQfW
- d44oKphqSXoLWN9fbMMxl3Z41EyOC+EgN2EfWovrbSSFWxC1UBcWjNa4JccmBTEiDdT6rvZ
- 32kVjQvuwzq0NggB7sFGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lkC+OnGQnHg=:kPPVIfYT7YHN97qmeSXGvk
- l1jbI/EMo9qP7O8sATHuJAaLeaT0AjV4zX94RMVQHS4RjYxNLlpTKNaXeH/89ykr1Dwbp/j8k
- Imcc3Ru00FC0BBj3W81g5teRmNinOQHACXX8htedo/FPvXTefmdzY/LQFQtU456UXBg1o4yj0
- uiDWrsmQMPqO4ISyZsipELlqV+5pOQf6SdYmLmiiJ+OfMVo5MBh3CjypDViJLRx5qX9bb6rjl
- SdhukU6I/RH0LyG//yRoxHH52c+vVHO+nZmOIq/WSBlXeDetPEl+X/+IB+X4Dy+sbo5b8qqfo
- 5NLyY3tVa0n4w9wUr4PKfhcQTxskSKOY7fvJ+CJIzhAKhOeswnsQNh5gcW8hEwFRB4koUNrnQ
- Y/vwq3GyevmmmLfcUPyJ22Q04W5VHmJD7CRflszvWEVx5CDt1uW8Jkiox7jz5Ya/cJIVBUGd2
- DP7oWie8VCswltCHRcrUAn/XiM0OcPFV0+UkTyIB7mZFc3BaMpVB38glwz66qkggpnOV6/Kvl
- FhLrAx9yaoQZhxG3CzWK5RjNkCwpR6BK6qklBwEv25oRipAvkt3ILiWRG2RvyqA6CMoxGWUOt
- UlpMDlTjULvGE4I5AotnMOtVD40Azhk8to+iTVIm+di1lVYc3t5lpwbeGvdxswiQsgmB2WQYo
- /Ct40J+S6BUTmWl63xkgDfGzRF5AsMVQjHpRMugTssSZrVKXiWfb30yKiaq+lz5HukSLMY7Vo
- 5inFEiJACRa5wukEREvFi6uXJMQoSdse7a6X6b9fixD4MdCPtk6B574hyFFsVhOPiiIbnAOi 
+	id S1752799AbcBLOQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 09:16:22 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49084 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752581AbcBLOQV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2016 09:16:21 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Feb 2016 09:16:21 EST
+X-AuditID: 1207440f-d9fff70000007e44-28-56bde7838abf
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id F6.54.32324.387EDB65; Fri, 12 Feb 2016 09:09:07 -0500 (EST)
+Received: from [192.168.69.130] (p548D685F.dip0.t-ipconnect.de [84.141.104.95])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1CE95al015646
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 12 Feb 2016 09:09:06 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <1454701462-3817-14-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsUixO6iqNv8fG+YwY+NphbzN51gtOi60s3k
+	wOSx4Pl9do/Pm+QCmKK4bZISS8qCM9Pz9O0SuDMWz+hmKZgvWfHq/TWWBsYrIl2MnBwSAiYS
+	a09uYu9i5OIQEtjKKNH0dhmUc55JYtuxQ8xdjBwcwgL2Eo3H5UAaRAQcJC7vOsoMUdPGKPHk
+	1QUmkASbgK7Eop5mJoipchK93ZNYQGxeAW2JhfcnMYPYLAKqEs/f32MDsUUFQiTef33OClEj
+	KHFy5hOwek4BT4lp9yeAzWEW0JPYcf0XK4QtL9G8dTbzBEb+WUhaZiEpm4WkbAEj8ypGucSc
+	0lzd3MTMnOLUZN3i5MS8vNQiXRO93MwSvdSU0k2MkJDk38HYtV7mEKMAB6MSD6/hrT1hQqyJ
+	ZcWVuYcYJTmYlER5w4/sDRPiS8pPqcxILM6ILyrNSS0+xCjBwawkwmvQBJTjTUmsrEotyodJ
+	SXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwBjwDahQsSk1PrUjLzClBSDNxcIIM55IS
+	KU7NS0ktSiwtyYgHxWR8MTAqQVI8QHuFQdp5iwsSc4GiEK2nGBWlxHkFQBICIImM0jy4sbBE
+	84pRHOhLYd6PT4GqeIBJCq77FdBgJqDBO77vAhlckoiQkmpg1N2uHeyX9f/i4jUnFyVujun+
+	ldo94/KN2+VV890O3ro9f6c7y/ySxesm7UmZeuo2x6lwb0WXr/JPlQoL9TklYn/uXq/Be5Nn
+	co2tlbpp2irZmtkLJNQUBWRX5R0Iuq8jYdJz5Y6/tRWL+CWe5ffkS9Q57ujGmJVw 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286050>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 02/05/2016 08:44 PM, David Turner wrote:
+> Before committing ref updates, split symbolic ref updates into two
+> parts: an update to the underlying ref, and a log-only update to the
+> symbolic ref.  This ensures that both references are locked correctly
+> while their reflogs are updated.
+> 
+> It is still possible to confuse git by concurrent updates, since the
+> splitting of symbolic refs does not happen under lock. So a symbolic ref
+> could be replaced by a plain ref in the middle of this operation, which
+> would lead to reflog discontinuities and missed old-ref checks.
 
---8323329-75981132-1455286235=:2964
-Content-Type: text/plain; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+This patch is doing too much at once for my little brain to follow.
 
-Dear Git users,
+My first hangup is the change to setting RESOLVE_REF_NO_RECURSE
+unconditionally in lock_ref_sha1_basic(). I count five callers of that
+function and see no justification for why the change is OK in the
+context of each caller. Here are some thoughts:
 
-It is my pleasure to announce that Git for Windows 2.7.1(2) is available fr=
-om:
+* The call from files_create_symref() sets REF_NODEREF, so it is
+unaffected by this change.
 
-=09https://git-for-windows.github.io/
+* The call from files_transaction_commit() is preceded by a call to
+dereference_symrefs(), which I assume effectively replaces the need for
+RESOLVE_REF_NO_RECURSE.
 
-Changes since Git for Windows v2.7.1 (February 6th 2016)
+* There are two calls from files_rename_ref(). Why is it OK to do
+without RESOLVE_REF_NO_RECURSE there?
 
-New Features
+  * For the oldrefname call, I suppose the justification is the "(flag &
+REF_ISSYMREF)" check earlier in the function. (But does this introduce a
+significant TOCTOU race?)
 
-  =E2=80=A2 The context menu items in the explorer now show icons.
+  * For the newrefname call, I suppose it's because the code a little
+higher up tries to delete any existing reference with that name. It
+looks to me like the old code was slightly broken: if newrefname was an
+unborn symbolic reference, then: read_ref_full() would fail;
+delete_ref() would be skipped; lock_ref_sha1_basic() would lock the
+*referred-to* reference; the referred-to reference would be overwritten
+instead of newrefname. So it could be that here REF_NODEREF indirectly
+fixes a bug?
 
-Bug Fixes
+* The last call, from files_reflog_expire(), is also questionable before
+your patch. If refname is a symref, then the function is expiring the
+reflog of the symref. But (before this patch) it locks not the symref
+but its referent. This was discussed in some length before on the
+mailing list [1], and the conclusion was that the current behavior is
+wrong, but for backwards compatibility reasons it would be safest to
+change it to locking *both* the symref and its referent.
 
-  =E2=80=A2 A bug was fixed where worktrees would forget their location e.g=
-=2E
-    after an interactive rebase.
-  =E2=80=A2 Thanks to Eric Lawrence and Martijn Laan, our installer sports =
-a
-    better way to look for system files now.
+If possible, it would be better to split this patch up into several: the
+first few would each add the REF_NODEREF flag at one callsite, with a
+careful justification of why that is OK. Once all the callsites (except
+the one in files_transaction_commit()) have been changed, then the last
+patch could add the dereference_symrefs() machinery and change the last
+callsite.
 
-Filename | SHA-256
--------- | -------
-Git-2.7.1.2-64-bit.exe | 956417448441e267a0ca601f47a2cd346e2d09589673060ae2=
-5d66628b2abc82
-Git-2.7.1.2-32-bit.exe | be10e98b8c53f92648f8d1c85c7bad4c433aeedcb9d4719588=
-b75030983cd76d
-PortableGit-2.7.1.2-64-bit.7z.exe | 92310dec60b0210acbfb31a0165f2628757b841=
-3efcbcea1cfc95b2984a974dd
-PortableGit-2.7.1.2-32-bit.7z.exe | 7bf8da2b46f40c98d18a5f9c36e5b90df258936=
-f43a0d230d0f29e0d729e3283
-Git-2.7.1.2-64-bit.tar.bz2 | b3170fc127889f8fa603bc8546c61528869a0a6d2c19bc=
-03de9d96dca2443881
-Git-2.7.1.2-32-bit.tar.bz2 | 4c897917682685194ed9d71fdfafbed721488fe22ecd8f=
-11bfefffe3fec9169a
+(I'm not certain that those steps are actually doable independently,
+given that REF_NODEREF has other effects besides setting
+RESOLVE_REF_NO_RECURSE.)
 
-Ciao,
-Johannes
---8323329-75981132-1455286235=:2964--
+I'm not just being pedantic here. The patch as written is really too big
+to review effectively.
+
+Michael
+
+[1]
+http://thread.gmane.org/gmane.comp.version-control.git/263552/focus=263555
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
