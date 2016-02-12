@@ -1,68 +1,73 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 2/1] support -4 and -6 switches for remote operations
-Date: Fri, 12 Feb 2016 16:43:38 +0100
-Message-ID: <56BDFDAA.2050607@web.de>
-References: <20160128225123.GA20045@dcvr.yhbt.net>
- <xmqqegd1l13l.fsf@gitster.mtv.corp.google.com>
- <20160130085056.GA20118@dcvr.yhbt.net> <20160130131353.GA20429@dcvr.yhbt.net>
- <56AD4887.3070207@web.de> <20160131000144.GA10117@dcvr.yhbt.net>
- <20160131011314.GA22855@sigill.intra.peff.net>
- <20160203040914.GA19840@dcvr.yhbt.net> <20160212113146.GA5520@dcvr.yhbt.net>
+From: Jagan Teki <jteki@openedev.com>
+Subject: Git patch shows tab but files doesn't
+Date: Fri, 12 Feb 2016 21:32:32 +0530
+Message-ID: <CAD6G_RTJuNsR6qawgco1H+ocKPThk1HsQLvhQigmzUb_c7UdaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 12 16:44:12 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 12 17:02:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUFtE-0008B2-9d
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 16:44:12 +0100
+	id 1aUGB9-000613-J5
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 17:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbcBLPoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 10:44:07 -0500
-Received: from mout.web.de ([212.227.17.12]:52981 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751189AbcBLPoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 10:44:06 -0500
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MVLWc-1aVm3n3dKY-00YlfV; Fri, 12 Feb 2016 16:43:41
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <20160212113146.GA5520@dcvr.yhbt.net>
-X-Provags-ID: V03:K0:mXZ3uVbYKLHynzc8nx330xnvyM/lhiHEiDTqdbMmVyfOuoFiVXG
- J3MxXdCAL7ynIN+C4L5AMglGB6f6k5OXJ1AmnIAkGWLCoXDjDS++pU+FxP77bhYIAW/n4I5
- ata1sEgPnWPdD8YnDkWr0Tks/QWPUcpT77HfIPWdEh8lww7e7diO0kW9lkg6Zc2ZkW33lmV
- eZSdjazyPEEIG1FOZIlGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g4paHVAjNHc=:QRZKGMm0yau1Y2j/qh5kWd
- SDYPzObZEVNH9rmvHrIz1BLPmD/AvN+Ewsvzxbqis2cGFRKZE3/XZa8BQ0ggxtEydCOXCfdKO
- 91PLaZLgE2WUTpcwOCIQ8+WKg6e6cjbau/+rb/NsLzzZ6QKjEZgvfijRxDCMvFt2jn9WvaNIL
- voZOXBXpDzHkBNOEMSLpxdVXkh2YsaVJvBIrxIs3nFCE0q6Eo/5KcMDN3GFhwvO7eYYwPQvGp
- D5T1uuXYpmqgtT/K/a52Uk7KDurlxKcGkFgRrxjiwp4GPY0vwLGdvc7zxCvbHmJkkYI9Dn3it
- z/+gWWobfEUA2W13kc1afBrkPfTQ2zVkY/rsxkpsus2EtzNqVCqRdGO6p9wVauaepWPt+oMnH
- sIIMSY2uluWzTbbfVWfQqZebKkmi0YPM/fxA1whPMXM46WO0LlB2IoD+POn0hBCNRGmCeVMCf
- b+N2eqcQ6hYnPgYbEEhzEs29/M8KScMq635Sa5j0jXlj1uW8ZijmQq670u9CHOfvvRyzj5Nh0
- 2YI8pop/halaxbafY5nm82WAhiVPPzt5j2feA/TwRNnSQwjfCFzN+Zd2eNKFg+zVkNNpbWn5V
- //Xcf2k+F+5G9NfE6gTOclgKKri8oGbf/y0axl+4Uzz4nXDQWfGd4BcTsStcsFFqOcsTSuQ6j
- K/rPl7h+mEnynXYw19Xam0wtoyBkxHgHko6IdEpuO+aIfZMGycw0YxQyekliicnOgAULILZ2L
- aqiRQzZ+pA6t4Wy8cf0IpziuSy46QFiAiiw/FzLYaOssY+frPQ+li6IFmx91Crt37rOHRsTG 
+	id S1751472AbcBLQCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 11:02:40 -0500
+Received: from server159.web-hosting.com ([68.65.120.118]:33486 "EHLO
+	s159.web-hosting.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417AbcBLQCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 11:02:39 -0500
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:36280)
+	by server159.web-hosting.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.86)
+	(envelope-from <jteki@openedev.com>)
+	id 1aUGB0-000Sbk-1h
+	for git@vger.kernel.org; Fri, 12 Feb 2016 11:02:38 -0500
+Received: by mail-lf0-f44.google.com with SMTP id 78so54400958lfy.3
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 08:02:33 -0800 (PST)
+X-Gm-Message-State: AG10YOSooASzQnWMJXR5WHQ7bAGSzZE2ngrj8CGodGyJwyrFtCc01ahkWAk2TzF761oM5Mrj3UVhETR2U725Kw==
+X-Received: by 10.25.21.90 with SMTP id l87mr964846lfi.64.1455292952502; Fri,
+ 12 Feb 2016 08:02:32 -0800 (PST)
+Received: by 10.25.25.149 with HTTP; Fri, 12 Feb 2016 08:02:32 -0800 (PST)
+X-Gmail-Original-Message-ID: <CAD6G_RTJuNsR6qawgco1H+ocKPThk1HsQLvhQigmzUb_c7UdaQ@mail.gmail.com>
+X-OutGoing-Spam-Status: No, score=-2.9
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server159.web-hosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - openedev.com
+X-Get-Message-Sender-Via: server159.web-hosting.com: authenticated_id: jteki@openedev.com
+X-Authenticated-Sender: server159.web-hosting.com: jteki@openedev.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: unmodified, already matched
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286056>
 
+Hi,
 
+I edited a file as one space between #define and macro and tab space
+between macro and BIT value, similar as below.
 
-On 12.02.16 12:31, Eric Wong wrote:
-> Eric Wong <normalperson@yhbt.net> wrote:
->> (no rush to review this, unlikely to be around the next few days)
-> Ping on v2.  I will be online the next few days and likely
-> working on some other git stuff anyways :)
-Patch V2 looks OK for me.
+#define USE_FSR           BIT(6)
+#define SNOR_WR         BIT(7)
+
+Once I created the patch looks different as tab space between #define
+and macro and 2 tab spaces between macro and BIT value looks like it's
+added tab spaces while creating a patch as below.
+
++#define        USE_FSR                              BIT(6)
++#define        SNOR_WR                            BIT(7)
+
+Any help how to fix this, was it an issues with vim or do we have any
+git-config fixes for this?
+
+-- 
+Jagan.
