@@ -1,93 +1,93 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 00/25] More flexibility in making shallow clones
-Date: Fri, 12 Feb 2016 07:24:01 +0700
-Message-ID: <CACsJy8DYkQe7DkY1AQbG5ZaJ-cLA3=1wjqAkekc3bdQQ1ANWMg@mail.gmail.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com> <xmqq60xy7u6u.fsf@gitster.mtv.corp.google.com>
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Re: Bug report: 'git commit --dry-run' corner case: returns error  ("nothing to commit") when all conflicts resolved to HEAD
+Date: Thu, 11 Feb 2016 18:04:03 -0700
+Message-ID: <2471685.OJU1dNe0yn@thunderbird>
+References: <1649296.sC1eN3ni6k@thunderbird>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 12 01:24:37 2016
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 12 02:03:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aU1XI-0007nh-Pp
-	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 01:24:37 +0100
+	id 1aU29O-0005bX-2C
+	for gcvg-git-2@plane.gmane.org; Fri, 12 Feb 2016 02:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750890AbcBLAYd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Feb 2016 19:24:33 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36665 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799AbcBLAYc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Feb 2016 19:24:32 -0500
-Received: by mail-lf0-f66.google.com with SMTP id h198so3444214lfh.3
-        for <git@vger.kernel.org>; Thu, 11 Feb 2016 16:24:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=tWhi0BkPvpu9Xtdp2Gn+thd8eA7r0ksomhZEupU9Kb4=;
-        b=Ovtf1ZmVJR7sTBR/eMSEkQv3jeNKBQnqrGHQ3r2YF45OY3UG8oKtGCHHXB7D804zMR
-         ojQSdpOJKyBG8XcKx46QdHpol/821oRlm6uEMERwnTxr0Fzfn5x78wOuSQDwht3QTU6v
-         IPeB83nX3TD3a4+2+VIt2AU1U5TEUprBuR1jGGvhhjtIB4Ae0YHrvv6/jzzeA2NqyIiA
-         MPzhLSxuv5xJQJ1wnDXFPs6yk+pROWHYIrIOoTDRpRRM6Gs+ygzkBf0p9ahg7R3u9bxu
-         ww/I+QyIBHxNz8lFiF3d4f/qXhrP4ht2E97iAHJUHGmU+Tr513ejebu068tT72gFdp+h
-         taKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=tWhi0BkPvpu9Xtdp2Gn+thd8eA7r0ksomhZEupU9Kb4=;
-        b=Uup4OSqltykVVFr5wnlW9hCV31RLs0+TMjY4MdIN5aVGOVoivsdxvy4ahEycvEz0K/
-         +j4GW5T3OaEv0RngwSTwE43asvno2+xB7mTlh/dsYlwVIN7DZwRKsZKGQ/z4bXw6cl5E
-         7otSRxc1DT4sSsup0iVFnplot6G+UnhH32359xRvKKvOqC1UeAILMozJAK5Y6ckiKga2
-         UvOxmT95a76Z5bLxO9Jg3M9PAq3mIHrSGiAX/uS6YEUUDt5rpwXm+ozUbdsjZFnchSuq
-         mqMz6wvfYKKrt45/Q5ltQWoGEoQS/6nT6347LoJSqKE35wnP5hBOw1rrD1GxN4Bn0XO7
-         Q9Dg==
-X-Gm-Message-State: AG10YOQqG5c6K0v9E6DJIwBqKndyDCJOr3hNe+qxFBLG9pHuu+MiPBeEzqmg99NXJfiqcvp2/gxOZihh9k0+iA==
-X-Received: by 10.25.5.6 with SMTP id 6mr16405532lff.3.1455236671062; Thu, 11
- Feb 2016 16:24:31 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 11 Feb 2016 16:24:01 -0800 (PST)
-In-Reply-To: <xmqq60xy7u6u.fsf@gitster.mtv.corp.google.com>
+	id S1751051AbcBLBDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Feb 2016 20:03:54 -0500
+Received: from fed1rmfepo203.cox.net ([68.230.241.148]:54218 "EHLO
+	fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933AbcBLBDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Feb 2016 20:03:53 -0500
+Received: from fed1rmimpo209 ([68.230.241.160]) by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20160212010352.JNGI26406.fed1rmfepo203.cox.net@fed1rmimpo209>
+          for <git@vger.kernel.org>; Thu, 11 Feb 2016 20:03:52 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo209 with cox
+	id HD3s1s0052tqoqC01D3sd8; Thu, 11 Feb 2016 20:03:52 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020203.56BD2F78.007B,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=RNFt6fe+ c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=jFJIQSaiL_oA:10 a=mvw1aI2ua-iA7i51uRgA:9
+ a=CjuIK1q_8ugA:10 a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id 1999F13F650;
+	Thu, 11 Feb 2016 18:04:04 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.4.0-4-generic; KDE/5.15.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286024>
 
-On Tue, Feb 9, 2016 at 4:45 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> This series brings three new options to shallow clone/fetch, to let
->> you specify cut point by time, or by excluding some refs, or to let
->> you extend shallow boundary by <N> commits.
->>
->> The series is now complete. Changes since v1 [1]
->>
->>  - smart http support
->>  - option names --not and --since are changed to --shallow-exclude
->>    and --shallow-since
->>  - fix the last patch per Eric's comments (the tests were totally
->>    broken but I didn't realize)
->>
->> The meat starts since 14/25. Before that is just cleanups and stuff.
->> Happy (shallowly) cloning!
->
-> Nicely done.  While I had a few "Huh?" moments, and I still feel
-> some changes are under-justified, it was a pleasant read overall.
+On Monday, February 08, 2016 06:55:17 PM Stephen & Linda Smith wrote:
+> > #!/bin/bash
+> > mkdir test-repository || exit 1
+> > cd test-repository
+> > git init
+> > echo "Initial contents, unimportant" > test-file
+> > git add test-file
+> > git commit -m "Initial commit"
+> > echo "commit-1-state" > test-file
+> > git commit -m "commit 1" -i test-file
+> > git tag commit-1
+> > git checkout -b branch-2 HEAD^1
+> > echo "commit-2-state" > test-file
+> > git commit -m "commit 2" -i test-file
+> > 
+> > # Creates conflicted state.
+> > git merge --no-commit commit-1
+> > 
+> > # Resolved entirely to commit-2, aka HEAD.
+> > echo "commit-2-state" > test-file
+> > # If we'd set to commit-1=state, all would work as expected (changes vs HEAD).
+> > git add test-file
+> > 
+> > # =====  Bug is here.
+> > git commit --dry-run && echo "Git said something to commit" \
+> >         || echo "Git said NOTHING to commit"
 
-Thanks. Will resend some time later.
+With the  '--dry-run' switch, dry_run_commit() is called which returns 1 
+since run_status() is returning the wt_status commitable field which has a value of 0.
 
-> How extensively have you been using this, or is this hot off the
-> press?
+That field is only set in one place (wt_status_print_updated) which isn't getting called
+directly or indirectly by run_status.   I checked this by code inspection as well as by 
+instrumenting the code.
 
-No I have not used it at all (can't use it for real when I can't
-control the server side of github ;)
---=20
-Duy
+I'm not sure that we want to add a call to wt_status_print_updated in run_status since 
+I don't believe we want the print statements.   An alternative might be to create a
+new function.
+
+> > 
+> > git commit -m "Something to commit after all" && echo "Commit went through"
+> > 
+> > git log --pretty=oneline
