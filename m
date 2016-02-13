@@ -1,119 +1,105 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] t5570: add tests for "git fetch -v"
-Date: Sat, 13 Feb 2016 00:35:26 +0000
-Message-ID: <20160213003526.GA15899@dcvr.yhbt.net>
-References: <xmqqsi10xhbk.fsf@gitster.mtv.corp.google.com>
- <20160212234953.GA8691@dcvr.yhbt.net>
- <CAPc5daUd6fQ6hX6W1AzQ9rCzrsTvkXOxZgwVdibbM5S34nF7ZA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] git-completion.bash: always swallow error output of for-each-ref
+Date: Sat, 13 Feb 2016 07:53:49 +0700
+Message-ID: <CACsJy8Bg5LzXKuvastiy5WAKBR8D4iOhTcCprYqmNc3fy-HrBA@mail.gmail.com>
+References: <56B32953.2010908@gmail.com> <20160204111307.GA30495@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1602041216240.2964@virtualbox> <20160213002122.Horde.mxoPmZIuCikpV2PO97l11AI@webmail.informatik.kit.edu>
+ <20160213004300.Horde.fMBUV1thpmh_xekWw-EOFAA@webmail.informatik.kit.edu> <20160212234655.GA23398@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 13 01:35:34 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 13 01:54:39 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUOBR-0005mu-Uv
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 01:35:34 +0100
+	id 1aUOTt-0002WX-7r
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 01:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058AbcBMAf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 19:35:29 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:56907 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751965AbcBMAf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 19:35:29 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98EE4202F4;
-	Sat, 13 Feb 2016 00:35:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAPc5daUd6fQ6hX6W1AzQ9rCzrsTvkXOxZgwVdibbM5S34nF7ZA@mail.gmail.com>
+	id S1752195AbcBMAya convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Feb 2016 19:54:30 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:35065 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999AbcBMAyU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Feb 2016 19:54:20 -0500
+Received: by mail-lb0-f180.google.com with SMTP id bc4so53994567lbc.2
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 16:54:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=e+QypIY5rpH5Ci670K3PMFFBOgHRcXuPJ7mNWKawnh4=;
+        b=g6WnEPPMgaqsCB65/zUQ8hXoi6b0U/4v0rm0JG0yb7r0ugCf949nhHw0wwINnRnoy4
+         4/RcTgq8Lhyl700iCs/DEhFBCfCfxfdAyMF5t5hfttxVPGjnBd1rhf5QN9IcMai6THYx
+         VPH1Q40e1jwT2eVTAIaoSfdcoBEmvHAcncR5r1eEjMRsBQjGe3ZHkJPqr8kvnkv2O9HL
+         92lVTecKqgXniVf1j33ldE+gFLQe001P0RXScHBCLepZ4hVAeoRKL3Tbcsi2pEemcTp9
+         OgOzcyQuaHI0LhKMH4/O7DGJdn4ZAa9RQJXl8xWqaEPH/rBlQ+MLEdUx4ooffXq8gWG3
+         HAQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=e+QypIY5rpH5Ci670K3PMFFBOgHRcXuPJ7mNWKawnh4=;
+        b=WoJ8ZPlUWcO3S5Y3wL8If2cutAI7WNzdWRvxyG+7JkZZUme767N9w2sGqAFpDCyCZG
+         QHRH66JGJ+e6pfIZEYeRedlhFm7P9u8GSvZxUtBjfCHVwJkzCEqx+JGMXbPFgcua1kRC
+         z/vIOZJENw8XnLEzXHU0dfdC40fndiI7XCmHirknvcLS3vYGEUzUnzWubo4iSbrwX0eK
+         gXpPEXqADi0Cq0zzbLrG9V3nkoHx4lllcamNyPoR26tytbwFep1VI9XcT/xS2XiUOZWu
+         AYZXRgAXPg7sz2NPYrD85m368NIopmLQQK24UK2vXcQHCvrH7mIlA4cgXiocNsSvtxMP
+         0Z9w==
+X-Gm-Message-State: AG10YOQVtmSBulzWPpk3HVjqAvg1kH0YZlMN26yYOw8yzLYW1wciqIuX0gNW6Tn1HeaF5+q7lmZ+fWVsjxElBA==
+X-Received: by 10.112.130.41 with SMTP id ob9mr1894693lbb.81.1455324858806;
+ Fri, 12 Feb 2016 16:54:18 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Fri, 12 Feb 2016 16:53:49 -0800 (PST)
+In-Reply-To: <20160212234655.GA23398@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286101>
 
-Now that git_connect is more information about connectivity
-progress after: ("pass transport verbosity down to git_connect")
-we should ensure it remains so for future users who need to
-to diagnose networking problems.
+On Sat, Feb 13, 2016 at 6:46 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 13, 2016 at 12:43:00AM +0100, SZEDER G=C3=A1bor wrote:
+>
+>>
+>> Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+>>
+>> >Now, if 'git for-each-ref' could understand '**' globbing, not just
+>> >fnmatch...
+>>
+>> Oh, look, though the manpage says:
+>>
+>>   <pattern>...
+>>       If one or more patterns are given, only refs are shown that ma=
+tch
+>>       against at least one pattern, either using fnmatch(3) or liter=
+ally,
+>
+> Yeah, we might want to update that. Wildmatch is basically fnmatch()
+> compatible, but it understands "**" (which I _think_ is the reason we
+> picked it up in the first place).
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
-  Junio C Hamano <gitster@pobox.com> wrote:
-  > On Fri, Feb 12, 2016 at 3:49 PM, Eric Wong <normalperson@yhbt.net> wrote:
-  > > Junio C Hamano <gitster@pobox.com> wrote:
-  > >> * ew/connect-verbose (2016-01-28) 1 commit
-  > >>   (merged to 'next' on 2016-02-03 at ceac37e)
-  > >>  + pass transport verbosity down to git_connect
-  > >
-  > > Btw, I posted v2 of this with tests added to t/t5570-git-daemon.sh
-  > >
-  > >   http://mid.gmane.org/20160130085056.GA20118@dcvr.yhbt.net
-  > >
-  > > Can you replace it with my v2 or would you prefer a standalone
-  > > patch for just the test?  Thanks.
-  > 
-  > Thanks, that's water under the bridge, so let's have a follow-up patch
-  > to add test.
+The second reason is consistent behavior across platforms.
 
- t/t5570-git-daemon.sh | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+> I think we dropped it into place by
+> default because "**" is otherwise meaningless for fnmatch.
+>
+> I don't think there are any other differences between the two, but Du=
+y
+> probably knows offhand.
 
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index d76269a..095e862 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -6,6 +6,13 @@ test_description='test fetching over git protocol'
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
- start_git_daemon
- 
-+check_verbose_connect () {
-+	grep -qF "Looking up 127.0.0.1 ..." stderr &&
-+	grep -qF "Connecting to 127.0.0.1 (port " stderr &&
-+	grep -qF "done." stderr &&
-+	rm stderr
-+}
-+
- test_expect_success 'setup repository' '
- 	git config push.default matching &&
- 	echo content >file &&
-@@ -24,18 +31,32 @@ test_expect_success 'create git-accessible bare repository' '
- '
- 
- test_expect_success 'clone git repository' '
--	git clone "$GIT_DAEMON_URL/repo.git" clone &&
-+	git clone -v "$GIT_DAEMON_URL/repo.git" clone 2>stderr &&
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'clone -v stderr is as expected' check_verbose_connect
-+
- test_expect_success 'fetch changes via git protocol' '
- 	echo content >>file &&
- 	git commit -a -m two &&
- 	git push public &&
--	(cd clone && git pull) &&
-+	(cd clone && git pull -v) 2>stderr &&
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'pull -v stderr is as expected' check_verbose_connect
-+
-+test_expect_success 'no-op fetch -v stderr is as expected' '
-+	(cd clone && git fetch -v) 2>stderr &&
-+	check_verbose_connect
-+'
-+
-+test_expect_success 'no-op fetch without "-v" is quiet' '
-+	(cd clone && git fetch) 2>stderr &&
-+	! test -s stderr
-+'
-+
- test_expect_success 'remote detects correct HEAD' '
- 	git push public master:other &&
- 	(cd clone &&
--- 
-EW
+Nope. I think that's the only difference, feature-wise, between
+fnmatch and wildmatch.
+
+> It looks like we mention fnmatch() in a few places in the documentati=
+on,
+> and AFAIK each of these is now outdated.
+--=20
+Duy
