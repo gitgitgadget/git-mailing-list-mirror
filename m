@@ -1,88 +1,122 @@
-From: Blake Burkhart <bburky@bburky.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Fri, 12 Feb 2016 19:40:43 -0600
-Message-ID: <CAP3OtXjyy+7cSi0S17FSsx8gnP1rKboeSAz_Hz1ZNVDuqcGASw@mail.gmail.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
- <CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com> <20160210214945.GA5853@sigill.intra.peff.net>
+From: =?iso-8859-1?Q?V=EDt_Novotn=FD?= <witiko@gmail.com>
+Subject: Re: `.git` symlink makes `git submodule add` fail
+Date: Sat, 13 Feb 2016 05:20:09 +0100
+Message-ID: <20160213042008.GA26677@witiko>
+References: <20160212164853.GA6888@witiko>
+ <xmqqio1tvlzu.fsf@gitster.mtv.corp.google.com>
+ <xmqq60xtvlj9.fsf@gitster.mtv.corp.google.com>
+ <20160212182733.GA19973@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 13 02:41:10 2016
+X-From: git-owner@vger.kernel.org Sat Feb 13 05:20:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUPCv-0000ZO-FZ
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 02:41:09 +0100
+	id 1aURha-0005h7-SZ
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 05:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752305AbcBMBlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Feb 2016 20:41:05 -0500
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:36011 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752271AbcBMBlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Feb 2016 20:41:04 -0500
-Received: by mail-ob0-f169.google.com with SMTP id gc3so45307375obb.3
-        for <git@vger.kernel.org>; Fri, 12 Feb 2016 17:41:03 -0800 (PST)
+	id S1750976AbcBMEUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Feb 2016 23:20:15 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:37431 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750902AbcBMEUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Feb 2016 23:20:14 -0500
+Received: by mail-wm0-f51.google.com with SMTP id g62so43360569wme.0
+        for <git@vger.kernel.org>; Fri, 12 Feb 2016 20:20:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bburky.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=q1IXi35wKcU/DRiOpTwLNh47eufcN9nc56bF9+b1SzU=;
-        b=N7qAYCLyskbQCow5YzsgQRI8TdKA6t5U+/mvkYoK4bvZzr8v9aXLn430sYJRh73WRW
-         AlVE5TtVBzW+YPvbnDLuGYfkHF3AbIkZeLGb+DYJjgEoIwfSgexvFvtZGl+bb2Uyvgp3
-         L90drOXMZDzFlB+MPQaR7SeBhIVKw0gcO73Ec=
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mR3J7Qyfkf94CAhboJNiSMwXl4wBhG+NJIeesgwwl/M=;
+        b=ernXXxMDm5V0YS5geBXZAqpjw+KhaTqczMC6s1Ab35cWmjPMplQEIDOEiv10amz8Xp
+         vCLwKzEBr2Nuw9++Vyv9T5vwyZYGcubtS5N2wbv96U4aslmZ8O8+eq0IAYjXzv8LIsba
+         W1hL1Rqm047rxppC/2U8kLosCjiqKeGVQRfk5ageJqwy31ZUq4db4SAfPz8RQot0X8GO
+         MXaL0pwpP/88/LA8+vqqyp8feYKH0q7Wdwa2V/S237jw31wdJ5AwxIyjcQSL6jQFxKxN
+         59Kx0I216y6FMv6ORIKd+7o3iR5+PDHIkZtGqOuZSOC9fmUe73tT50QHmPOidpTEi1m2
+         7NhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=q1IXi35wKcU/DRiOpTwLNh47eufcN9nc56bF9+b1SzU=;
-        b=aKVy0sC3kWF0+WWk8IKh6dGLyUn40n7kyMJREqApvdfxZDeEvYng7QQlZkNSUgFrYa
-         RBS+RKJbXQ8GxHB+a396t+3TDjFFJ9q56Qb2pKUF+Ct72YWQRQONxsEsQGkKvEv8f9/y
-         BK77qkfUlu8BupkZVrH0bKo5acin8ObsIQntB5ljMOGZjuoYUUtSYLNsq9ezChor20h7
-         cOMW1V9yUeyhUbSWlee74052du3O6RPC4dFxshhLGOJ2dTflPCLIcCG+ewbUyohHb1mx
-         bpRiwUovUhaUpVM7BFjvTpr1LX46dKEwDY2dwx4qdJAxUCIH8I6ZIYqDWzQLILx7bRQy
-         V01A==
-X-Gm-Message-State: AG10YOQLHVmXGb3o9iNA835i1AcePQuvhWG+Fd8jKcGjPlhfARxqTLKOsA4XHltTeTaPQcjs+L1oGzn8+L8Jnw==
-X-Received: by 10.182.86.98 with SMTP id o2mr3857859obz.27.1455327663018; Fri,
- 12 Feb 2016 17:41:03 -0800 (PST)
-Received: by 10.202.196.78 with HTTP; Fri, 12 Feb 2016 17:40:43 -0800 (PST)
-In-Reply-To: <20160210214945.GA5853@sigill.intra.peff.net>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=mR3J7Qyfkf94CAhboJNiSMwXl4wBhG+NJIeesgwwl/M=;
+        b=mJ4NlSE8LMEVD36YtrfkWiKriw+KO9VENcSQBezU+pdWznnD9MyUhH6c35KusA/2fj
+         IUkloaMvYG1cq2NMkcdwVfdk0jWhrvDUfJ/x6l00aKF0m3pLZBOvnnwxRA6qq0MP8IPb
+         7oXUY5O0sxaNqOUEX9b6sYUFCg8UTCyr2yTreyCiI6PVSrDIt9DbivsEg1E6D9zCdyZ6
+         OxsZHtv7AkNfBFO+3g4DtjHbXP21sY2WZwv425Ilb25/xND6iOdYUoDLkkxnn5GwAx8+
+         tnpJdFFQNN3bphI7QGXfJxNse+hc70UQvYNl8YdwLtdlh0oTss5C5YOqJAdv85mPRASd
+         FsiA==
+X-Gm-Message-State: AG10YOThhOy9Wm7opEkWxQtXgAaoW+WHPhRJYl7V0tpuEjut8ebMMtjXpAZlUCdDzQKLdQ==
+X-Received: by 10.194.185.84 with SMTP id fa20mr5025833wjc.31.1455337212505;
+        Fri, 12 Feb 2016 20:20:12 -0800 (PST)
+Received: from witiko (dynamic-2a00-1028-8d1c-ac1a-021f-3cff-fe2d-27ad.ipv6.broadband.iol.cz. [2a00:1028:8d1c:ac1a:21f:3cff:fe2d:27ad])
+        by smtp.gmail.com with ESMTPSA id jc7sm14803951wjb.33.2016.02.12.20.20.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 Feb 2016 20:20:11 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20160212182733.GA19973@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286105>
 
-On Wed, Feb 10, 2016 at 3:49 PM, Jeff King <peff@peff.net> wrote:
->> 2. Servers that support resumable clone include a "resumable"
->> capability in the advertisement.
->
-> Because the magic happens in the git protocol, that would mean this does
-> not have to be limited to git-over-http. It could be "resumable=<url>"
-> to point the client anywhere (the same server over a different protocol,
-> another server, etc).
+On Fri, Feb 12, 2016 at 01:27:33PM -0500, Jeff King wrote:
+> On Fri, Feb 12, 2016 at 10:19:38AM -0800, Junio C Hamano wrote:
+> 
+> > >> Is this a bug, or is the ability to symlink `.git` just a happy coincidence?
+> > >
+> > > It has never been supported.
+> > 
+> > Oops, hit "send" too early.
+> > 
+> > We have support for a "gitdir:" facility that would work even on a
+> > filesystem that cannot do symlinks (see gitrepository-layout(5)),
+> > and both the higher-level submodule Porcelain and the more recent
+> > "worktree" experimental code do use it.
+> 
+> And the way to convince git to make the link for you is with clone's
+> "--separate-git-dir" option.
+> 
+> -Peff
 
-I'd like to call this out as a possible security issue before it gets
-implemented. Allowing the server to instruct the client what protocol
-to use is a security risk. This sounds like a fine feature, just do it
-carefully.
+What's curious is that this doesn't really work either, so the issue
+doesn't seem to be the lack of symlink support, but rather the lack of
+willingness on the part of Git to resolve a path recursively.
 
-I reported a similar issue was discussed off list which eventually
-became CVE-2015-7545. Basically, git-submodule allowed a repository to
-specify any protocol via .gitmodules, causing the client to fetch an
-arbitrary URL using a protocol of the attacker's choice. Sadly, the
-existence of git-remote-ext allows easily executing arbitrary shell
-commands if the server can tell the client to use it. Furthermore,
-it's possible the client has some insecure or sensitive custom git
-remote helpers installed.
+The following works flawlessly:
 
-To address this GIT_ALLOW_PROTOCOL was introduced, and git-submodule
-now uses it as of 33cfccb. This environment variable specifies a
-default whitelist of protocols. Whoever implements this should
-probably make use of GIT_ALLOW_PROTOCOL to limit resumable clones to
-the same default whitelist that git-submodule now uses.
+  $ mkdir repos
+  $ git init
+  $ mv .git repos/repoA
+  $ printf 'gitdir: repos/repoA\n' >.git
+  $ git submodule add https://github.com/witiko/git-parallel
 
--- 
-Blake Burkhart
+There is, however, a minor pain, which makes the repository unportable:
+
+  $ cat git-parallel/.git
+  gitdir: /tmp/foobar/repos/repoA/modules/git-parallel
+
+When I change the gitdir symlink to a relative path, everything works
+fine as long as I don't make Git go over two gitdir symlinks:
+
+  $ sed -i 's#^/tmp/foobar#..#' git-parallel/.git
+  $ git status
+  [works]
+  $ sed -i 's#repos/repoA#.git#' git-parallel/.git
+  $ git status
+  fatal: Not a git repository: git-parallel/../.git/modules/git-parallel
+
+Clearly, Git resolves the first gitdir symlink:
+
+  git-parallel/.git => git-parallel/../.git/modules/git-parallel
+
+but refuses to resolve recursively:
+
+  git-parallel/../.git/modules/git-parallel =>
+  git-parallel/../repos/repoA/modules/git-parallel
