@@ -1,99 +1,126 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-completion.bash: always swallow error output of
- for-each-ref
-Date: Sat, 13 Feb 2016 10:21:52 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602131021170.2964@virtualbox>
-References: <56B32953.2010908@gmail.com> <20160204111307.GA30495@sigill.intra.peff.net> <alpine.DEB.2.20.1602041216240.2964@virtualbox> <20160213002122.Horde.mxoPmZIuCikpV2PO97l11AI@webmail.informatik.kit.edu> <20160212234041.GA15688@sigill.intra.peff.net>
- <20160213020712.Horde.SM-rQbc5Jx1UwdYxdvNFNJx@webmail.informatik.kit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Sat, 13 Feb 2016 12:21:43 +0100
+Message-ID: <vpqd1s04zzs.fsf@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr>
+	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
+	<vpqd1s2e74l.fsf@anie.imag.fr>
+	<20160212130446.GB10858@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1870764721-1455355316=:2964"
-Cc: Jeff King <peff@peff.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	tr@thomasrast.ch
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Feb 13 10:23:04 2016
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 13 12:22:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUWPw-0001Mf-4W
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 10:23:04 +0100
+	id 1aUYHa-0000WH-Ek
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 12:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750887AbcBMJWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2016 04:22:17 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59376 "EHLO mout.gmx.net"
+	id S1751010AbcBMLWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2016 06:22:01 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:45135 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750766AbcBMJWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2016 04:22:13 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0ME47n-1aDhXf0H8B-00HN4u; Sat, 13 Feb 2016 10:21:56
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160213020712.Horde.SM-rQbc5Jx1UwdYxdvNFNJx@webmail.informatik.kit.edu>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:04gqT9r4PcfCmC9KC1WLLO+WvrnH00E8sQ3nY0klM+XLs979hHM
- MBTnapU09FXy0vAPq+joLYreAdp73ZU1QHjjnDzUGhgQ2Xd2CxXe33XWAerkD2QGYQijNC2
- u2xJoHZdNFUgXX2TSwtEooUGaXP2/OLz+Lqxy0SVtbGLrC2I7thiSPNp7+/2gg9R6KaaPLQ
- KSClaGAMKOKV5rV5yLgjw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JhrEnzCT4yw=:TZWK3g9SmwqlTrhrCsYKQT
- 1/LNzlQWer2hkOn2Z/jy2hIbkkn+snNNO9l9DCZ324QdmfWA0UaLmjNv6RnOSmPGk5uznhdXO
- v4WXn58mbOCSIBUDNTl4q4RedO4bGFE8GMZv392pic3ay9ugDQGtiDqv+1qcuTnkxppJqH7F9
- EnwjWOGLdrVCwEpEmEXieGeqkkp3oAcccpajaIjaMnnpy3LvghdqtzYP59nKd1okmk+0RDrFq
- 20neSmM+8haFFOPk/RT680kx9GqyAk7IDGM1ByWDRfkfKTsM16RVrymvcgsp1g8hpnw6pw7sw
- mHZdPK0MPtBb263qVIQn5I3DTSH5SFtM77CI46/JG4Sm95dpSlnrzFccpq9jpO+wJK7DkO488
- EpIqk690HON9Jqu8G5TIeNa1O9ivAiBNLbbM9P3KGdVnYf1Tp5HfxO3DWxL803FeGZ8k90Pzq
- 8shV/4wmsaRZuL7NlqKZaj8OiviBss3Yqft5DXAmIFT99yVyBOk5tFeBnllxzw/+xxSwTNERc
- oLbZrE5e18QNSJ73ghoHqMQuWYPv3TRhW+A/bic6+lfOtTgeqEFF4Zp+YMdSbt9OHPF0UYRSr
- Xdx2HUdGaXXnlDFWJLhw9WjnPHZHIgL8LTt1mrRrtDQKOdrvXKak6W18Jm22xgfTMHswXvTrG
- 5r6hadNvmJaEykfPIIIXLhl7RjH3bqKsXxU/9JYEL9eh6tVt3yA3C0ZG9CqM9jcZBhOdGuD35
- aASjfa5/lxkeoor/CBT0sa/O9vJX+4Gyhs49RFwELilc9Z0MnOkQBFOKVjSH9a0/hSv951Oi 
+	id S1750949AbcBMLV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2016 06:21:59 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1DBLgL3024594
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 13 Feb 2016 12:21:42 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1DBLh5H008673;
+	Sat, 13 Feb 2016 12:21:43 +0100
+In-Reply-To: <20160212130446.GB10858@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 12 Feb 2016 08:04:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 13 Feb 2016 12:21:43 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1DBLgL3024594
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1455967307.31548@MLTPooQ+qkxJYYrYXTk+wg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286108>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---8323329-1870764721-1455355316=:2964
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> On Fri, Feb 12, 2016 at 08:10:34AM +0100, Matthieu Moy wrote:
+>
+>> So, that makes it 4 possible co-mentors, i.e. 2 potential slots. Not
+>> much, but it starts looking like last year ... ;-).
+>> 
+>> Peff, would you be willing to co-admin with me (that would be cool, you
+>> are the one with most experience here and you know the SFC stuff for
+>> payment)? Are there any other co-admin volunteer?
+>
+> Yes, I'm willing to co-admin (though I'm also happy to step aside for
+> somebody else if they would like to do it).
 
-Hi G=C3=A1bor,
+Cool!
 
-On Sat, 13 Feb 2016, SZEDER G=C3=A1bor wrote:
+> The biggest task there is getting the application together. I went
+> through the account creation steps at the site (which is different this
+> year), and the application questions are:
+>
+>  - Why does your org want to participate in Google Summer of Code?
+>
+>  - How many potential mentors have agreed to mentor this year?
+>
+>  - How will you keep mentors engaged with their students?
+>
+>  - How will you help your students stay on schedule to complete their projects?
+>
+>  - How will you get your students involved in your community during GSoC?
+>
+>  - How will you keep students involved with your community after GSoC?
+>
+>  - Has your org been accepted as a mentoring org in Google Summer of Code before?
+>
+>  - Are you part of a foundation/umbrella organization?
+>
+>  - What year was your project started? 
+>
+> I think we can pull most of these answers from previous-year
+> applications, but I haven't looked yet. In years past we collaborated
+> on the answers via the git.github.io site, and I pasted them in place.
 
->  $ cur=3Dm ; time __gitcomp_nl "$(__git_refs '' 1)"
->=20
->  real  0m7.641s
->  user  0m5.888s
->  sys   0m1.832s
->=20
-> Using 'refname:strip=3D2' for both 'git for-each-ref' in __git_refs():
->=20
->  $ cur=3Dm ; time __gitcomp_nl "$(__git_refs '' 1)"
->=20
->  real  0m2.848s
->  user  0m2.308s
->  sys   0m0.596s
->=20
-> Quick'n'dirty PoC using 'refname:strip', '**' globbing and a few more
-> tricks to let 'git for-each-ref' do the filtering instead of the
-> shell loop behind __gitcomp_nl():
->=20
->  $ cur=3Dm ; time IFS=3D$'\n' COMPREPLY=3D( $(__git_refs_PoC '' 1) )
->=20
->  real  0m0.247s
->  user  0m0.208s
->  sys   0m0.032s
->=20
-> Not bad for a Friday night, huh? :)
+I started working on it.
 
-Nope, not bad at all. May I have that patch, please? ;-)
+http://git.github.io/SoC-2015-Org-Application/ => the application itself.
+Mostly cut-and-paste from last year, but the questions have changed a
+bit. There's a "Remarks on the current state of the application" section
+at the end for stuff I wasn't sure about.
 
-Ciao,
-Dscho
---8323329-1870764721-1455355316=:2964--
+This is the urgent part, we won't have an opportunity to modify it after
+the deadline.
+
+
+Less urgent, but we need to add more stuff to be credible:
+
+http://git.github.io/SoC-2016-Ideas/ => Ideas page. I removed the
+completed project, and updated some other to reflect the current state
+of Git. I think "Convert scripts to builtins" is still feasible this
+year, but probably harder (we can't say "start with git-pull.sh"
+anymore ...). Johannes: you're still interested I guess?
+
+http://git.github.io/SoC-2016-Microprojects/ => I just did s/2015/2016/.
+I think most projects are not valid anymore, and we need new ones.
+
+To all: please contribute to these pages, either by sending patches here
+(CC: me and peff), pushing directly if you have access, or submitting
+pull-requests. The repo is https://github.com/git/git.github.io/.
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
