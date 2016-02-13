@@ -1,105 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/3] config: add 'type' to config_source struct that
- identifies config type
-Date: Sat, 13 Feb 2016 12:24:35 -0500
-Message-ID: <20160213172435.GG30144@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v3 0/3] config: add '--sources' option to print the source
+ of a config value
+Date: Sat, 13 Feb 2016 18:26:51 +0100
+Message-ID: <CAHGBnuOu4wWYLkYZdgHuaM4D0Ay8J3xNb1towtTj7FcLK1zVdw@mail.gmail.com>
 References: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
- <1455373456-64691-3-git-send-email-larsxschneider@gmail.com>
+	<CANoM8SWj08qKvDXhyfRXLV2iuYJ7Vjdutzjt0Q2ZNOcProqy=Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, sschuberth@gmail.com,
-	ramsay@ramsayjones.plus.com, sunshine@sunshineco.com,
-	hvoigt@hvoigt.net, sbeller@google.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Sat Feb 13 18:25:23 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: larsxschneider@gmail.com, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, ramsay@ramsayjones.plus.com,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Stefan Beller <sbeller@google.com>
+To: Mike Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 13 18:26:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUdwh-0008MO-B8
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 18:25:23 +0100
+	id 1aUdyD-0000wQ-BT
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 18:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902AbcBMRYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2016 12:24:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41555 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750865AbcBMRYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2016 12:24:37 -0500
-Received: (qmail 9262 invoked by uid 102); 13 Feb 2016 17:24:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Feb 2016 12:24:37 -0500
-Received: (qmail 26991 invoked by uid 107); 13 Feb 2016 17:24:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Feb 2016 12:24:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Feb 2016 12:24:35 -0500
-Content-Disposition: inline
-In-Reply-To: <1455373456-64691-3-git-send-email-larsxschneider@gmail.com>
+	id S1750974AbcBMR0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2016 12:26:53 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:34276 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875AbcBMR0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2016 12:26:52 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e6so6012259vkh.1
+        for <git@vger.kernel.org>; Sat, 13 Feb 2016 09:26:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NA17r8nL5x+aBFiHFnoUDYbvzOKIA4KABIM8GtSwnB8=;
+        b=M6vRimNyzX9x23gj/uyBMfQ1pbwXCY6QYEbJ5pJBYW7zOE4UKgFHuQyDtPIqID+ELM
+         A9OLG+R3qcPAvsqjdTeZAwFZKK8js8sWIOCnCEqoBkKy/lsoVbig8S3kQqj1ckjHor8R
+         eFeFWPkKUJm+2zZf2yL/6yCKbnewqnDR654SoePIVSNdm+7SmA0KS+hm7FSB4ezFk6e1
+         qer3dhqDz9GwYLTEtM9PD4xCfB2tmfasK1nqHiAzZwP3P5WNCWbT9d51AUpXLRVMA5j0
+         DzNHBk+muZqu9vC9MSUCqXf3PFpjzjb4YeBaVG7hCEudwcsho6M7Ckb6+3e55vMXsJ99
+         RQJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=NA17r8nL5x+aBFiHFnoUDYbvzOKIA4KABIM8GtSwnB8=;
+        b=X2wOPuc8JaPDieLQLYEqnQvKsNQYHj4hjm9hjAF1AQYaLKcBuCiQ+1O/6wLKf1pUZC
+         3cb2WWsfpLUIrLIAGCD7ag9no3F8aF97BBE8WnJJbfHQas9veXHjymPy6og4l9cGK2uP
+         9VGcKF9VKktHKvcqtrd5stZCLy4burQKk3D3sdPJkqW54gfFQaUWbQXRVzQ11mskyxMn
+         wiQA9i8PkbRQpG5JV2uEpF4cJ9aWbJahlGt6XOtvYEqfgFGOWYF668yAGZERxZDJIBSt
+         KoKrjkb2VSMrDy0RF9X+QrDcJlKb3JZJcQYgIcsvTXWrzU0fnSpoMXYtw5xPy37kvEfX
+         zSTQ==
+X-Gm-Message-State: AG10YOTXPJMa+crZ8PfiGTyK4nyMJ2GAFQHSHrNFOFVWCDAWIaII21NMMXolW5Kdr/TUGGUBhZSxarGDDj1vAw==
+X-Received: by 10.31.146.2 with SMTP id u2mr5653298vkd.19.1455384412015; Sat,
+ 13 Feb 2016 09:26:52 -0800 (PST)
+Received: by 10.176.68.6 with HTTP; Sat, 13 Feb 2016 09:26:51 -0800 (PST)
+In-Reply-To: <CANoM8SWj08qKvDXhyfRXLV2iuYJ7Vjdutzjt0Q2ZNOcProqy=Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286120>
 
-On Sat, Feb 13, 2016 at 03:24:15PM +0100, larsxschneider@gmail.com wrote:
+On Sat, Feb 13, 2016 at 3:43 PM, Mike Rappazzo <rappazzo@gmail.com> wrote:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Use the config type to print more detailed error messages that inform
-> the user about the origin of a config error (file, stdin, blob).
+>> I renamed the flag from "--source" to "--show-origin" as I got the impression
+>> that Sebastian, Peff and Ramsay seem to be all OK with "--show-origin".
+>
+> I know that I am late to the party here, but why not make the option
+> `--verbose` or `-v`?  `git config` doesn't have that now, and this
+> seems like a logical thing to include as verbose data.  I would
 
-This looks OK overall. A few minor nits...
+`--verbose` would be fine with me.
 
-> @@ -1104,6 +1106,7 @@ int git_config_from_buf(config_fn_t fn, const char *name, const char *buf,
->  	top.u.buf.buf = buf;
->  	top.u.buf.len = len;
->  	top.u.buf.pos = 0;
-> +	top.type = "blob";
->  	top.name = name;
->  	top.path = NULL;
->  	top.die_on_error = 0;
-
-This function is about reading config from a memory buffer. The only reason
-we do so _now_ is when reading from a blob, but I think it is laying a
-trap for somebody who wants to reuse the function later.
-
-Should git_config_from_buf() take a "type" parameter, and
-git_config_from_blob_sha1() pass in "blob"?
-
-> @@ -1066,7 +1067,8 @@ static int do_config_from_file(config_fn_t fn,
->  	struct config_source top;
->  
->  	top.u.file = f;
-> -	top.name = name;
-> +	top.type = path ? "file" : "stdin";
-> +	top.name = name ? name : "";
->  	top.path = path;
->  	top.die_on_error = 1;
->  	top.do_fgetc = config_file_fgetc;
-> @@ -1078,7 +1080,7 @@ static int do_config_from_file(config_fn_t fn,
->  
->  static int git_config_from_stdin(config_fn_t fn, void *data)
->  {
-> -	return do_config_from_file(fn, "<stdin>", NULL, stdin, data);
-> +	return do_config_from_file(fn, NULL, NULL, stdin, data);
->  }
-
-Likewise here, we make assumptions in do_config_from_file() about what
-the NULL path means. I think this is less likely to be a problem than
-the other case, but it seems like it would be cleaner for "file" or
-"stdin" to come from the caller, which knows for sure what we are doing.
-
-Similarly, I think git_config_from_stdin() can simply pass in an empty
-name rather than NULL to avoid do_config_from_file() having to fix it
-up.
-
-> +test_expect_success 'invalid stdin config' '
-> +	echo "fatal: bad config line 1 in stdin " >expect &&
-> +	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
-> +	test_cmp expect output
-> +'
-
-The original would have been "bad config file line 1 in <stdin>"; I
-think this is an improvement to drop the "file" here.
-
--Peff
+-- 
+Sebastian Schuberth
