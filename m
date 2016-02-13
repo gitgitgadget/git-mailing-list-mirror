@@ -1,7 +1,8 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v3 0/3] config: add '--sources' option to print the source of a config value
-Date: Sat, 13 Feb 2016 15:24:13 +0100
-Message-ID: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v3 1/3] git-config.txt: describe '--includes' default behavior
+Date: Sat, 13 Feb 2016 15:24:14 +0100
+Message-ID: <1455373456-64691-2-git-send-email-larsxschneider@gmail.com>
+References: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
 Cc: peff@peff.net, sschuberth@gmail.com, ramsay@ramsayjones.plus.com,
 	sunshine@sunshineco.com, hvoigt@hvoigt.net, sbeller@google.com,
 	Lars Schneider <larsxschneider@gmail.com>
@@ -12,103 +13,75 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUb8C-0007ml-Nv
+	id 1aUb8D-0007ml-G7
 	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 15:25:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317AbcBMOYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2016 09:24:22 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35543 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231AbcBMOYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2016 09:24:20 -0500
-Received: by mail-wm0-f67.google.com with SMTP id g62so7719717wme.2
-        for <git@vger.kernel.org>; Sat, 13 Feb 2016 06:24:20 -0800 (PST)
+	id S1751361AbcBMOYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2016 09:24:31 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32795 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243AbcBMOYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2016 09:24:21 -0500
+Received: by mail-wm0-f65.google.com with SMTP id c200so7726878wme.0
+        for <git@vger.kernel.org>; Sat, 13 Feb 2016 06:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=SNZ/C/CWZyQzzgejcUjeqoH/I2A2qhnCU2IasjESQ2c=;
-        b=mKKLmXgIRZAwPghb7pA4vhrdPAxcnJ6jokZ0Jf5IvMsBA2/GikfjGepg9YDesYWQh8
-         JCQeIu4NfVvH5dFzirzHh9MGeQ484/IjxbrYhWNDYRLIgQKFHCfkJS922MyZK3l5FILY
-         2aQf+nhBstc6LjGG6d9H+YKYewpB/0iEeCUaFNogbUoRTWZ1qoqjh1zFUWfPXGjXxUd2
-         BgOqufOAlfum2DYpDIe+CTPg48AqAE7ik7W+v/q3vNTcHTkJmnf8BPL1fuihKFymAGOn
-         tSzgBT2mhihaG1UDBhX2B4bTl8CGG90r3VeVVHFTcAxp9fpRZBF/0IQ0bJI3dF/vTzFP
-         LAug==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3ke6Cy6akHW9Qyg5/aDf20RXb9y5xgjnUQQgd8sLWMk=;
+        b=GChQe/1JUOBcT73YuauA6/iLnXMil9vNlQZLp6zBZWoGXNmD9b3K9sGgmiSnLbPmFe
+         A9Pjc8Y6PBpuukoGmL+0qd028VPWeT6zd5QbGJg7g8YT6bA7+V3v0mJrgBlaheXGtKtO
+         ekipZL4aZduOX9X61bNijpERdn1VJMY4mWqusy7/y8/1o11HO0GHslY/U2U2pfXTDiI6
+         1TR9x9bgjamFFczZW8noR8t5B/ydLzTWwfKjh7ytsvNocrDYvJNPIBOPUly8gBmu9ikV
+         DKHvRkRFcpKF7h3bVgAswuNVyzMKJS+s5PcxSIEAm2cmdI6C/RlRiOqPTDAXxjQRWk8P
+         rG2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=SNZ/C/CWZyQzzgejcUjeqoH/I2A2qhnCU2IasjESQ2c=;
-        b=YHLheHgefnBGmG0x4qXnKTgC+wQM78mqcDRmI7PItemg5b//FX05uWt2t5+6J7e1U1
-         w6pVw5ftI18Rqz5O2bUC2zt9joAQVawFi4wAKoUxe6CaTZrM+t5FJA8m61rY8c/bRFsf
-         58JiTAVj6GVFufxke7+KQyKuHyVMcjemOxKW1p082nkMvOTU8jvU5BKjk+SSFVr0dxp2
-         Dt8eiLS0XHkD2g+zEoLlRBdilV/rfbHP8rNQcNR2aVo+otmU2MptWISpIulEWnF//Zb+
-         cE2gX1BSZJ4PZI1KuaeoIKru3j+wpDvuxSbAHSNmpCU2KAHbnXJ5S/UZRfLEiIVRoylo
-         ePug==
-X-Gm-Message-State: AG10YOTgFy91ZlLy+jVZHQr1twVjGS4kYXsaB+S6Ani2XXu9L4isptVcMepBpADek4cgPA==
-X-Received: by 10.28.211.130 with SMTP id k124mr3410133wmg.7.1455373459484;
-        Sat, 13 Feb 2016 06:24:19 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=3ke6Cy6akHW9Qyg5/aDf20RXb9y5xgjnUQQgd8sLWMk=;
+        b=DRZ2aicAcFKb/8UzBLlqXkAuV4iIggRLCmXxQmSSgaXZEpfdeEMtxuwU5h0A9wq19e
+         9Jof8M22ie421NY0oyo9iIpyBDxaCOMqAIL0v/iJks/yXcl1MU5Pj76UaYKn0hp/qiha
+         njGLaA1rlEDF/LJHKqKR/iJSYFKNxuxdaPqTg1HOhLz6qgvZnUnARGuZ3wotEhJfmr9a
+         TCOb9DFSOAQ2dKxafc0f13QWtDQ0uAgkEHkK6DKE+veEVbaEQmtEz7kB1UN9fGvdJN4o
+         pP/agshrzvcSYrz/FeBEOridEe2IG6nroG8WYLLmdcvm9q0QZ+IUXXwygcVDsLFLGCsc
+         DLDw==
+X-Gm-Message-State: AG10YOT6SLxGhGg0d9Hu667/dpQ1L+5KwToLBiZ2ybIRy2pSAmhiVy9bHKEkG5LLxYhjDw==
+X-Received: by 10.194.76.72 with SMTP id i8mr6908092wjw.117.1455373460802;
+        Sat, 13 Feb 2016 06:24:20 -0800 (PST)
 Received: from slxBook3.fritz.box (p5DDB53AE.dip0.t-ipconnect.de. [93.219.83.174])
-        by smtp.gmail.com with ESMTPSA id os7sm16754763wjc.18.2016.02.13.06.24.17
+        by smtp.gmail.com with ESMTPSA id os7sm16754763wjc.18.2016.02.13.06.24.19
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 13 Feb 2016 06:24:18 -0800 (PST)
+        Sat, 13 Feb 2016 06:24:20 -0800 (PST)
 X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286111>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-diff to v2:
-* rename cmd to cmdline
-* rename function current_config_name to current_config_type_name
-* add 'type' to config_source struct that identifies config type
-* fix config stdin error output and add test case "invalid stdin config"
-* change delimiter between type and name from tab to colon
-* remove is_query_action variable
-* rename "--sources" to "--show-origin"
-* add pathological test case "--show-origin stdin with file include"
-* enumerate all valid commandline cases for "--show-origin"
-* removed TODOs as there are no config include bugs
-* describe '--includes' default behavior in git-config.txt
-* split test cases
-* use non-interpolated here-docs where possible
-* improve readablity of 'show_config_origin' function by removing duality
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ Documentation/git-config.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I renamed the flag from "--source" to "--show-origin" as I got the impression
-that Sebastian, Peff and Ramsay seem to be all OK with "--show-origin".
-
-Thanks Eric for the hint to simplify the 'show_config_origin' function.
-I took your suggestion but modfied one line. Instead of "fputs" I used
-"fwrite" to write the content. This was necssary as the last char of the
-string could be \0 due to the "--null" flag. "fputs" would ignore that.
-
-In 959b545 Heiko introduced a config API to lookup .gitmodules values and
-in "submodule-config.c" he uses the "git_config_from_buf" function [1]. I
-wonder if my modifications to this function could trigger any unwanted side
-effects in his implementation? (I can't imagine any but I want to make you
-aware of this connection)
-
-
-Thanks a lot Peff, Sebastian, Ramsey, and Eric for the review.
-
-
-[1] https://github.com/git/git/blob/494398473714dcbedb38b1ac79b531c7384b3bc4/submodule-config.c#L430-L431
-
-
-Lars Schneider (3):
-  git-config.txt: describe '--includes' default behavior
-  config: add 'type' to config_source struct that identifies config type
-  config: add '--show-origin' option to print the origin of a config
-    value
-
- Documentation/git-config.txt |  19 ++++--
- builtin/config.c             |  35 +++++++++++
- cache.h                      |   1 +
- config.c                     |  23 +++++---
- t/t1300-repo-config.sh       | 136 ++++++++++++++++++++++++++++++++++++++++++-
- t/t1308-config-set.sh        |   4 +-
- 6 files changed, 202 insertions(+), 16 deletions(-)
-
---
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 2608ca7..59b1c95 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -219,7 +219,9 @@ See also <<FILES>>.
+ 
+ --[no-]includes::
+ 	Respect `include.*` directives in config files when looking up
+-	values. Defaults to on.
++	values. Defaults to off when reading a specific config file
++	(e.g. via `--file` or via `--local` etc.), and to on when
++	generically reading all config.
+ 
+ [[FILES]]
+ FILES
+-- 
 2.5.1
