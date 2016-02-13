@@ -1,185 +1,133 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v3 2/3] config: add 'type' to config_source struct that identifies config type
-Date: Sat, 13 Feb 2016 15:24:15 +0100
-Message-ID: <1455373456-64691-3-git-send-email-larsxschneider@gmail.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v3 0/3] config: add '--sources' option to print the source
+ of a config value
+Date: Sat, 13 Feb 2016 09:43:34 -0500
+Message-ID: <CANoM8SWj08qKvDXhyfRXLV2iuYJ7Vjdutzjt0Q2ZNOcProqy=Q@mail.gmail.com>
 References: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, sschuberth@gmail.com, ramsay@ramsayjones.plus.com,
-	sunshine@sunshineco.com, hvoigt@hvoigt.net, sbeller@google.com,
-	Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 13 15:25:12 2016
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	ramsay@ramsayjones.plus.com,
+	Eric Sunshine <sunshine@sunshineco.com>, hvoigt@hvoigt.net,
+	sbeller@google.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Sat Feb 13 15:43:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUb8J-0007rJ-DA
-	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 15:25:11 +0100
+	id 1aUbQU-00033X-G6
+	for gcvg-git-2@plane.gmane.org; Sat, 13 Feb 2016 15:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364AbcBMOZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Feb 2016 09:25:01 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32805 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231AbcBMOYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Feb 2016 09:24:23 -0500
-Received: by mail-wm0-f68.google.com with SMTP id c200so7726965wme.0
-        for <git@vger.kernel.org>; Sat, 13 Feb 2016 06:24:22 -0800 (PST)
+	id S1751478AbcBMOnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Feb 2016 09:43:55 -0500
+Received: from mail-ob0-f193.google.com ([209.85.214.193]:34223 "EHLO
+	mail-ob0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbcBMOny (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Feb 2016 09:43:54 -0500
+Received: by mail-ob0-f193.google.com with SMTP id x5so11804702obg.1
+        for <git@vger.kernel.org>; Sat, 13 Feb 2016 06:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FnLqgFuVMcQvdzhTsErRLAIZwu1OQGKsi98kZveWWbs=;
-        b=o8/6gdWzBV7eBM1Xwjh3HcXupYAnza7vySSlIciodCqf42gabvcs5JJuhdl0CKigbr
-         OoITPBscoIhQklHxTxvIw9L1fnaXyKEfpVb02BPHzdE1Hl1NiZaC/CQbSz+GqLC5hqx3
-         6kz7UKo2n2L+CuTa6EwT6AV2MjqtUabnoWwvbTF8V0vZDzk64tNKxvXS1Itdl8jgMnxa
-         a19iKPsdlr0k3Ob7lm9utrct4UUG59D4apqY66789xxI+dT4gvIKsXIY+uAOvg0zPovw
-         FK9ZkNoNMxY+/skaN3Pu3EWX5IoWOoVl4wuJ3iC79/u0ReNnXe6/iU2E/goajFOlPkLb
-         U+UA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ZCXLma5VjId5lgo2GWXH7De9AWO928F719Pys7FvKdQ=;
+        b=W7qHItyMrhVJCujBXuFFGS0DcBWyV82j2cCcUGDGonspkESKY1jTiZ8O+BM/ifQg5P
+         OwVmY6VlRJ6lnfdNNFxwqV86Lu2Tkq1/rtMypVOiIjDcf7sGANWftYvgFXjURELmHxc4
+         Uki2BSnmw503Nk5FdPYVWlmSRoCheFZrNaXwhGmocc5AQZ3lrx6Kuas68jUXTQGCeyBS
+         MsEkZInwCOwhJa8NE3LF0J9foFAKxyEpWrTmHeThY4m2L9yLMXXHTZShcdfWreRxXaov
+         5bVbGSl7IgPRCWVwVSVHzTL7a6AUS3iApehWJAuJeH0P0pg8+wcdFEW8uFa4hpXS710s
+         yQdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FnLqgFuVMcQvdzhTsErRLAIZwu1OQGKsi98kZveWWbs=;
-        b=azTandjs1ria3dkKFpQBe1XMTLxl/f7dFplWsbyjbXhEUpxNv4zmVbox8VIYIKa/yx
-         +pHPaSmt3QPpErLj3uPWlorQqKnWzlrQ+cqtTyfjn1mb7XqnHvGw8zEZw6sxBCeGSYN8
-         RuZlqUJXrZT2j5/NvqdJy6LA6IzQ7U4q2ZKRtQnBcdR29bEsvsVfVtYauOccQNC8iSyO
-         YQ2adMHMWg1j0Zguv9dH757ChVoUSfJPOdwf/hzcdQHw+x/ndJcuRQdZWFvAvSN2bHeQ
-         zXfKyFf76LTNi5FGD1RJi+noNyFJZPQK7cNqHEYMOL6Y+6LNvRpq3+S4VV1CxLWWgEY+
-         CH7w==
-X-Gm-Message-State: AG10YOSFQecCwRGtEwvtXuDh/cbOgb6lP77DPSZILhQxe0Kp/3uDFfZa7cerXuFqIOsUBQ==
-X-Received: by 10.194.61.42 with SMTP id m10mr7055476wjr.126.1455373462200;
-        Sat, 13 Feb 2016 06:24:22 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB53AE.dip0.t-ipconnect.de. [93.219.83.174])
-        by smtp.gmail.com with ESMTPSA id os7sm16754763wjc.18.2016.02.13.06.24.21
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 13 Feb 2016 06:24:21 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=ZCXLma5VjId5lgo2GWXH7De9AWO928F719Pys7FvKdQ=;
+        b=TAGasjBnsrH53hjHUxfTmP6fRi9019riOsJMrURUzedkLuIb/V/upe2Svf1VEBoKHd
+         j/DGFptZ3/Yj2Q/C5zyQgs6SCBjf7gzBgwAN+gCj0H4HCUrJKD59z6lK5yTro4q4w1CA
+         YH2Agq/KvQ8uVclk9GXEP9UU5tIlPGIAHcujFIfz1jXgknFUr4lX891CPM1Op/5vSdGT
+         /lkCEhMkNn0/GGNRUxOwP5w+lobxu8wHGtHgLMv+oAd9erhvOzmaefyw99M74H42VXK2
+         cjrNoEGomXzjd96j4dBnJsMWaPGW3AgbCG8ZLu20N5C7zPnYtY0aoQnVKnjnt8UaMpoZ
+         uViA==
+X-Gm-Message-State: AG10YOSWvu3w4qEKYn/Eyno9TW5dnrfRd0mwlEdtBImSjMi2pRfkbJo0iaqOQBOb0fDYWiNvqSRNQhJxmUBwLg==
+X-Received: by 10.182.130.162 with SMTP id of2mr5496570obb.57.1455374633569;
+ Sat, 13 Feb 2016 06:43:53 -0800 (PST)
+Received: by 10.76.108.167 with HTTP; Sat, 13 Feb 2016 06:43:34 -0800 (PST)
 In-Reply-To: <1455373456-64691-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286114>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Sat, Feb 13, 2016 at 9:24 AM,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> diff to v2:
+> * rename cmd to cmdline
+> * rename function current_config_name to current_config_type_name
+> * add 'type' to config_source struct that identifies config type
+> * fix config stdin error output and add test case "invalid stdin config"
+> * change delimiter between type and name from tab to colon
+> * remove is_query_action variable
+> * rename "--sources" to "--show-origin"
+> * add pathological test case "--show-origin stdin with file include"
+> * enumerate all valid commandline cases for "--show-origin"
+> * removed TODOs as there are no config include bugs
+> * describe '--includes' default behavior in git-config.txt
+> * split test cases
+> * use non-interpolated here-docs where possible
+> * improve readablity of 'show_config_origin' function by removing duality
+>
+> I renamed the flag from "--source" to "--show-origin" as I got the impression
+> that Sebastian, Peff and Ramsay seem to be all OK with "--show-origin".
 
-Use the config type to print more detailed error messages that inform
-the user about the origin of a config error (file, stdin, blob).
+I know that I am late to the party here, but why not make the option
+`--verbose` or `-v`?  `git config` doesn't have that now, and this
+seems like a logical thing to include as verbose data.  I would
+venture to guess that `--verbose` is more likely to be the first thing
+that someone who is looking for this information will guess at before
+they run `git config --help`.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- config.c               | 17 ++++++++++-------
- t/t1300-repo-config.sh |  8 +++++++-
- t/t1308-config-set.sh  |  4 ++--
- 3 files changed, 19 insertions(+), 10 deletions(-)
-
-diff --git a/config.c b/config.c
-index 86a5eb2..6a5942f 100644
---- a/config.c
-+++ b/config.c
-@@ -24,6 +24,7 @@ struct config_source {
- 			size_t pos;
- 		} buf;
- 	} u;
-+	const char *type;
- 	const char *name;
- 	const char *path;
- 	int die_on_error;
-@@ -471,9 +472,9 @@ static int git_parse_source(config_fn_t fn, void *data)
- 			break;
- 	}
- 	if (cf->die_on_error)
--		die(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		die(_("bad config line %d in %s %s"), cf->linenr, cf->type, cf->name);
- 	else
--		return error(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		return error(_("bad config line %d in %s %s"), cf->linenr, cf->type, cf->name);
- }
- 
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -588,9 +589,9 @@ static void die_bad_number(const char *name, const char *value)
- 	if (!value)
- 		value = "";
- 
--	if (cf && cf->name)
--		die(_("bad numeric config value '%s' for '%s' in %s: %s"),
--		    value, name, cf->name, reason);
-+	if (cf && cf->type && cf->name)
-+		die(_("bad numeric config value '%s' for '%s' in %s %s: %s"),
-+		    value, name, cf->type, cf->name, reason);
- 	die(_("bad numeric config value '%s' for '%s': %s"), value, name, reason);
- }
- 
-@@ -1066,7 +1067,8 @@ static int do_config_from_file(config_fn_t fn,
- 	struct config_source top;
- 
- 	top.u.file = f;
--	top.name = name;
-+	top.type = path ? "file" : "stdin";
-+	top.name = name ? name : "";
- 	top.path = path;
- 	top.die_on_error = 1;
- 	top.do_fgetc = config_file_fgetc;
-@@ -1078,7 +1080,7 @@ static int do_config_from_file(config_fn_t fn,
- 
- static int git_config_from_stdin(config_fn_t fn, void *data)
- {
--	return do_config_from_file(fn, "<stdin>", NULL, stdin, data);
-+	return do_config_from_file(fn, NULL, NULL, stdin, data);
- }
- 
- int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-@@ -1104,6 +1106,7 @@ int git_config_from_buf(config_fn_t fn, const char *name, const char *buf,
- 	top.u.buf.buf = buf;
- 	top.u.buf.len = len;
- 	top.u.buf.pos = 0;
-+	top.type = "blob";
- 	top.name = name;
- 	top.path = NULL;
- 	top.die_on_error = 0;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 52678e7..7abdfcb 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -700,12 +700,18 @@ test_expect_success 'invalid unit' '
- 	git config aninvalid.unit >actual &&
- 	test_cmp expect actual &&
- 	cat >expect <<-\EOF &&
--	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in .git/config: invalid unit
-+	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in file .git/config: invalid unit
- 	EOF
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'invalid stdin config' '
-+	echo "fatal: bad config line 1 in stdin " >expect &&
-+	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
-+	test_cmp expect output
-+'
-+
- cat > expect << EOF
- true
- false
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 91235b7..82f82a1 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -195,14 +195,14 @@ test_expect_success 'proper error on error in default config files' '
- 	cp .git/config .git/config.old &&
- 	test_when_finished "mv .git/config.old .git/config" &&
- 	echo "[" >>.git/config &&
--	echo "fatal: bad config file line 34 in .git/config" >expect &&
-+	echo "fatal: bad config line 34 in file .git/config" >expect &&
- 	test_expect_code 128 test-config get_value foo.bar 2>actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'proper error on error in custom config files' '
- 	echo "[" >>syntax-error &&
--	echo "fatal: bad config file line 1 in syntax-error" >expect &&
-+	echo "fatal: bad config line 1 in file syntax-error" >expect &&
- 	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
- 	test_cmp expect actual
- '
--- 
-2.5.1
+>
+> Thanks Eric for the hint to simplify the 'show_config_origin' function.
+> I took your suggestion but modfied one line. Instead of "fputs" I used
+> "fwrite" to write the content. This was necssary as the last char of the
+> string could be \0 due to the "--null" flag. "fputs" would ignore that.
+>
+> In 959b545 Heiko introduced a config API to lookup .gitmodules values and
+> in "submodule-config.c" he uses the "git_config_from_buf" function [1]. I
+> wonder if my modifications to this function could trigger any unwanted side
+> effects in his implementation? (I can't imagine any but I want to make you
+> aware of this connection)
+>
+>
+> Thanks a lot Peff, Sebastian, Ramsey, and Eric for the review.
+>
+>
+> [1] https://github.com/git/git/blob/494398473714dcbedb38b1ac79b531c7384b3bc4/submodule-config.c#L430-L431
+>
+>
+> Lars Schneider (3):
+>   git-config.txt: describe '--includes' default behavior
+>   config: add 'type' to config_source struct that identifies config type
+>   config: add '--show-origin' option to print the origin of a config
+>     value
+>
+>  Documentation/git-config.txt |  19 ++++--
+>  builtin/config.c             |  35 +++++++++++
+>  cache.h                      |   1 +
+>  config.c                     |  23 +++++---
+>  t/t1300-repo-config.sh       | 136 ++++++++++++++++++++++++++++++++++++++++++-
+>  t/t1308-config-set.sh        |   4 +-
+>  6 files changed, 202 insertions(+), 16 deletions(-)
+>
+> --
+> 2.5.1
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
