@@ -1,106 +1,94 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH v2] t5570: add tests for "git {clone,fetch,pull} -v"
-Date: Sun, 14 Feb 2016 09:26:29 +0000
-Message-ID: <20160214092629.GA1909@dcvr.yhbt.net>
-References: <xmqqsi10xhbk.fsf@gitster.mtv.corp.google.com>
- <20160212234953.GA8691@dcvr.yhbt.net>
- <CAPc5daUd6fQ6hX6W1AzQ9rCzrsTvkXOxZgwVdibbM5S34nF7ZA@mail.gmail.com>
- <20160213003526.GA15899@dcvr.yhbt.net>
- <xmqqtwlcs5e6.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v7 01/12] grep: allow -F -i combination
+Date: Sun, 14 Feb 2016 18:49:45 +0700
+Message-ID: <1455450596-11904-2-git-send-email-pclouds@gmail.com>
+References: <1454724190-14063-1-git-send-email-pclouds@gmail.com>
+ <1455450596-11904-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 14 10:26:40 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 14 12:51:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aUswx-00074a-CZ
-	for gcvg-git-2@plane.gmane.org; Sun, 14 Feb 2016 10:26:39 +0100
+	id 1aUvDJ-0001H9-K1
+	for gcvg-git-2@plane.gmane.org; Sun, 14 Feb 2016 12:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbcBNJ0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2016 04:26:34 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:59227 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751742AbcBNJ0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2016 04:26:30 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6FB3202DA;
-	Sun, 14 Feb 2016 09:26:29 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqqtwlcs5e6.fsf@gitster.mtv.corp.google.com>
+	id S1751726AbcBNLvh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Feb 2016 06:51:37 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34935 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbcBNLvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2016 06:51:09 -0500
+Received: by mail-pf0-f196.google.com with SMTP id w128so5650853pfb.2
+        for <git@vger.kernel.org>; Sun, 14 Feb 2016 03:51:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ghOs16SUsabMZPrpw3eMN6cQOXDWKv0zIck7rxVdlog=;
+        b=m9eBWcnUKz7fdS+YBo8CnrTSIuF5la1qQWdvYPuGqXNi3ah/e+eVwCwEe9rqyMgknS
+         fj8WIwI6+h/FuxsNCwZf+Q6lal4I0Cb9jPrpCgdQPovWEO1Jr8+pNoKTKkkOltLXCdta
+         kiMIsTsbIHLPp1AiFSTylCIHiW5Z0ed4m/RfQ0Icno1vR2Q/ff5NpL3U/0TQkyg7oUh7
+         Ou+QgrEy8ZE0pWc7tYaAlGxdcVV93j4+A77xPoOCreVcmT8LTCwvem/1iR/Y2v9rBmy1
+         KwA0EurL3i7hsebil6UWrP+P1pTgFTbSZiCzFBCI1AgTrpUwKo9Xr+0SQpI0Vs1zbv3d
+         aMdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=ghOs16SUsabMZPrpw3eMN6cQOXDWKv0zIck7rxVdlog=;
+        b=fMvPgrV9hcgEq3eiAd21DZuvR2YZCHHtCbJmqqkGiMV599ZAjvQUAeIqaxGYpiTC0K
+         PS1y33eRhIBgn9reZZj+hged+HcrA0CzaYRVVXwr8lhA8HkBpGMZTu4k4cULXeIuqm7C
+         46+tVoo2K85PVpD93VAR7T4JtgB7V+9DaHfOblbQ5+BIvBkCy50G4Qs3FDTF38zH2XgO
+         3iG8dqiOIFlvkZdVe8sQVW/Rn/JEkFoAhpDSGf73pvEUsyma1i13U36XxZwTuavZOmEw
+         USzUSBkqJsjehWHcp3tYoZOFR8Lwb8kyutBc5LO8+g0LK9C//FvnI9sbSM76i7cX1mac
+         CNlA==
+X-Gm-Message-State: AG10YORZ0nRASK18vcbeXpmfdlEd4SrAMw5youc+Wm5N/SyS/DVbeZCYNS+mGAHqZLEu+w==
+X-Received: by 10.98.68.220 with SMTP id m89mr15545330pfi.65.1455450669532;
+        Sun, 14 Feb 2016 03:51:09 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id h89sm31291650pfj.52.2016.02.14.03.51.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 14 Feb 2016 03:51:08 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 14 Feb 2016 18:51:30 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
+In-Reply-To: <1455450596-11904-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286135>
 
-Now that git_connect is more information about connectivity
-progress after: ("pass transport verbosity down to git_connect")
-we should ensure it remains so for future users who need to
-to diagnose networking problems.
+-F means "no regex", not "case sensitive" so it should not override -i
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
-  Thanks for the feedback, v2 changes as suggested:
-  - remove -q flag from grep invocation for verbose git tests
-  - do not remove stderr file after testing
-  - fold verbosity check into existing tests for skip-ability
+ builtin/grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- t/t5570-git-daemon.sh | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index d76269a..225a022 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -6,6 +6,12 @@ test_description='test fetching over git protocol'
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
- start_git_daemon
- 
-+check_verbose_connect () {
-+	grep -F "Looking up 127.0.0.1 ..." stderr &&
-+	grep -F "Connecting to 127.0.0.1 (port " stderr &&
-+	grep -F "done." stderr
-+}
-+
- test_expect_success 'setup repository' '
- 	git config push.default matching &&
- 	echo content >file &&
-@@ -24,7 +30,8 @@ test_expect_success 'create git-accessible bare repository' '
- '
- 
- test_expect_success 'clone git repository' '
--	git clone "$GIT_DAEMON_URL/repo.git" clone &&
-+	git clone -v "$GIT_DAEMON_URL/repo.git" clone 2>stderr &&
-+	check_verbose_connect &&
- 	test_cmp file clone/file
- '
- 
-@@ -32,10 +39,21 @@ test_expect_success 'fetch changes via git protocol' '
- 	echo content >>file &&
- 	git commit -a -m two &&
- 	git push public &&
--	(cd clone && git pull) &&
-+	(cd clone && git pull -v) 2>stderr &&
-+	check_verbose_connect &&
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'no-op fetch -v stderr is as expected' '
-+	(cd clone && git fetch -v) 2>stderr &&
-+	check_verbose_connect
-+'
-+
-+test_expect_success 'no-op fetch without "-v" is quiet' '
-+	(cd clone && git fetch) 2>stderr &&
-+	! test -s stderr
-+'
-+
- test_expect_success 'remote detects correct HEAD' '
- 	git push public master:other &&
- 	(cd clone &&
--- 
-EW
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 8c516a9..46c5ba1 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -809,7 +809,7 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+=20
+ 	if (!opt.pattern_list)
+ 		die(_("no pattern given."));
+-	if (!opt.fixed && opt.ignore_case)
++	if (opt.ignore_case)
+ 		opt.regflags |=3D REG_ICASE;
+=20
+ 	compile_grep_patterns(&opt);
+--=20
+2.7.0.377.g4cd97dd
