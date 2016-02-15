@@ -1,362 +1,66 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the
- origin of a config value
-Date: Mon, 15 Feb 2016 21:36:23 +0000
-Message-ID: <56C244D7.1030503@ramsayjones.plus.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
- <1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] remote: simplify remote_is_configured()
+Date: Mon, 15 Feb 2016 13:37:44 -0800
+Message-ID: <xmqqwpq5psd3.fsf@gitster.mtv.corp.google.com>
+References: <1455558150-30267-1-git-send-email-t.gummerer@gmail.com>
+	<1455558150-30267-3-git-send-email-t.gummerer@gmail.com>
+	<20160215182113.GF26443@sigill.intra.peff.net>
+	<20160215203846.GD13775@hank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, sschuberth@gmail.com, sunshine@sunshineco.com,
-	hvoigt@hvoigt.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
-	gitster@pobox.com
-To: larsxschneider@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:36:40 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:37:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVQov-0005Va-Kp
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:36:38 +0100
+	id 1aVQq7-0006Qp-Qc
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbcBOVgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 16:36:35 -0500
-Received: from avasout07.plus.net ([84.93.230.235]:40261 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581AbcBOVgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 16:36:33 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout07 with smtp
-	id JlcV1s0064mu3xa01lcX75; Mon, 15 Feb 2016 21:36:31 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=pGLkceISAAAA:8 a=PKzvZo6CAAAA:8 a=qbU1AAr7QqVIF0DZQWYA:9 a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
+	id S1752528AbcBOVhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 16:37:48 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53099 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751120AbcBOVhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 16:37:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2886345ED4;
+	Mon, 15 Feb 2016 16:37:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dHTzm5TIOedznAD5YUE9YNtJZi8=; b=JLl85h
+	5kgNMh4+F16UXDemMf6lSGCszYRfLgnoWMCFGARdzisHH+aDtrRIyR/qfuOMMXTS
+	iPeB3j3ryYAMvWq1YnIXc5ZOS64ZS09bFTXDcCDSAEa2LBp5yuRG6YdvKE3nkPwp
+	D31vF3HNLqp8al6ZcwcymBIHbjE38YsP11/y8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FforWZ7fAOGj/yCN0UfLPN6ybSewdJw0
+	toDIkUOhVe90qsCdbmaSarb0F7JI/mgXHLkW4f34bDsmCK4owqjlZsrTdzEhOyrr
+	Jd3TKuqNaJ/I3D0UrpEACxKZygTdzivYIKBdFpvKK/Hi3YCOD4jtBGDKEuOLf0vB
+	k68hNqol4K4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E1A845ED3;
+	Mon, 15 Feb 2016 16:37:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 81B4045ED2;
+	Mon, 15 Feb 2016 16:37:46 -0500 (EST)
+In-Reply-To: <20160215203846.GD13775@hank> (Thomas Gummerer's message of "Mon,
+	15 Feb 2016 21:38:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5A6DB950-D42C-11E5-AD84-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286247>
 
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
+> Agreed, will change.  Thanks.
 
-On 15/02/16 10:17, larsxschneider@gmail.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> If config values are queried using 'git config' (e.g. via --get,
-> --get-all, --get-regexp, or --list flag) then it is sometimes hard to
-> find the configuration file where the values were defined.
-> 
-> Teach 'git config' the '--show-origin' option to print the source
-> configuration file for every printed value.
-> 
-> Based-on-patch-by: Jeff King <peff@peff.net>
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  Documentation/git-config.txt |  15 +++--
->  builtin/config.c             |  33 ++++++++++
->  t/t1300-repo-config.sh       | 153 +++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 196 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index 2608ca7..6374997 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -9,18 +9,18 @@ git-config - Get and set repository or global options
->  SYNOPSIS
->  --------
->  [verse]
-> -'git config' [<file-option>] [type] [-z|--null] name [value [value_regex]]
-> +'git config' [<file-option>] [type] [--show-origin] [-z|--null] name [value [value_regex]]
->  'git config' [<file-option>] [type] --add name value
->  'git config' [<file-option>] [type] --replace-all name value [value_regex]
-> -'git config' [<file-option>] [type] [-z|--null] --get name [value_regex]
-> -'git config' [<file-option>] [type] [-z|--null] --get-all name [value_regex]
-> -'git config' [<file-option>] [type] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
-> +'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get name [value_regex]
-> +'git config' [<file-option>] [type] [--show-origin] [-z|--null] --get-all name [value_regex]
-> +'git config' [<file-option>] [type] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
->  'git config' [<file-option>] [type] [-z|--null] --get-urlmatch name URL
->  'git config' [<file-option>] --unset name [value_regex]
->  'git config' [<file-option>] --unset-all name [value_regex]
->  'git config' [<file-option>] --rename-section old_name new_name
->  'git config' [<file-option>] --remove-section name
-> -'git config' [<file-option>] [-z|--null] [--name-only] -l | --list
-> +'git config' [<file-option>] [--show-origin] [-z|--null] [--name-only] -l | --list
->  'git config' [<file-option>] --get-color name [default]
->  'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
->  'git config' [<file-option>] -e | --edit
-> @@ -194,6 +194,11 @@ See also <<FILES>>.
->  	Output only the names of config variables for `--list` or
->  	`--get-regexp`.
->  
-> +--show-origin::
-> +	Augment the output of all queried config options with the
-> +	origin type (file, stdin, blob, cmdline) and the actual origin
-
-file, blob, cmdline (hmm, maybe cmd-line? ;-) )
-
-> +	(config file path, ref, or blob id if applicable).
-> +
->  --get-colorbool name [stdout-is-tty]::
->  
->  	Find the color setting for `name` (e.g. `color.diff`) and output
-> diff --git a/builtin/config.c b/builtin/config.c
-> index adc7727..7bad0c0 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -3,6 +3,7 @@
->  #include "color.h"
->  #include "parse-options.h"
->  #include "urlmatch.h"
-> +#include "quote.h"
->  
->  static const char *const builtin_config_usage[] = {
->  	N_("git config [<options>]"),
-> @@ -27,6 +28,7 @@ static int actions, types;
->  static const char *get_color_slot, *get_colorbool_slot;
->  static int end_null;
->  static int respect_includes = -1;
-> +static int show_origin;
->  
->  #define ACTION_GET (1<<0)
->  #define ACTION_GET_ALL (1<<1)
-> @@ -81,6 +83,7 @@ static struct option builtin_config_options[] = {
->  	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
->  	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
->  	OPT_BOOL(0, "includes", &respect_includes, N_("respect include directives on lookup")),
-> +	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, stdin, blob, cmdline)")),
->  	OPT_END(),
->  };
->  
-> @@ -91,8 +94,28 @@ static void check_argc(int argc, int min, int max) {
->  	usage_with_options(builtin_config_usage, builtin_config_options);
->  }
->  
-> +static void show_config_origin(struct strbuf *buf)
-> +{
-> +	const char term = end_null ? '\0' : '\t';
-> +
-> +	strbuf_addstr(buf, current_config_type());
-> +	strbuf_addch(buf, ':');
-> +	if (end_null)
-> +		strbuf_addstr(buf, current_config_name());
-> +	else
-> +		quote_c_style(current_config_name(), buf, NULL, 0);
-> +	strbuf_addch(buf, term);
-> +}
-> +
->  static int show_all_config(const char *key_, const char *value_, void *cb)
->  {
-> +	if (show_origin) {
-> +		struct strbuf buf = STRBUF_INIT;
-> +		show_config_origin(&buf);
-> +		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
-> +		fwrite(buf.buf, 1, buf.len, stdout);
-> +		strbuf_release(&buf);
-> +	}
->  	if (!omit_values && value_)
->  		printf("%s%c%s%c", key_, delim, value_, term);
->  	else
-> @@ -108,6 +131,8 @@ struct strbuf_list {
->  
->  static int format_config(struct strbuf *buf, const char *key_, const char *value_)
->  {
-> +	if (show_origin)
-> +		show_config_origin(buf);
->  	if (show_keys)
->  		strbuf_addstr(buf, key_);
->  	if (!omit_values) {
-> @@ -538,6 +563,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  		error("--name-only is only applicable to --list or --get-regexp");
->  		usage_with_options(builtin_config_usage, builtin_config_options);
->  	}
-> +
-> +	if (show_origin && !(actions &
-> +		(ACTION_GET|ACTION_GET_ALL|ACTION_GET_REGEXP|ACTION_LIST))) {
-> +		error("--show-origin is only applicable to --get, --get-all, "
-> +			  "--get-regexp, and --list.");
-> +		usage_with_options(builtin_config_usage, builtin_config_options);
-> +	}
-> +
->  	if (actions == ACTION_LIST) {
->  		check_argc(argc, 0, 0);
->  		if (git_config_with_options(show_all_config, NULL,
-> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-> index 42ed5cc..4abbdf9 100755
-> --- a/t/t1300-repo-config.sh
-> +++ b/t/t1300-repo-config.sh
-> @@ -1209,4 +1209,157 @@ test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
->  	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
->  '
->  
-> +test_expect_success 'set up --show-origin tests' '
-> +	INCLUDE_DIR="$HOME/include" &&
-> +	mkdir -p "$INCLUDE_DIR" &&
-> +	cat >"$INCLUDE_DIR"/absolute.include <<-\EOF &&
-> +		[user]
-> +			absolute = include
-> +	EOF
-> +	cat >"$INCLUDE_DIR"/relative.include <<-\EOF &&
-> +		[user]
-> +			relative = include
-> +	EOF
-> +	cat >"$HOME"/.gitconfig <<-EOF &&
-> +		[user]
-> +			global = true
-> +			override = global
-> +		[include]
-> +			path = "$INCLUDE_DIR/absolute.include"
-> +	EOF
-> +	cat >.git/config <<-\EOF
-> +		[user]
-> +			local = true
-> +			override = local
-> +		[include]
-> +			path = ../include/relative.include
-> +	EOF
-> +'
-> +
-> +test_expect_success '--show-origin with --list' '
-> +	cat >expect <<-EOF &&
-> +		file:$HOME/.gitconfig	user.global=true
-> +		file:$HOME/.gitconfig	user.override=global
-> +		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-> +		file:$INCLUDE_DIR/absolute.include	user.absolute=include
-> +		file:.git/config	user.local=true
-> +		file:.git/config	user.override=local
-> +		file:.git/config	include.path=../include/relative.include
-> +		file:.git/../include/relative.include	user.relative=include
-> +		cmdline:	user.cmdline=true
-> +	EOF
-> +	git -c user.cmdline=true config --list --show-origin >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin with --list --null' '
-> +	cat >expect <<-EOF &&
-> +		file:$HOME/.gitconfigQuser.global
-> +		trueQfile:$HOME/.gitconfigQuser.override
-> +		globalQfile:$HOME/.gitconfigQinclude.path
-> +		$INCLUDE_DIR/absolute.includeQfile:$INCLUDE_DIR/absolute.includeQuser.absolute
-> +		includeQfile:.git/configQuser.local
-> +		trueQfile:.git/configQuser.override
-> +		localQfile:.git/configQinclude.path
-> +		../include/relative.includeQfile:.git/../include/relative.includeQuser.relative
-> +		includeQcmdline:Quser.cmdline
-> +		trueQ
-> +	EOF
-> +	git -c user.cmdline=true config --null --list --show-origin >output.raw &&
-> +	nul_to_q <output.raw >output &&
-> +	# The here-doc above adds a newline that the --null output would not
-> +	# include. Add it here to make the two comparable.
-> +	echo >>output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin with single file' '
-> +	cat >expect <<-\EOF &&
-> +		file:.git/config	user.local=true
-> +		file:.git/config	user.override=local
-> +		file:.git/config	include.path=../include/relative.include
-> +	EOF
-> +	git config --local --list --show-origin >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin with --get-regexp' '
-> +	cat >expect <<-EOF &&
-> +		file:$HOME/.gitconfig	user.global true
-> +		file:.git/config	user.local true
-> +	EOF
-> +	git config --show-origin --get-regexp "user\.[g|l].*" >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin getting a single key' '
-> +	cat >expect <<-\EOF &&
-> +		file:.git/config	local
-> +	EOF
-> +	git config --show-origin user.override >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success 'set up custom config file' '
-> +	CUSTOM_CONFIG_FILE=$(printf "file\twith\ttabs.conf") &&
-> +	cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
-> +		[user]
-> +			custom = true
-> +	EOF
-> +'
-> +
-> +test_expect_success '--show-origin escape special file name characters' '
-> +	cat >expect <<-\EOF &&
-> +		file:"file\twith\ttabs.conf"	user.custom=true
-> +	EOF
-> +	git config --file "$CUSTOM_CONFIG_FILE" --show-origin --list >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin stdin' '
-> +	cat >expect <<-\EOF &&
-> +		stdin:	user.custom=true
-
-So, as with the previous patch, I think this should be:
-		file:<stdin>	user.custom=true
-
-ATB,
-Ramsay Jones
-
-
-> +	EOF
-> +	git config --file - --show-origin --list <"$CUSTOM_CONFIG_FILE" >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin stdin with file include' '
-> +	cat >"$INCLUDE_DIR"/stdin.include <<-EOF &&
-> +		[user]
-> +			stdin = include
-> +	EOF
-> +	cat >expect <<-EOF &&
-> +		file:$INCLUDE_DIR/stdin.include	include
-> +	EOF
-> +	echo "[include]path=\"$INCLUDE_DIR\"/stdin.include" \
-> +		| git config --show-origin --includes --file - user.stdin >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin blob' '
-> +	cat >expect <<-\EOF &&
-> +		blob:a9d9f9e555b5c6f07cbe09d3f06fe3df11e09c08	user.custom=true
-> +	EOF
-> +	blob=$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
-> +	git config --blob=$blob --show-origin --list >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success '--show-origin blob ref' '
-> +	cat >expect <<-\EOF &&
-> +		blob:"master:file\twith\ttabs.conf"	user.custom=true
-> +	EOF
-> +	git add "$CUSTOM_CONFIG_FILE" &&
-> +	git commit -m "new config file" &&
-> +	git config --blob=master:"$CUSTOM_CONFIG_FILE" --show-origin --list >output &&
-> +	test_cmp expect output
-> +'
-> +
-> +test_expect_success 'tear down --show-origin tests' '
-> +	rm -rf "$INCLUDE_DIR" &&
-> +	>"$HOME"/.gitconfig &&
-> +	>.git/config
-> +'
-> +
->  test_done
-> 
+Thanks for working on this, and thanks reviewers for helping.
