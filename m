@@ -1,183 +1,140 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/4] remote: simplify remote_is_configured()
-Date: Mon, 15 Feb 2016 23:39:42 +0100
-Message-ID: <1455575984-24348-3-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v2 4/4] remote: use remote_is_configured() for add and rename
+Date: Mon, 15 Feb 2016 23:39:44 +0100
+Message-ID: <1455575984-24348-5-git-send-email-t.gummerer@gmail.com>
 References: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
 Cc: peff@peff.net, Johannes.Schindelin@gmx.de, gitster@pobox.com
 To: git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 23:40:10 2016
+X-From: git-owner@vger.kernel.org Mon Feb 15 23:40:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVRoP-0002m2-GE
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 23:40:09 +0100
+	id 1aVRoT-0002pi-TD
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 23:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbcBOWkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 17:40:03 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34439 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752948AbcBOWja (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 17:39:30 -0500
-Received: by mail-wm0-f68.google.com with SMTP id b205so10534791wmb.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 14:39:30 -0800 (PST)
+	id S1753157AbcBOWkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 17:40:05 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33098 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753022AbcBOWje (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 17:39:34 -0500
+Received: by mail-wm0-f66.google.com with SMTP id c200so17926277wme.0
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 14:39:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0UGckEFeNFYaB0Oo+BfhPEqHUylgeFdEykjN9WTkrdo=;
-        b=rezCsiiZBcBJarm0S9HDbs+0Zw6BoYeRjVpGnDFl6yQZqiSc320yJbY0c2U6+1lU46
-         r2ChLhTnxiaq8RJe2Uc5GaHhaVx95WQ9D7MeXdLyXowZtpga4BrYWDk/UjMq712H1ZHD
-         Usg8jGbdXtg3pan7vCGJ3kkzaGNAp26ajUyHUT5B9zGJ7C1rgWzUvc6zI87uoYPU/QZv
-         ZYnQQIvU18vnzotQexU71ZItJxUUJh/xZs8aC+qWx8HRJ7tSZ1J+UxRLMjqTae4xiwjs
-         P2CkirZz2GSp4heuoQPO2MQaTRc+EMaLylMD8jpaTuT6gMBZlAYCZwnUl/cvL20p/1Of
-         kkHg==
+        bh=dqw4rGAGkeryYypoBV509s+vzrLqAICJis3rKV5HWRY=;
+        b=nPVOAuWRntO9vr0SELwYpUZbgDz7RfdB2Jkl8MyIEhJuUPEpiC87ZL0nh6owK8jPdQ
+         bwZdJhF7XigsJ5M51qW5g88RhGSvYADBNFtJp17D8QCyRoBQA1HmWq+S0WCEHy2oBpyd
+         QoqMlxTXtvmaf0ZO1VQpstsFYZjQRz67RiChrOBRm9/A3Mn6HTiarf603nPwNtG4e+Q2
+         qpBkv5NS8DmrrfsV5XTyj/sHggjDg7wfM4BAPvnA/8/Gp6P4P7MTV4mqngVnMpVj2/3b
+         fA4/R4r6NzzjDUR3+Mu/LJ0SIazcK2m5UJ5PZNty4YysW9hTX+JKa0vk/nZOEaAXzutl
+         Wr2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0UGckEFeNFYaB0Oo+BfhPEqHUylgeFdEykjN9WTkrdo=;
-        b=juGQNzOp8sfv2rruO97PFi8pjDo4hxImPFA9nkChevwQRK506NCbMqBYiTK5KXcgGe
-         p8j2u7DgaDkFji3Hb9T6Wpw0TVybyfOTQdf2tCX1irPTsFsx3Q8eDey+rCbThwbwQKvT
-         a7GNUwhkuMbU8NS4iVErPgWWA1Shr4Hv99/XMwrg3bhtDa7KgImpKxpTzZ9rjE2hoJvL
-         IpgC+q1bVc/2lrkX99DxTp5tHjfg7RQ6zDuZZGl9JNJ/9PFrgi62trsgMSod02fAucrf
-         9zeFzPPXjZ4XWYqs92MsKS9ncjMK5IV9KcLDCGa4ALXpyaIptjd7oU9GcZGzfgQTX9qK
-         l/VQ==
-X-Gm-Message-State: AG10YOSmbnGVhgdBAEHVPKnsjGn85jVN98sPKHnAey7dPa+cgxuCzsuSBLd4LOHFJ4zBSg==
-X-Received: by 10.194.77.193 with SMTP id u1mr18397228wjw.73.1455575969735;
-        Mon, 15 Feb 2016 14:39:29 -0800 (PST)
+        bh=dqw4rGAGkeryYypoBV509s+vzrLqAICJis3rKV5HWRY=;
+        b=Lu+3igetMuRAJHunev/NdIXxfm5XmSPKD1vdUndORNrWTowcNNWYgt5jzv3u6hQx1B
+         lZni5PnGYLcS27uXSfzvbShL514GnU9PWObEO4WB2/1h9X2O15uPRahTN2gmz/V5slRJ
+         90EpjbdZ7YHAjSo6TXN4SHXo2D+1231p05a6pZrObhJQTaBNuteGCK77fboEh5h0vOkg
+         CI90sighJRtrJsvy8gBXioMjYlmFTjyteIrt9SBvnw2ANepGV1TcPErbVpSCVLTQFTnJ
+         PQQuPtgdOYfS7yNSCch5N7CTwDkAGBB98OVamfllwwuVE646+DMEdu/M5R6xNejLlqnw
+         zqCQ==
+X-Gm-Message-State: AG10YOREDH6I80zZCnClRD4OzSdiHNpBkNdCMgH7VGuG1vqnoj5ZoQ+tqeBe6iWf78tTbw==
+X-Received: by 10.28.227.213 with SMTP id a204mr15954241wmh.2.1455575973681;
+        Mon, 15 Feb 2016 14:39:33 -0800 (PST)
 Received: from localhost (host186-106-dynamic.41-79-r.retail.telecomitalia.it. [79.41.106.186])
-        by smtp.gmail.com with ESMTPSA id pd1sm801736wjb.19.2016.02.15.14.39.28
+        by smtp.gmail.com with ESMTPSA id l7sm27377666wjx.14.2016.02.15.14.39.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Feb 2016 14:39:28 -0800 (PST)
+        Mon, 15 Feb 2016 14:39:32 -0800 (PST)
 X-Mailer: git-send-email 2.7.1.410.g6faf27b
 In-Reply-To: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286280>
 
-The remote_is_configured() function allows checking whether a remote
-exists or not.  The function however only works if remote_get() wasn't
-called before calling it.  In addition, it only checks the configuration
-for remotes, but not remotes or branches files.
+Both remote add and remote rename use a slightly different hand-rolled
+check if the remote exits.  The hand-rolled check may have some subtle
+cases in which it might fail to detect when a remote already exists.
+One such case was fixed in fb86e32 ("git remote: allow adding remotes
+agreeing with url.<...>.insteadOf").  Another case is when a remote is
+configured as follows:
 
-Make use of the origin member of struct remote instead, which indicates
-where the remote comes from.  It will be set to some value if the remote
-is configured in any file in the repository, but is initialized to 0 if
-the remote is only created in make_remote().
+  [remote "foo"]
+    vcs = bar
+
+If we try to run `git remote add foo bar` with the above remote
+configuration, git segfaults.  This change fixes it.
+
+In addition, git remote rename $existing foo with the configuration for
+foo as above silently succeeds, even though foo already exists,
+modifying its configuration.  With this patch it fails with "remote foo
+already exists".
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/fetch.c  |  5 ++---
- builtin/remote.c | 12 ++++++------
- remote.c         | 13 ++-----------
- remote.h         |  3 ++-
- 4 files changed, 12 insertions(+), 21 deletions(-)
+ builtin/remote.c  |  7 ++-----
+ t/t5505-remote.sh | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8e74213..8121830 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1016,10 +1016,9 @@ static int add_remote_or_group(const char *name, struct string_list *list)
- 
- 	git_config(get_remote_group, &g);
- 	if (list->nr == prev_nr) {
--		struct remote *remote;
--		if (!remote_is_configured(name))
-+		struct remote *remote = remote_get(name);
-+		if (!remote_is_configured(remote))
- 			return 0;
--		remote = remote_get(name);
- 		string_list_append(list, remote->name);
- 	}
- 	return 1;
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 2b2ff9b..d966262 100644
+index 981c487..bd57f1b 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -1441,9 +1441,9 @@ static int set_remote_branches(const char *remotename, const char **branches,
+@@ -186,10 +186,7 @@ static int add(int argc, const char **argv)
+ 	url = argv[1];
  
- 	strbuf_addf(&key, "remote.%s.fetch", remotename);
+ 	remote = remote_get(name);
+-	if (remote && (remote->url_nr > 1 ||
+-			(strcmp(name, remote->url[0]) &&
+-				strcmp(url, remote->url[0])) ||
+-			remote->fetch_refspec_nr))
++	if (remote_is_configured(remote))
+ 		die(_("remote %s already exists."), name);
  
--	if (!remote_is_configured(remotename))
--		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
-+	if (!remote_is_configured(remote))
-+		die(_("No such remote '%s'"), remotename);
+ 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
+@@ -641,7 +638,7 @@ static int mv(int argc, const char **argv)
+ 		return migrate_file(oldremote);
  
- 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
- 		strbuf_release(&key);
-@@ -1498,9 +1498,9 @@ static int get_url(int argc, const char **argv)
+ 	newremote = remote_get(rename.new);
+-	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_nr))
++	if (remote_is_configured(newremote))
+ 		die(_("remote %s already exists."), rename.new);
  
- 	remotename = argv[0];
+ 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index f1d073f..142ae62 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -157,6 +157,24 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
+ 	)
+ '
  
--	if (!remote_is_configured(remotename))
--		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
-+	if (!remote_is_configured(remote))
-+		die(_("No such remote '%s'"), remotename);
- 
- 	url_nr = 0;
- 	if (push_mode) {
-@@ -1566,9 +1566,9 @@ static int set_url(int argc, const char **argv)
- 	if (delete_mode)
- 		oldurl = newurl;
- 
--	if (!remote_is_configured(remotename))
--		die(_("No such remote '%s'"), remotename);
- 	remote = remote_get(remotename);
-+	if (!remote_is_configured(remote))
-+		die(_("No such remote '%s'"), remotename);
- 
- 	if (push_mode) {
- 		strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
-diff --git a/remote.c b/remote.c
-index bcd8eb6..d10ae00 100644
---- a/remote.c
-+++ b/remote.c
-@@ -713,18 +713,9 @@ struct remote *pushremote_get(const char *name)
- 	return remote_get_1(name, pushremote_for_branch);
- }
- 
--int remote_is_configured(const char *name)
-+int remote_is_configured(struct remote *remote)
- {
--	struct remotes_hash_key lookup;
--	struct hashmap_entry lookup_entry;
--	read_config();
--
--	init_remotes_hash();
--	lookup.str = name;
--	lookup.len = strlen(name);
--	hashmap_entry_init(&lookup_entry, memhash(name, lookup.len));
--
--	return hashmap_get(&remotes_hash, &lookup_entry, &lookup) != NULL;
-+	return remote && remote->origin;
- }
- 
- int for_each_remote(each_remote_fn fn, void *priv)
-diff --git a/remote.h b/remote.h
-index 4fd7a0f..c21fd37 100644
---- a/remote.h
-+++ b/remote.h
-@@ -5,6 +5,7 @@
- #include "hashmap.h"
- 
- enum {
-+	REMOTE_UNCONFIGURED = 0,
- 	REMOTE_CONFIG,
- 	REMOTE_REMOTES,
- 	REMOTE_BRANCHES
-@@ -59,7 +60,7 @@ struct remote {
- 
- struct remote *remote_get(const char *name);
- struct remote *pushremote_get(const char *name);
--int remote_is_configured(const char *name);
-+int remote_is_configured(struct remote *remote);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
- int for_each_remote(each_remote_fn fn, void *priv);
++test_expect_success 'add existing foreign_vcs remote' '
++	git config --add remote.foo.vcs "bar" &&
++	test_when_finished git remote rm foo &&
++	echo "fatal: remote foo already exists." >expect &&
++	test_must_fail git remote add foo bar 2>actual &&
++	test_i18ncmp expect actual
++'
++
++test_expect_success 'add existing foreign_vcs remote' '
++	git config --add remote.foo.vcs "bar" &&
++	git config --add remote.bar.vcs "bar" &&
++	test_when_finished git remote rm foo &&
++	test_when_finished git remote rm bar &&
++	echo "fatal: remote bar already exists." >expect &&
++	test_must_fail git remote rename foo bar 2>actual &&
++	test_i18ncmp expect actual
++'
++
+ cat >test/expect <<EOF
+ * remote origin
+   Fetch URL: $(pwd)/one
 -- 
 2.7.1.410.g6faf27b
