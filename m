@@ -1,117 +1,117 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 21/25] fetch: define shallow boundary with
- --shallow-exclude
-Date: Mon, 15 Feb 2016 15:15:39 +0700
-Message-ID: <20160215081539.GA12609@lanh>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
- <1454576641-29615-22-git-send-email-pclouds@gmail.com>
- <CAPig+cQA6yV369b7hM_Q8aPuAwF8tR1xT=jr1r2PH1KsCtHWtQ@mail.gmail.com>
- <CACsJy8B=p0frmU8ahc9bnk-uoDPNUT_6UB0MVRPiLc9DqNz3vQ@mail.gmail.com>
- <CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
+Subject: Issues with cc-cmd
+Date: Mon, 15 Feb 2016 13:57:46 +0530
+Message-ID: <20160215082746.GH6334@vireshk-i7>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 09:15:24 2016
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 09:28:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVEJX-00009h-PL
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:15:24 +0100
+	id 1aVEVj-0007tr-Dz
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:27:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751956AbcBOIPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 03:15:20 -0500
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:34102 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbcBOIPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 03:15:18 -0500
-Received: by mail-pa0-f66.google.com with SMTP id yy13so6903142pab.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 00:15:17 -0800 (PST)
+	id S1752265AbcBOI1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 03:27:55 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34487 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752027AbcBOI1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 03:27:54 -0500
+Received: by mail-pa0-f50.google.com with SMTP id fy10so42938194pac.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 00:27:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=MYde+I873eOoJj1deu1fzWRJk8UafW4oh5O2ipb+bm4=;
-        b=vP1pXYg/Fk8sW8awbc9HyVQGhLmicLG2a4PgAGQYLFkpRtX6THrXvQ90O8NOPxImcU
-         ysaTd9tybHg9vXOjQOKsNqOxscC4Ubvyp8rQX3OH1pATSGRdTAurAQeYzr/jVfI4IbvM
-         /6ZDAIcO3HErU4+7ih023g0Cm7XTYIUfd/WTtO5hc+adxDsEwgJiNlHmbnIj+WA2a0QG
-         jfBslO7DJS6nFXcnZ16zWnn7N70iv97GgtBvsJR1RzflzG3Dhl8bHCfi1ToheMUL/YPB
-         OehVAeWw6/u+XgjkKK5y0QQpbDYq8SyvkfoAS/kporrApioWxceGEezO+15L3kqXK8l3
-         7rmg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=J7FMGa+jzJEkuo5UnIQoulcqw2u5JOXUaKxDJl9xzuQ=;
+        b=ff+mxICL+NId8uSmVtu2Dg02OzzVy1hie+/8cQ8w/MDbMHsBBjqnSiBwVYf8U+R40t
+         hl0PLv1CIGqSS7e8Ax2ZwwvjMr87+LZ9sK2BQD5YEXNYp56vTP5lL5i1d58f0eRc3Fx5
+         DoQGtSVTl4VNZULbZ81eyJDkvZWpetRnwKYlg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=MYde+I873eOoJj1deu1fzWRJk8UafW4oh5O2ipb+bm4=;
-        b=R2941i+3Yvm0G9OqKz6e+cw3oZLFLnP/vfY2Ogv0tlsO2SN906DIAfMz4u64szOGas
-         baAjPuFP7Ww5v9fz5/wqxTNl2jq+kIEJVHmYPXw+AsTHkFbfzFH5aDbGnDll28R62q+x
-         pCovpS0BbiLHyuNUpfVGtKoS1WBMF/QUrSYysvbHdXXXqeLE0g/PWysua5K/fnQBDrZc
-         ECvCJq/RdOUymFyaPV7PFAvQQH3NcWMReGTozjQO3RuLMMbNYuQniS8Zel+FEjIJdSud
-         70j5tjLHTFBdOOu4HcQM+94GP9WJVPFPFPIsB5wdmx9p1/i8KoCb2+YxEniIyVGBnRN0
-         aQ8Q==
-X-Gm-Message-State: AG10YOSSp8HYH2vGxIcQrKtfOaGSnyySsKI+JzkxgHfdOSJhnSw/3wWwatHCn36ymaMBaw==
-X-Received: by 10.66.220.7 with SMTP id ps7mr8701220pac.58.1455524117574;
-        Mon, 15 Feb 2016 00:15:17 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id t87sm36414309pfa.14.2016.02.15.00.15.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=J7FMGa+jzJEkuo5UnIQoulcqw2u5JOXUaKxDJl9xzuQ=;
+        b=BEzvuXpjDwIKp5PLFMCBTbvkBbXOHBl0sdSWEehPJA2QAjcF9r1PS/FOO4jkuyaciG
+         SvSs/glhKVfe/BV+6nGm2auN2NhuEqSzjbPqA4Qn7bV4s6jGpW0K0Ex18xOrZCP2eOiy
+         ZTS2xl00ugMbeXq31Wyc9lIAR8/GKuYZuukS33WaUKkUZshjNJdaNT8p/spv5wLJEr7h
+         wmeC6az5G1pQmUdQBw3rbKwERwlPNw6mDVanfc37lZ40AEnc+KC8W+qjl8q+pMr8HCQT
+         VdYwrwU5iKdWU7ZczQSY8yqx11wpy5yrSpIgk0E9k2nAYJ0ZugFhtYrraZhgCz7uvjMt
+         wRiQ==
+X-Gm-Message-State: AG10YOSVnwqLMW17SB9rNZA74F+L8BAEQx1Y8GB8CdM0Q5F2fVdZb38AvXSNSaPe3V6n35CG
+X-Received: by 10.67.21.205 with SMTP id hm13mr21811443pad.56.1455524874019;
+        Mon, 15 Feb 2016 00:27:54 -0800 (PST)
+Received: from localhost ([122.172.89.184])
+        by smtp.gmail.com with ESMTPSA id ud10sm36560934pab.27.2016.02.15.00.27.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Feb 2016 00:15:15 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 15 Feb 2016 15:15:39 +0700
+        Mon, 15 Feb 2016 00:27:53 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286183>
 
-On Mon, Feb 15, 2016 at 12:52:26AM -0500, Eric Sunshine wrote:
-> Yes, dropping 'const' was implied. I didn't examine it too deeply, but
-> it did not appear as if there would be any major fallout from dropping
-> 'const'. It feels a bit cleaner to keep it all self-contained than to
-> have that somewhat oddball static string_list*, but it's not such a
-> big deal that I'd insist upon a rewrite.
+Hi Guys,
 
-Dropping 'const' is not a big deal. But before we do that, how about
-this instead? I think the code looks better, and the compiler can
-still catch invalid updates to deepen_not.
+I am facing a strange issue with git send-email, with cccmd and was
+looking for some help.
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 0402e27..07570be 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -50,6 +50,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	struct child_process *conn;
- 	struct fetch_pack_args args;
- 	struct sha1_array shallow = SHA1_ARRAY_INIT;
-+	struct string_list deepen_not = STRING_LIST_INIT_DUP;
- 
- 	packet_trace_identity("fetch-pack");
- 
-@@ -108,6 +109,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 			args.deepen_since = xstrdup(arg);
- 			continue;
- 		}
-+		if (skip_prefix(arg, "--shallow-exclude=", &arg)) {
-+			string_list_append(&deepen_not, arg);
-+			continue;
-+		}
- 		if (!strcmp("--no-progress", arg)) {
- 			args.no_progress = 1;
- 			continue;
-@@ -135,6 +140,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 		}
- 		usage(fetch_pack_usage);
- 	}
-+	if (deepen_not.nr)
-+		args.deepen_not = &deepen_not;
- 
- 	if (i < argc)
- 		dest = argv[i++];
---
-Duy
+I am using it with Linux Kernel..
+
+I used get-maintainers today to submit few patches for OPP framework
+and that is defined as below in MAINTAINERS:
+
+OPERATING PERFORMANCE POINTS (OPP)
+M:      Viresh Kumar <vireshk@kernel.org>
+M:      Nishanth Menon <nm@ti.com>
+M:      Stephen Boyd <sboyd@codeaurora.org>
+L:      linux-pm@vger.kernel.org
+S:      Maintained
+T:      git git://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git
+F:      drivers/base/power/opp/
+F:      include/linux/pm_opp.h
+F:      Documentation/power/opp.txt
+F:      Documentation/devicetree/bindings/opp/
+
+
+The parenthesis in the subsystem-name causes the cc list to look like:
+
+Cc: linaro-kernel@lists.linaro.org,
+linux-pm@vger.kernel.org,
+Viresh Kumar <viresh.kumar@linaro.org>,
+Krzysztof Kozlowski <k.kozlowski@samsung.com>,
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Len Brown <len.brown@intel.com>,
+linux-kernel@vger.kernel.org (open list),
+linux-pm@vger.kernel.org) (open list:OPERATING PERFORMANCE POINTS
+(OPP),
+Nishanth Menon <nm@ti.com>,
+Pavel Machek <pavel@ucw.cz>,
+Stephen Boyd <sboyd@codeaurora.org>,
+Viresh Kumar <vireshk@kernel.org>
+
+
+Look at the second linux-pm entry here, it adds a ')' at the end of
+the list's address and removes it from the end of the line.
+
+And so that becomes an invalid address to git-send-email.
+
+Dropping () from the subsystem name fixes it though..
+
+The output of get_maintainers looks fine, but when its being used by
+putting following into .gitconfig:
+
+[sendemail]
+        cccmd = scripts/get_maintainers
+
+
+it doesn't work well..
+
+-- 
+viresh
