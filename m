@@ -1,107 +1,96 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 20/21] refs: add LMDB refs storage backend
-Date: Mon, 15 Feb 2016 16:57:09 +0700
-Message-ID: <CACsJy8AkWpVERj8=ABaQ89xe=6-DRLV5KBz9_sxW8TE4LUzcQw@mail.gmail.com>
-References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
- <1454701462-3817-21-git-send-email-dturner@twopensource.com> <CACsJy8CWS9E0Jb4omm4k0=kZ73w9UoHmofLFCFHUhHu53zfgYw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Custom merge driver with no rename detection
+Date: Mon, 15 Feb 2016 01:57:43 -0800
+Message-ID: <xmqqlh6mqors.fsf@gitster.mtv.corp.google.com>
+References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
+	<xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1602150854520.2964@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 10:57:48 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis <felipeg.assis@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 15 10:57:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVFud-0007or-Gg
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 10:57:47 +0100
+	id 1aVFui-0007rx-Nh
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 10:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbcBOJ5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 04:57:43 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:33900 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477AbcBOJ5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 04:57:40 -0500
-Received: by mail-lb0-f179.google.com with SMTP id ap4so17384366lbd.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 01:57:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0znktMXQ1S2tTpKQMSgvNly+CUik6+RB9Owc85ZncEU=;
-        b=bSpABRStWnU9LWQLSejXN5XzIXSaBjOKNIWQjix2dB+U+mFgyjeH66m2eC56CmRQps
-         5C5yt9wBOFulnQmYQDjZ21J3472suZDqEgoujMFjp3Zr1IG+CFWtvDplRN6pIAiCUT5B
-         K1K8bg8gM5wLuxWQ8ZYSTn2e9bMq5E5OOyiWHhX1SSDTDDqjEyotMz0ktzLdBsGPCIg3
-         UkeVFkuquwpW70zDIP5h79iyM2wOCeI3UEdo+bliAgS0/V0bs8G8UtPNBmg4ySdJUzrC
-         opm6r2GxKmXMSMQ+kYtVwTDRbFtueSywiI9ViJP7sjM5u0YF1cDQVwEOTiwhkZbMyC5W
-         cjrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=0znktMXQ1S2tTpKQMSgvNly+CUik6+RB9Owc85ZncEU=;
-        b=cRnnSSNXj2DjivXTUjkikB99dYmbmoLg+/oUVWNL6b0qdxz9FCddamo3GHbLuSVrND
-         26icSnZakZhYbAHPw3PA7JQUd5Fu4N3hYpYNb5erxgnGRgDJg81Xd+HLwFWBrJ1DRgzM
-         eAvJwc0pqjwW2/OCaY2fUVePRhCvSAHyiT8Md6iES31Ml4TFybNN5Og+i6ER1P2pDfPW
-         ZESZG6sRgdUq/z5+cQoBpvBazE1TMgdUaJf6nV1mAn1TTuFuKEf637mMoxP08yewyEzv
-         iyrkG0w6eEnvwTdyaWTUSyaQxtcRa3YJiTk/ckCkShwDFk+nWFW3GjN+XLXjHICIClEq
-         OGYg==
-X-Gm-Message-State: AG10YOSNbupTMCPZACBzY+hMPoq6NQV4k/BSN8g65WYWg7QZkEv6XKWI0qMAqmrLkHSBMIKgbuhIoQipO3AbrA==
-X-Received: by 10.112.130.41 with SMTP id ob9mr6224140lbb.81.1455530259555;
- Mon, 15 Feb 2016 01:57:39 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Mon, 15 Feb 2016 01:57:09 -0800 (PST)
-In-Reply-To: <CACsJy8CWS9E0Jb4omm4k0=kZ73w9UoHmofLFCFHUhHu53zfgYw@mail.gmail.com>
+	id S1752627AbcBOJ5s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 04:57:48 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56248 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752500AbcBOJ5q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 04:57:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B87F3E869;
+	Mon, 15 Feb 2016 04:57:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=tdBIVI9xf7s1
+	FiNubps3R03YxfU=; b=Jn6Hnm8B3BxW5twd8ltr6WKMGYtvHW9wdWLhUYaR5gPC
+	Of8sfz1f6TxP/GK7f+kS0B8jEc/Al3HsJRBfJ6VgfCs5pyp2u9wRJh53prX1XVyt
+	5X0plAC/GZCCyLuEVE/r7Q1cXnmUE+W8sS7BnRA7kTtHrJHf3O8oxVfO3yGVJbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=d2X7V9
+	jJhg5ERnE5nYWC7GFUd7AlefjJcu3Jgk/+pNRDBnieBfVoCYOk9upzQ3b6XRh/kg
+	65sx69gAkdL4PTrD+xRPeKPR2FDWG4eQmxypIHryF2mVts7/kHmqWXtjrz2SHPHe
+	CCYvvGRLUjbrMak316yktYnvJp8PlnPAto4l8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 520F63E868;
+	Mon, 15 Feb 2016 04:57:45 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8DE13E867;
+	Mon, 15 Feb 2016 04:57:44 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.20.1602150854520.2964@virtualbox> (Johannes
+	Schindelin's message of "Mon, 15 Feb 2016 09:06:53 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8F755AB6-D3CA-11E5-BFFB-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286192>
 
-On Sun, Feb 14, 2016 at 7:04 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, Feb 6, 2016 at 2:44 AM, David Turner <dturner@twopensource.com> wrote:
->> +static char *get_refdb_path(const char *base)
->> +{
->> +       static struct strbuf path_buf = STRBUF_INIT;
->> +       strbuf_reset(&path_buf);
->> +       strbuf_addf(&path_buf, "%s/refdb", base);
->> +       return path_buf.buf;
->> +}
-> ...
->> +static int lmdb_init_db(struct strbuf *err, int shared)
->> +{
->> +       /*
->> +        * To create a db, all we need to do is make a directory for
->> +        * it to live in; lmdb will do the rest.
->> +        */
->> +
->> +       if (!db_path)
->> +               db_path = xstrdup(real_path(get_refdb_path(get_git_common_dir())));
->
-> This works for multiple worktrees. But scripts may have harder time
-> getting the path. The recommended way is "git rev-parse --git-path
-> refdb" but because "refdb" is not registered in path.c:common_list[],
-> that command becomes git_path("refdb") instead of
-> get_refdb(get_git_... like here. And I will need to know that
-> .git/refdb is _not_ per-worktree when I migrate/convert main worktree
-> (it's very likely I have to go that route to solve .git/config issue
-> in multi worktree).
->
-> The solution is register refdb to common_list[] and you can do
-> git_path("refdb") here. But then what happens when another backend is
-> added? Will the new backend use the same path "refdb", or say
-> "refdb.sqlite"? If all backends share the name "refdb", why can't we
-> just reuse "refs" instead because the default filesystem-based backend
-> is technically just another backend?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-To answer myself: I forgot that there were per-worktree refs (e.g.
-refs/bisect). It makes me wonder if we should put per-worktree refs to
-lmdb as well (maybe one per worktree if we don't want to put all in
-one db). One of the advantages of moving away from fs-based backend is
-the ability to deal with case sensitivity, "nested" refs (e.g. a/b and
-a/b/c are both refs). With this split, I think some refs are still
-left behind.. Sorry if this was discussed before, I haven't followed
-this closely.
--- 
-Duy
+> On Sun, 14 Feb 2016, Junio C Hamano wrote:
+>
+>> Felipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
+>>=20
+>> > The usual workaround is using the resolve strategy, but apparently=
+ it
+>> > ignores the custom merge driver.
+>>=20
+>> Hmph.
+>>=20
+>> Indeed, git-merge-file seems to call xdl_merge() directly, bypassing
+>> the ll_merge(), which is understandable as the former predates the
+>> latter.  That needs to be fixed, I think.
+>
+> I think this is by design. (Because I designed it.)
+>
+> The original idea of git-merge-file was to serve as a drop-in replace=
+ment
+> for GNU/BSD merge when you want to avoid to be subject to the vagarie=
+s of
+> the GNU vs BSD implementations.
+
+We did use to use "merge" from the RCS suite originally, and we did
+want to use our own, but the primary reason we added our own was so
+that it can be enhanced in sync with the remainder of Git in a
+consistent way.
+
+If the rest of Git can be told via the attribute system to make use
+of a three-way merge driver, it should have learnt the trick to be
+kept up with the rest of the system.  I see the current state of the
+program merely be staying a bit behind; I do not think it was part
+of the grand design to forbidd it forever from learning new optional
+tricks.
