@@ -1,89 +1,85 @@
-From: Florian Lohoff <f@zz.de>
-Subject: stdout vs stderr
-Date: Mon, 15 Feb 2016 10:59:13 +0100
-Organization: rfc822 - pure communication
-Message-ID: <20160215095913.GB27034@pax.zz.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Issues with cc-cmd
+Date: Mon, 15 Feb 2016 02:06:01 -0800
+Message-ID: <xmqqh9haqody.fsf@gitster.mtv.corp.google.com>
+References: <20160215082746.GH6334@vireshk-i7>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aM3YZ0Iwxop3KEKx"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 11:05:12 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Joe Perches <joe@perches.com>
+To: Viresh Kumar <viresh.kumar@linaro.org>
+X-From: git-owner@vger.kernel.org Mon Feb 15 11:06:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVG1l-0003tD-C2
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 11:05:09 +0100
+	id 1aVG2o-0004W5-Jg
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 11:06:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbcBOKFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 05:05:03 -0500
-Received: from pax.zz.de ([88.198.69.77]:60099 "EHLO pax.zz.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750981AbcBOKFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 05:05:01 -0500
-X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Feb 2016 05:05:01 EST
-Received: by pax.zz.de (Postfix, from userid 1000)
-	id 89BB1D021C; Mon, 15 Feb 2016 10:59:13 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751123AbcBOKGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 05:06:05 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54132 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751005AbcBOKGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 05:06:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4674A3E9A2;
+	Mon, 15 Feb 2016 05:06:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aSHcvYpqQ5I+Ek33y3kVJf+wzSI=; b=CQcnMl
+	ZSBjzpo1SWycwRzi7/77S9I7PQg/fUt4I9YlCYC7bDEEwkP8lX1as0VAsV7EeWwE
+	ps6HzQUUbZTZjKpaOWLmcZp8HQMbFFJwb4Xwd9tTljo7S0cnUneToZeEzNTxGCSH
+	G/yWIGAOclkH2gstKI0w+J0TUx9QjsVdmUnjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XiKu0iQukga8ecpyEJ/BnyMB3dPYOUX+
+	19cskyrP9hNanrpHQeAx+Ooi/gg/yqV+T1iiZa6XPk3bKvge/hooiw93fXIvbY4U
+	jSpVkpI4SDbskaTyb/aFU7LZ/0X/qouRAwe2p9uJS6p3VkgXwW/sP+ksxpMue0l5
+	xmTS1rUTMGo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F3343E9A1;
+	Mon, 15 Feb 2016 05:06:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BB13B3E9A0;
+	Mon, 15 Feb 2016 05:06:02 -0500 (EST)
+In-Reply-To: <20160215082746.GH6334@vireshk-i7> (Viresh Kumar's message of
+	"Mon, 15 Feb 2016 13:57:46 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B8414A62-D3CB-11E5-8CF0-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286194>
 
+Viresh Kumar <viresh.kumar@linaro.org> writes:
 
---aM3YZ0Iwxop3KEKx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> linux-pm@vger.kernel.org) (open list:OPERATING PERFORMANCE POINTS
+> (OPP),
 
+Hmm
 
-Hi,
-is there a reason why those messages for pull are sent to stdout and
-for push are sent to stderr?
+http://lists.kernelnewbies.org/pipermail/kernelnewbies/2014-July/011343.html
 
-flo@p3:~$ git pull
-Already up-to-date.
-flo@p3:~$ git pull >/dev/null
+comes to mind.  It tells you not to blindly automate this process.
 
-flo@p3:~$ git push
-Everything up-to-date
-flo@p3:~$ git push >/dev/null
-Everything up-to-date
+I do not offhand know if it was even designed to be directly used
+(and usable) as a cccmd, but anyway, I see this mention in its
+"Notes:" section:
 
-I am regularly trying to build automatisms around git and typically i
-redirect stdout to /dev/null in the hope that when something goes
-wrong i see error messages on stderr. This does not work for e.g. push
-for obvious reason.
+  Using "--roles" or "--rolestats" with git send-email --cc-cmd or any
+      other automated tools that expect only ["name"] <email address>
+      may not work because of additional output after <email address>.
 
-Flo
---=20
-Florian Lohoff                                                 f@zz.de
-      We need to self-defend - GnuPG/PGP enable your email today!
+I suspect that what you are showing is the "additional output after
+address" the above talks about.
 
---aM3YZ0Iwxop3KEKx
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBVsGhcZDdQSDLCfIvAQq18BAAifuCwOC6NvQI7GIJ5siVhT5Q+2smfVbh
-PKHoeLDTP7pF+SlsQ4PdVfTNu3thecqE9ylhUMpStmHY7Hr9eOXw6pNCP85eBkha
-n2ZeD8NPMnGznQs2ybjoNDX4Irx0yuRNpXxESTmP3pnfLVPnsYSLNTL+5hml/cCh
-DzgIOGkrU4/eXij3NXZS4JEuEIHbh+/ZCioM/XEeIPF0Bq79IlfvZBvdm1/6646t
-duKyjq5oxUzKiWsKjUgKjZ7HTjDpysBUwIcQR25tdfzC1q8xHno37S3X3gtHZyg+
-VCVJ4xZ42ncBHKJK9UZX38N2TjgRrC9Fkck/xQD0pNf28HW5rWlpk7gZtYy5PX0l
-9phDYS4ERLgOoCH1W1MvYdaolhiGHubdxvskrYQdtZb/FRUSUBdPPbV36WcNc6qp
-bzSIaBnaSGKDxLaDzUDsJbTghPmWjjc3oUEvRkUzbYEYchUnhXsPqNykJxuV9x5q
-Jvzu172G4w5l89ZsB7Oz/5O87yMxA+z4eVcVXo0NcgYXIFDMIuZlnI4oIVMMpqux
-Nhaxhxi0g3y3QAmuKWiI2tq6/O+IO6XjG83wa/Cf34MEw9vk/qgE1O97RUeXh8K7
-yiNpu1joXGH9tF5taRP4aCw4BrlAroRujcitdY+AMpwcWKXwbwbspe4FRrH65fL9
-c6Mhe8mE8kM=
-=cz1j
------END PGP SIGNATURE-----
-
---aM3YZ0Iwxop3KEKx--
+In any case, this command is maintained as part of the kernel, no?
+I see Joe Perches signed at the beginning of file in 2007; I do not
+know if he still maintains this script, or somebody else is
+primarily enhancing it these days (ehh, I probably could use the
+script on itself, but I am way too lazy late at night), but asking
+him would be a good starting point, instead of asking here.
