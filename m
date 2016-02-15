@@ -1,132 +1,107 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git worktree fails to recreate existing branch even with -B
-Date: Mon, 15 Feb 2016 16:41:54 +0700
-Message-ID: <20160215094154.GA11698@lanh>
-References: <344AE670-BF9A-4779-AFB0-50B870E1D488@jetbrains.com>
+Subject: Re: [PATCH v4 20/21] refs: add LMDB refs storage backend
+Date: Mon, 15 Feb 2016 16:57:09 +0700
+Message-ID: <CACsJy8AkWpVERj8=ABaQ89xe=6-DRLV5KBz9_sxW8TE4LUzcQw@mail.gmail.com>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+ <1454701462-3817-21-git-send-email-dturner@twopensource.com> <CACsJy8CWS9E0Jb4omm4k0=kZ73w9UoHmofLFCFHUhHu53zfgYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>
-To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 10:41:45 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 10:57:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVFf6-0006X5-5d
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 10:41:44 +0100
+	id 1aVFud-0007or-Gg
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 10:57:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752577AbcBOJlf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 04:41:35 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34724 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751604AbcBOJld (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 04:41:33 -0500
-Received: by mail-pa0-f47.google.com with SMTP id fy10so43940956pac.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 01:41:32 -0800 (PST)
+	id S1752156AbcBOJ5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 04:57:43 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:33900 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477AbcBOJ5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 04:57:40 -0500
+Received: by mail-lb0-f179.google.com with SMTP id ap4so17384366lbd.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 01:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AaQx+YdyKiYSHZopF4E5CrTBm1lflhY+H3CmEgRMPtE=;
-        b=IqZFCqGPbF0pNIDk7HZnijcJ2WhS5IEYXh0bHtCKI4Myk/h+4uKN4AtuWPW6diRRvT
-         IrilYeeIoJyQZFFUX9/z6sh5X49C8P3ErAoptEZOC4KhKfoiEpaimn0KHTHmJNEfHUjx
-         xexkqZ7q2zlDFuNRNAK2e9hzDu0f6mqjXz9GV1cNOa/uGQYLIrbT2S/wUpCONqSF9nVi
-         EOA1VfULOzaB2Rgo6Yrboh4m3w3V9cuF45vgzWLqqbHMRjYbWaS1KbHjjv5/XrG7vj1v
-         sa4IJ0UFJ7YDlxOSYdr2ArjFigBKOus4RxBFgPvBYWJ6Qi0TJUn25tvqgOMSzZXe2RUM
-         V4JQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0znktMXQ1S2tTpKQMSgvNly+CUik6+RB9Owc85ZncEU=;
+        b=bSpABRStWnU9LWQLSejXN5XzIXSaBjOKNIWQjix2dB+U+mFgyjeH66m2eC56CmRQps
+         5C5yt9wBOFulnQmYQDjZ21J3472suZDqEgoujMFjp3Zr1IG+CFWtvDplRN6pIAiCUT5B
+         K1K8bg8gM5wLuxWQ8ZYSTn2e9bMq5E5OOyiWHhX1SSDTDDqjEyotMz0ktzLdBsGPCIg3
+         UkeVFkuquwpW70zDIP5h79iyM2wOCeI3UEdo+bliAgS0/V0bs8G8UtPNBmg4ySdJUzrC
+         opm6r2GxKmXMSMQ+kYtVwTDRbFtueSywiI9ViJP7sjM5u0YF1cDQVwEOTiwhkZbMyC5W
+         cjrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=AaQx+YdyKiYSHZopF4E5CrTBm1lflhY+H3CmEgRMPtE=;
-        b=Dfq8j4tT+fxQfh7kfrHjqmElC5glkn71NrAk6kx2Vg/R/5tZmJEplL6fzj2uIv8lyc
-         py1OzYK5injxR5r7K+eHRwPlVxkzbpKVktFQxOPcqU1jUSE96ZTtn5fxqNPNXZutZvds
-         pZP+wc7oy0/h8rWWwihKpv0jXPwJtKw+hb/oWgdex2mbni5/FB34gYv6/krKpfHOhdXw
-         UVZsj00BMSeVFpj7gzbfqqOvAhIh/PSpPFh/DhXZB6EvZqGjrYCddjot3kIDUAlK/L2e
-         A2QlKH2kjF6dfYdY95+Sa0BrMvUBSrceldREP9uoVGhdmDCRWdnF1u9LNs0LKHrm6Bwd
-         XcQQ==
-X-Gm-Message-State: AG10YOTvzBnSIgYMMz6IReeDuCCgFN/ZXi3OZUbVgy2+eqGWRkuXalDVN/cQfEUy6Vr/2g==
-X-Received: by 10.66.234.104 with SMTP id ud8mr22052245pac.143.1455529292520;
-        Mon, 15 Feb 2016 01:41:32 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id kw10sm37162586pab.0.2016.02.15.01.41.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Feb 2016 01:41:31 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 15 Feb 2016 16:41:54 +0700
-Content-Disposition: inline
-In-Reply-To: <344AE670-BF9A-4779-AFB0-50B870E1D488@jetbrains.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=0znktMXQ1S2tTpKQMSgvNly+CUik6+RB9Owc85ZncEU=;
+        b=cRnnSSNXj2DjivXTUjkikB99dYmbmoLg+/oUVWNL6b0qdxz9FCddamo3GHbLuSVrND
+         26icSnZakZhYbAHPw3PA7JQUd5Fu4N3hYpYNb5erxgnGRgDJg81Xd+HLwFWBrJ1DRgzM
+         eAvJwc0pqjwW2/OCaY2fUVePRhCvSAHyiT8Md6iES31Ml4TFybNN5Og+i6ER1P2pDfPW
+         ZESZG6sRgdUq/z5+cQoBpvBazE1TMgdUaJf6nV1mAn1TTuFuKEf637mMoxP08yewyEzv
+         iyrkG0w6eEnvwTdyaWTUSyaQxtcRa3YJiTk/ckCkShwDFk+nWFW3GjN+XLXjHICIClEq
+         OGYg==
+X-Gm-Message-State: AG10YOSNbupTMCPZACBzY+hMPoq6NQV4k/BSN8g65WYWg7QZkEv6XKWI0qMAqmrLkHSBMIKgbuhIoQipO3AbrA==
+X-Received: by 10.112.130.41 with SMTP id ob9mr6224140lbb.81.1455530259555;
+ Mon, 15 Feb 2016 01:57:39 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Mon, 15 Feb 2016 01:57:09 -0800 (PST)
+In-Reply-To: <CACsJy8CWS9E0Jb4omm4k0=kZ73w9UoHmofLFCFHUhHu53zfgYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286191>
 
-On Tue, Feb 09, 2016 at 05:54:01PM +0300, Kirill Likhodedov wrote:
-> Git doesn=E2=80=99t allow me to execute=20
->     git worktree add -B <branch> <path> <start-point>
-> where <branch> already exists in the repository.
->=20
-> The command prints the following:
->     Preparing <path> (identifier <branch>)
->     fatal: Refusing to point HEAD outside of refs/
->=20
-> I=E2=80=99m trying to create a worktree on an existing branch <branch=
->,
-> which should point to <start-point>. This obviously should fail with
-> =E2=80=9C-b=E2=80=9D, but I use =E2=80=9C-B=E2=80=9D and expect it to=
- be reset to <start-point> as
-> mentioned in the docs:
->=20
->     By default, -b refuses to create a new branch if it already exist=
-s. =20
->     -B overrides this safeguard, resetting <new-branch> to <branch>.
->=20
-> Do I miss something or there is a bug?
+On Sun, Feb 14, 2016 at 7:04 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Feb 6, 2016 at 2:44 AM, David Turner <dturner@twopensource.com> wrote:
+>> +static char *get_refdb_path(const char *base)
+>> +{
+>> +       static struct strbuf path_buf = STRBUF_INIT;
+>> +       strbuf_reset(&path_buf);
+>> +       strbuf_addf(&path_buf, "%s/refdb", base);
+>> +       return path_buf.buf;
+>> +}
+> ...
+>> +static int lmdb_init_db(struct strbuf *err, int shared)
+>> +{
+>> +       /*
+>> +        * To create a db, all we need to do is make a directory for
+>> +        * it to live in; lmdb will do the rest.
+>> +        */
+>> +
+>> +       if (!db_path)
+>> +               db_path = xstrdup(real_path(get_refdb_path(get_git_common_dir())));
+>
+> This works for multiple worktrees. But scripts may have harder time
+> getting the path. The recommended way is "git rev-parse --git-path
+> refdb" but because "refdb" is not registered in path.c:common_list[],
+> that command becomes git_path("refdb") instead of
+> get_refdb(get_git_... like here. And I will need to know that
+> .git/refdb is _not_ per-worktree when I migrate/convert main worktree
+> (it's very likely I have to go that route to solve .git/config issue
+> in multi worktree).
+>
+> The solution is register refdb to common_list[] and you can do
+> git_path("refdb") here. But then what happens when another backend is
+> added? Will the new backend use the same path "refdb", or say
+> "refdb.sqlite"? If all backends share the name "refdb", why can't we
+> just reuse "refs" instead because the default filesystem-based backend
+> is technically just another backend?
 
-According to the man page, this looks like a bug.
-
-> Steps to reproduce:
->=20
-> git init wt
-> cd wt
-> echo 'asd' > a.txt ; git add a.txt ; git commit -m initial
-> git branch br1
-> git worktree add -B br1 ~/temp/br1 master
->=20
-> Error message:
-> Preparing /Users/loki/temp/br1 (identifier br1)
-> fatal: Refusing to point HEAD outside of refs/
-
-GIT_TRACE=3D2 gives me
-
-trace: built-in: git 'symbolic-ref' 'HEAD' ''
-fatal: Refusing to point HEAD outside of refs/
-
-So we pass wrong argument to symbolic-ref. The '' should be
-'refs/heads/br1'. This patch seems to fix it.
-
--- 8< --
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 475b958..d5b319f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -202,7 +202,7 @@ static int add_worktree(const char *path, const cha=
-r *refname,
-=20
- 	/* is 'refname' a branch or commit? */
- 	if (opts->force_new_branch) /* definitely a branch */
--		;
-+		strbuf_addf(&symref, "refs/heads/%s", refname);
- 	else if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) =
-&&
- 		 ref_exists(symref.buf)) { /* it's a branch */
- 		if (!opts->force)
--- 8< --
---
+To answer myself: I forgot that there were per-worktree refs (e.g.
+refs/bisect). It makes me wonder if we should put per-worktree refs to
+lmdb as well (maybe one per worktree if we don't want to put all in
+one db). One of the advantages of moving away from fs-based backend is
+the ability to deal with case sensitivity, "nested" refs (e.g. a/b and
+a/b/c are both refs). With this split, I think some refs are still
+left behind.. Sorry if this was discussed before, I haven't followed
+this closely.
+-- 
 Duy
