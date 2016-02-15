@@ -1,86 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Custom merge driver with no rename detection
-Date: Mon, 15 Feb 2016 09:06:53 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602150854520.2964@virtualbox>
-References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com> <xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 21/25] fetch: define shallow boundary with
+ --shallow-exclude
+Date: Mon, 15 Feb 2016 15:15:39 +0700
+Message-ID: <20160215081539.GA12609@lanh>
+References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
+ <1454576641-29615-22-git-send-email-pclouds@gmail.com>
+ <CAPig+cQA6yV369b7hM_Q8aPuAwF8tR1xT=jr1r2PH1KsCtHWtQ@mail.gmail.com>
+ <CACsJy8B=p0frmU8ahc9bnk-uoDPNUT_6UB0MVRPiLc9DqNz3vQ@mail.gmail.com>
+ <CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-552935812-1455523038=:2964"
-Cc: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 09:07:08 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 09:15:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVEBX-0003Sb-MI
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:07:08 +0100
+	id 1aVEJX-00009h-PL
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbcBOIHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 03:07:02 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50100 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751440AbcBOIHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 03:07:00 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MZ8fw-1aH0BG2Jjg-00KyDP; Mon, 15 Feb 2016 09:06:54
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-Content-ID: <alpine.DEB.2.20.1602150906510.2964@virtualbox>
-X-Provags-ID: V03:K0:nR2JQc7bZ/fXRg7n31WEs45C2jP+KfHUq4xnsmrGtd6AzYvdmp3
- wXu5On8Gj6E2MDpi1NfkAuZNOEVH1iIjH1h/3r0A17xXqz3ukrwzlXgH2dwgd1pfb2s6xXF
- y3k48ttODqwqMp5P2EGtAcQUfG7C4TKerlDB9KxSktZ+9km2tHSEIRmv1jvETtttnDsAagJ
- WWlKqqof9XPme9vCzPu/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6e22EUERxxI=:ThoeF3LWWXen9kfQCYKxhL
- 8t/6eLSxF/K0CgrS318Qn+ZQFAO5ONC5ZAjGKJYnXxK1RGRR0mqUoJPZT/M9DZD1IDW5OarGy
- 4SwIcYiKJ8aet68Ku+NjP92yvsvFOXfoACtTu+9Y4R3cGbNBJXfqPmx7qaVZIDWn/LboFUBR8
- +/HSokKzoLAi5Piq12vP0TqubhcO47diCK5WHjJvQj7ikfTdNGrwr4aI8Pnpn9ef6gmpPBbl1
- cKeBVoyrmJft3ENSthCNqMpfnINN3GLFj1/Xb7bSxt0eODye/DghfDhYR3D5lTSclHrBY8Zwb
- 2weO1xXOCWyRaFs4YaJL3MFlcLFh2x7KdADj8pB/4suBjEAW2+cDbfwvtHAjUOWrrmnzVwTpb
- b+jjL/3bobgEvRZQCKLpCvpRBS8XX9TrMMq++Z05Yplmle4lj/eiOJnAH1zMT1R3hXAc4H1zY
- TKQeEglaaFugaXX8CWgJVmQhpGX82R43KLZHKF857RTsa56HOu7V7TzfsctaTZZOvjW84ZuLJ
- x9NOybp7DYukwfjOR4bmXLs0/04YXWjLs6eJaqkcWFtMgpFbncKTUV4XIcpHnlDC3cQhYxihM
- 5Tt5+MT9y2rVkyqxVYuMcXvW5voLOhEJ+qryv/jmYJa3L4AyTEvf0IGp2PptrZFy/wu2rw86O
- fsp7RZfzb4awZ46RiZN6R0V78jZ+NYcmE22udcLRr5+2e00J18LSWRwVMD/1CzbpCq89DHNHd
- 9duFRTlrmjgCTUCufs8jFeNN5N56cvn67zheRnLOT5Q82jkNax6C7BHruGJM4wWWrzkNg61l 
+	id S1751956AbcBOIPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 03:15:20 -0500
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34102 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751756AbcBOIPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 03:15:18 -0500
+Received: by mail-pa0-f66.google.com with SMTP id yy13so6903142pab.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 00:15:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=MYde+I873eOoJj1deu1fzWRJk8UafW4oh5O2ipb+bm4=;
+        b=vP1pXYg/Fk8sW8awbc9HyVQGhLmicLG2a4PgAGQYLFkpRtX6THrXvQ90O8NOPxImcU
+         ysaTd9tybHg9vXOjQOKsNqOxscC4Ubvyp8rQX3OH1pATSGRdTAurAQeYzr/jVfI4IbvM
+         /6ZDAIcO3HErU4+7ih023g0Cm7XTYIUfd/WTtO5hc+adxDsEwgJiNlHmbnIj+WA2a0QG
+         jfBslO7DJS6nFXcnZ16zWnn7N70iv97GgtBvsJR1RzflzG3Dhl8bHCfi1ToheMUL/YPB
+         OehVAeWw6/u+XgjkKK5y0QQpbDYq8SyvkfoAS/kporrApioWxceGEezO+15L3kqXK8l3
+         7rmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=MYde+I873eOoJj1deu1fzWRJk8UafW4oh5O2ipb+bm4=;
+        b=R2941i+3Yvm0G9OqKz6e+cw3oZLFLnP/vfY2Ogv0tlsO2SN906DIAfMz4u64szOGas
+         baAjPuFP7Ww5v9fz5/wqxTNl2jq+kIEJVHmYPXw+AsTHkFbfzFH5aDbGnDll28R62q+x
+         pCovpS0BbiLHyuNUpfVGtKoS1WBMF/QUrSYysvbHdXXXqeLE0g/PWysua5K/fnQBDrZc
+         ECvCJq/RdOUymFyaPV7PFAvQQH3NcWMReGTozjQO3RuLMMbNYuQniS8Zel+FEjIJdSud
+         70j5tjLHTFBdOOu4HcQM+94GP9WJVPFPFPIsB5wdmx9p1/i8KoCb2+YxEniIyVGBnRN0
+         aQ8Q==
+X-Gm-Message-State: AG10YOSSp8HYH2vGxIcQrKtfOaGSnyySsKI+JzkxgHfdOSJhnSw/3wWwatHCn36ymaMBaw==
+X-Received: by 10.66.220.7 with SMTP id ps7mr8701220pac.58.1455524117574;
+        Mon, 15 Feb 2016 00:15:17 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id t87sm36414309pfa.14.2016.02.15.00.15.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Feb 2016 00:15:15 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 15 Feb 2016 15:15:39 +0700
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286182>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Feb 15, 2016 at 12:52:26AM -0500, Eric Sunshine wrote:
+> Yes, dropping 'const' was implied. I didn't examine it too deeply, but
+> it did not appear as if there would be any major fallout from dropping
+> 'const'. It feels a bit cleaner to keep it all self-contained than to
+> have that somewhat oddball static string_list*, but it's not such a
+> big deal that I'd insist upon a rewrite.
 
---8323329-552935812-1455523038=:2964
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1602150906511.2964@virtualbox>
+Dropping 'const' is not a big deal. But before we do that, how about
+this instead? I think the code looks better, and the compiler can
+still catch invalid updates to deepen_not.
 
-Hi Junio,
-
-On Sun, 14 Feb 2016, Junio C Hamano wrote:
-
-> Felipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
->=20
-> > The usual workaround is using the resolve strategy, but apparently it
-> > ignores the custom merge driver.
->=20
-> Hmph.
->=20
-> Indeed, git-merge-file seems to call xdl_merge() directly, bypassing
-> the ll_merge(), which is understandable as the former predates the
-> latter.  That needs to be fixed, I think.
-
-I think this is by design. (Because I designed it.)
-
-The original idea of git-merge-file was to serve as a drop-in replacement
-for GNU/BSD merge when you want to avoid to be subject to the vagaries of
-the GNU vs BSD implementations.
-
-Ciao,
-Dscho
---8323329-552935812-1455523038=:2964--
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 0402e27..07570be 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -50,6 +50,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	struct child_process *conn;
+ 	struct fetch_pack_args args;
+ 	struct sha1_array shallow = SHA1_ARRAY_INIT;
++	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+ 
+ 	packet_trace_identity("fetch-pack");
+ 
+@@ -108,6 +109,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.deepen_since = xstrdup(arg);
+ 			continue;
+ 		}
++		if (skip_prefix(arg, "--shallow-exclude=", &arg)) {
++			string_list_append(&deepen_not, arg);
++			continue;
++		}
+ 		if (!strcmp("--no-progress", arg)) {
+ 			args.no_progress = 1;
+ 			continue;
+@@ -135,6 +140,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		}
+ 		usage(fetch_pack_usage);
+ 	}
++	if (deepen_not.nr)
++		args.deepen_not = &deepen_not;
+ 
+ 	if (i < argc)
+ 		dest = argv[i++];
+--
+Duy
