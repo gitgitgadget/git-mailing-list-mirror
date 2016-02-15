@@ -1,273 +1,87 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v4 2/3] config: add 'type' to config_source struct that identifies config type
-Date: Mon, 15 Feb 2016 11:17:45 +0100
-Message-ID: <1455531466-16617-3-git-send-email-larsxschneider@gmail.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, sschuberth@gmail.com, ramsay@ramsayjones.plus.com,
-	sunshine@sunshineco.com, hvoigt@hvoigt.net, sbeller@google.com,
-	Johannes.Schindelin@gmx.de, gitster@pobox.com,
-	Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 11:18:02 2016
+From: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
+Subject: Re: Custom merge driver with no rename detection
+Date: Mon, 15 Feb 2016 08:42:34 -0200
+Message-ID: <CALMa68p9jdO63k2NLTUJXyms=Fc+woXx00UXCxzJ5_zV8jO8Rw@mail.gmail.com>
+References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
+	<alpine.DEB.2.20.1602150858340.2964@virtualbox>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 15 11:42:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVGED-0003TV-AN
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 11:18:02 +0100
+	id 1aVGcC-000261-7V
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 11:42:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbcBOKRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 05:17:55 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36988 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543AbcBOKRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 05:17:52 -0500
-Received: by mail-wm0-f49.google.com with SMTP id g62so101776061wme.0
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 02:17:52 -0800 (PST)
+	id S1752711AbcBOKmf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 05:42:35 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:37795 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751016AbcBOKme convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 05:42:34 -0500
+Received: by mail-ig0-f181.google.com with SMTP id 5so53006379igt.0
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 02:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lcmVbzuPi7DaGtBiKpGUSHhkrMjHhuj61BHrQBSP9A8=;
-        b=NipYHYwM35y6T08dcoxbUEgURjc41jBRIaMGBre8KE+QHqJiTDvL5XOn4B+BiCryrZ
-         GU/B0rcBxH12SG/iv5Y6icgBywQA05cN3IPW1LGft66VT7Izk7pzxDkesFAtpZ+usn+V
-         cerdlx1uHC3qocYlcylgfkAAQo/Y0a50niw+hq+4g+aWeZfTRkvRiVJIWbUQnQuKGI8F
-         uiOv1iK6HoX1uysYwyUuTLhMSWsRZWo/wtYL/G8zEu5ertKf/jOPP7r7PlI89TYh1I2Y
-         PsiNSiHmYzogOc3R9vmfR8Icl6EmKVFf7+76WbQrL2F21fEBmKHHtWUmidPuiwJR+PZO
-         fW+A==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3bpNClCo7TTdWRbbCvoK4IwOHHtf1l4RYVmdT6IFg/g=;
+        b=qBPQDjnCNcigICpMhe69QedpO9TZBcca1vcP9vDC12NiEfwDJrV31w7P7zFwjih1pN
+         Kyv4rrTw8atHYcAYffyyAA/sU3oUTyTmZ7hcbVJmMtypHjFQP6ZkfmKJMVEkYzN9nZzc
+         Pm8K9AlWHYWnTiMg0w69AgNmJNCXb24Dpl5galfa0NBsJZdN1mcIEY2GVCtugzEQcman
+         b5w/LT8CSa8My9CndEywGBsiBq31DZ4SEbErvlpGrnDYwrh5lHKSztyuN4WBVabVe9MW
+         XP39iiOYwCXih0CDcMslAZkzGPoVFHfYcTXTj8bO8o4Z8YNCAkEvjZrItaN0b66Wj5Rd
+         9Psw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=lcmVbzuPi7DaGtBiKpGUSHhkrMjHhuj61BHrQBSP9A8=;
-        b=Y21BnDj68CW3RnWTl/xlW2pGpxEBjytLV0DgqcRHLEu5yNR5ElMQMnRi7mnMhT+QXI
-         KEv1xX2bzUDbGijDiqgUs3M/v+Wggt4lhSU+KAZylaKE6fAa+ICHY2WqFEAZzQP2YnEe
-         ZyB8lss89EISP66pzFlnjls6DUxfCi7nSKAS+P8mHGo1NZ7gweMzY5QzBpIXG/YNO8Rv
-         yBCgyHEDoveKJ0FTKYKT5JKvg9XzVO+9A9jlwv5jruPwwg6XT40+CPLUzIYJVejIRDI+
-         geLCdesRvrq2lNpwszmojXN8IltH0whlRxjNvXmb6cVGzWAz7KlCoHXyCuAkiw+vV9Qb
-         Rp1Q==
-X-Gm-Message-State: AG10YOSac6pq9mVKbMvlIb9hOaYcl/NRGR7sErt+BhHRyC9aRC8rNAW5Sifrz6BoMPEPrA==
-X-Received: by 10.28.11.131 with SMTP id 125mr12368761wml.58.1455531471583;
-        Mon, 15 Feb 2016 02:17:51 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB477C.dip0.t-ipconnect.de. [93.219.71.124])
-        by smtp.gmail.com with ESMTPSA id i5sm24494120wja.23.2016.02.15.02.17.50
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 15 Feb 2016 02:17:50 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3bpNClCo7TTdWRbbCvoK4IwOHHtf1l4RYVmdT6IFg/g=;
+        b=ahpy/DssRoV/3KKw5Y6qYVmR3pgIoVTzU7N8lHRiSs/fZ0+PCNlqH45i7aI2jyP42V
+         fJDarDmzbbwqnlwszrrgg7uYtBpQqGVaQH5TKxleuw1uD/XwqF2RxAb8lJwHd0UT4iDD
+         JRkTaIzitLbPW7gCc7aOkoTWdIPHm9gtxU34v87bVKGMBmqIM0jUIMWwRsPZ7cVW3jKf
+         ZHeyZ10wTrEKE9IE3adCm0mPOIfFrFdB5EJCsLHYWVd9MRRs6+q4xeHgPstMRa05RB66
+         LY8mxtVj+GbatImKwlUDraoAvV8W8Ca5FnQR+YUlGBASHdqP3K8FSG2CvQB1x8t0GxcZ
+         VTrw==
+X-Gm-Message-State: AG10YORXJZvpn57Cw5mjMyGCEduhOro8/uKVUeujSHNdQrqCG0eqxhC1lZyzoc4RnW9fMpl6a20SViTa1iyDaA==
+X-Received: by 10.50.43.199 with SMTP id y7mr12063767igl.47.1455532954111;
+ Mon, 15 Feb 2016 02:42:34 -0800 (PST)
+Received: by 10.107.3.94 with HTTP; Mon, 15 Feb 2016 02:42:34 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1602150858340.2964@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286201>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On 15 February 2016 at 06:06, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Felipe,
+>
+> On Sun, 14 Feb 2016, Felipe Gon=C3=A7alves Assis wrote:
+>
+>> Attached is a quick and dirty patch that emulates the effect by
+>> allowing greater than 100% rename thresholds to mean "no-renames".
+>
+> It is really hard to comment on attached patches.
+>
+> First comment: the commit message is awfully empty, and lacks a sign-=
+off.
+>
 
-Use the config type to print more detailed error messages that inform
-the user about the origin of a config error (file, stdin, blob).
+Thanks. I am sorry for not submitting the patch separately in an
+email, but, it was really not meant for serious review, just for
+emulating the desired effect with minimal effort.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- cache.h                |  6 ++++--
- config.c               | 36 +++++++++++++++++++++++++-----------
- submodule-config.c     |  4 ++--
- t/t1300-repo-config.sh |  8 +++++++-
- t/t1308-config-set.sh  |  4 ++--
- 5 files changed, 40 insertions(+), 18 deletions(-)
+However, if you do find this approach acceptable/desirable
+(rename-threshold > 100%), I can work on the issues pointed out and
+propose a proper patch.
 
-diff --git a/cache.h b/cache.h
-index c63fcc1..8d86e5c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1485,8 +1485,8 @@ struct git_config_source {
- typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
--extern int git_config_from_buf(config_fn_t fn, const char *name,
--			       const char *buf, size_t len, void *data);
-+extern int git_config_from_mem(config_fn_t fn, const char *type,
-+					const char *name, const char *buf, size_t len, void *data);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void git_config(config_fn_t fn, void *);
-@@ -1525,6 +1525,8 @@ extern const char *get_log_output_encoding(void);
- extern const char *get_commit_output_encoding(void);
- 
- extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
-+extern const char *current_config_type();
-+extern const char *current_config_name();
- 
- struct config_include_data {
- 	int depth;
-diff --git a/config.c b/config.c
-index 86a5eb2..5cf11b5 100644
---- a/config.c
-+++ b/config.c
-@@ -24,6 +24,7 @@ struct config_source {
- 			size_t pos;
- 		} buf;
- 	} u;
-+	const char *type;
- 	const char *name;
- 	const char *path;
- 	int die_on_error;
-@@ -471,9 +472,9 @@ static int git_parse_source(config_fn_t fn, void *data)
- 			break;
- 	}
- 	if (cf->die_on_error)
--		die(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		die(_("bad config line %d in %s %s"), cf->linenr, cf->type, cf->name);
- 	else
--		return error(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		return error(_("bad config line %d in %s %s"), cf->linenr, cf->type, cf->name);
- }
- 
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -588,9 +589,9 @@ static void die_bad_number(const char *name, const char *value)
- 	if (!value)
- 		value = "";
- 
--	if (cf && cf->name)
--		die(_("bad numeric config value '%s' for '%s' in %s: %s"),
--		    value, name, cf->name, reason);
-+	if (cf && cf->type && cf->name)
-+		die(_("bad numeric config value '%s' for '%s' in %s %s: %s"),
-+		    value, name, cf->type, cf->name, reason);
- 	die(_("bad numeric config value '%s' for '%s': %s"), value, name, reason);
- }
- 
-@@ -1061,11 +1062,13 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- }
- 
- static int do_config_from_file(config_fn_t fn,
--		const char *name, const char *path, FILE *f, void *data)
-+		const char *type, const char *name, const char *path, FILE *f,
-+		void *data)
- {
- 	struct config_source top;
- 
- 	top.u.file = f;
-+	top.type = type;
- 	top.name = name;
- 	top.path = path;
- 	top.die_on_error = 1;
-@@ -1078,7 +1081,7 @@ static int do_config_from_file(config_fn_t fn,
- 
- static int git_config_from_stdin(config_fn_t fn, void *data)
- {
--	return do_config_from_file(fn, "<stdin>", NULL, stdin, data);
-+	return do_config_from_file(fn, "stdin", "", NULL, stdin, data);
- }
- 
- int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-@@ -1089,21 +1092,22 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 	f = fopen(filename, "r");
- 	if (f) {
- 		flockfile(f);
--		ret = do_config_from_file(fn, filename, filename, f, data);
-+		ret = do_config_from_file(fn, "file", filename, filename, f, data);
- 		funlockfile(f);
- 		fclose(f);
- 	}
- 	return ret;
- }
- 
--int git_config_from_buf(config_fn_t fn, const char *name, const char *buf,
--			size_t len, void *data)
-+int git_config_from_mem(config_fn_t fn, const char *type, const char *name,
-+			const char *buf, size_t len, void *data)
- {
- 	struct config_source top;
- 
- 	top.u.buf.buf = buf;
- 	top.u.buf.len = len;
- 	top.u.buf.pos = 0;
-+	top.type = type;
- 	top.name = name;
- 	top.path = NULL;
- 	top.die_on_error = 0;
-@@ -1132,7 +1136,7 @@ static int git_config_from_blob_sha1(config_fn_t fn,
- 		return error("reference '%s' does not point to a blob", name);
- 	}
- 
--	ret = git_config_from_buf(fn, name, buf, size, data);
-+	ret = git_config_from_mem(fn, "blob", name, buf, size, data);
- 	free(buf);
- 
- 	return ret;
-@@ -2385,3 +2389,13 @@ int parse_config_key(const char *var,
- 
- 	return 0;
- }
-+
-+const char *current_config_type()
-+{
-+	return cf && cf->type ? cf->type : "cmdline";
-+}
-+
-+const char *current_config_name()
-+{
-+	return cf && cf->name ? cf->name : "";
-+}
-diff --git a/submodule-config.c b/submodule-config.c
-index fe8ceab..92502b5 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -427,8 +427,8 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.commit_sha1 = commit_sha1;
- 	parameter.gitmodules_sha1 = sha1;
- 	parameter.overwrite = 0;
--	git_config_from_buf(parse_config, rev.buf, config, config_size,
--			&parameter);
-+	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
-+			config, config_size, &parameter);
- 	free(config);
- 
- 	switch (lookup_type) {
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 1782add..42ed5cc 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -700,12 +700,18 @@ test_expect_success 'invalid unit' '
- 	git config aninvalid.unit >actual &&
- 	test_cmp expect actual &&
- 	cat >expect <<-\EOF &&
--	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in .git/config: invalid unit
-+	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in file .git/config: invalid unit
- 	EOF
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'invalid stdin config' '
-+	echo "fatal: bad config line 1 in stdin " >expect &&
-+	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
-+	test_cmp expect output
-+'
-+
- cat > expect << EOF
- true
- false
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 91235b7..82f82a1 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -195,14 +195,14 @@ test_expect_success 'proper error on error in default config files' '
- 	cp .git/config .git/config.old &&
- 	test_when_finished "mv .git/config.old .git/config" &&
- 	echo "[" >>.git/config &&
--	echo "fatal: bad config file line 34 in .git/config" >expect &&
-+	echo "fatal: bad config line 34 in file .git/config" >expect &&
- 	test_expect_code 128 test-config get_value foo.bar 2>actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'proper error on error in custom config files' '
- 	echo "[" >>syntax-error &&
--	echo "fatal: bad config file line 1 in syntax-error" >expect &&
-+	echo "fatal: bad config line 1 in file syntax-error" >expect &&
- 	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
- 	test_cmp expect actual
- '
--- 
-2.5.1
+Regards,
+=46elipe
