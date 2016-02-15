@@ -1,113 +1,71 @@
-From: Tim Ringenbach <tim.ringenbach@gmail.com>
-Subject: Re: git svn dcommit doesn't support --username option for file:/// urls
-Date: Mon, 15 Feb 2016 16:01:17 -0600
-Message-ID: <CAGZMbffPYjX4g19AUPWJvknUtQ4AFeacKXpnQtuuOb1pPcOz-A@mail.gmail.com>
-References: <CAGZMbfc5Oi=EOYbCbZWfM1T65AZwCEbsso+QTkAe1sa4hRC61A@mail.gmail.com>
-	<20160215100636.GA5785@dcvr.yhbt.net>
-	<CAGZMbfdem6YzrEUw9A6ZWAbm6zXkNxqM3myAjHz4xFDS79VYwA@mail.gmail.com>
-	<20160215211413.GA1578@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/18] hardening allocations against integer overflow
+Date: Mon, 15 Feb 2016 17:02:13 -0500
+Message-ID: <20160215220212.GA10461@sigill.intra.peff.net>
+References: <20160215214516.GA4015@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 23:01:24 2016
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 15 23:02:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVRCs-0008Mx-Hy
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 23:01:23 +0100
+	id 1aVRDn-0000q2-9e
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 23:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791AbcBOWBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 17:01:18 -0500
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:35446 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752608AbcBOWBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 17:01:17 -0500
-Received: by mail-ob0-f172.google.com with SMTP id xk3so230329600obc.2
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 14:01:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PO5a/K+M9hw9Yp/64wBsubZFPDt7MmlmJretxEHdcSk=;
-        b=MopH3UlS6VMpaJHgN780fyU//ZM831dSj2+e+YM/aWSLy4zt1eRN2dZkXKi6FRmZpX
-         p5stPFUlQZ7GdA40i1Vyqe0PvdR7ZfaAN9Kpipufjb3rycJJtqZfTLU/sLkK4CDOC7VK
-         Xv1koV+TI3dycEVDJ0basNcyDoPt3ebQ+QPR5ZfOVpFMu1wlqihJMqcrbxw6IyFP8dBl
-         dTi3OwXX6IxsNhKpwKIM22/AU5Vjr3AbzSsWR62O+oyBgabNq6z+aFacgnIJ8Eh0i0RP
-         Iwb7JPrqKM+TbGSTN17LyqlLCQ88w5qTZtkSD8wq0dAfDhaNTQ4KkOmG9mdUaJtutmjU
-         mOhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=PO5a/K+M9hw9Yp/64wBsubZFPDt7MmlmJretxEHdcSk=;
-        b=HHDqilg49tfN0j73GPTBzSX/YHjMs8KReJEvhkY29ssh05KuIdm7Wb6W4qyjnr2kkG
-         QPAqdL9MWi+n4zR1czzSvO7GbtfkW44yWlGkysInLqk6gvDjdiHGskBi0Pl54tfeQMt1
-         X32+QV9j+q/gA25KBCVIgpUUu3M1LgopYWZqEMIv2hwJnDcbtVRQp200ycfeaIRtqKtr
-         XCEDP9I6yVJ/ZDhDuYzb5/qGSW1PrXpe07A1I6wGRpHeowSFJ1ZlW8KXDZf7i1zIWDiY
-         /H60MmMIyJdLCt0mFMbmvmMSAkHxKcHv1nRAbPhn+vkp7SzOh2cKdWFp4ihFf2dOMWfq
-         1rfQ==
-X-Gm-Message-State: AG10YORB73dHDAKVkuLTQ4R1YaaGPl9lh9zu7JpxUtZ8z9Q3cJa1/Ip1fdK0F6UeUd4k3yAWR9zHpkgU+QV6ig==
-X-Received: by 10.182.241.134 with SMTP id wi6mr13876694obc.81.1455573677394;
- Mon, 15 Feb 2016 14:01:17 -0800 (PST)
-Received: by 10.202.49.193 with HTTP; Mon, 15 Feb 2016 14:01:17 -0800 (PST)
-In-Reply-To: <20160215211413.GA1578@dcvr.yhbt.net>
+	id S1752844AbcBOWCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 17:02:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42531 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752608AbcBOWCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 17:02:15 -0500
+Received: (qmail 3006 invoked by uid 102); 15 Feb 2016 22:02:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 17:02:15 -0500
+Received: (qmail 12752 invoked by uid 107); 15 Feb 2016 22:02:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 17:02:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 17:02:13 -0500
+Content-Disposition: inline
+In-Reply-To: <20160215214516.GA4015@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286276>
 
-On Mon, Feb 15, 2016 at 3:14 PM, Eric Wong <normalperson@yhbt.net> wrote:
-> It might take a while for me to get around to looking at this
-> more, so it would be very helpful if you poked around and tried
-> some different things in the source.
+On Mon, Feb 15, 2016 at 04:45:16PM -0500, Jeff King wrote:
 
-Ok, I played around with it some and found something that works.
-I commented out all the providers except for:
+> The only bug I have actually confirmed in practice here is fixed by
+> patch 2 (which is why it's at the front). There's another one in
+> path_name(), but that function is already dropped by the nearby
+> jk/lose-name-path topic.
+> 
+> The rest are cleanups of spots which _might_ be buggy, but I didn't dig
+> too far to find out. As with the earlier audit, I tried to refactor
+> using helpers that make the code clearer and less error-prone. So maybe
+> they're fixing bugs or not, but they certainly make it easier to audit
+> the result for problems.
 
-   SVN::Client::get_username_prompt_provider(
-     \&Git::SVN::Prompt::username, 2)
+After this, looking for /[cm]alloc.*\+/ is pretty clean. I _didn't_ fix
+any sites in xdiff, but those are already protected by dcd1742 (xdiff:
+reject files larger than ~1GB, 2015-09-24).
 
-And that seems to actually work!
+That's not necessarily complete coverage, though, as you can always
+screw up the computation outside of the xmalloc call, and pass in the
+truncated version. E.g.:
 
-Interestingly, it doesn't actually interactively prompt me for a
-username. At least, not when I ran 'git svn dcommit --username test'.
-It did when I later ran a 'git svn fetch'.
+  int alloc = a + b;
+  char *foo = xmalloc(alloc);
 
-I don't know this API at all, and it's been a long time since I've
-done any perl. (And I didn't even realize you used perl bindings to
-libsvn until a few minutes ago, I just assumed you somehow implemented
-everything from scratch.)
+However, this is only a big problem if you then copy "a" and "b"
+separately. If you use "alloc" later as the limit, like:
 
-But my guess is that 'SVN::Client::get_username_provider()' is
-provided by the perl binding and isn't git-svn specific, and so it
-knows nothing of the --username argument, it simply is reading ~/.svn.
-(Assuming git-svn reads ~/.svn at all.) (That hints at maybe I could
-control the user with the files in ~/.svn, which I didn't even
-consider previously.) And if it knows nothing about git-svn or any
-arguments passed, then that explains why it didn't work.
+  xsnprintf(foo, alloc, "%s%s", a, b);
 
-Meanwhile, 'SVN::Client::get_username_prompt_provider' also looks like
-a stock SVN::Client function, but it's passed in a Git::SVN::
-argument, that I'm assuming is some sort of callback. So in that case
-it's able to provided it with the passed in --username argument, or
-failing that, it prompts me.
+that's only a minor bug (we notice the overflow and complain, rather
+than smashing the heap).
 
-So I have something that I think will work for me. I'm not sure how to
-turn it into a reasonable patch though. Maybe we need to eliminate
-some of the auth_provides from the list if the --username option is
-passed in?
-
-> Btw, which version of SVN are you using?  I also wonder if
-> there's something version-dependent.
-
-svn --version
-svn, version 1.6.12 (r955767)
-
-I know that's pretty old.
-
-Thanks,
-Tim
+-Peff
