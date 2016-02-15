@@ -1,79 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 10/18] fast-import: simplify allocation in start_packfile
-Date: Mon, 15 Feb 2016 16:54:16 -0500
-Message-ID: <20160215215415.GJ10287@sigill.intra.peff.net>
-References: <20160215214516.GA4015@sigill.intra.peff.net>
+From: =?UTF-8?Q?Stefan_Fr=c3=bchwirth?= <stefan.fruehwirth@uni-graz.at>
+Subject: Re: malloc memory corruption on merge-tree with leading newline
+Date: Mon, 15 Feb 2016 22:54:56 +0100
+Message-ID: <56C24930.1010606@uni-graz.at>
+References: <56C2459B.5060805@uni-graz.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:54:27 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:55:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVR66-0002fu-H9
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:54:22 +0100
+	id 1aVR6k-00037V-RY
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782AbcBOVyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 16:54:19 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42498 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752608AbcBOVyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 16:54:18 -0500
-Received: (qmail 2613 invoked by uid 102); 15 Feb 2016 21:54:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:54:18 -0500
-Received: (qmail 12521 invoked by uid 107); 15 Feb 2016 21:54:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:54:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 16:54:16 -0500
-Content-Disposition: inline
-In-Reply-To: <20160215214516.GA4015@sigill.intra.peff.net>
+	id S1752771AbcBOVy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 16:54:59 -0500
+Received: from EX07HTCA01.UNI-GRAZ.AT ([143.50.13.79]:33775 "EHLO
+	ex07htca01.uni-graz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752608AbcBOVy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 16:54:58 -0500
+Received: from EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) by
+ ex07htca01.pers.ad.uni-graz.at (2002:8f32:d4f::8f32:d4f) with Microsoft SMTP
+ Server (TLS) id 8.3.406.0; Mon, 15 Feb 2016 22:54:56 +0100
+Received: from [143.50.232.174] (143.50.232.174) by
+ EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) with Microsoft SMTP
+ Server (TLS) id 15.0.1076.9; Mon, 15 Feb 2016 22:54:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <56C2459B.5060805@uni-graz.at>
+X-ClientProxiedBy: EX13MS04.pers.ad.uni-graz.at (2002:8f32:dc2::8f32:dc2) To
+ EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286266>
 
-This function allocates a packed_git flex-array, and adds a
-mysterious 2 bytes to the length of the pack_name field. One
-is for the trailing NUL, but the other has no purpose. This
-is probably cargo-culted from add_packed_git, which gets the
-".idx" path and needs to allocate enough space to hold the
-matching ".pack" (though since 48bcc1c, we calculate the
-size there differently).
+Addendum: Problem occurs with version 2.7.1 as well as version 1.9.1.
 
-This site, however, is using the raw path of a tempfile, and
-does not need the extra byte. We can just replace the
-allocation with FLEX_ALLOC_STR, which handles the allocation
-and the NUL for us.
+On 15/02/16 22:39, Stefan Fr=C3=BChwirth wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- fast-import.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+> in one specific circumstance, git-merge-tree exits with a segfault
+> caused by "*** Error in `git': malloc(): memory corruption (fast)":
 
-diff --git a/fast-import.c b/fast-import.c
-index 3053bb8..9fc7093 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -865,15 +865,12 @@ static void start_packfile(void)
- {
- 	static char tmp_file[PATH_MAX];
- 	struct packed_git *p;
--	int namelen;
- 	struct pack_header hdr;
- 	int pack_fd;
- 
- 	pack_fd = odb_mkstemp(tmp_file, sizeof(tmp_file),
- 			      "pack/tmp_pack_XXXXXX");
--	namelen = strlen(tmp_file) + 2;
--	p = xcalloc(1, sizeof(*p) + namelen);
--	xsnprintf(p->pack_name, namelen, "%s", tmp_file);
-+	FLEX_ALLOC_STR(p, pack_name, tmp_file);
- 	p->pack_fd = pack_fd;
- 	p->do_not_close = 1;
- 	pack_file = sha1fd(pack_fd, p->pack_name);
--- 
-2.7.1.572.gf718037
+Stefan
