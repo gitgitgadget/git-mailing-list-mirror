@@ -1,73 +1,95 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Feb 2016, #04; Fri, 12)
-Date: Mon, 15 Feb 2016 18:44:44 +0100
-Message-ID: <56C20E8C.30708@web.de>
-References: <xmqqfuwxtrni.fsf@gitster.mtv.corp.google.com>
- <56C07182.1040804@web.de> <xmqqy4amr2z4.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/3] config: add '--sources' option to print the
+ source of a config value
+Date: Mon, 15 Feb 2016 13:05:52 -0500
+Message-ID: <20160215180552.GC26443@sigill.intra.peff.net>
+References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 18:45:06 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, sschuberth@gmail.com,
+	ramsay@ramsayjones.plus.com, sunshine@sunshineco.com,
+	hvoigt@hvoigt.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
+	gitster@pobox.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon Feb 15 19:06:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVNCq-0002Tl-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 18:45:04 +0100
+	id 1aVNX5-0004Zk-HR
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 19:05:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753799AbcBORo7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 12:44:59 -0500
-Received: from mout.web.de ([212.227.15.14]:65033 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753742AbcBORo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 12:44:57 -0500
-Received: from [172.29.0.69] ([89.1.31.133]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MKrC4-1aVNCc1ZlQ-0001Au; Mon, 15 Feb 2016 18:44:51
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <xmqqy4amr2z4.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:wJf2myHLn62O+8MqTo2aanDpHnXCq85nRWP/hOVwWCLsdRWH+zi
- bODDfw9RFgsVGp/o6HfiP0sfR0HQX53cVAdcbZgaMh7NJpChR/iMfPYDxqOcagp0iLZEpM6
- qp8Lo71CX3krpEwwwzrY7DlsOJf0B99sO/nUJOaIEBJnU0NBgeFQLTeMsrHwAAvK5gGz4io
- YOAlDwFloZ9EfAwGSe18g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aqaUN8X3Or4=:pdxfOe/FY7pxz4dnSu4CwI
- z0b+a6OmvL0AicNVFBjpVvrMekDnElDxI72DY4BeuWKPg2vYMOwmOO6nQhuKIbXprUJCxrMfz
- /Ggvsg+kBDVg2+zfhL9+JGqF9n95s6vcQS1QH/UMV4K21xcCKpCHjw9+fNYLsxfn3ce29DQiV
- SUZSBwH8kxnKipgrpttT81czriSQEISvZujK5R04LAxtwYiZVrewfXL4K/w/3iBELdTBPh9lz
- q6ilIQbMwJF7NgFP5uiCVsz9oS0dBRnBHTaAxotvzwKhEOaDly5CtKKmJFfOjKml25GfuWYv7
- 5PszXUIC1lsU10kDd42QYNZ+sShHCZ8UjAAvxGmifvJ+TnkRIJ3BktGW/X8WkVK3wNf/QFSG/
- 3AQ7Lim+SDOfr2KcaizZmp34O8yKPQMlyGxi2OYwZcVGhvOG/iL41O9e045ZHyTp7OAfkiLla
- bJE4an1jHm923GprG/Ou+ferbWKMQOxGOR2iBAWC0xPQXDfO/b+o/b7JTRPuHrSmS7YoHgIRc
- kqWJNUbdYxb8NGGpLq4ef66OVufxlYSdRlWZHwDErWk6oRQUO+SoY6qjTqjg0jyP1pf1/9nzA
- 7mj5/qrQzKWLeBigTvj1pQj+BC/GXccleMvcNAr95aWZe6aRxDZRZsoyp2l73CNcO15Oi19c9
- Git+vj10hMUYJnRAe9PVolk4bKtmaQZNSX2Vp/pDYH2yZdaN9i6/W1NmhHdFpL2AOtTsWcwNp
- JyCDc8me5WDFC3HSwDFD06XKVyf9UmynyOpzZFfxAisv/Uo058yRwYoMg+gfosU5M6oJPTLE 
+	id S1751661AbcBOSFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 13:05:55 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42253 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751389AbcBOSFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 13:05:55 -0500
+Received: (qmail 24405 invoked by uid 102); 15 Feb 2016 18:05:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 13:05:54 -0500
+Received: (qmail 9883 invoked by uid 107); 15 Feb 2016 18:05:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 13:05:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 13:05:52 -0500
+Content-Disposition: inline
+In-Reply-To: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286220>
 
+On Mon, Feb 15, 2016 at 11:17:43AM +0100, larsxschneider@gmail.com wrote:
 
+> I like the idea of a "test set up block" within a test script. In order
+> to clean up nicely before any subsequent tests I would like to propose
+> a "tear down" block. Would that work as a compromise in our "test cases
+> depend on earlier test cases" discussion?
 
-On 15/02/16 05:50, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->>> * tb/conversion (2016-02-10) 6 commits
->>>    (merged to 'next' on 2016-02-12 at 6faf27b)
->> Could we keep it in next for a while ?
->>
->> I found issues that needs to be fixed before going to master,
->> updates follow soonish.
-> Hmph, I somehow thought that everything was a no-op clean-up.  Any
-> regressions I failed to spot?
-The "text" attribute was reported incorrectly in ls-files --eol.
-A preleminary fix is here:
-<https://github.com/tboegi/git/commit/3a5f50005c0cfa16d2aaa6c602b6105b6=
-11a8ed5>
-A proper fix will come next week.
+I don't have any real problem with what you've written in the final
+patch, but I also don't think it's accomplishing much (and is more lines
+of code, and more running processes).
+
+If you want to run test N without having run all of 1..N-1, what you
+really want is some known, reliable state when that test starts. But the
+tests before it do not necessarily know what that state is.  The best
+they can do is roughly restore the original state before they ran. But:
+
+  1. What does the state consist of? Which files (and their contents)
+     are important to the test?
+
+     In your tear-down you get rid of $INCLUDE_DIR, and you zero-out the
+     config files. But you leave expect, output, output.raw, and the
+     oddly named $CUSTOM_CONFIG_FILE. Nor do you clean up the
+     environment variables.
+
+     To be clear, I think it's perfectly fine to leave those. But you
+     are still making assumptions about what the next test relies on.
+
+  2. We may create a clean slate, but that is probably not what the next
+     test wants. It will want to do its own setup. I.e., it will
+     probably not want a blank .git/config, and will create it itself,
+     just as you did in your setup step.
+
+So rather than tearing down, I think we are better off trying to make
+tests themselves (or blocks of them) set up their own assumptions. E.g.,
+by overwriting files rather than appending to them. By using unique
+filenames, commit messages, etc for their tests. That's less of a big
+deal here, but in many tests that create commits, "test_commit foo"
+would fail a second time, because there are no changes to "foo". Doing
+"test_commit subdir/check-diff-in-subdir" is less likely to clash
+without another test.
+
+Sometimes we _are_ better off with a teardown step, because subsequent
+tests would not reasonably think to clear some state we've set (e.g., in
+non-config tests, if we set some random config variable, we use
+test_config to tear it down afterwards rather than have each test clean
+out all of the config). So there's definitely a subjective judgement
+call on what is "reasonable" there. But I find it unlikely that your
+tear-down will help anybody in this case. Further tests will not care
+about $INCLUDE_DIR unless they reference it, and any further tests would
+set up their own .git/config, etc.
+
+-Peff
