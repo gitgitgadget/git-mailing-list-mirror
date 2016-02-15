@@ -1,96 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Custom merge driver with no rename detection
-Date: Mon, 15 Feb 2016 01:57:43 -0800
-Message-ID: <xmqqlh6mqors.fsf@gitster.mtv.corp.google.com>
-References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
-	<xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1602150854520.2964@virtualbox>
+From: Florian Lohoff <f@zz.de>
+Subject: stdout vs stderr
+Date: Mon, 15 Feb 2016 10:59:13 +0100
+Organization: rfc822 - pure communication
+Message-ID: <20160215095913.GB27034@pax.zz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis <felipeg.assis@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 15 10:57:53 2016
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aM3YZ0Iwxop3KEKx"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 15 11:05:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVFui-0007rx-Nh
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 10:57:53 +0100
+	id 1aVG1l-0003tD-C2
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 11:05:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752627AbcBOJ5s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 04:57:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56248 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752500AbcBOJ5q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 04:57:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B87F3E869;
-	Mon, 15 Feb 2016 04:57:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=tdBIVI9xf7s1
-	FiNubps3R03YxfU=; b=Jn6Hnm8B3BxW5twd8ltr6WKMGYtvHW9wdWLhUYaR5gPC
-	Of8sfz1f6TxP/GK7f+kS0B8jEc/Al3HsJRBfJ6VgfCs5pyp2u9wRJh53prX1XVyt
-	5X0plAC/GZCCyLuEVE/r7Q1cXnmUE+W8sS7BnRA7kTtHrJHf3O8oxVfO3yGVJbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=d2X7V9
-	jJhg5ERnE5nYWC7GFUd7AlefjJcu3Jgk/+pNRDBnieBfVoCYOk9upzQ3b6XRh/kg
-	65sx69gAkdL4PTrD+xRPeKPR2FDWG4eQmxypIHryF2mVts7/kHmqWXtjrz2SHPHe
-	CCYvvGRLUjbrMak316yktYnvJp8PlnPAto4l8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 520F63E868;
-	Mon, 15 Feb 2016 04:57:45 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8DE13E867;
-	Mon, 15 Feb 2016 04:57:44 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1602150854520.2964@virtualbox> (Johannes
-	Schindelin's message of "Mon, 15 Feb 2016 09:06:53 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8F755AB6-D3CA-11E5-BFFB-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752094AbcBOKFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 05:05:03 -0500
+Received: from pax.zz.de ([88.198.69.77]:60099 "EHLO pax.zz.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750981AbcBOKFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 05:05:01 -0500
+X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Feb 2016 05:05:01 EST
+Received: by pax.zz.de (Postfix, from userid 1000)
+	id 89BB1D021C; Mon, 15 Feb 2016 10:59:13 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286193>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Sun, 14 Feb 2016, Junio C Hamano wrote:
->
->> Felipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
->>=20
->> > The usual workaround is using the resolve strategy, but apparently=
- it
->> > ignores the custom merge driver.
->>=20
->> Hmph.
->>=20
->> Indeed, git-merge-file seems to call xdl_merge() directly, bypassing
->> the ll_merge(), which is understandable as the former predates the
->> latter.  That needs to be fixed, I think.
->
-> I think this is by design. (Because I designed it.)
->
-> The original idea of git-merge-file was to serve as a drop-in replace=
-ment
-> for GNU/BSD merge when you want to avoid to be subject to the vagarie=
-s of
-> the GNU vs BSD implementations.
+--aM3YZ0Iwxop3KEKx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We did use to use "merge" from the RCS suite originally, and we did
-want to use our own, but the primary reason we added our own was so
-that it can be enhanced in sync with the remainder of Git in a
-consistent way.
 
-If the rest of Git can be told via the attribute system to make use
-of a three-way merge driver, it should have learnt the trick to be
-kept up with the rest of the system.  I see the current state of the
-program merely be staying a bit behind; I do not think it was part
-of the grand design to forbidd it forever from learning new optional
-tricks.
+Hi,
+is there a reason why those messages for pull are sent to stdout and
+for push are sent to stderr?
+
+flo@p3:~$ git pull
+Already up-to-date.
+flo@p3:~$ git pull >/dev/null
+
+flo@p3:~$ git push
+Everything up-to-date
+flo@p3:~$ git push >/dev/null
+Everything up-to-date
+
+I am regularly trying to build automatisms around git and typically i
+redirect stdout to /dev/null in the hope that when something goes
+wrong i see error messages on stderr. This does not work for e.g. push
+for obvious reason.
+
+Flo
+--=20
+Florian Lohoff                                                 f@zz.de
+      We need to self-defend - GnuPG/PGP enable your email today!
+
+--aM3YZ0Iwxop3KEKx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIVAwUBVsGhcZDdQSDLCfIvAQq18BAAifuCwOC6NvQI7GIJ5siVhT5Q+2smfVbh
+PKHoeLDTP7pF+SlsQ4PdVfTNu3thecqE9ylhUMpStmHY7Hr9eOXw6pNCP85eBkha
+n2ZeD8NPMnGznQs2ybjoNDX4Irx0yuRNpXxESTmP3pnfLVPnsYSLNTL+5hml/cCh
+DzgIOGkrU4/eXij3NXZS4JEuEIHbh+/ZCioM/XEeIPF0Bq79IlfvZBvdm1/6646t
+duKyjq5oxUzKiWsKjUgKjZ7HTjDpysBUwIcQR25tdfzC1q8xHno37S3X3gtHZyg+
+VCVJ4xZ42ncBHKJK9UZX38N2TjgRrC9Fkck/xQD0pNf28HW5rWlpk7gZtYy5PX0l
+9phDYS4ERLgOoCH1W1MvYdaolhiGHubdxvskrYQdtZb/FRUSUBdPPbV36WcNc6qp
+bzSIaBnaSGKDxLaDzUDsJbTghPmWjjc3oUEvRkUzbYEYchUnhXsPqNykJxuV9x5q
+Jvzu172G4w5l89ZsB7Oz/5O87yMxA+z4eVcVXo0NcgYXIFDMIuZlnI4oIVMMpqux
+Nhaxhxi0g3y3QAmuKWiI2tq6/O+IO6XjG83wa/Cf34MEw9vk/qgE1O97RUeXh8K7
+yiNpu1joXGH9tF5taRP4aCw4BrlAroRujcitdY+AMpwcWKXwbwbspe4FRrH65fL9
+c6Mhe8mE8kM=
+=cz1j
+-----END PGP SIGNATURE-----
+
+--aM3YZ0Iwxop3KEKx--
