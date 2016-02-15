@@ -1,94 +1,65 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/2] git-svn: apply "svn.pathnameencoding" before URL
- encoding
-Date: Mon, 15 Feb 2016 00:33:31 +0000
-Message-ID: <20160215003331.GA19436@dcvr.yhbt.net>
+Subject: [PULL] svn pathnameencoding for git svn dcommit
+Date: Mon, 15 Feb 2016 00:52:10 +0000
+Message-ID: <20160215005210.GA31141@dcvr.yhbt.net>
 References: <56B8B1EA.5020901@f2.dion.ne.jp>
- <56B8B25E.9000001@f2.dion.ne.jp>
+ <20160208225806.GA3487@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, alex.crezoff@gmail.com
-To: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
-X-From: git-owner@vger.kernel.org Mon Feb 15 01:33:44 2016
+Cc: git@vger.kernel.org, alex.crezoff@gmail.com,
+	Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 01:52:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aV76j-0004ke-A6
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 01:33:41 +0100
+	id 1aV7Oj-0006b9-70
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 01:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753630AbcBOAdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Feb 2016 19:33:33 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:53711 "EHLO dcvr.yhbt.net"
+	id S1751723AbcBOAwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Feb 2016 19:52:13 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:53869 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754814AbcBOAdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Feb 2016 19:33:31 -0500
+	id S1751558AbcBOAwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Feb 2016 19:52:12 -0500
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85F4420276;
-	Mon, 15 Feb 2016 00:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC13120276;
+	Mon, 15 Feb 2016 00:52:10 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <56B8B25E.9000001@f2.dion.ne.jp>
+In-Reply-To: <20160208225806.GA3487@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286166>
 
-Kazutoshi Satoda <k_satoda@f2.dion.ne.jp> wrote:
-> The conversion from "svn.pathnameencoding" to UTF-8 should be applied
-> first, and then URL encoding should be applied on the resulting UTF-8
-> path. The reversed order of these transforms (used before this fix)
-> makes non-UTF-8 URL which causes error from Subversion such as
-> "Filesystem has no item: '...' path not found" when sending a rename (or
-> a copy) from non-ASCII path.
-> 
-> Signed-off-by: Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>
+I've amended tests to both commits, but the URL encoding one
+requires an HTTP server to test effectively.
 
-Thanks, running full SVN tests now.
+I couldn't find a test prereq for httpd, but perhaps it's good
+to test by default regardless in case a future SVN changes
+file:// behavior.  I've only tested this with SVN 1.6.17 under
+Debian wheezy.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+The following changes since commit 6faf27b4ff26804a07363078b238b5cfd3dfa976:
 
-> --- a/perl/Git/SVN/Editor.pm
-> +++ b/perl/Git/SVN/Editor.pm
-> @@ -144,11 +144,12 @@ sub repo_path {
->  
->  sub url_path {
->  	my ($self, $path) = @_;
-> +	$path = $self->repo_path($path);
->  	if ($self->{url} =~ m#^https?://#) {
->  		# characters are taken from subversion/libsvn_subr/path.c
->  		$path =~ s#([^~a-zA-Z0-9_./!$&'()*+,-])#sprintf("%%%02X",ord($1))#eg;
->  	}
-> -	$self->{url} . '/' . $self->repo_path($path);
-> +	$self->{url} . '/' . $path;
->  }
+  Merge branch 'tb/conversion' into next (2016-02-12 10:20:20 -0800)
 
-This is trickier to test, as it requires an https?:// URL.
-It always succeeds with the default file:// URL.
+are available in the git repository at:
 
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 82222fd..9828f05 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -93,6 +93,18 @@ test_expect_success 'svn.pathnameencoding=cp932 new file on dcommit' '
- 	git svn dcommit
- '
- 
-+test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
-+	inf=$(printf "\201\207") &&
-+	git config svn.pathnameencoding cp932 &&
-+	echo inf >"$inf" &&
-+	git add "$inf" &&
-+	git commit -m "inf" &&
-+	git svn dcommit &&
-+	git mv "$inf" inf &&
-+	git commit -m "inf rename" &&
-+	git svn dcommit
-+'
-+
- stop_httpd
- 
- test_done
--- 
-EW
+  git://bogomips.org/git-svn.git ks/svn-pathnameencoding
+
+for you to fetch changes up to dfee0cf8123e7f63268f05a02731ce82db136188:
+
+  git-svn: apply "svn.pathnameencoding" before URL encoding (2016-02-15 00:31:21 +0000)
+
+----------------------------------------------------------------
+Kazutoshi Satoda (2):
+      git-svn: enable "svn.pathnameencoding" on dcommit
+      git-svn: apply "svn.pathnameencoding" before URL encoding
+
+ perl/Git/SVN/Editor.pm                   |  4 +++-
+ t/t9115-git-svn-dcommit-funky-renames.sh | 26 ++++++++++++++++++++++++--
+ 2 files changed, 27 insertions(+), 3 deletions(-)
