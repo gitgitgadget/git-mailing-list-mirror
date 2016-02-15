@@ -1,128 +1,327 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] http: add option to try authentication without username
-Date: Mon, 15 Feb 2016 21:51:57 +0000
-Message-ID: <20160215215157.GD57185@vauxhall.crustytoothpaste.net>
-References: <CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
- <1455561886-42028-1-git-send-email-sandals@crustytoothpaste.net>
- <CAPig+cTr1eW1KLsZGpY98hUhJ2EHdPopz9C_gTztZRdNPBQTmQ@mail.gmail.com>
- <20160215202937.GA57185@vauxhall.crustytoothpaste.net>
- <20160215203451.GA29705@sigill.intra.peff.net>
- <20160215203659.GB57185@vauxhall.crustytoothpaste.net>
- <xmqqsi0tpsa5.fsf@gitster.mtv.corp.google.com>
- <CAPig+cSphEu3iRJrkdBA+BRhi9HnopLJnKOHVuGhUqavtV1RXg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 06/18] use xmallocz to avoid size arithmetic
+Date: Mon, 15 Feb 2016 16:52:22 -0500
+Message-ID: <20160215215222.GF10287@sigill.intra.peff.net>
+References: <20160215214516.GA4015@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="P+33d92oIH25kiaB"
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:52:11 2016
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:52:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVR3y-0000w1-3q
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:52:10 +0100
+	id 1aVR4H-0001Al-HL
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbcBOVwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 16:52:05 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:40234 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752608AbcBOVwC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 16:52:02 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 94FA5282CA;
-	Mon, 15 Feb 2016 21:51:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1455573118;
-	bh=O9rGb/6loUiQwi0HH4jozevKTaZRq7bbQrJz97BpWp0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bEkwLsSxFoG0N/vEVh/MIZetTGTMCUwVxdM1/Wp3Y1HsYksxWmmRNnr0HC0ca9gzn
-	 98RbPUuvwHwha5bTBNY5YNuekXrIvOC8h3qCvssW/IH+8SneGQ16WaUEC+Yshd/B/f
-	 tWA+TRH7j55trj8VOW8Kqje3D/j6HiRBW8i1uExYgIrRguIVdbSObzHdMGCZjw07mr
-	 CI+CjERbMEHbhhmz3w4KEl9+EgOUNXCpQKso1WhvBMBn7sSku+bhtitRv5uPNRGb0e
-	 J/1TW/3kizYmsa/+JB3l2gsKiOfZSflfHQrGshYZoYbimnCuqCLuV9EOPMpfHXvpvp
-	 TpVW9PNu6UFGHFd9nisWbNHMARceE0+iNVRNtKmhtbRWYxjKMsijY0QslKEbBgsnGx
-	 tuapQeI1biWQ0t1MuI633TOurFSIs9PlUSRWazEIMa8GA+5e3HZLHSQv9AHwMZ4Lf3
-	 Fi1e0Qj2eNAPNnPIL/wmXhVqAi/SFqcjA36d7X9V1DUokggCfJS
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
+	id S1752761AbcBOVw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 16:52:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42486 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752608AbcBOVwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 16:52:25 -0500
+Received: (qmail 2541 invoked by uid 102); 15 Feb 2016 21:52:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:52:25 -0500
+Received: (qmail 12455 invoked by uid 107); 15 Feb 2016 21:52:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:52:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 16:52:22 -0500
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSphEu3iRJrkdBA+BRhi9HnopLJnKOHVuGhUqavtV1RXg@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.3.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+In-Reply-To: <20160215214516.GA4015@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286261>
 
+We frequently allocate strings as xmalloc(len + 1), where
+the extra 1 is for the NUL terminator. This can be done more
+simply with xmallocz, which also checks for integer
+overflow.
 
---P+33d92oIH25kiaB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There's no case where switching xmalloc(n+1) to xmallocz(n)
+is wrong; the result is the same length, and malloc made no
+guarantees about what was in the buffer anyway. But in some
+cases, we can stop manually placing NUL at the end of the
+allocated buffer. But that's only safe if it's clear that
+the contents will always fill the buffer.
 
-On Mon, Feb 15, 2016 at 04:46:43PM -0500, Eric Sunshine wrote:
-> On Mon, Feb 15, 2016 at 4:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >> On Mon, Feb 15, 2016 at 03:34:51PM -0500, Jeff King wrote:
-> >>> So I think this hack should remain purely at the curl level, and never
-> >>> touch the credential struct at all.
-> >>>
-> >>> Which is a shame, because I think Eric's suggestion is otherwise much
-> >>> more readable. :)
-> >>
-> >> Yes, I agree.  That would have been a much nicer and smaller change.
-> >
-> > Alright, reading all reviews and taking them into account, the
-> > original, when a Sign-off is added, would be acceptable, it seems.
->=20
-> One final question: Keeping in mind my lack of familiarity with this
-> particular use-case, would it be possible to infer the need to employ
-> this curl-specific workaround rather than making users tweak a config
-> setting? Or would that be a security risk or an otherwise stupid idea?
+In each case where this patch does so, I manually examined
+the control flow, and I tried to err on the side of caution.
 
-It's not very easy to infer whether it's needed.  We'd need to know what
-types of authentication are offered, and somehow we'd have to intuit
-proper behavior when both GSS-Negotiate and Basic are enabled.  Some
-sites do that because you can use Basic against the Kerberos database.
-One user might legitimately want to always use Basic (e.g. with a
-password manager) and another might always want to use Negotiate.
-Setting this option is one way to ensure the latter.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/check-ref-format.c | 2 +-
+ builtin/merge-tree.c       | 2 +-
+ builtin/worktree.c         | 2 +-
+ column.c                   | 3 +--
+ combine-diff.c             | 4 +---
+ config.c                   | 4 +---
+ dir.c                      | 2 +-
+ entry.c                    | 2 +-
+ grep.c                     | 3 +--
+ imap-send.c                | 5 ++---
+ ll-merge.c                 | 2 +-
+ progress.c                 | 2 +-
+ refs.c                     | 2 +-
+ setup.c                    | 5 ++---
+ strbuf.c                   | 2 +-
+ 15 files changed, 17 insertions(+), 25 deletions(-)
 
---P+33d92oIH25kiaB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJWwkh8AAoJEL9TXYEfUvaL9AEP/16gbmxG9cCV5m8W4SBg/V/K
-JXRUunCAL50OqR5llHca5MBANuMiMYgb1Ntt/Cilcq1lSbxl1HPxXL40vPnRolCz
-1/aswwMTtsDYSFshWdwTzvw9TX5Fg7M5YjQPPIIrgtbrVs1JYnVI+opkWE/K2M8E
-7KTegRH2p64PQa8ZzB6AD+ZGJIHfxcSDWgFN/vKFiyI9k8uHpgMVMu9zt4Miaa8v
-xTQwcMXHIpcAINzsZ5bwVogEK1uiD5tbumlwNdSh4U4bup60x1KlXZuYj2B8eiLi
-S1DpaLVjtxeOsrLD++BmM03kDQpYZYfExuP17EdmF5CuGbHWn4E3rSgBFZ7VR0bt
-4KfOCQH4u5BosVhJMjAtMzkgwg1lY1QSH8Zn8cV70bPKgM5/GO9C6nQGZmR47kKQ
-t3j9XJAz73bmCbi32xjs601UIEstoo5GrvhT4GYDbFFufS4mVttsBtcVVElV2dCi
-O4ACEb8Yt0M3sRrrvXWf3vgwoc2yOILul9CWraICc/k/vxxrr7yYi1aZr1OCyM8i
-n1jWWa/GiL3qyIuhjSfsPChy9vgKSPIWk9jY+nHiuc7e7EsajpdsD2GGXdqAdFT+
-NJuSrrprKo1byAL0nk4f4atPaJBwrGx2lBg9UKZ66KZAOpreQGbvbIKEMtG4NVmX
-ghoCbC2FkUHcQGUHDsQZ
-=+rEG
------END PGP SIGNATURE-----
-
---P+33d92oIH25kiaB--
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index fd915d5..eac4994 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -20,7 +20,7 @@ static const char builtin_check_ref_format_usage[] =
+  */
+ static char *collapse_slashes(const char *refname)
+ {
+-	char *ret = xmalloc(strlen(refname) + 1);
++	char *ret = xmallocz(strlen(refname));
+ 	char ch;
+ 	char prev = '/';
+ 	char *cp = ret;
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index d4f0cbd..ca57004 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -174,7 +174,7 @@ static struct merge_list *create_entry(unsigned stage, unsigned mode, const unsi
+ 
+ static char *traverse_path(const struct traverse_info *info, const struct name_entry *n)
+ {
+-	char *path = xmalloc(traverse_path_len(info, n) + 1);
++	char *path = xmallocz(traverse_path_len(info, n));
+ 	return make_traverse_path(path, info, n);
+ }
+ 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 475b958..0a45710 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -52,7 +52,7 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 		return 1;
+ 	}
+ 	len = st.st_size;
+-	path = xmalloc(len + 1);
++	path = xmallocz(len);
+ 	read_in_full(fd, path, len);
+ 	close(fd);
+ 	while (len && (path[len - 1] == '\n' || path[len - 1] == '\r'))
+diff --git a/column.c b/column.c
+index f9fda68..d55ead1 100644
+--- a/column.c
++++ b/column.c
+@@ -173,9 +173,8 @@ static void display_table(const struct string_list *list,
+ 	if (colopts & COL_DENSE)
+ 		shrink_columns(&data);
+ 
+-	empty_cell = xmalloc(initial_width + 1);
++	empty_cell = xmallocz(initial_width);
+ 	memset(empty_cell, ' ', initial_width);
+-	empty_cell[initial_width] = '\0';
+ 	for (y = 0; y < data.rows; y++) {
+ 		for (x = 0; x < data.cols; x++)
+ 			if (display_cell(&data, initial_width, empty_cell, x, y))
+diff --git a/combine-diff.c b/combine-diff.c
+index a698016..890c415 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1043,7 +1043,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 				elem->mode = canon_mode(S_IFLNK);
+ 
+ 			result_size = len;
+-			result = xmalloc(len + 1);
++			result = xmallocz(len);
+ 
+ 			done = read_in_full(fd, result, len);
+ 			if (done < 0)
+@@ -1051,8 +1051,6 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			else if (done < len)
+ 				die("early EOF '%s'", elem->path);
+ 
+-			result[len] = 0;
+-
+ 			/* If not a fake symlink, apply filters, e.g. autocrlf */
+ 			if (is_file) {
+ 				struct strbuf buf = STRBUF_INIT;
+diff --git a/config.c b/config.c
+index b95ac3a..e7b589a 100644
+--- a/config.c
++++ b/config.c
+@@ -1902,7 +1902,7 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
+ 	 * Validate the key and while at it, lower case it for matching.
+ 	 */
+ 	if (store_key)
+-		*store_key = xmalloc(strlen(key) + 1);
++		*store_key = xmallocz(strlen(key));
+ 
+ 	dot = 0;
+ 	for (i = 0; key[i]; i++) {
+@@ -1926,8 +1926,6 @@ static int git_config_parse_key_1(const char *key, char **store_key, int *basele
+ 		if (store_key)
+ 			(*store_key)[i] = c;
+ 	}
+-	if (store_key)
+-		(*store_key)[i] = 0;
+ 
+ 	return 0;
+ 
+diff --git a/dir.c b/dir.c
+index 66c93c1..6c627d5 100644
+--- a/dir.c
++++ b/dir.c
+@@ -711,7 +711,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			close(fd);
+ 			return 0;
+ 		}
+-		buf = xmalloc(size+1);
++		buf = xmallocz(size);
+ 		if (read_in_full(fd, buf, size) != size) {
+ 			free(buf);
+ 			close(fd);
+diff --git a/entry.c b/entry.c
+index 582c400..a410957 100644
+--- a/entry.c
++++ b/entry.c
+@@ -6,7 +6,7 @@
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+ {
+-	char *buf = xmalloc(path_len + 1);
++	char *buf = xmallocz(path_len);
+ 	int len = 0;
+ 
+ 	while (len < path_len) {
+diff --git a/grep.c b/grep.c
+index 7b2b96a..528b652 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1741,7 +1741,7 @@ static int grep_source_load_file(struct grep_source *gs)
+ 	i = open(filename, O_RDONLY);
+ 	if (i < 0)
+ 		goto err_ret;
+-	data = xmalloc(size + 1);
++	data = xmallocz(size);
+ 	if (st.st_size != read_in_full(i, data, size)) {
+ 		error(_("'%s': short read %s"), filename, strerror(errno));
+ 		close(i);
+@@ -1749,7 +1749,6 @@ static int grep_source_load_file(struct grep_source *gs)
+ 		return -1;
+ 	}
+ 	close(i);
+-	data[size] = 0;
+ 
+ 	gs->buf = data;
+ 	gs->size = size;
+diff --git a/imap-send.c b/imap-send.c
+index 4d3b773..2c52027 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -892,12 +892,11 @@ static char *cram(const char *challenge_64, const char *user, const char *pass)
+ 	response = xstrfmt("%s %s", user, hex);
+ 	resp_len = strlen(response) + 1;
+ 
+-	response_64 = xmalloc(ENCODED_SIZE(resp_len) + 1);
++	response_64 = xmallocz(ENCODED_SIZE(resp_len));
+ 	encoded_len = EVP_EncodeBlock((unsigned char *)response_64,
+ 				      (unsigned char *)response, resp_len);
+ 	if (encoded_len < 0)
+ 		die("EVP_EncodeBlock error");
+-	response_64[encoded_len] = '\0';
+ 	return (char *)response_64;
+ }
+ 
+@@ -1188,7 +1187,7 @@ static void lf_to_crlf(struct strbuf *msg)
+ 		j++;
+ 	}
+ 
+-	new = xmalloc(j + 1);
++	new = xmallocz(j);
+ 
+ 	/*
+ 	 * Second pass: write the new string.  Note that this loop is
+diff --git a/ll-merge.c b/ll-merge.c
+index 0338630..ff4a43a 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -205,7 +205,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 	if (fstat(fd, &st))
+ 		goto close_bad;
+ 	result->size = st.st_size;
+-	result->ptr = xmalloc(result->size + 1);
++	result->ptr = xmallocz(result->size);
+ 	if (read_in_full(fd, result->ptr, result->size) != result->size) {
+ 		free(result->ptr);
+ 		result->ptr = NULL;
+diff --git a/progress.c b/progress.c
+index 353bd37..76a88c5 100644
+--- a/progress.c
++++ b/progress.c
+@@ -247,7 +247,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
+ 		size_t len = strlen(msg) + 5;
+ 		struct throughput *tp = progress->throughput;
+ 
+-		bufp = (len < sizeof(buf)) ? buf : xmalloc(len + 1);
++		bufp = (len < sizeof(buf)) ? buf : xmallocz(len);
+ 		if (tp) {
+ 			unsigned int rate = !tp->avg_misecs ? 0 :
+ 					tp->avg_bytes / tp->avg_misecs;
+diff --git a/refs.c b/refs.c
+index e2d34b2..1d9e2a7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -124,7 +124,7 @@ int refname_is_safe(const char *refname)
+ 		char *buf;
+ 		int result;
+ 
+-		buf = xmalloc(strlen(refname) + 1);
++		buf = xmallocz(strlen(refname));
+ 		/*
+ 		 * Does the refname try to escape refs/?
+ 		 * For example: refs/foo/../bar is safe but refs/foo/../../bar
+diff --git a/setup.c b/setup.c
+index 0deb022..ab21086 100644
+--- a/setup.c
++++ b/setup.c
+@@ -88,7 +88,7 @@ char *prefix_path_gently(const char *prefix, int len,
+ 	const char *orig = path;
+ 	char *sanitized;
+ 	if (is_absolute_path(orig)) {
+-		sanitized = xmalloc(strlen(path) + 1);
++		sanitized = xmallocz(strlen(path));
+ 		if (remaining_prefix)
+ 			*remaining_prefix = 0;
+ 		if (normalize_path_copy_len(sanitized, path, remaining_prefix)) {
+@@ -488,14 +488,13 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 		error_code = READ_GITFILE_ERR_OPEN_FAILED;
+ 		goto cleanup_return;
+ 	}
+-	buf = xmalloc(st.st_size + 1);
++	buf = xmallocz(st.st_size);
+ 	len = read_in_full(fd, buf, st.st_size);
+ 	close(fd);
+ 	if (len != st.st_size) {
+ 		error_code = READ_GITFILE_ERR_READ_FAILED;
+ 		goto cleanup_return;
+ 	}
+-	buf[len] = '\0';
+ 	if (!starts_with(buf, "gitdir: ")) {
+ 		error_code = READ_GITFILE_ERR_INVALID_FORMAT;
+ 		goto cleanup_return;
+diff --git a/strbuf.c b/strbuf.c
+index bab316d..f60e2ee 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -718,7 +718,7 @@ char *xstrdup_tolower(const char *string)
+ 	size_t len, i;
+ 
+ 	len = strlen(string);
+-	result = xmalloc(len + 1);
++	result = xmallocz(len);
+ 	for (i = 0; i < len; i++)
+ 		result[i] = tolower(string[i]);
+ 	result[i] = '\0';
+-- 
+2.7.1.572.gf718037
