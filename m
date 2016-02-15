@@ -1,94 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Custom merge driver with no rename detection
-Date: Mon, 15 Feb 2016 03:03:44 -0800
-Message-ID: <xmqqd1ryqlpr.fsf@gitster.mtv.corp.google.com>
-References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
-	<alpine.DEB.2.20.1602150858340.2964@virtualbox>
-	<CALMa68p9jdO63k2NLTUJXyms=Fc+woXx00UXCxzJ5_zV8jO8Rw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/2] worktree: fix "add -B"
+Date: Mon, 15 Feb 2016 20:35:32 +0700
+Message-ID: <1455543333-25814-1-git-send-email-pclouds@gmail.com>
+References: <20160215094154.GA11698@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 12:03:53 2016
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	kirill.likhodedov@jetbrains.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 15 14:36:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVGwZ-0007RP-QZ
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 12:03:52 +0100
+	id 1aVJKS-0003f3-VM
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 14:36:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219AbcBOLDs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 06:03:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751092AbcBOLDr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 06:03:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AF2141217;
-	Mon, 15 Feb 2016 06:03:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=8ISNAn/1qFUK
-	4buhxcCPZXHjwCE=; b=iPluPLJgdjf4a19VmDXbfmpLcAQMnUoWvuAi+SApddgz
-	oTkfxA8ro9kUX/f1FaCS3hoTFlyrJqwHRamLYK0uE8lIGkwS9vhW87QKi+Wm7kPj
-	HcqNo9Tzh6iHafdCvPli2QZp/ByNZihqDMwsEVJDCoqCD01MmiuttjeCEjEOcic=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XVUFwB
-	9d3AjrTDEUdL7Kcgq7sksW9hqRO7F6KxWZWVwYR2eWp0GTkqI5k5lblCrHVf73d9
-	SPw1ZnBe5k5EhXlXsq8QRor9ox3zFsEUXBvYCiuGab53dEoI/LAXO2vHJ05Nwk9H
-	S61OP5qDkGS8fC6zurNyhV+yeQcolSAC80En4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 417AE41216;
-	Mon, 15 Feb 2016 06:03:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AC3F741215;
-	Mon, 15 Feb 2016 06:03:45 -0500 (EST)
-In-Reply-To: <CALMa68p9jdO63k2NLTUJXyms=Fc+woXx00UXCxzJ5_zV8jO8Rw@mail.gmail.com>
-	("Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis"'s message of "Mon, 15 Feb 2016
- 08:42:34
-	-0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C85496C2-D3D3-11E5-BFDE-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753267AbcBONgh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 08:36:37 -0500
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:34616 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751431AbcBONgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 08:36:36 -0500
+Received: by mail-pa0-f65.google.com with SMTP id yy13so7214425pab.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 05:36:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=nmoEC9bDqZlLjQNraLPxH7Wbwqmk1XV4rYCLOTUEEP8=;
+        b=R/G2/bUySrKqAXh0hZkZcUOltJw6089RY/GZDC1wpnIv05NwHQH+qN6+Ol/pDt03Vg
+         U0WTs3XOaXj0K9ItqylTaHQKZjms/zSlmAwj9tCrNybCtxDlF3r2m3bk7R0iz5DV0pYz
+         YDRru+iLxIF91tfjP3pDX0kx9b/Q9sXRxAI9jXx6M0WBtn10eO3uqo+8NqhX9H0cWDQm
+         MoTYlK7AT6y5zNAcskytscqqA5mTkfgucp7oRkWdWCsD5O3l55sOzaU7OHZ0hH9OMkVd
+         Q4SUiSHcNGqwz+/vkuj43ZG6cpIKtmBRhds3ipRdR9LW3jveBsuOVcyTfDgngQeeJzHh
+         N7vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=nmoEC9bDqZlLjQNraLPxH7Wbwqmk1XV4rYCLOTUEEP8=;
+        b=ASxrVdfemLFKAUYJ+RerkErIrRrEKb6bgIWAcQDNG29eADPtfUsTtiGdPi/s/ThwH/
+         rFIFfv4KGp1BXqpX2/0ho91Fo6qEMmNqhNAjzuXGm90+ehJ5Uk7HqETjLrxStCxkoqjV
+         ba4J8C3GoLmMkg5315R7x802l0lR+tS3l6ide+LkwxEMDliIKvy67KITzDxsFeMsHH4q
+         ROdruWduymGSLoGfmS7fqtkcRsfqoSANxnCMfF2Q92aEINWV8XG3wAUIyK8QphUAwTSc
+         Ha8JwrlMZW24b5A+Qscs8TnrTsWujIoorb4BRikFCGnGTcL3Bsa8HvFIGdToGDJgq2V8
+         JJWg==
+X-Gm-Message-State: AG10YOTeEiFoTNP/P1h+3qAgIT1PsqgavHO/wBAwwEqF9Edy37VJkMBcQFCminaVcbJDcw==
+X-Received: by 10.66.65.109 with SMTP id w13mr23148083pas.142.1455543395898;
+        Mon, 15 Feb 2016 05:36:35 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id l21sm38770048pfi.63.2016.02.15.05.36.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Feb 2016 05:36:33 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 15 Feb 2016 20:36:56 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
+In-Reply-To: <20160215094154.GA11698@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286203>
 
-=46elipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
+Current code does not update "symref" when -B is used. This string
+contains the new HEAD. Because it's empty "git worktree add -B" fails a=
+t
+symbolic-ref step.
 
-> However, if you do find this approach acceptable/desirable
-> (rename-threshold > 100%), I can work on the issues pointed out and
-> propose a proper patch.
+Because branch creation is already done before calling add_worktree(),
+-B is equivalent to -b from add_worktree() point of view. We do not nee=
+d
+the special case for -B.
 
-The caller asks diffcore-rename to detect rename, and the algorithm
-compares things to come up with a similarity score and match things
-up.  And you add an option to the rename detection logic to forbid
-finding any?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Complete patch.
 
-To be bluntly honest, the approach sounds like a crazy talk.
+ builtin/worktree.c      | 4 +---
+ t/t2025-worktree-add.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-If your goal is not to allow rename detection at all, why not teach
-the caller of the diff machinery not to even ask for rename
-detection at all?  merge-recursive.c has a helper function called
-get_renames(), and it calls into the diff machinery passing
-DIFF_DETECT_RENAME option.  As a dirty hack, I think you would
-achieve your desired result if you stop passing that option there.
-
-I called that a "dirty hack", because for the purpose of not
-allowing rename detection inside merge-recursive, I think an even
-better thing to do is to teach the get_renames() helper to report to
-its caller, under your new option, "I found no renames at all"
-without doing anything.
-
-It might be just a simple matter of teaching its callers (there
-probably are two of them, one between the common ancestor and our
-branch and the other between the common ancestor and their branch)
-not call the get_renames() helper at all under your new option, but
-I didn't check these callers closely.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 475b958..6b9c946 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -201,9 +201,7 @@ static int add_worktree(const char *path, const cha=
+r *refname,
+ 		die(_("'%s' already exists"), path);
+=20
+ 	/* is 'refname' a branch or commit? */
+-	if (opts->force_new_branch) /* definitely a branch */
+-		;
+-	else if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) =
+&&
++	if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) &&
+ 		 ref_exists(symref.buf)) { /* it's a branch */
+ 		if (!opts->force)
+ 			die_if_checked_out(symref.buf);
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 0a804da..a4d36c0 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -193,6 +193,14 @@ test_expect_success '"add" -B/--detach mutually ex=
+clusive' '
+ 	test_must_fail git worktree add -B poodle --detach bamboo master
+ '
+=20
++test_expect_success 'add -B' '
++	git worktree add -B poodle bamboo2 master^ &&
++	git -C bamboo2 symbolic-ref HEAD >actual &&
++	echo refs/heads/poodle >expected &&
++	test_cmp expected actual &&
++	test_cmp_rev master^ poodle
++'
++
+ test_expect_success 'local clone from linked checkout' '
+ 	git clone --local here here-clone &&
+ 	( cd here-clone && git fsck )
+--=20
+2.7.0.377.g4cd97dd
