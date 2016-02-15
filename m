@@ -1,101 +1,115 @@
-From: Tim Ringenbach <tim.ringenbach@gmail.com>
-Subject: Re: git svn dcommit doesn't support --username option for file:/// urls
-Date: Mon, 15 Feb 2016 13:16:48 -0600
-Message-ID: <CAGZMbfdem6YzrEUw9A6ZWAbm6zXkNxqM3myAjHz4xFDS79VYwA@mail.gmail.com>
-References: <CAGZMbfc5Oi=EOYbCbZWfM1T65AZwCEbsso+QTkAe1sa4hRC61A@mail.gmail.com>
-	<20160215100636.GA5785@dcvr.yhbt.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] http: add option to try authentication without username
+Date: Mon, 15 Feb 2016 15:19:25 -0500
+Message-ID: <CAPig+cTr1eW1KLsZGpY98hUhJ2EHdPopz9C_gTztZRdNPBQTmQ@mail.gmail.com>
+References: <CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
+	<1455561886-42028-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 20:16:54 2016
+Cc: Git List <git@vger.kernel.org>,
+	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Feb 15 21:19:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVOdi-0007eM-4E
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 20:16:54 +0100
+	id 1aVPcJ-0001Xu-8T
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 21:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108AbcBOTQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 14:16:50 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:33614 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242AbcBOTQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 14:16:49 -0500
-Received: by mail-ob0-f173.google.com with SMTP id jq7so40887392obb.0
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 11:16:49 -0800 (PST)
+	id S1752350AbcBOUT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 15:19:27 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:34221 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752354AbcBOUT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 15:19:26 -0500
+Received: by mail-vk0-f52.google.com with SMTP id e185so116192106vkb.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 12:19:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=hKkBySfits2hpDyUbUdbb52bQU+SpJGSp193VrLX754=;
-        b=YPuMOtUYJ10BgpkrTVTozxwvMrF2VvbretzdgAfUYp6V70qOLjNeBEHeEqZZqOHN2b
-         Fk+dhHn5LTBJF0+hU7ILcSoJhNDW5HkjQwCqOO2hhEpEOEi/1YL5EZb33Ng0gYJX3CwQ
-         1WZnsPeyO7uJR8MxbgZIJnqWjIq67j5f8ElrVuqzBLDZi067gDSP5PQ/6Ybqd7SMdPOz
-         zGWFcHebx9Thp3qtC2sEBxFhzbjjZyiTOD7AMC5rbX86GCGCiI4n3if0hk39rXx7V8NF
-         pzoxtvB3mdfM13+fXQz6j88amxmR0V9uixpMpMTFurCTGPLnOgQZ41Nc2P+xYKoSl6nF
-         BDLw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ItAGC+44ywhf0g8YJexQU2Hxn4Ly7npLj2eE+WEKP6o=;
+        b=DLjHHSHIUxgJe/cIb0zLC8UYSw0R1iNHENOOl/WwSfv4D/tDQqXPGFo8pr6KdwiS0j
+         Lm1xnenfRb1XtoqVKydjtswIgeTd9ONFCqW47tAYvS2sxG3NEJQ2B7h26wgpBxf6UVln
+         rztQamfqtu+mTCnvxxPr8PBudSOSMkf741FiuX8A0K9q66c+F/sswgvKuWfw9byTZYdb
+         OgLDrvtsu8DamGK41KgKyOEJxauYTJ4J98BXkmLPJb2DypY9DZPVl3ELSG20XtgVLiae
+         fOutbAOWd/XuFBuxNC4usmAt9tkMtugG93fZVhf9arqrechvVFPsiZ0Y4RwNzsmo/ubi
+         RWSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=hKkBySfits2hpDyUbUdbb52bQU+SpJGSp193VrLX754=;
-        b=jO0m7mFqAOOya9w6ayryOf8Q4r1o+nS2Sv/zjVqPjcY5fBCCP8wl6uVqv6WpmTlpxP
-         7hwmiQ5ewHREKCF9m7dlUuowndPx8cZFsiW47l/9PbT1Gbbv2WoLL7lgLh/XEBXadJ0V
-         oJ0ZNnAUN7jxTllHhKw4xZqKKsJnau6qm8gL3JKeu7QwJgsbZ3r4kM5d0fmEvfnzBGWo
-         wqaPF5WdwcFR5dTruQ24DO1746feOOJu+vxLux5EYMVwa2WuFKrX6lXcegXZ8NFR8SqH
-         chBugJ8vpafg/c7hUZJU9xNoDZ3Jb5OuCk3rD/00Yg+XhZ/MT4MSiT5TeXV+FvdzezSd
-         GyQQ==
-X-Gm-Message-State: AG10YOT6PGFeu+avIN7P1C1hsrh5Q61TlfODmnSXaQxafewbMZ9fs2s7+6HJTy1Z0fiO2y0fnZk66AW40fnK6A==
-X-Received: by 10.182.250.169 with SMTP id zd9mr13449692obc.59.1455563809014;
- Mon, 15 Feb 2016 11:16:49 -0800 (PST)
-Received: by 10.202.49.193 with HTTP; Mon, 15 Feb 2016 11:16:48 -0800 (PST)
-In-Reply-To: <20160215100636.GA5785@dcvr.yhbt.net>
+        bh=ItAGC+44ywhf0g8YJexQU2Hxn4Ly7npLj2eE+WEKP6o=;
+        b=Nd9hd3C8diy54KMhexVQkYfoFh3F3ur7nInWTRQSMa+uzPQxkTXlQVg7vlkN0Aokn2
+         3VBZIks56YQU0Ue7dmj/5GZTpywLn5SvxzAbeSp8B4nezQI4Tf1mqj0eyBlEosMBc3Em
+         Rk8Mb+BpI8e3KdvffQ1E1mr5VP+ut0xqp7+1rlJm8W9ZF6Cs5x5tkndR1xfEjwm9hcB3
+         gTIfqjwseho02X46LEs7klPunmblC8OBt0OgBWsF6+3uwNpo8HbWrJZk5QDSWlmrBUTz
+         o0tLdJcpfth6wqgF6ruWjTxQ09znPVLmguSwiuz7Wxq72GsPYXPO7CL/uJ1c+7p6EwOD
+         ovug==
+X-Gm-Message-State: AG10YOTxhpumT6/ykmaw1C7JAnkpsp1bdWjU1GivuNPkFDgpB8Pz76nQ6FnUP+WleKWbQFz5MXhd6tAX2Ww+iQ==
+X-Received: by 10.31.41.14 with SMTP id p14mr15137433vkp.151.1455567565481;
+ Mon, 15 Feb 2016 12:19:25 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 12:19:25 -0800 (PST)
+In-Reply-To: <1455561886-42028-1-git-send-email-sandals@crustytoothpaste.net>
+X-Google-Sender-Auth: pmAIoRnQb-MMPOosqimX9ZpM9zk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286231>
 
-On Mon, Feb 15, 2016 at 4:06 AM, Eric Wong <normalperson@yhbt.net> wrote:
-[snip]
-> Totally untested, but does flipping the order of auth providers
-> help at all?
+On Mon, Feb 15, 2016 at 1:44 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Performing GSS-Negotiate authentication using Kerberos does not require
+> specifying a username or password, since that information is already
+> included in the ticket itself.  However, libcurl refuses to perform
+> authentication if it has not been provided with a username and password.
+> Add an option, http.emptyAuth, that provides libcurl with an empty
+> username and password to make it attempt authentication anyway.
 
-Thanks for looking into this. Unfortunately, that didn't seem to make
-a difference.
-I tried several times, and I tried both with and without
---interactive, but the commits
-always shared up as my unix user.
+I'm not familiar with this code, so let me know if my comments (below)
+are off the mark...
 
-I added a "print "test\n";" to make sure my modify copy was being
-used, and I did see
-that output, so I know I was running the right code.
+> ---
+> diff --git a/http.c b/http.c
+> +++ b/http.c
+> @@ -299,14 +300,22 @@ static int http_options(const char *var, const char *value, void *cb)
+>  static void init_curl_http_auth(CURL *result)
+>  {
+> -       if (!http_auth.username)
+> +       if (!http_auth.username) {
+> +               if (curl_empty_auth)
+> +                       curl_easy_setopt(result, CURLOPT_USERPWD, ":");
 
-For reference, here's what diff outputs on my side.
+Does this need to take LIBCURL_VERSION_NUM into account? Other code
+which uses CURLOPT_USERPWD only does so for certain versions of
+libcurl, otherwise CURLOPT_USERNAME and CURLOPT_PASSWORD is used.
 
---- git-2.7.1/perl/Git/SVN/Ra.pm 2016-02-05 17:31:08.000000000 -0600
-+++ local/share/perl/5.10.1/Git/SVN/Ra.pm 2016-02-15 13:06:27.000000000 -0600
-@@ -42,7 +42,9 @@ END {
+>                 return;
+> +       }
+>
+>         credential_fill(&http_auth);
+>
+> @@ -827,7 +836,7 @@ struct active_request_slot *get_active_slot(void)
+>  #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+>         curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+>  #endif
+> -       if (http_auth.password)
+> +       if (http_auth.password || curl_empty_auth)
+>                 init_curl_http_auth(slot->curl);
+>
+>         return slot;
 
- sub _auth_providers () {
-  require SVN::Client;
-+ print "test\n";
-  my @rv = (
-+  SVN::Client::get_username_provider(),
-   SVN::Client::get_simple_provider(),
-   SVN::Client::get_ssl_server_trust_file_provider(),
-   SVN::Client::get_simple_prompt_provider(
-@@ -53,7 +55,6 @@ sub _auth_providers () {
-   SVN::Client::get_ssl_client_cert_pw_file_provider(),
-   SVN::Client::get_ssl_client_cert_pw_prompt_provider(
-     \&Git::SVN::Prompt::ssl_client_cert_pw, 2),
--  SVN::Client::get_username_provider(),
-   SVN::Client::get_ssl_server_trust_prompt_provider(
-     \&Git::SVN::Prompt::ssl_server_trust),
-   SVN::Client::get_username_prompt_provider(
+Rather than sprinkling curl_empty_auth special cases here and there,
+would it be possible to simply set http_auth.username and
+http_auth.password to empty strings early on if they are not already
+set and curl_empty_auth is true, and then let the:
 
+    strbuf_addf(&up, "%s:%s",
+        http_auth.username, http_auth.password);
 
-Thanks,
-Tim
+in init_curl_http_auth() handle them in the normal fashion, with the
+end result being the same ":" set explicitly by this patch?
