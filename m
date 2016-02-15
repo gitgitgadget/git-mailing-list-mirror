@@ -1,71 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the origin of a config value
-Date: Mon, 15 Feb 2016 13:41:55 -0800
-Message-ID: <xmqqio1pps64.fsf@gitster.mtv.corp.google.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
-	<1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
-	<56C244D7.1030503@ramsayjones.plus.com>
+From: =?UTF-8?Q?Stefan_Fr=c3=bchwirth?= <stefan.fruehwirth@uni-graz.at>
+Subject: malloc memory corruption on merge-tree with leading newline
+Date: Mon, 15 Feb 2016 22:39:39 +0100
+Message-ID: <56C2459B.5060805@uni-graz.at>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: larsxschneider@gmail.com, git@vger.kernel.org, peff@peff.net,
-	sschuberth@gmail.com, sunshine@sunshineco.com, hvoigt@hvoigt.net,
-	sbeller@google.com, Johannes.Schindelin@gmx.de
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:42:08 2016
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:45:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVQu9-0001Pr-T5
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:42:02 +0100
+	id 1aVQxI-0003vh-Ae
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:45:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbcBOVl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 16:41:58 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65481 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752444AbcBOVl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 16:41:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4DB6645F9E;
-	Mon, 15 Feb 2016 16:41:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=670WGW/cTW/2gmHmqGG2Wq2J9MQ=; b=ksaZGg
-	QYMJj90TyJtKftTL2tAU4MgxAxbN3uwGpYknmhDSY0UnNTL2tgQPLJ/ZQ9WIEOV4
-	G4MQFa2/r5Q4/Td1WEl8/eMd6uQ71PZKTuxyNQx6Qkxx3i/Kdlmb/ng3nI1DkT/C
-	txCaIFbScmoUkwz6MuBjWV6fCcEj4QGYsYvX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M0ZKnF1lEYVE70NbW8kDNIpSk/36fxLu
-	QmJdCExlNIAM+IeraB+yL70apjzpUvGGVI5fwcTukiqSu0ie2s7ZEdmRpyaqdmKG
-	cdm6SLhih2s8mPSW0r8LAhkY+YSBchurDMRCPf4LZOILjWFpB/TpgiMc1DLpCe9d
-	k/EdJEe8Y2A=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 44B0945F9D;
-	Mon, 15 Feb 2016 16:41:57 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A60D845F9C;
-	Mon, 15 Feb 2016 16:41:56 -0500 (EST)
-In-Reply-To: <56C244D7.1030503@ramsayjones.plus.com> (Ramsay Jones's message
-	of "Mon, 15 Feb 2016 21:36:23 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EF92419A-D42C-11E5-B69C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752444AbcBOVpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 16:45:11 -0500
+Received: from EX07HTCA01.UNI-GRAZ.AT ([143.50.13.79]:7180 "EHLO
+	ex07htca01.uni-graz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120AbcBOVpK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 16:45:10 -0500
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Feb 2016 16:45:09 EST
+Received: from EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) by
+ ex07htca01.pers.ad.uni-graz.at (2002:8f32:d4f::8f32:d4f) with Microsoft SMTP
+ Server (TLS) id 8.3.406.0; Mon, 15 Feb 2016 22:39:39 +0100
+Received: from [143.50.232.174] (143.50.232.174) by
+ EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) with Microsoft SMTP
+ Server (TLS) id 15.0.1076.9; Mon, 15 Feb 2016 22:39:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+X-ClientProxiedBy: EX13MS03.pers.ad.uni-graz.at (2002:8f32:dc1::8f32:dc1) To
+ EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286252>
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Hi,
 
->> +--show-origin::
->> +	Augment the output of all queried config options with the
->> +	origin type (file, stdin, blob, cmdline) and the actual origin
->
-> file, blob, cmdline (hmm, maybe cmd-line? ;-) )
+in one specific circumstance, git-merge-tree exits with a segfault 
+caused by "*** Error in `git': malloc(): memory corruption (fast)":
 
-If we are going to spell it out, "command-line" would be the way to
-go.  "cmdline" is probably OK.
+There has to be at least one commit first (as far as I can tell it 
+doesn't matter what content). Then create a tree containing a file with 
+a leading newline character (\n) followed by some random string, and 
+another tree with a file containing a string without leading newline. 
+Now merge trees: Segmentation fault.
+
+There is a test case[1] kindly provided by chrisrossi, which he crafted 
+after I discovered the problem[2] in the context of Pylons/acidfs.
+
+Best,
+Stefan
+
+[1] https://gist.github.com/chrisrossi/f09c8bed70b364f9f12e
+[2] https://github.com/Pylons/acidfs/issues/3
+
+For in-line reference, here's the test case:
+
+git init bug
+cd bug
+echo b > a
+git add a
+git commit -m "first commit"
+echo > b
+echo -n a >> b
+git add b
+git commit -m "second commit, first branch"
+git checkout HEAD~1
+git checkout -b other
+echo -n a > b
+git add b
+git commit -m "second commit, second branch"
+git merge-tree HEAD~1 master other
+cd ..
+rm -rf bug
