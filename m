@@ -1,97 +1,124 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 12/18] test-path-utils: fix normalize_path_copy output buffer
- size
-Date: Mon, 15 Feb 2016 16:55:33 -0500
-Message-ID: <20160215215533.GL10287@sigill.intra.peff.net>
+Subject: [PATCH 13/18] sequencer: simplify memory allocation of get_message
+Date: Mon, 15 Feb 2016 16:56:19 -0500
+Message-ID: <20160215215619.GM10287@sigill.intra.peff.net>
 References: <20160215214516.GA4015@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 15 22:55:41 2016
+X-From: git-owner@vger.kernel.org Mon Feb 15 22:56:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVR7M-0003XB-9p
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:55:40 +0100
+	id 1aVR86-00044n-6B
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 22:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811AbcBOVzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 16:55:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42506 "HELO cloud.peff.net"
+	id S1752819AbcBOV4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 16:56:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42509 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752608AbcBOVzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 16:55:36 -0500
-Received: (qmail 2710 invoked by uid 102); 15 Feb 2016 21:55:36 -0000
+	id S1752608AbcBOV4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 16:56:22 -0500
+Received: (qmail 2717 invoked by uid 102); 15 Feb 2016 21:56:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:55:36 -0500
-Received: (qmail 12567 invoked by uid 107); 15 Feb 2016 21:55:40 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:56:22 -0500
+Received: (qmail 12584 invoked by uid 107); 15 Feb 2016 21:56:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:55:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 16:55:33 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 16:56:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 16:56:19 -0500
 Content-Disposition: inline
 In-Reply-To: <20160215214516.GA4015@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286269>
 
-The normalize_path_copy function needs an output buffer that
-is at least as long as its input (it may shrink the path,
-but never expand it). However, this test program feeds it
-static PATH_MAX-sized buffers, which have no relation to the
-input size.
+For a commit with has "1234abcd" and subject "foo", this
+function produces a struct with three strings:
 
-In the normalize_ceiling_entry case, we do at least check
-the size against PATH_MAX and die(), but that case is even
-more convoluted. We normalize into a fixed-size buffer, free
-the original, and then replace it with a strdup'd copy of
-the result. But normalize_path_copy explicitly allows
-normalizing in-place, so we can simply do that.
+ 1. "foo"
+
+ 2. "1234abcd... foo"
+
+ 3. "parent of 1234abcd... foo"
+
+It takes advantage of the fact that these strings are
+subsets of each other, and allocates only _one_ string, with
+pointers into the various parts. Unfortunately, this makes
+the string allocation complicated and hard to follow.
+
+Since we keep only one of these in memory at a time, we can
+afford to simply allocate three strings. This lets us build
+on tools like xstrfmt and avoid manual computation.
+
+While we're here, we can also drop the ad-hoc
+reimplementation of get_git_commit_encoding(), and simply
+call that function.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- test-path-utils.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ sequencer.c | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/test-path-utils.c b/test-path-utils.c
-index c3adcd8..0c15f18 100644
---- a/test-path-utils.c
-+++ b/test-path-utils.c
-@@ -8,21 +8,14 @@
-  */
- static int normalize_ceiling_entry(struct string_list_item *item, void *unused)
- {
--	const char *ceil = item->string;
--	int len = strlen(ceil);
--	char buf[PATH_MAX+1];
-+	char *ceil = item->string;
+diff --git a/sequencer.c b/sequencer.c
+index 8048786..e66f2fe 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -124,42 +124,33 @@ static const char *action_name(const struct replay_opts *opts)
  
--	if (len == 0)
-+	if (!*ceil)
- 		die("Empty path is not supported");
--	if (len > PATH_MAX)
--		die("Path \"%s\" is too long", ceil);
- 	if (!is_absolute_path(ceil))
- 		die("Path \"%s\" is not absolute", ceil);
--	if (normalize_path_copy(buf, ceil) < 0)
-+	if (normalize_path_copy(ceil, ceil) < 0)
- 		die("Path \"%s\" could not be normalized", ceil);
--	len = strlen(buf);
--	free(item->string);
--	item->string = xstrdup(buf);
- 	return 1;
+ struct commit_message {
+ 	char *parent_label;
+-	const char *label;
+-	const char *subject;
++	char *label;
++	char *subject;
+ 	const char *message;
+ };
+ 
+ static int get_message(struct commit *commit, struct commit_message *out)
+ {
+ 	const char *abbrev, *subject;
+-	int abbrev_len, subject_len;
+-	char *q;
+-
+-	if (!git_commit_encoding)
+-		git_commit_encoding = "UTF-8";
++	int subject_len;
+ 
+-	out->message = logmsg_reencode(commit, NULL, git_commit_encoding);
++	out->message = logmsg_reencode(commit, NULL, get_commit_output_encoding());
+ 	abbrev = find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
+-	abbrev_len = strlen(abbrev);
+ 
+ 	subject_len = find_commit_subject(out->message, &subject);
+ 
+-	out->parent_label = xmalloc(strlen("parent of ") + abbrev_len +
+-			      strlen("... ") + subject_len + 1);
+-	q = out->parent_label;
+-	q = mempcpy(q, "parent of ", strlen("parent of "));
+-	out->label = q;
+-	q = mempcpy(q, abbrev, abbrev_len);
+-	q = mempcpy(q, "... ", strlen("... "));
+-	out->subject = q;
+-	q = mempcpy(q, subject, subject_len);
+-	*q = '\0';
++	out->subject = xmemdupz(subject, subject_len);
++	out->label = xstrfmt("%s... %s", abbrev, out->subject);
++	out->parent_label = xstrfmt("parent of %s", out->label);
++
+ 	return 0;
  }
  
-@@ -166,7 +159,7 @@ static struct test_data dirname_data[] = {
- int main(int argc, char **argv)
+ static void free_message(struct commit *commit, struct commit_message *msg)
  {
- 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
--		char *buf = xmalloc(PATH_MAX + 1);
-+		char *buf = xmallocz(strlen(argv[2]));
- 		int rv = normalize_path_copy(buf, argv[2]);
- 		if (rv)
- 			buf = "++failed++";
+ 	free(msg->parent_label);
++	free(msg->label);
++	free(msg->subject);
+ 	unuse_commit_buffer(commit, msg->message);
+ }
+ 
 -- 
 2.7.1.572.gf718037
