@@ -1,121 +1,118 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] http: add option to try authentication without username
-Date: Mon, 15 Feb 2016 20:36:59 +0000
-Message-ID: <20160215203659.GB57185@vauxhall.crustytoothpaste.net>
-References: <CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
- <1455561886-42028-1-git-send-email-sandals@crustytoothpaste.net>
- <CAPig+cTr1eW1KLsZGpY98hUhJ2EHdPopz9C_gTztZRdNPBQTmQ@mail.gmail.com>
- <20160215202937.GA57185@vauxhall.crustytoothpaste.net>
- <20160215203451.GA29705@sigill.intra.peff.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 1/4] remote: use skip_prefix
+Date: Mon, 15 Feb 2016 21:37:30 +0100
+Message-ID: <20160215203730.GC13775@hank>
+References: <1455558150-30267-1-git-send-email-t.gummerer@gmail.com>
+ <1455558150-30267-2-git-send-email-t.gummerer@gmail.com>
+ <20160215181837.GE26443@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4bRzO86E/ozDv8r1"
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 15 21:37:13 2016
+X-From: git-owner@vger.kernel.org Mon Feb 15 21:37:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVPtQ-000548-3h
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 21:37:12 +0100
+	id 1aVPtT-00057D-S7
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 21:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbcBOUhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 15:37:06 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:40128 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751555AbcBOUhE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Feb 2016 15:37:04 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5E1B2282CA;
-	Mon, 15 Feb 2016 20:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1455568621;
-	bh=3Cs5I4XwYKFd1aOaWcuq5OcZ+obJ1RvKrW9Onj5GFwc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W8/qvvdikdK2rfCxwCtVLUWfnPicjfHvmyEdnUuIBE8xceGe74IVtYLg2dyBlkPIe
-	 PgsOWxqINp1A7Yv2TAUih0ZEhmWX8GJLlLgm8YaLGaHDRi/BTUFUYYJvsZE9/+Nrl8
-	 dEV5yyjRC5v/BvSHJ2EhRzROuYZMHi62q5rmAgLwxOzo6fwIFfoftwTkUmfpsuavst
-	 mtqbnNdCLbjIPwG+MyUW0wkcfgtvdXTQ/p+mcdyhZ6GgXMIkrNpaRwK88csDRXj8vs
-	 5K4dGGl3NdOTIDjrochT0dMUbm3seN6KCkq22/jObd+5Vc37mU2B9SMaTUMu9WfVwh
-	 DVDSFWKppkW3AeTRXzZz7ksAwsUIm2l+fTesOAsFqgxXzk2y2YbzbxlvbUfZIz3Epv
-	 mAAJ8AusQ5q+IEK8TG1WkCHzw3H8abVNGPujbsx2ik8cgwjq8A5B/wiDVp6IAKREYn
-	 RW2/JMI8yno3iLG/59hUbEsAtAtT+Bsnn3zG+vEdCEoiR8mNowK
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	id S1751819AbcBOUhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 15:37:10 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33834 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbcBOUhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 15:37:07 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b205so10108205wmb.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 12:37:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/Bf2qjqeuJvfv0U5K2bYsAPmkfB3f5wdHQ5bMuyxR7w=;
+        b=sYpbNAyNyYOOM8WIG0dmrhawHFP6nM+KVbS7dXbA5TfwMM8fMj7jCD6KUfwpMhgpBw
+         6AkS2bfJbusl/zC9E362xk+6OdcnHzQeNKZ8STKYkF9xUgIyrJHhiu2ynkoWqsta0Ema
+         WsgxElrI1bFrPp/h6tkn2KscK7dACtLdKxm1CEdveiCbCoa9DY62zaP7MZrXQ1HRAwC+
+         Ct2VWDRT0NnuicWs5zfaONOA9B6WdhnVg+2sxQZYhK1ko30bNbTd/y6z7xEjXm7jkeBy
+         C8AF7oVcsmcKYcIexPKDy5Pbg0UMl3yE94QC8r9FFKGKGvzwMfqk6vsF8ANtbc4s9R6m
+         81xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=/Bf2qjqeuJvfv0U5K2bYsAPmkfB3f5wdHQ5bMuyxR7w=;
+        b=ARSheFIL5CwTrol2vG0uEb+x2M8+URY5AFpoWVmec4h/CrozXnyjzf4hXjUfAipDHC
+         aS+xo8kAoA/s9guEoY5JKkPa2OrRtIe8L8yh3E/dgI9rdfnNUeplX8WqX11kpa+aaCfC
+         GWKN5gntuk9zV6v4IpUV91Tvku1ztfKdKaQjpqufS35liuv0ccyV8pO//70FBRI9mxak
+         5PrvPYGFIMnrZMx0TEbPrY8LYl/dDMj0Fb0EOm8tRZ0rTeuvq0XNroTfFeRjUUKByRbt
+         fECH5/lVBttsleWa1eCavVIcgJCBshxJASFaMgWi8r+KSMLoMdjWueLQlcDT25ubUx6H
+         gmVw==
+X-Gm-Message-State: AG10YORqeFHIgH524B8jWgPAviBrCJY+R0gXo3NLrKGg+rKlX5wlikSlyvW3XqIhcSj2Fg==
+X-Received: by 10.194.91.175 with SMTP id cf15mr18323769wjb.7.1455568626187;
+        Mon, 15 Feb 2016 12:37:06 -0800 (PST)
+Received: from localhost (host186-106-dynamic.41-79-r.retail.telecomitalia.it. [79.41.106.186])
+        by smtp.gmail.com with ESMTPSA id os7sm27059714wjc.18.2016.02.15.12.37.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Feb 2016 12:37:04 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20160215203451.GA29705@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.3.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+In-Reply-To: <20160215181837.GE26443@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286236>
 
+On 02/15, Jeff King wrote:
+> On Mon, Feb 15, 2016 at 06:42:27PM +0100, Thomas Gummerer wrote:
+>
+> > 95b567c7 ("use skip_prefix to avoid repeating strings") transformed
+> > calls using starts_with() and then skipping the length of the prefix to
+> > skip_prefix() calls.  In remote.c there are a few calls like:
+> >
+> >   if (starts_with(foo, "bar"))
+> >       foo += 3
+> >
+> > These calls weren't touched by the commit mentioned above, but can
+> > benefit from the same treatment to avoid magic numbers.
+>
+> This is definitely an improvement, but I think we can actually go a step
+> further here, and use parse_config_key. Like:
 
---4bRzO86E/ozDv8r1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks, I had no idea about this function :) It makes the diff a lot
+noisier, but I do think the end result is better.
 
-On Mon, Feb 15, 2016 at 03:34:51PM -0500, Jeff King wrote:
-> On Mon, Feb 15, 2016 at 08:29:37PM +0000, brian m. carlson wrote:
-> > That would work.  I was concerned about the credential_fill call
-> > actually prompting the user, but it appears that it doesn't do that if
-> > the password already exists.  I don't know if we want to rely on that
-> > functionality, though.
->=20
-> Yeah, credential_fill() will treat that as a noop, as it is no different
-> than getting "https://user:pass@example.com" in the URL in the first
-> place. But it will _also_ send the result to credential_approve() and
-> credential_reject(), which you probably don't want (because you do not
-> want to store these useless dummy credentials in your keystore).
+> diff --git a/remote.c b/remote.c
+> index 21e4ec3..8d2c3ca 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -318,15 +318,14 @@ static void read_branches_file(struct remote *remote)
+>  static int handle_config(const char *key, const char *value, void *cb)
+>  {
+>  	const char *name;
+> +	int namelen;
+>  	const char *subkey;
+>  	struct remote *remote;
+>  	struct branch *branch;
+> -	if (starts_with(key, "branch.")) {
+> -		name = key + 7;
+> -		subkey = strrchr(name, '.');
+> -		if (!subkey)
+> +	if (starts_with(key, "branch", &name, &namelen, &subkey)) {
+> +		if (!name)
+>  			return 0;
+> -		branch = make_branch(name, subkey - name);
+> +		branch = make_branch(name, namelen);
+>  		if (!strcmp(subkey, ".remote")) {
+>  			return git_config_string(&branch->remote_name, key, value);
+>  		} else if (!strcmp(subkey, ".pushremote")) {
+>
+> and so on. The difference in lines of code isn't that great, but I think
+> it makes the resulting code more obvious to read.
+>
+> -Peff
 
-Correct.
-
-> So I think this hack should remain purely at the curl level, and never
-> touch the credential struct at all.
->=20
-> Which is a shame, because I think Eric's suggestion is otherwise much
-> more readable. :)
-
-Yes, I agree.  That would have been a much nicer and smaller change.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---4bRzO86E/ozDv8r1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJWwjbrAAoJEL9TXYEfUvaLTjsP/21cyrpN0cFldCwzq8gtEZSE
-J0aKkiM7r65ZFHCmCxMLR0r7MQhpqI7dG3e98bjPYDkwn9T5noG6kqltMrFoUtTT
-La73NNTiOdWvrHUGZt3dzLaoiaxGW9+03O7bZz/BRJIG8KpwoRvGOdsQRBTS8zh0
-9QProa83SXIczf9tGW0fx2cwSuejrj8v5zV20+3uA93oqjsaSlNBUeATolfGPt8d
-O112hVdp9Vve7R2Rnh+gQuwh3+OJf3W0UpMuPCm40WQQspYUFhtw6Ke1nVP37+hw
-yKfCh3Vfj0NX6o07OcjzMMfA4oohx5UOI5RC5SvkcwXXQSBAdO9uPnylyARTKZEp
-COeeGNRKkxQ1KM8aTJbVMnZcXfCgpzts+ElXhIIiYYiL4E2j19rL41Xi7Twt0kvF
-USAPEoPp4qSIzCUlWOsltnQUxRRpMbnQfJ36yJIYIvcOxjjCpjVfpjRFZwa4YY9X
-Y/EpZvForvTuTZ5bmijMaGUAJ2ukXSXHSuOq/5XYT7GCgBPfdkve12Sto+DVnx/V
-fFuQKFOd9OSmDjfAkRgYvoMHTgvDoC9QuX+ewQTA8TeaGvo53ki5x0NiHuVltY11
-a2QrUGpKC/ZZgZCVqEvveSnRSwxlsrU20Wn5ZIk2WWylklI1eZoGd7da4kfCq1qe
-u30eVSIBbBjwijlDSiBM
-=yDeW
------END PGP SIGNATURE-----
-
---4bRzO86E/ozDv8r1--
+--
+Thomas
