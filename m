@@ -1,102 +1,86 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Custom merge driver with no rename detection
-Date: Mon, 15 Feb 2016 09:06:49 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602150858340.2964@virtualbox>
-References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
+Date: Mon, 15 Feb 2016 09:06:53 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602150854520.2964@virtualbox>
+References: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com> <xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-278220595-1455523610=:2964"
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 15 09:06:56 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-552935812-1455523038=:2964"
+Cc: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 15 09:07:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVEBM-0003Lr-Ct
-	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:06:56 +0100
+	id 1aVEBX-0003Sb-MI
+	for gcvg-git-2@plane.gmane.org; Mon, 15 Feb 2016 09:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbcBOIGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 03:06:53 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55683 "EHLO mout.gmx.net"
+	id S1751665AbcBOIHC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 03:07:02 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50100 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751605AbcBOIGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 03:06:52 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LzblK-1ZsA5g19SE-014mtA; Mon, 15 Feb 2016 09:06:50
+	id S1751440AbcBOIHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 03:07:00 -0500
+Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MZ8fw-1aH0BG2Jjg-00KyDP; Mon, 15 Feb 2016 09:06:54
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <CALMa68ovz=VZYkCcUDvEn1d7=xJDx__71caqsPXUFASZ1phfdw@mail.gmail.com>
+In-Reply-To: <xmqqpovyr22u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:tQMFnB5sV3JizEw1FMYSOjkvDKTIhqC8N6KRnQiuUspCzyeXq0v
- qycD6VHcJrxe/DKFNibV+VBUztueq1dV1oAOj37RA7DvpShWgG3/kgqM0Rbku97mZmmuQ4U
- 37xhBOn0UOg5kngeb8KpMp/IMo17cqrkiQONkFWOlRg17WYUjWOKdw0l5gwsVJJi/7PhFsI
- 9rvAo7q0GFs33sN/1ZKNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EMVfPFS/i4U=:yiVbw3NKWDGfcFyaS1MqEp
- djZXYMS4p1R25q1XKBokAgruWM9YwPkEP71hf8tpSOG9DJuQZTvtLA09MvjH/ClfELntZHJO7
- 88cU1Hgh48TQOTlGud087uF4C6p/5I+RSNBKjwdbCvEdduM6V9xSG1mcHl0gTZY6JYmqLG8Al
- VDz0ZCVNYCrZfeU0ZOPnaoizB7QSi+i44UkCQGRGA2KZDo/3s7AoqbD2FRDAsdFNbZKO2rq6q
- BJntkQLxsgQ8/n+G0N/8I8DPaWAg+Y1TCgn8HJANMftfKDdUKMwiFc6tNCaSPj4/wjVSHAvKW
- QLdVytyfZ3LUWt2VjOqfq7m/zud3cbntPu2IsNu8y9Qx7RxYntLHCHYdFo1t1tBZG4lq83FF0
- Bm7TXILW1rX0Z07ZB3gk7OGvT72dTIychSf9ZqKE/hcoz36Iqbu5bwIHCKkeDmLnUV1QUYrZ6
- ckTP1ApimiHGWcP/AZ33SEmaJlZaNNDWPMYIvsYmmkzRsDDsi3xAqg3FtsOVLVxH1ffmFBzbd
- d5XdMKHVuzo71oAhnD6E14POziOaXiyULa47vw10sLr/9SocBz2G8D/s8q4nnZpen1nbPCB2y
- 3Ftn4evztTbCNTCy1QAo8RdP6w/ElIcuF84TBhYajNSQmlP3oA4p7ibIhCk7yLDn212ekoghi
- t2cgw/8YsnBu6gN46xmSJy6EKuwimD1Zfvx5qT2aoE20qLYtodVedZwlJ1dIEuZaO4hrVO6Pj
- es8e7MW1oeYyrIcGt1UpfIaW3C3sePLW2Y4qLSiahz2YZSA2BjWlYJG2f2a6KRV4dsOiO4Pa 
+Content-ID: <alpine.DEB.2.20.1602150906510.2964@virtualbox>
+X-Provags-ID: V03:K0:nR2JQc7bZ/fXRg7n31WEs45C2jP+KfHUq4xnsmrGtd6AzYvdmp3
+ wXu5On8Gj6E2MDpi1NfkAuZNOEVH1iIjH1h/3r0A17xXqz3ukrwzlXgH2dwgd1pfb2s6xXF
+ y3k48ttODqwqMp5P2EGtAcQUfG7C4TKerlDB9KxSktZ+9km2tHSEIRmv1jvETtttnDsAagJ
+ WWlKqqof9XPme9vCzPu/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6e22EUERxxI=:ThoeF3LWWXen9kfQCYKxhL
+ 8t/6eLSxF/K0CgrS318Qn+ZQFAO5ONC5ZAjGKJYnXxK1RGRR0mqUoJPZT/M9DZD1IDW5OarGy
+ 4SwIcYiKJ8aet68Ku+NjP92yvsvFOXfoACtTu+9Y4R3cGbNBJXfqPmx7qaVZIDWn/LboFUBR8
+ +/HSokKzoLAi5Piq12vP0TqubhcO47diCK5WHjJvQj7ikfTdNGrwr4aI8Pnpn9ef6gmpPBbl1
+ cKeBVoyrmJft3ENSthCNqMpfnINN3GLFj1/Xb7bSxt0eODye/DghfDhYR3D5lTSclHrBY8Zwb
+ 2weO1xXOCWyRaFs4YaJL3MFlcLFh2x7KdADj8pB/4suBjEAW2+cDbfwvtHAjUOWrrmnzVwTpb
+ b+jjL/3bobgEvRZQCKLpCvpRBS8XX9TrMMq++Z05Yplmle4lj/eiOJnAH1zMT1R3hXAc4H1zY
+ TKQeEglaaFugaXX8CWgJVmQhpGX82R43KLZHKF857RTsa56HOu7V7TzfsctaTZZOvjW84ZuLJ
+ x9NOybp7DYukwfjOR4bmXLs0/04YXWjLs6eJaqkcWFtMgpFbncKTUV4XIcpHnlDC3cQhYxihM
+ 5Tt5+MT9y2rVkyqxVYuMcXvW5voLOhEJ+qryv/jmYJa3L4AyTEvf0IGp2PptrZFy/wu2rw86O
+ fsp7RZfzb4awZ46RiZN6R0V78jZ+NYcmE22udcLRr5+2e00J18LSWRwVMD/1CzbpCq89DHNHd
+ 9duFRTlrmjgCTUCufs8jFeNN5N56cvn67zheRnLOT5Q82jkNax6C7BHruGJM4wWWrzkNg61l 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286181>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-278220595-1455523610=:2964
-Content-Type: text/plain; charset=UTF-8
+--8323329-552935812-1455523038=:2964
+Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.20.1602150906511.2964@virtualbox>
 
-Hi Felipe,
+Hi Junio,
 
-On Sun, 14 Feb 2016, Felipe Gon=C3=A7alves Assis wrote:
+On Sun, 14 Feb 2016, Junio C Hamano wrote:
 
-> Attached is a quick and dirty patch that emulates the effect by
-> allowing greater than 100% rename thresholds to mean "no-renames".
+> Felipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
+>=20
+> > The usual workaround is using the resolve strategy, but apparently it
+> > ignores the custom merge driver.
+>=20
+> Hmph.
+>=20
+> Indeed, git-merge-file seems to call xdl_merge() directly, bypassing
+> the ll_merge(), which is understandable as the former predates the
+> latter.  That needs to be fixed, I think.
 
-It is really hard to comment on attached patches.
+I think this is by design. (Because I designed it.)
 
-First comment: the commit message is awfully empty, and lacks a sign-off.
-
->         /* user says num divided by scale and we say internally that
->          * is MAX_SCORE * num / scale.
->          */
-> -       return (int)((num >=3D scale) ? MAX_SCORE : (MAX_SCORE * num / sc=
-ale));
-> +       return (int)(MAX_SCORE * num / scale);
-
-Uh oh. I suspect this opens the door pretty wide for integer overflows. I
-could imagine that something like
-
-=09return (int)(num > scale ? MAX_SCORE + 1 : MAX_SCORE * num / scale);
-
-would work better, but it still would need some careful consideration.
-
->  static int diff_scoreopt_parse(const char *opt)
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index af1fe08..7cb5a3b 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -497,7 +497,7 @@ void diffcore_rename(struct diff_options *options)
->                         register_rename_src(p);
->                 }
->         }
-> -       if (rename_dst_nr =3D=3D 0 || rename_src_nr =3D=3D 0)
-> +       if (rename_dst_nr =3D=3D 0 || rename_src_nr =3D=3D 0 || minimum_s=
-core > MAX_SCORE)
-
-This line is too long now.
+The original idea of git-merge-file was to serve as a drop-in replacement
+for GNU/BSD merge when you want to avoid to be subject to the vagaries of
+the GNU vs BSD implementations.
 
 Ciao,
-Johannes
---8323329-278220595-1455523610=:2964--
+Dscho
+--8323329-552935812-1455523038=:2964--
