@@ -1,103 +1,89 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
-Date: Tue, 16 Feb 2016 17:49:19 -0500
-Message-ID: <CAPig+cS+i5QfpUbs8T+CqcDkC4ybaTygE9bguiqQMNgV4JhDOQ@mail.gmail.com>
-References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
-	<1455649215-23260-3-git-send-email-Karthik.188@gmail.com>
-	<20160216192231.GA16567@sigill.intra.peff.net>
-	<CAPig+cTiwHs+dD+jqAp8SNkwjQ2OzDsC8yopRgF7gctrGi5uUw@mail.gmail.com>
-	<20160216204954.GC27484@sigill.intra.peff.net>
-	<CAPig+cQDs35Uirm5cG552tR8iCFOstNJoOzLCZiXCgnq+g7MRQ@mail.gmail.com>
-	<20160216223451.GB9014@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 23:49:28 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/3] fix "v"iew subcommand in "git am -i"
+Date: Tue, 16 Feb 2016 15:06:54 -0800
+Message-ID: <1455664017-27588-1-git-send-email-gitster@pobox.com>
+Cc: Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 17 00:07:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVoQu-0007vF-DS
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 23:49:24 +0100
+	id 1aVoi4-00050g-8x
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 00:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756281AbcBPWtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 17:49:21 -0500
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:35459 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929AbcBPWtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 17:49:20 -0500
-Received: by mail-vk0-f50.google.com with SMTP id e6so147146859vkh.2
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 14:49:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=SqTP00s/AxA8wnMmtw5Oifdo0R+ltiJTc0dYWWyP3x0=;
-        b=ef4GFmadUznB3vqb4hvijFUH1hHxvn79TMqnQfSqteoU0I/eyHl0ab8hVIkrBlMHTQ
-         xEwbgpoLmZPm0N3ePBBUMhQDjzUQa8YC4u6ofvSNqYbAaEjivJ1kGGVGV0OdMnlQbEWk
-         QRTiNLVm3ln5mEW9RzqRsG9uZmUkXozLjzv52Q9jHKQK3bFUx25GEkFbSNGA45jxUiR+
-         KeXa/UC36veMEft/7V9yws5whucW8loHG7wz5jvRtamcLYN/lbGAIefPP7yrDHZOz2GG
-         eR5zmkCSHU/lNDp+SsiyAEuLd4VsEfXEnHBQL5tEtTZmlQofMWU7/0pgGGJpUfb1TB9+
-         gaEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SqTP00s/AxA8wnMmtw5Oifdo0R+ltiJTc0dYWWyP3x0=;
-        b=hpdzaLuteGYSbzlv1UHX917XeQeergDBxLBPFqQbuo5BS+I1QpAgkbHw3YUmHqNxxs
-         /9cCKzvNJjPMLVUEwsTsk85W0hMTLNdI+dOFC4f88ybIcJ4093cKbTL3mChGixfPo9UD
-         miXEmYFp1Uyaw8odqmLeHcZ3i0AU7vtJumXe9jGAgL8ZwWffEWoMqgAJmLMYcwhWrrNR
-         hAtBm2xM6WTjj3bMqxbjbmSaHLE649lPkVX/M0G7BCfQm5Ip4VoaUelrBkSSHG48AO79
-         db5V4GdYN6wvA1vc0kqpZUaj/H7sV9HpbBDcktUZeozxJKZR+G9+OV+2304zPqPvHKXF
-         KjKw==
-X-Gm-Message-State: AG10YOT4QlKc7ttf3my06icOd+WzxjItE1CS5CJpBU/VCgg8Y4icm8P3j+bAfOlqcdGBkbdSlz9FclfXbEJA6Q==
-X-Received: by 10.31.47.135 with SMTP id v129mr20233950vkv.115.1455662959301;
- Tue, 16 Feb 2016 14:49:19 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 16 Feb 2016 14:49:19 -0800 (PST)
-In-Reply-To: <20160216223451.GB9014@sigill.intra.peff.net>
-X-Google-Sender-Auth: HQZoFQbV9OM-1n-d2xyluqsH7l8
+	id S1756299AbcBPXHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 18:07:01 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54846 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756270AbcBPXHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 18:07:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B4A90453AD;
+	Tue, 16 Feb 2016 18:06:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; s=sasl; bh=EoL9KcBru/raQQc20XrfaF5I6PI
+	=; b=jjQXQJberZhMoM3VBnom5LG+sRgTGOyefXso/NEeb9K4PROuB+n2RGaoxNE
+	vMu8wcGoIvz5OSKz0nb/Da4zAIDa9VaE+Ej4nrqWupKfNsbJPhQpvQIadyuqNsJq
+	dQd5J1TuzaUtouguWunn76qR3qrq/tQwcJytWiTb+m1C+8Is=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; q=dns; s=sasl; b=yhD+0lZxvlK1xIaJM+FXL
+	8aZ+chw6M400bcn1oze3kpZ8QpQWEwetGbQlXDjPF3CR2T3ET7A5l/ATaQ0Z4PT7
+	oz0hLdghy8NzMrNEo2i9fsfYNueNgLT5V0Z8YCCPnJ97Ut6nlEsVQeLbaw6X4ydc
+	lTojnhdDv1CZqysHW1ycnM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD169453AC;
+	Tue, 16 Feb 2016 18:06:59 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 32699453A8;
+	Tue, 16 Feb 2016 18:06:59 -0500 (EST)
+X-Mailer: git-send-email 2.7.1-460-gd45d0a4
+X-Pobox-Relay-ID: FB488F1E-D501-11E5-A8A7-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286448>
 
-On Tue, Feb 16, 2016 at 5:34 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 16, 2016 at 04:09:53PM -0500, Eric Sunshine wrote:
->> My initial reaction was negative due to the heavy review burden this
->> series has demanded thus far, however, my mind was changing even as I
->> composed the above response. In retrospect, I think I'd be okay seeing
->> a v6, for the following reasons:
->>
->> - I already ended up reviewing the the suggested new changes pretty
->> closely as a side-effect of reading your proposal.
->>
->> - It would indeed be nice to avoid introducing
->> strbuf_split_str_omit_term() in the first place; thus one less thing
->> to worry about if someone ever takes on the task of retiring the
->> strbuf_split interface.
->>
->> - It should be only a minimal amount of work for Karthik, thus
->> turnaround time should be short.
->>
->> So, I think I'm fine with it, if Karthik is game.
->
-> I started to write up a commit message for my proposed change. But it
-> did make me think of a counter-argument. Right now we parse
-> "%(align:10,middle)" but do not allow "%(align: 10, middle)".
->
-> Should we? Or perhaps: might we? If the answer is yes, we are likely
-> better off with strbuf_split, because then we are only a strbuf_trim()
-> away from making that work.
+The 'v'iew subcommand of the interactive mode of "git am -i" was
+broken by the rewrite to C we did at around 2.6.0 timeframe at
+7ff26832 (builtin-am: implement -i/--interactive, 2015-08-04); we
+used to spawn the pager via the shell, accepting things like
 
-I also considered the issue of embedded whitespace very early on when
-reading your initial proposal, but didn't mention anything about it
-due to a vague recollection from one of the early reviews (or possibly
-a review of one of Karthik's other patch series) of someone (possibly
-Junio) saying or implying that embedded whitespace would not be
-supported. Unfortunately, I can't locate that message (assuming it
-even exists and wasn't a figment of my imagination).
+	PAGER='less -S'
+
+in the environment, but the rewrite forgot and tried to directly
+spawn a command whose name is the entire string.
+
+The bug is understandable, because there are things we need to do
+other than just run_command() to run the pager, such as running it
+with default LESS/LV settings and running it via the shell, but
+these pieces of necessary knowledge about what is the right thing to
+do are hoarded by the setup_pager() entry point, which is only good
+if we are feeding our own standard output to the pager.  A codepath
+that wants to run the pager but not on our output needs to do the
+right thing on its own.
+
+So the first patch in this series factors out a helper function to
+let the caller run the pager the right way.  They make the third
+patch to fix the breakage in "am" trivial.
+
+I debated myself where the call of git_pager() should go (it could
+be argued that it conceptually belongs to the new prepare_pager_args()
+helper), but I opted for a simpler change.
+
+Junio C Hamano (3):
+  pager: lose a separate argv[]
+  pager: factor out a helper to prepare a child process to run the pager
+  am -i: fix "v"iew
+
+ builtin/am.c |  5 +++--
+ cache.h      |  4 ++++
+ pager.c      | 26 ++++++++++++++++++--------
+ 3 files changed, 25 insertions(+), 10 deletions(-)
+
+-- 
+2.7.1-460-gd45d0a4
