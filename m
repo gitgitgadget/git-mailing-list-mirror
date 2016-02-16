@@ -1,104 +1,129 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 07/18] convert trivial cases to FLEX_ARRAY macros
-Date: Mon, 15 Feb 2016 21:17:05 -0500
-Message-ID: <CAPig+cSQG7gWStpRy76D_YzuCFPsXJLBzXCjQ-X_Q3sZthx3iw@mail.gmail.com>
-References: <20160215214516.GA4015@sigill.intra.peff.net>
-	<20160215215244.GG10287@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 03:17:16 2016
+From: "Stephen P. Smith" <ischis2@cox.net>
+Subject: [PATCH] wt-status.c: set commitable bit if there is a meaningful merge.
+Date: Mon, 15 Feb 2016 19:38:25 -0700
+Message-ID: <1455590305-30923-1-git-send-email-ischis2@cox.net>
+References: <72756249.nAoBccgOj7@thunderbird>
+Cc: Ovidiu Gheorghioiu <ovidiug@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Stephen P. Smith" <ischis2@cox.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 16 03:39:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVVCU-0000om-H3
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 03:17:15 +0100
+	id 1aVVXb-0004S6-H6
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 03:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753032AbcBPCRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 21:17:09 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:36309 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752676AbcBPCRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 21:17:06 -0500
-Received: by mail-vk0-f68.google.com with SMTP id k196so8953759vka.3
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 18:17:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=0QZCy7gN40lQiOG/9fBbLe6eCJ5MiS3q3BXMWqLdb9A=;
-        b=GA7Pi7IDmIx3GUTrg2uMt7Ho1Wf98VUNL4keBpTaPWrx3LACuTLBN18Y/JeEFhG61H
-         hyh4LfP8P+EMxY8VFU8GdfNhQ/QJCYJIuft8ss7Ju+m0e2GQdNkERN92d/CNDvDDdSv4
-         uHqq++pUHb20ndnXQ9d79D+wiW1TJCmZ35pYqwE7FF0LQnK/sP7BiGo3uwLb45kcuDqX
-         JBq/RKe3QFyEK0Cn3tvm95bnriYNKr8ftPrGYQeqFjEjQKcLhgc6dbuLY3qmDP0smvOE
-         UufZ6ccU+tj/dH5WzkDKZieovVgxmydIywYDGEWqLe4GC0PKozVSve0TC7Fxkiyknbnx
-         STCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=0QZCy7gN40lQiOG/9fBbLe6eCJ5MiS3q3BXMWqLdb9A=;
-        b=jQfXgeJQM4fQaHRFJpEEST8tSfawntAkYfS+o1OTGhelRFPR0HI/cI3PTuI5EW5cbR
-         8nRpILhnQ4gf0rK/iYan8u7d5ElVpwpY/OXhwsw47km96ft66WJ/4zU77juptaLhzhFX
-         yBrUWefSDfne1vdGdp0X12GVocsPNY1VtBGgoFtyDyRnsTzuqMbuMO98lnQuJ5bswfOi
-         nxWuKR4tZaDa2Dy0FUugQ6o1lpYiUFbrNVchcYaT2Y0eT375JC9FBItf9qI6Y4HXRw5q
-         8wDt27VvvKctLg65rUMmEk9v2GE0xOOostW68M2GB+GtmL5jMUL1s47dE/5dFDISx4x/
-         hVAA==
-X-Gm-Message-State: AG10YOSv7XxYyIV2tngh4WKI4e7JKt5uSWdM/EP2qP96sNb/uUciILrMFZz9vIUj+4sewrnS56XqlelcMMHiyQ==
-X-Received: by 10.31.146.2 with SMTP id u2mr13781850vkd.19.1455589025273; Mon,
- 15 Feb 2016 18:17:05 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 18:17:05 -0800 (PST)
-In-Reply-To: <20160215215244.GG10287@sigill.intra.peff.net>
-X-Google-Sender-Auth: hhmkQrX1BHrHdFTgnnIP6DEIr5s
+	id S1753099AbcBPCip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 21:38:45 -0500
+Received: from fed1rmfepo102.cox.net ([68.230.241.144]:40202 "EHLO
+	fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752909AbcBPCi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 21:38:29 -0500
+Received: from fed1rmimpo210 ([68.230.241.161]) by fed1rmfepo102.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20160216023828.FUWS7752.fed1rmfepo102.cox.net@fed1rmimpo210>
+          for <git@vger.kernel.org>; Mon, 15 Feb 2016 21:38:28 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo210 with cox
+	id JqeU1s0022tqoqC01qeUpd; Mon, 15 Feb 2016 21:38:28 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020202.56C28BA4.00A1,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=Hq2o7TvS c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=jFJIQSaiL_oA:10 a=kviXuzpPAAAA:8
+ a=3j0OYUYmodt_BhDjIi8A:9 a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.smith.home (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id 0E8C113F629;
+	Mon, 15 Feb 2016 19:38:57 -0700 (MST)
+X-Mailer: git-send-email 2.7.0.GIT
+In-Reply-To: <72756249.nAoBccgOj7@thunderbird>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286306>
 
-On Mon, Feb 15, 2016 at 4:52 PM, Jeff King <peff@peff.net> wrote:
-> Using FLEX_ARRAY macros reduces the amount of manual
-> computation size we have to do. It also ensures we don't
-> overflow size_t, and it makes sure we write the same number
-> of bytes that we allocated.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> @@ -412,8 +410,7 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
->                     !memcmp(ent->pattern, pattern, len))
->                         return ent;
->
-> -       ent = xcalloc(1, (sizeof(*ent) + len));
-> -       memcpy(ent->pattern, pattern, len);
-> +       FLEX_ALLOC_MEM(ent, pattern, pattern, len);
+The 'commit --dry-run' and commit return values differed if a
+conflicted merge had been resolved and the commit would be the same as
+the parent.
 
-Does the incoming 'len' already account for the NUL terminator, or was
-the original code underallocating?
+Update show_merge_in_progress to set the commitable bit if conflicts
+have been resolved and a merge is in progress.
 
-Answering my own question: Looking at reflog_expire_config() and
-parse_config_key(), I gather that 'len' already accounts for the NUL,
-thus the new code is overallocating (which should not be a problem).
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
 
->         ent->len = len;
->         *reflog_expire_cfg_tail = ent;
->         reflog_expire_cfg_tail = &(ent->next);
-> diff --git a/hashmap.c b/hashmap.c
-> @@ -256,10 +256,9 @@ const void *memintern(const void *data, size_t len)
->         e = hashmap_get(&map, &key, data);
->         if (!e) {
->                 /* not found: create it */
-> -               e = xmallocz(sizeof(struct pool_entry) + len);
-> +               FLEX_ALLOC_MEM(e, data, data, len);
+Notes:
+    In the original report when the dry run switch was passed and after
+    the merge commit was resolved head and index matched leading to a
+    returned value of 1. [1]
+    
+    If the dry run switch was not passed, the commit would succeed to
+    correctly record the resolution.
+    
+    The result was that a dry run would report that there would be a
+    failure, but there really isn't a failure if the commit is actually
+    attemped.
+    
+    [1] $gmane/276591
+    
+    It appeared that the conditional for 'Reject an attempt to record a
+    non-merge empty commit without * explicit --allow-empty.' could be
+    simplified after adding this patch.
+    
+    This change can't be propagated to the conditional because it allows
+    a commit that was previously disallowed.
 
-Ditto. I guess the new code is overallocating (which should be okay).
+ t/t7501-commit.sh | 20 ++++++++++++++++++++
+ wt-status.c       |  1 +
+ 2 files changed, 21 insertions(+)
 
->                 hashmap_entry_init(e, key.ent.hash);
->                 e->len = len;
-> -               memcpy(e->data, data, len);
->                 hashmap_add(&map, e);
->         }
->         return e->data;
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 63e0427..363abb1 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -587,4 +587,24 @@ test_expect_success '--only works on to-be-born branch' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '--dry-run with conflicts fixed from a merge' '
++	# setup two branches with conflicting information
++	# in the same file, resolve the conflict,
++	# call commit with --dry-run
++	echo "Initial contents, unimportant" >test-file &&
++	git add test-file &&
++	git commit -m "Initial commit" &&
++	echo "commit-1-state" >test-file &&
++	git commit -m "commit 1" -i test-file &&
++	git tag commit-1 &&
++	git checkout -b branch-2 HEAD^1 &&
++	echo "commit-2-state" >test-file &&
++	git commit -m "commit 2" -i test-file &&
++	! $(git merge --no-commit commit-1) &&
++	echo "commit-2-state" >test-file &&
++	git add test-file &&
++	git commit --dry-run &&
++	git commit -m "conflicts fixed from merge."
++'
++
+ test_done
+diff --git a/wt-status.c b/wt-status.c
+index ab4f80d..1374b48 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -950,6 +950,7 @@ static void show_merge_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (fix conflicts and run \"git commit\")"));
+ 	} else {
++		s-> commitable = 1;
+ 		status_printf_ln(s, color,
+ 			_("All conflicts fixed but you are still merging."));
+ 		if (s->hints)
+-- 
+2.7.0.GIT
