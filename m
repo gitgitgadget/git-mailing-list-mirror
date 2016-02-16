@@ -1,110 +1,108 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 12/20] log_ref_write_1(): inline function
-Date: Tue, 16 Feb 2016 14:22:25 +0100
-Message-ID: <5c317eec82b3da3cd4f4a2bba276afe6ef2603d9.1455626201.git.mhagger@alum.mit.edu>
+Subject: [PATCH 14/20] try_remove_empty_parents(): don't trash argument contents
+Date: Tue, 16 Feb 2016 14:22:27 +0100
+Message-ID: <c8897e9f6cb277af1a427b6d8c0dd90b561dd767.1455626201.git.mhagger@alum.mit.edu>
 References: <cover.1455626201.git.mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
 	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
 	David Turner <dturner@twopensource.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:30:42 2016
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:30:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfiD-0003Ac-LN
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:42 +0100
+	id 1aVfiK-0003Ac-Cu
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932370AbcBPNaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 08:30:30 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52078 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932351AbcBPNa2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:28 -0500
-X-AuditID: 12074412-b07ff70000006da4-51-56c322b9c896
+	id S932383AbcBPNak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 08:30:40 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:58880 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932179AbcBPNae (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:34 -0500
+X-AuditID: 1207440c-bf7ff70000002d40-12-56c322bd34b3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 58.4D.28068.9B223C65; Tue, 16 Feb 2016 08:23:06 -0500 (EST)
+	by  (Symantec Messaging Gateway) with SMTP id 1F.E5.11584.DB223C65; Tue, 16 Feb 2016 08:23:09 -0500 (EST)
 Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOY028717
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOa028717
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 16 Feb 2016 08:23:04 -0500
+	Tue, 16 Feb 2016 08:23:08 -0500
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqLtL6XCYwb8+Zov5m04wWnRd6Way
-	aOi9wmzxYe0hNoveyb2sFrdXzGe2+NHSw+zA7vH3/Qcmj6fbpzB7vDhf4fGsdw+jx8VLyh4L
-	nt9n9/i8SS6APYrbJimxpCw4Mz1P3y6BO2PmuV+MBV/5KrY/7mJqYGzj6WLk5JAQMJE4tX0b
-	YxcjF4eQwFZGiXObm9ggnBNMEuf7+hhBqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQs8YpTo2r8d
-	rEhYwFJi7ZqjbCA2i4CqxLfp28AaeAWiJLYd/swKsU5OouXHbjCbU8BC4mRLLwuILSRgLnHn
-	yx6mCYw8CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKEBJnQDsb1J+UO
-	MQpwMCrx8G5wPRQmxJpYVlyZe4hRkoNJSZSXh/twmBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
-	3n+vgMp5UxIrq1KL8mFS0hwsSuK8Pxer+wkJpCeWpGanphakFsFkZTg4lCR4OxSBhgoWpaan
-	VqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDoiC+GBgHICkeoL1pIO28xQWJuUBRiNZTjIpS
-	4rwuIAkBkERGaR7cWFjqeMUoDvSlMG83SBUPMO3Adb8CGswENDjnEshDxSWJCCmpBkavp4+d
-	lld8NteKFNHUPmAYv/LIC1mlP8Gen4QCLrClRi5ct94wsTj8X/D06TXlDfrvy59P6jyulRoz
-	t168bsURhdercp6zOcYlntkzOUujVLv9k3Ji/60rk24b2xRlK5ft+Rvxx6/+t8Sn 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqLtX6XCYwdSdchbzN51gtOi60s1k
+	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd0bjrD3MBfO5Kz6+tG9gvMfRxcjJISFgIvH+3Gfm
+	LkYuDiGBrYwSe27dY4JwTjBJ9N94wgxSxSagK7Gop5kJxBYRUJOY2HaIBaSIWeARo0TX/u2M
+	IAlhgQCJTa96gBIcHCwCqhL3VoLV8wpESVzY+ocVYpucRMuP3WA2p4CFxMmWXhYQW0jAXOLO
+	lz1MExh5FjAyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdTLzSzRS00p3cQICTCeHYzf1skc
+	YhTgYFTi4d3geihMiDWxrLgy9xCjJAeTkigvD/fhMCG+pPyUyozE4oz4otKc1OJDjBIczEoi
+	vP9eAZXzpiRWVqUW5cOkpDlYlMR5VZeo+wkJpCeWpGanphakFsFkZTg4lCR4PykCDRUsSk1P
+	rUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHRUB8MTAGQFI8QHvTQNp5iwsSc4GiEK2nGBWl
+	xHn3gyQEQBIZpXlwY2Fp4xWjONCXwrwBIFU8wJQD1/0KaDAT0OCcSyAPFZckIqSkGhi5Fyx+
+	tKXr30uZ5Um7EzaE+MtGfjr+Z77iL9PUktTEqRIiNRa7ZpV2LFV4Yl50hjVnm4vbXuNyv31z
+	/Z8q3D23KCM+4InNhVMh++ss7uUdXssXGmFTcKOkpXz2I11ORb+TB1+5z1npqX+W 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286378>
-
-Now log_ref_write_1() doesn't do anything, so inline it.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286379>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ refs/files-backend.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 120189c..9c13653 100644
+index 7e870fc..897ff4c 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2681,9 +2681,17 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 	return 0;
- }
+@@ -2200,13 +2200,15 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
  
--static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
--			   const unsigned char *new_sha1, const char *msg,
--			   int flags, struct strbuf *err)
-+static int log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			 const unsigned char *new_sha1, const char *msg,
-+			 int flags, struct strbuf *err)
-+{
-+	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
-+				   err);
-+}
-+
-+int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			const unsigned char *new_sha1, const char *msg,
-+			int flags, struct strbuf *err)
- {
- 	int logfd, result;
- 
-@@ -2714,21 +2722,6 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	return 0;
- }
- 
--static int log_ref_write(const char *refname, const unsigned char *old_sha1,
--			 const unsigned char *new_sha1, const char *msg,
--			 int flags, struct strbuf *err)
--{
--	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
--				   err);
--}
--
--int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
--			const unsigned char *new_sha1, const char *msg,
--			int flags, struct strbuf *err)
--{
--	return log_ref_write_1(refname, old_sha1, new_sha1, msg, flags, err);
--}
--
  /*
-  * Write sha1 into the open lockfile, then close the lockfile. On
-  * errors, rollback the lockfile, fill in *err and
+  * Remove empty parents, but spare refs/ and immediate subdirs.
+- * Note: munges *refname.
+  */
+-static void try_remove_empty_parents(char *refname)
++static void try_remove_empty_parents(const char *refname)
+ {
++	struct strbuf buf = STRBUF_INIT;
+ 	char *p, *q;
+ 	int i;
+-	p = refname;
++
++	strbuf_addstr(&buf, refname);
++	p = buf.buf;
+ 	for (i = 0; i < 2; i++) { /* refs/{heads,tags,...}/ */
+ 		while (*p && *p != '/')
+ 			p++;
+@@ -2214,8 +2216,7 @@ static void try_remove_empty_parents(char *refname)
+ 		while (*p == '/')
+ 			p++;
+ 	}
+-	for (q = p; *q; q++)
+-		;
++	q = buf.buf + buf.len;
+ 	while (1) {
+ 		while (q > p && *q != '/')
+ 			q--;
+@@ -2223,10 +2224,11 @@ static void try_remove_empty_parents(char *refname)
+ 			q--;
+ 		if (q == p)
+ 			break;
+-		*q = '\0';
+-		if (rmdir(git_path("%s", refname)))
++		strbuf_setlen(&buf, q - buf.buf);
++		if (rmdir(git_path("%s", buf.buf)))
+ 			break;
+ 	}
++	strbuf_release(&buf);
+ }
+ 
+ /* make sure nobody touched the ref, and unlink */
 -- 
 2.7.0
