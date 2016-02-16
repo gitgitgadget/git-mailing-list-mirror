@@ -1,156 +1,111 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 05/20] rename_tmp_log(): use raceproof_create_file()
-Date: Tue, 16 Feb 2016 14:22:18 +0100
-Message-ID: <a19192cb3219de9304af7d9b97be45a5e6f0895f.1455626201.git.mhagger@alum.mit.edu>
-References: <cover.1455626201.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:32:15 2016
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 12/26] worktree.c: use is_dot_or_dotdot()
+Date: Tue, 16 Feb 2016 20:29:13 +0700
+Message-ID: <1455629367-26193-13-git-send-email-pclouds@gmail.com>
+References: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
+ <1455629367-26193-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:32:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfjh-0004PL-FQ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:32:13 +0100
+	id 1aVfjp-0004ZA-9M
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932482AbcBPNcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 08:32:04 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:64171 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932366AbcBPNa3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:29 -0500
-X-AuditID: 1207440d-6a3ff7000000068f-19-56c322ae179d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id F5.B2.01679.EA223C65; Tue, 16 Feb 2016 08:22:54 -0500 (EST)
-Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOR028717
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 16 Feb 2016 08:22:52 -0500
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLtO6XCYwe5pPBbzN51gtOi60s1k
-	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
-	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8aSu93sBd1iFe2zHRsYlwl2MXJySAiYSEw7MIGx
-	i5GLQ0hgK6PE2TVPmSGcE0wSG/quM4JUsQnoSizqaWYCsUUE1CQmth1iASliFnjEKNG1fztY
-	kbCAi8TH1+uYQWwWAVWJPT0XweK8AlEST9/MYoVYJyfR8mM3mM0pYCFxsqWXBcQWEjCXuPNl
-	D9MERp4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9HIzS/RSU0o3MUJCjHcH4/91MocY
-	BTgYlXh4OTwOhQmxJpYVV+YeYpTkYFIS5eXhPhwmxJeUn1KZkVicEV9UmpNafIhRgoNZSYT3
-	3yugct6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBG+HItBQwaLU9NSK
-	tMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAMxBcDowAkxQO0Nw2knbe4IDEXKArReopRUUqc
-	1wUkIQCSyCjNgxsLSxyvGMWBvhTmPQ5SxQNMOnDdr4AGMwENzrkE8lBxSSJCSqqB0cxW67D1
-	scxXqt979zwPFThux7x2TkrRZOuUS0wStjaXtq/kXJqWPFHoU0nE2Zyi1QrLzwU+0bn1PvKZ
-	/PRDZ9db3Kvb8N5pj8WirhaFWxZuk9Lbk0tnpTNfmOUZt3Y2Q8701NBPfjpHV2hJ 
+	id S932487AbcBPNcS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 08:32:18 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35085 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932338AbcBPNa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 08:30:26 -0500
+Received: by mail-pa0-f43.google.com with SMTP id ho8so104955887pac.2
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 05:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=OiyKBnlkx9GEocPHfWARDHz6PyyQ4nndBskOg2rh14Y=;
+        b=BD+QCQwwrt18My9DL/oTNvRAGXzGwILwtECRjSTAVkFkVFZzqvHpAqurJ7e1xLoIge
+         TQ+A0A1TWRRSl9ZrVbAw/XwYfwCxOnkTOtHgYiC9vKO1A96rXxXMFwRNGhGHbWzvkp8Q
+         uL4SghwROvZ/J6mtmK1byphvUqrss54nqQ/0zHWOI0NlMniECEsKrrfnIn3oEJG1sVd3
+         42gNpRW4ENcnb0Omy2YniqkI60Xd67xyktl86aQUvh3maD9o8ZtiYHuxiBW6JcEPvu7T
+         t8bJYILcTBaBoosBLEyUEKWGAFVbFOaW6DizveTMUdtx8ZE+cx69ulQoAsrrcf0zzYef
+         CDjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=OiyKBnlkx9GEocPHfWARDHz6PyyQ4nndBskOg2rh14Y=;
+        b=MqEvAX2B1WBZkcRZDcAq/+O8NUPThBbGhC+as+G7ZoREDE1wdcGZ7l9VYVapffUi0c
+         TQ0GEYHVnszaan+/pB0kmxmeLZtTRaRnkSff6ZSRSGWhQpHrsZ5vg1KqlerZGY4ts3d9
+         d3kzVszVcsfqb7V1YxWiHM7Jcy1i1wX8X7N7N2ylagVRKtS1IM9Px8zQvHnstreOAlGq
+         Rr8weQv78FvI1USx5HvPOuFXw8orxGqA2cp8uQq3Lu6lY8I5ZnveMHVfp6wsTlaTG+Oo
+         Lmtor8CJPiUx1jkfnQgwJ8QY0JQIQXf1ZRMDQtsBYbl28Uw35YkTfaOWPTkSjnqT9lKR
+         MhUA==
+X-Gm-Message-State: AG10YOTohLDzoglyf1yd4DP75S0VFsK1gsXguB0bbC72FrAjCBHYXJrSphDSiJoWY7yGew==
+X-Received: by 10.67.6.72 with SMTP id cs8mr30342940pad.138.1455629426152;
+        Tue, 16 Feb 2016 05:30:26 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id z5sm46086756pas.29.2016.02.16.05.30.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Feb 2016 05:30:24 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 16 Feb 2016 20:30:48 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
+In-Reply-To: <1455629367-26193-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286400>
 
-Besides shortening the code, this saves an unnecessary call to
-safe_create_leading_directories_const() in almost all cases.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- refs/files-backend.c | 76 ++++++++++++++++++++++------------------------------
- 1 file changed, 32 insertions(+), 44 deletions(-)
+ builtin/worktree.c | 2 +-
+ worktree.c         | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a549942..e5f964c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2400,55 +2400,43 @@ out:
-  */
- #define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
- 
-+static int rename_tmp_log_callback(const char *path, void *cb)
-+{
-+	int *true_errno = cb;
-+
-+	if (rename(git_path(TMP_RENAMED_LOG), path)) {
-+		/*
-+		 * rename(a, b) when b is an existing directory ought
-+		 * to result in ISDIR, but Solaris 5.8 gives ENOTDIR.
-+		 * Sheesh. Record the true errno for error reporting,
-+		 * but report EISDIR to raceproof_create_file() so
-+		 * that it knows to retry.
-+		 */
-+		*true_errno = errno;
-+		if (errno==ENOTDIR)
-+			errno = EISDIR;
-+		return -1;
-+	} else {
-+		return 0;
-+	}
-+}
-+
- static int rename_tmp_log(const char *newrefname)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 68341e4..cfc848d 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -94,7 +94,7 @@ static void prune_worktrees(void)
+ 	if (!dir)
+ 		return;
+ 	while ((d =3D readdir(dir)) !=3D NULL) {
+-		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++		if (is_dot_or_dotdot(d->d_name))
+ 			continue;
+ 		strbuf_reset(&reason);
+ 		if (!prune_worktree(d->d_name, &reason))
+diff --git a/worktree.c b/worktree.c
+index 6181a66..ddb8cb7 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -2,6 +2,7 @@
+ #include "refs.h"
+ #include "strbuf.h"
+ #include "worktree.h"
++#include "dir.h"
+=20
+ void free_worktrees(struct worktree **worktrees)
  {
--	int attempts_remaining = 4;
--	struct strbuf path = STRBUF_INIT;
--	int ret = -1;
-+	char *path = git_pathdup("logs/%s", newrefname);
-+	int true_errno;
-+	int ret;
- 
-- retry:
--	strbuf_reset(&path);
--	strbuf_git_path(&path, "logs/%s", newrefname);
--	switch (safe_create_leading_directories_const(path.buf)) {
--	case SCLD_OK:
--		break; /* success */
--	case SCLD_VANISHED:
--		if (--attempts_remaining > 0)
--			goto retry;
--		/* fall through */
--	default:
--		error("unable to create directory for %s", newrefname);
--		goto out;
--	}
--
--	if (rename(git_path(TMP_RENAMED_LOG), path.buf)) {
--		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
--			/*
--			 * rename(a, b) when b is an existing
--			 * directory ought to result in ISDIR, but
--			 * Solaris 5.8 gives ENOTDIR.  Sheesh.
--			 */
--			if (remove_empty_directories(&path)) {
--				error("Directory not empty: logs/%s", newrefname);
--				goto out;
--			}
--			goto retry;
--		} else if (errno == ENOENT && --attempts_remaining > 0) {
--			/*
--			 * Maybe another process just deleted one of
--			 * the directories in the path to newrefname.
--			 * Try again from the beginning.
--			 */
--			goto retry;
--		} else {
-+	ret = raceproof_create_file(path, rename_tmp_log_callback, &true_errno);
-+	if (ret) {
-+		if (true_errno==EISDIR)
-+			error("Directory not empty: %s", path);
-+		else
- 			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
--				newrefname, strerror(errno));
--			goto out;
--		}
-+				newrefname, strerror(true_errno));
- 	}
--	ret = 0;
--out:
--	strbuf_release(&path);
-+
-+	free(path);
- 	return ret;
- }
- 
--- 
-2.7.0
+@@ -173,7 +174,7 @@ struct worktree **get_worktrees(void)
+ 	if (dir) {
+ 		while ((d =3D readdir(dir)) !=3D NULL) {
+ 			struct worktree *linked =3D NULL;
+-			if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++			if (is_dot_or_dotdot(d->d_name))
+ 				continue;
+=20
+ 			if ((linked =3D get_linked_worktree(d->d_name))) {
+--=20
+2.7.0.377.g4cd97dd
