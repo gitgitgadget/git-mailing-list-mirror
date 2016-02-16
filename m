@@ -1,81 +1,80 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 04/15] branch: die on config error when editing branch description
-Date: Tue, 16 Feb 2016 13:56:31 +0100
-Message-ID: <1455627402-752-5-git-send-email-ps@pks.im>
-References: <1455627402-752-1-git-send-email-ps@pks.im>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	ps@pks.im, Eric Sunshine <sunshine@sunshineco.com>,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:01:00 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 17/20] delete_ref_loose(): derive loose reference path from lock
+Date: Tue, 16 Feb 2016 14:22:30 +0100
+Message-ID: <e76003f80fd41fafd3b2df0a84cc199bf65bc555.1455626201.git.mhagger@alum.mit.edu>
+References: <cover.1455626201.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
+	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
+	David Turner <dturner@twopensource.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:23:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfFN-0004fp-SL
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:00:54 +0100
+	id 1aVfb6-0005hs-1d
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163AbcBPNAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 08:00:43 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33766 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932197AbcBPM44 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 07:56:56 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id E0E8D20A41
-	for <git@vger.kernel.org>; Tue, 16 Feb 2016 07:56:55 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 16 Feb 2016 07:56:55 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=splo
-	ML0q83tUuiYUnQMFlHjfYF4=; b=GwgaKRAOveKLRW2bo7m6/pb3IJLupOv/QqqA
-	cfy7ZMCa8Zm9uyk6asW2Bbree7Dw5jq4sPnPO6nmdOiRrp2rp66V0EK1ebXQrCNb
-	0Ng5QqJHc0Zrft6y+xNnQZxFmGk/tn4OU0Gfi++j+ZTDa0vn/xxrJDdtDubsgVzS
-	4G1XZcA=
-X-Sasl-enc: aXnj/4vt47vUoIVVslREwD3EacCXQmNqCl+Qk4mbeoHi 1455627415
-Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7439DC00018;
-	Tue, 16 Feb 2016 07:56:55 -0500 (EST)
-X-Mailer: git-send-email 2.7.1
-In-Reply-To: <1455627402-752-1-git-send-email-ps@pks.im>
+	id S932215AbcBPNXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 08:23:16 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53794 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932117AbcBPNXP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:23:15 -0500
+X-AuditID: 1207440f-db3ff70000007e44-ed-56c322c241a9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 6D.4C.32324.2C223C65; Tue, 16 Feb 2016 08:23:14 -0500 (EST)
+Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOd028717
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Feb 2016 08:23:13 -0500
+X-Mailer: git-send-email 2.7.0
+In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqHtI6XCYwdyvKhbzN51gtOi60s1k
+	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8b2Hw8ZC16yVfRu38rWwHiYtYuRk0NCwETiZctR
+	pi5GLg4hga2MEpvaO9khnBNMEqf7V7KBVLEJ6Eos6mlmArFFBNQkJrYdYgEpYhZ4xCjRtX87
+	I0hCWCBA4sD25cwgNouAqsSuJUvAGngFoiSav19gglgnJ9HyYzfYak4BC4mTLb0sILaQgLnE
+	nS97mCYw8ixgZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuil5tZopeaUrqJERJk/DsYu9bL
+	HGIU4GBU4uHl8DgUJsSaWFZcmXuIUZKDSUmUl4f7cJgQX1J+SmVGYnFGfFFpTmrxIUYJDmYl
+	Ed5/r4DKeVMSK6tSi/JhUtIcLErivOpL1P2EBNITS1KzU1MLUotgsjIcHEoSvB2KQEMFi1LT
+	UyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQVEQXwyMA5AUD9DeNJB23uKCxFygKETrKUZd
+	jgU/bq9lEmLJy89LlRLn3Q9SJABSlFGaB7cCllJeMYoDfSzMGwBSxQNMR3CTXgEtYQJaknMJ
+	5LnikkSElFQD44qHF+eJ//33XNtmlt6+TqZmllbL6xaJTGn7fux3cVZTfu+9sSRx7RpNmZuh
+	NUcrC28o5YQf7tB2KtASuOCnITHp6sOq/7e3T7+7VyApz57bPu6sg/Dmf7qlz3Yc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286357>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+It is simpler to derive the path to the file that must be deleted from
+"lock->ref_name" than from the lock_file object.
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/branch.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ refs/files-backend.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0978287..c043cfc 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -570,7 +570,6 @@ static const char edit_description[] = "BRANCH_DESCRIPTION";
- 
- static int edit_branch_description(const char *branch_name)
- {
--	int status;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf name = STRBUF_INIT;
- 
-@@ -595,11 +594,11 @@ static int edit_branch_description(const char *branch_name)
- 	strbuf_stripspace(&buf, 1);
- 
- 	strbuf_addf(&name, "branch.%s.description", branch_name);
--	status = git_config_set(name.buf, buf.len ? buf.buf : NULL);
-+	git_config_set_or_die(name.buf, buf.len ? buf.buf : NULL);
- 	strbuf_release(&name);
- 	strbuf_release(&buf);
- 
--	return status;
-+	return 0;
- }
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 0a9f330..754d254 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2345,10 +2345,7 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 		 * loose.  The loose file name is the same as the
+ 		 * lockfile name, minus ".lock":
+ 		 */
+-		char *loose_filename = get_locked_file_path(lock->lk);
+-		int res = unlink_or_msg(loose_filename, err);
+-		free(loose_filename);
+-		if (res)
++		if (unlink_or_msg(git_path("%s", lock->ref_name), err))
+ 			return 1;
+ 	}
+ 	return 0;
 -- 
-2.7.1
+2.7.0
