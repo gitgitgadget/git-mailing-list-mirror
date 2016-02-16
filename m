@@ -1,139 +1,85 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 4/4] remote: use remote_is_configured() for add and rename
-Date: Tue, 16 Feb 2016 10:47:52 +0100
-Message-ID: <1455616072-20838-5-git-send-email-t.gummerer@gmail.com>
-References: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
- <1455616072-20838-1-git-send-email-t.gummerer@gmail.com>
-Cc: sunshine@sunshineco.com, peff@peff.net, Johannes.Schindelin@gmx.de,
-	gitster@pobox.com
-To: git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 10:47:54 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the origin of a config value
+Date: Tue, 16 Feb 2016 10:48:30 +0100
+Message-ID: <BB209409-A43C-4C08-8691-B27FFDBDDB69@gmail.com>
+References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com> <1455531466-16617-4-git-send-email-larsxschneider@gmail.com> <56C244D7.1030503@ramsayjones.plus.com> <xmqqio1pps64.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	peff@peff.net, sschuberth@gmail.com, sunshine@sunshineco.com,
+	hvoigt@hvoigt.net, sbeller@google.com, Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 10:48:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVcEb-0005m3-4Q
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:47:53 +0100
+	id 1aVcFN-0006Ul-Co
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:48:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668AbcBPJrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 04:47:45 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:36012 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662AbcBPJrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 04:47:40 -0500
-Received: by mail-wm0-f51.google.com with SMTP id g62so96982483wme.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:47:40 -0800 (PST)
+	id S1754674AbcBPJsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 04:48:37 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:38743 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754415AbcBPJse convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 04:48:34 -0500
+Received: by mail-wm0-f47.google.com with SMTP id a4so90991420wme.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:48:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jN6R0Sgu6vqMbi730+fEa/hJ4Lv55N8x5D8vzCmg0Uw=;
-        b=Cg5/DqpRvsGq59G4Hx3UxiocOF+e9Fn07cRrcuuYZish8MVrtFWDf1tHanEGvFt7So
-         rNxpqTKKQVi421bjB8zo6SKX+NrNiZwHVL+OqpDXQ0yvyarBusXC9KY7GpM/0Ddc1E1H
-         qWJJ2poKwb+xSEqg3ymtVf4FI+myDRqgeH89j85UCf0ObshZV0ECgWG+TiiyHy2d0USx
-         5i8A/CwAqVTdnUqgPI8AD62MnELF4umyGZ6BCQMuXxo2sT+/nkJVQusxJPxISJPxWUev
-         0eP54o9PIDkUQqdFYlrhIPUoVxC/gAIeo1B3mI/W3PQ6gXPlofEi8xDB5AzrJyPbfo95
-         xjaA==
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=diZUHRBR9N9fEEbMOq3gBhmdGfzfbBsQUFc+ItGSmgg=;
+        b=MldhaV1ukogcoQc+cDwc+vfJIAJZgqsSGU4vGHW7jpki7+Zm66UPzJLh+p5jnQK+L0
+         CLYu1FjuVFnlnUhBcol2kxLMOniq8bmh/hbGuOYeXG7hYXLjoSc2YzlmcQxGecso9Ggs
+         SAwiFJGtYA60CRjMXFf8ft/D8BBsmNBTZygANoB2iTGOwM5WklJK/qaGC5G6/skQLmbS
+         QdckDl2kq1kDhyJUxjjOve+FUyvOa95QPQAytF8NFFmfTnNH86BDiFBSXPjIjTuDhLMg
+         /RN5kTmtpBvgTOvec6lGaXpTSpE3koC47HPk9eJ8kiqUj7J0dHclWMNh1oXs14+aUhqT
+         rXaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jN6R0Sgu6vqMbi730+fEa/hJ4Lv55N8x5D8vzCmg0Uw=;
-        b=EXtcQjiQ1iAJF+0BcBAb/HAkNsG0bEclQa5ZFpO9XJiH6XxBXQTs7H69mZcUQr5Z6C
-         HW79+UTyslIR7FvyufFvAv09n32zlHdddZTgwm0XA+ALEK8qM0cleHvnt4uS44aXXTBC
-         0bDel32/LW8m7xXDqSv966Zm0J1wuOI/AmPa1DSRkfptwsuVasM5NH321dAfr6HnOqix
-         LJHyZpzqeSs2IZqphk8FLvVaLMoGNAif4hBP1hGx9VxyVkYay9aq2JieoN+hdsIVQ2Vd
-         m9z2LpSFakdchtwT3I3GZD8STSKIJ4vO9Ad64qhHKmF2oHMXMLnyh6eAhasFyiyFB8MF
-         uqTA==
-X-Gm-Message-State: AG10YOQS/mZ7UKgeIzsHi42jyocOL3G6Ur0qToTZ26OKe8KImaIyWJxElAy7/BqMre/jxA==
-X-Received: by 10.194.92.147 with SMTP id cm19mr24456711wjb.32.1455616059496;
-        Tue, 16 Feb 2016 01:47:39 -0800 (PST)
-Received: from localhost (host161-107-dynamic.2-87-r.retail.telecomitalia.it. [87.2.107.161])
-        by smtp.gmail.com with ESMTPSA id ka7sm29240586wjb.8.2016.02.16.01.47.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Feb 2016 01:47:38 -0800 (PST)
-X-Mailer: git-send-email 2.7.1.410.g6faf27b
-In-Reply-To: <1455616072-20838-1-git-send-email-t.gummerer@gmail.com>
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=diZUHRBR9N9fEEbMOq3gBhmdGfzfbBsQUFc+ItGSmgg=;
+        b=VswTSG/vC72Ug36uJxHJXBe8MDfC1hJUs6SiVakYim3MH1+ZEmujbZbBDjZsYJJ7cT
+         3QUpxRkYbRKeqs7u2dHtUIKb497smsQiDc6DbinLPEv8uOUnzqQtWmz7xW0hXe8xljTq
+         WFWOy4bqCAttS1Lch4M4exKd4aM4+7hs85gQOh+uz8R+9OJluSa9hwc9tY7csqvB839G
+         StPRjqCxOiHg84J3GITnKaLxae+v2vF7TvaIkvb//8fqM3RM4h/4RI6+GlZgc52PjDV8
+         ZnHrTcZNHbgxl4jdAw1DjlZOK6HEb1ZOMbKgIuJMCvilSY8w/y5pbnUAbotHzKRTtoCr
+         aKnA==
+X-Gm-Message-State: AG10YOT7TwVQ72Rf3aV2DUajUs8YFWwr3VcxrKrOn+HcawB8tWXVWtZjkZ9UsKTf9HMl5w==
+X-Received: by 10.194.71.70 with SMTP id s6mr20933759wju.1.1455616113798;
+        Tue, 16 Feb 2016 01:48:33 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB43DD.dip0.t-ipconnect.de. [93.219.67.221])
+        by smtp.gmail.com with ESMTPSA id e9sm29391641wja.25.2016.02.16.01.48.31
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 16 Feb 2016 01:48:32 -0800 (PST)
+In-Reply-To: <xmqqio1pps64.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286336>
 
-Both remote add and remote rename use a slightly different hand-rolled
-check if the remote exits.  The hand-rolled check may have some subtle
-cases in which it might fail to detect when a remote already exists.
-One such case was fixed in fb86e32 ("git remote: allow adding remotes
-agreeing with url.<...>.insteadOf").  Another case is when a remote is
-configured as follows:
 
-  [remote "foo"]
-    vcs = bar
+On 15 Feb 2016, at 22:41, Junio C Hamano <gitster@pobox.com> wrote:
 
-If we try to run `git remote add foo bar` with the above remote
-configuration, git segfaults.  This change fixes it.
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>>> +--show-origin::
+>>> +	Augment the output of all queried config options with the
+>>> +	origin type (file, stdin, blob, cmdline) and the actual origin
+>> 
+>> file, blob, cmdline (hmm, maybe cmd-line? ;-) )
+> 
+> If we are going to spell it out, "command-line" would be the way to
+> go.  "cmdline" is probably OK.
 
-In addition, git remote rename $existing foo with the configuration for
-foo as above silently succeeds, even though foo already exists,
-modifying its configuration.  With this patch it fails with "remote foo
-already exists".
+I think cmdline is OK, too. However, if the list thinks that there is a chance
+that it could be incomprehensible to the user then I would prefer "command-line".
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/remote.c  |  7 ++-----
- t/t5505-remote.sh | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 981c487..bd57f1b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -186,10 +186,7 @@ static int add(int argc, const char **argv)
- 	url = argv[1];
- 
- 	remote = remote_get(name);
--	if (remote && (remote->url_nr > 1 ||
--			(strcmp(name, remote->url[0]) &&
--				strcmp(url, remote->url[0])) ||
--			remote->fetch_refspec_nr))
-+	if (remote_is_configured(remote))
- 		die(_("remote %s already exists."), name);
- 
- 	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
-@@ -641,7 +638,7 @@ static int mv(int argc, const char **argv)
- 		return migrate_file(oldremote);
- 
- 	newremote = remote_get(rename.new);
--	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_nr))
-+	if (remote_is_configured(newremote))
- 		die(_("remote %s already exists."), rename.new);
- 
- 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index f1d073f..94079a0 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -157,6 +157,21 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
- 	)
- '
- 
-+test_expect_success 'add existing foreign_vcs remote' '
-+	test_config remote.foo.vcs bar &&
-+	echo "fatal: remote foo already exists." >expect &&
-+	test_must_fail git remote add foo bar 2>actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success 'add existing foreign_vcs remote' '
-+	test_config remote.foo.vcs bar &&
-+	test_config remote.bar.vcs bar &&
-+	echo "fatal: remote bar already exists." >expect &&
-+	test_must_fail git remote rename foo bar 2>actual &&
-+	test_i18ncmp expect actual
-+'
-+
- cat >test/expect <<EOF
- * remote origin
-   Fetch URL: $(pwd)/one
--- 
-2.7.1.410.g6faf27b
+- Lars
