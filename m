@@ -1,55 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH +warn] Implement https public key pinning
-Date: Mon, 15 Feb 2016 20:22:11 -0500
-Message-ID: <20160216012210.GB11961@sigill.intra.peff.net>
-References: <87y4amcby5.fsf@mitoraj.siccegge.de>
- <20160215140422.GA1747@mitoraj.siccegge.de>
- <xmqqr3gdo8sz.fsf@gitster.mtv.corp.google.com>
+From: Cameron W <cameron_w55@outlook.com>
+Subject: Git Submodule auto-update
+Date: Tue, 16 Feb 2016 01:24:01 +0000 (UTC)
+Message-ID: <loom.20160216T022310-849@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christoph Egger <christoph@christoph-egger.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 02:22:19 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 02:30:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVULJ-0002IC-HE
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 02:22:17 +0100
+	id 1aVUT2-00071b-P2
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 02:30:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751759AbcBPBWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 20:22:14 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42691 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751491AbcBPBWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 20:22:13 -0500
-Received: (qmail 12679 invoked by uid 102); 16 Feb 2016 01:22:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 20:22:13 -0500
-Received: (qmail 15143 invoked by uid 107); 16 Feb 2016 01:22:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 20:22:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 20:22:11 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqr3gdo8sz.fsf@gitster.mtv.corp.google.com>
+	id S1751832AbcBPBaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 20:30:11 -0500
+Received: from plane.gmane.org ([80.91.229.3]:48300 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751726AbcBPBaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 20:30:10 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aVUSs-0006vE-Hx
+	for git@vger.kernel.org; Tue, 16 Feb 2016 02:30:07 +0100
+Received: from 203.8.18.100 ([203.8.18.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 02:30:06 +0100
+Received: from cameron_w55 by 203.8.18.100 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 02:30:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 203.8.18.100 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286302>
 
-On Mon, Feb 15, 2016 at 03:25:32PM -0800, Junio C Hamano wrote:
+I apologize if this is a dumb or repeated question.
 
-> Thanks.  This, when applied on top of 2.7.1, however seems to break
-> at least t5541 and t5551.
+Is there a way to have a submodule automatically 'update' on pull of the 
+parent repository, WITHOUT requiring each user/committer to change any 
+settings (hooks or git config aliases)?
 
-Hrm. I cannot see how the new code can possibly do anything unless
-http.pinnedpubkey is set, and our tests don't do that. Neither t5541 nor
-t5551 fails for me with the patch on top of v2.7.1 (or current "pu", for
-that matter).
+Ideally, a setting I can change at the repository level and then commit 
+and apply to all users who clone the repository.
 
-What does the failure look like?
-
--Peff
+Thanks. 
