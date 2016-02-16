@@ -1,89 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge_blobs: use strbuf instead of manually-sized mmfile_t
-Date: Tue, 16 Feb 2016 13:27:07 -0800
-Message-ID: <xmqqmvr0mjmc.fsf@gitster.mtv.corp.google.com>
-References: <56C2459B.5060805@uni-graz.at>
-	<20160216011258.GA11961@sigill.intra.peff.net>
-	<20160216050915.GA5765@flurp.local>
-	<20160216055043.GB28237@sigill.intra.peff.net>
+Subject: Re: [PATCH v3 0/4] git remote improvements
+Date: Tue, 16 Feb 2016 13:36:47 -0800
+Message-ID: <xmqqio1omj68.fsf@gitster.mtv.corp.google.com>
+References: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
+	<1455616072-20838-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Stefan =?utf-8?Q?Fr=C3=BChwi?= =?utf-8?Q?rth?= 
-	<stefan.fruehwirth@uni-graz.at>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 22:27:18 2016
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+	Johannes.Schindelin@gmx.de
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 22:36:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVn9Q-0000Rl-5q
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 22:27:16 +0100
+	id 1aVnIk-0008Jb-SX
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 22:36:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755971AbcBPV1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 16:27:10 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56395 "EHLO
+	id S1756060AbcBPVgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 16:36:51 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54159 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755140AbcBPV1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 16:27:09 -0500
+	with ESMTP id S1755561AbcBPVgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 16:36:50 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AE3F3459DD;
-	Tue, 16 Feb 2016 16:27:08 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A74D045C6A;
+	Tue, 16 Feb 2016 16:36:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/zHLme/2i5gKyn3golzYzS48cXs=; b=AeNBVA
-	EjDUyhJqkTbLY8/pNF0BRxjyhyfSkyNfBVhrp5A4y+Aylqs25Hc5LqFJjvjSUYyd
-	9aJdZ7N11Cld+srxRvJoqiRq+mgXT1NUxjsYvo7avBUDcZQ1m7wdxXZ6nZQ68ABf
-	71Kp0E87gKTEXOYwwUF+pLpGuhUbIJG5LlEM0=
+	:content-type; s=sasl; bh=7D6TxeMTkGQ8E4WDdjtuJKmUlYQ=; b=g6dDYI
+	jQAlx5W6Smh4aK2t5qDRNKCqQyX27e9H4lx5iRnmyxUaTb5oT8xGfQZREUFip4B5
+	EVDoi720a8C0yhUgJ6IGbriozBdenRjpuF0w9C8rcDvRJLgxrUtT+0jIqjTUoXMI
+	YOorR47qsCtpEEJSuIMvEHzbD9kVP0ZCUDSQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HIKyXsb6qnF7vb5qSWXkn0t+AniZ2y2s
-	U6QT/uuO4K6rXOqxiJQuRioQlMlqUB2u0rvHOwRBpnF3eN2ej2Z6SWxE3ZWG1H7u
-	cdRSbzDR5njKM/vM9xn2AFGQVYOOaUG/Qra1h0Wtfv2fkxMIyO1TRGpD+7TgVwVU
-	F5ni/d+QQ9g=
+	:content-type; q=dns; s=sasl; b=INg/6++GgE/QXEJPw/BhNU5ZUi8FxmY6
+	RK+LEAJUmW6CL8TpGgvT+KM0XzW81GJ7aYgqwDefO8aXYGL3BP5PrNg3/khSjMoO
+	/mCOJlerE1fC5DjOD/tR15D8qGkEkKLV2c9KeBLL7hc3cL/KhpXadzg53ksKw5dR
+	bso3SnQxS4I=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5E2C459DB;
-	Tue, 16 Feb 2016 16:27:08 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E43345C68;
+	Tue, 16 Feb 2016 16:36:49 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2A9DD459D8;
-	Tue, 16 Feb 2016 16:27:08 -0500 (EST)
-In-Reply-To: <20160216055043.GB28237@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 16 Feb 2016 00:50:43 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0098245C67;
+	Tue, 16 Feb 2016 16:36:48 -0500 (EST)
+In-Reply-To: <1455616072-20838-1-git-send-email-t.gummerer@gmail.com> (Thomas
+	Gummerer's message of "Tue, 16 Feb 2016 10:47:48 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0859C794-D4F4-11E5-98F4-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 628DC62E-D4F5-11E5-945A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286436>
 
-Jeff King <peff@peff.net> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Yeah, maybe. There were two reasons I avoided adding a test.
+> Previous rounds are at $gmane/286214 and $gmane/286278.  Thanks to
+> Peff and Eric for the reviews on the previous round.
 >
-> One, I secretly hoped that by dragging my feet we could get consensus on
-> just ripping out merge-tree entirely. ;)
->
-> Two, I'm not sure what the test output _should_ be. I think this case is
-> buggy. So we can check that we don't corrupt the heap, which is nice,
-> but I don't like adding a test that doesn't test_cmp the expected output
-> (and see my earlier comments re: thinking hard).
+> This version changes two checks in [1/4], and uses test_config in the
+> tests instead of calling git config directly.
 
-Three, I know the existence of the program is not more than "we
-could do something like this" illustration by Linus, and its output
-is in no way _designed_ to be so.  We know today that it does not do
-add/add conflict correctly thanks to this thread, but if we are
-going to keep this program, we'd need to start from really designing
-what its behaviour _should_ be, before casting the desirable
-behaviour into stone with tests.
+Thanks; I agree that 1/4 is a noisy patch but the culprit of the
+noisyness is that the old code, when doing tons of comparisons with
+fixed strings that begin with a dot, did not think it was crazy not
+to increment the "subkey" before doing so, and the resulting code is
+much easier to follow.
 
-> But if we are going to keep it, maybe some exercise of the code is
-> better than none.
-
-So, "exercise" is better than none in the sense that it would
-validate that "the command does something without barfing", but I
-think there is a downside to casting its current behaviour as the
-expected output in stone, if we are going to keep it.
+Thanks.
