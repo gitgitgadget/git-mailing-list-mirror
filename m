@@ -1,91 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 05/18] convert trivial cases to ALLOC_ARRAY
-Date: Mon, 15 Feb 2016 23:22:12 -0500
-Message-ID: <CAPig+cRTz4Fb10JDWLjmTEXzQ+FbvmKU51A9B3vmwBepDX+BYA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/18] convert trivial cases to FLEX_ARRAY macros
+Date: Mon, 15 Feb 2016 23:22:22 -0500
+Message-ID: <20160216042222.GA27060@sigill.intra.peff.net>
 References: <20160215214516.GA4015@sigill.intra.peff.net>
-	<20160215215154.GE10287@sigill.intra.peff.net>
+ <20160215215244.GG10287@sigill.intra.peff.net>
+ <CAPig+cSQG7gWStpRy76D_YzuCFPsXJLBzXCjQ-X_Q3sZthx3iw@mail.gmail.com>
+ <20160216031554.GB13606@sigill.intra.peff.net>
+ <20160216032626.GA19954@sigill.intra.peff.net>
+ <20160216033620.GA26430@sigill.intra.peff.net>
+ <CAPig+cQOF7CsJNoiu8FAMk+csrOWG2dbEyxqfpWNwvGdUsjxcw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 05:22:19 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 05:22:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVX9W-0000ZL-GA
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 05:22:18 +0100
+	id 1aVX9h-0000hi-0X
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 05:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbcBPEWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 23:22:14 -0500
-Received: from mail-vk0-f45.google.com ([209.85.213.45]:35485 "EHLO
-	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752002AbcBPEWN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 23:22:13 -0500
-Received: by mail-vk0-f45.google.com with SMTP id e6so123001481vkh.2
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 20:22:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=bapDoUFzWwYGpTWnNAyvqtp9CTDYtXI/Kzg5f161dRg=;
-        b=huXtM49r6pRjiyc5KEageETCyOtDt7TwCCVnOsICN1CdeNZ7y63QgD4hjngm/amx5a
-         Bbb6BA3cUGcgrSY4Me7e4EDvId1Hxo+ziAMKMpX2r8sNHlTr1Z/eAy2Pq07+Q1UpyIOs
-         MS3czPrSP//i1QRx15oAa6EdTZLQZ3RiQfdQd7FOzpdy349UiSu3H/LptiuUF6RKfa5X
-         IQTWnKHNvG0wJdCwH8vQwZnDXP8mjhc71V2/DuPyqB8kmABpMe05l8RtdcCJGlh+fAm2
-         Zq3RmIVbWtoiZm1BJwnS6vgv0C0MsjoN+m7iL4VQMueMTFUyRfl1AjzbcfaAEYby/Qyn
-         OOvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=bapDoUFzWwYGpTWnNAyvqtp9CTDYtXI/Kzg5f161dRg=;
-        b=I7FKgfDVAVPQsn0UamI7UhpKm29j/UgpygDseOAfbF1EZie1yA16R6z8IFhv7aveQQ
-         5xkUCB+E+4e2lpxDDD7MVUHb3+qlfbABPOydFKugM1/kJU/K9iyHD8k2qB6CzbU2JRNe
-         UE043Bfz4NhqGigWw83WvQwrbtP7ot279rNEngmqJhmXp8+plVYoxsolec88IAgLArNn
-         lDka/A9V6GG7ImtfPEwRgb32LVXXWpJ2uP+V6UFxBw06+oJfQ+/RboKpqU4EPDg3MZKh
-         11dDr3PKnzIKUnMvMq1klhvtGWa8JkeFhsaKfR9fxnbPvx35dAzpDCY04H6gGyDm3Bod
-         JCVQ==
-X-Gm-Message-State: AG10YOTqunY1VKI7ylK95f5p3x0NhNtXGGKi2rA/ZYwsaPAl7Tf+fK3MZ7Y3xAvvev9FmOfgE7p3CakP15FnqQ==
-X-Received: by 10.31.141.2 with SMTP id p2mr15992974vkd.37.1455596532492; Mon,
- 15 Feb 2016 20:22:12 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 20:22:12 -0800 (PST)
-In-Reply-To: <20160215215154.GE10287@sigill.intra.peff.net>
-X-Google-Sender-Auth: O5rhJSvHmHsPDa4rj_qvs_AR4SI
+	id S1752204AbcBPEWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 23:22:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42769 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752002AbcBPEWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 23:22:24 -0500
+Received: (qmail 21279 invoked by uid 102); 16 Feb 2016 04:22:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 23:22:25 -0500
+Received: (qmail 16307 invoked by uid 107); 16 Feb 2016 04:22:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 23:22:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 23:22:22 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQOF7CsJNoiu8FAMk+csrOWG2dbEyxqfpWNwvGdUsjxcw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286317>
 
-On Mon, Feb 15, 2016 at 4:51 PM, Jeff King <peff@peff.net> wrote:
-> Each of these cases can be converted to use ALLOC_ARRAY or
-> REALLOC_ARRAY, which has two advantages:
->
->   1. It automatically checks the array-size multiplication
->      for overflow.
->
->   2. It always uses sizeof(*array) for the element-size,
->      so that it can never go out of sync with the declared
->      type of the array.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 77a51d3..0eabe68 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -854,7 +854,7 @@ static char **get_path_split(void)
->         if (!n)
->                 return NULL;
->
-> -       path = xmalloc((n+1)*sizeof(char *));
-> +       ALLOC_ARRAY(path, n+1);
+On Mon, Feb 15, 2016 at 11:18:56PM -0500, Eric Sunshine wrote:
 
-Elsewhere in this patch, you've reformatted "x+c" as "x + c"; perhaps
-do so here, as well.
+> > diff --git a/builtin/reflog.c b/builtin/reflog.c
+> > @@ -408,13 +407,12 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
+> >                 reflog_expire_cfg_tail = &reflog_expire_cfg;
+> >
+> >         for (ent = reflog_expire_cfg; ent; ent = ent->next)
+> > -               if (ent->len == len &&
+> > -                   !memcmp(ent->pattern, pattern, len))
+> > +               if (!strncmp(ent->pattern, pattern, len) &&
+> > +                   ent->pattern[len] == '\0')
+> 
+> If 'ent->pattern' is shorter than 'pattern' then the strncmp() will
+> fail, thus it will short-circuit before ent->pattern[len] has a chance
+> to access beyond the end of memory allocated for 'ent->pattern'. Okay,
+> makes sense.
 
->         p = envpath;
->         i = 0;
->         do {
+Yeah. It took me a minute to convince myself that this was correct. If
+you have a shorter or more clear way of writing it, I'm open to it. The
+best I could come up with is running an extra "strlen" and otherwise
+keeping the loop as it is; the performance on that is not as good, but
+if performance is a concern, maybe something besides a linear search
+would be in order. :)
+
+-Peff
