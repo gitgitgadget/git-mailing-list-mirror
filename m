@@ -1,111 +1,101 @@
-From: Jeff King <peff@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH 07/18] convert trivial cases to FLEX_ARRAY macros
-Date: Mon, 15 Feb 2016 22:36:20 -0500
-Message-ID: <20160216033620.GA26430@sigill.intra.peff.net>
+Date: Mon, 15 Feb 2016 23:10:41 -0500
+Message-ID: <CAPig+cSyz7uYeHu=nP_V+6LaaWJZ-Bv6CR=9hmF8_cf74mnuHA@mail.gmail.com>
 References: <20160215214516.GA4015@sigill.intra.peff.net>
- <20160215215244.GG10287@sigill.intra.peff.net>
- <CAPig+cSQG7gWStpRy76D_YzuCFPsXJLBzXCjQ-X_Q3sZthx3iw@mail.gmail.com>
- <20160216031554.GB13606@sigill.intra.peff.net>
- <20160216032626.GA19954@sigill.intra.peff.net>
+	<20160215215244.GG10287@sigill.intra.peff.net>
+	<CAPig+cSQG7gWStpRy76D_YzuCFPsXJLBzXCjQ-X_Q3sZthx3iw@mail.gmail.com>
+	<20160216031554.GB13606@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 04:36:28 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 05:10:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVWR9-0002ok-Cy
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 04:36:27 +0100
+	id 1aVWyN-0001N2-35
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 05:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbcBPDgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 22:36:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42745 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753324AbcBPDgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 22:36:23 -0500
-Received: (qmail 19355 invoked by uid 102); 16 Feb 2016 03:36:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 22:36:22 -0500
-Received: (qmail 15771 invoked by uid 107); 16 Feb 2016 03:36:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 22:36:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 22:36:20 -0500
-Content-Disposition: inline
-In-Reply-To: <20160216032626.GA19954@sigill.intra.peff.net>
+	id S1751984AbcBPEKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 23:10:43 -0500
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:36486 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751706AbcBPEKm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 23:10:42 -0500
+Received: by mail-vk0-f46.google.com with SMTP id c3so122948967vkb.3
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 20:10:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ylN/tM6vw2ilVFlxBmeTILkgR9nWLXXaN0nsDIpwwBY=;
+        b=FkpVIhZE+UjmFr6iaJmzwoqYLMnqYfXTrWtf37uY02lsDGKFmL0Hpt00y20z+SNiPA
+         tcmIxg0CLHOAfM3zv4SCKf2yYXPS3ayerYxwbBzo3AztB/L6GFf4PPonw4Ghpr09CkYE
+         jsBWgfipzeep/jhcvY7TtRTg4oX9AzrqZ3asursfiKKqufoGsq3NEgDLPgAK/y+BZiKD
+         QL1nbnCAsWqtm+X4qGrK7tBV+UGn1ClQBmc6xRQRzTthtYHchyT6gGhafKIavO3+8dL1
+         tYVf3ZdSeodqHuj7UhCl9nK/AlKkR+S3yCVcKAJKNbBInHaoHCjltUcioAYd+yKkT41l
+         7m0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ylN/tM6vw2ilVFlxBmeTILkgR9nWLXXaN0nsDIpwwBY=;
+        b=bXCwjeqJU/eLmRce9oZASaG6GfGrKVKgbr+gHD13pZjxTGiI3HCPyxytn9dhB27qnG
+         abpNZ64kt6Ufu+eI4Gxf5BrfQlgtGwEjdFMUNl7gJpa9NbGhGW5m57vLrFD3CnViSho3
+         +lrxv6maZEELr+3y2Q7oGCjjVjQG5DQXxqelvPSu49oRto5tHd7Y6woUvi0itYbECXWS
+         rpFPrCwWToyvxM0ElhI+Lsqu2nkgtbECaDmN6ry/zD23GfCqmZVRfn7seAI2Egmd/OcK
+         RtBZxWLjpxMS7+hexKf0jm9z+2FIFkporfGLK6aJ29ZAN9Dcb6uroTkLICOkkb+PIqHo
+         C0jA==
+X-Gm-Message-State: AG10YOQTpyxMvO17b//Zzx/fyR5yJZUyyXrWAurehZYuvaIKuBhcKhGxAQ+0QClfGLm7vnsrY6vv9Z8tQKEtEg==
+X-Received: by 10.31.168.76 with SMTP id r73mr15987267vke.117.1455595841282;
+ Mon, 15 Feb 2016 20:10:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 20:10:41 -0800 (PST)
+In-Reply-To: <20160216031554.GB13606@sigill.intra.peff.net>
+X-Google-Sender-Auth: UzIhmvel1aaq4zUz6AnKrBk1T3M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286314>
 
-On Mon, Feb 15, 2016 at 10:26:26PM -0500, Jeff King wrote:
+On Mon, Feb 15, 2016 at 10:15 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 15, 2016 at 09:17:05PM -0500, Eric Sunshine wrote:
+>> > -       ent = xcalloc(1, (sizeof(*ent) + len));
+>> > -       memcpy(ent->pattern, pattern, len);
+>> > +       FLEX_ALLOC_MEM(ent, pattern, pattern, len);
+>>
+>> Does the incoming 'len' already account for the NUL terminator, or was
+>> the original code underallocating?
+>>
+>> Answering my own question: Looking at reflog_expire_config() and
+>> parse_config_key(), I gather that 'len' already accounts for the NUL,
+>> thus the new code is overallocating (which should not be a problem).
+>
+> Actually, I think the original underallocates. If we have
+> gc.foobar.reflogExpire, then "pattern" will poitn to "foobar" and "len"
+> will be 6. Meaning we allocate without a trailing NUL.
 
-> We could do this on top of my series (I can also factor out the fix
-> separately to go at the beginning if we don't want to hold the bugfix
-> hostage).
-> 
-> -- >8 --
-> Subject: [PATCH] reflog_expire_cfg: drop misleading "len" parameter
+Ugh, yeah, I misread the code.
 
-Here it is as a separate fix. Applying my series on top would need a
-minor and obvious tweak. I'll hold a re-roll for more comments, but will
-otherwise plan to stick this at the front of the series.
+> That _should_ be OK, because the struct has a "len" field, and readers
+> can be careful not to go past it. And indeed, in the loop above, we
+> check the length and use memcmp().
+>
+> But later, in set_reflog_expiry_param(), we walk through the list and
+> hand ent->pattern directly to wildmatch, which assumes a NUL-terminated
+> string. In practice, it probably works out 7 out of 8 times, because
+> malloc will align the struct, and we're on a zeroed page, so unless the
+> string is exactly 8 characters, we'll get some extra NULs afterwards.
+> But I could demonstrate it by doing:
+>
+>   gdb --args git -c gc.foobar12.reflogexpire=never reflog expire --all
+>
+> and breaking on wildmatch, which yields:
+>
+>   Breakpoint 1, wildmatch (pattern=0x85eb70 "foobar12Q", text=0x85e4d4
+>         "refs/heads/master", flags=0, wo=0x0)
 
--- >8 --
-Subject: [PATCH] reflog_expire_cfg: NUL-terminate pattern field
-
-You can tweak the reflog expiration for a particular subset
-of refs by configuring gc.foo.reflogexpire. We keep a linked
-list of reflog_expire_cfg structs, each of which holds the
-pattern and a "len" field for the length of the pattern. The
-pattern itself is _not_ NUL-terminated.
-
-However, we feed the pattern directly to wildmatch(), which
-expects a NUL-terminated string, meaning it may keep reading
-random junk after our struct.
-
-We can fix this by allocating an extra byte for the NUL
-(which is already zero because we use xcalloc). Let's also
-drop the misleading "len" field, which is no longer
-necessary. The existing use of "len" can be converted to use
-strncmp().
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/reflog.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index f39960e..9980731 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -396,7 +396,6 @@ static struct reflog_expire_cfg {
- 	struct reflog_expire_cfg *next;
- 	unsigned long expire_total;
- 	unsigned long expire_unreachable;
--	size_t len;
- 	char pattern[FLEX_ARRAY];
- } *reflog_expire_cfg, **reflog_expire_cfg_tail;
- 
-@@ -408,13 +407,12 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
- 		reflog_expire_cfg_tail = &reflog_expire_cfg;
- 
- 	for (ent = reflog_expire_cfg; ent; ent = ent->next)
--		if (ent->len == len &&
--		    !memcmp(ent->pattern, pattern, len))
-+		if (!strncmp(ent->pattern, pattern, len) &&
-+		    ent->pattern[len] == '\0')
- 			return ent;
- 
--	ent = xcalloc(1, (sizeof(*ent) + len));
-+	ent = xcalloc(1, sizeof(*ent) + len + 1);
- 	memcpy(ent->pattern, pattern, len);
--	ent->len = len;
- 	*reflog_expire_cfg_tail = ent;
- 	reflog_expire_cfg_tail = &(ent->next);
- 	return ent;
--- 
-2.7.1.574.gccd43a9
+Nice confirmation.
