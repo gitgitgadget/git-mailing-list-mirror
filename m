@@ -1,201 +1,126 @@
-From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
-Subject: Re: [PULL] svn pathnameencoding for git svn dcommit
-Date: Wed, 17 Feb 2016 01:19:11 +0900
-Message-ID: <56C34BFF.3030301@f2.dion.ne.jp>
-References: <56B8B1EA.5020901@f2.dion.ne.jp>
- <20160208225806.GA3487@dcvr.yhbt.net> <20160215005210.GA31141@dcvr.yhbt.net>
- <56C297A9.2080705@f2.dion.ne.jp> <20160216063357.GA17455@dcvr.yhbt.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the
+ origin of a config value
+Date: Tue, 16 Feb 2016 16:46:07 +0000
+Message-ID: <56C3524F.3000504@ramsayjones.plus.com>
+References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
+ <1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
+ <56C244D7.1030503@ramsayjones.plus.com>
+ <20160215214049.GA10094@sigill.intra.peff.net>
+ <56C253B8.1070702@ramsayjones.plus.com>
+ <51832840-B879-4650-9DC5-E15EAA9919B9@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040805020601060802030702"
-Cc: git@vger.kernel.org, alex.crezoff@gmail.com
-To: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 17:19:35 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	sschuberth@gmail.com, sunshine@sunshineco.com, hvoigt@hvoigt.net,
+	sbeller@google.com, Johannes.Schindelin@gmx.de, gitster@pobox.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 17:46:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aViLe-0001bJ-F1
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 17:19:34 +0100
+	id 1aVilc-0006sI-Am
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 17:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbcBPQTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 11:19:31 -0500
-Received: from mail-ae1-f9.auone-net.jp ([106.187.231.9]:50441 "EHLO
-	dmta03.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751929AbcBPQTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 11:19:30 -0500
-Received: from amlmta048.auone-net.jp (amlmta048-MM [10.188.23.63])
-	by dmta03.auone-net.jp (au one net mail) with ESMTP id 0D004DA03F4
-	for <git@vger.kernel.org>; Wed, 17 Feb 2016 01:19:28 +0900 (JST)
-Received: from [0.0.0.0] ([193.90.12.90])
-	by amlmta048.auone-net.jp id 56c34c0a0008578200006fcb00001e752000086fb4a7;
-	Wed, 17 Feb 2016 01:19:22 +0900
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+	id S964820AbcBPQqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 11:46:17 -0500
+Received: from avasout07.plus.net ([84.93.230.235]:54751 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933112AbcBPQqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 11:46:15 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout07 with smtp
+	id K4m91s0064mu3xa014mAnt; Tue, 16 Feb 2016 16:46:11 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
+ a=EBOSESyhAAAA:8 a=W5RpPGfKo7NaljfMNLsA:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.5.1
-In-Reply-To: <20160216063357.GA17455@dcvr.yhbt.net>
-X-MXM-DELIVERY-TYPE: 3
+In-Reply-To: <51832840-B879-4650-9DC5-E15EAA9919B9@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286407>
 
-This is a multi-part message in MIME format.
---------------040805020601060802030702
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
 
-On 2016/02/16 15:33 +0900, Eric Wong wrote:
-> Kazutoshi Satoda <k_satoda@f2.dion.ne.jp> wrote:
->> Thank you for the tests. But, on my environment, both of them failed
->> unexpectedly. (Windows 7 SP1, x86_64 Cygwin, LANG=ja_JP.UTF-8)
-...
->> > Untracked files:
->> >         svnrepo/
->> >         "\357\202\201\357\202\202"
->> >         "\357\202\201\357\202\207"
-...
->> I can't see how "\357\202\201\357\202\202" came as output in the test.
+
+On 16/02/16 09:51, Lars Schneider wrote:
 > 
-> I wonder if it's a shell or printf portability problem.  I've
-> repushed the branch against master and implemented the weird
-> character use inside Perl scripts.
+> On 15 Feb 2016, at 23:39, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
 > 
-> Can you give it a try?
+>>
+>>
+>> On 15/02/16 21:40, Jeff King wrote:
+>>> On Mon, Feb 15, 2016 at 09:36:23PM +0000, Ramsay Jones wrote:
+>>>
+>>>>> +test_expect_success '--show-origin stdin' '
+>>>>> +	cat >expect <<-\EOF &&
+>>>>> +		stdin:	user.custom=true
+>>>>
+>>>> So, as with the previous patch, I think this should be:
+>>>> 		file:<stdin>	user.custom=true
+>>>
+>>> That's ambiguous with a file named "<stdin>", which was the point of
+>>> having the two separate prefixes in the first place.
+>>>
+>>> I think in practice we _could_ get by with an ambiguous output (it's not
+>>> like "<stdin>" is a common filename), but that was discussed earlier in
+>>> the thread, and Lars decided to go for something unambiguous.
+>>
+>> sure, I just don't think it would cause a problem in practice.
+>> How about using '-' for <stdin>? Hmm, you can actually create
+>> such a file in the filesystem! Oh well, I guess its not a big deal.
+>>
+>>>
+>>> That doesn't necessarily have to bleed over into the error messages,
+>>> though (which could continue to use "<stdin>" if we want to put in a
+>>> little extra code to covering the cases separately.
+>>
+>> Yep.
 
-(Shouldn't the branch be based on maint, as these are bugfixes?)
+Sorry for not replying earlier - today has been hectic, so far.
 
-Thank you. I tried it but got similar problem:
-> $ ./t9115-git-svn-dcommit-funky-renames.sh -x --run='11-12'
-(snip)
-> expecting success:
->         git config svn.pathnameencoding cp932 &&
->         "$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/neq.perl &&
->         git commit -m "neq" &&
->         git svn dcommit
->
-> ++ git config svn.pathnameencoding cp932
-> ++ /usr/bin/perl -w /home/k_satoda/project/git/t/t9115/neq.perl
-> ++ git commit -m neq
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->         svnrepo/
->         "\357\202\201\357\202\202"
->
-> nothing added to commit but untracked files present
-> error: last command exited with $?=1
-> not ok 11 - svn.pathnameencoding=cp932 new file on dcommit
-> #
-> #               git config svn.pathnameencoding cp932 &&
-> #               "$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/neq.perl &&
-> #               git commit -m "neq" &&
-> #               git svn dcommit
-> #
->
-> expecting success:
->         "$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/inf.perl
->
-> ++ /usr/bin/perl -w /home/k_satoda/project/git/t/t9115/inf.perl
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->         svnrepo/
->         "\357\202\201\357\202\202"
->         "\357\202\201\357\202\207"
->
-> nothing added to commit but untracked files present
-> git commit -m inf: 256 at /home/k_satoda/project/git/t/t9115/inf.perl line 5.
-> error: last command exited with $?=1
-> not ok 12 - svn.pathnameencoding=cp932 rename on dcommit
-> #
-> #               "$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/inf.perl
-> #
+> OK, I am happy to add the extra code. 
 
+Unless I've missed something (quite possible), this patch does not
+need to change. (you have (both) convinced me that your current
+solution is the best).
 
-I found how "\357\202\201\357\202\202" (U+F081 U+F082 in UTF-8) could
-come.
-https://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-specialchars
-> Some characters are disallowed in filenames on Windows filesystems. ...
-...
-> ... All of the above characters, except for the backslash, are converted
-> to special UNICODE characters in the range 0xf000 to 0xf0ff (the
-> "Private use area") when creating or accessing files.
-"U+F081 U+F082" seems the result of conversion from "0x8182" (neq in
-cp932) as treating each of 2 bytes as disallowed characters.
+The only change that I would suggest is the one-liner I already
+suggested to the previous patch (plus the one-liner in the test,
+of course. err ... so the two-liner!). Having said that, I didn't
+try it out - I was just typing into my email client, so ...
 
-And I also noticed that LANG and LC_ALL is set to "C" in test-lib.sh.
+>                                       However, out of curiosity, can
+> you explain in what cases you actually use configs from stdin? I wasn't
+> aware of this feature before working on this patch and I still wonder
+> when I would use it.
 
-Setting LC_ALL=C.UTF-8 in the test 11-12 made them pass on Cygwin.
-Same change made the previous version also pass. Please find the patch
-in the attached output of git format-patch.
+Personally, I can't imagine ever using it. (I don't have a great
+imagination. ;-)
 
-Could you please test with this on non-Cygwin environment?
+Since I couldn't recall when this feature was added, I looked for
+the commit that added it and found it was merged in commit 08f36302.
+In particular, commit 3caec73b ("config: teach "git config --file -"
+to read from the standard input", 19-02-2014) does not seem to
+include any motivation for the change. The corresponding release
+notes for v2.2.0 do not seem to add anything either.
 
-If it made no harm, please tell me what should I do to proceed this patch.
-Will you (Eric) please make further integration? Shall I make another
-series (v2) of patches?
+So, I'm not much help here. :(
 
--- 
-k_satoda
+[Ah, looking at the date on the merge explains why I didn't
+notice this.]
 
---------------040805020601060802030702
-Content-Type: text/plain; charset=UTF-8;
- name="0001-Add-LC_ALL-C.UTF-8-in-t9115-git-svn-dcommit-funky-re.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-Add-LC_ALL-C.UTF-8-in-t9115-git-svn-dcommit-funky-re.pa";
- filename*1="tch"
+>                  If it is only a seldom used feature then I am not
+> sure if adding the extra code to restore the existing error message
+> is worth the effort?
 
->From 7b827f2d65aaa859030ba5b08055020f2bda1f0f Mon Sep 17 00:00:00 2001
-From: Kazutoshi SATODA <k_satoda@f2.dion.ne.jp>
-Date: Wed, 17 Feb 2016 00:29:24 +0900
-Subject: [PATCH] Add LC_ALL=C.UTF-8 in t9115-git-svn-dcommit-funky-renames.sh
-
-This makes the test 11-12 pass on Cygwin.
----
- t/t9115-git-svn-dcommit-funky-renames.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 9828f05..59d086b 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -84,7 +84,16 @@ test_expect_success 'git svn rebase works inside a fresh-cloned repository' '
- 		test -e test-rebase
- 	)'
- 
-+# Without this, LC_ALL=C as set in test-lib.sh, and Cygwin converts
-+# non-ASCII characters in filenames unexpectedly, and causes errors.
-+# https://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-specialchars
-+# > Some characters are disallowed in filenames on Windows filesystems. ...
-+# ...
-+# > ... All of the above characters, except for the backslash, are converted
-+# > to special UNICODE characters in the range 0xf000 to 0xf0ff (the
-+# > "Private use area") when creating or accessing files.
- test_expect_success 'svn.pathnameencoding=cp932 new file on dcommit' '
-+	export LC_ALL=C.UTF-8 &&
- 	neq=$(printf "\201\202") &&
- 	git config svn.pathnameencoding cp932 &&
- 	echo neq >"$neq" &&
-@@ -93,7 +102,9 @@ test_expect_success 'svn.pathnameencoding=cp932 new file on dcommit' '
- 	git svn dcommit
- '
- 
-+# See the comment on the above test for setting of LC_ALL.
- test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
-+	export LC_ALL=C.UTF-8 &&
- 	inf=$(printf "\201\207") &&
- 	git config svn.pathnameencoding cp932 &&
- 	echo inf >"$inf" &&
--- 
-2.7.0
-
-
---------------040805020601060802030702--
+ATB,
+Ramsay Jones
