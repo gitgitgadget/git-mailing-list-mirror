@@ -1,81 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 05/18] convert trivial cases to ALLOC_ARRAY
-Date: Tue, 16 Feb 2016 00:46:37 -0500
-Message-ID: <20160216054637.GA28237@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 08/18] use st_add and st_mult for allocation size computation
+Date: Tue, 16 Feb 2016 00:47:24 -0500
+Message-ID: <CAPig+cT0P0noxEEM3xCLyYzSFhKXQqW42L3v8EwHraF9Y_5-dg@mail.gmail.com>
 References: <20160215214516.GA4015@sigill.intra.peff.net>
- <20160215215154.GE10287@sigill.intra.peff.net>
- <CAPig+cRTz4Fb10JDWLjmTEXzQ+FbvmKU51A9B3vmwBepDX+BYA@mail.gmail.com>
- <20160216042346.GB27060@sigill.intra.peff.net>
- <CAPig+cSn29QtcWKRAaKMDzObuXetEySrVtLogkzfZXKXjPeufQ@mail.gmail.com>
+	<20160215215310.GH10287@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 06:47:12 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 06:47:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVYTg-0005Mu-Dm
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 06:47:12 +0100
+	id 1aVYU9-0005hq-JW
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 06:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753141AbcBPFrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 00:47:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42869 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753041AbcBPFqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 00:46:40 -0500
-Received: (qmail 24939 invoked by uid 102); 16 Feb 2016 05:46:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 00:46:40 -0500
-Received: (qmail 17998 invoked by uid 107); 16 Feb 2016 05:46:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 00:46:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2016 00:46:37 -0500
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSn29QtcWKRAaKMDzObuXetEySrVtLogkzfZXKXjPeufQ@mail.gmail.com>
+	id S1753391AbcBPFrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 00:47:37 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:33827 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753204AbcBPFrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 00:47:24 -0500
+Received: by mail-vk0-f50.google.com with SMTP id e185so124269358vkb.1
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 21:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=l6Y21CBvsh9TJ9zbFCYfqhTnNjQzvwSPdAn3MOetk6E=;
+        b=J+ibNpMcWNbtuoJXFSfUZjoq3UeMnZyw22qeKOHjS6gs9fcAd1TPs+HYHQpSs67s8d
+         C39wghhLvl1j5nn5ZYft7Rbwx8974jVrn7mEZZju7ea7gaUGm/B/wVlfR3laSM/LyFWQ
+         oGOjcG9V1lgjAw4H4/kdFCNzZbRJn4iLmmnDdRQKnKBex98Ua4V5/uY4FqQ0pKNWBD32
+         cw2LhyliJXwYfbSoY1faprJoKVXclKIAFKnBnUz46aTE6WniOkh84ptUmH6arnufd/1H
+         eWR2+plLwo1618xKtZTEfABYMoNfado98jKkGKIHW1dX7g2cOT8fjEQ4YnnwuLzXJ9io
+         sgvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=l6Y21CBvsh9TJ9zbFCYfqhTnNjQzvwSPdAn3MOetk6E=;
+        b=kIIRNl7WjZtxpg+Elnaxcm4OQs+o8IKVerCvIvg9BG0rDesHttmABFIn1W3VLQ2KGn
+         Wz/LJ8r8Ar4evW7P+zJjcXP8vemcW8ETb37PfArXZOfHPqPWFLeyuJFxTrgzv6XrlVt3
+         gNB1Pdu3pyGZuLdMZGK4M2paofiF29eq58FdMlFWn16sCMXbSpvciaVUBC2XGwahjT+Z
+         5lvSQ0vyFStGPNlTxBql0I3WKImI2sYOENZZDTMbrzV73sKwQund/03AsFzmD8mRKMDB
+         O9qk+5GMjT49NsVwC5nSRGk77SJJPOJVhjwJYyhfry4FEu9STa2etAALVhkT+meYOx4d
+         qJUQ==
+X-Gm-Message-State: AG10YOSKyNd/TOICtmN5QhKrxZNRbUP/RsP4ZsZcUP1/HTEfTlw+0fbEhuzHy4TIJH6rXGU4JasvBjsuvN8xuA==
+X-Received: by 10.31.47.135 with SMTP id v129mr16178994vkv.115.1455601644111;
+ Mon, 15 Feb 2016 21:47:24 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 21:47:24 -0800 (PST)
+In-Reply-To: <20160215215310.GH10287@sigill.intra.peff.net>
+X-Google-Sender-Auth: JFrNAV5TrIKhn0ZXoLSrxT8Fmjg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286322>
 
-On Mon, Feb 15, 2016 at 11:32:25PM -0500, Eric Sunshine wrote:
+On Mon, Feb 15, 2016 at 4:53 PM, Jeff King <peff@peff.net> wrote:
+> If our size computation overflows size_t, we may allocate a
+> much smaller buffer than we expected and overflow it. It's
+> probably impossible to trigger an overflow in most of these
+> sites in practice, but it is easy enough convert their
+> additions and multiplications into overflow-checking
+> variants. This may be fixing real bugs, and it makes
+> auditing the code easier.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> @@ -2632,7 +2632,7 @@ static void update_image(struct image *img,
+> -       result = xmalloc(img->len + insert_count - remove_count + 1);
+> +       result = xmalloc(st_add3(st_sub(img->len, remove_count), insert_count, 1));
 
-> On Mon, Feb 15, 2016 at 11:23 PM, Jeff King <peff@peff.net> wrote:
-> > On Mon, Feb 15, 2016 at 11:22:12PM -0500, Eric Sunshine wrote:
-> >> On Mon, Feb 15, 2016 at 4:51 PM, Jeff King <peff@peff.net> wrote:
-> >> > -       path = xmalloc((n+1)*sizeof(char *));
-> >> > +       ALLOC_ARRAY(path, n+1);
-> >>
-> >> Elsewhere in this patch, you've reformatted "x+c" as "x + c"; perhaps
-> >> do so here, as well.
-> >
-> > Will do. I noticed while going over this before sending it out that it
-> > may also be technically possible for "n+1" to overflow here (and I think
-> > in a few other places in this patch). I don't know how paranoid we want
-> > to be.
-> 
-> Yes, I also noticed those and considered mentioning it. There was also
-> some multiplication which might be of concern.
-> 
->     ALLOC_ARRAY(graph->mapping, 2 * graph->column_capacity);
-> 
-> It would be easy enough to manually call st_add() and st_mult() for
-> those cases, but I haven't examined them closely enough to determine
-> how likely they would be to overflow, nor do I know if the resulting
-> noisiness of code is desirable.
+Phew, what a mouthful, and not easy to read compared to the original.
+Fortunately, the remainder of the changes in this patch are
+straightforward and often simple.
 
-Yeah, I'm quite sure that one is safe (we set column_capacity to a fixed
-integer immediately beforehand). And many of the "+" ones are likely
-safe, too.  If "n" is close to wrapping, then allocating "n" structs
-will probably fail beforehand (though not always, if you have a ton of
-RAM and "n" is a signed int).
+> diff --git a/sha1_name.c b/sha1_name.c
+> @@ -87,9 +87,8 @@ static void find_short_object_filename(int len, const char *hex_pfx, struct disa
+>                 const char *objdir = get_object_directory();
+> -               int objdir_len = strlen(objdir);
+> -               int entlen = objdir_len + 43;
+> -               fakeent = xmalloc(sizeof(*fakeent) + entlen);
+> +               size_t objdir_len = strlen(objdir);
+> +               fakeent = xmalloc(st_add3(sizeof(*fakeent), objdir_len, 43));
+>                 memcpy(fakeent->base, objdir, objdir_len);
+>                 fakeent->name = fakeent->base + objdir_len + 1;
 
-But part of the point of this series is that we shouldn't have to wonder
-if things are safe. They should just be obviously so, and we should err
-on the side of caution. So I think it probably _is_ worth sprinkling
-st_add() calls in those places. I'll take a look for the re-roll.
+If we've gotten this far without die()ing due to overflow in st_add3()
+when invoking xmalloc(), then we know that this fakeent->name
+computation won't overflow. Okay.
 
--Peff
+>                 fakeent->name[-1] = '/';
