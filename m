@@ -1,96 +1,103 @@
-From: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
-Subject: Re: [PATCH] merge-recursive: option to disable renames
-Date: Tue, 16 Feb 2016 20:42:05 -0200
-Message-ID: <CALMa68q+TgAXS0=xc1CpZ2nbzGb+TWafWCUXZhGrWPzFL5_AQQ@mail.gmail.com>
-References: <1455583834-4796-1-git-send-email-felipegassis@gmail.com>
-	<xmqqegccmikn.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
+Date: Tue, 16 Feb 2016 17:49:19 -0500
+Message-ID: <CAPig+cS+i5QfpUbs8T+CqcDkC4ybaTygE9bguiqQMNgV4JhDOQ@mail.gmail.com>
+References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
+	<1455649215-23260-3-git-send-email-Karthik.188@gmail.com>
+	<20160216192231.GA16567@sigill.intra.peff.net>
+	<CAPig+cTiwHs+dD+jqAp8SNkwjQ2OzDsC8yopRgF7gctrGi5uUw@mail.gmail.com>
+	<20160216204954.GC27484@sigill.intra.peff.net>
+	<CAPig+cQDs35Uirm5cG552tR8iCFOstNJoOzLCZiXCgnq+g7MRQ@mail.gmail.com>
+	<20160216223451.GB9014@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipegassis@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 23:42:17 2016
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 16 23:49:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVoJz-00027p-Hu
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 23:42:15 +0100
+	id 1aVoQu-0007vF-DS
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 23:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756183AbcBPWmI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 17:42:08 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:38157 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756143AbcBPWmH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 17:42:07 -0500
-Received: by mail-ig0-f171.google.com with SMTP id y8so1896056igp.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 14:42:05 -0800 (PST)
+	id S1756281AbcBPWtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 17:49:21 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:35459 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929AbcBPWtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 17:49:20 -0500
+Received: by mail-vk0-f50.google.com with SMTP id e6so147146859vkh.2
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 14:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gFaigGicG0YLwo5TGUIJk6aLd27+J2cOe4979hVO8Es=;
-        b=GhqM4N1VqPK3fd6iAm9ZlHVPn3vn0Jsndbn2hNMcD2czTx5/5LFNrkyW44BTOouHow
-         QYR8EoZwNaUU2b/1NvKF+u8M/YM6iObqjGR+KuG4jcGO+EpixhTVwcnqc31C3UXvbbkg
-         lWr+Q5PvtpzewtpF8bKoysHz3iywu7Wxnl5Ch+7nCVX9lFlqs9f4EmBuWr/vDOus1fGw
-         euzE/muPDfy8bH4mtXGy/ZDHgRYhHt3FO2Z9kO2ZHIBf/pf87ZWGva0E7PkNP6C0eO8J
-         VJhOh49rE0byvzcgNM4hUswhl2CQzvetIWWcCJB9J5H8fIsFKVXfmk16icImw8I9u8l7
-         2AHg==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SqTP00s/AxA8wnMmtw5Oifdo0R+ltiJTc0dYWWyP3x0=;
+        b=ef4GFmadUznB3vqb4hvijFUH1hHxvn79TMqnQfSqteoU0I/eyHl0ab8hVIkrBlMHTQ
+         xEwbgpoLmZPm0N3ePBBUMhQDjzUQa8YC4u6ofvSNqYbAaEjivJ1kGGVGV0OdMnlQbEWk
+         QRTiNLVm3ln5mEW9RzqRsG9uZmUkXozLjzv52Q9jHKQK3bFUx25GEkFbSNGA45jxUiR+
+         KeXa/UC36veMEft/7V9yws5whucW8loHG7wz5jvRtamcLYN/lbGAIefPP7yrDHZOz2GG
+         eR5zmkCSHU/lNDp+SsiyAEuLd4VsEfXEnHBQL5tEtTZmlQofMWU7/0pgGGJpUfb1TB9+
+         gaEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gFaigGicG0YLwo5TGUIJk6aLd27+J2cOe4979hVO8Es=;
-        b=fOET4GyQh14301Tg36rV6QVVb9Ic1k77df9dXH6B5loBvAOxpln3mqw5s+RoPUIqK9
-         a3bM/uLYgbBfYkFoHwkufZ8Zwew9GDJpHaY6cDR7vOaARMjoA8TRuNNrNOpZzirs7kIN
-         0LiY5Nw1L9nqmdw9YdTArqHQhaDlEy9+kGVOb8ok3GJka7mZcO1JZbLD25gZ9T26S6zj
-         U4SXF/nV1NzNJhQvX+RFtR29k/v6HxM1vESGFo9aRxU/r+VKl5e0lt+h0A9rklC0XlZz
-         LAuS0//YBST7LuAwNIrlV+dz0RdMA2AFG0IvQ4KqFZFgj+j27PDpJR11SKKA821ZUnTO
-         4GSg==
-X-Gm-Message-State: AG10YOTYQTb0TgxSseC/lsfJ7InocsOFUukBsNKGO3CC++9x6ABYa9eC6Uu6KWVGOM1lLmJUxHW/Y7GyLjbkeQ==
-X-Received: by 10.50.43.199 with SMTP id y7mr21285698igl.47.1455662525569;
- Tue, 16 Feb 2016 14:42:05 -0800 (PST)
-Received: by 10.107.3.94 with HTTP; Tue, 16 Feb 2016 14:42:05 -0800 (PST)
-In-Reply-To: <xmqqegccmikn.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SqTP00s/AxA8wnMmtw5Oifdo0R+ltiJTc0dYWWyP3x0=;
+        b=hpdzaLuteGYSbzlv1UHX917XeQeergDBxLBPFqQbuo5BS+I1QpAgkbHw3YUmHqNxxs
+         /9cCKzvNJjPMLVUEwsTsk85W0hMTLNdI+dOFC4f88ybIcJ4093cKbTL3mChGixfPo9UD
+         miXEmYFp1Uyaw8odqmLeHcZ3i0AU7vtJumXe9jGAgL8ZwWffEWoMqgAJmLMYcwhWrrNR
+         hAtBm2xM6WTjj3bMqxbjbmSaHLE649lPkVX/M0G7BCfQm5Ip4VoaUelrBkSSHG48AO79
+         db5V4GdYN6wvA1vc0kqpZUaj/H7sV9HpbBDcktUZeozxJKZR+G9+OV+2304zPqPvHKXF
+         KjKw==
+X-Gm-Message-State: AG10YOT4QlKc7ttf3my06icOd+WzxjItE1CS5CJpBU/VCgg8Y4icm8P3j+bAfOlqcdGBkbdSlz9FclfXbEJA6Q==
+X-Received: by 10.31.47.135 with SMTP id v129mr20233950vkv.115.1455662959301;
+ Tue, 16 Feb 2016 14:49:19 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 16 Feb 2016 14:49:19 -0800 (PST)
+In-Reply-To: <20160216223451.GB9014@sigill.intra.peff.net>
+X-Google-Sender-Auth: HQZoFQbV9OM-1n-d2xyluqsH7l8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286447>
 
-On 16 February 2016 at 19:49, Junio C Hamano <gitster@pobox.com> wrote:
-> "Felipe Gon=C3=A7alves Assis"  <felipeg.assis@gmail.com> writes:
+On Tue, Feb 16, 2016 at 5:34 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 16, 2016 at 04:09:53PM -0500, Eric Sunshine wrote:
+>> My initial reaction was negative due to the heavy review burden this
+>> series has demanded thus far, however, my mind was changing even as I
+>> composed the above response. In retrospect, I think I'd be okay seeing
+>> a v6, for the following reasons:
+>>
+>> - I already ended up reviewing the the suggested new changes pretty
+>> closely as a side-effect of reading your proposal.
+>>
+>> - It would indeed be nice to avoid introducing
+>> strbuf_split_str_omit_term() in the first place; thus one less thing
+>> to worry about if someone ever takes on the task of retiring the
+>> strbuf_split interface.
+>>
+>> - It should be only a minimal amount of work for Karthik, thus
+>> turnaround time should be short.
+>>
+>> So, I think I'm fine with it, if Karthik is game.
 >
->> +no-renames;;
->> +     Turn off rename detection.
->> +     See also linkgit:git-diff[1] `--no-renames`.
+> I started to write up a commit message for my proposed change. But it
+> did make me think of a counter-argument. Right now we parse
+> "%(align:10,middle)" but do not allow "%(align: 10, middle)".
 >
-> Even though by default for merge-recursive the rename detection is
-> on, if we are adding an option to control this aspect of the
-> behaviour from the command line, it should follow the usual pattern,
-> i.e.
->
->  (1) the code to parse options would allow an earlier "--no-renames"
->      on the command line to be overridden with a later "--renames"; a=
-nd
->
->  (2) the description in the documentation would be headed by
->      "--[no-]renames", describes which one is the default, etc.
->
+> Should we? Or perhaps: might we? If the answer is yes, we are likely
+> better off with strbuf_split, because then we are only a strbuf_trim()
+> away from making that work.
 
-Just a note: In git-diff, there is no "--renames". Instead, renames
-are enabled by the "--find-renames[=3D<n>]" option.
-
-1. Do you think "rename-threshold=3D<n>" should enable renames?
-2. Should we have an option "find-renames" in merge?
-3. Should git-diff have a "--renames" option?
-
-I personally like your suggestion as it is. Just wanted to make sure
-you considered that while I work on the next patch.
-
-Thanks,
-=46elipe
+I also considered the issue of embedded whitespace very early on when
+reading your initial proposal, but didn't mention anything about it
+due to a vague recollection from one of the early reviews (or possibly
+a review of one of Karthik's other patch series) of someone (possibly
+Junio) saying or implying that embedded whitespace would not be
+supported. Unfortunately, I can't locate that message (assuming it
+even exists and wasn't a figment of my imagination).
