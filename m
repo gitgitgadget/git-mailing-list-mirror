@@ -1,198 +1,119 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 11/20] log_ref_setup(): manage the name of the reflog file internally
-Date: Tue, 16 Feb 2016 14:22:24 +0100
-Message-ID: <86533578d4205742b8158be7ce8e8e2f8697f9bd.1455626201.git.mhagger@alum.mit.edu>
-References: <cover.1455626201.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:31:44 2016
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 25/26] worktree move: accept destination as directory
+Date: Tue, 16 Feb 2016 20:29:26 +0700
+Message-ID: <1455629367-26193-26-git-send-email-pclouds@gmail.com>
+References: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
+ <1455629367-26193-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:31:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfjE-00047S-0B
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:31:44 +0100
+	id 1aVfjP-00049f-QJ
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbcBPNbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 08:31:04 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:48662 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932351AbcBPNaj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:39 -0500
-X-AuditID: 12074414-8b3ff70000005020-ea-56c322b89451
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 9A.1E.20512.8B223C65; Tue, 16 Feb 2016 08:23:04 -0500 (EST)
-Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOX028717
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 16 Feb 2016 08:23:02 -0500
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLtD6XCYwbbLUhbzN51gtOi60s1k
-	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
-	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd0bP7gtsBf/VK/62rGFvYOyU72Lk5JAQMJFY1N/J
-	3MXIxSEksJVRYs23djYI5wSTxKFLv5lBqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQs8YpTo2r+d
-	sYuRg0NYIFRi6cNwkBoWAVWJro5ZrCA2r0CUxNmfa1ghtslJtPzYDWZzClhInGzpZQGxhQTM
-	Je582cM0gZFnASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdC73czBK91JTSTYyQEBPZwXjk
-	pNwhRgEORiUeXg6PQ2FCrIllxZW5hxglOZiURHl5uA+HCfEl5adUZiQWZ8QXleakFh9ilOBg
-	VhLh/fcKqJw3JbGyKrUoHyYlzcGiJM77bbG6n5BAemJJanZqakFqEUxWhoNDSYL3kyLQUMGi
-	1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQDMQXA6MAJMUDtDcNpJ23uCAxFygK0XqK
-	UVFKnHc/SEIAJJFRmgc3FpY4XjGKA30pzNsNUsUDTDpw3a+ABjMBDc65BPJQcUkiQkqqgbGI
-	5f6W5UV/Nqydv8J/sYMVX+v9P7um5FREOBdtUlHZfi25mTvrufK5hWcXJLEwuEyPKK9crBVY
-	7xb85XHqkjsLctP2sekJXNy7ZkPh/Oi4Pic5k9f2bk8zDXYembLZO4H5eteUjacX 
+	id S932468AbcBPNbr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 08:31:47 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33855 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932262AbcBPNbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 08:31:43 -0500
+Received: by mail-pf0-f180.google.com with SMTP id x65so105419409pfb.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 05:31:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=802CxMYXHNEtMMVjJ05yPzIgzCXHmfLJ5EWZw332Bzs=;
+        b=V0YC7vIzDlSFAGjl1miJ7XHgOJWcl0KY4yauSXKVEtlzo3Mxzy63zQjZINR1ysJWQQ
+         Yta9Qr/50H8kea1uAXLkKELXnJpWBCKuaTDbGsBnMf9kUDJPqVHXSkAj+u79PZHUz7tU
+         aAS9jUZNhbjDaR9/AiVILK7ps7ujFygcMRTEhYT6JkOtfAgyv1+tRI7fsxW9ijfvTMWF
+         CpqSKW76tJ1AOLnJKZY0KfO52tCS9h3FU4u8fDEnrrOhwi2M8RFEXo+1UN9qB2WXPuBk
+         AUrVTl2rYbGjhjUaCSIZy/2qQf1XH7RrlE0rTlDepYWWUs7rlv3sZ9xVC8FiF9iY5yTG
+         1GaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=802CxMYXHNEtMMVjJ05yPzIgzCXHmfLJ5EWZw332Bzs=;
+        b=llsyk3wWAu9lJ5cncP4z4lTttYkf/qTWRMFTTDhdVw0b+4/VzWpRXkqZEwDIuiZXyu
+         f3Pv8UED7Lkb/JCR/cVljDUm6el9+v3ZaN+/xccm3Hkm2ia85yZjpoxMBg7MGwLl/oRC
+         PpmtmRh0S1tmiAor2sGhosL1uuPnKDuDHPR/HJfuEVnAv+HkjaHyVkbpZBCLaylAG4xv
+         Vs5zEKpPESD6+TsMwXS+Quf4uS19L19esNyf9rbLiWdE1hppWQy+KRMBYtvVQzh19bJJ
+         KVwT5KzWtQTQ3bOZq55ilvdnf+ztnMwhRZ+MjQabF0D2MtYeQMf9W/Ln++SjRrh0mlVX
+         j5Aw==
+X-Gm-Message-State: AG10YOTYWS8JICo4QFliFvHN3nmGHvkZQWWuvm4cQaTBMH6eb/VsIT0BrnmK18vatD9T9w==
+X-Received: by 10.98.19.22 with SMTP id b22mr31210433pfj.17.1455629503285;
+        Tue, 16 Feb 2016 05:31:43 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id 144sm45944063pfa.83.2016.02.16.05.31.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Feb 2016 05:31:41 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 16 Feb 2016 20:32:06 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
+In-Reply-To: <1455629367-26193-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286392>
 
-Instead of writing the name of the reflog file into a strbuf that is
-supplied by the caller but not needed there, write it into a local
-temporary buffer and remove the strbuf parameter entirely.
+Similar to "mv a b/", which is actually "mv a b/a", we extract basename
+of source worktree and create a directory of the same name at
+destination if dst path is a directory.
 
-And while we're adjusting the function signature, reorder the arguments
-to move the input parameters before the output parameters.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- refs/files-backend.c | 66 +++++++++++++++++++++++-----------------------------
- 1 file changed, 29 insertions(+), 37 deletions(-)
+ builtin/worktree.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index dcd19ee..120189c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2591,39 +2591,38 @@ static int open_or_create_logfile(const char *path, void *cb)
- }
- 
- /*
-- * Create a reflog for a ref. Store its path to *logfile. If
-- * force_create = 0, only create the reflog for certain refs (those
-- * for which should_autocreate_reflog returns non-zero). Otherwise,
-- * create it regardless of the reference name. If the logfile already
-- * existed or was created, return 0 and set *logfd to the file
-- * descriptor opened for appending to the file. If no logfile exists
-- * and we decided not to create one, return 0 and set *logfd to -1. On
-- * failure, fill in *err and return -1.
-+ * Create a reflog for a ref. If force_create = 0, only create the
-+ * reflog for certain refs (those for which should_autocreate_reflog
-+ * returns non-zero). Otherwise, create it regardless of the reference
-+ * name. If the logfile already existed or was created, return 0 and
-+ * set *logfd to the file descriptor opened for appending to the file.
-+ * If no logfile exists and we decided not to create one, return 0 and
-+ * set *logfd to -1. On failure, fill in *err and return -1.
-  */
--static int log_ref_setup(const char *refname,
--			 struct strbuf *logfile, int *logfd,
--			 struct strbuf *err, int force_create)
-+static int log_ref_setup(const char *refname, int force_create,
-+			 int *logfd, struct strbuf *err)
- {
--	strbuf_git_path(logfile, "logs/%s", refname);
-+	char *logfile = git_pathdup("logs/%s", refname);
-+	int ret = 0;
- 
- 	if (force_create || should_autocreate_reflog(refname)) {
--		if (raceproof_create_file(logfile->buf, open_or_create_logfile, logfd) < 0) {
-+		if (raceproof_create_file(logfile, open_or_create_logfile, logfd) < 0) {
- 			if (errno == ENOENT) {
- 				strbuf_addf(err, "unable to create directory for %s: "
--					    "%s", logfile->buf, strerror(errno));
-+					    "%s", logfile, strerror(errno));
- 			} else if (errno == EISDIR) {
- 				strbuf_addf(err, "there are still logs under %s",
--					    logfile->buf);
-+					    logfile);
- 			} else {
- 				strbuf_addf(err, "unable to append to %s: %s",
--					    logfile->buf, strerror(errno));
-+					    logfile, strerror(errno));
- 			}
--			return -1;
-+			ret = -1;
- 		} else {
--			adjust_shared_perm(logfile->buf);
-+			adjust_shared_perm(logfile);
- 		}
- 	} else {
--		*logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
-+		*logfd = open(logfile, O_APPEND | O_WRONLY, 0666);
- 		if (*logfd < 0) {
- 			if (errno == ENOENT || errno == EISDIR) {
- 				/*
-@@ -2634,27 +2633,25 @@ static int log_ref_setup(const char *refname,
- 				 */
- 			} else {
- 				strbuf_addf(err, "unable to append to %s: %s",
--					    logfile->buf, strerror(errno));
--				return -1;
-+					    logfile, strerror(errno));
-+				ret = -1;
- 			}
- 		} else {
--			adjust_shared_perm(logfile->buf);
-+			adjust_shared_perm(logfile);
- 		}
- 	}
- 
--	return 0;
-+	free(logfile);
-+	return ret;
- }
- 
- int safe_create_reflog(const char *refname, int force_create, struct strbuf *err)
- {
--	int ret;
--	struct strbuf sb = STRBUF_INIT;
--	int fd;
-+	int ret, fd;
- 
--	ret = log_ref_setup(refname, &sb, &fd, err, force_create);
-+	ret = log_ref_setup(refname, force_create, &fd, err);
- 	if (!ret && fd >= 0)
- 		close(fd);
--	strbuf_release(&sb);
- 	return ret;
- }
- 
-@@ -2686,16 +2683,15 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 
- static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 			   const unsigned char *new_sha1, const char *msg,
--			   struct strbuf *logfile, int flags,
--			   struct strbuf *err)
-+			   int flags, struct strbuf *err)
- {
- 	int logfd, result;
- 
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
- 
--	result = log_ref_setup(refname, logfile, &logfd, err,
--			       flags & REF_FORCE_CREATE_REFLOG);
-+	result = log_ref_setup(refname, flags & REF_FORCE_CREATE_REFLOG,
-+			       &logfd, err);
- 
- 	if (result)
- 		return result;
-@@ -2730,11 +2726,7 @@ int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			const unsigned char *new_sha1, const char *msg,
- 			int flags, struct strbuf *err)
- {
--	struct strbuf sb = STRBUF_INIT;
--	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, flags,
--				  err);
--	strbuf_release(&sb);
--	return ret;
-+	return log_ref_write_1(refname, old_sha1, new_sha1, msg, flags, err);
- }
- 
- /*
--- 
-2.7.0
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index acd49da..d4ce987 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -531,7 +531,13 @@ static int move_worktree(int ac, const char **av, =
+const char *prefix)
+ 	strbuf_addstr(&dst, prefix_filename(prefix,
+ 					    strlen(prefix),
+ 					    av[1]));
+-	if (file_exists(dst.buf))
++	if (is_directory(dst.buf))
++		/*
++		 * keep going, dst will be appended after we get the
++		 * source's absolute path
++		 */
++		;
++	else if (file_exists(dst.buf))
+ 		die(_("target '%s' already exists"), av[1]);
+=20
+ 	worktrees =3D get_worktrees();
+@@ -551,6 +557,17 @@ static int move_worktree(int ac, const char **av, =
+const char *prefix)
+ 	if (validate_worktree(wt, 0))
+ 		return -1;
+=20
++	if (is_directory(dst.buf)) {
++		const char *sep =3D strrchr(wt->path, '/');
++
++		if (!sep)
++			die(_("could not figure out destination name from '%s'"),
++			    wt->path);
++		strbuf_addstr(&dst, sep);
++		if (file_exists(dst.buf))
++			die(_("target '%s' already exists"), dst.buf);
++	}
++
+ 	/*
+ 	 * First try. Atomically move, and probably cheaper, if both
+ 	 * source and target are on the same file system.
+--=20
+2.7.0.377.g4cd97dd
