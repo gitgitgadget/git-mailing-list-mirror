@@ -1,238 +1,185 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 1/4] remote: use parse_config_key
-Date: Tue, 16 Feb 2016 10:47:49 +0100
-Message-ID: <1455616072-20838-2-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v3 2/4] remote: simplify remote_is_configured()
+Date: Tue, 16 Feb 2016 10:47:50 +0100
+Message-ID: <1455616072-20838-3-git-send-email-t.gummerer@gmail.com>
 References: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
  <1455616072-20838-1-git-send-email-t.gummerer@gmail.com>
 Cc: sunshine@sunshineco.com, peff@peff.net, Johannes.Schindelin@gmx.de,
 	gitster@pobox.com
 To: git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 10:47:51 2016
+X-From: git-owner@vger.kernel.org Tue Feb 16 10:47:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVcEZ-0005m3-2E
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:47:51 +0100
+	id 1aVcEZ-0005m3-UE
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754648AbcBPJri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 04:47:38 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:37834 "EHLO
-	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754464AbcBPJre (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 04:47:34 -0500
-Received: by mail-wm0-f43.google.com with SMTP id g62so143861055wme.0
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:47:33 -0800 (PST)
+	id S1754666AbcBPJrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 04:47:40 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38633 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754415AbcBPJrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 04:47:36 -0500
+Received: by mail-wm0-f41.google.com with SMTP id a4so90954744wme.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:47:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IpcSz1dtc0qAnOgQJQAoOaGW5wryF/KuK2NEaSEfrm8=;
-        b=WJlCF4fLTILevNyf/t/xWBw1Aw7O0Kulxe3d1T/zIr/YTBSpLRXPwmHHrrmdOw+m/D
-         5bVrPWkLqZUxWDbxJAKa3hnKhWwHUB3DZ8fx1o8EhHGvM7AZ6ote7Sjapi6fbG0PeC7o
-         lLLqTy0GEO2sOR/6asnijkMEhs7wy7K4rwjQYZby0IJpSRZsRvYgFFYTbKzXPrBDCt0L
-         3RLlqYSeYkVOIo8aTBHJipaAfbKu6XJiMuBJrSijhUI/VPkKcQgvFwpDL6WOuWNOhJOk
-         Ex205ukPdQLjJjzTeJA8Q/NRI/7lG9zrgHNrDy7gINbBDVCnpcCLqJgI3fAauS6aFxg9
-         TQYA==
+        bh=2W7tOyOuXL38iOPsxJsvUAy/yzRqbsN1cj9zMVcanzo=;
+        b=iHwNrIKoyFqQx+qHjL8EvOBPs3ldoW9Li8AQxIgi5ZyrO165TL3HIZabnWuKg4ACve
+         ABOndb8K8vG3SjD4RzvDcZfDegpgIrpNa77Sc3QoMcmat4ZQ6Pqpol1bz3Gbw/8HfgTJ
+         f1b2n7EswNs5/bxOQe7o1IWIf1VgkM3QW7DXxYWKSRJ26872rwvW7p4esV/5ZZTqu4yQ
+         tV2XBXLiGyqhBkTySgPo+hh712ihzjUyqPoM0WyN+Np6RrB6r1x0BsfrT5HVa8HBNy5Z
+         lOxJGUBTpOnc0cV8sQa87LJWHsSKs4SuTCtHtIh47FDNsSyFuaOG+5q83gc3wqVfYomg
+         bOEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IpcSz1dtc0qAnOgQJQAoOaGW5wryF/KuK2NEaSEfrm8=;
-        b=kUWEdLXuhEIP+1u7xZSiitmzzqZaKDINMqQDivomxtzVOFEGGXigA+MzOGnoThfknA
-         cw3o0PT2bXJIJp5o0PovHOpwW/qmbboyTWqiiSlBvDOjKdGQa8OKwlVI6fhlTO30e0W9
-         YFsg4OfhAqfnd+yLhR6vhPjLifD7lqWZhyZ95NdFRaL1Ben0axE0FhWlwsxw1HQAD0ZL
-         vJHXA+su4pDoXyyxHzbJc6EcOqdpaUArTZfjLt155GJsqlqPiUSvxzOL5I5RWOxIiOCH
-         oijVfU6MqD1gku/ppnXDS0GmxffqizfbY8MQbiZVoE4Q8Td74L762qctIkTxifMwxFjh
-         JV9w==
-X-Gm-Message-State: AG10YOQqupTrZUh9EIZ++OouTSWqhObQpu1Lyat3Z6KEv1nw7gvWut11FECNvKXtL0E7AA==
-X-Received: by 10.194.71.46 with SMTP id r14mr23884077wju.100.1455616052608;
-        Tue, 16 Feb 2016 01:47:32 -0800 (PST)
+        bh=2W7tOyOuXL38iOPsxJsvUAy/yzRqbsN1cj9zMVcanzo=;
+        b=XH1XmofWO8I4bQo2kH9yjn+damdXfwtW9/9RACiaKJo0c6xjmAyQHbNxm6J8yzFOi5
+         3mOUwklf6iaP1QEF4XhQJLjH1CjbM8HZsjrryG4JH5OoXMFQfMOdzEnDBj+/Fgvl75WS
+         rRoqGUzAydNclmQjqw4vv6BzsaRTsCbPRRSpxWeizNijXrg0xxjXY2nQGc9m9Kk1rqgk
+         deCRJabJjka9OaaKXGHWJMO9Jh7uAIZsWJAY2g5BA2KfbE1QJVkhaaulnHQyWeg76NUH
+         6FAA3z8WZp6Gbc6RYeTsieeumhyAWQFrFOwwgLq9+Y0Z/I1lXIyCYIrtvBhRn9rxCIZJ
+         l46g==
+X-Gm-Message-State: AG10YOTyirKHwYQkz77n3EZe9+yqA+jJTqff+jVQoAGOoBEqQDCZskRZqSTbAMkAa8CGzA==
+X-Received: by 10.194.61.135 with SMTP id p7mr24653379wjr.64.1455616054944;
+        Tue, 16 Feb 2016 01:47:34 -0800 (PST)
 Received: from localhost (host161-107-dynamic.2-87-r.retail.telecomitalia.it. [87.2.107.161])
-        by smtp.gmail.com with ESMTPSA id ko2sm29334240wjc.9.2016.02.16.01.47.31
+        by smtp.gmail.com with ESMTPSA id gb9sm29335088wjb.26.2016.02.16.01.47.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Feb 2016 01:47:31 -0800 (PST)
+        Tue, 16 Feb 2016 01:47:33 -0800 (PST)
 X-Mailer: git-send-email 2.7.1.410.g6faf27b
 In-Reply-To: <1455616072-20838-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286333>
 
-95b567c7 ("use skip_prefix to avoid repeating strings") transformed
-calls using starts_with() and then skipping the length of the prefix to
-skip_prefix() calls.  In remote.c there are a few calls like:
+The remote_is_configured() function allows checking whether a remote
+exists or not.  The function however only works if remote_get() wasn't
+called before calling it.  In addition, it only checks the configuration
+for remotes, but not remotes or branches files.
 
-  if (starts_with(foo, "bar"))
-      foo += 3
+Make use of the origin member of struct remote instead, which indicates
+where the remote comes from.  It will be set to some value if the remote
+is configured in any file in the repository, but is initialized to 0 if
+the remote is only created in make_remote().
 
-These calls weren't touched by the aformentioned commit, but can be
-replaced by calls to parse_config_key(), to simplify the code and
-clarify the intentions.  Do that.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- remote.c | 69 ++++++++++++++++++++++++++++++----------------------------------
- 1 file changed, 32 insertions(+), 37 deletions(-)
+ builtin/fetch.c  |  5 ++---
+ builtin/remote.c | 12 ++++++------
+ remote.c         | 13 ++-----------
+ remote.h         |  3 ++-
+ 4 files changed, 12 insertions(+), 21 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 8e74213..8121830 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1016,10 +1016,9 @@ static int add_remote_or_group(const char *name, struct string_list *list)
+ 
+ 	git_config(get_remote_group, &g);
+ 	if (list->nr == prev_nr) {
+-		struct remote *remote;
+-		if (!remote_is_configured(name))
++		struct remote *remote = remote_get(name);
++		if (!remote_is_configured(remote))
+ 			return 0;
+-		remote = remote_get(name);
+ 		string_list_append(list, remote->name);
+ 	}
+ 	return 1;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 2b2ff9b..d966262 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1441,9 +1441,9 @@ static int set_remote_branches(const char *remotename, const char **branches,
+ 
+ 	strbuf_addf(&key, "remote.%s.fetch", remotename);
+ 
+-	if (!remote_is_configured(remotename))
+-		die(_("No such remote '%s'"), remotename);
+ 	remote = remote_get(remotename);
++	if (!remote_is_configured(remote))
++		die(_("No such remote '%s'"), remotename);
+ 
+ 	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
+ 		strbuf_release(&key);
+@@ -1498,9 +1498,9 @@ static int get_url(int argc, const char **argv)
+ 
+ 	remotename = argv[0];
+ 
+-	if (!remote_is_configured(remotename))
+-		die(_("No such remote '%s'"), remotename);
+ 	remote = remote_get(remotename);
++	if (!remote_is_configured(remote))
++		die(_("No such remote '%s'"), remotename);
+ 
+ 	url_nr = 0;
+ 	if (push_mode) {
+@@ -1566,9 +1566,9 @@ static int set_url(int argc, const char **argv)
+ 	if (delete_mode)
+ 		oldurl = newurl;
+ 
+-	if (!remote_is_configured(remotename))
+-		die(_("No such remote '%s'"), remotename);
+ 	remote = remote_get(remotename);
++	if (!remote_is_configured(remote))
++		die(_("No such remote '%s'"), remotename);
+ 
+ 	if (push_mode) {
+ 		strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
 diff --git a/remote.c b/remote.c
-index 02e698a..c7d67c2 100644
+index c7d67c2..f001681 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -318,93 +318,88 @@ static void read_branches_file(struct remote *remote)
- static int handle_config(const char *key, const char *value, void *cb)
+@@ -713,18 +713,9 @@ struct remote *pushremote_get(const char *name)
+ 	return remote_get_1(name, pushremote_for_branch);
+ }
+ 
+-int remote_is_configured(const char *name)
++int remote_is_configured(struct remote *remote)
  {
- 	const char *name;
-+	int namelen;
- 	const char *subkey;
- 	struct remote *remote;
- 	struct branch *branch;
--	if (starts_with(key, "branch.")) {
--		name = key + 7;
--		subkey = strrchr(name, '.');
--		if (!subkey)
-+	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
-+		if (!name)
- 			return 0;
--		branch = make_branch(name, subkey - name);
--		if (!strcmp(subkey, ".remote")) {
-+		branch = make_branch(name, namelen);
-+		if (!strcmp(subkey, "remote")) {
- 			return git_config_string(&branch->remote_name, key, value);
--		} else if (!strcmp(subkey, ".pushremote")) {
-+		} else if (!strcmp(subkey, "pushremote")) {
- 			return git_config_string(&branch->pushremote_name, key, value);
--		} else if (!strcmp(subkey, ".merge")) {
-+		} else if (!strcmp(subkey, "merge")) {
- 			if (!value)
- 				return config_error_nonbool(key);
- 			add_merge(branch, xstrdup(value));
- 		}
- 		return 0;
- 	}
--	if (starts_with(key, "url.")) {
-+	if (parse_config_key(key, "url", &name, &namelen, &subkey) >= 0) {
- 		struct rewrite *rewrite;
--		name = key + 4;
--		subkey = strrchr(name, '.');
--		if (!subkey)
-+		if (!name)
- 			return 0;
--		if (!strcmp(subkey, ".insteadof")) {
--			rewrite = make_rewrite(&rewrites, name, subkey - name);
-+		if (!strcmp(subkey, "insteadof")) {
-+			rewrite = make_rewrite(&rewrites, name, namelen);
- 			if (!value)
- 				return config_error_nonbool(key);
- 			add_instead_of(rewrite, xstrdup(value));
--		} else if (!strcmp(subkey, ".pushinsteadof")) {
--			rewrite = make_rewrite(&rewrites_push, name, subkey - name);
-+		} else if (!strcmp(subkey, "pushinsteadof")) {
-+			rewrite = make_rewrite(&rewrites_push, name, namelen);
- 			if (!value)
- 				return config_error_nonbool(key);
- 			add_instead_of(rewrite, xstrdup(value));
- 		}
- 	}
+-	struct remotes_hash_key lookup;
+-	struct hashmap_entry lookup_entry;
+-	read_config();
+-
+-	init_remotes_hash();
+-	lookup.str = name;
+-	lookup.len = strlen(name);
+-	hashmap_entry_init(&lookup_entry, memhash(name, lookup.len));
+-
+-	return hashmap_get(&remotes_hash, &lookup_entry, &lookup) != NULL;
++	return remote && remote->origin;
+ }
  
--	if (!starts_with(key,  "remote."))
-+	if (parse_config_key(key, "remote", &name, &namelen, &subkey) < 0)
- 		return 0;
--	name = key + 7;
+ int for_each_remote(each_remote_fn fn, void *priv)
+diff --git a/remote.h b/remote.h
+index 4fd7a0f..c21fd37 100644
+--- a/remote.h
++++ b/remote.h
+@@ -5,6 +5,7 @@
+ #include "hashmap.h"
  
- 	/* Handle remote.* variables */
--	if (!strcmp(name, "pushdefault"))
-+	if (!name && !strcmp(subkey, "pushdefault"))
- 		return git_config_string(&pushremote_name, key, value);
+ enum {
++	REMOTE_UNCONFIGURED = 0,
+ 	REMOTE_CONFIG,
+ 	REMOTE_REMOTES,
+ 	REMOTE_BRANCHES
+@@ -59,7 +60,7 @@ struct remote {
  
-+	if (!name)
-+		return 0;
- 	/* Handle remote.<name>.* variables */
- 	if (*name == '/') {
- 		warning("Config remote shorthand cannot begin with '/': %s",
- 			name);
- 		return 0;
- 	}
--	subkey = strrchr(name, '.');
--	if (!subkey)
--		return 0;
--	remote = make_remote(name, subkey - name);
-+	remote = make_remote(name, namelen);
- 	remote->origin = REMOTE_CONFIG;
--	if (!strcmp(subkey, ".mirror"))
-+	if (!strcmp(subkey, "mirror"))
- 		remote->mirror = git_config_bool(key, value);
--	else if (!strcmp(subkey, ".skipdefaultupdate"))
-+	else if (!strcmp(subkey, "skipdefaultupdate"))
- 		remote->skip_default_update = git_config_bool(key, value);
--	else if (!strcmp(subkey, ".skipfetchall"))
-+	else if (!strcmp(subkey, "skipfetchall"))
- 		remote->skip_default_update = git_config_bool(key, value);
--	else if (!strcmp(subkey, ".prune"))
-+	else if (!strcmp(subkey, "prune"))
- 		remote->prune = git_config_bool(key, value);
--	else if (!strcmp(subkey, ".url")) {
-+	else if (!strcmp(subkey, "url")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_url(remote, v);
--	} else if (!strcmp(subkey, ".pushurl")) {
-+	} else if (!strcmp(subkey, "pushurl")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_pushurl(remote, v);
--	} else if (!strcmp(subkey, ".push")) {
-+	} else if (!strcmp(subkey, "push")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_push_refspec(remote, v);
--	} else if (!strcmp(subkey, ".fetch")) {
-+	} else if (!strcmp(subkey, "fetch")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_fetch_refspec(remote, v);
--	} else if (!strcmp(subkey, ".receivepack")) {
-+	} else if (!strcmp(subkey, "receivepack")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
-@@ -412,7 +407,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 			remote->receivepack = v;
- 		else
- 			error("more than one receivepack given, using the first");
--	} else if (!strcmp(subkey, ".uploadpack")) {
-+	} else if (!strcmp(subkey, "uploadpack")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
- 			return -1;
-@@ -420,18 +415,18 @@ static int handle_config(const char *key, const char *value, void *cb)
- 			remote->uploadpack = v;
- 		else
- 			error("more than one uploadpack given, using the first");
--	} else if (!strcmp(subkey, ".tagopt")) {
-+	} else if (!strcmp(subkey, "tagopt")) {
- 		if (!strcmp(value, "--no-tags"))
- 			remote->fetch_tags = -1;
- 		else if (!strcmp(value, "--tags"))
- 			remote->fetch_tags = 2;
--	} else if (!strcmp(subkey, ".proxy")) {
-+	} else if (!strcmp(subkey, "proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
--	} else if (!strcmp(subkey, ".proxyauthmethod")) {
-+	} else if (!strcmp(subkey, "proxyauthmethod")) {
- 		return git_config_string((const char **)&remote->http_proxy_authmethod,
- 					 key, value);
--	} else if (!strcmp(subkey, ".vcs")) {
-+	} else if (!strcmp(subkey, "vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
- 	}
- 	return 0;
+ struct remote *remote_get(const char *name);
+ struct remote *pushremote_get(const char *name);
+-int remote_is_configured(const char *name);
++int remote_is_configured(struct remote *remote);
+ 
+ typedef int each_remote_fn(struct remote *remote, void *priv);
+ int for_each_remote(each_remote_fn fn, void *priv);
 -- 
 2.7.1.410.g6faf27b
