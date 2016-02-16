@@ -1,89 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] am -i: fix "v"iew
-Date: Tue, 16 Feb 2016 15:06:57 -0800
-Message-ID: <1455664017-27588-4-git-send-email-gitster@pobox.com>
-References: <1455664017-27588-1-git-send-email-gitster@pobox.com>
-Cc: Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 00:07:18 2016
+Subject: Re: [PATCH v5 02/15] branch: report errors in tracking branch setup
+Date: Tue, 16 Feb 2016 15:07:55 -0800
+Message-ID: <xmqq1t8cmeyc.fsf@gitster.mtv.corp.google.com>
+References: <1455627402-752-1-git-send-email-ps@pks.im>
+	<1455627402-752-3-git-send-email-ps@pks.im>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Stefan Beller <sbeller@google.com>
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Wed Feb 17 00:08:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVoiC-00057H-88
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 00:07:16 +0100
+	id 1aVoiw-0005kl-Fk
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 00:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353AbcBPXHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 18:07:11 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51094 "EHLO
+	id S1756380AbcBPXH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 18:07:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56243 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756334AbcBPXHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 18:07:05 -0500
+	with ESMTP id S1756335AbcBPXH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 18:07:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B8B50453BC;
-	Tue, 16 Feb 2016 18:07:04 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB07D453E3;
+	Tue, 16 Feb 2016 18:07:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=MYD6
-	es6TyHvRu8T0l28wkWOy6t4=; b=DF2K0tTx12AwphPDDcUeAghOuvHXfNyYqVSc
-	hLVHlxzSG14WnRi9g0VzTRTX1CySKVc7tU9OgeHQtUAvVUFPGNx/2hgUwMhIVCue
-	v/R8a8fUY7D4MzPtsOW5xPzgO2LR2YFnFTkeIMLLqFei1WEXhlTD1N0mDKcx7Bo8
-	wuwnLSE=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fsf8i/ufoN+1lB6bKo9fuhPMW4E=; b=IOaGEm
+	yE1XEWPajLPS6HKO5laXxeAd+fVCQg51f2ZFXrweVke0uDr5SAD9XeQdZJ/pfirS
+	92T146wtFiEwpEd8MpwKFIFBJX9zqbcFgVakBhNhEEqYmwuiY09UtNtYs/Yt2tNL
+	81Kl804McskZzmO/XB+Lx25h/Oyj5HzVVOjJA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	BhAvwOeX/oxo/A+lOu7mythx12r9SP7tvNfx5Q0TNY7HX6cX5FStWEbr8g5PDd6n
-	P/NOaktqLU3TIz7viaQu2v/MrY7M4fhauBk2VgCJlhjskgeXGOVRlPZcFYnKfWHL
-	V7eKBmG8aGbaqlEDxB4C2STA4W+bEYNs98vDcTxo6co=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WH1wf9y5C4BRS2e00wWRDS6q75jEHPHz
+	JKs1eRlBpdip6a8IaM2k3IrQA/iWO2PqZu8e5wFy/1HIUV61iSEwg+ao1rfrp1a/
+	ZXmVcKfNlWt+QmJzbH61gVf4kuDV6PrnyPjptiWixNWg/3GXPJ9hnSPH6Wjm32+6
+	e2a7GCa6XHY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B14D9453BB;
-	Tue, 16 Feb 2016 18:07:04 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2DE5453E2;
+	Tue, 16 Feb 2016 18:07:57 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2033C453BA;
-	Tue, 16 Feb 2016 18:07:04 -0500 (EST)
-X-Mailer: git-send-email 2.7.1-460-gd45d0a4
-In-Reply-To: <1455664017-27588-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: FE37EE5E-D501-11E5-A6D2-79226BB36C07-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 293C6453E1;
+	Tue, 16 Feb 2016 18:07:57 -0500 (EST)
+In-Reply-To: <1455627402-752-3-git-send-email-ps@pks.im> (Patrick Steinhardt's
+	message of "Tue, 16 Feb 2016 13:56:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1DD5C470-D502-11E5-AE41-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286452>
 
-The 'v'iew subcommand of the interactive mode of "git am -i" was
-broken by the rewrite to C we did at around 2.6.0 timeframe at
-7ff26832 (builtin-am: implement -i/--interactive, 2015-08-04); we
-used to spawn the pager via the shell, accepting things like
+Patrick Steinhardt <ps@pks.im> writes:
 
-	PAGER='less -S'
+>  	if (rebasing) {
+>  		strbuf_reset(&key);
+>  		strbuf_addf(&key, "branch.%s.rebase", local);
+> -		git_config_set(key.buf, "true");
+> +		if (git_config_set(key.buf, "true") < 0)
+> +		    goto out_err;
 
-in the environment, but the rewrite forgot and tried to directly
-spawn a command whose name is the entire string.
-
-The previous refactoring of the new helper function makes it easier
-for us to do the right thing.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/am.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index 1399c8d..aecf917 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1740,8 +1740,9 @@ static int do_interactive(struct am_state *state)
- 
- 			if (!pager)
- 				pager = "cat";
--			argv_array_push(&cp.args, pager);
--			argv_array_push(&cp.args, am_path(state, "patch"));
-+
-+			prepare_pager_args(&cp, pager,
-+					   am_path(state, "patch"), NULL);
- 			run_command(&cp);
- 		}
- 	}
--- 
-2.7.1-460-gd45d0a4
+The indentation here is suspect.
