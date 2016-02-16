@@ -1,206 +1,147 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 20/20] ref_transaction_commit(): clean up empty directories
-Date: Tue, 16 Feb 2016 14:22:33 +0100
-Message-ID: <fd7c25cd0c43bcb292261198bd7cccf38b23f6c2.1455626201.git.mhagger@alum.mit.edu>
-References: <cover.1455626201.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:23:31 2016
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/26] worktree lock, move, remove and unlock
+Date: Tue, 16 Feb 2016 20:29:01 +0700
+Message-ID: <1455629367-26193-1-git-send-email-pclouds@gmail.com>
+References: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:29:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfbG-0005mm-Bk
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:23:30 +0100
+	id 1aVfgr-00022B-23
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932234AbcBPNXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 08:23:22 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:65315 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932233AbcBPNXU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:23:20 -0500
-X-AuditID: 1207440e-befff70000000398-6b-56c322c76d37
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id DA.B2.00920.7C223C65; Tue, 16 Feb 2016 08:23:19 -0500 (EST)
-Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOg028717
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 16 Feb 2016 08:23:18 -0500
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqHtc6XCYwbuT+hbzN51gtOi60s1k
-	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
-	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8bHg14Fz9UrzuxdyNTAeFShi5GTQ0LAROLL6i0s
-	XYxcHEICWxkl7i97wg7hnGCSaLp/jRmkik1AV2JRTzMTiC0ioCYxse0QWAezwCNGia792xlB
-	EsIC3hL/rr4Ds1kEVCXWr5wP1swrECUxbe5Hdoh1chItP3azgticAhYSJ1t6WUBsIQFziTtf
-	9jBNYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXWC83s0QvNaV0EyMkxPh2MLavlznE
-	KMDBqMTDy+FxKEyINbGsuDL3EKMkB5OSKC8P9+EwIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8
-	/14BlfOmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHg/KQINFSxKTU+t
-	SMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFQHwxMApAUjxAe9NA2nmLCxJzgaIQracYFaXE
-	efeDJARAEhmleXBjYYnjFaM40JfCvMdBqniASQeu+xXQYCagwTmXQB4qLklESEk1MOo0Nsxw
-	jVN/o7PzyCkNzawTOqW7thTs52S+t33Gpn9LpUKnv/zzRKxxkkxDTfdcoZVubAc8nrzhnWKm
-	6X9t8iZvkyUL7peZ9UTn3fXfFbbE26zxmaDE4zyL/sMKTy/0Cvj9DC9hXm/8Zam1 
+	id S932188AbcBPN3N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 08:29:13 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33385 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932117AbcBPN3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 08:29:11 -0500
+Received: by mail-pa0-f48.google.com with SMTP id fl4so91701443pad.0
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 05:29:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=dZBbKo9znFMhJfUdXtYE/5+KUzW3tGpmMB4CwcmU2s4=;
+        b=wSOtvjrnNRmVOmaWb0knszghH9ZgqrHsP7YdYjPRRHm8qO0vsBsUBWAwYt+JRhSule
+         EFt4alRj0dXoxWqrPWjWQablBL66IkoWlrpNuW+ye6j6tpZWmfKMSc4ItyaPQS8LQz8/
+         JMY+viSGi45NDFC/aQ1vuQ2R2Z2CKFGaOeaNVlfH9N7WmII7kT/adpaTroYjvyHGqBcn
+         Y5hw4YCHHwB0pfbVAf3uEmbAwIU98qjyBFX8AuH0a5ksyrWqVQUyiX3jgW7eYy2dl1lO
+         0ynSQkE7NhdUvBn3gg6z/6Rb+renO8h9ee5872aKIDmGyPVEONxsId9w3Lxd9RqVzz8K
+         rnBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=dZBbKo9znFMhJfUdXtYE/5+KUzW3tGpmMB4CwcmU2s4=;
+        b=TU9kOVNuL2h28uuwFBAB6NodHY3FfCYQ+cQPQGOj6QcoIKu6wawp4d9EGvWq+t+TBe
+         rJ+Cx9dEfLcEybxyiUr7fVlDt2Ll2F4qPCnzkgFI1Pc9+IUocg11pxeI/dUpxsIHV6JV
+         H05511wJEa+671/+CPzAl1yjKG6/yKYgVtRXavi4838os9qsuyj3yh0mUvi+fEQXxdme
+         /mv465cTyATbXzQSaUWl5C8PxojcXGDsHDtpT/l+934qgb0qr7JiClKelOkwriJy7Ftk
+         sEm56KfZMIxVLF/0cjAjRqcMrpWi7iUdm9o2bPpqK+WgklKSeuwjhQYHjzcuDX3HVP7d
+         UUAg==
+X-Gm-Message-State: AG10YOT7zPzqBDUc8mCYhwRJE+zk5K1B3cuMRYRz/3ltq55Vil+dXHScMpTm1cDcqamG+A==
+X-Received: by 10.66.102.70 with SMTP id fm6mr30654698pab.98.1455629351416;
+        Tue, 16 Feb 2016 05:29:11 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id i23sm45964787pfj.68.2016.02.16.05.29.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Feb 2016 05:29:09 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 16 Feb 2016 20:29:34 +0700
+X-Mailer: git-send-email 2.7.0.377.g4cd97dd
+In-Reply-To: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286360>
 
-When deleting/pruning references, remove any directories that are made
-empty by the deletion of loose references or of reflogs. Otherwise such
-empty directories can survive forever and accumulate over time. (Even
-'pack-refs', which is smart enough to remove the parent directories of
-loose references that it prunes, leaves directories that were already
-empty.)
+I think this is good enough to be further polished and maybe released.
+The series adds four new commands and bash completion for git-worktree.
 
-And now that ref_transaction_commit() takes care of deleting the parent
-directories of loose references that it prunes, we don't have to do that
-in prune_ref() anymore.
+Remaining work to do on git-worktree:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/files-backend.c  | 37 +++++++++++++++++++++++++++++++------
- refs/refs-internal.h  |  9 ++++++++-
- t/t1400-update-ref.sh | 27 +++++++++++++++++++++++++++
- 3 files changed, 66 insertions(+), 7 deletions(-)
+ - "git worktree move --repository", in v1 but left out in v2 because
+   it's trickier.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9d9151c..18f32bb 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2263,7 +2263,6 @@ static void prune_ref(struct ref_to_prune *r)
- 	}
- 	ref_transaction_free(transaction);
- 	strbuf_release(&err);
--	try_remove_empty_parents(r->name, REMOVE_EMPTY_PARENTS_REF);
- }
- 
- static void prune_refs(struct ref_to_prune *r)
-@@ -3261,6 +3260,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 					ret = TRANSACTION_GENERIC_ERROR;
- 					goto cleanup;
- 				}
-+				update->flags |= REF_DELETED_LOOSE;
- 			}
- 
- 			if (!(update->flags & REF_ISPRUNING))
-@@ -3273,16 +3273,41 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
- 	}
--	for_each_string_list_item(ref_to_delete, &refs_to_delete)
--		unlink_or_warn(git_path("logs/%s", ref_to_delete->string));
-+
-+	/* Delete the reflogs of any references that were deleted: */
-+	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
-+		if (!unlink_or_warn(git_path("logs/%s", ref_to_delete->string)))
-+			try_remove_empty_parents(ref_to_delete->string,
-+						 REMOVE_EMPTY_PARENTS_REFLOG);
-+	}
-+
- 	clear_loose_ref_cache(&ref_cache);
- 
- cleanup:
- 	transaction->state = REF_TRANSACTION_CLOSED;
- 
--	for (i = 0; i < n; i++)
--		if (updates[i]->lock)
--			unlock_ref(updates[i]->lock);
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (!update->lock)
-+			continue;
-+
-+		if (update->flags & REF_DELETED_LOOSE) {
-+			/*
-+			 * The loose reference was deleted. We want to
-+			 * delete any empty parent directories, but
-+			 * that can only work after we have removed
-+			 * the lockfile:
-+			 */
-+			char *path = xstrdup(update->lock->ref_name);
-+			unlock_ref(update->lock);
-+			try_remove_empty_parents(path, REMOVE_EMPTY_PARENTS_REF);
-+			free(path);
-+		} else {
-+			unlock_ref(update->lock);
-+		}
-+	}
-+
- 	string_list_clear(&refs_to_delete, 0);
- 	string_list_clear(&affected_refnames, 0);
- 	return ret;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index c7dded3..dd09be1 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -43,6 +43,12 @@
-  */
- 
- /*
-+ * Used as a flag in ref_update::flags when the loose reference has
-+ * been deleted.
-+ */
-+#define REF_DELETED_LOOSE 0x100
-+
-+/*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
-  * example by causing a file that is not a reference to be deleted.
-@@ -141,7 +147,8 @@ struct ref_update {
- 	unsigned char old_sha1[20];
- 	/*
- 	 * One or more of REF_HAVE_NEW, REF_HAVE_OLD, REF_NODEREF,
--	 * REF_DELETING, and REF_ISPRUNING:
-+	 * REF_DELETING, REF_ISPRUNING, REF_NEEDS_COMMIT, and
-+	 * REF_DELETED_LOOSE:
- 	 */
- 	unsigned int flags;
- 	struct ref_lock *lock;
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index af1b20d..00284eb 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -191,6 +191,33 @@ test_expect_success \
- 	 git update-ref HEAD'" $A &&
- 	 test $A"' = $(cat .git/'"$m"')'
- 
-+test_expect_success "empty directory removal" '
-+	git branch d1/d2/r1 HEAD &&
-+	git branch d1/r2 HEAD &&
-+	test -f .git/refs/heads/d1/d2/r1 &&
-+	test -f .git/logs/refs/heads/d1/d2/r1 &&
-+	git branch -d d1/d2/r1 &&
-+	! test -e .git/refs/heads/d1/d2 &&
-+	! test -e .git/logs/refs/heads/d1/d2 &&
-+	test -f .git/refs/heads/d1/r2 &&
-+	test -f .git/logs/refs/heads/d1/r2
-+'
-+
-+test_expect_success "symref empty directory removal" '
-+	git branch e1/e2/r1 HEAD &&
-+	git branch e1/r2 HEAD &&
-+	git checkout e1/e2/r1 &&
-+	test_when_finished "git checkout master" &&
-+	test -f .git/refs/heads/e1/e2/r1 &&
-+	test -f .git/logs/refs/heads/e1/e2/r1 &&
-+	git update-ref -d HEAD &&
-+	! test -e .git/refs/heads/e1/e2 &&
-+	! test -e .git/logs/refs/heads/e1/e2 &&
-+	test -f .git/refs/heads/e1/r2 &&
-+	test -f .git/logs/refs/heads/e1/r2 &&
-+	test -f .git/logs/HEAD
-+'
-+
- cat >expect <<EOF
- $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	Initial Creation
- $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150260 +0000	Switch
--- 
-2.7.0
+ - .git/config issue and submodule support
+
+A bit off topic, I've been using this script to add "cw" command, to
+chdir to another worktree with tab-completion. It works wonderfully,
+but I'm not sure if it can ever be merged to git-completion.bash.
+
+-- 8< --
+cw() {
+    cd "$(git worktree list --porcelain | grep -B2 refs/heads/$1 | head=
+ -n1 | cut -f 2 -d ' ')"
+}
+
+_git_cw() {
+	local cur words cword prev
+	_get_comp_words_by_ref -n =3D: cur words cword prev
+
+    	local list=3D"$(git worktree list --porcelain | grep '^branch refs=
+/heads/' | cut -c 19-)"
+	__gitcomp "$list"
+}
+
+complete -o bashdefault -o default -o nospace -F _git_cw cw 2>/dev/null=
+ || \
+    complete -o default -o nospace -F _git_cw cw
+-- 8< --
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (26):
+  usage.c: move format processing out of die_errno()
+  usage.c: add sys_error() that prints strerror() automatically
+  copy.c: import copy_file() from busybox
+  copy.c: delete unused code in copy_file()
+  copy.c: convert bb_(p)error_msg to (sys_)error
+  copy.c: style fix
+  copy.c: convert copy_file() to copy_dir_recursively()
+  completion: support git-worktree
+  git-worktree.txt: keep subcommand listing in alphabetical order
+  wrapper.c: allow to create an empty file with write_file()
+  path.c: add git_common_path() and strbuf_git_common_path()
+  worktree.c: use is_dot_or_dotdot()
+  worktree.c: store "id" instead of "git_dir"
+  worktree.c: add clear_worktree()
+  worktree.c: add find_worktree_by_path()
+  worktree.c: add is_main_worktree()
+  worktree.c: add validate_worktree()
+  worktree.c: add update_worktree_location()
+  worktree.c: add is_worktree_locked()
+  worktree: avoid 0{40}, too many zeroes, hard to read
+  worktree: simplify prefixing paths
+  worktree: add "lock" command
+  worktree: add "unlock" command
+  worktree: add "move" commmand
+  worktree move: accept destination as directory
+  worktree: add "remove" command
+
+ Documentation/git-worktree.txt         |  55 +++--
+ builtin/worktree.c                     | 240 ++++++++++++++++++++-
+ cache.h                                |   4 +
+ contrib/completion/git-completion.bash |  29 +++
+ copy.c                                 | 369 +++++++++++++++++++++++++=
+++++++++
+ git-compat-util.h                      |   1 +
+ path.c                                 |  29 +++
+ t/t2028-worktree-move.sh (new +x)      | 103 +++++++++
+ usage.c                                |  35 +++-
+ worktree.c                             | 171 +++++++++++++--
+ worktree.h                             |  40 +++-
+ wrapper.c                              |   2 +-
+ 12 files changed, 1029 insertions(+), 49 deletions(-)
+ create mode 100755 t/t2028-worktree-move.sh
+
+--=20
+2.7.0.377.g4cd97dd
