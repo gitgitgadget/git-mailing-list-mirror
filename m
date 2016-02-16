@@ -1,138 +1,94 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] wt-status.c: set commitable bit if there is a meaningful merge.
-Date: Tue, 16 Feb 2016 08:20:43 -0000
-Organization: OPDS
-Message-ID: <C8BDC3289C184F40BFBE3B150CFBB50B@PhilipOakley>
-References: <72756249.nAoBccgOj7@thunderbird> <1455590305-30923-1-git-send-email-ischis2@cox.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Zheng Lv <lv.zheng.2015@gmail.com>
+Subject: git-mv ignores gitignore file
+Date: Tue, 16 Feb 2016 16:35:16 +0800
+Message-ID: <56C2DF44.10309@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: "Ovidiu Gheorghioiu" <ovidiug@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Stephen P. Smith" <ischis2@cox.net>
-To: "Stephen P. Smith" <ischis2@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 16 09:21:14 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 09:35:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVasj-0005GY-GK
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 09:21:13 +0100
+	id 1aVb6S-0008MD-Td
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 09:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184AbcBPIVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 03:21:09 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:34569 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752458AbcBPIVH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 03:21:07 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AkGgCr28JWPDUjFlxeGQEBAgsBAgEBAQEBgwpSbYZibrBBbIMcGYVqAQECBAKBN00BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcDFAYBEggCAQIDAYgBDK9iiQyGEYQ1h12BDwWNYIkfAYFAhBKJYo0XhXCIUIJkGYFIPC6BFINNg3sBAQE
-X-IPAS-Result: A2AkGgCr28JWPDUjFlxeGQEBAgsBAgEBAQEBgwpSbYZibrBBbIMcGYVqAQECBAKBN00BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcDFAYBEggCAQIDAYgBDK9iiQyGEYQ1h12BDwWNYIkfAYFAhBKJYo0XhXCIUIJkGYFIPC6BFINNg3sBAQE
-X-IronPort-AV: E=Sophos;i="5.22,454,1449532800"; 
-   d="scan'208";a="869854143"
-Received: from host-92-22-35-53.as13285.net (HELO PhilipOakley) ([92.22.35.53])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 16 Feb 2016 08:20:44 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752241AbcBPIfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 03:35:21 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:33550 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894AbcBPIfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 03:35:20 -0500
+Received: by mail-pa0-f46.google.com with SMTP id fl4so87744160pad.0
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 00:35:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=mo671dCuTonRgr2n1ti2jyl1EfSS20xEayhNwfRlBOI=;
+        b=0EJQ+63KGyLkjMMinx6vbbjcT16mEQ0w47m02QJr+JeOF1Y+6ZCIIMgZKnIbXkZC7E
+         nIE1Auo5O+7R//X86F2xLGTD4AIpm5aZuUKI+PR9G71pUfWBAXBrzmaF/KsmlyohDSuF
+         LZNY8JbCYAsP1myXQ5MNs5CIHgPUlCUKznnh9AAqDsrhW9531QgfLHu5H2nnNlfWNKGu
+         QJuFRo/cJkY8D640AzwcdOFhciukwjdcmxKuZXSEce0QifaqfyZ9l7xiY+ohgQwpHFgT
+         XAMvlQjBsDtPIseZ4I0TxzRwCogJsdM0MTW4YxeQCBFtIuhUqpn3g7W0QtpgqYp4ovnB
+         4vHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=mo671dCuTonRgr2n1ti2jyl1EfSS20xEayhNwfRlBOI=;
+        b=cPNON7Lhn8PapyrNhbs5j+sbkW6PhQR+QOYxni/JG3QjTVI3v8fXUmUcq2V1Bq3NPw
+         KcXwdBbV/M3gzGzO/8/6A92yFlCye8Tmc7/DcXkpZOHX8ErbB+TXIwGhqJkFj2IOmwzR
+         IRo1nZQCAliBWhdzOkXu6nOJgdLMNgybf1i5nmN8xrMP1Ocz6EG95mRdYAI4u2BSIxQ5
+         VVlXIFHWRh1vtb1fBAM88JPrGqszN582AaGr2W8A8JAKgkDuURwcpZMENqqEqxqhEzjc
+         pVLUiDHkg//wUREvBkUV77xHr8g/7ZvnbRX4ALMTc8qhW+OYhjhP/jjE+7c64lhLZvUG
+         UIQQ==
+X-Gm-Message-State: AG10YOQ270M+8dxx+pixxlHnInUMJF7InJisAI/28mS4ZYtEDbMZkEtuUWGPsVniU1jeRQ==
+X-Received: by 10.66.187.36 with SMTP id fp4mr29192163pac.47.1455611719604;
+        Tue, 16 Feb 2016 00:35:19 -0800 (PST)
+Received: from [0.0.0.0] ([159.203.227.210])
+        by smtp.gmail.com with ESMTPSA id q16sm43740752pfi.80.2016.02.16.00.35.17
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 16 Feb 2016 00:35:18 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286328>
 
-From: "Stephen P. Smith" <ischis2@cox.net>
-> The 'commit --dry-run' and commit return values differed if a
+gitignore(5) manual says that
 
-Should this have quotes around the second 'commit' as they both refer to the 
-command, rather than the action?
+> A gitignore file specifies intentionally untracked files that Git 
+> should ignore. Files already tracked by Git are not affected ...
 
-> conflicted merge had been resolved and the commit would be the same as
-> the parent.
->
-> Update show_merge_in_progress to set the commitable bit if conflicts
-> have been resolved and a merge is in progress.
->
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
->
-> Notes:
->    In the original report when the dry run switch was passed and after
->    the merge commit was resolved head and index matched leading to a
->    returned value of 1. [1]
->
->    If the dry run switch was not passed, the commit would succeed to
->    correctly record the resolution.
->
->    The result was that a dry run would report that there would be a
->    failure, but there really isn't a failure if the commit is actually
->    attemped.
->
->    [1] $gmane/276591
->
->    It appeared that the conditional for 'Reject an attempt to record a
->    non-merge empty commit without * explicit --allow-empty.' could be
->    simplified after adding this patch.
->
->    This change can't be propagated to the conditional because it allows
->    a commit that was previously disallowed.
->
-> t/t7501-commit.sh | 20 ++++++++++++++++++++
-> wt-status.c       |  1 +
-> 2 files changed, 21 insertions(+)
->
-> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-> index 63e0427..363abb1 100755
-> --- a/t/t7501-commit.sh
-> +++ b/t/t7501-commit.sh
-> @@ -587,4 +587,24 @@ test_expect_success '--only works on to-be-born 
-> branch' '
->  test_cmp expected actual
-> '
->
-> +test_expect_success '--dry-run with conflicts fixed from a merge' '
-> + # setup two branches with conflicting information
-> + # in the same file, resolve the conflict,
-> + # call commit with --dry-run
-> + echo "Initial contents, unimportant" >test-file &&
-> + git add test-file &&
-> + git commit -m "Initial commit" &&
-> + echo "commit-1-state" >test-file &&
-> + git commit -m "commit 1" -i test-file &&
-> + git tag commit-1 &&
-> + git checkout -b branch-2 HEAD^1 &&
-> + echo "commit-2-state" >test-file &&
-> + git commit -m "commit 2" -i test-file &&
-> + ! $(git merge --no-commit commit-1) &&
-> + echo "commit-2-state" >test-file &&
-> + git add test-file &&
-> + git commit --dry-run &&
-> + git commit -m "conflicts fixed from merge."
-> +'
-> +
-> test_done
-> diff --git a/wt-status.c b/wt-status.c
-> index ab4f80d..1374b48 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -950,6 +950,7 @@ static void show_merge_in_progress(struct wt_status 
-> *s,
->  status_printf_ln(s, color,
->  _("  (fix conflicts and run \"git commit\")"));
->  } else {
-> + s-> commitable = 1;
->  status_printf_ln(s, color,
->  _("All conflicts fixed but you are still merging."));
->  if (s->hints)
-> -- 
-> 2.7.0.GIT
->
-> --
-Philip 
+> The purpose of gitignore files is to ensure that certain files not 
+> tracked by Git remain untracked.
+
+which means that the following operations are totally correct.
+
+$ echo "b" >> .gitignore
+$ echo "Something" > a
+$ git add a
+$ git mv a b
+
+Equivalantly,
+
+$ echo "b" >> .gitignore
+$ echo "Something" > b
+$ git add --force b
+
+That is, doing something --force when --force it is not specified.
+
+However, this may not be the intented behavior. The user might not want
+to equivalantly add a `new' file b to the index when b should be
+gitignored. Such operations are possibly oversight of users.
+
+The ideal behavior, issue a warning when git-mv target collides with
+gitignore.
+
+Thanks.
