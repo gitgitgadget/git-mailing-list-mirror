@@ -1,82 +1,165 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: RFC: Resumable clone based on hybrid "smart" and "dumb" HTTP
-Date: Tue, 16 Feb 2016 10:34:21 -0800
-Message-ID: <CAGZ79kaDM+sATm73t1pkdc7PqYeZVDgZyYaL-0b8VS2HB9x93g@mail.gmail.com>
-References: <CAJo=hJtHgE_vye_1sPTDsvJ0X=Cs72HKLgRH8btpW-pMrDdk9g@mail.gmail.com>
-	<CAJo=hJuRxoe6tXe65ci-A35c_PWJEP7KEPFu5Ocn147HwVuo3A@mail.gmail.com>
-	<20160210214945.GA5853@sigill.intra.peff.net>
-	<CAJo=hJv-GWZOsv31iekW+AdNazLGQ=XYD=UXMO+RuB15baTsow@mail.gmail.com>
-	<20160214170525.GB10219@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 19:34:30 2016
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v5 01/12] strbuf: introduce strbuf_split_str_omit_term()
+Date: Wed, 17 Feb 2016 00:30:04 +0530
+Message-ID: <1455649215-23260-2-git-send-email-Karthik.188@gmail.com>
+References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
+Cc: gitster@pobox.com, sunshine@sunshineco.com,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 19:59:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVkSA-0007lI-WC
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 19:34:27 +0100
+	id 1aVkqh-00082n-By
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 19:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbcBPSeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 13:34:23 -0500
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33038 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbcBPSeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 13:34:22 -0500
-Received: by mail-io0-f172.google.com with SMTP id z135so132891696iof.0
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 10:34:22 -0800 (PST)
+	id S933169AbcBPS7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 13:59:41 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33732 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753079AbcBPS7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 13:59:40 -0500
+Received: by mail-pf0-f170.google.com with SMTP id q63so109678466pfb.0
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 10:59:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4gQw83EWZ/v66L7Hl8wY2bHGUMXGwxaL91cUJnID8fM=;
-        b=SgIyJDlXOLi6EPz4iJtJYHEW/a6/QE7LXI4swfjawV6KdbV0OWsqyDlWKZYAbT+P9a
-         uKYwQr6wS6xlg4h8FBvVhb0Ywj0eTqtl7n/AqKtgKH2jzXemXsuf0bZDVCjRV70P4nzi
-         05tm/nKT2GvN+WSAP+kEbI8O76xxLLKLpbXxGlNlwsYPZlNosHIBDg8eF43vz8Dr2TsV
-         T+xmWQrB54RcJXlqyh5FWqHvP5KMGBvffJprywKvUc1RV54WdNgiHrXhLkXSecCmcgWd
-         duCI01gruR8TovcH6I4Z2wEy3OlTYtgXwid64QeOGLIF2XHvMKLSJTRy05O8u+THGNw8
-         JEfQ==
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+XhJbC0KhQfyRsVvsNRToiCLzd0NRxflj2wZ0N8HWrg=;
+        b=SeFxmoUOwj++elFPqQbn6Ky2GEiDDkL5LLw3+LHxfGNDWK59umWma/LEV7sp+PifO/
+         YBZrTXBbJh2KO2kLAwu2ZKOk4zZo3ExSryLeOvJCju9WtISttQEFHvFTqjceYn8GUSKK
+         2k3ZJFJWYxamxdGi35oi+o4qHbeB5NcP1bTJ3SfDT2SpaULGK7MhneAXtJj7+0NX8JN5
+         16wq631F5CL3t1ssBjVtZeuNwLsh7xAIBTElFHpCjyrMRzNKVl7Mhyx0Ur1h/tRW8nB7
+         vbi4lC9DJ+XS2wRLfoE5wnAd4+Md/M3ppcQ5UYVsl9fCDtgYiqUJmOINRhIp6+mYKYXJ
+         ns6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=4gQw83EWZ/v66L7Hl8wY2bHGUMXGwxaL91cUJnID8fM=;
-        b=chy2mI1r8D93O90ELSzzSiwDtFoyLkY8py8hH72J7fjhwYOqKHCPtc/9VBK6qOfzNW
-         paLTtMvifeo5jzoIK92F09fc8aTGW3f70AUfwyQ37+RpxSxV9MIJE7QwxqekJizPP18y
-         WO/NQFeRMGusYryrPacmBXmRM+jsY8313sIZ719otA4uBXDf+0nbP+0uKEqpUE/HE4bd
-         7S1iEjAMtN2zxqQKXvouYVzBbIght7UU470mIFvXd7Bdi0jR3j/EZhW2TaM/gJhknv4i
-         jpjbhztPTaBEPNuML84G38BGcBNZt14FXQ3Bf4bjeUWdGEHN43S4ZPSoWXDeIPfjQL75
-         9+Dw==
-X-Gm-Message-State: AG10YOTeLTV6cQaA1pgFxAa7iMkAdZgTCy8KiAQ/A/3wcYzVp3rK/Hhc5bgYsO3VlQKB48iPGQ8gh77JiMYwwSA/
-X-Received: by 10.107.158.81 with SMTP id h78mr23449126ioe.174.1455647661675;
- Tue, 16 Feb 2016 10:34:21 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Tue, 16 Feb 2016 10:34:21 -0800 (PST)
-In-Reply-To: <20160214170525.GB10219@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+XhJbC0KhQfyRsVvsNRToiCLzd0NRxflj2wZ0N8HWrg=;
+        b=jlGbpgRDolc/mQ47V3uo/hzL9LUfqHlSogw0H98W9eJswc0kDfyPydeAcvmhv0tSYt
+         gSi4wLKuCgmloWSZRfd6xjmA3K5DG2iQgfFlCI4rDy5W6Dzx25gXiFjfDYONYefaN4sG
+         tCmI6oZJkp+FiaXLYuE5omYgkRie6MetM/P5RSHy5FYT+A7qqHXnGkJvMQw4WZQoZQLt
+         gF4NE70vjInRWMdnCjponRbMu7ZTzT5kjhKypZMk4Cnq7iiuB4SjYt/6oLTiogCbecAh
+         M+zuhCgH8BXHpUUPInH42VfEm1j5WjnUxrghD9cfLi99N+XHSUQ2CyZKdIgIQXewqgJl
+         bk+Q==
+X-Gm-Message-State: AG10YORQTgnFAQaoaFJ/ltwWB56k5klhHVZOtrs5kcrRor4qbWUBZYj2w9xoOh65LHUEWA==
+X-Received: by 10.98.64.202 with SMTP id f71mr33404689pfd.113.1455649180247;
+        Tue, 16 Feb 2016 10:59:40 -0800 (PST)
+Received: from ashley.localdomain ([106.51.133.38])
+        by smtp.gmail.com with ESMTPSA id 27sm47469677pfh.48.2016.02.16.10.59.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 16 Feb 2016 10:59:39 -0800 (PST)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.7.1
+In-Reply-To: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286412>
 
-On Sun, Feb 14, 2016 at 9:05 AM, Jeff King <peff@peff.net> wrote:
->
-> I'm also not happy about having an HTTP-only feature in the protocol. I
-> liked Stefan's proposal for the "v2" protocol that would let the two
-> sides exchange capabilities before the ref advertisement. Then the
-> client, having seen the server's resumable URL, knows whether or not
-> to proceed with the advertisement.
+The current implementation of 'strbuf_split_buf()' includes the
+terminator at the end of each strbuf post splitting. Add an option
+wherein we can drop the terminator if desired. In this context
+introduce a wrapper function 'strbuf_split_str_omit_term()' which
+splits a given string into strbufs without including the terminator.
 
-I completely stalled that side project, so if anyone wants to pick it up,
-feel free.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ strbuf.c | 14 +++++++++-----
+ strbuf.h | 25 ++++++++++++++++---------
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
-The server side was complete (and reviewed and people liked it).
-The only missing part was the client side to be completed. (There were
-some patches back and forth and it worked mostly, the design seemed to
-be accepted and well). The code is at
-https://github.com/stefanbeller/git/commits/protocol2-10
-
-Thanks,
-Stefan
+diff --git a/strbuf.c b/strbuf.c
+index bab316d..4a93e2a 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -115,7 +115,7 @@ void strbuf_tolower(struct strbuf *sb)
+ }
+ 
+ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+-				 int terminator, int max)
++				 int terminator, int max, int omit_term)
+ {
+ 	struct strbuf **ret = NULL;
+ 	size_t nr = 0, alloc = 0;
+@@ -123,14 +123,18 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+ 
+ 	while (slen) {
+ 		int len = slen;
++		int copylen = len;
++		const char *end = NULL;
+ 		if (max <= 0 || nr + 1 < max) {
+-			const char *end = memchr(str, terminator, slen);
+-			if (end)
++			end = memchr(str, terminator, slen);
++			if (end) {
+ 				len = end - str + 1;
++				copylen = len - !!omit_term;
++			}
+ 		}
+ 		t = xmalloc(sizeof(struct strbuf));
+-		strbuf_init(t, len);
+-		strbuf_add(t, str, len);
++		strbuf_init(t, copylen);
++		strbuf_add(t, str, copylen);
+ 		ALLOC_GROW(ret, nr + 2, alloc);
+ 		ret[nr++] = t;
+ 		str += len;
+diff --git a/strbuf.h b/strbuf.h
+index f72fd14..6115e72 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -466,11 +466,12 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+ /**
+  * Split str (of length slen) at the specified terminator character.
+  * Return a null-terminated array of pointers to strbuf objects
+- * holding the substrings.  The substrings include the terminator,
+- * except for the last substring, which might be unterminated if the
+- * original string did not end with a terminator.  If max is positive,
+- * then split the string into at most max substrings (with the last
+- * substring containing everything following the (max-1)th terminator
++ * holding the substrings.  If omit_term is true, the terminator will
++ * be stripped from all substrings. Otherwise, substrings will include
++ * the terminator, except for the final substring, if the original
++ * string lacked a terminator.  If max is positive, then split the
++ * string into at most max substrings (with the last substring
++ * containing everything following the (max-1)th terminator
+  * character).
+  *
+  * The most generic form is `strbuf_split_buf`, which takes an arbitrary
+@@ -481,19 +482,25 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
+  * For lighter-weight alternatives, see string_list_split() and
+  * string_list_split_in_place().
+  */
+-extern struct strbuf **strbuf_split_buf(const char *, size_t,
+-					int terminator, int max);
++extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
++					int terminator, int max, int omit_term);
++
++static inline struct strbuf **strbuf_split_str_omit_term(const char *str,
++							    int terminator, int max)
++{
++	return strbuf_split_buf(str, strlen(str), terminator, max, 1);
++}
+ 
+ static inline struct strbuf **strbuf_split_str(const char *str,
+ 					       int terminator, int max)
+ {
+-	return strbuf_split_buf(str, strlen(str), terminator, max);
++	return strbuf_split_buf(str, strlen(str), terminator, max, 0);
+ }
+ 
+ static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
+ 						int terminator, int max)
+ {
+-	return strbuf_split_buf(sb->buf, sb->len, terminator, max);
++	return strbuf_split_buf(sb->buf, sb->len, terminator, max, 0);
+ }
+ 
+ static inline struct strbuf **strbuf_split(const struct strbuf *sb,
+-- 
+2.7.1
