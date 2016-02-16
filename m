@@ -1,93 +1,94 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 10/26] wrapper.c: allow to create an empty file with write_file()
-Date: Tue, 16 Feb 2016 20:29:11 +0700
-Message-ID: <1455629367-26193-11-git-send-email-pclouds@gmail.com>
-References: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
- <1455629367-26193-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 14:30:23 2016
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 13/20] try_remove_empty_parents(): rename parameter "name" -> "refname"
+Date: Tue, 16 Feb 2016 14:22:26 +0100
+Message-ID: <0fc53be1c243e22809289c8893b867b8b7a7aaa2.1455626201.git.mhagger@alum.mit.edu>
+References: <cover.1455626201.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
+	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
+	David Turner <dturner@twopensource.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 14:30:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfhu-0002zR-OT
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:23 +0100
+	id 1aVfhr-0002qY-WC
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932349AbcBPNaQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 08:30:16 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:32820 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932338AbcBPNaO (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932345AbcBPNaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 16 Feb 2016 08:30:14 -0500
-Received: by mail-pa0-f47.google.com with SMTP id fl4so91713761pad.0
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 05:30:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=aerlodWnE6D3kz1oy38wQuM+jML0GD1rbtKRk1wAk/w=;
-        b=c78s7HcsFaxlxYShN+XicLIpJ5MXIC+Vk8ie6OHuRp1lZpKUPiQpHX9/xnfOa8qhEX
-         mUob+rOBsYklqLUmrAtMq1m+JxhyIs537o+v08FO4A4wy4qbZTXlJRt3uBQ5HxtOjAtr
-         J8ZcBCpDACkWQmaTVbSmg+ynNYmxiwKhj7xc0QCcUDhtn6i6vfoNMbFQ1ES7XWUXF7zB
-         5+V6RHAGTrVZg1oGjozlcPLFvu3g1D6XB8EQY+TBm+0WfY8a7pFz9BSwLHbtHVevjR14
-         8WY/m2HzXmMxRZ+3TwWoWRxKgODDm+PPPc9RDmHeARvCwfSRvKCGHRlP46lsHznwQFzy
-         s8xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=aerlodWnE6D3kz1oy38wQuM+jML0GD1rbtKRk1wAk/w=;
-        b=aaZqn4jVRWa1nyxNQGjeL5QpY2a58FkZMEgnZfirstSx0afeF0CGvNZvR5H2dLLROG
-         sn9qWYmjm/UG8Og18jDBFEywPCx/HOFPv0Vh5YJ5agBve7ACj6kjoIaHN1HuHSZjJK/g
-         3A997U70B0h3dcDUJb+oI3rihcHk7BuVTCS8HBKOBP41i9eTTT9nn3OkrS+vqa1OGH9Q
-         3+eE2whAByseEBKldr8pyyrTYH5yPn9Z4yJLHRQ/3GLA9OWXX3RiA4ELHx8j/zuLMkO2
-         dBlOc3p13Mq2De2I4y9Ys+crnDuzsOK/feb61wzqQb4pl5AgAiEVROyLjzA/5Q9u0Ffd
-         9r5Q==
-X-Gm-Message-State: AG10YOTq4w/KM8C2gT92ijplcRaHz/9g0PFgjcoHthS04YvkON38fIKqzOpZJicy6tHxYw==
-X-Received: by 10.66.63.104 with SMTP id f8mr30876602pas.109.1455629414306;
-        Tue, 16 Feb 2016 05:30:14 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id o184sm45980183pfo.36.2016.02.16.05.30.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Feb 2016 05:30:12 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 16 Feb 2016 20:30:37 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <1455629367-26193-1-git-send-email-pclouds@gmail.com>
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:65361 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932338AbcBPNaM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:12 -0500
+X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Feb 2016 08:30:11 EST
+X-AuditID: 1207440e-c03ff70000000398-59-56c322bb4569
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 09.B2.00920.BB223C65; Tue, 16 Feb 2016 08:23:07 -0500 (EST)
+Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOZ028717
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Feb 2016 08:23:06 -0500
+X-Mailer: git-send-email 2.7.0
+In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLtb6XCYwYMv+hbzN51gtOi60s1k
+	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8amCXvYC2ZwVPxa+5O5gXE3WxcjJ4eEgInEtX3T
+	GbsYuTiEBLYySqz7+IsdwjnBJLF4y20WkCo2AV2JRT3NTCC2iICaxMS2QywgRcwCjxgluvZv
+	B2rn4BAWCJc48EUfpIZFQFXi0osGVhCbVyBKYtXbVnaIbXISLT92g8U5BSwkTrb0gs0XEjCX
+	uPNlD9MERp4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUJCjG8HY/t6
+	mUOMAhyMSjy8HB6HwoRYE8uKK3MPMUpyMCmJ8vJwHw4T4kvKT6nMSCzOiC8qzUktPsQowcGs
+	JML77xVQOW9KYmVValE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgveTItBQwaLU
+	9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAMxBcDowAkxQO0Nw2knbe4IDEXKArReopR
+	UUqcdz9IQgAkkVGaBzcWljheMYoDfSnMexykigeYdOC6XwENZgIanHMJ5KHikkSElFQDo5qc
+	enxIosHMj7NWV9o7b/pZLXp5+xu5x7IfrBbMX99dOHGZTrmsXNX+RBXb5++/qMjxsRwMDt+a
+	Ic974ejpJ1fOLhErF86t3KVTZC4y6/bi+LyHNSzfT3+/F979ymLWUacnZj1lOuLc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286373>
 
-This is used later on to create empty .git/worktrees/xxx/locked when
-"git worktree lock" is called with no reason given.
+This is the standard nomenclature.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- wrapper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ refs/files-backend.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/wrapper.c b/wrapper.c
-index 29a45d2..1dc1eff 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -666,7 +666,7 @@ static int write_file_v(const char *path, int fatal=
-,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 9c13653..7e870fc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2200,13 +2200,13 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 
+ /*
+  * Remove empty parents, but spare refs/ and immediate subdirs.
+- * Note: munges *name.
++ * Note: munges *refname.
+  */
+-static void try_remove_empty_parents(char *name)
++static void try_remove_empty_parents(char *refname)
+ {
+ 	char *p, *q;
+ 	int i;
+-	p = name;
++	p = refname;
+ 	for (i = 0; i < 2; i++) { /* refs/{heads,tags,...}/ */
+ 		while (*p && *p != '/')
+ 			p++;
+@@ -2224,7 +2224,7 @@ static void try_remove_empty_parents(char *name)
+ 		if (q == p)
+ 			break;
+ 		*q = '\0';
+-		if (rmdir(git_path("%s", name)))
++		if (rmdir(git_path("%s", refname)))
+ 			break;
  	}
- 	strbuf_vaddf(&sb, fmt, params);
- 	strbuf_complete_line(&sb);
--	if (write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
-+	if (sb.len && write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
- 		int err =3D errno;
- 		close(fd);
- 		strbuf_release(&sb);
---=20
-2.7.0.377.g4cd97dd
+ }
+-- 
+2.7.0
