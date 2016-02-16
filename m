@@ -1,109 +1,153 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v2 4/4] remote: use remote_is_configured() for add and
- rename
-Date: Tue, 16 Feb 2016 01:16:09 +0100
-Message-ID: <20160216001609.GB1831@hank>
-References: <1455575984-24348-1-git-send-email-t.gummerer@gmail.com>
- <1455575984-24348-5-git-send-email-t.gummerer@gmail.com>
- <CAPig+cTH+S67_T=O58E_x--ZhawQEZKjCmK8G+unzm_8f2w8eA@mail.gmail.com>
- <20160215230920.GC30631@sigill.intra.peff.net>
+From: "=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?=" 
+	<felipeg.assis@gmail.com>
+Subject: [PATCH] merge-recursive: option to disable renames
+Date: Mon, 15 Feb 2016 22:50:34 -0200
+Message-ID: <1455583834-4796-1-git-send-email-felipegassis@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 01:15:53 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= 
+	<felipegassis@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 16 01:52:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVTJ0-0004U4-Hk
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 01:15:50 +0100
+	id 1aVTsM-0000ez-Jt
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 01:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbcBPAPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 19:15:47 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32995 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767AbcBPAPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 19:15:46 -0500
-Received: by mail-wm0-f67.google.com with SMTP id c200so18209832wme.0
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 16:15:45 -0800 (PST)
+	id S1751219AbcBPAwT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Feb 2016 19:52:19 -0500
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:35647 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbcBPAwS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 19:52:18 -0500
+Received: by mail-qg0-f49.google.com with SMTP id y89so122684546qge.2
+        for <git@vger.kernel.org>; Mon, 15 Feb 2016 16:52:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=tpP18qTxIbuNB5GkkBNh5RpwieNMKMi6FISoME7M3UA=;
-        b=dsogDWRsr5UxwEiMNlrkX0o0olbnCABTNkQI44GauYvnmhxZioRLughmd4toH6LOvr
-         XDWEN0K1h88EPCkcowE/WiDr4tiDSi/IW2wPTMDfIyJ5lfGvhngBPD5NgHAfeu8WMbjs
-         r1w44+hPweZCKkr2oQqy+GHwlaJdGoMhObw2kU7bHXplSx25cofR+BGdsYafuhaJQ83X
-         UZKydl55yjRBnP0Cu3X5rgnQtgSD4kAzX8mjLuvA9cEIbGMMgwKq6hmbmmP8hsekAASc
-         MNRCGRSco2NOPNiMmM6YoZVjgSOWBqJELzJatuD01FIZ3QzxlmASQakrNDULEerDZa38
-         zjTw==
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=1QkMpbN9XqpNiOFAgM8U/HZadXbQFRoRR0sg2m8kzsM=;
+        b=VjMGmrvfeivlwRTjeRsxPMI+57hfNcEah73Rm0JVULh05G8kcOOjUu3km40BNEwKq3
+         EKXIBoS9UstoIN/7MhnzH/ZcBRJLF6OKk5GkH8eDtMO6+1YvrklU+Kxe6fwbn14q+YeB
+         NdmqRCN86sLC9zvaXHCcED5GsS6lE1YRMHZ8was3qtd9aw1x2/8K2JIx0eBY4+EVqNr8
+         zxrhYrJAdNA3i3i1P0dxIBD47MToXYg6LG44Bjt2Bm135QiQSTkFIW8AO1/y/pp3aK+i
+         cQZTmBrKMb1QLVipjwBnlLck0iNM1qA4cPvzHFrp/b+eNBTuLGnE7oUYBbNQS+e9ACyL
+         2W6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=tpP18qTxIbuNB5GkkBNh5RpwieNMKMi6FISoME7M3UA=;
-        b=foDsxWLsciDpYNoBNq/OKr9Dovbw+KC8aSfPBMJNcnucLmTWcqdBEPOqZ47xmRPDZV
-         5VmFMqAdQr521Y9nTwX09ZRnsOg/ViypsqNlrbyl2wun69V3nBPOrltnKhww3aQzT5IU
-         xILi8OfTbmNpMmq6YJ1m7Dc/eyJOF5N4kxVPvedcPCYY6e9CNS1b87vbOga8JKtATUFz
-         AT2GffofTN7UHSolEn3CbIZSPLi5UpeeIwCGDWLLVVMTIRuX3BLLUas8GwhTJroVch9j
-         9o3eU4n2YdV8Yfb9VO0AjGK/eb0oFY/RGs42FQzApq6E2Lp4Www/DePUNcM5xnDTZXYW
-         3VFQ==
-X-Gm-Message-State: AG10YOR4kjwMxGllH8P2BzGpert5T7Pe8La6kno4cweZz4Q88Aj4hgqwEQ7ZCxuXpNH1rQ==
-X-Received: by 10.28.60.11 with SMTP id j11mr10311075wma.99.1455581745191;
-        Mon, 15 Feb 2016 16:15:45 -0800 (PST)
-Received: from localhost (host186-106-dynamic.41-79-r.retail.telecomitalia.it. [79.41.106.186])
-        by smtp.gmail.com with ESMTPSA id i5sm7472874wjx.15.2016.02.15.16.15.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=1QkMpbN9XqpNiOFAgM8U/HZadXbQFRoRR0sg2m8kzsM=;
+        b=b4n0LZqqIA92/EZjt9P6TuL2378sAdDcRg1Ccq8dxHFa/X+GqGqCXEMtfIIHZUZ6dm
+         gVaoNYuY4Eao53kLju8gCBqBxJuBfkdW/eEjEp4y/0y4hpTkvdNScReePnb9dMQR3+o9
+         z/fjMdhKXA8orAqmDdEDaVEY33JlZdEKEs6pkWj8MS+ygRa7oJur3gNLjck81BPeH1WT
+         mX3drBP4hzC4c9zjemTAgKEiqeVDoqmrhEjV22+E49QS/1R5wMym4nIpmsyJeTa7UtPG
+         hqHMsCNQUYl2V5nHH84EHliWFgjem46cKGUPRJrizava7HmxUcOQdpdpl3g3ZyNqMrKf
+         mjxw==
+X-Gm-Message-State: AG10YOQNMFqhlDuVwAXCg7zdJB3Pea7lw+yV9OTrlzPuYQCm837lCgThOPaKZwbIn/Rs9g==
+X-Received: by 10.140.95.117 with SMTP id h108mr23874633qge.65.1455583937514;
+        Mon, 15 Feb 2016 16:52:17 -0800 (PST)
+Received: from traveller.moon ([187.34.45.132])
+        by smtp.gmail.com with ESMTPSA id r123sm10172306qha.8.2016.02.15.16.52.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Feb 2016 16:15:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20160215230920.GC30631@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        Mon, 15 Feb 2016 16:52:16 -0800 (PST)
+X-Google-Original-From: =?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= <felipegassis@gmail.com>
+X-Mailer: git-send-email 2.7.1.287.g4943984
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286296>
 
-On 02/15, Jeff King wrote:
-> On Mon, Feb 15, 2016 at 05:52:14PM -0500, Eric Sunshine wrote:
->
-> > > diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> > > @@ -157,6 +157,24 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
-> > > +test_expect_success 'add existing foreign_vcs remote' '
-> > > +       git config --add remote.foo.vcs "bar" &&
-> > > +       git config --add remote.bar.vcs "bar" &&
-> > > +       test_when_finished git remote rm foo &&
-> > > +       test_when_finished git remote rm bar &&
-> >
-> > Nit: If the second git-config fails, then none of the cleanup will
-> > happen. You'd either want to re-order them like this:
-> >
-> >     git config --add remote.foo.vcs "bar" &&
-> >     test_when_finished git remote rm foo &&
-> >     git config --add remote.bar.vcs "bar" &&
-> >     test_when_finished git remote rm bar &&
->
-> Good catch. Do we actually care about "--add" here at all? We do not
-> expect these remotes to have any existing config, I think. So would:
->
->   test_config remote.foo.vcs bar &&
->   test_config remote.bar.vcs bar
->
-> do? I guess technically the failing "git remote rename" could introduce
-> extra config that is not cleaned up by those invocations, and we need to
-> "git remote rm" to get a clean slate, but I don't think that is the case
-> now (and it does not seem likely to become so in the future).
+The recursive strategy turns on rename detection by default. Add a
+strategy option to disable rename detection even for exact renames.
 
-Good point, I think the test_config is indeed enough.  Thanks, both,
-will fix in the re-roll.
+Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
+---
 
-> -Peff
+Hi, this is a patch relative to the "Custom merge driver with no rename
+detection" thread, based on suggestions by Junio C Hamano.
 
---
-Thomas
+ Documentation/merge-strategies.txt |  4 ++++
+ merge-recursive.c                  | 16 +++++++++++++---
+ merge-recursive.h                  |  1 +
+ 3 files changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-s=
+trategies.txt
+index 7bbd19b..0528d85 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -81,6 +81,10 @@ no-renormalize;;
+ 	Disables the `renormalize` option.  This overrides the
+ 	`merge.renormalize` configuration variable.
+=20
++no-renames;;
++	Turn off rename detection.
++	See also linkgit:git-diff[1] `--no-renames`.
++
+ rename-threshold=3D<n>;;
+ 	Controls the similarity threshold used for rename detection.
+ 	See also linkgit:git-diff[1] `-M`.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 8eabde2..ca67805 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1839,9 +1839,16 @@ int merge_trees(struct merge_options *o,
+=20
+ 		entries =3D get_unmerged();
+ 		record_df_conflict_files(o, entries);
+-		re_head  =3D get_renames(o, head, common, head, merge, entries);
+-		re_merge =3D get_renames(o, merge, common, head, merge, entries);
+-		clean =3D process_renames(o, re_head, re_merge);
++		if (o->detect_rename) {
++			re_head  =3D get_renames(o, head, common, head, merge, entries);
++			re_merge =3D get_renames(o, merge, common, head, merge, entries);
++			clean =3D process_renames(o, re_head, re_merge);
++		}
++		else {
++			re_head  =3D xcalloc(1, sizeof(struct string_list));
++			re_merge =3D xcalloc(1, sizeof(struct string_list));
++			clean =3D 1;
++		}
+ 		for (i =3D entries->nr-1; 0 <=3D i; i--) {
+ 			const char *path =3D entries->items[i].string;
+ 			struct stage_data *e =3D entries->items[i].util;
+@@ -2039,6 +2046,7 @@ void init_merge_options(struct merge_options *o)
+ 	o->diff_rename_limit =3D -1;
+ 	o->merge_rename_limit =3D -1;
+ 	o->renormalize =3D 0;
++	o->detect_rename =3D DIFF_DETECT_RENAME;
+ 	merge_recursive_config(o);
+ 	if (getenv("GIT_MERGE_VERBOSITY"))
+ 		o->verbosity =3D
+@@ -2088,6 +2096,8 @@ int parse_merge_opt(struct merge_options *o, cons=
+t char *s)
+ 		o->renormalize =3D 1;
+ 	else if (!strcmp(s, "no-renormalize"))
+ 		o->renormalize =3D 0;
++	else if (!strcmp(s, "no-renames"))
++		o->detect_rename =3D 0;
+ 	else if (skip_prefix(s, "rename-threshold=3D", &arg)) {
+ 		if ((o->rename_score =3D parse_rename_score(&arg)) =3D=3D -1 || *arg=
+ !=3D 0)
+ 			return -1;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 9e090a3..52f0201 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -17,6 +17,7 @@ struct merge_options {
+ 	unsigned renormalize : 1;
+ 	long xdl_opts;
+ 	int verbosity;
++	int detect_rename;
+ 	int diff_rename_limit;
+ 	int merge_rename_limit;
+ 	int rename_score;
+--=20
+2.7.1.291.gd6478c6
