@@ -1,159 +1,111 @@
-From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
-Subject: Re: [PULL] svn pathnameencoding for git svn dcommit
-Date: Tue, 16 Feb 2016 12:29:45 +0900
-Message-ID: <56C297A9.2080705@f2.dion.ne.jp>
-References: <56B8B1EA.5020901@f2.dion.ne.jp>
- <20160208225806.GA3487@dcvr.yhbt.net> <20160215005210.GA31141@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/18] convert trivial cases to FLEX_ARRAY macros
+Date: Mon, 15 Feb 2016 22:36:20 -0500
+Message-ID: <20160216033620.GA26430@sigill.intra.peff.net>
+References: <20160215214516.GA4015@sigill.intra.peff.net>
+ <20160215215244.GG10287@sigill.intra.peff.net>
+ <CAPig+cSQG7gWStpRy76D_YzuCFPsXJLBzXCjQ-X_Q3sZthx3iw@mail.gmail.com>
+ <20160216031554.GB13606@sigill.intra.peff.net>
+ <20160216032626.GA19954@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, alex.crezoff@gmail.com
-To: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 04:31:31 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 04:36:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVWMD-0005zZ-PQ
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 04:31:22 +0100
+	id 1aVWR9-0002ok-Cy
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 04:36:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439AbcBPDbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Feb 2016 22:31:18 -0500
-Received: from mail-ae2-f139.auone-net.jp ([111.87.219.139]:52938 "EHLO
-	dmta02.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752759AbcBPDbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Feb 2016 22:31:17 -0500
-Received: from amlmta053.auone-net.jp (amlmta053-MM [10.188.23.128])
-	by dmta02.auone-net.jp (au one net mail) with ESMTP id 059EE400676
-	for <git@vger.kernel.org>; Tue, 16 Feb 2016 12:31:15 +0900 (JST)
-Received: from [0.0.0.0] ([80.255.3.122])
-	by amlmta053.auone-net.jp id 56c297fd00034b7b000033a40000775e3000098deda2;
-	Tue, 16 Feb 2016 12:31:09 +0900
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <20160215005210.GA31141@dcvr.yhbt.net>
-X-MXM-DELIVERY-TYPE: 3
+	id S1753384AbcBPDgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Feb 2016 22:36:23 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42745 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753324AbcBPDgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Feb 2016 22:36:23 -0500
+Received: (qmail 19355 invoked by uid 102); 16 Feb 2016 03:36:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 22:36:22 -0500
+Received: (qmail 15771 invoked by uid 107); 16 Feb 2016 03:36:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Feb 2016 22:36:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Feb 2016 22:36:20 -0500
+Content-Disposition: inline
+In-Reply-To: <20160216032626.GA19954@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286313>
 
-On 2016/02/15 9:52 +0900, Eric Wong wrote:
-> I've amended tests to both commits, but the URL encoding one
-> requires an HTTP server to test effectively.
+On Mon, Feb 15, 2016 at 10:26:26PM -0500, Jeff King wrote:
 
-Thank you for the tests. But, on my environment, both of them failed
-unexpectedly. (Windows 7 SP1, x86_64 Cygwin, LANG=ja_JP.UTF-8)
+> We could do this on top of my series (I can also factor out the fix
+> separately to go at the beginning if we don't want to hold the bugfix
+> hostage).
+> 
+> -- >8 --
+> Subject: [PATCH] reflog_expire_cfg: drop misleading "len" parameter
 
-For now, I don't have enough time to investigate this further. Let me
-just share the result.
+Here it is as a separate fix. Applying my series on top would need a
+minor and obvious tweak. I'll hold a re-roll for more comments, but will
+otherwise plan to stick this at the front of the series.
 
-> $ ./t9115-git-svn-dcommit-funky-renames.sh -x --run='11-12'
-(snip)
-> expecting success:
->         neq=$(printf "\201\202") &&
->         git config svn.pathnameencoding cp932 &&
->         echo neq >"$neq" &&
->         git add "$neq" &&
->         git commit -m "neq" &&
->         git svn dcommit
->
-> +++ printf '\201\202'
-> ++ neq=$'\201\202'
-> ++ git config svn.pathnameencoding cp932
-> ++ echo neq
-> ++ git add $'\201\202'
-> ++ git commit -m neq
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->         svnrepo/
->         "\357\202\201\357\202\202"
->
-> nothing added to commit but untracked files present
-> error: last command exited with $?=1
-> not ok 11 - svn.pathnameencoding=cp932 new file on dcommit
-> #
-> #               neq=$(printf "\201\202") &&
-> #               git config svn.pathnameencoding cp932 &&
-> #               echo neq >"$neq" &&
-> #               git add "$neq" &&
-> #               git commit -m "neq" &&
-> #               git svn dcommit
-> #
->
-> expecting success:
->         inf=$(printf "\201\207") &&
->         git config svn.pathnameencoding cp932 &&
->         echo inf >"$inf" &&
->         git add "$inf" &&
->         git commit -m "inf" &&
->         git svn dcommit &&
->         git mv "$inf" inf &&
->         git commit -m "inf rename" &&
->         git svn dcommit
->
-> +++ printf '\201\207'
-> ++ inf=$'\201\207'
-> ++ git config svn.pathnameencoding cp932
-> ++ echo inf
-> ++ git add $'\201\207'
-> ++ git commit -m inf
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->         svnrepo/
->         "\357\202\201\357\202\202"
->         "\357\202\201\357\202\207"
->
-> nothing added to commit but untracked files present
-> error: last command exited with $?=1
-> not ok 12 - svn.pathnameencoding=cp932 rename on dcommit
-> #
-> #               inf=$(printf "\201\207") &&
-> #               git config svn.pathnameencoding cp932 &&
-> #               echo inf >"$inf" &&
-> #               git add "$inf" &&
-> #               git commit -m "inf" &&
-> #               git svn dcommit &&
-> #               git mv "$inf" inf &&
-> #               git commit -m "inf rename" &&
-> #               git svn dcommit
-> #
+-- >8 --
+Subject: [PATCH] reflog_expire_cfg: NUL-terminate pattern field
 
-Strangely, after the test failure, "git status" in the trash directory
-reports different status.
-> $ cd 'trash directory.t9115-git-svn-dcommit-funky-renames'
-> $ git status
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
->         svnrepo/
->         "\201\202"
->         "\201\207"
->
-> nothing added to commit but untracked files present (use "git add" to track)
+You can tweak the reflog expiration for a particular subset
+of refs by configuring gc.foo.reflogexpire. We keep a linked
+list of reflog_expire_cfg structs, each of which holds the
+pattern and a "len" field for the length of the pattern. The
+pattern itself is _not_ NUL-terminated.
 
-I can manually add and commit them.
-> $ neq=$(printf "\201\202")
-> $ git add "$neq"
-> $ git commit -m "neq"
-> [master (root-commit) 3fd464f] neq
->  1 file changed, 1 insertion(+)
->  create mode 100644 "\201\202"
+However, we feed the pattern directly to wildmatch(), which
+expects a NUL-terminated string, meaning it may keep reading
+random junk after our struct.
 
-I can't see how "\357\202\201\357\202\202" came as output in the test.
+We can fix this by allocating an extra byte for the NUL
+(which is already zero because we use xcalloc). Let's also
+drop the misleading "len" field, which is no longer
+necessary. The existing use of "len" can be converted to use
+strncmp().
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/reflog.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index f39960e..9980731 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -396,7 +396,6 @@ static struct reflog_expire_cfg {
+ 	struct reflog_expire_cfg *next;
+ 	unsigned long expire_total;
+ 	unsigned long expire_unreachable;
+-	size_t len;
+ 	char pattern[FLEX_ARRAY];
+ } *reflog_expire_cfg, **reflog_expire_cfg_tail;
+ 
+@@ -408,13 +407,12 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
+ 		reflog_expire_cfg_tail = &reflog_expire_cfg;
+ 
+ 	for (ent = reflog_expire_cfg; ent; ent = ent->next)
+-		if (ent->len == len &&
+-		    !memcmp(ent->pattern, pattern, len))
++		if (!strncmp(ent->pattern, pattern, len) &&
++		    ent->pattern[len] == '\0')
+ 			return ent;
+ 
+-	ent = xcalloc(1, (sizeof(*ent) + len));
++	ent = xcalloc(1, sizeof(*ent) + len + 1);
+ 	memcpy(ent->pattern, pattern, len);
+-	ent->len = len;
+ 	*reflog_expire_cfg_tail = ent;
+ 	reflog_expire_cfg_tail = &(ent->next);
+ 	return ent;
 -- 
-k_satoda
+2.7.1.574.gccd43a9
