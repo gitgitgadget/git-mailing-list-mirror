@@ -1,137 +1,169 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 08/15] remote: die on config error when setting/adding branches
-Date: Tue, 16 Feb 2016 13:56:35 +0100
-Message-ID: <1455627402-752-9-git-send-email-ps@pks.im>
+Subject: [PATCH v5 09/15] remote: die on config error when manipulating remotes
+Date: Tue, 16 Feb 2016 13:56:36 +0100
+Message-ID: <1455627402-752-10-git-send-email-ps@pks.im>
 References: <1455627402-752-1-git-send-email-ps@pks.im>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	ps@pks.im, Eric Sunshine <sunshine@sunshineco.com>,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 13:57:18 2016
+X-From: git-owner@vger.kernel.org Tue Feb 16 13:57:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfBq-0001g8-Rg
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 13:57:15 +0100
+	id 1aVfC2-0001v0-5e
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 13:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932229AbcBPM5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 07:57:11 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:45301 "EHLO
+	id S932224AbcBPM5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 07:57:10 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:53078 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932210AbcBPM5C (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 07:57:02 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1D65420A17
-	for <git@vger.kernel.org>; Tue, 16 Feb 2016 07:57:01 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 16 Feb 2016 07:57:01 -0500
+	by vger.kernel.org with ESMTP id S932213AbcBPM5D (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 07:57:03 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6CFD520AC1
+	for <git@vger.kernel.org>; Tue, 16 Feb 2016 07:57:02 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 16 Feb 2016 07:57:02 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=V9Yb
-	TCP0LI8VzNhgxH37+w2Vraw=; b=dP251QAQjmeGaDEzT5SBvh163yincq0cmDwM
-	5LEv3nGlrJBdSkBncgI04VCD4F1uDgz4xOmDD0XFhFu9omrmhwruymBig33sDmCs
-	NdknMdD3qabUPdBqEQzYcC96nP+jSxG3p8df971i8czed8KNPNFN5ncjNYhKYDCa
-	SrDj8oY=
-X-Sasl-enc: jYnWDqtamRP2gvkHdURrxhj5s6GAwX/k672pJPGVMTwd 1455627420
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=2w99
+	qRFhOQW/uxFZgaL+ZR/r+Zc=; b=T7vNFbFUle38LXtvyx5/kB7Nca1MxyIezWYi
+	8mNtKsQeaA/gF9x1VeGiLkn2Z8ZAF7QRkp7k8M1NpsLa9ZF3zMBPvTF4pgox7am/
+	8/BcVMvO+kL/et6cDlj6RNV7VtTYRb4wSemQMX36FuY/vDmdI68n68SjQGWPd0Kj
+	QPNlBMw=
+X-Sasl-enc: To6Jx3R4DRjbwzn1+DHgQsGDkbS1uWaJ22oSA/mVNYmR 1455627422
 Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id B1E9EC00018;
-	Tue, 16 Feb 2016 07:57:00 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id F41D4680159;
+	Tue, 16 Feb 2016 07:57:01 -0500 (EST)
 X-Mailer: git-send-email 2.7.1
 In-Reply-To: <1455627402-752-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286345>
 
-When we add or set new branches (e.g. by `git remote add -f` or
-`git remote set-branches`) we do not check for error codes when
-writing the branches to the configuration file. When persisting
-the configuration failed we are left with a remote that has none
-or not all of the branches that should have been set without
-notifying the user.
+When manipulating remotes we try to set various configuration
+values without checking if the values were persisted correctly,
+possibly leaving the remote in an inconsistent state.
 
-Fix this issue by dying early on configuration error.
+Fix this issue by dying early and notifying the user about the
+error.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/remote.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+ builtin/remote.c | 39 ++++++++++++---------------------------
+ 1 file changed, 12 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 8b78c3d..eeb6d2e 100644
+index eeb6d2e..fe57f77 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -108,8 +108,8 @@ enum {
- #define MIRROR_PUSH 2
- #define MIRROR_BOTH (MIRROR_FETCH|MIRROR_PUSH)
+@@ -197,8 +197,7 @@ static int add(int argc, const char **argv)
+ 		die(_("'%s' is not a valid remote name"), name);
  
--static int add_branch(const char *key, const char *branchname,
--		const char *remotename, int mirror, struct strbuf *tmp)
-+static void add_branch(const char *key, const char *branchname,
-+		       const char *remotename, int mirror, struct strbuf *tmp)
- {
- 	strbuf_reset(tmp);
- 	strbuf_addch(tmp, '+');
-@@ -119,7 +119,7 @@ static int add_branch(const char *key, const char *branchname,
- 	else
- 		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
- 				branchname, remotename, branchname);
--	return git_config_set_multivar(key, tmp->buf, "^$", 0);
-+	git_config_set_multivar_or_die(key, tmp->buf, "^$", 0);
+ 	strbuf_addf(&buf, "remote.%s.url", name);
+-	if (git_config_set(buf.buf, url))
+-		return 1;
++	git_config_set_or_die(buf.buf, url);
+ 
+ 	if (!mirror || mirror & MIRROR_FETCH) {
+ 		strbuf_reset(&buf);
+@@ -214,16 +213,14 @@ static int add(int argc, const char **argv)
+ 	if (mirror & MIRROR_PUSH) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "remote.%s.mirror", name);
+-		if (git_config_set(buf.buf, "true"))
+-			return 1;
++		git_config_set_or_die(buf.buf, "true");
+ 	}
+ 
+ 	if (fetch_tags != TAGS_DEFAULT) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "remote.%s.tagopt", name);
+-		if (git_config_set(buf.buf,
+-			fetch_tags == TAGS_SET ? "--tags" : "--no-tags"))
+-			return 1;
++		git_config_set_or_die(buf.buf,
++				      fetch_tags == TAGS_SET ? "--tags" : "--no-tags");
+ 	}
+ 
+ 	if (fetch && fetch_remote(name))
+@@ -591,25 +588,20 @@ static int migrate_file(struct remote *remote)
+ 
+ 	strbuf_addf(&buf, "remote.%s.url", remote->name);
+ 	for (i = 0; i < remote->url_nr; i++)
+-		if (git_config_set_multivar(buf.buf, remote->url[i], "^$", 0))
+-			return error(_("Could not append '%s' to '%s'"),
+-					remote->url[i], buf.buf);
++		git_config_set_multivar_or_die(buf.buf, remote->url[i], "^$", 0);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.push", remote->name);
+ 	for (i = 0; i < remote->push_refspec_nr; i++)
+-		if (git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0))
+-			return error(_("Could not append '%s' to '%s'"),
+-					remote->push_refspec[i], buf.buf);
++		git_config_set_multivar_or_die(buf.buf, remote->push_refspec[i], "^$", 0);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+ 	for (i = 0; i < remote->fetch_refspec_nr; i++)
+-		if (git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0))
+-			return error(_("Could not append '%s' to '%s'"),
+-					remote->fetch_refspec[i], buf.buf);
++		git_config_set_multivar_or_die(buf.buf, remote->fetch_refspec[i], "^$", 0);
+ 	if (remote->origin == REMOTE_REMOTES)
+ 		unlink_or_warn(git_path("remotes/%s", remote->name));
+ 	else if (remote->origin == REMOTE_BRANCHES)
+ 		unlink_or_warn(git_path("branches/%s", remote->name));
++
+ 	return 0;
  }
  
- static const char mirror_advice[] =
-@@ -206,9 +206,8 @@ static int add(int argc, const char **argv)
- 		if (track.nr == 0)
- 			string_list_append(&track, "*");
- 		for (i = 0; i < track.nr; i++) {
--			if (add_branch(buf.buf, track.items[i].string,
--				       name, mirror, &buf2))
--				return 1;
-+			add_branch(buf.buf, track.items[i].string,
-+				   name, mirror, &buf2);
+@@ -656,8 +648,7 @@ static int mv(int argc, const char **argv)
+ 
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
+-	if (git_config_set_multivar(buf.buf, NULL, NULL, 1))
+-		return error(_("Could not remove config section '%s'"), buf.buf);
++	git_config_set_multivar_or_die(buf.buf, NULL, NULL, 1);
+ 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
+ 	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
+ 		char *ptr;
+@@ -677,8 +668,7 @@ static int mv(int argc, const char **argv)
+ 				  "\tPlease update the configuration manually if necessary."),
+ 				buf2.buf);
+ 
+-		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
+-			return error(_("Could not append '%s'"), buf.buf);
++		git_config_set_multivar_or_die(buf.buf, buf2.buf, "^$", 0);
+ 	}
+ 
+ 	read_branches();
+@@ -688,9 +678,7 @@ static int mv(int argc, const char **argv)
+ 		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
+ 			strbuf_reset(&buf);
+ 			strbuf_addf(&buf, "branch.%s.remote", item->string);
+-			if (git_config_set(buf.buf, rename.new)) {
+-				return error(_("Could not set '%s'"), buf.buf);
+-			}
++			git_config_set_or_die(buf.buf, rename.new);
  		}
  	}
  
-@@ -1416,21 +1415,17 @@ static int remove_all_fetch_refspecs(const char *remote, const char *key)
- 	return git_config_set_multivar(key, NULL, NULL, 1);
- }
- 
--static int add_branches(struct remote *remote, const char **branches,
--			const char *key)
-+static void add_branches(struct remote *remote, const char **branches,
-+			 const char *key)
- {
- 	const char *remotename = remote->name;
- 	int mirror = remote->mirror;
- 	struct strbuf refspec = STRBUF_INIT;
- 
- 	for (; *branches; branches++)
--		if (add_branch(key, *branches, remotename, mirror, &refspec)) {
--			strbuf_release(&refspec);
--			return 1;
--		}
-+		add_branch(key, *branches, remotename, mirror, &refspec);
- 
- 	strbuf_release(&refspec);
--	return 0;
- }
- 
- static int set_remote_branches(const char *remotename, const char **branches,
-@@ -1449,10 +1444,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 		strbuf_release(&key);
- 		return 1;
+@@ -788,10 +776,7 @@ static int rm(int argc, const char **argv)
+ 				strbuf_reset(&buf);
+ 				strbuf_addf(&buf, "branch.%s.%s",
+ 						item->string, *k);
+-				if (git_config_set(buf.buf, NULL)) {
+-					strbuf_release(&buf);
+-					return -1;
+-				}
++				git_config_set_or_die(buf.buf, NULL);
+ 			}
+ 		}
  	}
--	if (add_branches(remote, branches, key.buf)) {
--		strbuf_release(&key);
--		return 1;
--	}
-+	add_branches(remote, branches, key.buf);
- 
- 	strbuf_release(&key);
- 	return 0;
 -- 
 2.7.1
