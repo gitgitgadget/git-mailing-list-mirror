@@ -1,97 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 08/18] use st_add and st_mult for allocation size computation
-Date: Tue, 16 Feb 2016 00:47:24 -0500
-Message-ID: <CAPig+cT0P0noxEEM3xCLyYzSFhKXQqW42L3v8EwHraF9Y_5-dg@mail.gmail.com>
-References: <20160215214516.GA4015@sigill.intra.peff.net>
-	<20160215215310.GH10287@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] merge_blobs: use strbuf instead of manually-sized
+ mmfile_t
+Date: Tue, 16 Feb 2016 00:50:43 -0500
+Message-ID: <20160216055043.GB28237@sigill.intra.peff.net>
+References: <56C2459B.5060805@uni-graz.at>
+ <20160216011258.GA11961@sigill.intra.peff.net>
+ <20160216050915.GA5765@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 16 06:47:43 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan =?utf-8?Q?Fr=C3=BChwirth?= <stefan.fruehwirth@uni-graz.at>,
+	git@vger.kernel.org
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 06:50:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVYU9-0005hq-JW
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 06:47:41 +0100
+	id 1aVYXD-00089F-85
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 06:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391AbcBPFrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 00:47:37 -0500
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:33827 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753204AbcBPFrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 00:47:24 -0500
-Received: by mail-vk0-f50.google.com with SMTP id e185so124269358vkb.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2016 21:47:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=l6Y21CBvsh9TJ9zbFCYfqhTnNjQzvwSPdAn3MOetk6E=;
-        b=J+ibNpMcWNbtuoJXFSfUZjoq3UeMnZyw22qeKOHjS6gs9fcAd1TPs+HYHQpSs67s8d
-         C39wghhLvl1j5nn5ZYft7Rbwx8974jVrn7mEZZju7ea7gaUGm/B/wVlfR3laSM/LyFWQ
-         oGOjcG9V1lgjAw4H4/kdFCNzZbRJn4iLmmnDdRQKnKBex98Ua4V5/uY4FqQ0pKNWBD32
-         cw2LhyliJXwYfbSoY1faprJoKVXclKIAFKnBnUz46aTE6WniOkh84ptUmH6arnufd/1H
-         eWR2+plLwo1618xKtZTEfABYMoNfado98jKkGKIHW1dX7g2cOT8fjEQ4YnnwuLzXJ9io
-         sgvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=l6Y21CBvsh9TJ9zbFCYfqhTnNjQzvwSPdAn3MOetk6E=;
-        b=kIIRNl7WjZtxpg+Elnaxcm4OQs+o8IKVerCvIvg9BG0rDesHttmABFIn1W3VLQ2KGn
-         Wz/LJ8r8Ar4evW7P+zJjcXP8vemcW8ETb37PfArXZOfHPqPWFLeyuJFxTrgzv6XrlVt3
-         gNB1Pdu3pyGZuLdMZGK4M2paofiF29eq58FdMlFWn16sCMXbSpvciaVUBC2XGwahjT+Z
-         5lvSQ0vyFStGPNlTxBql0I3WKImI2sYOENZZDTMbrzV73sKwQund/03AsFzmD8mRKMDB
-         O9qk+5GMjT49NsVwC5nSRGk77SJJPOJVhjwJYyhfry4FEu9STa2etAALVhkT+meYOx4d
-         qJUQ==
-X-Gm-Message-State: AG10YOSKyNd/TOICtmN5QhKrxZNRbUP/RsP4ZsZcUP1/HTEfTlw+0fbEhuzHy4TIJH6rXGU4JasvBjsuvN8xuA==
-X-Received: by 10.31.47.135 with SMTP id v129mr16178994vkv.115.1455601644111;
- Mon, 15 Feb 2016 21:47:24 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 15 Feb 2016 21:47:24 -0800 (PST)
-In-Reply-To: <20160215215310.GH10287@sigill.intra.peff.net>
-X-Google-Sender-Auth: JFrNAV5TrIKhn0ZXoLSrxT8Fmjg
+	id S1753530AbcBPFur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 00:50:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42879 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753165AbcBPFuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 00:50:46 -0500
+Received: (qmail 25123 invoked by uid 102); 16 Feb 2016 05:50:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 00:50:46 -0500
+Received: (qmail 18077 invoked by uid 107); 16 Feb 2016 05:50:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 00:50:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2016 00:50:43 -0500
+Content-Disposition: inline
+In-Reply-To: <20160216050915.GA5765@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286323>
 
-On Mon, Feb 15, 2016 at 4:53 PM, Jeff King <peff@peff.net> wrote:
-> If our size computation overflows size_t, we may allocate a
-> much smaller buffer than we expected and overflow it. It's
-> probably impossible to trigger an overflow in most of these
-> sites in practice, but it is easy enough convert their
-> additions and multiplications into overflow-checking
-> variants. This may be fixing real bugs, and it makes
-> auditing the code easier.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> @@ -2632,7 +2632,7 @@ static void update_image(struct image *img,
-> -       result = xmalloc(img->len + insert_count - remove_count + 1);
-> +       result = xmalloc(st_add3(st_sub(img->len, remove_count), insert_count, 1));
+On Tue, Feb 16, 2016 at 12:09:15AM -0500, Eric Sunshine wrote:
 
-Phew, what a mouthful, and not easy to read compared to the original.
-Fortunately, the remainder of the changes in this patch are
-straightforward and often simple.
+> > -	ecb.priv = res;
+> > -	return xdi_diff(f1, f2, &xpp, &xecfg, &ecb);
+> > +	res->size = out.len; /* avoid long/size_t pointer mismatch below */
+> 
+> It took a minute or two for me to realize that "mismatch below" was
+> talking about the second argument to strbuf_detach(). I tried
+> rewriting the comment to mention the second argument explicitly, but
+> couldn't come up with one sufficiently succinct. Oh well.
 
-> diff --git a/sha1_name.c b/sha1_name.c
-> @@ -87,9 +87,8 @@ static void find_short_object_filename(int len, const char *hex_pfx, struct disa
->                 const char *objdir = get_object_directory();
-> -               int objdir_len = strlen(objdir);
-> -               int entlen = objdir_len + 43;
-> -               fakeent = xmalloc(sizeof(*fakeent) + entlen);
-> +               size_t objdir_len = strlen(objdir);
-> +               fakeent = xmalloc(st_add3(sizeof(*fakeent), objdir_len, 43));
->                 memcpy(fakeent->base, objdir, objdir_len);
->                 fakeent->name = fakeent->base + objdir_len + 1;
+Maybe "avoid long/size_t mismatch in strbuf_detach" would be better.
 
-If we've gotten this far without die()ing due to overflow in st_add3()
-when invoking xmalloc(), then we know that this fakeent->name
-computation won't overflow. Okay.
+> > +	res->ptr = strbuf_detach(&out, NULL);
+> > +	return 0;
+> >  }
+> 
+> My reviewed-by may not be worth much since this code is new to me
+> too, but this patch looks "obviously correct" to me, so:
+> 
+>     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> 
+> Perhaps squash in the following test which I adapted from the
+> reproduction recipe provided by Chris Rossi[1]?
+> 
+> [1] https://gist.github.com/chrisrossi/f09c8bed70b364f9f12e
 
->                 fakeent->name[-1] = '/';
+Yeah, maybe. There were two reasons I avoided adding a test.
+
+One, I secretly hoped that by dragging my feet we could get consensus on
+just ripping out merge-tree entirely. ;)
+
+Two, I'm not sure what the test output _should_ be. I think this case is
+buggy. So we can check that we don't corrupt the heap, which is nice,
+but I don't like adding a test that doesn't test_cmp the expected output
+(and see my earlier comments re: thinking hard).
+
+But if we are going to keep it, maybe some exercise of the code is
+better than none.
+
+-Peff
