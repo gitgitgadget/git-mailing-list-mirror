@@ -1,56 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v5 08/12] ref-filter: introduce align_atom_parser()
-Date: Wed, 17 Feb 2016 00:30:11 +0530
-Message-ID: <1455649215-23260-9-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v5 06/12] ref-filter: introduce color_atom_parser()
+Date: Wed, 17 Feb 2016 00:30:09 +0530
+Message-ID: <1455649215-23260-7-git-send-email-Karthik.188@gmail.com>
 References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 16 20:00:22 2016
+X-From: git-owner@vger.kernel.org Tue Feb 16 20:00:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVkr9-0008UQ-2r
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 20:00:15 +0100
+	id 1aVkqw-0008IR-Hm
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 20:00:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933221AbcBPTAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 14:00:07 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34452 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933217AbcBPTAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 14:00:03 -0500
-Received: by mail-pa0-f49.google.com with SMTP id fy10so68376191pac.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 11:00:03 -0800 (PST)
+	id S933212AbcBPS76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 13:59:58 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33397 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933189AbcBPS75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 13:59:57 -0500
+Received: by mail-pa0-f43.google.com with SMTP id fl4so95993071pad.0
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 10:59:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PLruhpfA+LN/CXHWcmIz0miuBP3JO7jdOJbA6Bv5hME=;
-        b=l7JMeg/MsK/M4ADDnhlZAa882tlYwMgGtl9Ia05DJPEsad/9CHfj6yXVHZZ29pxxkt
-         pZ03a31p31TK6pfoQLePZxabUeasiw1hh3SEsjG1deoeW2FyF5LRTKkCiubo2sCoVR5E
-         n7259D5QHZP0hzXfYCnuDKfjWdOrfzbYyGKKowbLl98at/4R1vcr9cCqw44hhi4oPEOx
-         x50idyJ4xLRfzPFSAKtJiyvDyjya70iguOQTuWprFguyNQHxKAsDVVHZ9giOxNksU+A8
-         c+bx9Da4nG68v4AO8h4Iv3kDg8fVMj7XvfYTr+flvkEjluK40tdeRFqniEBUBJdxN4aL
-         uvGQ==
+        bh=i5XDIvQv1ke8l70+Tww3kKqtBw3WCATXbMmBivNU+3s=;
+        b=xligPyeXTlqJGa8W3WX2eaKxCpnJIHdgdYgGLh+JtsZ24CD6CFZs6k5yHpKSWfvPdI
+         Vm9+sgTv/OxQG2gEI6GjZrUHctYeiFi6ejdu7+CwCeIGOKM1G8YcvSuNigTPfoK20zbC
+         +IDbpjCsGzlLtCzLcDf0ChiWuHXwJSNyWQRcUHDOiKOcCz25UeP+q00Y8OW8eM+dmcfb
+         GNVpTaaLl87/OyyFfHgxZlrwSP6NFgZ0DgxYstcRWwIOxcImssLMU2zCZi0PsTYhJbbx
+         kQMC402Ei0Prmyd7SbDTxLEaGT1YqVJU2RoBvVlDQZXkkWKqC0iAEFkCQZ1ioawQnKHf
+         D3Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=PLruhpfA+LN/CXHWcmIz0miuBP3JO7jdOJbA6Bv5hME=;
-        b=Y94QtDEEM12df/Jx4h45N0UNi2VuIfvKfAP8aX5/PaURzAWGKJe5Wy8rHs7G2ciHoO
-         pRjbWcstwf9lpiQm4eNI0aC83SC42kWxlPrMlqS6BmBVe1w+EZBgDFVOo6zpxQTyWGyJ
-         KDZAbs1B/5jWmAYCg6dPZ6sCFGfGKTI9GtDVnbHkfKha4v1ruqcX1FAWyEA8JRsUzHn1
-         3YXO2Re5dcTmV2MwVUs7gTgPQa2yATcDzFQgnvSF0AOSWqeBTtXSXeCGeLrF+OIL4iKL
-         2GjoKwEKeu4pICizCg0CgZm1VKv0roKBIib5eRZeMCEg72RZkR+Wc3USIa07UB5NAeNz
-         SsbA==
-X-Gm-Message-State: AG10YORk7wtGokht5N03wVHk60VudEqOUHy2tbWqoiFY9JzSQi5mGPiaIFgp9oL56CDtyg==
-X-Received: by 10.66.63.104 with SMTP id f8mr33072334pas.109.1455649203329;
-        Tue, 16 Feb 2016 11:00:03 -0800 (PST)
+        bh=i5XDIvQv1ke8l70+Tww3kKqtBw3WCATXbMmBivNU+3s=;
+        b=ejtDv5JnVpyWvoHMcCDzuGwV4A8GHvjQ8QYthGS3EN6VOeqhDOP7TAZ16nxlsLjNl8
+         Y33dQpsROWJ2KiEdZJvvsxYJJuL4V9+OBSc+wFf29Q178pi1TG+wPnAor0nw0uCxqezX
+         tqiMzqRo/sVj0xAAj4K/ATqoS8n0lJi1uyEOsVnaol4DIC1aaUCH4uLIjgvnr81u1uKj
+         KmoQtX+lKMS1+6XG5c8bEJVQHLmPSR+5b7mHTDDl7Iwjwgu57Tn6KfzN4acf7BgSjpeb
+         S+WjPc5lnpLYxx9V4kuqelF7VLDEk4KT5zV2fY1cgKFtBGp+0c1LWY/ykc8OGMUUEev/
+         o+7Q==
+X-Gm-Message-State: AG10YORHK4pAGV6lrMlfqpMi1T/uIMZ7tGKvwq8WSX1qyRHznynDhXeelQt3W/xpZoURtQ==
+X-Received: by 10.67.14.138 with SMTP id fg10mr33253609pad.145.1455649196709;
+        Tue, 16 Feb 2016 10:59:56 -0800 (PST)
 Received: from ashley.localdomain ([106.51.133.38])
-        by smtp.gmail.com with ESMTPSA id 27sm47469677pfh.48.2016.02.16.11.00.00
+        by smtp.gmail.com with ESMTPSA id 27sm47469677pfh.48.2016.02.16.10.59.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Feb 2016 11:00:02 -0800 (PST)
+        Tue, 16 Feb 2016 10:59:56 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.1
 In-Reply-To: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
@@ -58,170 +58,86 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286420>
 
-Introduce align_atom_parser() which will parse an 'align' atom and
-store the required alignment position and width in the 'used_atom'
-structure for further usage in populate_value().
+Introduce color_atom_parser() which will parse a "color" atom and
+store its color in the "used_atom" structure for further usage in
+populate_value().
 
-Since this patch removes the last usage of match_atom_name(), remove
-the function from ref-filter.c.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 91 ++++++++++++++++++++++++++----------------------------------
- 1 file changed, 40 insertions(+), 51 deletions(-)
+ ref-filter.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index a08ea83..4a9711f 100644
+index 974c412..f401da6 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -16,6 +16,11 @@
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-+struct align {
-+	align_type position;
-+	unsigned int width;
-+};
-+
- /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -31,6 +36,7 @@ static struct used_atom {
+@@ -29,10 +29,21 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ static struct used_atom {
+ 	const char *name;
  	cmp_type type;
- 	union {
- 		char color[COLOR_MAXLEN];
-+		struct align align;
- 	} u;
++	union {
++		char color[COLOR_MAXLEN];
++	} u;
  } *used_atom;
  static int used_atom_cnt, need_tagged, need_symref;
-@@ -55,6 +61,37 @@ static align_type parse_align_position(const char *s)
- 	return -1;
- }
+ static int need_color_reset_at_eol;
  
-+static void align_atom_parser(struct used_atom *atom, const char *arg)
++static void color_atom_parser(struct used_atom *atom, const char *color_value)
 +{
-+	struct align *align = &atom->u.align;
-+	struct strbuf **v, **to_free;
-+	unsigned int width = ~0U;
-+
-+	if (!arg)
-+		die(_("expected format: %%(align:<width>,<position>)"));
-+	v = to_free = strbuf_split_str_omit_term(arg, ',', 0);
-+
-+	align->position = ALIGN_LEFT;
-+
-+	while (*v) {
-+		int position;
-+		const char *s = v[0]->buf;
-+
-+		if (!strtoul_ui(s, 10, &width))
-+			;
-+		else if ((position = parse_align_position(s)) >= 0)
-+			align->position = position;
-+		else
-+			die(_("unrecognized %%(align) argument: %s"), s);
-+		v++;
-+	}
-+
-+	if (width == ~0U)
-+		die(_("positive width expected with the %%(align) atom"));
-+	align->width = width;
-+	strbuf_list_free(to_free);
++	if (!color_value)
++		die(_("expected format: %%(color:<color>)"));
++	if (color_parse(color_value, atom->u.color) < 0)
++		die(_("unrecognized color: %%(color:%s)"), color_value);
 +}
 +
  static struct {
  	const char *name;
  	cmp_type cmp_type;
-@@ -93,17 +130,12 @@ static struct {
+@@ -70,7 +81,7 @@ static struct {
+ 	{ "symref" },
  	{ "flag" },
  	{ "HEAD" },
- 	{ "color", FIELD_STR, color_atom_parser },
--	{ "align" },
-+	{ "align", FIELD_STR, align_atom_parser },
+-	{ "color" },
++	{ "color", FIELD_STR, color_atom_parser },
+ 	{ "align" },
  	{ "end" },
  };
+@@ -158,6 +169,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 	used_atom[at].type = valid_atom[i].cmp_type;
+ 	if (arg)
+ 		arg = used_atom[at].name + (arg - atom) + 1;
++	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
+ 	if (valid_atom[i].parser)
+ 		valid_atom[i].parser(&used_atom[at], arg);
+ 	if (*atom == '*')
+@@ -816,6 +828,7 @@ static void populate_value(struct ref_array_item *ref)
  
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
- 
--struct align {
--	align_type position;
--	unsigned int width;
--};
--
- struct contents {
- 	unsigned int lines;
- 	struct object_id oid;
-@@ -288,22 +320,6 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	pop_stack_element(&state->stack);
- }
- 
--static int match_atom_name(const char *name, const char *atom_name, const char **val)
--{
--	const char *body;
--
--	if (!skip_prefix(name, atom_name, &body))
--		return 0; /* doesn't even begin with "atom_name" */
--	if (!body[0]) {
--		*val = NULL; /* %(atom_name) and no customization */
--		return 1;
--	}
--	if (body[0] != ':')
--		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
--	*val = body + 1; /* "atom_name:val" */
--	return 1;
--}
--
- /*
-  * In a format string, find the next occurrence of %(atom).
-  */
-@@ -845,7 +861,6 @@ static void populate_value(struct ref_array_item *ref)
+ 	/* Fill in specials first */
+ 	for (i = 0; i < used_atom_cnt; i++) {
++		struct used_atom *atom = &used_atom[i];
+ 		const char *name = used_atom[i].name;
+ 		struct atom_value *v = &ref->value[i];
  		int deref = 0;
- 		const char *refname;
- 		const char *formatp;
--		const char *valp;
- 		struct branch *branch = NULL;
- 
- 		v->handler = append_atom;
-@@ -909,34 +924,8 @@ static void populate_value(struct ref_array_item *ref)
- 			else
- 				v->s = " ";
- 			continue;
--		} else if (match_atom_name(name, "align", &valp)) {
--			struct align *align = &v->u.align;
--			struct strbuf **s, **to_free;
--			int width = -1;
+@@ -856,14 +869,8 @@ static void populate_value(struct ref_array_item *ref)
+ 			refname = branch_get_push(branch, NULL);
+ 			if (!refname)
+ 				continue;
+-		} else if (match_atom_name(name, "color", &valp)) {
+-			char color[COLOR_MAXLEN] = "";
 -
 -			if (!valp)
--				die(_("expected format: %%(align:<width>,<position>)"));
--
--			s = to_free = strbuf_split_str_omit_term(valp, ',', 0);
--
--			align->position = ALIGN_LEFT;
--
--			while (*s) {
--				int position;
--
--				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
--					;
--				else if ((position = parse_align_position(s[0]->buf)) >= 0)
--					align->position = position;
--				else
--					die(_("improper format entered align:%s"), s[0]->buf);
--				s++;
--			}
--
--			if (width < 0)
--				die(_("positive width expected with the %%(align) atom"));
--			align->width = width;
--			strbuf_list_free(to_free);
-+		} else if (starts_with(name, "align")) {
-+			v->u.align = atom->u.align;
- 			v->handler = align_atom_handler;
+-				die(_("expected format: %%(color:<color>)"));
+-			if (color_parse(valp, color) < 0)
+-				die(_("unable to parse format"));
+-			v->s = xstrdup(color);
++		} else if (starts_with(name, "color:")) {
++			v->s = atom->u.color;
  			continue;
- 		} else if (!strcmp(name, "end")) {
+ 		} else if (!strcmp(name, "flag")) {
+ 			char buf[256], *cp = buf;
 -- 
 2.7.1
