@@ -1,85 +1,108 @@
 From: Lars Schneider <larsxschneider@gmail.com>
 Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the origin of a config value
-Date: Tue, 16 Feb 2016 10:48:30 +0100
-Message-ID: <BB209409-A43C-4C08-8691-B27FFDBDDB69@gmail.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com> <1455531466-16617-4-git-send-email-larsxschneider@gmail.com> <56C244D7.1030503@ramsayjones.plus.com> <xmqqio1pps64.fsf@gitster.mtv.corp.google.com>
+Date: Tue, 16 Feb 2016 10:51:50 +0100
+Message-ID: <51832840-B879-4650-9DC5-E15EAA9919B9@gmail.com>
+References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com> <1455531466-16617-4-git-send-email-larsxschneider@gmail.com> <56C244D7.1030503@ramsayjones.plus.com> <20160215214049.GA10094@sigill.intra.peff.net> <56C253B8.1070702@ramsayjones.plus.com>
 Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	peff@peff.net, sschuberth@gmail.com, sunshine@sunshineco.com,
-	hvoigt@hvoigt.net, sbeller@google.com, Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 10:48:42 2016
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	sschuberth@gmail.com, sunshine@sunshineco.com, hvoigt@hvoigt.net,
+	sbeller@google.com, Johannes.Schindelin@gmx.de, gitster@pobox.com
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Tue Feb 16 10:52:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVcFN-0006Ul-Co
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:48:41 +0100
+	id 1aVcIb-0000db-Qh
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 10:52:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674AbcBPJsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 04:48:37 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38743 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754415AbcBPJse convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 04:48:34 -0500
-Received: by mail-wm0-f47.google.com with SMTP id a4so90991420wme.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:48:34 -0800 (PST)
+	id S1754496AbcBPJv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 04:51:57 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38633 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999AbcBPJvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 04:51:54 -0500
+Received: by mail-wm0-f41.google.com with SMTP id a4so91118884wme.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 01:51:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=content-type:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=diZUHRBR9N9fEEbMOq3gBhmdGfzfbBsQUFc+ItGSmgg=;
-        b=MldhaV1ukogcoQc+cDwc+vfJIAJZgqsSGU4vGHW7jpki7+Zm66UPzJLh+p5jnQK+L0
-         CLYu1FjuVFnlnUhBcol2kxLMOniq8bmh/hbGuOYeXG7hYXLjoSc2YzlmcQxGecso9Ggs
-         SAwiFJGtYA60CRjMXFf8ft/D8BBsmNBTZygANoB2iTGOwM5WklJK/qaGC5G6/skQLmbS
-         QdckDl2kq1kDhyJUxjjOve+FUyvOa95QPQAytF8NFFmfTnNH86BDiFBSXPjIjTuDhLMg
-         /RN5kTmtpBvgTOvec6lGaXpTSpE3koC47HPk9eJ8kiqUj7J0dHclWMNh1oXs14+aUhqT
-         rXaA==
+        bh=IPZyTqTuZDmJWBjwra9bKMxT5KtRiKg1NDEEptgt4ec=;
+        b=JajC1FC+wdM51KnzXawBQZx+AdY0jbBunYrBmCXuhsqb/MlmLBfn+gcQiK+dt+9Wsh
+         y+gquv1/qmx2EVAATJ4GS5kHaMC4eZbhR1kPqS8j6+yXAqq8AHKIS6oatv6asHf4LIOa
+         Zbv6x84nioeLxgs7q/aRt6DdVMNEMJJ9b9eddwboIjUdUW2UQpsiI/u5xCquq4VTUXgd
+         jTgtp+M/XoyseqSimYGDV4dLqqKRcNQxFPwcuwz2E+87nUYvWWfrGiMrET59cnF2r8h5
+         1micVGvyHDsydo/bONRAotp7lZX7T60Tc235Eq7+uvlsFCfd0fwDOlIDBIzg+NBKwdc6
+         6y/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:content-type:mime-version:subject:from
          :in-reply-to:date:cc:content-transfer-encoding:message-id:references
          :to;
-        bh=diZUHRBR9N9fEEbMOq3gBhmdGfzfbBsQUFc+ItGSmgg=;
-        b=VswTSG/vC72Ug36uJxHJXBe8MDfC1hJUs6SiVakYim3MH1+ZEmujbZbBDjZsYJJ7cT
-         3QUpxRkYbRKeqs7u2dHtUIKb497smsQiDc6DbinLPEv8uOUnzqQtWmz7xW0hXe8xljTq
-         WFWOy4bqCAttS1Lch4M4exKd4aM4+7hs85gQOh+uz8R+9OJluSa9hwc9tY7csqvB839G
-         StPRjqCxOiHg84J3GITnKaLxae+v2vF7TvaIkvb//8fqM3RM4h/4RI6+GlZgc52PjDV8
-         ZnHrTcZNHbgxl4jdAw1DjlZOK6HEb1ZOMbKgIuJMCvilSY8w/y5pbnUAbotHzKRTtoCr
-         aKnA==
-X-Gm-Message-State: AG10YOT7TwVQ72Rf3aV2DUajUs8YFWwr3VcxrKrOn+HcawB8tWXVWtZjkZ9UsKTf9HMl5w==
-X-Received: by 10.194.71.70 with SMTP id s6mr20933759wju.1.1455616113798;
-        Tue, 16 Feb 2016 01:48:33 -0800 (PST)
+        bh=IPZyTqTuZDmJWBjwra9bKMxT5KtRiKg1NDEEptgt4ec=;
+        b=FznQO/XM6l1fEKUC1KpGppbBDTIRdBjfsMZB+N0w52I6XZMocGAQVbAawfl3HqwUo0
+         wW6xH3m23V9woEHvdO//34GxDgjyf88DDkX0jA8nOccwNyAzDhdpGq0WXfKmHMsBVJ4h
+         5qkdgB0pKMuRFuL6uJ2VMhRsUt1ly25J3P+ZoDpD4RGNALM+D4H6hGCMffDgs6RVJfYj
+         /VbaE55BoqST+DHXPkch0H/sDUPMBTNPOUx8Zut0Gy+xCsBDqAcrNFBf9Unrirg0VQci
+         nLhqYPJZx/yvNXuTmP0yyDiCECYLkswQG94d775qRYifHlTahMa0Jl4weiLk2LGx0BQl
+         d9GA==
+X-Gm-Message-State: AG10YOT4SsuruYz1KEuFapB95pRbWci1+20TQdVFebUCDdBaFMOXChpzCMHeS+nvK9W54w==
+X-Received: by 10.194.94.138 with SMTP id dc10mr25020042wjb.37.1455616313309;
+        Tue, 16 Feb 2016 01:51:53 -0800 (PST)
 Received: from slxbook3.fritz.box (p5DDB43DD.dip0.t-ipconnect.de. [93.219.67.221])
-        by smtp.gmail.com with ESMTPSA id e9sm29391641wja.25.2016.02.16.01.48.31
+        by smtp.gmail.com with ESMTPSA id os7sm29481322wjc.18.2016.02.16.01.51.51
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Feb 2016 01:48:32 -0800 (PST)
-In-Reply-To: <xmqqio1pps64.fsf@gitster.mtv.corp.google.com>
+        Tue, 16 Feb 2016 01:51:52 -0800 (PST)
+In-Reply-To: <56C253B8.1070702@ramsayjones.plus.com>
 X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286337>
 
 
-On 15 Feb 2016, at 22:41, Junio C Hamano <gitster@pobox.com> wrote:
+On 15 Feb 2016, at 23:39, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
 
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 > 
->>> +--show-origin::
->>> +	Augment the output of all queried config options with the
->>> +	origin type (file, stdin, blob, cmdline) and the actual origin
+> 
+> On 15/02/16 21:40, Jeff King wrote:
+>> On Mon, Feb 15, 2016 at 09:36:23PM +0000, Ramsay Jones wrote:
 >> 
->> file, blob, cmdline (hmm, maybe cmd-line? ;-) )
+>>>> +test_expect_success '--show-origin stdin' '
+>>>> +	cat >expect <<-\EOF &&
+>>>> +		stdin:	user.custom=true
+>>> 
+>>> So, as with the previous patch, I think this should be:
+>>> 		file:<stdin>	user.custom=true
+>> 
+>> That's ambiguous with a file named "<stdin>", which was the point of
+>> having the two separate prefixes in the first place.
+>> 
+>> I think in practice we _could_ get by with an ambiguous output (it's not
+>> like "<stdin>" is a common filename), but that was discussed earlier in
+>> the thread, and Lars decided to go for something unambiguous.
 > 
-> If we are going to spell it out, "command-line" would be the way to
-> go.  "cmdline" is probably OK.
+> sure, I just don't think it would cause a problem in practice.
+> How about using '-' for <stdin>? Hmm, you can actually create
+> such a file in the filesystem! Oh well, I guess its not a big deal.
+> 
+>> 
+>> That doesn't necessarily have to bleed over into the error messages,
+>> though (which could continue to use "<stdin>" if we want to put in a
+>> little extra code to covering the cases separately.
+> 
+> Yep.
+OK, I am happy to add the extra code. However, out of curiosity, can
+you explain in what cases you actually use configs from stdin? I wasn't
+aware of this feature before working on this patch and I still wonder
+when I would use it. If it is only a seldom used feature then I am not
+sure if adding the extra code to restore the existing error message
+is worth the effort?
 
-I think cmdline is OK, too. However, if the list thinks that there is a chance
-that it could be incomprehensible to the user then I would prefer "command-line".
-
-- Lars
+Thanks,
+Lars
