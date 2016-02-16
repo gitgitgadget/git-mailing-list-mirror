@@ -1,126 +1,95 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the
- origin of a config value
-Date: Tue, 16 Feb 2016 16:46:07 +0000
-Message-ID: <56C3524F.3000504@ramsayjones.plus.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
- <1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
- <56C244D7.1030503@ramsayjones.plus.com>
- <20160215214049.GA10094@sigill.intra.peff.net>
- <56C253B8.1070702@ramsayjones.plus.com>
- <51832840-B879-4650-9DC5-E15EAA9919B9@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 00/15] config: make git_config_set die on failure
+Date: Tue, 16 Feb 2016 12:15:35 -0500
+Message-ID: <CAPig+cQav4AS6-RwUKGA2fmWxRL-2e2o72oYkk83emqz3z6q3w@mail.gmail.com>
+References: <1455627402-752-1-git-send-email-ps@pks.im>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	sschuberth@gmail.com, sunshine@sunshineco.com, hvoigt@hvoigt.net,
-	sbeller@google.com, Johannes.Schindelin@gmx.de, gitster@pobox.com
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 17:46:25 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Tue Feb 16 18:15:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVilc-0006sI-Am
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 17:46:24 +0100
+	id 1aVjDx-0005ML-8W
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 18:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964820AbcBPQqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 11:46:17 -0500
-Received: from avasout07.plus.net ([84.93.230.235]:54751 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933112AbcBPQqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 11:46:15 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout07 with smtp
-	id K4m91s0064mu3xa014mAnt; Tue, 16 Feb 2016 16:46:11 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=QqujpgGd c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=EBOSESyhAAAA:8 a=W5RpPGfKo7NaljfMNLsA:9 a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <51832840-B879-4650-9DC5-E15EAA9919B9@gmail.com>
+	id S1755290AbcBPRPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 12:15:37 -0500
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:34382 "EHLO
+	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753204AbcBPRPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 12:15:36 -0500
+Received: by mail-vk0-f45.google.com with SMTP id e185so139218869vkb.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 09:15:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=biK4lTwgRxqN4UDMS5ivjDMBQTPmvqBoMFQJvOcV4hY=;
+        b=tVJa4aAjMlx+JBvNfGJzO8BC2oVM/ECuYnbRE80+NG+apUpk489VQClaGb4xeXTy8A
+         5qjkqGVqMbJkzEgAHFrkJWNjUarrujG+dLlxiBHvTPOJhrDsUvKnm8mj55jaeYYAaRXa
+         7bf5nzVyEnFHE7esdz9/8qFk+tRaPC6GdEXg8C7Q1fupdCeoX0NANbZsVu1eL+tXnx47
+         9ZAxnz1phR9f5kvediJkVGx5UxLCSVqAoUzL+V8YJQBbfQ4DaLxhj8TGpb5I9AOYFh2g
+         1xpefm/QmZUf+I1Ecm0Uj9yfIPMmyx90txM7VJRNYUMsLN9WxnlGuQ8cneA3gT7it/o4
+         c4lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=biK4lTwgRxqN4UDMS5ivjDMBQTPmvqBoMFQJvOcV4hY=;
+        b=ZRx9SJSfUBLLxlaf7zVgwYDsmx8N0b4Zasqh2F2HZ89mbNVLwKa5wNY8HCXeo/OUih
+         P0t0lKNxUPiM/gYzEROm+4KqIrYIzFPUutX9soZjhu824Rf1R9+mUMk8XbxopdDnFIB8
+         pwuvQgXKfhWRzy8urYuismImMnUp2Ikl/w4iSPXFBLkmai7ayarByHrRN1PaxPwByPkt
+         dj6peyfQHDvSMmOBy/mjh0pO8Z8bkrH7vdivf2nnWPwvHng+MTmAp5fzVUtsoCryDaDM
+         G9p9vAx2cVG7RJkPYMhPqnWb39J3O+bNC+u2zK8Ln6SX6gDPLZL/DBd+1N2xo+nOYYAz
+         DdWw==
+X-Gm-Message-State: AG10YOT0kY+1P0FyxrJLNvuy7gFnQ//SAw71lf/po1X/SzGAmHZ8ELduUQ9lYOjSczcjIdLSJd3dSjlHRTrcwA==
+X-Received: by 10.31.168.76 with SMTP id r73mr18822838vke.117.1455642935581;
+ Tue, 16 Feb 2016 09:15:35 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 16 Feb 2016 09:15:35 -0800 (PST)
+In-Reply-To: <1455627402-752-1-git-send-email-ps@pks.im>
+X-Google-Sender-Auth: oT74BOq16RGgFebZZZTiOgZMTFs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286408>
 
+On Tue, Feb 16, 2016 at 7:56 AM, Patrick Steinhardt <ps@pks.im> wrote:
+> [...]
+> Junio pointed out that it might not always be the most sensible
+> thing to die when install_branch_config fails. After thinking
+> about it I changed the behavior of the function to print an error
+> and advise message and return an error code. The error code is
+> then only used by the `git branch --set-upstream-to=` command to
+> abort early, as its main intent will usually be to set the
+> tracking information. The other callers (related to git-clone and
+> git-push) simply ignore the returned value while the messages are
+> still printed.
+>
+> I think it does make sense to not abort clones and pushes when
+> the function fails. Setting the upstream information is only a
+> small part of these commands and especially when cloning a large
+> repository it is harmful to die as this would delete everything
+> that has just been cloned. The user can still fix up the remote
+> tracking branch afterwards.
+>
+> Interdiff between v4 and v5:
+>
+> diff --git a/branch.c b/branch.c
+> @@ -49,7 +49,13 @@ static int should_setup_rebase(const char *origin)
+> +static const char tracking_advice[] =
+> +N_("\n"
+> +"After fixing the error cause you may try to fix up\n"
+> +"the remote tracking information by invoking\n"
+> +"\"git branch --set-upstream-to=\".");
 
-
-On 16/02/16 09:51, Lars Schneider wrote:
-> 
-> On 15 Feb 2016, at 23:39, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
-> 
->>
->>
->> On 15/02/16 21:40, Jeff King wrote:
->>> On Mon, Feb 15, 2016 at 09:36:23PM +0000, Ramsay Jones wrote:
->>>
->>>>> +test_expect_success '--show-origin stdin' '
->>>>> +	cat >expect <<-\EOF &&
->>>>> +		stdin:	user.custom=true
->>>>
->>>> So, as with the previous patch, I think this should be:
->>>> 		file:<stdin>	user.custom=true
->>>
->>> That's ambiguous with a file named "<stdin>", which was the point of
->>> having the two separate prefixes in the first place.
->>>
->>> I think in practice we _could_ get by with an ambiguous output (it's not
->>> like "<stdin>" is a common filename), but that was discussed earlier in
->>> the thread, and Lars decided to go for something unambiguous.
->>
->> sure, I just don't think it would cause a problem in practice.
->> How about using '-' for <stdin>? Hmm, you can actually create
->> such a file in the filesystem! Oh well, I guess its not a big deal.
->>
->>>
->>> That doesn't necessarily have to bleed over into the error messages,
->>> though (which could continue to use "<stdin>" if we want to put in a
->>> little extra code to covering the cases separately.
->>
->> Yep.
-
-Sorry for not replying earlier - today has been hectic, so far.
-
-> OK, I am happy to add the extra code. 
-
-Unless I've missed something (quite possible), this patch does not
-need to change. (you have (both) convinced me that your current
-solution is the best).
-
-The only change that I would suggest is the one-liner I already
-suggested to the previous patch (plus the one-liner in the test,
-of course. err ... so the two-liner!). Having said that, I didn't
-try it out - I was just typing into my email client, so ...
-
->                                       However, out of curiosity, can
-> you explain in what cases you actually use configs from stdin? I wasn't
-> aware of this feature before working on this patch and I still wonder
-> when I would use it.
-
-Personally, I can't imagine ever using it. (I don't have a great
-imagination. ;-)
-
-Since I couldn't recall when this feature was added, I looked for
-the commit that added it and found it was merged in commit 08f36302.
-In particular, commit 3caec73b ("config: teach "git config --file -"
-to read from the standard input", 19-02-2014) does not seem to
-include any motivation for the change. The corresponding release
-notes for v2.2.0 do not seem to add anything either.
-
-So, I'm not much help here. :(
-
-[Ah, looking at the date on the merge explains why I didn't
-notice this.]
-
->                  If it is only a seldom used feature then I am not
-> sure if adding the extra code to restore the existing error message
-> is worth the effort?
-
-ATB,
-Ramsay Jones
+Do you have enough information at the point this message is emitted to
+make it even more useful for the user by showing the actual argument
+to --set-upstream-to= that the user would need to invoke once the
+issue is resolved?
