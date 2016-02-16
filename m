@@ -1,122 +1,106 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 15/26] worktree.c: add find_worktree_by_path()
-Date: Tue, 16 Feb 2016 20:29:16 +0700
-Message-ID: <1455629367-26193-16-git-send-email-pclouds@gmail.com>
-References: <1454492150-10628-1-git-send-email-pclouds@gmail.com>
- <1455629367-26193-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 18/20] delete_ref_loose(): inline function
+Date: Tue, 16 Feb 2016 14:22:31 +0100
+Message-ID: <59ef9e1f7f750564411f141efdfa07cbb906be13.1455626201.git.mhagger@alum.mit.edu>
+References: <cover.1455626201.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
+	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
+	David Turner <dturner@twopensource.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Tue Feb 16 14:30:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVfiM-0003Ac-1q
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:50 +0100
+	id 1aVfiL-0003Ac-At
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 14:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932390AbcBPNaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 08:30:46 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34367 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932384AbcBPNao (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932386AbcBPNao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 16 Feb 2016 08:30:44 -0500
-Received: by mail-pa0-f48.google.com with SMTP id fy10so64108896pac.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 05:30:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=qtq4+Y2fp6R3nuQ331g4y1HMLVqPkccGAgunpUh08fM=;
-        b=x90UgMVcdrLXCt9+nbjZm3X+9A5/ZdidQppVDMCZN0G6ueg3MhrLqU0NvfAoizFHY3
-         dKE6rtOG4ipCTDejYNXbnB85byimTMiIRfEgMn1lsAIukRkN5eJ4AtOLGswi6Ew4aCj1
-         1RJTFTgSTDlA9oUdK7jYTrueOAMheE+QYFIANZca4/+yvi/OyLifjIHKPr9IJrOdGL8A
-         BZHZ/8tyjNvOdSxXTr9Y60PvRFTJyQhWev6sPGaHu/rv+8RZ8KB93ZvREYwfzPAVGQ6M
-         UqkadGN7Jzle1lOpKbRgImU3TtjccHQQuIRerVaXc/9quu0+Pwk9Mf6A/oKjRniBVO7k
-         ZWxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=qtq4+Y2fp6R3nuQ331g4y1HMLVqPkccGAgunpUh08fM=;
-        b=iKICT+VdR55MyXzLpJ7s2BeP2FRz61MJoc2TT6LyoHyFbXP4aUaZ2oEAc6rqez318l
-         8jc9tzpE/nb+9DZBQhEQd0PrWgDKffoDQH6r3JT6M+8tievp6xyIy55EQdA/3LpiUBm1
-         jeeG3ybEyubmBMdShkBBbNeJ7fukYzSgrds7fM1TIQmetNp2YK4W2VwunvbtNHPOfDTg
-         fnWtEfVujh7XO8XlI/24jz0M1UM0jaKJfuXpvj8MywehTfUKSJh5a5mrWNgdUVhVHjBo
-         KopSfVQa7qjtMzN4LiVgDk9GKBtdd5afZD+sgQZjsWK9YF0m1FHNaOUdJTRzoaiPxulM
-         J1+w==
-X-Gm-Message-State: AG10YOScJdekv+wiPkfhYpwYN/sgBXEa0y9xAvahAh3NWuwAb4Q45We4l1UdwJcpIu/iFw==
-X-Received: by 10.66.167.237 with SMTP id zr13mr439170pab.85.1455629443904;
-        Tue, 16 Feb 2016 05:30:43 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id n78sm45977897pfb.53.2016.02.16.05.30.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Feb 2016 05:30:42 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 16 Feb 2016 20:31:06 +0700
-X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <1455629367-26193-1-git-send-email-pclouds@gmail.com>
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:48662 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932384AbcBPNak (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 08:30:40 -0500
+X-AuditID: 12074414-89fff70000005020-fc-56c322c4bcc3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 3C.1E.20512.4C223C65; Tue, 16 Feb 2016 08:23:16 -0500 (EST)
+Received: from michael.fritz.box (p548D6919.dip0.t-ipconnect.de [84.141.105.25])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1GDMfOe028717
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Feb 2016 08:23:14 -0500
+X-Mailer: git-send-email 2.7.0
+In-Reply-To: <cover.1455626201.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqHtE6XCYwdZ1AhbzN51gtOi60s1k
+	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
+	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8bUfZ/ZC2byVJw5vICxgfEGZxcjJ4eEgInEvpd3
+	2bsYuTiEBLYySvQuW8EE4Zxgknh2uI8JpIpNQFdiUU8zmC0ioCYxse0QC0gRs8AjRomu/dsZ
+	uxg5OIQFrCQ6/oSA1LAIqEpceDKDGcTmFYiS2Pp1JxPENjmJlh+7WUFsTgELiZMtvSwgtpCA
+	ucSdL3uYJjDyLGBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokREmIiOxiP
+	nJQ7xCjAwajEw8vhcShMiDWxrLgy9xCjJAeTkigvD/fhMCG+pPyUyozE4oz4otKc1OJDjBIc
+	zEoivP9eAZXzpiRWVqUW5cOkpDlYlMR5vy1W9xMSSE8sSc1OTS1ILYLJynBwKEnwflIEGipY
+	lJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPioH4YmAUgKR4gPamgbTzFhck5gJFIVpP
+	MSpKifPuB0kIgCQySvPgxsISxytGcaAvhXm7Qap4gEkHrvsV0GAmoME5l0AeKi5JREhJNTB6
+	PmBqL3+0dEWZtLH4yrU+rQbGT3W1z6cevdV9PPngt3frgy54ajY83b7jySK95dFHF2boHZp9
+	b9oVeWut3/LrHospeBzXCn7s7Vj8i+3Ofsl3H0okpe0XMLdl5/4QXrbGLbF1k6jg 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286382>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+It was hardly doing anything anymore.
+
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- worktree.c | 16 ++++++++++++++++
- worktree.h |  6 ++++++
- 2 files changed, 22 insertions(+)
+ refs/files-backend.c | 25 +++++++------------------
+ 1 file changed, 7 insertions(+), 18 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index b4e4b57..e444ad1 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -198,6 +198,22 @@ const char *get_worktree_git_dir(const struct work=
-tree *wt)
- 		return get_git_common_dir();
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 754d254..b2b0f39 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2336,21 +2336,6 @@ static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+ 	return ret;
  }
-=20
-+struct worktree *find_worktree_by_path(struct worktree **list,
-+				       const char *path_)
-+{
-+	char *path =3D xstrdup(real_path(path_));
-+	struct worktree *wt =3D NULL;
-+
-+	while (*list) {
-+		wt =3D *list++;
-+		if (!strcmp_icase(path, real_path(wt->path)))
-+			break;
-+		wt =3D NULL;
-+	}
-+	free(path);
-+	return wt;
-+}
-+
- char *find_shared_symref(const char *symref, const char *target)
+ 
+-static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+-{
+-	assert(err);
+-
+-	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+-		/*
+-		 * loose.  The loose file name is the same as the
+-		 * lockfile name, minus ".lock":
+-		 */
+-		if (unlink_or_msg(git_path("%s", lock->ref_name), err))
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+ int delete_refs(struct string_list *refnames)
  {
- 	char *existing =3D NULL;
-diff --git a/worktree.h b/worktree.h
-index 0ba07ab..c163b6b 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -28,6 +28,12 @@ extern struct worktree **get_worktrees(void);
- extern const char *get_worktree_git_dir(const struct worktree *wt);
-=20
- /*
-+ * Search a worktree by its path. Paths are normalized internally.
-+ */
-+extern struct worktree *find_worktree_by_path(struct worktree **list,
-+					      const char *path_);
-+
-+/*
-  * Free up the memory for worktree
-  */
- extern void clear_worktree(struct worktree *);
---=20
-2.7.0.377.g4cd97dd
+ 	struct strbuf err = STRBUF_INIT;
+@@ -3257,9 +3242,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->flags & REF_DELETING) {
+-			if (delete_ref_loose(update->lock, update->type, err)) {
+-				ret = TRANSACTION_GENERIC_ERROR;
+-				goto cleanup;
++			if (!(update->type & REF_ISPACKED) ||
++			    update->type & REF_ISSYMREF) {
++				/* It is a loose reference. */
++				if (unlink_or_msg(git_path("%s", update->lock->ref_name), err)) {
++					ret = TRANSACTION_GENERIC_ERROR;
++					goto cleanup;
++				}
+ 			}
+ 
+ 			if (!(update->flags & REF_ISPRUNING))
+-- 
+2.7.0
