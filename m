@@ -1,162 +1,138 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PULL] svn pathnameencoding for git svn dcommit
-Date: Tue, 16 Feb 2016 06:33:57 +0000
-Message-ID: <20160216063357.GA17455@dcvr.yhbt.net>
-References: <56B8B1EA.5020901@f2.dion.ne.jp>
- <20160208225806.GA3487@dcvr.yhbt.net>
- <20160215005210.GA31141@dcvr.yhbt.net>
- <56C297A9.2080705@f2.dion.ne.jp>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] wt-status.c: set commitable bit if there is a meaningful merge.
+Date: Tue, 16 Feb 2016 08:20:43 -0000
+Organization: OPDS
+Message-ID: <C8BDC3289C184F40BFBE3B150CFBB50B@PhilipOakley>
+References: <72756249.nAoBccgOj7@thunderbird> <1455590305-30923-1-git-send-email-ischis2@cox.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, alex.crezoff@gmail.com
-To: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 16 07:34:04 2016
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Ovidiu Gheorghioiu" <ovidiug@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Stephen P. Smith" <ischis2@cox.net>
+To: "Stephen P. Smith" <ischis2@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 16 09:21:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVZD0-0007ik-BR
-	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 07:34:02 +0100
+	id 1aVasj-0005GY-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 16 Feb 2016 09:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbcBPGd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 01:33:59 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:58172 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753785AbcBPGd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 01:33:58 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 894CB20338;
-	Tue, 16 Feb 2016 06:33:57 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <56C297A9.2080705@f2.dion.ne.jp>
+	id S1754184AbcBPIVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 03:21:09 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:34569 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752458AbcBPIVH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 03:21:07 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2AkGgCr28JWPDUjFlxeGQEBAgsBAgEBAQEBgwpSbYZibrBBbIMcGYVqAQECBAKBN00BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcDFAYBEggCAQIDAYgBDK9iiQyGEYQ1h12BDwWNYIkfAYFAhBKJYo0XhXCIUIJkGYFIPC6BFINNg3sBAQE
+X-IPAS-Result: A2AkGgCr28JWPDUjFlxeGQEBAgsBAgEBAQEBgwpSbYZibrBBbIMcGYVqAQECBAKBN00BAQEBAQEHAQEBAUEkG0EBBA0Bg2gFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcDFAYBEggCAQIDAYgBDK9iiQyGEYQ1h12BDwWNYIkfAYFAhBKJYo0XhXCIUIJkGYFIPC6BFINNg3sBAQE
+X-IronPort-AV: E=Sophos;i="5.22,454,1449532800"; 
+   d="scan'208";a="869854143"
+Received: from host-92-22-35-53.as13285.net (HELO PhilipOakley) ([92.22.35.53])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 16 Feb 2016 08:20:44 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286327>
 
-Junio, sorry about basing on next, I somehow
-thought I was going to need to depend on something there.
-Updated pull below if Kazutoshi can run the test effectively.
+From: "Stephen P. Smith" <ischis2@cox.net>
+> The 'commit --dry-run' and commit return values differed if a
 
-Kazutoshi Satoda <k_satoda@f2.dion.ne.jp> wrote:
-> Thank you for the tests. But, on my environment, both of them failed
-> unexpectedly. (Windows 7 SP1, x86_64 Cygwin, LANG=ja_JP.UTF-8)
-> 
-> For now, I don't have enough time to investigate this further. Let me
-> just share the result.
+Should this have quotes around the second 'commit' as they both refer to the 
+command, rather than the action?
 
-<snip>
-
-> > Untracked files:
-> >         svnrepo/
-> >         "\357\202\201\357\202\202"
-> >         "\357\202\201\357\202\207"
-> >
-
-<snip>
-
-> I can't see how "\357\202\201\357\202\202" came as output in the test.
-
-I wonder if it's a shell or printf portability problem.  I've
-repushed the branch against master and implemented the weird
-character use inside Perl scripts.
-
-Can you give it a try?
-
-The following changes since commit 494398473714dcbedb38b1ac79b531c7384b3bc4:
-
-  Sixth batch for the 2.8 cycle (2016-02-10 14:24:14 -0800)
-
-are available in the git repository at:
-
-  git://bogomips.org/git-svn.git ks/svn-pathnameencoding
-
-for you to fetch changes up to 7d7ea44ea5a1a38ee36402e6709e64c05650ba46:
-
-  git-svn: apply "svn.pathnameencoding" before URL encoding (2016-02-16 06:25:01 +0000)
-
-----------------------------------------------------------------
-Kazutoshi Satoda (2):
-      git-svn: enable "svn.pathnameencoding" on dcommit
-      git-svn: apply "svn.pathnameencoding" before URL encoding
-
- perl/Git/SVN/Editor.pm                   |  4 +++-
- t/t9115-git-svn-dcommit-funky-renames.sh | 16 ++++++++++++++--
- t/t9115/inf.perl                         | 12 ++++++++++++
- t/t9115/neq.perl                         |  5 +++++
- 4 files changed, 34 insertions(+), 3 deletions(-)
- create mode 100644 t/t9115/inf.perl
- create mode 100644 t/t9115/neq.perl
-
- t/t9115-git-svn-dcommit-funky-renames.sh | 16 +++-------------
- t/t9115/inf.perl                         | 12 ++++++++++++
- t/t9115/neq.perl                         |  5 +++++
- 3 files changed, 20 insertions(+), 13 deletions(-)
-
-Interdiff of test changes:
-
-diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-index 9828f05..94698fe 100755
---- a/t/t9115-git-svn-dcommit-funky-renames.sh
-+++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-@@ -84,25 +84,15 @@ test_expect_success 'git svn rebase works inside a fresh-cloned repository' '
- 		test -e test-rebase
- 	)'
- 
--test_expect_success 'svn.pathnameencoding=cp932 new file on dcommit' '
--	neq=$(printf "\201\202") &&
-+test_expect_success PERL 'svn.pathnameencoding=cp932 new file on dcommit' '
- 	git config svn.pathnameencoding cp932 &&
--	echo neq >"$neq" &&
--	git add "$neq" &&
-+	"$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/neq.perl &&
- 	git commit -m "neq" &&
- 	git svn dcommit
- '
- 
- test_expect_success 'svn.pathnameencoding=cp932 rename on dcommit' '
--	inf=$(printf "\201\207") &&
--	git config svn.pathnameencoding cp932 &&
--	echo inf >"$inf" &&
--	git add "$inf" &&
--	git commit -m "inf" &&
--	git svn dcommit &&
--	git mv "$inf" inf &&
--	git commit -m "inf rename" &&
--	git svn dcommit
-+	"$PERL_PATH" -w "$TEST_DIRECTORY"/t9115/inf.perl
- '
- 
- stop_httpd
-diff --git a/t/t9115/inf.perl b/t/t9115/inf.perl
-new file mode 100644
-index 0000000..0adcfc7
---- /dev/null
-+++ b/t/t9115/inf.perl
-@@ -0,0 +1,12 @@
-+use strict;
-+my $path = "\201\207";
-+open my $fh, '>', $path or die $!;
-+close $fh or die $!;
-+sub run { system(@_) == 0 or die join(' ', @_) . ": $?" }
-+run(qw(git config svn.pathnameencoding cp932));
-+run(qw(git add), $path);
-+run(qw(git commit -m inf));
-+run(qw(git svn dcommit));
-+run(qw(git mv), $path, 'inf');
-+run(qw(git commit -m inf-rename));
-+run(qw(git svn dcommit));
-diff --git a/t/t9115/neq.perl b/t/t9115/neq.perl
-new file mode 100644
-index 0000000..91b1061
---- /dev/null
-+++ b/t/t9115/neq.perl
-@@ -0,0 +1,5 @@
-+use strict;
-+my $path = "\201\202";
-+open my $fh, '>', $path or die $!;
-+close $fh or die $!;
-+exec(qw(git add), $path);
+> conflicted merge had been resolved and the commit would be the same as
+> the parent.
+>
+> Update show_merge_in_progress to set the commitable bit if conflicts
+> have been resolved and a merge is in progress.
+>
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+>
+> Notes:
+>    In the original report when the dry run switch was passed and after
+>    the merge commit was resolved head and index matched leading to a
+>    returned value of 1. [1]
+>
+>    If the dry run switch was not passed, the commit would succeed to
+>    correctly record the resolution.
+>
+>    The result was that a dry run would report that there would be a
+>    failure, but there really isn't a failure if the commit is actually
+>    attemped.
+>
+>    [1] $gmane/276591
+>
+>    It appeared that the conditional for 'Reject an attempt to record a
+>    non-merge empty commit without * explicit --allow-empty.' could be
+>    simplified after adding this patch.
+>
+>    This change can't be propagated to the conditional because it allows
+>    a commit that was previously disallowed.
+>
+> t/t7501-commit.sh | 20 ++++++++++++++++++++
+> wt-status.c       |  1 +
+> 2 files changed, 21 insertions(+)
+>
+> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+> index 63e0427..363abb1 100755
+> --- a/t/t7501-commit.sh
+> +++ b/t/t7501-commit.sh
+> @@ -587,4 +587,24 @@ test_expect_success '--only works on to-be-born 
+> branch' '
+>  test_cmp expected actual
+> '
+>
+> +test_expect_success '--dry-run with conflicts fixed from a merge' '
+> + # setup two branches with conflicting information
+> + # in the same file, resolve the conflict,
+> + # call commit with --dry-run
+> + echo "Initial contents, unimportant" >test-file &&
+> + git add test-file &&
+> + git commit -m "Initial commit" &&
+> + echo "commit-1-state" >test-file &&
+> + git commit -m "commit 1" -i test-file &&
+> + git tag commit-1 &&
+> + git checkout -b branch-2 HEAD^1 &&
+> + echo "commit-2-state" >test-file &&
+> + git commit -m "commit 2" -i test-file &&
+> + ! $(git merge --no-commit commit-1) &&
+> + echo "commit-2-state" >test-file &&
+> + git add test-file &&
+> + git commit --dry-run &&
+> + git commit -m "conflicts fixed from merge."
+> +'
+> +
+> test_done
+> diff --git a/wt-status.c b/wt-status.c
+> index ab4f80d..1374b48 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -950,6 +950,7 @@ static void show_merge_in_progress(struct wt_status 
+> *s,
+>  status_printf_ln(s, color,
+>  _("  (fix conflicts and run \"git commit\")"));
+>  } else {
+> + s-> commitable = 1;
+>  status_printf_ln(s, color,
+>  _("All conflicts fixed but you are still merging."));
+>  if (s->hints)
+> -- 
+> 2.7.0.GIT
+>
+> --
+Philip 
