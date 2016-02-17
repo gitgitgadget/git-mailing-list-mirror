@@ -1,98 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/3] config: add 'type' to config_source struct that identifies config type
-Date: Wed, 17 Feb 2016 10:59:50 -0800
-Message-ID: <xmqqa8mzjh7d.fsf@gitster.mtv.corp.google.com>
-References: <1455699468-45443-1-git-send-email-larsxschneider@gmail.com>
-	<1455699468-45443-3-git-send-email-larsxschneider@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 11:03:11 -0800
+Message-ID: <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, ramsay@ramsayjones.plus.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:59:58 2016
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 17 20:03:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW7KO-0006Hh-W4
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:59:57 +0100
+	id 1aW7Nd-0000RD-TY
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 20:03:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161197AbcBQS7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 13:59:53 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60059 "EHLO
+	id S1161496AbcBQTDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 14:03:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51179 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030250AbcBQS7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 13:59:52 -0500
+	with ESMTP id S1030388AbcBQTDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 14:03:13 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D9FEE43F93;
-	Wed, 17 Feb 2016 13:59:51 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 074DE42096;
+	Wed, 17 Feb 2016 14:03:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T4pwQoWTjqdC+q446sVHAFXdpA8=; b=gsqJA6
-	fGFfAab3SrMO8buxOmDOF79QOwCBzP64K3Hl29oIsaZIo/VHhyRmteY/uH9G1xnE
-	fJD4nzR7Lo2ChbwSkNJlRG7VWZDPW3bfW8ltz/ZLplft4bBkC7Hxcrk4GOY7agpa
-	X3XHlrsMyYA5ZSPfpbQ1Sw6k0EGOoVb9iR+oE=
+	:content-type; s=sasl; bh=Dzjan9wswAv89b1XnzBDrCLrpGE=; b=B4W99i
+	NERx8GNHll7g2xndw6CEU7hias9aP1tqxKpz2u9oZuJTEmqzELaCKx5WQ5Fshl1s
+	kdd+wqdlSH7HflWwt6d5PIidtTSl+B/XDSXy3fMnlNPj0P8NvA1Mq/dGbcNsPsCb
+	BIs5kRMM9IKcJOZ2OWvODoKEW034d8Jf1iEkw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vc+fYvAMlfvTs0tqbde93vfTRaFbIyze
-	hRMBcu4OoQ6JVLRAWAmIyglv70U/3XxFXlp8s7MZh12u4oPpqf+RJ/WaTfUOUhKC
-	z46Pe5siXmfWa5xbgOG4x3SpVdtObYGfZAf5KDCVFA5N5EiU128I28qYWgzeSxhH
-	Q31FHEnwXIg=
+	:content-type; q=dns; s=sasl; b=oPZhGw+eOi1Ddg2UTgSxJwr7jpmstW/Y
+	7ZpiRHEysz8XbL+mDhDuGqJ4orDi5WVLDn/VEZNRl7LrCj2Ro3rF/FcxbDHXj58q
+	zX+niHsW4C1udY77aKYVfWAjiF9OJOD14Hx7kFDBX9UXdeOEsCy5MvZNQNB2Ndxt
+	PKCTAVIFmIo=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D1C6443F92;
-	Wed, 17 Feb 2016 13:59:51 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0C7442094;
+	Wed, 17 Feb 2016 14:03:12 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2BC4A43F90;
-	Wed, 17 Feb 2016 13:59:51 -0500 (EST)
-In-Reply-To: <1455699468-45443-3-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Wed, 17 Feb 2016 09:57:47
-	+0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4657E42093;
+	Wed, 17 Feb 2016 14:03:12 -0500 (EST)
+In-Reply-To: <vpqh9h7f9kz.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	17 Feb 2016 19:58:04 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9F814CDC-D5A8-11E5-9CE9-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 176A7994-D5A9-11E5-AA5A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286535>
 
-larsxschneider@gmail.com writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Use the config type to print more detailed error messages that inform
-> the user about the origin of a config error (file, stdin, blob).
+> Feel free to start writting an idea for
+> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+> ideas before Friday. We can polish them later if needed.
 
-"type" is too broad a word in the context of configuration file, and
-does not help readers as a variable or a field name in a structure.
-You are not talking about "this is a binary typed variable", for
-example.
+The top of the page says it is shared between Git and libgit2;
+should that be really the case?  We later say we only have capacity
+for two mentors, but the mentor pool capacity is not shared between
+two projects.
 
-If showing the origin is useful to the user, that origin should be
-called origin, not type, I would think.
-
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> index 91235b7..82f82a1 100755
-> --- a/t/t1308-config-set.sh
-> +++ b/t/t1308-config-set.sh
-> @@ -195,14 +195,14 @@ test_expect_success 'proper error on error in default config files' '
->  	cp .git/config .git/config.old &&
->  	test_when_finished "mv .git/config.old .git/config" &&
->  	echo "[" >>.git/config &&
-> -	echo "fatal: bad config file line 34 in .git/config" >expect &&
-> +	echo "fatal: bad config line 34 in file .git/config" >expect &&
-
-This definitely is a great improvement ;-)
-
->  	test_expect_code 128 test-config get_value foo.bar 2>actual &&
->  	test_cmp expect actual
->  '
->  
->  test_expect_success 'proper error on error in custom config files' '
->  	echo "[" >>syntax-error &&
-> -	echo "fatal: bad config file line 1 in syntax-error" >expect &&
-> +	echo "fatal: bad config line 1 in file syntax-error" >expect &&
->  	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
->  	test_cmp expect actual
->  '
+I am wondering if we heard from libgit2 folks if they want us to
+host them (or they want to participate in GSoC at all).
