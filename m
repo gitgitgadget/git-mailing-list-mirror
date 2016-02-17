@@ -1,85 +1,95 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/3] Turn git-rebase--*.sh to external helpers
-Date: Wed, 17 Feb 2016 21:40:32 +0700
-Message-ID: <CACsJy8AAhpKbRi7QznwqAQ+uBb1SuFJCCh=cSw58oeuV1n_90g@mail.gmail.com>
-References: <vpqio1nsk0q.fsf@anie.imag.fr> <1455716201-29784-1-git-send-email-pclouds@gmail.com>
- <alpine.DEB.2.20.1602171513140.6516@virtualbox>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 17:04:09 +0100
+Message-ID: <CAP8UFD2OY_QMqvEew5+V+P4653REm_P0R4_JiwwBfo0O6727Xw@mail.gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr>
+	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
+	<vpqd1s2e74l.fsf@anie.imag.fr>
+	<20160212130446.GB10858@sigill.intra.peff.net>
+	<vpqd1s04zzs.fsf@anie.imag.fr>
+	<CAGZ79kbUG73eo5YvedbVB0bmZduMeCWNpbCRK4Adr9XDebsbQQ@mail.gmail.com>
+	<alpine.DEB.2.20.1602171353260.6516@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Stefan Beller <sbeller@google.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 17 15:41:10 2016
+X-From: git-owner@vger.kernel.org Wed Feb 17 17:04:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW3Hy-0008U0-4s
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 15:41:10 +0100
+	id 1aW4aO-0003tK-Jz
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 17:04:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423552AbcBQOlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 09:41:05 -0500
-Received: from mail-lf0-f49.google.com ([209.85.215.49]:34270 "EHLO
-	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965322AbcBQOlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 09:41:03 -0500
-Received: by mail-lf0-f49.google.com with SMTP id j78so12172622lfb.1
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 06:41:02 -0800 (PST)
+	id S1424175AbcBQQEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 11:04:13 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:34846 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424172AbcBQQEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 11:04:11 -0500
+Received: by mail-lb0-f172.google.com with SMTP id bc4so12205208lbc.2
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 08:04:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=UwRwvOAo4TpKatCwxX3dWPUub7wrJPhEkB9/5aNp0d4=;
-        b=EV+XAaI69CsyARHzdzXl4c82WzDcuab82sIrLqEl26qSTu4tbmUthE46KwRC33yvnW
-         65cN5UywOtdqBwqS+lRwov8lW1TRiE9cm8vP9Wpqe4m4439H0oTM4WMZi7h4IC/9kZXa
-         Es8rmr7pBFmzpR+2lPGo0tyNM0EXczkmb3JGdDRID3pcrM96DaHGm82Sb+ZjIA2w/QIR
-         bHl1Y/fD6NBCRUkMDfA2bpo5qIJEbSMX4LfeLNEa9clue3DkHyBDmyhoRJTWO2YXMHiS
-         a6KWMTauzSq68WJj9fc7qt+POjuEdHTxS9oV4smQuvDHA90AOe2VwUnIX2BpPuO7ioH3
-         CrMA==
+        bh=4n9mCeC50xVcUB5CyHEQPe/gMRVPjbDQYo+xoDwVXOU=;
+        b=0ebLq2ZttSztoruJX5zF0E+LOlez4nY7HR+8KS/s7ASBG4njtJoCp6Q7dPcLZOs6OP
+         2/RnsFknGWVIIuY0yBMuXPYLIpcpR2F1Y9iTLhMc5VhdPsnCUNROWyGEbyBCT0ZS7Tov
+         TBSX66qegQfjnhGCBrdtSi6pQXDWr8tQq1FbKgHdAQ/s4w3DXm3TSUL9jNKbRA7XNOYz
+         5UB3Vh8KehP2o6eBwvGgDgcuZUF8ioMkXTCpWRVrpPLrZnySGWagfjyrwRHxs3TPWkuh
+         +keotW9L3JW8pZn7YsJvBhxdVZ+NVAz3yaobuEl5RE/glSGmiSTKkBjpLzpTjcWGPBou
+         cbhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=UwRwvOAo4TpKatCwxX3dWPUub7wrJPhEkB9/5aNp0d4=;
-        b=OhXILhRIPdnnJRe4bNvfCCfWDA5X+l6es3XgW/7x88gXILSU+u16T1yrm46lGdbN1D
-         myYsl5snsxVBMUrZcEN6hZlC+fgHaDXlgqZnZpLLRjV8XuMH6J6YECKij+5OeyyON1jO
-         7Up0I45xa/mkd7qEnAmiVhUg7mVcmZyviKETywTLp2lzjGeEYKqF7561spQT7zgE8/Nm
-         1yg47l09gDAXmseoxMClOftrsi0tldNBvcxeVcFhhdVa3tKGhJ2LuukdmUGgHJW6JrSO
-         EdtrfwLTqQgU/xrP4ykYtbtjOv9rnZqVT+yOnXwtzCTCYnfhvzQxqamtFksQT7CKii+F
-         oy/Q==
-X-Gm-Message-State: AG10YOQJtcKb9YL6Z2olRIzsqsumN5zZ4ydLmifs0bhJGyyRPRJ5gdjoUTiuP99oYB8q0tkSzQr01sPVWvM5YQ==
-X-Received: by 10.25.159.68 with SMTP id i65mr943377lfe.94.1455720061957; Wed,
- 17 Feb 2016 06:41:01 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Wed, 17 Feb 2016 06:40:32 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1602171513140.6516@virtualbox>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=4n9mCeC50xVcUB5CyHEQPe/gMRVPjbDQYo+xoDwVXOU=;
+        b=N5tWtB3RRuq8+JOIiSIuRmEVtFCDcBkCHYaeleHdYl94j6a1EIdWWLsAB7uYUNxLmk
+         ypXcYCITn1V9/3ka/RLH4ncuchdtnYjvJukqVY5sRvp15U2Waf70+8+i3s+0agHlDv22
+         dC4P2l84a8Gd0lLzcsdT52ODxtwHXajsDV2KEfhM/t7odbNo+zHxfMusMOUV3mUKV3gh
+         0aikNcOl8Bh9QrBSoECoaVsL2r6DvkxLAzooi6cL+GSPmTifkLbNGuaK2p3GeUS9R+si
+         iL8mntl/s2WH9lvaG2vTyRreDZ/gJxTRblVYMAX7K39EUU0dVELcNSTyWFa6T3gSxim+
+         oHeQ==
+X-Gm-Message-State: AG10YOT/zbdlQCMsihL4t22xwws+3/a0CLsCBnCFIMpKzJI8eICMVXq1NfgptqkenLoMxhC+UCoROilR6M/RGA==
+X-Received: by 10.112.211.168 with SMTP id nd8mr1144937lbc.116.1455725050012;
+ Wed, 17 Feb 2016 08:04:10 -0800 (PST)
+Received: by 10.25.152.199 with HTTP; Wed, 17 Feb 2016 08:04:09 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1602171353260.6516@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286508>
 
-On Wed, Feb 17, 2016 at 9:22 PM, Johannes Schindelin
+Hi Johannes,
+
+On Wed, Feb 17, 2016 at 2:09 PM, Johannes Schindelin
 <Johannes.Schindelin@gmx.de> wrote:
-> I already started a different route locally (nothing to show yet, mostly
-> because I have to write emails and try to triage the bug tracker instead
-> of doing real work *grmbl*): add a rebase--helper and off-load heavy-duty
-> work from the scripts to that helper.
 >
-> There are major benefits to do it that way:
+>> Then there is also git-bisect.sh with nearly 700 lines, which is also
+>> not as easy.
 >
-> - we can focus on the really rewarding parts first, i.e. the parts that
->   make the interactive rebase so painfully slow,
->
-> - it allows for a painlessly incremental conversion,
->
-> - if multiple people are interested in working on the conversion, it can
->   happen in parallel.
->
-> And probably a few other upsides.
+> Nothing is easy, but bisect has a much better chance to be finally
+> converted into a builtin: there is already a bisect--helper builtin, and
+> all we need to do is to move more parts over, piece by piece. It does not
+> even have to be a complete rewrite.
 
-Now it does sound fun (and probably feel rewarding too), even to GSoC students!
--- 
-Duy
+I don't know which has a better chance to be finally converted, but
+it's true that for bisect, the bisect--helper builtin could help, and
+it can be done piece by piece.
+
+
+> I count 22 functions with bisect_start and bisect_replay being the obvious
+> elephants. Personally, I would recommend starting with bisect_next_check
+> (which would imply get_terms and bisect_voc, of course). It could even be
+> a mini project for a prospective student.
+
+Not sure it is small enough for a mini project, but sure it is a good
+choice to start with.
+
+Thanks,
+Christian.
