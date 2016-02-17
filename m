@@ -1,56 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 03/11] ref-filter: introduce struct used_atom
-Date: Wed, 17 Feb 2016 23:36:11 +0530
-Message-ID: <1455732379-22479-4-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v6 05/11] ref-filter: introduce color_atom_parser()
+Date: Wed, 17 Feb 2016 23:36:13 +0530
+Message-ID: <1455732379-22479-6-git-send-email-Karthik.188@gmail.com>
 References: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:05:54 2016
+X-From: git-owner@vger.kernel.org Wed Feb 17 19:05:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW6U4-0006mT-BJ
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:05:52 +0100
+	id 1aW6U8-0006ok-QC
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423478AbcBQSFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 13:05:47 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33756 "EHLO
-	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423438AbcBQSFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 13:05:44 -0500
-Received: by mail-pf0-f169.google.com with SMTP id q63so15377019pfb.0
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:05:44 -0800 (PST)
+	id S1423494AbcBQSFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 13:05:52 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34683 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423479AbcBQSFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 13:05:49 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fy10so15116154pac.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:05:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wXrJFONGE9SYbk0j2f1XhoU1Y45sinaurpND0oD+OW4=;
-        b=pucnH5jHN8ydm31oM21rcDk1eovkRxH8xs639YuBXdDYAe2iAD4ja1Zq9FCd2KAw7Z
-         tPYyhbR7U39hLT829S2YDLo0CoDWAp0mjGrnu2GpPmjCHgVosQ9pQ5AkAOVIUFeMjHfn
-         BPtMK2U+wew74qlYv5fGSYLMv0+YeGJdikUQtjSiHN379rBNFGZc17rnqMxKzKwXWFNZ
-         5XvhV21ksIYRVsJLqkffdNVwtHY5Znhy8hQwWCyEtdb8nWkC7sJXjZwerW9GCo7EJkXX
-         cIdBf+xsuPh5ZaCDWXTSJowyQkhTlDxnietTEPDcqdPghrHTYYGs7PY8BdqNQfSptEfI
-         5+AA==
+        bh=WwMF79UuHGPQXTOfGWC9iwGHjlYSJghKh/AJXQlH7d8=;
+        b=Sh96rqMYbMzSA859Fcs9uO5ug6LtdXaTHAAaVK9uvXUEkJ0ooeHS7fZLB0td/TiFzf
+         uKLWpdxJ1UbRLB5uo6imonLc5K3OCZ34ntMt+eTzLKwa6vlmOSAdh+KKM/NJY5u9+dPu
+         VjgcIefWXW9ct7D9CVKtFJrmxzj0gNENZOnS+13OkkxVQwX83FBwYSYQj/a7Srfg4q+U
+         ap5QmR1VekbaAPFvnEZ6BpcIDGOPQnImNrkkG/Wwa5SIqnZHzG6cph1Gaxw3CGahWOwe
+         hmcNvPathVgb7rSnA8o5lV2h0J3xVKentz1k/7eLmMRrctzUjeR7tWQiLcIdHofl/nNx
+         CoEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wXrJFONGE9SYbk0j2f1XhoU1Y45sinaurpND0oD+OW4=;
-        b=NONxoCqnKd6L9+PUi9QYBC9Et6dWJiORX+YPS3SjY+HxJRyHz2tOf8mZ4msV2yySZn
-         zIU/4JakxfxbHQn+xZUA4CXCxNp9Gs4p80/PvFWZa3LDZWGrIDnVPxkPE51qILFzCrhy
-         x0kMykr47bVYhaTLAzVb+NQlNDr3PxSNznbBRJQbQEVV8RPt1Y660J1ZKJHMmV+xCIbd
-         H/n5n0Kr82mVSeAtPONH1GFdKf5/zuTTYTPc9l7Gov52bSpQMwtl/Y+b2oQLj3MbMj9Z
-         QDKkfOZ+aNOpXFRoP8XUd/zQ2oj7/Jt4MWofECn/i3VB2Nd4XKaExZpyeC3NHZqC2Svy
-         8k8Q==
-X-Gm-Message-State: AG10YOSKzgQRegwJLa3G+1DbKiw01FhbfuOTsPHxZZgns1lP00yn+7cP/tV0Y3rA8u/csg==
-X-Received: by 10.98.74.202 with SMTP id c71mr4005774pfj.25.1455732344381;
-        Wed, 17 Feb 2016 10:05:44 -0800 (PST)
+        bh=WwMF79UuHGPQXTOfGWC9iwGHjlYSJghKh/AJXQlH7d8=;
+        b=MpLhjKo44f9gnz5g8VvO7BTGbd9Yy1df3Kx3bi6gtcoo9QtnSuCKIRFXyKPtgObU1b
+         r5RqP8FbjJiPWOBY+1G7LI/HjcUcaO5Hqp5syvqPPLXPT7l/R6y9+AUFeuDwHoEAA5lR
+         gUG0eeWbM239cDxECI4cT+kfI96VvBBGR97hZLpyo2bQ7M2ZNfFZD/ho3hrog47Uekfr
+         bH5UDSqxc8hKe9zFAlOCs2ZprDn2bc16444crTf0jsVvgB+VkwLQ9iCAMj3pwmSH+RSd
+         EKkIqNLvUXkU31jniotArCi5ZoyDPHjd/Ztg46X23Z6CEXxB6y7DB/POVwxDSmnsECkk
+         HVxQ==
+X-Gm-Message-State: AG10YOSQl79KxiLzgF6Ve8cS/WL8x54Q8WcLLDuGOSjGHKNzQmiqqbR+8HvfJ/10vZHEqQ==
+X-Received: by 10.66.54.78 with SMTP id h14mr3858968pap.127.1455732349234;
+        Wed, 17 Feb 2016 10:05:49 -0800 (PST)
 Received: from ashley.localdomain ([106.51.133.38])
-        by smtp.gmail.com with ESMTPSA id cf6sm4105793pad.41.2016.02.17.10.05.42
+        by smtp.gmail.com with ESMTPSA id cf6sm4105793pad.41.2016.02.17.10.05.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 17 Feb 2016 10:05:43 -0800 (PST)
+        Wed, 17 Feb 2016 10:05:48 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.1
 In-Reply-To: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
@@ -58,143 +58,86 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286521>
 
-Introduce the 'used_atom' structure to replace the existing
-implementation of 'used_atom' (which is a list of atoms). This helps
-us parse atoms beforehand and store required details into the
-'used_atom' for future usage.
+Introduce color_atom_parser() which will parse a "color" atom and
+store its color in the "used_atom" structure for further usage in
+populate_value().
 
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ ref-filter.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 6a73c5b..8139709 100644
+index 8a34ba1..c90d2f4 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -26,8 +26,10 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
-  * indexed with the "atom number", which is an index into this
-  * array.
-  */
--static const char **used_atom;
--static cmp_type *used_atom_type;
-+static struct used_atom {
-+	const char *name;
-+	cmp_type type;
-+} *used_atom;
+@@ -29,10 +29,21 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ static struct used_atom {
+ 	const char *name;
+ 	cmp_type type;
++	union {
++		char color[COLOR_MAXLEN];
++	} u;
+ } *used_atom;
  static int used_atom_cnt, need_tagged, need_symref;
  static int need_color_reset_at_eol;
  
-@@ -122,8 +124,8 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 
- 	/* Do we have the atom already used elsewhere? */
- 	for (i = 0; i < used_atom_cnt; i++) {
--		int len = strlen(used_atom[i]);
--		if (len == ep - atom && !memcmp(used_atom[i], atom, len))
-+		int len = strlen(used_atom[i].name);
-+		if (len == ep - atom && !memcmp(used_atom[i].name, atom, len))
- 			return i;
- 	}
- 
-@@ -150,12 +152,11 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 	at = used_atom_cnt;
- 	used_atom_cnt++;
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
--	REALLOC_ARRAY(used_atom_type, used_atom_cnt);
--	used_atom[at] = xmemdupz(atom, ep - atom);
--	used_atom_type[at] = valid_atom[i].cmp_type;
-+	used_atom[at].name = xmemdupz(atom, ep - atom);
-+	used_atom[at].type = valid_atom[i].cmp_type;
++static void color_atom_parser(struct used_atom *atom, const char *color_value)
++{
++	if (!color_value)
++		die(_("expected format: %%(color:<color>)"));
++	if (color_parse(color_value, atom->u.color) < 0)
++		die(_("unrecognized color: %%(color:%s)"), color_value);
++}
++
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
+@@ -70,7 +81,7 @@ static struct {
+ 	{ "symref" },
+ 	{ "flag" },
+ 	{ "HEAD" },
+-	{ "color" },
++	{ "color", FIELD_STR, color_atom_parser },
+ 	{ "align" },
+ 	{ "end" },
+ };
+@@ -158,6 +169,7 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 	used_atom[at].type = valid_atom[i].cmp_type;
+ 	if (arg)
+ 		arg = used_atom[at].name + (arg - atom) + 1;
++	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
+ 	if (valid_atom[i].parser)
+ 		valid_atom[i].parser(&used_atom[at], arg);
  	if (*atom == '*')
- 		need_tagged = 1;
--	if (!strcmp(used_atom[at], "symref"))
-+	if (!strcmp(used_atom[at].name, "symref"))
- 		need_symref = 1;
- 	return at;
- }
-@@ -315,7 +316,7 @@ int verify_ref_format(const char *format)
- 		at = parse_ref_filter_atom(sp + 2, ep);
- 		cp = ep + 1;
- 
--		if (skip_prefix(used_atom[at], "color:", &color))
-+		if (skip_prefix(used_atom[at].name, "color:", &color))
- 			need_color_reset_at_eol = !!strcmp(color, "reset");
- 	}
- 	return 0;
-@@ -359,7 +360,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 	int i;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-@@ -383,7 +384,7 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 	struct tag *tag = (struct tag *) obj;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-@@ -405,7 +406,7 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 	struct commit *commit = (struct commit *) obj;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-@@ -535,7 +536,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
- 	const char *wholine = NULL;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-@@ -573,7 +574,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
- 	if (!wholine)
- 		return;
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-@@ -663,7 +664,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 	unsigned long sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
- 		struct atom_value *v = &val[i];
- 		const char *valp = NULL;
- 		if (!!deref != (*name == '*'))
-@@ -809,7 +810,7 @@ static void populate_value(struct ref_array_item *ref)
+@@ -816,6 +828,7 @@ static void populate_value(struct ref_array_item *ref)
  
  	/* Fill in specials first */
  	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i];
-+		const char *name = used_atom[i].name;
++		struct used_atom *atom = &used_atom[i];
+ 		const char *name = used_atom[i].name;
  		struct atom_value *v = &ref->value[i];
  		int deref = 0;
- 		const char *refname;
-@@ -1464,7 +1465,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- {
- 	struct atom_value *va, *vb;
- 	int cmp;
--	cmp_type cmp_type = used_atom_type[s->atom];
-+	cmp_type cmp_type = used_atom[s->atom].type;
- 
- 	get_ref_atom_value(a, s->atom, &va);
- 	get_ref_atom_value(b, s->atom, &vb);
+@@ -856,14 +869,8 @@ static void populate_value(struct ref_array_item *ref)
+ 			refname = branch_get_push(branch, NULL);
+ 			if (!refname)
+ 				continue;
+-		} else if (match_atom_name(name, "color", &valp)) {
+-			char color[COLOR_MAXLEN] = "";
+-
+-			if (!valp)
+-				die(_("expected format: %%(color:<color>)"));
+-			if (color_parse(valp, color) < 0)
+-				die(_("unable to parse format"));
+-			v->s = xstrdup(color);
++		} else if (starts_with(name, "color:")) {
++			v->s = atom->u.color;
+ 			continue;
+ 		} else if (!strcmp(name, "flag")) {
+ 			char buf[256], *cp = buf;
 -- 
 2.7.1
