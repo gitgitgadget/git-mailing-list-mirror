@@ -1,56 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 09/11] ref-filter: introduce remote_ref_atom_parser()
-Date: Wed, 17 Feb 2016 23:36:17 +0530
-Message-ID: <1455732379-22479-10-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v6 07/11] ref-filter: introduce align_atom_parser()
+Date: Wed, 17 Feb 2016 23:36:15 +0530
+Message-ID: <1455732379-22479-8-git-send-email-Karthik.188@gmail.com>
 References: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:06:07 2016
+X-From: git-owner@vger.kernel.org Wed Feb 17 19:06:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW6UI-0006wo-He
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:06:07 +0100
+	id 1aW6UD-0006tQ-9g
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423555AbcBQSGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 13:06:01 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35011 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423519AbcBQSF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 13:05:58 -0500
-Received: by mail-pa0-f44.google.com with SMTP id ho8so15548912pac.2
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:05:58 -0800 (PST)
+	id S1423513AbcBQSF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 13:05:56 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:36247 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423479AbcBQSFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 13:05:54 -0500
+Received: by mail-pf0-f170.google.com with SMTP id e127so15348778pfe.3
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0kFtbTUa4Tu4wwwQ7zrQADxCgYGWkvuFU8kUhazXRAc=;
-        b=Bn+TCGek2Q1yC0JCl+4hAhzue7iVbPzTWUKe/wXTXI4zW3avKY4ayyouBI7c4Ddg44
-         3JsxWUSxb1ZgG5EZfuD7tagPRPdxMg+DtfMprrUHV0uZaMyQjn6UGHUWNJhdmU5u/rJy
-         9b8Ie7Pb+rKpWcXpCNEZiUctaCl5I6ihGOFRaFvmGs911s9jR+3wy5OCzDDfpeHoyysK
-         Kv+/YOlTkAzUnoxd9Cbp8VZWwbplNRigowaL9pEVSkDZueGXpaikIcuSdGDosn4BqwdZ
-         rCt+YXSJGnYrHdtmm4zqgTrbO22AQItAQmbbXfTA8/b1AjO1xejSHdT4yKacX+ecCDWT
-         a3PA==
+        bh=k9qd1ljBmsnZx13sJFjOe5W4q2mJ24lDqg0WxZCRB+4=;
+        b=BpeBSRrLMEAqZ7v0TW5LURR0zEF1b12m0TEiABHcn2sfdCZYY64WcC8krqHIDUvmwq
+         V938OvH8xqVy6rXPwGhFjAz6Qn/CdbBUqDr0J2PzqJBtlRQTRFL+8Fv24ZoUl574Wai8
+         NH7i2RoQxqRY7LvRL1m/web6JFSDLoiWXQmT0jZkyf9RXOcGhiRrdUO90cp3Thr/Te1Y
+         XdFUXBM+ihJeu9R9eLuPU7fxGIuwtBmx7fOsas4N0oI+yVotd6byq5a5gJSh5yqIxkH7
+         g6vzWgUVGz4+L/HFodYe9lBJX1C4iJ3A6T4plKzzsMka0ZxCgqqVQ22o+Ku99owNfRUX
+         Tx5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0kFtbTUa4Tu4wwwQ7zrQADxCgYGWkvuFU8kUhazXRAc=;
-        b=RGWShAXHJiXYu65oOvBZ3U6GOdntaRA2Z7/iS/aCUozFsWD013hTDOGXaVENQVRkYd
-         F35EZsM5RT6KaWGfBPI8UKICAR5sgCVs2B+/8mDNdoDJ0WW9OhV8Kp54pgu+nm1t3CGT
-         xFh2j8Myj25Syr6m3y7uWFw8rL4eMiV0Nal3Mfl7DOoQTVEO1APqlyAQ5Uo2tNcgepkH
-         TO2FrtwO70Pg5O+ozGdoAbRjYq7/fYVkuHWYw0Szoma1uA4CksMerot4+3NtPDjRquv/
-         09ed0TYBEadl/LVJ53xv2fEXxzpgGnN63bt+UwNDGDmgzvUtuL88G5WCUOgBu8N/1niN
-         3lsw==
-X-Gm-Message-State: AG10YOTUwQE++cxuwZvUZyL3IDTX9NHg5bPK5yA/CWtQpAVy7bbpsgbWhHods9dW0h+ONw==
-X-Received: by 10.66.142.132 with SMTP id rw4mr3959312pab.26.1455732358400;
-        Wed, 17 Feb 2016 10:05:58 -0800 (PST)
+        bh=k9qd1ljBmsnZx13sJFjOe5W4q2mJ24lDqg0WxZCRB+4=;
+        b=RasAvdsH/e44zlxilOmCCt0VKE/EcE3252R3hG/u8n2v4KiPGoQcK8Bdx0NBrY5dqe
+         1S//4o8uK2n4s2Og5/l/HZLPrBZ7SPU88UG43nehdO3QbRyPKTHYBl6Zkl44bW46oLMu
+         CorsUtTW1KNrYfN1GUJf7q/IejUj5QYPJ/j7D5GnTLl80dQUIHIAyJ1gQOGkrZwx32Mv
+         YNlXvgYZ9zE4Y3fP8viQIuPd8DTr/EcmMCa47T0cmqQlIj4dgT5rTpgGEw9E28EbrOgN
+         cwentvwXIpQsy3ZLaLS0eKVR0a0RCtUEH6jE7YBTOH/uK1OZXGlga/PEf5gYb+AlbZv+
+         RDPQ==
+X-Gm-Message-State: AG10YORWQRNEiUCSUz4UOlrB0664ydWRouVC6TgL2fh/M1kLe+lEDakQ2OClH3MuZo9d6g==
+X-Received: by 10.98.73.2 with SMTP id w2mr3972478pfa.106.1455732353755;
+        Wed, 17 Feb 2016 10:05:53 -0800 (PST)
 Received: from ashley.localdomain ([106.51.133.38])
-        by smtp.gmail.com with ESMTPSA id cf6sm4105793pad.41.2016.02.17.10.05.56
+        by smtp.gmail.com with ESMTPSA id cf6sm4105793pad.41.2016.02.17.10.05.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 17 Feb 2016 10:05:57 -0800 (PST)
+        Wed, 17 Feb 2016 10:05:53 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.1
 In-Reply-To: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
@@ -58,182 +58,171 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286524>
 
-Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
-and '%(push)' atoms and store information into the 'used_atom'
-structure based on the modifiers used along with the corresponding
-atom.
+Introduce align_atom_parser() which will parse an 'align' atom and
+store the required alignment position and width in the 'used_atom'
+structure for further usage in populate_value().
 
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Since this patch removes the last usage of match_atom_name(), remove
+the function from ref-filter.c.
+
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 103 +++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 61 insertions(+), 42 deletions(-)
+ ref-filter.c | 91 ++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 40 insertions(+), 51 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 2255dcc..7df5085 100644
+index e8b076d..797f9fe 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -37,6 +37,8 @@ static struct used_atom {
+@@ -16,6 +16,11 @@
+ 
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 
++struct align {
++	align_type position;
++	unsigned int width;
++};
++
+ /*
+  * An atom is a valid field atom listed below, possibly prefixed with
+  * a "*" to denote deref_tag().
+@@ -31,6 +36,7 @@ static struct used_atom {
+ 	cmp_type type;
  	union {
  		char color[COLOR_MAXLEN];
- 		struct align align;
-+		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
-+			remote_ref;
++		struct align align;
  	} u;
  } *used_atom;
  static int used_atom_cnt, need_tagged, need_symref;
-@@ -50,6 +52,20 @@ static void color_atom_parser(struct used_atom *atom, const char *color_value)
- 		die(_("unrecognized color: %%(color:%s)"), color_value);
+@@ -55,6 +61,37 @@ static align_type parse_align_position(const char *s)
+ 	return -1;
  }
  
-+static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
++static void align_atom_parser(struct used_atom *atom, const char *arg)
 +{
++	struct align *align = &atom->u.align;
++	struct string_list params = STRING_LIST_INIT_DUP;
++	int i;
++	unsigned int width = ~0U;
++
 +	if (!arg)
-+		atom->u.remote_ref = RR_NORMAL;
-+	else if (!strcmp(arg, "short"))
-+		atom->u.remote_ref = RR_SHORTEN;
-+	else if (!strcmp(arg, "track"))
-+		atom->u.remote_ref = RR_TRACK;
-+	else if (!strcmp(arg, "trackshort"))
-+		atom->u.remote_ref = RR_TRACKSHORT;
-+	else
-+		die(_("unrecognized format: %%(%s)"), atom->name);
++		die(_("expected format: %%(align:<width>,<position>)"));
++
++	align->position = ALIGN_LEFT;
++
++	string_list_split(&params, arg, ',', -1);
++	for (i = 0; i < params.nr; i++) {
++		const char *s = params.items[i].string;
++		int position;
++
++		if (!strtoul_ui(s, 10, &width))
++			;
++		else if ((position = parse_align_position(s)) >= 0)
++			align->position = position;
++		else
++			die(_("unrecognized %%(align) argument: %s"), s);
++	}
++
++	if (width == ~0U)
++		die(_("positive width expected with the %%(align) atom"));
++	align->width = width;
++	string_list_clear(&params, 0);
 +}
 +
- static align_type parse_align_position(const char *s)
- {
- 	if (!strcmp(s, "right"))
-@@ -132,8 +148,8 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
--	{ "upstream" },
--	{ "push" },
-+	{ "upstream", FIELD_STR, remote_ref_atom_parser },
-+	{ "push", FIELD_STR, remote_ref_atom_parser },
- 	{ "symref" },
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
+@@ -93,17 +130,12 @@ static struct {
  	{ "flag" },
  	{ "HEAD" },
-@@ -840,6 +856,43 @@ static const char *strip_ref_components(const char *refname, const char *nr_arg)
- 	return start;
+ 	{ "color", FIELD_STR, color_atom_parser },
+-	{ "align" },
++	{ "align", FIELD_STR, align_atom_parser },
+ 	{ "end" },
+ };
+ 
+ #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+ 
+-struct align {
+-	align_type position;
+-	unsigned int width;
+-};
+-
+ struct contents {
+ 	unsigned int lines;
+ 	struct object_id oid;
+@@ -288,22 +320,6 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
+ 	pop_stack_element(&state->stack);
  }
  
-+static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
-+				    struct branch *branch, const char **s)
-+{
-+	int num_ours, num_theirs;
-+	if (atom->u.remote_ref == RR_SHORTEN)
-+		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
-+	else if (atom->u.remote_ref == RR_TRACK) {
-+		if (stat_tracking_info(branch, &num_ours,
-+				       &num_theirs, NULL))
-+			return;
-+
-+		if (!num_ours && !num_theirs)
-+			*s = "";
-+		else if (!num_ours)
-+			*s = xstrfmt("[behind %d]", num_theirs);
-+		else if (!num_theirs)
-+			*s = xstrfmt("[ahead %d]", num_ours);
-+		else
-+			*s = xstrfmt("[ahead %d, behind %d]",
-+				     num_ours, num_theirs);
-+	} else if (atom->u.remote_ref == RR_TRACKSHORT) {
-+		if (stat_tracking_info(branch, &num_ours,
-+				       &num_theirs, NULL))
-+			return;
-+
-+		if (!num_ours && !num_theirs)
-+			*s = "=";
-+		else if (!num_ours)
-+			*s = "<";
-+		else if (!num_theirs)
-+			*s = ">";
-+		else
-+			*s = "<>";
-+	} else /* RR_NORMAL */
-+		*s = refname;
-+}
-+
+-static int match_atom_name(const char *name, const char *atom_name, const char **val)
+-{
+-	const char *body;
+-
+-	if (!skip_prefix(name, atom_name, &body))
+-		return 0; /* doesn't even begin with "atom_name" */
+-	if (!body[0]) {
+-		*val = NULL; /* %(atom_name) and no customization */
+-		return 1;
+-	}
+-	if (body[0] != ':')
+-		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
+-	*val = body + 1; /* "atom_name:val" */
+-	return 1;
+-}
+-
  /*
-  * Parse the object referred by ref, and grab needed value.
+  * In a format string, find the next occurrence of %(atom).
   */
-@@ -891,8 +944,9 @@ static void populate_value(struct ref_array_item *ref)
- 			branch = branch_get(branch_name);
+@@ -845,7 +861,6 @@ static void populate_value(struct ref_array_item *ref)
+ 		int deref = 0;
+ 		const char *refname;
+ 		const char *formatp;
+-		const char *valp;
+ 		struct branch *branch = NULL;
  
- 			refname = branch_get_upstream(branch, NULL);
--			if (!refname)
--				continue;
-+			if (refname)
-+				fill_remote_ref_details(atom, refname, branch, &v->s);
-+			continue;
- 		} else if (starts_with(name, "push")) {
- 			const char *branch_name;
- 			if (!skip_prefix(ref->refname, "refs/heads/",
-@@ -903,6 +957,8 @@ static void populate_value(struct ref_array_item *ref)
- 			refname = branch_get_push(branch, NULL);
- 			if (!refname)
- 				continue;
-+			fill_remote_ref_details(atom, refname, branch, &v->s);
-+			continue;
- 		} else if (starts_with(name, "color:")) {
- 			v->s = atom->u.color;
+ 		v->handler = append_atom;
+@@ -909,34 +924,8 @@ static void populate_value(struct ref_array_item *ref)
+ 			else
+ 				v->s = " ";
  			continue;
-@@ -944,7 +1000,6 @@ static void populate_value(struct ref_array_item *ref)
- 
- 		formatp = strchr(name, ':');
- 		if (formatp) {
--			int num_ours, num_theirs;
- 			const char *arg;
- 
- 			formatp++;
-@@ -953,43 +1008,7 @@ static void populate_value(struct ref_array_item *ref)
- 						      warn_ambiguous_refs);
- 			else if (skip_prefix(formatp, "strip=", &arg))
- 				refname = strip_ref_components(refname, arg);
--			else if (!strcmp(formatp, "track") &&
--				 (starts_with(name, "upstream") ||
--				  starts_with(name, "push"))) {
+-		} else if (match_atom_name(name, "align", &valp)) {
+-			struct align *align = &v->u.align;
+-			struct string_list params = STRING_LIST_INIT_DUP;
+-			int i;
+-			int width = -1;
 -
--				if (stat_tracking_info(branch, &num_ours,
--						       &num_theirs, NULL))
--					continue;
+-			if (!valp)
+-				die(_("expected format: %%(align:<width>,<position>)"));
 -
--				if (!num_ours && !num_theirs)
--					v->s = "";
--				else if (!num_ours)
--					v->s = xstrfmt("[behind %d]", num_theirs);
--				else if (!num_theirs)
--					v->s = xstrfmt("[ahead %d]", num_ours);
+-			align->position = ALIGN_LEFT;
+-
+-			string_list_split(&params, valp, ',', -1);
+-			for (i = 0; i < params.nr; i++) {
+-				const char *s = params.items[i].string;
+-				int position;
+-
+-				if (!strtoul_ui(s, 10, (unsigned int *)&width))
+-					;
+-				else if ((position = parse_align_position(s)) >= 0)
+-					align->position = position;
 -				else
--					v->s = xstrfmt("[ahead %d, behind %d]",
--						       num_ours, num_theirs);
--				continue;
--			} else if (!strcmp(formatp, "trackshort") &&
--				   (starts_with(name, "upstream") ||
--				    starts_with(name, "push"))) {
--				assert(branch);
+-					die(_("improper format entered align:%s"), s);
+-			}
 -
--				if (stat_tracking_info(branch, &num_ours,
--							&num_theirs, NULL))
--					continue;
--
--				if (!num_ours && !num_theirs)
--					v->s = "=";
--				else if (!num_ours)
--					v->s = "<";
--				else if (!num_theirs)
--					v->s = ">";
--				else
--					v->s = "<>";
--				continue;
--			} else
-+			else
- 				die("unknown %.*s format %s",
- 				    (int)(formatp - name), name, formatp);
- 		}
+-			if (width < 0)
+-				die(_("positive width expected with the %%(align) atom"));
+-			align->width = width;
+-			string_list_clear(&params, 0);
++		} else if (starts_with(name, "align")) {
++			v->u.align = atom->u.align;
+ 			v->handler = align_atom_handler;
+ 			continue;
+ 		} else if (!strcmp(name, "end")) {
 -- 
 2.7.1
