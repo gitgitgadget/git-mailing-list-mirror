@@ -1,105 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Wed, 17 Feb 2016 11:34:13 +0100
-Message-ID: <vpqio1nsk0q.fsf@anie.imag.fr>
-References: <vpqoabox66p.fsf@anie.imag.fr>
-	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
-	<vpqd1s2e74l.fsf@anie.imag.fr>
-	<20160212130446.GB10858@sigill.intra.peff.net>
-	<vpqd1s04zzs.fsf@anie.imag.fr>
-	<CAGZ79kbUG73eo5YvedbVB0bmZduMeCWNpbCRK4Adr9XDebsbQQ@mail.gmail.com>
+From: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v5 02/15] branch: report errors in tracking branch setup
+Date: Wed, 17 Feb 2016 11:34:35 +0100
+Message-ID: <20160217103435.GB743@pks-xps.fritz.box>
+References: <1455627402-752-1-git-send-email-ps@pks.im>
+ <1455627402-752-3-git-send-email-ps@pks.im>
+ <xmqq1t8cmeyc.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 11:34:35 2016
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 11:34:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVzRJ-0002ZA-80
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 11:34:33 +0100
+	id 1aVzRX-0002i7-Le
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 11:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161024AbcBQKe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 05:34:28 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:58757 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934038AbcBQKe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 05:34:27 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1HAYC6v028973
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 17 Feb 2016 11:34:12 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1HAYDOf023835;
-	Wed, 17 Feb 2016 11:34:13 +0100
-In-Reply-To: <CAGZ79kbUG73eo5YvedbVB0bmZduMeCWNpbCRK4Adr9XDebsbQQ@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 16 Feb 2016 10:10:38 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Feb 2016 11:34:13 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1HAYC6v028973
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1456310055.65575@EhMmsquA6KHxRXwF3Suryg
+	id S1161100AbcBQKel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 05:34:41 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33797 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161041AbcBQKei (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Feb 2016 05:34:38 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id E034B20991
+	for <git@vger.kernel.org>; Wed, 17 Feb 2016 05:34:37 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 17 Feb 2016 05:34:37 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=RFPJQQ5AILDD+GfLr+OUZ1m4RcM=; b=mtEM7
+	zdjPx3svkDcxRvQ2JJpAzXroJUrjcI3joBjlQautE9qW9PlmO+WjuQ5UmXl+k8IX
+	mxROEE402ebZ3+84TbbbQ7Rkn2ThdvnIJz/vTfMpTyAW2bcuTZw2mBh33ZAmYtUy
+	AiRP8fPORXa6HyT+17i1miIDPPgdRxWF7SoeZo=
+X-Sasl-enc: k+g9eavMeA36s/yenIni+oAGAGzSA6oYGize0Aem3dfn 1455705277
+Received: from localhost (p5088a9c6.dip0.t-ipconnect.de [80.136.169.198])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 482E7C00014;
+	Wed, 17 Feb 2016 05:34:37 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <xmqq1t8cmeyc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286493>
 
-Stefan Beller <sbeller@google.com> writes:
 
-> I'd be interested to co-mentor a sh->C conversion.
->
-> I think the git-rebase*.sh is a good start.
->
-> $ wc -l git-rebase*.sh
->   101 git-rebase--am.sh
->  1296 git-rebase--interactive.sh
->   167 git-rebase--merge.sh
->   636 git-rebase.sh
->  2200 total
->
-> So start with rebase--am and rebase--merge to have the same amount
-> of lines as git-pull.sh. I did not look at the code, just judging by
-> the lines of
-> code.
+--rS8CxjVDS/+yyDmU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There's a funny exercice there: the git-rebase--$type.sh scripts are not
-called as external helpers, but like this:
+On Tue, Feb 16, 2016 at 03:07:55PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> >  	if (rebasing) {
+> >  		strbuf_reset(&key);
+> >  		strbuf_addf(&key, "branch.%s.rebase", local);
+> > -		git_config_set(key.buf, "true");
+> > +		if (git_config_set(key.buf, "true") < 0)
+> > +		    goto out_err;
+>=20
+> The indentation here is suspect.
 
-run_specific_rebase () {
-	if [ "$interactive_rebase" = implied ]; then
-		GIT_EDITOR=:
-		export GIT_EDITOR
-		autosquash=
-	fi
-	. git-rebase--$type
-	# ...
+Thanks, will fix.
 
-So, turning these scripts into builtins would first require turning this
-". git-rebase--$type" into an actual command call. But nothing
-unfeasible.
+--rS8CxjVDS/+yyDmU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Anyway, I'm not happy with the current shape of the code since
-.-including files within a function already caused us several issues (I
-fixed a FreeBSD related bug which triggered another one, so the current
-code is a fix for a workaround for a FreeBSD issue ...).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-I guess git-rebase--interactive.sh would be a lot for a single GSoC
-project, but it can remain a shell-script helper called by a builtin.
+iQIcBAEBCAAGBQJWxEy7AAoJEBF8Z7aeq/EsHAMP/3wOpXFES2CgpI2FDQgLwO2N
+PG1zLIWsloPmpPJ5J14DdJcFUGvXQOqFzweZAYGm1fYOfjkxW47Fc6vl3HjSVs1H
+0H3svDzFfakOqXEXmekTx1zC0LHJWc5i2BOm1UScyVliPFm2nT/zzBNaEJc1z28e
+bFmiPEhPQs4th4aZqpD1t83/F+J5El1QeOm9iu91224l02xyQONunjN1r+sBAsAJ
+tVMJ07VaUGQmlalrPBg/ZOMbLxd9HMVqpJmQ71ck9NgXOA/GZQfmMeJR/cHNXM4j
+qFhaDQ5rr0Puoi1mN4W9FHLMtdpz7TsEhZnTqla/J9W1r71usJW3M5zDmrXGRVVx
+dV/1elH3adsA0cVfVl/rh0k7HHJGNgpQ09uoM0vUmgyjHQ4DqP1f8d5kOAnYjrrf
+j22DlojegD5hmJ62x0Opv9SjkrUpjtP+K75sfW+Fo2TcxSgj+7uOdoMLWUWbwJUE
+lu5t+EIuu61tDTwtWQ6ca/rtXpAk/PrrZNSSHD/NsJT8OwALKglIVKWRwWZElgdA
+wW+2/8KjnT950F5ixodhxOUYi0EYbdbEU8k9xpJKltxsgA2LZKkkFQoBO4iBHekI
+0aiE2J9Oh4C6w4yb2v7EwT1BR0GfeR165Z3o1tTmtlQimsYg6ssFvtpqMX7eZy4h
+ObC6rIH0dKlUL/70yuY2
+=XFuc
+-----END PGP SIGNATURE-----
 
-Can you add more details to the "Convert scripts to builtins" part of
-http://git.github.io/SoC-2016-Ideas/ to reflect this? And make it look
-attractive for candidates ;-).
-
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--rS8CxjVDS/+yyDmU--
