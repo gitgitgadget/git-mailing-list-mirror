@@ -1,12 +1,9 @@
 From: "=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?=" 
 	<felipeg.assis@gmail.com>
-Subject: [PATCH v3 1/2] merge-recursive: option to disable renames
-Date: Tue, 16 Feb 2016 23:11:34 -0200
-Message-ID: <1455671495-10908-2-git-send-email-felipegassis@gmail.com>
+Subject: [PATCH v3 2/2] merge-recursive: more consistent interface
+Date: Tue, 16 Feb 2016 23:11:35 -0200
+Message-ID: <1455671495-10908-3-git-send-email-felipegassis@gmail.com>
 References: <1455671495-10908-1-git-send-email-felipegassis@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
 	=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= 
 	<felipegassis@gmail.com>
@@ -17,46 +14,45 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVqgG-0004cF-3H
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 02:13:24 +0100
+	id 1aVqgG-0004cF-La
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 02:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964878AbcBQBNT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 20:13:19 -0500
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:33208 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964793AbcBQBNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 20:13:17 -0500
-Received: by mail-qg0-f45.google.com with SMTP id b35so1411503qge.0
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 17:13:17 -0800 (PST)
+	id S1756275AbcBQBNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 20:13:21 -0500
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:33907 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964874AbcBQBNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 20:13:19 -0500
+Received: by mail-qg0-f51.google.com with SMTP id b67so1384987qgb.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 17:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=CVYJCiO5IcDqdjbLgYsShRsu+zEehQ46zJI/4wmv6Io=;
-        b=vHWhMH6OQMxvcjpivEKJ6iSWWGS3Fo/8QSxxHIoM1GHnfPAlWMdFyA60O+G23EjX9M
-         owlAa9RZrUwSK8u0N7CH7ZC/bhS9k1MsjxDm3qcAauBnNSHLTqApSMuq4JltROcf0Dsv
-         mS2NueV07AkvgKXHv2RsCLWvdthjogSDZ11mfOwjlAx7hYYVJAVNy9qYNXB+W+TExcn7
-         wsDvNJc5UsCGWv6kW0j0rR+Q3uDW6uUgU3SpyhNJDeYVS/yfqg+MVCvkCH/cdwY2LiuE
-         mTZ4TS3VP2/o+/UghfRKKZ0PLWNxBDwhzUgo6fFVi5PU/93ZwurWgC0cIXAcw5MeBHu4
-         Zsdw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=R6Ou3Nz/Z78aBVpFu30UAUCFmMJ69YUSbVZhYRT+JS8=;
+        b=ajIo4inmIH0J8TRkpNr2Nx5eeWqwnNOy3BhX1I4nfI3fOneCPfoZOdhOiC3tjQVvQN
+         CgFOyFvF/53RgZzyvoq4ka9S8aWFpV3MpyUxNUIS9D0rkJXFKed1DLC1SIv6qs5g2XrQ
+         YQb5ThFHYUc/hMdic55nzsKVsXaZeMSP1UujL1iSZFRLUoARpMyL8z9eZ4S7pdbrw63x
+         7sEktsTJeyU9hKDxYxg3KJYQIF5MyHKMkKNrjV01bKSo78n9Zb7hz6Gc8PDqtmhuJFet
+         G7TGN1jD+MTv8pVM3loaXgljUh+3dehz9gOcWIlfsKH5w2vRtnPooWTb+JneiUw4RPPd
+         v7LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=CVYJCiO5IcDqdjbLgYsShRsu+zEehQ46zJI/4wmv6Io=;
-        b=X7tbR8g/nEHSBPKH8SHmItnPKD1IDzRDJqHCJTikB3aF441nU6HQN04lUVO8K/timM
-         /h1KSt1GncfFmzi8z3/OX+x4j+jL44O8/GyA9mSfzp6I2oYahej5DKXIVkV4VZ3LDs+3
-         Zwo0rQPpRBZYWqqRVCHQYfh8Mk1f7TPPSBoVEppq9E5T5GN5CKGUXmOI6/k28kvjFNUm
-         0Si+HJJXioNiDZZizDRtKZvq4GFAltUEf0TDP0RMSt++LfCMXJd3oO77OCVtnJm9wnFp
-         r8UAdPsIqEUXpfhWY+EQ2sxpm7+VArhvwSjicgZSex+nSnwBMp2aqi8UxvK6/5/E9tkV
-         3hEw==
-X-Gm-Message-State: AG10YORPZdFiXmUcEYwU1FcYVi3lIQ3EARN+R4YejcRA+cGnJexnPoWllZFniQ3xnRZOeQ==
-X-Received: by 10.141.4.139 with SMTP id g133mr32707435qhd.34.1455671596803;
-        Tue, 16 Feb 2016 17:13:16 -0800 (PST)
+         :references;
+        bh=R6Ou3Nz/Z78aBVpFu30UAUCFmMJ69YUSbVZhYRT+JS8=;
+        b=VT7K7bwIv5fYD2tUQ5oxkXoLDJDJeXEOZV6gxDb/8vXuSFXrx7IM9wQVLDKE6aOmLb
+         c9fnZlqNYrGKSAb7dtSjfGiUjMZ5NtSyBsnEgCrFNxYhe7J4L4783CayYxAevkF5G97A
+         upPeiShjeX/GlHMOIKg6dIIVU9hEHFfXpADa8XBvzUNMNOiPUvH8U/ZUo1zoHQv7qq5J
+         VAYrzXAMr7PtNTI4fZElZxJpCl3H83iBF+mYPdrUScXlTXEv/mGftaNWP1FVzH0wVJvb
+         YsVjuKMbeJW5jb+h6ke2RCjN18JyWfXf/oHBSgFkXOe7CX3baPvq4+TYV09ylZN6YzI2
+         6flQ==
+X-Gm-Message-State: AG10YOSBvze0gUE1ezNeA7/ibdtpJuDaL+cy3us1zznr9v0z6I8hHWW0JOHbk5bajR0fGg==
+X-Received: by 10.140.132.149 with SMTP id 143mr31675837qhe.7.1455671599046;
+        Tue, 16 Feb 2016 17:13:19 -0800 (PST)
 Received: from traveller.moon ([187.34.45.132])
-        by smtp.gmail.com with ESMTPSA id a88sm14361238qkj.32.2016.02.16.17.13.14
+        by smtp.gmail.com with ESMTPSA id a88sm14361238qkj.32.2016.02.16.17.13.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Feb 2016 17:13:16 -0800 (PST)
+        Tue, 16 Feb 2016 17:13:18 -0800 (PST)
 X-Google-Original-From: =?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= <felipegassis@gmail.com>
 X-Mailer: git-send-email 2.7.1.288.gfad33a8
 In-Reply-To: <1455671495-10908-1-git-send-email-felipegassis@gmail.com>
@@ -64,87 +60,58 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286471>
 
-The recursive strategy turns on rename detection by default. Add a
-strategy option to disable rename detection even for exact renames.
-
-Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
+Add strategy option find-renames, following git-diff interface. This
+makes the option rename-threshold redundant.
 ---
- Documentation/merge-strategies.txt | 6 ++++++
- merge-recursive.c                  | 7 +++++++
- merge-recursive.h                  | 1 +
- 3 files changed, 14 insertions(+)
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-s=
-trategies.txt
-index 7bbd19b..1a5e197 100644
+A minor note
+git diff --check complains about an indent with spaces here, but I think I did
+the right thing: indented with tabs and aligned with spaces. If desired, I can
+align with tabs to avoid this.
+
+ Documentation/merge-strategies.txt | 8 ++++++--
+ merge-recursive.c                  | 5 ++++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index 1a5e197..f8618c9 100644
 --- a/Documentation/merge-strategies.txt
 +++ b/Documentation/merge-strategies.txt
-@@ -81,8 +81,14 @@ no-renormalize;;
- 	Disables the `renormalize` option.  This overrides the
- 	`merge.renormalize` configuration variable.
-=20
-+no-renames;;
-+	Turn off rename detection.
-+	See also linkgit:git-diff[1] `--no-renames`.
-+
- rename-threshold=3D<n>;;
+@@ -85,11 +85,15 @@ no-renames;;
+ 	Turn off rename detection.
+ 	See also linkgit:git-diff[1] `--no-renames`.
+ 
+-rename-threshold=<n>;;
++find-renames[=<n>];;
  	Controls the similarity threshold used for rename detection.
-+	Re-enables rename detection if disabled by a preceding
-+	`no-renames`.
- 	See also linkgit:git-diff[1] `-M`.
-=20
- subtree[=3D<path>];;
+ 	Re-enables rename detection if disabled by a preceding
+ 	`no-renames`.
+-	See also linkgit:git-diff[1] `-M`.
++	See also linkgit:git-diff[1] `--find-renames`.
++
++rename-threshold=<n>;;
++	Synonym for `find-renames=<n>`. Present for historical reasons.
++	New scripts should prefer the `find-renames=<n>` syntax.
+ 
+ subtree[=<path>];;
+ 	This option is a more advanced form of 'subtree' strategy, where
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 8eabde2..6dd0a11 100644
+index 6dd0a11..700febd 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -482,6 +482,9 @@ static struct string_list *get_renames(struct merge=
-_options *o,
- 	struct diff_options opts;
-=20
- 	renames =3D xcalloc(1, sizeof(struct string_list));
-+	if (!o->detect_rename)
-+		return renames;
-+
- 	diff_setup(&opts);
- 	DIFF_OPT_SET(&opts, RECURSIVE);
- 	DIFF_OPT_CLR(&opts, RENAME_EMPTY);
-@@ -2039,6 +2042,7 @@ void init_merge_options(struct merge_options *o)
- 	o->diff_rename_limit =3D -1;
- 	o->merge_rename_limit =3D -1;
- 	o->renormalize =3D 0;
-+	o->detect_rename =3D 1;
- 	merge_recursive_config(o);
- 	if (getenv("GIT_MERGE_VERBOSITY"))
- 		o->verbosity =3D
-@@ -2088,9 +2092,12 @@ int parse_merge_opt(struct merge_options *o, con=
-st char *s)
- 		o->renormalize =3D 1;
- 	else if (!strcmp(s, "no-renormalize"))
- 		o->renormalize =3D 0;
-+	else if (!strcmp(s, "no-renames"))
-+		o->detect_rename =3D 0;
- 	else if (skip_prefix(s, "rename-threshold=3D", &arg)) {
- 		if ((o->rename_score =3D parse_rename_score(&arg)) =3D=3D -1 || *arg=
- !=3D 0)
+@@ -2094,7 +2094,10 @@ int parse_merge_opt(struct merge_options *o, const char *s)
+ 		o->renormalize = 0;
+ 	else if (!strcmp(s, "no-renames"))
+ 		o->detect_rename = 0;
+-	else if (skip_prefix(s, "rename-threshold=", &arg)) {
++	else if (!strcmp(s, "find-renames"))
++		o->detect_rename = 1;
++	else if (skip_prefix(s, "find-renames=", &arg) ||
++	         skip_prefix(s, "rename-threshold=", &arg)) {
+ 		if ((o->rename_score = parse_rename_score(&arg)) == -1 || *arg != 0)
  			return -1;
-+		o->detect_rename =3D 1;
- 	}
- 	else
- 		return -1;
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 9e090a3..52f0201 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -17,6 +17,7 @@ struct merge_options {
- 	unsigned renormalize : 1;
- 	long xdl_opts;
- 	int verbosity;
-+	int detect_rename;
- 	int diff_rename_limit;
- 	int merge_rename_limit;
- 	int rename_score;
---=20
+ 		o->detect_rename = 1;
+-- 
 2.7.1.288.gfad33a8
