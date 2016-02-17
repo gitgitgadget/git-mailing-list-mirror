@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/3] Turn git-rebase--*.sh to external helpers
-Date: Wed, 17 Feb 2016 20:36:38 +0700
-Message-ID: <1455716201-29784-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/3] rebase: move common functions to rebase--lib.sh
+Date: Wed, 17 Feb 2016 20:36:39 +0700
+Message-ID: <1455716201-29784-2-git-send-email-pclouds@gmail.com>
 References: <vpqio1nsk0q.fsf@anie.imag.fr>
+ <1455716201-29784-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,105 +13,199 @@ Cc: Matthieu.Moy@grenoble-inp.fr, sbeller@google.com, peff@peff.net,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 14:36:42 2016
+X-From: git-owner@vger.kernel.org Wed Feb 17 14:36:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW2HY-0002LB-KT
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 14:36:40 +0100
+	id 1aW2Hf-0002PG-Bi
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 14:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422955AbcBQNgh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2016 08:36:37 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34168 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422802AbcBQNgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 08:36:35 -0500
-Received: by mail-pf0-f181.google.com with SMTP id x65so11707156pfb.1
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 05:36:35 -0800 (PST)
+	id S1422982AbcBQNgn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2016 08:36:43 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34216 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422802AbcBQNgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 08:36:42 -0500
+Received: by mail-pf0-f170.google.com with SMTP id x65so11708485pfb.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 05:36:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=HuvTKYde9kf+eiLdqoSw+denYYwuohJe4QVnOj1QK8Q=;
-        b=xjRd73nWfiGAXlFYoZH/gd+W+tu3IBmUDUnNjIQDxTW5BTyZH1CWScGu3s3z9m/h7J
-         /8BguLcUa6MN6i4e/EtD//+ni2fwoVad6s/F5/VysVfUN6rFTLCEPPPEgQ2QlI9aSil7
-         rBaIb9ct5TksJ8lnHwyolQ/Z6BUEAjBJpCJCHq7G2wYFBuo+tiE8ooe65rwUm+dyZcok
-         rTrJmv8HxL69sh04Q9JiNqqNyKPBStvXF72jbW2mQzj8Ku0dRe/EDQ9z3gxxe2lJ6QpX
-         DXyKQHH0bZiays93dXCELyliaEkYrdUBHWQd+lfRkf4tqx/90N+lkKhLbZmCvcQhXqcf
-         M3MA==
+        bh=EUoRuW4uagn1+8aTpZOgUxAK1w6YCI0QzAjZ82JoqJo=;
+        b=JwJuLGC4bxwieu9OZrkAImDqoJHORGIFPEnUEy1ij4lVvI3YAdG+T/ttT6h+2EZD7m
+         mFt5rrbiGfwd8lIBNdfdCP5V9Sp/YZT0quJ6bvRImvJOc2Y23+ZBrt1Iftv1Oy3YCNNg
+         Irf1VSrefVhIoEBmq4/GHUAZ1W4UGkRC+g4YMOndJoFsmGsNGNIecR7Ck66Kb5q4If9v
+         tWnmk7DSiT9umO3yVbCBx0oaz81GJmfZRw7+KaIbRhtZEqF8WcJDKLEn4ftQp/5tB9TN
+         5IbU5K6Xo9vyzFnIzTHoc4YkQ2qAZdKPJlt/rrz5oA9vMQUwEGiSua+ZeO2pDfawDFuP
+         tSYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=HuvTKYde9kf+eiLdqoSw+denYYwuohJe4QVnOj1QK8Q=;
-        b=dlasS40b1INYu9QXZPRHUPJWxAkWWtzvIpKWCpjiuvvIWTwLR7v3vuISA5Kyy8Z5lt
-         XmUPn9EpBEWTF+hcBw63ni0UaHdT87kgg4CuxaGic5mTYsDL6zynXCuxJYYlx0j1NF+e
-         3zRyPef7LfTEAww0b+Ug9oastv8MlYFsrDvxOxYEmyMjxeygxeVrK1YOvqYaplmfFChz
-         605/JL9EfHwsppMetg3MburR6pM24K+hrKAces+ls+31Pzg6P1z8IynBl52KmTzActVG
-         FnzQsPVtD5x+WTQTe13vNmZ9cQLpZtMuQKJxl3j+vl9lFO6T7yAtFCv2Y+xfrzrWedYW
-         J7bA==
-X-Gm-Message-State: AG10YOSJ9kSdDmVdWudOobT1ZiwsP5CbUPj3VAHDroOv03v6v8BiqXDJEgsHkqj7jbAgtA==
-X-Received: by 10.98.68.193 with SMTP id m62mr2149922pfi.130.1455716195354;
-        Wed, 17 Feb 2016 05:36:35 -0800 (PST)
+        bh=EUoRuW4uagn1+8aTpZOgUxAK1w6YCI0QzAjZ82JoqJo=;
+        b=T2LkmObfiYiviJ2naS3Pv3+UXg4lfCGesKyK9D56jrXC/nXJVcimF3iJMbJdo1txlV
+         +B7b8zyBUWA5p5AEedCLUCO8Hslm0myC6BW2eDBTal5Xf9xZYh01D+X73L2blbfd0b/q
+         wCfv+ALf+v1s1kAEPW08xje3c1D8yMIfgVMQssDcBPIp50NuyESaWNzC1m5v8eD+fXmH
+         pldogEPpvboqpJlAD++LH2Vo5fLPqxXxMr7MiSCArbjUmg+qyYXFCEg0xJ3uhu2ZHCCd
+         v3BFeEqg8I/pgrMWSWRTDLPjA8Wdr9h/LJitO7iYOxRxpH6v2YKCrSfJ8e8EQsvMzaYR
+         zcWw==
+X-Gm-Message-State: AG10YOT5OdNuoM+fnZL8AihYx7pPXW/ymxUSgeMKxk3X9ct7eqgterBj+2tpI7EW9P+g6g==
+X-Received: by 10.98.0.11 with SMTP id 11mr2134778pfa.5.1455716202007;
+        Wed, 17 Feb 2016 05:36:42 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id c24sm2957334pfj.41.2016.02.17.05.36.30
+        by smtp.gmail.com with ESMTPSA id k14sm3018977pfj.0.2016.02.17.05.36.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Feb 2016 05:36:33 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Wed, 17 Feb 2016 20:36:57 +0700
+        Wed, 17 Feb 2016 05:36:40 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 17 Feb 2016 20:37:04 +0700
 X-Mailer: git-send-email 2.7.0.377.g4cd97dd
-In-Reply-To: <vpqio1nsk0q.fsf@anie.imag.fr>
+In-Reply-To: <1455716201-29784-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286499>
 
-On Wed, Feb 17, 2016 at 5:34 PM, Matthieu Moy <Matthieu.Moy@grenoble-in=
-p.fr> wrote:
-> There's a funny exercice there: the git-rebase--$type.sh scripts are =
-not
-> called as external helpers, but like this:
->
-> run_specific_rebase () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if [ "$interactive_rebase" =3D implied ];=
- then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GIT_EDITOR=3D=
-:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 export GIT_ED=
-ITOR
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 autosquash=3D
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 . git-rebase--$type
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 # ...
->
-> So, turning these scripts into builtins would first require turning t=
-his
-> ". git-rebase--$type" into an actual command call. But nothing
-> unfeasible.
+These functions are used by git-rebase--*.sh, which will be made
+separate programs later. At that point, we can reinclude rebase--lib.sh
+to provide the functions without duplicating code.
 
-We do want to turn all these scripts to C in the end, regardless if
-the conversion is part of any GSoC. So I dug up my code and prepared
-this. Now we need people to convert any git-rebase*.sh to C :)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Makefile                 |  1 +
+ git-rebase--lib.sh (new) | 41 ++++++++++++++++++++++++++++++++++++++++=
++
+ git-rebase.sh            | 42 +---------------------------------------=
+--
+ 3 files changed, 43 insertions(+), 41 deletions(-)
+ create mode 100644 git-rebase--lib.sh
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-  rebase: move common functions to rebase--lib.sh
-  rebase: move cleanup code to exit_rebase()
-  rebase: turn git-rebase--*.sh into separate programs
-
- Makefile                             |   7 +--
- git-rebase--am.sh (mode +x)          |  23 ++++----
- git-rebase--interactive.sh (mode +x) |  15 ++++++
- git-rebase--lib.sh (new +x)          |  79 +++++++++++++++++++++++++++
- git-rebase--merge.sh (mode +x)       |  14 +++++
- git-rebase.sh                        | 100 ++++++---------------------=
---------
- 6 files changed, 143 insertions(+), 95 deletions(-)
- mode change 100644 =3D> 100755 git-rebase--am.sh
- mode change 100644 =3D> 100755 git-rebase--interactive.sh
- create mode 100755 git-rebase--lib.sh
- mode change 100644 =3D> 100755 git-rebase--merge.sh
-
+diff --git a/Makefile b/Makefile
+index fc2f1ab..1ee0ed3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -496,6 +496,7 @@ SCRIPT_LIB +=3D git-parse-remote
+ SCRIPT_LIB +=3D git-rebase--am
+ SCRIPT_LIB +=3D git-rebase--interactive
+ SCRIPT_LIB +=3D git-rebase--merge
++SCRIPT_LIB +=3D git-rebase--lib
+ SCRIPT_LIB +=3D git-sh-setup
+ SCRIPT_LIB +=3D git-sh-i18n
+=20
+diff --git a/git-rebase--lib.sh b/git-rebase--lib.sh
+new file mode 100644
+index 0000000..8bec516
+--- /dev/null
++++ b/git-rebase--lib.sh
+@@ -0,0 +1,41 @@
++write_basic_state () {
++	echo "$head_name" > "$state_dir"/head-name &&
++	echo "$onto" > "$state_dir"/onto &&
++	echo "$orig_head" > "$state_dir"/orig-head &&
++	echo "$GIT_QUIET" > "$state_dir"/quiet &&
++	test t =3D "$verbose" && : > "$state_dir"/verbose
++	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
++	test -n "$strategy_opts" && echo "$strategy_opts" > \
++		"$state_dir"/strategy_opts
++	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate"=
+ > \
++		"$state_dir"/allow_rerere_autoupdate
++	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_si=
+gn_opt
++}
++
++output () {
++	case "$verbose" in
++	'')
++		output=3D$("$@" 2>&1 )
++		status=3D$?
++		test $status !=3D 0 && printf "%s\n" "$output"
++		return $status
++		;;
++	*)
++		"$@"
++		;;
++	esac
++}
++
++move_to_original_branch () {
++	case "$head_name" in
++	refs/*)
++		message=3D"rebase finished: $head_name onto $onto"
++		git update-ref -m "$message" \
++			$head_name $(git rev-parse HEAD) $orig_head &&
++		git symbolic-ref \
++			-m "rebase finished: returning to $head_name" \
++			HEAD $head_name ||
++		die "$(gettext "Could not move back to $head_name")"
++		;;
++	esac
++}
+diff --git a/git-rebase.sh b/git-rebase.sh
+index cf60c43..dc29474 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -46,6 +46,7 @@ edit-todo!         edit the todo list during an inter=
+active rebase
+ "
+ . git-sh-setup
+ . git-sh-i18n
++. git-rebase--lib
+ set_reflog_action rebase
+ require_work_tree_exists
+ cd_to_toplevel
+@@ -114,47 +115,6 @@ read_basic_state () {
+ 		gpg_sign_opt=3D"$(cat "$state_dir"/gpg_sign_opt)"
+ }
+=20
+-write_basic_state () {
+-	echo "$head_name" > "$state_dir"/head-name &&
+-	echo "$onto" > "$state_dir"/onto &&
+-	echo "$orig_head" > "$state_dir"/orig-head &&
+-	echo "$GIT_QUIET" > "$state_dir"/quiet &&
+-	test t =3D "$verbose" && : > "$state_dir"/verbose
+-	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
+-	test -n "$strategy_opts" && echo "$strategy_opts" > \
+-		"$state_dir"/strategy_opts
+-	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate"=
+ > \
+-		"$state_dir"/allow_rerere_autoupdate
+-	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_si=
+gn_opt
+-}
+-
+-output () {
+-	case "$verbose" in
+-	'')
+-		output=3D$("$@" 2>&1 )
+-		status=3D$?
+-		test $status !=3D 0 && printf "%s\n" "$output"
+-		return $status
+-		;;
+-	*)
+-		"$@"
+-		;;
+-	esac
+-}
+-
+-move_to_original_branch () {
+-	case "$head_name" in
+-	refs/*)
+-		message=3D"rebase finished: $head_name onto $onto"
+-		git update-ref -m "$message" \
+-			$head_name $(git rev-parse HEAD) $orig_head &&
+-		git symbolic-ref \
+-			-m "rebase finished: returning to $head_name" \
+-			HEAD $head_name ||
+-		die "$(gettext "Could not move back to $head_name")"
+-		;;
+-	esac
+-}
+=20
+ apply_autostash () {
+ 	if test -f "$state_dir/autostash"
 --=20
 2.7.0.377.g4cd97dd
