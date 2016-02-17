@@ -1,77 +1,102 @@
-From: GyuYong Jung <obliviscence@gmail.com>
-Subject: [PATCH] git-cvsserver.perl: fix typo
-Date: Wed, 17 Feb 2016 11:14:58 +0900
-Message-ID: <1455675298-75332-1-git-send-email-obliviscence@gmail.com>
-Cc: mmogilvi_git@miniinfo.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 03:14:39 2016
+From: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
+Subject: Re: [PATCH v3 1/2] merge-recursive: option to disable renames
+Date: Wed, 17 Feb 2016 01:16:12 -0200
+Message-ID: <CALMa68peGr3TsS8bTpsG3Xt5U5VtbLhKryhOSLEYaNZyjRuSgQ@mail.gmail.com>
+References: <1455671495-10908-1-git-send-email-felipegassis@gmail.com>
+	<1455671495-10908-2-git-send-email-felipegassis@gmail.com>
+	<CAPig+cRCKQ8Vpr11XB-MSNsjDXjMHstaEAz333nMZxuKC8xmEg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipegassis@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 04:16:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVrdX-0003Od-2q
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 03:14:39 +0100
+	id 1aVsbi-0002rT-N1
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 04:16:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964997AbcBQCOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 21:14:35 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:34747 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964967AbcBQCOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 21:14:34 -0500
-Received: by mail-pa0-f54.google.com with SMTP id fy10so2124521pac.1
-        for <git@vger.kernel.org>; Tue, 16 Feb 2016 18:14:34 -0800 (PST)
+	id S1755636AbcBQDQO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Feb 2016 22:16:14 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:33816 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755528AbcBQDQN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Feb 2016 22:16:13 -0500
+Received: by mail-ig0-f181.google.com with SMTP id g6so48504218igt.1
+        for <git@vger.kernel.org>; Tue, 16 Feb 2016 19:16:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=hlMn8UYDU3zhUQNZ2W5CzJAExyMrgvdj9EuuE3MXs/8=;
-        b=TpJo6u90MKlVrJxtChFPtnskvkTgN4dXgiK+bdKqymX6uWsthD5qv9qdGtnA9Jlb90
-         Rm/Z2c3dx7Ud3jOkMq1BijeOpZftTK8uTNPsCfRnut5m0gUISWwpaOHSpdm54y4dZPtZ
-         lXWl18SSJlx9d69L32VqPEhnphAMkN7y4aR0Ntw9h27NwuWwb0qeYJ9OqHXikBMnXVYp
-         xjpONZIvMQyM32vIDGsgLJG6oqBAfcYFb8UmxjzLA42oD4zrxH2jMQqiruTb4/jABZa9
-         uEERyKDlnjdnFEkYYbB/XIfTH4O8NGca1fRrSs4YwGdapNDAdsJWQ4KJZfMHHTIGtpfi
-         CQJA==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=nn1nKYLx6xlZZAzTjxnOEwUGd1qOpLtpDdGcKBORxac=;
+        b=yRTY7XgRUMhoyjfih7zticZhHTpSaxNdkkrK/LjN5yaZZc1QmP/QTTF9qvDc6OVubJ
+         wnBJbZ2CsRrFLG2qQWRUlLUQr+2zU4+a7MKe/U9QbPl8llQy2FqQf35NbigvjLcFEkvy
+         mhKY/UzG2qjmIfX35WXQCf2KXj/2z/HCrfh8Gx8HvrWCgvEWbZCshvL2exWAetnTazP/
+         Eo/GiPGuuVRy+NqNGVSIlHmHW/PUC6h2klQJfw/oive8XMC3qkNTx4uG96bIxIHpTdH+
+         5UhD8C4Q72wIrWydfLjPYNChwOlkiNzuJXk+HcbrhiFJDjkqIuAAp7tu6UCTAuM2UPwS
+         vdaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=hlMn8UYDU3zhUQNZ2W5CzJAExyMrgvdj9EuuE3MXs/8=;
-        b=bLeG3sPvt0klzLi5sj0tQG4FCYp4ayQK86Vq7X+M1ljT6gdsOsB0NmbCKpvkObkvMf
-         0x7L/hdYIbrpGLC36W2lly+z2Y1sq7X6no3AxKv0hcNgf9GPo8m6Fw3LSKjSQc6CJEVj
-         s46CHGhEzYjfoMgsBHwdcyaTNDivjtj82HH7SWuTpigTO5lRiQlN1zj0ZgLNwBnMSQuN
-         C/JC4O8OTdohKa4R/95auh5wqSH9vKw0YxWzLUvVe03Am/zaL7tX7UdPdkJXVH9j7N7c
-         Um5k3BT8S1wl4IPdwzQW35IjbDDNHdXu5IvOj3AmzM9Ekph3KBzrrmQ6y/azUBgc8Am3
-         ZKlQ==
-X-Gm-Message-State: AG10YOSeiGtecJPDWrWaTPmzVlJGqcK2d7pP5csbil/FwalM5WCnP4G6coG+5jjuieCp2Q==
-X-Received: by 10.66.151.177 with SMTP id ur17mr35306449pab.68.1455675274164;
-        Tue, 16 Feb 2016 18:14:34 -0800 (PST)
-Received: from localhost.localdomain ([211.56.96.51])
-        by smtp.gmail.com with ESMTPSA id x10sm48619145pas.37.2016.02.16.18.14.32
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 16 Feb 2016 18:14:33 -0800 (PST)
-X-Mailer: git-send-email 2.7.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nn1nKYLx6xlZZAzTjxnOEwUGd1qOpLtpDdGcKBORxac=;
+        b=AGIfE2MbB0MmJksPN+JtreqCxhxtIrJyYh8z6lIyFC7ziX9Wqq5VPtaTbUxasTsQId
+         yadFUNIH17x/YWAR5O63PM3SwQU8Za48NCfA0xG+NqCWl1ECx5NvJuxwo8p3Y1U13+2W
+         U+9o5jVq/WzEaYfZ3GbZWBbMt2PRw6cZZgVESgazaz+T+3eNE2IFRDJqD7Llrjf4WBeZ
+         37PJ1YRpbNVfnV27bhYj5yprJ91i0W0mLulzzXo6Lk3UbyMhLoJJlA8M4DegoabI4u1p
+         KzCKE7aejm/eK7bmkoiIQYfr4JHI7CEUMSaU+1CfVtEnW2nLe2nnlFM5Q9wnIqDl/WKA
+         p6HQ==
+X-Gm-Message-State: AG10YORxYjxLjpPEwLpy/teyjmDwxwOwvpDqzavTdD8YJFEGShkOzoB6NbX2rMABlUI6OUoPfB8DEbJrlvcKxA==
+X-Received: by 10.50.33.20 with SMTP id n20mr21786047igi.17.1455678972797;
+ Tue, 16 Feb 2016 19:16:12 -0800 (PST)
+Received: by 10.107.3.94 with HTTP; Tue, 16 Feb 2016 19:16:12 -0800 (PST)
+In-Reply-To: <CAPig+cRCKQ8Vpr11XB-MSNsjDXjMHstaEAz333nMZxuKC8xmEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286476>
 
-Signed-off-by: GyuYong Jung <obliviscence@gmail.com>
----
- git-cvsserver.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 16 February 2016 at 23:41, Eric Sunshine <sunshine@sunshineco.com> w=
+rote:
+> On Tue, Feb 16, 2016 at 8:11 PM, Felipe Gon=C3=A7alves Assis
+> <felipeg.assis@gmail.com> wrote:
+>> The recursive strategy turns on rename detection by default. Add a
+>> strategy option to disable rename detection even for exact renames.
+>>
+>> Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
+>> ---
+>> diff --git a/Documentation/merge-strategies.txt b/Documentation/merg=
+e-strategies.txt
+>> @@ -81,8 +81,14 @@ no-renormalize;;
+>> +no-renames;;
+>> +       Turn off rename detection.
+>> +       See also linkgit:git-diff[1] `--no-renames`.
+>> +
+>>  rename-threshold=3D<n>;;
+>>         Controls the similarity threshold used for rename detection.
+>> +       Re-enables rename detection if disabled by a preceding
+>> +       `no-renames`.
+>
+> I'm not sure that it is necessary to mention the "last one wins" rule
+> here, but if you do so, does --no-renames documentation deserve
+> similar treatment?
+>
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 95e69b1..02c0445 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2664,7 +2664,7 @@ sub argsfromdir
-     #   co  # Obtain list directly.
-     #   remove # HERE: TEST: MAYBE client does the recursion for us,
-     #          # since it only makes sense to remove stuff already in
--    #          # the sandobx?
-+    #          # the sandbox?
-     #   ci # HERE: Similar to remove...
-     #      # Don't try to implement the confusing/weird
-     #      # ci -r bug er.."feature".
--- 
-2.7.1
+It is not so much about the "last one wins" rule, but about the fact
+that, given the sub-optimal name, it is not obvious that this option
+even enables renaming. The wording is just the best way I found to
+explain that without creating additional confusion.
+
+I will apply your suggestion on the second commit. Please see the next
+patch proposal and tell what you think.
+
+Thanks,
+=46elipe
