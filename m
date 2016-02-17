@@ -1,89 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] am -i: fix "v"iew
-Date: Wed, 17 Feb 2016 11:15:16 -0800
-Message-ID: <1455736516-13466-4-git-send-email-gitster@pobox.com>
-References: <1455664017-27588-1-git-send-email-gitster@pobox.com>
- <1455736516-13466-1-git-send-email-gitster@pobox.com>
-Cc: Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 20:19:47 2016
+Subject: Re: [PATCH 02/20] safe_create_leading_directories(): set errno on SCLD_EXISTS
+Date: Wed, 17 Feb 2016 11:23:23 -0800
+Message-ID: <xmqqziuzi1jo.fsf@gitster.mtv.corp.google.com>
+References: <cover.1455626201.git.mhagger@alum.mit.edu>
+	<7ddc8ac89f36b01494fbdc6f97bf1ca258b3e885.1455626201.git.mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
+	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
+	David Turner <dturner@twopensource.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 17 20:23:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW7dZ-0004yd-5d
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 20:19:45 +0100
+	id 1aW7hD-0007wD-3P
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 20:23:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965396AbcBQTTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 14:19:18 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55641 "EHLO
+	id S1161180AbcBQTX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 14:23:27 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65331 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423644AbcBQTPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 14:15:23 -0500
+	with ESMTP id S1030377AbcBQTX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 14:23:26 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C17B5423ED;
-	Wed, 17 Feb 2016 14:15:22 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5108242642;
+	Wed, 17 Feb 2016 14:23:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=gYyi
-	Ug/bNSEtt27rGP6t6Os8Ifw=; b=le2kXml21o3MrXpciZ0QtTc+BznhkGTIc6wB
-	ORNvt21+ILmchIu5byN57gHL0mJJ1XX2h2FBOF+538RbrniZRpj8L1XCYeS4x8rH
-	NZL6w3+H2yKlJhoLjmGFXGlNRIuJgvuxlpFDxbRTxjq33XZFC4lQTrD3HendYVGU
-	vxtE/TQ=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/HokWwMAYz9YzwkYAdMhFcHronU=; b=hqC9HZ
+	dsqNahZJuhpC15HNu6Y7qWNCVAPW11IETrnQYZqq4rSJxILN6LF6wL4tPnZ7UWv0
+	1e5bmwLc1d8Z/hC3GyLhI0qgquhSuWQS4xS8jE3f43P38kOSiqp21R2BVjUS5E88
+	I+ZG8AP7W3ebUma5in9wQKuo6+/oOQMWVYK6Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	pII5ShMuUdKFfD5Yi6bcwG/30DWHgi8yq8fqkK9YGuWVQ0FLx2thznF+ftKkDUWQ
-	5GIMfV3OTaht3U767HFYWOQFG+khkd58jYXCw0Qi5FljqX3Sf5QJD49GFiGUSFBn
-	t/fdMbuAe75Yu0HGF4kjr3Ox6soTOfDHl/vIwWg88/0=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qWUXX+PvWRSTYX9gl0bTDOvJJTIY+mju
+	XjyJjRDMavvcKS8sZU4CZXL/WwZ1cWYnFtkryWL4DI67i9eZKfl7BwQS3QMUme3/
+	YYkmBhAV76AyKlhPf90uzIfdYyJfFSCtNxfcMms11Z7rbRjdZc0GgE+8/gdnWdla
+	pBMopUI2eRA=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B2FF1423EC;
-	Wed, 17 Feb 2016 14:15:22 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 483E642641;
+	Wed, 17 Feb 2016 14:23:25 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 335BD423EB;
-	Wed, 17 Feb 2016 14:15:22 -0500 (EST)
-X-Mailer: git-send-email 2.7.1-489-g20b2cbe
-In-Reply-To: <1455736516-13466-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: CA71244C-D5AA-11E5-B86C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B090E42640;
+	Wed, 17 Feb 2016 14:23:24 -0500 (EST)
+In-Reply-To: <7ddc8ac89f36b01494fbdc6f97bf1ca258b3e885.1455626201.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Tue, 16 Feb 2016 14:22:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EA15AE84-D5AB-11E5-A2E2-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286541>
 
-The 'v'iew subcommand of the interactive mode of "git am -i" was
-broken by the rewrite to C we did at around 2.6.0 timeframe at
-7ff26832 (builtin-am: implement -i/--interactive, 2015-08-04); we
-used to spawn the pager via the shell, accepting things like
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-	PAGER='less -S'
+> The exit path for SCLD_EXISTS wasn't setting errno, as expected by at
+> least one caller. Fix the problem and document that the function sets
+> errno correctly to help avoid similar regressions in the future.
 
-in the environment, but the rewrite forgot and tried to directly
-spawn a command whose name is the entire string.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 568120e..a1ac646 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -135,8 +135,10 @@ enum scld_error safe_create_leading_directories(char *path)
+>  		*slash = '\0';
+>  		if (!stat(path, &st)) {
+>  			/* path exists */
+> -			if (!S_ISDIR(st.st_mode))
+> +			if (!S_ISDIR(st.st_mode)) {
+> +				errno = EEXIST;
+>  				ret = SCLD_EXISTS;
 
-The previous refactoring of the new helper function makes it easier
-for us to do the right thing.
+Hmm, when does this trigger?  There is a non-directory A/B, you are
+preparing leading directories to create A/B/C/D, and you find A/B
+exists but is not a directory so you cannot create A/B/C underneath
+it?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Essentially the same as v1, modulo adjustment for the change in 2/3
+That sounds more like ENOTDIR to me.
 
- builtin/am.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Does the caller expect EEXIST, or both?
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 1399c8d..56cf26e 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1740,7 +1740,7 @@ static int do_interactive(struct am_state *state)
- 
- 			if (!pager)
- 				pager = "cat";
--			argv_array_push(&cp.args, pager);
-+			prepare_pager_args(&cp, pager);
- 			argv_array_push(&cp.args, am_path(state, "patch"));
- 			run_command(&cp);
- 		}
--- 
-2.7.1-489-g20b2cbe
+> +			}
+>  		} else if (mkdir(path, 0777)) {
+>  			if (errno == EEXIST &&
+>  			    !stat(path, &st) && S_ISDIR(st.st_mode))
