@@ -1,110 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH +warn] Implement https public key pinning
-Date: Wed, 17 Feb 2016 13:05:11 -0800
-Message-ID: <xmqqlh6jhwu0.fsf@gitster.mtv.corp.google.com>
-References: <87y4amcby5.fsf@mitoraj.siccegge.de>
-	<20160215140422.GA1747@mitoraj.siccegge.de>
+Subject: Re: [PATCH v5 15/15] config: rename git_config_set_or_die to git_config_set
+Date: Wed, 17 Feb 2016 13:09:25 -0800
+Message-ID: <xmqqh9h7hwmy.fsf@gitster.mtv.corp.google.com>
+References: <1455627402-752-1-git-send-email-ps@pks.im>
+	<1455627402-752-16-git-send-email-ps@pks.im>
+	<CAO2U3Qia8r=jp9CmF0rN3ZxeJk+811q5VZ65pygr9aqrgLUn3A@mail.gmail.com>
+	<CAO2U3QjYKV_fPWb7CBYqvHXhQjcgZC+ht6VMQso4PBaHXas99Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Christoph Egger <christoph@christoph-egger.org>
-X-From: git-owner@vger.kernel.org Wed Feb 17 22:05:22 2016
+Cc: Patrick Steinhardt <ps@pks.im>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Stefan Beller <sbeller@google.com>
+To: Michael Blume <blume.mike@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 22:09:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW9Hl-0003du-2w
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 22:05:21 +0100
+	id 1aW9Ln-00070F-QH
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 22:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161750AbcBQVFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 16:05:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62857 "EHLO
+	id S965485AbcBQVJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 16:09:28 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53847 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161042AbcBQVFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 16:05:13 -0500
+	with ESMTP id S965348AbcBQVJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 16:09:27 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 392DB44343;
-	Wed, 17 Feb 2016 16:05:13 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CDDCA44424;
+	Wed, 17 Feb 2016 16:09:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=rl3XeC0joxP11RJbeNbe7mstExQ=; b=ckqbKN
-	54OIIVC2rIOKT6WpQ25s4+rmwOR/bS/Ar+kyYKGaZT35CPz9l0x1Wg8u0XZJbEWb
-	N4P+YcDCFDwgN+cAGDYO1XKfHCaB3rXFrlmiQckvT2nr8In9MG+wb0duTmvPA2oz
-	rWl2A5kjHYNroPl6Ts0Fd8kz5aGGJP3fJG35Y=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z05D8GO+6P8twsRzaGd+/yJwQwg=; b=eCW0MP
+	UcXLXGta60BYDLauYYlR9+ScGBjHM4XoE44HDHaRcxE09iW7qthDCb5qR7tUJO8H
+	l9TBhkvINJ1lt9MtpXWmVpfV+32IIZGlsZARhV31Tg9alDV6J1oTIfJ7zvUvLXwj
+	9swApzyc0WBYQjo8nH2MIh9DUbizSlDcrSBrE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OMkDfRsz4D+uh/3HypV+MGyDIXP53URK
-	O2Ktr0o0/7l8YFKz/lxGGK9l1Z/PXQIU5F3U3hOkSuiQznobtuLIUQgcp+Qa6JFz
-	sg3/7tTOczltELHD5plc/WruMTEo1oLQp3OACEsUxqGHUx3uQSB+HhZnKGQbE7Al
-	CwgtpdGB5/I=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ma7aRjxIS/+uqYUjVDD4Wy4uIbpjk2ZS
+	kTWr7+QQxAgsZM8h0Uos+3UKroS6Od6HDh/2X6+jsyyDKjFNttzVdHRIatkFVSog
+	CccWWi4++9jVUUkNZEnh2F7yJ/QrWG73jseAf2wEFmOV8TqLQBDwyNlh/1Qh/fo3
+	ZsiLPzIqYAE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29D2A44342;
-	Wed, 17 Feb 2016 16:05:13 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BBE9644423;
+	Wed, 17 Feb 2016 16:09:26 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 90EE744341;
-	Wed, 17 Feb 2016 16:05:12 -0500 (EST)
-In-Reply-To: <20160215140422.GA1747@mitoraj.siccegge.de> (Christoph Egger's
-	message of "Mon, 15 Feb 2016 15:04:22 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 40EFC44422;
+	Wed, 17 Feb 2016 16:09:26 -0500 (EST)
+In-Reply-To: <CAO2U3QjYKV_fPWb7CBYqvHXhQjcgZC+ht6VMQso4PBaHXas99Q@mail.gmail.com>
+	(Michael Blume's message of "Wed, 17 Feb 2016 13:02:45 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 229DABFE-D5BA-11E5-AD27-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B9D1B1FA-D5BA-11E5-A26F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286554>
 
-Christoph Egger <christoph@christoph-egger.org> writes:
+Michael Blume <blume.mike@gmail.com> writes:
 
-> Add the http.pinnedpubkey configuration option for public key
-> pinning. It allows any string supported by libcurl --
-> base64(sha256(pubkey)) or filename of the full public key.
+[administrivia: please cull unnecessary parts from your quote]
+
+>> 1 warning generated.
+>>     AR libgit.a
+>>     LINK git-credential-store
+>> Undefined symbols for architecture x86_64:
+>>   "_git_config_set_or_die", referenced from:
+>>       _probe_utf8_pathname_composition in libgit.a(precompose_utf8.o)
+>> ld: symbol(s) not found for architecture x86_64
+>> clang: error: linker command failed with exit code 1 (use -v to see invocation)
+>> make: *** [git-credential-store] Error 1
 >
-> If cURL does not support pinning (is too old) output a warning to the
-> user.
->
-> Signed-off-by: Christoph Egger <christoph@christoph-egger.org>
-> ---
+> Looks like there's one more use of git_config_set_or_die that needs to
+> be removed.
 
-I needed this fix to unbreak it for those with older versions of
-cURL.
+Thanks; let's squash this in.
 
+ compat/precompose_utf8.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- http.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/http.c b/http.c
-index a6b8076..3475040 100644
---- a/http.c
-+++ b/http.c
-@@ -219,13 +219,6 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.sslcapath", var))
- 		return git_config_pathname(&ssl_capath, var, value);
- #endif
--	if (!strcmp("http.pinnedpubkey", var))
--#if LIBCURL_VERSION_NUM >= 0x072c00
--		return git_config_pathname(&ssl_pinnedkey, var, value);
--#else
--		warning(_("Public key pinning not supported with cURL < 7.44.0"));
--		return 0;
--#endif
- 	if (!strcmp("http.sslcainfo", var))
- 		return git_config_pathname(&ssl_cainfo, var, value);
- 	if (!strcmp("http.sslcertpasswordprotected", var)) {
-@@ -283,6 +276,14 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.useragent", var))
- 		return git_config_string(&user_agent, var, value);
- 
-+	if (!strcmp("http.pinnedpubkey", var)) {
-+#if LIBCURL_VERSION_NUM >= 0x072c00
-+		return git_config_pathname(&ssl_pinnedkey, var, value);
-+#else
-+		warning(_("Public key pinning not supported with cURL < 7.44.0"));
-+		return 0;
-+#endif
-+	}
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 9ff1ebe..dfbe6d8 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -50,8 +50,8 @@ void probe_utf8_pathname_composition(void)
+ 		close(output_fd);
+ 		git_path_buf(&path, "%s", auml_nfd);
+ 		precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+-		git_config_set_or_die("core.precomposeunicode",
+-				      precomposed_unicode ? "true" : "false");
++		git_config_set("core.precomposeunicode",
++			       precomposed_unicode ? "true" : "false");
+ 		git_path_buf(&path, "%s", auml_nfc);
+ 		if (unlink(path.buf))
+ 			die_errno(_("failed to unlink '%s'"), path.buf);
