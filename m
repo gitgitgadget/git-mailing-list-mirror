@@ -1,87 +1,112 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
-Date: Wed, 17 Feb 2016 23:51:45 +0530
-Message-ID: <CAOLa=ZR83_79YTPA1QAB8wOPUDFu_RV2za4P4s9eO_PCgpXdNg@mail.gmail.com>
-References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
- <1455649215-23260-3-git-send-email-Karthik.188@gmail.com> <20160216192231.GA16567@sigill.intra.peff.net>
- <CAPig+cTiwHs+dD+jqAp8SNkwjQ2OzDsC8yopRgF7gctrGi5uUw@mail.gmail.com>
- <20160216204954.GC27484@sigill.intra.peff.net> <CAPig+cQDs35Uirm5cG552tR8iCFOstNJoOzLCZiXCgnq+g7MRQ@mail.gmail.com>
- <CAOLa=ZQO065j5VfJabbV6jww5Z2f3jbaRQDfDcG9NY4x2txrFQ@mail.gmail.com>
- <CAPig+cTrh4u7vgQRXOT0a-5St2a6TV4qfhOMCVSetbQD0kGTrQ@mail.gmail.com>
- <CAOLa=ZQ4-Qwp84XgTS9joGW4rJRiw8VMTf+Y1Dzo5M-ZNPZXuA@mail.gmail.com> <CAPig+cQzkQ2G2EbrkDXHq4eytywFbJKPO2kxFTOxrcACQJCZ6g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:22:23 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 19:32:05 +0100
+Message-ID: <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 19:32:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW6k2-0002Xx-8k
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:22:22 +0100
+	id 1aW6tb-0001hb-Tk
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:32:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161050AbcBQSWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 13:22:18 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:36343 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030312AbcBQSWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 13:22:16 -0500
-Received: by mail-vk0-f42.google.com with SMTP id c3so22299646vkb.3
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:22:15 -0800 (PST)
+	id S933380AbcBQScL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 13:32:11 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:34538 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933149AbcBQScK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 13:32:10 -0500
+Received: by mail-wm0-f42.google.com with SMTP id b205so168294169wmb.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:32:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=i49tEktGATbWTIuAiaQj6O6RihtYnzCdEls9s0ObmGs=;
-        b=YlXBzTsA67LMlr3dCNnUJQQtiYMzBPo2MDfssERcESN9Zd143NfZf0JgHkG1zGE0QN
-         1Ow597A3fqmyGiiVKuI6XLxIwtCotMp0o3u5rCTArGcq8zJssfZh6VmpATx4ZSMc/Q43
-         T/9S07QT884ua6Mx0T8z7Jaeili2o7/0XslEvJm9jdfDg4g1l4W3UunTYfQeSsFC8Mu5
-         q0aaZFZFAJQatJiOKhlvZJaGlIXTbk9J0K8fwOBLOgJmstQXIu1iRt2FHk8+T7O/ElYC
-         FN4HC1ycIYetXMO3A85N6akYuuZV12vrDV6WEf/awMe/+qj3Dbca9OqUYCn3HFhjDah+
-         oLnw==
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/43xtCou6kLuP1N6zW0hlSdAqC9zgiSO/w7o/ad/5Fg=;
+        b=EZHVpny1DDzH4f6w25b9xg5Sen1kQXb4vuFuy0PyiWbaYQ50n9FgeJajsO2/lFQFLz
+         3FP6F7omykzCVObGnOAbbdHtZXhK9W8zFs4Xv2u9OTTaTCxA5ERweIcbxUSEYrjJUDSL
+         4CO6ukHIDxYc2tvt+buhWnYxD91EFHRNbHkUIBQipHjZXuy2x43wdaAvaDPNTqEhnzQg
+         GA/v4G/WeqjfLF11xZrutt6skXHYebv3YetCxBxQ9RdWtUM19pXl6wKZDgoRf5ngKX34
+         8sh7yWukj/A/n8mp0xbssO90gqWQ0uo2g+CTPBhsq1p/VwIIoRycH5KBv45BWTWYrmF8
+         NC5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=i49tEktGATbWTIuAiaQj6O6RihtYnzCdEls9s0ObmGs=;
-        b=IXiCPIeR2kjSJIgOxV2QfO53nfnGzek+UTXfsm/3wy4zUS1bLche6hxJb8nvDSlaxb
-         sXMNVaCkqFMr8TeDKgO+SBgLh5RMVFUjY66lyJP/aBXqxMZ2FO7YyMyJVXYn0MOnPiL7
-         XgHMyEbJBQRlkxg3QuM7V+uv61u349rSJFvsDOsAX4Al8CPhOiG2/C8yJjWffK497XOO
-         Lw0xplFyVwrftNqLDhE80WrHfzqW8wmeXSfR68spWfiC0hVGlxMgpDBJk1HScVs48eoU
-         xR+JtjOb+bFpo/QD2zzNmU/xzXz/V6kyrunrx7y4mZ/6eSQxU9v7s9wgnLyt4hRVGZz9
-         9APA==
-X-Gm-Message-State: AG10YOSTeSDuy2iYxBuMhbyN14h0McB/k3fi/Y1ZJKlmq9Eo69iTHWbTwq6Ui681inXIwC0mAfuF5nI9SrSuPg==
-X-Received: by 10.31.142.203 with SMTP id q194mr2431291vkd.95.1455733335400;
- Wed, 17 Feb 2016 10:22:15 -0800 (PST)
-Received: by 10.103.82.133 with HTTP; Wed, 17 Feb 2016 10:21:45 -0800 (PST)
-In-Reply-To: <CAPig+cQzkQ2G2EbrkDXHq4eytywFbJKPO2kxFTOxrcACQJCZ6g@mail.gmail.com>
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=/43xtCou6kLuP1N6zW0hlSdAqC9zgiSO/w7o/ad/5Fg=;
+        b=lWihz/Si55U1uzO4W8izonTIpZkFndsbFqKgdG7b8dZzsrryqe/P680vyJpM7GIYdc
+         4LU2/FINh4tmbi4CyJJh+JR2XokEpLhIqm8IaGutNGKNcooo46hY2u1fYM+DzWmgREle
+         OeVS+RCRiQj8JiVDcxAEKXZWM/ymioGjnlfoCfvRihdmE7Srlg8lMXVfwv1aAmzbBl6W
+         c52VYL3S6l3figGuwe6fzCIoGsdhUro5SZDuP6D2kikH7DHDu22mvyHJ5IV+SJoQqqf1
+         YCRwcpKalSknzueDnfkC5YpCzu4ks4WaBLOOr7VwJQb7P0Rst52OhG82HvKyBi61N1gY
+         gtmQ==
+X-Gm-Message-State: AG10YORkrWEdwkT0wvukQyFMnwWe3ByPnYDmykvur/Iu/xzG5MKMvixdHb3I7SZe/l6rtg==
+X-Received: by 10.28.131.141 with SMTP id f135mr26549325wmd.33.1455733928894;
+        Wed, 17 Feb 2016 10:32:08 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB412D.dip0.t-ipconnect.de. [93.219.65.45])
+        by smtp.gmail.com with ESMTPSA id s8sm2750239wje.35.2016.02.17.10.32.06
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 17 Feb 2016 10:32:07 -0800 (PST)
+In-Reply-To: <20160217172407.GD1831@hank>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286532>
 
-On Wed, Feb 17, 2016 at 11:47 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Feb 17, 2016 at 1:07 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> On Wed, Feb 17, 2016 at 11:09 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> I reviewed the entire series again, including Peff's changes, so this
->>> entire series is:
->>>
->>>     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
->>>
->>> Karthik, feel free to include my Reviewed-by: in all the patches
->>> (including Peff's) when you post v6.
->>
->> Oops! I just pushed v6 before I even saw this mail.
->
-> No problem. Junio can add my Reviewed-by: if he wants when he picks up
-> the series.
 
-That would be great :) Thanks for reviewing this series.
+On 17 Feb 2016, at 18:24, Thomas Gummerer <t.gummerer@gmail.com> wrote:
 
--- 
-Regards,
-Karthik Nayak
+> On 02/10, Matthieu Moy wrote:
+>> Work on the application itself, and on the list of ideas.
+> 
+> One potential idea:
+> 
+> Make destructive git commands more safe for the user.
+> 
+> Some commands (e.g. git reset --hard, git clean -f, etc.) can
+> potentially destroy some of the users work.  Store the information
+> that we are potentially losing somewhere, where it's easily
+> retrievable by the user.
+> 
+> This should probably be hidden behind a new config variable
+> (core.iKnowWhatImDoingButIReallyDont or something better), as it has
+> the potential to really inflate the repository size (when storing
+> binary files that should be deleted by git clean for example).
+> 
+> It happened more than once that I thought I knew what I was doing, but
+> would have been really glad if git saved me from my mistakes.
+> 
+> I haven't thought this through much further than just the idea, so it
+> would be great to hear some opinions on it first.
+
+Coincidentally I started working on similar thing already (1) and I have
+lots of ideas around it. I get endless requests at my $DAYJOB of messed
+up Git repos where people just pasted stuff from StackOverflow without
+a deep understanding of what they are doing.
+
+If the lists agrees to take this topic for GSoC I would be happy to 
+co-mentor it.
+
+Cheers,
+Lars
+
+(1) using Git config hacks
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
