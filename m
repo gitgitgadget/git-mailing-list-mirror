@@ -1,130 +1,85 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 4/4] remote: use remote_is_configured() for add and rename
-Date: Wed, 17 Feb 2016 15:24:55 +0100
-Message-ID: <20160217142455.GC1831@hank>
-References: <1455558150-30267-1-git-send-email-t.gummerer@gmail.com>
- <1455558150-30267-5-git-send-email-t.gummerer@gmail.com>
- <20160215183334.GH26443@sigill.intra.peff.net>
- <alpine.DEB.2.20.1602171451030.6516@virtualbox>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/3] Turn git-rebase--*.sh to external helpers
+Date: Wed, 17 Feb 2016 21:40:32 +0700
+Message-ID: <CACsJy8AAhpKbRi7QznwqAQ+uBb1SuFJCCh=cSw58oeuV1n_90g@mail.gmail.com>
+References: <vpqio1nsk0q.fsf@anie.imag.fr> <1455716201-29784-1-git-send-email-pclouds@gmail.com>
+ <alpine.DEB.2.20.1602171513140.6516@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 17 15:24:40 2016
+X-From: git-owner@vger.kernel.org Wed Feb 17 15:41:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW31z-0004Tm-He
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 15:24:39 +0100
+	id 1aW3Hy-0008U0-4s
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 15:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161629AbcBQOYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 09:24:34 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:36972 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030267AbcBQOYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 09:24:32 -0500
-Received: by mail-wm0-f50.google.com with SMTP id g62so30536475wme.0
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 06:24:31 -0800 (PST)
+	id S1423552AbcBQOlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 09:41:05 -0500
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:34270 "EHLO
+	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965322AbcBQOlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 09:41:03 -0500
+Received: by mail-lf0-f49.google.com with SMTP id j78so12172622lfb.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 06:41:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TXGiexyjHWzC6y8tdMY0K1Afwa7L/nmyOLwOuS25JZk=;
-        b=IYwiLsQrfvzM6PEvyrIO8NKcfcjEpv3x/xnxXPK0bsV/yEw0hl5KTpagJ7Vgq9z/xy
-         jbeaRkEum6E2kaoMxGrTJ6FOhlZXFOzTFUXQUusyBVQnMyhNIwKCJNnAM2ylU2aLPFcj
-         MQBcTEhb7QNy3K7k8/pf+O9luPQsYoDrFcgfqpg0vBITmnVrG2Gz/QNWWxcGMV5ovS47
-         1i0Lf5s+jOdYG7ql+UYreE3zk22+urYJy4sPngQTSZRBM6YD+bySRWdp1cPPzkYveYVK
-         od4iw1ln0hLA6i8JOJmJXYx/dLV+Qe0MC46QYXmeEZ4qRbzGYMf+DlpTALnVrAx1QTdE
-         tTEw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UwRwvOAo4TpKatCwxX3dWPUub7wrJPhEkB9/5aNp0d4=;
+        b=EV+XAaI69CsyARHzdzXl4c82WzDcuab82sIrLqEl26qSTu4tbmUthE46KwRC33yvnW
+         65cN5UywOtdqBwqS+lRwov8lW1TRiE9cm8vP9Wpqe4m4439H0oTM4WMZi7h4IC/9kZXa
+         Es8rmr7pBFmzpR+2lPGo0tyNM0EXczkmb3JGdDRID3pcrM96DaHGm82Sb+ZjIA2w/QIR
+         bHl1Y/fD6NBCRUkMDfA2bpo5qIJEbSMX4LfeLNEa9clue3DkHyBDmyhoRJTWO2YXMHiS
+         a6KWMTauzSq68WJj9fc7qt+POjuEdHTxS9oV4smQuvDHA90AOe2VwUnIX2BpPuO7ioH3
+         CrMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=TXGiexyjHWzC6y8tdMY0K1Afwa7L/nmyOLwOuS25JZk=;
-        b=eyZbHgdQh3yH3mDE2gSw7wIUbqYnb5aU6FfcDRhjJeXV7LbnDq0b+vSb9MTWvuDv3f
-         FidzEjenedmZ3uQBswvWV4xj2bCvJI23kW6X2gkugA6fnkfKTMHtUn4JiRSgZJGNoe/q
-         U81KF3nq3R2/RSMVsx0u6XxqwgqDTifL1LXG/yUVNA9tbYJ9YJOIIQTqKXDZ8WTf4Gl3
-         IFmA3u5kMz+Zhyf4fX9s+v0TKBvBXj8GYgIlIxsZHL6yktlVfL4gpY9Ronmmh5fVsXRd
-         6+I6v40B9E1ouXCYHyJXEPmtlti/KinWzyYaemXoJ6IVH51Pz8oCr9tjjd6qSyTMCObA
-         kynQ==
-X-Gm-Message-State: AG10YOQTZ2IjNOl7ByqmdUzMom54q2NOC+VicQ5SDXCCUpvues7NXbcLWUtr6Xp4BTy79Q==
-X-Received: by 10.28.19.204 with SMTP id 195mr27781013wmt.1.1455719071123;
-        Wed, 17 Feb 2016 06:24:31 -0800 (PST)
-Received: from localhost (host144-107-dynamic.41-79-r.retail.telecomitalia.it. [79.41.107.144])
-        by smtp.gmail.com with ESMTPSA id g1sm31899496wmc.0.2016.02.17.06.24.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Feb 2016 06:24:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1602171451030.6516@virtualbox>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=UwRwvOAo4TpKatCwxX3dWPUub7wrJPhEkB9/5aNp0d4=;
+        b=OhXILhRIPdnnJRe4bNvfCCfWDA5X+l6es3XgW/7x88gXILSU+u16T1yrm46lGdbN1D
+         myYsl5snsxVBMUrZcEN6hZlC+fgHaDXlgqZnZpLLRjV8XuMH6J6YECKij+5OeyyON1jO
+         7Up0I45xa/mkd7qEnAmiVhUg7mVcmZyviKETywTLp2lzjGeEYKqF7561spQT7zgE8/Nm
+         1yg47l09gDAXmseoxMClOftrsi0tldNBvcxeVcFhhdVa3tKGhJ2LuukdmUGgHJW6JrSO
+         EdtrfwLTqQgU/xrP4ykYtbtjOv9rnZqVT+yOnXwtzCTCYnfhvzQxqamtFksQT7CKii+F
+         oy/Q==
+X-Gm-Message-State: AG10YOQJtcKb9YL6Z2olRIzsqsumN5zZ4ydLmifs0bhJGyyRPRJ5gdjoUTiuP99oYB8q0tkSzQr01sPVWvM5YQ==
+X-Received: by 10.25.159.68 with SMTP id i65mr943377lfe.94.1455720061957; Wed,
+ 17 Feb 2016 06:41:01 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Wed, 17 Feb 2016 06:40:32 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1602171513140.6516@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286507>
 
-On 02/17, Johannes Schindelin wrote:
-> Hi Peff & Thomas,
+On Wed, Feb 17, 2016 at 9:22 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> I already started a different route locally (nothing to show yet, mostly
+> because I have to write emails and try to triage the bug tracker instead
+> of doing real work *grmbl*): add a rebase--helper and off-load heavy-duty
+> work from the scripts to that helper.
 >
-> On Mon, 15 Feb 2016, Jeff King wrote:
-> > This original is quite confusing. I thought at first that there was
-> > perhaps something going on with allowing repeated re-configuration of
-> > the same remote, as long as some parameters matched. I.e., I am
-> > wondering if there is a case here that does _not_ segfault, that we
-> > would be breaking.
-> >
-> > But reading over fb86e32dcc, I think I have convinced myself that it was
-> > merely an ad-hoc check for "is_configured", and using that function is a
-> > better replacement.
+> There are major benefits to do it that way:
 >
-> Yes, yes, yes. Y'all are absolutely correct. I shoulda added a test case
-> right away, to make sure not only that what I fixed does not get broken in
-> the future, but also to document *what* was fixed, exactly.
+> - we can focus on the really rewarding parts first, i.e. the parts that
+>   make the interactive rebase so painfully slow,
+>
+> - it allows for a painlessly incremental conversion,
+>
+> - if multiple people are interested in working on the conversion, it can
+>   happen in parallel.
+>
+> And probably a few other upsides.
 
-Thanks for confirming and the test case so we don't break it again.
-
-> So, belatedly, here goes a patch that verifies what that commit was
-> supposed to fix, and yes, it passes with Thomas' changes (Junio, would you
-> please apply this on top of tg/git-remote?):
->
-> -- snipsnap --
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Date: Wed, 17 Feb 2016 14:45:59 +0100
-> Subject: [PATCH] t5505: 'remote add x y' should work when url.y.insteadOf = x
->
-> This is the test missing from fb86e32 (git remote: allow adding
-> remotes agreeing with url.<...>.insteadOf, 2014-12-23): we should
-> allow adding a remote with the URL when it agrees with the
-> url.<...>.insteadOf setting.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t5505-remote.sh | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> index 94079a0..19e8e34 100755
-> --- a/t/t5505-remote.sh
-> +++ b/t/t5505-remote.sh
-> @@ -51,6 +51,11 @@ test_expect_success setup '
->  	git clone one test
->  '
->
-> +test_expect_success 'add remote whose URL agrees with url.<...>.insteadOf' '
-> +	git config url.git@host.com:team/repo.git.insteadOf myremote &&
-
-Minor nit: I think we should use test_config here.
-
-> +	git remote add myremote git@host.com:team/repo.git
-> +'
-> +
->  test_expect_success C_LOCALE_OUTPUT 'remote information for the origin' '
->  	(
->  		cd test &&
-> --
-> 2.7.1.windows.2
---
-Thomas
+Now it does sound fun (and probably feel rewarding too), even to GSoC students!
+-- 
+Duy
