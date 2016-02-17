@@ -1,146 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] remote: use remote_is_configured() for add and
- rename
-Date: Wed, 17 Feb 2016 14:54:05 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602171451030.6516@virtualbox>
-References: <1455558150-30267-1-git-send-email-t.gummerer@gmail.com> <1455558150-30267-5-git-send-email-t.gummerer@gmail.com> <20160215183334.GH26443@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/3] rebase: move cleanup code to exit_rebase()
+Date: Wed, 17 Feb 2016 15:03:51 +0100
+Message-ID: <vpqk2m3juwo.fsf@anie.imag.fr>
+References: <vpqio1nsk0q.fsf@anie.imag.fr>
+	<1455716201-29784-1-git-send-email-pclouds@gmail.com>
+	<1455716201-29784-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 17 14:54:45 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+	christian.couder@gmail.com, Johannes.Schindelin@gmx.de
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 15:04:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW2Z3-0007KO-4V
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 14:54:45 +0100
+	id 1aW2i9-000607-BO
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 15:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423184AbcBQNyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 08:54:24 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58555 "EHLO mout.gmx.net"
+	id S1423190AbcBQOEF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Feb 2016 09:04:05 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:35975 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423127AbcBQNyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 08:54:22 -0500
-Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mh5h7-1aJ1sn0IT3-00MNEc; Wed, 17 Feb 2016 14:54:08
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160215183334.GH26443@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:pCyTJXptokJfdbIBHdw2vbHm5TVVSsaQOeSjwk2uR5Sd7/5/lfT
- fYtWzFwIpdNJOg7oHxxisq8lL/DkO4cPF26UEv1JkolDiu8COHVkBY6xqbA/JkXPIpq0c82
- bySn/TU04SdyKXX0MvFCo2JDuKooAk1r5lfLCjVxNs682gGtO5HEC4G4M8LdCGnvgPaPhYB
- O7AH4zQe/NcDJVe2sNkxg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bMnmed6nnW4=:OJipo6yp6W8RCSqPFWNHXP
- 8MZygdACeK37DBrbJe52BL7cW2IvHFjo8yUStj7s7ITU0BCAXGMKMCMsBLoIbdsGONafGcbHz
- WfgyQkXmobpBdzW2nfNhq1fSWbhNwozElacW180OfGafnqHrH77bvMjpdRTL9Pg2FtcuYOKIz
- rHd4IrazUlAEvCrTY830sNrzyqgdafeR+GBgyYae3FVhuvMhdraYptE/3UIy4fGfY0KHy/YvE
- /oy0Ibtb+6Qq/24c6vYIdEqVSf2w63Tvj9GcAlKolExudbq4M2/UKk0bXRDrAI4D2ftVGF++1
- FjA5FxbxjnBfEg1orae52mhwZtVLL7l2RVZBqxLXsWjm4h2o2mmut3xPDOkpxBDino5nqFw5H
- kWtGCki8IoIXK7xZvslfGUChDKdauGIrxytKSSOu7sjC1szGC17365uEZ2i5T02I3lDCdY5ZG
- tNyAzFT85h0hNVHT7MgvCnAdSa5XmKbiAKlOmvnK9FTboma79YSlE0LBTdW68iMMtnaF2SqBb
- j3wZEcZrWlXXfrE177QyovIFxw/p0ww9ic/Uc3qKzg33OMGx8QJbep5I0Ve6UoKD16vlYDBlm
- tvTbzBcBiQ+S06+N/uXuG5yu4HcOd9mbu4ORJaNQ+1348H34tVVvBgvYKKVeOb6YmJLmDcT4h
- NScqNYVJD9BnDtABqrEYpbThS9hSs2Q/mAiukcV7meuzK7rf5uL5QZgr8HoQT9fUfZ6IT8Ot2
- Vk/I8bEq4OQ3lq4yTSl0NdMuMdmLEw6hkexBU1HfutV/aeGH654wxIO6t5TkUnNOOHxrxyr9 
+	id S1423147AbcBQOED (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 09:04:03 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1HE3oZb010524
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 17 Feb 2016 15:03:50 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1HE3pdQ029111;
+	Wed, 17 Feb 2016 15:03:51 +0100
+In-Reply-To: <1455716201-29784-3-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 17
+ Feb 2016 20:36:40 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 17 Feb 2016 15:03:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1HE3oZb010524
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456322635.59541@s5HCIP7Nqft3LGQU7RQCYA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286503>
 
-Hi Peff & Thomas,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-On Mon, 15 Feb 2016, Jeff King wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-> On Mon, Feb 15, 2016 at 06:42:30PM +0100, Thomas Gummerer wrote:
-> 
-> > Both remote add and remote rename use a slightly different hand-rolled
-> > check if the remote exits.  The hand-rolled check may have some subtle
-> > cases in which it might fail to detect when a remote already exists.
-> > One such case was fixed in fb86e32 ("git remote: allow adding remotes
-> > agreeing with url.<...>.insteadOf").  Another case is when a remote is
-> > configured as follows:
-> > 
-> >   [remote "foo"]
-> >     vcs = bar
-> > 
-> > If we try to run `git remote add foo bar` with the above remote
-> > configuration, git segfaults.  This change fixes it.
-> > 
-> > In addition, git remote rename $existing foo with the configuration for
-> > foo as above silently succeeds, even though foo already exists,
-> > modifying its configuration.  With this patch it fails with "remote foo
-> > already exists".
-> 
-> Checking is_configured() certainly sounds like a better test, but...
-> 
-> > diff --git a/builtin/remote.c b/builtin/remote.c
-> > index 981c487..bd57f1b 100644
-> > --- a/builtin/remote.c
-> > +++ b/builtin/remote.c
-> > @@ -186,10 +186,7 @@ static int add(int argc, const char **argv)
-> >  	url = argv[1];
-> >  
-> >  	remote = remote_get(name);
-> > -	if (remote && (remote->url_nr > 1 ||
-> > -			(strcmp(name, remote->url[0]) &&
-> > -				strcmp(url, remote->url[0])) ||
-> > -			remote->fetch_refspec_nr))
-> > +	if (remote_is_configured(remote))
-> >  		die(_("remote %s already exists."), name);
-> 
-> This original is quite confusing. I thought at first that there was
-> perhaps something going on with allowing repeated re-configuration of
-> the same remote, as long as some parameters matched. I.e., I am
-> wondering if there is a case here that does _not_ segfault, that we
-> would be breaking.
-> 
-> But reading over fb86e32dcc, I think I have convinced myself that it was
-> merely an ad-hoc check for "is_configured", and using that function is a
-> better replacement.
+This patch could use a little bit more verbose commit message IMHO. At
+this point it's not completely clear why you need to move this code to
+git--rebase-lib.sh.
 
-Yes, yes, yes. Y'all are absolutely correct. I shoulda added a test case
-right away, to make sure not only that what I fixed does not get broken in
-the future, but also to document *what* was fixed, exactly.
+My understanding is that you want to have this code in the lib.h file t=
+o
+allow the toplevel to "exec" the helpers which does not allow the
+toplevel to do the cleanup afterwards. Hence you need exit_rebase in th=
+e
+lib to call it from each helper.
 
-So, belatedly, here goes a patch that verifies what that commit was
-supposed to fix, and yes, it passes with Thomas' changes (Junio, would you
-please apply this on top of tg/git-remote?):
-
--- snipsnap --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Wed, 17 Feb 2016 14:45:59 +0100
-Subject: [PATCH] t5505: 'remote add x y' should work when url.y.insteadOf = x
-
-This is the test missing from fb86e32 (git remote: allow adding
-remotes agreeing with url.<...>.insteadOf, 2014-12-23): we should
-allow adding a remote with the URL when it agrees with the
-url.<...>.insteadOf setting.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5505-remote.sh | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 94079a0..19e8e34 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -51,6 +51,11 @@ test_expect_success setup '
- 	git clone one test
- '
- 
-+test_expect_success 'add remote whose URL agrees with url.<...>.insteadOf' '
-+	git config url.git@host.com:team/repo.git.insteadOf myremote &&
-+	git remote add myremote git@host.com:team/repo.git
-+'
-+
- test_expect_success C_LOCALE_OUTPUT 'remote information for the origin' '
- 	(
- 		cd test &&
--- 
-2.7.1.windows.2
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
