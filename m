@@ -1,129 +1,97 @@
-From: Edward Marshall <marshallx7a@gmail.com>
-Subject: Windows git bash - child processes see system PATH environment
- variable instead of user...
-Date: Wed, 17 Feb 2016 21:31:30 +0000
-Message-ID: <CAN2vHUFYqKDDEJpGtxJ9aD+8abe-krnHBy7cm1tMm0+bh5ykBQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 13:33:27 -0800
+Message-ID: <xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
+	<xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
+	<vpqziuzdr5r.fsf@anie.imag.fr>
+	<20160217204528.GA22893@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 22:31:36 2016
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Carlos =?utf-8?Q?Mart?= =?utf-8?Q?=C3=ADn?= Nieto 
+	<cmn@dwim.me>, Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 17 22:33:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW9h9-0007iU-Fs
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 22:31:35 +0100
+	id 1aW9j4-0000qc-Pw
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 22:33:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424060AbcBQVbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 16:31:32 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36174 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423542AbcBQVbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 16:31:31 -0500
-Received: by mail-wm0-f48.google.com with SMTP id g62so181714684wme.1
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 13:31:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=k+ApzgGeWzw4GBRtNYt8mJdLNVEJGch1kdC0dSHT8Cc=;
-        b=bTS/06f4jmnzQwuPXPNFWK8KKWTffM4ElfzoBhxejjToYcqMqhAcOi/1cEWwj2nJme
-         q1mka79+8CbKkAw2Fi82iryPq2mJ34Nxhbc1lvrL26gRuo4ld8PtbQrh/ckLTAWhRFdb
-         iSa/ceW/ElFWIBbz29u05ORDq2gN3KnXMovdNsNkDlNBGw1WiZJ9zzlHco8K8T/8p2wG
-         HH2RkSJHfdj+i+1GVq4iljtrYeSNiITinoh/o6/OTBuIfa8usRamhjkzNDeNaZ5x9Yga
-         UAu9sv0weg8bUHWTZE6UHLZ0Kcs0EkDpv6vqy9tSkKQZcrBvoXZHYgZR2EbUdFYGKToZ
-         tD7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=k+ApzgGeWzw4GBRtNYt8mJdLNVEJGch1kdC0dSHT8Cc=;
-        b=AHKrxejvh09YSE5xgOVOtEx/eF3P2mU5R9FZxo/Oc1gyfU3U4OUhQCNNO8NluhCFQb
-         H9a8cjxUh+rN11bQZwGih1C73ERW1MzpN4FL4S7tJhMKfAQhB4EnVk7cePPVnDJ5u0Ex
-         Ew/bSQyGO2AOl+0KMv5faIBZBl9aIO513TMP+Sl/71vSJNW5f1Vti/W8u72b7h2ZCZ7c
-         eN/D5MqDsiLgD62Zwtg0AqoKRfKPON0LF/ymlljZQv7Ji7OE3zjxdjdUCHQOYdPOHc9M
-         2vI+tyA2xI5lK3x0RcQKUYp+pbqwONLE+WcY0gIlCZbHDXKUdeQQPFJgZ3bBo18N127s
-         1RFw==
-X-Gm-Message-State: AG10YOQEVqSglSui52Kq5utSy/3KDoSPUG+pBRkF+m0FW0aC+s/ovR5qqnyf1PaLHzjPaHA6BZpN1lNB+7Yltw==
-X-Received: by 10.28.188.138 with SMTP id m132mr28059618wmf.29.1455744690126;
- Wed, 17 Feb 2016 13:31:30 -0800 (PST)
-Received: by 10.194.102.193 with HTTP; Wed, 17 Feb 2016 13:31:30 -0800 (PST)
+	id S1424307AbcBQVdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 16:33:31 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59175 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423542AbcBQVd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 16:33:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B6FB144AB7;
+	Wed, 17 Feb 2016 16:33:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2CGS8jqzgVoyijNq7ZPM6zlw5Do=; b=JLKBuN
+	kHDnWR12bgI39Jgmr0FnmtMjgqnNsp/+s+nh8oKoDYPNEk0RvIiiqH87Y4Szt6Vn
+	Wz16PCUTp7+jqD+FohSDdSN2QkpL7Ryo3iGc8xeSbu8YMTmRtwjxMH4J9RjaIzy+
+	iLJZhuML4OjJ6rhno5OI7Cr/KEqBxuzJHklfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BaGgo09XE81qq5qPLKB6nPS+ie7aci9D
+	h9yP4dQ8n5kmvC8FIHnnPcPT0QZbM/vv4iM/lBL4I0Whz6y4yWVTd/P+nLIxQXXQ
+	jx0OBnrt2gYLGJe8OXDZPBVcp/y7YEUnAL+WnhE+D6FJa8EYttoEFDmsbi5xavmr
+	XxO0/nliZCo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD1A244AB6;
+	Wed, 17 Feb 2016 16:33:28 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 24F6144AB5;
+	Wed, 17 Feb 2016 16:33:28 -0500 (EST)
+In-Reply-To: <20160217204528.GA22893@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 17 Feb 2016 15:45:28 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1549F4FE-D5BE-11E5-9EFF-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286557>
 
-This happens on my Windows 7 Home Premium x64 SP1 Desktop, but not on
-my Windows 10 Pro x64 laptop.
+Jeff King <peff@peff.net> writes:
 
-Everything used to work fine until I updated my Desktop to the latest
-version of Git (the laptop has the same version but was a totally
-clean install as it is a new laptop)
+> On Wed, Feb 17, 2016 at 09:21:20PM +0100, Matthieu Moy wrote:
+>
+>> > I am wondering if we heard from libgit2 folks if they want us to
+>> > host them (or they want to participate in GSoC at all).
+>> 
+>> The libgit2 mention is left from previous versions of this page. I left
+>> a message on their IRC channel asking to join this thread if people were
+>> interested (I don't know the libgit2 community really well, and I didn't
+>> find a mailing-list to Cc here). 
+>> 
+>> I did not hear anything from them. We should probably remove the mention
+>> of libgit2. Or, if anyone receiving this message is interested in having
+>> libgit2 participate, or knows anyone who may be, speak now.
+>
+> I think they do a lot of their communication via GitHub issues. I've
+> cc'd Carlos, the maintainer, who can ping the rest of the community as
+> appropriate.
+>
+> I don't think we did a libgit2 project last year, and included the
+> libgit2 references mainly so that we would not drop them with zero
+> warning.
 
-Edward@Edward-PC MINGW64 /f/Work
-$ echo $PATH
-...(USER PATH)...
-
-Edward@Edward-PC MINGW64 /f/Work
-$ cmd
-Microsoft Windows [Version 6.1.7601]
-Copyright (c) 2009 Microsoft Corporation. All rights reserved.
-
-F:\Work>echo %PATH%
-echo %PATH%
-...(SYSTEM PATH)...
-
-The same is true of any child process (e.g. node.js) - they all see
-SYSTEM PATH now instead of USER PATH.
-I have tried clean reinstalling git.
-I have tried both the 64-bit and 32-bit versions of git.
-
-Used Process Explorer to investigate the environment of the processes
-on the 2 machines. The only significant difference I can see is the
-PATH variable in cmd.exe.
-
-If I double-click bash.exe (instead of the shortcut to git-bash.exe)
-then the user PATH is seen by child processes.
-Double clicking git-bash.exe, still has the problem.
-Running bash -l from a cmd window, has the problem.
-
-Run bash.exe, then
-sh
-echo $PATH
-// Shows user path
-cmd
-echo %PATH%
-// Now shows system path
-So bash saw user path, sh saw user path but then cmd was passed the
-system path?!
-
-Run bash.exe followed by cmd, cmd, cmd, etc - cmd always sees user path.
-So bash -l and sh both see user path but then only forward system path
-to child processes...
-
-sh definitely used to work as well as the git bash shortcut (I know
-because I run git bash > grunt > sh and that now sees the
-wrong/incomplete path when before it was working fine)
-
-I have spent most of this frustrating day trying to figure out what is
-going wrong but do not have a clue.
-
-I have no .bashrc or .bash_profile files on either system (no idea
-what these are for but a colleague was trying to help diagnose the
-problem - they ultimately came up empty).
-As far as I can tell the 2 systems are set up exactly the same (apart
-from the different Windows versions of course).
-Path length is not an issue as the (working) laptop has a huge path
-whereas the (not working) desktop has less than 500 characters.
-
-Unfortunately I don't know what version of git I had before, and older
-versions aren't offered for download so I can't trial and error.
-Really wishing I hadn't upgraded!
-
-Any assistance would be much appreciated as I am totally pulling my
-hair out now.
-
-Many thanks and kind regards,
-
-Edward Marshall
+Understandable.  I do not mind seeing us hosting them if that is
+what they want, but the candidate selection and mentor assignment
+between two more-or-less independent projects would not work very
+well unless there is _some_ degree of coordination ;-)
