@@ -1,91 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
-Date: Tue, 16 Feb 2016 16:28:10 -0800
-Message-ID: <xmqq37sskwo5.fsf@gitster.mtv.corp.google.com>
-References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
-	<1455649215-23260-3-git-send-email-Karthik.188@gmail.com>
-	<20160216192231.GA16567@sigill.intra.peff.net>
-	<CAPig+cTiwHs+dD+jqAp8SNkwjQ2OzDsC8yopRgF7gctrGi5uUw@mail.gmail.com>
-	<20160216204954.GC27484@sigill.intra.peff.net>
-	<CAPig+cQDs35Uirm5cG552tR8iCFOstNJoOzLCZiXCgnq+g7MRQ@mail.gmail.com>
-	<20160216223451.GB9014@sigill.intra.peff.net>
-	<CAPig+cS+i5QfpUbs8T+CqcDkC4ybaTygE9bguiqQMNgV4JhDOQ@mail.gmail.com>
-	<20160216231811.GA18634@sigill.intra.peff.net>
-	<xmqqbn7gkxev.fsf@gitster.mtv.corp.google.com>
-	<20160217002215.GA1187@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] pager: factor out a helper to prepare a child
+ process to run the pager
+Date: Tue, 16 Feb 2016 19:32:15 -0500
+Message-ID: <20160217003215.GC1187@sigill.intra.peff.net>
+References: <1455664017-27588-1-git-send-email-gitster@pobox.com>
+ <1455664017-27588-3-git-send-email-gitster@pobox.com>
+ <20160216232657.GB18634@sigill.intra.peff.net>
+ <xmqqk2m4kyfw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 17 01:28:28 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 01:32:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aVpyi-0002F2-D6
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 01:28:24 +0100
+	id 1aVq2X-0005Lz-VC
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 01:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933545AbcBQA2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Feb 2016 19:28:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64740 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933537AbcBQA2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Feb 2016 19:28:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 609D14464D;
-	Tue, 16 Feb 2016 19:28:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WRSRyr3nvZZGCszOF+bPteFdU2s=; b=JhaDkC
-	U9NsreRvgVwXQQhx12A78JexKtHRFZdjeUqWzjVzNFZwq8JHumHl2uH90inl8IuE
-	GXk8y7VLa7SGwEMrc7luhROQq/YlWajxGrAaQUtJx2PUPr7qG82hEHIfoh4P3Z1N
-	XsCcOjo7BkLUz/ES/kWLG17C67GDFXhlhanWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WSyWjtndFisWxnv5kwWFycjhcli3+aXB
-	UkfRXQr84HxfXzP6os+0SzuYSP6ItHGFGvcrYw4xF2CTm6sACzsl96ld/Yq29vZg
-	ti4qyWY+URKx/3cUd7ZBQheefIUzKe7J/aqnY3ERamFeQQdGNR/vVm6p8SwO8sJ5
-	5Avg660Y5/Y=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 581C44464C;
-	Tue, 16 Feb 2016 19:28:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E048F4464B;
-	Tue, 16 Feb 2016 19:28:11 -0500 (EST)
-In-Reply-To: <20160217002215.GA1187@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 16 Feb 2016 19:22:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 53A592AA-D50D-11E5-AD0C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933488AbcBQAcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Feb 2016 19:32:18 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43767 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933422AbcBQAcR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Feb 2016 19:32:17 -0500
+Received: (qmail 11687 invoked by uid 102); 17 Feb 2016 00:32:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 19:32:17 -0500
+Received: (qmail 1031 invoked by uid 107); 17 Feb 2016 00:32:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Feb 2016 19:32:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Feb 2016 19:32:15 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqk2m4kyfw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286467>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Feb 16, 2016 at 03:49:55PM -0800, Junio C Hamano wrote:
 
-> On Tue, Feb 16, 2016 at 04:12:08PM -0800, Junio C Hamano wrote:
->
->> > To be honest, though, I am now on the fence, considering the possible
->> > whitespace issue.
->> 
->> Certainly not having to see s[0]->buf over and over is a huge win ;-).
->> 
->> Is the "whitespace issue" a big deal?  Does it involve more than a
->> similar sibling to string_list_split() that trims the whitespace
->> around the delimiter (or allows a regexp as a delimiter "\s*,\s*")?
->
-> I think that solution would work (and IMHO would actually be preferable
-> to the split-then-trim that strbuf_split does). But it does mean writing
-> new code.
+> > And if you put the git_pager() call inside prepare_pager_args (which I
+> > agree would be cleaner), we just have:
+> >
+> >   void prepare_pager_args(struct child_process *pager_process);
+> >
+> > which is pretty self-explanatory (though it might need a new name; I'd
+> > be tempted to call it init_pager_process() or something, and actually
+> > have it do the child_process_init() to make sure it is working with a
+> > sane clean slate).
+> 
+> Conceptually I am on the same page, but I am not sure how well that
+> interacts with what "git am -i" codepath wants to do, though.
+> 
+> One big difference between the "we'll feed our output to pager"
+> codepath and "we'll spawn a pager to let a file on the filesystem be
+> read" codepath is that the former needs to call git_pager() and
+> check the NULL-ness of the return value to decide that it does not
+> want to spawn a pager and let the standard output just go straight
+> to the outside world.  The latter, on the other hand, does want to
+> spawn something to cause the file to be presented to the end user
+> even git_pager() returns NULL.
+> 
+> And that is why I didn't make this helper call git_pager() itself.
 
-True, but only when we decide to support trimming the whitespace,
-which can come later.
+That makes sense. I didn't dig into it carefully. I saw the "pager=cat"
+thing in the context of your diff to git-am, and assumed it was weird
+fallback that should be done by the regular pager infrastructure. But
+it's the exact thing you're talking about here.
 
-I do not even know if it is wise to accept %(align:position=left, width=4)
-when %(align:position=left,width=4) would do the job just fine.
+So of all of the things I suggested, I think the non-varargs one that
+takes "pager" as a string makes the most sense.
+
+-Peff
