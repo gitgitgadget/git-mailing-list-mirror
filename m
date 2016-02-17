@@ -1,95 +1,107 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Wed, 17 Feb 2016 17:04:09 +0100
-Message-ID: <CAP8UFD2OY_QMqvEew5+V+P4653REm_P0R4_JiwwBfo0O6727Xw@mail.gmail.com>
-References: <vpqoabox66p.fsf@anie.imag.fr>
-	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
-	<vpqd1s2e74l.fsf@anie.imag.fr>
-	<20160212130446.GB10858@sigill.intra.peff.net>
-	<vpqd1s04zzs.fsf@anie.imag.fr>
-	<CAGZ79kbUG73eo5YvedbVB0bmZduMeCWNpbCRK4Adr9XDebsbQQ@mail.gmail.com>
-	<alpine.DEB.2.20.1602171353260.6516@virtualbox>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] remote: use remote_is_configured() for add and
+ rename
+Date: Wed, 17 Feb 2016 17:20:47 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602171720130.3152@virtualbox>
+References: <1455558150-30267-1-git-send-email-t.gummerer@gmail.com> <1455558150-30267-5-git-send-email-t.gummerer@gmail.com> <20160215183334.GH26443@sigill.intra.peff.net> <alpine.DEB.2.20.1602171451030.6516@virtualbox> <20160217142455.GC1831@hank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 17 17:04:17 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 17:21:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW4aO-0003tK-Jz
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 17:04:16 +0100
+	id 1aW4qp-0000Bb-2h
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 17:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424175AbcBQQEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 11:04:13 -0500
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:34846 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1424172AbcBQQEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 11:04:11 -0500
-Received: by mail-lb0-f172.google.com with SMTP id bc4so12205208lbc.2
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 08:04:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4n9mCeC50xVcUB5CyHEQPe/gMRVPjbDQYo+xoDwVXOU=;
-        b=0ebLq2ZttSztoruJX5zF0E+LOlez4nY7HR+8KS/s7ASBG4njtJoCp6Q7dPcLZOs6OP
-         2/RnsFknGWVIIuY0yBMuXPYLIpcpR2F1Y9iTLhMc5VhdPsnCUNROWyGEbyBCT0ZS7Tov
-         TBSX66qegQfjnhGCBrdtSi6pQXDWr8tQq1FbKgHdAQ/s4w3DXm3TSUL9jNKbRA7XNOYz
-         5UB3Vh8KehP2o6eBwvGgDgcuZUF8ioMkXTCpWRVrpPLrZnySGWagfjyrwRHxs3TPWkuh
-         +keotW9L3JW8pZn7YsJvBhxdVZ+NVAz3yaobuEl5RE/glSGmiSTKkBjpLzpTjcWGPBou
-         cbhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=4n9mCeC50xVcUB5CyHEQPe/gMRVPjbDQYo+xoDwVXOU=;
-        b=N5tWtB3RRuq8+JOIiSIuRmEVtFCDcBkCHYaeleHdYl94j6a1EIdWWLsAB7uYUNxLmk
-         ypXcYCITn1V9/3ka/RLH4ncuchdtnYjvJukqVY5sRvp15U2Waf70+8+i3s+0agHlDv22
-         dC4P2l84a8Gd0lLzcsdT52ODxtwHXajsDV2KEfhM/t7odbNo+zHxfMusMOUV3mUKV3gh
-         0aikNcOl8Bh9QrBSoECoaVsL2r6DvkxLAzooi6cL+GSPmTifkLbNGuaK2p3GeUS9R+si
-         iL8mntl/s2WH9lvaG2vTyRreDZ/gJxTRblVYMAX7K39EUU0dVELcNSTyWFa6T3gSxim+
-         oHeQ==
-X-Gm-Message-State: AG10YOT/zbdlQCMsihL4t22xwws+3/a0CLsCBnCFIMpKzJI8eICMVXq1NfgptqkenLoMxhC+UCoROilR6M/RGA==
-X-Received: by 10.112.211.168 with SMTP id nd8mr1144937lbc.116.1455725050012;
- Wed, 17 Feb 2016 08:04:10 -0800 (PST)
-Received: by 10.25.152.199 with HTTP; Wed, 17 Feb 2016 08:04:09 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1602171353260.6516@virtualbox>
+	id S1161828AbcBQQVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 11:21:09 -0500
+Received: from mout.gmx.net ([212.227.17.21]:54006 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161193AbcBQQVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 11:21:08 -0500
+Received: from virtualbox ([37.24.143.97]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M0tr1-1Zh7ks1Wox-00v81v; Wed, 17 Feb 2016 17:20:49
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160217142455.GC1831@hank>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:+D3U44KBl4eLycPQT4lpLJV1IBkRGR5fEFOQHFa5aP2WJWCENXY
+ 7n7ujElmFmo2QQjouaV3zAjBpqOgBynQVISRMWcmfa3pIlGC9n/dBld6IR+fhd0smYfP0DY
+ fXjt0Tzd6wCvygy1DSRomDFrdJZ2DM3lrMr4cgjBoJBIcdiPslXAdSGojZXV77ILH/N0470
+ d9EH08sFRsmJ3Z1AtNAqQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5HCUNS4sI5Q=:4qGYzBeNWObirmbwAPQf5V
+ gYmi+YCI4tRtOIc0ZOuF/BfrrOsTTDiZvlcu25epdsi3by3Lw2SYAxhCJ743SUI1I8zyCQumQ
+ hQDTzQ2j8W1lHS5EwHhWn7WPLnWLCK9Q8u/beEQJZiKMDJ+gI9mK2Uz80dpLK4+TeXO4ovcWz
+ rWYjDYCpbiSQO2y5/aEKxSSiBPCwVh3dpqSOOG+fjaP0V8SEtJBtOXMX07e5fBDDp3BZ/3JJK
+ Id8EawdvPNxfOoxSdgeOgQo2vl3lh8SiaOLKEEC42tRnqnh1zbwnrlW6yrpJligRoDH7OFCg8
+ 6z4EhcDyHDWkZ+RHTrOeHmHDshOdkue8r3O4FQFNujsmWyNjcO5FptC2dv9bMI8PkhSaF7WkV
+ 69lN0Y3caq9f5CjI8hRm7GODHm4kmsdhA6uXQ3Fi711Iy2ZDNrDGvvazO1b6g/i6DiFpPCo9P
+ vzW6hQoEv7Ei5A5d07Md6Nux7T2vSRSnujior6QHERpJmBQBVFq3ZfjT4Z3Xmz1X8aKyLQEGt
+ IKC8OQMcMlFIpA9wsjLDBn3jXxQMD2/E3MnBZx0x48KSDNFDFZDwdWHyf6dbIy8Ed1OVTZN62
+ ichGZclcKWQyLIUO6e6wKr0baOKp1lg+v6tTU8s+HFmnfs0KgKswRFJy+DmzQqjMaQdP/RTZC
+ KZmSpJwYvQ0cAfb0Z19AKRwawiptJv/kG1wgucLJZmWAJ190dp2j4FgtNseWB6j0ZQi95Fvrt
+ FBiYpRGF7hnawL5w1TVwt8wIa0tKDZ6fS5JxSZt4p16VyXjFZxxt8WQqLdpKNDytLMSW8xDk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286509>
 
-Hi Johannes,
+Hi Tomas,
 
-On Wed, Feb 17, 2016 at 2:09 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
->> Then there is also git-bisect.sh with nearly 700 lines, which is also
->> not as easy.
->
-> Nothing is easy, but bisect has a much better chance to be finally
-> converted into a builtin: there is already a bisect--helper builtin, and
-> all we need to do is to move more parts over, piece by piece. It does not
-> even have to be a complete rewrite.
+On Wed, 17 Feb 2016, Thomas Gummerer wrote:
 
-I don't know which has a better chance to be finally converted, but
-it's true that for bisect, the bisect--helper builtin could help, and
-it can be done piece by piece.
+> On 02/17, Johannes Schindelin wrote:
+> >
+> > diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> > index 94079a0..19e8e34 100755
+> > --- a/t/t5505-remote.sh
+> > +++ b/t/t5505-remote.sh
+> > @@ -51,6 +51,11 @@ test_expect_success setup '
+> >  	git clone one test
+> >  '
+> >
+> > +test_expect_success 'add remote whose URL agrees with url.<...>.insteadOf' '
+> > +	git config url.git@host.com:team/repo.git.insteadOf myremote &&
+> 
+> Minor nit: I think we should use test_config here.
 
+Good point.
 
-> I count 22 functions with bisect_start and bisect_replay being the obvious
-> elephants. Personally, I would recommend starting with bisect_next_check
-> (which would imply get_terms and bisect_voc, of course). It could even be
-> a mini project for a prospective student.
+-- snipsnap --
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Wed, 17 Feb 2016 14:45:59 +0100
+Subject: [PATCH] t5505: 'remote add x y' should work when url.y.insteadOf = x
 
-Not sure it is small enough for a mini project, but sure it is a good
-choice to start with.
+This is the test missing from fb86e32 (git remote: allow adding
+remotes agreeing with url.<...>.insteadOf, 2014-12-23): we should
+allow adding a remote with the URL when it agrees with the
+url.<...>.insteadOf setting.
 
-Thanks,
-Christian.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t5505-remote.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 94079a0..949725e 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -51,6 +51,11 @@ test_expect_success setup '
+ 	git clone one test
+ '
+ 
++test_expect_success 'add remote whose URL agrees with url.<...>.insteadOf' '
++	test_config url.git@host.com:team/repo.git.insteadOf myremote &&
++	git remote add myremote git@host.com:team/repo.git
++'
++
+ test_expect_success C_LOCALE_OUTPUT 'remote information for the origin' '
+ 	(
+ 		cd test &&
+-- 
+2.7.1.windows.2
