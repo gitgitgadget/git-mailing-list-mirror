@@ -1,192 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/20] raceproof_create_file(): new function
-Date: Wed, 17 Feb 2016 11:38:26 -0800
-Message-ID: <xmqqvb5ni0ul.fsf@gitster.mtv.corp.google.com>
-References: <cover.1455626201.git.mhagger@alum.mit.edu>
-	<338201e98a16f6c53ed1ee447de10c206f2acc33.1455626201.git.mhagger@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 21:21:20 +0100
+Message-ID: <vpqziuzdr5r.fsf@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
+	<xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 17 20:38:35 2016
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 21:21:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW7vm-0002dx-Rt
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 20:38:35 +0100
+	id 1aW8bX-0002XD-8p
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 21:21:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965366AbcBQTia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 14:38:30 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58315 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965237AbcBQTi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 14:38:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC86B42A78;
-	Wed, 17 Feb 2016 14:38:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H3m1JF7yarEnOuNslHVa8Xzc5P8=; b=QOJGSZ
-	zykILX/djrHphaMevvyaKK7EwGV3VrqRdVELwAwTlgjvpuQw09jGHoW+ZR8EalQH
-	pIcbdVAYSHUwac8LY3ebXYyx6zciFr1x8zIbMFfe7XuOrymk0LR+KeZGZ447Xa53
-	A+Ida6CmNdBpYTRCf51A9SXUSeYYaawLj984Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=akPXYSTWybn+YD0X0nxX3H6LcIv3vhrq
-	Vo0N+zFZQ0dxnFnLYx7HoegJAYXTiQ3b0rZ5+KQDHKn4HsSnGRhmzqSD/xdwYmnh
-	a/+Zlkug1Y2UARV3NXwwAmSWhA+ngvrxUl6DOth7hkua1D92G9BwiyE6x7BVi7O8
-	GGdU9zoNOUA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A31F042A77;
-	Wed, 17 Feb 2016 14:38:28 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C70A342A76;
-	Wed, 17 Feb 2016 14:38:27 -0500 (EST)
-In-Reply-To: <338201e98a16f6c53ed1ee447de10c206f2acc33.1455626201.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Tue, 16 Feb 2016 14:22:16 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0454268E-D5AE-11E5-9911-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S965513AbcBQUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 15:21:39 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:41187 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965483AbcBQUVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 15:21:38 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1HKLItE012282
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 17 Feb 2016 21:21:18 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1HKLKnc003888;
+	Wed, 17 Feb 2016 21:21:20 +0100
+In-Reply-To: <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 17 Feb 2016 11:03:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 17 Feb 2016 21:21:20 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1HKLItE012282
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456345283.59225@Qj0k+Wp0/F2PWfyxRD1+sg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286543>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I was thinking about moving this function, along with
-> safe_create_leading_directories() and
-> safe_create_leading_directories_const(), to a more general module like
-> path.c. But it didn't seem worth the code churn.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Feel free to start writting an idea for
+>> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+>> ideas before Friday. We can polish them later if needed.
+>
+> The top of the page says it is shared between Git and libgit2;
+> should that be really the case?  We later say we only have capacity
+> for two mentors, but the mentor pool capacity is not shared between
+> two projects.
+>
+> I am wondering if we heard from libgit2 folks if they want us to
+> host them (or they want to participate in GSoC at all).
 
-I think it would be a better longer-term endgame state, but let's
-not do that within this 20-patch series until it stabilizes.
+The libgit2 mention is left from previous versions of this page. I left
+a message on their IRC channel asking to join this thread if people were
+interested (I don't know the libgit2 community really well, and I didn't
+find a mailing-list to Cc here). 
 
-> diff --git a/cache.h b/cache.h
-> index 7d3f80c..6e53cc8 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -976,6 +976,22 @@ enum scld_error {
->  enum scld_error safe_create_leading_directories(char *path);
->  enum scld_error safe_create_leading_directories_const(const char *path);
->  
-> +typedef int create_file_fn(const char *path, void *cb);
+I did not hear anything from them. We should probably remove the mention
+of libgit2. Or, if anyone receiving this message is interested in having
+libgit2 participate, or knows anyone who may be, speak now.
 
-What kind of guarantee is a callback function of this type expected
-to give to the caller?  Is being idempotent necessary?  etc.
-
-What is the callback function expected to signal the caller and how?
-How is its return value used?  I am guessing that returning zero
-signals success and any non-zero means a failure?
-
-> +/*
-> + * Create a file at path using fn, creating leading directories if
-> + * necessary. If fn fails with errno==ENOENT, then try to create the
-> + * containing directory and call fn again. If fn fails with
-> + * errno==EISDIR, then delete the directory that is in the way if it
-> + * is empty and call fn again. Retry a few times in case we are racing
-> + * with another process that is trying to clean up the directory
-> + * that contains path.
-> + *
-> + * In any case, the return value of this function and the errno that
-> + * it sets are those resulting from the last call of fn.
-> + */
-> +int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
-
-Neat-o.  As long as the error comes from filesystem atomic system
-calls, the approach sounds like a good way to go.
-
-> diff --git a/sha1_file.c b/sha1_file.c
-> index a1ac646..31dcfe8 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -177,6 +177,75 @@ enum scld_error safe_create_leading_directories_const(const char *path)
->  	return result;
->  }
->  
-> +int raceproof_create_file(const char *path, create_file_fn fn, void *cb)
-> +{
-> +	/*
-> +	 * The number of times we will try to remove empty directories
-> +	 * in the way of path. This is only 1 because if another
-> +	 * process is racily creating directories that conflict with
-> +	 * us, we don't want to fight against them.
-> +	 */
-> +	int remove_directories_remaining = 1;
-> +
-> +	/*
-> +	 * The number of times that we will try to create the
-> +	 * directories containing path. We are willing to attempt this
-> +	 * more than once, because another process could be trying to
-> +	 * clean up empty directories at the same time as we are
-> +	 * trying to create them.
-> +	 */
-> +	int create_directories_remaining = 3;
-> +
-> +	/* A scratch copy of path, filled lazily if we need it: */
-> +	struct strbuf path_copy = STRBUF_INIT;
-> +
-> +	int save_errno;
-> +	int ret;
-> +
-> +retry_fn:
-> +	ret = fn(path, cb);
-> +	save_errno = errno;
-> +	if (!ret)
-> +		goto out;
-> +
-> +	if (errno == EISDIR && remove_directories_remaining > 0) {
-> +		/*
-> +		 * A directory is in the way. Maybe it is empty; try
-> +		 * to remove it:
-> +		 */
-> +		if (!path_copy.len)
-
-Perhaps assert(path[0]) is needed at the beginning of this function?
-
-
-> +			strbuf_addstr(&path_copy, path);
-> +
-> +		if (!remove_dir_recursively(&path_copy, REMOVE_DIR_EMPTY_ONLY)) {
-
-We do want to pass empty-only, but are there cases where the caller
-may want to pass more flags, e.g. keep-toplevel?
-
-> +			remove_directories_remaining--;
-> +			goto retry_fn;
-> +		}
-> +	} else if (errno == ENOENT && create_directories_remaining > 0) {
-> +		/*
-> +		 * Maybe the containing directory didn't exist, or
-> +		 * maybe it was just deleted by a process that is
-> +		 * racing with us to clean up empty directories. Try
-> +		 * to create it:
-> +		 */
-> +		enum scld_error scld_result;
-> +
-> +		if (!path_copy.len)
-> +			strbuf_addstr(&path_copy, path);
-> +
-> +		do {
-> +			create_directories_remaining--;
-> +			scld_result = safe_create_leading_directories(path_copy.buf);
-> +			if (scld_result == SCLD_OK)
-> +				goto retry_fn;
-> +		} while (scld_result == SCLD_VANISHED && create_directories_remaining > 0);
-> +	}
-> +
-> +out:
-> +	strbuf_release(&path_copy);
-> +	errno = save_errno;
-> +	return ret;
-> +}
-> +
->  static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
->  {
->  	int i;
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
