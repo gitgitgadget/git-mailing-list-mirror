@@ -1,82 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/3] config: add '--show-origin' option to print the origin of a config value
-Date: Wed, 17 Feb 2016 08:39:17 -0800
-Message-ID: <xmqqmvqzjnpm.fsf@gitster.mtv.corp.google.com>
-References: <1455531466-16617-1-git-send-email-larsxschneider@gmail.com>
-	<1455531466-16617-4-git-send-email-larsxschneider@gmail.com>
-	<CAPig+cS=TtVGTxo0oHny4GpAAaej93T2kP93upfHtPMkAd7V0g@mail.gmail.com>
-	<DC5B6F35-CBB5-4DC4-A875-275BF072AD91@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
+Date: Wed, 17 Feb 2016 22:28:24 +0530
+Message-ID: <CAOLa=ZSgt=+OnSQsDvp0S5yKNekZ0XF4D1OncfyH4152Nvf6QQ@mail.gmail.com>
+References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
+ <1455649215-23260-3-git-send-email-Karthik.188@gmail.com> <20160216192231.GA16567@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 17 17:39:28 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 17 17:58:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW58P-00066h-Ck
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 17:39:25 +0100
+	id 1aW5RK-0004Xb-SD
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 17:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423935AbcBQQjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 11:39:21 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64658 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1422903AbcBQQjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 11:39:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 85DCA3E487;
-	Wed, 17 Feb 2016 11:39:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sNrL8iAyjhSPl1QnntXNAgWZgSU=; b=CnfSf5
-	7Lt80djjgBJysNFnGgbXHOPZL1uyNMUO/CeuOJT6N6cE8lQA7Py5/CZSlppjqLZn
-	pgH186ceHuM1mtaCHnU3HQsRYTwNx5aZdwnW9Dzm4m6X/QhW1snII2egT79VUTBT
-	mFHcMeO+6M/P7/O86ttCAkep3gNt/6clKxgwo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fyZnACiHXd4MgpJvW5JoHBbcAb6GXvkt
-	HODAxzcqkk+IIXp3XrVNr5WrlKu9NivNHomtzmEOTj8PtnWDqUIgfckVZWDw6I4P
-	yVov1nwk3BSP9RldIFNGScGsDsgLUP+J4tlxmaodBqWL4u89kJGRClnxmWzE/jhQ
-	rBq80VFhg2w=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7D38C3E486;
-	Wed, 17 Feb 2016 11:39:19 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F0AEB3E485;
-	Wed, 17 Feb 2016 11:39:18 -0500 (EST)
-In-Reply-To: <DC5B6F35-CBB5-4DC4-A875-275BF072AD91@gmail.com> (Lars
-	Schneider's message of "Wed, 17 Feb 2016 09:32:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FD913472-D594-11E5-A816-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1030442AbcBQQ6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 11:58:55 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:35015 "EHLO
+	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030335AbcBQQ6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 11:58:54 -0500
+Received: by mail-vk0-f53.google.com with SMTP id e6so19992193vkh.2
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 08:58:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NiTwJF0+8lMnAOVYjwCLGvMxObtNSB8Ob0xEk56quX4=;
+        b=MdpcUu4eAP+9JDcpIEFlkQSzEJOZbRP/QbDqiK8U3URcokd1Missrd1BQ0xIAMvdjV
+         8MteO4zF/Kzrr/urxaLODi+tZbHoKbmMJG6v7XvCAmz6fyjJy8Gh2fgy40PQO9D9qRzN
+         66gY+UvDHdSxDD2JDk+bqjxo9oXc5uAnnP+PxK2KMKqzedHs+VNUmjligJGlFqteuAqQ
+         uVIlNyjHX26sGuTIQ7c0i0ZdJqNEeWJznkp4O1+oLGDCwcfq8/StOWrCdaQzw1VhCUq7
+         eS8pwle5G/TRmGnvuAzz7vYuBX7TwhAFu9TE8EsaED3SoRDzf8GfTuT1YpDToytV1JEg
+         BRRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=NiTwJF0+8lMnAOVYjwCLGvMxObtNSB8Ob0xEk56quX4=;
+        b=BYyZu5762ontfaD8EaKjy10wyt16hgaU32JtQUxrXNixRYe+yWuWrxkk4fNoPt0V76
+         pVPe6yQad9gncN+W1GVJD1TuVzA1TI1lU5DnW6USm0AtJavIMGbcXpwHP30MjF2g8R51
+         WRVyriAPHAMeP+EwwZw4xHAFAPuIsrxHBq4JyEqR54nAt/GZtaURyThWLnttl6JCKOnd
+         j8vDVQJ4VtuLuF0uXDkldqt4sknJJkvHM/AgvoTFcncKBsd68hvWmHFRkb/i4xrliYv6
+         I5HOCQJQ9tmpqX9N3agfqzV/Sgd/la8Ijev64XsjURxzUwAUEV58Kre3WR29ZXlwtZe2
+         UlOw==
+X-Gm-Message-State: AG10YOSxPASKeUxFBneD/OCi1sMb+hT+1I2zhKdvjY+LxLPXSzi3wCtAbbukRUtpbTwXCrS2gPpTZfRJNKaZYg==
+X-Received: by 10.31.16.37 with SMTP id g37mr1978049vki.106.1455728333523;
+ Wed, 17 Feb 2016 08:58:53 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Wed, 17 Feb 2016 08:58:24 -0800 (PST)
+In-Reply-To: <20160216192231.GA16567@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286511>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
->> There is no need for this patch series to address this anomaly; it's
->> perhaps low-hanging fruit for someone wanting to join the project. The
->> only very minor wrinkle is that we'd still need to recognize --null as
->> a deprecated (and undocumented) alias for --nul.
+On Wed, Feb 17, 2016 at 12:52 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 17, 2016 at 12:30:05AM +0530, Karthik Nayak wrote:
 >
-> Does the list have a place to document these ideas for newbies to be found?
+>> Use the newly introduced strbuf_split_str_omit_term() rather than
+>> using strbuf_split_str() and manually removing the ',' terminator.
+>>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+>> ---
+>>  ref-filter.c | 9 +--------
+>>  1 file changed, 1 insertion(+), 8 deletions(-)
+>
+> Did you consider just using string_list_split for this? AFAICT, you
+> don't care about the results being strbufs themselves, and it would do
+> what you want without having to bother with patch 1. The result would
+> look something like the patch below.
+>
 
-I do not know of one offhand, but if somebody (or like-minded group
-of people) starts to collect one, I am sure it would be very much
-appreciated.
+I haven't, thanks for bringing it up :)
 
-A search for "low hanging fruit" and "hint hint" in the list archive
-used to work well as a first-order approximation; using these
-keywords takes conscious effort on those who write them, though ;-).
+> Sorry to waltz into a review of v5 with a suggestion to throw out all
+> the work done in previous iterations. :-/ I just think the strbuf_split
+> interface is kind of clunky and I'd be happy if we could slowly get rid
+> of it rather than growing it. Maybe that's not realistic, though (some
+> of the callsites _do_ want to do things like strbuf_trim() after
+> splitting).
+>
+> -Peff
+
+That's fine, as I see it, it's better to wait a while and get a better version
+of something.
+
+-- 
+Regards,
+Karthik Nayak
