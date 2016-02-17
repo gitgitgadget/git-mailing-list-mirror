@@ -1,69 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/20] lock_ref_sha1_basic(): use raceproof_create_file()
-Date: Wed, 17 Feb 2016 12:44:28 -0800
-Message-ID: <xmqqr3gbhxsj.fsf@gitster.mtv.corp.google.com>
-References: <cover.1455626201.git.mhagger@alum.mit.edu>
-	<77c2b6f72b55943a0097d81196f520a7fe890310.1455626201.git.mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Wed, 17 Feb 2016 15:45:28 -0500
+Message-ID: <20160217204528.GA22893@sigill.intra.peff.net>
+References: <vpqoabox66p.fsf@anie.imag.fr>
+ <20160217172407.GD1831@hank>
+ <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+ <vpqh9h7f9kz.fsf@anie.imag.fr>
+ <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
+ <vpqziuzdr5r.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 17 21:44:36 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 17 21:45:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW8xf-0003WX-Oz
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 21:44:36 +0100
+	id 1aW8yd-0004Hi-Dl
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 21:45:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422806AbcBQUoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 15:44:32 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62794 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030267AbcBQUob (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 15:44:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4484443D9A;
-	Wed, 17 Feb 2016 15:44:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DHB6/2HA5D8E9uSeX+5GnWkCja0=; b=GKSv1l
-	t3cMz4wLZutTkZhXI0us4Oz1DDHKQUcl8dsXVkQEoIEOSNSIR+EicE3vF04mvo1K
-	Tse+jgyWyumKyDopH809VSAuLHvffS3WorNEP8iwzu0QvQkiQ+ZXEvLPH+DmP+h9
-	YlD4/IF0GNn9dEaEknCFZCGCiSNkkq47RAPrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hvhsH/Xzhaj90mmHqbFHuhgQgz1ypefy
-	yNMlGhDklBelSpHLKM2wE/DAFSBm9wVF5r7m/earcA9jINjJOFf7jBsWBZNCDoFP
-	g3vowxr3DLNsHiKTriDIJuALOttQOIQdroW4eQT0/eculgHFraeEPDZHB3kXu9ky
-	KxUomlercg4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B93D43D99;
-	Wed, 17 Feb 2016 15:44:30 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF07A43D97;
-	Wed, 17 Feb 2016 15:44:29 -0500 (EST)
-In-Reply-To: <77c2b6f72b55943a0097d81196f520a7fe890310.1455626201.git.mhagger@alum.mit.edu>
-	(Michael Haggerty's message of "Tue, 16 Feb 2016 14:22:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3DD85A20-D5B7-11E5-A16B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1423348AbcBQUpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 15:45:32 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44370 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422950AbcBQUpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 15:45:31 -0500
+Received: (qmail 8905 invoked by uid 102); 17 Feb 2016 20:45:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Feb 2016 15:45:30 -0500
+Received: (qmail 12013 invoked by uid 107); 17 Feb 2016 20:45:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 Feb 2016 15:45:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Feb 2016 15:45:28 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqziuzdr5r.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286547>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Wed, Feb 17, 2016 at 09:21:20PM +0100, Matthieu Moy wrote:
 
-> Instead of coding the retry loop inline, use raceproof_create_file() to
-> make lock acquisition safe against directory creation/deletion races.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
+> > I am wondering if we heard from libgit2 folks if they want us to
+> > host them (or they want to participate in GSoC at all).
+> 
+> The libgit2 mention is left from previous versions of this page. I left
+> a message on their IRC channel asking to join this thread if people were
+> interested (I don't know the libgit2 community really well, and I didn't
+> find a mailing-list to Cc here). 
+> 
+> I did not hear anything from them. We should probably remove the mention
+> of libgit2. Or, if anyone receiving this message is interested in having
+> libgit2 participate, or knows anyone who may be, speak now.
 
-Makes sense.
+I think they do a lot of their communication via GitHub issues. I've
+cc'd Carlos, the maintainer, who can ping the rest of the community as
+appropriate.
+
+I don't think we did a libgit2 project last year, and included the
+libgit2 references mainly so that we would not drop them with zero
+warning.
+
+-Peff
