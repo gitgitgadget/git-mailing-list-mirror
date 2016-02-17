@@ -1,157 +1,98 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6 11/11] ref-filter: introduce objectname_atom_parser()
-Date: Wed, 17 Feb 2016 23:36:19 +0530
-Message-ID: <1455732379-22479-12-git-send-email-Karthik.188@gmail.com>
-References: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, sunshine@sunshineco.com,
-	Karthik Nayak <Karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 17 19:07:22 2016
+Subject: Re: [PATCH v5 02/12] ref-filter: use strbuf_split_str_omit_term()
+Date: Wed, 17 Feb 2016 23:37:44 +0530
+Message-ID: <CAOLa=ZQ4-Qwp84XgTS9joGW4rJRiw8VMTf+Y1Dzo5M-ZNPZXuA@mail.gmail.com>
+References: <1455649215-23260-1-git-send-email-Karthik.188@gmail.com>
+ <1455649215-23260-3-git-send-email-Karthik.188@gmail.com> <20160216192231.GA16567@sigill.intra.peff.net>
+ <CAPig+cTiwHs+dD+jqAp8SNkwjQ2OzDsC8yopRgF7gctrGi5uUw@mail.gmail.com>
+ <20160216204954.GC27484@sigill.intra.peff.net> <CAPig+cQDs35Uirm5cG552tR8iCFOstNJoOzLCZiXCgnq+g7MRQ@mail.gmail.com>
+ <CAOLa=ZQO065j5VfJabbV6jww5Z2f3jbaRQDfDcG9NY4x2txrFQ@mail.gmail.com> <CAPig+cTrh4u7vgQRXOT0a-5St2a6TV4qfhOMCVSetbQD0kGTrQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Feb 17 19:08:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aW6VV-0007wY-Qw
-	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:07:22 +0100
+	id 1aW6WR-0000E0-Nn
+	for gcvg-git-2@plane.gmane.org; Wed, 17 Feb 2016 19:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423578AbcBQSGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Feb 2016 13:06:12 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:33728 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423519AbcBQSGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Feb 2016 13:06:03 -0500
-Received: by mail-pa0-f42.google.com with SMTP id fl4so15180454pad.0
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:06:03 -0800 (PST)
+	id S1030349AbcBQSIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Feb 2016 13:08:16 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:35019 "EHLO
+	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964878AbcBQSIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Feb 2016 13:08:15 -0500
+Received: by mail-vk0-f53.google.com with SMTP id e6so21931115vkh.2
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 10:08:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HNgObZq3GgbShUGJ+zUVtRRFh+76Vc2oKNT8Nmrtua8=;
-        b=KSAdO1So5pNAsNDWDhvErA3Z4GMsV7JOHM1vFaxLibt/4LvZnW19/gcuNCPJCHnp9W
-         GyyOTDJ8o7Kck7O3EacOGtGsHy4Tv/u8UZvmAj4/e5iTa2A+fGbdRi2P76JUJQAm0ftg
-         7noSesWX/XAVIguw4AWOLcJ297eOd3uLqtqGZZekRY6nM9/yzzBKKHh/Buwo22CejnMs
-         YJx1OZm9mJgqLPjfg5woGjLHcwW3O6FBgk+l3Ma+3rWbMSLclMoCQRSYJVf1LfwH7jyK
-         A88NUvn3WJPI3bKxy89EDnwLuCD2RoTP5ra7zCDbkX8HI8m0Dnk0w1cm2ARweAT2RPQg
-         wUrQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=/G1rWGJS2/7STIbHZyeI4zr+u620g0m8EW8BqeboSSc=;
+        b=0mOe6m3jgD/gOPYpW/h595Bp9JbSlULob2pmWzYCXRaCfdunjZHPnY47v7VQPBHrJw
+         jUWTgi4tEedu11OC6NJkzEWZinLfR4kFQ/+TPaqEj7kB6jkVNL0ue0m3UIHDNCsWKLLr
+         UUUn7v6Jq5uhjZbb7T+S6eUmELVPT9/VKAiUxpkkUIAAsuAZSa2dDCzmKm8Z1YQszqMw
+         J8jm177gnLqbYa5GS+4bg61lM0qFb4bzSTimkYoXc1UxHIOBk0M+pv0+RNoQPES+ZN9L
+         2JrDOtK3jv0/TniwfvwZ7/ilcxdw0BW21HGu3DSwq1ULkHRm0fVwmQTpRAgRqRDAXmhI
+         DMCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=HNgObZq3GgbShUGJ+zUVtRRFh+76Vc2oKNT8Nmrtua8=;
-        b=SsbfRfOTjfTcf0oaK8lzvj6U3aZakynq/GEXhee+9K/J8IJJUt5DRFrtAyVkZ403V9
-         M64VH/YWwBmanVC+fIqKwpls+EJXZ/oB6+a51buqsQQT6txVQtpCFBnHqJY5NcIfDUyJ
-         2Wmk2YhHSN/dqVu00xFvws1GS4OIpUcX4iP/L8+PuTn/d9IghbyEmILJz40dXmmi7FNW
-         lyC1XCyLHC4jg8sfAMOhGKM8vCp+4U/aQle9u3DlUiFjiT2CqQysAcRcIeG/eVOC/2bh
-         qmZNQ8FBUUWEejnwT+RrA1QTWWGJyu2RXLWU827T0Qqi4dRnnxLaZ1I78+Di6RYCk7WW
-         m0Aw==
-X-Gm-Message-State: AG10YOS/xIUhZ1hbictkOL/k2hp50uCYQrwH1qyoLuIM4hb0JKJH6S2E5tIFx/rXRe3JYw==
-X-Received: by 10.66.55.102 with SMTP id r6mr3920468pap.67.1455732363065;
-        Wed, 17 Feb 2016 10:06:03 -0800 (PST)
-Received: from ashley.localdomain ([106.51.133.38])
-        by smtp.gmail.com with ESMTPSA id cf6sm4105793pad.41.2016.02.17.10.06.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 17 Feb 2016 10:06:02 -0800 (PST)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.7.1
-In-Reply-To: <1455732379-22479-1-git-send-email-Karthik.188@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=/G1rWGJS2/7STIbHZyeI4zr+u620g0m8EW8BqeboSSc=;
+        b=T/9KySvNjQomGenJ93CWaXq1+xz4sRt0DgM3AqZ75fYE+u+q/97cgNTmsSzNvcQNLy
+         81mNCM6X0Fwer/q0QQM8QIoYq6MorZfPyAu0fdB1rQmp2zQi/INve2hE2mM7tsqNS+i8
+         8N0VDIG0ni0Ug8U8/C1HdgfSlnNOwZDSlLE8mOfi+giQHKvEqiSOpxHMReh/JKUQL+V5
+         sJ3O7lHBqSsqlO+tKQ9TYdwOKfqXhGlh0EPxTsksV2yc+2twXlnjmesye7JNzcd1RUUi
+         zzKevICyKAvsZeGpr1XjZFrK7C+pHj7S+V27kJm5K4iG5EYuz6wnyitIknie83/x1zby
+         vm0A==
+X-Gm-Message-State: AG10YOQ/eL119gE/A8x6wq9aRgpS42wyKuoOVXfSdIrtfSJGxn8cbdzL+vaxFZSWad34o0PHo80MZc0K54w4uA==
+X-Received: by 10.31.16.37 with SMTP id g37mr2390625vki.97.1455732494018; Wed,
+ 17 Feb 2016 10:08:14 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Wed, 17 Feb 2016 10:07:44 -0800 (PST)
+In-Reply-To: <CAPig+cTrh4u7vgQRXOT0a-5St2a6TV4qfhOMCVSetbQD0kGTrQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286529>
 
-Introduce objectname_atom_parser() which will parse the
-'%(objectname)' atom and store information into the 'used_atom'
-structure based on the modifiers used along with the atom.
+On Wed, Feb 17, 2016 at 11:09 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Feb 17, 2016 at 12:04 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Wed, Feb 17, 2016 at 2:39 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> My initial reaction was negative due to the heavy review burden this
+>>> series has demanded thus far, however, my mind was changing even as I
+>>> composed the above response. [...]
+>>>
+>>> So, I think I'm fine with it, if Karthik is game.
+>>
+>> Sounds good to me.
+>>
+>> I just read the conversation between Jeff, Junio and You about the whitespace
+>> counter-argument and I think its good to go ahead with v6 with Jeff's suggested
+>> change.
+>>
+>> Since he's already pushed the changes on top of my changes to:
+>>  git://github.com/peff/git.git jk/tweaked-ref-filter
+>> I'll just have a look and push that to the list as v6.
+>
+> I reviewed the entire series again, including Peff's changes, so this
+> entire series is:
+>
+>     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+>
+> Karthik, feel free to include my Reviewed-by: in all the patches
+> (including Peff's) when you post v6.
+>
+> Thanks.
 
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
----
- ref-filter.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+Oops! I just pushed v6 before I even saw this mail.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index d2946ea..d13d002 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -43,6 +43,7 @@ static struct used_atom {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
- 			unsigned int nlines;
- 		} contents;
-+		enum { O_FULL, O_SHORT } objectname;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -102,6 +103,16 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
- 		die(_("unrecognized %%(contents) argument: %s"), arg);
- }
- 
-+static void objectname_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	if (!arg)
-+		atom->u.objectname = O_FULL;
-+	else if (!strcmp(arg, "short"))
-+		atom->u.objectname = O_SHORT;
-+	else
-+		die(_("unrecognized %%(objectname) argument: %s"), arg);
-+}
-+
- static align_type parse_align_position(const char *s)
- {
- 	if (!strcmp(s, "right"))
-@@ -160,7 +171,7 @@ static struct {
- 	{ "refname" },
- 	{ "objecttype" },
- 	{ "objectsize", FIELD_ULONG },
--	{ "objectname" },
-+	{ "objectname", FIELD_STR, objectname_atom_parser },
- 	{ "tree" },
- 	{ "parent" },
- 	{ "numparent", FIELD_ULONG },
-@@ -440,15 +451,17 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
- }
- 
- static int grab_objectname(const char *name, const unsigned char *sha1,
--			    struct atom_value *v)
-+			   struct atom_value *v, struct used_atom *atom)
- {
--	if (!strcmp(name, "objectname")) {
--		v->s = xstrdup(sha1_to_hex(sha1));
--		return 1;
--	}
--	if (!strcmp(name, "objectname:short")) {
--		v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
--		return 1;
-+	if (starts_with(name, "objectname")) {
-+		if (atom->u.objectname == O_SHORT) {
-+			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+			return 1;
-+		} else if (atom->u.objectname == O_FULL) {
-+			v->s = xstrdup(sha1_to_hex(sha1));
-+			return 1;
-+		} else
-+			die("BUG: unknown %%(objectname) option");
- 	}
- 	return 0;
- }
-@@ -472,7 +485,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 			v->s = xstrfmt("%lu", sz);
- 		}
- 		else if (deref)
--			grab_objectname(name, obj->oid.hash, v);
-+			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
- 	}
- }
- 
-@@ -996,7 +1009,7 @@ static void populate_value(struct ref_array_item *ref)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && grab_objectname(name, ref->objectname, v)) {
-+		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			const char *head;
 -- 
-2.7.1
+Regards,
+Karthik Nayak
