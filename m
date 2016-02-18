@@ -1,242 +1,125 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 02/27] refs: move for_each_*ref* functions into common code
-Date: Thu, 18 Feb 2016 00:17:25 -0500
-Message-ID: <1455772670-21142-3-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 06/27] refs: add do_for_each_per_worktree_ref
+Date: Thu, 18 Feb 2016 00:17:29 -0500
+Message-ID: <1455772670-21142-7-git-send-email-dturner@twopensource.com>
 References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Feb 18 06:18:37 2016
+X-From: git-owner@vger.kernel.org Thu Feb 18 06:18:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWGz6-00013V-RV
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 06:18:37 +0100
+	id 1aWGzD-0001D0-GE
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 06:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424744AbcBRFSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1424805AbcBRFSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 00:18:38 -0500
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:32853 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424477AbcBRFSe (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 18 Feb 2016 00:18:34 -0500
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:35031 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbcBRFS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 00:18:27 -0500
-Received: by mail-qg0-f54.google.com with SMTP id y89so29367335qge.2
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 21:18:27 -0800 (PST)
+Received: by mail-qg0-f41.google.com with SMTP id b35so29343294qge.0
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 21:18:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WNHjhPUT1w8SWjx1k6C+E8RVOanNTnULIB7vur5W77o=;
-        b=1kn9lK0TwrYbKmKXZ8eNbe8S05vI9v25FoZBYZKuCdHglGCPxKfOBf7k3NCu8ijZ7K
-         NlgBjx9w8EcAogKdzlZqsCx4BfRIMKSNRFKviUHh1On+9y/6p/Qo9bT1vqyRlnTcMp9B
-         NylrzmRBCP8FEff8sydmKfazL7I/p/c8JN3/PNrfhaHV4SJ2xbhT7RESVHVCwm8WYC82
-         bbmCZ7ikUKqdzADTPfGRH6HZN1WSG5n/lS7ysvMD1fB329FZHIJT/oWybhP9hkh9/Ztb
-         1mnm1Z0kuXvDi3mKIZmeXbQxt6+X6bMNKDj8KDXtvOtJPUThrpWebdYTXja79KHALMNN
-         Wr6A==
+        bh=ngrYDSCWOSJVK333XFS+kLpqMiBG/m9OYbpi7Ez3Mq0=;
+        b=i741y3r4qhFyImDIiNsvTh19PH7VWtdzMvksYLLd5uTOdQRlxEjSVTUEe55z6vkXSZ
+         EA8+KRMAOZzPdZKT6Hl6C7+8/P/rErTOCLVbRLLu2d+tmmllktNH/uYf+gApISK/Na+N
+         lus2AJ5zUC+8V2ueZaInHAHdC36SGaGpfih+sxfM0IQTGPz/cJBSWzjvJBJNOS9FVMiH
+         PE+67gF5WTX/dlO+NsJ7EdmfgzUZot8ouZYoZKx/FOOpIQRKmpUHVzwjqvwBWbNfthcX
+         oo3FZU63E8/ebCuyQ2VzILdIRWtnW3W5iSN41xTY6ssgKsDt5SHdgt58bFqONgQ7eJ34
+         7Twg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WNHjhPUT1w8SWjx1k6C+E8RVOanNTnULIB7vur5W77o=;
-        b=jPzVFOYH2yLRyTJnkocI6xVqaCmxVzIgBG8z1hUpQCOPtN9rHA/8WbmZIYvBXVafe0
-         MOAmzo3JYyI5QQimUnqmLVKgZUpGS1el4ltjZ+UhcbrUT0f3uK2xQ/RzsL64gE8bc90o
-         zRklbRvsEw/a68WosxwcimWqNhxAcOWLZ9ZLcVtSBVEm8+Mlp88DL92fbpUfydrjESMj
-         oYUqvoxutQNC24/zwAkM4cCgBpZXg0tWzuGTRpBgfL/PgmDfbuAiz3TsPX6uRm85nFnf
-         hskbSxKZgOVckwiPSy8eABYN11W88Dmx4dEpxljkU1Gk7g8QVA8rf+1tCT0QDX7qnOru
-         Lt0A==
-X-Gm-Message-State: AG10YOQ2XdFrwmDD2M98UahDd0lQ4yWDgrTVFL84okH0A4ppDyBsgeg7xhI2SBK+xwW1PQ==
-X-Received: by 10.140.99.69 with SMTP id p63mr6554984qge.97.1455772707104;
-        Wed, 17 Feb 2016 21:18:27 -0800 (PST)
+        bh=ngrYDSCWOSJVK333XFS+kLpqMiBG/m9OYbpi7Ez3Mq0=;
+        b=ee+KXjUjmW4KaS9zn7OqOvbds4Vg2KTKjICfsemOm13WV/gx2UXIHdxOI41wnQCcm8
+         GOqu7q3FjACbIJDJspRP4k2RnXRtZ7k5QkmnusBTmQwOmTq8L9hct/PRUXmi6FpFkZyC
+         DDuJwcYPqWoexlenVVf+FMdSgdN475mVfzbmg5Ok3vUBKMoRsTQokTPH53CVqD1+bzaA
+         S2IcXggnPzMsx3dzS3TzdaMKlBTUuOjLtuLNpK9j8lCnTMqMc6K+11xTGqG+9fhDbEdK
+         39WgNT4PjMBE1YWz23+moNCJLPXOwraJopSW5O3K24fC2vTJiSuy7k1hvJhBtbHYWDuL
+         T1/Q==
+X-Gm-Message-State: AG10YOR3k60Bv304Ko0vGSYAs0tEzyXcgRcTACcVpRf2alsJaxiE+5fX9yC2wyUdym16Hg==
+X-Received: by 10.140.102.232 with SMTP id w95mr6588852qge.21.1455772713538;
+        Wed, 17 Feb 2016 21:18:33 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id q22sm1965322qkl.19.2016.02.17.21.18.25
+        by smtp.gmail.com with ESMTPSA id q22sm1965322qkl.19.2016.02.17.21.18.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Feb 2016 21:18:26 -0800 (PST)
+        Wed, 17 Feb 2016 21:18:32 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286575>
 
-Make do_for_each_ref take a submodule as an argument instead of a
-ref_cache.  Since all for_each_*ref* functions are defined in terms of
-do_for_each_ref, we can then move them into the common code.
-
-Later, we can simply make do_for_each_ref into a backend function.
+Alternate refs backends might still use files to store per-worktree
+refs.  So the files backend's ref-loading infrastructure should be
+available to those backends, just for use on per-worktree refs.  Add
+do_for_each_per_worktree_ref, which iterates over per-worktree refs.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c               | 52 +++++++++++++++++++++++++++++++++++++++++++
- refs/files-backend.c | 62 +++++-----------------------------------------------
- refs/refs-internal.h |  9 ++++++++
- 3 files changed, 66 insertions(+), 57 deletions(-)
+ refs/files-backend.c | 16 ++++++++++++++++
+ refs/refs-internal.h |  7 +++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 4367c14..c38311b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1105,3 +1105,55 @@ int head_ref(each_ref_fn fn, void *cb_data)
- {
- 	return head_ref_submodule(NULL, fn, cb_data);
- }
-+
-+int for_each_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(NULL, "", fn, 0, 0, cb_data);
-+}
-+
-+int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(submodule, "", fn, 0, 0, cb_data);
-+}
-+
-+int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
-+}
-+
-+int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
-+{
-+	unsigned int flag = 0;
-+
-+	if (broken)
-+		flag = DO_FOR_EACH_INCLUDE_BROKEN;
-+	return do_for_each_ref(NULL, prefix, fn, 0, flag, cb_data);
-+}
-+
-+int for_each_ref_in_submodule(const char *submodule, const char *prefix,
-+		each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(submodule, prefix, fn, strlen(prefix), 0, cb_data);
-+}
-+
-+int for_each_replace_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(NULL, git_replace_ref_base, fn,
-+			       strlen(git_replace_ref_base), 0, cb_data);
-+}
-+
-+int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret;
-+	strbuf_addf(&buf, "%srefs/", get_git_namespace());
-+	ret = do_for_each_ref(NULL, buf.buf, fn, 0, 0, cb_data);
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+int for_each_rawref(each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(NULL, "", fn, 0,
-+			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2e2a6d9..fd664d6 100644
+index 34c414b..e94960a 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -518,9 +518,6 @@ static void sort_ref_dir(struct ref_dir *dir)
- 	dir->sorted = dir->nr = i;
- }
+@@ -565,6 +565,10 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
+ 	struct ref_entry *old_current_ref;
+ 	int retval;
  
--/* Include broken references in a do_for_each_ref*() iteration: */
--#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
--
- /*
-  * Return true iff the reference described by entry can be resolved to
-  * an object in the database.  Emit a warning if the referred-to
-@@ -1735,10 +1732,13 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
-  * value, stop the iteration and return that value; otherwise, return
-  * 0.
-  */
--static int do_for_each_ref(struct ref_cache *refs, const char *base,
--			   each_ref_fn fn, int trim, int flags, void *cb_data)
-+int do_for_each_ref(const char *submodule, const char *base,
-+		    each_ref_fn fn, int trim, int flags, void *cb_data)
- {
- 	struct ref_entry_cb data;
-+	struct ref_cache *refs;
++	if (data->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
++	    ref_type(entry->name) != REF_TYPE_PER_WORKTREE)
++		return 0;
 +
-+	refs = get_ref_cache(submodule);
- 	data.base = base;
- 	data.trim = trim;
- 	data.flags = flags;
-@@ -1753,58 +1753,6 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
+ 	if (!starts_with(entry->name, data->base))
+ 		return 0;
+ 
+@@ -1757,6 +1761,18 @@ static int files_do_for_each_ref(const char *submodule, const char *base,
  	return do_for_each_entry(refs, base, do_one_ref, &data);
  }
  
--int for_each_ref(each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(&ref_cache, "", fn, 0, 0, cb_data);
--}
--
--int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(get_ref_cache(submodule), "", fn, 0, 0, cb_data);
--}
--
--int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
--}
--
--int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
--{
--	unsigned int flag = 0;
--
--	if (broken)
--		flag = DO_FOR_EACH_INCLUDE_BROKEN;
--	return do_for_each_ref(&ref_cache, prefix, fn, 0, flag, cb_data);
--}
--
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
--		each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(get_ref_cache(submodule), prefix, fn, strlen(prefix), 0, cb_data);
--}
--
--int for_each_replace_ref(each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(&ref_cache, git_replace_ref_base, fn,
--			       strlen(git_replace_ref_base), 0, cb_data);
--}
--
--int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
--{
--	struct strbuf buf = STRBUF_INIT;
--	int ret;
--	strbuf_addf(&buf, "%srefs/", get_git_namespace());
--	ret = do_for_each_ref(&ref_cache, buf.buf, fn, 0, 0, cb_data);
--	strbuf_release(&buf);
--	return ret;
--}
--
--int for_each_rawref(each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(&ref_cache, "", fn, 0,
--			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
--}
--
++int do_for_each_per_worktree_ref(const char *submodule, const char *base,
++				 each_ref_fn fn, int trim, int flags,
++				 void *cb_data)
++{
++	/*
++	 * It's important that this one use the files backend, since
++	 *  that's what controls the per-worktree refs
++	 */
++	return files_do_for_each_ref(submodule, base, fn, trim,
++				     flags | DO_FOR_EACH_PER_WORKTREE_ONLY, cb_data);
++}
++
  static void unlock_ref(struct ref_lock *lock)
  {
  	/* Do not free lock->lk -- atexit() still looks at them */
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index c7dded3..92aae80 100644
+index 1caeb61..87b9d80 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -197,4 +197,13 @@ const char *find_descendant_ref(const char *dirname,
+@@ -200,6 +200,13 @@ int rename_ref_available(const char *oldname, const char *newname);
+ /* Include broken references in a do_for_each_ref*() iteration: */
+ #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
  
- int rename_ref_available(const char *oldname, const char *newname);
- 
++/* Only include per-worktree refs in a do_for_each_ref*() iteration */
++#define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
 +
-+/* Include broken references in a do_for_each_ref*() iteration: */
-+#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
++int do_for_each_per_worktree_ref(const char *submodule, const char *base,
++				 each_ref_fn fn, int trim, int flags,
++				 void *cb_data);
 +
-+/*
-+ * The common backend for the for_each_*ref* functions
-+ */
-+int do_for_each_ref(const char *submodule, const char *base,
-+		    each_ref_fn fn, int trim, int flags, void *cb_data);
- #endif /* REFS_REFS_INTERNAL_H */
+ /*
+  * The common backend for the for_each_*ref* functions
+  */
 -- 
 2.4.2.767.g62658d5-twtrsrc
