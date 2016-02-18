@@ -1,100 +1,167 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Thu, 18 Feb 2016 10:38:44 +0100
-Message-ID: <1455788324.3786.14.camel@dwim.me>
-References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
-	 <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
-	 <vpqh9h7f9kz.fsf@anie.imag.fr>
-	 <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
-	 <vpqziuzdr5r.fsf@anie.imag.fr>
-	 <20160217204528.GA22893@sigill.intra.peff.net>
-	 <xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 13/21] refs: resolve symbolic refs first
+Date: Thu, 18 Feb 2016 12:59:58 +0100
+Message-ID: <56C5B23E.6090905@alum.mit.edu>
+References: <1454701462-3817-1-git-send-email-dturner@twopensource.com>
+ <1454701462-3817-14-git-send-email-dturner@twopensource.com>
+ <56BDE780.2030407@alum.mit.edu> <1455755367.7528.57.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 18 10:38:57 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 18 13:07:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWL30-0002qc-Fd
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 10:38:54 +0100
+	id 1aWNMi-0007NS-Ie
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 13:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1425861AbcBRJiu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2016 04:38:50 -0500
-Received: from hessy.dwim.me ([78.47.67.53]:54599 "EHLO hessy.dwim.me"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1425807AbcBRJir (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 04:38:47 -0500
-Received: from [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4] (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
-	by hessy.dwim.me (Postfix) with ESMTPSA id 7AF61815C6;
-	Thu, 18 Feb 2016 10:38:45 +0100 (CET)
-In-Reply-To: <xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.18.3-1 
+	id S1426111AbcBRMHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 07:07:10 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:51455 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1423108AbcBRMHH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Feb 2016 07:07:07 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Feb 2016 07:07:07 EST
+X-AuditID: 1207440c-c0bff70000002d40-bd-56c5b2415252
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 6D.A8.11584.142B5C65; Thu, 18 Feb 2016 07:00:01 -0500 (EST)
+Received: from [192.168.69.130] (p548D6911.dip0.t-ipconnect.de [84.141.105.17])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1IBxx1R030092
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Feb 2016 07:00:00 -0500
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <1455755367.7528.57.camel@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsUixO6iqOu46WiYQddxfYv5m04wWnRd6WZy
+	YPJY8Pw+u8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bm/N21nLnijXPF49Rz2BsZzMl2MnBwSAiYS
+	S9ZvZuti5OIQEtjKKPFz+2NmCOc8k8Skj9NZuxg5OIQF7CUaj8uBNIgIOEhc3nUUquYKo0T/
+	8pssIAk2AV2JRT3NTBBT5SR6uyeBxXkFtCXWndvABmKzCKhKHOmYyg5iiwqESLz/+pwVokZQ
+	4uTMJ2D1nAIWEmf2HASrYRZQl/gz7xIzhC0v0bx1NvMERv5ZSFpmISmbhaRsASPzKka5xJzS
+	XN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQkOTZwfhtncwhRgEORiUeXo7XR8KEWBPL
+	iitzDzFKcjApifIKLzoaJsSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd8N6oBxvSmJlVWpRPkxK
+	moNFSZxXdYm6n5BAemJJanZqakFqEUxWhoNDSYK3awNQo2BRanpqRVpmTglCmomDE2Q4l5RI
+	cWpeSmpRYmlJRjwoJuOLgVEJkuIB2vsMpJ23uCAxFygK0XqKUVFKnPc+SEIAJJFRmgc3FpZo
+	XjGKA30pzCu6EaiKB5ik4LpfAQ1mAhqcc+kQyOCSRISUVANj2ave6u7Pj7v5ZHpXvc/S51ki
+	oHVIKWLOKvcdPR7Cz05zfHz9ZBaPArf2iuWaSTybhLZ/e2rhkSuodrJc5yVfq1zO4eeGjDNN
+	ms85PUp7Vszd3rjLuaX8baui4dalgmwHjxaxTvgptbebc93WCf9NV2by2N3Oskxb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286605>
 
-On Wed, 2016-02-17 at 13:33 -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->=20
-> > On Wed, Feb 17, 2016 at 09:21:20PM +0100, Matthieu Moy wrote:
-> >=20
-> > > > I am wondering if we heard from libgit2 folks if they want us
-> > > > to
-> > > > host them (or they want to participate in GSoC at all).
-> > >=20
-> > > The libgit2 mention is left from previous versions of this page.
-> > > I left
-> > > a message on their IRC channel asking to join this thread if
-> > > people were
-> > > interested (I don't know the libgit2 community really well, and I
-> > > didn't
-> > > find a mailing-list to Cc here).=C2=A0
-> > >=20
-> > > I did not hear anything from them. We should probably remove the
-> > > mention
-> > > of libgit2. Or, if anyone receiving this message is interested in
-> > > having
-> > > libgit2 participate, or knows anyone who may be, speak now.
-> >=20
-> > I think they do a lot of their communication via GitHub issues.
-> > I've
-> > cc'd Carlos, the maintainer, who can ping the rest of the community
-> > as
-> > appropriate.
-> >=20
-> > I don't think we did a libgit2 project last year, and included the
-> > libgit2 references mainly so that we would not drop them with zero
-> > warning.
->=20
-> Understandable.=C2=A0=C2=A0I do not mind seeing us hosting them if th=
-at is
-> what they want, but the candidate selection and mentor assignment
-> between two more-or-less independent projects would not work very
-> well unless there is _some_ degree of coordination ;-)
+On 02/18/2016 01:29 AM, David Turner wrote:
+> On Fri, 201-02-12 at 15:09 +0100, Michael Haggerty wrote:]
+>> On 02/05/2016 08:44 PM, David Turner wrote:
+>>> Before committing ref updates, split symbolic ref updates into two
+>>> parts: an update to the underlying ref, and a log-only update to
+>>> the
+>>> symbolic ref.  This ensures that both references are locked
+>>> correctly
+>>> while their reflogs are updated.
+>>>
+>>> It is still possible to confuse git by concurrent updates, since
+>>> the
+>>> splitting of symbolic refs does not happen under lock. So a
+>>> symbolic ref
+>>> could be replaced by a plain ref in the middle of this operation,
+>>> which
+>>> would lead to reflog discontinuities and missed old-ref checks.
+>>
+>> This patch is doing too much at once for my little brain to follow.
+>>
+>> My first hangup is the change to setting RESOLVE_REF_NO_RECURSE
+>> unconditionally in lock_ref_sha1_basic(). I count five callers of
+>> that
+>> function and see no justification for why the change is OK in the
+>> context of each caller. Here are some thoughts:
+>>
+>> * The call from files_create_symref() sets REF_NODEREF, so it is
+>> unaffected by this change.
+> 
+> Yes.
+> 
+>> * The call from files_transaction_commit() is preceded by a call to
+>> dereference_symrefs(), which I assume effectively replaces the need
+>> for
+>> RESOLVE_REF_NO_RECURSE.
+> 
+> Yes.
+> 
+>> * There are two calls from files_rename_ref(). Why is it OK to do
+>> without RESOLVE_REF_NO_RECURSE there?
+>>
+>>   * For the oldrefname call, I suppose the justification is the
+>> "(flag &
+>> REF_ISSYMREF)" check earlier in the function. (But does this
+>> introduce a
+>> significant TOCTOU race?)
+> 
+> The refs code as a whole seems likely to have TOCTOU issues. In
+> general, anywhere we check/set flag & REF_ISSYMREF without holding a
+> lock, we have a potential problem.  I haven't generally tried to handle
+> these cases, since they're not presently handled.  
 
-We still have most of the same things open as for the 2014 list. I'll
-ask around to see if we have. Last year I wasn't involved in the
-candidate selection but IIRC we didn't do a project as none of the
-applications showed the candidates would be capable of doing the
-project they were applying for.
+I agree that we don't do so well here, though I think that most races
+would result in reading/writing a ref that was pointed to by the symref
+a moment ago, which is usually indistinguishable to the user from their
+update having gone through the moment before the symref was updated. So
+I don't think your change makes this bit of code significantly worse.
 
-I'll ask around to make sure people would be able to be mentors, but I
-think that we would still like to put forward a few projects (I can
-send a PR with the projects that we would still like to see to the 2016
-page).
+> The central problem with this area of the code is that commit interacts
+> so intimately with the locking machinery.  I understand some of why
+> it's done that way.  In particular, your change to ref locking to not
+> hold lots of open files was a big win for us at Twitter.  But this
+> means that it's hard to deal with cross-backend ref updates: you want
+> to hold multiple locks, and backends don't have the machinery for it.
+> 
+> We could add backend hooks to specifically lock and unlock refs. Then
+> the backend commit code would just be handled a bundle of locked refs
+> and would commit them.  This might be hairy, but it could fix the
+> TOCTOU problems.  So, first lock the outer refs, then split out updates
+> for any which are symbolic refs, and lock those. Finally, commit all
+> updates (split by backend).
 
-Cheers,
-=C2=A0 =C2=A0cmn
+As chance would have it, for an internal GitHub project I've implemented
+hooks that can be called *during* a ref transaction. The hooks can, for
+example, take arbitrary actions between the time that the reflocks are
+all acquired and the time that the updates start to be committed. I
+didn't submit this code upstream because I didn't think that it would
+benefit other users, but many it would be useful for implementing
+split-backend reference transaction commits. E.g., the primary reference
+transaction could run the secondary backend's commit while holding the
+locks for the primary backend references.
+
+Let me think about it.
+
+I don't think this is urgent though. The current code is not
+significantly racy in mainstream usage scenarios, right?
+
+> One downside of this is that right now, the backend API is relatively
+> close to the front-end, and this would leak what should be an
+> implementation detail.  But maybe this is necessary to knit multiple
+> backends together.  
+> 
+> But I'm not sure that this is necessary right now, because I'm not sure
+> that I'm actually making TOCTOU issues much worse. 
+
+Agreed.
+
+> [...]
+> That's a legit complaint.  The problem, as you note, is that doing some
+> of these steps completely independently doesn't work.  But I'll try
+> splitting out what I can.
+
+Thanks!
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
