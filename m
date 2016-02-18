@@ -1,180 +1,126 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 24/27] refs: add register_ref_storage_backends()
-Date: Thu, 18 Feb 2016 00:17:47 -0500
-Message-ID: <1455772670-21142-25-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 23/27] svn: learn ref-storage argument
+Date: Thu, 18 Feb 2016 00:17:46 -0500
+Message-ID: <1455772670-21142-24-git-send-email-dturner@twopensource.com>
 References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Feb 18 06:19:14 2016
+X-From: git-owner@vger.kernel.org Thu Feb 18 06:19:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWGzh-0001cT-Ts
+	id 1aWGzi-0001cT-GW
 	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 06:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1424964AbcBRFTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 00:19:06 -0500
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:36401 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1424957AbcBRFTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 00:19:01 -0500
-Received: by mail-qg0-f43.google.com with SMTP id y9so29821108qgd.3
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 21:19:01 -0800 (PST)
+	id S1424968AbcBRFTI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Feb 2016 00:19:08 -0500
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:33042 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1424900AbcBRFTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 00:19:00 -0500
+Received: by mail-qg0-f51.google.com with SMTP id b35so29347981qge.0
+        for <git@vger.kernel.org>; Wed, 17 Feb 2016 21:18:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=csfWk4GTz0M+mUkbQmC0/K8R0O2N4kOkG3HrZkneDtU=;
-        b=R8khLQb436WKDZBQqxhX9VaOAim9F4l//otcDiUWtaod3CEl4QY3T7N6s4UwgxHFeg
-         h0ODRdL7wqTjKCpLp0p+tgaLfEy1pGFLOsG2rrOH056hzJsUylrmbzKYa0It1f/X+KwH
-         2M4yqHsOVWNf66FjNJ+vU2ZGc/BB6SM2yuLtfVIJmli2J+Z7pBDNA8n9fD9MwSBtE5nS
-         xzLiIPtEiiffDAUp+eOkJOXOyzvz7Ff4yyObR0mMXtoEx0Fqg7u5Fe/Hqytd53o68gAt
-         A8WDz+ez7y/2uvKHeBJ80Z9JPRKGTt+AGA7YpA8pmFUAHceqx/7AkgKMGxZ9GuDU16+C
-         ML4A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=AJ0EwoK9i7sZSVFNr6Pz/7M5UGS93h6n/XlsGUnrqgU=;
+        b=Z6CW0S42N1k2d4qx3GHtUxZ4qZ4VoeH+g4vV4W+VlGTS7867Tk08yrbVcAkKKiGc7P
+         MDFiZqQpXS19UKpUoCU/XYC37UjjMgo/3rmMADGzBdzFxC1bOB4/E3RBBxoTgcMCYIHD
+         F2ziUxbkdq57vCs62KxRU4vUyzF4PBluTAZOcnTqNFtsGT9cCtzxpBOZf8rqYU+o2cFu
+         7JtyivsyAzhPiI6hfErCuVJ27Fh4eCIepbj0VZNlyjtgcgWTv0Q6M7OjDSsPvs0YJuov
+         /6Nx8bKDV3IKA6inVtZlBAT3km8LG2z4cBF3fz1y4Q/B7Dbb8+zESGS3yKIHDjxa/GIf
+         tkpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=csfWk4GTz0M+mUkbQmC0/K8R0O2N4kOkG3HrZkneDtU=;
-        b=d292yoLoqrM0oV3AIXx1UEqK1rgiH4Tk7nYQaPRBKZOdvttZaqfDBRw0VT6ctbZQWC
-         mJLvzJJZmkzWgeQmqjbX8YEaOoq9jmPM0YZHfG5dijncKopTMBSrTSua0rqgk3bPOS2T
-         2xKhJMh0xjnbWqtYFq5i8cGBD/V49uiu3PC5JQYbKJAq8cO4Z3hla6ULTPuz7HYlIH0E
-         yGfdMwbkhSMi92x6KRcKh5J32tiBA79T9S0dEcKHZHKqjJQ+oUEx1U96F/jURFmphSIX
-         DHDwXHNM0WSQBA7NgB11ykkvktpvBKsl+Qz3uo5sm6tE2XBbDZww3ggtvcQJAYM7o+RT
-         lEAg==
-X-Gm-Message-State: AG10YOS1HFznQHGvUK8kFXKU3HEwzMgt4dv7orI10Ug0kOrwU/vRljFKSWx24KQXfN3iFA==
-X-Received: by 10.140.107.70 with SMTP id g64mr6565427qgf.75.1455772741312;
-        Wed, 17 Feb 2016 21:19:01 -0800 (PST)
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=AJ0EwoK9i7sZSVFNr6Pz/7M5UGS93h6n/XlsGUnrqgU=;
+        b=EHda2hl2aoxUa+qfvE6eMdYtbdfssBMMDdytepy22U12u2qG+tcgRrUf4d7w2Ns+Yz
+         E8MHiL/QhlmGrp+GuMZLEUejNlond1hpfWo8CS2tRqVxMuH0egcKKIRM8FmAJ5KdOGxD
+         TZg9uc2UZaRQvPy1GElTgTyygqqgDsL9NMOS/2L4w0LQN8qjc5IIAPjKdqSwgL/BZCZF
+         UDVroT/eoCuwdXzCnKDifIBqr0e6Ivhi2ZbCWvvpQwWgsDSFJSIEuIOancg211IMHv+0
+         tQ3fvCqnnkv7QQdPbj272YZuXhypHWHL7NFDQ53nX5cIzd6k/LHueI2gBdS4SY3MTx+P
+         wWzQ==
+X-Gm-Message-State: AG10YOS+CT1ZXCCrF0g73AMYL32hAD8dQPS9uyzsZTtfVvYFBXGes+fjLbS46G8LCizBrA==
+X-Received: by 10.140.23.81 with SMTP id 75mr6653353qgo.35.1455772739435;
+        Wed, 17 Feb 2016 21:18:59 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id q22sm1965322qkl.19.2016.02.17.21.18.59
+        by smtp.gmail.com with ESMTPSA id q22sm1965322qkl.19.2016.02.17.21.18.58
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Feb 2016 21:19:00 -0800 (PST)
+        Wed, 17 Feb 2016 21:18:58 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286587>
 
-This new function will register all known ref storage backends... once
-there are any other than the default.  For now, it's a no-op.
+git svn learns to pass the ref-storage command-line argument (to init
+and clone) through to git init.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- builtin/init-db.c |  3 +++
- config.c          | 25 +++++++++++++++++++++++++
- refs.c            | 13 +++++++++----
- refs.h            |  2 ++
- 4 files changed, 39 insertions(+), 4 deletions(-)
+ contrib/completion/git-completion.bash | 2 +-
+ git-svn.perl                           | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 753cb1c..9bd98eb 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -225,6 +225,7 @@ static int create_default_files(const char *template_path)
- 	if (strcmp(ref_storage_backend, "files")) {
- 		git_config_set("extensions.refStorage", ref_storage_backend);
- 		git_config_set("core.repositoryformatversion", ref_storage_backend);
-+		register_ref_storage_backends();
- 		if (set_ref_storage_backend(ref_storage_backend))
- 			die(_("Unknown ref storage backend %s"),
- 			    ref_storage_backend);
-@@ -502,6 +503,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
- 
-+	register_ref_storage_backends();
-+
- 	if (requested_ref_storage_backend &&
- 	    !ref_storage_backend_exists(requested_ref_storage_backend))
- 		die(_("Unknown ref storage backend %s"),
-diff --git a/config.c b/config.c
-index b95ac3a..025a1ee 100644
---- a/config.c
-+++ b/config.c
-@@ -11,6 +11,7 @@
- #include "strbuf.h"
- #include "quote.h"
- #include "hashmap.h"
-+#include "refs.h"
- #include "string-list.h"
- #include "utf8.h"
- 
-@@ -1207,6 +1208,30 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 	}
- 
- 	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
-+		char *storage = NULL;
-+
-+		/*
-+		 * make sure we always read the ref storage config
-+		 * from the extensions section on startup
-+		 */
-+		ret += git_config_from_file(ref_storage_backend_config,
-+					    repo_config, &storage);
-+
-+		register_ref_storage_backends();
-+		if (!storage)
-+			storage = xstrdup("");
-+
-+		if (!*storage ||
-+		    !strcmp(storage, "files")) {
-+			/* default backend, nothing to do */
-+			free(storage);
-+		} else {
-+			ref_storage_backend = storage;
-+			if (set_ref_storage_backend(ref_storage_backend))
-+				die(_("Unknown ref storage backend %s"),
-+				    ref_storage_backend);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index cb9c473..ba4137d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2477,7 +2477,7 @@ _git_svn ()
+ 			--branches=3D --stdlayout --minimize-url
+ 			--no-metadata --use-svm-props --use-svnsync-props
+ 			--rewrite-root=3D --prefix=3D --use-log-author
+-			--add-author-from $remote_opts
++			--add-author-from --ref-storage=3D $remote_opts
+ 			"
+ 		local cmt_opts=3D"
+ 			--edit --rmdir --find-copies-harder --copy-similarity=3D
+diff --git a/git-svn.perl b/git-svn.perl
+index fa5f253..15d1544 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -141,7 +141,7 @@ my %fc_opts =3D ( 'follow-parent|follow!' =3D> \$Gi=
+t::SVN::_follow_parent,
+ 		'localtime' =3D> \$Git::SVN::_localtime,
+ 		%remote_opts );
+=20
+-my ($_trunk, @_tags, @_branches, $_stdlayout);
++my ($_trunk, @_tags, @_branches, $_stdlayout, $_ref_storage);
+ my %icv;
+ my %init_opts =3D ( 'template=3Ds' =3D> \$_template, 'shared:s' =3D> \=
+$_shared,
+                   'trunk|T=3Ds' =3D> \$_trunk, 'tags|t=3Ds@' =3D> \@_t=
+ags,
+@@ -153,6 +153,7 @@ my %init_opts =3D ( 'template=3Ds' =3D> \$_template=
+, 'shared:s' =3D> \$_shared,
+ 		  'use-svnsync-props' =3D> sub { $icv{useSvnsyncProps} =3D 1 },
+ 		  'rewrite-root=3Ds' =3D> sub { $icv{rewriteRoot} =3D $_[1] },
+ 		  'rewrite-uuid=3Ds' =3D> sub { $icv{rewriteUUID} =3D $_[1] },
++		  'ref-storage=3Ds' =3D> \$_ref_storage,
+                   %remote_opts );
+ my %cmt_opts =3D ( 'edit|e' =3D> \$_edit,
+ 		'rmdir' =3D> \$Git::SVN::Editor::_rmdir,
+@@ -469,6 +470,9 @@ sub do_git_init_db {
+ 				push @init_db, "--shared";
+ 			}
+ 		}
++		if (defined $_ref_storage) {
++		    push @init_db, "--ref-storage=3D" . $_ref_storage;
 +		}
-+
- 		ret += git_config_from_file(fn, repo_config, data);
- 		found += 1;
+ 		command_noisy(@init_db);
+ 		$_repository =3D Git->repository(Repository =3D> ".git");
  	}
-diff --git a/refs.c b/refs.c
-index ea7e0eb..dec7b5c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -14,14 +14,11 @@ static const char split_transaction_fail_warning[] = N_(
- 	"transaction succeeded, but then the update to the per-worktree refs "
- 	"failed.  Your repository may be in an inconsistent state.");
- 
--/*
-- * We always have a files backend and it is the default.
-- */
- static struct ref_storage_be *the_refs_backend = &refs_be_files;
- /*
-  * List of all available backends
-  */
--static struct ref_storage_be *refs_backends = &refs_be_files;
-+static struct ref_storage_be *refs_backends = NULL;
- 
- const char *ref_storage_backend = "files";
- 
-@@ -1580,3 +1577,11 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 	}
- 	return the_refs_backend->rename_ref(oldref, newref, logmsg);
- }
-+
-+void register_ref_storage_backends(void) {
-+	/*
-+	 * Add register_ref_storage_backend(ptr-to-backend)
-+	 * entries below when you add a new backend.
-+	 */
-+	register_ref_storage_backend(&refs_be_files);
-+}
-diff --git a/refs.h b/refs.h
-index e659882..363c6ee 100644
---- a/refs.h
-+++ b/refs.h
-@@ -525,4 +525,6 @@ int ref_storage_backend_exists(const char *name);
- 
- void register_ref_storage_backend(struct ref_storage_be *be);
- 
-+void register_ref_storage_backends(void);
-+
- #endif /* REFS_H */
--- 
+--=20
 2.4.2.767.g62658d5-twtrsrc
