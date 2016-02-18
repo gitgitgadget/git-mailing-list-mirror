@@ -1,317 +1,129 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Thu, 18 Feb 2016 15:23:21 -0500
-Organization: Twitter
-Message-ID: <1455827001.7528.87.camel@twopensource.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-	 <1455772670-21142-26-git-send-email-dturner@twopensource.com>
-	 <20160218085023.GA30049@lanh>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] submodule: port resolve_relative_url from shell to C
+Date: Thu, 18 Feb 2016 12:23:38 -0800
+Message-ID: <xmqqsi0pg439.fsf@gitster.mtv.corp.google.com>
+References: <1455320356-15778-1-git-send-email-sbeller@google.com>
+	<1455320356-15778-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 18 21:23:37 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Feb 18 21:23:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWV6u-0004a4-3r
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 21:23:36 +0100
+	id 1aWV79-0004of-6Q
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 21:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948137AbcBRUX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 15:23:29 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:34894 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1948118AbcBRUX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 15:23:26 -0500
-Received: by mail-qk0-f172.google.com with SMTP id o6so23159005qkc.2
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 12:23:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=1iTmadxiHSDPpHcqg+7OFfb3XpAoMUOUI8byPe+UySY=;
-        b=MLiEruDOGy3fIInga9+728Sra7WcQKOaNu1lAUUCfUZYRbKZwNWgpw6NmxW/l7B3sY
-         AZgblJ6qpSsptgtq2qsY5YVycwSJuHPbL0HGc8Q05LFb9e20/LzktK0K7E7KQED0Rm7C
-         6yKqT2NZX/KnAKiNSbpY8sioBuZO770T7hPxW7H6yQIQtZm0uJ56CfdgwA+SOXxdSdXC
-         onEFTchFMNDauRbydyRuydHfBxwJHcRzlIZKUvqFTuoCrDMwHsX2+3Ni4/5vmQxWHMUk
-         CfhQSQmaLewy0aNB8tS3nXWUjvSG7/WdkIvT8Cd+mSZp9myqymDuOra04THJV9tUDfIu
-         Q6rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=1iTmadxiHSDPpHcqg+7OFfb3XpAoMUOUI8byPe+UySY=;
-        b=PMcXw+XLn1fzV2QwyzSNgzPZ08/CqwOVyYDqrXVlLURS39nO9ufWBsL0ez3fw+ht9D
-         ihEpWA5A0FyP3So+Q4580g+RSPkhu5y/DYhBRr4PqQipDXxFKAPMetfDxaM/JPoXNfCp
-         BXc8iO0iwcdOyimhr/BnkqmzLac+BWVQ6lSAtGjFXJxXXtIRR3KXSC9eCMOb0Q0cLnSS
-         Wd8B4oqORDwtQgoGNYgwpfJacg7sKpd/cNQvaBG4ZbWJkNVDDiSpiZIOC8nb947NcG4y
-         LuN4p1EdueLqmdMnDvWE8Nc++XksOVAypOzF3g4JUsJMIC6qZGJQevAp9ixIPFlJLer6
-         GDsA==
-X-Gm-Message-State: AG10YOQ1R3XNSRajYrpvRJ43cw5khCZAHfRJIlQl64ujuQ9lCwy6Br/wsQV1ZRvP5/jN7A==
-X-Received: by 10.55.52.211 with SMTP id b202mr11322298qka.27.1455827005141;
-        Thu, 18 Feb 2016 12:23:25 -0800 (PST)
-Received: from ubuntu ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id g64sm3265212qkb.44.2016.02.18.12.23.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 18 Feb 2016 12:23:24 -0800 (PST)
-In-Reply-To: <20160218085023.GA30049@lanh>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1948140AbcBRUXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 15:23:43 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53635 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1948118AbcBRUXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 15:23:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E979A45301;
+	Thu, 18 Feb 2016 15:23:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kx42L/HKtyXyzdTQPKuaNmlhk74=; b=nQUMh5
+	5YUk5zI/VUTX51yGJyRpdMJoHX/x4SkMVw9L9oM/GtidFc7tbFu64BQfV341P3Dn
+	J7G6CwTJMqc3N6AmJ4s6OwO9VYg9ecBqYB5GhWv75h+ffKqO8q9TOPnq1+Jv6eHI
+	IN7Pn3mDQOp3zHWkcDSPSZp79kvHxXGXXWsNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NW7J6ZOKxgsdkAOT62y82BgoYBQYp3A1
+	/toX8eo57PcJq0YrL41LBpCLZEO3peM6dP28vVFJ47TiJWY78u/lwc95j9RQEgxu
+	qmK0af4Qcd+WE3pYxTZPHQrKfM8feQtdDPQnLutXfGAxbliDuDHISMs5hftNAHEw
+	ijMjMJmHaNY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D504845300;
+	Thu, 18 Feb 2016 15:23:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 53340452F9;
+	Thu, 18 Feb 2016 15:23:39 -0500 (EST)
+In-Reply-To: <1455320356-15778-2-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 12 Feb 2016 15:39:15 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7EEFF434-D67D-11E5-863B-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286618>
 
-On Thu, 2016-02-18 at 15:50 +0700, Duy Nguyen wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-[snip]
+> +static int starts_with_dot_slash(const char *str)
+> +{
+> +	return str[0] == '.' && is_dir_sep(str[1]);
+> +}
+> +
+> +static int starts_with_dot_dot_slash(const char *str)
+> +{
+> +	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
+> +}
+> +
+> +/*
+> + * Returns 1 if it was the last chop before ':'.
+> + */
+> +static int chop_last_dir(char **remoteurl, int is_relative)
+> +{
+> +	char *rfind = find_last_dir_sep(*remoteurl);
+> +	if (rfind) {
+> +		*rfind = '\0';
+> +		return 0;
+> +	}
+> +
+> +	rfind = strrchr(*remoteurl, ':');
+> +	if (rfind) {
+> +		*rfind = '\0';
+> +		return 1;
+> +	}
+> +
+> +	if (is_relative || !strcmp(".", *remoteurl))
+> +		die(_("cannot strip one component off url '%s'"),
+> +			*remoteurl);
+> +
+> +	free(*remoteurl);
+> +	*remoteurl = xstrdup(".");
+> +	return 0;
+> +}
+> +
+> +/*
+> + * The `url` argument is the URL that navigates to the submodule origin
+> + * repo. When relative, this URL is relative to the superproject origin
+> + * URL repo. The `up_path` argument, if specified, is the relative
+> + * path that navigates from the submodule working tree to the superproject
+> + * working tree. Returns the origin URL of the submodule.
+> + *
+> + * Return either an absolute URL or filesystem path (if the superproject
+> + * origin URL is an absolute URL or filesystem path, respectively) or a
+> + * relative file system path (if the superproject origin URL is a relative
+> + * file system path).
+> + *
+> + * When the output is a relative file system path, the path is either
+> + * relative to the submodule working tree, if up_path is specified, or to
+> + * the superproject working tree otherwise.
+> + *
+> + * NEEDSWORK: This works incorrectly on the domain and protocol part.
+> + * remote_url      url              outcome          correct
+> + * http://a.com/b  ../c             http://a.com/c   yes
+> + * http://a.com/b  ../../c          http://c         no (domain should be kept)
+> + * http://a.com/b  ../../../c       http:/c          no
+> + * http://a.com/b  ../../../../c    http:c           no
+> + * http://a.com/b  ../../../../../c    .:c           no
+> + */
 
-Thanks; applied the above
+Not just "no" but we should say what the expected outcome is.  I
+think all of them should error out?
 
-> This permission makes me wonder if we need adjust_shared_perm() here
-> and some other places.
-
-So just add this after every mkdir?
-
-	if (shared_repository)
-		adjust_shared_perm(db_path);
-
-> > +	if (ret)
-> > +		die("BUG: mdb_env_open (%s) failed: %s", path,
-> > +		    mdb_strerror(ret));
-> > +}
-> > +
-> > +static int lmdb_init_db(int shared, struct strbuf *err)
-> > +{
-> > +	/*
-> > +	 * To create a db, all we need to do is make a directory
-> > for
-> > +	 * it to live in; lmdb will do the rest.
-> > +	 */
-> > +
-> > +	if (!db_path)
-> > +		db_path =
-> > xstrdup(real_path(git_path("refs.lmdb")));
-> > +
-> > +	if (mkdir(db_path, 0775) && errno != EEXIST) {
-> > +		strbuf_addf(err, "%s", strerror(errno));
-> 
-> maybe strbuf_addstr, unless want to add something more, "mkdir
-> failed"?
-
-added more
-
-> > +static int read_per_worktree_ref(const char *submodule, const char
-> > *refname,
-> > +				 struct MDB_val *val, int
-> > *needs_free)
-> 
-> From what I read, I suspect these _per_worktree functions will be
-> identical for the next backend. Should we just hand over the job for
-> files backend? For all entry points that may deal with per-worktree
-> refs, e.g. lmdb_resolve_ref_unsafe, can we check ref_type() first
-> thing, if it's per-worktree we call
-> refs_be_files.resolve_ref_unsafe()
-> instead?  It could even be done at frontend level,
-> e.g. refs.c:resolve_ref_unsafe().
-> 
-> Though I may be talking rubbish here because I don't know how whether
-> it has anything to do with transactions.
-
-The reason I did it this way is that some ref chains cross backend
-boundaries (e.g. HEAD -> refs/heads/master).  But if we have other
-backends later, we could generalize.
-
-> > +{
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +	struct strbuf path = STRBUF_INIT;
-> > +	struct stat st;
-> > +	int ret = -1;
-> > +
-> > +	submodule_path(&path, submodule, refname);
-> > +
-> > +#ifndef NO_SYMLINK_HEAD
-> 
-> It started with the compiler warns about unused "st" when this macro
-> is defined. Which makes me wonder, should we do something like this
-> to
-> make sure this code compiles unconditionally?
-> 
-> +#ifndef NO_SYMLINK_HEAD
-> +       int no_symlink_head = 0;
-> +#else
-> +       int no_symlink_head = 1;
-> +#endif
-> ...
-> +       if (!no_symlink_head) {
-> ...
-
-OK.
-
-> > +int lmdb_transaction_begin_flags(struct strbuf *err, unsigned int
-> > flags)
-> 
-> static?
-
-yep
-
-> > +static const char *parse_ref_data(struct lmdb_transaction
-> > *transaction,
-> > +				  const char *refname, const char
-> > *ref_data,
-> > +				  unsigned char *sha1, int
-> > resolve_flags,
-> > +				  int *flags, int bad_name)
-> > +{
->[snip]
-> This code looks a lot like near the end of resolve_ref_1(). Maybe we
-> could share the code in refs/backend-common.c or something and call
-> here instead?
-
-When I wrote this, I couldn't find a straightforward way to factor out
-the commonalities, but I'll try again now that I understand the refs
-code better.
-
-> > +static int show_one_reflog_ent(struct strbuf *sb,
-> > each_reflog_ent_fn fn, void *cb_data)
-> > +{
-> > +	unsigned char osha1[20], nsha1[20];
-> > +	char *email_end, *message;
-> > +	unsigned long timestamp;
-> > +	int tz;
-> > +
-> > +	/* old (raw sha) new (raw sha) name <email> SP time TAB
-> > msg LF */
-> 
-> Hmm.. since you're going with raw sha-1, this is clearly not a text
-> string anymore, any reason to still keep LF at the end?
-
-IIRC, some of the common funcs depend on this.
-
-> > +static int lmdb_delete_reflog(const char *refname)
-> > +{
-> > +	MDB_val key, val;
-> > +	char *log_path;
-> > +	int len;
-> > +	MDB_cursor *cursor;
-> > +	int ret = 0;
-> > +	int mdb_ret;
-> > +	struct strbuf err = STRBUF_INIT;
-> > +	int in_transaction;
-> > +
-> > +	if (ref_type(refname) != REF_TYPE_NORMAL)
-> > +		return refs_be_files.delete_reflog(refname);
-> 
-> Yay.. delegating work to files backend. I still think doing this in
-> refs.c:delete_reflog() may be a good idea.
-
-Yes, I agree.
-
-> > +int lmdb_reflog_expire(const char *refname, const unsigned char
-> > *sha1,
-> 
-> static?
-
-Yep.
-
-> > +static int lmdb_create_symref(const char *ref_target,
-> > +			      const char *refs_heads_master,
-> > +			      const char *logmsg)
-> > +{
-> > +
-> ...
-> > +	mdb_put_or_die(&transaction, &key, &val, 0);
-> > +
-> > +	/* TODO: Don't create ref d/f conflicts */
-> 
-> I'm not sure I get this comment. D/F conflicts are no longer a thing
-> for lmdb backend, right?
-
-I'm trying to avoid the lmdb backend creating a set of refs that the
-files backend can't handle.  This would make collaboration with other
-versions of git more difficult.
-
-> > +MDB_env *submodule_txn_begin(struct lmdb_transaction *transaction)
-> 
-> static?
-
-Yes.
-
-> > +{
-> > +	int ret;
-> > +	MDB_env *submodule_env = NULL;
-> > +	struct strbuf path = STRBUF_INIT;
-> > +
-> > +	strbuf_git_path_submodule(&path, transaction->submodule,
-> > "refs.lmdb");
-> > +
-> > +	if (!is_directory(path.buf))
-> > +		goto done;
-> > +
-> > +	mkdir(path.buf, 0775);
-> 
-> A few other places where mkdir() is called, we may need to
-> adjust_shared_perm().
-
-OK.
-
-> > diff --git a/setup.c b/setup.c
-> > index 1a62277..00625ab 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -279,7 +279,7 @@ int ref_storage_backend_config(const char *var,
-> > const char *value, void *ptr)
-> >   *
-> >   *  - either an objects/ directory _or_ the proper
-> >   *    GIT_OBJECT_DIRECTORY environment variable
-> > - *  - a refs/ directory
-> > + *  - a refs.lmdb/ directory or a refs/ directory
-> >   *  - either a HEAD symlink or a HEAD file that is formatted as
-> >   *    a proper "ref:", or a regular file HEAD that has a properly
-> >   *    formatted sha1 object name.
-> > @@ -313,8 +313,13 @@ int is_git_directory(const char *suspect)
-> >  
-> >  	strbuf_setlen(&path, len);
-> >  	strbuf_addstr(&path, "/refs");
-> > -	if (access(path.buf, X_OK))
-> > -		goto done;
-> > +
-> > +	if (access(path.buf, X_OK)) {
-> > +		strbuf_setlen(&path, len);
-> > +		strbuf_addstr(&path, "/refs.lmdb");
-> > +		if (access(path.buf, X_OK))
-> > +			goto done;
-> > +	}
-> > 
-> 
-> I think it's ok leaving this function unmodified, which means "refs"
-> directory will always be there and "refs.lmdb" does not matter. If
-> somehow "refs" is deleted, old binaries get confused anyway so we
-> can't delete it.
-
-OK.
-
-> > @@ -1089,8 +1089,11 @@ static int refs_from_alternate_cb(struct
-> > alternate_object_database *e,
-> >  		goto out;
-> >  	/* Is this a git repository with refs? */
-> >  	memcpy(other + len - 8, "/refs", 6);
-> > -	if (!is_directory(other))
-> > -		goto out;
-> > +	if (!is_directory(other)) {
-> > +		memcpy(other + len - 8, "/refs.lmdb", 11);
-> > +		if (!is_directory(other))
-> > +			goto out;
-> > +	}
-> 
-> and probably the same here. I have no idea what this code does
-> though,
-> but if it's about detecting git directory, it should call
-> is_git_directory() instead.
-
-I'll back out my change, but not do the the is_git_directory thing
-since I don't have a strong sense of why this code is the way it is.
+Given how chop_last_dir() works, I think this function is broken
+when a local part has a colon in its path component, too.  I do not
+think the scripted version did any better on such a URL; just
+another thing that NEEDSWORK comment should list as a thing to be
+fixed in the future.
