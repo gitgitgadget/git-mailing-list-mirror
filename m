@@ -1,133 +1,99 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 05/27] refs: add method for do_for_each_ref
-Date: Thu, 18 Feb 2016 00:17:28 -0500
-Message-ID: <1455772670-21142-6-git-send-email-dturner@twopensource.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Feb 18 06:20:52 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Thu, 18 Feb 2016 09:41:00 +0100
+Message-ID: <1CE3F5E2-DDCC-4F1B-93CF-1A4A194650BF@gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank> <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 18 09:41:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWH1I-0002sZ-3u
-	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 06:20:52 +0100
+	id 1aWK9F-0004bR-0X
+	for gcvg-git-2@plane.gmane.org; Thu, 18 Feb 2016 09:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1425045AbcBRFUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 00:20:45 -0500
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:36183 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1424582AbcBRFSd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 00:18:33 -0500
-Received: by mail-qg0-f52.google.com with SMTP id y9so29815659qgd.3
-        for <git@vger.kernel.org>; Wed, 17 Feb 2016 21:18:32 -0800 (PST)
+	id S1425491AbcBRIlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 03:41:07 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35083 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1425167AbcBRIlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 03:41:04 -0500
+Received: by mail-wm0-f48.google.com with SMTP id c200so14981136wme.0
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 00:41:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gbe4xZ6bOgRTQt9wkWgWkDGUOPuczKWIOYO7iyefsoU=;
-        b=uBn/uM6oS7rbxfoOAxdM063j3n8+xbtD0T8PV+Ya/CeEBDr5J5qnwkW15NVIe9Iz5l
-         Z3vyEhuqv7hcvKpNX/+Ok424qiyfcSeSuAH94lSsSLdUJ7HfNXbBgzv1tucuiavPhXgB
-         osMoeJBLaCCHB6FV+D6imj0Zmop2sheh41H/fLfmUrT6EJpIK2x5zmCcAJTYXGi7zv2Z
-         XRcCiVt34GygUPloXlmKPOmtBeV6HLA5VJ057/BSRfnNT62f+n1jqRajRIbPDRaFsvqA
-         vm88ROAbgLXuUzTcKjVe2Y5GhbYBIXEvaKfwfFa2h1LQlGatGhme5PnUv6HkrLePa/GR
-         PT/Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xE1DiTGT8VE8HOgrymzsxGa6UbYb0hkMrLpw1CRDZu0=;
+        b=VCd/mMO9iQ0iXWz2ppz6UPFhH9duw0W+HhbHTMCKYUnt+Xr2xPhWnimRfhgu3bvyBm
+         IpjqsArczMdO0sePSw1WyI4q05SSf7kdQ7lZaroKBRKvFhTNQYNjfQ3Kw0OfyItRfjro
+         xry9fmMbODjxX8+H0pzJYqaCeAY1LnrWKGrVq2KMBIe7FQkiF8WYmtxVhzAONDjHL1Wu
+         Lw1Z//OUTZ/KslsxZWif7uQVuFz6DnivmqDxUKxI/1T2oGnERUE8E6WZrr6FAgD3VKah
+         O5THrnBR5r4RQGZDN9An/X+4C+V+fSKPFXOm/8JXD8cotxb5Fc6B/6+z+OHDUcG6F6sV
+         7+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gbe4xZ6bOgRTQt9wkWgWkDGUOPuczKWIOYO7iyefsoU=;
-        b=COErVqg4lJ/c8LnpaZdu+RouiqTlDaBs7rcs8HzQyBlE21KnDwWE0V9PW0Vx0cwNKl
-         tUpI6vapXJ9BaO/oXxWXXxNHBFDrn2Z28PTpuC3+6rP55W/ehE/0fQlc8RKMjZikpFKC
-         CTA9lGu1VmI36HMfaB++xzWVXlllIVxCCxvwy5VYiPQ5cAUgq02Nk02VPhjaIccEp4jZ
-         2hrxUmAWiwxiHk8MbCym7Mal+XnKJK8lItpWv6AXCY4oG/Z8Bq5p88wMA1jlez+Uq2cH
-         MlbDtjAMQyGkx6xsZjiZTpHT7eXgB+Xbc52QnVbrftLMD2ubnLzNggHJEfIrsedvLlCS
-         8B9w==
-X-Gm-Message-State: AG10YOQA9ikdzL5OlaN/MC44Ilt56ZDz3GNe95aTwxxvv2cO4xMHlDqJZDJ6XkalqD1VPw==
-X-Received: by 10.140.18.114 with SMTP id 105mr6606644qge.41.1455772711963;
-        Wed, 17 Feb 2016 21:18:31 -0800 (PST)
-Received: from ubuntu.twitter.corp? ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id q22sm1965322qkl.19.2016.02.17.21.18.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Feb 2016 21:18:30 -0800 (PST)
-X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
-In-Reply-To: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=xE1DiTGT8VE8HOgrymzsxGa6UbYb0hkMrLpw1CRDZu0=;
+        b=d87JHkPHw6WqVlqsTz5+lB3yZNJSGvWFvYXPiCvrs07m/VH3sx+jQRUXdPZcMbNxso
+         xa8ivRBv1feO8fgtbed4hx/9D6KHyh5CrYBOQBpFvckGRNX7VKVYHqNgM91ZFhEHewGn
+         wXeyrbKaFEQLs7l3ZwH1MGjSIA22TmYkbE3rGM+ey9qLV66b8Tgoj1Psvv1aQlQ7LUy8
+         2n2mgpe8MU5nGno1fYMJrpmGUf+H2sgQq8dueqTSdQUWNfUUxQRVJonoU0LGqpIEFNR1
+         YSgItJjDTWw1cwEgY5aAAWG0wyGieb4c2bSlA67BOCyXLYv/xbID/kGEGDnAAZ1TlWu+
+         y8Ng==
+X-Gm-Message-State: AG10YORzPjsmbHnrPo12XQ5XXAHOb5EhvcHjbAg3Medf8AWWTFRG0Yc+8y7rIJc4otLdQw==
+X-Received: by 10.28.57.68 with SMTP id g65mr2153237wma.56.1455784863740;
+        Thu, 18 Feb 2016 00:41:03 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB4227.dip0.t-ipconnect.de. [93.219.66.39])
+        by smtp.gmail.com with ESMTPSA id z127sm1835684wme.5.2016.02.18.00.41.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 18 Feb 2016 00:41:02 -0800 (PST)
+In-Reply-To: <vpqh9h7f9kz.fsf@anie.imag.fr>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286600>
 
-Add a ref backend method for do_for_each_ref.
 
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- refs.c               | 8 ++++++++
- refs/files-backend.c | 7 +++++--
- refs/refs-internal.h | 5 +++++
- 3 files changed, 18 insertions(+), 2 deletions(-)
+On 17 Feb 2016, at 19:58, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
 
-diff --git a/refs.c b/refs.c
-index bfe3b4e..253e566 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1233,3 +1233,11 @@ int resolve_gitlink_ref(const char *path, const char *refname,
- {
- 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
- }
-+
-+int do_for_each_ref(const char *submodule, const char *base,
-+		    each_ref_fn fn, int trim, int flags,
-+		    void *cb_data)
-+{
-+	return the_refs_backend->do_for_each_ref(submodule, base, fn, trim,
-+						 flags, cb_data);
-+}
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index dec8575..34c414b 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1735,8 +1735,9 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
-  * value, stop the iteration and return that value; otherwise, return
-  * 0.
-  */
--int do_for_each_ref(const char *submodule, const char *base,
--		    each_ref_fn fn, int trim, int flags, void *cb_data)
-+static int files_do_for_each_ref(const char *submodule, const char *base,
-+				 each_ref_fn fn, int trim, int flags,
-+				 void *cb_data)
- {
- 	struct ref_entry_cb data;
- 	struct ref_cache *refs;
-@@ -3471,4 +3472,6 @@ struct ref_storage_be refs_be_files = {
- 	files_resolve_ref_unsafe,
- 	files_verify_refname_available,
- 	files_resolve_gitlink_ref,
-+
-+	files_do_for_each_ref,
- };
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ed458fb..1caeb61 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -224,6 +224,9 @@ typedef const char *resolve_ref_unsafe_fn(const char *ref,
- typedef int verify_refname_available_fn(const char *refname, struct string_list *extra, struct string_list *skip, struct strbuf *err);
- typedef int resolve_gitlink_ref_fn(const char *path, const char *refname,
- 				   unsigned char *sha1);
-+typedef int do_for_each_ref_fn(const char *submodule, const char *base,
-+			       each_ref_fn fn, int trim, int flags,
-+			       void *cb_data);
- 
- struct ref_storage_be {
- 	struct ref_storage_be *next;
-@@ -237,6 +240,8 @@ struct ref_storage_be {
- 	resolve_ref_unsafe_fn *resolve_ref_unsafe;
- 	verify_refname_available_fn *verify_refname_available;
- 	resolve_gitlink_ref_fn *resolve_gitlink_ref;
-+
-+	do_for_each_ref_fn *do_for_each_ref;
- };
- 
- extern struct ref_storage_be refs_be_files;
--- 
-2.4.2.767.g62658d5-twtrsrc
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> Coincidentally I started working on similar thing already (1) and I have
+>> lots of ideas around it.
+> 
+> I guess it's time to start sharing these ideas then ;-).
+> 
+> I think there's a lot to do. If we want to push this idea as a GSoC
+> project, we need:
+> 
+> * A rough plan. We can't expect students to read a vague text like
+>  "let's make Git safer" and write a real proposal out of it.
+> 
+> * A way to start this rough plan incrementally (i.e. first step should
+>  be easy and mergeable without waiting for next steps).
+> 
+> Feel free to start writting an idea for
+> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+> ideas before Friday. We can polish them later if needed.
+
+I published my ideas here:
+https://github.com/git/git.github.io/pull/125/files
+
+Do you think that works as start or do we need more detailed, hands-on
+instructions?
+
+Thanks,
+Lars
