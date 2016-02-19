@@ -1,113 +1,111 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 21/25] fetch: define shallow boundary with --shallow-exclude
-Date: Thu, 18 Feb 2016 20:35:54 -0500
-Message-ID: <CAPig+cRHOKkaGmSRioEqYYmWzDazNinq2owwYmKyQwOFDLvjig@mail.gmail.com>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
-	<1454576641-29615-22-git-send-email-pclouds@gmail.com>
-	<CAPig+cQA6yV369b7hM_Q8aPuAwF8tR1xT=jr1r2PH1KsCtHWtQ@mail.gmail.com>
-	<CACsJy8B=p0frmU8ahc9bnk-uoDPNUT_6UB0MVRPiLc9DqNz3vQ@mail.gmail.com>
-	<CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
-	<20160215081539.GA12609@lanh>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
+Date: Fri, 19 Feb 2016 09:54:32 +0700
+Message-ID: <CACsJy8AEOzSi-yJo3eJLSv5s6RW1sZBw+G2Y7cypGb2b+p0QLg@mail.gmail.com>
+References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
+ <1455772670-21142-26-git-send-email-dturner@twopensource.com>
+ <20160218085023.GA30049@lanh> <1455827001.7528.87.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 02:36:33 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 03:55:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWZzj-0000W5-9S
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 02:36:31 +0100
+	id 1aWbDr-0008Cp-4X
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 03:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948121AbcBSBf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 20:35:57 -0500
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:33911 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1948102AbcBSBfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 20:35:55 -0500
-Received: by mail-vk0-f46.google.com with SMTP id e185so61639044vkb.1
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 17:35:55 -0800 (PST)
+	id S2992752AbcBSCzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 21:55:05 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:34623 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992749AbcBSCzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 21:55:03 -0500
+Received: by mail-lf0-f54.google.com with SMTP id j78so45300562lfb.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 18:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Qf1URTlEZNX8B16TprFJ64atSlF+fWEsBQav5jea/QM=;
-        b=G6/v+cISUgnYG0m2FZjSwDroTqwJQiMi8Y1/EwxvGhvLv15tzkQApY2/BHf/4QBuGI
-         fJ/m0A+/A/a7ujRRIX8oW5vNvK2Qrv8KEJsXD/bluFBFsIy1JY9bZqf9ujNzOm6b7uvl
-         u95u4ErGzpcNBsiemxCsehCT++KlFT2Ovw4ASjI8jH/01wKnNRoHW5hxjtlM1RsCgW0m
-         iU7FiQCA75sP53hBdSmCM/1/+bJF6ieWZfqSf852jQ+6YqNhfde0SrIzRIeSCsMe8lbZ
-         DMcIeRso73n8edprQ4pxLjnHBerzOQUysV9dcHMosFLNjyCmwscIUrH4ST8xfr0BILPP
-         n7aA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=jgncnJZxMexkObXUvFLhaJ+Bn/Ub3UJVW9bTTlQTgCc=;
+        b=zfk/+1uvGyDDRQ+l0J6wWw3jdlQFiHqvOkci8Lco8c1diAKgBHq2SSYZyJYDfQiRMC
+         wwsnHoC8463uoggo4M/DYgSmIcOxD0iKvt0v2BmruwTTFSmSy4kSolkWRyRF9+8mo451
+         Z8la8JQMUAQ67T9WByAAJXxObNQTPbuyVLejNS2ozc9wRIhm2kxj7fyhGVljx8GGTH/c
+         g8RmthzUVc+Jdy8mPSlWq2iUYRSnomGtpQmaxWXUUIIVLeFIIz9eZayJ395SyuwnI+4i
+         P5i0d/myiWASGsf1rJ/TPyOjg4bAbeYOchcoyuU0d84xBmWxdFWOPL9c+uB8AkcdVJe5
+         ckcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Qf1URTlEZNX8B16TprFJ64atSlF+fWEsBQav5jea/QM=;
-        b=HukYAKLclaaQyBEiKvSeSQAsCoS5veZQD+2aJBVzf7TE6Qsa+c8vtX7SJbvoJmqGbR
-         YNX5sVvH4FVQhtrjQ6qokXVBbbvISSZ9Mbia3vGbqcQ2ROAPOVtI3uBzlaiWvFKjwvl7
-         Vm6ETa23WVndFRZTmJCtaIUwGnv0unR1c7MJ0sJtjd9uNs0QY1+I1eTjZUrCD6am3vOg
-         XBGW6rgqDHEY+oAURPcwMQZLiHq+LCvLaW/hr7fSDZdyvg+r3LH8KXjZKf7QKh3Gosp4
-         qhORxu+S2tWxX/e/jV9BOqFULYt8SS8dsjkkdAdrxLLuhp1dLHJmV4Qr+PPoOZDdwF53
-         fWLg==
-X-Gm-Message-State: AG10YOR/WqWVjAKce+76bYvUpI5LmmfzCGtfNYTW493r3uhMCCGOcZlFAp8w53B10rLwcq3kcoqYvdNBZYhWuQ==
-X-Received: by 10.31.182.143 with SMTP id g137mr8744461vkf.45.1455845754769;
- Thu, 18 Feb 2016 17:35:54 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 18 Feb 2016 17:35:54 -0800 (PST)
-In-Reply-To: <20160215081539.GA12609@lanh>
-X-Google-Sender-Auth: wLgJAFQSjQADAg95O4jFwntXSKs
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=jgncnJZxMexkObXUvFLhaJ+Bn/Ub3UJVW9bTTlQTgCc=;
+        b=jpYInrOQoBokQ/HgKtlY6zXvmLniwcC1U1eCUaPmmYcgJizyNuaIpamVo6md6NsKhF
+         aheP58qzs+ded+XD+34rtNi2+/OXTXPVJOG6RwAVvmf6a3FXGUVCHB0vMetBJllx16sO
+         krWpRr7/QbYnsIwOKOLvGDQzziP936dJBotmpf4xkrHTillM123M9pb1am7WdtuLPFO/
+         yb0jRpyUqmxF/mFOYnqj8bj3w6K3lwQI8n8aQ6XD98NiKJDVjfLMrobTGjQGMrZ+1U+3
+         j4tToIfY3NCK8fDNsaXrshbpkr3+kcH/uhwOlq0DF7bX+M0peAjWl5QkzOETbV+Yf7+h
+         8B0Q==
+X-Gm-Message-State: AG10YOS2Z/pwYwZirD761B0iNtWalL+JDq7X0+Y914IW2RPPZQTGlm404n3Gdj7jOaZlTvsAfRK5T4EOngX4CQ==
+X-Received: by 10.25.212.197 with SMTP id l188mr4478063lfg.118.1455850501800;
+ Thu, 18 Feb 2016 18:55:01 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 18 Feb 2016 18:54:32 -0800 (PST)
+In-Reply-To: <1455827001.7528.87.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286653>
 
-On Mon, Feb 15, 2016 at 3:15 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Feb 15, 2016 at 12:52:26AM -0500, Eric Sunshine wrote:
->> Yes, dropping 'const' was implied. I didn't examine it too deeply, but
->> it did not appear as if there would be any major fallout from dropping
->> 'const'. It feels a bit cleaner to keep it all self-contained than to
->> have that somewhat oddball static string_list*, but it's not such a
->> big deal that I'd insist upon a rewrite.
+On Fri, Feb 19, 2016 at 3:23 AM, David Turner <dturner@twopensource.com> wrote:
+>> > +static int read_per_worktree_ref(const char *submodule, const char
+>> > *refname,
+>> > +                            struct MDB_val *val, int
+>> > *needs_free)
+>>
+>> From what I read, I suspect these _per_worktree functions will be
+>> identical for the next backend. Should we just hand over the job for
+>> files backend? For all entry points that may deal with per-worktree
+>> refs, e.g. lmdb_resolve_ref_unsafe, can we check ref_type() first
+>> thing, if it's per-worktree we call
+>> refs_be_files.resolve_ref_unsafe()
+>> instead?  It could even be done at frontend level,
+>> e.g. refs.c:resolve_ref_unsafe().
+>>
+>> Though I may be talking rubbish here because I don't know how whether
+>> it has anything to do with transactions.
 >
-> Dropping 'const' is not a big deal. But before we do that, how about
-> this instead? I think the code looks better, and the compiler can
-> still catch invalid updates to deepen_not.
+> The reason I did it this way is that some ref chains cross backend
+> boundaries (e.g. HEAD -> refs/heads/master).  But if we have other
+> backends later, we could generalize.
 
-I like this better, too.
+Crossing backends should go through frontend again, imo. But I don't
+really know if it's efficient.
 
-> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-> index 0402e27..07570be 100644
-> --- a/builtin/fetch-pack.c
-> +++ b/builtin/fetch-pack.c
-> @@ -50,6 +50,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->         struct child_process *conn;
->         struct fetch_pack_args args;
->         struct sha1_array shallow = SHA1_ARRAY_INIT;
-> +       struct string_list deepen_not = STRING_LIST_INIT_DUP;
+>> > +static int lmdb_create_symref(const char *ref_target,
+>> > +                         const char *refs_heads_master,
+>> > +                         const char *logmsg)
+>> > +{
+>> > +
+>> ...
+>> > +   mdb_put_or_die(&transaction, &key, &val, 0);
+>> > +
+>> > +   /* TODO: Don't create ref d/f conflicts */
+>>
+>> I'm not sure I get this comment. D/F conflicts are no longer a thing
+>> for lmdb backend, right?
 >
->         packet_trace_identity("fetch-pack");
->
-> @@ -108,6 +109,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->                         args.deepen_since = xstrdup(arg);
->                         continue;
->                 }
-> +               if (skip_prefix(arg, "--shallow-exclude=", &arg)) {
-> +                       string_list_append(&deepen_not, arg);
-> +                       continue;
-> +               }
->                 if (!strcmp("--no-progress", arg)) {
->                         args.no_progress = 1;
->                         continue;
-> @@ -135,6 +140,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->                 }
->                 usage(fetch_pack_usage);
->         }
-> +       if (deepen_not.nr)
-> +               args.deepen_not = &deepen_not;
->
->         if (i < argc)
->                 dest = argv[i++];
-> --
-> Duy
+> I'm trying to avoid the lmdb backend creating a set of refs that the
+> files backend can't handle.  This would make collaboration with other
+> versions of git more difficult.
+
+It already is. If you create refs "foo" and "FOO" on case sensitive
+file system and clone it on a case-insensitive one, you face the same
+problem. We may have an optional configuration knob to prevent
+incompatibilities with files backend, but I think that should be done
+(and enforced if necessary) outside backends.
+-- 
+Duy
