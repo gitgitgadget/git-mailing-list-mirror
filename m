@@ -1,96 +1,100 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Fri, 19 Feb 2016 16:41:45 +0700
-Message-ID: <CACsJy8AySJdgntW3hv+J9zuGMAKV5H4suLJp2jy_xRuGY=6evQ@mail.gmail.com>
-References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
- <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr>
- <CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com> <vpq60xl88zk.fsf@anie.imag.fr>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] git-p4.py: Don't try to rebase on submit from bare repository
+Date: Fri, 19 Feb 2016 09:47:13 +0000
+Message-ID: <CAE5ih78G1JczQvUEwzz3TmVPZuKUJVcxwZAsDdNzUbqAyHcqqA@mail.gmail.com>
+References: <1455749160-2017-1-git-send-email-aidecoe@aidecoe.name>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 19 10:42:49 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: =?UTF-8?B?QW1hZGV1c3ogxbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
+X-From: git-owner@vger.kernel.org Fri Feb 19 10:47:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWhaL-0006BU-08
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:42:49 +0100
+	id 1aWhf3-0001N3-Uh
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423150AbcBSJmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 04:42:19 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:35017 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161050AbcBSJmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 04:42:16 -0500
-Received: by mail-lf0-f42.google.com with SMTP id l143so50152968lfe.2
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:42:15 -0800 (PST)
+	id S1427371AbcBSJrg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2016 04:47:36 -0500
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:33144 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1427368AbcBSJrU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2016 04:47:20 -0500
+Received: by mail-ob0-f171.google.com with SMTP id jq7so102660894obb.0
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sakiIHxEpCdgv2KVBGPpCJ55g6HjrWC0osb9L2Mr0Bo=;
-        b=ICi/zuUrb752VOcvaIfsLrv9Cdv4iJO+tZ3rBUFzd2lNU+AiaWt82s2rTDnl7IcHpj
-         Eu81L5xLsy6ifyoJp4bU9+nI8WtTRoC2w4IMSL5+cdzUH2z6WWwz1zN7YgrSCB8bHDgK
-         f/2EGFs4brL6VzgXM251U0G/5yHOvnwPO4LddwjYLIv+d/oc9mTEFonOl4s7AhnSAsTQ
-         3i8UhmJnjYld990WP7Udmchn31oQ7rEdVb6MJbDqPg7rgL5m4sqZvLXU5Brh9CsxnRKi
-         xlZG7Lo0U2R5w3uV4JApclQSDBk/dgmyUBdk5Gq+Q+X+9KpO1cTyIX3XtwKGtACz82o5
-         5WgQ==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OOtC07sBR0GZ7mbOp7zICvQFGkI9V0+PtML0VjhHGJw=;
+        b=PwX1SQ5zKpX672U6xR1OobkaVdPHd8vKA+ByLFUG5tCnDcOPIRwGSN2gb/p/zgg5d7
+         1mNw7uR/jpqvS01WVVUwJXWl/VqSeF3R7nOIkjxOJq41l/7BFvvs2ReGaO8a6AvUD9jw
+         8DJKoiFCnZhc0hVujVWadbBdD962Crn4xrF/k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=sakiIHxEpCdgv2KVBGPpCJ55g6HjrWC0osb9L2Mr0Bo=;
-        b=mMvnbhk1DmO6qqL/77hhADqlJzU8B5K+zm+1vBj9oL/KnDD79Jbu83eNv5DIK7Ee9H
-         a7h6dmvpxDA0McgWCu+DENIQxuv5SJVHcubRQWHAi+G9ASuZH4MstrdR70OGf2uH7veK
-         aFjZHqz5c0Vy8SkQJBHp/8UC5J3e15kbSWQrFQRdJ8sWwaqU3pdLjL8tcn82UVnpvBQS
-         BmcSeRUcpwu2sDRR+OJkjwsKUOuOaUHYJlsTvngPcAKFoAu6GX19J9k085xVQ86y9Yq8
-         P6lW2P+XLmMh4PKe3sMYRNXGnJZWlrToJMSPFZty8/lRL6O0XIZ+xCVNaLuDHhC57h81
-         qKsw==
-X-Gm-Message-State: AG10YOTRj/NFoplBgXwSYcZsiC4/Lf22a2dmwteqqCUlpgxVit+kmQBKRfSPPjU5OVVbdYTY5sd/XhbzGFN8+Q==
-X-Received: by 10.25.212.197 with SMTP id l188mr4997833lfg.118.1455874935250;
- Fri, 19 Feb 2016 01:42:15 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Fri, 19 Feb 2016 01:41:45 -0800 (PST)
-In-Reply-To: <vpq60xl88zk.fsf@anie.imag.fr>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OOtC07sBR0GZ7mbOp7zICvQFGkI9V0+PtML0VjhHGJw=;
+        b=gTfUsPfw2frTTtGlSpLY/Wsrqf0mQqQYR9jvx/tJ2YSO81s4z0LVkmUT7/c2ZpYLAG
+         b0VOrgUsdXSnwISwEkDomSWM9NlLz71XDguVcHpaD5fNohYwL5rP/o4AOhwU7fwQ8VgC
+         Wy4Jt8luMaNL9/wKPbEMko5Jrd/TfGTXU4QiaoT2caFMqTL1dAqRRSQ8DBo4d589Kgaf
+         MDTOuqaFHfBn3HLUjc11EOkJX/7bIBOpNGHfWMMFRzHRvTWzBOsI+gqIWnsKdJVMl+a3
+         u2GogJJ+WH9xQmwvEJeAt9Zdq7L33PFqFZ/Ao9eq0SfUHlPcoYuu+SLThdt6UAQCh+7g
+         /tFw==
+X-Gm-Message-State: AG10YORKYs1yqfFBivlJhNtsBdV3h3SfO71yj6lc9DZqt61DR8wO1fW/2zx1RxoNsz70lZNAJ2SpSphKD1KbRQ==
+X-Received: by 10.60.178.70 with SMTP id cw6mr10952379oec.46.1455875233263;
+ Fri, 19 Feb 2016 01:47:13 -0800 (PST)
+Received: by 10.202.214.18 with HTTP; Fri, 19 Feb 2016 01:47:13 -0800 (PST)
+In-Reply-To: <1455749160-2017-1-git-send-email-aidecoe@aidecoe.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286680>
 
-On Fri, Feb 19, 2016 at 2:17 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->> with David's multiple ref backend work, we could have a third,
->> no-dependency backend. We can use index format to store refs.
+On 17 February 2016 at 22:46, Amadeusz =C5=BBo=C5=82nowski <aidecoe@aid=
+ecoe.name> wrote:
+> git-p4 can be successfully used from bare repository (which acts as a
+> bridge between Perforce repository and pure Git repositories). On sub=
+mit
+> git-p4 performs unconditional rebase. Do rebase only on non-bare
+> repositories.
+
+This looks obviously sensible and good to me, ack.
+
+Thanks!
+Luke
+
+
+
+> ---
+>  git-p4.py | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> This sounds like an interesting but ambitious project for a GSoC. There
-> are a lot of new stuff to understand for someone potentially new to
-> Git's codebase. And it's hard to work incrementally: the result would
-> hardly be mergeable before being almost finished.
-
-On the other hand, the actual amount of code they write is roughly
-about 1700 lines of refs/lmdb-backend.c. Which I guess can be written
-in a month once you know what's going on, basically how refs are
-handled (I think documents have been greatly improved), git object
-manipulation and optionally index manipulation  (if we store in index
-instead of trees). I think it's manageable. But then I haven't
-interacted with students for a looong time.
-
-> I think it's interesting to offer the idea, but there should be a
-> warning for the student about the difficulties.
-
-Yep.
-
-> Would you be willing to (co-)mentor?
-
-I can't guarantee I will not disappear for a couple months again like
-last year. It depends on $DAY_JOB. So maybe co-mentor position, but my
-other co-mentor should be ready for that situation.
--- 
-Duy
+> diff --git a/git-p4.py b/git-p4.py
+> index c33dece..e00cd02 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2059,8 +2059,9 @@ class P4Submit(Command, P4UserMap):
+>                  sync.branch =3D self.branch
+>              sync.run([])
+>
+> -            rebase =3D P4Rebase()
+> -            rebase.rebase()
+> +            if not gitConfigBool("core.bare"):
+> +                rebase =3D P4Rebase()
+> +                rebase.rebase()
+>
+>          else:
+>              if len(applied) =3D=3D 0:
+> --
+> 2.7.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
