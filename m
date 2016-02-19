@@ -1,146 +1,96 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 14/25] shallow.c: implement a generic shallow boundary
- finder based on rev-list
-Date: Fri, 19 Feb 2016 16:30:23 +0700
-Message-ID: <20160219093023.GA12470@lanh>
-References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
- <1454576641-29615-15-git-send-email-pclouds@gmail.com>
- <xmqqvb5y7vuj.fsf@gitster.mtv.corp.google.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 19 Feb 2016 16:41:45 +0700
+Message-ID: <CACsJy8AySJdgntW3hv+J9zuGMAKV5H4suLJp2jy_xRuGY=6evQ@mail.gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+ <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr>
+ <CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com> <vpq60xl88zk.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 10:30:51 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 19 10:42:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWhOk-0006UZ-1y
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:30:50 +0100
+	id 1aWhaL-0006BU-08
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030273AbcBSJaH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2016 04:30:07 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33044 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751351AbcBSJaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 04:30:00 -0500
-Received: by mail-pa0-f47.google.com with SMTP id fl4so47589561pad.0
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:29:59 -0800 (PST)
+	id S1423150AbcBSJmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 04:42:19 -0500
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:35017 "EHLO
+	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161050AbcBSJmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 04:42:16 -0500
+Received: by mail-lf0-f42.google.com with SMTP id l143so50152968lfe.2
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:42:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=fr3mlOucWHRrbebgenBQSVCEDYl+1BF2+K1Ek8eaCks=;
-        b=b8yP6ZLUAuRsVv9x/jov0URpmuR3Jv1Odbpz5+HyOWqr+rr+lkglzikGWYSeNPUlJ+
-         9FlPzXnGfzQSNWEbMinrZIKPX95l15RuhkTDyYAPM7HFyC7NkVm29lSoQViQcCHde1xu
-         MWq4sbHX1BsxrQnqbhsnJ4sXq8qfZtGRza8dnxpzujJzUtIpHaVMJ1beBsZqjP5kxtB8
-         a+MW0jKCsU6mDNFcuIPmnBoNAObNjB0Ylbeh+XqHyxtRGJ8zFdK1RLqrxNp9rydbt3qZ
-         GCjtGP9v9ni6k6UPUhiLaK+/HOj+dZGUpWk+6RIZUUB0L6f/PAYvxYjHRg8ztAzLcN+f
-         eV7g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sakiIHxEpCdgv2KVBGPpCJ55g6HjrWC0osb9L2Mr0Bo=;
+        b=ICi/zuUrb752VOcvaIfsLrv9Cdv4iJO+tZ3rBUFzd2lNU+AiaWt82s2rTDnl7IcHpj
+         Eu81L5xLsy6ifyoJp4bU9+nI8WtTRoC2w4IMSL5+cdzUH2z6WWwz1zN7YgrSCB8bHDgK
+         f/2EGFs4brL6VzgXM251U0G/5yHOvnwPO4LddwjYLIv+d/oc9mTEFonOl4s7AhnSAsTQ
+         3i8UhmJnjYld990WP7Udmchn31oQ7rEdVb6MJbDqPg7rgL5m4sqZvLXU5Brh9CsxnRKi
+         xlZG7Lo0U2R5w3uV4JApclQSDBk/dgmyUBdk5Gq+Q+X+9KpO1cTyIX3XtwKGtACz82o5
+         5WgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=fr3mlOucWHRrbebgenBQSVCEDYl+1BF2+K1Ek8eaCks=;
-        b=TIPvyh+UB6MclUziyjd+3mJECy+WUnE2RSMfdClrSeEJJZUqnb9TIZGjGL3RoAZqAD
-         V5BYIGLNuiEUw1FhyM2a/YbjhNpSgzjoOhpErUhmfnCco9h+TPtjXKawWoJkOOjl+zT3
-         SOBqMBxVtuyJl0/kcs72VqhjSFsDB4/re0ocra9OqmKBRJ4N1XIxha3wh1FNptli34T5
-         EUaOtXQxeuiht4Htm/uXOZjkJ8wv5xY6RX3wq/j2cDpseqSWsBJ0G5g2lHVtMdyUx6dZ
-         1ZpSF3aWqQkBLWVtrf+e3xEZTp8Zs8dB1tGkvjgsq6CLVKZUIST3AbJjS/EK8ImdXP+S
-         RgPQ==
-X-Gm-Message-State: AG10YORIBdUNzJbPTknfMRa7FkjWWd4xdWFW61kWtgb2Vim4NNOnjAgufMV0HzNqVivJRA==
-X-Received: by 10.66.252.100 with SMTP id zr4mr16330591pac.111.1455874199612;
-        Fri, 19 Feb 2016 01:29:59 -0800 (PST)
-Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id dg12sm16178451pac.47.2016.02.19.01.29.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Feb 2016 01:29:57 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 19 Feb 2016 16:30:23 +0700
-Content-Disposition: inline
-In-Reply-To: <xmqqvb5y7vuj.fsf@gitster.mtv.corp.google.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=sakiIHxEpCdgv2KVBGPpCJ55g6HjrWC0osb9L2Mr0Bo=;
+        b=mMvnbhk1DmO6qqL/77hhADqlJzU8B5K+zm+1vBj9oL/KnDD79Jbu83eNv5DIK7Ee9H
+         a7h6dmvpxDA0McgWCu+DENIQxuv5SJVHcubRQWHAi+G9ASuZH4MstrdR70OGf2uH7veK
+         aFjZHqz5c0Vy8SkQJBHp/8UC5J3e15kbSWQrFQRdJ8sWwaqU3pdLjL8tcn82UVnpvBQS
+         BmcSeRUcpwu2sDRR+OJkjwsKUOuOaUHYJlsTvngPcAKFoAu6GX19J9k085xVQ86y9Yq8
+         P6lW2P+XLmMh4PKe3sMYRNXGnJZWlrToJMSPFZty8/lRL6O0XIZ+xCVNaLuDHhC57h81
+         qKsw==
+X-Gm-Message-State: AG10YOTRj/NFoplBgXwSYcZsiC4/Lf22a2dmwteqqCUlpgxVit+kmQBKRfSPPjU5OVVbdYTY5sd/XhbzGFN8+Q==
+X-Received: by 10.25.212.197 with SMTP id l188mr4997833lfg.118.1455874935250;
+ Fri, 19 Feb 2016 01:42:15 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Fri, 19 Feb 2016 01:41:45 -0800 (PST)
+In-Reply-To: <vpq60xl88zk.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286679>
 
-On Mon, Feb 08, 2016 at 01:09:24PM -0800, Junio C Hamano wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->=20
-> > Instead of a custom commit walker like get_shallow_commits(), this =
-new
-> > function uses rev-list to mark NOT_SHALLOW to all reachable commits=
-,
-> > except borders. The definition of reachable is to be defined by the
-> > protocol later. This makes it more flexible to define shallow bound=
-ary.
-> >
-> > Note: if a commit has one NOT_SHALLOW parent and one SHALLOW parent=
-,
-> > then it's considered the boundary. Which means in the client side, =
-this
-> > commit has _no_ parents. This could lead to surprising cuts if we'r=
-e not
-> > careful.
-> >
-> > Another option is to include more commits and only mark commits who=
-se
-> > all parents are SHALLOW as boundary.
->=20
-> The second and third are greek to me at this point ;-) but hopefully
-> they will become clear as we read on.
+On Fri, Feb 19, 2016 at 2:17 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+>> with David's multiple ref backend work, we could have a third,
+>> no-dependency backend. We can use index format to store refs.
+>
+> This sounds like an interesting but ambitious project for a GSoC. There
+> are a lot of new stuff to understand for someone potentially new to
+> Git's codebase. And it's hard to work incrementally: the result would
+> hardly be mergeable before being almost finished.
 
-Yeah. Everything looks clearer with illustration. This should be a
-better. The question is should we do something about it now, or leave
-it as is.
+On the other hand, the actual amount of code they write is roughly
+about 1700 lines of refs/lmdb-backend.c. Which I guess can be written
+in a month once you know what's going on, basically how refs are
+handled (I think documents have been greatly improved), git object
+manipulation and optionally index manipulation  (if we store in index
+instead of trees). I think it's manageable. But then I haven't
+interacted with students for a looong time.
 
-I'm tempted to go with "the first way" in future (so add some comments
-about this in is_repository_shallow, instead of leaving it as commit
-message in this patch).
+> I think it's interesting to offer the idea, but there should be a
+> warning for the student about the difficulties.
 
--- 8< --
-The way we find find border is paint all reachable commits NOT_SHALLOW.
-Any of them that "touches" commits without NOT_SHALLOW flag are
-considered shallow (e.g. zero parents via grafting mechanism). Shallow
-commits and their true parents are all marked SHALLOW. Then NOT_SHALLOW
-is removed from shallow commits at the end.
+Yep.
 
-There is interesting observation, though somewhat off topic for this
-patch. In the following graph, "x" is unreachable commits. "b" is the
-parent of "a".
+> Would you be willing to (co-)mentor?
 
-           x -- a -- o
-	       /    /
-         x -- b -- o
-
-And as a result, "a" and "b" are both considered shallow commits. After
-grafting occurs at the client side, what we see is
-
-                a -- o
-	            /
-              b -- o
-
-Notice that because of grafting, "a" has zero parents, so "b" is no
-longer a parent of "a".
-
-This is unfortunate and may be solved in two ways. The first is change
-the way shallow grafting works and keeps "b -- a" connection if "b"
-exists and is a shallow commit.
-
-The second way is produce this graph (at client side) instead
-
-           x -- a -- o
-	       /    /
-              b -- o
-
-Which means we mark "x" as a shallow commit instead of "a".
--- 8< --
---
+I can't guarantee I will not disappear for a couple months again like
+last year. It depends on $DAY_JOB. So maybe co-mentor position, but my
+other co-mentor should be ready for that situation.
+-- 
 Duy
