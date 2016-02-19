@@ -1,96 +1,103 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: git submodule should honor "-c credential.helper" command line argument
-Date: Thu, 18 Feb 2016 23:51:25 -0800
-Message-ID: <CA+P7+xoN+ye38tHiXc=WGenuuF0NVA1R-3nfd5_LNjOF01EJfQ@mail.gmail.com>
-References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
- <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
- <CA+P7+xr4gQFPsUiuqSzMsUJP6_W8FnXBwX1Xes=XjksuTs=+hQ@mail.gmail.com>
- <56B74B17.4040304@syntevo.com> <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
- <CA+P7+xpHNHVSJnVg3HwiBjWxRdSpLXCsm3GpWst=BNyhLMVd5A@mail.gmail.com>
- <20160219043019.GA14764@sigill.intra.peff.net> <CA+P7+xr9dLOyaVky1jvXm7MkF0JUqs5SadrTdr4o83baMp397A@mail.gmail.com>
- <20160219074633.GA780@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, libgit2 and git.git
+Date: Fri, 19 Feb 2016 09:06:23 +0100
+Message-ID: <vpq1t896s5c.fsf_-_@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
+	<xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
+	<vpqziuzdr5r.fsf@anie.imag.fr>
+	<20160217204528.GA22893@sigill.intra.peff.net>
+	<xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
+	<1455788324.3786.14.camel@dwim.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:51:50 2016
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
+X-From: git-owner@vger.kernel.org Fri Feb 19 09:06:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWfqw-00014M-2C
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 08:51:50 +0100
+	id 1aWg5U-0004VZ-6m
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 09:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441AbcBSHvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 02:51:46 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:37640 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751488AbcBSHvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 02:51:45 -0500
-Received: by mail-ig0-f170.google.com with SMTP id 5so31263227igt.0
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 23:51:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+lu80zpNn93EgCB7mLG9y4pfKE1XtoWvEehAWBu3Cr0=;
-        b=NlSGKzbL3IyInobjiYEIGj8KtamuJOC26yI6ycH4yGJx0S/YOkW8Sk+/5t0Y3HJ9Ne
-         GgxrXIkLYDDQJmBi48apcMAoO59gz6BSuauEdk/BljNIz4CUkFR+DngfcEFiQIgdeH4M
-         DRV0jHnfj2AEg1jMdoHJ5Qt56IprcohUplEZEq3oibvN0OnA1qbvpMl/Kkgmq+29mHlM
-         CYkpGL7cbZcMM6LIIJkdm9I9WL2UHdAiosbdjZIqIDa6eKC8ssfTi0BiSQkhJsrzkQWt
-         yL3hqS0NQRBo+xz4RTClmjdaEPIRcXHf6JADdM51zL7K4AFuUZ6qRuCNkli55Ho4bmZe
-         lbEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=+lu80zpNn93EgCB7mLG9y4pfKE1XtoWvEehAWBu3Cr0=;
-        b=dTSxhD9WJFnF7Mf3RtGMwAqWT39VjJFl7Soh7FYnEvlzSgqZUrDWfeVKbrVebaJQuZ
-         viz6OWJENkzrhJExei6VGjU8SUJVt1GymV/DrV2EQqaGdVcZWIwfllJWg1n6bvdesalE
-         +n2XkDwmZaMf1I4Q2WPZZu3uRdgZFq0RThJt0DnYtHamIjIuYQf3m3HgzLQgr59puLAw
-         WWIotrB9gXRuoYJhJVg4WMdSzvEChu76yZzUIXJVN81DHx4BF8Vm6XS7qkTyqn8Vfxrf
-         r9InzguU4sULCxCYxA7rrjqK6yn2PAFD+ESYOAELn3nB7nNAypLM8rXdulyy1diQVqmr
-         ntDA==
-X-Gm-Message-State: AG10YORXoa6m7HwQFb9jyawmj4RkBMCnKo7vUh/4gTC3Xt8VZS0/6xkJrJ/eVe6pIYXooq8oIEEWbQ9YnM+NHQ==
-X-Received: by 10.50.72.48 with SMTP id a16mr7326842igv.73.1455868304914; Thu,
- 18 Feb 2016 23:51:44 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Thu, 18 Feb 2016 23:51:25 -0800 (PST)
-In-Reply-To: <20160219074633.GA780@sigill.intra.peff.net>
+	id S1422990AbcBSIGn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2016 03:06:43 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:55230 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422756AbcBSIGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 03:06:42 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1J86NO6010589
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 19 Feb 2016 09:06:24 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1J86OQH031878;
+	Fri, 19 Feb 2016 09:06:24 +0100
+In-Reply-To: <1455788324.3786.14.camel@dwim.me> ("Carlos =?iso-8859-1?Q?Ma?=
+ =?iso-8859-1?Q?rt=EDn?= Nieto"'s
+	message of "Thu, 18 Feb 2016 10:38:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 19 Feb 2016 09:06:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1J86NO6010589
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456473986.92872@fojAOpJgir7Cn3WznkHffw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286666>
 
-On Thu, Feb 18, 2016 at 11:46 PM, Jeff King <peff@peff.net> wrote:
-> To trigger a credential fetch in actual use, you have to clone over
-> http. See the credential tests in t5550, for example.
->
+Carlos Mart=EDn Nieto <cmn@dwim.me> writes:
 
-I'll look at these.
+> We still have most of the same things open as for the 2014 list. I'll
+> ask around to see if we have. Last year I wasn't involved in the
+> candidate selection but IIRC we didn't do a project as none of the
+> applications showed the candidates would be capable of doing the
+> project they were applying for.
 
->> As for how to whitelist config to share with the submodule I am really
->> not 100% sure, since we just clear GIT_CONFIG_PARAMETERS, and I think
->> we'd need a specialized variant of clear_local_git_env_vars specific
->> to submodule then.
->
-> Yeah, you'll have to parse, which is pretty painful. In C, you'd do
-> something like:
+OK. It's essentially too late to change this for this year, but next
+time we should discuss earlier about how we want to organize this
+git.git/libgit2 thing. For example, I think it would make little sense
+to have a git.git microproject and then apply for a libgit2 project
+since we have very different ways of interacting. And honnestly, right
+now the application is really git.git-centric so I don't think it
+attracts students towards libgit2. So, if you want to attract more
+students, we should work on that.
 
-<snip>
+I tried to clarify the situation with libgit2:
 
->
-> but right now git-submodule.sh is all in shell. You'd probably need a
-> special helper from git-submodule--helper, though it might simply make
-> sense to put this off until the submodule code is fully ported to C.
->
+https://github.com/git/git.github.io/commit/94d1747eb9621b3bc892be2f232=
+338b7933ac271
 
-I think the best approach is probably to put this off since I am not
-100% sure how we'd handle environment variables from swapping into
-submoduler--helper and out. That seems really finicky and likely to go
-away once the full port occurs so I am not sure it's worth it.
+Please say if you're happy/unhappy with what I wrote. PRs are still
+welcome after the deadline.
 
-> -Peff
+> I'll ask around to make sure people would be able to be mentors, but =
+I
+> think that we would still like to put forward a few projects (I can
+> send a PR with the projects that we would still like to see to the 20=
+16
+> page).
+
+We don't have this everywhere, but having a "potential mentors" field
+for projects also helps (students, and us, at least to make sure we do
+have mentors).
+
+Cheers,
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
