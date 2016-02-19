@@ -1,200 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv14 3/7] fetching submodules: respect `submodule.fetchJobs` config option
-Date: Fri, 19 Feb 2016 10:17:09 -0800
-Message-ID: <1455905833-7449-4-git-send-email-sbeller@google.com>
-References: <1455905833-7449-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
-	peff@peff.net, sunshine@sunshineco.com,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 19:18:07 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/4] config: add '--sources' option to print the source of a config value
+Date: Fri, 19 Feb 2016 10:26:19 -0800
+Message-ID: <xmqqd1rsd0ac.fsf@gitster.mtv.corp.google.com>
+References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net, ramsay@ramsayjones.plus.com,
+	Johannes.Schindelin@gmx.de
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Fri Feb 19 19:26:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWpd0-0001SY-AJ
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:18:06 +0100
+	id 1aWpl5-0000ca-Ly
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:26:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992848AbcBSSRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 13:17:48 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36140 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992775AbcBSSRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 13:17:33 -0500
-Received: by mail-pf0-f177.google.com with SMTP id e127so55102403pfe.3
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 10:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=b22soMssNbfzGKn/wX83x6i8oPeej2pidijGln2JOAM=;
-        b=d0K9/XEn6E8pZsOWDAdr/3uOlMMeV/LVVIoTjHnDRx1x3IPdYK4AhKPjscZm8mDA9R
-         vK5ubwfrdOttFpPacOy2EMPLNlw5v4OixbvPgWOH9T5jLuhYrvkYvQGHzpHF4F1kgoUz
-         /xxef44M4BxHPhHBC/o5EABbLn9YFMkzjk2vmD0iJ9zj4zjcY2wmwNuREARC76NTHFkx
-         rM6y9Q/4tRpfLuGEyaVvTcofpkpgxd2VtPwIvB7euD463r+ED/WMzzjQUFlZFTvnmanI
-         sbikVAM3DD2eKvQbboztWnGK2isbUD8mhdjWFbd+/kI2F9quRR2EVodac+d3+vx7vibp
-         0E4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=b22soMssNbfzGKn/wX83x6i8oPeej2pidijGln2JOAM=;
-        b=ZvngUKCXw6qqaijNpdr+RrD1BugYhGXc6iiDMUWgOHx5RqOEoz4b/YolVvZ5Uy6xwC
-         +aUJvKygWD47lT7iRQL9oonNNho4u1NFWNNtYMM5xEWjbK2hlY+d+rhg3++xPLC+dcnh
-         rN7ZmMrqZAqE8JEFBVeQ6+zGQZ+/nXXKESfgWp/kqJXGIgQsTTi3WsxZ780lhXCl325Y
-         CLPn/mqVVyriPA6wwPplCHgfGbQbc9enZN59lNUjoGiH4NangiQgCItVtzLAQ93Z82tg
-         upknvluDKmrYi3o4uX+5waBVFjSWixURvf+ZP9kEUK22y03KDyXXCNO9CmxwDbyXOvpe
-         nH/Q==
-X-Gm-Message-State: AG10YORZWOruVka0wy6ePlROfyuogPLX+U6fAwW5YCxLoYIxQMixWa7trmSF7j4MFvggzsby
-X-Received: by 10.98.93.205 with SMTP id n74mr19924720pfj.99.1455905841678;
-        Fri, 19 Feb 2016 10:17:21 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:d444:f36c:1851:bb54])
-        by smtp.gmail.com with ESMTPSA id i13sm19223105pfi.95.2016.02.19.10.17.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 19 Feb 2016 10:17:20 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
-In-Reply-To: <1455905833-7449-1-git-send-email-sbeller@google.com>
+	id S1946525AbcBSS0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 13:26:23 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60902 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1946084AbcBSS0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 13:26:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D251B4474C;
+	Fri, 19 Feb 2016 13:26:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=frkJ09Ya/hxtAO0YMg06/3JC6Kw=; b=ODPqe+
+	tk+ykNIUwk69JPzskQRTfjVtfNOntZ1GDPQDUCAfSkNQMf4qobKo4z3xEjvKynDy
+	yoZJo5ZEImrkfscC5HpeLiljexIqWOttANH6yBXpVerELYZ5WBuT96OmpwS+m0Ao
+	Z6osLhWjDQ94sIL+t6aIFBmrnXv9BPQamqdYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BsjrXR/hrIO7AsQLIvoFpTosCgrI6nFR
+	JiQoBakSkUhYpHsZH1eE9pSyGzOFUzZeafdGpOWhiRe7F6WXitCN160OXC1BfVE5
+	5helukSCig+u+0N4HOH3U5fSfqrLrUNW6GFT0DGUqV6aC5tC8JgsYZgG0gtOyrZG
+	zhvsuK01HyQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C91B54474A;
+	Fri, 19 Feb 2016 13:26:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 30F6F44749;
+	Fri, 19 Feb 2016 13:26:21 -0500 (EST)
+In-Reply-To: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Fri, 19 Feb 2016 10:15:58
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 465524C8-D736-11E5-AF84-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286735>
 
-This allows to configure fetching and updating in parallel
-without having the command line option.
+larsxschneider@gmail.com writes:
 
-This moved the responsibility to determine how many parallel processes
-to start from builtin/fetch to submodule.c as we need a way to communicate
-"The user did not specify the number of parallel processes in the command
-line options" in the builtin fetch. The submodule code takes care of
-the precedence (CLI > config > default).
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> diff to v5:
+> * rename 'type' to 'origin_type' as 'type' is too broad a word in the context
+>   of configuration file (Thanks to the reviewers Junio and Dscho)
+> * add dedicated patch to rename git_config_from_buf to git_config_from_mem
+>   (this change was part of the series since v4 as suggested by Junio but
+>   hidden in the "config: add 'origin_type'" patch)
+>
+> Thanks,
+> Lars
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt    |  6 ++++++
- builtin/fetch.c             |  2 +-
- submodule.c                 | 16 +++++++++++++++-
- submodule.h                 |  2 ++
- t/t5526-fetch-submodules.sh | 14 ++++++++++++++
- 5 files changed, 38 insertions(+), 2 deletions(-)
+Overall this round looks good.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2d06b11..3b02732 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2646,6 +2646,12 @@ submodule.<name>.ignore::
- 	"--ignore-submodules" option. The 'git submodule' commands are not
- 	affected by this setting.
- 
-+submodule.fetchJobs::
-+	Specifies how many submodules are fetched/cloned at the same time.
-+	A positive integer allows up to that number of submodules fetched
-+	in parallel. A value of 0 will give some reasonable default.
-+	If unset, it defaults to 1.
-+
- tag.sort::
- 	This variable controls the sort ordering of tags when displayed by
- 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 586840d..5aa1c2d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
- static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
- static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow;
--static int max_children = 1;
-+static int max_children = -1;
- static const char *depth;
- static const char *upload_pack;
- static struct strbuf default_rla = STRBUF_INIT;
-diff --git a/submodule.c b/submodule.c
-index b38dd51..051f722 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -15,6 +15,7 @@
- #include "thread-utils.h"
- 
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
-+static int parallel_jobs = 1;
- static struct string_list changed_submodule_paths;
- static int initialized_fetch_ref_tips;
- static struct sha1_array ref_tips_before_fetch;
-@@ -169,7 +170,12 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 
- int submodule_config(const char *var, const char *value, void *cb)
- {
--	if (starts_with(var, "submodule."))
-+	if (!strcmp(var, "submodule.fetchjobs")) {
-+		parallel_jobs = git_config_int(var, value);
-+		if (parallel_jobs < 0)
-+			die(_("negative values not allowed for submodule.fetchJobs"));
-+		return 0;
-+	} else if (starts_with(var, "submodule."))
- 		return parse_submodule_config_option(var, value);
- 	else if (!strcmp(var, "fetch.recursesubmodules")) {
- 		config_fetch_recurse_submodules = parse_fetch_recurse_submodules_arg(var, value);
-@@ -772,6 +778,9 @@ int fetch_populated_submodules(const struct argv_array *options,
- 	argv_array_push(&spf.args, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
- 
-+	if (max_parallel_jobs < 0)
-+		max_parallel_jobs = parallel_jobs;
-+
- 	calculate_changed_submodule_paths();
- 	run_processes_parallel(max_parallel_jobs,
- 			       get_next_submodule,
-@@ -1118,3 +1127,8 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
- 	strbuf_release(&rel_path);
- 	free((void *)real_work_tree);
- }
-+
-+int parallel_submodules(void)
-+{
-+	return parallel_jobs;
-+}
-diff --git a/submodule.h b/submodule.h
-index 3464500..3166608 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -26,6 +26,7 @@ struct submodule_update_strategy {
- 	enum submodule_update_type type;
- 	const char *command;
- };
-+#define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
- 
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
-@@ -57,5 +58,6 @@ int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_nam
- 		struct string_list *needs_pushing);
- int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name);
- void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
-+int parallel_submodules(void);
- 
- #endif
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 1241146..954d0e4 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -471,4 +471,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
- 	test_i18ncmp expect.err actual.err
- '
- 
-+test_expect_success 'fetching submodules respects parallel settings' '
-+	git config fetch.recurseSubmodules true &&
-+	(
-+		cd downstream &&
-+		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
-+		grep "7 tasks" trace.out &&
-+		git config submodule.fetchJobs 8 &&
-+		GIT_TRACE=$(pwd)/trace.out git fetch &&
-+		grep "8 tasks" trace.out &&
-+		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
-+		grep "9 tasks" trace.out
-+	)
-+'
-+
- test_done
--- 
-2.7.0.rc0.34.ga06e0b3.dirty
+I personally prefer 'stdin' to be spelled out as '(the) standard
+input' in end-user facing messages, e.g. the expected message in
+this piece
+
+    test_expect_success 'invalid stdin config' '
+            echo "fatal: bad config line 1 in stdin " >expect &&
+
+to say "line 1 in the standard input", but that is a quite minor
+point and just a preference.
+
+Thanks.
+
+Let's queue this version and move it forward to 'next' soonish.
