@@ -1,103 +1,106 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-p4.py: Don't try to rebase on submit from bare repository
-Date: Fri, 19 Feb 2016 13:40:45 -0500
-Message-ID: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com>
-References: <xmqqy4agd3b1.fsf@gitster.mtv.corp.google.com>
-	<1455906431-32140-1-git-send-email-aidecoe@aidecoe.name>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?QW1hZGV1c3ogxbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
-X-From: git-owner@vger.kernel.org Fri Feb 19 19:40:52 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule: Fetch the direct sha1 first
+Date: Fri, 19 Feb 2016 10:57:33 -0800
+Message-ID: <1455908253-1136-1-git-send-email-sbeller@google.com>
+Cc: dborowitz@google.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 19 19:57:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWpz1-0005dp-CP
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:40:51 +0100
+	id 1aWqFN-0003wE-CC
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1949325AbcBSSkr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2016 13:40:47 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34136 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1948884AbcBSSkq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Feb 2016 13:40:46 -0500
-Received: by mail-vk0-f42.google.com with SMTP id e185so82222566vkb.1
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 10:40:46 -0800 (PST)
+	id S1427916AbcBSS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 13:57:41 -0500
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:36399 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422838AbcBSS5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 13:57:40 -0500
+Received: by mail-pf0-f177.google.com with SMTP id e127so55615545pfe.3
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 10:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=edRRo50BYOmF+oNHe45y3BKy2n/9NtslcwlhIv6L+FA=;
-        b=evi041yAPEhp0McpE8Jmqhq8EfyfZt0uU0NGF7kPPKGrzmSLvprd0DT0j3sIgB1la2
-         h8qaEhF0FbY7jR55PQ4SXLeJq56+Rwzx9Mak9SGSpieOnzqXbmZ472J62mosF8xwCMp2
-         kExoOzpEWu89zmi4Rz3rrXbCn2Hk8JMIxfNccFzERUM2KNHGPkkpQAAJMv7WpBIiqlSK
-         hkS5JohS8FysxCUHDM4gL2hIVYFXAY4KG5EfUeQD/k1n1RFVv/+DGGmOLhyUx0stxV7P
-         t3z9GORGJ5TPqX0h3ErDk87dLOyUZqL2PYSovm1tCt3r16idDIrYJkrFVX5x0/C7M5ei
-         JSaQ==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jridkIZdWDy6hmifMzww2H2RSIH3xLEZb68aEZcCHWo=;
+        b=TfLKCZBr5Ofa20Rw78+9WE6csLKltS7EpNiAJeIw1WsnZny9+opmVygsuejeeO+lue
+         86+a6N1xrKXsY/B0yeTX+Y2kHz8lBbizBQiVUJjXvIQL0RkJ7YtIarAvqSfEyXcldrzu
+         7bhdSID/1MJlXfXtPd+0wBLyDEMrV4RiqWZCP/MgbK6LFD6BwE9G5cx6Sr/Km0sKvAmJ
+         i1k9cTqcOrU67zoSzVQ0ITWU2huQOknfHvl8QqfT80Ll2qZBdTH2gvk3elvIqg4OmIzM
+         5j5yUJyxmUXL3wyMMOYnnL+5psu5iprTC1Y/5GD9EYWnGWDPmNoZEYR6t6j4kOahvYeM
+         Lt5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=edRRo50BYOmF+oNHe45y3BKy2n/9NtslcwlhIv6L+FA=;
-        b=OnxTYVquccH4MXc2Bxg0qjikPebTinWW91/hgyYIaVhYhKlYfY16JibtjsEbeZ8FwE
-         UezpHvQNzHK03cCr33rpkqWIXREuW7i//UYdw3NlHmlB1ojHHAUAjz1VC+/+uyD2StoT
-         3DR4cheszPiPxJLDydToCncyc01PClj9FntQg4trZsoLTYhxaHyyb/3kWirIufVJu82W
-         ivLRCrIupIkoAStymx53a/wz76TC/IzVn2NT21rsTbP2SR0uSjBwJHNrkk7/3iE9uuJs
-         P1BLuhPBMcFPpMVRMUoQRRdpB89g9L9C9aTtOdy6319WgBlIMZ9Rh5PpHG1et9vA/wLU
-         kcjg==
-X-Gm-Message-State: AG10YOSMMDJQNFmGp3MXC+de+CJwGvZ+fD6KJCOgeeLknOlwwnlMOGWZ/Omd4OqE66WupRgG8At0UHDG6v72HA==
-X-Received: by 10.31.150.76 with SMTP id y73mr12114635vkd.84.1455907245824;
- Fri, 19 Feb 2016 10:40:45 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Fri, 19 Feb 2016 10:40:45 -0800 (PST)
-In-Reply-To: <1455906431-32140-1-git-send-email-aidecoe@aidecoe.name>
-X-Google-Sender-Auth: 9_MJepXcIt4C22xDU3OuCiIV4yA
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jridkIZdWDy6hmifMzww2H2RSIH3xLEZb68aEZcCHWo=;
+        b=Ob9D4jbBaT/yCzE1E03ML+0+M31fcuNVyJVp+x/IgHlV9JV7JkSiifEirowlLEFI2V
+         n2McuYVwc0cJaYM1cDhF3zOkmmP+8jtV0/hnYSbAa16pIUNg1SQRw/I96GxNxNHm6Y/T
+         j+jHG+OEFLU17SOCJj5PTqq6PeDZIBLlO9qWpovjLMwB3LC24Ag15K98r1bq26tVKTN8
+         p56WrwLr15+5x/C0RgX31q1f4L4ZA87++cfAd37NZ5GZ4NKoo3GPsjaRmNpmIL8gvniF
+         0ajC05S9+F9PLNGGsuQQcFvi04SZycfMMt033b+RdoVPKNBXupVqejw5YVe7tbB1n9IH
+         dlVg==
+X-Gm-Message-State: AG10YOQGx93oivAriPr8H6wf0PvOCW2bVApVIor0w9AZ4eR+rFpC2kKQQQwwVGCkrcw5pbkC
+X-Received: by 10.98.33.199 with SMTP id o68mr20043887pfj.125.1455908259623;
+        Fri, 19 Feb 2016 10:57:39 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:9499:df1f:834d:69bf])
+        by smtp.gmail.com with ESMTPSA id o10sm19531481pap.37.2016.02.19.10.57.38
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 19 Feb 2016 10:57:38 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286739>
 
-On Fri, Feb 19, 2016 at 1:27 PM, Amadeusz =C5=BBo=C5=82nowski
-<aidecoe@aidecoe.name> wrote:
-> git-p4 can be successfully used from bare repository (which acts as a
-> bridge between Perforce repository and pure Git repositories). On sub=
-mit
-> git-p4 performs unconditional rebase. Do rebase only on non-bare
-> repositories.
+When reviewing a change in Gerrit, which also updates a submodule,
+a common review practice is to download and cherry-pick the patch locally
+to test it. However when testing it locally, the 'git submodule update'
+may fail fetching the correct submodule sha1 as the corresponding commit
+in the submodule is not yet part of the project history, but also just a
+proposed change.
 
-As a person who does not use Perforce, it is not obvious to me from
-the commit message why this change is beneficial or even what the
-consequences are. Will Perforce users understand this change given
-only the explanation above? If not, perhaps it would be helpful to
-expand the commit message to explain more thoroughly the impact of
-this change and why it is a good idea.
+To ease this, try fetching by sha1 first and when that fails (in case of
+servers which do not allow fetching by sha1), fall back to the default
+behavior we already have.
 
-Thanks.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> Signed-off-by: Amadeusz =C5=BBo=C5=82nowski <aidecoe@aidecoe.name>
-> ---
->  git-p4.py | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index c33dece..e00cd02 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2059,8 +2059,9 @@ class P4Submit(Command, P4UserMap):
->                  sync.branch =3D self.branch
->              sync.run([])
->
-> -            rebase =3D P4Rebase()
-> -            rebase.rebase()
-> +            if not gitConfigBool("core.bare"):
-> +                rebase =3D P4Rebase()
-> +                rebase.rebase()
->
->          else:
->              if len(applied) =3D=3D 0:
-> --
-> 2.7.0
+I think it's best to apply this on origin/master, there is no collision
+with sb/submodule-parallel-update.
+
+Also I do not see a good way to test this both in correctness as well
+as performance degeneration. If the first git fetch fails, the second
+fetch is executed, so it should behave as before this patch w.r.t. correctness.
+
+Regarding performance, the first fetch should fail quite fast iff the fetch
+fails and then continue with the normal fetch. In case the first fetch works
+fine getting the exact sha1, the fetch should be faster than a default fetch
+as potentially less data needs to be fetched.
+
+Thanks,
+Stefan
+
+ git-submodule.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f..ee0b985 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -746,8 +746,9 @@ Maybe you want to use 'update --init'?")"
+ 				# Run fetch only if $sha1 isn't present or it
+ 				# is not reachable from a ref.
+ 				(clear_local_git_env; cd "$sm_path" &&
++					remote_name=$(get_default_remote)
+ 					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+-					 test -z "$rev") || git-fetch)) ||
++					 test -z "$rev") || git-fetch $remote_name $rev || git-fetch)) ||
+ 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
+ 			fi
+ 
+-- 
+2.7.0.rc0.34.ga06e0b3.dirty
