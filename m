@@ -1,173 +1,113 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv13 7/7] clone: allow an explicit argument for parallel submodule clones
-Date: Thu, 18 Feb 2016 15:33:18 -0800
-Message-ID: <1455838398-12379-8-git-send-email-sbeller@google.com>
-References: <1455838398-12379-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 00:33:50 2016
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: git submodule should honor "-c credential.helper" command line argument
+Date: Thu, 18 Feb 2016 17:15:54 -0800
+Message-ID: <CA+P7+xpHNHVSJnVg3HwiBjWxRdSpLXCsm3GpWst=BNyhLMVd5A@mail.gmail.com>
+References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
+ <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
+ <CA+P7+xr4gQFPsUiuqSzMsUJP6_W8FnXBwX1Xes=XjksuTs=+hQ@mail.gmail.com>
+ <56B74B17.4040304@syntevo.com> <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 02:16:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWY4x-00049V-3j
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 00:33:47 +0100
+	id 1aWZgC-0000Tn-Cd
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 02:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948694AbcBRXdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 18:33:36 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:35227 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1948692AbcBRXdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 18:33:32 -0500
-Received: by mail-pa0-f54.google.com with SMTP id ho8so40122956pac.2
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 15:33:31 -0800 (PST)
+	id S1948927AbcBSBQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 20:16:16 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:36093 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1947768AbcBSBQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 20:16:14 -0500
+Received: by mail-ig0-f173.google.com with SMTP id xg9so25410696igb.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 17:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q5GnELQU6xj/KyZJqMAwpSZoLzKER+i0CKXD87Sz+bM=;
-        b=bW0oTEAnmT1JTksdumgBQ6EYbRWC+XpXO6zjZGkosuOty9N2kcunX+F0CTZzDDTIx6
-         1JrvyYsZvHQBzx8F/hnjMVD5LiCIA/408oJFjOvE1VKw5HZPQZ8NpqjBzob6uZ8QMwmh
-         lhyDuf99V/lAHwjktoRswusHEkuM3m+bv7cE4pskpSJW0yo9vgKfLDHqhqt8LLJmxRJa
-         BKRy2GyQi1rldrpW7PY8eZMtdk+dHCOuc+WpZ5cHOWZcu781tO/CI3YVdw85rftz5jdL
-         UjtKgObpFVgaGYSouujYjZni8D/61knb5v3iXaf7Ne2OKlc6H6Al9mI85IgR+m7+evyi
-         E+SA==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ssxY+6tFlXwjAZxjuN8ckS85VtNMTv94Blx3zDZVG2w=;
+        b=ddxQzmQCDjhMgxTbUNjbShpXd/yY8L8zrfdhYYSpyKLCxLKfT2x85h0M19Cs5e++NP
+         pa5bzbw2/wh3+6EbeP1Hc74Y37tSSg4a7g0Sb4mvTRAszbxtm37EF+10Rs1/+tf4N/Es
+         4DeqEBSOZKeA+0f4Yokb8PWQlG+I21DJkXZUrxhUZ2QDptE8pzC3wn7Vx0Oaw+uhq/MI
+         +26EvD7+SfqbKlRpx4y5xQIdrPZ5tylUn+BaJ8m+PphVKI5v3rJvlZ1PQFYkxZdZ44O/
+         gXGBUTb2v7rg5wK+z6GukqiPGsWIudxjm5kgL/BFX/6Int0++dE+mnhhwyjZTI65DH5t
+         TEWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Q5GnELQU6xj/KyZJqMAwpSZoLzKER+i0CKXD87Sz+bM=;
-        b=kmdMu3/XLUFxVxATT75P3qIcps7moitbWw13gE61sV5OP1rFp0H6pquzGsrJa+2kW6
-         qJ2YKj0JhihN/xhvkasEtzGitdlf4zw31ne3yNzd6KbWqf8dQGE48D45FlvI02O2KIRb
-         KM0oGuDJnfnua3gm+IKZU9geD53nLz5dTWVekQFzuxw80J/xzw4HJbEUaE6ZAdeG/3R2
-         d9JLkPnzmQ/S9e+DSNUShCfEC65vYKUh8ZoPAMV90MU7AepWWW8xuHL9r/YSyTZ3GLU5
-         bVp484mZ8CHAXIvYCaD1BB9Vls1iqHVAl4IdddQxUUd3JfaJxp3If+wTLJD/jM3IDx8f
-         r+Ow==
-X-Gm-Message-State: AG10YOTKs9tEpgEqE0nk3kRJmIWiBTLWT1l9aIPHSnIS3E1aUG18rsRCFyP7z+8z8h9y8t41
-X-Received: by 10.66.144.134 with SMTP id sm6mr14162118pab.158.1455838411462;
-        Thu, 18 Feb 2016 15:33:31 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:d444:f36c:1851:bb54])
-        by smtp.gmail.com with ESMTPSA id k14sm12890691pfj.0.2016.02.18.15.33.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 18 Feb 2016 15:33:30 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.34.g65aed89
-In-Reply-To: <1455838398-12379-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=ssxY+6tFlXwjAZxjuN8ckS85VtNMTv94Blx3zDZVG2w=;
+        b=CaGRnYQhNQy6PDcJjtrRrH070Lwk6RTbzNBlwioymZOPpZIY6nMr8bTA9um+g6nvAW
+         B8Zi/D4Q8o0vesFOOMM71Xi5D1PKclagC065nabLQXBaN/j3HlvFoxtub4qv7kBtiO+l
+         25lugvzOKIB5jLVIHSJrb2hza0w7783xL0JLlkYCzuXq/BPPItE+4tSeDKrHnGLpoeET
+         QtN7y6lFg9pvfVzuE1qffLQvpV57Nageh6NU57/OQOprQGx8eDlqWODzXyxc8bkc9aCU
+         hKjvnp2ivwPbhCLKP8wdpo5iymrfIcGs8eeuFreQZ2KwCbUbDdgFiN3d1UIA6WhZXw59
+         gnLA==
+X-Gm-Message-State: AG10YOR3zWp1dd7tYB91xsFQV6Znexxg1Ugs2c+M52QoUOzEQ9KfWz8Lg31sPJBZlKrI5aoTjmjEovXx+FvtHQ==
+X-Received: by 10.50.137.35 with SMTP id qf3mr6630969igb.92.1455844574412;
+ Thu, 18 Feb 2016 17:16:14 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Thu, 18 Feb 2016 17:15:54 -0800 (PST)
+In-Reply-To: <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286651>
 
-Just pass it along to "git submodule update", which may pick reasonable
-defaults if you don't specify an explicit number.
+On Sun, Feb 7, 2016 at 7:44 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Sun, Feb 7, 2016 at 5:48 AM, Marc Strapetz <marc.strapetz@syntevo.com> wrote:
+>> On 07.02.2016 05:41, Jacob Keller wrote:
+>>>
+>>> On Wed, Feb 3, 2016 at 3:44 PM, Jacob Keller <jacob.keller@gmail.com>
+>>> wrote:
+>>>>
+>>>> Ok so I am not sure we even really need to use "-c" option in
+>>>> git-clone considering that we can just use the same flow we do for
+>>>> setting core.worktree values. I'll propose a patch with you two Cc'ed,
+>>>> which I think fixes the issue. There may actually be a set of
+>>>> configuration we want to include though, and the main issue I see is
+>>>> that it won't get updated correctly whenever the parent configuration
+>>>> changes.
+>>>>
+>>>> Thanks,
+>>>> Jake
+>>>
+>>>
+>>> I tried adding the config as part of module_clone in
+>>> submodule--helper.c but it didn't pass the test I added. I haven't had
+>>> time to look at this in the last few days, but I am stuck as to why
+>>> submodule--helper.c appeared to not use module_clone as I thought.
+>>
+>>
+>> I've tried to just comment out clearing of environment variables in
+>> git-sh-setup.sh, clear_local_git_env(). I've noticed that "-c
+>> credentials-helper ..." is stored in $GIT_CONFIG_PARAMETERS and with
+>> existing code is reset there. If not clearing the environment variables, at
+>> least "git submodule init" is working properly. I didn't try with other
+>> commands nor to run tests.
+>>
+>> -Marc
+>>
+>>
+>
+> I'll have to dig more into this next week.
+>
+> Regards,
+> Jake
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-clone.txt |  6 +++++-
- builtin/clone.c             | 19 +++++++++++++------
- t/t7406-submodule-update.sh | 15 +++++++++++++++
- 3 files changed, 33 insertions(+), 7 deletions(-)
+I am looking at this more and I am stuck as to how best to provide a test case.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 6bf000d..6db7b6d 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
--	  [--recursive | --recurse-submodules] [--] <repository>
-+	  [--recursive | --recurse-submodules] [--jobs <n>] [--] <repository>
- 	  [<directory>]
- 
- DESCRIPTION
-@@ -221,6 +221,10 @@ objects from the source repository into a pack in the cloned repository.
- 	The result is Git repository can be separated from working
- 	tree.
- 
-+-j <n>::
-+--jobs <n>::
-+	The number of submodules fetched at the same time.
-+	Defaults to the `submodule.fetchJobs` option.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0b3cd9..b004fb4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,6 +50,7 @@ static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
-+static int max_jobs = -1;
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -72,6 +73,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("initialize submodules in the clone")),
- 	OPT_BOOL(0, "recurse-submodules", &option_recursive,
- 		    N_("initialize submodules in the clone")),
-+	OPT_INTEGER('j', "jobs", &max_jobs,
-+		    N_("number of submodules cloned in parallel")),
- 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
- 		   N_("directory from which templates will be used")),
- 	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
-@@ -95,10 +98,6 @@ static struct option builtin_clone_options[] = {
- 	OPT_END()
- };
- 
--static const char *argv_submodule[] = {
--	"submodule", "update", "--init", "--recursive", NULL
--};
--
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
- {
- 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -724,8 +723,16 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive)
--		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-+	if (!err && option_recursive) {
-+		struct argv_array args = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+
-+		if (max_jobs != -1)
-+			argv_array_pushf(&args, "--jobs=%d", max_jobs);
-+
-+		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+		argv_array_clear(&args);
-+	}
- 
- 	return err;
- }
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 7fd5142..090891e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -786,4 +786,19 @@ test_expect_success 'submodule update can be run in parallel' '
- 	 grep "9 tasks" trace.out
- 	)
- '
-+
-+test_expect_success 'git clone passes the parallel jobs config on to submodules' '
-+	test_when_finished "rm -rf super4" &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
-+	grep "7 tasks" trace.out &&
-+	rm -rf super4 &&
-+	git config --global submodule.fetchJobs 8 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules . super4 &&
-+	grep "8 tasks" trace.out &&
-+	rm -rf super4 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 9 . super4 &&
-+	grep "9 tasks" trace.out &&
-+	rm -rf super4
-+'
-+
- test_done
--- 
-2.7.0.rc0.34.g65aed89
+I think the problem as stated above is pretty straight forward, we
+just want to stop clearing GIT_CONFIG_PARAMETERS but I can't find an
+easy way to test that we've done the right thing. There are no current
+tests for using a credential helper with submodule update right now.
+
+Regards,
+Jake
