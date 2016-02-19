@@ -1,111 +1,86 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Fri, 19 Feb 2016 09:54:32 +0700
-Message-ID: <CACsJy8AEOzSi-yJo3eJLSv5s6RW1sZBw+G2Y7cypGb2b+p0QLg@mail.gmail.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
- <1455772670-21142-26-git-send-email-dturner@twopensource.com>
- <20160218085023.GA30049@lanh> <1455827001.7528.87.camel@twopensource.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 19 Feb 2016 10:09:45 +0700
+Message-ID: <CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+ <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 03:55:12 2016
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 19 04:10:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWbDr-0008Cp-4X
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 03:55:11 +0100
+	id 1aWbSf-0004K8-T3
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 04:10:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992752AbcBSCzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 21:55:05 -0500
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:34623 "EHLO
-	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992749AbcBSCzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 21:55:03 -0500
-Received: by mail-lf0-f54.google.com with SMTP id j78so45300562lfb.1
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 18:55:02 -0800 (PST)
+	id S1757426AbcBSDKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 22:10:24 -0500
+Received: from mail-lf0-f41.google.com ([209.85.215.41]:34967 "EHLO
+	mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757297AbcBSDKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 22:10:17 -0500
+Received: by mail-lf0-f41.google.com with SMTP id l143so45519177lfe.2
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 19:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=jgncnJZxMexkObXUvFLhaJ+Bn/Ub3UJVW9bTTlQTgCc=;
-        b=zfk/+1uvGyDDRQ+l0J6wWw3jdlQFiHqvOkci8Lco8c1diAKgBHq2SSYZyJYDfQiRMC
-         wwsnHoC8463uoggo4M/DYgSmIcOxD0iKvt0v2BmruwTTFSmSy4kSolkWRyRF9+8mo451
-         Z8la8JQMUAQ67T9WByAAJXxObNQTPbuyVLejNS2ozc9wRIhm2kxj7fyhGVljx8GGTH/c
-         g8RmthzUVc+Jdy8mPSlWq2iUYRSnomGtpQmaxWXUUIIVLeFIIz9eZayJ395SyuwnI+4i
-         P5i0d/myiWASGsf1rJ/TPyOjg4bAbeYOchcoyuU0d84xBmWxdFWOPL9c+uB8AkcdVJe5
-         ckcg==
+        bh=r35QZYs/KeCNBSQzMDJnaz1k3g0eRB7CH81YHVm+LCs=;
+        b=P0OVEP0rOToghrU3xBWMAjEyQ3pVtKobtPg+/4Y/I+wsbHwZ1KYyPOEZ62OIP1AtMn
+         /FPAvp28iBanSwcaoRYA1cW19QqW4k4yrgh1emqgLbcqZ1MNUuguAqRKg/1UMAnG/kWE
+         0e41zOWwwV7TAsi9FgJd+IgLJmcK/gPoDkvrwpJ2Y/w0FVrp91Nx/dQ4FKPEEqW3xrCA
+         tZYa+xdaSiubSAhJ35TEwkRcj6ujKiqGchPsjwOQXXOcvK8jFXBX9nO0zzbM39KveS0x
+         HVZUTOxNdbjYHYJyRvds/9XlAqv9blgAb0kBAuMfKmt7PzGmhzIubRo/nWS3s0mFvu7K
+         alFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=jgncnJZxMexkObXUvFLhaJ+Bn/Ub3UJVW9bTTlQTgCc=;
-        b=jpYInrOQoBokQ/HgKtlY6zXvmLniwcC1U1eCUaPmmYcgJizyNuaIpamVo6md6NsKhF
-         aheP58qzs+ded+XD+34rtNi2+/OXTXPVJOG6RwAVvmf6a3FXGUVCHB0vMetBJllx16sO
-         krWpRr7/QbYnsIwOKOLvGDQzziP936dJBotmpf4xkrHTillM123M9pb1am7WdtuLPFO/
-         yb0jRpyUqmxF/mFOYnqj8bj3w6K3lwQI8n8aQ6XD98NiKJDVjfLMrobTGjQGMrZ+1U+3
-         j4tToIfY3NCK8fDNsaXrshbpkr3+kcH/uhwOlq0DF7bX+M0peAjWl5QkzOETbV+Yf7+h
-         8B0Q==
-X-Gm-Message-State: AG10YOS2Z/pwYwZirD761B0iNtWalL+JDq7X0+Y914IW2RPPZQTGlm404n3Gdj7jOaZlTvsAfRK5T4EOngX4CQ==
-X-Received: by 10.25.212.197 with SMTP id l188mr4478063lfg.118.1455850501800;
- Thu, 18 Feb 2016 18:55:01 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 18 Feb 2016 18:54:32 -0800 (PST)
-In-Reply-To: <1455827001.7528.87.camel@twopensource.com>
+        bh=r35QZYs/KeCNBSQzMDJnaz1k3g0eRB7CH81YHVm+LCs=;
+        b=GCV8CRkY5GIL3bE4tC8WV4Dz93tPubFLcLB7tL6ClNT6wG5+Bx9W9yQDa8ACelrC75
+         VwGjGnNWp0UH9hxkmw6DVQHbatAXnWNF7fJD9XcEnyx3F4E1tPnHS8Zs4fs4hy9/JiSM
+         hkqJ9gmObIp3coVg/8dnNeCfZAwtPknGWUnUy94DeETfzYah5eTUcQX68zNTEp5paAXH
+         8gnC7qSJPiSuRrZ+wqQk8clWt8KIm13bKA/5kLMcisU7Cc6mPpT+MOAqahddbhYBk+Vh
+         pR7nj/lvzwRtUgonjmDSmlkMWLbRX8lH4MRH8hWxxOkPCk8VpuokbMzbGzqmwMNsKhBp
+         7MGQ==
+X-Gm-Message-State: AG10YORfOWfvQzy+bPKQW/RA52wFiZlDpsnK+ehHlKOL0Cl+UpAtc6o/21vXJl9uzroG/GLh0yapj+/pmUUQpw==
+X-Received: by 10.25.5.6 with SMTP id 6mr3710928lff.3.1455851415385; Thu, 18
+ Feb 2016 19:10:15 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 18 Feb 2016 19:09:45 -0800 (PST)
+In-Reply-To: <vpqh9h7f9kz.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286654>
 
-On Fri, Feb 19, 2016 at 3:23 AM, David Turner <dturner@twopensource.com> wrote:
->> > +static int read_per_worktree_ref(const char *submodule, const char
->> > *refname,
->> > +                            struct MDB_val *val, int
->> > *needs_free)
->>
->> From what I read, I suspect these _per_worktree functions will be
->> identical for the next backend. Should we just hand over the job for
->> files backend? For all entry points that may deal with per-worktree
->> refs, e.g. lmdb_resolve_ref_unsafe, can we check ref_type() first
->> thing, if it's per-worktree we call
->> refs_be_files.resolve_ref_unsafe()
->> instead?  It could even be done at frontend level,
->> e.g. refs.c:resolve_ref_unsafe().
->>
->> Though I may be talking rubbish here because I don't know how whether
->> it has anything to do with transactions.
->
-> The reason I did it this way is that some ref chains cross backend
-> boundaries (e.g. HEAD -> refs/heads/master).  But if we have other
-> backends later, we could generalize.
+On Thu, Feb 18, 2016 at 1:58 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Feel free to start writting an idea for
+> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+> ideas before Friday. We can polish them later if needed.
 
-Crossing backends should go through frontend again, imo. But I don't
-really know if it's efficient.
+Probably too late now, anyway.. with David's multiple ref backend
+work, we could have a third, no-dependency backend. We can use index
+format to store refs. Then we can avoid case-sensitivity issue with
+filesystems. Split-index could make it relatively cheap for updating
+refs. Later on, when we can store tree objects in index (*), some
+(rarely used) refs could be stored as tree objects and we can reduce
+index file size (and loading cost). This idea is inspired by Shawn's
+storing refs as tree objects mail, except that I stopped at "wait, if
+we want to create trees we (usually) have to go through index, why not
+just stop at index?".
 
->> > +static int lmdb_create_symref(const char *ref_target,
->> > +                         const char *refs_heads_master,
->> > +                         const char *logmsg)
->> > +{
->> > +
->> ...
->> > +   mdb_put_or_die(&transaction, &key, &val, 0);
->> > +
->> > +   /* TODO: Don't create ref d/f conflicts */
->>
->> I'm not sure I get this comment. D/F conflicts are no longer a thing
->> for lmdb backend, right?
->
-> I'm trying to avoid the lmdb backend creating a set of refs that the
-> files backend can't handle.  This would make collaboration with other
-> versions of git more difficult.
-
-It already is. If you create refs "foo" and "FOO" on case sensitive
-file system and clone it on a case-insensitive one, you face the same
-problem. We may have an optional configuration knob to prevent
-incompatibilities with files backend, but I think that should be done
-(and enforced if necessary) outside backends.
+(*) In have some WIP in this area, but not ready for public discussion
+yet. And it's out of scope for GSoC.
 -- 
 Duy
