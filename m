@@ -1,89 +1,102 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Fri, 19 Feb 2016 23:09:26 +0530
-Message-ID: <CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
-	<vpq37so26oz.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 13/21] fast-import: simplify allocation in start_packfile
+Date: Fri, 19 Feb 2016 09:48:54 -0800
+Message-ID: <xmqqio1kd20p.fsf@gitster.mtv.corp.google.com>
+References: <20160219111941.GA31906@sigill.intra.peff.net>
+	<20160219112449.GM9319@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 19 18:39:34 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 18:49:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWp1g-00012f-G2
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 18:39:32 +0100
+	id 1aWpAs-0000fP-Tf
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 18:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947621AbcBSRj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 12:39:28 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:34823 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030504AbcBSRj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 12:39:27 -0500
-Received: by mail-qk0-f172.google.com with SMTP id o6so33604607qkc.2
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 09:39:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rd2yCKgxxvvyZJngIEUJWOd1z5adVihL3LfeOMXq8b4=;
-        b=bXr/P+kztSV6c8Ojpn4bEXBaLUc8YcyFIff12fUuHR0ehnM2T1d2t5rbzOT1mfCDEo
-         ovF0B48m9GMe/umcIVvCXYB1K7f7hV7Wo4yGvospIfAH55ofXlWSUA7C2JEsyjncItJ9
-         WlizELKGgvBMvUa890l3MIECofZ+tcpi0dDJ0MAyEF/1iLxKtpltNCJq6GT2xRxQKG29
-         d0Lel/mngZcfKypwqIjJ+Yd2f+ypbGg+lHWB//4BxBAsuF0toMipvRVPiIQkavrMHMIC
-         xupQQcYzqMcCx8+4F9gTRBXENZLB3h8+QsnQMqT8tU0NX3k8IDETEhv0ScTM2KG5S8lw
-         wNpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=rd2yCKgxxvvyZJngIEUJWOd1z5adVihL3LfeOMXq8b4=;
-        b=ifmx+VZRfHgRrMRJxvkwIqc2O3Q3qwldP6Q3wFYw5Zm5GRuBjR+SErvL0+goX15RvJ
-         08Nbo8jk5KkC8maktvu0kz1spzC8M0vyZhwlVm1209bYSVyEuFHvJpBom/pxKjFTiJXv
-         aquynBk0Fwu8sJR5KLi+DUW3WR9UALdQ6v1j15DODQmbRMbtMg9ftYR+oQeoHy2R/BLt
-         nzo8s+OPqmfyrOYHbROM6gN7CAnF9YEH/pKlMQenbE9mCADW4Q1hf3hxNujrIHJ7AKyT
-         SDgSjZnyXt+69oir6OTfbXGLHJv6NP+y24FTxT9T1p1NkMueB+X1L8lZZTVMs9ZtykTI
-         cQBw==
-X-Gm-Message-State: AG10YOT5guAvurbC4yCqmrlBkJ+YJRHZ7Qln/QnAkR2rIFAGekRejf8k+UtcLhYfxvep7MLUrp8XKLs4fpMq0Q==
-X-Received: by 10.55.209.148 with SMTP id o20mr128626qkl.5.1455903566520; Fri,
- 19 Feb 2016 09:39:26 -0800 (PST)
-Received: by 10.55.166.10 with HTTP; Fri, 19 Feb 2016 09:39:26 -0800 (PST)
-In-Reply-To: <vpq37so26oz.fsf@anie.imag.fr>
+	id S1423474AbcBSRs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 12:48:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61279 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161764AbcBSRs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 12:48:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 83ADF43C2D;
+	Fri, 19 Feb 2016 12:48:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OnvVgUba6RJJhjbKb9yldKSI5h8=; b=QoQY5R
+	npwUV0W6DSBuroP7V0CiPaEWhqEHgHwMRruyI0nwvXK+LWmmdg3vqfHwK8Z6UPIE
+	X4KzB5zOxAKFIF3hNmhHF3pzebDLWG3xRjTUcCs20Ehvm2cTtNJLzv8slD01Maxj
+	bLPgCEYUD8mYLzzs2XMt9/SxINqoxk/RitERo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iSP4I0kcw73q4Qta8Z4hI8U9zkVc3+dt
+	oAqANKg9I0UIwvOskyXB5gL/F11TvRWSY92MWOUfSX7aoKArwsDJ/1CM9Avl0cb0
+	o9BqyDiQldkVPKMCLIe85oGIIuu92FY3PUZg7TifxSKZRl0IRbeVXWBQMobNsdAK
+	xci/WAiep2I=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B26643C2C;
+	Fri, 19 Feb 2016 12:48:56 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F0DB443C2B;
+	Fri, 19 Feb 2016 12:48:55 -0500 (EST)
+In-Reply-To: <20160219112449.GM9319@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 19 Feb 2016 06:24:49 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0C0A9780-D731-11E5-A0A8-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286725>
 
-On Fri, Feb 19, 2016 at 6:33 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Hi,
+Jeff King <peff@peff.net> writes:
+
+> This function allocate a packed_git flex-array, and adds a
+
+s/allocate/&s/, right?
+
+> mysterious 2 bytes to the length of the pack_name field. One
+> is for the trailing NUL, but the other has no purpose. This
+> is probably cargo-culted from add_packed_git, which gets the
+> ".idx" path and needed to allocate enough space to hold the
+> matching ".pack" (though since 48bcc1c, we calculate the
+> size there differently).
 >
-> This is a double-post. You've posted almost the same message under the
-> title "GSoC 2016". Nothing serious, but attention to details is
-> important if you want to give a good image of yourself.
-
-I'm sorry of this kind of behavior. It was due to a misunderstanding by my side.
-
-> I don't have all the code in mind, but I think it is. In this situation,
-> you always end up with a variable telling Git what to do (I guess,
-> autostash here), and this variable is set according to the configuration
-> and the command-line.
+> This site, however, is using the raw path of a tempfile, and
+> does not need the extra byte. We can just replace the
+> allocation with FLEX_ALLOC_STR, which handles the allocation
+> and the NUL for us.
 >
-> You should be careful about the precedence: command-line should override
-> the configuration. And the default behavior should be used if neither
-> the command-line nor the configuration specified otherwise.
-
-Thanks for the suggestion.
-I've started the work on patch and did the change in the code which
-were necessary for Microproject. I have run the test by using "make",
-and there was no failure of any test.
-I've a doubt regarding tests. Here as "git pull" will now understand
-the argument that  "--[no-]autostash" means "rebase.autostash" should
-be set false for current execution of command "git pull --rebase". So
-do I have to write a test for this new option?
-
-Mehul Jain
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  fast-import.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/fast-import.c b/fast-import.c
+> index 3053bb8..9fc7093 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -865,15 +865,12 @@ static void start_packfile(void)
+>  {
+>  	static char tmp_file[PATH_MAX];
+>  	struct packed_git *p;
+> -	int namelen;
+>  	struct pack_header hdr;
+>  	int pack_fd;
+>  
+>  	pack_fd = odb_mkstemp(tmp_file, sizeof(tmp_file),
+>  			      "pack/tmp_pack_XXXXXX");
+> -	namelen = strlen(tmp_file) + 2;
+> -	p = xcalloc(1, sizeof(*p) + namelen);
+> -	xsnprintf(p->pack_name, namelen, "%s", tmp_file);
+> +	FLEX_ALLOC_STR(p, pack_name, tmp_file);
+>  	p->pack_fd = pack_fd;
+>  	p->do_not_close = 1;
+>  	pack_file = sha1fd(pack_fd, p->pack_name);
