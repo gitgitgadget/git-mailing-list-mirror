@@ -1,106 +1,71 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule: Fetch the direct sha1 first
-Date: Fri, 19 Feb 2016 10:57:33 -0800
-Message-ID: <1455908253-1136-1-git-send-email-sbeller@google.com>
-Cc: dborowitz@google.com, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 19 19:57:47 2016
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv13 5/7] git submodule update: have a dedicated helper for
+ cloning
+Date: Fri, 19 Feb 2016 14:08:21 -0500
+Message-ID: <20160219190821.GA777@sigill.intra.peff.net>
+References: <1455838398-12379-1-git-send-email-sbeller@google.com>
+ <1455838398-12379-6-git-send-email-sbeller@google.com>
+ <20160219120310.GB10204@sigill.intra.peff.net>
+ <CAGZ79kbp+A1J4isLGftMiA2UZM16NO6nUycraj4U==2Zv6kHVQ@mail.gmail.com>
+ <CAPig+cR6SKwM7x=n6fdZDscm2GLTNQq-ZNvB-ELqAk6dk1jGFw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 20:08:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWqFN-0003wE-CC
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:57:45 +0100
+	id 1aWqPr-0005q2-U6
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 20:08:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1427916AbcBSS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 13:57:41 -0500
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36399 "EHLO
-	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422838AbcBSS5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 13:57:40 -0500
-Received: by mail-pf0-f177.google.com with SMTP id e127so55615545pfe.3
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 10:57:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=jridkIZdWDy6hmifMzww2H2RSIH3xLEZb68aEZcCHWo=;
-        b=TfLKCZBr5Ofa20Rw78+9WE6csLKltS7EpNiAJeIw1WsnZny9+opmVygsuejeeO+lue
-         86+a6N1xrKXsY/B0yeTX+Y2kHz8lBbizBQiVUJjXvIQL0RkJ7YtIarAvqSfEyXcldrzu
-         7bhdSID/1MJlXfXtPd+0wBLyDEMrV4RiqWZCP/MgbK6LFD6BwE9G5cx6Sr/Km0sKvAmJ
-         i1k9cTqcOrU67zoSzVQ0ITWU2huQOknfHvl8QqfT80Ll2qZBdTH2gvk3elvIqg4OmIzM
-         5j5yUJyxmUXL3wyMMOYnnL+5psu5iprTC1Y/5GD9EYWnGWDPmNoZEYR6t6j4kOahvYeM
-         Lt5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=jridkIZdWDy6hmifMzww2H2RSIH3xLEZb68aEZcCHWo=;
-        b=Ob9D4jbBaT/yCzE1E03ML+0+M31fcuNVyJVp+x/IgHlV9JV7JkSiifEirowlLEFI2V
-         n2McuYVwc0cJaYM1cDhF3zOkmmP+8jtV0/hnYSbAa16pIUNg1SQRw/I96GxNxNHm6Y/T
-         j+jHG+OEFLU17SOCJj5PTqq6PeDZIBLlO9qWpovjLMwB3LC24Ag15K98r1bq26tVKTN8
-         p56WrwLr15+5x/C0RgX31q1f4L4ZA87++cfAd37NZ5GZ4NKoo3GPsjaRmNpmIL8gvniF
-         0ajC05S9+F9PLNGGsuQQcFvi04SZycfMMt033b+RdoVPKNBXupVqejw5YVe7tbB1n9IH
-         dlVg==
-X-Gm-Message-State: AG10YOQGx93oivAriPr8H6wf0PvOCW2bVApVIor0w9AZ4eR+rFpC2kKQQQwwVGCkrcw5pbkC
-X-Received: by 10.98.33.199 with SMTP id o68mr20043887pfj.125.1455908259623;
-        Fri, 19 Feb 2016 10:57:39 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:9499:df1f:834d:69bf])
-        by smtp.gmail.com with ESMTPSA id o10sm19531481pap.37.2016.02.19.10.57.38
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 19 Feb 2016 10:57:38 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
+	id S2993206AbcBSTI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 14:08:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45667 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030273AbcBSTIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 14:08:25 -0500
+Received: (qmail 8838 invoked by uid 102); 19 Feb 2016 19:08:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 14:08:23 -0500
+Received: (qmail 31408 invoked by uid 107); 19 Feb 2016 19:08:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 14:08:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2016 14:08:21 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR6SKwM7x=n6fdZDscm2GLTNQq-ZNvB-ELqAk6dk1jGFw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286740>
 
-When reviewing a change in Gerrit, which also updates a submodule,
-a common review practice is to download and cherry-pick the patch locally
-to test it. However when testing it locally, the 'git submodule update'
-may fail fetching the correct submodule sha1 as the corresponding commit
-in the submodule is not yet part of the project history, but also just a
-proposed change.
+On Fri, Feb 19, 2016 at 12:20:48PM -0500, Eric Sunshine wrote:
 
-To ease this, try fetching by sha1 first and when that fails (in case of
-servers which do not allow fetching by sha1), fall back to the default
-behavior we already have.
+> >>> +             argv_array_pushl(&cp->args, "--path", sub->path, NULL);
+> >>> +             argv_array_pushl(&cp->args, "--name", sub->name, NULL);
+> >>> +             argv_array_pushl(&cp->args, "--url", strdup(url), NULL);
+> >>
+> >> No need to strdup() here; argv_array handles its own memory, so this
+> >> just leaks (and if we were keeping it, it should be xstrdup(), of
+> >> course).
+> >
+> > We cannot remove the strdup as the url is a local variable we read in from
+> > git_config_get_string and the local variable is going out of scope before the
+> > child process ends?
+> >
+> > I'll change it to xstrdup then.
+> 
+> When Peff said "argv_array handles its own memory", he meant that it
+> does xstrdup() itself, so there's no need for you to do so a second
+> time manually (leaking a string as a consequence).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Exactly. :) Sorry for not being clear the first time around.
 
-I think it's best to apply this on origin/master, there is no collision
-with sb/submodule-parallel-update.
-
-Also I do not see a good way to test this both in correctness as well
-as performance degeneration. If the first git fetch fails, the second
-fetch is executed, so it should behave as before this patch w.r.t. correctness.
-
-Regarding performance, the first fetch should fail quite fast iff the fetch
-fails and then continue with the normal fetch. In case the first fetch works
-fine getting the exact sha1, the fetch should be faster than a default fetch
-as potentially less data needs to be fetched.
-
-Thanks,
-Stefan
-
- git-submodule.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9bc5c5f..ee0b985 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -746,8 +746,9 @@ Maybe you want to use 'update --init'?")"
- 				# Run fetch only if $sha1 isn't present or it
- 				# is not reachable from a ref.
- 				(clear_local_git_env; cd "$sm_path" &&
-+					remote_name=$(get_default_remote)
- 					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
--					 test -z "$rev") || git-fetch)) ||
-+					 test -z "$rev") || git-fetch $remote_name $rev || git-fetch)) ||
- 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
- 			fi
- 
--- 
-2.7.0.rc0.34.ga06e0b3.dirty
+-Peff
