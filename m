@@ -1,591 +1,364 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Fri, 19 Feb 2016 17:49:46 -0500
-Organization: Twitter
-Message-ID: <1455922186.7528.97.camel@twopensource.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-	 <1455772670-21142-26-git-send-email-dturner@twopensource.com>
-	 <20160218085023.GA30049@lanh>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv14 5/7] git submodule update: have a dedicated helper for
+ cloning
+Date: Fri, 19 Feb 2016 15:07:40 -0800
+Message-ID: <20160219230740.GM28749@google.com>
+References: <1455905833-7449-1-git-send-email-sbeller@google.com>
+ <1455905833-7449-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Duy Nguyen <pclouds@gmail.com>,
-	git mailing list <git@vger.kernel.org>, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Feb 19 23:49:56 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	peff@peff.net, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 00:08:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWts3-00072I-4Z
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 23:49:55 +0100
+	id 1aWuA4-00062a-U4
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 00:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993366AbcBSWtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 17:49:51 -0500
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:35205 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993061AbcBSWtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 17:49:49 -0500
-Received: by mail-qg0-f47.google.com with SMTP id y89so73346655qge.2
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 14:49:48 -0800 (PST)
+	id S1161179AbcBSXIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 18:08:13 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33470 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1162022AbcBSXH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 18:07:57 -0500
+Received: by mail-pf0-f181.google.com with SMTP id q63so58495384pfb.0
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 15:07:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=YFx0sqe81WwqgpT2FeLKeHhV5usglfcY8psKffrd/fE=;
-        b=ViZsq4/JDjuRNZq73KyHkeVbLQZ32iigPNbNROagdYYW6v97kdVLRBDO0o1ObMUTkS
-         NkOY/Mj5UjhqzgnE7pL9OSwKSKslS+DDIbYY1V7TyWImYoH1F4ijiXuFZ8tEtneNrtZZ
-         qKy1rW4uewcBb9SIs3qETd7mesWq4fjt5ZdPXO9WFV3nZ63NpONDOffJfCSq87H1RmWC
-         4nBB+KmY06HBa3ceE8mmVi7UEHWHlAXWbyuVBsmgTpO02hlCpCOHBCYmCEuMK8maAcFk
-         O3nirVvAASZSa6Ba40o0SdcZObdOKZv9mNQrq6VTZNf0r0QbJsDk1OBQxFY/e+bAGQNe
-         MRBQ==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=18JIddeR5nEU08RW8EdygEadinuKm+k6Mrl2gRoJaDk=;
+        b=uUYvDDvdX9NfFQaD2+I3umjLpyuKTu5UwBXp74jh0gRgPFUbADiVOKuMCzI2GmHz+p
+         fei2VrD6z9FW3VwsO6Iyp1B+WItMLcInsB74HfAryqvkSi0QbUvL7JcuCzbbugB36s7C
+         0XFXqU+6yEpcSFJpHMSzdq5JqHmM4ilftS3D311nNcjCeJCYDtQUNMQgIg1gwIQ4DeAl
+         MZx7+lAohpDlohwO7XVjHwTgT2cYupK9n926rB+1LBSEjOg8a0g4Ep+LswkTXO1cWU0s
+         qfVRYDGCMQPbYzWVKO05FUlM+hjlXuzkAKmuKWoBE+lyJzyej4KBXQkFF6aUoi3FdKLF
+         dxjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=YFx0sqe81WwqgpT2FeLKeHhV5usglfcY8psKffrd/fE=;
-        b=JdKefRfxyS8GeOIm5JGkmd0AgvhPC208Bb5kIzFxiKoxcxgccvoPj0UvVhjljrnAeM
-         LoJhcr/g8wAmA8ONf60aL4L/7Nnif+lO0fAgX6hFR0DRKKBciOO5qwscIfKGSJeXyOoE
-         Jyw3a0/LHg8U1tMdKmHN5kpuWFhiJs0Ey9Z0I7MbLkeXA0ofmaoCK6JsjjQJWiXblp5c
-         W9dzmOWfBGLFeEfC+/UN6n67u0GVaJ3NY/BUN+8/W/7x2g+7B2wtwQKevcKFsBXrXy15
-         XOyMRdCBZQyp2suddxQnvYcRI0BwXTdnyv5JmE3jWGsvUb7rI+JhKV+vwpciBUVT1pX1
-         EZew==
-X-Gm-Message-State: AG10YOQOgHODpZ4wjDTBrZevmeETzXpHQ6eTF65oz3apjugtw4rjmDsIbsMtLGZozVM8rg==
-X-Received: by 10.140.88.229 with SMTP id t92mr13010313qgd.8.1455922188279;
-        Fri, 19 Feb 2016 14:49:48 -0800 (PST)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id 64sm5526604qhf.40.2016.02.19.14.49.46
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=18JIddeR5nEU08RW8EdygEadinuKm+k6Mrl2gRoJaDk=;
+        b=axlmGL39iBFwgicbshIkVU7GkJpWK4o12IOFKGSuvt0QCCiQU6r8nZC3gbYw47/GfC
+         3EP8YDMpnbKwA3KvXi4rnwdiHbUftSILIwsJDPXM0gbPDhCM0s7ppRZ0aKUMYoHnMRxC
+         v8ee3NEpR8EaHG2Py+4v798DS5YB2K1huBwhuNGOmYIttJnNwXryNiY0TWw8TmiSMHrC
+         OiEPAU/C5Y1y1+g9F1SWuPqCuOlOl6XUUv1KLg0ymoTLj4iR6LXeFFgyVnJqMDdmlY41
+         3ux6qvMYE+mz67KmDNSvdpE3qHgyo+7HgKO83fy3BsblkemNO++w2VLwp8x41fJSYeBt
+         Io0A==
+X-Gm-Message-State: AG10YOTVtn1iF+mNIVYWoi2aWKGOezRbrgQk0UNlqSvCEHnjuGGx0kh0b1rIWIFbymuorQ==
+X-Received: by 10.98.66.138 with SMTP id h10mr21736626pfd.89.1455923277297;
+        Fri, 19 Feb 2016 15:07:57 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:c115:884b:f4c6:61dc])
+        by smtp.gmail.com with ESMTPSA id 79sm20027267pfq.65.2016.02.19.15.07.55
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 19 Feb 2016 14:49:46 -0800 (PST)
-In-Reply-To: <20160218085023.GA30049@lanh>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        Fri, 19 Feb 2016 15:07:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1455905833-7449-6-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286758>
 
-On Thu, 2016-02-18 at 15:50 +0700, Duy Nguyen wrote:
-> Caveat: I did not study how to use lmdb. I just guessed what it does
-> based on function names. I don't know much about refs handling either
-> (especially since the transaction thing is introduced)
-> 
-> > diff --git a/Documentation/technical/refs-lmdb-backend.txt
-> > b/Documentation/technical/refs-lmdb-backend.txt
-> > new file mode 100644
-> > index 0000000..eb81465
-> > --- /dev/null
-> > +++ b/Documentation/technical/refs-lmdb-backend.txt
-> > +Reflog values are in the same format as the original files-based
-> > +reflog, including the trailing LF. The date in the reflog value
-> > +matches the date in the timestamp field.
-> 
-> ..except that SHA-1s are stored in raw values instead of hex strings.
-> 
-> > diff --git a/Documentation/technical/repository-version.txt
-> > b/Documentation/technical/repository-version.txt
-> > index 00ad379..fca5ecd 100644
-> > --- a/Documentation/technical/repository-version.txt
-> > +++ b/Documentation/technical/repository-version.txt
-> > @@ -86,3 +86,8 @@ for testing format-1 compatibility.
-> >  When the config key `extensions.preciousObjects` is set to `true`,
-> >  objects in the repository MUST NOT be deleted (e.g., by `git
-> > -prune` or
-> >  `git repack -d`).
-> > +
-> > +`refStorage`
-> > +~~~~~~~~~~~~
-> > +This extension allows the use of alternate ref storage backends. 
-> >  The
-> > +only defined value is `lmdb`.
-> 
-> refStorage accepts empty string and `files` as well, should probably
-> be worth mentioning.
-> 
-> > diff --git a/refs/lmdb-backend.c b/refs/lmdb-backend.c
-> > +#include "../cache.h"
-> > +#include <lmdb.h>
-> > +#include "../object.h"
-> > +#include "../refs.h"
-> > +#include "refs-internal.h"
-> > +#include "../tag.h"
-> > +#include "../lockfile.h"
-> 
-> I'm quite sure we don't need "../". We have plenty of source files in
-> subdirs and many of them (haven't checked all) just go with
-> #include "cache.h".
-> 
-> > +struct lmdb_transaction transaction;
-> 
-> static?
-> 
-> > +
-> > +static int in_write_transaction(void)
-> > +{
-> > +	return transaction.txn && !(transaction.flags &
-> > MDB_RDONLY);
-> > +}
-> > +
-> > +static void init_env(MDB_env **env, const char *path)
-> > +{
-> > +	int ret;
-> > +	if (*env)
-> > +		return;
-> > +
-> > +	assert(path);
-> > +
-> > +	ret = mdb_env_create(env);
-> > +	if (ret)
-> > +		die("BUG: mdb_env_create failed: %s",
-> > mdb_strerror(ret));
-> > +	ret = mdb_env_set_maxreaders(*env, 1000);
-> > +	if (ret)
-> > +		die("BUG: mdb_env_set_maxreaders failed: %s",
-> > mdb_strerror(ret));
-> > +	ret = mdb_env_set_mapsize(*env, (1<<30));
-> > +	if (ret)
-> > +		die("BUG: mdb_set_mapsize failed: %s",
-> > mdb_strerror(ret));
-> > +	ret = mdb_env_open(*env, path, 0 , 0664);
-> 
-> This permission makes me wonder if we need adjust_shared_perm() here
-> and some other places.
-> 
-> > +	if (ret)
-> > +		die("BUG: mdb_env_open (%s) failed: %s", path,
-> > +		    mdb_strerror(ret));
-> > +}
-> > +
-> > +static int lmdb_init_db(int shared, struct strbuf *err)
-> > +{
-> > +	/*
-> > +	 * To create a db, all we need to do is make a directory
-> > for
-> > +	 * it to live in; lmdb will do the rest.
-> > +	 */
-> > +
-> > +	if (!db_path)
-> > +		db_path =
-> > xstrdup(real_path(git_path("refs.lmdb")));
-> > +
-> > +	if (mkdir(db_path, 0775) && errno != EEXIST) {
-> > +		strbuf_addf(err, "%s", strerror(errno));
-> 
-> maybe strbuf_addstr, unless want to add something more, "mkdir
-> failed"?
-> 
-> > +static int read_per_worktree_ref(const char *submodule, const char
-> > *refname,
-> > +				 struct MDB_val *val, int
-> > *needs_free)
-> 
-> From what I read, I suspect these _per_worktree functions will be
-> identical for the next backend. Should we just hand over the job for
-> files backend? For all entry points that may deal with per-worktree
-> refs, e.g. lmdb_resolve_ref_unsafe, can we check ref_type() first
-> thing, if it's per-worktree we call
-> refs_be_files.resolve_ref_unsafe()
-> instead?  It could even be done at frontend level,
-> e.g. refs.c:resolve_ref_unsafe().
-> 
-> Though I may be talking rubbish here because I don't know how whether
-> it has anything to do with transactions.
-> 
-> > +{
-> > +	struct strbuf sb = STRBUF_INIT;
-> > +	struct strbuf path = STRBUF_INIT;
-> > +	struct stat st;
-> > +	int ret = -1;
-> > +
-> > +	submodule_path(&path, submodule, refname);
-> > +
-> > +#ifndef NO_SYMLINK_HEAD
-> 
-> It started with the compiler warns about unused "st" when this macro
-> is defined. Which makes me wonder, should we do something like this
-> to
-> make sure this code compiles unconditionally?
-> 
-> +#ifndef NO_SYMLINK_HEAD
-> +       int no_symlink_head = 0;
-> +#else
-> +       int no_symlink_head = 1;
-> +#endif
-> ...
-> +       if (!no_symlink_head) {
-> ...
-> 
-> 
-> > +int lmdb_transaction_begin_flags(struct strbuf *err, unsigned int
-> > flags)
-> 
-> static?
-> 
-> > +#define MAXDEPTH 5
-> > +
-> > +static const char *parse_ref_data(struct lmdb_transaction
-> > *transaction,
-> > +				  const char *refname, const char
-> > *ref_data,
-> > +				  unsigned char *sha1, int
-> > resolve_flags,
-> > +				  int *flags, int bad_name)
-> > +{
-> > +	int depth = MAXDEPTH;
-> > +	const char *buf;
-> > +	static struct strbuf refname_buffer = STRBUF_INIT;
-> > +	static struct strbuf refdata_buffer = STRBUF_INIT;
-> > +	MDB_val key, val;
-> > +	int needs_free = 0;
-> > +
-> > +	for (;;) {
-> > +		if (--depth < 0)
-> > +			return NULL;
-> > +
-> > +		if (!starts_with(ref_data, "ref:")) {
-> > +			if (get_sha1_hex(ref_data, sha1) ||
-> > +			    (ref_data[40] != '\0' &&
-> > !isspace(ref_data[40]))) {
-> > +				if (flags)
-> > +					*flags |= REF_ISBROKEN;
-> > +				errno = EINVAL;
-> > +				return NULL;
-> > +			}
-> > +
-> > +			if (bad_name) {
-> > +				hashclr(sha1);
-> > +				if (flags)
-> > +					*flags |= REF_ISBROKEN;
-> > +			} else if (is_null_sha1(sha1)) {
-> > +				if (flags)
-> > +					*flags |= REF_ISBROKEN;
-> > +			}
-> > +			return refname;
-> > +		}
-> > +		if (flags)
-> > +			*flags |= REF_ISSYMREF;
-> > +		buf = ref_data + 4;
-> > +		while (isspace(*buf))
-> > +			buf++;
-> > +		strbuf_reset(&refname_buffer);
-> > +		strbuf_addstr(&refname_buffer, buf);
-> > +		refname = refname_buffer.buf;
-> > +		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
-> > +			hashclr(sha1);
-> > +			return refname;
-> > +		}
-> > +		if (check_refname_format(buf,
-> > REFNAME_ALLOW_ONELEVEL)) {
-> > +			if (flags)
-> > +				*flags |= REF_ISBROKEN;
-> > +
-> > +			if (!(resolve_flags &
-> > RESOLVE_REF_ALLOW_BAD_NAME) ||
-> > +			    !refname_is_safe(buf)) {
-> > +				errno = EINVAL;
-> > +				return NULL;
-> > +			}
-> > +			bad_name = 1;
-> > +		}
-> 
-> This code looks a lot like near the end of resolve_ref_1(). Maybe we
-> could share the code in refs/backend-common.c or something and call
-> here instead?
+Hi,
 
-Something like the following?
+Stefan Beller wrote:
 
-commit aad6b84fd1869f6e1cf6ed15bcece0c2f6429e9d
-Author: David Turner <dturner@twopensource.com>
-Date:   Thu Feb 18 17:09:29 2016 -0500
+> This introduces a new helper function in git submodule--helper
+> which takes care of cloning all submodules, which we want to
+> parallelize eventually.
 
-    refs: break out some functions from resolve_ref_1
-    
-    A bunch of resolve_ref_1 is not backend-specific, so we can
-    break it out into separate internal functions that other
-    backends can use.
-    
-    Signed-off-by: David Turner <dturner@twopensource.com>
+Patches 1-4 are still
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-diff --git a/refs.c b/refs.c
-index c9fa34d..680c2a5 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1221,6 +1221,66 @@ int for_each_rawref(each_ref_fn fn, void
-*cb_data)
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
-+int parse_simple_ref(const char *buf, unsigned char *sha1, unsigned
-int *flags, int bad_name)
-+{
-+	/*
-+	 * Please note that FETCH_HEAD has a second
-+	 * line containing other data.
-+	 */
-+	if (get_sha1_hex(buf, sha1) ||
-+	    (buf[40] != '\0' && !isspace(buf[40]))) {
-+		if (flags)
-+			*flags |= REF_ISBROKEN;
-+		errno = EINVAL;
-+		return -1;
-+	}
-+	if (bad_name) {
-+		hashclr(sha1);
-+		if (flags)
-+			*flags |= REF_ISBROKEN;
-+	}
-+	return 0;
-+}
-+
-+int check_bad_refname(const char *refname, int *flags, int
-resolve_flags)
-+{
-+	if (!check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
-+		return 0;
-+
-+	if (flags)
-+		*flags |= REF_BAD_NAME;
-+
-+	if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
-+	    !refname_is_safe(refname)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+	/*
-+	 * dwim_ref() uses REF_ISBROKEN to distinguish between
-+	 * missing refs and refs that were present but invalid,
-+	 * to complain about the latter to stderr.
-+	 *
-+	 * We don't know whether the ref exists, so don't set
-+	 * REF_ISBROKEN yet.
-+	 */
-+	return 1;
-+}
-+
-+/*
-+ * Parse a refname out of the contents of a symref into a provided
-+ * strbuf.  Return a pointer to the strbuf's contents.
-+ */
-+char *parse_symref_data(const char *buf, struct strbuf *sb_refname)
-+{
-+	buf += 4;
-+	while (isspace(*buf))
-+		buf++;
-+	strbuf_reset(sb_refname);
-+	strbuf_addstr(sb_refname, buf);
-+	return sb_refname->buf;
-+}
-+
-+
- /* backend functions */
- int refs_init_db(int shared, struct strbuf *err)
- {
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index da06408..52972e6 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1427,25 +1427,9 @@ static const char *resolve_ref_1(const char
-*refname,
- 	if (flags)
- 		*flags = 0;
- 
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
--		if (flags)
--			*flags |= REF_BAD_NAME;
--
--		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
--		    !refname_is_safe(refname)) {
--			errno = EINVAL;
--			return NULL;
--		}
--		/*
--		 * dwim_ref() uses REF_ISBROKEN to distinguish between
--		 * missing refs and refs that were present but
-invalid,
--		 * to complain about the latter to stderr.
--		 *
--		 * We don't know whether the ref exists, so don't set
--		 * REF_ISBROKEN yet.
--		 */
--		bad_name = 1;
--	}
-+	bad_name = check_bad_refname(refname, flags, resolve_flags);
-+	if (bad_name < 0)
-+		return NULL;
- 	for (;;) {
- 		const char *path;
- 		struct stat st;
-@@ -1541,47 +1525,20 @@ static const char *resolve_ref_1(const char
-*refname,
- 		 * Is it a symbolic ref?
- 		 */
- 		if (!starts_with(sb_contents->buf, "ref:")) {
--			/*
--			 * Please note that FETCH_HEAD has a second
--			 * line containing other data.
--			 */
--			if (get_sha1_hex(sb_contents->buf, sha1) ||
--			    (sb_contents->buf[40] != '\0' &&
-!isspace(sb_contents->buf[40]))) {
--				if (flags)
--					*flags |= REF_ISBROKEN;
--				errno = EINVAL;
--				return NULL;
--			}
--			if (bad_name) {
--				hashclr(sha1);
--				if (flags)
--					*flags |= REF_ISBROKEN;
--			}
-+			if (parse_simple_ref(sb_contents->buf, sha1,
-flags, bad_name))
-+				refname = NULL;
- 			return refname;
- 		}
- 		if (flags)
- 			*flags |= REF_ISSYMREF;
--		buf = sb_contents->buf + 4;
--		while (isspace(*buf))
--			buf++;
--		strbuf_reset(sb_refname);
--		strbuf_addstr(sb_refname, buf);
--		refname = sb_refname->buf;
-+		refname = parse_symref_data(sb_contents->buf,
-sb_refname);
- 		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
- 			hashclr(sha1);
- 			return refname;
- 		}
--		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL))
-{
--			if (flags)
--				*flags |= REF_ISBROKEN;
--
--			if (!(resolve_flags &
-RESOLVE_REF_ALLOW_BAD_NAME) ||
--			    !refname_is_safe(buf)) {
--				errno = EINVAL;
--				return NULL;
--			}
--			bad_name = 1;
--		}
-+		bad_name |= check_bad_refname(refname, flags,
-resolve_flags);
-+		if (bad_name < 0)
-+			return NULL;
- 	}
- }
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index efdde82..7cdfffe 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -218,6 +218,26 @@ int do_for_each_per_worktree_ref(const char
-*submodule, const char *base,
- int do_for_each_ref(const char *submodule, const char *base,
- 		    each_ref_fn fn, int trim, int flags, void
-*cb_data);
- 
-+/*
-+ * Parse a non-symref -- a buf hopefully containing 40 hex characters.
-+ * Set errno and flags appropriately.  If the buf can be parsed but
-+ * bad_name is set, the ref is broken: zero out sha1.
-+ */
-+int parse_simple_ref(const char *buf, unsigned char *sha1, unsigned
-int *flags,
-+		     int bad_name);
-+/*
-+ * Parse a refname out of the contents of a symref into a provided
-+ * strbuf.  Return a pointer to the strbuf's contents.
-+ */
-+char *parse_symref_data(const char *buf, struct strbuf *sb_refname);
-+
-+/*
-+ * Check the format of refname.  Set flags and errno appropriately.
-+ * Returns 0 if the refname is good, -1 if it is bad enough that we
-+ * have to stop parsing and 1 if we just have to note that it is bad.
-+ */
-+int check_bad_refname(const char *refname, int *flags, int
-resolve_flags);
-+
- /* refs backends */
- typedef int ref_init_db_fn(int shared, struct strbuf *err);
- typedef int ref_transaction_commit_fn(struct ref_transaction
-*transaction,
+I still have trouble reading this patch (patch 5).  Some musing below
+to figure out what could change to make it more readable (perhaps in a
+patch on top).
+
+[...]
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -255,6 +255,234 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  	return 0;
+>  }
+>  
+> +struct submodule_update_clone {
+> +	/* states */
+> +	int count;
+> +	int print_unmatched;
+> +	/* configuration */
+> +	int quiet;
+> +	const char *reference;
+> +	const char *depth;
+> +	const char *recursive_prefix;
+> +	const char *prefix;
+> +	struct module_list list;
+> +	struct string_list projectlines;
+> +	struct submodule_update_strategy update;
+> +	struct pathspec pathspec;
+> +};
+> +#define SUBMODULE_UPDATE_CLONE_INIT {0, 0, 0, NULL, NULL, NULL, NULL, MODULE_LIST_INIT, STRING_LIST_INIT_DUP, SUBMODULE_UPDATE_STRATEGY_INIT}
+
+I think these struct fields need some comments.  It's not clear what
+most of them represent.
+
+[...]
+> +static int update_clone_inspect_next_task(struct child_process *cp,
+
+What is being inspected here?  What does the return value represent?
+
+Would a name like 'prepare_to_clone_next_submodule' make sense?  A
+comment could say that 'ce' points to the candidate submodule to clone,
+that the return value represents whether we want to clone it, and
+that the first parameter is an output parameter representing a command
+to run to carry out the clone.
+
+[...]
+> +	if (ce_stage(ce)) {
+> +		if (pp->recursive_prefix)
+> +			strbuf_addf(err, "Skipping unmerged submodule %s/%s\n",
+> +				    pp->recursive_prefix, ce->name);
+> +		else
+> +			strbuf_addf(err, "Skipping unmerged submodule %s\n",
+> +				    ce->name);
+
+Nit: this would be easier to scan with braces.
+
+[...]
+> +	sub = submodule_from_path(null_sha1, ce->name);
+
+It's common to call submodule_from_path with null_sha1 as a parameter
+but I have trouble continuing to remember what that means.  Maybe
+there should be a separate function that handles that?  As a
+side-effect, the name and docstring of that function could explain
+what it means, which I still am not sure about. :)
 
 
+> +	if (pp->recursive_prefix)
+> +		displaypath = relative_path(pp->recursive_prefix,
+> +					    ce->name, &displaypath_sb);
 
+Nit: could use braces.
 
-followed by this version of parse_ref_data:
+> +	else
+> +		displaypath = ce->name;
+> +
+> +	if (pp->update.type == SM_UPDATE_NONE ||
+> +	    (pp->update.type == SM_UPDATE_UNSPECIFIED &&
+> +	     sub->update_strategy.type == SM_UPDATE_NONE)) {
 
-static const char *parse_ref_data(struct lmdb_transaction *transaction,
-				  const char *refname, const char
-*ref_data,
-				  unsigned char *sha1, int
-resolve_flags,
-				  int *flags, int bad_name)
-{
-	int depth = MAXDEPTH;
-	const char *buf;
-	static struct strbuf refname_buffer = STRBUF_INIT;
-	static struct strbuf refdata_buffer = STRBUF_INIT;
-	MDB_val key, val;
-	int needs_free = 0;
+Nit: this might be more readable with the operators starting each
+line:
 
-	for (;;) {
-		if (--depth < 0)
-			return NULL;
+	if (pp->update.type == SM_UPDATE_NONE
+	    || (pp->update.type == SM_UPDATE_UNSPECIFIED
+	        && sub->update_strategy.type == SM_UPDATE_NONE)) {
 
-		/*
-		 * Is it a symbolic ref?
-		 */
-		if (!starts_with(ref_data, "ref:")) {
-			if (parse_simple_ref(ref_data, sha1, flags,
-bad_name))
-				refname = NULL;
-			 if (is_null_sha1(sha1) && flags)
-				*flags |= REF_ISBROKEN;
-			return refname;
-		}
-		if (flags)
-			*flags |= REF_ISSYMREF;
+What does pp stand for?
 
-		refname = parse_symref_data(ref_data, &refname_buffer);
-		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
-			hashclr(sha1);
-			return refname;
-		}
-		bad_name |= check_bad_refname(refname, flags,
-resolve_flags);
-		if (bad_name < 0)
-			return NULL;
+Is the --update parameter ever set to 'none'?  What does it mean
+when someone sets it to none?
 
-		key.mv_data = (char *)refname;
-		key.mv_size = strlen(refname) + 1;
-		if (mdb_get_or_die(transaction, &key, &val,
-&needs_free)) {
-			hashclr(sha1);
-			if (bad_name) {
-				if (flags)
-					*flags |= REF_ISBROKEN;
-			}
-			if (resolve_flags & RESOLVE_REF_READING)
-				return NULL;
+> +		strbuf_addf(err, "Skipping submodule '%s'\n",
+> +			    displaypath);
 
-			return refname;
-		}
-		strbuf_reset(&refdata_buffer);
-		strbuf_add(&refdata_buffer, val.mv_data, val.mv_size);
-		if (needs_free)
-			free(val.mv_data);
-		ref_data = refdata_buffer.buf;
-	}
-	return refname;
-}
+Does the caller expect a newline at the end of err?
 
-----------------
+In the refs code that uses an err strbuf, the convention is to
+not end the message with a newline.  That way, a function like
+die() can insert a newline and messages are guaranteed to be
+newline-terminated even if someone is sloppy and does the wrong thing
+when generating an error.
 
-I'm not sure I like it, because it breaks out these weird tiny
-functions that take a lot of arguments.  But maybe it's worth it?  What
-do you think?
+[...]
+> +	if (needs_cloning) {
+
+Could de-indent:
+
+	if (!needs_cloning)
+		goto cleanup;
+
+> +		cp->git_cmd = 1;
+> +		cp->no_stdin = 1;
+> +		cp->stdout_to_stderr = 1;
+> +		cp->err = -1;
+> +		argv_array_push(&cp->args, "submodule--helper");
+> +		argv_array_push(&cp->args, "clone");
+> +		if (pp->quiet)
+> +			argv_array_push(&cp->args, "--quiet");
+> +
+> +		if (pp->prefix)
+> +			argv_array_pushl(&cp->args, "--prefix", pp->prefix, NULL);
+> +
+
+Odd whitespace.  I think it would be fine to remove the blank lines.
+
+> +		argv_array_pushl(&cp->args, "--path", sub->path, NULL);
+> +		argv_array_pushl(&cp->args, "--name", sub->name, NULL);
+> +		argv_array_pushl(&cp->args, "--url", url, NULL);
+> +		if (pp->reference)
+> +			argv_array_push(&cp->args, pp->reference);
+> +		if (pp->depth)
+> +			argv_array_push(&cp->args, pp->depth);
+
+What does 'cp' stand for mean?  Would a name like 'child' work?
+
+[...]
+> +static int update_clone_get_next_task(struct child_process *cp,
+> +				      struct strbuf *err,
+> +				      void *pp_cb,
+> +				      void **pp_task_cb)
+> +{
+> +	struct submodule_update_clone *pp = pp_cb;
+> +
+> +	for (; pp->count < pp->list.nr; pp->count++) {
+> +		const struct cache_entry *ce = pp->list.entries[pp->count];
+> +		if (update_clone_inspect_next_task(cp, err, pp,
+> +						   pp_task_cb, ce)) {
+> +			pp->count++;
+> +			return 1;
+> +		}
+> +	}
+> +	return 0;
+> +}
+
+Ah, that clarifies things a bit.
+
+The 'count' variable is more of a cursor than a count.  Would a name +
+comment like
+
+	/* index into 'list' representing the next submodule to consider cloning */
+	int current;
+
+work?
+
+> +
+> +static int update_clone_start_failure(struct child_process *cp,
+> +				      struct strbuf *err,
+> +				      void *pp_cb,
+> +				      void *pp_task_cb)
+> +{
+> +	struct submodule_update_clone *pp = pp_cb;
+> +
+> +	strbuf_addf(err, "error when starting a child process");
+> +	pp->print_unmatched = 1;
+
+What does print_unmatched mean?
+
+[...]
+> +static int update_clone_task_finished(int result,
+> +				      struct child_process *cp,
+> +				      struct strbuf *err,
+> +				      void *pp_cb,
+> +				      void *pp_task_cb)
+> +{
+> +	struct submodule_update_clone *pp = pp_cb;
+> +
+> +	if (!result) {
+> +		return 0;
+> +	} else {
+
+No need for an 'else' here --- the 'if' already returned.
+
+> +		strbuf_addf(err, "error in one child process");
+> +		pp->print_unmatched = 1;
+
+What does print_unmatched mean?
+
+[...]
+> +static int update_clone(int argc, const char **argv, const char *prefix)
+> +{
+> +	const char *update = NULL;
+> +	struct string_list_item *item;
+> +	struct submodule_update_clone pp = SUBMODULE_UPDATE_CLONE_INIT;
+> +
+> +	struct option module_list_options[] = {
+
+The name looks stale.
+
+> +		OPT_STRING(0, "prefix", &prefix,
+> +			   N_("path"),
+> +			   N_("path into the working tree")),
+> +		OPT_STRING(0, "recursive_prefix", &pp.recursive_prefix,
+> +			   N_("path"),
+> +			   N_("path into the working tree, across nested "
+> +			      "submodule boundaries")),
+
+What do these options represent?  I'm used to the 'prefix' parameter to
+a command coming from git machinery that remembers what the path to the
+original cwd was relative to the worktree or repository root.  Here
+there's an option to set it --- is that intentional?  Would setting the
+environment variable GIT_PREFIX (that git already knows how to respect)
+work in its place?
+
+What is recursive_prefix relative to?
+
+Nit: it would be more idiomatic to use a dash in place of an underscore
+in the second one's name.  But this is an internal interface so it
+doesn't matter much.
+
+> +		OPT_STRING(0, "update", &update,
+> +			   N_("string"),
+> +			   N_("update command for submodules")),
+
+This one is confusing to me because while the script supports --rebase /
+--merge / --checkout this option seems to be more general.
+
+If the help string said '(rebase, merge, or checkout)' then I wouldn't
+mind.
+
+> +		OPT_STRING(0, "reference", &pp.reference, "<repository>",
+> +			   N_("Use the local reference repository "
+> +			      "instead of a full clone")),
+
+Is this allowed to be relative?  If so, what is it relative to?
+
+[...]
+> +		OPT__QUIET(&pp.quiet, N_("do't print cloning progress")),
+
+Typo.
+
+[...]
+> +	const char *const git_submodule_helper_usage[] = {
+> +		N_("git submodule--helper list [--prefix=<path>] [<path>...]"),
+
+Is this the 'list' subcommand?
+
+[...]
+> +	gitmodules_config();
+> +	/* Overlay the parsed .gitmodules file with .git/config */
+> +	git_config(submodule_config, NULL);
+> +	run_processes_parallel(1, update_clone_get_next_task,
+> +				  update_clone_start_failure,
+> +				  update_clone_task_finished,
+> +				  &pp);
+
+Neat. \o/
+
+> +	if (pp.print_unmatched) {
+> +		printf("#unmatched\n");
+
+I'm still confused about this.  I think a comment where
+'print_unmatched' is declared would probably clear it up.
+
+[...]
+> +	for_each_string_list_item(item, &pp.projectlines)
+> +		utf8_fprintf(stdout, "%s", item->string);
+
+(just curious) why are these saved up and printed all at once instead
+of being printed as it goes?
+
+[...]
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+
+Very nice.
+
+Thanks,
+Jonathan
