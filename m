@@ -1,77 +1,86 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: GSoC 2016
-Date: Fri, 19 Feb 2016 12:40:04 +0530
-Message-ID: <CA+DCAeSjBWrnnfzsM+u9ZQ7Z4swNU_dWiG+UemF+Z2QKqnU8qw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 19 Feb 2016 08:17:19 +0100
+Message-ID: <vpq60xl88zk.fsf@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
+	<CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:10:25 2016
+Content-Type: text/plain
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:17:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWfCq-0000E9-Mq
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 08:10:25 +0100
+	id 1aWfJo-000613-V9
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 08:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbcBSHKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 02:10:12 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:34022 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472AbcBSHKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 02:10:06 -0500
-Received: by mail-qk0-f177.google.com with SMTP id x1so27860988qkc.1
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 23:10:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=K1SZfz2SqS/gC/tdwdnJeheAzB6ySetSEToT8XENP7k=;
-        b=wTauk+QwI8pb4VBwevsL6CvsyVFr7UHm3VInZRZHFvnDkWO99IEV4ZngHlNKBprSY7
-         qKXVjmQhky0wt4tO7mU9MgMkbD1+JZA320BiLSSuVr+jrOSls9GAQ4QD654PPQrWiOwA
-         LUHFt5pemhzwlHE7F95Io9JdovMS2UY9qztzkgt22J/duxTHzWbDefFWHHkVjTDAnTOI
-         6l/iOefxymkec4TInXB1m2mUMNViwHrhi4CIDUUXqzVtkxG7ueV1CWpLY+ZIn2R4s74F
-         ZZOjXVuPwv7zrAJcpZBdxKfdfetF9kd1rbL8xOT8ezaMhyVd9KhICgOuZwHlJgtQvSnH
-         I62A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=K1SZfz2SqS/gC/tdwdnJeheAzB6ySetSEToT8XENP7k=;
-        b=E1VJ4U5U3va6jzp8pKoDje0XwUO7F/qtBRuX08hudhGL3ie2pdV2Cz0vXyrxRnFtxy
-         0H08j0c1x3FunP/Qc33A7pBESgz2FXO5oAwPHaxoBDHLaQ2GhOCXw2WzyhTi/uCmKHkl
-         VfzaOFOVjDYkSI6ph6dDkcFSJ/mr1Q2BM4Y1qrffX0nuiF9pAnxBbWzW/LOLVieQHCkA
-         SpZ6n9o/QV5L5daxJ3pTgGntwjbdUn/aJo4p9E4jD4MsCJBDzlechP14uAOU4ikuZmMU
-         u15DcV8bNWGjwF5XquE/NrY3ISKsV65aoPR3qpclivb9Hlby/fTxnbbKmdcDvE8lU538
-         PYdA==
-X-Gm-Message-State: AG10YOTuaw6Ata6UdAs6vkcyd774A+SVC3eVMRa4K9GZYAQ7XaMRhjF9yzdZluhu1YNiSvmYN89vAcJz8NkDPQ==
-X-Received: by 10.55.54.201 with SMTP id d192mr13734999qka.23.1455865804455;
- Thu, 18 Feb 2016 23:10:04 -0800 (PST)
-Received: by 10.55.166.10 with HTTP; Thu, 18 Feb 2016 23:10:04 -0800 (PST)
+	id S1757226AbcBSHR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 02:17:29 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54152 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752023AbcBSHR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 02:17:28 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1J7HJrR003264
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 19 Feb 2016 08:17:19 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1J7HJYH030950;
+	Fri, 19 Feb 2016 08:17:19 +0100
+In-Reply-To: <CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 19 Feb 2016 10:09:45 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 19 Feb 2016 08:17:19 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1J7HJrR003264
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456471040.91145@2b7rygrCHDCf3gd/QXa/5A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286661>
 
-Hello everyone,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I'm Mehul Jain. I'm looking for participating in GSoC 2016.
+> On Thu, Feb 18, 2016 at 1:58 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Feel free to start writting an idea for
+>> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+>> ideas before Friday. We can polish them later if needed.
+>
+> Probably too late now, anyway..
 
-I've started work on a Microproject" Teach git pull --rebase the
---no-autostash" option. While looking at Git's source code I have made
-following observation: In the pull.c file
-1.  git_config_get_bool( , ) search in the configuration key for the
-value of rebase.autostash, if found true then modify autostash's value
-to a non-zero number and thus making a stash to encounter the problem
-of dirty tree.
-2. Here if in command line a flag "--no-autostash" is given then we
-can easily set the value of autostash = 0 and thus killing the process
-by die_on_unclean_work_tree(prefix).
-Is my observation is right?
+It's still time. I'll post the application very soon (a few hours from
+now), but the idea list is not included in the application, but linked
+from it. So we can add something before reviewers follow the link, and
+obviously we can add more before students start picking them.
 
-I'm new to open source projects and not much experienced at it. So
-please correct/comment on any mistake that I made while trying to put
-my point. I will also appreciate any comment/suggestion/criticism on
-my observation.
+> with David's multiple ref backend work, we could have a third,
+> no-dependency backend. We can use index format to store refs.
 
-Thanks
+This sounds like an interesting but ambitious project for a GSoC. There
+are a lot of new stuff to understand for someone potentially new to
+Git's codebase. And it's hard to work incrementally: the result would
+hardly be mergeable before being almost finished.
+
+I think it's interesting to offer the idea, but there should be a
+warning for the student about the difficulties.
+
+Would you be willing to (co-)mentor?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
