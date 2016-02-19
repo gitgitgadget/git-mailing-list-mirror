@@ -1,131 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Fri, 19 Feb 2016 15:08:53 -0800
-Message-ID: <xmqq37sob8my.fsf@gitster.mtv.corp.google.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-	<1455772670-21142-26-git-send-email-dturner@twopensource.com>
-	<20160218085023.GA30049@lanh>
-	<1455922186.7528.97.camel@twopensource.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule: Fetch the direct sha1 first
+Date: Fri, 19 Feb 2016 15:40:07 -0800
+Message-ID: <CAGZ79kaL8T72Fcy1kzuRrYagX9biRTscA4q=xBc7JaUXv5msVg@mail.gmail.com>
+References: <1455908253-1136-1-git-send-email-sbeller@google.com>
+	<xmqqpovsbdyu.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaOQTGEY6akKgz695nPdG4cG4SsYKLcJkKr1im+RQjK5A@mail.gmail.com>
+	<xmqqbn7cbahb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	git mailing list <git@vger.kernel.org>, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 00:09:07 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Dave Borowitz <dborowitz@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 00:40:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWuAb-0006VG-96
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 00:09:05 +0100
+	id 1aWuen-0008If-TD
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 00:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1428816AbcBSXI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 18:08:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62199 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1428813AbcBSXI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 18:08:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 283A1449FC;
-	Fri, 19 Feb 2016 18:08:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k2CW3fO7L8tYbf6cDpEqBnuWv0o=; b=KHDz+z
-	lM2xDhcaTerlXdEaK75rFM7k2U0420oE3WXi6LmbyxbChkqj4E3aqkNr1lO4mpYc
-	vsU9l1H01phOF9OZzqpUfOk3DlAwUyMdLSIBYXRtJaqTlaDgKa9tbGbbskwn1LCt
-	mUJ9ZZ8lOE538ONOaf/Ng+WyeovxS+/khBm2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TFMEd9jXck/MwjJaLkmtL9JD94XLv6o8
-	RbSHESsfhn9UazvXX1rTiOmhsuR0GYyp0vvYvO7HfjzZ0uMzwXWA2653xc7OO/8U
-	NjnDJkcFn13TE0HvmUn9uRVwqBh6lNuC+34P515ZjBFk3CXPEBDQsvXO/GoQqYhr
-	nnDwCeimsoY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 201A1449FA;
-	Fri, 19 Feb 2016 18:08:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 91DC6449F9;
-	Fri, 19 Feb 2016 18:08:54 -0500 (EST)
-In-Reply-To: <1455922186.7528.97.camel@twopensource.com> (David Turner's
-	message of "Fri, 19 Feb 2016 17:49:46 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BF4D71C4-D75D-11E5-851A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1428777AbcBSXkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 18:40:10 -0500
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:37862 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1427474AbcBSXkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 18:40:08 -0500
+Received: by mail-ig0-f176.google.com with SMTP id 5so47368506igt.0
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 15:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3iTXIrufDJd2tWZ8lvQAxEU0RbLy/Mb4LxpqDryREnA=;
+        b=FAa4hSmHgE0J+vxH7TAG5+lzGQw+j7It1Dt6BcbJKbsAw+iwHLApB0A1LXzhH7/3k5
+         ZQWhID1tIIX5NGIwlRM4ftme1fDHc0L4f0J12kvYptGA4g2HK3EQ1+uq4XZrJp94xjvG
+         4kNaA5SBjNel4e9364xocCCWT+GS0A3i+PArALQsryEIGaenaeyRh3iFLAUfK18hcMFU
+         G91/yD7N5oVYUyDCWa+0JqxI3lcmOuCgVdpwEZk0jX2E9h0BxKLlQTT8JJ4aSV1Ws5cE
+         1tN6sRdiIEZJ3HQP9ZMUn03sECtW/oe/9w+L/H1jX+nz8Noiztyv5GIrZp+bRVrzJC6W
+         NnFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=3iTXIrufDJd2tWZ8lvQAxEU0RbLy/Mb4LxpqDryREnA=;
+        b=MS89vB5ViRLSvv5uobIfDVUSvwIAQ8hXTBG32ibE+P/9M2zSwvscQxy8hpIM5JL2Kc
+         bhvGWJNH+040skeXg6zMjAW7zxUSMwxXTfkYWCf3F0I3E2V2nqKSHeqzRD3Qlp5OYzwd
+         /zG3BTmIRx/HSlq5XCVoyb/C5khDS6oeNr291FEn20+9zqbDKWt799ht/RiPuAAOTNhk
+         QjZCadfzGsVXWTGGL2aBUbB1YzO2stsAr57CUNEl2oZJwvKwvslhjEuPUmlXWUFc9iSz
+         XNWXGStdTtoOOdD2l24eVQIjLVCgDhLImykOyETJj17cusY+dIdPTkAywgimHCSZ36r1
+         rbDQ==
+X-Gm-Message-State: AG10YOQ1LebOXfn0yeGBqoq2dIMFKNWc4zJm7CG6Edai+QfTGSIeDrJnkoiJ1pycg47mQuHe35a/RrlKuKq/0ZGK
+X-Received: by 10.50.112.10 with SMTP id im10mr469650igb.93.1455925207898;
+ Fri, 19 Feb 2016 15:40:07 -0800 (PST)
+Received: by 10.107.4.210 with HTTP; Fri, 19 Feb 2016 15:40:07 -0800 (PST)
+In-Reply-To: <xmqqbn7cbahb.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286760>
 
-David Turner <dturner@twopensource.com> writes:
-
-> Something like the following?
+On Fri, Feb 19, 2016 at 2:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> commit aad6b84fd1869f6e1cf6ed15bcece0c2f6429e9d
-> Author: David Turner <dturner@twopensource.com>
-> Date:   Thu Feb 18 17:09:29 2016 -0500
+>> Doing a 'git fetch' only and not the fetch for the specific sha1 would be
+>> incorrect?
 >
->     refs: break out some functions from resolve_ref_1
->     
->     A bunch of resolve_ref_1 is not backend-specific, so we can
->     break it out into separate internal functions that other
->     backends can use.
->     
->     Signed-off-by: David Turner <dturner@twopensource.com>
-> 
-> diff --git a/refs.c b/refs.c
-> index c9fa34d..680c2a5 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1221,6 +1221,66 @@ int for_each_rawref(each_ref_fn fn, void
-> *cb_data)
->  			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
->  }
->  
-> +int parse_simple_ref(const char *buf, unsigned char *sha1, unsigned
-> int *flags, int bad_name)
-> +{
-> +	/*
-> +	 * Please note that FETCH_HEAD has a second
-> +	 * line containing other data.
-> +	 */
+> I thought that was what you are attempting to address.
 
-This comment is not quite correct; the reason why the latter half of
-this condition is more convoluted than just !buf[40] is not because
-FETCH_HEAD has a second line, but it has an additional info at the
-tail on the first line.
+Yep. In an ideal world I would imagine it would look like
 
-Also the caller is expected to have already checked for "ref:"
-prefix to decide not to call this.
+    if $sha1 doesn't exist:
+        fetch $sha1
+        if server did not support fetching direct sha1:
+            fallback to fetch <no args>
 
-> +	if (get_sha1_hex(buf, sha1) ||
-> +	    (buf[40] != '\0' && !isspace(buf[40]))) {
+and I thought this would be small enough to be expressed
+using the || and &&.
 
-> +/*
-> + * Parse a refname out of the contents of a symref into a provided
-> + * strbuf.  Return a pointer to the strbuf's contents.
-> + */
-> +char *parse_symref_data(const char *buf, struct strbuf *sb_refname)
-> +{
-> +	buf += 4;
-> +	while (isspace(*buf))
-> +		buf++;
+It would be slightly more complicated for first doing the fetch
+and then refetching if the sha1 is still missing as the condition
+is more complicated to express.
 
-This is expecting to be called by somebody who read "ref:..."  into
-buf and the caller must decide by checking the "ref:" prefix before
-calling into this function.
+>
+>> ('git fetch' with no args finishes successfully, so no fallback is
+>> triggered. But we are not sure if we obtained the sha1, so we need to
+>> check if we have the sha1 by doing a local check and then try to get the sha1
+>> again if we don't have it locally.
+>
+> Yes, that is what I meant in the "In the opposite fallback order"
+> suggestion.
+>>>>                               (clear_local_git_env; cd "$sm_path" &&
+>>>> +                                     remote_name=$(get_default_remote)
+>>>>                                       ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+>>>> -                                      test -z "$rev") || git-fetch)) ||
+>>>> +                                      test -z "$rev") || git-fetch $remote_name $rev
+>>>
+>>> Regardless of the "fallback order" issue, I do not think $rev is a
+>>> correct thing to fetch here.  The superproject binds $sha1 to its
+>>> tree, and you would be checking that out, so shouldn't you be
+>>> fetching that commit?
+>>
+>> Both $sha1 and $rev are in the submodule (because
+>> 'git submodule--helper list' puts out the sha1 as the
+>> submodule sha1). $rev is either empty or equal to $sha1
+>> in my understanding of "rev-list $sha1 --not --all".
+>
+> Not quite.  The rev-list command expects [*1*] one of three outcomes
+> in the original construct:
+>
+>  * The repository does not know anything about $sha1; the command
+>    fails, rev is left empty, but thanks to &&, git-fetch runs.
 
-> ...  I'm not sure I like it, because it breaks out these weird
-> tiny functions that take a lot of arguments.  But maybe it's worth
-> it?  What do you think?
+ok. "git cat-file -e" would be able to replace this case.
 
-I wasn't Cc'ed but if you ask me, I do not think I can say I like
-it, either.  Somehow it smells that the responsibility of inspecting
-data and doing different things based on normal vs symbolic ref is
-split between the caller and the callees at a wrong level.  The
-caller also is responsible to rtrim the line before calling the
-latter function if I am reading the code correctly, which smells
-inconsistent given that an equivalent ltrim() is done by the "skip
-the leading spaces" loop inside.
+>
+>  * The repository has $sha1 but the history behind it is not
+>    complete.  While digging from $sha1 following the parent chain,
+>    it would hit a missing object and fails, rev may or may not be
+>    empty, but thanks to &&, git-fetch runs.
+
+which I read as a broken shallow clone or a half-way gc'ed repository.
+(git fetch repairs that? ok.)
+
+An intact shallow clone which has enough history to contain sha1 should
+not be deepened in my understanding of "submodule update".
+
+Rereading the man page for  "git cat-file -e", the output of
+"cat-file -e" is the same as in the first case, and we want to also fetch.
+
+>
+>  * The repository has $sha1 and its history is all connected.  The
+>    command succeeds.  If $sha1 is not connected to any of the refs,
+>    however, that commit may be shown and stored in $rev.  In this
+>    case, "$rev" happens to be the same as "$sha1".
+
+So it would be possible to checkout $sha1 as a detached HEAD,
+but it's not strongly protected against gc. (I assume gc will not
+touch objects reachable from HEAD, but not referenced by any ref,
+but HEAD can change in a heart beat, so it is not as strong of a protection
+as having a branch include that $sha1).
+
+>
+> As this "fetch" is run in order to make sure that the history behind
+> $sha1 is complete in the submodule repository, so that detaching the
+> HEAD at that commit will give the user a useful repository and its
+> working tree, the check the code is doing in the original is already
+> flawed.  If $sha1 and its ancestry is complete in the repository,
+> rev-list would succeed, and if $sha1 is ahead of any of the refs,
+> the original code still runs "git fetch", which is not necessary for
+> the purpose of detaching the head at $sha1.  On the other hand, by
+> using "-n 1", it can cause rev-list stop before discovering a gap in
+> history behind $sha1, allowing "git fetch" to be skipped when it
+> should be run to fill the gap in the history.
+>
+> To be complete, the rev-list command line should also run with
+> "--objects"; after all, a commit walker fetch may have downloaded
+> commit chain completely but haven't fetched necessary trees and
+> blobs when it was killed, and "rev-list $sha1 --not --all" would not
+> catch such a breakage without "--objects".
+
+So 'cat-file -e' doesn't sound like it would back-test the history at all,
+so it doesn't sound like a sufficient replacement.
+
+>
+>> Oh! Looking at that I suspect the
+>> "test -z $(git rev-list -n 1 $sha1 --not --all 2>/dev/null)"
+>> and "git cat-file -e" are serving the same purpose here and should just
+>> indicate if the given sha1 is present or not.
+>
+> That is the simplest explanation why the original "rev-list"
+> invocation is already wrong.  It should do an equivalent of
+> builtin/fetch.c::quickfetch() to ensure that $sha1 is something that
+> is complete, i.e. could be anchored with a ref if we wanted to,
+> before deciding to avoid running "git fetch".
+
+Would it make sense in case of broken histories to not fetch
+(specially if the user asked to not fetch) and rather repair by
+making it a shallow repository?
+
+>
