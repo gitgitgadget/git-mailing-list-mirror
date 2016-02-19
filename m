@@ -1,113 +1,113 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: git submodule should honor "-c credential.helper" command line argument
-Date: Thu, 18 Feb 2016 17:15:54 -0800
-Message-ID: <CA+P7+xpHNHVSJnVg3HwiBjWxRdSpLXCsm3GpWst=BNyhLMVd5A@mail.gmail.com>
-References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
- <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
- <CA+P7+xr4gQFPsUiuqSzMsUJP6_W8FnXBwX1Xes=XjksuTs=+hQ@mail.gmail.com>
- <56B74B17.4040304@syntevo.com> <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 21/25] fetch: define shallow boundary with --shallow-exclude
+Date: Thu, 18 Feb 2016 20:35:54 -0500
+Message-ID: <CAPig+cRHOKkaGmSRioEqYYmWzDazNinq2owwYmKyQwOFDLvjig@mail.gmail.com>
+References: <1454576641-29615-1-git-send-email-pclouds@gmail.com>
+	<1454576641-29615-22-git-send-email-pclouds@gmail.com>
+	<CAPig+cQA6yV369b7hM_Q8aPuAwF8tR1xT=jr1r2PH1KsCtHWtQ@mail.gmail.com>
+	<CACsJy8B=p0frmU8ahc9bnk-uoDPNUT_6UB0MVRPiLc9DqNz3vQ@mail.gmail.com>
+	<CAPig+cR01WCgyJQuDcq-j5Z6u3S-LO5kUVuT+g-jdu-hoH-5yw@mail.gmail.com>
+	<20160215081539.GA12609@lanh>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Marc Strapetz <marc.strapetz@syntevo.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 02:16:22 2016
+Cc: Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 02:36:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWZgC-0000Tn-Cd
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 02:16:20 +0100
+	id 1aWZzj-0000W5-9S
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 02:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948927AbcBSBQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Feb 2016 20:16:16 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:36093 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1947768AbcBSBQO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Feb 2016 20:16:14 -0500
-Received: by mail-ig0-f173.google.com with SMTP id xg9so25410696igb.1
-        for <git@vger.kernel.org>; Thu, 18 Feb 2016 17:16:14 -0800 (PST)
+	id S1948121AbcBSBf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Feb 2016 20:35:57 -0500
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:33911 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1948102AbcBSBfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Feb 2016 20:35:55 -0500
+Received: by mail-vk0-f46.google.com with SMTP id e185so61639044vkb.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 17:35:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ssxY+6tFlXwjAZxjuN8ckS85VtNMTv94Blx3zDZVG2w=;
-        b=ddxQzmQCDjhMgxTbUNjbShpXd/yY8L8zrfdhYYSpyKLCxLKfT2x85h0M19Cs5e++NP
-         pa5bzbw2/wh3+6EbeP1Hc74Y37tSSg4a7g0Sb4mvTRAszbxtm37EF+10Rs1/+tf4N/Es
-         4DeqEBSOZKeA+0f4Yokb8PWQlG+I21DJkXZUrxhUZ2QDptE8pzC3wn7Vx0Oaw+uhq/MI
-         +26EvD7+SfqbKlRpx4y5xQIdrPZ5tylUn+BaJ8m+PphVKI5v3rJvlZ1PQFYkxZdZ44O/
-         gXGBUTb2v7rg5wK+z6GukqiPGsWIudxjm5kgL/BFX/6Int0++dE+mnhhwyjZTI65DH5t
-         TEWQ==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Qf1URTlEZNX8B16TprFJ64atSlF+fWEsBQav5jea/QM=;
+        b=G6/v+cISUgnYG0m2FZjSwDroTqwJQiMi8Y1/EwxvGhvLv15tzkQApY2/BHf/4QBuGI
+         fJ/m0A+/A/a7ujRRIX8oW5vNvK2Qrv8KEJsXD/bluFBFsIy1JY9bZqf9ujNzOm6b7uvl
+         u95u4ErGzpcNBsiemxCsehCT++KlFT2Ovw4ASjI8jH/01wKnNRoHW5hxjtlM1RsCgW0m
+         iU7FiQCA75sP53hBdSmCM/1/+bJF6ieWZfqSf852jQ+6YqNhfde0SrIzRIeSCsMe8lbZ
+         DMcIeRso73n8edprQ4pxLjnHBerzOQUysV9dcHMosFLNjyCmwscIUrH4ST8xfr0BILPP
+         n7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ssxY+6tFlXwjAZxjuN8ckS85VtNMTv94Blx3zDZVG2w=;
-        b=CaGRnYQhNQy6PDcJjtrRrH070Lwk6RTbzNBlwioymZOPpZIY6nMr8bTA9um+g6nvAW
-         B8Zi/D4Q8o0vesFOOMM71Xi5D1PKclagC065nabLQXBaN/j3HlvFoxtub4qv7kBtiO+l
-         25lugvzOKIB5jLVIHSJrb2hza0w7783xL0JLlkYCzuXq/BPPItE+4tSeDKrHnGLpoeET
-         QtN7y6lFg9pvfVzuE1qffLQvpV57Nageh6NU57/OQOprQGx8eDlqWODzXyxc8bkc9aCU
-         hKjvnp2ivwPbhCLKP8wdpo5iymrfIcGs8eeuFreQZ2KwCbUbDdgFiN3d1UIA6WhZXw59
-         gnLA==
-X-Gm-Message-State: AG10YOR3zWp1dd7tYB91xsFQV6Znexxg1Ugs2c+M52QoUOzEQ9KfWz8Lg31sPJBZlKrI5aoTjmjEovXx+FvtHQ==
-X-Received: by 10.50.137.35 with SMTP id qf3mr6630969igb.92.1455844574412;
- Thu, 18 Feb 2016 17:16:14 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Thu, 18 Feb 2016 17:15:54 -0800 (PST)
-In-Reply-To: <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Qf1URTlEZNX8B16TprFJ64atSlF+fWEsBQav5jea/QM=;
+        b=HukYAKLclaaQyBEiKvSeSQAsCoS5veZQD+2aJBVzf7TE6Qsa+c8vtX7SJbvoJmqGbR
+         YNX5sVvH4FVQhtrjQ6qokXVBbbvISSZ9Mbia3vGbqcQ2ROAPOVtI3uBzlaiWvFKjwvl7
+         Vm6ETa23WVndFRZTmJCtaIUwGnv0unR1c7MJ0sJtjd9uNs0QY1+I1eTjZUrCD6am3vOg
+         XBGW6rgqDHEY+oAURPcwMQZLiHq+LCvLaW/hr7fSDZdyvg+r3LH8KXjZKf7QKh3Gosp4
+         qhORxu+S2tWxX/e/jV9BOqFULYt8SS8dsjkkdAdrxLLuhp1dLHJmV4Qr+PPoOZDdwF53
+         fWLg==
+X-Gm-Message-State: AG10YOR/WqWVjAKce+76bYvUpI5LmmfzCGtfNYTW493r3uhMCCGOcZlFAp8w53B10rLwcq3kcoqYvdNBZYhWuQ==
+X-Received: by 10.31.182.143 with SMTP id g137mr8744461vkf.45.1455845754769;
+ Thu, 18 Feb 2016 17:35:54 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 18 Feb 2016 17:35:54 -0800 (PST)
+In-Reply-To: <20160215081539.GA12609@lanh>
+X-Google-Sender-Auth: wLgJAFQSjQADAg95O4jFwntXSKs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286652>
 
-On Sun, Feb 7, 2016 at 7:44 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Sun, Feb 7, 2016 at 5:48 AM, Marc Strapetz <marc.strapetz@syntevo.com> wrote:
->> On 07.02.2016 05:41, Jacob Keller wrote:
->>>
->>> On Wed, Feb 3, 2016 at 3:44 PM, Jacob Keller <jacob.keller@gmail.com>
->>> wrote:
->>>>
->>>> Ok so I am not sure we even really need to use "-c" option in
->>>> git-clone considering that we can just use the same flow we do for
->>>> setting core.worktree values. I'll propose a patch with you two Cc'ed,
->>>> which I think fixes the issue. There may actually be a set of
->>>> configuration we want to include though, and the main issue I see is
->>>> that it won't get updated correctly whenever the parent configuration
->>>> changes.
->>>>
->>>> Thanks,
->>>> Jake
->>>
->>>
->>> I tried adding the config as part of module_clone in
->>> submodule--helper.c but it didn't pass the test I added. I haven't had
->>> time to look at this in the last few days, but I am stuck as to why
->>> submodule--helper.c appeared to not use module_clone as I thought.
->>
->>
->> I've tried to just comment out clearing of environment variables in
->> git-sh-setup.sh, clear_local_git_env(). I've noticed that "-c
->> credentials-helper ..." is stored in $GIT_CONFIG_PARAMETERS and with
->> existing code is reset there. If not clearing the environment variables, at
->> least "git submodule init" is working properly. I didn't try with other
->> commands nor to run tests.
->>
->> -Marc
->>
->>
+On Mon, Feb 15, 2016 at 3:15 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Feb 15, 2016 at 12:52:26AM -0500, Eric Sunshine wrote:
+>> Yes, dropping 'const' was implied. I didn't examine it too deeply, but
+>> it did not appear as if there would be any major fallout from dropping
+>> 'const'. It feels a bit cleaner to keep it all self-contained than to
+>> have that somewhat oddball static string_list*, but it's not such a
+>> big deal that I'd insist upon a rewrite.
 >
-> I'll have to dig more into this next week.
+> Dropping 'const' is not a big deal. But before we do that, how about
+> this instead? I think the code looks better, and the compiler can
+> still catch invalid updates to deepen_not.
+
+I like this better, too.
+
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index 0402e27..07570be 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -50,6 +50,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>         struct child_process *conn;
+>         struct fetch_pack_args args;
+>         struct sha1_array shallow = SHA1_ARRAY_INIT;
+> +       struct string_list deepen_not = STRING_LIST_INIT_DUP;
 >
-> Regards,
-> Jake
-
-I am looking at this more and I am stuck as to how best to provide a test case.
-
-I think the problem as stated above is pretty straight forward, we
-just want to stop clearing GIT_CONFIG_PARAMETERS but I can't find an
-easy way to test that we've done the right thing. There are no current
-tests for using a credential helper with submodule update right now.
-
-Regards,
-Jake
+>         packet_trace_identity("fetch-pack");
+>
+> @@ -108,6 +109,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>                         args.deepen_since = xstrdup(arg);
+>                         continue;
+>                 }
+> +               if (skip_prefix(arg, "--shallow-exclude=", &arg)) {
+> +                       string_list_append(&deepen_not, arg);
+> +                       continue;
+> +               }
+>                 if (!strcmp("--no-progress", arg)) {
+>                         args.no_progress = 1;
+>                         continue;
+> @@ -135,6 +140,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>                 }
+>                 usage(fetch_pack_usage);
+>         }
+> +       if (deepen_not.nr)
+> +               args.deepen_not = &deepen_not;
+>
+>         if (i < argc)
+>                 dest = argv[i++];
+> --
+> Duy
