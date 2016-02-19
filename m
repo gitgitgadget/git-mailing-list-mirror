@@ -1,111 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 14/21] fetch-pack: simplify add_sought_entry
-Date: Fri, 19 Feb 2016 06:24:55 -0500
-Message-ID: <20160219112454.GN9319@sigill.intra.peff.net>
+Subject: [PATCH 13/21] fast-import: simplify allocation in start_packfile
+Date: Fri, 19 Feb 2016 06:24:49 -0500
+Message-ID: <20160219112449.GM9319@sigill.intra.peff.net>
 References: <20160219111941.GA31906@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 12:25:02 2016
+X-From: git-owner@vger.kernel.org Fri Feb 19 12:25:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWjBF-0005fS-R0
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 12:25:02 +0100
+	id 1aWjBE-0005fS-Ld
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 12:25:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1427685AbcBSLY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 06:24:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45280 "HELO cloud.peff.net"
+	id S1427681AbcBSLY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 06:24:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45278 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1427678AbcBSLY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 06:24:57 -0500
-Received: (qmail 20481 invoked by uid 102); 19 Feb 2016 11:24:58 -0000
+	id S1427678AbcBSLYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 06:24:52 -0500
+Received: (qmail 20469 invoked by uid 102); 19 Feb 2016 11:24:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:24:58 -0500
-Received: (qmail 26694 invoked by uid 107); 19 Feb 2016 11:25:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:24:52 -0500
+Received: (qmail 26673 invoked by uid 107); 19 Feb 2016 11:24:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:25:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2016 06:24:55 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:24:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2016 06:24:49 -0500
 Content-Disposition: inline
 In-Reply-To: <20160219111941.GA31906@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286697>
 
-We have two variants of this function, one that takes a
-string and one that takes a ptr/len combo. But we only call
-the latter with the length of a NUL-terminated string, so
-our first simplification is to drop it in favor of the
-string variant.
+This function allocate a packed_git flex-array, and adds a
+mysterious 2 bytes to the length of the pack_name field. One
+is for the trailing NUL, but the other has no purpose. This
+is probably cargo-culted from add_packed_git, which gets the
+".idx" path and needed to allocate enough space to hold the
+matching ".pack" (though since 48bcc1c, we calculate the
+size there differently).
 
-Since we know we have a string, we can also replace the
-manual memory computation with a call to alloc_ref().
-
-Furthermore, we can rely on get_oid_hex() to complain if it
-hits the end of the string. That means we can simplify the
-check for "<sha1> <ref>" versus just "<ref>". Rather than
-manage the ptr/len pair, we can just bump the start of our
-string forward. The original code over-allocated based on
-the original "namelen" (which wasn't _wrong_, but was simply
-wasteful and confusing).
+This site, however, is using the raw path of a tempfile, and
+does not need the extra byte. We can just replace the
+allocation with FLEX_ALLOC_STR, which handles the allocation
+and the NUL for us.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fetch-pack.c | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ fast-import.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 9b2a514..79a611f 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -10,33 +10,24 @@ static const char fetch_pack_usage[] =
- "[--include-tag] [--upload-pack=<git-upload-pack>] [--depth=<n>] "
- "[--no-progress] [--diag-url] [-v] [<host>:]<directory> [<refs>...]";
- 
--static void add_sought_entry_mem(struct ref ***sought, int *nr, int *alloc,
--				 const char *name, int namelen)
-+static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
-+			     const char *name)
+diff --git a/fast-import.c b/fast-import.c
+index 3053bb8..9fc7093 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -865,15 +865,12 @@ static void start_packfile(void)
  {
--	struct ref *ref = xcalloc(1, sizeof(*ref) + namelen + 1);
-+	struct ref *ref;
- 	struct object_id oid;
--	const int chunksz = GIT_SHA1_HEXSZ + 1;
+ 	static char tmp_file[PATH_MAX];
+ 	struct packed_git *p;
+-	int namelen;
+ 	struct pack_header hdr;
+ 	int pack_fd;
  
--	if (namelen > chunksz && name[chunksz - 1] == ' ' &&
--		!get_oid_hex(name, &oid)) {
--		oidcpy(&ref->old_oid, &oid);
--		name += chunksz;
--		namelen -= chunksz;
--	}
-+	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
-+		name += GIT_SHA1_HEXSZ + 1;
-+	else
-+		oidclr(&oid);
- 
--	memcpy(ref->name, name, namelen);
--	ref->name[namelen] = '\0';
-+	ref = alloc_ref(name);
-+	oidcpy(&ref->old_oid, &oid);
- 	(*nr)++;
- 	ALLOC_GROW(*sought, *nr, *alloc);
- 	(*sought)[*nr - 1] = ref;
- }
- 
--static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
--			     const char *string)
--{
--	add_sought_entry_mem(sought, nr, alloc, string, strlen(string));
--}
--
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, ret;
+ 	pack_fd = odb_mkstemp(tmp_file, sizeof(tmp_file),
+ 			      "pack/tmp_pack_XXXXXX");
+-	namelen = strlen(tmp_file) + 2;
+-	p = xcalloc(1, sizeof(*p) + namelen);
+-	xsnprintf(p->pack_name, namelen, "%s", tmp_file);
++	FLEX_ALLOC_STR(p, pack_name, tmp_file);
+ 	p->pack_fd = pack_fd;
+ 	p->do_not_close = 1;
+ 	pack_file = sha1fd(pack_fd, p->pack_name);
 -- 
 2.7.1.577.gfed91b8
