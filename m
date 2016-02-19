@@ -1,65 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Windows git bash - child processes see system PATH environment
- variable instead of user...
-Date: Fri, 19 Feb 2016 12:33:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1602191233170.20796@bonsai2>
-References: <CAN2vHUFYqKDDEJpGtxJ9aD+8abe-krnHBy7cm1tMm0+bh5ykBQ@mail.gmail.com> <alpine.DEB.1.00.1602191154190.20796@bonsai2> <CAN2vHUHhqVn8uXaUTdeU5mKuRLQ1084wJu27k4nMJgywOjdOdA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC 2016: applications open, deadline = now => submitted
+Date: Fri, 19 Feb 2016 06:37:24 -0500
+Message-ID: <20160219113723.GA9568@sigill.intra.peff.net>
+References: <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+ <vpqh9h7f9kz.fsf@anie.imag.fr>
+ <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
+ <vpqziuzdr5r.fsf@anie.imag.fr>
+ <20160217204528.GA22893@sigill.intra.peff.net>
+ <xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
+ <1455788324.3786.14.camel@dwim.me>
+ <vpqr3g95df5.fsf_-_@anie.imag.fr>
+ <20160219081848.GB780@sigill.intra.peff.net>
+ <vpqsi0p3w0w.fsf_-_@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Edward Marshall <marshallx7a@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 12:34:07 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 19 12:37:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWjK1-0003yM-Fo
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 12:34:05 +0100
+	id 1aWjNP-0006Ui-LM
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 12:37:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1427234AbcBSLeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 06:34:00 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60687 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1426497AbcBSLd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 06:33:59 -0500
-Received: from bonsai2 ([89.204.137.138]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MbOrg-1aDxTs14gG-00Imhu; Fri, 19 Feb 2016 12:33:56
- +0100
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <CAN2vHUHhqVn8uXaUTdeU5mKuRLQ1084wJu27k4nMJgywOjdOdA@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:VocWWWcLNiY3tp4ftxsmtLAqQ9howNZCfJYTdp5GHeTLiR3ZTNa
- wWjSaE9QOSK0fIIB3a+FN4ajRxjeI2eEGHAtAMO4NOkS6iyiMQdvlR4NKMUJmhNuywV+KoJ
- GUIkuM+U+A9mOb6l9jGBjuSPBcgYzlLnU1e7jxSkduh7QlooAweX9UNkWW4AEOPKasbqqRj
- hn65iyDOQ39jrXozfntAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cx7ORnZ3VFI=:lXrE44L+CMXnXHswkm8IgX
- /JEGvlvbtbkTk4qJCRWbaGbG8LFJmMW6MSZnEhKE09UAUdtoA51w4VOQhziTNTll+5zxAcuCA
- LjtUjk5JMjCj/d3wvk7ZhGhvDMcXmkbNp08v2lI6QDVVudcry+dlpExJ6VIWxPPjhO+ocb6P3
- 5QBGoMUDZ2vXufWGGbLdMy+m5L+DZC4SjPg/ThIq2qEjpZNhY6/oW4LPsh+Wh85D6S/W7DGcp
- nbgmlB559bMBHWTzfzEcZP+NjuaCXXfLUusdXCciCDDy/uthKv0M7QxWWpsy2BMUxBkhdntd9
- 4l/fDn+4lIukX3W6NuMBWOVPBJFnLcczcWW9pjXMAbP0TGLfmYVuLxDatzLNIjEJBRacvxu3W
- tOHa65FKl3xuDTG/rKy+WFFeCi/AYpnKJgMbG/hkURzqFW3sa7RyItcZoYzzan0jLd8ZIsSFx
- d0kRAFbXmdu4Yf7BtxBjB+W/Z0gG7nPbERgQZvQiOiPcPnHcYP7mvRyVpDmvGLw1FVm6lzge6
- 2z42+A0d5a+23BWDbSsVGXm3SSn2QVTb5No8lTQiUPriPJQm/rEP6ITD6RcJ/Sn3ZHRQHhLbz
- estJtwsidonWNGClE6kBFnN0OHUm7Vl/cszamx82CVEmog20TFZRT+taZ2q0tU1OxHufmVduO
- 8bYFu3PeI7Gmdsn9Tfh9VsyE+IsOJxNaFsHZBbqWEDVeaJVqcfqJzfh1D/wXntM5Md8b7Cvvb
- wx091SOX4wVP+MlxQ4LNSYwMpSjE7UEllQTPGQCfIo8OweLek2SFUtcRxFtQc1+4xZJP9lCf 
+	id S1427717AbcBSLhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 06:37:31 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45338 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1427714AbcBSLh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 06:37:27 -0500
+Received: (qmail 21543 invoked by uid 102); 19 Feb 2016 11:37:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:37:26 -0500
+Received: (qmail 27081 invoked by uid 107); 19 Feb 2016 11:37:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Feb 2016 06:37:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Feb 2016 06:37:24 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqsi0p3w0w.fsf_-_@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286707>
 
-Hi Edward,
+On Fri, Feb 19, 2016 at 10:10:55AM +0100, Matthieu Moy wrote:
 
-On Fri, 19 Feb 2016, Edward Marshall wrote:
+> > I think we can continue to modify up to the deadline (at least that has
+> > been the case in years past).
+> 
+> Indeed: I've completed the application and it's still possible to modify
+> (the form just says "You've completed this form", but there's no scary
+> "submit and remove write access from now" button ;-)).
+> 
+> I had to modify the text a bit to fit within the new length limit (1000
+> characters for most fields). The content of the form should be the same
+> as what's currently on http://git.github.io/SoC-2016-Org-Application/.
+> Please check.
 
-> Hey, thanks for getting back to me. I subseuqently found the
-> git-for-windows issues tracker on github so have posted an updated
-> version of this there - not sure where is the best place for issues.
+I read over what is in Google's application system, and it all looks
+good.
 
-It is the best place for Windows-specific issues. Thanks for following up!
+I did make one minor change, which is that I listed "Software Freedom
+Conservancy" as a foundation of which we are a member. I don't think it
+will make a difference either way to our application, but they may want
+to have it in their system, as it becomes relevant later on for
+invoicing the mentor payments.
 
-Ciao,
-Johannes
+Matthieu, thanks for coordinating the application effort this year.  And
+thanks to everybody else for submitting ideas and microprojects.
+
+-Peff
