@@ -1,70 +1,70 @@
-From: =?UTF-8?q?Amadeusz=20=C5=BBo=C5=82nowski?= <aidecoe@aidecoe.name>
-Subject: [PATCH] git-p4.py: Don't try to rebase on submit from bare repository
-Date: Fri, 19 Feb 2016 18:27:11 +0000
-Message-ID: <1455906431-32140-1-git-send-email-aidecoe@aidecoe.name>
-References: <xmqqy4agd3b1.fsf@gitster.mtv.corp.google.com>
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: Re: GSoC 2016: Microproject
+Date: Sat, 20 Feb 2016 00:02:35 +0530
+Message-ID: <CA+DCAeSH4S9F-1Z90cxbNNJu-6KTuOB_Jro9UdYnTAQGx3xzOg@mail.gmail.com>
+References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
+	<vpq37so26oz.fsf@anie.imag.fr>
+	<CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
+	<CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, aidecoe@aidecoe.name
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 19:27:26 2016
+Cc: git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 19:32:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWpm0-0001XE-6j
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:27:24 +0100
+	id 1aWpr8-0006O3-2i
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 19:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1947410AbcBSS1U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Feb 2016 13:27:20 -0500
-Received: from jim.zolnowski.name ([188.116.54.122]:46026 "EHLO
-	jim.zolnowski.name" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946084AbcBSS1T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 13:27:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aidecoe.name; s=jim;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=TAGFLmwgRBfEJJQiuNsYz0FFkuD0mASXIuUuMO0/PVg=;
-	b=o7jRBQmFV7JooRd0ggLnPtd0ndoeI62+llISjByqPPNdOkRSKY2hZ24/7OGVC93fF1fuO7b6WXNvRY4Z5ch3tfDvTYT8GAlsPuMbEcPzGlxk/rnOGlqw8gzsHy95cM9/M8wlfQQ4GBL7qGbxgy/3+WonWHSigVx7Ki780gghHl2gI4qf2PSAuZ9jrTtvTyk5kdEjDelH5nWNg3w1XrUZN+bQzcKyKMxqFIpTutjiHldJ5KSTSdymAltKAr4UTEd51vyWtxXt3FL4DdjXlj+Q3FdPRsvKI0Purqa3AWpVQbHTmKafMZ4IRKYnKTSm+mSIPy/EEsSqimb7UsdozVTUfg==;
-Received: from cpc92302-cmbg19-2-0-cust189.5-4.cable.virginm.net ([82.1.208.190] helo=localhost)
-	by jim.zolnowski.name with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.85)
-	(envelope-from <aidecoe@aidecoe.name>)
-	id 1aWplt-0008AJ-4Y; Fri, 19 Feb 2016 19:27:17 +0100
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <xmqqy4agd3b1.fsf@gitster.mtv.corp.google.com>
+	id S1949310AbcBSSci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 13:32:38 -0500
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:34944 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946084AbcBSScg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 13:32:36 -0500
+Received: by mail-qk0-f180.google.com with SMTP id o6so34227503qkc.2
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 10:32:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=6SomOapdvSrOL1K4Cqac/N6Wv8JvDePXlWn8+67xVxQ=;
+        b=Z8KVOFiFr8ETTylKHy5ODgfngEnW+7x17wWBYxiPU98zrceQGkcpMgKThxUdsNHYfT
+         4ZdBlygM66L3Qhe8eHq0JNNxRKhsTBabgna6f+V9+yDe0ovhJzCMa261H8YnkW0vn0PE
+         mFW4fa338hRFdxuYh+V9kiwA4ZgYJgBc66t8a3nnDkLUwkqZxccvsrbek+P9hmlKDA+L
+         ITwiqPtFFSMf9jy6H5d85yjAwWvMxxbhhPzy26lLCgtjN66kZPaipodN3/Qb0rWNyLEV
+         1jIQKxJhtydg7syUa64dQe89OsI0zkHTjymrbkrTF61CrhkEGBjoDztjVACI0D4OMkH7
+         t3Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=6SomOapdvSrOL1K4Cqac/N6Wv8JvDePXlWn8+67xVxQ=;
+        b=FPTTWlMP5etDunBawKFJtMexaT00umdWk/vFSnAZTTh1Y31lltzCU/upWymf3ZzQEI
+         v5Fu4S+JA3tvDe+xXRFU0IyP2woDeavOHIXvZ69toL1/Xi5iAhsCojA5YlgjFI+/LN7e
+         C1pBSzOFDoS09rN5qkMZo5/+xpfJSUjRsiUE7woXqWMNgjzOFPExpmHAQtKUm2UUhHrr
+         mtosNzS6vqAckhRUstS9+9mph6Z8Y9HHetv+wBMNBMTfoNF9Nkya0GIAv69GTgYbonMt
+         n0A08WpzBQhKB/aPjSk5m2T4l7WO3hPrlh1acyDse6bIyPHWhX5/9DyRefNo3UM5d0B3
+         TfAg==
+X-Gm-Message-State: AG10YORwMPD1/jHsIOroMC1X2EhpjF719pqibuO+EomhUf3bKsyF53ROn3WPWntJoYeeN/Ng88iWNaZAssqAZg==
+X-Received: by 10.55.54.201 with SMTP id d192mr17617278qka.23.1455906755072;
+ Fri, 19 Feb 2016 10:32:35 -0800 (PST)
+Received: by 10.55.166.10 with HTTP; Fri, 19 Feb 2016 10:32:35 -0800 (PST)
+In-Reply-To: <CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286737>
 
-git-p4 can be successfully used from bare repository (which acts as a
-bridge between Perforce repository and pure Git repositories). On submi=
-t
-git-p4 performs unconditional rebase. Do rebase only on non-bare
-repositories.
+On Fri, Feb 19, 2016 at 11:20 PM, Stefan Beller <sbeller@google.com> wrote:
+> Yes, most likely t/t5521-pull-options.sh or t/t5520-pull.sh would be the right
+> place as judging from the file name of the tests.
 
-Signed-off-by: Amadeusz =C5=BBo=C5=82nowski <aidecoe@aidecoe.name>
----
- git-p4.py | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Thanks for specifying the files. I think t/t5520-pull.sh line 258 will
+be the best place to write test for this case.
 
-diff --git a/git-p4.py b/git-p4.py
-index c33dece..e00cd02 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2059,8 +2059,9 @@ class P4Submit(Command, P4UserMap):
-                 sync.branch =3D self.branch
-             sync.run([])
-=20
--            rebase =3D P4Rebase()
--            rebase.rebase()
-+            if not gitConfigBool("core.bare"):
-+                rebase =3D P4Rebase()
-+                rebase.rebase()
-=20
-         else:
-             if len(applied) =3D=3D 0:
---=20
-2.7.0
+Mehul Jain
