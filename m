@@ -1,181 +1,135 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] submodule: Fetch the direct sha1 first
-Date: Fri, 19 Feb 2016 14:10:34 -0800
-Message-ID: <CAGZ79kaOQTGEY6akKgz695nPdG4cG4SsYKLcJkKr1im+RQjK5A@mail.gmail.com>
+Date: Fri, 19 Feb 2016 14:29:04 -0800
+Message-ID: <xmqqbn7cbahb.fsf@gitster.mtv.corp.google.com>
 References: <1455908253-1136-1-git-send-email-sbeller@google.com>
 	<xmqqpovsbdyu.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaOQTGEY6akKgz695nPdG4cG4SsYKLcJkKr1im+RQjK5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Dave Borowitz <dborowitz@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 23:10:43 2016
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 23:29:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWtG5-0006PK-9O
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 23:10:41 +0100
+	id 1aWtY1-0005ne-HG
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 23:29:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2994236AbcBSWKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 17:10:36 -0500
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36288 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992511AbcBSWKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 17:10:35 -0500
-Received: by mail-io0-f179.google.com with SMTP id l127so123754066iof.3
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 14:10:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4w0FesFPF7V52uQV6/RHILBPrYAbSEFhteD85g7GrtQ=;
-        b=X3puHF98Er3ZMDh2nkTOmSYRDUZA7ZRk/Ba8bpp9tA83xd4Ar0Ppty0Oi2eZxohp1L
-         PAn5zPlcMnPAlOwjTd7ktLxP7gFHNpNGIskE8kcQ/7HqikZlhHotbmZtv1yGBA7LMlG4
-         MDjdNyvh35S7Hwic5B4K/p5iJhSNcbjGetU+AyU/P7uY9ZL9UTFMnGbcynhmiT+TGEIN
-         JZgG4SLMdC0wp9yOmkFG6nIIS5eH/hueXlbFNXp3KxWQ+QxDgqbIKlvJ3KfuUAljqC27
-         a63bRaDNJNeivbONWve6C2O+xAneLpDQlFnWDcH7/UloTNK/zF9CCpd6+NCwJqk3iGWX
-         Sn0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=4w0FesFPF7V52uQV6/RHILBPrYAbSEFhteD85g7GrtQ=;
-        b=fPGWwJ/3T32in5yc0GxJrMv88yoBfpHR/BPOzqcheTKOlKLNaFrbik10qEzR5Zq8CS
-         dEfjkIbNJFBbGKAiKre2coSi3VybGyFLFgjXy4oNS1ve+7Pey4M2bBniM4F27EM0yt4t
-         3KUROGjldBspztEX/6cNUIlbLImKqgjtcjnEuH77PMiNlDE8JzcMZBvQeKDtA6BxR6rs
-         0ZtfAVIWwkPKOvYIGsO7sOkI5nVqmCyWUvJzQIwtU5mhviBdfx+hTDHC1r238IMq8KzJ
-         Hzo7KZ3fdASVxcO9VjZLVRcOJQZL5L6WMZrrkuXGqGkDKXTzXy+NnGPHtZ2uhUIuZru+
-         VyrA==
-X-Gm-Message-State: AG10YOSCAkBm2lfpL50SFI+DTBDNoYw9DbPI2UdhjpIQbBFs9Ns9JYAcQxJ0AnaisMMawSov1fzWG3kFU7C3c1ll
-X-Received: by 10.107.168.149 with SMTP id e21mr16789541ioj.96.1455919834644;
- Fri, 19 Feb 2016 14:10:34 -0800 (PST)
-Received: by 10.107.4.210 with HTTP; Fri, 19 Feb 2016 14:10:34 -0800 (PST)
-In-Reply-To: <xmqqpovsbdyu.fsf@gitster.mtv.corp.google.com>
+	id S1428517AbcBSW3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 17:29:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65498 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1428470AbcBSW3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 17:29:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 177DE440CC;
+	Fri, 19 Feb 2016 17:29:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nrIq+JN9jLUQqdk7Zmm9L8p6kks=; b=mSGiNr
+	i1VwxeeYHRL3N816ULYtj8Fk6SC8x2L21MdmwQLtqWRl+Ff5fq6TwrGyKxoGq5ck
+	gmC/yrMCa4Cct6msNod+B1At09gTn/unvH/XN/1dHACIb75eiIhAjyzxw2H8XLbK
+	1irvqQdHY31wn7gx+c3y3AEjFk6OZsmVhGIys=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o2mrj7QlFCPCwzauMBQV+1xSZsZ6IiSH
+	MnxFkQ/7+D06kP2tWsdXerLy1xrqT7tJPGeHeuaoTy8dPOyK24MNuXEAgTVvzRse
+	m2yPWbhTWyLLkS1vAlvM46UTxt2pAuKPfVZqDQvO8nMe1J2hX2bpNNa7qq7fcfKx
+	NUgzvC4EzIQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F2B5440CB;
+	Fri, 19 Feb 2016 17:29:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7EA58440CA;
+	Fri, 19 Feb 2016 17:29:05 -0500 (EST)
+In-Reply-To: <CAGZ79kaOQTGEY6akKgz695nPdG4cG4SsYKLcJkKr1im+RQjK5A@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 19 Feb 2016 14:10:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2F4D00E4-D758-11E5-8AD1-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286755>
 
-On Fri, Feb 19, 2016 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> When reviewing a change in Gerrit, which also updates a submodule,
->> a common review practice is to download and cherry-pick the patch locally
->> to test it. However when testing it locally, the 'git submodule update'
->> may fail fetching the correct submodule sha1 as the corresponding commit
->> in the submodule is not yet part of the project history, but also just a
->> proposed change.
+Stefan Beller <sbeller@google.com> writes:
+
+> Doing a 'git fetch' only and not the fetch for the specific sha1 would be
+> incorrect?
+
+I thought that was what you are attempting to address.
+
+> ('git fetch' with no args finishes successfully, so no fallback is
+> triggered. But we are not sure if we obtained the sha1, so we need to
+> check if we have the sha1 by doing a local check and then try to get the sha1
+> again if we don't have it locally.
+
+Yes, that is what I meant in the "In the opposite fallback order"
+suggestion.
+>>>                               (clear_local_git_env; cd "$sm_path" &&
+>>> +                                     remote_name=$(get_default_remote)
+>>>                                       ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
+>>> -                                      test -z "$rev") || git-fetch)) ||
+>>> +                                      test -z "$rev") || git-fetch $remote_name $rev
 >>
->> To ease this, try fetching by sha1 first and when that fails (in case of
->> servers which do not allow fetching by sha1), fall back to the default
->> behavior we already have.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> I think it's best to apply this on origin/master, there is no collision
->> with sb/submodule-parallel-update.
->>
->> Also I do not see a good way to test this both in correctness as well
->> as performance degeneration. If the first git fetch fails, the second
->> fetch is executed, so it should behave as before this patch w.r.t. correctness.
->>
->> Regarding performance, the first fetch should fail quite fast iff the fetch
->> fails and then continue with the normal fetch. In case the first fetch works
->> fine getting the exact sha1, the fetch should be faster than a default fetch
->> as potentially less data needs to be fetched.
+>> Regardless of the "fallback order" issue, I do not think $rev is a
+>> correct thing to fetch here.  The superproject binds $sha1 to its
+>> tree, and you would be checking that out, so shouldn't you be
+>> fetching that commit?
 >
-> "The fetch should be faster" may not be making a good trade-off
-> overall--people may have depended on the branches configured to be
-> fetched to be fetched after this codepath is exercised, but now if
-> the commit bound to the superproject tree happens to be complete,
-> even though it is not anchored by any remote tracking ref (hence the
-> next GC may clobber it), the fetch of other branches will not
-> happen.
->
-> My knee-jerk reaction is that the order of fallback is probably the
-> other way around.  That is, try "git fetch" as before, check again
-> if the commit bound to the superproject tree is now complete, and
-> fallback to fetch that commit with an extra "git fetch".
+> Both $sha1 and $rev are in the submodule (because
+> 'git submodule--helper list' puts out the sha1 as the
+> submodule sha1). $rev is either empty or equal to $sha1
+> in my understanding of "rev-list $sha1 --not --all".
 
-I thought about that and assumed we'd need to have an option for
-fetch like "--try-to-get-sha1", which depending on the servers capabilities
-would just add that sha1 to the "wants" during fetching negotiation if the
-server supports it, otherwise just fetch normally.
+Not quite.  The rev-list command expects [*1*] one of three outcomes
+in the original construct:
 
-Doing a 'git fetch' only and not the fetch for the specific sha1 would be
-incorrect? ('git fetch' with no args finishes successfully, so no fallback is
-triggered. But we are not sure if we obtained the sha1, so we need to
-check if we have the sha1 by doing a local check and then try to get the sha1
-again if we don't have it locally. So doing the reverse order would be
-more code here for correctness.
+ * The repository does not know anything about $sha1; the command
+   fails, rev is left empty, but thanks to &&, git-fetch runs.
 
->
-> Jens, what do you think?
->
->>  git-submodule.sh | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 9bc5c5f..ee0b985 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -746,8 +746,9 @@ Maybe you want to use 'update --init'?")"
->>                               # Run fetch only if $sha1 isn't present or it
->>                               # is not reachable from a ref.
->>                               (clear_local_git_env; cd "$sm_path" &&
->> +                                     remote_name=$(get_default_remote)
->>                                       ( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
->> -                                      test -z "$rev") || git-fetch)) ||
->> +                                      test -z "$rev") || git-fetch $remote_name $rev
->
-> Regardless of the "fallback order" issue, I do not think $rev is a
-> correct thing to fetch here.  The superproject binds $sha1 to its
-> tree, and you would be checking that out, so shouldn't you be
-> fetching that commit?
+ * The repository has $sha1 but the history behind it is not
+   complete.  While digging from $sha1 following the parent chain,
+   it would hit a missing object and fails, rev may or may not be
+   empty, but thanks to &&, git-fetch runs.
 
-Both $sha1 and $rev are in the submodule (because
-'git submodule--helper list' puts out the sha1 as the
-submodule sha1). $rev is either empty or equal to $sha1
-in my understanding of "rev-list $sha1 --not --all". However for
-readability maybe we want to write:
+ * The repository has $sha1 and its history is all connected.  The
+   command succeeds.  If $sha1 is not connected to any of the refs,
+   however, that commit may be shown and stored in $rev.  In this
+   case, "$rev" happens to be the same as "$sha1".
 
-    (clear_local_git_env; cd "$sm_path" &&
-        test -z $(git rev-list -n 1 $sha1 --not --all 2>/dev/null) ||
-        git fetch $(get_default_remote) $sha1 ||
-        git fetch ||
-        die ...
-    )
+As this "fetch" is run in order to make sure that the history behind
+$sha1 is complete in the submodule repository, so that detaching the
+HEAD at that commit will give the user a useful repository and its
+working tree, the check the code is doing in the original is already
+flawed.  If $sha1 and its ancestry is complete in the repository,
+rev-list would succeed, and if $sha1 is ahead of any of the refs,
+the original code still runs "git fetch", which is not necessary for
+the purpose of detaching the head at $sha1.  On the other hand, by
+using "-n 1", it can cause rev-list stop before discovering a gap in
+history behind $sha1, allowing "git fetch" to be skipped when it
+should be run to fill the gap in the history.
 
-So in case you want to the other order, I'd propose
+To be complete, the rev-list command line should also run with
+"--objects"; after all, a commit walker fetch may have downloaded
+commit chain completely but haven't fetched necessary trees and
+blobs when it was killed, and "rev-list $sha1 --not --all" would not
+catch such a breakage without "--objects".
 
-    (clear_local_git_env; cd "$sm_path" &&
-        test -z $(git rev-list -n 1 $sha1 --not --all 2>/dev/null) ||
-        git fetch ||
-        (git cat-file -e $sha1 && git fetch $(get_default_remote) $sha1) ||
-        die ...
-    )
+> Oh! Looking at that I suspect the
+> "test -z $(git rev-list -n 1 $sha1 --not --all 2>/dev/null)"
+> and "git cat-file -e" are serving the same purpose here and should just
+> indicate if the given sha1 is present or not.
 
-Oh! Looking at that I suspect the
-"test -z $(git rev-list -n 1 $sha1 --not --all 2>/dev/null)"
-and "git cat-file -e" are serving the same purpose here and should just
-indicate if the given sha1 is present or not.
-
-So we could reduce it further to
-
-    (clear_local_git_env; cd "$sm_path" &&
-        git cat-file -e $sha1 || git fetch ||
-        (git cat-file -e $sha1 && git fetch $(get_default_remote) $sha1) ||
-        die ...
-    )
-
-I may have messed up the logic operators along the way, maybe it is
-even better if
-we rewrite it with non shorted conditions.
-
-Thanks,
-Stefan
+That is the simplest explanation why the original "rev-list"
+invocation is already wrong.  It should do an equivalent of
+builtin/fetch.c::quickfetch() to ensure that $sha1 is something that
+is complete, i.e. could be anchored with a ref if we wanted to,
+before deciding to avoid running "git fetch".
