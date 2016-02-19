@@ -1,58 +1,85 @@
-From: =?UTF-8?Q?Stefan_Fr=c3=bchwirth?= <stefan.fruehwirth@uni-graz.at>
-Subject: Re: [PATCH] merge_blobs: use strbuf instead of manually-sized
- mmfile_t
-Date: Fri, 19 Feb 2016 13:48:01 +0100
-Message-ID: <56C70F01.9060609@uni-graz.at>
-References: <56C2459B.5060805@uni-graz.at>
- <20160216011258.GA11961@sigill.intra.peff.net>
- <20160216050915.GA5765@flurp.local>
- <20160216055043.GB28237@sigill.intra.peff.net>
- <xmqqmvr0mjmc.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 19 Feb 2016 13:49:05 +0100
+Message-ID: <vpqr3g827cu.fsf@anie.imag.fr>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
+	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
+	<vpqh9h7f9kz.fsf@anie.imag.fr>
+	<1CE3F5E2-DDCC-4F1B-93CF-1A4A194650BF@gmail.com>
+	<CAGZ79kbGyCTdq4P02fNb7tEuvkvqcZviWJp40Ob1ed6=JCh9Xg@mail.gmail.com>
+	<xmqq7fi1hlw6.fsf@gitster.mtv.corp.google.com>
+	<0E364888-DD95-4B47-9679-3CB586FC7E8C@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 19 13:48:12 2016
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 13:49:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWkTi-0000NR-R6
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 13:48:11 +0100
+	id 1aWkUs-0001Jy-Ia
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 13:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757376AbcBSMsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 07:48:05 -0500
-Received: from EX07HTCA01.UNI-GRAZ.AT ([143.50.13.79]:25256 "EHLO
-	ex07htca01.uni-graz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757175AbcBSMsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 07:48:04 -0500
-Received: from EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) by
- ex07htca01.pers.ad.uni-graz.at (2002:8f32:d4f::8f32:d4f) with Microsoft SMTP
- Server (TLS) id 8.3.406.0; Fri, 19 Feb 2016 13:48:02 +0100
-Received: from [143.50.233.116] (143.50.233.116) by
- EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) with Microsoft SMTP
- Server (TLS) id 15.0.1076.9; Fri, 19 Feb 2016 13:48:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <xmqqmvr0mjmc.fsf@gitster.mtv.corp.google.com>
-X-ClientProxiedBy: EX13MS04.pers.ad.uni-graz.at (2002:8f32:dc2::8f32:dc2) To
- EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf)
+	id S1757454AbcBSMtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 07:49:18 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:36609 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757175AbcBSMtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 07:49:17 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1JCn3H8013494
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 19 Feb 2016 13:49:03 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1JCn5kY007003;
+	Fri, 19 Feb 2016 13:49:05 +0100
+In-Reply-To: <0E364888-DD95-4B47-9679-3CB586FC7E8C@gmail.com> (Lars
+	Schneider's message of "Fri, 19 Feb 2016 10:23:56 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 19 Feb 2016 13:49:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1JCn3H8013494
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456490945.66989@+IzfyuNNkDEgi4XQrG3XwA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286713>
 
-On 2016-02-16 at 22:27 Junio C Hamano wrote:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> Three, I know the existence of the program is not more than "we
-> could do something like this" illustration by Linus, and its output
-> is in no way _designed_ to be so.  We know today that it does not do
+> Thanks for your elaborate response. I think I got your point and I
+> tried to adjust my "beginner mode" proposal accordingly [1].
 
-Well, then it is just really sad that the manpage doesn't say so. This 
-should be corrected immediately in order to prevent someone to build 
-more (e.g.) libraries on top of it.
+Now merged as
+https://github.com/git/git.github.io/commit/6b8b5e19cdb221192dedd70ba3e207636f1cdab1
 
-Stefan
+I've added a warning for students:
+
+  Note that this project is not technically difficult, it requires a
+  deep understanding of Git: how each command is meant to be used, what
+  are the potential dangers, ... Reaching a solution that effectively
+  protects beginners without harming anyone is much harder than it
+  seems. See for example [this
+  thread](http://thread.gmane.org/gmane.comp.version-control.git/285893/focus=286614)
+  for example potential objections. If chosen, this project should be
+  discussed in depth on the list before and after the student
+  application.
+
+I just want to avoid students loosing their time writting silly
+proposals (once you have seen what the majority of proposals looks like,
+nothing surprises you anymore ;-) ).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
