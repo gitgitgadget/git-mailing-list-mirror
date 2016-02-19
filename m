@@ -1,274 +1,150 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v6 3/4] config: add 'origin_type' to config_source struct
-Date: Fri, 19 Feb 2016 10:16:01 +0100
-Message-ID: <1455873362-66998-4-git-send-email-larsxschneider@gmail.com>
-References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, ramsay@ramsayjones.plus.com, gitster@pobox.com,
-	Johannes.Schindelin@gmx.de,
-	Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 19 10:16:52 2016
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Fri, 19 Feb 2016 10:23:56 +0100
+Message-ID: <0E364888-DD95-4B47-9679-3CB586FC7E8C@gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank> <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr> <1CE3F5E2-DDCC-4F1B-93CF-1A4A194650BF@gmail.com> <CAGZ79kbGyCTdq4P02fNb7tEuvkvqcZviWJp40Ob1ed6=JCh9Xg@mail.gmail.com> <xmqq7fi1hlw6.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 19 10:25:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWhBE-0004sz-7d
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:16:52 +0100
+	id 1aWhJD-0002Xr-A8
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 10:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948534AbcBSJQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 04:16:34 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36661 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1948502AbcBSJQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 04:16:10 -0500
-Received: by mail-wm0-f45.google.com with SMTP id g62so66277343wme.1
-        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:16:09 -0800 (PST)
+	id S964982AbcBSJZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 04:25:00 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37698 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161117AbcBSJYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 04:24:03 -0500
+Received: by mail-wm0-f41.google.com with SMTP id g62so62099028wme.0
+        for <git@vger.kernel.org>; Fri, 19 Feb 2016 01:24:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d0NeR7lNiv6c2LiePnLSARWHc02q+e0h2W3mzvnGJkg=;
-        b=gvvQP3UzzqWEL1bbmsnRkoXu9lCp1rn4ZgsOAnMuW71ZLWyMmL8eJ1JTZUkJja8Ap+
-         SI3WFsX0omkpwzsEBzj1zfjB5LsYt14NORaOKRWOS03VkTxS09f6MKNkQTyVBbMIfjKG
-         HImi/2CHsEz1Jadbh37ZJUZDQyJBOH6B9aDSotKOCW/N+jpNtFDhbwtQKca98CTDJJja
-         KkmicDQs+Yz0gXaPexf70Ozf8R3V4hD6vwi6OD4aTgR7DAFk9z+1+Orr6Kd3xkJKXofC
-         cgeQtUQNnYR0YF+GUGC+HNFPr3AjmhhZUWAtFpTKEoiEVJWC8TfTU+clsnEWx+PsNHxt
-         GIlQ==
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=M9Bwcv+AuY4sNE4aT4xBDzJevy+ARTZHhxlcDK2/08k=;
+        b=HfA/wDeT8FnnGB8vf3/Eftjiu0k/MMW6H7hTZpnVdfm3YMI1V4cBPSH2+2aFCD41Xa
+         CWjHgDJl6PGG+YqmJ+TKvF4mR+L70KYEhv7DV+kM25FhFdBj7MHSLhdtI1GFoX+h2ENo
+         spPXlpmvQd0IAjWv3w3of2pc8s49n9HydMpTVp934bkAFbwagDShk++OXDzob1dfMdgi
+         yiEZiMFJ1GW58tBnN3wEzbHO4F+jjq/O0lYenVCFrlvSqFJDpSV2TlHtT1PvHZ/JH495
+         tKVOQo7jU/gG010xbmdi3hY9Z9AuUqjQtmLHlgfmiI4ik0RyXgQedt1dW84J1FuTIhiI
+         JAWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=d0NeR7lNiv6c2LiePnLSARWHc02q+e0h2W3mzvnGJkg=;
-        b=W1/FWpIMkviu53evYb3fYx5y2xd/EuGrT5Su/RbCZAqAknGta0x5X7UElSuFHiQHOq
-         6YtzDiKUIzgaPqxD97agtMS/TpWSD6x/WENmr7XFM3vt2yluReLwoOnR9r9x5m8mknnr
-         U4zAnkBCcB2M04m3JxcSIG9tyG2isfcqz2r59WxqF9ERYUvSfU56D0KV2OhiGDtnNZTF
-         t3WvWv4RLcRtozLg40RIbB18l1te813IUY+MV8g/2ExPsqjyyanfVn2f9QpI8L7FXBZ4
-         /hKTBNAfcULaRNi6FlPlZEHTLbCYGRt+wRSs9Yz5w0y5JBAz0pUE9X9wKtteJN9xVxJG
-         PO+g==
-X-Gm-Message-State: AG10YOS4wJ55gZb1LlE8yIGbRrtqPa3WVLqg5xRMvldEDcc0V4+lvn37kfRXRduwVq3dhg==
-X-Received: by 10.194.120.229 with SMTP id lf5mr13375850wjb.151.1455873369092;
-        Fri, 19 Feb 2016 01:16:09 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB455F.dip0.t-ipconnect.de. [93.219.69.95])
-        by smtp.gmail.com with ESMTPSA id ks5sm10301204wjb.13.2016.02.19.01.16.07
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 19 Feb 2016 01:16:08 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=M9Bwcv+AuY4sNE4aT4xBDzJevy+ARTZHhxlcDK2/08k=;
+        b=V84ujrfyrGwe64ts1ga7ZZFYPyxP3CQq5qfoOGpVImZSdig8CdLknFOtkTJF5IlTkA
+         BSTAC9r/caHmGR/u13Q78SIM8tMUZKg3rrfPO3HaUfFG4tVq+bI4xRNnHMNw4RiFvD38
+         9V5KfF8mvDhYyfoeuh4ndpSyDYFPMbXRts4c8GxUPz0C7G1vfYG1wF+v4h3pfQvQ2HTk
+         LJS/woEuSmKrpUKbKRuXdxi/TOKwSSWqEQic3XWgVYqDiUg8KMd0HGihC08osjUPHEXU
+         d+Lve9P4lS2qz7AnjooDukN94wEFx1sm3nhI45ThiSbYALiNCE9Xpksfdyj62EOCjlLi
+         O2JA==
+X-Gm-Message-State: AG10YOS05yrBe68gKaqLamXCVknsXEBr4pc04i33sVFODVaLNcUmErzgcch2ifeI96cFOQ==
+X-Received: by 10.28.226.6 with SMTP id z6mr7611585wmg.44.1455873839804;
+        Fri, 19 Feb 2016 01:23:59 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB455F.dip0.t-ipconnect.de. [93.219.69.95])
+        by smtp.gmail.com with ESMTPSA id ei9sm10297042wjd.40.2016.02.19.01.23.57
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 19 Feb 2016 01:23:58 -0800 (PST)
+In-Reply-To: <xmqq7fi1hlw6.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286677>
 
-From: Lars Schneider <larsxschneider@gmail.com>
 
-Use the config origin_type to print more detailed error messages that
-inform the user about the origin of a config error (file, stdin, blob).
+On 18 Feb 2016, at 20:13, Junio C Hamano <gitster@pobox.com> wrote:
 
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-Acked-by: Jeff King <peff@peff.net>
----
- cache.h                |  6 ++++--
- config.c               | 36 +++++++++++++++++++++++++-----------
- submodule-config.c     |  4 ++--
- t/t1300-repo-config.sh |  8 +++++++-
- t/t1308-config-set.sh  |  4 ++--
- 5 files changed, 40 insertions(+), 18 deletions(-)
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> On Thu, Feb 18, 2016 at 12:41 AM, Lars Schneider
+>> <larsxschneider@gmail.com> wrote:
+>>>> Feel free to start writting an idea for
+>>>> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
+>>>> ideas before Friday. We can polish them later if needed.
+>>> 
+>>> I published my ideas here:
+>>> https://github.com/git/git.github.io/pull/125/files
+>> 
+>> I like the idea of a beginner mode, but on the other hand that looks
+>> inflexible to me ;)
+>> (What if I want to use rebase, but not reset --hard?)
+> 
+> That's simple.  You say "cd .. && rm -fr repo && git clone" and
+> start from scratch ;-).
+> 
+> This whole "beginner should be limited to a 'safe' subset" is an
+> unhealthy attitude.
+> 
+> Deciding what the 'safe' subset is must be done with a lot of
+> thinking by people who intimately know what implications it has to
+> ban each feature.  I do not think it would be a good fit for a
+> project to give to a relatively new participant to the Git project.
+> 
+> For example, I think banning "worktree" feature from newbies may not
+> be a bad idea, as you can work on a project without using "worktree"
+> at all, and use of "worktree" would only subject you to bugs that do
+> not exist when you do not use that feature.  The "shallow clone",
+> "sparse checkout", and "untracked cache" fall into the same category
+> for exactly the same reason.  The "submodule" feature might fall
+> into the same category for the same reason, but that is not
+> something you as a project participant can unilaterally decide, as
+> the project you are working on may have already decided to use the
+> feature, so it is harder to ban from the beginners.
+> 
+> But for the rest of really "core" part of Git, I do not think there
+> is any such command that can be totally banned.
+> 
+> We have these "powerful" tools for a reason.  After making a mess
+> experimenting with your working tree files, "reset --hard" is the
+> best tool to go back to the known-good state, and robbing it from
+> the users is not a sound approach to help them.  When "powerful"
+> becomes "too powerful" is when a "powerful" tool is misused.  It is
+> perhaps done by mistake or perhaps done by copying and pasting a
+> solution from Interweb for a problem that does not match your
+> situation without understanding what you are doing.
+> 
+> What is needed to help beginners is to make the powerful tool harder
+> to misuse.  Of course, that would be a harder task, because you have
+> to do a real thinking.
+> 
+> You do not have to do any thinking to say that "a blanket ban that
+> hides these powerful tools behind the beginner mode" helps
+> beginners, but I do not think it is solving what really matters.  At
+> the same time, it just adds to the FUD, i.e. some commands are too
+> powerful for their own good.
 
-diff --git a/cache.h b/cache.h
-index 6679bb4..ad7fcfc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1485,8 +1485,8 @@ struct git_config_source {
- typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
--extern int git_config_from_mem(config_fn_t fn, const char *name,
--			       const char *buf, size_t len, void *data);
-+extern int git_config_from_mem(config_fn_t fn, const char *origin_type,
-+					const char *name, const char *buf, size_t len, void *data);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void git_config(config_fn_t fn, void *);
-@@ -1525,6 +1525,8 @@ extern const char *get_log_output_encoding(void);
- extern const char *get_commit_output_encoding(void);
- 
- extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
-+extern const char *current_config_origin_type(void);
-+extern const char *current_config_name(void);
- 
- struct config_include_data {
- 	int depth;
-diff --git a/config.c b/config.c
-index 36b0ddb..3be2cbc 100644
---- a/config.c
-+++ b/config.c
-@@ -24,6 +24,7 @@ struct config_source {
- 			size_t pos;
- 		} buf;
- 	} u;
-+	const char *origin_type;
- 	const char *name;
- 	const char *path;
- 	int die_on_error;
-@@ -471,9 +472,9 @@ static int git_parse_source(config_fn_t fn, void *data)
- 			break;
- 	}
- 	if (cf->die_on_error)
--		die(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		die(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
- 	else
--		return error(_("bad config file line %d in %s"), cf->linenr, cf->name);
-+		return error(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
- }
- 
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -588,9 +589,9 @@ static void die_bad_number(const char *name, const char *value)
- 	if (!value)
- 		value = "";
- 
--	if (cf && cf->name)
--		die(_("bad numeric config value '%s' for '%s' in %s: %s"),
--		    value, name, cf->name, reason);
-+	if (cf && cf->origin_type && cf->name)
-+		die(_("bad numeric config value '%s' for '%s' in %s %s: %s"),
-+		    value, name, cf->origin_type, cf->name, reason);
- 	die(_("bad numeric config value '%s' for '%s': %s"), value, name, reason);
- }
- 
-@@ -1061,11 +1062,13 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- }
- 
- static int do_config_from_file(config_fn_t fn,
--		const char *name, const char *path, FILE *f, void *data)
-+		const char *origin_type, const char *name, const char *path, FILE *f,
-+		void *data)
- {
- 	struct config_source top;
- 
- 	top.u.file = f;
-+	top.origin_type = origin_type;
- 	top.name = name;
- 	top.path = path;
- 	top.die_on_error = 1;
-@@ -1078,7 +1081,7 @@ static int do_config_from_file(config_fn_t fn,
- 
- static int git_config_from_stdin(config_fn_t fn, void *data)
- {
--	return do_config_from_file(fn, "<stdin>", NULL, stdin, data);
-+	return do_config_from_file(fn, "stdin", "", NULL, stdin, data);
- }
- 
- int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-@@ -1089,21 +1092,22 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 	f = fopen(filename, "r");
- 	if (f) {
- 		flockfile(f);
--		ret = do_config_from_file(fn, filename, filename, f, data);
-+		ret = do_config_from_file(fn, "file", filename, filename, f, data);
- 		funlockfile(f);
- 		fclose(f);
- 	}
- 	return ret;
- }
- 
--int git_config_from_mem(config_fn_t fn, const char *name, const char *buf,
--			size_t len, void *data)
-+int git_config_from_mem(config_fn_t fn, const char *origin_type,
-+			const char *name, const char *buf, size_t len, void *data)
- {
- 	struct config_source top;
- 
- 	top.u.buf.buf = buf;
- 	top.u.buf.len = len;
- 	top.u.buf.pos = 0;
-+	top.origin_type = origin_type;
- 	top.name = name;
- 	top.path = NULL;
- 	top.die_on_error = 0;
-@@ -1132,7 +1136,7 @@ static int git_config_from_blob_sha1(config_fn_t fn,
- 		return error("reference '%s' does not point to a blob", name);
- 	}
- 
--	ret = git_config_from_mem(fn, name, buf, size, data);
-+	ret = git_config_from_mem(fn, "blob", name, buf, size, data);
- 	free(buf);
- 
- 	return ret;
-@@ -2385,3 +2389,13 @@ int parse_config_key(const char *var,
- 
- 	return 0;
- }
-+
-+const char *current_config_origin_type(void)
-+{
-+	return cf && cf->origin_type ? cf->origin_type : "cmdline";
-+}
-+
-+const char *current_config_name(void)
-+{
-+	return cf && cf->name ? cf->name : "";
-+}
-diff --git a/submodule-config.c b/submodule-config.c
-index b85a937..92502b5 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -427,8 +427,8 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.commit_sha1 = commit_sha1;
- 	parameter.gitmodules_sha1 = sha1;
- 	parameter.overwrite = 0;
--	git_config_from_mem(parse_config, rev.buf, config, config_size,
--			&parameter);
-+	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
-+			config, config_size, &parameter);
- 	free(config);
- 
- 	switch (lookup_type) {
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 1782add..42ed5cc 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -700,12 +700,18 @@ test_expect_success 'invalid unit' '
- 	git config aninvalid.unit >actual &&
- 	test_cmp expect actual &&
- 	cat >expect <<-\EOF &&
--	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in .git/config: invalid unit
-+	fatal: bad numeric config value '\''1auto'\'' for '\''aninvalid.unit'\'' in file .git/config: invalid unit
- 	EOF
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'invalid stdin config' '
-+	echo "fatal: bad config line 1 in stdin " >expect &&
-+	echo "[broken" | test_must_fail git config --list --file - >output 2>&1 &&
-+	test_cmp expect output
-+'
-+
- cat > expect << EOF
- true
- false
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 91235b7..82f82a1 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -195,14 +195,14 @@ test_expect_success 'proper error on error in default config files' '
- 	cp .git/config .git/config.old &&
- 	test_when_finished "mv .git/config.old .git/config" &&
- 	echo "[" >>.git/config &&
--	echo "fatal: bad config file line 34 in .git/config" >expect &&
-+	echo "fatal: bad config line 34 in file .git/config" >expect &&
- 	test_expect_code 128 test-config get_value foo.bar 2>actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'proper error on error in custom config files' '
- 	echo "[" >>syntax-error &&
--	echo "fatal: bad config file line 1 in syntax-error" >expect &&
-+	echo "fatal: bad config line 1 in file syntax-error" >expect &&
- 	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
- 	test_cmp expect actual
- '
--- 
-2.5.1
+Thanks for your elaborate response. I think I got your point and I
+tried to adjust my "beginner mode" proposal accordingly [1]. Here
+is the relevant change:
+
+If this mode is enabled then Git shall print a warning message before 
+running a potentially destructive command. In addition to the warning 
+Git shall print a command that would reverse the operation if possible. 
+Most of the information to reverse an operation is already available 
+via git reflog. However, the task here is to make this information more 
+easily accessible to Git beginners.
+
+--
+
+Does this go into the direction of "making the powerful tool harder to
+misuse"?
+
+Thanks,
+Lars
