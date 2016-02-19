@@ -1,86 +1,119 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Fri, 19 Feb 2016 08:17:19 +0100
-Message-ID: <vpq60xl88zk.fsf@anie.imag.fr>
-References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank>
-	<448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
-	<vpqh9h7f9kz.fsf@anie.imag.fr>
-	<CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: git submodule should honor "-c credential.helper" command line argument
+Date: Thu, 18 Feb 2016 23:29:09 -0800
+Message-ID: <CA+P7+xr9dLOyaVky1jvXm7MkF0JUqs5SadrTdr4o83baMp397A@mail.gmail.com>
+References: <56B0E3AA.30804@syntevo.com> <20160203042554.GA21179@sigill.intra.peff.net>
+ <CA+P7+xpGTvbyLOKQ=DHFBLOuVNN8WocraaZQhFD36oDiFrY+sA@mail.gmail.com>
+ <CA+P7+xr4gQFPsUiuqSzMsUJP6_W8FnXBwX1Xes=XjksuTs=+hQ@mail.gmail.com>
+ <56B74B17.4040304@syntevo.com> <CA+P7+xpFmZBUwq1h9Xhi7xKYfAyvcouBiV5ujHxuGJQJTMHXZw@mail.gmail.com>
+ <CA+P7+xpHNHVSJnVg3HwiBjWxRdSpLXCsm3GpWst=BNyhLMVd5A@mail.gmail.com> <20160219043019.GA14764@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 19 08:17:40 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 19 08:30:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aWfJo-000613-V9
-	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 08:17:37 +0100
+	id 1aWfVw-0007lV-6n
+	for gcvg-git-2@plane.gmane.org; Fri, 19 Feb 2016 08:30:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757226AbcBSHR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Feb 2016 02:17:29 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54152 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752023AbcBSHR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Feb 2016 02:17:28 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1J7HJrR003264
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 19 Feb 2016 08:17:19 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1J7HJYH030950;
-	Fri, 19 Feb 2016 08:17:19 +0100
-In-Reply-To: <CACsJy8D-bHOLGKq0ZELcPYWpKXgct3HBF9Btp3UPw+tqGUR5Bw@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 19 Feb 2016 10:09:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 19 Feb 2016 08:17:19 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1J7HJrR003264
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1456471040.91145@2b7rygrCHDCf3gd/QXa/5A
+	id S1757283AbcBSH3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Feb 2016 02:29:30 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:35631 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756553AbcBSH33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Feb 2016 02:29:29 -0500
+Received: by mail-io0-f181.google.com with SMTP id g203so100879154iof.2
+        for <git@vger.kernel.org>; Thu, 18 Feb 2016 23:29:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BGeED0NAgwwZrJrlA3F3IpHbgj8W3bKQNPSTedZKO7E=;
+        b=wyQDkqXpINpHcysfuJ0bPr2FVyQeMqyRAT9QquxR/8kRKmQjguPKYtsDBkY4tX+zyB
+         hPE2gtAFYPa0eJSINkuHv1vC9FUSdz6TC2KVwWRfrGXnuu07xDlAl7cR3KCXnhcP2tKf
+         dT5zZlgUv/uh5I21KXN2zLyYsz8IGuGZYl2V6pNkihXkq/ErAi50Lm8yHOprWEyDI0LB
+         T+ixNuXxOXf6+D7ygZ4wXSMZnDRSefWc6blqsumeKJIsFq11s0CnsB7Onvn6TrtoUJWT
+         dTuky1Ycy+ZlB2MIa4lUXzfUKVXCPNU5Zla98I5znmwLL3OmKE0Dtm/b/j80i/7Z/Ehp
+         JHPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=BGeED0NAgwwZrJrlA3F3IpHbgj8W3bKQNPSTedZKO7E=;
+        b=FIkFZufwZejvMxsws5OZvgZfdmxxmMrFIsfBxqOQJt8ffLOBLJhfgaK7+q+kdcbBJs
+         g5dmZsKzGMB7S8v7Js0YK7CeYjvI9deB/5aEY2vOcaPsWNaSZi/+FPs9mTW/Op7H0K+T
+         UNEC6qmmijVhqEmys9QJv9wAWa+o/hCEl3w7e/Am3fUl5axFREVbLpsZD81CMa5CLHi+
+         XJFoLwJqLv3cdBbiqPZnxmBnyYP6sNCG+DyOG/Esysi/t3zmUtXvNrCzSfrln3vWW0gH
+         IIv1+JqfoJXNvFhGlDC9dgcpAoJ9VOqr+bDdHunugeKeVY9WqH3+8WVYJhDAlEJOOgAU
+         sFxA==
+X-Gm-Message-State: AG10YORIrtdBWnmnF6nG5j4yEcl6Ib9T6PvMHLrDrevyQBcCjmGhCeHI1ClM/jYioa0lmKAH73XpzK3wmP3LMA==
+X-Received: by 10.107.156.14 with SMTP id f14mr15866514ioe.0.1455866968702;
+ Thu, 18 Feb 2016 23:29:28 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Thu, 18 Feb 2016 23:29:09 -0800 (PST)
+In-Reply-To: <20160219043019.GA14764@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286662>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Thu, Feb 18, 2016 at 1:58 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Feel free to start writting an idea for
->> http://git.github.io/SoC-2016-Ideas/. It'd be nice to have a few more
->> ideas before Friday. We can polish them later if needed.
+On Thu, Feb 18, 2016 at 8:30 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 18, 2016 at 05:15:54PM -0800, Jacob Keller wrote:
 >
-> Probably too late now, anyway..
+>> I am looking at this more and I am stuck as to how best to provide a
+>> test case.
+>>
+>> I think the problem as stated above is pretty straight forward, we
+>> just want to stop clearing GIT_CONFIG_PARAMETERS but I can't find an
+>> easy way to test that we've done the right thing. There are no current
+>> tests for using a credential helper with submodule update right now.
+>
+> If you just want to test that GIT_CONFIG_PARAMETERS is left untouched in
+> the submodule, you can tweak any config setting that would impact the
+> newly-cloned repo. E.g. this:
+>
+>   unset GIT_COMMITTER_NAME
+>   git config --global user.name='Global Name'
+>   git -c user.name='Command-Line Name' clone repo-with-module foo
+>   head -1 foo/.git/logs/HEAD
+>   head -1 foo/.git/modules/sub/logs/HEAD
+>
+> shows that the parent-level clone uses the "-c" name, but the submodule
+> does not.
+>
+> That being said, I am not sure this is the right solution. In the thread
+> I linked earlier[1], Jens indicated he would prefer not to blindly share
+> config with the submodules, and I think I agree. Or are you proposing to
+> pick and choose the keys in GIT_CONFIG_PARAMETERS, and whitelist
+> credential.*?
+>
+> In that case, obviously my test example would not work, though I think
+> that it might be fine to put "user.name" onto the whitelist (the things
+> we really would worry about is stuff like "core.worktree" that clearly
+> does not make sense to carry over into the submodule).
+>
+> -Peff
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/264840
+>
 
-It's still time. I'll post the application very soon (a few hours from
-now), but the idea list is not included in the application, but linked
-from it. So we can add something before reviewers follow the link, and
-obviously we can add more before students start picking them.
+I would prefer to either.. blacklist stuff like core.worktree, or
+whitelist a bunch of stuff that makes sense. In this case though, I
+would prefer to have an explicit test of credential.helper, but I
+don't know if any of our tests actually have a solid test case for
+"credential.helper was used in a clone. There may not be test
+infrastructure for this though, so your test might work well enough.
 
-> with David's multiple ref backend work, we could have a third,
-> no-dependency backend. We can use index format to store refs.
+As for how to whitelist config to share with the submodule I am really
+not 100% sure, since we just clear GIT_CONFIG_PARAMETERS, and I think
+we'd need a specialized variant of clear_local_git_env_vars specific
+to submodule then.
 
-This sounds like an interesting but ambitious project for a GSoC. There
-are a lot of new stuff to understand for someone potentially new to
-Git's codebase. And it's hard to work incrementally: the result would
-hardly be mergeable before being almost finished.
-
-I think it's interesting to offer the idea, but there should be a
-warning for the student about the difficulties.
-
-Would you be willing to (co-)mentor?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+Jake
