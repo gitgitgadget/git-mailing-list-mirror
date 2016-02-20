@@ -1,110 +1,106 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't
- tried Negotiate
-Date: Sat, 20 Feb 2016 15:23:51 +0000
-Message-ID: <20160220152351.GD14569@vauxhall.crustytoothpaste.net>
-References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
- <xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
- <20160202232952.GA6503@vauxhall.crustytoothpaste.net>
- <CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
- <20160205204648.GA7403@vauxhall.crustytoothpaste.net>
- <xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
- <20160205210623.GC7403@vauxhall.crustytoothpaste.net>
- <xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
- <CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
- <CAHdYDCryaCbj-s6LG5fcDu115fi0k_uCawtus81PPbgyWpBTSA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="n/aVsWSeQ4JHkrmm"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 16:24:43 2016
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] tests: rename work-tree tests to *work-tree*
+Date: Sat, 20 Feb 2016 17:18:41 +0100
+Message-ID: <2e74b7a8e3dd27ccd225b5278500f8a3e029d245.1455985042.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 20 17:19:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aX9Ok-0000jn-UN
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 16:24:43 +0100
+	id 1aXAFk-0006TA-GO
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 17:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532AbcBTPX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 10:23:59 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:36540 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751490AbcBTPX6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Feb 2016 10:23:58 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 84FF928098;
-	Sat, 20 Feb 2016 15:23:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1455981836;
-	bh=y4th+LbmYEYiVOHv6O8us4hhHGeynG+lxeqrNknE6/0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GYVkUCWyqL0CcM748eCAmN5YtvdNGyGGwfRbLktN+qsr4/LQ+23qHve9d5pug9C63
-	 tLmMEz8Cchp3Ako324Rry56LCGYx+iNdn9dGDuyeXmmd1SeE8lYfVRyZkLz9UilMNe
-	 We1bea0NnlkFY7HdRCVUqMG6i5kCKAigrsNi/iLqttLzRrvpVtfE/2T9ZrTavnZSth
-	 OQC1P0erXzaD1xhR+N0lFlPObrtbqR3Dg4xk19UmijwBmxn9wWYbN4ENnojBJf3HEp
-	 jK4Q3b61WjJfg2Q5tKhDYRPo2Wtph/UVzAfGW3EKLfymEfTJ28KaYJLOkwju694RdE
-	 niXKPRoJW+H1d4U5xnTu8f/8Ri8VkQZKrxddFec7+Y1t/DUkXY4BqCgvrH3gqksqXP
-	 3+SLH5cgC1WRQXmJiWd2YMVpW+xcKPb9DkqRKjrTkyMpvSOAOIuspYjDPzVdl8dDv2
-	 eeww4Vxj72aD2lWrIig4Zmy8d9/cDyAsSDIwRrOkyq+1Ni8PXvf
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Dmitry Vilkov <dmitry.a.vilkov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CAHdYDCryaCbj-s6LG5fcDu115fi0k_uCawtus81PPbgyWpBTSA@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.3.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	id S1758773AbcBTQSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 11:18:46 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:36995 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750987AbcBTQSp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Feb 2016 11:18:45 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9BF132030B
+	for <git@vger.kernel.org>; Sat, 20 Feb 2016 11:18:43 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Sat, 20 Feb 2016 11:18:43 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
+	 bh=4f4JALisKOGBAtWRqmRL6b4DEeg=; b=P6H+G5reZ/RsmR53eYssBHKYG+xv
+	4lPIO2VQ204VI8ezpzmvxPLEOi1cwsMh6WsRh+oAGdlNCquaB3WX5TfHrxgROOur
+	84TT7JqzOA89r3QSXGH8MTpOwV3jm6alrW18xyD3aX6by8CfOkDlb9pRt+4CEWnd
+	yWA1o28wrS4nZMo=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=4f4JALisKOGBAtWRqmRL6b4DEe
+	g=; b=daaGohnmFergl0sfNGtmRVqqDcSdtryMEeU5zIxT1otDLWNn/3ZP/u8Vnl
+	kWfCZvOUyjt/QWeOnUGWinRpfe7YTpov/n90RQQ/Qg3/w70q5dnvu2S3ySf6mwa3
+	Yfb+vRzP2zl6LmPU3URt29pV4HYOJdEZJGD5ogcKTRcW26naQ=
+X-Sasl-enc: n9o+L+sA3nEY6Xq5e0/syA1kyfmHAh5kp8Jb30HODgFU 1455985122
+Received: from localhost (dslb-092-076-191-118.092.076.pools.vodafone-ip.de [92.76.191.118])
+	by mail.messagingengine.com (Postfix) with ESMTPA id EEAC8680133;
+	Sat, 20 Feb 2016 11:18:42 -0500 (EST)
+X-Mailer: git-send-email 2.7.1.428.g2de392b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286785>
 
+"Work tree" or "working tree" is the name of a checked out tree,
+"worktree" the name of the command which manages several working trees.
+The naming of tests mixes these two, currently:
 
---n/aVsWSeQ4JHkrmm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+$ls t/*worktree*
+t/t1501-worktree.sh
+t/t1509-root-worktree.sh
+t/t2025-worktree-add.sh
+t/t2026-worktree-prune.sh
+t/t2027-worktree-list.sh
+t/t2104-update-index-skip-worktree.sh
+t/t3320-notes-merge-worktrees.sh
+t/t7011-skip-worktree-reading.sh
+t/t7012-skip-worktree-writing.sh
+t/t7409-submodule-detached-worktree.sh
 
-On Sat, Feb 20, 2016 at 05:35:19PM +0300, Dmitry Vilkov wrote:
-> Maybe you could accept my patch, so users would use
-> "credential.helper=3Dstore" to avoid using ":@" in remote URL? At least
-> for now, while there is no good solution to this issue? It would be
-> very helpful because now we have to have our own version of patched
-> Git :(
+$grep -l "git worktree" t/*.sh
+t/t0002-gitfile.sh
+t/t1400-update-ref.sh
+t/t2025-worktree-add.sh
+t/t2026-worktree-prune.sh
+t/t2027-worktree-list.sh
+t/t3320-notes-merge-worktrees.sh
+t/t7410-submodule-checkout-to.sh
 
-I sent in a patch (and I believe I CC'd you) that adds an option
-http.emptyAuth that can be used in this case.  It should make its way to
-a future release.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Rename t1501, t1509 and t7409 to make it clear on first glance that they
+test work tree related behavior, rather than the worktree command.
 
---n/aVsWSeQ4JHkrmm
-Content-Type: application/pgp-signature; name="signature.asc"
+t2104, t7011 and t7012 are about the "skip-worktree" flag so that their
+name should remain unchanged.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Just some housekeeping. Not super necessary, but should make it easier to find
+the right test to amend, for example.
 
-iQIcBAEBCgAGBQJWyIUHAAoJEL9TXYEfUvaLWQcP/0HNUFsUY1C4QvQ5MOTwwH3Q
-ZUhFxeidSOx7Z64Q36tCBTDea8YpwjwY2tkDmPA/pOmQ3FKaaM5OVYExamfOhABM
-0j5aZ5ZDkV5k917PcnFhRwNTz3OS+FVI/NTjjsWjIOJIBKa3eB3UPLPFECjBuVXL
-QZE5cqZardWhLvdMUbuP8VreTzcwJze6EqpejYjQjuP90rJxRgc17Sx2utkV272q
-7IK1nIXbnqdS2m3TvoGa+TYSbpmUVaJcnx1HVIdQNDla+0uwKk578UvWwTHxNKBG
-IHl1s02jSdphBYhv8rmRa/soiJnMkgw6E9+ZvJzsVMxEbHOlpr9KaP42IBZotK9s
-/TFroeS4m63TvRfFINseU6tSngLo+VwQJ0XuW/M1V4DofgI8TjKeKcff8HSFc9r3
-oTIqNbzhnX0XxwFsmIzt5hlsFArgZS/rV56Dtkj8J+9e1K9i32KkUe9b30nigkwY
-BOyMazcL3zyvmbCiBhMf+pvHZjPYV6ccqnBb3fs++Lyn2iYix6dYUvqqxpG2/PhE
-2I7UA++DrC7mTOAOWH7LN/u++18A88bvDo5en/W8cKfMCnFMbVIKfZL0uPoZuEm7
-qGg8vyi/bQFMLHOeFj3F513czoc1bjSI6h6YHI9rFv0IY5bYIJ6kMWYn0e5AOETV
-C2eDL0Sbfoo7OStNg+WT
-=3vUq
------END PGP SIGNATURE-----
+ t/{t1501-worktree.sh => t1501-work-tree.sh}                               | 0
+ t/{t1509-root-worktree.sh => t1509-root-work-tree.sh}                     | 0
+ ...bmodule-detached-worktree.sh => t7409-submodule-detached-work-tree.sh} | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t1501-worktree.sh => t1501-work-tree.sh} (100%)
+ rename t/{t1509-root-worktree.sh => t1509-root-work-tree.sh} (100%)
+ rename t/{t7409-submodule-detached-worktree.sh => t7409-submodule-detached-work-tree.sh} (100%)
 
---n/aVsWSeQ4JHkrmm--
+diff --git a/t/t1501-worktree.sh b/t/t1501-work-tree.sh
+similarity index 100%
+rename from t/t1501-worktree.sh
+rename to t/t1501-work-tree.sh
+diff --git a/t/t1509-root-worktree.sh b/t/t1509-root-work-tree.sh
+similarity index 100%
+rename from t/t1509-root-worktree.sh
+rename to t/t1509-root-work-tree.sh
+diff --git a/t/t7409-submodule-detached-worktree.sh b/t/t7409-submodule-detached-work-tree.sh
+similarity index 100%
+rename from t/t7409-submodule-detached-worktree.sh
+rename to t/t7409-submodule-detached-work-tree.sh
+-- 
+2.7.1.428.g2de392b
