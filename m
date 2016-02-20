@@ -1,136 +1,77 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 06/21] convert manual allocations to argv_array
-Date: Sat, 20 Feb 2016 04:04:41 -0500
-Message-ID: <CAPig+cSaZv9XHO+BezAJxjh-i_LiBfLxhkKr3u=p8V8zCFnjDw@mail.gmail.com>
-References: <20160219111941.GA31906@sigill.intra.peff.net>
-	<20160219112324.GF9319@sigill.intra.peff.net>
-	<CAPig+cQsFAd4WEoHP-eoz9HCcVzY2uVcDH+_rvkoNjSe-Fg0oA@mail.gmail.com>
-	<20160220081010.GA16722@sigill.intra.peff.net>
-	<CAPig+cTACku01im72Cd7LxYopwwFaXtKYXkxi53GMrTRyZpFGQ@mail.gmail.com>
-	<20160220083426.GA17171@sigill.intra.peff.net>
-	<CAPig+cQK15OoNdG0zyCC0eZJ1XeidD7sOU8BggnNN7k=Zi9zdw@mail.gmail.com>
-	<20160220085740.GC17171@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Sat, 20 Feb 2016 10:28:46 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1602201027170.20796@bonsai2>
+References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank> <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr> <1CE3F5E2-DDCC-4F1B-93CF-1A4A194650BF@gmail.com> <CAGZ79kbGyCTdq4P02fNb7tEuvkvqcZviWJp40Ob1ed6=JCh9Xg@mail.gmail.com>
+ <xmqq7fi1hlw6.fsf@gitster.mtv.corp.google.com> <vpqr3g96tn6.fsf@anie.imag.fr> <xmqq8u2gcubh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 20 10:04:53 2016
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 10:29:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aX3TA-0003db-4m
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 10:04:52 +0100
+	id 1aX3qo-0004RQ-5T
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 10:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992867AbcBTJEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 04:04:46 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:34193 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992561AbcBTJEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 04:04:43 -0500
-Received: by mail-vk0-f52.google.com with SMTP id e185so94141200vkb.1
-        for <git@vger.kernel.org>; Sat, 20 Feb 2016 01:04:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=qxrIWDbqE1TmyUuYXYFPsI3rG61KAV8CwkV5i/+8Juk=;
-        b=LDXs7HqNh/Pjmui4mp7DG97Ep0kdOqQsXDJaWjd1CA9CNWo0BLsE0hTE5bXd3QQyWK
-         Q8N16ebxhIdvfS79pqjk+Mo4QRaCgxL964UJ9sSgUhNJ64M6azYL5xLWWSXwtLoJxPO8
-         sfUdprbLVIE2SucrtkFK44/xc7F59D5OtrXYZ8ow721Z5FpwLR8PJrPqpx0o0z90xNNX
-         /CTR0z9Yr0zMUFshWEXsSAKPwDrTFT7ndu2++lQUZKGG4iDV9mhAs2iX1ZeR6XZfZ40o
-         F5r1PQBHnWpjOoyuzWMBrzd4k30ymmHGRestya7Ur0LflDcpnwpC1L91DaTcYzmms+xB
-         Kftg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=qxrIWDbqE1TmyUuYXYFPsI3rG61KAV8CwkV5i/+8Juk=;
-        b=EX2nLTaLoK97trnTCDRx6DcN/JKrOENmMSYlBzpCdGvUZLZ+9O4TRZOFaPxTrnC+sX
-         5cpA9/1KFC5aXhn7rcDL8+0bPJa02WIgfUU8EqYrAumJGJFX4lYOUoIzDs2Ml/Xoa1CK
-         cA/7mkR/1dsDpihJLU8x4ZyIP84Aq96c5/gPyObQbsxzNGGeWmYMmTQxdyRtpZJHqtX0
-         PQByLp0S03Xbu9K4YFbM5IIeXazvWbGSF0ex+ddD6CxTHkZO59RBifMhAeb70qtzXDkb
-         moOxtmgHCnKxr7qHHae9MCfbYHDuLupX/QgxGntozEhv1xEG5AmF80Q0YG4VIHYeivu0
-         Dv3Q==
-X-Gm-Message-State: AG10YOT63E2GD4xZh7iKY8i7hFLNa/4pKMVHgjmpj8xsXwA5o0kaKOZpQzJCLDdI4wBUR/5YhZmRiDwu3DjQEA==
-X-Received: by 10.31.164.78 with SMTP id n75mr15276828vke.14.1455959082270;
- Sat, 20 Feb 2016 01:04:42 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sat, 20 Feb 2016 01:04:41 -0800 (PST)
-In-Reply-To: <20160220085740.GC17171@sigill.intra.peff.net>
-X-Google-Sender-Auth: 2TOqC1Zg9cSQrlmKNEVOBR1Tsbw
+	id S1427185AbcBTJ3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 04:29:12 -0500
+Received: from mout.gmx.net ([212.227.15.15]:52300 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1426785AbcBTJ3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 04:29:05 -0500
+Received: from surfer-172-29-13-169-hotspot.internet-for-guests.com
+ ([91.66.56.192]) by mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id
+ 0MU11l-1aOZNp2TKb-00QnH1; Sat, 20 Feb 2016 10:28:49 +0100
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <xmqq8u2gcubh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:GsnejQH2Pl4Gr2Essj5WeWmoHOmBi0ByOpAk8BEw5i7LnkLeyfu
+ mU5bh1t4/xciZF04tzdiwgVdYm9ag5uJ+ESv0TO5NfeJ1dYR8zzJgIkaOrhGo00Yj6JHeUl
+ Evkl/IVMHcnCZEY/H/QdGhqp6T/3woTeSPmu09+qw3KXQFnNhweNPvOsSsiPNpV6IfWRrhs
+ 4lb+BBvqnMa6I0D/GEPqQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T7pxtaxK9GU=:c6EzrsisMDX44ygd2R3MC1
+ dA0FXf3eVOlwl75rVus6/lVoITd2Nkp+rpYy/Plpk7gQXy3/vctDp4TEtJurF+EkpABmnRFjH
+ 5FEy69LSgPQ2LM4fV6pidzejOQBye2J7BKjeMFUKq9c+0YvaeyqSMHAlL+HlGdzGJKGVOO+4F
+ sfx//R1uvGyg+yIDFr5LCbTNdwLq8Xz4IC7ybG4p/hivqPSjNh8RFJ+c/63kHob5I4UdqA1Po
+ IQENIVSUrj568u6DTTD8e5SXIenkj8FeM8R29F20r7zDCUTCAcEBeyxvzmM5th1x6eIHQf3FM
+ uKKBMZe9RMhtrKn/JEzLnKDI6NE0WjdFRqa8oPaSejIOYBRWQqSuNZYZ+VXASMvG5evmqb8fu
+ +ZYnvN+sfo5mbgKmjBqmz0TuozF3ouC2nwyh9y+fjHR95UFWMpaqc2QCvF3HwQ+VQxU/fNFqt
+ ZeHgyj0VJrIJXnxwAIt/bXxifo+xZFu8I+ml6k6smwE+XXrS3ivLbtf11AqVTS0ncBefkGvyQ
+ OR0fMf3npuWfVK206azN3YIfMeplz4Du+bGPzqKIzuCzfqMEMwesucrYfGw96i4wgTH7TENYW
+ tqWFpo6YDbQx6NWG2kLjoE9TtVZ4iJ6dJPEZbBC9slLdu1aSzDeNZS7v5wpiOGt30kU5hP+bH
+ mD2rHQxdZHCzNy1OI8Zwk1Fs3q079wGzlxsqHd6+xNHEPZ2SOX424wNIcvW/VA4gKQH8wsK+U
+ CH5CJir2tXOtawgUYA51OD387+vv9VY/HcxfGJbqee4JVSBApyljoi6sxu4PG1cm2gWW4kfs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286776>
 
-On Sat, Feb 20, 2016 at 3:57 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Feb 20, 2016 at 03:39:36AM -0500, Eric Sunshine wrote:
->> I also had made the strbuf_detach() analogy in my response but deleted
->> it before sending; I do think it's a reasonable API template to mirror
->> via new argv_array_detach().
->
-> That would look like this, which I think is not too bad (on top of my
-> series for now; I'd do the API function as a separate patch at the
-> beginning and then use it immediately).
+Hi Junio,
 
-Looks reasonable.
+On Fri, 19 Feb 2016, Junio C Hamano wrote:
 
-> diff --git a/argv-array.c b/argv-array.c
-> index eaed477..5d370fa 100644
-> --- a/argv-array.c
-> +++ b/argv-array.c
-> @@ -74,3 +74,14 @@ void argv_array_clear(struct argv_array *array)
->         }
->         argv_array_init(array);
->  }
-> +
-> +const char **argv_array_detach(struct argv_array *array)
-> +{
-> +       if (array->argv == empty_argv)
-> +               return xcalloc(1, sizeof(const char *));
-> +       else {
-> +               const char **ret = array->argv;
-> +               argv_array_init(array);
-> +               return ret;
-> +       }
-> +}
-> diff --git a/argv-array.h b/argv-array.h
-> index a2fa0aa..29056e4 100644
-> --- a/argv-array.h
-> +++ b/argv-array.h
-> @@ -20,5 +20,6 @@ void argv_array_pushl(struct argv_array *, ...);
->  void argv_array_pushv(struct argv_array *, const char **);
->  void argv_array_pop(struct argv_array *);
->  void argv_array_clear(struct argv_array *);
-> +const char **argv_array_detach(struct argv_array *);
->
->  #endif /* ARGV_ARRAY_H */
-> diff --git a/line-log.c b/line-log.c
-> index fa095b9..bbe31ed 100644
-> --- a/line-log.c
-> +++ b/line-log.c
-> @@ -748,15 +748,17 @@ void line_log_init(struct rev_info *rev, const char *prefix, struct string_list
->
->         if (!rev->diffopt.detect_rename) {
->                 struct line_log_data *r;
-> -               struct argv_array paths = ARGV_ARRAY_INIT;
-> +               struct argv_array array = ARGV_ARRAY_INIT;
-> +               const char **paths;
->
->                 for (r = range; r; r = r->next)
-> -                       argv_array_push(&paths, r->path);
-> +                       argv_array_push(&array, r->path);
-> +               paths = argv_array_detach(&array);
-> +
->                 parse_pathspec(&rev->diffopt.pathspec, 0,
-> -                              PATHSPEC_PREFER_FULL, "", paths.argv);
-> -               /* argv strings are now owned by pathspec */
-> -               paths.argc = 0;
-> -               argv_array_clear(&paths);
-> +                              PATHSPEC_PREFER_FULL, "", paths);
-> +               /* strings are now owned by pathspec */
-> +               free(paths);
->         }
->  }
+> The "experimenting" would include mergy operations like "am -3" and
+> "cherry-pick".  "After queuing a topic and trying it in isolation, an
+> attempt to merge to the baseline results in quite a mess, and I give
+> up"--there is nothing to salvage.
+> 
+> And obviously, "stash" is not useful in such a situation.
+
+I think this is more a short-coming of "stash" than anything else.
+
+Many a times did I wish I could simply quickly stash a failed merge and
+then come back later. Or not. Just like stashed changes without conflicts
+allow me to do already.
+
+Ciao,
+Dscho
