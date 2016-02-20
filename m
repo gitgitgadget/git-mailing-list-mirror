@@ -1,64 +1,111 @@
-From: Zakaria Itani <zak.itani@gmail.com>
-Subject: Git Download Problem
-Date: Sat, 20 Feb 2016 19:00:59 +0200
-Message-ID: <CANmjEXCw3fexzb+UNxwx10sxuSCZq-EFRxmdsnTCHyy8PLUwCw@mail.gmail.com>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 04/21] harden REALLOC_ARRAY and xcalloc against size_t
+ overflow
+Date: Sat, 20 Feb 2016 22:32:00 +0100
+Message-ID: <56C8DB50.7070606@web.de>
+References: <20160219111941.GA31906@sigill.intra.peff.net>
+ <20160219112200.GD9319@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 20 18:01:46 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 20 22:32:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXAud-0002vl-7N
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 18:01:43 +0100
+	id 1aXF8X-0004Lj-QC
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 22:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbcBTRBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 12:01:01 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:33148 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503AbcBTRBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 12:01:00 -0500
-Received: by mail-wm0-f48.google.com with SMTP id g62so106343354wme.0
-        for <git@vger.kernel.org>; Sat, 20 Feb 2016 09:00:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=KuFCJU0k6V0mNLfacRCu/lWeLsp2vMwpaUff291DFak=;
-        b=KYTLat6bI+eQe4LryNSSDUcPQxvt9AZ5xCgnSgKi9vKTY7HXRXM/E0xxgfEOWsa79M
-         pzOGAkne8QhmkXsU2epGaDXMzHsS3D78D9xJiotIiq/nIiHPi+kMqgfbOLQkTbBMNpA4
-         FhAZtxIwqhi/WoASB0h1vkrIgeI0wQIGt+a1VkYQHUyGfgxlet6/3UEfLnG1JX0nkDEg
-         aI1d3LCuYAm4+Rb/+2tiiAlFUfzNKQXd9O2WZFFGWcHL8sad3ckChADKN10h6pPp16ew
-         pLyoLkRR23QL6BQCF5XYQpzAMa6BAfB2nVhXliQDGRKRA57ngY5MyVRfM9CuJreAYWgT
-         GuzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=KuFCJU0k6V0mNLfacRCu/lWeLsp2vMwpaUff291DFak=;
-        b=mr1MydfhtVrKVriPYKPR9tdAb5kaQVuUD1JWarLBYT0D955qCBuBiWwooFQBU480IO
-         qvP0r/LqQb6X1gfQfPvlR/QpU2lwBLft4zFu+ftYBGOkV0KyhxpDZIQHOuT21jMOlHe4
-         x5thL+3ZXekcnfqt3ZcmeEd18DxsF6tXDLki47ZCkF6XzIZaKjB1D6zbrPimdY8zQLmy
-         dlw4HD42EbJ5HmfYK6ScIAThg9L4CXbOI9GnWzXwqd9RPQLa+YsLqHKihweE8IuWh7mO
-         tZnCZTxEGvpqCoUxZ62dUnrFBbfsWm052f/o1eHmfO174IR+EDW3dewIutskrTWQMIj/
-         Nasw==
-X-Gm-Message-State: AG10YOSeU/sCp/TUsxF3a3F6iOOQ/oFe4kGaezdNkwtJc4nuS4gQUmY2JJRvhxPUJxmuZEwcIAjb4+LPwm+LHQ==
-X-Received: by 10.28.225.8 with SMTP id y8mr3526915wmg.23.1455987659040; Sat,
- 20 Feb 2016 09:00:59 -0800 (PST)
-Received: by 10.27.189.195 with HTTP; Sat, 20 Feb 2016 09:00:59 -0800 (PST)
+	id S1759439AbcBTVcR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Feb 2016 16:32:17 -0500
+Received: from mout.web.de ([212.227.17.11]:51696 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752563AbcBTVcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 16:32:15 -0500
+Received: from [192.168.178.36] ([79.213.114.152]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MOzoR-1adYFm1fIV-006KPI; Sat, 20 Feb 2016 22:32:05
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <20160219112200.GD9319@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:KE73s/flwc1A4jMMX+qK7j+4T5paxCRtsABno8U4bKX89zPwFrt
+ tKqMnk0xqTd2/4txAG8Ys/PBktgnApi+IR4GbCCBKzW2sKvl0WWY6OVylzd629k5cZ86nbl
+ Bfn6K6GGlEB0MsSULqU0c9rojX3tpLDVFvPl4t6sy4sSb+ATJN8C0/l3lmZN8vM2qs5H1el
+ i9QNY632c4WNT9g5u2zDw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zy7cXfqoP90=:l/2EVSHsHAbO4PKbccggTA
+ GHJA9XDQI24kCeMOQQuORGSXh4ZGYzHHWt59uUl904jDsFD8AtLxiAXzLnSuxvdEAV9Shkej7
+ 8VJNsvvAPZgbrKxZCk6wBDgLKYLWlhklIaeUDzvAyg2fHlMEZ3AkIT9RSLzj5ibOE1TH4P49N
+ 41foxyvEvZpIZ7MGkSQMiuWNdQayv0B6Xju6SA2kN2jyAWmNw6dhg0OcE4HOWY2WWCBQPyqJv
+ 1oo47BQoyFj7iiHtSOQM7i+T00Zp8r18Hh8jzk+DlnMcO+2E29qukz7mxOWPqhy1cMrqRvoU6
+ QilRVy4Dq+NgzF65VraQuS1DlpTuK54VpPk4/gIG+GtMteeC/7OutgadD95sdO27c85zphw71
+ Z07v8585dARylSGBXZg5vf3VSB2fBk8X6aH/73FskcA5pN4KRiyI/Bv0m5UGL3fLeX9VTsVqB
+ 8sfJIk1IbVQRosl2ZfI0D/1dX7ifW+wkMT5yUkwEjTXiJ0OchgqKkCSj5gZBfbA7hGUnJx9HG
+ 4zQZU91nAYFUNUAtpzBMnNJUbZIqyNSDCX6fr4tRIQyed9aNDIf922kL3ffqlI45kzOwGZYvF
+ Hd1InaufTff0H0+ajnUDcH4r57vN/6oUoOnWB6M+yYy3VCnUNc82+Cm1mDtPzW+LxCEvjRGsh
+ vZq4+4rCaY+GoMLi9brciwAS0WiG4H8O5jNHfxlLaAhzL3ENUUxPEX7hE+IDldvJG0CkZWSaW
+ kPlF9qkx+wWVO8djePdEQTWOpuPIVo3DnxRx5yWiAXt2gX6ijZCLWIKwK8yBcvyJUDcBxD+B 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286787>
 
-Hello,
+Am 19.02.2016 um 12:22 schrieb Jeff King:
+> REALLOC_ARRAY inherently involves a multiplication which can
+> overflow size_t, resulting in a much smaller buffer than we
+> think we've allocated. We can easily harden it by using
+> st_mult() to check for overflow.  Likewise, we can add
+> ALLOC_ARRAY to do the same thing for xmalloc calls.
 
-After downloading version 2.6.4 of git for mac, i faced a problem
-launching it where a message showed up saying
-git-2.6.4-intel-universal-mavericks.dmg couldn't be opened since image
-is not recognized. My mac's current version is Yosemite 10.10.3
+Good idea!
 
-I'd like to know how could I fix this problem, thank you in advance.
-Zak.
+> xcalloc() should already be fine, because it takes the two
+> factors separately, assuming the system calloc actually
+> checks for overflow. However, before we even hit the system
+> calloc(), we do our memory_limit_check, which involves a
+> multiplication. Let's check for overflow ourselves so that
+> this limit cannot be bypassed.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   git-compat-util.h | 3 ++-
+>   wrapper.c         | 3 +++
+>   2 files changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 0c65033..55c073d 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -779,7 +779,8 @@ extern int odb_pack_keep(char *name, size_t names=
+z, const unsigned char *sha1);
+>   extern char *xgetcwd(void);
+>   extern FILE *fopen_for_writing(const char *path);
+>
+> -#define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), (alloc) * size=
+of(*(x)))
+> +#define ALLOC_ARRAY(x, alloc) (x) =3D xmalloc(st_mult((alloc), sizeo=
+f(*(x))))
+> +#define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), st_mult((alloc=
+), sizeof(*(x))))
+
+st_mult(x, y) calls unsigned_mult_overflows(x, y), which divides by x.=20
+This division can be done at compile time if x is a constant.  This can=
+=20
+be guaranteed for all users of the two macros above by reversing the=20
+arguments of st_mult(), so that sizeof comes first.  Probably not a big=
+=20
+win, but why not do it if it's that easy?
+
+Or perhaps a macro like this could help here and in other places which=20
+use st_mult with sizeof:
+
+   #define SIZEOF_MULT(x, n) st_mult(sizeof(x), (n))
+
+(I'd call it ARRAY_SIZE, but that name is already taken. :)
+
+Ren=C3=A9
