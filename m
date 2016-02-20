@@ -1,127 +1,136 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Sat, 20 Feb 2016 15:59:09 +0700
-Message-ID: <CACsJy8BQZCBpfmvXk+o5PqM7=zad7cxgA9B2995Rb0D0YBxEVw@mail.gmail.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com> <1455772670-21142-26-git-send-email-dturner@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 06/21] convert manual allocations to argv_array
+Date: Sat, 20 Feb 2016 04:04:41 -0500
+Message-ID: <CAPig+cSaZv9XHO+BezAJxjh-i_LiBfLxhkKr3u=p8V8zCFnjDw@mail.gmail.com>
+References: <20160219111941.GA31906@sigill.intra.peff.net>
+	<20160219112324.GF9319@sigill.intra.peff.net>
+	<CAPig+cQsFAd4WEoHP-eoz9HCcVzY2uVcDH+_rvkoNjSe-Fg0oA@mail.gmail.com>
+	<20160220081010.GA16722@sigill.intra.peff.net>
+	<CAPig+cTACku01im72Cd7LxYopwwFaXtKYXkxi53GMrTRyZpFGQ@mail.gmail.com>
+	<20160220083426.GA17171@sigill.intra.peff.net>
+	<CAPig+cQK15OoNdG0zyCC0eZJ1XeidD7sOU8BggnNN7k=Zi9zdw@mail.gmail.com>
+	<20160220085740.GC17171@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 09:59:49 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 20 10:04:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aX3OE-0008EP-5c
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 09:59:46 +0100
+	id 1aX3TA-0003db-4m
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 10:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992773AbcBTI7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 03:59:42 -0500
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:34986 "EHLO
-	mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992561AbcBTI7l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 03:59:41 -0500
-Received: by mail-lf0-f46.google.com with SMTP id l143so67690058lfe.2
-        for <git@vger.kernel.org>; Sat, 20 Feb 2016 00:59:40 -0800 (PST)
+	id S2992867AbcBTJEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 04:04:46 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:34193 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992561AbcBTJEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 04:04:43 -0500
+Received: by mail-vk0-f52.google.com with SMTP id e185so94141200vkb.1
+        for <git@vger.kernel.org>; Sat, 20 Feb 2016 01:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ghXiYoNttObLIMfPlVmJgWuXb+15lntyj4MHVVpKMC8=;
-        b=vGiT/yzYNyi73lkGLswGZW7KrHRZY0ZnOYS6XJFEUChFTBuwSEmd1chhzye8G8b361
-         D9ZnH+iEvmRP8CHW5hh9EtpblK9tEHChP5c/UzAVnSZ32TyUWTQG9PCeSKrfILHmwFCB
-         NHoW6MA9a0pMIiDgV9DCrqZBbmunDpypj7+skyK2cmJNFHmVrZAgGUPi/0/552NGPAoU
-         98XvwmHeL81nyO6+60LOJxqcz6xLnAC4P/L1NmwmNp5g3WC3HFUd9f7lIzqX1f3QJWV5
-         aNVgqSIF3e2Uo7ifsH24lyqy35byR080MJZjoNF10ZsPRro8Jfj/4bvYN4fSMhQ8uds/
-         EGYw==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=qxrIWDbqE1TmyUuYXYFPsI3rG61KAV8CwkV5i/+8Juk=;
+        b=LDXs7HqNh/Pjmui4mp7DG97Ep0kdOqQsXDJaWjd1CA9CNWo0BLsE0hTE5bXd3QQyWK
+         Q8N16ebxhIdvfS79pqjk+Mo4QRaCgxL964UJ9sSgUhNJ64M6azYL5xLWWSXwtLoJxPO8
+         sfUdprbLVIE2SucrtkFK44/xc7F59D5OtrXYZ8ow721Z5FpwLR8PJrPqpx0o0z90xNNX
+         /CTR0z9Yr0zMUFshWEXsSAKPwDrTFT7ndu2++lQUZKGG4iDV9mhAs2iX1ZeR6XZfZ40o
+         F5r1PQBHnWpjOoyuzWMBrzd4k30ymmHGRestya7Ur0LflDcpnwpC1L91DaTcYzmms+xB
+         Kftg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ghXiYoNttObLIMfPlVmJgWuXb+15lntyj4MHVVpKMC8=;
-        b=LNknkWtZ5VOeKO5zbT3xcRTno5lczXxkd4wXlKkrYjh13OJUsdn08lBddy/46VQym1
-         +VWQZVWYcADXUpaC6YsxWOExD0N8IbQUPpvrHN8dLyqZkR1uXhHU9L6Flw453bu+Q+nV
-         2zcuIiHDgp0zXENA7VEWay/56D5dD4rA93RMIshqz76VMgKA3nd41O99zzbMbYZJ69of
-         uT3aVUuPIXacIxl6kseIycpD9/5OGY4Scta/v83rvJTo2ThMvyhTV8/6EtuVwMkHpif3
-         0ZI2ZHI6YQrZrctSuoHOgRppwK+tIDmh0OTtS0T2HC9h/HuCEnFpS/GHgTIhuWTP0aCX
-         /FjQ==
-X-Gm-Message-State: AG10YOQChrKKzEaJ8hzpfCjghn5hNqLzaRuwOrdrXptSxLr5G0VQ0zQ7P7qJ1UdmZ1QNjzz3rvPFg4LpQGBXkg==
-X-Received: by 10.25.161.131 with SMTP id k125mr3561021lfe.83.1455958779676;
- Sat, 20 Feb 2016 00:59:39 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Sat, 20 Feb 2016 00:59:09 -0800 (PST)
-In-Reply-To: <1455772670-21142-26-git-send-email-dturner@twopensource.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=qxrIWDbqE1TmyUuYXYFPsI3rG61KAV8CwkV5i/+8Juk=;
+        b=EX2nLTaLoK97trnTCDRx6DcN/JKrOENmMSYlBzpCdGvUZLZ+9O4TRZOFaPxTrnC+sX
+         5cpA9/1KFC5aXhn7rcDL8+0bPJa02WIgfUU8EqYrAumJGJFX4lYOUoIzDs2Ml/Xoa1CK
+         cA/7mkR/1dsDpihJLU8x4ZyIP84Aq96c5/gPyObQbsxzNGGeWmYMmTQxdyRtpZJHqtX0
+         PQByLp0S03Xbu9K4YFbM5IIeXazvWbGSF0ex+ddD6CxTHkZO59RBifMhAeb70qtzXDkb
+         moOxtmgHCnKxr7qHHae9MCfbYHDuLupX/QgxGntozEhv1xEG5AmF80Q0YG4VIHYeivu0
+         Dv3Q==
+X-Gm-Message-State: AG10YOT63E2GD4xZh7iKY8i7hFLNa/4pKMVHgjmpj8xsXwA5o0kaKOZpQzJCLDdI4wBUR/5YhZmRiDwu3DjQEA==
+X-Received: by 10.31.164.78 with SMTP id n75mr15276828vke.14.1455959082270;
+ Sat, 20 Feb 2016 01:04:42 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 20 Feb 2016 01:04:41 -0800 (PST)
+In-Reply-To: <20160220085740.GC17171@sigill.intra.peff.net>
+X-Google-Sender-Auth: 2TOqC1Zg9cSQrlmKNEVOBR1Tsbw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286775>
 
-On Thu, Feb 18, 2016 at 12:17 PM, David Turner <dturner@twopensource.com> wrote:
-> LMDB has a few features that make it suitable for usage in git:
-> ...
+On Sat, Feb 20, 2016 at 3:57 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 20, 2016 at 03:39:36AM -0500, Eric Sunshine wrote:
+>> I also had made the strbuf_detach() analogy in my response but deleted
+>> it before sending; I do think it's a reasonable API template to mirror
+>> via new argv_array_detach().
+>
+> That would look like this, which I think is not too bad (on top of my
+> series for now; I'd do the API function as a separate patch at the
+> beginning and then use it immediately).
 
-I'm reading lmdb documents and hitting  the caveat section [1]. Random thoughts
+Looks reasonable.
 
-* "There is normally no pure read-only mode, since readers need write
-access to locks and lock file.".
-
-This will be a problem for server side that serves git:// protocol
-only. Some of those servers disable write access to the entire
-repository and git still works fine (but won't when lmdb is used).
-Should we do something in this case? Just tell server admins to relax
-file access, or use MDB_NOLOCK (and when? based on config var?)
-
-*  " Use an MDB_env* in the process which opened it, without
-fork()ing.". We do use fork on non-Windows in run-command.c, but it
-should be followed by exec() with no ref access in between, so we're
-almost good.
-
-I notice atexit() is used in this for/exec code, which reminds me we
-also use atexit() in many other places. I hope none of them access
-refs, or we could be in trouble.
-
-* "Do not have open an LMDB database twice in the same process at the
-same time. Not even from a plain open() call - close()ing it breaks
-flock() advisory locking"
-
-I wonder what happens if we do open twice, will it error out or
-silently ignore and move on? Because if it's the latter case, we need
-some protection from the caller and I'm not sure if
-lmdb-backend.c:init_env() has it, especially when it open submodule's
-lmdb.
-
-* "Avoid long-lived transactions...."
-
-OK we don't have a problem with this. But it makes me realize lmdb
-transactions do not map with ref transactions. We don't open lmdb
-transaction at ref_transaction_begin(), for example. Is it simply more
-convenient to do transactions the current way, or is it impossible or
-incorrect to attach lmdb transactions to ref_transaction_*()?
-
-* "Avoid aborting a process with an active transaction. The
-transaction becomes "long-lived" as above until a check for stale
-readers is performed or the lockfile is reset, since the process may
-not remove it from the lockfile."
-
-Does it mean we should at atexit() and signal handler to release
-currently active transaction?
-
-* "Do not use LMDB databases on remote filesystems, even between
-processes on the same host. This breaks flock() on some OSes, possibly
-memory map sync, and certainly sync between programs on different
-hosts."
-
-OK can't do anything about it anyway, but maybe it should be mentioned
-somewhere in Git documentation.
-
-* "Opening a database can fail if another process is opening or
-closing it at exactly the same time."
-
-We have some retry logic in resolve_ref_1(). Do we need the same for
-lmdb? Not very important though.
-
-[1] http://symas.com/mdb/doc/
--- 
-Duy
+> diff --git a/argv-array.c b/argv-array.c
+> index eaed477..5d370fa 100644
+> --- a/argv-array.c
+> +++ b/argv-array.c
+> @@ -74,3 +74,14 @@ void argv_array_clear(struct argv_array *array)
+>         }
+>         argv_array_init(array);
+>  }
+> +
+> +const char **argv_array_detach(struct argv_array *array)
+> +{
+> +       if (array->argv == empty_argv)
+> +               return xcalloc(1, sizeof(const char *));
+> +       else {
+> +               const char **ret = array->argv;
+> +               argv_array_init(array);
+> +               return ret;
+> +       }
+> +}
+> diff --git a/argv-array.h b/argv-array.h
+> index a2fa0aa..29056e4 100644
+> --- a/argv-array.h
+> +++ b/argv-array.h
+> @@ -20,5 +20,6 @@ void argv_array_pushl(struct argv_array *, ...);
+>  void argv_array_pushv(struct argv_array *, const char **);
+>  void argv_array_pop(struct argv_array *);
+>  void argv_array_clear(struct argv_array *);
+> +const char **argv_array_detach(struct argv_array *);
+>
+>  #endif /* ARGV_ARRAY_H */
+> diff --git a/line-log.c b/line-log.c
+> index fa095b9..bbe31ed 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -748,15 +748,17 @@ void line_log_init(struct rev_info *rev, const char *prefix, struct string_list
+>
+>         if (!rev->diffopt.detect_rename) {
+>                 struct line_log_data *r;
+> -               struct argv_array paths = ARGV_ARRAY_INIT;
+> +               struct argv_array array = ARGV_ARRAY_INIT;
+> +               const char **paths;
+>
+>                 for (r = range; r; r = r->next)
+> -                       argv_array_push(&paths, r->path);
+> +                       argv_array_push(&array, r->path);
+> +               paths = argv_array_detach(&array);
+> +
+>                 parse_pathspec(&rev->diffopt.pathspec, 0,
+> -                              PATHSPEC_PREFER_FULL, "", paths.argv);
+> -               /* argv strings are now owned by pathspec */
+> -               paths.argc = 0;
+> -               argv_array_clear(&paths);
+> +                              PATHSPEC_PREFER_FULL, "", paths);
+> +               /* strings are now owned by pathspec */
+> +               free(paths);
+>         }
+>  }
