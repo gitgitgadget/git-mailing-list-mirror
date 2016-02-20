@@ -1,74 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
-Date: Sat, 20 Feb 2016 13:32:17 -0800
-Message-ID: <xmqqr3g79ify.fsf@gitster.mtv.corp.google.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-	<1455772670-21142-26-git-send-email-dturner@twopensource.com>
-	<20160218085023.GA30049@lanh>
-	<1455827001.7528.87.camel@twopensource.com>
+Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't tried Negotiate
+Date: Sat, 20 Feb 2016 13:38:09 -0800
+Message-ID: <xmqqk2lz9i66.fsf@gitster.mtv.corp.google.com>
+References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
+	<xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
+	<20160202232952.GA6503@vauxhall.crustytoothpaste.net>
+	<CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
+	<20160205204648.GA7403@vauxhall.crustytoothpaste.net>
+	<xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
+	<20160205210623.GC7403@vauxhall.crustytoothpaste.net>
+	<xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
+	<CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
+	<CAHdYDCryaCbj-s6LG5fcDu115fi0k_uCawtus81PPbgyWpBTSA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 22:32:32 2016
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 22:38:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXF8f-0004T8-P7
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 22:32:30 +0100
+	id 1aXFEH-00005X-95
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 22:38:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759442AbcBTVc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 16:32:26 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50702 "EHLO
+	id S1759454AbcBTViN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 16:38:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50551 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752563AbcBTVcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 16:32:25 -0500
+	with ESMTP id S1752384AbcBTViM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 16:38:12 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5E544319D;
-	Sat, 20 Feb 2016 16:32:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E74F0432A1;
+	Sat, 20 Feb 2016 16:38:11 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Yhyc4B/f5odXtfDYFi7z1vNlG4Q=; b=xsW9+b
-	126rL2axFo00rUj4r02KNkwU4sBy/0S2aT6Oc9UojsVkgXao4JswwIiWI2Haipck
-	fS49OuGkWa0TfQZ61Owcxnu6WJySm3yBTjxydi6HDW94k5vD0bnVIRPGV64rlPTe
-	N0KB2rWfQpWFdMy6Lt8ZhLS19PcadaYNQ0Nl0=
+	:content-type; s=sasl; bh=rUeETucFR9z7z+84PdBuxrNAkwA=; b=VRnKGX
+	MiqQlqBZupWSfhDkeA+hQ0ptYbgSXgR0Uu9AelvhjMO5fMrOptQjylomhcCHuwGJ
+	yQrMb79QafYwTZ9cymD9/4hxSzwkFO0as/gcReQOXe1YvONP/Mcfa3uAJ3xG25vl
+	pK+ghaAyNyQ3j41yi9iWj9L4i0L5J+Ef7RxP8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dvh68GK87eBMIRCEikle+PpPCY3PkSIr
-	z9I1BXiSh5Zwk5y+E2PLzEOOJNasNP3Cf1KdYCz94dmLAtagvTC7LsvwQjip7J0w
-	j1GDeiAF/KYXwa3WtkD1Fon+zV1KLQ5tk/II4GXxMEepN1KYn1h+sQ/tKurE5B8t
-	ZxFoCGo9ELg=
+	:content-type; q=dns; s=sasl; b=aHs1j+Mdh/jR560z7JhekMR/8gOUE4B5
+	jmOdzpUACh8Tymq5lwqckqJNuCJAvaEXfHoA8U9FLJceh55Isf2R5MQ7DIWArfDi
+	/QYTwvLE38eEL8cEpNhhoHK1wlERvcMVMBHkTQt1PWOzuKh2aWLsSmzQ2I2UMe4j
+	SsMteB5fpKA=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E20C4319C;
-	Sat, 20 Feb 2016 16:32:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF302432A0;
+	Sat, 20 Feb 2016 16:38:11 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0A2664319B;
-	Sat, 20 Feb 2016 16:32:18 -0500 (EST)
-In-Reply-To: <1455827001.7528.87.camel@twopensource.com> (David Turner's
-	message of "Thu, 18 Feb 2016 15:23:21 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 279B94329E;
+	Sat, 20 Feb 2016 16:38:11 -0500 (EST)
+In-Reply-To: <CAHdYDCryaCbj-s6LG5fcDu115fi0k_uCawtus81PPbgyWpBTSA@mail.gmail.com>
+	(Dmitry Vilkov's message of "Sat, 20 Feb 2016 17:35:19 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B4B3DCE-D819-11E5-9F03-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 3D2CD15E-D81A-11E5-8D54-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286789>
 
-David Turner <dturner@twopensource.com> writes:
+Dmitry Vilkov <dmitry.a.vilkov@gmail.com> writes:
 
-> So just add this after every mkdir?
->
-> 	if (shared_repository)
-> 		adjust_shared_perm(db_path);
+> Hi guys! Any luck with fixing this issue?
 
-The function itself checks shared_repository configuration, so the
-caller does not have to bother.  You should rather treat it as a
-declaration and a documentation that says "this path in $GIT_DIR
-should be writable".
+I think Brian suggested an alternative approach, to which you earler
+responded
 
-You should check its exit value for errors, though.
+>> That would be great! Definitely it will be much better solution than
+>> patch I've proposed.
+
+The patch has been queued as 121061f6 (http: add option to try
+authentication without username, 2016-02-15); perhaps you can help
+by trying it out in your installation before it hits a released
+version of Git?  That way, if the patch does not fix your problem,
+or it introduces an unexpected side effect, we would notice before
+we include it in a future release.
+
+Thanks.
