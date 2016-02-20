@@ -1,77 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Sat, 20 Feb 2016 10:28:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1602201027170.20796@bonsai2>
-References: <vpqoabox66p.fsf@anie.imag.fr> <20160217172407.GD1831@hank> <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com> <vpqh9h7f9kz.fsf@anie.imag.fr> <1CE3F5E2-DDCC-4F1B-93CF-1A4A194650BF@gmail.com> <CAGZ79kbGyCTdq4P02fNb7tEuvkvqcZviWJp40Ob1ed6=JCh9Xg@mail.gmail.com>
- <xmqq7fi1hlw6.fsf@gitster.mtv.corp.google.com> <vpqr3g96tn6.fsf@anie.imag.fr> <xmqq8u2gcubh.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] submodule: Fetch the direct sha1 first
+Date: Sat, 20 Feb 2016 02:52:03 -0800
+Message-ID: <CA+P7+xrjE5fF9QKe5AvAcuwNtx4O5yq8FfkXtyrR8r7+E=d8Bw@mail.gmail.com>
+References: <1455908253-1136-1-git-send-email-sbeller@google.com> <xmqqpovsbdyu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>, dborowitz@google.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 20 10:29:21 2016
+X-From: git-owner@vger.kernel.org Sat Feb 20 11:52:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aX3qo-0004RQ-5T
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 10:29:18 +0100
+	id 1aX59K-0005S3-PQ
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 11:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1427185AbcBTJ3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Feb 2016 04:29:12 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52300 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1426785AbcBTJ3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 04:29:05 -0500
-Received: from surfer-172-29-13-169-hotspot.internet-for-guests.com
- ([91.66.56.192]) by mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id
- 0MU11l-1aOZNp2TKb-00QnH1; Sat, 20 Feb 2016 10:28:49 +0100
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <xmqq8u2gcubh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:GsnejQH2Pl4Gr2Essj5WeWmoHOmBi0ByOpAk8BEw5i7LnkLeyfu
- mU5bh1t4/xciZF04tzdiwgVdYm9ag5uJ+ESv0TO5NfeJ1dYR8zzJgIkaOrhGo00Yj6JHeUl
- Evkl/IVMHcnCZEY/H/QdGhqp6T/3woTeSPmu09+qw3KXQFnNhweNPvOsSsiPNpV6IfWRrhs
- 4lb+BBvqnMa6I0D/GEPqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T7pxtaxK9GU=:c6EzrsisMDX44ygd2R3MC1
- dA0FXf3eVOlwl75rVus6/lVoITd2Nkp+rpYy/Plpk7gQXy3/vctDp4TEtJurF+EkpABmnRFjH
- 5FEy69LSgPQ2LM4fV6pidzejOQBye2J7BKjeMFUKq9c+0YvaeyqSMHAlL+HlGdzGJKGVOO+4F
- sfx//R1uvGyg+yIDFr5LCbTNdwLq8Xz4IC7ybG4p/hivqPSjNh8RFJ+c/63kHob5I4UdqA1Po
- IQENIVSUrj568u6DTTD8e5SXIenkj8FeM8R29F20r7zDCUTCAcEBeyxvzmM5th1x6eIHQf3FM
- uKKBMZe9RMhtrKn/JEzLnKDI6NE0WjdFRqa8oPaSejIOYBRWQqSuNZYZ+VXASMvG5evmqb8fu
- +ZYnvN+sfo5mbgKmjBqmz0TuozF3ouC2nwyh9y+fjHR95UFWMpaqc2QCvF3HwQ+VQxU/fNFqt
- ZeHgyj0VJrIJXnxwAIt/bXxifo+xZFu8I+ml6k6smwE+XXrS3ivLbtf11AqVTS0ncBefkGvyQ
- OR0fMf3npuWfVK206azN3YIfMeplz4Du+bGPzqKIzuCzfqMEMwesucrYfGw96i4wgTH7TENYW
- tqWFpo6YDbQx6NWG2kLjoE9TtVZ4iJ6dJPEZbBC9slLdu1aSzDeNZS7v5wpiOGt30kU5hP+bH
- mD2rHQxdZHCzNy1OI8Zwk1Fs3q079wGzlxsqHd6+xNHEPZ2SOX424wNIcvW/VA4gKQH8wsK+U
- CH5CJir2tXOtawgUYA51OD387+vv9VY/HcxfGJbqee4JVSBApyljoi6sxu4PG1cm2gWW4kfs 
+	id S2993824AbcBTKwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 05:52:25 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34036 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993759AbcBTKwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 05:52:23 -0500
+Received: by mail-io0-f169.google.com with SMTP id 9so134995811iom.1
+        for <git@vger.kernel.org>; Sat, 20 Feb 2016 02:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dw+9+nFVByuoREGA19ZkPK9SErkPsComLLU0LlA+ln8=;
+        b=Pqsu1msKakW0t23bHWBxzp+6CJ10SEvXDgW9A6ZXUl0rddryjSL7ki44G8EerLKhw4
+         8BFIjQ2zwGs9Yi9lLe85/APqnfIZ8pXQ9+l/wNIRgWIb7UPOubhqd1w+QNY0DkpcHzPz
+         Cen7nPIwTuVA9sUkiUh9VE+dAveIVy5AYZns8a+QH9plXVbY/Rk0Wue9I/gYj6Nd2Dxa
+         GLxlm9hSQprZQPZZfmFCV9kpSs6LkU2tJd6kDrLNgI9GajT43A4jhBVARM58YkiaeRjC
+         b591KGWQZmGBonE5ReN3Py5pZoKKJ0QBGLsx7QEKr5Kv8z1lHSVcaLrKZEs2ynMRoBUK
+         39Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=dw+9+nFVByuoREGA19ZkPK9SErkPsComLLU0LlA+ln8=;
+        b=Tsdanu20H1VVPHPPfN77Cehgp4GKBkvjisD6ItYL4k5dXWIaIO329Gf7c2pK5fDHHg
+         T/bIluF+GiqSU4Z94YZiKNzLWQ5fJkf2GnNfN1jv/cCKwvZnyImD4EwH+mvg662He9kS
+         6ItYIs0fZJTonO6WhgZ5x7MBTgJx1nfSjRsg3AWcx/d8iy8ZZaQlkniw7PcbVTEkV4lr
+         48ncWgDMRvnXHE4KAKlYdD2Npe7y/lXUdWfuv81ZmDaAjaMweydbbPJS3Itd9WEiZ4tG
+         zcWU8McDtheI3K1o+IjdMCf7GCXmh3ElJeHivQCj7za701fRKXGeY2vZaArg38tEWY8+
+         w9iw==
+X-Gm-Message-State: AG10YOShfimW+nmY1upWP1uPG20QpaJy8wLl1uaMJe7pM6mG0jaxDcCqSKZaRDxSbOPkArdlgeYNA7Y0s0ek+g==
+X-Received: by 10.107.170.79 with SMTP id t76mr23128471ioe.71.1455965542845;
+ Sat, 20 Feb 2016 02:52:22 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Sat, 20 Feb 2016 02:52:03 -0800 (PST)
+In-Reply-To: <xmqqpovsbdyu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286777>
 
-Hi Junio,
+On Fri, Feb 19, 2016 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Regarding performance, the first fetch should fail quite fast iff the fetch
+>> fails and then continue with the normal fetch. In case the first fetch works
+>> fine getting the exact sha1, the fetch should be faster than a default fetch
+>> as potentially less data needs to be fetched.
+>
+> "The fetch should be faster" may not be making a good trade-off
+> overall--people may have depended on the branches configured to be
+> fetched to be fetched after this codepath is exercised, but now if
+> the commit bound to the superproject tree happens to be complete,
+> even though it is not anchored by any remote tracking ref (hence the
+> next GC may clobber it), the fetch of other branches will not
+> happen.
+>
+> My knee-jerk reaction is that the order of fallback is probably the
+> other way around.  That is, try "git fetch" as before, check again
+> if the commit bound to the superproject tree is now complete, and
+> fallback to fetch that commit with an extra "git fetch".
+>
 
-On Fri, 19 Feb 2016, Junio C Hamano wrote:
+FWIW, I think the order you suggest here is probably better. It would
+be lower risk of breaking something since we'd only do something more
+in this case if the current fetch fails.
 
-> The "experimenting" would include mergy operations like "am -3" and
-> "cherry-pick".  "After queuing a topic and trying it in isolation, an
-> attempt to merge to the baseline results in quite a mess, and I give
-> up"--there is nothing to salvage.
-> 
-> And obviously, "stash" is not useful in such a situation.
+I've definitely been bit by this before thinking that the sub module
+would be able to be fetched just fine only to discover that it wasn't
+able to locate the change.
 
-I think this is more a short-coming of "stash" than anything else.
-
-Many a times did I wish I could simply quickly stash a failed merge and
-then come back later. Or not. Just like stashed changes without conflicts
-allow me to do already.
-
-Ciao,
-Dscho
+Regards,
+Jake
