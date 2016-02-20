@@ -1,111 +1,74 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH 04/21] harden REALLOC_ARRAY and xcalloc against size_t
- overflow
-Date: Sat, 20 Feb 2016 22:32:00 +0100
-Message-ID: <56C8DB50.7070606@web.de>
-References: <20160219111941.GA31906@sigill.intra.peff.net>
- <20160219112200.GD9319@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 25/27] refs: add LMDB refs storage backend
+Date: Sat, 20 Feb 2016 13:32:17 -0800
+Message-ID: <xmqqr3g79ify.fsf@gitster.mtv.corp.google.com>
+References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
+	<1455772670-21142-26-git-send-email-dturner@twopensource.com>
+	<20160218085023.GA30049@lanh>
+	<1455827001.7528.87.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 20 22:32:22 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+	mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Feb 20 22:32:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXF8X-0004Lj-QC
-	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 22:32:22 +0100
+	id 1aXF8f-0004T8-P7
+	for gcvg-git-2@plane.gmane.org; Sat, 20 Feb 2016 22:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759439AbcBTVcR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Feb 2016 16:32:17 -0500
-Received: from mout.web.de ([212.227.17.11]:51696 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752563AbcBTVcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Feb 2016 16:32:15 -0500
-Received: from [192.168.178.36] ([79.213.114.152]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MOzoR-1adYFm1fIV-006KPI; Sat, 20 Feb 2016 22:32:05
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <20160219112200.GD9319@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:KE73s/flwc1A4jMMX+qK7j+4T5paxCRtsABno8U4bKX89zPwFrt
- tKqMnk0xqTd2/4txAG8Ys/PBktgnApi+IR4GbCCBKzW2sKvl0WWY6OVylzd629k5cZ86nbl
- Bfn6K6GGlEB0MsSULqU0c9rojX3tpLDVFvPl4t6sy4sSb+ATJN8C0/l3lmZN8vM2qs5H1el
- i9QNY632c4WNT9g5u2zDw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zy7cXfqoP90=:l/2EVSHsHAbO4PKbccggTA
- GHJA9XDQI24kCeMOQQuORGSXh4ZGYzHHWt59uUl904jDsFD8AtLxiAXzLnSuxvdEAV9Shkej7
- 8VJNsvvAPZgbrKxZCk6wBDgLKYLWlhklIaeUDzvAyg2fHlMEZ3AkIT9RSLzj5ibOE1TH4P49N
- 41foxyvEvZpIZ7MGkSQMiuWNdQayv0B6Xju6SA2kN2jyAWmNw6dhg0OcE4HOWY2WWCBQPyqJv
- 1oo47BQoyFj7iiHtSOQM7i+T00Zp8r18Hh8jzk+DlnMcO+2E29qukz7mxOWPqhy1cMrqRvoU6
- QilRVy4Dq+NgzF65VraQuS1DlpTuK54VpPk4/gIG+GtMteeC/7OutgadD95sdO27c85zphw71
- Z07v8585dARylSGBXZg5vf3VSB2fBk8X6aH/73FskcA5pN4KRiyI/Bv0m5UGL3fLeX9VTsVqB
- 8sfJIk1IbVQRosl2ZfI0D/1dX7ifW+wkMT5yUkwEjTXiJ0OchgqKkCSj5gZBfbA7hGUnJx9HG
- 4zQZU91nAYFUNUAtpzBMnNJUbZIqyNSDCX6fr4tRIQyed9aNDIf922kL3ffqlI45kzOwGZYvF
- Hd1InaufTff0H0+ajnUDcH4r57vN/6oUoOnWB6M+yYy3VCnUNc82+Cm1mDtPzW+LxCEvjRGsh
- vZq4+4rCaY+GoMLi9brciwAS0WiG4H8O5jNHfxlLaAhzL3ENUUxPEX7hE+IDldvJG0CkZWSaW
- kPlF9qkx+wWVO8djePdEQTWOpuPIVo3DnxRx5yWiAXt2gX6ijZCLWIKwK8yBcvyJUDcBxD+B 
+	id S1759442AbcBTVc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Feb 2016 16:32:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50702 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752563AbcBTVcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Feb 2016 16:32:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5E544319D;
+	Sat, 20 Feb 2016 16:32:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Yhyc4B/f5odXtfDYFi7z1vNlG4Q=; b=xsW9+b
+	126rL2axFo00rUj4r02KNkwU4sBy/0S2aT6Oc9UojsVkgXao4JswwIiWI2Haipck
+	fS49OuGkWa0TfQZ61Owcxnu6WJySm3yBTjxydi6HDW94k5vD0bnVIRPGV64rlPTe
+	N0KB2rWfQpWFdMy6Lt8ZhLS19PcadaYNQ0Nl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Dvh68GK87eBMIRCEikle+PpPCY3PkSIr
+	z9I1BXiSh5Zwk5y+E2PLzEOOJNasNP3Cf1KdYCz94dmLAtagvTC7LsvwQjip7J0w
+	j1GDeiAF/KYXwa3WtkD1Fon+zV1KLQ5tk/II4GXxMEepN1KYn1h+sQ/tKurE5B8t
+	ZxFoCGo9ELg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E20C4319C;
+	Sat, 20 Feb 2016 16:32:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0A2664319B;
+	Sat, 20 Feb 2016 16:32:18 -0500 (EST)
+In-Reply-To: <1455827001.7528.87.camel@twopensource.com> (David Turner's
+	message of "Thu, 18 Feb 2016 15:23:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6B4B3DCE-D819-11E5-9F03-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286788>
 
-Am 19.02.2016 um 12:22 schrieb Jeff King:
-> REALLOC_ARRAY inherently involves a multiplication which can
-> overflow size_t, resulting in a much smaller buffer than we
-> think we've allocated. We can easily harden it by using
-> st_mult() to check for overflow.  Likewise, we can add
-> ALLOC_ARRAY to do the same thing for xmalloc calls.
+David Turner <dturner@twopensource.com> writes:
 
-Good idea!
-
-> xcalloc() should already be fine, because it takes the two
-> factors separately, assuming the system calloc actually
-> checks for overflow. However, before we even hit the system
-> calloc(), we do our memory_limit_check, which involves a
-> multiplication. Let's check for overflow ourselves so that
-> this limit cannot be bypassed.
+> So just add this after every mkdir?
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->   git-compat-util.h | 3 ++-
->   wrapper.c         | 3 +++
->   2 files changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 0c65033..55c073d 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -779,7 +779,8 @@ extern int odb_pack_keep(char *name, size_t names=
-z, const unsigned char *sha1);
->   extern char *xgetcwd(void);
->   extern FILE *fopen_for_writing(const char *path);
->
-> -#define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), (alloc) * size=
-of(*(x)))
-> +#define ALLOC_ARRAY(x, alloc) (x) =3D xmalloc(st_mult((alloc), sizeo=
-f(*(x))))
-> +#define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), st_mult((alloc=
-), sizeof(*(x))))
+> 	if (shared_repository)
+> 		adjust_shared_perm(db_path);
 
-st_mult(x, y) calls unsigned_mult_overflows(x, y), which divides by x.=20
-This division can be done at compile time if x is a constant.  This can=
-=20
-be guaranteed for all users of the two macros above by reversing the=20
-arguments of st_mult(), so that sizeof comes first.  Probably not a big=
-=20
-win, but why not do it if it's that easy?
+The function itself checks shared_repository configuration, so the
+caller does not have to bother.  You should rather treat it as a
+declaration and a documentation that says "this path in $GIT_DIR
+should be writable".
 
-Or perhaps a macro like this could help here and in other places which=20
-use st_mult with sizeof:
-
-   #define SIZEOF_MULT(x, n) st_mult(sizeof(x), (n))
-
-(I'd call it ARRAY_SIZE, but that name is already taken. :)
-
-Ren=C3=A9
+You should check its exit value for errors, though.
