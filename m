@@ -1,73 +1,72 @@
-From: "Steinar H. Gunderson" <sgunderson@bigfoot.com>
-Subject: Re: Please document git-http-backend/Apache timeout interactions
-Date: Mon, 22 Feb 2016 00:34:27 +0100
-Message-ID: <20160221233427.GA13598@sesse.net>
-References: <20160221221744.GA38068@sesse.net>
- <xmqqwppx8wwb.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] t8005: avoid grep on non-ASCII data
+Date: Sun, 21 Feb 2016 18:35:33 -0500
+Message-ID: <20160221233533.GD4094@sigill.intra.peff.net>
+References: <20160219193310.GA1299@sigill.intra.peff.net>
+ <cover.1456075680.git.john@keeping.me.uk>
+ <81ec83acd004ef050a4c8df62fb158b41f0a0a80.1456075680.git.john@keeping.me.uk>
+ <CAPig+cQ9n4Eg73Uyeg_g_4wzebuwn8=0R-LMb8F9QLFxanwVVg@mail.gmail.com>
+ <20160221231913.GA4094@sigill.intra.peff.net>
+ <CAPig+cSXsk4Pp9adi4KvYjdCwaw4R0Jrv2vwC0JTCyzomWxaww@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 00:34:39 2016
+Cc: John Keeping <john@keeping.me.uk>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 00:35:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXdWO-0006x8-9z
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 00:34:36 +0100
+	id 1aXdXP-0007wV-Vq
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 00:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbcBUXed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2016 18:34:33 -0500
-Received: from cassarossa.samfundet.no ([193.35.52.29]:32912 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752453AbcBUXec (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 18:34:32 -0500
-Received: from pannekake.samfundet.no ([2001:67c:29f4::50] ident=unknown)
-	by cassarossa.samfundet.no with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.84)
-	(envelope-from <sesse@samfundet.no>)
-	id 1aXdWF-0008Vd-6M; Mon, 22 Feb 2016 00:34:27 +0100
-Received: from sesse by pannekake.samfundet.no with local (Exim 4.84)
-	(envelope-from <sesse@samfundet.no>)
-	id 1aXdWF-0004QN-3d; Mon, 22 Feb 2016 00:34:27 +0100
+	id S1752513AbcBUXfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2016 18:35:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46414 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752434AbcBUXfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 18:35:36 -0500
+Received: (qmail 25048 invoked by uid 102); 21 Feb 2016 23:35:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 21 Feb 2016 18:35:36 -0500
+Received: (qmail 13336 invoked by uid 107); 21 Feb 2016 23:35:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 21 Feb 2016 18:35:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Feb 2016 18:35:33 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqwppx8wwb.fsf@gitster.mtv.corp.google.com>
-X-Operating-System: Linux 4.4.0 on a x86_64
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <CAPig+cSXsk4Pp9adi4KvYjdCwaw4R0Jrv2vwC0JTCyzomWxaww@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286848>
 
-On Sun, Feb 21, 2016 at 03:29:56PM -0800, Junio C Hamano wrote:
-> This feels 70% like "how to configure your Apache server when you
-> run site that is contacted by a client that is slow to talk?", that
-> is not necessarily specific to Git.
+On Sun, Feb 21, 2016 at 06:31:08PM -0500, Eric Sunshine wrote:
 
-It's specific to Git in the sense that Git seemingly as a normal matter of
-course posts very slowly to /git-upload-pack. Normal HTTP clients don't work
-this way; they typically have their entire POST body ready before they decide
-to make a request.
+> > Something like the patch below works for me. I think we could make it
+> > shorter by using $PERLIO to get the raw behavior, but using binmode will
+> > work even on ancient versions of perl.
+> >
+> > +filter_blame () {
+> > +       perl -e '
+> > +               binmode STDIN;
+> > +               binmode STDOUT;
+> 
+> I was worried about binmode() due to some vague recollection from
+> years and years ago of it being problematic on Windows, but I see
+> these tests are all protected by !MINGW anyhow...
 
-> Also while it may make sense to tweak the timeout on the server
-> side, recommending to disable it altogether, instead of adjusting to
-> the typical requirement for a sane client, feels just wrong.
+Thanks for mentioning that. I meant to put a note on that at the end of
+_my_ message, but forgot. :)
 
-True, although I have no idea what the right limits would be.
+It does mean we won't do CRLF processing. We could get around that with
+some explicit `chomp`-ing, I think. Or just leave it as-is and assume
+these will lose the !MINGW prereq.
 
-> Also, are all requests from one client slow to start, or are only
-> some phases in the protocol exchange slow but not others?  If the
-> server side can tell which ones could be normally slow, selectively
-> loosening timeouts only for them might be more palatable, but I am
-> sensing that you are not suggesting such an approach.
+I see Junio just mentioned elsewhere that we can simply avoid the
+extended regular expressions by using two sed commands. That would be
+fine with me, too.
 
-I know only of /git-upload-pack having this pattern, and it is the only one I
-am seeing 408 errors for in my logs. It seems to fail very rarely (~0.2% of
-all /git-upload-pack requests), but for some users, it's seemingly very
-persistent.
-
-/* Steinar */
--- 
-Homepage: https://www.sesse.net/
+-Peff
