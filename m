@@ -1,82 +1,241 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Sun, 21 Feb 2016 21:32:37 +0530
-Message-ID: <CA+DCAeSpN+OSJ85yyqq9ONzfubh=coMd7FTct5OkEnLvhMm2tw@mail.gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
-	<vpq37so26oz.fsf@anie.imag.fr>
-	<CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
-	<CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
+From: "=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?=" 
+	<felipeg.assis@gmail.com>
+Subject: [PATCH 3/5] merge-recursive: test rename threshold option
+Date: Sun, 21 Feb 2016 12:09:16 -0300
+Message-ID: <1456067358-19781-4-git-send-email-felipegassis@gmail.com>
+References: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sun Feb 21 18:52:44 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	sunshine@sunshineco.com,
+	=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= 
+	<felipegassis@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 21 18:53:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXYBW-0007X5-PM
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:52:43 +0100
+	id 1aXYCT-00007h-Ut
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:53:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbcBURwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2016 12:52:37 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:33580 "EHLO
+	id S1751361AbcBURxh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 12:53:37 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:34450 "EHLO
 	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016AbcBURwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 12:52:35 -0500
-Received: by mail-qk0-f169.google.com with SMTP id s5so48662823qkd.0
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 09:52:34 -0800 (PST)
+	with ESMTP id S1751122AbcBURxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 12:53:35 -0500
+Received: by mail-qk0-f169.google.com with SMTP id x1so48620338qkc.1
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 09:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2l+/HQuK+fSDJwZ9APfPALrNkv26Nm6X/OzSd1H4Hag=;
-        b=KeoG/WHJfftuEQcbslIFONhvko73YoVkiCntc0S4BAdO8MzrhjRdjCYFKCmisteeC4
-         LfMrXBART1U2j18bcZsNXNPDwueZVqIT1fqXg2Xg8BEtgX9w+k5hEXN30KcYE5I45ypM
-         BRYc8m3XKzbwAoxvWmlve5opreAE+H06EgyxcOcCyKa8MyYTTZbi3R3EGQAInrsigR5X
-         NMYYrh/R3rMmFXonuOnbHrDdVqYHi7vuPxIOYpAPTOYuBoUkd3kjdVz6tb5M22zDUZlI
-         cI3FuK82wpj8grtPJ1XPzPze6OGMTdIE1XvzlFxRl8FPmxZpS++7Hdwr+OevnYPeeCaf
-         RNAw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ooQrzn9SmH4vOIeA1mgCLeh+hgika3LPegDPfofaDP8=;
+        b=S4JQKtbYHX69lIDVosPYUZbIpfnjMD7FPs53p+8ZFTPwSeywTJNkpZoJeuLAyuym8O
+         KkHroM7KPfL3WyaulYkFLBNaR6gxS78JIWxv0fnCeZPtjxvVS5UEWCUKj+LM+WuoFdQC
+         gMSGb67JcimMwTlGshdmudh7ILMhXhwSkiurIeHILmCb2lhnzPuomJOn3AnEHNUxthz8
+         kktRrrVwNWL/o51vzCKOSeQB1DbfpsMtRgASYFabaozB48xeHFirmIhDS0ucPToOSilN
+         5qdDaoZPAqqSkJJQzVq3bVtwCGCgB57wwVee235HnngNpo4K9WmPcW9JMbQkrqfOOYRr
+         5lRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=2l+/HQuK+fSDJwZ9APfPALrNkv26Nm6X/OzSd1H4Hag=;
-        b=XJZLD08voYhdRV3StXtWzrJCJrMdmgwghBnIlOuaO6R8fzoW21k4/OP+/MObu3RYZT
-         22mddwMryqJ/pLd1P1KqZZaQLRHqhZObW7OizbUDM6MxWQ6RwMMj+77gLgkkGc4TW5Jh
-         aDMNuK/WOrHF99smWxCH/mMwy3mtFmpUy/PaOuSkoIsJd/QUSYEP70Wugt7c/GFZ1CeO
-         iCHfNI7s4/ubkAZFQgRAwPPdkdzduLwg9fJb/y2H63lUnT7Ev30JzUQ5dvw8h67+364c
-         f24h9c+r32XvTjQL8hTH0Drebko0s2BIKvQ2y+2i5HMl62U/kWY7HnvYZeGLLq6RzJKA
-         2uMw==
-X-Gm-Message-State: AG10YOT9gqyMkXb6Xy6ByP0nY0wTmJRi0b/UG+BLRzBkxcS6h2lh6ZD/XJICN9hislk7IUx0Qm88Ov1NmADbow==
-X-Received: by 10.55.54.201 with SMTP id d192mr28855857qka.23.1456070557246;
- Sun, 21 Feb 2016 08:02:37 -0800 (PST)
-Received: by 10.55.154.205 with HTTP; Sun, 21 Feb 2016 08:02:37 -0800 (PST)
-In-Reply-To: <CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=ooQrzn9SmH4vOIeA1mgCLeh+hgika3LPegDPfofaDP8=;
+        b=KwH7ZdG61yc2QnMvTy9YozzM7x/pQwT0zg+apwbXUge/lFTZP8FZgwNgv4HPnxLZmt
+         73V8pGfnze6PpttTwk4541AUUjEQ4xf+WBYNqKQp5U3CfEKhZqDMvonr36INMqxpoAlJ
+         Sh5NKwz0YJZyWv3EnAyJP9SGVn+UgNWGENBKJ5i1nw4AdRbRTF6NIXIwRjlBDb0xxdJe
+         Rmkm7gvSLbb6EV2FHh7NddJ024N47mYNB4kN/t/5uN0624MxVSRvvICTs4k4jxV+/jH8
+         oIckZwVy4NVUVifyeX24e5HwdGEe0Zs75anmqK7XIGai3GGUJgyYNig1zTQOBouBNqtY
+         FhRQ==
+X-Gm-Message-State: AG10YOTuMA5mzAgUuR1TplBLp9BFfNwc4u9vGLhPj/avfA6wJ9YV57a0iIhuXRpAh49pRw==
+X-Received: by 10.55.71.195 with SMTP id u186mr28776909qka.38.1456067473387;
+        Sun, 21 Feb 2016 07:11:13 -0800 (PST)
+Received: from traveller.moon ([177.94.146.172])
+        by smtp.gmail.com with ESMTPSA id o203sm8467389qho.15.2016.02.21.07.11.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Feb 2016 07:11:12 -0800 (PST)
+X-Google-Original-From: =?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= <felipegassis@gmail.com>
+X-Mailer: git-send-email 2.7.1.492.gc9722f8
+In-Reply-To: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286812>
 
-On Fri, Feb 19, 2016 at 11:20 PM, Stefan Beller <sbeller@google.com> wrote:
-> Yes, most likely t/t5521-pull-options.sh or t/t5520-pull.sh would be the right
-> place as judging from the file name of the tests.
+Commit 10ae7526bebb505ddddba01f76ec97d5f7b5e0e5 introduced this feature=
+,
+but did not include any tests. This commit fixes this.
 
-I checked out both of the files and made following observations -
+Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
+---
+ t/t3034-merge-recursive-rename-threshold.sh | 146 ++++++++++++++++++++=
+++++++++
+ 1 file changed, 146 insertions(+)
+ create mode 100755 t/t3034-merge-recursive-rename-threshold.sh
 
-1) As I'm going to add an option for "git pull --rebase"; tests should
-be added for following commands in t/t5521-pull-options.sh
-          a)  git pull --rebase --[no-]autostash
-          b)  git pull -v --rebase --[no-]autostash
-          c)  git pull -q --rebase --[no-]autostash
-
-2) Also test for "pull --rebase --[no-]autostash fails with dirty
-working tree and rebase.autostash set" should be added to
-t/t5520-pull.sh.
-
-Have I made the right observation?
-
-Thanks,
-Mehul Jain
+diff --git a/t/t3034-merge-recursive-rename-threshold.sh b/t/t3034-merg=
+e-recursive-rename-threshold.sh
+new file mode 100755
+index 0000000..f0b3f44
+--- /dev/null
++++ b/t/t3034-merge-recursive-rename-threshold.sh
+@@ -0,0 +1,146 @@
++#!/bin/sh
++
++test_description=3D'merge-recursive rename threshold option
++
++Test rename detection by examining rename/delete conflicts.
++
++Similarity index:
++R100 a-old a-new
++R075 b-old b-new
++R050 c-old c-new
++R025 d-old d-new
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	get_expected_stages () {
++		git checkout rename -- $1-new &&
++		git ls-files --stage $1-new > expected-stages-undetected-$1
++		sed "s/ 0	/ 2	/
++		" < expected-stages-undetected-$1 > expected-stages-detected-$1
++		git read-tree -u --reset HEAD
++	} &&
++
++	rename_detected () {
++		git ls-files --stage $1-old $1-new > stages-actual-$1 &&
++		test_cmp expected-stages-detected-$1 stages-actual-$1
++	} &&
++
++	rename_undetected () {
++		git ls-files --stage $1-old $1-new > stages-actual-$1 &&
++		test_cmp expected-stages-undetected-$1 stages-actual-$1
++	} &&
++
++	check_common () {
++		git ls-files --stage > stages-actual &&
++		test $(wc -l < stages-actual) -eq 4
++	} &&
++
++	check_find_renames_25 () {
++		check_common &&
++		rename_detected a &&
++		rename_detected b &&
++		rename_detected c &&
++		rename_detected d
++	} &&
++
++	check_find_renames_50 () {
++		check_common
++		rename_detected a &&
++		rename_detected b &&
++		rename_detected c &&
++		rename_undetected d
++	} &&
++
++	check_find_renames_75 () {
++		check_common
++		rename_detected a &&
++		rename_detected b &&
++		rename_undetected c &&
++		rename_undetected d
++	} &&
++
++	check_find_renames_100 () {
++		check_common
++		rename_detected a &&
++		rename_undetected b &&
++		rename_undetected c &&
++		rename_undetected d
++	} &&
++
++	check_no_renames () {
++		check_common
++		rename_undetected a &&
++		rename_undetected b &&
++		rename_undetected c &&
++		rename_undetected d
++	} &&
++
++	cat <<-\EOF > a-old &&
++	aa1
++	aa2
++	aa3
++	aa4
++	EOF
++	sed s/aa/bb/ < a-old > b-old &&
++	sed s/aa/cc/ < a-old > c-old &&
++	sed s/aa/dd/ < a-old > d-old &&
++	git add [a-d]-old &&
++	test_tick &&
++	git commit -m base &&
++	git rm [a-d]-old &&
++	test_tick &&
++	git commit -m delete &&
++	git checkout -b rename HEAD^ &&
++	cp a-old a-new &&
++	sed 1,1s/./x/ < b-old > b-new &&
++	sed 1,2s/./x/ < c-old > c-new &&
++	sed 1,3s/./x/ < d-old > d-new &&
++	git add [a-d]-new &&
++	git rm [a-d]-old &&
++	test_tick &&
++	git commit -m rename &&
++	get_expected_stages a &&
++	get_expected_stages b &&
++	get_expected_stages c &&
++	get_expected_stages d
++'
++
++test_expect_success 'the default similarity index is 50%' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive HEAD^ -- HEAD master &&
++	check_find_renames_50
++'
++
++test_expect_success 'low rename threshold' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive --rename-threshold=3D25 HEAD^ -- H=
+EAD master &&
++	check_find_renames_25
++'
++
++test_expect_success 'high rename threshold' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive --rename-threshold=3D75 HEAD^ -- H=
+EAD master &&
++	check_find_renames_75
++'
++
++test_expect_success 'exact renames only' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive --rename-threshold=3D100% HEAD^ --=
+ HEAD master &&
++	check_find_renames_100
++'
++
++test_expect_success 'rename threshold is truncated' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive --rename-threshold=3D200% HEAD^ --=
+ HEAD master &&
++	check_find_renames_100
++'
++
++test_expect_success 'last wins in --rename-threshold=3D<m> --rename-th=
+reshold=3D<n>' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git merge-recursive --rename-threshold=3D25 --rename-t=
+hreshold=3D75 HEAD^ -- HEAD master &&
++	check_find_renames_75
++'
++
++test_done
+--=20
+2.7.1.492.gc9722f8
