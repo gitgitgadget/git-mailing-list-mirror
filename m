@@ -1,87 +1,62 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] t9200: avoid grep on non-ASCII data
-Date: Sun, 21 Feb 2016 16:15:31 -0500
-Message-ID: <CAPig+cQkcUPD5+0rUPkKCcJSzRC0NkuRYKHmW54eZ041PqaqmQ@mail.gmail.com>
-References: <20160219193310.GA1299@sigill.intra.peff.net>
-	<cover.1456075680.git.john@keeping.me.uk>
-	<42c95c23bffcbb526aaae302f80667867d164876.1456075680.git.john@keeping.me.uk>
+From: "Steinar H. Gunderson" <sgunderson@bigfoot.com>
+Subject: Please document git-http-backend/Apache timeout interactions
+Date: Sun, 21 Feb 2016 23:17:44 +0100
+Message-ID: <20160221221744.GA38068@sesse.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 21 22:15:38 2016
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 21 23:18:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXbLt-0007yl-6m
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 22:15:37 +0100
+	id 1aXcKA-0005ET-KO
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 23:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbcBUVPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2016 16:15:33 -0500
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:33482 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949AbcBUVPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 16:15:32 -0500
-Received: by mail-vk0-f41.google.com with SMTP id k196so115244790vka.0
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 13:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=o4FiDLnuv4E9OQ4zldHyCC8Uf1fpYAVqvoPAjKPBFIA=;
-        b=EwsRE8zeChdBNvDqNvUpkjWI1FEXhQqkuaA5wEeigcspBqeYfd173ooUMsr0wYV1Ly
-         DYLGF1b7YnFzrlmgY6njHLiM5fdgkEDWR9YjR6wmICGgYb8lA4mkQxVZcNBSyokAF1kA
-         P6wQ7cEPI/4yIl97sutdUfNmY9kdJlruYeM5GmSt+m4g58kLGSXk8wNXXzjGFtsCtk1w
-         Re/kkKodx4NLaRcKW35qeNuJ0d79gjwFDG8O0kQbr4v2hRFGjzu/tpa2xuz3M5b/69gN
-         /tIPT1ZMdrrm5XH0K+s2Wfltjh49r6St/KMxYp0AofoN6C8USlWMESs98vgvaV9yEsss
-         naWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=o4FiDLnuv4E9OQ4zldHyCC8Uf1fpYAVqvoPAjKPBFIA=;
-        b=ktpYe59QACdLIIghii/D0SEZPxkMdZa3HNImrdeYtJNu9sdHK8LtF9cwGlkA3EZjAo
-         7rankb8SKTxp7p+lbCpAv6YAPi9FtFKQQNaETErppGXMTDKm/5+0knG9FRdAd+bsXvu9
-         MCmOSXWDuhuKFdOuuViB7O4bpOthfPJ108u9h2BxO7wqxJ3dLzpi/xo/FmppaSC+IBgW
-         XeyE5HYV+bJLgTVTky/VhF1PTjoxej+YUgaIeJ3V9i2nUz2rEhgwaMH/IbNy1LWGSue/
-         GCYYIgu4zbZYR/xbWwDCtm52vLRouYabDmmgGukUdTxr6UYyTzSwtJQph0lTKz0z2AnP
-         UuKA==
-X-Gm-Message-State: AG10YORHasYt6AcMEwmPUImyz2NtxbzJs7aj7lCdZ5Q26wrMak6JSebgESvK2MdGNhw0k/0TwNrjbNehw2TNZw==
-X-Received: by 10.31.182.143 with SMTP id g137mr20118867vkf.45.1456089331970;
- Sun, 21 Feb 2016 13:15:31 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 13:15:31 -0800 (PST)
-In-Reply-To: <42c95c23bffcbb526aaae302f80667867d164876.1456075680.git.john@keeping.me.uk>
-X-Google-Sender-Auth: E3y0G85LSD0GWINoUF_7e_soYM4
+	id S1752335AbcBUWRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2016 17:17:51 -0500
+Received: from cassarossa.samfundet.no ([193.35.52.29]:53401 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752109AbcBUWRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 17:17:50 -0500
+Received: from pannekake.samfundet.no ([2001:67c:29f4::50] ident=unknown)
+	by cassarossa.samfundet.no with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	(Exim 4.84)
+	(envelope-from <sesse@samfundet.no>)
+	id 1aXcK1-000205-1M
+	for git@vger.kernel.org; Sun, 21 Feb 2016 23:17:45 +0100
+Received: from sesse by pannekake.samfundet.no with local (Exim 4.84)
+	(envelope-from <sesse@samfundet.no>)
+	id 1aXcK0-000AMR-VH
+	for git@vger.kernel.org; Sun, 21 Feb 2016 23:17:44 +0100
+Content-Disposition: inline
+X-Operating-System: Linux 4.4.0 on a x86_64
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286832>
 
-On Sun, Feb 21, 2016 at 12:32 PM, John Keeping <john@keeping.me.uk> wrote:
-> GNU grep 2.23 detects the input used in this test as binary data so it
-> does not work for extracting lines from a file.  We could add the "-a"
-> option to force grep to treat the input as text, but not all
-> implementations support that.  Instead, use sed to extract the desired
-> lines since it will always treat its input as text.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
-> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-> @@ -35,7 +35,7 @@ exit 1
->  check_entries () {
->         # $1 == directory, $2 == expected
-> -       grep '^/' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
-> +       sed -ne '\!^/!p' "$1/CVS/Entries" | sort | cut -d/ -f2,3,5 >actual
+Hi,
 
-This works with BSD sed, but double negatives are confusing. Have you
-considered this instead?
+I am running git-http-backend behind Apache as suggested in
+git-http-backend(1). However, what it fails to mention is that
+git-fetch-pack seemingly can be very slow in sending its request.
+Consequently, mod_reqtimeout (on by default, as I understand it)
+kicks in as an anti-DoS measure, and the user sees a 408 (timeout)
+error.
 
-    sed -ne '/^\//p' ...
+Seemingly the simplest fix is to turn off mod_reqtimeout in the vhost
+serving git (potentially with some <IfModule> around it):
 
->         if test -z "$2"
->         then
->                 >expected
+   RequestReadTimeout header=0 body=0
+
+Would you consider adding this to the documentation?
+
+Thanks!
+
+/* Steinar */
+-- 
+Homepage: https://www.sesse.net/
