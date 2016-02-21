@@ -1,178 +1,238 @@
-From: Saurav Sachidanand <sauravsachidanand@gmail.com>
-Subject: [PATCH] GSoC Micoproject: Hunt down signed int flags
-Date: Sun, 21 Feb 2016 16:43:09 +0530
-Message-ID: <1456053189-5221-1-git-send-email-sauravsachidanand@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 5/5] merge-recursive: test more consistent interface
+Date: Sun, 21 Feb 2016 13:40:26 -0500
+Message-ID: <CAPig+cSAWjqD7weNLyk4MrAU1Q7+R6z16GndKkByHo2Uc4yWqg@mail.gmail.com>
+References: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
+	<1456067358-19781-6-git-send-email-felipegassis@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Saurav Sachidanand <sauravsachidanand@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 21 19:14:47 2016
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipegassis@gmail.com>
+To: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 21 19:40:36 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXYWs-0003zo-2r
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 19:14:46 +0100
+	id 1aXYvn-0004dM-PZ
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 19:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbcBUSOn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 13:14:43 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36602 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbcBUSOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 13:14:42 -0500
-Received: by mail-pf0-f181.google.com with SMTP id e127so79778464pfe.3
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 10:14:41 -0800 (PST)
+	id S1751096AbcBUSk2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 13:40:28 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:36356 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805AbcBUSk1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Feb 2016 13:40:27 -0500
+Received: by mail-vk0-f47.google.com with SMTP id c3so112626282vkb.3
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 10:40:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=zZJQo1qop/RRKdSeyM30Kku2Dgy7rGNMMDgsSxFQOSs=;
-        b=Qa2ESDe9VD7CsgvgY0Ouw7BMaHCL602yTfbK2H+VRvHITrpacfhPCbhJSlUXa749vE
-         OouNOqMgQHKnhIo0p32Qc5QqQfr9q10xt40rhC6yHyduGmPRKx4jG/LThVNEALtMs3Dw
-         iAwb5PKuPKd4JgHzW1PKtbM4e3FmTYLdS8JeXngrRTC9wFpZ9C87UwlxNlAMaAjGLQjg
-         jK0n/PQuKEd8BI3VPOm6hHjQURYZkM85CriCmVPrctVBQoUFIso6REnoBh6V6+3VlOiG
-         2gZo7d5n34ImfUXzA/z6dgBkXiZeKvf8E+sAsHsaE+DMMz4cusWNJEwJUXNKWsWjJVGd
-         CGgA==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=075YDg5yJP6px+v3WCl0b/BidGO1b99Y2pizc25K5VY=;
+        b=qVdPop57DzQ6AFYUxNpyRS1vCir32nn+P4AsiC7/M4Afo+svMta2Diqq49SjdpdMpH
+         xP6b3xYmDVAJKmGm0jTZlLxWiJlb/9WsPH5dblGoLUQhIQPI7cYiB1K5XZP3LbcwsvQI
+         knhtpuKG5HcHgTP28bBe25vscsDKZcz8jWEf4VcvS10xKJd8penTuhpy4mGOana+SUiS
+         0gNsITuFGFEuyhdxZlDbRP+nJkjj19XnRUsQkXjP5b0LVKkEj0H7RrUA41tCYRvBnaxq
+         hnE8dW23FEgnuknQ4GjnHSj3uHtRZM+W0KT9CKYDRlPewJmRfG1mNYM2bBB9aTa26pQu
+         kUcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zZJQo1qop/RRKdSeyM30Kku2Dgy7rGNMMDgsSxFQOSs=;
-        b=m5Ylw9yT73SHIRJSHECwwRKB6d944GhqudxT3uDzx5VY8NWw+lvoTeFYcNLoPBvPML
-         +RgJUzreP9dEUI8XTAsLIIP7jIM2mJOs5BAzUsV2lG22aBsWrt4BXU9RsLuQLf9A4Imz
-         pXdcPYLi9bQkGpFRCRVvHF3rQ2rPiDV2rVAR3gf4yKdq6J8iNIW8lUpnoueslgb5mH95
-         V4NfRuXmYJLzdQpxEPrGgEB/s8G4xKZRW1pXzaXeqKRJOT7dNftG/gcbPfWCnAdgjr1l
-         8XMDHg7cAz/o54pJUKSH/P905CIvhXut/j3myh6WixGLTxak7EHJkJyijkzNEQXQ3yzc
-         fAXQ==
-X-Gm-Message-State: AG10YOS6AZYne8NoeSOV9CO9YP1FLU5+9eRPxZI7AJDwc6iWR91/S8g+9wt3EYbkPCrm4w==
-X-Received: by 10.98.75.79 with SMTP id y76mr21290248pfa.147.1456053205225;
-        Sun, 21 Feb 2016 03:13:25 -0800 (PST)
-Received: from localhost.localdomain ([106.51.19.158])
-        by smtp.googlemail.com with ESMTPSA id l62sm29519620pfj.7.2016.02.21.03.13.23
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 21 Feb 2016 03:13:24 -0800 (PST)
-X-Mailer: git-send-email 2.7.1.339.g0233b80
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=075YDg5yJP6px+v3WCl0b/BidGO1b99Y2pizc25K5VY=;
+        b=HwuH9u2WadlkB9ox+Ys2X8m04A/o7qCK3LfaE/WBQ2XM+ryNkoI+xmKV9djxKH8XBZ
+         4sfIyGSq+AVI3OpRYeXQpanUAmMDbCLyptIjsPV9ygqpJqcRSJOQZec+NEvCkdO4PtEJ
+         K6MsMRovoadobXqF76vYNGJLdXC0AK1i97tBpHqpdhcNqGOMqNG3qnXsVrs+k/xQECs9
+         QzhACKC5pDwSQT37YZh4WP/fZ2qqe6zKkrciLdzh8SNOfoyNx5bGmti/ZHXNyfcwwk/n
+         7z2eWBgElMgjH8BmmCFZZa/Wi81u+c+f0NiN6ah9i/3i7gcDGjn3+jA0YRQCgPO5526H
+         4WvA==
+X-Gm-Message-State: AG10YOTkB/R0CniYFT1Te55wudkIIZ4fs3f91xCVO8wJ3iVJlcCtjytdRIMY6xv4uVJk6Yx7XUMg5J9cq93OpQ==
+X-Received: by 10.31.8.142 with SMTP id 136mr63407vki.14.1456080026179; Sun,
+ 21 Feb 2016 10:40:26 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 10:40:26 -0800 (PST)
+In-Reply-To: <1456067358-19781-6-git-send-email-felipegassis@gmail.com>
+X-Google-Sender-Auth: r4G9_bBhbgEHwrC-N_yNIbWh-5g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286823>
 
-This is patch is for a suggested micro project for GSoC 2016; namely,
-that of searching for a field of a struct that is of signed integral
-type and used as a collection of multiple bits, and converting it to
-an unsigned type if the MSB isn=E2=80=99t used in any special way.
+On Sun, Feb 21, 2016 at 10:09 AM, Felipe Gon=C3=A7alves Assis
+<felipeg.assis@gmail.com> wrote:
+> merge-recursive: test more consistent interface
 
-Two structs, `pattern` defined in attr.c and `exclude` defined in dir.h=
-,
-have a `flags` field of signed int type. The fields of both structs tak=
-e
-on values from the same set of positive integers {1, 4, 8, 16},
-enumerated through the marco EXC_FLAG_*. `pattern` is used only in attr=
-=2Ec,
-and `exclude` is used only in builtin/check-ignore.c and dir.c, and in
-those files, either, the value of `flags` is checked using the `&` oper=
-ator
-(e.g.: flags & EXC_FLAG_NODIR), or the value of `flags` is first set to=
- 0
-and then set to any one of {1, 4, 8, 16} using the `|=3D` operator
-(e.g.: flags |=3D EXC_FLAG_NODIR). And, so it does not appear that the =
-MSB
-of `flags` is used in any special way. Therefore, I thought to change t=
-he
-type of `flags` in the definitions of both structs to `unsigned int`.
+The real meat of this patch (it seems) is that you're adding tests to
+verify that --find-renames=3D and --rename-threshold=3D are aliases, so=
+ it
+might make sense for the summary line to state that.
 
-=46urthermore, `flags` is passed by reference (of `pattern` in attr.c a=
-nd of
-`exclude` in dir.c) to the function `parse_exclude_pattern` defined in
-dir.c, that accepts an `int *` type for `flags`. When make was run, it =
-gave
-a warning for =E2=80=98converting between pointers to integer types of =
-different
-sign=E2=80=99, so I changed the type of that respective argument to `un=
-signed int *`.
+    t3034: test that --find-renames=3D and --rename-threshold=3D are al=
+iases
 
-In the end, running make to build didn=E2=80=99t produce any more warni=
-ngs, and
-running make in t/ didn=E2=80=99t produce any breakage that wasn=E2=80=99=
-t =E2=80=98#TODO known
-breakage=E2=80=99.
+> Update basic tests to use the new option find-renames instead of
+> rename-threshold. Add tests to verify that rename-threshold=3D<n> beh=
+aves
+> as a synonym for find-renames=3D<n>. Test that find-renames resets
+> threshold.
 
-I also thought it=E2=80=99d be helpful to add the comment /* EXC_FLAG_*=
- */ next
-to `flags` of `exclude`, just like it exists for `flags` of `pattern`.
+Likewise, the order of these sentences seems wrong. The important bit
+should be mentioned first, which is that the one is an alias for the
+other.
 
-Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
----
- attr.c | 2 +-
- dir.c  | 4 ++--
- dir.h  | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+(In fact, if you take advice given below in the actual patch content,
+then this paragraph can probably be dropped altogether since the other
+two bits don't really belong in this patch.)
 
-diff --git a/attr.c b/attr.c
-index 086c08d..874f726 100644
---- a/attr.c
-+++ b/attr.c
-@@ -124,7 +124,7 @@ struct pattern {
- 	const char *pattern;
- 	int patternlen;
- 	int nowildcardlen;
--	int flags;		/* EXC_FLAG_* */
-+	unsigned int flags;		/* EXC_FLAG_* */
- };
-=20
- /*
-diff --git a/dir.c b/dir.c
-index f0b6d0a..2d657e1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -457,7 +457,7 @@ int no_wildcard(const char *string)
-=20
- void parse_exclude_pattern(const char **pattern,
- 			   int *patternlen,
--			   int *flags,
-+			   unsigned int *flags,
- 			   int *nowildcardlen)
- {
- 	const char *p =3D *pattern;
-@@ -498,7 +498,7 @@ void add_exclude(const char *string, const char *ba=
-se,
- {
- 	struct exclude *x;
- 	int patternlen;
--	int flags;
-+	unsigned int flags;
- 	int nowildcardlen;
-=20
- 	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
-diff --git a/dir.h b/dir.h
-index cd46f30..6d205f0 100644
---- a/dir.h
-+++ b/dir.h
-@@ -27,7 +27,7 @@ struct exclude {
- 	int nowildcardlen;
- 	const char *base;
- 	int baselen;
--	int flags;
-+	unsigned int flags;		/* EXC_FLAG_* */
-=20
- 	/*
- 	 * Counting starts from 1 for line numbers in ignore files,
-@@ -241,7 +241,7 @@ extern struct exclude_list *add_exclude_list(struct=
- dir_struct *dir,
- extern int add_excludes_from_file_to_list(const char *fname, const cha=
-r *base, int baselen,
- 					  struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fn=
-ame);
--extern void parse_exclude_pattern(const char **string, int *patternlen=
-, int *flags, int *nowildcardlen);
-+extern void parse_exclude_pattern(const char **string, int *patternlen=
-, unsigned int *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
- extern void clear_exclude_list(struct exclude_list *el);
---=20
-2.7.1.339.g0233b80
+> Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
+> ---
+> diff --git a/t/t3034-merge-recursive-rename-options.sh b/t/t3034-merg=
+e-recursive-rename-options.sh
+> @@ -115,25 +115,25 @@ test_expect_success 'the default similarity ind=
+ex is 50%' '
+>
+>  test_expect_success 'low rename threshold' '
+>         git read-tree --reset -u HEAD &&
+> -       test_must_fail git merge-recursive --rename-threshold=3D25 HE=
+AD^ -- HEAD master &&
+> +       test_must_fail git merge-recursive --find-renames=3D25 HEAD^ =
+-- HEAD master &&
+
+Since you're building this series atop 10ae752 (merge-recursive:
+option to specify rename threshold, 2010-09-27) in 'next', the
+--find-renames=3D option already exists, so these tests, which were
+added in 3/5, can instead use --find-renames=3D from the start, thus
+making this patch (5/5) much less noisy since this change and several
+below will disappear altogether.
+
+Taking the above and review comments from earlier patches into
+account, it might make sense to re-order the series as follows:
+
+1/5: add --find-renames & --find-renames=3D tests (including "last wins=
+")
+2/5: add --find-renames=3D / --rename-threshold=3D aliases tests
+3/5: add --no-renames tests (including "last wins")
+4/5: fix --find-renames to reset threshold to default (including test)
+5/5: fix merge-strategies.txt typo
+
+The position of the typo fix patch isn't significant; I just
+arbitrarily plopped it at the end. Also, the order of patches 2 & 3 is
+arbitrary.
+
+More below...
+
+>         check_find_renames_25
+>  '
+>
+>  test_expect_success 'high rename threshold' '
+>         git read-tree --reset -u HEAD &&
+> -       test_must_fail git merge-recursive --rename-threshold=3D75 HE=
+AD^ -- HEAD master &&
+> +       test_must_fail git merge-recursive --find-renames=3D75 HEAD^ =
+-- HEAD master &&
+>         check_find_renames_75
+>  '
+>
+>  test_expect_success 'exact renames only' '
+>         git read-tree --reset -u HEAD &&
+> -       test_must_fail git merge-recursive --rename-threshold=3D100% =
+HEAD^ -- HEAD master &&
+> +       test_must_fail git merge-recursive --find-renames=3D100% HEAD=
+^ -- HEAD master &&
+>         check_find_renames_100
+>  '
+>
+>  test_expect_success 'rename threshold is truncated' '
+>         git read-tree --reset -u HEAD &&
+> -       test_must_fail git merge-recursive --rename-threshold=3D200% =
+HEAD^ -- HEAD master &&
+> +       test_must_fail git merge-recursive --find-renames=3D200% HEAD=
+^ -- HEAD master &&
+>         check_find_renames_100
+>  '
+>
+> @@ -143,12 +143,36 @@ test_expect_success 'disabled rename detection'=
+ '
+>         check_no_renames
+>  '
+>
+> -test_expect_success 'last wins in --rename-threshold=3D<m> --rename-=
+threshold=3D<n>' '
+> +test_expect_success 'last wins in --find-renames=3D<m> --find-rename=
+s=3D<n>' '
+>         git read-tree --reset -u HEAD &&
+> -       test_must_fail git merge-recursive --rename-threshold=3D25 --=
+rename-threshold=3D75 HEAD^ -- HEAD master &&
+> +       test_must_fail git merge-recursive --find-renames=3D25 --find=
+-renames=3D75 HEAD^ -- HEAD master &&
+>         check_find_renames_75
+>  '
+>
+> +test_expect_success '--find-renames resets threshold' '
+> +       git read-tree --reset -u HEAD &&
+> +       test_must_fail git merge-recursive --find-renames=3D25 --find=
+-renames HEAD^ -- HEAD master &&
+> +       check_find_renames_50
+> +'
+
+As mentioned in my review of patch 1/5, this test really ought to be
+bundled with that patch.
+
+> +test_expect_success 'last wins in --no-renames --find-renames' '
+> +       git read-tree --reset -u HEAD &&
+> +       test_must_fail git merge-recursive --no-renames --find-rename=
+s HEAD^ -- HEAD master &&
+> +       check_find_renames_50
+> +'
+> +
+> +test_expect_success 'last wins in --find-renames --no-renames' '
+> +       git read-tree --reset -u HEAD &&
+> +       git merge-recursive --find-renames --no-renames HEAD^ -- HEAD=
+ master &&
+> +       check_no_renames
+> +'
+> +
+> +test_expect_success 'rename-threshold=3D<n> is a synonym for find-re=
+names=3D<n>' '
+> +       git read-tree --reset -u HEAD &&
+> +       test_must_fail git merge-recursive --rename-threshold=3D25 HE=
+AD^ -- HEAD master &&
+> +       check_find_renames_25
+> +'
+
+I rather expected to see this test come first, as all the others are
+rather subordinate to it.
+
+>  test_expect_success 'last wins in --no-renames --rename-threshold=3D=
+<n>' '
+>         git read-tree --reset -u HEAD &&
+>         test_must_fail git merge-recursive --no-renames --rename-thre=
+shold=3D25 HEAD^ -- HEAD master &&
+> @@ -161,4 +185,16 @@ test_expect_success 'last wins in --rename-thres=
+hold=3D<n> --no-renames' '
+>         check_no_renames
+>  '
+>
+> +test_expect_success 'last wins in --rename-threshold=3D<n> --find-re=
+names' '
+> +       git read-tree --reset -u HEAD &&
+> +       test_must_fail git merge-recursive --rename-threshold=3D25 --=
+find-renames HEAD^ -- HEAD master &&
+> +       check_find_renames_50
+> +'
+> +
+> +test_expect_success 'last wins in --find-renames --rename-threshold=3D=
+<n>' '
+> +       git read-tree --reset -u HEAD &&
+> +       test_must_fail git merge-recursive --find-renames --rename-th=
+reshold=3D25 HEAD^ -- HEAD master &&
+> +       check_find_renames_25
+> +'
+> +
+>  test_done
