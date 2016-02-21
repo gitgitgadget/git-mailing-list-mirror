@@ -1,9 +1,8 @@
 From: "=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?=" 
 	<felipeg.assis@gmail.com>
-Subject: [PATCH 3/5] merge-recursive: test rename threshold option
-Date: Sun, 21 Feb 2016 12:09:16 -0300
-Message-ID: <1456067358-19781-4-git-send-email-felipegassis@gmail.com>
-References: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
+Subject: [PATCH 0/5] Tests and fixes for merge-recursive rename options
+Date: Sun, 21 Feb 2016 12:09:13 -0300
+Message-ID: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,230 +11,93 @@ Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
 	=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= 
 	<felipegassis@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 21 18:53:42 2016
+X-From: git-owner@vger.kernel.org Sun Feb 21 18:53:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXYCT-00007h-Ut
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:53:42 +0100
+	id 1aXYCY-0000CN-9M
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361AbcBURxh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 12:53:37 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:34450 "EHLO
-	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122AbcBURxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 12:53:35 -0500
-Received: by mail-qk0-f169.google.com with SMTP id x1so48620338qkc.1
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 09:53:34 -0800 (PST)
+	id S1751506AbcBURxm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 12:53:42 -0500
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:35047 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbcBURxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 12:53:41 -0500
+Received: by mail-qg0-f52.google.com with SMTP id y89so96934006qge.2
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 09:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ooQrzn9SmH4vOIeA1mgCLeh+hgika3LPegDPfofaDP8=;
-        b=S4JQKtbYHX69lIDVosPYUZbIpfnjMD7FPs53p+8ZFTPwSeywTJNkpZoJeuLAyuym8O
-         KkHroM7KPfL3WyaulYkFLBNaR6gxS78JIWxv0fnCeZPtjxvVS5UEWCUKj+LM+WuoFdQC
-         gMSGb67JcimMwTlGshdmudh7ILMhXhwSkiurIeHILmCb2lhnzPuomJOn3AnEHNUxthz8
-         kktRrrVwNWL/o51vzCKOSeQB1DbfpsMtRgASYFabaozB48xeHFirmIhDS0ucPToOSilN
-         5qdDaoZPAqqSkJJQzVq3bVtwCGCgB57wwVee235HnngNpo4K9WmPcW9JMbQkrqfOOYRr
-         5lRg==
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=WQsuIBggWO2Gc/tQMXh8LYF+eg6WJpzUGlcMXtt6R3o=;
+        b=zadV60VV/4cqiTQnQa5B/8el3c/pKcR2xeyJFZzbjZa0bnWuJ/AiOnshR/p31VWqGo
+         nqfI9xL65lzuVhlkF2GaYTk4cO+sRrRHieUZo7POn7OTkzaKP1Gl3UJ2yMoFxsWVx8Km
+         8APzg5kM7VI47bjQy+QiwXcKvM+Ff8YMgLRJESRrZ97dzds7w1YT6yLbkRIxEMRkAPKQ
+         FdXIcLpG1P19HLOTrBl7LiKIvvnpquLhFmNh35ewASq1rRO0FWN2ZtJ9uLsGB8fYrqUh
+         0jrEiyUZszx4QBtVWZVeBhR9mpI6mcLx2dr0dHkm2ilW9vh1kV48mZ0k03FNJP4JTEex
+         qLHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=ooQrzn9SmH4vOIeA1mgCLeh+hgika3LPegDPfofaDP8=;
-        b=KwH7ZdG61yc2QnMvTy9YozzM7x/pQwT0zg+apwbXUge/lFTZP8FZgwNgv4HPnxLZmt
-         73V8pGfnze6PpttTwk4541AUUjEQ4xf+WBYNqKQp5U3CfEKhZqDMvonr36INMqxpoAlJ
-         Sh5NKwz0YJZyWv3EnAyJP9SGVn+UgNWGENBKJ5i1nw4AdRbRTF6NIXIwRjlBDb0xxdJe
-         Rmkm7gvSLbb6EV2FHh7NddJ024N47mYNB4kN/t/5uN0624MxVSRvvICTs4k4jxV+/jH8
-         oIckZwVy4NVUVifyeX24e5HwdGEe0Zs75anmqK7XIGai3GGUJgyYNig1zTQOBouBNqtY
-         FhRQ==
-X-Gm-Message-State: AG10YOTuMA5mzAgUuR1TplBLp9BFfNwc4u9vGLhPj/avfA6wJ9YV57a0iIhuXRpAh49pRw==
-X-Received: by 10.55.71.195 with SMTP id u186mr28776909qka.38.1456067473387;
-        Sun, 21 Feb 2016 07:11:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=WQsuIBggWO2Gc/tQMXh8LYF+eg6WJpzUGlcMXtt6R3o=;
+        b=nM/jSAltfECNIvbYIvUw63SRGvlkPDGByRI5SQym6bUpYFsWefnPlej0NRXa7LqxHr
+         Qx6/Gorej7l/LHiAbjdRtg3tSbtZVRukNWY+tkfNdKRFiSmn73fNeVmUVgXKWHkpwq+O
+         gkpXNaMYk71SjaRhWKcj+eg0NivowAUwrpyHDfl7L0GNuEofYglV2SQABZ4dCd1e689E
+         zI8PD1eMdOsJBrtBkFvjkViqyfUEQXK+O/BmpePwS+ID3c30WlRqW+BwLecx7UZ41ier
+         nsUDqbP3dEEtkr/FGqo2bXmjyoObWkuqSmYUZOBEWFVusTLrNdhO+Nhp/ZqWNnN+tprK
+         QbnQ==
+X-Gm-Message-State: AG10YOT7BWKpxioN/cbwOKOb+LJR6oZlZ2S8e0RXKUxPswyAefv/kwmsso4LAeQahbtL5w==
+X-Received: by 10.140.20.82 with SMTP id 76mr29178325qgi.5.1456067464737;
+        Sun, 21 Feb 2016 07:11:04 -0800 (PST)
 Received: from traveller.moon ([177.94.146.172])
-        by smtp.gmail.com with ESMTPSA id o203sm8467389qho.15.2016.02.21.07.11.11
+        by smtp.gmail.com with ESMTPSA id o203sm8467389qho.15.2016.02.21.07.11.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Feb 2016 07:11:12 -0800 (PST)
+        Sun, 21 Feb 2016 07:11:04 -0800 (PST)
 X-Google-Original-From: =?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= <felipegassis@gmail.com>
 X-Mailer: git-send-email 2.7.1.492.gc9722f8
-In-Reply-To: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286813>
 
-Commit 10ae7526bebb505ddddba01f76ec97d5f7b5e0e5 introduced this feature=
-,
-but did not include any tests. This commit fixes this.
+This builds on the work in 1b47ad160b55f50a7a98c180e18d80f0f8f17a67
+(merge-recursive: more consistent interface, 2016-02-17).
 
-Signed-off-by: Felipe Gon=C3=A7alves Assis <felipegassis@gmail.com>
----
- t/t3034-merge-recursive-rename-threshold.sh | 146 ++++++++++++++++++++=
+Add tests for the merge-recursive rename options, as suggested by Eric =
+Sunshine.
+Also fixes an inconsistency in the behaviour of find-renames and a typo=
+=2E
+
+The first two commits contain fixes.
+
+The tests were divided in the latter three, reproducing the chronologic=
+al
+history of the features:
+  3. --rename-threshold only
+  4. --rename-threshold and --no-renames
+  5. --find-renames, --no-renames and deprecated --rename-threshold
+
+=46elipe Gon=C3=A7alves Assis (5):
+  merge-recursive: find-renames resets threshold
+  merge-strategies.txt: fix typo
+  merge-recursive: test rename threshold option
+  merge-recursive: test option to disable renames
+  merge-recursive: test more consistent interface
+
+ Documentation/merge-strategies.txt                 |   4 +-
+ merge-recursive.c                                  |   4 +-
+ ...s.sh =3D> t3032-merge-recursive-space-options.sh} |   2 +-
+ t/t3034-merge-recursive-rename-options.sh          | 200 +++++++++++++=
 ++++++++
- 1 file changed, 146 insertions(+)
- create mode 100755 t/t3034-merge-recursive-rename-threshold.sh
+ 4 files changed, 206 insertions(+), 4 deletions(-)
+ rename t/{t3032-merge-recursive-options.sh =3D> t3032-merge-recursive-=
+space-options.sh} (99%)
+ create mode 100755 t/t3034-merge-recursive-rename-options.sh
 
-diff --git a/t/t3034-merge-recursive-rename-threshold.sh b/t/t3034-merg=
-e-recursive-rename-threshold.sh
-new file mode 100755
-index 0000000..f0b3f44
---- /dev/null
-+++ b/t/t3034-merge-recursive-rename-threshold.sh
-@@ -0,0 +1,146 @@
-+#!/bin/sh
-+
-+test_description=3D'merge-recursive rename threshold option
-+
-+Test rename detection by examining rename/delete conflicts.
-+
-+Similarity index:
-+R100 a-old a-new
-+R075 b-old b-new
-+R050 c-old c-new
-+R025 d-old d-new
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	get_expected_stages () {
-+		git checkout rename -- $1-new &&
-+		git ls-files --stage $1-new > expected-stages-undetected-$1
-+		sed "s/ 0	/ 2	/
-+		" < expected-stages-undetected-$1 > expected-stages-detected-$1
-+		git read-tree -u --reset HEAD
-+	} &&
-+
-+	rename_detected () {
-+		git ls-files --stage $1-old $1-new > stages-actual-$1 &&
-+		test_cmp expected-stages-detected-$1 stages-actual-$1
-+	} &&
-+
-+	rename_undetected () {
-+		git ls-files --stage $1-old $1-new > stages-actual-$1 &&
-+		test_cmp expected-stages-undetected-$1 stages-actual-$1
-+	} &&
-+
-+	check_common () {
-+		git ls-files --stage > stages-actual &&
-+		test $(wc -l < stages-actual) -eq 4
-+	} &&
-+
-+	check_find_renames_25 () {
-+		check_common &&
-+		rename_detected a &&
-+		rename_detected b &&
-+		rename_detected c &&
-+		rename_detected d
-+	} &&
-+
-+	check_find_renames_50 () {
-+		check_common
-+		rename_detected a &&
-+		rename_detected b &&
-+		rename_detected c &&
-+		rename_undetected d
-+	} &&
-+
-+	check_find_renames_75 () {
-+		check_common
-+		rename_detected a &&
-+		rename_detected b &&
-+		rename_undetected c &&
-+		rename_undetected d
-+	} &&
-+
-+	check_find_renames_100 () {
-+		check_common
-+		rename_detected a &&
-+		rename_undetected b &&
-+		rename_undetected c &&
-+		rename_undetected d
-+	} &&
-+
-+	check_no_renames () {
-+		check_common
-+		rename_undetected a &&
-+		rename_undetected b &&
-+		rename_undetected c &&
-+		rename_undetected d
-+	} &&
-+
-+	cat <<-\EOF > a-old &&
-+	aa1
-+	aa2
-+	aa3
-+	aa4
-+	EOF
-+	sed s/aa/bb/ < a-old > b-old &&
-+	sed s/aa/cc/ < a-old > c-old &&
-+	sed s/aa/dd/ < a-old > d-old &&
-+	git add [a-d]-old &&
-+	test_tick &&
-+	git commit -m base &&
-+	git rm [a-d]-old &&
-+	test_tick &&
-+	git commit -m delete &&
-+	git checkout -b rename HEAD^ &&
-+	cp a-old a-new &&
-+	sed 1,1s/./x/ < b-old > b-new &&
-+	sed 1,2s/./x/ < c-old > c-new &&
-+	sed 1,3s/./x/ < d-old > d-new &&
-+	git add [a-d]-new &&
-+	git rm [a-d]-old &&
-+	test_tick &&
-+	git commit -m rename &&
-+	get_expected_stages a &&
-+	get_expected_stages b &&
-+	get_expected_stages c &&
-+	get_expected_stages d
-+'
-+
-+test_expect_success 'the default similarity index is 50%' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive HEAD^ -- HEAD master &&
-+	check_find_renames_50
-+'
-+
-+test_expect_success 'low rename threshold' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive --rename-threshold=3D25 HEAD^ -- H=
-EAD master &&
-+	check_find_renames_25
-+'
-+
-+test_expect_success 'high rename threshold' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive --rename-threshold=3D75 HEAD^ -- H=
-EAD master &&
-+	check_find_renames_75
-+'
-+
-+test_expect_success 'exact renames only' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive --rename-threshold=3D100% HEAD^ --=
- HEAD master &&
-+	check_find_renames_100
-+'
-+
-+test_expect_success 'rename threshold is truncated' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive --rename-threshold=3D200% HEAD^ --=
- HEAD master &&
-+	check_find_renames_100
-+'
-+
-+test_expect_success 'last wins in --rename-threshold=3D<m> --rename-th=
-reshold=3D<n>' '
-+	git read-tree --reset -u HEAD &&
-+	test_must_fail git merge-recursive --rename-threshold=3D25 --rename-t=
-hreshold=3D75 HEAD^ -- HEAD master &&
-+	check_find_renames_75
-+'
-+
-+test_done
 --=20
 2.7.1.492.gc9722f8
