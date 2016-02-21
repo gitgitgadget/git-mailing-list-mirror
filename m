@@ -1,112 +1,132 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Sun, 21 Feb 2016 21:34:18 +0530
-Message-ID: <CA+DCAeQWeUodaBtHOdzGB3RTZTQ672ZUSV-=eh-nA+8Bvn4gxw@mail.gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
-	<vpq37so26oz.fsf@anie.imag.fr>
-	<CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
-	<CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
-	<CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
-	<vpq8u2er7ae.fsf@anie.imag.fr>
+From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+Subject: Re: [PULL] svn pathnameencoding for git svn dcommit
+Date: Sun, 21 Feb 2016 22:12:23 +0900
+Message-ID: <56C9B7B7.7030406@f2.dion.ne.jp>
+References: <56B8B1EA.5020901@f2.dion.ne.jp>
+ <20160208225806.GA3487@dcvr.yhbt.net> <20160215005210.GA31141@dcvr.yhbt.net>
+ <56C297A9.2080705@f2.dion.ne.jp> <20160216063357.GA17455@dcvr.yhbt.net>
+ <56C34BFF.3030301@f2.dion.ne.jp> <20160220233743.GA28606@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Feb 21 18:56:52 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	alex.crezoff@gmail.com
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Feb 21 18:56:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXYFU-0003Jc-Vq
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:56:49 +0100
+	id 1aXYFZ-0003QH-Hm
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 18:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681AbcBUR4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2016 12:56:46 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:33978 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832AbcBUR4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 12:56:45 -0500
-Received: by mail-qk0-f175.google.com with SMTP id x1so48635304qkc.1
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 09:56:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YbqQYaksNV017dXMb+PU9tVyIPlKedcuoD1i7wd6H6A=;
-        b=NAV1mvjcdsnqhWsxpE46yZtEN9zj35zxVkHXbc2BvNKozd0HT6YTibxKMIcSmdVooY
-         Siq2mP0ie9+pApWhBg+Izi0Z78cdDmxrdS5u22HJuLAQRseeRN73DYRx6t51GFRU7WlH
-         tZe6gBKoSqrTwzZgHhgUtaijqn6MhT6RPWbnEx7/EHKif1F+9M1OLrvU+D4pLBjY3aRM
-         Fme9yeKMDpm2rPyyOHJjCETKsEBVFlzCzZ3XfdMakhPNUqqed6OkPH9vzoyFG7YT6f5O
-         eJoeY6TdE3tarNDJHF2ZbOl3i9nUI/2Ab6BngfaeSu+2Utgskte0aK9pYN0SJGkGuGtI
-         nIhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=YbqQYaksNV017dXMb+PU9tVyIPlKedcuoD1i7wd6H6A=;
-        b=M5emyViNhF5snkrSdxwYUi2fVZ3F1nmHZZYEHPlPg7AxjHsi+c7oKcyLxiobVDKw9X
-         Xw8jbXpWF55amFmFHzGImgXX+bYyo7gC2lsGvLtIb0j9EpljKAnL9p3FDnKQXG2vUrxT
-         fYBcuROsVrHZJIN3LHzwXKKs1qUYVQJch6f/dUIgrnQ+8AOM9i7iQB5vv8sXckdkFHLl
-         lOwHhgWwLaLkSwsRWg6npC0P31xYWdYY7VW+15zrGWnVKh3By4/iX2VtqBkDZro3tFkT
-         t1cXUIINB+DkgJGgA4JQGYosjsB+RdhAb3BSsd28H79DGaNPKQFookKKhEgQd2Y1OsQw
-         8fcA==
-X-Gm-Message-State: AG10YORrK6PG/C5lCTFHbKNspxqRO9cyGcKpjv+RNXN7vcPRWlade0fnbXcjmZb12Im49UIrQ3rjkdeodhIKfg==
-X-Received: by 10.55.217.151 with SMTP id q23mr10414627qkl.88.1456070659032;
- Sun, 21 Feb 2016 08:04:19 -0800 (PST)
-Received: by 10.55.154.205 with HTTP; Sun, 21 Feb 2016 08:04:18 -0800 (PST)
-In-Reply-To: <vpq8u2er7ae.fsf@anie.imag.fr>
+	id S1751433AbcBUR42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2016 12:56:28 -0500
+Received: from mail-ae1-f9.auone-net.jp ([106.187.231.9]:46038 "EHLO
+	dmta01.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751270AbcBUR41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 12:56:27 -0500
+Received: from amlmta051.auone-net.jp (amlmta051-MM [10.188.23.102])
+	by dmta01.auone-net.jp (au one net mail) with ESMTP id DB6C656032F
+	for <git@vger.kernel.org>; Sun, 21 Feb 2016 22:12:30 +0900 (JST)
+Received: from [0.0.0.0] ([197.231.221.211])
+	by amlmta051.auone-net.jp id 56c9b7ba000689450000576100002efae0000761ff7e;
+	Sun, 21 Feb 2016 22:12:26 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160220233743.GA28606@dcvr.yhbt.net>
+X-MXM-DELIVERY-TYPE: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286815>
 
-On Sun, Feb 21, 2016 at 10:25 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Please, don't top-post on this list.
+On 2016/02/21 8:37 +0900, Eric Wong wrote:
+> Kazutoshi Satoda <k_satoda@f2.dion.ne.jp> wrote:
+...
+>> Setting LC_ALL=C.UTF-8 in the test 11-12 made them pass on Cygwin.
+>> Same change made the previous version also pass. Please find the patch
+>> in the attached output of git format-patch.
+> 
+> Thanks.  However, I also wonder what happens on machines without
+> "C.UTF-8" support (are there still any?).
+> 
+>> Could you please test with this on non-Cygwin environment?
+> 
+> Works for me, at least.  I've squashed your changes into the two
+> patches already queued up.  I needed to split the
+> "export LC_ALL=C.UTF-8" statement into
+> "LC_ALL=C.UTF-8 && export LC_ALL" for portability.
 
-I apologize for top-posting on the list.
+Thank you.
 
-> Are you sure that 1) you have no uncommitted change and 2) you have
-> compiled what you have in your tree?
+>> If it made no harm, please tell me what should I do to proceed this patch.
+>> Will you (Eric) please make further integration? Shall I make another
+>> series (v2) of patches?
+> 
+> I've pushed out a new branch with your LC_ALL changes squashed
+> in.  However I'm unsure if there's any new portability problems
+> with LC_ALL=C.UTF-8...
+> 
+> Junio or anyone else: thoughts?
 
-1) Yes, I have no uncommited change in the branch(master).
-2) Yes, I compiled before testing.
+The test passed on my environment.
 
-Earlier when I was testing the master branch on my pc, I used "make"
-in \t directory, which lead to failure of test #2, #3 in
-t5539-fetch-http-shallow.sh .
-Afterwards I switched to sudo mode and ran the make command again.
-This time all test of  t5539-fetch-http-shallow.sh passed, but test
-#32 of file t7300-clean.sh failed. To crosscheck, I ran " sudo sh
-./t7300-clean.sh -v --run='1-32' " which gave the following error
-message -
+I've searched use of LC_ALL values other than "C".
+It seems be the best to move the variable a_utf8_locale in t9129 to
+lib-git-svn.sh and use it also in t9115.
 
-Skipping repository baz/boo
-Skipping repository foo/
-Removing possible_sub1/
-Skipping repository repo/
-Skipping repository sub2/
-Removing to_clean/
-File possible_sub1/.git doesn't exist.
-not ok 32 - should avoid cleaning possible submodules
-#
-# rm -fr to_clean possible_sub1 &&
-# mkdir to_clean possible_sub1 &&
-# test_when_finished "rm -rf possible_sub*" &&
-# echo "gitdir: foo" >possible_sub1/.git &&
-# >possible_sub1/hello.world &&
-# chmod 0 possible_sub1/.git &&
-# >to_clean/should_clean.this &&
-# git clean -f -d &&
-# test_path_is_file possible_sub1/.git &&
-# test_path_is_file possible_sub1/hello.world &&
-# test_path_is_missing to_clean
-#
 
-I haven't made any commits/changes in the master branch. Can you
-please suggest where things are going wrong.
+t/Makefile:83
+> 	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=0 LC_ALL=en_US.UTF-8
 
-Thanks
-Mehul Jain
+Here, "en_US.UTF-8" is hard-coded. I think this is at least more
+problematic than hard-coding "C.UTF-8". Beside hard-coding, does this
+take effect while test-lib.sh does LC_ALL=C ?
+
+t/t9129-git-svn-i18n-commitencoding.sh:17
+> a_utf8_locale=$(locale -a | sed -n '/\.[uU][tT][fF]-*8$/{
+> 	p
+> 	q
+> }')
+>
+> if test -n "$a_utf8_locale"
+> then
+> 	test_set_prereq UTF8
+> else
+> 	say "# UTF-8 locale not available, some tests are skipped"
+> fi
+
+Here, a UTF-8 locale is took from "locale -a", and the test is skipped
+if not found. This gives "a_utf8_locale=C.utf8" on my Cygwin
+environment. There was a record that says the difference of ".utf8" and
+".UTF-8" caused a failure.
+https://git.kernel.org/cgit/git/git.git/commit/?id=2de03ebe0635c93e182c3367140f999e79bdadcd
+
+t/lib-gettext.sh:17
+> 	# is_IS.UTF-8 on Solaris and FreeBSD, is_IS.utf8 on Debian
+> 	is_IS_locale=$(locale -a 2>/dev/null |
+> 		sed -n '/^is_IS\.[uU][tT][fF]-*8$/{
+> 		p
+> 		q
+> 	}')
+...
+> 	if test -n "$is_IS_locale" &&
+> 		test $GIT_INTERNAL_GETTEXT_SH_SCHEME != "fallthrough"
+> 	then
+> 		# Some of the tests need the reference Icelandic locale
+> 		test_set_prereq GETTEXT_LOCALE
+...
+> 	else
+> 		say "# lib-gettext: No is_IS UTF-8 locale available"
+> 	fi
+(the same logic is used for is_IS.ISO8859-1.)
+
+Here, a UTF-8 locale with hard coded "is_IS" is took from "locale -a",
+and the test is skipped if not found. This gives
+"is_IS_locale=is_IS.utf8.utf8" on my Cygwin environment.
+
+-- 
+k_satoda
