@@ -1,118 +1,127 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/5] merge-recursive: test rename threshold option
-Date: Sun, 21 Feb 2016 15:45:32 -0500
-Message-ID: <CAPig+cQ5h4hjOwO6-xXii6QQP0J8B_bHYUwWniR6HdQN2dB_1A@mail.gmail.com>
-References: <1456067358-19781-1-git-send-email-felipegassis@gmail.com>
-	<1456067358-19781-4-git-send-email-felipegassis@gmail.com>
-	<CAPig+cTpngfi6EF+MbD-fQ1nM_9TTeVZJ_fBviD5=4Q9uN-8aA@mail.gmail.com>
-	<CALMa68qhCBJ5MnT7i6UT989OKKzzOF_bTqo38thSPMwq0mbj6g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t8005: avoid grep on non-ASCII data
+Date: Sun, 21 Feb 2016 16:01:27 -0500
+Message-ID: <CAPig+cQ9n4Eg73Uyeg_g_4wzebuwn8=0R-LMb8F9QLFxanwVVg@mail.gmail.com>
+References: <20160219193310.GA1299@sigill.intra.peff.net>
+	<cover.1456075680.git.john@keeping.me.uk>
+	<81ec83acd004ef050a4c8df62fb158b41f0a0a80.1456075680.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipegassis@gmail.com>
-To: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 21 21:45:39 2016
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 21 22:01:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXass-00060l-Fo
-	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 21:45:38 +0100
+	id 1aXb8H-0003qH-Mq
+	for gcvg-git-2@plane.gmane.org; Sun, 21 Feb 2016 22:01:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbcBUUpf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Feb 2016 15:45:35 -0500
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:35496 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbcBUUpd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Feb 2016 15:45:33 -0500
-Received: by mail-vk0-f50.google.com with SMTP id e6so113777414vkh.2
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 12:45:33 -0800 (PST)
+	id S1752121AbcBUVB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2016 16:01:28 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:34947 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751373AbcBUVB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 16:01:28 -0500
+Received: by mail-vk0-f51.google.com with SMTP id e6so113932856vkh.2
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 13:01:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=xwJOzL5765cPXgMHRAP3nvdZdYRA1my1LBh1lERHxjM=;
-        b=LFVEv5fXqVXwALb946s9Uy1JzqYFRfysPBBqf8iQUEQC2EykoZKYknGSXsUbnUsS6x
-         qOkrDEvLmABC7hvPEZcGIwASTBBCuzbeRDq3PPN5voCOtFJCBKIkHPEbAh41khD9UZ0p
-         C1jC12M7zHdL8y+/i+AlWhKJnknGF7Ep3mA+XlXIjI55g5iFvDMzLX7jpyuIDVjO9Aqt
-         rMiLWNJauzK6sicoHqzMThgiPsFNjymJJdpqqKMl3hbsn/5dETxf60RRsuEA1/9ue9sp
-         ZdJOWUGmVDCdaNF4uqBN1dvXwq/VLL/jVd1bP2ILEYgNA9t30cxiDc6JKeA9ZG/yqGRS
-         Rwgg==
+         :from:to:cc:content-type;
+        bh=28jv7Cx1RGhD+qCsCpxs8iS9KTq9xXTbhnh77zlaBho=;
+        b=OxYrczDPsI2abEjIwmcEozkc60nueqyadWpF6Xp8+Se10qxd7KLNf99P0xV9VadXUz
+         MGjAQgLvrET31adMTvgvcUJjnNWhnc+xwt0S+fkvnBIRP24SSOwOXNWtiu7OoeSgYAUO
+         SjZOGWzb9GOOaJcCfCKML+1bK2aSRDJEzM72kAwsI1fHCzu0MkuqolsLvE+j9ElRTH6N
+         p5+dpKlyXD0z+4aag0I2rEhy+yzFP/Z/uhgWF86VsWMGKwwUouqZssjePDvCi+sypy82
+         L5geRHlR2poxZbAtvttt4cUDlAYsQnbXEQrlC7yb/uajqPUnxOQN0je8mxztAnCOYStp
+         tD3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xwJOzL5765cPXgMHRAP3nvdZdYRA1my1LBh1lERHxjM=;
-        b=DLGELAsQiqaxmMw0ibPn94ixNkWooLWFbNBFpyXdlnb/WNeY1zIilA8/eoEC3+hN+C
-         hO2P1YwxtWOjjDmBqhL3utxFA07parOhy9/llRLumQxRWVWJMTY8gr6irGS91Gu7YpI2
-         4sHeQiUE3XeZEyoUzcMfOKsRct/mZ2y0w8iNnXtaAIRxmu+eIkcph7Wd5dR85SNDmb5v
-         eQ5KE7O9wPyW9KO7jbdZtQqOaSyb8o3SdAvWelMNavUrFJYLJLjfM6su+YRr3GT79fFy
-         xQ7WLCFuwtbcPvqB7uhidW9CfdL958cR9qR/EtFg46/H03Gs/KAUsdjLC2OZd27gqIkm
-         Dcpw==
-X-Gm-Message-State: AG10YORxg+EFw5wopW1g3Kz/ZBmgnzwBnpmlX5Qln9RCFgSnhKmiYqf66REt83F/L16glln6yQ4+WqnHZQjIUg==
-X-Received: by 10.31.41.14 with SMTP id p14mr20433985vkp.151.1456087532667;
- Sun, 21 Feb 2016 12:45:32 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 12:45:32 -0800 (PST)
-In-Reply-To: <CALMa68qhCBJ5MnT7i6UT989OKKzzOF_bTqo38thSPMwq0mbj6g@mail.gmail.com>
-X-Google-Sender-Auth: FguleWFLYndPFCwfTG1-vbkq4jw
+         :message-id:subject:from:to:cc:content-type;
+        bh=28jv7Cx1RGhD+qCsCpxs8iS9KTq9xXTbhnh77zlaBho=;
+        b=gpZuGTtdcmFzeYM7ZiXZDifnlSyY1nEN1KpCN8htRMZ5daV6IXDKT2uxuMhFUU63Ye
+         WZFLPlXNypWUE4jdNGwqqclm7Lwdo1411Enu322s+eRmlk3Sr3yn9NF487FDODT3Vnsd
+         Q7Pr5WvZuKtj3G2c/be5X4Q0g7bUUbnXq42DzxAjYpxEaBbdRYePW2XalkYABpx8bB9a
+         BTjbMSaF9F8zlOlRYQFnDlG8qPPOQqpqvnGFd5c7osU0nZlhOL1vBfgGXktcLt01wtYg
+         FURl9RDHtKA36OHgIDHjCraPvZPWNzDl5Kdc9/11g9FKNA8SQHX/9vWpui7j97Mm3Rxw
+         K6HQ==
+X-Gm-Message-State: AG10YOQt3BTJiS8XrWRHslgl4JpHdjJromASSyFNwaKjL2xjlWRxZWbH2rKbW/W3QKCV14L9cdQlDDhVJEfBaQ==
+X-Received: by 10.31.146.2 with SMTP id u2mr17605159vkd.19.1456088487380; Sun,
+ 21 Feb 2016 13:01:27 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 13:01:27 -0800 (PST)
+In-Reply-To: <81ec83acd004ef050a4c8df62fb158b41f0a0a80.1456075680.git.john@keeping.me.uk>
+X-Google-Sender-Auth: GHKdZW_PlCguG95f1ppaZ6SmCWM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286830>
 
-On Sun, Feb 21, 2016 at 1:55 PM, Felipe Gon=C3=A7alves Assis
-<felipeg.assis@gmail.com> wrote:
-> On 21 February 2016 at 14:52, Eric Sunshine <sunshine@sunshineco.com>=
- wrote:
->> On Sun, Feb 21, 2016 at 10:09 AM, Felipe Gon=C3=A7alves Assis
->> <felipeg.assis@gmail.com> wrote:
->>> +test_expect_success 'rename threshold is truncated' '
->>> +       git read-tree --reset -u HEAD &&
->>> +       test_must_fail git merge-recursive --rename-threshold=3D200=
-% HEAD^ -- HEAD master &&
->>> +       check_find_renames_100
->>> +'
->>
->> Is this truncation documented behavior or is it just a detail of the
->> current implementation. (Genuine question; I haven't checked the
->> documentation or source.) If just an implementation detail, then it
->> might not be desirable to formalize it via a test.
+On Sun, Feb 21, 2016 at 12:32 PM, John Keeping <john@keeping.me.uk> wrote:
+> GNU grep 2.23 detects the input used in this test as binary data so it
+> does not work for extracting lines from a file.  We could add the "-a"
+> option to force grep to treat the input as text, but not all
+> implementations support that.  Instead, use sed to extract the desired
+> lines since it will always treat its input as text.
 >
-> Not documented. I will remove this. If you prefer to have it
-> documented and the test added back later, I can do that.
-
-Looking at the code itself and its history, this seems to be a
-deliberate decision, so the test may be appropriate, however, I defer
-to Junio's judgment.
-
->>> +test_expect_success 'last wins in --rename-threshold=3D<m> --renam=
-e-threshold=3D<n>' '
->>> +       git read-tree --reset -u HEAD &&
->>> +       test_must_fail git merge-recursive --rename-threshold=3D25 =
---rename-threshold=3D75 HEAD^ -- HEAD master &&
->>> +       check_find_renames_75
->>> +'
->>
->> Would it make sense to add tests checking that invalid
->> --rename-threshold=3D arguments, such as negative and non-numbers,
->> correctly error out?
+> While touching these lines, modernize the test style to avoid hiding the
+> exit status of "git blame" and remove a space following a redirection
+> operator.
 >
-> I guess so. Can I ask you for a suggestion on how to check this?
->
-> Given that merges here usually fail anyway because of the conflicts,
-> what is the best way of checking the effect of an argument rejection?
-> 1. Check that the merge fails but the index is not changed
-> 2. Check for a specific exit code
-> 3. Use another setup so that the merges succeed
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+> diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
+> @@ -35,8 +35,8 @@ EOF
+>  test_expect_success !MINGW \
+>         'blame respects i18n.commitencoding' '
+> -       git blame --incremental file | \
+> -               egrep "^(author|summary) " > actual &&
+> +       git blame --incremental file >output &&
+> +       sed -ne "/^\(author\|summary\) /p" output >actual &&
 
-The last option would be most straightforward, however, looking at
-diff.c:parse_rename_score(), I see that it never actually errors out
-(by returning -1), so you may not (presently) be able to test these
-cases. It seems (presently) that merge-recursive.c:parse_merge_opt()
-can only catch a usage error if nothing follows the '=3D'.
+These tests all crash and burn with BSD sed (including Mac OS X) since
+you're not restricting yourself to BRE (basic regular expressions).
+You _could_ request extended regular expressions, which do work on
+those platforms, as well as with GNU sed:
+
+    sed -nEe "/^(author|summary) /p" ...
+
+>         test_cmp actual expected
+>  '
+>
+> @@ -52,8 +52,8 @@ EOF
+>  test_expect_success !MINGW \
+>         'blame respects i18n.logoutputencoding' '
+>         git config i18n.logoutputencoding eucJP &&
+> -       git blame --incremental file | \
+> -               egrep "^(author|summary) " > actual &&
+> +       git blame --incremental file >output &&
+> +       sed -ne "/^\(author\|summary\) /p" output >actual &&
+>         test_cmp actual expected
+>  '
+>
+> @@ -68,8 +68,8 @@ EOF
+>
+>  test_expect_success !MINGW \
+>         'blame respects --encoding=UTF-8' '
+> -       git blame --incremental --encoding=UTF-8 file | \
+> -               egrep "^(author|summary) " > actual &&
+> +       git blame --incremental --encoding=UTF-8 file >output &&
+> +       sed -ne "/^\(author\|summary\) /p" output >actual &&
+>         test_cmp actual expected
+>  '
+>
+> @@ -84,8 +84,8 @@ EOF
+>
+>  test_expect_success !MINGW \
+>         'blame respects --encoding=none' '
+> -       git blame --incremental --encoding=none file | \
+> -               egrep "^(author|summary) " > actual &&
+> +       git blame --incremental --encoding=none file >output &&
+> +       sed -ne "/^\(author\|summary\) /p" output >actual &&
+>         test_cmp actual expected
+>  '
