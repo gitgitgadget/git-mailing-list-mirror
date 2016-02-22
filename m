@@ -1,104 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] Tests and fixes for merge-recursive rename options
-Date: Mon, 22 Feb 2016 13:00:25 -0800
-Message-ID: <xmqqpovo5ul2.fsf@gitster.mtv.corp.google.com>
-References: <1456095545-20201-1-git-send-email-felipegassis@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: A different bug in git-filter-branch (v2.7.0)
+Date: Mon, 22 Feb 2016 16:13:28 -0500
+Message-ID: <20160222211328.GA16512@sigill.intra.peff.net>
+References: <loom.20160128T153147-396@post.gmane.org>
+ <20160129061820.GB23106@sigill.intra.peff.net>
+ <n8gao5$3c6$1@ger.gmane.org>
+ <20160129231127.GA31798@sigill.intra.peff.net>
+ <n9b9tp$gbr$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	sunshine@sunshineco.com,
-	Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis 
-	<felipegassis@gmail.com>
-To: =?utf-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 22:00:35 2016
+Cc: git@vger.kernel.org
+To: Anatoly Borodin <anatoly.borodin@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 22:13:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXxas-00037x-AO
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 22:00:34 +0100
+	id 1aXxnh-0006uv-F4
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 22:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbcBVVA3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 16:00:29 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59338 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752199AbcBVVA2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 16:00:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4FBBB4754E;
-	Mon, 22 Feb 2016 16:00:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=X0IYMosWn6vi
-	0dljHsoAEj5u7c0=; b=EhOvhiaNnkPQHMoSo6Jg+0UR3ql2h1p4U0oJaODDqHN5
-	P8Kr995W/HQh91U9tUwNGRSDnA5/LWGjyb61SEZ6CR5SRM2ZGlN+uFxfMoP85mrK
-	0KNm8cLGC2OIPAw6WCnf1BTztJ+r8UdvLz9bCcDlnZrxeJ+KFC8kjV5oYzmk8vU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gDB2ew
-	LN0IHlMYCA4DQWiUWnQi3oxBf1EKQSceNRiM+zMLp8qyVYnC4jxAtwqeTfWJfG91
-	T7TwgvHBysymurh2fp5yqecZrvGEAcaSXMXZd2fL9p/mTiMRUwddCbNWNe3xkXSG
-	5TKP5gSJNutRrItzuaiar/w4vy7IVVNixK18I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 475B54754D;
-	Mon, 22 Feb 2016 16:00:27 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BA8E24754C;
-	Mon, 22 Feb 2016 16:00:26 -0500 (EST)
-In-Reply-To: <1456095545-20201-1-git-send-email-felipegassis@gmail.com>
-	("Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis"'s message of "Sun, 21 Feb 2016
- 19:59:00
-	-0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4C5084D0-D9A7-11E5-A2A0-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755651AbcBVVNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 16:13:32 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46951 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751937AbcBVVNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 16:13:31 -0500
+Received: (qmail 17503 invoked by uid 102); 22 Feb 2016 21:13:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:13:30 -0500
+Received: (qmail 22192 invoked by uid 107); 22 Feb 2016 21:13:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:13:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 16:13:28 -0500
+Content-Disposition: inline
+In-Reply-To: <n9b9tp$gbr$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286952>
 
-"Felipe Gon=C3=A7alves Assis"  <felipeg.assis@gmail.com> writes:
+On Mon, Feb 08, 2016 at 11:55:37PM +0000, Anatoly Borodin wrote:
 
-> This is a reorganisation of the previous series, bundling the test fo=
-r the fix
-> along with the commit itself, as suggested by Eric. It also includes =
-many fixes
-> and improvements pointed out by the same reviewer, whom I thank.
->
-> The typo fix is the same as before.
->
-> In "add rename threshold tests", I include tests involving --find-ren=
-ames,
-> except for one that depends on the fix.
->
-> "test option to disable renames" adds tests involving --rename-thresh=
-old.
->
-> "test deprecated interface" tests the aliasing --rename-threshold.
->
-> In "find-renames resets threshold", the specific test for the feature=
- was
-> bundled along.
->
-> To Junio: Please pay special attention to the test of threshold trunc=
-ation.
-> Given that it seems to be an undocumented feature, I am not sure whet=
-her it
-> should be included or not.
->
-> Felipe Gon=C3=A7alves Assis (5):
->   merge-strategies.txt: fix typo
->   t3034: add rename threshold tests
->   t3034: test option to disable renames
->   t3034: test deprecated interface
->   merge-recursive: find-renames resets threshold
+> unfortunately, `--tree-filter true` doesn't solve the problem with the
+> repo at my work: not all old blobs are replaced with the new ones. I've
+> made a test repository to demonstrate it; it's a huge one (115M), but I
+> couldn't make it much smaller, because the bug fails to reproduce if the
+> repo is not big enough:
+> 
+> https://github.com/anatolyborodin/git-filter-branch-bug
+> 
+> There are some description and instructions in `README.md`. I hope you
+> will be able to reproduce it on your machine, if not - just add more
+> files :)
+> 
+> I've debugged the test case and found the place where `git diff-index`
+> behaves differently regarding `aa/bb.dat`:
+> 
+> read-cache.c +351	ie_match_stat():
+> ...
+> 	if (!changed && is_racy_timestamp(istate, ce)) {
+> 		if (assume_racy_is_modified)
+> 			changed |= DATA_CHANGED;
+> 		else
+> 			changed |= ce_modified_check_fs(ce, st);
+> 	}
+> ...
+> 
+> After `git-checkout-index` the blob hash for `aa/bb.dat` in the index is
+> 88a0f09b9b2e4ccf2faec89ab37d416fba4ee79d (the huge binary), but the file
+> on disk is a text file "This file was to big, and it has been removed."
+> with the hash 16e0939430610600301680d5bf8a24a22ff8b6c4.
 
-As I said, I am reluctant to take the 25%/50%/75% tests in their
-current form.  Let me take the first one and a half of the last one
-(i.e. excluding the test) for now.
+Right, that makes sense. The index doesn't know anything about the
+replace mechanism. So it assumes that what it wrote matches what is in
+the stat cache (i.e., some sha1 and the matching stat info). Later, when
+git wants to know "should I bother reading this file back in and
+computing its sha1", the stat cache says no.
 
-Thanks.
+And then as you noticed, it sometimes "works" because if the file and
+index timestamps are the same, we err on the side of re-reading. So more
+files means more likelihood of crossing the one-second boundary.
+
+> I don't know if it should be considered to be a bug in in the logic of
+> `git checkout-index`, or `git diff-index` / `git update-index`.
+
+I'd say if any, it is the fault of checkout-index for writing out
+content that does not match the sha1 in the index, but writing out the
+stat information as if it is clean. For your case, you'd obviously
+prefer that the file be marked dirty and re-read later.
+
+But I'm not sure whether other users of replace refs would want the same
+behavior. They may want to silently pretend as if the data is
+unmodified. I'm not sure if anyone is doing that in practice, though; as
+you noted, the results are not deterministic, so it probably ends up
+just being a huge pain. So perhaps it would make sense to make the
+checkout operation aware of replaced blobs.
+
+As a workaround for your filter-branch, I suspect you could do
+`--tree-filter 'git ls-files | xargs touch'` or something, but that is
+going to be rather inefficient.
+
+By now you've probably realized that replaced blobs are not widely used,
+and there are a lot of corner cases around checking them out. So let's
+take a step back for a moment. What are you trying to accomplish with
+your filter-branch? If you just want to replace blob A with blob B, I
+think it might be easier to skip refs/replace entirely and just do so
+explicitly in an index-filter, like:
+
+  --index-filter '
+    git ls-files -s |
+    sed "s/$old_sha1/$new_sha1/" |
+    git update-index --index-info
+  '
+
+-Peff
