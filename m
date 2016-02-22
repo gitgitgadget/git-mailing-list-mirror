@@ -1,117 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] convert.c: correct attr_action
-Date: Mon, 22 Feb 2016 00:04:05 -0800
-Message-ID: <xmqqd1rp893e.fsf@gitster.mtv.corp.google.com>
-References: <Message-Id=1453558101-6858-1-git-send-email-tboegi@web.de>
-	<1456117898-30357-1-git-send-email-tboegi@web.de>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: GSoC 2016: Microproject
+Date: Mon, 22 Feb 2016 13:40:37 +0530
+Message-ID: <CAOLa=ZQqyfGDOVr=nxKbuZXJw2rsCu0KbomG+tuRkeS+R9xzFw@mail.gmail.com>
+References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
+ <vpq37so26oz.fsf@anie.imag.fr> <CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
+ <CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
+ <CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
+ <vpq8u2er7ae.fsf@anie.imag.fr> <CA+DCAeQWeUodaBtHOdzGB3RTZTQ672ZUSV-=eh-nA+8Bvn4gxw@mail.gmail.com>
+ <vpq1t85rj44.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: tboegi@web.de
-X-From: git-owner@vger.kernel.org Mon Feb 22 09:04:31 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Mehul Jain <mehul.jain2029@gmail.com>,
+	Stefan Beller <sbeller@google.com>, Git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 22 09:11:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXlTe-0001mj-3p
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 09:04:18 +0100
+	id 1aXlaq-0000KP-CI
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 09:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794AbcBVIEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 03:04:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58892 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753511AbcBVIEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 03:04:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8B11543029;
-	Mon, 22 Feb 2016 03:04:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NitbTJA5htCZwU0VlGvrTi7xI5g=; b=sM+NIY
-	nLWC22uF+rC+bmfWLmv8r7CECoxZxDZf2HpE7PQH3FuZ8syTp4rHA2pNyKLmx9f4
-	ysccRPF0E5yp9YI6fJnkBajqQTW5QLlWNjA9xsBTQ9Ri8CRCN6c1KNz/QOU9ca/k
-	FdetjtAGIPUErbalpBpd2aZeniMSthnDwxbSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P1JXW4MW9s2hQsHEDl9zEM8vMm5dIiCB
-	OxdbPC5zmB4/wAIdvxfx2DsZ+c+c42YMSGUHddL6dkCjsLOM/B5zasZ+bzqacF7o
-	fXG2jl6H8qj1cCuMuEcSsFbWWaCOZhfOaBVIXa52VEviWYAwsQrjnOWdFypLmICU
-	fRWUNsGTBlI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 826A043028;
-	Mon, 22 Feb 2016 03:04:07 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 00AA543027;
-	Mon, 22 Feb 2016 03:04:06 -0500 (EST)
-In-Reply-To: <1456117898-30357-1-git-send-email-tboegi@web.de>
-	(tboegi@web.de's message of "Mon, 22 Feb 2016 06:11:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D89D45A8-D93A-11E5-8D80-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753686AbcBVILl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 03:11:41 -0500
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:32980 "EHLO
+	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753640AbcBVILI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 03:11:08 -0500
+Received: by mail-vk0-f42.google.com with SMTP id k196so123707774vka.0
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 00:11:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4EYAFKTa8+S9Qg3nUUnohCvrANDuQhDbO3AZqZSEBVI=;
+        b=QEmxkpe/mtdfvygYgnnuKAfaOCcKTUBQB9IwbTCofbHE05L8cxtTk4baIeoPoqe9Ry
+         MY7aLlTzMbUAP1ETojhQDrBmGKwZ4LiDHp6ErS6CyWXB5bmkdypxh7Og60+5bxOZn/Kw
+         zP37BqNmV49/60fpRPIWF+5L0Sf5FiExC2XaVhtVqKk7Q8QLWdrFfF+CutAvGnyD3AyG
+         E4boNcFA1CQ2hZ/my7C/UJof9oARTxeb51uxOn2Sih4T+UCIXMiRvSDoVkgnVXjJnSPd
+         PWE+QBBiXZrMfYMcpkaeoY1P5U8lEe97IyTYmbYjx09XD6vlfpizJlCQm7QXInentQM0
+         JiGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=4EYAFKTa8+S9Qg3nUUnohCvrANDuQhDbO3AZqZSEBVI=;
+        b=gDIvErf9bf/m4gbP0tzEvZNx4Se/DSNRJ070TIN9V2ET5/1Ec8epZCFxQN8AB6Lc4s
+         bUcxW92XIwR1ovwzeeFzZiZevBj5HFGwIzxnIScRGwangaSakh8rRYWrPq+cojbVrPHx
+         RVGseAV4fet8C8tdxaoPs7NIHY654muihDDy5SgWSjTNidm9kIjy06xlfjhl25wSJbX2
+         0kgiZ+oH0Y/DtVShA01Quvn/ifH7idDMXSh9JJU/U58n5ZzR0dd9nIa2gVFCX4Q9REMl
+         6OEsqmgnVlddHb2nGaw6hT2WJeFv0dc2Xa2UF02m97ZbQrXePoM9W2NzqZRPpb3tpAUr
+         H48g==
+X-Gm-Message-State: AG10YOQoFIHO1guLCBs8ifYBqZ0Cs3HA7l/uKU7egS032z5Fu/HWllxEmRithNDq9atqzJe9LSs5LJ8JixETvw==
+X-Received: by 10.31.54.75 with SMTP id d72mr21359942vka.30.1456128667212;
+ Mon, 22 Feb 2016 00:11:07 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Mon, 22 Feb 2016 00:10:37 -0800 (PST)
+In-Reply-To: <vpq1t85rj44.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286893>
 
-tboegi@web.de writes:
+On Mon, Feb 22, 2016 at 12:22 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Mehul Jain <mehul.jain2029@gmail.com> writes:
+>
+>> Earlier when I was testing the master branch on my pc, I used "make"
+>> in \t directory, which lead to failure of test #2, #3 in
+>> t5539-fetch-http-shallow.sh .
+>> Afterwards I switched to sudo mode and ran the make command again.
+>
+> Never ever do that. Your git source tree should be within your $HOME
+> directory, and you should never run any command as root that creates
+> files within your $HOME dir. If you do that, you'll end up having files
+> belonging to root within other directories, you won't have write
+> permission on these files. Then, anything can go wrong because any
+> attempt to write to these files will fail.
+>
+> The simplest way to get back on track for you is probably to start over
+> with a fresh clone, or (warning: destructive operations): use git clean
+> to remove untracked files.
+>
 
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index fc4c628..f9c92c6 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -159,6 +159,39 @@ stats_ascii () {
->  
->  }
->  
-> +attr_ascii () {
-> +	case "$1" in
-> +	"-text") echo "-text"	;;
+I think a 'sudo git clean' outta be enough. But the main point to take away is
+not using 'make' with 'sudo' like you mentioned.
 
- - I do not think you need to quote the case label.
-
- - Why the excessive trailing whitespaces before double-semicolons?
-
-> +	lf)	echo "text eol=lf" ;;
-> +	crlf)	echo "text eol=crlf" ;;
-> +	text)
-> +		case "$2" in
-> +		"")	echo "text" ;;
-> +		lf)	echo "text eol=lf" ;;
-> +		crlf)	echo "text eol=crlf" ;;
-> +		*) echo invalid_attr2 "$2" ;;
-> +		esac
-> +		;;
-> +	auto)
-> +		case "$2" in
-> +		"")	echo "text=auto" ;;
-> +		lf)	echo "text=auto eol=lf" ;;
-> +		crlf)	echo "text=auto eol=crlf" ;;
-> +		*) echo invalid_attr2 "$2"	;;
-> +		esac
-> +		;;
-> +	"")
-> +		case "$2" in
-> +		"")	echo "" ;;
-> +		lf)	echo "text eol=lf" ;;
-> +		crlf)	echo "text eol=crlf" ;;
-> +		*) echo invalid_attr2 "$2" ;;
-> +		esac
-> +		;;
-
-I wonder if the above is easier to read if written like this:
-
-	case "$1,$2" in
-        "-text,*")		echo "-text" ;;
-        lf,*)   	        echo text eol=lf" ;;
-	...
-	auto,)			echo "text=auto" ;;
-	auto,lf | auto,crlf)	echo "text=auto eol=$2" ;;
-	auto,*)			echo invalid_attr2 "$2" ;;
-	...
-        esac
-
-as $1 and $2 are not arbitrary words, but you know exactly from what
-vocabulary they are taken.
+-- 
+Regards,
+Karthik Nayak
