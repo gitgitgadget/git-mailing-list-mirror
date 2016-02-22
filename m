@@ -1,137 +1,139 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 02/22] add helpers for detecting size_t overflow
-Date: Mon, 22 Feb 2016 17:43:11 -0500
-Message-ID: <20160222224310.GB10075@sigill.intra.peff.net>
+Subject: [PATCH v3 05/22] add helpers for allocating flex-array structs
+Date: Mon, 22 Feb 2016 17:43:25 -0500
+Message-ID: <20160222224324.GE10075@sigill.intra.peff.net>
 References: <20160222224059.GA3857@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:43:17 2016
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:43:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXzCH-0003zo-4g
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:43:17 +0100
+	id 1aXzCY-0004G5-4O
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:43:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755928AbcBVWnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 17:43:14 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47042 "HELO cloud.peff.net"
+	id S1756039AbcBVWn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 17:43:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47056 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755726AbcBVWnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 17:43:13 -0500
-Received: (qmail 21515 invoked by uid 102); 22 Feb 2016 22:43:13 -0000
+	id S1755877AbcBVWn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 17:43:27 -0500
+Received: (qmail 21594 invoked by uid 102); 22 Feb 2016 22:43:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:13 -0500
-Received: (qmail 22905 invoked by uid 107); 22 Feb 2016 22:43:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:27 -0500
+Received: (qmail 22946 invoked by uid 107); 22 Feb 2016 22:43:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:43:11 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:43:25 -0500
 Content-Disposition: inline
 In-Reply-To: <20160222224059.GA3857@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286973>
 
-Performing computations on size_t variables that we feed to
-xmalloc and friends can be dangerous, as an integer overflow
-can cause us to allocate a much smaller chunk than we
-realized.
+Allocating a struct with a flex array is pretty simple in
+practice: you over-allocate the struct, then copy some data
+into the over-allocation. But it can be a slight pain to
+make sure you're allocating and copying the right amounts.
 
-We already have unsigned_add_overflows(), but let's add
-unsigned_mult_overflows() to that. Furthermore, rather than
-have each site manually check and die on overflow, we can
-provide some helpers that will:
+This patch adds a few helpers to turn simple cases of
+flex-array struct allocation into a one-liner that properly
+checks for overflow. See the embedded documentation for
+details.
 
-  - promote the arguments to size_t, so that we know we are
-    doing our computation in the same size of integer that
-    will ultimately be fed to xmalloc
+Ideally we could provide a more flexible version that could
+handle multiple strings, like:
 
-  - check and die on overflow
+  FLEX_ALLOC_FMT(ref, name, "%s%s", prefix, name);
 
-  - return the result so that computations can be done in
-    the parameter list of xmalloc.
-
-These functions are a lot uglier to use than normal
-arithmetic operators (you have to do "st_add(foo, bar)"
-instead of "foo + bar"). To at least limit the damage, we
-also provide multi-valued versions. So rather than:
-
-  st_add(st_add(a, b), st_add(c, d));
-
-you can write:
-
-  st_add4(a, b, c, d);
-
-This isn't nearly as elegant as a varargs function, but it's
-a lot harder to get it wrong. You don't have to remember to
-add a sentinel value at the end, and the compiler will
-complain if you get the number of arguments wrong. This
-patch adds only the numbered variants required to convert
-the current code base; we can easily add more later if
-needed.
+But we have to implement this as a macro (because of the
+offset calculation of the flex member), which means we would
+need all compilers to support variadic macros.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- git-compat-util.h | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ git-compat-util.h | 62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
 diff --git a/git-compat-util.h b/git-compat-util.h
-index 693a336..0c65033 100644
+index 81f2347..57ff9fb 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -96,6 +96,14 @@
- #define unsigned_add_overflows(a, b) \
-     ((b) > maximum_unsigned_value_of_type(a) - (a))
+@@ -782,6 +782,68 @@ extern FILE *fopen_for_writing(const char *path);
+ #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
+ #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
  
 +/*
-+ * Returns true if the multiplication of "a" and "b" will
-+ * overflow. The types of "a" and "b" must match and must be unsigned.
-+ * Note that this macro evaluates "a" twice!
++ * These functions help you allocate structs with flex arrays, and copy
++ * the data directly into the array. For example, if you had:
++ *
++ *   struct foo {
++ *     int bar;
++ *     char name[FLEX_ARRAY];
++ *   };
++ *
++ * you can do:
++ *
++ *   struct foo *f;
++ *   FLEX_ALLOC_MEM(f, name, src, len);
++ *
++ * to allocate a "foo" with the contents of "src" in the "name" field.
++ * The resulting struct is automatically zero'd, and the flex-array field
++ * is NUL-terminated (whether the incoming src buffer was or not).
++ *
++ * The FLEXPTR_* variants operate on structs that don't use flex-arrays,
++ * but do want to store a pointer to some extra data in the same allocated
++ * block. For example, if you have:
++ *
++ *   struct foo {
++ *     char *name;
++ *     int bar;
++ *   };
++ *
++ * you can do:
++ *
++ *   struct foo *f;
++ *   FLEX_ALLOC_STR(f, name, src);
++ *
++ * and "name" will point to a block of memory after the struct, which will be
++ * freed along with the struct (but the pointer can be repointed anywhere).
++ *
++ * The *_STR variants accept a string parameter rather than a ptr/len
++ * combination.
++ *
++ * Note that these macros will evaluate the first parameter multiple
++ * times, and it must be assignable as an lvalue.
 + */
-+#define unsigned_mult_overflows(a, b) \
-+    ((a) && (b) > maximum_unsigned_value_of_type(a) / (a))
++#define FLEX_ALLOC_MEM(x, flexname, buf, len) do { \
++	(x) = NULL; /* silence -Wuninitialized for offset calculation */ \
++	(x) = xalloc_flex(sizeof(*(x)), (char *)(&((x)->flexname)) - (char *)(x), (buf), (len)); \
++} while (0)
++#define FLEXPTR_ALLOC_MEM(x, ptrname, buf, len) do { \
++	(x) = xalloc_flex(sizeof(*(x)), sizeof(*(x)), (buf), (len)); \
++	(x)->ptrname = (void *)((x)+1); \
++} while(0)
++#define FLEX_ALLOC_STR(x, flexname, str) \
++	FLEX_ALLOC_MEM((x), flexname, (str), strlen(str))
++#define FLEXPTR_ALLOC_STR(x, ptrname, str) \
++	FLEXPTR_ALLOC_MEM((x), ptrname, (str), strlen(str))
 +
- #ifdef __GNUC__
- #define TYPEOF(x) (__typeof__(x))
- #else
-@@ -713,6 +721,32 @@ extern void release_pack_memory(size_t);
- typedef void (*try_to_free_t)(size_t);
- extern try_to_free_t set_try_to_free_routine(try_to_free_t);
- 
-+static inline size_t st_add(size_t a, size_t b)
++static inline void *xalloc_flex(size_t base_len, size_t offset,
++				const void *src, size_t src_len)
 +{
-+	if (unsigned_add_overflows(a, b))
-+		die("size_t overflow: %"PRIuMAX" + %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a + b;
-+}
-+#define st_add3(a,b,c)   st_add((a),st_add((b),(c)))
-+#define st_add4(a,b,c,d) st_add((a),st_add3((b),(c),(d)))
-+
-+static inline size_t st_mult(size_t a, size_t b)
-+{
-+	if (unsigned_mult_overflows(a, b))
-+		die("size_t overflow: %"PRIuMAX" * %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a * b;
++	unsigned char *ret = xcalloc(1, st_add3(base_len, src_len, 1));
++	memcpy(ret + offset, src, src_len);
++	return ret;
 +}
 +
-+static inline size_t st_sub(size_t a, size_t b)
-+{
-+	if (a < b)
-+		die("size_t underflow: %"PRIuMAX" - %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a - b;
-+}
-+
- #ifdef HAVE_ALLOCA_H
- # include <alloca.h>
- # define xalloca(size)      (alloca(size))
+ static inline char *xstrdup_or_null(const char *str)
+ {
+ 	return str ? xstrdup(str) : NULL;
 -- 
 2.7.2.645.g4e1306c
