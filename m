@@ -1,74 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Question about pull-requests
-Date: Mon, 22 Feb 2016 16:37:02 -0500
-Message-ID: <20160222213702.GD15595@sigill.intra.peff.net>
-References: <CAOh0v-WW=hOXw=uTdzkd3afzXCguBHWdaDShwKE3QKqUCOBTzg@mail.gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Mon, 22 Feb 2016 16:42:46 -0500
+Message-ID: <20160222214246.GE15595@sigill.intra.peff.net>
+References: <vpqoabox66p.fsf@anie.imag.fr>
+ <CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
+ <vpqd1s2e74l.fsf@anie.imag.fr>
+ <20160212130446.GB10858@sigill.intra.peff.net>
+ <vpqd1s04zzs.fsf@anie.imag.fr>
+ <CACsJy8BzkWSc11ODenEuGBBta+dkLS893o7oRS57_ctoB5ie8A@mail.gmail.com>
+ <vpqziutkps7.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nagaraj Mandya <nmandya@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 22:37:14 2016
+Cc: Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 22 22:42:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXyAL-0001D5-Kw
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 22:37:13 +0100
+	id 1aXyFp-0005gR-6d
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 22:42:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552AbcBVVhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 16:37:06 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46961 "HELO cloud.peff.net"
+	id S1755708AbcBVVmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 16:42:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46964 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754742AbcBVVhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 16:37:06 -0500
-Received: (qmail 18481 invoked by uid 102); 22 Feb 2016 21:37:05 -0000
+	id S1754742AbcBVVmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 16:42:49 -0500
+Received: (qmail 18795 invoked by uid 102); 22 Feb 2016 21:42:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:37:05 -0500
-Received: (qmail 22276 invoked by uid 107); 22 Feb 2016 21:37:12 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:42:49 -0500
+Received: (qmail 22300 invoked by uid 107); 22 Feb 2016 21:42:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:37:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 16:37:02 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 16:42:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 16:42:46 -0500
 Content-Disposition: inline
-In-Reply-To: <CAOh0v-WW=hOXw=uTdzkd3afzXCguBHWdaDShwKE3QKqUCOBTzg@mail.gmail.com>
+In-Reply-To: <vpqziutkps7.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286955>
 
-On Mon, Feb 22, 2016 at 05:24:15PM +0530, Nagaraj Mandya wrote:
+On Mon, Feb 22, 2016 at 11:22:48AM +0100, Matthieu Moy wrote:
 
->   In our GIT repository, all users are restricted from merging to
-> master without a pull request. This works well and all developers are
-> raising pull requests and merging. However, if there is a merge
-> conflict during the merge, we have a problem.
+> > Idea for microprojects. If you compile using gcc with -Wshadow, it
+> > spots local variables that shadow another local or global variables.
+> > These are usually bad because it makes it's easy to make mistakes when
+> > changing the code.
 > 
->   We follow the instructions provided by Bitbucket and the final step
-> is to push the merged code to master to the "origin" repository.
-> However, that steps always fails with the error that pushes can only
-> be made with pull requests.
+> I hade a look an a few instances of the warning, and all of them were
+> bad (sometimes even suspicious, I wouldn't be surprised if we found real
+> bugs hunting these down).
+
+I looked at a handful, too, and many looked fine (e.g., shadowing an
+overly-broadly-named global parameter with a function parameter). Not
+that I'm against squelching them. There's definitely potential for
+confusion, and I won't be surprised either if there's a real bug lurking
+in there (which we can't find because of the number of false positives).
+
+But...
+
+> > _If_ you agree shadow vars are bad and should be exterminated,
+> > 'master' has 94 warnings spreading over 49 files. A student can pick
+> > _one_ file and try to fix all warnings in that file. There are many
+> > possible approaches (rename, combine vars, change scope, even
+> > restructure/kill global vars..), plenty of room for discussion.
 > 
->   How do we work around this problem? We want all pushes to happen
-> through merge requests but still allow pull requests with merge
-> conflicts to get pushed. Thanks.
+> +1.
+> 
+> Are there counter-arguments to this?
 
-The strategy we use at GitHub (for our internal work, I mean, but which
-we also recommend to other projects on the site) is to back-merge master
-to the pull request branch and resolve the conflicts there. Then you can
-push that, and the merge of that result to master will always be trivial
-(unless somebody updated master in the meantime, of course).
+I agree that there are a lot of different ways to resolve each instance,
+and it will vary from case to case. I think the original point of a
+microproject was to do something really easy and not contentious, so
+that the student could get familiar with all of the other parts of the
+cycle: writing a commit message, formatting the patch, posting to the
+list, etc.
 
-In fact, we use the "protected branches" feature[1] to disallow any
-non-fast-forward merges of a pull request into the master branch. We do
-our CI tests on the tip commit of each pull request, and they also must
-pass to allow merging. So you would not want to do any real merging to
-bring the PR into master; the merge result hasn't actually been tested!
-
-I don't know offhand whether BitBucket has a similar feature to
-protected branches, but certainly you can do use the back-merge-and-push
-trick.
+It seems like this has a high chance of frustrating students as they get
+embroiled in back-and-forth review. I dunno. Maybe it should be marked
+with a star as a "challenge" microproject. :)
 
 -Peff
-
-[1] https://github.com/blog/2051-protected-branches-and-required-status-checks
