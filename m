@@ -1,7 +1,7 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v6 01/15] config: introduce set_or_die wrappers
-Date: Mon, 22 Feb 2016 12:23:22 +0100
-Message-ID: <1456140216-24169-2-git-send-email-ps@pks.im>
+Subject: [PATCH v6 05/15] submodule: die on config error when linking modules
+Date: Mon, 22 Feb 2016 12:23:26 +0100
+Message-ID: <1456140216-24169-6-git-send-email-ps@pks.im>
 References: <1456140216-24169-1-git-send-email-ps@pks.im>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	ps@pks.im, Eric Sunshine <sunshine@sunshineco.com>,
@@ -9,138 +9,81 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Lars Schneider <larsxschneider@gmail.com>,
 	Michael Blume <blume.mike@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 12:24:48 2016
+X-From: git-owner@vger.kernel.org Mon Feb 22 12:24:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXobd-0000Yy-GV
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 12:24:45 +0100
+	id 1aXobe-0000Yy-2M
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 12:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754655AbcBVLYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 06:24:41 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38168 "EHLO
+	id S1754658AbcBVLYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 06:24:43 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37661 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754215AbcBVLYf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 06:24:35 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 72A7520BF8
-	for <git@vger.kernel.org>; Mon, 22 Feb 2016 06:24:35 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1754492AbcBVLYl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 06:24:41 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9FEAD20C37
+	for <git@vger.kernel.org>; Mon, 22 Feb 2016 06:24:40 -0500 (EST)
 Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Mon, 22 Feb 2016 06:24:35 -0500
+  by compute4.internal (MEProxy); Mon, 22 Feb 2016 06:24:40 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=kwP3
-	XlWdmruQxezrdAPRHnPyfyM=; b=NpO7QxFvSjSmleCBGfFQdYKwtqWbDhZiZrO9
-	eqicgCnUAH6muSnHTERDAlWrCLC+2MJmsIiNUlth1OdpYA5TJIXwiABtUz+xXorq
-	vdfeYkfxzJjL38hHrlys4YyHdYRWu3ccgce6h70EjgRIWM6ACIZ9hTAyrx7/3buz
-	BWspe+g=
-X-Sasl-enc: qr+vbCm8Mmxy1k2bEnAJjfg6HBhXvHcHr4yFAWITJX8p 1456140275
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=UgLB
+	hqsbkjz6Q//gkCSjkbi9InE=; b=XEKfCfu6eTcSGCwKJW30i7tLs4nKM6s3/aPP
+	FWHtUlU6fwkOy1K8DbGeGrzI36HsChpsbqg8OOdBRdPInN3mAGWCZ/l9Y8OSWkrm
+	OyiNlwoEOzeHspZ9v/FpjgIaPPSLCXFl6i/T3wdRIPycVKRbgb1CcWWxD8jd6EWx
+	u2THYBo=
+X-Sasl-enc: GBD4v1U5eTvNGrWIkqt5lykSr9L6pOHbvoFJOUND8fHh 1456140280
 Received: from localhost (unknown [46.189.27.162])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E928FC00016;
-	Mon, 22 Feb 2016 06:24:34 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 31857C00014;
+	Mon, 22 Feb 2016 06:24:40 -0500 (EST)
 X-Mailer: git-send-email 2.7.1
 In-Reply-To: <1456140216-24169-1-git-send-email-ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286911>
 
-A lot of call-sites for the existing family of `git_config_set`
-functions do not check for errors that may occur, e.g. when the
-configuration file is locked. In many cases we simply want to die
-when such a situation arises.
+When trying to connect a submodule with its corresponding
+repository in '.git/modules' we try to set the core.worktree
+setting in the submodule, which may fail due to an error
+encountered in `git_config_set_in_file`.
 
-Introduce wrappers that will cause the program to die in those
-cases. These wrappers are temporary only to ease the transition
-to let `git_config_set` die by default. They will be removed
-later on when `git_config_set` itself has been replaced by
-`git_config_set_gently`.
+The function is used in the git-mv command when trying to move a
+submodule to another location. We already die when renaming a
+file fails but do not pay attention to the case where updating
+the connection between submodule and its repository fails. As
+this leaves the repository in an inconsistent state, as well,
+abort the program by dying early and presenting the failure to
+the user.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- cache.h  |  4 ++++
- config.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ submodule.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 26640b4..209d8c8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1526,11 +1526,15 @@ extern int git_config_maybe_bool(const char *, const char *);
- extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
- extern int git_config_set_in_file(const char *, const char *, const char *);
-+extern void git_config_set_in_file_or_die(const char *, const char *, const char *);
- extern int git_config_set(const char *, const char *);
-+extern void git_config_set_or_die(const char *, const char *);
- extern int git_config_parse_key(const char *, char **, int *);
- extern int git_config_key_is_valid(const char *key);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
-+extern void git_config_set_multivar_or_die(const char *, const char *, const char *, int);
- extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
-+extern void git_config_set_multivar_in_file_or_die(const char *, const char *, const char *, const char *, int);
- extern int git_config_rename_section(const char *, const char *);
- extern int git_config_rename_section_in_file(const char *, const char *, const char *);
- extern const char *git_etc_gitconfig(void);
-diff --git a/config.c b/config.c
-index b95ac3a..261853a 100644
---- a/config.c
-+++ b/config.c
-@@ -1855,11 +1855,22 @@ int git_config_set_in_file(const char *config_filename,
- 	return git_config_set_multivar_in_file(config_filename, key, value, NULL, 0);
- }
+diff --git a/submodule.c b/submodule.c
+index b83939c..589a82c 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1087,11 +1087,9 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
+ 	/* Update core.worktree setting */
+ 	strbuf_reset(&file_name);
+ 	strbuf_addf(&file_name, "%s/config", git_dir);
+-	if (git_config_set_in_file(file_name.buf, "core.worktree",
+-				   relative_path(real_work_tree, git_dir,
+-						 &rel_path)))
+-		die(_("Could not set core.worktree in %s"),
+-		    file_name.buf);
++	git_config_set_in_file_or_die(file_name.buf, "core.worktree",
++				      relative_path(real_work_tree, git_dir,
++						    &rel_path));
  
-+void git_config_set_in_file_or_die(const char *config_filename,
-+			const char *key, const char *value)
-+{
-+	git_config_set_multivar_in_file_or_die(config_filename, key, value, NULL, 0);
-+}
-+
- int git_config_set(const char *key, const char *value)
- {
- 	return git_config_set_multivar(key, value, NULL, 0);
- }
- 
-+void git_config_set_or_die(const char *key, const char *value)
-+{
-+	git_config_set_multivar_or_die(key, value, NULL, 0);
-+}
-+
- /*
-  * Auxiliary function to sanity-check and split the key into the section
-  * identifier and variable name.
-@@ -2203,6 +2214,15 @@ write_err_out:
- 
- }
- 
-+void git_config_set_multivar_in_file_or_die(const char *config_filename,
-+				const char *key, const char *value,
-+				const char *value_regex, int multi_replace)
-+{
-+	if (git_config_set_multivar_in_file(config_filename, key, value,
-+					    value_regex, multi_replace) < 0)
-+		die(_("Could not set '%s' to '%s'"), key, value);
-+}
-+
- int git_config_set_multivar(const char *key, const char *value,
- 			const char *value_regex, int multi_replace)
- {
-@@ -2210,6 +2230,13 @@ int git_config_set_multivar(const char *key, const char *value,
- 					       multi_replace);
- }
- 
-+void git_config_set_multivar_or_die(const char *key, const char *value,
-+			const char *value_regex, int multi_replace)
-+{
-+	git_config_set_multivar_in_file_or_die(NULL, key, value, value_regex,
-+					       multi_replace);
-+}
-+
- static int section_name_match (const char *buf, const char *name)
- {
- 	int i = 0, j = 0, dot = 0;
+ 	strbuf_release(&file_name);
+ 	strbuf_release(&rel_path);
 -- 
 2.7.1
