@@ -1,88 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 03/22] tree-diff: catch integer overflow in
- combine_diff_path allocation
-Date: Mon, 22 Feb 2016 17:43:15 -0500
-Message-ID: <20160222224314.GC10075@sigill.intra.peff.net>
+Subject: [PATCH v3 06/22] argv-array: add detach function
+Date: Mon, 22 Feb 2016 17:44:15 -0500
+Message-ID: <20160222224414.GF10075@sigill.intra.peff.net>
 References: <20160222224059.GA3857@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:43:41 2016
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:44:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXzCe-0004MN-F4
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:43:40 +0100
+	id 1aXzDJ-0004ss-Be
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756062AbcBVWnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 17:43:35 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47046 "HELO cloud.peff.net"
+	id S1756055AbcBVWoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 17:44:18 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47067 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755726AbcBVWnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 17:43:17 -0500
-Received: (qmail 21526 invoked by uid 102); 22 Feb 2016 22:43:17 -0000
+	id S1755500AbcBVWoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 17:44:17 -0500
+Received: (qmail 21614 invoked by uid 102); 22 Feb 2016 22:44:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:17 -0500
-Received: (qmail 22910 invoked by uid 107); 22 Feb 2016 22:43:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:17 -0500
+Received: (qmail 23022 invoked by uid 107); 22 Feb 2016 22:44:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:43:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:43:15 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:44:15 -0500
 Content-Disposition: inline
 In-Reply-To: <20160222224059.GA3857@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286976>
 
-A combine_diff_path struct has two "flex" members allocated
-alongside the struct: a string to hold the pathname, and an
-array of parent pointers. We use an "int" to compute this,
-meaning we may easily overflow it if the pathname is
-extremely long.
-
-We can fix this by using size_t, and checking for overflow
-with the st_add helper.
+The usual pattern for an argv array is to initialize it,
+push in some strings, and then clear it when done. Very
+occasionally, though, we must do other exotic things with
+the memory, like freeing the list but keeping the strings.
+Let's provide a detach function so that callers can make use
+of our API to build up the array, and then take ownership of
+it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- diff.h      | 4 ++--
- tree-diff.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/technical/api-argv-array.txt |  7 +++++++
+ argv-array.c                               | 11 +++++++++++
+ argv-array.h                               |  1 +
+ 3 files changed, 19 insertions(+)
 
-diff --git a/diff.h b/diff.h
-index 70b2d70..beafbbd 100644
---- a/diff.h
-+++ b/diff.h
-@@ -222,8 +222,8 @@ struct combine_diff_path {
- 	} parent[FLEX_ARRAY];
- };
- #define combine_diff_path_size(n, l) \
--	(sizeof(struct combine_diff_path) + \
--	 sizeof(struct combine_diff_parent) * (n) + (l) + 1)
-+	st_add4(sizeof(struct combine_diff_path), (l), 1, \
-+		st_mult(sizeof(struct combine_diff_parent), (n)))
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
+index 8076172..cfc0630 100644
+--- a/Documentation/technical/api-argv-array.txt
++++ b/Documentation/technical/api-argv-array.txt
+@@ -56,3 +56,10 @@ Functions
+ `argv_array_clear`::
+ 	Free all memory associated with the array and return it to the
+ 	initial, empty state.
++
++`argv_array_detach`::
++	Disconnect the `argv` member from the `argv_array` struct and
++	return it. The caller is responsible for freeing the memory used
++	by the array, and by the strings it references. After detaching,
++	the `argv_array` is in a reinitialized state and can be pushed
++	into again.
+diff --git a/argv-array.c b/argv-array.c
+index eaed477..5d370fa 100644
+--- a/argv-array.c
++++ b/argv-array.c
+@@ -74,3 +74,14 @@ void argv_array_clear(struct argv_array *array)
+ 	}
+ 	argv_array_init(array);
+ }
++
++const char **argv_array_detach(struct argv_array *array)
++{
++	if (array->argv == empty_argv)
++		return xcalloc(1, sizeof(const char *));
++	else {
++		const char **ret = array->argv;
++		argv_array_init(array);
++		return ret;
++	}
++}
+diff --git a/argv-array.h b/argv-array.h
+index a2fa0aa..29056e4 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -20,5 +20,6 @@ void argv_array_pushl(struct argv_array *, ...);
+ void argv_array_pushv(struct argv_array *, const char **);
+ void argv_array_pop(struct argv_array *);
+ void argv_array_clear(struct argv_array *);
++const char **argv_array_detach(struct argv_array *);
  
- extern void show_combined_diff(struct combine_diff_path *elem, int num_parent,
- 			      int dense, struct rev_info *);
-diff --git a/tree-diff.c b/tree-diff.c
-index 290a1da..4dda9a1 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -124,8 +124,8 @@ static struct combine_diff_path *path_appendnew(struct combine_diff_path *last,
- 	unsigned mode, const unsigned char *sha1)
- {
- 	struct combine_diff_path *p;
--	int len = base->len + pathlen;
--	int alloclen = combine_diff_path_size(nparent, len);
-+	size_t len = st_add(base->len, pathlen);
-+	size_t alloclen = combine_diff_path_size(nparent, len);
- 
- 	/* if last->next is !NULL - it is a pre-allocated memory, we can reuse */
- 	p = last->next;
+ #endif /* ARGV_ARRAY_H */
 -- 
 2.7.2.645.g4e1306c
