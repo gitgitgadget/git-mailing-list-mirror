@@ -1,86 +1,87 @@
-From: Moritz Neeb <lists@moritzneeb.de>
-Subject: Re: [PATCH v2 3/6] clean: read user input with strbuf_getline()
-Date: Mon, 22 Feb 2016 08:40:59 +0100
-Message-ID: <56CABB8B.2070502@moritzneeb.de>
-References: <56CA5DBB.8040006@moritzneeb.de> <56CA6264.1040400@moritzneeb.de>
- <CAPig+cSi-4R-a=HVmpCWAZ3kr=yQtJ9GdT-JZ4hJ2kmqg-edVA@mail.gmail.com>
+From: David <bouncingcats@gmail.com>
+Subject: Re: interactive rebase results across shared histories
+Date: Mon, 22 Feb 2016 18:41:35 +1100
+Message-ID: <CAMPXz=r23aor3P4XQ3bb1iNsmO9idAUWhGrLhKpMdGa4P_Or8w@mail.gmail.com>
+References: <87io1j6laz.fsf@gmail.com>
+	<56C91D21.90306@moritzneeb.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 08:41:12 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Seb <spluque@gmail.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 22 08:41:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXl7G-00069t-3d
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 08:41:10 +0100
+	id 1aXl7l-0006fN-CG
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 08:41:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbcBVHlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 02:41:04 -0500
-Received: from moritzneeb.de ([78.47.1.106]:55960 "EHLO moritzneeb.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753750AbcBVHlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 02:41:01 -0500
-Received: from [192.168.1.3] (x4db34e7f.dyn.telefonica.de [77.179.78.127])
-	by moritzneeb.de (Postfix) with ESMTPSA id BA2841C090;
-	Mon, 22 Feb 2016 08:40:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
-	s=mail; t=1456126859;
-	bh=OS+zKrf42Fah/Nrmxl6xiz5x5rbD+gBxigVAqUI/i0s=;
-	h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-	b=qSPshoxx9EU7TMtc+Pbuw1egDFtDnGJTg89VY8tizlaNdrvKggmYG4xPe+z4nn22a
-	 4IBBgNfXqLqUyT89W6Ce8HrQmaTGd8WEpV8zMs8mmpaCsby46iMnLwxde967uzZeh5
-	 qapLL6OW0jr7BvvwWTPi9d189eBDzMatAbzfFKhw=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <CAPig+cSi-4R-a=HVmpCWAZ3kr=yQtJ9GdT-JZ4hJ2kmqg-edVA@mail.gmail.com>
+	id S1753805AbcBVHli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 02:41:38 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:34702 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753501AbcBVHlh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 02:41:37 -0500
+Received: by mail-wm0-f48.google.com with SMTP id b205so143190256wmb.1
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 23:41:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vkVaj7L2T9eUlYKBVJ7g77p3D/JbY/f/0bV5cPeO8bc=;
+        b=zHAKPsV4H7u2UbikuAjRpDk3F12gn5+X9BQTShMRr0mYJ8LNCAMjWO4ddbs9qfn8B6
+         pm54EgrCygl8JjR70MBBD93YrFCiTmbU/2oDM/rlsxv1LOmmVfuTUTD6/AQk2ZAKmeFq
+         fiOt4KqMFHxfQ2DpcFEgiQ9RL9CR4sdDughYPxIsX7WYRDLCLjFBJawBS8RNHYc2fHn0
+         5/GiCiobjJzlK2Hkw/AVyM4hYuGRGhidLm5NyPSjtOcpUGyZw7k4rk6SFlUevclYOjKU
+         KWsFYPgD1pc9BPYmpiULOScADhyA+BTKy/Ryyzpr1a9WkSyHt3vYKr8pN41tD+RuJgTU
+         RSsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vkVaj7L2T9eUlYKBVJ7g77p3D/JbY/f/0bV5cPeO8bc=;
+        b=CFv+MpbcJRRI6qC49YhQqsFfdyHNjBmlYtxle9CrpbQWNFW+aIRRIeG9liLYteZnKo
+         Td4EZuw4hnTABuRlxp7dr2Cv+gjeBpd87qrnDEwbDVb0rjQlYLRptsm8hsp52+zW/L88
+         g1yntg71AlVJaWZZhUvLU1YXbkaDDjCIEVAkTjzUvxJJR9aNPs010R6edhyE+V7P0iwk
+         M0SWybGmraI5r2IWhhKOmJnjBOHMNGaWEX6H4B4J2zlar9yD+qw+SgTpVwWBfEPBywhr
+         r9r7CstIvJ4lcGa85EXfDA/lVcwgsI0VXW3STojCevEd5P71p4vVnbR0waXWV4SSAuo8
+         Etjg==
+X-Gm-Message-State: AG10YOQFRTP4SAY0cCjLz8baqN0NvAoE6hIEZljKCZFs1TQNPsfVOerfBsYtTgI+qG/QbThrVJFQgFZR8aOKBw==
+X-Received: by 10.28.184.78 with SMTP id i75mr11069154wmf.22.1456126895854;
+ Sun, 21 Feb 2016 23:41:35 -0800 (PST)
+Received: by 10.194.30.136 with HTTP; Sun, 21 Feb 2016 23:41:35 -0800 (PST)
+In-Reply-To: <56C91D21.90306@moritzneeb.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286890>
 
-On 02/22/2016 03:27 AM, Eric Sunshine wrote:
-> On Sun, Feb 21, 2016 at 8:20 PM, Moritz Neeb <lists@moritzneeb.de> wrote:
->> The inputs that are read are all answers that are given by the user
->> when interacting with git on the commandline. As these answers are
->> not supposed to contain a meaningful CR it is safe to
->> replace strbuf_getline_lf() can be replaced by strbuf_getline().
+On 21 February 2016 at 13:12, Moritz Neeb <lists@moritzneeb.de> wrote:
+>
+> On 02/20/2016 11:58 PM, Seb wrote:
 >>
->> Before the user input was trimmed to remove the CR. This would be now
->> redundant. Another effect of the trimming was that some (accidentally)
->> typed spaces were filtered. But here we want to be consistent with similar UIs
->> like interactive adding, which only accepts space-less input.
-> 
-> I don't at all insist upon it, but this behavior change feels somewhat
-> like it ought to be in its own commit.
+>> I've recently learnt how to consolidate and clean up the master branch's
+>> commit history.  I've squashed/fixuped many commits thinking these would
+>> propagate to the children branches with whom it shares the earlier parts
+>> of the its history.  However, this is not the case; switching to the
+>> child branch still shows the non-rebased (dirty) commit history from
+>> master.  Am I misunderstanding something with this?
+>
+> [snip]
+>
+> Maybe, to get a better understanding, you could use visualization tool
+> like "tig" or "gitk" to observe what happens to your commits (hashes)
+> and branches (labels) and just play around with some of these operations.
 
-You're right, two commits would be nicer. I was also thinking about
-splitting up the three codepaths, but I decided all of the
-clean-interaction belongs together.
+ Seb,
 
-> I'm also not convinced that
-> making this consistent with the less forgiving behavior of
-> "interactive adding" is desirable (rather the reverse: that that case
-> should be more flexible). However, I wasn't following the discussion
-> with Junio closely, and perhaps missed you two agreeing that this is
-> preferable.
+If you have a gui environment, the command
+  gitk --all
+will show you diagrams that will complement the explanations
+others have given you here. You must specify --all to see more
+than one branch.
 
-To summarize the discussion with Junio: We were not directly talking
-about that. Two aspects from the whole discussion were that I should
-decide something and justify a stance (which I did) and that it's also
-beneficial to think aloud (which I forgot).
-
-In fact, I was surprised, that interactive adding is that strict. I
-should've added that to the discussion. I am at the moment sometimes
-unsure whether I find things weird because git standards are different
-than what I'd expect or because things really should be changed. So I
-went for the former and decided to go for consistency with the base. I'd
-expect, from my own behaviour, interactive adding is used by far more
-than interactive cleaning, which might be an argument to adapt the latter.
-
-But now that we're discussing this, I don't really see a benefit from
-the user perspective, it's more code cleanup.
+And if you give a branch two names before rebasing one of those
+names, then you will easily be able to compare before and after.
