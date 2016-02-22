@@ -1,103 +1,98 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Mon, 22 Feb 2016 11:30:31 +0100
-Message-ID: <9D5C632B-0F4C-482A-9A05-056B3F878B79@gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com> <vpq37so26oz.fsf@anie.imag.fr> <CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com> <CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com> <CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com> <vpq8u2er7ae.fsf@anie.imag.fr> <CA+DCAeQWeUodaBtHOdzGB3RTZTQ672ZUSV-=eh-nA+8Bvn4gxw@mail.gmail.com> <vpq1t85rj44.fsf@anie.imag.fr> <CA+DCAeQGPqZvvn5RSA0UweM4sQLat-2OPo4BdEDyvUbq+eLi=w@mail.gmail.com> <5B6C5271-FC9E-409E-9410-CE699499901D@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Users <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	karthik nayak <Karthik.188@gmail.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 11:30:43 2016
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] tests: rename work-tree tests to *work-tree*
+Date: Mon, 22 Feb 2016 11:35:12 +0100
+Message-ID: <56CAE460.8010405@drmicha.warpmail.net>
+References: <2e74b7a8e3dd27ccd225b5278500f8a3e029d245.1455985042.git.git@drmicha.warpmail.net>
+ <xmqqfuwn9hyp.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 11:35:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXnlI-0004UK-K2
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 11:30:40 +0100
+	id 1aXnpu-0000SD-6n
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 11:35:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401AbcBVKaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 05:30:35 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35954 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754385AbcBVKae convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 05:30:34 -0500
-Received: by mail-wm0-f49.google.com with SMTP id g62so165073419wme.1
-        for <git@vger.kernel.org>; Mon, 22 Feb 2016 02:30:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RqMqSYvqbNK9yCI9EpYaC5BD4ZwgenaXRImfhyC9T64=;
-        b=EoFHEFl2+HAgIzcouNZtU+kmvaKLCt76/0ZnazlxZhFcui6+mHsKJyRpS3KbM7kH5i
-         BHRioJUVHrRpEK+0L8ia+5BBC1wZrRnTzds9U+5wIN7u5uoNK5QJXE1+1Bp3pA23odc4
-         6gBxEZwpZ2VEZb8dhN8CLuy++BpLj8lUXpLvqbqfa7fe79QAI4zPAubAAbBxnqnvlrrq
-         6q28S6ON1CEO8nWJdX+JEgfxBoRXt+Fkl1xhrpONGeMBrfGP/jvNetueDWOP1/sewgv/
-         7tloiyZTWOG6KZARHfta/QTYLAwxT3RX38CNrPny/OOM7SZ4f1C83fWbh9NPQ2LDZs99
-         7vzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:content-type:mime-version:subject:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to;
-        bh=RqMqSYvqbNK9yCI9EpYaC5BD4ZwgenaXRImfhyC9T64=;
-        b=WkhdPBFg/v0J7I03xmCOsgLrxhka3V9hoNYjkbQMlQxKM9vzL3xQwIGyvFxvdrbAKB
-         1dOEvEKVlxptGxGmn5xd1wjjChwLLfduT3SVGjpD1qaw0CSUGK5mzj/8PGbNbO2zez7Y
-         8PWLGnvCt77rgB7JC64A807d9i74HSkd7ZJswRcnzpWtiJvSoBPnqT8epDecwmMoqDNV
-         O8HDXzqonIyhDrC34yKu2cqir6EzDlKWk4k6+mj/69E408N5BXt+T0kBpUDg9rjv9/ts
-         M+X2A3gZhTtGvHUT9tZB7GAexb7PkJI14MFcm/vy+j7zAtAbkYZS9EISvYJnYXC7Qq9m
-         kJGA==
-X-Gm-Message-State: AG10YORVGtU7TkFsOSJ06kwisTaw0Ppmh7FCMlbmN1C712P+fViAdoCIrIIv2qxjH6YczQ==
-X-Received: by 10.194.115.132 with SMTP id jo4mr8041141wjb.156.1456137033142;
-        Mon, 22 Feb 2016 02:30:33 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id ka4sm23967527wjc.47.2016.02.22.02.30.32
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Feb 2016 02:30:32 -0800 (PST)
-In-Reply-To: <5B6C5271-FC9E-409E-9410-CE699499901D@gmail.com>
-X-Mailer: Apple Mail (2.3112)
+	id S1754404AbcBVKfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 05:35:19 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60103 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754300AbcBVKfR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 05:35:17 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8E3D4207D8
+	for <git@vger.kernel.org>; Mon, 22 Feb 2016 05:35:14 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Mon, 22 Feb 2016 05:35:14 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=TE/hiN/nfjyUj9fIOkQupbxyZ7k=; b=FBsAh1
+	PQouTCJI6yLtyx+FbBHRFY27J8WXt2QoaaC8blRreqOp8KWJoUmJrvMG4wvZtVM6
+	oRKh50LdphCor1HijRowELLlzayatJa74Ya0MyzFcqnxM9LaOAoryZRRaubJ89kH
+	sYct/WHjd62sExeEHXoykb3gdJUa7QjiDeMM8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=TE/hiN/nfjyUj9f
+	IOkQupbxyZ7k=; b=mVX4v8SjBJRdG0E1hS+/q5i4rWc3sSDkybsUlTOfd+kbt0A
+	OcFzx3WYQOFHbueJf0pfEGtprBtOsAQ6EX5LgvWWcCuZAPgX/GCWDSWlSSiT5G1j
+	wMUylUhoClp/QdNuTsEoXONf/E8fqYQ6lV6K3eAtSkEUuOn+jk2xFeXSDvnk=
+X-Sasl-enc: tyTe7aXBGAa+YWQ2ct/bgAsooJvNhvlAEnbBdmSVJgu2 1456137314
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 084FC6800A5;
+	Mon, 22 Feb 2016 05:35:13 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <xmqqfuwn9hyp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286907>
 
+Junio C Hamano venit, vidit, dixit 20.02.2016 22:42:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> "Work tree" or "working tree" is the name of a checked out tree,
+>> "worktree" the name of the command which manages several working trees.
+>> The naming of tests mixes these two, currently:
+>>
+>> $ls t/*worktree*
+>> ...
+>> Rename t1501, t1509 and t7409 to make it clear on first glance that they
+>> test work tree related behavior, rather than the worktree command.
+>>
+>> t2104, t7011 and t7012 are about the "skip-worktree" flag so that their
+>> name should remain unchanged.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>> Just some housekeeping. Not super necessary, but should make it easier to find
+>> the right test to amend, for example.
+> 
+> That is rather unfortunate.  Most of them predate the "worktree"
+> subcommand, I think, and having to rename them merely because a
+> subcommand with a confusing name appeared sound somewhat backwards.
 
-> On 22 Feb 2016, at 11:21, Lars Schneider <larsxschneider@gmail.com> wrote:
-> 
-> 
->> On 22 Feb 2016, at 11:12, Mehul Jain <mehul.jain2029@gmail.com> wrote:
->> 
->> On Mon, Feb 22, 2016 at 12:22 AM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>> The simplest way to get back on track for you is probably to start over
->>> with a fresh clone, or (warning: destructive operations): use git clean
->>> to remove untracked files.
->> 
->> Hello Matthieu,
->> 
->> I followed your advise and cloned a fresh copy of git source code.
->> After compiling it and running the test with " prove --timer --jobs 15
->> ./t[0-9]*.sh" command, I received tests failure. All these tests are
->> regarding HTTP protocol being invoked like
->> t5539-fetch-http-shallow.sh.
->> 
->> I'm behind a proxy server which blocks all ports except 80 and 443.
->> Also my .gitconfig file is properly configured for proxy. Can these
->> tests failure be triggered because of proxy server?
->> 
-> 
-> Hi Mehul,
-> 
-> please try this:
-> https://github.com/git/git.github.io/commit/9754cb22aeacf37fe341c5b3fde88f2a79e0ea24
-> 
-Oops.. I am sorry. I should have read your email more closely. t5539 is not yet executed on Travis-CI...
-But it wouldn't be too hard to add ;-)
+The question is: What ist the way forward?
 
-Cheers,
-Lars
+I was looking for a proper place for a "git worktree" test and got
+confused by the status quo. My suggestion is one way to help that
+confusion, but I'd be happy to learn other ways. "grep" is an answer, too.
+
+Maybe it's also time to admit that the numbering and naming scheme in t/
+don't scale and that we should rather support other means of navigating
+t/, such as standardizing a comment boiler plate in each test or such.
+
+In fact, giving up on the numbering scheme would allow to regroup tests
+more easily because there would be no room constraint any more (within a
+fixed finite set of numbers).
+
+Michael
