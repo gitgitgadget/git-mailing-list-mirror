@@ -1,144 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] t3034: add rename threshold tests
-Date: Mon, 22 Feb 2016 11:03:50 -0800
-Message-ID: <xmqqh9h07ejt.fsf@gitster.mtv.corp.google.com>
-References: <1456095545-20201-1-git-send-email-felipegassis@gmail.com>
-	<1456095545-20201-3-git-send-email-felipegassis@gmail.com>
+Subject: Re: [PATCH v2 5/6] remote: read $GIT_DIR/branches/* with strbuf_getline()
+Date: Mon, 22 Feb 2016 11:09:18 -0800
+Message-ID: <xmqqa8ms7eap.fsf@gitster.mtv.corp.google.com>
+References: <56CA5DBB.8040006@moritzneeb.de> <56CA62D3.7060808@moritzneeb.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	sunshine@sunshineco.com,
-	Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis 
-	<felipegassis@gmail.com>
-To: =?utf-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 20:04:17 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Moritz Neeb <lists@moritzneeb.de>
+X-From: git-owner@vger.kernel.org Mon Feb 22 20:09:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXvmI-0001W4-2F
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 20:04:14 +0100
+	id 1aXvrJ-00075K-AU
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 20:09:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752114AbcBVTEI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 14:04:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61055 "EHLO
+	id S1752598AbcBVTJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 14:09:22 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61540 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751907AbcBVTDw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 14:03:52 -0500
+	with ESMTP id S1752098AbcBVTJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 14:09:21 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A160472DB;
-	Mon, 22 Feb 2016 14:03:52 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5DF5D4748F;
+	Mon, 22 Feb 2016 14:09:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=QwfuT2qQAnH3
-	q6ZndYvt8LHy9NU=; b=M+X9LWQeoyDkF0BV6jvbAMGhq3qb6mpJ4WnGqhUlQJiY
-	ZvW1DHYdlUk0GXND6utQspo2lwAfJ0us5l9SZW7i/HeSgNN3HPID7ohHzN0pFOGB
-	PlfLOku8jxUZsanTsO0VKXE8mbNUHgHGvkLOQIHlwQ4R1y09sBVpNFbPNPvlCcc=
+	:content-type; s=sasl; bh=3HUGz+AOYGV7f9qaZ65TgcLX8Kk=; b=ofyxn+
+	8akVxEMhrWJLx7WfpvzExCLPFnvlo/2YGrYD9WK/itR7GWmUx+njVfyalISVbjWy
+	1GOKBgjWGEfGABApW0VW3usGBTj0ZgVhJb/eAjDCvgbZLH4Hs61q6Z8YdFWSGfEY
+	YDoaz3+ftLmJriRdfHmUR8hAawehpQ0PqdlIw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iYyyms
-	jjFUO/UI7Ro5XBV04tfhUKop7wQMjP2UwT7RU8IRwXwhNDKY0de2WBpP/d2zDyo5
-	ghCgyMPL03CGEaDzuh4cgw3RrgvzbIKuBm59lvyfCtcJ9Qf8hVZXA3QcWRVUzx+K
-	ddGO4wU+x7HurM2voRz2zopJLURj5qVpX1ouM=
+	:content-type; q=dns; s=sasl; b=FBqB8Mn2kfpAvhaPZjBunf2mYSJFQG7m
+	Ea12O93N3FgC1C1R1dAWkysN4y6gddlcuyPxA/fgrrYDPR9owTp1rD/1mb73X6fJ
+	BsY/V4oD2XSvSU0GkuAdHQLteB7zYWxLkkA0JBrL6W54Za0fGKT++GLrrdlNp590
+	8IOSljrpOlk=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21024472DA;
-	Mon, 22 Feb 2016 14:03:52 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53F804748D;
+	Mon, 22 Feb 2016 14:09:20 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 90BDE472D8;
-	Mon, 22 Feb 2016 14:03:51 -0500 (EST)
-In-Reply-To: <1456095545-20201-3-git-send-email-felipegassis@gmail.com>
-	("Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis"'s message of "Sun, 21 Feb 2016
- 19:59:02
-	-0300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BC60C4748C;
+	Mon, 22 Feb 2016 14:09:19 -0500 (EST)
+In-Reply-To: <56CA62D3.7060808@moritzneeb.de> (Moritz Neeb's message of "Mon,
+	22 Feb 2016 02:22:27 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 02DE76D2-D997-11E5-86E5-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C67A3720-D997-11E5-83D0-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286944>
 
-"Felipe Gon=C3=A7alves Assis"  <felipeg.assis@gmail.com> writes:
+Moritz Neeb <lists@moritzneeb.de> writes:
 
-> 10ae752 (merge-recursive: option to specify rename threshold,
-> 2010-09-27) introduced this feature but did not include any tests.
+> The line read from the branch file is directly trimmed after reading with
+> strbuf_trim(). There is thus no logic expecting CR, so strbuf_getline_lf()
+> can be replaced by its CRLF counterpart.
 >
-> The tests use the new option --find-renames, which replaces the then
-> introduced and now deprecated option --rename-threshold.
-> ...
-> diff --git a/t/t3034-merge-recursive-rename-options.sh b/t/t3034-merg=
-e-recursive-rename-options.sh
-> new file mode 100755
-> index 0000000..7ae7f83
-> --- /dev/null
-> +++ b/t/t3034-merge-recursive-rename-options.sh
-> @@ -0,0 +1,159 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'merge-recursive rename options
-> +
-> +Test rename detection by examining rename/delete conflicts.
-> +
-> +Similarity index:
-> +R100 a-old a-new
-> +R075 b-old b-new
-> +R050 c-old c-new
-> +R025 d-old d-new
-> +'
-> ...
-> +test_expect_success setup '
-> +	cat <<-\EOF >a-old &&
-> +	aa1
-> +	aa2
-> +	aa3
-> +	aa4
-> +	EOF
-> +	sed s/aa/bb/ <a-old >b-old &&
-> +	sed s/aa/cc/ <a-old >c-old &&
-> +	sed s/aa/dd/ <a-old >d-old &&
-> +	git add [a-d]-old &&
-> +	git commit -m base &&
-> +	git rm [a-d]-old &&
-> +	git commit -m delete &&
-> +	git checkout -b rename HEAD^ &&
-> +	cp a-old a-new &&
-> +	sed 1,1s/./x/ <b-old >b-new &&
-> +	sed 1,2s/./x/ <c-old >c-new &&
-> +	sed 1,3s/./x/ <d-old >d-new &&
-> +	git add [a-d]-new &&
-> +	git rm [a-d]-old &&
-> +	git commit -m rename &&
-> +	get_expected_stages a &&
-> +	get_expected_stages b &&
-> +	get_expected_stages c &&
-> +	get_expected_stages d
-> +'
+> Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
+> ---
+> To be honest, I did not yet fully understand the purpose of this branches/ file.
+> What I'd expect is that it is some intermediary file while fetching?
+> Or is it edited directly by the user and thus it's necessary to strip spaces
+> that could be added accidentally?
 
-I somehow doubt that it is wise to make the similarity index
-computed by the current heuristics as a hard promise like this test
-does.
+[Documentation/gitrepository-layout.txt]
 
-This test specifies that turning the original bb1/bb2/bb3/bb4 into
-updated xb1/bb2/bb3/bb4 _MUST_ get 75% similarity, but that is not
-something we want to guarantee, ever.  We may later update the
-algorithm and tweak such a change to register 70% or 78%, but such a
-change would break the expectation by this test.  This test script
-however should not be interested in the exact similarity index
-assignment for a given filepair--it only wants to make sure that the
-option chooses the filepair with similarity index above the given
-value.
-
-The test for --find-renames=3D<num> should instead only validate that
-the code works on the value given from the command line relative to
-the similarity index the code computed.  I.e. first measure what the
-similarity index going from b-old to b-new is (e.g. it may say 76%,
-or 74%, depending on the version of Git being tested), then choose a
-value that is higher (or lower) than that similarity to give to
-the --find-renames=3D<num> option and ensure that merge-recursive does
-what is expected.
-
-I am not very happy with this one.
+branches::
+	A slightly deprecated way to store shorthands to be used
+	to specify a URL to 'git fetch', 'git pull' and 'git push'.
+	A file can be stored as `branches/<name>` and then
+	'name' can be given to these commands in place of
+	'repository' argument.  See the REMOTES section in
+	linkgit:git-fetch[1] for details.  This mechanism is legacy
+	and not likely to be found in modern repositories. This
+	directory is ignored if $GIT_COMMON_DIR is set and
+	"$GIT_COMMON_DIR/branches" will be used instead.
