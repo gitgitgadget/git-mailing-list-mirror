@@ -1,73 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: Microproject
-Date: Sun, 21 Feb 2016 05:55:53 +0100
-Message-ID: <vpq8u2er7ae.fsf@anie.imag.fr>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
-	<vpq37so26oz.fsf@anie.imag.fr>
-	<CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
-	<CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
-	<CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 09:58:14 2016
+From: larsxschneider@gmail.com
+Subject: [PATCH v6 squash 0/2] config: add '--sources' option to print the source of a config value
+Date: Mon, 22 Feb 2016 10:23:44 +0100
+Message-ID: <1456133026-15355-1-git-send-email-larsxschneider@gmail.com>
+References: <xmqqd1rsd0ac.fsf@gitster.mtv.corp.google.com>
+Cc: gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 10:24:05 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXmJq-0004wq-4I
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 09:58:14 +0100
+	id 1aXmil-0004Tv-EA
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 10:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbcBVI6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 03:58:10 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:60165 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751797AbcBVI6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 03:58:08 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1L4trSU015839
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 21 Feb 2016 05:55:54 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1L4trbM027499;
-	Sun, 21 Feb 2016 05:55:53 +0100
-In-Reply-To: <CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
-	(Mehul Jain's message of "Sat, 20 Feb 2016 20:13:40 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 21 Feb 2016 05:55:54 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1L4trSU015839
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1456635358.67332@gjwxzZAJlwrzMyN5cxRLeA
+	id S1754117AbcBVJX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 04:23:56 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35584 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752737AbcBVJXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 04:23:50 -0500
+Received: by mail-wm0-f43.google.com with SMTP id c200so160869737wme.0
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 01:23:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=SF9WjVLE4+vlnaJjTjrS80Rtw1YcCAr46i9dd9cSsjE=;
+        b=F9IO/7fEN9KnoF1JyhEHzz1eufFfhxsCtU4TDFgA3TAjirBTkxhumTNLCcBaCYvzkP
+         WaOS9kJ7NDQ4SY0KI2BMLOJ6TdZ5dgGAWC6T6/BtQk16OaxhJNzpUMPNt1g8jqfCOf5U
+         IMq9PZPfrtSTR227nj0/JiObDcJtA3u55t7vgtd+ri6+b9C6OXzDqvPpEWCtwXoZ7dhp
+         PeNJN/6bdB14gt67gpdtIhJLh3AtUgVR67ewQq0om9B3CyJh/5rUYaVVXYaARKrlduBZ
+         T/uLFTRjZhixoSpn0yYG2gQJkQCSYiEDm9aQFOxFzGNrBpnWMMh4nfNJg2XbN3Xasw7Y
+         5l1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=SF9WjVLE4+vlnaJjTjrS80Rtw1YcCAr46i9dd9cSsjE=;
+        b=QbbGvzoDr0yCsnzvmJXl+d6uN4sWWT5RSOrUZqz4Xwu0IJ0RLHQF1X38q9xcX/+0Fe
+         BAcyHn+Vly+8QlgQeVjWMQs7vgF713m7+6ensz0ewzmmUj7U29tEI80MZJv1YbGUEVlF
+         Inmw8qChZli/9XGUGdWFDqkbGlu1fo8ftj2Gbu3J75y/8eN8vlDrvQ0bVusXyUkTD2E+
+         HLOlv8oQ8C3q9+Z0HMFoQZiCBrIU24EtTgfq4R0Wakk2eqVJseQXknQYXsYaJAZteHPi
+         adK4wd+Sk+MrhaNSRXodCuQ8tyGEFHTSCC5931g1Vh6pEDSmUGGIWmpnrVbifcxlixB2
+         mMxw==
+X-Gm-Message-State: AG10YORFxp0FI+pl18do0N9f4Lejqwl84S2b/Ew2wko6Dj8pyGOKd53GnoTpAP3tMopE9Q==
+X-Received: by 10.194.185.144 with SMTP id fc16mr26520895wjc.123.1456133028999;
+        Mon, 22 Feb 2016 01:23:48 -0800 (PST)
+Received: from slxBook3.fritz.box (p5DDB49D4.dip0.t-ipconnect.de. [93.219.73.212])
+        by smtp.gmail.com with ESMTPSA id g126sm20054279wmf.16.2016.02.22.01.23.47
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 22 Feb 2016 01:23:48 -0800 (PST)
+X-Mailer: git-send-email 2.5.1
+In-Reply-To: <xmqqd1rsd0ac.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286896>
 
-Please, don't top-post on this list.
+From: Lars Schneider <larsxschneider@gmail.com>
 
-Mehul Jain <mehul.jain2029@gmail.com> writes:
+Hi Junio,
 
-> Hello,
->
-> I faced the following problem when I tested master branch. Here I have
-> made no commits to master branch.
+please squash these two patches into the corresponding patches from my v6
+to spell out end user facing messages (response to [1], sorry gmane didn't
+work for me).
 
-Are you sure that 1) you have no uncommitted change and 2) you have
-compiled what you have in your tree?
+I am not sure about the right way an answer with a "two patch" squash on
+the mailing list. Please let me know if I should reroll the topic with
+the squashed patches included.
 
-> Is this test failure usual with linux based system or just happened with me.
+Thanks,
+Lars
 
-All tests are supposed to pass. You can see the result of the Travis-CI
-builds there:
+[1] http://www.spinics.net/lists/git/msg268424.html
 
-  https://travis-ci.org/git/git/branches
+Lars Schneider (2):
+  fixup: config: add 'origin_type' to config_source struct
+  fixup: config: add '--show-origin' option to print the origin of a
+    config value
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ Documentation/git-config.txt | 5 +++--
+ builtin/config.c             | 2 +-
+ config.c                     | 4 ++--
+ t/t1300-repo-config.sh       | 8 ++++----
+ 4 files changed, 10 insertions(+), 9 deletions(-)
+
+--
+2.5.1
