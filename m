@@ -1,90 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] Tests and fixes for merge-recursive rename options
-Date: Mon, 22 Feb 2016 14:29:39 -0800
-Message-ID: <xmqqwppw4bvw.fsf@gitster.mtv.corp.google.com>
-References: <1456095545-20201-1-git-send-email-felipegassis@gmail.com>
-	<xmqqpovo5ul2.fsf@gitster.mtv.corp.google.com>
-	<CALMa68qmGie+AHOWZ=BKHZOeSK9K4djiHRuooCz2h72rNZg7_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis 
-	<felipegassis@gmail.com>
-To: Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis <felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:34:35 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 2/2] submodule: Try harder to fetch needed sha1 by direct fetching sha1
+Date: Mon, 22 Feb 2016 14:35:48 -0800
+Message-ID: <1456180548-20996-3-git-send-email-sbeller@google.com>
+References: <1456180548-20996-1-git-send-email-sbeller@google.com>
+Cc: gitster@pobox.com, Jens.Lehmann@web.de, dborowitz@google.com,
+	jacob.keller@gmail.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:37:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXz3r-0005fN-0m
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:34:35 +0100
+	id 1aXz6v-00088t-EG
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756329AbcBVWeQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 17:34:16 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756239AbcBVW3m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 17:29:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC27547D16;
-	Mon, 22 Feb 2016 17:29:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=F/TT8GCDzIqR
-	LpStSw2W3TOwD3Y=; b=sZZG3KckdmsD9HBO+/uzurOmzO7iMM8lduJqralIv2uD
-	947hUKOdr+Buy5MyjLx8rSwAN+P8GI5CLtGXakP9hPxR8tVrGIq5b2QbfenFrKf3
-	KzvNB9E3bZBC6leHTsr08VIk8anFwlGKlkP79CB6+bgYRJBpCssQR9+OiPKtvCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tB6PVK
-	2Jl2m2XU8CZeCrBG+ZY5qTDDZLf5SL0aV0A9DGf5Opvv+RhXIuwl9RSaBUUw+4EF
-	v+7R7GiVedmfj73e+6MJ2XG047TFPPDKF9uVJo9bIUV/I9zVRAIzrLmJ/SyrBzGD
-	2yTekQQjvKFuWPvaDe0pe85ubMUVEFbxGndww=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B2E9847D14;
-	Mon, 22 Feb 2016 17:29:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1DBAD47D13;
-	Mon, 22 Feb 2016 17:29:41 -0500 (EST)
-In-Reply-To: <CALMa68qmGie+AHOWZ=BKHZOeSK9K4djiHRuooCz2h72rNZg7_A@mail.gmail.com>
-	("Felipe =?utf-8?Q?Gon=C3=A7alves?= Assis"'s message of "Mon, 22 Feb 2016
- 19:16:09
-	-0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C3C2FF1E-D9B3-11E5-86DC-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756200AbcBVWhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 17:37:32 -0500
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35092 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755725AbcBVWh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 17:37:29 -0500
+Received: by mail-pf0-f178.google.com with SMTP id c10so103143768pfc.2
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 14:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wQohfx51gikHWm0s3jD9WiRpnrsip3R6qix1SuNrlKw=;
+        b=TdRMEM+E/hGHlGRuTspPKvwe11nMpi9Ztrm7Xy+BFJtQ72jx+hd1+Rj+20jOuh886O
+         5MlWFA3gbSu1kCNVUUa46+IhmKrZD4t1aXMrEM/3ZOcTHzoqQQ5RMQA1MdoKKP/94m5Y
+         QKxeosGqaLP3f0tTK24CECl4BiPCiQMw5dYoimYMenjc97SF4PKtSh0HgNmoYtiLy0DV
+         46H3mfSkCFFHuXJ3L1qGiuQegAlhIzKeoax3c/6qp4ooKjnjd2RqXcz83BhgzCCXjkpf
+         afErQAi7UtY1QUmKPzckKh1xvXLbQf4mgOjM17odzEFMBQZrl8CdQRGiU0UBCU6FLVEL
+         i6Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wQohfx51gikHWm0s3jD9WiRpnrsip3R6qix1SuNrlKw=;
+        b=gd+IKYQtwaPB75a6wlo+dYD+fIBg+6n7XGQaRrk6bXFPXte8M7Z1fQeOG6zx0romac
+         /7gBhlhz6vPTPxPxMI7CHdqE2c0fudansDtu3AYUydFXSL9uqBE1B6NJimgVjVoUtRRv
+         pwF6tNO8AOWApHI/Zu8A2SuKnqyEQq6ki/iv2TJ+btkoBTIGT9ANLuUbVxZS3CTagIWf
+         NklEyh2g+OL6V88dv5tGswLcCvRSUsdTFP0tAyODmSDhHLRvn3hJ6DPMuTkeRf/Gk3HK
+         ZSGEIGslW1/AUfauIth9HPVPPBGsmagvEsnmaOgVYVZUIX6QJw+lIMIHjIsLVZfwjsap
+         RKzw==
+X-Gm-Message-State: AG10YOREexfhezycWL4vWnzpsKKiNeb7Pdq8T7ngUlt4wMhO+dOJXZ9dJHGXlC2PWyfLsxGK
+X-Received: by 10.98.67.8 with SMTP id q8mr41580471pfa.133.1456180648793;
+        Mon, 22 Feb 2016 14:37:28 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:c420:8149:fd30:c3e3])
+        by smtp.gmail.com with ESMTPSA id tb10sm39360858pab.22.2016.02.22.14.37.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 22 Feb 2016 14:37:28 -0800 (PST)
+X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
+In-Reply-To: <1456180548-20996-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286966>
 
-=46elipe Gon=C3=A7alves Assis <felipeg.assis@gmail.com> writes:
+When reviewing a change in Gerrit, which also updates a submodule,
+a common review practice is to download and cherry-pick the patch locally
+to test it. However when testing it locally, the 'git submodule update'
+may fail fetching the correct submodule sha1 as the corresponding commit
+in the submodule is not yet part of the project history, but also just a
+proposed change.
 
->> As I said, I am reluctant to take the 25%/50%/75% tests in their
->> current form.  Let me take the first one and a half of the last one
->> (i.e. excluding the test) for now.
->>
->> Thanks.
->
-> Ok, should I post a new version of the patch without the tests while =
-I
-> rework them or does that mean that you have already filtered them out
-> locally?
+If $sha1 was not part of the default fetch, we try to fetch the $sha1
+directly. Some servers however do not support direct fetch by sha1, which
+leads git-fetch to fail quickly. We can fail ourselves here as the still
+missing sha1 would lead to a failure later in the checkout stage anyway,
+so failing here is as good as we can get.
 
-I already have and queued them tentatively as=20
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-    c443d39 merge-recursive: find-renames resets threshold
-    83837ec merge-strategies.txt: fix typo
+We may want to discuss the error message. It is the same as in the case
+before (git-fetch <no args>), this is good for translation, but may be bad
+for the user as we may want to give extra information.
+("We fetched for you and it worked, however the sha1 was not included,
+so we fetched again the server broke it, so we error out.  You used to
+see error message: ....")
 
-but they haven't been merged to 'next', so it is up to you whether
-you rebuild the remainder on top of c443d39 or redo these 5 patches
-altogether (just tell me to drop these two if you go the latter
-route).
+Although this may be too much information?
 
-Thanks.
+Thanks,
+Stefan
+
+ git-submodule.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index f5d6675..f021fe3 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -749,6 +749,13 @@ Maybe you want to use 'update --init'?")"
+ 					( (rev=$(git rev-list --objects -n 1 $sha1 --not --all 2>/dev/null) &&
+ 					 test -z "$rev") || git-fetch)) ||
+ 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
++
++				# In case the sha1 is still missing, try harder
++				# by fetching the sha1 directly.
++				(clear_local_git_env; cd "$sm_path" &&
++					( (rev=$(git rev-list --objects -n 1 $sha1 --not --all 2>/dev/null) &&
++					 test -z "$rev") || git-fetch $(get_default_remote) $sha1 )) ||
++				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
+ 			fi
+ 
+ 			# Is this something we just cloned?
+-- 
+2.7.0.rc0.34.ga06e0b3.dirty
