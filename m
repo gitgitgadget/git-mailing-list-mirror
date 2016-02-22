@@ -1,93 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] submodule: Include check for objects when fetching
-Date: Mon, 22 Feb 2016 14:54:53 -0800
-Message-ID: <xmqqoab84apu.fsf@gitster.mtv.corp.google.com>
-References: <1456180548-20996-1-git-send-email-sbeller@google.com>
-	<1456180548-20996-2-git-send-email-sbeller@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] diff: clarify textconv interface
+Date: Tue, 23 Feb 2016 06:01:47 +0700
+Message-ID: <CACsJy8Cg4cgCEqwo=9ujdTV8aw5CO-irVxOCanzBG4n7Nm-0kg@mail.gmail.com>
+References: <1456145545-5374-1-git-send-email-pclouds@gmail.com>
+ <1456145545-5374-3-git-send-email-pclouds@gmail.com> <20160222180645.GB4587@sigill.intra.peff.net>
+ <20160222182854.GA11732@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, dborowitz@google.com,
-	jacob.keller@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:55:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 23 00:02:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXzNd-00054d-RR
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:55:02 +0100
+	id 1aXzUp-0002KI-44
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 00:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756165AbcBVWy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 17:54:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55870 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756476AbcBVWy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 17:54:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F9D947289;
-	Mon, 22 Feb 2016 17:54:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PivFRReKJ2hTTaSQsnAUTwIAnV0=; b=lD8ZJz
-	EtFxdoCElTdCtHiH4bf9Y4DgY84PKNL2Xjrpsk45tMgSQZ+5u87nxRHIOCRKiHSU
-	4BdKL8TrStuInR7BCPQoluEMZa46cppENhtv98MMlGDqDpnrfuIdAcbGsn3v/sSs
-	fnFVyOZR2BIf8bTX6PBBhHAhn2iIIQwxgn3Ks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JnsbkjIrxF6Eqd8F8lnjhLcDZuV97gwp
-	Cz9PLeqjHhK7G10c9Q1i3qR2HpAtOL3In3gflhfK5+y5egtZECrosgeoQlTAn4O3
-	Ob7O6ZuFAfqCaywckqFl0lWQ8cqkAW2W/nfHMHu/kV+eTkLM/BwX6Sm40VYjfWsY
-	YGpCOG2Bkeo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4549447288;
-	Mon, 22 Feb 2016 17:54:55 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 95A1A47286;
-	Mon, 22 Feb 2016 17:54:54 -0500 (EST)
-In-Reply-To: <1456180548-20996-2-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 22 Feb 2016 14:35:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 49ED3520-D9B7-11E5-B3BB-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1756239AbcBVXCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 18:02:21 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:32780 "EHLO
+	mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752980AbcBVXCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 18:02:18 -0500
+Received: by mail-lf0-f52.google.com with SMTP id m1so105052557lfg.0
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 15:02:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=eI//l8dJlzg4CG3Pk2N9NEtkG+IH3ITvufwmXkOVC3s=;
+        b=YWYUtAYmTigF+Ikp4cw/7X4v/IW/SQp4ROOQ5+ua9hj68gQzwLd5TTYAe4Qg0XVStQ
+         +8Vc+1pRON+2hk92IKObRsJ3aD6In/Jmz/2RmdYPp04FINLATO6Cj9NLGMY8adVjcl34
+         rXhqTJg8ex3LO59ztAwCKCVw1e7svnIRbVwz2bmWeE3nw36NhV7iFqUVYgl+HcBRKsb+
+         pMOjYwUdyv3216BPcrSGYDHfFRkbseOZGVXnumwF2SMDujFl/Uc5tMlCEDcFVejf/lIc
+         N59Di+1HDcU0lf5+decETR19y4QTB2JiEpQNLYwQ/fRxAzss2xwz6v76t+8A2C1LF+SA
+         LGqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=eI//l8dJlzg4CG3Pk2N9NEtkG+IH3ITvufwmXkOVC3s=;
+        b=Wf6iOUYpb/t8KzTDLCRPxDxMy5PQpg0eQbgTQpRuPzTAEaH+nFJXCj4LTof2EIGafm
+         TZqZ3vrgk/AHh2P+GqBmZVGs0i7gGvzeHOZE3HAFxrghx18wmUSS0WR5sz4gSnqrf97d
+         /r5oXGwDBbb2iFIokgmnBYCPnNQuWK2BeiVIHo4F8UX3oLfdZ7dE7inI1IkB8hx1k5+J
+         gd4Echz3UMRk3tEaq/prL7WX0urhis9aZQox569R/BsBGqQ87sWzlkFFJB5+tgnhCKFc
+         WunegyhGJLffbTK39n5Rgd2jsWdYNCtUIbjLWkkfO0xVe+B5pXfC46wq7WY6BT0QlGWe
+         E2Jg==
+X-Gm-Message-State: AG10YOSMyjqaBHZ0PGW6kzzUmGG85l8lkQbHRGMjrF10fZNlfpxJi0trtIlhgYQmQCutZ0Et8JdIV2keMzdUIw==
+X-Received: by 10.25.4.7 with SMTP id 7mr10897201lfe.45.1456182136973; Mon, 22
+ Feb 2016 15:02:16 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Mon, 22 Feb 2016 15:01:47 -0800 (PST)
+In-Reply-To: <20160222182854.GA11732@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286995>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Junio wrote:
->> To be complete, the rev-list command line should also run with
->> "--objects"; after all, a commit walker fetch may have downloaded
->> commit chain completely but haven't fetched necessary trees and
->> blobs when it was killed, and "rev-list $sha1 --not --all" would not
->> catch such a breakage without "--objects".
+On Tue, Feb 23, 2016 at 1:28 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 22, 2016 at 01:06:45PM -0500, Jeff King wrote:
 >
-> By adding the --objects switch to rev-list we make sure to do a complete
-> check.
-
-You also need to drop "-n1" for the command to be equivalent to
-quickfetch, I think.
-
+>> I have a feeling you were confused by the fact that fill_textconv()
+>> does:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  git-submodule.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Looking over it, I agree this is a pretty confusing interface that grew
+> out of control over time.  But refactoring it is kind of tricky, because
+> we really do want to avoid extra allocations, or cross-module
+> assumptions (e.g., userdiff doesn't know about diff_filespec, but rather
+> the other way around, and we probably do not want to muck with the
+> internals of a diff_filespec when doing a textconv).
 >
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 9bc5c5f..f5d6675 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -746,7 +746,7 @@ Maybe you want to use 'update --init'?")"
->  				# Run fetch only if $sha1 isn't present or it
->  				# is not reachable from a ref.
->  				(clear_local_git_env; cd "$sm_path" &&
-> -					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
-> +					( (rev=$(git rev-list --objects -n 1 $sha1 --not --all 2>/dev/null) &&
->  					 test -z "$rev") || git-fetch)) ||
->  				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
->  			fi
+> So I think the patch below is an improvement, but if somebody really
+> wants to dig into refactoring it, be my guest.
+
+I almost went this way but I wasn't sure if driver->textconv can be
+NULL on purpose. Definitely an improvement.
+-- 
+Duy
