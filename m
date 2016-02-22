@@ -1,728 +1,566 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 08/22] convert trivial cases to ALLOC_ARRAY
-Date: Mon, 22 Feb 2016 17:44:25 -0500
-Message-ID: <20160222224425.GH10075@sigill.intra.peff.net>
+Subject: [PATCH v3 11/22] use st_add and st_mult for allocation size
+ computation
+Date: Mon, 22 Feb 2016 17:44:35 -0500
+Message-ID: <20160222224435.GK10075@sigill.intra.peff.net>
 References: <20160222224059.GA3857@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 23:44:36 2016
+X-From: git-owner@vger.kernel.org Mon Feb 22 23:44:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXzDV-00051t-JE
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:44:34 +0100
+	id 1aXzDe-0005B4-PN
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 23:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082AbcBVWo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 17:44:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47074 "HELO cloud.peff.net"
+	id S1756092AbcBVWok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 17:44:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47089 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756015AbcBVWo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 17:44:27 -0500
-Received: (qmail 21670 invoked by uid 102); 22 Feb 2016 22:44:27 -0000
+	id S1752980AbcBVWoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 17:44:38 -0500
+Received: (qmail 21702 invoked by uid 102); 22 Feb 2016 22:44:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:27 -0500
-Received: (qmail 23045 invoked by uid 107); 22 Feb 2016 22:44:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:38 -0500
+Received: (qmail 23086 invoked by uid 107); 22 Feb 2016 22:44:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:44:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 17:44:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 17:44:35 -0500
 Content-Disposition: inline
 In-Reply-To: <20160222224059.GA3857@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286980>
 
-Each of these cases can be converted to use ALLOC_ARRAY or
-REALLOC_ARRAY, which has two advantages:
-
-  1. It automatically checks the array-size multiplication
-     for overflow.
-
-  2. It always uses sizeof(*array) for the element-size,
-     so that it can never go out of sync with the declared
-     type of the array.
+If our size computation overflows size_t, we may allocate a
+much smaller buffer than we expected and overflow it. It's
+probably impossible to trigger an overflow in most of these
+sites in practice, but it is easy enough convert their
+additions and multiplications into overflow-checking
+variants. This may be fixing real bugs, and it makes
+auditing the code easier.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- alias.c                  |  2 +-
- attr.c                   |  2 +-
- bisect.c                 |  4 ++--
- builtin/blame.c          |  3 ++-
- builtin/clean.c          |  2 +-
- builtin/fast-export.c    |  2 +-
- builtin/index-pack.c     |  4 ++--
- builtin/merge-base.c     |  2 +-
- builtin/mv.c             |  3 ++-
- builtin/pack-objects.c   |  7 ++++---
- builtin/pack-redundant.c |  2 +-
- builtin/receive-pack.c   |  5 ++---
- column.c                 |  2 +-
- combine-diff.c           |  4 ++--
- commit.c                 |  2 +-
- compat/mingw.c           |  6 +++---
- diffcore-order.c         |  4 ++--
- dir.c                    |  6 +++---
- fast-import.c            |  5 +++--
- fsck.c                   |  3 ++-
- graph.c                  | 10 ++++------
- khash.h                  |  2 +-
- levenshtein.c            |  8 +++++---
- line-log.c               |  8 ++++----
- notes.c                  |  2 +-
- pack-check.c             |  2 +-
- pack-revindex.c          | 12 ++++++++----
- pathspec.c               |  5 +++--
- remote-curl.c            |  3 ++-
- sha1_file.c              |  4 ++--
- shallow.c                |  6 +++---
- show-index.c             |  3 ++-
- transport.c              |  2 +-
- xdiff-interface.c        |  2 +-
- 34 files changed, 75 insertions(+), 64 deletions(-)
+ archive.c              |  4 ++--
+ builtin/apply.c        |  2 +-
+ builtin/clean.c        |  2 +-
+ builtin/fetch.c        |  2 +-
+ builtin/index-pack.c   |  4 ++--
+ builtin/merge.c        |  2 +-
+ builtin/mv.c           |  4 ++--
+ builtin/receive-pack.c |  2 +-
+ combine-diff.c         | 14 +++++++-------
+ commit.c               |  2 +-
+ compat/mingw.c         |  4 ++--
+ compat/qsort.c         |  2 +-
+ compat/setenv.c        |  2 +-
+ compat/win32/syslog.c  |  4 ++--
+ diffcore-delta.c       |  6 ++++--
+ diffcore-rename.c      |  2 +-
+ dir.c                  |  4 ++--
+ fast-import.c          |  2 +-
+ refs.c                 |  2 +-
+ remote.c               |  8 ++++----
+ revision.c             |  2 +-
+ sha1_file.c            | 20 +++++++++++---------
+ sha1_name.c            |  5 ++---
+ shallow.c              |  2 +-
+ submodule.c            |  6 +++---
+ 25 files changed, 56 insertions(+), 53 deletions(-)
 
-diff --git a/alias.c b/alias.c
-index a11229d..3b90397 100644
---- a/alias.c
-+++ b/alias.c
-@@ -23,7 +23,7 @@ int split_cmdline(char *cmdline, const char ***argv)
- 	int src, dst, count = 0, size = 16;
- 	char quoted = 0;
- 
--	*argv = xmalloc(sizeof(**argv) * size);
-+	ALLOC_ARRAY(*argv, size);
- 
- 	/* split alias_string */
- 	(*argv)[count++] = cmdline;
-diff --git a/attr.c b/attr.c
-index 086c08d..c83ec49 100644
---- a/attr.c
-+++ b/attr.c
-@@ -799,7 +799,7 @@ int git_all_attrs(const char *path, int *num, struct git_attr_check **check)
- 			++count;
- 	}
- 	*num = count;
--	*check = xmalloc(sizeof(**check) * count);
-+	ALLOC_ARRAY(*check, count);
- 	j = 0;
- 	for (i = 0; i < attr_nr; i++) {
- 		const char *value = check_all_attr[i].value;
-diff --git a/bisect.c b/bisect.c
-index 06ec54e..7996c29 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -708,10 +708,10 @@ static struct commit *get_commit_reference(const unsigned char *sha1)
- 
- static struct commit **get_bad_and_good_commits(int *rev_nr)
+diff --git a/archive.c b/archive.c
+index 0687afa..5d735ae 100644
+--- a/archive.c
++++ b/archive.c
+@@ -171,8 +171,8 @@ static void queue_directory(const unsigned char *sha1,
+ 		unsigned mode, int stage, struct archiver_context *c)
  {
--	int len = 1 + good_revs.nr;
--	struct commit **rev = xmalloc(len * sizeof(*rev));
-+	struct commit **rev;
- 	int i, n = 0;
+ 	struct directory *d;
+-	size_t len = base->len + 1 + strlen(filename) + 1;
+-	d = xmalloc(sizeof(*d) + len);
++	size_t len = st_add4(base->len, 1, strlen(filename), 1);
++	d = xmalloc(st_add(sizeof(*d), len));
+ 	d->up	   = c->bottom;
+ 	d->baselen = base->len;
+ 	d->mode	   = mode;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index d61ac65..42c610e 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -2632,7 +2632,7 @@ static void update_image(struct image *img,
+ 	insert_count = postimage->len;
  
-+	ALLOC_ARRAY(rev, 1 + good_revs.nr);
- 	rev[n++] = get_commit_reference(current_bad_oid->hash);
- 	for (i = 0; i < good_revs.nr; i++)
- 		rev[n++] = get_commit_reference(good_revs.sha1[i]);
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 55bf5fa..b4ed462 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2059,7 +2059,8 @@ static int prepare_lines(struct scoreboard *sb)
- 	for (p = buf; p < end; p = get_next_line(p, end))
- 		num++;
- 
--	sb->lineno = lineno = xmalloc(sizeof(*sb->lineno) * (num + 1));
-+	ALLOC_ARRAY(sb->lineno, num + 1);
-+	lineno = sb->lineno;
- 
- 	for (p = buf; p < end; p = get_next_line(p, end))
- 		*lineno++ = p - buf;
+ 	/* Adjust the contents */
+-	result = xmalloc(img->len + insert_count - remove_count + 1);
++	result = xmalloc(st_add3(st_sub(img->len, remove_count), insert_count, 1));
+ 	memcpy(result, img->buf, applied_at);
+ 	memcpy(result + applied_at, postimage->buf, postimage->len);
+ 	memcpy(result + applied_at + postimage->len,
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 7b08237..8229f7e 100644
+index 8229f7e..0371010 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -543,7 +543,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
- 	int eof = 0;
- 	int i;
+@@ -615,7 +615,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
+ 				nr += chosen[i];
+ 		}
  
--	chosen = xmalloc(sizeof(int) * stuff->nr);
-+	ALLOC_ARRAY(chosen, stuff->nr);
- 	/* set chosen as uninitialized */
- 	for (i = 0; i < stuff->nr; i++)
- 		chosen[i] = -1;
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 2471297..8164b58 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -1021,7 +1021,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		const char **refspecs_str;
+-		result = xcalloc(nr + 1, sizeof(int));
++		result = xcalloc(st_add(nr, 1), sizeof(int));
+ 		for (i = 0; i < stuff->nr && j < nr; i++) {
+ 			if (chosen[i])
+ 				result[j++] = i;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 8e74213..373a89d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1110,7 +1110,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 	if (argc > 0) {
+ 		int j = 0;
  		int i;
- 
--		refspecs_str = xmalloc(sizeof(*refspecs_str) * refspecs_list.nr);
-+		ALLOC_ARRAY(refspecs_str, refspecs_list.nr);
- 		for (i = 0; i < refspecs_list.nr; i++)
- 			refspecs_str[i] = refspecs_list.items[i].string;
- 
+-		refs = xcalloc(argc + 1, sizeof(const char *));
++		refs = xcalloc(st_add(argc, 1), sizeof(const char *));
+ 		for (i = 0; i < argc; i++) {
+ 			if (!strcmp(argv[i], "tag")) {
+ 				i++;
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 6a01509..a60bcfa 100644
+index a60bcfa..193908a 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1346,7 +1346,7 @@ static void fix_unresolved_deltas(struct sha1file *f)
- 	 * before deltas depending on them, a good heuristic is to start
- 	 * resolving deltas in the same order as their position in the pack.
- 	 */
--	sorted_by_pos = xmalloc(nr_ref_deltas * sizeof(*sorted_by_pos));
-+	ALLOC_ARRAY(sorted_by_pos, nr_ref_deltas);
- 	for (i = 0; i < nr_ref_deltas; i++)
- 		sorted_by_pos[i] = &ref_deltas[i];
- 	qsort(sorted_by_pos, nr_ref_deltas, sizeof(*sorted_by_pos), delta_pos_compare);
-@@ -1759,7 +1759,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+@@ -1744,9 +1744,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 
+ 	curr_pack = open_pack_file(pack_name);
+ 	parse_pack_header();
+-	objects = xcalloc(nr_objects + 1, sizeof(struct object_entry));
++	objects = xcalloc(st_add(nr_objects, 1), sizeof(struct object_entry));
  	if (show_stat)
- 		show_pack_info(stat_only);
+-		obj_stat = xcalloc(nr_objects + 1, sizeof(struct object_stat));
++		obj_stat = xcalloc(st_add(nr_objects, 1), sizeof(struct object_stat));
+ 	ofs_deltas = xcalloc(nr_objects, sizeof(struct ofs_delta_entry));
+ 	parse_pack_objects(pack_sha1);
+ 	resolve_deltas();
+diff --git a/builtin/merge.c b/builtin/merge.c
+index b98a348..101ffef 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -939,7 +939,7 @@ static int setup_with_upstream(const char ***argv)
+ 	if (!branch->merge_nr)
+ 		die(_("No default upstream defined for the current branch."));
  
--	idx_objects = xmalloc((nr_objects) * sizeof(struct pack_idx_entry *));
-+	ALLOC_ARRAY(idx_objects, nr_objects);
- 	for (i = 0; i < nr_objects; i++)
- 		idx_objects[i] = &objects[i].idx;
- 	curr_index = write_idx_file(index_name, idx_objects, nr_objects, &opts, pack_sha1);
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index a891162..c0d1822 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -252,7 +252,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
- 	if (argc < 2)
- 		usage_with_options(merge_base_usage, options);
- 
--	rev = xmalloc(argc * sizeof(*rev));
-+	ALLOC_ARRAY(rev, argc);
- 	while (argc-- > 0)
- 		rev[rev_nr++] = get_commit_reference(*argv++);
- 	return show_merge_base(rev, rev_nr, show_all);
+-	args = xcalloc(branch->merge_nr + 1, sizeof(char *));
++	args = xcalloc(st_add(branch->merge_nr, 1), sizeof(char *));
+ 	for (i = 0; i < branch->merge_nr; i++) {
+ 		if (!branch->merge[i]->dst)
+ 			die(_("No remote-tracking branch for %s from %s"),
 diff --git a/builtin/mv.c b/builtin/mv.c
-index d1d4316..9a9813a 100644
+index 9a9813a..aeae855 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -24,7 +24,8 @@ static const char **internal_copy_pathspec(const char *prefix,
- 					   int count, unsigned flags)
+@@ -48,9 +48,9 @@ static const char **internal_copy_pathspec(const char *prefix,
+ 
+ static const char *add_slash(const char *path)
  {
- 	int i;
--	const char **result = xmalloc((count + 1) * sizeof(const char *));
-+	const char **result;
-+	ALLOC_ARRAY(result, count + 1);
- 	memcpy(result, pathspec, count * sizeof(const char *));
- 	result[count] = NULL;
- 	for (i = 0; i < count; i++) {
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 4dae5b1..b4f1fa6 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -624,7 +624,7 @@ static struct object_entry **compute_write_order(void)
- {
- 	unsigned int i, wo_end, last_untagged;
- 
--	struct object_entry **wo = xmalloc(to_pack.nr_objects * sizeof(*wo));
-+	struct object_entry **wo;
- 	struct object_entry *objects = to_pack.objects;
- 
- 	for (i = 0; i < to_pack.nr_objects; i++) {
-@@ -657,6 +657,7 @@ static struct object_entry **compute_write_order(void)
- 	 * Give the objects in the original recency order until
- 	 * we see a tagged tip.
- 	 */
-+	ALLOC_ARRAY(wo, to_pack.nr_objects);
- 	for (i = wo_end = 0; i < to_pack.nr_objects; i++) {
- 		if (objects[i].tagged)
- 			break;
-@@ -769,7 +770,7 @@ static void write_pack_file(void)
- 
- 	if (progress > pack_to_stdout)
- 		progress_state = start_progress(_("Writing objects"), nr_result);
--	written_list = xmalloc(to_pack.nr_objects * sizeof(*written_list));
-+	ALLOC_ARRAY(written_list, to_pack.nr_objects);
- 	write_order = compute_write_order();
- 
- 	do {
-@@ -2129,7 +2130,7 @@ static void prepare_pack(int window, int depth)
- 	if (!to_pack.nr_objects || !window || !depth)
- 		return;
- 
--	delta_list = xmalloc(to_pack.nr_objects * sizeof(*delta_list));
-+	ALLOC_ARRAY(delta_list, to_pack.nr_objects);
- 	nr_deltas = n = 0;
- 
- 	for (i = 0; i < to_pack.nr_objects; i++) {
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index d0532f6..72c8158 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -53,7 +53,7 @@ static inline struct llist_item *llist_item_get(void)
- 		free_nodes = free_nodes->next;
- 	} else {
- 		int i = 1;
--		new = xmalloc(sizeof(struct llist_item) * BLKSIZE);
-+		ALLOC_ARRAY(new, BLKSIZE);
- 		for (; i < BLKSIZE; i++)
- 			llist_item_put(&new[i]);
- 	}
+-	int len = strlen(path);
++	size_t len = strlen(path);
+ 	if (path[len - 1] != '/') {
+-		char *with_slash = xmalloc(len + 2);
++		char *with_slash = xmalloc(st_add(len, 2));
+ 		memcpy(with_slash, path, len);
+ 		with_slash[len++] = '/';
+ 		with_slash[len] = 0;
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 932afab..3dc3868 100644
+index 3dc3868..c8e32b2 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1591,8 +1591,7 @@ static void prepare_shallow_update(struct command *commands,
- {
- 	int i, j, k, bitmap_size = (si->ref->nr + 31) / 32;
+@@ -1372,7 +1372,7 @@ static struct command **queue_command(struct command **tail,
  
--	si->used_shallow = xmalloc(sizeof(*si->used_shallow) *
--				   si->shallow->nr);
-+	ALLOC_ARRAY(si->used_shallow, si->shallow->nr);
- 	assign_shallow_commits_to_refs(si, si->used_shallow, NULL);
- 
- 	si->need_reachability_test =
-@@ -1658,7 +1657,7 @@ static void update_shallow_info(struct command *commands,
- 		return;
- 	}
- 
--	ref_status = xmalloc(sizeof(*ref_status) * ref->nr);
-+	ALLOC_ARRAY(ref_status, ref->nr);
- 	assign_shallow_commits_to_refs(si, NULL, ref_status);
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (is_null_sha1(cmd->new_sha1))
-diff --git a/column.c b/column.c
-index 786abe6..f9fda68 100644
---- a/column.c
-+++ b/column.c
-@@ -164,7 +164,7 @@ static void display_table(const struct string_list *list,
- 	data.colopts = colopts;
- 	data.opts = *opts;
- 
--	data.len = xmalloc(sizeof(*data.len) * list->nr);
-+	ALLOC_ARRAY(data.len, list->nr);
- 	for (i = 0; i < list->nr; i++)
- 		data.len[i] = item_length(colopts, list->items[i].string);
- 
+ 	refname = line + 82;
+ 	reflen = linelen - 82;
+-	cmd = xcalloc(1, sizeof(struct command) + reflen + 1);
++	cmd = xcalloc(1, st_add3(sizeof(struct command), reflen, 1));
+ 	hashcpy(cmd->old_sha1, old_sha1);
+ 	hashcpy(cmd->new_sha1, new_sha1);
+ 	memcpy(cmd->ref_name, refname, reflen);
 diff --git a/combine-diff.c b/combine-diff.c
-index 5571304..a698016 100644
+index be09a2b..0e1d4b0 100644
 --- a/combine-diff.c
 +++ b/combine-diff.c
-@@ -1372,7 +1372,7 @@ static struct combine_diff_path *find_paths_multitree(
- 	struct combine_diff_path paths_head;
- 	struct strbuf base;
+@@ -189,11 +189,11 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
+ 	 *   - Else if we have NEW, insert newend lline into base and
+ 	 *   consume newend
+ 	 */
+-	lcs = xcalloc(origbaselen + 1, sizeof(int*));
+-	directions = xcalloc(origbaselen + 1, sizeof(enum coalesce_direction*));
++	lcs = xcalloc(st_add(origbaselen, 1), sizeof(int*));
++	directions = xcalloc(st_add(origbaselen, 1), sizeof(enum coalesce_direction*));
+ 	for (i = 0; i < origbaselen + 1; i++) {
+-		lcs[i] = xcalloc(lennew + 1, sizeof(int));
+-		directions[i] = xcalloc(lennew + 1, sizeof(enum coalesce_direction));
++		lcs[i] = xcalloc(st_add(lennew, 1), sizeof(int));
++		directions[i] = xcalloc(st_add(lennew, 1), sizeof(enum coalesce_direction));
+ 		directions[i][0] = BASE;
+ 	}
+ 	for (j = 1; j < lennew + 1; j++)
+@@ -1111,7 +1111,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	if (result_size && result[result_size-1] != '\n')
+ 		cnt++; /* incomplete line */
  
--	parents_sha1 = xmalloc(nparent * sizeof(parents_sha1[0]));
-+	ALLOC_ARRAY(parents_sha1, nparent);
- 	for (i = 0; i < nparent; i++)
- 		parents_sha1[i] = parents->sha1[i];
+-	sline = xcalloc(cnt+2, sizeof(*sline));
++	sline = xcalloc(st_add(cnt, 2), sizeof(*sline));
+ 	sline[0].bol = result;
+ 	for (lno = 0, cp = result; cp < result + result_size; cp++) {
+ 		if (*cp == '\n') {
+@@ -1130,7 +1130,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	/* Even p_lno[cnt+1] is valid -- that is for the end line number
+ 	 * for deletion hunk at the end.
+ 	 */
+-	sline[0].p_lno = xcalloc((cnt+2) * num_parent, sizeof(unsigned long));
++	sline[0].p_lno = xcalloc(st_mult(st_add(cnt, 2), num_parent), sizeof(unsigned long));
+ 	for (lno = 0; lno <= cnt; lno++)
+ 		sline[lno+1].p_lno = sline[lno].p_lno + num_parent;
  
-@@ -1483,7 +1483,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 	if (opt->orderfile && num_paths) {
- 		struct obj_order *o;
+@@ -1262,7 +1262,7 @@ static struct diff_filepair *combined_pair(struct combine_diff_path *p,
+ 	struct diff_filespec *pool;
  
--		o = xmalloc(sizeof(*o) * num_paths);
-+		ALLOC_ARRAY(o, num_paths);
- 		for (i = 0, p = paths; p; p = p->next, i++)
- 			o[i].obj = p;
- 		order_objects(opt->orderfile, path_path, o, num_paths);
+ 	pair = xmalloc(sizeof(*pair));
+-	pool = xcalloc(num_parent + 1, sizeof(struct diff_filespec));
++	pool = xcalloc(st_add(num_parent, 1), sizeof(struct diff_filespec));
+ 	pair->one = pool + 1;
+ 	pair->two = pool;
+ 
 diff --git a/commit.c b/commit.c
-index 40388d7..31cd91f 100644
+index 31cd91f..3f4f371 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -903,7 +903,7 @@ static int remove_redundant(struct commit **array, int cnt)
- 
- 	work = xcalloc(cnt, sizeof(*work));
- 	redundant = xcalloc(cnt, 1);
--	filled_index = xmalloc(sizeof(*filled_index) * (cnt - 1));
-+	ALLOC_ARRAY(filled_index, cnt - 1);
- 
- 	for (i = 0; i < cnt; i++)
- 		parse_commit(array[i]);
+@@ -147,7 +147,7 @@ struct commit_graft *read_graft_line(char *buf, int len)
+ 	if ((len + 1) % entry_size)
+ 		goto bad_graft_data;
+ 	i = (len + 1) / entry_size - 1;
+-	graft = xmalloc(sizeof(*graft) + GIT_SHA1_RAWSZ * i);
++	graft = xmalloc(st_add(sizeof(*graft), st_mult(GIT_SHA1_RAWSZ, i)));
+ 	graft->nr_parent = i;
+ 	if (get_oid_hex(buf, &graft->oid))
+ 		goto bad_graft_data;
 diff --git a/compat/mingw.c b/compat/mingw.c
-index fbe69b8..7803f30 100644
+index 7803f30..cfedcf9 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -893,7 +893,7 @@ static char **get_path_split(void)
- 	if (!n)
- 		return NULL;
+@@ -810,7 +810,7 @@ static const char *quote_arg(const char *arg)
+ 		return arg;
  
--	path = xmalloc((n+1)*sizeof(char *));
-+	ALLOC_ARRAY(path, n + 1);
- 	p = envpath;
- 	i = 0;
- 	do {
-@@ -978,7 +978,7 @@ static wchar_t *make_environment_block(char **deltaenv)
- 		i++;
- 
- 	/* copy the environment, leaving space for changes */
--	tmpenv = xmalloc((size + i) * sizeof(char*));
-+	ALLOC_ARRAY(tmpenv, size + i);
- 	memcpy(tmpenv, environ, size * sizeof(char*));
- 
- 	/* merge supplied environment changes into the temporary environment */
-@@ -1168,7 +1168,7 @@ static int try_shell_exec(const char *cmd, char *const *argv)
- 		int argc = 0;
- 		const char **argv2;
- 		while (argv[argc]) argc++;
--		argv2 = xmalloc(sizeof(*argv) * (argc+1));
-+		ALLOC_ARRAY(argv2, argc + 1);
- 		argv2[0] = (char *)cmd;	/* full path to the script file */
- 		memcpy(&argv2[1], &argv[1], sizeof(*argv) * argc);
- 		pid = mingw_spawnv(prog, argv2, 1);
-diff --git a/diffcore-order.c b/diffcore-order.c
-index 97dd3d0..69d41f7 100644
---- a/diffcore-order.c
-+++ b/diffcore-order.c
-@@ -52,7 +52,7 @@ static void prepare_order(const char *orderfile)
- 		}
- 		if (pass == 0) {
- 			order_cnt = cnt;
--			order = xmalloc(sizeof(*order) * cnt);
-+			ALLOC_ARRAY(order, cnt);
- 		}
+ 	/* insert \ where necessary */
+-	d = q = xmalloc(len+n+3);
++	d = q = xmalloc(st_add3(len, n, 3));
+ 	*d++ = '"';
+ 	while (*arg) {
+ 		if (*arg == '"')
+@@ -1069,7 +1069,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
+ 			free(quoted);
  	}
- }
-@@ -120,7 +120,7 @@ void diffcore_order(const char *orderfile)
- 	if (!q->nr)
- 		return;
  
--	o = xmalloc(sizeof(*o) * q->nr);
-+	ALLOC_ARRAY(o, q->nr);
- 	for (i = 0; i < q->nr; i++)
- 		o[i].obj = q->queue[i];
- 	order_objects(orderfile, pair_pathtwo, o, q->nr);
+-	wargs = xmalloc((2 * args.len + 1) * sizeof(wchar_t));
++	wargs = xmalloc_array(st_add(st_mult(2, args.len), 1), sizeof(wchar_t));
+ 	xutftowcs(wargs, args.buf, 2 * args.len + 1);
+ 	strbuf_release(&args);
+ 
+diff --git a/compat/qsort.c b/compat/qsort.c
+index 9574d53..7d071af 100644
+--- a/compat/qsort.c
++++ b/compat/qsort.c
+@@ -47,7 +47,7 @@ static void msort_with_tmp(void *b, size_t n, size_t s,
+ void git_qsort(void *b, size_t n, size_t s,
+ 	       int (*cmp)(const void *, const void *))
+ {
+-	const size_t size = n * s;
++	const size_t size = st_mult(n, s);
+ 	char buf[1024];
+ 
+ 	if (size < sizeof(buf)) {
+diff --git a/compat/setenv.c b/compat/setenv.c
+index fc1439a..7849f25 100644
+--- a/compat/setenv.c
++++ b/compat/setenv.c
+@@ -18,7 +18,7 @@ int gitsetenv(const char *name, const char *value, int replace)
+ 
+ 	namelen = strlen(name);
+ 	valuelen = strlen(value);
+-	envstr = malloc((namelen + valuelen + 2));
++	envstr = malloc(st_add3(namelen, valuelen, 2));
+ 	if (!envstr) {
+ 		errno = ENOMEM;
+ 		return -1;
+diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+index d015e43..b905aea 100644
+--- a/compat/win32/syslog.c
++++ b/compat/win32/syslog.c
+@@ -32,7 +32,7 @@ void syslog(int priority, const char *fmt, ...)
+ 		return;
+ 	}
+ 
+-	str = malloc(str_len + 1);
++	str = malloc(st_add(str_len, 1));
+ 	if (!str) {
+ 		warning("malloc failed: '%s'", strerror(errno));
+ 		return;
+@@ -43,7 +43,7 @@ void syslog(int priority, const char *fmt, ...)
+ 	va_end(ap);
+ 
+ 	while ((pos = strstr(str, "%1")) != NULL) {
+-		str = realloc(str, ++str_len + 1);
++		str = realloc(str, st_add(++str_len, 1));
+ 		if (!str) {
+ 			warning("realloc failed: '%s'", strerror(errno));
+ 			return;
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index 7cf431d..4159748 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -53,7 +53,8 @@ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
+ 	int osz = 1 << orig->alloc_log2;
+ 	int sz = osz << 1;
+ 
+-	new = xmalloc(sizeof(*orig) + sizeof(struct spanhash) * sz);
++	new = xmalloc(st_add(sizeof(*orig),
++			     st_mult(sizeof(struct spanhash), sz)));
+ 	new->alloc_log2 = orig->alloc_log2 + 1;
+ 	new->free = INITIAL_FREE(new->alloc_log2);
+ 	memset(new->data, 0, sizeof(struct spanhash) * sz);
+@@ -130,7 +131,8 @@ static struct spanhash_top *hash_chars(struct diff_filespec *one)
+ 	int is_text = !diff_filespec_is_binary(one);
+ 
+ 	i = INITIAL_HASH_SIZE;
+-	hash = xmalloc(sizeof(*hash) + sizeof(struct spanhash) * (1<<i));
++	hash = xmalloc(st_add(sizeof(*hash),
++			      st_mult(sizeof(struct spanhash), 1<<i)));
+ 	hash->alloc_log2 = i;
+ 	hash->free = INITIAL_FREE(i);
+ 	memset(hash->data, 0, sizeof(struct spanhash) * (1<<i));
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index af1fe08..3b3c1ed 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -537,7 +537,7 @@ void diffcore_rename(struct diff_options *options)
+ 				rename_dst_nr * rename_src_nr, 50, 1);
+ 	}
+ 
+-	mx = xcalloc(num_create * NUM_CANDIDATE_PER_DST, sizeof(*mx));
++	mx = xcalloc(st_mult(num_create, NUM_CANDIDATE_PER_DST), sizeof(*mx));
+ 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+ 		struct diff_filespec *two = rename_dst[i].two;
+ 		struct diff_score *m;
 diff --git a/dir.c b/dir.c
-index f0b6d0a..66c93c1 100644
+index f06ebb7..2c91541 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -2484,14 +2484,14 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
- 	ud.untracked_alloc = value;
- 	ud.untracked_nr	   = value;
- 	if (ud.untracked_nr)
--		ud.untracked = xmalloc(sizeof(*ud.untracked) * ud.untracked_nr);
-+		ALLOC_ARRAY(ud.untracked, ud.untracked_nr);
- 	data = next;
- 
- 	next = data;
- 	ud.dirs_alloc = ud.dirs_nr = decode_varint(&next);
- 	if (next > end)
+@@ -689,7 +689,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			return 0;
+ 		}
+ 		if (buf[size-1] != '\n') {
+-			buf = xrealloc(buf, size+1);
++			buf = xrealloc(buf, st_add(size, 1));
+ 			buf[size++] = '\n';
+ 		}
+ 	} else {
+@@ -2488,7 +2488,7 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
+ 	next = data + len + 1;
+ 	if (next > rd->end)
  		return -1;
--	ud.dirs = xmalloc(sizeof(*ud.dirs) * ud.dirs_nr);
-+	ALLOC_ARRAY(ud.dirs, ud.dirs_nr);
+-	*untracked_ = untracked = xmalloc(sizeof(*untracked) + len);
++	*untracked_ = untracked = xmalloc(st_add(sizeof(*untracked), len));
+ 	memcpy(untracked, &ud, sizeof(ud));
+ 	memcpy(untracked->name, data, len + 1);
  	data = next;
- 
- 	len = strlen((const char *)data);
-@@ -2611,7 +2611,7 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	rd.data	      = next;
- 	rd.end	      = end;
- 	rd.index      = 0;
--	rd.ucd        = xmalloc(sizeof(*rd.ucd) * len);
-+	ALLOC_ARRAY(rd.ucd, len);
- 
- 	if (read_one_dir(&uc->root, &rd) || rd.index != len)
- 		goto done;
 diff --git a/fast-import.c b/fast-import.c
-index bf01b34..a6467cb 100644
+index a6467cb..3053bb8 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -814,7 +814,8 @@ static struct tree_entry *new_tree_entry(void)
- 	if (!avail_tree_entry) {
- 		unsigned int n = tree_entry_alloc;
- 		total_allocd += n * sizeof(struct tree_entry);
--		avail_tree_entry = e = xmalloc(n * sizeof(struct tree_entry));
-+		ALLOC_ARRAY(e, n);
-+		avail_tree_entry = e;
- 		while (n-- > 1) {
- 			*((void**)e) = e + 1;
- 			e++;
-@@ -898,7 +899,7 @@ static const char *create_index(void)
- 	struct object_entry_pool *o;
+@@ -622,7 +622,7 @@ static void *pool_alloc(size_t len)
+ 			return xmalloc(len);
+ 		}
+ 		total_allocd += sizeof(struct mem_pool) + mem_pool_alloc;
+-		p = xmalloc(sizeof(struct mem_pool) + mem_pool_alloc);
++		p = xmalloc(st_add(sizeof(struct mem_pool), mem_pool_alloc));
+ 		p->next_pool = mem_pool;
+ 		p->next_free = (char *) p->space;
+ 		p->end = p->next_free + mem_pool_alloc;
+diff --git a/refs.c b/refs.c
+index 2d86445..b0e6ece 100644
+--- a/refs.c
++++ b/refs.c
+@@ -906,7 +906,7 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
+ 			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
  
- 	/* Build the table of object IDs. */
--	idx = xmalloc(object_count * sizeof(*idx));
-+	ALLOC_ARRAY(idx, object_count);
- 	c = idx;
- 	for (o = blocks; o; o = o->next_pool)
- 		for (e = o->next_free; e-- != o->entries;)
-diff --git a/fsck.c b/fsck.c
-index c637f66..ca4c685 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -199,7 +199,8 @@ void fsck_set_msg_type(struct fsck_options *options,
+-		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
++		scanf_fmts = xmalloc(st_add(st_mult(nr_rules, sizeof(char *)), total_len));
  
- 	if (!options->msg_type) {
- 		int i;
--		int *msg_type = xmalloc(sizeof(int) * FSCK_MSG_MAX);
-+		int *msg_type;
-+		ALLOC_ARRAY(msg_type, FSCK_MSG_MAX);
- 		for (i = 0; i < FSCK_MSG_MAX; i++)
- 			msg_type[i] = fsck_msg_type(i, options);
- 		options->msg_type = msg_type;
-diff --git a/graph.c b/graph.c
-index c25a09a..1350bdd 100644
---- a/graph.c
-+++ b/graph.c
-@@ -234,12 +234,10 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	 * We'll automatically grow columns later if we need more room.
- 	 */
- 	graph->column_capacity = 30;
--	graph->columns = xmalloc(sizeof(struct column) *
--				 graph->column_capacity);
--	graph->new_columns = xmalloc(sizeof(struct column) *
--				     graph->column_capacity);
--	graph->mapping = xmalloc(sizeof(int) * 2 * graph->column_capacity);
--	graph->new_mapping = xmalloc(sizeof(int) * 2 * graph->column_capacity);
-+	ALLOC_ARRAY(graph->columns, graph->column_capacity);
-+	ALLOC_ARRAY(graph->new_columns, graph->column_capacity);
-+	ALLOC_ARRAY(graph->mapping, 2 * graph->column_capacity);
-+	ALLOC_ARRAY(graph->new_mapping, 2 * graph->column_capacity);
- 
- 	/*
- 	 * The diff output prefix callback, with this we can make
-diff --git a/khash.h b/khash.h
-index 376475a..c0da40d 100644
---- a/khash.h
-+++ b/khash.h
-@@ -117,7 +117,7 @@ static const double __ac_HASH_UPPER = 0.77;
- 			if (new_n_buckets < 4) new_n_buckets = 4;					\
- 			if (h->size >= (khint_t)(new_n_buckets * __ac_HASH_UPPER + 0.5)) j = 0;	/* requested size is too small */ \
- 			else { /* hash table size to be changed (shrink or expand); rehash */ \
--				new_flags = (khint32_t*)xmalloc(__ac_fsize(new_n_buckets) * sizeof(khint32_t));	\
-+				ALLOC_ARRAY(new_flags, __ac_fsize(new_n_buckets)); \
- 				if (!new_flags) return -1;								\
- 				memset(new_flags, 0xaa, __ac_fsize(new_n_buckets) * sizeof(khint32_t)); \
- 				if (h->n_buckets < new_n_buckets) {	/* expand */		\
-diff --git a/levenshtein.c b/levenshtein.c
-index fc28159..d263269 100644
---- a/levenshtein.c
-+++ b/levenshtein.c
-@@ -42,11 +42,13 @@ int levenshtein(const char *string1, const char *string2,
- 		int w, int s, int a, int d)
+ 		offset = 0;
+ 		for (i = 0; i < nr_rules; i++) {
+diff --git a/remote.c b/remote.c
+index 25a960f..21e4ec3 100644
+--- a/remote.c
++++ b/remote.c
+@@ -931,7 +931,7 @@ static struct ref *alloc_ref_with_prefix(const char *prefix, size_t prefixlen,
+ 		const char *name)
  {
- 	int len1 = strlen(string1), len2 = strlen(string2);
--	int *row0 = xmalloc(sizeof(int) * (len2 + 1));
--	int *row1 = xmalloc(sizeof(int) * (len2 + 1));
--	int *row2 = xmalloc(sizeof(int) * (len2 + 1));
-+	int *row0, *row1, *row2;
- 	int i, j;
- 
-+	ALLOC_ARRAY(row0, len2 + 1);
-+	ALLOC_ARRAY(row1, len2 + 1);
-+	ALLOC_ARRAY(row2, len2 + 1);
-+
- 	for (j = 0; j <= len2; j++)
- 		row1[j] = j * a;
- 	for (i = 0; i < len1; i++) {
-diff --git a/line-log.c b/line-log.c
-index 5877986..bbe31ed 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -522,7 +522,7 @@ static void fill_line_ends(struct diff_filespec *spec, long *lines,
- 	if (diff_populate_filespec(spec, 0))
- 		die("Cannot read blob %s", sha1_to_hex(spec->sha1));
- 
--	ends = xmalloc(size * sizeof(*ends));
-+	ALLOC_ARRAY(ends, size);
- 	ends[cur++] = 0;
- 	data = spec->data;
- 	while (num < spec->size) {
-@@ -1142,9 +1142,9 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
- 	if (nparents > 1 && rev->first_parent_only)
- 		nparents = 1;
- 
--	diffqueues = xmalloc(nparents * sizeof(*diffqueues));
--	cand = xmalloc(nparents * sizeof(*cand));
--	parents = xmalloc(nparents * sizeof(*parents));
-+	ALLOC_ARRAY(diffqueues, nparents);
-+	ALLOC_ARRAY(cand, nparents);
-+	ALLOC_ARRAY(parents, nparents);
- 
- 	p = commit->parents;
- 	for (i = 0; i < nparents; i++) {
-diff --git a/notes.c b/notes.c
-index c1e5035..88cf474 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1035,7 +1035,7 @@ struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
- 	struct string_list_item *item;
- 	int counter = 0;
- 	struct notes_tree **trees;
--	trees = xmalloc((refs->nr+1) * sizeof(struct notes_tree *));
-+	ALLOC_ARRAY(trees, refs->nr + 1);
- 	for_each_string_list_item(item, refs) {
- 		struct notes_tree *t = xcalloc(1, sizeof(struct notes_tree));
- 		init_notes(t, item->string, combine_notes_ignore, flags);
-diff --git a/pack-check.c b/pack-check.c
-index 433bd86..1da89a4 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -89,7 +89,7 @@ static int verify_packfile(struct packed_git *p,
- 	 * we do not do scan-streaming check on the pack file.
- 	 */
- 	nr_objects = p->num_objects;
--	entries = xmalloc((nr_objects + 1) * sizeof(*entries));
-+	ALLOC_ARRAY(entries, nr_objects + 1);
- 	entries[nr_objects].offset = pack_sig_ofs;
- 	/* first sort entries by pack offset, since unpacking them is more efficient that way */
- 	for (i = 0; i < nr_objects; i++) {
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 155a8a3..96d51c3 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -44,10 +44,14 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
- 	 * keep track of them with alias pointers, always sorting from "from"
- 	 * to "to".
- 	 */
--	struct revindex_entry *tmp = xmalloc(n * sizeof(*tmp));
--	struct revindex_entry *from = entries, *to = tmp;
-+	struct revindex_entry *tmp, *from, *to;
- 	int bits;
--	unsigned *pos = xmalloc(BUCKETS * sizeof(*pos));
-+	unsigned *pos;
-+
-+	ALLOC_ARRAY(pos, BUCKETS);
-+	ALLOC_ARRAY(tmp, n);
-+	from = entries;
-+	to = tmp;
- 
- 	/*
- 	 * If (max >> bits) is zero, then we know that the radix digit we are
-@@ -121,7 +125,7 @@ static void create_pack_revindex(struct packed_git *p)
- 	unsigned i;
- 	const char *index = p->index_data;
- 
--	p->revindex = xmalloc(sizeof(*p->revindex) * (num_ent + 1));
-+	ALLOC_ARRAY(p->revindex, num_ent + 1);
- 	index += 4 * 256;
- 
- 	if (p->index_version > 1) {
-diff --git a/pathspec.c b/pathspec.c
-index 9304ee3..c9e9b6c 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -406,7 +406,8 @@ void parse_pathspec(struct pathspec *pathspec,
- 		n++;
- 
- 	pathspec->nr = n;
--	pathspec->items = item = xmalloc(sizeof(*item) * n);
-+	ALLOC_ARRAY(pathspec->items, n);
-+	item = pathspec->items;
- 	pathspec->_raw = argv;
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 
-@@ -483,7 +484,7 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+ 	size_t len = strlen(name);
+-	struct ref *ref = xcalloc(1, sizeof(struct ref) + prefixlen + len + 1);
++	struct ref *ref = xcalloc(1, st_add4(sizeof(*ref), prefixlen, len, 1));
+ 	memcpy(ref->name, prefix, prefixlen);
+ 	memcpy(ref->name + prefixlen, name, len);
+ 	return ref;
+@@ -948,9 +948,9 @@ struct ref *copy_ref(const struct ref *ref)
+ 	size_t len;
+ 	if (!ref)
+ 		return NULL;
+-	len = strlen(ref->name);
+-	cpy = xmalloc(sizeof(struct ref) + len + 1);
+-	memcpy(cpy, ref, sizeof(struct ref) + len + 1);
++	len = st_add3(sizeof(struct ref), strlen(ref->name), 1);
++	cpy = xmalloc(len);
++	memcpy(cpy, ref, len);
+ 	cpy->next = NULL;
+ 	cpy->symref = xstrdup_or_null(ref->symref);
+ 	cpy->remote_status = xstrdup_or_null(ref->remote_status);
+diff --git a/revision.c b/revision.c
+index f24ead5..d4ace60 100644
+--- a/revision.c
++++ b/revision.c
+@@ -540,7 +540,7 @@ struct treesame_state {
+ static struct treesame_state *initialise_treesame(struct rev_info *revs, struct commit *commit)
  {
- 	*dst = *src;
--	dst->items = xmalloc(sizeof(struct pathspec_item) * dst->nr);
-+	ALLOC_ARRAY(dst->items, dst->nr);
- 	memcpy(dst->items, src->items,
- 	       sizeof(struct pathspec_item) * dst->nr);
- }
-diff --git a/remote-curl.c b/remote-curl.c
-index 42deeec..5259b7e 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -696,9 +696,10 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- {
- 	struct walker *walker;
--	char **targets = xmalloc(nr_heads * sizeof(char*));
-+	char **targets;
- 	int ret, i;
- 
-+	ALLOC_ARRAY(targets, nr_heads);
- 	if (options.depth)
- 		die("dumb http transport does not support --depth");
- 	for (i = 0; i < nr_heads; i++)
+ 	unsigned n = commit_list_count(commit->parents);
+-	struct treesame_state *st = xcalloc(1, sizeof(*st) + n);
++	struct treesame_state *st = xcalloc(1, st_add(sizeof(*st), n));
+ 	st->nparents = n;
+ 	add_decoration(&revs->treesame, &commit->object, st);
+ 	return st;
 diff --git a/sha1_file.c b/sha1_file.c
-index aab1872..2f1c6d3 100644
+index 2f1c6d3..0251700 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1942,7 +1942,7 @@ static enum object_type packed_to_object_type(struct packed_git *p,
- 		/* Push the object we're going to leave behind */
- 		if (poi_stack_nr >= poi_stack_alloc && poi_stack == small_poi_stack) {
- 			poi_stack_alloc = alloc_nr(poi_stack_nr);
--			poi_stack = xmalloc(sizeof(off_t)*poi_stack_alloc);
-+			ALLOC_ARRAY(poi_stack, poi_stack_alloc);
- 			memcpy(poi_stack, small_poi_stack, sizeof(off_t)*poi_stack_nr);
- 		} else {
- 			ALLOC_GROW(poi_stack, poi_stack_nr+1, poi_stack_alloc);
-@@ -2308,7 +2308,7 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 		if (delta_stack_nr >= delta_stack_alloc
- 		    && delta_stack == small_delta_stack) {
- 			delta_stack_alloc = alloc_nr(delta_stack_nr);
--			delta_stack = xmalloc(sizeof(*delta_stack)*delta_stack_alloc);
-+			ALLOC_ARRAY(delta_stack, delta_stack_alloc);
- 			memcpy(delta_stack, small_delta_stack,
- 			       sizeof(*delta_stack)*delta_stack_nr);
- 		} else {
+@@ -253,7 +253,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+ {
+ 	struct alternate_object_database *ent;
+ 	struct alternate_object_database *alt;
+-	int pfxlen, entlen;
++	size_t pfxlen, entlen;
+ 	struct strbuf pathbuf = STRBUF_INIT;
+ 
+ 	if (!is_absolute_path(entry) && relative_base) {
+@@ -273,8 +273,8 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+ 	while (pfxlen && pathbuf.buf[pfxlen-1] == '/')
+ 		pfxlen -= 1;
+ 
+-	entlen = pfxlen + 43; /* '/' + 2 hex + '/' + 38 hex + NUL */
+-	ent = xmalloc(sizeof(*ent) + entlen);
++	entlen = st_add(pfxlen, 43); /* '/' + 2 hex + '/' + 38 hex + NUL */
++	ent = xmalloc(st_add(sizeof(*ent), entlen));
+ 	memcpy(ent->base, pathbuf.buf, pfxlen);
+ 	strbuf_release(&pathbuf);
+ 
+@@ -1134,7 +1134,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 
+ static struct packed_git *alloc_packed_git(int extra)
+ {
+-	struct packed_git *p = xmalloc(sizeof(*p) + extra);
++	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
+ 	memset(p, 0, sizeof(*p));
+ 	p->pack_fd = -1;
+ 	return p;
+@@ -1168,7 +1168,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+ 	 * ".pack" is long enough to hold any suffix we're adding (and
+ 	 * the use xsnprintf double-checks that)
+ 	 */
+-	alloc = path_len + strlen(".pack") + 1;
++	alloc = st_add3(path_len, strlen(".pack"), 1);
+ 	p = alloc_packed_git(alloc);
+ 	memcpy(p->pack_name, path, path_len);
+ 
+@@ -1196,7 +1196,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+ struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
+ {
+ 	const char *path = sha1_pack_name(sha1);
+-	int alloc = strlen(path) + 1;
++	size_t alloc = st_add(strlen(path), 1);
+ 	struct packed_git *p = alloc_packed_git(alloc);
+ 
+ 	memcpy(p->pack_name, path, alloc); /* includes NUL */
+@@ -1413,10 +1413,12 @@ static void mark_bad_packed_object(struct packed_git *p,
+ {
+ 	unsigned i;
+ 	for (i = 0; i < p->num_bad_objects; i++)
+-		if (!hashcmp(sha1, p->bad_object_sha1 + 20 * i))
++		if (!hashcmp(sha1, p->bad_object_sha1 + GIT_SHA1_RAWSZ * i))
+ 			return;
+-	p->bad_object_sha1 = xrealloc(p->bad_object_sha1, 20 * (p->num_bad_objects + 1));
+-	hashcpy(p->bad_object_sha1 + 20 * p->num_bad_objects, sha1);
++	p->bad_object_sha1 = xrealloc(p->bad_object_sha1,
++				      st_mult(GIT_SHA1_RAWSZ,
++					      st_add(p->num_bad_objects, 1)));
++	hashcpy(p->bad_object_sha1 + GIT_SHA1_RAWSZ * p->num_bad_objects, sha1);
+ 	p->num_bad_objects++;
+ }
+ 
+diff --git a/sha1_name.c b/sha1_name.c
+index 89918ca..d14346c 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -87,9 +87,8 @@ static void find_short_object_filename(int len, const char *hex_pfx, struct disa
+ 		 * object databases including our own.
+ 		 */
+ 		const char *objdir = get_object_directory();
+-		int objdir_len = strlen(objdir);
+-		int entlen = objdir_len + 43;
+-		fakeent = xmalloc(sizeof(*fakeent) + entlen);
++		size_t objdir_len = strlen(objdir);
++		fakeent = xmalloc(st_add3(sizeof(*fakeent), objdir_len, 43));
+ 		memcpy(fakeent->base, objdir, objdir_len);
+ 		fakeent->name = fakeent->base + objdir_len + 1;
+ 		fakeent->name[-1] = '/';
 diff --git a/shallow.c b/shallow.c
-index 60f1505..71163bf 100644
+index 71163bf..4d554ca 100644
 --- a/shallow.c
 +++ b/shallow.c
-@@ -315,8 +315,8 @@ void prepare_shallow_info(struct shallow_info *info, struct sha1_array *sa)
- 	info->shallow = sa;
- 	if (!sa)
- 		return;
--	info->ours = xmalloc(sizeof(*info->ours) * sa->nr);
--	info->theirs = xmalloc(sizeof(*info->theirs) * sa->nr);
-+	ALLOC_ARRAY(info->ours, sa->nr);
-+	ALLOC_ARRAY(info->theirs, sa->nr);
- 	for (i = 0; i < sa->nr; i++) {
- 		if (has_sha1_file(sa->sha1[i])) {
- 			struct commit_graft *graft;
-@@ -487,7 +487,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
- 	struct paint_info pi;
+@@ -389,7 +389,7 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	unsigned int i, nr;
+ 	struct commit_list *head = NULL;
+ 	int bitmap_nr = (info->nr_bits + 31) / 32;
+-	int bitmap_size = bitmap_nr * sizeof(uint32_t);
++	size_t bitmap_size = st_mult(bitmap_nr, sizeof(uint32_t));
+ 	uint32_t *tmp = xmalloc(bitmap_size); /* to be freed before return */
+ 	uint32_t *bitmap = paint_alloc(info);
+ 	struct commit *c = lookup_commit_reference_gently(sha1, 1);
+diff --git a/submodule.c b/submodule.c
+index b83939c..ac61c65 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -123,7 +123,7 @@ static int add_submodule_odb(const char *path)
+ 	struct strbuf objects_directory = STRBUF_INIT;
+ 	struct alternate_object_database *alt_odb;
+ 	int ret = 0;
+-	int alloc;
++	size_t alloc;
  
- 	trace_printf_key(&trace_shallow, "shallow: assign_shallow_commits_to_refs\n");
--	shallow = xmalloc(sizeof(*shallow) * (info->nr_ours + info->nr_theirs));
-+	ALLOC_ARRAY(shallow, info->nr_ours + info->nr_theirs);
- 	for (i = 0; i < info->nr_ours; i++)
- 		shallow[nr_shallow++] = info->ours[i];
- 	for (i = 0; i < info->nr_theirs; i++)
-diff --git a/show-index.c b/show-index.c
-index d9e4903..acf8d54 100644
---- a/show-index.c
-+++ b/show-index.c
-@@ -50,7 +50,8 @@ int main(int argc, char **argv)
- 			unsigned char sha1[20];
- 			uint32_t crc;
- 			uint32_t off;
--		} *entries = xmalloc(nr * sizeof(entries[0]));
-+		} *entries;
-+		ALLOC_ARRAY(entries, nr);
- 		for (i = 0; i < nr; i++)
- 			if (fread(entries[i].sha1, 20, 1, stdin) != 1)
- 				die("unable to read sha1 %u/%u", i, nr);
-diff --git a/transport.c b/transport.c
-index c92f8ae..3b4e644 100644
---- a/transport.c
-+++ b/transport.c
-@@ -977,7 +977,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 		 * This condition shouldn't be met in a non-deepening fetch
- 		 * (see builtin/fetch.c:quickfetch()).
- 		 */
--		heads = xmalloc(nr_refs * sizeof(*heads));
-+		ALLOC_ARRAY(heads, nr_refs);
- 		for (rm = refs; rm; rm = rm->next)
- 			heads[nr_heads++] = rm;
- 	}
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index cb67c1c..54236f2 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -265,7 +265,7 @@ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *value, int cflags)
- 	for (i = 0, regs->nr = 1; value[i]; i++)
- 		if (value[i] == '\n')
- 			regs->nr++;
--	regs->array = xmalloc(regs->nr * sizeof(struct ff_reg));
-+	ALLOC_ARRAY(regs->array, regs->nr);
- 	for (i = 0; i < regs->nr; i++) {
- 		struct ff_reg *reg = regs->array + i;
- 		const char *ep = strchr(value, '\n'), *expression;
+ 	strbuf_git_path_submodule(&objects_directory, path, "objects/");
+ 	if (!is_directory(objects_directory.buf)) {
+@@ -138,8 +138,8 @@ static int add_submodule_odb(const char *path)
+ 					objects_directory.len))
+ 			goto done;
+ 
+-	alloc = objects_directory.len + 42; /* for "12/345..." sha1 */
+-	alt_odb = xmalloc(sizeof(*alt_odb) + alloc);
++	alloc = st_add(objects_directory.len, 42); /* for "12/345..." sha1 */
++	alt_odb = xmalloc(st_add(sizeof(*alt_odb), alloc));
+ 	alt_odb->next = alt_odb_list;
+ 	xsnprintf(alt_odb->base, alloc, "%s", objects_directory.buf);
+ 	alt_odb->name = alt_odb->base + objects_directory.len;
 -- 
 2.7.2.645.g4e1306c
