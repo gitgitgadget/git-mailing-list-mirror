@@ -1,207 +1,61 @@
-From: Christoph Egger <christoph@christoph-egger.org>
-Subject: Re: [PATCH +warn] Implement https public key pinning
-Date: Mon, 22 Feb 2016 16:41:55 +0100
-Organization: Privat
-Message-ID: <8760xg7nwc.fsf@mitoraj.siccegge.de>
-References: <87y4amcby5.fsf@mitoraj.siccegge.de>
-	<20160215140422.GA1747@mitoraj.siccegge.de>
-	<xmqqlh6jhwu0.fsf@gitster.mtv.corp.google.com>
+From: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>
+Subject: Re: [PATCH] tests: remove unused full-svn-test target
+Date: Tue, 23 Feb 2016 01:01:55 +0900
+Message-ID: <56CB30F3.40908@f2.dion.ne.jp>
+References: <20160222030814.GA18817@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 16:42:12 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Feb 22 17:02:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXsck-00007C-VI
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 16:42:11 +0100
+	id 1aXswC-0002v2-Mv
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 17:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbcBVPmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 10:42:06 -0500
-Received: from chadwick.siccegge.de ([185.44.107.74]:60798 "EHLO
-	chadwick.siccegge.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbcBVPmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 10:42:04 -0500
-Received: by chadwick.siccegge.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-	(Exim 4.86 (FreeBSD))
-	(envelope-from <christoph@christoph-egger.org>)
-	id 1aXscT-000DDY-NA; Mon, 22 Feb 2016 15:41:55 +0000
-In-Reply-To: <xmqqlh6jhwu0.fsf@gitster.mtv.corp.google.com>
-	(sfid-20160217_220456_742065_2DA8214B) (Junio C. Hamano's message of "Wed,
-	17 Feb 2016 13:05:11 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/kfreebsd)
-X-SA-Exim-Connect-IP: 131.188.6.21
-X-SA-Exim-Mail-From: christoph@christoph-egger.org
-X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on chadwick.siccegge.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=5.0 tests=NO_RELAYS
-	autolearn=unavailable autolearn_force=no version=3.4.1
-X-SA-Exim-Version: 4.2
-X-SA-Exim-Scanned: Yes (on chadwick.siccegge.de)
+	id S1752616AbcBVQCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 11:02:12 -0500
+Received: from mail-ae1-f13.auone-net.jp ([106.187.231.13]:39528 "EHLO
+	dmta03.auone-net.jp" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752542AbcBVQCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 11:02:11 -0500
+Received: from amlmta052.auone-net.jp (amlmta052-MM [10.188.23.115])
+	by dmta03.auone-net.jp (au one net mail) with ESMTP id 97CE7DA008C
+	for <git@vger.kernel.org>; Tue, 23 Feb 2016 01:02:09 +0900 (JST)
+Received: from [0.0.0.0] ([176.31.45.7])
+	by amlmta052.auone-net.jp id 56cb30fc000bd5ec00006394000012fb100009d9e58e;
+	Tue, 23 Feb 2016 01:02:04 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160222030814.GA18817@dcvr.yhbt.net>
+X-MXM-DELIVERY-TYPE: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286932>
 
---=-=-=
-Content-Type: text/plain
+On 2016/02/22 12:08 +0900, Eric Wong wrote:
+> git-svn has not supported GIT_SVN_NO_OPTIMIZE_COMMITS for
+> the "set-tree" sub-command in 9 years since commit 490f49ea5899
+> ("git-svn: remove optimized commit stuff for set-tree").
+> 
+> So remove this target to avoid confusion.
 
-Hi!
+> diff --git a/t/Makefile b/t/Makefile
+> index 43b15e3..ad97a7e 100644
+...
+> -# we can test NO_OPTIMIZE_COMMITS independently of LC_ALL
+> -full-svn-test:
+> -	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=1 LC_ALL=C
+> -	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=0 LC_ALL=en_US.UTF-8
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Christoph Egger <christoph@christoph-egger.org> writes:
->
->> Add the http.pinnedpubkey configuration option for public key
->> pinning. It allows any string supported by libcurl --
->> base64(sha256(pubkey)) or filename of the full public key.
->>
->> If cURL does not support pinning (is too old) output a warning to the
->> user.
->>
->> Signed-off-by: Christoph Egger <christoph@christoph-egger.org>
->> ---
->
-> I needed this fix to unbreak it for those with older versions of
-> cURL.
-
-Jep sorry about that. should have run a second test with old libcurl.
-I've attached a consolidated patch.
-
-  Christoph
-
-
---=-=-=
-Content-Type: text/x-diff
-Content-Disposition: inline;
- filename=0001-Implement-https-public-key-pinning.patch
-
->From be8112d695de534629bcb3411634d101a74021a7 Mon Sep 17 00:00:00 2001
-From: Christoph Egger <christoph@christoph-egger.org>
-Date: Thu, 11 Feb 2016 23:28:20 +0100
-Subject: [PATCH] Implement https public key pinning
-
-Add the http.pinnedpubkey configuration option for public key
-pinning. It allows any string supported by libcurl --
-base64(sha256(pubkey)) or filename of the full public key.
-
-If cURL does not support pinning (is too old) output a warning to the
-user.
-
-Signed-off-by: Christoph Egger <christoph@christoph-egger.org>
----
- Documentation/config.txt |  8 ++++++++
- http.c                   | 16 ++++++++++++++++
- 2 files changed, 24 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 27f02be..0f2643b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1727,6 +1727,14 @@ http.sslCAPath::
- 	with when fetching or pushing over HTTPS. Can be overridden
- 	by the 'GIT_SSL_CAPATH' environment variable.
- 
-+http.pinnedpubkey::
-+	Public key of the https service. It may either be the filename of
-+	a PEM or DER encoded public key file or a string starting with
-+	'sha256//' followed by the base64 encoded sha256 hash of the
-+	public key. See also libcurl 'CURLOPT_PINNEDPUBLICKEY'. git will
-+	exit with an error if this option is set but not supported by
-+	cURL.
-+
- http.sslTry::
- 	Attempt to use AUTH SSL/TLS and encrypted data transfers
- 	when connecting via regular FTP protocol. This might be needed
-diff --git a/http.c b/http.c
-index dfc53c1..1c295dd 100644
---- a/http.c
-+++ b/http.c
-@@ -57,6 +57,9 @@ static const char *ssl_key;
- #if LIBCURL_VERSION_NUM >= 0x070908
- static const char *ssl_capath;
- #endif
-+#if LIBCURL_VERSION_NUM >= 0x072c00
-+static const char *ssl_pinnedkey;
-+#endif
- static const char *ssl_cainfo;
- static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
-@@ -299,6 +302,15 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.useragent", var))
- 		return git_config_string(&user_agent, var, value);
- 
-+	if (!strcmp("http.pinnedpubkey", var)) {
-+#if LIBCURL_VERSION_NUM >= 0x072c00
-+		return git_config_pathname(&ssl_pinnedkey, var, value);
-+#else
-+		warning(_("Public key pinning not supported with cURL < 7.44.0"));
-+		return 0;
-+#endif
-+	}
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
-@@ -499,6 +511,10 @@ static CURL *get_curl_handle(void)
- 	if (ssl_capath != NULL)
- 		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
- #endif
-+#if LIBCURL_VERSION_NUM >= 0x072c00
-+	if (ssl_pinnedkey != NULL)
-+		curl_easy_setopt(result, CURLOPT_PINNEDPUBLICKEY, ssl_pinnedkey);
-+#endif
- 	if (ssl_cainfo != NULL)
- 		curl_easy_setopt(result, CURLOPT_CAINFO, ssl_cainfo);
- 
--- 
-2.7.0
-
-
---=-=-=
-Content-Type: text/plain
-
-
->  http.c | 15 ++++++++-------
->  1 file changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index a6b8076..3475040 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -219,13 +219,6 @@ static int http_options(const char *var, const char *value, void *cb)
->  	if (!strcmp("http.sslcapath", var))
->  		return git_config_pathname(&ssl_capath, var, value);
->  #endif
-> -	if (!strcmp("http.pinnedpubkey", var))
-> -#if LIBCURL_VERSION_NUM >= 0x072c00
-> -		return git_config_pathname(&ssl_pinnedkey, var, value);
-> -#else
-> -		warning(_("Public key pinning not supported with cURL < 7.44.0"));
-> -		return 0;
-> -#endif
->  	if (!strcmp("http.sslcainfo", var))
->  		return git_config_pathname(&ssl_cainfo, var, value);
->  	if (!strcmp("http.sslcertpasswordprotected", var)) {
-> @@ -283,6 +276,14 @@ static int http_options(const char *var, const char *value, void *cb)
->  	if (!strcmp("http.useragent", var))
->  		return git_config_string(&user_agent, var, value);
->  
-> +	if (!strcmp("http.pinnedpubkey", var)) {
-> +#if LIBCURL_VERSION_NUM >= 0x072c00
-> +		return git_config_pathname(&ssl_pinnedkey, var, value);
-> +#else
-> +		warning(_("Public key pinning not supported with cURL < 7.44.0"));
-> +		return 0;
-> +#endif
-> +	}
->  	/* Fall back on the default ones */
->  	return git_default_config(var, value, cb);
->  }
+The variable TSVN becomes unused by this removal. It should be removed
+together, shouldn't it?
 
 -- 
-
---=-=-=--
+k_satoda
