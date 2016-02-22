@@ -1,112 +1,148 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Mon, 22 Feb 2016 18:21:22 +0700
-Message-ID: <CACsJy8B7m7PWY-RJ2pb3fAP6ZKz167Xzbby9Lo44gfDX9w7NPg@mail.gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
- <vpq37so26oz.fsf@anie.imag.fr> <CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
- <CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
- <CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
- <vpq8u2er7ae.fsf@anie.imag.fr> <CA+DCAeQWeUodaBtHOdzGB3RTZTQ672ZUSV-=eh-nA+8Bvn4gxw@mail.gmail.com>
- <vpq1t85rj44.fsf@anie.imag.fr> <CA+DCAeQGPqZvvn5RSA0UweM4sQLat-2OPo4BdEDyvUbq+eLi=w@mail.gmail.com>
- <CACsJy8BKko=esR5Q3dsq=Z-pdX1EtocJr25tH4Fn+E-pOns=_Q@mail.gmail.com> <CA+DCAeQADoW-r5ppDNXVBj0=16FXKi=3pedAzhRuCD9uDJz_YQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Mailing List <git@vger.kernel.org>,
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v6 00/15] config: make git_config_set die on failure
+Date: Mon, 22 Feb 2016 12:23:21 +0100
+Message-ID: <1456140216-24169-1-git-send-email-ps@pks.im>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	ps@pks.im, Eric Sunshine <sunshine@sunshineco.com>,
 	Stefan Beller <sbeller@google.com>,
-	karthik nayak <Karthik.188@gmail.com>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 12:21:59 2016
+	Lars Schneider <larsxschneider@gmail.com>,
+	Michael Blume <blume.mike@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 12:24:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXoYv-0006Yo-Tb
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 12:21:58 +0100
+	id 1aXobW-0000Ps-VA
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 12:24:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480AbcBVLVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 06:21:54 -0500
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:34554 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754346AbcBVLVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 06:21:53 -0500
-Received: by mail-lb0-f176.google.com with SMTP id of3so79926530lbc.1
-        for <git@vger.kernel.org>; Mon, 22 Feb 2016 03:21:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=MLV2t8ZaTkCZhB17EX45u/coRPdbtdVe1/azsiG2KGw=;
-        b=XY8YTX9G1LFyTzqtaoEltBs+VfCmNY5r0fOUwtUwjVegHRC9PojwoeYc/jKUK4qKvg
-         denFnVFONKVUMmOX4pFC0RoC6xf69/CQjfvMTfMFTYptwa4IyLcY1Owf3BwlKclgDHLh
-         VT6h3QQnL4Pt09D+vOAV54HHA0jcGi8zxUGRN/JJFMha2dRinlWxRRRo8pB0ogkV3QNO
-         1vOIpyRvTAzNpdCuaXiK14+7BOI08lWnoj2SUJQ9MMlZ+7qx7PghCmuBSsitQ1Ase29j
-         J7ZVua9OkZbDf0pmm9dYDZSdgOX3aboyoXtZE09zU7DaKyN8zRj2lESP4WutzHwLxGp9
-         /3qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=MLV2t8ZaTkCZhB17EX45u/coRPdbtdVe1/azsiG2KGw=;
-        b=K4z7ldA2M5wl0al4EMZMI9FJA8JzGbNgg+TjmFwuU69OFOBtKuT6f6zuMmTkcMlsNW
-         Gy+GvQRYOlCSwwR/MvHIiBhI38whFuTgYs5X16S35WY3f4STiEVmA4uekUlt06rtBSqD
-         /jz4vLs4JZqSZWO8xdTV3y5hL6E1hkkhrH2QBOqe94rZD7V11h5BnjrdAHsDfLstZMpv
-         q/PgrvMmJHmO0gErXujtU6VJzG0bHl5ST2lA0mTS/FSsI5b7zB/okglATdd9ye3FpNiF
-         BH1A4Yq5si2xHdm9o6nWhtTclPsL466IN5abhN/CYQmQidaZqkdMIcEyOO9wLx6jza4T
-         QfVg==
-X-Gm-Message-State: AG10YOSlKE/So8xjoBuCbNoUqEY7oVD8f5vNSAXyChFLQHzte3KtAAGFj0xyOJSPFkL4vxNO9fYFnUF8D+rZOA==
-X-Received: by 10.112.209.99 with SMTP id ml3mr9648951lbc.26.1456140111774;
- Mon, 22 Feb 2016 03:21:51 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Mon, 22 Feb 2016 03:21:22 -0800 (PST)
-In-Reply-To: <CA+DCAeQADoW-r5ppDNXVBj0=16FXKi=3pedAzhRuCD9uDJz_YQ@mail.gmail.com>
+	id S1754497AbcBVLYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 06:24:36 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43269 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754492AbcBVLYe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 06:24:34 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 40D1D20C0D
+	for <git@vger.kernel.org>; Mon, 22 Feb 2016 06:24:34 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 22 Feb 2016 06:24:34 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:date:from:message-id:subject:to
+	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=BhSzlyDQWuVyDQaHkVWbd9teUT
+	E=; b=S8mi3Lt3vGTb/6unSGtmyWjZg53th7DU4rrShv7XKp19IMUnhINTK/xZTK
+	UkI16HdwOEQZoF/94bryw38DymWHFDos9pQyIkXVIZrBB5dq3domH3ir26eZHUr1
+	H/cxeY7vJBB/DQaku53lJlw5Isrey+kgO45l30145qFV9TEYU=
+X-Sasl-enc: nHJ0nXhzm2iaxsACLt1EMc/3WOWZ87GwTyFO1CoIsRg7 1456140273
+Received: from localhost (unknown [46.189.27.162])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 94B7C68015B;
+	Mon, 22 Feb 2016 06:24:33 -0500 (EST)
+X-Mailer: git-send-email 2.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286909>
 
-On Mon, Feb 22, 2016 at 5:30 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
-> On Mon, Feb 22, 2016 at 3:50 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> You may have an http server installed but not suitable for these
->> tests. Try running one test file alone with -v -i, e.g.
->> ./t5539-fetch-http-shallow.sh -v -i and post the output.
->
-> Here's the output :-
->
-> expecting success:
->     git clone --bare --no-local shallow "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
->     git clone $HTTPD_URL/smart/repo.git clone &&
->     (
->     cd clone &&
->     git fsck &&
->     git log --format=%s origin/master >actual &&
->     cat <<EOF >expect &&
-> 7
-> 6
-> 5
-> 4
-> 3
-> EOF
->     test_cmp expect actual
->     )
->
-> Cloning into bare repository '/home/mj/git/t/trash
-> directory.t5539-fetch-http-shallow/httpd/www/repo.git'...
-> remote: Counting objects: 15, done.
-> remote: Compressing objects: 100% (5/5), done.
-> remote: Total 15 (delta 0), reused 15 (delta 0)
-> Receiving objects: 100% (15/15), done.
-> Checking connectivity... done.
-> Cloning into 'clone'...
-> fatal: unable to access 'http://127.0.0.1:5539/smart/repo.git/': The
-> requested URL returned error: 403
+Next revision of my patch series to improve error handling on
+git_config_set. Only three small changes to v5 [1], thanks for
+pointing these out:
 
-OK server is up but very likely misconfigured. If you have experience
-with http server before (I think this is apache), then you can dig in
-t/lib-httpd.sh, study how the server is configured and try to fix it.
+    - fixed missing conversion of git_config_set_or_die in
+      compat/precompose_utf8.c
+    - fixed indentation in install_branch_config
+    - improved advise message to give the complete command for
+      fixing up the upstream configuration, including the actual
+      tracking branch
 
-Alternatively, you can smiply skip http tests by setting environment
-variable GIT_TEST_HTTPD to false before running the tests.
+[1]: http://article.gmane.org/gmane.comp.version-control.git/286355
+
+Interdiff to v5:
+
+diff --git a/branch.c b/branch.c
+index 06942ef..c50ea42 100644
+--- a/branch.c
++++ b/branch.c
+@@ -53,7 +53,7 @@ static const char tracking_advice[] =
+ N_("\n"
+ "After fixing the error cause you may try to fix up\n"
+ "the remote tracking information by invoking\n"
+-"\"git branch --set-upstream-to=\".");
++"\"git branch --set-upstream-to=%s%s%s\".");
+ 
+ int install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+@@ -82,7 +82,7 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 		strbuf_reset(&key);
+ 		strbuf_addf(&key, "branch.%s.rebase", local);
+ 		if (git_config_set_gently(key.buf, "true") < 0)
+-		    goto out_err;
++			goto out_err;
+ 	}
+ 	strbuf_release(&key);
+ 
+@@ -117,7 +117,12 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ out_err:
+ 	strbuf_release(&key);
+ 	error(_("Unable to write upstream branch configuration"));
+-	advise(_(tracking_advice));
++
++	advise(_(tracking_advice),
++	       origin ? origin : "",
++	       origin ? "/" : "",
++	       shortname ? shortname : remote);
++
+ 	return -1;
+ }
+ 
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 9ff1ebe..dfbe6d8 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -50,8 +50,8 @@ void probe_utf8_pathname_composition(void)
+ 		close(output_fd);
+ 		git_path_buf(&path, "%s", auml_nfd);
+ 		precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+-		git_config_set_or_die("core.precomposeunicode",
+-				      precomposed_unicode ? "true" : "false");
++		git_config_set("core.precomposeunicode",
++			       precomposed_unicode ? "true" : "false");
+ 		git_path_buf(&path, "%s", auml_nfc);
+ 		if (unlink(path.buf))
+ 			die_errno(_("failed to unlink '%s'"), path.buf);
+
+Patrick Steinhardt (15):
+  config: introduce set_or_die wrappers
+  branch: report errors in tracking branch setup
+  branch: die on config error when unsetting upstream
+  branch: die on config error when editing branch description
+  submodule: die on config error when linking modules
+  submodule--helper: die on config error when cloning module
+  remote: die on config error when setting URL
+  remote: die on config error when setting/adding branches
+  remote: die on config error when manipulating remotes
+  clone: die on config error in cmd_clone
+  init-db: die on config errors when initializing empty repo
+  sequencer: die on config error when saving replay opts
+  compat: die when unable to set core.precomposeunicode
+  config: rename git_config_set to git_config_set_gently
+  config: rename git_config_set_or_die to git_config_set
+
+ branch.c                 | 50 ++++++++++++++++++++++++----------
+ branch.h                 |  3 ++-
+ builtin/branch.c         |  5 ++--
+ builtin/clone.c          |  2 +-
+ builtin/config.c         | 28 +++++++++----------
+ builtin/init-db.c        |  2 +-
+ builtin/remote.c         | 70 +++++++++++++++++-------------------------------
+ cache.h                  | 14 ++++++----
+ compat/precompose_utf8.c |  3 ++-
+ config.c                 | 52 ++++++++++++++++++++++++++---------
+ submodule.c              | 10 +++----
+ t/t3200-branch.sh        | 16 ++++++++++-
+ t/t5505-remote.sh        |  9 +++++++
+ 13 files changed, 159 insertions(+), 105 deletions(-)
+
 -- 
-Duy
+2.7.1
