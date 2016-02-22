@@ -1,87 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 4/4] config: add '--show-origin' option to print the origin of a config value
-Date: Mon, 22 Feb 2016 09:43:25 -0800
-Message-ID: <xmqq4md08wua.fsf@gitster.mtv.corp.google.com>
-References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
-	<1455873362-66998-5-git-send-email-larsxschneider@gmail.com>
+Subject: Re: [PATCH] tests: rename work-tree tests to *work-tree*
+Date: Mon, 22 Feb 2016 09:57:33 -0800
+Message-ID: <xmqqzius7hma.fsf@gitster.mtv.corp.google.com>
+References: <2e74b7a8e3dd27ccd225b5278500f8a3e029d245.1455985042.git.git@drmicha.warpmail.net>
+	<xmqqfuwn9hyp.fsf@gitster.mtv.corp.google.com>
+	<56CAE460.8010405@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net, ramsay@ramsayjones.plus.com,
-	Johannes.Schindelin@gmx.de
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 22 18:43:54 2016
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Feb 22 18:57:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXuWQ-0002or-OW
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 18:43:47 +0100
+	id 1aXujt-0000GU-Iy
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 18:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873AbcBVRn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 12:43:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64407 "EHLO
+	id S1754215AbcBVR5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 12:57:37 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65004 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751096AbcBVRn1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 12:43:27 -0500
+	with ESMTP id S1750731AbcBVR5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 12:57:36 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F08F945892;
-	Mon, 22 Feb 2016 12:43:26 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7087645CB7;
+	Mon, 22 Feb 2016 12:57:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kTslA26z5/XkE7G9K/sRRk6AfNo=; b=g/0Svk
-	L/b4Y7wZaF0otQiBQj/nNjImrwNiWhqmkRMAuBrbwrWtlES2Vg6nmrAGqs9+RJ72
-	eGCFpmgniB5O4SuQp261V5xtX4UY7tP+B7HAJIUfdHwAGXt0HaJL/ktGHHNzNFiV
-	X5iLfOt7MIGmFTTtYghivofLBlIFj0YG2cTwg=
+	:content-type; s=sasl; bh=y50CvlKUm+CERIy1ejNIi0iEdI0=; b=vLzLfA
+	KpaUwM1RAK9O7ejRSmort0FMZicjXs8ZWHQdGF0UO4DdhSVS6cd94CDS8vrbjsqv
+	VUaGtvwNHfw4jBDS4PpCFQD0tq5NAAeHq2dluwjscUESHttkoNuNtlghmveXEfcM
+	EeobiZQnG5TMl0A+8f5dGARBdCiA7TI67fifY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O5MCKcniD9R8SUZfZtItmKLa0hj9gB59
-	Cce4ZLI/BoY+752S+93TWIWVobLYyq5phmc9FILJe8gsi445m5UoCSMPIFlfzKzv
-	pRB4nPb3NZ7ZyZKL+Ez5iOLLRFhZmRdufqnMFux9m9tONoCR3DC/Modbi4NEVZkt
-	FIoQKgr5z1s=
+	:content-type; q=dns; s=sasl; b=BDUAGrp1J7N1yhdO+tn/Gc5RWWU7Mhaj
+	I2pkwZaOBNDsA3GWulWsE++MZyY/7rS0648Yin4Ab7JpGqV8NDfCB5M7WIApoxcz
+	0ef++1Kt/om2cYTpgwRRkZRvxuSvHPyvMrlpj0tOEudrCzeGlhPgfBs3hlbeliQS
+	hJ9IP29ClM0=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E63A745891;
-	Mon, 22 Feb 2016 12:43:26 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 688F845CB6;
+	Mon, 22 Feb 2016 12:57:35 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5595245890;
-	Mon, 22 Feb 2016 12:43:26 -0500 (EST)
-In-Reply-To: <1455873362-66998-5-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Fri, 19 Feb 2016 10:16:02
-	+0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DFC0545CB4;
+	Mon, 22 Feb 2016 12:57:34 -0500 (EST)
+In-Reply-To: <56CAE460.8010405@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 22 Feb 2016 11:35:12 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C6D71852-D98B-11E5-8D71-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C095BCDA-D98D-11E5-A73D-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286936>
 
-larsxschneider@gmail.com writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> +test_expect_success '--show-origin with --list' '
-> +	cat >expect <<-EOF &&
-> +		file:$HOME/.gitconfig	user.global=true
-> +		file:$HOME/.gitconfig	user.override=global
-> +		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-> +		file:$INCLUDE_DIR/absolute.include	user.absolute=include
-> +		file:.git/config	user.local=true
-> +		file:.git/config	user.override=local
-> +		file:.git/config	include.path=../include/relative.include
-> +		file:.git/../include/relative.include	user.relative=include
-> +		cmdline:	user.cmdline=true
-> +	EOF
-> ...
-> +test_expect_success '--show-origin stdin' '
-> +	cat >expect <<-\EOF &&
-> +		stdin:	user.custom=true
-> +	EOF
+>> That is rather unfortunate.  Most of them predate the "worktree"
+>> subcommand, I think, and having to rename them merely because a
+>> subcommand with a confusing name appeared sound somewhat backwards.
+>
+> The question is: What ist the way forward?
 
-I do recall there was some bikeshedding^Wdesigning discussion, in
-which I chose not to participate, on the output format, how
-origin-type and origin-value are given in the output in an
-unambiguous way that is easy to understand by the end users.
+Probably many.  Take this as-is is one, rename newer ones that are
+about worktree subcommand to "s/worktree/worktree-cmd/" would be
+another.
 
-Does the above reflect the concensus from the discussion?  Just
-double checking.
+> I was looking for a proper place for a "git worktree" test and got
+> confused by the status quo. My suggestion is one way to help that
+> confusion, but I'd be happy to learn other ways. "grep" is an answer, too.
+>
+> Maybe it's also time to admit that the numbering and naming scheme in t/
+> don't scale and that we should rather support other means of navigating
+> t/, such as standardizing a comment boiler plate in each test or such.
+
+Yeah, test_description at the beginning of each test may have been a
+well meaning attempt, but it is not helping us very much.
+
+> In fact, giving up on the numbering scheme would allow to regroup tests
+> more easily because there would be no room constraint any more (within a
+> fixed finite set of numbers).
+
+I tend to agree that may be an easier way forward in the longer
+term.
+
+Thanks.
