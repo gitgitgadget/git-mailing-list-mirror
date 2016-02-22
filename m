@@ -1,81 +1,90 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: GSoC 2016: Microproject
-Date: Mon, 22 Feb 2016 17:58:15 +0530
-Message-ID: <CA+DCAeTYwfKy_S-5uy=BKNP5J3sa2+wMrpZEQZAikROmvOy1vw@mail.gmail.com>
-References: <CA+DCAeTAmUAciCx33ZHLKReHSy4K-dEeaKSb19qBcQc_U80UJA@mail.gmail.com>
-	<vpq37so26oz.fsf@anie.imag.fr>
-	<CA+DCAeQLJnvNFdSobDNOGVaHbDRnRy4vm9_4SB+Bw+5N5QMKHA@mail.gmail.com>
-	<CAGZ79kbdTFui5Zxmt0+BrgOzxTFsN2n-XZiJBNj4QFD3HPRpBQ@mail.gmail.com>
-	<CA+DCAeRTtECCZSAPYUe2=AoQEvc6LRG1B+qYCCj9C6_nyUJrhw@mail.gmail.com>
-	<vpq8u2er7ae.fsf@anie.imag.fr>
-	<CA+DCAeQWeUodaBtHOdzGB3RTZTQ672ZUSV-=eh-nA+8Bvn4gxw@mail.gmail.com>
-	<vpq1t85rj44.fsf@anie.imag.fr>
-	<CA+DCAeQGPqZvvn5RSA0UweM4sQLat-2OPo4BdEDyvUbq+eLi=w@mail.gmail.com>
-	<CACsJy8BKko=esR5Q3dsq=Z-pdX1EtocJr25tH4Fn+E-pOns=_Q@mail.gmail.com>
-	<CA+DCAeQADoW-r5ppDNXVBj0=16FXKi=3pedAzhRuCD9uDJz_YQ@mail.gmail.com>
-	<CACsJy8B7m7PWY-RJ2pb3fAP6ZKz167Xzbby9Lo44gfDX9w7NPg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 2/3] diff.c: remove unnecessary typecast
+Date: Mon, 22 Feb 2016 19:52:24 +0700
+Message-ID: <1456145545-5374-2-git-send-email-pclouds@gmail.com>
+References: <1456145545-5374-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>, larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 22 13:28:25 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 22 13:52:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXpbA-0000la-Lv
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 13:28:21 +0100
+	id 1aXpyF-00061N-Bm
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 13:52:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754787AbcBVM2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 07:28:17 -0500
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:35406 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751666AbcBVM2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 07:28:16 -0500
-Received: by mail-qg0-f51.google.com with SMTP id y89so109142482qge.2
-        for <git@vger.kernel.org>; Mon, 22 Feb 2016 04:28:16 -0800 (PST)
+	id S1754023AbcBVMwG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 07:52:06 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35305 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753341AbcBVMwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 07:52:05 -0500
+Received: by mail-pf0-f170.google.com with SMTP id c10so95520817pfc.2
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 04:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yLY/2+jeleT1Sp2rC8MfOHGj4SnuUqJaXQIDX7Mrn6o=;
-        b=NBAS0/hji35SI+5so6ZNdQdgWkd7cTLp6Bn/gxvMgqmS3cQuGguTuFmK/772aEgf9h
-         QrlMst79dVq4X9/tUz/FPpvlVimyy3XLVdu0U1plmaBMRoFio63yHd+dGwJwY8sL0ez0
-         66dVFahHnvUxIOlsBGbc0mNxXoLmGa0a6knW2Ehg20cGDH9O6CPYVksnKzov+xAsSUFv
-         6SPXCVa2+kSYKeAe9A7F251hFLK7TtSvNXrNLfEO9MKEJqIze4TAAwiC6inZWqJ6nS1r
-         I/SXsXI8FMfNs2dEca0TzfT9UuLkOYl4zQxEfHqwljiTbDClYpGilNTHfwATiXnPHLHD
-         3y2A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=SO8k0aBqbrIJjs9UvLmbutHleWWYVDfFq5mYNb7aJsc=;
+        b=RqgXbzOQUTkpVt9P7/EU+fe4C+P8gjvbzxmW88u4oXnlUIboCaWX1V0/x3MWinhP1v
+         ERSZi0MUNHD/N9gMBkV7W4MF3jWiKWJ5ay5Tkuv+PLkSvT6h2H4a0lVufVOTp/Tf3tjJ
+         BfMDl5ZCY0vP1fUji4bUTZyRaDxt3nVraizZuUrW4ztftfjZRx51b+B0ejQGfpI8mnA5
+         aSqw19jMUlUYDZIlKpeXcHNdq1GiYk0KPoBMDU925F0UttVIG0e3SE0acjKKP0zrCM/f
+         kWYDsu4q/wClelNkh0Q/T+yK4vzM4QZvn9a2CEa6UCmdtXt25ScQXxzG51raPJGAwzVZ
+         yGgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=yLY/2+jeleT1Sp2rC8MfOHGj4SnuUqJaXQIDX7Mrn6o=;
-        b=AadYtWRJ8cBZcwY/mj3OigYVDEIbVaxdIAl/3v5YmwHbq2sgLaIKkQa+np/xq372hS
-         loHGyTL7aKKtJqO7AZrHrC+Q8d1P4CHGeIMlE808Lw0HYp/xeUzJXiGP7jNCaQczTvua
-         hiBPw1/AWPOUOs3Xvqx+piLcVwMjRM3bn7BENnQdIMdynKGK1WN1kRH2V46X8MkfEu75
-         8Kg99CVzJ/PyJ7OkJAs4Fk0z9m9Pa3ZX461cfapdUe0PO9WkFqNO9NEnLpLfgxcPdpuq
-         3OUsZ/RejaydJSyJ3QpoDs7gAYeIc8s6Kqzrd3SD70CZtQ35lZRMTxUFBrFBeVBHIkCG
-         kGSw==
-X-Gm-Message-State: AG10YOS0jgkozD4L1r3QpRRfbdJ05e9WtjmO47YoV8DxquAwu1VLZjqrzOTKuShQ26r3qDicp+WQjg3BEcswcg==
-X-Received: by 10.140.157.7 with SMTP id d7mr35663434qhd.17.1456144095781;
- Mon, 22 Feb 2016 04:28:15 -0800 (PST)
-Received: by 10.55.154.205 with HTTP; Mon, 22 Feb 2016 04:28:15 -0800 (PST)
-In-Reply-To: <CACsJy8B7m7PWY-RJ2pb3fAP6ZKz167Xzbby9Lo44gfDX9w7NPg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=SO8k0aBqbrIJjs9UvLmbutHleWWYVDfFq5mYNb7aJsc=;
+        b=CBATY24DCnAHKuj+a2C8JJicEhPbdjaSVFWhzZQcxZMgcAKa9BGdWbVcLCFVem3bhr
+         8HJR5YvDLMGxcQoPvmAVRlkZZzY3kRGkPECgzZ3fvc7+sz5/sxnPde1JJVYn2p/iPtlE
+         XAOdKiZZWm+ChYGK5wzeCp8IyNyDjjZ6nkhsXTVcMCewqaOCokKba9izsDZ8giD6ZDry
+         9Kw24J9eMfjKQBjxGCD5IcRIay11a5FqV7fzxNR35OvKe6rX/3zk/KPG0xcdXgPRqZjz
+         zqlzHMJYR+Hq2kN++tbrhdWgwbIjWTTm0+zsWbZju9qbToTGvHaBlo7QuXIuEP7131WB
+         +W8A==
+X-Gm-Message-State: AG10YOSD6ZxuzNaMMmjRGj26W6NeuUi+dAEPXN9i64f7BKiLIw+3NxGrFv+SLanUP1laww==
+X-Received: by 10.98.70.80 with SMTP id t77mr37261255pfa.107.1456145524727;
+        Mon, 22 Feb 2016 04:52:04 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id 6sm36788686pfo.58.2016.02.22.04.52.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Feb 2016 04:52:03 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 22 Feb 2016 19:52:33 +0700
+X-Mailer: git-send-email 2.7.1.532.gd9e3aaa
+In-Reply-To: <1456145545-5374-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286927>
 
-On Mon, Feb 22, 2016 at 4:51 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> OK server is up but very likely misconfigured. If you have experience
-> with http server before (I think this is apache), then you can dig in
-> t/lib-httpd.sh, study how the server is configured and try to fix it.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ diff.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks Duy. :)  All tests passed. I configured apache server to listen
-to the ports tests were trying to access.
-
-Thanks Lars. I tested on Traivs-CI, worked fine. :)
-
-Mehul Jain
+diff --git a/diff.c b/diff.c
+index 8b3a3db..5bdc3c0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -717,8 +717,8 @@ static void emit_rewrite_diff(const char *name_a,
+ 	ecbdata.opt =3D o;
+ 	if (ecbdata.ws_rule & WS_BLANK_AT_EOF) {
+ 		mmfile_t mf1, mf2;
+-		mf1.ptr =3D (char *)data_one;
+-		mf2.ptr =3D (char *)data_two;
++		mf1.ptr =3D data_one;
++		mf2.ptr =3D data_two;
+ 		mf1.size =3D size_one;
+ 		mf2.size =3D size_two;
+ 		check_blank_at_eof(&mf1, &mf2, &ecbdata);
+--=20
+2.7.1.532.gd9e3aaa
