@@ -1,72 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/3] git-svn: svn.pathnameencoding for dcommit
-Date: Mon, 22 Feb 2016 10:00:46 -0800
-Message-ID: <xmqqr3g47hgx.fsf@gitster.mtv.corp.google.com>
-References: <1456109711-26866-1-git-send-email-normalperson@yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] Correct conditions to free textconv result data
+Date: Mon, 22 Feb 2016 13:06:46 -0500
+Message-ID: <20160222180645.GB4587@sigill.intra.peff.net>
+References: <1456145545-5374-1-git-send-email-pclouds@gmail.com>
+ <1456145545-5374-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kazutoshi Satoda <k_satoda@f2.dion.ne.jp>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Feb 22 19:01:03 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 19:07:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXumz-0003UV-C2
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 19:00:53 +0100
+	id 1aXuss-0001UD-2P
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 19:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbcBVSAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 13:00:49 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56350 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751784AbcBVSAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 13:00:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 522D345E7F;
-	Mon, 22 Feb 2016 13:00:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ojevfzw6qUVWc+wBEXxuftMgwlY=; b=kSM1ln
-	MqMypuXDF2U4vEDNxMvJ3/LWuUOAyigTZb+l/xaRL0BIQ0fPK/RCiSooxVsc+c7+
-	MfKzDy+HQ2UsdVIfOZIhXYcjzkBh5lVcOwzJJ7C4spKHH20xVVDxNA1RGhorBHoW
-	+8/J4qS+QB91bT0UtsFKsHjH1C0dMTVjCHmp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HIUqL5wS67PCzfVM2pduU14eItIMuzLG
-	JWEMSj7zQnzm+4ykm3iIHigi8xeFCO2V6KhUphcoM8kXZ5r02+ChR76sKAzk8ddu
-	7tkn52R3QYM6CvvNIvLQCfUA894HW2jUX0zL5FUYCoy9ULXV09Ed1cTZyP9bNRoj
-	w8AVGVDV9zY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3520A45E7D;
-	Mon, 22 Feb 2016 13:00:48 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 91AA845E7C;
-	Mon, 22 Feb 2016 13:00:47 -0500 (EST)
-In-Reply-To: <1456109711-26866-1-git-send-email-normalperson@yhbt.net> (Eric
-	Wong's message of "Mon, 22 Feb 2016 02:55:08 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 336E7F3A-D98E-11E5-A5BA-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755281AbcBVSGu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 13:06:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46858 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754712AbcBVSGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 13:06:48 -0500
+Received: (qmail 9460 invoked by uid 102); 22 Feb 2016 18:06:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 13:06:48 -0500
+Received: (qmail 20436 invoked by uid 107); 22 Feb 2016 18:06:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Feb 2016 13:06:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Feb 2016 13:06:46 -0500
+Content-Disposition: inline
+In-Reply-To: <1456145545-5374-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286939>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Mon, Feb 22, 2016 at 07:52:25PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-> The following changes since commit 0233b800c838ddda41db318ee396320b3c21a560:
->
->   Merge branch 'maint' (2016-02-17 10:14:39 -0800)
->
-> are available in the git repository at:
->
->   git://bogomips.org/git-svn.git ks/svn-pathnameencoding-4
->
-> for you to fetch changes up to 1b42f45255de5844b7fe8d0c60fea74cd5b9f954:
->
->   git-svn: apply "svn.pathnameencoding" before URL encoding (2016-02-22 02:29:36 +0000)
+> fill_textconv() have four code paths to return a new buffer. Two of
+> them, run_textconv() and notes_cache_get(), return a newly allocated
+> buffer. The other two return either a constant string or an existing
+> buffer (mmfile_t). We can only free the result buffer if it's allocat=
+ed
+> by fill_textconv(). Correct all call sites.
 
-Thanks.
+Right, and those two cases (allocated or not) should follow based on
+whether you passed in a textconv-enabled driver.
+
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index cb6f2fb..b5477ad 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -166,7 +166,7 @@ int textconv_object(const char *path,
+>  	df =3D alloc_filespec(path);
+>  	fill_filespec(df, sha1, sha1_valid, mode);
+>  	textconv =3D get_textconv(df);
+> -	if (!textconv) {
+> +	if (!textconv || !textconv->textconv) {
+>  		free_filespec(df);
+>  		return 0;
+>  	}
+
+This change (and the other similar ones) doesn't make any sense to me.
+The point of get_textconv() is to return the userdiff driver if and onl=
+y
+if it has textconv enabled.
+
+I have a feeling you were confused by the fact that fill_textconv()
+does:
+
+  if (!driver || !driver->textconv)
+
+to decide whether to allocate the textconv buffer. The latter half of
+that is really just defensive programming, and I think this would
+probably be better as:
+
+  if (driver)
+	....
+
+  assert(driver->textconv);
+
+to make it more clear that we assume the parameter came from
+get_textconv().
+
+And if there's a case that triggers that assert(), then I think the bug
+is in the caller, which should be fixed.
+
+Is there a case I'm missing here where we actually leak memory or try t=
+o
+free non-allocated memory? I didn't see it.
+
+-Peff
