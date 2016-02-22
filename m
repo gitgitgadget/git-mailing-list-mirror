@@ -1,131 +1,88 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v7 2/2] fixup: config: add '--show-origin' option to print the origin of a config value
-Date: Mon, 22 Feb 2016 10:23:46 +0100
-Message-ID: <1456133026-15355-3-git-send-email-larsxschneider@gmail.com>
-References: <xmqqd1rsd0ac.fsf@gitster.mtv.corp.google.com>
- <1456133026-15355-1-git-send-email-larsxschneider@gmail.com>
-Cc: gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 22 10:24:16 2016
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
+Date: Mon, 22 Feb 2016 16:28:32 +0700
+Message-ID: <CACsJy8BzkWSc11ODenEuGBBta+dkLS893o7oRS57_ctoB5ie8A@mail.gmail.com>
+References: <vpqoabox66p.fsf@anie.imag.fr> <CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
+ <vpqd1s2e74l.fsf@anie.imag.fr> <20160212130446.GB10858@sigill.intra.peff.net> <vpqd1s04zzs.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 22 10:29:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXmiy-0004gH-6V
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 10:24:12 +0100
+	id 1aXmnr-0000m1-G5
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 10:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753975AbcBVJYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 04:24:05 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:38031 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754091AbcBVJXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 04:23:52 -0500
-Received: by mail-wm0-f46.google.com with SMTP id a4so153089934wme.1
-        for <git@vger.kernel.org>; Mon, 22 Feb 2016 01:23:51 -0800 (PST)
+	id S1754107AbcBVJ3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 04:29:08 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:32840 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753149AbcBVJ3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 04:29:04 -0500
+Received: by mail-lf0-f54.google.com with SMTP id m1so90479126lfg.0
+        for <git@vger.kernel.org>; Mon, 22 Feb 2016 01:29:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Mm6Cba36Ao/s/cthDKSbl3tx5VRJDD7tV5aa5Qc+rWw=;
-        b=POxFSq/KD1h2EMg1XMlvANJt/lwpoEFgUsTmK0RWasZi4dFGbmh8ng370EqByn780R
-         QjY4jtTEh6LODLvUi6nKuBjZITDQ2qt3gPHA0hQdpDJuiQWl3vutrSRQt68wZRFGWrzP
-         9CQpC1IhU2bACjWvr+3qkQIdiP5jbaqfWvPYe6TZyblwDLhy/uV+Gi2ywyZjCuRQ3Etp
-         W8DQ166aNi5kRm70K/DNGsNZnBN/jM0LFncsRfLp/6dcNEuZVuG2gTVWec2H6G4odOK+
-         +w89uSkQ9bi8x93XPdW9c3Il04yZpDeIWQjEVhte5vEiJ2HHfXHCwze0SbYL9kwXc+Ue
-         fsYg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PckPrJhlIu277a1mbrxD76d4zKA6RO71O2LAgvr1f8A=;
+        b=o7cj8y0MAt8AwPQ3V5Cvn1EATdDAKAs1FMIs09XmX1xQEic1gGSdQ46OMjtHYDmuLh
+         LNEbJU6S7QbRwkQDnm4RtR1/rqR4pL4Oo1uuvbuVxsGlp4HlfUoIsOxCn/kpIEQ7jESe
+         y4HU9K6tTrtLgr/DhIsO5K7ljLQIGxzMiNbponEuEcrGWKvFFrSYJrmTAXPFBahhc742
+         Z8tiM3uMItgJsZ/NNh1i1bP1ua8uSEva7nbz/XDVL69zBPz24L5r5l1cVQLUVqkt/pzk
+         hCqP3iT9L6nTbPRcWhzOuOVR2ITNwpOZWnKTp9UwVvbPoUSHRywK0ZZkVaxk9Ve/9Ux4
+         RUxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Mm6Cba36Ao/s/cthDKSbl3tx5VRJDD7tV5aa5Qc+rWw=;
-        b=ZIS4g/2BRawiIvbhIkAlBgTo4WSqdwTRioseTiAwXqWoykUQv89H0FHuFgFZgoCMkd
-         kguwHmbPwcTF2vSzN6N1qE1o9ZzCGjc10/+ZRIZxAePq1+wKc4HEJePXORTOKODgMCZ8
-         +/WdzxMXQYc8hVmhVnnopgVzArT6f4s10g+97vDMbK5YOdyrpBO1duplGJ9lhW7HwAS6
-         zN7xJ0FZnC/EJD7mA1gQVxTcCl6GQqe4bhOXN9UwWeYVhh00Fsv7DZYxcfRAeorJudpS
-         7Lj+v8ou8BHl6pPcXRJEKaRLJIz7AbO5+ZdjdFhGWT1W1Sd+UjKSYrEw8h4gX8WHjehI
-         aNDg==
-X-Gm-Message-State: AG10YOTX78A0giATrjJpqL/N3P/f53X0fi4vJeDQSmjHhNREX+eaQ/5FDYXyvjtTTxzjaw==
-X-Received: by 10.194.184.50 with SMTP id er18mr29934973wjc.160.1456133031235;
-        Mon, 22 Feb 2016 01:23:51 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB49D4.dip0.t-ipconnect.de. [93.219.73.212])
-        by smtp.gmail.com with ESMTPSA id g126sm20054279wmf.16.2016.02.22.01.23.50
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 22 Feb 2016 01:23:50 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1456133026-15355-1-git-send-email-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=PckPrJhlIu277a1mbrxD76d4zKA6RO71O2LAgvr1f8A=;
+        b=DpRnPhLmZlre96FHnOjNabQRxEmlXVX+a4+F3SeJmajjVz+fRFV4H55awXvtBRcFgo
+         ii3c+IyNyfMtw4aF8RJENVBSHIWU8PXpxSjt0h+rxwj2Tp8z8YL7o9p64Ut64tTicHMD
+         CT+s70EyZE4mydpn72l2iuduoQ1fEONXkeevq2/GKVU48DOSer3a5GlR4TjrZwIo1t6E
+         +gxxNjuit82H79gQ6zeTbD5RQMh8QKPPl5nFGmIIXOpqxqsgrtiCKdaRt2kI/qtqPH4H
+         BFu4ppKh4mUC/kr0IvKgVrV2Qw7Nlqv2f1IhG1b78zH73/YAHAtgqSdSQBE/tnIJpW9H
+         j7oQ==
+X-Gm-Message-State: AG10YOQdPcdzu2YXvGmxdo6C6/VuTxoat2keo02pRZFgfp3jtY+LcuhuAseLqc/XPpZkull7Rl3fTP90hUo+LQ==
+X-Received: by 10.25.159.68 with SMTP id i65mr9718736lfe.94.1456133342168;
+ Mon, 22 Feb 2016 01:29:02 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Mon, 22 Feb 2016 01:28:32 -0800 (PST)
+In-Reply-To: <vpqd1s04zzs.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286899>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Sat, Feb 13, 2016 at 6:21 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Less urgent, but we need to add more stuff to be credible:
+>
+> ...
+>
+> http://git.github.io/SoC-2016-Microprojects/ => I just did s/2015/2016/.
+> I think most projects are not valid anymore, and we need new ones.
+>
+> To all: please contribute to these pages, either by sending patches here
+> (CC: me and peff), pushing directly if you have access, or submitting
+> pull-requests. The repo is https://github.com/git/git.github.io/.
 
----
- Documentation/git-config.txt | 5 +++--
- builtin/config.c             | 2 +-
- t/t1300-repo-config.sh       | 6 +++---
- 3 files changed, 7 insertions(+), 6 deletions(-)
+Idea for microprojects. If you compile using gcc with -Wshadow, it
+spots local variables that shadow another local or global variables.
+These are usually bad because it makes it's easy to make mistakes when
+changing the code.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 6374997..499fc0f 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -196,8 +196,9 @@ See also <<FILES>>.
- 
- --show-origin::
- 	Augment the output of all queried config options with the
--	origin type (file, stdin, blob, cmdline) and the actual origin
--	(config file path, ref, or blob id if applicable).
-+	origin type (file, standard input, blob, command line) and
-+	the actual origin (config file path, ref, or blob id if
-+	applicable).
- 
- --get-colorbool name [stdout-is-tty]::
- 
-diff --git a/builtin/config.c b/builtin/config.c
-index a1a9b9a..0f14220 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -83,7 +83,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes, N_("respect include directives on lookup")),
--	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, stdin, blob, cmdline)")),
-+	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
- 	OPT_END(),
- };
- 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 254643a..8867ce1 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1246,7 +1246,7 @@ test_expect_success '--show-origin with --list' '
- 		file:.git/config	user.override=local
- 		file:.git/config	include.path=../include/relative.include
- 		file:.git/../include/relative.include	user.relative=include
--		cmdline:	user.cmdline=true
-+		command line:	user.cmdline=true
- 	EOF
- 	git -c user.cmdline=true config --list --show-origin >output &&
- 	test_cmp expect output
-@@ -1262,7 +1262,7 @@ test_expect_success '--show-origin with --list --null' '
- 		trueQfile:.git/configQuser.override
- 		localQfile:.git/configQinclude.path
- 		../include/relative.includeQfile:.git/../include/relative.includeQuser.relative
--		includeQcmdline:Quser.cmdline
-+		includeQcommand line:Quser.cmdline
- 		trueQ
- 	EOF
- 	git -c user.cmdline=true config --null --list --show-origin >output.raw &&
-@@ -1318,7 +1318,7 @@ test_expect_success '--show-origin escape special file name characters' '
- 
- test_expect_success '--show-origin stdin' '
- 	cat >expect <<-\EOF &&
--		stdin:	user.custom=true
-+		standard input:	user.custom=true
- 	EOF
- 	git config --file - --show-origin --list <"$CUSTOM_CONFIG_FILE" >output &&
- 	test_cmp expect output
+_If_ you agree shadow vars are bad and should be exterminated,
+'master' has 94 warnings spreading over 49 files. A student can pick
+_one_ file and try to fix all warnings in that file. There are many
+possible approaches (rename, combine vars, change scope, even
+restructure/kill global vars..), plenty of room for discussion.
 -- 
-2.5.1
+Duy
