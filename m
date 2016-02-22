@@ -1,112 +1,135 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: contrib/diff-highlight: stop hard-coding perl location
-Date: Mon, 22 Feb 2016 02:13:23 -0500
-Message-ID: <CAPig+cQp9H4K2D88bVxRRnwD_rY-8hROzVOp6aBCp9Y=Y6HwUA@mail.gmail.com>
-References: <CA+boQ6YWWkudgwC7zn-3UPWqfkw+uJZgwcBWcGvJDcCUakjzHA@mail.gmail.com>
-	<CAPig+cSE77JbD9CShrxnFsDLd9DrG9L15BSecERk_Qih9CMOig@mail.gmail.com>
-	<CA+boQ6bCH35hu9GfQY_P5bNZCdJ8Knr8zQ+S41RGF0z-JamVgw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Peter Dave Hello <hsu@peterdavehello.org>
-X-From: git-owner@vger.kernel.org Mon Feb 22 08:13:29 2016
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH v2] git.c: simplify stripping extension of a file in handle_builtin()
+Date: Mon, 22 Feb 2016 13:18:29 +0600
+Message-ID: <1456125509-2317-1-git-send-email-kuleshovmail@gmail.com>
+Cc: "git @ vger . kernel . org" <git@vger.kernel.org>,
+	Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 22 08:22:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXkgT-0006mj-57
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 08:13:29 +0100
+	id 1aXkpV-0006hU-WE
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 08:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477AbcBVHNZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 02:13:25 -0500
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:34822 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751855AbcBVHNY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 02:13:24 -0500
-Received: by mail-vk0-f51.google.com with SMTP id e6so121493720vkh.2
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 23:13:24 -0800 (PST)
+	id S1753480AbcBVHWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 02:22:46 -0500
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:32908 "EHLO
+	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751855AbcBVHWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 02:22:45 -0500
+Received: by mail-lf0-f48.google.com with SMTP id m1so88677025lfg.0
+        for <git@vger.kernel.org>; Sun, 21 Feb 2016 23:22:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=lDVPKjz8PjGy6x8w7P3uIsMOkmaE87FzyjI9ADFmToE=;
-        b=DaGv0fsBI7cjT/wGNFXu6p9YW7I4q9Arzpiqc+UjyB/l2X/R5tIta35c77dA2rP+Kn
-         Z/v4rRUYlHyK5kgCsgD7oOjPX4a0inJoiBrGFXASnThirvpYdevVfYJS8vtm82dd8u14
-         y0AxABhJIQ9rHg0dAf5SJ4O03kExpc+zE1u0WqcIpFJsu40hiQto9v1iLd+CJx2Ee8YS
-         84Ckm1hCKUrA2uf8ma48mGdBzKJs9rkl4o+AoD0CBlawMg0YIGtzPf6aHplarL69Y5/k
-         0L+X0Mua+i5GjxcAyjyamHG/IzGLbseUPhCDvVNUIjfnJhC+H3p5jAv2ZCyl/yiomv1Q
-         kIEw==
+        h=from:to:cc:subject:date:message-id;
+        bh=8z9Rq5BDxdQECP4mwbqJQh3FRXNdCD7QO3RLWtkgs2A=;
+        b=obazAAH/5vqmFDd+3jsGASQG7Fydr9+35dYBIRWikdkeoJ3OtzvcoLaPzp2wY1HbAl
+         V5utrxWViG9Z988D6rBzGIChUPq/p0bzuqW9YdH0OsIZxriiOLh5nXhx4K0frfE5tY4e
+         qPXaKTdm4varEhbIw8sysBfMpnpt+eEaHAnEAKdoTFIFn5j1JXJit8sWrhVQy9tSFkrA
+         CkCiVcAt0jIrSGSde9NqDpS3CE5jkO2VewhAZp8LHhYRqvNjhGpFNJnmGLktoZin6D+X
+         U1QBoFvBulXBvF0Zr+RoTwlRrNbLKkAF5lW9j2R/DJjBmUn30K7qDxuS9kDU85K7Q2Q0
+         geeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lDVPKjz8PjGy6x8w7P3uIsMOkmaE87FzyjI9ADFmToE=;
-        b=F2DZZi02I3BLjkvKPJRg2sTXeMOWObkr/zJKxwO9fsU94s4YSrtO4pM8Ib8K3OmmGK
-         sbLopEVRwuCJ5lBl3jr80L/wwdli8TOqMUE/XojdZSR7IKDRwtcf5y+wngvH7BKmS2r2
-         I5R0slO+oILqmUsW1A88BzpD+M0J1sj82tTiOEU3oeOL5VEIHTEOa1YGNEspCMNZwTe8
-         ZVfIgZOhrtpOedzEbQFl+GB3mze0QX3xESMXc86Vg4a6ZfpqILpaekG/H0/iVd7YKwFT
-         ebWIhWFmYACICsH5CKqCilrlhSUyiLsxrQryMI1SXCkuaSDo1bTBDxzvGEgtDMHHyBsS
-         eDhw==
-X-Gm-Message-State: AG10YOR6M1jBQ3IjXpgKKT/bmCOtnUEiMIBMNHt0K6cuE2bDWwQ48eZ9JRKXCBgr81uYHYh4VkCpfbwbh8680A==
-X-Received: by 10.31.168.76 with SMTP id r73mr21980933vke.117.1456125203728;
- Sun, 21 Feb 2016 23:13:23 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 23:13:23 -0800 (PST)
-In-Reply-To: <CA+boQ6bCH35hu9GfQY_P5bNZCdJ8Knr8zQ+S41RGF0z-JamVgw@mail.gmail.com>
-X-Google-Sender-Auth: rqP-6jCVuqWU5UL34qo2J_VlDXk
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8z9Rq5BDxdQECP4mwbqJQh3FRXNdCD7QO3RLWtkgs2A=;
+        b=lTIpAHSCOrh0XGmnW+hh5bTtapP626GsfGajoHU99TFns5rPsOLax4rdbbxa7sW21x
+         MA2UR+S+bm7CgL6aOA8tqzOw4aQqr+bCqv20ThiPNKPEHUb8oIuTw6yuDlI12a2BLhFj
+         FGsXukhIxlfokHFrQOa4U2gywi8XJQgkoE8EjYYs+UpkveZDqSMP2oHae9wR5mQ2U411
+         cN/V+LaHrjo8bKbfp2ktFM3KrTxtwZiKJni+iUvg8hKN6nU+4ChgwXP6/a6l+kYzRrFS
+         8riVYY/AJSDC8pcdzeJzY13eIflCWgBd/03vO9lpq8W9jdV9nf7EO01SU70/RzQMjHKO
+         0BOg==
+X-Gm-Message-State: AG10YOSl2ObPUoB+LDYdMpKSIfYPTooL9F6TLD/bGintdnzetr2E1Vl5sgmVJjFY+ODUdA==
+X-Received: by 10.25.169.74 with SMTP id s71mr9828680lfe.135.1456125763721;
+        Sun, 21 Feb 2016 23:22:43 -0800 (PST)
+Received: from localhost.localhost ([2.135.53.16])
+        by smtp.gmail.com with ESMTPSA id rp10sm3174893lbb.13.2016.02.21.23.22.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Feb 2016 23:22:42 -0800 (PST)
+X-Mailer: git-send-email 2.7.1.339.g0233b80
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286887>
 
-[please don't top-post on this list]
+The handle_builtin() starts from stripping of command extension if
+STRIP_EXTENSION is enabled. Actually STRIP_EXTENSION does not used
+anywhere else.
 
-On Mon, Feb 22, 2016 at 1:49 AM, Peter Dave Hello
-<hsu@peterdavehello.org> wrote:
-> Thank you, is there anything I should do? Or I should just wait?
+This patch introduces strip_extension() helper to strip STRIP_EXTENSION
+extension from argv[0] with the strip_suffix() instead of manually
+stripping.
 
-Best is to wait for other review comments, particularly from Junio.
-Reviewers work at their own pace as time permits, so don't be
-surprised if it takes days or a week or more. If you don't hear back
-from Junio after a week or two, and if you don't see that he has
-silently picked it up in his "pu" branch and don't see mention of it
-in Junio's "What's cooking" email after that time, then it can be
-helpful to send a reminder about the patch to the list.
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+---
+Changelog:
 
-> Best,
-> Peter
->
-> 2016/2/22 =E4=B8=8B=E5=8D=881:56=E6=96=BC "Eric Sunshine" <sunshine@s=
-unshineco.com>=E5=AF=AB=E9=81=93=EF=BC=9A
->>
->> On Mon, Feb 22, 2016 at 12:54 AM, Peter Dave Hello
->> <hsu@peterdavehello.org> wrote:
->> > From: Peter Dave Hello <hsu@peterdavehello.org>
->> >
->> > Use `#!/usr/bin/env perl` instead of `#!/usr/bin/perl`,
->> > the util "env" can help located the "perl",
->> > so that it can work on FreeBSD and other platforms.
->> >
->> > Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
->>
->> Better, thanks.
->>
->> > ---
->> >  contrib/diff-highlight/diff-highlight | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/contrib/diff-highlight/diff-highlight
->> > b/contrib/diff-highlight/diff-highlight
->> > index ffefc31..b57b0fd 100755
->> > --- a/contrib/diff-highlight/diff-highlight
->> > +++ b/contrib/diff-highlight/diff-highlight
->> > @@ -1,4 +1,4 @@
->> > -#!/usr/bin/perl
->> > +#!/usr/bin/env perl
->> >
->> >  use 5.008;
->> >  use warnings FATAL =3D> 'all';
->
+v2: typos fixed in commit message.
+
+ git-compat-util.h |  4 ----
+ git.c             | 26 +++++++++++++++-----------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8f0e76b..b35251c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -333,10 +333,6 @@ extern char *gitdirname(char *);
+ #define _PATH_DEFPATH "/usr/local/bin:/usr/bin:/bin"
+ #endif
+ 
+-#ifndef STRIP_EXTENSION
+-#define STRIP_EXTENSION ""
+-#endif
+-
+ #ifndef has_dos_drive_prefix
+ static inline int git_has_dos_drive_prefix(const char *path)
+ {
+diff --git a/git.c b/git.c
+index 087ad31..6cc0c07 100644
+--- a/git.c
++++ b/git.c
+@@ -509,21 +509,25 @@ int is_builtin(const char *s)
+ 	return !!get_builtin(s);
+ }
+ 
++#ifdef STRIP_EXTENSION
++static void strip_extension(const char **argv)
++{
++	size_t len;
++
++	if (strip_suffix(argv[0], STRIP_EXTENSION, &len))
++		argv[0] = xmemdupz(argv[0], len);
++}
++#else
++#define strip_extension(cmd)
++#endif
++
+ static void handle_builtin(int argc, const char **argv)
+ {
+-	const char *cmd = argv[0];
+-	int i;
+-	static const char ext[] = STRIP_EXTENSION;
++	const char *cmd;
+ 	struct cmd_struct *builtin;
+ 
+-	if (sizeof(ext) > 1) {
+-		i = strlen(argv[0]) - strlen(ext);
+-		if (i > 0 && !strcmp(argv[0] + i, ext)) {
+-			char *argv0 = xstrdup(argv[0]);
+-			argv[0] = cmd = argv0;
+-			argv0[i] = '\0';
+-		}
+-	}
++	strip_extension(argv);
++	cmd = argv[0];
+ 
+ 	/* Turn "git cmd --help" into "git help cmd" */
+ 	if (argc > 1 && !strcmp(argv[1], "--help")) {
+-- 
+2.7.1.339.g0233b80
