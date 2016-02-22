@@ -1,137 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git.c: simplify striping extension of a file in handle_builtin()
-Date: Sun, 21 Feb 2016 19:20:12 -0500
-Message-ID: <CAPig+cTiZ17Fb-d+9n_F2PM5+4Q4NAc0xC3xVogwv5+P6aCE9A@mail.gmail.com>
-References: <1455978468-14387-1-git-send-email-kuleshovmail@gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] daemon.c: mark a file-local symbol as static
+Date: Mon, 22 Feb 2016 00:33:23 +0000
+Message-ID: <56CA5753.9030308@ramsayjones.plus.com>
+References: <56C9F4F2.1060100@ramsayjones.plus.com>
+ <20160221232510.GB4094@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	"git @ vger . kernel . org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 22 01:20:23 2016
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 22 01:33:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aXeEf-0000TW-Ql
-	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 01:20:22 +0100
+	id 1aXeRW-00063N-Po
+	for gcvg-git-2@plane.gmane.org; Mon, 22 Feb 2016 01:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752397AbcBVAUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Feb 2016 19:20:14 -0500
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:36401 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300AbcBVAUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Feb 2016 19:20:13 -0500
-Received: by mail-vk0-f49.google.com with SMTP id c3so116089170vkb.3
-        for <git@vger.kernel.org>; Sun, 21 Feb 2016 16:20:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=poDQtIe1/QJ7kNfkQA3pmb6p26mhWGKe3CPXthAjXbA=;
-        b=tdNJTlBMbJ3g6xp0yiGlfhNMPPOkaW6uIDd1U38zaERUD0hAplaHCrpDbkrGLlKwWy
-         tOPKR+adD3Iws8Rg3fWjbMuim3YJT/lJmHcPVrnG22HW3hoIY36RiOslXONeA9X/7a0y
-         9UX3MrC5tk6+zm29Y89oITvh1c4rjriyrP9gBcR9QRsMUsg4tDf2yMIGP53+feTdGXLb
-         cjMdjF7Dmq1C4PQzE6wW0U0wG49rdRS+GmIJDOhBKcOJEW48ajj3pkSo6weq3sgsq94M
-         I4HU6F5TA0gisrxqAq6UbupXdApj3E0dh6GIAJEiNX61oiQSGBwj5q1gdLLPxLqo8/1F
-         UXYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=poDQtIe1/QJ7kNfkQA3pmb6p26mhWGKe3CPXthAjXbA=;
-        b=COTNFKdBEbz521QL9v6ats09K8eItde3MJF2UOPjxFATjEFKB/r2VPM29FueANTP5P
-         pOo8nVT5MgVDbBMZrpCG/1qjpJ2CfYmIixBIgpBNs7858AUIAVQOV9mVA074TihYZ3sb
-         a/wMfI5H4frR3SjtRKEaIr8eUAj3V3Wu9dFRUZeW9dagHmpEdyMm5Co37Rz5F6YbnJTw
-         FukdUkT18WAbpsqSEY7+X1nOxtpAAw4zg6IzllxneJwlJejK6RmrX2sg2/BxgX8GQ8Ld
-         MSsQLcTa//g31uFcRgp2KNBIfub+Ja0nDlsiKtY65Qa0e/38iO/14rYTJAkyuTxGQt4D
-         GuNA==
-X-Gm-Message-State: AG10YOQuG8U64pF8nIpItNuljK1N+ExKqm63R/eXfUTHsyBGHfnurYVLQ1ngtoLxRhZGMGUlXK0dswNI3EomNw==
-X-Received: by 10.31.182.143 with SMTP id g137mr20572671vkf.45.1456100412851;
- Sun, 21 Feb 2016 16:20:12 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 21 Feb 2016 16:20:12 -0800 (PST)
-In-Reply-To: <1455978468-14387-1-git-send-email-kuleshovmail@gmail.com>
-X-Google-Sender-Auth: TL-YiXKvrdKaXBSUG-P7rWTGZ3o
+	id S1752646AbcBVAdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Feb 2016 19:33:35 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:57728 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752304AbcBVAde (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Feb 2016 19:33:34 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout04 with smtp
+	id MCZX1s0044mu3xa01CZYom; Mon, 22 Feb 2016 00:33:33 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=VwQbUJbxAAAA:8 a=GJtFG2W7KNLIo_G5Q4YA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <20160221232510.GB4094@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/286856>
 
-On Sat, Feb 20, 2016 at 9:27 AM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> git.c: simplify striping extension of a file in handle_builtin()
 
-s/striping/stripping/g
 
-(Note the '/g' above.)
+On 21/02/16 23:25, Jeff King wrote:
+> On Sun, Feb 21, 2016 at 05:33:38PM +0000, Ramsay Jones wrote:
+> 
+>> If you need to re-roll your 'jk/tighten-alloc' branch, could you
+>> please squash this into the relevant patch. (ie. "convert manual
+>> allocations to argv_array").
+> 
+> Thanks, will do. You notice these with sparse, as I recall? I've meant
+> to look into running that myself, but it looks like we are not
+> warning-free with sparse currently. I see complaints like:
+> 
+>   connect.c:377:40: warning: incorrect type in argument 2 (invalid types)
+>   connect.c:377:40:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+>   connect.c:377:40:    got struct sockaddr *ai_addr
+> 
+> As far as I can tell, that's just noise. Do you have a ready-made recipe
+> for silencing it?
 
-The patch itself looks okay.
+Ah, I think you must be on a very old version of sparse.
 
-> The handle_builtin() starts from striping of command extension if
-> STRIP_EXTENSION is enabled. Actually STRIP_EXTENSION does not used
-> anywhere else.
->
-> This patch introduces strip_extension() helper to strip STRIP_EXTENSION
-> extension from argv[0] with the strip_suffix() instead of manually
-> striping.
->
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> @@ -333,10 +333,6 @@ extern char *gitdirname(char *);
->  #define _PATH_DEFPATH "/usr/local/bin:/usr/bin:/bin"
->  #endif
->
-> -#ifndef STRIP_EXTENSION
-> -#define STRIP_EXTENSION ""
-> -#endif
-> -
->  #ifndef has_dos_drive_prefix
->  static inline int git_has_dos_drive_prefix(const char *path)
->  {
-> diff --git a/git.c b/git.c
-> index 087ad31..6cc0c07 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -509,21 +509,25 @@ int is_builtin(const char *s)
->         return !!get_builtin(s);
->  }
->
-> +#ifdef STRIP_EXTENSION
-> +static void strip_extension(const char **argv)
-> +{
-> +       size_t len;
-> +
-> +       if (strip_suffix(argv[0], STRIP_EXTENSION, &len))
-> +               argv[0] = xmemdupz(argv[0], len);
-> +}
-> +#else
-> +#define strip_extension(cmd)
-> +#endif
-> +
->  static void handle_builtin(int argc, const char **argv)
->  {
-> -       const char *cmd = argv[0];
-> -       int i;
-> -       static const char ext[] = STRIP_EXTENSION;
-> +       const char *cmd;
->         struct cmd_struct *builtin;
->
-> -       if (sizeof(ext) > 1) {
-> -               i = strlen(argv[0]) - strlen(ext);
-> -               if (i > 0 && !strcmp(argv[0] + i, ext)) {
-> -                       char *argv0 = xstrdup(argv[0]);
-> -                       argv[0] = cmd = argv0;
-> -                       argv0[i] = '\0';
-> -               }
-> -       }
-> +       strip_extension(argv);
-> +       cmd = argv[0];
->
->         /* Turn "git cmd --help" into "git help cmd" */
->         if (argc > 1 && !strcmp(argv[1], "--help")) {
-> --
-> 2.5.0
+I tend to run a (non-released, reasonably) up-to-date version built
+directly from the sparse repo at:
+
+    git://git.kernel.org/pub/scm/devel/sparse/sparse.git
+
+[You just prompted me to check, I'm running version v0.5.0-30-gca3309e
+which is actually a little behind master, which is v0.5.0-44-g40791b9.
+This is even further behind the maintainers master branch.]
+
+On Linux, there is a single warning, which results from a hard-coded
+value (max size of memcpy et. al., used for the kernel) which should
+at least be settable from the command line (I have a patch somewhere
+which I have not sent upstream).
+
+On cygwin, currently, there are several other warnings, which can be
+silenced by fixups to sparse (again I have some patches ...)
+
+(Also, static-check.pl comes in handy for these types of 'problem'.)
+
+HTH
+
+ATB,
+Ramsay Jones
