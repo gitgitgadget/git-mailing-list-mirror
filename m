@@ -1,113 +1,172 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] push: shorten "push.default is unset" warning message
-Date: Tue, 23 Feb 2016 14:59:04 +0000
-Message-ID: <000001530ea408ed-2b71a34a-32bb-434c-bba5-fdac28193e9c-000000@eu-west-1.amazonses.com>
+From: tboegi@web.de
+Subject: [PATCH v2 1/1] convert.c: correct attr_action
+Date: Tue, 23 Feb 2016 18:07:19 +0100
+Message-ID: <1456247239-5988-1-git-send-email-tboegi@web.de>
+References: <56CBED82.5040400@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 16:19:44 2016
+X-From: git-owner@vger.kernel.org Tue Feb 23 18:05:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYEkZ-0002gX-6n
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 16:19:43 +0100
+	id 1aYGOq-000078-Mh
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 18:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbcBWPTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 10:19:38 -0500
-Received: from a6-247.smtp-out.eu-west-1.amazonses.com ([54.240.6.247]:52509
-	"EHLO a6-247.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752555AbcBWPTh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2016 10:19:37 -0500
-X-Greylist: delayed 1230 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Feb 2016 10:19:37 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1456239544;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=0481EHIxKBKXjYdVoh/n7vogJLWu1z3fRLVyf3VNLz4=;
-	b=E3dLESrC6UMFvt/0wCBceq9fnGi0s4iIrMnIKDhZIoB/9n63EvSYHD8XVPxHuogR
-	9OvJJXiFVGMhaU4iIdD9LlgtUHj/m7h05pheE7+2EkpmvSXvjEfQ/YXypWOkDrrEcjQ
-	rQlW3+QcC8M34IQXB+wpBayA/DAYfylYDOMQBtwE=
-X-SES-Outgoing: 2016.02.23-54.240.6.247
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1753992AbcBWRFS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 12:05:18 -0500
+Received: from mout.web.de ([212.227.17.11]:56548 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752920AbcBWRFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 12:05:17 -0500
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MLgQp-1aZ5bs11vv-000qTd; Tue, 23 Feb 2016 18:05:15
+ +0100
+X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
+In-Reply-To: <56CBED82.5040400@web.de>
+X-Provags-ID: V03:K0:tBj9t/4syUIkedshK44qTaZkWYg5bxe6G/BVeRtsn8aHFZmw1lu
+ R6FiF6etbJ4weciwgE+/Fh7iRfVhzbCUOuiFrxcOylwdZ5WBJkGOGtHSuJ8IWO6Mlu99DEw
+ POt30fpb6JKloinosHQHJtarsDxcl2MbqvGRlJ64JgZDcrEpS5RSbPLmnmjDopkL7SjNCbu
+ aWoEbwCLoa+8ElL74vk6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:slTiTcP2oXI=:Dcwd+ouKvTqcKqQ7/J1DXx
+ 1TB7AG+1hWPcfMOitCL5SgQRYc0pTO8uzhnmjuob3JhO1I43Bpx+bR7SRoMRVOCV/RnamChyP
+ w/kwt9pWnJsh8fAOhzzHvRye27es1B6YXBEU8x7dJlLZAtymBWV35BwZDDIcnrGawqtMjjcuj
+ jr/cO9UZnwtMBmDh0LIgOCc20lWVPDMC8VNIDnRv3HyBiEDKzTIwVJhGFcv1EBTfrit3bND0f
+ +gHjPOigWZtadpjFanv8OHVHEj1WYGqlOiFMm2GxNZC71cc+JbxSDxwAWcz9izKynTgW0DD+o
+ ozSmlzkPX8fo/V6h5CIVjj7VmkUgGXMZCCeF3QxKkiBi5jIrle8+xabjJ2/uRolslKKs72zRE
+ RjlJMePca96TxQxClHmg8+/LrsmQ9RzxPYbdrtC0XAPKKO7Rmj5Epa1lD4Ant0IvJ88nrwKDI
+ QG57GVwXMwm6hD+ubg66oGJn7qMlb29Rf8mXWLy3XcSQKkPiE7lFt9H29fl0m7It65bntp/SL
+ EBHylVja6vKEIwarmUtwzPr90fswg3RoKZU3W9GGJ8MMdCtCIWQWqk5CozTgOy883oC3o1D6A
+ nxprtuf55hXyDTzmtEzpKBUvPlThWlKJYczKtJiNYmjru2QozsDwh7YoDr3kYmrZqrklPh4kL
+ wIQbR0bXbPMJAbj81CAYKliFh40EoWJzqbKJiWWU+9I98M7cMAUKCLyqoHwZUVwqeG58iQ7MC
+ FjdBzwHRNsoBngKI6s0X2/T/RqGWaNJLkqdvt4c4eYdQli+CejAs4MEPUti/ZOn8YrihEyUh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287084>
 
-From: Matthieu Moy <matthieu.moy@imag.fr>
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-The warning was purposely long, both to explain the situation properly
-and to give a strong incentive to set push.default explicitly. This was
-important before the 2.0 transition, and remained important for a while
-after, so that new users get push.default explicitly in their
-configuration and do not experience inconsistent behavior if they ever
-used an older version of Git.
+Commit "convert.c: refactor crlf_action" unified the crlf_handling
+and introdused a bug for "git ls-files --eol".
+The "text" attribute was shown as "text eol=3Dlf" or "text eol=3Dcrlf",
+depending on core.autpcrlf or core.eol.
+Correct this and add test cases in t0027.
 
-The warning has been there since version 1.8.0 (Oct 2012), hence we can
-expect the vast majority of current Git users to have been exposed to
-it, and most of them have already set push.default explicitly. The
-switch from 'matching' to 'simple' was planned for 2.0 (May 2014), but
-actually happened only for 2.3 (Feb 2015).
-
-The warning is mostly seen by beginners, who have not set their
-push.default configuration (yet). For many of them, the warning is
-confusing because it talks about concepts that they have not learned and
-asks them a choice that they are not able to make yet. See for example
-
-  http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0
-
-(1260 votes for the question, 1824 for the answer as of writing)
-
-Shorten the warning and mention only the way to remove the warning
-without changing the behavior. Keep a pointer to the documentation so
-that people willing to learn can still find the alternative behaviors
-easily.
-
-Eventually, the warning should be removed completely, but this can wait
-a couple more releases or years.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- builtin/push.c | 20 +++-----------------
- 1 file changed, 3 insertions(+), 17 deletions(-)
+ convert.c            | 18 +++++++++---------
+ t/t0027-auto-crlf.sh | 33 ++++++++++++++++++++++++++-------
+ 2 files changed, 35 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 960ffc3..00eba2f 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -205,26 +205,12 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
+diff --git a/convert.c b/convert.c
+index 18af685..d8b1f17 100644
+--- a/convert.c
++++ b/convert.c
+@@ -708,7 +708,7 @@ static enum crlf_action git_path_check_crlf(struct =
+git_attr_check *check)
+ 	const char *value =3D check->value;
+=20
+ 	if (ATTR_TRUE(value))
+-		return text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
++		return CRLF_TEXT;
+ 	else if (ATTR_FALSE(value))
+ 		return CRLF_BINARY;
+ 	else if (ATTR_UNSET(value))
+@@ -778,20 +778,20 @@ static void convert_attrs(struct conv_attrs *ca, =
+const char *path)
+ 	}
+=20
+ 	if (!git_check_attr(path, NUM_CONV_ATTRS, ccheck)) {
+-		enum eol eol_attr;
+ 		ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
+ 		if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
+ 			ca->crlf_action =3D git_path_check_crlf(ccheck + 0);
+ 		ca->attr_action =3D ca->crlf_action;
+ 		ca->ident =3D git_path_check_ident(ccheck + 1);
+ 		ca->drv =3D git_path_check_convert(ccheck + 2);
+-		if (ca->crlf_action =3D=3D CRLF_BINARY)
+-			return;
+-		eol_attr =3D git_path_check_eol(ccheck + 3);
+-		if (eol_attr =3D=3D EOL_LF)
+-			ca->crlf_action =3D CRLF_TEXT_INPUT;
+-		else if (eol_attr =3D=3D EOL_CRLF)
+-			ca->crlf_action =3D CRLF_TEXT_CRLF;
++		if (ca->crlf_action !=3D CRLF_BINARY) {
++			enum eol eol_attr =3D git_path_check_eol(ccheck + 3);
++			if (eol_attr =3D=3D EOL_LF)
++				ca->crlf_action =3D CRLF_TEXT_INPUT;
++			else if (eol_attr =3D=3D EOL_CRLF)
++				ca->crlf_action =3D CRLF_TEXT_CRLF;
++		}
++		ca->attr_action =3D ca->crlf_action;
+ 	} else {
+ 		ca->drv =3D NULL;
+ 		ca->crlf_action =3D CRLF_UNDEFINED;
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index fc4c628..f33962b 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -159,6 +159,25 @@ stats_ascii () {
+=20
  }
- 
- static char warn_unspecified_push_default_msg[] =
--N_("push.default is unset; its implicit value has changed in\n"
--   "Git 2.0 from 'matching' to 'simple'. To squelch this message\n"
--   "and maintain the traditional behavior, use:\n"
--   "\n"
--   "  git config --global push.default matching\n"
--   "\n"
--   "To squelch this message and adopt the new behavior now, use:\n"
-+N_("push.default is unset; its default value has changed in Git 2.0 from\n"
-+   "'matching' to 'simple'. To squelch this message and adopt the new behavior, use:\n"
-    "\n"
-    "  git config --global push.default simple\n"
-    "\n"
--   "When push.default is set to 'matching', git will push local branches\n"
--   "to the remote branches that already exist with the same name.\n"
--   "\n"
--   "Since Git 2.0, Git defaults to the more conservative 'simple'\n"
--   "behavior, which only pushes the current branch to the corresponding\n"
--   "remote branch that 'git pull' uses to update the current branch.\n"
--   "\n"
--   "See 'git help config' and search for 'push.default' for further information.\n"
--   "(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode\n"
--   "'current' instead of 'simple' if you sometimes use older versions of Git)");
-+   "See 'git help config' and search for 'push.default' for further information.");
- 
- static void warn_unspecified_push_default_configuration(void)
- {
-
---
-https://github.com/git/git/pull/201
+=20
++
++# contruct the attr/ returned by git ls-files --eol
++# Take none (=3Dempty), one or two args
++attr_ascii () {
++	case $1,$2 in
++	-text,*)   echo "-text" ;;
++	text,)     echo "text" ;;
++	text,lf)   echo "text eol=3Dlf" ;;
++	text,crlf) echo "text eol=3Dcrlf" ;;
++	auto,)     echo "text=3Dauto" ;;
++	auto,lf)   echo "text=3Dauto eol=3Dlf" ;;
++	auto,crlf) echo "text=3Dauto eol=3Dcrlf" ;;
++	lf,)       echo "text eol=3Dlf" ;;
++	crlf,)     echo "text eol=3Dcrlf" ;;
++	,) echo "" ;;
++	*) echo invalid_attr "$1,$2" ;;
++	esac
++}
++
+ check_files_in_repo () {
+ 	crlf=3D$1
+ 	attr=3D$2
+@@ -228,15 +247,15 @@ checkout_files () {
+ 	test_expect_success "ls-files --eol attr=3D$attr $ident $aeol core.au=
+tocrlf=3D$crlf core.eol=3D$ceol" '
+ 		test_when_finished "rm expect actual" &&
+ 		sort <<-EOF >expect &&
+-		i/crlf w/$(stats_ascii $crlfname) crlf_false_attr__CRLF.txt
+-		i/mixed w/$(stats_ascii $lfmixcrlf) crlf_false_attr__CRLF_mix_LF.txt
+-		i/lf w/$(stats_ascii $lfname) crlf_false_attr__LF.txt
+-		i/-text w/$(stats_ascii $lfmixcr) crlf_false_attr__LF_mix_CR.txt
+-		i/-text w/$(stats_ascii $crlfnul) crlf_false_attr__CRLF_nul.txt
+-		i/-text w/$(stats_ascii $crlfnul) crlf_false_attr__LF_nul.txt
++		i/crlf w/$(stats_ascii $crlfname) attr/$(attr_ascii $attr $aeol) crl=
+f_false_attr__CRLF.txt
++		i/mixed w/$(stats_ascii $lfmixcrlf) attr/$(attr_ascii $attr $aeol) c=
+rlf_false_attr__CRLF_mix_LF.txt
++		i/lf w/$(stats_ascii $lfname) attr/$(attr_ascii $attr $aeol) crlf_fa=
+lse_attr__LF.txt
++		i/-text w/$(stats_ascii $lfmixcr) attr/$(attr_ascii $attr $aeol) crl=
+f_false_attr__LF_mix_CR.txt
++		i/-text w/$(stats_ascii $crlfnul) attr/$(attr_ascii $attr $aeol) crl=
+f_false_attr__CRLF_nul.txt
++		i/-text w/$(stats_ascii $crlfnul) attr/$(attr_ascii $attr $aeol) crl=
+f_false_attr__LF_nul.txt
+ 		EOF
+ 		git ls-files --eol crlf_false_attr__* |
+-		sed -e "s!attr/[^	]*!!g" -e "s/	/ /g" -e "s/  */ /g" |
++		sed -e "s/	/ /g" -e "s/  */ /g" |
+ 		sort >actual &&
+ 		test_cmp expect actual
+ 	'
+--=20
+2.7.0.303.g2c4f448.dirty
