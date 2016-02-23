@@ -1,83 +1,77 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: git "thin" submodule clone to feed "describe"
-Date: Tue, 23 Feb 2016 16:03:45 -0500
-Message-ID: <CACPiFCLnXLdt5rLuX0a3pTS3OphKW=1oVKxyYpwvSLhY7ydb2g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 23 22:04:12 2016
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Documentation/git-push: document that 'simple' is the default
+Date: Tue, 23 Feb 2016 22:04:41 +0100
+Message-ID: <1456261481-23468-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqegc3f8bd.fsf@anie.imag.fr>
+Cc: philipoakley@iee.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 23 22:04:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYK7v-0003CP-K1
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:04:11 +0100
+	id 1aYK8b-0003jD-Bn
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755380AbcBWVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 16:04:07 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:36370 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755279AbcBWVEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 16:04:06 -0500
-Received: by mail-ob0-f176.google.com with SMTP id gc3so206504293obb.3
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 13:04:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=uhgWyXC5e507EpWhqP4CXVq2tqAscQfjn12BqggAY18=;
-        b=H0xKLK6pmEkD4tyLYPcV42kMJVvFEEAeIPukt4d7/AqmuhWLN7GBHhVWG2DnLg6o8n
-         hwvpbeCR/Bx5isXwJr4n4Jhexf8zmFlQUkCx/4t2NLXDm/dzkyOpNzbQRgxJcU5eEEn+
-         yB5vvjgIgR4C+IgJGG1yNeRFoxVuQ/h7xOCk5ziGJWue3lS/l7W8FyqdhYBilKhQZQPt
-         SXS7F3nbkhbV0+VBKz80+77zpTMX085WP+NSnbOYL3CvqM/ZpRISIo+LkLq4ZElINnee
-         JSuQgFnlaulu8xXW4ZLElinKHHzzyywv3Tori8FaVR1nr/l+iRLIMKzsyUWJKkHckkV+
-         BSHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=uhgWyXC5e507EpWhqP4CXVq2tqAscQfjn12BqggAY18=;
-        b=g6hFckrGsSrMwPiMWjMhVFwjwV5HsjpTlCOE6skRtTECK2ZeK88tR2rf3hNzKjfOp+
-         pFhInUh4Xe9l3RDHl+a1HI7J87RY9m58XPxnVcereOjObb8zoJxvX2nIks1r5RlkFRaq
-         PilkTQXz25Hs3iNHJIIP07opFskYKrug1V960Hpldr/29QYENrp4bO2TLmw26d/IqEY7
-         ryvjsW9bcbi6xE8yC1az0N02aRWJr84yGjR/rY6fmRIvM9OWX2lTmLqIOPIrVafvS3xb
-         JKrcohDd8nsfX5873uCeoRpQPDl/DT8IzzHSh7AbJgBh6M9aOAde6JLs5TSyHWJA5Z0Z
-         GwgQ==
-X-Gm-Message-State: AG10YOSA1cMYpmZicro0ty5pzeA25eJWMtPlgVyTlfnhOLUaJ4+NyvhfReEFuXadEiqUrbXjLjfKo9v5Wo0xBg==
-X-Received: by 10.60.96.74 with SMTP id dq10mr30654111oeb.78.1456261445149;
- Tue, 23 Feb 2016 13:04:05 -0800 (PST)
-Received: by 10.182.19.225 with HTTP; Tue, 23 Feb 2016 13:03:45 -0800 (PST)
+	id S1755389AbcBWVEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 16:04:50 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:50426 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755279AbcBWVEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 16:04:49 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL4en9005127
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 23 Feb 2016 22:04:40 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL4hCo014906;
+	Tue, 23 Feb 2016 22:04:43 +0100
+X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
+In-Reply-To: <vpqegc3f8bd.fsf@anie.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Feb 2016 22:04:40 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1NL4en9005127
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1456866284.34124@Ek3j0+xcyB//Xm6bag1tWQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287121>
 
-Hi git list! long time no see! :-) Been missing you lots.
+The default behavior is well documented already in git-config(1), but
+git-push(1) itself did not mention it at all. For users willing to learn
+how "git push" works but not how to configure it, this makes the
+documentation cumbersome to read.
 
-Do we currently have any means to clone _history_ but not _blobs_ of a
-repo, or some approximation thereof?
+Make the git-push(1) page self-contained by adding a short summary of
+what 'push.default=simple' does, early in the page.
 
-With a bit more context: If I have a top-level project using a couple
-dozen submodules, where the submodules are huge, do I have a
-git-native means of running git-describe on each submodule without
-pulling the whole thing down?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-push.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-In this context, most developers want to get full checkout of some
-submodules, but not of all; and 'git describe' of the submodules is
-needed to 'shim' the missing submodules appropriately.
-
-If the answer is no, there's a bunch of ways I can carry that as extra
-data in the top level project. It's possible, yet inelegant &
-duplicative.
-
-thanks,
-
-
-
-martin
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 32482ce..a992793 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -37,6 +37,13 @@ the default `<refspec>` by consulting `remote.*.push` configuration,
+ and if it is not found, honors `push.default` configuration to decide
+ what to push (See linkgit:git-config[1] for the meaning of `push.default`).
+ 
++When neither the command-line nor the configuration specify what to
++push, the default behavior is used, which corresponds to the `simple`
++value for `push.default`: the current branch is pushed to the
++corresponding upstream branch, but as a safety measure, the push is
++aborted if the upstream branch does not have the same name as the
++local one.
++
+ 
+ OPTIONS[[OPTIONS]]
+ ------------------
 -- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+2.7.2.334.g35ed2ae.dirty
