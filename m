@@ -1,88 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv14 0/7] Expose submodule parallelism to the user
-Date: Tue, 23 Feb 2016 15:44:04 -0800
-Message-ID: <xmqq4mczngaj.fsf@gitster.mtv.corp.google.com>
-References: <1455905833-7449-1-git-send-email-sbeller@google.com>
-	<xmqqtwl4bedt.fsf@gitster.mtv.corp.google.com>
-	<xmqq8u2bngsi.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZucTS8ESLOEAJ2rJPrBEtQWHOow-a5G11vm4GOKEARqg@mail.gmail.com>
+From: "=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?=" 
+	<felipeg.assis@gmail.com>
+Subject: [PATCH v2 0/3] Tests for merge-recursive rename options
+Date: Tue, 23 Feb 2016 20:48:09 -0300
+Message-ID: <1456271292-4652-1-git-send-email-felipegassis@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 00:44:15 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	sunshine@sunshineco.com,
+	=?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= 
+	<felipegassis@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 00:49:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYMcm-0005JZ-TL
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 00:44:13 +0100
+	id 1aYMiK-0001SD-Bm
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 00:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109AbcBWXoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 18:44:09 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64369 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751948AbcBWXoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 18:44:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 282E548A44;
-	Tue, 23 Feb 2016 18:44:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g/lb1mMzEyMDGRoNq6t5QPBBpX8=; b=OBhLzc
-	xh0wHs3RG+WKjvtXzGKOvFl9fqVrEUfUyfZorfg/s5eR8sr/nnSLyWe11xlFpCDQ
-	3zE22qKAIcCG5lQL5VphOc30GF8IpiUrPapmj4kJhxPb+56KvwwBpxRijoNjfFg8
-	Z+Fd1TYQvqrYrkMndOghWUPQB7CLbYGRXQduA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z2EuKrm9QYLhv5dbO5vrAaBukzea+xEj
-	ZJtjNWoLtW/vGzuhdwr/DMty1GtTw5wC+vl5XX80Auc2xjzXapzX7Cypx81IZ5Qt
-	pD9bN3FLtKKkiIVcsrix7p9AkutQ5iAqrntLvvR0/W6UfVXstINtHZRohonHfpwH
-	WmLST7d5hvY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1EFD448A42;
-	Tue, 23 Feb 2016 18:44:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6A30848A3C;
-	Tue, 23 Feb 2016 18:44:05 -0500 (EST)
-In-Reply-To: <CAGZ79kZucTS8ESLOEAJ2rJPrBEtQWHOow-a5G11vm4GOKEARqg@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 23 Feb 2016 15:42:45 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5328B940-DA87-11E5-8445-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751584AbcBWXtw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 18:49:52 -0500
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:34467 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751155AbcBWXtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 18:49:51 -0500
+Received: by mail-qg0-f49.google.com with SMTP id b67so1703539qgb.1
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 15:49:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=PzuskH4TqI5isJUExSz/G/QB6SyDMMYZxQig22Fdn18=;
+        b=oZNLVdS8FXBL/REXCWaKoLSmAuB5tc+9iH+fx/ghUXEaCizvX7G6m7z9ipSc6i0dSj
+         A4VBlHb747LbQSEh1L+WJiaGdgox72JMu2HmXOOorS5NZQC2bXdqSW1Uy3XvcD4HvR/9
+         ZZ2vwR4UZGPXIdPjOaJ/RvUi6RvcPpBM/KZ4oFuX9szcyx7kdqFLaapNTfIQMQRlC0GX
+         Qhjv2Ux2k54uqE8zqNtFEHce8ofzHFMZOAq7dD/1EoPEeHTOC/Srq8QE0p+O98OHYjZ1
+         knRgCkYXUfpt2NP549gnduc8V09gxwNKFztwk17cIu3TzoS034s95U89xP6dMvacE4IA
+         W98w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=PzuskH4TqI5isJUExSz/G/QB6SyDMMYZxQig22Fdn18=;
+        b=ARCbjVbQdawI1DEIKTNvqB3WTMOQ+DPG7F2VPntvP22mRsHr6p84HaI+evjcIV4UpG
+         hvljq6Zs05ceuVUEVp0jSbWgi2qY4BnS64QOx6N2aTTQOJ9j4MTvu7tk00HS+0F0E+4d
+         XOuYQzC3QJPkLBB/LZHP47vCOrYCKNqd2aCxzFsbp1XdaOzEYLTEv3UUiQAy3SuXqiGO
+         rw+YrgibbnQQmPfAnzS/o/MnXrSmDM9qonDPXyAgOxO2ephmXRY9zc3XaCewd8jDe2oL
+         VROQpvtwAF+v8/X80AqtNfDP7TBWtZA44d+OkR40OynSfIc1sVArpx7rpEAfXqhj6KEP
+         zqHA==
+X-Gm-Message-State: AG10YOSsb4TVAHbiYfM6Dj1/jPjtbVLzRewEmIg2ievgZCm+gand6KDMQj1cVqJVVRbN1A==
+X-Received: by 10.140.35.115 with SMTP id m106mr44695962qgm.13.1456271390903;
+        Tue, 23 Feb 2016 15:49:50 -0800 (PST)
+Received: from traveller.moon (189-19-119-165.dsl.telesp.net.br. [189.19.119.165])
+        by smtp.gmail.com with ESMTPSA id w1sm126080qha.3.2016.02.23.15.49.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Feb 2016 15:49:50 -0800 (PST)
+X-Google-Original-From: =?UTF-8?q?Felipe=20Gon=C3=A7alves=20Assis?= <felipegassis@gmail.com>
+X-Mailer: git-send-email 2.7.1.492.gd821b20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287146>
 
-Stefan Beller <sbeller@google.com> writes:
+Get rid of blatant bash-isms in favour of simple and portable construct=
+ions.
 
-> On Tue, Feb 23, 2016 at 3:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Looks good.  I didn't notice these unnecessary blank lines while
->>> reading the previous rounds, and it is good to see them go.
->>>
->>> Let's wait for a few days and merge them to 'next'.  David's ref
->>> backend topic textually depends on this, and we'd better give it a
->>> solid foundation to build on soon.
->>
->> So... it seems that you and Jonathan had a few rounds of back and
->> forth on 5/7 that didn't sound like it saw a satisfactory end.  Will
->> we see a reroll to address the issues raised?
->
-> Yes, I was about to send one out, but then I wanted to fix the last
-> of Jonathans small nits, which resulted in some heavy refactoring.
->
-> I'll reroll, but I suspect it won't make it out today in time for integration.
+=46elipe Gon=C3=A7alves Assis (3):
+  t3034: add rename threshold tests
+  t3034: test option to disable renames
+  t3034: test deprecated interface
 
-Ah, that's OK, I've already pushed today's out.  Take time to read
-it over one more time, perhaps?
+ ...s.sh =3D> t3032-merge-recursive-space-options.sh} |   2 +-
+ t/t3034-merge-recursive-rename-options.sh          | 309 +++++++++++++=
+++++++++
+ 2 files changed, 310 insertions(+), 1 deletion(-)
+ rename t/{t3032-merge-recursive-options.sh =3D> t3032-merge-recursive-=
+space-options.sh} (99%)
+ create mode 100755 t/t3034-merge-recursive-rename-options.sh
 
-Thanks.
+--=20
+2.7.1.492.gd821b20
