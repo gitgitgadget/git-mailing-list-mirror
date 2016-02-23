@@ -1,77 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Documentation/git-push: document that 'simple' is the default
-Date: Tue, 23 Feb 2016 22:04:41 +0100
-Message-ID: <1456261481-23468-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqegc3f8bd.fsf@anie.imag.fr>
-Cc: philipoakley@iee.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 22:04:53 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] credential-cache--daemon: change to the socket dir on startup
+Date: Tue, 23 Feb 2016 13:06:10 -0800
+Message-ID: <xmqqfuwjyw59.fsf@gitster.mtv.corp.google.com>
+References: <20160223071427.GA7489@sigill.intra.peff.net>
+	<20160223071604.GC8395@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jon Griffiths <jon_p_griffiths@yahoo.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 23 22:06:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYK8b-0003jD-Bn
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:04:53 +0100
+	id 1aYKA1-0004vF-KT
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755389AbcBWVEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 16:04:50 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:50426 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755279AbcBWVEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 16:04:49 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL4en9005127
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 23 Feb 2016 22:04:40 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL4hCo014906;
-	Tue, 23 Feb 2016 22:04:43 +0100
-X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
-In-Reply-To: <vpqegc3f8bd.fsf@anie.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Feb 2016 22:04:40 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1NL4en9005127
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1456866284.34124@Ek3j0+xcyB//Xm6bag1tWQ
+	id S1755419AbcBWVGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 16:06:16 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65453 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755279AbcBWVGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 16:06:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2815F460AF;
+	Tue, 23 Feb 2016 16:06:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JgvHjl3rT+hNMHsnA/d6nlQn4QU=; b=ZaDtSZ
+	s2DdrejFsfMMPP13aNwcuwIqLx8EVHWgl40QEaIJOUV1ZdGM1WIrhI4InIjx1tOL
+	XGJU1wSIY7Xumj5m/2jL+jK96N6IPq3bSLwmdqvsbLJBGRviu16dZziyvuigduVg
+	q68Fw0g6xL7o4UbimZ7RBqPVDME7cmaRsHKFE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NGOr5bb+oWwhX2T3SmpUbDKFfsqO97CH
+	0xW7KQPZqxTjmBGQ02wlY5v9pW5Ne3xPxGutle6ULTOLsztdXpvrqWO84LEJMmcO
+	/qfcPTh7HoR8vutOYSdsoR2iw6C3ESyLDOlk2/4FWDQBYO919ZOvQnKRQKtAYDqC
+	75DrEZo65Y4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 20252460AE;
+	Tue, 23 Feb 2016 16:06:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 91015460AD;
+	Tue, 23 Feb 2016 16:06:11 -0500 (EST)
+In-Reply-To: <20160223071604.GC8395@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 23 Feb 2016 02:16:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 44431E22-DA71-11E5-8CC4-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287122>
 
-The default behavior is well documented already in git-config(1), but
-git-push(1) itself did not mention it at all. For users willing to learn
-how "git push" works but not how to configure it, this makes the
-documentation cumbersome to read.
+Jeff King <peff@peff.net> writes:
 
-Make the git-push(1) page self-contained by adding a short summary of
-what 'push.default=simple' does, early in the page.
+> +	/*
+> +	 * We don't actually care what our cwd is; we chdir here just to
+> +	 * be a friendly daemon and avoid tying up our original cwd.
+> +	 * If this fails, it's OK to just continue without that benefit.
+> +	 */
+> +	chdir(dir);
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-push.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+I fully do agree with this comment, but my copy of gcc and system
+headers doesn't, unfortunately.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 32482ce..a992793 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -37,6 +37,13 @@ the default `<refspec>` by consulting `remote.*.push` configuration,
- and if it is not found, honors `push.default` configuration to decide
- what to push (See linkgit:git-config[1] for the meaning of `push.default`).
- 
-+When neither the command-line nor the configuration specify what to
-+push, the default behavior is used, which corresponds to the `simple`
-+value for `push.default`: the current branch is pushed to the
-+corresponding upstream branch, but as a safety measure, the push is
-+aborted if the upstream branch does not have the same name as the
-+local one.
-+
- 
- OPTIONS[[OPTIONS]]
- ------------------
--- 
-2.7.2.334.g35ed2ae.dirty
+credential-cache--daemon.c: In function 'init_socket_directory':
+credential-cache--daemon.c:245:7: error: ignoring return value of 'chdir', declared with attribute warn_unused_result [-Werror=unused-result]
+  chdir(dir);
+       ^
+cc1: all warnings being treated as errors
+make: *** [credential-cache--daemon.o] Error 1
