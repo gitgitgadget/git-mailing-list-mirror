@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 07/25] upload-pack: use skip_prefix() instead of starts_with()
-Date: Tue, 23 Feb 2016 20:44:45 +0700
-Message-ID: <1456235103-26317-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 21/25] clone: define shallow clone boundary with --shallow-exclude
+Date: Tue, 23 Feb 2016 20:44:59 +0700
+Message-ID: <1456235103-26317-22-git-send-email-pclouds@gmail.com>
 References: <1456235103-26317-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,144 +12,154 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 14:47:11 2016
+X-From: git-owner@vger.kernel.org Tue Feb 23 14:47:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYDJ0-0001Fa-MQ
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 14:47:11 +0100
+	id 1aYDJ5-0001J1-0h
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 14:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382AbcBWNrE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 08:47:04 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34986 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752589AbcBWNpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 08:45:32 -0500
-Received: by mail-pf0-f174.google.com with SMTP id c10so116381196pfc.2
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 05:45:32 -0800 (PST)
+	id S1752850AbcBWNrK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 08:47:10 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34130 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752116AbcBWNrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 08:47:03 -0500
+Received: by mail-pf0-f171.google.com with SMTP id x65so112644054pfb.1
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 05:47:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=nVsmptvx7zps22DtUpoAUXOvsnQB7CPDtbuX3/Ss2aI=;
-        b=TdQwHChi4ScfvKvxPpNWiPwkFVYRCvlm+xeJkBH2rVyCz0o0vST1UiBezYM3KXkKaU
-         M0hdzlcSHBHQ30iyi22AyjVkOoGOpsASPwZ/+xN9Hmk5B2VdnKN2vZ8NyHt+2odfXi6F
-         43mjP+dGg60zAxg7+cPx2t4fO+4yHR91jQ0c7NGObO/NZ8r7wxeql2u/HLL0Gb+yS3tM
-         7NXwNxBi/DALYndaqwQMPkO3nMJsvYR5pKW+GcnylUz6JmBGdbq+ty7RuAJNb210ySzb
-         0P9rleWcQSoxvJ4fwHgoqSLSO/IKdvgLGwK3nqh2QkdnXMxdm0fUaUI+uAKQsHyKRhYq
-         SSPw==
+        bh=GLiJ3i/sqbaYM8BAvgXnHS4ygWZHEOo+rgaCYMhOOiw=;
+        b=G5+OvMVBpF52w5TZQGZuK2IvihLDPwFWPdSSM6wgcPZhV10mj30Pa9KWJTbvSoz+Zw
+         6IbYFUpQBxFUcm7EM7MwvQM8GjUnMTAkoLU1+9RestGKZPiNjWNhySKo4b7QgqDS1TSd
+         CFS+QBHjzQTSAXANKi0f5Yf1ahLiMHUXwevoEcxf8fedDz02c0BKXGSFna4Ahjl0zDW9
+         4Ti8G7P+FZKAyIJbFyA3Irx0Im6SloCh9PV4RhGF1pxbppuFvmq8JoWPJARuoLP/+NNI
+         5Zqv5iilQ/DCePKDTuCnQ62cEQ7NHTy7/YEqA+n2S/fT4mPAuosdTRuqTAQD/jZuNl2d
+         TT0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=nVsmptvx7zps22DtUpoAUXOvsnQB7CPDtbuX3/Ss2aI=;
-        b=bQOIQRi2ki2tZuiB74iCw6xExEEC1mxamfJsAOFMHAhVTw8XVnY/vR4FtIHTWzG3Yx
-         nwmBQbqHN5XqTUzCZzlSPtf35tkMDK7V4lPem+VFywRvitm4T8VAntQiOHHGv6uCv0gn
-         eOc3DHzUDvWQs8qjN5myJNgeAxA3XcOVIsF6XFi60dPOu4vyk+vnWdXJfI9CowD2+iAQ
-         jY/M1E+5V0qNfHBY7UllBnt9qX+wRlKd6grPacMjeEV/61NQz7Y/tADLkU6uRsHq1APG
-         eXyseCWiv+iNT3IivnuwyRfhB8Y4ISXxdUCjIdA03OHU2hfwp+Kk3XD4/gGee1zkGe/P
-         pixw==
-X-Gm-Message-State: AG10YOTESc27rF8tpllfAJ8wugDSViRAlRITtzmx366Chl0L8XeMA/BV5aUzD5EYy+1fXw==
-X-Received: by 10.98.64.132 with SMTP id f4mr45864260pfd.159.1456235131821;
-        Tue, 23 Feb 2016 05:45:31 -0800 (PST)
+        bh=GLiJ3i/sqbaYM8BAvgXnHS4ygWZHEOo+rgaCYMhOOiw=;
+        b=QdPupub+s6Qwm4ibzKaBqcCKAyRXjwvfea85CSIbyzPbeUL+N9AVJZgVz7GXoltlir
+         mzOGf4s7bqmH8vG76DeDFQP5T4jRYCTRurOx8MWQ5hoH6PTp9RCbV6Q/6VqSfu5N9oyx
+         y52we6mYKTU6qEtx57ZwNN5H6SZacZlqLlTHTFc035j1slfjJ74gqLzDc4r2/rk96d5J
+         TrDLWCKZQYG975xGA90qytRf/wvI37Ak7rm2+tW3VQXNx5uxfFd38mHfJa1FBUufHYco
+         4ZHbKxjV795HLaAEU6D28IfvjUm+FdwLVFHbhyp3W4qwtu9qP6S0pn3o92CFpSAxzEPC
+         tkOA==
+X-Gm-Message-State: AG10YOT9mY7lvp3ocQ6Mit1DXKwrMqSp3nXDNVVY2mWo1mI8ULcqJnWDn3/xIL3At2TcDA==
+X-Received: by 10.98.0.11 with SMTP id 11mr46405278pfa.5.1456235222043;
+        Tue, 23 Feb 2016 05:47:02 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id fk9sm5029355pad.9.2016.02.23.05.45.27
+        by smtp.gmail.com with ESMTPSA id yh5sm44735483pab.13.2016.02.23.05.46.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Feb 2016 05:45:30 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 23 Feb 2016 20:46:00 +0700
+        Tue, 23 Feb 2016 05:47:00 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 23 Feb 2016 20:47:29 +0700
 X-Mailer: git-send-email 2.7.1.532.gd9e3aaa
 In-Reply-To: <1456235103-26317-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287072>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ Documentation/git-clone.txt |  5 +++++
+ builtin/clone.c             | 18 +++++++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index bfb7985..257ad48 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -276,7 +276,7 @@ static void create_pack_file(void)
- 	die("git upload-pack: %s", abort_msg);
- }
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index a410409..5049663 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -196,6 +196,11 @@ objects from the source repository into a pack in =
+the cloned repository.
+ --shallow-since=3D<date>::
+ 	Create a shallow clone with a history after the specified time.
 =20
--static int got_sha1(char *hex, unsigned char *sha1)
-+static int got_sha1(const char *hex, unsigned char *sha1)
- {
- 	struct object *o;
- 	int we_knew_they_have =3D 0;
-@@ -382,6 +382,8 @@ static int get_common_commits(void)
-=20
- 	for (;;) {
- 		char *line =3D packet_read_line(0, NULL);
-+		const char *arg;
++--shallow-exclude=3D<revision>::
++	Create a shallow clone with a history, excluding commits
++	reachable from a specified remote branch or tag.  This option
++	can be specified multiple times.
 +
- 		reset_timeout();
+ --[no-]single-branch::
+ 	Clone only the history leading to the tip of a single branch,
+ 	either specified by the `--branch` option or the primary
+diff --git a/builtin/clone.c b/builtin/clone.c
+index dc2ef4f..5ccf6b7 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -44,6 +44,7 @@ static int deepen;
+ static char *option_template, *option_depth, *option_since;
+ static char *option_origin =3D NULL;
+ static char *option_branch =3D NULL;
++static struct string_list option_not =3D STRING_LIST_INIT_NODUP;
+ static const char *real_git_dir;
+ static char *option_upload_pack =3D "git-upload-pack";
+ static int option_verbosity;
+@@ -52,6 +53,13 @@ static struct string_list option_config;
+ static struct string_list option_reference;
+ static int option_dissociate;
 =20
- 		if (!line) {
-@@ -403,8 +405,8 @@ static int get_common_commits(void)
- 			got_other =3D 0;
- 			continue;
- 		}
--		if (starts_with(line, "have ")) {
--			switch (got_sha1(line+5, sha1)) {
-+		if (skip_prefix(line, "have ", &arg)) {
-+			switch (got_sha1(arg, sha1)) {
- 			case -1: /* they have what we do not */
- 				got_other =3D 1;
- 				if (multi_ack && ok_to_give_up()) {
-@@ -616,14 +618,16 @@ static void receive_needs(void)
- 		const char *features;
- 		unsigned char sha1_buf[20];
- 		char *line =3D packet_read_line(0, NULL);
-+		const char *arg;
++static int option_parse_deepen_not(const struct option *opt,
++				   const char *arg, int unset)
++{
++	string_list_append(&option_not, arg);
++	return 0;
++}
 +
- 		reset_timeout();
- 		if (!line)
- 			break;
+ static struct option builtin_clone_options[] =3D {
+ 	OPT__VERBOSITY(&option_verbosity),
+ 	OPT_BOOL(0, "progress", &option_progress,
+@@ -89,6 +97,9 @@ static struct option builtin_clone_options[] =3D {
+ 		    N_("create a shallow clone of that depth")),
+ 	OPT_STRING(0, "shallow-since", &option_since, N_("time"),
+ 		    N_("create a shallow clone since a specific time")),
++	{ OPTION_CALLBACK, 0, "shallow-exclude", NULL, N_("revision"),
++		    N_("deepen history of shallow clone by excluding rev"),
++		    PARSE_OPT_NONEG, option_parse_deepen_not },
+ 	OPT_BOOL(0, "single-branch", &option_single_branch,
+ 		    N_("clone only one branch, HEAD or --branch")),
+ 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+@@ -852,7 +863,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 		usage_msg_opt(_("You must specify a repository to clone."),
+ 			builtin_clone_usage, builtin_clone_options);
 =20
--		if (starts_with(line, "shallow ")) {
-+		if (skip_prefix(line, "shallow ", &arg)) {
- 			unsigned char sha1[20];
- 			struct object *object;
--			if (get_sha1_hex(line + 8, sha1))
-+			if (get_sha1_hex(arg, sha1))
- 				die("invalid shallow line: %s", line);
- 			object =3D parse_object(sha1);
- 			if (!object)
-@@ -636,19 +640,19 @@ static void receive_needs(void)
- 			}
- 			continue;
- 		}
--		if (starts_with(line, "deepen ")) {
-+		if (skip_prefix(line, "deepen ", &arg)) {
- 			char *end;
--			depth =3D strtol(line + 7, &end, 0);
--			if (end =3D=3D line + 7 || depth <=3D 0)
-+			depth =3D strtol(arg, &end, 0);
-+			if (end =3D=3D arg || depth <=3D 0)
- 				die("Invalid deepen: %s", line);
- 			continue;
- 		}
--		if (!starts_with(line, "want ") ||
--		    get_sha1_hex(line+5, sha1_buf))
-+		if (!skip_prefix(line, "want ", &arg) ||
-+		    get_sha1_hex(arg, sha1_buf))
- 			die("git upload-pack: protocol error, "
- 			    "expected to get sha, not '%s'", line);
+-	if (option_depth || option_since)
++	if (option_depth || option_since || option_not.nr)
+ 		deepen =3D 1;
+ 	if (option_single_branch =3D=3D -1)
+ 		option_single_branch =3D deepen ? 1 : 0;
+@@ -983,6 +994,8 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 			warning(_("--depth is ignored in local clones; use file:// instead.=
+"));
+ 		if (option_since)
+ 			warning(_("--shallow-since is ignored in local clones; use file:// =
+instead."));
++		if (option_not.nr)
++			warning(_("--shallow-exclude is ignored in local clones; use file:/=
+/ instead."));
+ 		if (!access(mkpath("%s/shallow", path), F_OK)) {
+ 			if (option_local > 0)
+ 				warning(_("source repository is shallow, ignoring --local"));
+@@ -1004,6 +1017,9 @@ int cmd_clone(int argc, const char **argv, const =
+char *prefix)
+ 	if (option_since)
+ 		transport_set_option(transport, TRANS_OPT_DEEPEN_SINCE,
+ 				     option_since);
++	if (option_not.nr)
++		transport_set_option(transport, TRANS_OPT_DEEPEN_NOT,
++				     (const char *)&option_not);
+ 	if (option_single_branch)
+ 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
 =20
--		features =3D line + 45;
-+		features =3D arg + 40;
-=20
- 		if (parse_feature_request(features, "multi_ack_detailed"))
- 			multi_ack =3D 2;
 --=20
 2.7.1.532.gd9e3aaa
