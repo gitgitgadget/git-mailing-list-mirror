@@ -1,105 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] xdiff: drop XDL_EMIT_COMMON
-Date: Tue, 23 Feb 2016 01:07:25 -0500
-Message-ID: <20160223060725.GC3205@sigill.intra.peff.net>
-References: <20160223060338.GA2912@sigill.intra.peff.net>
+Subject: Re: Git Daemon Dummy: 301 Redirects for git:// to https://
+Date: Tue, 23 Feb 2016 01:15:17 -0500
+Message-ID: <20160223061517.GA3252@sigill.intra.peff.net>
+References: <CAHmME9rTpGNHMKbXD48oBYm136=u79YiHjX5hm8ZYC4xSThJsA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Stefan =?utf-8?Q?Fr=C3=BChwirth?= <stefan.fruehwirth@uni-graz.at>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 07:07:32 2016
+Cc: git@vger.kernel.org
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 07:15:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aY68C-0001Jn-5e
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 07:07:32 +0100
+	id 1aY6Fo-00071K-NA
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 07:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750989AbcBWGH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 01:07:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47319 "HELO cloud.peff.net"
+	id S1756941AbcBWGPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 01:15:21 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47324 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750704AbcBWGH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 01:07:27 -0500
-Received: (qmail 8997 invoked by uid 102); 23 Feb 2016 06:07:27 -0000
+	id S1756890AbcBWGPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 01:15:20 -0500
+Received: (qmail 9334 invoked by uid 102); 23 Feb 2016 06:15:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Feb 2016 01:07:27 -0500
-Received: (qmail 25892 invoked by uid 107); 23 Feb 2016 06:07:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Feb 2016 01:15:20 -0500
+Received: (qmail 25927 invoked by uid 107); 23 Feb 2016 06:15:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Feb 2016 01:07:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Feb 2016 01:07:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 Feb 2016 01:15:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Feb 2016 01:15:17 -0500
 Content-Disposition: inline
-In-Reply-To: <20160223060338.GA2912@sigill.intra.peff.net>
+In-Reply-To: <CAHmME9rTpGNHMKbXD48oBYm136=u79YiHjX5hm8ZYC4xSThJsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287021>
 
-There are no more callers that use this mode, and none
-likely to be added (as our xdl_merge() eliminates the common
-use of it for generating 3-way merge bases).
+On Tue, Feb 23, 2016 at 03:32:02AM +0100, Jason A. Donenfeld wrote:
 
-This is effectively a revert of a9ed376 (xdiff: generate
-"anti-diffs" aka what is common to two files, 2006-06-28),
-though of course trying to revert that ancient commit
-directly produces many textual conflicts.
+> In case anyone else finds this useful, I wrote this:
+> 
+> https://git.zx2c4.com/git-daemon-dummy/about/
+> 
+> It's an epoll-based responder for git:// that simply returns an error
+> telling users of a new URI.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- xdiff/xdiff.h |  1 -
- xdiff/xemit.c | 18 ------------------
- 2 files changed, 19 deletions(-)
+Neat.
 
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index c033991..4fb7e79 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -42,7 +42,6 @@ extern "C" {
- #define XDF_IGNORE_BLANK_LINES (1 << 7)
- 
- #define XDL_EMIT_FUNCNAMES (1 << 0)
--#define XDL_EMIT_COMMON (1 << 1)
- #define XDL_EMIT_FUNCCONTEXT (1 << 2)
- 
- #define XDL_MMB_READONLY (1 << 0)
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 4266ada..993724b 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -120,21 +120,6 @@ static long def_ff(const char *rec, long len, char *buf, long sz, void *priv)
- 	return -1;
- }
- 
--static int xdl_emit_common(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
--                           xdemitconf_t const *xecfg) {
--	xdfile_t *xdf = &xe->xdf2;
--	const char *rchg = xdf->rchg;
--	long ix;
--
--	for (ix = 0; ix < xdf->nrec; ix++) {
--		if (rchg[ix])
--			continue;
--		if (xdl_emit_record(xdf, ix, "", ecb))
--			return -1;
--	}
--	return 0;
--}
--
- struct func_line {
- 	long len;
- 	char buf[80];
-@@ -170,9 +155,6 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 	long funclineprev = -1;
- 	struct func_line func_line = { 0 };
- 
--	if (xecfg->flags & XDL_EMIT_COMMON)
--		return xdl_emit_common(xe, xscr, ecb, xecfg);
--
- 	for (xch = xscr; xch; xch = xche->next) {
- 		xche = xdl_get_hunk(&xch, xecfg);
- 		if (!xch)
--- 
-2.7.2.645.g4e1306c
+> The purpose is to phase out git-daemon in
+> favor of more secure TLS/HTTPS endpoints. With HTTPS certificates now
+> being free, seems like this could be useful.
+
+Yeah, the existence of HTTPS (and the fact that the same URL can be both
+anonymous and authenticated) is nice. Unfortunately, git-over-https is
+not as efficient as the other protocols, because it's not asynchronously
+bi-directional. It would probably be relatively simple to make a
+"gits://" protocol, but I think it would be more interesting still if we
+could do git-over-websockets, to get the ubiquity benefits of HTTP.
+
+I looked into it once, but was unable to find any reasonably sized
+explanation of how to implement either the server or client side of
+websockets. :)
+
+> My personal motivation is that I'd like to just totally kill the
+> git-daemon service, but somebody hard coded a URI of mine into a real
+> printed textbook [1], so I don't want it to go stale suddenly. So, I
+> need some way of informing users of the new URI.
+
+Darn printed books. I thought the Ministry of Truth was supposed to take
+care of keeping our facts up to date.
+
+-Peff
