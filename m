@@ -1,85 +1,81 @@
-From: Amadeusz =?utf-8?B?xbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
-Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
-Date: Mon, 22 Feb 2016 18:50:23 +0000
-Message-ID: <877fhwd1g0.fsf@freja.aidecoe.name>
-References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com> <1455919074-5683-1-git-send-email-aidecoe@aidecoe.name> <xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com> <87fuwnd4u7.fsf@freja.aidecoe.name> <xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
+From: fhaehnel <fhaehnel@atlassian.com>
+Subject: Re: Question about pull-requests
+Date: Mon, 22 Feb 2016 19:58:35 -0700 (MST)
+Message-ID: <1456196315828-7648733.post@n2.nabble.com>
+References: <CAOh0v-WW=hOXw=uTdzkd3afzXCguBHWdaDShwKE3QKqUCOBTzg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 03:46:34 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 23 04:07:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aY2zb-000055-Ph
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 03:46:28 +0100
+	id 1aY3KE-0007Mx-Ci
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 04:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756743AbcBWCqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 21:46:20 -0500
-Received: from jim.zolnowski.name ([188.116.54.122]:49258 "EHLO
-	jim.zolnowski.name" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756701AbcBWCqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 21:46:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aidecoe.name; s=jim;
-	h=Content-Type:MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From; bh=2JrWWtRKwo5zwJn+alrob7tJQBi1GPQeaalWhrW1rwY=;
-	b=Z47wochEDDEnILgpRSI2+RQTbqXgWjAJxFNwbCnSa+8B7f1YTezp1BJ7RMiP7H2ANPwN8/x5icZIx8wIggZvmF3Y+X8ap5d3fNMLWrkS/n6p+++cMmTxMC3GM+Ia8XdaJ4L5xRFggqu3idSrzR96mBsnjcmIP/faXOYg+WlxwMJiZBBYoG/GyJVToz0nssCzYkaRGbu4NjfA0pr8GgE6pV26u3McYjx+YYqvL7GWTElo+5Bpi/fKKtnU+mWjkeGrR1iLHFTusZgtYTnzfId1DDW5l6A71QPgJdtS+cEJF5Nem3zQyrVG6rX80I8cFDo4zLrqXdVzz63G3hffE+7+RQ==;
-Received: from cpc92302-cmbg19-2-0-cust189.5-4.cable.virginm.net ([82.1.208.190] helo=localhost)
-	by jim.zolnowski.name with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.85)
-	(envelope-from <aidecoe@aidecoe.name>)
-	id 1aXvYu-0000aw-N4; Mon, 22 Feb 2016 19:50:25 +0100
-In-Reply-To: <xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
-User-Agent: Notmuch/0.21 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
+	id S1756585AbcBWDHl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Feb 2016 22:07:41 -0500
+Received: from mwork.nabble.com ([162.253.133.43]:53271 "EHLO mwork.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752159AbcBWDHl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Feb 2016 22:07:41 -0500
+X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Feb 2016 22:07:41 EST
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+	by mwork.nabble.com (Postfix) with ESMTP id BE31A16D4A78F
+	for <git@vger.kernel.org>; Mon, 22 Feb 2016 18:50:02 -0800 (PST)
+In-Reply-To: <CAOh0v-WW=hOXw=uTdzkd3afzXCguBHWdaDShwKE3QKqUCOBTzg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287009>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+=46rom your message I=E2=80=99m guessing you are using Bitbucket Server=
+ with branch
+permissions [1].=20
+We=E2=80=99re aware the conflict resolution instructions can not always=
+ be followed.
+Improving these is on our backlog
+(https://jira.atlassian.com/browse/BSERV-7561) - feel free to watch/vot=
+e for
+that issue.=20
 
-Junio C Hamano <gitster@pobox.com> writes:
-> I wonder if it makes sense to just silently allowing submit without
-> rebasing, and without telling the user how to clean it up.
+=46irst, let=E2=80=99s start with the most basic case: a pull request y=
+ou created is
+conflicted and can=E2=80=99t be merged.=20
+Here, you can apply Jeff King=E2=80=99s solution and back-merge the tar=
+get branch.
+Alternatively, you can, of course, rebase the branch too. (Check out
+https://www.atlassian.com/git/tutorials/merging-vs-rebasing for more in=
+fo on
+which option to pick and when).
 
-It is a good point. Maybe submit shouldn't be allowed by default at all
-From=20bare repository. What do you think about following approach?  If
-core.base is true, then if git-p4.submitFromBare is also true then
-submit without performing proper rebase, but update master ref from
-p4/master. If core.base is true, but git-p4.submitFromBare is false,
-abort immediately. Submitting from bare repository would require aware
-decision from a user.
+If you are using cascading merges [2] in Bitbucket Server, there=E2=80=99=
+s a chance
+of conflicts during the merge-cascade, which will generate =E2=80=9CAut=
+omatic merge
+failures=E2=80=9D.
+If this happens, Bitbucket will create a new pull request on your behal=
+f.
+The same strategy as above can be applied: merge the target branch and
+resolve the conflicts, or rebase.
 
-Kind regards,
 
-=2D-=20
-Amadeusz =C5=BBo=C5=82nowski
+[1]
+https://confluence.atlassian.com/bitbucketserver/using-branch-permissio=
+ns-776639807.html
+[2]
+https://confluence.atlassian.com/bitbucketserver/automatic-branch-mergi=
+ng-776639993.html
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+- Felix
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1
 
-iQJ8BAEBCgBmBQJWy1hvXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRCMzcyRTFENjI5NUM1MzYwQTQwODQyRUZD
-QkNDODAyM0Y1OUUxNzA0AAoJEMvMgCP1nhcEyeoQAMz/0ZlYWydZHVxva9gGICLE
-ze+l0zaUOxRUmD4VcdYPsePg9EOYIPZE76AnS4L9gVx22UR3Qp7YnLd7NsLva0Jt
-qQUqc3wzVDMjLTYDmXyheqowaS6hTd2X15bnn5JizvlVndRHaPZEPHyzHjvCevDl
-nJ+31nQuGTqyucBC1ZgTBQGzJXSPz/reVh5yS+j2b75m2ejTAlgbHvBCOVeqMOnI
-EVinXmX0ZnUwbsAk3iUqUvgHnuNjZ2BRnsLLDFO7Yhah6YVgpxJITYFgT0cz46Ke
-Qy8jDRsnrT2x48UkCfYUVLItLiaUhadd8YOADveOPKNcQbNfMEymQy5oij7dMUI4
-Jr4h1xZwKkA50o7LYAvMg3pJlp4H2n9ZeA8W0sZqI1+u8j3cXBmPs1GOxJS4citZ
-tJwGm7LRUOESAnFGTy5Os0VUD/ox7+ZzxQoHNiOMRTC9GsJxgSG+mqUGIdg4xGh9
-q8bXn0KJ8Hz3twrAzeMBvh6fUFfB/bRcKt3IHEqacDH3Oucqnomrh+G2JUfTZoPX
-g9WnGvU/11Tzw/lFD5QGzYG3FQlD7VuXhHZXIHhgDdzS//H2x3oZscG7gfEdtWo1
-HwIPnOpb6xJDh4wuLoXK+SE57X9o6vZ1xD9GOpT0FYeg0kHq6MgP95irSOvH0g3O
-iMEfUAqrnbppmU92EUM7
-=b3d2
------END PGP SIGNATURE-----
---=-=-=--
+
+--
+View this message in context: http://git.661346.n2.nabble.com/Question-=
+about-pull-requests-tp7648649p7648733.html
+Sent from the git mailing list archive at Nabble.com.
