@@ -1,71 +1,86 @@
-From: =?UTF-8?Q?Stefan_Fr=c3=bchwirth?= <stefan.fruehwirth@uni-graz.at>
-Subject: Re: whither merge-tree?
-Date: Tue, 23 Feb 2016 10:49:34 +0100
-Message-ID: <56CC2B2E.6070203@uni-graz.at>
-References: <xmqqio1nge5b.fsf@gitster.mtv.corp.google.com>
- <20160222221209.GA18522@sigill.intra.peff.net>
- <xmqqsi0k4b52.fsf@gitster.mtv.corp.google.com>
- <20160223050210.GA17767@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] xdiff/xmerge: fix memory leak in xdl_merge
+Date: Tue, 23 Feb 2016 11:09:50 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602231108260.3152@virtualbox>
+References: <1456217151-16473-1-git-send-email-ps@pks.im>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 10:49:51 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Tue Feb 23 11:10:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aY9bG-0008MF-Jv
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 10:49:46 +0100
+	id 1aY9ux-0006xz-VX
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 11:10:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbcBWJtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 04:49:42 -0500
-Received: from EX07HTCA01.UNI-GRAZ.AT ([143.50.13.79]:36396 "EHLO
-	ex07htca01.uni-graz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751270AbcBWJti (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 04:49:38 -0500
-Received: from EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf) by
- ex07htca01.pers.ad.uni-graz.at (2002:8f32:d4f::8f32:d4f) with Microsoft SMTP
- Server (TLS) id 8.3.406.0; Tue, 23 Feb 2016 10:49:35 +0100
-Received: from [143.50.156.78] (143.50.156.78) by EX13MS01.pers.ad.uni-graz.at
- (2002:8f32:dbf::8f32:dbf) with Microsoft SMTP Server (TLS) id 15.0.1076.9;
- Tue, 23 Feb 2016 10:49:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <20160223050210.GA17767@sigill.intra.peff.net>
-X-ClientProxiedBy: EX13MS04.pers.ad.uni-graz.at (2002:8f32:dc2::8f32:dc2) To
- EX13MS01.pers.ad.uni-graz.at (2002:8f32:dbf::8f32:dbf)
+	id S1751802AbcBWKKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 05:10:01 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60385 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751374AbcBWKJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 05:09:59 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LomN9-1a28160jj1-00glgb; Tue, 23 Feb 2016 11:09:51
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1456217151-16473-1-git-send-email-ps@pks.im>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:coOGcayxTdEdHR+umyi+T5QXavGaWUtZ7ya6NGZZEv1PyoJ46Er
+ wVDBX+Q+7mxkTB6HRSzGFn/oxC8gimzDROjtjhDzV3Ab3cXtPQAzI/QnO7ZjoZPGOmaupOv
+ YLw1kyRNsqmg3FRI4EqE/TaCYJMVp82+g4I1wfKil7mYjxJHyfd58ivGXQrqVB7OaeQTe4e
+ zfJ9U+sHSZ3t1S3dfUlNA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:x8ld1Sp32Ls=:BaXuIKIFdK5veZa4mTiC+w
+ nT1duaIzbWw/INn3E17CZZNwmxcRHYijDWbpEhjtyswEQhujOPk5Z6HfbsM1dsstDW7NhjE9M
+ Zb9K+21QWwN+qlwP747lEOJSzvKAMPdMzov/Q2GcDSw+U8aaT41970hVqZL5/8wL7tLaEr7JF
+ NScSFKUJL8lGi7eklImCFL0LmmOY2ZCjMpxIyoZNH/YbuXs9OdXvM0tNxVfkQjc3DTHwC1dB0
+ f6lB1ES9TUWzno6qYMZNnmE+tMZ2qcDazawOgPsLQs6ioGBRtlrB1K9JPHjMX+1OGTtKFdH5H
+ GB4OOLKDTypBWvLRfmA0jXGcdz0osf5j0Crf2Hdr4ZtVciSo2D4WijpCNaFPzKUl/HRQyRphq
+ 25TrYa+//LO1k27oqXvFfiaRKbNyr4FsZPVbstWsTluqLcCdDHSmFer60FlTsVNwLhVCJYZfW
+ cJ4T1Wpty1pVjlFJZ1LsYpwK+rqiLl07/YrqNdCM31RQChJ63SHgQNUr301F6gvlg/kGvdkDq
+ q3J+mirUg72zrZ9FjvAW5dhdfj7oyUzNsLsoy77/eWY9oiyNk7TIRvsswC7Zwhl1bkoWMypEP
+ KFR7OOtPRq1EhiYnnmv/BqWrKq6aj793RNmFpY3JcbqI2kg29tQfArXzLaSarbr20xLnesfZ+
+ A+Jwsto9Wqe6oBk72fjMJHIji0CFLbP9SwHhWxYqjx/GK0Q3hnwP9E4YAY++Qp4uuw6eZ8Aac
+ 9p6NI3p14e3iXVEtqG0GjDq8pBPTuUYUM5BrUOF7e7KeOtuT7QrkUYUq/ATYWCGZhkCKGheL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287039>
 
-On 23.02.2016 at 06:02 Jeff King wrote:
->> Let's wait and see how many "please don't"s we hear, perhaps, before
->> deciding to go 3.?
->
-> I'm guessing we won't see much either way. Even Stefan, the original
-> reporter, does not seem to actively be using it, but rather relaying a
-> report.
+Hi Patrick,
 
-I _am_ actively using it. Maybe I was unclear on that topic. I'm in 
-favour of keeping it, because this means I don't have to rewrite Chris' 
-Code in order to be able to use the Python library that uses merge-tree 
-(Acidfs). But as a sensible human being I want what's best in the long 
-run. I leave that up to you as I have no way of assessing that.
+On Tue, 23 Feb 2016, Patrick Steinhardt wrote:
 
-So that's a "please don't" leave the code as-is but provide a 
-(transitional) solution that fixes the reported bug and has the best 
-chances of not causing any more headaches :)
+> When building the script for the second file that is to be merged
+> we have already allocated memory for data structures related to
+> the first file. When we encounter an error in building the second
+> script we only free allocated memory related to the second file
+> before erroring out.
 
-> We'd probably get more response by doing 2 for now, then adding a
-> deprecation warning to the manpage (and possibly the program itself) for
-> the next release.
+ACK.
 
-A deprecation warning would be very welcome.
+I wonder, though, whether we need this in addition:
 
-Thanks,
-Stefan
+-- snipsnap --
+t a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 625198e..e5c8745 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -579,8 +579,11 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t
+*mf2,
+ 	result->ptr = NULL;
+ 	result->size = 0;
+ 
+-	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0 ||
+-			xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
++	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
++		return -1;
++	}
++	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
++		xdl_free_env(&xe1);
+ 		return -1;
+ 	}
+ 	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
