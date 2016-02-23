@@ -1,89 +1,86 @@
-From: Seb <spluque@gmail.com>
-Subject: Re: interactive rebase results across shared histories
-Date: Tue, 23 Feb 2016 11:39:25 -0600
-Organization: Church of Emacs
-Message-ID: <87io1f5nsi.fsf@gmail.com>
-References: <87io1j6laz.fsf@gmail.com> <56C91D21.90306@moritzneeb.de>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/5] README: use markdown syntax
+Date: Tue, 23 Feb 2016 18:40:25 +0100
+Message-ID: <1456249229-30454-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: emma.westby@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 18:40:48 2016
+X-From: git-owner@vger.kernel.org Tue Feb 23 18:41:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYGx1-0005Wv-5h
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 18:40:43 +0100
+	id 1aYGxU-0005z2-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 18:41:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754333AbcBWRj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 12:39:56 -0500
-Received: from plane.gmane.org ([80.91.229.3]:57927 "EHLO plane.gmane.org"
+	id S1754738AbcBWRlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 12:41:08 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:37000 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753551AbcBWRjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 12:39:55 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aYGwC-0004ns-Mt
-	for git@vger.kernel.org; Tue, 23 Feb 2016 18:39:52 +0100
-Received: from s0106503955564c1f.wp.shawcable.net ([24.77.8.70])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 18:39:52 +0100
-Received: from spluque by s0106503955564c1f.wp.shawcable.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 18:39:52 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s0106503955564c1f.wp.shawcable.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-Cancel-Lock: sha1:LwYeqHeGB3Ad+LRH08y1PUM/I8w=
+	id S1754713AbcBWRlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 12:41:07 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1NHexoW004340
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 23 Feb 2016 18:40:59 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NHf0l5012837;
+	Tue, 23 Feb 2016 18:41:01 +0100
+X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
+In-Reply-To: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Feb 2016 18:40:59 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1NHexoW004340
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1456854063.31046@TMcyISlrpTRDQoIh5a4iLg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287086>
 
-On Sun, 21 Feb 2016 03:12:49 +0100,
-Moritz Neeb <lists@moritzneeb.de> wrote:
+This allows repository browsers like GitHub to display the content of
+the file nicely formatted.
 
-> Hi Seb,
-> On 02/20/2016 11:58 PM, Seb wrote:
->> Hello,
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ README => README.md | 6 +-----
+ t/t7001-mv.sh       | 2 +-
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+ rename README => README.md (93%)
 
->> I've recently learnt how to consolidate and clean up the master
->> branch's commit history.  I've squashed/fixuped many commits thinking
->> these would propagate to the children branches with whom it shares
->> the earlier parts of the its history.  However, this is not the case;
->> switching to the child branch still shows the non-rebased (dirty)
->> commit history from master.  Am I misunderstanding something with
->> this?
-
-> I am not sure what you meand by "child branch". If I understand
-> corretly, you have something like:
-
-[...]
-
-> Maybe, to get a better understanding, you could use visualization tool
-> like "tig" or "gitk" to observe what happens to your commits (hashes)
-> and branches (labels) and just play around with some of these
-> operations.
-
-OK, I've followed this advice and looked at the dependency graphs in
-gitk before and after rebasing, I've managed to obtain what I was
-after.  The repository now has two branches: master and topic.  However,
-Gitk reveals a problem with a string of commits that are not part of any
-branch:
-
-A---B---H---I                   (master)
-     \
-      C---D---E                 (loose string of commits)
-       \
-        D'---E'---F---G         (topic)
-
-How do I remove these loose commits (C, D, E)?
-
-Thanks for your feedback,
-
+diff --git a/README b/README.md
+similarity index 93%
+rename from README
+rename to README.md
+index 1083735..907eb3b 100644
+--- a/README
++++ b/README.md
+@@ -1,8 +1,4 @@
+-////////////////////////////////////////////////////////////////
+-
+-	Git - the stupid content tracker
+-
+-////////////////////////////////////////////////////////////////
++# Git - the stupid content tracker
+ 
+ "git" can mean anything, depending on your mood.
+ 
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 51dd2b4..4008fae 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -102,7 +102,7 @@ test_expect_success \
+ 
+ test_expect_success \
+     'adding another file' \
+-    'cp "$TEST_DIRECTORY"/../README path0/README &&
++    'cp "$TEST_DIRECTORY"/../README.md path0/README &&
+      git add path0/README &&
+      git commit -m add2 -a'
+ 
 -- 
-Seb
+2.7.2.334.g35ed2ae.dirty
