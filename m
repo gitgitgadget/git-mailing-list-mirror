@@ -1,97 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] activate diff.renames by default
-Date: Tue, 23 Feb 2016 11:17:12 -0800
-Message-ID: <xmqqa8mr1bk7.fsf@gitster.mtv.corp.google.com>
-References: <1456249498-3232-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] push: shorten "push.default is unset" warning message
+Date: Tue, 23 Feb 2016 20:47:12 +0100
+Message-ID: <vpqd1rngqf3.fsf@anie.imag.fr>
+References: <000001530ea408ed-2b71a34a-32bb-434c-bba5-fdac28193e9c-000000@eu-west-1.amazonses.com>
+	<xmqqtwkz1c4b.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Feb 23 20:17:19 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 20:47:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYISV-0001gm-B9
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 20:17:19 +0100
+	id 1aYIvh-0000Ml-Ep
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 20:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbcBWTRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 14:17:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58981 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752099AbcBWTRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 14:17:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC5D844EB3;
-	Tue, 23 Feb 2016 14:17:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bM3Bd2aItzM5jaXOb9YawF3PvTo=; b=b2U4Ws
-	Zk2cpNoH2FLZTFOamTLIELUpE/f39SOrfSG8yAIbX2HAX+lhv7nSxAXhjVKOHD6d
-	/tOH6SID9l7ELBP5nGBAdem7RABqa/BGhF/97C1o0plM69GJf/+1etsOQuEESuKz
-	CrENJ6QrrZcP7jcF5/x6nuY9V61LaTDrMEug8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZNJJjZ0RkUYbAZpo8gPzWaVs2yP1BRrG
-	8ChF1/I2PUxlF20LtfQyw62EuPT+7ygyQdD9ma3+zO33mmVMh0Cr6JIxe2VCT4yF
-	T+mQU6kl/jVdBcR2few9ucuwt0a5QrGCiSNMDsVTsB5jm6YNb2MPY9mT4ZpS+kCz
-	t5gvuCjXOJs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3B1444EB2;
-	Tue, 23 Feb 2016 14:17:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 49B9F44EB1;
-	Tue, 23 Feb 2016 14:17:13 -0500 (EST)
-In-Reply-To: <1456249498-3232-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Tue, 23 Feb 2016 18:44:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0B22D02E-DA62-11E5-BFDA-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754903AbcBWTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 14:47:25 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:49261 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754861AbcBWTrY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 14:47:24 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NJlA4x031634
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 23 Feb 2016 20:47:10 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NJlChP014303;
+	Tue, 23 Feb 2016 20:47:12 +0100
+In-Reply-To: <xmqqtwkz1c4b.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 23 Feb 2016 11:05:08 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Feb 2016 20:47:10 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1NJlA4x031634
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456861631.91809@43CcNAY25UzIZ0MjEd7pCQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287105>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I have always wondered why diff.renames was not activated by default.
-> I've had it to true in my configuration for 9 years, and I've been
-> teaching newbies to set it for a while without issue. I think it's
-> time to activate it by default, but please let me know if I missed a
-> reason to keep it to false.
+> The punchline of that question is:
 >
-> In any case, the first 3 patches are useful cleanups.
-
-It's a long time coming since I heard "I love how I can just say
-'oh, keep in mind that we might want to..' and 24 hours later you
-did it." [*1*]
-
-I can hardly be an impartial judge for this series, though.
-
-[Reference]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/3541/focus=3702
-
-> Matthieu Moy (5):
->   Documentation/diff-config: fix description of diff.renames
->   t4001-diff-rename: wrap file creations in a test
->   t: add tests for diff.renames (true/false/unset)
->   log: introduce init_log_defaults()
->   diff: activate diff.renames by default
+>     I can obviously set it to one of the values mentioned, but what do
+>     they mean? What's the difference between simple and matching?
 >
->  Documentation/diff-config.txt |  7 ++--
->  builtin/commit.c              |  1 +
->  builtin/diff.c                |  1 +
->  builtin/log.c                 | 16 ++++---
->  builtin/merge.c               |  1 +
->  diff.c                        |  5 +++
->  diff.h                        |  1 +
->  t/t4001-diff-rename.sh        | 97 +++++++++++++++++++++++++++++++++++--------
->  t/t4013-diff-various.sh       |  2 +
->  t/t4014-format-patch.sh       |  4 +-
->  t/t4047-diff-dirstat.sh       |  3 +-
->  t/t4202-log.sh                |  8 ++--
->  12 files changed, 114 insertions(+), 32 deletions(-)
+> It tells us that "See 'git help config'" is not such an effective
+> message to help such a user.
+
+[ The teacher inside me speaks ]
+
+Don't underestimate the ability to ignore any pointer to the doc from
+many users.
+
+In many case, when a student comes to me scared about an error or
+warning message, I just ask the student to read the message to me. If
+it's in english, I sometimes have to add "so, what does this mean in
+French", and in many cases it's sufficient.
+
+>> Shorten the warning and mention only the way to remove the warning
+>> without changing the behavior. Keep a pointer to the documentation so
+>> that people willing to learn can still find the alternative behaviors
+>> easily.
+>
+> While I admit that I usually am the most cautious one when dealing
+> with any change, I am not sure if this rephrasing helps very much.
+> As we saw, the sentence you kept, "See 'git help config'", is not
+> effective in helping those stackoverflow users.
+
+Right. But assuming someone who reads the complete message, I found that
+keeping only the first lines without a pointer to the doc make the text
+kind of mysterious:
+
+  warning: push.default is unset; its default value has changed in Git 2.0 from
+  'matching' to 'simple'. To squelch this message and adopt the new behavior, use:
+  
+    git config --global push.default simple
+
+Alone, this really looks like a magic formula like "I'm showing you this
+warning just to bug you, but you can get rid of it with ...".
+
+> If most people are happy with "simple" (and certainly that was the
+> assumption and hope behind the transtion we made at 2.0), we may be
+> better off removing the warning altogether.
+
+To me, this is the plan. I have no strong objection in removing it
+completely, but I think it makes sense to keep a lightweight one for a
+while: if people use different machines with different Git versions
+(especially if they ever use a version in the interval 2.0 to 2.3 which
+claims to use simple but actually do not), then these people may
+appreciate an incentive to set push.default.
+
+OTOH, if they use different Git versions, they will eventually get the
+message.
+
+> After all, push.default configuration is hardly the only case where
+> there are other ways to use Git that may match the user's situation
+> better, and we do not advertise "Oh by the way you can do things
+> differently, study the manual" for any of them with a warning
+> message like this.  Those who want to do different things know to
+> seek settings to tweak.
+
+I completely agree with this.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
