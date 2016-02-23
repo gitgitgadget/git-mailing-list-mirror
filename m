@@ -1,76 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git Daemon Dummy: 301 Redirects for git:// to https://
-Date: Tue, 23 Feb 2016 19:13:28 +0700
-Message-ID: <CACsJy8D1H6k2FJOHQnT3BEnpXDPn8+ux-vJfDLMhO-JybFvR=w@mail.gmail.com>
-References: <CAHmME9rTpGNHMKbXD48oBYm136=u79YiHjX5hm8ZYC4xSThJsA@mail.gmail.com>
- <20160223061517.GA3252@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: whither merge-tree?
+Date: Tue, 23 Feb 2016 13:36:36 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602231334050.3152@virtualbox>
+References: <xmqqio1nge5b.fsf@gitster.mtv.corp.google.com> <20160222221209.GA18522@sigill.intra.peff.net> <xmqqsi0k4b52.fsf@gitster.mtv.corp.google.com> <20160223050210.GA17767@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Stefan_Fr=C3=BChwirth?= <stefan.fruehwirth@uni-graz.at>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 23 13:14:11 2016
+X-From: git-owner@vger.kernel.org Tue Feb 23 13:36:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYBqx-00013P-Ae
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 13:14:07 +0100
+	id 1aYCD4-0000lz-Ts
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 13:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbcBWMOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 07:14:03 -0500
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:34635 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190AbcBWMN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 07:13:59 -0500
-Received: by mail-lf0-f48.google.com with SMTP id j78so113724508lfb.1
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 04:13:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IImXWR2ZvKzs6YL65KH68LZrb9r3sE4miWnpKI8vrvU=;
-        b=dmE1Ek//W0FNHoyW7fd7dz+8uowcsIHhRavvO/cwn1Mn0kqnmmtsuqUioY3TEK2BQU
-         UTknLyjCokpMWlTM3yBX/b8qRxSodFQG75kBtQQgUVsHcC9Nux+2HhYGgjQrkWtkZO9+
-         b/rTy2yiV9Tp8AAyHS0GfRfl3QP0mu/NWYY6x1P2BRK9z4C+EJqETUNj9S27pZD3gSxO
-         r15PQ5foXWHe6U/eurKurQiTHQ2mb5I4l00KSfTWGKGSSYq7DbCc5d2gQGSvWH/lB9Fi
-         +ZR9gMsvQq0wn3RFVpicU1RfSkRCMmyxZN8oJQzDkG8bzgD08BFRG7v2S14T72npouAS
-         +O0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=IImXWR2ZvKzs6YL65KH68LZrb9r3sE4miWnpKI8vrvU=;
-        b=TdDzIa5T570dwz62cxapML5yudQIlXOpkWldHMpHSsrrtj95Ay/VYFdNwzKrEqIsMo
-         Dg1mA9Um4tnwRhEm5eXuDTir8elW8GFhPb3m6Q81PhP1HTUScx4HGkBuo/+JGCt/F387
-         zz1JokHz14C0319ghiXSJzexphgegFc4yzPhkL7spydZr+2u1Of+vwGbXp04W+WjSPs/
-         Gm7wQRpPjAnQ1lbYOo5WwFa1KoFtQ987gP0OAwci0KPqKlpYbVrGp1Z9FeOLkTQOq5/h
-         O3PuT4eK7Ey+7Ou32p0J3WaFb2QahLaj3gRgO4eMtVe50jw6ujAxeO7t5gFS3eQRnjw/
-         I0gA==
-X-Gm-Message-State: AG10YOT5v1n4gRatSbbghtjdA8jyChIR30pAoC/NjQK+zWWDDEmEeBvQaTOvXjfWVIhDdtQY03+QC2JfMuZr8g==
-X-Received: by 10.25.159.68 with SMTP id i65mr12028302lfe.94.1456229638507;
- Tue, 23 Feb 2016 04:13:58 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Tue, 23 Feb 2016 04:13:28 -0800 (PST)
-In-Reply-To: <20160223061517.GA3252@sigill.intra.peff.net>
+	id S1751447AbcBWMgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 07:36:55 -0500
+Received: from mout.gmx.net ([212.227.17.21]:59006 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751232AbcBWMgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 07:36:54 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LnUna-1a0mOO2yuk-00hbF3; Tue, 23 Feb 2016 13:36:38
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160223050210.GA17767@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:gftVCHvDqDnlypOhMqKbDfk6pYCXKtnGQ0tiTinD2m8T471UDwS
+ DDSPXxggYe5xd5Hea8YoFprD0XDqwXR+BNRXOCnULS6q68wwk+pjwR6yeatzKeuy7oMAvB5
+ 8birxQ4LEhvDt+ckXkdAyTkb+Svsja3BbNiXH54Lqz7mGHjxCTBKBY5CCyazj9NruEs4+zO
+ Qs0IuXMSEdHc8OlUeppMg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ln9ZMq+8cjc=:Kj3Xaj/YD/sLld4HRBL8r4
+ /8gxHUbjsXDTzjXoiQaqzas6Rz0Nw+rHVA1vFEZ5uaWlEfOQgzO0u4bnR7LLJImCvh7DwSpZr
+ mw/DcUaUs7asln7/PMDssL2mEBNe83e3vQtEXXIXlI02E24cn5ynAyt5M1TdiCaxE9LWznkek
+ 0M7X3Up5nYeQMvnN3Lj6YLhnU5ukDk2ClDq7t6rDY9IfQJQCzSSQ1A6TT1OzNjf5oeEGdGUh/
+ ZT5E4g4R5+lMwTXoUjjdzh42j5oDicLtddqmFz4VvQgCkx2EQ8C0bg6PE/H68o+IOiSNzm7uc
+ mYNT6ga1o7HQfQ9WtInTnQ1T6b8J3x90gH2HOgbzzvB//1K6UWtVcjxFpECbL4x7bo5LzxlOq
+ KX3fAtvME0/drZOgFWG/Ama55V7OfQAT8rFdKHI5nMwqoVz1sHtEXaupk6UeWiHNcWZlpHkwj
+ Mas8qpwNs7lV1J6YEEHXrEhmW+q18NPPxqQz8m7x4PTZH1RZTkCBHMJcyK1Jj93k14WOOIQJq
+ EIXLaSywZDwqq4uFxoZg5c9kt8tYNL49vN8IqMLOvRwYA8kXRHLFBWRb+yhhNUdg2Y7WjDwYf
+ eUdqkUnfZCu0A6i0xDYgc3QAS0COBvnrHE42P0x/3xFqzIdM/7pgYyWYVG4W70eK3z1HR1rpK
+ lRPtY3bSP4L1BucKa4NrAt1T9y1hpmNlIZUb1gZtHvvf4UOKT9u/7ccisR9jyfF/TpYwxDmRk
+ 0iTom2/QXLApIF+5Ot6MaRoLYKbrJoa0cqM48qdnDL/W2u8799cMD3LPvdb2w8mdRzjqFSe7 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287048>
 
-On Tue, Feb 23, 2016 at 1:15 PM, Jeff King <peff@peff.net> wrote:
-> I looked into it once, but was unable to find any reasonably sized
-> explanation of how to implement either the server or client side of
-> websockets. :)
+Hi Peff,
 
-Wikipedia explained handshake in four paragraphs. Then you only have
-to chew about ten pages of RFC6455, from page 27 to master data frames
-(and we probably just need binary frames for pkt-line, or fragmented
-when sending the pack). Come on, give us git+ws:// :D
+On Tue, 23 Feb 2016, Jeff King wrote:
 
-PS. Too bad I couldn't find any minimal library that just deals with
-websocket data frame handling. I suppose curl can deal with handshake
-just fine.
--- 
-Duy
+> On Mon, Feb 22, 2016 at 02:45:45PM -0800, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > >   3. Drop merge-tree completely. This deletes even more code, and
+> > >   helps the people in (2) realize that it is utterly unmaintained.
+> > >   :)
+> >
+> > Let's wait and see how many "please don't"s we hear, perhaps, before
+> > deciding to go 3.?
+> 
+> I'm guessing we won't see much either way.
+
+We could encourage more voices by issuing a warning when merge-tree is
+called, e.g.:
+
+	warning: merge-tree is unsupported (please contact
+		 git@vger.kernel.org if you use it actively)
+
+Ciao,
+Dscho
