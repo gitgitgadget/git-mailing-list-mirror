@@ -1,112 +1,79 @@
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] refs: reduce the visibility of do_for_each_ref()
-Date: Tue, 23 Feb 2016 00:39:13 +0000
-Message-ID: <56CBAA31.7030809@ramsayjones.plus.com>
+Subject: Re: [PATCH] daemon.c: mark a file-local symbol as static
+Date: Tue, 23 Feb 2016 00:49:53 +0000
+Message-ID: <56CBACB1.8070109@ramsayjones.plus.com>
+References: <56C9F4F2.1060100@ramsayjones.plus.com>
+ <20160221232510.GB4094@sigill.intra.peff.net>
+ <56CA5753.9030308@ramsayjones.plus.com>
+ <20160222211827.GB15595@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Feb 23 01:39:28 2016
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 23 01:50:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aY10i-0004Tj-9I
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 01:39:28 +0100
+	id 1aY1B5-0004hQ-1j
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 01:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631AbcBWAjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Feb 2016 19:39:24 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:52933 "EHLO
+	id S1756261AbcBWAuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Feb 2016 19:50:05 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:56870 "EHLO
 	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755859AbcBWAjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Feb 2016 19:39:23 -0500
+	with ESMTP id S1755860AbcBWAuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Feb 2016 19:50:04 -0500
 Received: from [10.0.2.15] ([46.208.159.221])
 	by avasout01 with smtp
-	id McfL1s0064mu3xa01cfMSs; Tue, 23 Feb 2016 00:39:22 +0000
+	id Mcq01s0064mu3xa01cq1yN; Tue, 23 Feb 2016 00:50:02 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
  a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
  a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=EBOSESyhAAAA:8 a=7pY-7TPnZjXjs4SiriQA:9 a=QEXdDO2ut3YA:10
+ a=2kEm8GLCBaJTssrXEugA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.5.1
+In-Reply-To: <20160222211827.GB15595@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287005>
 
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
 
-Hi David,
+On 22/02/16 21:18, Jeff King wrote:
+> On Mon, Feb 22, 2016 at 12:33:23AM +0000, Ramsay Jones wrote:
+> 
+>>> Thanks, will do. You notice these with sparse, as I recall? I've meant
+>>> to look into running that myself, but it looks like we are not
+>>> warning-free with sparse currently. I see complaints like:
+>>>
+>>>   connect.c:377:40: warning: incorrect type in argument 2 (invalid types)
+>>>   connect.c:377:40:    expected union __CONST_SOCKADDR_ARG [usertype] __addr
+>>>   connect.c:377:40:    got struct sockaddr *ai_addr
+>>>
+>>> As far as I can tell, that's just noise. Do you have a ready-made recipe
+>>> for silencing it?
+>>
+>> Ah, I think you must be on a very old version of sparse.
+> 
+> I have whatever comes with debian unstable. Looks like 0.5.0 from
+> November. So not _that_ old, but I can well believe it is missing tweaks
+> found at the tip of their development.
 
-Again, If you need to re-roll your 'dt/refs-backend-lmdb' branch ...
+Yes, but that version was released in Jan 2014!
 
-Thanks!
+> I guess I was wondering whether I should be adding "make sparse" to my
+> set of pre-submission checks. But I can't say I'm enthused about
+> manually keeping another tool up to date. :)
+
+Hmm, probably not worth it - I sometimes wonder why I bother! :-D
 
 ATB,
 Ramsay Jones
-
- refs.c               | 16 ++++++++--------
- refs/refs-internal.h |  6 ------
- 2 files changed, 8 insertions(+), 14 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 337f110..bf70876 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1236,6 +1236,14 @@ static int get_affected_refnames(struct ref_transaction *transaction,
- 	return 0;
- }
- 
-+static int do_for_each_ref(const char *submodule, const char *base,
-+			   each_ref_fn fn, int trim, int flags,
-+			   void *cb_data)
-+{
-+	return the_refs_backend->do_for_each_ref(submodule, base, fn, trim,
-+						 flags, cb_data);
-+}
-+
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(NULL, "", fn, 0, 0, cb_data);
-@@ -1501,14 +1509,6 @@ int resolve_gitlink_ref(const char *path, const char *refname,
- 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
- }
- 
--int do_for_each_ref(const char *submodule, const char *base,
--		    each_ref_fn fn, int trim, int flags,
--		    void *cb_data)
--{
--	return the_refs_backend->do_for_each_ref(submodule, base, fn, trim,
--						 flags, cb_data);
--}
--
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
- 				void *cb_data)
- {
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ced6af4..4922e25 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -227,12 +227,6 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
- 				 each_ref_fn fn, int trim, int flags,
- 				 void *cb_data);
- 
--/*
-- * The common backend for the for_each_*ref* functions
-- */
--int do_for_each_ref(const char *submodule, const char *base,
--		    each_ref_fn fn, int trim, int flags, void *cb_data);
--
- /* refs backends */
- typedef int ref_init_db_fn(int shared, struct strbuf *err);
- typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
--- 
-2.7.0
