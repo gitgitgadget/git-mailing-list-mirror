@@ -1,86 +1,246 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] xdiff/xmerge: fix memory leak in xdl_merge
-Date: Tue, 23 Feb 2016 11:09:50 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602231108260.3152@virtualbox>
-References: <1456217151-16473-1-git-send-email-ps@pks.im>
+From: Mathias Nyman <mathias.nyman@iki.fi>
+Subject: [PATCH] contrib/subtree: add repo url to commit messages
+Date: Tue, 23 Feb 2016 12:25:59 +0200
+Message-ID: <20160223102559.GA18668@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-X-From: git-owner@vger.kernel.org Tue Feb 23 11:10:08 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, npaolucci@atlassian.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 23 11:26:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aY9ux-0006xz-VX
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 11:10:08 +0100
+	id 1aYAAy-0001Xe-9I
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 11:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbcBWKKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 05:10:01 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60385 "EHLO mout.gmx.net"
+	id S1751681AbcBWK03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 05:26:29 -0500
+Received: from mail.kapsi.fi ([217.30.184.167]:41992 "EHLO mail.kapsi.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374AbcBWKJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 05:09:59 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LomN9-1a28160jj1-00glgb; Tue, 23 Feb 2016 11:09:51
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <1456217151-16473-1-git-send-email-ps@pks.im>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:coOGcayxTdEdHR+umyi+T5QXavGaWUtZ7ya6NGZZEv1PyoJ46Er
- wVDBX+Q+7mxkTB6HRSzGFn/oxC8gimzDROjtjhDzV3Ab3cXtPQAzI/QnO7ZjoZPGOmaupOv
- YLw1kyRNsqmg3FRI4EqE/TaCYJMVp82+g4I1wfKil7mYjxJHyfd58ivGXQrqVB7OaeQTe4e
- zfJ9U+sHSZ3t1S3dfUlNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:x8ld1Sp32Ls=:BaXuIKIFdK5veZa4mTiC+w
- nT1duaIzbWw/INn3E17CZZNwmxcRHYijDWbpEhjtyswEQhujOPk5Z6HfbsM1dsstDW7NhjE9M
- Zb9K+21QWwN+qlwP747lEOJSzvKAMPdMzov/Q2GcDSw+U8aaT41970hVqZL5/8wL7tLaEr7JF
- NScSFKUJL8lGi7eklImCFL0LmmOY2ZCjMpxIyoZNH/YbuXs9OdXvM0tNxVfkQjc3DTHwC1dB0
- f6lB1ES9TUWzno6qYMZNnmE+tMZ2qcDazawOgPsLQs6ioGBRtlrB1K9JPHjMX+1OGTtKFdH5H
- GB4OOLKDTypBWvLRfmA0jXGcdz0osf5j0Crf2Hdr4ZtVciSo2D4WijpCNaFPzKUl/HRQyRphq
- 25TrYa+//LO1k27oqXvFfiaRKbNyr4FsZPVbstWsTluqLcCdDHSmFer60FlTsVNwLhVCJYZfW
- cJ4T1Wpty1pVjlFJZ1LsYpwK+rqiLl07/YrqNdCM31RQChJ63SHgQNUr301F6gvlg/kGvdkDq
- q3J+mirUg72zrZ9FjvAW5dhdfj7oyUzNsLsoy77/eWY9oiyNk7TIRvsswC7Zwhl1bkoWMypEP
- KFR7OOtPRq1EhiYnnmv/BqWrKq6aj793RNmFpY3JcbqI2kg29tQfArXzLaSarbr20xLnesfZ+
- A+Jwsto9Wqe6oBk72fjMJHIji0CFLbP9SwHhWxYqjx/GK0Q3hnwP9E4YAY++Qp4uuw6eZ8Aac
- 9p6NI3p14e3iXVEtqG0GjDq8pBPTuUYUM5BrUOF7e7KeOtuT7QrkUYUq/ATYWCGZhkCKGheL 
+	id S1750919AbcBWK0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 05:26:06 -0500
+Received: from lakka.kapsi.fi ([2001:1bc8:1004::1] ident=Debian-exim)
+	by mail.kapsi.fi with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <lem@kapsi.fi>)
+	id 1aYAAK-0002PN-5y; Tue, 23 Feb 2016 12:26:00 +0200
+Received: from lem by lakka.kapsi.fi with local (Exim 4.80)
+	(envelope-from <lem@lakka.kapsi.fi>)
+	id 1aYAAJ-0000sL-SG; Tue, 23 Feb 2016 12:25:59 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
+X-SA-Exim-Mail-From: lem@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287040>
 
-Hi Patrick,
+For recalling where a subtree came from; git-subtree operations 'add'
+and 'pull', when called with the <repository> parameter add this to the
+commit message:
+    git-subtree-repo: <repo_url>
 
-On Tue, 23 Feb 2016, Patrick Steinhardt wrote:
+Other operations that don't have the <repository> information, like
+'merge' and 'add' without <repository>, are unchanged. Users with such a
+workflow will continue to be on their own with the --message parameter,
+if they'd like to record where the subtree came from.
 
-> When building the script for the second file that is to be merged
-> we have already allocated memory for data structures related to
-> the first file. When we encounter an error in building the second
-> script we only free allocated memory related to the second file
-> before erroring out.
+Signed-off-by: Mathias Nyman <mathias.nyman@iki.fi>
+Based-on-patch-by: Nicola Paolucci <npaolucci@atlassian.com>
+---
+ contrib/subtree/git-subtree.sh | 73 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 24 deletions(-)
 
-ACK.
-
-I wonder, though, whether we need this in addition:
-
--- snipsnap --
-t a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 625198e..e5c8745 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -579,8 +579,11 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t
-*mf2,
- 	result->ptr = NULL;
- 	result->size = 0;
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 7a39b30..7cf73c0 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -335,18 +335,21 @@ add_msg()
+ 	dir="$1"
+ 	latest_old="$2"
+ 	latest_new="$3"
++	repo="$4" # optional
+ 	if [ -n "$message" ]; then
+ 		commit_message="$message"
+ 	else
+ 		commit_message="Add '$dir/' from commit '$latest_new'"
+ 	fi
+-	cat <<-EOF
+-		$commit_message
+-		
+-		git-subtree-dir: $dir
+-		git-subtree-mainline: $latest_old
+-		git-subtree-split: $latest_new
+-	EOF
++	echo $commit_message
++	echo
++	echo git-subtree-dir: $dir
++	echo git-subtree-mainline: $latest_old
++	echo git-subtree-split: $latest_new
++	if [ -n "$repo" ]; then
++		repo_url=$(get_repository_url "$repo")
++		echo "git-subtree-repo: $repo_url"
++	fi
+ }
  
--	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0 ||
--			xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
-+	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
-+		return -1;
-+	}
-+	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
-+		xdl_free_env(&xe1);
- 		return -1;
- 	}
- 	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
+ add_squashed_msg()
+@@ -382,8 +385,9 @@ squash_msg()
+ 	dir="$1"
+ 	oldsub="$2"
+ 	newsub="$3"
++	repo="$4" # optional
+ 	newsub_short=$(git rev-parse --short "$newsub")
+-	
++
+ 	if [ -n "$oldsub" ]; then
+ 		oldsub_short=$(git rev-parse --short "$oldsub")
+ 		echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
+@@ -397,6 +401,10 @@ squash_msg()
+ 	echo
+ 	echo "git-subtree-dir: $dir"
+ 	echo "git-subtree-split: $newsub"
++	if [ -n "$repo" ]; then
++		repo_url=$(get_repository_url "$repo")
++		echo "git-subtree-repo: $repo_url"
++	fi
+ }
+ 
+ toptree_for_commit()
+@@ -440,12 +448,13 @@ new_squash_commit()
+ 	old="$1"
+ 	oldsub="$2"
+ 	newsub="$3"
++	repo="$4" # optional
+ 	tree=$(toptree_for_commit $newsub) || exit $?
+ 	if [ -n "$old" ]; then
+-		squash_msg "$dir" "$oldsub" "$newsub" | 
++		squash_msg "$dir" "$oldsub" "$newsub" "$repo" |
+ 			git commit-tree "$tree" -p "$old" || exit $?
+ 	else
+-		squash_msg "$dir" "" "$newsub" |
++		squash_msg "$dir" "" "$newsub" "$repo" |
+ 			git commit-tree "$tree" || exit $?
+ 	fi
+ }
+@@ -517,6 +526,16 @@ ensure_valid_ref_format()
+ 	    die "'$1' does not look like a ref"
+ }
+ 
++get_repository_url()
++{
++	repo=$1
++	repo_url=$(git config --get remote.$repo.url)
++	if [ -z "$repo_url" ]; then
++		repo_url=$repo
++	fi
++	echo $repo_url
++}
++
+ cmd_add()
+ {
+ 	if [ -e "$dir" ]; then
+@@ -548,19 +567,18 @@ cmd_add()
+ cmd_add_repository()
+ {
+ 	echo "git fetch" "$@"
+-	repository=$1
++	repo=$1
+ 	refspec=$2
+ 	git fetch "$@" || exit $?
+ 	revs=FETCH_HEAD
+-	set -- $revs
++	set -- $revs $repo
+ 	cmd_add_commit "$@"
+ }
+ 
+ cmd_add_commit()
+ {
+-	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+-	set -- $revs
+-	rev="$1"
++	rev=$(git rev-parse $default --revs-only "$1") || exit $?
++	repo="$2" # optional
+ 	
+ 	debug "Adding $dir as '$rev'..."
+ 	git read-tree --prefix="$dir" $rev || exit $?
+@@ -575,12 +593,12 @@ cmd_add_commit()
+ 	fi
+ 	
+ 	if [ -n "$squash" ]; then
+-		rev=$(new_squash_commit "" "" "$rev") || exit $?
++		rev=$(new_squash_commit "" "" "$rev" "$repo") || exit $?
+ 		commit=$(add_squashed_msg "$rev" "$dir" |
+ 			 git commit-tree $tree $headp -p "$rev") || exit $?
+ 	else
+ 		revp=$(peel_committish "$rev") &&
+-		commit=$(add_msg "$dir" "$headrev" "$rev" |
++		commit=$(add_msg "$dir" "$headrev" "$rev" "$repo" |
+ 			 git commit-tree $tree $headp -p "$revp") || exit $?
+ 	fi
+ 	git reset "$commit" || exit $?
+@@ -609,7 +627,8 @@ cmd_split()
+ 	else
+ 		unrevs="$(find_existing_splits "$dir" "$revs")"
+ 	fi
+-	
++e
++	rev="$1"
+ 	# We can't restrict rev-list to only $dir here, because some of our
+ 	# parents have the $dir contents the root, and those won't match.
+ 	# (and rev-list --follow doesn't seem to solve this)
+@@ -683,15 +702,20 @@ cmd_split()
+ 
+ cmd_merge()
+ {
+-	revs=$(git rev-parse $default --revs-only "$@") || exit $?
++	revs=$(git rev-parse $default --revs-only "$1") || exit $?
+ 	ensure_clean
+-	
+ 	set -- $revs
+ 	if [ $# -ne 1 ]; then
+ 		die "You must provide exactly one revision.  Got: '$revs'"
+ 	fi
++	do_merge "$@"
++}
++
++do_merge()
++{
+ 	rev="$1"
+-	
++	repo="$2" # optional
++
+ 	if [ -n "$squash" ]; then
+ 		first_split="$(find_latest_squash "$dir")"
+ 		if [ -z "$first_split" ]; then
+@@ -704,7 +728,7 @@ cmd_merge()
+ 			say "Subtree is already at commit $rev."
+ 			exit 0
+ 		fi
+-		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
++		new=$(new_squash_commit "$old" "$sub" "$rev" "$repo") || exit $?
+ 		debug "New squash commit: $new"
+ 		rev="$new"
+ 	fi
+@@ -730,12 +754,13 @@ cmd_pull()
+ 	if [ $# -ne 2 ]; then
+ 	    die "You must provide <repository> <ref>"
+ 	fi
++	repo=$1
+ 	ensure_clean
+ 	ensure_valid_ref_format "$2"
+ 	git fetch "$@" || exit $?
+ 	revs=FETCH_HEAD
+-	set -- $revs
+-	cmd_merge "$@"
++	set -- $revs $repo
++	do_merge "$@"
+ }
+ 
+ cmd_push()
+-- 
+2.7.1
