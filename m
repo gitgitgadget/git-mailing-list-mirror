@@ -1,91 +1,71 @@
-From: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [RFC/PATCH 1/1] format-patch: add an option to record base tree
- info
-Date: Tue, 23 Feb 2016 13:32:53 +0300
-Message-ID: <20160223103253.GE5273@mwanda>
-References: <1456109938-8568-1-git-send-email-xiaolong.ye@intel.com>
- <1456109938-8568-2-git-send-email-xiaolong.ye@intel.com>
- <xmqqmvqt8jgz.fsf@gitster.mtv.corp.google.com>
- <20160223014741.GA21025@wfg-t540p.sh.intel.com>
- <xmqqio1f3oi9.fsf@gitster.mtv.corp.google.com>
- <20160223091740.GA3830@wfg-t540p.sh.intel.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Git Daemon Dummy: 301 Redirects for git:// to https://
+Date: Tue, 23 Feb 2016 10:51:59 +0000
+Message-ID: <20160223105159.GJ1766@serenity.lan>
+References: <CAHmME9rTpGNHMKbXD48oBYm136=u79YiHjX5hm8ZYC4xSThJsA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Xiaolong Ye <xiaolong.ye@intel.com>, git@vger.kernel.org,
-	ying.huang@intel.com, philip.li@intel.com, julie.du@intel.com,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	LKML <linux-kernel@vger.kernel.org>
-To: Fengguang Wu <fengguang.wu@intel.com>
-X-From: linux-kernel-owner@vger.kernel.org Tue Feb 23 11:33:37 2016
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: git@vger.kernel.org
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-From: git-owner@vger.kernel.org Tue Feb 23 11:57:40 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1aYAHh-0006FO-44
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 23 Feb 2016 11:33:37 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1aYAZq-00084z-8G
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 11:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752745AbcBWKd1 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 23 Feb 2016 05:33:27 -0500
-Received: from aserp1040.oracle.com ([141.146.126.69]:40377 "EHLO
-	aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752135AbcBWKdX (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 23 Feb 2016 05:33:23 -0500
-Received: from userv0021.oracle.com (userv0021.oracle.com [156.151.31.71])
-	by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u1NAWwvP009483
-	(version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 23 Feb 2016 10:32:59 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-	by userv0021.oracle.com (8.13.8/8.13.8) with ESMTP id u1NAWwka021482
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
-	Tue, 23 Feb 2016 10:32:58 GMT
-Received: from abhmp0010.oracle.com (abhmp0010.oracle.com [141.146.116.16])
-	by userv0121.oracle.com (8.13.8/8.13.8) with ESMTP id u1NAWvFH001833;
-	Tue, 23 Feb 2016 10:32:57 GMT
-Received: from mwanda (/154.0.139.178)
-	by default (Oracle Beehive Gateway v4.0)
-	with ESMTP ; Tue, 23 Feb 2016 02:32:56 -0800
+	id S1753204AbcBWKwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 05:52:17 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:49971 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467AbcBWKwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 05:52:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id C09DACDA58D;
+	Tue, 23 Feb 2016 10:52:12 +0000 (GMT)
+X-Quarantine-ID: <HEvdQxcKz46c>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id HEvdQxcKz46c; Tue, 23 Feb 2016 10:52:09 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 63334CDA62B;
+	Tue, 23 Feb 2016 10:52:01 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <20160223091740.GA3830@wfg-t540p.sh.intel.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Source-IP: userv0021.oracle.com [156.151.31.71]
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <CAHmME9rTpGNHMKbXD48oBYm136=u79YiHjX5hm8ZYC4xSThJsA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287041>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287042>
 
-So this is the format for the first patch?
+On Tue, Feb 23, 2016 at 03:32:02AM +0100, Jason A. Donenfeld wrote:
+> In case anyone else finds this useful, I wrote this:
+> 
+> https://git.zx2c4.com/git-daemon-dummy/about/
+> 
+> It's an epoll-based responder for git:// that simply returns an error
+> telling users of a new URI. The purpose is to phase out git-daemon in
+> favor of more secure TLS/HTTPS endpoints. With HTTPS certificates now
+> being free, seems like this could be useful.
+> 
+> My personal motivation is that I'd like to just totally kill the
+> git-daemon service, but somebody hard coded a URI of mine into a real
+> printed textbook [1], so I don't want it to go stale suddenly. So, I
+> need some way of informing users of the new URI.
+> 
+> Let me know what you think.
 
-base commit: 0233b800c838ddda41db318ee396320b3c21a560
-
-Can we change it to include the name of the public tree we are starting
-from?
-
-applies-to: 0233b800c838 git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git#master
-
-Of course, my absolute prefered format would be:
-
-applies-to: net-next 0233b800c838
-
-I don't think that's possible though?  I often write that sort of a line
-in my emails to Dave already.
-
-Fengguang was suggesting something like this if we have to include
-unmerged patches:
-
-applies-to: net-next 0233b800c838
-private patchset 1
-private patchset 2
-
-I don't think git knows what a patchset is.  We would have to include
-the subject line for each unmerged patch.  I think we should only do
-that if there is a cover letter, otherwise the it's too noisy.
-
-regards,
-dan carpenter
+There's no license specified in the repo, it just says "All rights
+reserved" in the .c file.  I'm sure you intend it to be open source, but
+it isn't unless a license is specified.
