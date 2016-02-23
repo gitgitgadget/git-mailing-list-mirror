@@ -1,109 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016: applications open, deadline = Fri, 19/2
-Date: Tue, 23 Feb 2016 14:13:34 +0100
-Message-ID: <vpqr3g3h8n5.fsf@anie.imag.fr>
-References: <vpqoabox66p.fsf@anie.imag.fr>
-	<CAP8UFD0UxB6Z1UU=4Bkz0Yt2KE+AkrttQeTx2oY9v9O78f9qow@mail.gmail.com>
-	<vpqd1s2e74l.fsf@anie.imag.fr>
-	<20160212130446.GB10858@sigill.intra.peff.net>
-	<vpqd1s04zzs.fsf@anie.imag.fr>
-	<CACsJy8BzkWSc11ODenEuGBBta+dkLS893o7oRS57_ctoB5ie8A@mail.gmail.com>
-	<vpqziutkps7.fsf@anie.imag.fr>
-	<20160222214246.GE15595@sigill.intra.peff.net>
-	<xmqqlh6c5ryz.fsf@gitster.mtv.corp.google.com>
-	<20160222220248.GC18250@sigill.intra.peff.net>
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Subject: Re: [RFC/PATCH 1/1] format-patch: add an option to record base tree
+ info
+Date: Tue, 23 Feb 2016 16:31:35 +0300
+Message-ID: <20160223133135.GF5273@mwanda>
+References: <1456109938-8568-1-git-send-email-xiaolong.ye@intel.com>
+ <1456109938-8568-2-git-send-email-xiaolong.ye@intel.com>
+ <xmqqmvqt8jgz.fsf@gitster.mtv.corp.google.com>
+ <20160223014741.GA21025@wfg-t540p.sh.intel.com>
+ <xmqqio1f3oi9.fsf@gitster.mtv.corp.google.com>
+ <20160223091740.GA3830@wfg-t540p.sh.intel.com>
+ <20160223103253.GE5273@mwanda>
+ <20160223120015.GA10488@wfg-t540p.sh.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 23 14:14:03 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Xiaolong Ye <xiaolong.ye@intel.com>, git@vger.kernel.org,
+	ying.huang@intel.com, philip.li@intel.com, julie.du@intel.com,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	LKML <linux-kernel@vger.kernel.org>
+To: Fengguang Wu <fengguang.wu@intel.com>
+X-From: linux-kernel-owner@vger.kernel.org Tue Feb 23 14:32:03 2016
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYCmw-00022m-QG
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 14:14:03 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1aYD4K-0006my-1Y
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 23 Feb 2016 14:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169AbcBWNNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 08:13:53 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:58947 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751984AbcBWNNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 08:13:50 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1NDDYwP032501
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 23 Feb 2016 14:13:34 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NDDZ6E008145;
-	Tue, 23 Feb 2016 14:13:35 +0100
-In-Reply-To: <20160222220248.GC18250@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 22 Feb 2016 17:02:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 23 Feb 2016 14:13:34 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1NDDYwP032501
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1456838017.30172@rMaovrpVNuKA4JQttUbAkg
-Sender: git-owner@vger.kernel.org
+	id S1752212AbcBWNbu (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 23 Feb 2016 08:31:50 -0500
+Received: from aserp1040.oracle.com ([141.146.126.69]:27116 "EHLO
+	aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751781AbcBWNbs (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 23 Feb 2016 08:31:48 -0500
+Received: from userv0022.oracle.com (userv0022.oracle.com [156.151.31.74])
+	by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u1NDVgMV026483
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 23 Feb 2016 13:31:42 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+	by userv0022.oracle.com (8.14.4/8.13.8) with ESMTP id u1NDVf86030270
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+	Tue, 23 Feb 2016 13:31:42 GMT
+Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
+	by aserv0121.oracle.com (8.13.8/8.13.8) with ESMTP id u1NDVfub005264;
+	Tue, 23 Feb 2016 13:31:41 GMT
+Received: from mwanda (/154.0.139.178)
+	by default (Oracle Beehive Gateway v4.0)
+	with ESMTP ; Tue, 23 Feb 2016 05:31:39 -0800
+Content-Disposition: inline
+In-Reply-To: <20160223120015.GA10488@wfg-t540p.sh.intel.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Source-IP: userv0022.oracle.com [156.151.31.74]
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287050>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287051>
 
-Jeff King <peff@peff.net> writes:
+Blergh...  You want it machine readable and I want it human readable.  I
+don't care so much about the cover letter but for the first patch then I
+really want something minimal (one line) and human readable.
 
-> On Mon, Feb 22, 2016 at 01:56:52PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > I agree that there are a lot of different ways to resolve each instance,
->> > and it will vary from case to case. I think the original point of a
->> > microproject was to do something really easy and not contentious, so
->> > that the student could get familiar with all of the other parts of the
->> > cycle: writing a commit message, formatting the patch, posting to the
->> > list, etc.
->> 
->> I had an impression that Micros are also used as an aptitude test,
->> and one important trait we want to see in a potential developer is
->> how well s/he interacts with others in such a discussion.  So "easy
->> and not contentious" might not be a very good criteria.
->> 
->> I dunno.
->
-> I sort-of agree. I think of the microprojects as more of a "fizz-buzz",
-> where you intentionally keep the technical level very low so that you
-> can evaluate the other things.
+base tree/branch: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git master
+base commit: afd2ff9b7e1b367172f18ba7f693dfb62bdcb2dc
+base patch-id: a849260a843115dbac4b1a330d44256ee6b16d7b
+base patch-subject: Linux 4.4
+base tag: v4.4
 
-I agree with "very low", but I don't think we should eliminate
-completely the difficulty. During the selection, microprojects can be
-very efficient in eliminating the really bad candidates (usually, there
-are quite a few), but once the first selection is done, we still need
-tools to separate "moderately good" and "really good" candidates.
+To me that looks like an unparseable wall of text.  My version of that
+is:
 
-> So I think a little back and forth is good; almost everybody does
-> something a little wrong in their first patch submission. But I'd worry
-> about a topic that is going to involve a lot of bikeshedding or subtle
-> nuances to finding the correct solution. I certainly think _some_
-> candidates can handle that, but for the ones who cannot, it may
-> frustrate all involved.
+Applies-to: afd2ff9b7e1b+ origin
 
-Well, starting a microproject and realizing afterwards that it was a
-hard one is frustrating. But picking a very easy project and see someone
-else do a brillant job on a harder one, and this someone else get
-accepted is also frustrating.
+As a human all I really want to know is the tree to apply this to.  If
+it doesn't apply then I don't debug it, I just send an automatic note
+"This doesn't apply to staging-next.  Please redo."
 
-I don't think this "kill -Wshadow warning" is really too hard. I'd say
-it's hard enough to be interesting for students who have a chance to be
-selected in the end.
+I think that Applies-to is a better name and also that grepping for
+"^base " is less reliable than grepping for ^Applies-to.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I used "origin" because that's the name in Next/Trees.  The + means
+private patches are applied.  That's what we already do in naming the
+kernel.  If the + matters, then I would include a cover letter.
+
+I have no idea what a "base patch-id" is so that doesn't work at all.
+
+Including the tag is just duplicative since we already have the hash.
+
+In my email, I proposed that we list all the other private patches in a
+cover letter, but I think you are saying that we only need to know the
+most recent private patch?  Another idea would be to list them newest
+to oldest (git log order instead of email order) in the cover letter.
+
+Btw, I always work against linux-next and Dave M is always getting
+annoyed with me for not marking which patches go to net and which go to
+net-next.  I don't use git format-patch, but I will probably start using
+"Applies-to: net" or "Applies-to: net-next".
+
+regards,
+dan carpenter
