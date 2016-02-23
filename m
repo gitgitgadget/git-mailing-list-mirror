@@ -1,93 +1,106 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v5 23/27] svn: learn ref-storage argument
-Date: Tue, 23 Feb 2016 13:08:23 -0500
-Organization: Twitter
-Message-ID: <1456250903.7528.105.camel@twopensource.com>
-References: <1455772670-21142-1-git-send-email-dturner@twopensource.com>
-	 <1455772670-21142-24-git-send-email-dturner@twopensource.com>
-	 <20160220235514.GA2311@dcvr.yhbt.net>
+From: "jarek z." <yaras6@gmail.com>
+Subject: Invalid initial git gui message encoding
+Date: Tue, 23 Feb 2016 19:36:55 +0100
+Message-ID: <CABvS4Ogs9biYxs-yNVxO9S5_nWiKcUO8dySWHWEfFAyaqCviJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
-	SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 23 19:08:34 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: patthoyts@users.sourceforge.net
+X-From: git-owner@vger.kernel.org Tue Feb 23 19:37:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYHNv-0003Oy-93
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 19:08:31 +0100
+	id 1aYHpU-0001kS-61
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 19:37:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323AbcBWSI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 13:08:27 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:34152 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbcBWSI0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 13:08:26 -0500
-Received: by mail-qg0-f46.google.com with SMTP id b67so142874205qgb.1
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 10:08:26 -0800 (PST)
+	id S1754120AbcBWSg4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 13:36:56 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35067 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806AbcBWSgz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2016 13:36:55 -0500
+Received: by mail-ig0-f171.google.com with SMTP id hb3so105111388igb.0
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 10:36:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=4TwifuZczJ4dw6ZZEVZ3RGYviCttxlyBtgzuqBpglno=;
-        b=ogdkMvs6gIUcGqlnNzGzJE4miDN2mH3RFVZtRPiFuo9IclqGiMEDP5BMBMOKY8+EZr
-         qHTRR7Q8H8xt0IBwsuxdX3Tt/FsT/oWd6xfTyzpduMMJs8BZW8KIN52PdSdMdJAWtdxF
-         7FLi7FosvVOwm3rVKCzf89Wm7gCYTzHXbZ6fLnFM2dLI+XtgWcsYpnZMIHoQxhtgyDlw
-         +tw1PapMq8BuaPm+45GxdAsHBRVgQhj7N6Jrtyf9GmcBGZZi+3x/lCMZBNwXcmDtZGDz
-         ZX9qEPGEroCVvgjxR4TFIWjs68MgvKotAF5hG5q4a0Npyo3G9U+eTyPFg46zwQSJAI3D
-         mwsg==
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=zAQkArDS+4aRupi+B9Mmq79J3yEX/UfiqTsi4hHje4k=;
+        b=OzuSLbeC255laWv90ZBf9d0FkB5WLmCMIM8JHSvI2C29rG4r8tb0ieukNrkG2k1pYS
+         gq3LLFXli4PNR/xV5bZ+sO9PgQrREa7wN8Nuc83EJP0kzJP2vefBO+mXiEkDH+2xPwji
+         9qqPmaSCDjC0USrOXMbNvajRHFJWiB7p2TnO32a/xrM7Uux2njLbkVp0sXfrByyCdquv
+         ADZpRv4ExI6J6nXjCF5cfWsewnSO2o7TcwLM6Xdz3epH/0isYLGw1E8U/5/RbAFvAMtN
+         ZBnCZyjs/uHctYBq8ufBOWtrL7VauJO8kH4R2bsx0mwpwcs0NlK8RMLbrp157AWICqGv
+         SCOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
          :content-transfer-encoding;
-        bh=4TwifuZczJ4dw6ZZEVZ3RGYviCttxlyBtgzuqBpglno=;
-        b=lgfHFFdl5pXbH/WCRFa31++CEWiQsebvmcARrsQgGwnFjUKWDgXoLQ1wI6BjmI5nZT
-         HELFIcAQQWHDx3rRiLVNMxdafxCfI2RyxnG6upMbB/DilPrShcJw2SRVjCXQ9cK+zDcA
-         xT/CytUPop9gkV2nUT80NwrDmp7NN7wGmIty7cPoUy34PWklZ/7wsK/k9gmsE7mxrkR2
-         DuGRa4NeFHnsbxHLxDfjNMEHsLd/Ajtzb7zIMCprVJOIpRn8W4J3jT8s5IJXAAIv993B
-         v8854Hsf+t7Rure46qKZb1ZJAqbZwU7dCFb0ZT0ZK+vj7GiWTDJAruHkWsl2LXPKRb6f
-         yQEw==
-X-Gm-Message-State: AG10YOSv3LwBwCnEsJc5kCJiSB2hxi2aGj3L9oBOasEN4HNtre4MqsglW3NJviw5JNV6Qw==
-X-Received: by 10.140.146.143 with SMTP id 137mr45496338qhs.15.1456250905590;
-        Tue, 23 Feb 2016 10:08:25 -0800 (PST)
-Received: from ubuntu ([192.133.79.128])
-        by smtp.gmail.com with ESMTPSA id d188sm12615950qkb.9.2016.02.23.10.08.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 23 Feb 2016 10:08:24 -0800 (PST)
-In-Reply-To: <20160220235514.GA2311@dcvr.yhbt.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+        bh=zAQkArDS+4aRupi+B9Mmq79J3yEX/UfiqTsi4hHje4k=;
+        b=g/Dxt6yYukcYnz2ru7Q1RUO0l2peiYnu1S/j91w93qODaME0lPw7H1yM6QOapflijo
+         +bz+0vZrrv9bGI956cAUVrX9xEMxStq9Ha9wtapZBiXzGL2/6GIsXf3blORSujoMd/SL
+         2QX7BwGziyFTK80LNCsMvdIp+fp1i/dCwS/AWAkxE8b1hb05RSmjz1bbEcyM8bnTdeRT
+         tIKerWp+AQQYl2idDakT6JBiPJWbfd0LjrFXiNJJER/Rc3vxzu+jGuMIE+nFZ+NlcgU9
+         varg21RU35z02iqQNts6L1HgzZ74zEG7bEEbsvWpW85gYlKeM4aohZqPE7Hf0ep9mfat
+         i6NQ==
+X-Gm-Message-State: AG10YORvkX/cPFGgKABEgXCW+iP/8usjHlt1tNyYhM++8SaRSdg2XtJ9W+rY+uq9+cm+rV3ci9Fh846HZfZB1w==
+X-Received: by 10.50.61.147 with SMTP id p19mr16011270igr.10.1456252615101;
+ Tue, 23 Feb 2016 10:36:55 -0800 (PST)
+Received: by 10.36.211.202 with HTTP; Tue, 23 Feb 2016 10:36:55 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287099>
 
-On Sat, 2016-02-20 at 23:55 +0000, Eric Wong wrote:
-> David Turner <dturner@twopensource.com> wrote:
-> > +++ b/git-svn.perl
-> 
-> > +		if (defined $_ref_storage) {
-> > +		    push @init_db, "--ref-storage=" .
-> > $_ref_storage;
-> > +		}
-> 
-> Minor nit: git-svn uses tabs for indentation.
-> Otherwise, if we go this route, consider it:
+Hello.
 
-Got it, thanks.
+Working with Git for Windows on git gui I noticed an issue on reading
+initial message to git gui message prompt.
 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> 
-> Thanks.
-> 
-> I would favor Shawn's RefTree or similar to reuse existing
-> code + commands and avoid the external dependency, though.
+Steps to reproduce:
 
-It's an interesting idea. I'm not sure how good the performance would
-be in the case where there are a large number of refs in a single
-directory, but it would be worth a try.
+  git init .
+  echo 'a' > a && git add . && git commit -m 'added A'
+  git checkout -b devel
+  echo 'b' > b && git add . && git commit -m 'added B (=C4=99=C3=B3=C4=85=
+=C5=9B=C5=82=C5=BC=C5=BA=C4=87=C5=84)'
+  echo 'bbb' >> b && git add . && git commit -m 'changed B (=C5=BC=C5=BA=
+=C4=87=C5=84=C4=85=C5=9B=C5=82=C3=B3=C4=99)'
+  git checkout master
+  git merge --squash devel
+
+after above commands I run git gui where I get initial message with
+invalid encoding. I described it more widely on github:
+https://github.com/git-for-windows/git/issues/664#issuecomment-18766407=
+2.
+
+I prepared a fix on https://github.com/git-for-windows/git/pull/665.
+Before I send a patch based on git://repo.or.cz/git-gui.git may I ask
+you to review my changes? I also attach them to this message below.
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 1834f00..5771973 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1599,11 +1599,13 @@ proc run_prepare_commit_msg_hook {} {
+  if {[file isfile [gitdir MERGE_MSG]]} {
+  set pcm_source "merge"
+  set fd_mm [open [gitdir MERGE_MSG] r]
++ fconfigure $fd_mm -encoding utf-8
+  puts -nonewline $fd_pcm [read $fd_mm]
+  close $fd_mm
+  } elseif {[file isfile [gitdir SQUASH_MSG]]} {
+  set pcm_source "squash"
+  set fd_sm [open [gitdir SQUASH_MSG] r]
++ fconfigure $fd_sm -encoding utf-8
+  puts -nonewline $fd_pcm [read $fd_sm]
+  close $fd_sm
+  } else {
+
+---
+Yours sincerely,
+Jarek Z.
