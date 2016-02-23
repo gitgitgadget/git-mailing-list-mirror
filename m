@@ -1,62 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] push: shorten "push.default is unset" warning message
-Date: Tue, 23 Feb 2016 22:03:34 +0100
-Message-ID: <vpqegc3f8bd.fsf@anie.imag.fr>
-References: <000001530ea408ed-2b71a34a-32bb-434c-bba5-fdac28193e9c-000000@eu-west-1.amazonses.com>
-	<A8668075C5244F34A8C21A22F91ED823@PhilipOakley>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: git "thin" submodule clone to feed "describe"
+Date: Tue, 23 Feb 2016 16:03:45 -0500
+Message-ID: <CACPiFCLnXLdt5rLuX0a3pTS3OphKW=1oVKxyYpwvSLhY7ydb2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Feb 23 22:03:45 2016
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 23 22:04:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYK7T-0002rA-UB
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:03:44 +0100
+	id 1aYK7v-0003CP-K1
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 22:04:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755350AbcBWVDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 16:03:40 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:50412 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755279AbcBWVDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 16:03:40 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL3VFP005058
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 23 Feb 2016 22:03:32 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1NL3YnL014895;
-	Tue, 23 Feb 2016 22:03:34 +0100
-In-Reply-To: <A8668075C5244F34A8C21A22F91ED823@PhilipOakley> (Philip Oakley's
-	message of "Tue, 23 Feb 2016 20:38:27 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 23 Feb 2016 22:03:32 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1NL3VFP005058
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1456866213.91301@hZahGPT1aPgnb486mJYDMw
+	id S1755380AbcBWVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 16:04:07 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:36370 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755279AbcBWVEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 16:04:06 -0500
+Received: by mail-ob0-f176.google.com with SMTP id gc3so206504293obb.3
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 13:04:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=uhgWyXC5e507EpWhqP4CXVq2tqAscQfjn12BqggAY18=;
+        b=H0xKLK6pmEkD4tyLYPcV42kMJVvFEEAeIPukt4d7/AqmuhWLN7GBHhVWG2DnLg6o8n
+         hwvpbeCR/Bx5isXwJr4n4Jhexf8zmFlQUkCx/4t2NLXDm/dzkyOpNzbQRgxJcU5eEEn+
+         yB5vvjgIgR4C+IgJGG1yNeRFoxVuQ/h7xOCk5ziGJWue3lS/l7W8FyqdhYBilKhQZQPt
+         SXS7F3nbkhbV0+VBKz80+77zpTMX085WP+NSnbOYL3CvqM/ZpRISIo+LkLq4ZElINnee
+         JSuQgFnlaulu8xXW4ZLElinKHHzzyywv3Tori8FaVR1nr/l+iRLIMKzsyUWJKkHckkV+
+         BSHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=uhgWyXC5e507EpWhqP4CXVq2tqAscQfjn12BqggAY18=;
+        b=g6hFckrGsSrMwPiMWjMhVFwjwV5HsjpTlCOE6skRtTECK2ZeK88tR2rf3hNzKjfOp+
+         pFhInUh4Xe9l3RDHl+a1HI7J87RY9m58XPxnVcereOjObb8zoJxvX2nIks1r5RlkFRaq
+         PilkTQXz25Hs3iNHJIIP07opFskYKrug1V960Hpldr/29QYENrp4bO2TLmw26d/IqEY7
+         ryvjsW9bcbi6xE8yC1az0N02aRWJr84yGjR/rY6fmRIvM9OWX2lTmLqIOPIrVafvS3xb
+         JKrcohDd8nsfX5873uCeoRpQPDl/DT8IzzHSh7AbJgBh6M9aOAde6JLs5TSyHWJA5Z0Z
+         GwgQ==
+X-Gm-Message-State: AG10YOSA1cMYpmZicro0ty5pzeA25eJWMtPlgVyTlfnhOLUaJ4+NyvhfReEFuXadEiqUrbXjLjfKo9v5Wo0xBg==
+X-Received: by 10.60.96.74 with SMTP id dq10mr30654111oeb.78.1456261445149;
+ Tue, 23 Feb 2016 13:04:05 -0800 (PST)
+Received: by 10.182.19.225 with HTTP; Tue, 23 Feb 2016 13:03:45 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287120>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Hi git list! long time no see! :-) Been missing you lots.
 
-> Shouldn't this also update the 'push' man page to state what the new
-> default is. @gerry's comment to the top answer
-> http://stackoverflow.com/a/13148313/717355 highlights that the word
-> 'simple' is not even mentioned in the 'push' man page.
+Do we currently have any means to clone _history_ but not _blobs_ of a
+repo, or some approximation thereof?
 
-This is more or less a different topic IMHO. If git-push(1) is not clear
-enough, then it should be clarified regardless of this patch. But a
-patch follows.
+With a bit more context: If I have a top-level project using a couple
+dozen submodules, where the submodules are huge, do I have a
+git-native means of running git-describe on each submodule without
+pulling the whole thing down?
 
+In this context, most developers want to get full checkout of some
+submodules, but not of all; and 'git describe' of the submodules is
+needed to 'shim' the missing submodules appropriately.
+
+If the answer is no, there's a bunch of ways I can carry that as extra
+data in the top level project. It's possible, yet inelegant &
+duplicative.
+
+thanks,
+
+
+
+martin
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
