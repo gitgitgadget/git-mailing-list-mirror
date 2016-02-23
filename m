@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 23/25] upload-pack: split check_unreachable() in two, prep for get_reachable_list()
-Date: Tue, 23 Feb 2016 20:45:01 +0700
-Message-ID: <1456235103-26317-24-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 22/25] t5500, t5539: tests for shallow depth excluding a ref
+Date: Tue, 23 Feb 2016 20:45:00 +0700
+Message-ID: <1456235103-26317-23-git-send-email-pclouds@gmail.com>
 References: <1456235103-26317-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,151 +12,133 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 23 14:47:24 2016
+X-From: git-owner@vger.kernel.org Tue Feb 23 14:47:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYDJE-0001PV-1r
-	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 14:47:24 +0100
+	id 1aYDJA-0001NO-Cm
+	for gcvg-git-2@plane.gmane.org; Tue, 23 Feb 2016 14:47:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbcBWNrS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 08:47:18 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35339 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752851AbcBWNrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 08:47:14 -0500
-Received: by mail-pa0-f53.google.com with SMTP id ho8so113764356pac.2
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 05:47:14 -0800 (PST)
+	id S1752856AbcBWNrP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 08:47:15 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35723 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752819AbcBWNrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Feb 2016 08:47:08 -0500
+Received: by mail-pf0-f181.google.com with SMTP id c10so116401072pfc.2
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 05:47:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=TscU9o9BliHUmXenoE0r8aJZG307Hbc6DIA8nwmvAk8=;
-        b=K/V3s7DOLhCVZ1htLtYY+Um/DmYw4AWxyL774+b/YWSsfWVaOPGbHTT/cTFEa0ZgU4
-         J4C5HPb+Wvs0ZsTUAYyKNsgbgebvQeBqDmJ21UKBooYoohH/sFVUZG5pzt3wvSK29Grd
-         3fsxoqukSwYkN7KGLm8JiQXlc4r0ueVAV9+yN2ZU4yRPRhXYWyrajKMXEyCN5pozkdeV
-         6yS8TQY+Sc/bebdl4ASxwhRGga1z0vO2C3iOC66TlJhUk83mIMvvkr9Q64ppBkyHFftz
-         OYc9AphEQHILQtvSXbiBS3ltGw/FnNomHm/Fn5RdhnQ1tdQVEOTIUI5ucaGQ0k9wdbBj
-         +fFA==
+        bh=PnH/ZrZB98MIfTt5X45JYav+Pb5A9s+mqlLgyuEO8UY=;
+        b=bN1TgtlPh4Y/GTyzsjaQNYDKp1tUkKeDsxq0h4hIC1Rjcr5yQWECmmY6cajrxlESj1
+         6VL388VaZPAD8OD57gRWR4gdZ7Dh9Amw648Bki2gvii+0mPL6C9THdelOy9aBchIVUJf
+         +SAkzpRoqMPG2h5vhCsi7o+vBL5vq8OGvzDi6PNmupeHX/zMCdNk5soBJFjeQuegjg0x
+         mMEn7oUUgEB3gRlvKwlXmE7L9HmumpUTztQ5PrjdcdwR91qHZoVteYUa4rcupCvBqtXh
+         jdl2GrpFVFFhlz0MpIFSYYizvtkIL9EqxazV6gfzaq4yc9HidvHP/4xJ4Mi+fAdJ5TCU
+         U2WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-type:content-transfer-encoding;
-        bh=TscU9o9BliHUmXenoE0r8aJZG307Hbc6DIA8nwmvAk8=;
-        b=mI8JMseaEepCCrE/Y4YB++lek79mgLUOpwJmAKpK6yZlg1S5jZrR5zUPNLR69PtZuf
-         PztCnIZvvyI4oGtj8UMypW2K0xVBr06cHViuGHiG0JNggCODPWYdSIyw+a2aLTHofGTC
-         VtwPdEmhfKUhNeC71GBBNuulER2mLQBLgZZoxEAhF3Gy1rJPUeWsvaHOTx84n1a8lzv1
-         FrNkpU4gPKHEgaQEYz+H0ldGStgqv6XnHMblqRdp2wTtuXDEGgOA3fAxgx0vWFAPpKOY
-         +hW0bpPSIuFKR1oA0tFH2cShKVWPR5F0+QuJZ7s9WIZgX9x0rVT4w9LeQnEX3q0VRDTY
-         mZow==
-X-Gm-Message-State: AG10YOSpOYiMM99u0u9lQqLmlOrkguoYJTV53mDAEBiCfluqnjAt0DOsLwIULmcjkxTjVQ==
-X-Received: by 10.67.21.205 with SMTP id hm13mr46492233pad.56.1456235234531;
-        Tue, 23 Feb 2016 05:47:14 -0800 (PST)
+        bh=PnH/ZrZB98MIfTt5X45JYav+Pb5A9s+mqlLgyuEO8UY=;
+        b=DFw5KuSMXUV7nXce5OTeYCMjBeVJn6v1QiLbI7D9aOTIsQbatyVfSD6Ojh5LFKo5GM
+         IlQwxsA6jHi2aKrQdcVGZM1nw/30lT1jYs+PWnSQQOWypnH6ADlASlYourAQ1eb4AOE+
+         2o2yFCPVEUhWXsE6nBVo+7ooCQG04hPGeuUJG/BgAzU477p54C5ANjBkz4+y+ta6Ueqx
+         bJFFwygCxsSTO2FE2qSUUjviGVoLpF61557A6zyS/XHN52MScRJDgfXRgb+qrdFMsc+o
+         Pcb+MIl3HlmuSuqwLmgeo/oxGdD7S86S9jDjzj+yDMR8lTcJDdSn4QtQZ4Loi8L5syWN
+         PJhQ==
+X-Gm-Message-State: AG10YOT8maeIZUfSsgaoAWF7mEVhC7HlY1nBGb8sXg12Sy4CFtnVD5dH+RfXPvsYvNCtlg==
+X-Received: by 10.98.69.78 with SMTP id s75mr46785481pfa.102.1456235228314;
+        Tue, 23 Feb 2016 05:47:08 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id ss5sm44737756pab.15.2016.02.23.05.47.10
+        by smtp.gmail.com with ESMTPSA id w9sm30871681pfa.21.2016.02.23.05.47.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Feb 2016 05:47:13 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 23 Feb 2016 20:47:43 +0700
+        Tue, 23 Feb 2016 05:47:06 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 23 Feb 2016 20:47:37 +0700
 X-Mailer: git-send-email 2.7.1.532.gd9e3aaa
 In-Reply-To: <1456235103-26317-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287074>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- upload-pack.c | 41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ t/t5500-fetch-pack.sh         | 22 ++++++++++++++++++++++
+ t/t5539-fetch-http-shallow.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 95a0bfb..9e4a4fa 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -452,24 +452,24 @@ static int is_our_ref(struct object *o)
- 	return o->flags & ((allow_hidden_ref ? HIDDEN_REF : 0) | OUR_REF);
- }
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 26f050d..a3fe5ca 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -661,4 +661,26 @@ test_expect_success 'fetch shallow since ...' '
+ 	test_cmp expected actual
+ '
 =20
--static int check_unreachable(struct object_array *src)
-+static int do_reachable_revlist(struct child_process *cmd,
-+				struct object_array *src)
- {
- 	static const char *argv[] =3D {
- 		"rev-list", "--stdin", NULL,
- 	};
--	static struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	struct object *o;
- 	char namebuf[42]; /* ^ + SHA-1 + LF */
- 	int i;
-=20
--	cmd.argv =3D argv;
--	cmd.git_cmd =3D 1;
--	cmd.no_stderr =3D 1;
--	cmd.in =3D -1;
--	cmd.out =3D -1;
-+	cmd->argv =3D argv;
-+	cmd->git_cmd =3D 1;
-+	cmd->no_stderr =3D 1;
-+	cmd->in =3D -1;
-+	cmd->out =3D -1;
-=20
--	if (start_command(&cmd))
--		return 0;
-+	if (start_command(cmd))
-+		return -1;
-=20
- 	/*
- 	 * If rev-list --stdin encounters an unknown commit, it
-@@ -487,8 +487,8 @@ static int check_unreachable(struct object_array *s=
-rc)
- 		if (!is_our_ref(o))
- 			continue;
- 		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd.in, namebuf, 42) < 0)
--			return 0;
-+		if (write_in_full(cmd->in, namebuf, 42) < 0)
-+			return -1;
- 	}
- 	namebuf[40] =3D '\n';
- 	for (i =3D 0; i < src->nr; i++) {
-@@ -496,18 +496,29 @@ static int check_unreachable(struct object_array =
-*src)
- 		if (is_our_ref(o))
- 			continue;
- 		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd.in, namebuf, 41) < 0)
--			return 0;
-+		if (write_in_full(cmd->in, namebuf, 41) < 0)
-+			return -1;
- 	}
--	close(cmd.in);
-+	close(cmd->in);
-=20
- 	sigchain_pop(SIGPIPE);
-+	return 0;
-+}
++test_expect_success 'shallow clone exclude tag two' '
++	test_create_repo shallow-exclude &&
++	(
++	cd shallow-exclude &&
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	git clone --shallow-exclude two "file://$(pwd)/." ../shallow12 &&
++	git -C ../shallow12 log --pretty=3Dtformat:%s HEAD >actual &&
++	echo three >expected &&
++	test_cmp expected actual
++	)
++'
 +
-+static int check_unreachable(struct object_array *src)
-+{
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-+	int i, ret =3D do_reachable_revlist(&cmd, src);
-+	char buf[1];
++test_expect_success 'fetch exclude tag one' '
++	git -C shallow12 fetch --shallow-exclude one origin &&
++	git -C shallow12 log --pretty=3Dtformat:%s origin/master >actual &&
++	echo three >expected &&
++	echo two  >>expected &&
++	test_cmp expected actual
++'
 +
-+	if (ret < 0)
-+		return 0;
+ test_done
+diff --git a/t/t5539-fetch-http-shallow.sh b/t/t5539-fetch-http-shallow=
+=2Esh
+index 6d77ca7..f71573d 100755
+--- a/t/t5539-fetch-http-shallow.sh
++++ b/t/t5539-fetch-http-shallow.sh
+@@ -98,6 +98,28 @@ test_expect_success 'fetch shallow since ...' '
+ 	test_cmp expected actual
+ '
 =20
- 	/*
- 	 * The commits out of the rev-list are not ancestors of
- 	 * our ref.
- 	 */
--	i =3D read_in_full(cmd.out, namebuf, 1);
-+	i =3D read_in_full(cmd.out, buf, 1);
- 	if (i)
- 		return 0;
- 	close(cmd.out);
++test_expect_success 'shallow clone exclude tag two' '
++	test_create_repo shallow-exclude &&
++	(
++	cd shallow-exclude &&
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	mv .git "$HTTPD_DOCUMENT_ROOT_PATH/shallow-exclude.git" &&
++	git clone --shallow-exclude two $HTTPD_URL/smart/shallow-exclude.git =
+=2E./shallow12 &&
++	git -C ../shallow12 log --pretty=3Dtformat:%s HEAD >actual &&
++	echo three >expected &&
++	test_cmp expected actual
++	)
++'
++
++test_expect_success 'fetch exclude tag one' '
++	git -C shallow12 fetch --shallow-exclude one origin &&
++	git -C shallow12 log --pretty=3Dtformat:%s origin/master >actual &&
++	echo three >expected &&
++	echo two  >>expected &&
++	test_cmp expected actual
++'
+=20
+ stop_httpd
+ test_done
 --=20
 2.7.1.532.gd9e3aaa
