@@ -1,310 +1,144 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 17/32] refs: move duplicate check to common code
-Date: Wed, 24 Feb 2016 17:58:49 -0500
-Message-ID: <1456354744-8022-18-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 18/32] refs: allow log-only updates
+Date: Wed, 24 Feb 2016 17:58:50 -0500
+Message-ID: <1456354744-8022-19-git-send-email-dturner@twopensource.com>
 References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:01:07 2016
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:01:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYiQc-0004iM-Ht
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:01:06 +0100
+	id 1aYiQb-0004iM-1N
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759046AbcBXXBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 18:01:03 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:34614 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759149AbcBXW7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 17:59:33 -0500
-Received: by mail-qg0-f44.google.com with SMTP id b67so27012817qgb.1
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 14:59:33 -0800 (PST)
+	id S1759270AbcBXXAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 18:00:53 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33005 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759091AbcBXW7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 17:59:34 -0500
+Received: by mail-qk0-f174.google.com with SMTP id s5so13257888qkd.0
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 14:59:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i6mfzTFFbewDKyVY2tG5XlrLgyATGL1KuCJSYiFFd7g=;
-        b=nCEIHwoL694SzmuBqBR+WSNTlhH++W++c+XciK0qtLucS4lxX736kFr/Pp+nw2nZOI
-         pVqKOa331OJRwAFhYwLvz308zSX/kuloqNsdVoBJdNweUfnbTyFLVjXE/HQOjC+Rv3Bu
-         UHNy7QGvzWXG6lEb5UcQEmaFYNrjTFSce7xs/DTp9bV48zKIQ5etruOLhbX6Z3pQ9Oih
-         H0SRAT73HQKAjsRBdBc0cPTUKnEvo3bCMlRu23UrXBitQv0EZAxrQ1VWoEYj1HgUerOM
-         o67TE4WA7LJag7rInZd/QtH8q8tJb4tgxcf2APJqePncYZvKXUy+yF3L/CWS7PRlea1e
-         /WOw==
+        bh=/UOHGHbtJAXUVZhRjG1icwB8WXSYjTQKs+4/OPd7ri0=;
+        b=ILkn0K2aHxMdb6MapvUNhwDvxVtpRKTS9xEas3Elq1sjPmlF2VhyLUXMEENZGnZpBr
+         asO+tLfOqqvpxm4OLHVvZETjHhJIjmgfj7pdRTuCCODM4a5bWPbF2U3UUbcm9xxQDAN0
+         od0ZMQIFlR3qgS+Nos+WK5lnikY3Vx7LRaLg/lhz72ApJP3IUDqUXf8zgNvWAso4H/Zh
+         qI3nDzpLJ6bbic6UwYQcyPJJ0d2tuo3tdDTiz6GUNwu/6/f20xvdb45h4hpPahLNamuF
+         HjnOcgN9ns3I3K1WVNTQUMnpnZGP/zRr1ETKNee1LzBXNoHYoU78J7NVBZAksO8Ulqfo
+         NJsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=i6mfzTFFbewDKyVY2tG5XlrLgyATGL1KuCJSYiFFd7g=;
-        b=MBZ3eqmImCvyY2345Ev4K6c+Ks/4kYrfH0vmDMOapr52/s/lBLqpM0VLve0lxksyWt
-         v1c5nnAXH7yjIttqUclrQcyHC8EH2a3NtgTGATp/p6RwnWAW2IVi1+knzDF2YyFVHjbY
-         6X6imqSd/n1s4Dkb/sLAgyFKipt5lbTjYgSqIp95BAlbEXqAgBrzHPstONNfbg4PnLT9
-         db+Z9wF/0VV8GrvAkFS3JlHLzB3dS5dYEEY+0krDIfEUXYh302NkcpHMvAvIFJ6OSDzZ
-         /erhniVYForD8nVtmcnKbSGuAxVc9fBIfEpgfRgkV54KOLma33xo2OaDHgYE1r2jDRDb
-         kkQQ==
-X-Gm-Message-State: AG10YOQxML3bz1bO8I2aTb3PL4lr3M76uBQj9q8/BHGURgwiLDGwUtB2wUVbAxuCs50fIg==
-X-Received: by 10.140.42.137 with SMTP id c9mr20142589qga.5.1456354772607;
-        Wed, 24 Feb 2016 14:59:32 -0800 (PST)
+        bh=/UOHGHbtJAXUVZhRjG1icwB8WXSYjTQKs+4/OPd7ri0=;
+        b=hdAwfMmGOOqPz6dOQ10ZGxxFY3O6N+MbDJTmTfAJo9QxC/Mguop4dN6JH+7yp0jSL2
+         NulnOUCtYWoAYpcrGXIE9izV8g2dM7xRP5dEqVCp+s2A1v6QlXHuFbqgumg0UQlCLCBR
+         qh0yUVS59DIoCXZEkRsSA0tAMzEg3u7iJQqQOLPOeL/WHbZ1VU2+oFtBoapydsRSaqWJ
+         RSHYMSjh49hGVJ37w2bO1IH9SsSlotNFd4Iv/vTdZIVwVy0ct8lxuwBKKWP5PblYKKxM
+         U7XOSPklPtYRr1pcsU0Q80pmPSvljrIZ9hm3dSL6a75rnxqMbA3k1IhryR/bpHljsS+i
+         PfUw==
+X-Gm-Message-State: AG10YOTB4rN8RC7GG9YG58y5NT45tdMtlv2W0BbF5W7u04/nbCgjSF3s755GePgB38YGDg==
+X-Received: by 10.55.55.138 with SMTP id e132mr31060638qka.11.1456354773815;
+        Wed, 24 Feb 2016 14:59:33 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 66sm2154254qhp.4.2016.02.24.14.59.31
+        by smtp.gmail.com with ESMTPSA id 66sm2154254qhp.4.2016.02.24.14.59.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 24 Feb 2016 14:59:31 -0800 (PST)
+        Wed, 24 Feb 2016 14:59:32 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287271>
 
-The check for duplicate refnames in a transaction is needed for
-all backends, so move it to the common code.
-
-ref_transaction_commit_fn gains a new argument, the sorted
-string_list of affected refnames.
+The refs infrastructure learns about log-only ref updates, which only
+update the reflog.  Later, we will use this to separate symbolic
+reference resolution from ref updating.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs.c               | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- refs/files-backend.c | 57 ++++---------------------------------------
- refs/refs-internal.h |  1 +
- 3 files changed, 73 insertions(+), 54 deletions(-)
+ refs/files-backend.c | 15 ++++++++++-----
+ refs/refs-internal.h |  7 +++++++
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 05b1b2a..daf92ce 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1140,6 +1140,36 @@ int head_ref(each_ref_fn fn, void *cb_data)
- }
- 
- /*
-+ * Return 1 if there are any duplicate refnames in the updates in
-+ * `transaction`, and fill in err with an appropriate error message.
-+ * Fill in `refnames` with the refnames from the transaction.
-+ */
-+static int get_affected_refnames(struct ref_transaction *transaction,
-+				 struct string_list *refnames,
-+				 struct strbuf *err)
-+{
-+	int i, n = transaction->nr;
-+	struct ref_update **updates;
-+
-+	assert(err);
-+
-+	updates = transaction->updates;
-+	/* Fail if a refname appears more than once in the transaction: */
-+	for (i = 0; i < n; i++)
-+		string_list_append(refnames, updates[i]->refname);
-+	string_list_sort(refnames);
-+
-+	for (i = 1; i < n; i++)
-+		if (!strcmp(refnames->items[i - 1].string, refnames->items[i].string)) {
-+			strbuf_addf(err,
-+				    "Multiple updates for ref '%s' not allowed.",
-+				    refnames->items[i].string);
-+			return 1;
-+		}
-+	return 0;
-+}
-+
-+/*
-  * The common backend for the for_each_*ref* functions
-  */
- static int do_for_each_ref(const char *submodule, const char *base,
-@@ -1324,7 +1354,29 @@ int refs_init_db(int shared, struct strbuf *err)
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	return the_refs_backend->transaction_commit(transaction, err);
-+	int ret = -1;
-+	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
-+
-+	assert(err);
-+
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: commit called for transaction that is not open");
-+
-+	if (!transaction->nr) {
-+		transaction->state = REF_TRANSACTION_CLOSED;
-+		return 0;
-+	}
-+
-+	if (get_affected_refnames(transaction, &affected_refnames, err)) {
-+		ret = TRANSACTION_GENERIC_ERROR;
-+		goto done;
-+	}
-+
-+	ret = the_refs_backend->transaction_commit(transaction,
-+						   &affected_refnames, err);
-+done:
-+	string_list_clear(&affected_refnames, 0);
-+	return ret;
- }
- 
- int verify_refname_available(const char *refname, struct string_list *extra,
-@@ -1405,7 +1457,20 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
- {
--	return the_refs_backend->initial_transaction_commit(transaction, err);
-+	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
-+	int ret;
-+
-+	if (get_affected_refnames(transaction,
-+				  &affected_refnames, err)) {
-+		ret = TRANSACTION_GENERIC_ERROR;
-+		goto done;
-+	}
-+	ret = the_refs_backend->initial_transaction_commit(transaction,
-+							   &affected_refnames,
-+							   err);
-+done:
-+	string_list_clear(&affected_refnames, 0);
-+	return ret;
- }
- 
- int delete_refs(struct string_list *refnames)
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9be3158..413db22 100644
+index 413db22..8dc80e2 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3020,24 +3020,8 @@ static int files_for_each_reflog(each_ref_fn fn, void *cb_data)
- 	return retval;
- }
- 
--static int ref_update_reject_duplicates(struct string_list *refnames,
--					struct strbuf *err)
--{
--	int i, n = refnames->nr;
--
--	assert(err);
--
--	for (i = 1; i < n; i++)
--		if (!strcmp(refnames->items[i - 1].string, refnames->items[i].string)) {
--			strbuf_addf(err,
--				    "Multiple updates for ref '%s' not allowed.",
--				    refnames->items[i].string);
--			return 1;
--		}
--	return 0;
--}
--
- static int files_transaction_commit(struct ref_transaction *transaction,
-+				    struct string_list *affected_refnames,
- 				    struct strbuf *err)
- {
- 	int ret = 0, i;
-@@ -3045,26 +3029,6 @@ static int files_transaction_commit(struct ref_transaction *transaction,
- 	struct ref_update **updates = transaction->updates;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *ref_to_delete;
--	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
--
--	assert(err);
--
--	if (transaction->state != REF_TRANSACTION_OPEN)
--		die("BUG: commit called for transaction that is not open");
--
--	if (!n) {
--		transaction->state = REF_TRANSACTION_CLOSED;
--		return 0;
--	}
--
--	/* Fail if a refname appears more than once in the transaction: */
--	for (i = 0; i < n; i++)
--		string_list_append(&affected_refnames, updates[i]->refname);
--	string_list_sort(&affected_refnames);
--	if (ref_update_reject_duplicates(&affected_refnames, err)) {
--		ret = TRANSACTION_GENERIC_ERROR;
--		goto cleanup;
--	}
- 
- 	/*
- 	 * Acquire all locks, verify old values if provided, check
-@@ -3083,7 +3047,7 @@ static int files_transaction_commit(struct ref_transaction *transaction,
- 				update->refname,
- 				((update->flags & REF_HAVE_OLD) ?
- 				 update->old_sha1 : NULL),
--				&affected_refnames, NULL,
-+				affected_refnames, NULL,
- 				update->flags,
- 				&update->type,
- 				err);
-@@ -3195,7 +3159,6 @@ cleanup:
- 		if (updates[i]->backend_data)
- 			unlock_ref(updates[i]->backend_data);
- 	string_list_clear(&refs_to_delete, 0);
--	string_list_clear(&affected_refnames, 0);
- 	return ret;
- }
- 
-@@ -3208,27 +3171,18 @@ static int ref_present(const char *refname,
- }
- 
- static int files_initial_transaction_commit(struct ref_transaction *transaction,
-+					    struct string_list *affected_refnames,
- 					    struct strbuf *err)
- {
- 	int ret = 0, i;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
--	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
- 
- 	assert(err);
- 
- 	if (transaction->state != REF_TRANSACTION_OPEN)
- 		die("BUG: commit called for transaction that is not open");
- 
--	/* Fail if a refname appears more than once in the transaction: */
--	for (i = 0; i < n; i++)
--		string_list_append(&affected_refnames, updates[i]->refname);
--	string_list_sort(&affected_refnames);
--	if (ref_update_reject_duplicates(&affected_refnames, err)) {
--		ret = TRANSACTION_GENERIC_ERROR;
--		goto cleanup;
--	}
--
- 	/*
- 	 * It's really undefined to call this function in an active
- 	 * repository or when there are existing references: we are
-@@ -3241,7 +3195,7 @@ static int files_initial_transaction_commit(struct ref_transaction *transaction,
- 	 * so here we really only check that none of the references
- 	 * that we are creating already exists.
- 	 */
--	if (for_each_rawref(ref_present, &affected_refnames))
-+	if (for_each_rawref(ref_present, affected_refnames))
- 		die("BUG: initial ref transaction called with existing refs");
- 
- 	for (i = 0; i < n; i++) {
-@@ -3251,7 +3205,7 @@ static int files_initial_transaction_commit(struct ref_transaction *transaction,
- 		    !is_null_sha1(update->old_sha1))
- 			die("BUG: initial ref transaction with old_sha1 set");
- 		if (verify_refname_available(update->refname,
--					     &affected_refnames, NULL,
-+					     affected_refnames, NULL,
- 					     err)) {
- 			ret = TRANSACTION_NAME_CONFLICT;
+@@ -2711,7 +2711,7 @@ static int commit_ref_update(struct ref_lock *lock,
+ 			}
+ 		}
+ 	}
+-	if (commit_ref(lock)) {
++	if (!(flags & REF_LOG_ONLY) && commit_ref(lock)) {
+ 		error("Couldn't set %s", lock->ref_name);
+ 		unlock_ref(lock);
+ 		return -1;
+@@ -3065,7 +3065,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
  			goto cleanup;
-@@ -3282,7 +3236,6 @@ static int files_initial_transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 		if ((update->flags & REF_HAVE_NEW) &&
+-		    !(update->flags & REF_DELETING)) {
++		    !(update->flags & REF_DELETING) &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			int overwriting_symref = ((update->type & REF_ISSYMREF) &&
+ 						  (update->flags & REF_NODEREF));
  
- cleanup:
- 	transaction->state = REF_TRANSACTION_CLOSED;
--	string_list_clear(&affected_refnames, 0);
- 	return ret;
- }
+@@ -3095,7 +3096,9 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 				update->flags |= REF_NEEDS_COMMIT;
+ 			}
+ 		}
+-		if (!(update->flags & REF_NEEDS_COMMIT)) {
++
++		if (!(update->flags & REF_LOG_ONLY) &&
++		    !(update->flags & REF_NEEDS_COMMIT)) {
+ 			/*
+ 			 * We didn't have to write anything to the lockfile.
+ 			 * Close it to free up the file descriptor:
+@@ -3112,7 +3115,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
+-		if (update->flags & REF_NEEDS_COMMIT) {
++		if (update->flags & REF_NEEDS_COMMIT ||
++		    update->flags & REF_LOG_ONLY) {
+ 			if (commit_ref_update(update->backend_data,
+ 					      update->new_sha1, update->msg,
+ 					      update->flags, err)) {
+@@ -3132,7 +3136,8 @@ static int files_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 		struct ref_lock *lock = update->backend_data;
+ 
+-		if (update->flags & REF_DELETING) {
++		if (update->flags & REF_DELETING &&
++		    !(update->flags & REF_LOG_ONLY)) {
+ 			if (delete_ref_loose(lock, update->type, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 8d091cb..94d162e 100644
+index 94d162e..dd76246 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -218,6 +218,7 @@ int do_for_each_per_worktree_ref(const char *submodule, const char *base,
- /* refs backends */
- typedef int ref_init_db_fn(int shared, struct strbuf *err);
- typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
-+				      struct string_list *affected_refnames,
- 				      struct strbuf *err);
+@@ -43,6 +43,13 @@
+  */
  
- /* reflog functions */
+ /*
++ * Used as a flag in ref_update::flags when we want to log a ref
++ * update but not actually perform it.  This is used when a symbolic
++ * ref update is split up.
++ */
++#define REF_LOG_ONLY 0x80
++
++/*
+  * Return true iff refname is minimally safe. "Safe" here means that
+  * deleting a loose reference by this name will not do any damage, for
+  * example by causing a file that is not a reference to be deleted.
 -- 
 2.4.2.767.g62658d5-twtrsrc
