@@ -1,100 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] unpack-trees: do not delete i-t-a entries in worktree even when forced
-Date: Wed, 24 Feb 2016 15:23:04 -0800
-Message-ID: <xmqq60xdsnfr.fsf@gitster.mtv.corp.google.com>
-References: <1456314317-30301-1-git-send-email-pclouds@gmail.com>
-	<xmqqa8mpsom6.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] git: submodule honor -c credential.* from command line
+Date: Wed, 24 Feb 2016 15:27:30 -0800
+Message-ID: <CAGZ79kbSd4TRdgdcj2NUrc+pL7ATrGQNcfTYd57TuJtyZ5QBwg@mail.gmail.com>
+References: <1456344559-2822-1-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 00:23:24 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 00:27:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYimB-0003qf-Kq
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:23:23 +0100
+	id 1aYiqG-0006mB-Os
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:27:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753884AbcBXXXK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Feb 2016 18:23:10 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60045 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753585AbcBXXXH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Feb 2016 18:23:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 15A9347AAA;
-	Wed, 24 Feb 2016 18:23:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=hkEwNAVoCbld
-	nYyBTPd5LDJkkrQ=; b=a+z0cROhxjXfpg+N4wmVfcpYE6KltzDZBB5yV+GOCrGn
-	IIMTnLtq7y8k9fsb9bA+8stsVVhY/oU2aHY9Ev/gkNu40oOFj5+YaXL3HumDIWs+
-	Enj1H1/mfZDnZ7R3OGucPRUhQgg719doUJg69MJ4uWm8KfMRFfmxSKSAmlYcBQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=q1EZu1
-	885R47RyG4Ba+Azrzqm3yo3pAETaaZ+kus7POBlbjQMxw62IFvG5bScPlUOOAzqF
-	OqMdzVFiE0WO8lxqlZyfYGySeE0Mz6bSFMChuKfVz89ZHZoRXtMywWZ2rpJcLWij
-	IN9v4Lvm77JFtws27enyKUm2Ln9N1GkoaNRHQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D8ED47AA9;
-	Wed, 24 Feb 2016 18:23:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7CC7747AA7;
-	Wed, 24 Feb 2016 18:23:05 -0500 (EST)
-In-Reply-To: <xmqqa8mpsom6.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 24 Feb 2016 14:57:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E8CF07A-DB4D-11E5-8D42-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751858AbcBXX1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 18:27:31 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37116 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbcBXX1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 18:27:31 -0500
+Received: by mail-ig0-f173.google.com with SMTP id z8so2112500ige.0
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 15:27:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=NqDZvznlZLJ4qXVqc1MjKlyOB9zLbzcD+Qg+xJT4sGw=;
+        b=bhovFfz3nBVQQ6ouOjyxzQVwQL7jXuXRgrIqLjiRxaw5Mg4TcYoRMUPV4wxq2njZwB
+         PLdxbWPWaYu3tPpTQa0BK5NoiR70yUPSEgiSTFVlpAPPfjecX9TEuDuzFOnSk/Vb70uX
+         BK1cO8gszQ8fh/R5rygkXNSp0oD/jMXJleI6T5Srg44U6ngaQb7M8poRXIg9ybXGKnuT
+         x1Atyk1mjJVlG0QGsxoKrsTsLZvgzKbSq3ZUNTqg0zByTKqe/ny17jF2A0rORIMLYQsR
+         gxJQUbdcAyIJdcgs1F+04rhrVG+St9cj1A6upKK+or9qfg7GOb0vR0tvn7i6Rqa1k+eV
+         5SnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=NqDZvznlZLJ4qXVqc1MjKlyOB9zLbzcD+Qg+xJT4sGw=;
+        b=lOQUCSbPgt/BN7TjwhlNAp1r46gVwEZgKjMWmYE2/aABfx7e8JFAqfMIrUgIb2yCa/
+         Z2ZLgoVsv7j7LlJIJ88M4cHulzGUHwhyN1K9Oj2WSbgerCItVO7FK4Kv4WJ2PeTAUt9F
+         9kFnFjJMF1miFAS1F8zqTeUBhCgNuIozPZ+mK9VkE0YUSW1AtercoF5GpwvJchlji6Ck
+         2haxUFuafG2Asg7RE8uqIxN8a9vbmdY3Q7kFMJbpIBTEEYsE03HacvxuqAjmo+X/HPrc
+         emQD2gRHp747IHYmCWsCnZMH/tbXk4Dr7cAWI0BcYiTM6KOW+8V1VByio2EkxzCT/y79
+         ot7w==
+X-Gm-Message-State: AG10YOTsxu8yOd7FjLqIWDs585bJRq/3LmfoWRQmRMD4110gDaH1Ug7+m1ldTQ4u9FmEJRDVTztdwfouGkH6wrcA
+X-Received: by 10.50.92.68 with SMTP id ck4mr318737igb.93.1456356450303; Wed,
+ 24 Feb 2016 15:27:30 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Wed, 24 Feb 2016 15:27:30 -0800 (PST)
+In-Reply-To: <1456344559-2822-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287279>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Wed, Feb 24, 2016 at 12:09 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
->> Intent-to-add entries are basically "I may want to commit these file=
-s
->> later, but for now they are untracked". As such, when the user does =
-"git
->> reset --hard <tree>", which removes i-t-a entries from the index, i-=
-t-a
->> entries in worktree should be kept as untracked.
+> Due to the way that the git-submodule code works, it clears all local
+> git environment variables before entering submodules. This is normally
+> a good thing since we want to clear settings such as GIT_WORKTREE and
+> other variables which would affect the operation of submodule commands.
+> However, GIT_CONFIG_PARAMETERS is special, and we actually do want to
+> preserve these settings. However, we do not want to preserve all
+> configuration as many things should be left specific to the parent
+> project.
 >
-> Hmm, I can see that the control flow of "reset --hard" for an i-t-a
-> path does pass through this function, but it is not very obvious
-> to see how this will not negatively affect other uses of the
-> unpack-trees machinery (e.g. "checkout" and "merge", especially when
-> such a path needs to turn into a directory by getting removed).
+> Add a git submodule--helper function which can be used to sanitize the
+> GIT_CONFIG_PARAMETERS value to only allow certain settings. For now,
+> restrict this to only credential.* settings.
+
+I guess for now that subset is fine and will be expanded over time?
+
+>
+> Replace all the calls to clear_local_git_env with a wrapped function
+> that filters GIT_CONFIG_PARAMETERS using the new helper and then
+> restores it to the filtered subset after clearing the rest of the
+> environment.
+
+The patch looks good to me, we should have introduced the submodule--helper
+test file earlier. I may migrate the test for the fix I send earlier
+today to that
+file eventually.
+
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f4c3eff179b5..8194d3b3d1d5 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -255,6 +255,56 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         return 0;
+>  }
 >
 
-Thinking about it more, I have to say that I do not agree with the
-basic premise of this patch.  I-T-A is not "may want to commit, but
-they are untracked" at all.  It is "I know I want to add, I just
-cannot yet decide the exact contents".
+Probably this will cause easy to resolve merge conflicts with
+origin/sb/submodule-parallel-update
 
-That is why "git add -N newfile && git grep string" would find the
-string from newfile, and "git add -N newfile && git diff HEAD newfile"
-would show the addition.
+> @@ -264,6 +314,7 @@ static struct cmd_struct commands[] = {
+>         {"list", module_list},
+>         {"name", module_name},
+>         {"clone", module_clone},
+> +       {"sanitize-config", module_sanitize_config},
 
-Sane people would expect that "git reset --hard HEAD" would behave
-as "git diff HEAD | git apply --index -R" when your index is fully
-merged, but this change will break the expectation.
+same here.
 
-Earlier we changed "git commit" to pretend as if an I-T-A entry does
-not exist in "git add -N newfile && git commit", but I think that
-was a mistake that was caused by the same fuzzy thinking.
+> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
+> new file mode 100755
+> index 000000000000..376f58afe967
+> --- /dev/null
+> +++ b/t/t7412-submodule--helper.sh
 
-3f6d56de (commit: ignore intent-to-add entries instead of refusing,
-2012-02-07) does talk about the use of "git add -N" in conjunction
-with "git status" and "git diff", but somehow nobody realized that
-it was introducing inconsistency in the semantics.
+Thanks for introducing such a file. I did not do it as I though it was
+"too small"
+and would not be enough to test to justify its own file.
+
+> +
+> +test_expect_success 'sanitize-config clears configuration' '
+> +       git -c user.name="Some User" submodule--helper sanitize-config >actual &&
+> +       test_must_be_empty actual
+
+I usually keep my user.name in the global config, so no need to pass
+it around like that,
+but for testing purposes this looks good.
