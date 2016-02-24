@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 30/32] refs: add LMDB refs storage backend
-Date: Wed, 24 Feb 2016 17:59:02 -0500
-Message-ID: <1456354744-8022-31-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v6 32/32] tests: add ref-storage argument
+Date: Wed, 24 Feb 2016 17:59:04 -0500
+Message-ID: <1456354744-8022-33-git-send-email-dturner@twopensource.com>
 References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
@@ -11,2320 +11,2064 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYiQ9-0004K3-K3
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:00:38 +0100
+	id 1aYiQ8-0004K3-CM
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 00:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758422AbcBXXAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 18:00:30 -0500
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:36198 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759208AbcBXW7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 17:59:49 -0500
-Received: by mail-qg0-f45.google.com with SMTP id y9so27397529qgd.3
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 14:59:48 -0800 (PST)
+	id S1758611AbcBXXAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 18:00:17 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:35682 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758068AbcBXW7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 17:59:51 -0500
+Received: by mail-qk0-f174.google.com with SMTP id o6so13260679qkc.2
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 14:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ODvP5FRTXU5iarHcfXtfnZc5tw/BHklCTCWUiM90u6Y=;
-        b=A3QCK0tit/ZKU8lAm4RGxNbTcttNf305uta1QAaq3D1R5S0XpAuvcdNdUwDbfcWPJ4
-         2LJNq9zZcFw92YVLwwbWnF6qs5ZbWXtuWGkvYSl5SL9qdwGU4p5J6ex/R/weVwUojEc3
-         7HxIJxpbdUY/V4zCk0PwbhsJ1FrIDiMglxJV5rfyeDeoUSrPStd0tTxZH6naONwl0oO9
-         PUSz2HTGNR7w3sH8CyWA319Zkbb9htWPwhMNEaWEx6LnWNYwDgQ1BIgGgQlCnPeaiAJJ
-         F2pSJqnIIWEIZ7BgLR99QH9bu1QFcSORIZFQg5Lmfwc1WmJjHuZty0vOcrtbErB+x6iq
-         hiGA==
+        bh=brbWUFPzFaqaj7aRCE1CkmIL65fgL8ETIQOAeGLXBd0=;
+        b=sTysZHYThNharW5gB4cK+QR9GU8hwgWRifpVkTCjObYddpOH7b4MfbEQNtuIjNvNdm
+         DKRAtKOsDFjM7v/wHA8oJr/EX+A/FkItVAvG8kX9uIsL2/zfq3Q0HDm+woFNa4CjRJM8
+         1M4vbcxCEDyX9nq/LF0D9nD31Wn3IAfuxwSBRFLs1GCkPoSrWXrPk7vCGtzp65e4WURz
+         eJUXzkPDx6IHnYVZAv5dUilhPKNnCAfgDL5cUYI9N7acKbI5fmoqSE68BxeLENPfmaxU
+         7smOP2UTI/0t4NVj2FUtEaQFEcB9uzW4rZvSWwdA+WdDpHv+X3O7hUBznXuKMIeidMD3
+         NtXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ODvP5FRTXU5iarHcfXtfnZc5tw/BHklCTCWUiM90u6Y=;
-        b=Kd6U65YjGCvFBMb+UwnyPOy2Ozl44a/LxdHNgh4Cn4yq83HvMjvTdIaZB8DjPtXCsg
-         +cKPk6yo5uVgcAQdfKY80maHVgv5qX+/k5kj1rPZIjeMdqzWOPzuNuDLhU0ZqMGucmqg
-         FQg273kiuB0AT0B9ka3f6uNFZCPTpt2He3S5PSOi4OVYfcGEPEx6Hdy5CuOhOfO+mSui
-         amdCX2GHKN9GgjfYK6UK55T9ugxHfVgDhQb1FfiajaXqhF3TLMJAuYNZtT4kU2nSLltu
-         h7er5TaHtbR+IQnOax7nj+hoxaz4IqRrZOAL8YxU1epAWoyJU6ReZkooSBXgC8lV52si
-         XxgQ==
-X-Gm-Message-State: AG10YOS8y/HhEisMTe9bL7WSWWMwqW5kCuceH6xfI3ezSwEUpcZxbb5pZ4uF8VuQaY4wtA==
-X-Received: by 10.140.157.7 with SMTP id d7mr54930156qhd.17.1456354787969;
-        Wed, 24 Feb 2016 14:59:47 -0800 (PST)
+        bh=brbWUFPzFaqaj7aRCE1CkmIL65fgL8ETIQOAeGLXBd0=;
+        b=S5gLsQ5eFSJA1m+PaYWh/qqxlQJkuN6B28HC3mDPFnDc6Umvt4jJfTjit8YGy4Mk45
+         9FQyhQJ4YbYX7KY2H0LBjvZ3t8Jmu/G4YlH8qlwTqxurVPzPc69+cx5+1e0MXHSrQ1Nk
+         CWHcCCPEhppczIZVXhAR3jghIy1RfsLiwuThsvuDHi+FR69jkQtbdXTN24XnG/1NiG9c
+         SbCubVP94Z152P83jKYIFdL7v7KUykRyC/Pc4hEFb1zBrbnQ+Pihk+et62x5QxYELieb
+         mXYvqf/B9bSKEWlF2BIvIVy7hUzIBkYQwDo/P1SABNYf9/sdtI5w9Yy+cjr8BWde+u8p
+         bdCw==
+X-Gm-Message-State: AG10YORh61WeIZa04Up9yRMthVlpRgz7I/icgEkI1MxNj+YnqF/c8uarb5ZjLY5WM+IVrg==
+X-Received: by 10.55.26.86 with SMTP id a83mr5555707qka.79.1456354790578;
+        Wed, 24 Feb 2016 14:59:50 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 66sm2154254qhp.4.2016.02.24.14.59.46
+        by smtp.gmail.com with ESMTPSA id 66sm2154254qhp.4.2016.02.24.14.59.49
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 24 Feb 2016 14:59:47 -0800 (PST)
+        Wed, 24 Feb 2016 14:59:49 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287262>
 
-Add a database backend for refs using LMDB.  This backend runs git
-for-each-ref about 30% faster than the files backend with fully-packed
-refs on a repo with ~120k refs.  It's also about 4x faster than using
-fully-unpacked refs.  In addition, and perhaps more importantly, it
-avoids case-conflict issues on OS X.
+Add a --ref-storage argument to make it easy to test alternate ref
+storage backends.  This means that every test that calls git init or
+git clone must use the new ref storage argument.
 
-LMDB has a few features that make it suitable for usage in git:
+Modify many tests to work under alternate ref storage backends.
 
-1. It is licensed under the OpenLDAP Public License, which is
-GPL-compatible [1].
+Introduce abstractions for raw ref/reflog reading/writing in tests
+instead of directly frobbing the filesystem.
 
-[1] http://www.gnu.org/licenses/license-list.en.html#newOpenLDAP
+Conditionally skip tests that are not expected to succeed under this
+condition. Most of this is straightforward. Of particular note are the
+following test changes:
 
-2. It is relatively lightweight; it requires only one header file, and
-the library code takes under 64k at runtime.
+* The rearrangement of commands in t1401 is because without HEAD in
+the right place, git doesn't recognized the trash dir as a git repo,
+so no git commands work.
 
-3. It is well-tested: it's been used in OpenLDAP for years.
-
-4. It's very fast.  LMDB's benchmarks show that it is among
-the fastest key-value stores.
-
-5. It has a relatively simple concurrency story; readers don't
-block writers and writers don't block readers.
-
-Ronnie Sahlberg's original version of this patchset used tdb.  The
-major disadvantage of tdb is that tdb is hard to build on OS X.  It's
-also not in homebrew.  So lmdb seemed simpler.
-
-To test this backend's correctness, I added support to the test suite
-to run under LMDB.  Dozens of tests use manual ref/reflog
-reading/writing, or create submodules without passing --ref-storage to
-git init.  If those tests are changed to use the update-ref machinery
-or test-refs-lmdb-backend (or, in the case of packed-refs, corrupt
-refs, and dumb fetch tests, are skipped), the only remaining failing
-tests are the git-new-workdir tests.  Later, we'll add this support
-to the test suite.
+* t1430-bad-ref-name specifically blocks lmdb because other alternate
+backends might want to keep this test.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- .gitignore                                     |    1 +
- Documentation/config.txt                       |    9 +
- Documentation/git-clone.txt                    |    3 +-
- Documentation/git-init.txt                     |    3 +-
- Documentation/technical/refs-lmdb-backend.txt  |   61 +
- Documentation/technical/repository-version.txt |    7 +
- Makefile                                       |   12 +
- configure.ac                                   |   33 +
- contrib/workdir/git-new-workdir                |    3 +
- path.c                                         |    1 +
- refs/lmdb-backend.c                            | 1886 ++++++++++++++++++++++++
- test-refs-lmdb-backend.c                       |   65 +
- 12 files changed, 2082 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/technical/refs-lmdb-backend.txt
- create mode 100644 refs/lmdb-backend.c
- create mode 100644 test-refs-lmdb-backend.c
+ t/README                                 |  6 +++
+ t/lib-submodule-update.sh                | 15 +++++--
+ t/lib-t6000.sh                           |  7 ++-
+ t/t0008-ignores.sh                       |  2 +-
+ t/t0062-revision-walking.sh              |  6 +++
+ t/t1021-rerere-in-workdir.sh             |  6 +++
+ t/t1200-tutorial.sh                      |  8 +++-
+ t/t1302-repo-version.sh                  |  6 +++
+ t/t1305-config-include.sh                | 17 ++++++--
+ t/t1400-update-ref.sh                    |  6 +++
+ t/t1401-symbolic-ref.sh                  | 17 +++++---
+ t/t1404-update-ref-df-conflicts.sh       |  8 +++-
+ t/t1410-reflog.sh                        |  6 +++
+ t/t1430-bad-ref-name.sh                  |  6 +++
+ t/t1450-fsck.sh                          | 12 ++---
+ t/t1506-rev-parse-diagnosis.sh           |  4 +-
+ t/t2013-checkout-submodule.sh            |  2 +-
+ t/t2105-update-index-gitfile.sh          |  4 +-
+ t/t2107-update-index-basic.sh            |  6 +--
+ t/t2201-add-update-typechange.sh         |  4 +-
+ t/t3001-ls-files-others-exclude.sh       |  2 +-
+ t/t3010-ls-files-killed-modified.sh      |  4 +-
+ t/t3040-subprojects-basic.sh             |  4 +-
+ t/t3050-subprojects-fetch.sh             |  2 +-
+ t/t3200-branch.sh                        | 75 ++++++++++++++++++--------------
+ t/t3210-pack-refs.sh                     |  7 +++
+ t/t3211-peel-ref.sh                      |  6 +++
+ t/t3308-notes-merge.sh                   |  2 +-
+ t/t3404-rebase-interactive.sh            |  2 +-
+ t/t3600-rm.sh                            |  2 +-
+ t/t3800-mktag.sh                         |  4 +-
+ t/t3903-stash.sh                         |  2 +-
+ t/t4010-diff-pathspec.sh                 |  2 +-
+ t/t4020-diff-external.sh                 |  2 +-
+ t/t4027-diff-submodule.sh                |  2 +-
+ t/t4035-diff-quiet.sh                    |  2 +-
+ t/t4255-am-submodule.sh                  |  2 +-
+ t/t5000-tar-tree.sh                      |  3 +-
+ t/t5304-prune.sh                         |  2 +-
+ t/t5312-prune-corruption.sh              | 11 ++++-
+ t/t5500-fetch-pack.sh                    | 10 ++---
+ t/t5510-fetch.sh                         | 30 ++++++-------
+ t/t5526-fetch-submodules.sh              |  4 +-
+ t/t5527-fetch-odd-refs.sh                |  7 +++
+ t/t5537-fetch-shallow.sh                 |  7 +++
+ t/t5700-clone-reference.sh               | 42 +++++++++---------
+ t/t6001-rev-list-graft.sh                |  3 +-
+ t/t6010-merge-base.sh                    |  2 +-
+ t/t6050-replace.sh                       |  4 +-
+ t/t6120-describe.sh                      |  6 ++-
+ t/t6301-for-each-ref-errors.sh           | 12 ++---
+ t/t7201-co.sh                            |  2 +-
+ t/t7300-clean.sh                         | 25 ++++++-----
+ t/t7400-submodule-basic.sh               | 18 ++++----
+ t/t7402-submodule-rebase.sh              |  2 +-
+ t/t7405-submodule-merge.sh               | 10 ++---
+ t/t9104-git-svn-follow-parent.sh         |  3 +-
+ t/t9115-git-svn-dcommit-funky-renames.sh |  2 +-
+ t/t9350-fast-export.sh                   |  6 +--
+ t/t9902-completion.sh                    |  3 +-
+ t/t9903-bash-prompt.sh                   |  1 +
+ t/test-lib-functions.sh                  | 53 +++++++++++++++++++++-
+ t/test-lib.sh                            | 11 +++++
+ 63 files changed, 368 insertions(+), 181 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 1c2f832..87d45a2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -199,6 +199,7 @@
- /test-path-utils
- /test-prio-queue
- /test-read-cache
-+/test-refs-lmdb-backend
- /test-regex
- /test-revision-walking
- /test-run-command
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 06d3659..65b5947 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1153,6 +1153,15 @@ difftool.<tool>.cmd::
- difftool.prompt::
- 	Prompt before each invocation of the diff tool.
+diff --git a/t/README b/t/README
+index 1dc908e..8e047cb 100644
+--- a/t/README
++++ b/t/README
+@@ -178,6 +178,12 @@ appropriately before running "make".
+ 	this feature by setting the GIT_TEST_CHAIN_LINT environment
+ 	variable to "1" or "0", respectively.
  
-+extensions.refStorage::
-+	Type of ref storage backend. Default is to use the original
-+	files based ref storage.  When set to "lmdb", refs are stored
-+	in an LMDB database.  This setting reflects the refs storage
-+	backend that was chosen via the --ref-storage option when the
-+	repository was originally created. It is currently not
-+	possible to change the refs storage backend of an existing
-+	repository.
++--ref-storage=<backend>::
++	If --ref-storage is set, run tests under an alternate ref
++	backend.  Tests that rely on the original files backend will
++	be skipped.  You may also enable or disable this feature by
++	setting the GIT_TEST_REF_STORAGE environment variable
 +
- fetch.recurseSubmodules::
- 	This option can be either set to a boolean value or to 'on-demand'.
- 	Setting it to a boolean changes the behavior of fetch and pull to
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 68f56a7..e5873fe 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -227,7 +227,8 @@ objects from the source repository into a pack in the cloned repository.
- 
- --ref-storage=<name>::
- 	Type of ref storage backend. Default is to use the original files
--	based ref storage.
-+	based ref storage. Set to "lmdb" to store refs in the LMDB database
-+	backend.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 93f8d0c..129702b 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -116,7 +116,8 @@ does not exist, it will be created.
- --ref-storage=<name>::
- Type of refs storage backend. Default is to use the original "files"
- storage, which stores ref data in files in `$GIT_DIR/refs` and
--`$GIT_DIR/packed-refs`.
-+`$GIT_DIR/packed-refs`. Set to "lmdb" to activate the LMDB storage
-+backend.
- 
- TEMPLATE DIRECTORY
- ------------------
-diff --git a/Documentation/technical/refs-lmdb-backend.txt b/Documentation/technical/refs-lmdb-backend.txt
-new file mode 100644
-index 0000000..b8b5a0a
---- /dev/null
-+++ b/Documentation/technical/refs-lmdb-backend.txt
-@@ -0,0 +1,61 @@
-+Notes on the LMDB refs backend
-+==============================
-+
-+Design:
-+------
-+
-+Refs and reflogs are stored in a lmdb database in .git/refs.lmdb.  All
-+keys and values are \0-terminated.
-+
-+Keys for refs are the name of the ref (e.g. refs/heads/master).
-+Values are the value of the ref, in hex
-+(e.g. 61f23eb0f81357c19fa91e2b8c6f3906c3a8f9b0).
-+
-+All per-worktree refs (refs/bisect/* and HEAD) are stored using
-+the traditional files-based backend.
-+
-+Reflogs are stored as a series of database entries.
-+
-+For non-empty reflogs, there is one entry per logged ref update.  The
-+key format is logs/[refname]\0[timestamp].  The timestamp is a 64-bit
-+unsigned integer number of nanoseconds since 1/1/1970, stored in
-+network byte order.  This means that reflog entries are
-+chronologically ordered.  Because LMDB is a btree database, we can
-+efficiently iterate over these keys.
-+
-+For an empty reflog, there is a "header" entry to show that a reflog
-+exists.  The header has the same format as an ordinary reflog entry,
-+but with a timestamp of all zeros and an empty value.
-+
-+Reflog values are in almost the same format as the original
-+files-based reflog, including the trailing LF. The exception is that
-+the SHAs are stored in binary instead of hex. The date in the reflog
-+value matches the date in the timestamp field.
-+
-+Weaknesses:
-+-----------
-+
-+The reflog format is somewhat inefficient: a binary format could store
-+reflog date/time information in somewhat less space.
-+
-+The rsync and file:// transports don't work yet, because they
-+don't use the refs API.
-+
-+git new-workdir is incompatible with the lmdb backend.  Fortunately,
-+git new-workdir is deprecated, and worktrees work fine.
-+
-+LMDB locks the entire database for write.  Any other writer waits
-+until the first writer is done before beginning.  Readers do not wait
-+for writers, and writers do not wait for readers.  The underlying
-+scheme is approximately MVCC; each reader's queries see the state of
-+the database as-of the time that the reader acquired its read lock.
-+This is not too far off from the files backend, which loads all refs
-+into memory when one is requested.
-+
-+LMDB requires write access to the filesystem for locking.  In the case
-+where there are only readers (e.g. read-only repositories), this
-+requirement can be relaxed using the MDB_NOLOCK option.  But we don't
-+yet have a config to do that.
-+
-+Don't use this over NFS or other remote filesystems.  LMDB doesn't work
-+there.
-diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
-index 00ad379..b317ba9 100644
---- a/Documentation/technical/repository-version.txt
-+++ b/Documentation/technical/repository-version.txt
-@@ -86,3 +86,10 @@ for testing format-1 compatibility.
- When the config key `extensions.preciousObjects` is set to `true`,
- objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
- `git repack -d`).
-+
-+`refStorage`
-+~~~~~~~~~~~~
-+This extension allows the use of alternate ref storage backends.  The
-+only defined values are `lmdb`, `files`, and the empty string (meaning
-+`files`).  The latter two values should never be used, because the
-+files backend is the default and does not need repository version 1.
-diff --git a/Makefile b/Makefile
-index 10566d6..fd80e94 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1042,6 +1042,17 @@ ifdef USE_LIBPCRE
- 	EXTLIBS += -lpcre
- endif
- 
-+ifdef USE_LIBLMDB
-+	BASIC_CFLAGS += -DUSE_LIBLMDB
-+	ifdef LIBLMDBDIR
-+		BASIC_CFLAGS += -I$(LIBLMDBDIR)/include
-+		EXTLIBS += -L$(LIBLMDBDIR)/$(lib) $(CC_LD_DYNPATH)$(LIBLMDBDIR)/$(lib)
-+	endif
-+	EXTLIBS += -llmdb
-+	LIB_OBJS += refs/lmdb-backend.o
-+	TEST_PROGRAMS_NEED_X += test-refs-lmdb-backend
-+endif
-+
- ifdef HAVE_ALLOCA_H
- 	BASIC_CFLAGS += -DHAVE_ALLOCA_H
- endif
-@@ -2140,6 +2151,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
- 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
- 	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
-+	@echo USE_LIBLMDB=\''$(subst ','\'',$(subst ','\'',$(USE_LIBLMDB)))'\' >>$@+
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
-diff --git a/configure.ac b/configure.ac
-index 89e2590..3853bec 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -271,6 +271,24 @@ AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and hea
-         dnl it yet.
- 	GIT_CONF_SUBST([LIBPCREDIR])
-     fi)
-+
-+USE_LIBLMDB=YesPlease
-+AC_ARG_WITH(liblmdb,
-+AS_HELP_STRING([--with-liblmdb],[support lmdb (default is YES])
-+AS_HELP_STRING([],           [ARG can be also prefix for liblmdb library and headers]),
-+    if test "$withval" = "no"; then
-+	USE_LIBLMDB=
-+    elif test "$withval" = "yes"; then
-+	USE_LIBLMDB=YesPlease
-+    else
-+	USE_LIBLMDB=YesPlease
-+	LIBLMDBDIR=$withval
-+	AC_MSG_NOTICE([Setting LIBLMDBDIR to $LIBLMDBDIR])
-+        dnl USE_LIBLMDB can still be modified below, so don't substitute
-+        dnl it yet.
-+	GIT_CONF_SUBST([LIBLMDBDIR])
-+    fi)
-+
+ You can also set the GIT_TEST_INSTALLED environment variable to
+ the bindir of an existing git installation to test that installation.
+ You still need to have built this git sandbox, from which various
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 79cdd34..b037eb3 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -32,7 +32,7 @@
+ #                     invalid_sub1
  #
- # Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
- AC_FUNC_ALLOCA
-@@ -510,6 +528,21 @@ GIT_CONF_SUBST([USE_LIBPCRE])
+ create_lib_submodule_repo () {
+-	git init submodule_update_repo &&
++	git init $ref_storage_arg submodule_update_repo &&
+ 	(
+ 		cd submodule_update_repo &&
+ 		echo "expect" >>.gitignore &&
+@@ -125,7 +125,16 @@ test_git_directory_is_unchanged () {
+ 		# "$1/.git/config" lacks it...
+ 		git config --unset core.worktree
+ 	) &&
+-	diff -r ".git/modules/$1" "$1/.git" &&
++	if test "$ref_storage" = "lmdb"
++	then
++	    diff -x refs.lmdb -r ".git/modules/$1" "$1/.git" &&
++	    mdb_dump -p ".git/modules/$1/refs.lmdb" >one &&
++	    mdb_dump -p "$1/.git/refs.lmdb" >two &&
++	    diff one two &&
++	    rm one two
++	else
++	    diff -r ".git/modules/$1" "$1/.git"
++	fi
+ 	(
+ 		# ... and then restore.
+ 		cd ".git/modules/$1" &&
+@@ -147,7 +156,7 @@ prolog () {
+ # should be updated to an existing commit.
+ reset_work_tree_to () {
+ 	rm -rf submodule_update &&
+-	git clone submodule_update_repo submodule_update &&
++	git clone $ref_storage_arg submodule_update_repo submodule_update &&
+ 	(
+ 		cd submodule_update &&
+ 		rm -rf sub1 &&
+diff --git a/t/lib-t6000.sh b/t/lib-t6000.sh
+index 3f2d873..5fb4345 100644
+--- a/t/lib-t6000.sh
++++ b/t/lib-t6000.sh
+@@ -4,11 +4,10 @@ mkdir -p .git/refs/tags
  
- fi
+ >sed.script
  
-+if test -n "$USE_LIBLMDB"; then
-+
-+GIT_STASH_FLAGS($LIBLMDBDIR)
-+
-+AC_CHECK_LIB([lmdb], [mdb_env_open],
-+[USE_LIBLMDB=YesPlease],
-+[USE_LIBLMDB=])
-+
-+GIT_UNSTASH_FLAGS($LIBLMDBDIR)
-+
-+GIT_CONF_SUBST([USE_LIBLMDB])
-+
+-# Answer the sha1 has associated with the tag. The tag must exist in .git/refs/tags
++# Answer the sha1 has associated with the tag. The tag must exist under refs/tags
+ tag () {
+ 	_tag=$1
+-	test -f ".git/refs/tags/$_tag" || error "tag: \"$_tag\" does not exist"
+-	cat ".git/refs/tags/$_tag"
++	git rev-parse --verify "refs/tags/$_tag" || error "tag: \"$_tag\" does not exist"
+ }
+ 
+ # Generate a commit using the text specified to make it unique and the tree
+@@ -26,7 +25,7 @@ save_tag () {
+ 	_tag=$1
+ 	test -n "$_tag" || error "usage: save_tag tag commit-args ..."
+ 	shift 1
+-	"$@" >".git/refs/tags/$_tag"
++	write_ref "refs/tags/$_tag" $("$@")
+ 
+ 	echo "s/$(tag $_tag)/$_tag/g" >sed.script.tmp
+ 	cat sed.script >>sed.script.tmp
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 89544dd..63fe6d5 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -184,7 +184,7 @@ test_expect_success 'setup' '
+ 	fi &&
+ 	(
+ 		cd a/submodule &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo a >a &&
+ 		git add a &&
+ 		git commit -m"commit in submodule"
+diff --git a/t/t0062-revision-walking.sh b/t/t0062-revision-walking.sh
+index 113c728..0bd3981 100755
+--- a/t/t0062-revision-walking.sh
++++ b/t/t0062-revision-walking.sh
+@@ -7,6 +7,12 @@ test_description='Test revision walking api'
+ 
+ . ./test-lib.sh
+ 
++if test "$ref_storage" != "files"
++then
++	skip_all="Alternate storage doesn't do test-revision-walking"
++	test_done
 +fi
 +
-+
- #
- # Define NO_CURL if you do not have libcurl installed.  git-http-pull and
- # git-http-push are not built, and you cannot use http:// and https://
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-index 888c34a..d153ddf 100755
---- a/contrib/workdir/git-new-workdir
-+++ b/contrib/workdir/git-new-workdir
-@@ -28,6 +28,9 @@ git_dir=$(cd "$orig_git" 2>/dev/null &&
-   git rev-parse --git-dir 2>/dev/null) ||
-   die "Not a git repository: \"$orig_git\""
+ cat >run_twice_expected <<-EOF
+ 1st
+  > add b
+diff --git a/t/t1021-rerere-in-workdir.sh b/t/t1021-rerere-in-workdir.sh
+index 301e071..8fe5de7 100755
+--- a/t/t1021-rerere-in-workdir.sh
++++ b/t/t1021-rerere-in-workdir.sh
+@@ -3,6 +3,12 @@
+ test_description='rerere run in a workdir'
+ . ./test-lib.sh
  
-+ref_storage=$(git config extensions.refstorage || echo "files")
-+test "$ref_storage" != "files" && die "git-new-workdir is incompatible with ref storage other than 'files'"
++if test "$ref_storage" != "files"
++then
++	skip_all="Workdirs don't support alternate ref backends"
++	test_done
++fi
 +
- case "$git_dir" in
- .git)
- 	git_dir="$orig_git/.git"
-diff --git a/path.c b/path.c
-index 2e67a2b..347aba4 100644
---- a/path.c
-+++ b/path.c
-@@ -112,6 +112,7 @@ static struct common_dir common_list[] = {
- 	{ 0, 1, 0, "lost-found" },
- 	{ 0, 1, 0, "objects" },
- 	{ 0, 1, 0, "refs" },
-+	{ 0, 1, 0, "refs.lmdb" },
- 	{ 0, 1, 1, "refs/bisect" },
- 	{ 0, 1, 0, "remotes" },
- 	{ 0, 1, 0, "worktrees" },
-diff --git a/refs/lmdb-backend.c b/refs/lmdb-backend.c
-new file mode 100644
-index 0000000..6b72425
---- /dev/null
-+++ b/refs/lmdb-backend.c
-@@ -0,0 +1,1886 @@
-+/*
-+ * This file implements a lmdb backend for refs.
-+ *
-+ * The design of this backend relies on lmdb's write lock -- that is, any
-+ * write transaction blocks all other writers.  Thus, as soon as a ref
-+ * transaction is opened, we know that any values we read won't
-+ * change out from under us, and we have a fully-consistent view of the
-+ * database.
-+ *
-+ * We store the content of refs including the trailing \0 so that
-+ * standard C string functions can handle them.  Just like struct
-+ * strbuf.
-+ */
-+#include "cache.h"
-+#include <lmdb.h>
-+#include "object.h"
-+#include "refs.h"
-+#include "refs-internal.h"
-+#include "tag.h"
-+#include "lockfile.h"
+ test_expect_success SYMLINKS setup '
+ 	git config rerere.enabled true &&
+ 	>world &&
+diff --git a/t/t1200-tutorial.sh b/t/t1200-tutorial.sh
+index 397ccb6..c67c7da 100755
+--- a/t/t1200-tutorial.sh
++++ b/t/t1200-tutorial.sh
+@@ -93,12 +93,16 @@ test_expect_success 'git whatchanged -p --root' '
+ 
+ test_expect_success 'git tag my-first-tag' '
+ 	git tag my-first-tag &&
+-	test_cmp .git/refs/heads/master .git/refs/tags/my-first-tag
++	git rev-parse --verify refs/heads/master >expect &&
++	git rev-parse --verify refs/tags/my-first-tag >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'git checkout -b mybranch' '
+ 	git checkout -b mybranch &&
+-	test_cmp .git/refs/heads/master .git/refs/heads/mybranch
++	git rev-parse --verify refs/heads/master >expect &&
++	git rev-parse --verify refs/heads/mybranch >actual &&
++	test_cmp expect actual
+ '
+ 
+ cat > branch.expect <<EOF
+diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
+index 9bcd349..270a8d3 100755
+--- a/t/t1302-repo-version.sh
++++ b/t/t1302-repo-version.sh
+@@ -7,6 +7,12 @@ test_description='Test repository version check'
+ 
+ . ./test-lib.sh
+ 
++if test "$ref_storage" != "files"
++then
++	skip_all="Alternate ref storage sets core.repositoryformatversion=1"
++	test_done
++fi
 +
-+static MDB_env *env;
-+
-+static char *db_path;
-+
-+struct lmdb_transaction {
-+	MDB_txn *txn;
-+	MDB_dbi dbi;
-+	MDB_cursor *cursor;
-+	const char *submodule;
-+	int flags;
-+};
-+
-+static struct lmdb_transaction transaction;
-+
-+static int in_write_transaction(void)
+ test_expect_success 'setup' '
+ 	cat >test.patch <<-\EOF &&
+ 	diff --git a/test.txt b/test.txt
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index 9ba2ba1..220cd63 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -45,14 +45,23 @@ test_expect_success 'include options can still be examined' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'listing includes option and expansion' '
+-	echo "[test]one = 1" >one &&
+-	echo "[include]path = one" >.gitconfig &&
+-	cat >expect <<-\EOF &&
++write_expected_config()
 +{
-+	return transaction.txn && !(transaction.flags & MDB_RDONLY);
++	cat <<-\EOF &&
+ 	include.path=one
+ 	test.one=1
+ 	EOF
++	if test "$ref_storage" != "files"
++	then
++		echo "extensions.refstorage=$ref_storage"
++	fi
 +}
 +
-+static int cleanup_registered;
++test_expect_success 'listing includes option and expansion' '
++	echo "[test]one = 1" >one &&
++	echo "[include]path = one" >.gitconfig &&
+ 	git config --list >actual.full &&
++	write_expected_config >expect &&
+ 	grep -v ^core actual.full >actual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index af1b20d..878dc53 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -6,6 +6,12 @@
+ test_description='Test git update-ref and basic ref logging'
+ . ./test-lib.sh
+ 
++if test "$ref_storage" != "files"
++then
++	skip_all="This test is ref storage backend-specific"
++	test_done
++fi
 +
-+static void cleanup_txn(void)
-+{
-+	if (transaction.txn) {
-+		mdb_txn_abort(transaction.txn);
-+	}
+ Z=$_z40
+ 
+ test_expect_success setup '
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index 417eecc..5bfe7d2 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -35,15 +35,16 @@ reset_to_sane
+ 
+ test_expect_success 'symbolic-ref deletes HEAD' '
+ 	git symbolic-ref -d HEAD &&
+-	test_path_is_file .git/refs/heads/foo &&
+-	test_path_is_missing .git/HEAD
++	test_path_is_missing .git/HEAD &&
++	reset_to_sane &&
++	git rev-parse --verify refs/heads/foo
+ '
+ reset_to_sane
+ 
+ test_expect_success 'symbolic-ref deletes dangling HEAD' '
+ 	git symbolic-ref HEAD refs/heads/missing &&
+ 	git symbolic-ref -d HEAD &&
+-	test_path_is_missing .git/refs/heads/missing &&
++	test_must_fail git rev-parse --verify refs/heads/missing &&
+ 	test_path_is_missing .git/HEAD
+ '
+ reset_to_sane
+@@ -58,7 +59,7 @@ reset_to_sane
+ test_expect_success 'symbolic-ref fails to delete real ref' '
+ 	echo "fatal: Cannot delete refs/heads/foo, not a symbolic ref" >expect &&
+ 	test_must_fail git symbolic-ref -d refs/heads/foo >actual 2>&1 &&
+-	test_path_is_file .git/refs/heads/foo &&
++	git rev-parse --verify refs/heads/foo &&
+ 	test_cmp expect actual
+ '
+ reset_to_sane
+@@ -114,7 +115,13 @@ test_expect_success 'symbolic-ref writes reflog entry' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'symbolic-ref does not create ref d/f conflicts' '
++if test "$ref_storage" = "files"
++then
++    test_cmd=test_expect_success
++else
++    test_cmd=test_expect_failure
++fi
++$test_cmd 'symbolic-ref does not create ref d/f conflicts' '
+ 	git checkout -b df &&
+ 	test_commit df &&
+ 	test_must_fail git symbolic-ref refs/heads/df/conflict refs/heads/df &&
+diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
+index 66bafb5..e918abc 100755
+--- a/t/t1404-update-ref-df-conflicts.sh
++++ b/t/t1404-update-ref-df-conflicts.sh
+@@ -96,7 +96,13 @@ test_expect_success 'new ref is a deeper prefix of existing packed' '
+ 
+ '
+ 
+-test_expect_success 'one new ref is a simple prefix of another' '
++expect=test_expect_success
++if test "$ref_storage" != "files"
++then
++	expect=test_expect_failure
++fi
++
++$expect 'one new ref is a simple prefix of another' '
+ 
+ 	prefix=refs/5 &&
+ 	test_update_rejected $prefix "a e" false "b c c/x d" \
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 9cf91dc..41ff1a2 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -6,6 +6,12 @@
+ test_description='Test prune and reflog expiration'
+ . ./test-lib.sh
+ 
++if test "$ref_storage" != "files"
++then
++	skip_all="This test is ref storage backend-specific"
++	test_done
++fi
++
+ check_have () {
+ 	gaah= &&
+ 	for N in "$@"
+diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+index c465abe..bfcec3c 100755
+--- a/t/t1430-bad-ref-name.sh
++++ b/t/t1430-bad-ref-name.sh
+@@ -3,6 +3,12 @@
+ test_description='Test handling of ref names that check-ref-format rejects'
+ . ./test-lib.sh
+ 
++if test "$ref_storage" = "lmdb"
++then
++	skip_all="The lmdb backend refuses to save refs with bad names"
++	test_done
++fi
++
+ test_expect_success setup '
+ 	test_commit one &&
+ 	test_commit two
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index e66b7cb..5fd3921 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -75,7 +75,7 @@ test_expect_success 'object with bad sha1' '
+ '
+ 
+ test_expect_success 'branch pointing to non-commit' '
+-	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
++	write_ref refs/heads/invalid $(git rev-parse HEAD^{tree}) &&
+ 	test_when_finished "git update-ref -d refs/heads/invalid" &&
+ 	test_must_fail git fsck 2>out &&
+ 	cat out &&
+@@ -220,7 +220,7 @@ test_expect_success 'tag pointing to nonexistent' '
+ 
+ 	tag=$(git hash-object -t tag -w --stdin <invalid-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/invalid &&
++	write_ref refs/tags/invalid $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/invalid" &&
+ 	test_must_fail git fsck --tags >out &&
+ 	cat out &&
+@@ -241,7 +241,7 @@ test_expect_success 'tag pointing to something else than its type' '
+ 
+ 	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	write_ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags
+ '
+@@ -258,7 +258,7 @@ test_expect_success 'tag with incorrect tag name & missing tagger' '
+ 
+ 	tag=$(git hash-object -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	write_ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	git fsck --tags 2>out &&
+ 
+@@ -282,7 +282,7 @@ test_expect_success 'tag with bad tagger' '
+ 
+ 	tag=$(git hash-object --literally -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	write_ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags 2>out &&
+ 	grep "error in tag .*: invalid author/committer" out
+@@ -301,7 +301,7 @@ test_expect_success 'tag with NUL in header' '
+ 
+ 	tag=$(git hash-object --literally -t tag -w --stdin <tag-NUL-header) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	write_ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags 2>out &&
+ 	cat out &&
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index 613d9bf..a9a15ca 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -167,7 +167,7 @@ test_expect_success 'relative path when cwd is outside worktree' '
+ '
+ 
+ test_expect_success 'relative path when startup_info is NULL' '
+-	test_must_fail test-match-trees HEAD:./file.txt HEAD:./file.txt 2>error &&
++	test_must_fail test-match-trees $(git rev-parse HEAD):./file.txt $(git rev-parse HEAD):./file.txt 2>error &&
+ 	grep "BUG: startup_info struct is not initialized." error
+ '
+ 
+@@ -213,7 +213,7 @@ test_expect_success 'arg before dashdash must be a revision (ambiguous)' '
+ 	{
+ 		# we do not want to use rev-parse here, because
+ 		# we are testing it
+-		cat .git/refs/heads/foobar &&
++		raw_ref refs/heads/foobar &&
+ 		printf "%s\n" --
+ 	} >expect &&
+ 	git rev-parse foobar -- >actual &&
+diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+index 6847f75..94e8ec8 100755
+--- a/t/t2013-checkout-submodule.sh
++++ b/t/t2013-checkout-submodule.sh
+@@ -8,7 +8,7 @@ test_description='checkout can handle submodules'
+ test_expect_success 'setup' '
+ 	mkdir submodule &&
+ 	(cd submodule &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 test_commit first) &&
+ 	git add submodule &&
+ 	test_tick &&
+diff --git a/t/t2105-update-index-gitfile.sh b/t/t2105-update-index-gitfile.sh
+index a7f3d47..ce151a4 100755
+--- a/t/t2105-update-index-gitfile.sh
++++ b/t/t2105-update-index-gitfile.sh
+@@ -11,7 +11,7 @@ test_description='git update-index for gitlink to .git file.
+ test_expect_success 'submodule with absolute .git file' '
+ 	mkdir sub1 &&
+ 	(cd sub1 &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 REAL="$(pwd)/.real" &&
+ 	 mv .git "$REAL" &&
+ 	 echo "gitdir: $REAL" >.git &&
+@@ -25,7 +25,7 @@ test_expect_success 'add gitlink to absolute .git file' '
+ test_expect_success 'submodule with relative .git file' '
+ 	mkdir sub2 &&
+ 	(cd sub2 &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 mv .git .real &&
+ 	 echo "gitdir: .real" >.git &&
+ 	 test_commit first)
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index dfe02f4..b00adef 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -22,7 +22,7 @@ test_expect_success 'update-index -h with corrupt index' '
+ 	mkdir broken &&
+ 	(
+ 		cd broken &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		>.git/index &&
+ 		test_expect_code 129 git update-index -h >usage 2>&1
+ 	) &&
+@@ -43,7 +43,7 @@ test_expect_success '--cacheinfo does not accept blob null sha1' '
+ '
+ 
+ test_expect_success '--cacheinfo does not accept gitlink null sha1' '
+-	git init submodule &&
++	git init submodule $ref_storage_arg &&
+ 	(cd submodule && test_commit foo) &&
+ 	git add submodule &&
+ 	git rev-parse :submodule >expect &&
+@@ -70,7 +70,7 @@ test_expect_success '.lock files cleaned up' '
+ 	(
+ 	cd cleanup &&
+ 	mkdir worktree &&
+-	git init repo &&
++	git init $ref_storage_arg repo &&
+ 	cd repo &&
+ 	git config core.worktree ../../worktree &&
+ 	# --refresh triggers late setup_work_tree,
+diff --git a/t/t2201-add-update-typechange.sh b/t/t2201-add-update-typechange.sh
+index 954fc51..882a5b7 100755
+--- a/t/t2201-add-update-typechange.sh
++++ b/t/t2201-add-update-typechange.sh
+@@ -46,7 +46,7 @@ test_expect_success modify '
+ 	>yomin/yomin &&
+ 	(
+ 		cd yomin &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		git add yomin &&
+ 		git commit -m "sub initial"
+ 	) &&
+@@ -60,7 +60,7 @@ test_expect_success modify '
+ 	>yonk/yonk &&
+ 	(
+ 		cd yonk &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		git add yonk &&
+ 		git commit -m "sub initial"
+ 	) &&
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 3fc484e..b26e68e 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -197,7 +197,7 @@ test_expect_success 'subdirectory ignore (setup)' '
+ 	mkdir -p top/l1/l2 &&
+ 	(
+ 		cd top &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo /.gitignore >.gitignore &&
+ 		echo l1 >>.gitignore &&
+ 		echo l2 >l1/.gitignore &&
+diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
+index 580e158..3cf2a74 100755
+--- a/t/t3010-ls-files-killed-modified.sh
++++ b/t/t3010-ls-files-killed-modified.sh
+@@ -55,9 +55,9 @@ test_expect_success 'git update-index --add to add various paths.' '
+ 	: >path9 &&
+ 	date >path10 &&
+ 	git update-index --add -- path0 path?/file? pathx/ju path7 path8 path9 path10 &&
+-	git init submod1 &&
++	git init $ref_storage_arg submod1 &&
+ 	git -C submod1 commit --allow-empty -m "empty 1" &&
+-	git init submod2 &&
++	git init $ref_storage_arg submod2 &&
+ 	git -C submod2 commit --allow-empty -m "empty 2" &&
+ 	git update-index --add submod[12] &&
+ 	(
+diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
+index 0a4ff6d..368c03e 100755
+--- a/t/t3040-subprojects-basic.sh
++++ b/t/t3040-subprojects-basic.sh
+@@ -11,10 +11,10 @@ test_expect_success 'setup: create superproject' '
+ 
+ test_expect_success 'setup: create subprojects' '
+ 	mkdir sub1 &&
+-	( cd sub1 && git init && : >Makefile && git add * &&
++	( cd sub1 && git init $ref_storage_arg && : >Makefile && git add * &&
+ 	git commit -q -m "subproject 1" ) &&
+ 	mkdir sub2 &&
+-	( cd sub2 && git init && : >Makefile && git add * &&
++	( cd sub2 && git init $ref_storage_arg && : >Makefile && git add * &&
+ 	git commit -q -m "subproject 2" ) &&
+ 	git update-index --add sub1 &&
+ 	git add sub2 &&
+diff --git a/t/t3050-subprojects-fetch.sh b/t/t3050-subprojects-fetch.sh
+index 2f5f41a..8d26bb9 100755
+--- a/t/t3050-subprojects-fetch.sh
++++ b/t/t3050-subprojects-fetch.sh
+@@ -8,7 +8,7 @@ test_expect_success setup '
+ 	test_tick &&
+ 	mkdir -p sub && (
+ 		cd sub &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		>subfile &&
+ 		git add subfile &&
+ 		git commit -m "subproject commit #1"
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 07e9749..f7287ef 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -19,26 +19,26 @@ test_expect_success 'prepare a trivial repository' '
+ 
+ test_expect_success 'git branch --help should not have created a bogus branch' '
+ 	test_might_fail git branch --man --help </dev/null >/dev/null 2>&1 &&
+-	test_path_is_missing .git/refs/heads/--help
++	test_must_fail git rev-parse --verify refs/heads/--help
+ '
+ 
+ test_expect_success 'branch -h in broken repository' '
+ 	mkdir broken &&
+ 	(
+ 		cd broken &&
+-		git init &&
+-		>.git/refs/heads/master &&
++		git init $ref_storage_arg &&
++		write_ref refs/heads/master "" &&
+ 		test_expect_code 129 git branch -h >usage 2>&1
+ 	) &&
+ 	test_i18ngrep "[Uu]sage" broken/usage
+ '
+ 
+ test_expect_success 'git branch abc should create a branch' '
+-	git branch abc && test_path_is_file .git/refs/heads/abc
++	git branch abc && git rev-parse --verify refs/heads/abc
+ '
+ 
+ test_expect_success 'git branch a/b/c should create a branch' '
+-	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
++	git branch a/b/c && git rev-parse --verify refs/heads/a/b/c
+ '
+ 
+ test_expect_success 'git branch HEAD should fail' '
+@@ -51,14 +51,14 @@ EOF
+ test_expect_success 'git branch -l d/e/f should create a branch and a log' '
+ 	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+ 	git branch -l d/e/f &&
+-	test_path_is_file .git/refs/heads/d/e/f &&
+-	test_path_is_file .git/logs/refs/heads/d/e/f &&
+-	test_cmp expect .git/logs/refs/heads/d/e/f
++	git rev-parse --verify refs/heads/d/e/f &&
++	raw_reflog refs/heads/d/e/f > reflog &&
++	test_cmp expect reflog
+ '
+ 
+ test_expect_success 'git branch -d d/e/f should delete a branch and a log' '
+ 	git branch -d d/e/f &&
+-	test_path_is_missing .git/refs/heads/d/e/f &&
++	test_must_fail git rev-parse --verify refs/heads/d/e/f &&
+ 	test_must_fail git reflog exists refs/heads/d/e/f
+ '
+ 
+@@ -156,34 +156,34 @@ test_expect_success 'git branch -M master2 master2 should work when master is ch
+ 
+ test_expect_success 'git branch -v -d t should work' '
+ 	git branch t &&
+-	test_path_is_file .git/refs/heads/t &&
++	git rev-parse --verify refs/heads/t &&
+ 	git branch -v -d t &&
+-	test_path_is_missing .git/refs/heads/t
++	test_must_fail git rev-parse --verify refs/heads/t
+ '
+ 
+ test_expect_success 'git branch -v -m t s should work' '
+ 	git branch t &&
+-	test_path_is_file .git/refs/heads/t &&
++	git rev-parse --verify refs/heads/t &&
+ 	git branch -v -m t s &&
+-	test_path_is_missing .git/refs/heads/t &&
+-	test_path_is_file .git/refs/heads/s &&
++	test_must_fail git rev-parse --verify refs/heads/t &&
++	git rev-parse --verify refs/heads/s &&
+ 	git branch -d s
+ '
+ 
+ test_expect_success 'git branch -m -d t s should fail' '
+ 	git branch t &&
+-	test_path_is_file .git/refs/heads/t &&
++	git rev-parse refs/heads/t &&
+ 	test_must_fail git branch -m -d t s &&
+ 	git branch -d t &&
+-	test_path_is_missing .git/refs/heads/t
++	test_must_fail git rev-parse refs/heads/t
+ '
+ 
+ test_expect_success 'git branch --list -d t should fail' '
+ 	git branch t &&
+-	test_path_is_file .git/refs/heads/t &&
++	git rev-parse refs/heads/t &&
+ 	test_must_fail git branch --list -d t &&
+ 	git branch -d t &&
+-	test_path_is_missing .git/refs/heads/t
++	test_must_fail git rev-parse refs/heads/t
+ '
+ 
+ test_expect_success 'git branch --column' '
+@@ -263,6 +263,10 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++# All alternate ref storage backends require config, so we just skip
++# the "no-config" test if we're using one.
++if test $ref_storage = "files"
++then
+ mv .git/config .git/config-saved
+ 
+ test_expect_success 'git branch -m q q2 without config should succeed' '
+@@ -271,6 +275,7 @@ test_expect_success 'git branch -m q q2 without config should succeed' '
+ '
+ 
+ mv .git/config-saved .git/config
++fi
+ 
+ git config branch.s/s.dummy Hello
+ 
+@@ -294,26 +299,26 @@ test_expect_success 'deleting a symref' '
+ 	git symbolic-ref refs/heads/symref refs/heads/target &&
+ 	echo "Deleted branch symref (was refs/heads/target)." >expect &&
+ 	git branch -d symref >actual &&
+-	test_path_is_file .git/refs/heads/target &&
+-	test_path_is_missing .git/refs/heads/symref &&
++	git rev-parse refs/heads/target &&
++	test_must_fail git rev-parse refs/heads/symref &&
+ 	test_i18ncmp expect actual
+ '
+ 
+ test_expect_success 'deleting a dangling symref' '
+ 	git symbolic-ref refs/heads/dangling-symref nowhere &&
+-	test_path_is_file .git/refs/heads/dangling-symref &&
++	raw_ref refs/heads/dangling-symref &&
+ 	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
+ 	git branch -d dangling-symref >actual &&
+-	test_path_is_missing .git/refs/heads/dangling-symref &&
++	test_must_fail git rev-parse refs/heads/dangling-symref &&
+ 	test_i18ncmp expect actual
+ '
+ 
+ test_expect_success 'deleting a self-referential symref' '
+ 	git symbolic-ref refs/heads/self-reference refs/heads/self-reference &&
+-	test_path_is_file .git/refs/heads/self-reference &&
++	raw_ref refs/heads/self-reference &&
+ 	echo "Deleted branch self-reference (was refs/heads/self-reference)." >expect &&
+ 	git branch -d self-reference >actual &&
+-	test_path_is_missing .git/refs/heads/self-reference &&
++	test_must_fail git rev-parse refs/heads/self-reference &&
+ 	test_i18ncmp expect actual
+ '
+ 
+@@ -321,16 +326,20 @@ test_expect_success 'renaming a symref is not allowed' '
+ 	git symbolic-ref refs/heads/master2 refs/heads/master &&
+ 	test_must_fail git branch -m master2 master3 &&
+ 	git symbolic-ref refs/heads/master2 &&
+-	test_path_is_file .git/refs/heads/master &&
+-	test_path_is_missing .git/refs/heads/master3
++	git rev-parse refs/heads/master &&
++	test_must_fail git rev-parse refs/heads/master3
+ '
+ 
++# lmdb doesn't support store reflogs in the filesystem
++if test $ref_storage != "lmdb"
++then
+ test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
+ 	git branch -l u &&
+ 	mv .git/logs/refs/heads/u real-u &&
+ 	ln -s real-u .git/logs/refs/heads/u &&
+ 	test_must_fail git branch -m u v
+ '
++fi
+ 
+ test_expect_success 'test tracking setup via --track' '
+ 	git config remote.local.url . &&
+@@ -556,9 +565,9 @@ EOF
+ test_expect_success 'git checkout -b g/h/i -l should create a branch and a log' '
+ 	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+ 	git checkout -b g/h/i -l master &&
+-	test_path_is_file .git/refs/heads/g/h/i &&
+-	test_path_is_file .git/logs/refs/heads/g/h/i &&
+-	test_cmp expect .git/logs/refs/heads/g/h/i
++	git rev-parse refs/heads/g/h/i &&
++	raw_reflog refs/heads/g/h/i > reflog &&
++	test_cmp expect reflog
+ '
+ 
+ test_expect_success 'checkout -b makes reflog by default' '
+@@ -908,17 +917,17 @@ test_expect_success '--merged catches invalid object names' '
+ 
+ test_expect_success 'tracking with unexpected .fetch refspec' '
+ 	rm -rf a b c d &&
+-	git init a &&
++	git init $ref_storage_arg a &&
+ 	(
+ 		cd a &&
+ 		test_commit a
+ 	) &&
+-	git init b &&
++	git init $ref_storage_arg b &&
+ 	(
+ 		cd b &&
+ 		test_commit b
+ 	) &&
+-	git init c &&
++	git init $ref_storage_arg c &&
+ 	(
+ 		cd c &&
+ 		test_commit c &&
+@@ -926,7 +935,7 @@ test_expect_success 'tracking with unexpected .fetch refspec' '
+ 		git remote add b ../b &&
+ 		git fetch --all
+ 	) &&
+-	git init d &&
++	git init $ref_storage_arg d &&
+ 	(
+ 		cd d &&
+ 		git remote add c ../c &&
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 9b182a0..5d55be3 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -11,6 +11,13 @@ semantic is still the same.
+ '
+ . ./test-lib.sh
+ 
++backend=$ref_storage
++if test "$backend" = "lmdb"
++then
++	skip_all="The lmdb ref storage doesn't pack refs"
++	test_done
++fi
++
+ test_expect_success 'enable reflogs' '
+ 	git config core.logallrefupdates true
+ '
+diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
+index 3b7caca..84d1e8e 100755
+--- a/t/t3211-peel-ref.sh
++++ b/t/t3211-peel-ref.sh
+@@ -3,6 +3,12 @@
+ test_description='tests for the peel_ref optimization of packed-refs'
+ . ./test-lib.sh
+ 
++if test "$ref_storage" = "lmdb"
++then
++	skip_all="The lmdb ref storage doesn't pack refs"
++	test_done
++fi
++
+ test_expect_success 'create annotated tag in refs/tags' '
+ 	test_commit base &&
+ 	git tag -m annotated foo
+diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
+index 19aed7e..49148a2 100755
+--- a/t/t3308-notes-merge.sh
++++ b/t/t3308-notes-merge.sh
+@@ -79,7 +79,7 @@ test_expect_success 'fail to merge empty notes ref into empty notes ref (z => y)
+ test_expect_success 'fail to merge into various non-notes refs' '
+ 	test_must_fail git -c "core.notesRef=refs/notes" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/" notes merge x &&
+-	mkdir -p .git/refs/notes/dir &&
++	git update-ref refs/notes/dir/test HEAD &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/dir" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/dir/" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/heads/master" notes merge x &&
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 544f9ad..5508eb0 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -608,7 +608,7 @@ test_expect_success 'submodule rebase setup' '
+ 	git checkout A &&
+ 	mkdir sub &&
+ 	(
+-		cd sub && git init && >elif &&
++		cd sub && git init $ref_storage_arg && >elif &&
+ 		git add elif && git commit -m "submodule initial"
+ 	) &&
+ 	echo 1 >file1 &&
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index d046d98..01d207e 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -220,7 +220,7 @@ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
+ test_expect_success 'Call "rm" from outside the work tree' '
+ 	mkdir repo &&
+ 	(cd repo &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 echo something > somefile &&
+ 	 git add somefile &&
+ 	 git commit -m "add a file" &&
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index 8eb4794..e7ac52e 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -224,7 +224,7 @@ EOF
+ 
+ test_expect_success \
+     'allow empty tag email' \
+-    'git mktag <tag.sig >.git/refs/tags/mytag 2>message'
++    'write_ref refs/tags/mytag $(git mktag <tag.sig 2>message)'
+ 
+ ############################################################
+ # 16. disallow spaces in tag email
+@@ -352,7 +352,7 @@ EOF
+ 
+ test_expect_success \
+     'create valid tag' \
+-    'git mktag <tag.sig >.git/refs/tags/mytag 2>message'
++    'write_ref refs/tags/mytag $(git mktag <tag.sig 2>message)'
+ 
+ ############################################################
+ # 25. check mytag
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 2142c1f..1e3b50e 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -671,7 +671,7 @@ test_expect_success 'store updates stash ref and reflog' '
+ 	git reset --hard &&
+ 	! grep quux bazzy &&
+ 	git stash store -m quuxery $STASH_ID &&
+-	test $(cat .git/refs/stash) = $STASH_ID &&
++	test $(git rev-parse stash) = $STASH_ID &&
+ 	git reflog --format=%H stash| grep $STASH_ID &&
+ 	git stash pop &&
+ 	grep quux bazzy
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index 43c488b..76b3b64 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -112,7 +112,7 @@ test_expect_success 'diff-tree -r with wildcard' '
+ 
+ test_expect_success 'setup submodules' '
+ 	test_tick &&
+-	git init submod &&
++	git init $ref_storage_arg submod &&
+ 	( cd submod && test_commit first; ) &&
+ 	git add submod &&
+ 	git commit -m first &&
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 0446201..b03b4f6 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -247,7 +247,7 @@ test_expect_success 'clean up crlf leftovers' '
+ '
+ 
+ test_expect_success 'submodule diff' '
+-	git init sub &&
++	git init $ref_storage_arg sub &&
+ 	( cd sub && test_commit sub1 ) &&
+ 	git add sub &&
+ 	test_tick &&
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index 518bf95..147351d 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -344,7 +344,7 @@ test_expect_success 'combined (empty submodule)' '
+ 
+ test_expect_success 'combined (with submodule)' '
+ 	rm -fr sub &&
+-	git clone --no-checkout . sub &&
++	git clone $ref_storage_arg --no-checkout . sub &&
+ 	git diff >actual &&
+ 	test_cmp expect.withsub actual
+ '
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index 461f4bb..553cabe 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -13,7 +13,7 @@ test_expect_success 'setup' '
+ 	git commit -a -m second &&
+ 	mkdir -p test-outside/repo && (
+ 		cd test-outside/repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo "1 1" >a &&
+ 		git add . &&
+ 		git commit -m 1
+diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+index 0ba8194..427b601 100755
+--- a/t/t4255-am-submodule.sh
++++ b/t/t4255-am-submodule.sh
+@@ -22,7 +22,7 @@ test_expect_success 'setup diff.submodule' '
+ 	test_commit one &&
+ 	INITIAL=$(git rev-parse HEAD) &&
+ 
+-	git init submodule &&
++	git init $ref_storage_arg submodule &&
+ 	(
+ 		cd submodule &&
+ 		test_commit two &&
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 4b68bba..79249ef 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -190,7 +190,8 @@ test_expect_success \
+ test_expect_success \
+     'git get-tar-commit-id' \
+     'git get-tar-commit-id <b.tar >b.commitid &&
+-     test_cmp .git/$(git symbolic-ref HEAD) b.commitid'
++     raw_ref $(git symbolic-ref HEAD) > expect &&
++     test_cmp expect b.commitid'
+ 
+ test_expect_success 'git archive with --output, override inferred format' '
+ 	git archive --format=tar --output=d4.zip HEAD &&
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index ad7ad2f..cfe8038 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -93,7 +93,7 @@ test_expect_success 'prune: prune nonsense parameters' '
+ test_expect_success 'prune: prune unreachable heads' '
+ 
+ 	git config core.logAllRefUpdates false &&
+-	mv .git/logs .git/logs.old &&
++	delete_all_reflogs &&
+ 	: > file2 &&
+ 	git add file2 &&
+ 	git commit -m temporary &&
+diff --git a/t/t5312-prune-corruption.sh b/t/t5312-prune-corruption.sh
+index da9d599..f118735 100755
+--- a/t/t5312-prune-corruption.sh
++++ b/t/t5312-prune-corruption.sh
+@@ -21,7 +21,7 @@ test_expect_success 'create history reachable only from a bogus-named ref' '
+ 	test_tick && git commit --allow-empty -m bogus &&
+ 	bogus=$(git rev-parse HEAD) &&
+ 	git cat-file commit $bogus >saved &&
+-	echo $bogus >.git/refs/heads/bogus..name &&
++	write_ref refs/heads/bogus..name $bogus &&
+ 	git reset --hard HEAD^
+ '
+ 
+@@ -47,7 +47,7 @@ test_expect_success 'destructive repack keeps packed object' '
+ 
+ # subsequent tests will have different corruptions
+ test_expect_success 'clean up bogus ref' '
+-	rm .git/refs/heads/bogus..name
++	delete_ref refs/heads/bogus..name
+ '
+ 
+ # We create two new objects here, "one" and "two". Our
+@@ -85,6 +85,13 @@ test_expect_success 'pack-refs does not silently delete broken loose ref' '
+ 	test_cmp expect actual
+ '
+ 
++backend=$ref_storage
++if test "$backend" = "lmdb"
++then
++       skip="The lmdb backend doesn't write a packed-refs file"
++       test_done
++fi
++
+ # we do not want to count on running pack-refs to
+ # actually pack it, as it is perfectly reasonable to
+ # skip processing a broken ref
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index e5f83bf..9b7aeac 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -30,7 +30,7 @@ add () {
+ 	test_tick &&
+ 	commit=$(echo "$text" | git commit-tree $tree $parents) &&
+ 	eval "$name=$commit; export $name" &&
+-	echo $commit > .git/refs/heads/$branch &&
++	git update-ref refs/heads/$branch $commit &&
+ 	eval ${branch}TIP=$commit
+ }
+ 
+@@ -45,10 +45,10 @@ pull_to_client () {
+ 
+ 			case "$heads" in
+ 			    *A*)
+-				    echo $ATIP > .git/refs/heads/A;;
++				    git update-ref refs/heads/A $ATIP;;
+ 			esac &&
+ 			case "$heads" in *B*)
+-			    echo $BTIP > .git/refs/heads/B;;
++			    git update-ref refs/heads/B $BTIP;;
+ 			esac &&
+ 			git symbolic-ref HEAD refs/heads/$(echo $heads \
+ 				| sed -e "s/^\(.\).*$/\1/") &&
+@@ -92,8 +92,8 @@ test_expect_success 'setup' '
+ 		cur=$(($cur+1))
+ 	done &&
+ 	add B1 $A1 &&
+-	echo $ATIP > .git/refs/heads/A &&
+-	echo $BTIP > .git/refs/heads/B &&
++	git update-ref refs/heads/A $ATIP &&
++	git update-ref refs/heads/B $BTIP &&
+ 	git symbolic-ref HEAD refs/heads/B
+ '
+ 
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 0c10c85..9591271 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -28,20 +28,20 @@ test_expect_success setup '
+ 	git commit -a -m original'
+ 
+ test_expect_success "clone and setup child repos" '
+-	git clone . one &&
++	git clone $ref_storage_arg . one &&
+ 	(
+ 		cd one &&
+ 		echo >file updated by one &&
+ 		git commit -a -m "updated by one"
+ 	) &&
+-	git clone . two &&
++	git clone $ref_storage_arg  . two &&
+ 	(
+ 		cd two &&
+ 		git config branch.master.remote one &&
+ 		git config remote.one.url ../one/.git/ &&
+ 		git config remote.one.fetch refs/heads/master:refs/heads/one
+ 	) &&
+-	git clone . three &&
++	git clone $ref_storage_arg  . three &&
+ 	(
+ 		cd three &&
+ 		git config branch.master.remote two &&
+@@ -53,8 +53,8 @@ test_expect_success "clone and setup child repos" '
+ 			echo "Pull: refs/heads/one:refs/heads/one"
+ 		} >.git/remotes/two
+ 	) &&
+-	git clone . bundle &&
+-	git clone . seven
++	git clone $ref_storage_arg  . bundle &&
++	git clone $ref_storage_arg  . seven
+ '
+ 
+ test_expect_success "fetch test" '
+@@ -63,7 +63,7 @@ test_expect_success "fetch test" '
+ 	git commit -a -m "updated by origin" &&
+ 	cd two &&
+ 	git fetch &&
+-	test -f .git/refs/heads/one &&
++	git rev-parse --verify refs/heads/one &&
+ 	mine=$(git rev-parse refs/heads/one) &&
+ 	his=$(cd ../one && git rev-parse refs/heads/master) &&
+ 	test "z$mine" = "z$his"
+@@ -73,8 +73,8 @@ test_expect_success "fetch test for-merge" '
+ 	cd "$D" &&
+ 	cd three &&
+ 	git fetch &&
+-	test -f .git/refs/heads/two &&
+-	test -f .git/refs/heads/one &&
++	git rev-parse --verify refs/heads/two &&
++	git rev-parse --verify refs/heads/one &&
+ 	master_in_two=$(cd ../two && git rev-parse master) &&
+ 	one_in_two=$(cd ../two && git rev-parse one) &&
+ 	{
+@@ -180,7 +180,7 @@ test_expect_success 'fetch tags when there is no tags' '
+ 
+     mkdir notags &&
+     cd notags &&
+-    git init &&
++    git init $ref_storage_arg &&
+ 
+     git fetch -t ..
+ 
+@@ -194,7 +194,7 @@ test_expect_success 'fetch following tags' '
+ 
+ 	mkdir four &&
+ 	cd four &&
+-	git init &&
++	git init $ref_storage_arg &&
+ 
+ 	git fetch .. :track &&
+ 	git show-ref --verify refs/tags/anno &&
+@@ -204,7 +204,7 @@ test_expect_success 'fetch following tags' '
+ 
+ test_expect_success 'fetch uses remote ref names to describe new refs' '
+ 	cd "$D" &&
+-	git init descriptive &&
++	git init $ref_storage_arg descriptive &&
+ 	(
+ 		cd descriptive &&
+ 		git config remote.o.url .. &&
+@@ -238,7 +238,7 @@ test_expect_success 'fetch must not resolve short tag name' '
+ 
+ 	mkdir five &&
+ 	cd five &&
+-	git init &&
++	git init $ref_storage_arg &&
+ 
+ 	test_must_fail git fetch .. anno:five
+ 
+@@ -251,7 +251,7 @@ test_expect_success 'fetch can now resolve short remote name' '
+ 
+ 	mkdir six &&
+ 	cd six &&
+-	git init &&
++	git init $ref_storage_arg &&
+ 
+ 	git fetch .. six:six
+ '
+@@ -529,7 +529,7 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
+ 	mkdir dups &&
+ 	(
+ 		cd dups &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		git config branch.master.remote three &&
+ 		git config remote.three.url ../three/.git &&
+ 		git config remote.three.fetch +refs/heads/*:refs/remotes/origin/* &&
+@@ -665,7 +665,7 @@ test_expect_success 'fetching a one-level ref works' '
+ 	test_commit extra &&
+ 	git reset --hard HEAD^ &&
+ 	git update-ref refs/foo extra &&
+-	git init one-level &&
++	git init $ref_storage_arg one-level &&
+ 	(
+ 		cd one-level &&
+ 		git fetch .. HEAD refs/foo
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 954d0e4..0fef8ac 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -38,7 +38,7 @@ test_expect_success setup '
+ 	mkdir deepsubmodule &&
+ 	(
+ 		cd deepsubmodule &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo deepsubcontent > deepsubfile &&
+ 		git add deepsubfile &&
+ 		git commit -m new deepsubfile
+@@ -46,7 +46,7 @@ test_expect_success setup '
+ 	mkdir submodule &&
+ 	(
+ 		cd submodule &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo subcontent > subfile &&
+ 		git add subfile &&
+ 		git submodule add "$pwd/deepsubmodule" subdir/deepsubmodule &&
+diff --git a/t/t5527-fetch-odd-refs.sh b/t/t5527-fetch-odd-refs.sh
+index 207899a..b9ecfa0 100755
+--- a/t/t5527-fetch-odd-refs.sh
++++ b/t/t5527-fetch-odd-refs.sh
+@@ -26,6 +26,13 @@ test_expect_success 'suffix ref is ignored during fetch' '
+ 	test_cmp expect actual
+ '
+ 
++backend=$ref_storage
++if test "$backend" = "lmdb"
++then
++    skip="The lmdb backend doesn't do crazy-long refs"
++    test_done
++fi
++
+ test_expect_success 'try to create repo with absurdly long refname' '
+ 	ref240=$_z40/$_z40/$_z40/$_z40/$_z40/$_z40 &&
+ 	ref1440=$ref240/$ref240/$ref240/$ref240/$ref240/$ref240 &&
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index df8d2f0..114d25a 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -173,6 +173,13 @@ EOF
+ 	)
+ '
+ 
++backend=$ref_storage
++if test "$backend" = "lmdb"
++then
++	skip="The lmdb backend needs write access for its locks"
++	test_done
++fi
++
+ test_expect_success POSIXPERM,SANITY 'shallow fetch from a read-only repo' '
+ 	cp -R .git read-only.git &&
+ 	find read-only.git -print | xargs chmod -w &&
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 4320082..49e7868 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -34,14 +34,14 @@ test_expect_success 'preparing first repository' '
+ '
+ 
+ test_expect_success 'preparing second repository' '
+-	git clone A B &&
++	git clone $ref_storage_arg A B &&
+ 	commit_in B file2 &&
+ 	git -C B repack -ad &&
+ 	git -C B prune
+ '
+ 
+ test_expect_success 'cloning with reference (-l -s)' '
+-	git clone -l -s --reference B A C
++	git clone $ref_storage_arg -l -s --reference B A C
+ '
+ 
+ test_expect_success 'existence of info/alternates' '
+@@ -57,7 +57,7 @@ test_expect_success 'that reference gets used' '
+ '
+ 
+ test_expect_success 'cloning with reference (no -l -s)' '
+-	GIT_TRACE_PACKET=$U.D git clone --reference B "file://$(pwd)/A" D
++	GIT_TRACE_PACKET=$U.D git clone $ref_storage_arg --reference B "file://$(pwd)/A" D
+ '
+ 
+ test_expect_success 'fetched no objects' '
+@@ -108,20 +108,20 @@ test_expect_success 'preparing alternate repository #1' '
+ '
+ 
+ test_expect_success 'cloning alternate repo #2 and adding changes to repo #1' '
+-	git clone F G &&
++	git clone $ref_storage_arg F G &&
+ 	commit_in F file2
+ '
+ 
+ test_expect_success 'cloning alternate repo #1, using #2 as reference' '
+-	git clone --reference G F H
++	git clone $ref_storage_arg --reference G F H
+ '
+ 
+ test_expect_success 'cloning with reference being subset of source (-l -s)' '
+-	git clone -l -s --reference A B E
++	git clone $ref_storage_arg -l -s --reference A B E
+ '
+ 
+ test_expect_success 'cloning with multiple references drops duplicates' '
+-	git clone -s --reference B --reference A --reference B A dups &&
++	git clone $ref_storage_arg -s --reference B --reference A --reference B A dups &&
+ 	test_line_count = 2 dups/.git/objects/info/alternates
+ '
+ 
+@@ -129,11 +129,11 @@ test_expect_success 'clone with reference from a tagged repository' '
+ 	(
+ 		cd A && git tag -a -m tagged HEAD
+ 	) &&
+-	git clone --reference=A A I
++	git clone $ref_storage_arg --reference=A A I
+ '
+ 
+ test_expect_success 'prepare branched repository' '
+-	git clone A J &&
++	git clone $ref_storage_arg A J &&
+ 	(
+ 		cd J &&
+ 		git checkout -b other master^ &&
+@@ -145,7 +145,7 @@ test_expect_success 'prepare branched repository' '
+ '
+ 
+ test_expect_success 'fetch with incomplete alternates' '
+-	git init K &&
++	git init $ref_storage_arg K &&
+ 	echo "$base_dir/A/.git/objects" >K/.git/objects/info/alternates &&
+ 	(
+ 		cd K &&
+@@ -160,29 +160,29 @@ test_expect_success 'fetch with incomplete alternates' '
+ '
+ 
+ test_expect_success 'clone using repo with gitfile as a reference' '
+-	git clone --separate-git-dir=L A M &&
+-	git clone --reference=M A N &&
++	git clone $ref_storage_arg --separate-git-dir=L A M &&
++	git clone $ref_storage_arg --reference=M A N &&
+ 	echo "$base_dir/L/objects" >expected &&
+ 	test_cmp expected "$base_dir/N/.git/objects/info/alternates"
+ '
+ 
+ test_expect_success 'clone using repo pointed at by gitfile as reference' '
+-	git clone --reference=M/.git A O &&
++	git clone $ref_storage_arg --reference=M/.git A O &&
+ 	echo "$base_dir/L/objects" >expected &&
+ 	test_cmp expected "$base_dir/O/.git/objects/info/alternates"
+ '
+ 
+ test_expect_success 'clone and dissociate from reference' '
+-	git init P &&
++	git init $ref_storage_arg P &&
+ 	(
+ 		cd P &&	test_commit one
+ 	) &&
+-	git clone P Q &&
++	git clone $ref_storage_arg P Q &&
+ 	(
+ 		cd Q && test_commit two
+ 	) &&
+-	git clone --no-local --reference=P Q R &&
+-	git clone --no-local --reference=P --dissociate Q S &&
++	git clone $ref_storage_arg --no-local --reference=P Q R &&
++	git clone $ref_storage_arg --no-local --reference=P --dissociate Q S &&
+ 	# removing the reference P would corrupt R but not S
+ 	rm -fr P &&
+ 	test_must_fail git -C R fsck &&
+@@ -198,14 +198,14 @@ test_expect_success 'clone, dissociate from partial reference and repack' '
+ 		test_commit two &&
+ 		git repack
+ 	) &&
+-	git clone --bare P Q &&
++	git clone $ref_storage_arg  --bare P Q &&
+ 	(
+ 		cd P &&
+ 		git checkout -b second &&
+ 		test_commit three &&
+ 		git repack
+ 	) &&
+-	git clone --bare --dissociate --reference=P Q R &&
++	git clone $ref_storage_arg  --bare --dissociate --reference=P Q R &&
+ 	ls R/objects/pack/*.pack >packs.txt &&
+ 	test_line_count = 1 packs.txt
+ '
+@@ -214,9 +214,9 @@ test_expect_success 'clone, dissociate from alternates' '
+ 	rm -fr A B C &&
+ 	test_create_repo A &&
+ 	commit_in A file1 &&
+-	git clone --reference=A A B &&
++	git clone $ref_storage_arg  --reference=A A B &&
+ 	test_line_count = 1 B/.git/objects/info/alternates &&
+-	git clone --local --dissociate B C &&
++	git clone $ref_storage_arg  --local --dissociate B C &&
+ 	! test -f C/.git/objects/info/alternates &&
+ 	( cd C && git fsck )
+ '
+diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
+index 05ddc69..0c009ab 100755
+--- a/t/t6001-rev-list-graft.sh
++++ b/t/t6001-rev-list-graft.sh
+@@ -20,7 +20,8 @@ test_expect_success setup '
+ 	git commit -a -m "Third in one history." &&
+ 	A2=$(git rev-parse --verify HEAD) &&
+ 
+-	rm -f .git/refs/heads/master .git/index &&
++	delete_ref refs/heads/master &&
++	rm -f .git/index &&
+ 
+ 	echo >fileA fileA again &&
+ 	echo >subdir/fileB fileB again &&
+diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+index 39b3238..b2003c5 100755
+--- a/t/t6010-merge-base.sh
++++ b/t/t6010-merge-base.sh
+@@ -34,7 +34,7 @@ doit () {
+ 
+ 	commit=$(echo $NAME | git commit-tree $T $PARENTS) &&
+ 
+-	echo $commit >.git/refs/tags/$NAME &&
++	git update-ref refs/tags/$NAME $commit &&
+ 	echo $commit
+ }
+ 
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index c630aba..60f0011 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -124,13 +124,13 @@ tagger T A Gger <> 0 +0000
+ EOF
+ 
+ test_expect_success 'tag replaced commit' '
+-     git mktag <tag.sig >.git/refs/tags/mytag 2>message
++    write_ref refs/tags/mytag $(git mktag <tag.sig 2>message)
+ '
+ 
+ test_expect_success '"git fsck" works' '
+      git fsck master >fsck_master.out &&
+      grep "dangling commit $R" fsck_master.out &&
+-     grep "dangling tag $(cat .git/refs/tags/mytag)" fsck_master.out &&
++     grep "dangling tag $(raw_ref refs/tags/mytag)" fsck_master.out &&
+      test -z "$(git fsck)"
+ '
+ 
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 85f2694..ca30c18 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -128,7 +128,8 @@ test_expect_success 'no warning was displayed for A' '
+ '
+ 
+ test_expect_success 'rename tag A to Q locally' '
+-	mv .git/refs/tags/A .git/refs/tags/Q
++	write_ref refs/tags/Q $(raw_ref refs/tags/A) &&
++	delete_ref refs/tags/A
+ '
+ cat - >err.expect <<EOF
+ warning: tag 'A' is really 'Q' here
+@@ -138,7 +139,8 @@ test_expect_success 'warning was displayed for Q' '
+ 	test_i18ncmp err.expect err.actual
+ '
+ test_expect_success 'rename tag Q back to A' '
+-	mv .git/refs/tags/Q .git/refs/tags/A
++	write_ref refs/tags/A $(raw_ref refs/tags/Q) &&
++	delete_ref refs/tags/Q
+ '
+ 
+ test_expect_success 'pack tag refs' 'git pack-refs'
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index cdb67a0..f7ba4ca 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -16,8 +16,8 @@ test_expect_success setup '
+ 
+ test_expect_success 'Broken refs are reported correctly' '
+ 	r=refs/heads/bogus &&
+-	: >.git/$r &&
+-	test_when_finished "rm -f .git/$r" &&
++	write_ref $r '' &&
++	test_when_finished "delete_ref $r" &&
+ 	echo "warning: ignoring broken ref $r" >broken-err &&
+ 	git for-each-ref >out 2>err &&
+ 	test_cmp full-list out &&
+@@ -26,8 +26,8 @@ test_expect_success 'Broken refs are reported correctly' '
+ 
+ test_expect_success 'NULL_SHA1 refs are reported correctly' '
+ 	r=refs/heads/zeros &&
+-	echo $ZEROS >.git/$r &&
+-	test_when_finished "rm -f .git/$r" &&
++	write_ref $r $ZEROS &&
++	test_when_finished "delete_ref $r" &&
+ 	echo "warning: ignoring broken ref $r" >zeros-err &&
+ 	git for-each-ref >out 2>err &&
+ 	test_cmp full-list out &&
+@@ -39,8 +39,8 @@ test_expect_success 'NULL_SHA1 refs are reported correctly' '
+ 
+ test_expect_success 'Missing objects are reported correctly' '
+ 	r=refs/heads/missing &&
+-	echo $MISSING >.git/$r &&
+-	test_when_finished "rm -f .git/$r" &&
++	write_ref $r $MISSING &&
++	test_when_finished "delete_ref $r" &&
+ 	echo "fatal: missing object $MISSING for $r" >missing-err &&
+ 	test_must_fail git for-each-ref 2>err &&
+ 	test_cmp missing-err err &&
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 8859236..ab1fb99 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -65,7 +65,7 @@ test_expect_success setup '
+ test_expect_success "checkout from non-existing branch" '
+ 
+ 	git checkout -b delete-me master &&
+-	rm .git/refs/heads/delete-me &&
++	git update-ref -d --no-deref refs/heads/delete-me &&
+ 	test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
+ 	git checkout master &&
+ 	test refs/heads/master = "$(git symbolic-ref HEAD)"
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 86ceb38..36832ec 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -431,7 +431,7 @@ test_expect_success 'nested git work tree' '
+ 	mkdir -p foo bar baz/boo &&
+ 	(
+ 		cd foo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit nested hello.world
+ 	) &&
+ 	(
+@@ -440,7 +440,7 @@ test_expect_success 'nested git work tree' '
+ 	) &&
+ 	(
+ 		cd baz/boo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit deeply.nested deeper.world
+ 	) &&
+ 	git clean -f -d &&
+@@ -455,6 +455,7 @@ test_expect_success 'should clean things that almost look like git but are not'
+ 	rm -fr almost_git almost_bare_git almost_submodule &&
+ 	mkdir -p almost_git/.git/objects &&
+ 	mkdir -p almost_git/.git/refs &&
++	mkdir -p almost_git/.git/refs.lmdb &&
+ 	cat >almost_git/.git/HEAD <<-\EOF &&
+ 	garbage
+ 	EOF
+@@ -475,7 +476,7 @@ test_expect_success 'should not clean submodules' '
+ 	mkdir repo to_clean &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit msg hello.world
+ 	) &&
+ 	git submodule add ./repo/.git sub1 &&
+@@ -511,7 +512,7 @@ test_expect_success POSIXPERM 'should avoid cleaning possible submodules' '
+ 
+ test_expect_success 'nested (empty) git should be kept' '
+ 	rm -fr empty_repo to_clean &&
+-	git init empty_repo &&
++	git init $ref_storage_arg empty_repo &&
+ 	mkdir to_clean &&
+ 	>to_clean/should_clean.this &&
+ 	git clean -f -d &&
+@@ -521,7 +522,7 @@ test_expect_success 'nested (empty) git should be kept' '
+ 
+ test_expect_success 'nested bare repositories should be cleaned' '
+ 	rm -fr bare1 bare2 subdir &&
+-	git init --bare bare1 &&
++	git init $ref_storage_arg --bare bare1 &&
+ 	git clone --local --bare . bare2 &&
+ 	mkdir subdir &&
+ 	cp -r bare2 subdir/bare3 &&
+@@ -534,7 +535,7 @@ test_expect_success 'nested bare repositories should be cleaned' '
+ test_expect_failure 'nested (empty) bare repositories should be cleaned even when in .git' '
+ 	rm -fr strange_bare &&
+ 	mkdir strange_bare &&
+-	git init --bare strange_bare/.git &&
++	git init $ref_storage_arg --bare strange_bare/.git &&
+ 	git clean -f -d &&
+ 	test_path_is_missing strange_bare
+ '
+@@ -552,7 +553,7 @@ test_expect_success 'giving path in nested git work tree will remove it' '
+ 	mkdir repo &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		mkdir -p bar/baz &&
+ 		test_commit msg bar/baz/hello.world
+ 	) &&
+@@ -567,7 +568,7 @@ test_expect_success 'giving path to nested .git will not remove it' '
+ 	mkdir repo untracked &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit msg hello.world
+ 	) &&
+ 	git clean -f -d repo/.git &&
+@@ -582,7 +583,7 @@ test_expect_success 'giving path to nested .git/ will remove contents' '
+ 	mkdir repo untracked &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit msg hello.world
+ 	) &&
+ 	git clean -f -d repo/.git/ &&
+@@ -596,7 +597,7 @@ test_expect_success 'force removal of nested git work tree' '
+ 	mkdir -p foo bar baz/boo &&
+ 	(
+ 		cd foo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit nested hello.world
+ 	) &&
+ 	(
+@@ -605,7 +606,7 @@ test_expect_success 'force removal of nested git work tree' '
+ 	) &&
+ 	(
+ 		cd baz/boo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		test_commit deeply.nested deeper.world
+ 	) &&
+ 	git clean -f -f -d &&
+@@ -619,7 +620,7 @@ test_expect_success 'git clean -e' '
+ 	mkdir repo &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		touch known 1 2 3 &&
+ 		git add known &&
+ 		git clean -f -e 1 -e 2 &&
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5991e3c..131a23f 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -32,7 +32,7 @@ test_expect_success 'setup - repository in init subdirectory' '
+ 	mkdir init &&
+ 	(
+ 		cd init &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo a >a &&
+ 		git add a &&
+ 		git commit -m "submodule commit 1" &&
+@@ -52,8 +52,8 @@ test_expect_success 'setup - hide init subdirectory' '
+ '
+ 
+ test_expect_success 'setup - repository to add submodules to' '
+-	git init addtest &&
+-	git init addtest-ignore
++	git init $ref_storage_arg addtest &&
++	git init $ref_storage_arg addtest-ignore
+ '
+ 
+ # The 'submodule add' tests need some repository to add as a submodule.
+@@ -540,7 +540,7 @@ test_expect_success 'add submodules without specifying an explicit path' '
+ 	mkdir repo &&
+ 	(
+ 		cd repo &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		echo r >r &&
+ 		git add r &&
+ 		git commit -m "repo commit 1"
+@@ -585,11 +585,11 @@ test_expect_success 'set up for relative path tests' '
+ 	mkdir reltest &&
+ 	(
+ 		cd reltest &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		mkdir sub &&
+ 		(
+ 			cd sub &&
+-			git init &&
++			git init $ref_storage_arg &&
+ 			test_commit foo
+ 		) &&
+ 		git add sub &&
+@@ -754,7 +754,7 @@ test_expect_success '../bar/a/b/c works with relative local path - ../foo/bar.gi
+ 		cp pristine-.git-config .git/config &&
+ 		cp pristine-.gitmodules .gitmodules &&
+ 		mkdir -p a/b/c &&
+-		(cd a/b/c; git init) &&
++		(cd a/b/c; git init $ref_storage_arg) &&
+ 		git config remote.origin.url ../foo/bar.git &&
+ 		git submodule add ../bar/a/b/c ./a/b/c &&
+ 		git submodule init &&
+@@ -975,7 +975,7 @@ test_expect_success 'submodule with UTF-8 name' '
+ 	mkdir "$svname" &&
+ 	(
+ 		cd "$svname" &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		>sub &&
+ 		git add sub &&
+ 		git commit -m "init sub"
+@@ -990,7 +990,7 @@ test_expect_success 'submodule add clone shallow submodule' '
+ 	pwd=$(pwd) &&
+ 	(
+ 		cd super &&
+-		git init &&
++		git init $ref_storage_arg &&
+ 		git submodule add --depth=1 file://"$pwd"/example2 submodule &&
+ 		(
+ 			cd submodule &&
+diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
+index 8e32f19..85166da 100755
+--- a/t/t7402-submodule-rebase.sh
++++ b/t/t7402-submodule-rebase.sh
+@@ -13,7 +13,7 @@ test_expect_success setup '
+ 	git add file &&
+ 	test_tick &&
+ 	git commit -m initial &&
+-	git clone . submodule &&
++	git clone $ref_storage_arg . submodule &&
+ 	git add submodule &&
+ 	test_tick &&
+ 	git commit -m submodule &&
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index 0d5b42a..9d147df 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -18,7 +18,7 @@ test_expect_success setup '
+ 
+ 	mkdir sub &&
+ 	(cd sub &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 echo original > file &&
+ 	 git add file &&
+ 	 test_tick &&
+@@ -68,10 +68,10 @@ test_expect_success setup '
+ test_expect_success 'setup for merge search' '
+ 	mkdir merge-search &&
+ 	(cd merge-search &&
+-	git init &&
++	git init $ref_storage_arg &&
+ 	mkdir sub &&
+ 	(cd sub &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 echo "file-a" > file-a &&
+ 	 git add file-a &&
+ 	 git commit -m "sub-a" &&
+@@ -232,10 +232,10 @@ test_expect_success 'merging with a modify/modify conflict between merge bases'
+ test_expect_success 'setup for recursive merge with submodule' '
+ 	mkdir merge-recursive &&
+ 	(cd merge-recursive &&
+-	 git init &&
++	 git init $ref_storage_arg &&
+ 	 mkdir sub &&
+ 	 (cd sub &&
+-	  git init &&
++	  git init $ref_storage_arg &&
+ 	  test_commit a &&
+ 	  git checkout -b sub-b master &&
+ 	  test_commit b &&
+diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+index cd480ed..0c9c8f9 100755
+--- a/t/t9104-git-svn-follow-parent.sh
++++ b/t/t9104-git-svn-follow-parent.sh
+@@ -213,7 +213,8 @@ test_expect_success "multi-fetch continues to work" "
+ 	"
+ 
+ test_expect_success "multi-fetch works off a 'clean' repository" '
+-	rm -r "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" "$GIT_DIR/logs" &&
++	rm -rf "$GIT_DIR/svn" "$GIT_DIR/refs/remotes" &&
++	git reflog expire --all --expire=all &&
+ 	mkdir "$GIT_DIR/svn" &&
+ 	git svn multi-fetch
+ 	'
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 6a48e40..83ea46b 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -60,7 +60,7 @@ test_expect_success 'add a file with plus signs' '
+ 	'
+ 
+ test_expect_success 'clone the repository to test rebase' '
+-	git svn clone "$svnrepo" test-rebase &&
++	git svn clone $ref_storage_arg "$svnrepo" test-rebase &&
+ 	(
+ 		cd test-rebase &&
+ 		echo test-rebase >test-rebase &&
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index b5149fd..b36008c 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -42,7 +42,7 @@ test_expect_success 'fast-export | fast-import' '
+ 	WER=$(git rev-parse --verify wer) &&
+ 	MUSS=$(git rev-parse --verify muss) &&
+ 	mkdir new &&
+-	git --git-dir=new/.git init &&
++	git --git-dir=new/.git init $ref_storage_arg &&
+ 	git fast-export --all |
+ 	(cd new &&
+ 	 git fast-import &&
+@@ -158,7 +158,7 @@ test_expect_success 'setup submodule' '
+ 	mkdir sub &&
+ 	(
+ 		cd sub &&
+-		git init  &&
++		git init $ref_storage_arg &&
+ 		echo test file > file &&
+ 		git add file &&
+ 		git commit -m sub_initial
+@@ -183,7 +183,7 @@ test_expect_success 'submodule fast-export | fast-import' '
+ 	SUBENT2=$(git ls-tree master sub) &&
+ 	rm -rf new &&
+ 	mkdir new &&
+-	git --git-dir=new/.git init &&
++	git --git-dir=new/.git init $ref_storage_arg &&
+ 	git fast-export --signed-tags=strip --all |
+ 	(cd new &&
+ 	 git fast-import &&
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2ba62fb..d5751e2 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -126,7 +126,7 @@ actual="$TRASH_DIRECTORY/actual"
+ 
+ test_expect_success 'setup for __gitdir tests' '
+ 	mkdir -p subdir/subsubdir &&
+-	git init otherrepo
++	git init $ref_storage_arg otherrepo
+ '
+ 
+ test_expect_success '__gitdir - from command line (through $__git_dir)' '
+@@ -177,6 +177,7 @@ test_expect_success '__gitdir - cwd is a .git directory' '
+ test_expect_success '__gitdir - parent is a .git directory' '
+ 	echo "$(pwd -P)/.git" >expected &&
+ 	(
++		mkdir -p .git/refs/heads &&
+ 		cd .git/refs/heads &&
+ 		__gitdir >"$actual"
+ 	) &&
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index ffbfa0e..caa706c 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -148,6 +148,7 @@ test_expect_success 'prompt - inside .git directory' '
+ test_expect_success 'prompt - deep inside .git directory' '
+ 	printf " (GIT_DIR!)" >expected &&
+ 	(
++		mkdir -p .git/refs/heads &&
+ 		cd .git/refs/heads &&
+ 		__git_ps1 >"$actual"
+ 	) &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index c64e5a5..9a8bb72 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -783,8 +783,8 @@ test_create_repo () {
+ 	repo="$1"
+ 	mkdir -p "$repo"
+ 	(
+-		cd "$repo" || error "Cannot setup test environment"
+-		"$GIT_EXEC_PATH/git-init" "--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
++	    cd "$repo" || error "Cannot setup test environment"
++		"$GIT_EXEC_PATH/git-init" $ref_storage_arg "--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
+ 		error "cannot run git init -- have you built things yet?"
+ 		mv .git/hooks .git/hooks-disabled
+ 	) || exit
+@@ -941,3 +941,52 @@ mingw_read_file_strip_cr_ () {
+ 		eval "$1=\$$1\$line"
+ 	done
+ }
++
++raw_ref() {
++    if test $ref_storage = "lmdb"
++    then
++	test-refs-lmdb-backend "$1" 2>/dev/null
++    else
++	cat ".git/$1"
++    fi
 +}
 +
-+static void init_env(MDB_env **env, const char *path)
-+{
-+	int ret;
-+	if (*env)
-+		return;
-+
-+	assert(path);
-+
-+	ret = mdb_env_create(env);
-+	if (ret)
-+		die("BUG: mdb_env_create failed: %s", mdb_strerror(ret));
-+	ret = mdb_env_set_maxreaders(*env, 1000);
-+	if (ret)
-+		die("BUG: mdb_env_set_maxreaders failed: %s", mdb_strerror(ret));
-+	ret = mdb_env_set_mapsize(*env, (1<<30));
-+	if (ret)
-+		die("BUG: mdb_set_mapsize failed: %s", mdb_strerror(ret));
-+	for (;;) {
-+		/*
-+		 * The LMDB docs say, "Opening a database can fail if
-+		 * another process is opening or closing it at exactly
-+		 * the same time."  They don't specify what will
-+		 * happen in this case.  From reading LDMB's code, it
-+		 * appears that init_env will return an error code
-+		 * from fcntl: EAGAIN or EACCES.  So we'll retry in
-+		 * those cases.
-+		 */
-+		ret = mdb_env_open(*env, path, MDB_NOSUBDIR, 0664);
-+		if (ret == 0)
-+			break;
-+		if (ret != EAGAIN && ret != EACCES)
-+			die("BUG: mdb_env_open (%s) failed: %s", path,
-+			    mdb_strerror(ret));
-+	}
-+
-+	if (!cleanup_registered) {
-+		cleanup_registered = 1;
-+		atexit(cleanup_txn);
-+	}
++delete_ref() {
++    if test $ref_storage = "lmdb"
++    then
++	test-refs-lmdb-backend -d "$1" 2>/dev/null
++    else
++	rm ".git/$1"
++    fi
 +}
 +
-+static int lmdb_init_db(int shared, struct strbuf *err)
-+{
-+	/*
-+	 * To create a db, all we need to do is set up the db path
-+	 * variable.
-+	 */
-+
-+	if (!db_path)
-+		db_path = xstrdup(real_path(git_path("refs.lmdb")));
-+	return 0;
++write_ref() {
++    if test $ref_storage = "lmdb"
++    then
++	test-refs-lmdb-backend "$1" "$2" 2>/dev/null
++    else
++	echo "$2" > ".git/$1"
++    fi
 +}
 +
-+static void mdb_cursor_open_or_die(struct lmdb_transaction *transaction,
-+				   MDB_cursor **cursor)
-+{
-+	int ret = mdb_cursor_open(transaction->txn, transaction->dbi, cursor);
-+	if (ret)
-+		die("BUG: mdb_cursor_open failed: %s", mdb_strerror(ret));
++raw_reflog() {
++    if test $ref_storage = "lmdb"
++    then
++	test-refs-lmdb-backend -l "$1" 2>/dev/null
++    else
++	cat ".git/logs/$1"
++    fi
 +}
 +
-+static void submodule_path(struct strbuf *sb, const char *submodule,
-+			   const char *refname)
-+{
-+	if (submodule)
-+		strbuf_git_path_submodule(sb, submodule, "%s", refname);
-+	else
-+		strbuf_git_path(sb, "%s", refname);
++delete_all_reflogs() {
++    if test $ref_storage = "lmdb"
++    then
++	test-refs-lmdb-backend -c
++    fi
++    # We have to do this in any case to handle logs for per-worktree refs
++    rm -rf .git/logs
 +}
 +
-+static int read_per_worktree_ref(const char *submodule, const char *refname,
-+				 struct MDB_val *val, int *needs_free)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	struct stat st;
-+	int ret = -1;
-+	int symlink_head;
-+
-+	submodule_path(&path, submodule, refname);
-+
-+#ifdef NO_SYMLINK_HEAD
-+	symlink_head = 0;
-+#else
-+	symlink_head = 1;
-+#endif
-+
-+	if (symlink_head) {
-+		if (lstat(path.buf, &st)) {
-+			if (errno == ENOENT)
-+				ret = MDB_NOTFOUND;
-+			goto done;
-+		}
-+		if (S_ISLNK(st.st_mode)) {
-+			strbuf_readlink(&sb, path.buf, 0);
-+			if (starts_with(sb.buf, "refs/") &&
-+			    !check_refname_format(sb.buf, 0)) {
-+				val->mv_data = xstrfmt("ref: %s", sb.buf);
-+				val->mv_size = strlen(val->mv_data) + 1;
-+				ret = 0;
-+			} else {
-+				ret = MDB_NOTFOUND;
-+			}
-+			strbuf_release(&sb);
-+			goto done;
-+		}
-+	}
-+
-+	if (strbuf_read_file(&sb, path.buf, 200) < 0) {
-+		strbuf_release(&sb);
-+		if (errno == ENOENT)
-+			ret = MDB_NOTFOUND;
-+		goto done;
-+	}
-+	strbuf_rtrim(&sb);
-+
-+	val->mv_data = strbuf_detach(&sb, &val->mv_size);
-+	val->mv_size++;
-+
-+	ret = 0;
-+done:
-+	strbuf_release(&path);
-+	*needs_free = !ret;
-+	return ret;
++append_reflog() {
++	test-refs-lmdb-backend -a "$1"
 +}
-+
-+static void write_per_worktree_ref(const char *submodule, const char *refname,
-+				   MDB_val *val)
-+{
-+	static struct lock_file lock;
-+	int fd;
-+	int len = val->mv_size - 1;
-+	struct strbuf path = STRBUF_INIT;
-+
-+	submodule_path(&path, submodule, refname);
-+	safe_create_leading_directories(path.buf);
-+
-+	fd = hold_lock_file_for_update(&lock, path.buf, LOCK_DIE_ON_ERROR);
-+	strbuf_release(&path);
-+
-+	if (write_in_full(fd, val->mv_data, len) != len ||
-+	    write_in_full(fd, "\n", 1) != 1)
-+		die_errno(_("failed to write new HEAD"));
-+
-+	if (commit_lock_file(&lock))
-+		die_errno(_("failed to write new HEAD"));
-+}
-+
-+static int del_per_worktree_ref(const char *submodule, const char *refname,
-+				MDB_val *val)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	int result;
-+
-+	/*
-+	 * Returning deleted ref data is not yet implemented, but no
-+	 * callers need it.
-+	 */
-+	assert(val == NULL);
-+
-+	submodule_path(&path, submodule, refname);
-+
-+	result = unlink(path.buf);
-+	strbuf_release(&path);
-+	if (result && errno != ENOENT)
-+		return 1;
-+
-+	return 0;
-+}
-+
-+/*
-+ * Read a ref.  If the ref is a per-worktree ref, read it from disk.
-+ * Otherwise, read it from LMDB.  LMDB manages its own memory, so the
-+ * data returned in *val will ordinarily not need to be freed.  But
-+ * when a per-worktree ref is (successfully) read, non-LMDB memory is
-+ * allocated.  In this case, *needs_free is set so that the caller can
-+ * free the memory when it is done with it.
-+ */
-+static int mdb_get_or_die(struct lmdb_transaction *transaction, MDB_val *key,
-+			  MDB_val *val, int *needs_free)
-+{
-+	int ret;
-+
-+	if (ref_type(key->mv_data) != REF_TYPE_NORMAL)
-+		return read_per_worktree_ref(transaction->submodule,
-+					     key->mv_data, val, needs_free);
-+
-+	*needs_free = 0;
-+	ret = mdb_get(transaction->txn, transaction->dbi, key, val);
-+	if (ret) {
-+		if (ret != MDB_NOTFOUND)
-+			die("BUG: mdb_get failed: %s", mdb_strerror(ret));
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static int mdb_del_or_die(struct lmdb_transaction *transaction, MDB_val *key,
-+			  MDB_val *val)
-+{
-+	int ret;
-+
-+	if (ref_type(key->mv_data) != REF_TYPE_NORMAL)
-+		die("BUG: this backend should only try to delete normal refs");
-+
-+	ret = mdb_del(transaction->txn, transaction->dbi, key, val);
-+	if (ret) {
-+		if (ret != MDB_NOTFOUND)
-+			die("BUG: mdb_del failed: %s", mdb_strerror(ret));
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static void mdb_put_or_die(struct lmdb_transaction *transaction, MDB_val *key,
-+			   MDB_val *val, int mode)
-+{
-+	int ret;
-+
-+	if (ref_type(key->mv_data) != REF_TYPE_NORMAL)
-+		die("BUG: this backend should only try to write normal refs");
-+
-+	ret = mdb_put(transaction->txn, transaction->dbi, key, val, mode);
-+	if (ret) {
-+		if (ret == MDB_BAD_VALSIZE)
-+			die(_("Ref name %s too long (max size is %d)"),
-+			    (const char *)key->mv_data,
-+			    mdb_env_get_maxkeysize(env));
-+		else
-+			die("BUG: mdb_put failed: (%s -> %s) %s",
-+			    (const char *)key->mv_data,
-+			    (const char *)val->mv_data, mdb_strerror(ret));
-+	}
-+}
-+
-+static int mdb_cursor_get_or_die(MDB_cursor *cursor, MDB_val *key, MDB_val *val, int mode)
-+{
-+	int ret;
-+
-+	ret = mdb_cursor_get(cursor, key, val, mode);
-+	if (ret) {
-+		if (ret != MDB_NOTFOUND)
-+			die("BUG: mdb_cursor_get failed: %s", mdb_strerror(ret));
-+		return ret;
-+	}
-+	assert(((char *)val->mv_data)[val->mv_size - 1] == 0);
-+	return 0;
-+}
-+
-+static int mdb_cursor_del_or_die(MDB_cursor *cursor, int flags)
-+{
-+	int ret = mdb_cursor_del(cursor, flags);
-+	if (ret) {
-+		if (ret != MDB_NOTFOUND)
-+			die("BUG: mdb_cursor_del failed: %s", mdb_strerror(ret));
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Begin a transaction. Because only one transaction per thread is
-+ * permitted, we use a global transaction object.  If a read-write
-+ * transaction is presently already in-progress, and a read-only
-+ * transaction is requested, the read-write transaction will be
-+ * returned instead.  If a read-write transaction is requested and a
-+ * read-only transaction is open, the read-only transaction will be
-+ * closed.
-+ *
-+ * It is a bug to request a read-write transaction during another
-+ * read-write transaction.
-+ *
-+ * As a result, it is unsafe to retain read-only transactions past the
-+ * point where a read-write transaction might be needed.  For
-+ * instance, any call that has callbacks outside this module must
-+ * conclude all of its reads from the database before calling those
-+ * callbacks, or must reacquire the transaction after its callbacks
-+ * are completed.
-+ */
-+static int lmdb_transaction_begin_flags(struct strbuf *err, unsigned int flags)
-+{
-+	int ret;
-+	MDB_txn *txn;
-+	static size_t last_txnid = 0;
-+	int force_restart = 0;
-+	MDB_envinfo stat;
-+
-+	if (!db_path)
-+		db_path = xstrdup(real_path(git_path("refs.lmdb")));
-+
-+	init_env(&env, db_path);
-+
-+	/*
-+	 * Since each transaction sees a consistent view of the db,
-+	 * downstream processes that write the db won't be seen in
-+	 * this transaction.  We can check if the last transaction id
-+	 * has changed since this read transaction was started, and if
-+	 * so, we want to reopen the transaction.
-+	 */
-+
-+	mdb_env_info(env, &stat);
-+	if (stat.me_last_txnid != last_txnid) {
-+		force_restart = 1;
-+		last_txnid = stat.me_last_txnid;
-+	}
-+
-+	if (!transaction.txn) {
-+		ret = mdb_txn_begin(env, NULL, flags, &txn);
-+		if (ret) {
-+			strbuf_addf(err, "BUG: mdb_txn_begin failed: %s",
-+				    mdb_strerror(ret));
-+			return -1;
-+		}
-+		ret = mdb_dbi_open(txn, NULL, 0, &transaction.dbi);
-+		if (ret) {
-+			strbuf_addf(err, "BUG: mdb_txn_open failed: %s",
-+				    mdb_strerror(ret));
-+			return -1;
-+		}
-+		transaction.txn = txn;
-+		transaction.flags = flags;
-+		return 0;
-+	}
-+
-+	if (transaction.flags == flags && !(flags & MDB_RDONLY))
-+		die("BUG: rw transaction started during another rw txn");
-+
-+	if (force_restart || (transaction.flags != flags && transaction.flags & MDB_RDONLY)) {
-+		/*
-+		 * RO -> RW, or forced restart due to possible changes
-+		 * from downstream processes.
-+		 */
-+		mdb_txn_abort(transaction.txn);
-+		transaction.txn = NULL;
-+		ret = mdb_txn_begin(env, NULL, flags, &txn);
-+		if (ret) {
-+			strbuf_addf(err, "BUG: restarting txn: mdb_txn_begin failed: %s",
-+				    mdb_strerror(ret));
-+			return -1;
-+		}
-+		ret = mdb_dbi_open(txn, NULL, 0, &transaction.dbi);
-+		if (ret) {
-+			strbuf_addf(err, "BUG: mdb_txn_open failed: %s",
-+				    mdb_strerror(ret));
-+			return -1;
-+		}
-+		transaction.txn = txn;
-+		transaction.flags = flags;
-+	}
-+	/* RW -> RO just keeps the RW txn */
-+	return 0;
-+}
-+
-+static struct lmdb_transaction *lmdb_transaction_begin_flags_or_die(int flags)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	if (lmdb_transaction_begin_flags(&err, flags))
-+		die("%s", err.buf);
-+	return &transaction;
-+}
-+
-+static int verify_refname_available_txn(struct lmdb_transaction *transaction,
-+					const char *refname,
-+					struct string_list *extras,
-+					struct string_list *skip,
-+					struct strbuf *err)
-+{
-+	MDB_cursor *cursor;
-+	MDB_val key;
-+	MDB_val val;
-+	int mdb_ret;
-+	size_t refname_len;
-+	char *search_key;
-+	const char *extra_refname;
-+	int ret = 1;
-+	size_t i;
-+
-+	mdb_cursor_open_or_die(transaction, &cursor);
-+
-+	refname_len = strlen(refname) + 2;
-+	key.mv_size = refname_len;
-+	search_key = xmalloc(refname_len);
-+	memcpy(search_key, refname, refname_len - 2);
-+	search_key[refname_len - 2] = '/';
-+	search_key[refname_len - 1] = 0;
-+	key.mv_data = search_key;
-+
-+	/* Check for subdirs of refname: we start at refname/ */
-+	mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE);
-+
-+	while (!mdb_ret) {
-+		if (starts_with(key.mv_data, refname) &&
-+		    ((char *)key.mv_data)[refname_len - 2] == '/') {
-+			if (skip && string_list_has_string(skip, key.mv_data))
-+				goto next;
-+
-+			strbuf_addf(err, _("'%s' exists; cannot create '%s'"), (char *)key.mv_data, refname);
-+			goto done;
-+		}
-+		break;
-+	next:
-+		mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_NEXT);
-+	}
-+
-+	/* Check for parent dirs of refname. */
-+	for (i = 0; i < refname_len - 2; i++) {
-+		if (search_key[i] == '/') {
-+			search_key[i] = 0;
-+			if (skip && string_list_has_string(skip, search_key)) {
-+				search_key[i] = '/';
-+				continue;
-+			}
-+
-+			if (extras && string_list_has_string(extras, search_key)) {
-+				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+					    refname, search_key);
-+				goto done;
-+			}
-+
-+			key.mv_data = search_key;
-+			key.mv_size = i + 1;
-+			if (!mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET)) {
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"), (char *)key.mv_data, refname);
-+				goto done;
-+			}
-+			search_key[i] = '/';
-+		}
-+	}
-+
-+	extra_refname = find_descendant_ref(refname, extras, skip);
-+	if (extra_refname) {
-+		strbuf_addf(err,
-+			    _("cannot process '%s' and '%s' at the same time"),
-+			    refname, extra_refname);
-+		ret = 1;
-+	} else {
-+		ret = 0;
-+	}
-+done:
-+	mdb_cursor_close(cursor);
-+	free(search_key);
-+	return ret;
-+}
-+
-+static MDB_env *submodule_txn_begin(struct lmdb_transaction *transaction)
-+{
-+	int ret;
-+	MDB_env *submodule_env = NULL;
-+	struct strbuf path = STRBUF_INIT;
-+
-+	strbuf_git_path_submodule(&path, transaction->submodule, "refs.lmdb");
-+
-+	init_env(&submodule_env, path.buf);
-+
-+	ret = mdb_txn_begin(submodule_env, NULL, MDB_RDONLY, &transaction->txn);
-+	if (ret)
-+		die("BUG: mdb_txn_begin failed: %s", mdb_strerror(ret));
-+
-+	ret = mdb_dbi_open(transaction->txn, NULL, 0, &transaction->dbi);
-+	if (ret)
-+		die("BUG: mdb_txn_open failed: %s", mdb_strerror(ret));
-+
-+	strbuf_release(&path);
-+	return submodule_env;
-+}
-+
-+static struct lmdb_transaction *get_submodule_transaction(const char *submodule)
-+{
-+	static char *last_submodule = NULL;
-+	static struct lmdb_transaction transaction = {NULL};
-+	static MDB_env *env = NULL;
-+
-+	if (submodule == NULL) {
-+		if (last_submodule != NULL) {
-+			if (env)
-+				mdb_env_close(env);
-+			env = NULL;
-+			free((char *)transaction.submodule);
-+			transaction.submodule = NULL;
-+			free(last_submodule);
-+			last_submodule = NULL;
-+		}
-+		return lmdb_transaction_begin_flags_or_die(MDB_RDONLY);
-+	}
-+
-+	if (submodule != NULL && last_submodule != NULL &&
-+	     !strcmp(submodule, last_submodule) && transaction.txn != NULL)
-+		return &transaction;
-+
-+	free((char *)transaction.submodule);
-+	transaction.submodule = xstrdup(submodule);
-+	transaction.txn = NULL;
-+
-+	last_submodule = xstrdup(submodule);
-+	env = submodule_txn_begin(&transaction);
-+
-+	return &transaction;
-+}
-+
-+static int lmdb_read_raw_ref(const char *submodule, const char *refname,
-+			     unsigned char *sha1, struct strbuf *symref,
-+			     struct strbuf *sb_path, unsigned int *flags)
-+{
-+	char *buf;
-+	struct MDB_val key, val;
-+	struct strbuf err = STRBUF_INIT;
-+	int needs_free = 0;
-+	int ret = -1;
-+	struct lmdb_transaction *transaction;
-+
-+	transaction = get_submodule_transaction(submodule);
-+
-+	val.mv_size = 0;
-+	val.mv_data = NULL;
-+
-+	if (flags)
-+		*flags = 0;
-+
-+	key.mv_data = (void *)refname;
-+	key.mv_size = strlen(refname) + 1;
-+	if (mdb_get_or_die(transaction, &key, &val, &needs_free)) {
-+		errno = ENOENT;
-+		return -1;
-+	}
-+
-+	buf = val.mv_data;
-+	assert(buf[val.mv_size - 1] == 0);
-+
-+	if (starts_with(buf, "ref:")) {
-+		buf += 4;
-+		while (isspace(*buf))
-+			buf++;
-+
-+		strbuf_reset(symref);
-+		strbuf_addstr(symref, buf);
-+		if (flags)
-+			*flags |= REF_ISSYMREF;
-+		ret = 0;
-+		goto done;
-+	}
-+
-+	/*
-+	 * Please note that FETCH_HEAD has additional
-+	 * data after the sha.
-+	 */
-+	if (get_sha1_hex(buf, sha1) ||
-+	    (buf[40] != '\0' && !isspace(buf[40]))) {
-+		if (flags)
-+			*flags |= REF_ISBROKEN;
-+		errno = EINVAL;
-+		goto done;
-+	}
-+	ret = 0;
-+	goto done;
-+
-+done:
-+	if (needs_free)
-+		free(val.mv_data);
-+	return ret;
-+
-+}
-+
-+static void write_u64(char *buf, uint64_t number)
-+{
-+	int i;
-+
-+	for (i = 0; i < 8; i++)
-+		buf[i] = (number >> (i * 8)) & 0xff;
-+}
-+
-+static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
-+{
-+	unsigned char osha1[20], nsha1[20];
-+	char *email_end, *message;
-+	unsigned long timestamp;
-+	int tz;
-+
-+	/* old (raw sha) new (raw sha) name <email> SP time TAB msg LF */
-+	if (sb->len < 41 || sb->buf[sb->len - 1] != '\n' ||
-+	    !(email_end = strchr(sb->buf + 40, '>')) ||
-+	    email_end[1] != ' ')
-+		return 0; /* corrupt? */
-+
-+	timestamp = strtoul(email_end + 2, &message, 10);
-+
-+	if (!timestamp ||
-+	    !message || message[0] != ' ' ||
-+	    (message[1] != '+' && message[1] != '-') ||
-+	    !isdigit(message[2]) || !isdigit(message[3]) ||
-+	    !isdigit(message[4]) || !isdigit(message[5]))
-+		return 0; /* corrupt? */
-+
-+	hashcpy(osha1, (const unsigned char *)sb->buf);
-+	hashcpy(nsha1, (const unsigned char *)sb->buf + 20);
-+
-+	email_end[1] = '\0';
-+	tz = strtol(message + 1, NULL, 10);
-+	if (message[6] != '\t')
-+		message += 6;
-+	else
-+		message += 7;
-+	return fn(osha1, nsha1, sb->buf + 40, timestamp, tz, message, cb_data);
-+}
-+
-+static void format_reflog_entry(struct strbuf *buf,
-+				const unsigned char *old_sha1,
-+				const unsigned char *new_sha1,
-+				const char *committer, const char *msg)
-+{
-+	int len;
-+	int msglen;
-+
-+	assert(buf->len == 0);
-+	strbuf_add(buf, old_sha1, 20);
-+	strbuf_add(buf, new_sha1, 20);
-+	strbuf_addstr(buf, committer);
-+	strbuf_addch(buf, '\n');
-+
-+	len = buf->len;
-+	msglen = msg ? strlen(msg) : 0;
-+	if (msglen) {
-+		int copied;
-+		strbuf_grow(buf, msglen + 1);
-+		copied = copy_reflog_msg(buf->buf + 40 + strlen(committer), msg) - 1;
-+		buf->len = len + copied;
-+		buf->buf[buf->len] = 0;
-+	}
-+}
-+
-+static int log_ref_write(const char *refname,
-+			 const unsigned char *old_sha1,
-+			 const unsigned char *new_sha1,
-+			 const char *msg,
-+			 int flags,
-+			 struct strbuf *err)
-+{
-+	MDB_val key, val;
-+	uint64_t now = getnanotime();
-+	int result;
-+	struct strbuf log_key = STRBUF_INIT;
-+	int refname_len;
-+	MDB_cursor *cursor;
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *timestamp;
-+	uint64_t zero = 0;
-+
-+	if (log_all_ref_updates < 0)
-+		log_all_ref_updates = !is_bare_repository();
-+
-+	/* it is assumed that we are in a ref transaction here */
-+	assert(transaction.txn);
-+
-+	result = safe_create_reflog(refname, flags & REF_FORCE_CREATE_REFLOG, err);
-+	if (result)
-+		return result;
-+
-+	/* "logs/" + refname + \0 + 8-byte timestamp for sorting and expiry. */
-+	refname_len = strlen(refname);
-+
-+	strbuf_addf(&log_key, "logs/%s", refname);
-+	strbuf_add(&log_key, &zero, 8);
-+	key.mv_data = log_key.buf;
-+	key.mv_size = log_key.len + 1;
-+
-+	mdb_cursor_open_or_die(&transaction, &cursor);
-+
-+	/* if no reflog exists, we're done */
-+	if (mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE) ||
-+	    strcmp(key.mv_data, log_key.buf))
-+		goto done;
-+
-+	/* Is this a header?  We only need the header for empty reflogs */
-+	timestamp = (const char *)key.mv_data + refname_len + 6;
-+	if (ntohll(*(uint64_t *)timestamp) == 0)
-+		mdb_cursor_del_or_die(cursor, 0);
-+
-+	key.mv_data = log_key.buf;
-+
-+	write_u64((char *)key.mv_data + refname_len + 6, htonll(now));
-+
-+	format_reflog_entry(&buf, old_sha1, new_sha1,
-+			    git_committer_info(0), msg);
-+	assert(buf.len >= 42);
-+	val.mv_data = buf.buf;
-+	val.mv_size = buf.len + 1;
-+
-+	mdb_put_or_die(&transaction, &key, &val, 0);
-+	strbuf_release(&buf);
-+
-+done:
-+	strbuf_release(&log_key);
-+	mdb_cursor_close(cursor);
-+	return 0;
-+}
-+
-+static int lmdb_verify_refname_available(const char *refname,
-+					 struct string_list *extras,
-+					 struct string_list *skip,
-+					 struct strbuf *err)
-+{
-+	lmdb_transaction_begin_flags_or_die(MDB_RDONLY);
-+	return verify_refname_available_txn(&transaction, refname, extras, skip, err);
-+}
-+
-+/*
-+ * Attempt to resolve `refname` to `old_sha1` (if old_sha1 is
-+ * non-null).  The return value is a pointer to a newly-allocated
-+ * string containing the next ref name that this resolves to.  So if
-+ * HEAD is a symbolic ref to refs/heads/example, which is itself a
-+ * symbolic ref to refs/heads/foo, return refs/heads/example,
-+ * and fill in resolved_sha1 with the sha of refs/heads/foo.
-+ */
-+static char *check_ref(MDB_txn *txn, const char *refname,
-+		       const unsigned char *old_sha1,
-+		       unsigned char *resolved_sha1, int flags,
-+		       int *type_p)
-+{
-+	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
-+	int resolve_flags = 0;
-+	int type;
-+	char *resolved_refname;
-+
-+	if (mustexist)
-+		resolve_flags |= RESOLVE_REF_READING;
-+	if (flags & REF_DELETING) {
-+		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
-+		if (flags & REF_NODEREF)
-+			resolve_flags |= RESOLVE_REF_NO_RECURSE;
-+	}
-+
-+	/*
-+	 * The first time we resolve the refname, we're just trying to
-+	 * see if there is any ref at all by this name, even if it is
-+	 * a broken symref.
-+	 */
-+	refname = resolve_ref_unsafe(refname, resolve_flags,
-+				     resolved_sha1, &type);
-+	if (type_p)
-+		*type_p = type;
-+
-+	if (!refname)
-+		return NULL;
-+
-+	/*
-+	 * Need to copy refname here because the resolve_ref_unsafe
-+	 * returns a pointer to a static buffer that could get mangled
-+	 * by the second call.
-+	 */
-+	resolved_refname = xstrdup(refname);
-+
-+	if (old_sha1) {
-+		if (flags & REF_NODEREF) {
-+			resolve_flags &= ~RESOLVE_REF_NO_RECURSE;
-+
-+			resolve_ref_unsafe(refname, resolve_flags,
-+					   resolved_sha1, &type);
-+		}
-+		if (hashcmp(old_sha1, resolved_sha1)) {
-+			error(_("ref %s is at %s but expected %s"), refname,
-+			      sha1_to_hex(resolved_sha1), sha1_to_hex(old_sha1));
-+
-+			return NULL;
-+		}
-+	}
-+	return resolved_refname;
-+}
-+
-+static int mdb_transaction_commit(struct lmdb_transaction *transaction,
-+				  struct strbuf *err)
-+{
-+	int result;
-+
-+	result = mdb_txn_commit(transaction->txn);
-+	if (result && err)
-+		strbuf_addstr(err, mdb_strerror(result));
-+
-+	transaction->txn = NULL;
-+	return result;
-+}
-+
-+static void mdb_transaction_abort(struct lmdb_transaction *transaction)
-+{
-+	mdb_txn_abort(transaction->txn);
-+	transaction->txn = NULL;
-+}
-+
-+static int lmdb_delete_reflog(const char *refname)
-+{
-+	MDB_val key, val;
-+	char *log_path;
-+	int len;
-+	MDB_cursor *cursor;
-+	int ret = 0;
-+	int mdb_ret;
-+	struct strbuf err = STRBUF_INIT;
-+	int in_transaction;
-+
-+	in_transaction = in_write_transaction();
-+
-+	log_path = xstrfmt("logs/%s", refname);
-+	len = strlen(log_path) + 1;
-+
-+	key.mv_data = log_path;
-+	key.mv_size = len;
-+
-+	if (!in_transaction)
-+		lmdb_transaction_begin_flags_or_die(0);
-+
-+	mdb_cursor_open_or_die(&transaction, &cursor);
-+
-+	mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE);
-+
-+	while (!mdb_ret) {
-+		if (key.mv_size < len)
-+			break;
-+
-+		if (!starts_with(key.mv_data, log_path) ||
-+		    ((char *)key.mv_data)[len - 1] != 0)
-+			break;
-+
-+		mdb_cursor_del_or_die(cursor, 0);
-+		mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_NEXT);
-+	}
-+
-+	free(log_path);
-+	mdb_cursor_close(cursor);
-+	transaction.cursor = NULL;
-+
-+	if (!in_transaction && mdb_transaction_commit(&transaction, &err)) {
-+		warning("%s", err.buf);
-+		ret = 01;
-+	}
-+	strbuf_release(&err);
-+	return ret;
-+}
-+
-+#define REF_NO_REFLOG 0x8000
-+
-+static int lmdb_transaction_update(const char *refname,
-+				   const unsigned char *new_sha1,
-+				   const unsigned char *old_sha1,
-+				   unsigned int flags, const char *msg,
-+				   struct strbuf *err)
-+{
-+	const char *orig_refname = refname;
-+	MDB_val key, val;
-+	unsigned char resolved_sha1[20];
-+	int type;
-+	int ret = -1;
-+
-+	if ((flags & REF_HAVE_NEW) && is_null_sha1(new_sha1))
-+		flags |= REF_DELETING;
-+
-+	if (new_sha1 && !is_null_sha1(new_sha1) &&
-+	    check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+		strbuf_addf(err, _("refusing to update ref with bad name %s"),
-+			    refname);
-+		return TRANSACTION_GENERIC_ERROR;
-+	}
-+
-+	refname = check_ref(transaction.txn, orig_refname, old_sha1,
-+			    resolved_sha1, flags, &type);
-+	if (refname == NULL) {
-+		strbuf_addf(err, _("cannot lock the ref '%s'"), orig_refname);
-+		return TRANSACTION_GENERIC_ERROR;
-+	}
-+
-+	if (!(flags & REF_DELETING) && is_null_sha1(resolved_sha1) &&
-+	    verify_refname_available_txn(&transaction, refname, NULL, NULL, err))
-+		return TRANSACTION_NAME_CONFLICT;
-+
-+	if (flags & REF_NODEREF) {
-+		free((void *)refname);
-+		refname = orig_refname;
-+	}
-+
-+	key.mv_size = strlen(refname) + 1;
-+	key.mv_data = (void *)refname;
-+
-+	if ((flags & REF_HAVE_NEW) && !is_null_sha1(new_sha1)) {
-+		int overwriting_symref = ((type & REF_ISSYMREF) &&
-+					  (flags & REF_NODEREF));
-+
-+		struct object *o = parse_object(new_sha1);
-+		if (!o) {
-+			strbuf_addf(err,
-+				    _("Trying to write ref %s with nonexistent object %s"),
-+				    refname, sha1_to_hex(new_sha1));
-+			goto done;
-+		}
-+		if (o->type != OBJ_COMMIT && is_branch(refname)) {
-+			strbuf_addf(err,
-+				    _("Trying to write non-commit object %s to branch %s"),
-+				    sha1_to_hex(new_sha1), refname);
-+			goto done;
-+		}
-+
-+		if (!overwriting_symref
-+		    && !hashcmp(resolved_sha1, new_sha1)) {
-+			/*
-+			 * The reference already has the desired
-+			 * value, so we don't need to write it.
-+			 */
-+			flags |= REF_NO_REFLOG;
-+		} else {
-+			val.mv_size = 41;
-+			if (new_sha1)
-+				val.mv_data = sha1_to_hex(new_sha1);
-+			else
-+				val.mv_data = sha1_to_hex(null_sha1);
-+			mdb_put_or_die(&transaction, &key, &val, 0);
-+		}
-+	}
-+
-+	if (flags & REF_DELETING) {
-+		if (mdb_del_or_die(&transaction, &key, NULL)) {
-+			if (old_sha1 && !is_null_sha1(old_sha1)) {
-+				strbuf_addf(err, _("No such ref %s"), refname);
-+				ret = TRANSACTION_GENERIC_ERROR;
-+				goto done;
-+			}
-+		}
-+		lmdb_delete_reflog(orig_refname);
-+	} else if (!(flags & REF_NO_REFLOG)) {
-+		if (!new_sha1)
-+			new_sha1 = null_sha1;
-+		if (log_ref_write(orig_refname, resolved_sha1,
-+				  new_sha1, msg, flags, err) < 0)
-+			goto done;
-+		if (strcmp(refname, orig_refname) &&
-+		    log_ref_write(refname, resolved_sha1,
-+				  new_sha1, msg, flags, err) < 0)
-+			goto done;
-+	}
-+
-+	ret = 0;
-+done:
-+	if (refname != orig_refname)
-+		free((void *) refname);
-+	return ret;
-+}
-+
-+static int lmdb_transaction_commit(struct ref_transaction *ref_transaction,
-+				   struct string_list *affected_refnames,
-+				   struct strbuf *err)
-+{
-+	int ret = 0, i;
-+	int n = ref_transaction->nr;
-+	struct ref_update **updates = ref_transaction->updates;
-+
-+	/*
-+	 * We might already be in a write transaction, because some
-+	 * lmdb backend functionality is implemented in terms of
-+	 * (other stuff) + ref_transaction_commit
-+	 */
-+	if (!in_write_transaction())
-+		lmdb_transaction_begin_flags_or_die(0);
-+
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (lmdb_transaction_update(update->refname,
-+					    update->new_sha1,
-+					    (update->flags & REF_HAVE_OLD) ?
-+					     update->old_sha1 : NULL,
-+					    update->flags,
-+					    update->msg,
-+					    err)) {
-+			mdb_transaction_abort(&transaction);
-+			ret = -1;
-+			goto cleanup;
-+		}
-+
-+	}
-+	ret = mdb_transaction_commit(&transaction, err);
-+
-+cleanup:
-+	ref_transaction->state = REF_TRANSACTION_CLOSED;
-+	return ret;
-+}
-+
-+static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+			     const char *email, unsigned long timestamp, int tz,
-+			     const char *message, void *cb_data)
-+{
-+
-+	const char *newrefname = cb_data;
-+	MDB_val key, new_key, val;
-+	struct strbuf new_key_buf = STRBUF_INIT;
-+
-+	assert(transaction.cursor);
-+
-+	if (mdb_cursor_get_or_die(transaction.cursor, &key, &val, MDB_GET_CURRENT))
-+		die("BUG: renaming ref: mdb_cursor_get failed to get current");
-+
-+	/* This must really be a reflog entry */
-+	assert(val.mv_size > 42);
-+
-+	strbuf_addf(&new_key_buf, "logs/%s", newrefname);
-+	strbuf_add(&new_key_buf, (char *)key.mv_data + key.mv_size - 8, 8);
-+
-+	new_key.mv_size = new_key_buf.len + 1;
-+	new_key.mv_data = new_key_buf.buf;
-+	mdb_put_or_die(&transaction, &new_key, &val, 0);
-+	mdb_cursor_del_or_die(transaction.cursor, 0);
-+	strbuf_release(&new_key_buf);
-+	return 0;
-+}
-+
-+static int lmdb_rename_ref(const char *oldref, const char *newref, const char *logmsg)
-+{
-+	unsigned char orig_sha1[20];
-+	int flag = 0, resolve_flags;
-+	int log = reflog_exists(oldref);
-+	const char *symref = NULL;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *ref_transaction;
-+
-+	if (!strcmp(oldref, newref))
-+		return 0;
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+
-+	ref_transaction = ref_transaction_begin(&err);
-+	if (!ref_transaction)
-+		die("%s", err.buf);
-+
-+	resolve_flags = RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE;
-+	symref = resolve_ref_unsafe(oldref, resolve_flags,
-+				    orig_sha1, &flag);
-+	if (flag & REF_ISSYMREF) {
-+		error(_("refname %s is a symbolic ref, renaming it is not supported"),
-+		      oldref);
-+		goto fail;
-+	}
-+	if (!symref) {
-+		mdb_transaction_abort(&transaction);
-+		error(_("refname %s not found"), oldref);
-+		goto fail;
-+	}
-+	if (!rename_ref_available(oldref, newref))
-+		goto fail;
-+
-+	/* Copy the reflog from the old to the new */
-+	if (log) {
-+		struct strbuf old_log_sentinel = STRBUF_INIT;
-+		MDB_val key;
-+		int log_all;
-+
-+		log_all = log_all_ref_updates;
-+		log_all_ref_updates = 1;
-+		if (safe_create_reflog(newref, 0, &err)) {
-+			error(_("can't create reflog for %s: %s"), newref, err.buf);
-+			strbuf_release(&err);
-+			goto fail;
-+		}
-+		log_all_ref_updates = log_all;
-+
-+		for_each_reflog_ent(oldref, rename_reflog_ent, (void *)newref);
-+		strbuf_addf(&old_log_sentinel, "logs/%sxxxxxxxx", oldref);
-+		memset(old_log_sentinel.buf + old_log_sentinel.len - 8, 0, 8);
-+
-+		key.mv_size = old_log_sentinel.len;
-+		key.mv_data = old_log_sentinel.buf;
-+
-+		/* It's OK if the old reflog is missing */
-+		mdb_del_or_die(&transaction, &key, NULL);
-+		strbuf_release(&old_log_sentinel);
-+	}
-+
-+	if (ref_transaction_delete(ref_transaction, oldref,
-+				   orig_sha1, REF_NODEREF, NULL, &err)) {
-+		error(_("unable to delete old %s"), oldref);
-+		goto fail;
-+	}
-+
-+	if (ref_transaction_update(ref_transaction, newref, orig_sha1, NULL,
-+				    REF_NODEREF, logmsg, &err)) {
-+		error("%s", err.buf);
-+		goto fail;
-+	}
-+
-+	if (ref_transaction_commit(ref_transaction, &err)) {
-+		error("%s", err.buf);
-+		goto fail;
-+	}
-+
-+	return 0;
-+
-+fail:
-+	ref_transaction_free(ref_transaction);
-+	strbuf_release(&err);
-+	mdb_transaction_abort(&transaction);
-+	transaction.txn = NULL;
-+	return 1;
-+}
-+
-+static int lmdb_delete_refs(struct string_list *refnames)
-+{
-+	int i;
-+	struct strbuf err = STRBUF_INIT;
-+	int result = 0;
-+
-+	if (!refnames->nr)
-+		return 0;
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+
-+	for (i = 0; i < refnames->nr; i++) {
-+		const char *refname = refnames->items[i].string;
-+
-+		if (lmdb_transaction_update(refname, null_sha1, NULL,
-+					    REF_DELETING, NULL, &err))
-+			result |= error(_("could not remove reference %s: %s"),
-+					refname, err.buf);
-+	}
-+
-+	result |= mdb_transaction_commit(&transaction, &err);
-+	strbuf_release(&err);
-+	return 0;
-+}
-+
-+static int lmdb_for_each_reflog_ent_order(const char *refname,
-+					  each_reflog_ent_fn fn,
-+					  void *cb_data, int reverse)
-+{
-+	MDB_val key, val;
-+	char *search_key;
-+	char *log_path;
-+	int len;
-+	MDB_cursor *cursor;
-+	int ret = 0;
-+	struct strbuf sb = STRBUF_INIT;
-+	enum MDB_cursor_op direction = reverse ? MDB_PREV : MDB_NEXT;
-+	uint64_t zero = 0ULL;
-+
-+	log_path = xstrfmt("logs/%s", refname);
-+	len = strlen(log_path) + 1;
-+
-+	if (reverse) {
-+		/*
-+		 * For a reverse search, start at the key
-+		 * lexicographically after the searched-for key.
-+		 * That's the one with \1 appended to the key.
-+		 */
-+		search_key = xstrfmt("%s\1", log_path);
-+		key.mv_size = len + 1;
-+	} else {
-+		search_key = xstrdup(log_path);
-+		key.mv_size = len;
-+	}
-+
-+	key.mv_data = search_key;
-+
-+	lmdb_transaction_begin_flags_or_die(MDB_RDONLY);
-+
-+	mdb_cursor_open_or_die(&transaction, &cursor);
-+
-+	transaction.cursor = cursor;
-+
-+	/*
-+	 * MDB's cursor API requires that the first mdb_cursor_get be
-+	 * called with MDB_SET_RANGE.  For reverse searches, this will
-+	 * give us the entry one-past the entry we're looking for, so
-+	 * we should jump back using MDB_PREV.
-+	 */
-+	mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE);
-+	if (direction == MDB_PREV)
-+		mdb_cursor_get_or_die(cursor, &key, &val, direction);
-+
-+	do {
-+		if (key.mv_size < len)
-+			break;
-+
-+		if (!starts_with(key.mv_data, log_path) || ((char *)key.mv_data)[len - 1] != 0)
-+			break;
-+
-+		if (!memcmp(&zero, ((char *)key.mv_data) + key.mv_size - 8, 8))
-+			continue;
-+
-+		assert(val.mv_size != 0);
-+
-+		strbuf_add(&sb, val.mv_data, val.mv_size - 1);
-+		ret = show_one_reflog_ent(&sb, fn, cb_data);
-+		if (ret)
-+			break;
-+
-+		strbuf_reset(&sb);
-+	} while (!mdb_cursor_get_or_die(cursor, &key, &val, direction));
-+
-+	strbuf_release(&sb);
-+	free(log_path);
-+	free(search_key);
-+	mdb_cursor_close(cursor);
-+	return ret;
-+}
-+
-+static int lmdb_for_each_reflog_ent(const char *refname,
-+				    each_reflog_ent_fn fn,
-+				    void *cb_data)
-+{
-+	if (ref_type(refname) != REF_TYPE_NORMAL)
-+		return refs_be_files.for_each_reflog_ent(refname, fn, cb_data);
-+	return lmdb_for_each_reflog_ent_order(refname, fn, cb_data, 0);
-+}
-+
-+static int lmdb_for_each_reflog_ent_reverse(const char *refname,
-+					    each_reflog_ent_fn fn,
-+					    void *cb_data)
-+{
-+	if (ref_type(refname) != REF_TYPE_NORMAL)
-+		return refs_be_files.for_each_reflog_ent_reverse(refname, fn, cb_data);
-+	return lmdb_for_each_reflog_ent_order(refname, fn, cb_data, 1);
-+}
-+
-+static int lmdb_reflog_exists(const char *refname)
-+{
-+	MDB_val key, val;
-+	char *log_path;
-+	int len;
-+	MDB_cursor *cursor;
-+	int ret = 1;
-+
-+	if (ref_type(refname) != REF_TYPE_NORMAL)
-+		return refs_be_files.reflog_exists(refname);
-+
-+	log_path = xstrfmt("logs/%s", refname);
-+	len = strlen(log_path) + 1;
-+
-+	key.mv_data = log_path;
-+	key.mv_size = len;
-+
-+	lmdb_transaction_begin_flags_or_die(MDB_RDONLY);
-+	mdb_cursor_open_or_die(&transaction, &cursor);
-+
-+	if (mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE) ||
-+	    !starts_with(key.mv_data, log_path))
-+		ret = 0;
-+
-+	free(log_path);
-+	mdb_cursor_close(cursor);
-+
-+	return ret;
-+}
-+
-+struct wrapped_each_ref_fn {
-+	each_ref_fn *fn;
-+	void *cb_data;
-+};
-+
-+static int check_reflog(const char *refname,
-+			const struct object_id *oid, int flags, void *cb_data)
-+{
-+	struct wrapped_each_ref_fn *wrapped = cb_data;
-+
-+	if (reflog_exists(refname))
-+		return wrapped->fn(refname, oid, 0, wrapped->cb_data);
-+
-+	return 0;
-+}
-+
-+static int lmdb_for_each_reflog(each_ref_fn fn, void *cb_data)
-+{
-+	struct wrapped_each_ref_fn wrapped = {fn, cb_data};
-+	int result = head_ref(fn, cb_data);
-+	if (result)
-+		return result;
-+	return for_each_ref(check_reflog, &wrapped);
-+}
-+
-+static void strbuf_reflog_header(struct strbuf *sb, const char *refname)
-+{
-+	uint64_t zero = 0;
-+
-+	strbuf_addf(sb, "logs/%s", refname);
-+	strbuf_add(sb, &zero, 8);
-+}
-+
-+static int lmdb_create_reflog(const char *refname, int force_create, struct strbuf *err)
-+{
-+	/*
-+	 * We mark that there is a reflog by creating a key of the
-+	 * form logs/$refname followed by nine \0 (one for
-+	 * string-termination, 8 in lieu of a timestamp), with an empty
-+	 * value.
-+	 */
-+
-+	int in_transaction = in_write_transaction();
-+	MDB_val key, val;
-+	struct strbuf key_buf = STRBUF_INIT;
-+
-+	if (!force_create && !should_autocreate_reflog(refname))
-+		return 0;
-+
-+	if (!in_transaction)
-+		lmdb_transaction_begin_flags_or_die(0);
-+
-+	strbuf_reflog_header(&key_buf, refname);
-+	key.mv_size = key_buf.len + 1;
-+	key.mv_data = key_buf.buf;
-+
-+	val.mv_size = 0;
-+	val.mv_data = NULL;
-+	mdb_put_or_die(&transaction, &key, &val, 0);
-+
-+	strbuf_release(&key_buf);
-+	if (!in_transaction)
-+		return mdb_transaction_commit(&transaction, err);
-+	return 0;
-+}
-+
-+struct expire_reflog_cb {
-+	unsigned int flags;
-+	reflog_expiry_should_prune_fn *should_prune_fn;
-+	void *policy_cb;
-+	unsigned char last_kept_sha1[20];
-+};
-+
-+static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+			     const char *email, unsigned long timestamp, int tz,
-+			     const char *message, void *cb_data)
-+{
-+	struct expire_reflog_cb *cb = cb_data;
-+	struct expire_reflog_policy_cb *policy_cb = cb->policy_cb;
-+
-+	if (cb->flags & EXPIRE_REFLOGS_REWRITE)
-+		osha1 = cb->last_kept_sha1;
-+
-+	if ((*cb->should_prune_fn)(osha1, nsha1, email, timestamp, tz,
-+				   message, policy_cb)) {
-+		if (cb->flags & EXPIRE_REFLOGS_DRY_RUN)
-+			printf("would prune %s", message);
-+		else {
-+			if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
-+				printf("prune %s", message);
-+
-+			mdb_cursor_del_or_die(transaction.cursor, 0);
-+		}
-+	} else {
-+		hashcpy(cb->last_kept_sha1, nsha1);
-+		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
-+			printf("keep %s", message);
-+	}
-+	return 0;
-+}
-+
-+static int write_ref(const char *refname, const unsigned char *sha1)
-+{
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction;
-+
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+		return -1;
-+	}
-+
-+	if (ref_transaction_update(transaction, refname, sha1, NULL,
-+				   REF_NO_REFLOG, NULL, &err)) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+		return -1;
-+	}
-+
-+	if (ref_transaction_commit(transaction, &err)) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int lmdb_reflog_expire(const char *refname, const unsigned char *sha1,
-+			      unsigned int flags,
-+			      reflog_expiry_prepare_fn prepare_fn,
-+			      reflog_expiry_should_prune_fn should_prune_fn,
-+			      reflog_expiry_cleanup_fn cleanup_fn,
-+			      void *policy_cb_data)
-+{
-+	struct expire_reflog_cb cb;
-+	int dry_run = flags & EXPIRE_REFLOGS_DRY_RUN;
-+	int status = 0;
-+	struct strbuf err = STRBUF_INIT;
-+	unsigned char resolved_sha1[20];
-+	int type;
-+	char *resolved;
-+
-+	if (ref_type(refname) != REF_TYPE_NORMAL)
-+		return refs_be_files.reflog_expire(refname, sha1, flags, prepare_fn,
-+					       should_prune_fn, cleanup_fn,
-+					       policy_cb_data);
-+
-+	memset(&cb, 0, sizeof(cb));
-+	cb.flags = flags;
-+	cb.policy_cb = policy_cb_data;
-+	cb.should_prune_fn = should_prune_fn;
-+
-+	lmdb_transaction_begin_flags_or_die(dry_run ? MDB_RDONLY : 0);
-+
-+	resolved = check_ref(transaction.txn, refname, sha1,
-+			     resolved_sha1, 0, &type);
-+	if (!resolved)
-+		die(_("Failed to resolve %s"), refname);
-+	free(resolved);
-+
-+	(*prepare_fn)(refname, sha1, cb.policy_cb);
-+	lmdb_for_each_reflog_ent(refname, expire_reflog_ent, &cb);
-+	(*cleanup_fn)(cb.policy_cb);
-+
-+	if (!dry_run) {
-+		/*
-+		 * It doesn't make sense to adjust a reference pointed
-+		 * to by a symbolic ref based on expiring entries in
-+		 * the symbolic reference's reflog. Nor can we update
-+		 * a reference if there are no remaining reflog
-+		 * entries.
-+		 */
-+		int update = (flags & EXPIRE_REFLOGS_UPDATE_REF) &&
-+			!(type & REF_ISSYMREF) &&
-+			!is_null_sha1(cb.last_kept_sha1);
-+
-+		if (mdb_transaction_commit(&transaction, &err)) {
-+			status |= error(_("couldn't write logs/%s: %s"),
-+					refname, err.buf);
-+			strbuf_release(&err);
-+		} else if (update && write_ref(refname, cb.last_kept_sha1)) {
-+			status |= error(_("couldn't set %s"),
-+					refname);
-+		}
-+	}
-+	return status;
-+}
-+
-+static int lmdb_pack_refs(unsigned int flags)
-+{
-+	/* This concept does not exist in this backend. */
-+	return 0;
-+}
-+
-+static int lmdb_peel_ref(const char *refname, unsigned char *sha1)
-+{
-+	int flag;
-+	unsigned char base[20];
-+
-+	if (read_ref_full(refname, RESOLVE_REF_READING, base, &flag))
-+		return -1;
-+
-+	return peel_object(base, sha1);
-+}
-+
-+static int lmdb_create_symref(const char *ref_target,
-+			      const char *refs_heads_master,
-+			      const char *logmsg)
-+{
-+
-+	struct strbuf err = STRBUF_INIT;
-+	unsigned char old_sha1[20], new_sha1[20];
-+	MDB_val key, val;
-+	char *valdata;
-+	int ret = 0;
-+	int in_transaction;
-+
-+	in_transaction = in_write_transaction();
-+
-+	if (logmsg && read_ref(ref_target, old_sha1))
-+		hashclr(old_sha1);
-+
-+	key.mv_size = strlen(ref_target) + 1;
-+	key.mv_data = xstrdup(ref_target);
-+
-+	valdata = xstrfmt("ref: %s", refs_heads_master);
-+	val.mv_data = valdata;
-+	val.mv_size = strlen(valdata) + 1;
-+
-+	if (!in_transaction)
-+		lmdb_transaction_begin_flags_or_die(0);
-+
-+	mdb_put_or_die(&transaction, &key, &val, 0);
-+
-+	/* TODO: Don't create ref d/f conflicts */
-+
-+	if (logmsg && !read_ref(refs_heads_master, new_sha1) &&
-+	    log_ref_write(ref_target, old_sha1, new_sha1, logmsg, 0, &err)) {
-+		error(_("create_symref: log_ref_write failed: %s"), err.buf);
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	if (!in_transaction && mdb_transaction_commit(&transaction, &err)) {
-+		error(_("create_symref: commit failed: %s"), err.buf);
-+		ret = -1;
-+	}
-+
-+done:
-+	strbuf_release(&err);
-+	free(key.mv_data);
-+	free(valdata);
-+
-+	return ret;
-+}
-+
-+static int lmdb_resolve_gitlink_ref(const char *submodule, const char *refname,
-+				    unsigned char *sha1)
-+{
-+	static struct strbuf sb_refname = STRBUF_INIT;
-+	struct strbuf sb_path = STRBUF_INIT;
-+	const char *ret;
-+
-+	ret = resolve_ref_unsafe_submodule(submodule, refname,
-+					   RESOLVE_REF_READING, sha1,
-+					   NULL, &sb_refname, &sb_path);
-+	strbuf_release(&sb_path);
-+	strbuf_release(&sb_refname);
-+	return ret ? 0 : -1;
-+}
-+
-+/*
-+ * Call fn for each reference for which the refname begins with base.
-+ * If trim is non-zero, then trim that many characters off the
-+ * beginning of each refname before passing the refname to fn.  flags
-+ * can be DO_FOR_EACH_INCLUDE_BROKEN to include broken references in
-+ * the iteration.  If fn ever returns a non-zero value, stop the
-+ * iteration and return that value; otherwise, return 0.
-+ */
-+static int lmdb_do_for_each_ref(const char *submodule, const char *base,
-+				each_ref_fn fn, int trim, int flags,
-+				void *cb_data)
-+{
-+
-+	MDB_val key, val;
-+	MDB_cursor *cursor;
-+	int baselen;
-+	char *search_key;
-+	int retval;
-+	int mdb_ret;
-+	struct lmdb_transaction *transaction;
-+
-+	retval = do_for_each_per_worktree_ref(submodule, base, fn,
-+					      trim, flags, cb_data);
-+	if (retval)
-+		return retval;
-+
-+	if (ref_paranoia < 0)
-+		ref_paranoia = git_env_bool("GIT_REF_PARANOIA", 0);
-+	if (ref_paranoia)
-+		flags |= DO_FOR_EACH_INCLUDE_BROKEN;
-+
-+	if (!base || !*base) {
-+		base = "refs/";
-+		trim = 0;
-+	}
-+
-+	transaction = get_submodule_transaction(submodule);
-+
-+	search_key = xstrdup(base);
-+	baselen = strlen(base);
-+	key.mv_size = baselen + 1;
-+	key.mv_data = search_key;
-+
-+	mdb_cursor_open_or_die(transaction, &cursor);
-+
-+	mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE);
-+
-+	while (!mdb_ret) {
-+		struct object_id oid;
-+		int parsed_flags = 0;
-+		const char *refname;
-+		struct strbuf sb_refname = STRBUF_INIT;
-+		struct strbuf sb_path = STRBUF_INIT;
-+
-+		if (memcmp(key.mv_data, base, baselen))
-+			break;
-+
-+		refname = (const char *)key.mv_data;
-+		const char *c = resolve_ref_unsafe_submodule(submodule, refname, 0, oid.hash,
-+					     &parsed_flags, &sb_refname,
-+					     &sb_path);
-+		if (!(parsed_flags & REF_ISBROKEN) && is_null_oid(&oid))
-+			parsed_flags |= REF_ISBROKEN;
-+
-+		strbuf_release(&sb_path);
-+		strbuf_release(&sb_refname);
-+
-+		if (flags & DO_FOR_EACH_INCLUDE_BROKEN ||
-+		    (!(parsed_flags & REF_ISBROKEN) &&
-+		     has_sha1_file(oid.hash))) {
-+			retval = fn(refname + (trim ? baselen : 0), &oid, parsed_flags, cb_data);
-+			if (retval)
-+				break;
-+		}
-+
-+		mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_NEXT);
-+	}
-+
-+	mdb_cursor_close(cursor);
-+	free(search_key);
-+
-+	if (submodule) {
-+		MDB_env *env = mdb_txn_env(transaction->txn);
-+		mdb_transaction_abort(transaction);
-+		mdb_env_close(env);
-+	}
-+	return retval;
-+}
-+
-+/* For testing only! */
-+int test_refdb_raw_read(const char *key)
-+{
-+	MDB_val key_val, val;
-+	char *keydup;
-+	int ret;
-+	int needs_free = 0;
-+
-+	lmdb_transaction_begin_flags_or_die(MDB_RDONLY);
-+	keydup = xstrdup(key);
-+	key_val.mv_data = keydup;
-+	key_val.mv_size = strlen(key) + 1;
-+
-+	ret = mdb_get_or_die(&transaction, &key_val, &val, &needs_free);
-+	free(keydup);
-+	switch (ret) {
-+	case 0:
-+		printf("%s\n", (char *)val.mv_data);
-+		return 0;
-+	case MDB_NOTFOUND:
-+		fprintf(stderr, "%s not found\n", key);
-+		return 1;
-+	default:
-+		return 2;
-+	}
-+	if (needs_free)
-+		free(val.mv_data);
-+}
-+
-+/* For testing only! */
-+void test_refdb_raw_write(const char *key, const char *value)
-+{
-+	MDB_val key_val, val;
-+	char *keydup, *valdup;
-+
-+	if (ref_type(key) != REF_TYPE_NORMAL) {
-+		val.mv_data = (void *)value;
-+		val.mv_size = strlen(value) + 1;
-+		write_per_worktree_ref(NULL, key, &val);
-+		return;
-+	}
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+
-+	keydup = xstrdup(key);
-+	key_val.mv_data = keydup;
-+	key_val.mv_size = strlen(key) + 1;
-+
-+	valdup = xstrdup(value);
-+	val.mv_data = valdup;
-+	val.mv_size = strlen(value) + 1;
-+
-+	mdb_put_or_die(&transaction, &key_val, &val, 0);
-+	assert(mdb_transaction_commit(&transaction, NULL) == 0);
-+
-+	free(keydup);
-+	free(valdup);
-+}
-+
-+/* For testing only! */
-+int test_refdb_raw_delete(const char *key)
-+{
-+	MDB_val key_val;
-+	char *keydup;
-+	int ret;
-+
-+	if (ref_type(key) != REF_TYPE_NORMAL)
-+		return del_per_worktree_ref(NULL, key, NULL);
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+	keydup = xstrdup(key);
-+	key_val.mv_data = keydup;
-+	key_val.mv_size = strlen(key) + 1;
-+
-+	ret = mdb_del_or_die(&transaction, &key_val, NULL);
-+
-+	assert(mdb_transaction_commit(&transaction, NULL) == 0);
-+
-+	free(keydup);
-+	return ret;
-+}
-+
-+static int print_raw_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+				const char *email, unsigned long timestamp,
-+				int tz, const char *message, void *cb_data)
-+{
-+	int *any = cb_data;
-+	*any = 1;
-+
-+	if (*message != '\n')
-+		printf("%s %s %s %lu %+05d\t%s", sha1_to_hex(osha1),
-+		       sha1_to_hex(nsha1),
-+		       email, timestamp, tz, message);
-+	else
-+		printf("%s %s %s %lu %+05d\n", sha1_to_hex(osha1),
-+		       sha1_to_hex(nsha1),
-+		       email, timestamp, tz);
-+	return 0;
-+}
-+
-+/* For testing only! */
-+int test_refdb_raw_reflog(const char *refname)
-+{
-+	int any = 0;
-+
-+	for_each_reflog_ent(refname, print_raw_reflog_ent, &any);
-+
-+	return !any;
-+}
-+
-+/* For testing only! */
-+void test_refdb_raw_delete_reflog(char *refname)
-+{
-+	MDB_val key, val;
-+	int mdb_ret;
-+	char *search_key;
-+	MDB_cursor *cursor;
-+	int len;
-+
-+	search_key = xstrfmt("logs/%s", refname ? refname : "");
-+	len = strlen(search_key) + 1;
-+
-+	key.mv_data = search_key;
-+	key.mv_size = len;
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+
-+	mdb_cursor_open_or_die(&transaction, &cursor);
-+
-+	mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_SET_RANGE);
-+	while (!mdb_ret) {
-+		if (!starts_with(key.mv_data, search_key))
-+			break;
-+		if (refname && ((char *)val.mv_data)[len - 1] == 0)
-+			break;
-+
-+		mdb_cursor_del_or_die(cursor, 0);
-+		mdb_ret = mdb_cursor_get_or_die(cursor, &key, &val, MDB_NEXT);
-+	}
-+
-+	free(search_key);
-+	mdb_cursor_close(cursor);
-+
-+	assert(mdb_transaction_commit(&transaction, NULL) == 0);
-+	return;
-+}
-+
-+static void format_lmdb_reflog_ent(struct strbuf *dst, struct strbuf *src)
-+{
-+	unsigned char osha1[20], nsha1[20];
-+	const char *msg;
-+
-+	get_sha1_hex(src->buf, osha1);
-+	get_sha1_hex(src->buf + 41, nsha1);
-+
-+	msg = strchr(src->buf + 82, '\t');
-+	if (msg)
-+		msg += 1;
-+
-+	format_reflog_entry(dst, osha1, nsha1, src->buf + 82, msg);
-+}
-+
-+/* For testing only! */
-+void test_refdb_raw_append_reflog(const char *refname)
-+{
-+	struct strbuf input = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	uint64_t now = getnanotime();
-+	MDB_val key, val;
-+	struct strbuf key_buf = STRBUF_INIT;
-+
-+	strbuf_reflog_header(&key_buf, refname);
-+	key.mv_size = key_buf.len + 1;
-+	key.mv_data = key_buf.buf;
-+
-+	lmdb_transaction_begin_flags_or_die(0);
-+
-+	/* We do not remove the header entry here, because this is
-+	 * just for tests, so it's OK to be a bit inefficient */
-+
-+	while (strbuf_getline(&input, stdin) != EOF) {
-+		/* "logs/" + \0 + 8-byte timestamp for sorting and expiry */
-+		write_u64((char *)key.mv_data + key.mv_size - 8, htonll(now++));
-+
-+		/*
-+		 * Convert the input from files-reflog format to
-+		 * lmdb-reflog-format
-+		 */
-+
-+		format_lmdb_reflog_ent(&sb, &input);
-+		val.mv_data = sb.buf;
-+		val.mv_size = sb.len + 1;
-+		mdb_put_or_die(&transaction, &key, &val, 0);
-+		strbuf_reset(&sb);
-+		input.len = 0;
-+	}
-+
-+	strbuf_release(&input);
-+	strbuf_release(&sb);
-+	assert(mdb_transaction_commit(&transaction, NULL) == 0);
-+	strbuf_release(&key_buf);
-+}
-+
-+struct ref_storage_be refs_be_lmdb = {
-+	NULL,
-+	"lmdb",
-+	lmdb_init_db,
-+	lmdb_transaction_commit,
-+	lmdb_transaction_commit, /* initial commit */
-+
-+	lmdb_for_each_reflog_ent,
-+	lmdb_for_each_reflog_ent_reverse,
-+	lmdb_for_each_reflog,
-+	lmdb_reflog_exists,
-+	lmdb_create_reflog,
-+	lmdb_delete_reflog,
-+	lmdb_reflog_expire,
-+
-+	lmdb_pack_refs,
-+	lmdb_peel_ref,
-+	lmdb_create_symref,
-+	lmdb_delete_refs,
-+	lmdb_rename_ref,
-+
-+	lmdb_read_raw_ref,
-+	lmdb_verify_refname_available,
-+	lmdb_resolve_gitlink_ref,
-+
-+	lmdb_do_for_each_ref,
-+};
-diff --git a/test-refs-lmdb-backend.c b/test-refs-lmdb-backend.c
-new file mode 100644
-index 0000000..5347178
---- /dev/null
-+++ b/test-refs-lmdb-backend.c
-@@ -0,0 +1,65 @@
-+#include "cache.h"
-+#include "string-list.h"
-+#include "parse-options.h"
-+#include "refs.h"
-+#include "refs/refs-internal.h"
-+
-+static const char * const test_refs_be_lmdb_usage[] = {
-+	"git test-refs-lmdb-backend <key>",
-+	"git test-refs-lmdb-backend <key> <value>",
-+	NULL,
-+};
-+
-+int test_refdb_raw_read(const char *key);
-+void test_refdb_raw_write(const char *key, const char *value);
-+int test_refdb_raw_reflog(const char *refname);
-+int test_refdb_raw_delete(const char *key);
-+void test_refdb_raw_delete_reflog(const char *refname);
-+void test_refdb_raw_append_reflog(const char *refname);
-+
-+int main(int argc, const char **argv)
-+{
-+	const char *delete = NULL;
-+	const char *reflog = NULL;
-+	const char *append_reflog = NULL;
-+	int delete_missing_error = 0;
-+	int clear_reflog = 0;
-+
-+	struct option options[] = {
-+		OPT_STRING('d', NULL, &delete, "branch", "delete refdb entry"),
-+		OPT_STRING('l', NULL, &reflog, "branch", "show reflog"),
-+		OPT_STRING('a', NULL, &append_reflog, "branch", "append to reflog"),
-+		OPT_BOOL('c', NULL, &clear_reflog, "delete reflog. If a branch is provided, the reflog for that branch will be deleted; else all reflogs will be deleted."),
-+		OPT_BOOL('x', NULL, &delete_missing_error,
-+			 "deleting a missing key is an error"),
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, "", options, test_refs_be_lmdb_usage,
-+			     0);
-+
-+	if (!append_reflog && !clear_reflog && !delete && !reflog && argc != 1 && argc != 2)
-+		usage_with_options(test_refs_be_lmdb_usage,
-+				   options);
-+
-+	git_config(git_default_config, NULL);
-+
-+	if (set_ref_storage_backend("lmdb"))
-+		die("could not set lmdb reference backend");
-+
-+	if (clear_reflog) {
-+		test_refdb_raw_delete_reflog(argv[0]);
-+	} else if (append_reflog) {
-+		test_refdb_raw_append_reflog(append_reflog);
-+	} else if (reflog) {
-+		return test_refdb_raw_reflog(reflog);
-+	} else if (delete) {
-+		if (test_refdb_raw_delete(delete) && delete_missing_error)
-+			return 1;
-+	} else if (argc == 1) {
-+		return test_refdb_raw_read(argv[0]);
-+	} else {
-+		test_refdb_raw_write(argv[0], argv[1]);
-+	}
-+	return 0;
-+}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ce40770..e736554 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -186,6 +186,8 @@ test "x$TERM" != "xdumb" && (
+ 	) &&
+ 	color=t
+ 
++ref_storage="files"
++ref_storage_arg=
+ while test "$#" -ne 0
+ do
+ 	case "$1" in
+@@ -201,6 +203,9 @@ do
+ 			exit 1;
+ 		}
+ 		run_list=$1; shift ;;
++	--ref-storage=*)
++	    GIT_TEST_REF_STORAGE=$(expr "z$1" : 'z[^=]*=\(.*\)'); shift
++	    ;;
+ 	--run=*)
+ 		run_list=$(expr "z$1" : 'z[^=]*=\(.*\)'); shift ;;
+ 	-h|--h|--he|--hel|--help)
+@@ -247,6 +252,12 @@ do
+ 	esac
+ done
+ 
++if test -n "$GIT_TEST_REF_STORAGE"
++then
++	ref_storage=$GIT_TEST_REF_STORAGE
++	ref_storage_arg="--ref-storage=$ref_storage"
++fi
++
+ if test -n "$valgrind_only"
+ then
+ 	test -z "$valgrind" && valgrind=memcheck
 -- 
 2.4.2.767.g62658d5-twtrsrc
