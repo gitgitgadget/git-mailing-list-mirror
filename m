@@ -1,156 +1,82 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule helper list: Respect correct path prefix
-Date: Wed, 24 Feb 2016 13:15:02 -0800
-Message-ID: <1456348502-4529-1-git-send-email-sbeller@google.com>
-Cc: gitster@pobox.com, Stefan Beller <sbeller@google.com>
-To: cjorden@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 22:15:17 2016
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv15 2/5] run_processes_parallel: add LF when caller is
+ sloppy
+Date: Wed, 24 Feb 2016 13:19:47 -0800
+Message-ID: <20160224211947.GO28749@google.com>
+References: <1456284017-26141-1-git-send-email-sbeller@google.com>
+ <1456284017-26141-3-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	peff@peff.net, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 22:19:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYgmD-0003lj-6h
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 22:15:17 +0100
+	id 1aYgqi-00076U-28
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 22:19:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485AbcBXVPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 16:15:10 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35497 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbcBXVPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 16:15:09 -0500
-Received: by mail-pa0-f46.google.com with SMTP id ho8so19705607pac.2
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 13:15:09 -0800 (PST)
+	id S1752476AbcBXVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 16:19:52 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:34920 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057AbcBXVTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 16:19:51 -0500
+Received: by mail-pa0-f43.google.com with SMTP id ho8so19766961pac.2
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 13:19:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=fWcqO7E/cbvuzRRHI2q0WkTOyvXHim6o+lOE4e2apuI=;
-        b=id+rPR1l/oD8zXT1YRN0fl8kvQMPw/QkPOBpRWee29o4L8HR0t8eIgJoqIbipxGd0q
-         QK9drFib7rLCg1IMK2G5sMxEfsf8jZ9qKbk8ZakluCkMrzuhi6pLtFRo01CDCVgy/yOa
-         9yQlVqfl65atDyJJT0NpRVvShOdLPEQ2nio4sfZdqE6mEwoxjtukOmyN1aQrS5Dk8Ce9
-         TuR3Z8/efPFCdVzi2yPjO6beGFKixVFlXW7HUqlTG8C7p8sbdqA7cRSgRNt+mZenP0YM
-         NGx12IYzTBQeo5Kk+l49XPsalV6ZY8mY4nVOVMD134oV6Ngx7cZZ8a3OYfyewpqGqN9q
-         tgPQ==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=H7cvRiaelq4Av9tzcBJJI3mBqBlxP0Kx/60FYIoZfG8=;
+        b=cTcn+IPazd8S61+LthrZbMRJZ97v6nrwemqgkrZP1RN0uMLy9SfdWkXBgHAjXavowz
+         tofQcKEuNjH2tOp3vOhk8Pxoupw+w0K6gS6ToiAwtaizKLClcnagKGjbb26sSlPvbn5P
+         hva3bbg70RekSd6sGk2Z9u7A32qRk0de1JMwq57MMhfkTrbdsaUVvrbw7A87rDZmiGhl
+         9ZcEdFBpPYSriwo8MiieFWLjptRyjwb59+G9CzIbwbgKvI+O0C9rQfZTUB9I4E5DN9LB
+         uXldtS8atDEhUjMWsFU55z/hj4AU2++BooSGHBtCuhB6RC3AoZBLl82T03YutOtuhTrb
+         iQgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=fWcqO7E/cbvuzRRHI2q0WkTOyvXHim6o+lOE4e2apuI=;
-        b=ZWZzQwYqupp+hQlmodcHv7tr71XInjulZDe6LrrOq5a5C/RBy0I28Sjfge0JfIXc8/
-         d3l5mHrcid+H/CVN1KU9ZKaoao2VhQfemU8QUYRBQ14dBcRKuIw/Ia6fDJh2YEOGpJgu
-         ZebX/KO+M6lHe14/x6LDscj9HD98dUVpVcsfaqmwKAbA8DHC+YznFeFY/d6YuaObnLl2
-         yk8AxNY1nxRKZ+ZQu+8xNHyGeb8iH2K53Wwfoioh12CyIEOV9VqiArkw0oZqXM5wNVdI
-         ux/0PThbMHGW4srZZ/eu3VyPZfKMnHegXVdJmIEHGWPm8UxF3HbmMzfbXg9e0zTpsCCI
-         24ng==
-X-Gm-Message-State: AG10YOTt+a9Ak27tipiYIzmrMjgXYdt3RUe1Ig4e6TgoaCzMj5ev5xF+DNbdbmH3YLefGQvV
-X-Received: by 10.66.142.226 with SMTP id rz2mr57635602pab.104.1456348508706;
-        Wed, 24 Feb 2016 13:15:08 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:74de:af7a:dfba:15a4])
-        by smtp.gmail.com with ESMTPSA id p9sm7102104pfa.11.2016.02.24.13.15.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Feb 2016 13:15:07 -0800 (PST)
-X-Mailer: git-send-email 2.7.2.335.g3f96d05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=H7cvRiaelq4Av9tzcBJJI3mBqBlxP0Kx/60FYIoZfG8=;
+        b=hka+JBLxmJiAMOZ2wkwYIL7BbX+ETlqHJ5ZRkL0BQBc9YqDZJdFdfkxTZ62NJly9+S
+         33ylxzZUpG0uHWgxWvI2QCquAPr+BqPWLoLVlT9V3YMX0QpPykSaTNenb2beJk+O+X2q
+         o20y9ZhvXHzkfSatIJGyEnlXIqfAtvIxhrVOd59tdMbAm5uXpQ5z5OpPVOYl8W+meMZ7
+         aZtZ+jfC1JafE8EfRtPIuQGVMqS1uLQ+RHlp6QE0NOm1488JHkyqGIuhTO7t083PvUJl
+         s81sbJEKOoyFXtOyawv8O1rnQUMzf5KjASw4xXxbyuLjM6koZa+epMIQuhQROWOZKRzF
+         E/WQ==
+X-Gm-Message-State: AG10YOSodaF+enlzlT77pYCZT13hKDd/8VYlnYw8D3h4nsO18IKixEXQxD19uqFNIQVttg==
+X-Received: by 10.66.222.129 with SMTP id qm1mr57185486pac.22.1456348790751;
+        Wed, 24 Feb 2016 13:19:50 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:41cf:620e:463d:86cf])
+        by smtp.gmail.com with ESMTPSA id z67sm7087480pfa.71.2016.02.24.13.19.49
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 24 Feb 2016 13:19:49 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1456284017-26141-3-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287229>
 
-This is a regression introduced by 74703a1e4d (submodule: rewrite
-`module_list` shell function in C, 2015-09-02).
+Stefan Beller wrote:
 
-Add a test to ensure we list the right submodule when giving a specific
-path spec.
+> When the callers of parallel processing machine are sloppy with their
+> messages, make sure the output is terminated with LF after one child
+> process is handled.
 
-Reported-By: Caleb Jorden <cjorden@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Why not always add \n here?
 
- I developed this on top of current origin/master, though I can backport it
- to 2.7 as well if desired.
- 
- I do not remember the cause why we started to ignore a common prefix.
- 
- Thanks,
- Stefan
-  
- builtin/submodule--helper.c | 10 ++--------
- t/t7400-submodule-basic.sh  | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 8 deletions(-)
+That would make callers simpler and would make it easier for callers to
+know what to do.  It also makes it possible to end with \n\n if the
+caller wants.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f4c3eff..ed764c9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -22,17 +22,12 @@ static int module_list_compute(int argc, const char **argv,
- 			       struct module_list *list)
- {
- 	int i, result = 0;
--	char *max_prefix, *ps_matched = NULL;
--	int max_prefix_len;
-+	char *ps_matched = NULL;
- 	parse_pathspec(pathspec, 0,
- 		       PATHSPEC_PREFER_FULL |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
- 		       prefix, argv);
- 
--	/* Find common prefix for all pathspec's */
--	max_prefix = common_prefix(pathspec);
--	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
--
- 	if (pathspec->nr)
- 		ps_matched = xcalloc(pathspec->nr, 1);
- 
-@@ -44,7 +39,7 @@ static int module_list_compute(int argc, const char **argv,
- 
- 		if (!S_ISGITLINK(ce->ce_mode) ||
- 		    !match_pathspec(pathspec, ce->name, ce_namelen(ce),
--				    max_prefix_len, ps_matched, 1))
-+				    0, ps_matched, 1))
- 			continue;
- 
- 		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-@@ -57,7 +52,6 @@ static int module_list_compute(int argc, const char **argv,
- 			 */
- 			i++;
- 	}
--	free(max_prefix);
- 
- 	if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
- 		result = -1;
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 540771c..be82a75 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -999,5 +999,30 @@ test_expect_success 'submodule add clone shallow submodule' '
- 	)
- '
- 
-+test_expect_success 'submodule helper list is not confused by common prefixes' '
-+	mkdir -p dir1/b &&
-+	(
-+		cd dir1/b &&
-+		git init &&
-+		echo hi >testfile2 &&
-+		git add . &&
-+		git commit -m "test1"
-+	) &&
-+	mkdir -p dir2/b &&
-+	(
-+		cd dir2/b &&
-+		git init &&
-+		echo hello >testfile1 &&
-+		git add .  &&
-+		git commit -m "test2"
-+	) &&
-+	git submodule add /dir1/b dir1/b &&
-+	git submodule add /dir2/b dir2/b &&
-+	git commit -m "first submodule commit" &&
-+	git submodule--helper list dir1/b |cut -c51- >actual &&
-+	echo "dir1/b" >expect &&
-+	test_cmp expect actual
-+'
-+
- 
- test_done
--- 
-2.7.2.334.g7c0da37.dirty
+Thanks,
+Jonathan
