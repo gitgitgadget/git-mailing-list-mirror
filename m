@@ -1,136 +1,145 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv15 0/5] Expose submodule parallelism to the user
-Date: Tue, 23 Feb 2016 19:20:12 -0800
-Message-ID: <1456284017-26141-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv15 1/5] run-command: expose default_{start_failure, task_finished}
+Date: Tue, 23 Feb 2016 19:20:13 -0800
+Message-ID: <1456284017-26141-2-git-send-email-sbeller@google.com>
+References: <1456284017-26141-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
 	peff@peff.net, sunshine@sunshineco.com,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 24 04:22:18 2016
+X-From: git-owner@vger.kernel.org Wed Feb 24 04:22:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYQ1p-0006ay-80
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 04:22:17 +0100
+	id 1aYQ22-0006kB-M9
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 04:22:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444AbcBXDWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755458AbcBXDWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Feb 2016 22:22:15 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33491 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755430AbcBXDWM (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 23 Feb 2016 22:22:12 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:35639 "EHLO
-	mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751285AbcBXDWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 22:22:11 -0500
-Received: by mail-pf0-f175.google.com with SMTP id c10so4493762pfc.2
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 19:22:11 -0800 (PST)
+Received: by mail-pf0-f171.google.com with SMTP id q63so4375800pfb.0
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 19:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=MvTOwx0GZ7MWIdZxyt37rp9tmwODfVOiBlvn+5gbTj4=;
-        b=AJo1Qhriru81h6+QVxJGcxsUM/RyHLMIGNsQeaTKUjuQnFvWV3mUVzXtgwFVgBwGG0
-         ycSMND+l+uKEky8e/ROop3gPoWL25tv1IiTzGVqTHS872MZP72i9yFLOfPsOloOnJC9r
-         pZEKv8BQyJzG/4A+CLC47xxWlMa1sCSD4fjaOh/04FZRr6WIUyBCDPw494UUswoelPXO
-         /Y0dEbnwd133V744xj/e1ytpICOLQhQfwzZKcMvW7JOrQM3Idap2jYsbPmUV6efGsJZ8
-         R8bEAPDOnnTgPq5c6/XgjrTmadDREuhVKCHGacJv5AniyDmurDN8vmALuQwiWjA6vgGQ
-         8qcA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=JjgZHp74Ovjn08M9qQge8vZKrjnuvwZG4Ft+xhTpRco=;
+        b=JJXOQS3t1tBGhyxIW6eXAcI9y1LhBLiYecgu+YJ8yitlBQoZXLuaIKKu0fJ3DT7Yt9
+         uJkFywD5VUsJh2OXma9Qc940EpGQi5d6Zns3nkai1SFM+xZ6kLa2K7hp/KhDKRopm5+/
+         Flfv6+5nDN9E60D3KN1xLUex3IB/3oUU+SzLbrnCOX58TKK6lnVcgk+vma/HiFf5oXr6
+         /Dbu7f/S9/r8+IwwpFgODenkMw4PdtjeycNb5zG1RVFdSc2/IOrUc+oHQ2Pebk8kbDHS
+         Fq7o+PuRYPgMTPFexx+j4xtz++xhzoZaqTmMDXLsCgHkRROHpScLjvsAG64kwmEweIvw
+         sDQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=MvTOwx0GZ7MWIdZxyt37rp9tmwODfVOiBlvn+5gbTj4=;
-        b=OXwcqRdX3jjLVls+hVN6ERgv0zD6FhLrckxjiA1PT8YCPgigz3poN2Vyp8dWglVptv
-         wBPCI3or+iKvId0JSGp6GveUxXBpHD33vF3vr6ilsOQbmniakaBvOFE2YiTG1mKo0iFX
-         8nzKwnUAAkjuw68zfpEcGnlIa8+/OizWEeskxFPnnovWpTcYT+cDNA9a96PCANnz3SsQ
-         yB5ZP+Gzo6qyZzBiP92BlAsFeJvw0l4ji3lQex5MZkd8PQHIunPGYCQVEEfidsOHpPqe
-         ueRHppDoCOBx7WsKpcTJGjzcUztLD4jYjRcKpabVhERK6mi5jpXK/i9ImopyoK2AAz0P
-         fQiw==
-X-Gm-Message-State: AG10YORZncDCoGQVU6ZzZZvvYxtAcyaZgqrxCa0YJw5C7q59FVnk9zO1QoqXw47kE6MbadjE
-X-Received: by 10.98.79.156 with SMTP id f28mr51444613pfj.55.1456284130524;
-        Tue, 23 Feb 2016 19:22:10 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=JjgZHp74Ovjn08M9qQge8vZKrjnuvwZG4Ft+xhTpRco=;
+        b=NWLfTlJOZRGOZdWcIwOXbBusH2PMcSspZt5+zC+owukAkKjbn3RjdoZi8ysSZ4IFRh
+         i/jz2e20KkpN5kwsjL6TRwznn31g5bCt+/PmWQwHXNSd8SJoKfwdXpK8JkJOpXVpUpBA
+         jqusC0Le94B/YBmmSA5F2a9u+M53jydRFeE4wDzT5wjmsJbuWV2ZzLWCa2HKjA7m1qrd
+         Bnb2A/doMgK8tWP6Z9TwACgK3Fl/kBFnvuzb+iV8z7Is4B0dZabQePFyS2mjxPTZpibV
+         bK/oaiPzqZ9thkjKc/VGodyJaGvFyXVzN9UDEhHCkdC8RTnWtY52hsSG+KH9MV378/qS
+         puFg==
+X-Gm-Message-State: AG10YOR5G3Xi8fZc9buSVA24Ug9Mp4KSeZma6s4Ek7AWuisSdHlkvDA0Rwlomeoy2mYjp6sf
+X-Received: by 10.98.67.92 with SMTP id q89mr51528687pfa.137.1456284131839;
+        Tue, 23 Feb 2016 19:22:11 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a8b2:5b44:5b58:45af])
-        by smtp.gmail.com with ESMTPSA id tp6sm725584pab.25.2016.02.23.19.22.08
+        by smtp.gmail.com with ESMTPSA id tp6sm725730pab.25.2016.02.23.19.22.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 23 Feb 2016 19:22:08 -0800 (PST)
+        Tue, 23 Feb 2016 19:22:11 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
+In-Reply-To: <1456284017-26141-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287165>
 
-This build on top of 163b9b1f919c762a4bfb693b3aa05ef1aa627fee
-(origin/sb/submodule-parallel-update~3) and replaces the commits 
-origin/sb/submodule-parallel-update~2.. 
+We want to reuse the error reporting facilities in a later patch.
 
-* Renamed inspect_clone_next_submodule to prepare_to_clone_next_submodule
-  and reordered the arguments thereof
-* Comments for the struct submodule_update_clone which is passed around
-* Better handling around LFs.
-* Renamed struct child_process *cp to *child
-* Print #unmatched in git-submodule.sh instead of the helper
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ run-command.c | 18 +++++++++---------
+ run-command.h | 19 +++++++++++++++++++
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-> 
-> 	if (pp->update.type == SM_UPDATE_NONE
-> 	    || (pp->update.type == SM_UPDATE_UNSPECIFIED
-> 	        && sub->update_strategy.type == SM_UPDATE_NONE)) {
-> 
-> What does pp stand for?
-
-I think I took it as parallel_process when starting off from the parallel
-processing machinery. I'll rename it (probably to suc as short for struct
-submodule_update_clone).
-
-> > +	if (pp->recursive_prefix)
-> > +		displaypath = relative_path(pp->recursive_prefix,
-> > +					    ce->name, &displaypath_sb);
-> 
-> Nit: could use braces.
-
-Why? I would understand a few lines above where we have an if nested in an
-if with braces. But here we have a pretty straighforward one statement per case
-condition.
-
-
-> > +	sub = submodule_from_path(null_sha1, ce->name);
-> 
-> It's common to call submodule_from_path with null_sha1 as a parameter
-> but I have trouble continuing to remember what that means.  Maybe
-> there should be a separate function that handles that?  As a
-> side-effect, the name and docstring of that function could explain
-> what it means, which I still am not sure about. :)
-
-I'll do that as a followup cleanup patch as it affects more than just the
-new code.
-
->> +		OPT_STRING(0, "reference", &pp.reference, "<repository>",
->> +			   N_("Use the local reference repository "
->> +			      "instead of a full clone")),
-
-> Is this allowed to be relative?  If so, what is it relative to?
-
-It is passing on the argument to clone, so I assume the same rules apply as for
-git-clone.
-
-Thanks,
-Stefan
-
-Stefan Beller (5):
-  run-command: expose default_{start_failure, task_finished}
-  run_processes_parallel: add LF when caller is sloppy
-  git submodule update: have a dedicated helper for cloning
-  submodule update: expose parallelism to the user
-  clone: allow an explicit argument for parallel submodule clones
-
- Documentation/git-clone.txt     |   6 +-
- Documentation/git-submodule.txt |   7 +-
- builtin/clone.c                 |  19 ++-
- builtin/submodule--helper.c     | 255 +++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh                |  56 ++++-----
- run-command.c                   |  35 ++++--
- run-command.h                   |  19 +++
- t/t0061-run-command.sh          |  26 ++++
- t/t7406-submodule-update.sh     |  27 +++++
- test-run-command.c              |  18 +++
- 10 files changed, 412 insertions(+), 56 deletions(-)
-
+diff --git a/run-command.c b/run-command.c
+index 51fd72c..d03ecaa 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -902,10 +902,10 @@ struct parallel_processes {
+ 	struct strbuf buffered_output; /* of finished children */
+ };
+ 
+-static int default_start_failure(struct child_process *cp,
+-				 struct strbuf *err,
+-				 void *pp_cb,
+-				 void *pp_task_cb)
++int default_start_failure(struct child_process *cp,
++			  struct strbuf *err,
++			  void *pp_cb,
++			  void *pp_task_cb)
+ {
+ 	int i;
+ 
+@@ -916,11 +916,11 @@ static int default_start_failure(struct child_process *cp,
+ 	return 0;
+ }
+ 
+-static int default_task_finished(int result,
+-				 struct child_process *cp,
+-				 struct strbuf *err,
+-				 void *pp_cb,
+-				 void *pp_task_cb)
++int default_task_finished(int result,
++			  struct child_process *cp,
++			  struct strbuf *err,
++			  void *pp_cb,
++			  void *pp_task_cb)
+ {
+ 	int i;
+ 
+diff --git a/run-command.h b/run-command.h
+index d5a57f9..a054fa6 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -164,6 +164,15 @@ typedef int (*start_failure_fn)(struct child_process *cp,
+ 				void *pp_task_cb);
+ 
+ /**
++ * If a command fails to start, then print an error message stating the
++ * exact command which failed.
++ */
++int default_start_failure(struct child_process *cp,
++			  struct strbuf *err,
++			  void *pp_cb,
++			  void *pp_task_cb);
++
++/**
+  * This callback is called on every child process that finished processing.
+  *
+  * You must not write to stdout or stderr in this function. Add your
+@@ -184,6 +193,16 @@ typedef int (*task_finished_fn)(int result,
+ 				void *pp_task_cb);
+ 
+ /**
++ * If the child process returns with a non zero error code, print
++ * an error message of the exact command which failed.
++ */
++int default_task_finished(int result,
++			  struct child_process *cp,
++			  struct strbuf *err,
++			  void *pp_cb,
++			  void *pp_task_cb);
++
++/**
+  * Runs up to n processes at the same time. Whenever a process can be
+  * started, the callback get_next_task_fn is called to obtain the data
+  * required to start another child process.
 -- 
 2.7.0.rc0.34.ga06e0b3.dirty
