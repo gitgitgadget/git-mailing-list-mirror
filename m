@@ -1,76 +1,72 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git "thin" submodule clone to feed "describe"
-Date: Tue, 23 Feb 2016 20:28:42 -0500
-Message-ID: <CACPiFCJ216dx9s6YynH2d8StyNxR4zci9OhGKH4BbJXXf4SSUA@mail.gmail.com>
-References: <CACPiFCLnXLdt5rLuX0a3pTS3OphKW=1oVKxyYpwvSLhY7ydb2g@mail.gmail.com>
- <xmqq1t83yuv6.fsf@gitster.mtv.corp.google.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [RFC/PATCH 1/1] format-patch: add an option to record base tree
+ info
+Date: Tue, 23 Feb 2016 17:40:45 -0800
+Message-ID: <56CD0A1D.9050207@zytor.com>
+References: <1456109938-8568-1-git-send-email-xiaolong.ye@intel.com>
+ <1456109938-8568-2-git-send-email-xiaolong.ye@intel.com>
+ <xmqqmvqt8jgz.fsf@gitster.mtv.corp.google.com>
+ <20160223014741.GA21025@wfg-t540p.sh.intel.com>
+ <xmqqio1f3oi9.fsf@gitster.mtv.corp.google.com>
+ <20160223091740.GA3830@wfg-t540p.sh.intel.com>
+ <xmqq1t8319z0.fsf@gitster.mtv.corp.google.com>
+ <87d1rnjil4.fsf@x220.int.ebiederm.org>
+ <xmqqtwkzyxkv.fsf@gitster.mtv.corp.google.com>
+ <3FAB2030-8106-4114-99A4-B04A8A0D22FB@zytor.com>
+ <87bn77hzbp.fsf@x220.int.ebiederm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 02:29:11 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Fengguang Wu <fengguang.wu@intel.com>,
+	Xiaolong Ye <xiaolong.ye@intel.com>, git@vger.kernel.org,
+	ying.huang@intel.com, philip.li@intel.com, julie.du@intel.com,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	LKML <linux-kernel@vger.kernel.org>
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Feb 24 02:41:32 2016
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYOGL-0002Bw-9S
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 02:29:09 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1aYOSK-0002mn-0r
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 24 Feb 2016 02:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658AbcBXB3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 20:29:04 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:36355 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753369AbcBXB3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 20:29:03 -0500
-Received: by mail-ob0-f180.google.com with SMTP id gc3so3755758obb.3
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 17:29:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=aOgIHinYHUj09iif53HVXRrX2QbA7MeRrlLDFJwKBi4=;
-        b=eL9DISmU0H7VBW0cyPJ+QnUC13JQ4QrgbXGOsJVvgL4zRCxTJ1kwzCjKgyW7p+DvEB
-         v5qqLW4gCOKuuKHzoXV9QcIAifLHM5LIAYWJTt6+wRAjfT78UKFihM2ZdZepDZpR94DX
-         Od2vLw0SW42tlLGhilQQl7X6ddduUnOxKWYvrAGI51HUgSMz0Zg+01ZuZUfA3/o1kcBQ
-         ILG6gmFckda70laIoy9DYD1LvXKl/gbxMox5OxiaOymTjHKwV8C8Tk2Wz+dRY6LlBkvo
-         gq/36753SxL0pkdkW9c2D63ZTxm7iy2bvJBD6z7joiKlfE3Q0iTWl4plwXGTHaROPlD3
-         pwyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=aOgIHinYHUj09iif53HVXRrX2QbA7MeRrlLDFJwKBi4=;
-        b=a3Tl4bzZF4IRKMG/IwsYhE6IxA8FP9QRvbJJ+xaAvKW9DbE0DjHYRBCuRou1ZJobSz
-         wKo4n5fr4CXa2ydZ6Xb7BL71/8Lx0geyv9KeRUf3WMnWjsOJtkzL5Gp/aidmUoZDN87h
-         GwwNIvnEiX6I3ffHVVlyZmoqZKbqA4FQVI+kc34icZuvUVqReWkaI/H1RObR9MtgiLcE
-         XuDstcTrlFbFFXxrB4c+vW5AobgI+/N+L1GPV7dVWRLsNf7xUnqkji9xb59g5x/j7VFw
-         yUkhAEz9g+KW79w4cKSpWL9LtjVWxyKtgArir2RK7XaGA7F7GMmyUdccTsbU1wJNQBwN
-         Dh9Q==
-X-Gm-Message-State: AG10YORSEFkdlpwMhalDUSRbvpBSgcPtu1qhmpF83WrXx2LK2IHuhQYcnoMUmxlzp7LFKHINIbnTHhXANXuOXw==
-X-Received: by 10.182.61.38 with SMTP id m6mr31097738obr.32.1456277342344;
- Tue, 23 Feb 2016 17:29:02 -0800 (PST)
-Received: by 10.182.19.225 with HTTP; Tue, 23 Feb 2016 17:28:42 -0800 (PST)
-In-Reply-To: <xmqq1t83yuv6.fsf@gitster.mtv.corp.google.com>
-Sender: git-owner@vger.kernel.org
+	id S1755225AbcBXBlZ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 23 Feb 2016 20:41:25 -0500
+Received: from terminus.zytor.com ([198.137.202.10]:53640 "EHLO mail.zytor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753899AbcBXBlX (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 23 Feb 2016 20:41:23 -0500
+Received: from anacreon.sc.intel.com (jfdmzpr04-ext.jf.intel.com [134.134.137.73])
+	(authenticated bits=0)
+	by mail.zytor.com (8.15.2/8.14.5) with ESMTPSA id u1O1f37b018863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+	Tue, 23 Feb 2016 17:41:03 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <87bn77hzbp.fsf@x220.int.ebiederm.org>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287154>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287155>
 
-On Tue, Feb 23, 2016 at 4:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> No, I do not think so.
+On 02/23/2016 01:49 PM, Eric W. Biederman wrote:
+> 
+> So I could really respect a patch header line that said:
+> tree abcdef0123456789...0123456789abcdef
+> 
+> Where the numbers where the truncated tree hash before and after a patch
+> was applied.  That would seem to give a little bit of extra sanity
+> checking in the application of git diffs as well.
+> 
 
-Thanks. I will probably setup a pre-commit hook at the top level
-project to update a submodule metadata file.
+I would rather have the untruncated base tree ID.  The truncated file
+IDs already provide the verification component, and it is *way* cheaper
+to search for an untruncated ID.
 
-Not the prettiest but... :-)
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+	-hpa
