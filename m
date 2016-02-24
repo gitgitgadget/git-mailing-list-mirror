@@ -1,68 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] test_must_fail: report number of unexpected signal
-Date: Wed, 24 Feb 2016 02:45:49 -0500
-Message-ID: <20160224074548.GC9481@sigill.intra.peff.net>
-References: <20160224073603.GA9163@sigill.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] git config: do not create .git/ if it does not exist yet
+Date: Wed, 24 Feb 2016 08:47:00 +0100 (CET)
+Message-ID: <c4027d758b0914dbc2e1ff5df344b0669aac4447.1456299545.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 24 08:45:56 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 08:47:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYU8x-000197-LV
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 08:45:56 +0100
+	id 1aYUAG-000286-Ug
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 08:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757211AbcBXHpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 02:45:52 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48080 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756699AbcBXHpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 02:45:51 -0500
-Received: (qmail 20684 invoked by uid 102); 24 Feb 2016 07:45:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 02:45:51 -0500
-Received: (qmail 5257 invoked by uid 107); 24 Feb 2016 07:45:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 02:45:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 02:45:49 -0500
-Content-Disposition: inline
-In-Reply-To: <20160224073603.GA9163@sigill.intra.peff.net>
+	id S1757582AbcBXHrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 02:47:13 -0500
+Received: from mout.gmx.net ([212.227.15.19]:56368 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756730AbcBXHrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 02:47:12 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LuxG5-1ZqJYV02ef-0107lk; Wed, 24 Feb 2016 08:47:02
+ +0100
+X-X-Sender: virtualbox@virtualbox
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:7YV9qTqCDf5mzPeyf5mYGkvOG0zd6ybWGgoGD7wtFT5ijuX/G2L
+ +ok7d9ElURqNAQM6bebqsMz1kYvMX16gTPc6VxG/EIhr1jQhjnjiv5DDJ8IY8/EN8fZl1qa
+ g44xaR1AfqA5BHyNIDDbqyehSxJbHQhgS2SxHZQdwq6q0cqKvkw8Alh6+J/59Pk2nJQkvhu
+ mHayfXvfs8MzC0RXEyXGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GI3k/HVv+v8=:Q6yi4pEgV3xcfdjdsxEqfL
+ S7b5+h90Lpsv3Ct8LWAXj7uSAEyXKdJvI22Gp6pM/dF32ulX8nDZaDYiXN87BRXOj3rH506cE
+ MlXjf7njtSNoDZ4hyh4TXcbVi64hB9D9mQ9acHeokB+r2Vq6Tx2zs9AwVGIpg4i9/bQJkkW1Y
+ ZBVX7/EJCX1b896YeRm8lIkJX/kYPP9tTwxKr8CL1FtI0qZ7XvY033JRfxlQEi00holFcSrJ+
+ lKM594qNgsV/nVw8a+TqE6myJq0ecMIzKeBGBWDrG4jVREV7whgnWgJI2SlH/A0s76RBnw5KV
+ vKQJ/W0lk3K/Vl5NY5FtvNglSPpAv2aOs2BPLzCWn/hIBDPqv4/FQHdM6We6ovkxS+fr3Tx7q
+ 23KGeA4VtUk7e+x9/hc6pASK50FyTbFwM6VqBQL0TCkwZW8gfoU5yw2C9uzoHCx0Iyh+gF/Ps
+ GhHhrNpzQTc0LcnJakB51b22FztpGt+05hPWwqhu/KHFtkPy5KTvAqPcP7iyCmoNNwdlyTmA6
+ Uo6zokj6rE4gY0OezXE21orXzCXw16aNC1HkxRMaswic7W7Y70S9TmEYtLf8EGWZ5IbtVGuUI
+ wbzhxV9GCyzejH0Fzb/n6oBD/KCSc/TQ8aU0TiiSWBNX2/4Kf43y+I3/lYVKBj5Kbm3Ss9PUw
+ WMs2VGJDxb3AIh1u3u/psNDtVLy8ORUR9FtyOua5xpdUzS9TCVXqaLOoLVZaM2rSpsJ0uEpZU
+ WQQYWrY5AvH2ZQ9kwLgGa+XV9PaxDsi+HjIc75D/lGKHdaayZ5DF09WnDV/olkvw/JyWdayQ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287180>
 
-If a command is marked as test_must_fail but dies with a
-signal, we consider that a problem and report the error to
-stderr. However, we don't say _which_ signal; knowing that
-can make debugging easier. Let's share as much as we know.
+It is a pilot error to call `git config section.key value` outside of
+any Git worktree.
 
-Signed-off-by: Jeff King <peff@peff.net>
+Let's report that error instead of creating the .git/ directory and
+writing a fresh config into it.
+
+This addresses https://github.com/git-for-windows/git/issues/643 and
+https://groups.google.com/forum/#!topic/git-for-windows/fVRdnDIKVuw
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Not necessary for the fix, obviously, but I implemented this while
-trying to figure out what in the world was going on with the
-write_or_die() thing. :)
 
- t/test-lib-functions.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+	I cannot think of a way how to test this: all of the regression
+	tests run inside Git's own worktree, and we cannot even assume
+	that /tmp/ is outside of a worktree (or that it exists).
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index c64e5a5..8d99eb3 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -617,7 +617,7 @@ test_must_fail () {
- 		return 0
- 	elif test $exit_code -gt 129 && test $exit_code -le 192
- 	then
--		echo >&2 "test_must_fail: died by signal: $*"
-+		echo >&2 "test_must_fail: died by signal $(($exit_code - 128)): $*"
- 		return 1
- 	elif test $exit_code -eq 127
- 	then
+ builtin/config.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index adc7727..78aab95 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -352,6 +352,9 @@ static int get_colorbool(const char *var, int print)
+ 
+ static void check_write(void)
+ {
++	if (!given_config_source.file && !startup_info->have_repository)
++		die("not in a git directory");
++
+ 	if (given_config_source.use_stdin)
+ 		die("writing to stdin is not supported");
+ 
 -- 
-2.7.2.645.g4e1306c
+2.7.2.windows.1.2.gbc859c8
