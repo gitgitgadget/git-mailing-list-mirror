@@ -1,129 +1,94 @@
-From: Fengguang Wu <fengguang.wu@intel.com>
-Subject: Re: [RFC/PATCH 1/1] format-patch: add an option to record base tree
- info
-Date: Wed, 24 Feb 2016 15:07:27 +0800
-Message-ID: <20160224070727.GA23808@wfg-t540p.sh.intel.com>
-References: <1456109938-8568-2-git-send-email-xiaolong.ye@intel.com>
- <xmqqmvqt8jgz.fsf@gitster.mtv.corp.google.com>
- <20160223014741.GA21025@wfg-t540p.sh.intel.com>
- <xmqqio1f3oi9.fsf@gitster.mtv.corp.google.com>
- <20160223091740.GA3830@wfg-t540p.sh.intel.com>
- <20160223103253.GE5273@mwanda>
- <20160223120015.GA10488@wfg-t540p.sh.intel.com>
- <20160223133135.GF5273@mwanda>
- <20160224025519.GB16562@wfg-t540p.sh.intel.com>
- <xmqqpovmmxhv.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] README: use markdown syntax
+Date: Wed, 24 Feb 2016 08:08:52 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602240801550.3152@virtualbox>
+References: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr> <1456249229-30454-2-git-send-email-Matthieu.Moy@imag.fr> <xmqqoab71c09.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dan Carpenter <dan.carpenter@oracle.com>,
-	Xiaolong Ye <xiaolong.ye@intel.com>, git@vger.kernel.org,
-	ying.huang@intel.com, philip.li@intel.com, julie.du@intel.com,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	emma.westby@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Feb 24 08:07:43 2016
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 08:09:07 2016
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1aYTXz-0006Br-5J
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 24 Feb 2016 08:07:43 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1aYTZL-0007DY-7M
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 08:09:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757226AbcBXHHe (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 24 Feb 2016 02:07:34 -0500
-Received: from mga02.intel.com ([134.134.136.20]:25165 "EHLO mga02.intel.com"
+	id S1750931AbcBXHJC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 02:09:02 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57632 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750931AbcBXHHc (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 24 Feb 2016 02:07:32 -0500
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga101.jf.intel.com with ESMTP; 23 Feb 2016 23:07:32 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.22,493,1449561600"; 
-   d="scan'208";a="658355940"
-Received: from wfg-t540p.sh.intel.com ([10.239.197.212])
-  by FMSMGA003.fm.intel.com with ESMTP; 23 Feb 2016 23:07:28 -0800
-Received: from wfg by wfg-t540p.sh.intel.com with local (Exim 4.86)
-	(envelope-from <fengguang.wu@intel.com>)
-	id 1aYTXj-0006Me-UV; Wed, 24 Feb 2016 15:07:27 +0800
-Content-Disposition: inline
-In-Reply-To: <xmqqpovmmxhv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1757183AbcBXHJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 02:09:01 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LxxKu-1ZtrRy0XlE-015LHv; Wed, 24 Feb 2016 08:08:54
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqoab71c09.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:lUweals+/yWe9ru4OC1LRpZWtHdVdF6flyZoOkJKP+4exQv+FRV
+ ajq8NXIcPmemlfNmPq+0/IuByKtGEDLhuknSH7ScCgEuX8c0+V/h3/iQx3dq6OvN7t72Sbh
+ zDMFlYIoxiAJvvc2HZLvX3j2UAOjzpolV5lUgC+T76+YAnDkiTchEKqHVKIlg12XTcUr2GD
+ DjFlG4FB1f+bjfQZdcwnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F0syAyDO9Xo=:Ajg+hDA309PZ7sd1U7J/VC
+ bbltdi8VgAroX96nC5txm0hj9w8zI843yMViPMB7GnmyfMtdV1ilnUkkwSeK6TigelH7xDBP7
+ srjTFwLNZ5p3unDqxI6wu1sNjYLZawbvvfIQqi0rSnNGItiDExSXrXgNGWnbZwSeU/3GkkXBp
+ 6oHbQ5ZADEtPHsx007Ee1T7afO159nkcNC5SbVyOkq1b2r4kWs5Y+47B+qM67ZX3OL6G1SMaZ
+ NYwJMyzKP8kjA0mML+/quQKsNiCroENNoc0R9TAVg85dqM0UJ9PzmMNPuoSQNOvBCVP++E/kW
+ ATdHckXwnird0WkNAHFqP3XXQDWnGVGf1D+UWad+CFrMeUvLjN8YCOL5eqs+vd3KTTZWbcS4P
+ AgwLVtimwEq8NpSOzZvxZcjsTXp1tQi4/FITt35/hEWeVtbfrpbtChOqyrfQY7je7Lq2NtHbj
+ CEgVIpvdJH2AM5XE6l+kXIBen7qpXizA9FEdqTaTx9PuGmPOUHm30zs3Em0D5SqCTDfQDzUI8
+ mF/PNCvrJMy8tYACe/yYQjGeOQeyAczwLkF3hkzaJXCvyO/BTc/cvg8/xcPH5yoX1dwo3Si/p
+ zznyVLNabYpMkCWQQp+yyIrRAmdHc0mZHen7tCrhDEnKSI1jUGoFrGY+FNWJ114pj2a79iron
+ sxZkF57ZWyJ8hm/M4tLxTeDtL+TaynbJerF4o49DBuo8bS+57tEE/qAZb5x1Q9Y8VwJA9GcSw
+ n8Mjr1AQb8RqvcL401AHAZ7O+HYlTPz3V49HmgUold81J+sgT3zdcvNwHOd91VFVpoL2+LmV 
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287173>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287174>
 
-On Tue, Feb 23, 2016 at 10:30:04PM -0800, Junio C Hamano wrote:
-> Fengguang Wu <fengguang.wu@intel.com> writes:
+Hi Junio,
+
+On Tue, 23 Feb 2016, Junio C Hamano wrote:
+
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 > 
-> > The necessary lines for the robot are
+> > This allows repository browsers like GitHub to display the content of
+> > the file nicely formatted.
 > >
-> >         base commit:
-> >         base patch-id:
-> > or
-> >         base tree-id:
-> >         base patch-id:
+> > Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> > ---
 > 
-> I will not repeat why a commit object name would be more appropriate
-> than a tree object name here (please see my response to HPA).
-
-Yes I see that reasoning in your other email.
-
-> > The "base tree-id" will be useful if the submitted patchset is based
-> > on a public (maintainer) commit.
-> >
-> > The "base patch-id" will be useful if the submitted patchset is based
-> > on another patchset someone (likely the developer himself) posted to
-> > the mailing list.
+> To be honest, I have the most problem with this step in the whole
+> series.
 > 
-> Is there a database of in-flight patches indexed by their patch-ids
-> with a large enough coverage (hopefully those who maintain such a
+> Markdown when rendered may be easier to read, but plain text is even
+> easier, and it somehow feels backward to cater to those who browse
+> at GitHub sacrificing those who use "less" in the source tree.
 
-Yes, the 0day robot internally maintains such a patch-id => commit-id
-(of the below git tree) database for in-flight patches.
+That assumes that the primary audience of the README file is the
+developers who already decided to clone the repository, as opposed to
+people browsing the README file in the browser to determine whether they
+found the correct project, or to read up on the background of the project
+without downloading the entire source code.
 
-We exported a git tree which holds all in-flight patches, where each
-patchset maps to a new branch:
+I'd wager real money (without scientific evidence. just going on common
+sense) that your 'less' people are in the vast minority.
 
-https://github.com/0day-ci/linux/branches
+Since I am convinced that markdown'ed READMEs enhance the user experience
+dramatically, Git for Windows has one already for a long time.
 
-We monitor dozens of linux kernel mailing lists, the coverage is
-pretty good for the linux kernel project.
+Hence *my* main objection: this patch series would conflict with patches
+we carry in Git for Windows.
 
-> database are using the --stable version of the patch-id for indexing
-> the patches)?
+;-)
 
-Right, we do use the --stable option.
+Ciao,
+Dscho
 
-> I am wondering how well this scales, especially if a
-> well-known commit named by "base commit" needs to be checked out and
-> then many in-flight patches identified by "base patch-id"s need to
-> be applied on top of it, to prepare the tree-ish the patch being
-> evaluated can be applied to.
-
-The database is effectively a key-value store, in the scale of 1000
-new mappings per day. If we only keep 100 days data, there will be
-100k mappings, which could be hold in 10MB memory.
-
-> This starts to sound more like something you would want to write in
-> the cover letter, or the trailer block next to Signed-off-by: at the
-> end of the first patch in the series.
-
-Yes, that's roughly what the current patch does, except in the latter
-case we add new info after diffstat.
-
-> Or even after the mail
-> signature at the very end of the message (incidentally that would
-> probably minimize the damage to the Git codebase needed for this
-> addition--you should be able to do this without touching anything
-> other than builtin/log.c).
-
-That's an interesting place. It looks worth trying. 
-
-Thanks,
-Fengguang
+P.S.: If it was not clear, my objection was meant as a joke. I am very
+much in favor of enhancing the user experience via Matthieu's patches.
