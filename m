@@ -1,85 +1,83 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] git config: do not create .git/ if it does not exist yet
-Date: Wed, 24 Feb 2016 08:47:00 +0100 (CET)
-Message-ID: <c4027d758b0914dbc2e1ff5df344b0669aac4447.1456299545.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 4/4] t5504: handle expected output from SIGPIPE death
+Date: Wed, 24 Feb 2016 02:48:36 -0500
+Message-ID: <20160224074836.GD9481@sigill.intra.peff.net>
+References: <20160224073603.GA9163@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 24 08:47:18 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 24 08:48:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYUAG-000286-Ug
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 08:47:17 +0100
+	id 1aYUBf-0003Db-Dz
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 08:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757582AbcBXHrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 02:47:13 -0500
-Received: from mout.gmx.net ([212.227.15.19]:56368 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756730AbcBXHrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 02:47:12 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LuxG5-1ZqJYV02ef-0107lk; Wed, 24 Feb 2016 08:47:02
- +0100
-X-X-Sender: virtualbox@virtualbox
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:7YV9qTqCDf5mzPeyf5mYGkvOG0zd6ybWGgoGD7wtFT5ijuX/G2L
- +ok7d9ElURqNAQM6bebqsMz1kYvMX16gTPc6VxG/EIhr1jQhjnjiv5DDJ8IY8/EN8fZl1qa
- g44xaR1AfqA5BHyNIDDbqyehSxJbHQhgS2SxHZQdwq6q0cqKvkw8Alh6+J/59Pk2nJQkvhu
- mHayfXvfs8MzC0RXEyXGQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GI3k/HVv+v8=:Q6yi4pEgV3xcfdjdsxEqfL
- S7b5+h90Lpsv3Ct8LWAXj7uSAEyXKdJvI22Gp6pM/dF32ulX8nDZaDYiXN87BRXOj3rH506cE
- MlXjf7njtSNoDZ4hyh4TXcbVi64hB9D9mQ9acHeokB+r2Vq6Tx2zs9AwVGIpg4i9/bQJkkW1Y
- ZBVX7/EJCX1b896YeRm8lIkJX/kYPP9tTwxKr8CL1FtI0qZ7XvY033JRfxlQEi00holFcSrJ+
- lKM594qNgsV/nVw8a+TqE6myJq0ecMIzKeBGBWDrG4jVREV7whgnWgJI2SlH/A0s76RBnw5KV
- vKQJ/W0lk3K/Vl5NY5FtvNglSPpAv2aOs2BPLzCWn/hIBDPqv4/FQHdM6We6ovkxS+fr3Tx7q
- 23KGeA4VtUk7e+x9/hc6pASK50FyTbFwM6VqBQL0TCkwZW8gfoU5yw2C9uzoHCx0Iyh+gF/Ps
- GhHhrNpzQTc0LcnJakB51b22FztpGt+05hPWwqhu/KHFtkPy5KTvAqPcP7iyCmoNNwdlyTmA6
- Uo6zokj6rE4gY0OezXE21orXzCXw16aNC1HkxRMaswic7W7Y70S9TmEYtLf8EGWZ5IbtVGuUI
- wbzhxV9GCyzejH0Fzb/n6oBD/KCSc/TQ8aU0TiiSWBNX2/4Kf43y+I3/lYVKBj5Kbm3Ss9PUw
- WMs2VGJDxb3AIh1u3u/psNDtVLy8ORUR9FtyOua5xpdUzS9TCVXqaLOoLVZaM2rSpsJ0uEpZU
- WQQYWrY5AvH2ZQ9kwLgGa+XV9PaxDsi+HjIc75D/lGKHdaayZ5DF09WnDV/olkvw/JyWdayQ 
+	id S1757794AbcBXHsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 02:48:39 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48086 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757607AbcBXHsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 02:48:39 -0500
+Received: (qmail 20834 invoked by uid 102); 24 Feb 2016 07:48:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 02:48:39 -0500
+Received: (qmail 5293 invoked by uid 107); 24 Feb 2016 07:48:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 02:48:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 02:48:36 -0500
+Content-Disposition: inline
+In-Reply-To: <20160224073603.GA9163@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287181>
 
-It is a pilot error to call `git config section.key value` outside of
-any Git worktree.
+Commit 8bf4bec (add "ok=sigpipe" to test_must_fail and use
+it to fix flaky tests, 2015-11-27) taught t5504 to handle
+"git push" racily exiting with SIGPIPE rather than failing.
 
-Let's report that error instead of creating the .git/ directory and
-writing a fresh config into it.
+However, one of the tests checks the output of the command,
+as well. In the SIGPIPE case, we will not have produced any
+output. If we want the test to be truly non-flaky, we have
+to accept either output.
 
-This addresses https://github.com/git-for-windows/git/issues/643 and
-https://groups.google.com/forum/#!topic/git-for-windows/fVRdnDIKVuw
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+I'm not sure we're really accomplishing anything with this test_cmp
+anymore. We'll complain only if we get _some_ output, and it's not the
+expected output. I'm not sure if that's actually useful.
 
-	I cannot think of a way how to test this: all of the regression
-	tests run inside Git's own worktree, and we cannot even assume
-	that /tmp/ is outside of a worktree (or that it exists).
+It looks like 8bf4bec just dropped the test_cmp completely in one of the
+cases. So an alternative here would be to do the same.
 
- builtin/config.c | 3 +++
- 1 file changed, 3 insertions(+)
+We _could_ also tighten this, to make sure the output matches the exit
+code we got (right now we can get code=128 with blank output and not
+complain, even though that's clearly bogus). But we'd have to abandon
+test_must_fail and do things manually.
 
-diff --git a/builtin/config.c b/builtin/config.c
-index adc7727..78aab95 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -352,6 +352,9 @@ static int get_colorbool(const char *var, int print)
+ t/t5504-fetch-receive-strict.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index 89224ed..a3e12d2 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -101,7 +101,10 @@ test_expect_success 'push with receive.fsckobjects' '
+ 		git config transfer.fsckobjects false
+ 	) &&
+ 	test_must_fail ok=sigpipe git push --porcelain dst master:refs/heads/test >act &&
+-	test_cmp exp act
++	{
++		test_cmp exp act ||
++		! test -s act
++	}
+ '
  
- static void check_write(void)
- {
-+	if (!given_config_source.file && !startup_info->have_repository)
-+		die("not in a git directory");
-+
- 	if (given_config_source.use_stdin)
- 		die("writing to stdin is not supported");
- 
+ test_expect_success 'push with transfer.fsckobjects' '
 -- 
-2.7.2.windows.1.2.gbc859c8
+2.7.2.645.g4e1306c
