@@ -1,96 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
-Date: Wed, 24 Feb 2016 10:48:27 -0800
-Message-ID: <xmqqegc2t05g.fsf@gitster.mtv.corp.google.com>
-References: <568BC8D1.3080201@gmail.com>
-	<20160105152436.GA1205@sigill.intra.peff.net>
-	<xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com>
-	<xmqqtwmp2e6d.fsf@gitster.mtv.corp.google.com>
-	<20160224110548.GA21620@sigill.intra.peff.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH] refs: reduce the visibility of do_for_each_ref()
+Date: Wed, 24 Feb 2016 14:28:16 -0500
+Organization: Twitter
+Message-ID: <1456342096.18017.2.camel@twopensource.com>
+References: <56CBAA31.7030809@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacek Wielemborek <d33tah@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 24 19:48:36 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 20:28:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYeUE-0001PA-OR
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 19:48:35 +0100
+	id 1aYf6q-0007HL-HF
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 20:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755151AbcBXSsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 13:48:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752829AbcBXSsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 13:48:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8CF345FD2;
-	Wed, 24 Feb 2016 13:48:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DBYzlfW+IRI5iEgdXnHl+GHWwZY=; b=w2KqxA
-	fxRoBQHRFgEr9lQxNXq+tBwdofoHlmFp0Jc81HNEcbTGzmSiS7jyJVh03NaEKXmp
-	Yof6JYfSLr2QEjhU+4PUo7uBQLo6NofAn465nZuLKBoq0mkmObBlSywU+9+0ViyY
-	PhxWcyiLLwdtsppY61AMmzv6uuEXfi5U7pBlc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kna7Ihd3+aX5Aqhq/xqz5I/d6w3Frebl
-	S3OGK0E0UgrUd82oMkqZls0m9aDbR0n7KhvNSGtEgmXmxyB+XlzPSdfJ9KACJ96T
-	OZvQS9lB5Cxh1KfrHDS80/8wYOvVDdgmvBK0llZwXJo1JN2E+WAcUlsPJWoV/u4D
-	g6wi4h3+aFM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF71045FD1;
-	Wed, 24 Feb 2016 13:48:29 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3C95345FCD;
-	Wed, 24 Feb 2016 13:48:29 -0500 (EST)
-In-Reply-To: <20160224110548.GA21620@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 24 Feb 2016 06:05:48 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 31EEE880-DB27-11E5-8A7F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754476AbcBXT2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 14:28:19 -0500
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:36694 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752585AbcBXT2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 14:28:18 -0500
+Received: by mail-qg0-f47.google.com with SMTP id y9so22685335qgd.3
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 11:28:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=h1uoDku14o9/0mPxYdGHtfDGmgW6L780+L//zwTbrh8=;
+        b=1V29Q0PERP1P/2wZJ1bOzS9pSBiKDC4W4NjvjLBCvSTvdYhMrYU8+OW5hDyr9l38t1
+         CLjFkgGSHsNeeiDSb6/10kdUHPicFH2VrskN7E4tFKsLbWiL+LAZI6AwID/HHps0udJW
+         gSXBcMbkNkGFJgfg8aeUB22I4fhfFe4m0k212L0qFGgRBfqQWCa2RMD6ORq/R10yHqbd
+         W1Rh+xAVl8LFDhvvJKb9tEH4U4pLuFRd0c5+CCR+CopQGcsrgVE+kavtt1EUi124EhBb
+         XCTvVTiOTGviYuL92F772l0PPZ8c47L7FqJxMfJFrabu8Skr/0MP4vyB46U8jx8Fiy/D
+         6brA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=h1uoDku14o9/0mPxYdGHtfDGmgW6L780+L//zwTbrh8=;
+        b=m8TwGdnodc3Q5YEOucsN9QjH/w1Ewwen3SH6HerQ87K2XNYfcRkTCnzhxS2JjtFFYs
+         lG0huxEono9PuiI1hxRZUQkNRc9t9/X9fTMRE/bWZX1HKr1RZYsaZ3xQR0XteZ6o3zom
+         32sFZ0H6wIeMf52yNLg7gI9tVUv47GVamkYI8b7e2RsROIEjh3c8+0C6bWj1mdBvih0a
+         90AG9InQBzqTo9q3fSoP3x1jSk/eaqjktP+ajhJMnVzsQKkGiqeRVfxeLsUYZJ2wMlN7
+         7Rxxwn90s3wbNPcShuHt6mIxzYnuTc92/fKFZtHc87FZvxUtteVDDpzvF28Cx9lvx1jV
+         ylpQ==
+X-Gm-Message-State: AG10YOSoo2kjxzXDOUXdbQcpS8nXztd04onODSP6ftM2Wh3PbsblKdtRjhmuDL8MSw9g8w==
+X-Received: by 10.141.1.87 with SMTP id c84mr54081015qhd.1.1456342097669;
+        Wed, 24 Feb 2016 11:28:17 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 85sm1799414qkw.19.2016.02.24.11.28.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 24 Feb 2016 11:28:16 -0800 (PST)
+In-Reply-To: <56CBAA31.7030809@ramsayjones.plus.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287218>
 
-Jeff King <peff@peff.net> writes:
+Got it, thanks.
 
-> On Thu, Jan 07, 2016 at 02:54:50PM -0800, Junio C Hamano wrote:
->
->> We do not check if the offset of individual objects are within the
->> corresponding .pack file, either, and nth_packed_object_offset()
->> does return the data read from .idx file that is not checked for
->> sanity.  use_pack(), which is the helper used by the callers of
->> nth_packed_object_offset() that finds the offset in the packfile for
->> each object, avoids allowing a read access to mapped pack data
->> beyond the end of it, so it is OK to return bogus value that was
->> read from the .idx file from this function, but there is one
->> computation the function itself does using a possibly bogus value
->> read from the disk: to find out where in the secondary offset table
->> in the .idx file the offset in the packfile is stored.
->
-> Looks like this topic got dropped. I was reminded of it when somebody
-> pointed me to a similar case[1] today which segfaults in a similar way (but
-> this time was caused by actual filesystem corruption).
->
-> Did you ever push the patch below further along?
-
-I do not think so, as I didn't "dig"; I recall trying to be explicit
-that it was an illustration to prevent two extra and unnecessary
-changes I alluded to in the earlier parts of the thread, not a real
-patch.
-
-> I confirmed that your patch detects and complains on this newer case.
-> Though I think there is another similar problem in
-> read_v2_anomalous_offsets (I haven't dug, but it triggers for me in
-> "index-pack --verify").
->
-> -Peff
->
-> [1] https://github.com/libgit2/libgit2/issues/3556
+On Tue, 2016-02-23 at 00:39 +0000, Ramsay Jones wrote:
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> 
+> Hi David,
+> 
+> Again, If you need to re-roll your 'dt/refs-backend-lmdb' branch ...
+> 
+> Thanks!
+> 
+> ATB,
+> Ramsay Jones
+> 
+>  refs.c               | 16 ++++++++--------
+>  refs/refs-internal.h |  6 ------
+>  2 files changed, 8 insertions(+), 14 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 337f110..bf70876 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1236,6 +1236,14 @@ static int get_affected_refnames(struct
+> ref_transaction *transaction,
+>  	return 0;
+>  }
+>  
+> +static int do_for_each_ref(const char *submodule, const char *base,
+> +			   each_ref_fn fn, int trim, int flags,
+> +			   void *cb_data)
+> +{
+> +	return the_refs_backend->do_for_each_ref(submodule, base,
+> fn, trim,
+> +						 flags, cb_data);
+> +}
+> +
+>  int for_each_ref(each_ref_fn fn, void *cb_data)
+>  {
+>  	return do_for_each_ref(NULL, "", fn, 0, 0, cb_data);
+> @@ -1501,14 +1509,6 @@ int resolve_gitlink_ref(const char *path,
+> const char *refname,
+>  	return the_refs_backend->resolve_gitlink_ref(path, refname,
+> sha1);
+>  }
+>  
+> -int do_for_each_ref(const char *submodule, const char *base,
+> -		    each_ref_fn fn, int trim, int flags,
+> -		    void *cb_data)
+> -{
+> -	return the_refs_backend->do_for_each_ref(submodule, base,
+> fn, trim,
+> -						 flags, cb_data);
+> -}
+> -
+>  int for_each_reflog_ent_reverse(const char *refname,
+> each_reflog_ent_fn fn,
+>  				void *cb_data)
+>  {
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index ced6af4..4922e25 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -227,12 +227,6 @@ int do_for_each_per_worktree_ref(const char
+> *submodule, const char *base,
+>  				 each_ref_fn fn, int trim, int
+> flags,
+>  				 void *cb_data);
+>  
+> -/*
+> - * The common backend for the for_each_*ref* functions
+> - */
+> -int do_for_each_ref(const char *submodule, const char *base,
+> -		    each_ref_fn fn, int trim, int flags, void
+> *cb_data);
+> -
+>  /* refs backends */
+>  typedef int ref_init_db_fn(int shared, struct strbuf *err);
+>  typedef int ref_transaction_commit_fn(struct ref_transaction
+> *transaction,
