@@ -1,198 +1,139 @@
-From: "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
-Subject: Re: Git History Rewriting in a public repository - capability to
- remove one or more commits from a public repository
-Date: Wed, 24 Feb 2016 01:08:26 +0000
-Message-ID: <D2F22F32.A0553%sarvi@cisco.com>
-References: <D2F20E85.A04DB%sarvi@cisco.com> <56CCD9EA.3010404@gmail.com>
+From: =?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipeg.assis@gmail.com>
+Subject: Re: [PATCH 1/3] t3034: add rename threshold tests
+Date: Tue, 23 Feb 2016 22:15:35 -0300
+Message-ID: <CALMa68oN-d1t67QZ8+7KetApbLgFXoZkJV93-QOeviT_JVPGdw@mail.gmail.com>
+References: <1456271292-4652-1-git-send-email-felipegassis@gmail.com>
+	<1456271292-4652-2-git-send-email-felipegassis@gmail.com>
+	<CAPig+cQ+MF7Nsvp7jASXPtPjNWT_g865ot45Y1Q347Y1iCDeYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="euc-kr"
-Content-Transfer-Encoding: base64
-To: Ilya Terentyev <bacondropped@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 24 02:08:36 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Felipe_Gon=C3=A7alves_Assis?= <felipegassis@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 02:15:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYNwR-0003Fs-DA
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 02:08:36 +0100
+	id 1aYO3I-0000Ec-QR
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 02:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753536AbcBXBIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 20:08:31 -0500
-Received: from rcdn-iport-2.cisco.com ([173.37.86.73]:46115 "EHLO
-	rcdn-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553AbcBXBI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 20:08:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=9624; q=dns/txt; s=iport;
-  t=1456276109; x=1457485709;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-id:content-transfer-encoding:mime-version;
-  bh=ASmsbqsx98A9PZ2qmbPQtfYV8Iq6a78bZIM6hS10+QQ=;
-  b=TS1rzateVRYoGXYcj0l8r+wX5MJNRulDjR95wj07WL6oYZ9i28ag2xot
-   9VWHQ1647YCZ6jPkBPjJXhbAsSxemIOCjnyLgBL7jqGlYQkD2XEp0zGkK
-   5+Vx4ODXCwWW9v8PFnROAF914wIrqlHB+o9qaHbTh/azgtB9+OsNp0ucb
-   E=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0A+BQDGAc1W/4cNJK1UCoM6Um0GvFsXD?=
- =?us-ascii?q?IVqAhyBLDsRAQEBAQEBAWQnhEIBAQQnDRomFQIBCA4KBB8JAgIfEAElAgQBBws?=
- =?us-ascii?q?dBIdoAxIOkUqdCwaKHg2EQQEBAQEBAQEBAQEBAQEBAQEBGXWIWn2COoFKBwQkG?=
- =?us-ascii?q?IJkgUAFh1MNhnuILAGFV4YUgXOCJ4xLhwWHQwE2LIIwgTRqhns9fQEBAQ?=
-X-IronPort-AV: E=Sophos;i="5.22,492,1449532800"; 
-   d="scan'208";a="79079052"
-Received: from alln-core-2.cisco.com ([173.36.13.135])
-  by rcdn-iport-2.cisco.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 24 Feb 2016 01:08:27 +0000
-Received: from XCH-ALN-010.cisco.com (xch-aln-010.cisco.com [173.36.7.20])
-	by alln-core-2.cisco.com (8.14.5/8.14.5) with ESMTP id u1O18RUr018983
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-	Wed, 24 Feb 2016 01:08:27 GMT
-Received: from xch-rcd-009.cisco.com (173.37.102.19) by XCH-ALN-010.cisco.com
- (173.36.7.20) with Microsoft SMTP Server (TLS) id 15.0.1104.5; Tue, 23 Feb
- 2016 19:08:26 -0600
-Received: from xch-rcd-009.cisco.com ([173.37.102.19]) by
- XCH-RCD-009.cisco.com ([173.37.102.19]) with mapi id 15.00.1104.009; Tue, 23
- Feb 2016 19:08:26 -0600
-Thread-Topic: Git History Rewriting in a public repository - capability to
- remove one or more commits from a public repository
-Thread-Index: AQHRboF7S3yrdT5cyk6OOai6CWMbtZ86lt4A//+qTwA=
-In-Reply-To: <56CCD9EA.3010404@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.6.0.151221
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.154.48.226]
-Content-ID: <6EA106B5C5EE35458776D5D9E7910F56@emea.cisco.com>
+	id S1753831AbcBXBPh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Feb 2016 20:15:37 -0500
+Received: from mail-io0-f176.google.com ([209.85.223.176]:35579 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753487AbcBXBPg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Feb 2016 20:15:36 -0500
+Received: by mail-io0-f176.google.com with SMTP id g203so11837421iof.2
+        for <git@vger.kernel.org>; Tue, 23 Feb 2016 17:15:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5OCTYNjoUO5TcYJ/rJ0kHnIUHDVHRLw9UWh8KQLgCXQ=;
+        b=0PLqzDlHaVQM0bq1glXbHCK6DEhOU0cuXieYX+2xPEkhPHp4wtwJ27mE8h9kaLHknZ
+         MTTbnkP+5nP47FoDKNKGqsOsyDmX447iVM6UN3OWtlsfraBUQKh74NZDTX0Rdhvj0/ni
+         Tk6JKx5W+dc70v2p/usgNr2ktRmMd1JyUIucvAgtq2oUu+I56DdEWxEIvjbNX+27CsOM
+         VX9Z2jOhy4tpGjMGnudaxc7lRF0/515hLD5WC7dWobhGP2fwvTWKIw5rj9NSEXobNj8l
+         /NIAN7q98rnGxLNhl+Nri7FOtQXK0NaMG0gcbHq8XcsuJjBMU6GLghbNX/9PFk2HBjC6
+         Q42A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5OCTYNjoUO5TcYJ/rJ0kHnIUHDVHRLw9UWh8KQLgCXQ=;
+        b=k0G9mD7WkS4v4chkrqN9Z+uCuU4dy/rxomW5H0c72mprtk5NxsOM7qPr4NqhA0fI3w
+         ESTWJavXyGuLiJvus/F/bHSoOeFi0xJQybx9BVOvdNr6rWmqc2LChj+0zQsqQTrzWzuC
+         33v75MYI11zTNUF+djcawNhn0lgz5REK0rtTOkyK2JUsisBW9iT8Qt7upBrZS/sMaX/w
+         kXKSaw5UwCce0t/pW2/sTaidPujmS+h8Nss4gKvAtqrBmoGaiSoQOxvpbw/u+RpfJJZU
+         Kq71FwjlM8NufCVXyG3oCacIWiWAfpwQiZLo5Fxz98KpdAJTS2KzUQCc5un+tqX/y01G
+         WRwA==
+X-Gm-Message-State: AG10YOSsX0qWHU6NbzarKT3K/Cs/ftOMQjTsQUBNRFXnpvcRyADkZ1GMuqVYNrCZmlLJIKwn4aTChPRKlD8h7w==
+X-Received: by 10.50.43.133 with SMTP id w5mr17906720igl.47.1456276536039;
+ Tue, 23 Feb 2016 17:15:36 -0800 (PST)
+Received: by 10.107.3.94 with HTTP; Tue, 23 Feb 2016 17:15:35 -0800 (PST)
+In-Reply-To: <CAPig+cQ+MF7Nsvp7jASXPtPjNWT_g865ot45Y1Q347Y1iCDeYA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287153>
 
-VGhhbmtzIElseWEgYW5kIFN0ZWZhbiBmb3IgeW91ciBkZXRhaWxlZCByZXNwb25zZXMuDQoNCklu
-IGdlbmVyYWwgSSBhbSB0cnlpbmcgdG8gYXZvaWQgaGF2aW5nIHRvIHdvcmsgd2l0aCBwYXRjaCBz
-ZXRzL3F1ZXVlcy4NClRoaXMgbWF5IGJlIGFjY2VwdGFibGUgYXMgYSByZXBsYWNlbWVudCBmb3Ig
-dGhlIKGwdGVzdGluZy1zdGFnZaGxIHJlcG8uDQoNCkJ1dCB3ZSBkb26hr3Qgd2FudCB0byBoYXZl
-IHRoZSBkZXZlbG9wZXIgZGVhbCB3aXRoIHBhdGNoZXMgb3IgcGF0Y2ggcXVldWVzDQppbiBoaXMg
-d29ya2Zsb3cuDQoNCjEuIFRoZSBkZXZlbG9wZXIgd2lsbCBwdWxsaW5nIGZyb20gdGhlIKGwbWFp
-bmxpbmWhsSByZXBvc2l0b3J5IHRvICBkbw0KZGV2ZWxvcG1lbnQuDQoyLiBUaGV5IHdpbGwgYmUg
-Y29tbWl0dGluZyBhbmQgcHVzaGluZyB0byB0aGUgobB0ZXN0aW5nLXN0YWdlobEgcmVwb3NpdG9y
-eQ0Kb3IgYnJhbmNoIGFzIHlvdSBzdWdnZXN0Lg0KMy4gVG8gZG8gKDIpIGFib3ZlIHRoZXkgd2ls
-bCBuZWVkIHRvIHN5bmMgdG8gobB0ZXN0aW5nLXN0YWdlobEgcmVwb3NpdG9yeSBvcg0KYnJhbmNo
-LCB3aGljaCBtaWdodCBwdWxsIGluIDIwLTMwIGNvbW1pdHMgdGhhdCBhcmUgYWxyZWFkeSBpbiB0
-aGF0IGJyYW5jaA0Kb3IgcmVwb3NpdG9yeS4NCjQuIEhlIG1pZ2h0IGhhdmUgdG8gcmVzb2x2ZSBz
-b21lIGNvbmZsaWN0cyBiZWZvcmUgaGUgY29tbWl0cyBpdCBpbnRvIHRoYXQNCqGwdGVzdGluZy1z
-dGFnZaGxIHJlcG9zaXRvcnkgb3IgYnJhbmNoLg0KNS4gRHVyaW5nIHRoZSB3aW5kb3cgb2YgKDQp
-IGFib3ZlLCBBdXRvIGJpc2VjdGlvbiB0ZXN0aW5nIHByb2Nlc3MNCmhhcHBlbmluZyBvbiB0aGUg
-obB0ZXN0aW5nLXN0YWdlobEgcmVwb3NpdG9yeSBvciBicmFuY2ggbWlnaHQgaGF2ZSBraWNrZWQN
-Cm91dCAzIGNvbW1pdHMgZnJvbSB0aGF0IHJlcG9zaXRvcnkNCjYuIFRoZSBraWNraW5nIG91dCBv
-ZiB0aGUgMyBjb21taXRzIGluICg1KSBhYm92ZSwgd291bGQgcmVxdWlyZSB0aGUNCmRldmVsb3Bl
-ciBzeW5jIHRvIHRoZSChsHRlc3Rpbmctc3RhZ2WhsSByZXBvc2l0b3J5IG9yIGJyYW5jaCBhZ2Fp
-biBiZWZvcmUNCnB1c2hpbmcgaXQuDQoNCldlIHdhbnQgdGhlIGRldmVsb3BlciB3b3JrZmxvdyBh
-dCAoMykgYW5kICg2KSBhYm92ZSwgdG8gbm90IGhhdmUgdG8gZGVhbA0Kd2l0aCBwYXRjaCBxdWV1
-ZXMgYW5kIHN0dWZmLg0KRm9yIGhpbSB0byBiZSBhYmxlIHRvIGRvIHRoZSChsHN5bmMiIHRvIHRo
-ZSChsHRlc3Rpbmctc3RhZ2WhsSByZXBvc2l0b3J5DQpicmFuY2ggaW4gKDMpIGFuZCAoNikgYWJv
-dmUsIGFsbG93IGhpbSB0byBtZXJnZSB0aGUgdGhlIGNvbW1pdHMgaGUgaGFzDQphbHJlYWR5IG1h
-ZGUgaW4gaGlzIGxvY2FsIHJlcG9zaXRvcnkgd2l0aCB0aGUgcmV3cml0dGVuIGhpc3Rvcnkgb2Yg
-Y29tbWl0cw0KY29taW5nIGZyb20gdGhlIKGwdGVzdGluZy1zdGFnZaGxIHJlcG9zaXRvcnkgb3Ig
-YnJhbmNoLg0KDQoNCldoYXQgSSBhbSBoZWFyaW5nIHlvdSBzdWdnZXN0IGFzIHRoZSB3YXkgZm9y
-d2FyZCBpcyB0aGUgZm9sbG93aW5nDQoxLiBSZW1vdmluZyBiYWQgcGF0Y2hlcyBpbiChsHRlc3Rp
-bi1zdGFnZaGxIHJlcG9zaXRvcnkgb3IgYnJhbmNoDQogICAxLiBVc2UgbWF5IGJlIGJyYW5jaCBp
-bnN0ZWFkIG9mIGEgc2VwYXJhdGUgcmVwb3NpdG9yeSBmb3INCqGwdGVzdGluZy1zdGFnZaGxLg0K
-ICAgMi4gUHVsbCBhIHdvcmtzcGFjZSByZXBvIGZvciByZW1vdmluZyB0aGUgYmFkIGNvbW1pdCBh
-bmQgcmVsYXRlZA0KY29tbWl0cyBpbiB0aGF0IHdvcmtzcGFjZSBieSByZXdyaXRpbmcgaGlzdG9y
-eSBpbiBpdC4NCiAgIDMuIERvIGdpdCBwdXNoIC1uIC0tZm9yY2Utd2l0aC1sZWFzZSByZW1vdGUg
-YnJhbmNoLiBJZiB0aGF0IGZhaWxzDQpiZWNhdXNlIGFkZGl0aW9uYWwgY29tbWl0cyBoYXZlIGNv
-bWUgYnJpbmcgaW4gdGhlIGFkZGl0aW9uYWwgY2hhbmdlcyBhbmQNCnJlLWF0dGVtcHQgdGhlIHB1
-c2guDQogICA0LiBXaGVuIDMgY29tcGxldGVzIHN1Y2Nlc3NmdWxseSB0aGUgaGlzdG9yeSB3b3Vs
-ZCBoYXZlIGJlZW4gcmV3cml0dGVuDQppbnRvIHRoZSChsHRlc3Rpbmctc3RhZ2WhsQ0KDQoyLiBE
-ZXZlbG9wZXIgaGFzIG1hZGUgY29tbWl0cyB0byBoaXN0b3J5IHNwYWNlLg0KMy4gRGV2ZWxvcGVy
-IHN5bmNzIHRvIKGwdGVzdGluZy1zdGFnZaGxIHJlcG8gb3IgYnJhbmNoLCB0aGUgZmlyc3QgdGlt
-ZSwgaW4NCnByZXBhcmF0aW9uIGZvciBwdXNoaW5nIGhpcyBjaGFuZ2VzIHRvIHRoYXQgYnJhbmNo
-IG9yIHJlcG8uIEFsbCBzaG91bGQgZ28NCndlbGwuIFNpbmNlIGhpcyByZXBvIGhhcyBub3Qgc2Vl
-biBoaXN0b3J5IGZyb20gdGhhdCBicmFuY2ggb3IgcmVwbyB0aWxsDQp0aGF0IHRpbWUuDQozLiBU
-YWtlcyB0aW1lIHJlc29sdmUgaXNzdWVzLihXaGlsZSB0aGUgaGlzdG9yeSBoYXMgY2hhbmdlZCBp
-biB0aGUNCqGwdGVzdGluZy1zdGFnZaGxIHJlcG8gb3IgYnJhbmNoKQ0KDQo0LiBIZSBzeW5jcyBh
-Z2Fpbiwgd2hpY2ggaXMgd2hlcmUgd2Ugd2lsbCBoYXZlIGEgcHJvYmxlbS4gobBnaXQgcHVsbKGx
-IG5lZWRzDQp0byByZWNvZ25pemUgdGhhdCBoaXN0b3J5IGhhcyBjaGFuZ2VkIGFuZCBmYWlsLiBX
-aWxsIGl0IGRvIHRoYXQ/DQoNCjUuIERyYXdpbmcgZnJvbSBTdGVmYW4gQmVsbGVyoa9zIHJlc3Bv
-bnNlLCBpdCBsb29rcyB0aGUgZGV2ZWxvcGVyIGhhcyB0bw0KZWl0aGVyIG1hbnVhbGx5IG9yIHRo
-cm91Z2ggZ2l0IGV4dGVuc2lvbg0KICAgIDEuIFJlY29nbml6ZSB0aGF0IHRoZSBoaXN0b3J5IGhh
-cyBjaGFuZ2VkLCBkdXJpbmcgYSBnaXQgcHVsbCBmYWlsdXJlLg0KICAgIDIuIFVzZSAiZ2l0IGNo
-ZXJyeXBpY2uhsSBnZXQgaGlzIG93biBjb21taXRzIGluIGhpcyB3b3Jrc3BhY2UgaGF2ZSB0aGVt
-DQpyZWNvbW1pdGVkIG92ZXIgdGhlIG5ldyBoaXN0b3J5IHRoYXQgaXMgYmVpbmcgcHVsbGVkIGZy
-b20gobB0ZXN0aW5nLXN0YWdlobENCnJlcG8gb3IgYnJhbmNoLiBEbyBzb21ldGhpbmcgYWxvbmcg
-dGhlIGxpbmVzIG9mDQpodHRwOi8vdGhpbmstbGlrZS1hLWdpdC5uZXQvc2VjdGlvbnMvcmViYXNl
-LWZyb20tdGhlLWdyb3VuZC11cC91c2luZy1naXQtY2gNCmVycnktcGljay10by1zaW11bGF0ZS1n
-aXQtcmViYXNlLmh0bWwgdG8gYWNoaWV2ZSB0aGF0Lg0KDQpEbyBJIGhhdmUgdGhlIHdvcmtmbG93
-IHJpZ2h0Pw0KDQpUaGFua3MsDQpTYXJ2aQ0KLS0tLS0NCk9jY2FtJ3MgUmF6b3IgUnVsZXMNCg0K
-DQoNCg0KDQpPbiAyLzIzLzE2LCAyOjE1IFBNLCAiSWx5YSBUZXJlbnR5ZXYiIDxiYWNvbmRyb3Bw
-ZWRAZ21haWwuY29tPiB3cm90ZToNCg0KPkhpIFNhcmF2YW5hbiwNCj4NCj5DaGFuZ2VzIHRoYXQg
-cmV3cml0ZSBoaXN0b3J5LCBpbmNsdWRpbmcgKGJ1dCBub3QgbGltaXRlZCB0bykgZGVsZXRlZA0K
-PmNvbW1pdHMsDQo+Y2FuIGJlIHB1c2hlZCB3aXRoIHRoZSAtLWZvcmNlIG9yIC0tZm9yY2Utd2l0
-aC1sZWFzZSBvcHRpb25zLCBsaWtlIHRoaXM6DQo+DQo+ICAgICAkIGdpdCBwdXNoIC0tZm9yY2Ug
-cmVtb3RlIGJyYW5jaA0KPg0KPi0tZm9yY2UgcHVzaGVzIHlvdXIgY2hhbmdlcyB1bmNvbmRpdGlv
-bmFsbHksIHdoaWNoIG1heSBvdmVyd3JpdGUgY2hhbmdlcw0KPnRoYXQgc29tZW9uZSBlbHNlIHB1
-c2hlZCBiZXR3ZWVuIHRoZSBtb21lbnQgeW91IGNsb25lZCB0aGUgcmVwbyBhbmQgcHVzaGVkDQo+
-eW91ciBvd24uIC0tZm9yY2Utd2l0aC1sZWFzZSB3aWxsIGNoZWNrIGZvciBvdGhlcnMnIHB1c2hl
-cywgc28geW91IGNhbg0KPnVzZSBpdA0KPmluIGEgZHJ5IHJ1biAod2l0aG91dCBhY3R1YWxseSBj
-aGFuZ2luZyBhbnl0aGluZyBpbiB0aGUgcmVtb3RlIHJlcG9zaXRvcnkpDQo+bGlrZSB0aGlzOg0K
-Pg0KPiAgICAgJCBnaXQgcHVzaCAtbiAtLWZvcmNlLXdpdGgtbGVhc2UgcmVtb3RlIGJyYW5jaA0K
-Pg0KPklmIHNvbWVvbmUgZWxzZSAobGlrZSBhbm90aGVyIGRldmVsb3BlciB3aXRoIGFjY2VzcyB0
-byAidGVzdGluZy1zdGFnZSIpDQo+cHVzaGVzIGFueXRoaW5nIGJlZm9yZSB5b3VyIGF0dGVtcHQg
-dG8gcHVzaCwgeW91IHdpbGwgcmVjZWl2ZSBhIG1lc3NhZ2UNCj5saWtlOg0KPg0KPiAgICAgJCBn
-aXQgcHVzaCAtbiAtLWZvcmNlLXdpdGgtbGVhc2UgcmVtb3RlIGJyYW5jaA0KPiAgICAgISBbcmVq
-ZWN0ZWRdICAgICAgICBicmFuY2ggLT4gYnJhbmNoIChzdGFsZSBpbmZvKQ0KPiAgICAgZXJyb3I6
-IGZhaWxlZCB0byBwdXNoIHNvbWUgcmVmcyB0byByZW1vdGUNCj4NCj5HZW5lcmFsbHkgc3BlYWtp
-bmcsIHlvdXIgaWRlYSBpcywgcHJvYmFibHksIGJldHRlciBpbXBsZW1lbnRlZCB3aXRoDQo+cGF0
-Y2hlcw0KPm9yIHB1bGwgcmVxdWVzdHM6DQo+DQo+ICAxKSBZb3VyIGRldmVsb3BlcnMgcmV3cml0
-ZSB0aGVpciBsb2NhbCBoaXN0b3J5IGFzIHRoZXkgd2lzaA0KPiAgMikgVGhleSBnZW5lcmF0ZSBw
-YXRjaGVzIGZyb20gdGhlaXIgY29tbWl0cyAod2l0aCBnaXQgZm9ybWF0LXBhdGNoLA0KPiAgICAg
-Zm9yIGluc3RhbmNlKQ0KPiAgMykgU2VuZCB0aG9zZSBwYXRjaGVzIHRvICJ0ZXN0aW5nLXN0YWdl
-Ig0KPiAgNCkgQXBwbHkgdGhlbSB0byBzdGFnaW5nIGFyZWEgKHdpdGhvdXQgY29tbWl0dGluZykN
-Cj4gIDUpIFJ1biByZXF1aXJlZCBjaGVja3MNCj4gIDYpIElmIGNoZWNrcyBkb24ndCBwYXNzLCBk
-aXNjYXJkIHRob3NlIGNoYW5nZXMNCj4gIDcpIElmIGNoZWNrcyBwYXNzLCBjb21taXQgdGhvc2Ug
-cGF0Y2hlcw0KPiAgOCkgUHVzaCBjb21taXR0ZWQgY2hhbmdlcyB0byAibWFpbmxpbmUiDQo+DQo+
-QnV0IGluIGFueSBjYXNlLCB5b3Ugc2hvdWxkIGJldHRlciBjb25zaWRlciB1c2luZyBmZWF0dXJl
-IGJyYW5jaGVzIGZvcg0KPnRoYXQuDQo+DQo+QmVzdCByZWdhcmRzLA0KPklseWEgVC4NCj4NCj4N
-Cj5PbiAwMi8yNC8yMDE2IDEyOjMwIEFNLCBTYXJhdmFuYW4gU2hhbm11Z2hhbSAoc2FydmkpIHdy
-b3RlOg0KPj4gSGkgR2l0IExlYWRzLA0KPj4gICAgICAgIEkgYW0gbG9va2luZyBmb3IgZ2l0IGNh
-cGFiaWxpdHkvd2F5IHRvIGJlIGFibGUgdG8gcmVtb3ZlIGNvbW1pdHMNCj4+IGZyb20gYSBwdWJs
-aWMgcmVwb3NpdG9yeS4NCj4+DQo+PiBCYWNrZ3JvdW5kOg0KPj4gV2UgYXJlIGxvb2tpbmcgZm9y
-IGEgbXVsdGktc3RhZ2UgY29tbWl0IHByb2Nlc3Mgd2hlcmUgY29tbWl0cyBnZXQgcHVzaGVkDQo+
-PiBpbnRvIGEgcHVibGljIKn4dGVzdGluZy1zdGFnZan3IHJlcG9zaXRvcnkuDQo+PiBXaGVyZSB3
-ZSBkbyB0ZXN0aW5nIG9mIGNvbW1pdHMgYmVmb3JlIHRoZXkgYXJlIHB1c2hlZCB0byBhbm90aGVy
-IHB1YmxpYw0KPj4gqfhtYWlubGluZan3IHJlcG9zaXRvcnkuDQo+Pg0KPj4gV2hlbiB0aGVyZSBh
-cmUgZmFpbHVyZXMgc2VlbiBpbiB0aGUgcHVibGljIKn4dGVzdGluZy1zdGFnZan3IHJlcG9zaXRv
-cnkuDQo+PiBXZSB3b3VsZCBsaWtlIHRvIGltcGxlbWVudCBzb21lIHByb2Nlc3MgdG8gZ28gaWRl
-bnRpZnkgdGhlIGJhZCBwYXRjaCBhbmQNCj4+IGNvbXBsZXRlbHkgZWplY3QgaXQgZnJvbSB0aGF0
-IHB1YmxpYyCp+HRlc3Rpbmctc3RhZ2Wp9yByZXBvc2l0b3J5LCBhcyBpZg0KPj5pdA0KPj4gd2Fz
-IG5vdCBjb25uZWN0ZWQuDQo+Pg0KPj4gVGhlIHBsYW4gaXMgdG8gdXNlIHRoZSBHaXQgSGlzdG9y
-eSBSZXdyaXRpbmcgY2FwYWJpbGl0eSBkZXNjcmliZWQgaGVyZQ0KPj4gaHR0cHM6Ly9naXQtc2Nt
-LmNvbS9ib29rL2VuL3YyL0dpdC1Ub29scy1SZXdyaXRpbmctSGlzdG9yeQ0KPj4gU28gSSBjYW4g
-cHVsbCBhIHB1bGwgd29ya3NwYWNlIGZyb20gdGhlIHB1YmxpYyCp+HRlc3Rpbmctc3RhZ2Wp9w0K
-Pj5yZXBvc2l0b3J5DQo+PiB1c2UgdGhlIGFib3ZlIG1lY2hhbmlzbSB0byBlamVjdCBvbmUgb3Ig
-bW9yZSBjb21taXRzIGZyb20gaXQuDQo+Pg0KPj4gTm93IEkgd291bGQgbGlrZSB0byBiZSBhYmxl
-IHB1c2ggaXQgYmFjayB0byBwdWJsaWMgqfh0ZXN0aW5nLXN0YWdlqfcNCj4+IHJlcG9zaXRvcnku
-DQo+PiBBbmQgYWxsb3cgb3RoZXIgcGVvcGxlIHRvIGJlIGFibGUgdG8gc3luYyB0aGVpciB3b3Jr
-c3BhY2VzIHRvIHRoaXMNCj4+cHVibGljDQo+PiCp+HRlc3Rpbmctc3RhZ2Wp9yByZXBvc2l0b3J5
-LCBjb3JyZWN0bHkuDQo+Pg0KPj4gVGhpcyBhcyBJIHVuZGVyc3RhbmQgaXMgbm90IHN1cHBvcnRl
-ZD8vcmVjb21tZW5kZWQ/IGluIEdJVC4NCj4+DQo+PiBNZXJjdXJpYWwgYWRkcmVzc2VzIHRoaXMg
-d2l0aCB0aGUgY2FwYWJpbGl0eSB0byBtYXJrIGNvbW1pdHMgd2l0aCBhDQo+PnBoYXNlDQo+PiBz
-dWNoIGFzIKn4RHJhZnSp9yBvciCp+EV4cGVyaW1lbnRhbKn3IGFuZCBoYXZpbmcgYSB3b3JrZmxv
-dyBhcm91bmQgdGhlbS4NCj4+IERlc2NyaWJlZCBoZXJlDQo+PiBodHRwczovL3d3dy5tZXJjdXJp
-YWwtc2NtLm9yZy93aWtpL1BoYXNlcw0KPj4NCj4+IGh0dHA6Ly93d3cuZ2VyZy5jYS9ldm9sdmUv
-dXNlci1ndWlkZS5odG1sI2V2b2x2ZS11c2VyLWd1aWRlDQo+Pg0KPj4NCj4+DQo+PiBRdWVzdGlv
-bjoNCj4+IFdoYXQgYXJlIHRoZSBpc3N1ZXM/DQo+PiBXaGF0IG5lZWRzIHRvIGJlIGRvbmUgaW4g
-dGVybXMgb2YgZGV2ZWxvcG1lbnQsIHRvIHN1cHBvcnQgdGhpcw0KPj4gZnVuY3Rpb25hbGl0eSBh
-bmQgbWFrZSBpdCB3b3JrIHByb3Blcmx5IGluIEdJVD8NCj4+IElzIHRoZXJlIGFkZGl0aW9uYWwg
-ZGV2ZWxvcG1lbnQgdGhhdCBuZWVkcyB0byBiZSBkb25lIHRvIGdpdCBjb3JlIHRvDQo+PmFsbG93
-DQo+PiB0aGlzIGRldmVsb3BtZW50IHByb2Nlc3M/DQo+Pg0KPj4NCj4+IFRoYW5rcywNCj4+IFNh
-cnZpDQo+PiAtLS0tLQ0KPj4gT2NjYW0ncyBSYXpvciBSdWxlcw0KPj4NCj4+IC0tDQo+PiBUbyB1
-bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0
-IiBpbg0KPj4gdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvbWFqb3Jkb21vQHZnZXIua2VybmVsLm9y
-Zw0KPj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jk
-b21vLWluZm8uaHRtbA0KPg0KDQo=
+On 23 February 2016 at 21:50, Eric Sunshine <sunshine@sunshineco.com> w=
+rote:
+> On Tue, Feb 23, 2016 at 6:48 PM, Felipe Gon=C3=A7alves Assis
+> <felipeg.assis@gmail.com> wrote:
+>> 10ae752 (merge-recursive: option to specify rename threshold,
+>> 2010-09-27) introduced this feature but did not include any tests.
+>>
+>> The tests use the new option --find-renames, which replaces the then
+>> introduced and now deprecated option --rename-threshold.
+>>
+>> Also update name and description of t3032 for consistency:
+>> "merge-recursive options" -> "merge-recursive space options"
+>
+> A few superficial comments below...
+>
+>> +       cat <<-\EOF >3-old &&
+>> +       33a
+>> +       33b
+>> +       33c
+>> +       33d
+>> +       EOF
+>> +       sed s/33/22/ <3-old >2-old &&
+>> +       sed s/33/11/ <3-old >1-old &&
+>> +       sed s/33/00/ <3-old >0-old &&
+>> +       git add [0-3]-old &&
+>> +       git commit -m base &&
+>> +       git rm [0-3]-old &&
+>> +       git commit -m delete &&
+>> +       git checkout -b rename HEAD^ &&
+>> +       cp 3-old 3-new &&
+>> +       sed 1,1s/./x/ <2-old >2-new &&
+>> +       sed 1,2s/./x/ <1-old >1-new &&
+>> +       sed 1,3s/./x/ <0-old >0-new &&
+>> +       git add [0-3]-new &&
+>> +       git rm [0-3]-old &&
+>> +       git commit -m rename &&
+>> +       get_expected_stages 0 &&
+>> +       get_expected_stages 1 &&
+>> +       get_expected_stages 2 &&
+>> +       get_expected_stages 3 &&
+>> +       check_50=3D"false" &&
+>
+> Why isn't this assignment done in setup 2/2 where all the other
+> assignments to 'check_50' are done?
+>
+
+Oh, it might be a minor thing, but I would like to make tests using
+check_50 fail if setup 2/2 is skipped, instead of succeeding without
+any actual checks.
+
+>> +       th0=3D$(sed -n "s/R\(...\)        0-old   0-new/\1/p" <diff-=
+output) &&
+>> +       th1=3D$(sed -n "s/R\(...\)        1-old   1-new/\1/p" <diff-=
+output) &&
+>> +       th2=3D$(sed -n "s/R\(...\)        2-old   2-new/\1/p" <diff-=
+output) &&
+>> +       th3=3D$(sed -n "s/R\(...\)        3-old   3-new/\1/p" <diff-=
+output) &&
+>> +       test "$th0" -lt "$th1" &&
+>> +       test "$th1" -lt "$th2" &&
+>> +       test "$th2" -lt "$th3" &&
+>> +       test "$th3" =3D 100 &&
+>
+> It's very slightly odd to see '=3D' rather than '-eq' among all these
+> other algebraic operators ('-lt', '-le'), but not so odd that I'd
+> mention it (unless I just did), and not necessarily worth changing.
+>
+
+Here I favoured the stricter test. If the string is not exactly "100",
+then a lot should be reviewed.
+
+Once more, thanks for the review. Your other comments should be
+included in the next version of the patches.
