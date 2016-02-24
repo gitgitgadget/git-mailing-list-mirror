@@ -1,139 +1,144 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule: Try harder to fetch needed sha1 by direct fetching sha1
-Date: Tue, 23 Feb 2016 19:32:13 -0800
-Message-ID: <1456284733-28003-1-git-send-email-sbeller@google.com>
-References: <xmqqmvqs2ao4.fsf@gitster.mtv.corp.google.com>
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, dborowitz@google.com,
-	jacob.keller@gmail.com, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 24 04:32:25 2016
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Fengguang Wu <fengguang.wu@intel.com>
+Subject: Re: [RFC/PATCH 1/1] format-patch: add an option to record base tree
+ info
+Date: Wed, 24 Feb 2016 11:36:24 +0800
+Message-ID: <20160224033624.GB17763@wfg-t540p.sh.intel.com>
+References: <1456109938-8568-1-git-send-email-xiaolong.ye@intel.com>
+ <1456109938-8568-2-git-send-email-xiaolong.ye@intel.com>
+ <xmqqmvqt8jgz.fsf@gitster.mtv.corp.google.com>
+ <20160223014741.GA21025@wfg-t540p.sh.intel.com>
+ <xmqqio1f3oi9.fsf@gitster.mtv.corp.google.com>
+ <20160223091740.GA3830@wfg-t540p.sh.intel.com>
+ <xmqq1t8319z0.fsf@gitster.mtv.corp.google.com>
+ <87d1rnjil4.fsf@x220.int.ebiederm.org>
+ <xmqqtwkzyxkv.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Xiaolong Ye <xiaolong.ye@intel.com>, git@vger.kernel.org,
+	ying.huang@intel.com, philip.li@intel.com, julie.du@intel.com,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	LKML <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Feb 24 04:36:44 2016
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYQBb-0005Vl-KX
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 04:32:23 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1aYQFn-0000QZ-Ag
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 24 Feb 2016 04:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974AbcBXDcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Feb 2016 22:32:19 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33519 "EHLO
-	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671AbcBXDcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Feb 2016 22:32:19 -0500
-Received: by mail-pf0-f178.google.com with SMTP id q63so4521284pfb.0
-        for <git@vger.kernel.org>; Tue, 23 Feb 2016 19:32:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kN6KZHauA9siW23P5kbhtpAtN7wZFlKxf1nxM/ILyZY=;
-        b=EmRiQQYR3XWCwC99c4cq3nm3v9s0nAzo8v0JzB/TYWraRVLKy1j00yotjniMgDiqTr
-         5dSphbVakxV7BpGZR06JR/ezy3exhQn6cXK7jWhaJpAwq5nmMj+lzfpEhpflttJbfQvq
-         iJMG48zHVTST42w+hIGMjHTQpb0GM64/yEVKIpHnkZmgpclSIi7XQCau5AlYxZlSsaRt
-         GydMJ+UTG/+QsZZFlLZ3nBWbZ6mFwIjtTUiEyqowTb8loZykUckBFb+lvftQmF+Ailhw
-         UNDJ1Q871najhWBBecVNimzof5iImTfQwSLUrMu5EHVhByvhTgT01QiSSSyRsjRZFTB3
-         C2RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kN6KZHauA9siW23P5kbhtpAtN7wZFlKxf1nxM/ILyZY=;
-        b=jE0lDDaKH/5QMxk5tPiYz1HsASJdawtDMpkBOb3J9jGMpvCATUbZ5wEovyj4C+Mw+x
-         QaHDcSofy1ouDmEiol0orb5bf8/1H7BT7dbYtQt0lS9opBtNhcL2rIOkXLTOKr2GVXhe
-         ILRAMOdkQp6YBEB4GegzP7vwCSUhtIstl/hJkZmTZ1UR8weRiIreDQEaBaVc1CkiEAmh
-         JFOypR19NVTSNunO/SbLBEY7t7EMHZuhw8/rrGXdA7a9XwqtPIXxjJqroIBNn74+Syxj
-         vqoKGXMRIzmMoiu2XXFnv0T6px24a0DlGDWYoW8DkdwXel7pshuaACxFEcVkU2F4bsSV
-         Pypg==
-X-Gm-Message-State: AG10YOQOUpv1mNXgQC0W4TiVVDS/OdKPx7sMe2ZCAfkGxBRdj9sdY7ShJTHtQJSOCoLKwkqS
-X-Received: by 10.98.72.133 with SMTP id q5mr51889672pfi.166.1456284738493;
-        Tue, 23 Feb 2016 19:32:18 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a8b2:5b44:5b58:45af])
-        by smtp.gmail.com with ESMTPSA id x88sm762367pfi.66.2016.02.23.19.32.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 23 Feb 2016 19:32:17 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.34.ga06e0b3.dirty
-In-Reply-To: <xmqqmvqs2ao4.fsf@gitster.mtv.corp.google.com>
-Sender: git-owner@vger.kernel.org
+	id S1755916AbcBXDgd (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 23 Feb 2016 22:36:33 -0500
+Received: from mga03.intel.com ([134.134.136.65]:45015 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751370AbcBXDgb (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 23 Feb 2016 22:36:31 -0500
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga103.jf.intel.com with ESMTP; 23 Feb 2016 19:36:28 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.22,492,1449561600"; 
+   d="scan'208";a="658268751"
+Received: from wfg-t540p.sh.intel.com ([10.239.197.212])
+  by FMSMGA003.fm.intel.com with ESMTP; 23 Feb 2016 19:36:25 -0800
+Received: from wfg by wfg-t540p.sh.intel.com with local (Exim 4.86)
+	(envelope-from <fengguang.wu@intel.com>)
+	id 1aYQFU-0004ku-O9; Wed, 24 Feb 2016 11:36:24 +0800
+Content-Disposition: inline
+In-Reply-To: <xmqqtwkzyxkv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287169>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287170>
 
-When reviewing a change in Gerrit, which also updates a submodule,
-a common review practice is to download and cherry-pick the patch
-locally to test it. However when testing it locally, the 'git
-submodule update' may fail fetching the correct submodule sha1 as
-the corresponding commit in the submodule is not yet part of the
-project history, but also just a proposed change.
+On Tue, Feb 23, 2016 at 12:35:12PM -0800, Junio C Hamano wrote:
+> ebiederm@xmission.com (Eric W. Biederman) writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> It is valuable for a testing organization to say "We tested this
+> >> series on top of version X.  We know it works, we have tested on a
+> >> lot more hardware than the original developer had, we know this is
+> >> good to go."  It is a valuable service.
+> >>
+> >> But that is valuable only if version X is still relevant, isn't it?
+> >>
+> >> Is the relevance of a version something that is decided by a
+> >> developer who submits a patch series, or is it more of an attribute
+> >> of the project and where the current integration is happening?
+> >> Judging from the responses from Dan to this thread, I think the
+> >> answer is the latter, and for the purpose of identifying the
+> >> relevant version(s), the project does not even care about the exact
+> >> commit, but it wants to know more about which branch the series is
+> >> targetted to.
+> >>
+> >> With that understanding, I find it hard to believe that it buys the
+> >> project much for the "base" commit to be recorded in a patch series
+> >> and automated testing is done by applying the patches to that exact
+> >> commit, which possibly is no-longer-relevant, even though it may
+> >> help shielding the testing machinery from "you tested with a wrong
+> >> version" complaints.
+> >>
+> >> Isn't it more valuable for the test robot to say "this may or may
+> >> not have worked well with whatever old version the patch series was
+> >> based on, but it no longer is useful to the current tip of the
+> >> 'master'"?  If you consider what benefit the project would gain by
+> >> having such a robot, that is the conclusion I have to draw.
+> >>
+> >> So I still am not convinced that this "record base commit" is a
+> >> useful thing to do.
+> >
+> > So I don't know what value this has to the git project.
+> 
+> Oh, don't worry, I wasn't talking about value this may have to the
+> Git project at all.  "The value to the project" I mentioned in my
+> response was all about the value to the kernel project.
+> 
+> > The value of Fengguag's automated testing to the kernel project is to
+> > smoke out really stupid things.
+> 
+> I'll snip your bullet points, but as I wrote, I do understand the
+> value of prescreening test.
+> 
+> What I was questioning was what value it gives to that testing to
+> use "the developer based this patch on this exact commit" added to
+> each incoming patch, and have Fengguag's testing machinery test a
+> patch with a base version that may no longer be relevant in the
+> context of the project.  Compared to that, wouldn't "this no longer
+> applies to the branch the series targets" or "this still applies
+> cleanly, but no longer compiles because the surrounding API has
+> changed" be much more valuable?
+> 
+> In your other message, you mentioned the "index $old..$new" lines,
+> and it is possible to use them to find a tree that the patch cleanly
+> applies to, but it will not uniquely identify _the_ version the
+> patch submitter used.  IMHO, finding such _a_ tree from the recent
+> history of the branch that the patch targets and testing the patch
 
-If $sha1 was not part of the default fetch, we try to fetch the $sha1
-directly. Some servers however do not support direct fetch by sha1,
-which leads git-fetch to fail quickly. We can fail ourselves here as
-the still missing sha1 would lead to a failure later in the checkout
-stage anyway, so failing here is as good as we can get.
+Problem is, it's typically not clear what the patch "targets". Linux
+is such a big project, there are dozens of maintainer trees and an
+order more branches in their trees. The robot does a hard work trying
+to guess what are the patches' targets, based on various hints like the
+files being modified, the TO/CC list, the subject, etc. However it's
+error prone -- even big maintainers cannot make a certain judgement
+at times: "shall me or you take the patch?". Not to mention the
+semi-private rules of co-maintainers, sub-maintainers and topic
+branches. Sometimes people are backporting patches, hence "don't
+test my patch on new RC kernels"; Or people may be working on cool
+futurism patches that depend on more changes than the latest RC
+kernel. To a robot, it's really hard to avoid stupid actions in such
+a versatile bazaar. The "base commit/tree-id" under discussion would
+be a perfect compass to guide the bot.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+Thanks,
+Fengguang
 
- Junio, I took your patch and reworded the error message, so 25 / 26
- lines of the code are still originally authored by you. But as "it is
- my itch not yours" I am resending it. If you changed your mind, take
- authorship of this.
- 
- Thanks,
- Stefan
-
- git-submodule.sh | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9bc5c5f..babfc64 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -591,6 +591,24 @@ cmd_deinit()
- 	done
- }
- 
-+is_tip_reachable () (
-+	clear_local_git_env
-+	cd "$1" &&
-+	rev=$(git rev-list -n 1 "$2" --not --all 2>/dev/null) &&
-+	test -z "$rev"
-+)
-+
-+fetch_in_submodule () (
-+	clear_local_git_env
-+	cd "$1" &&
-+	case "$2" in
-+	'')
-+		git fetch ;;
-+	*)
-+		git fetch $(get_default_remote) "$2" ;;
-+	esac
-+)
-+
- #
- # Update each submodule path to correct revision, using clone and checkout as needed
- #
-@@ -745,10 +763,15 @@ Maybe you want to use 'update --init'?")"
- 			then
- 				# Run fetch only if $sha1 isn't present or it
- 				# is not reachable from a ref.
--				(clear_local_git_env; cd "$sm_path" &&
--					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
--					 test -z "$rev") || git-fetch)) ||
-+				is_tip_reachable "$sm_path" "$sha1" ||
-+				fetch_in_submodule "$sm_path" ||
- 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
-+
-+				# Now we tried the usual fetch, but $sha1 may
-+				# not be reachable from any of the refs
-+				is_tip_reachable "$sm_path" "$sha1" ||
-+				fetch_in_submodule "$sm_path" "$sha1" ||
-+				die "$(eval_gettext "Fetched in submodule path '\$displaypath', but it did not contain $sha1. Direct fetching of that commit failed.")"
- 			fi
- 
- 			# Is this something we just cloned?
--- 
-2.7.0.rc0.34.ga06e0b3.dirty
+> on top of that tree (as opposed to testing the patch in the exact
+> context the developer worked on) would give the project a better
+> value.
