@@ -1,78 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] README: use markdown syntax
-Date: Wed, 24 Feb 2016 05:18:57 -0500
-Message-ID: <20160224101857.GB20807@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH 0/5] Make README more pleasant to read
+Date: Wed, 24 Feb 2016 05:22:47 -0500
+Message-ID: <20160224102247.GA21152@sigill.intra.peff.net>
 References: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
- <1456249229-30454-2-git-send-email-Matthieu.Moy@imag.fr>
- <xmqqoab71c09.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1602240801550.3152@virtualbox>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	emma.westby@gmail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 24 11:19:09 2016
+Cc: git@vger.kernel.org, emma.westby@gmail.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 24 11:22:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYWXE-0002nS-BD
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 11:19:08 +0100
+	id 1aYWaw-0005lw-2t
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 11:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756360AbcBXKTC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 05:19:02 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48176 "HELO cloud.peff.net"
+	id S1753708AbcBXKWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 05:22:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48185 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752858AbcBXKTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 05:19:00 -0500
-Received: (qmail 27793 invoked by uid 102); 24 Feb 2016 10:19:00 -0000
+	id S1752641AbcBXKWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 05:22:50 -0500
+Received: (qmail 27939 invoked by uid 102); 24 Feb 2016 10:22:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 05:19:00 -0500
-Received: (qmail 6754 invoked by uid 107); 24 Feb 2016 10:19:08 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 05:22:50 -0500
+Received: (qmail 6819 invoked by uid 107); 24 Feb 2016 10:22:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 05:19:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 05:18:57 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 05:22:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 05:22:48 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1602240801550.3152@virtualbox>
+In-Reply-To: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287189>
 
-On Wed, Feb 24, 2016 at 08:08:52AM +0100, Johannes Schindelin wrote:
+On Tue, Feb 23, 2016 at 06:40:24PM +0100, Matthieu Moy wrote:
 
-> > Markdown when rendered may be easier to read, but plain text is even
-> > easier, and it somehow feels backward to cater to those who browse
-> > at GitHub sacrificing those who use "less" in the source tree.
+> This patch series was inspired by a discussion I had with Emma Jane
+> after Git Merge last year. It tries both to make the README file less
+> agressive and generally more pleasant to read.
 > 
-> That assumes that the primary audience of the README file is the
-> developers who already decided to clone the repository, as opposed to
-> people browsing the README file in the browser to determine whether they
-> found the correct project, or to read up on the background of the project
-> without downloading the entire source code.
+> To get a quick overview, compare the old one:
 > 
-> I'd wager real money (without scientific evidence. just going on common
-> sense) that your 'less' people are in the vast minority.
+>   https://github.com/git/git#readme
 > 
-> Since I am convinced that markdown'ed READMEs enhance the user experience
-> dramatically, Git for Windows has one already for a long time.
+> and my proposal:
+> 
+>   https://github.com/moy/git/tree/git-readme#readme
+> 
+> Matthieu Moy (5):
+>   README: use markdown syntax
+>   README.md: add hyperlinks on filenames
+>   README.md: move the link to git-scm.com up
+>   README.md: don't call git stupid in the title
+>   README.md: move down historical explanation about the name
 
-Yeah, I agree. I cannot imagine why I would read Git's README at this
-point in time.  And I find I primarily consume READMEs on the web these
-days, as they are the first step in me figuring out whether a project is
-worth looking into.
+Thanks for working on this. I think the end product is much nicer on the
+web, with very little downside for local viewing.
 
-Whereas I _do_ care what things like Documentation/technical look like,
-or CodingGuidelines, because I actually refer to them locally.
+I'm especially happy about the final patch. I don't look at Git's README
+often, but I always cringe when I see that intro paragraph and think
+that it's some people's first introduction to what git is.
 
-IMHO the title formatting is somewhat moot, though, as we can have our
-cake and eat it, too, with the "====" underlines. I don't think they are
-any worse than the lines of slashes in the original. :)
+>  README => README.md | 54 ++++++++++++++++++++++++++++-------------------------
+>  t/t7001-mv.sh       |  2 +-
 
-I'd worry more about the [] links from patch 2, but even those are fine
-by me.
+I do not overly care, but I wonder if it would be nice to keep README as
+a symlink. I don't think that complicates things for people checking out
+on Windows (we already have RelNotes as a symlink, and IIRC they just
+get a file with the link contents. Not helpful, but not harmful to them
+either).
 
 -Peff
