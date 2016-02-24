@@ -1,107 +1,70 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] git config: do not create .git/ if it does not exist yet
-Date: Wed, 24 Feb 2016 18:01:15 +0700
-Message-ID: <CACsJy8BETTY82RuEPD_Hthi3eXRK6WDutjO1RGscfCSun2SfUQ@mail.gmail.com>
-References: <c4027d758b0914dbc2e1ff5df344b0669aac4447.1456299545.git.johannes.schindelin@gmx.de>
- <20160224082657.GD12511@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Segmentation fault found while fuzzing .pack file under 2.7.0.rc3
+Date: Wed, 24 Feb 2016 06:05:48 -0500
+Message-ID: <20160224110548.GA21620@sigill.intra.peff.net>
+References: <568BC8D1.3080201@gmail.com>
+ <20160105152436.GA1205@sigill.intra.peff.net>
+ <xmqqr3ht41w8.fsf@gitster.mtv.corp.google.com>
+ <xmqqtwmp2e6d.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 24 12:01:55 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Jacek Wielemborek <d33tah@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 24 12:06:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYXCd-00011w-6W
-	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 12:01:55 +0100
+	id 1aYXGc-0003v7-8v
+	for gcvg-git-2@plane.gmane.org; Wed, 24 Feb 2016 12:06:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756615AbcBXLBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 06:01:49 -0500
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:34380 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754394AbcBXLBq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 06:01:46 -0500
-Received: by mail-lb0-f178.google.com with SMTP id of3so8138348lbc.1
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 03:01:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SKUer7z0ELyzFL42QhQi8k2VYEknDYARlukwOEDMjyU=;
-        b=gE7bJ4/9Wu34lyU3lhLNewoEEMySrouTCSVdEoMdwiiZrhI2NlbRL30tD35bYiIIM7
-         3Fe9UZ1Xzga1rgJNtXWS1tnEWzlARKR20JiCuLz/wWM0HiYs6NDCoK77qoI5NvpliHmt
-         hceJw9C6gpRcLSO2/shUd/sQmCit1RqE+hY1RBFj5XlGxObJ3igyb9ABklJ+def1Ih/O
-         UPFpAciLmFxxUwETK93erwlr7jKe9Pir1KzuOsWByxjXDDDZ1+q0YH7iFh2HnQ1Ma0vS
-         SksYq/fm4Qb6YqBL8AU7+p/4MaWT3GBt1w9aMznAZCofC5VjT3DRhibMz/i5seOoxBrs
-         sxFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=SKUer7z0ELyzFL42QhQi8k2VYEknDYARlukwOEDMjyU=;
-        b=dUpB/jlnFabBeVo0ZPhAqSb0d1dJU7xU0gvckcntBx9zNTMyPxYgDFm4CuGA15CReU
-         gnRHLAsad6WIOwm7argtWKvLJJo3/KUF0zX3cSnjWSdH9W8EM3dDHCNK9809kOgvAKsK
-         GNqym1kRGgy3g5o2AaCHWLOq83AMeAYROylXGFL7TuByLU6QMRy2AZMuXXHDMh2jkvOx
-         01uRGVl09WX1XKQXi1GfwicR1SfZ7h5rm/Bwb4xH9I3MOPrnshBJ3P0lSqMhygmswds+
-         sIRkjdIfxRR9COrg9EYoEmyUb9l3VtpohFhZp5ZFfRm3rJpIaUih1/qO2r32U0P7bvZ8
-         9vVg==
-X-Gm-Message-State: AG10YOQTgrdrPTY1vv3Ifg3kcQIpMt9IkLQsdwahww9aGt/3GDnBx7OLjq13dn2fGNuY8IMCa3chq7rrgWLMPA==
-X-Received: by 10.112.130.41 with SMTP id ob9mr13983842lbb.81.1456311705325;
- Wed, 24 Feb 2016 03:01:45 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Wed, 24 Feb 2016 03:01:15 -0800 (PST)
-In-Reply-To: <20160224082657.GD12511@sigill.intra.peff.net>
+	id S1753502AbcBXLF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 06:05:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48239 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751447AbcBXLFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 06:05:51 -0500
+Received: (qmail 29889 invoked by uid 102); 24 Feb 2016 11:05:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 06:05:51 -0500
+Received: (qmail 7331 invoked by uid 107); 24 Feb 2016 11:05:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 06:05:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 06:05:48 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqtwmp2e6d.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287199>
 
-On Wed, Feb 24, 2016 at 3:26 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 24, 2016 at 08:47:00AM +0100, Johannes Schindelin wrote:
->
->> It is a pilot error to call `git config section.key value` outside of
->> any Git worktree.
->>
->> Let's report that error instead of creating the .git/ directory and
->> writing a fresh config into it.
->
-> Hmm.  I get (on my Linux machine):
->
->   $ git config foo.bar baz
->   error: could not lock config file .git/config: No such file or directory
+On Thu, Jan 07, 2016 at 02:54:50PM -0800, Junio C Hamano wrote:
 
-Yep, tried the same thing before I asked about the .git dir thing on
-gfw list. Same result.
+> We do not check if the offset of individual objects are within the
+> corresponding .pack file, either, and nth_packed_object_offset()
+> does return the data read from .idx file that is not checked for
+> sanity.  use_pack(), which is the helper used by the callers of
+> nth_packed_object_offset() that finds the offset in the packfile for
+> each object, avoids allowing a read access to mapped pack data
+> beyond the end of it, so it is OK to return bogus value that was
+> read from the .idx file from this function, but there is one
+> computation the function itself does using a possibly bogus value
+> read from the disk: to find out where in the secondary offset table
+> in the .idx file the offset in the packfile is stored.
 
-> which makes sense (though still isn't a great error message, and is kind
-> of weird if you happen to have a .git directory that isn't a real
-> repository).
+Looks like this topic got dropped. I was reminded of it when somebody
+pointed me to a similar case[1] today which segfaults in a similar way (but
+this time was caused by actual filesystem corruption).
 
-Known bug. If setup fails to find git dir and somebody (plenty of them
-in fact) calls get_git_dir(), we automtaically assume git dir is
-".git".
+Did you ever push the patch below further along?
 
-> Is Git more aggressive about auto-creating the directory for lockfiles
-> on Windows? I tried the exact recipe you gave in the linked thread, just
-> to be sure, but I couldn't replicate it.
+I confirmed that your patch detects and complains on this newer case.
+Though I think there is another similar problem in
+read_v2_anomalous_offsets (I haven't dug, but it triggers for me in
+"index-pack --verify").
 
-If .git is created before lockfile code, then the lock should be
-successfully created.  The fix in check_write() fixes it for Johannes,
-so it must be something between
+-Peff
 
-// if (action == ACTION_SET) {...
-check_write();
-check_argc(argc, 2, 2);
-value = normalize_value(argv[0], argv[1]);
-ret = git_config_set_in_file(given_config_source.file, argv[0], value);
-
-I don't see where mkdir() can be called either.
-
-Johannes, maybe you can force a crash in mingw_mkdir to pinpoint this
-code? Just in case the bug is outside config code.
--- 
-Duy
+[1] https://github.com/libgit2/libgit2/issues/3556
