@@ -1,76 +1,108 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v6 00/32] refs backend
-Date: Thu, 25 Feb 2016 19:57:32 +0700
-Message-ID: <CACsJy8DEtmYnmwENws0Hb_2Do_sQkKEaraz=vxgrCyTOV-3FVg@mail.gmail.com>
-References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/20] Delete directories left empty after ref deletion
+Date: Thu, 25 Feb 2016 14:15:59 +0100
+Message-ID: <cover.1456405698.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
+	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
+	David Turner <dturner@twopensource.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 13:58:12 2016
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 14:16:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYvUh-0000mD-7P
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 13:58:11 +0100
+	id 1aYvma-0003c4-Fk
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759756AbcBYM6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 07:58:06 -0500
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:33282 "EHLO
-	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759381AbcBYM6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 07:58:04 -0500
-Received: by mail-lf0-f53.google.com with SMTP id m1so32597380lfg.0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 04:58:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gGT26kKcNtYhszqHf0/dPDgdMZnjPS6knOwMvP0rlOQ=;
-        b=etvIcO86szMwYhTZdP0ujyi+KPQIk5ahRN9s7KjsZTjnSm7fYMDocQ9gGnMIZW/huc
-         h718nI98Xg0/Nc3f29LACGiwzfMAX5P76u7D7dRCPTpW2UmAy7oTcCp1cZv++mdQjcTS
-         dw9PXzncXcbCCjTuQ3zhXMvBLHryZUVf8KEg5hRHKqORbXHLtkbZVZnBuyHQ4ffQQasa
-         XDsPKpA4D32D3cttfIAPYeMB3EQlu0Op+gViQXCN0NdRrMmkNhlnxF+9oEE8y+E5Qxf3
-         jOzNrwqV4OhxTphknhZpkBk9wWlFZ3GyoWAckChvwU8Z/10qlDZGokVpRZMmyJR7td93
-         bf3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=gGT26kKcNtYhszqHf0/dPDgdMZnjPS6knOwMvP0rlOQ=;
-        b=dOSMRLyQ52oxHiCUO7KRfLcPiHw+ZcmL7ZgBImKZhRxoEzpTkVwY/K/neDuEWOC8Hz
-         8Uz1c84lijdD5FE2Bw3n4i/uBgpjAR70MslTBjxrzhiRharFB+2iyjp1O+rvWoVzpm8+
-         Qfkj6eEmrWV9jDxWdjf5KDKlSZv1Y4Q9dvguZX/7TKcu9tp6Fn66yCFW42/uHIMedeW4
-         SF6sFgg3PwABdmdMc+X7YfLFShWcrwAjlaPA2/BLBzVERslC0fgf7gKEGCycfPfquZ3O
-         ++0P8G87DGxw8W+cGN48e4iekepEIDkDIW2QH5QDWjDx9g7W+DznQM4yv8JgR4PCpw+U
-         Dkdg==
-X-Gm-Message-State: AG10YOT2xixKKU8JEcV2DSkmDbyCdDAePxnmaaeXZ3iOvsWmf/wtueAt2mdtLGhPlxFM7QuyeWzk6HuveqOE+g==
-X-Received: by 10.25.4.7 with SMTP id 7mr16271726lfe.45.1456405082263; Thu, 25
- Feb 2016 04:58:02 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 25 Feb 2016 04:57:32 -0800 (PST)
-In-Reply-To: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
+	id S1760262AbcBYNQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 08:16:36 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:52843 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759164AbcBYNQf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2016 08:16:35 -0500
+X-AuditID: 1207440f-d9fff70000007e44-dd-56cefead1766
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 9E.8C.32324.DAEFEC65; Thu, 25 Feb 2016 08:16:29 -0500 (EST)
+Received: from michael.fritz.box (p548D63F1.dip0.t-ipconnect.de [84.141.99.241])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1PDGPre024973
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 25 Feb 2016 08:16:26 -0500
+X-Mailer: git-send-email 2.7.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNIsWRmVeSWpSXmKPExsUixO6iqLv237kwg893RCzmbzrBaNF1pZvJ
+	oqH3CrPFh7WH2Cx6J/eyWtxeMZ/Z4kdLD7MDu8ff9x+YPJ5un8Ls8eJ8hcez3j2MHhcvKXss
+	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7owz15+zFbQKVnyb1MDWwNjM18XIySEhYCLRe+EU
+	SxcjF4eQwFZGiSt901khnBNMErsubGMGqWIT0JVY1NPMBGKLCKhJTGw7BNbBLPCIUaJr/3ZG
+	kISwgJfEm+1HgRIcHCwCqhIL16SDmLwC5hIzl3FCLJOTaPmxm3UCI9cCRoZVjHKJOaW5urmJ
+	mTnFqcm6xcmJeXmpRbomermZJXqpKaWbGCEBw7+DsWu9zCFGAQ5GJR5ehp9nw4RYE8uKK3MP
+	MUpyMCmJ8u55fi5MiC8pP6UyI7E4I76oNCe1+BCjBAezkgjvir9AOd6UxMqq1KJ8mJQ0B4uS
+	OK/6EnU/IYH0xJLU7NTUgtQimKwMB4eSBO8mkEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTU
+	osTSkox4UEDHFwNDGiTFA7Q3F2xvcUFiLlAUovUUo6KUOK8RSEIAJJFRmgc3FpYGXjGKA30p
+	zPsKpIoHmELgul8BDWYCGjxzA9jgkkSElFQDo95sL4vbM7Vml096eyxlu/1M7UlPKpW7L4d4
+	H/u1co6xEEdP4fqu1+vynNR1Nnn4y7z6YNIW6LVletCdYydYMsJeHVGPk19Sdo9XdTbHwe23
+	vrZUPTcTfblPe1v/Orky/RDRmntSLj91FkiUbUr/mF1nsP4D88/GF8s2Ri76XFff 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287366>
 
-A couple of build warnings I found, haven't really read the code yet.
-These two can easily be fixed
+This re-roll addresses a few minor points that were brought up about v1 [1]:
 
-refs/lmdb-backend.c: In function 'lmdb_read_raw_ref':
-refs/lmdb-backend.c:554:16: warning: unused variable 'err' [-Wunused-variable]
-  struct strbuf err = STRBUF_INIT;
-                ^
-refs/lmdb-backend.c: In function 'lmdb_do_for_each_ref':
-refs/lmdb-backend.c:1625:15: warning: unused variable 'c' [-Wunused-variable]
-   const char *c = resolve_ref_unsafe_submodule(submodule, refname, 0, oid.hash,
-               ^
+* "safe_create_leading_directories(): set errno on SCLD_EXISTS":
+  * Set errno to ENOTDIR rather than EEXIST.
 
--Wshadow also gives a bunch of warnings, mostly about "transaction"
-and "env". Whether you want to fix them is really up to you.
---
-Duy
+* "raceproof_create_file(): new function":
+  * Improve comments.
+
+* "rename_tmp_log(): use raceproof_create_file()":
+  * Fix whitespace.
+
+* "rename_tmp_log(): improve error reporting":
+  * Fix whitespace.
+
+This patch series is also available from my GitHub account [2] as
+branch delete-empty-refs-dirs.
+
+Thanks to Junio and Peff for their feedback about v1.
+
+Michael
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/286370
+[2] http://github.com/mhagger/git
+
+Michael Haggerty (20):
+  safe_create_leading_directories_const(): preserve errno
+  safe_create_leading_directories(): set errno on SCLD_EXISTS
+  raceproof_create_file(): new function
+  lock_ref_sha1_basic(): use raceproof_create_file()
+  rename_tmp_log(): use raceproof_create_file()
+  rename_tmp_log(): improve error reporting
+  log_ref_setup(): separate code for create vs non-create
+  log_ref_setup(): improve robustness against races
+  log_ref_setup(): pass the open file descriptor back to the caller
+  log_ref_write_1(): don't depend on logfile
+  log_ref_setup(): manage the name of the reflog file internally
+  log_ref_write_1(): inline function
+  try_remove_empty_parents(): rename parameter "name" -> "refname"
+  try_remove_empty_parents(): don't trash argument contents
+  try_remove_empty_parents(): don't accommodate consecutive slashes
+  t5505: use "for-each-ref" to test for the non-existence of references
+  delete_ref_loose(): derive loose reference path from lock
+  delete_ref_loose(): inline function
+  try_remove_empty_parents(): teach to remove parents of reflogs, too
+  ref_transaction_commit(): clean up empty directories
+
+ cache.h               |  52 ++++++-
+ refs/files-backend.c  | 370 ++++++++++++++++++++++++++------------------------
+ refs/refs-internal.h  |   9 +-
+ sha1_file.c           |  77 ++++++++++-
+ t/t1400-update-ref.sh |  27 ++++
+ t/t5505-remote.sh     |   2 +-
+ 6 files changed, 351 insertions(+), 186 deletions(-)
+
+-- 
+2.7.0
