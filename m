@@ -1,73 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/5] Documentation/diff-config: fix description of diff.renames
-Date: Thu, 25 Feb 2016 18:34:56 +0100
-Message-ID: <vpqvb5c3d8f.fsf@anie.imag.fr>
-References: <1456249498-3232-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1456249498-3232-2-git-send-email-Matthieu.Moy@imag.fr>
-	<loom.20160225T181310-74@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe =?iso-8859-1?Q?Gon=E7alves?= Assis 
-	<felipeg.assis@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 18:35:08 2016
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2.1] Documentation/diff-config: fix description of diff.renames
+Date: Thu, 25 Feb 2016 18:37:58 +0100
+Message-ID: <1456421878-443-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1456390761-27015-2-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 18:38:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYzoh-0001hQ-HO
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 18:35:07 +0100
+	id 1aYzrl-0003pn-OW
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 18:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933295AbcBYRfB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2016 12:35:01 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:43130 "EHLO shiva.imag.fr"
+	id S933369AbcBYRiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 12:38:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:43182 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933066AbcBYRfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 12:35:01 -0500
+	id S933304AbcBYRiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 12:38:08 -0500
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1PHYs35018349
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1PHc0m4018682
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 25 Feb 2016 18:34:54 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1PHYu8o023823;
-	Thu, 25 Feb 2016 18:34:56 +0100
-In-Reply-To: <loom.20160225T181310-74@post.gmane.org> ("Felipe
- =?iso-8859-1?Q?Gon=E7alves?=
-	Assis"'s message of "Thu, 25 Feb 2016 17:27:02 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 25 Feb 2016 18:34:55 +0100 (CET)
+	Thu, 25 Feb 2016 18:38:00 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1PHc2Ht023862;
+	Thu, 25 Feb 2016 18:38:02 +0100
+X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
+In-Reply-To: <1456390761-27015-2-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 25 Feb 2016 18:38:01 +0100 (CET)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1PHYs35018349
+X-MailScanner-ID: u1PHc0m4018682
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457026496.99786@Z5u+GAE7UUEUd8qzw0R46A
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1457026682.34351@W+nd0VB0ix9tikvUBuGmEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287404>
 
-=46elipe Gon=E7alves Assis <felipeg.assis@gmail.com> writes:
+The description was misleading, since "set to any boolean value" include
+"set to false", and diff.renames=false does not enable basic detection,
+but actually disables it. Also, document that diff.renames only affects
+Porcelain.
 
-> Matthieu Moy <Matthieu.Moy <at> imag.fr> writes:
->
->>  diff.renames::
->> -	Tells Git to detect renames.  If set to any boolean value, it
->> -	will enable basic rename detection.  If set to "copies" or
->> -	"copy", it will detect copies, as well.
->> +	Whether and how Git detects renames.  If set to "false",
->> +	rename detection is disabled. If set to "true", basic rename
->> +	detection is enable.  If set to "copies" or "copy", Git will
->> +	detect copies, as well.  Defaults to false.
->
-> Just a minor typo: s/enable/enabled/
-> Also, there is only one space between the second and third sentences.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Oops, trivial fix for typo noticed by Felipe. I'm resending just this
+one in case Junio wants to pick the latest version but I can obviously
+resend the whole if needed.
 
-Indeed. Thanks.
+ Documentation/diff-config.txt | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
+index 6eaa452..b5e9bda 100644
+--- a/Documentation/diff-config.txt
++++ b/Documentation/diff-config.txt
+@@ -108,9 +108,13 @@ diff.renameLimit::
+ 	detection; equivalent to the 'git diff' option '-l'.
+ 
+ diff.renames::
+-	Tells Git to detect renames.  If set to any boolean value, it
+-	will enable basic rename detection.  If set to "copies" or
+-	"copy", it will detect copies, as well.
++	Whether and how Git detects renames.  If set to "false",
++	rename detection is disabled.  If set to "true", basic rename
++	detection is enabled.  If set to "copies" or "copy", Git will
++	detect copies, as well.  Defaults to false.  Note that this
++	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
++	linkgit:git-log[1], and not lower level commands such as
++	linkgit:git-diff-files[1].
+ 
+ diff.suppressBlankEmpty::
+ 	A boolean to inhibit the standard behavior of printing a space
+-- 
+2.7.2.334.g35ed2ae.dirty
