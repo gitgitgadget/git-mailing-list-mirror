@@ -1,159 +1,164 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 09/20] log_ref_setup(): pass the open file descriptor back to the caller
-Date: Thu, 25 Feb 2016 14:16:08 +0100
-Message-ID: <19b83a0ba835dc711a78e56be0b287d5340f2816.1456405699.git.mhagger@alum.mit.edu>
-References: <cover.1456405698.git.mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
-	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 14:24:01 2016
+From: Saurav Sachidanand <sauravsachidanand@gmail.com>
+Subject: [PATCH] Change type of signed int flags to unsigned
+Date: Thu, 25 Feb 2016 18:54:32 +0530
+Message-ID: <1456406672-5661-1-git-send-email-sauravsachidanand@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Saurav Sachidanand <sauravsachidanand@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 25 14:25:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYvtg-0008G8-NQ
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:24:01 +0100
+	id 1aYvus-0000bY-3Y
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760687AbcBYNXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 08:23:54 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:62932 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760665AbcBYNXx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2016 08:23:53 -0500
-X-AuditID: 1207440c-98bff700000008b4-74-56cefebcf9b4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 16.3F.02228.CBEFEC65; Thu, 25 Feb 2016 08:16:45 -0500 (EST)
-Received: from michael.fritz.box (p548D63F1.dip0.t-ipconnect.de [84.141.99.241])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1PDGPrn024973
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 25 Feb 2016 08:16:43 -0500
-X-Mailer: git-send-email 2.7.0
-In-Reply-To: <cover.1456405698.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqLv337kwg1ldLBbzN51gtOi60s1k
-	0dB7hdniw9pDbBa9k3tZLW6vmM9s8aOlh9mB3ePv+w9MHk+3T2H2eHG+wuNZ7x5Gj4uXlD0W
-	PL/P7vF5k1wAexS3TVJiSVlwZnqevl0Cd8aVV1vYC17KVRy7+pytgXGzRBcjB4eEgInEgcuF
-	XYycHEICWxklLn8R7GLkArJPMEnMWfKUFSTBJqArsainmQnEFhFQk5jYdogFpIhZ4BGjRNf+
-	7YwgCWGBaInPT4+A2SwCqhIbj+1nA7F5BaIkVnQ/ZgGxJQTkJFp+7AYbyilgIXHx5HRmiM3m
-	Eqtu7GGfwMizgJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuoV5uZoleakrpJkZIgPHsYPy2
-	TuYQowAHoxIPL8PPs2FCrIllxZW5hxglOZiURHn3PD8XJsSXlJ9SmZFYnBFfVJqTWnyIUYKD
-	WUmEd8VfoBxvSmJlVWpRPkxKmoNFSZxXdYm6n5BAemJJanZqakFqEUxWhoNDSYJ3E0ijYFFq
-	empFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCgC4ouBMQCS4gHaq/gPZG9xQWIuUBSi9RSj
-	opQ473KQuQIgiYzSPLixsLTxilEc6Eth3haQKh5gyoHrfgU0mAlo8MwNYINLEhFSUg2Mmbfn
-	79xy5/tJC4b/miV/8hcybIlyO3pwueGbx6o7y7gOmf51Ct7osvJ8zOWjB0WqJhsExS4qfbE/
-	+OvtSbL3lPZ0XjHY5u166c/XtUvW9Dr+b9odvEcp47+N3cktiw8eeGZuLiYmulaX 
+	id S1760404AbcBYNY6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2016 08:24:58 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33994 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760562AbcBYNYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 08:24:49 -0500
+Received: by mail-pf0-f170.google.com with SMTP id x65so32906198pfb.1
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 05:24:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=RT2UYaUVutXTyNhv+0HMXbrxPS2igPWPW9GnEe+EHcY=;
+        b=tqE05/nj79cpNL+I2xF9tj214yZiukcNOwe78vGUqyIYMlgCFjfhH2Ico2CCdN2sUR
+         LWP9R02LPeIyTTWzYdlCvxuYDTEuzF5GhoMOR2idNHhx69/amkjoLk8dC9+RQeNFZDvQ
+         ZVxm9jqq05FSny51nRHO5w7PV1dDR02WKl7iR7njdnmSAOJLr8x4p5KBEuYX6YMR2+yL
+         vjq9TcycdQ9emF5a3exttuBvVNv/AYo07/7dRBAmxBgl1qAat01+QvB8V9rabOHjQz5Y
+         0A8Xy4OSgumii1UIkUn25CSsjUXoaecICycgN4moysg2hovBKU9gP7vZ6OgP176OaUUE
+         mXww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=RT2UYaUVutXTyNhv+0HMXbrxPS2igPWPW9GnEe+EHcY=;
+        b=I1Gp0ndOBk5DbYhHY6z8bu8GsI9xS/bs0fG/xGQ+4UnYUqmphJGXcsVQDrTR1JcfUq
+         DzMVbTJeaSY6iMqsYhjWa4jgvcuEpvw9PMhQQsqHbPcZ2lzz3he6D69e2sa77Y6sNkiS
+         W5ry0MRJF8D/smTyywWTY1bD9SPwuQhHG+WP5H7rgzXxvQim5WUFwIu2UQaJ9YkfX3Tx
+         DljzdYIouMEw4326vU1hEJr7M0CngIHnQiuVBjE73j7mE3u1/i9R5dgHwqtXXvjy0swQ
+         c4nkaRdlVx9pQhcbTh21U0v8AD/tvvm84HeJstRT9OQBX3phgpWpgoa4kxGEJ8509fLf
+         oBLw==
+X-Gm-Message-State: AG10YOTzmmddNltL/8gal6uTGO5RZgrbC+1iRJjpPVwApv665FJcm2TLxxXuRFJymx6LGA==
+X-Received: by 10.98.68.212 with SMTP id m81mr62587043pfi.135.1456406688709;
+        Thu, 25 Feb 2016 05:24:48 -0800 (PST)
+Received: from localhost.localdomain ([106.51.19.158])
+        by smtp.googlemail.com with ESMTPSA id yj1sm12471163pac.16.2016.02.25.05.24.46
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 25 Feb 2016 05:24:48 -0800 (PST)
+X-Mailer: git-send-email 2.7.1.339.g0233b80
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287387>
 
-This function will most often be called by log_ref_write_1(), which
-wants to append to the reflog file. In that case, it is silly to close
-the file only for the caller to reopen it immediately. So, in the case
-that the file was opened, pass the open file descriptor back to the
-caller.
+=E2=80=9Cpattern=E2=80=9D and =E2=80=9Cexclude=E2=80=9D are two structs=
+ defined in attr.c and dir.h
+respectively. Each contains a field named =E2=80=9Cflags=E2=80=9D of ty=
+pe int, that
+takes on values from the set of positive integers {1, 4, 8, 16}
+enumerated through the macro EXC_FLAG_*.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+That the most significant bit (used to store the sign) of these two
+fields is not used in any special way, is observed from the fact
+that, the flags fields (accessed within attr.c, dir.c, and
+builtin/check-ignore.c) is either checked for it's value using the &
+operator (e.g.: flags & EXC_FLAG_NODIR), or assigned a value of 0
+first and then assigned any one of {1, 4, 8, 16} using the | operator
+(e.g.: flags |=3D EXC_FLAG_NODIR). Hence, change the type of flags
+to unsigned in both structs.
+
+=46urthermore, flags is passed by reference to the function
+parse_exclude_pattern defined in dir.c, which accepts an =E2=80=9Cint *=
+=E2=80=9D type
+for the flags argument. To avoid converting between pointers to
+different types, change type of the flags argument to =E2=80=9Cunsigned=
+ *=E2=80=9D.
+
+While we=E2=80=99re at it, document the flags field of exclude to expli=
+citly
+state the values it=E2=80=99s supposed to take on.
+
+Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
 ---
- refs/files-backend.c | 37 +++++++++++++++++++++----------------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ attr.c | 2 +-
+ dir.c  | 4 ++--
+ dir.h  | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2cc9489..5937099 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2591,19 +2591,23 @@ static int open_or_create_logfile(const char *path, void *cb)
- }
- 
+diff --git a/attr.c b/attr.c
+index 086c08d..679e13c 100644
+--- a/attr.c
++++ b/attr.c
+@@ -124,7 +124,7 @@ struct pattern {
+ 	const char *pattern;
+ 	int patternlen;
+ 	int nowildcardlen;
+-	int flags;		/* EXC_FLAG_* */
++	unsigned flags;		/* EXC_FLAG_* */
+ };
+
  /*
-- * Create a reflog for a ref.  If force_create = 0, the reflog will
-- * only be created for certain refs (those for which
-- * should_autocreate_reflog returns non-zero.  Otherwise, create it
-- * regardless of the ref name.  Fill in *err and return -1 on failure.
-+ * Create a reflog for a ref. Store its path to *logfile. If
-+ * force_create = 0, only create the reflog for certain refs (those
-+ * for which should_autocreate_reflog returns non-zero). Otherwise,
-+ * create it regardless of the reference name. If the logfile already
-+ * existed or was created, return 0 and set *logfd to the file
-+ * descriptor opened for appending to the file. If no logfile exists
-+ * and we decided not to create one, return 0 and set *logfd to -1. On
-+ * failure, fill in *err and return -1.
-  */
--static int log_ref_setup(const char *refname, struct strbuf *logfile, struct strbuf *err, int force_create)
-+static int log_ref_setup(const char *refname,
-+			 struct strbuf *logfile, int *logfd,
-+			 struct strbuf *err, int force_create)
+diff --git a/dir.c b/dir.c
+index 552af23..d36fda7 100644
+--- a/dir.c
++++ b/dir.c
+@@ -459,7 +459,7 @@ int no_wildcard(const char *string)
+
+ void parse_exclude_pattern(const char **pattern,
+ 			   int *patternlen,
+-			   int *flags,
++			   unsigned *flags,
+ 			   int *nowildcardlen)
  {
--	int logfd;
--
- 	strbuf_git_path(logfile, "logs/%s", refname);
- 
- 	if (force_create || should_autocreate_reflog(refname)) {
--		if (raceproof_create_file(logfile->buf, open_or_create_logfile, &logfd) < 0) {
-+		if (raceproof_create_file(logfile->buf, open_or_create_logfile, logfd) < 0) {
- 			if (errno == ENOENT) {
- 				strbuf_addf(err, "unable to create directory for %s: "
- 					    "%s", logfile->buf, strerror(errno));
-@@ -2617,11 +2621,10 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
- 			return -1;
- 		} else {
- 			adjust_shared_perm(logfile->buf);
--			close(logfd);
- 		}
- 	} else {
--		logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
--		if (logfd < 0) {
-+		*logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
-+		if (*logfd < 0) {
- 			if (errno == ENOENT || errno == EISDIR) {
- 				/*
- 				 * The logfile doesn't already exist,
-@@ -2636,7 +2639,6 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
- 			}
- 		} else {
- 			adjust_shared_perm(logfile->buf);
--			close(logfd);
- 		}
- 	}
- 
-@@ -2647,8 +2649,11 @@ int safe_create_reflog(const char *refname, int force_create, struct strbuf *err
+ 	const char *p =3D *pattern;
+@@ -500,7 +500,7 @@ void add_exclude(const char *string, const char *ba=
+se,
  {
- 	int ret;
- 	struct strbuf sb = STRBUF_INIT;
-+	int fd;
- 
--	ret = log_ref_setup(refname, &sb, err, force_create);
-+	ret = log_ref_setup(refname, &sb, &fd, err, force_create);
-+	if (!ret && fd >= 0)
-+		close(fd);
- 	strbuf_release(&sb);
- 	return ret;
- }
-@@ -2684,17 +2689,17 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 			   struct strbuf *logfile, int flags,
- 			   struct strbuf *err)
- {
--	int logfd, result, oflags = O_APPEND | O_WRONLY;
-+	int logfd, result;
- 
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates = !is_bare_repository();
- 
--	result = log_ref_setup(refname, logfile, err, flags & REF_FORCE_CREATE_REFLOG);
-+	result = log_ref_setup(refname, logfile, &logfd, err,
-+			       flags & REF_FORCE_CREATE_REFLOG);
- 
- 	if (result)
- 		return result;
- 
--	logfd = open(logfile->buf, oflags);
- 	if (logfd < 0)
- 		return 0;
- 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
--- 
-2.7.0
+ 	struct exclude *x;
+ 	int patternlen;
+-	int flags;
++	unsigned flags;
+ 	int nowildcardlen;
+
+ 	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
+diff --git a/dir.h b/dir.h
+index 3ec3fb0..e34df5e 100644
+--- a/dir.h
++++ b/dir.h
+@@ -28,7 +28,7 @@ struct exclude {
+ 	int nowildcardlen;
+ 	const char *base;
+ 	int baselen;
+-	int flags;
++	unsigned flags;		/* EXC_FLAG_* */
+
+ 	/*
+ 	 * Counting starts from 1 for line numbers in ignore files,
+@@ -244,7 +244,7 @@ extern struct exclude_list *add_exclude_list(struct=
+ dir_struct *dir,
+ extern int add_excludes_from_file_to_list(const char *fname, const cha=
+r *base, int baselen,
+ 					  struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fn=
+ame);
+-extern void parse_exclude_pattern(const char **string, int *patternlen=
+, int *flags, int *nowildcardlen);
++extern void parse_exclude_pattern(const char **string, int *patternlen=
+, unsigned *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
+ extern void clear_exclude_list(struct exclude_list *el);
+--
+2.7.1.339.g0233b80
+
+This patch is for the suggested microproject for GSoC 2016 titled
+"Use unsigned integral type for collection of bits."
