@@ -1,174 +1,105 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv18 11/11] clone: allow an explicit argument for parallel submodule clones
-Date: Thu, 25 Feb 2016 15:08:28 -0800
-Message-ID: <1456441708-13512-12-git-send-email-sbeller@google.com>
+Subject: [PATCHv18 02/11] submodule-config: drop check against NULL
+Date: Thu, 25 Feb 2016 15:08:19 -0800
+Message-ID: <1456441708-13512-3-git-send-email-sbeller@google.com>
 References: <xmqqoab4mnoc.fsf@gitster.mtv.corp.google.com>
  <1456441708-13512-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, sunshine@sunshineco.com, jrnieder@gmail.com
 To: sbeller@google.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:24 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ52B-0008Fv-8W
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:23 +0100
+	id 1aZ522-00089u-C0
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392AbcBYXJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 18:09:15 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:35908 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbcBYXJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 18:09:14 -0500
-Received: by mail-pa0-f54.google.com with SMTP id yy13so39708061pab.3
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:09:14 -0800 (PST)
+	id S1752329AbcBYXJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 18:09:06 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35392 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752285AbcBYXJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 18:09:01 -0500
+Received: by mail-pf0-f171.google.com with SMTP id c10so41929903pfc.2
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bLU6ECR3DWFpadT8TcQlj+Egqjsn71XAaHnNAQNZayE=;
-        b=IQcS+OVix/OZAQD7Jg2kjI1o6re+mDOtZlKuJOSV5NMJMtBFxMzB9SmZHmRcauqpl7
-         ykJ0fKD0dGirse8L1if1tRs6ovyptAM6KjOlv4KS4WTBNvljK/KRxnmZRWNJDTW0fy/G
-         5iV8WzsBsNDeP1fc0GX5l8JNfNAsUeh/VnjxHfHXIh3Ep7uz59tEgVC5Tz6/q5Cu2djY
-         zvR6eSQ10SDXZjwi4SLrbNdVpXqHLoeTFQHSUHDci8NK0sAjd6y8Bu5cCfCzT+rigT1O
-         nhKtBcbEjoiqsooVCQMsd9fPd/ugGU56a9m9NcfM9RXdXakRjNtRleosinVVkgiEXHgH
-         +4Qg==
+        bh=GhDAMJO8T6VhrAGSxj9wN/RW5qX7B5343VWv3q4zgjU=;
+        b=pa/jomCxNSNAz8fPGcgRsLQGGg4uN9OD+4SJ5DoyocOFafhlGM23ZFgrhk9CzJQksT
+         SqE8j9JzCum4ChTQ0LITnN+AtLGcil0mG9rq+AYdwmmnpaYbQhB7NWV+US9BTRYpJINX
+         cgIY8JeuTeE+KRmuRhEh6vB9W43uwLobIsg7mOt74yWyWeqDR5pX4iAG6T117gU6Rsdz
+         uAerquARnH+kS6agRFhwjQpPbnGKr5LW3qobaoz4bAtc93XYHtc0j2py8IslCJrBBajs
+         xNzWixLHpRl7Ir0Ft+IuU5TuZdI0PtksTB3FPB+XQonbpukDEGBOw5Ng1P8XlvTHdIAo
+         p0sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bLU6ECR3DWFpadT8TcQlj+Egqjsn71XAaHnNAQNZayE=;
-        b=WpwkZc8QNoUDqbGtUXJxOC72a0YNy1QWLOUjRSDIcuqD5AEAQ+9pfiS7HBgOSipkUt
-         f0e66DHhte8IVtMTAeiaSnSatJqbgwsQ9RlZ0M+67d4cz9Qgn0CmBCVW/+ng8R96IdrJ
-         6TbvUrzSD034Tf3IWDX6h2dvHqZIpkRUyFZtOAOId49Ii5EqPM5oJj/+oeHZ5h4kUBJ0
-         vmXXoeVc77V6up7pJiN0cjIvD7sKzjXFYvViYu0ydUvv6hMu9rSXCAEgM6KweKQ8micY
-         olJNDdvtaEgPBcwnNWRh7OS94wqVbTtQ2vuWIa7aTElIvUI+LXXFGhZR1rvc7YPLU2Rn
-         G8Fw==
-X-Gm-Message-State: AG10YOSHC61S5FeRYuvkagAGpJjJyyPSyarWqPVeuLAu+V7XvwdE9fTN9r8z8opqQ2KpALRr
-X-Received: by 10.66.192.195 with SMTP id hi3mr66610559pac.149.1456441753646;
-        Thu, 25 Feb 2016 15:09:13 -0800 (PST)
+        bh=GhDAMJO8T6VhrAGSxj9wN/RW5qX7B5343VWv3q4zgjU=;
+        b=gdDomhtOBAFRh8eiiISJLCEV8Q5VjrBDrYvMi/lPQcb4IvUwaMAI9GuCG6OorUohtS
+         xoPvVnLrPpC0xxBEQS3zOHdXDFJ+J3jgzTshykVvlXC9FlgQLqbqRGfCDFg0F9T4ME+8
+         ygPJOzhKi/KLE1VXhq5Ac2uguNOc0HARV8TWM76R36cgTFImIo/xfmTxVRIoI9hu0mdg
+         RdxoaTI3NoeGzbjSzXpWFHHt5p1YJ+3DuPMreb3VpOFa96VcmbjUyqUOOH+bf4RvrrCC
+         wC/iUtPpTSiiRtt0TZx2SOrrGdd04XXrexhP26oAP/1Cvh251WfsznoPAueb2WArHdIB
+         ogyg==
+X-Gm-Message-State: AG10YOTX8oNQmpVBLhhBVIm9Pl3x4EJwrkF5yeH8rvs03sYOqT/BYU+JZzsDptI+w3tcX1GT
+X-Received: by 10.98.68.73 with SMTP id r70mr67688958pfa.136.1456441740301;
+        Thu, 25 Feb 2016 15:09:00 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a893:1c03:aadb:c3d])
-        by smtp.gmail.com with ESMTPSA id p21sm14506809pfj.67.2016.02.25.15.09.12
+        by smtp.gmail.com with ESMTPSA id dg1sm14536184pad.18.2016.02.25.15.08.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Feb 2016 15:09:12 -0800 (PST)
+        Thu, 25 Feb 2016 15:08:59 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.36.g75877e4.dirty
 In-Reply-To: <1456441708-13512-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287479>
 
-Just pass it along to "git submodule update", which may pick reasonable
-defaults if you don't specify an explicit number.
+Adhere to the common coding style of Git and not check explicitly
+for NULL throughout the file. There are still other occurrences in the
+code base but that is usually inside of conditions with side effects.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-clone.txt |  6 +++++-
- builtin/clone.c             | 19 +++++++++++++------
- t/t7406-submodule-update.sh | 15 +++++++++++++++
- 3 files changed, 33 insertions(+), 7 deletions(-)
+ submodule-config.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 6bf000d..6db7b6d 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
--	  [--recursive | --recurse-submodules] [--] <repository>
-+	  [--recursive | --recurse-submodules] [--jobs <n>] [--] <repository>
- 	  [<directory>]
- 
- DESCRIPTION
-@@ -221,6 +221,10 @@ objects from the source repository into a pack in the cloned repository.
- 	The result is Git repository can be separated from working
- 	tree.
- 
-+-j <n>::
-+--jobs <n>::
-+	The number of submodules fetched at the same time.
-+	Defaults to the `submodule.fetchJobs` option.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0b3cd9..b004fb4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,6 +50,7 @@ static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
-+static int max_jobs = -1;
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -72,6 +73,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("initialize submodules in the clone")),
- 	OPT_BOOL(0, "recurse-submodules", &option_recursive,
- 		    N_("initialize submodules in the clone")),
-+	OPT_INTEGER('j', "jobs", &max_jobs,
-+		    N_("number of submodules cloned in parallel")),
- 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
- 		   N_("directory from which templates will be used")),
- 	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
-@@ -95,10 +98,6 @@ static struct option builtin_clone_options[] = {
- 	OPT_END()
- };
- 
--static const char *argv_submodule[] = {
--	"submodule", "update", "--init", "--recursive", NULL
--};
--
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
- {
- 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -724,8 +723,16 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive)
--		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-+	if (!err && option_recursive) {
-+		struct argv_array args = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+
-+		if (max_jobs != -1)
-+			argv_array_pushf(&args, "--jobs=%d", max_jobs);
-+
-+		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
-+		argv_array_clear(&args);
-+	}
- 
- 	return err;
- }
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 7fd5142..090891e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -786,4 +786,19 @@ test_expect_success 'submodule update can be run in parallel' '
- 	 grep "9 tasks" trace.out
- 	)
- '
-+
-+test_expect_success 'git clone passes the parallel jobs config on to submodules' '
-+	test_when_finished "rm -rf super4" &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
-+	grep "7 tasks" trace.out &&
-+	rm -rf super4 &&
-+	git config --global submodule.fetchJobs 8 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules . super4 &&
-+	grep "8 tasks" trace.out &&
-+	rm -rf super4 &&
-+	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 9 . super4 &&
-+	grep "9 tasks" trace.out &&
-+	rm -rf super4
-+'
-+
- test_done
+diff --git a/submodule-config.c b/submodule-config.c
+index a5cd2ee..9fa2269 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -267,7 +267,7 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	if (!strcmp(item.buf, "path")) {
+ 		if (!value)
+ 			ret = config_error_nonbool(var);
+-		else if (!me->overwrite && submodule->path != NULL)
++		else if (!me->overwrite && submodule->path)
+ 			warn_multiple_config(me->commit_sha1, submodule->name,
+ 					"path");
+ 		else {
+@@ -291,7 +291,7 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	} else if (!strcmp(item.buf, "ignore")) {
+ 		if (!value)
+ 			ret = config_error_nonbool(var);
+-		else if (!me->overwrite && submodule->ignore != NULL)
++		else if (!me->overwrite && submodule->ignore)
+ 			warn_multiple_config(me->commit_sha1, submodule->name,
+ 					"ignore");
+ 		else if (strcmp(value, "untracked") &&
+@@ -307,7 +307,7 @@ static int parse_config(const char *var, const char *value, void *data)
+ 	} else if (!strcmp(item.buf, "url")) {
+ 		if (!value) {
+ 			ret = config_error_nonbool(var);
+-		} else if (!me->overwrite && submodule->url != NULL) {
++		} else if (!me->overwrite && submodule->url) {
+ 			warn_multiple_config(me->commit_sha1, submodule->name,
+ 					"url");
+ 		} else {
 -- 
 2.7.0.rc0.36.g75877e4.dirty
