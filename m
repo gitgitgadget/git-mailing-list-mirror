@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 10/20] log_ref_write_1(): don't depend on logfile
-Date: Thu, 25 Feb 2016 14:16:09 +0100
-Message-ID: <0f2ae0f9766d36b697291cea21c517a3c53c9c69.1456405699.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 08/20] log_ref_setup(): improve robustness against races
+Date: Thu, 25 Feb 2016 14:16:07 +0100
+Message-ID: <2554cdb15206319537c694299f7c78238e7706b3.1456405699.git.mhagger@alum.mit.edu>
 References: <cover.1456405698.git.mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Karl Moskowski <kmoskowski@me.com>,
 	Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
@@ -14,77 +14,129 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYvtb-0008Bi-N5
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:23:56 +0100
+	id 1aYvta-0008Bi-GO
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760686AbcBYNXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 08:23:52 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:46576 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760171AbcBYNXv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2016 08:23:51 -0500
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Feb 2016 08:23:51 EST
-X-AuditID: 12074412-b07ff70000006da4-f1-56cefebe8cee
+	id S1760685AbcBYNXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 08:23:47 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:65170 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760665AbcBYNXq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2016 08:23:46 -0500
+X-AuditID: 12074413-eefff7000000516b-25-56cefebbb995
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id BA.A8.28068.EBEFEC65; Thu, 25 Feb 2016 08:16:46 -0500 (EST)
+	by  (Symantec Messaging Gateway) with SMTP id 60.F0.20843.BBEFEC65; Thu, 25 Feb 2016 08:16:43 -0500 (EST)
 Received: from michael.fritz.box (p548D63F1.dip0.t-ipconnect.de [84.141.99.241])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1PDGPro024973
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1PDGPrm024973
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 25 Feb 2016 08:16:45 -0500
+	Thu, 25 Feb 2016 08:16:41 -0500
 X-Mailer: git-send-email 2.7.0
 In-Reply-To: <cover.1456405698.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLvv37kwg7d/9S3mbzrBaNF1pZvJ
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqLv737kwgwunZCzmbzrBaNF1pZvJ
 	oqH3CrPFh7WH2Cx6J/eyWtxeMZ/Z4kdLD7MDu8ff9x+YPJ5un8Ls8eJ8hcez3j2MHhcvKXss
-	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7oxvj5awFrzlrHg/pZ2xgfErexcjB4eEgInEubOl
-	XYxcHEICWxklOqatYIFwTjBJPFyxibGLkZODTUBXYlFPMxOILSKgJjGx7RBYEbPAI0aJrv3b
-	wYqEBVwknn7cxw5iswioShy/fp0VxOYViJJo+/QbrFlCQE6i5cdusDingIXExZPTmUFsIQFz
-	iVU39rBPYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXTC83s0QvNaV0EyMkxIR2MK4/
-	KXeIUYCDUYmHN+L32TAh1sSy4srcQ4ySHExKorx7np8LE+JLyk+pzEgszogvKs1JLT7EKMHB
-	rCTCu+IvUI43JbGyKrUoHyYlzcGiJM77c7G6n5BAemJJanZqakFqEUxWhoNDSYKXGRhLQoJF
-	qempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgGIgvBkYBSIoHaK8iSDtvcUFiLlAUovUU
-	o6KUOO9ykIMEQBIZpXlwY2GJ4xWjONCXwrxmIFU8wKQD1/0KaDAT0OCZG8AGlyQipKQaGBMe
-	neFi+LE4+w+/Ukfpuqru/wpz8xb+47s/06qXJe9VadXUGT53Qo88nMPeMyto4jllMb60JbWS
-	JYk6Dt+SD25Y2hk0qWLj7xZ+A1/526zN97a2ei50EdowPWDxhxMt5ZYiYe0RVcnq 
+	eH6f3ePzJrkA9ihum6TEkrLgzPQ8fbsE7oymSRNYCy6JV3zfPpe5gXGlUBcjJ4eEgInE5PVr
+	2boYuTiEBLYySiz6s4wVwjnBJDH31CF2kCo2AV2JRT3NTCC2iICaxMS2QywgRcwCjxgluvZv
+	ZwRJCAt4S+yZ+xTI5uBgEVCV6H9fABLmFYiS2NjbxgKxTU6i5cduVhCbU8BC4uLJ6cwgtpCA
+	ucSqG3vYJzDyLGBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka66Xm1mil5pSuokREmLCOxh3
+	nZQ7xCjAwajEwxvx+2yYEGtiWXFl7iFGSQ4mJVHePc/PhQnxJeWnVGYkFmfEF5XmpBYfYpTg
+	YFYS4V3xFyjHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLgZQbGkpBg
+	UWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KAbii4FRAJLiAdqrCNLOW1yQmAsUhWg9
+	xajLsWTXg7VMQix5+XmpUuK8y0GOEwApyijNg1sBSyivGMWBPhbm1QQZxQNMRnCTXgEtYQJa
+	MnMD2JKSRISUVANjpsrBZayzok5975n82IR3mn7n1Rc2s5XY+mqfPbNlf2zbenhdjuW+eXfm
+	3lVYJ+t783uDVgz/Ds6kLfZe8y668/Dmu9i8eXriRaT77+mlbP6rpiq/7H46ecGT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287384>
 
-It's unnecessary to pass a strbuf holding the reflog path up and down
-the call stack now that it is hardly needed by the callers. Remove the
-places where log_ref_write_1() uses it, in preparation for making it
-internal to log_ref_setup().
+Change log_ref_setup() to use raceproof_create_file() to create the new
+logfile. This makes it more robust against a race against another
+process that might be trying to clean up empty directories while we are
+trying to create a new logfile.
+
+This also means that it will only call create_leading_directories() if
+open() fails, which should be a net win. Even in the cases where we are
+willing to create a new logfile, it will usually be the case that the
+logfile already exists, or if not then that the directory containing the
+logfile already exists. In such cases, we will save some work that was
+previously done unconditionally.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ refs/files-backend.c | 46 +++++++++++++++++++++-------------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 5937099..4f25932 100644
+index 8fff1a8..2cc9489 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2705,14 +2705,14 @@ static int log_ref_write_1(const char *refname, const unsigned char *old_sha1,
- 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
- 				  git_committer_info(0), msg);
- 	if (result) {
--		strbuf_addf(err, "unable to append to %s: %s", logfile->buf,
--			    strerror(errno));
-+		strbuf_addf(err, "unable to append to %s: %s",
-+			    git_path("logs/%s", refname), strerror(errno));
- 		close(logfd);
- 		return -1;
- 	}
- 	if (close(logfd)) {
--		strbuf_addf(err, "unable to append to %s: %s", logfile->buf,
--			    strerror(errno));
-+		strbuf_addf(err, "unable to append to %s: %s",
-+			    git_path("logs/%s", refname), strerror(errno));
- 		return -1;
- 	}
+@@ -2582,6 +2582,14 @@ static int commit_ref(struct ref_lock *lock)
  	return 0;
+ }
+ 
++static int open_or_create_logfile(const char *path, void *cb)
++{
++	int *fd = cb;
++
++	*fd = open(path, O_APPEND | O_WRONLY | O_CREAT, 0666);
++	return (*fd < 0) ? -1 : 0;
++}
++
+ /*
+  * Create a reflog for a ref.  If force_create = 0, the reflog will
+  * only be created for certain refs (those for which
+@@ -2593,36 +2601,24 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
+ 	int logfd;
+ 
+ 	strbuf_git_path(logfile, "logs/%s", refname);
++
+ 	if (force_create || should_autocreate_reflog(refname)) {
+-		if (safe_create_leading_directories(logfile->buf) < 0) {
+-			strbuf_addf(err, "unable to create directory for %s: "
+-				    "%s", logfile->buf, strerror(errno));
+-			return -1;
+-		}
+-		logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
+-		if (logfd < 0) {
+-			if (errno == EISDIR) {
+-				/*
+-				 * The directory that is in the way might be
+-				 * empty. Try to remove it.
+-				 */
+-				if (remove_empty_directories(logfile)) {
+-					strbuf_addf(err, "There are still logs under "
+-						    "'%s'", logfile->buf);
+-					return -1;
+-				}
+-				logfd = open(logfile->buf, O_APPEND | O_WRONLY | O_CREAT, 0666);
+-			}
+-
+-			if (logfd < 0) {
++		if (raceproof_create_file(logfile->buf, open_or_create_logfile, &logfd) < 0) {
++			if (errno == ENOENT) {
++				strbuf_addf(err, "unable to create directory for %s: "
++					    "%s", logfile->buf, strerror(errno));
++			} else if (errno == EISDIR) {
++				strbuf_addf(err, "there are still logs under %s",
++					    logfile->buf);
++			} else {
+ 				strbuf_addf(err, "unable to append to %s: %s",
+ 					    logfile->buf, strerror(errno));
+-				return -1;
+ 			}
++			return -1;
++		} else {
++			adjust_shared_perm(logfile->buf);
++			close(logfd);
+ 		}
+-
+-		adjust_shared_perm(logfile->buf);
+-		close(logfd);
+ 	} else {
+ 		logfd = open(logfile->buf, O_APPEND | O_WRONLY, 0666);
+ 		if (logfd < 0) {
 -- 
 2.7.0
