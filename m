@@ -1,146 +1,174 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv18 06/11] run-command: expose default_{start_failure, task_finished}
-Date: Thu, 25 Feb 2016 15:08:23 -0800
-Message-ID: <1456441708-13512-7-git-send-email-sbeller@google.com>
+Subject: [PATCHv18 11/11] clone: allow an explicit argument for parallel submodule clones
+Date: Thu, 25 Feb 2016 15:08:28 -0800
+Message-ID: <1456441708-13512-12-git-send-email-sbeller@google.com>
 References: <xmqqoab4mnoc.fsf@gitster.mtv.corp.google.com>
  <1456441708-13512-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, sunshine@sunshineco.com, jrnieder@gmail.com
 To: sbeller@google.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:28 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ52B-0008Fv-Qu
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:24 +0100
+	id 1aZ52B-0008Fv-8W
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752381AbcBYXJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 18:09:12 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34764 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752285AbcBYXJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 18:09:06 -0500
-Received: by mail-pf0-f180.google.com with SMTP id x65so40602263pfb.1
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:09:06 -0800 (PST)
+	id S1752392AbcBYXJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 18:09:15 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35908 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbcBYXJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 18:09:14 -0500
+Received: by mail-pa0-f54.google.com with SMTP id yy13so39708061pab.3
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:09:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FvCdp4S4HwLahP21ct3uMjFDIejPx52HXPUXQXmvmWg=;
-        b=HbqgZ8INK2MBgZ2z+h3LNjgoRPdpWBEcwmL0yOvlzgmnGPMlkz//iWgw1MiEr5yP24
-         p6MEg5vJVZXJmJA76/rtLIm914tQp4khhG5OvxI7VdkfQJ6VH5sMd4NKFNN4+XM9qclp
-         6m8lXQGnouR3dpooGPrjaVowjIiANgBwNpTqwtkpIz7F5wfNLFQmN0mokv9vXUnC67TB
-         gc94dwWDGaSiDaI4dd34IGhTz9/yhjL8Lovn5DgdHyLFTmFG3RN7ZbR3KbeTlqQeqDKm
-         xopFgsEYTS7sIxW0fAiNX8bNaMC8lnkOPdMJqww+tVdoSTzXYUKYU4CfRUy42VsOJV9i
-         IJoA==
+        bh=bLU6ECR3DWFpadT8TcQlj+Egqjsn71XAaHnNAQNZayE=;
+        b=IQcS+OVix/OZAQD7Jg2kjI1o6re+mDOtZlKuJOSV5NMJMtBFxMzB9SmZHmRcauqpl7
+         ykJ0fKD0dGirse8L1if1tRs6ovyptAM6KjOlv4KS4WTBNvljK/KRxnmZRWNJDTW0fy/G
+         5iV8WzsBsNDeP1fc0GX5l8JNfNAsUeh/VnjxHfHXIh3Ep7uz59tEgVC5Tz6/q5Cu2djY
+         zvR6eSQ10SDXZjwi4SLrbNdVpXqHLoeTFQHSUHDci8NK0sAjd6y8Bu5cCfCzT+rigT1O
+         nhKtBcbEjoiqsooVCQMsd9fPd/ugGU56a9m9NcfM9RXdXakRjNtRleosinVVkgiEXHgH
+         +4Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FvCdp4S4HwLahP21ct3uMjFDIejPx52HXPUXQXmvmWg=;
-        b=YtndCvV9ESSc1V+jplfWPn4OJnhROMsJi1d5KMGRQbR470bM1mv5YgfVlINt4V7G5N
-         Et4efUMxZ7I9kb8g+kOf+egKp5gVf0xZ1Lvsbc0umjo59uXZ/fbFzO/vZpz41lzm+j4a
-         9uLUUs5jsrE6PzbjLmiWbaiSvNSzm2jQs4Vi9paDlIGr/7EetyoJWgB4v7wOWNn+RhtG
-         CLGn/jftLSuuOfQKMb2kMCA3PfV4kcSov9cCHkNjRL/aF8NKAaFo9eK7xjU1Sn3o8xbm
-         seA/f5w8whLSOns6Ow7hgfj6j9W35uF2r9zAtU5MK2ZEdpFKO7qIWQQCbvcxoNdD6Pd+
-         cXiQ==
-X-Gm-Message-State: AG10YOSMmtuaWK9JjoXxpGC8jIvd9Hsb4aBdGU1nZbFerukHUiYuA79LHvGZLTmRJiBDKdK9
-X-Received: by 10.98.89.215 with SMTP id k84mr67081394pfj.66.1456441745951;
-        Thu, 25 Feb 2016 15:09:05 -0800 (PST)
+        bh=bLU6ECR3DWFpadT8TcQlj+Egqjsn71XAaHnNAQNZayE=;
+        b=WpwkZc8QNoUDqbGtUXJxOC72a0YNy1QWLOUjRSDIcuqD5AEAQ+9pfiS7HBgOSipkUt
+         f0e66DHhte8IVtMTAeiaSnSatJqbgwsQ9RlZ0M+67d4cz9Qgn0CmBCVW/+ng8R96IdrJ
+         6TbvUrzSD034Tf3IWDX6h2dvHqZIpkRUyFZtOAOId49Ii5EqPM5oJj/+oeHZ5h4kUBJ0
+         vmXXoeVc77V6up7pJiN0cjIvD7sKzjXFYvViYu0ydUvv6hMu9rSXCAEgM6KweKQ8micY
+         olJNDdvtaEgPBcwnNWRh7OS94wqVbTtQ2vuWIa7aTElIvUI+LXXFGhZR1rvc7YPLU2Rn
+         G8Fw==
+X-Gm-Message-State: AG10YOSHC61S5FeRYuvkagAGpJjJyyPSyarWqPVeuLAu+V7XvwdE9fTN9r8z8opqQ2KpALRr
+X-Received: by 10.66.192.195 with SMTP id hi3mr66610559pac.149.1456441753646;
+        Thu, 25 Feb 2016 15:09:13 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a893:1c03:aadb:c3d])
-        by smtp.gmail.com with ESMTPSA id h66sm14487415pfd.91.2016.02.25.15.09.05
+        by smtp.gmail.com with ESMTPSA id p21sm14506809pfj.67.2016.02.25.15.09.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Feb 2016 15:09:05 -0800 (PST)
+        Thu, 25 Feb 2016 15:09:12 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.36.g75877e4.dirty
 In-Reply-To: <1456441708-13512-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287478>
 
-We want to reuse the error reporting facilities in a later patch.
+Just pass it along to "git submodule update", which may pick reasonable
+defaults if you don't specify an explicit number.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- run-command.c | 18 +++++++++---------
- run-command.h | 19 +++++++++++++++++++
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ Documentation/git-clone.txt |  6 +++++-
+ builtin/clone.c             | 19 +++++++++++++------
+ t/t7406-submodule-update.sh | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+), 7 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 2f8f222..c9b13cf 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -902,10 +902,10 @@ struct parallel_processes {
- 	struct strbuf buffered_output; /* of finished children */
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 6bf000d..6db7b6d 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+ 	  [--dissociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch]
+-	  [--recursive | --recurse-submodules] [--] <repository>
++	  [--recursive | --recurse-submodules] [--jobs <n>] [--] <repository>
+ 	  [<directory>]
+ 
+ DESCRIPTION
+@@ -221,6 +221,10 @@ objects from the source repository into a pack in the cloned repository.
+ 	The result is Git repository can be separated from working
+ 	tree.
+ 
++-j <n>::
++--jobs <n>::
++	The number of submodules fetched at the same time.
++	Defaults to the `submodule.fetchJobs` option.
+ 
+ <repository>::
+ 	The (possibly remote) repository to clone from.  See the
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a0b3cd9..b004fb4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -50,6 +50,7 @@ static int option_progress = -1;
+ static struct string_list option_config;
+ static struct string_list option_reference;
+ static int option_dissociate;
++static int max_jobs = -1;
+ 
+ static struct option builtin_clone_options[] = {
+ 	OPT__VERBOSITY(&option_verbosity),
+@@ -72,6 +73,8 @@ static struct option builtin_clone_options[] = {
+ 		    N_("initialize submodules in the clone")),
+ 	OPT_BOOL(0, "recurse-submodules", &option_recursive,
+ 		    N_("initialize submodules in the clone")),
++	OPT_INTEGER('j', "jobs", &max_jobs,
++		    N_("number of submodules cloned in parallel")),
+ 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
+ 		   N_("directory from which templates will be used")),
+ 	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
+@@ -95,10 +98,6 @@ static struct option builtin_clone_options[] = {
+ 	OPT_END()
  };
  
--static int default_start_failure(struct child_process *cp,
--				 struct strbuf *err,
--				 void *pp_cb,
--				 void *pp_task_cb)
-+int default_start_failure(struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb)
+-static const char *argv_submodule[] = {
+-	"submodule", "update", "--init", "--recursive", NULL
+-};
+-
+ static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
  {
- 	int i;
+ 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
+@@ -724,8 +723,16 @@ static int checkout(void)
+ 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
+ 			   sha1_to_hex(sha1), "1", NULL);
  
-@@ -916,11 +916,11 @@ static int default_start_failure(struct child_process *cp,
- 	return 0;
+-	if (!err && option_recursive)
+-		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
++	if (!err && option_recursive) {
++		struct argv_array args = ARGV_ARRAY_INIT;
++		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
++
++		if (max_jobs != -1)
++			argv_array_pushf(&args, "--jobs=%d", max_jobs);
++
++		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
++		argv_array_clear(&args);
++	}
+ 
+ 	return err;
  }
- 
--static int default_task_finished(int result,
--				 struct child_process *cp,
--				 struct strbuf *err,
--				 void *pp_cb,
--				 void *pp_task_cb)
-+int default_task_finished(int result,
-+			  struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb)
- {
- 	int i;
- 
-diff --git a/run-command.h b/run-command.h
-index d5a57f9..a054fa6 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -164,6 +164,15 @@ typedef int (*start_failure_fn)(struct child_process *cp,
- 				void *pp_task_cb);
- 
- /**
-+ * If a command fails to start, then print an error message stating the
-+ * exact command which failed.
-+ */
-+int default_start_failure(struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb);
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 7fd5142..090891e 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -786,4 +786,19 @@ test_expect_success 'submodule update can be run in parallel' '
+ 	 grep "9 tasks" trace.out
+ 	)
+ '
 +
-+/**
-  * This callback is called on every child process that finished processing.
-  *
-  * You must not write to stdout or stderr in this function. Add your
-@@ -184,6 +193,16 @@ typedef int (*task_finished_fn)(int result,
- 				void *pp_task_cb);
- 
- /**
-+ * If the child process returns with a non zero error code, print
-+ * an error message of the exact command which failed.
-+ */
-+int default_task_finished(int result,
-+			  struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb);
++test_expect_success 'git clone passes the parallel jobs config on to submodules' '
++	test_when_finished "rm -rf super4" &&
++	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 7 . super4 &&
++	grep "7 tasks" trace.out &&
++	rm -rf super4 &&
++	git config --global submodule.fetchJobs 8 &&
++	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules . super4 &&
++	grep "8 tasks" trace.out &&
++	rm -rf super4 &&
++	GIT_TRACE=$(pwd)/trace.out git clone --recurse-submodules --jobs 9 . super4 &&
++	grep "9 tasks" trace.out &&
++	rm -rf super4
++'
 +
-+/**
-  * Runs up to n processes at the same time. Whenever a process can be
-  * started, the callback get_next_task_fn is called to obtain the data
-  * required to start another child process.
+ test_done
 -- 
 2.7.0.rc0.36.g75877e4.dirty
