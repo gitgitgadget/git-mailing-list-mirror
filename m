@@ -1,83 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: reflog: weird options
-Date: Wed, 24 Feb 2016 16:49:11 -0800
-Message-ID: <xmqqbn75r4vs.fsf@gitster.mtv.corp.google.com>
-References: <1456358433.18017.35.camel@twopensource.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Rebase performance
+Date: Thu, 25 Feb 2016 07:50:03 +0700
+Message-ID: <CACsJy8DZOv2Z2hiUmRKHr_GCjsyVz9kQEE8a1F=h6Ku0Dr9g_w@mail.gmail.com>
+References: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:49:32 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:50:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYk7W-0005nq-Bh
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:49:30 +0100
+	id 1aYk8e-0006bM-DU
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758121AbcBYAtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 19:49:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55464 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757990AbcBYAtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 19:49:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B3A848D13;
-	Wed, 24 Feb 2016 19:49:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z7iR6YXhN7p9BaWuWYsxUB1+Ryg=; b=KUbkBS
-	S8TQxA3UXZKx0HYFUGgwuJjPSizssx5P3eW0cbMhAXQZEsT3cTB596VxLjHUvOsc
-	dEWRPgu3+P+1N16oMyApLeaTAjjRjw6Ea+H+59u4iG303WR55MCjsJ8D0FFJDOVS
-	HzPi1OYbv911fwggIGFCtTmLC9r1BIO5t+tl8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vcXgooayhHGenNzjxGfDnjOlbtJzS3mz
-	NPDIYI1Ln4W3OOWHsNNjoIcSknBd+7XeLRKC2BFr8F2e9muOOLJogbcE7oVZuP06
-	Dh/NhaknKSY/DkF61oz9SEOTbDIu/wrlAgB9cTToZ8MI/A8HWjSx7To5tw5H86We
-	sUPD/2+YoK8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 01CAA48D12;
-	Wed, 24 Feb 2016 19:49:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7B3C348D11;
-	Wed, 24 Feb 2016 19:49:12 -0500 (EST)
-In-Reply-To: <1456358433.18017.35.camel@twopensource.com> (David Turner's
-	message of "Wed, 24 Feb 2016 19:00:33 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 965214FA-DB59-11E5-94D8-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1758447AbcBYAug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 19:50:36 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:33650 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757325AbcBYAuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 19:50:35 -0500
+Received: by mail-lb0-f170.google.com with SMTP id x4so20452647lbm.0
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 16:50:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NDUtjLkf3mIB9Od5DRM/zxB9HS+5XcI6SNStUP0mcvU=;
+        b=s2P0bpfaRCCxOBxV1NCd85fY1q3FAVK+ELhJgcQOBM89XefQQpMKqbmrEM2lqWJKDj
+         5uWOtn0dn9QeqGxTCq/vBHmV1hj8MD1gcNt/TxVZTY+QAstFrvPE3wqPlCoBCGla7AkA
+         NVxR/K4wA0o4fqp5U1JTc/AYIdjNBCrNJzDWlHU6KiMmaAsZgALvun5p+2fWvVvMzKUg
+         Ui7Dddf3J1idQj+xvE5ru+a3rwjyrTqzmkzprZinEmKSDYHImAtO6C4dxLWlrlAST0Ca
+         qgSebV9CCqGK3nY+bep0ZiUqEsn6Slm/l/ppM86IvozhzkBzDkBWYoUIEJK5UWWMdAPq
+         Y6xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=NDUtjLkf3mIB9Od5DRM/zxB9HS+5XcI6SNStUP0mcvU=;
+        b=CZ3xZ0igz4lXz4RjQiRO0aGtYv8rghfT0wpYOnGVyS9Z4rB1jBH2btz0FMcPvE4d7U
+         vI3H/ztfRQ5i9e2heodPh841cEfPEFitQAML9B4emI28iDiGwexR6AJ/eWMBmxKTJkWy
+         mp4376SFMzlnxSjtxbuZcAdZMdsz9HEUBKCxgylUGUrWLBfnrnK+HcynE9U5sv3bNvMK
+         Z/CzNcDSa4iRO+RJInmocJ7O6vdVNtFJmqertbmvxIfbCkKI15+CsiLSMHHegK73y2xk
+         cKxM7aWFT0e8OcTgIWMlxiF1i3HC/JkcJNUYdtTQGFMa1RjlrWzB5RLHGjIjwF+sRL0c
+         coEQ==
+X-Gm-Message-State: AG10YOSdsWeDk59E2bghIAgUuMIjuXL8siEgai2/ZkYtocajnvaLvvRSsNPIdpQDiseCphk2uLyUpciuePw9cg==
+X-Received: by 10.112.150.133 with SMTP id ui5mr15415207lbb.12.1456361433298;
+ Wed, 24 Feb 2016 16:50:33 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Wed, 24 Feb 2016 16:50:03 -0800 (PST)
+In-Reply-To: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287297>
 
-David Turner <dturner@twopensource.com> writes:
+On Thu, Feb 25, 2016 at 5:09 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Another possibility would be to libify the "git apply" functionality
+> and then to use the libified "git apply" in run_apply() instead of
+> launching a separate "git apply" process. One benefit from this is
+> that we could probably get rid of the read_cache_from() call at the
+> end of run_apply() and this would likely further speed up things. Also
+> avoiding to launch separate processes might be a win especially on
+> Windows.
 
-> The manual for git reflog says it takes "[log-options]".  And it does,
-> sort-of.  For instance, you can give a path, and it will only show you
-> reflog entries that touch that path (I'm not sure why you would want to
-> do that, but you can!).  But you can also give --merges, which will
-> silently give you no reflog entries.  I don't know why.
->
-> One useful option that may or may not exist: show the time the reflog
-> entry was made.  I'd really like to say, "well, I know it was working
-> as-of last Tuesday...".  I know the data is in the reflog, but I don't
-> know how to show it.  I can show the committer date, which is usually
-> good enough when I'm rewriting a patch series, but that is not quite
-> the same thing.
->  
-> I know I could fix these issues, but unfortunately I don't have the
-> time right now. It might make a good starter project for someone new to
-> git development!
-
-I think somebody who is fairly new to the project was already
-looking into it.  The hacky way the feature to show "reflog" entries
-was implemented (i.e. done by tweawking the "git log" machinery,
-even though the entries that comes out of the "log" and "reflog" are
-quite different things, as you observed by the lack of "time the
-reflog entry was created") shows up as these inconsistencies and
-"Huh?"s.
+The amount of global variables in apply.c is just scary. Libification
+will need some cleanup first (i'm not against it though). Out of
+curiosity, how long does it take to do "git update-index <one modified
+path>" on this repo? That would cover read_cache_from() and
+write_cache(). While you're measuring, maybe sprinkle some
+trace_performance() in apply.c:apply_patch() to get an idea where time
+is most spent in? This is a big guess, but if we spend more time
+parsing/validating the patch than applying, then that part could be
+parallelized, we only need to apply patches in sequence.
+-- 
+Duy
