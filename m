@@ -1,79 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2 2/2] Documentation/git-push: document that 'simple' is the default
-Date: Thu, 25 Feb 2016 10:22:00 +0100
-Message-ID: <1456392120-16298-3-git-send-email-Matthieu.Moy@imag.fr>
-References: <000001530ea408ed-2b71a34a-32bb-434c-bba5-fdac28193e9c-000000@eu-west-1.amazonses.com>
- <1456392120-16298-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: git@vger.kernel.org, peff@peff.net, philipoakley@iee.org,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 25 10:22:35 2016
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] add DEVELOPER makefile knob to check for acknowledged warnings
+Date: Thu, 25 Feb 2016 10:26:18 +0100
+Message-ID: <vpqk2lt5ef9.fsf@anie.imag.fr>
+References: <1456389742-48052-1-git-send-email-larsxschneider@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 10:26:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYs82-0005MV-3S
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 10:22:34 +0100
+	id 1aYsBw-0007pW-Ew
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 10:26:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760170AbcBYJWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 04:22:18 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:36955 "EHLO rominette.imag.fr"
+	id S1759380AbcBYJ0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 04:26:32 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:37067 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760152AbcBYJWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 04:22:16 -0500
+	id S1754819AbcBYJ0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 04:26:30 -0500
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1P9M2kb021028
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1P9QHnr021887
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 25 Feb 2016 10:22:02 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1P9M2e9011904;
-	Thu, 25 Feb 2016 10:22:02 +0100
-X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
-In-Reply-To: <1456392120-16298-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Feb 2016 10:22:02 +0100 (CET)
+	Thu, 25 Feb 2016 10:26:17 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1P9QILh012016;
+	Thu, 25 Feb 2016 10:26:18 +0100
+In-Reply-To: <1456389742-48052-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Thu, 25 Feb 2016 09:42:22
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 25 Feb 2016 10:26:18 +0100 (CET)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1P9M2kb021028
+X-MailScanner-ID: u1P9QHnr021887
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1456996924.37983@UXn0cJV4ZgxlSRJi+qaZRA
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1456997182.7722@clTAZaTUC8r2nnOv04/DFw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287356>
 
-The default behavior is well documented already in git-config(1), but
-git-push(1) itself did not mention it at all. For users willing to learn
-how "git push" works but not how to configure it, this makes the
-documentation cumbersome to read.
+larsxschneider@gmail.com writes:
 
-Make the git-push(1) page self-contained by adding a short summary of
-what 'push.default=simple' does, early in the page.
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -380,6 +380,18 @@ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
+>
+> +ifdef DEVELOPER
+> +	CFLAGS +=	-Werror \
+> +				-Wdeclaration-after-statement \
+> +				-Wno-format-zero-length \
+> +				-Wold-style-definition \
+> +				-Woverflow \
+> +				-Wpointer-arith \
+> +				-Wstrict-prototypes \
+> +				-Wunused \
+> +				-Wvla
+> +endif
+> +
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-push.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+I guess you have tab-width=4. This portion looks ugly with tab-width=8.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 32482ce..a992793 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -37,6 +37,13 @@ the default `<refspec>` by consulting `remote.*.push` configuration,
- and if it is not found, honors `push.default` configuration to decide
- what to push (See linkgit:git-config[1] for the meaning of `push.default`).
- 
-+When neither the command-line nor the configuration specify what to
-+push, the default behavior is used, which corresponds to the `simple`
-+value for `push.default`: the current branch is pushed to the
-+corresponding upstream branch, but as a safety measure, the push is
-+aborted if the upstream branch does not have the same name as the
-+local one.
-+
- 
- OPTIONS[[OPTIONS]]
- ------------------
 -- 
-2.7.2.334.g35ed2ae.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
