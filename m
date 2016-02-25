@@ -1,79 +1,84 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 00/32] refs backend
-Date: Thu, 25 Feb 2016 14:32:08 -0500
-Organization: Twitter
-Message-ID: <1456428728.18017.41.camel@twopensource.com>
-References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
-	 <56CE460A.4020505@ramsayjones.plus.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] run-command: fix an 'different modifiers' sparse warning
+Date: Thu, 25 Feb 2016 19:35:07 +0000
+Message-ID: <56CF576B.4020401@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Feb 25 20:32:26 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 25 20:35:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ1e9-0007rH-FY
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 20:32:21 +0100
+	id 1aZ1h4-0001iu-Uu
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 20:35:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933641AbcBYTcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 14:32:11 -0500
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:34459 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933401AbcBYTcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 14:32:10 -0500
-Received: by mail-qg0-f48.google.com with SMTP id b67so48272601qgb.1
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 11:32:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:organization
-         :content-type:mime-version:content-transfer-encoding;
-        bh=p+Nx07qu9vUvMHfZhuhp/TDIUHmqWuUFOaLNjAVIy/w=;
-        b=jp1IQVjegJEQQxsLOKKL4xd6xcUtua6JxyGC8MuMUNRDrVvuPpWjCkhprL0cnzGXJV
-         ynCnlgwp/XirnWiUVrp34avmxq3f5GaVH9hxRk01qsjiz8mK9S7r9x5GInEwl3rGYX4W
-         5WBx+K45Pow5+InVml22gDBAsmC95pskR1alTQf/75678AlVmSUbu9k89QEsobWJLAOH
-         NRoTeRmKy48k9muX/v8lftVIKHqZ1xM+4p3fwwW2EhdrxkuasVg7bmuIrqVFES0Bvx7h
-         HFEra37B4eaPTLzgHIQ9LIrQDNmOoJEa+bkddFhCeMx5lI3ECWvh5SN8+PpM5wicHOm4
-         ebSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=p+Nx07qu9vUvMHfZhuhp/TDIUHmqWuUFOaLNjAVIy/w=;
-        b=YBr4/o1SQ+AQaeENaX1lfwT2FD92H02hKD0jPVDRkZ8KcXVIaHnJJULsEbvzsT17Sq
-         b0bWVZwyfdreQudDev2S/CswdwwkYCzOXQDFFtFfMKiyBMf+oIwT1B6wGDMWBGJYfxiQ
-         Sz6unYS+s2yU1gmtCksjkiKGb+WEEFy1hQjePet3vi3uY409K/Q9YDyygXoibSMtGAi0
-         Qaj2a1RTA6exNhFxTJVdvRn/OuJ6Zw9WJWr+xmlwM4uZRmdNaqLKTdfQTa4v/I5hRTW2
-         kdoJP+C+u/6k7Ry3qRhOTC35uWn0+GO/zUHoKt8MfgIPqu6+lzNev+S0qDPuKt5gMspi
-         CEJA==
-X-Gm-Message-State: AG10YOTwhpEsnePVFZIUAL4gqslZQr3N4PFVJbnomyqOKaHhiJzafV0TQLWMgnmAnBqg3w==
-X-Received: by 10.140.44.38 with SMTP id f35mr58690159qga.49.1456428729640;
-        Thu, 25 Feb 2016 11:32:09 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id e11sm3848426qkb.39.2016.02.25.11.32.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 25 Feb 2016 11:32:08 -0800 (PST)
-In-Reply-To: <56CE460A.4020505@ramsayjones.plus.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S933656AbcBYTfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 14:35:18 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:49741 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933377AbcBYTfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 14:35:17 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout04 with smtp
+	id NjbC1s00A4mu3xa01jbDXc; Thu, 25 Feb 2016 19:35:14 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=K//fZHiI c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=EBOSESyhAAAA:8 a=cHrC_p4BxEfK6BwOxesA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287424>
 
-On Thu, 2016-02-25 at 00:08 +0000, Ramsay Jones wrote:
-> > Ramsay Jones (1):
-> >   refs: reduce the visibility of do_for_each_ref()
-> 
-> Ah, sorry if it wasn't clear, but there is no need to keep this
-> as a separate patch - it should simply be squashed into the relevant
-> patch in your series.
-> 
-> ATB,
-> Ramsay Jones
 
-It actually seemed cleaner to do it this way for some reason.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
+Hi Jeff,
+
+If you need to re-roll your 'jk/epipe-in-async' branch, could you
+please squash this into the relevant patch. (ie. "write_or_die:
+handle EPIPE in async threads", 24-02-2016).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ run-command.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index cd861bc..5dec18b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -625,7 +625,7 @@ int in_async(void)
+ 	return !pthread_equal(main_thread, pthread_self());
+ }
+ 
+-void async_exit(int code)
++void NORETURN async_exit(int code)
+ {
+ 	pthread_exit((void *)(intptr_t)code);
+ }
+@@ -675,7 +675,7 @@ int in_async(void)
+ 	return process_is_async;
+ }
+ 
+-int async_exit(int code)
++int NORETURN async_exit(int code)
+ {
+ 	exit(code);
+ }
+-- 
+2.7.0
