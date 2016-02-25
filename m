@@ -1,76 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] t5313: test bounds-checks of corrupted/malicious pack/idx files
-Date: Thu, 25 Feb 2016 12:31:12 -0800
-Message-ID: <xmqq4mcwo7lb.fsf@gitster.mtv.corp.google.com>
-References: <20160225142004.GA17678@sigill.intra.peff.net>
-	<20160225142112.GA17811@sigill.intra.peff.net>
-	<56CF523A.8050208@kdbg.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v6 00/32] refs backend
+Date: Fri, 26 Feb 2016 03:31:29 +0700
+Message-ID: <CACsJy8D168eqdwvgLOeOtnD9FuiDLvUV2V9AVNFQPDVPUDZUww@mail.gmail.com>
+References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
+ <CACsJy8DEtmYnmwENws0Hb_2Do_sQkKEaraz=vxgrCyTOV-3FVg@mail.gmail.com> <1456428475.18017.38.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Jacek Wielemborek <d33tah@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Feb 25 21:31:27 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 21:32:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ2ZJ-0006Cp-T2
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 21:31:26 +0100
+	id 1aZ2a0-0006j9-Dg
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 21:32:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775AbcBYUbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 15:31:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52700 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751255AbcBYUbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 15:31:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A4F6447A32;
-	Thu, 25 Feb 2016 15:31:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vneiq2N74/MtGzzmu1FKF2BZv1o=; b=t60b1H
-	jMlEtpSTR9JBVq/NdMKiuiosNXGwD+seVyrRMPv2KEFlLogCKDzgdDc2dwjzhjPL
-	QnCuw9jWCbyzQ5k4mk3jabD+JIjIqgu52OWnX9qMEayNp5fIYhZcMxXwOdisip3r
-	VgL4G0O9xfSU3hIl1P45t1SfiMjA2DHWXLgB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AWAs7FZ6TJOsBXmgJZpRalgcaz3l5jgs
-	B/NGFXnsDc9uw1txC8o6aSzXVOOQBqptA2bDM6fCGLZYXDiPfw4N/G3Vugvkm8q3
-	UW4OV7ih7jdoILhQVe89c+p2Sn16xvWsJGnJCfSLfKaHmLoNov7GXqSqjLtxHDjN
-	Sc6VOHcPAX8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A83247A31;
-	Thu, 25 Feb 2016 15:31:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 15A7047A30;
-	Thu, 25 Feb 2016 15:31:14 -0500 (EST)
-In-Reply-To: <56CF523A.8050208@kdbg.org> (Johannes Sixt's message of "Thu, 25
-	Feb 2016 20:12:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B6E11766-DBFE-11E5-AE4A-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751823AbcBYUcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 15:32:03 -0500
+Received: from mail-lb0-f194.google.com ([209.85.217.194]:35276 "EHLO
+	mail-lb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751817AbcBYUcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 15:32:01 -0500
+Received: by mail-lb0-f194.google.com with SMTP id h2so2394425lbs.2
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 12:32:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YMJEpP5FtGOAz+Hi3PHGLykLBRX8gXkvP4Xh4/o+SYY=;
+        b=k4w3mdBZp4SwCN1gl3Z9B99OchE1IQrvmRHj/R1XOwRDsRosTfEk8R8apgOD3j5nKt
+         R3Y0cWYZz/Fh7kadZTXmZiKIV6w8U5SLEX0dM6SHJLbIbNwfyw9Yc7M+BsOmBURWtBZY
+         melKrlDTm4KXJStF1wbNwdyaeUZmovYo83cdPdVnzBONn73yrVPf0BooyXuDfc9owIhG
+         CznVKGbJZTfv81XNbM98eoSZ4z84iPULkZqgSVDO/31S4EwplbnyMo9dN0CyVMPKVYUg
+         5LFU0vYGrN9ropBBaAs/m9BCn4MAKKPEqpzLrQ0cdiuj+SYo+/vhdqWzHKK4d0dYKvia
+         TKVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=YMJEpP5FtGOAz+Hi3PHGLykLBRX8gXkvP4Xh4/o+SYY=;
+        b=UOHs3CVTy0Q2YdmgXm9HMqjer6shNgwqmW1fP0u+zcPLVzITHsBl5dsm+CzY8IcM23
+         D6/Qpd9n40XlRvpj10eTYLtTKXlJfYydICbkrNB5iaR3A02eqBCH1i9SYrqBbDznNfea
+         1hDSpBEkdcuB+101ubJpxpsrrLn1FQfe6QzcAZQ8jBxf7NLozidcatCC29DUALxA7u6x
+         a3pZhHRkPeRBOUj0yEBvqVqmDx3xQRZLe/s0+5Aut5WxsFVveiafWKkzpVzW5IRQOSMX
+         XGwACCImZQuiMHPUxxuHU/Gev3Wz/RPzG+9NSKgNSV8E5ei2nmZ2N/+gulMbqrqnqK57
+         jnmg==
+X-Gm-Message-State: AG10YOQK4Nrk0GOwiHNoYJ0X6V+ayhgJFN0xJXphavTtkcsyBa9G5eQViT3Iw+PNtv0M8I2d7uUppF9tvvtV9A==
+X-Received: by 10.112.130.41 with SMTP id ob9mr17153820lbb.81.1456432319497;
+ Thu, 25 Feb 2016 12:31:59 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 25 Feb 2016 12:31:29 -0800 (PST)
+In-Reply-To: <1456428475.18017.38.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287434>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Feb 26, 2016 at 2:27 AM, David Turner <dturner@twopensource.com> wrote:
+> but -Wshadow produces a ton of complaints on the rest of git's
+> code.   We should probably fix those.
 
-> Am 25.02.2016 um 15:21 schrieb Jeff King:
->> +munge () {
->> +	printf "$3" | dd of="$1" bs=1 conv=notrunc seek=$2
->> +}
->
-> Instead of adding another call of dd, would it be an option to insert
-> the following patch at the front of this series and then use
-> test_overwrite_bytes?
-
-It would be an option, but I'd want to merge this to 'next' today
-without waiting for a reroll.  Change from dd to custom script can
-be done as a follow-up topic after the dust settles, if necessary.
-
-Thanks.
+I know, but what I wrote was meant for new code only (e.g. make
+refs/lmdb-backend.o CFLAGS=-Wshadow is clean). I think renaming the
+global env and transaction to the_env and the_transaction probably
+does the trick. Again, this is controversial whether it's a good thing
+to do. So your choice.
+-- 
+Duy
