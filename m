@@ -1,151 +1,144 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] git: submodule honor -c credential.* from command line
-Date: Wed, 24 Feb 2016 20:41:49 -0500
-Message-ID: <20160225014149.GA31616@sigill.intra.peff.net>
-References: <1456358352-28939-1-git-send-email-jacob.e.keller@intel.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 02:41:59 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/7] run_processes_parallel: treat output of children as byte array
+Date: Wed, 24 Feb 2016 17:41:59 -0800
+Message-ID: <1456364525-21190-2-git-send-email-sbeller@google.com>
+References: <1456364525-21190-1-git-send-email-sbeller@google.com>
+Cc: Jens.Lehmann@web.de, peff@peff.net, sunshine@sunshineco.com,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 02:42:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYkwJ-0008S8-2y
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 02:41:59 +0100
+	id 1aYkwb-0000DG-5P
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 02:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbcBYBlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 20:41:53 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48678 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751270AbcBYBlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 20:41:53 -0500
-Received: (qmail 4708 invoked by uid 102); 25 Feb 2016 01:41:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 20:41:52 -0500
-Received: (qmail 13720 invoked by uid 107); 25 Feb 2016 01:42:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 20:42:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 20:41:49 -0500
-Content-Disposition: inline
-In-Reply-To: <1456358352-28939-1-git-send-email-jacob.e.keller@intel.com>
+	id S1757042AbcBYBmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 20:42:13 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34144 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753630AbcBYBmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 20:42:10 -0500
+Received: by mail-pa0-f48.google.com with SMTP id fy10so22613003pac.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 17:42:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dir7MtpBkfZtUMwZBw+6BsXpx6W710Mu6A7JAUZYSIY=;
+        b=o4OXRPDz8PEpo47Amf4QuBIazCYrD4zgjM4uXE2IqaTwEvSavdPPS3G5/7DKXXPJD8
+         2EDMa7fQP5XqTkKVvrAX6dH1Yr+lOUVloyz8h/vkhJqLvDG5V+R/8uf+J9iTIzjKFCGR
+         B7mrDGOztAw811szctdpuCf2SgzTNHLyjbojKN9YY77fXIeAoveeIDJ6vKI8ka049RUZ
+         PAZPDqJYiQ33/5BycNVJUwhCLs77OeFkpG7L+JCjsuMXfh7nEzBWiag4FHxeFeaEGduB
+         MbcUZR8MXkLDJ+6pEe27x+dl/4pcKDmgfdiH/iWSVUueFiL8kuOqPqnDDbw9kXuxRgis
+         q66Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=dir7MtpBkfZtUMwZBw+6BsXpx6W710Mu6A7JAUZYSIY=;
+        b=MWbXNxdK7ssKQcd7z+MEagkA8zoxCad33IGR8H3tAkfqiaMTwRkHFpWRpDpJ9ICs/P
+         nbtnGcAYc4U9XnUUjyIc3LIwU/tYDQtWCbK7jGo36x4KfQSaBd3ykGSJcbQL4X6DLvR6
+         XUuthHiY6FDiNX3rZNYXf06RmMafxLvhtDWdgT8q0z6CHQLjYWcyWwXbDdzOqJIeERk3
+         6z1z0ybaieZstUkqqc3zoRoTsRJnh1nmNtcW1KjpLeBxN6b2n5a0+K46dCDyMreztUOR
+         5i1PM/a8GLzu2hr9qas4A4kDumx1Xl4kh17FP+c3fHvQkmW1y0iTrnfTdcU7B5OA9AwU
+         irZA==
+X-Gm-Message-State: AG10YOT05y1FPN/W4oqJ7t+mn+mkfEpeVD/Gb8BtJ4sx6i1Rga9PhX7qLmz0nrNbvfBqMVLp
+X-Received: by 10.66.222.101 with SMTP id ql5mr59582648pac.144.1456364529654;
+        Wed, 24 Feb 2016 17:42:09 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:74de:af7a:dfba:15a4])
+        by smtp.gmail.com with ESMTPSA id 3sm7704124pfn.59.2016.02.24.17.42.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 Feb 2016 17:42:08 -0800 (PST)
+X-Mailer: git-send-email 2.7.2.335.g3f96d05
+In-Reply-To: <1456364525-21190-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287301>
 
-On Wed, Feb 24, 2016 at 03:59:12PM -0800, Jacob Keller wrote:
+We do not want the output to be interrupted by a NUL byte, so we
+cannot use raw fputs. Introduce strbuf_write to avoid having long
+arguments in run-command.c.
 
-> +int sanitize_submodule_config(const char *var, const char *value, void *data)
-> +{
-> +	struct strbuf quoted = STRBUF_INIT;
-> +	struct strbuf *out = data;
-> +
-> +	if (submodule_config_ok(var)) {
-> +		if (out->len)
-> +			strbuf_addch(out, ' ');
-> +
-> +		/* combined all the values before we quote them */
-> +		strbuf_addstr(&quoted, var);
-> +		strbuf_addch(&quoted, '=');
-> +		strbuf_addstr(&quoted, value);
-> +
-> +		/* safely quote them for shell use */
-> +		sq_quote_buf(out, quoted.buf);
-> +	}
-> +	return 0;
-> +}
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ run-command.c | 8 ++++----
+ strbuf.c      | 6 ++++++
+ strbuf.h      | 6 ++++++
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
-This leaks "quoted", doesn't it?
-
-I was confused by the "combine all the values" comment. We just have
-_one_ config key/value here, right (I had thought originally that you
-were putting multiple keys into a single sq-quoted string, which would be
-wrong)?
-
-I agree with Eric, though, that you could just drop the comment
-entirely.
-
-> +static int module_sanitize_config(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct strbuf sanitized_config = STRBUF_INIT;
-> +
-> +	struct option module_sanitize_config_options[] = {
-> +		OPT_END()
-> +	};
-> +
-> +	const char *const git_submodule_helper_usage[] = {
-> +		N_("git submodule--helper sanitize-config"),
-> +		NULL
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, module_sanitize_config_options,
-> +			     git_submodule_helper_usage, 0);
-> +
-> +	git_config_from_parameters(sanitize_submodule_config, &sanitized_config);
-> +	if (sanitized_config.len)
-> +		printf("%s\n", sanitized_config.buf);
-> +
-> +	return 0;
-> +}
-
-The empty option list looked funny to me for a minute, but I guess you
-use it to complain about:
-
-  git submodule--helper sanitize-config --foo
-
-Should we also warn about:
-
-  git submodule--helper sanitize-config foo
-
-I think you could catch both with just:
-
-  if (argc > 1)
-	usage(...);
-
-(though I do not mind the empty option list staying in that case, as it
-provides the necessary boilerplate for later).
-
-> +# Sanitize the local git environment for use within a submodule. We
-> +# can't simply use clear_local_git_env since we want to preserve some
-> +# of the settings from GIT_CONFIG_PARAMETERS.
-> +sanitize_local_git_env()
-> +{
-> +	local sanitized_config = $(git submodule--helper sanitize-config)
-> +	clear_local_git_env
-> +	GIT_CONFIG_PARAMETERS=$sanitized_config
-> +}
-
-Do we need to export GIT_CONFIG_PARAMETERS? I guess not; if it is
-already exported, we don't need, and if it isn't, then by definition
-$sanitized_config will be empty.
-
-The name of this function isn't very descriptive (it's easy to see what
-it does from the implementation, but in the callers, it's unclear what
-the difference between "clear" and "sanitize" is). Should it maybe be
-"sanitize_submodule_env" or something to make it clear that this is
-about passing through things for child submodules?
-
-Probably not that big a deal as its local to this script
-
-> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
-> new file mode 100755
-> index 000000000000..376f58afe967
-> --- /dev/null
-> +++ b/t/t7412-submodule--helper.sh
-
-In the long run I think we want to kill off submodule--helper, as it's
-just an implementation detail until git-submodule is all in C. I do not
-mind these tests in the meantime, as they can act as unit tests. But it
-would be nice to also (or instead, if you like) test the actual
-user-visible effects. Otherwise, once git-submodule turns into C, these
-behaviors are likely to end up completely untested (and it's during that
-conversion that you you're most likely to run into regressions!).
-
--Peff
+diff --git a/run-command.c b/run-command.c
+index 51fd72c..1f86728 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1011,7 +1011,7 @@ static void pp_cleanup(struct parallel_processes *pp)
+ 	 * When get_next_task added messages to the buffer in its last
+ 	 * iteration, the buffered output is non empty.
+ 	 */
+-	fputs(pp->buffered_output.buf, stderr);
++	strbuf_write(&pp->buffered_output, stderr);
+ 	strbuf_release(&pp->buffered_output);
+ 
+ 	sigchain_pop_common();
+@@ -1097,7 +1097,7 @@ static void pp_output(struct parallel_processes *pp)
+ 	int i = pp->output_owner;
+ 	if (pp->children[i].state == GIT_CP_WORKING &&
+ 	    pp->children[i].err.len) {
+-		fputs(pp->children[i].err.buf, stderr);
++		strbuf_write(&pp->children[i].err, stderr);
+ 		strbuf_reset(&pp->children[i].err);
+ 	}
+ }
+@@ -1135,11 +1135,11 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+ 			strbuf_reset(&pp->children[i].err);
+ 		} else {
+-			fputs(pp->children[i].err.buf, stderr);
++			strbuf_write(&pp->children[i].err, stderr);
+ 			strbuf_reset(&pp->children[i].err);
+ 
+ 			/* Output all other finished child processes */
+-			fputs(pp->buffered_output.buf, stderr);
++			strbuf_write(&pp->buffered_output, stderr);
+ 			strbuf_reset(&pp->buffered_output);
+ 
+ 			/*
+diff --git a/strbuf.c b/strbuf.c
+index 38686ff..71345cd 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -395,6 +395,12 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
+ 	return cnt;
+ }
+ 
++ssize_t strbuf_write(struct strbuf *sb, FILE *f)
++{
++	return fwrite(sb->buf, 1, sb->len, f);
++}
++
++
+ #define STRBUF_MAXLINK (2*PATH_MAX)
+ 
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+diff --git a/strbuf.h b/strbuf.h
+index 2bf90e7..d4f2aa1 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -387,6 +387,12 @@ extern ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint
+ extern int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
+ 
+ /**
++ * Write the whole content of the strbuf to the stream not stopping at
++ * NUL bytes.
++ */
++extern ssize_t strbuf_write(struct strbuf *sb, FILE *stream);
++
++/**
+  * Read a line from a FILE *, overwriting the existing contents
+  * of the strbuf. The second argument specifies the line
+  * terminator character, typically `'\n'`.
+-- 
+2.7.2.335.g3f96d05
