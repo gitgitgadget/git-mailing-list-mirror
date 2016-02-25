@@ -1,72 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v6 00/32] refs backend
-Date: Fri, 26 Feb 2016 03:31:29 +0700
-Message-ID: <CACsJy8D168eqdwvgLOeOtnD9FuiDLvUV2V9AVNFQPDVPUDZUww@mail.gmail.com>
-References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
- <CACsJy8DEtmYnmwENws0Hb_2Do_sQkKEaraz=vxgrCyTOV-3FVg@mail.gmail.com> <1456428475.18017.38.camel@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git: submodule honor -c credential.* from command line
+Date: Thu, 25 Feb 2016 12:32:37 -0800
+Message-ID: <xmqqziuomsyi.fsf@gitster.mtv.corp.google.com>
+References: <1456358352-28939-1-git-send-email-jacob.e.keller@intel.com>
+	<20160225014149.GA31616@sigill.intra.peff.net>
+	<CA+P7+xpfuPkwcdeXVTiTdqRCX16J4pus-wmxe7Sipu_GXCNSoA@mail.gmail.com>
+	<20160225070036.GA5654@sigill.intra.peff.net>
+	<20160225071159.GA22529@sigill.intra.peff.net>
+	<CA+P7+xqa8+DopurNGnuW1HKMOmj2r2mvahossK_11SyMSWm2_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 21:32:09 2016
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 21:32:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ2a0-0006j9-Dg
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 21:32:08 +0100
+	id 1aZ2ae-0007Be-Hn
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 21:32:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbcBYUcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 15:32:03 -0500
-Received: from mail-lb0-f194.google.com ([209.85.217.194]:35276 "EHLO
-	mail-lb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751817AbcBYUcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 15:32:01 -0500
-Received: by mail-lb0-f194.google.com with SMTP id h2so2394425lbs.2
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 12:32:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YMJEpP5FtGOAz+Hi3PHGLykLBRX8gXkvP4Xh4/o+SYY=;
-        b=k4w3mdBZp4SwCN1gl3Z9B99OchE1IQrvmRHj/R1XOwRDsRosTfEk8R8apgOD3j5nKt
-         R3Y0cWYZz/Fh7kadZTXmZiKIV6w8U5SLEX0dM6SHJLbIbNwfyw9Yc7M+BsOmBURWtBZY
-         melKrlDTm4KXJStF1wbNwdyaeUZmovYo83cdPdVnzBONn73yrVPf0BooyXuDfc9owIhG
-         CznVKGbJZTfv81XNbM98eoSZ4z84iPULkZqgSVDO/31S4EwplbnyMo9dN0CyVMPKVYUg
-         5LFU0vYGrN9ropBBaAs/m9BCn4MAKKPEqpzLrQ0cdiuj+SYo+/vhdqWzHKK4d0dYKvia
-         TKVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=YMJEpP5FtGOAz+Hi3PHGLykLBRX8gXkvP4Xh4/o+SYY=;
-        b=UOHs3CVTy0Q2YdmgXm9HMqjer6shNgwqmW1fP0u+zcPLVzITHsBl5dsm+CzY8IcM23
-         D6/Qpd9n40XlRvpj10eTYLtTKXlJfYydICbkrNB5iaR3A02eqBCH1i9SYrqBbDznNfea
-         1hDSpBEkdcuB+101ubJpxpsrrLn1FQfe6QzcAZQ8jBxf7NLozidcatCC29DUALxA7u6x
-         a3pZhHRkPeRBOUj0yEBvqVqmDx3xQRZLe/s0+5Aut5WxsFVveiafWKkzpVzW5IRQOSMX
-         XGwACCImZQuiMHPUxxuHU/Gev3Wz/RPzG+9NSKgNSV8E5ei2nmZ2N/+gulMbqrqnqK57
-         jnmg==
-X-Gm-Message-State: AG10YOQK4Nrk0GOwiHNoYJ0X6V+ayhgJFN0xJXphavTtkcsyBa9G5eQViT3Iw+PNtv0M8I2d7uUppF9tvvtV9A==
-X-Received: by 10.112.130.41 with SMTP id ob9mr17153820lbb.81.1456432319497;
- Thu, 25 Feb 2016 12:31:59 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Thu, 25 Feb 2016 12:31:29 -0800 (PST)
-In-Reply-To: <1456428475.18017.38.camel@twopensource.com>
+	id S1751879AbcBYUcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 15:32:41 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57301 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751661AbcBYUck (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 15:32:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3671347AC0;
+	Thu, 25 Feb 2016 15:32:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VPwQxahxDuhOI5RqLsF9IAd6MRg=; b=x8CTB1
+	x8jp9P4vTJDDIe14RlszlYE0g96e+eaqN4CKoqUpYgcCTZrP4D2lyaz6T6FzXLew
+	52EppURsGUdBwIZFhFtLC6aJzhdDLBJBRu2YSuu6hHECv7wRZAw2wAGptnAtwbYo
+	FMEDl4Pol3ipDl6iXAmaM0wkXSRHRkR1kCTSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z6QbK6fJKolueyo52vsuviMUbCLQsmS/
+	l2peTpWAA9ZW9iHhQD49h9p9ww5MsdM7OdfgZCO3jjb2+HeWPyOp0FWy9fozNsQl
+	C6nymLaDWCPRtOYYKb76kvl9/WcU9RIkXVWdxUFfkCH/dgc42k03wTZwFSWkQCSQ
+	WplFwuGgyDA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D38247ABE;
+	Thu, 25 Feb 2016 15:32:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9A4D347AB6;
+	Thu, 25 Feb 2016 15:32:38 -0500 (EST)
+In-Reply-To: <CA+P7+xqa8+DopurNGnuW1HKMOmj2r2mvahossK_11SyMSWm2_g@mail.gmail.com>
+	(Jacob Keller's message of "Thu, 25 Feb 2016 10:51:03 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E9503380-DBFE-11E5-827C-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287435>
 
-On Fri, Feb 26, 2016 at 2:27 AM, David Turner <dturner@twopensource.com> wrote:
-> but -Wshadow produces a ton of complaints on the rest of git's
-> code.   We should probably fix those.
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-I know, but what I wrote was meant for new code only (e.g. make
-refs/lmdb-backend.o CFLAGS=-Wshadow is clean). I think renaming the
-global env and transaction to the_env and the_transaction probably
-does the trick. Again, this is controversial whether it's a good thing
-to do. So your choice.
--- 
-Duy
+> On Wed, Feb 24, 2016 at 11:11 PM, Jeff King <peff@peff.net> wrote:
+>>  static int clone_submodule(const char *path, const char *gitdir, const char *url,
+>>                            const char *depth, const char *reference, int quiet)
+>>  {
+>> @@ -145,7 +166,7 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+>>         argv_array_push(&cp.args, path);
+>>
+>>         cp.git_cmd = 1;
+>> -       cp.env = local_repo_env;
+>> +       add_submodule_repo_env(&cp.env_array);
+>>         cp.no_stdin = 1;
+>>
+>>         return run_command(&cp);
+>
+>
+> Ignore my previous comment. The cp.env API is *very* subtle. If the
+> line is just a name, it removes the environment variable, while
+> "name=value" adds it. That is definitely not what I was expecting
+> here, so I misread how it works.
+
+I think that is modelled after how putenv(3) is made capable of
+removing an existing environment variable.
