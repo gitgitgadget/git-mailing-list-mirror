@@ -1,82 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] t/lib-http/apache.conf: load mod_unixd module in apache 2.4
-Date: Thu, 25 Feb 2016 15:18:52 -0800
-Message-ID: <xmqq37sgml9f.fsf@gitster.mtv.corp.google.com>
-References: <1456426632-23257-1-git-send-email-jacob.e.keller@intel.com>
-	<20160225220045.GA10267@sigill.intra.peff.net>
-	<xmqqbn74mlco.fsf@gitster.mtv.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv18 00/11] Expose
+Date: Thu, 25 Feb 2016 15:19:04 -0800
+Message-ID: <20160225231904.GT28749@google.com>
+References: <xmqqoab4mnoc.fsf@gitster.mtv.corp.google.com>
+ <1456441708-13512-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 00:18:59 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com,
+	peff@peff.net, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 00:19:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ5BT-0005xX-Cq
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:18:59 +0100
+	id 1aZ5Bh-00065r-Dl
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242AbcBYXS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 18:18:56 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57112 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751701AbcBYXSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 18:18:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F9E347599;
-	Thu, 25 Feb 2016 18:18:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TjfmOByqGGusF75EKnaaX2KkrJA=; b=C6gGrM
-	ED9hOrRe5In96AhN78VXeAoV1i+PAkYBDifkh1WtugJIN+CveSbeH0GyqUPG4fP4
-	m9Spcm3xcsMs6oC5bWpSuHIO/SkByheLS2q3TF7DTowhnnHGChAlGMnRo304MQhb
-	L35TJTte+7vfo3hVno/1i4oThuaTyR48SMdy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eBdTMyRxth7kQR+ZNGjiv17nP8xHAJ98
-	VArnt7Cvt3muNmoMSHuma5Qm7ZjPAdkeepGcHyk9Km3iTGzJeS9ksG/rftOUw6J0
-	nNcS8Hv1AT62dvveHlSGsEuV7rhWOQbuK4WUaJxsJ/XgRRD/sznyEtolrFHc6vN1
-	Rvh7Mx3uer8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63FBF47598;
-	Thu, 25 Feb 2016 18:18:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CCC0547595;
-	Thu, 25 Feb 2016 18:18:53 -0500 (EST)
-In-Reply-To: <xmqqbn74mlco.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 25 Feb 2016 15:16:55 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 22FFE258-DC16-11E5-A956-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752348AbcBYXTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 18:19:09 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33007 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896AbcBYXTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 18:19:08 -0500
+Received: by mail-pf0-f173.google.com with SMTP id q63so40674595pfb.0
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:19:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bidXSvNUkIKIIPrI5f9m+r5SRAIUUZagg6U9oWZGSk4=;
+        b=eLjKpRZnDsFuO9bt5CxacAGawpnYiNO3QjXnL5zUGske58yNZ9p4gBt8CcXySpDo8C
+         QuHHnQDAUgz5G7LYLXUWVDN0kAZ2MPtMp+gCOBg16o9Ua48ZJKURAiuJkjhYFHvkI/mE
+         EKn651bq/fkSPXGO05Jj+SztdfuzREmW+OX1iXrLNH03EVS/JGSdNyQr7jDRkdafzIvb
+         m07iphPQWelVljitja5wohypFciBwclioodQPYIbnneXLH1wJh52/0s98lqu3pfw+Tz4
+         2vBV9ugYCHC27oO7RLRdpaPJBThqSPWo32Q4QYHRw4RSJdm+GBy7Wg0ToZIn0yPvPWFM
+         fQKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bidXSvNUkIKIIPrI5f9m+r5SRAIUUZagg6U9oWZGSk4=;
+        b=gNHuu3eUjIBbMDc7wKq5gsmuKPVnQBhKuOD5CTjjG7m8YeQlbd64qsLbylYGRurE72
+         GjEiGrwxcxLgo/ACnSpPVOKoXIs6XJxHH59mlKDrNIiucL7hanNgUJqvu7pROIg3PN0f
+         C3wKoIcxDoF7sOk3olUxvTw0t6dL02Mfb6EvOULBD6/Rsg1f3PozN2xJJ3ZhKSNMdOhF
+         HYKhs5Q2zWUu30da0gUZ8WX9gRTDZ+b1THWNMZP0eEsq0jKRIHhlyzFVolOTtLfa0Hox
+         ad4CHlKBaVwcWbYFIdyYCCR1RCH+1AcIHXbYfYm/VTo01MkQ6BFv8IDeDBKHln6+9T9J
+         w8Dg==
+X-Gm-Message-State: AG10YOSzn9mME4ZB0P3C52o82bnUZDlXf9XrfV36uyXQmIG7eGjkkt5cxmJW9Sj2ovJDYA==
+X-Received: by 10.98.19.205 with SMTP id 74mr66869642pft.31.1456442347028;
+        Thu, 25 Feb 2016 15:19:07 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:d4a8:9152:117:98a9])
+        by smtp.gmail.com with ESMTPSA id v7sm14533404pfi.56.2016.02.25.15.19.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 25 Feb 2016 15:19:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1456441708-13512-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287489>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller wrote:
 
->> Michael (cc'd) posted an identical patch with some more discussion back
->> in May:
->>
->>   http://article.gmane.org/gmane.comp.version-control.git/268770
->>
->> The series languished because none of the reviewers had systems that
->> reproduced the problem, and I think there's some additional work needed
->> to get all of the svn-over-http tests running[1].
->>
->> I think this bit should be OK to take without the rest (though I like
->> the extra discussion in the original).
->
-> I can resurrect 745a5487 (t/lib-httpd: load mod_unixd, 2015-04-08),
-> which is still on 'pu', and apply 2/2 from Jacov on top of it.
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -465,14 +465,14 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+>  		NULL
+>  	};
+>  
+> -	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+> +	argc = parse_options(argc, argv, suc.prefix, module_update_clone_options,
+>  			     git_submodule_helper_usage, 0);
 
-Ahh, the one you quoted does have a better log message.  Let's
-replace the ancieint one I have and use Jacob's 2/2 on top of it.
+I would have expected this to use 'parse_options(argc, argv, prefix, ...' since
+I wouldn't expect a command-specific --prefix= parameter to affect the
+interpretation of relative filenames in other parameters.
+
+Now that I look around more, it seems that other submodule--helper subcommands
+have the same strange behavior of overwriting the 'prefix' var.  So I take
+back my suggestion of using a different variable --- that can be addressed in a
+separate patch that deals with them all at once.
+
+Sorry to flip-flop like this,
+Jonathan
