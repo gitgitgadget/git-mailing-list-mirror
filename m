@@ -1,145 +1,93 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv17 06/11] run-command: expose default_{start_failure, task_finished}
-Date: Wed, 24 Feb 2016 19:06:53 -0800
-Message-ID: <1456369618-18127-7-git-send-email-sbeller@google.com>
+Subject: [PATCHv17 08/11] run_processes_parallel: correctly terminate callbacks with an LF
+Date: Wed, 24 Feb 2016 19:06:55 -0800
+Message-ID: <1456369618-18127-9-git-send-email-sbeller@google.com>
 References: <1456369618-18127-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, sunshine@sunshineco.com, jrnieder@gmail.com
 To: sbeller@google.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 25 04:07:27 2016
+X-From: git-owner@vger.kernel.org Thu Feb 25 04:07:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYmH0-0000mq-Qt
+	id 1aYmH1-0000mq-Ei
 	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 04:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759896AbcBYDHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1759903AbcBYDHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 22:07:20 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:34178 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759892AbcBYDHQ (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 24 Feb 2016 22:07:16 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33507 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759882AbcBYDHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 22:07:12 -0500
-Received: by mail-pf0-f176.google.com with SMTP id q63so24323266pfb.0
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 19:07:12 -0800 (PST)
+Received: by mail-pa0-f42.google.com with SMTP id fy10so23805822pac.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 19:07:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TCNLQpQsH7z2kFMzLhA5s/0SKBmxZnXH718Y3Ym84e0=;
-        b=pPdhqyGSu1bOIAwVtaGRnuYraaqFUHTjarMx+NFP8/xbk5+PqZ2DeRdMXNmoC/Jx82
-         AQIo4KELA/ehywJRiz87ekU6f2zBlFnjdaHoH7SYvXVL9NUCXuNPKY2lWzhg3Wmt8wAS
-         Bz2Xq68LwRbThtp+5uVlHw11bKgG2HOdjI5UIsjxmt6O86WwqCDV1kOuf+RQSVpdgbuw
-         bVnnx8IlxZeuhqZ4L+E4Z/SOGllxouFiwDYW8OVtHRHgs3gonHoFK5jBCeTiHC8e25PU
-         sgLfpunfqmhU+8ZUYhZrP+e2ol0/2iEVy0/Xx/dOM63eHf+oEB/Znm7SZ/kjn7Zz3kbk
-         aogg==
+        bh=ma0KCMjPw71hSgagzYa+khPIlA8z8ojjLtLrk+48c8M=;
+        b=HFpBUwSNUu48T597xfDQpzYhzKMlNeF7z9oalorcWgd2LIfxx8bAU+3nkOtia2loWO
+         zCiqHU+16DMzA7FCvugbICoEk8KX4DhHGuOpeNOFOTIoozzDvk4mT+mh5hBREQuZ36Vf
+         m+vl5FADD0zyOlaTUfmYL2/qqpT3eyIoOXsSDBKqD9r/Wg00LvXG/L4o2L066/CJBkQI
+         yfgyhwCgqtjUu0712+8iQeIstA1Anfv44GlMk0wKGJLUnjD4YKzMZTrC12bUVXsYHbF7
+         Z7tRn+wxp1bDS7OzwG5rQoec0kgnH7DaWHIqJ70r7Ch5UkRvkAQbNigQgHYQ45GRu36+
+         c99w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TCNLQpQsH7z2kFMzLhA5s/0SKBmxZnXH718Y3Ym84e0=;
-        b=KLpZa2Hqfr9uwFh/prDKVJwYixmbIY6I06QD5Bung99jM5ZLunvYQA8XuhSsbgYHmr
-         kT2Vu2DevEiibIX501F+QO+uWDas7HUz+b1EEVXhks2B0SwFr9YGEH/UGXi6fW0mbMyu
-         zC/ZC9ZUYFWy9RjFGcSfV8u3BWNQar/627v+8dwmI2TVaOO9DEY2VEiMehHsIT2hSf6Q
-         L62X/HOsIdbxsbB7aKmIdrW86NgawHz45aSSeP5mrl5iCKR7yXjQQC+sTJs9vDmo2Z8n
-         zu7WCsTbig8VAQJjWBfM+P5dX3kTFoezmkKY1H6k67V3B8GDce3I8WLHiHHFk7uJKKnq
-         oVyw==
-X-Gm-Message-State: AG10YOSBDA5FBXJUC7fdX88wRBvmCYp6pKFWRoGKj+vYQBfvrP6fXo1k07ov6ksVqHwQnpcF
-X-Received: by 10.98.87.202 with SMTP id i71mr1394pfj.63.1456369631742;
-        Wed, 24 Feb 2016 19:07:11 -0800 (PST)
+        bh=ma0KCMjPw71hSgagzYa+khPIlA8z8ojjLtLrk+48c8M=;
+        b=HJhBoIXdcNfbgWvkdWZYDrIvblNDDtB+ETpx1NLeM3wAWFhhwSXB6sBkosuA5ZtsUT
+         rDDH5f+qQOVknTt5tTd83GDjyavpD2FB4nip6p5QPw/3gjTM5yt41BhllHn06cFrlLlV
+         kNeys2aMSu2LgaFMUloR2pt3YX4OKadjgC3suwe5xLe+C1B5DmXOmSBiTl0sJZhBE/KA
+         LJ3ShF25EokGLK0HxhMhlNzF4WCTDaVryqqjvThBhs9K2BYPtCGj3PuGCK9JuDe8SWCK
+         bT3AOJv4p/qwfjlzX6U9IMSA9mKfOJalCbB9Cg8yWW9gwLX3agyE684//hCNjoOIfZBa
+         iduQ==
+X-Gm-Message-State: AG10YOQaGgUQS+FignphAzVsVcUTT3bqOcQykky0JhamPu4qPO/47QNuoT4WkaSxHMJBen+b
+X-Received: by 10.67.3.67 with SMTP id bu3mr7882644pad.39.1456369634063;
+        Wed, 24 Feb 2016 19:07:14 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:74de:af7a:dfba:15a4])
-        by smtp.gmail.com with ESMTPSA id xa9sm7960624pab.44.2016.02.24.19.07.11
+        by smtp.gmail.com with ESMTPSA id u84sm7956770pfa.57.2016.02.24.19.07.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Feb 2016 19:07:11 -0800 (PST)
+        Wed, 24 Feb 2016 19:07:13 -0800 (PST)
 X-Mailer: git-send-email 2.7.2.373.g1655498.dirty
 In-Reply-To: <1456369618-18127-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287318>
 
-We want to reuse the error reporting facilities in a later patch.
+As the strbufs passed around collect all output to the user, and there
+is no post processing involved we need to care about the line ending
+ourselves.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- run-command.c | 18 +++++++++---------
- run-command.h | 19 +++++++++++++++++++
- 2 files changed, 28 insertions(+), 9 deletions(-)
+ run-command.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/run-command.c b/run-command.c
-index 2f8f222..c9b13cf 100644
+index d2964e1..6fad42f 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -902,10 +902,10 @@ struct parallel_processes {
- 	struct strbuf buffered_output; /* of finished children */
- };
+@@ -912,6 +912,7 @@ int default_start_failure(struct child_process *cp,
+ 	strbuf_addstr(out, "Starting a child failed:");
+ 	for (i = 0; cp->argv[i]; i++)
+ 		strbuf_addf(out, " %s", cp->argv[i]);
++	strbuf_addch(out, '\n');
  
--static int default_start_failure(struct child_process *cp,
--				 struct strbuf *err,
--				 void *pp_cb,
--				 void *pp_task_cb)
-+int default_start_failure(struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb)
- {
- 	int i;
- 
-@@ -916,11 +916,11 @@ static int default_start_failure(struct child_process *cp,
  	return 0;
  }
+@@ -930,6 +931,7 @@ int default_task_finished(int result,
+ 	strbuf_addf(out, "A child failed with return code %d:", result);
+ 	for (i = 0; cp->argv[i]; i++)
+ 		strbuf_addf(out, " %s", cp->argv[i]);
++	strbuf_addch(out, '\n');
  
--static int default_task_finished(int result,
--				 struct child_process *cp,
--				 struct strbuf *err,
--				 void *pp_cb,
--				 void *pp_task_cb)
-+int default_task_finished(int result,
-+			  struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb)
- {
- 	int i;
- 
-diff --git a/run-command.h b/run-command.h
-index d5a57f9..a054fa6 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -164,6 +164,15 @@ typedef int (*start_failure_fn)(struct child_process *cp,
- 				void *pp_task_cb);
- 
- /**
-+ * If a command fails to start, then print an error message stating the
-+ * exact command which failed.
-+ */
-+int default_start_failure(struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb);
-+
-+/**
-  * This callback is called on every child process that finished processing.
-  *
-  * You must not write to stdout or stderr in this function. Add your
-@@ -184,6 +193,16 @@ typedef int (*task_finished_fn)(int result,
- 				void *pp_task_cb);
- 
- /**
-+ * If the child process returns with a non zero error code, print
-+ * an error message of the exact command which failed.
-+ */
-+int default_task_finished(int result,
-+			  struct child_process *cp,
-+			  struct strbuf *err,
-+			  void *pp_cb,
-+			  void *pp_task_cb);
-+
-+/**
-  * Runs up to n processes at the same time. Whenever a process can be
-  * started, the callback get_next_task_fn is called to obtain the data
-  * required to start another child process.
+ 	return 0;
+ }
 -- 
 2.7.2.373.g1655498.dirty
