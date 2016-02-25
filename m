@@ -1,103 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2.1] Documentation/diff-config: fix description of diff.renames
-Date: Thu, 25 Feb 2016 10:18:39 -0800
-Message-ID: <xmqqoab4odq8.fsf@gitster.mtv.corp.google.com>
-References: <1456390761-27015-2-git-send-email-Matthieu.Moy@imag.fr>
-	<1456421878-443-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv17 01/11] submodule-config: keep update strategy around
+Date: Thu, 25 Feb 2016 10:21:54 -0800
+Message-ID: <CAGZ79kaG+npqYDxABdUGrXH04nBF0_S+VLOHGrsa0jPcWMtiUQ@mail.gmail.com>
+References: <1456369618-18127-1-git-send-email-sbeller@google.com>
+	<1456369618-18127-2-git-send-email-sbeller@google.com>
+	<xmqqwppsoeab.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 25 19:18:52 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 19:22:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ0V1-0007me-HK
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 19:18:51 +0100
+	id 1aZ0Y4-0001Ym-3u
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 19:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933380AbcBYSSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 13:18:45 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56168 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933114AbcBYSSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 13:18:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E96494659D;
-	Thu, 25 Feb 2016 13:18:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mQ0VMLiSZF1/eTFbrcqhuWfMVeU=; b=K1GyZp
-	t0MkiWfyIUXhG86zMfvH4gDczA6Or/k4AlfuMzxIEke8QQbcpYqD0bXplelDM4Qd
-	dU8KLJ6k8PYrMVuYRGKAnIlZ57WyqJ85ucMGFsAUCj7loH4PzAFF/grJbIYUK5Rm
-	Ikj2LX81Hwd5D/a4g+rLodV22pjGS2auanBQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=amnGqqm5oyKz7CPrJG6AeNd+NxacHPgL
-	6zIqgPJ38ShXgWa/2/udkWgnnxv9QP/CD19JoqobKzSUlhxYzBvA2DuG5ui3ZIlp
-	Rme34CHULdFq5xwNH0klgo61mJuR8uepM5CUmDsi90jqXlxRYHLEhUXmF9KqJ4b3
-	h98zOt4vDso=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E05514659C;
-	Thu, 25 Feb 2016 13:18:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4578C4659A;
-	Thu, 25 Feb 2016 13:18:41 -0500 (EST)
-In-Reply-To: <1456421878-443-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Thu, 25 Feb 2016 18:37:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 32A31D44-DBEC-11E5-AC3F-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S933423AbcBYSV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 13:21:56 -0500
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:36716 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933304AbcBYSVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 13:21:55 -0500
+Received: by mail-ig0-f182.google.com with SMTP id xg9so18919145igb.1
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 10:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=lOUfZB8bQ/iJvAvVUzsQ1n4uqpecgcPuupNNeadMLwA=;
+        b=Bl/hMlzviJbZxxTVJ2xzU3lyPUy01H7MetxbrCyXxDSOfEr2quow+Q/ubmuH/XicQ5
+         Z95Q3bb5g0Srgg6f38jg9LpyvoCrULNWvtJSFyuwdYmoNFUHv48vA/J0tLaEnheLrAug
+         t5skw2Z0I/kHe7MJtKzNLxxFvw6m0PwQYok+7MocOR4Wr4ssx0gBSEq3fCWAU61vOqMh
+         /Orh9z1GfRaWSQn09UdyIH2wMQYnCDzzc4S0WwkTYEih/036LQysPSH4NXesbcRvamup
+         YKOPzMejIiE6FPmO+b+1TGqikDCsqtCOrRBW44KIxEsFYfAGZFLG4W7KuY8OHVkni0aV
+         eD0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=lOUfZB8bQ/iJvAvVUzsQ1n4uqpecgcPuupNNeadMLwA=;
+        b=XnKNC8ZhW4mPAmlkNz8TLiwrsG5YwmIwZoeFvbI6HUkUxtLs9JmxR9F+JBFaJhY28y
+         6S8vfBBvnFdH1pm1c8rMaLOEOtAFMrkvwhGbllmN56OBNlRRzL/5LtNE+xwks8JY0Lf1
+         eKRS2LnJcj5Kjn1Z2l29zonH+1NaNTo9N5wqLw8v2HgseV2UtK8ac7bsphXxrei7WLwe
+         NYCvUeSalX4fyf8IDHiijzjcz9PuPaNDTmwOVLXEvE8hcUw0AwEFM1Dfj771jyGi4f3T
+         hvxoj/3CrGLCJN6JFiixgOBs1p3qcAYS6RbCoePcueO8zhbhodK7raFalTdgfMKZXuDu
+         FRIA==
+X-Gm-Message-State: AG10YORp846XTP01+CHTt6LWY8pm+VgHMPDWXU9KI5S0axi3M9UsUdRtug87PnbziG6vyxrAX2zSX0IUoeQuPt9z
+X-Received: by 10.50.55.71 with SMTP id q7mr38135igp.27.1456424514747; Thu, 25
+ Feb 2016 10:21:54 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Thu, 25 Feb 2016 10:21:54 -0800 (PST)
+In-Reply-To: <xmqqwppsoeab.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287413>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-
-> The description was misleading, since "set to any boolean value" include
-> "set to false", and diff.renames=false does not enable basic detection,
-> but actually disables it. Also, document that diff.renames only affects
-> Porcelain.
+On Thu, Feb 25, 2016 at 10:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> Oops, trivial fix for typo noticed by Felipe. I'm resending just this
-> one in case Junio wants to pick the latest version but I can obviously
-> resend the whole if needed.
-
-Heh, I guess people independently spotted the same typo nearly
-simultaneously ;-)
-
-I think I got this fixed locally (and adjusted the last one to
-match).  Thanks.
-
-
+>> +int parse_submodule_update_strategy(const char *value,
+>> +             struct submodule_update_strategy *dst)
+>> +{
+>> +     free((void*)dst->command);
 >
->  Documentation/diff-config.txt | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
+>         free((void *)dst->command);
 >
-> diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-> index 6eaa452..b5e9bda 100644
-> --- a/Documentation/diff-config.txt
-> +++ b/Documentation/diff-config.txt
-> @@ -108,9 +108,13 @@ diff.renameLimit::
->  	detection; equivalent to the 'git diff' option '-l'.
->  
->  diff.renames::
-> -	Tells Git to detect renames.  If set to any boolean value, it
-> -	will enable basic rename detection.  If set to "copies" or
-> -	"copy", it will detect copies, as well.
-> +	Whether and how Git detects renames.  If set to "false",
-> +	rename detection is disabled.  If set to "true", basic rename
-> +	detection is enabled.  If set to "copies" or "copy", Git will
-> +	detect copies, as well.  Defaults to false.  Note that this
-> +	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
-> +	linkgit:git-log[1], and not lower level commands such as
-> +	linkgit:git-diff-files[1].
->  
->  diff.suppressBlankEmpty::
->  	A boolean to inhibit the standard behavior of printing a space
+> "git tbdiff" is quite handy; it didn't spot any other lossage of
+> local tweak that was in 'pu', which is good.
+>
+> Thanks, will replace.
+
+
+I usually use git diff <localbranch>.. origin/sb/feature to generate
+the interdiffs,
+so if you tweak things and I take these tweaks, then the interdiff is
+not complete.
+
+On the other hand if I miss the tweak, such a diff shows a revert of the tweak.
+
+I remember applying this tweak; not sure how it got lost again.
