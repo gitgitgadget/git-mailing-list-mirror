@@ -1,138 +1,118 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv18 00/11] Expose
-Date: Thu, 25 Feb 2016 15:08:17 -0800
-Message-ID: <1456441708-13512-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv18 04/11] submodule update: direct error message to stderr
+Date: Thu, 25 Feb 2016 15:08:21 -0800
+Message-ID: <1456441708-13512-5-git-send-email-sbeller@google.com>
 References: <xmqqoab4mnoc.fsf@gitster.mtv.corp.google.com>
+ <1456441708-13512-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, sunshine@sunshineco.com, jrnieder@gmail.com
 To: sbeller@google.com, git@vger.kernel.org, Jens.Lehmann@web.de,
 	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:04 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 00:09:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ51s-000832-4c
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:04 +0100
+	id 1aZ521-00089u-Pw
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 00:09:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbcBYXI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 18:08:59 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:35604 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752071AbcBYXI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 18:08:57 -0500
-Received: by mail-pa0-f51.google.com with SMTP id ho8so40882070pac.2
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:08:57 -0800 (PST)
+	id S1752332AbcBYXJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 18:09:07 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35419 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752293AbcBYXJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 18:09:04 -0500
+Received: by mail-pf0-f182.google.com with SMTP id c10so41930646pfc.2
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 15:09:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xOgjDVcG20LHqT/uyw2fQt4RnLiSM073zq6s5b/Wg2Y=;
-        b=UZyj6AbVYfWkbdH+kZqw9un/wlTDGwfZ0Sk1cRz+AhIuIyIl1Waf9ROBmRJO5B8FK4
-         2E4qPgxPWDCET4HVo/Kb+vAqXeSeCfELyb5HhEy+heWjraxO06kkUO8qD4JY0ZyUF5+z
-         ylyqR1EryR0H4jrslaZZuBsos0Xsu2FM8Q4IhNzHCxfTpxVlVWxPF8FjaVIbAd3QbkPl
-         JxscDF/+ekbP4k3S6tprudbYL4Um5n54HaOYmKAqDgcCy1YTUmhM22lpVsOnbLMpoyGn
-         wn1jYvi6Zp07RA6dNF+v+4vj+gmhCUw6i4o99B2Al6qxFWC4s66kMovpeXm0eS0hadpm
-         04mA==
+        bh=veOa7UbyW66FxpG/HGX3J0xysuplbTPQHnxgPapN9Kw=;
+        b=NF7E8rPhrvls4wKy6hDaUJ5YxhPOtCW4KKnEf6+3l+65Glx2k0Qbc6xcO3yAOo4Lhu
+         5N7bAuRi6ucDf1/Axa3jZqlePkJYxM/s+sfamAeQMSC17TZjbxE8rqOB8M+T/bhgOuTQ
+         1zAjx8OFLco7uvtz1I0e78UUKEAVIzQJ4PFyGAuevdqvGIdQBrJrmtBUlEchLoqSAA7s
+         4cG6vk0BEMa2LoHkxT3TEnI/Di1rAWiM4+nQLoH146N1jZmFiu+2D9qvfJBZBVp/XSpv
+         MpJZRxko9XKVGLSwt8zMI17ztuWArp0Jx7l7Hc0O62nUnITpu/XYsat+XfYoCQSRFnJ1
+         xr5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xOgjDVcG20LHqT/uyw2fQt4RnLiSM073zq6s5b/Wg2Y=;
-        b=W9IdI05FnC086lFmzuVlBRiz2wNqT+mMZndGGzvlZLxWGbtQ1BWUuHBcmFtMXyaERm
-         NYioAGHr5QAfZWC9QtQW9K7PDpMMgENhIQFwqtmMiWka17p1qSj+m7pWDxi70AnmCmVQ
-         t5z7SBAV7XMbhfs+9ZIIHAee/jK8ctmoDLeY/TU/E3lsK3MqgJD3MeaaYv+75KNY6Vht
-         O0dCTWNVxblEFLGX58Ebr2aL5eaWLYw8N1D0A6aUq2wS3xaZcfXUNXpZ69Bvg9/EfdSv
-         q9OftOkzS2VOVn1mVo8wU1cwjsgX3SNEUV+TGNxtNNlrxQtcHwUYmZMJW9lrHXnpSKe1
-         /xSg==
-X-Gm-Message-State: AG10YOTFPuDUCof9KKdy3MXznEUhSbfWyDbD0Ix8f8dRIvUmVV+T2d76o6PEPjEWS0ydXtw8
-X-Received: by 10.66.244.233 with SMTP id xj9mr46645362pac.19.1456441736994;
-        Thu, 25 Feb 2016 15:08:56 -0800 (PST)
+        bh=veOa7UbyW66FxpG/HGX3J0xysuplbTPQHnxgPapN9Kw=;
+        b=M84bW2dw1v9GhGPesH/epoKzmDWVe404DsepCiGZwE4x68fbz75wN7SBeie1Ncm+kH
+         lPowNoN+fgvhC7zb8+42BpIBb+Y7KTlwDTVN1Mwr58A7U13+tg1kgywMltybzbpp+KV4
+         K4sVXqz6GEHrbsB2i6fEQSCexuGoAkHc4+jGK5ZW4t2epec4YoxwvNl2TAHE8hfcbaI3
+         X1wsPCBkPhIkcttIAuQSg4Y1UZIl68Y/sHJk3QXuhdEbTtr/JkMR2uMlg1lyltnwzjvx
+         s+6NbC8CKzl5pcxtd0mR4T3CVrkj9t4KXq6Ltct6ekxScgV8ir2Oky+hgzQHvcs1UtM4
+         RvFg==
+X-Gm-Message-State: AG10YOQ1yjZ7enBoLyJxoZRqY7sTyBuRvU/P/GwFp/O60dJOKkX2Z6WA0XkH8fj98UvcSAXP
+X-Received: by 10.98.13.68 with SMTP id v65mr66367560pfi.150.1456441743391;
+        Thu, 25 Feb 2016 15:09:03 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a893:1c03:aadb:c3d])
-        by smtp.gmail.com with ESMTPSA id l14sm14523151pfi.23.2016.02.25.15.08.56
+        by smtp.gmail.com with ESMTPSA id ux2sm14517795pac.46.2016.02.25.15.09.02
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Feb 2016 15:08:56 -0800 (PST)
+        Thu, 25 Feb 2016 15:09:02 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.36.g75877e4.dirty
-In-Reply-To: <xmqqoab4mnoc.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1456441708-13512-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287475>
 
-* fixes the test breakage (which was caused by a last minute fix :/ to the
-  prefix variable handling)
-* include the separately sent patch to not call fwrite in case of length 0
+Reroute the error message for specified but initialized submodules
+to stderr instead of stdout.
 
-Thanks,
-Stefan
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh           | 4 ++--
+ t/t7400-submodule-basic.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Interdiff to v17:
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 9d94406..882aeca 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -465,14 +465,14 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 		NULL
- 	};
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f..9ee86d4 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -693,7 +693,7 @@ cmd_update()
  
--	argc = parse_options(argc, argv, prefix, module_update_clone_options,
-+	argc = parse_options(argc, argv, suc.prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
+ 		if test "$update_module" = "none"
+ 		then
+-			echo "Skipping submodule '$displaypath'"
++			echo >&2 "Skipping submodule '$displaypath'"
+ 			continue
+ 		fi
  
- 	if (update)
- 		if (parse_submodule_update_strategy(update, &suc.update) < 0)
- 			die(_("bad value for update parameter"));
+@@ -702,7 +702,7 @@ cmd_update()
+ 			# Only mention uninitialized submodules when its
+ 			# path have been specified
+ 			test "$#" != "0" &&
+-			say "$(eval_gettext "Submodule path '\$displaypath' not initialized
++			say >&2 "$(eval_gettext "Submodule path '\$displaypath' not initialized
+ Maybe you want to use 'update --init'?")"
+ 			continue
+ 		fi
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 540771c..5991e3c 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -462,7 +462,7 @@ test_expect_success 'update --init' '
+ 	git config --remove-section submodule.example &&
+ 	test_must_fail git config submodule.example.url &&
  
--	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
-+	if (module_list_compute(argc, argv, suc.prefix, &pathspec, &suc.list) < 0)
- 		return 1;
- 
- 	if (pathspec.nr)
-diff --git a/strbuf.c b/strbuf.c
-index 71345cd..5f6da82 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -397,7 +397,7 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
- 
- ssize_t strbuf_write(struct strbuf *sb, FILE *f)
- {
--	return fwrite(sb->buf, 1, sb->len, f);
-+	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
- }
- 
-Stefan Beller (11):
-  submodule-config: keep update strategy around
-  submodule-config: drop check against NULL
-  fetching submodules: respect `submodule.fetchJobs` config option
-  submodule update: direct error message to stderr
-  run_processes_parallel: treat output of children as byte array
-  run-command: expose default_{start_failure, task_finished}
-  run_processes_parallel: rename parameters for the callbacks
-  run_processes_parallel: correctly terminate callbacks with an LF
-  git submodule update: have a dedicated helper for cloning
-  submodule update: expose parallelism to the user
-  clone: allow an explicit argument for parallel submodule clones
-
- Documentation/config.txt        |   6 +
- Documentation/git-clone.txt     |   6 +-
- Documentation/git-submodule.txt |   7 +-
- builtin/clone.c                 |  19 ++-
- builtin/fetch.c                 |   2 +-
- builtin/submodule--helper.c     | 254 ++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh                |  56 ++++-----
- run-command.c                   |  36 +++---
- run-command.h                   |  29 ++++-
- strbuf.c                        |   6 +
- strbuf.h                        |   6 +
- submodule-config.c              |  19 ++-
- submodule-config.h              |   2 +
- submodule.c                     |  37 +++++-
- submodule.h                     |  18 +++
- t/t5526-fetch-submodules.sh     |  14 +++
- t/t7400-submodule-basic.sh      |   4 +-
- t/t7406-submodule-update.sh     |  27 +++++
- 18 files changed, 477 insertions(+), 71 deletions(-)
-
+-	git submodule update init > update.out &&
++	git submodule update init 2> update.out &&
+ 	cat update.out &&
+ 	test_i18ngrep "not initialized" update.out &&
+ 	test_must_fail git rev-parse --resolve-git-dir init/.git &&
+@@ -480,7 +480,7 @@ test_expect_success 'update --init from subdirectory' '
+ 	mkdir -p sub &&
+ 	(
+ 		cd sub &&
+-		git submodule update ../init >update.out &&
++		git submodule update ../init 2>update.out &&
+ 		cat update.out &&
+ 		test_i18ngrep "not initialized" update.out &&
+ 		test_must_fail git rev-parse --resolve-git-dir ../init/.git &&
 -- 
 2.7.0.rc0.36.g75877e4.dirty
