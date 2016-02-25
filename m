@@ -1,164 +1,135 @@
-From: Saurav Sachidanand <sauravsachidanand@gmail.com>
-Subject: [PATCH] Change type of signed int flags to unsigned
-Date: Thu, 25 Feb 2016 18:54:32 +0530
-Message-ID: <1456406672-5661-1-git-send-email-sauravsachidanand@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: git mv messed up file mapping if folders contain identical files
+Date: Thu, 25 Feb 2016 05:56:22 -0800
+Message-ID: <CAGZ79kZApquSRaY_BtHrqfvuWmtYuPjeshmT-oW6T8Z7atYdFQ@mail.gmail.com>
+References: <CADsr5c_Hk34KBN06dM9Hk5HPW9-Mt3eZLMgvyes8sSgxCA-k0w@mail.gmail.com>
+	<20160225114958.GC15324@ikke.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Saurav Sachidanand <sauravsachidanand@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 25 14:25:15 2016
+Cc: Bill Okara <billokara@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Thu Feb 25 14:56:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYvus-0000bY-3Y
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:25:14 +0100
+	id 1aYwP6-0003PS-RK
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 14:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760404AbcBYNY6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Feb 2016 08:24:58 -0500
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33994 "EHLO
-	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760562AbcBYNYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 08:24:49 -0500
-Received: by mail-pf0-f170.google.com with SMTP id x65so32906198pfb.1
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 05:24:49 -0800 (PST)
+	id S1760268AbcBYN4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 08:56:24 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:33050 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760194AbcBYN4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 08:56:23 -0500
+Received: by mail-ig0-f173.google.com with SMTP id y8so14576657igp.0
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 05:56:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=RT2UYaUVutXTyNhv+0HMXbrxPS2igPWPW9GnEe+EHcY=;
-        b=tqE05/nj79cpNL+I2xF9tj214yZiukcNOwe78vGUqyIYMlgCFjfhH2Ico2CCdN2sUR
-         LWP9R02LPeIyTTWzYdlCvxuYDTEuzF5GhoMOR2idNHhx69/amkjoLk8dC9+RQeNFZDvQ
-         ZVxm9jqq05FSny51nRHO5w7PV1dDR02WKl7iR7njdnmSAOJLr8x4p5KBEuYX6YMR2+yL
-         vjq9TcycdQ9emF5a3exttuBvVNv/AYo07/7dRBAmxBgl1qAat01+QvB8V9rabOHjQz5Y
-         0A8Xy4OSgumii1UIkUn25CSsjUXoaecICycgN4moysg2hovBKU9gP7vZ6OgP176OaUUE
-         mXww==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=DW4TEYYDtH1YslQtPQ6pAj5Uoms3jaL6x3i6iiWTr3s=;
+        b=iEJaVKpie116YEatsHVgbQg/FWn+CdiATLKjOSngFFgZw4dfsOPeUXgQ5t+q8trN5/
+         HisKqrZmjA5zG0wLr4mBIzRQXffc52qutXNxfSsWb20ipJZa9ou9Xo37gM3BmnCFGxvo
+         ZK9Sa4peWP2sfSzmBQV+Ix5OoyUVG818i54s0nxUZUTW+kwsCeLc4i8AyHjDzp3kikqx
+         XUFdNhU+Z8lgtaxJvVWjYhPcYnsxRSbs21P1OxLfIl3+YPu88ndQqsBQJcUT1c02K596
+         DEnYjog2I+PfS/wbmvCCjjdj3XPp2EBqHGGEcX9vOaCEWO95BN1GlDFF3Jkk9GXEEBko
+         RFIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=RT2UYaUVutXTyNhv+0HMXbrxPS2igPWPW9GnEe+EHcY=;
-        b=I1Gp0ndOBk5DbYhHY6z8bu8GsI9xS/bs0fG/xGQ+4UnYUqmphJGXcsVQDrTR1JcfUq
-         DzMVbTJeaSY6iMqsYhjWa4jgvcuEpvw9PMhQQsqHbPcZ2lzz3he6D69e2sa77Y6sNkiS
-         W5ry0MRJF8D/smTyywWTY1bD9SPwuQhHG+WP5H7rgzXxvQim5WUFwIu2UQaJ9YkfX3Tx
-         DljzdYIouMEw4326vU1hEJr7M0CngIHnQiuVBjE73j7mE3u1/i9R5dgHwqtXXvjy0swQ
-         c4nkaRdlVx9pQhcbTh21U0v8AD/tvvm84HeJstRT9OQBX3phgpWpgoa4kxGEJ8509fLf
-         oBLw==
-X-Gm-Message-State: AG10YOTzmmddNltL/8gal6uTGO5RZgrbC+1iRJjpPVwApv665FJcm2TLxxXuRFJymx6LGA==
-X-Received: by 10.98.68.212 with SMTP id m81mr62587043pfi.135.1456406688709;
-        Thu, 25 Feb 2016 05:24:48 -0800 (PST)
-Received: from localhost.localdomain ([106.51.19.158])
-        by smtp.googlemail.com with ESMTPSA id yj1sm12471163pac.16.2016.02.25.05.24.46
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Feb 2016 05:24:48 -0800 (PST)
-X-Mailer: git-send-email 2.7.1.339.g0233b80
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=DW4TEYYDtH1YslQtPQ6pAj5Uoms3jaL6x3i6iiWTr3s=;
+        b=HWlPWXEef7LIE+4YalmGIbxVTVQNs42P3Hnor/a9lm9nsoS1hO0Mjc0ryRnCDWQv43
+         gOnWzVJv1z3kx1IU1w4mhyZoZW3YlayaQysgKiJeNjAP4hHwt3lYn4vnUKEcBnEiaESH
+         yaI32KYrdTS7/pTQ68cYeqzWLWWGk4yejcaf7cdy7bRT2ThxSJJr3u8edLZx9sWPsuyd
+         6snvaYgeHa4pz0A3i5HwO4UkCc19X3ZekpwvB29Y3mZcDvMc49W80LVkm3XCDNyEOujN
+         2B2aZtDWfq7o0C7XwVvT1SI7/mcR0tO3N0cIgLpXxYsSKue8227Ojo6FYaanNuouxLxm
+         2KQg==
+X-Gm-Message-State: AG10YOT+VFIbFtCgncGZJ/YSaehNJ4N19Kn8hae7FZeFktGwe8vNxyohDeBeTXapBmESOkKjU8fD3FuYUzMsGBIB
+X-Received: by 10.50.112.10 with SMTP id im10mr3212735igb.93.1456408582438;
+ Thu, 25 Feb 2016 05:56:22 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Thu, 25 Feb 2016 05:56:22 -0800 (PST)
+In-Reply-To: <20160225114958.GC15324@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287388>
 
-=E2=80=9Cpattern=E2=80=9D and =E2=80=9Cexclude=E2=80=9D are two structs=
- defined in attr.c and dir.h
-respectively. Each contains a field named =E2=80=9Cflags=E2=80=9D of ty=
-pe int, that
-takes on values from the set of positive integers {1, 4, 8, 16}
-enumerated through the macro EXC_FLAG_*.
+On Thu, Feb 25, 2016 at 3:49 AM, Kevin Daudt <me@ikke.info> wrote:
+> On Wed, Feb 24, 2016 at 04:38:11PM -0700, Bill Okara wrote:
+>> Hi,
+>>
+>> I noticed the following 'git mv' issue with:
+>> git version 2.6.4
+>>
+>>
+>> If there are identical files in different subfolders, 'git mv' the
+>> root folder (and/or each file individually) will mess up the file path
+>> mapping. that is, if having identical 'content.txt' file under
+>> gitmvtest
+>>     |--demo/content.txt
+>>     |--dev/content.txt
+>>     |--prod/content.txt
+>>
+>> after doing the "git mv gitmvtest/resources
+>> gitmvtest/src/main/resources", the 'git status' will show:
+>>
+>> renamed:    gitmvtest/resources/demo/content.txt ->
+>> gitmvtest/src/main/resources/demo/content.txt
+>> renamed:    gitmvtest/resources/prod/content.txt ->
+>> gitmvtest/src/main/resources/dev/content.txt            <== NOTE:
+>> wrongly mapped the prod/content.txt to dev/content.txt
+>> renamed:    gitmvtest/resources/dev/content.txt ->
+>> gitmvtest/src/main/resources/prod/content.txt            <== NOTE:
+>> wrongly mapped the dev/content.txt to prod/content.txt
+>>
+>> I tried running 'git mv' on each file individually, got the same problem:
+>> > git mv gitmvtest/resources/demo/content.txt gitmvtest/src/main/resources/demo/content.txt
+>> > git mv gitmvtest/resources/dev/content.txt gitmvtest/src/main/resources/dev/content.txt
+>> > git mv gitmvtest/resources/prod/content.txt gitmvtest/src/main/resources/prod/content.txt
+>>
+>> > git status
+>> renamed:    gitmvtest/resources/demo/content.txt ->
+>> gitmvtest/src/main/resources/demo/content.txt
+>> renamed:    gitmvtest/resources/prod/content.txt ->
+>> gitmvtest/src/main/resources/dev/content.txt          <== WRONG
+>> renamed:    gitmvtest/resources/dev/content.txt ->
+>> gitmvtest/src/main/resources/prod/content.txt          <== WRONG
+>>
+>>
+>> NOTE:
+>> =======
+>> if modified the content.txt in the 3 folders to contain different
+>> data, then repeating the above 'git mv' will produce correct result,
+>>
+>> renamed:    gitmvtest/resources/demo/content.txt ->
+>> gitmvtest/src/main/resources/demo/content.txt       <== CORRECT
+>> renamed:    gitmvtest/resources/dev/content.txt ->
+>> gitmvtest/src/main/resources/dev/content.txt             <== CORRECT
+>> renamed:    gitmvtest/resources/prod/content.txt ->
+>> gitmvtest/src/main/resources/prod/content.txt          <== CORRECT
+>>
+>>
+>>
+>> just want to see if this is a bug, user error (on my end), or??
+>>
+>
+> This looks like the same issue as submodule--helper list has:
+> http://article.gmane.org/gmane.comp.version-control.git/287227
 
-That the most significant bit (used to store the sign) of these two
-fields is not used in any special way, is observed from the fact
-that, the flags fields (accessed within attr.c, dir.c, and
-builtin/check-ignore.c) is either checked for it's value using the &
-operator (e.g.: flags & EXC_FLAG_NODIR), or assigned a value of 0
-first and then assigned any one of {1, 4, 8, 16} using the | operator
-(e.g.: flags |=3D EXC_FLAG_NODIR). Hence, change the type of flags
-to unsigned in both structs.
+The submodule--helper is not called from within git-mv, so it may be
+a similar but not the same issue. ;)
 
-=46urthermore, flags is passed by reference to the function
-parse_exclude_pattern defined in dir.c, which accepts an =E2=80=9Cint *=
-=E2=80=9D type
-for the flags argument. To avoid converting between pointers to
-different types, change type of the flags argument to =E2=80=9Cunsigned=
- *=E2=80=9D.
+Looking through the code, the pathspec is not treated according to the newest
+style convention, I think it is one of the last places where the
+pathspec internals
+are poked with, instead of using parse_parsespec && match_parsespec.
+(That said it is very old hence often tested code in the wild. old
+code != bad code)
 
-While we=E2=80=99re at it, document the flags field of exclude to expli=
-citly
-state the values it=E2=80=99s supposed to take on.
-
-Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
----
- attr.c | 2 +-
- dir.c  | 4 ++--
- dir.h  | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 086c08d..679e13c 100644
---- a/attr.c
-+++ b/attr.c
-@@ -124,7 +124,7 @@ struct pattern {
- 	const char *pattern;
- 	int patternlen;
- 	int nowildcardlen;
--	int flags;		/* EXC_FLAG_* */
-+	unsigned flags;		/* EXC_FLAG_* */
- };
-
- /*
-diff --git a/dir.c b/dir.c
-index 552af23..d36fda7 100644
---- a/dir.c
-+++ b/dir.c
-@@ -459,7 +459,7 @@ int no_wildcard(const char *string)
-
- void parse_exclude_pattern(const char **pattern,
- 			   int *patternlen,
--			   int *flags,
-+			   unsigned *flags,
- 			   int *nowildcardlen)
- {
- 	const char *p =3D *pattern;
-@@ -500,7 +500,7 @@ void add_exclude(const char *string, const char *ba=
-se,
- {
- 	struct exclude *x;
- 	int patternlen;
--	int flags;
-+	unsigned flags;
- 	int nowildcardlen;
-
- 	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
-diff --git a/dir.h b/dir.h
-index 3ec3fb0..e34df5e 100644
---- a/dir.h
-+++ b/dir.h
-@@ -28,7 +28,7 @@ struct exclude {
- 	int nowildcardlen;
- 	const char *base;
- 	int baselen;
--	int flags;
-+	unsigned flags;		/* EXC_FLAG_* */
-
- 	/*
- 	 * Counting starts from 1 for line numbers in ignore files,
-@@ -244,7 +244,7 @@ extern struct exclude_list *add_exclude_list(struct=
- dir_struct *dir,
- extern int add_excludes_from_file_to_list(const char *fname, const cha=
-r *base, int baselen,
- 					  struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fn=
-ame);
--extern void parse_exclude_pattern(const char **string, int *patternlen=
-, int *flags, int *nowildcardlen);
-+extern void parse_exclude_pattern(const char **string, int *patternlen=
-, unsigned *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
- extern void clear_exclude_list(struct exclude_list *el);
---
-2.7.1.339.g0233b80
-
-This patch is for the suggested microproject for GSoC 2016 titled
-"Use unsigned integral type for collection of bits."
+Stefan
