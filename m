@@ -1,113 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC] git-commit: add a commit.verbose config variable
-Date: Thu, 25 Feb 2016 22:27:00 +0100
-Message-ID: <vpqmvqo1nx7.fsf@anie.imag.fr>
-References: <56CFBF19.6040004@zoho.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] run-command: fix an 'different modifiers' sparse warning
+Date: Thu, 25 Feb 2016 16:39:35 -0500
+Message-ID: <20160225213935.GA3612@sigill.intra.peff.net>
+References: <56CF576B.4020401@ramsayjones.plus.com>
+ <xmqqfuwgo83n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Pranit Bauva <pranit.bauva@zoho.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 22:27:24 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 22:39:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ3RR-0001mM-36
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 22:27:21 +0100
+	id 1aZ3dP-0001Gc-7n
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 22:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbcBYV1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 16:27:17 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:47499 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750767AbcBYV1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 16:27:16 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1PLQwE1015827
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 25 Feb 2016 22:26:59 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1PLR0ZA026275;
-	Thu, 25 Feb 2016 22:27:00 +0100
-In-Reply-To: <56CFBF19.6040004@zoho.com> (Pranit Bauva's message of "Fri, 26
-	Feb 2016 02:57:29 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 25 Feb 2016 22:27:01 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1PLQwE1015827
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457040423.289@YBQEIykTFE4AjCxUteaXaw
+	id S1751494AbcBYVjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 16:39:39 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49403 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750763AbcBYVji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 16:39:38 -0500
+Received: (qmail 26015 invoked by uid 102); 25 Feb 2016 21:39:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Feb 2016 16:39:37 -0500
+Received: (qmail 25305 invoked by uid 107); 25 Feb 2016 21:39:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Feb 2016 16:39:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Feb 2016 16:39:35 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqfuwgo83n.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287441>
 
-Pranit Bauva <pranit.bauva@zoho.com> writes:
+On Thu, Feb 25, 2016 at 12:20:12PM -0800, Junio C Hamano wrote:
 
-> From c273a02fc9cab9305cedf6e37422e257a1cc3b1e Mon Sep 17 00:00:00 2001
-> From: Pranit Bauva <pranit.bauva@zoho.com>
-> Date: Fri, 26 Feb 2016 07:14:18 +0530
-> Subject: [PATCH/RFC] git-commit: add a commit.verbose config variable
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> > Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> > ---
+> >
+> > Hi Jeff,
+> >
+> > If you need to re-roll your 'jk/epipe-in-async' branch, could you
+> > please squash this into the relevant patch. (ie. "write_or_die:
+> > handle EPIPE in async threads", 24-02-2016).
+> >
+> > Thanks!
+> 
+> I actually was planning to merge this to 'next' today, so I'll
+> squash it in without waiting for a reroll.
 
-These should not appear in the body of your message, but they should be
-the actual headers of your email. Try sending such message to yourself,
-and compare with what you see on the list.
+I am OK with that. But I do find it interesting that we must mark
+NORETURN in both the declaration and the definition, but we don't for
+__attribute__((format)).
 
-Using "git send-email" normally does the right thing. You may want to
-look at https://submitgit.herokuapp.com/ too.
+> By the way, doesn't it bother anybody to give two different types to
+> the same function depending on NO_PTHREAD?  It is not a new issue
+> added by this series, but async_exit() that claims to return int
+> does not (naturally) return anything, and sparse does not seem to
+> care (neither do we).
 
-> The variable `verbose` is changed instead of `s.verbose` as the method
-> run_status() updates the `s.verbose` with the value of `verbose`. So in
-> this way the change is reflected in both of them.
+It would have bothered me if I had noticed. :)
 
-The commit message should not try to rephrase what the patch aleady
-says.
+It is simply a bug, and sparse (and the compiler) do not notice it
+because it only shows up if you compile with NO_PTHREADS=1. And I think
+it is added by this series:
 
->     This is a patch for the microproject of GSOC 2016. I have done the change
->     under careful consideration of where to place the line. I have to yet write
->     the tests for this.
+> > @@ -675,7 +675,7 @@ int in_async(void)
+> >  	return process_is_async;
+> >  }
+> >  
+> > -int async_exit(int code)
+> > +int NORETURN async_exit(int code)
 
-If you know you haven't finished, you may use WIP (work in progress)
-instead of RFC in the title.
+The return value on this one should be "void", too, of course.
 
-> +commit.verbose::
-> +	A boolean to specify whether to always include the verbose option
-
-Boolean is usually written with a capital letter.
-
-> +	with git-config.
-
-Did you mean "git commit"?
-
-> +	of the commit message. If this option is used always, it can
-
-"If this option is used always" does not sound right. I'd write "To
-activate this option permanently, ..."
-
-> +	be set in the git-config with the boolean variable `commit.verbose`.
-
-"the git-config" is not proper English. You mean "a configuration file".
-I'd write "the configuration variable `commit.verbose` can be set to
-true".
-
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1644,6 +1644,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
->  	s.colopts = 0;
->  
-> +	git_config_get_bool("commit.verbose", &verbose);
-
-Doesn't this override any value that --verbose or --no-verbose may have
-set before?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Peff
