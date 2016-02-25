@@ -1,83 +1,125 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Rebase performance
-Date: Wed, 24 Feb 2016 16:15:53 -0800
-Message-ID: <CA+P7+xpC+gZijkcxcp8uFCmYjQf7-0xbBf7FWSsFnMXB1b7G+Q@mail.gmail.com>
-References: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 03/32] files-backend: break out ref reading
+Date: Wed, 24 Feb 2016 16:21:10 -0800
+Message-ID: <xmqqr3g1r66h.fsf@gitster.mtv.corp.google.com>
+References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
+	<1456354744-8022-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:16:26 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:21:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYjbV-0007pO-6h
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:16:25 +0100
+	id 1aYjgE-0002nV-4k
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758486AbcBYAQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 19:16:16 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:34255 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757530AbcBYAQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 19:16:13 -0500
-Received: by mail-io0-f176.google.com with SMTP id 9so65936822iom.1
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 16:16:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=b3iv90MgdtDVegMisbMRTSPn0gzRkCKKzPwjHu0A5xg=;
-        b=YFWd0/ACm5BJBHWxvXjU/LuJfqZ1E9zrrlx5zqzPzQoT969gVJGSVz2bpUp/97bgEZ
-         RbLuHpAxX5VussIBXQwc2ZlRtOSPnsMIsvitUGH7kvx9GAB8WyMqPfzHty9sYOIttCXZ
-         oR6c4AU1TdcD6/T1oTDzOFRRBr4ODa0lO7/6fwpI6TeguNnT7fSiZyzv0j68QDFpvc5f
-         f8APUXtT6R2giKetVMqlqLaXiwlC4nh/2U4tW/k54z28OpkGzxDVPMDJbucv1RRs8dpO
-         W3i+PmSKBY8/OInF85mUXB3cMYk/qZ2NINlhjYIHaour8iZT5N73JUe2l5VfXF6rqhLY
-         mXkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=b3iv90MgdtDVegMisbMRTSPn0gzRkCKKzPwjHu0A5xg=;
-        b=OVMF3FxUQo0vl60H1nW1rC13LYUQt4rmFDabGvPWqP+ztzXfeqoNPGUDpfzs2EpDKs
-         mrx1KCqEnwMERLC2QYzrWILRIBh7merOB6T9uZLPl93K5hy0mA0zhrC/VxbdRZ5GMANN
-         NNw5t1TQctCOXzJOcnxQqDDMth2fAu+TfIO/Wv4iABzrIoBFBPg5lD5myx8sa1Uj0t+T
-         exKLpSmIB+5zfFith1NYzuIv5OeZSNgv/gdCDT61EBOVds/uRUI6DCEmOnkXU+BYGIQA
-         KlLj+W76Ej4GuZkPvovbhZQym9w/rxHo0FVSxOX+i6VmMBpJRXGyE5jdi6FnhtVOpQJ0
-         E9hg==
-X-Gm-Message-State: AG10YOR5S841XPfPrH1/fnFKd0waDmZe9UpGi4swJhsCIAC9MZQ9E9pqumKeQfaVSafNALTtIbBZiedp+v5ILA==
-X-Received: by 10.107.170.79 with SMTP id t76mr358766ioe.71.1456359372983;
- Wed, 24 Feb 2016 16:16:12 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Wed, 24 Feb 2016 16:15:53 -0800 (PST)
-In-Reply-To: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
+	id S1754757AbcBYAVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 19:21:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753429AbcBYAVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 19:21:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B73E486EC;
+	Wed, 24 Feb 2016 19:21:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cgI0oo1YAVtDSYeBOI0gga039Go=; b=wtCyNH
+	/5HdgssbD9yv9pey7eAMdGpoqVx5OZvaQZKMMiY6iAGuC5k8YmEx8AhFSHR2VL+3
+	ls15azAP5lMLhxHNyARvXIj7QLvwfMsK+yiLLZo0oP9dyMwOsiKu9hStNT1hu6xd
+	/JtiPaQq54oRNxcJKG7Kn8tS3zTGe0QmfeET0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lqFeVlxGgWEVwlcFImwfJsnCM1Wyyrpz
+	Ac4bk5FElS/ZrNmkJS1cYr9bZMuchRDVOz0DP+v9r3MSujrpWlbQJlD1t0Uxcxk3
+	HPANX9jLTULF615v3k9VfzXbP/HSAwTs5VjYzmdA9pLl39svEz7H8gbiN2+kEhkw
+	rDN+x/XT+ks=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 03100486EB;
+	Wed, 24 Feb 2016 19:21:12 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 77178486E9;
+	Wed, 24 Feb 2016 19:21:11 -0500 (EST)
+In-Reply-To: <1456354744-8022-4-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Wed, 24 Feb 2016 17:58:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AC5AD24A-DB55-11E5-8CD7-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287291>
 
-On Wed, Feb 24, 2016 at 2:09 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Hi,
-> Another possibility would be to libify the "git apply" functionality
-> and then to use the libified "git apply" in run_apply() instead of
-> launching a separate "git apply" process. One benefit from this is
-> that we could probably get rid of the read_cache_from() call at the
-> end of run_apply() and this would likely further speed up things. Also
-> avoiding to launch separate processes might be a win especially on
-> Windows.
+David Turner <dturner@twopensource.com> writes:
+
+> Refactor resolve_ref_1 in terms of a new function read_raw_ref, which
+> is responsible for reading ref data from the ref storage.
 >
+> Later, we will make read_raw_ref a pluggable backend function, and make
+> resolve_ref_unsafe common.
+>
+> Testing done: Hacked in code to run both old and new version of
+> resolve_ref_1 and compare all outputs, failing dramatically if outputs
+> differed.  Ran test suite.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> Helped-by: Duy Nguyen <pclouds@gmail.com>
+> ---
+>  refs/files-backend.c | 265 ++++++++++++++++++++++++++++++---------------------
+>  1 file changed, 159 insertions(+), 106 deletions(-)
+>
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index fd664d6..ef5f28d 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1377,10 +1377,9 @@ static struct ref_entry *get_packed_ref(const char *refname)
+>  
+>  /*
+>   * A loose ref file doesn't exist; check for a packed ref.  The
+> - * options are forwarded from resolve_safe_unsafe().
+> + * options are forwarded from resolve_ref_unsafe().
+>   */
+>  static int resolve_missing_loose_ref(const char *refname,
+> -				     int resolve_flags,
+>  				     unsigned char *sha1,
+>  				     int *flags)
 
-This is the route I would go, since the addition of a taskset option
-seems pretty difficult to get correct, and may not be portable. This
-above solution likely improves more in general, and is more portable.
-Not exactly sure how easy it would be to "libify" the required bits of
-apply, however.. it may be that this is already available as well but
-we just didn't go that route during the port of git-am into C code.
+The last parameter must be made "unsigned int *flags" ...
 
-Regards,
-Jake
+> +static int read_raw_ref(const char *refname, unsigned char *sha1,
+> +			struct strbuf *symref, struct strbuf *sb_path,
+> +			unsigned int *flags)
+>  {
+
+... because the last parameter here is "unsigned int *flags", and
+you later pass the same variable to both.
+
+> -	for (;;) {
+> -		const char *path;
+> +	for(;;) {
+
+This is an unwelcome change.
+
+> +				break;
+> +			if (resolve_missing_loose_ref(refname, sha1, flags)) 
+
+This line has a trailing whitespace.
+
+> +	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
+> +		int read_flags = 0;
+
+... and this must be "unsigned read_flags = 0".
+
+You can of course standardize on signed int, but because this is a
+collection of flag bits, there is no reason not to choose unsigned.
+
+I _think_ I can fix everything up before pushing out, so please
+check what will appear on 'pu' before rerolling.
+
+Thanks.
