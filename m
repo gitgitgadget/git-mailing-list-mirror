@@ -1,75 +1,91 @@
-From: Martin Amdisen <martin.amdisen@praqma.com>
-Subject: [PATCH] Fix minor typo in hook documentation
-Date: Thu, 25 Feb 2016 09:10:12 +0100
-Message-ID: <CACbrkToX7zE0sqynOuN5i_Ytoui1h8pb3+cLKPntymdaVG+pAg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 25 09:10:29 2016
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 0/5] Make README more pleasant to read
+Date: Thu, 25 Feb 2016 09:37:25 +0100
+Message-ID: <1456389450-27118-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 25 09:37:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYr09-0001z6-RI
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 09:10:22 +0100
+	id 1aYrQn-0002i2-TM
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 09:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759140AbcBYIKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 03:10:15 -0500
-Received: from mail-io0-f182.google.com ([209.85.223.182]:33313 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753257AbcBYIKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 03:10:13 -0500
-Received: by mail-io0-f182.google.com with SMTP id z135so81296322iof.0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 00:10:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=praqma-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:date:message-id:subject:from:to;
-        bh=QfNN6rsP9yO/g6B1N/coGB/tIGLwuguBmJfLwfCUSwc=;
-        b=AL3wE0V2ShkkGtvmxO082e+h4LvFgLmxeYMNyOLtxVamaEbGoYZZAV8LtDDJkbEHwl
-         evqGCe7GU2FljimZ92yV7Yleftre0wObS/8WD8I+/HuOQ9gMtsSTParsnAg0NUYDSKa5
-         uEyToSxFjInokYh859dii1tX/n4CfA6G1we9299ipzLo3aAIZRQ24EDdsg9iuq0PLULE
-         EhzMGWzmzIJeSYCEBlYxTmv5VT3xfPiunP9x59Eneor2Z98CBXRklA0rTIsxp17hCxK8
-         tPn4iSK/AdVA+2PgK1aVuwJYVVOHAAaLijf5dSMKBxX8rALH9dvbXiJ7RwwPPr/2cnGt
-         IdKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:date:message-id:subject:from
-         :to;
-        bh=QfNN6rsP9yO/g6B1N/coGB/tIGLwuguBmJfLwfCUSwc=;
-        b=C3zJGhvW3LJxRWrDJKlQ4dFK+SR6gzWTohN4Y6iyUV1LouYdNKw+dEOFaX8cjQDNBg
-         FX1P9PWxHaqO7oi4yAcc/tU3mK+POslzUZsEohoWqH515aQEeS8Mk06qWe8SiF3V3Sos
-         JztA2Ug0gdmSsbY8aovmAkt3Law3OYQajTmQ5ZsPsj+8use5JB8r2XuskTEJAPz2Uuzo
-         rdoRdMDCkyyGpbnL7wRImpp+TFL8zoseD1h8awuDRebatZSYBL9nuRVZAOPk/Cezoa18
-         ZuGVrvmqjGF3elRldvQEwFy6xi0TrrEFcwt8zrlWQjVrHxWP5Qv6WpKnNLx0ZmCGudEm
-         mnTg==
-X-Gm-Message-State: AG10YOScM+0Jp0fZTWAkW7zNsa31q+zOqe9TgReKpbmt6q3GZlFRn9Y9ITCN65Cpp/XSYux+Ctbfrf+7F5tvIg==
-X-Received: by 10.107.186.87 with SMTP id k84mr1891989iof.91.1456387812693;
- Thu, 25 Feb 2016 00:10:12 -0800 (PST)
-Received: by 10.79.25.4 with HTTP; Thu, 25 Feb 2016 00:10:12 -0800 (PST)
-X-Google-Sender-Auth: JMcq8mRHnOwVYCE0ynMpiXzGJM8
+	id S1760106AbcBYIhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 03:37:48 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54864 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759214AbcBYIhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 03:37:47 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1P8bcSo008477
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 25 Feb 2016 09:37:38 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1P8bdLK010488;
+	Thu, 25 Feb 2016 09:37:39 +0100
+X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
+In-Reply-To: <1456249229-30454-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 25 Feb 2016 09:37:39 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1P8bcSo008477
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1456994260.10543@PKv1YutJJ6ZOvG1wj2Ajyg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287339>
 
-Signed-off-by: Martin Mosegaard Amdisen <martin.amdisen@praqma.com>
----
- templates/hooks--update.sample | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Minor tweaks after discussion on v1 (for those who missed it, this
+series makes README render nicely on GitHub and tries to present
+important information early).
 
-diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
-index d847583..80ba941 100755
---- a/templates/hooks--update.sample
-+++ b/templates/hooks--update.sample
-@@ -1,6 +1,6 @@
- #!/bin/sh
- #
--# An example hook script to blocks unannotated tags from entering.
-+# An example hook script to block unannotated tags from entering.
- # Called by "git receive-pack" with arguments: refname sha1-old sha1-new
- #
- # To enable this hook, rename this file to "update".
---
-2.6.4
+The result is here:
+
+  https://github.com/moy/git/tree/git-readme#readme
+
+Changes since v1:
+
+* Visible on the rendered page: resurect "the stupid content tracker"
+  at the bottom ("He described the tool as "the stupid content
+  tracker" and the name as (depending on your mood)") as suggested by
+  Junio. I first disagreed, but that's part of the explanation why Git
+  is called Git, so why not.
+
+* Visible only in the source: change
+
+  # title
+
+  to
+
+  title
+  =====
+
+  (I chose the first because it was more easy to type, but for someone
+  not familiar with markdown, the second makes it more obvious that
+  its' a title)
+
+I kept the patch introducing explicit links on filenames. I do not
+care deeply about it.
+
+Matthieu Moy (5):
+  README: use markdown syntax
+  README.md: add hyperlinks on filenames
+  README.md: move the link to git-scm.com up
+  README.md: don't call git stupid in the title
+  README.md: move down historical explanation about the name
+
+ README => README.md | 56 +++++++++++++++++++++++++++++------------------------
+ t/t7001-mv.sh       |  2 +-
+ 2 files changed, 32 insertions(+), 26 deletions(-)
+ rename README => README.md (65%)
+
+-- 
+2.7.2.334.g35ed2ae.dirty
