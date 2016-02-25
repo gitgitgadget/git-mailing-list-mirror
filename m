@@ -1,203 +1,104 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv17 01/11] submodule-config: keep update strategy around
-Date: Wed, 24 Feb 2016 19:06:48 -0800
-Message-ID: <1456369618-18127-2-git-send-email-sbeller@google.com>
-References: <1456369618-18127-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, sunshine@sunshineco.com, jrnieder@gmail.com
-To: sbeller@google.com, git@vger.kernel.org, Jens.Lehmann@web.de,
-	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 25 04:08:02 2016
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Rebase performance
+Date: Thu, 25 Feb 2016 10:14:02 +0700
+Message-ID: <CACsJy8DMyD9oo2_3+BdM-M=0eYAi1ip77WTuYt42tBn9DuD+kw@mail.gmail.com>
+References: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
+ <CACsJy8DZOv2Z2hiUmRKHr_GCjsyVz9kQEE8a1F=h6Ku0Dr9g_w@mail.gmail.com> <xmqqvb5dpk5z.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 04:14:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYmHZ-0001Fe-0S
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 04:08:01 +0100
+	id 1aYmO1-0006Yn-3C
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 04:14:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759886AbcBYDHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 22:07:09 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35810 "EHLO
-	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759881AbcBYDHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 22:07:06 -0500
-Received: by mail-pf0-f169.google.com with SMTP id c10so25159002pfc.2
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 19:07:05 -0800 (PST)
+	id S1758547AbcBYDOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 22:14:35 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:34080 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753007AbcBYDOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 22:14:33 -0500
+Received: by mail-lb0-f169.google.com with SMTP id of3so21539444lbc.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2016 19:14:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P/BzZrOTjeBswJAnINL0aZ95SrigLPIt4fiZMjs614w=;
-        b=jUDh6F/ubrGUL1l1TGyhQPkoAKetOjsO/iVXC1YBBaYURhIj5Q7RlDQtsHst8zUNDa
-         zbo91wo4WziDSftkbjSb5naLcr8LAqpb3ePFEFC3WHtxK7cqT72fefzImxMVfavD8IXL
-         fAVZrjYtpEgKnpJmsvtWCZYORtZ2DG9HPWKY/O+dlQ6j4/yrPaqXt99JWm44vx704SVW
-         C/SPJftsU67YoECcRulwRU7+8ztqK0SQ10IN6TMcHYvQtHluogMeXaAEck3Rwu9ArpSl
-         01/EImwAlb+VM9RGUgPbnd2BbVVljKtjdYEggRE4uFaM6UFUF1kMNMiKv+dPN6ZvgA/3
-         oWGg==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+N/z3AdDS4CJXKF9aIcEaF0EcS3Z5ATdlZqX6RpOL30=;
+        b=XnNwHErvcewV7BR8Xe7NqU0J1EtR55tjmtCoEkQnv9cSylw23t633M8NET8F13HL6h
+         6qRiUOEFDCt40SvKHbken+bfGrYDK3J+RdmITkfpSSj1HIzt8IQ3CJ8W6HpJeLl0hlzz
+         tjcgzD9fhDBmvUqQd5j++HwLZhqfjkBj6Q56gjNwpZl3DrlPJ3Jy3m+FwEtvLVXuebpP
+         gu8fHvroDR1MUXkHq1nMc64d0DPwdEGD1/HpbnYhDekJs4/TaL2R3vJVdrGSWjTrDW/v
+         zMRjh0bfY0DdceUNSLz7YkMKbOz6boLHPx/izoWPJoVJdPVaewPHB7pdEvFEkTR7GQAg
+         ofeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=P/BzZrOTjeBswJAnINL0aZ95SrigLPIt4fiZMjs614w=;
-        b=PT2u0uVDPfvNhgg67zaTu+3sVMZZbQGZmES90HhKOQ/zp6s8thKTeB6PMYz0iazKlx
-         T+ls54ZedQEBMRmhmVa4Nt95VQeUh25Pyj5co8bNLG93ItbOLTqPdi5A6dTAMcLztAOJ
-         LSwG+YZT7ptDAYdbBCgg8Z40tDr1y8oae8XZ5EZOT8K5OM3H0b1KMNLPn5UL8XN+iZOm
-         UiRv5Mbp7nuUTANWOYku/4GqDSNd0L1A/j4dMebb690jToYjEyywrZ9yLErNtKT+VoIj
-         6c5U3hUq/VwnJSBiJOeLMhUgqO3UUOhBHOaIKh7v+8u1qJ8kpawH9fBmtqMuOdy7azds
-         +tLw==
-X-Gm-Message-State: AG10YOTyOt/nQXaGrAcEKNMoTC/JhIod39ib3TF5yilbJKHcT1t1KzZW+f47xFBho5SmZghN
-X-Received: by 10.98.79.9 with SMTP id d9mr59203267pfb.46.1456369625132;
-        Wed, 24 Feb 2016 19:07:05 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:74de:af7a:dfba:15a4])
-        by smtp.gmail.com with ESMTPSA id h66sm7941427pfd.91.2016.02.24.19.07.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Feb 2016 19:07:04 -0800 (PST)
-X-Mailer: git-send-email 2.7.2.373.g1655498.dirty
-In-Reply-To: <1456369618-18127-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=+N/z3AdDS4CJXKF9aIcEaF0EcS3Z5ATdlZqX6RpOL30=;
+        b=TOdlULxul7PHT71ht4IVhDAmL+wkVc6E4lwlAY6JmK/06FOUj3mjmFuobMksrv4rab
+         /ZxGY+hONwSBgK/2jvxQ4zHBUAQJkdlVnSMz15wyoKkFstedknDew28w7o7q9yyWiBPr
+         5fx60my4rFx2oGFyjZXrIenOOnOdfkTb84HkKrm0L3Jc1J7lPoOzUrTn/l9IRuAUeZQQ
+         hbd4fCrynVqeqxuD3FS9kd9s//eFgQBvX7g5XGp5fgl62ArxWO93ud9VI7CGoiLTn/B8
+         GTjqJ4W3nWg0lP8/PLKQaU/qCPBoxdwXX3fQfAeeL//kvgCf0OnujDmpM6XdHRYZa6ig
+         cLWw==
+X-Gm-Message-State: AG10YOTkVNk1jvcoErJNnRZKSGtEpSmBUN+dhLf1vuB1MK5c3ONeAu7zSe+TtDdoFVJYJ/pB70B1BCt1TaYVVQ==
+X-Received: by 10.112.140.129 with SMTP id rg1mr5567295lbb.80.1456370071904;
+ Wed, 24 Feb 2016 19:14:31 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Wed, 24 Feb 2016 19:14:02 -0800 (PST)
+In-Reply-To: <xmqqvb5dpk5z.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287328>
 
-Currently submodule.<name>.update is only handled by git-submodule.sh.
-C code will start to need to make use of that value as more of the
-functionality of git-submodule.sh moves into library code in C.
+On Thu, Feb 25, 2016 at 10:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Thu, Feb 25, 2016 at 5:09 AM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>>> Another possibility would be to libify the "git apply" functionality
+>>> and then to use the libified "git apply" in run_apply() instead of
+>>> launching a separate "git apply" process. One benefit from this is
+>>> that we could probably get rid of the read_cache_from() call at the
+>>> end of run_apply() and this would likely further speed up things. Also
+>>> avoiding to launch separate processes might be a win especially on
+>>> Windows.
+>>
+>> The amount of global variables in apply.c is just scary. Libification
+>> will need some cleanup first (i'm not against it though).
+>
+> The global variables do not scare me.  You can just throw them into
+> a single "apply_state" structure and pass it around the callchain
+> just fine--the helper functions in the file all take only a small
+> number of parameters, and a new parameter that is a pointer to the
+> state structure that consistently comes at the beginning would not
+> make things harder to read or maintain.
 
-Add the update field to 'struct submodule' and populate it so it can
-be read as sm->update or from sm->update_command.
+There are a bunch of shadow variables in this file. If you are not
+careful, it's easy to mistake local var "x" with global "x" and
+replace it with global_state->x.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 13 +++++++++++++
- submodule-config.h |  2 ++
- submodule.c        | 21 +++++++++++++++++++++
- submodule.h        | 16 ++++++++++++++++
- 4 files changed, 52 insertions(+)
+> What does scare me (and what you should be scared) more is the way
+> the current code handles erroneous input.  It was one of the
+> programs written in early days with "just do one thing well and
+> exit, the larger program structure will be scripted around us"
+> mentality and liberally die() without cleaning things up.  I do
+> agree with others that libification of it is a very good thing, but
+> the second step (the first step is the easier "global to state
+> structure" one, which should be more or less mechanical) towards it
+> is to design how the errors are handled and resources are released.
 
-diff --git a/submodule-config.c b/submodule-config.c
-index afe0ea8..a5cd2ee 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -59,6 +59,7 @@ static void free_one_config(struct submodule_entry *entry)
- {
- 	free((void *) entry->config->path);
- 	free((void *) entry->config->name);
-+	free((void *) entry->config->update_strategy.command);
- 	free(entry->config);
- }
- 
-@@ -194,6 +195,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 
- 	submodule->path = NULL;
- 	submodule->url = NULL;
-+	submodule->update_strategy.type = SM_UPDATE_UNSPECIFIED;
-+	submodule->update_strategy.command = NULL;
- 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
- 	submodule->ignore = NULL;
- 
-@@ -311,6 +314,16 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->url);
- 			submodule->url = xstrdup(value);
- 		}
-+	} else if (!strcmp(item.buf, "update")) {
-+		if (!value)
-+			ret = config_error_nonbool(var);
-+		else if (!me->overwrite &&
-+			 submodule->update_strategy.type != SM_UPDATE_UNSPECIFIED)
-+			warn_multiple_config(me->commit_sha1, submodule->name,
-+					     "update");
-+		else if (parse_submodule_update_strategy(value,
-+			 &submodule->update_strategy) < 0)
-+				die(_("invalid value for %s"), var);
- 	}
- 
- 	strbuf_release(&name);
-diff --git a/submodule-config.h b/submodule-config.h
-index 9061e4e..092ebfc 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -2,6 +2,7 @@
- #define SUBMODULE_CONFIG_CACHE_H
- 
- #include "hashmap.h"
-+#include "submodule.h"
- #include "strbuf.h"
- 
- /*
-@@ -14,6 +15,7 @@ struct submodule {
- 	const char *url;
- 	int fetch_recurse;
- 	const char *ignore;
-+	struct submodule_update_strategy update_strategy;
- 	/* the sha1 blob id of the responsible .gitmodules file */
- 	unsigned char gitmodules_sha1[20];
- };
-diff --git a/submodule.c b/submodule.c
-index b83939c..b38dd51 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -210,6 +210,27 @@ void gitmodules_config(void)
- 	}
- }
- 
-+int parse_submodule_update_strategy(const char *value,
-+		struct submodule_update_strategy *dst)
-+{
-+	free((void*)dst->command);
-+	dst->command = NULL;
-+	if (!strcmp(value, "none"))
-+		dst->type = SM_UPDATE_NONE;
-+	else if (!strcmp(value, "checkout"))
-+		dst->type = SM_UPDATE_CHECKOUT;
-+	else if (!strcmp(value, "rebase"))
-+		dst->type = SM_UPDATE_REBASE;
-+	else if (!strcmp(value, "merge"))
-+		dst->type = SM_UPDATE_MERGE;
-+	else if (skip_prefix(value, "!", &value)) {
-+		dst->type = SM_UPDATE_COMMAND;
-+		dst->command = xstrdup(value);
-+	} else
-+		return -1;
-+	return 0;
-+}
-+
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
- {
-diff --git a/submodule.h b/submodule.h
-index cbc0003..3464500 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -13,6 +13,20 @@ enum {
- 	RECURSE_SUBMODULES_ON = 2
- };
- 
-+enum submodule_update_type {
-+	SM_UPDATE_UNSPECIFIED = 0,
-+	SM_UPDATE_CHECKOUT,
-+	SM_UPDATE_REBASE,
-+	SM_UPDATE_MERGE,
-+	SM_UPDATE_NONE,
-+	SM_UPDATE_COMMAND
-+};
-+
-+struct submodule_update_strategy {
-+	enum submodule_update_type type;
-+	const char *command;
-+};
-+
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- int remove_path_from_gitmodules(const char *path);
-@@ -21,6 +35,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
-+int parse_submodule_update_strategy(const char *value,
-+		struct submodule_update_strategy *dst);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
+Yeah.. thorough study of apply code may be needed before anybody does
+any surgery in this code
 -- 
-2.7.2.373.g1655498.dirty
+Duy
