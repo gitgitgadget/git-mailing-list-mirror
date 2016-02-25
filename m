@@ -1,83 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git: submodule honor -c credential.* from command line
-Date: Wed, 24 Feb 2016 16:43:43 -0800
-Message-ID: <xmqqfuwhr54w.fsf@gitster.mtv.corp.google.com>
-References: <1456344559-2822-1-git-send-email-jacob.e.keller@intel.com>
-	<CAGZ79kbSd4TRdgdcj2NUrc+pL7ATrGQNcfTYd57TuJtyZ5QBwg@mail.gmail.com>
-	<xmqq1t81smu6.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xrJkOaqfOBOK7oh1w97dEJytyPN5UbH6ctK+saGUSkZiw@mail.gmail.com>
+Subject: Re: reflog: weird options
+Date: Wed, 24 Feb 2016 16:49:11 -0800
+Message-ID: <xmqqbn75r4vs.fsf@gitster.mtv.corp.google.com>
+References: <1456358433.18017.35.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:43:58 2016
+Cc: git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 01:49:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYk2A-0001gh-9u
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:43:58 +0100
+	id 1aYk7W-0005nq-Bh
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758501AbcBYAns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 19:43:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54799 "EHLO
+	id S1758121AbcBYAtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 19:49:24 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55464 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753293AbcBYAnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 19:43:46 -0500
+	with ESMTP id S1757990AbcBYAtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 19:49:23 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9209548BC0;
-	Wed, 24 Feb 2016 19:43:45 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B3A848D13;
+	Wed, 24 Feb 2016 19:49:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+1h82HwyW9UzuBpbmOkZqElASY4=; b=IxytbZ
-	J1EEtZ2q31oMgDnsO+qVObHc1frOedtT04I7k3eFNQ4Pg6eqigiNbYQ7EVs3RzGC
-	GXIz1kRmRS9NJ0khZ97izoXpCnNLrRQt2xgnuGpU6oe/6SmoYoaD/9xnOlK59XIX
-	EyvIH+p1mwyOwWklfEA31bio7HyJuwoou3Tyo=
+	:content-type; s=sasl; bh=Z7iR6YXhN7p9BaWuWYsxUB1+Ryg=; b=KUbkBS
+	S8TQxA3UXZKx0HYFUGgwuJjPSizssx5P3eW0cbMhAXQZEsT3cTB596VxLjHUvOsc
+	dEWRPgu3+P+1N16oMyApLeaTAjjRjw6Ea+H+59u4iG303WR55MCjsJ8D0FFJDOVS
+	HzPi1OYbv911fwggIGFCtTmLC9r1BIO5t+tl8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vpFzIAyDRmtP81s8D0+C6fMI/hOoNzCV
-	7NFNdiFUG48IuvBjCxkKjCHN/rpjxGn2M56IluvlVjefiUoCMWD9L4A8IQ9sOcGC
-	ogJtpop0m9zc2aI3HJFrfh3U6g8BokYuY+AwyxPGxwWOi+bsDujsNdzkIgRuVURf
-	ERCkhjxwhCA=
+	:content-type; q=dns; s=sasl; b=vcXgooayhHGenNzjxGfDnjOlbtJzS3mz
+	NPDIYI1Ln4W3OOWHsNNjoIcSknBd+7XeLRKC2BFr8F2e9muOOLJogbcE7oVZuP06
+	Dh/NhaknKSY/DkF61oz9SEOTbDIu/wrlAgB9cTToZ8MI/A8HWjSx7To5tw5H86We
+	sUPD/2+YoK8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8899F48BBF;
-	Wed, 24 Feb 2016 19:43:45 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 01CAA48D12;
+	Wed, 24 Feb 2016 19:49:13 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F40BE48BBE;
-	Wed, 24 Feb 2016 19:43:44 -0500 (EST)
-In-Reply-To: <CA+P7+xrJkOaqfOBOK7oh1w97dEJytyPN5UbH6ctK+saGUSkZiw@mail.gmail.com>
-	(Jacob Keller's message of "Wed, 24 Feb 2016 15:51:01 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7B3C348D11;
+	Wed, 24 Feb 2016 19:49:12 -0500 (EST)
+In-Reply-To: <1456358433.18017.35.camel@twopensource.com> (David Turner's
+	message of "Wed, 24 Feb 2016 19:00:33 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D3224856-DB58-11E5-BCFB-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 965214FA-DB59-11E5-94D8-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287296>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+David Turner <dturner@twopensource.com> writes:
 
->>>> Add a git submodule--helper function which can be used to sanitize the
->>>> GIT_CONFIG_PARAMETERS value to only allow certain settings. For now,
->>>> restrict this to only credential.* settings.
->>>
->>> I guess for now that subset is fine and will be expanded over time?
->>
->> I think it is more like "we pass only what is known to be necessary
->> and safe, and right now, credential.* are the only such variables."
->>
->> As the system evolves more, theoretically we might find more, but
->> let's not phrase it as if expanding is a good thing and a longer
->> term goal.
->>
+> The manual for git reflog says it takes "[log-options]".  And it does,
+> sort-of.  For instance, you can give a path, and it will only show you
+> reflog entries that touch that path (I'm not sure why you would want to
+> do that, but you can!).  But you can also give --merges, which will
+> silently give you no reflog entries.  I don't know why.
 >
-> I can reword the commit message to that effect.
+> One useful option that may or may not exist: show the time the reflog
+> entry was made.  I'd really like to say, "well, I know it was working
+> as-of last Tuesday...".  I know the data is in the reflog, but I don't
+> know how to show it.  I can show the committer date, which is usually
+> good enough when I'm rewriting a patch series, but that is not quite
+> the same thing.
+>  
+> I know I could fix these issues, but unfortunately I don't have the
+> time right now. It might make a good starter project for someone new to
+> git development!
 
-I think what you wrote was perfectly fine.
+I think somebody who is fairly new to the project was already
+looking into it.  The hacky way the feature to show "reflog" entries
+was implemented (i.e. done by tweawking the "git log" machinery,
+even though the entries that comes out of the "log" and "reflog" are
+quite different things, as you observed by the lack of "time the
+reflog entry was created") shows up as these inconsistencies and
+"Huh?"s.
