@@ -1,112 +1,65 @@
-From: Dmitry Vilkov <dmitry.a.vilkov@gmail.com>
-Subject: Re: [PATCH] remote-curl: don't fall back to Basic auth if we haven't
- tried Negotiate
-Date: Thu, 25 Feb 2016 19:54:21 +0300
-Message-ID: <CAHdYDCqM0dhjs0vYmuHmbU3Pr=Wmfp_7GbgXGsRcbT+TgX10vA@mail.gmail.com>
-References: <1454404284-2197-1-git-send-email-dmitry.a.vilkov@gmail.com>
-	<xmqqegcusvb4.fsf@gitster.mtv.corp.google.com>
-	<20160202232952.GA6503@vauxhall.crustytoothpaste.net>
-	<CAHdYDCqtNQMoU3Gu2AcSEWM5wA0SbaMrivu3WV_-N+B-F67v1Q@mail.gmail.com>
-	<20160205204648.GA7403@vauxhall.crustytoothpaste.net>
-	<xmqqa8nedg59.fsf@gitster.mtv.corp.google.com>
-	<20160205210623.GC7403@vauxhall.crustytoothpaste.net>
-	<xmqq60y2dduw.fsf@gitster.mtv.corp.google.com>
-	<CAHdYDCq+MiAJoCPFd3Qn9VjAzoii8QgTOOV7HXEV8OdzW-dgPQ@mail.gmail.com>
-	<CAHdYDCryaCbj-s6LG5fcDu115fi0k_uCawtus81PPbgyWpBTSA@mail.gmail.com>
-	<xmqqk2lz9i66.fsf@gitster.mtv.corp.google.com>
+From: Felipe =?utf-8?b?R29uw6dhbHZlcw==?= Assis 
+	<felipeg.assis@gmail.com>
+Subject: Re: [PATCH 1/5] Documentation/diff-config: fix description of diff.renames
+Date: Thu, 25 Feb 2016 17:27:02 +0000 (UTC)
+Message-ID: <loom.20160225T181310-74@post.gmane.org>
+References: <1456249498-3232-1-git-send-email-Matthieu.Moy@imag.fr> <1456249498-3232-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 17:54:29 2016
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 25 18:30:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYzBL-0006be-Sd
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 17:54:28 +0100
+	id 1aYzjy-0006m3-ET
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 18:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760641AbcBYQyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 11:54:23 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:35072 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759877AbcBYQyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 11:54:22 -0500
-Received: by mail-ob0-f175.google.com with SMTP id dm2so53367296obb.2
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 08:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=oHbwRFk3VEMScVkgfmllZ1y0gfot0keb2T2MphTLh3s=;
-        b=q25mFoJNWCuIaVlnq4AjjiC30h7misxFtBQ0IENNWBGLTKlzr8/zfwZM80c1ztZBFx
-         /dsLaSOHA+N88T7G02NgBAWqL8CZF29G9gJTg5Y1hPxIpYDYawtNSWGwwz0pT0oPmB7d
-         1R/r+jE1hS0cpB/04IDA13cio5eWaxBPfgid5F4+F8fjILyFsQGCND5950NmVLxVnHw8
-         96UQtvUl8tInIB0RSf28/yFqhwGTGzcETgOGsm1ouWmExzaNfwvmfT8GMZdAzLJDxKf4
-         cpVOpVIMz+s0DpaSuYzOM7LYOwvtACUFT8+kX97AGp9Hg9BFWt6KTStuPFlpF7GjQgrD
-         84cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=oHbwRFk3VEMScVkgfmllZ1y0gfot0keb2T2MphTLh3s=;
-        b=O01mI4nYAJHBBkhvst7Hmav0yYAt9qlSRVTsHFFkpjDl88TT50RY7/QPZBWWpNL0s3
-         9Ci26KiRaGHwfaI5yrw5Ur3myWwO1VIwHKDBKIaCTTtzWfi0j/HflLxGLipz9LFGQihr
-         Yp3IhNfrvPJrjMAKBJU7InyvE7pryXDcSfd+mTR9VKqiLViRhbxO+/BgPPz6KPEJEbjr
-         qd0xeEUGHmVrC2xJdekcSPE/Ar0VdPdJa/ZxZsfSoCNSli5I6dkpEYGOaac3w9crkBY/
-         TTfpB61JyCjyYolfUW0H9vH5IInV9Jl1C/rxWr7vKdyJHek50eRTnepRJGDJN1HJO68P
-         TskA==
-X-Gm-Message-State: AG10YOSI+nEwNxqNjnEZj43I8V1zDfdetWiZ9OOStxUdEjXLx668OMiH8+NtewvmH8bpeD0jhKXSchh53IMm9Q==
-X-Received: by 10.60.96.74 with SMTP id dq10mr39534732oeb.78.1456419261865;
- Thu, 25 Feb 2016 08:54:21 -0800 (PST)
-Received: by 10.76.130.36 with HTTP; Thu, 25 Feb 2016 08:54:21 -0800 (PST)
-In-Reply-To: <xmqqk2lz9i66.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: o7iApApjGurDF0s1HvBq7l4HerA
+	id S932938AbcBYRaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 12:30:08 -0500
+Received: from plane.gmane.org ([80.91.229.3]:37366 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760375AbcBYRaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 12:30:07 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aYzjo-0006fa-Kx
+	for git@vger.kernel.org; Thu, 25 Feb 2016 18:30:05 +0100
+Received: from gate-tx3.freescale.com ([192.88.168.1])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 18:30:04 +0100
+Received: from felipeg.assis by gate-tx3.freescale.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 18:30:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 192.88.168.1 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287401>
 
-Hi, guys!
+Matthieu Moy <Matthieu.Moy <at> imag.fr> writes:
 
-> I sent in a patch (and I believe I CC'd you) that adds an option
-> http.emptyAuth that can be used in this case.  It should make its way to
-> a future release.
+>  diff.renames::
+> -	Tells Git to detect renames.  If set to any boolean value, it
+> -	will enable basic rename detection.  If set to "copies" or
+> -	"copy", it will detect copies, as well.
+> +	Whether and how Git detects renames.  If set to "false",
+> +	rename detection is disabled. If set to "true", basic rename
+> +	detection is enable.  If set to "copies" or "copy", Git will
+> +	detect copies, as well.  Defaults to false.
 
-Somehow I've missed your letter...
+Just a minor typo: s/enable/enabled/
+Also, there is only one space between the second and third sentences.
 
-> The patch has been queued as 121061f6 (http: add option to try
-> authentication without username, 2016-02-15); perhaps you can help
-> by trying it out in your installation before it hits a released
-> version of Git?  That way, if the patch does not fix your problem,
-> or it introduces an unexpected side effect, we would notice before
-> we include it in a future release.
+Just in case you haven't already fixed that.
 
-I've cherry-picked commit 121061f6 over version 2.4.10 and 2.7.1.
-In both cases it works exactly as expected.
-
-Please, let me know if I can help with something else regarding this issue.
-
-2016-02-21 0:38 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
-> Dmitry Vilkov <dmitry.a.vilkov@gmail.com> writes:
->
->> Hi guys! Any luck with fixing this issue?
->
-> I think Brian suggested an alternative approach, to which you earler
-> responded
->
->>> That would be great! Definitely it will be much better solution than
->>> patch I've proposed.
->
-> The patch has been queued as 121061f6 (http: add option to try
-> authentication without username, 2016-02-15); perhaps you can help
-> by trying it out in your installation before it hits a released
-> version of Git?  That way, if the patch does not fix your problem,
-> or it introduces an unexpected side effect, we would notice before
-> we include it in a future release.
->
-> Thanks.
->
+Regards,
+Felipe
