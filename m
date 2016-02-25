@@ -1,123 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2] add DEVELOPER makefile knob to check for acknowledged
- warnings
-Date: Thu, 25 Feb 2016 11:20:29 +0100
-Message-ID: <56CED56D.5040202@alum.mit.edu>
-References: <1456389742-48052-1-git-send-email-larsxschneider@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] unpack-trees: do not delete i-t-a entries in worktree
+ even when forced
+Date: Thu, 25 Feb 2016 17:45:55 +0700
+Message-ID: <CACsJy8C1fgu584Uxte+x4aHHQwishOeAzofyU7BGx0V-Pav7Kg@mail.gmail.com>
+References: <1456314317-30301-1-git-send-email-pclouds@gmail.com>
+ <xmqqa8mpsom6.fsf@gitster.mtv.corp.google.com> <xmqq60xdsnfr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, gitster@pobox.com
-To: larsxschneider@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 25 11:27:48 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 11:46:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYt99-0003wq-7Y
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 11:27:48 +0100
+	id 1aYtRJ-0006qz-Qk
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 11:46:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758420AbcBYK1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 05:27:39 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60166 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752111AbcBYK1g (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Feb 2016 05:27:36 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Feb 2016 05:27:36 EST
-X-AuditID: 1207440d-6b7ff7000000068f-9d-56ced57146b3
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 78.3E.01679.175DEC65; Thu, 25 Feb 2016 05:20:33 -0500 (EST)
-Received: from [192.168.69.130] (p548D63F1.dip0.t-ipconnect.de [84.141.99.241])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u1PAKUA4017874
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 25 Feb 2016 05:20:31 -0500
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.5.0
-In-Reply-To: <1456389742-48052-1-git-send-email-larsxschneider@gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqFt49VyYQdNhYYuuK91MFg29V5gt
-	Hj9cwmrxo6WH2YHFY+esu+wez3r3MHpcvKTs8XmTXABLFLdNUmJJWXBmep6+XQJ3xpy5M5kK
-	popUbP+6nL2BsU2gi5GDQ0LARGLipdAuRi4OIYGtjBIT/rUwQTjnmSSmvd7DDlIkLBAh8Wpv
-	fRcjJ4eIgKHEgcvP2EFsIQEPiQ0P/jGC2MwCKhLHOiawgNhsAroSi3qamUBsCQE5id7uSWBx
-	XgFtidnrJ7KB2CwCqhI31n5hBbFFBUIk3n99zgpRIyhxcuYTsHpOAU+JCeuXQs3Xk9hx/Rcr
-	hC0vsf3tHOYJjAKzkLTMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6
-	qSmlmxghwcy7g/H/OplDjAIcjEo8vBG/z4YJsSaWFVfmHmKU5GBSEuU9MO9cmBBfUn5KZUZi
-	cUZ8UWlOavEhRgkOZiUR3qDTQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpis
-	DAeHkgSv2xWgRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQnMYXAyMVJMUDtNcX
-	pJ23uCAxFygK0XqKUVFKnNcZJCEAksgozYMbC0tRrxjFgb4U5l0IUsUDTG9w3a+ABjMBDZ65
-	AWxwSSJCSqqBkbMj5NwP58YZt66KfKkIF5kwP2tpuE16uPxhrSovwSshztv+zLg4oTxo1g+d
-	RRzPdsy6rhdy9FHt4ar1U+t3NSvu57fyP8NfuDtp65M1c4q/VMVWC16dGf9t4Sfv 
+	id S1759853AbcBYKq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 05:46:28 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:33052 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759412AbcBYKq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 05:46:27 -0500
+Received: by mail-lb0-f177.google.com with SMTP id x4so26707027lbm.0
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 02:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=i6zZoNhA4RgQ1O363eYum03ftnLD7fN+FEO/eFNdyiA=;
+        b=E1Woq9yDt2s0TTjsMhyirhEW5Me0m+QeBkGl1IJzeZaTxkRiTUt6j90dmxywcZiDH/
+         V76iIGDrbJqxcIoPYDSGWiz5lmtYJJScXUsnY/WIULu2/aHXv0+8PYF3JLHyB9AEZ6L4
+         /KXOlE8nvbt3Ktkk0gFnHPebjiyjGU8v68kHmSSyyHNM8NhkJkuxHwA23SbZysAg6SJq
+         GchLxjSctZIw1iPY+oJ8Cd3StD+YctZ2li7Ra4R8Ehz6oxNyWMwT3nsvWfPFt0M+xDYE
+         3LQo0YSDVDoPQKyivtrGglApIufO6QybAxAHoDxTGHOhwhNjCJaOpXORE3cBJVB0Uzau
+         JoXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=i6zZoNhA4RgQ1O363eYum03ftnLD7fN+FEO/eFNdyiA=;
+        b=ETlol3hrkcWcU1XH5wcvMiFfvp58rbJxfruU8Ij/zGrqy1CO01cS7/EuX10mZfyuk6
+         HTER/WZpm1JH3ql5HjbIzP6aghktBJv4aPEdLpB+g3IXfLrIDXJcsh4rog9dkETYkwE6
+         3Ji8C0LqalfLvkgJ6ZKNI81FUcmac2dohydpsV2eDMPPEckfzd3TXerdDWunWkenegKn
+         Dt1AYo/4PcC26ux9+uVBmpEFJETTTzQrqlMQd0i9JLnIL4rsHg0eGqnmpaUV9Wu8mjdg
+         mmk9eL9IMpwf84NgTrJI+4QrUr9eQGRL1IGMQsF+UnrkeTCkVSJuZdPkNq9Z8KjIAE/T
+         1jNQ==
+X-Gm-Message-State: AG10YORC2hOAiPgxrmjL0przBbfC83gkIwFewTwOZz1piq3DwNyaNiBgAq5XMdfV7IeE6tit6FOqPjJBL3Q+0A==
+X-Received: by 10.112.150.133 with SMTP id ui5mr16162966lbb.12.1456397185326;
+ Thu, 25 Feb 2016 02:46:25 -0800 (PST)
+Received: by 10.112.97.72 with HTTP; Thu, 25 Feb 2016 02:45:55 -0800 (PST)
+In-Reply-To: <xmqq60xdsnfr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287362>
 
-On 02/25/2016 09:42 AM, larsxschneider@gmail.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> We assume Git developers have a reasonably modern compiler and recommend
-> them to enable the DEVELOPER makefile knob to ensure their patches are
-> clear of all compiler warnings the Git core project cares about.
-> 
-> Enable the DEVELOPER makefile knob in the Travis-CI build.
-> 
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> 
-> This patch is the successor of "[PATCH v1] travis-ci: override CFLAGS properly,
-> add -Wdeclaration-after-statement" [1] which enables compiler warnings for the
-> Travis-CI build.
-> 
-> Peff suggested to codify the knowledge about the compiler warnings the Git
-> project cares about [2] which I have done here.
-> 
-> The only problem is the "-Wold-style-declaration" compiler warning as this is
-> only supported by GCC and not Clang. Should we ignore that warning or would you
-> prefer to detect the GCC compiler and add the warning? The Linux kernel project
-> does a similar thing [3].
-> 
-> 
-> Thanks,
-> Lars
-> 
-> 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/285752
-> [2] http://article.gmane.org/gmane.comp.version-control.git/285761
-> [3] https://github.com/torvalds/linux/blob/6dc390ad61ac8dfca5fa9b0823981fb6f7ec17a0/Makefile#L303-L306
-> 
-> 
->  .travis.yml                    |  2 +-
->  Documentation/CodingGuidelines |  4 ++++
->  Makefile                       | 12 ++++++++++++
->  3 files changed, 17 insertions(+), 1 deletion(-)
-> 
-> [...]
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index c6e536f..1c676c2 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -171,6 +171,10 @@ For C programs:
-> 
->   - We try to keep to at most 80 characters per line.
-> 
-> + - As a Git developer we assume you have a reasonably modern compiler
-> +   and we recommend you to enable the DEVELOPER makefile knob to
-> +   ensure your patch is clear of all compiler warnings we care about.
-> +
+On Thu, Feb 25, 2016 at 6:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thinking about it more, I have to say that I do not agree with the
+> basic premise of this patch.  I-T-A is not "may want to commit, but
+> they are untracked" at all.  It is "I know I want to add, I just
+> cannot yet decide the exact contents".
+>
+> That is why "git add -N newfile && git grep string" would find the
+> string from newfile, and "git add -N newfile && git diff HEAD newfile"
+> would show the addition.
 
-Instead of saying "enable the DEVELOPER makefile knob" could you be more
-explicit? Like maybe "create a file called `config.mak` and add the line
-`DEVELOPER=1` to it"? (Or whatever is your preferred way to tweak this
-setting.)
+We can agree to disagree. To me i-t-a is still a reminder, not a real
+tracked entry (with unknown content).
 
->   - We try to support a wide range of C compilers to compile Git with,
->     including old ones. That means that you should not use C99
->     initializers, even if a lot of compilers grok it.
-> [...]
+> Sane people would expect that "git reset --hard HEAD" would behave
+> as "git diff HEAD | git apply --index -R" when your index is fully
+> merged, but this change will break the expectation.
 
-Michael
+$ echo abc >abc
+$ git add -N abc
+$ git diff HEAD|LANG=C git apply --index -R
+error: abc: does not match index
+$ cat abc
+abc
+
+OK this is just nit-picking. We could probably make it work, though
+I'm not interested in doing that.
+
+> Earlier we changed "git commit" to pretend as if an I-T-A entry does
+> not exist in "git add -N newfile && git commit", but I think that
+> was a mistake that was caused by the same fuzzy thinking.
+>
+> 3f6d56de (commit: ignore intent-to-add entries instead of refusing,
+> 2012-02-07) does talk about the use of "git add -N" in conjunction
+> with "git status" and "git diff", but somehow nobody realized that
+> it was introducing inconsistency in the semantics.
+-- 
+Duy
