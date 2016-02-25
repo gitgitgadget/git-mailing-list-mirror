@@ -1,151 +1,151 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv15 2/5] run_processes_parallel: add LF when caller is
- sloppy
-Date: Wed, 24 Feb 2016 16:55:13 -0800
-Message-ID: <20160225005513.GP28749@google.com>
-References: <1456284017-26141-1-git-send-email-sbeller@google.com>
- <1456284017-26141-3-git-send-email-sbeller@google.com>
- <20160224211947.GO28749@google.com>
- <CAGZ79kZvD4zFA61XvSLa8fe1PzH91+4ii5vSeH-P+ER2wbQy2g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] git: submodule honor -c credential.* from command line
+Date: Wed, 24 Feb 2016 20:41:49 -0500
+Message-ID: <20160225014149.GA31616@sigill.intra.peff.net>
+References: <1456358352-28939-1-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 25 01:55:26 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Thu Feb 25 02:41:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aYkDE-0001Yk-2K
-	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 01:55:24 +0100
+	id 1aYkwJ-0008S8-2y
+	for gcvg-git-2@plane.gmane.org; Thu, 25 Feb 2016 02:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650AbcBYAzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Feb 2016 19:55:19 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36183 "EHLO
-	mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbcBYAzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Feb 2016 19:55:17 -0500
-Received: by mail-pf0-f175.google.com with SMTP id e127so22466535pfe.3
-        for <git@vger.kernel.org>; Wed, 24 Feb 2016 16:55:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=fvLCcxww1ZJAyE7nDIjwYcYvEAFxPVtZluinZ7nfmno=;
-        b=GzzjUiSy1pJXu7OcLaKG6pfJrWNK9ZKU+pKoJ0rVgx+wavVTAMB9CRRUIJVvZtJlUq
-         XhUOcU1r8oYE4fl+Ow1QbB6IYZ+Zo5ColYrQk5MlEs6ORX4zb7IWvZlRpVYHvgqYjAev
-         DGzjDf8suLEmABT7noeHTCgLaYWdFpxWPufr5WumP4bVFPQbT5cXHYSxiHIbzdzyDYXp
-         xAYkvNyYvXHUtjBEcKGTtOywyzOP7mdPmGOvQebUxC896cvNfYy9kt0X6pGEBusMfUto
-         Ywha6nvCl4IeG0V0mJW4nWnSWsJjAm94RDRhw3dQq6bjRlg2NrVhwMUDSHc8kltHVfkq
-         hfHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=fvLCcxww1ZJAyE7nDIjwYcYvEAFxPVtZluinZ7nfmno=;
-        b=eTZeBJT5yi9Gl1aYAImRYlPiircj7L+Uye07hLVXGTAvE5V2/zbhNDYy9MqKYGBoTn
-         2Ct/mj7RKKS5d1ciBhUVtUuN+0fbNdM2s3/jGxFK9i/zytZKqCweUJ7x81wlmiOpli++
-         967kGLslcve8TxsMyf8U4Kn7Fq/zy6dAQG4BYB+/vJXtmejNelc7Udzjr/AQS423SAZU
-         Af3U+2L5VbdSqfFKudm1LS0ys8AMCckE7bucRUOgOb2R7F3M3QM0MfHo1GzeWcNXOZhH
-         pn31d6M5iqFNE85SMopoet99BJ1WE3f0iKcjqqq3M0pydHxlBvGju0THLrXilx0dJKGz
-         7mGg==
-X-Gm-Message-State: AG10YOSiqNa9akQyt9cctakX0qFNI/SeuXHSZ9zy23CjjUmbbbI2gtLDfyMLveS51vOfSA==
-X-Received: by 10.98.10.139 with SMTP id 11mr59173448pfk.87.1456361716568;
-        Wed, 24 Feb 2016 16:55:16 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:41cf:620e:463d:86cf])
-        by smtp.gmail.com with ESMTPSA id i13sm7573472pfi.95.2016.02.24.16.55.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 24 Feb 2016 16:55:15 -0800 (PST)
+	id S1752870AbcBYBlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Feb 2016 20:41:53 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48678 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751270AbcBYBlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Feb 2016 20:41:53 -0500
+Received: (qmail 4708 invoked by uid 102); 25 Feb 2016 01:41:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 20:41:52 -0500
+Received: (qmail 13720 invoked by uid 107); 25 Feb 2016 01:42:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Feb 2016 20:42:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Feb 2016 20:41:49 -0500
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZvD4zFA61XvSLa8fe1PzH91+4ii5vSeH-P+ER2wbQy2g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1456358352-28939-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287300>
 
-Stefan Beller wrote:
-> On Wed, Feb 24, 2016 at 1:19 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > Stefan Beller wrote:
+On Wed, Feb 24, 2016 at 03:59:12PM -0800, Jacob Keller wrote:
 
->>> When the callers of parallel processing machine are sloppy with their
->>> messages, make sure the output is terminated with LF after one child
->>> process is handled.
->>
->> Why not always add \n here?
->
-> So you propose to always add a \n if the output length was > 0 ?
+> +int sanitize_submodule_config(const char *var, const char *value, void *data)
+> +{
+> +	struct strbuf quoted = STRBUF_INIT;
+> +	struct strbuf *out = data;
+> +
+> +	if (submodule_config_ok(var)) {
+> +		if (out->len)
+> +			strbuf_addch(out, ' ');
+> +
+> +		/* combined all the values before we quote them */
+> +		strbuf_addstr(&quoted, var);
+> +		strbuf_addch(&quoted, '=');
+> +		strbuf_addstr(&quoted, value);
+> +
+> +		/* safely quote them for shell use */
+> +		sq_quote_buf(out, quoted.buf);
+> +	}
+> +	return 0;
+> +}
 
-Ah, now I see where I was confused.
+This leaks "quoted", doesn't it?
 
-I was seeing an analogy to functions like ref_transaction_begin(),
-which use a 'struct strbuf *err' argument to store the argument to
-die() that describes why they failed.  They get used like this:
+I was confused by the "combine all the values" comment. We just have
+_one_ config key/value here, right (I had thought originally that you
+were putting multiple keys into a single sq-quoted string, which would be
+wrong)?
 
-	struct strbuf err = STRBUF_INIT;
-	if (ref_transaction_begin(..., &err))
-		die(err.buf);
+I agree with Eric, though, that you could just drop the comment
+entirely.
 
-and die() appends a \n at the end.  They typically are implemented
-like this:
+> +static int module_sanitize_config(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct strbuf sanitized_config = STRBUF_INIT;
+> +
+> +	struct option module_sanitize_config_options[] = {
+> +		OPT_END()
+> +	};
+> +
+> +	const char *const git_submodule_helper_usage[] = {
+> +		N_("git submodule--helper sanitize-config"),
+> +		NULL
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, module_sanitize_config_options,
+> +			     git_submodule_helper_usage, 0);
+> +
+> +	git_config_from_parameters(sanitize_submodule_config, &sanitized_config);
+> +	if (sanitized_config.len)
+> +		printf("%s\n", sanitized_config.buf);
+> +
+> +	return 0;
+> +}
 
-	if (open(...)) {
-		strbuf_addf(&err,
-			    "cannot open '%s': %s", ..., strerror(errno));
-		return -1;
-	}
+The empty option list looked funny to me for a minute, but I guess you
+use it to complain about:
 
-When the function doesn't fail, err doesn't need to be inspected at all.
+  git submodule--helper sanitize-config --foo
 
-get_next_task_fn et al looked similar to that pattern, but they are
-doing something different.  The strbuf passed in is the same buffer
-that is used to collect the child process's output.  Writing to that
-strbuf is not a way to provide an error message for die() --- instead,
-it is a way to provide additional output that should be combined with
-the child process's output.
+Should we also warn about:
 
-Renaming the parameter to something like 'struct strbuf *out' would
-have avoided this clash of conventions and got me un-confused.  That
-would make it clearer that the callback function should do
+  git submodule--helper sanitize-config foo
 
-	strbuf_addf(out, "warning: foo\n");
+I think you could catch both with just:
 
-including both its own 'warning: ' prefix and its own newline.  It is
-providing output meant to be passed as-is to the terminal.
+  if (argc > 1)
+	usage(...);
 
-That is a convenient API since if you want to write multiple messages,
-you can do
+(though I do not mind the empty option list staying in that case, as it
+provides the necessary boilerplate for later).
 
-	if (foo)
-		strbuf_addf(out, "warning: foo\n");
+> +# Sanitize the local git environment for use within a submodule. We
+> +# can't simply use clear_local_git_env since we want to preserve some
+> +# of the settings from GIT_CONFIG_PARAMETERS.
+> +sanitize_local_git_env()
+> +{
+> +	local sanitized_config = $(git submodule--helper sanitize-config)
+> +	clear_local_git_env
+> +	GIT_CONFIG_PARAMETERS=$sanitized_config
+> +}
 
-	... do some other things ...
+Do we need to export GIT_CONFIG_PARAMETERS? I guess not; if it is
+already exported, we don't need, and if it isn't, then by definition
+$sanitized_config will be empty.
 
-	if (bar)
-		strbuf_addf(out, "warning: bar\n");
+The name of this function isn't very descriptive (it's easy to see what
+it does from the implementation, but in the callers, it's unclear what
+the difference between "clear" and "sanitize" is). Should it maybe be
+"sanitize_submodule_env" or something to make it clear that this is
+about passing through things for child submodules?
 
-The newlines avoid the messages running together.
+Probably not that big a deal as its local to this script
 
-The functions default_start_failure and default_task_finished are
-buggy under that API, since they do not include newlines in their
-output.
+> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
+> new file mode 100755
+> index 000000000000..376f58afe967
+> --- /dev/null
+> +++ b/t/t7412-submodule--helper.sh
 
-Once they're fixed, there wouldn't be any need to add \n, unless we
-are worried about a child process that writes output that doesn't end
-with a newline.  It can be convenient for child processes to do things
-like
+In the long run I think we want to kill off submodule--helper, as it's
+just an implementation detail until git-submodule is all in C. I do not
+mind these tests in the meantime, as they can act as unit tests. But it
+would be nice to also (or instead, if you like) test the actual
+user-visible effects. Otherwise, once git-submodule turns into C, these
+behaviors are likely to end up completely untested (and it's during that
+conversion that you you're most likely to run into regressions!).
 
-	printf '%s\t' "some information"
-
-so I am not convinced this patch is helping.
-
-Does that make sense?
-
-Sorry for the confusion,
-Jonathan
+-Peff
