@@ -1,11 +1,11 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [PATCH v3 2/2] git: submodule honor -c credential.* from command line
-Date: Thu, 25 Feb 2016 21:26:14 -0500
-Message-ID: <CAPig+cRM_1JLfBiOqo+-EdKbXp--4VUbddKN_zpSCSLK8PT09w@mail.gmail.com>
+Date: Thu, 25 Feb 2016 18:31:42 -0800
+Message-ID: <CA+P7+xpdZRMPgUtP3Hu1DMN74S5rVPT6La7Pa0=LsLJHaO7bxw@mail.gmail.com>
 References: <1456426632-23257-1-git-send-email-jacob.e.keller@intel.com>
-	<1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
-	<20160226015510.GA5347@flurp.local>
-	<CA+P7+xqyTUh60BOmY03JHE6HyVqY7iidVkUf3ji95_s3uE32cg@mail.gmail.com>
+ <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
+ <20160226015510.GA5347@flurp.local> <CA+P7+xqyTUh60BOmY03JHE6HyVqY7iidVkUf3ji95_s3uE32cg@mail.gmail.com>
+ <CAPig+cRM_1JLfBiOqo+-EdKbXp--4VUbddKN_zpSCSLK8PT09w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Jacob Keller <jacob.e.keller@intel.com>,
@@ -14,84 +14,70 @@ Cc: Jacob Keller <jacob.e.keller@intel.com>,
 	Mark Strapetz <marc.strapetz@syntevo.com>,
 	Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 03:26:21 2016
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 03:32:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ86m-0003Ik-Ou
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:26:21 +0100
+	id 1aZ8CW-0006nB-PR
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:32:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753087AbcBZC0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 21:26:16 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:33122 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbcBZC0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 21:26:15 -0500
-Received: by mail-vk0-f67.google.com with SMTP id c3so4107031vkb.0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 18:26:15 -0800 (PST)
+	id S1753248AbcBZCcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:32:04 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:36530 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751124AbcBZCcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 21:32:03 -0500
+Received: by mail-ig0-f175.google.com with SMTP id xg9so26365065igb.1
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 18:32:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=nq+IzNrmMUP1dG2K8Me4tGwyEP1gk+DOfzf4bc4HfTA=;
-        b=FAyaTbjLA1PLrzkofKUPKB632RrKP0udqhRvfP3P/kt5nbG9oifI9VO5WRh8n7WeRd
-         mnrPZ50gk0CPoxo7OkbSkBdJamwZ5eeCXD7NIM6P2t0UStXOo9npimlPvxV18r2t3c5D
-         /zfCUlOTNQv59+xoHVY68MtfUuTVRSPdly8ZWWYq/I2owN3E5mOdFULM0fbN5GN0pJHY
-         RatLUFIaY4D9R8unpoK574+tukUwIOfOna4CTX1IHcewC8WJjzPaAdnhzPS7wqIKXZ71
-         KZJugaIONskSrrfMYnGV/pFUYRW1320qytsBInzeil1JF1VD5VDHYqwC/VM3TXiHgJOW
-         h7bA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ozUr7thrG82qjFDtnL4959DqxNZBT8GlIQR9vTgNknk=;
+        b=KL18RFqu2WMYbFwBcy91oKCCuKtDOlX+S3z59iq6OUZxp9cxUfrSJUZJl9LR8F3r7c
+         7O73PRoryqslK8/m0/EViXuTc643ntcxUtGsisDS7VfKqcfnKjfmaTxqmaT/OoiX/18L
+         /KXiRYxgIapIGMZ5rUGREcX7Cd5rhGMDBjaOoiirxbHYxvXneX6BwkqbPnSx2feu5JGN
+         d7pKfx6tiM9pgGx4quZQka4utI15CsX8V6Aup0/YSAEpDzBrV1GN9TtmyQG3Y5kEFUE/
+         ji9rrzK2fZKIVrhPVxrzHWpQkVLKTAa8GDee6fEj/WGmkMgZVIWQPKm0hs3STquFY67t
+         jIHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nq+IzNrmMUP1dG2K8Me4tGwyEP1gk+DOfzf4bc4HfTA=;
-        b=cEEEcFYorFCuwMi/CYzaD9SVVxkKLbQ1y6MU4YOG+0YoLeHPlEXCRg0tQamHGuvwcM
-         E2BmVZ64YMrqVfl+DyAzG3FEFk4rdorPm5TGYBPSkLarfuNryo9ZExwhxinIDPUWORSo
-         4stMsak2UCjzkKxAN1mvkUtAc4xp3cjaAekiFALEsIpXDd1nJ9c+fuwErdOY1a0v5Kk2
-         VFYqEhLCH8atkSAKi2YW6qzc1igiCIJSaA6VUUos0GjV/sbOZC12kItinwMGlXLJ4klE
-         gg9lx0GAdaxTe0ZF6SoYYicA1Z22QMjFPKpFw6QpgP7eAzLc9Bn4SOh6TvuLgJPttT5M
-         ryqg==
-X-Gm-Message-State: AG10YOQbzpkYttqH9OvLdPDSqKMgjm75zlBjnvaogyCrUYIrsy15TA6lK5FI+C7ilPxH7Gq7FvETQtQ+Pr6r7Q==
-X-Received: by 10.31.141.2 with SMTP id p2mr40080448vkd.37.1456453574881; Thu,
- 25 Feb 2016 18:26:14 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 25 Feb 2016 18:26:14 -0800 (PST)
-In-Reply-To: <CA+P7+xqyTUh60BOmY03JHE6HyVqY7iidVkUf3ji95_s3uE32cg@mail.gmail.com>
-X-Google-Sender-Auth: fVez87LlLdlvdJRqFw3-QeNT7yw
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ozUr7thrG82qjFDtnL4959DqxNZBT8GlIQR9vTgNknk=;
+        b=m8btHgvY2N7EiDfl8YmrnZqsfmxDbSqBJNx3ULBh4eoXQ8C8w9Vw8eYxYPbxuBtyDY
+         mpofAc3Qu2M/ddvzfaKr2d3ttD6UZzx6WOhkoqML4H/UfxeVGUCwwQ4jKSJW2SkGxoka
+         q+rXrXVqiSHYxVeRruJvo69Izl212WkTSX/88NiBNIiVnFi1RKy5HVGP1MzVoMQDPn6I
+         c1IZuyRoejiwpvQYRBrdVB1VTUkgDdoDDq9xbbsBVh0Crn+Iv0WfOPXOtFjlr2j66Dmm
+         kFhBnJjyxBCffxiVbwLWS3Ce+jcaGVUyBKSlhtBcz5fzGxtmP2PNS/1bhkcHwVa72Z+J
+         qqLQ==
+X-Gm-Message-State: AD7BkJKCtghq6hAyjPd/Vnx66RweU+PwO4ZS13z9J9xSoRUJB8tk2cqtnMgWZ9dy975wYnzZMuicJcijDTDwJg==
+X-Received: by 10.50.142.103 with SMTP id rv7mr559087igb.35.1456453922237;
+ Thu, 25 Feb 2016 18:32:02 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Thu, 25 Feb 2016 18:31:42 -0800 (PST)
+In-Reply-To: <CAPig+cRM_1JLfBiOqo+-EdKbXp--4VUbddKN_zpSCSLK8PT09w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287533>
 
-On Thu, Feb 25, 2016 at 9:19 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Feb 25, 2016 at 5:55 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Not worth a re-roll, but these quote sequences are brain-melting.
->> Easier would have been to double-quote the second argument of
->> test_expect_success() and then do either:
+On Thu, Feb 25, 2016 at 6:26 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> One thing I elided accidentally was that when changing the second
+> argument of test_expect_success to double-quotes, you would altogether
+> drop the double-quotes around "helper" in:
 >
-> They are. I fiddled with things till I got it working. I wasn't sure
-> if double quotes would cause a problem or not, since most other tests
-> seemed to avoid it.
+>     git -c credential.helper="helper" submodule--helper [...] &&
+>
+> to become:
+>
+>     git -c credential.helper=helper submodule--helper [...] &&
 
-You normally want variable interpolations within the test to happen
-when the test is actually run rather than when it is defined, which is
-why single quotes are normally used. But this test doesn't use any
-variable interpolations, so double quotes won't hurt it.
 
-> However this re-roll forgot to check argc in submodule--helper so
-> maybe worth reroll to fix both things?
+Yes I figured that :)
 
-Possibly.
-
-One thing I elided accidentally was that when changing the second
-argument of test_expect_success to double-quotes, you would altogether
-drop the double-quotes around "helper" in:
-
-    git -c credential.helper="helper" submodule--helper [...] &&
-
-to become:
-
-    git -c credential.helper=helper submodule--helper [...] &&
+Thanks,
+Jake
