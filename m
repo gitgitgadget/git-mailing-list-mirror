@@ -1,76 +1,69 @@
-From: Paul Tan <pyokagan@gmail.com>
+From: Mehul Jain <mehul.jain2029@gmail.com>
 Subject: Re: [GSoC] Microproject :- Teaching git pull --rebase the
  --no-autostash flag
-Date: Fri, 26 Feb 2016 19:51:42 +0800
-Message-ID: <CACRoPnSoJvyvm4npw40AsgvPaviwb07akpiWtYWX3wTEME6wRA@mail.gmail.com>
+Date: Fri, 26 Feb 2016 17:35:54 +0530
+Message-ID: <CA+DCAeSOfq22FyhPSdeYmWEL+_Bgx0et=jm786mdj-0b7R5OSg@mail.gmail.com>
 References: <1456485825-21309-1-git-send-email-mehul.jain2029@gmail.com>
+	<CACRoPnSoJvyvm4npw40AsgvPaviwb07akpiWtYWX3wTEME6wRA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 12:51:50 2016
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 13:05:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZGw0-0003pj-KD
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 12:51:48 +0100
+	id 1aZH9j-0003tM-IW
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 13:05:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960AbcBZLvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 06:51:44 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:36833 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751124AbcBZLvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 06:51:44 -0500
-Received: by mail-lb0-f179.google.com with SMTP id x1so45230304lbj.3
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 03:51:43 -0800 (PST)
+	id S1751377AbcBZMFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 07:05:55 -0500
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:36310 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185AbcBZMFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 07:05:55 -0500
+Received: by mail-qg0-f44.google.com with SMTP id y9so63965324qgd.3
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 04:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=9AdMO7BPZMDrxKGhlL9rSJGYeNBnsUvNVArxLl+5lfE=;
-        b=PGh80YCsvGc6ut4hvUb93U3VgpKDPTF+Dp+1HyF89LtwxOyNc0l+7XhJpAHWhu8cDa
-         8rIUw7k9QeWWBkmcbyWvT8GU9ySnNhLFIpwRNN81OJXg6nYCm2kqnKQNLAaFvXzjAegR
-         XfZtoo1PCP0Lv7dOZlh1gBp7ai0O2vonMPpXf2w3pV+MQa6T648aM4bpg9EK0XXUEZ6R
-         Tmf/l6kh5ANfu4bMKTWPBje9/vMwMf4iHf5e1/hLoGCTfu1qYsUKCrnLT1B1uQTsvQik
-         lN7CrJMc81ywewpHF041dzQ+1kjl2AqwUn2Ue6ay9j1f3aaHkvWL1NyfK7EfBlVUm+Ud
-         56gA==
+        bh=NDcHpJMrhXRELc5iwH4+WtI52biNBnQr1SC5O3XxvXo=;
+        b=vaAWxzmbDV5iLzT/w75vjTFei/3mb8zg0f3VICY70Zcdc0Nz0dutTnWB5vHo4vnzDe
+         8i6hF3PH7yaiBZzamF00TPJR4lYTiKOZp52890gV89kCXoFu1F0jfMm8KTMpQM68qg69
+         a9qpTCs2zUN7RlP0vBtLF7Iy6KIlZAaqd1Rzw0dXm3/+cWvPmnLjdgfCQNFXYAI9p+HJ
+         Xqg3Jqf8BUhxT8tWkFBD9SieridP6aKb/YySgidinPrzXodBrRcyCf1+QUuBEHDFPtCh
+         gwF/kSC0pwN8AGH5U9NU9yDbwdISnBljFA7oZtJKu6T3QkDse8gU7/dXLQId2hwfmVGK
+         PETg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=9AdMO7BPZMDrxKGhlL9rSJGYeNBnsUvNVArxLl+5lfE=;
-        b=S1X+jMIqkmHWEMidfyj04Fqrwo0J1jTRAeE446iOSGBJ3ul8ilqCCP1uDyE1amMExe
-         L21FfD51UVyQSfiFKlzyjLeJn6PjyUQxn9R+6ODv0HVjX3/66payUffQc8rU0nabFxSt
-         VAVnSFRUIVVZnMmhy+C8pkPfGPGIkCmN0KwZYKL/qiWoJ5JNtL5zaw2+e5j1vKBl7K7k
-         TV7jIM9V4ZUBdOt//06SNqBm/1iLX8bCa4SqStySNCJ93IstgbaIObLByoF+erLwT1Mq
-         LAygSTsTE1Ze4x+cAfZm1rdKLzFilsQrw7NMZMXfc+JUxFmhtH9viMvzdeeeAK25FhgR
-         PrQg==
-X-Gm-Message-State: AD7BkJL4F/6Zn1oH4JG+B3Addc7xt3TrpyG9DJjpzOMXyK16kdedhfK2uPuVr9mPgTAD0EdEu5k87Z2GqaSzrg==
-X-Received: by 10.112.128.225 with SMTP id nr1mr450888lbb.101.1456487502307;
- Fri, 26 Feb 2016 03:51:42 -0800 (PST)
-Received: by 10.112.207.68 with HTTP; Fri, 26 Feb 2016 03:51:42 -0800 (PST)
-In-Reply-To: <1456485825-21309-1-git-send-email-mehul.jain2029@gmail.com>
+        bh=NDcHpJMrhXRELc5iwH4+WtI52biNBnQr1SC5O3XxvXo=;
+        b=jBbqu9Znz6wUwch3A5+ERqLBe83PinD6hq9KkW3EKLEJK9f9tGlUlhRsZlgKho6ybL
+         +u0PaQ1EXGcy5T6omm51jQCSX/08Z2yvqy/XWl8J/a7IZ68YAO+49XLjovlKYALYLrHp
+         +6bkC7NdA3EGqf3t+vWJag/cFv9M6LRgCLcxzcze/sIgxDIbMwb/9xJbH/VFRBS1ywGm
+         2mQ0o9eXr/B7hfQ/lkGHtRkfQsbbFCIUdTH7m4silqbrFhkk12SorDVduLYKqV0Ne7k0
+         XeH1eMRR01/Eovu5rKm1pWT1fK4CITlhhAkVM+nKoGPfZKJ9mdxDbd7UNg0max733BV1
+         CyVw==
+X-Gm-Message-State: AD7BkJI2/kFNVjLpHUK7j9Yz46RFc9dfSLwU1sRryNXCnQPA0FII5KEubk1LdQE3hkvCh4OdeLXKhTetTc/AUg==
+X-Received: by 10.140.98.197 with SMTP id o63mr1339533qge.78.1456488354060;
+ Fri, 26 Feb 2016 04:05:54 -0800 (PST)
+Received: by 10.55.188.7 with HTTP; Fri, 26 Feb 2016 04:05:54 -0800 (PST)
+In-Reply-To: <CACRoPnSoJvyvm4npw40AsgvPaviwb07akpiWtYWX3wTEME6wRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287572>
 
-On Fri, Feb 26, 2016 at 7:23 PM, Mehul Jain <mehul.jain2029@gmail.com> wrote:
-> With this patch, git pull --rebase will understand --no-autostash command line flag.
-> This flag will override "rebase.autostash" configuration(if set) and leads to a
-> failure if current working directory is dirty. If "rebase.autostash" is not configured
-> and no flag is passed then by default command will die if directory is to be dirty, before
-> even calling rebase.
->
-> I am also thinking of adding a "--autostash" flag for git pull --rebase, which will
-> override "rebase.autostash" configuration(if set false) and will pass --autostash to
-> git rebase. I would like to know your opinion on this option.
+On Fri, Feb 26, 2016 at 5:21 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> That was the point of the microproject ;-). --[no-]autostash means
+> both --autostash and --no-autostash.
 
-That was the point of the microproject ;-). --[no-]autostash means
-both --autostash and --no-autostash.
+Oops, my bad. I will add the necessary changes :-).
 
 Thanks,
-Paul
+Mehul
