@@ -1,182 +1,126 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC] git-commit: add a commit.verbose config variable
-Date: Thu, 25 Feb 2016 22:00:51 -0500
-Message-ID: <CAPig+cQE6ytRKFjqRRLrPHCYqJuf52NKvy8sZs8rX3t5_kDRVg@mail.gmail.com>
-References: <56CFBF19.6040004@zoho.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/16] bisect: use a modified breadth-first search to find relevant weights
+Date: Thu, 25 Feb 2016 19:09:54 -0800
+Message-ID: <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+	<1456452282-10325-15-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Pranit Bauva <pranit.bauva@zoho.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 04:01:00 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Feb 26 04:10:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ8eH-0006rE-Vr
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 04:00:58 +0100
+	id 1aZ8n4-0003pp-Na
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 04:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbcBZDAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 22:00:54 -0500
-Received: from mail-vk0-f45.google.com ([209.85.213.45]:33405 "EHLO
-	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750767AbcBZDAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 22:00:53 -0500
-Received: by mail-vk0-f45.google.com with SMTP id k196so66776397vka.0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 19:00:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Ps7LpSMlFVqx4L0DkJZ0UN5re42I9H81y0CeVVSvACU=;
-        b=VTZ2YGfX7MOcpqlY8wkvsumlyQEwR0srfiGelq/f/uzs5C6HL28w4eOaYlIfLT5V6s
-         Sjabb43E3nfo5axk0f1ijlNBrzwknvPClt9FBDgSpQTmns13c4VgNNI4D51Mt1iHRp2x
-         OKiQ9xsCVmGPKfO+MVPlNa5In2vCXAgONaCtT82EgcX3JFiWPIPzM8giTZifgSI9mk8K
-         0JGbfbLK9YVIOUBlAiYnYnVQPdbrES7Jwwn+clqfXmBf8UMBHuwdmGKHg+dFdznOGLgU
-         pU35oCd+gVAu7f81AdRbrnHGx4OsquQJipahe1U0zCs0gtGcLBr49/8Y52F4QO5SSCGn
-         wl+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Ps7LpSMlFVqx4L0DkJZ0UN5re42I9H81y0CeVVSvACU=;
-        b=SIT5X1rn53WZLw51Ic40q3Re+O8zspY5UT8tCh+vpB/ZlD13JOvbBVzvFAbtMTzowK
-         X1pZXKXBMDs9RLO6nOW4g+vnAvDs4uqhXoIsRPuUTvBoEH5o6BmKcJYprpbcZ8nqJL3P
-         VupaKSGq2UPXc1C4t/G+jjOm7QZY/WNkbxjTPnxGeA1jieu7qrgEA42p8KOCmp5ejBM5
-         pzphJfCtUQatEszAIBpz2uv/DFjNVS0Q90GuNuh6Xkj8OLza0ZaH/07rxOMyUrh+/utc
-         D+kgCNb9QqnualCuwYdrpsgEVUX+IhXn1AHdeBg7KvUklsZzs0/TJhsM+ar5WaS5M8kh
-         sHAQ==
-X-Gm-Message-State: AG10YOQNTgWjJ+Ap3GIdorN/egCsAsbIqLEUr6oZl64vZ0lAWgEucvOHwY0sIHi0iZpMYkInut77j9qdYECJNg==
-X-Received: by 10.31.41.14 with SMTP id p14mr39910892vkp.151.1456455651985;
- Thu, 25 Feb 2016 19:00:51 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 25 Feb 2016 19:00:51 -0800 (PST)
-In-Reply-To: <56CFBF19.6040004@zoho.com>
-X-Google-Sender-Auth: qDb_Qwoms60ns-HjCiug5ZtTFIw
+	id S1751503AbcBZDJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 22:09:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62343 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750767AbcBZDJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 22:09:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7FA6145CDB;
+	Thu, 25 Feb 2016 22:09:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Lhphyx+ha4iWehuAhlKkZt4rsec=; b=Fxp99Z
+	TbzR4J8++t3N6DauEA77Tpgytbs/pzP/3OKMSzTdvIbBNGDHF1QHni/BGxY8ou44
+	YCJOkhTWYLjStGnDw55tL8rfKZ65bBrQUK9BPDzpfRmHrnzVSUDLf2THX/fhELu8
+	nU6kzfwRXieqt1nlXCauMDudcwmaaYhqhWv34=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fG1alTcLanAbdipHVclxvEQd7bG70vJ4
+	L3oVw2quY3FmxSYTf5tmNSZKCz+5aUvf6Os+ZQ7t3SxpukzYlseTeCSPARxXtY1x
+	bwgJ12NqDwDRLUXr8vyh+Fpuz+0937/11+LcDTRSCFfBqnwnXv0CcehiucF/BGsW
+	3YF6tRMd7yE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 774AF45CDA;
+	Thu, 25 Feb 2016 22:09:56 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CAA8F45CD6;
+	Thu, 25 Feb 2016 22:09:55 -0500 (EST)
+In-Reply-To: <1456452282-10325-15-git-send-email-s-beyer@gmx.net> (Stephan
+	Beyer's message of "Fri, 26 Feb 2016 03:04:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 69592D34-DC36-11E5-8972-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287535>
 
-Thanks for the submission. Review comments below...
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-On Thu, Feb 25, 2016 at 9:57 PM, Pranit Bauva <pranit.bauva@zoho.com> wrote:
-> From c273a02fc9cab9305cedf6e37422e257a1cc3b1e Mon Sep 17 00:00:00 2001
-> From: Pranit Bauva <pranit.bauva@zoho.com>
-> Date: Fri, 26 Feb 2016 07:14:18 +0530
-> Subject: [PATCH/RFC] git-commit: add a commit.verbose config variable
-
-Drop these four lines. The first is only meaningful in your
-repository, and the rest are picked up automatically by git-am from
-the email envelope.
-
-> Since many people always run the command with this option, and would
-> prefer not to use the argument again and again but instead specify it in
-> some config file.
-
-This seems like a sentence fragment. I suppose you meant it as a
-continuation of the patch subject? Better would be to write a full
-sentence instead so that the reader doesn't have to guess at its
-meaning.
-
-> The variable `verbose` is changed instead of `s.verbose` as the method
-> run_status() updates the `s.verbose` with the value of `verbose`. So in
-> this way the change is reflected in both of them.
-
-Talking about this in the commit message misleads the reader into
-thinking that there is some potential oddity going on where a careful
-decision needs to be made about which variable to set, when that's not
-in fact the case. The 'verbose' member of wt_status is just one
-consumer of the "verbose" flag, not the sole consumer. Another
-consumer is found in builtin/commit.c:cmd_commit():
-
-    if (verbose ||
-        cleanup_mode == CLEANUP_SCISSORS)
-            wt_status_truncate_message_at_cut_line(&sb);
-
-So, it would not be correct for the configuration ever to set only
-wt_status::verbose.
-
-Consequently, it would be better to drop this paragraph altogether
-from the commit message, so as to avoid confusing readers.
-
-> Signed-off-by: Pranit Bauva <pranit.bauva@zoho.com>
+> The idea is to reverse the DAG and perform a modified breadth-first search
+> on it, starting on all sources of the reversed DAG.
+> Before each visit of a commit, its weight is induced.
+> This only works for non-merge commits, so the BFS stops prematurely on
+> merge commits (that are collected in a list).
+> Merge commits from that collection are considered for further visits
+> as soon as all their parents have been visited.
+> Their weights are computed using compute_weight().
+> Each BFS walk ends when the computed weight is falling or halfway.
+>
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 > ---
 >
-> Notes:
->     This is a patch for the microproject of GSOC 2016. I have done the change
->     under careful consideration of where to place the line. I have to yet write
->     the tests for this. I have explored the config API and I am currently going
->     through the tests part. I have run the test locally by manually checking.
->     I currently learning about the test suite. I will update this patch
->     with some tests in some time.
-
-Some tests to consider:
-
-* commit.verbose unset
-* commit.verbose=true
-* commit.verbose=false
-* --verbose overrides commit.verbose
-* --no-verbose overrides commit.verbose
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 01cca0a..f7e9c09 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1110,6 +1110,11 @@ commit.template::
->         "`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
->         specified user's home directory.
+> In other words: walk the history up, compute the weight of each
+> commit and stop when you know a better commit cannot follow.
 >
-> +commit.verbose::
-> +       A boolean to specify whether to always include the verbose option
+> This way, the expensive "compute_weight()" function is not called
+> on merge commits that will not help to find the maximum distance.
 
-It's nice to see a documentation update included in the patch.
+Interesting.  So you walk from the bottom commits, incrementing the
+weight while walking on a part of the graph that is single strand of
+pearls, or doing the "count the reachable ones the hard way" when
+you hit a merge [*1*], but either way, once you know the commit you
+are looking at is above the mid-way, i.e. reaches more than half of
+the graph, then stop walking because its children will never be
+better than that commit?
 
-> +       with git-config.
+This is doubly clever idea [*2*].  It cuts the search space in half
+for one thing, and more importantly, because "count the reachable
+ones the hard way" counting has to traverse the graph from a merge
+to the bottom boundary, the computation for a merge commit in the
+more recent half of the history is more expensive than the
+computation for a merge comit in the older half of the history, and
+what you are avoiding is to waste the cycles on that more expensive
+half.
 
-I guess you meant "git-commit".
+I like it.
 
-> +       See linkgit:git-commit[1]
+I haven't studied the code carefully, but your mention of BFS makes
+me wonder if you can "narrow" down the search space even more.  In
+an earlier step of the series, you introduced a work queue to
+replace the recursion.  The recursion forces the algorithm to work
+along the topology of the history, but you have more latitude in
+selecting the commit to dig further with a work queue.
 
-Nit: It wouldn't hurt to fold this line into the line above.
+I wonder if you can sort the elements on the work queue based on
+their distance (i.e. by using a priority queue).  You know the total
+upfront, so you may find a commit whose weight is exactly half of it
+before traversing all the bottom half of the history and it may turn
+out to be even more efficient.  After all, you are only looking for
+just one such commit, not trying to find all the commits with the
+best weight.
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> @@ -290,7 +290,8 @@ configuration variable documented in linkgit:git-config[1].
->         what changes the commit has.
->         Note that this diff output doesn't have its
->         lines prefixed with '#'. This diff will not be a part
-> -       of the commit message.
-> +       of the commit message. If this option is used always, it can
-> +       be set in the git-config with the boolean variable `commit.verbose`.
 
-You could probably replace this entire added sentence with the simpler:
+[Footnote]
 
-    Also see the `commit.verbose` configuration variable.
+*1* A merge between a commit that reaches N commits and another that
+reaches M commits may have weight smaller than the sum of N and M,
+and that is why I left the original "truly stupid algorithm" Linus
+wrote as-is when I did the obvious optimization for the linear parts
+of the history.
 
->  If specified twice, show in addition the unified diff between
->  what would be committed and the worktree files, i.e. the unstaged
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index b3bd2d4..68080fe 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1644,6 +1644,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->         status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
->         s.colopts = 0;
->
-> +       git_config_get_bool("commit.verbose", &verbose);
-
-I haven't fully digested builtin/commit.c, but the placement of this
-new code seems suspect. My expectation would have been to see
-git_commit_config() updated to recognize the new "commit.verbose"
-variable. Am I missing something?
-
->         if (get_sha1("HEAD", sha1))
->                 current_head = NULL;
->         else {
-> --
-> 2.1.4
+*2* Whenever I revisited the bisection in my head, I thought about
+ways to improve that "truly stupid" counting, but never thought
+about an approach to simply reduce the number of times the "truly
+stupid" counting has to be done.
