@@ -1,387 +1,154 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v4 3/3] git: submodule honor -c credential.* from command line
-Date: Fri, 26 Feb 2016 11:18:48 -0800
-Message-ID: <1456514328-10153-3-git-send-email-jacob.e.keller@intel.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 2/3] sumodule--helper: fix submodule--helper clone
+ usage and check argc count
+Date: Fri, 26 Feb 2016 11:31:06 -0800
+Message-ID: <CAGZ79kbD7_CYo9KT185oTxrjqch-otwfG0mWqAV2QiwrC-ch9Q@mail.gmail.com>
 References: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jeff King <peff@peff.net>,
+	<1456514328-10153-2-git-send-email-jacob.e.keller@intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
 	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 20:19:24 2016
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 20:31:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZNv9-0004FV-2n
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:19:23 +0100
+	id 1aZO6r-0004Gr-VI
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423132AbcBZTTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 14:19:13 -0500
-Received: from mga09.intel.com ([134.134.136.24]:22297 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423035AbcBZTSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 14:18:53 -0500
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga102.jf.intel.com with ESMTP; 26 Feb 2016 11:18:50 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.22,504,1449561600"; 
-   d="scan'208";a="912041159"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.65])
-  by fmsmga001.fm.intel.com with ESMTP; 26 Feb 2016 11:18:51 -0800
-X-Mailer: git-send-email 2.7.1.429.g45cd78e
-In-Reply-To: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
+	id S1422652AbcBZTbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 14:31:10 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35149 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933880AbcBZTbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 14:31:08 -0500
+Received: by mail-ig0-f172.google.com with SMTP id hb3so41100454igb.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:31:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=RC0Z0zSJsM21IiVWzA+cGOjvJtgbcG/db9UO37NtG/0=;
+        b=YVeDtdRrdqhzBsGjvrmUYdWStXP/dfkxjo4nfq6Zxw3ppV2WmB1dQafn1Lwo9vLz4l
+         8vmEs1ZgzLG+YXPFGTrUHepcJfoEELliEqoYoQnrfdwdZLRHp19S6fSj0t58KVkHhbXj
+         L3/2QdrescB3ehZ7B3jqwecSSZEYJQgsAgdgt+tH3JfHEepRJG9VqpPnyHGDIYkjM+bR
+         CLuLpvBTo2nOh/YUY73PFxTDOrEZ/TovAlQ2I65YUHX7XT3JaQUqzSuV980eNkW0gku/
+         5LjEUBSXu/0g/1gNuPwfU5ba+KrqLkgoZC4d264n+wYBdq8xXxZwD4q+LE1yi41hOAp0
+         98Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=RC0Z0zSJsM21IiVWzA+cGOjvJtgbcG/db9UO37NtG/0=;
+        b=llMpyTG9wcsxnvXmF84ARKrEwy/5ZylBP/ZjiTnmBL0OOa4qdOCxzgw27s7BOAeYFQ
+         ouiUHQKHQYd/mExURRIiuELzk3cloq57jbVZQMINGMwCnM4RDKDHDLY/fOdjiGtN27KY
+         B7nbiU8WPW+VClUzWL+4dlc49KB1uf4XFKYbVnybyl/y7GN7ZPyg2vroAgfaow1yP6dy
+         QmdhH73Sddqs4x2HV2edaz/gr3aVANjze03Y9Ssvgkv8TMB5t/GOqWZZ0eYmQ1hBTf+T
+         jONlFrKHIyrERndxFpzIS/xcZeK/fszYctS0qBoj6EiLvCpudRS8erduC1U9BERGkIh1
+         UuYw==
+X-Gm-Message-State: AD7BkJJPOwFy2nYBO5+4Mmetw3qGsqfHK1qmSv7bxG5qC32iH8M/dWUYUbGqJu4qxmT2xBcouN1TCq5f53O8p6p6
+X-Received: by 10.50.3.42 with SMTP id 10mr4464567igz.85.1456515067007; Fri,
+ 26 Feb 2016 11:31:07 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Fri, 26 Feb 2016 11:31:06 -0800 (PST)
+In-Reply-To: <1456514328-10153-2-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287611>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Fri, Feb 26, 2016 at 11:18 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> git submodule--helper clone usage specified that paths come after the --
+> as a sequence. However, the actual implementation does not, and requires
+> only a single path passed in via --path. In addition, argc was
+> unchecked. (allowing arbitrary extra arguments that were silently
+> ignored).
+>
+> Fix the usage description to match implementation. Add an argc check to
+> enforce no extra arguments. Fix a bug in the argument passing in
+> git-submodule.sh which would pass --reference and --depth as empty
+> strings when they were unused, resulting in extra argc after parsing
+> options.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 5 ++++-
+>  git-submodule.sh            | 4 ++--
+>  2 files changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f4c3eff179b5..072d9bbd12a8 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -187,13 +187,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>         const char *const git_submodule_helper_usage[] = {
+>                 N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+>                    "[--reference <repository>] [--name <name>] [--url <url>]"
+> -                  "[--depth <depth>] [--] [<path>...]"),
+> +                  "[--depth <depth>] [--path <path>]"),
 
-Due to the way that the git-submodule code works, it clears all local
-git environment variables before entering submodules. This is normally
-a good thing since we want to clear settings such as GIT_WORKTREE and
-other variables which would affect the operation of submodule commands.
-However, GIT_CONFIG_PARAMETERS is special, and we actually do want to
-preserve these settings. However, we do not want to preserve all
-configuration as many things should be left specific to the parent
-project.
+Right, no extra arguments.
 
-Add a git submodule--helper function, sanitize-config, which shall be
-used to sanitize GIT_CONFIG_PARAMETERS, removing all key/value pairs
-except a small subset that are known to be safe and necessary.
+>                 NULL
+>         };
+>
+>         argc = parse_options(argc, argv, prefix, module_clone_options,
+>                              git_submodule_helper_usage, 0);
+>
+> +       if (argc)
+> +               usage(*git_submodule_helper_usage);
+> +
 
-Replace all the calls to clear_local_git_env with a wrapped function
-that filters GIT_CONFIG_PARAMETERS using the new helper and then
-restores it to the filtered subset after clearing the rest of the
-environment.
+This is the fix to check for more arguments.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
+>         strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+>         sm_gitdir = strbuf_detach(&sb, NULL);
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 9bc5c5f94d1d..2dd29b3df0e6 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -347,7 +347,7 @@ Use -f if you really want to add it." >&2
+>                                 echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+>                         fi
+>                 fi
+> -               git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
+> +               git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
 
-Notes:
-    - v2
-    * Clarify which paramaters are left after the sanitization, and don't seem to
-      indicate it is our goal to extend the list.
-    * add a comment in the submodule_config_ok function indicating the same
-    
-    - v3
-    * Remove extraneous comments
-    * add strbuf_release calls
-    * rename sanitize_local_git_env
-    * remove use of local
-    * add C equivalent of sanitize_config
-    * add a test for the credential passing
-    
-    - v4
-    * use argc check instead of empty options check
-    * fix brain-melting quotes in t7412-submodule--helper.sh
+By having this additional fix (i.e. no '--depth', '<empty string>' is
+passed to the
+submodule helper, we can improve the submodule helper further
+in clone_submodule we can drop the double check for `depth` and `reference`
+(as well as `gitdir`, that double check is unneeded as of now already),
+by just checking for the pointer to be non  NULL and not further checking
+the dereferenced pointer.
 
- builtin/submodule--helper.c  | 77 +++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh             | 36 +++++++++++++--------
- t/t5550-http-fetch-dumb.sh   | 17 ++++++++++
- t/t7412-submodule--helper.sh | 27 ++++++++++++++++
- 4 files changed, 143 insertions(+), 14 deletions(-)
- create mode 100755 t/t7412-submodule--helper.sh
+That can go in either squashed into this commit or on top of it, either is fine.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 072d9bbd12a8..c6c0a3b06e27 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -124,6 +124,64 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 
- 	return 0;
- }
-+
-+/*
-+ * Rules to sanitize configuration variables that are Ok to be passed into
-+ * submodule operations from the parent project using "-c". Should only
-+ * include keys which are both (a) safe and (b) necessary for proper
-+ * operation.
-+ */
-+static int submodule_config_ok(const char *var)
-+{
-+	if (starts_with(var, "credential."))
-+		return 1;
-+	return 0;
-+}
-+
-+static int sanitize_submodule_config(const char *var, const char *value, void *data)
-+{
-+	struct strbuf quoted = STRBUF_INIT;
-+	struct strbuf *out = data;
-+
-+	if (submodule_config_ok(var)) {
-+		if (out->len)
-+			strbuf_addch(out, ' ');
-+
-+		/*
-+		 * The GIT_CONFIG_PARAMETERS parser is a bit picky and
-+		 * requires that each var=value pair be quoted as a single
-+		 * unit.
-+		 */
-+		strbuf_addstr(&quoted, var);
-+		strbuf_addch(&quoted, '=');
-+		strbuf_addstr(&quoted, value);
-+
-+		sq_quote_buf(out, quoted.buf);
-+	}
-+
-+	strbuf_release(&quoted);
-+
-+	return 0;
-+}
-+
-+static void prepare_submodule_repo_env(struct argv_array *out)
-+{
-+	const char * const *var;
-+
-+	for (var = local_repo_env; *var; var++) {
-+		if (!strcmp(*var, CONFIG_DATA_ENVIRONMENT)) {
-+			struct strbuf sanitized_config = STRBUF_INIT;
-+			git_config_from_parameters(sanitize_submodule_config,
-+						   &sanitized_config);
-+			argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
-+			strbuf_release(&sanitized_config);
-+		} else {
-+			argv_array_push(out, *var);
-+		}
-+	}
-+
-+}
-+
- static int clone_submodule(const char *path, const char *gitdir, const char *url,
- 			   const char *depth, const char *reference, int quiet)
- {
-@@ -145,7 +203,7 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 	argv_array_push(&cp.args, path);
- 
- 	cp.git_cmd = 1;
--	cp.env = local_repo_env;
-+	prepare_submodule_repo_env(&cp.env_array);
- 	cp.no_stdin = 1;
- 
- 	return run_command(&cp);
-@@ -258,6 +316,22 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int module_sanitize_config(int argc, const char **argv, const char *prefix)
-+{
-+	struct strbuf sanitized_config = STRBUF_INIT;
-+
-+	if (argc > 1)
-+		usage(_("git submodule--helper sanitize-config"));
-+
-+	git_config_from_parameters(sanitize_submodule_config, &sanitized_config);
-+	if (sanitized_config.len)
-+		printf("%s\n", sanitized_config.buf);
-+
-+	strbuf_release(&sanitized_config);
-+
-+	return 0;
-+}
-+
- struct cmd_struct {
- 	const char *cmd;
- 	int (*fn)(int, const char **, const char *);
-@@ -267,6 +341,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list},
- 	{"name", module_name},
- 	{"clone", module_clone},
-+	{"sanitize-config", module_sanitize_config},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2dd29b3df0e6..1f132b489b81 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -192,6 +192,16 @@ isnumber()
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
- }
- 
-+# Sanitize the local git environment for use within a submodule. We
-+# can't simply use clear_local_git_env since we want to preserve some
-+# of the settings from GIT_CONFIG_PARAMETERS.
-+sanitize_submodule_env()
-+{
-+	sanitized_config=$(git submodule--helper sanitize-config)
-+	clear_local_git_env
-+	GIT_CONFIG_PARAMETERS=$sanitized_config
-+}
-+
- #
- # Add a new submodule to the working tree, .gitmodules and the index
- #
-@@ -349,7 +359,7 @@ Use -f if you really want to add it." >&2
- 		fi
- 		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
- 		(
--			clear_local_git_env
-+			sanitize_submodule_env
- 			cd "$sm_path" &&
- 			# ash fails to wordsplit ${branch:+-b "$branch"...}
- 			case "$branch" in
-@@ -418,7 +428,7 @@ cmd_foreach()
- 			name=$(git submodule--helper name "$sm_path")
- 			(
- 				prefix="$prefix$sm_path/"
--				clear_local_git_env
-+				sanitize_submodule_env
- 				cd "$sm_path" &&
- 				sm_path=$(relative_path "$sm_path") &&
- 				# we make $path available to scripts ...
-@@ -713,7 +723,7 @@ Maybe you want to use 'update --init'?")"
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
--			subsha1=$(clear_local_git_env; cd "$sm_path" &&
-+			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
- 			die "$(eval_gettext "Unable to find current revision in submodule path '\$displaypath'")"
- 		fi
-@@ -723,11 +733,11 @@ Maybe you want to use 'update --init'?")"
- 			if test -z "$nofetch"
- 			then
- 				# Fetch remote before determining tracking $sha1
--				(clear_local_git_env; cd "$sm_path" && git-fetch) ||
-+				(sanitize_submodule_env; cd "$sm_path" && git-fetch) ||
- 				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
- 			fi
--			remote_name=$(clear_local_git_env; cd "$sm_path" && get_default_remote)
--			sha1=$(clear_local_git_env; cd "$sm_path" &&
-+			remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
-+			sha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify "${remote_name}/${branch}") ||
- 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
- 		fi
-@@ -745,7 +755,7 @@ Maybe you want to use 'update --init'?")"
- 			then
- 				# Run fetch only if $sha1 isn't present or it
- 				# is not reachable from a ref.
--				(clear_local_git_env; cd "$sm_path" &&
-+				(sanitize_submodule_env; cd "$sm_path" &&
- 					( (rev=$(git rev-list -n 1 $sha1 --not --all 2>/dev/null) &&
- 					 test -z "$rev") || git-fetch)) ||
- 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
-@@ -787,7 +797,7 @@ Maybe you want to use 'update --init'?")"
- 				die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
- 			esac
- 
--			if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
-+			if (sanitize_submodule_env; cd "$sm_path" && $command "$sha1")
- 			then
- 				say "$say_msg"
- 			elif test -n "$must_die_on_failure"
-@@ -803,7 +813,7 @@ Maybe you want to use 'update --init'?")"
- 		then
- 			(
- 				prefix="$prefix$sm_path/"
--				clear_local_git_env
-+				sanitize_submodule_env
- 				cd "$sm_path" &&
- 				eval cmd_update
- 			)
-@@ -841,7 +851,7 @@ Maybe you want to use 'update --init'?")"
- 
- set_name_rev () {
- 	revname=$( (
--		clear_local_git_env
-+		sanitize_submodule_env
- 		cd "$1" && {
- 			git describe "$2" 2>/dev/null ||
- 			git describe --tags "$2" 2>/dev/null ||
-@@ -1125,7 +1135,7 @@ cmd_status()
- 		else
- 			if test -z "$cached"
- 			then
--				sha1=$(clear_local_git_env; cd "$sm_path" && git rev-parse --verify HEAD)
-+				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
- 			fi
- 			set_name_rev "$sm_path" "$sha1"
- 			say "+$sha1 $displaypath$revname"
-@@ -1135,7 +1145,7 @@ cmd_status()
- 		then
- 			(
- 				prefix="$displaypath/"
--				clear_local_git_env
-+				sanitize_submodule_env
- 				cd "$sm_path" &&
- 				eval cmd_status
- 			) ||
-@@ -1209,7 +1219,7 @@ cmd_sync()
- 			if test -e "$sm_path"/.git
- 			then
- 			(
--				clear_local_git_env
-+				sanitize_submodule_env
- 				cd "$sm_path"
- 				remote=$(get_default_remote)
- 				git config remote."$remote".url "$sub_origin_url"
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 64146352ae20..48e2ab62da7a 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -91,6 +91,23 @@ test_expect_success 'configured username does not override URL' '
- 	expect_askpass pass user@host
- '
- 
-+test_expect_success 'cmdline credential config passes into submodules' '
-+	git init super &&
-+	set_askpass user@host pass@host &&
-+	(
-+		cd super &&
-+		git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
-+		git commit -m "add submodule"
-+	) &&
-+	set_askpass wrong pass@host &&
-+	test_must_fail git clone --recursive super super-clone &&
-+	rm -rf super-clone &&
-+	set_askpass wrong pass@host &&
-+	git -c "credential.$HTTP_URL.username=user@host" \
-+		clone --recursive super super-clone &&
-+	expect_askpass pass user@host
-+'
-+
- test_expect_success 'fetch changes via http' '
- 	echo content >>file &&
- 	git commit -a -m two &&
-diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
-new file mode 100755
-index 000000000000..9d937de8b224
---- /dev/null
-+++ b/t/t7412-submodule--helper.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2016 Jacob Keller
-+#
-+
-+test_description='Basic plumbing support of submodule--helper
-+
-+This test verifies the submodule--helper plumbing command used to implement
-+git-submodule.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'sanitize-config clears configuration' '
-+	git -c user.name="Some User" submodule--helper sanitize-config >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'sanitize-config keeps credential.helper' "
-+	git -c credential.helper=helper submodule--helper sanitize-config >actual &&
-+	cat >expect <<-EOF &&
-+	'credential.helper=helper'
-+	EOF
-+	test_cmp expect actual
-+"
-+
-+test_done
--- 
-2.7.1.429.g45cd78e
+That said:
+Reviewed-by: Stefan Beller <sbeller@google.com>
+
+
+>                 (
+>                         clear_local_git_env
+>                         cd "$sm_path" &&
+> @@ -709,7 +709,7 @@ Maybe you want to use 'update --init'?")"
+>
+>                 if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+>                 then
+> -                       git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+> +                       git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+>                         cloned_modules="$cloned_modules;$name"
+>                         subsha1=
+>                 else
+> --
+> 2.7.1.429.g45cd78e
+>
