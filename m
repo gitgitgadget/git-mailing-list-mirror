@@ -1,247 +1,171 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 06/16] bisect: use struct node_data array instead of int array
-Date: Fri, 26 Feb 2016 03:04:32 +0100
-Message-ID: <1456452282-10325-7-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH 01/16] bisect: write about `bisect next` in documentation
+Date: Fri, 26 Feb 2016 03:04:27 +0100
+Message-ID: <1456452282-10325-2-git-send-email-s-beyer@gmx.net>
 References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 03:06:22 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 03:06:23 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7nR-0007dj-8u
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:06:21 +0100
+	id 1aZ7nS-0007dj-LW
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:06:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752789AbcBZCGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 21:06:13 -0500
-Received: from mout.gmx.net ([212.227.15.15]:61420 "EHLO mout.gmx.net"
+	id S1752925AbcBZCGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:06:15 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54666 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752160AbcBZCFp (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752141AbcBZCFp (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 25 Feb 2016 21:05:45 -0500
 Received: from fermat.fritz.box ([188.108.247.176]) by mail.gmx.com (mrgmx003)
- with ESMTPSA (Nemesis) id 0ML7NR-1aYqnu0kLp-000Ilh; Fri, 26 Feb 2016 03:05:43
+ with ESMTPSA (Nemesis) id 0MMBiP-1aZwjI2K7h-007ynp; Fri, 26 Feb 2016 03:05:41
  +0100
 X-Mailer: git-send-email 2.7.2.383.g3fb0654
 In-Reply-To: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:qbmrq6mUbtA5bmXkIAG0sgDwQC+/zNnBnJ7Dd3zFg9pY2HeSelp
- fMTWp4t0paCOaAIZNcvyRuVvmMDjm4bZ13dCCD2yxcSPOElE2Rr0heQB/zWvvgPLlF2jgC7
- e2yZb5xR883vNHIVGpwdrojRweg3prM330uaHkYkl2CDc8PKLCZek209aaRWgd8EMH0/LBQ
- jX2D/MinB8RBU3FVagwgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BQXqrKrtFB8=:+Q/QbdLNFjLMywQiAl9QPS
- mdePyZ/rBtatDexseHtBL0Ibjbcec43bQsLv8VAR8DAz3038puo+16IQj9Q51kTjNWMQQgDto
- 5g4cFvEwIzZbX89cSFPIF/MK6aNebvjHvAiaWQm3GAPqULOpEPpzYYGt8HBMjsoD/aih7Dr1q
- z7L843IS+JsPdacN7TqHVigDCAPRNUfPFLAKTWz2Ij4gYftBIRHTREepKuYd0QnGtwVc1iYmj
- Ir/4XJwsLi4qlY7zj6oCaZDHyCKkTFob2C55Cnbqmaq9oDbz/FKFoIWuZoEcyF4oefYnaOlJM
- IJAokfJy+S0PP2AslxOcBrltu9a98ElEX4La8C+ERSKfPPUgXDLjanr8UiK/5KBjfQPYfZ6DN
- J3hRt9SvxSpQdSn0UF7AxgkwV5/VE5m48Df2bRhuVtL/8zG+jm+yO+YRqwMyLaWMxP7NKonWf
- 2Ria5i32jWVc38ypJo8JOOLtkU1twVAisyUHjfltaZTBUOZZnWDrKpZYV6KAh0qvKqifjmbQX
- W9HYMxR3fN0Rs7Y/7OW9lbES8hF/VhQhWS2mDqtPttLRd4mfYkUoSZCvUxqy+clFpPGVeKFyE
- zrKHvHxa45+OHzT1GMdXb1oej3Xpm9FTCWvhc48DK+XKLZo6N4LtYsLjZEiUfF95XQseV8ck7
- uYNC2gNwiWMU2Z8GQBgeuAlfeM4rFLLWsTDy7QhtDTfGWrIPssgpRKTrxrA3RLK0fLp3A8b2h
- WHPKXOFcW3exHRHzV6kW24Hl0BfL4M9FfFeAvYN5m+PYjDPXr0Vz3RLmesQ=
+X-Provags-ID: V03:K0:OvdBn2641KRlti8xH+DIv6Q6Ncmny60zfCqqnnv4YMQsAbLwkEE
+ LrNP5VefLs3Y9j/I3T2658r1qpZ5Qghwxjd4uMAp5h7dIAloYcKna2pUQlk+zWrsY2cYcJo
+ PnVAv0X1syqS7UnFrHzImK4pnVFyn/UEKSuD7WZlDEAMrekydpihOC4/EQXzOCWKb+0H7XL
+ ssUgENq/LR7jWJvjCA6SA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gQ87Rfw1Gyw=:g80rNvg2+GH+lQL/E8d/bS
+ mMbWlfmLTZNo471S/9DNwGC5kUpg/P4+dVNZ/nmnSzuL02vfbOrBZXehmFd4yYLNY3CrGL9Tb
+ 5DO9cb0KrJzoABoqbPoBUnALIEPm6Knw4Jcns1cvV1G3oVm6ypr/0JLnd8prrOKSi0iLn8nOv
+ PcFTuI82/O+3f+vBdU68AUW32nFnjGRcoppMycvRa8AoTE7czp6moCAbddEeYPhinzL6Aksft
+ QUGvxm6MSX4MwFFzx+zpu3oV6cHbEXTwyrQAAAgFlQiNuZ1W1hcgSBC2BWyqJM2uFNI00S05Y
+ oqg3zJaMCJDpQo7DqNy/7mCG64Z7E8xLz3OCamp9bnfNmrU4M/p7Sl4fwuYdAlqM8rYLJmdBu
+ 2rFuK9a0W2PiP6iNAUmV6fseN+sGt4JxjPsw3O6Gqo+TOiaPXs4VRS/j0RO4wqB4mM1afTWqO
+ 4Tn3Cf+e7mVrZcCvqrU2NLUe32u8z5t9sBTTRcjfYz5d65KyXXYcQaeNph6qtaFqH/lND8yL4
+ Z4HTvbH0ND79OXCf4//oVQ09tAds34t4wHTm7wCWFyaNxBTA8wPOvZfSPVofgPzEECqBCI74x
+ Izf+KFh1A2yPa4rYLEo3S2Em6G1aHAIRssGvivXZ/u+0Y18Kdy9V1MyreYRNiPIgEvvYkk9Zd
+ h0FUMV7ADeoJxUWN55W3eoJYD8D6vbryvu7xoPSfjMEMm43+Sbo7owuVQ/Q2WOHR6oMDzt/pN
+ LjLLJoVyLAwmqvE5d+xEKnc9o5baE+tqF1NPdSYXi/WAju9ioQlmMJ/DvvI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287524>
 
-This is a preparation for subsequent changes.
-During a bisection process, we want to augment commits with
-further information to improve speed.
+Mention `bisect next` in the documentation of bisect.
+`bisect next` is only useful in rare cases and the result
+can also be accomplished using other utilities (like reflog).
+However, it is available as a bisect command and should hence be
+documented.
+
+Also mention the use case when no good commit is known.
+Some user message in git-bisect.sh is changed to reflect that
+use case. It is also simplified: there is no need to mention
+running `bisect start` explicitly, because it can be done
+indirectly using `bisect bad`.
 
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- bisect.c | 61 ++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 30 insertions(+), 31 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 03e7660..bcb58ed 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -23,9 +23,21 @@ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
- static const char *term_bad;
- static const char *term_good;
+This patch considers the source code comment that says to be
+"not sure we want 'next' at the UI level anymore", and replies with
+"Yes, we want it!". Therefore, the "git bisect next" functionality
+is explicitly motivated and documented.
+
+The motivation of "having no good commit" is not made up. I am
+working on a big project that is several years old and nearly
+no test exists. So I add a test and things go wrong. However,
+I know from using (an older version of) the project that a similar
+case did work. So...I want to find the bad commit...
+However, to make git bisect work, I always first had to find a good
+commit, so I ended up doing the whole bisection process manually
+(because I did not know that "git bisect next" existed).
+
+I think that this change will help people who are also in these
+situations.
+
+ Documentation/git-bisect.txt | 25 +++++++++++++++++++++++++
+ git-bisect.sh                | 15 ++++-----------
+ 2 files changed, 29 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 7e79aae..8045e6d 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -27,6 +27,7 @@ on the subcommand:
+  git bisect replay <logfile>
+  git bisect log
+  git bisect run <cmd>...
++ git bisect next
+  git bisect help
  
-+struct node_data {
-+	int weight;
-+};
-+
- /* Remember to update object flag allocation in object.h */
- #define COUNTED		(1u<<16)
+ This command uses a binary search algorithm to find which commit in
+@@ -66,6 +67,15 @@ checks it out, and outputs something similar to the following:
+ Bisecting: 675 revisions left to test after this (roughly 10 steps)
+ ------------------------------------------------
  
-+#define DEBUG_BISECT 0
++Note that in cases you do not know a good commit,
++you can also start with:
 +
-+static inline struct node_data *node_data(struct commit *elem)
-+{
-+	assert(elem->util);
-+	return (struct node_data *)elem->util;
-+}
++------------------------------------------------
++$ git bisect start
++$ git bisect bad                 # current version is bad
++$ git bisect next                # check out another commit
++------------------------------------------------
 +
- static int count_distance(struct commit_list *entry)
- {
- 	int nr = 0;
-@@ -59,18 +71,6 @@ static void clear_distance(struct commit_list *list)
- 	}
+ You should now compile the checked-out version and test it. If that
+ version works correctly, type
+ 
+@@ -353,6 +363,21 @@ rewind the tree to the pristine state.  Finally the script should exit
+ with the status of the real test to let the `git bisect run` command loop
+ determine the eventual outcome of the bisect session.
+ 
++Bisect next
++~~~~~~~~~~~
++
++Sometimes it can be necessary to check out other branches during a bisect
++session. If you want to check out the next commit of the bisection again,
++simply issue the command:
++
++------------
++$ git bisect next
++------------
++
++Another typical use case of this command is when you have marked a commit
++as bad but you do not know a good commit. Instead of crawling through the
++history yourself, let this command check out a commit for you.
++
+ OPTIONS
+ -------
+ --no-checkout::
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 5d1cb00..5c93a27 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -334,16 +334,10 @@ bisect_next_check() {
+ 	*)
+ 		bad_syn=$(bisect_voc bad)
+ 		good_syn=$(bisect_voc good)
+-		if test -s "$GIT_DIR/BISECT_START"
+-		then
+-
+-			eval_gettextln "You need to give me at least one \$bad_syn and one \$good_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		else
+-			eval_gettextln "You need to start by \"git bisect start\".
+-You then need to give me at least one \$good_syn and one \$bad_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		fi
++		eval_gettextln "You need to give me at least one \$bad_syn revision.
++Use \"git bisect \$bad_syn\" for that. One \$good_syn revision is also helpful
++for bisecting (use \"git bisect \$good_syn\"). If you do not know one \$good_syn
++revision, you can use \"git bisect next\" to find one." >&2
+ 		exit 1 ;;
+ 	esac
  }
- 
--#define DEBUG_BISECT 0
--
--static inline int weight(struct commit_list *elem)
--{
--	return *((int*)(elem->item->util));
--}
--
--static inline void weight_set(struct commit_list *elem, int weight)
--{
--	*((int*)(elem->item->util)) = weight;
--}
--
- static int count_interesting_parents(struct commit *commit)
- {
- 	struct commit_list *p;
-@@ -95,7 +95,7 @@ static inline int halfway(struct commit_list *p, int nr)
- 	 * 2 and 3 are halfway of 5.
- 	 * 3 is halfway of 6 but 2 and 4 are not.
- 	 */
--	switch (2 * weight(p) - nr) {
-+	switch (2 * node_data(p->item)->weight - nr) {
- 	case -1: case 0: case 1:
- 		return 1;
- 	default:
-@@ -128,7 +128,7 @@ static void show_list(const char *debug, int counted, int nr,
- 			(flags & UNINTERESTING) ? 'U' : ' ',
- 			(flags & COUNTED) ? 'C' : ' ');
- 		if (commit->util)
--			fprintf(stderr, "%3d", weight(p));
-+			fprintf(stderr, "%3d", node_data(commit)->weight);
- 		else
- 			fprintf(stderr, "---");
- 		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
-@@ -156,7 +156,7 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
- 
- 		if (flags & TREESAME)
- 			continue;
--		distance = weight(p);
-+		distance = node_data(p->item)->weight;
- 		if (nr - distance < distance)
- 			distance = nr - distance;
- 		if (distance > best_distance) {
-@@ -196,7 +196,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
- 
- 		if (flags & TREESAME)
- 			continue;
--		distance = weight(p);
-+		distance = node_data(p->item)->weight;
- 		if (nr - distance < distance)
- 			distance = nr - distance;
- 		array[cnt].commit = p->item;
-@@ -234,7 +234,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
-  * or positive distance.
-  */
- static struct commit_list *do_find_bisection(struct commit_list *list,
--					     int nr, int *weights,
-+					     int nr, struct node_data *weights,
- 					     int find_all)
- {
- 	int n, counted;
-@@ -246,11 +246,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 		struct commit *commit = p->item;
- 		unsigned flags = commit->object.flags;
- 
--		p->item->util = &weights[n++];
-+		commit->util = &weights[n++];
- 		switch (count_interesting_parents(commit)) {
- 		case 0:
- 			if (!(flags & TREESAME)) {
--				weight_set(p, 1);
-+				node_data(commit)->weight = 1;
- 				counted++;
- 				show_list("bisection 2 count one",
- 					  counted, nr, list);
-@@ -261,10 +261,10 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			 */
- 			break;
- 		case 1:
--			weight_set(p, -1);
-+			node_data(commit)->weight = -1;
- 			break;
- 		default:
--			weight_set(p, -2);
-+			node_data(commit)->weight = -2;
- 			break;
- 		}
- 	}
-@@ -287,8 +287,8 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 	 */
- 	for (p = list; p; p = p->next) {
- 		if (!(p->item->object.flags & UNINTERESTING)
--		 && (weight(p) == -2)) {
--			weight_set(p, count_distance(p));
-+		 && (node_data(p->item)->weight == -2)) {
-+			node_data(p->item)->weight = count_distance(p);
- 			clear_distance(list);
- 
- 			/* Does it happen to be at exactly half-way? */
-@@ -305,12 +305,12 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			struct commit_list *q;
- 			unsigned flags = p->item->object.flags;
- 
--			if (0 <= weight(p))
-+			if (0 <= node_data(p->item)->weight)
- 				continue;
- 			for (q = p->item->parents; q; q = q->next) {
- 				if (q->item->object.flags & UNINTERESTING)
- 					continue;
--				if (0 <= weight(q))
-+				if (0 <= node_data(q->item)->weight)
- 					break;
- 			}
- 			if (!q)
-@@ -321,14 +321,13 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			 * add one for p itself if p is to be counted,
- 			 * otherwise inherit it from q directly.
- 			 */
-+			node_data(p->item)->weight = node_data(q->item)->weight;
- 			if (!(flags & TREESAME)) {
--				weight_set(p, weight(q)+1);
-+				node_data(p->item)->weight++;
- 				counted++;
- 				show_list("bisection 2 count one",
- 					  counted, nr, list);
- 			}
--			else
--				weight_set(p, weight(q));
- 
- 			/* Does it happen to be at exactly half-way? */
- 			if (!find_all && halfway(p, nr))
-@@ -350,7 +349,7 @@ struct commit_list *find_bisection(struct commit_list *list,
- {
- 	int nr, on_list;
- 	struct commit_list *p, *best, *next, *last;
--	int *weights;
-+	struct node_data *weights;
- 
- 	show_list("bisection 2 entry", 0, 0, list);
- 
-@@ -376,14 +375,14 @@ struct commit_list *find_bisection(struct commit_list *list,
- 	show_list("bisection 2 sorted", 0, nr, list);
- 
- 	*all = nr;
--	weights = xcalloc(on_list, sizeof(*weights));
-+	weights = (struct node_data *)xcalloc(on_list, sizeof(*weights));
- 
- 	/* Do the real work of finding bisection commit. */
- 	best = do_find_bisection(list, nr, weights, find_all);
- 	if (best) {
- 		if (!find_all)
- 			best->next = NULL;
--		*reaches = weight(best);
-+		*reaches = node_data(best->item)->weight;
- 	}
- 	free(weights);
- 	return best;
+@@ -677,7 +671,6 @@ case "$#" in
+ 	skip)
+ 		bisect_skip "$@" ;;
+ 	next)
+-		# Not sure we want "next" at the UI level anymore.
+ 		bisect_next "$@" ;;
+ 	visualize|view)
+ 		bisect_visualize "$@" ;;
 -- 
 2.7.1.354.gd492730.dirty
