@@ -1,131 +1,136 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] submodule sync: Test we can pass individual submodules
-Date: Fri, 26 Feb 2016 12:51:52 -0800
-Message-ID: <1456519912-10641-3-git-send-email-sbeller@google.com>
-References: <1456519912-10641-1-git-send-email-sbeller@google.com>
-Cc: jacob.e.keller@intel.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 21:52:08 2016
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH 14/16] bisect: use a modified breadth-first search to find
+ relevant weights
+Date: Fri, 26 Feb 2016 21:55:16 +0100
+Message-ID: <56D0BBB4.9020305@gmx.net>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+ <1456452282-10325-15-git-send-email-s-beyer@gmx.net>
+ <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 21:55:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZPMt-0004Z3-CX
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 21:52:07 +0100
+	id 1aZPQU-0006sy-EA
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 21:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933602AbcBZUwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 15:52:01 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34833 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098AbcBZUv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 15:51:59 -0500
-Received: by mail-pa0-f42.google.com with SMTP id ho8so58117982pac.2
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 12:51:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sP6WSGpudoZ8Q44UFSDH0YsWUlPvUaPGOe+vD0ESCh8=;
-        b=loN3WbwKFmK0Xu07KUd30/B895QFUIFa/RYRdMO2nO4eZ97zCey0OoSyddKK1jFpsj
-         e4+6LqTlVl8YqJ3/5KOP+2hlwQeEUm7w+IaRJgJNXY/wa7VJaNP+kenspZTJhs+aLu1i
-         qqd2kls5xqxq423ui7hhhKHkMa1rKYBi1EfBR09BvwxuzSKJNiPYI1SKe3uQrzYzaV1t
-         sVR5WD+2/VWtQbI0eOBqdomHiEUSsiPzDPizem2SHKkwiqXQBoqCu+1hU9M+ZGD6fOLs
-         4tWph618IK1zzfXkObh8F7OH9C2MxtWZ9/u5VZhNOnRzuSOzoiH0YRC1VIALSX2tyyWl
-         0nSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=sP6WSGpudoZ8Q44UFSDH0YsWUlPvUaPGOe+vD0ESCh8=;
-        b=ZwQ32kPEVuIVc25hNysSazWpLT2WrZMcHYruqYVr4sZ1XZOzcPmyS6uG84rD+ow+/g
-         fk9U/Kcj8HWkT132BXv6kVW0MxqjPq1KPVeOx+5c0x3UC+LcBDJUG5/OJ8fdjeplznWp
-         FI7vq0OCgtvzP8vm0nXGuXHim0wKyfaybRUVv4A3gBiJ1kPSgYn5OElSri5IMN57OVnS
-         TEwjyXzj+/ypgDSkx1sIw3IrG6Gg3dW7PuFC+zDApj647ePYwmNE3qncc5yWOKmOlwdP
-         r1zCnx8G2sCs6Jhc/TxWB01B26LYob/cxJZYUCs6mP7GZfukY1XPrkDVd//6XsJp0XZi
-         UcSQ==
-X-Gm-Message-State: AD7BkJI5JF19zng7ewIJUVsiRHMfz1T4heETq1HnKGWuneu/M3SWA/XiFYN5ET3oEwtUWqbT
-X-Received: by 10.67.7.197 with SMTP id de5mr4927058pad.105.1456519918786;
-        Fri, 26 Feb 2016 12:51:58 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a09f:64c6:9d8b:3a18])
-        by smtp.gmail.com with ESMTPSA id k65sm21316746pfb.30.2016.02.26.12.51.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Feb 2016 12:51:58 -0800 (PST)
-X-Mailer: git-send-email 2.7.2.368.g934fe14
-In-Reply-To: <1456519912-10641-1-git-send-email-sbeller@google.com>
+	id S932066AbcBZUzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 15:55:45 -0500
+Received: from mout.gmx.net ([212.227.17.21]:51532 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754972AbcBZUzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 15:55:44 -0500
+Received: from [192.168.178.43] ([188.108.247.176]) by mail.gmx.com (mrgmx103)
+ with ESMTPSA (Nemesis) id 0Ma2Lr-1aLzph2QjH-00LodP; Fri, 26 Feb 2016 21:55:26
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:6k5YQRWyX7waQ3H0P6DDb6O05jTGTGTcamgZenTUPUCvkuWuqpP
+ uWQnYURd8cqmslTnVAXeOENGhARz4QWr4HzPs9ysFs/pWrSv+rKOT3KWuCZ71SfZnXjj2AV
+ /vRcZQ5R89ffix/NgymiS1rNL2turLKqmlcAizIV/i6ECzg2+DZXoyCAy/DskKcCg8/HQfG
+ vxg/Qxz0RXdV0zo3+UjeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HDIQoSasy/8=:Rx9ISYaLLKuYSB9v87W94G
+ SqIeY3I5thgyl6GGd643MjcTmnXjRbbrqR+oURoS4G6XnGcMiZFJhtpbJyBKZX/UVOz+br3cU
+ nmteGrdvnCsUI6d6kG42qRr7YJ8Xekys41Hz0wxKczs+qf/qvyGcCC82cbXc466UkUjjrylzq
+ ORbNeodDxPhdIZqA6IrrkPvFE6P+AeMwQAGH2vXmPta19l0BCfsy0Xhw53cgZUm2LnofX/FAp
+ 2b0LpnkxtE4T6oQFBegQOJKrlkgx0uVIg37KUMeVpJIJQvEggZtEoXNaKqdzZH54a7IUZhP15
+ RqBTjcmt8pXMDIeB85SC68xVJIyV4suiwXyE7MwUUZFxdEoJ5RIQ9MyOy5tjzEUZwot+xK9ip
+ m6k9+t4IheTdXbKCf5H3RHO/C9Kzz2IAPtBcpiV3wAd1sp1RbGt5EivNhkzrh/UBFMpYk/HNq
+ meaJwCdyWcJocsxuVRHorjPisCgOFUMIs1CEOqblHv7x9Ve+AHQNg+dRKvp/FU9udSCjw6hef
+ nt1H7RQuDVVXRWDqDxM4C42wggA0DnBIcyjZxkrTqbIjxdnZzxO9jVHh+734s8CxWfan6IB1M
+ SvAcqMXo8GkbjRkfzdfy9VkrOsnmFdbNj7MvuCgSciGH/g0xwtSeu5hzbh9NPLQoMZ909CPtE
+ 9hZXKWfnNHvga39bhv03uFxBzZzfVyQxw2ExKxPiqCLvjczukGsUEWLL2a9PJNC/qApdYVgW9
+ coui3EjVyullI9z5kQI28tasFPNygQn3dvyn9gPAcvWYlRwn/kUMtirMpbLJvRtX+mZcf7RW 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287622>
 
-The parent patch made changes to the way `git submodule--helper list`
-is called. From experience this is a sensitive topic and lots subtle things
-can go wrong. As all submodule subcommands except `sync` are setup to
-run `git submodule--helper list` in the original directory, I suspected
-a possible breakage in `sync` not being able to specify an exact submodule
-to run in, so let's add a test for that. Instead of adding a complete new
-test we can modify an existing test to additionally test the additional
-assertion of having just one submodule work fine.
+Hi,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t7403-submodule-sync.sh | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+On 02/26/2016 04:09 AM, Junio C Hamano wrote:
+> Interesting.  So you walk from the bottom commits, incrementing the
+> weight while walking on a part of the graph that is single strand of
+> pearls, or doing the "count the reachable ones the hard way" when
+> you hit a merge [*1*], but either way, once you know the commit you
+> are looking at is above the mid-way, i.e. reaches more than half of
+> the graph, then stop walking because its children will never be
+> better than that commit?
 
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 79bc135..5dde123 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -28,6 +28,9 @@ test_expect_success setup '
- 		git submodule add ../submodule submodule &&
- 		test_tick &&
- 		git commit -m "submodule"
-+		git submodule add ../submodule submodule2 &&
-+		test_tick &&
-+		git commit -m "second submodule"
- 	) &&
- 	git clone super super-clone &&
- 	(
-@@ -149,15 +152,16 @@ test_expect_success 'reset submodule URLs' '
- 	reset_submodule_urls super-clone
- '
- 
--test_expect_success '"git submodule sync" should update submodule URLs - subdirectory' '
-+test_expect_success '"git submodule sync" should update specified submodule URLs - subdirectory' '
- 	(
- 		cd super-clone &&
- 		git pull --no-recurse-submodules &&
- 		mkdir -p sub &&
- 		cd sub &&
--		git submodule sync >../../output
-+		git submodule sync ../submodule >../../output
- 	) &&
- 	grep "\\.\\./submodule" output &&
-+	! grep submodule2 output &&
- 	test -d "$(
- 		cd super-clone/submodule &&
- 		git config remote.origin.url
-@@ -177,7 +181,7 @@ test_expect_success '"git submodule sync" should update submodule URLs - subdire
- 	)
- '
- 
--test_expect_success '"git submodule sync --recursive" should update all submodule URLs - subdirectory' '
-+test_expect_success '"git submodule sync --recursive" should update all specified submodule URLs - subdirectory' '
- 	(
- 		cd super-clone &&
- 		(
-@@ -186,9 +190,10 @@ test_expect_success '"git submodule sync --recursive" should update all submodul
- 		) &&
- 		mkdir -p sub &&
- 		cd sub &&
--		git submodule sync --recursive >../../output
-+		git submodule sync --recursive ../submodule >../../output
- 	) &&
- 	grep "\\.\\./submodule/sub-submodule" output &&
-+	! grep submodule2 output &&
- 	test -d "$(
- 		cd super-clone/submodule &&
- 		git config remote.origin.url
--- 
-2.7.2.368.g934fe14
+Exactly. Maybe that's an even better description for the commit message l-)
+
+> I haven't studied the code carefully, but your mention of BFS makes
+> me wonder if you can "narrow" down the search space even more.
+
+I had an idea that aimed at accomplishing this by finding the
+highest-distance merge commit using binary search. (The BFS collected
+all merge commits, in that order, then you could do binary search.)
+So you have O(log(#mergecommits)) "do it the hard way" weight computations.
+However, in the worst case (or even in every case, I did not thoroughly
+think about the cases that can occur), it could happen that it also had
+to do these "do it the hard way" computations for all merge commits with
+smaller weight... That's why I dropped this idea in favor of the more
+simple approach that I sent to the list.
+
+> In an earlier step of the series, you introduced a work queue to
+> replace the recursion.  The recursion forces the algorithm to work
+> along the topology of the history, but you have more latitude in
+> selecting the commit to dig further with a work queue.
+> 
+> I wonder if you can sort the elements on the work queue based on
+> their distance (i.e. by using a priority queue).  You know the total
+> upfront, so you may find a commit whose weight is exactly half of it
+> before traversing all the bottom half of the history and it may turn
+> out to be even more efficient.  After all, you are only looking for
+> just one such commit, not trying to find all the commits with the
+> best weight.
+
+For the compute_weight() function (the "doing it the hard way"
+function), this would not make sense since all parent commits (of a
+merge commit we call compute_weight() on) will have smaller distance.
+
+However, your idea can help:
+I just noticed that it's not important that I use a *B*FS because of the
+acyclity. So I could also use a DFS that is "more greedy" going towards
+high numbers.
+Note that the traversal is always on trees because the merge commits are
+cut out. So whenever a branching (a commit with more than one child)
+occurs, the DFS should follow the branch of maximum length to its leaf.
+(These maximum lengths can be saved during build_reversed_dag().)
+Then, if there is a halfway commit, we stop. If not, we can just go on
+with the remaining DFS...
+I think I only rethought and rephrased your idea. :) Sounds good to me.
+I'm going to add commits for that.
+
+> [Footnote]
+> 
+> *1* A merge between a commit that reaches N commits and another that
+> reaches M commits may have weight smaller than the sum of N and M,
+> and that is why I left the original "truly stupid algorithm" Linus
+> wrote as-is when I did the obvious optimization for the linear parts
+> of the history.
+
+Yes. In fact, the "truly stupid algorithm" is not truly stupid. I'm not
+quite sure, but I think it's still the best algorithm known so far for
+that problem. (But maybe the problem is just not very interesting in
+science.)
+
+> *2* Whenever I revisited the bisection in my head, I thought about
+> ways to improve that "truly stupid" counting, but never thought
+> about an approach to simply reduce the number of times the "truly
+> stupid" counting has to be done.
+
+Well, I also improved that "truly stupid" counting a little in a former
+commit (patch 7). But it's just the implementation that I improved
+(time/memory trade-off), not the algorithm. :)
+
+Cheers,
+  Stephan
