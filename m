@@ -1,118 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] strbuf_write: omit system call when length is zero
-Date: Thu, 25 Feb 2016 17:40:48 -0800
-Message-ID: <xmqqy4a8l04f.fsf@gitster.mtv.corp.google.com>
-References: <1456439678-5433-1-git-send-email-sbeller@google.com>
-	<CACsJy8DgjmdX681fRwB-JajPBRN+cNy=jFwEDW6D-dXhNi=_6g@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 2/2] git: submodule honor -c credential.* from command
+ line
+Date: Thu, 25 Feb 2016 20:55:10 -0500
+Message-ID: <20160226015510.GA5347@flurp.local>
+References: <1456426632-23257-1-git-send-email-jacob.e.keller@intel.com>
+ <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 02:40:57 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 02:55:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7Oq-00013o-IP
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 02:40:56 +0100
+	id 1aZ7co-0000w6-VR
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 02:55:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbcBZBkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 20:40:52 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60955 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752822AbcBZBkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 20:40:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3EBA48B55;
-	Thu, 25 Feb 2016 20:40:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rAIFilCAk5W1S1peKQ08xJqifq4=; b=SleQjZ
-	4e2oSZRG2wCyaN+atTFbJrWEjtHSdbhzyUWWRhivj4MzlFv6rLthrHuRYo4bt5wf
-	hCqx8YwnSmRpL7K48Uc27DuSQ1BZ63UsmgEi/mo+fqyNWFOWmOSjoNKQ0PTQKlsQ
-	K///N3B/HydSB712RYXx1unkt2529zy/g+iQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yG8XaROfW74qFD2WoAAdMXzW+cz/dYC3
-	didVwrNA5RdSUBUEpFo1uLjss2PsJhpJvCHyZsgYcK5cACXIWwnX0TBuSJY4isDi
-	YrkejcvjE3YrjjNH6wsz+ASSDuLkQZ2xhg6V4uKpy5S7dVKBnYcvUWFP+W4o9S+L
-	QD9zLafC46U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 98BFD48B54;
-	Thu, 25 Feb 2016 20:40:50 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 148E848B52;
-	Thu, 25 Feb 2016 20:40:50 -0500 (EST)
-In-Reply-To: <CACsJy8DgjmdX681fRwB-JajPBRN+cNy=jFwEDW6D-dXhNi=_6g@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 26 Feb 2016 07:47:44 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F713B2E6-DC29-11E5-8831-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1750989AbcBZBzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 20:55:17 -0500
+Received: from mail-ig0-f195.google.com ([209.85.213.195]:36693 "EHLO
+	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750763AbcBZBzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 20:55:16 -0500
+Received: by mail-ig0-f195.google.com with SMTP id xg9so2561592igb.3
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 17:55:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uOJ00CYrYmb/Aq+ShEHi5+c7qSkG3Mcx/7kW13ATOfA=;
+        b=trRRHII+RRS5T7hvpP+Wi4kQ+ZW/fuEPj/8De7iEkEDZaHEoi0joZktveii2Mo81OL
+         B/uTdx4SR4r3w9SfRgEVIYhMIgJijGo4vfyd8JfRQ2lpwU/eyGv/x1KLEhtnLYpbyzJa
+         c0Huf1JroQW8izEhYwL+sv7ENxhmdNecYKwcHo4PUqHhYXf+nL2IIRHmDwegh/4Q91TY
+         AS5qoonu5WZKBbHxNiBCd3biH0J0h0r+cQHOmIsb4rHa4PLWbq3zKOKaxsm1DKQNZlwY
+         d0Ho2xLQOetVYvIJ1ntt/bWI292ofXa/QHqwf8MoXoif6AkNglUBV4dMFNxpighjfcev
+         Fpxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uOJ00CYrYmb/Aq+ShEHi5+c7qSkG3Mcx/7kW13ATOfA=;
+        b=czAh/rvKOV08j/7esSX0GiC5phNrqNb+n+Zoi7gd8ptG7ZhwYH0v9ikvHDOOosVEod
+         dbnDLbdccSybvyIZyO6udZkCDjAu4UQ9slPxAbcJtHdyRtEv6vyUG6nfPEp98qa1pI3K
+         LWhIrmNbKWEsmicaAuG54K93BfOlM7GCsR+m62+JjvCO2nWeD70/NVvJIrrCg3bHNDSm
+         FqzkNJpctNRgnuxGssAdE0r3TwxxqSyDyy3kfV0WPjJGSiovV8VYTaTYkUBdli3Ssbzo
+         Y5QWsr9hCiQT76mDq6FBH0rTOifsLqUcqgewmgE5Rx+a70t4Cq2l7TCtdPSZAqC7faJ2
+         tyWg==
+X-Gm-Message-State: AD7BkJLUziibxzaWX7PBuNgyz+TnSboyPnPbQEyGa7A7JRR6tUAGF/tpu1x9fEGlSFnxDA==
+X-Received: by 10.50.132.74 with SMTP id os10mr400369igb.91.1456451715326;
+        Thu, 25 Feb 2016 17:55:15 -0800 (PST)
+Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
+        by smtp.gmail.com with ESMTPSA id l11sm4440449iol.17.2016.02.25.17.55.14
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 25 Feb 2016 17:55:14 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287512>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Thu, Feb 25, 2016 at 10:57:12AM -0800, Jacob Keller wrote:
+> [...]
+> Replace all the calls to clear_local_git_env with a wrapped function
+> that filters GIT_CONFIG_PARAMETERS using the new helper and then
+> restores it to the filtered subset after clearing the rest of the
+> environment.
+> 
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
+> @@ -0,0 +1,25 @@
+> +test_expect_success 'sanitize-config keeps credential.helper' '
+> +	git -c credential.helper="helper" submodule--helper sanitize-config >actual &&
+> +	echo "'\''credential.helper=helper'\''" >expect &&
 
-> On Fri, Feb 26, 2016 at 5:34 AM, Stefan Beller <sbeller@google.com> wrote:
->> In case the length of the buffer is zero, we do not need to call the
->> fwrite system call as a performance improvement.
->
-> fwrite is a libc call, not system call. Are you sure it always calls
-> write() (assuming buffering is off)?
+Not worth a re-roll, but these quote sequences are brain-melting.
+Easier would have been to double-quote the second argument of
+test_expect_success() and then do either:
 
-I do not think so, but I suspect that the patch misstates its
-rationale (I said I get uncomfortable every time I see a function
-that takes size and nelem separately used by a caller that can
-potentially pass nleme=0, when I wondered it it is OK that no caller
-of this funtion checks its return value).
+    test_expect_success 'sanitize-config keeps credential.helper' "
+        git -c [...] submodule--helper sanitize-config >actual &&
+        echo \'credential.helper=helper\' >expect &&
+        test_cmp expect actual
+    "
 
+or:
 
->
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->>  This applies on top of v17 for origin/sb/submodule-parallel-update.
->>
->>  In case there are other reasons for origin/sb/submodule-parallel-update
->>  to need a reroll I'll squash it in. But as this is a pure performance
->>  optimization in a case we are not running into with that series and that
->>  series is clashing with Davids refs backend series, I figure we may not
->>  want to have a reroll for this fix alone.
->>
->>  Thanks,
->>  Stefan
->>
->>
->>  strbuf.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/strbuf.c b/strbuf.c
->> index 71345cd..5f6da82 100644
->> --- a/strbuf.c
->> +++ b/strbuf.c
->> @@ -397,7 +397,7 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
->>
->>  ssize_t strbuf_write(struct strbuf *sb, FILE *f)
->>  {
->> -       return fwrite(sb->buf, 1, sb->len, f);
->> +       return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
->>  }
->>
->>
->> --
->> 2.7.2.374.ga5f0819.dirty
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+    test_expect_success 'sanitize-config keeps credential.helper' "
+        git -c [...] submodule--helper sanitize-config >actual &&
+        cat >expect <<-\EOF &&
+        'credential.helper=helper'
+        EOF
+        test_cmp expect actual
+    "
+
+> +	test_cmp expect actual
+> +'
+> +
+> +test_done
