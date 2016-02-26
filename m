@@ -1,87 +1,110 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 03/16] bisect: make bisect compile if DEBUG_BISECT is set
-Date: Fri, 26 Feb 2016 03:04:29 +0100
-Message-ID: <1456452282-10325-4-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH 16/16] bisect: get back halfway shortcut
+Date: Fri, 26 Feb 2016 03:04:42 +0100
+Message-ID: <1456452282-10325-17-git-send-email-s-beyer@gmx.net>
 References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 03:05:56 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 03:05:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7n1-0007NX-Dv
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:55 +0100
+	id 1aZ7n4-0007NX-2r
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298AbcBZCFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 21:05:46 -0500
-Received: from mout.gmx.net ([212.227.15.18]:64222 "EHLO mout.gmx.net"
+	id S1752553AbcBZCFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:05:55 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58735 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752112AbcBZCFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 21:05:44 -0500
+	id S1752384AbcBZCFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 21:05:49 -0500
 Received: from fermat.fritz.box ([188.108.247.176]) by mail.gmx.com (mrgmx003)
- with ESMTPSA (Nemesis) id 0MOfcU-1abrKy1Gek-00643e; Fri, 26 Feb 2016 03:05:42
+ with ESMTPSA (Nemesis) id 0MGSgq-1amGvS2ky0-00DF4O; Fri, 26 Feb 2016 03:05:46
  +0100
 X-Mailer: git-send-email 2.7.2.383.g3fb0654
 In-Reply-To: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:6PFnR+R015dp35IRmFBIuEl0aDFawvApi3ODhVDFX6zh4iGAzE2
- CVnmeW1b/iP2RI3gyWjukLbRATu0OpI6CoOKcoBwPbY0SmHKBdDwUIRpEhvUlfRBoPKytPN
- MNrG8tzdURnmESrgSUEuvgdibTxuEmIwE8l5U1aTSK/evHQDNfUo7m/IG2uvs86d60h5TAM
- FNj/MHeL1WI7jKYlQ4p5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tVFAa+jI8Zg=:7ymUhM97Npy6glzMz6vM4E
- j+kFZY1Cu2sppAd1x39dDQK/9nkm1lLNb7PEG2YRGKdAVoG8Lpj5cHw/8V51M9WtroK79g4Ks
- 5iIEvbU+vWpCDBS2/8njDKIkLfcdU8oqNA8hwyAVnPi66T9momaOI50cZZFgwnhIpNndR75ur
- 6VP39F3f5gIUpVTUQXYvnc/JSIPfkNsYg6ftSJ8fRq0UyYXn8vb0vZ/kbiUtWYCiE4+cAd2W0
- pFIanct+2KAt16rqhtazhQGVFLoV/eDHOPx7YnA5oV8a3fY2Zvmc5b1Ab/7F+I3seshB72DN+
- xQdy8sPY2hwqTUyQeTTL1ZoOp1BJ4qBvRkgXOnjg2TjY67THnf9t3fbFq2z5cXi3jcW2I8UKO
- WUcxZa/Jf0aEev1ghJL6+dfI8BV5CdZ6vfwTFUPH6Oyjun6tZgzMactgA8T5Hpp8AuRVkD7BQ
- lHRZ+tOnObYHeAoVSjd5Cm6qEE3eWFmi8WdjEkDbuvdr+XLb3UDwhsLhWmElF7Yghoxb6Ng89
- dc7YDJ7eCxzFjn8r8NHHfGb1OAHDlknxL9818WyrcEnkigfx7Hp+lz68zjzpCWy2vLixa4yUF
- BfckP9B/BY3xPGYemI6AcgJAIIVCD20TAnCozC2imIlvbsNBaPi39dADzK6p41uoljUZq7DH+
- QDVz+BlegcEvdQO/v5hZT06swujrfkUAgfi1pWSyTBdnnkUESbheYUb6ce+6iLo7Lofl8Y6je
- crZHkkEHbhsS4JjffdsR3HpYIUC4JfWKQnYRV9QWf0/KrPCUKlV3iQEtW/Y=
+X-Provags-ID: V03:K0:JIPld5EvlSfpdiAA849RFkKp1g+ou4wZWFG1ObEC98qHJjmt/k4
+ BNC/YbqHt4ZEdBhxfkiv1Xsw7bZhVsBd7vTLh+8o7LpwGyL+0C1GbD/SuN9pAH58UkvnjrH
+ fNWzoTz8aEzvhAS6bteCYh/0LRvUu/X6t2//y64BSoH269cXHaTUPZvh9rQYQRT2jFvmfHq
+ lIMjPxBTkz9wSUXN4sFZw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oErIaSV6vQ4=:lqnmvKEVKu2N6Wg6lK3+FY
+ aUU/YBgzpLXDi3E7mFVQi9jMGkZSPtGtwevVdKtBJtbKOh064us/zDPMYWBoTVt24EJncJ238
+ YyVTB2ECWAkaSh5XWbVfKUbCl0h/NGh7Ax9f6me7uiDAEmhaYq57QpxJP9+wPp8gL+28wGhr7
+ I5MBdXNwHHpxSUQJsq/2fKortng960c1h+IT0jkTO9AJOAZ1lZ9BMDr0fqHMzWM1D7Ah7nSxR
+ NHspvUWi0YSgdcv5lzfNNdwfyAyU+OQWHTHtkRg+0GV4n6H0XdhzAH8SzmtFIvavy9QcLjWx7
+ Lw2V/a+DVxO0x3Im8B9lwpIpgoZVaULU9QeJ1OtZKk01kQM5hDWJJiZ1oAOl6a1y2LuWN0MdB
+ EnfrfWq7R8jvv9uWtwzzeHIe1e6cT+Rp6LqoiC3PApacrgSvTj7vpyrOYCAtOht4e67RiuC/x
+ 9BnoMVw2Fura6c7ziSK/1l9ZsL7BMwJK/+umqvtRZ21hUFUP9n3BJgbHtsxV+YG9U5cps5YIr
+ NAQgdxn5UrPx030Rva2zyC8AESvMNHKW25rTGJlVGa/j6M9RgJvb6xUvXvPojicGBuCdQiH2I
+ vEOpz5/uQd4JjD9BUuEonhLSVf6X6HL/8NjBg7XHbfYxA9kD/dZIJYVUrvwfDwohmWY/crkra
+ D9Yso5BxuHfPx/sYCwvMTj6JCggk+rJb4ql2JsMG+/jwemzSFbRv7jFCB1/jAPmYi0QBIsJ9J
+ OaZ5zqedMG24aErog2Or21eta7SVFy0nCGIMSPE+bhrlS1c96FktDNdrbSE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287515>
 
-Setting the macro DEBUG_BISECT to 1 enables debugging information
-for the bisect algorithm. The code did not compile due to struct
-changes.
+The documentation says that when the maximum possible distance
+is found, the algorithm stops immediately. That feature is
+reestablished by this commit.
 
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- bisect.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+
+In my tests, I have not seen any gain of performance by
+doing this... but it's fast now anyway, who cares ;-)
+
+ bisect.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 06ec54e..905e63a 100644
+index 185a3cf..0153d9a 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
- 		unsigned flags = commit->object.flags;
- 		enum object_type type;
- 		unsigned long size;
--		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
-+		char *buf = read_sha1_file(commit->object.oid.hash, &type, &size);
- 		const char *subject_start;
- 		int subject_len;
+@@ -363,8 +363,8 @@ static void commit_list_insert_unique(struct commit *item,
+ }
  
-@@ -143,10 +143,10 @@ static void show_list(const char *debug, int counted, int nr,
- 			fprintf(stderr, "%3d", weight(p));
- 		else
- 			fprintf(stderr, "---");
--		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.sha1));
-+		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
- 		for (pp = commit->parents; pp; pp = pp->next)
- 			fprintf(stderr, " %.*s", 8,
--				sha1_to_hex(pp->item->object.sha1));
-+				sha1_to_hex(pp->item->object.oid.hash));
+ /* do a BFS on the reversed DAG (starting from commits in queue), stop at merge commits */
+-static void bfs_up_to_merges(struct commit_list *queue,
+-			     struct commit_list **merges)
++static int bfs_up_to_merges(struct commit_list *queue,
++			    struct commit_list **merges)
+ {
+ 	assert(queue);
+ 	struct commit_list **last;
+@@ -391,8 +391,13 @@ static void bfs_up_to_merges(struct commit_list *queue,
+ 		}
  
- 		subject_len = find_commit_subject(buf, &subject_start);
- 		if (subject_len)
+ 		update_best_bisection(top);
++		if (distance_direction(top) == 0) { // halfway
++			assert(!(top->object.flags & TREESAME));
++			return 1;
++		}
+ 		pop_commit(&queue);
+ 	}
++	return 0;
+ }
+ 
+ static int all_parents_are_visited(struct commit *merge)
+@@ -456,10 +461,12 @@ static void compute_merge_weights(struct commit_list *merges)
+ static void modified_bfs(struct commit_list *queue)
+ {
+ 	struct commit_list *merges = NULL;
+-	bfs_up_to_merges(queue, &merges);
+-	while (find_new_queue_from_merges(&queue, &merges)) {
++	int halfway_found = bfs_up_to_merges(queue, &merges);
++
++	while (!halfway_found
++	    && find_new_queue_from_merges(&queue, &merges)) {
+ 		compute_merge_weights(queue);
+-		bfs_up_to_merges(queue, &merges);
++		halfway_found &= bfs_up_to_merges(queue, &merges);
+ 	}
+ }
+ 
 -- 
 2.7.1.354.gd492730.dirty
