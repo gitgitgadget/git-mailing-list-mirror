@@ -1,112 +1,91 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Rebase performance
-Date: Fri, 26 Feb 2016 09:15:05 -0800
-Message-ID: <CAGZ79ka5qTGuLOz3mMr0s=8yOF7LR0iRDhf9jy38GBppOhzD6Q@mail.gmail.com>
-References: <CAP8UFD0p1kvk2B0kkc-M9dm+H-Bmam=OrE99VwQx=KCETFEjcw@mail.gmail.com>
-	<CACBZZX7rVAdzfCm=0FdrCXSx8a2=a8n7pjq1ZSW-V3fzmaSGWw@mail.gmail.com>
-	<vpq37sg4s0l.fsf@anie.imag.fr>
-	<alpine.DEB.2.20.1602261644570.3152@virtualbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] credential: let empty credential specs reset helper list
+Date: Fri, 26 Feb 2016 09:23:24 -0800
+Message-ID: <xmqqa8mnl71v.fsf@gitster.mtv.corp.google.com>
+References: <20160226105135.GA30215@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 26 18:15:17 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Guilherme <guibufolo@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 26 18:23:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZLz1-0006KQ-EF
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 18:15:15 +0100
+	id 1aZM72-0003DP-PW
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 18:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422717AbcBZRPI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2016 12:15:08 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:34589 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422671AbcBZRPH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2016 12:15:07 -0500
-Received: by mail-ig0-f179.google.com with SMTP id g6so42989089igt.1
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 09:15:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=AaNR/ECWDOT0XSfxSN3sGvaXBvV2jRR9qMHYES6SASU=;
-        b=h/Az2ltOrYhOa91B8Io0D0jkAhEmbJ7x6E75iramVj9BFtjpRMwD4nFnUqkAz683s8
-         +urdyyRABNtAxJQ5lN5BiMFMUPSdByaSMMisNvDxRRRnOj0tVqiENYonQyAKmZolGrYm
-         hCvyfeDTQ6YgKqQBYLUx5i5rmo0sMMrrJW3T+34Vy3Co3rWCjxEk232alnDbCh3HHh5q
-         +MFVhqu/kvoGvcZKIfkdUNrzdE6m5C63bjY97IdVvU7w+aw75BSDBma8J+bS3kIOALlH
-         kHP1R/0JP5hR0DJwLBdHkiexuwsTcmPWS6h3/LLlfC3NAM1I081hbHFLTg0S1eXUuUDd
-         sm+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=AaNR/ECWDOT0XSfxSN3sGvaXBvV2jRR9qMHYES6SASU=;
-        b=ifZb8xPczbWe3QmZNeLyJ4ZkKqtXvUxnmZcbrmlbQ6a9tk6xI5AVqVwCPg9BupwZkr
-         VqOSsAsPmgQQWy5DURHFqadmnKWJdiS+5QOUyoX558yIAgh2n58ROTS+s0adhWdL4TqH
-         d3PP6QB0tdsC07WspACMEEIzFgD6UuMFU6aKO4L7UbGsDaCOVkrudxj1Q8vZr07DyQSi
-         /pU6Xp/B042yY74F1NZCa4rgdQwp/YIjQMXZDcDc1XAoBVeiwxT8TfV8BIV6mHQVW9iT
-         m/7xUnSF3DjcIn+9AfIw0gtbudTJmet2bIsZB63q2hglVNKrRnl8jMeY/8bbQFRtSvOc
-         cMvg==
-X-Gm-Message-State: AD7BkJLM81jXqWayI5mJL/fQLVw1UjTyMHQCQ7TEyJvdo/2o8/pF4HhOYYyW47vQKwLYbwFGff6nYZiwe2FjI3At
-X-Received: by 10.50.176.226 with SMTP id cl2mr3913135igc.85.1456506905845;
- Fri, 26 Feb 2016 09:15:05 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Fri, 26 Feb 2016 09:15:05 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.20.1602261644570.3152@virtualbox>
+	id S1754513AbcBZRX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 12:23:28 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53361 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753981AbcBZRX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 12:23:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3FC52444C9;
+	Fri, 26 Feb 2016 12:23:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UGTN8tbZnpnm/xjqXgwHBznkq8M=; b=LmwCwx
+	bYrJpzlbyYCbl2ixlUh8u0o3+1KeB30LvF5D+yA6jGCRUA7eEMp3FqivsZcGFkzj
+	vbqGI3AQlesGlxENa++B7DrDGkq9/UjN4rP+/7ZkPkox0WyllN0CFDs7Kq7OhnGo
+	7YHb3pJW3ryABAyyj9RThPJCXtnk6lc3YlG1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qWKDbkmxnK0DsWWfTzVxKokkyz/HgYmN
+	0mYqm1iEuwxFOLJJt5Q6O7TJ9OQKbq6K0qrOXLiHw8BP28+XDeyNh4XF7dzItTf9
+	LSwmy4qj3g3mSaJ/X0bd1tkNZ9Z3SPhUW8D487WDEqiOvA652nv5u672m1KrV73q
+	EW0hqUo1WyE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 37B2D444C8;
+	Fri, 26 Feb 2016 12:23:26 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 89C3F444C7;
+	Fri, 26 Feb 2016 12:23:25 -0500 (EST)
+In-Reply-To: <20160226105135.GA30215@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 26 Feb 2016 05:51:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A4BA69A2-DCAD-11E5-82F2-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287596>
 
-On Fri, Feb 26, 2016 at 7:45 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Matthieu,
->
-> On Thu, 25 Feb 2016, Matthieu Moy wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->> > At the risk of derailing this thread, a thing that would make reba=
-se
->> > even faster I think would be to change it so that instead of apply=
-ing
->> > a patch at a time to the working tree the whole operation takes pl=
-ace
->> > on temporary trees & commits and then we'll eventually move the br=
-anch
->> > pointer to that once it's finished.
->> >
->> > I.e. there's no reason for why a sequence of 1000 patches where a
->> > FOO.txt is changed from "hi1", "hi2", "hi3", ... would be noticeab=
-ly
->> > slower than applying the same changes with git-fast-import.
->>
->> Also, not touching the worktree during rebase would have the advanta=
-ge
->> that if the final result doesn't change a file, we wouldn't need to
->> touch this file at all, hence the next "make" (or whatever
->> timestamp-using build system the user runs) would consider this file
->> unchanged.
->
-> We still have to write all blobs. So I would still expect this to be =
-I/O
-> bound.
+Jeff King <peff@peff.net> writes:
 
-But if there is an IO bound process, the only way to make it faster
-is to reduce its IO, which was the proposal here? I agree that it proba=
-bly
-is not enough to shift it from being IO bound to say CPU bounded.
+> Sine the credential.helper key is a multi-valued config
 
-Thanks,
-Stefan
+s/Sine/Since/;
 
->
-> Ciao,
-> Dscho
+> diff --git a/credential.c b/credential.c
+> index 7d6501d..aa99666 100644
+> --- a/credential.c
+> +++ b/credential.c
+> @@ -63,9 +63,12 @@ static int credential_config_callback(const char *var, const char *value,
+>  		key = dot + 1;
+>  	}
+>  
+> -	if (!strcmp(key, "helper"))
+> -		string_list_append(&c->helpers, value);
+> -	else if (!strcmp(key, "username")) {
+> +	if (!strcmp(key, "helper")) {
+> +		if (*value)
+> +			string_list_append(&c->helpers, value);
+> +		else
+> +			string_list_clear(&c->helpers, 0);
+> +	} else if (!strcmp(key, "username")) {
+
+I wondered why neither the existing code nor the updated one has a
+check for !value, but this callback assumes no credential
+configuration variable will ever be a boolean and rejects it
+upfront, so this code before or after the change is safe.
+
+Not pointing out anything that needs to be changed; demonstrating
+that I did read this sufficiently well to say that I have reviewed
+it ;-)
