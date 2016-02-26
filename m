@@ -1,111 +1,119 @@
-From: Seb <spluque@gmail.com>
-Subject: Re: interactive rebase results across shared histories
-Date: Fri, 26 Feb 2016 15:12:46 -0600
-Organization: Church of Emacs
-Message-ID: <87povj41m9.fsf@gmail.com>
-References: <87io1j6laz.fsf@gmail.com> <56C91D21.90306@moritzneeb.de>
-	<87io1f5nsi.fsf@gmail.com> <56CCE3C2.1050608@moritzneeb.de>
-	<87egc358ou.fsf@gmail.com>
-	<CAMPXz=on8ONkzDYWEEGFqqKhRoBb9zYBqmYDBsKWagdwFRPRdA@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH 02/16] bisect: add test for the bisect algorithm
+Date: Fri, 26 Feb 2016 22:38:40 +0100
+Message-ID: <56D0C5E0.2020703@gmx.net>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+ <1456452282-10325-3-git-send-email-s-beyer@gmx.net>
+ <CAP8UFD2szf46skWmgZi3kSkh3D0aeMPw4TagUQa7KZ-z6pHdAA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 22:13:24 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 22:38:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZPhS-0000eq-5f
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 22:13:22 +0100
+	id 1aZQ68-0007eq-HK
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 22:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061AbcBZVNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 16:13:18 -0500
-Received: from plane.gmane.org ([80.91.229.3]:54863 "EHLO plane.gmane.org"
+	id S933912AbcBZVir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 16:38:47 -0500
+Received: from mout.gmx.net ([212.227.15.18]:61396 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751505AbcBZVNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 16:13:17 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1aZPhL-0000b7-Ll
-	for git@vger.kernel.org; Fri, 26 Feb 2016 22:13:15 +0100
-Received: from s0106503955564c1f.wp.shawcable.net ([24.77.8.70])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:13:15 +0100
-Received: from spluque by s0106503955564c1f.wp.shawcable.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:13:15 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s0106503955564c1f.wp.shawcable.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-Cancel-Lock: sha1:QcaX8eqqmt5/rxghlNySAPXvf4U=
+	id S1752176AbcBZVip (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 16:38:45 -0500
+Received: from [192.168.178.43] ([188.108.247.176]) by mail.gmx.com (mrgmx002)
+ with ESMTPSA (Nemesis) id 0Ln897-1ZzHP507Ib-00hJxm; Fri, 26 Feb 2016 22:38:42
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.5.0
+In-Reply-To: <CAP8UFD2szf46skWmgZi3kSkh3D0aeMPw4TagUQa7KZ-z6pHdAA@mail.gmail.com>
+X-Provags-ID: V03:K0:s50OeGGiNiGLrEU+Hbzg7beqkdPK/ImaVHvhEPYrSTB0a8Q7tcv
+ wby3KgsFou1KzevhYCqsJVfAuEZG4zLMqoBvDp6K4C0xZVe8tmYIaGhRl0nGiF97GvSezf6
+ GHJl/i1t4EzYh0RFDQ3P94Ci18GvGojafv+tQSEQVHjQTIj27ECyaIrkS8HjTiKQ0PCbcsT
+ 6SF3MiLMUp1njlC5bSyqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xndS7CsrR9Q=:ocDJkChiP54JxRLlP2W4Wq
+ xvUwDwSNdBMUh9Vf8ZXEMxF8boE5ccd0HeXn+eh8TpOIZBwAD6cMfsSF7NtVKIV+YiRtEtCah
+ mU14EjYa/TOtiqKz6ihrymFsH0Ola5MjH+dIcyRDuEbaxefohHAxAcZQosBiySM6Wm4xb3SB3
+ ralu//CY/TCJbczFp3s4/e6/XDUu4AbVlscNNyStE0jTL3h8gy9zEtuP0rGAKyB4C7vbPD4Jo
+ frPJ7mGx4LnEYYyzU4wQ63+yi7Aem5m/u37Y5fXjhrtJobmqeQGljHq88uJ3c55bp5MgGTl2s
+ 3Rt7kLsLP2eoTfaPptmr1C9skWpduhRu+EtH1bMmxttJtxKN8RvOVoBX4+3sp2yAttQlKOR6y
+ 2NAEeLqrAHrODJVKK+6Nm36CdrCLdijramdmmpVo86Yx5l/G6UnF2a2POw3EwfLTh79kelTDT
+ 66SZGjRhIMhKqsEd9ufn1/MlGbwoUitxgcq+D1XOxXYH4ON8F5mzLGWIOFTMJHA5bOkMOo32C
+ nX0379irjK7J6qXKHj2Adgx9tb1FxM0JV4SB1tNbd4ZnlyBB/SvQdZIFLaJl+Wt81vEV/EXWQ
+ 3TSjzRB8fvITLBgYNTVT9vQ4e0WO8KrOLQOuN/sqCCLS+GdcH5y4M4kzjHXmq77V0d4UP+BKn
+ p9vgVCmMQZmKLVzmV0XWXp8cMyE9/KYxF6dE6u+B6sqbaBoo/79otzti5gp6C9zs0R987yjCo
+ koMCg+kqZphY4HkEE41EnEXVornR4Kn82xoxugX7PJ9xEG9Ds6+hTGj3OHWkbff/kJa0pU/f 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287624>
 
-On Fri, 26 Feb 2016 23:38:38 +1100,
-David <bouncingcats@gmail.com> wrote:
+Hi Christian,
 
-> On 24 February 2016 at 10:05, Seb <spluque@gmail.com> wrote:
->> On Tue, 23 Feb 2016 23:57:06 +0100,
->> Moritz Neeb <lists@moritzneeb.de> wrote:
+On 02/26/2016 07:53 AM, Christian Couder wrote:
+>> +test_expect_success 'bisect algorithm works in linear history with an odd number of commits' '
+>> +       git bisect start A7 &&
+>> +       git bisect next &&
+>> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" \
+>> +         -o "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
+> 
+> I thought that we should not use "-o" and "-a" but instead "|| test"
+> and "&& test".
 
->> [...]
+Why is this? I understand the && instead of -a thing (test atomicity),
+however, for || this results in an ugly
 
->>>> OK, I've followed this advice and looked at the dependency graphs
->>>> in gitk before and after rebasing, I've managed to obtain what I
->>>> was after.  The repository now has two branches: master and topic.
->>>> However, Gitk reveals a problem with a string of commits that are
->>>> not part of any branch:
++       git bisect next &&
++       ( test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" ||
++         test "$(git rev-parse HEAD)" = "$(git rev-parse A4)" )
 
->>>> A---B---H---I (master) \ C---D---E (loose string of commits) \
->>>> D'---E'---F---G (topic)
+Right? (Otherwise a failure of e.g. "git bisect start A7" would run
+the command after || (which may still be fine in some cases but is wrong
+in most of the other cases).
 
->>>> How do I remove these loose commits (C, D, E)?
+However, what do you think about this?
 
+diff --git a/t/t8010-bisect-algorithm.sh b/t/t8010-bisect-algorithm.sh
+index bda59da..ae50e7c 100755
+--- a/t/t8010-bisect-algorithm.sh
++++ b/t/t8010-bisect-algorithm.sh
+@@ -8,6 +8,16 @@ exec </dev/null
 
->>> what you might be after is "git gc". But I never used it, it was not
->>> neccesary for me. I would let the automatic garbage collection drop
->>> my dangling commits. It's safer - who knows when you will still want
->>> to restore your recent "loose string of commits".
+ . ./test-lib.sh
 
->>> How exactly are the loose commits causing trouble?
++test_compare_rev () {
++       arg="$(git rev-parse "$1")"
++       shift
++       for rev
++       do
++               test "$arg" = "$(git rev-parse "$rev")" && return 0
++       done
++       return 1
++}
++
+ test_expect_success 'set up a history for the test' '
+        test_commit A1 A 1 &&
+        test_commit A2 A 2 &&
+@@ -48,27 +58,25 @@ test_expect_success 'set up a history for the test' '
+ test_expect_success 'bisect algorithm works in linear history with an
+odd number of commits' '
+        git bisect start A7 &&
+        git bisect next &&
+-       test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" \
+-         -o "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
++       test_compare_rev HEAD A3 A4
+ '
 
->> Sure enough, these dangling commits were removed automatically
->> without any intervention.  All is good.
+and so on...
+See
+https://github.com/sbeyer/git/commit/2c224093ccee837a7f0f62f6af6a0a804d07c022
 
-> This discussion could end there without problem. But if you want to
-> understand a little more thoroughly, read on ...
+(test_compare_rev() could also go into test-lib.sh)
 
-Thanks David, I appreciate the insight.  Indeed, I've learnt a lot over
-the last few days with help in this thread as I confronted a lurking
-problem after many years neglecting it.  Briefly, long ago I was
-developing a project in RCS, then on CVS and SVN, until some years ago I
-imported it into git via cvs2svn.  I had turned a blind eye to a bit of
-mess up to the very early releases, likely due to my inexperience but
-also differences between VCS.
-
-After cleaning up all the mess, I've ended up with a long master branch,
-and a series of earlier commits that are not reachable from master.
-Fortunately, the tags have kept them alive. This is the scenario
-simplified:
-
-A---C---D(tag2)                 loose commits (not on any branch)
- \
-  B(tag1)
-
-E---F---G---H---*               (master)
-
-I could put the "loose" (but tagged) commits on a branch at "tag2", but
-I hate that "tag1" shows as a twig there...  It would be nice to have
-all the history reachable from master.  So two questions I'm working on
-right now: 1) how to bring "tag1" into the "tag2" chain of commits, and
-then 2) how to tie it all together into master so that it reads
-linearly.
-
--- 
-Seb
+Cheers
+Stephan
