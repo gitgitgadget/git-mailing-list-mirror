@@ -1,125 +1,101 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFD 3/6] rev-list: list all heads with --all
-Date: Fri, 26 Feb 2016 17:39:43 +0100
-Message-ID: <61d93b0aba1d4cb7348066db0b48f1ce2d5b35c5.1456504190.git.git@drmicha.warpmail.net>
+Subject: [PATCH 2/6] t6014: test prune with detached HEADs in separate worktrees
+Date: Fri, 26 Feb 2016 17:39:42 +0100
+Message-ID: <47fd12af598614ca10fa28cb36fb98ca9ab6d7bb.1456504190.git.git@drmicha.warpmail.net>
 References: <cover.1456504190.git.git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 17:40:09 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 17:40:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZLR0-00014b-Uh
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 17:40:07 +0100
+	id 1aZLR0-00014b-9t
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 17:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754801AbcBZQj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 11:39:56 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:54597 "EHLO
+	id S932594AbcBZQjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 11:39:53 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35035 "EHLO
 	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754632AbcBZQjw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2016 11:39:52 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id AECA420C91
-	for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:39:51 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 26 Feb 2016 11:39:51 -0500
+	by vger.kernel.org with ESMTP id S1754483AbcBZQjv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2016 11:39:51 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 94E52208E3
+	for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:39:50 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 26 Feb 2016 11:39:50 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
 	date:from:in-reply-to:message-id:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=XbZwcY1zifJ9NdPO58O+iJZQtE0
-	=; b=XPI8D/PoGUEktzng+aVn/fByTRgcdtl6gJ8OB8tM9bck5WvZcZlmoI8cvcn
-	GQ+9o8S/7dEoup28oJ1oWcL2/zvFlMPV7XITN2vuwqzZ5Pw/k344C0KrA27dKdjo
-	+CTMNeREJFu5AENgH/+Txfa9J8/82uLvYmhuQ5VrNLPwLRKw=
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=r4dVJkvAZVLsIvTyLvQxo5TMD24
+	=; b=CWUbSH7m/UOzFgg0qWjBMuLM8QqwfuB3UWtOabM6ocgYgSqKTXbmIaWJYQ2
+	sT9V9fSqsCu4jIHW24x4n/0JiCrNmuhSDgFVtAApxVMZq4x7u/r0DXOBQ2X5UcgD
+	ntt909NytDwvquMku6GlKI4PggIbRqR4nmM0v0DvdZ8Arwwg=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=XbZw
-	cY1zifJ9NdPO58O+iJZQtE0=; b=U0/vQjY+kt9tLjnXiPKyrv9RbMIafNM9F2uo
-	aG0daSnu9ZwafUm3YSR9dbTCB/btunFKA6mJTp70ycrST2EfXKxaZm93OOsrOy+q
-	g9YdM5eRd6mFgrdDKN6Gwo8PPOM92+xTWCfUT+EdVSTWfOKHx2lr75ItEya8Z9k1
-	55tkK+s=
-X-Sasl-enc: 4CFbWYoUdlWVQIr5dkwxsD7ssQ41ETNDknBcJtXJekU1 1456504791
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=r4dV
+	JkvAZVLsIvTyLvQxo5TMD24=; b=a/994qnfjv93XKkl7/e+Nef1F671F5RoJvO5
+	Z3ex92tKVbB2yxH1qtm8HNTOyTsmC9BfLxUfg/B7giRTGwKDJlMCi/LbOptJiis0
+	n/zPF2CJMW4tUXOPzGN9MQ+SG5iuu3yc+xkC7/EI10y1rO9FAnaOJLh0hl0ha6Uq
+	d1gpFrc=
+X-Sasl-enc: pO1kJB9sXLZvZOtoHi6r0u/B6Dh8au/NzLQflyLufYer 1456504790
 Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4F4B3680180;
-	Fri, 26 Feb 2016 11:39:51 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2C105C00014;
+	Fri, 26 Feb 2016 11:39:50 -0500 (EST)
 X-Mailer: git-send-email 2.7.2.618.g7a61b68
 In-Reply-To: <cover.1456504190.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287585>
 
-HEAD is a worktree specific sysmref, so that a repository with multiple
-worktrees can have multiple HEADs, or HEADs in a worktree different from
-the current worktree.
+"git prune" relies on "git rev-list --all" to list all reachable,
+non-prunable commits. In the presence of per-worktree refs such as HEAD
+this becomes more complicated.
 
-So far, "rev-parse --all" adds only the HEAD from the current worktree
-to the list of refs (besides branches etc.). So, a detached HEAD from a
-different checkout would be missed unless a shared ref (or current HEAD)
-points to it (or descents from it). As a consequence, "git prune" can
-prune detached HEADs from worktrees and leave the repo in an
-inconsistent state.
+Add a test that makes sure that per-worktree refs from other worktrees
+are not omitted.
 
-Make "rev-parse --all" add the HEADs from all worktrees. This results in
-a non-worktree-specific ref list and solves the pruning problem.
+This is currently broken, possibly resulting in data loss.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
+ t/t6014-rev-list-all.sh | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-Notes:
-    This patch solves the pruning problem with worktrees, but I feel quite
-    uneasy about substituting the ref solving at the very heart of refs.c. So
-    please consider this a mere poc and a request for discussion/input
-    about how to do this the right way.
-    
-    In essence, I feel the worktree interface still has to evolve a bit: I'd
-    rather for_each_worktree than loop myself, and if many call sites need to
-    be aware of multiple heads or worktrees than get_worktrees() should be
-    part of our init stuff, not here. [I may be out of sync of newer progress.]
-
- refs/files-backend.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 81f68f8..5bdb568 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -4,6 +4,7 @@
- #include "../lockfile.h"
- #include "../object.h"
- #include "../dir.h"
-+#include "../worktree.h"
+diff --git a/t/t6014-rev-list-all.sh b/t/t6014-rev-list-all.sh
+index c9bedd2..99bf8ae 100755
+--- a/t/t6014-rev-list-all.sh
++++ b/t/t6014-rev-list-all.sh
+@@ -39,4 +39,29 @@ test_expect_success 'rev-list --graph --no-walk is forbidden' '
+ 	test_must_fail git rev-list --graph --no-walk HEAD
+ '
  
- struct ref_lock {
- 	char *ref_name;
-@@ -1748,7 +1749,8 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
- static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
- 	struct object_id oid;
--	int flag;
-+	struct worktree **worktrees;
-+	int i, retval;
- 
- 	if (submodule) {
- 		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
-@@ -1757,10 +1759,15 @@ static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- 		return 0;
- 	}
- 
--	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
--		return fn("HEAD", &oid, flag, cb_data);
-+	worktrees = get_worktrees();
-+	retval = 0;
-+	for (i=0; worktrees[i]; i++) {
-+		hashcpy(oid.hash, worktrees[i]->head_sha1);
-+		retval = retval || fn("HEAD", &oid, worktrees[i]->is_detached ? 0 : REF_ISSYMREF, cb_data);
-+	}
- 
--	return 0;
-+	free_worktrees(worktrees);
-+	return retval;
- }
- 
- int head_ref(each_ref_fn fn, void *cb_data)
++test_expect_success 'setup worktree tests' '
++	mkdir newtree &&
++	git worktree add --detach newtree master^ &&
++	(
++		cd newtree &&
++		commit detached2
++	)
++'
++
++test_expect_failure 'prune in main worktree does not lose detached HEAD in new worktree' '
++	git prune --expire=now &&
++	(
++		cd newtree &&
++		git show HEAD
++	)
++'
++
++test_expect_failure 'prune in new worktree does not lose detached HEAD in main worktree' '
++	(
++		cd newtree &&
++		git prune --expire=now
++	) &&
++	git show HEAD
++'
++
+ test_done
 -- 
 2.7.2.618.g7a61b68
