@@ -1,7 +1,7 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 09/16] bisect: extract get_distance() function from code duplication
-Date: Fri, 26 Feb 2016 03:04:35 +0100
-Message-ID: <1456452282-10325-10-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH 08/16] bisect: use commit instead of commit list as arguments when appropriate
+Date: Fri, 26 Feb 2016 03:04:34 +0100
+Message-ID: <1456452282-10325-9-git-send-email-s-beyer@gmx.net>
 References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <chriscool@tuxfamily.org>
@@ -12,90 +12,115 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7n2-0007NX-0r
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:56 +0100
+	id 1aZ7n3-0007NX-GA
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752452AbcBZCFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 21:05:50 -0500
-Received: from mout.gmx.net ([212.227.15.18]:49573 "EHLO mout.gmx.net"
+	id S1752410AbcBZCFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:05:49 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64397 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065AbcBZCFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 21:05:46 -0500
+	id S1752286AbcBZCFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 21:05:47 -0500
 Received: from fermat.fritz.box ([188.108.247.176]) by mail.gmx.com (mrgmx003)
- with ESMTPSA (Nemesis) id 0M3j17-1Zhz6P0hTF-00rItZ; Fri, 26 Feb 2016 03:05:44
+ with ESMTPSA (Nemesis) id 0Lhwt0-1aCNsL3g4g-00n83K; Fri, 26 Feb 2016 03:05:44
  +0100
 X-Mailer: git-send-email 2.7.2.383.g3fb0654
 In-Reply-To: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-X-Provags-ID: V03:K0:OIfUuyrvl4o5pCXK+Avv3OStp8flsjd9imXg9x3gLzhD7NffJ9Q
- Q27BqQvwz+CunhtqP+1v8eZfkgFbSuDeVZYwfY5BOfR542ADpUVgq718d+xIwiJ7XN7ADTC
- h2dgqhuz82wZYHEn6CO8MT+TRbkADWEnTweZnlwP2zpBKuQc5NXd0wPVDatCcasORUGN6xH
- QHVycMDzIrclyo4lBCpKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NUFHgcxOfPk=:PN7sL6BsL7i6qNkNbEispL
- /UFey4Cx6Kuw43uOAfBYdcf+6fmVHnHyr1Ch+fIhFXbiMWtzK6tX4mWP+Ij0JgFz156qnZUqm
- Zo3mVHptpTtUUl3KfzNPyF7tuQkNZiBiKWt9gZKiM4UgPNRzPpyDfoYC0GbWkZ/ay3hGZDrD2
- QuhlwsrkrBad5YxyJ85KpuypV5RW1GtY5sjhJn25DzPBYOEdHoi0Eoa2ImeZSJA0XhI4ef5RC
- 7Lb4DpUiXUroXzmlO6e6a7yT9gkuaPNNDNXDh3ywT+6urIOprKufisjarcR8N9gEmM6wMtfop
- ahIEZ1bFaIbX56Yich7ro7r3hb9JQrXwDuMfs7eLKoHt5DVAM2zaMS+fnlgTQV/phxXWYpmot
- UgCU1AcETfeyOX+aRWedfEyfryJ0ugTKHtaI6Y20Ejf3dKofN5gdj92B9dik7tuukGYc9HuOC
- PO7RmvRAdXPel7FwnIPbg5QITw9b9v7NYs0M3qIVucZNo178VbHM4cgj0pumwvxHJ6lT7kBeT
- 0Cto9PAdclYEQ94C7LWtU7S6yQhrq/SpVqcLo+bgqD7Mrt9srL0uxN0BT+CXY2hoZZT4Fx3sm
- nRKfYulbU2JqPGrDuTiG1SNVlZqt0PUutcdSTsDwkcJzxH+1kNwthJFmgdWv5tA8hInj+8hsL
- Qdp6Y+NjBkSssLzp35/gaE5w/COQh1s/PZsdXT34eZGhqdVubXMhuI0u3qGWvAqJi5RWOwajq
- mAvbPPcJ4Xtr8b5OZI1B29RABMa8j+AcXZqauWj+hRTx03wkmNcRYDuLOcY=
+X-Provags-ID: V03:K0:ImE+6JEwN14gd1SxWBYBF4+y068CG8RQXKzGJBWvLfYjC2p3OMk
+ /MlJb/ktR2ejypvMq8mz90XOWXSxmsftgCvbcjVDtisKXkQTvXJYYL0waZZ3WdHKHZwsomU
+ UAryMxYIGaM6yi1mWc+Gc0D7h3HqVGp6sQWeIbT5jL6i7rWoYEaQVxvRInYAeBZk5aBGplj
+ eYg71XNw+OTDyUBch7Ogw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UwGmwAmGf1g=:tULr6eZcvfxfYFsVbxDk/q
+ qRjU4eGJiBX5J5FKbXuRobZ+VchrakNt7s4mT10P2IlcKf/dLFsmbPTu8mXtJMwMYvWEHw6zO
+ 2Vh4MKdKbDHCx92qygvV9e02c0RkRKuW6sE2RYKDDvKAtQ2lerlNtLDsDoJpXGDH5bPH0wVzY
+ wo7pRb0IY0lfWOQk3d5zLacazmA9ie/tJNHh0s4K4d2H9HNsZn4H0R178RTL73j94fzwyubg/
+ AgSwnf8SuyDL7zwnAJceO6V+ZUIaGsMLwOvKOnAfK4udkcCxZUUtzTX6AjhkEXluoY+11Swze
+ lQPR594a/CAgFPzWGeptNmuiJ5X+Ozl6J71B4pNII7s41S+Np8zqrCWdmAcZs/SQjStzYRH9Z
+ yj2jjpK06Uu/eKL8uw0xJWNU5Lw/5jy8w9wPEn0piLupPvEFCsWfKP1Xro6WqJHcebkyOT/X8
+ NS7f4mHQYMRQrNylp0w9snGu+9ImdFtYhwpk7FlOTLFwo+cAavZNsqaW1ylJ6smv7eKSNlIHd
+ seP83t0baPMHfCIc6a1gHakHqfhJdzP/FaYu2XuBf6R+R28bVTsI7rHfaOEgaXf/08aMpT5ZW
+ ydY86VQiYg4IUtZiiqAmSMvWynjRBDsiCjD1hcbd6NtXvrjVkyfbvjoZsxY7BRs5gRsmnU81j
+ L062sZVu9Fdr8r+kJPwqmpjKSjpgEvmvJ+DjIgeFTwl/4kO4WmfDGJiqxMsEy6eor8oi4QPzv
+ MQJtG7/5r+WcFEAQC26siifbuevSVRJLDAn01UUaHB6xCyENQ+sdQYV1wKM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287517>
+
+It makes no sense that the argument for count_distance() and
+halfway() is a commit list when only its first commit is relevant.
 
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
 
-We will also use that function more often later.
+This is just some kind of minor code cleanup.
+The typical "while at it", you know it, I guess.
 
- bisect.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ bisect.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 76f2445..afdd1c4 100644
+index 6df13b0..76f2445 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -38,6 +38,14 @@ static inline struct node_data *node_data(struct commit *elem)
+@@ -38,11 +38,11 @@ static inline struct node_data *node_data(struct commit *elem)
  	return (struct node_data *)elem->util;
  }
  
-+static inline int get_distance(struct commit *commit, int total)
-+{
-+	int distance = node_data(commit)->weight;
-+	if (total - distance < distance)
-+		distance = total - distance;
-+	return distance;
-+}
-+
- static int count_distance(struct commit *entry)
+-static int count_distance(struct commit_list *entry)
++static int count_distance(struct commit *entry)
  {
  	int nr = 0;
-@@ -148,9 +156,7 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
+ 	struct commit_list *todo = NULL;
+-	commit_list_append(entry->item, &todo);
++	commit_list_append(entry, &todo);
+ 	marker++;
  
- 		if (flags & TREESAME)
- 			continue;
--		distance = node_data(p->item)->weight;
--		if (nr - distance < distance)
--			distance = nr - distance;
-+		distance = get_distance(p->item, nr);
- 		if (distance > best_distance) {
- 			best = p;
- 			best_distance = distance;
-@@ -188,9 +194,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+ 	while (todo) {
+@@ -77,18 +77,18 @@ static int count_interesting_parents(struct commit *commit)
+ 	return count;
+ }
  
- 		if (flags & TREESAME)
- 			continue;
--		distance = node_data(p->item)->weight;
--		if (nr - distance < distance)
--			distance = nr - distance;
-+		distance = get_distance(p->item, nr);
- 		array[cnt].commit = p->item;
- 		array[cnt].distance = distance;
- 		cnt++;
+-static inline int halfway(struct commit_list *p, int nr)
++static inline int halfway(struct commit *commit, int nr)
+ {
+ 	/*
+ 	 * Don't short-cut something we are not going to return!
+ 	 */
+-	if (p->item->object.flags & TREESAME)
++	if (commit->object.flags & TREESAME)
+ 		return 0;
+ 	/*
+ 	 * 2 and 3 are halfway of 5.
+ 	 * 3 is halfway of 6 but 2 and 4 are not.
+ 	 */
+-	switch (2 * node_data(p->item)->weight - nr) {
++	switch (2 * node_data(commit)->weight - nr) {
+ 	case -1: case 0: case 1:
+ 		return 1;
+ 	default:
+@@ -280,10 +280,10 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 	for (p = list; p; p = p->next) {
+ 		if (!(p->item->object.flags & UNINTERESTING)
+ 		 && (node_data(p->item)->weight == -2)) {
+-			node_data(p->item)->weight = count_distance(p);
++			node_data(p->item)->weight = count_distance(p->item);
+ 
+ 			/* Does it happen to be at exactly half-way? */
+-			if (!find_all && halfway(p, nr))
++			if (!find_all && halfway(p->item, nr))
+ 				return p;
+ 			counted++;
+ 		}
+@@ -321,7 +321,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 			}
+ 
+ 			/* Does it happen to be at exactly half-way? */
+-			if (!find_all && halfway(p, nr))
++			if (!find_all && halfway(p->item, nr))
+ 				return p;
+ 		}
+ 	}
 -- 
 2.7.1.354.gd492730.dirty
