@@ -1,176 +1,160 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 02/16] bisect: add test for the bisect algorithm
-Date: Fri, 26 Feb 2016 07:53:42 +0100
-Message-ID: <CAP8UFD2szf46skWmgZi3kSkh3D0aeMPw4TagUQa7KZ-z6pHdAA@mail.gmail.com>
-References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-	<1456452282-10325-3-git-send-email-s-beyer@gmx.net>
+From: Pranit Bauva <pranit.bauva@zoho.com>
+Subject: Re: [PATCH/RFC] git-commit: add a commit.verbose config variable
+Date: Fri, 26 Feb 2016 13:26:45 +0000
+Message-ID: <56D05295.6020102@zoho.com>
+References: <56CFBF19.6040004@zoho.com>
+ <CAPig+cQE6ytRKFjqRRLrPHCYqJuf52NKvy8sZs8rX3t5_kDRVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 07:53:54 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Feb 26 08:21:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZCHg-0005AA-8u
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 07:53:52 +0100
+	id 1aZCiZ-0005CG-VB
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 08:21:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932745AbcBZGxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 01:53:47 -0500
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:36134 "EHLO
-	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932674AbcBZGxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 01:53:44 -0500
-Received: by mail-lf0-f47.google.com with SMTP id l83so471435lfd.3
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 22:53:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FFt+stUSHQVgHKg9z+Sa2bdnB4Yo2csdw9/nQrMkhqA=;
-        b=sHxS108dsTqh3Ml9rkE0UWZBd2y8A+7VSufZ+H3dSUxq92g44+fCv3+kg2/ZSj+6fS
-         dyI6vk3lZbUnbLKGDGlsKHkJbyh9PBiz/ZL8jbxEs4c8bWR4GO9SzfN80bF/IM24qVoy
-         9EsstxRcYGvIghIph029ZfjNX4+M41fGs5oOf40o60cSKPvhZZqxY/Q2bH/VmvpQKTz+
-         pU1AObMbhn6dHIfDnjZBP1xRd0qMDKGK02UuzgbNR4ZKzqFft9p0ZQxMu2U8J+eAbyBs
-         u20+dToH63Ccpey8FccnIXyXRaUOmN0SXvCWUPSWDxWPkIHeq0bPwotSeHQLWtjE9KM/
-         TnYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=FFt+stUSHQVgHKg9z+Sa2bdnB4Yo2csdw9/nQrMkhqA=;
-        b=YgPtEF/chItvvk/cXimFlj3FF2rhjbvk0DByDmwM4hGnhmw+2+jiceTFIwiu5q5kM2
-         LWBlTU6AqO3VPH+CeYNeBHtlx3qRZ1ak1H3q06tlu8FXPsgnpVT+pJP6zz19SKavjPAi
-         IUW49hk3jzm/BWIXCtW21kC9gB0H5mdtKTq8MPcSzIPF9ZCuUlAe78WCSPZ8mGwEIxrR
-         WpCj81mMjjBlIAIqBqXugjbEjvShWhrWesfVC03o95Vi6sJ3JDVeBe0DZVoBOCNQajnO
-         Aak21DMQ2ShbODXp/4Y82Q8hGqrPnGIi+LUjz6BSG4NCW92PhVRim83f+J4z2IHjZ4sJ
-         4DhQ==
-X-Gm-Message-State: AG10YOTf5mnAx4UJijFF/5wTBtsrA71OtZakS97Gtkh05fPJ8YzGixXFSBYr8uZ5SGrHhay4BHa7P/Iqoev6Qg==
-X-Received: by 10.25.26.83 with SMTP id a80mr18505050lfa.36.1456469623024;
- Thu, 25 Feb 2016 22:53:43 -0800 (PST)
-Received: by 10.25.152.199 with HTTP; Thu, 25 Feb 2016 22:53:42 -0800 (PST)
-In-Reply-To: <1456452282-10325-3-git-send-email-s-beyer@gmx.net>
+	id S932195AbcBZHSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 02:18:49 -0500
+Received: from sender153-mail.zoho.com ([74.201.84.153]:22834 "EHLO
+	sender153-mail.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932099AbcBZHSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 02:18:48 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=zapps768; d=zoho.com; 
+  h=subject:to:references:cc:from:message-id:date:mime-version:in-reply-to:content-type; 
+  b=SyJwtNnY5/bAZXPGw8V94/B7SKywxSIgHt/vA+J41FKwIqQ4b82qhglrdrDDHu6by/0Y92lfM5/o
+    QF5CKcsoXZi3u1M9AmAXQL38eeCLmgWMoqXvOYH5NKpAf7xoCer7  
+Received: from 127.0.0.1 (193.90.12.88 [193.90.12.88]) by mx.zohomail.com
+	with SMTPS id 1456471123160150.64967302839887; Thu, 25 Feb 2016 23:18:43 -0800 (PST)
+In-Reply-To: <CAPig+cQE6ytRKFjqRRLrPHCYqJuf52NKvy8sZs8rX3t5_kDRVg@mail.gmail.com>
+X-Zoho-Virus-Status: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287540>
 
-On Fri, Feb 26, 2016 at 3:04 AM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
+Matthieu Moy:
+> Using "git send-email" normally does the right thing. You may want to
+> look at https://submitgit.herokuapp.com/ too.
+git send-email does not work as my institute proxy does not allow
+IMAP/SMTP connections. But I will take care of this from hence forward.
+
+> The commit message should not try to rephrase what the patch aleady
+> says.
+
+I am dropping this statement off because of one another reason which
+Eric Sunshine gave.
+
+> If you know you haven't finished, you may use WIP (work in progress)
+> instead of RFC in the title.
+
+I wasn't familiar with this tag. I will keep it in mind. And this is not
+included in Documentation/SubmittingPatches , so I will send a patch to
+include WIP tag.
+
+> "the git-config" is not proper English. You mean "a configuration file".
+> I'd write "the configuration variable `commit.verbose` can be set to
+> true".
+
+I actually was facing problem in phrasing it. Thanks for your
+suggestion. I will update this.
+
+>> +	with git-config.
 >
-> To be honest: the test could be better, it could be more "targeted",
-> i.e. the example commit history could be smaller and just consider
-> all the cases and corner cases and whatever.
-> However, I made it first to understand the algorithm and verify the
-> description of it in the documentation. Then I was too lazy to
-> improve it. I am sorry that this is no better advertising text. ;)
->
-> Moreover, the test does not test one important thing that is
-> always cared about in the bisect code: TREESAME commits.
-> Perhaps I got the concept wrong. I tried to obtain TREESAME commits
-> using 'git commit --allow-empty -m "same tree"'. However, those
-> commits were never considered being TREESAME. So I gave up (I did
-> not care much.)
+> Did you mean "git commit"?
+Sorry for my carelessness. I will update this.
 
-I didn't care enough to test TREESAME either.
 
-> Anyone has an idea how to obtain them?
-> Or is this a bug that should be fixed?
->
-> (Also UNINTERESTING commits are never found by the DEBUG_BISECT
-> output, but I think this is because they are just filtered out.)
+> Doesn't this override any value that --verbose or --no-verbose may >
+ have set before?
+Yes, this was the problem. I have fixed it now. But there is a glitch.
+See below.
 
-Yeah, I think so.
+Eric Sunshine:
+> On Thu, Feb 25, 2016 at 9:57 PM, Pranit Bauva <pranit.bauva@zoho.com> wrote:
+>> From c273a02fc9cab9305cedf6e37422e257a1cc3b1e Mon Sep 17 00:00:00 2001
+>> From: Pranit Bauva <pranit.bauva@zoho.com>
+>> Date: Fri, 26 Feb 2016 07:14:18 +0530
+>> Subject: [PATCH/RFC] git-commit: add a commit.verbose config variable
 
->  t/t8010-bisect-algorithm.sh | 162 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 162 insertions(+)
->  create mode 100755 t/t8010-bisect-algorithm.sh
->
-> diff --git a/t/t8010-bisect-algorithm.sh b/t/t8010-bisect-algorithm.sh
-> new file mode 100755
-> index 0000000..bda59da
-> --- /dev/null
-> +++ b/t/t8010-bisect-algorithm.sh
-> @@ -0,0 +1,162 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2016 Stephan Beyer
-> +#
-> +test_description='Tests git bisect algorithm'
-> +
-> +exec </dev/null
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'set up a history for the test' '
-> +       test_commit A1 A 1 &&
-> +       test_commit A2 A 2 &&
-> +       test_commit A3 A 3 &&
-> +       test_commit A4 A 4 &&
-> +       test_commit A5 A 5 &&
-> +       test_commit A6 A 6 &&
-> +       git checkout -b b A5 &&
-> +       test_commit B1 B 1 &&
-> +       git checkout master &&
-> +       test_commit A7 A 7 &&
-> +       git checkout b &&
-> +       test_commit B2 B 2 &&
-> +       git checkout master &&
-> +       test_commit A8 A 8 &&
-> +       test_merge Bmerge b &&
-> +       git checkout b &&
-> +       test_commit B3 B 3 &&
-> +       git checkout -b c A7 &&
-> +       test_commit C1 C 1 &&
-> +       git checkout -b d A3 &&
-> +       test_commit D1 D 1 &&
-> +       git checkout c &&
-> +       test_commit C2 C 2 &&
-> +       git checkout d &&
-> +       test_commit D2 D 2 &&
-> +       git checkout c &&
-> +       test_commit C3 C 3 &&
-> +       git checkout master &&
-> +       git merge -m BCDmerge b c d &&
-> +       git tag BCDmerge &&
-> +       test_commit A9 A 9 &&
-> +       git checkout d &&
-> +       test_commit D3 &&
-> +       git checkout master
-> +'
-> +
-> +test_expect_success 'bisect algorithm works in linear history with an odd number of commits' '
-> +       git bisect start A7 &&
-> +       git bisect next &&
-> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" \
-> +         -o "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
+>From hence forth I will take that into consideration.
 
-I thought that we should not use "-o" and "-a" but instead "|| test"
-and "&& test".
+> Talking about this in the commit message misleads the reader into
+> thinking that there is some potential oddity going on where a careful
+> decision needs to be made about which variable to set, when that's not
+> in fact the case. The 'verbose' member of wt_status is just one
+> consumer of the "verbose" flag, not the sole consumer. Another
+> consumer is found in builtin/commit.c:cmd_commit():
+> 
+>     if (verbose ||
+>         cleanup_mode == CLEANUP_SCISSORS)
+>             wt_status_truncate_message_at_cut_line(&sb);
+> 
+> So, it would not be correct for the configuration ever to set only
+> wt_status::verbose.
+> 
+> Consequently, it would be better to drop this paragraph altogether
+> from the commit message, so as to avoid confusing readers.
 
-> +'
-> +
-> +test_expect_success 'bisect algorithm works in linear history with an even number of commits' '
-> +       git bisect reset &&
-> +       git bisect start A8 &&
-> +       git bisect next &&
-> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
-> +'
-> +
-> +test_expect_success 'bisect algorithm works with a merge' '
-> +       git bisect reset &&
-> +       git bisect start Bmerge &&
-> +       git bisect next &&
-> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A5)" &&
-> +       git bisect good &&
-> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A8)" &&
-> +       git bisect good &&
-> +       test "$(git rev-parse HEAD)" = "$(git rev-parse B2)" \
-> +         -o "$(git rev-parse HEAD)" = "$(git rev-parse B1)"
+I guessed this parent-child behavior and I wanted the commit to sound
+like that but now that I read it again, I can understand that it might
+confuse readers who aren't familiar with the code base.
 
-Here and in other places too...
+> Some tests to consider:
+> 
+> * commit.verbose unset
+
+This was working perfectly fine!
+
+> * commit.verbose=true
+
+This was working perfectly fine!
+
+> * commit.verbose=false
+
+This was working perfectly fine!
+
+> * --verbose overrides commit.verbose
+
+This was showing errors. So I now included an if statement and then
+placed the whole code after the method parse_and_validate_options()
+otherwise it would just ignore the behavior. Now even this is working
+perfectly fine.
+
+> * --no-verbose overrides commit.verbose
+
+This is a problematic one as currently `git-commit` does not have such a
+behavior. I tried printing value of `verbose` in both the cases ie. with
+`git commit` and `git commit --no-verbose` and in both of them it
+printed the value 0. So currently, the program won't understand the
+"overriding" nature. I have an idea for implementing this. We can keep
+the default nature to point out to 0 and `--no-verbose` to point to -1.
+But I guess this problem would have been faced/implemented in other part
+of the code. I will have to look in different parts of code and see how
+this has been done in those so as to maintain the practices followed
+with git. I am currently not quite familiar with `parse-options.c` so I
+will read about it. But you could help by pointing out specific commits
+or email threads which are related to `--no-verbose` option in other git
+commands to speed up the process.
+
+> I haven't fully digested builtin/commit.c, but the placement of this
+> new code seems suspect. My expectation would have been to see
+> git_commit_config() updated to recognize the new "commit.verbose"
+> variable. Am I missing something?
+
+I too had a lot of confusing regarding this. But it seems to me that the
+method git_commit_config() shows a "different" behavior and I don't
+think such "complicated" behavior is required for reading the boolean
+variable `commit.verbose`.
