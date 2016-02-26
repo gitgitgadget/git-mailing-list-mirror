@@ -1,136 +1,111 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 14/16] bisect: use a modified breadth-first search to find
- relevant weights
-Date: Fri, 26 Feb 2016 21:55:16 +0100
-Message-ID: <56D0BBB4.9020305@gmx.net>
-References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
- <1456452282-10325-15-git-send-email-s-beyer@gmx.net>
- <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
+From: Seb <spluque@gmail.com>
+Subject: Re: interactive rebase results across shared histories
+Date: Fri, 26 Feb 2016 15:12:46 -0600
+Organization: Church of Emacs
+Message-ID: <87povj41m9.fsf@gmail.com>
+References: <87io1j6laz.fsf@gmail.com> <56C91D21.90306@moritzneeb.de>
+	<87io1f5nsi.fsf@gmail.com> <56CCE3C2.1050608@moritzneeb.de>
+	<87egc358ou.fsf@gmail.com>
+	<CAMPXz=on8ONkzDYWEEGFqqKhRoBb9zYBqmYDBsKWagdwFRPRdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 21:55:51 2016
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 22:13:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZPQU-0006sy-EA
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 21:55:50 +0100
+	id 1aZPhS-0000eq-5f
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 22:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066AbcBZUzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 15:55:45 -0500
-Received: from mout.gmx.net ([212.227.17.21]:51532 "EHLO mout.gmx.net"
+	id S1754061AbcBZVNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 16:13:18 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54863 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754972AbcBZUzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 15:55:44 -0500
-Received: from [192.168.178.43] ([188.108.247.176]) by mail.gmx.com (mrgmx103)
- with ESMTPSA (Nemesis) id 0Ma2Lr-1aLzph2QjH-00LodP; Fri, 26 Feb 2016 21:55:26
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.5.0
-In-Reply-To: <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:6k5YQRWyX7waQ3H0P6DDb6O05jTGTGTcamgZenTUPUCvkuWuqpP
- uWQnYURd8cqmslTnVAXeOENGhARz4QWr4HzPs9ysFs/pWrSv+rKOT3KWuCZ71SfZnXjj2AV
- /vRcZQ5R89ffix/NgymiS1rNL2turLKqmlcAizIV/i6ECzg2+DZXoyCAy/DskKcCg8/HQfG
- vxg/Qxz0RXdV0zo3+UjeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HDIQoSasy/8=:Rx9ISYaLLKuYSB9v87W94G
- SqIeY3I5thgyl6GGd643MjcTmnXjRbbrqR+oURoS4G6XnGcMiZFJhtpbJyBKZX/UVOz+br3cU
- nmteGrdvnCsUI6d6kG42qRr7YJ8Xekys41Hz0wxKczs+qf/qvyGcCC82cbXc466UkUjjrylzq
- ORbNeodDxPhdIZqA6IrrkPvFE6P+AeMwQAGH2vXmPta19l0BCfsy0Xhw53cgZUm2LnofX/FAp
- 2b0LpnkxtE4T6oQFBegQOJKrlkgx0uVIg37KUMeVpJIJQvEggZtEoXNaKqdzZH54a7IUZhP15
- RqBTjcmt8pXMDIeB85SC68xVJIyV4suiwXyE7MwUUZFxdEoJ5RIQ9MyOy5tjzEUZwot+xK9ip
- m6k9+t4IheTdXbKCf5H3RHO/C9Kzz2IAPtBcpiV3wAd1sp1RbGt5EivNhkzrh/UBFMpYk/HNq
- meaJwCdyWcJocsxuVRHorjPisCgOFUMIs1CEOqblHv7x9Ve+AHQNg+dRKvp/FU9udSCjw6hef
- nt1H7RQuDVVXRWDqDxM4C42wggA0DnBIcyjZxkrTqbIjxdnZzxO9jVHh+734s8CxWfan6IB1M
- SvAcqMXo8GkbjRkfzdfy9VkrOsnmFdbNj7MvuCgSciGH/g0xwtSeu5hzbh9NPLQoMZ909CPtE
- 9hZXKWfnNHvga39bhv03uFxBzZzfVyQxw2ExKxPiqCLvjczukGsUEWLL2a9PJNC/qApdYVgW9
- coui3EjVyullI9z5kQI28tasFPNygQn3dvyn9gPAcvWYlRwn/kUMtirMpbLJvRtX+mZcf7RW 
+	id S1751505AbcBZVNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 16:13:17 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1aZPhL-0000b7-Ll
+	for git@vger.kernel.org; Fri, 26 Feb 2016 22:13:15 +0100
+Received: from s0106503955564c1f.wp.shawcable.net ([24.77.8.70])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:13:15 +0100
+Received: from spluque by s0106503955564c1f.wp.shawcable.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:13:15 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: s0106503955564c1f.wp.shawcable.net
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+Cancel-Lock: sha1:QcaX8eqqmt5/rxghlNySAPXvf4U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287623>
 
-Hi,
+On Fri, 26 Feb 2016 23:38:38 +1100,
+David <bouncingcats@gmail.com> wrote:
 
-On 02/26/2016 04:09 AM, Junio C Hamano wrote:
-> Interesting.  So you walk from the bottom commits, incrementing the
-> weight while walking on a part of the graph that is single strand of
-> pearls, or doing the "count the reachable ones the hard way" when
-> you hit a merge [*1*], but either way, once you know the commit you
-> are looking at is above the mid-way, i.e. reaches more than half of
-> the graph, then stop walking because its children will never be
-> better than that commit?
+> On 24 February 2016 at 10:05, Seb <spluque@gmail.com> wrote:
+>> On Tue, 23 Feb 2016 23:57:06 +0100,
+>> Moritz Neeb <lists@moritzneeb.de> wrote:
 
-Exactly. Maybe that's an even better description for the commit message l-)
+>> [...]
 
-> I haven't studied the code carefully, but your mention of BFS makes
-> me wonder if you can "narrow" down the search space even more.
+>>>> OK, I've followed this advice and looked at the dependency graphs
+>>>> in gitk before and after rebasing, I've managed to obtain what I
+>>>> was after.  The repository now has two branches: master and topic.
+>>>> However, Gitk reveals a problem with a string of commits that are
+>>>> not part of any branch:
 
-I had an idea that aimed at accomplishing this by finding the
-highest-distance merge commit using binary search. (The BFS collected
-all merge commits, in that order, then you could do binary search.)
-So you have O(log(#mergecommits)) "do it the hard way" weight computations.
-However, in the worst case (or even in every case, I did not thoroughly
-think about the cases that can occur), it could happen that it also had
-to do these "do it the hard way" computations for all merge commits with
-smaller weight... That's why I dropped this idea in favor of the more
-simple approach that I sent to the list.
+>>>> A---B---H---I (master) \ C---D---E (loose string of commits) \
+>>>> D'---E'---F---G (topic)
 
-> In an earlier step of the series, you introduced a work queue to
-> replace the recursion.  The recursion forces the algorithm to work
-> along the topology of the history, but you have more latitude in
-> selecting the commit to dig further with a work queue.
-> 
-> I wonder if you can sort the elements on the work queue based on
-> their distance (i.e. by using a priority queue).  You know the total
-> upfront, so you may find a commit whose weight is exactly half of it
-> before traversing all the bottom half of the history and it may turn
-> out to be even more efficient.  After all, you are only looking for
-> just one such commit, not trying to find all the commits with the
-> best weight.
+>>>> How do I remove these loose commits (C, D, E)?
 
-For the compute_weight() function (the "doing it the hard way"
-function), this would not make sense since all parent commits (of a
-merge commit we call compute_weight() on) will have smaller distance.
 
-However, your idea can help:
-I just noticed that it's not important that I use a *B*FS because of the
-acyclity. So I could also use a DFS that is "more greedy" going towards
-high numbers.
-Note that the traversal is always on trees because the merge commits are
-cut out. So whenever a branching (a commit with more than one child)
-occurs, the DFS should follow the branch of maximum length to its leaf.
-(These maximum lengths can be saved during build_reversed_dag().)
-Then, if there is a halfway commit, we stop. If not, we can just go on
-with the remaining DFS...
-I think I only rethought and rephrased your idea. :) Sounds good to me.
-I'm going to add commits for that.
+>>> what you might be after is "git gc". But I never used it, it was not
+>>> neccesary for me. I would let the automatic garbage collection drop
+>>> my dangling commits. It's safer - who knows when you will still want
+>>> to restore your recent "loose string of commits".
 
-> [Footnote]
-> 
-> *1* A merge between a commit that reaches N commits and another that
-> reaches M commits may have weight smaller than the sum of N and M,
-> and that is why I left the original "truly stupid algorithm" Linus
-> wrote as-is when I did the obvious optimization for the linear parts
-> of the history.
+>>> How exactly are the loose commits causing trouble?
 
-Yes. In fact, the "truly stupid algorithm" is not truly stupid. I'm not
-quite sure, but I think it's still the best algorithm known so far for
-that problem. (But maybe the problem is just not very interesting in
-science.)
+>> Sure enough, these dangling commits were removed automatically
+>> without any intervention.  All is good.
 
-> *2* Whenever I revisited the bisection in my head, I thought about
-> ways to improve that "truly stupid" counting, but never thought
-> about an approach to simply reduce the number of times the "truly
-> stupid" counting has to be done.
+> This discussion could end there without problem. But if you want to
+> understand a little more thoroughly, read on ...
 
-Well, I also improved that "truly stupid" counting a little in a former
-commit (patch 7). But it's just the implementation that I improved
-(time/memory trade-off), not the algorithm. :)
+Thanks David, I appreciate the insight.  Indeed, I've learnt a lot over
+the last few days with help in this thread as I confronted a lurking
+problem after many years neglecting it.  Briefly, long ago I was
+developing a project in RCS, then on CVS and SVN, until some years ago I
+imported it into git via cvs2svn.  I had turned a blind eye to a bit of
+mess up to the very early releases, likely due to my inexperience but
+also differences between VCS.
 
-Cheers,
-  Stephan
+After cleaning up all the mess, I've ended up with a long master branch,
+and a series of earlier commits that are not reachable from master.
+Fortunately, the tags have kept them alive. This is the scenario
+simplified:
+
+A---C---D(tag2)                 loose commits (not on any branch)
+ \
+  B(tag1)
+
+E---F---G---H---*               (master)
+
+I could put the "loose" (but tagged) commits on a branch at "tag2", but
+I hate that "tag1" shows as a twig there...  It would be nice to have
+all the history reachable from master.  So two questions I'm working on
+right now: 1) how to bring "tag1" into the "tag2" chain of commits, and
+then 2) how to tie it all together into master so that it reads
+linearly.
+
+-- 
+Seb
