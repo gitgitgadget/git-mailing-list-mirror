@@ -1,134 +1,132 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 3/3] git: submodule honor -c credential.* from command line
-Date: Fri, 26 Feb 2016 11:41:15 -0800
-Message-ID: <CAGZ79kZnR3EsESCFdORq84awWnRZZ9A_+mcH_54ULZZJfD8xyQ@mail.gmail.com>
-References: <1456514268-8241-1-git-send-email-jacob.e.keller@intel.com>
-	<1456514268-8241-3-git-send-email-jacob.e.keller@intel.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] contrib/subtree: add repo url to commit messages
+Date: Fri, 26 Feb 2016 14:49:42 -0500
+Message-ID: <CAPig+cRTz_VYt-2q9y0+COhVCezMs-7Sm-v=jvhUxUSRhiN93g@mail.gmail.com>
+References: <20160223102559.GA18668@iki.fi>
+	<CAPig+cSwQmbvZYbk3T-XYDfMYaMdJ=bFbDwEUtaR121pBrYJOQ@mail.gmail.com>
+	<20160226082828.GA5960@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 20:41:23 2016
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Nicola Paolucci <npaolucci@atlassian.com>
+To: Mathias Nyman <m.nyman@iki.fi>
+X-From: git-owner@vger.kernel.org Fri Feb 26 20:49:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZOGP-0002ag-4a
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:41:21 +0100
+	id 1aZOOa-0007nt-Cc
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423035AbcBZTlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 14:41:17 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34179 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754904AbcBZTlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 14:41:16 -0500
-Received: by mail-ig0-f180.google.com with SMTP id g6so45794422igt.1
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:41:15 -0800 (PST)
+	id S1754981AbcBZTto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 14:49:44 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:35126 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754760AbcBZTtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 14:49:43 -0500
+Received: by mail-vk0-f47.google.com with SMTP id e6so86792991vkh.2
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:49:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=H2Z8M2ibgLmo5jKMYtMi57//CsmoU3HQb2ReBwENSSU=;
-        b=m0hHSQWvMo9N4PL95PN0vApJrLPyeMAhaD9YHbB9DyDwp13qO1vQjrN/Qcye7KdOy1
-         v9p4gpms+YhW3LAhUMDb5C+5zVIq1I5Xu4lJjDZEeJNWK0lpncDgI8IntzIeECm2SA7X
-         9lJTiNGhxdem5fJ24/zooZnVl2i9OxArho06Yl7pDeePp2ZZgwWLgRLUUdYBWsvgYuAI
-         JiZlaDPV6WatEhNucV4MdJOnkefuA1ujd5RB8eebm26bB3guT892WVLQD4V/Lkx5uuXz
-         ocUYidx/4vUjYqQRW3A5cgmN+vKgTJsbFuS9M8BrSsTfR4qLgjGTlzs2xD7GhRQ8oDrJ
-         M90A==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=9m2tUqUswFIgFsBRpmqPMuXYMgR+XznjTz9C0GvpKZg=;
+        b=Bs+iQfVHoP0cnOq2xMUhvVQ3Rou/CyJkHyYVHszzFWfj9RfUOEXEgC4hZ7rWpQx248
+         3kEkET7pfOgKCFMf7xkt+lc9hRYf7hsh57Z9qu4Pqf3h2dEmTekO2+qcrZHbbs4EnONz
+         e/J6qQ7QWz5lMBLgkjGZnMOWj3EGChWIS+VFzztuQGA1RCvWa4gzLLP6Bae+MX0CB6q1
+         v6uEzxRUvieX7F4UmKAVcwtgeCZDotneR3WgHcJ1IbYguFTsJ4ANbtogrphMjj3n9LjS
+         mcd4kGlsxQz00JkSLfsTpjtSixmvCM30w7POEY9fUGHDgnTfdZtx4+fgKOHNUYfvgVUH
+         PFhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=H2Z8M2ibgLmo5jKMYtMi57//CsmoU3HQb2ReBwENSSU=;
-        b=df11MZmbWPz2+bA9V9Og9vcsqhdnVDaRgpYPNOXOg80yD+fE062Gq72/BGvJUxoXwi
-         8NELZXIOUIMzDVlpUO6+skU6gj16ea9Bfr2QmQ3Z3heMsCieUwhoN6SKaBUInb4tDer/
-         8nDpPDG38NKbs+4STAbbJBMHQGTVk5F2Iwc7FWHB1zEK3LiVUOK1NkPo6J94pSG/pCQZ
-         1HTPPKTgknE03wuteco2EmRJNWOW+XsdIdGBN089WENPcPj8oEbW9+oe+N6YaDAiZu98
-         qmS2AZxMjbPPaSjpK5q3shNqwKpKtYIRYScxcT2ot3BuDhVQAnt0eLzee7pSXLsQpea8
-         LZFw==
-X-Gm-Message-State: AD7BkJI5Q9K9Ke60N9Vpbu+Ft+8inU+N31jlq0cmTUIZnUbIC1YVHHDJrf5+Yv4RFVES0K9kkYGynYmIYV2FRHMo
-X-Received: by 10.50.3.42 with SMTP id 10mr4503025igz.85.1456515675152; Fri,
- 26 Feb 2016 11:41:15 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Fri, 26 Feb 2016 11:41:15 -0800 (PST)
-In-Reply-To: <1456514268-8241-3-git-send-email-jacob.e.keller@intel.com>
+        bh=9m2tUqUswFIgFsBRpmqPMuXYMgR+XznjTz9C0GvpKZg=;
+        b=P+Jc7MMdSi96iMm6o850rQyq4RQMFLGQKqt8JUUSqR3xc7U4SGTj12tSMSvfVXLM9E
+         5eV5C7oxj+1cjJbGlDOdtmKY3G19wHPeF+FDEtzNlwb2uWz2dTjMZvQFgfCNcTz7YMx2
+         FUgr76hKIzEaS8zGx+QkWOjz5P8giOwz+cQOlBBOnxmAxSpgvCFNP7m6xSQ0jFVsB3eN
+         t3KAr3k6MzGOvVBR0L16ySDZ4oNXxgjpzd8EGdpvKE+rqBHwPQeZ+/G7fYZTf+Yv2ZAW
+         xGRXRFuqArLoRND3Gd9s/ybN8GEBeRPdouGRTwXkaeWN/j0ma2d393oMy9sFA09MzW0c
+         bnTg==
+X-Gm-Message-State: AD7BkJJ+FpN6sutb30Pna2OE382T/P6khc81UHXQR9GmQA/ixWi3LYwBBGdl9cFAKnV/OZrQnMJ0g/w3nsOGCg==
+X-Received: by 10.31.146.2 with SMTP id u2mr2274765vkd.19.1456516182710; Fri,
+ 26 Feb 2016 11:49:42 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Fri, 26 Feb 2016 11:49:42 -0800 (PST)
+In-Reply-To: <20160226082828.GA5960@iki.fi>
+X-Google-Sender-Auth: oCQ9jzeMIxZygVu2r-XcOOHx2VI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287614>
 
-On Fri, Feb 26, 2016 at 11:17 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
+On Fri, Feb 26, 2016 at 3:28 AM, Mathias Nyman <m.nyman@iki.fi> wrote:
+> On 2016-02-25 17:23-0500, Eric Sunshine wrote:
+>> On Tue, Feb 23, 2016 at 5:25 AM, Mathias Nyman <mathias.nyman@iki.fi>
+>> wrote:
+>>> -       cat <<-EOF
+>>> -               $commit_message
+>>> -
+>>> -               git-subtree-dir: $dir
+>>> -               git-subtree-mainline: $latest_old
+>>> -               git-subtree-split: $latest_new
+>>> -       EOF
+>>> +       echo $commit_message
+>>> +       echo
+>>> +       echo git-subtree-dir: $dir
+>>> +       echo git-subtree-mainline: $latest_old
+>>> +       echo git-subtree-split: $latest_new
+>>
+>> It's not clear why this code was changed to use a series of echo's in
+>> place of the single cat. Although the net result is the same, this
+>> appears to be mere code churn. If your intention was to make it
+>> similar to how squash_msg() uses a series of echo's, then that might
+>> make sense, however, rejoin_msg() uses the same single 'cat' as
+>> add_msg(), so inconsistency remains. Thus, it's not clear what the
+>> intention is.
 >
-> Due to the way that the git-submodule code works, it clears all local
-> git environment variables before entering submodules. This is normally
-> a good thing since we want to clear settings such as GIT_WORKTREE and
-> other variables which would affect the operation of submodule commands.
-> However, GIT_CONFIG_PARAMETERS is special, and we actually do want to
-> preserve these settings. However, we do not want to preserve all
-> configuration as many things should be left specific to the parent
-> project.
+> Using a mixutre of heredoc and echo felt messy. But I'll change it
+> back to heredoc here, and through out the commit aim for near-zero
+> refactoring.
+
+An alternative would be to have a preparatory patch which unifies the
+heredoc vs. echo issue across add_msg(), squash_msg(), rejoin_msg(),
+but I wouldn't insist upon it (that's just more work for you). Leaving
+this bit alone is a reasonable choice.
+
+>>> +       repo="$4" # optional
+>>>         newsub_short=$(git rev-parse --short "$newsub")
+>>> -
+>>> +
+>>
+>>
+>> Okay, this change is removing an unnecessary tab. Perhaps the commit
+>> message can say that the patch fixes a few whitespace inconsistencies
+>> while touching nearby code.
 >
-> Add a git submodule--helper function, sanitize-config, which shall be
-> used to sanitize GIT_CONFIG_PARAMETERS, removing all key/value pairs
-> except a small subset that are known to be safe and necessary.
+> Will undo the whitespace fixing.
+
+Oh, I wasn't insisting that you should undo the whitespace fix.
+Typically, you'd make such fixes in a preparatory cleanup patch, but
+since there are only two cases here that you've fixed, it probably
+wouldn't hurt to retain them (if that's all there are in the file).
+The reason I suggested mentioning the whitespace fixes in the commit
+message is to let the reviewer know that they weren't cases of you
+accidentally making unwanted whitespace changes (like inserting tabs
+rather than removing them). As it was, as a reviewer, I had to go
+through extra effort to determine whether you had made a fix or had
+accidentally botched something.
+
+>>>  cmd_merge()
+>>>  {
+>>> -       revs=$(git rev-parse $default --revs-only "$@") || exit $?
+>>> +       revs=$(git rev-parse $default --revs-only "$1") || exit $?
+>>
+>> Why is this variable still named 'revs' (plural) since you're only
+>> passing in $1 now rather than $@?
 >
-> Replace all the calls to clear_local_git_env with a wrapped function
-> that filters GIT_CONFIG_PARAMETERS using the new helper and then
-> restores it to the filtered subset after clearing the rest of the
-> environment.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->
-> Notes:
->     - v2
->     * Clarify which paramaters are left after the sanitization, and don't seem to
->       indicate it is our goal to extend the list.
->     * add a comment in the submodule_config_ok function indicating the same
->
->     - v3
->     * Remove extraneous comments
->     * add strbuf_release calls
->     * rename sanitize_local_git_env
->     * remove use of local
->     * add C equivalent of sanitize_config
->     * add a test for the credential passing
->
->     - v3
->     * use argc check instead of empty options check
->     * fix brain-melting quotes in t7412-submodule--helper.sh
+> Because technically the result can still be more then one rev I guess.
+> Consider 'git rev-parse HEAD~1..HEAD', which would return two hashes.
 
-In the future, would you mind to try interdiffs in a cover letter?
-
-(I do git diff HEAD...$(previousSeries) with previousSerier either
-local branch or rather what Junio picked up already. There is also tbdiff,
-which should be better and easier than this work flow)
-
-
-> +                */
-> +               strbuf_addstr(&quoted, var);
-> +               strbuf_addch(&quoted, '=');
-> +               strbuf_addstr(&quoted, value);
-
-This could be `strbuf_addf("%s=%s", var, value);` (?)
-which then gets quoted below
-
-> +                       git_config_from_parameters(sanitize_submodule_config,
-> +                                                  &sanitized_config);
-> +                       argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
-
-like here?
-
-> -                       subsha1=$(clear_local_git_env; cd "$sm_path" &&
-> +                       subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
->                                 git rev-parse --verify HEAD) ||
-
-While at it, we could discuss if we want to replace the pattern cd
-<somewhere> && git-command
-by `git -C <somewhere> <command>` eventually (not in this patch) ?
+Okay, so I was missing something obvious.
