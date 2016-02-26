@@ -1,69 +1,125 @@
-From: Mehul Jain <mehul.jain2029@gmail.com>
-Subject: Re: [GSoC] Microproject :- Teaching git pull --rebase the
- --no-autostash flag
-Date: Fri, 26 Feb 2016 17:35:54 +0530
-Message-ID: <CA+DCAeSOfq22FyhPSdeYmWEL+_Bgx0et=jm786mdj-0b7R5OSg@mail.gmail.com>
-References: <1456485825-21309-1-git-send-email-mehul.jain2029@gmail.com>
-	<CACRoPnSoJvyvm4npw40AsgvPaviwb07akpiWtYWX3wTEME6wRA@mail.gmail.com>
+From: Vineet Gupta <Vineet.Gupta1@synopsys.com>
+Subject: Re: cover letter and cc list
+Date: Fri, 26 Feb 2016 18:05:15 +0530
+Message-ID: <56D04683.3080201@synopsys.com>
+References: <20150320173504.GA6162@aepfle.de>
+ <xmqqpp83ee2z.fsf@gitster.dls.corp.google.com>
+ <20150323081840.GB9332@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Kevin Daudt <me@ikke.info>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 13:05:59 2016
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Olaf Hering <olaf@aepfle.de>, Junio C Hamano <gitster@pobox.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 13:35:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZH9j-0003tM-IW
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 13:05:59 +0100
+	id 1aZHcX-0004iD-Gi
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 13:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbcBZMFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 07:05:55 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:36310 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185AbcBZMFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 07:05:55 -0500
-Received: by mail-qg0-f44.google.com with SMTP id y9so63965324qgd.3
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 04:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=NDcHpJMrhXRELc5iwH4+WtI52biNBnQr1SC5O3XxvXo=;
-        b=vaAWxzmbDV5iLzT/w75vjTFei/3mb8zg0f3VICY70Zcdc0Nz0dutTnWB5vHo4vnzDe
-         8i6hF3PH7yaiBZzamF00TPJR4lYTiKOZp52890gV89kCXoFu1F0jfMm8KTMpQM68qg69
-         a9qpTCs2zUN7RlP0vBtLF7Iy6KIlZAaqd1Rzw0dXm3/+cWvPmnLjdgfCQNFXYAI9p+HJ
-         Xqg3Jqf8BUhxT8tWkFBD9SieridP6aKb/YySgidinPrzXodBrRcyCf1+QUuBEHDFPtCh
-         gwF/kSC0pwN8AGH5U9NU9yDbwdISnBljFA7oZtJKu6T3QkDse8gU7/dXLQId2hwfmVGK
-         PETg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=NDcHpJMrhXRELc5iwH4+WtI52biNBnQr1SC5O3XxvXo=;
-        b=jBbqu9Znz6wUwch3A5+ERqLBe83PinD6hq9KkW3EKLEJK9f9tGlUlhRsZlgKho6ybL
-         +u0PaQ1EXGcy5T6omm51jQCSX/08Z2yvqy/XWl8J/a7IZ68YAO+49XLjovlKYALYLrHp
-         +6bkC7NdA3EGqf3t+vWJag/cFv9M6LRgCLcxzcze/sIgxDIbMwb/9xJbH/VFRBS1ywGm
-         2mQ0o9eXr/B7hfQ/lkGHtRkfQsbbFCIUdTH7m4silqbrFhkk12SorDVduLYKqV0Ne7k0
-         XeH1eMRR01/Eovu5rKm1pWT1fK4CITlhhAkVM+nKoGPfZKJ9mdxDbd7UNg0max733BV1
-         CyVw==
-X-Gm-Message-State: AD7BkJI2/kFNVjLpHUK7j9Yz46RFc9dfSLwU1sRryNXCnQPA0FII5KEubk1LdQE3hkvCh4OdeLXKhTetTc/AUg==
-X-Received: by 10.140.98.197 with SMTP id o63mr1339533qge.78.1456488354060;
- Fri, 26 Feb 2016 04:05:54 -0800 (PST)
-Received: by 10.55.188.7 with HTTP; Fri, 26 Feb 2016 04:05:54 -0800 (PST)
-In-Reply-To: <CACRoPnSoJvyvm4npw40AsgvPaviwb07akpiWtYWX3wTEME6wRA@mail.gmail.com>
+	id S932135AbcBZMff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 07:35:35 -0500
+Received: from smtprelay2.synopsys.com ([198.182.60.111]:48791 "EHLO
+	smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932088AbcBZMfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 07:35:34 -0500
+Received: from us02secmta1.synopsys.com (us02secmta1.synopsys.com [10.12.235.96])
+	by smtprelay.synopsys.com (Postfix) with ESMTP id 3FBF910C1255;
+	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
+Received: from us02secmta1.internal.synopsys.com (us02secmta1.internal.synopsys.com [127.0.0.1])
+	by us02secmta1.internal.synopsys.com (Service) with ESMTP id D07714E213;
+	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
+Received: from mailhost.synopsys.com (unknown [10.13.184.66])
+	by us02secmta1.internal.synopsys.com (Service) with ESMTP id 975114E202;
+	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
+Received: from mailhost.synopsys.com (localhost [127.0.0.1])
+	by mailhost.synopsys.com (Postfix) with ESMTP id 86E3EE67;
+	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
+Received: from us01wehtc1.internal.synopsys.com (us01wehtc1.internal.synopsys.com [10.12.239.235])
+	by mailhost.synopsys.com (Postfix) with ESMTP id 0159DE66;
+	Fri, 26 Feb 2016 04:35:31 -0800 (PST)
+Received: from IN01WEHTCB.internal.synopsys.com (10.144.199.106) by
+ us01wehtc1.internal.synopsys.com (10.12.239.231) with Microsoft SMTP Server
+ (TLS) id 14.3.195.1; Fri, 26 Feb 2016 04:35:31 -0800
+Received: from IN01WEHTCA.internal.synopsys.com (10.144.199.103) by
+ IN01WEHTCB.internal.synopsys.com (10.144.199.105) with Microsoft SMTP Server
+ (TLS) id 14.3.195.1; Fri, 26 Feb 2016 18:05:29 +0530
+Received: from [10.12.197.208] (10.12.197.208) by
+ IN01WEHTCA.internal.synopsys.com (10.144.199.243) with Microsoft SMTP Server
+ (TLS) id 14.3.195.1; Fri, 26 Feb 2016 18:05:27 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <20150323081840.GB9332@aepfle.de>
+X-Originating-IP: [10.12.197.208]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287573>
 
-On Fri, Feb 26, 2016 at 5:21 PM, Paul Tan <pyokagan@gmail.com> wrote:
-> That was the point of the microproject ;-). --[no-]autostash means
-> both --autostash and --no-autostash.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Oops, my bad. I will add the necessary changes :-).
+On Monday 23 March 2015 01:48 PM, Olaf Hering wrote:
+> On Fri, Mar 20, Junio C Hamano wrote:
+> 
+>>> Olaf Hering <olaf@aepfle.de> writes:
+>>> 
+>>>>> What does it take to send the cover letter to all people which are 
+>>>>> listed in the Cc: list of the following patches? Each patch has a 
+>>>>> different Cc: list. The "git send-email --help" command suggests
+>>>>> that this cmdline should do it. But the cover letter goes just to the
+>>>>> address listed in --to=:
+>>>>> 
+>>>>> env TMPDIR=/dev/shm LC_ALL=C git send-email -M --stat --annotate \ 
+>>>>> --cover-letter --cc-cover --to=$address \ $base..$head
+>>> 
+>>> First step is not to drive format-patch from within send-email I would
+>>> think.  Instead prepare them in files in a directory (with format-patch
+>>> -o $dir).  You can edit Cc: header in 0000-*.patch message while you
+>>> proof-read what you are going to send out.
+> Thanks. Then I misinterpreted what --cc-cover actually means. All Cc: lines
+> have to be present in the cover letter already. Would be nice if git would
+> run a command like this to put the list into the coverletter:
+> 
+> # git log --format=%b $base..$head | grep -iw ^cc: | sort -u
+> 
+> In the meantime I will remember to do that step manually.
+> 
+> Olaf
 
-Thanks,
-Mehul
+I have the exact same requirement, to create a union of CC in patches for
+cover-letter. That way sending a series to different people gives them the right
+context with cover-letter and individual patch.
+
+Now man git send-email mentions --[no-]cc-cover. I quote
+
+"emails found in Cc: headers in the first patch of the series (typically the
+cover letter) are added to the cc list for each email set..."
+
+I certainly want the reverse, but the question is how does one get about getting
+an address in cover letter in first place.
+
+Thx,
+- -Vineet
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJW0EaDAAoJEGnX8d3iisJevuMQALMNQv7IiOTc78A0GMDZpBx4
+cAEY2mPu29uJG0rRq8vaWxwBEAAoIflqUEiv9ygHwtvI1YDBGgt3RsEuqTMdj1eI
+JboZy4cpn04XVKRtcEU1iXf8Qp5uGmOgBUSwP5VaawTpGxIn43KJjyFwvq7h9Sps
+lsuOtY5rO1xq1B4ktmolF93unwI5R68moNTHhpOilOcBwbNVApouMnJ0c64ritPw
+hn9pUWST+rtL9pbqUas4PRxHL4vUAhIQkswlxxZvaVhlC9WK6AY2nMTWmz0Pcmlc
+WbGD1nulGJMXkHR4G02GhSbO2zsy8o5vJii2inFCwl7eWC5LIdfc8w+ssDYJ9Zlz
+beXuRxYy5zgQQzCpd9d1o7ZMjbSEuWizgPJ9a+lGPfqeqB/cp9emdbOUOc7CMhXn
+5C3nDtOIgkchnZw3otgbUmGQCbiIHTN4tMQHbXrp0suu2mPCkYA9H8SqBRANPy1k
+AfU1FCvgQBjGgezV4IOBLrqi3vqoacQqriYIyYmUq0rnuwI6fT09OwfvAa2uVugT
+BWuuzpW1gBiiSKfYstC+ZzoZCnD8Ia5HsaKNtFxfxia2ekFC50RTkSR3ScSVnlKI
+77uLzflHsoZvFrla1mgLn+D4pn3yzSUdcd9lFIBAkBqgR1T5mKjT3HaSDOdMDJRz
+KiRJrh3G8ZC7hYeAj3Kx
+=GzhS
+-----END PGP SIGNATURE-----
