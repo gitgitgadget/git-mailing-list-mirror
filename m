@@ -1,107 +1,87 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH 00/16] git bisect improvements
-Date: Fri, 26 Feb 2016 03:04:26 +0100
-Message-ID: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+Subject: [PATCH 03/16] bisect: make bisect compile if DEBUG_BISECT is set
+Date: Fri, 26 Feb 2016 03:04:29 +0100
+Message-ID: <1456452282-10325-4-git-send-email-s-beyer@gmx.net>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
 Cc: Stephan Beyer <s-beyer@gmx.net>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 03:05:40 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 03:05:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7ml-0007Dq-HI
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:39 +0100
+	id 1aZ7n1-0007NX-Dv
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbcBZCFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 21:05:35 -0500
-Received: from mout.gmx.net ([212.227.15.18]:65394 "EHLO mout.gmx.net"
+	id S1752298AbcBZCFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:05:46 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64222 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065AbcBZCFe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 21:05:34 -0500
+	id S1752112AbcBZCFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 21:05:44 -0500
 Received: from fermat.fritz.box ([188.108.247.176]) by mail.gmx.com (mrgmx003)
- with ESMTPSA (Nemesis) id 0LoVOE-1a1Qau2EMU-00gUD0; Fri, 26 Feb 2016 03:05:30
+ with ESMTPSA (Nemesis) id 0MOfcU-1abrKy1Gek-00643e; Fri, 26 Feb 2016 03:05:42
  +0100
 X-Mailer: git-send-email 2.7.2.383.g3fb0654
-X-Provags-ID: V03:K0:6EJAjm8mlmYu9tFtzjRV4I4Oz1XdwB6iaQUTcyJZmD62i4sQ4ut
- uJxhV3hdYv6oYrgBLCI0keOy3BmdEvWdyRNCENEOltanhSjXEQ93FdVKApr5iBcUcYMlWQ1
- zDS3lpYFLuXoVYzx/7dj2ALKKmGVfL2CCLPo/E14Rd9f45r/mQUC+AVxWiXafiavX+TJ33R
- Mb1F7TfNjbN/Nv9LrQI8A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kRLorlzTdu0=:7D/7WD0Qda4e+VkdVFvML2
- xLgWw71QgtCD0ZGgF5sp+F9frVAY2rU2OarHCNu3JA35uP62/UvT5eFsMY/+dYhrPhICjk/ZM
- vvkTzU+TOz0mhELEvmffhj4RHt2Qk2xGLq5tENkOuEMfEFBISomewkk1K73BkJJXIRnMN6HHp
- nd3QOZlX5iYq5oMdiZC7woj+p6/v5Czo6Oc+nBaXhytQ1ukKHjWuG4NR3GelzRkdZssQCj+wi
- fbR0K+jtj++EYcbCMTd5zM9a05NuYoH2ntDHh7/rJ9wBiVVI5CNMxmFqHQZQpYd0jD/CG3KaY
- 2LY+mOEJgqrfgxJcW5bsNHRWS+mT/+ow6p/SfOv0i8JMN9E7TwE+o4HdAphrNEyMtDm99+195
- ZnvpHn7ZWr80CQF02jfw3Injgbb8xiPLZAHifK79bJCe98jA4L5o884Chscbq0g5Ve9Exzf10
- DFaJ3CaMB+Mof2efUCB1YB+BGEFr23S9Jmj5QfVj5pHoHed8LZ0c6bYnKJFCMYv0B6oO+2qcf
- wz8x31NYq0tMTbiY1qImG3mIsg75AeFl3HWgM0UOyT+po53ZOA4b9/BwXg0UgS3TGTPodngfF
- +PE74APUQtZG1IQO4t39/u2NRUlyWTMfBzUiD4LCi8QcNQd9FT9nqhPe5hBoW85FL6bcmFahR
- AnLizxRFghf9W0h63vXy7RJzvYW1EZRkU8An6E+NI8DBA6JRdBGegW3iy9kdRXVxcqFhhfBR/
- jQYrNjs8pcXRpYu/3EL0fapkjZ4fHnlbjp52QIcjf4MVcaiplYO/ivSe6uE=
+In-Reply-To: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+X-Provags-ID: V03:K0:6PFnR+R015dp35IRmFBIuEl0aDFawvApi3ODhVDFX6zh4iGAzE2
+ CVnmeW1b/iP2RI3gyWjukLbRATu0OpI6CoOKcoBwPbY0SmHKBdDwUIRpEhvUlfRBoPKytPN
+ MNrG8tzdURnmESrgSUEuvgdibTxuEmIwE8l5U1aTSK/evHQDNfUo7m/IG2uvs86d60h5TAM
+ FNj/MHeL1WI7jKYlQ4p5g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tVFAa+jI8Zg=:7ymUhM97Npy6glzMz6vM4E
+ j+kFZY1Cu2sppAd1x39dDQK/9nkm1lLNb7PEG2YRGKdAVoG8Lpj5cHw/8V51M9WtroK79g4Ks
+ 5iIEvbU+vWpCDBS2/8njDKIkLfcdU8oqNA8hwyAVnPi66T9momaOI50cZZFgwnhIpNndR75ur
+ 6VP39F3f5gIUpVTUQXYvnc/JSIPfkNsYg6ftSJ8fRq0UyYXn8vb0vZ/kbiUtWYCiE4+cAd2W0
+ pFIanct+2KAt16rqhtazhQGVFLoV/eDHOPx7YnA5oV8a3fY2Zvmc5b1Ab/7F+I3seshB72DN+
+ xQdy8sPY2hwqTUyQeTTL1ZoOp1BJ4qBvRkgXOnjg2TjY67THnf9t3fbFq2z5cXi3jcW2I8UKO
+ WUcxZa/Jf0aEev1ghJL6+dfI8BV5CdZ6vfwTFUPH6Oyjun6tZgzMactgA8T5Hpp8AuRVkD7BQ
+ lHRZ+tOnObYHeAoVSjd5Cm6qEE3eWFmi8WdjEkDbuvdr+XLb3UDwhsLhWmElF7Yghoxb6Ng89
+ dc7YDJ7eCxzFjn8r8NHHfGb1OAHDlknxL9818WyrcEnkigfx7Hp+lz68zjzpCWy2vLixa4yUF
+ BfckP9B/BY3xPGYemI6AcgJAIIVCD20TAnCozC2imIlvbsNBaPi39dADzK6p41uoljUZq7DH+
+ QDVz+BlegcEvdQO/v5hZT06swujrfkUAgfi1pWSyTBdnnkUESbheYUb6ce+6iLo7Lofl8Y6je
+ crZHkkEHbhsS4JjffdsR3HpYIUC4JfWKQnYRV9QWf0/KrPCUKlV3iQEtW/Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287514>
 
-Hi,
+Setting the macro DEBUG_BISECT to 1 enables debugging information
+for the bisect algorithm. The code did not compile due to struct
+changes.
 
-this set of patches provides improvements for git bisect.
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ bisect.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Quick summary of changes
- - relevant for users:
-   - `git bisect next` is documented and motivated
-   - git bisect implementation becomes much faster
-     (or: is now working) for big repositories**
- - relevant for developers:
-   - a test for the git bisect algorithm is added
-   - fix: bisect.c compiles also if DEBUG_BISECT is set
-
-The ** marked change is the most interesting one.
-To be more accurate: the use case is when you want to bisect in a
-repository with a huge amount of merge commits (and having these
-merge commits relevant for the actual bisect process).
-For example, a bisect in the whole git master branch took
-~50 seconds, now it takes ~4 seconds.
-
-
-Note that the patches have finer granularity (especially the performance
-improvements are splitted into several preparing commits).
-For some patches, there is some more patch-related story as
-"cover letter material" in these patches.
-
-Btw: I also wondered about the internationalizaton: no string in bisect.c
-is marked for translation. Intentionally?
-
-Cheers
-
-Stephan Beyer (16):
-  bisect: write about `bisect next` in documentation
-  bisect: add test for the bisect algorithm
-  bisect: make bisect compile if DEBUG_BISECT is set
-  bisect: make algorithm behavior independent of DEBUG_BISECT
-  bisect: get rid of recursion in count_distance()
-  bisect: use struct node_data array instead of int array
-  bisect: replace clear_distance() by unique markers
-  bisect: use commit instead of commit list as arguments when
-    appropriate
-  bisect: extract get_distance() function from code duplication
-  bisect: introduce distance_direction()
-  bisect: make total number of commits global
-  bisect: rename count_distance() to compute_weight()
-  bisect: prepare for different algorithms based on find_all
-  bisect: use a modified breadth-first search to find relevant weights
-  bisect: compute best bisection in compute_relevant_weights()
-  bisect: get back halfway shortcut
-
- Documentation/git-bisect.txt |  25 +++
- bisect.c                     | 473 ++++++++++++++++++++++++++++---------------
- git-bisect.sh                |  15 +-
- t/t8010-bisect-algorithm.sh  | 162 +++++++++++++++
- 4 files changed, 502 insertions(+), 173 deletions(-)
- create mode 100755 t/t8010-bisect-algorithm.sh
-
+diff --git a/bisect.c b/bisect.c
+index 06ec54e..905e63a 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -131,7 +131,7 @@ static void show_list(const char *debug, int counted, int nr,
+ 		unsigned flags = commit->object.flags;
+ 		enum object_type type;
+ 		unsigned long size;
+-		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
++		char *buf = read_sha1_file(commit->object.oid.hash, &type, &size);
+ 		const char *subject_start;
+ 		int subject_len;
+ 
+@@ -143,10 +143,10 @@ static void show_list(const char *debug, int counted, int nr,
+ 			fprintf(stderr, "%3d", weight(p));
+ 		else
+ 			fprintf(stderr, "---");
+-		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.sha1));
++		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
+ 		for (pp = commit->parents; pp; pp = pp->next)
+ 			fprintf(stderr, " %.*s", 8,
+-				sha1_to_hex(pp->item->object.sha1));
++				sha1_to_hex(pp->item->object.oid.hash));
+ 
+ 		subject_len = find_commit_subject(buf, &subject_start);
+ 		if (subject_len)
 -- 
 2.7.1.354.gd492730.dirty
