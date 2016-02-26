@@ -1,93 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] add DEVELOPER makefile knob to check for acknowledged warnings
-Date: Fri, 26 Feb 2016 16:33:44 +0700
-Message-ID: <CACsJy8Dc1dHp7kGgz_pY1uoXum-k3gnzD0AHFsaLQzuZihUKcw@mail.gmail.com>
-References: <1456389742-48052-1-git-send-email-larsxschneider@gmail.com>
- <CACsJy8CjOkNuEg=QRTATQLkYzMxpf5zryMXERZu6Zn59VDUB_Q@mail.gmail.com> <17AFC0E6-FC83-4BD4-9C19-43A6B9103866@gmail.com>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH] Update diff-highlight
+Date: Fri, 26 Feb 2016 09:41:41 +0000
+Message-ID: <CAFY1edZ=zs-MyVFmejy32DUyvCjPeb9Kt9J0bFEqVOQMQgW_Og@mail.gmail.com>
+References: <00000153072f5465-fd36f07c-e5e6-4a0f-8cf1-77be99424892-000000@eu-west-1.amazonses.com>
+	<CAPig+cRRX4k8jR02YOGTGHUnbOmhHF0oMc-6aCOWuMOpi+BG0A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 10:40:53 2016
+Cc: Peter Dave Hello <hsu@peterdavehello.org>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 10:41:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZEtI-0001sm-HJ
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 10:40:52 +0100
+	id 1aZEuF-0002Rh-DZ
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 10:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbcBZJkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 04:40:47 -0500
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:34599 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753122AbcBZJeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 04:34:15 -0500
-Received: by mail-lf0-f66.google.com with SMTP id i75so219188lfb.1
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 01:34:14 -0800 (PST)
+	id S1753526AbcBZJlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 04:41:46 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:33632 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753846AbcBZJlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 04:41:42 -0500
+Received: by mail-ig0-f178.google.com with SMTP id y8so34101506igp.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 01:41:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc;
-        bh=g7CDXkeoO749qOCl/lHWf1lrKlCHKx9JIVGlbHRaXSE=;
-        b=j0b0TQnNO9ibJcSSir0m/W6m/AMq6RaoIHe2jjfxqZoALJDDEmYNs3b0nQDPs16IAD
-         PjS01GF4ZSMLYg4gZaXLHwzekqkSfI5dtHBPS6bU5J1v9jDU0OUDJg1y4LfLrBbDpvqz
-         HpwWjkwi85DT1zXf8+CPqfqgu1AdLVEpKTBMUIjfifut3IFCdim1qDXaMombGym2fPCZ
-         31Ity/lJ3pfV3lJY3vX90CXJI1MobpwsIqZ1+19BRkQ5e+1tYlOZD0+1ZnxWvqdVTGS3
-         F0O9LgBrJuHoa+jh2tcQlJhZz6k5CTuUsex6WVc5ZsoQ6yjKhdzbefcv3RG/Nazl0Onq
-         ePRg==
+        bh=uY2lWgsmK1/TAIF/pWcYm962O5RRj2eS4RGNqu56SUg=;
+        b=DCR3XkWjlxAVCzQ/+2mEsXqlWs/PPUaMSWVldGmgqlOJ5A5di7xkrjGfe9iCfSrshp
+         LeQPgbRrQODEsNm2HpbEE5bx4XWbaaWmvDc7FE2h05TaNC565HELWCQz1uxeyuPectj4
+         j5j/b58d0qlLusB34661EBQ/aqOlBg2DyDojUKQi0607TpfpajZNX0vNZhgQk6Z8PJdm
+         bv70ImGSvnB/WQz8fp6JhNx68A64vKbaSftWDkfDlvfFZb6/yOZwis1xk7eczAPU7912
+         ZXksRypJUkl1ZUyn3tbq+XS1KXMHeJiWLjK0W0EbJerBReSN5jKLnArgj6vakx+ZAHqb
+         JCZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=g7CDXkeoO749qOCl/lHWf1lrKlCHKx9JIVGlbHRaXSE=;
-        b=ddKJ2XQHVE3z8j6EsvEkJwplhwKQZvH/+sHRiNy0w2RXrKmbc7C+FZv0j7BgQRVyeF
-         uvkv/ei0ICkZ5YHZcc49J7LLCLfH8FXH99vk0oVT8rBDqyL1s3JN/GUl1L75jkWpfqJ/
-         6nz1zGa40bdj9ozvDC/dYvyemGtJSOFOZrjLfkFdil6o2axSRHgyirNG7e+IdkpWTMWx
-         sq8pWl6AP9HuCYubUh2YObmOvsFNT2L0D0JYNp0R+p9a3MAwNuvOUXkcVe0MFrvxGXR6
-         bwecx+IMHJmJLjg1/arg60fNic6nxX47qqQI9sGO/GJi6v5W9Tsqrt54uBbId66d+6lI
-         mxwA==
-X-Gm-Message-State: AD7BkJLkOgHGbU+8LpYMa+Fg6lGXfsx9jJ9lymIcWWg2MQ7RRRZkQcMczp8dMq47IyWzrw6Vd0ac85xxgaiQ8w==
-X-Received: by 10.25.5.6 with SMTP id 6mr190372lff.3.1456479253700; Fri, 26
- Feb 2016 01:34:13 -0800 (PST)
-Received: by 10.112.97.72 with HTTP; Fri, 26 Feb 2016 01:33:44 -0800 (PST)
-In-Reply-To: <17AFC0E6-FC83-4BD4-9C19-43A6B9103866@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=uY2lWgsmK1/TAIF/pWcYm962O5RRj2eS4RGNqu56SUg=;
+        b=asLKaMdZ8YrIyzHd1cgh4yEFvBbgoJQyN06svhXfvUgKrpvecyiDE8Ua9j0uMXndPv
+         WnYtgPyHell3DmUJ+UPbQb3XTQMzUB6DiUb3wo0WpFRq8rJYPlTrZcWXcrnfcpTtE9e7
+         /FNUzD5t8+TFP5BG+5lnElvNqyOSe45egaASsTxA/O9kZorMhFkhghC9fISYsuNOa6Ro
+         54bqjv8xOYIuSzrv4eriR/p6UwYXR62ccf7pgqzAssZjhF4xP/ouvUcxcNDRGZJieTQ7
+         Go9neald8weheJ0CThiLoMTtxRk53hTd0FOUlsnQ/ecn78R1gy2jRuyW0S6JUUJTTy4t
+         PyMw==
+X-Gm-Message-State: AD7BkJKmklYIxK/qJ3hgzQ87QchyeVp8yJhCXVo0vNIMsFajQeXRpb9rjfi5XRAGRfngoiDqNPHeo9XiHxajLw==
+X-Received: by 10.50.176.137 with SMTP id ci9mr2002367igc.53.1456479702028;
+ Fri, 26 Feb 2016 01:41:42 -0800 (PST)
+Received: by 10.79.93.129 with HTTP; Fri, 26 Feb 2016 01:41:41 -0800 (PST)
+In-Reply-To: <CAPig+cRRX4k8jR02YOGTGHUnbOmhHF0oMc-6aCOWuMOpi+BG0A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287561>
 
-On Fri, Feb 26, 2016 at 4:30 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
+On 22 February 2016 at 04:49, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Feb 21, 2016 at 11:14 PM, Peter Dave Hello
+> <hsu@peterdavehello.org> wrote:
+>> From: Peter Dave Hello <peterdavehello@users.noreply.github.com>
 >
->> On 26 Feb 2016, at 10:26, Duy Nguyen <pclouds@gmail.com> wrote:
->>
->> On Thu, Feb 25, 2016 at 3:42 PM,  <larsxschneider@gmail.com> wrote:
->>> +ifdef DEVELOPER
->>> +       CFLAGS +=       -Werror \
->>> +                               -Wdeclaration-after-statement \
->>> +                               -Wno-format-zero-length \
->>> +                               -Wold-style-definition \
->>> +                               -Woverflow \
->>> +                               -Wpointer-arith \
->>> +                               -Wstrict-prototypes \
->>> +                               -Wunused \
->>> +                               -Wvla
->>
->> With the exception of $(SCRIPTS) in Makefile, I think we prefer to
->> avoid \ and have one addition per statement
->>
-> I guessed that because I actually looked through the makefile to find how you deal with line
-> brakes. The problem here was that this line gets really long and then it is hard to see what
-> warnings are enabled.
-> Would you be OK with using \ for readability here?
+> This "From:" line looks suspiciously incorrect. If anything, you'd
+> probably want to drop the line altogether or use:
+>
+>     From: Peter Dave Hello <hsu@peterdavehello.org>
 
-Probably misunderstanding. I meant something like this
+Peter's commit (https://github.com/git/git/commit/15415c6e) had an author of
+'peterdavehello@users.noreply.github.com' (perhaps because the commit was
+generated through GitHub's interface?), and submitGit added it as an in-body
+'From: ' line because it differed from the address used to send the email
+(hsu@peterdavehello.org - submitGit always uses the user's
+primary-email-address-in-GitHub to send the email).
 
-CFLAGS += -Werror
-CFLAGS += -Wdecl..
-CFLAGS += -Wno-form..
--- 
-Duy
+A 'noreply' address is obviously not wanted in this context though, so
+I've updated
+submitGit to disregard them when deciding whether or not to generate an in-body
+'From: ' header: https://github.com/rtyley/submitgit/pull/29
+
+Roberto
