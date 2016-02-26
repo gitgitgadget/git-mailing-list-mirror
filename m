@@ -1,89 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG? git log --no-merges shows grafted merges in shallow clones
-Date: Fri, 26 Feb 2016 12:13:34 -0800
-Message-ID: <xmqqbn73jklt.fsf@gitster.mtv.corp.google.com>
-References: <vpq4mcvs146.fsf@anie.imag.fr>
-	<xmqqfuwfjl8e.fsf@gitster.mtv.corp.google.com>
-	<vpqwpprqlt4.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 26 21:13:49 2016
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/2] Check recursive submodule update to have correct path from subdirectory
+Date: Fri, 26 Feb 2016 12:51:51 -0800
+Message-ID: <1456519912-10641-2-git-send-email-sbeller@google.com>
+References: <1456519912-10641-1-git-send-email-sbeller@google.com>
+Cc: jacob.e.keller@intel.com, Jens.Lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 21:52:03 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZOli-0006Mb-JE
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 21:13:42 +0100
+	id 1aZPMo-0004VA-CC
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 21:52:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030230AbcBZUNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 15:13:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60951 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755063AbcBZUNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 15:13:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 414C3460C8;
-	Fri, 26 Feb 2016 15:13:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oIJ+YCdMRQZK/FSp1FY1L1DwRIo=; b=o9fd9Q
-	+bP1c++OAhnu4PUOYUczv33hJ4m/WshtPDcEUvKtmxULDTJn4Crj+Dt2ZB8LSbsF
-	W8E7RkzbVNnT/eOLwuwdakL3iaKtBxPEyEDA48n3kl4KE3GhlzsAbfXHew9FNjki
-	Z9PUiKm8h3x0MkHZN3+TJz4EobKzeY+BtPkzc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JoqO5rB5/q69H/I0Y7HifYdot5X/p4AN
-	F/IqEaA6DMzVkLbMP6CklIdgeGgbaS0eGuRXdBg7WJziaaNhUVocMZcsoNz1fIag
-	kGmTBQQn+qX5X5sU2BdSVbuWydU8MMWNDN7MOAcYGnxUhCwNPG5Ff/tUtnl5PTyJ
-	v3AN3RxtTtk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 38EBD460C7;
-	Fri, 26 Feb 2016 15:13:36 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A70A5460C6;
-	Fri, 26 Feb 2016 15:13:35 -0500 (EST)
-In-Reply-To: <vpqwpprqlt4.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
-	26 Feb 2016 21:05:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6A6EFF34-DCC5-11E5-A37B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755099AbcBZUv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 15:51:59 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:33328 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754946AbcBZUv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 15:51:58 -0500
+Received: by mail-pa0-f50.google.com with SMTP id fl4so56543001pad.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 12:51:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/xDYe5IiObgYOhfWu2Z7KV9Djp4A3eMKN7s6stdj6HY=;
+        b=FstBICXcpmrJ6Uo9laSxyy7el3eH2vh4ohTOwmkY36mIdcwCLqdC73hk/1LY0YHCSL
+         N4GZmJ8ak1xqlvh85cQFu2P8MRRz0u0SdPV1BhkdtjkTCyyLF3WnxaiUqBBpBz+207A1
+         64YFC9t1skHjd83XBi9t6VbhYeNjNJJcmW/SWrvUfVbeVqM1eK5lFF+/7RgTO7FoTVSL
+         JkcSP7HjPOXSQyXsikLpPakaOWBIQcj9FC3p6FMxq0bJ4rv0Jnn5M5GQwGeGuFYJ26f1
+         wy0e2qc7I8b8hL4rRZl61XTEbR6pcvjp0DzrhaYhfk2HqFD+nV6KQ7bzUysBnBNt7458
+         nP4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/xDYe5IiObgYOhfWu2Z7KV9Djp4A3eMKN7s6stdj6HY=;
+        b=fHRPEPpLVA06Gczkp4hDVzYgB7wd/4b20v9VeDbqyqm0wMUkxvlgWnrStfVx+knQS4
+         o12hHAgDmeV9WFhwVpv9U7J05QFuz1bQ2qz+mVcPkZuACx5HCCHQraGiXzbHEjQnBebt
+         5k4tzAcW3zW0mJ9fMM5LtwFrjboNHqU3oO+MIh8y2sM0cX5DjRRQ8FpWn7y9bZB1DkwY
+         VlrzSoUIvI6+7naIj76HPdglETqGhFhTrKLyIS9h3K7iGnjYbfUBPSLH9opohfYTHD16
+         CsGzlenUY6Re3nC0yaP0To8c+hAdklkuN2boJiIlmHee39FD5+HcNfTXIN11b9LOTCg8
+         mo5Q==
+X-Gm-Message-State: AD7BkJK9nk2wL6TWVOJ54nQayTfjYBiPIxJ0RUIV9dxDHVQS2eB1x+RMnP3f6FQrCeT3pZ8A
+X-Received: by 10.66.139.234 with SMTP id rb10mr4936011pab.82.1456519917508;
+        Fri, 26 Feb 2016 12:51:57 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:a09f:64c6:9d8b:3a18])
+        by smtp.gmail.com with ESMTPSA id 4sm7378970pft.44.2016.02.26.12.51.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Feb 2016 12:51:56 -0800 (PST)
+X-Mailer: git-send-email 2.7.2.368.g934fe14
+In-Reply-To: <1456519912-10641-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287619>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+A similar test exists for `submodule sync` to behave well when being in
+an unrelated subdirectory and performing operations on submodules.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I do not think this is limited to shallow but for grafts in
->> general.  
->
-> Probably yes. I happen to only use grafts in shallow clones ;-).
->
->> cat-file is low-level to show the bare metal, but by using these
->> facility you asked Git to give you an imaginary history where that
->> commit is the root commit--and that is why it is shown, I think.
->>
->> What does it do if you say "git -c log.showRoot=false log -p"?
->
-> I get the commit without the patch:
->
-> commit c3c1cc25b27d448e9ef67b265a11be8735ff2df4 (grafted)
-> Author: Matthieu Moy <Matthieu.Moy@imag.fr>
-> Date:   Mon Aug 31 16:32:20 2015 +0200
->
->     Merge remote-tracking branch 'edward/utf-8-email-support4'
->
-> Without "-c log.showRoot=false" I get a big patch (diff of the commit
-> against the empty tree).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7406-submodule-update.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-... which shows that Git is consistently pretending as if that
-commit is the root commit, which in turn means that it is correct
-for "log --no-merges" to not peek into the information at "cat-file
-commit" level.
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 68ea31d..628da7f 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -774,4 +774,16 @@ test_expect_success 'submodule update --recursive drops module name before recur
+ 	 test_i18ngrep "Submodule path .deeper/submodule/subsubmodule.: checked out" actual
+ 	)
+ '
++
++test_expect_success 'submodule update --recursive works from subdirectory' '
++	(cd super2 &&
++	 (cd deeper/submodule/subsubmodule &&
++	  git checkout HEAD^
++	 ) &&
++	 mkdir untracked &&
++	 cd untracked &&
++	 git submodule update --recursive >actual &&
++	 test_i18ngrep "Submodule path .../deeper/submodule/subsubmodule.: checked out" actual
++	)
++'
+ test_done
+-- 
+2.7.2.368.g934fe14
