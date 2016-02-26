@@ -1,160 +1,79 @@
-From: Pranit Bauva <pranit.bauva@zoho.com>
-Subject: Re: [PATCH/RFC] git-commit: add a commit.verbose config variable
-Date: Fri, 26 Feb 2016 13:26:45 +0000
-Message-ID: <56D05295.6020102@zoho.com>
-References: <56CFBF19.6040004@zoho.com>
- <CAPig+cQE6ytRKFjqRRLrPHCYqJuf52NKvy8sZs8rX3t5_kDRVg@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 2/2] git: submodule honor -c credential.* from command line
+Date: Thu, 25 Feb 2016 23:32:56 -0800
+Message-ID: <CA+P7+xqUZeSCqXGB_E-P5NkQaqYEdF0vXmzQSTNo64R3GRHdoQ@mail.gmail.com>
+References: <1456426632-23257-1-git-send-email-jacob.e.keller@intel.com>
+ <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
+ <20160226015510.GA5347@flurp.local> <CA+P7+xqyTUh60BOmY03JHE6HyVqY7iidVkUf3ji95_s3uE32cg@mail.gmail.com>
+ <CAPig+cRM_1JLfBiOqo+-EdKbXp--4VUbddKN_zpSCSLK8PT09w@mail.gmail.com> <20160226060743.GB24517@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
 	Stefan Beller <sbeller@google.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 26 08:21:40 2016
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 26 08:33:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZCiZ-0005CG-VB
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 08:21:40 +0100
+	id 1aZCtt-0004BD-Pm
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 08:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195AbcBZHSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 02:18:49 -0500
-Received: from sender153-mail.zoho.com ([74.201.84.153]:22834 "EHLO
-	sender153-mail.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099AbcBZHSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 02:18:48 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=subject:to:references:cc:from:message-id:date:mime-version:in-reply-to:content-type; 
-  b=SyJwtNnY5/bAZXPGw8V94/B7SKywxSIgHt/vA+J41FKwIqQ4b82qhglrdrDDHu6by/0Y92lfM5/o
-    QF5CKcsoXZi3u1M9AmAXQL38eeCLmgWMoqXvOYH5NKpAf7xoCer7  
-Received: from 127.0.0.1 (193.90.12.88 [193.90.12.88]) by mx.zohomail.com
-	with SMTPS id 1456471123160150.64967302839887; Thu, 25 Feb 2016 23:18:43 -0800 (PST)
-In-Reply-To: <CAPig+cQE6ytRKFjqRRLrPHCYqJuf52NKvy8sZs8rX3t5_kDRVg@mail.gmail.com>
-X-Zoho-Virus-Status: 1
+	id S1753524AbcBZHdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 02:33:17 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36078 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753319AbcBZHdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 02:33:16 -0500
+Received: by mail-ig0-f180.google.com with SMTP id xg9so29622933igb.1
+        for <git@vger.kernel.org>; Thu, 25 Feb 2016 23:33:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RTtTFycMscn8GAKXH34TwRPQWDeVMM3bnYdy5BrJjio=;
+        b=iLrA2PRnXjLu/VFncvEBmdSf/hCkCIKaDBOUR8pj/9g0LY/zBxdGev+5awQnSRB07b
+         ulUiEciEToCdI3L8dImhcKadHMb57oEqXMG9NNMzAA1SLQe5ZyCHMAt+yO3a9u8WWhyF
+         6dNreYMv/xOCsXJUrKwFjeqG4P1MilvgCKYZ60nJkgYh6HY+siJXtgj3qOWSllZlvezW
+         klBVSv4yQRZoZImaHInvH9ZZAnGpIhnThvOAXu7ZEL7G0uaw3D6yqsznjHV40H39kt0l
+         Fp9UDRsy+rrF9itTDo5TgMd5bs8B50VNq1eiN0S3I7Ilt/FOONaQAAcbWiKl1l7wf6eY
+         uq0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RTtTFycMscn8GAKXH34TwRPQWDeVMM3bnYdy5BrJjio=;
+        b=H+ei979d1nUgdRYA5WVcSR+ymscIzT+d0E2LMon/Khc+cba2AawbZUZgQMX+UR6VyE
+         9UkJuGpDvtyaozEbLjoOQtzaRtjJmfF+2gKz9LJXVzVA7IO5jHUxaDooJ5lwfndVMtAM
+         lJ7sqU6sZ4+lr4oVakqZBHhCyrU1au4HSUBtL7Wek+PNqCp5fa33X2ngsns7CCHfl7Dh
+         J+9Y4LH4dC8yzNxH4Ji8g9ZCh+A+Ut64bvhf3Bqt1jI6N3nRnTHiH4OQeVDoiM/ph54K
+         CC3OYYURx3kgpKilM4nqWtXTinceWB4jBCPzWNI60iuv1hZOQ8dqrXTwGfss7f4ZdY4z
+         KFag==
+X-Gm-Message-State: AD7BkJJhm+zwLrSvzUK6Z3E6PDMjte9FHOkAfgcivBkKkamQ59CqwhYuDzravSrliZgKkw8CjJfTZ6mbt77g8A==
+X-Received: by 10.50.137.35 with SMTP id qf3mr1483710igb.92.1456471996068;
+ Thu, 25 Feb 2016 23:33:16 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Thu, 25 Feb 2016 23:32:56 -0800 (PST)
+In-Reply-To: <20160226060743.GB24517@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287541>
 
-Matthieu Moy:
-> Using "git send-email" normally does the right thing. You may want to
-> look at https://submitgit.herokuapp.com/ too.
-git send-email does not work as my institute proxy does not allow
-IMAP/SMTP connections. But I will take care of this from hence forward.
-
-> The commit message should not try to rephrase what the patch aleady
-> says.
-
-I am dropping this statement off because of one another reason which
-Eric Sunshine gave.
-
-> If you know you haven't finished, you may use WIP (work in progress)
-> instead of RFC in the title.
-
-I wasn't familiar with this tag. I will keep it in mind. And this is not
-included in Documentation/SubmittingPatches , so I will send a patch to
-include WIP tag.
-
-> "the git-config" is not proper English. You mean "a configuration file".
-> I'd write "the configuration variable `commit.verbose` can be set to
-> true".
-
-I actually was facing problem in phrasing it. Thanks for your
-suggestion. I will update this.
-
->> +	with git-config.
+On Thu, Feb 25, 2016 at 10:07 PM, Jeff King <peff@peff.net> wrote:
+> Of the two you suggested, I think I like the here-doc better, as it does
+> not leave any question to a reader that there is other interpolation
+> going on.
 >
-> Did you mean "git commit"?
-Sorry for my carelessness. I will update this.
+> -Peff
 
+Agreed. Since I forgot the parts about argc checking, I will do a
+reroll with the heredoc rolled in as well.
 
-> Doesn't this override any value that --verbose or --no-verbose may >
- have set before?
-Yes, this was the problem. I have fixed it now. But there is a glitch.
-See below.
-
-Eric Sunshine:
-> On Thu, Feb 25, 2016 at 9:57 PM, Pranit Bauva <pranit.bauva@zoho.com> wrote:
->> From c273a02fc9cab9305cedf6e37422e257a1cc3b1e Mon Sep 17 00:00:00 2001
->> From: Pranit Bauva <pranit.bauva@zoho.com>
->> Date: Fri, 26 Feb 2016 07:14:18 +0530
->> Subject: [PATCH/RFC] git-commit: add a commit.verbose config variable
-
->From hence forth I will take that into consideration.
-
-> Talking about this in the commit message misleads the reader into
-> thinking that there is some potential oddity going on where a careful
-> decision needs to be made about which variable to set, when that's not
-> in fact the case. The 'verbose' member of wt_status is just one
-> consumer of the "verbose" flag, not the sole consumer. Another
-> consumer is found in builtin/commit.c:cmd_commit():
-> 
->     if (verbose ||
->         cleanup_mode == CLEANUP_SCISSORS)
->             wt_status_truncate_message_at_cut_line(&sb);
-> 
-> So, it would not be correct for the configuration ever to set only
-> wt_status::verbose.
-> 
-> Consequently, it would be better to drop this paragraph altogether
-> from the commit message, so as to avoid confusing readers.
-
-I guessed this parent-child behavior and I wanted the commit to sound
-like that but now that I read it again, I can understand that it might
-confuse readers who aren't familiar with the code base.
-
-> Some tests to consider:
-> 
-> * commit.verbose unset
-
-This was working perfectly fine!
-
-> * commit.verbose=true
-
-This was working perfectly fine!
-
-> * commit.verbose=false
-
-This was working perfectly fine!
-
-> * --verbose overrides commit.verbose
-
-This was showing errors. So I now included an if statement and then
-placed the whole code after the method parse_and_validate_options()
-otherwise it would just ignore the behavior. Now even this is working
-perfectly fine.
-
-> * --no-verbose overrides commit.verbose
-
-This is a problematic one as currently `git-commit` does not have such a
-behavior. I tried printing value of `verbose` in both the cases ie. with
-`git commit` and `git commit --no-verbose` and in both of them it
-printed the value 0. So currently, the program won't understand the
-"overriding" nature. I have an idea for implementing this. We can keep
-the default nature to point out to 0 and `--no-verbose` to point to -1.
-But I guess this problem would have been faced/implemented in other part
-of the code. I will have to look in different parts of code and see how
-this has been done in those so as to maintain the practices followed
-with git. I am currently not quite familiar with `parse-options.c` so I
-will read about it. But you could help by pointing out specific commits
-or email threads which are related to `--no-verbose` option in other git
-commands to speed up the process.
-
-> I haven't fully digested builtin/commit.c, but the placement of this
-> new code seems suspect. My expectation would have been to see
-> git_commit_config() updated to recognize the new "commit.verbose"
-> variable. Am I missing something?
-
-I too had a lot of confusing regarding this. But it seems to me that the
-method git_commit_config() shows a "different" behavior and I don't
-think such "complicated" behavior is required for reading the boolean
-variable `commit.verbose`.
+Thanks,
+Jake
