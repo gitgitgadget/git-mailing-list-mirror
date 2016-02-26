@@ -1,126 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/16] bisect: use a modified breadth-first search to find relevant weights
-Date: Thu, 25 Feb 2016 19:09:54 -0800
-Message-ID: <xmqqr3g0kvzx.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 08/16] bisect: use commit instead of commit list as arguments when appropriate
+Date: Thu, 25 Feb 2016 19:10:55 -0800
+Message-ID: <xmqqmvqokvy8.fsf@gitster.mtv.corp.google.com>
 References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-	<1456452282-10325-15-git-send-email-s-beyer@gmx.net>
+	<1456452282-10325-9-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
 To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 04:10:03 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 04:11:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ8n4-0003pp-Na
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 04:10:03 +0100
+	id 1aZ8o4-0004bE-5Y
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 04:11:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbcBZDJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 22:09:58 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62343 "EHLO
+	id S1753110AbcBZDK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 22:10:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63008 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750767AbcBZDJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 22:09:58 -0500
+	with ESMTP id S1752727AbcBZDK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 22:10:59 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7FA6145CDB;
-	Thu, 25 Feb 2016 22:09:56 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B3BE45D05;
+	Thu, 25 Feb 2016 22:10:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Lhphyx+ha4iWehuAhlKkZt4rsec=; b=Fxp99Z
-	TbzR4J8++t3N6DauEA77Tpgytbs/pzP/3OKMSzTdvIbBNGDHF1QHni/BGxY8ou44
-	YCJOkhTWYLjStGnDw55tL8rfKZ65bBrQUK9BPDzpfRmHrnzVSUDLf2THX/fhELu8
-	nU6kzfwRXieqt1nlXCauMDudcwmaaYhqhWv34=
+	:content-type; s=sasl; bh=oq2tqGra+pBrP6LDa/kPtTEsq5A=; b=NbTtCl
+	D/fOF0IxilhxNl/3w3SfQBHQ/Wn4f+31iD8Pw55nw0bHR4vJHQrfeqxm3YYTQATA
+	0LBFNLmcJDzngSRo5jU+W/PsI2o1tYM0N7JEdkOW3ErSNP/qyecl8ddpMggkJBiR
+	25X32hYw3u6851HItiBvpxQPCwknEmC6Xg4do=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fG1alTcLanAbdipHVclxvEQd7bG70vJ4
-	L3oVw2quY3FmxSYTf5tmNSZKCz+5aUvf6Os+ZQ7t3SxpukzYlseTeCSPARxXtY1x
-	bwgJ12NqDwDRLUXr8vyh+Fpuz+0937/11+LcDTRSCFfBqnwnXv0CcehiucF/BGsW
-	3YF6tRMd7yE=
+	:content-type; q=dns; s=sasl; b=dp2FyntJpqNzggnRMBKitAh8prc+pEC1
+	Gz8XJEaJY9Ass2C0laKshf4EVh+cL17/yKvAf8dxAexnYFxvTiNTYUnki6ONBtL5
+	io3NJQPO21PXVMj8O6hIlF1O9RRqBK+TJH1u+Se8E5e976u9ei5h/lbUZ5NGQ2Ks
+	t7r2ZYpKn0o=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 774AF45CDA;
-	Thu, 25 Feb 2016 22:09:56 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9185145D04;
+	Thu, 25 Feb 2016 22:10:57 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CAA8F45CD6;
-	Thu, 25 Feb 2016 22:09:55 -0500 (EST)
-In-Reply-To: <1456452282-10325-15-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Fri, 26 Feb 2016 03:04:40 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 14AC445D03;
+	Thu, 25 Feb 2016 22:10:57 -0500 (EST)
+In-Reply-To: <1456452282-10325-9-git-send-email-s-beyer@gmx.net> (Stephan
+	Beyer's message of "Fri, 26 Feb 2016 03:04:34 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 69592D34-DC36-11E5-8972-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 8DDBB172-DC36-11E5-AA11-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287536>
 
 Stephan Beyer <s-beyer@gmx.net> writes:
 
-> The idea is to reverse the DAG and perform a modified breadth-first search
-> on it, starting on all sources of the reversed DAG.
-> Before each visit of a commit, its weight is induced.
-> This only works for non-merge commits, so the BFS stops prematurely on
-> merge commits (that are collected in a list).
-> Merge commits from that collection are considered for further visits
-> as soon as all their parents have been visited.
-> Their weights are computed using compute_weight().
-> Each BFS walk ends when the computed weight is falling or halfway.
+> It makes no sense that the argument for count_distance() and
+> halfway() is a commit list when only its first commit is relevant.
 >
 > Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 > ---
 >
-> In other words: walk the history up, compute the weight of each
-> commit and stop when you know a better commit cannot follow.
+> This is just some kind of minor code cleanup.
+> The typical "while at it", you know it, I guess.
+
+If you are doing while-at-it, please rename the variable to commit
+or something.  "entry" refers to one element in the list, but the
+entity the updated code works on is no longer that.
+
 >
-> This way, the expensive "compute_weight()" function is not called
-> on merge commits that will not help to find the maximum distance.
-
-Interesting.  So you walk from the bottom commits, incrementing the
-weight while walking on a part of the graph that is single strand of
-pearls, or doing the "count the reachable ones the hard way" when
-you hit a merge [*1*], but either way, once you know the commit you
-are looking at is above the mid-way, i.e. reaches more than half of
-the graph, then stop walking because its children will never be
-better than that commit?
-
-This is doubly clever idea [*2*].  It cuts the search space in half
-for one thing, and more importantly, because "count the reachable
-ones the hard way" counting has to traverse the graph from a merge
-to the bottom boundary, the computation for a merge commit in the
-more recent half of the history is more expensive than the
-computation for a merge comit in the older half of the history, and
-what you are avoiding is to waste the cycles on that more expensive
-half.
-
-I like it.
-
-I haven't studied the code carefully, but your mention of BFS makes
-me wonder if you can "narrow" down the search space even more.  In
-an earlier step of the series, you introduced a work queue to
-replace the recursion.  The recursion forces the algorithm to work
-along the topology of the history, but you have more latitude in
-selecting the commit to dig further with a work queue.
-
-I wonder if you can sort the elements on the work queue based on
-their distance (i.e. by using a priority queue).  You know the total
-upfront, so you may find a commit whose weight is exactly half of it
-before traversing all the bottom half of the history and it may turn
-out to be even more efficient.  After all, you are only looking for
-just one such commit, not trying to find all the commits with the
-best weight.
-
-
-[Footnote]
-
-*1* A merge between a commit that reaches N commits and another that
-reaches M commits may have weight smaller than the sum of N and M,
-and that is why I left the original "truly stupid algorithm" Linus
-wrote as-is when I did the obvious optimization for the linear parts
-of the history.
-
-*2* Whenever I revisited the bisection in my head, I thought about
-ways to improve that "truly stupid" counting, but never thought
-about an approach to simply reduce the number of times the "truly
-stupid" counting has to be done.
+>  bisect.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/bisect.c b/bisect.c
+> index 6df13b0..76f2445 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -38,11 +38,11 @@ static inline struct node_data *node_data(struct commit *elem)
+>  	return (struct node_data *)elem->util;
+>  }
+>  
+> -static int count_distance(struct commit_list *entry)
+> +static int count_distance(struct commit *entry)
+>  {
+>  	int nr = 0;
+>  	struct commit_list *todo = NULL;
+> -	commit_list_append(entry->item, &todo);
+> +	commit_list_append(entry, &todo);
+>  	marker++;
+>  
+>  	while (todo) {
+> @@ -77,18 +77,18 @@ static int count_interesting_parents(struct commit *commit)
+>  	return count;
+>  }
+>  
+> -static inline int halfway(struct commit_list *p, int nr)
+> +static inline int halfway(struct commit *commit, int nr)
+>  {
+>  	/*
+>  	 * Don't short-cut something we are not going to return!
+>  	 */
+> -	if (p->item->object.flags & TREESAME)
+> +	if (commit->object.flags & TREESAME)
+>  		return 0;
+>  	/*
+>  	 * 2 and 3 are halfway of 5.
+>  	 * 3 is halfway of 6 but 2 and 4 are not.
+>  	 */
+> -	switch (2 * node_data(p->item)->weight - nr) {
+> +	switch (2 * node_data(commit)->weight - nr) {
+>  	case -1: case 0: case 1:
+>  		return 1;
+>  	default:
+> @@ -280,10 +280,10 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>  	for (p = list; p; p = p->next) {
+>  		if (!(p->item->object.flags & UNINTERESTING)
+>  		 && (node_data(p->item)->weight == -2)) {
+> -			node_data(p->item)->weight = count_distance(p);
+> +			node_data(p->item)->weight = count_distance(p->item);
+>  
+>  			/* Does it happen to be at exactly half-way? */
+> -			if (!find_all && halfway(p, nr))
+> +			if (!find_all && halfway(p->item, nr))
+>  				return p;
+>  			counted++;
+>  		}
+> @@ -321,7 +321,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+>  			}
+>  
+>  			/* Does it happen to be at exactly half-way? */
+> -			if (!find_all && halfway(p, nr))
+> +			if (!find_all && halfway(p->item, nr))
+>  				return p;
+>  		}
+>  	}
