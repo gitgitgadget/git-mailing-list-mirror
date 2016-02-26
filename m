@@ -1,98 +1,71 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
-Date: Fri, 26 Feb 2016 17:10:27 +0100
-Message-ID: <56D078F3.9070905@web.de>
-References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 17:10:55 2016
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 5/6] WIP: fix unborn branch case
+Date: Fri, 26 Feb 2016 17:39:45 +0100
+Message-ID: <9d4ba4d9aa4deaf88c4e7e1d9d92fb18717e7b2c.1456504190.git.git@drmicha.warpmail.net>
+References: <cover.1456504190.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 17:40:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZKyh-00007N-1S
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 17:10:51 +0100
+	id 1aZLR2-00014b-BD
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 17:40:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbcBZQKq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2016 11:10:46 -0500
-Received: from mout.web.de ([212.227.15.14]:59098 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753896AbcBZQKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 11:10:46 -0500
-Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MHpOP-1acuPJ2vHR-003beb; Fri, 26 Feb 2016 17:10:36
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:+ADnREyALi3jExt9DcDy8aHh1t9bNcXGGV9RL7ZoMJPRsgQjh6B
- mIjtqvYNdYcTkMoLYFa1zHP2lhls7b9yB89tDdwskFHswWF4CfvANdpBBAh/N1IM+gZGym3
- hCyQBY8ZH8MsfMQiL93kVRqOJ25vWkI6dK6pFs5+aUi5zbP7S3bmW+brifPZQFD1niUEa7H
- ZFSOuT6r4ZeQ6mfbHiYNQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OfQUiNdser8=:esR4rQNbOYkQA127+RbH9M
- 1l9d3vAQhGijaJLzKgCz2SY50bJMMlgknKGH0cPR3UompihSlc4YDNM2H64/zFyHyLYLborMU
- L3F+HEI5qeVed0dR2003w457Gpgkpesza24WiIgk9u8uS9kJ8WdYSExa4XCDKy2RLEN0F+41q
- Z7fqvN+H+2i+RMd2FhbK3hOzxNSI3E/1CD+Jx5XNy39L+l5z621HnFmYB6keihF78BMy4eXK8
- t9hNvWRY7aI+2sPSISSESxYwR2qGsOOe5PDAj8uuUwMU9PB2DFBQQqbpRkqYUFGHJNCOWRpEg
- INtM8GoLgR/JWz9AYqiAlymgq5MzXRAEz5cPucAL4Qfo0pPO4pXTVvc67CS66MZwOAY3C41+e
- v1q0t+vuXV75xHQp8jeoLnlhTgeE3YhNNyMojYIkp5AaIdvlSj8zxaGMwEJ0rKza3bARRyQOX
- d2h+h1HTsuue9x+EE3iAuj0uzsm6U1kU/SlPDgjb11CMGh0VrQWXdzczsSvkqfV6rwne547jS
- mvEzzyfrCImcfQmpz/a2SNi+H4DCeUtALU7+m5roRhb5J2reNvaaOYENxZcpBMa1kQb+e6kBU
- 1eqwu8bltReR0nNy2F/wkD1Q2E2E/btzYLJw3qn3SCu3gcTkFMit6YgQl1he6Ar0tyTXebJ2O
- Ja7anvY5Luj9aKDdJ2PEw5h6rYJhIrYaMFRg8GlrPrWFh6/ZHp91S0ReTCOriPhbKR6xfkUhA
- xXx28ZvR/f3gSE9flbIHR/SPtp7CjFSZZ1Q09dZyF02aP4YvF7ac2dGFineNBGX2vGQ5O9vR 
+	id S932660AbcBZQj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 11:39:57 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:38199 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754483AbcBZQjz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Feb 2016 11:39:55 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 729EC20B5C
+	for <git@vger.kernel.org>; Fri, 26 Feb 2016 11:39:54 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Fri, 26 Feb 2016 11:39:54 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:in-reply-to:message-id:references:subject:to
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=BOl3cFvYbbOMXYfnUxV3yF5QPyM
+	=; b=QSICJAlpxniG9XxPaEgQ1rRUdMIKH9Ju4/zzZo+WZflYR+fsbJCgRiBuIuV
+	Dnbelny7bIBvaOUH9gIZSoJvxPJEYASudulOMDeftD3u3RATHVY7YArmRfkwWYtz
+	HSyJxDcU4r822EExMF3pRVSaTqJ3sst1W8Oe6cG92t3h49V0=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=BOl3
+	cFvYbbOMXYfnUxV3yF5QPyM=; b=rCyu/tzy7Q2KIa71szotKMoDdtN5k9PqxRWw
+	xV3PTXL72pnzoSldPQ93R0XksiwFoIaHboTbhrC0BWzJNiURiRsmJHVOrNmBXzRQ
+	hZ2GJhZAHO8giDsUx1JJ+NMWQNKtGBp5Q93e6qBHIaQQYjIkjKYHbr+5aPBx3Vg/
+	K7w7h1w=
+X-Sasl-enc: 33yFUCVmaCaDPF+ICaT5z6J6cI7Ad1o+Kbp7OCSAonRa 1456504794
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id DD2296801B3;
+	Fri, 26 Feb 2016 11:39:53 -0500 (EST)
+X-Mailer: git-send-email 2.7.2.618.g7a61b68
+In-Reply-To: <cover.1456504190.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287582>
 
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ refs/files-backend.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> * jk/tighten-alloc (2016-02-22) 22 commits
->   (merged to 'next' on 2016-02-24 at 78b3251)
->  + ewah: convert to REALLOC_ARRAY, etc
->  + convert ewah/bitmap code to use xmalloc
->  + diff_populate_gitlink: use a strbuf
->  + transport_anonymize_url: use xstrfmt
->  + git-compat-util: drop mempcpy compat code
->  + sequencer: simplify memory allocation of get_message
->  + test-path-utils: fix normalize_path_copy output buffer size
->  + fetch-pack: simplify add_sought_entry
->  + fast-import: simplify allocation in start_packfile
->  + write_untracked_extension: use FLEX_ALLOC helper
->  + prepare_{git,shell}_cmd: use argv_array
->  + use st_add and st_mult for allocation size computation
->  + convert trivial cases to FLEX_ARRAY macros
->  + use xmallocz to avoid size arithmetic
->  + convert trivial cases to ALLOC_ARRAY
->  + convert manual allocations to argv_array
->  + argv-array: add detach function
->  + add helpers for allocating flex-array structs
->  + harden REALLOC_ARRAY and xcalloc against size_t overflow
->  + tree-diff: catch integer overflow in combine_diff_path allocation
->  + add helpers for detecting size_t overflow
->  + reflog_expire_cfg: NUL-terminate pattern field
->=20
->  Update various codepaths to avoid manually-counted malloc().
->=20
->  Will merge to 'master'.
->=20
-
-Sorry being late,
-but this is what my older test system says:
-
-CC combine-diff.o
-combine-diff.c: In function =91diff_tree_combined=92:
-combine-diff.c:1391: internal compiler error: Segmentation fault
-Please submit a full bug report,
-with preprocessed source if appropriate.
-See <URL:http://developer.apple.com/bugreporter> for instructions.
-make: *** [combine-diff.o] Error 1
-
-Revert "use st_add and st_mult for allocation size computation" didn't =
-fix it.
-I haven't digged deeper yet.
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f020c52..1614854 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1780,6 +1780,8 @@ static int do_head_ref_worktrees(const char *submodule, each_ref_fn fn, void *cb
+ 	worktrees = get_worktrees();
+ 	retval = 0;
+ 	for (i=0; worktrees[i]; i++) {
++		if (is_null_sha1(worktrees[i]->head_sha1))
++			continue;
+ 		hashcpy(oid.hash, worktrees[i]->head_sha1);
+ 		retval = retval || fn("HEAD", &oid, worktrees[i]->is_detached ? 0 : REF_ISSYMREF, cb_data);
+ 	}
+-- 
+2.7.2.618.g7a61b68
