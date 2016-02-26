@@ -1,92 +1,118 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
-Date: Fri, 26 Feb 2016 23:34:07 +0100
-Message-ID: <56D0D2DF.1040807@web.de>
-References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
- <56D078F3.9070905@web.de> <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 3/3] git: submodule honor -c credential.* from command line
+Date: Fri, 26 Feb 2016 14:19:32 -0800
+Message-ID: <CA+P7+xpArLkv2_3juxMFBct1=31hf-gdaOT43pN9CbpuHaz5AQ@mail.gmail.com>
+References: <1456514268-8241-1-git-send-email-jacob.e.keller@intel.com>
+ <1456514268-8241-3-git-send-email-jacob.e.keller@intel.com> <CAGZ79kZnR3EsESCFdORq84awWnRZZ9A_+mcH_54ULZZJfD8xyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Feb 26 23:34:43 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Feb 26 23:34:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZQyB-0008Nn-5V
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 23:34:43 +0100
+	id 1aZQyG-0008R3-DE
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 23:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755753AbcBZWej convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2016 17:34:39 -0500
-Received: from mout.web.de ([212.227.15.4]:55423 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755748AbcBZWeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 17:34:37 -0500
-Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MbMg8-1aIs0v1eVg-00In1e; Fri, 26 Feb 2016 23:34:13
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:x7fXPRV8jEKX+qAVIjE6+2GrtZTVYlT9zapIE6Qnt+38OL9wZoW
- DyalWBWYAsOAUkPjvdUwAaMPDk5NjoukCLQsT7i0tTanl0vn0e/eGwrtUD7MCuxRe6zyzSh
- tLED7IiBaqpjGKQaoWg/cZHmAXolSfLcqfOXxGqcsIBMV6GmK9YOVrj1peWW/ux1lcjV0BK
- +NoHNr1eFx1nuIExx7QrA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:flvPVsN+nDQ=:wFiBNJ+f7F6d8jwhd0S710
- 6JfqGizrjr+w2wLOBCT73+TTyJ/F4hqFXfzIyJxqxCpzFBOVXOvZGMevSAR4Ie6NNF9R90Oef
- Fzm0xOgykxHLQfCBtJShQRMA1131W6mzrnzwNuHxAUopAGrLAEmvLAmoNP+NeLIvBL2lUVCzD
- yXPXyL5DKz1qibaoiQtXuiL/GlTsKZ39wAbtHg+//OE26ac0oV3dpU8R7hJAjFCUOiS6PCIa/
- LeuU72FCrb8xWjSEQZefTndmygKeQamTlYgN/7wmDiVZit6XXQNUbkwBbU5+EVmL6qXXvNhfP
- 76zBqE9SLWkXtydH6CZJqQFXnpOHYMFs3hVbGf2O/KCvyqECJ8UKak2DxZfm1coLNo2E9ydHO
- aM4/12iDdyGzCL9jWVeqXLid4cLTnLE5vzm4ZCyTegfIfDJj1YZ33R8Jfms1hjOpuUKqccLj3
- 4vCFmVlXzJ40e3uAGgHOyFWDpVGQ1iZGnnUtoBCGr9WQDZgukyjaFrrY/cASD4YTvqhE5/6pZ
- sGH9oFXNP7a5ixmcsGEv/4qZM94Qb6Z7WbU5pyOAZwBtjfYUOXGTyJ63WRiHpdLAAxevDgyvh
- +uXGZqMqTmRCgwz9mqGdIU6kIh4EoBV1PYPY22pJ8NACm/O/4EuBhqTF8k/5adoCJbwIMbPrp
- vhwyA1O7+sDaIMV1gM+H6fYstT/H+yBLDPGPm1vecW4vPsPRslUJtjIpJoUa0GaO95NMl+GRk
- YBYurgHxqgsuI3qTv2RIPYpER0MHr6Cd3Vgfkf3gl869X60pVSkpHfjx+y1OvopRo4/SzMls 
+	id S1755756AbcBZWem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 17:34:42 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36933 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933955AbcBZWTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 17:19:52 -0500
+Received: by mail-ig0-f180.google.com with SMTP id z8so44979933ige.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 14:19:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gJT6Q5nulne/dpXgbNHud8Qfr9vEiEtzZ+co+/QF42M=;
+        b=fbAqj11n9ia9XDhQ3pU+mA8C83ERRU2DNBOVJH4GsWIqF7kuRzyoVifl5DcXWKMihm
+         yyGL/9q3RsoKwCLzZ8Gk1cPt5PG1rVX1K6SFQNV/ONFoulZDGOPl8E3YbFH/PdC4ejEx
+         cM5Q0xubwd1zrn0b9lQt9eQp1Q663zLm18m5u6OmFzvzYLubMBSNDNDEwipjvzOhJ2To
+         vEjP7UMSM5Y/nYsR8DGYe0ckAdXxXGptppjX09ckhj2JFtm6CC57ZDCiZGEhmPwNXAyr
+         t1uyu7tWZPKWIljnE5Z2cudgCvr9j15mzW5j3m+nI49j9ujq+u9ld0MrmQrkq4tItKSQ
+         It0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gJT6Q5nulne/dpXgbNHud8Qfr9vEiEtzZ+co+/QF42M=;
+        b=PkFCV238/p/vaMIDM6anB1cYW8OS4WQe2Y3LYfruQqlk9gLTg44fSTti1t0kjQ7zpi
+         avGntX8W89iJlYqQVm5/ZwYenP+Ql4KTVqNzbCTqd3Ns/W7zB/VxvbL5ALlySa9mDagp
+         a7vnHpViK/ebIxMlRrXn8E3silcifM+KEQ1MS1wur2yob4B8UjpqGpBK3XKncLMFOB/j
+         bvh+Rkh5O317xYwmZciSEGWth6UVGMX9LNhvvKabW/iUvfBjTGst2uDjfID2TSrcr2lX
+         gEVwBcfPZgGCQo5tnzxt7EKpNl1qIoUL7Jgb67h9HJNWH79uLYSJQ1Qos+Tsm8KfJlYr
+         dRbg==
+X-Gm-Message-State: AD7BkJLUn+SLTLkkVE2n4src4V7rjlFEPCLfTGuWg6PFKsEj2a4t7PHPHBnUMcyN6oQXROnFNuKWN67tMeIcQQ==
+X-Received: by 10.50.108.112 with SMTP id hj16mr223292igb.35.1456525191868;
+ Fri, 26 Feb 2016 14:19:51 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Fri, 26 Feb 2016 14:19:32 -0800 (PST)
+In-Reply-To: <CAGZ79kZnR3EsESCFdORq84awWnRZZ9A_+mcH_54ULZZJfD8xyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287630>
 
-On 2016-02-26 19.29, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> CC combine-diff.o
->> combine-diff.c: In function =E2=80=98diff_tree_combined=E2=80=99:
->> combine-diff.c:1391: internal compiler error: Segmentation fault
->> Please submit a full bug report,
->> with preprocessed source if appropriate.
->> See <URL:http://developer.apple.com/bugreporter> for instructions.
->> make: *** [combine-diff.o] Error 1
->>
->> Revert "use st_add and st_mult for allocation size computation" didn=
-'t fix it.
->> I haven't digged deeper yet.
->=20
-> Hmph, I am not quite sure what you meant by "I haven't digged
-> deeper"; I do not think you should be debugging Apple's compiler
-> (unless you have the source to it and that is your job to do so,
-> that is).
->=20
-> In any case, merging the topic to 'master', and reverting that
-> commit will leave this only this change between 'master' and the
-> result.  I do not immediately spot anything trickier in the
-> postimage compared to the preimage that may trickle a compiler bug,
-> but what would I know without the source ;-)
->=20
-Digging means:
-run git bisect and report the commit.
-And this makes the compiler happy:
-  Revert "tree-diff: catch integer overflow in combine_diff_path alloca=
-tion"
+On Fri, Feb 26, 2016 at 11:41 AM, Stefan Beller <sbeller@google.com> wrote:
+>
+> In the future, would you mind to try interdiffs in a cover letter?
+>
+> (I do git diff HEAD...$(previousSeries) with previousSerier either
+> local branch or rather what Junio picked up already. There is also tbdiff,
+> which should be better and easier than this work flow)
+>
 
-    This reverts commit 5b442c4f2723211ce0d862571e88ee206bfd51bf.
+Yes, I should do that. I could just use the reflog for this actually,
+for my workflow.
 
-Test suite passes,
-( except t9115, the 2 new test cases "svn.pathnameencoding=3Dcp932".
-  More info about that later)
+>
+>> +                */
+>> +               strbuf_addstr(&quoted, var);
+>> +               strbuf_addch(&quoted, '=');
+>> +               strbuf_addstr(&quoted, value);
+>
+> This could be `strbuf_addf("%s=%s", var, value);` (?)
+> which then gets quoted below
+>
+
+Is there such a thing as sq_quote_buf equivalent of this? If not,
+should I add one? I think that might be preferable since we'd drop the
+entire extra strbuf variable.
+
+>> +                       git_config_from_parameters(sanitize_submodule_config,
+>> +                                                  &sanitized_config);
+>> +                       argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
+>
+> like here?
+>
+
+Ya, I just wasn't thinking of strbuf_addf. But I think I'd rather have
+sq_quote_f or something created instead to drop the need of a separate
+strbuf.
+
+>> -                       subsha1=$(clear_local_git_env; cd "$sm_path" &&
+>> +                       subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
+>>                                 git rev-parse --verify HEAD) ||
+>
+> While at it, we could discuss if we want to replace the pattern cd
+> <somewhere> && git-command
+> by `git -C <somewhere> <command>` eventually (not in this patch) ?
+
+Yes, we should use git -C instead, but probably not worth too much
+effort if our plan is to drop the shell code eventually? Might be
+worth the cleanup, especially if it lets us avoid a subshell. If we
+still need the subshell for other non-git commands I would prefer to
+leave it as "(cd <somewhere> && git command && other commands && ...
+&& )
+
+Thanks,
+Jake
