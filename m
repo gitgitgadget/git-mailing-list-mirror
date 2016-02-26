@@ -1,118 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Revert "rev-parse: remove restrictions on some options"
-Date: Fri, 26 Feb 2016 15:44:01 -0800
-Message-ID: <xmqqbn73hwam.fsf@gitster.mtv.corp.google.com>
-References: <20160226232507.GA9404@sigill.intra.peff.net>
-	<20160226232957.GB9552@sigill.intra.peff.net>
-	<20160226233449.GA9622@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: What's cooking in git.git (Feb 2016, #08; Fri, 26)
+Date: Fri, 26 Feb 2016 15:57:15 -0800
+Message-ID: <CAGZ79ka_3wr7uCLRjA6DqzSUOF8V+SVH_89WxPsx=jjucaWmMg@mail.gmail.com>
+References: <xmqqfuwfhwey.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	John Keeping <john@keeping.me.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 27 00:44:13 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 00:57:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZS3O-0006kw-Tt
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 00:44:11 +0100
+	id 1aZSGC-00069C-U2
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 00:57:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755532AbcBZXoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 18:44:05 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754818AbcBZXoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 18:44:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DC161476EF;
-	Fri, 26 Feb 2016 18:44:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+9V9y0iwmQ6KILe6xqLUqIKN2CY=; b=FaHum1
-	tI4gQeEusHFD+nfqt4Y1fDS2d5cGEQ4C0ABbSBAWsEf+ghkDUNc95SeU87u5c/lc
-	CxiRdlg4ZAa4qmA62RTL8iXPAhdFLdZU+PEs+y6yItqCRgausxTN2Lv16q8S8FRw
-	nlBwnxKsle6kM6mtlCVVbDyWXv7JIfAIuzV0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YMjzSpoJ23JAj0AFIoPSHQdSrVsDnwmA
-	gY1Q7BgCLmXbGtNWiLpUHb30stTI8a8e0PUqKEq/cyKUTgKL2EJLaK93MhPTfm1o
-	iNX4mHY4ktYJN2mrDksMXAG23twPPxIoUv7P76ZP4daLg0r50IBKCWn+lPqsMaaG
-	S3EQdkrGY5g=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D3D65476EE;
-	Fri, 26 Feb 2016 18:44:02 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 59504476ED;
-	Fri, 26 Feb 2016 18:44:02 -0500 (EST)
-In-Reply-To: <20160226233449.GA9622@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 26 Feb 2016 18:34:49 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D085972A-DCE2-11E5-878B-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1755828AbcBZX5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 18:57:18 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:37646 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755820AbcBZX5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 18:57:16 -0500
+Received: by mail-ig0-f178.google.com with SMTP id z8so46088822ige.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 15:57:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=15ITov40sTdkS+ilVzB2ZHapFt2RVE12CBFFPElzL9o=;
+        b=ZypZ4xbn7ZsmrKPL2ksSBK9DIKeY6WhAdiSjnE7hlqxdlqPsPnPConpYJEDwjAGcNe
+         OzN1957I20vQGIiCxlYtGVdLbDGvCdoBY267qFdXZIxpeLBYAEzE+fdE+htS61ID9LM3
+         JJm372ok+FMU6q2l5F/lHdjBqgYDRcTeC9pfTTMt/rLYZ04BwhBcSznVNBO6Zs2EuZzh
+         7eACbXLGG8aTqi0Em/WMK8/II76CeX4Ctm+cMU5MnlER033P+qw6Q7lMnGuA3nQ8SlA+
+         Me17elJlnACcGGCQjeNFCcfouaCVWi93qBiWfHpW5QnP9VTSAVGHq/7qsVFedMTEOLi6
+         6ciA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=15ITov40sTdkS+ilVzB2ZHapFt2RVE12CBFFPElzL9o=;
+        b=M44IDEWY/D6PObLMpD70qcLllo8oNdoWNO2ykAtWGhCAOAd3f8CAZGLi5oVubVJmEf
+         miHQP2Mkr+sqo3rZog1XfzSkHIy86mk+jmSB2yVB0gdCFVjsJk1gCSuJJoomumS0p5zk
+         mYVf1AwUuN2jRoAFp/sPVw9p/TavExWs9qkqOxb2q1baLeGZ9LIcz+4l3Ko2zkWBKt+R
+         9do93cShj4ZZPS09IInScE3im6XIR5cxV0JO1ilG8MTlWd0UQ4Vp80zsiyOTNu4MprgP
+         +7ngr5ZcmESN7xw6bztymnUNqG+AVEWUHWorWvQcymB1JBPwPAv6lSoaeGVwNHu0w2Vc
+         2Jqw==
+X-Gm-Message-State: AD7BkJKGXsSHBaasQJq0XKn4u6Cod8sdzK6u2Vw5ynwew0BbwwTHsn2aZN/lJaiIkbdKITH9n88b3/N3xYqE6rC5
+X-Received: by 10.50.28.105 with SMTP id a9mr554820igh.94.1456531035150; Fri,
+ 26 Feb 2016 15:57:15 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Fri, 26 Feb 2016 15:57:15 -0800 (PST)
+In-Reply-To: <xmqqfuwfhwey.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287643>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 26, 2016 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Fri, Feb 26, 2016 at 06:29:57PM -0500, Jeff King wrote:
+> * sb/submodule-parallel-update (2016-02-25) 11 commits
+>  - clone: allow an explicit argument for parallel submodule clones
+>  - submodule update: expose parallelism to the user
+>  - git submodule update: have a dedicated helper for cloning
+>  - run_processes_parallel: correctly terminate callbacks with an LF
+>  - run_processes_parallel: rename parameters for the callbacks
+>  - run-command: expose default_{start_failure, task_finished}
+>  - run_processes_parallel: treat output of children as byte array
+>  - submodule update: direct error message to stderr
+>  - fetching submodules: respect `submodule.fetchJobs` config option
+>  - submodule-config: drop check against NULL
+>  - submodule-config: keep update strategy around
+>  (this branch is used by dt/refs-backend-lmdb and sb/submodule-init.)
 >
->> The best solution here would be to have a full parsing loop
->> that handles all options, but only calls setup_git_directory
->> as appropriate. Unfortunately, that's a bit complicated to
->> implement. We _have_ to handle each option in the order it
->> appears on the command line. If the caller asked for:
->> 
->>   git rev-parse --resolve-git-dir foo/.git --show-toplevel
->> 
->> then it must receive the two lines of output in the correct
->> to know which is which. But asking for:
->> 
->>   git rev-parse --show-toplevel --resolve-git-dir foo/.git
->> 
->> is weird; we have to setup_git_directory() for the first
->> option.
->> 
->> So any implementation would probably have to either:
->> 
->>   - make two passes over the options, first figuring out
->>     whether we need a git-dir, and then actually handling
->>     the options. That's possible, but it's probably not
->>     worth the trouble.
->> 
->>   - call setup_git_directory() on the fly when an option
->>     needs it; that requires annotating all of the options,
->>     and there are a considerable number of them.
+>  A major part of "git submodule update" has been ported to C to take
+>  advantage of the recently added framework to run download tasks in
+>  parallel.
 >
-> Having just sent this, of course, it occurs to me that a loop like:
->
->    setup_git_directory_gently(&nongit);
->    for (i = 0; i < argc; i++) {
->   	if (!strcmp(argv[i], "--local-env-vars"))
->   	... and other nongit-ok options ...
->   
->   	if (nongit)
->   		die("need a repo");
->   
->   	if (!strcmp(argv[i], "--git-dir"))
->   	... and other options ...
->    }
->
-> would probably work. It does still leave things like --parseopt and
-> --sq-quote as one-offs, though, because they consume the rest of the
-> command line. And the fact remains that --local-repo-env isn't really
-> suitable for use with other options.
->
-> So I'm still tempted by this "lazy" approach.
->
-> -Peff
+>  Seems to break tests when merged to the tip of 'pu'.
 
-Yup.
+There was a version (v17[1]) which broke tests,
+v18 seemed fine by Jonathan except for a small nit (the prefix handling[2])
+v19 reverted that nit to an earlier version, which Jonathan seemed fine with.
+IIUC, v19[3] is reviewed by Jonathan, no complaints found.
 
-But why do you even need to run local-env-vars from outside a
-repository in the first place?
+Please pick that latest version.
+
+Thanks,
+Stefan
+
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/287319/focus=287447
+[2] http://thread.gmane.org/gmane.comp.version-control.git/287319/focus=287489
+[3] http://thread.gmane.org/gmane.comp.version-control.git/287500
