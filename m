@@ -1,125 +1,121 @@
-From: Vineet Gupta <Vineet.Gupta1@synopsys.com>
-Subject: Re: cover letter and cc list
-Date: Fri, 26 Feb 2016 18:05:15 +0530
-Message-ID: <56D04683.3080201@synopsys.com>
-References: <20150320173504.GA6162@aepfle.de>
- <xmqqpp83ee2z.fsf@gitster.dls.corp.google.com>
- <20150323081840.GB9332@aepfle.de>
+From: David <bouncingcats@gmail.com>
+Subject: Re: interactive rebase results across shared histories
+Date: Fri, 26 Feb 2016 23:38:38 +1100
+Message-ID: <CAMPXz=on8ONkzDYWEEGFqqKhRoBb9zYBqmYDBsKWagdwFRPRdA@mail.gmail.com>
+References: <87io1j6laz.fsf@gmail.com>
+	<56C91D21.90306@moritzneeb.de>
+	<87io1f5nsi.fsf@gmail.com>
+	<56CCE3C2.1050608@moritzneeb.de>
+	<87egc358ou.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Olaf Hering <olaf@aepfle.de>, Junio C Hamano <gitster@pobox.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 13:35:47 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Seb <spluque@gmail.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 26 13:39:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZHcX-0004iD-Gi
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 13:35:45 +0100
+	id 1aZHfi-0006bz-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 13:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932135AbcBZMff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 07:35:35 -0500
-Received: from smtprelay2.synopsys.com ([198.182.60.111]:48791 "EHLO
-	smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932088AbcBZMfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 07:35:34 -0500
-Received: from us02secmta1.synopsys.com (us02secmta1.synopsys.com [10.12.235.96])
-	by smtprelay.synopsys.com (Postfix) with ESMTP id 3FBF910C1255;
-	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
-Received: from us02secmta1.internal.synopsys.com (us02secmta1.internal.synopsys.com [127.0.0.1])
-	by us02secmta1.internal.synopsys.com (Service) with ESMTP id D07714E213;
-	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
-Received: from mailhost.synopsys.com (unknown [10.13.184.66])
-	by us02secmta1.internal.synopsys.com (Service) with ESMTP id 975114E202;
-	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
-Received: from mailhost.synopsys.com (localhost [127.0.0.1])
-	by mailhost.synopsys.com (Postfix) with ESMTP id 86E3EE67;
-	Fri, 26 Feb 2016 04:35:32 -0800 (PST)
-Received: from us01wehtc1.internal.synopsys.com (us01wehtc1.internal.synopsys.com [10.12.239.235])
-	by mailhost.synopsys.com (Postfix) with ESMTP id 0159DE66;
-	Fri, 26 Feb 2016 04:35:31 -0800 (PST)
-Received: from IN01WEHTCB.internal.synopsys.com (10.144.199.106) by
- us01wehtc1.internal.synopsys.com (10.12.239.231) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Fri, 26 Feb 2016 04:35:31 -0800
-Received: from IN01WEHTCA.internal.synopsys.com (10.144.199.103) by
- IN01WEHTCB.internal.synopsys.com (10.144.199.105) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Fri, 26 Feb 2016 18:05:29 +0530
-Received: from [10.12.197.208] (10.12.197.208) by
- IN01WEHTCA.internal.synopsys.com (10.144.199.243) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Fri, 26 Feb 2016 18:05:27 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <20150323081840.GB9332@aepfle.de>
-X-Originating-IP: [10.12.197.208]
+	id S1753566AbcBZMim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 07:38:42 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:35837 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbcBZMik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 07:38:40 -0500
+Received: by mail-wm0-f42.google.com with SMTP id c200so70593904wme.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 04:38:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=qx6ZHEtOmf+u/pBIQF2//g/1kt0nndxGTF+mde2Pg+4=;
+        b=X/XjWOpj6hvm/n+8k2u8rpXTcj1A3hls1l2UWPsx72XBbESSRsbYytfdjBbiqO2g/f
+         FkcwQXWoKhY2ynMNly59q68W/1ZMzIdX7Fudg4zHrLiwz+cBekMv/pcbY+xI0NYSl5uB
+         XydhyfL1L/o0ABuv/pqgGXtE+hxJVf+aVC/+sAuluHiyJgFT+Wbm/ekYhmj+3qw+/kH5
+         JcCpEul3AsTA4KlxDqRGJduDDXlmAxqwFT9ZLE3w8GCHQaCf2SZNTFf7mQ2hnGumLLJU
+         w87OLAKx6IcU0yOBL36PxvKz4kVHOMP39VLXq0RySAgMZW7hsfkq2zc52Cp/844lSnju
+         E8nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=qx6ZHEtOmf+u/pBIQF2//g/1kt0nndxGTF+mde2Pg+4=;
+        b=fgsAfKwe3SSB3KA9qyR2CoEbNMfkteigpCC5V48+1m0v0Zb7c6hXZLZrtWKgscYJXt
+         nOk6vFMdEhHR1eWaOrBphJkReseGT/qQratWG/IXm+764i41f0ne7RZIS/V82I5VqWU+
+         hf1UwISSIVY0j3srjLBAWtFa2zgfJi2HYt/hkmju6UkF7BoXeDEPbr3N96Y2uQisRAkD
+         Yn1rPvf8+vCIFJI4WwRTj40ek3eGWM981Wgg4bSiZHKeexYAMGRG6LJ3UDGfmrMB0omh
+         sWaufLn66HMexFrt8A6T/2a3l/8Kfnq/JfzKJ9vYxfmvEHJzRvxZwjPuu9UYJlZbqV6/
+         hPOQ==
+X-Gm-Message-State: AD7BkJI5v/A5YfMa21ghfn4O3OdH97yQFpf8xxbCebfxD6TV6myAASQzFRpCj3qsCI5XvFrzUsb1ji8C1P4xZw==
+X-Received: by 10.194.192.36 with SMTP id hd4mr1394650wjc.85.1456490318832;
+ Fri, 26 Feb 2016 04:38:38 -0800 (PST)
+Received: by 10.194.30.136 with HTTP; Fri, 26 Feb 2016 04:38:38 -0800 (PST)
+In-Reply-To: <87egc358ou.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287574>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 24 February 2016 at 10:05, Seb <spluque@gmail.com> wrote:
+> On Tue, 23 Feb 2016 23:57:06 +0100,
+> Moritz Neeb <lists@moritzneeb.de> wrote:
+>
+> [...]
+>
+>>> OK, I've followed this advice and looked at the dependency graphs in
+>>> gitk before and after rebasing, I've managed to obtain what I was
+>>> after.  The repository now has two branches: master and topic.
+>>> However, Gitk reveals a problem with a string of commits that are not
+>>> part of any branch:
+>
+>>> A---B---H---I (master) \ C---D---E (loose string of commits) \
+>>> D'---E'---F---G (topic)
+>
+>>> How do I remove these loose commits (C, D, E)?
+>
+>
+>> what you might be after is "git gc". But I never used it, it was not
+>> neccesary for me. I would let the automatic garbage collection drop my
+>> dangling commits. It's safer - who knows when you will still want to
+>> restore your recent "loose string of commits".
+>
+>> How exactly are the loose commits causing trouble?
+>
+> Sure enough, these dangling commits were removed automatically without
+> any intervention.  All is good.
 
-On Monday 23 March 2015 01:48 PM, Olaf Hering wrote:
-> On Fri, Mar 20, Junio C Hamano wrote:
-> 
->>> Olaf Hering <olaf@aepfle.de> writes:
->>> 
->>>>> What does it take to send the cover letter to all people which are 
->>>>> listed in the Cc: list of the following patches? Each patch has a 
->>>>> different Cc: list. The "git send-email --help" command suggests
->>>>> that this cmdline should do it. But the cover letter goes just to the
->>>>> address listed in --to=:
->>>>> 
->>>>> env TMPDIR=/dev/shm LC_ALL=C git send-email -M --stat --annotate \ 
->>>>> --cover-letter --cc-cover --to=$address \ $base..$head
->>> 
->>> First step is not to drive format-patch from within send-email I would
->>> think.  Instead prepare them in files in a directory (with format-patch
->>> -o $dir).  You can edit Cc: header in 0000-*.patch message while you
->>> proof-read what you are going to send out.
-> Thanks. Then I misinterpreted what --cc-cover actually means. All Cc: lines
-> have to be present in the cover letter already. Would be nice if git would
-> run a command like this to put the list into the coverletter:
-> 
-> # git log --format=%b $base..$head | grep -iw ^cc: | sort -u
-> 
-> In the meantime I will remember to do that step manually.
-> 
-> Olaf
+This discussion could end there without problem. But if you want to
+understand a little more thoroughly, read on ...
 
-I have the exact same requirement, to create a union of CC in patches for
-cover-letter. That way sending a series to different people gives them the right
-context with cover-letter and individual patch.
+First, for basic git use, please stop being concerned about when or whether
+dangling commits are removed or not. For basic git use, it is unimportant
+(except for advanced use like disaster recovery).
 
-Now man git send-email mentions --[no-]cc-cover. I quote
+By default, git waits a while (couple of weeks I think?) and then removes
+dangling commits silently.
 
-"emails found in Cc: headers in the first patch of the series (typically the
-cover letter) are added to the cc list for each email set..."
+Why remove them? Because dangling commits are commits that git has
+been instructed to forget about and discard, because no reference
+(like a branch or tag) points to them.
 
-I certainly want the reverse, but the question is how does one get about getting
-an address in cover letter in first place.
+And because they are unimportant, gitk chooses not to show them;
+whenever you refresh or restart gitk, it won't show any dangling commits.
 
-Thx,
-- -Vineet
+Why does git wait before discarding them entirely? Because advanced
+users might want to do something clever with them.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+So your dangling commits (after rebase) are probably not removed for a
+couple of weeks. If you were to somehow recreate a reference to them,
+then gitk will show them again. But otherwise it treats them as unworthy
+of being shown.
 
-iQIcBAEBCAAGBQJW0EaDAAoJEGnX8d3iisJevuMQALMNQv7IiOTc78A0GMDZpBx4
-cAEY2mPu29uJG0rRq8vaWxwBEAAoIflqUEiv9ygHwtvI1YDBGgt3RsEuqTMdj1eI
-JboZy4cpn04XVKRtcEU1iXf8Qp5uGmOgBUSwP5VaawTpGxIn43KJjyFwvq7h9Sps
-lsuOtY5rO1xq1B4ktmolF93unwI5R68moNTHhpOilOcBwbNVApouMnJ0c64ritPw
-hn9pUWST+rtL9pbqUas4PRxHL4vUAhIQkswlxxZvaVhlC9WK6AY2nMTWmz0Pcmlc
-WbGD1nulGJMXkHR4G02GhSbO2zsy8o5vJii2inFCwl7eWC5LIdfc8w+ssDYJ9Zlz
-beXuRxYy5zgQQzCpd9d1o7ZMjbSEuWizgPJ9a+lGPfqeqB/cp9emdbOUOc7CMhXn
-5C3nDtOIgkchnZw3otgbUmGQCbiIHTN4tMQHbXrp0suu2mPCkYA9H8SqBRANPy1k
-AfU1FCvgQBjGgezV4IOBLrqi3vqoacQqriYIyYmUq0rnuwI6fT09OwfvAa2uVugT
-BWuuzpW1gBiiSKfYstC+ZzoZCnD8Ia5HsaKNtFxfxia2ekFC50RTkSR3ScSVnlKI
-77uLzflHsoZvFrla1mgLn+D4pn3yzSUdcd9lFIBAkBqgR1T5mKjT3HaSDOdMDJRz
-KiRJrh3G8ZC7hYeAj3Kx
-=GzhS
------END PGP SIGNATURE-----
+So how did you ever see the dangling commits? I think it is because gitk
+was aware of them because it had a reference to them before the rebase.
+So if you keep gitk open it still shows them afterwards even though the
+reference is gone. And if I recall correctly, if you refresh or restart gitk,
+they will disappear from its display.
