@@ -1,109 +1,107 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 2/2] git: submodule honor -c credential.* from command
- line
-Date: Thu, 25 Feb 2016 20:55:10 -0500
-Message-ID: <20160226015510.GA5347@flurp.local>
-References: <1456426632-23257-1-git-send-email-jacob.e.keller@intel.com>
- <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 02:55:26 2016
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH 00/16] git bisect improvements
+Date: Fri, 26 Feb 2016 03:04:26 +0100
+Message-ID: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 26 03:05:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZ7co-0000w6-VR
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 02:55:23 +0100
+	id 1aZ7ml-0007Dq-HI
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 03:05:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750989AbcBZBzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Feb 2016 20:55:17 -0500
-Received: from mail-ig0-f195.google.com ([209.85.213.195]:36693 "EHLO
-	mail-ig0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763AbcBZBzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Feb 2016 20:55:16 -0500
-Received: by mail-ig0-f195.google.com with SMTP id xg9so2561592igb.3
-        for <git@vger.kernel.org>; Thu, 25 Feb 2016 17:55:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uOJ00CYrYmb/Aq+ShEHi5+c7qSkG3Mcx/7kW13ATOfA=;
-        b=trRRHII+RRS5T7hvpP+Wi4kQ+ZW/fuEPj/8De7iEkEDZaHEoi0joZktveii2Mo81OL
-         B/uTdx4SR4r3w9SfRgEVIYhMIgJijGo4vfyd8JfRQ2lpwU/eyGv/x1KLEhtnLYpbyzJa
-         c0Huf1JroQW8izEhYwL+sv7ENxhmdNecYKwcHo4PUqHhYXf+nL2IIRHmDwegh/4Q91TY
-         AS5qoonu5WZKBbHxNiBCd3biH0J0h0r+cQHOmIsb4rHa4PLWbq3zKOKaxsm1DKQNZlwY
-         d0Ho2xLQOetVYvIJ1ntt/bWI292ofXa/QHqwf8MoXoif6AkNglUBV4dMFNxpighjfcev
-         Fpxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uOJ00CYrYmb/Aq+ShEHi5+c7qSkG3Mcx/7kW13ATOfA=;
-        b=czAh/rvKOV08j/7esSX0GiC5phNrqNb+n+Zoi7gd8ptG7ZhwYH0v9ikvHDOOosVEod
-         dbnDLbdccSybvyIZyO6udZkCDjAu4UQ9slPxAbcJtHdyRtEv6vyUG6nfPEp98qa1pI3K
-         LWhIrmNbKWEsmicaAuG54K93BfOlM7GCsR+m62+JjvCO2nWeD70/NVvJIrrCg3bHNDSm
-         FqzkNJpctNRgnuxGssAdE0r3TwxxqSyDyy3kfV0WPjJGSiovV8VYTaTYkUBdli3Ssbzo
-         Y5QWsr9hCiQT76mDq6FBH0rTOifsLqUcqgewmgE5Rx+a70t4Cq2l7TCtdPSZAqC7faJ2
-         tyWg==
-X-Gm-Message-State: AD7BkJLUziibxzaWX7PBuNgyz+TnSboyPnPbQEyGa7A7JRR6tUAGF/tpu1x9fEGlSFnxDA==
-X-Received: by 10.50.132.74 with SMTP id os10mr400369igb.91.1456451715326;
-        Thu, 25 Feb 2016 17:55:15 -0800 (PST)
-Received: from flurp.local (user-12l3c5v.cable.mindspring.com. [69.81.176.191])
-        by smtp.gmail.com with ESMTPSA id l11sm4440449iol.17.2016.02.25.17.55.14
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 25 Feb 2016 17:55:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1456426632-23257-2-git-send-email-jacob.e.keller@intel.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752111AbcBZCFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Feb 2016 21:05:35 -0500
+Received: from mout.gmx.net ([212.227.15.18]:65394 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752065AbcBZCFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Feb 2016 21:05:34 -0500
+Received: from fermat.fritz.box ([188.108.247.176]) by mail.gmx.com (mrgmx003)
+ with ESMTPSA (Nemesis) id 0LoVOE-1a1Qau2EMU-00gUD0; Fri, 26 Feb 2016 03:05:30
+ +0100
+X-Mailer: git-send-email 2.7.2.383.g3fb0654
+X-Provags-ID: V03:K0:6EJAjm8mlmYu9tFtzjRV4I4Oz1XdwB6iaQUTcyJZmD62i4sQ4ut
+ uJxhV3hdYv6oYrgBLCI0keOy3BmdEvWdyRNCENEOltanhSjXEQ93FdVKApr5iBcUcYMlWQ1
+ zDS3lpYFLuXoVYzx/7dj2ALKKmGVfL2CCLPo/E14Rd9f45r/mQUC+AVxWiXafiavX+TJ33R
+ Mb1F7TfNjbN/Nv9LrQI8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kRLorlzTdu0=:7D/7WD0Qda4e+VkdVFvML2
+ xLgWw71QgtCD0ZGgF5sp+F9frVAY2rU2OarHCNu3JA35uP62/UvT5eFsMY/+dYhrPhICjk/ZM
+ vvkTzU+TOz0mhELEvmffhj4RHt2Qk2xGLq5tENkOuEMfEFBISomewkk1K73BkJJXIRnMN6HHp
+ nd3QOZlX5iYq5oMdiZC7woj+p6/v5Czo6Oc+nBaXhytQ1ukKHjWuG4NR3GelzRkdZssQCj+wi
+ fbR0K+jtj++EYcbCMTd5zM9a05NuYoH2ntDHh7/rJ9wBiVVI5CNMxmFqHQZQpYd0jD/CG3KaY
+ 2LY+mOEJgqrfgxJcW5bsNHRWS+mT/+ow6p/SfOv0i8JMN9E7TwE+o4HdAphrNEyMtDm99+195
+ ZnvpHn7ZWr80CQF02jfw3Injgbb8xiPLZAHifK79bJCe98jA4L5o884Chscbq0g5Ve9Exzf10
+ DFaJ3CaMB+Mof2efUCB1YB+BGEFr23S9Jmj5QfVj5pHoHed8LZ0c6bYnKJFCMYv0B6oO+2qcf
+ wz8x31NYq0tMTbiY1qImG3mIsg75AeFl3HWgM0UOyT+po53ZOA4b9/BwXg0UgS3TGTPodngfF
+ +PE74APUQtZG1IQO4t39/u2NRUlyWTMfBzUiD4LCi8QcNQd9FT9nqhPe5hBoW85FL6bcmFahR
+ AnLizxRFghf9W0h63vXy7RJzvYW1EZRkU8An6E+NI8DBA6JRdBGegW3iy9kdRXVxcqFhhfBR/
+ jQYrNjs8pcXRpYu/3EL0fapkjZ4fHnlbjp52QIcjf4MVcaiplYO/ivSe6uE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287513>
 
-On Thu, Feb 25, 2016 at 10:57:12AM -0800, Jacob Keller wrote:
-> [...]
-> Replace all the calls to clear_local_git_env with a wrapped function
-> that filters GIT_CONFIG_PARAMETERS using the new helper and then
-> restores it to the filtered subset after clearing the rest of the
-> environment.
-> 
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> diff --git a/t/t7412-submodule--helper.sh b/t/t7412-submodule--helper.sh
-> @@ -0,0 +1,25 @@
-> +test_expect_success 'sanitize-config keeps credential.helper' '
-> +	git -c credential.helper="helper" submodule--helper sanitize-config >actual &&
-> +	echo "'\''credential.helper=helper'\''" >expect &&
+Hi,
 
-Not worth a re-roll, but these quote sequences are brain-melting.
-Easier would have been to double-quote the second argument of
-test_expect_success() and then do either:
+this set of patches provides improvements for git bisect.
 
-    test_expect_success 'sanitize-config keeps credential.helper' "
-        git -c [...] submodule--helper sanitize-config >actual &&
-        echo \'credential.helper=helper\' >expect &&
-        test_cmp expect actual
-    "
+Quick summary of changes
+ - relevant for users:
+   - `git bisect next` is documented and motivated
+   - git bisect implementation becomes much faster
+     (or: is now working) for big repositories**
+ - relevant for developers:
+   - a test for the git bisect algorithm is added
+   - fix: bisect.c compiles also if DEBUG_BISECT is set
 
-or:
+The ** marked change is the most interesting one.
+To be more accurate: the use case is when you want to bisect in a
+repository with a huge amount of merge commits (and having these
+merge commits relevant for the actual bisect process).
+For example, a bisect in the whole git master branch took
+~50 seconds, now it takes ~4 seconds.
 
-    test_expect_success 'sanitize-config keeps credential.helper' "
-        git -c [...] submodule--helper sanitize-config >actual &&
-        cat >expect <<-\EOF &&
-        'credential.helper=helper'
-        EOF
-        test_cmp expect actual
-    "
 
-> +	test_cmp expect actual
-> +'
-> +
-> +test_done
+Note that the patches have finer granularity (especially the performance
+improvements are splitted into several preparing commits).
+For some patches, there is some more patch-related story as
+"cover letter material" in these patches.
+
+Btw: I also wondered about the internationalizaton: no string in bisect.c
+is marked for translation. Intentionally?
+
+Cheers
+
+Stephan Beyer (16):
+  bisect: write about `bisect next` in documentation
+  bisect: add test for the bisect algorithm
+  bisect: make bisect compile if DEBUG_BISECT is set
+  bisect: make algorithm behavior independent of DEBUG_BISECT
+  bisect: get rid of recursion in count_distance()
+  bisect: use struct node_data array instead of int array
+  bisect: replace clear_distance() by unique markers
+  bisect: use commit instead of commit list as arguments when
+    appropriate
+  bisect: extract get_distance() function from code duplication
+  bisect: introduce distance_direction()
+  bisect: make total number of commits global
+  bisect: rename count_distance() to compute_weight()
+  bisect: prepare for different algorithms based on find_all
+  bisect: use a modified breadth-first search to find relevant weights
+  bisect: compute best bisection in compute_relevant_weights()
+  bisect: get back halfway shortcut
+
+ Documentation/git-bisect.txt |  25 +++
+ bisect.c                     | 473 ++++++++++++++++++++++++++++---------------
+ git-bisect.sh                |  15 +-
+ t/t8010-bisect-algorithm.sh  | 162 +++++++++++++++
+ 4 files changed, 502 insertions(+), 173 deletions(-)
+ create mode 100755 t/t8010-bisect-algorithm.sh
+
+-- 
+2.7.1.354.gd492730.dirty
