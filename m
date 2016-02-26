@@ -1,75 +1,107 @@
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v4 1/3] t/lib-httpd: load mod_unixd
-Date: Fri, 26 Feb 2016 11:18:46 -0800
-Message-ID: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
+Subject: [PATCH v4 2/3] sumodule--helper: fix submodule--helper clone usage and check argc count
+Date: Fri, 26 Feb 2016 11:18:47 -0800
+Message-ID: <1456514328-10153-2-git-send-email-jacob.e.keller@intel.com>
+References: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
 Cc: Jeff King <peff@peff.net>,
 	Mark Strapetz <marc.strapetz@syntevo.com>,
 	Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
+	Jacob Keller <jacob.keller@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 26 20:18:55 2016
+X-From: git-owner@vger.kernel.org Fri Feb 26 20:19:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZNuh-0003Oz-2r
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:18:55 +0100
+	id 1aZNuy-00047o-7Q
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 20:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422985AbcBZTSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 14:18:51 -0500
+	id S1423096AbcBZTSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 14:18:54 -0500
 Received: from mga09.intel.com ([134.134.136.24]:22297 "EHLO mga09.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422768AbcBZTSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 14:18:50 -0500
+	id S1422858AbcBZTSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 14:18:51 -0500
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
   by orsmga102.jf.intel.com with ESMTP; 26 Feb 2016 11:18:50 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.22,504,1449561600"; 
-   d="scan'208";a="912041157"
+   d="scan'208";a="912041158"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.65])
   by fmsmga001.fm.intel.com with ESMTP; 26 Feb 2016 11:18:50 -0800
 X-Mailer: git-send-email 2.7.1.429.g45cd78e
+In-Reply-To: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287609>
 
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Jacob Keller <jacob.keller@gmail.com>
 
-In contrast to apache 2.2, apache 2.4 does not load mod_unixd in its
-default configuration (because there are choices). Thus, with the
-current config, apache 2.4.10 will not be started and the httpd tests
-will not run on distros with default apache config (RedHat type).
+git submodule--helper clone usage specified that paths come after the --
+as a sequence. However, the actual implementation does not, and requires
+only a single path passed in via --path. In addition, argc was
+unchecked. (allowing arbitrary extra arguments that were silently
+ignored).
 
-Enable mod_unixd to make the httpd tests run. This does not affect
-distros negatively which have that config already in their default
-(Debian type). httpd tests will run on these before and after this patch.
+Fix the usage description to match implementation. Add an argc check to
+enforce no extra arguments. Fix a bug in the argument passing in
+git-submodule.sh which would pass --reference and --depth as empty
+strings when they were unused, resulting in extra argc after parsing
+options.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-I am sending this version strictly from PU since I need it to pass the
-httpd tests.
+ builtin/submodule--helper.c | 5 ++++-
+ git-submodule.sh            | 4 ++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
- t/lib-httpd/apache.conf | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 7d15e6d44c83..f667e7ce2f33 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -64,6 +64,9 @@ LockFile accept.lock
- <IfModule !mod_mpm_prefork.c>
- 	LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
- </IfModule>
-+<IfModule !mod_unixd.c>
-+	LoadModule unixd_module modules/mod_unixd.so
-+</IfModule>
- </IfVersion>
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f4c3eff179b5..072d9bbd12a8 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -187,13 +187,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	const char *const git_submodule_helper_usage[] = {
+ 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+ 		   "[--reference <repository>] [--name <name>] [--url <url>]"
+-		   "[--depth <depth>] [--] [<path>...]"),
++		   "[--depth <depth>] [--path <path>]"),
+ 		NULL
+ 	};
  
- PassEnv GIT_VALGRIND
+ 	argc = parse_options(argc, argv, prefix, module_clone_options,
+ 			     git_submodule_helper_usage, 0);
+ 
++	if (argc)
++		usage(*git_submodule_helper_usage);
++
+ 	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+ 	sm_gitdir = strbuf_detach(&sb, NULL);
+ 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f94d1d..2dd29b3df0e6 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -347,7 +347,7 @@ Use -f if you really want to add it." >&2
+ 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+ 			fi
+ 		fi
+-		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
++		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+ 		(
+ 			clear_local_git_env
+ 			cd "$sm_path" &&
+@@ -709,7 +709,7 @@ Maybe you want to use 'update --init'?")"
+ 
+ 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+ 		then
+-			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
++			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+ 			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
 -- 
 2.7.1.429.g45cd78e
