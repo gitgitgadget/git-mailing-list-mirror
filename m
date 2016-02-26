@@ -1,97 +1,92 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 3/3] git: submodule honor -c credential.* from command line
-Date: Fri, 26 Feb 2016 14:20:34 -0800
-Message-ID: <CA+P7+xqSZGAJD7ryvx2A2qM1wd0rKMmjT2tcBPann33sUUHGcA@mail.gmail.com>
-References: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
- <1456514328-10153-3-git-send-email-jacob.e.keller@intel.com> <20160226220553.GA1835@sigill.intra.peff.net>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
+Date: Fri, 26 Feb 2016 23:34:07 +0100
+Message-ID: <56D0D2DF.1040807@web.de>
+References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
+ <56D078F3.9070905@web.de> <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 26 23:21:51 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Feb 26 23:34:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZQli-0000UT-TK
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 23:21:51 +0100
+	id 1aZQyB-0008Nn-5V
+	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 23:34:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945946AbcBZWVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 17:21:03 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:33501 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945934AbcBZWVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 17:21:00 -0500
-Received: by mail-ig0-f180.google.com with SMTP id y8so47584232igp.0
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 14:20:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1ZVdyEN/cvuxLXfwdQQ6b35/fwic39zvqEyzjk4YJwE=;
-        b=NkDQc66lExD62g9SJSgZWOsey9ocw9PMfcqZv179UuJ+W2k0EiyrqrIW5OIp1BI4L9
-         zIPhI55poJiCsz729Cy+JZ/cG7zCjE1G7cBw0SSPojRagFcCAAML9Ziu779SnHH0VKzo
-         CSMQoHB/T84V9KtrLYSwLbzRZ4Zv4Dt+X2tMpE+Vh1kc1GpnRG3+HmigKo68f1oXdJ2q
-         jh+UB2VEMx/jrQrrIKVWptDtSqxSnSBH2rYeuT/kYqpF+sTcH+wbrA8RSxpMVuqbgdKW
-         6ky5NgiNHUuCHuoVBqXJAo/heWgUsPXq4Vb08Hq4PnSwe2Zr8wy8/nGv1+ERTVUcV+uq
-         kyAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1ZVdyEN/cvuxLXfwdQQ6b35/fwic39zvqEyzjk4YJwE=;
-        b=MzVxUCjL3+gnJkrQjzmmfutBtphQ75KaZsP3ndIKIMhJ+1IGxATZgiPm7rb+pHQ+dH
-         RNctMLC8ed02JoAdP1qRCPFIVByj86QWgm8f0b05halBV2sgk/n5V1xrvC4ODw2wSSZG
-         USvTzBGfXnBZKCSKAEydNZll9YzvdKcyKygj23HlElfDTivFA2aEz9rVYrTURbLkxlP/
-         PVKT9Cab9Zvsxbuk65nK/RT9fW8YfxwKvnDHqNDxLtblwLpNkgSgY8XFcUjwmVhiO4lI
-         qTxr/vXKbv98fYKouFlU8qb8DvCGRTU3mfeMpRKPzF1+b089//t08u8EuMMdr8km/PFG
-         D1mQ==
-X-Gm-Message-State: AD7BkJIuYZKsam3tkuJxqp2WBwnFhdLKy9eiZZCh0XsbqR1PUJfn7o5wVQHh4pi9nMvAu8SACobB1XeqwS6Bqw==
-X-Received: by 10.50.137.35 with SMTP id qf3mr256699igb.92.1456525254270; Fri,
- 26 Feb 2016 14:20:54 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Fri, 26 Feb 2016 14:20:34 -0800 (PST)
-In-Reply-To: <20160226220553.GA1835@sigill.intra.peff.net>
+	id S1755753AbcBZWej convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Feb 2016 17:34:39 -0500
+Received: from mout.web.de ([212.227.15.4]:55423 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755748AbcBZWeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 17:34:37 -0500
+Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0MbMg8-1aIs0v1eVg-00In1e; Fri, 26 Feb 2016 23:34:13
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:x7fXPRV8jEKX+qAVIjE6+2GrtZTVYlT9zapIE6Qnt+38OL9wZoW
+ DyalWBWYAsOAUkPjvdUwAaMPDk5NjoukCLQsT7i0tTanl0vn0e/eGwrtUD7MCuxRe6zyzSh
+ tLED7IiBaqpjGKQaoWg/cZHmAXolSfLcqfOXxGqcsIBMV6GmK9YOVrj1peWW/ux1lcjV0BK
+ +NoHNr1eFx1nuIExx7QrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:flvPVsN+nDQ=:wFiBNJ+f7F6d8jwhd0S710
+ 6JfqGizrjr+w2wLOBCT73+TTyJ/F4hqFXfzIyJxqxCpzFBOVXOvZGMevSAR4Ie6NNF9R90Oef
+ Fzm0xOgykxHLQfCBtJShQRMA1131W6mzrnzwNuHxAUopAGrLAEmvLAmoNP+NeLIvBL2lUVCzD
+ yXPXyL5DKz1qibaoiQtXuiL/GlTsKZ39wAbtHg+//OE26ac0oV3dpU8R7hJAjFCUOiS6PCIa/
+ LeuU72FCrb8xWjSEQZefTndmygKeQamTlYgN/7wmDiVZit6XXQNUbkwBbU5+EVmL6qXXvNhfP
+ 76zBqE9SLWkXtydH6CZJqQFXnpOHYMFs3hVbGf2O/KCvyqECJ8UKak2DxZfm1coLNo2E9ydHO
+ aM4/12iDdyGzCL9jWVeqXLid4cLTnLE5vzm4ZCyTegfIfDJj1YZ33R8Jfms1hjOpuUKqccLj3
+ 4vCFmVlXzJ40e3uAGgHOyFWDpVGQ1iZGnnUtoBCGr9WQDZgukyjaFrrY/cASD4YTvqhE5/6pZ
+ sGH9oFXNP7a5ixmcsGEv/4qZM94Qb6Z7WbU5pyOAZwBtjfYUOXGTyJ63WRiHpdLAAxevDgyvh
+ +uXGZqMqTmRCgwz9mqGdIU6kIh4EoBV1PYPY22pJ8NACm/O/4EuBhqTF8k/5adoCJbwIMbPrp
+ vhwyA1O7+sDaIMV1gM+H6fYstT/H+yBLDPGPm1vecW4vPsPRslUJtjIpJoUa0GaO95NMl+GRk
+ YBYurgHxqgsuI3qTv2RIPYpER0MHr6Cd3Vgfkf3gl869X60pVSkpHfjx+y1OvopRo4/SzMls 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287629>
 
-On Fri, Feb 26, 2016 at 2:05 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Feb 26, 2016 at 11:18:48AM -0800, Jacob Keller wrote:
->
->> +test_expect_success 'sanitize-config keeps credential.helper' "
->> +     git -c credential.helper=helper submodule--helper sanitize-config >actual &&
->> +     cat >expect <<-EOF &&
->> +     'credential.helper=helper'
->> +     EOF
->> +     test_cmp expect actual
->> +"
->
-> This can (and should) be "<<-\EOF", right?
->
+On 2016-02-26 19.29, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> CC combine-diff.o
+>> combine-diff.c: In function =E2=80=98diff_tree_combined=E2=80=99:
+>> combine-diff.c:1391: internal compiler error: Segmentation fault
+>> Please submit a full bug report,
+>> with preprocessed source if appropriate.
+>> See <URL:http://developer.apple.com/bugreporter> for instructions.
+>> make: *** [combine-diff.o] Error 1
+>>
+>> Revert "use st_add and st_mult for allocation size computation" didn=
+'t fix it.
+>> I haven't digged deeper yet.
+>=20
+> Hmph, I am not quite sure what you meant by "I haven't digged
+> deeper"; I do not think you should be debugging Apple's compiler
+> (unless you have the source to it and that is your job to do so,
+> that is).
+>=20
+> In any case, merging the topic to 'master', and reverting that
+> commit will leave this only this change between 'master' and the
+> result.  I do not immediately spot anything trickier in the
+> postimage compared to the preimage that may trickle a compiler bug,
+> but what would I know without the source ;-)
+>=20
+Digging means:
+run git bisect and report the commit.
+And this makes the compiler happy:
+  Revert "tree-diff: catch integer overflow in combine_diff_path alloca=
+tion"
 
-Yes, I actually meant <<-\EOF but forgot while writing it.
+    This reverts commit 5b442c4f2723211ce0d862571e88ee206bfd51bf.
 
-> I happened to be writing a test with the exact same problem (embedded
-> single-quotes) today, and realized we have another solution which is
-> used elsewhere in the test suite:
->
->   sq="'"
->   test_expect_success '...' '
->         echo "${sq}credential.helper=helper${sq}" >expect &&
->         ...
->   '
->
-> that is slightly more verbose, but it does let us keep the main body
-> inside single-quotes, without restoring to confusing backslash escaping.
->
-
-I think I prefer the double quotes myself but will use this if people prefer?
-
-> -Peff
+Test suite passes,
+( except t9115, the 2 new test cases "svn.pathnameencoding=3Dcp932".
+  More info about that later)
