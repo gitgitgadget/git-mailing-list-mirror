@@ -1,139 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] credential: let empty credential specs reset helper list
-Date: Fri, 26 Feb 2016 17:37:20 -0500
-Message-ID: <20160226223719.GA2429@sigill.intra.peff.net>
-References: <20160226105135.GA30215@sigill.intra.peff.net>
- <xmqqa8mnl71v.fsf@gitster.mtv.corp.google.com>
- <xmqqk2lrjmff.fsf@gitster.mtv.corp.google.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: interactive rebase results across shared histories
+Date: Fri, 26 Feb 2016 23:56:50 +0100
+Message-ID: <20160226225650.GA3185@ucw.cz>
+References: <87io1j6laz.fsf@gmail.com>
+ <56C91D21.90306@moritzneeb.de>
+ <87io1f5nsi.fsf@gmail.com>
+ <56CCE3C2.1050608@moritzneeb.de>
+ <87egc358ou.fsf@gmail.com>
+ <CAMPXz=on8ONkzDYWEEGFqqKhRoBb9zYBqmYDBsKWagdwFRPRdA@mail.gmail.com>
+ <87povj41m9.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Guilherme <guibufolo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 26 23:37:30 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Seb <spluque@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 00:04:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZR0r-0001bC-Ld
-	for gcvg-git-2@plane.gmane.org; Fri, 26 Feb 2016 23:37:30 +0100
+	id 1aZRRQ-0001FV-QZ
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 00:04:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423113AbcBZWhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 17:37:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50380 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755336AbcBZWhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 17:37:22 -0500
-Received: (qmail 6959 invoked by uid 102); 26 Feb 2016 22:37:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Feb 2016 17:37:22 -0500
-Received: (qmail 8412 invoked by uid 107); 26 Feb 2016 22:37:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Feb 2016 17:37:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Feb 2016 17:37:20 -0500
+	id S1754037AbcBZXEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 18:04:52 -0500
+Received: from jabberwock.ucw.cz ([46.255.230.98]:56638 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752825AbcBZXEv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 18:04:51 -0500
+X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Feb 2016 18:04:51 EST
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id D66691C0122; Fri, 26 Feb 2016 23:56:50 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <xmqqk2lrjmff.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <87povj41m9.fsf@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287632>
 
-On Fri, Feb 26, 2016 at 11:34:12AM -0800, Junio C Hamano wrote:
+Hello Seb,
 
-> >> -	if (!strcmp(key, "helper"))
-> >> -		string_list_append(&c->helpers, value);
-> >> -	else if (!strcmp(key, "username")) {
-> >> +	if (!strcmp(key, "helper")) {
-> >> +		if (*value)
-> >> +			string_list_append(&c->helpers, value);
-> >> +		else
-> >> +			string_list_clear(&c->helpers, 0);
-> >> +	} else if (!strcmp(key, "username")) {
-> >
-> > I wondered why neither the existing code nor the updated one has a
-> > check for !value, but this callback assumes no credential
-> > configuration variable will ever be a boolean and rejects it
-> > upfront, so this code before or after the change is safe.
-> >
-> > Not pointing out anything that needs to be changed; demonstrating
-> > that I did read this sufficiently well to say that I have reviewed
-> > it ;-)
+let me add a few things, perhaps they'll clean some misunderstandings.
+
+On Fri, Feb 26, 2016 at 03:12:46PM -0600, Seb wrote:
+> After cleaning up all the mess, I've ended up with a long master branch,
+> and a series of earlier commits that are not reachable from master.
+> Fortunately, the tags have kept them alive. This is the scenario
+> simplified:
 > 
-> This reminds me of one thing.  The only reason why we are hesitant
-> to introduce a new syntax like
+> A---C---D(tag2)                 loose commits (not on any branch)
+>  \
+>   B(tag1)
 > 
-> 	[credential]
->         	!helper ;# clear
->                 helper = ...
-> 
-> to allow explicit clearing of accumulated values so far IIRC is
-> because such a _file_ will not be readable by existing versions of
-> Git.  Am I correct?
+> E---F---G---H---*               (master)
 
-I think there is another reason, which is that the interface we expose
-to config callbacks (and via "config --get-all") is to sequentially pass
-in all values. How does that interact with this "reset"? For example,
-what is the output of:
+I noticed that these are tags.  Actually, tags in git are meant to mark
+certain fixed points, and they are not meant to change in the future.
 
-  git config foo.bar one
-  git -c '!foo.bar' config --get-all foo.bar
+They are used to mark releases in the project, and they can even have
+a cryptographic signature attached to it, so that no one can forge them.
 
-?
+I guess that you used them as a temporary mark for yourself when you
+reaced a point in development, or to mark a stable point as a base for
+future development.  If that was the case, you could have used a branch
+as well.
 
-Do we continue to output the "reset" values, or do we quietly munge the
-list on behalf of the caller? If the former, how do we represent that in
-the output? I can see arguments both ways.
+I guess that people subconsciously still think that branch is ecpensive,
+based on the experiences from other VCS.  It's not true: branch is
+a variable that holds a value: the hex id of the top commit.
+As you do not care how many variables you need to declare when writing
+code, you should not hesitate to create as many branches as you need
+to mark the points in the history.
 
-Implementation-wise (both for git-config and for internal callbacks), it
-means we cannot parse the config as a single pass anymore. That's
-probably OK; we've already moved partially toward that with the
-configset stuff. If we _just_ support this via command-line options, we
-could do an initial pass over those, looking for negatives, and then
-simply skip all negatives while parsing the config files.
+Perhaps you just delte the tags.  That would be true if the code
+in these old branches has already been copied (by rebase) to the new
+master.
 
-> If that is the case, then that reasoning will still not prevent us
-> from adding corresponding support for a command-line overide, i.e.
-> either one or both of these:
-> 
-> 	$ git -c credential.!helper cmd
-> 	$ git -c !credential.helper cmd
-> 
-> no?
+If you would like to mark the corresponding points in the rewritten
+history, you can create these marks again.  (As branches, perhaps.)
 
-Yes, that would work, though to me it really feels like a
-half-implemented feature. You cannot override a bad /etc/gitconfig line
-via your ~/.gitconfig or repo-specific .git/config. Those things are
-useful.
+Then you say that you want to put everything to one branch master,
+to create a linear history of development.  (Well, not true history,
+but a made up history, you see.)
 
-One other thing that occurred to me is that Apple Git hard-codes the
-osxkeychain helper (rather than putting it into the system-wide
-gitconfig <sigh>). No config-based system can "undo" that, but my patch
-does. I admit that's probably not the best argument; hitting Apple with
-a clue-stick is a cleaner approach.
+For that goal, does master already contain all the code?
+If yes, then you have it.  You can perhaps just delete all the old
+branches that were used to develop individual parts...
 
-> Of course, the code in the configuration subsystem for updated
-> version of Git needs to become aware of the new syntax, and those
-> that deal with the multi-value variables need custom code, which is
-> similar to the way you special cased an empty value in the above
-> patch, so I am not sure how much this would help.
+I'm working on a project, where we decided to have linear history
+on the main server.
+So my own local git clone of my work contains lots of branches named
+after features and their combination, like:
+    counting
+    counting-3counters
+    pairs
+    counting-with-pairs
+    counting-3c-pairs
 
-I think you could get away without changing the users of the multi-value
-variables, using the "negative" approach I mentioned above. Basically:
+I use rebase heavily to move each of the feature (=series of commits)
+to another branch ot to master.
 
-  1. parse GIT_CONFIG_PARAMETERS looking for negatives; stick them in a
-     string-list or whatever.
+For example, when i wanted to enhance branch "counting" with the feature
+"pairs," I did it like this:
 
-  2. parse the files; look up each key in the string-list, and if it
-     matches, don't even send it to the callback
+git branch counting-with-pairs pairs
+git rebase -i counting counting-with-pairs
 
-  3. clear the string-list
+That will take all the commits that are in pairs, but not in counting.
+(This is usually all the commits in "pairs", staring from the point
+where in branched from master.) And all these get replayed on the tip of
+"counting".
 
-  4. parse GIT_CONFIG_PARAMETERS again, ignoring any negatives
+Likewise, I can move the topic to the latest master, then move master
+(git checkout master; git merge --ff-only some-branch)
+and then push.
 
-But like I said, that does feel somewhat half-implemented to me, since
-it treats the command-line specially.
+BTW, another thing:
+when you decided to clean up the history -- are there any other
+people working with the repository you are working with?
 
--Peff
+If yes, then each of them has to be prepared to follow your cleanup.
+All their work is currently base on the old history; if they push
+their work all the old hostory will be back.
+
+They could throw away their current local clones and start anew,
+if they had no work there.  But that's probaably not the case.
+
+So they have to fetch your new history of master and then rebase
+all of their features --onto your new master.
+
+I hope some of my talking will be useful.
+
+Stepan
