@@ -1,143 +1,141 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] environment.c: introduce SETUP_GIT_ENV helper macro
-Date: Sat, 27 Feb 2016 23:13:35 +0600
-Message-ID: <1456593215-16302-1-git-send-email-kuleshovmail@gmail.com>
-Cc: Git <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 18:18:08 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/22] Mark more strings for translation
+Date: Sat, 27 Feb 2016 09:34:42 -0800
+Message-ID: <xmqq7fhqhxal.fsf@gitster.mtv.corp.google.com>
+References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 18:34:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZiVL-0003B5-IF
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:18:07 +0100
+	id 1aZilZ-0001yC-SD
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:34:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756638AbcB0RSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 12:18:01 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35108 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756340AbcB0RSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 12:18:00 -0500
-Received: by mail-lf0-f51.google.com with SMTP id l143so69912520lfe.2
-        for <git@vger.kernel.org>; Sat, 27 Feb 2016 09:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=LsM/fmunjOTZknDVsgtlMcsEnmXgGz70sXNLvPGe+kk=;
-        b=Lnx/zoei6wW29fFN+PZN3Ttqtl5QTiNKymxTo1ffaPuQm+lKZERgW9k08BSBFw0P+n
-         X3khR1uQxLlf6SYVcWtNQbfWYB9TdOz+etwNJkFndDnybVJxriFDLXN57tNcA+vdSxE2
-         TaCRd2Tef74IH/pUyeGRedRIf4lD2rOk7qXOfJHqCgTdCFBrj/L1x/8PIToMSzjzY5vi
-         9HyX3gZpdzbRnTYkUQBA4ZtUI2wIOY2FwrXcfU7qQl30pYefMzjM9UwKdikJUjD5gY/x
-         a1PwMyy1jZMQi8HpajQQSdwm2KtFyIdlR6jwl6KXMV/iMKomP2V+TX3GeR2yGVRroRoE
-         VIJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LsM/fmunjOTZknDVsgtlMcsEnmXgGz70sXNLvPGe+kk=;
-        b=X1P9X9x2ksCtVJ2xpoZhX+qGAwK9j09+BMKyGIz9hATswMzCQzbtmWmOZ1a7PH6C9u
-         4mvZK9tPgSLd00pt0Cw/ZntWQJEdBaLhxoH5OBEHO1Fc92HYo1to98jBlaFSpvmKWnqi
-         soEoxAQnwsf3H5ne+ikKL+qPh4n9EaNejL2psH8RVb3EBKiaZUfs1jsT4xdouGl3i8Ye
-         5sO86tOjDC8CLrzlJZ/tnEd+IhAu0IUS1Vk40ESX73Yy/O1wScgxx4ylz1Zk6WGR5bVU
-         gGyXVozfV0dd2PHzQdUee4KxLa7VCdbXOe7AN4IE0M3kwND2cP3x26uDyNnxNHikg5Y5
-         xG1A==
-X-Gm-Message-State: AD7BkJI5sZndcAVrMijvIHiCam423icfUa1cgk5HAbuOKwYCfIxZoV9h0XMUGJtyhecIqA==
-X-Received: by 10.25.42.13 with SMTP id q13mr2634023lfq.96.1456593478499;
-        Sat, 27 Feb 2016 09:17:58 -0800 (PST)
-Received: from localhost.localhost ([2.134.234.130])
-        by smtp.gmail.com with ESMTPSA id s75sm2563396lfs.21.2016.02.27.09.17.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Feb 2016 09:17:57 -0800 (PST)
-X-Mailer: git-send-email 2.8.0.rc0.142.g64f2103.dirty
+	id S932227AbcB0Res convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 12:34:48 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62664 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756340AbcB0Rer convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Feb 2016 12:34:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD4D5459AD;
+	Sat, 27 Feb 2016 12:34:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=T6982gm2Q5h9
+	twNpzeH4mb60e1M=; b=WlVkOUQUhaY/D9w6fbH6iBOnjecywv9vkY3HRSVHRSgY
+	XvEXNUk6ky/W5hh/NoidV+t9VSbOqe1or0OhrW3oyWEFybgyV++VCAvaQ4Zw326+
+	2+sfXmWYo6MORLfh2UWs3HM1/oibF+T6WkXWGGT/V7JhN4syUGn3OWiZSYiAnPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OQRGPZ
+	RvlipBubI6ZnnbsrL8ibSMxhadnwqWU8MtLjEWiH25jf8JQsjDFSTbMFYA9WsM68
+	McKjHjyc8VQRc1mW7itWbltcqz1/mF9PqFT4roGet+ZClxfrZAZSmPigz+nSWzhF
+	2mReBvDGILNsJJ2232sFGQ+PDdfkBz6dvtjKY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5662459AC;
+	Sat, 27 Feb 2016 12:34:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1A2FE459AB;
+	Sat, 27 Feb 2016 12:34:43 -0500 (EST)
+In-Reply-To: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 27
+ Feb 2016 13:41:51 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 63950312-DD78-11E5-999D-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287705>
 
-The environment.c contans a couple of functions which are
-consist from the following pattern:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-        if (!env)
-                setup_git_env();
-        return env;
+> On Sat, Feb 27, 2016 at 6:41 AM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> In previous cycles, I often left many topics in 'next' when tagging
+>> this zero-th preview, but eventually merged them before the final.
+>> I decided to do things a bit differently for this cycle: a topic,
+>> once it hits 'next', will not be rewound and only refined and
+>> corrected with incremental updates, so the only effect such a late
+>> merge to 'master' before the final is that some topics are not as
+>> widely tested on 'master' before the final one is tagged.
+>>
+>> So this -rc0 is deliberately aggressive in that it includes all
+>> topics that have been cooking in 'next' that I think we can fix bugs
+>> that might still lurking in them before the final (it merges 25
+>> topics since the last batch to 'master').  The topics not merged to
+>> this preview, on the other hand, will not be considered for 2.8
+>> final, even though I might later succumb to the temptation to pick
+>> up ones that are in 'next' as of today ;-)
+>
+> Beautiful. This allows me to fix up all i18n strings in a single
+> series instead of spreading them across many topics in 'next'.
 
-Let's move this to the SETUP_GIT_ENV helper macro to prevent
-code duplication in these functions.
+Thanks.  "A new string we added since v2.7.0 that is not marked for
+i18n" is a new i18n bug and "a string that used to be marked is not
+marked when the code was rewritten since v2.7.0" is an i18n
+regression, and we would want to "fix" both post -rc0 period.  The
+patches that touch new strings added since 1.7.x are exactly that ;-)
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- environment.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+We'd still want the fixes to apply on top of relevant topics if we
+could, as the fix to the topic itself (with or without i18n fixes),
+when we discover that it has a huge flaw not desirable in v2.8.0,
+might be to revert the whole thing, though.
 
-diff --git a/environment.c b/environment.c
-index 6dec9d0..04cb6cd 100644
---- a/environment.c
-+++ b/environment.c
-@@ -126,6 +126,11 @@ const char * const local_repo_env[] = {
- 	NULL
- };
- 
-+#define SETUP_GIT_ENV(env)              \
-+	if (!env)                       \
-+		setup_git_env();        \
-+	return env;
-+
- static char *expand_namespace(const char *raw_namespace)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -199,9 +204,7 @@ int is_bare_repository(void)
- 
- const char *get_git_dir(void)
- {
--	if (!git_dir)
--		setup_git_env();
--	return git_dir;
-+	SETUP_GIT_ENV(git_dir);
- }
- 
- const char *get_git_common_dir(void)
-@@ -211,9 +214,7 @@ const char *get_git_common_dir(void)
- 
- const char *get_git_namespace(void)
- {
--	if (!namespace)
--		setup_git_env();
--	return namespace;
-+	SETUP_GIT_ENV(namespace);
- }
- 
- const char *strip_namespace(const char *namespaced_ref)
-@@ -251,9 +252,7 @@ const char *get_git_work_tree(void)
- 
- char *get_object_directory(void)
- {
--	if (!git_object_dir)
--		setup_git_env();
--	return git_object_dir;
-+	SETUP_GIT_ENV(git_object_dir);
- }
- 
- int odb_mkstemp(char *template, size_t limit, const char *pattern)
-@@ -295,16 +294,12 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
- 
- char *get_index_file(void)
- {
--	if (!git_index_file)
--		setup_git_env();
--	return git_index_file;
-+	SETUP_GIT_ENV(git_index_file);
- }
- 
- char *get_graft_file(void)
- {
--	if (!git_graft_file)
--		setup_git_env();
--	return git_graft_file;
-+	SETUP_GIT_ENV(git_graft_file);
- }
- 
- int set_git_dir(const char *path)
--- 
-2.5.0
+> I'm not
+> sure if there's enough time for translators before release though.
+
+Also we need to get an Ack from the authors of commits we added in
+this cycle that these patches fix i18n bugs they introduced and make
+sure there is no "this i18n mark is not appropriate as it is a
+plumbing output (or protocol messsage) that should not be
+translated" response from them.  It won't be like I apply these
+blindly today and ask translators to start working.
+
+> This series marks many strings for translation. It's a result of
+> looking for new strings between 1.7.2 and 'master', and sometimes
+> looking around touched files some more.
+>
+> Most of these are wrapping _() around strings, except 01/22 (enable
+> gettext) and 20/22 and 21/22, which convert some more strings (they
+> have been in my queue for a year)
+>
+>   [01/22] credential-cache--daemon: enable localized messages
+>   [02/22] builtin/blame.c: mark strings for translation
+>   [03/22] builtin/checkout.c: mark strings for translation
+>   [04/22] builtin/clone.c: mark strings for translation
+>   [05/22] builtin/config.c: mark strings for translation
+>   [06/22] builtin/config.c: mark strings for translation
+>   [07/22] builtin/update-index.c: mark strings for translation
+>   [08/22] convert.c: mark strings for translation
+>   [09/22] credential-cache--daemon.c: mark strings for translation
+>   [10/22] http.c: mark strings for translation
+>   [11/22] ident.c: mark strings for translation
+>   [12/22] notes.c: mark strings for translation
+>   [13/22] ref-filter.c: mark strings for translation
+>   [14/22] refs/files-backend.c: mark strings for translation
+>   [15/22] remote-curl.c: mark strings for translation
+>   [16/22] run-command.c: mark strings for translation
+>   [17/22] sha1_file.c: mark strings for translation
+>   [18/22] submodule.c: mark strings for translation
+>   [19/22] trailer.c: mark strings for translation
+>   [20/22] transport-helper.c: mark strings for translating
+>   [21/22] transport.c: mark strings for translating
+>   [22/22] wrapper.c: mark strings for translation
+>
+> Total 20 files changed, 385 insertions(+), 372 deletions(-)
+
+Let's queue this and start cooking; I see you never To'ed the guilty
+party that introduced i18n bug/regression to each of your patch, but
+can you start pinging them to collect Acks?
+
+Thanks.
