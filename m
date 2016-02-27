@@ -1,218 +1,93 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/2] Revert "rev-parse: remove restrictions on some
- options"
-Date: Sat, 27 Feb 2016 12:25:11 +0000
-Message-ID: <20160227122511.GR1766@serenity.lan>
-References: <20160226232507.GA9404@sigill.intra.peff.net>
- <20160226232957.GB9552@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 02/16] bisect: add test for the bisect algorithm
+Date: Sat, 27 Feb 2016 13:42:51 +0100
+Message-ID: <vpqd1riqq7o.fsf@anie.imag.fr>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+	<1456452282-10325-3-git-send-email-s-beyer@gmx.net>
+	<CAP8UFD2szf46skWmgZi3kSkh3D0aeMPw4TagUQa7KZ-z6pHdAA@mail.gmail.com>
+	<56D0C5E0.2020703@gmx.net>
+	<CAP8UFD27f3zmrLrvyCuMfs6ijt7MtLB8rX0Ykvfar3kidpm6LQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 27 13:28:11 2016
+Content-Type: text/plain
+Cc: Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 13:43:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZdyk-0002pl-Jz
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 13:28:10 +0100
+	id 1aZeDE-0002kQ-IH
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 13:43:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756319AbcB0MZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 07:25:26 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:40455 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756183AbcB0MZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 07:25:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id C7645CDA5E8;
-	Sat, 27 Feb 2016 12:25:24 +0000 (GMT)
-X-Quarantine-ID: <VmYuAymPvsj9>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.001
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=5
-	tests=[ALL_TRUSTED=-1, BAYES_20=-0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id VmYuAymPvsj9; Sat, 27 Feb 2016 12:25:23 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 86226CDA5BA;
-	Sat, 27 Feb 2016 12:25:12 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20160226232957.GB9552@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1756456AbcB0MnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 07:43:04 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:37150 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756183AbcB0MnC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 07:43:02 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1RCgoxQ023359
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 27 Feb 2016 13:42:51 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1RCgp9C021957;
+	Sat, 27 Feb 2016 13:42:51 +0100
+In-Reply-To: <CAP8UFD27f3zmrLrvyCuMfs6ijt7MtLB8rX0Ykvfar3kidpm6LQ@mail.gmail.com>
+	(Christian Couder's message of "Sat, 27 Feb 2016 12:40:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 27 Feb 2016 13:42:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1RCgoxQ023359
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1457181774.5875@usHqjPjAbLmYwkYwBP/d+Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287695>
 
-On Fri, Feb 26, 2016 at 06:29:57PM -0500, Jeff King wrote:
-> This reverts commit 68889b416d5b6a5cf7d280a428281d635fe9b292.
-[snip]
-> The original patch was not spurred by an actual bug report,
-> but by an observation[1] that was essentially "eh, this
-> looks unnecessarily restrictive". It _is_ restrictive, but
-> it turns out to be necessarily so. :)
+Christian Couder <christian.couder@gmail.com> writes:
 
-The aim of the original series was to improve the documentation, so I
-don't think it's unreasonable to consider this a regression and revert
-the functional change.  Although I think we can improve the behaviour
-slightly (see below).
+> Hi Stephan,
+>
+> On Fri, Feb 26, 2016 at 10:38 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
+>> Hi Christian,
+>>
+>> On 02/26/2016 07:53 AM, Christian Couder wrote:
+>>>> +test_expect_success 'bisect algorithm works in linear history with an odd number of commits' '
+>>>> +       git bisect start A7 &&
+>>>> +       git bisect next &&
+>>>> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" \
+>>>> +         -o "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
+>>>
+>>> I thought that we should not use "-o" and "-a" but instead "|| test"
+>>> and "&& test".
+>>
+>> Why is this?
+>
+> I think it is because it might not be very portable, but I am not sure
+> I remember well the previous discussions about this.
 
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-> index b6c6326..0f2bb9b 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -28,7 +28,8 @@ OPTIONS
->  Operation Modes
->  ~~~~~~~~~~~~~~~
->  
-> -Each of these options must appear first on the command line.
-> +Each of these options must appear first on the command line; they do not
-> +need to be run in a git repository.
->  
->  --parseopt::
->  	Use 'git rev-parse' in option parsing mode (see PARSEOPT section below).
-> @@ -38,6 +39,18 @@ Each of these options must appear first on the command line.
->  	section below). In contrast to the `--sq` option below, this
->  	mode does only quoting. Nothing else is done to command input.
->  
-> +--local-env-vars::
-> +	List the GIT_* environment variables that are local to the
-> +	repository (e.g. GIT_DIR or GIT_WORK_TREE, but not GIT_EDITOR).
-> +	Only the names of the variables are listed, not their value,
-> +	even if they are set.
+See Documentation/CodingGuidelines:
 
-I think we should add:
+ - We do not write our "test" command with "-a" and "-o" and use "&&"
+   or "||" to concatenate multiple "test" commands instead, because
+   the use of "-a/-o" is often error-prone.  E.g.
 
-	No other arguments may be supplied.
+     test -n "$x" -a "$a" = "$b"
 
-> +--resolve-git-dir <path>::
-> +	Check if <path> is a valid repository or a gitfile that
-> +	points at a valid repository, and print the location of the
-> +	repository.  If <path> is a gitfile then the resolved path
-> +	to the real repository is printed.
+   is buggy and breaks when $x is "=", but
 
-Again I think this should say that only the `path` argument may be
-supplied.
+     test -n "$x" && test "$a" = "$b"
 
->  --git-path <path>::
->  	Resolve "$GIT_DIR/<path>" and takes other path relocation
->  	variables such as $GIT_OBJECT_DIRECTORY,
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index cf8487b..ccc0328 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -518,6 +518,21 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  	if (argc > 1 && !strcmp("--sq-quote", argv[1]))
->  		return cmd_sq_quote(argc - 2, argv + 2);
->  
-> +	if (argc == 2 && !strcmp("--local-env-vars", argv[1])) {
+   does not have such a problem.
 
-Maybe:
+Regarding portability, test -a/-o is not strictly POSIX (it's in the XSI
+extension), but AFAIK implemented by all reasonable shells.
 
-	if (argc > 1 && !strcmp("--local-env-vars", argv[1])) {
-		if (argc != 2)
-			die("--local-env-vars must be the only argument");
-
-since the behaviour of:
-
-	$ git rev-parse --local-env-vars --
-	--local-env-vars
-	--
-
-is quite surprising.
-
-> +		int i;
-> +		for (i = 0; local_repo_env[i]; i++)
-> +			printf("%s\n", local_repo_env[i]);
-> +		return 0;
-> +	}
-> +
-> +	if (argc > 2 && !strcmp(argv[1], "--resolve-git-dir")) {
-
-This is less bad, but again it might be nice to provide a better error
-if the path argument isn't supplied.
-
-> +		const char *gitdir = resolve_gitdir(argv[2]);
-> +		if (!gitdir)
-> +			die("not a gitdir '%s'", argv[2]);
-> +		puts(gitdir);
-> +		return 0;
-> +	}
-> +
->  	if (argc > 1 && !strcmp("-h", argv[1]))
->  		usage(builtin_rev_parse_usage);
->  
-> @@ -706,12 +721,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  				add_ref_exclusion(&ref_excludes, arg + 10);
->  				continue;
->  			}
-> -			if (!strcmp(arg, "--local-env-vars")) {
-
-What about leaving this in and replacing the body of the if statement
-with:
-
-	die("--local-env-vars must be the first argument");
-
-?  I expect this will significantly reduce debugging time if anyone is
-relying on the current behaviour.
-
-> -				int i;
-> -				for (i = 0; local_repo_env[i]; i++)
-> -					printf("%s\n", local_repo_env[i]);
-> -				continue;
-> -			}
->  			if (!strcmp(arg, "--show-toplevel")) {
->  				const char *work_tree = get_git_work_tree();
->  				if (work_tree)
-> @@ -767,16 +776,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  				puts(prefix_filename(pfx, strlen(pfx), get_git_common_dir()));
->  				continue;
->  			}
-> -			if (!strcmp(arg, "--resolve-git-dir")) {
-> -				const char *gitdir = argv[++i];
-> -				if (!gitdir)
-> -					die("--resolve-git-dir requires an argument");
-> -				gitdir = resolve_gitdir(gitdir);
-> -				if (!gitdir)
-> -					die("not a gitdir '%s'", argv[i]);
-> -				puts(gitdir);
-> -				continue;
-> -			}
->  			if (!strcmp(arg, "--is-inside-git-dir")) {
->  				printf("%s\n", is_inside_git_dir() ? "true"
->  						: "false");
-> diff --git a/t/t1515-rev-parse-outside-repo.sh b/t/t1515-rev-parse-outside-repo.sh
-> index ae33093..3ec2971 100755
-> --- a/t/t1515-rev-parse-outside-repo.sh
-> +++ b/t/t1515-rev-parse-outside-repo.sh
-> @@ -27,14 +27,14 @@ test_expect_success 'rev-parse --sq-quote' '
->  	test_cmp expect actual
->  '
->  
-> -test_expect_failure 'rev-parse --local-env-vars' '
-> +test_expect_success 'rev-parse --local-env-vars' '
->  	git rev-parse --local-env-vars >actual &&
->  	# we do not want to depend on the complete list here,
->  	# so just look for something plausible
->  	grep ^GIT_DIR actual
->  '
->  
-> -test_expect_failure 'rev-parse --resolve-git-dir' '
-> +test_expect_success 'rev-parse --resolve-git-dir' '
->  	git init --separate-git-dir repo dir &&
->  	test_must_fail git rev-parse --resolve-git-dir . &&
->  	echo "$(pwd)/repo" >expect &&
-> -- 
-> 2.7.2.767.g705917e
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
