@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/22] credential-cache--daemon.c: mark strings for translation
-Date: Sat, 27 Feb 2016 13:42:00 +0700
-Message-ID: <1456555333-5853-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 10/22] http.c: mark strings for translation
+Date: Sat, 27 Feb 2016 13:42:01 +0700
+Message-ID: <1456555333-5853-11-git-send-email-pclouds@gmail.com>
 References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,201 +11,213 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 07:43:08 2016
+X-From: git-owner@vger.kernel.org Sat Feb 27 07:43:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZYan-0003JN-57
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 07:43:05 +0100
+	id 1aZYau-0003Mk-MQ
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 07:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756056AbcB0GnC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 01:43:02 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35604 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751408AbcB0GnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 01:43:00 -0500
-Received: by mail-pf0-f180.google.com with SMTP id w128so16213030pfb.2
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:43:00 -0800 (PST)
+	id S1756062AbcB0GnI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 01:43:08 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:33997 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751408AbcB0GnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 01:43:06 -0500
+Received: by mail-pa0-f50.google.com with SMTP id fy10so62462034pac.1
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OINLBzcELhaN4+ho980OIcaApdcGSKunZuJvzRh/9ks=;
-        b=QfYObGbHD1X/ldIT1XlqRs7XI7rfc3P9iCEDvyJC+E8Dm7K5OLlbQ3znlTBraTvJZg
-         0PVc+FR6k1ubbwsnoVuBYr0BKAkw6j834tPXe47QuXiCW7Ob7jxMhwewAGuQHxbF9fTu
-         hgJiEVOs6dGubhWKH81MYt9P4roOl8bUraCArXKcMk8l0G08xriI7SAA26gTzSwguhnt
-         1N82c147BgatG2uNUwz8ha3K4Eb9Wi5jRIiaD+lpNBOgEJsEbR2DlZ27EjGmO1ojE6s0
-         Ke72OSFs4F/33w57FAt5ioZQJW06OJigXNUF9+5XsrKBlXZdSOql6QzuJt+O2hNpfkw+
-         5ZTw==
+        bh=Xgo3FfChdgrvUIv5mr35cgYBZ4/ULlxnxU0kCM0DA2s=;
+        b=YexV6++S5hvp6zyVbTw5kNf6+icQTSBTMY1gpuHk7IfcS6wvoR8b7Lbe1w4xVyNStL
+         a8vWJc333BE4Dz4OufA2rZmfJ3L+i6iLWPtWwBVqG+MWqG2QzLjoDEfrL3b4Diqf2QCC
+         AxZsSoYpXT7aRu9GB1xmK+b99UDjO7aoZ7Xy+NouQsqMxIgMhDwmDanfrTUY7ZxkEHu9
+         prvX87ysaY8g+SuuvZIFNeVBqdh5Pp+ztJ50seUo+dbDr0U7I8Pxxp2wNjH0LPMeSNAb
+         bxxEI2kworo5wU2BRFy5ebr6LJQEJNuJWzfyXl3cahQmC5GbtnK3snPtHWGPfmnpx3iB
+         uaHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OINLBzcELhaN4+ho980OIcaApdcGSKunZuJvzRh/9ks=;
-        b=kMWOfqNpWGuDvCsYOCv7kmjobN+ZIEjs3iX20h3s5kwRDG4R11oOPSUUDGFhwcLWST
-         ycDS+JUVrSR1lg9wtHeHj2qulow75tUtsPvxJB0c7D/AMxqV//Bh0+EVFtacByhPHquh
-         zY+iezlUJFj5ewiHAdPCeFu5ZGX7lr4XxXaYoEesyH6fzLfS1paBQut4i9Gyc7ej/Jh1
-         AtvUjww7oRgcz9KgZYFvzbfiYSw5qrlB6duNtsY5iN0ZVv2d0jSvfhTlpYfPcNR1qj4A
-         PvL5uQlE2UV9FkUDrJR/SMHqcLtxwhw0hRMczhBUt1bo9mLifwOKRrOWibYUY9MaJkOi
-         O83w==
-X-Gm-Message-State: AD7BkJLsYGG1/qhYvHmtZNkkjKYIyR2AoBy3EPfXmra9eD3YI32mlWul8TOFT2HB+ABPag==
-X-Received: by 10.98.75.10 with SMTP id y10mr7664598pfa.32.1456555379696;
-        Fri, 26 Feb 2016 22:42:59 -0800 (PST)
+        bh=Xgo3FfChdgrvUIv5mr35cgYBZ4/ULlxnxU0kCM0DA2s=;
+        b=G44mwhHRKSX3LYpX7+gB7oR6CNyzDtDxZYJnrwgEBEp8EBPgHSzbyodO4BL/582leh
+         MNHkzCOp78z44P8mbPcWTHQD40o9RzgH8EtROKmkXa01dYXKfaDCZjgoVnYIjMO39Ole
+         0XfgxVEinpYyapmtQ5giISxRUxcKKz3P6UbPtcWL8eSQTJjHN7QKphyd2WCS0AvlJkhE
+         9YdwwzvjuiwSlegQuC70ysKPDHTCsHz/v79jCj2o79288zGyDf0MdAeohAfj2DRnMAIn
+         phdHLjZ8XVfprdUqCJf4u/zlD/g+6iciYCUHAKYxvdrqmap83rxAP4RMiGxuJRykw+tz
+         nbVA==
+X-Gm-Message-State: AD7BkJKFYrtSWp2uGTPx86YrWMmAOC6tKvFYJyG9pWjEf9KkaNMfdslA+Whlm6oAsjqlSw==
+X-Received: by 10.66.102.37 with SMTP id fl5mr7711368pab.32.1456555385996;
+        Fri, 26 Feb 2016 22:43:05 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id dy6sm15598478pab.48.2016.02.26.22.42.55
+        by smtp.gmail.com with ESMTPSA id d81sm23459915pfj.77.2016.02.26.22.43.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Feb 2016 22:42:58 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 13:43:31 +0700
+        Fri, 26 Feb 2016 22:43:04 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 13:43:38 +0700
 X-Mailer: git-send-email 2.8.0.rc0.205.g7ec8cf1
 In-Reply-To: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287671>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- credential-cache--daemon.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ http.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
-index 63ca7c8..ab33355 100644
---- a/credential-cache--daemon.c
-+++ b/credential-cache--daemon.c
-@@ -98,12 +98,12 @@ static int read_request(FILE *fh, struct credential=
- *c,
-=20
- 	strbuf_getline_lf(&item, fh);
- 	if (!skip_prefix(item.buf, "action=3D", &p))
--		return error("client sent bogus action line: %s", item.buf);
-+		return error(_("client sent bogus action line: %s"), item.buf);
- 	strbuf_addstr(action, p);
-=20
- 	strbuf_getline_lf(&item, fh);
- 	if (!skip_prefix(item.buf, "timeout=3D", &p))
--		return error("client sent bogus timeout line: %s", item.buf);
-+		return error(_("client sent bogus timeout line: %s"), item.buf);
- 	*timeout =3D atoi(p);
-=20
- 	if (credential_read(c, fh) < 0)
-@@ -132,16 +132,16 @@ static void serve_one_client(FILE *in, FILE *out)
- 		remove_credential(&c);
- 	else if (!strcmp(action.buf, "store")) {
- 		if (timeout < 0)
--			warning("cache client didn't specify a timeout");
-+			warning(_("cache client didn't specify a timeout"));
- 		else if (!c.username || !c.password)
--			warning("cache client gave us a partial credential");
-+			warning(_("cache client gave us a partial credential"));
- 		else {
- 			remove_credential(&c);
- 			cache_credential(&c, timeout);
+diff --git a/http.c b/http.c
+index 1d5e3bb..d56cb52 100644
+--- a/http.c
++++ b/http.c
+@@ -404,7 +404,7 @@ static void init_curl_proxy_auth(CURL *result)
+ 			}
  		}
- 	}
- 	else
--		warning("cache client sent unknown action: %s", action.buf);
-+		warning(_("cache client sent unknown action: %s"), action.buf);
-=20
- 	credential_clear(&c);
- 	strbuf_release(&action);
-@@ -160,7 +160,7 @@ static int serve_cache_loop(int fd)
- 	pfd.events =3D POLLIN;
- 	if (poll(&pfd, 1, 1000 * wakeup) < 0) {
- 		if (errno !=3D EINTR)
--			die_errno("poll failed");
-+			die_errno(_("poll failed"));
- 		return 1;
- 	}
-=20
-@@ -170,12 +170,12 @@ static int serve_cache_loop(int fd)
-=20
- 		client =3D accept(fd, NULL, NULL);
- 		if (client < 0) {
--			warning("accept failed: %s", strerror(errno));
-+			warning(_("accept failed: %s"), strerror(errno));
- 			return 1;
+ 		if (i =3D=3D ARRAY_SIZE(proxy_authmethods)) {
+-			warning("unsupported proxy authentication method %s: using anyauth"=
+,
++			warning(_("unsupported proxy authentication method %s: using anyaut=
+h"),
+ 					http_proxy_authmethod);
+ 			curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
  		}
- 		client2 =3D dup(client);
- 		if (client2 < 0) {
--			warning("dup failed: %s", strerror(errno));
-+			warning(_("dup failed: %s"), strerror(errno));
- 			close(client);
- 			return 1;
+@@ -445,7 +445,7 @@ static int sockopt_callback(void *client, curl_sock=
+et_t fd, curlsocktype type)
+=20
+ 	rc =3D setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, (void *)&ka, len);
+ 	if (rc < 0)
+-		warning("unable to set SO_KEEPALIVE on socket %s",
++		warning(_("unable to set SO_KEEPALIVE on socket %s"),
+ 			strerror(errno));
+=20
+ 	return 0; /* CURL_SOCKOPT_OK only exists since curl 7.21.5 */
+@@ -469,7 +469,7 @@ static CURL *get_curl_handle(void)
+ 	long allowed_protocols =3D 0;
+=20
+ 	if (!result)
+-		die("curl_easy_init failed");
++		die(_("curl_easy_init failed"));
+=20
+ 	if (!curl_ssl_verify) {
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
+@@ -503,7 +503,7 @@ static CURL *get_curl_handle(void)
+ 			}
  		}
-@@ -195,13 +195,13 @@ static void serve_cache(const char *socket_path, =
-int debug)
-=20
- 	fd =3D unix_stream_listen(socket_path);
- 	if (fd < 0)
--		die_errno("unable to bind to '%s'", socket_path);
-+		die_errno(_("unable to bind to '%s'"), socket_path);
-=20
- 	printf("ok\n");
- 	fclose(stdout);
- 	if (!debug) {
- 		if (!freopen("/dev/null", "w", stderr))
--			die_errno("unable to point stderr to /dev/null");
-+			die_errno(_("unable to point stderr to /dev/null"));
+ 		if (i =3D=3D ARRAY_SIZE(sslversions))
+-			warning("unsupported ssl version %s: using default",
++			warning(_("unsupported ssl version %s: using default"),
+ 				ssl_version);
  	}
 =20
- 	while (serve_cache_loop(fd))
-@@ -211,10 +211,10 @@ static void serve_cache(const char *socket_path, =
-int debug)
- }
+@@ -558,8 +558,8 @@ static CURL *get_curl_handle(void)
+ 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS, allowed_protocols);
+ #else
+ 	if (transport_restrict_protocols())
+-		warning("protocol restrictions not applied to curl redirects because=
+\n"
+-			"your curl version is too old (>=3D 7.19.4)");
++		warning(_("protocol restrictions not applied to curl redirects becau=
+se\n"
++			  "your curl version is too old (>=3D 7.19.4)"));
+ #endif
 =20
- static const char permissions_advice[] =3D
--"The permissions on your socket directory are too loose; other\n"
-+N_("The permissions on your socket directory are too loose; other\n"
- "users may be able to read your cached credentials. Consider running:\=
-n"
- "\n"
--"	chmod 0700 %s";
-+"	chmod 0700 %s");
- static void init_socket_directory(const char *path)
- {
- 	struct stat st;
-@@ -223,7 +223,7 @@ static void init_socket_directory(const char *path)
+ 	if (getenv("GIT_CURL_VERBOSE"))
+@@ -659,7 +659,7 @@ void http_init(struct remote *remote, const char *u=
+rl, int proactive_auth)
+ 	free(normalized_url);
 =20
- 	if (!stat(dir, &st)) {
- 		if (st.st_mode & 077)
--			die(permissions_advice, dir);
-+			die(_(permissions_advice), dir);
- 	} else {
- 		/*
- 		 * We must be sure to create the directory with the correct mode,
-@@ -232,9 +232,9 @@ static void init_socket_directory(const char *path)
- 		 * our protected socket.
- 		 */
- 		if (safe_create_leading_directories_const(dir) < 0)
--			die_errno("unable to create directories for '%s'", dir);
-+			die_errno(_("unable to create directories for '%s'"), dir);
- 		if (mkdir(dir, 0700) < 0)
--			die_errno("unable to mkdir '%s'", dir);
-+			die_errno(_("unable to mkdir '%s'"), dir);
+ 	if (curl_global_init(CURL_GLOBAL_ALL) !=3D CURLE_OK)
+-		die("curl_global_init failed");
++		die(_("curl_global_init failed"));
+=20
+ 	http_proactive_auth =3D proactive_auth;
+=20
+@@ -681,7 +681,7 @@ void http_init(struct remote *remote, const char *u=
+rl, int proactive_auth)
+=20
+ 	curlm =3D curl_multi_init();
+ 	if (!curlm)
+-		die("curl_multi_init failed");
++		die(_("curl_multi_init failed"));
+ #endif
+=20
+ 	if (getenv("GIT_SSL_NO_VERIFY"))
+@@ -1544,7 +1544,7 @@ static int http_get_file(const char *url, const c=
+har *filename,
+ 	strbuf_addf(&tmpfile, "%s.temp", filename);
+ 	result =3D fopen(tmpfile.buf, "a");
+ 	if (!result) {
+-		error("Unable to open local file %s", tmpfile.buf);
++		error(_("Unable to open local file %s"), tmpfile.buf);
+ 		ret =3D HTTP_ERROR;
+ 		goto cleanup;
+ 	}
+@@ -1601,7 +1601,7 @@ static char *fetch_pack_index(unsigned char *sha1=
+, const char *base_url)
+ 	tmp =3D strbuf_detach(&buf, NULL);
+=20
+ 	if (http_get_file(url, tmp, NULL) !=3D HTTP_OK) {
+-		error("Unable to get pack index %s", url);
++		error(_("Unable to get pack index %s"), url);
+ 		free(tmp);
+ 		tmp =3D NULL;
+ 	}
+@@ -1778,7 +1778,7 @@ struct http_pack_request *new_http_pack_request(
+ 		sha1_pack_name(target->sha1));
+ 	preq->packfile =3D fopen(preq->tmpfile, "a");
+ 	if (!preq->packfile) {
+-		error("Unable to open local file %s for pack",
++		error(_("Unable to open local file %s for pack"),
+ 		      preq->tmpfile);
+ 		goto abort;
+ 	}
+@@ -1866,7 +1866,7 @@ struct http_object_request *new_http_object_reque=
+st(const char *base_url,
+ 	unlink_or_warn(freq->tmpfile);
+=20
+ 	if (freq->localfile !=3D -1)
+-		error("fd leakage in start: %d", freq->localfile);
++		error(_("fd leakage in start: %d"), freq->localfile);
+ 	freq->localfile =3D open(freq->tmpfile,
+ 			       O_WRONLY | O_CREAT | O_EXCL, 0666);
+ 	/*
+@@ -1885,7 +1885,7 @@ struct http_object_request *new_http_object_reque=
+st(const char *base_url,
  	}
 =20
- 	if (chdir(dir))
-@@ -253,7 +253,7 @@ int main(int argc, const char **argv)
- 	const char *socket_path;
- 	int ignore_sighup =3D 0;
- 	static const char *usage[] =3D {
--		"git-credential-cache--daemon [opts] <socket_path>",
-+		N_("git-credential-cache--daemon [opts] <socket_path>"),
- 		NULL
- 	};
- 	int debug =3D 0;
-@@ -274,7 +274,7 @@ int main(int argc, const char **argv)
- 		usage_with_options(usage, options);
+ 	if (freq->localfile < 0) {
+-		error("Couldn't create temporary file %s: %s",
++		error(_("Couldn't create temporary file %s: %s"),
+ 		      freq->tmpfile, strerror(errno));
+ 		goto abort;
+ 	}
+@@ -1931,7 +1931,7 @@ struct http_object_request *new_http_object_reque=
+st(const char *base_url,
+ 			prev_posn =3D 0;
+ 			lseek(freq->localfile, 0, SEEK_SET);
+ 			if (ftruncate(freq->localfile, 0) < 0) {
+-				error("Couldn't truncate temporary file %s: %s",
++				error(_("Couldn't truncate temporary file %s: %s"),
+ 					  freq->tmpfile, strerror(errno));
+ 				goto abort;
+ 			}
+@@ -1985,7 +1985,7 @@ int finish_http_object_request(struct http_object=
+_request *freq)
+ 	process_http_object_request(freq);
 =20
- 	if (!is_absolute_path(socket_path))
--		die("socket directory must be an absolute path");
-+		die(_("socket directory must be an absolute path"));
-=20
- 	init_socket_directory(socket_path);
- 	register_tempfile(&socket_file, socket_path);
+ 	if (freq->http_code =3D=3D 416) {
+-		warning("requested range invalid; we may already have all the data."=
+);
++		warning(_("requested range invalid; we may already have all the data=
+=2E"));
+ 	} else if (freq->curl_result !=3D CURLE_OK) {
+ 		if (stat(freq->tmpfile, &st) =3D=3D 0)
+ 			if (st.st_size =3D=3D 0)
 --=20
 2.8.0.rc0.205.g7ec8cf1
