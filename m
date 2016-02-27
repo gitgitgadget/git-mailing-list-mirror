@@ -1,165 +1,103 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] environment.c: introduce DECLARE_GIT_GETTER helper macro
-Date: Sun, 28 Feb 2016 01:35:44 +0600
-Message-ID: <1456601744-18404-1-git-send-email-kuleshovmail@gmail.com>
-Cc: Git <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: JunioCHamanogitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 27 20:40:16 2016
+From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+Subject: Re: [PATCH] fetch-pack: fix unadvertised requests validation
+Date: Sat, 27 Feb 2016 17:28:55 -0300
+Message-ID: <CABaesJ+yNJ6_z=sFc+bDEPqDDsw9fkB5bYgxJaAkAMVqHNWwrQ@mail.gmail.com>
+References: <1456577034-6494-1-git-send-email-gabrielfrancosouza@gmail.com>
+ <xmqqd1riggd7.fsf@gitster.mtv.corp.google.com> <20160227190712.GC12822@sigill.intra.peff.net>
+ <20160227191943.GD12822@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 27 21:29:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZkis-00026q-VW
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 20:40:15 +0100
+	id 1aZlUO-00087g-8v
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 21:29:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992517AbcB0TkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 14:40:09 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:36852 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbcB0TkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 14:40:07 -0500
-Received: by mail-lb0-f182.google.com with SMTP id x1so61947193lbj.3
-        for <git@vger.kernel.org>; Sat, 27 Feb 2016 11:40:07 -0800 (PST)
+	id S2992534AbcB0U3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 15:29:16 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:34227 "EHLO
+	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992522AbcB0U3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 15:29:15 -0500
+Received: by mail-io0-f174.google.com with SMTP id 9so148741965iom.1
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 12:29:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=5M6Mf7Nxoo+8QDBNFnbWGSMZ2ot9g/OZV5XYA1QLa4Q=;
-        b=t0/1MYaDLIOR6JLJ7kQz77MRnwEcQ90H/FU8DECgOpXjktf7bXwUZTnFBbPyMV+wWM
-         7JNm3XAYsYSEADLG8XFN7ik8Vp+YkLdj4oXngdPdAkHqg84TbDVBKdZNOoh5IosHdIor
-         2U/cc1AURNFEZAuLE/J34a7vI1jNKcYQUFJP6pNXgkV4zpu65jz2f4Z7XUWJ+8sRz/zn
-         +/zNtrc6/+6nBdvC8ih34PsLt201qRy5/WEt+RiJPAgRDIyOh1oIS+uF3md1kBWr7DgJ
-         So/DaJStEvC30arirviKKfTlarPQKjQtgosENa0wYp8YPC9fdW/PGikX2aPcwRFzfroc
-         fbDQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OlXnRtjoZciqYnciJcmuMX94XqMfr5hJwUehbL0L4rY=;
+        b=tBlapJbeps/QMGTAuWEyb08ByW0xAdNOlkj5qxCnnst8Zud2p9NmZ8+pryf9F6NIhW
+         8vrf4B70jtEai+MDmDjD66ohT32rW93Lr7zVyjKmz8gfVLLqheijR0JcWIbVFfMHxZX2
+         qKnp+Vu6h7aNXj8UB8k28H+v179qywv/gPeCnetynaYuEnbYeolYmUo1rxinOvKIQesS
+         AcJtrRnbgYmsoeD4fHDFQzPLvmcUAukTfK1foJyeDuAxKNPn6HV9L2b2AQ+syP6RxtzP
+         DTOTeFA0AUPAJC9Ys8x3nxZsXmrA/ZFHXgbGWb5MF/Q55NMb95xvr5h1x7DD+lYQvvH7
+         UU2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5M6Mf7Nxoo+8QDBNFnbWGSMZ2ot9g/OZV5XYA1QLa4Q=;
-        b=ZUE8GSZ16gqS8yMNe3+3UkdVgONa6yfqmLnuZ7asEhxrTdMzQC0mrLBbV0QcEFNoU7
-         imq07J0zG/OMHOgkVhDIZt0XUMm8hUfJsJHCELUkVFOuHkICG7U6EGS5MmHjDtGwYJSN
-         lyNqNo4GJLV34owZcOUZgBoD2RCbkcDqsKZ4VUPitmWc6a6tPz9VcE/4anyyO8gSLvzL
-         sdvxJHa249DKSp/Bl2lVQ7ekDX9heVezX6uiIjz4jgrrswJ5ARgmK0nHXJwSGVr9cbNn
-         SS3hVn9iPr7nsPHJ/HcBPngCh6S+DcgcHynRTgRD0LBj6LTHxUIN5ugTSf/g1gzlAF+V
-         5tiA==
-X-Gm-Message-State: AD7BkJJpA8jasp87ULNGhRkT7BCuFlsvx9eZVe4llixDYkdYwMmS0IT29iV+/IriFDv6Jw==
-X-Received: by 10.112.172.233 with SMTP id bf9mr2759689lbc.121.1456602005993;
-        Sat, 27 Feb 2016 11:40:05 -0800 (PST)
-Received: from localhost.localhost ([2.134.234.130])
-        by smtp.gmail.com with ESMTPSA id ay2sm2662040lbc.39.2016.02.27.11.40.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Feb 2016 11:40:05 -0800 (PST)
-X-Mailer: git-send-email 2.8.0.rc0.142.g64f2103.dirty
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OlXnRtjoZciqYnciJcmuMX94XqMfr5hJwUehbL0L4rY=;
+        b=VOc1gE9hEJ5yC/kVq4xfxzGrl3WfnXNI8V7j0U/gBX/AGPGSIpzCj0RFW3DDyhUFta
+         /8EGrgSGyMmdusVDAIlhYGrnE0bwQpugF2bsX7iewO+ZW/yDWnEp53rpIoSVCQyNxGA7
+         e5YmQrAaaTrA+pUWsTlMTXEKjw6Um0A+x3hh7sUzbye8w0qzUoCAMZK1fRgDmXHx1AXI
+         Qsikt3mJiS1LcJFr21wdoHd+vQKEGvx84wozgj76fRWfOqWrRQUxnpyBZo94Oy8yMkgC
+         EvBZtZiLtFC+prJfc8zAXwVytNFq3KjyMfwEzg42DkEvSYhtNdujpJUwIbFbstvmeKsm
+         0rAg==
+X-Gm-Message-State: AG10YOQs+2fRGruCkn+jzpIXgU3JalcBfBEjf+O/kd/i1hrhCD7+nC3E87YnhY6wGNg0ZFH93V9pGnTU9IVRfA==
+X-Received: by 10.107.135.156 with SMTP id r28mr13892649ioi.40.1456604954629;
+ Sat, 27 Feb 2016 12:29:14 -0800 (PST)
+Received: by 10.50.59.2 with HTTP; Sat, 27 Feb 2016 12:28:55 -0800 (PST)
+In-Reply-To: <20160227191943.GD12822@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287729>
 
-The environment.c contans a couple of functions which are
-consist from the following pattern:
+On Sat, Feb 27, 2016 at 4:19 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 27, 2016 at 02:07:12PM -0500, Jeff King wrote:
+>
+>> We expect whoever creates the "sought" list to fill in the name and sha1
+>> as appropriate. If that is not happening in some code path, then yeah,
+>> filter_refs() will not work as intended. But I think the solution there
+>> would be to fix the caller to set up the "struct ref" more completely.
+>>
+>> Gabriel, did this come from a bug you noticed in practice, or was it
+>> just an intended cleanup?
 
-        if (!env)
-                setup_git_env();
-        return env;
+I was experimenting with uploadpack.hiderefs and uploadpack.allowTipSHA1InWant
+and couldn't get
 
-Let's move declaration of these functions to the DECLARE_GIT_GETTER
-helper macro to prevent code duplication.
+        git fetch-pack $remote <sha1>
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- environment.c | 49 ++++++++++++++-----------------------------------
- 1 file changed, 14 insertions(+), 35 deletions(-)
+to work, and I traced the failure until that check. Reading more, I now see
+that currently it requires
 
-diff --git a/environment.c b/environment.c
-index 6dec9d0..f10fc7a 100644
---- a/environment.c
-+++ b/environment.c
-@@ -126,6 +126,14 @@ const char * const local_repo_env[] = {
- 	NULL
- };
- 
-+#define DECLARE_GIT_GETTER(type, name, env)	\
-+	type name(void)				\
-+	{					\
-+		if (!env)			\
-+			setup_git_env();	\
-+		return env;			\
-+	}
-+
- static char *expand_namespace(const char *raw_namespace)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -197,25 +205,11 @@ int is_bare_repository(void)
- 	return is_bare_repository_cfg && !get_git_work_tree();
- }
- 
--const char *get_git_dir(void)
--{
--	if (!git_dir)
--		setup_git_env();
--	return git_dir;
--}
--
- const char *get_git_common_dir(void)
- {
- 	return git_common_dir;
- }
- 
--const char *get_git_namespace(void)
--{
--	if (!namespace)
--		setup_git_env();
--	return namespace;
--}
--
- const char *strip_namespace(const char *namespaced_ref)
- {
- 	if (!starts_with(namespaced_ref, get_git_namespace()))
-@@ -249,13 +243,6 @@ const char *get_git_work_tree(void)
- 	return work_tree;
- }
- 
--char *get_object_directory(void)
--{
--	if (!git_object_dir)
--		setup_git_env();
--	return git_object_dir;
--}
--
- int odb_mkstemp(char *template, size_t limit, const char *pattern)
- {
- 	int fd;
-@@ -293,20 +280,6 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
- 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
- }
- 
--char *get_index_file(void)
--{
--	if (!git_index_file)
--		setup_git_env();
--	return git_index_file;
--}
--
--char *get_graft_file(void)
--{
--	if (!git_graft_file)
--		setup_git_env();
--	return git_graft_file;
--}
--
- int set_git_dir(const char *path)
- {
- 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
-@@ -325,3 +298,9 @@ const char *get_commit_output_encoding(void)
- {
- 	return git_commit_encoding ? git_commit_encoding : "UTF-8";
- }
-+
-+DECLARE_GIT_GETTER(const char *, get_git_dir, git_dir)
-+DECLARE_GIT_GETTER(const char *, get_git_namespace, namespace)
-+DECLARE_GIT_GETTER(char *, get_object_directory, git_object_dir)
-+DECLARE_GIT_GETTER(char *, get_index_file, git_index_file)
-+DECLARE_GIT_GETTER(char *, get_graft_file, git_graft_file)
--- 
-2.8.0.rc0.142.g64f2103.dirty
+       git fetch-pack $remote "<sha1> <sha1>"
+
+to do what I want.
+
+>
+> I double-checked that the code for git-fetch does so. It's in
+> get_fetch_map()
+>
+>     if (refspec->exact_sha1) {
+>             ref_map = alloc_ref(name);
+>             get_oid_hex(name, &ref_map->old_oid);
+>     } else ...
+>
+> So we should always have old_oid filled in already, and there is no need
+> to do so in filter_refs() (and in fact it is wrong, for the degenerate
+> example I gave earlier).
+
+git fetch-pack doesn't use these code paths. I'll send a new patch
+shortly to allow
+bare sha1's in fetch-pack.
+
+>
+> -Peff
