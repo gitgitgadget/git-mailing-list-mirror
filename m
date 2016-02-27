@@ -1,79 +1,107 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 3/3] git: submodule honor -c credential.* from command line
-Date: Fri, 26 Feb 2016 16:01:08 -0800
-Message-ID: <CA+P7+xroP8PFKe+zSdT-j9oq+APT6OKOkbzS_DM8HyVjM-v_og@mail.gmail.com>
-References: <1456514328-10153-1-git-send-email-jacob.e.keller@intel.com>
- <1456514328-10153-3-git-send-email-jacob.e.keller@intel.com>
- <20160226220553.GA1835@sigill.intra.peff.net> <CA+P7+xqSZGAJD7ryvx2A2qM1wd0rKMmjT2tcBPann33sUUHGcA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v5 1/3] sumodule--helper: fix submodule--helper clone usage and check argc count
+Date: Fri, 26 Feb 2016 16:13:18 -0800
+Message-ID: <1456532000-22971-2-git-send-email-jacob.e.keller@intel.com>
+References: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Jeff King <peff@peff.net>,
 	Mark Strapetz <marc.strapetz@syntevo.com>,
 	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 27 01:01:33 2016
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 01:13:30 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZSKC-0008Qd-Sn
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 01:01:33 +0100
+	id 1aZSVl-0006yT-3a
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 01:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755551AbcB0AB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 19:01:29 -0500
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36837 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755158AbcB0AB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 19:01:28 -0500
-Received: by mail-io0-f170.google.com with SMTP id l127so137867604iof.3
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 16:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=04yljw26rh3N/bImHxhpTW6V9BRU8Qqyfyoc0xJV7L4=;
-        b=rYhF39uDEKjQ6LIWLp+xNAN5ZMpJin1Gs0sJ876IFqN7xxV9bNr0wNh9TF5lTAevQD
-         loet2jcB7DkkYkA5ckA+/t08jmY1iaD3EO2NKbecFawaC21IkQOozmdikAzpkmSbFoPH
-         JgtLx2UdiOS7L4fXolfV8RH54ocamQViZlgbjjT1NJL8P4tNiB0x8I41LkwiZCq2pJaM
-         Fd6KbX3mwOj1HyHw3MlPsxFm6UzmrC3eD4k5lFLM0pmfzlpQEs6v06uyyDFmUqwHg/ea
-         NRwaZtNFr+3S7ojooJjyzv9kcJVaiYG8zKkhXS/zTm4IqFZ+YM8zfPw6DRJjHAp+9yKW
-         yszg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=04yljw26rh3N/bImHxhpTW6V9BRU8Qqyfyoc0xJV7L4=;
-        b=AgB9qoun8vuT1oThhPD4Xlv1aMGKJXVjexwztL55E9bd6hZxfXodjgQhV19hXpFo1Z
-         GiA/IOGRpob3NOzf5WJltlnv38PTR1Q/yqfTW71yLExHD2wVuYt+w1jN6J8cFyIBZ7kM
-         Kdcpwlq636ABSTVa5OlrAhRDZ5p9A7wQN8v7XECR2PqrnBNGAU2xvMgjfSHhtdxyXD+9
-         fNAK6YB7lJy92/4edhCrG158KPzA91rZ7dVvgTlSvXJZoZ5E3F3JPzgeCVf9YSotZj5o
-         LnDbPxBAWp32xGDNH/6IsWOiQ0LOkpgvUhRI3NXt5808ORgBF5a5TFVfxZbhB1IIVgmk
-         sw1A==
-X-Gm-Message-State: AG10YOTMYvsl7NZTatdoKSAogwb5tKCIpoNjfVIHKyRgjqvyd+9CpAlF5XKmec/xGQzohfZwvLGyM0tliIebXQ==
-X-Received: by 10.107.156.14 with SMTP id f14mr12585478ioe.0.1456531288011;
- Fri, 26 Feb 2016 16:01:28 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Fri, 26 Feb 2016 16:01:08 -0800 (PST)
-In-Reply-To: <CA+P7+xqSZGAJD7ryvx2A2qM1wd0rKMmjT2tcBPann33sUUHGcA@mail.gmail.com>
+	id S933849AbcB0AN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Feb 2016 19:13:26 -0500
+Received: from mga01.intel.com ([192.55.52.88]:38260 "EHLO mga01.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755106AbcB0ANX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Feb 2016 19:13:23 -0500
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga101.fm.intel.com with ESMTP; 26 Feb 2016 16:13:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.22,506,1449561600"; 
+   d="scan'208";a="924835109"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.65])
+  by fmsmga002.fm.intel.com with ESMTP; 26 Feb 2016 16:13:22 -0800
+X-Mailer: git-send-email 2.7.1.429.g45cd78e
+In-Reply-To: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287645>
 
-On Fri, Feb 26, 2016 at 2:20 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> that is slightly more verbose, but it does let us keep the main body
->> inside single-quotes, without restoring to confusing backslash escaping.
->>
->
-> I think I prefer the double quotes myself but will use this if people prefer?
->
->> -Peff
+From: Jacob Keller <jacob.keller@gmail.com>
 
-On second thought, I'd prefer consistency and I think using single
-quotes is probably better, so I'll use this solution in v5.
+git submodule--helper clone usage specified that paths come after the --
+as a sequence. However, the actual implementation does not, and requires
+only a single path passed in via --path. In addition, argc was
+unchecked. (allowing arbitrary extra arguments that were silently
+ignored).
 
-Thanks,
-Jake
+Fix the usage description to match implementation. Add an argc check to
+enforce no extra arguments. Fix a bug in the argument passing in
+git-submodule.sh which would pass --reference and --depth as empty
+strings when they were unused, resulting in extra argc after parsing
+options.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ builtin/submodule--helper.c | 5 ++++-
+ git-submodule.sh            | 4 ++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f4c3eff179b5..072d9bbd12a8 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -187,13 +187,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	const char *const git_submodule_helper_usage[] = {
+ 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+ 		   "[--reference <repository>] [--name <name>] [--url <url>]"
+-		   "[--depth <depth>] [--] [<path>...]"),
++		   "[--depth <depth>] [--path <path>]"),
+ 		NULL
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, module_clone_options,
+ 			     git_submodule_helper_usage, 0);
+ 
++	if (argc)
++		usage(*git_submodule_helper_usage);
++
+ 	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+ 	sm_gitdir = strbuf_detach(&sb, NULL);
+ 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9bc5c5f94d1d..2dd29b3df0e6 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -347,7 +347,7 @@ Use -f if you really want to add it." >&2
+ 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+ 			fi
+ 		fi
+-		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
++		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+ 		(
+ 			clear_local_git_env
+ 			cd "$sm_path" &&
+@@ -709,7 +709,7 @@ Maybe you want to use 'update --init'?")"
+ 
+ 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+ 		then
+-			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
++			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+ 			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
+-- 
+2.7.1.429.g45cd78e
