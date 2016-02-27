@@ -1,86 +1,92 @@
-From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: [PATCH] fetch-pack: fix unadvertised requests validation
-Date: Sat, 27 Feb 2016 09:43:54 -0300
-Message-ID: <1456577034-6494-1-git-send-email-gabrielfrancosouza@gmail.com>
-Cc: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: GSoC 2016 Microproject
+Date: Sat, 27 Feb 2016 18:34:57 +0530
+Message-ID: <56D19EF9.3070702@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 13:45:02 2016
+X-From: git-owner@vger.kernel.org Sat Feb 27 14:05:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZeF3-0003gA-Rs
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 13:45:02 +0100
+	id 1aZeYY-0005h6-VG
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 14:05:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562AbcB0Mo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 07:44:57 -0500
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:33289 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756363AbcB0Mo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 07:44:56 -0500
-Received: by mail-qk0-f170.google.com with SMTP id s5so41497811qkd.0
-        for <git@vger.kernel.org>; Sat, 27 Feb 2016 04:44:56 -0800 (PST)
+	id S1756571AbcB0NFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 08:05:03 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33128 "EHLO
+	mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756282AbcB0NFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 08:05:02 -0500
+Received: by mail-pf0-f196.google.com with SMTP id t66so1909747pfb.0
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 05:05:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DmUQPXDXi5zRUK5HJD5nZOfyVtyQTc4gVlWE3kKMnUY=;
-        b=eN5IZy0i53fMrw4otKlbQUWbyaQXe/C19Ae9WAQI5/jWXsfSMeaRw+K97TfkKIdP2Z
-         itGpY3h4SbiQ7A0VUd03F40FdQ3ceK886EfEtwGPaGAfWtRvqX5PmXx7eOGujeUzhD3r
-         qs7Lo9yuZA9v5dB5ZPm+xfQWIBsfL/KV//MG27kTY99fKeb3FA885f1lMe8vpOujqbWZ
-         /+WxEL9BTTQ0VQM4tfU2yyHXzAyzAbWf/y60RiLHhpRcBaS6QUxqxSHO3qzBhxt4C+Aj
-         Tn7zcG0CyNDRH1rM/bEMKd/vM56mZ10u56KFwpaeXZU6bf71lXeIfpWY9z8pLRj8kEZC
-         wWiA==
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=bPMgrQEG5OejPBv66K4UCv0b1k1om4d6ywXTCIIHcJg=;
+        b=BvXqRrF0BNfn9Gr4V0SBhfaXHr+dlK721yq9tyjttdxBZdh/FvL2rcckBQe/x6iloa
+         QCg29FyMS12hb7KFbmyHOaKUGEVWGWtFV5wb4TQsdQ0pYbYHTRaffjJT8Mue71n+bWL8
+         KFeUC0R7dbYJSeSsWsVsdKQXOyArPcOV21dyqMF5avboJDMzUg2QYvAdtUvC3jmnAe5y
+         ZS68m+d3zQ8xIHtZQdEo0gcvMuifS+GLPCg+Grz388vx0uGKJoHLol/oIK7ifSlutfqh
+         zNoaycU01WKNvLV/diTLbba0FA3Is+lvn1G/hxFNEov3UAPHkO1+tIxyAQs4RDz2gIs7
+         uR7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=DmUQPXDXi5zRUK5HJD5nZOfyVtyQTc4gVlWE3kKMnUY=;
-        b=kIi7vgjPV/gu5J8hAqvoMgQaUSlWRSa5NVzALq0ezNiM9iPO10zaRrMgkJHZmErCZv
-         QMc4ym3h7hBv7xf4gaxtgofhVZ/1xLOoTX4N7taQZX1DnCLQzUg5brLg9P6P4bNFgPQB
-         IxhOpLRBPHi+TePGIuTdb5jxXgwLnBTlEl3Etf4glcfjRBpx/Yoh2LgPebtV0K7GTODd
-         X4M4ZCtmDycKsad8ceUMAnutO1Rd3U+37bIb+dcpn5QSe64WoSH6zPyTp4rajnMmZkJn
-         FeO8oYhnS6YYozn2O0/fhdkTfgsvVg5ewPWfGMCER7I13V8B8mjpapZCX03yseJlUj2X
-         /I/w==
-X-Gm-Message-State: AD7BkJKx3IptR9ulJAIKkRhULZxnyFnUJg3jLZSDKKzTTr03q4FtCjRXXS52Yn+2Cspf2w==
-X-Received: by 10.55.79.207 with SMTP id d198mr7893966qkb.49.1456577096029;
-        Sat, 27 Feb 2016 04:44:56 -0800 (PST)
-Received: from ghost.localdomain ([187.22.88.116])
-        by smtp.gmail.com with ESMTPSA id d6sm7257581qkb.13.2016.02.27.04.44.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 27 Feb 2016 04:44:55 -0800 (PST)
-X-Mailer: git-send-email 2.7.1
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=bPMgrQEG5OejPBv66K4UCv0b1k1om4d6ywXTCIIHcJg=;
+        b=fV8PFafS4uyGHIzKiKVyi8BDIrcf1XF1Jd+yMbNf/daoYd5EKXykzynHwk7vd4DwXL
+         ynydCsIHwZWcnbkojo41EaCTWgbgfSdqDjr/w9oceO2KyZHqz2yH8WuUJyyC6+vVg7Ym
+         XkkaX605AuLjqrf0rSc/qDPXmzzpRBTZOZzpeMHwFiGS1IKGs3xb3YJBbbaEhP2OKoqH
+         Bd6F0FcWfOBXGqnRhfDMG0aNhwxjok2goU62Tr6vSo5aOA+0sHr1+XUOc6psLej6toUg
+         fZnR8LGRcT+gapnaP0tkaXITSlx8o5iAzwIPOx7SZHXRFDooL3HJVmQHh59EvR+MXmmR
+         z4mw==
+X-Gm-Message-State: AD7BkJLPE9LfnMoQsDQzXur7qq1x11XXqZJP4Yuy4WEIlCFWYkerfGZn/yjVfMIsdU1sxA==
+X-Received: by 10.98.33.199 with SMTP id o68mr8986666pfj.125.1456578300696;
+        Sat, 27 Feb 2016 05:05:00 -0800 (PST)
+Received: from [192.168.1.10] ([182.68.63.13])
+        by smtp.gmail.com with ESMTPSA id ko9sm26181844pab.37.2016.02.27.05.04.59
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 27 Feb 2016 05:05:00 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287697>
 
-Check was introduced in b791642 (filter_ref: avoid overwriting
-ref->old_sha1 with garbage, 2015-03-19), but was always false because
-ref->old_oid.hash is empty in this case. Instead copy sha1 from ref->name.
+Hi everyone,
 
-Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
----
- fetch-pack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 01e34b6..83b937b 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -569,11 +569,11 @@ static void filter_refs(struct fetch_pack_args *args,
- 			if (ref->matched)
- 				continue;
- 			if (get_sha1_hex(ref->name, sha1) ||
--			    ref->name[40] != '\0' ||
--			    hashcmp(sha1, ref->old_oid.hash))
-+			    ref->name[40] != '\0')
- 				continue;
- 
- 			ref->matched = 1;
-+			hashcpy(ref->old_oid.hash, sha1);
- 			*newtail = copy_ref(ref);
- 			newtail = &(*newtail)->next;
- 		}
--- 
-2.7.1
+I'm Sidhant Sharma. I'm looking to participate in GSoC 2016 (and contribute  
+to Git in general as well). I read up the pages relating to participation  
+in GSoC and selected the microproject "Add configuration options for some  
+commonly used command-line options". I have some queries regarding this  
+though:
+
+1. I believe the option can be added by a reassignment of the `verbose`  
+variable in `parse_and_validate_options` function inside the  
+`builtin/commit.c`. It can be a logical OR between the `verbose` (which was  
+parsed by the argument parser) and the value obtained by using  
+`git_config_get_bool("command.verbose", &opt_verbose)`. Am I thinking on  
+the right lines?
+
+2. Should I also add an option to override the configuration for verbose?
+
+3. The microproject title suggests there can more such options, so are  
+there more to be added?
+
+
+Thanks in advance.
+
+
+
+Regards
+
+Sidhant Sharma [:tk]
