@@ -1,93 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 02/16] bisect: add test for the bisect algorithm
-Date: Sat, 27 Feb 2016 13:42:51 +0100
-Message-ID: <vpqd1riqq7o.fsf@anie.imag.fr>
-References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
-	<1456452282-10325-3-git-send-email-s-beyer@gmx.net>
-	<CAP8UFD2szf46skWmgZi3kSkh3D0aeMPw4TagUQa7KZ-z6pHdAA@mail.gmail.com>
-	<56D0C5E0.2020703@gmx.net>
-	<CAP8UFD27f3zmrLrvyCuMfs6ijt7MtLB8rX0Ykvfar3kidpm6LQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stephan Beyer <s-beyer@gmx.net>, git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 13:43:09 2016
+From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+Subject: [PATCH] fetch-pack: fix unadvertised requests validation
+Date: Sat, 27 Feb 2016 09:43:54 -0300
+Message-ID: <1456577034-6494-1-git-send-email-gabrielfrancosouza@gmail.com>
+Cc: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 13:45:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZeDE-0002kQ-IH
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 13:43:08 +0100
+	id 1aZeF3-0003gA-Rs
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 13:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756456AbcB0MnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 07:43:04 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:37150 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756183AbcB0MnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 07:43:02 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1RCgoxQ023359
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 27 Feb 2016 13:42:51 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1RCgp9C021957;
-	Sat, 27 Feb 2016 13:42:51 +0100
-In-Reply-To: <CAP8UFD27f3zmrLrvyCuMfs6ijt7MtLB8rX0Ykvfar3kidpm6LQ@mail.gmail.com>
-	(Christian Couder's message of "Sat, 27 Feb 2016 12:40:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 27 Feb 2016 13:42:51 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1RCgoxQ023359
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457181774.5875@usHqjPjAbLmYwkYwBP/d+Q
+	id S1756562AbcB0Mo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 07:44:57 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:33289 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756363AbcB0Mo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 07:44:56 -0500
+Received: by mail-qk0-f170.google.com with SMTP id s5so41497811qkd.0
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 04:44:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=DmUQPXDXi5zRUK5HJD5nZOfyVtyQTc4gVlWE3kKMnUY=;
+        b=eN5IZy0i53fMrw4otKlbQUWbyaQXe/C19Ae9WAQI5/jWXsfSMeaRw+K97TfkKIdP2Z
+         itGpY3h4SbiQ7A0VUd03F40FdQ3ceK886EfEtwGPaGAfWtRvqX5PmXx7eOGujeUzhD3r
+         qs7Lo9yuZA9v5dB5ZPm+xfQWIBsfL/KV//MG27kTY99fKeb3FA885f1lMe8vpOujqbWZ
+         /+WxEL9BTTQ0VQM4tfU2yyHXzAyzAbWf/y60RiLHhpRcBaS6QUxqxSHO3qzBhxt4C+Aj
+         Tn7zcG0CyNDRH1rM/bEMKd/vM56mZ10u56KFwpaeXZU6bf71lXeIfpWY9z8pLRj8kEZC
+         wWiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=DmUQPXDXi5zRUK5HJD5nZOfyVtyQTc4gVlWE3kKMnUY=;
+        b=kIi7vgjPV/gu5J8hAqvoMgQaUSlWRSa5NVzALq0ezNiM9iPO10zaRrMgkJHZmErCZv
+         QMc4ym3h7hBv7xf4gaxtgofhVZ/1xLOoTX4N7taQZX1DnCLQzUg5brLg9P6P4bNFgPQB
+         IxhOpLRBPHi+TePGIuTdb5jxXgwLnBTlEl3Etf4glcfjRBpx/Yoh2LgPebtV0K7GTODd
+         X4M4ZCtmDycKsad8ceUMAnutO1Rd3U+37bIb+dcpn5QSe64WoSH6zPyTp4rajnMmZkJn
+         FeO8oYhnS6YYozn2O0/fhdkTfgsvVg5ewPWfGMCER7I13V8B8mjpapZCX03yseJlUj2X
+         /I/w==
+X-Gm-Message-State: AD7BkJKx3IptR9ulJAIKkRhULZxnyFnUJg3jLZSDKKzTTr03q4FtCjRXXS52Yn+2Cspf2w==
+X-Received: by 10.55.79.207 with SMTP id d198mr7893966qkb.49.1456577096029;
+        Sat, 27 Feb 2016 04:44:56 -0800 (PST)
+Received: from ghost.localdomain ([187.22.88.116])
+        by smtp.gmail.com with ESMTPSA id d6sm7257581qkb.13.2016.02.27.04.44.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 27 Feb 2016 04:44:55 -0800 (PST)
+X-Mailer: git-send-email 2.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287696>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Check was introduced in b791642 (filter_ref: avoid overwriting
+ref->old_sha1 with garbage, 2015-03-19), but was always false because
+ref->old_oid.hash is empty in this case. Instead copy sha1 from ref->name.
 
-> Hi Stephan,
->
-> On Fri, Feb 26, 2016 at 10:38 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
->> Hi Christian,
->>
->> On 02/26/2016 07:53 AM, Christian Couder wrote:
->>>> +test_expect_success 'bisect algorithm works in linear history with an odd number of commits' '
->>>> +       git bisect start A7 &&
->>>> +       git bisect next &&
->>>> +       test "$(git rev-parse HEAD)" = "$(git rev-parse A3)" \
->>>> +         -o "$(git rev-parse HEAD)" = "$(git rev-parse A4)"
->>>
->>> I thought that we should not use "-o" and "-a" but instead "|| test"
->>> and "&& test".
->>
->> Why is this?
->
-> I think it is because it might not be very portable, but I am not sure
-> I remember well the previous discussions about this.
+Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+---
+ fetch-pack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-See Documentation/CodingGuidelines:
-
- - We do not write our "test" command with "-a" and "-o" and use "&&"
-   or "||" to concatenate multiple "test" commands instead, because
-   the use of "-a/-o" is often error-prone.  E.g.
-
-     test -n "$x" -a "$a" = "$b"
-
-   is buggy and breaks when $x is "=", but
-
-     test -n "$x" && test "$a" = "$b"
-
-   does not have such a problem.
-
-Regarding portability, test -a/-o is not strictly POSIX (it's in the XSI
-extension), but AFAIK implemented by all reasonable shells.
-
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 01e34b6..83b937b 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -569,11 +569,11 @@ static void filter_refs(struct fetch_pack_args *args,
+ 			if (ref->matched)
+ 				continue;
+ 			if (get_sha1_hex(ref->name, sha1) ||
+-			    ref->name[40] != '\0' ||
+-			    hashcmp(sha1, ref->old_oid.hash))
++			    ref->name[40] != '\0')
+ 				continue;
+ 
+ 			ref->matched = 1;
++			hashcpy(ref->old_oid.hash, sha1);
+ 			*newtail = copy_ref(ref);
+ 			newtail = &(*newtail)->next;
+ 		}
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.7.1
