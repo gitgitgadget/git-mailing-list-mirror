@@ -1,113 +1,103 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/3] sha1_file.c: mark strings for translation
-Date: Sat, 27 Feb 2016 14:49:33 +0700
-Message-ID: <1456559373-13589-1-git-send-email-pclouds@gmail.com>
-References: <20160225142004.GA17678@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] submodule: port resolve_relative_url from shell to C
+Date: Sat, 27 Feb 2016 15:28:22 +0700
+Message-ID: <20160227082821.GA14856@lanh>
+References: <1455320356-15778-1-git-send-email-sbeller@google.com>
+ <1455320356-15778-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	d33tah@gmail.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 08:49:32 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	Jens.Lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 09:28:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZZd5-0005rT-If
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 08:49:31 +0100
+	id 1aZaEN-0001ay-E5
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 09:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207AbcB0HtS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 02:49:18 -0500
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34233 "EHLO
-	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752075AbcB0HtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 02:49:15 -0500
-Received: by mail-pf0-f169.google.com with SMTP id x65so64534749pfb.1
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 23:49:15 -0800 (PST)
+	id S1752013AbcB0I1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 03:27:51 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35834 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426AbcB0I1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 03:27:50 -0500
+Received: by mail-pf0-f171.google.com with SMTP id w128so17215440pfb.2
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 00:27:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p5nKjXq5pj7aaIRIFnp8e6VMf7Kor7Fc7YLVHjAHFjg=;
-        b=NSLuS2D6u1NhIyTRA3ofGNz10bChxg70RVDmVQcdIDqdjNDcb1YRB/DV93BvlFL1mF
-         JK3dgO4+qnP+jOJJZt/MNnrQr4gu5/t/y0wznNrJH6PyFHVJVCdMA2dzJxBEULg0//a8
-         20uuzFfJz8/EdqqENUTcIgxrY7uPx346dQDhub7ZmkqbiLa554UanmxSjpv9GYwov/Hg
-         lxIh22cdmCvXEa9zTMdLRK8D/Hz9gUP58BLM7dIVY9PR4Ok4LhrySMGCB2E4H+QHto4w
-         Whzi9JfSbB4E8OmueVRTJehPtbRxP3nZcBLe8UQtIcgS7KZjNlkuPU5bn/pfq4MLrayS
-         M+vA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JkX6zcbj55Kbp6u9D83ReEGzODqhug96QNmkb/UFEQE=;
+        b=aLc/HFjP9HJrklBE+460yHdjSWQRF3XMG20Por2Wvfrpzdv0r+xUQwwtKX3q3j5wo8
+         R+Z0HHOYwaG99vi865Rp+2yrDRXXJFVHsq52kBRUpc0dk3F5wWRZ40QbL8PYIySDSFG0
+         B1TTaYFIw06fxIK4CfClkKyz6hWlZ2xqndM2el9JzPWuC+oW63ML+04/Tgs+56u3RMAH
+         ZD/tPBRN6AXWmBj7AYEXcV788syzi/CopTt/iH/gyf8F/WHVKp1fHmQehaQOC2/OY/sB
+         KBKALv+NEpOhER/AdBZDUqAlyKdBS5XOlEi2K+MhHAJfEsAWYyel6smbf9pMCTuS4y8U
+         DrQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p5nKjXq5pj7aaIRIFnp8e6VMf7Kor7Fc7YLVHjAHFjg=;
-        b=jb0F1dRelpx2qvytQGcOLbdJn5oZZHOGY6qEZ6vU3/5ejwMG09axye4B87HKuwhhuA
-         dR7wd4MmzEIfp1K0QU1lbHtBuuz7gsN/sHsRAlC6wOiepfQIornTQloc/+ZCXykSUHse
-         f7yTxZ+9Iyra/ArWbpuyzntbQOOECUZmywae6o6wPvthTTTfSpihL5V4+sYXmWKLC0je
-         JH4vKEIksblN9NeE9I9hmVWPoJGleazynGK5uGG2VgYP8lrEXJmgxiuSwqLIGQpMoPDL
-         MfKZ1YF7meyHd4t1uDumO1G9nsomEpv2AnMP6drfguRgIy5LUuFK/+iaOcC/ZapriIUr
-         FZ1Q==
-X-Gm-Message-State: AD7BkJK/MvR3vL95o7ValclgMzYzgvrnU19z4s7+Kn7S89pYMg0GCIuuuDmt5lCM6wdQIg==
-X-Received: by 10.98.16.198 with SMTP id 67mr7837220pfq.21.1456559355220;
-        Fri, 26 Feb 2016 23:49:15 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JkX6zcbj55Kbp6u9D83ReEGzODqhug96QNmkb/UFEQE=;
+        b=MV2aPMzkZCo3ysaMp3DNYxC87xs8QLaBTCgg4ftzSmavVxOr8H5ds5NFcxRMZPvNGf
+         p29W/GFU0ufUzeufyecveN26SPTSq3JFYxItsXpJZHwVgExpx8lHqjiSeDAhCfdxhbPy
+         RsCJPxgY08gEBxZCHpz3KZV9qULoEShhEtdYaWgTlDrpvTzzUncVKsZuom6O7OPHnInY
+         EPoR8Led1V2c7GKrc8A2GHzots2A6v/bwSw0rUB2hOsnvU0iusQ3cQVrJD8vYUahvXEH
+         LTAyU/UItXI/TFOWzpZPlGJBrgSs89KneaLzqh9+wpMFhhSrEggO//Exfxs/aA3oYYwH
+         nIPg==
+X-Gm-Message-State: AD7BkJIg5wHeiPizMf/Oa/HyTGcHQw/YLUXyZJ7UUb5ZtgwbzwvMwQbG7zwADzG7hIEY7A==
+X-Received: by 10.98.8.80 with SMTP id c77mr8009001pfd.42.1456561669563;
+        Sat, 27 Feb 2016 00:27:49 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id y68sm24007201pfi.6.2016.02.26.23.49.11
+        by smtp.gmail.com with ESMTPSA id 67sm24286541pfi.2.2016.02.27.00.27.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Feb 2016 23:49:14 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 14:49:48 +0700
-X-Mailer: git-send-email 2.8.0.rc0.205.g7ec8cf1
-In-Reply-To: <20160225142004.GA17678@sigill.intra.peff.net>
+        Sat, 27 Feb 2016 00:27:48 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 15:28:22 +0700
+Content-Disposition: inline
+In-Reply-To: <1455320356-15778-2-git-send-email-sbeller@google.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287686>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Since jk/pack-idx-corruption-safety is already in 'next', can we add
- this patch on top? Surrounding strings are handled separately [1] by
- another series.
+On Fri, Feb 12, 2016 at 03:39:15PM -0800, Stefan Beller wrote:
+> Later on we want to automatically call `git submodule init` from
+> other commands, such that the users don't have to initialize the
+> submodule themselves.  As these other commands are written in C
+> already, we'd need the init functionality in C, too.  The
+> `resolve_relative_url` function is a large part of that init
+> functionality, so start by porting this function to C.
+> 
+> To create the tests in t0060, the function `resolve_relative_url`
+> was temporarily enhanced to write all inputs and output to disk
+> when running the test suite. The added tests in this patch are
+> a small selection thereof.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/submodule--helper.c | 208 +++++++++++++++++++++++++++++++++++++++++++-
 
- [1] http://thread.gmane.org/gmane.comp.version-control.git/287661/focu=
-s=3D287678
+i18n fixes. Can you squash this patch in when it's re-rolled?
 
- sha1_file.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 4a3a032..b8da68b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1042,7 +1042,7 @@ unsigned char *use_pack(struct packed_git *p,
- 	if (offset > (p->pack_size - 20))
- 		die("offset beyond end of packfile (truncated pack?)");
- 	if (offset < 0)
--		die("offset before end of packfile (broken .idx?)");
-+		die(_("offset before end of packfile (broken .idx?)"));
-=20
- 	if (!win || !in_window(win, offset)) {
- 		if (win)
-@@ -2367,11 +2367,11 @@ void check_pack_index_ptr(const struct packed_g=
-it *p, const void *vptr)
- 	const unsigned char *start =3D p->index_data;
- 	const unsigned char *end =3D start + p->index_size;
- 	if (ptr < start)
--		die("offset before start of pack index for %s (corrupt index?)",
-+		die(_("offset before start of pack index for %s (corrupt index?)"),
- 		    p->pack_name);
- 	/* No need to check for underflow; .idx files must be at least 8 byte=
-s */
- 	if (ptr >=3D end - 8)
--		die("offset beyond end of pack index for %s (truncated index?)",
-+		die(_("offset beyond end of pack index for %s (truncated index?)"),
- 		    p->pack_name);
- }
-=20
---=20
-2.8.0.rc0.205.g7ec8cf1
+-- 8< --
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f4a0fd7..a6e54fa 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -22,7 +22,7 @@ static char *get_default_remote(void)
+ 	const char *refname = resolve_ref_unsafe("HEAD", 0, sha1, &flag);
+ 
+ 	if (!refname)
+-		die("No such ref: HEAD");
++		die(_("No such ref: %s"), "HEAD");
+ 
+ 	/* detached HEAD */
+ 	if (!strcmp(refname, "HEAD"))
+-- 8< --
