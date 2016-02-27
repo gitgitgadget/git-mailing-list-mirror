@@ -1,141 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/22] Mark more strings for translation
-Date: Sat, 27 Feb 2016 09:34:42 -0800
-Message-ID: <xmqq7fhqhxal.fsf@gitster.mtv.corp.google.com>
-References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
+Date: Sat, 27 Feb 2016 18:39:31 +0100
+Message-ID: <56D1DF53.1010006@web.de>
+References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
+ <56D078F3.9070905@web.de> <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
+ <56D0D2DF.1040807@web.de> <xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
+ <20160227032907.GB10313@sigill.intra.peff.net> <56D14C56.6070306@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 18:34:56 2016
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 18:40:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZilZ-0001yC-SD
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:34:54 +0100
+	id 1aZirL-0004hG-P0
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932227AbcB0Res convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 12:34:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756340AbcB0Rer convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Feb 2016 12:34:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD4D5459AD;
-	Sat, 27 Feb 2016 12:34:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=T6982gm2Q5h9
-	twNpzeH4mb60e1M=; b=WlVkOUQUhaY/D9w6fbH6iBOnjecywv9vkY3HRSVHRSgY
-	XvEXNUk6ky/W5hh/NoidV+t9VSbOqe1or0OhrW3oyWEFybgyV++VCAvaQ4Zw326+
-	2+sfXmWYo6MORLfh2UWs3HM1/oibF+T6WkXWGGT/V7JhN4syUGn3OWiZSYiAnPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OQRGPZ
-	RvlipBubI6ZnnbsrL8ibSMxhadnwqWU8MtLjEWiH25jf8JQsjDFSTbMFYA9WsM68
-	McKjHjyc8VQRc1mW7itWbltcqz1/mF9PqFT4roGet+ZClxfrZAZSmPigz+nSWzhF
-	2mReBvDGILNsJJ2232sFGQ+PDdfkBz6dvtjKY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5662459AC;
-	Sat, 27 Feb 2016 12:34:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1A2FE459AB;
-	Sat, 27 Feb 2016 12:34:43 -0500 (EST)
-In-Reply-To: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 27
- Feb 2016 13:41:51 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 63950312-DD78-11E5-999D-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1422813AbcB0Rjw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 12:39:52 -0500
+Received: from mout.web.de ([212.227.17.11]:62155 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756340AbcB0Rjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 12:39:51 -0500
+Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0M40zO-1ZjGe60YgE-00rZJW; Sat, 27 Feb 2016 18:39:40
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <56D14C56.6070306@web.de>
+X-Provags-ID: V03:K0:h2PfUlfwacaMBRDPxPfpq6jk1+LMyeYNgu42NCB73B/iUKqBuqw
+ VlkbQrIT0gJqrloIiSL2V89PSpMLFW7pobqwg71Oi7pncEbt8nW+p/VPnHenDmOLeKZw9BG
+ ZVI1tXX1MGVyg9TGlfxTua9GB/WsRbKVoewu8ecjyOtYu7BiAEr0xsalUZzxEVC6knpirL0
+ IWllMMyVy2sc+6xRHix6Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HexAEfw1xpo=:1gPTvMu9OjBR6zZ2VP4kHW
+ hvzznjdX+al/bImzwpo1zqQ67TwVyIDOWlOaBUxrOD6Z1sNG6flCKvtcQZPo/GLTALQvFWcn9
+ 4s3myQ8C4sIz8y4N08Zx3iXF+WwL92BZfWhvMRz8kTUFJeMJOm/KbwWRSvd16hQ+F7Zps5JCS
+ u7tpczTo1LGLN7ZFoXlF7Xdm/rRykcxmE2JpKKz2bDd62RMl5EVcqbh509vqu4LU88VFKWypC
+ gKvjD3mfua240+VauDdMJn8zzgoQTTMOG3Xl1ZZ6Lv+9GoxZGy+zMP4hQE6W7bQxcd5j4Ppro
+ 6aYx+4QKqkw9kboJ3LFhYPYcVL/PYpsGSQCLe5NYSfV/MshEgAOXsCIU4GINS3ESmGVR++I53
+ 4qJpbhIeVYBfnQOcIgNvbCLZ9d1d5+YO2chmOsf7UEestMjYK2XygeEo1Hxg+1D6SaIreLWZ2
+ 9ID+Mb7El1DeLMA9oLcvDH8t8PPm8/g3DtXpEwO3Wcy9k5LkEn3f0x0YaxfuOWVQ2GiZdd27O
+ r7ZDOdEv29R1ugKVruI/AEGxDxfkXK6NpKSspvuwiu2d+pwblzwqFSW957/mcp8vv7bze++Cf
+ 1jZ8Z8fqaJ2R5ivjzm7lN1l7kN6bNE5W1WSjKyM3quU29T9jv6MCfjiPgQ3MeB8V6CGSkVvqD
+ edboFa4siZlXkv2Ji5sY4vY8LSIgzRuCN8qdX+RlvwNG6isrX+OrC1sBJC05btDqb/vd4Ab5Q
+ F14UuFhnr1qyqaWkQh67aeTaMof9r2dpt8ZQchYbk9uDs8pU444Oo5JC5ZVuqFzYXo1fnqDV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287706>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+How about something like this as a workaround ?
+(I can send a proper patch, if this is the way forward)
 
-> On Sat, Feb 27, 2016 at 6:41 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> In previous cycles, I often left many topics in 'next' when tagging
->> this zero-th preview, but eventually merged them before the final.
->> I decided to do things a bit differently for this cycle: a topic,
->> once it hits 'next', will not be rewound and only refined and
->> corrected with incremental updates, so the only effect such a late
->> merge to 'master' before the final is that some topics are not as
->> widely tested on 'master' before the final one is tagged.
->>
->> So this -rc0 is deliberately aggressive in that it includes all
->> topics that have been cooking in 'next' that I think we can fix bugs
->> that might still lurking in them before the final (it merges 25
->> topics since the last batch to 'master').  The topics not merged to
->> this preview, on the other hand, will not be considered for 2.8
->> final, even though I might later succumb to the temptation to pick
->> up ones that are in 'next' as of today ;-)
->
-> Beautiful. This allows me to fix up all i18n strings in a single
-> series instead of spreading them across many topics in 'next'.
+commit dcd7d5551d6931e47829c7febbee0877340eb17f
+Author: Torsten B=C3=B6gershausen <tboegi@web.de>
+Date:   Sat Feb 27 15:18:28 2016 +0100
 
-Thanks.  "A new string we added since v2.7.0 that is not marked for
-i18n" is a new i18n bug and "a string that used to be marked is not
-marked when the code was rewritten since v2.7.0" is an i18n
-regression, and we would want to "fix" both post -rc0 period.  The
-patches that touch new strings added since 1.7.x are exactly that ;-)
+    config.mak.uname: Darwin: Use clang for Mac OS X 10.6
 
-We'd still want the fixes to apply on top of relevant topics if we
-could, as the fix to the topic itself (with or without i18n fixes),
-when we discover that it has a huge flaw not desirable in v2.8.0,
-might be to revert the whole thing, though.
+    Commit
+    "tree-diff: catch integer overflow in combine_diff_path allocation"
+    make gcc under Mac OX 10.6 crash like this:
 
-> I'm not
-> sure if there's enough time for translators before release though.
+    CC combine-diff.o
+    combine-diff.c: In function =E2=80=98diff_tree_combined=E2=80=99:
+    combine-diff.c:1391: internal compiler error: Segmentation fault
 
-Also we need to get an Ack from the authors of commits we added in
-this cycle that these patches fix i18n bugs they introduced and make
-sure there is no "this i18n mark is not appropriate as it is a
-plumbing output (or protocol messsage) that should not be
-translated" response from them.  It won't be like I apply these
-blindly today and ask translators to start working.
+    Xcode for Mac OS X 10.6 has both gcc and clang.
+    Later versions of Mac OSX/Xcode only provide clang, and gcc is a wr=
+apper
+    to it.
+    Make Git compile under Mac OS X 10.6 by using clang instead of gcc
 
-> This series marks many strings for translation. It's a result of
-> looking for new strings between 1.7.2 and 'master', and sometimes
-> looking around touched files some more.
->
-> Most of these are wrapping _() around strings, except 01/22 (enable
-> gettext) and 20/22 and 21/22, which convert some more strings (they
-> have been in my queue for a year)
->
->   [01/22] credential-cache--daemon: enable localized messages
->   [02/22] builtin/blame.c: mark strings for translation
->   [03/22] builtin/checkout.c: mark strings for translation
->   [04/22] builtin/clone.c: mark strings for translation
->   [05/22] builtin/config.c: mark strings for translation
->   [06/22] builtin/config.c: mark strings for translation
->   [07/22] builtin/update-index.c: mark strings for translation
->   [08/22] convert.c: mark strings for translation
->   [09/22] credential-cache--daemon.c: mark strings for translation
->   [10/22] http.c: mark strings for translation
->   [11/22] ident.c: mark strings for translation
->   [12/22] notes.c: mark strings for translation
->   [13/22] ref-filter.c: mark strings for translation
->   [14/22] refs/files-backend.c: mark strings for translation
->   [15/22] remote-curl.c: mark strings for translation
->   [16/22] run-command.c: mark strings for translation
->   [17/22] sha1_file.c: mark strings for translation
->   [18/22] submodule.c: mark strings for translation
->   [19/22] trailer.c: mark strings for translation
->   [20/22] transport-helper.c: mark strings for translating
->   [21/22] transport.c: mark strings for translating
->   [22/22] wrapper.c: mark strings for translation
->
-> Total 20 files changed, 385 insertions(+), 372 deletions(-)
-
-Let's queue this and start cooking; I see you never To'ed the guilty
-party that introduced i18n bug/regression to each of your patch, but
-can you start pinging them to collect Acks?
-
-Thanks.
+diff --git a/config.mak.uname b/config.mak.uname
+index d6f7980..211afec 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -102,6 +102,9 @@ ifeq ($(uname_S),Darwin)
+        ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+                NO_STRLCPY =3D YesPlease
+        endif
++       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
+-ge 10 &&
+echo 1),1)
++    CC =3D clang
++       endif
+        ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
+-ge 11 &&
+echo 1),1)
+                HAVE_GETDELIM =3D YesPlease
+        endif
