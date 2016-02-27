@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 08/22] convert.c: mark strings for translation
-Date: Sat, 27 Feb 2016 13:41:59 +0700
-Message-ID: <1456555333-5853-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 09/22] credential-cache--daemon.c: mark strings for translation
+Date: Sat, 27 Feb 2016 13:42:00 +0700
+Message-ID: <1456555333-5853-10-git-send-email-pclouds@gmail.com>
 References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,182 +11,201 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 27 07:42:59 2016
+X-From: git-owner@vger.kernel.org Sat Feb 27 07:43:08 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZYag-0003Ev-37
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 07:42:58 +0100
+	id 1aZYan-0003JN-57
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 07:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035AbcB0Gmy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 01:42:54 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36732 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751408AbcB0Gmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 01:42:53 -0500
-Received: by mail-pf0-f179.google.com with SMTP id e127so64364675pfe.3
-        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:42:53 -0800 (PST)
+	id S1756056AbcB0GnC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 01:43:02 -0500
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35604 "EHLO
+	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751408AbcB0GnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 01:43:00 -0500
+Received: by mail-pf0-f180.google.com with SMTP id w128so16213030pfb.2
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 22:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=R1dsRzCUFBR3Z1giWgOGUjIqcDXMs2lh9Tn5imPwMns=;
-        b=fOLhzHv6ykdCOCNOu17gDnBIeNBAP2AlREkadvXupzASTSolYbUVI1sZXtPg8+Xs0H
-         v8zSDJ8xEXVdzn6dn8omMcLlj+kVovx+XtVcSYCSmtMZI4CLSoLy+5+2ROMiEBJNWoJS
-         YjfTeMMvZfvt4s/XZZwJ2V/3Lyg5E5nskDgdmnKHAes9zddXw5BwtFc40uWy7XPcE8yb
-         fxHqkY42APEPQdfYpWIVblsjsjNLghllEF5hbw+T/TT54E27eXCukwwHf+lVJXZI9+/C
-         wJeM+15fMBMh2Q4NMk4NHRYhgLR7xRDtjyxSFISGPe/4P72fhk2jyAOtd64oq/Td3AoR
-         mnXw==
+        bh=OINLBzcELhaN4+ho980OIcaApdcGSKunZuJvzRh/9ks=;
+        b=QfYObGbHD1X/ldIT1XlqRs7XI7rfc3P9iCEDvyJC+E8Dm7K5OLlbQ3znlTBraTvJZg
+         0PVc+FR6k1ubbwsnoVuBYr0BKAkw6j834tPXe47QuXiCW7Ob7jxMhwewAGuQHxbF9fTu
+         hgJiEVOs6dGubhWKH81MYt9P4roOl8bUraCArXKcMk8l0G08xriI7SAA26gTzSwguhnt
+         1N82c147BgatG2uNUwz8ha3K4Eb9Wi5jRIiaD+lpNBOgEJsEbR2DlZ27EjGmO1ojE6s0
+         Ke72OSFs4F/33w57FAt5ioZQJW06OJigXNUF9+5XsrKBlXZdSOql6QzuJt+O2hNpfkw+
+         5ZTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=R1dsRzCUFBR3Z1giWgOGUjIqcDXMs2lh9Tn5imPwMns=;
-        b=LIXVj1pAq1xRgZCvAdeqeIxd0p4po6CjszkM3OXZVOz4MBPAAKl5yhE+Nunky923Ib
-         Mv7ywEso1XZEulVR1fe4j3vKa8gsZ+VhWvxrcPgtQ+fAgY7pPiJ56whohHA1kY4UgLwz
-         U1z+07wC1rRn+9STjubE1rvO6QGuAwwYbWA6pW+iwPQdKHLywE2L+0L628ogDAtdasYx
-         /gBdD01whUezY3SblKaknRszpjLSywjHx8vbixkVkW7LNEzZC7bvXNORXvlXw2HiytfR
-         Kij1VnrGe7SiKHNVs3FXIOPZoKlG+DgOBUvwrvXk0bWs5q5XR6VlX1qNVbLrSpT/ZaZX
-         6dNQ==
-X-Gm-Message-State: AD7BkJI85bKM+arDAq/bl9B3IVYDucdOSALIbYngLatIrTvFwnF/xTUNRIfyg5zyXvpvyQ==
-X-Received: by 10.98.17.75 with SMTP id z72mr7614798pfi.16.1456555372799;
-        Fri, 26 Feb 2016 22:42:52 -0800 (PST)
+        bh=OINLBzcELhaN4+ho980OIcaApdcGSKunZuJvzRh/9ks=;
+        b=kMWOfqNpWGuDvCsYOCv7kmjobN+ZIEjs3iX20h3s5kwRDG4R11oOPSUUDGFhwcLWST
+         ycDS+JUVrSR1lg9wtHeHj2qulow75tUtsPvxJB0c7D/AMxqV//Bh0+EVFtacByhPHquh
+         zY+iezlUJFj5ewiHAdPCeFu5ZGX7lr4XxXaYoEesyH6fzLfS1paBQut4i9Gyc7ej/Jh1
+         AtvUjww7oRgcz9KgZYFvzbfiYSw5qrlB6duNtsY5iN0ZVv2d0jSvfhTlpYfPcNR1qj4A
+         PvL5uQlE2UV9FkUDrJR/SMHqcLtxwhw0hRMczhBUt1bo9mLifwOKRrOWibYUY9MaJkOi
+         O83w==
+X-Gm-Message-State: AD7BkJLsYGG1/qhYvHmtZNkkjKYIyR2AoBy3EPfXmra9eD3YI32mlWul8TOFT2HB+ABPag==
+X-Received: by 10.98.75.10 with SMTP id y10mr7664598pfa.32.1456555379696;
+        Fri, 26 Feb 2016 22:42:59 -0800 (PST)
 Received: from lanh ([115.76.228.161])
-        by smtp.gmail.com with ESMTPSA id r77sm23482101pfa.47.2016.02.26.22.42.49
+        by smtp.gmail.com with ESMTPSA id dy6sm15598478pab.48.2016.02.26.22.42.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Feb 2016 22:42:51 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 13:43:25 +0700
+        Fri, 26 Feb 2016 22:42:58 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 13:43:31 +0700
 X-Mailer: git-send-email 2.8.0.rc0.205.g7ec8cf1
 In-Reply-To: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287670>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- convert.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ credential-cache--daemon.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index f524b8d..59d03b0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -199,9 +199,11 @@ static void check_safe_crlf(const char *path, enum=
- crlf_action crlf_action,
- 		 */
- 		if (stats->crlf) {
- 			if (checksafe =3D=3D SAFE_CRLF_WARN)
--				warning("CRLF will be replaced by LF in %s.\nThe file will have it=
-s original line endings in your working directory.", path);
-+				warning(_("CRLF will be replaced by LF in %s.\n"
-+					  "The file will have its original line "
-+					  "endings in your working directory."), path);
- 			else /* i.e. SAFE_CRLF_FAIL */
--				die("CRLF would be replaced by LF in %s.", path);
-+				die(_("CRLF would be replaced by LF in %s."), path);
+diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+index 63ca7c8..ab33355 100644
+--- a/credential-cache--daemon.c
++++ b/credential-cache--daemon.c
+@@ -98,12 +98,12 @@ static int read_request(FILE *fh, struct credential=
+ *c,
+=20
+ 	strbuf_getline_lf(&item, fh);
+ 	if (!skip_prefix(item.buf, "action=3D", &p))
+-		return error("client sent bogus action line: %s", item.buf);
++		return error(_("client sent bogus action line: %s"), item.buf);
+ 	strbuf_addstr(action, p);
+=20
+ 	strbuf_getline_lf(&item, fh);
+ 	if (!skip_prefix(item.buf, "timeout=3D", &p))
+-		return error("client sent bogus timeout line: %s", item.buf);
++		return error(_("client sent bogus timeout line: %s"), item.buf);
+ 	*timeout =3D atoi(p);
+=20
+ 	if (credential_read(c, fh) < 0)
+@@ -132,16 +132,16 @@ static void serve_one_client(FILE *in, FILE *out)
+ 		remove_credential(&c);
+ 	else if (!strcmp(action.buf, "store")) {
+ 		if (timeout < 0)
+-			warning("cache client didn't specify a timeout");
++			warning(_("cache client didn't specify a timeout"));
+ 		else if (!c.username || !c.password)
+-			warning("cache client gave us a partial credential");
++			warning(_("cache client gave us a partial credential"));
+ 		else {
+ 			remove_credential(&c);
+ 			cache_credential(&c, timeout);
  		}
- 	} else if (output_eol(crlf_action) =3D=3D EOL_CRLF) {
+ 	}
+ 	else
+-		warning("cache client sent unknown action: %s", action.buf);
++		warning(_("cache client sent unknown action: %s"), action.buf);
+=20
+ 	credential_clear(&c);
+ 	strbuf_release(&action);
+@@ -160,7 +160,7 @@ static int serve_cache_loop(int fd)
+ 	pfd.events =3D POLLIN;
+ 	if (poll(&pfd, 1, 1000 * wakeup) < 0) {
+ 		if (errno !=3D EINTR)
+-			die_errno("poll failed");
++			die_errno(_("poll failed"));
+ 		return 1;
+ 	}
+=20
+@@ -170,12 +170,12 @@ static int serve_cache_loop(int fd)
+=20
+ 		client =3D accept(fd, NULL, NULL);
+ 		if (client < 0) {
+-			warning("accept failed: %s", strerror(errno));
++			warning(_("accept failed: %s"), strerror(errno));
+ 			return 1;
+ 		}
+ 		client2 =3D dup(client);
+ 		if (client2 < 0) {
+-			warning("dup failed: %s", strerror(errno));
++			warning(_("dup failed: %s"), strerror(errno));
+ 			close(client);
+ 			return 1;
+ 		}
+@@ -195,13 +195,13 @@ static void serve_cache(const char *socket_path, =
+int debug)
+=20
+ 	fd =3D unix_stream_listen(socket_path);
+ 	if (fd < 0)
+-		die_errno("unable to bind to '%s'", socket_path);
++		die_errno(_("unable to bind to '%s'"), socket_path);
+=20
+ 	printf("ok\n");
+ 	fclose(stdout);
+ 	if (!debug) {
+ 		if (!freopen("/dev/null", "w", stderr))
+-			die_errno("unable to point stderr to /dev/null");
++			die_errno(_("unable to point stderr to /dev/null"));
+ 	}
+=20
+ 	while (serve_cache_loop(fd))
+@@ -211,10 +211,10 @@ static void serve_cache(const char *socket_path, =
+int debug)
+ }
+=20
+ static const char permissions_advice[] =3D
+-"The permissions on your socket directory are too loose; other\n"
++N_("The permissions on your socket directory are too loose; other\n"
+ "users may be able to read your cached credentials. Consider running:\=
+n"
+ "\n"
+-"	chmod 0700 %s";
++"	chmod 0700 %s");
+ static void init_socket_directory(const char *path)
+ {
+ 	struct stat st;
+@@ -223,7 +223,7 @@ static void init_socket_directory(const char *path)
+=20
+ 	if (!stat(dir, &st)) {
+ 		if (st.st_mode & 077)
+-			die(permissions_advice, dir);
++			die(_(permissions_advice), dir);
+ 	} else {
  		/*
-@@ -210,9 +212,11 @@ static void check_safe_crlf(const char *path, enum=
- crlf_action crlf_action,
+ 		 * We must be sure to create the directory with the correct mode,
+@@ -232,9 +232,9 @@ static void init_socket_directory(const char *path)
+ 		 * our protected socket.
  		 */
- 		if (stats->lonelf) {
- 			if (checksafe =3D=3D SAFE_CRLF_WARN)
--				warning("LF will be replaced by CRLF in %s.\nThe file will have it=
-s original line endings in your working directory.", path);
-+				warning(_("LF will be replaced by CRLF in %s.\n"
-+					  "The file will have its original line "
-+					  "endings in your working directory."), path);
- 			else /* i.e. SAFE_CRLF_FAIL */
--				die("LF would be replaced by CRLF in %s", path);
-+				die(_("LF would be replaced by CRLF in %s"), path);
- 		}
- 	}
- }
-@@ -397,7 +401,7 @@ static int filter_buffer_or_fd(int in, int out, voi=
-d *data)
- 	child_process.out =3D out;
-=20
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", params->cmd);
-+		return error(_("cannot fork to run external filter %s"), params->cmd=
-);
-=20
- 	sigchain_push(SIGPIPE, SIG_IGN);
-=20
-@@ -415,13 +419,13 @@ static int filter_buffer_or_fd(int in, int out, v=
-oid *data)
- 	if (close(child_process.in))
- 		write_err =3D 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", params->cmd);
-+		error(_("cannot feed the input to external filter %s"), params->cmd)=
-;
-=20
- 	sigchain_pop(SIGPIPE);
-=20
- 	status =3D finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, status);
-+		error(_("external filter %s failed %d"), params->cmd, status);
-=20
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -462,15 +466,15 @@ static int apply_filter(const char *path, const c=
-har *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
-=20
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter %s failed", cmd);
-+		error(_("read from external filter %s failed"), cmd);
- 		ret =3D 0;
- 	}
- 	if (close(async.out)) {
--		error("read from external filter %s failed", cmd);
-+		error(_("read from external filter %s failed"), cmd);
- 		ret =3D 0;
- 	}
- 	if (finish_async(&async)) {
--		error("external filter %s failed", cmd);
-+		error(_("external filter %s failed"), cmd);
- 		ret =3D 0;
+ 		if (safe_create_leading_directories_const(dir) < 0)
+-			die_errno("unable to create directories for '%s'", dir);
++			die_errno(_("unable to create directories for '%s'"), dir);
+ 		if (mkdir(dir, 0700) < 0)
+-			die_errno("unable to mkdir '%s'", dir);
++			die_errno(_("unable to mkdir '%s'"), dir);
  	}
 =20
-@@ -868,7 +872,7 @@ int convert_to_git(const char *path, const char *sr=
-c, size_t len,
+ 	if (chdir(dir))
+@@ -253,7 +253,7 @@ int main(int argc, const char **argv)
+ 	const char *socket_path;
+ 	int ignore_sighup =3D 0;
+ 	static const char *usage[] =3D {
+-		"git-credential-cache--daemon [opts] <socket_path>",
++		N_("git-credential-cache--daemon [opts] <socket_path>"),
+ 		NULL
+ 	};
+ 	int debug =3D 0;
+@@ -274,7 +274,7 @@ int main(int argc, const char **argv)
+ 		usage_with_options(usage, options);
 =20
- 	ret |=3D apply_filter(path, src, len, -1, dst, filter);
- 	if (!ret && required)
--		die("%s: clean filter '%s' failed", path, ca.drv->name);
-+		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
+ 	if (!is_absolute_path(socket_path))
+-		die("socket directory must be an absolute path");
++		die(_("socket directory must be an absolute path"));
 =20
- 	if (ret && dst) {
- 		src =3D dst->buf;
-@@ -892,7 +896,7 @@ void convert_to_git_filter_fd(const char *path, int=
- fd, struct strbuf *dst,
- 	assert(ca.drv->clean);
-=20
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv->clean))
--		die("%s: clean filter '%s' failed", path, ca.drv->name);
-+		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
-=20
- 	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe)=
-;
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
-@@ -932,7 +936,7 @@ static int convert_to_working_tree_internal(const c=
-har *path, const char *src,
-=20
- 	ret_filter =3D apply_filter(path, src, len, -1, dst, filter);
- 	if (!ret_filter && required)
--		die("%s: smudge filter %s failed", path, ca.drv->name);
-+		die(_("%s: smudge filter %s failed"), path, ca.drv->name);
-=20
- 	return ret | ret_filter;
- }
+ 	init_socket_directory(socket_path);
+ 	register_tempfile(&socket_file, socket_path);
 --=20
 2.8.0.rc0.205.g7ec8cf1
