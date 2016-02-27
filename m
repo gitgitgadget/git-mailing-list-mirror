@@ -1,146 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fetch-pack: fix unadvertised requests validation
-Date: Sat, 27 Feb 2016 14:07:12 -0500
-Message-ID: <20160227190712.GC12822@sigill.intra.peff.net>
-References: <1456577034-6494-1-git-send-email-gabrielfrancosouza@gmail.com>
- <xmqqd1riggd7.fsf@gitster.mtv.corp.google.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: [PATCH] environment.c: introduce SETUP_GIT_ENV helper macro
+Date: Sun, 28 Feb 2016 01:10:55 +0600
+Message-ID: <CANCZXo5aLD_9cjzwPK5zw_ZHmevxmX8c_e9ONPyByF7jn_zF7Q@mail.gmail.com>
+References: <1456593215-16302-1-git-send-email-kuleshovmail@gmail.com>
+ <xmqqpovighxk.fsf@gitster.mtv.corp.google.com> <xmqqsi0ef0mz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 20:07:28 2016
+X-From: git-owner@vger.kernel.org Sat Feb 27 20:11:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZkD5-0003Sp-Nd
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 20:07:24 +0100
+	id 1aZkGu-0005Il-KV
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 20:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707AbcB0THR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 14:07:17 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50810 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756704AbcB0THP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 14:07:15 -0500
-Received: (qmail 1056 invoked by uid 102); 27 Feb 2016 19:07:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 14:07:15 -0500
-Received: (qmail 14890 invoked by uid 107); 27 Feb 2016 19:07:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 14:07:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Feb 2016 14:07:12 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqd1riggd7.fsf@gitster.mtv.corp.google.com>
+	id S1756725AbcB0TLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 14:11:17 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35365 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbcB0TLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 14:11:16 -0500
+Received: by mail-wm0-f43.google.com with SMTP id l68so12462687wml.0
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 11:11:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RLQmJV+0sWMNNbrwW3gfkXh3CnRVkEvCnnBZ2O3MPZQ=;
+        b=SETjcomCiGE8Nqas/6XiF1nZH2XOVbTatsbM4LgUdo+NWVzgefEX2A3Go1qCOm7/Dl
+         RGF65cvD5oriZBrsDVVC3sqiqUMirAEv/HbQXrMLRQX6jC8n6HFoXh9jnT8kBzrY4nl1
+         K+VxJ4y7CVH3IuDKzIZHy+ZS+BDC0QTUS26gNO553u1fWz6rNqsbooeLj7B7y3wdaCbr
+         E2cC8i/T5jeChlPyCDCP8x63KkCST/JiHGQIOrS2SNM5MD3y49wZX983lUhNXMcB2I+5
+         9IklXpN+ioomM9IxUY1P6zGNJxpe+8PsJnDL3HqmhQ/QMjvGzbMP2ZIqJ5qOaWmRbfSA
+         GpuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RLQmJV+0sWMNNbrwW3gfkXh3CnRVkEvCnnBZ2O3MPZQ=;
+        b=NiUiVJKNPXQxe40GK1IlUIVFN/OcjytcDt9Qzlr6TO4+mOrcaIwR9i/JWcO1TyknBr
+         bWtUuPJ9yhPDmMD6YMslCxk7Tshep0HdIjuMCV4kQJBcLv1E0xq55KH7gWJm1ne2Wusf
+         g3TQMQMMkUCqIZUJswkdRIHtSQGyIYnTydQziGdRP2fLsGhSh8TDjx4oX88GUetRnOMr
+         bVcFbpCTEhR4oaLTvRVvVfq7XwckEe/eHcJ8R8q4GdpHZ+piRhVc/pZ2HDuSVm9Zj6D8
+         3Bens+RzaVtJcFCpJfZBsLGQ8eXTFffSkNhw070YR3OC5LoKOvic9Aag0901omJc0ssP
+         z2XA==
+X-Gm-Message-State: AD7BkJK9v1m1beTclIZarmChB2KgGShDNcZ7L9DGg4zoRrUUtn6WArMaCGgaHa3zKg6oufH/EFQTdzwhNff48w==
+X-Received: by 10.194.246.35 with SMTP id xt3mr8136850wjc.57.1456600275026;
+ Sat, 27 Feb 2016 11:11:15 -0800 (PST)
+Received: by 10.27.7.141 with HTTP; Sat, 27 Feb 2016 11:10:55 -0800 (PST)
+In-Reply-To: <xmqqsi0ef0mz.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287724>
 
-On Sat, Feb 27, 2016 at 10:25:40AM -0800, Junio C Hamano wrote:
+Hello Junio,
 
-> Gabriel Souza Franco <gabrielfrancosouza@gmail.com> writes:
-> 
-> > Check was introduced in b791642 (filter_ref: avoid overwriting
-> > ref->old_sha1 with garbage, 2015-03-19), but was always false because
-> > ref->old_oid.hash is empty in this case. Instead copy sha1 from ref->name.
-> >
-> > Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-> > ---
-> 
-> Peff, that commit points me at your direction.  And I can see the
-> original patch avoids overwriting old_sha1 by saving the result from
-> get_sha1_hex() in a temporary, it is true that old_sha1 is not
-> updated from the temporary.
-> 
-> The original code before b791642 wanted to say "if ref->name is not
-> 40-hex, continue, and otherwise, do the ref->matched thing" and an
-> implementation of b791642 that is more faithful to the original
-> would indeed have been the result of applying this patch from
-> Gabriel, but I am scratching my head why we have hashcmp() there.
-> 
-> Was it to avoid adding the same thing twice to the resulting list,
-> or something?
+On Sun, Feb 28, 2016 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>
+>> Please don't.  A macro that hides "return" makes things harder to
+>> follow, not easier.
 
-It is a sanity check. The code is looking in our list of things to fetch
-for items that are pure objects, not refs (we already matched the refs
-by name, but obviously would not have matched any pure-sha1 requests to
-refnames).  So the conditional really is:
+I will consider it next time.
 
-   if (!is_a_pure_sha1(ref))
-	continue;
+> Having said that, I do think a higher-level macro that encapulates
+> the whole thing may not be such a bad idea, i.e. making the above
+> into
+>
+>     DECLARE_GIT_GETTER(const char *, get_git_dir, git_dir)
 
-We can implement that as:
+Yes, it is better. Will resend the patch.
 
-  if (get_sha1_hex(ref->name, sha1) || ref->name[40] != '\0')
-
-but as noted in the commit message for b791642:
-
-  We could just check that we have exactly 40 characters of
-  sha1. But let's be even more careful and make sure that we
-  have a 40-char hex refname that matches what is in old_sha1.
-  This is perhaps overly defensive, but spells out our
-  assumptions clearly.
-
-E.g., if you did this:
-
-  git fetch-pack --stdin $remote <<\EOF
-  1234567890123456789012345678901234567890 abcdef1234abcdef1234abcdef1234abcdef1234
-  EOF
-
-you'd have a "struct ref" with a 40-hex sha1, but which does _not_ want
-the object of the same name. This is not a pure-object request, and we
-should only request 1234... if the ref abcd... is present on the remote.
-
-I doubt it would ever come up in real life; refs tend to start with
-"refs/", and I suspect short of manual prodding as above, you could not
-get anything without "refs/" to this point of the code.
-
-So the patch:
-
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index 01e34b6..83b937b 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -569,11 +569,11 @@ static void filter_refs(struct fetch_pack_args *args,
-> >  			if (ref->matched)
-> >  				continue;
-> >  			if (get_sha1_hex(ref->name, sha1) ||
-> > -			    ref->name[40] != '\0' ||
-> > -			    hashcmp(sha1, ref->old_oid.hash))
-> > +			    ref->name[40] != '\0')
-> >  				continue;
-> >  
-> >  			ref->matched = 1;
-> > +			hashcpy(ref->old_oid.hash, sha1);
-> >  			*newtail = copy_ref(ref);
-> >  			newtail = &(*newtail)->next;
-> >  		}
-
-is a wrong direction, I think. It removes the extra safety check that
-skips the ref above. But worse, in the example above, it overwrites the
-real object "1234..." with the name of the ref "abcd..." in the sha1
-field. We'll ask for an object that may not even exist.
-
-The commit message for Gabriel's patch says:
-
-> > Check was introduced in b791642 (filter_ref: avoid overwriting
-> > ref->old_sha1 with garbage, 2015-03-19), but was always false because
-> > ref->old_oid.hash is empty in this case. Instead copy sha1 from ref->name.
-
-but I don't think ref->old_oid.hash _is_ empty. At least, that was not
-the conclusion from our discussion in:
-
-   http://thread.gmane.org/gmane.comp.version-control.git/265480
-
-We expect whoever creates the "sought" list to fill in the name and sha1
-as appropriate. If that is not happening in some code path, then yeah,
-filter_refs() will not work as intended. But I think the solution there
-would be to fix the caller to set up the "struct ref" more completely.
-
-Gabriel, did this come from a bug you noticed in practice, or was it
-just an intended cleanup?
-
--Peff
+Thank you.
