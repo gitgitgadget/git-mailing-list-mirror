@@ -1,98 +1,109 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
-Date: Sat, 27 Feb 2016 18:39:31 +0100
-Message-ID: <56D1DF53.1010006@web.de>
-References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
- <56D078F3.9070905@web.de> <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
- <56D0D2DF.1040807@web.de> <xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
- <20160227032907.GB10313@sigill.intra.peff.net> <56D14C56.6070306@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/3] sha1_file.c: mark strings for translation
+Date: Sat, 27 Feb 2016 09:41:09 -0800
+Message-ID: <xmqq37sehwzu.fsf@gitster.mtv.corp.google.com>
+References: <20160225142004.GA17678@sigill.intra.peff.net>
+	<1456559373-13589-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 18:40:52 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, d33tah@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 27 18:41:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZirL-0004hG-P0
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:40:52 +0100
+	id 1aZis0-00051o-Rm
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 18:41:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422813AbcB0Rjw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 12:39:52 -0500
-Received: from mout.web.de ([212.227.17.11]:62155 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756340AbcB0Rjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 12:39:51 -0500
-Received: from macce.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0M40zO-1ZjGe60YgE-00rZJW; Sat, 27 Feb 2016 18:39:40
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <56D14C56.6070306@web.de>
-X-Provags-ID: V03:K0:h2PfUlfwacaMBRDPxPfpq6jk1+LMyeYNgu42NCB73B/iUKqBuqw
- VlkbQrIT0gJqrloIiSL2V89PSpMLFW7pobqwg71Oi7pncEbt8nW+p/VPnHenDmOLeKZw9BG
- ZVI1tXX1MGVyg9TGlfxTua9GB/WsRbKVoewu8ecjyOtYu7BiAEr0xsalUZzxEVC6knpirL0
- IWllMMyVy2sc+6xRHix6Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HexAEfw1xpo=:1gPTvMu9OjBR6zZ2VP4kHW
- hvzznjdX+al/bImzwpo1zqQ67TwVyIDOWlOaBUxrOD6Z1sNG6flCKvtcQZPo/GLTALQvFWcn9
- 4s3myQ8C4sIz8y4N08Zx3iXF+WwL92BZfWhvMRz8kTUFJeMJOm/KbwWRSvd16hQ+F7Zps5JCS
- u7tpczTo1LGLN7ZFoXlF7Xdm/rRykcxmE2JpKKz2bDd62RMl5EVcqbh509vqu4LU88VFKWypC
- gKvjD3mfua240+VauDdMJn8zzgoQTTMOG3Xl1ZZ6Lv+9GoxZGy+zMP4hQE6W7bQxcd5j4Ppro
- 6aYx+4QKqkw9kboJ3LFhYPYcVL/PYpsGSQCLe5NYSfV/MshEgAOXsCIU4GINS3ESmGVR++I53
- 4qJpbhIeVYBfnQOcIgNvbCLZ9d1d5+YO2chmOsf7UEestMjYK2XygeEo1Hxg+1D6SaIreLWZ2
- 9ID+Mb7El1DeLMA9oLcvDH8t8PPm8/g3DtXpEwO3Wcy9k5LkEn3f0x0YaxfuOWVQ2GiZdd27O
- r7ZDOdEv29R1ugKVruI/AEGxDxfkXK6NpKSspvuwiu2d+pwblzwqFSW957/mcp8vv7bze++Cf
- 1jZ8Z8fqaJ2R5ivjzm7lN1l7kN6bNE5W1WSjKyM3quU29T9jv6MCfjiPgQ3MeB8V6CGSkVvqD
- edboFa4siZlXkv2Ji5sY4vY8LSIgzRuCN8qdX+RlvwNG6isrX+OrC1sBJC05btDqb/vd4Ab5Q
- F14UuFhnr1qyqaWkQh67aeTaMof9r2dpt8ZQchYbk9uDs8pU444Oo5JC5ZVuqFzYXo1fnqDV 
+	id S2992531AbcB0RlN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 12:41:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61872 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S2992528AbcB0RlL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Feb 2016 12:41:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAB1245AF4;
+	Sat, 27 Feb 2016 12:41:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=qUxwbYZj/PkX
+	U+OnkIedwvDIkGk=; b=HcCkixUvv6NmL5jd4XB4LNUI7J+MDBMyvyYJug1ESBUi
+	0CU87Sen8Sqo35Vd1Z4pTXhVYLqPg/CpVFNr9AgrqRNWn/HeNqK+qDMILpdHXIef
+	ToRdW9y73D4OntEQNM7G+uvCwLRr1xr+A0QtxJP5MUrj9Y6jJe2qHcMAvU2CWqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=plKDsH
+	eZezU9X3g0Go5IvTDm/TabzzTTpYUZXSa/ow5zit8o6VvYAUiaFuQSo9tqm9VEFz
+	Gbx482m8/5Hr6/9cIR75XrgVa907Rjqcp6lQBvUhDH0FKdspvQq4OvyIMwAApMHz
+	NDLooLeMLfOvZiHvNs/SDHzVkZrOuf+KTQfsY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D21A445AF3;
+	Sat, 27 Feb 2016 12:41:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 550FB45AF2;
+	Sat, 27 Feb 2016 12:41:10 -0500 (EST)
+In-Reply-To: <1456559373-13589-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 27
+ Feb 2016 14:49:33 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 49CCCA4A-DD79-11E5-9E6D-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287707>
 
-How about something like this as a workaround ?
-(I can send a proper patch, if this is the way forward)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-commit dcd7d5551d6931e47829c7febbee0877340eb17f
-Author: Torsten B=C3=B6gershausen <tboegi@web.de>
-Date:   Sat Feb 27 15:18:28 2016 +0100
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Since jk/pack-idx-corruption-safety is already in 'next', can we add
+>  this patch on top? Surrounding strings are handled separately [1] by
+>  another series.
+>
+>  [1] http://thread.gmane.org/gmane.comp.version-control.git/287661/fo=
+cus=3D287678
 
-    config.mak.uname: Darwin: Use clang for Mac OS X 10.6
+Thanks, I think this makes sense.  Peff--I do not think I missed a
+reason we shouldn't take this?
 
-    Commit
-    "tree-diff: catch integer overflow in combine_diff_path allocation"
-    make gcc under Mac OX 10.6 crash like this:
-
-    CC combine-diff.o
-    combine-diff.c: In function =E2=80=98diff_tree_combined=E2=80=99:
-    combine-diff.c:1391: internal compiler error: Segmentation fault
-
-    Xcode for Mac OS X 10.6 has both gcc and clang.
-    Later versions of Mac OSX/Xcode only provide clang, and gcc is a wr=
-apper
-    to it.
-    Make Git compile under Mac OS X 10.6 by using clang instead of gcc
-
-diff --git a/config.mak.uname b/config.mak.uname
-index d6f7980..211afec 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -102,6 +102,9 @@ ifeq ($(uname_S),Darwin)
-        ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
-                NO_STRLCPY =3D YesPlease
-        endif
-+       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
--ge 10 &&
-echo 1),1)
-+    CC =3D clang
-+       endif
-        ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
--ge 11 &&
-echo 1),1)
-                HAVE_GETDELIM =3D YesPlease
-        endif
+>
+>  sha1_file.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 4a3a032..b8da68b 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1042,7 +1042,7 @@ unsigned char *use_pack(struct packed_git *p,
+>  	if (offset > (p->pack_size - 20))
+>  		die("offset beyond end of packfile (truncated pack?)");
+>  	if (offset < 0)
+> -		die("offset before end of packfile (broken .idx?)");
+> +		die(_("offset before end of packfile (broken .idx?)"));
+> =20
+>  	if (!win || !in_window(win, offset)) {
+>  		if (win)
+> @@ -2367,11 +2367,11 @@ void check_pack_index_ptr(const struct packed=
+_git *p, const void *vptr)
+>  	const unsigned char *start =3D p->index_data;
+>  	const unsigned char *end =3D start + p->index_size;
+>  	if (ptr < start)
+> -		die("offset before start of pack index for %s (corrupt index?)",
+> +		die(_("offset before start of pack index for %s (corrupt index?)")=
+,
+>  		    p->pack_name);
+>  	/* No need to check for underflow; .idx files must be at least 8 by=
+tes */
+>  	if (ptr >=3D end - 8)
+> -		die("offset beyond end of pack index for %s (truncated index?)",
+> +		die(_("offset beyond end of pack index for %s (truncated index?)")=
+,
+>  		    p->pack_name);
+>  }
