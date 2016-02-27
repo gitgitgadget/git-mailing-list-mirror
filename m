@@ -1,89 +1,147 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] builtin/tag: Changes argument format for verify
-Date: Fri, 26 Feb 2016 23:36:25 -0500
-Message-ID: <20160227043625.GC11604@sigill.intra.peff.net>
-References: <1456532864-30327-1-git-send-email-santiago@nyu.edu>
+Subject: [PATCH] add--interactive: allow custom diff highlighting programs
+Date: Sat, 27 Feb 2016 00:37:06 -0500
+Message-ID: <20160227053706.GA21117@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: santiago@nyu.edu
-X-From: git-owner@vger.kernel.org Sat Feb 27 05:36:33 2016
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 06:37:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZWcK-0002iK-MX
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 05:36:33 +0100
+	id 1aZXZC-0001VX-Sv
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 06:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756050AbcB0Eg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Feb 2016 23:36:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50557 "HELO cloud.peff.net"
+	id S1751292AbcB0FhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 00:37:10 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50572 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756020AbcB0Eg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Feb 2016 23:36:28 -0500
-Received: (qmail 23587 invoked by uid 102); 27 Feb 2016 04:36:28 -0000
+	id S1750964AbcB0FhJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 00:37:09 -0500
+Received: (qmail 26643 invoked by uid 102); 27 Feb 2016 05:37:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Feb 2016 23:36:28 -0500
-Received: (qmail 10424 invoked by uid 107); 27 Feb 2016 04:36:37 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 00:37:09 -0500
+Received: (qmail 10804 invoked by uid 107); 27 Feb 2016 05:37:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 26 Feb 2016 23:36:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Feb 2016 23:36:25 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 00:37:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Feb 2016 00:37:06 -0500
 Content-Disposition: inline
-In-Reply-To: <1456532864-30327-1-git-send-email-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287659>
 
-On Fri, Feb 26, 2016 at 07:27:44PM -0500, santiago@nyu.edu wrote:
+The patch hunk selector of add--interactive knows how ask
+git for colorized diffs, and correlate them with the
+uncolored diffs we apply. But there's not any way for
+somebody who uses a diff-filter tool like contrib's
+diff-highlight to see their normal highlighting.
 
-> From: Santiago Torres <santiago@nyu.edu>
-> 
-> The verify tag function converts the commit sha1 to hex and passes it as
-> a command-line argument to builtin/verify-tag. Given that builtin/verify-tag
-> already resolves the ref name sha1 equivalent, the sha1 to
-> hex_sha1 conversion is unnecessary and the ref-name can be used instead.
+This patch lets users define an arbitrary shell command to
+pipe the colorized diff through. The exact output shouldn't
+matter (since we just show the result to humans) as long as
+it is line-compatible with the original diff (so that
+hunk-splitting can split the colorized version, too).
 
-Hrm. This is potentially racy, if git-tag is going to say something
-about the ref, but git-verify-tag may have actually verified another tag
-entirely.
+I left two minor issues with the new system that I don't
+think are worth fixing right now, but could be done later:
 
-AFAICT, though, git-tag doesn't say anything, and is just purely
-forwarding work to verify-tag. So I can't see a real downside to passing
-in the ref name, except that it is slightly less efficient (because
-verify_tag has to re-resolve it). But...
+  1. We only filter colorized diffs. Theoretically a user
+     could want to filter a non-colorized diff, but I find
+     it unlikely in practice. Users who are doing things
+     like diff-highlighting are likely to want color, too.
 
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 1705c94..5de1161 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -105,8 +105,7 @@ static int verify_tag(const char *name, const char *ref,
->  				const unsigned char *sha1)
->  {
->  	const char *argv_verify_tag[] = {"verify-tag",
-> -					"-v", "SHA1_HEX", NULL};
-> -	argv_verify_tag[2] = sha1_to_hex(sha1);
-> +					"-v", name, NULL};
+  2. add--interactive will re-colorize a diff which has been
+     hand-edited, but it won't have run through the filter.
+     Fixing this is conceptually easy (just pipe the diff
+     through the filter), but practically hard to do without
+     using tempfiles (it would need to feed data to and read
+     the result from the filter without deadlocking; this
+     raises portability questions with respect to Windows).
 
-You are passing in "name" here, not "ref". git-tag knows it is operating
-specifically on tags, and completes a name like "foo" to
-"refs/tags/foo". Whereas verify-tag is plumbing that can operate on any
-ref, and will do the usual lookup for "foo", "refs/heads/foo",
-"refs/tags/foo", etc.
+I've punted on both issues for now, and if somebody really
+cares later, they can do a patch on top.
 
-So by passing the unqualified name, we may end up finding something
-entirely different, generating "ambiguous name" errors, etc. So if we
-_were_ to go this route, I think we'd need to use "ref" here, not
-"name".
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is a little hack I whipped up after the diff-so-fancy people asked
+me about it in:
 
-But I'm not really sure I see the upside.
+  https://github.com/so-fancy/diff-so-fancy/issues/35
 
-A much more interesting change in this area, I think, would be to skip
-verify-tag entirely. Once upon a time it had a lot of logic itself, but
-these days it is a thin wrapper over run_gpg_verify(), and we could
-improve the efficiency quite a bit by eliminates the sub-process
-entirely.
+It's something I've wanted for a while with diff-highlight. I made sure
+it works (the final hunk of this patch was added via highlighted "add
+-p". Woohoo!), but other than that it hasn't been exposed to a lot of
+corner cases.
 
--Peff
+I'm actually not sure whether it will work well with diff-so-fancy or
+not; they change the diff header around a bit, and there's not a
+complete 1:1 correspondence in the lines. _But_ I think it might work OK
+in practice, because their diff header remains 4 lines long, and the
+hunks themselves have 1:1 line correspondence.
+
+ Documentation/config.txt  |  8 ++++++++
+ git-add--interactive.perl | 12 ++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 2cd6bdd..f5834ec 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1886,6 +1886,14 @@ interactive.singleKey::
+ 	setting is silently ignored if portable keystroke input
+ 	is not available; requires the Perl module Term::ReadKey.
+ 
++interactive.diffFilter::
++	When an interactive command (such as `git add --patch`) shows
++	a colorized diff, git will pipe the diff through the shell
++	command defined by this configuration variable. The command may
++	mark up the diff further for human consumption, provided that it
++	retains a one-to-one correspondence with the lines in the
++	original diff. Defaults to disabled (no filtering).
++
+ log.abbrevCommit::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--abbrev-commit`. You may
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 77876d4..822f857 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -45,6 +45,7 @@ my ($diff_new_color) =
+ my $normal_color = $repo->get_color("", "reset");
+ 
+ my $diff_algorithm = $repo->config('diff.algorithm');
++my $diff_filter = $repo->config('interactive.difffilter');
+ 
+ my $use_readkey = 0;
+ my $use_termcap = 0;
+@@ -754,7 +755,14 @@ sub parse_diff {
+ 	my @diff = run_cmd_pipe("git", @diff_cmd, "--", $path);
+ 	my @colored = ();
+ 	if ($diff_use_color) {
+-		@colored = run_cmd_pipe("git", @diff_cmd, qw(--color --), $path);
++		my @display_cmd = ("git", @diff_cmd, qw(--color --), $path);
++		if (defined $diff_filter) {
++			# quotemeta is overkill, but sufficient for shell-quoting
++			my $diff = join(' ', map { quotemeta } @display_cmd);
++			@display_cmd = ("$diff | $diff_filter");
++		}
++
++		@colored = run_cmd_pipe(@display_cmd);
+ 	}
+ 	my (@hunk) = { TEXT => [], DISPLAY => [], TYPE => 'header' };
+ 
+@@ -765,7 +773,7 @@ sub parse_diff {
+ 		}
+ 		push @{$hunk[-1]{TEXT}}, $diff[$i];
+ 		push @{$hunk[-1]{DISPLAY}},
+-			($diff_use_color ? $colored[$i] : $diff[$i]);
++			(@colored ? $colored[$i] : $diff[$i]);
+ 	}
+ 	return @hunk;
+ }
+-- 
+2.7.2.767.g705917e
