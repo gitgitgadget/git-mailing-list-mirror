@@ -1,114 +1,113 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
-Date: Sat, 27 Feb 2016 08:12:22 +0100
-Message-ID: <56D14C56.6070306@web.de>
-References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
- <56D078F3.9070905@web.de> <xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
- <56D0D2DF.1040807@web.de> <xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
- <20160227032907.GB10313@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 4/3] sha1_file.c: mark strings for translation
+Date: Sat, 27 Feb 2016 14:49:33 +0700
+Message-ID: <1456559373-13589-1-git-send-email-pclouds@gmail.com>
+References: <20160225142004.GA17678@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 08:12:53 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	d33tah@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 27 08:49:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZZ3c-0002mo-I1
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 08:12:52 +0100
+	id 1aZZd5-0005rT-If
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 08:49:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756005AbcB0HMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 02:12:48 -0500
-Received: from mout.web.de ([212.227.17.11]:57502 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752013AbcB0HMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 02:12:47 -0500
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MPpE6-1aVjYq0Ma2-004x1d; Sat, 27 Feb 2016 08:12:30
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
-In-Reply-To: <20160227032907.GB10313@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:wdRUH8FktTg9DXOJrbfDK05xb/CCOYYQDtiXSUwES7SqlAoXpY3
- OM/2sFwNpKKTOofah3GxlOC73itzZBNgqesOlV8urLTppN1qKBBqBImyL3qQly5j06VsFs5
- Nx0Eg8CiG+CWydvLwseaQn8OO6L6yWyoMGdwLQV766u3EpmeWsBY73RK3ME05Ordr2t9K1p
- 37JIrml3aYi3IKUcj1ANQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UCrSOWr2HHY=:2cM0JMTzQriohiLd5kDmn9
- VXFwtsHFBsXLkGiO7QJWRynaIXA9HMBw3poeyRyyT7AiUBM1CXcrxtQyRIpMKrrUCG5E4CCZI
- pHaZSlhEtUBovx+GGAPjzJyJGjbTuA88gJWyEjpXarLNg04Dzu8Q46Suqxjp4IJOMrgGKxBYL
- NcungKWWjl+XCZfrio7YkamuUsOhxZyL3ZghkRcZsNRveMORUO6337tF0fyT2fn6h8hT3FpLs
- o6iZwKGDD3TbLktatiV3XfTJ9+DZ80/CacU4xtFQpyTTv8dsE3IJYirb0bYc7mPcel7+BUzIf
- 5XAuDGbe0oBPyNYNJ1K4CMo2Ux33mvR34nkqFodGS3iYzBokxtWNLKKMY+VSP7bVxANtorlPU
- mHOtNkGzvGm/7U9Atkcr/pS/vEUxpfoUnKb/1gV8Gi5lPx3GxFUHF3u6iohkqSjP5zMMQ6PWM
- R8+WwiepSYpkNHtFGJfitIWrvsBmIOgjDqk68fpWj+TGieVCILUHTVTuOkxuZB1vN2es1dzA2
- Knbz8uUWRYacSbr66/iay5zpfi3njG0LR0sii5rY+9tgbuv8nnb+bms+dH+fn2MOE5Uw6C/VX
- 0fACyt9ETz1GEhBwpsPv165UFlok1HkQQLr0/ED1XWFoORyTY5ReC2xA+Snr6P3BjRWgw2dJL
- JSjdY2uMZVYymD2YsqokZgAmMIdFOv57+3lfJP0l/KTjBZ3MBcEc9BaWqK34oB3nVuT1iqm2p
- ozz0lhPq9aV5wpd6oVKXHpJb+NfZxXKJIk/iYb60yplCEXpogCyiFGqWPclraXJxMImDwup+ 
+	id S1756207AbcB0HtS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Feb 2016 02:49:18 -0500
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34233 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752075AbcB0HtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 02:49:15 -0500
+Received: by mail-pf0-f169.google.com with SMTP id x65so64534749pfb.1
+        for <git@vger.kernel.org>; Fri, 26 Feb 2016 23:49:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=p5nKjXq5pj7aaIRIFnp8e6VMf7Kor7Fc7YLVHjAHFjg=;
+        b=NSLuS2D6u1NhIyTRA3ofGNz10bChxg70RVDmVQcdIDqdjNDcb1YRB/DV93BvlFL1mF
+         JK3dgO4+qnP+jOJJZt/MNnrQr4gu5/t/y0wznNrJH6PyFHVJVCdMA2dzJxBEULg0//a8
+         20uuzFfJz8/EdqqENUTcIgxrY7uPx346dQDhub7ZmkqbiLa554UanmxSjpv9GYwov/Hg
+         lxIh22cdmCvXEa9zTMdLRK8D/Hz9gUP58BLM7dIVY9PR4Ok4LhrySMGCB2E4H+QHto4w
+         Whzi9JfSbB4E8OmueVRTJehPtbRxP3nZcBLe8UQtIcgS7KZjNlkuPU5bn/pfq4MLrayS
+         M+vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=p5nKjXq5pj7aaIRIFnp8e6VMf7Kor7Fc7YLVHjAHFjg=;
+        b=jb0F1dRelpx2qvytQGcOLbdJn5oZZHOGY6qEZ6vU3/5ejwMG09axye4B87HKuwhhuA
+         dR7wd4MmzEIfp1K0QU1lbHtBuuz7gsN/sHsRAlC6wOiepfQIornTQloc/+ZCXykSUHse
+         f7yTxZ+9Iyra/ArWbpuyzntbQOOECUZmywae6o6wPvthTTTfSpihL5V4+sYXmWKLC0je
+         JH4vKEIksblN9NeE9I9hmVWPoJGleazynGK5uGG2VgYP8lrEXJmgxiuSwqLIGQpMoPDL
+         MfKZ1YF7meyHd4t1uDumO1G9nsomEpv2AnMP6drfguRgIy5LUuFK/+iaOcC/ZapriIUr
+         FZ1Q==
+X-Gm-Message-State: AD7BkJK/MvR3vL95o7ValclgMzYzgvrnU19z4s7+Kn7S89pYMg0GCIuuuDmt5lCM6wdQIg==
+X-Received: by 10.98.16.198 with SMTP id 67mr7837220pfq.21.1456559355220;
+        Fri, 26 Feb 2016 23:49:15 -0800 (PST)
+Received: from lanh ([115.76.228.161])
+        by smtp.gmail.com with ESMTPSA id y68sm24007201pfi.6.2016.02.26.23.49.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Feb 2016 23:49:14 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 27 Feb 2016 14:49:48 +0700
+X-Mailer: git-send-email 2.8.0.rc0.205.g7ec8cf1
+In-Reply-To: <20160225142004.GA17678@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287685>
 
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Since jk/pack-idx-corruption-safety is already in 'next', can we add
+ this patch on top? Surrounding strings are handled separately [1] by
+ another series.
 
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/287661/focu=
+s=3D287678
 
-On 27.02.16 04:29, Jeff King wrote:
-> On Fri, Feb 26, 2016 at 03:35:10PM -0800, Junio C Hamano wrote:
->
->>> Digging means:
->>> run git bisect and report the commit.
->>> And this makes the compiler happy:
->>>   Revert "tree-diff: catch integer overflow in combine_diff_path allocation"
->> So?
->>
->> Identifying two versions of the same C file, for one of which the
->> Apple compiler does not give you "internal compiler error" and for
->> the other it does, may help Apple engineers to debug their compiler.
->>
->> But we cannot and will not revert any of our code only because some
->> vendor compiler is broken.  It would be a different story if we were
->> throwing an invalid C at compilers and relying on a bug in GCC that
->> accepts an invalid code, but I do not think that is the case here.
-> I think knowing the commit that causes the problem is interesting for
-> us, because it lets us see whether we are throwing invalid C at the
-> compiler or not (the compiler should never segfault, obviously, but I
-> can believe that it is more likely to if you throw garbage at it).
->
-> But that commit is one of the tamest, I think; it just seems like a
-> boring compiler bug.  I'd be curious to reduce it to a minimal change
-> that causes the bug, just to be sure.
->
-> Torsten, what is the compiler version (I don't have Apple compilers, but
-> it seems plausible that older clang might have the same problem).
->
-> -Peff
-That's machine is running Mac OS X 10.6, which is no longer supported
-with updates.
+ sha1_file.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- gcc --version
-i686-apple-darwin10-gcc-4.2.1 (GCC) 4.2.1 (Apple Inc. build 5666) (dot 3)
-Copyright (C) 2007 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-There seems to be a clang as well:
-clang --version
-Apple clang version 1.7 (tags/Apple/clang-77) (based on LLVM 2.9svn)
-Target: x86_64-apple-darwin10
-Thread model: posix
-
-
-
-If that information is helpful:
-On later versions of Mac OS X (and/or Xcode) gcc is a wrapper to clang,
-and this is what I see under Mac OS 10.9:
-gcc --version
-Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
-Apple LLVM version 6.0 (clang-600.0.57) (based on LLVM 3.5svn)
-Target: x86_64-apple-darwin13.4.0
-Thread model: posix
+diff --git a/sha1_file.c b/sha1_file.c
+index 4a3a032..b8da68b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1042,7 +1042,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 	if (offset > (p->pack_size - 20))
+ 		die("offset beyond end of packfile (truncated pack?)");
+ 	if (offset < 0)
+-		die("offset before end of packfile (broken .idx?)");
++		die(_("offset before end of packfile (broken .idx?)"));
+=20
+ 	if (!win || !in_window(win, offset)) {
+ 		if (win)
+@@ -2367,11 +2367,11 @@ void check_pack_index_ptr(const struct packed_g=
+it *p, const void *vptr)
+ 	const unsigned char *start =3D p->index_data;
+ 	const unsigned char *end =3D start + p->index_size;
+ 	if (ptr < start)
+-		die("offset before start of pack index for %s (corrupt index?)",
++		die(_("offset before start of pack index for %s (corrupt index?)"),
+ 		    p->pack_name);
+ 	/* No need to check for underflow; .idx files must be at least 8 byte=
+s */
+ 	if (ptr >=3D end - 8)
+-		die("offset beyond end of pack index for %s (truncated index?)",
++		die(_("offset beyond end of pack index for %s (truncated index?)"),
+ 		    p->pack_name);
+ }
+=20
+--=20
+2.8.0.rc0.205.g7ec8cf1
