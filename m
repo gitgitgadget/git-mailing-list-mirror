@@ -1,85 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fetch-pack: fix unadvertised requests validation
-Date: Sat, 27 Feb 2016 17:08:16 -0500
-Message-ID: <20160227220816.GA17475@sigill.intra.peff.net>
-References: <1456577034-6494-1-git-send-email-gabrielfrancosouza@gmail.com>
- <xmqqd1riggd7.fsf@gitster.mtv.corp.google.com>
- <20160227190712.GC12822@sigill.intra.peff.net>
- <20160227191943.GD12822@sigill.intra.peff.net>
- <CABaesJ+yNJ6_z=sFc+bDEPqDDsw9fkB5bYgxJaAkAMVqHNWwrQ@mail.gmail.com>
+Subject: Re: [PATCH] fetch-pack: fix object_id of exact sha1
+Date: Sat, 27 Feb 2016 17:12:48 -0500
+Message-ID: <20160227221248.GB17475@sigill.intra.peff.net>
+References: <CABaesJ+yNJ6_z=sFc+bDEPqDDsw9fkB5bYgxJaAkAMVqHNWwrQ@mail.gmail.com>
+ <1456605174-28360-1-git-send-email-gabrielfrancosouza@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 27 23:08:29 2016
+X-From: git-owner@vger.kernel.org Sat Feb 27 23:12:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZn2K-0003Rp-NC
-	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 23:08:29 +0100
+	id 1aZn6e-0005lL-B2
+	for gcvg-git-2@plane.gmane.org; Sat, 27 Feb 2016 23:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756738AbcB0WIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Feb 2016 17:08:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50848 "HELO cloud.peff.net"
+	id S1756831AbcB0WMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Feb 2016 17:12:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50859 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755826AbcB0WIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Feb 2016 17:08:19 -0500
-Received: (qmail 8953 invoked by uid 102); 27 Feb 2016 22:08:18 -0000
+	id S1756728AbcB0WMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Feb 2016 17:12:51 -0500
+Received: (qmail 9171 invoked by uid 102); 27 Feb 2016 22:12:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 17:08:18 -0500
-Received: (qmail 15578 invoked by uid 107); 27 Feb 2016 22:08:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 17:12:51 -0500
+Received: (qmail 15638 invoked by uid 107); 27 Feb 2016 22:13:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 17:08:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Feb 2016 17:08:16 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 Feb 2016 17:13:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Feb 2016 17:12:48 -0500
 Content-Disposition: inline
-In-Reply-To: <CABaesJ+yNJ6_z=sFc+bDEPqDDsw9fkB5bYgxJaAkAMVqHNWwrQ@mail.gmail.com>
+In-Reply-To: <1456605174-28360-1-git-send-email-gabrielfrancosouza@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287732>
 
-On Sat, Feb 27, 2016 at 05:28:55PM -0300, Gabriel Souza Franco wrote:
+On Sat, Feb 27, 2016 at 05:32:54PM -0300, Gabriel Souza Franco wrote:
 
-> On Sat, Feb 27, 2016 at 4:19 PM, Jeff King <peff@peff.net> wrote:
-> > On Sat, Feb 27, 2016 at 02:07:12PM -0500, Jeff King wrote:
-> >
-> >> We expect whoever creates the "sought" list to fill in the name and sha1
-> >> as appropriate. If that is not happening in some code path, then yeah,
-> >> filter_refs() will not work as intended. But I think the solution there
-> >> would be to fix the caller to set up the "struct ref" more completely.
-> >>
-> >> Gabriel, did this come from a bug you noticed in practice, or was it
-> >> just an intended cleanup?
+> Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
+> 2013-12-05) added support for specifying a SHA-1 as well as a ref name.
+> Add support for specifying just a SHA-1 and set the ref name to the same
+> value in this case.
 > 
-> I was experimenting with uploadpack.hiderefs and uploadpack.allowTipSHA1InWant
-> and couldn't get
+> Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+> ---
+>  builtin/fetch-pack.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
->         git fetch-pack $remote <sha1>
-> 
-> to work, and I traced the failure until that check. Reading more, I now see
-> that currently it requires
-> 
->        git fetch-pack $remote "<sha1> <sha1>"
-> 
-> to do what I want.
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index 79a611f..d7e439a 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -16,10 +16,10 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
+>  	struct ref *ref;
+>  	struct object_id oid;
+>  
+> -	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
+> -		name += GIT_SHA1_HEXSZ + 1;
+> -	else
+> +	if (get_oid_hex(name, &oid))
+>  		oidclr(&oid);
+> +	else if (name[GIT_SHA1_HEXSZ] == ' ')
+> +		name += GIT_SHA1_HEXSZ + 1;
 
-Ah, that makes sense. I do think the "<sha1> <sha1>" syntax is a bit
-weird, and I think mostly because the pure-object fetch came much later
-in git's life; at this point hardly anybody uses a manual fetch-pack.
+This makes sense to me. I wonder if we should be more particular about
+the pure-sha1 case consuming the whole string, though. E.g., if we get:
 
-It would probably make sense to "<sha1>" to set up the ref correctly.
+  1234567890123456789012345678901234567890-bananas
 
-> > I double-checked that the code for git-fetch does so. It's in
-> > get_fetch_map()
-> [...]
-> 
-> git fetch-pack doesn't use these code paths. I'll send a new patch
-> shortly to allow
-> bare sha1's in fetch-pack.
+that should probably not have sha1 1234...
 
-Right. Sounds like a good plan.
+I don't think it should ever really happen in practice, but it might be
+worth noticing and complaining when name[GIT_SHA1_HEXSZ] is neither
+space nor '\0'.
 
 -Peff
