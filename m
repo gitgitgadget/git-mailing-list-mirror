@@ -1,95 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
-Date: Sun, 28 Feb 2016 10:21:43 -0800
-Message-ID: <xmqqfuwcg0g8.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
-	<56D078F3.9070905@web.de>
-	<xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
-	<56D0D2DF.1040807@web.de>
-	<xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
-	<20160227032907.GB10313@sigill.intra.peff.net>
-	<56D14C56.6070306@web.de> <56D1DF53.1010006@web.de>
+Subject: Re: [PATCH 01/16] bisect: write about `bisect next` in documentation
+Date: Sun, 28 Feb 2016 10:28:55 -0800
+Message-ID: <xmqqbn70g048.fsf@gitster.mtv.corp.google.com>
+References: <1456452282-10325-1-git-send-email-s-beyer@gmx.net>
+	<1456452282-10325-2-git-send-email-s-beyer@gmx.net>
+	<xmqqoab3jokp.fsf@gitster.mtv.corp.google.com>
+	<56D1A873.1090709@gmx.net>
+	<xmqqk2lqghdw.fsf@gitster.mtv.corp.google.com>
+	<56D1FB53.2020404@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 28 19:21:53 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Feb 28 19:29:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa5yZ-0000GO-DU
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 19:21:51 +0100
+	id 1aa65a-0003LI-Hu
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 19:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753766AbcB1SVr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2016 13:21:47 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62120 "EHLO
+	id S1753827AbcB1S27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 13:28:59 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55055 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753496AbcB1SVr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2016 13:21:47 -0500
+	with ESMTP id S1753496AbcB1S26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 13:28:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A299B44C37;
-	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 876B244D21;
+	Sun, 28 Feb 2016 13:28:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yRnDMw1eUyJ8
-	ZlHLgjQIVSL31Nk=; b=XaKSG9W4hsZrFYnk7gryxfibb/Y4vrz0dIaOKkN2Fo2K
-	RCXpXv/MCRyTp9UCLGPHDq7XbV4HxC5ZdbcwGtWPD4FYKOJj4Dphg2T/YenYW++8
-	RpxOnF5uqwNH9ztv8R60xC79Iz1DxOeFj+/1JDyxfybaeMRmC414kE9WLFg+e4E=
+	:content-type; s=sasl; bh=uogHhgUy2mi4zzlxXfVqcT/t+X8=; b=IM3g7G
+	ay6Sr1P8mXr0BQ+k/uuL1/8/gyVcV264yeKOlM7+MrB9oMY+R5KKKUDkl3e2hLIK
+	7U6aQQG7KcnXe9c0l/5E/F9TVYj3xG9/mJgFgu8TZ8C0tPZoGjtEVKhiChrj+qiu
+	phQFWizkkHThZDunjAXi0UK0av4c3zLaWvn4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=StkmXN
-	MRKUcSk39bqVXgVUaMa5Ko2HzRFpi592wuDcsmYwuBFz/Ky02lloxXLLb5CFTZi8
-	lHdfPHGeidepmSz7yae7XdG4zLxTmZzQ4bhLQ+OE8jpWofQZIJix3mRySw4G/wK8
-	DYN53Y4+bG5wXbq8nafakbf9OM5OJZglGh8Pk=
+	:content-type; q=dns; s=sasl; b=X8VYAqAiWgUL0dVKI0vqzSuSHpN3Qm2B
+	yuGlijjkWfSJL7bJIPt9J20nG6uDtgzFfmUgpUu74zKcC/vMYcropBsvL8i4Bu64
+	vpOHX2Hok64+DBz3d6a4C3dhPZCueZj4IT3avDTCzaGSnX1Vf/HTk6b6ibL5ogdY
+	HmXbWldB/50=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9972644C36;
-	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F67144D20;
+	Sun, 28 Feb 2016 13:28:57 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 19E8044C35;
-	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
-In-Reply-To: <56D1DF53.1010006@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 27 Feb 2016 18:39:31 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0272C44D1D;
+	Sun, 28 Feb 2016 13:28:56 -0500 (EST)
+In-Reply-To: <56D1FB53.2020404@gmx.net> (Stephan Beyer's message of "Sat, 27
+	Feb 2016 20:38:59 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1F718F9A-DE48-11E5-8305-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 20E0E528-DE49-11E5-9CFD-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287781>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Stephan Beyer <s-beyer@gmx.net> writes:
 
-> How about something like this as a workaround ?
-> (I can send a proper patch, if this is the way forward)
-> ...
->     Make Git compile under Mac OS X 10.6 by using clang instead of gc=
-c
+> However, it probably should be documented what "git bisect next" does
+> after you've specified bad and good commits.
+>
+> For that, I'd like to have an extra informational paragraph.
+> What about: "In general, the command computes the next commit for the
+> bisection and checks it out."
+> This would be neutral, in the meaning that no use case is involved.
 
-Given that it is understandable that Apple is no longer interesting
-in fixing compiler bugs for 10.6, I think that is the best we could
-do to help its users.
-
-> ...
-> +       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`=
-" -ge 10 &&
-> echo 1),1)
-
-This singles out 10.6-and-nothing-else, 10.6-or-older or
-10.6-or-newer?
-
-That "-ge", which smells like a copy-and-pasta from the next one
-that says "we have getdelim on 10.7-and-newer" bothers me.
-
-> +    CC =3D clang
-> +       endif
->         ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`=
-" -ge 11 &&
-> echo 1),1)
->                 HAVE_GETDELIM =3D YesPlease
->         endif
+Good thinking.  Thanks for being careful; I often pretend to take an
+extreme position to invite a well-thought-out rebuttal, and I really
+like it when people respond with a good counter-proposal.
