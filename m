@@ -1,114 +1,138 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 3/7] clean: read user input with strbuf_getline()
-Date: Sun, 28 Feb 2016 01:36:05 -0500
-Message-ID: <CAPig+cSkV0KMG7gONabPxgQkzWgPU+1YGTMb4SDmpg1QrHxhSA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] notes copy --stdin: split lines with string_list_split()
+Date: Sun, 28 Feb 2016 01:56:51 -0500
+Message-ID: <CAPig+cT2GQ7mr0i649JRkJA7xGzXLEmy0RD31u537==sU1mtqQ@mail.gmail.com>
 References: <56D28092.9090209@moritzneeb.de>
-	<56D28203.7040502@moritzneeb.de>
+	<56D28207.6080600@moritzneeb.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Sun Feb 28 07:36:13 2016
+X-From: git-owner@vger.kernel.org Sun Feb 28 07:56:59 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZuxg-0007LJ-Pa
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 07:36:13 +0100
+	id 1aZvHl-0006pO-V8
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 07:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230AbcB1GgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 01:36:08 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:32952 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbcB1GgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 01:36:07 -0500
-Received: by mail-vk0-f65.google.com with SMTP id c3so7486947vkb.0
-        for <git@vger.kernel.org>; Sat, 27 Feb 2016 22:36:06 -0800 (PST)
+	id S1751401AbcB1G4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 01:56:53 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:36295 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084AbcB1G4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 01:56:52 -0500
+Received: by mail-vk0-f66.google.com with SMTP id k196so7500977vka.3
+        for <git@vger.kernel.org>; Sat, 27 Feb 2016 22:56:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=EXow/2gxuniBeCzOgdHMC2TryN5whCc18PVUcAnN24U=;
-        b=G2cqHrMz/QfB4Ly2t9fQN89fN7f/vOepz/Oh6fsMkHZR1CWJo1biJOpPBUJzEnCqYd
-         4zdsGQNpOizIzWiva/uZJU8flbKGiijWZoh8vzHM1MUuBEFljx/ntUPHPtPgVdhC5EdK
-         ByC+D6nLL5baPts6JuzAjahF3JUOT2CXo1clt968fNsj24h8OC426k1aTWnPP4Nsux5D
-         bNKPbEsTbtiVSBLqmTo2c7woo1W9wV+fFyvsbp3/MsKvdA1KmpwECMtoKMO8jh2d9Ur3
-         w2yFEzYo1xtYEotYp34h2Ol+WHF3Bqj3Mn0qlD+r2XQwxg7weAI6kru+iDxsYdmGb2V5
-         2rnw==
+        bh=lMaGW1/MKrL+iEGa0jDvNiLa9xIIiAWbuo2aN3V5+1E=;
+        b=rYGcGZgMPT1GOFbcMQp0qLrXKNpLLXCug6lD+arAt5KFiLcRSWYPl+ZsaidlthtGr2
+         dWGIqaXDT5prZ/jolBHSwLGQq28Rsyro68A3R4ZDyPfTMsfpm7AaPUp3qNuIWh8sbTer
+         INR1qWiGcHEfcZUiF0wNnPneEnSeAUl8FBOwqD11ndAUJCQTsuPD9Wk05h0vh8Je9TmU
+         MyoLo5kLmHTHCNQdfqVuVNuw+Q/SfW4BWAdWefFDhjihwmc6bFSs6anpBRTcA3UwS9vK
+         bMLuy/ot+FXbFeySuYw8lcRPfqy+arzL3mPWuLfXhNeg6t13Wn5WBzYnybtt2soO+SEY
+         xUqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=EXow/2gxuniBeCzOgdHMC2TryN5whCc18PVUcAnN24U=;
-        b=BHGCEY6swQHf4C9qIQjnLsjIpfWL73JBqO8dIp9s0uKo2Gxtj2xkV6vRcsmaU9XwjV
-         Gsrq/sh3K+Ftxl3hHYtQwRe9n8jnSGUrcQaXZRm0jC8x6mR+9xfBmc5gv9XVCxuZVR4s
-         OBpn4NaDa+V2eayxl8fYFFuYcpBzJleyXxTTozfa9KZBUToQ+zx73rOr1j4HskA2Cl6y
-         G5S/G0pa1J3uBewZBbuhyxajAtu2gqtr2s/2Cr5XlNsGKf44N7JKOGv7+5vS6Uyd0QSz
-         dPB6hs17ZQi1De7M70p+07d2G/62/BwZRZ6VXmL3vslKsBV/a12Fnxn3YThrMdVuAtop
-         VqbQ==
-X-Gm-Message-State: AD7BkJKMgIfBGGZCAp1cU3QMQai/7ICif6dQ9fW2RgSet5CrLgJzlJatqrbV6oQ2GUH+VNBERA5ABfALQa8mHw==
-X-Received: by 10.31.141.2 with SMTP id p2mr7133475vkd.37.1456641365800; Sat,
- 27 Feb 2016 22:36:05 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sat, 27 Feb 2016 22:36:05 -0800 (PST)
-In-Reply-To: <56D28203.7040502@moritzneeb.de>
-X-Google-Sender-Auth: Y2AJ-4_VBr1O0MGkGuBcJPDhHPk
+        bh=lMaGW1/MKrL+iEGa0jDvNiLa9xIIiAWbuo2aN3V5+1E=;
+        b=Wdsh/ajCXfD/UgsRpNVGfM+D9TIVkxYnjtZ834WOUUTPUpxU/c4PYeG74pXE43Wnel
+         YLtmlzHJofiLlCHcZ8CHvE/LPKRyAx7sTjJe/DTxRVhJfibQyHJ2aBQtCud93v0jbZ2N
+         jWgsU4/tHo4wFMnN7sg+irMkKdwXe8hvEBE0AddN6TMMgvFmr6S4r5JVXBdkWnW1UMDs
+         aC/sHA+T+g6qqXgDR3Ifu1xeD2nmqkFdt8mYv+Xbw1tUW4zYI3seshIPOX2kcCFeWsLH
+         5PsrYKTncj4DFdM2zm7keW7VisLMhST7F+Rro+AJ5zqK+woqiC31zft84Bt+8LSPfdzK
+         VBGQ==
+X-Gm-Message-State: AD7BkJKaDLcYuVlsGq6PgKliGPFt0qGwp0kHocF90+/ECwiG9RWGggJKS1cId2/Sx1WjtCFoEf5PdpD6ChTA0w==
+X-Received: by 10.31.141.2 with SMTP id p2mr7170347vkd.37.1456642611515; Sat,
+ 27 Feb 2016 22:56:51 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 27 Feb 2016 22:56:51 -0800 (PST)
+In-Reply-To: <56D28207.6080600@moritzneeb.de>
+X-Google-Sender-Auth: lMZoiXx3M1iurQPaTlHjnckzeUs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287754>
 
 On Sun, Feb 28, 2016 at 12:13 AM, Moritz Neeb <lists@moritzneeb.de> wrote:
-> The inputs that are read are all answers that are given by the user
-> when interacting with git on the commandline. As these answers are
-> not supposed to contain a meaningful CR it is safe to
-> replace strbuf_getline_lf() can be replaced by strbuf_getline().
+> This patch changes, how the lines are split, when reading them from
+> stdin to copy the notes. The advantage of string_list_split() over
+> strbuf_split() is that it removes the terminator, making trimming
+> of the left part unneccesary.
 
-Grammo: "it is safe to replace ... can be replaced by ..."
+Here's an alternate commit message:
 
-> In the subsequent codepath, the input is trimmed. This leads to
+    strbuf_split() has the unfortunate behavior of leaving the
+    separator character on the end of the split components, thus
+    placing the burden of manually removing the separator on the
+    caller. It's also heavyweight in that each split component is a
+    full-on strbuf. We need neither feature of strbuf_split() so
+    let's use string_list_split() instead since it removes the
+    separator character and returns an array of simple NUL-terminated
+    strings.
 
-How about?
+> The strbuf is now rtrimmed before splitting. This is still required
+> to remove potential CRs. In the next step this will then be done
+> implicitly by strbuf_readline(). Thus, this is a preparatory refactoring,
+> towards a trim-free codepath.
 
-    After being read, the input is trimmed.
+I would actually swap patches 4 and 5 so that strbuf_getline() is done
+first (without removing any of the rtrim's) and string_list_split()
+second. That way, you don't have to add that extra rtrim in one patch
+and immediately remove it in the next. And, as a bonus, you can drop
+the above paragraph altogether.
 
-> accepting user input with spaces, e.g. "  y ", as a valid answer in
-> the interactive cleaning process.
->
-> Although trimming would not be required anymore to remove a potential CR,
-> we don't want to change the existing behavior with this patch.
-> Thus, the trimming is kept in place.
->
+The patch itself looks okay.
+
 > Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
 > ---
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> @@ -570,7 +570,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
->                                clean_get_color(CLEAN_COLOR_RESET));
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> @@ -292,18 +292,18 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+>
+>         while (strbuf_getline_lf(&buf, stdin) != EOF) {
+>                 unsigned char from_obj[20], to_obj[20];
+> -               struct strbuf **split;
+> +               struct string_list split = STRING_LIST_INIT_DUP;
+>                 int err;
+>
+> -               split = strbuf_split(&buf, ' ');
+> -               if (!split[0] || !split[1])
+> +               strbuf_rtrim(&buf);
+> +               string_list_split(&split, buf.buf, ' ', -1);
+> +
+> +               if (split.nr != 2)
+>                         die(_("Malformed input line: '%s'."), buf.buf);
+> -               strbuf_rtrim(split[0]);
+> -               strbuf_rtrim(split[1]);
+> -               if (get_sha1(split[0]->buf, from_obj))
+> -                       die(_("Failed to resolve '%s' as a valid ref."), split[0]->buf);
+> -               if (get_sha1(split[1]->buf, to_obj))
+> -                       die(_("Failed to resolve '%s' as a valid ref."), split[1]->buf);
+> +               if (get_sha1(split.items[0].string, from_obj))
+> +                       die(_("Failed to resolve '%s' as a valid ref."), split.items[0].string);
+> +               if (get_sha1(split.items[1].string, to_obj))
+> +                       die(_("Failed to resolve '%s' as a valid ref."), split.items[1].string);
+>
+>                 if (rewrite_cmd)
+>                         err = copy_note_for_rewrite(c, from_obj, to_obj);
+> @@ -313,11 +313,11 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+>
+>                 if (err) {
+>                         error(_("Failed to copy notes from '%s' to '%s'"),
+> -                             split[0]->buf, split[1]->buf);
+> +                             split.items[0].string, split.items[1].string);
+>                         ret = 1;
 >                 }
 >
-> -               if (strbuf_getline_lf(&choice, stdin) != EOF) {
-> +               if (strbuf_getline(&choice, stdin) != EOF) {
->                         strbuf_trim(&choice);
->                 } else {
->                         eof = 1;
-> @@ -652,7 +652,7 @@ static int filter_by_patterns_cmd(void)
->                 clean_print_color(CLEAN_COLOR_PROMPT);
->                 printf(_("Input ignore patterns>> "));
->                 clean_print_color(CLEAN_COLOR_RESET);
-> -               if (strbuf_getline_lf(&confirm, stdin) != EOF)
-> +               if (strbuf_getline(&confirm, stdin) != EOF)
->                         strbuf_trim(&confirm);
->                 else
->                         putchar('\n');
-> @@ -750,7 +750,7 @@ static int ask_each_cmd(void)
->                         qname = quote_path_relative(item->string, NULL, &buf);
->                         /* TRANSLATORS: Make sure to keep [y/N] as is */
->                         printf(_("Remove %s [y/N]? "), qname);
-> -                       if (strbuf_getline_lf(&confirm, stdin) != EOF) {
-> +                       if (strbuf_getline(&confirm, stdin) != EOF) {
->                                 strbuf_trim(&confirm);
->                         } else {
->                                 putchar('\n');
+> -               strbuf_list_free(split);
+> +               string_list_clear(&split, 0);
+>         }
+>
+>         if (!rewrite_cmd) {
 > --
 > 2.4.3
