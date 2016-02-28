@@ -1,124 +1,90 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 1/2] pull --rebase: add --[no-]autostash flag
-Date: Sun, 28 Feb 2016 20:28:49 +0800
-Message-ID: <CACRoPnT6Yc_vfrYvzKctL1dDkZCzme-4emLF0MysJq4f_H2OvQ@mail.gmail.com>
-References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
-	<xmqqk2lqeyzv.fsf@gitster.mtv.corp.google.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff of translation for Git 2.8.0 round 1
+Date: Sun, 28 Feb 2016 22:12:08 +0800
+Message-ID: <CANYiYbHV_hpGoF9_6ng8eTfnzU+fHvyzZfSQncitGNVZZMfaxw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Mehul Jain <mehul.jain2029@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 13:28:57 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Changwoo Ryu <cwryu@debian.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 15:12:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa0T2-00034E-QW
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 13:28:57 +0100
+	id 1aa251-0002MO-KQ
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 15:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757308AbcB1M2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 07:28:52 -0500
-Received: from mail-lb0-f195.google.com ([209.85.217.195]:35197 "EHLO
-	mail-lb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbcB1M2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 07:28:51 -0500
-Received: by mail-lb0-f195.google.com with SMTP id h2so5058569lbs.2
-        for <git@vger.kernel.org>; Sun, 28 Feb 2016 04:28:50 -0800 (PST)
+	id S1757658AbcB1OMM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2016 09:12:12 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:34354 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757527AbcB1OMK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2016 09:12:10 -0500
+Received: by mail-wm0-f46.google.com with SMTP id p65so37960071wmp.1
+        for <git@vger.kernel.org>; Sun, 28 Feb 2016 06:12:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=WPIHoR7+o4IQwSU9oBWtKKoAPLTWAndl0bA9QeBbjyI=;
-        b=H2GmsxEdaYaY/+YaCD6C7kDhd32piP4f+/O1pr5T7KGwTjyUGY3K8/UDo50WgxYlSi
-         u+YarXNlQWi5yhEgUW4s7KIiHsq5rzqpI4nf8UfnZ6Bsd6dWnVqWZJ1NPzqZ0H7VsG2a
-         KquzReaatE76vm7sYx4L/MctFpb4ARPSV6ho4ZxXL4+rYZ+82UvHMPp/GRClERtBbmNE
-         XkbSk4avDTypM5shlh0yiJNLzQ+bmZ0+8i91aTG2oDoEwRQANm8nf4PdPEWMnkK0keTB
-         wLe/0HrhyXN9rZHkYdbEj3E1wVsGVf6cZPWizFL66vMmkV+V1ZByMB3b6TEUy9OG0Ion
-         XWAw==
+        h=mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=8sz0AZ7KNDyiwYEpG6OVgUcL4KjpbE6InvDSZhj30EE=;
+        b=XCzo2RUAfsZs52d49/dXn2RswZrC3/ryBnXWjRN82PLD7yOAGSm0XRP4LH0lC9b1AM
+         +UNjeUFRQnbL7X8jcvNktc9p8Utc1ae1dVqZEhAshbuAYcxvw2VjMpLzXv1yC+BDjDFE
+         NiPmEtJCGSS70p5Wl0+qk49Pzf+xIuf6LV+xgYUxquZQ686kImkxqvNbbuhyL/sekqSk
+         LMyOkP6+sinDuqKl+bP8/kYMK8UdRL90KXlxYbIMBEo+PApQSxtr7sVJZ+nmSkMpEFqA
+         Ox7RUyRAJ39gakwG65Jfn4SYNk3jg60JeSjIAvSB0pD2zcQQCDocARfBTd5lm2naT4b+
+         y7Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=WPIHoR7+o4IQwSU9oBWtKKoAPLTWAndl0bA9QeBbjyI=;
-        b=RlQSynz+L5t/uGpUZVQy3Yi8TxwIhr7Z9+RP+BPd1/gOikUDqHtwDy0WdrLCs0rk+C
-         Kb9URpicFbPX1wA3tmXAEgimrENCmUuurJw/uX7HQdpsJPRRsYhkldzJ2g1++ubmjkOY
-         2s8V+1HwuqY5qeHuLbN0FvJ1TGTlD3qqiiiY3nUid+aSJMrwQ75eKVDlpyqxzi3T1WRF
-         2ILRFax76PJ9td8zYc+kDPzGCRVGA1/30GEM7BtQuRNtafxpH+qGzWqcmVvEJKl4rnSC
-         YmvABwFAnkPDDDfg9gJkIlTyRDtZWXygjqmIrwGlYymmOJ7HTX5jP3quMOhdQe5GwBsZ
-         VCdQ==
-X-Gm-Message-State: AD7BkJJpbepIa/BL2y+RdXMyZREjru1oGA4v+IyoxXGiZNAKB5x/U7Jna5c8ozRWUYb+0n0haZXC3LQnPkqkqQ==
-X-Received: by 10.112.184.133 with SMTP id eu5mr2840652lbc.99.1456662529901;
- Sun, 28 Feb 2016 04:28:49 -0800 (PST)
-Received: by 10.112.207.68 with HTTP; Sun, 28 Feb 2016 04:28:49 -0800 (PST)
-In-Reply-To: <xmqqk2lqeyzv.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=8sz0AZ7KNDyiwYEpG6OVgUcL4KjpbE6InvDSZhj30EE=;
+        b=AOdbBrwlRUWqhNTRHoRIvzBwK8MAYnOFDMHde/6pas/pxoytVcQhfTW54fbvVge3DW
+         XaWhmiAT9wIyyN/muFEUMMj0RTSbMRuXuE12o5KXI3NXVzoa2PdTirfMdEjYkUOd/ZB2
+         icqCTHQmhm+JSQa6FNS+55Rnmp7QcxMo0iZqISayUV0QIeWJu3MVpq7mzIBJ9Z+yPBKU
+         wLmBqO+hUfzQkl5dBM7lYvatfTLGpxbnTEwIEoWe0lwJuevuaNkQ8T8K5KzHBSZjXdcI
+         rMyt0uS55BarhEdjqHxt6RoAa7ECEYjRhAb+QO+979ZOCZ2qLbUqXSPx0q9i7gUDggoD
+         IdtA==
+X-Gm-Message-State: AD7BkJK5Vy5GHZgMR8nUztMB7RtDe8Mddp9T62x/NBw1omS2bNKOweA+yWG7lhNPYxYkH9kmdg/FyssLpOnltw==
+X-Received: by 10.194.109.161 with SMTP id ht1mr989198wjb.43.1456668728792;
+ Sun, 28 Feb 2016 06:12:08 -0800 (PST)
+Received: by 10.194.54.8 with HTTP; Sun, 28 Feb 2016 06:12:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287774>
 
-Hi Junio,
+Hi guys,
 
-On Sun, Feb 28, 2016 at 3:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Mehul Jain <mehul.jain2029@gmail.com> writes:
->> @@ -835,13 +841,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->>               hashclr(orig_head);
->>
->>       if (opt_rebase) {
->> -             int autostash = 0;
->> -
->>               if (is_null_sha1(orig_head) && !is_cache_unborn())
->>                       die(_("Updating an unborn branch with changes added to the index."));
->>
->> -             git_config_get_bool("rebase.autostash", &autostash);
->> -             if (!autostash)
->> +             if (!opt_autostash)
->>                       die_on_unclean_work_tree(prefix);
->
-> I would have expected that
->
->  * a global opt_autostash is initialized to -1 (unspecified);
->
->  * opt_bool() would flip it to either 0 or 1 with --[no-]autostash;
->
->  * existing "rebase.autostash" configuration check inside "git pull"
->    code  gets removed;
+Git v2.8.0-rc0 has been released, and it's time to start new round of g=
+it l10n.
+This time there are 48 updated messages need to be translated since las=
+t
+update:
 
-Removing the "rebase.autostash" configuration check would bring back
-the problem which 53c76dc (pull: allow dirty tree when
-rebase.autostash enabled, 2015-07-04) fixed.
+    l10n: git.pot: v2.8.0 round 1 (48 new, 16 removed)
 
->  * and the code that builds "git rebase" invocation command line
->    will do
->
->         if (opt_autostash < 0)
->                 ; /* do nothing */
->         else if (opt_autostash == 0)
->                 argv_array_push(&args, "--no-autostash");
->         else
->                 argv_array_push(&args, "--autostash");
->
-> Then when "git pull --rebase" is run without "--[no-]autostash", the
-> underlying "git rebase" would be run without that option, and does its
-> usual thing, including reading rebase.autostash and deciding to do
-> "git stash".  And when "git pull" is run with "--[no-]autostash",
-> the underlying "git rebase" would be given the same option, and
-> would do what it was told to do, ignoring rebase.autostash setting.
->
-> So why does "git pull" still need to look at rebase.autostash
-> configuration after this change?
+    Generate po/git.pot from v2.8.0-rc0 for git v2.8.0 l10n round 1.
 
-Ultimately, git-pull needs to be aware of whether autostash is active
-or not (and this means rebase.autostash needs to be looked at as well)
-because if autostash is disabled, git-pull needs to perform the
-"worktree is clean" check. And this "worktree is clean" check needs to
-be done *before* git-fetch and git-rebase is run.
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-See f9189cf (pull --rebase: exit early when the working directory is
-dirty, 2008-05-21).
+You can get it from the usual place:
 
-Regards,
-Paul
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
