@@ -1,90 +1,174 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 4/7] notes copy --stdin: split lines with string_list_split()
-Date: Sun, 28 Feb 2016 11:02:38 -0500
-Message-ID: <CAPig+cSOjdCkMAKEJ+7o=-cGsLgZWG5mnVmkWLSbyedg=mY5Lw@mail.gmail.com>
-References: <56D28092.9090209@moritzneeb.de>
-	<56D28207.6080600@moritzneeb.de>
-	<CAPig+cT2GQ7mr0i649JRkJA7xGzXLEmy0RD31u537==sU1mtqQ@mail.gmail.com>
-	<56D2A60A.4000306@moritzneeb.de>
+Subject: Re: [PATCH v1] git-p4: map a P4 user to Git author name and email address
+Date: Sun, 28 Feb 2016 11:19:59 -0500
+Message-ID: <CAPig+cTCZ_diLH+tge6bis6gjq0Qvk05zD7zqf1PBJxNTJu9bw@mail.gmail.com>
+References: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Sun Feb 28 17:02:45 2016
+Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+	Lars Schneider <lars.schneider@autodesk.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 17:20:09 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa3nw-0008Er-RD
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 17:02:45 +0100
+	id 1aa44l-0000My-ST
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 17:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758018AbcB1QCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 11:02:40 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:35960 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757920AbcB1QCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 11:02:39 -0500
-Received: by mail-vk0-f68.google.com with SMTP id k196so7898843vka.3
-        for <git@vger.kernel.org>; Sun, 28 Feb 2016 08:02:39 -0800 (PST)
+	id S1758689AbcB1QUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 11:20:01 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:34771 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757958AbcB1QUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 11:20:00 -0500
+Received: by mail-vk0-f66.google.com with SMTP id e6so7910671vkh.1
+        for <git@vger.kernel.org>; Sun, 28 Feb 2016 08:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc;
-        bh=0TCSIaAo1niU5GybOzn7bmJuV655hEc3bZhevbsAhHg=;
-        b=Df3+maXx3rjgKuoCQdKaDcXYXAiPs5R9p/GPmNPQ3WhEUWqMLqAIG7/rAgCoDmQ1/Q
-         lQiRkCqwF98psN76wW07lO162RjUohmQJ86duE4qhaJkEW1eoYZuaR2wct6co3Cdm/OV
-         8EJY+YTse6Rxn/J1L4d20YlRFI7jIyPr6/+uWHiGYMEnpA0UA4/K0RFrQI3J1cLm46qr
-         xoWQNzsPfXnvRpygCJ8zXAa+RFQua520gz6HfdkY0KFkDk3uG4qtAiwSqZF+hhmQhJZo
-         XoqQNwtcJMJYFgKF0eL6NyOpp6WFBqqzmTtSIyNXAK/eC3b4mZP2fZhgitHXeg7G9Myh
-         7idg==
+        bh=K3+iUoANzdL9ATFjq4JsXrkT7YY632AsgdRgthpCdBA=;
+        b=ZGC2d9AwIZIEKgvgycOLOfWD7AP/VMARUffme6SgRhiPvE046NbFOrpPcJCqtl/Ap4
+         zAyMCyCPR3seeHmHPPvGzKc7a4BXcM55mxE+PTGNnmXRdRyncT1BvNkV3y5yoYCvlWcz
+         tCbsXspCWbPK5MgITB4IS9XrQFaAS0mBWCAVV7i3jZaSlKUtPOi26Din9a/pfzNKylMo
+         M1c0YMzoEq84pvwlP5Q/Td5jo/sMxjT5PkoBTCf1wxh5pUq1sAu5Q5zubyWhXpkdxNYM
+         EaPpZvkqLqMs7dzBH98D9UOkDBbznAnpFCVHRc0T+Xze52v5gXEHxWlDui2e/kmO7FVH
+         XHKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=0TCSIaAo1niU5GybOzn7bmJuV655hEc3bZhevbsAhHg=;
-        b=IY/fNcGXmZyectmfb1fFXg2u0rTSOOJ+1s5meCutkZnY4u+QJz6kaE5wtCr6kMqooz
-         ptuaxr+MRseHIiliH0y5Nn+N46HDEzxuXbj3hcCe60VShGMDJaaXinqh5DLShgHF4VqU
-         L/HgV7jxYDPAp8IV3du7P0AobCfv/S+ZoRSabgKi2XoRG5xlNytUOqAMMdN0mcnhwbRA
-         DvT6Pdf9h+SGHN+N5uOSUpJKUzH32amyAi5v/ZSJW+c8wZkPTQFgiwGAF1fU2j+kmxmf
-         Jr1MxoUSD5zgiWRAplaYoZuJ/QLc0v16D+yKLQcPVxj0MS1My2aWn1+M1q22lLJ0W9Qb
-         FXvw==
-X-Gm-Message-State: AD7BkJLlZczAoEaB2mPu1mRf2F7wWjjR42j2oCmnoxNlXoadjeKyn0zsU9SUXAensDCEWCJ0CaiPDVXOe/oJcA==
-X-Received: by 10.31.8.142 with SMTP id 136mr8474690vki.14.1456675358460; Sun,
- 28 Feb 2016 08:02:38 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 28 Feb 2016 08:02:38 -0800 (PST)
-In-Reply-To: <56D2A60A.4000306@moritzneeb.de>
-X-Google-Sender-Auth: AoOdMZK5HHQ-qsaCz7Giqo2QgGA
+        bh=K3+iUoANzdL9ATFjq4JsXrkT7YY632AsgdRgthpCdBA=;
+        b=cjEej3s1ZXzDacqm8khOwAYExDfi72cEmVVOeqfF4cGdvflcp0Yk3o44URP1gx1DZZ
+         WgulN3PUXJeEm9oXt64zBxbBp5s/9hHsM8ekjGR3137TI1t0eXLFW0n8FulYkMxN9DCu
+         QrnyAffZwQQqHgmvnPrxbKqr1zNTIGpGwyMURYjpyJWYvfL0/8mMO7JH/XtpP7uapiAT
+         7A4z1czpl7mGcOfeJ8uhxSx1Q/OcbnmLerfP5Jceqm0uCLDQvRRp4GNLaDkqpm+P71OM
+         +HJ43MRSP8kL+Mg4bFU0C4qMc67UYJH+iAyjmAO7UfzI8JbdaDRR03ndxbU5d9Y7kij2
+         dUPg==
+X-Gm-Message-State: AD7BkJJwczCeNMlL5n7/k/GebQNddOUtDZ/Dh9jmbwOf8TaBXWK48CFHXwzwUYqcyToIoWDs/jZNTm39uZJ5GA==
+X-Received: by 10.31.182.143 with SMTP id g137mr8113928vkf.45.1456676399454;
+ Sun, 28 Feb 2016 08:19:59 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sun, 28 Feb 2016 08:19:59 -0800 (PST)
+In-Reply-To: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com>
+X-Google-Sender-Auth: UxEi_-W07ZLUgPdk9XC3Be0Wuco
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287776>
 
-On Sun, Feb 28, 2016 at 2:47 AM, Moritz Neeb <lists@moritzneeb.de> wrote:
-> On 02/28/2016 07:56 AM, Eric Sunshine wrote:
->> On Sun, Feb 28, 2016 at 12:13 AM, Moritz Neeb <lists@moritzneeb.de> wrote:
->>> The strbuf is now rtrimmed before splitting. This is still required
->>> to remove potential CRs. In the next step this will then be done
->>> implicitly by strbuf_readline(). Thus, this is a preparatory refactoring,
->>> towards a trim-free codepath.
->>
->> I would actually swap patches 4 and 5 so that strbuf_getline() is done
->> first (without removing any of the rtrim's) and string_list_split()
->> second. That way, you don't have to add that extra rtrim in one patch
->> and immediately remove it in the next. And, as a bonus, you can drop
->> the above paragraph altogether.
->
-> Yeah, I also was thinking about that, should've pointed that out.
-> I was just following your "guiding" in v2 [1], that's why I did it this way,
-> because I thought it is somehow expected to be a prepraratory change.
+On Sun, Feb 28, 2016 at 5:25 AM,  <larsxschneider@gmail.com> wrote:
+> Map a P4 user to a specific name and email address in Git with the
+> "git-p4.mapUser" config. The config value must be a string adhering
+> to the format "p4user -> First Lastname <email@address.com>".
 
-Indeed, I meant to add a footnote acknowledging that and saying
-something along the lines of: "Despite suggesting this as a
-preparatory change in my v2 review, having now seen actually seen it,
-it makes more sense as a follow-on change."
+With the caveat that I'm not a Perforce user, is this arrow "->"
+thingy common in the Perforce world, or was it invented with this
+patch? If it was invented here, then would it make sense to instead
+use a more established format, such as the "authors" mapping file from
+git-svn?
 
-> Ok, when switching 4 and 5, I could call it something like "post cleanup/refactoring"
-> instead.
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/286868
+    p4user = Joe User <user@example.com>
+
+More below...
+
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> @@ -553,6 +553,17 @@ git-p4.keepEmptyCommits::
+> +git-p4.mapUser::
+> +       Map a P4 user to a name and email address in Git. Use a string
+> +       with the following format to create a mapping:
+> ++
+> +-------------
+> +git config --add git-p4.mapUser "p4user -> First Last <mail@address.com>"
+> +-------------
+> ++
+> +       A mapping will override any user information from P4. Mappings for
+> +       multiple P4 user can be defined.
+
+Does this format correctly with Asciidoc, or does the pargraph need to
+be left-justified? (I haven't tested it myself.)
+
+> diff --git a/t/t9828-git-p4-map-user.sh b/t/t9828-git-p4-map-user.sh
+> @@ -0,0 +1,61 @@
+> +#!/bin/sh
+> +
+> +test_description='Clone repositories and map users'
+> +
+> +. ./lib-git-p4.sh
+> +
+> +test_expect_success 'start p4d' '
+> +       start_p4d
+> +'
+> +
+> +test_expect_success 'Create a repo with different users' '
+> +       client_view "//depot/... //client/..." &&
+> +       (
+> +               cd "$cli" &&
+> +
+> +               >author.txt &&
+> +               p4 add author.txt &&
+> +               p4 submit -d "Add file author\\n"
+
+Broken &&-chain.
+
+> +               P4USER=mmax
+
+Ditto.
+
+> +               >max.txt &&
+> +               p4 add max.txt &&
+> +               p4 submit -d "Add file max"
+
+Ditto.
+
+> +               P4USER=mo
+
+Ditto.
+
+> +               >moritz.txt &&
+> +               p4 add moritz.txt &&
+> +               p4 submit -d "Add file moritz"
+
+...
+
+> +               P4USER=no
+
+...
+
+> +               >nobody.txt &&
+> +               p4 add nobody.txt &&
+> +               p4 submit -d "Add file nobody"
+> +       )
+> +'
+> +
+> +test_expect_success 'Clone repo root path with all history' '
+> +       client_view "//depot/... //client/..." &&
+> +       test_when_finished cleanup_git &&
+> +       (
+> +               cd "$git" &&
+> +               git init . &&
+> +               git config --add git-p4.mapUser "mmax -> Max Mustermann <max@muster.com>"  &&
+> +               git config --add git-p4.mapUser "mo -> Moritz Untreu <moritz@untreu.com>" &&
+> +               git p4 clone --use-client-spec --destination="$git" //depot@all &&
+> +               cat >expect <<-\EOF &&
+> +                       no <no@client>
+> +                       Moritz Untreu <moritz@untreu.com>
+> +                       Max Mustermann <max@muster.com>
+> +                       Dr. author <author@example.com>
+> +               EOF
+> +               git log --format="%an <%ae>" >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +test_expect_success 'kill p4d' '
+> +       kill_p4d
+> +'
+> +
+> +test_done
+> --
+> 2.5.1
