@@ -1,115 +1,66 @@
-From: Fred's Personal <freddiewik@optonline.net>
-Subject: RE: Trouble Cloning Git remote repository
-Date: Sun, 28 Feb 2016 12:48:49 -0500
-Message-ID: <00e001d17250$47c63fe0$d752bfa0$@optonline.net>
-References: <009f01d170e9$ecd5cae0$c68160a0$@optonline.net>
- <CACsJy8A5539X+VhUAnNfn5Q_uW1pa5oYb9YAAF8=u3XfdhAeMw@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/1] t9115: Skip pathnameencoding=cp932 under HFS
+Date: Sun, 28 Feb 2016 18:52:49 +0100
+Message-ID: <56D333F1.9050905@web.de>
+References: <20160208225806.GA3487@dcvr.yhbt.net>
+ <1456597724-26497-1-git-send-email-tboegi@web.de>
+ <20160228045945.GA14289@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7BIT
-Cc: 'Git Mailing List' <git@vger.kernel.org>
-To: 'Duy Nguyen' <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 18:49:05 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, k_satoda@f2.dion.ne.jp
+To: Eric Wong <normalperson@yhbt.net>, tboegi@web.de
+X-From: git-owner@vger.kernel.org Sun Feb 28 18:53:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa5Sq-0002v0-4m
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 18:49:04 +0100
+	id 1aa5Wp-00052e-It
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 18:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbcB1Rsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 12:48:41 -0500
-Received: from mta7.srv.hcvlny.cv.net ([167.206.4.202]:51814 "EHLO
-	mta7.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754556AbcB1Rsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 12:48:41 -0500
-Received: from mordor (ool-4350b670.dyn.optonline.net [67.80.182.112])
- by mta7.srv.hcvlny.cv.net
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTP id <0O39000HQQT3N261@mta7.srv.hcvlny.cv.net> for
- git@vger.kernel.org; Sun, 28 Feb 2016 12:48:39 -0500 (EST)
-In-reply-to: <CACsJy8A5539X+VhUAnNfn5Q_uW1pa5oYb9YAAF8=u3XfdhAeMw@mail.gmail.com>
-X-Mailer: Microsoft Outlook 14.0
-Content-language: en-us
-Thread-index: AQOgdq5P9iRbUgta8tPA1S+543FP/gF6fvFXm5fc6+A=
-X-Antivirus: AVG for E-mail 2016.0.7442 [4537/11713]
+	id S1753879AbcB1RxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 12:53:06 -0500
+Received: from mout.web.de ([212.227.15.14]:57497 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753548AbcB1RxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 12:53:05 -0500
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0LrbLR-1ZvIZG2o0r-013RXH; Sun, 28 Feb 2016 18:52:55
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <20160228045945.GA14289@dcvr.yhbt.net>
+X-Provags-ID: V03:K0:PKW3MDBDo6NXK8pgE23ypDhX090HD0rFMzPdGzh2PGen2JrHjJr
+ zAupitOqEi2vmMPaR4qQKHC12dtzzCYhCQg6pgZfM2B2AtSpltfGBQwCIM+DFvCkpBDxCT6
+ EYM3BjUf0JWDzcd0SpovyCI94KYSLLlAWWdBPXxfUn2RyZ5D/UTBrqxrraS9IB0U87psDdd
+ phdCT3B9Xu7t362m95VNg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:i/FholMEgOk=:b9Njv0++25iXFvsOfW1hoP
+ cU9+BUCViWYMoH0G2E/MHy3LZyyS/HufJyViWBEDSszLHusQzWsHL8rrW753LXYlhOQQ/vQbH
+ kCjdJCIchcgcbKxdysymsDv+sFBVNLjDbfSgr7avFB+kuLI7iKD8yG/iJV5BVkt/SAWt5KX1p
+ 5+2GS9bRrFGH9IACCpW+oVZqHWWkJhjWZTR/BXvTEdfmRoBGvR7aG/8/vOe7OPI1bsdW6YMm/
+ gQn4UnibNPnZJICN7vihZLHmP+Usr3vYzNSHnljQ1a6uLDiUNewUefjfOuJl14iHJabuJZrSi
+ X+791GjnWRq8sdDHDidSM4eNIcf+cpTz/gBBtje+LRGUwBazEF54WDLrAHKXOPcQjy5gh2N4j
+ JtAdD8YWNbANZlNn1KFDT9iojDGAxqEc/wplj8XWKDv3ncZULpu8ol/D+10kzwUWYTzfEAAqu
+ BV78lEpPY4n8f7ClVNa1LWZgBMg9M8c9oUtvqQq6PXiIxsXFGekwXu6C4spnjQY7ui4uaoKk4
+ p6bB4MzLcfhxpE77nmWYS/ffApymZoZt8Ho+Ug8es3v0+F4sTzHIaoOiVr76FVMpudElZDU1d
+ 7NmGWL9Zs+DoG1YAvvzQxA4OTfiCRlWbSqzr8vCXabslpJXWngdFqHol0JnwwVqCpWf/D1Eut
+ WxAfdCmnGILP3M39q0HNV7nufCocI9BrbvAwKViM2sHtcM9NH4A7CTjnp8IZmT9hEdWaCQHsY
+ bAQg+/6oDbnGF122zrocyIaz+kG1Ntm6HK55l5gpiYu0Qf3NoEG/QaAjy5kgvMKQYx1bdIfe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287779>
 
-Duy,
-
-Thanks for advice, here is the result of executing the lines you suggested:
-
-user1@Host1 MINGW64 ~/gitrepository (master)
-$ export GIT_TRACE=1
-
-user1@Host1 MINGW64 ~/gitrepository (master)
-$ git clone -v ssh://user1@Host2/srv/centralrepo
-12:33:47.928365 git.c:348               trace: built-in: git 'clone' '-v' 'ssh://user1@Host2/srv/centralrepo'
-Cloning into 'centralrepo'...
-12:33:48.022110 run-command.c:343       trace: run_command: 'C:\Program Files (x86)\PuTTY\plink.exe' 'user1@Host2' 'git-upload-pack '\''/srv/centralrepo'\'''
-
-##>>>Lines from $HOME/.bashrc (See below, removed here for clarity)
-
-+ user1@Host2 git-upload-pack /srv/centralrepo
-bash: user1@Host2: command not found
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-
-Regards,
-Fred 
-
-freddiewik@optonline.net
-
-
------Original Message-----
-From: Duy Nguyen [mailto:pclouds@gmail.com] 
-Sent: Saturday, February 27, 2016 4:36 AM
-To: Fred's Personal
-Cc: Git Mailing List
-Subject: Re: Trouble Cloning Git remote repository
-
-On Sat, Feb 27, 2016 at 6:03 AM, Fred's Personal <freddiewik@optonline.net> wrote:
-> $ git clone -v ssh://user1@Host2/srv/centralrepo Cloning into 
-> 'centralrepo'...
->>>>Lines from $HOME/.bashrc
->   + export
-> PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr
-> /games
-> :/usr/local/games
->   +
-> PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr
-> /games
-> :/usr/local/games
->   + PROMPT_COMMAND=
->   + CDPATH=
->   + '[' '' = yes ']'
->   + PS1='${debian_chroot:+($debian_chroot)}\u:\W\$ '
->   + export GIT_TRACE_PACKET=1
->   + GIT_TRACE_PACKET=1
->   + export GIT_TRACE=1
->   + GIT_TRACE=1
->>>>End of Lines from $HOME/.bashrc
-> ## WHERE DOES The following line COME FROM????What Script spits out 
-> this line????
->   + user1@Host2 git-upload-pack /srv/centralrepo
-
-Try set GIT_TRACE=1 at the clone line, I have a feeling that this line should be "ssh user@Host2..." but "ssh" is missing.
-
-$ export GIT_TRACE=1
-$ git clone -v ssh://user1@Host2/srv/centralrepo
---
-Duy
-
-
------
-No virus found in this message.
-Checked by AVG - www.avg.com
-Version: 2016.0.7442 / Virus Database: 4537/11702 - Release Date: 02/26/16
+On 28.02.16 05:59, Eric Wong wrote:
+> tboegi@web.de wrote:
+> Please keep lines wrapped at 80 cols or less.
+> (I need big fonts)
+OK
+> 
+>> @@ -105,10 +105,10 @@ test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
+>>  '
+> Why the extra 'o'?
+That shouldn't be there, sorry.
+Will send V2...
