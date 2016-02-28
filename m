@@ -1,97 +1,96 @@
-From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: [PATCH v2] fetch-pack: fix object_id of exact sha1
-Date: Sun, 28 Feb 2016 19:22:24 -0300
-Message-ID: <1456698144-11519-1-git-send-email-gabrielfrancosouza@gmail.com>
-References: <xmqqh9gseiqk.fsf@gitster.mtv.corp.google.com>
-Cc: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 28 23:22:53 2016
+From: Moritz Neeb <lists@moritzneeb.de>
+Subject: Re: [RFC/PATCH] lockfile: improve error message when lockfile exists
+Date: Sun, 28 Feb 2016 23:58:21 +0100
+Message-ID: <56D37B8D.9090001@moritzneeb.de>
+References: <1456690276-13914-1-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Gregory.Mounie@grenoble-inp.fr
+To: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 28 23:58:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa9jn-0000Hy-32
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 23:22:51 +0100
+	id 1aaAII-0006kF-U1
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 23:58:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755254AbcB1WWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 17:22:43 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:32973 "EHLO
-	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755048AbcB1WWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 17:22:42 -0500
-Received: by mail-yw0-f180.google.com with SMTP id u200so108096383ywf.0
-        for <git@vger.kernel.org>; Sun, 28 Feb 2016 14:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x8PvlzZXn/emN/C1Hvu7Qlmb1Q4njeHG5VlGr/Lhvvs=;
-        b=nSWvR9gzVDz7FFdaTJQuPJ83QOcrQ6ynYBPzBu5rKZzbukuuv+EpR8sII3o+gi7GX1
-         CCrpVc3jd6kuAO02xRAaEhdsDHYfLXZSBKPo39BYhXbNXhTELdm85HFq6k5jb/8b5cGM
-         aCOpFlpnCGCg0r0sKuf75vI1207sHKgyKjrUs4MZTscFoeAix+S25FRBwMGvQJFNX0tL
-         Z1aQEQLn2VLPiCBe3e2d2Lkj/OdOGxBc5dvoedVLUq948Uya28tEz89Et5CTW2bRuRyh
-         kkZA+e7a217vbryQB/dND8IhTz58hUsNS6YAtmxX4QyR9gSnLYCk22PEmt3U/YzUnZcM
-         +oRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=x8PvlzZXn/emN/C1Hvu7Qlmb1Q4njeHG5VlGr/Lhvvs=;
-        b=L95VeHlCdyqjLU69Ig3fVXDdTVCLyxGGpNwnWZDWfgs2d6itIUZdOc0oXO4ibzvD2+
-         WoAEuIfa4YIbyS9RzmCNcwEHtelfPIvH0wIo8MTgMu6/BbmZg2qGRMyEeIVu6ExtN6Az
-         y92v2KCqbKlTbllM9bG2mwLZj7lPAoavUKkDsim4tbd2UxKt+8r24BCUkysmUJUUel+K
-         5pzq0n4Li6RxHPxRpkqTB0jORpsrw8Ep9OSsM2N7Li5nroVh8jzhohHQS8ntFzLaiemv
-         VKm7atYbgDcT2E+GNrCAHl9Zi9SmwJG7drFDA+bLzxFLulDF78mHSorFVW0SRc2mfuMY
-         xeYQ==
-X-Gm-Message-State: AD7BkJI+iy4EylVoFkkNsEtcRC2fJpwAL8EzipYx9d2fT+PLfQx56a+z5/lyRp5anY/KeQ==
-X-Received: by 10.129.156.204 with SMTP id t195mr6736521ywg.288.1456698161925;
-        Sun, 28 Feb 2016 14:22:41 -0800 (PST)
-Received: from ghost.localdomain ([201.82.54.180])
-        by smtp.gmail.com with ESMTPSA id p199sm18517936ywp.37.2016.02.28.14.22.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 Feb 2016 14:22:41 -0800 (PST)
-X-Mailer: git-send-email 2.7.2
-In-Reply-To: <xmqqh9gseiqk.fsf@gitster.mtv.corp.google.com>
+	id S1755448AbcB1W60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 17:58:26 -0500
+Received: from moritzneeb.de ([78.47.1.106]:38923 "EHLO moritzneeb.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755277AbcB1W6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 17:58:25 -0500
+Received: from [192.168.1.3] (x4db4d017.dyn.telefonica.de [77.180.208.23])
+	by moritzneeb.de (Postfix) with ESMTPSA id 733191C058;
+	Sun, 28 Feb 2016 23:58:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
+	s=mail; t=1456700301;
+	bh=UJxdvJo0CO+/2z50Alh2sQcWZEfEVrJLsjNud8Dyw4Y=;
+	h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
+	b=Pkr8aPVPHhbH8O2COyaZqeUdhlFOnRRFOo7fQjgDJS0xRd0PzTBshRuU1xO/bUSWv
+	 MZlhqcipnvYGl1AjRzqp1hQLB76e0QWmflK88mhxVwlgnCTRwN1o9JIkyASZsPs2Jd
+	 ln8cxTFRErL8Sgpzprb8uvJMhMeGvndgLd1A/rqU=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+In-Reply-To: <1456690276-13914-1-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287793>
 
-Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
-2013-12-05) added support for specifying a SHA-1 as well as a ref name.
-Add support for specifying just a SHA-1 and set the ref name to the same
-value in this case.
+On 02/28/2016 09:11 PM, Matthieu Moy wrote:
+> A common mistake leading a user to see this message is to launch "git
+> commit", let the editor open (and forget about it), and try again to
+> commit.
+> 
+> The previous message was going too quickly to "a git process crashed"
+> and to the advice "remove the file manually".
+> 
+> This patch modifies the message in two ways: first, it considers that
+> "another process is running" is the norm, not the exception, and it
+> explicitly hints the user to look at text editors.
+> 
+> The message is 2 lines longer, but this is not a problem since
+> experienced users do not see the message often.
+> 
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> This patch was written after seen one more time a student panicked
+> because he had a "git commit" backgrounded.
 
-Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
----
+I think git commit is almost the only case where this would happen.
+If the goal is have it shorter, then the editor example could be boiled down to
+something like "e.g. a commit". But then it is less clear on what the
+necessary action would be. 
+> 
+> I'm not 100% satisfied with the new message. I don't think it harms to
+> have a 5-lines message here but it's probably possible to be a bit
+> more concise.
 
-Not the cleanest conditional I've ever written, but it should handle
-all cases correctly.
+I adapted it a bit, it has about the same length but I tried to
+take out some repeating:
 
- builtin/fetch-pack.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 79a611f..763f510 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -16,10 +16,12 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- 	struct ref *ref;
- 	struct object_id oid;
- 
--	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
--		name += GIT_SHA1_HEXSZ + 1;
--	else
-+	if (get_oid_hex(name, &oid) ||
-+			(name[GIT_SHA1_HEXSZ] != ' ' &&
-+			 name[GIT_SHA1_HEXSZ] != '\0'))
- 		oidclr(&oid);
-+	else if (name[GIT_SHA1_HEXSZ] == ' ')
-+		name += GIT_SHA1_HEXSZ + 1;
- 
- 	ref = alloc_ref(name);
- 	oidcpy(&ref->old_oid, &oid);
--- 
-2.7.2
+-- 8< --
+diff --git a/lockfile.c b/lockfile.c
+index 80d056d..ffb4c8d 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -150,9 +150,11 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ {
+     if (err == EEXIST) {
+         strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
+-            "If no other git process is currently running, this probably means a\n"
+-            "git process crashed in this repository earlier. Make sure no other git\n"
+-            "process is running and remove the file manually to continue.",
++            "Another git process seems to be running in this repository,\n"
++            "e.g. an editor opened by git. Please make sure all processes\n"
++            "are terminated then try again. If it still fails, a git process\n"
++            "may have crashed in this repository earlier:\n"
++            "remove the file manually to continue.",
+                 absolute_path(path), strerror(err));
+     } else
+         strbuf_addf(buf, "Unable to create '%s.lock': %s",
