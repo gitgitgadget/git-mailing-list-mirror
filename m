@@ -1,66 +1,95 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/1] t9115: Skip pathnameencoding=cp932 under HFS
-Date: Sun, 28 Feb 2016 18:52:49 +0100
-Message-ID: <56D333F1.9050905@web.de>
-References: <20160208225806.GA3487@dcvr.yhbt.net>
- <1456597724-26497-1-git-send-email-tboegi@web.de>
- <20160228045945.GA14289@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
+Date: Sun, 28 Feb 2016 10:21:43 -0800
+Message-ID: <xmqqfuwcg0g8.fsf@gitster.mtv.corp.google.com>
+References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
+	<56D078F3.9070905@web.de>
+	<xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
+	<56D0D2DF.1040807@web.de>
+	<xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
+	<20160227032907.GB10313@sigill.intra.peff.net>
+	<56D14C56.6070306@web.de> <56D1DF53.1010006@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, k_satoda@f2.dion.ne.jp
-To: Eric Wong <normalperson@yhbt.net>, tboegi@web.de
-X-From: git-owner@vger.kernel.org Sun Feb 28 18:53:12 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Feb 28 19:21:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa5Wp-00052e-It
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 18:53:11 +0100
+	id 1aa5yZ-0000GO-DU
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 19:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753879AbcB1RxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 12:53:06 -0500
-Received: from mout.web.de ([212.227.15.14]:57497 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753548AbcB1RxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 12:53:05 -0500
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0LrbLR-1ZvIZG2o0r-013RXH; Sun, 28 Feb 2016 18:52:55
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.6.0
-In-Reply-To: <20160228045945.GA14289@dcvr.yhbt.net>
-X-Provags-ID: V03:K0:PKW3MDBDo6NXK8pgE23ypDhX090HD0rFMzPdGzh2PGen2JrHjJr
- zAupitOqEi2vmMPaR4qQKHC12dtzzCYhCQg6pgZfM2B2AtSpltfGBQwCIM+DFvCkpBDxCT6
- EYM3BjUf0JWDzcd0SpovyCI94KYSLLlAWWdBPXxfUn2RyZ5D/UTBrqxrraS9IB0U87psDdd
- phdCT3B9Xu7t362m95VNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:i/FholMEgOk=:b9Njv0++25iXFvsOfW1hoP
- cU9+BUCViWYMoH0G2E/MHy3LZyyS/HufJyViWBEDSszLHusQzWsHL8rrW753LXYlhOQQ/vQbH
- kCjdJCIchcgcbKxdysymsDv+sFBVNLjDbfSgr7avFB+kuLI7iKD8yG/iJV5BVkt/SAWt5KX1p
- 5+2GS9bRrFGH9IACCpW+oVZqHWWkJhjWZTR/BXvTEdfmRoBGvR7aG/8/vOe7OPI1bsdW6YMm/
- gQn4UnibNPnZJICN7vihZLHmP+Usr3vYzNSHnljQ1a6uLDiUNewUefjfOuJl14iHJabuJZrSi
- X+791GjnWRq8sdDHDidSM4eNIcf+cpTz/gBBtje+LRGUwBazEF54WDLrAHKXOPcQjy5gh2N4j
- JtAdD8YWNbANZlNn1KFDT9iojDGAxqEc/wplj8XWKDv3ncZULpu8ol/D+10kzwUWYTzfEAAqu
- BV78lEpPY4n8f7ClVNa1LWZgBMg9M8c9oUtvqQq6PXiIxsXFGekwXu6C4spnjQY7ui4uaoKk4
- p6bB4MzLcfhxpE77nmWYS/ffApymZoZt8Ho+Ug8es3v0+F4sTzHIaoOiVr76FVMpudElZDU1d
- 7NmGWL9Zs+DoG1YAvvzQxA4OTfiCRlWbSqzr8vCXabslpJXWngdFqHol0JnwwVqCpWf/D1Eut
- WxAfdCmnGILP3M39q0HNV7nufCocI9BrbvAwKViM2sHtcM9NH4A7CTjnp8IZmT9hEdWaCQHsY
- bAQg+/6oDbnGF122zrocyIaz+kG1Ntm6HK55l5gpiYu0Qf3NoEG/QaAjy5kgvMKQYx1bdIfe 
+	id S1753766AbcB1SVr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2016 13:21:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62120 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753496AbcB1SVr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Feb 2016 13:21:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A299B44C37;
+	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=yRnDMw1eUyJ8
+	ZlHLgjQIVSL31Nk=; b=XaKSG9W4hsZrFYnk7gryxfibb/Y4vrz0dIaOKkN2Fo2K
+	RCXpXv/MCRyTp9UCLGPHDq7XbV4HxC5ZdbcwGtWPD4FYKOJj4Dphg2T/YenYW++8
+	RpxOnF5uqwNH9ztv8R60xC79Iz1DxOeFj+/1JDyxfybaeMRmC414kE9WLFg+e4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=StkmXN
+	MRKUcSk39bqVXgVUaMa5Ko2HzRFpi592wuDcsmYwuBFz/Ky02lloxXLLb5CFTZi8
+	lHdfPHGeidepmSz7yae7XdG4zLxTmZzQ4bhLQ+OE8jpWofQZIJix3mRySw4G/wK8
+	DYN53Y4+bG5wXbq8nafakbf9OM5OJZglGh8Pk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9972644C36;
+	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 19E8044C35;
+	Sun, 28 Feb 2016 13:21:45 -0500 (EST)
+In-Reply-To: <56D1DF53.1010006@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 27 Feb 2016 18:39:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1F718F9A-DE48-11E5-8305-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287780>
 
-On 28.02.16 05:59, Eric Wong wrote:
-> tboegi@web.de wrote:
-> Please keep lines wrapped at 80 cols or less.
-> (I need big fonts)
-OK
-> 
->> @@ -105,10 +105,10 @@ test_expect_success UTF8 'svn.pathnameencoding=cp932 new file on dcommit' '
->>  '
-> Why the extra 'o'?
-That shouldn't be there, sorry.
-Will send V2...
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+
+> How about something like this as a workaround ?
+> (I can send a proper patch, if this is the way forward)
+> ...
+>     Make Git compile under Mac OS X 10.6 by using clang instead of gc=
+c
+
+Given that it is understandable that Apple is no longer interesting
+in fixing compiler bugs for 10.6, I think that is the best we could
+do to help its users.
+
+> ...
+> +       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`=
+" -ge 10 &&
+> echo 1),1)
+
+This singles out 10.6-and-nothing-else, 10.6-or-older or
+10.6-or-newer?
+
+That "-ge", which smells like a copy-and-pasta from the next one
+that says "we have getdelim on 10.7-and-newer" bothers me.
+
+> +    CC =3D clang
+> +       endif
+>         ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`=
+" -ge 11 &&
+> echo 1),1)
+>                 HAVE_GETDELIM =3D YesPlease
+>         endif
