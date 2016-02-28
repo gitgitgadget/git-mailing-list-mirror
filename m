@@ -1,76 +1,124 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 3/3] Documentation/git-config: fix --get-all description
-Date: Sun, 28 Feb 2016 11:54:37 +0000
-Message-ID: <77578beabdb50d696ad9155ef2e0e1847c22a9ad.1456660027.git.john@keeping.me.uk>
-References: <cover.1456660027.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>, Guilherme <guibufolo@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 28 12:55:28 2016
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 1/2] pull --rebase: add --[no-]autostash flag
+Date: Sun, 28 Feb 2016 20:28:49 +0800
+Message-ID: <CACRoPnT6Yc_vfrYvzKctL1dDkZCzme-4emLF0MysJq4f_H2OvQ@mail.gmail.com>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+	<xmqqk2lqeyzv.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Mehul Jain <mehul.jain2029@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 28 13:28:57 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aZzwd-0006VA-Ee
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 12:55:27 +0100
+	id 1aa0T2-00034E-QW
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 13:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757351AbcB1LzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 06:55:23 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:36772 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756975AbcB1LzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 06:55:22 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 5F623CDA56C;
-	Sun, 28 Feb 2016 11:55:21 +0000 (GMT)
-X-Quarantine-ID: <r2ErpfIdZCkp>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=5
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id r2ErpfIdZCkp; Sun, 28 Feb 2016 11:55:20 +0000 (GMT)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 69A6BCDA62D;
-	Sun, 28 Feb 2016 11:55:11 +0000 (GMT)
-X-Mailer: git-send-email 2.7.1.503.g3cfa3ac
-In-Reply-To: <cover.1456660027.git.john@keeping.me.uk>
-In-Reply-To: <cover.1456660027.git.john@keeping.me.uk>
-References: <20160228104557.GT1766@serenity.lan> <cover.1456660027.git.john@keeping.me.uk>
+	id S1757308AbcB1M2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 07:28:52 -0500
+Received: from mail-lb0-f195.google.com ([209.85.217.195]:35197 "EHLO
+	mail-lb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbcB1M2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 07:28:51 -0500
+Received: by mail-lb0-f195.google.com with SMTP id h2so5058569lbs.2
+        for <git@vger.kernel.org>; Sun, 28 Feb 2016 04:28:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=WPIHoR7+o4IQwSU9oBWtKKoAPLTWAndl0bA9QeBbjyI=;
+        b=H2GmsxEdaYaY/+YaCD6C7kDhd32piP4f+/O1pr5T7KGwTjyUGY3K8/UDo50WgxYlSi
+         u+YarXNlQWi5yhEgUW4s7KIiHsq5rzqpI4nf8UfnZ6Bsd6dWnVqWZJ1NPzqZ0H7VsG2a
+         KquzReaatE76vm7sYx4L/MctFpb4ARPSV6ho4ZxXL4+rYZ+82UvHMPp/GRClERtBbmNE
+         XkbSk4avDTypM5shlh0yiJNLzQ+bmZ0+8i91aTG2oDoEwRQANm8nf4PdPEWMnkK0keTB
+         wLe/0HrhyXN9rZHkYdbEj3E1wVsGVf6cZPWizFL66vMmkV+V1ZByMB3b6TEUy9OG0Ion
+         XWAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=WPIHoR7+o4IQwSU9oBWtKKoAPLTWAndl0bA9QeBbjyI=;
+        b=RlQSynz+L5t/uGpUZVQy3Yi8TxwIhr7Z9+RP+BPd1/gOikUDqHtwDy0WdrLCs0rk+C
+         Kb9URpicFbPX1wA3tmXAEgimrENCmUuurJw/uX7HQdpsJPRRsYhkldzJ2g1++ubmjkOY
+         2s8V+1HwuqY5qeHuLbN0FvJ1TGTlD3qqiiiY3nUid+aSJMrwQ75eKVDlpyqxzi3T1WRF
+         2ILRFax76PJ9td8zYc+kDPzGCRVGA1/30GEM7BtQuRNtafxpH+qGzWqcmVvEJKl4rnSC
+         YmvABwFAnkPDDDfg9gJkIlTyRDtZWXygjqmIrwGlYymmOJ7HTX5jP3quMOhdQe5GwBsZ
+         VCdQ==
+X-Gm-Message-State: AD7BkJJpbepIa/BL2y+RdXMyZREjru1oGA4v+IyoxXGiZNAKB5x/U7Jna5c8ozRWUYb+0n0haZXC3LQnPkqkqQ==
+X-Received: by 10.112.184.133 with SMTP id eu5mr2840652lbc.99.1456662529901;
+ Sun, 28 Feb 2016 04:28:49 -0800 (PST)
+Received: by 10.112.207.68 with HTTP; Sun, 28 Feb 2016 04:28:49 -0800 (PST)
+In-Reply-To: <xmqqk2lqeyzv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287773>
 
---get does not fail if a key is multi-valued, it returns the last value
-as described in its documentation.  Clarify the description of --get-all
-to avoid implying that --get does fail in this case.
+Hi Junio,
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- Documentation/git-config.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Sun, Feb 28, 2016 at 3:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Mehul Jain <mehul.jain2029@gmail.com> writes:
+>> @@ -835,13 +841,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>>               hashclr(orig_head);
+>>
+>>       if (opt_rebase) {
+>> -             int autostash = 0;
+>> -
+>>               if (is_null_sha1(orig_head) && !is_cache_unborn())
+>>                       die(_("Updating an unborn branch with changes added to the index."));
+>>
+>> -             git_config_get_bool("rebase.autostash", &autostash);
+>> -             if (!autostash)
+>> +             if (!opt_autostash)
+>>                       die_on_unclean_work_tree(prefix);
+>
+> I would have expected that
+>
+>  * a global opt_autostash is initialized to -1 (unspecified);
+>
+>  * opt_bool() would flip it to either 0 or 1 with --[no-]autostash;
+>
+>  * existing "rebase.autostash" configuration check inside "git pull"
+>    code  gets removed;
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index e9c755f..6fc08e3 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -86,8 +86,7 @@ OPTIONS
- 	found and the last value if multiple key values were found.
- 
- --get-all::
--	Like get, but does not fail if the number of values for the key
--	is not exactly one.
-+	Like get, but returns all values for a multi-valued key.
- 
- --get-regexp::
- 	Like --get-all, but interprets the name as a regular expression and
--- 
-2.7.1.503.g3cfa3ac
+Removing the "rebase.autostash" configuration check would bring back
+the problem which 53c76dc (pull: allow dirty tree when
+rebase.autostash enabled, 2015-07-04) fixed.
+
+>  * and the code that builds "git rebase" invocation command line
+>    will do
+>
+>         if (opt_autostash < 0)
+>                 ; /* do nothing */
+>         else if (opt_autostash == 0)
+>                 argv_array_push(&args, "--no-autostash");
+>         else
+>                 argv_array_push(&args, "--autostash");
+>
+> Then when "git pull --rebase" is run without "--[no-]autostash", the
+> underlying "git rebase" would be run without that option, and does its
+> usual thing, including reading rebase.autostash and deciding to do
+> "git stash".  And when "git pull" is run with "--[no-]autostash",
+> the underlying "git rebase" would be given the same option, and
+> would do what it was told to do, ignoring rebase.autostash setting.
+>
+> So why does "git pull" still need to look at rebase.autostash
+> configuration after this change?
+
+Ultimately, git-pull needs to be aware of whether autostash is active
+or not (and this means rebase.autostash needs to be looked at as well)
+because if autostash is disabled, git-pull needs to perform the
+"worktree is clean" check. And this "worktree is clean" check needs to
+be done *before* git-fetch and git-rebase is run.
+
+See f9189cf (pull --rebase: exit early when the working directory is
+dirty, 2008-05-21).
+
+Regards,
+Paul
