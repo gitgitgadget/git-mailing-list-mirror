@@ -1,77 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Re: git config --get-urlmatch does not set exit code 1 when no match is found
-Date: Sun, 28 Feb 2016 12:01:19 -0800
-Message-ID: <xmqq8u24eh9s.fsf@gitster.mtv.corp.google.com>
-References: <20160228104557.GT1766@serenity.lan>
-	<cover.1456660027.git.john@keeping.me.uk>
+From: tboegi@web.de
+Subject: [PATCH 1/1] config.mak.uname: Darwin: Use clang for Mac OS X 10.6
+Date: Sun, 28 Feb 2016 21:09:44 +0100
+Message-ID: <1456690184-25127-1-git-send-email-tboegi@web.de>
+References: <xmqqfuwcg0g8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Guilherme <guibufolo@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Sun Feb 28 21:01:39 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 28 21:07:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aa7X8-0008Hr-OT
-	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 21:01:39 +0100
+	id 1aa7co-0002Hd-KE
+	for gcvg-git-2@plane.gmane.org; Sun, 28 Feb 2016 21:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065AbcB1UB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 15:01:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53879 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755024AbcB1UB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 15:01:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BEF0A47CBF;
-	Sun, 28 Feb 2016 15:01:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G78L435ouGwgeOvJUAOsWOiyLUU=; b=YlJzkP
-	1Bg086KMWwmLCKDjXMF9/u31Lofj30c4rdsbP1IuXmL6fZsz5O4DbA4PIil3gYZL
-	ldiHU4dxGWoWQ+UJlcGW+nJ6QMAn6zGqNdqzzgRXTN6QqZA/lCMZkPOybpcpMkWA
-	+87Ejj4wiEhddfl/1yaU4rr6reof/JtnIbu9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GTY8MvCRq/CXddizC8E1yJe5oashBCx0
-	vBQ8b1PYjqhDq2G7hwIGbqjuRjeAJ+DQkiF09TjqUVJ/zy3dYwErnN9cfFfHiKSG
-	1ZHJWWLyqDxHWKCSEgWXXz7xCghjL2TJBN8tnmwwrb3ePXgw+dhduPgcLcoaFJZG
-	IGKCYCMtHXI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B66F547CBE;
-	Sun, 28 Feb 2016 15:01:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C71247CBD;
-	Sun, 28 Feb 2016 15:01:21 -0500 (EST)
-In-Reply-To: <cover.1456660027.git.john@keeping.me.uk> (John Keeping's message
-	of "Sun, 28 Feb 2016 11:54:34 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0975F2EA-DE56-11E5-BAE6-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754813AbcB1UH0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Feb 2016 15:07:26 -0500
+Received: from mout.web.de ([212.227.17.11]:53763 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754612AbcB1UHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 15:07:25 -0500
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MN4Gi-1aXuh015Kq-006bm0; Sun, 28 Feb 2016 21:07:22
+ +0100
+X-Mailer: git-send-email 2.7.0.303.g2c4f448.dirty
+In-Reply-To: <xmqqfuwcg0g8.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:cB/Dk7zGYmakQeMK2IyZ/ID3l92J+5P3USdk2yJzj8GikNN+ABV
+ rDzsiIbGh9nhwwspENLX0T0uMe4Jd5+Jg93haJLztyMaaZK+uZ/T24qsje72jvFtWmm9wXy
+ aV1ogDd2QKev8SPp1Fw1f8G7+nYMe5ROCJbHMarCFoBZhvR5yIZHFo7/P/GkWA2/4ySy3ps
+ mtVScVwWIpaiH+9TivOqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0cvHtfQqpJE=:C8kytye2fodhVN+Pb6JTAC
+ HC3wrv1Ya3ssCzvZSMEQjDfwOMxYGcvaX7O8JGqgrRs0GYrb2FectbsFV6sUPWfvfHAiAmgAQ
+ Qb50vXSoz5zeWjVVbLCMleJIziI0349ZUoGIevbCcql2bnPqGSbFt2vliuTQHRuTBSDNIpZk6
+ KJrGkcYYXDSZMYKw/864F0DOKaaYDzEXULSqrx7qTh5MYhAGENe51f+9W9Xh77aQJXen6NG1W
+ TRkIF3qYxA5GxxyTqheG4YP3gjk+nuoPO0OzQEhoUqAp6cljAPI0Mypp8JuHSHBaY4/MPn6Tx
+ VCqOEbuiJcEHdjT+DRvMYOJJ6CtldWM2JcBj9GOG0UwIPLPP0a6V2a7JgNDMad8buY0iDj/jJ
+ Nj1yevF0qCxATYqEMWm+jT53xBl6e1rnXge3lV0IkpMm0Fhfu8HNRfcuuKLw/t6p9I7lc3Xtx
+ ctXHllFBHH2UDM9fo76CxLhYTtZys9jfhf1WHDbCXWe+ssWanvI7Sk//kAObtqmHdaK3oEMzM
+ X3rRxfuYO34TPLDfEYkYExGvVD39Qcv+nHcaJ0u+oWbMbuVD2Qc0MdzeWwMQ6mvr71jQ0Sx9j
+ agBQi/fCcXur3ILUu0DzcgsF9jeDBaNkk16TO85yhB57MqRh/+AaLkzsESX1VmOzAOlmsQ1wn
+ h6R+Vf5RbkIHAWe7DHPEvB6zwRZAerEvXdEKiDPmC0NpIG8/i5qExFoirqvDnAKZ6KG7NzN4Z
+ USBZqLFBar3zIvwrArMeSKaFnLKK7bp45oOpd/I8qwNT0r8AARq5oi6Ih50hLKsjKNmk2Wfr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287789>
 
-John Keeping <john@keeping.me.uk> writes:
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-> Here's a series that changes the behaviour of "git config --get-urlmatch"
-> when no appropriate key is found as well as a couple of improvements to
-> the documentation while we're here.
+Commit
+"tree-diff: catch integer overflow in combine_diff_path allocation"
+make gcc under Mac OX 10.6 crash like this:
 
-Sounds sensible.  It does change the behaviour, but it is inevitable
-that a bugfix has to change existing behaviour, so...
+CC combine-diff.o
+combine-diff.c: In function =E2=80=98diff_tree_combined=E2=80=99:
+combine-diff.c:1391: internal compiler error: Segmentation fault
 
->
-> John Keeping (3):
->   config: fail if --get-urlmatch finds no value
->   Documentation/git-config: use bulleted list for exit codes
->   Documentation/git-config: fix --get-all description
->
->  Documentation/git-config.txt | 19 +++++++++----------
->  builtin/config.c             |  5 ++++-
->  t/t1300-repo-config.sh       |  3 +++
->  3 files changed, 16 insertions(+), 11 deletions(-)
+Xcode for Mac OS X 10.6 has both gcc and clang.
+Later versions of Mac OSX/Xcode only provide clang, and gcc is a wrappe=
+r
+to it.
+Make Git compile under Mac OS X 10.6 by using clang instead of gcc
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ config.mak.uname | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index d6f7980..d0a3df3 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -102,6 +102,9 @@ ifeq ($(uname_S),Darwin)
+ 	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+ 		NO_STRLCPY =3D YesPlease
+ 	endif
++	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -eq 10=
+ && echo 1),1)
++    CC =3D clang
++	endif
+ 	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge 11=
+ && echo 1),1)
+ 		HAVE_GETDELIM =3D YesPlease
+ 	endif
+--=20
+2.7.0.303.g2c4f448.dirty
