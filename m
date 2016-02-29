@@ -1,139 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/3] sumodule--helper: fix submodule--helper clone usage and check argc count
-Date: Mon, 29 Feb 2016 09:49:49 -0800
-Message-ID: <xmqqr3fvcsoy.fsf@gitster.mtv.corp.google.com>
-References: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
-	<1456532000-22971-2-git-send-email-jacob.e.keller@intel.com>
+From: "jarek z." <yaras6@gmail.com>
+Subject: Invalid initial git gui message encoding
+Date: Mon, 29 Feb 2016 18:50:04 +0100
+Message-ID: <CABvS4Ohe3fKG6qcDHtryLR3Mokt44m4AM6oP0p3PisvxndO+oA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 18:50:01 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: patthoyts@users.sourceforge.net
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 29 18:50:13 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaRxG-0001bG-4z
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 18:49:58 +0100
+	id 1aaRxT-0001jQ-Ey
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 18:50:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036AbcB2Rty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 12:49:54 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62492 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752407AbcB2Rtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 12:49:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2156484B6;
-	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EQ1t7D6Cf0lJkE2eYpDGGD9pnM4=; b=fsv1TS
-	l/yRTOuf86tntl6Q25dK0HqtNjNP4I0yg+CmoRU/9jWTbMcpUUfReXWtEEOBMpAJ
-	phD5utU2GoSy8zzGJzGy3ap80M16JFDBPn1gm/d/Zl9SACWBDZ68xICrl+VMuuHU
-	6xXfkuXY1of81z9bbN5eEAmFAKr6kPtvkMe3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UpF+NUebtVvLMenHTAJQc1TwZs+H84+r
-	sZoEc9yUGUhH7P5k8XSimoBcjNLE5+wmwhx8CwcIKAlUmG1YHOs6TtR7kCgKZhtF
-	irNvhJNuCOB4v1500zgKebtEPMdYp/WQlayzLvJ5ra7+ez0atzOBKprwZzNeqR5b
-	/2243esRp3w=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9E07484B5;
-	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 32A68484B3;
-	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
-In-Reply-To: <1456532000-22971-2-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Fri, 26 Feb 2016 16:13:18 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D515E066-DF0C-11E5-9891-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753279AbcB2RuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 12:50:06 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:33749 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346AbcB2RuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 12:50:05 -0500
+Received: by mail-ig0-f171.google.com with SMTP id y8so1057235igp.0
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 09:50:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=jHuT3LjUIIfbFcYmISiFtsMmJrhK0OcAn6Pjv73pUOY=;
+        b=Evz6azhWOSsKUgJaXQN6cOA+j9yVUjXGY8HaM2nx0bC50O1lI9b1rqidHwBuRBMswm
+         IRQ+Tr5eAx/N8LYS2EEXz+vWI32WUzCaIf5BrWyoeHQUGrLOQgHouGBACw03WY8Ran8q
+         86uZ01edInKHjz3qxn+Qt0QR2bIqW1DTHu6g1Iwr9FhPZXXwcXoS4P+bYFlrcU4dnBtF
+         rdD/WB5hUahMTZq5OI+6b7Q7PlhV+z6z1H/MRm2WLvfdwRJyD6ySRtrpfWJihQeubV4O
+         HdpmiSn90HlF3cbBycUY2ERGJRB/MA92VNFHKMxeH1hwY1xTv70usc3a3QwB6Q07B8Sy
+         ROtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=jHuT3LjUIIfbFcYmISiFtsMmJrhK0OcAn6Pjv73pUOY=;
+        b=VDIiamRdKmfKPiKgJ/JMUwrvDiNVi3f7UC2XssLQvw18Ktg+hTPUn7ex0FnbqSOK/6
+         HGmTCUqWfH+32BiAPq0cecmapsEZZ5CFbLGKMJzSkJHcwGN5XJ9EahDk/UFFCPQKKe2l
+         /aS7Naj7Gu0cZZ+HFyEOkQaHSye+CTqoRUR5TbbXftRm2Z3UiYF6OXi4lfeO7e88xE/9
+         Q6pJXWgQ9Z6lcyG1kbPZ1BJKAnhIqHOKFAF4VN9QrZBH3Wv8GY0c34m8lLQ735Gm9SyH
+         YPKE7dNqEovQMZqMeh5nhaDevzhNTgyH6baNlT1imSLilbOf75DG1mi/HUhmUcRMzvP9
+         QqFw==
+X-Gm-Message-State: AD7BkJKBnbdgFyK0JPVMweEci7SGXV/K3OCUQwrlwRJt02VHwepiiRYjVE91RCO8XXmykieRc7K2uzehkVlnqQ==
+X-Received: by 10.50.50.201 with SMTP id e9mr11695609igo.10.1456768204580;
+ Mon, 29 Feb 2016 09:50:04 -0800 (PST)
+Received: by 10.36.211.202 with HTTP; Mon, 29 Feb 2016 09:50:04 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287853>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Hello.
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> git submodule--helper clone usage specified that paths come after the --
-> as a sequence. However, the actual implementation does not, and requires
-> only a single path passed in via --path. In addition, argc was
-> unchecked. (allowing arbitrary extra arguments that were silently
-> ignored).
->
-> Fix the usage description to match implementation. Add an argc check to
-> enforce no extra arguments. 
+Working with Git for Windows on git gui I noticed an issue on reading
+initial message to git gui message prompt after squash or cherry-pick
+conflict. When system encoding is not set to UTF-8 (and on my Windows
+it is cp1250) squash/cherry pick conflict message gets invalid
+encoding.
 
-The above sounds very sensible.
+This issue and test case is more widely described on
+https://github.com/git-for-windows/git/issues/664 . After I set
+encoding to UTF-8 using fconfigure, the problem seems to be fixed.
 
-> Fix a bug in the argument passing in
-> git-submodule.sh which would pass --reference and --depth as empty
-> strings when they were unused, resulting in extra argc after parsing
-> options.
+I tried it also on Linux, but I cannot reproduce this problem as its
+default encoding is utf-8. I verified it using simple tcl script:
+"puts [encoding system]". On Windows I get:
 
-This does make sense but it is an unrelated fix.  Perhaps split this
-patch into two?
+$ tclsh enc.tcl
+cp1250
 
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->  builtin/submodule--helper.c | 5 ++++-
->  git-submodule.sh            | 4 ++--
->  2 files changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f4c3eff179b5..072d9bbd12a8 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -187,13 +187,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
->  	const char *const git_submodule_helper_usage[] = {
->  		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
->  		   "[--reference <repository>] [--name <name>] [--url <url>]"
-> -		   "[--depth <depth>] [--] [<path>...]"),
-> +		   "[--depth <depth>] [--path <path>]"),
->  		NULL
->  	};
->  
->  	argc = parse_options(argc, argv, prefix, module_clone_options,
->  			     git_submodule_helper_usage, 0);
->  
-> +	if (argc)
-> +		usage(*git_submodule_helper_usage);
-> +
+on Linux:
 
-That asterisk looks very unusual and wanting to be future-proofed
-(i.e. who says that only the first entry matters?).  Should't this
-be calling usage_with_options()?
+$ tclsh enc.tcl
+utf-8
 
->  	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
->  	sm_gitdir = strbuf_detach(&sb, NULL);
->  
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 9bc5c5f94d1d..2dd29b3df0e6 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -347,7 +347,7 @@ Use -f if you really want to add it." >&2
->  				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
->  			fi
->  		fi
-> -		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
-> +		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
->  		(
->  			clear_local_git_env
->  			cd "$sm_path" &&
-> @@ -709,7 +709,7 @@ Maybe you want to use 'update --init'?")"
->  
->  		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
->  		then
-> -			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
-> +			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" ${reference:+"$reference"} ${depth:+"$depth"} || exit
->  			cloned_modules="$cloned_modules;$name"
->  			subsha1=
->  		else
+It may be not a big issue for Linux, but I think it is worth to have
+it merged in case of somebody had other encoding than UTF-8. This fix
+has been already merged into Git for Windows.
+
+As stated in Documentation/SubmittingPatches, this patch is based on
+git://repo.or.cz/git-gui.git.
+
+BTW. Is there any example of writing regression tests for git-gui?
+
+Signed-off-by: yaras <yaras6@gmail.com>
+---
+ git-gui.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 11048c7..1ed5185 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1616,11 +1616,13 @@ proc run_prepare_commit_msg_hook {} {
+  if {[file isfile [gitdir MERGE_MSG]]} {
+  set pcm_source "merge"
+  set fd_mm [open [gitdir MERGE_MSG] r]
++ fconfigure $fd_mm -encoding utf-8
+  puts -nonewline $fd_pcm [read $fd_mm]
+  close $fd_mm
+  } elseif {[file isfile [gitdir SQUASH_MSG]]} {
+  set pcm_source "squash"
+  set fd_sm [open [gitdir SQUASH_MSG] r]
++ fconfigure $fd_sm -encoding utf-8
+  puts -nonewline $fd_pcm [read $fd_sm]
+  close $fd_sm
+  } else {
+--
