@@ -1,126 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 28/32] config: read ref storage config on startup
-Date: Mon, 29 Feb 2016 17:21:07 -0500
-Message-ID: <20160229222107.GA18931@sigill.intra.peff.net>
-References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
- <1456354744-8022-29-git-send-email-dturner@twopensource.com>
- <20160227035634.GA10829@sigill.intra.peff.net>
- <1456783062.18017.65.camel@twopensource.com>
- <20160229221024.GE25342@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v6 32/32] tests: add ref-storage argument
+Date: Mon, 29 Feb 2016 23:52:53 +0100
+Message-ID: <1456786373-6644-1-git-send-email-szeder@ira.uka.de>
+References: <1456354744-8022-33-git-send-email-dturner@twopensource.com>
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 23:21:17 2016
+X-From: git-owner@vger.kernel.org Mon Feb 29 23:54:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaWBn-0000vO-TI
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 23:21:16 +0100
+	id 1aaWhw-00035j-AU
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 23:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751179AbcB2WVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 17:21:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51835 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750779AbcB2WVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 17:21:11 -0500
-Received: (qmail 12753 invoked by uid 102); 29 Feb 2016 22:21:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 17:21:10 -0500
-Received: (qmail 31896 invoked by uid 107); 29 Feb 2016 22:21:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 17:21:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 17:21:07 -0500
-Content-Disposition: inline
-In-Reply-To: <20160229221024.GE25342@sigill.intra.peff.net>
+	id S1750973AbcB2WyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 17:54:24 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:53483 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750729AbcB2WyY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 17:54:24 -0500
+Received: from x590c46ff.dyn.telefonica.de ([89.12.70.255] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1aaWho-0000aX-85; Mon, 29 Feb 2016 23:54:21 +0100
+X-Mailer: git-send-email 2.7.2.410.g92cb358
+In-Reply-To: <1456354744-8022-33-git-send-email-dturner@twopensource.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1456786461.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287924>
 
-On Mon, Feb 29, 2016 at 05:10:24PM -0500, Jeff King wrote:
+Hi,
 
-> > We apparently don't always call check_repo_format before calling
-> > git_config_early -- or, more to the point, before doing ref operations.
-> > So I think we need this in git_config_early.
-> 
-> That seems horribly broken, though. If a program is accessing refs
-> without calling check_repository_format, isn't it bypassing all of our
-> regular version and extension checks?
-> 
-> I think we should be smoking out such cases (e.g., by setting
-> a null refs-backend, as I mentioned earlier) and fixing them, rather
-> than working around them by putting the backend setup in the wrong
-> place.
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 2ba62fb..d5751e2 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -126,7 +126,7 @@ actual="$TRASH_DIRECTORY/actual"
+>  
+>  test_expect_success 'setup for __gitdir tests' '
+>  	mkdir -p subdir/subsubdir &&
+> -	git init otherrepo
+> +	git init $ref_storage_arg otherrepo
+>  '
+>  
+>  test_expect_success '__gitdir - from command line (through $__git_dir)' '
+> @@ -177,6 +177,7 @@ test_expect_success '__gitdir - cwd is a .git directory' '
+>  test_expect_success '__gitdir - parent is a .git directory' '
+>  	echo "$(pwd -P)/.git" >expected &&
+>  	(
+> +		mkdir -p .git/refs/heads &&
+>  		cd .git/refs/heads &&
+>  		__gitdir >"$actual"
+>  	) &&
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index ffbfa0e..caa706c 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -148,6 +148,7 @@ test_expect_success 'prompt - inside .git directory' '
+>  test_expect_success 'prompt - deep inside .git directory' '
+>  	printf " (GIT_DIR!)" >expected &&
+>  	(
+> +		mkdir -p .git/refs/heads &&
+>  		cd .git/refs/heads &&
+>  		__git_ps1 >"$actual"
+>  	) &&
 
-So even without your series, this isn't too bad to instrument, like the
-patch below.
+As far as these tests are concerned any subdirectory under .git/ would
+do, it doesn't have to be .git/refs/heads.  How about cd-ing into a
+different directory instead of creating the missing ones?
 
-It does reveal a handful of failures in the test suite. I haven't dug
-yet, but I strongly suspect those are all bugs that should be fixed.
+ ----  >8  ----
+Subject: [PATCH] fixup! tests: add ref-storage argument
 
-diff --git a/cache.h b/cache.h
-index af2aeb8..a286f99 100644
---- a/cache.h
-+++ b/cache.h
-@@ -639,6 +639,7 @@ extern int hold_locked_index(struct lock_file *, int);
- extern void set_alternate_index_output(const char *);
- 
- /* Environment bits from configuration mechanism */
-+extern int repo_initialized;
- extern int trust_executable_bit;
- extern int trust_ctime;
- extern int check_stat;
-diff --git a/environment.c b/environment.c
-index 10451ee..6ee9812 100644
---- a/environment.c
-+++ b/environment.c
-@@ -12,6 +12,7 @@
- #include "fmt-merge-msg.h"
- #include "commit.h"
- 
-+int repo_initialized;
- int trust_executable_bit = 1;
- int trust_ctime = 1;
- int check_stat = 1;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 339f5c7..a4e9df6 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -947,6 +947,9 @@ static struct ref_cache *lookup_ref_cache(const char *submodule)
- {
- 	struct ref_cache *refs;
- 
-+	if (!repo_initialized)
-+		die("BUG: lookup_ref_cache called without initializing repo");
-+
- 	if (!submodule || !*submodule)
- 		return &ref_cache;
- 
-@@ -1414,6 +1417,9 @@ static const char *resolve_ref_1(const char *refname,
- 	int depth = MAXDEPTH;
- 	int bad_name = 0;
- 
-+	if (!repo_initialized)
-+		die("BUG: resolve_ref called without initializing repo");
-+
- 	if (flags)
- 		*flags = 0;
- 
-diff --git a/setup.c b/setup.c
-index 76609fa..ed86094 100644
---- a/setup.c
-+++ b/setup.c
-@@ -446,6 +446,9 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 		ret = -1;
- 	}
- 
-+	if (ret == 0)
-+		repo_initialized = 1;
-+
- 	strbuf_release(&sb);
- 	return ret;
- }
+---
+ t/t9902-completion.sh  | 3 +--
+ t/t9903-bash-prompt.sh | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index d5751e25eb50..605816a9b996 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -177,8 +177,7 @@ test_expect_success '__gitdir - cwd is a .git directory' '
+ test_expect_success '__gitdir - parent is a .git directory' '
+ 	echo "$(pwd -P)/.git" >expected &&
+ 	(
+-		mkdir -p .git/refs/heads &&
+-		cd .git/refs/heads &&
++		cd .git/objects &&
+ 		__gitdir >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 683b4705167f..6068ccb92eb9 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -148,8 +148,7 @@ test_expect_success 'prompt - inside .git directory' '
+ test_expect_success 'prompt - deep inside .git directory' '
+ 	printf " (GIT_DIR!)" >expected &&
+ 	(
+-		mkdir -p .git/refs/heads &&
+-		cd .git/refs/heads &&
++		cd .git/objects &&
+ 		__git_ps1 >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+-- 
+2.7.2.410.g92cb358
