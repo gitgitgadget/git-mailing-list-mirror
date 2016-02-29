@@ -1,153 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git 2.7.2.windows.1 fails to authenticate access to private
- repository over HTTPS
-Date: Mon, 29 Feb 2016 14:30:08 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602291405150.3152@virtualbox>
-References: <0eee43fe410bb5db3dc8eeec2f7ff00c@slingshot.co.nz>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: GIT_TRACE_PERFORMANCE and pager
+Date: Mon, 29 Feb 2016 14:46:12 +0100
+Message-ID: <CAP8UFD30fWvFPtSgY_6mVMCeQ9rMR-0EODaKbZdMmz_fo-qfKw@mail.gmail.com>
+References: <CAP8UFD2zFBV7gRVvLB-gGEB=cfZJmYKrfiD2vdTdxgEgYU6jHQ@mail.gmail.com>
+	<20160229113924.GC29769@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: zacr <zacr@slingshot.co.nz>
-X-From: git-owner@vger.kernel.org Mon Feb 29 14:30:40 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Karsten Blees <karsten.blees@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 29 14:46:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaNuJ-00056d-Vl
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:30:40 +0100
+	id 1aaO9U-0004YR-3u
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544AbcB2Na2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 08:30:28 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49258 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752672AbcB2NaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 08:30:23 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Man6U-1aLTNm0QSQ-00KRek; Mon, 29 Feb 2016 14:30:12
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <0eee43fe410bb5db3dc8eeec2f7ff00c@slingshot.co.nz>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:BIVXu9e8e7BGMiCqdaGyq49AjAWvi7Vpv00QTUMmXbF387aJanO
- Mk1fiahsuFrF4W7RoZ/Gyf/sRn93sPvGEtKVoa2pIDmYTCDUDw6xglJHDRNnybTrJNiMsLq
- BHYw7QmZSgTZ5P7axMDaBfwzMBXOXmJ+UKxjiQcJy5E7gXeQlGsmOjP5+dYXXotv/K1agGS
- C75UAqeMHPfOhnlx/x1Qg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BT9cbyI+VJ4=:NmiD/uz2zYzH/QsskNcMGg
- 4LVGKjbEZSCa8GPz9clwe5jiZosdNMeqPqo3e1P2exrzO6XRx1GhIPNxVA1eK7XCwXDMOwpO4
- YD/rBlMzzucfH83Xs4Ull1z7sPaKD2nHxiOfNb9ioEPQuZDSVT62fkxenHJn9joD/HImftBcm
- 7ONU/3mSk1V2xu23Re7Hs+UZPaNa41v3x3fZeORTWcIj/SpjExG2/C4pf7WUzDqN7XZAKhVQb
- 2152sTsv2J1D2wafv/1kFPoNBiAAAfTzwiF2x46t5IMZpm/z++hi5HrKY5n82LvMG42rGDOOH
- Pnqn78QwBexSoPRv8NRL/cmpK2kXyqWyRWt8cnec9S47/4PPie4F1QJniuWKKJCx65o9x0Cgs
- 7zownmyylLYT6rZHs773DVLz7351SvXUZQKwpFgbG8+e4fSIC/sfZqr62oN8/exdnjRqsHa/s
- KUb0/PcvPcHmJHk5LxzAddNLvFy8KeDq6i87TEbjV+XJoZ3vpG+r9NrzeTIOOSZXB6C+W1h9w
- hOLPu8kzrbsumKJ7kYf8p2Lmrq4YcQNLMI9dCCBGU8qiUrqmzvwoNvV/h2ssKaDFtAk4y7D7L
- 5XNS+G2hq9Oc4MMEJ0imwXx9KU8TT/SmBLoiVy4S49AouKCAa2WJSi/WHvdaNgaz/ed20qb7V
- PVIYQYW5sBfez7fVDbEKNJD7cvCMxko6sWV6FirdvR3ID11HOMsCKWZzVdVTfwqdVIpHVW2lw
- +LeGgVNrHh44omz1/wQmsuZ21nC6qE75tP1JCJv5qcGpMVoP/h6KV+MlEr7r4H1vBo+Y+NlZ 
+	id S1753559AbcB2NqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 08:46:16 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:35613 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751744AbcB2NqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 08:46:14 -0500
+Received: by mail-lb0-f180.google.com with SMTP id bc4so80056467lbc.2
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 05:46:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=0H8z7M1d9YYPSdMwzDDXtdp5zhwgptS+ZpzkMB1evj8=;
+        b=ICLrow/EIOffdauBnFlp9F8AAaQpD6V5/3k+rxr5KMRnZYZRG3nxBlTDtYXS2QonNZ
+         PdPEWbA9Iqbxbk6XpEeVquCB8QojDBJPZdENIfneusAmDukeTzGBatV0MFXnE5r9GZ2d
+         /AI0XzIZLPTfrdgOD0JUGfagq63QXUEA6522/Bip6f8IT9LAaqLZlpgSxyB0ZdYU87IJ
+         brlZPSCOo+5ttjR7oWlCszD/GkKCSplbCzII/BsZKM9Mwo0qOf8uE3q3QoDtxp7+3JY5
+         KhICSxbkYcbQZVEqGT8wRaWeS2KJGG4+/9lCkZp8oMB+1wPK6E6ymY+rH9WDl1AoAjHl
+         OZuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=0H8z7M1d9YYPSdMwzDDXtdp5zhwgptS+ZpzkMB1evj8=;
+        b=MSPGmkg+zVk3SIiwAHEH0tN+1pIz9FHbqGUaQmaLLOF/MzhJTkzZd1a/z2Olxw580A
+         iT8MOfIOZhrpNINcsHYkQQeL+T9/Ek5AJ/RV+ca+UvSOezPoUJa6ro+jr0kLpZoyrdjf
+         DhVy4pf6cwQ/0EJ+qbj/mBW89w01x9XLVrXlxyoDk7Rvtp2cLYfkqVlVRVxJrwCIHy6d
+         PBCcwtR8i7C6JS4cX9zGNT/c2F7lULleziC2CF47TTMDFiXSKv+8mECqWiMVDwbs0zFS
+         sSdKLXtL/0B0KC1pSUtI4rmTjb1FR/8b3i4EfFFlufjPe3ID1rVMqTNsocjP19wWMjvI
+         9HaQ==
+X-Gm-Message-State: AD7BkJKZB+K/kTOskhiFm1bBVsOQY5WTE5g/XKJYwV2oElQs2PV1kNSTCIYEvHCAw05DQGtozKF9BcSfKvctZQ==
+X-Received: by 10.112.211.168 with SMTP id nd8mr5558285lbc.116.1456753572928;
+ Mon, 29 Feb 2016 05:46:12 -0800 (PST)
+Received: by 10.25.137.130 with HTTP; Mon, 29 Feb 2016 05:46:12 -0800 (PST)
+In-Reply-To: <20160229113924.GC29769@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287837>
 
-Hi Zac,
-
-On Mon, 29 Feb 2016, zacr wrote:
-
-> I have recently downloaded 64-bit Git for Windows (the file I downloaded
-> was "Git-2.7.2-64-bit.exe"). This reports a version string of "git
-> version 2.7.2.windows.1"
+On Mon, Feb 29, 2016 at 12:39 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 29, 2016 at 12:25:49PM +0100, Christian Couder wrote:
 >
-> Using it from the command line, after cloning a repository, I attempted
-> to "git pull" a private repository from GitHub.
+>> Setting GIT_TRACE to 1 or 2 seems to work, but maybe it is because it
+>> outputs stuff at the beginning of the process and not at the end.
+>
+> Yeah, I think so. Try this (on Linux):
+>
+>   $ GIT_PAGER='sed s/^/paged:/' \
+>     GIT_TRACE_PERFORMANCE=1 \
+>     strace -f -e write -e 'signal=!sigchld' git -p rev-parse
+>   strace: Process 31155 attached
+>   strace: Process 31156 attached
+>   [pid 31156] +++ exited with 0 +++
+>   [pid 31155] +++ exited with 0 +++
+>   write(2, "06:32:30.486995 [pid=31154] trac"..., 114) = -1 EBADF (Bad file descriptor)
+>   write(2, "Could not trace into fd given by"..., 99) = -1 EBADF (Bad file descriptor)
+>   +++ exited with 0 +++
 
-Are you using Git CMD? It is rather crucial to get such details right.
+Yeah, I get the same thing.
 
-> 15:55:58.615147 git.c:348               trace: built-in: git 'pull'
-> 15:55:58.617147 run-command.c:343       trace: run_command: 'fetch'
-> '--update-head-ok'
-> 15:55:58.633149 git.c:348               trace: built-in: git 'fetch'
-> '--update-head-ok'
-> 15:55:58.636149 run-command.c:343       trace: run_command:
-> 'git-remote-https' 'origin' 'https://github.com/username/repository.git'
-> 15:55:59.630248 run-command.c:343       trace: run_command: 'bash' '-c' 'cat
-> >/dev/tty && read -r line </dev/tty && echo "$line"'
-> error: failed to execute prompt script (exit code 1)
-> fatal: could not read Username for 'https://github.com': Invalid argument
-> 
-> 
-> It looks like it's trying to run a new bash instance for me to enter my
-> password, which fails on Windows because I don't have bash installed.
+> We redirect stderr to the pager (note that GIT_TRACE=1 still goes to
+> stderr; it never goes to stdout). We wait() on the pager process before
+> we exit the main git process, and we don't print the performance stats
+> until atexit(). So by the time we get there, the pager must be dead, and
+> the pipe descriptor is closed (I'm actually kind of surprised we don't
+> get EPIPE, but it looks like we close the descriptors in
+> wait_for_pager()).
+>
+> One workaround is something like:
+>
+>   GIT_TRACE_PERFORMANCE=3 3>&2 git ...
 
-You do have bash installed. Unless you went out of your way to delete it
-after installing Git for Windows.
+Yeah, that works.
 
-Assuming that you used Git CMD to perform your test, the sad news is that
-I cannot reproduce your problem here.
+> though I guess I'd question whether trace-performance is interesting at
+> all for a paged command, since it is also counting the length of time
+> you spend looking at the pager waiting to hit "q".
 
-Let's first of all try to make a Minimal, Complete & Verifiable Example
-(MCVE). In other words, let's find the minimal set of steps with no
-prerequisites (such as local clones of private repositories) that *still*
-reproduce the bug. This is in general a Very Good Idea if you are
-reporting bugs because it not only shows that you are dedicated to see
-this bug fixed but also that you are not expecting only others to invest
-a ton of time into the bug fix.
+In case of "GIT_TRACE_PERFORMANCE=2 git log -1", it doesn't count the
+time spent looking at the pager because the output is small, so 'less'
+exits immediately, and it could give the impression that
+GIT_TRACE_PERFORMANCE is not working.
 
-In your case, the problem is easily triggered without a local clone at
-all. A simple `git ls-remote https://github.com/user/repository.git` is
-enough, and would count as *Minimal* as per that MCVE acronym.
-
-Alas, when I issue this (with GIT_TRACE=1), I get this:
-
--- snip --
-C:\Users\me>set GIT_TRACE=1
-
-C:\Users\me>git ls-remote https://github.com/user/repository.git
-14:14:01.717354 git.c:348               trace: built-in: git 'ls-remote' 'https://github.com/user/repository.git'
-14:14:01.718331 run-command.c:343       trace: run_command: 'git-remote-https' 'https://github.com/user/repository.git' 'https://github.com/user/repository.git'
-14:14:02.599651 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r line </dev/tty && echo "$line"'
-Username for 'https://github.com': 123
-14:14:06.822993 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r -s line </dev/tty && echo "$line" && echo
->/dev/tty'
-Password for 'https://123@github.com':
-remote: Invalid username or password.
-fatal: Authentication failed for 'https://github.com/user/repository.git/'
--- snap --
-
-So at first I thought maybe you called
-
-	C:\Program Files\Git\mingw64\bin\git.exe
-
-directly, which is a user mistake that is unfortunately quite frequent,
-the appropriate entry point is instead
-
-	C:\Program Files\Git\cmd\git.exe
-
-But even then, it succeeds for me (without having sh.exe nor bash.exe in
-the PATH):
-
--- snip --
-C:\Users\me>"\Program Files"\git\mingw64\bin\git ls-remote https://github.com/user/repository.git
-14:22:44.320489 git.c:348               trace: built-in: git 'ls-remote' 'https://github.com/user/repository.git'
-14:22:44.321470 run-command.c:343       trace: run_command: 'git-remote-https' 'https://github.com/user/repository.git' 'https://github.com/user/repository.git'
-14:22:44.990258 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r line </dev/tty && echo "$line"'
-Username for 'https://github.com': 123
-14:22:45.840206 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r -s line </dev/tty && echo "$line" && echo >/dev/tty'
-Password for 'https://123@github.com':
-remote: Invalid username or password.
-fatal: Authentication failed for 'https://github.com/user/repository.git/'
--- snap --
-
-Maybe your setup has something funky going on that my setup lacks.
-
-Lastly, for the record, the best way to report bugs in Git for Windows is
-through the bug tracker at https://github.com/git-for-windows/git/issues.
-I tried to make this obvious on Git for Windows' home page at
-https://git-for-windows.github.io/#contribute.
-
-Maybe you have an idea how I could make it more obvious to users who
-prefer visiting StackOverflow over visiting Git for Windows' home page?
-
-Ciao,
-Johannes
+I am preparing a patch to Documentation/technical/api-trace.txt to
+warn about that.
