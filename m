@@ -1,73 +1,88 @@
-From: Sidhant Sharma <tigerkid001@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: GSoC 2016 Microproject
-Date: Mon, 29 Feb 2016 20:21:41 +0530
-Message-ID: <56D45AFD.2060200@gmail.com>
+Date: Mon, 29 Feb 2016 16:04:37 +0100
+Message-ID: <vpqpovfblru.fsf@anie.imag.fr>
 References: <56D19EF9.3070702@gmail.com> <vpq8u26qo3y.fsf@anie.imag.fr>
- <56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
- <56D2C828.6010901@gmail.com>
+	<56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
+	<56D2C828.6010901@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 29 15:52:16 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Sidhant Sharma <tigerkid001@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 16:04:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaPBH-0000i9-J9
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 15:52:16 +0100
+	id 1aaPNP-0006Qt-HC
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853AbcB2OwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 09:52:12 -0500
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:35968 "EHLO
-	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001AbcB2OwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 09:52:11 -0500
-Received: by mail-pf0-f182.google.com with SMTP id t66so27597304pfb.3
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 06:52:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:references:cc:to:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Hwyef/fsAzAf1DnRxKu0D4b47RZeXSL5HJusyk0j8fM=;
-        b=aoVoTyj6QKNUVtQcnriwRw6pfi7Mchiw18ngJftwcQzLff8rPlylKB1G8zp1xxnsow
-         wnLswkrmwOc1tqiesxsLbGNprtm32/sD4ueuyoQ33R1kIaPGYE1C3KNRU+VtxCj2UIu2
-         UnuVZBqHcUhCJp35o+LJQdYmPvtujpAuk/peSEcuPCo/HFx6q7lu3k8u6u1ViGZVrpCp
-         kreQAsxe+ITI+F/FotoXqiAycTYLQKONj4Jrx/tnhHwVJcFv2IlsOKB5BBxnX1k34jnl
-         Ab62Ic0Lbg8AWqnxigYd0AJZHeg6FoW4nDTeYln2gkQz8/SDpg511Q6V72DUblTE97Us
-         f/kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:references:cc:to:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Hwyef/fsAzAf1DnRxKu0D4b47RZeXSL5HJusyk0j8fM=;
-        b=dYLp4e73fyX/ih+1QHL3J3d6lr0G1qwCrRINGqKYNh0HYyZ0RhVXNXGeERqyDA72xX
-         RnauprxosI3j46hMYaDpG7iU17RTc2h9sG3/KzUnwM/QSqeSEWcdn9WpyS8USfcas+sG
-         VmFtTkFQTf2C0ObWLq3CWLJldazBafwHJSgd4E9JzXYpp++FRv5NdaRm6swQU/UxH+Y4
-         AVH6qQd2RPwJClonX1ZbZ8ACkAaGeqCeVm1ZO+imeVW645tmbwAvM9nPknFtilSKIZ79
-         YumlWRoDO5SzhPmN9slCWWePxUS0MJ8iczO37FO5P1EpQc6VbIuhHXjdFsZ3DPk7EmVQ
-         rZiQ==
-X-Gm-Message-State: AD7BkJK+zF5nxJgD3yTvAs+7+c8orwO9F8LdU1zcXrKPp686cV++8LUDpvUV5SlDM+TjpQ==
-X-Received: by 10.98.19.199 with SMTP id 68mr5270997pft.31.1456757530236;
-        Mon, 29 Feb 2016 06:52:10 -0800 (PST)
-Received: from [192.168.1.10] ([182.64.202.34])
-        by smtp.gmail.com with ESMTPSA id d65sm38753941pfb.74.2016.02.29.06.52.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 06:52:09 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <56D2C828.6010901@gmail.com>
+	id S1753924AbcB2PEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 10:04:43 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:58071 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751261AbcB2PEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 10:04:42 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u1TF4aWr012174
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 29 Feb 2016 16:04:36 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1TF4bnK024625;
+	Mon, 29 Feb 2016 16:04:37 +0100
+In-Reply-To: <56D2C828.6010901@gmail.com> (Sidhant Sharma's message of "Sun,
+	28 Feb 2016 15:42:56 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 29 Feb 2016 16:04:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u1TF4aWr012174
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1457363078.03377@1LtINNW+7sJSgtFyHb4Knw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287842>
 
-Hi,
-Should I make a patch for this and submit it for discussion on the mailing list?
+Sidhant Sharma <tigerkid001@gmail.com> writes:
 
+> Hi,
+>> I didn't see anything going on for this one, but you may want to
+>> double-check with the ml's archives.
+>>
+> I checked the archives and there doesn't seem to be any active work on this.
+> I made the required changes and ran the test suite. Though all the
+> tests pass, there still are two queries I have.
+> First, I'm not quite sure what to put in the help message for the
+> options (--quiet, --stateless-rpc, --advertise-refs and
+> --reject-thin-pack-for-testing).
 
-Regards,
-Sidhant Sharma [:tk]
+They are currently undocumented. We sometimes have explicitly
+undocumented options (PARSE_OPT_HIDDEN) when they are used only
+internally to avoid polluting the end-user's UI.
+
+In this case, the command is anyway not meant for end-users so I think
+it would make sense to document them, but not necessarily within the the
+microproject.
+
+> Second, regarding the reject-thin-pack-for-testing option, currently
+> when the option is entered, `fix_thin` is unset
+> (https://github.com/git/git/blob/master/builtin/receive-pack.c#L1736).
+> But using `OPT_BOOL(...)` for the same, the variable would instead be
+> set when the option is given. I think one solution can be to invert
+> `fix_thin` after calling `parse_options`. Am I going right so far?
+> Suggestions and corrections welcome.
+
+Or use OPT_SET_INT(..., 0) on a variable initialized to 1.
+
+> Should I make a patch for this and submit it for discussion on the mailing list?
+
+On this list, it is indeed often more efficient to say "here's what I'm
+done. Any comments?" than "here's what I'm about to do".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
