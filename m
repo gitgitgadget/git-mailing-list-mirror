@@ -1,119 +1,73 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] Documentation: talk about pager in api-trace.txt
-Date: Mon, 29 Feb 2016 15:21:20 +0100
-Message-ID: <1456755680-4335-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: GSoC 2016 Microproject
+Date: Mon, 29 Feb 2016 20:21:41 +0530
+Message-ID: <56D45AFD.2060200@gmail.com>
+References: <56D19EF9.3070702@gmail.com> <vpq8u26qo3y.fsf@anie.imag.fr>
+ <56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
+ <56D2C828.6010901@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 29 15:23:56 2016
+X-From: git-owner@vger.kernel.org Mon Feb 29 15:52:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaOjo-0004QI-6B
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 15:23:52 +0100
+	id 1aaPBH-0000i9-J9
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 15:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbcB2OXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 09:23:47 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:37967 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340AbcB2OXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 09:23:46 -0500
-Received: by mail-wm0-f52.google.com with SMTP id l68so60683124wml.1
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 06:23:45 -0800 (PST)
+	id S1752853AbcB2OwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 09:52:12 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35968 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752001AbcB2OwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 09:52:11 -0500
+Received: by mail-pf0-f182.google.com with SMTP id t66so27597304pfb.3
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 06:52:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=x0auPZ4IjEQryAsL9HkAHBZO/teG2uda+xjZTSAUoJE=;
-        b=eQy7JMZzg1Il9MP7wtPvtibjRj1QDpGps4OXnYB0weXaApcHsdSfbFqU4cI4KY3bx5
-         ZkqhGG6qv1EVwxOy2xjNJXC2RwB2P4Ll4PjylEokc56NBgu8laAL464Whc0cVH1/Lnv8
-         GoMU9PNK3Zm2CFgALuRB6YbMLqnUSswmMdjae+3C5c+Mcox+RLCMtcJfeC6rPFqayD4a
-         YMWERbZQEtTZADI/ogYZ50e7uo9H8WFXvEr3/q8r/rxT3NOySFLbI9SYs0ZuPXfgi+GZ
-         XbcyGar7+f54Qfp+T6x1LHSQYrLDjod24yZsRyAmBafNS5xA/S6zDaJ5nKSVT9dpgMXc
-         M7kA==
+        h=subject:references:cc:to:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Hwyef/fsAzAf1DnRxKu0D4b47RZeXSL5HJusyk0j8fM=;
+        b=aoVoTyj6QKNUVtQcnriwRw6pfi7Mchiw18ngJftwcQzLff8rPlylKB1G8zp1xxnsow
+         wnLswkrmwOc1tqiesxsLbGNprtm32/sD4ueuyoQ33R1kIaPGYE1C3KNRU+VtxCj2UIu2
+         UnuVZBqHcUhCJp35o+LJQdYmPvtujpAuk/peSEcuPCo/HFx6q7lu3k8u6u1ViGZVrpCp
+         kreQAsxe+ITI+F/FotoXqiAycTYLQKONj4Jrx/tnhHwVJcFv2IlsOKB5BBxnX1k34jnl
+         Ab62Ic0Lbg8AWqnxigYd0AJZHeg6FoW4nDTeYln2gkQz8/SDpg511Q6V72DUblTE97Us
+         f/kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=x0auPZ4IjEQryAsL9HkAHBZO/teG2uda+xjZTSAUoJE=;
-        b=H4R2fGhuncLIEz91VFmN6BctjPDYSMcO2+t1QnzEpTNKtiZRHQWEZZvtmDXgowo1KT
-         N5OA/QkmI+YGaKwKYcwMP0IiaN9za8ZQyeisGp3rYvdyG+c9T9mPtfhCA0UFUKbRx3m5
-         EvJRPgIjJs2N2dOncVFy4gr9wxfqKWscpIrqkdb1KPxq38ujTuekygOS4EFPnombgKKH
-         pfaDb2nZo89Uno5mvTDeBevBTvTWLoruAj07NS11RADbBcp8ttwH96NzVOCnmEFIORPc
-         5a+z1bbGmdZdfKRu2ywCcDfsMCTxuSDHH3hPjO1yUAzzhN2s6LRbif9GR6kc0X6VmHc1
-         SgpQ==
-X-Gm-Message-State: AD7BkJIvZfTsRh2HOXk6TR/+T8zX50Dk2J6B4oyyLJbwUcMYCOQzrDPnQXxfpZH6ajqv8g==
-X-Received: by 10.195.13.16 with SMTP id eu16mr17019533wjd.140.1456755825045;
-        Mon, 29 Feb 2016 06:23:45 -0800 (PST)
-Received: from localhost.localdomain (AMontpellier-652-1-275-241.w90-57.abo.wanadoo.fr. [90.57.182.241])
-        by smtp.gmail.com with ESMTPSA id l7sm26226757wjx.14.2016.02.29.06.23.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Feb 2016 06:23:44 -0800 (PST)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.7.1.289.gf4cc727
+        h=x-gm-message-state:subject:references:cc:to:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Hwyef/fsAzAf1DnRxKu0D4b47RZeXSL5HJusyk0j8fM=;
+        b=dYLp4e73fyX/ih+1QHL3J3d6lr0G1qwCrRINGqKYNh0HYyZ0RhVXNXGeERqyDA72xX
+         RnauprxosI3j46hMYaDpG7iU17RTc2h9sG3/KzUnwM/QSqeSEWcdn9WpyS8USfcas+sG
+         VmFtTkFQTf2C0ObWLq3CWLJldazBafwHJSgd4E9JzXYpp++FRv5NdaRm6swQU/UxH+Y4
+         AVH6qQd2RPwJClonX1ZbZ8ACkAaGeqCeVm1ZO+imeVW645tmbwAvM9nPknFtilSKIZ79
+         YumlWRoDO5SzhPmN9slCWWePxUS0MJ8iczO37FO5P1EpQc6VbIuhHXjdFsZ3DPk7EmVQ
+         rZiQ==
+X-Gm-Message-State: AD7BkJK+zF5nxJgD3yTvAs+7+c8orwO9F8LdU1zcXrKPp686cV++8LUDpvUV5SlDM+TjpQ==
+X-Received: by 10.98.19.199 with SMTP id 68mr5270997pft.31.1456757530236;
+        Mon, 29 Feb 2016 06:52:10 -0800 (PST)
+Received: from [192.168.1.10] ([182.64.202.34])
+        by smtp.gmail.com with ESMTPSA id d65sm38753941pfb.74.2016.02.29.06.52.06
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 29 Feb 2016 06:52:09 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <56D2C828.6010901@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287841>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/technical/api-trace.txt | 43 +++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+Hi,
+Should I make a patch for this and submit it for discussion on the mailing list?
 
-diff --git a/Documentation/technical/api-trace.txt b/Documentation/technical/api-trace.txt
-index 097a651..a10b3a9 100644
---- a/Documentation/technical/api-trace.txt
-+++ b/Documentation/technical/api-trace.txt
-@@ -95,3 +95,46 @@ for (;;) {
- }
- trace_performance(t, "frotz");
- ------------
-+
-+Bugs & Caveats
-+--------------
-+
-+Some git commands, like `git log`, are run by default using a
-+pager. In this case, stdout and stderr are redirected to the pager and
-+are closed when the pager exits.
-+
-+If a GIT_TRACE* environment variable has been set to "1" or "2" to
-+print traces on stderr, no trace output will be printed after the
-+pager has exited.
-+
-+This can be annoying, because GIT_TRACE_PERFORMANCE by default prints
-+the performance stats for the whole command at atexit() time which
-+happens after the pager has exited.
-+
-+So the following command will print no performance stat:
-+
-+------------
-+GIT_TRACE_PERFORMANCE=2 git log -1
-+------------
-+
-+To overcome this problem, you can use one of the following
-+work-arounds:
-+
-+  - redirect to another file descriptor which is redirected to stderr,
-+    like this:
-+
-+------------
-+GIT_TRACE_PERFORMANCE=3 3>&2 git log -1
-+------------
-+
-+  - redirect to a file specified by its absolute path, like this:
-+
-+------------
-+GIT_TRACE_PERFORMANCE=/path/to/log/file git log -1
-+------------
-+
-+  - use "--no-pager", like this:
-+
-+------------
-+GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
-+------------
--- 
-2.7.1.289.gf4cc727
+
+Regards,
+Sidhant Sharma [:tk]
