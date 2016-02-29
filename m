@@ -1,118 +1,91 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] http: honor no_http env variable to bypass proxy
-Date: Mon, 29 Feb 2016 23:16:57 +0800
-Message-ID: <5652e025323b60ccf5a59bcbdc7266d4f4e32fc4.1456758964.git.xin.jiang@huawei.com>
-Cc: Git List <git@vger.kernel.org>, Jiang Xin <xin.jiang@huawei.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 16:17:18 2016
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
+Date: Mon, 29 Feb 2016 15:29:02 +0000
+Message-ID: <CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com>
+References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com>
+	<1455919074-5683-1-git-send-email-aidecoe@aidecoe.name>
+	<xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com>
+	<87fuwnd4u7.fsf@freja.aidecoe.name>
+	<xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
+	<877fhwd1g0.fsf@freja.aidecoe.name>
+	<xmqqegc33oal.fsf@gitster.mtv.corp.google.com>
+	<CAE5ih7_vBMsi+zRZRTCaO56VrOYZUR0NQ0CSSE+Do48xkJ_BwA@mail.gmail.com>
+	<871t83cfi7.fsf@freja.aidecoe.name>
+	<CAE5ih7-rBuipoAGEnK60iidi1nYA9xWZQV6jRMHTVQe6f=cQag@mail.gmail.com>
+	<87si0cpnpn.fsf@freja.aidecoe.name>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+To: =?UTF-8?B?QW1hZGV1c3ogxbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
+X-From: git-owner@vger.kernel.org Mon Feb 29 16:29:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaPZV-0003xx-HI
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:17:17 +0100
+	id 1aaPl0-0001IB-KS
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138AbcB2PRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 10:17:13 -0500
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:35369 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549AbcB2PRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 10:17:12 -0500
-Received: by mail-qg0-f47.google.com with SMTP id y89so117450662qge.2
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 07:17:12 -0800 (PST)
+	id S1755073AbcB2P3H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 10:29:07 -0500
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:34443 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751390AbcB2P3E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 10:29:04 -0500
+Received: by mail-ob0-f171.google.com with SMTP id ts10so137423495obc.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 07:29:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Y520VAeHGH1hQe5+bAiJtiaV9GKaywR/90pGJUoHFlw=;
-        b=r8dhhuUImokxwotimcZ9Hinq1yFchT+VP6XgeDaI1W1IHsMSbWqqKMcaGPhtnCrf2s
-         WlUWXP42EtTwS618YwqbgmSWuwsnr/UKa5WLTIbAnbEp5H7qtl8nr0cHoQoKHUGCPBAI
-         QLiOp9yQBoH16Z0tG5vQcUATgIX0rkhr1kZWNlQCxFfbpyAQujlPM4jYugxZpqzr+qwZ
-         zaqv3+wYKUw6ToUPGtw6kOs2xkoczQL/ojMcrlNQSfI7T9AkexI37sZlyiTAQwxzb8aT
-         k28bN3vSn0HF8mq//6BovAdbRS8axceGvBbINL/OBmihknIZ7KSaRfnko8BQt45S6QRQ
-         y5jg==
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=DxBYDr6Zysv95GIYwHTxDW+LP0uj6l8pLf2kCb7pZGY=;
+        b=FbTPq1FC7RcY217fTZ/7grRmxhxoAorqcL7g/ZIcU+748fTxJleOobZ5CUu300mpV6
+         Lta+TALbGa6ecg4caMx/Bqkk5XrRHv9wGOWwqAx+p6go+xsxABNJvpX93l0AQtzlXEGC
+         srM7CL4sTm312opTXPp8kwX94+InUOV+1SUL8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Y520VAeHGH1hQe5+bAiJtiaV9GKaywR/90pGJUoHFlw=;
-        b=WSernmVdGbGNcFpHAudFJgJ98q2/d/Rh/zjO46GOLEB4sXJ352qmy/yAFDLsWbmrzf
-         Otru9nerytLPDWwHMOztHq16zibeDg+fvT0+axOi1NZivppu5cBnRQXKZ/yZ73t4RsMt
-         /9A0pIf5U1+UMz+YbcUejwSTuKvlz+p7hVQbMbnLMHwQ07I1Gyp/xqezZUlPULnNFzQ1
-         r2BefkgImb4X5RFdHGI7dOkTUew4bPKYMwNkQHrcxiB8nfuWvYXSMj4oKhzV2lQlyZsS
-         z6w2VVsphNnCIx967A7ASeTM0ELJ8/ulx3hxeJkkOBK6eykpZC4NCqYRaqnWGmTPi45U
-         mbEQ==
-X-Gm-Message-State: AD7BkJLmDitvTbbISneTRpY33OUxULGQ+YICHx5KOgmr5GuHuCk5yWZQoaa58ru+Q2p0ew==
-X-Received: by 10.140.98.71 with SMTP id n65mr4034281qge.22.1456759031686;
-        Mon, 29 Feb 2016 07:17:11 -0800 (PST)
-Received: from localhost.localdomain ([69.85.93.127])
-        by smtp.googlemail.com with ESMTPSA id 78sm11113468qgt.1.2016.02.29.07.17.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 07:17:10 -0800 (PST)
-X-Mailer: git-send-email 2.8.0.rc0.1.g9eb3984.dirty
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=DxBYDr6Zysv95GIYwHTxDW+LP0uj6l8pLf2kCb7pZGY=;
+        b=g4SUbXF3TdbYPwYYLn3lsuquHuQGZHQzCDnjjmqyA4Lm60xUoEtiAOWn72ib2y26/p
+         Pw5E+DLezZD3H1Xh/aJ2wN/y0iU+Kc8JR/VKPZTZ/EA9eiC+H4Stz5Fi6+K1SW85XdXH
+         C+dEiIpJA1xoqNTZ8xYl1qL+zc0LKCYYEgx9/ufY5dP3m52/QwH5R10Ev8zeyZkcab7m
+         uUhLAghI1P6dxoWrXma9ciujkN7/2wAUUcPEGe7x0JSFTmVLNU6IDkRZ4wNwXFcF5TMR
+         spywr0Rp343DShMIkj/jhQLfQ3tw+KJUcDQj/wZTjze73GKcOg2rsxhukL/393EhehGp
+         Kixg==
+X-Gm-Message-State: AD7BkJILsgBfK0k5Yqc9nH9ZOv4Mu+QqeeT3LIuZjt+Us15pMHmAqbovYog4Z8aaC6uZLPXj89+teMllf2kdog==
+X-Received: by 10.182.186.105 with SMTP id fj9mr12100725obc.17.1456759742431;
+ Mon, 29 Feb 2016 07:29:02 -0800 (PST)
+Received: by 10.202.172.132 with HTTP; Mon, 29 Feb 2016 07:29:02 -0800 (PST)
+In-Reply-To: <87si0cpnpn.fsf@freja.aidecoe.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287844>
 
-From: Jiang Xin <xin.jiang@huawei.com>
+On 28 February 2016 at 20:46, Amadeusz =C5=BBo=C5=82nowski <aidecoe@aid=
+ecoe.name> wrote:
 
-Curl and its families honor several proxy related environment variables:
+>
+> True. For now I have these cases covered by wrapper scripts. The mini=
+mum
+> I need from git-p4 is just not to fail on git submit from bare
+> repository which is covered by patch I have submitted. If I get my
+> solution enough testing, I'd think of transforming it into patch for
+> git-p4.py as well.
 
-* http_proxy and https_proxy define proxy for http/https connections.
-* no_proxy (a comma separated hosts) defines hosts bypass the proxy.
+Could you change the patch to add a command-line option to suppress
+the rebase? I think this would be a bit more obvious: instead of
+having some special magical behaviour kick-in on a bare repo, git-p4
+just does what it's told on the command-line.
 
-This command will bypass the bad-proxy and connect to the host directly:
+It means that if we find another situation where we don't want to
+rebase, we don't have an ever-growing list of special-case
+circumstances, which could become hard to make sense of in future.
+Instead, the user (who hopefully knows better) just tells git-p4 what
+to do.
 
-    no_proxy=* https_proxy=http://bad-proxy/ \
-    curl -sk https://google.com/
-
-Before commit 372370f (http: use credential API to handle proxy auth...),
-Environment variable "no_proxy" will take effect if the config variable
-"http.proxy" is not set.  So the following comamnd won't fail if not
-behind a firewall.
-
-    no_proxy=* https_proxy=http://bad-proxy/ \
-    git ls-remote https://github.com/git/git
-
-But commit 372370f not only read git config variable "http.proxy", but
-also read "http_proxy" and "https_proxy" environment variables, and set
-the curl option using:
-
-    curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-
-This caused "no_proxy" environment variable not working any more.
-
-Set extra curl option "CURLOPT_NOPROXY" will fix this issue.
-
-Signed-off-by: Jiang Xin <xin.jiang@huawei.com>
----
- http.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/http.c b/http.c
-index 1d5e3bb..69da445 100644
---- a/http.c
-+++ b/http.c
-@@ -70,6 +70,7 @@ static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
-+static const char *curl_no_proxy;
- static const char *http_proxy_authmethod;
- static struct {
- 	const char *name;
-@@ -624,6 +625,11 @@ static CURL *get_curl_handle(void)
- 		}
- 
- 		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-+#if LIBCURL_VERSION_NUM >= 0x071304
-+		var_override(&curl_no_proxy, getenv("NO_PROXY"));
-+		var_override(&curl_no_proxy, getenv("no_proxy"));
-+		curl_easy_setopt(result, CURLOPT_NOPROXY, curl_no_proxy);
-+#endif
- 	}
- 	init_curl_proxy_auth(result);
- 
--- 
-2.8.0.rc0.1.g9eb3984.dirty
+Thanks!
+Luke
