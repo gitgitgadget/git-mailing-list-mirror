@@ -1,205 +1,146 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv20 01/12] submodule-config: keep update strategy around
-Date: Mon, 29 Feb 2016 11:13:59 -0800
-Message-ID: <1456773250-5510-2-git-send-email-sbeller@google.com>
-References: <1456773250-5510-1-git-send-email-sbeller@google.com>
+Subject: [PATCHv20 00/12] Expose submodule parallelism to the user
+Date: Mon, 29 Feb 2016 11:13:58 -0800
+Message-ID: <1456773250-5510-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
 	peff@peff.net, sunshine@sunshineco.com,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:14:23 2016
+X-From: git-owner@vger.kernel.org Mon Feb 29 20:14:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaTGw-0005We-6b
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:14:22 +0100
+	id 1aaTGv-0005We-8L
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753277AbcB2TOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:14:19 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33545 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752642AbcB2TOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:14:18 -0500
-Received: by mail-pa0-f44.google.com with SMTP id fl4so96786712pad.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:14:17 -0800 (PST)
+	id S1753221AbcB2TOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 14:14:17 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34420 "EHLO
+	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193AbcB2TOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 14:14:16 -0500
+Received: by mail-pf0-f182.google.com with SMTP id 4so18862047pfd.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:14:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wK+vXCvYvZN+cysfapfxXRhH0lGer3XsXk+XhEQgASg=;
-        b=iMcDXx2y7zqsHMetTRi//554c58UQTwc74ghWSngSrof3Jpa21pttEl0B/T383xI9D
-         p+QMrd/go1h6NKuVOm4uCuwckQoAPt15p34GaWn073odL/kkJ33RG/8vu6GavppEQred
-         Um8znqmjTRuxp2GXaKKFn4qtTsT8hVMmsL6DOtvbPpStovTgcG8RrYlOaw2Q91Mq4CT6
-         1boixE9JC7FptAmNBajR+rUR3IgG98ey0JyjzTeAbeqcatM7LMJJrA6LCvIVrgzHMOhr
-         PjWpPCGqyJNv1f6AZhz3Ff4TiNF12RESkwB/GEEOTSG/Ru/jvtJ2DnCcoLhURV/dpFge
-         yhOQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=oeFUc/7pfRJUAMhf8/d+WLPuE4VDFkKN1r9bcSqXnvg=;
+        b=EUpy56VIDtXXkEOa6p/V2TnkqaQkPAMLtP26OW2yDrvCF314YMiijD85rrthjuv6T5
+         qIiV0AwgDTyAvNmU/H+0rauL/clSPNRfJckmFKKWjLvpslYQnUYzLqRNpLPbHSiViUVX
+         8XzaFGSRuibsO3oQgT6WRqjuPQeZSDyLukFEvcZhkwxZOxp4N88tuVUI5O7XD6cxsHJ3
+         tve4LmJQu2I8VTL2HhQUkfsOVUC0RNq+6lfwo1N340PiCsLOqIJt+KG7XCqKH2CfS+G5
+         2p2AemGrwllNgEFYPYERE/YWTVYrK5ir1HYuF0YCKmYjSqBFtP35aoSmu+rqEePB9mR7
+         tk+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wK+vXCvYvZN+cysfapfxXRhH0lGer3XsXk+XhEQgASg=;
-        b=Brbo2GNoT2N0jOZ/9rjWB6zk35dGWiJ4A6XmfjAbyKE3agt3V+heBBfIGPTiwoKoDb
-         ltIRAL4koeC9JAq24Js1l2//q/ECWzmIJIWlwBi2XmRI58SAmqpIVkQAzO3cBP0Quv1D
-         /LoBL2aEsgchmcYVNAMt5UcNTUkoVmgQsl3p0g/LEv0f2nhy3KoLTvIJ+euXv4XPYaoZ
-         EIa464tkSVwFxAYXzMtZ37RCuq/Ti4hQ80h0wVBk3HfrcJ6KE46pqusYTacTUdTx9yix
-         l6En25OpiAt7xfD1omv8lEdXcr9sX8+7tNJIfsSUidomFfODjjBTDLkwdAT4qIumnfPE
-         97qg==
-X-Gm-Message-State: AD7BkJKWy0Zlo1rgcuN+zDARbcZ3CFc49shugIr5jEnH/JWRTMwiQkWYombxjyOW99p6IBuU
-X-Received: by 10.66.55.39 with SMTP id o7mr23907810pap.13.1456773257349;
-        Mon, 29 Feb 2016 11:14:17 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:e195:dbe1:d842:476])
-        by smtp.gmail.com with ESMTPSA id if4sm26743275pad.29.2016.02.29.11.14.15
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=oeFUc/7pfRJUAMhf8/d+WLPuE4VDFkKN1r9bcSqXnvg=;
+        b=kJWW69eNT61jBdpUsjj57cmWh3NiGM4zarfCQO2y7/770dAHCIP3WyJEyi1vUv1Uae
+         w5AhpM+4aq1wA3f0C68uqAOQoLTrIX7mMRiwARBbzvSBt5wjStpRhqk/f5yVwFCMw2UW
+         uiV9KcZ9NA+zMGSSVCrHoL3+Nx/ehGGSfKFYxRMszYD8jRHF2yXWmOvQbnINhQ2F4gR8
+         dVNIrt6uMjD9UZl7ppcCeGWYwZ0RcL8burKAh6SJZESiy99wzDep6gbfCFaPH0IIm8To
+         hzPx40iLnG8kSlPF9di9UxGVZ5+AE5bjDXHIQfF6DNhgpA48T6uos3aRW2VgFSUKnqWR
+         +dKg==
+X-Gm-Message-State: AD7BkJIxN16KXw1gh5RbNfEqrCEkJgk5hcKRSI1DqwKVe/+8eiU0D2mYdGS3Wi1VeIHkqnNO
+X-Received: by 10.98.86.69 with SMTP id k66mr17309166pfb.28.1456773255383;
         Mon, 29 Feb 2016 11:14:15 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:e195:dbe1:d842:476])
+        by smtp.gmail.com with ESMTPSA id by3sm39963631pab.39.2016.02.29.11.14.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 29 Feb 2016 11:14:12 -0800 (PST)
 X-Mailer: git-send-email 2.7.0.rc0.37.gb7b9e8e
-In-Reply-To: <1456773250-5510-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287874>
 
-Currently submodule.<name>.update is only handled by git-submodule.sh.
-C code will start to need to make use of that value as more of the
-functionality of git-submodule.sh moves into library code in C.
+Thanks Duy for reviewing!
+I added your suggestions as amending and as a new patch.
 
-Add the update field to 'struct submodule' and populate it so it can
-be read as sm->update or from sm->update_command.
+Thanks,
+Stefan
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- submodule-config.c | 13 +++++++++++++
- submodule-config.h |  2 ++
- submodule.c        | 21 +++++++++++++++++++++
- submodule.h        | 16 ++++++++++++++++
- 4 files changed, 52 insertions(+)
-
-diff --git a/submodule-config.c b/submodule-config.c
-index afe0ea8..a5cd2ee 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -59,6 +59,7 @@ static void free_one_config(struct submodule_entry *entry)
- {
- 	free((void *) entry->config->path);
- 	free((void *) entry->config->name);
-+	free((void *) entry->config->update_strategy.command);
- 	free(entry->config);
- }
+Interdiff to v19 (current origin/sb/submodule-parallel-update):
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 0272c98..1b0b13a 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -299,10 +299,10 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
  
-@@ -194,6 +195,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 
- 	submodule->path = NULL;
- 	submodule->url = NULL;
-+	submodule->update_strategy.type = SM_UPDATE_UNSPECIFIED;
-+	submodule->update_strategy.command = NULL;
- 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
- 	submodule->ignore = NULL;
- 
-@@ -311,6 +314,16 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->url);
- 			submodule->url = xstrdup(value);
+ 	if (ce_stage(ce)) {
+ 		if (suc->recursive_prefix) {
+-			strbuf_addf(out, "Skipping unmerged submodule %s/%s\n",
++			strbuf_addf(out,_("Skipping unmerged submodule %s/%s\n"),
+ 				    suc->recursive_prefix, ce->name);
+ 		} else {
+-			strbuf_addf(out, "Skipping unmerged submodule %s\n",
++			strbuf_addf(out, _("Skipping unmerged submodule %s\n"),
+ 				    ce->name);
  		}
-+	} else if (!strcmp(item.buf, "update")) {
-+		if (!value)
-+			ret = config_error_nonbool(var);
-+		else if (!me->overwrite &&
-+			 submodule->update_strategy.type != SM_UPDATE_UNSPECIFIED)
-+			warn_multiple_config(me->commit_sha1, submodule->name,
-+					     "update");
-+		else if (parse_submodule_update_strategy(value,
-+			 &submodule->update_strategy) < 0)
-+				die(_("invalid value for %s"), var);
+ 		goto cleanup;
+@@ -319,7 +319,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	if (suc->update.type == SM_UPDATE_NONE
+ 	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
+ 		&& sub->update_strategy.type == SM_UPDATE_NONE)) {
+-		strbuf_addf(out, "Skipping submodule '%s'\n",
++		strbuf_addf(out, _("Skipping submodule '%s'\n"),
+ 			    displaypath);
+ 		goto cleanup;
  	}
- 
- 	strbuf_release(&name);
-diff --git a/submodule-config.h b/submodule-config.h
-index 9061e4e..092ebfc 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -2,6 +2,7 @@
- #define SUBMODULE_CONFIG_CACHE_H
- 
- #include "hashmap.h"
-+#include "submodule.h"
- #include "strbuf.h"
- 
- /*
-@@ -14,6 +15,7 @@ struct submodule {
- 	const char *url;
- 	int fetch_recurse;
- 	const char *ignore;
-+	struct submodule_update_strategy update_strategy;
- 	/* the sha1 blob id of the responsible .gitmodules file */
- 	unsigned char gitmodules_sha1[20];
- };
-diff --git a/submodule.c b/submodule.c
-index b83939c..b38dd51 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -210,6 +210,27 @@ void gitmodules_config(void)
- 	}
- }
- 
-+int parse_submodule_update_strategy(const char *value,
-+		struct submodule_update_strategy *dst)
-+{
-+	free((void*)dst->command);
-+	dst->command = NULL;
-+	if (!strcmp(value, "none"))
-+		dst->type = SM_UPDATE_NONE;
-+	else if (!strcmp(value, "checkout"))
-+		dst->type = SM_UPDATE_CHECKOUT;
-+	else if (!strcmp(value, "rebase"))
-+		dst->type = SM_UPDATE_REBASE;
-+	else if (!strcmp(value, "merge"))
-+		dst->type = SM_UPDATE_MERGE;
-+	else if (skip_prefix(value, "!", &value)) {
-+		dst->type = SM_UPDATE_COMMAND;
-+		dst->command = xstrdup(value);
-+	} else
-+		return -1;
-+	return 0;
-+}
-+
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
+@@ -525,13 +525,13 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
  {
-diff --git a/submodule.h b/submodule.h
-index cbc0003..3464500 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -13,6 +13,20 @@ enum {
- 	RECURSE_SUBMODULES_ON = 2
- };
+ 	int i;
+ 	if (argc < 2)
+-		die(_("fatal: submodule--helper subcommand must be "
++		die(_("submodule--helper subcommand must be "
+ 		      "called with a subcommand"));
  
-+enum submodule_update_type {
-+	SM_UPDATE_UNSPECIFIED = 0,
-+	SM_UPDATE_CHECKOUT,
-+	SM_UPDATE_REBASE,
-+	SM_UPDATE_MERGE,
-+	SM_UPDATE_NONE,
-+	SM_UPDATE_COMMAND
-+};
-+
-+struct submodule_update_strategy {
-+	enum submodule_update_type type;
-+	const char *command;
-+};
-+
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- int remove_path_from_gitmodules(const char *path);
-@@ -21,6 +35,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 		const char *path);
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
-+int parse_submodule_update_strategy(const char *value,
-+		struct submodule_update_strategy *dst);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
+ 	for (i = 0; i < ARRAY_SIZE(commands); i++)
+ 		if (!strcmp(argv[1], commands[i].cmd))
+ 			return commands[i].fn(argc - 1, argv + 1, prefix);
+ 
+-	die(_("fatal: '%s' is not a valid submodule--helper "
++	die(_("'%s' is not a valid submodule--helper "
+ 	      "subcommand"), argv[1]);
+ }
+
+
+Stefan Beller (12):
+  submodule-config: keep update strategy around
+  submodule-config: drop check against NULL
+  fetching submodules: respect `submodule.fetchJobs` config option
+  submodule update: direct error message to stderr
+  run_processes_parallel: treat output of children as byte array
+  run-command: expose default_{start_failure, task_finished}
+  run_processes_parallel: rename parameters for the callbacks
+  run_processes_parallel: correctly terminate callbacks with an LF
+  git submodule update: have a dedicated helper for cloning
+  submodule helper: remove double 'fatal: ' prefix
+  submodule update: expose parallelism to the user
+  clone: allow an explicit argument for parallel submodule clones
+
+ Documentation/config.txt        |   6 +
+ Documentation/git-clone.txt     |   6 +-
+ Documentation/git-submodule.txt |   7 +-
+ builtin/clone.c                 |  19 ++-
+ builtin/fetch.c                 |   2 +-
+ builtin/submodule--helper.c     | 259 +++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh                |  56 ++++-----
+ run-command.c                   |  36 +++---
+ run-command.h                   |  29 ++++-
+ strbuf.c                        |   6 +
+ strbuf.h                        |   6 +
+ submodule-config.c              |  19 ++-
+ submodule-config.h              |   2 +
+ submodule.c                     |  37 +++++-
+ submodule.h                     |  18 +++
+ t/t5526-fetch-submodules.sh     |  14 +++
+ t/t7400-submodule-basic.sh      |   4 +-
+ t/t7406-submodule-update.sh     |  27 +++++
+ 18 files changed, 480 insertions(+), 73 deletions(-)
+
 -- 
 2.7.0.rc0.37.gb7b9e8e
