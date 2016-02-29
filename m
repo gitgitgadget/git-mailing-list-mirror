@@ -1,91 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git cat-file -e behavior
-Date: Mon, 29 Feb 2016 07:40:32 -0500
-Message-ID: <20160229124032.GA21158@sigill.intra.peff.net>
-References: <56D41645.4050800@cihar.com>
- <20160229114455.GD29769@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
+Date: Mon, 29 Feb 2016 14:01:52 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602291359580.3152@virtualbox>
+References: <56D3E56A.5010608@web.de> <20160229092816.GA23910@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michal =?utf-8?B?xIxpaGHFmQ==?= <michal@cihar.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 13:40:39 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 29 14:02:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaN7v-0006cT-2m
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 13:40:39 +0100
+	id 1aaNSq-00007a-HX
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbcB2Mkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 07:40:35 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51368 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752129AbcB2Mkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 07:40:35 -0500
-Received: (qmail 17716 invoked by uid 102); 29 Feb 2016 12:40:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 07:40:34 -0500
-Received: (qmail 25908 invoked by uid 107); 29 Feb 2016 12:40:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 07:40:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 07:40:32 -0500
-Content-Disposition: inline
-In-Reply-To: <20160229114455.GD29769@sigill.intra.peff.net>
+	id S1754833AbcB2NCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 08:02:13 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50165 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753855AbcB2NCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 08:02:09 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MGAdz-1aeYjc1rh1-00FACV; Mon, 29 Feb 2016 14:01:55
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160229092816.GA23910@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:qiN1B3/Sl+3P1xWQRV0A+K6vQg3je2CPO/TUmqT7/yeiVwYAReW
+ ZW3+C+daaas2wHXzBz/EPOBxqHLZmb2uazD2aMwS348u3wwgnP3xIZPcG4u/XuV4YaM66et
+ LfYtXjAjouJV/bbI6qb1o9RRWoFmOFQznaSmNNaWt4TRJtthEnIKFQnS2dGbAIkyzEO1417
+ vRKFVYhQx0Cyi4uKxntSQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F/1Jtbb5uXE=:/X6C5EmIwon1XsVkbhFoxR
+ brRt9goyRrKP8T75/GeRlFIK0z7xqTNU6aLF9WZd4szmcr9GLEGWDRgGJRAdCQlRehit4OhSy
+ LdRpjwY4Jo2yVRFGetuk/Ri1eoUcCSGLnb3QAStko+kSsHEAwz4dz7fkEy4kT5xUGCs5wmOy4
+ oDO2eSJNKwC4Dg9/FBYhuEIysW6tsgfVvSRLxvBvznctutHVZeRGRFJZk3Kv6gNxwI2Q+311W
+ s3ocsQw9YBHBEKXvSEd+JcOrYstqhR7za8HdMwqec1dceyKjgzpVDz0tj8DqXIEfBCDBlHRxN
+ LVCaJJy1gkjDR/eiEJX7dHKEtD2fXj6hynz5i6Qo5UUYD7tyxnZEIbNU4znPTNFK+/yB8e08/
+ J25PQbnpQFZ9VjjmJcT0wRKN5nKinpPK7HdYJ2RnTnb4bVOzutKU2FrKidOHPjLTYnmMdZeg2
+ YYlvf1VAY0sYg9kb2khlmkruvvQmVq8Ju/APaWcyxHBurboYtWawbUQvscVfSmCQOC19MN0Gn
+ 2ipShU3UOypc0ZCvcEhJ8ThuHwNbV6tnSpLw4JBXs9QLabO43WKT/K4UGJNBQQkMzsdfc7WOm
+ FHpl7LBirAIsiarPFmfmXDREEYnvwO//gsLYYeLhVAYE1QmQy/H0CB1dC1ZosNljkjHqjrg/k
+ yBGZDU75DNPP8hv/oHDlN+a/IiG3KWS8vUYStcqaLf4IhWVqyBd82p8oZ+tnZylMxF5y1+Bgx
+ lDs7EdNJVx61F/MeZUwAhSAqrrY2WLxDnEckzzdAylYiSNXtSGZPMRWcT/n/1d2PjnQkkYRt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287834>
 
-On Mon, Feb 29, 2016 at 06:44:55AM -0500, Jeff King wrote:
+Hi Peff,
 
-> [...]but it would be easy to change:
+On Mon, 29 Feb 2016, Jeff King wrote:
+
+> I think this means "master" is broken for mingw builds.
 > 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 54db118..afde169 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -35,6 +35,9 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
->  	if (unknown_type)
->  		flags |= LOOKUP_UNKNOWN_OBJECT;
->  
-> +	if (opt == 'e')
-> +		return !has_sha1_file(sha1);
-> +
->  	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
->  		die("Not a valid object name %s", obj_name);
->  
-> @@ -58,9 +61,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
->  		printf("%lu\n", size);
->  		return 0;
->  
-> -	case 'e':
-> -		return !has_sha1_file(sha1);
-> -
->  	case 'c':
->  		if (!obj_context.path[0])
->  			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+> Sorry, Windows people, for breaking your build. I'm happy to hold back
+> such repo-wide cleanups from the mingw code in the future, since I can't
+> actually compile them. But the flipside is that if I _do_ improve
+> things, you don't get the benefit until somebody manually ports it over.
 
-This is wrong, of course. We still need to call get_sha1, but just need
-to not die. So it's more like this (totally untested, naturally):
+No, I do not think that you need to hold back cleanups. We will catch such
+issues before long, anyway.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 54db118..44add8c 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -35,8 +35,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	if (unknown_type)
- 		flags |= LOOKUP_UNKNOWN_OBJECT;
- 
--	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
-+	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context)) {
-+		if (opt == 'e')
-+			return 1;
- 		die("Not a valid object name %s", obj_name);
-+	}
- 
- 	buf = NULL;
- 	switch (opt) {
-
--Peff
+Thanks for all your hard work!
+Dscho
