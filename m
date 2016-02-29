@@ -1,105 +1,76 @@
-From: =?UTF-8?B?TWljaGFsIMSMaWhhxZk=?= <michal@cihar.com>
-Subject: Re: git cat-file -e behavior
-Date: Mon, 29 Feb 2016 13:16:34 +0100
-Message-ID: <56D436A2.4090202@cihar.com>
-References: <56D41645.4050800@cihar.com>
- <20160229114455.GD29769@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: Compiler warning under cygwin/mingw
+Date: Mon, 29 Feb 2016 12:32:33 +0000
+Message-ID: <56D43A61.3090503@ramsayjones.plus.com>
+References: <56D3E56A.5010608@web.de>
+ <20160229092816.GA23910@sigill.intra.peff.net> <56D415C6.2040203@web.de>
+ <20160229100258.GC2950@sigill.intra.peff.net> <56D4203B.1030708@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="7IIWAN40HibidFCtQPWQmMkHF4KF9QsDs"
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 13:16:47 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 29 13:32:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaMkp-0004Or-GH
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 13:16:47 +0100
+	id 1aaN0D-00030Q-MI
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 13:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbcB2MQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 07:16:43 -0500
-Received: from mort.cihar.com ([77.78.107.252]:54803 "EHLO mail.cihar.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752129AbcB2MQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 07:16:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cihar.com; s=20150416;
-	h=Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:Cc:References:To:Subject; bh=MU3nMsaSr+h82VYk3V0oBIaYksUJk3fULSV7N27giT8=;
-	b=bZbbYqHlwSDeQ5p1HPBfd4b7McUS2zrZXObJuEeeKRCINaJWuyirxcHWZdUGocBjlMzDobDHdjoTHLVC3GjLIPhhDAJEgEQU738r6gr1RY7PM8eNYMAlvfCvUFmCRXTc6/DukicE7rw/Uu8icaRZ7I03/tDPAdRgaXm7tgNxVmg=;
-Received: from 127.0.0.1 (helo=authenticated.u-s-e-r)
-	by mail.cihar.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.84)
-	(envelope-from <michal@cihar.com>)
-	id 1aaMkg-00024z-5J; Mon, 29 Feb 2016 13:16:38 +0100
-Received: from [::1]
-	by nutt with esmtp (Exim 4.86)
-	(envelope-from <michal@cihar.com>)
-	id 1aaMkd-0004Ub-06; Mon, 29 Feb 2016 13:16:35 +0100
+	id S1752283AbcB2Mch convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 07:32:37 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:34502 "EHLO
+	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbcB2Mch (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 07:32:37 -0500
+Received: from [10.0.2.15] ([46.208.159.221])
+	by avasout01 with smtp
+	id QCYZ1s0044mu3xa01CYaTa; Mon, 29 Feb 2016 12:32:35 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
+ a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=N3sh0_2eW6l_0QQvmi0A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.6.0
-In-Reply-To: <20160229114455.GD29769@sigill.intra.peff.net>
+ Thunderbird/38.5.1
+In-Reply-To: <56D4203B.1030708@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287831>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---7IIWAN40HibidFCtQPWQmMkHF4KF9QsDs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 
-Hi
 
-Dne 29.2.2016 v 12:44 Jeff King napsal(a):
-> It looks like it has been this way forever. The first thing we do with
-> the object is resolve its name to a sha1, and that's where the error yo=
-u
-> see comes from. And then we actually check whether we have the object.
+On 29/02/16 10:40, Torsten B=C3=B6gershausen wrote:
+> That compiles OK, thanks.
 >=20
-> I think the intended use was to feed it a sha1 to see if it exists. The=
-n
-> the name-resolution step is a noop.
+>=20
+> Sorry for high-jacking this thread, but while compiling under CYGWIN,
+> found one warning:
+>=20
+>    LINK git-credential-store.exe
+>     CC daemon.o
+> daemon.c: In function =E2=80=98drop_privileges=E2=80=99:
+> daemon.c:1136:15: warning: implicit declaration of function =E2=80=98=
+initgroups=E2=80=99 [-Wimplicit-function-declaration]
+>   if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
 
-I found this as best way to check whether file exists in branch.
-Checking git ls-tree output seems less error prone than checking return
-value of git cat-file -e...
+Yeah, this has been there for a while - except it depends on which vers=
+ion
+of the header files you have. (Some may not see the warning).
 
-> I'm not sure if the behavior you are seeing is all that bad (the
-> documentation could be read as suppressing the normal stdout output, bu=
-t
-> error messages remain),=20
+I have 'fixed' this twice before, then updated my installation and
+a change to the system headers broke it again! (The headers are
+currently 'broken'). So, I got tired of fixing it up and have left
+it a while - you never know a new update may fix it! ;-)
 
-I understand this, that's why I'm asking whether it's expected output or
-not :-).
+[I personally don't use the git daemon on cygwin, so I don't know
+if this a problem in practice.]
 
---=20
-	Michal =C4=8Ciha=C5=99 | http://cihar.com | http://blog.cihar.com
-
-
---7IIWAN40HibidFCtQPWQmMkHF4KF9QsDs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJW1DaiAAoJEPSqIp1NWMJFjs4P+wYVt+UTDxBemkek3lbG3SC9
-UbEhQlPl091PdA0YMG/pJlszHqwTvcua/6wmQoZtpKRvDT4cLU4z4V5UZXSwR3C9
-1yETsdkTQmyHFj5/BsH2zJ0DV/POjxTziIk3T4VZ4D6ci/V0fTyIvxUHJzGzbpr/
-fS5ES4UfFcSUjAFdEFfB4HK0xpGh/kt5KJIUSc2FsF4ZlpTvbAw/S3eepwFboQtE
-931sQ7FRhwGHrpTUEPTwhAQ3iI7ab2JrmFVRKtjs1olM4h64sqClKsqdctwvAun0
-QXWgAFyu7jnv4dKnWTcWGjodf47HA0JrOgiz3JhQ4H8QauVTxvxpbuiyY8ykFjN0
-3fd9d8+A1Q7vMSKq9DGOF0uL2Czjux0V1IoNfcIrAq2FWD9YeJbGCeo3SSFE15Tr
-DyN6CjW/KQtTdoU/SZ+Q52MHb6oNQiPOU+ZFVV4tK+sfQyPjirat41zHR8uJh8OG
-+2+M6ssz8uILjXfEvcmDtcqxwI8ad2XMBnCFBJanxDqGUvjObez27rNZRnJhYg4/
-B0qDlO6B9xHk+34N07iZEm/SPIFAFPyabrs8FjcFMaiJ0GQE3USVM3z+ntZuwdWz
-ltmXhDEuevE7bBUege2R/zDz+hjBFGrzY4GLv1aCVz1g0BQlXLmDeuKsnuOTHuvt
-Gn4rzyfzG8cMF3RQcdIY
-=0Vya
------END PGP SIGNATURE-----
-
---7IIWAN40HibidFCtQPWQmMkHF4KF9QsDs--
+ATB,
+Ramsay Jones
