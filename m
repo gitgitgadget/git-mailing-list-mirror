@@ -1,95 +1,138 @@
-From: Stefan Beller <sbeller@google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
-Date: Mon, 29 Feb 2016 15:39:28 -0800
-Message-ID: <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
+Date: Mon, 29 Feb 2016 15:44:51 -0800
+Message-ID: <CA+P7+xrr61wO0XrhXCEbSLPbSo7HxxzDWnq=6K14fvyo7RfscA@mail.gmail.com>
 References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
-	<1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+ <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com> <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>,
 	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 00:39:39 2016
+	Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 00:45:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaXPa-0002T5-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 00:39:34 +0100
+	id 1aaXVc-0005lx-7c
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 00:45:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751106AbcB2Xja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 18:39:30 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33548 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837AbcB2Xj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 18:39:29 -0500
-Received: by mail-ig0-f172.google.com with SMTP id y8so7901760igp.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 15:39:29 -0800 (PST)
+	id S1752005AbcB2Xpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 18:45:43 -0500
+Received: from mail-io0-f175.google.com ([209.85.223.175]:34686 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789AbcB2XpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 18:45:12 -0500
+Received: by mail-io0-f175.google.com with SMTP id 9so201114413iom.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 15:45:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=4PrpQa4lvk06ErB9j8Hi0QbBDs6TimF+BdbqNYSkP7Q=;
-        b=o0PCY7/mOaGDeNPPDZyrjXq5lCw5b2YlKY8vfT6i7xw/FpcmoBTagrUR7JlCTF1jzW
-         U1aXM8UNdlhLx6LxXeuejb1iGXJMGraUfz8YSROqoAy4svg0X/nS5lthsGvBY2O8TPFf
-         lxlmCaGII6787bmduyt2Nf+yn6FaYx0iY7ottnOJuaBEhw+QlfLoFZUIgLUNutOgBl2V
-         7ROW5VOtgNQhoHY4b9J5rit2bMQkN9K2sGkn0IjekQMYNqLP0VIfIxkrBKh6sEZ8+laO
-         KNDmgt9xNIDARO0GmCD863ILGsbHBSWMKtjlfnftK4OkY8UoJZCVtQLueeApHH1M6QrL
-         /PBw==
+        bh=AP1ss6JjxqLaLZulMvgfCwWD83QlG7o95/ixiWI3F2I=;
+        b=QDW1ErdiDP7Z8UzVpES9T/efW9t9kcc2cFyaPWyR68oYUn6nDiLmXJ0eNsZCOkvJIv
+         vGxVi6T7t1/sgP0REQUZj3eXS4U8J/PHlUlvWKVIhgcA4x61tJOHYo5N6HRbMBUuxxuv
+         xQYZQKJA5mMiVf3RUKk3oPxt4Y6Ow7dCczinqY+CCwJfTdjaUDzx0MrrGcT142lhRng/
+         bjOjO7pISegBLIU2TsOjZf62JA/x6x+jDho+Bvz3YUohmMrYcbJUZa4cJNOZK0K+eaAu
+         gMK+4ex2LDWEevP1ANIVT69syG/FjfuBmxe34FlppTPRCVMxaSYe+0IBpWbblbxox1qp
+         sLXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4PrpQa4lvk06ErB9j8Hi0QbBDs6TimF+BdbqNYSkP7Q=;
-        b=kRUvR0fboM1p575cgWE2/p1c12MRswemEaQ71YoDEE2P4VBoFZOwAZu6IxbJiuvmE1
-         ryzCfT0OVY57eNBSwXgMOjTJx7A/hmg/6cbrao6p70/9tDncjxFEnHAMp3QO2h4R30g+
-         lBL35DIwVK3epf70p/gEE3avcgRWfnTbKoc6YrfEJS/GSvh0UIsn8iVYXQhggmWC33RL
-         iSkPTfqEHUuOBeV9qbw/1fUjoDzPNzm+ho/Yay2/CRzSpHHAlmWpV21BV/ND5rUxm4pr
-         Q9wEnVGjY/2dtP9TGlwaUYmPCoMVxhxphlCYYxPFWZepb/Esq7F/V9J7xiLmoPYt6wIc
-         cQFw==
-X-Gm-Message-State: AD7BkJKugmuC6/h3MpnuDZT/au0sM8RcrAfhr3PtFXTQ1xL8ISm1uwFJnsgDLndNQtcwUoyuX3uq64w5iQJCqz5v
-X-Received: by 10.50.3.42 with SMTP id 10mr509229igz.85.1456789168520; Mon, 29
- Feb 2016 15:39:28 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Mon, 29 Feb 2016 15:39:28 -0800 (PST)
-In-Reply-To: <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AP1ss6JjxqLaLZulMvgfCwWD83QlG7o95/ixiWI3F2I=;
+        b=Bu8+Y68bgtarsbvDhs42rCvVBCLHJwyYqWKXHRJikjX+lg1rAYGidzvpoTw9G/5aPg
+         V0mHot+fMZJrE2Cn48W7tiEQN1zd1S1+Gvh6djbZSfY7I7dLgenr9K5dGFNSnC/SatzK
+         MqJaxtHxulk5DzIUGGmHI6zel1zGWnq1DfeFw30270dNWXe668Hvc4n6d6jiaavVimWL
+         ztnDEHwvcNL+j+ER/6lyoujaQ/ek3h57wvy2ySSDoP9k3npzvNDKv38/du5xJKKVZYFQ
+         FzfjSAPJ4dqBUoZ2/lDzlDVIHHDSqRJa5ki7Y26ajJ1If2CW/oKUioFZ73zgBBg4IJe9
+         tc4g==
+X-Gm-Message-State: AG10YORTbvg7w94jcgg4h8itB0QGcjhReyssiWY8HY4KiJSC2Rhb0WL7Owl6BP0C43S00ZuHulWMvH41PPfS3A==
+X-Received: by 10.107.166.195 with SMTP id p186mr22025813ioe.146.1456789511000;
+ Mon, 29 Feb 2016 15:45:11 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Mon, 29 Feb 2016 15:44:51 -0800 (PST)
+In-Reply-To: <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287941>
 
-On Mon, Feb 29, 2016 at 2:58 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+On Mon, Feb 29, 2016 at 3:39 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Feb 29, 2016 at 2:58 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+>>
+>> +test_expect_success 'cmdline credential config passes into submodules' '
+>> +       git init super &&
+>> +       set_askpass user@host pass@host &&
 >
-> +test_expect_success 'cmdline credential config passes into submodules' '
-> +       git init super &&
-> +       set_askpass user@host pass@host &&
+> I wonder why we use pass@host as a password, it seems confusing to me.
+> p@ssword would have worked if we wanted to test a password containing an @,
+> pass@host doesn't quite fit my mental model of how passwords work.
+> No need to change anything, better be consistent with the rest of the tests.
+>
 
-I wonder why we use pass@host as a password, it seems confusing to me.
-p@ssword would have worked if we wanted to test a password containing an @,
-pass@host doesn't quite fit my mental model of how passwords work.
-No need to change anything, better be consistent with the rest of the tests.
+I am not sure, but I don't think it particularly matters what we use.
+Most of this is pretty much copied as suggested by Peff.
 
+>
+>> +       (
+>> +               cd super &&
+>> +               git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
+>> +               git commit -m "add submodule"
+>> +       ) &&
+>> +       set_askpass wrong pass@host &&
+>> +       test_must_fail git clone --recursive super super-clone &&
+>> +       rm -rf super-clone &&
+>> +       set_askpass wrong pass@host &&
+>
+> Why set set_askpass a second time here?
 
-> +       (
-> +               cd super &&
-> +               git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
-> +               git commit -m "add submodule"
-> +       ) &&
-> +       set_askpass wrong pass@host &&
-> +       test_must_fail git clone --recursive super super-clone &&
-> +       rm -rf super-clone &&
-> +       set_askpass wrong pass@host &&
+Interesingly, it fails unless I add this line with:
 
-Why set set_askpass a second time here?
+Submodule path 'sub': checked out '678c534310f3cd5727f8e066cba0cd420bd7948e'
+--- "/home/jekeller/git/git/t/trash
+directory.t5550-http-fetch-dumb/askpass-expect"     2016-02-29
+23:43:35.724179569 +0000
++++ "/home/jekeller/git/git/t/trash
+directory.t5550-http-fetch-dumb/askpass-query"      2016-02-29
+23:43:35.681179568 +0000
+@@ -1 +1,3 @@
++askpass: Username for 'http://127.0.0.1:5550':
++askpass: Password for 'http://wrong@127.0.0.1:5550':
+ askpass: Password for 'http://user@host@127.0.0.1:5550':
+not ok 13 - cmdline credential config passes into submodules
+#
+#               git init super &&
+#               set_askpass user@host pass@host &&
+#               (
+#                       cd super &&
+#                       git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
+#                       git commit -m "add submodule"
+#               ) &&
+#               set_askpass wrong pass@host &&
+#               test_must_fail git clone --recursive super super-clone &&
+#               rm -rf super-clone &&
+#               git -c "credential.$HTTP_URL.username=user@host" \
+#                       clone --recursive super super-clone &&
+#               expect_askpass pass user@host
+#
 
-> +       git -c "credential.$HTTP_URL.username=user@host" \
-> +               clone --recursive super super-clone &&
-> +       expect_askpass pass user@host
-> +'
+I really don't understand why adding the extra askpass setting fixes
+this? Possibly because the query and expect files are appended to? Or
+something else subtle going on?
 
-Thanks for this test!
-Stefan
+Basically: without this, the expect vs the query don't match. With it,
+they do. I don't understand the reasoning why.
+
+>
+> Thanks for this test!
+> Stefan
+
+Jeff King suggested it, originally.
+
+Thanks,
+Jake
