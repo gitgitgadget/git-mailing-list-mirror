@@ -1,425 +1,234 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv20 09/12] git submodule update: have a dedicated helper for cloning
-Date: Mon, 29 Feb 2016 11:14:07 -0800
-Message-ID: <1456773250-5510-10-git-send-email-sbeller@google.com>
-References: <1456773250-5510-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
-	peff@peff.net, sunshine@sunshineco.com,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:14:50 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Change type of signed int flags to unsigned
+Date: Mon, 29 Feb 2016 11:26:07 -0800
+Message-ID: <xmqqmvqj9v3k.fsf@gitster.mtv.corp.google.com>
+References: <1456754667-9462-1-git-send-email-sauravsachidanand@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Saurav Sachidanand <sauravsachidanand@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 20:26:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaTHM-0005nN-FJ
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:14:48 +0100
+	id 1aaTST-0003g7-Q7
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753767AbcB2TOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:14:43 -0500
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35862 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417AbcB2TOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:14:30 -0500
-Received: by mail-pf0-f181.google.com with SMTP id t66so31168445pfb.3
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gTse0zxvaZfmqZmdylOABbCcHIB2+wuJusCiLMqA2kY=;
-        b=d7SPYp4ChlXXGy9NKQ2gejtu5X4M4fQV3J8MlGph1QwoqNXypghYw/CYtUQY48W9HQ
-         Fw/mPWW0o52A4/6Q0RyS5o+f8F0LZuh2h9mBdLy74IjQfH2uPcPxyGop4Mw2lJ1MhcUR
-         UbOZ1eL4rT4ScwkJpd8bT+530g4gpTB+pG7HHVcFDfLveYkvF8A3KeA0onhKgqi1li+/
-         sDABrV/PUhjHvLYw4DMcP34E5u1rOBx9/cqlyiBdw0OM4r55X2uScWnzQNPUfiRLfZQH
-         +nHl8xuT33SByRRXy+0H6TnVp1n2IQn4pETeYrqVzKb+BEGwfshQUdjHeE4Fac+gulgu
-         7KCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=gTse0zxvaZfmqZmdylOABbCcHIB2+wuJusCiLMqA2kY=;
-        b=QDVa+RgH+J/B7LoooYnJcusGMK45eQHudDhUa1Bu/2V+PuPbE0UPdfOIEmeKAYZvgl
-         kfWVEWPuijVlCBPASTIwLijYd1GL0NP8R4ONURfYTJt1DybQDW1oLnqMhtuFXkpuuIC8
-         bamOwzO1TuwqssaTLNFFc8ntZU/N+ZAcv8iZdpbXbMnx0LapsbAcV5hqUeJp4VcL5QoL
-         VN790HKdD0JsiFBThzDvZVvW824YrGCBh3r/lqN641IMyrCLPcE2k1pLgIl+2yPxIC9m
-         DUn92/P7iRBg5wyzFICfYw20dglFGaV5n7pPHn7xWeZ+2DO2GdqSbzRO2cGYA+3PB1q/
-         zY0w==
-X-Gm-Message-State: AD7BkJIZlIHYK2VtXH96qpTFhrPNusrJS2bD6JhsIuyorbxJnWEK7fckeBELZN4u5J6lysZQ
-X-Received: by 10.98.13.154 with SMTP id 26mr24533722pfn.164.1456773269577;
-        Mon, 29 Feb 2016 11:14:29 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:e195:dbe1:d842:476])
-        by smtp.gmail.com with ESMTPSA id i23sm39847112pfj.68.2016.02.29.11.14.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 29 Feb 2016 11:14:28 -0800 (PST)
-X-Mailer: git-send-email 2.7.0.rc0.37.gb7b9e8e
-In-Reply-To: <1456773250-5510-1-git-send-email-sbeller@google.com>
+	id S1754302AbcB2T0N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 14:26:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56311 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752354AbcB2T0L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 14:26:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD17A48278;
+	Mon, 29 Feb 2016 14:26:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=E3GezfXMNSgP
+	nlgiEj0Fr1ylHtA=; b=JuF1X9vKeuqHM48RAwDHCBAT6dkb1af/bvm4vgfA3QGL
+	VB0VOZGYu6udHTfrwiifHz4ytyGpcr0+t/W4qA7OGlEk0fDcvx9qlWqr/t2dzwbW
+	LIcy58Z2wL74srG+VAHA8v0+9SjxTP3NnpnOTlQ2aKqZH2kZIyXKXQkBlXririU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=b7CB/o
+	ICIkaGcTxKM6yvboPD8k64fBpU5PiynX28atMpRPcRJ8pjFz/aKpWQ7x1rY4Wo2X
+	fKDYay6Siqv+Bvqj/qIvGw+ph2Och9nDMFLdG9/ZvvPLcDNvldyYpCMkefKnRkDT
+	O6pfED9iA41Gw5FVOQ4ynNsa7AIzmUzBDTTIs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3EFA48277;
+	Mon, 29 Feb 2016 14:26:09 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 049DB48276;
+	Mon, 29 Feb 2016 14:26:08 -0500 (EST)
+In-Reply-To: <1456754667-9462-1-git-send-email-sauravsachidanand@gmail.com>
+	(Saurav Sachidanand's message of "Mon, 29 Feb 2016 19:34:27 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 48ED2852-DF1A-11E5-94A2-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287886>
 
-This introduces a new helper function in git submodule--helper
-which takes care of cloning all submodules, which we want to
-parallelize eventually.
+Saurav Sachidanand <sauravsachidanand@gmail.com> writes:
 
-Some tests (such as empty URL, update_mode=none) are required in the
-helper to make the decision for cloning. These checks have been
-moved into the C function as well (no need to repeat them in the
-shell script).
+> =E2=80=9Cpattern=E2=80=9D and =E2=80=9Cexclude=E2=80=9D are two struc=
+ts defined in attr.c and dir.h
+> respectively. Each contain a =E2=80=9Cflags=E2=80=9D field of type in=
+t that takes on
+> values from the set of positive integers {1, 4, 8, 16}, that are
+> enumerated through the macro EXC_FLAG_*.
+>
+> That the most significant bit (used to store the sign) of these two
+> fields is not used in any special way is observed from the fact that
+> the "flags" fields (accessed within attr.c, dir.c, and
+> builtin/check-ignore.c) are either checked for their values using the
+> & operator (e.g.: flags & EXC_FLAG_NODIR), or assigned a value of 0
+> first and then assigned any one of {1, 4, 8, 16} using the | operator
+> (e.g.: flags |=3D EXC_FLAG_NODIR). Hence, change the type of "flags"
+> to unsigned in both structs.
+>
+> Furthermore, =E2=80=9Cflags=E2=80=9D of both structs is passed by val=
+ue or by reference
+> to the functions parse_exclude_pattern, match_basename and
+> match_pathname (declared in dir.h), that have an =E2=80=9Cint=E2=80=9D=
+ or =E2=80=9Cint *=E2=80=9D type
+> for "flags" in their signatures. To avoid implicit conversion to type=
+s,
+> or pointers to types, of different sign, change the type for =E2=80=9C=
+flags=E2=80=9D to
+> =E2=80=9Cunsigned=E2=80=9D and =E2=80=9Cunsigned *=E2=80=9D in the re=
+spective function signatures.
+>
+> And while we=E2=80=99re at it, document the "flags" field of "exclude=
+" to
+> explicitly state the values it=E2=80=99s supposed to take on.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 249 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  47 +++------
- 2 files changed, 262 insertions(+), 34 deletions(-)
+The above is overly verbose for two reasons, I think.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f4c3eff..e1b60ff 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -255,6 +255,254 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+struct submodule_update_clone {
-+	/* index into 'list', the list of submodules to look into for cloning */
-+	int current;
-+	struct module_list list;
-+	unsigned warn_if_uninitialized : 1;
-+
-+	/* update parameter passed via commandline */
-+	struct submodule_update_strategy update;
-+
-+	/* configuration parameters which are passed on to the children */
-+	int quiet;
-+	const char *reference;
-+	const char *depth;
-+	const char *recursive_prefix;
-+	const char *prefix;
-+
-+	/* Machine-readable status lines to be consumed by git-submodule.sh */
-+	struct string_list projectlines;
-+
-+	/* If we want to stop as fast as possible and return an error */
-+	unsigned quickstop : 1;
-+};
-+#define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
-+	SUBMODULE_UPDATE_STRATEGY_INIT, 0, NULL, NULL, NULL, NULL, \
-+	STRING_LIST_INIT_DUP, 0}
-+
-+/**
-+ * Determine whether 'ce' needs to be cloned. If so, prepare the 'child' to
-+ * run the clone. Returns 1 if 'ce' needs to be cloned, 0 otherwise.
-+ */
-+static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
-+					   struct child_process *child,
-+					   struct submodule_update_clone *suc,
-+					   struct strbuf *out)
-+{
-+	const struct submodule *sub = NULL;
-+	struct strbuf displaypath_sb = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *displaypath = NULL;
-+	char *url = NULL;
-+	int needs_cloning = 0;
-+
-+	if (ce_stage(ce)) {
-+		if (suc->recursive_prefix) {
-+			strbuf_addf(out,_("Skipping unmerged submodule %s/%s\n"),
-+				    suc->recursive_prefix, ce->name);
-+		} else {
-+			strbuf_addf(out, _("Skipping unmerged submodule %s\n"),
-+				    ce->name);
-+		}
-+		goto cleanup;
-+	}
-+
-+	sub = submodule_from_path(null_sha1, ce->name);
-+
-+	if (suc->recursive_prefix)
-+		displaypath = relative_path(suc->recursive_prefix,
-+					    ce->name, &displaypath_sb);
-+	else
-+		displaypath = ce->name;
-+
-+	if (suc->update.type == SM_UPDATE_NONE
-+	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
-+		&& sub->update_strategy.type == SM_UPDATE_NONE)) {
-+		strbuf_addf(out, _("Skipping submodule '%s'\n"),
-+			    displaypath);
-+		goto cleanup;
-+	}
-+
-+	/*
-+	 * Looking up the url in .git/config.
-+	 * We must not fall back to .gitmodules as we only want
-+	 * to process configured submodules.
-+	 */
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "submodule.%s.url", sub->name);
-+	git_config_get_string(sb.buf, &url);
-+	if (!url) {
-+		/*
-+		 * Only mention uninitialized submodules when their
-+		 * path have been specified
-+		 */
-+		if (suc->warn_if_uninitialized)
-+			strbuf_addf(out, _("Submodule path '%s' not initialized\n"
-+				    "Maybe you want to use 'update --init'?\n"),
-+				    displaypath);
-+		goto cleanup;
-+	}
-+
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/.git", ce->name);
-+	needs_cloning = !file_exists(sb.buf);
-+
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%06o %s %d %d\t%s\n", ce->ce_mode,
-+			sha1_to_hex(ce->sha1), ce_stage(ce),
-+			needs_cloning, ce->name);
-+	string_list_append(&suc->projectlines, sb.buf);
-+
-+	if (!needs_cloning)
-+		goto cleanup;
-+
-+	child->git_cmd = 1;
-+	child->no_stdin = 1;
-+	child->stdout_to_stderr = 1;
-+	child->err = -1;
-+	argv_array_push(&child->args, "submodule--helper");
-+	argv_array_push(&child->args, "clone");
-+	if (suc->quiet)
-+		argv_array_push(&child->args, "--quiet");
-+	if (suc->prefix)
-+		argv_array_pushl(&child->args, "--prefix", suc->prefix, NULL);
-+	argv_array_pushl(&child->args, "--path", sub->path, NULL);
-+	argv_array_pushl(&child->args, "--name", sub->name, NULL);
-+	argv_array_pushl(&child->args, "--url", url, NULL);
-+	if (suc->reference)
-+		argv_array_push(&child->args, suc->reference);
-+	if (suc->depth)
-+		argv_array_push(&child->args, suc->depth);
-+
-+cleanup:
-+	free(url);
-+	strbuf_reset(&displaypath_sb);
-+	strbuf_reset(&sb);
-+
-+	return needs_cloning;
-+}
-+
-+static int update_clone_get_next_task(struct child_process *child,
-+				      struct strbuf *err,
-+				      void *suc_cb,
-+				      void **void_task_cb)
-+{
-+	struct submodule_update_clone *suc = suc_cb;
-+
-+	for (; suc->current < suc->list.nr; suc->current++) {
-+		const struct cache_entry *ce = suc->list.entries[suc->current];
-+		if (prepare_to_clone_next_submodule(ce, child, suc, err)) {
-+			suc->current++;
-+			return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
-+static int update_clone_start_failure(struct child_process *child,
-+				      struct strbuf *err,
-+				      void *suc_cb,
-+				      void *void_task_cb)
-+{
-+	struct submodule_update_clone *suc = suc_cb;
-+
-+	default_start_failure(child, err, suc_cb, void_task_cb);
-+	suc->quickstop = 1;
-+
-+	return 1;
-+}
-+
-+static int update_clone_task_finished(int result,
-+				      struct child_process *child,
-+				      struct strbuf *err,
-+				      void *suc_cb,
-+				      void *void_task_cb)
-+{
-+	struct submodule_update_clone *suc = suc_cb;
-+
-+	if (!result)
-+		return 0;
-+
-+	default_task_finished(result, child, err, suc_cb, void_task_cb);
-+	suc->quickstop = 1;
-+
-+	return 1;
-+}
-+
-+static int update_clone(int argc, const char **argv, const char *prefix)
-+{
-+	const char *update = NULL;
-+	struct string_list_item *item;
-+	struct pathspec pathspec;
-+	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
-+
-+	struct option module_update_clone_options[] = {
-+		OPT_STRING(0, "prefix", &prefix,
-+			   N_("path"),
-+			   N_("path into the working tree")),
-+		OPT_STRING(0, "recursive-prefix", &suc.recursive_prefix,
-+			   N_("path"),
-+			   N_("path into the working tree, across nested "
-+			      "submodule boundaries")),
-+		OPT_STRING(0, "update", &update,
-+			   N_("string"),
-+			   N_("rebase, merge, checkout or none")),
-+		OPT_STRING(0, "reference", &suc.reference, N_("repo"),
-+			   N_("reference repository")),
-+		OPT_STRING(0, "depth", &suc.depth, "<depth>",
-+			   N_("Create a shallow clone truncated to the "
-+			      "specified number of revisions")),
-+		OPT__QUIET(&suc.quiet, N_("don't print cloning progress")),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper update_clone [--prefix=<path>] [<path>...]"),
-+		NULL
-+	};
-+	suc.prefix = prefix;
-+
-+	argc = parse_options(argc, argv, prefix, module_update_clone_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (update)
-+		if (parse_submodule_update_strategy(update, &suc.update) < 0)
-+			die(_("bad value for update parameter"));
-+
-+	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
-+		return 1;
-+
-+	if (pathspec.nr)
-+		suc.warn_if_uninitialized = 1;
-+
-+	/* Overlay the parsed .gitmodules file with .git/config */
-+	gitmodules_config();
-+	git_config(submodule_config, NULL);
-+
-+	run_processes_parallel(1,
-+			       update_clone_get_next_task,
-+			       update_clone_start_failure,
-+			       update_clone_task_finished,
-+			       &suc);
-+
-+	/*
-+	 * We saved the output and put it out all at once now.
-+	 * That means:
-+	 * - the listener does not have to interleave their (checkout)
-+	 *   work with our fetching.  The writes involved in a
-+	 *   checkout involve more straightforward sequential I/O.
-+	 * - the listener can avoid doing any work if fetching failed.
-+	 */
-+	if (suc.quickstop)
-+		return 1;
-+
-+	for_each_string_list_item(item, &suc.projectlines)
-+		utf8_fprintf(stdout, "%s", item->string);
-+
-+	return 0;
-+}
-+
- struct cmd_struct {
- 	const char *cmd;
- 	int (*fn)(int, const char **, const char *);
-@@ -264,6 +512,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list},
- 	{"name", module_name},
- 	{"clone", module_clone},
-+	{"update-clone", update_clone}
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9ee86d4..a6a82d2 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -664,17 +664,20 @@ cmd_update()
- 		cmd_init "--" "$@" || return
- 	fi
- 
--	cloned_modules=
--	git submodule--helper list --prefix "$wt_prefix" "$@" | {
-+	{
-+	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
-+		${wt_prefix:+--prefix "$wt_prefix"} \
-+		${prefix:+--recursive-prefix "$prefix"} \
-+		${update:+--update "$update"} \
-+		${reference:+--reference "$reference"} \
-+		${depth:+--depth "$depth"} \
-+		"$@" || echo "#unmatched"
-+	} | {
- 	err=
--	while read mode sha1 stage sm_path
-+	while read mode sha1 stage just_cloned sm_path
- 	do
- 		die_if_unmatched "$mode"
--		if test "$stage" = U
--		then
--			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
--			continue
--		fi
-+
- 		name=$(git submodule--helper name "$sm_path") || exit
- 		url=$(git config submodule."$name".url)
- 		branch=$(get_submodule_config "$name" branch master)
-@@ -691,27 +694,10 @@ cmd_update()
- 
- 		displaypath=$(relative_path "$prefix$sm_path")
- 
--		if test "$update_module" = "none"
--		then
--			echo >&2 "Skipping submodule '$displaypath'"
--			continue
--		fi
--
--		if test -z "$url"
--		then
--			# Only mention uninitialized submodules when its
--			# path have been specified
--			test "$#" != "0" &&
--			say >&2 "$(eval_gettext "Submodule path '\$displaypath' not initialized
--Maybe you want to use 'update --init'?")"
--			continue
--		fi
--
--		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
-+		if test $just_cloned -eq 1
- 		then
--			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
--			cloned_modules="$cloned_modules;$name"
- 			subsha1=
-+			update_module=checkout
- 		else
- 			subsha1=$(clear_local_git_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
-@@ -751,13 +737,6 @@ Maybe you want to use 'update --init'?")"
- 				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
- 			fi
- 
--			# Is this something we just cloned?
--			case ";$cloned_modules;" in
--			*";$name;"*)
--				# then there is no local change to integrate
--				update_module=checkout ;;
--			esac
--
- 			must_die_on_failure=
- 			case "$update_module" in
- 			checkout)
--- 
-2.7.0.rc0.37.gb7b9e8e
+ * You seem to start from "I have to change the type of struct
+   fields", which leads you to describe "these fields are passed as
+   parameters to functions, so their signatures also need to change"
+   cascade of changes.  Instead, think of this change is about
+   "store EXC_FLAG_* flags in an unsigned integer" (which can be the
+   title of the patch).  Then the first and the third paragraphs do
+   not have to even exist ;-)
+
+ * The second paragraph could just be:
+
+     No variable (or structure field) that hold these bits is tested
+     for its MSB with (variable < 0), so there is no reason to hold
+     them in a signed integer.
+
+   Here, also notice that your version stressed "of these two
+   fields" too much; the reasoning applies equally to any variable
+   that holds copies of values from these fields (or in general,
+   anything that holds combination of EXC_FLAG_* flags).
+
+Otherwise it looks good to me.
+
+Thanks.
+
+
+> Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
+> ---
+>
+> This patch is for the suggested microproject for GSoC 2016 titled
+> "Use unsigned integral type for collection of bits." It is the third
+> patch for this project (technically second, considering only the
+> subject of the email) that incorporates changes to the commit message
+> suggested by Moritz Neeb and Eric Sunshine, and to some function
+> signatures suggested by Duy Nguyen. Thanks to them for their feedback=
+=2E
+>
+>  attr.c | 2 +-
+>  dir.c  | 8 ++++----
+>  dir.h  | 8 ++++----
+>  3 files changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/attr.c b/attr.c
+> index 086c08d..679e13c 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -124,7 +124,7 @@ struct pattern {
+>  	const char *pattern;
+>  	int patternlen;
+>  	int nowildcardlen;
+> -	int flags;		/* EXC_FLAG_* */
+> +	unsigned flags;		/* EXC_FLAG_* */
+>  };
+>
+>  /*
+> diff --git a/dir.c b/dir.c
+> index 552af23..82cec7d 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -459,7 +459,7 @@ int no_wildcard(const char *string)
+>
+>  void parse_exclude_pattern(const char **pattern,
+>  			   int *patternlen,
+> -			   int *flags,
+> +			   unsigned *flags,
+>  			   int *nowildcardlen)
+>  {
+>  	const char *p =3D *pattern;
+> @@ -500,7 +500,7 @@ void add_exclude(const char *string, const char *=
+base,
+>  {
+>  	struct exclude *x;
+>  	int patternlen;
+> -	int flags;
+> +	unsigned flags;
+>  	int nowildcardlen;
+>
+>  	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen)=
+;
+> @@ -811,7 +811,7 @@ void add_excludes_from_file(struct dir_struct *di=
+r, const char *fname)
+>
+>  int match_basename(const char *basename, int basenamelen,
+>  		   const char *pattern, int prefix, int patternlen,
+> -		   int flags)
+> +		   unsigned flags)
+>  {
+>  	if (prefix =3D=3D patternlen) {
+>  		if (patternlen =3D=3D basenamelen &&
+> @@ -836,7 +836,7 @@ int match_basename(const char *basename, int base=
+namelen,
+>  int match_pathname(const char *pathname, int pathlen,
+>  		   const char *base, int baselen,
+>  		   const char *pattern, int prefix, int patternlen,
+> -		   int flags)
+> +		   unsigned flags)
+>  {
+>  	const char *name;
+>  	int namelen;
+> diff --git a/dir.h b/dir.h
+> index 3ec3fb0..e942b50 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -28,7 +28,7 @@ struct exclude {
+>  	int nowildcardlen;
+>  	const char *base;
+>  	int baselen;
+> -	int flags;
+> +	unsigned flags;		/* EXC_FLAG_* */
+>
+>  	/*
+>  	 * Counting starts from 1 for line numbers in ignore files,
+> @@ -229,10 +229,10 @@ struct dir_entry *dir_add_ignored(struct dir_st=
+ruct *dir, const char *pathname,
+>   * attr.c:path_matches()
+>   */
+>  extern int match_basename(const char *, int,
+> -			  const char *, int, int, int);
+> +			  const char *, int, int, unsigned);
+>  extern int match_pathname(const char *, int,
+>  			  const char *, int,
+> -			  const char *, int, int, int);
+> +			  const char *, int, int, unsigned);
+>
+>  extern struct exclude *last_exclude_matching(struct dir_struct *dir,
+>  					     const char *name, int *dtype);
+> @@ -244,7 +244,7 @@ extern struct exclude_list *add_exclude_list(stru=
+ct dir_struct *dir,
+>  extern int add_excludes_from_file_to_list(const char *fname, const c=
+har *base, int baselen,
+>  					  struct exclude_list *el, int check_index);
+>  extern void add_excludes_from_file(struct dir_struct *, const char *=
+fname);
+> -extern void parse_exclude_pattern(const char **string, int *patternl=
+en, int *flags, int *nowildcardlen);
+> +extern void parse_exclude_pattern(const char **string, int *patternl=
+en, unsigned *flags, int *nowildcardlen);
+>  extern void add_exclude(const char *string, const char *base,
+>  			int baselen, struct exclude_list *el, int srcpos);
+>  extern void clear_exclude_list(struct exclude_list *el);
+> --
+> 2.7.1.339.g0233b80
