@@ -1,84 +1,66 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v5 3/3] git: submodule honor -c credential.* from command line
-Date: Mon, 29 Feb 2016 14:09:12 -0800
-Message-ID: <CA+P7+xrZrVbvh=2dhKqMTGnudy0pCSzGMWHBXyirvsp7hCzaZw@mail.gmail.com>
-References: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
- <1456532000-22971-4-git-send-email-jacob.e.keller@intel.com>
- <xmqqmvqjcr95.fsf@gitster.mtv.corp.google.com> <CA+P7+xoNdsDH0jBz6bcikpeMa-qMR6795U+hKqGDSfu52dJFSw@mail.gmail.com>
- <xmqqa8mj9u3c.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 28/32] config: read ref storage config on startup
+Date: Mon, 29 Feb 2016 17:10:25 -0500
+Message-ID: <20160229221024.GE25342@sigill.intra.peff.net>
+References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
+ <1456354744-8022-29-git-send-email-dturner@twopensource.com>
+ <20160227035634.GA10829@sigill.intra.peff.net>
+ <1456783062.18017.65.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 23:09:40 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 23:11:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaW0Y-0002uy-Ie
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 23:09:38 +0100
+	id 1aaW1m-0003Wq-J1
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 23:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbcB2WJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 17:09:34 -0500
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:36569 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775AbcB2WJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 17:09:32 -0500
-Received: by mail-ig0-f177.google.com with SMTP id xg9so5251190igb.1
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 14:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fLG7Sl66XQ2oBobzy8HRpXiKzvgXSJTABhZZurZ8dWw=;
-        b=PqMCCn8quTZiqFXYrECmc49MSccB1iWazDDZZZRMMWQdYH1K4WLW8LjTuiULvNVkxO
-         n2c1y9flPtolA7KinTGY/c11cY7WO4YhFZ20eOpIqj/XeXlSOVDervKwPoCIQExtqO6+
-         5sHDRO9YRfysL806QjeJSjiHkxn8EBMvAI3V/jiAgDHU/Hfw/Iy76o3Omx44CM1N0xNh
-         9HqzCgWVnVAHOOJ6CD2KYCIWaDb3bfZS0z36solFKemLA95nAPiZp81Zm9T0/LdwDW2V
-         9Nx0dsZtnFhPauK7JOqmF6HwGuROy2emhpMS7PfEyvRKNOwbgJF0+mjLrOTTCQDNdv0f
-         SR9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fLG7Sl66XQ2oBobzy8HRpXiKzvgXSJTABhZZurZ8dWw=;
-        b=lF05Z1317Muh+fR6W7tUUR0VGiYIsC555U9gpxoDkYyu31fsiVv81zoLVt0EifA2aZ
-         BO0qe53XwGpzVX3fGKhRfbfKiLHgjeS0rRHFCa1DNL+cJ/A+oj6YDIIJi8G+3I+FG4TP
-         RmOf2vSIj7YjEqkIfVpiepFKzL8Ed10EwNIeTc4d7cIqmhB81H/MNL6xouMz+4i1DVfM
-         DU0Tu+tWej3J8C4ltuGuaWpSpKYlmBva/wGsiAin5xTIoTt/2GylvGox5/WzlqX0qtDW
-         fPgTmdIlxlTgcjufJyVjl+qfoP6hiiqLY7WuXIBMup9NAecIvrBrmYU8LZPwubZ9ehge
-         18BA==
-X-Gm-Message-State: AD7BkJLGvjKw0XMpFH4U73EvgzL5HjFQFVLE4bgrwF3NOk3cZgAyMtgrDRUbN7aCNhNmRpAKu2X5JfwTZXfA+w==
-X-Received: by 10.50.142.103 with SMTP id rv7mr262760igb.35.1456783771791;
- Mon, 29 Feb 2016 14:09:31 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Mon, 29 Feb 2016 14:09:12 -0800 (PST)
-In-Reply-To: <xmqqa8mj9u3c.fsf@gitster.mtv.corp.google.com>
+	id S1754141AbcB2WKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 17:10:53 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51820 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754670AbcB2WKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 17:10:52 -0500
+Received: (qmail 12082 invoked by uid 102); 29 Feb 2016 22:10:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 17:10:51 -0500
+Received: (qmail 31824 invoked by uid 107); 29 Feb 2016 22:10:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 17:10:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 17:10:25 -0500
+Content-Disposition: inline
+In-Reply-To: <1456783062.18017.65.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287921>
 
-On Mon, Feb 29, 2016 at 11:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I was talking about the "not even an equal sign" true, i.e.
->
->     $ git -c random.what -c random.false=no -c random.true=yes \
->       config --bool --get-regexp 'random.*'
->     random.what true
->     random.false false
->     random.true true
->
-> What would you see for random.what in the above function (if the
-> callchain allowed you to pass it through)?
+On Mon, Feb 29, 2016 at 04:57:42PM -0500, David Turner wrote:
 
-I see 'credential.what=(null)' if I pass it to sanitize-config. That's
-probably a bug, and we should instead just output 'credential.what'
-instead. I'll rework this.
+> > So I think this setup probably should be in
+> > check_repository_format_gently(), and should be able to trigger off
+> > of
+> > the existing ref_storage_backend string we've already saved (and we
+> > should bail immediately there if we don't know about the backend, as
+> > it
+> > means we _don't_ match the repo's extensions and cannot proceed).
+> 
+> We apparently don't always call check_repo_format before calling
+> git_config_early -- or, more to the point, before doing ref operations.
+> So I think we need this in git_config_early.
 
-Thanks,
-Jake
+That seems horribly broken, though. If a program is accessing refs
+without calling check_repository_format, isn't it bypassing all of our
+regular version and extension checks?
+
+I think we should be smoking out such cases (e.g., by setting
+a null refs-backend, as I mentioned earlier) and fixing them, rather
+than working around them by putting the backend setup in the wrong
+place.
+
+-Peff
