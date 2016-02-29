@@ -1,72 +1,153 @@
-From: Guilherme <guibufolo@gmail.com>
-Subject: Re: git config --get-urlmatch does not set exit code 1 when no match
- is found
-Date: Mon, 29 Feb 2016 18:38:28 +0530
-Message-ID: <CAMDzUtwJVyaQbjgdQLi17_4ejGofpRFBDxXxjseaVcHLXCAwRA@mail.gmail.com>
-References: <CAMDzUtzNKAYSKYkt3WagkUrA2mKaoDu1rT6Nhf89pXSMg0wZwA@mail.gmail.com>
- <20160229115355.GA31273@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git 2.7.2.windows.1 fails to authenticate access to private
+ repository over HTTPS
+Date: Mon, 29 Feb 2016 14:30:08 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602291405150.3152@virtualbox>
+References: <0eee43fe410bb5db3dc8eeec2f7ff00c@slingshot.co.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 14:09:16 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: zacr <zacr@slingshot.co.nz>
+X-From: git-owner@vger.kernel.org Mon Feb 29 14:30:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaNZa-0003Iw-Um
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:09:15 +0100
+	id 1aaNuJ-00056d-Vl
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbcB2NJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 08:09:09 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:33821 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750723AbcB2NJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 08:09:08 -0500
-Received: by mail-vk0-f48.google.com with SMTP id e185so132680548vkb.1
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 05:09:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=q1QMaZ6mLV0SwQgGm1yRkjHhfXdqt55owGVw/Xwa1Yk=;
-        b=dzaSSBuWFjq+d02MPaRiTMRF3WKyo4Lp5WS9TyRK1N037NCiMERMeGx2M10PctKLiw
-         fv1auzTkzl2nr8rntvhTG7A5kaVUtjWoB2GYfNilRQOPpRA/yM8NU7dXGOibnOr0K0wu
-         tRLz5Y+pVMUXihXzQ8M0KBX6EtB+90Q5MgySooWf4V25E1wWVFwKpGEmtMrs51AxQKrt
-         ZzoHN8xwdyNlO3x7x4+kx0g6wMupAerkgXnx46/TJWS8KQedF30TXzbwyK39El6x1+Pi
-         iYJ+8MLmG1h/diILIjM6EheOjlv6kjb3QatAVpiDtIqby9NceTALGUYGCHevVvwajHzq
-         +3SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=q1QMaZ6mLV0SwQgGm1yRkjHhfXdqt55owGVw/Xwa1Yk=;
-        b=S9F54pVO1eRb7csK1cmOMQuslWfku1Ixdl419/MfzAlbOKV02w6K2yRn1ix8A47IRo
-         Xvqwm/5PoPAHg2CcB85V7N5f0gHHF1BiB6f2iMnXstGulES/KnUMCHYS1GKI/077NaFf
-         GQsSqj3mR5JSSOz4UFjJtpkDEC0fCEhiXct7crGUqBgFGL4536w5A9JdHv28IACQxFN1
-         lFGQyCbIir7Trp87nFeOvZ8JrWmX1PSbbreWAIzDzxYJB6ulCrsKv5++0QVP6vVa6jZ0
-         MBAYFfX92XzAYh9xf8uCgVypJqHN04zEUZiYo8sUHBUR56IvQINIrKy2OUctrdLgYz2c
-         fGWA==
-X-Gm-Message-State: AD7BkJKa3tuKQ5ycGcym0ngZdQbwnh/BAUKBWsOuo/FCTr8/tBHTFMrSj6G7AQ/F9n2gZZ0eBVIo/JmNIsCdOQ==
-X-Received: by 10.31.52.147 with SMTP id b141mr11574019vka.82.1456751347792;
- Mon, 29 Feb 2016 05:09:07 -0800 (PST)
-Received: by 10.31.162.145 with HTTP; Mon, 29 Feb 2016 05:08:28 -0800 (PST)
-In-Reply-To: <20160229115355.GA31273@sigill.intra.peff.net>
+	id S1755544AbcB2Na2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 08:30:28 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49258 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752672AbcB2NaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 08:30:23 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Man6U-1aLTNm0QSQ-00KRek; Mon, 29 Feb 2016 14:30:12
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <0eee43fe410bb5db3dc8eeec2f7ff00c@slingshot.co.nz>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:BIVXu9e8e7BGMiCqdaGyq49AjAWvi7Vpv00QTUMmXbF387aJanO
+ Mk1fiahsuFrF4W7RoZ/Gyf/sRn93sPvGEtKVoa2pIDmYTCDUDw6xglJHDRNnybTrJNiMsLq
+ BHYw7QmZSgTZ5P7axMDaBfwzMBXOXmJ+UKxjiQcJy5E7gXeQlGsmOjP5+dYXXotv/K1agGS
+ C75UAqeMHPfOhnlx/x1Qg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BT9cbyI+VJ4=:NmiD/uz2zYzH/QsskNcMGg
+ 4LVGKjbEZSCa8GPz9clwe5jiZosdNMeqPqo3e1P2exrzO6XRx1GhIPNxVA1eK7XCwXDMOwpO4
+ YD/rBlMzzucfH83Xs4Ull1z7sPaKD2nHxiOfNb9ioEPQuZDSVT62fkxenHJn9joD/HImftBcm
+ 7ONU/3mSk1V2xu23Re7Hs+UZPaNa41v3x3fZeORTWcIj/SpjExG2/C4pf7WUzDqN7XZAKhVQb
+ 2152sTsv2J1D2wafv/1kFPoNBiAAAfTzwiF2x46t5IMZpm/z++hi5HrKY5n82LvMG42rGDOOH
+ Pnqn78QwBexSoPRv8NRL/cmpK2kXyqWyRWt8cnec9S47/4PPie4F1QJniuWKKJCx65o9x0Cgs
+ 7zownmyylLYT6rZHs773DVLz7351SvXUZQKwpFgbG8+e4fSIC/sfZqr62oN8/exdnjRqsHa/s
+ KUb0/PcvPcHmJHk5LxzAddNLvFy8KeDq6i87TEbjV+XJoZ3vpG+r9NrzeTIOOSZXB6C+W1h9w
+ hOLPu8kzrbsumKJ7kYf8p2Lmrq4YcQNLMI9dCCBGU8qiUrqmzvwoNvV/h2ssKaDFtAk4y7D7L
+ 5XNS+G2hq9Oc4MMEJ0imwXx9KU8TT/SmBLoiVy4S49AouKCAa2WJSi/WHvdaNgaz/ed20qb7V
+ PVIYQYW5sBfez7fVDbEKNJD7cvCMxko6sWV6FirdvR3ID11HOMsCKWZzVdVTfwqdVIpHVW2lw
+ +LeGgVNrHh44omz1/wQmsuZ21nC6qE75tP1JCJv5qcGpMVoP/h6KV+MlEr7r4H1vBo+Y+NlZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287836>
 
-@Peff Thank you for the heads up.
+Hi Zac,
 
-I'm trying to find out if there are any credential helpers configured
-in the system that will be running tests. On the dedicated test
-machines that is not a problem but the developer machines are.
+On Mon, 29 Feb 2016, zacr wrote:
 
-Should I already post a pre-emptive email asking about the corner cases?
+> I have recently downloaded 64-bit Git for Windows (the file I downloaded
+> was "Git-2.7.2-64-bit.exe"). This reports a version string of "git
+> version 2.7.2.windows.1"
+>
+> Using it from the command line, after cloning a repository, I attempted
+> to "git pull" a private repository from GitHub.
 
-More importantly for me is if there is a case where get-url would not
-show a match where git clone would. If git clone skips a configuration
-that config url-match doesn't then it's not so bad.
+Are you using Git CMD? It is rather crucial to get such details right.
+
+> 15:55:58.615147 git.c:348               trace: built-in: git 'pull'
+> 15:55:58.617147 run-command.c:343       trace: run_command: 'fetch'
+> '--update-head-ok'
+> 15:55:58.633149 git.c:348               trace: built-in: git 'fetch'
+> '--update-head-ok'
+> 15:55:58.636149 run-command.c:343       trace: run_command:
+> 'git-remote-https' 'origin' 'https://github.com/username/repository.git'
+> 15:55:59.630248 run-command.c:343       trace: run_command: 'bash' '-c' 'cat
+> >/dev/tty && read -r line </dev/tty && echo "$line"'
+> error: failed to execute prompt script (exit code 1)
+> fatal: could not read Username for 'https://github.com': Invalid argument
+> 
+> 
+> It looks like it's trying to run a new bash instance for me to enter my
+> password, which fails on Windows because I don't have bash installed.
+
+You do have bash installed. Unless you went out of your way to delete it
+after installing Git for Windows.
+
+Assuming that you used Git CMD to perform your test, the sad news is that
+I cannot reproduce your problem here.
+
+Let's first of all try to make a Minimal, Complete & Verifiable Example
+(MCVE). In other words, let's find the minimal set of steps with no
+prerequisites (such as local clones of private repositories) that *still*
+reproduce the bug. This is in general a Very Good Idea if you are
+reporting bugs because it not only shows that you are dedicated to see
+this bug fixed but also that you are not expecting only others to invest
+a ton of time into the bug fix.
+
+In your case, the problem is easily triggered without a local clone at
+all. A simple `git ls-remote https://github.com/user/repository.git` is
+enough, and would count as *Minimal* as per that MCVE acronym.
+
+Alas, when I issue this (with GIT_TRACE=1), I get this:
+
+-- snip --
+C:\Users\me>set GIT_TRACE=1
+
+C:\Users\me>git ls-remote https://github.com/user/repository.git
+14:14:01.717354 git.c:348               trace: built-in: git 'ls-remote' 'https://github.com/user/repository.git'
+14:14:01.718331 run-command.c:343       trace: run_command: 'git-remote-https' 'https://github.com/user/repository.git' 'https://github.com/user/repository.git'
+14:14:02.599651 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r line </dev/tty && echo "$line"'
+Username for 'https://github.com': 123
+14:14:06.822993 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r -s line </dev/tty && echo "$line" && echo
+>/dev/tty'
+Password for 'https://123@github.com':
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/user/repository.git/'
+-- snap --
+
+So at first I thought maybe you called
+
+	C:\Program Files\Git\mingw64\bin\git.exe
+
+directly, which is a user mistake that is unfortunately quite frequent,
+the appropriate entry point is instead
+
+	C:\Program Files\Git\cmd\git.exe
+
+But even then, it succeeds for me (without having sh.exe nor bash.exe in
+the PATH):
+
+-- snip --
+C:\Users\me>"\Program Files"\git\mingw64\bin\git ls-remote https://github.com/user/repository.git
+14:22:44.320489 git.c:348               trace: built-in: git 'ls-remote' 'https://github.com/user/repository.git'
+14:22:44.321470 run-command.c:343       trace: run_command: 'git-remote-https' 'https://github.com/user/repository.git' 'https://github.com/user/repository.git'
+14:22:44.990258 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r line </dev/tty && echo "$line"'
+Username for 'https://github.com': 123
+14:22:45.840206 run-command.c:343       trace: run_command: 'bash' '-c' 'cat >/dev/tty && read -r -s line </dev/tty && echo "$line" && echo >/dev/tty'
+Password for 'https://123@github.com':
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/user/repository.git/'
+-- snap --
+
+Maybe your setup has something funky going on that my setup lacks.
+
+Lastly, for the record, the best way to report bugs in Git for Windows is
+through the bug tracker at https://github.com/git-for-windows/git/issues.
+I tried to make this obvious on Git for Windows' home page at
+https://git-for-windows.github.io/#contribute.
+
+Maybe you have an idea how I could make it more obvious to users who
+prefer visiting StackOverflow over visiting Git for Windows' home page?
+
+Ciao,
+Johannes
