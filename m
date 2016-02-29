@@ -1,68 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Revert "rev-parse: remove restrictions on some options"
-Date: Mon, 29 Feb 2016 09:32:22 -0800
-Message-ID: <xmqqy4a3cti1.fsf@gitster.mtv.corp.google.com>
-References: <20160226232507.GA9404@sigill.intra.peff.net>
-	<20160226232957.GB9552@sigill.intra.peff.net>
-	<20160226233449.GA9622@sigill.intra.peff.net>
-	<20160229110156.GA29697@sigill.intra.peff.net>
+Subject: Re: [PATCH v5 1/3] sumodule--helper: fix submodule--helper clone usage and check argc count
+Date: Mon, 29 Feb 2016 09:49:49 -0800
+Message-ID: <xmqqr3fvcsoy.fsf@gitster.mtv.corp.google.com>
+References: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
+	<1456532000-22971-2-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	John Keeping <john@keeping.me.uk>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 18:32:30 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 18:50:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaRgL-0000NU-Oe
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 18:32:30 +0100
+	id 1aaRxG-0001bG-4z
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 18:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752911AbcB2RcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 12:32:25 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50081 "EHLO
+	id S1753036AbcB2Rty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 12:49:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62492 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751350AbcB2RcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 12:32:25 -0500
+	with ESMTP id S1752407AbcB2Rtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 12:49:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CDB9D47F25;
-	Mon, 29 Feb 2016 12:32:23 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2156484B6;
+	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nep8DsGeM1kmuTFju+fOnygJUnc=; b=Duix7o
-	fVqkzNNto2lS3FUg3gzpW1btZ187oYqLExkDq4NtINUgM4wTLQayiwCW5iFYTDYK
-	8X2GSQ2MYfzQepv3hyxzvTiLmTH3oTIV/EL7pgTFvwvKb27mLXHlS95RufhYSsXf
-	ZOl/PLD91F4xnnmf+GUA2LsqjEa1FKqTtW1wg=
+	:content-type; s=sasl; bh=EQ1t7D6Cf0lJkE2eYpDGGD9pnM4=; b=fsv1TS
+	l/yRTOuf86tntl6Q25dK0HqtNjNP4I0yg+CmoRU/9jWTbMcpUUfReXWtEEOBMpAJ
+	phD5utU2GoSy8zzGJzGy3ap80M16JFDBPn1gm/d/Zl9SACWBDZ68xICrl+VMuuHU
+	6xXfkuXY1of81z9bbN5eEAmFAKr6kPtvkMe3Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jeeYnbZHrbCDJ0ET4gXtIp+nHYfGT76R
-	gWzWZAe7qVqsDSNmYxZDOF/QW9K/t6nKHwZSnMgE+9ZdJ7Lu7MMctlcnEd2wEpRo
-	U3U/3JGebkJ0Akrc915RvOx+LDu7fPxbwTWcGBoOehKY9jgRLDOW1ZLQcVQB9XsN
-	aIuXEymwqC0=
+	:content-type; q=dns; s=sasl; b=UpF+NUebtVvLMenHTAJQc1TwZs+H84+r
+	sZoEc9yUGUhH7P5k8XSimoBcjNLE5+wmwhx8CwcIKAlUmG1YHOs6TtR7kCgKZhtF
+	irNvhJNuCOB4v1500zgKebtEPMdYp/WQlayzLvJ5ra7+ez0atzOBKprwZzNeqR5b
+	/2243esRp3w=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C567347F24;
-	Mon, 29 Feb 2016 12:32:23 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9E07484B5;
+	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47A4E47F22;
-	Mon, 29 Feb 2016 12:32:23 -0500 (EST)
-In-Reply-To: <20160229110156.GA29697@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 29 Feb 2016 06:01:56 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 32A68484B3;
+	Mon, 29 Feb 2016 12:49:51 -0500 (EST)
+In-Reply-To: <1456532000-22971-2-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Fri, 26 Feb 2016 16:13:18 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 647A7742-DF0A-11E5-A1F6-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D515E066-DF0C-11E5-9891-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287852>
 
-Jeff King <peff@peff.net> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> IOW, I think my 2/2 should be replaced with this:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> git submodule--helper clone usage specified that paths come after the --
+> as a sequence. However, the actual implementation does not, and requires
+> only a single path passed in via --path. In addition, argc was
+> unchecked. (allowing arbitrary extra arguments that were silently
+> ignored).
+>
+> Fix the usage description to match implementation. Add an argc check to
+> enforce no extra arguments. 
 
-This looks sensible.
+The above sounds very sensible.
 
-Don't we still want the documentation updates from the previous 2/2?
+> Fix a bug in the argument passing in
+> git-submodule.sh which would pass --reference and --depth as empty
+> strings when they were unused, resulting in extra argc after parsing
+> options.
+
+This does make sense but it is an unrelated fix.  Perhaps split this
+patch into two?
+
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 5 ++++-
+>  git-submodule.sh            | 4 ++--
+>  2 files changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f4c3eff179b5..072d9bbd12a8 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -187,13 +187,16 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  	const char *const git_submodule_helper_usage[] = {
+>  		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+>  		   "[--reference <repository>] [--name <name>] [--url <url>]"
+> -		   "[--depth <depth>] [--] [<path>...]"),
+> +		   "[--depth <depth>] [--path <path>]"),
+>  		NULL
+>  	};
+>  
+>  	argc = parse_options(argc, argv, prefix, module_clone_options,
+>  			     git_submodule_helper_usage, 0);
+>  
+> +	if (argc)
+> +		usage(*git_submodule_helper_usage);
+> +
+
+That asterisk looks very unusual and wanting to be future-proofed
+(i.e. who says that only the first entry matters?).  Should't this
+be calling usage_with_options()?
+
+>  	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+>  	sm_gitdir = strbuf_detach(&sb, NULL);
+>  
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 9bc5c5f94d1d..2dd29b3df0e6 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -347,7 +347,7 @@ Use -f if you really want to add it." >&2
+>  				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+>  			fi
+>  		fi
+> -		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
+> +		git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+>  		(
+>  			clear_local_git_env
+>  			cd "$sm_path" &&
+> @@ -709,7 +709,7 @@ Maybe you want to use 'update --init'?")"
+>  
+>  		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+>  		then
+> -			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+> +			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" ${reference:+"$reference"} ${depth:+"$depth"} || exit
+>  			cloned_modules="$cloned_modules;$name"
+>  			subsha1=
+>  		else
