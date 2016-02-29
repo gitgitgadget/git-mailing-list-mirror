@@ -1,62 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 12/22] notes.c: mark strings for translation
-Date: Mon, 29 Feb 2016 10:36:05 -0800
-Message-ID: <xmqqoaazbbze.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 13/22] ref-filter.c: mark strings for translation
+Date: Mon, 29 Feb 2016 10:41:26 -0800
+Message-ID: <xmqqk2lnbbqh.fsf@gitster.mtv.corp.google.com>
 References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
-	<1456555333-5853-13-git-send-email-pclouds@gmail.com>
+	<1456555333-5853-14-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
 To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 19:36:16 2016
+X-From: git-owner@vger.kernel.org Mon Feb 29 19:41:38 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaSg2-0000rE-OH
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 19:36:15 +0100
+	id 1aaSlB-0003lz-VK
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 19:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbcB2SgL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 13:36:11 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51206 "EHLO
+	id S1752162AbcB2Sl3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 13:41:29 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51242 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750860AbcB2SgI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 13:36:08 -0500
+	with ESMTP id S1751566AbcB2Sl2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 13:41:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC6DD474A8;
-	Mon, 29 Feb 2016 13:36:07 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D3F4847609;
+	Mon, 29 Feb 2016 13:41:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ES9UBXi90SD2
-	LxKWi3LJ+zXz3d8=; b=lp22QxN60POmF5CSMveMmxIKxO9n685LWO61vs/Y3/vY
-	48jXPNLg7A/R0X1AetJ7OKcrmk/cNVcbxTQy50Sg6FW2V9Px7zTmDk6Cn4yjq8Ep
-	Lvl3ujrBXtnh4z0iyo9Y5iOVFNme4WRZkYXupSS+iDN1idslbAecemXeGyFSbxY=
+	:content-type:content-transfer-encoding; s=sasl; bh=j9iouiH1Y/QZ
+	ckiNxSZY5deWQ+c=; b=cjKM8Tzia6L34lpCnXDvCfn8Fckynjxe7xjR8s4jhVhz
+	IfRpKb9VpFPYd/yOg93RRd3/R2KXMpBTVotcYkAPFXuspwEp+Bobqbvi5OVzMUJk
+	Ltm3nCnBLC8GozYUSXnfdY4wK+7Utr+BP6ztxzGvbNWR7+vTw69Om7OL9yFdiew=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=p9SEqQ
-	8xeJMyg9GgjbqACImtuQszxmIogPmXShD02ne9/bZHu1IcFrcsLFANIPHXBQoGXn
-	4MdLwWwzCfpfp1IKBYhhIcLNH9z26jvRZZ+bniVWapuOu5HVrNYFG4lbxDWIVto0
-	bDfrv/eP3jqhYsKobIkQqib8Sz88+yiTIrKy0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=M79xEJ
+	6Y65pFZDuH7A+oo/4I2mwvkO6bEYZGvEB+M1hQssuEPGHl9u8rxB68nkLUXN40gc
+	tw1wa8zNc77HkFVGJC6v755KEhXDZsNhYyvYnp63f+nAcSyXj5VmHBYJffgfJ0Ug
+	5pvuDXtcGPAd+zQsh1rm3d6IJoGM/x3F8HqYo=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A412D474A7;
-	Mon, 29 Feb 2016 13:36:07 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC1FD47608;
+	Mon, 29 Feb 2016 13:41:27 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1AA49474A6;
-	Mon, 29 Feb 2016 13:36:07 -0500 (EST)
-In-Reply-To: <1456555333-5853-13-git-send-email-pclouds@gmail.com>
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 42A8D47607;
+	Mon, 29 Feb 2016 13:41:27 -0500 (EST)
+In-Reply-To: <1456555333-5853-14-git-send-email-pclouds@gmail.com>
  (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 27
- Feb 2016 13:42:03 +0700")
+ Feb 2016 13:42:04 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4BA60CF0-DF13-11E5-868A-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0A7B3312-DF14-11E5-BA79-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287865>
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
@@ -64,59 +64,133 @@ Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 il.com>
 > ---
 
-All (or at least most of) these look old ones.  I'm inclined to say
-we should do the whole thing post 2.8.0 release for this file.
+About half of this we can find in 2.7.0, but we can see that many
+existing messages are already marked.  Let's take this for 2.8.0 (I
+am assuming that this covers the whole file, not just relatively new
+ones).
 
->  notes.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  ref-filter.c | 28 ++++++++++++++--------------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
 >
-> diff --git a/notes.c b/notes.c
-> index 88cf474..0f03f77 100644
-> --- a/notes.c
-> +++ b/notes.c
-> @@ -422,7 +422,7 @@ static void load_subtree(struct notes_tree *t, st=
-ruct leaf_node *subtree,
-> =20
->  	buf =3D fill_tree_descriptor(&desc, subtree->val_sha1);
->  	if (!buf)
-> -		die("Could not read %s for notes-index",
-> +		die(_("Could not read %s for notes-index"),
->  		     sha1_to_hex(subtree->val_sha1));
-> =20
->  	prefix_len =3D subtree->key_sha1[19];
-> @@ -455,8 +455,8 @@ static void load_subtree(struct notes_tree *t, st=
-ruct leaf_node *subtree,
->  			}
->  			if (note_tree_insert(t, node, n, l, type,
->  					     combine_notes_concatenate))
-> -				die("Failed to load %s %s into notes tree "
-> -				    "from %s",
-> +				die(_("Failed to load %s %s into notes tree "
-> +				      "from %s"),
->  				    type =3D=3D PTR_TYPE_NOTE ? "note" : "subtree",
->  				    sha1_to_hex(l->key_sha1), t->ref);
->  		}
-> @@ -942,7 +942,7 @@ void string_list_add_refs_by_glob(struct string_l=
-ist *list, const char *glob)
->  	} else {
->  		unsigned char sha1[20];
->  		if (get_sha1(glob, sha1))
-> -			warning("notes ref %s is invalid", glob);
-> +			warning(_("notes ref %s is invalid"), glob);
->  		if (!unsorted_string_list_has_string(list, glob))
->  			string_list_append(list, glob);
->  	}
-> @@ -1020,9 +1020,9 @@ void init_notes(struct notes_tree *t, const cha=
-r *notes_ref,
->  	    get_sha1_treeish(notes_ref, object_sha1))
->  		return;
->  	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, object_sha1)=
+> diff --git a/ref-filter.c b/ref-filter.c
+> index bb79d6b..bc551a7 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -74,14 +74,14 @@ static void remote_ref_atom_parser(struct used_at=
+om *atom, const char *arg)
+>  static void body_atom_parser(struct used_atom *atom, const char *arg=
 )
-> -		die("Cannot use notes ref %s", notes_ref);
-> +		die(_("Cannot use notes ref %s"), notes_ref);
->  	if (get_tree_entry(object_sha1, "", sha1, &mode))
-> -		die("Failed to read notes tree referenced by %s (%s)",
-> +		die(_("Failed to read notes tree referenced by %s (%s)"),
->  		    notes_ref, sha1_to_hex(object_sha1));
+>  {
+>  	if (arg)
+> -		die("%%(body) does not take arguments");
+> +		die(_("%%(body) does not take arguments"));
+>  	atom->u.contents.option =3D C_BODY_DEP;
+>  }
 > =20
->  	hashclr(root_tree.key_sha1);
+>  static void subject_atom_parser(struct used_atom *atom, const char *=
+arg)
+>  {
+>  	if (arg)
+> -		die("%%(subject) does not take arguments");
+> +		die(_("%%(subject) does not take arguments"));
+>  	atom->u.contents.option =3D C_SUB;
+>  }
+> =20
+> @@ -241,7 +241,7 @@ int parse_ref_filter_atom(const char *atom, const=
+ char *ep)
+>  	if (*sp =3D=3D '*' && sp < ep)
+>  		sp++; /* deref */
+>  	if (ep <=3D sp)
+> -		die("malformed field name: %.*s", (int)(ep-atom), atom);
+> +		die(_("malformed field name: %.*s"), (int)(ep-atom), atom);
+> =20
+>  	/* Do we have the atom already used elsewhere? */
+>  	for (i =3D 0; i < used_atom_cnt; i++) {
+> @@ -267,7 +267,7 @@ int parse_ref_filter_atom(const char *atom, const=
+ char *ep)
+>  	}
+> =20
+>  	if (ARRAY_SIZE(valid_atom) <=3D i)
+> -		die("unknown field name: %.*s", (int)(ep-atom), atom);
+> +		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
+> =20
+>  	/* Add it in, including the deref prefix */
+>  	at =3D used_atom_cnt;
+> @@ -421,7 +421,7 @@ int verify_ref_format(const char *format)
+>  		int at;
+> =20
+>  		if (!ep)
+> -			return error("malformed format string %s", sp);
+> +			return error(_("malformed format string %s"), sp);
+>  		/* sp points at "%(" and ep points at the closing ")" */
+>  		at =3D parse_ref_filter_atom(sp + 2, ep);
+>  		cp =3D ep + 1;
+> @@ -875,12 +875,12 @@ static const char *strip_ref_components(const c=
+har *refname, const char *nr_arg)
+>  	const char *start =3D refname;
+> =20
+>  	if (nr < 1 || *end !=3D '\0')
+> -		die(":strip=3D requires a positive integer argument");
+> +		die(_(":strip=3D requires a positive integer argument"));
+> =20
+>  	while (remaining) {
+>  		switch (*start++) {
+>  		case '\0':
+> -			die("ref '%s' does not have %ld components to :strip",
+> +			die(_("ref '%s' does not have %ld components to :strip"),
+>  			    refname, nr);
+>  		case '/':
+>  			remaining--;
+> @@ -1043,7 +1043,7 @@ static void populate_value(struct ref_array_ite=
+m *ref)
+>  			else if (skip_prefix(formatp, "strip=3D", &arg))
+>  				refname =3D strip_ref_components(refname, arg);
+>  			else
+> -				die("unknown %.*s format %s",
+> +				die(_("unknown %.*s format %s"),
+>  				    (int)(formatp - name), name, formatp);
+>  		}
+> =20
+> @@ -1063,10 +1063,10 @@ static void populate_value(struct ref_array_i=
+tem *ref)
+>   need_obj:
+>  	buf =3D get_obj(ref->objectname, &obj, &size, &eaten);
+>  	if (!buf)
+> -		die("missing object %s for %s",
+> +		die(_("missing object %s for %s"),
+>  		    sha1_to_hex(ref->objectname), ref->refname);
+>  	if (!obj)
+> -		die("parse_object_buffer failed on %s for %s",
+> +		die(_("parse_object_buffer failed on %s for %s"),
+>  		    sha1_to_hex(ref->objectname), ref->refname);
+> =20
+>  	grab_values(ref->value, 0, obj, buf, size);
+> @@ -1094,10 +1094,10 @@ static void populate_value(struct ref_array_i=
+tem *ref)
+>  	 */
+>  	buf =3D get_obj(tagged, &obj, &size, &eaten);
+>  	if (!buf)
+> -		die("missing object %s for %s",
+> +		die(_("missing object %s for %s"),
+>  		    sha1_to_hex(tagged), ref->refname);
+>  	if (!obj)
+> -		die("parse_object_buffer failed on %s for %s",
+> +		die(_("parse_object_buffer failed on %s for %s"),
+>  		    sha1_to_hex(tagged), ref->refname);
+>  	grab_values(ref->value, 1, obj, buf, size);
+>  	if (!eaten)
+> @@ -1370,12 +1370,12 @@ static int ref_filter_handler(const char *ref=
+name, const struct object_id *oid,
+>  	unsigned int kind;
+> =20
+>  	if (flag & REF_BAD_NAME) {
+> -		warning("ignoring ref with broken name %s", refname);
+> +		warning(_("ignoring ref with broken name %s"), refname);
+>  		return 0;
+>  	}
+> =20
+>  	if (flag & REF_ISBROKEN) {
+> -		warning("ignoring broken ref %s", refname);
+> +		warning(_("ignoring broken ref %s"), refname);
+>  		return 0;
+>  	}
