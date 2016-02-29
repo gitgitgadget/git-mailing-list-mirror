@@ -1,140 +1,110 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 05/32] refs: add a backend method structure with
- transaction functions
-Date: Mon, 29 Feb 2016 15:43:00 -0500
-Organization: Twitter
-Message-ID: <1456778580.18017.57.camel@twopensource.com>
-References: <1456354744-8022-1-git-send-email-dturner@twopensource.com>
-	 <1456354744-8022-6-git-send-email-dturner@twopensource.com>
-	 <20160227040643.GB10829@sigill.intra.peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCHv19 00/11] Expose submodule parallelism to the user
+Date: Mon, 29 Feb 2016 21:48:10 +0100
+Message-ID: <56D4AE8A.2050403@kdbg.org>
+References: <CAPc5daWbkNXp8T4U2tiYftB4kSOjf9Cv1fgmbYbpuoKdJPRHGA@mail.gmail.com>
+ <1456444119-6934-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 21:43:11 2016
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, peff@peff.net,
+	sunshine@sunshineco.com, jrnieder@gmail.com
+To: Stefan Beller <sbeller@google.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 29 21:48:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaUer-00049v-Km
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 21:43:09 +0100
+	id 1aaUjr-00073v-CK
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 21:48:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbcB2UnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 15:43:05 -0500
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:34034 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbcB2UnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 15:43:03 -0500
-Received: by mail-qg0-f41.google.com with SMTP id b67so125860439qgb.1
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 12:43:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=JRkcvcmTsiA6+1JH1LDIhEVyUaQzP13vR5eHouw+xEk=;
-        b=z7qHOilI5K3LBTXWzErR5AVXNUqcVVIBKr5HumQq40vG+ucKjWHBbkpslCbVlR79mx
-         j6gvdRdP1N7QRAfk+iWCAe8UroX0qsrjT8RMVnzYh2Lqhko23Kp42ig4E19G4hwhYcGc
-         KH/in5TgneoTRIvvnZ5zRW3rH6j/JRnFFPFQ8hCiCgKvkHq1RkETiqqSyKqVb1ZlzeQ4
-         aJD54rS/7b2fzlGVaG4QxUjHd+0rxdwmB6j70rG/CvSI/+qnODMZc7iQfOIk42Sd6AGO
-         6ijSkFrxP9VIPL8S1MTYggqnQJPjQPE+/lFPmbhN8CZvNmtPOziwP2ucJpyhpfq7z2jT
-         PzNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=JRkcvcmTsiA6+1JH1LDIhEVyUaQzP13vR5eHouw+xEk=;
-        b=Vqbj6KNTIPn7AvVDxWMJ75Cb7I80ucXM7Q6NSG8KI2jxJESfzrBOKK5qxzS/lAiRgg
-         fkZChzf4h1cETCP12rsn5CtD5Z6l/H9/LjKHABpCWw2hhz1Uj4TONdm/21WrZwViSy1f
-         8TYYSlqx67tYdhd05wxeMI/qGUkDTKxMPqgkA9BAJtNxMKEuFCznDtNmKE+Yaws+GFtU
-         9lRBO/w8RVg579ruGmG3XNYQNOrdMKzvu3Qd0OBge/Zx2PYKjPORLhSUtUPRPpivahO1
-         pMOAKdJmuyn8uUGmcv+qg17WCc04+uGVU12l7XE2hi5C8qwyTRcIkBEvtnczVe0KO4Rx
-         /+Mw==
-X-Gm-Message-State: AD7BkJIyr+Ij8uOIVu34I/mhIIW8y9LsLxX2Kf0kdTNJeNeQvS8DdcgIk8OberZ1tEglDQ==
-X-Received: by 10.140.239.66 with SMTP id k63mr23405726qhc.11.1456778582758;
-        Mon, 29 Feb 2016 12:43:02 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id a102sm11657722qgf.21.2016.02.29.12.43.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 12:43:01 -0800 (PST)
-In-Reply-To: <20160227040643.GB10829@sigill.intra.peff.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1753949AbcB2UsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 15:48:15 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:43555 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752610AbcB2UsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 15:48:15 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3qDYZg61lKz5tlD;
+	Mon, 29 Feb 2016 21:48:11 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id F2D5451D9;
+	Mon, 29 Feb 2016 21:48:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <1456444119-6934-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287897>
 
-On Fri, 2016-02-26 at 23:06 -0500, Jeff King wrote:
-> On Wed, Feb 24, 2016 at 05:58:37PM -0500, David Turner wrote:
-> 
-> > +int set_ref_storage_backend(const char *name)
-> > +{
-> > +	struct ref_storage_be *be;
-> > +
-> > +	for (be = refs_backends; be; be = be->next)
-> > +		if (!strcmp(be->name, name)) {
-> > +			the_refs_backend = be;
-> > +			return 0;
-> > +		}
-> > +	return 1;
-> > +}
-> 
-> So we search through the list and assign the_refs_backend if we find
-> something, returning 0 for success, and 1 if we found nothing. OK
-> (though our usual convention is that if 0 is success, -1 is the error
-> case).
+Hi folks,
 
-Will fix.
+we have a major breakage in the parallel tasks infrastructure, and I'm
+afraid it is already in master.
 
-> > +int ref_storage_backend_exists(const char *name)
-> > +{
-> > +	struct ref_storage_be *be;
-> > +
-> > +	for (be = refs_backends; be; be = be->next)
-> > +		if (!strcmp(be->name, name)) {
-> > +			the_refs_backend = be;
-> > +			return 1;
-> > +		}
-> > +	return 0;
-> > +}
-> 
-> Here we do the same thing, but we get "1" for exists, and "0"
-> otherwise. That makes sense if this is about querying for existence.
-> But
-> why does the query function still set the_refs_backend?
+Instrument the code in sb/submodule-parallel-update like this and enjoy
+the fireworks of './t7400-submodule-basic.sh -v -i -x --debug':
 
-Yeah, that's wrong.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 0322282..482c7f6 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -690,8 +690,9 @@ cmd_update()
+ 		cmd_init "--" "$@" || return
+ 	fi
+ 
++	set -x
+ 	{
+-	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
++	valgrind git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
+ 		${wt_prefix:+--prefix "$wt_prefix"} \
+ 		${prefix:+--recursive-prefix "$prefix"} \
+ 		${update:+--update "$update"} \
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 5572327..717e491 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -337,6 +337,7 @@ test_expect_success 'update should fail when path is used by a file' '
+ 
+ 	echo "hello" >init &&
+ 	test_must_fail git submodule update &&
++	false &&
+ 
+ 	test_cmp expect init
+ '
 
-> I'm guessing the assignment in the second one is just copy-pasta, but
-> maybe the whole thing would be simpler if they could share the
-> implementation, like:
-> 
->   struct ref_storage_be *find_ref_storage_backend(const char *name)
->   {
-> 	struct ref_storage *be;
-> 	for (be = refs_backends; be; be = be->next)
-> 		if (!strcmp(be->name, name))
-> 			return be;
-> 	return NULL;
->   }
-> 
->   int set_ref_storage_backend(const char *name)
->   {
-> 	struct ref_storage *be = find_ref_storage_backend(name);
-> 	if (!be)
-> 		return -1;
-> 	the_refs_backend = be;
-> 	return 0;
->   }
-> 
-> You don't really need an "exists", as you can check that "find"
-> doesn't
-> return NULL, but you could wrap it, of course.
+The culprit seems to be default_task_finished(), which accesses argv[]
+of the struct child_process after finish_command has released it,
+provided the child exited with an error, for example:
 
-I'd rather wrap it to keep the backends firmly inside the refs-internal
-barrier.  
+==3395== Invalid read of size 8
+==3395==    at 0x54F991: default_task_finished (run-command.c:932)
+==3395==    by 0x49158F: update_clone_task_finished (submodule--helper.c:421)
+==3395==    by 0x5504A2: pp_collect_finished (run-command.c:1122)
+==3395==    by 0x5507C7: run_processes_parallel (run-command.c:1194)
+==3395==    by 0x4918EB: update_clone (submodule--helper.c:483)
+==3395==    by 0x4919D8: cmd_submodule__helper (submodule--helper.c:527)
+==3395==    by 0x405CBE: run_builtin (git.c:353)
+==3395==    by 0x405EAA: handle_builtin (git.c:540)
+==3395==    by 0x405FCC: run_argv (git.c:594)
+==3395==    by 0x4061BF: main (git.c:701)
+==3395==  Address 0x5e49370 is 0 bytes inside a block of size 192 free'd
+==3395==    at 0x4C2A37C: free (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3395==    by 0x4A26EE: argv_array_clear (argv-array.c:73)
+==3395==    by 0x54DFC4: child_process_clear (run-command.c:18)
+==3395==    by 0x54EFA7: finish_command (run-command.c:539)
+==3395==    by 0x550413: pp_collect_finished (run-command.c:1120)
+==3395==    by 0x5507C7: run_processes_parallel (run-command.c:1194)
+==3395==    by 0x4918EB: update_clone (submodule--helper.c:483)
+==3395==    by 0x4919D8: cmd_submodule__helper (submodule--helper.c:527)
+==3395==    by 0x405CBE: run_builtin (git.c:353)
+==3395==    by 0x405EAA: handle_builtin (git.c:540)
+==3395==    by 0x405FCC: run_argv (git.c:594)
+==3395==    by 0x4061BF: main (git.c:701)
 
-Thanks.
+I haven't thought about a solution, yet. Perhaps you have ideas.
+
+-- Hannes
