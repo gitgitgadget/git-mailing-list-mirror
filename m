@@ -1,173 +1,137 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv19 09/11] git submodule update: have a dedicated helper
- for cloning
-Date: Mon, 29 Feb 2016 11:03:10 -0800
-Message-ID: <CAGZ79kZYqXWAqjmYJtHM5rPUPbCS_NxOsrbspkOS1WAVV44wzg@mail.gmail.com>
-References: <CAPc5daWbkNXp8T4U2tiYftB4kSOjf9Cv1fgmbYbpuoKdJPRHGA@mail.gmail.com>
-	<1456444119-6934-1-git-send-email-sbeller@google.com>
-	<1456444119-6934-10-git-send-email-sbeller@google.com>
-	<CACsJy8DmhJrUkp=d4kSst=0yGWn+Hk=MqxCmhH3WqfPzhTt+Uw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
+Date: Mon, 29 Feb 2016 11:10:09 -0800
+Message-ID: <xmqqtwkr9vu6.fsf@gitster.mtv.corp.google.com>
+References: <56D3E56A.5010608@web.de>
+	<20160229092816.GA23910@sigill.intra.peff.net>
+	<56D415C6.2040203@web.de>
+	<20160229100258.GC2950@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:03:20 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 29 20:10:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaT6C-000836-3D
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:03:16 +0100
+	id 1aaTD1-0003Sk-AR
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbcB2TDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:03:12 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:33499 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750957AbcB2TDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:03:11 -0500
-Received: by mail-ig0-f175.google.com with SMTP id y8so2665853igp.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=4zDf7MTiMVE2/WdBsQNDp+XRAOBF9ND8NlHi1s0HWBs=;
-        b=b8/9yGWK5fP6TYqtREgtH+KqenigNE9f0z+A6FctnUk4wTp947yijgRlVkP2g/iGYM
-         nHC6R/HgJM7+dMI34UzdoY3lbGT/GQnLf3A77mgbxYnr1o6GaPLwA+Sf7tYU6fV/ZJ58
-         FefqzTErsGGG3WMP4bCPlv2DSzEA1xfVR7BEG30RpPpHeoKczbafRB5MACBfmrKnwT+1
-         Wi0a6FwoeaIpIahGrFpW50e64fEF0IXh2fsB3e3+dCPhUdZ1kTPNHeFbXS9pyhKz9m4x
-         0XePDiHzWlZ+4RCBUFV34U3xHLNIVZ8kSWGgJxHlEBEYyLBL8IvNzotuTuDbrGTRIGS7
-         /gug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=4zDf7MTiMVE2/WdBsQNDp+XRAOBF9ND8NlHi1s0HWBs=;
-        b=S7CFNHqca0movyvK9uwSL4WI9DZ5DFDvxpWr19RXl94cVtcfTxUrw2YZdu18mTceLX
-         ngyMixMGyrS3GmLIT2RSi8MqmWnWG742llH3PDN0wVia6s5mZoXg8jV68W833UfxI06Y
-         MsWhzlsJBud3q3NVbIZFbeRNC+zkkOKbmB3RbJNY7keSlUmBRn6HzswZn0SUqKFv6G1e
-         GEfLDW9i0SvKasGT3ZM1wNbN5sA+iR8/HyjkBywOdiFcy4Ml+iFtrMOLj+G3l06Ps8nX
-         wOohl5u/OwLTThip38Dt6TifyWqs9e+upHTns3wcRIa4q09eNtYFYZl1gr63u1DhLlPa
-         CkEw==
-X-Gm-Message-State: AD7BkJItVn76KmXR4L69l1QjNSQR0z8EJGk9kKzAQOF7yr/PlH/mvypkO/nGYcRI40/tGBNLxi7LlUO5VBrU8eXR
-X-Received: by 10.50.112.10 with SMTP id im10mr11539122igb.93.1456772590528;
- Mon, 29 Feb 2016 11:03:10 -0800 (PST)
-Received: by 10.107.58.6 with HTTP; Mon, 29 Feb 2016 11:03:10 -0800 (PST)
-In-Reply-To: <CACsJy8DmhJrUkp=d4kSst=0yGWn+Hk=MqxCmhH3WqfPzhTt+Uw@mail.gmail.com>
+	id S1753390AbcB2TKO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 14:10:14 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52917 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753277AbcB2TKN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 14:10:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2262447E05;
+	Mon, 29 Feb 2016 14:10:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=O+va33ChtlMC
+	+g5H9Ngjy1xiksc=; b=Z4mKfMpagni3VdRodTd0Q9MFw6YQnFFSU+yRVXYjmSkH
+	8yTzyShunQxkXTDWKzqC+pciU1flFEYQoaIYbgN7iB1qHVnX/tTxhTmbUfoytMYO
+	hZY5w1xbxoGffMUR5S7y560NeKP7UJGGfUG6buqijYlIeh+ca53Dg5KgVFh0o/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VBxJt0
+	erlnuZ7e2HP8z+wHoVtlCDDCpAgOfohvOSbxa4An5c+N1NlxxDmV+pCc11jw9b0y
+	s/yRNrEAP3l5JGEAu29aa4PCoxZVICGVQEhCXSCVMT5NkRjQXCbMGgdVHlO0W91D
+	1UldEZZCgpTtqB5sIaj5bmu+8ibxuq6jfUCnc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 16D7C47E04;
+	Mon, 29 Feb 2016 14:10:11 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7722947E03;
+	Mon, 29 Feb 2016 14:10:10 -0500 (EST)
+In-Reply-To: <20160229100258.GC2950@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 29 Feb 2016 05:02:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0D998554-DF18-11E5-A3D1-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287872>
 
-On Sat, Feb 27, 2016 at 12:40 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Feb 26, 2016 at 6:48 AM, Stefan Beller <sbeller@google.com> wrote:
->> +static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->> +                                          struct child_process *child,
->> +                                          struct submodule_update_clone *suc,
->> +                                          struct strbuf *out)
->> +{
->> +       const struct submodule *sub = NULL;
->> +       struct strbuf displaypath_sb = STRBUF_INIT;
->> +       struct strbuf sb = STRBUF_INIT;
->> +       const char *displaypath = NULL;
->> +       char *url = NULL;
->> +       int needs_cloning = 0;
->> +
->> +       if (ce_stage(ce)) {
->> +               if (suc->recursive_prefix) {
->> +                       strbuf_addf(out, "Skipping unmerged submodule %s/%s\n",
->> +                                   suc->recursive_prefix, ce->name);
->
-> I'm pretty sure this string is for human consumption (because it's
-> _()'d elsehwere in this function), please _() this string.
->
->> +               } else {
->> +                       strbuf_addf(out, "Skipping unmerged submodule %s\n",
->> +                                   ce->name);
->
-> and this one
->
->> +               }
->> +               goto cleanup;
->> +       }
->> +
->> +       sub = submodule_from_path(null_sha1, ce->name);
->> +
->> +       if (suc->recursive_prefix)
->> +               displaypath = relative_path(suc->recursive_prefix,
->> +                                           ce->name, &displaypath_sb);
->> +       else
->> +               displaypath = ce->name;
->> +
->> +       if (suc->update.type == SM_UPDATE_NONE
->> +           || (suc->update.type == SM_UPDATE_UNSPECIFIED
->> +               && sub->update_strategy.type == SM_UPDATE_NONE)) {
->> +               strbuf_addf(out, "Skipping submodule '%s'\n",
->> +                           displaypath);
->
-> and this one
->
->> +               goto cleanup;
->> +       }
->> +
->> +       /*
->> +        * Looking up the url in .git/config.
->> +        * We must not fall back to .gitmodules as we only want
->> +        * to process configured submodules.
->> +        */
->> +       strbuf_reset(&sb);
->> +       strbuf_addf(&sb, "submodule.%s.url", sub->name);
->> +       git_config_get_string(sb.buf, &url);
->> +       if (!url) {
->> +               /*
->> +                * Only mention uninitialized submodules when their
->> +                * path have been specified
->> +                */
->> +               if (suc->warn_if_uninitialized)
->> +                       strbuf_addf(out, _("Submodule path '%s' not initialized\n"
->> +                                   "Maybe you want to use 'update --init'?\n"),
->> +                                   displaypath);
->
-> oh it's already marked :)
->
-> BTW, while you're editing this file, perhaps do this too (maybe in a
-> separate patch)? Because die() already prepends "fatal:"
+Jeff King <peff@peff.net> writes:
 
-Makes sense. As builtin/submodule--helper.c was introduced in 2.7.0
-and translation has already started fr 2.8.0, I'll just pick it up as
-part of this series
-instead of sending a bugfix patch alone.
+> On Mon, Feb 29, 2016 at 10:56:22AM +0100, Torsten B=C3=B6gershausen w=
+rote:
+>
+>> Thanks for the fast-patch.
+>>=20
+>> I manually copied the patch, But there are more probles, it seems.
+>>=20
+>> $ git diff
+>> diff --git a/compat/mingw.c b/compat/mingw.c
+>> index cfedcf9..b1163f2 100644
+>> --- a/compat/mingw.c
+>> +++ b/compat/mingw.c
+>> @@ -1069,7 +1069,7 @@ static pid_t mingw_spawnve_fd(const char *cmd,=
+ const
+>> char **argv, char **deltaen
+>>                         free(quoted);
+>>         }
+>>=20
+>> -       wargs =3D xmalloc_array(st_add(st_mult(2, args.len), 1), siz=
+eof(wchar_t));
+>> +       wargs =3D ALLOC_ARRAY(st_add(st_mult(2, args.len), 1), sizeo=
+f(wchar_t));
+>>         xutftowcs(wargs, args.buf, 2 * args.len + 1);
+>>         strbuf_release(&args);
+>
+> Argh. Let me write "git commit -a" on the inside of my brown paper ba=
+g,
+> so that I actually send out the fix sitting in my working tree, not t=
+he
+> half-finished thing I ran "git add" on.
 
-Thanks for review!
+Just to make sure that I am not confused, what you wrote below
+matches what I received from you two message upthread.
 
+I am assuming that it is intended that the two messages from you
+have the same patch, and the assignment of ALLOC_ARRAY to wargs was
+a bug Torsten introduced only to his tree when cutting and pasting.
+
+With that assumption, will queue this one (or the original one,
+which to me is the same thing).
+
+Thanks.
+
+> -- >8 --
+> Subject: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
 >
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index a6e54fa..6cf47de 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -731,13 +731,13 @@ int cmd_submodule__helper(int argc, const char
-> **argv, const char *prefix)
->  {
->         int i;
->         if (argc < 2)
-> -               die(_("fatal: submodule--helper subcommand must be "
-> +               die(_("submodule--helper subcommand must be "
->                       "called with a subcommand"));
+> Commit 50a6c8e (use st_add and st_mult for allocation size
+> computation, 2016-02-22) fixed up many xmalloc call-sites
+> including ones in compat/mingw.c.
 >
->         for (i = 0; i < ARRAY_SIZE(commands); i++)
->                 if (!strcmp(argv[1], commands[i].cmd))
->                         return commands[i].fn(argc - 1, argv + 1, prefix);
+> But I screwed up one of them, which was half-converted to
+> ALLOC_ARRAY, using a very early prototype of the function.
+> And I never caught it because I don't build on Windows.
 >
-> -       die(_("fatal: '%s' is not a valid submodule--helper "
-> +       die(_("'%s' is not a valid submodule--helper "
->               "subcommand"), argv[1]);
->  }
-> --
-> Duy
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  compat/mingw.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index cfedcf9..54c82ec 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1069,7 +1069,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, =
+const char **argv, char **deltaen
+>  			free(quoted);
+>  	}
+> =20
+> -	wargs =3D xmalloc_array(st_add(st_mult(2, args.len), 1), sizeof(wch=
+ar_t));
+> +	ALLOC_ARRAY(wargs, st_add(st_mult(2, args.len), 1));
+>  	xutftowcs(wargs, args.buf, 2 * args.len + 1);
+>  	strbuf_release(&args);
