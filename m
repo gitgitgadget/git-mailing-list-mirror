@@ -1,97 +1,97 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1] git-p4: map a P4 user to Git author name and email address
-Date: Sun, 28 Feb 2016 22:53:58 -0500
-Message-ID: <CAPig+cQEzsJT+06bam2o+B1YTOrviHVtzE2LWsrF_bVCWy7+Bw@mail.gmail.com>
-References: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com>
-	<CAPig+cTCZ_diLH+tge6bis6gjq0Qvk05zD7zqf1PBJxNTJu9bw@mail.gmail.com>
-	<F97BFD52-C258-4B8C-A380-6F0240FDE7F8@gmail.com>
+From: zacr <zacr@slingshot.co.nz>
+Subject: Git 2.7.2.windows.1 fails to authenticate access to private
+ repository over HTTPS
+Date: Mon, 29 Feb 2016 16:24:32 +1300
+Message-ID: <0eee43fe410bb5db3dc8eeec2f7ff00c@slingshot.co.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
-	Lars Schneider <lars.schneider@autodesk.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 04:54:06 2016
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 29 05:08:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaEuL-0000b4-KQ
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 04:54:05 +0100
+	id 1aaF8c-0007Yo-SW
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 05:08:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754409AbcB2DyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Feb 2016 22:54:00 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:34705 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753952AbcB2Dx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Feb 2016 22:53:59 -0500
-Received: by mail-vk0-f67.google.com with SMTP id e6so8594730vkh.1
-        for <git@vger.kernel.org>; Sun, 28 Feb 2016 19:53:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=0mgwivTo4xr4WjpGFDcfDNCxQCFayU93cKZ2aoy8gAA=;
-        b=mI45p/hoflTTW3k7vpsAsC6jY8eoyKf343F56CrMNm4EliKzpLs4CCLKZYPUEkHcpV
-         W9kvLn2jkiuLlFQujZEb03QKNKk/IBn7UxkeY45TfAevFx6+fMWy9qI+lRELJcSQQN7/
-         RPx9wlhW+dH2O3jtLYUH1REKWIeP8jTVhqOB65KAcO7+ADLimm0cxgapDAYl++M0YL14
-         cc8drWenaU9I/PlFYDLFstj/A0nPQ9IjZ4Dzy1P5sQscOGogcYYqIVLsMeRGz4GF0LUv
-         cca+NkXrfNOc/bB+fElc7+WzxOhurluYUQJd3e3VjZXiRKPBKmaeLghDirNeXRzpdbGe
-         glKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=0mgwivTo4xr4WjpGFDcfDNCxQCFayU93cKZ2aoy8gAA=;
-        b=gv2e/KHG6j/e9HtkwzWgjVjv+gSoiOqq0l4CV8nPjg6RNK7eUR6su8c0FsO7uoI1Jo
-         i0Bggv7l1IS4SZA2rdaUJd4yRQUr7soK42hA/LtWL9+XZCUiSp4ZY0+lndtzmquHWCli
-         GhltBGeOVbpH6WGbEC2ubjg2gAOaino4HW3YYzZYaHaaWNjxmBbHijwIkXtFxe0gtclX
-         bTV2/zKwbsZ5WhXE/fLeILlhx3+UZqsldqB1zS+639LviG0DPmdQ9uA2oEucrCcYBPfT
-         Mz6/3sjHm4IcNj10hiEWVTV2DaZAQJ/BASiLw1pe8H8HmRZ+Y6S/PW5FgAE/fLRNaNk5
-         PR5Q==
-X-Gm-Message-State: AD7BkJLGYG3r7u77Wxee78jiJDAAp02UXdBl5NYN5jzrmPyMYs8puJbi54KZBjvvnJT5u6EyLY2bLeegEEmU8w==
-X-Received: by 10.31.8.142 with SMTP id 136mr10136700vki.14.1456718038631;
- Sun, 28 Feb 2016 19:53:58 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 28 Feb 2016 19:53:58 -0800 (PST)
-In-Reply-To: <F97BFD52-C258-4B8C-A380-6F0240FDE7F8@gmail.com>
-X-Google-Sender-Auth: FP9uTyaXpX_HDXtx74Tk1nr5lII
+	id S1754954AbcB2EIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Feb 2016 23:08:44 -0500
+Received: from mta5.flip.co.nz ([103.9.40.8]:34518 "EHLO mta5.flip.co.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754429AbcB2EIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Feb 2016 23:08:43 -0500
+X-Greylist: delayed 2648 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Feb 2016 23:08:43 EST
+Received: from fortimail2.tranzpeer.net (mx238.tranzpeer.net [202.180.66.238])
+	by mta5.flip.co.nz (8.14.4/8.14.4) with ESMTP id u1T3OWBm025920
+	for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:24:32 +1300
+Received: from webmail.slingshot.co.nz (default-rdns.callplus.co.nz [202.189.160.42] (may be forged))
+	by fortimail2.tranzpeer.net  with ESMTP id u1T3OWc1012489-u1T3OWc2012489
+	for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:24:32 +1300
+X-Sender: zacr@slingshot.co.nz
+User-Agent: Roundcube Webmail/0.9.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287798>
 
-On Sun, Feb 28, 2016 at 12:05 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> On 28 Feb 2016, at 17:19, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sun, Feb 28, 2016 at 5:25 AM,  <larsxschneider@gmail.com> wrote:
->>> +git-p4.mapUser::
->>> +       Map a P4 user to a name and email address in Git. Use a string
->>> +       with the following format to create a mapping:
->>> ++
->>> +-------------
->>> +git config --add git-p4.mapUser "p4user -> First Last <mail@address.com>"
->>> +-------------
->>> ++
->>> +       A mapping will override any user information from P4. Mappings for
->>> +       multiple P4 user can be defined.
->>
->> Does this format correctly with Asciidoc, or does the pargraph need to
->> be left-justified? (I haven't tested it myself.)
-> I am not exactly sure what you mean. The last paragraph is already left
-> justified, no?
+Hi,
 
-Sorry, I meant "does it need to be flush against the left margin (that
-is column 0)?" Just picking a file at random, (say
-Documentation/blame-options.txt), you see quickly that while the first
-paragraph of an entry is indented, subsequent paragraphs belonging to
-that entry are not.
+I have recently downloaded 64-bit Git for Windows (the file I downloaded 
+was "Git-2.7.2-64-bit.exe"). This reports a version string of "git 
+version 2.7.2.windows.1"
+Using it from the command line, after cloning a repository, I attempted 
+to "git pull" a private repository from GitHub. From prior experience, I 
+expected it to ask me for my username and password, then authenticate 
+with the server. It asked for my username, which I typed in, but after 
+pressing Enter it suddenly failed with an error:
 
-> Do you know a good tutorial for Asciidoc? How can I/should
-> I check these things?
+error: failed to execute prompt script (exit code 1)
+fatal: could not read Username for 'https://github.com': Invalid 
+argument
 
-I haven't looked at tutorial; I've merely consult the Asciidoc
-documentation when needed. Assuming you have the Asciidoc toolchain
-installed, the easiest way to check if it formats correctly is to run
-"make html" and then look at the built Documentation/git-p4.html in a
-browser.
+
+I experimented a bit, and it only occurs when trying to use HTTPS to 
+pull from a repository that requires authentication. Using a personal 
+access token to authenticate or using the git protocol both work.
+
+I ran it again with GIT_TRACE=true, and here is the trace (with username 
+and repository name removed):
+
+15:55:58.615147 git.c:348               trace: built-in: git 'pull'
+15:55:58.617147 run-command.c:343       trace: run_command: 'fetch' 
+'--update-head-ok'
+15:55:58.633149 git.c:348               trace: built-in: git 'fetch' 
+'--update-head-ok'
+15:55:58.636149 run-command.c:343       trace: run_command: 
+'git-remote-https' 'origin' 'https://github.com/username/repository.git'
+15:55:59.630248 run-command.c:343       trace: run_command: 'bash' '-c' 
+'cat >/dev/tty && read -r line </dev/tty && echo "$line"'
+error: failed to execute prompt script (exit code 1)
+fatal: could not read Username for 'https://github.com': Invalid 
+argument
+
+
+It looks like it's trying to run a new bash instance for me to enter my 
+password, which fails on Windows because I don't have bash installed.
+
+
+
+For reference, here are some old threads I found while researching the 
+issue. It looks like this has cropped up before, in Git 1.8.5.
+https://groups.google.com/forum/#!msg/msysgit/s4dB8Nv9V4c/55-cGPdPYmAJ
+https://github.com/msysgit/msysgit/issues/153
+and stackoverflow for good measure (comments by Mr_and_Mrs_D, Ricardo, 
+and AndyL identify it as a bug with 1.8.5):
+http://stackoverflow.com/questions/20871549/error-when-push-commits-with-github-fatal-could-not-read-username
+
+
+I would appreciate your help.
+
+
+Yours sincerely,
+Zac Roberts
+zacr@slingshot.co.nz
