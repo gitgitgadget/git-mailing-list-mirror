@@ -1,91 +1,102 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH] git-p4.py: Make submit working on bare repository
-Date: Mon, 29 Feb 2016 15:29:02 +0000
-Message-ID: <CAE5ih7-q_PwF-T6nsu=FyyN9wO6o0Jcfkg=gKy5mhOXRGFZ+VA@mail.gmail.com>
-References: <CAPig+cQA4sJ2RneG8zRsUx+bDPAMYVtmhFjZx5SOGDqnsKNUaQ@mail.gmail.com>
-	<1455919074-5683-1-git-send-email-aidecoe@aidecoe.name>
-	<xmqq7fi0b9rt.fsf@gitster.mtv.corp.google.com>
-	<87fuwnd4u7.fsf@freja.aidecoe.name>
-	<xmqqbn7aa522.fsf@gitster.mtv.corp.google.com>
-	<877fhwd1g0.fsf@freja.aidecoe.name>
-	<xmqqegc33oal.fsf@gitster.mtv.corp.google.com>
-	<CAE5ih7_vBMsi+zRZRTCaO56VrOYZUR0NQ0CSSE+Do48xkJ_BwA@mail.gmail.com>
-	<871t83cfi7.fsf@freja.aidecoe.name>
-	<CAE5ih7-rBuipoAGEnK60iidi1nYA9xWZQV6jRMHTVQe6f=cQag@mail.gmail.com>
-	<87si0cpnpn.fsf@freja.aidecoe.name>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: GSoC 2016 Microproject
+Date: Mon, 29 Feb 2016 21:02:35 +0530
+Message-ID: <56D46493.4040909@gmail.com>
+References: <56D19EF9.3070702@gmail.com> <vpq8u26qo3y.fsf@anie.imag.fr>
+ <56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
+ <56D2C828.6010901@gmail.com> <vpqpovfblru.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: =?UTF-8?B?QW1hZGV1c3ogxbtvxYJub3dza2k=?= <aidecoe@aidecoe.name>
-X-From: git-owner@vger.kernel.org Mon Feb 29 16:29:11 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 29 16:32:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaPl0-0001IB-KS
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:29:10 +0100
+	id 1aaPoT-0003BI-AG
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:32:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755073AbcB2P3H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 10:29:07 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:34443 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751390AbcB2P3E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 10:29:04 -0500
-Received: by mail-ob0-f171.google.com with SMTP id ts10so137423495obc.1
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 07:29:03 -0800 (PST)
+	id S1754067AbcB2Pck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 10:32:40 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35765 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041AbcB2Pcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 10:32:39 -0500
+Received: by mail-pa0-f52.google.com with SMTP id bj10so24467522pad.2
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 07:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=DxBYDr6Zysv95GIYwHTxDW+LP0uj6l8pLf2kCb7pZGY=;
-        b=FbTPq1FC7RcY217fTZ/7grRmxhxoAorqcL7g/ZIcU+748fTxJleOobZ5CUu300mpV6
-         Lta+TALbGa6ecg4caMx/Bqkk5XrRHv9wGOWwqAx+p6go+xsxABNJvpX93l0AQtzlXEGC
-         srM7CL4sTm312opTXPp8kwX94+InUOV+1SUL8=
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=O6mCkIkqU/rJftH2ZARyrNvCD8NLhv7OSX8gZGzP7Sg=;
+        b=L4wMf1RNDsMs/4X+Pvzj+37ALb4MPBY7+0/lA80ksOr9DKno7UG70aKpaj5RGodlxW
+         5GXuYidqCjlCTUmBXapNXsMx9IR29MCp9oQYM6SBFO4I+wnEEBgFzw3FtgjxJ5vbMdo7
+         OdIcvWEJeW/mZVGhfhfu6Dl+93tZH+2F/HpdPAd7iHB11iwr1dUxXm6pX8GJDVYA+7XQ
+         LDP3QP2Hbzj/ZIRzbl44iB3/Vg76Vejb2fV2MsGwMOtIpa5gHpJk6/o3J/Wkel25bNGz
+         m9KycQdkYA9SEygaFpDriUMXkM0gWabppDw6CkHvWT3uHZAkERrqec1Z1rOYUf0gYiKf
+         VE8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=DxBYDr6Zysv95GIYwHTxDW+LP0uj6l8pLf2kCb7pZGY=;
-        b=g4SUbXF3TdbYPwYYLn3lsuquHuQGZHQzCDnjjmqyA4Lm60xUoEtiAOWn72ib2y26/p
-         Pw5E+DLezZD3H1Xh/aJ2wN/y0iU+Kc8JR/VKPZTZ/EA9eiC+H4Stz5Fi6+K1SW85XdXH
-         C+dEiIpJA1xoqNTZ8xYl1qL+zc0LKCYYEgx9/ufY5dP3m52/QwH5R10Ev8zeyZkcab7m
-         uUhLAghI1P6dxoWrXma9ciujkN7/2wAUUcPEGe7x0JSFTmVLNU6IDkRZ4wNwXFcF5TMR
-         spywr0Rp343DShMIkj/jhQLfQ3tw+KJUcDQj/wZTjze73GKcOg2rsxhukL/393EhehGp
-         Kixg==
-X-Gm-Message-State: AD7BkJILsgBfK0k5Yqc9nH9ZOv4Mu+QqeeT3LIuZjt+Us15pMHmAqbovYog4Z8aaC6uZLPXj89+teMllf2kdog==
-X-Received: by 10.182.186.105 with SMTP id fj9mr12100725obc.17.1456759742431;
- Mon, 29 Feb 2016 07:29:02 -0800 (PST)
-Received: by 10.202.172.132 with HTTP; Mon, 29 Feb 2016 07:29:02 -0800 (PST)
-In-Reply-To: <87si0cpnpn.fsf@freja.aidecoe.name>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=O6mCkIkqU/rJftH2ZARyrNvCD8NLhv7OSX8gZGzP7Sg=;
+        b=m07yOsLRoIgm3RvVIHBAICNeXpOE7R85CUctsW5yQHuTKlb51I17bw6Dc/fUQbstaz
+         Qjyyp0Q7Np4LhMjtuubGwPx8D17xBi8YNRbFoAdlSdzmn5y1Zw9qJAzsGr9WBfJv8qaN
+         I5SbUIWWCd4S1eTCTJ5rOFBSvX5/FoWDgRwmmYi8oljwcrFdARgqm/sTKhIQrHWDnxHF
+         /03iYiaKI5QZqXboCmkmngU/uNTb5BXf6RdyZdXiou9b3SmJ4A/XLecZGDwLcXDJvRCX
+         NKej5+rCj13299+dv1NJKME6fECIS1a1YEtvgXpGPyXk2Vm9dnPubIGITHBkliaSplqH
+         bNLw==
+X-Gm-Message-State: AD7BkJL9VNNfywe8Mjbo5abE/9Y42YfhWqkzHgxtjmqy5RLDY1rKPYffpPbWFm792WOYwQ==
+X-Received: by 10.66.132.37 with SMTP id or5mr15410874pab.144.1456759959121;
+        Mon, 29 Feb 2016 07:32:39 -0800 (PST)
+Received: from [192.168.1.10] ([182.64.202.34])
+        by smtp.gmail.com with ESMTPSA id r5sm39060284pap.7.2016.02.29.07.32.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 29 Feb 2016 07:32:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <vpqpovfblru.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287845>
 
-On 28 February 2016 at 20:46, Amadeusz =C5=BBo=C5=82nowski <aidecoe@aid=
-ecoe.name> wrote:
 
+>> First, I'm not quite sure what to put in the help message for the
+>> options (--quiet, --stateless-rpc, --advertise-refs and
+>> --reject-thin-pack-for-testing).
+> They are currently undocumented. We sometimes have explicitly
+> undocumented options (PARSE_OPT_HIDDEN) when they are used only
+> internally to avoid polluting the end-user's UI.
 >
-> True. For now I have these cases covered by wrapper scripts. The mini=
-mum
-> I need from git-p4 is just not to fail on git submit from bare
-> repository which is covered by patch I have submitted. If I get my
-> solution enough testing, I'd think of transforming it into patch for
-> git-p4.py as well.
+> In this case, the command is anyway not meant for end-users so I think
+> it would make sense to document them, but not necessarily within the the
+> microproject.
+So what may I put in the message parameter? I was thinking
+perhaps the option itself, without hyphens. Would that be
+correct?
+>
+>> Second, regarding the reject-thin-pack-for-testing option, currently
+>> when the option is entered, `fix_thin` is unset
+>> (https://github.com/git/git/blob/master/builtin/receive-pack.c#L1736).
+>> But using `OPT_BOOL(...)` for the same, the variable would instead be
+>> set when the option is given. I think one solution can be to invert
+>> `fix_thin` after calling `parse_options`. Am I going right so far?
+>> Suggestions and corrections welcome.
+> Or use OPT_SET_INT(..., 0) on a variable initialized to 1.
+Okay, will do that.
+>> Should I make a patch for this and submit it for discussion on the mailing list?
+> On this list, it is indeed often more efficient to say "here's what I'm
+> done. Any comments?" than "here's what I'm about to do".
+>
+I'm really sorry, I'm not very familiar with mailing list etiquettes.
+I'll keep that in mind :)
 
-Could you change the patch to add a command-line option to suppress
-the rebase? I think this would be a bit more obvious: instead of
-having some special magical behaviour kick-in on a bare repo, git-p4
-just does what it's told on the command-line.
 
-It means that if we find another situation where we don't want to
-rebase, we don't have an ever-growing list of special-case
-circumstances, which could become hard to make sense of in future.
-Instead, the user (who hopefully knows better) just tells git-p4 what
-to do.
 
-Thanks!
-Luke
+Thanks and regards,
+Sidhant Sharma [:tk]
