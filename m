@@ -1,106 +1,85 @@
-From: Moritz Neeb <lists@moritzneeb.de>
-Subject: [PATCH v4 5/7] notes copy --stdin: split lines with
- string_list_split()
-Date: Mon, 29 Feb 2016 09:36:27 +0100
-Message-ID: <56D4030B.8000303@moritzneeb.de>
-References: <56D401C2.8020100@moritzneeb.de>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.8.0-rc0
+Date: Mon, 29 Feb 2016 10:24:21 +0100
+Message-ID: <56D40E45.5020304@gmail.com>
+References: <xmqqmvqnhwf4.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 29 09:38:44 2016
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 29 10:24:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaJLj-0003pn-KS
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 09:38:39 +0100
+	id 1aaK47-0000Aj-29
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 10:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574AbcB2Iia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 03:38:30 -0500
-Received: from moritzneeb.de ([78.47.1.106]:39568 "EHLO moritzneeb.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752507AbcB2IiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 03:38:23 -0500
-Received: from [192.168.1.3] (x4db4d1fb.dyn.telefonica.de [77.180.209.251])
-	by moritzneeb.de (Postfix) with ESMTPSA id 612161C117;
-	Mon, 29 Feb 2016 09:38:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
-	s=mail; t=1456735102;
-	bh=GJfp4luzB32GUG5pWawnOHWf+MfXAIBMUdje/Stz3NU=;
-	h=From:Subject:To:References:Cc:Date:In-Reply-To:From;
-	b=vS6aF09K0+jI+Goet2tPWcHgahvUnSaGLDsizOFJJIdqRSv+ep8PwiJex8WBGwsj+
-	 oqFKVkoD4GdviRe53O89arD8M9zaQhId/Z5zJco6jy3FjWCZ4Fo1JuERBQ1eWYusJq
-	 9lVuK+gzVuA8z//wA7Z9tivztaX/qjovbnNc5dKY=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <56D401C2.8020100@moritzneeb.de>
+	id S1752644AbcB2JY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 04:24:27 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:33122 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbcB2JYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 04:24:24 -0500
+Received: by mail-wm0-f49.google.com with SMTP id l68so27703436wml.0;
+        Mon, 29 Feb 2016 01:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Hejx3j5sU6/afIpt+IArIbSKVyufwTAt10VGo6lPqHs=;
+        b=sMDpYtKtjRB9bUzBwKBsTVhUpWbk9j1uxVnkeOpP4I2fpFIu8ostz5orZVbHX9KmAO
+         U9g8bj/op+Cvp29SzDMbDtkHIy+QIXv7PtOR3CUT6HhAfQrT7zJstX9GT5nZCpL4+iom
+         9J4ROltQfOk2/68cgps9cOGDF/8NTPG6AGJ9oyf84975P9pPM4v2XvSodYEGJb8DHKfI
+         iLGApgzCsS47FcYHWhw0wl0s7iibafQdNI6Gr+ITvFnp9LDjE5Lp2iBcxABHHGEZ6t04
+         CPMvTjZiJMdcoIlPn1PPds+kV49pE5bAxkkPVMH+F546b5FKisthkLrlUDYHEcFKDVzw
+         ZEgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=Hejx3j5sU6/afIpt+IArIbSKVyufwTAt10VGo6lPqHs=;
+        b=WuIAVNWrsGnIjgwukqCA625F5y2lpM2LCXzI0wmuhO+XCxD+8ZNqBAR5hrE7hDIJm0
+         YGDQmQCicTaGhtUxyl/kxzehS59aVdikgxLdqaWcFVgyBwKQJ1R8Yg/tJNaTQiGhOMEp
+         6xAuRJFUlzfcs2y7EpPu3nUad1RTUAwIHXMX5zuRBOxNYxvnEr/IYNOnZz7pS2tYb80E
+         /h/XNpl3fpLe2LdlhAuRF+n1yywxMT+vU5RwbetLVS76hcuklDbkIZIcbP7z/7jsCYvn
+         zkfT3bRvojQSF78WuG2vlNW73/zap7LOgdek57qFZoRZax06C8G4AUUdDSA9x90IDqY2
+         JRTg==
+X-Gm-Message-State: AD7BkJIWaLnXuXjtXfwQZgxnBPrjNlNhurEPHlo9o8DhckGguTczrR/kJmHQDv/ji08MOA==
+X-Received: by 10.28.180.193 with SMTP id d184mr10060391wmf.64.1456737863160;
+        Mon, 29 Feb 2016 01:24:23 -0800 (PST)
+Received: from [10.223.62.76] ([131.228.216.132])
+        by smtp.googlemail.com with ESMTPSA id j10sm24924328wjb.46.2016.02.29.01.24.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 29 Feb 2016 01:24:22 -0800 (PST)
+Newsgroups: gmane.comp.version-control.git,gmane.linux.kernel
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqqmvqnhwf4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287812>
 
-strbuf_split() has the unfortunate behavior of leaving the
-separator character on the end of the split components, thus
-placing the burden of manually removing the separator on the
-caller. It's also heavyweight in that each split component is a
-full-on strbuf. We need neither feature of strbuf_split() so
-let's use string_list_split() instead since it removes the
-separator character and returns an array of simple NUL-terminated
-strings.
+On 2/27/2016 0:41, Junio C Hamano wrote:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
----
- builtin/notes.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+>   * Some calls to strcpy(3) triggers a false warning from static
+>     analysers that are less intelligent than humans, and reducing the
+>     number of these false hits helps us notice real issues.  A few
+>     calls to strcpy(3) in test-path-utils that are already safe has
+>     been rewritten to avoid false wanings.
+>
+>   * Some calls to strcpy(3) triggers a false warning from static
+>     analysers that are less intelligent than humans, and reducing the
+>     number of these false hits helps us notice real issues.  A few
+>     calls to strcpy(3) in "git rerere" that are already safe has been
+>     rewritten to avoid false wanings.
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 706ec11..715fade 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -292,17 +292,16 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 
- 	while (strbuf_getline(&buf, stdin) != EOF) {
- 		unsigned char from_obj[20], to_obj[20];
--		struct strbuf **split;
-+		struct string_list split = STRING_LIST_INIT_DUP;
- 		int err;
- 
--		split = strbuf_split(&buf, ' ');
--		if (!split[0] || !split[1])
-+		string_list_split(&split, buf.buf, ' ', -1);
-+		if (split.nr != 2)
- 			die(_("Malformed input line: '%s'."), buf.buf);
--		strbuf_rtrim(split[0]);
--		if (get_sha1(split[0]->buf, from_obj))
--			die(_("Failed to resolve '%s' as a valid ref."), split[0]->buf);
--		if (get_sha1(split[1]->buf, to_obj))
--			die(_("Failed to resolve '%s' as a valid ref."), split[1]->buf);
-+		if (get_sha1(split.items[0].string, from_obj))
-+			die(_("Failed to resolve '%s' as a valid ref."), split.items[0].string);
-+		if (get_sha1(split.items[1].string, to_obj))
-+			die(_("Failed to resolve '%s' as a valid ref."), split.items[1].string);
- 
- 		if (rewrite_cmd)
- 			err = copy_note_for_rewrite(c, from_obj, to_obj);
-@@ -312,11 +311,11 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 
- 		if (err) {
- 			error(_("Failed to copy notes from '%s' to '%s'"),
--			      split[0]->buf, split[1]->buf);
-+			      split.items[0].string, split.items[1].string);
- 			ret = 1;
- 		}
- 
--		strbuf_list_free(split);
-+		string_list_clear(&split, 0);
- 	}
- 
- 	if (!rewrite_cmd) {
--- 
-2.4.3
+This is a duplicate.
+
+Regards,
+Sebastian
