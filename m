@@ -1,125 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http: honor no_http env variable to bypass proxy
-Date: Mon, 29 Feb 2016 11:29:40 -0800
-Message-ID: <xmqqio179uxn.fsf@gitster.mtv.corp.google.com>
-References: <5652e025323b60ccf5a59bcbdc7266d4f4e32fc4.1456758964.git.xin.jiang@huawei.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv20 00/12] Expose submodule parallelism to the user
+Date: Mon, 29 Feb 2016 11:32:22 -0800
+Message-ID: <20160229193222.GX28749@google.com>
+References: <1456773250-5510-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>, Jiang Xin <xin.jiang@huawei.com>,
-	Knut Franke <k.franke@science-computing.de>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:29:50 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org,
+	Jens.Lehmann@web.de, peff@peff.net, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 20:32:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaTVr-0005VF-Sf
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:29:48 +0100
+	id 1aaTYU-0006wQ-DR
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752213AbcB2T3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:29:44 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63698 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751390AbcB2T3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:29:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EAF3A4832C;
-	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NPGdATYlDLUMpK+KN80yg+4VD9k=; b=Smz/KR
-	MSN+9HjXcNRliC2Ip+4piuB6MyKcIYHVVNtHVmyIpg+rLxH8kwxZvABXmFJo0sL0
-	MBR/SZePuwiaYDIV/EIrYm/MCVxFqLI4aZ6tj9+srqFBUjuTyy4yW8YNFoXvVPGm
-	hAigyD4TnxiCaTzxEeO4lZdkDYGkZbAJyYX50=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DpGGNcT+XwGefwbPnXjPxsGiQjci2E4b
-	o0bbXXx4qNH5YUTWJlhaoKR0sfD2tDD3eNIeaqyyyIg0CH2E/03Z++dyBgT/DE1S
-	p8GKC2bGMXpkrIUUMCqmceLzk8gZZeviz2HZJ5foozWfvRaERDLpxznngSaSpNSt
-	naToH4wMK7o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E21AF4832B;
-	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5415248327;
-	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
-In-Reply-To: <5652e025323b60ccf5a59bcbdc7266d4f4e32fc4.1456758964.git.xin.jiang@huawei.com>
-	(Jiang Xin's message of "Mon, 29 Feb 2016 23:16:57 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C77B555E-DF1A-11E5-8403-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753193AbcB2Tc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 14:32:26 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33990 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142AbcB2TcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 14:32:25 -0500
+Received: by mail-pa0-f52.google.com with SMTP id fy10so96863190pac.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:32:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1CPn3mmG5DotMeio7c2lp4EJ/KWJzFBrbCCVVck9mbg=;
+        b=sgQ2pb/ErVgm7THbWaipTkeROj/SOkR6K/z1TWjAb2b1p5Zkdjl0lSE+YlJgn7bCrI
+         DSwlfXfXCPhnrE6oeZJ7RCjJ59C2Ce5eWk1P2z+8mXhFIYEbeO0WuQ9dwxJ7zjnSmoMo
+         2d4GcELXuGsn9sm+4ezEjbJC0b9P9yktkpplAx4RuckI6/zNSM2Dqs/Olben5qdRrmN4
+         u4U/RIaD8HbeWDojGNaFYbg7ipvbIGv2L08NpS+AKNLwcnN1aFIwy7RWL2Cfk5sYM6/y
+         CA1qtN1jOfxddO0LyYklROEc/JNwoas2nGD8SbtcU8ax6nGhfeKGlk6ZVOea3acoezKR
+         5Bhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1CPn3mmG5DotMeio7c2lp4EJ/KWJzFBrbCCVVck9mbg=;
+        b=cFt+F/FfV9zuVJqdKmHx6BM1D4MJ8/qrRpdPL7NfDYAywYa8jvFahSQ0eqQGQmNrHd
+         gapj/YHEVsWpjIYN6y6AvRW+3bXuA0k9mm0Nw45QmPoUKZDDwGsP7g4Fwgc2fzvnMEW9
+         pPz+nkkEnFjwVNxxr5GGHTLtt8imE8Eu+2WSZpA3weP6eyYMzQwCKtAS1w4CfaxWSAoM
+         azfCZBjyPC4i1vwhRMYVvov9ociPypmmz7SEoaQcSW2cEYAbjMSnEujk3pzvt2y7o3Mi
+         Vjk5gegXEF296GSD4B5FwzvUun0QHRG51WSGHo18gnC+6bk7TGFwWLlzQXORpmP3Lo2k
+         F5LA==
+X-Gm-Message-State: AD7BkJJ99IEOqCKmssNyrGkf0pEeVQHZ6R2J3gtnNqkrKzab8tmDx4ZNuZ9X3eDXfAkbdQ==
+X-Received: by 10.67.3.67 with SMTP id bu3mr24162308pad.39.1456774345127;
+        Mon, 29 Feb 2016 11:32:25 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:6025:7a8f:271c:ff15])
+        by smtp.gmail.com with ESMTPSA id 27sm39910293pfh.48.2016.02.29.11.32.23
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 29 Feb 2016 11:32:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1456773250-5510-1-git-send-email-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287889>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Stefan Beller wrote:
 
-> From: Jiang Xin <xin.jiang@huawei.com>
->
-> Curl and its families honor several proxy related environment variables:
->
-> * http_proxy and https_proxy define proxy for http/https connections.
-> * no_proxy (a comma separated hosts) defines hosts bypass the proxy.
->
-> This command will bypass the bad-proxy and connect to the host directly:
->
->     no_proxy=* https_proxy=http://bad-proxy/ \
->     curl -sk https://google.com/
->
-> Before commit 372370f (http: use credential API to handle proxy auth...),
-> Environment variable "no_proxy" will take effect if the config variable
-> "http.proxy" is not set.  So the following comamnd won't fail if not
-> behind a firewall.
->
->     no_proxy=* https_proxy=http://bad-proxy/ \
->     git ls-remote https://github.com/git/git
->
-> But commit 372370f not only read git config variable "http.proxy", but
-> also read "http_proxy" and "https_proxy" environment variables, and set
-> the curl option using:
->
->     curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
->
-> This caused "no_proxy" environment variable not working any more.
->
-> Set extra curl option "CURLOPT_NOPROXY" will fix this issue.
->
-> Signed-off-by: Jiang Xin <xin.jiang@huawei.com>
-> ---
->  http.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> I added your suggestions as amending and as a new patch.
 
-Sounds sensible; I am guessing that this is 2.8.0-rc0 regression
-that we need to fast-track?
+I think we're at the point where patches on top would work better.  I
+admit I was a little scared to see another reroll.
 
-Knut, does this look good?
-
-Thanks.
-
-> diff --git a/http.c b/http.c
-> index 1d5e3bb..69da445 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -70,6 +70,7 @@ static long curl_low_speed_limit = -1;
->  static long curl_low_speed_time = -1;
->  static int curl_ftp_no_epsv;
->  static const char *curl_http_proxy;
-> +static const char *curl_no_proxy;
->  static const char *http_proxy_authmethod;
->  static struct {
->  	const char *name;
-> @@ -624,6 +625,11 @@ static CURL *get_curl_handle(void)
->  		}
+[...]
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -299,10 +299,10 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
 >  
->  		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-> +#if LIBCURL_VERSION_NUM >= 0x071304
-> +		var_override(&curl_no_proxy, getenv("NO_PROXY"));
-> +		var_override(&curl_no_proxy, getenv("no_proxy"));
-> +		curl_easy_setopt(result, CURLOPT_NOPROXY, curl_no_proxy);
-> +#endif
->  	}
->  	init_curl_proxy_auth(result);
+>  	if (ce_stage(ce)) {
+>  		if (suc->recursive_prefix) {
+> -			strbuf_addf(out, "Skipping unmerged submodule %s/%s\n",
+> +			strbuf_addf(out,_("Skipping unmerged submodule %s/%s\n"),
+
+Missing space after comma.
+
+Usual practice for i18n would be something like
+
+	struct strbuf path = STRBUF_INIT;
+	if (suc->recursive_prefix)
+		strbuf_addf(&path, "%s/%s", suc->recursive_prefix, ce->name);
+	else
+		strbuf_addstr(&path, ce->name);
+
+	strbuf_addf(out, _("Skipping unmerged submodule %s"), path.buf);
+	strbuf_addch(out, '\n');
+	strbuf_release(&path);
+
+Reasons:
+ - translators shouldn't have to worry about the trailing newline
+ - minimizing number of strings to translate
+ - minimizing the chance that a translator typo produces an invalid path
+
+[...]
+> @@ -319,7 +319,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>  	if (suc->update.type == SM_UPDATE_NONE
+>  	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
+>  		&& sub->update_strategy.type == SM_UPDATE_NONE)) {
+> -		strbuf_addf(out, "Skipping submodule '%s'\n",
+> +		strbuf_addf(out, _("Skipping submodule '%s'\n"),
+>  			    displaypath);
+
+Same issue here with the trailing \n.
+
+If the strbuf_addf + strbuf_addch('\n') pattern is common enough, we
+could introduce a helper (e.g. strbuf_addf_nl) to save typing.
+
+Thanks and hope that helps,
+Jonathan
