@@ -1,101 +1,125 @@
-From: Moritz Neeb <lists@moritzneeb.de>
-Subject: Re: [PATCH v4 4/7] notes copy --stdin: read lines with
- strbuf_getline()
-Date: Mon, 29 Feb 2016 20:26:50 +0100
-Message-ID: <56D49B7A.2060601@moritzneeb.de>
-References: <56D401C2.8020100@moritzneeb.de> <56D40314.7040608@moritzneeb.de>
- <CAPig+cSptQr21QMOJmxT4RPVR3r3zkEQ2TkTU8RoaJfo7=KChw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http: honor no_http env variable to bypass proxy
+Date: Mon, 29 Feb 2016 11:29:40 -0800
+Message-ID: <xmqqio179uxn.fsf@gitster.mtv.corp.google.com>
+References: <5652e025323b60ccf5a59bcbdc7266d4f4e32fc4.1456758964.git.xin.jiang@huawei.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:26:59 2016
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Jiang Xin <xin.jiang@huawei.com>,
+	Knut Franke <k.franke@science-computing.de>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 20:29:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaTT7-000426-8A
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:26:57 +0100
+	id 1aaTVr-0005VF-Sf
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753969AbcB2T0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:26:53 -0500
-Received: from moritzneeb.de ([78.47.1.106]:40812 "EHLO moritzneeb.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752235AbcB2T0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:26:52 -0500
-Received: from [192.168.20.130] (port-213-160-9-202.static.qsc.de [213.160.9.202])
-	by moritzneeb.de (Postfix) with ESMTPSA id 174581C058;
-	Mon, 29 Feb 2016 20:26:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
-	s=mail; t=1456774011;
-	bh=HNnSk8EhGd49iKC1DuTXrHL+UAFmueUsAbyXAQWPl3o=;
-	h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-	b=dhoJNTitgSbXuyYK43zcVj0r29/duoaU7FdcCJIGgT0RkM6Fw+pzYN5tlN4GfkqWX
-	 VWuTIdpgHienEp6ME2WPKWY8h7DCm96SE3zEVFWTbPdnYHSWly6EBpaf37krqzeqeE
-	 R/n+YcJazCpZRsIXUAJqFu1qStfhpWz5/olbx/Jg=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <CAPig+cSptQr21QMOJmxT4RPVR3r3zkEQ2TkTU8RoaJfo7=KChw@mail.gmail.com>
+	id S1752213AbcB2T3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 14:29:44 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63698 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751390AbcB2T3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 14:29:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EAF3A4832C;
+	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NPGdATYlDLUMpK+KN80yg+4VD9k=; b=Smz/KR
+	MSN+9HjXcNRliC2Ip+4piuB6MyKcIYHVVNtHVmyIpg+rLxH8kwxZvABXmFJo0sL0
+	MBR/SZePuwiaYDIV/EIrYm/MCVxFqLI4aZ6tj9+srqFBUjuTyy4yW8YNFoXvVPGm
+	hAigyD4TnxiCaTzxEeO4lZdkDYGkZbAJyYX50=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DpGGNcT+XwGefwbPnXjPxsGiQjci2E4b
+	o0bbXXx4qNH5YUTWJlhaoKR0sfD2tDD3eNIeaqyyyIg0CH2E/03Z++dyBgT/DE1S
+	p8GKC2bGMXpkrIUUMCqmceLzk8gZZeviz2HZJ5foozWfvRaERDLpxznngSaSpNSt
+	naToH4wMK7o=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E21AF4832B;
+	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5415248327;
+	Mon, 29 Feb 2016 14:29:41 -0500 (EST)
+In-Reply-To: <5652e025323b60ccf5a59bcbdc7266d4f4e32fc4.1456758964.git.xin.jiang@huawei.com>
+	(Jiang Xin's message of "Mon, 29 Feb 2016 23:16:57 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C77B555E-DF1A-11E5-8403-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287888>
 
-On 02/29/2016 07:19 PM, Eric Sunshine wrote:
-> If you do elect to keep things the way they are, then (as mentioned in
-> my v2 review) it would be helpful for the above paragraph to explain
-> that strbuf_split() leave the "terminator" on the split elements, thus
-> clarifying why the rtrim() of split[0] is still needed.
-> 
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Yes I would rather leave it like it is. I have the feeling it is
-unmotivated to remove the rtrim of split[1] in the patch 5/7, because it
-is directly related to the strbuf_getline_lf() replacement. Thats's what
-I was trying to explain in the 2nd paragraph of the commit message.
+> From: Jiang Xin <xin.jiang@huawei.com>
+>
+> Curl and its families honor several proxy related environment variables:
+>
+> * http_proxy and https_proxy define proxy for http/https connections.
+> * no_proxy (a comma separated hosts) defines hosts bypass the proxy.
+>
+> This command will bypass the bad-proxy and connect to the host directly:
+>
+>     no_proxy=* https_proxy=http://bad-proxy/ \
+>     curl -sk https://google.com/
+>
+> Before commit 372370f (http: use credential API to handle proxy auth...),
+> Environment variable "no_proxy" will take effect if the config variable
+> "http.proxy" is not set.  So the following comamnd won't fail if not
+> behind a firewall.
+>
+>     no_proxy=* https_proxy=http://bad-proxy/ \
+>     git ls-remote https://github.com/git/git
+>
+> But commit 372370f not only read git config variable "http.proxy", but
+> also read "http_proxy" and "https_proxy" environment variables, and set
+> the curl option using:
+>
+>     curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
+>
+> This caused "no_proxy" environment variable not working any more.
+>
+> Set extra curl option "CURLOPT_NOPROXY" will fix this issue.
+>
+> Signed-off-by: Jiang Xin <xin.jiang@huawei.com>
+> ---
+>  http.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-First I was following your review, but then I had to add a paragraph in
-patch 5/7 that says something like "because the effect of the previous
-patch is that there is not a CR anymore, we can now safely remove
-rtrim() split[1]."
+Sounds sensible; I am guessing that this is 2.8.0-rc0 regression
+that we need to fast-track?
 
-You're right, maybe I should add a comment about why I left rtrim() of
-split[0] to make it more obvious. I thought that would get clear by
-looking at the context, i.e. patch 5/7, where it is explained (by you,
-thanks for that), that strbuf_split leave this space. Is the assumption,
-that those two patches are most times viewed in context wrong?
+Knut, does this look good?
 
-Thanks,
-Moritz
+Thanks.
 
-
->> Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
->> ---
->>  builtin/notes.c | 3 +--
->>  1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/builtin/notes.c b/builtin/notes.c
->> index ed6f222..706ec11 100644
->> --- a/builtin/notes.c
->> +++ b/builtin/notes.c
->> @@ -290,7 +290,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
->>                 t = &default_notes_tree;
->>         }
->>
->> -       while (strbuf_getline_lf(&buf, stdin) != EOF) {
->> +       while (strbuf_getline(&buf, stdin) != EOF) {
->>                 unsigned char from_obj[20], to_obj[20];
->>                 struct strbuf **split;
->>                 int err;
->> @@ -299,7 +299,6 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
->>                 if (!split[0] || !split[1])
->>                         die(_("Malformed input line: '%s'."), buf.buf);
->>                 strbuf_rtrim(split[0]);
->> -               strbuf_rtrim(split[1]);
->>                 if (get_sha1(split[0]->buf, from_obj))
->>                         die(_("Failed to resolve '%s' as a valid ref."), split[0]->buf);
->>                 if (get_sha1(split[1]->buf, to_obj))
->> --
->> 2.4.3
+> diff --git a/http.c b/http.c
+> index 1d5e3bb..69da445 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -70,6 +70,7 @@ static long curl_low_speed_limit = -1;
+>  static long curl_low_speed_time = -1;
+>  static int curl_ftp_no_epsv;
+>  static const char *curl_http_proxy;
+> +static const char *curl_no_proxy;
+>  static const char *http_proxy_authmethod;
+>  static struct {
+>  	const char *name;
+> @@ -624,6 +625,11 @@ static CURL *get_curl_handle(void)
+>  		}
+>  
+>  		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
+> +#if LIBCURL_VERSION_NUM >= 0x071304
+> +		var_override(&curl_no_proxy, getenv("NO_PROXY"));
+> +		var_override(&curl_no_proxy, getenv("no_proxy"));
+> +		curl_easy_setopt(result, CURLOPT_NOPROXY, curl_no_proxy);
+> +#endif
+>  	}
+>  	init_curl_proxy_auth(result);
