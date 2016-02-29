@@ -1,87 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] lockfile: improve error message when lockfile exists
-Date: Mon, 29 Feb 2016 08:25:06 +0100
-Message-ID: <vpqh9gskmgd.fsf@anie.imag.fr>
-References: <1456690276-13914-1-git-send-email-Matthieu.Moy@imag.fr>
-	<56D37B8D.9090001@moritzneeb.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] fetch-pack: fix object_id of exact sha1
+Date: Mon, 29 Feb 2016 09:30:53 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1602290912260.3152@virtualbox>
+References: <xmqqh9gseiqk.fsf@gitster.mtv.corp.google.com> <1456698144-11519-1-git-send-email-gabrielfrancosouza@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Gregory.Mounie@grenoble-inp.fr
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Mon Feb 29 08:25:21 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 09:31:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaICl-00031v-Nr
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 08:25:20 +0100
+	id 1aaJEh-0000N0-9K
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 09:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbcB2HZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 02:25:15 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:35403 "EHLO rominette.imag.fr"
+	id S1752803AbcB2IbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 03:31:13 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55012 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751017AbcB2HZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 02:25:14 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1T7P6sj000519
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 29 Feb 2016 08:25:06 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1T7P6KS011064;
-	Mon, 29 Feb 2016 08:25:06 +0100
-In-Reply-To: <56D37B8D.9090001@moritzneeb.de> (Moritz Neeb's message of "Sun,
-	28 Feb 2016 23:58:21 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 29 Feb 2016 08:25:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1T7P6sj000519
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457335507.16653@1+vKWyQvtwgGI7WV35Vv7A
+	id S1752280AbcB2IbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 03:31:12 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MTkNU-1aRc360gJU-00QWKn; Mon, 29 Feb 2016 09:30:56
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <1456698144-11519-1-git-send-email-gabrielfrancosouza@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:f9hbw7kuq/rS8owSa7p3NKKheXh12pychkoGkFmCtzwLxMkvA6N
+ Lp97CZHjSV8dmuLVEzOeGVzgNf+gLixt8hPP64lR4opAnzm2/u1bFlaK0dQLnsR55Sz/x2m
+ s0H1X8x+mS+4e709Wi6iZO+iePnuRhmwQCETtVc2RK3mg3W/VZf6QuivT12NYFQ7zf8efQ3
+ yiPm1JAUaylrHlj5MZPyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MNpwr2aGySg=:I3HPAS6e1yQmVGefel1FIw
+ trLXNOghKvwkzBjyQOfy5opb8/z61oKAcuPUwLF6diGNCCL+cPntTamulSb8dqWDcax0WKs12
+ BNWHsK3ycvpnbVY51k0VQ585xeNbQNlPmaWIkSPoloKyBxizi0tBlAZPPYai+IQejsVHA4S62
+ L5/fPjDb64D6GBfDM6ORRTWThy1nbT1LubPs90e3RDRTUeZteBsFKr/3sZRzRQXeaMoAIJaO+
+ Pj+rYgClXUdZ7LrTqvU+ckaEnT0dGmv7woC4GSqikVb7KHdKVPih3giWcvBYC68qLJm28zCrC
+ Rd719kr7HuGiQX2RgSQxU36bxV6Y/SIX71CPOjmeP1e+/U42XtU05nQjnxCGVlE2RftU59CRC
+ VetDySIXHBqLhQ/TzWs06wlnDlRHSktwz49Lj5AQXgZK9dKN5cLoIuGnG80FnwLtH8mRmRUnI
+ FaO17HDDZDVIyKVjxqNez3vgh4ZyXdO+/ta+fPOOnqYeDQk/w7iIit9riQS9vgcQ9RQhsT3yA
+ N+/04Urxwp6wKHJXSF+jElGz+qGZ/X/IdME02457eviYYW2clVWyDtqr84qBE/DTrFU601mcm
+ PobArv5WXG3epFqyFjywNH4TU4TOewXvSaTipwG6kKAAQ8krsXLltyJxHxrPrjLxSmChidIi2
+ KUqRt1TJw6k5woftV1fMybAc2TazwMGvcnx0M9TcnQRHbiUDPUnToS1f7DRtog66SAc3ytE/S
+ cLO4y0W9Si8ArKzrBSgDVz9+IYNmRga5eH8mTVw2auBtjyw+4yOITp4CWvI7++iQ8J/JnE3E 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287803>
 
-Moritz Neeb <lists@moritzneeb.de> writes:
+Hi Gabriel,
 
-> On 02/28/2016 09:11 PM, Matthieu Moy wrote:
->
->> This patch was written after seen one more time a student panicked
->> because he had a "git commit" backgrounded.
->
-> I think git commit is almost the only case where this would happen.
+On Sun, 28 Feb 2016, Gabriel Souza Franco wrote:
 
-Right. It's not the only case when Git launches an editor, but probably
-the only one when it does so keeping a lock.
+> Not the cleanest conditional I've ever written, but it should handle
+> all cases correctly.
 
-> If the goal is have it shorter, then the editor example could be boiled down to
-> something like "e.g. a commit". But then it is less clear on what the
-> necessary action would be.
+It could be much worse:
 
-Maybe just ""e.g. an editor opened by git" -> ""e.g. an editor opened by
-git commit"?
+> +	if (get_oid_hex(name, &oid) ||
+> +			(name[GIT_SHA1_HEXSZ] != ' ' &&
+> +			 name[GIT_SHA1_HEXSZ] != '\0'))
 
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -150,9 +150,11 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
->  {
->      if (err == EEXIST) {
->          strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
-> -            "If no other git process is currently running, this probably means a\n"
-> -            "git process crashed in this repository earlier. Make sure no other git\n"
-> -            "process is running and remove the file manually to continue.",
-> +            "Another git process seems to be running in this repository,\n"
-> +            "e.g. an editor opened by git. Please make sure all processes\n"
-> +            "are terminated then try again. If it still fails, a git process\n"
-> +            "may have crashed in this repository earlier:\n"
-> +            "remove the file manually to continue.",
+I know developers who would write this as
 
-I like your version better than mine indeed.
+	if (get_oid_hex(name, &oid) || (name[GIT_SHA1_HEXSZ] & ' '))
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+and not even begin to realize that this is a problem.
+
+So I'd say your conditional is good.
+
+Having said that, this *might* be a good opportunity to imitate the
+skip_prefix() function. If there are enough similar code constructs, we
+could simplify all of them by introducing the function
+
+	skip_oid_hex(const char *str, struct object_id *oid, const char **out)
+
+that returns 1 if and only if an oid was parsed, and stores the pointer
+after the oid in "out" (skipping an additional space if there is one)?
+
+Ciao,
+Dscho
