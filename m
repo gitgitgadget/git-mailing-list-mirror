@@ -1,69 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
-Date: Mon, 29 Feb 2016 14:01:52 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1602291359580.3152@virtualbox>
-References: <56D3E56A.5010608@web.de> <20160229092816.GA23910@sigill.intra.peff.net>
+From: Guilherme <guibufolo@gmail.com>
+Subject: Re: git config --get-urlmatch does not set exit code 1 when no match
+ is found
+Date: Mon, 29 Feb 2016 18:38:28 +0530
+Message-ID: <CAMDzUtwJVyaQbjgdQLi17_4ejGofpRFBDxXxjseaVcHLXCAwRA@mail.gmail.com>
+References: <CAMDzUtzNKAYSKYkt3WagkUrA2mKaoDu1rT6Nhf89pXSMg0wZwA@mail.gmail.com>
+ <20160229115355.GA31273@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 14:02:17 2016
+X-From: git-owner@vger.kernel.org Mon Feb 29 14:09:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaNSq-00007a-HX
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:02:16 +0100
+	id 1aaNZa-0003Iw-Um
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 14:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754833AbcB2NCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 08:02:13 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50165 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753855AbcB2NCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 08:02:09 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MGAdz-1aeYjc1rh1-00FACV; Mon, 29 Feb 2016 14:01:55
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160229092816.GA23910@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:qiN1B3/Sl+3P1xWQRV0A+K6vQg3je2CPO/TUmqT7/yeiVwYAReW
- ZW3+C+daaas2wHXzBz/EPOBxqHLZmb2uazD2aMwS348u3wwgnP3xIZPcG4u/XuV4YaM66et
- LfYtXjAjouJV/bbI6qb1o9RRWoFmOFQznaSmNNaWt4TRJtthEnIKFQnS2dGbAIkyzEO1417
- vRKFVYhQx0Cyi4uKxntSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:F/1Jtbb5uXE=:/X6C5EmIwon1XsVkbhFoxR
- brRt9goyRrKP8T75/GeRlFIK0z7xqTNU6aLF9WZd4szmcr9GLEGWDRgGJRAdCQlRehit4OhSy
- LdRpjwY4Jo2yVRFGetuk/Ri1eoUcCSGLnb3QAStko+kSsHEAwz4dz7fkEy4kT5xUGCs5wmOy4
- oDO2eSJNKwC4Dg9/FBYhuEIysW6tsgfVvSRLxvBvznctutHVZeRGRFJZk3Kv6gNxwI2Q+311W
- s3ocsQw9YBHBEKXvSEd+JcOrYstqhR7za8HdMwqec1dceyKjgzpVDz0tj8DqXIEfBCDBlHRxN
- LVCaJJy1gkjDR/eiEJX7dHKEtD2fXj6hynz5i6Qo5UUYD7tyxnZEIbNU4znPTNFK+/yB8e08/
- J25PQbnpQFZ9VjjmJcT0wRKN5nKinpPK7HdYJ2RnTnb4bVOzutKU2FrKidOHPjLTYnmMdZeg2
- YYlvf1VAY0sYg9kb2khlmkruvvQmVq8Ju/APaWcyxHBurboYtWawbUQvscVfSmCQOC19MN0Gn
- 2ipShU3UOypc0ZCvcEhJ8ThuHwNbV6tnSpLw4JBXs9QLabO43WKT/K4UGJNBQQkMzsdfc7WOm
- FHpl7LBirAIsiarPFmfmXDREEYnvwO//gsLYYeLhVAYE1QmQy/H0CB1dC1ZosNljkjHqjrg/k
- yBGZDU75DNPP8hv/oHDlN+a/IiG3KWS8vUYStcqaLf4IhWVqyBd82p8oZ+tnZylMxF5y1+Bgx
- lDs7EdNJVx61F/MeZUwAhSAqrrY2WLxDnEckzzdAylYiSNXtSGZPMRWcT/n/1d2PjnQkkYRt 
+	id S1751471AbcB2NJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 08:09:09 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:33821 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750723AbcB2NJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 08:09:08 -0500
+Received: by mail-vk0-f48.google.com with SMTP id e185so132680548vkb.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 05:09:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q1QMaZ6mLV0SwQgGm1yRkjHhfXdqt55owGVw/Xwa1Yk=;
+        b=dzaSSBuWFjq+d02MPaRiTMRF3WKyo4Lp5WS9TyRK1N037NCiMERMeGx2M10PctKLiw
+         fv1auzTkzl2nr8rntvhTG7A5kaVUtjWoB2GYfNilRQOPpRA/yM8NU7dXGOibnOr0K0wu
+         tRLz5Y+pVMUXihXzQ8M0KBX6EtB+90Q5MgySooWf4V25E1wWVFwKpGEmtMrs51AxQKrt
+         ZzoHN8xwdyNlO3x7x4+kx0g6wMupAerkgXnx46/TJWS8KQedF30TXzbwyK39El6x1+Pi
+         iYJ+8MLmG1h/diILIjM6EheOjlv6kjb3QatAVpiDtIqby9NceTALGUYGCHevVvwajHzq
+         +3SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q1QMaZ6mLV0SwQgGm1yRkjHhfXdqt55owGVw/Xwa1Yk=;
+        b=S9F54pVO1eRb7csK1cmOMQuslWfku1Ixdl419/MfzAlbOKV02w6K2yRn1ix8A47IRo
+         Xvqwm/5PoPAHg2CcB85V7N5f0gHHF1BiB6f2iMnXstGulES/KnUMCHYS1GKI/077NaFf
+         GQsSqj3mR5JSSOz4UFjJtpkDEC0fCEhiXct7crGUqBgFGL4536w5A9JdHv28IACQxFN1
+         lFGQyCbIir7Trp87nFeOvZ8JrWmX1PSbbreWAIzDzxYJB6ulCrsKv5++0QVP6vVa6jZ0
+         MBAYFfX92XzAYh9xf8uCgVypJqHN04zEUZiYo8sUHBUR56IvQINIrKy2OUctrdLgYz2c
+         fGWA==
+X-Gm-Message-State: AD7BkJKa3tuKQ5ycGcym0ngZdQbwnh/BAUKBWsOuo/FCTr8/tBHTFMrSj6G7AQ/F9n2gZZ0eBVIo/JmNIsCdOQ==
+X-Received: by 10.31.52.147 with SMTP id b141mr11574019vka.82.1456751347792;
+ Mon, 29 Feb 2016 05:09:07 -0800 (PST)
+Received: by 10.31.162.145 with HTTP; Mon, 29 Feb 2016 05:08:28 -0800 (PST)
+In-Reply-To: <20160229115355.GA31273@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287835>
 
-Hi Peff,
+@Peff Thank you for the heads up.
 
-On Mon, 29 Feb 2016, Jeff King wrote:
+I'm trying to find out if there are any credential helpers configured
+in the system that will be running tests. On the dedicated test
+machines that is not a problem but the developer machines are.
 
-> I think this means "master" is broken for mingw builds.
-> 
-> Sorry, Windows people, for breaking your build. I'm happy to hold back
-> such repo-wide cleanups from the mingw code in the future, since I can't
-> actually compile them. But the flipside is that if I _do_ improve
-> things, you don't get the benefit until somebody manually ports it over.
+Should I already post a pre-emptive email asking about the corner cases?
 
-No, I do not think that you need to hold back cleanups. We will catch such
-issues before long, anyway.
-
-Thanks for all your hard work!
-Dscho
+More importantly for me is if there is a case where get-url would not
+show a match where git clone would. If git clone skips a configuration
+that config url-match doesn't then it's not so bad.
