@@ -1,76 +1,71 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Compiler warning under cygwin/mingw
-Date: Mon, 29 Feb 2016 12:32:33 +0000
-Message-ID: <56D43A61.3090503@ramsayjones.plus.com>
-References: <56D3E56A.5010608@web.de>
- <20160229092816.GA23910@sigill.intra.peff.net> <56D415C6.2040203@web.de>
- <20160229100258.GC2950@sigill.intra.peff.net> <56D4203B.1030708@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: git cat-file -e behavior
+Date: Mon, 29 Feb 2016 07:36:45 -0500
+Message-ID: <20160229123645.GA20754@sigill.intra.peff.net>
+References: <56D41645.4050800@cihar.com>
+ <20160229114455.GD29769@sigill.intra.peff.net>
+ <56D436A2.4090202@cihar.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 29 13:32:42 2016
+Cc: git@vger.kernel.org
+To: Michal =?utf-8?B?xIxpaGHFmQ==?= <michal@cihar.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 13:36:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaN0D-00030Q-MI
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 13:32:42 +0100
+	id 1aaN4K-0004vw-6I
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 13:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283AbcB2Mch convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 07:32:37 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:34502 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054AbcB2Mch (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 07:32:37 -0500
-Received: from [10.0.2.15] ([46.208.159.221])
-	by avasout01 with smtp
-	id QCYZ1s0044mu3xa01CYaTa; Mon, 29 Feb 2016 12:32:35 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bsGxfxui c=1 sm=1 tr=0
- a=Sp5fw55EgyGSOjouSGNDoQ==:117 a=Sp5fw55EgyGSOjouSGNDoQ==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=N3sh0_2eW6l_0QQvmi0A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <56D4203B.1030708@web.de>
+	id S1753268AbcB2Mgw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 07:36:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51365 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752129AbcB2Mgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 07:36:51 -0500
+Received: (qmail 17510 invoked by uid 102); 29 Feb 2016 12:36:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 07:36:47 -0500
+Received: (qmail 25874 invoked by uid 107); 29 Feb 2016 12:36:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 07:36:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 07:36:45 -0500
+Content-Disposition: inline
+In-Reply-To: <56D436A2.4090202@cihar.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287832>
 
+On Mon, Feb 29, 2016 at 01:16:34PM +0100, Michal =C4=8Ciha=C5=99 wrote:
 
-
-On 29/02/16 10:40, Torsten B=C3=B6gershausen wrote:
-> That compiles OK, thanks.
+> Dne 29.2.2016 v 12:44 Jeff King napsal(a):
+> > It looks like it has been this way forever. The first thing we do w=
+ith
+> > the object is resolve its name to a sha1, and that's where the erro=
+r you
+> > see comes from. And then we actually check whether we have the obje=
+ct.
+> >=20
+> > I think the intended use was to feed it a sha1 to see if it exists.=
+ Then
+> > the name-resolution step is a noop.
 >=20
->=20
-> Sorry for high-jacking this thread, but while compiling under CYGWIN,
-> found one warning:
->=20
->    LINK git-credential-store.exe
->     CC daemon.o
-> daemon.c: In function =E2=80=98drop_privileges=E2=80=99:
-> daemon.c:1136:15: warning: implicit declaration of function =E2=80=98=
-initgroups=E2=80=99 [-Wimplicit-function-declaration]
->   if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
+> I found this as best way to check whether file exists in branch.
+> Checking git ls-tree output seems less error prone than checking retu=
+rn
+> value of git cat-file -e...
 
-Yeah, this has been there for a while - except it depends on which vers=
-ion
-of the header files you have. (Some may not see the warning).
+I think the usual way to do that would be:
 
-I have 'fixed' this twice before, then updated my installation and
-a change to the system headers broke it again! (The headers are
-currently 'broken'). So, I got tired of fixing it up and have left
-it a while - you never know a new update may fix it! ;-)
+  git rev-parse --verify $branch:$path >/dev/null
 
-[I personally don't use the git daemon on cygwin, so I don't know
-if this a problem in practice.]
+which just resolves the name (not that what you are doing is wrong, I
+just think rev-parse is the way we usually do it in our scripts).
 
-ATB,
-Ramsay Jones
+That _will_ write a message to stderr when the name doesn't resolve.
+
+-Peff
