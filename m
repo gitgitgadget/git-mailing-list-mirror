@@ -1,112 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 4/7] notes copy --stdin: read lines with strbuf_getline()
-Date: Mon, 29 Feb 2016 13:19:08 -0500
-Message-ID: <CAPig+cSptQr21QMOJmxT4RPVR3r3zkEQ2TkTU8RoaJfo7=KChw@mail.gmail.com>
-References: <56D401C2.8020100@moritzneeb.de>
-	<56D40314.7040608@moritzneeb.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/3] git: submodule honor -c credential.* from command line
+Date: Mon, 29 Feb 2016 10:20:54 -0800
+Message-ID: <xmqqmvqjcr95.fsf@gitster.mtv.corp.google.com>
+References: <1456532000-22971-1-git-send-email-jacob.e.keller@intel.com>
+	<1456532000-22971-4-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Mon Feb 29 19:19:26 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 19:21:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaSPk-0000FE-Ag
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 19:19:24 +0100
+	id 1aaSRK-00016t-94
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 19:21:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbcB2STU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 13:19:20 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:33339 "EHLO
-	mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbcB2STT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 13:19:19 -0500
-Received: by mail-vk0-f65.google.com with SMTP id c3so9946128vkb.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 10:19:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=FycVIAV+sD+J89c2VrZ4xjdWjYH92o6NUrRo2YE+KSM=;
-        b=Ttix0zP/RuI5gTPwYghLU9pp1wmQzk5KnHH90bjmdJ9ceZPGMzqKjvgIPi4I02/ApK
-         Od/I1CNJcmjN/oUptpJO5/rYmOoqSIoSkhkdRWGspwgwJ5e6rhkoWqVRM0YXY4Xpy4Vx
-         wh3d52FlADVtOV96uGweYYsND9ifpP9KdvGgmD+tl7mClNdLNIZnTucEk0riMDCx/XuG
-         vdcbQi6MJTSTDJIlfzq6qNZDd2Ta/IIy9Gf9qzi8GDT5VUzgnE+JLGYqQ2gZwZMV5vuh
-         Iy3+AZ0prKTtp4H/ORFE/7tz6/fjZGj3CD20H8v/4RPb6/rHfJXsKopA+Vx0aINtxbbX
-         XIBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=FycVIAV+sD+J89c2VrZ4xjdWjYH92o6NUrRo2YE+KSM=;
-        b=a9/RaesmjOZAMBlB7kUJayV6Ywi2Y2xEs6lkZ/SfyZ6vRoeNcP2L2cVDgjbddImq3z
-         TqDnz6uaslwg9k6rC6kBFmR6A+MkS0i8eS6owgbCwlv/MUqGBPPlaKn3ZwWzzWPyA+W4
-         LtlS3qUs9cjO7jJVqiqR7xsIbe5UIdn3A7KoN52J+HWrzPVRF9l29nTqpTcvrdwrJVpg
-         VsRwfvHFRoy7BVISNevzEf+Oy3KLYKeOkcTMh23XFBsIk34zjXQ6GQW+QW1pw0KyBB+K
-         GZCMqkyfDi5qM4VwFiFMrAI1eWOEC4q4rfhhAwYxvwhjEHRyLAc5D0dm+I8fvFaOv5y5
-         wSSw==
-X-Gm-Message-State: AD7BkJJcHeAYbsKsaxqyoFvmUXo6Jd2x+bZpApZABfaGeab+3s433wBfYa97BDVl/5pcL/Sa0csKZaAimXvo1w==
-X-Received: by 10.31.141.2 with SMTP id p2mr12575931vkd.37.1456769948207; Mon,
- 29 Feb 2016 10:19:08 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 29 Feb 2016 10:19:08 -0800 (PST)
-In-Reply-To: <56D40314.7040608@moritzneeb.de>
-X-Google-Sender-Auth: S--RNT_y3ioKlfmEKXssLiwCtpA
+	id S1753344AbcB2SU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 13:20:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60032 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753329AbcB2SU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 13:20:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 227FC48F88;
+	Mon, 29 Feb 2016 13:20:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+FTHYLNRi+t/YyFGtklPYxBxve0=; b=UMgkMq
+	L9mGBdfCx32rv8/1vDTZZzFI1hOS2CvGGjF3u8HZEhUsnZpYiVtZCPNf6XVyRnKW
+	oyY8/wMyL87i4hNbNer192pBa0lb9/JBDG6TEEXJxCAUJi18r4h9/eao+OtTfc9M
+	TaiDt83n+Juk2S3iTHaAj+XS7kXDwRkOIPw7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vr/qMJwz/qCXFrORKBkTjBgLMv/zz88v
+	2Vxamm3hnTRpQ0bIcNoLTGaq/MNsbAfTaFOAZh01tN4UGucWpQDtUMamq9zNvhNz
+	wiREA5blESyViyDpDk0aGJHhYTL1VSOvy2Cl6XnZ+WtEWlzyL1Ck4te9Eg0AycD3
+	Z5Y2xZSJn1w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1A23648F87;
+	Mon, 29 Feb 2016 13:20:56 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 793E148F86;
+	Mon, 29 Feb 2016 13:20:55 -0500 (EST)
+In-Reply-To: <1456532000-22971-4-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Fri, 26 Feb 2016 16:13:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2C5379F2-DF11-11E5-893D-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287855>
 
-On Mon, Feb 29, 2016 at 3:36 AM, Moritz Neeb <lists@moritzneeb.de> wrote:
-> The format of a line that is expected when copying notes via stdin
-> is "sha1 sha1". As this is text-only, strbuf_getline() should be used
-> instead of strbuf_getline_lf(), as documentation of this fact.
->
-> When reading with strbuf_getline() the trimming of split[1] can be
-> removed.  It was necessary before to remove potential CRs inserted
-> through a dos editor.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-s/dos/DOS/
+> +static int sanitize_submodule_config(const char *var, const char *value, void *data)
+> +{
+> +	struct strbuf quoted = STRBUF_INIT;
+> +	struct strbuf *out = data;
+> +
+> +	if (submodule_config_ok(var)) {
+> +		if (out->len)
+> +			strbuf_addch(out, ' ');
+> +
+> +		sq_quotef(out, "%s=%s", var, value);
 
-This may not be worth a re-roll, but the suggestion of my v3 review
-was to keep both rtrim's in this patch and then remove them in the
-next patch when converting to string_list_split(). A benefit of doing
-so is that you can then drop the above paragraph altogether, and both
-patches become simpler (description and content), thus easier to
-review.
+Can a configuration variable that comes from the original command
+line be a boolean true that is spelled without "=true", i.e. can
+value be NULL here?
 
-If you do elect to keep things the way they are, then (as mentioned in
-my v2 review) it would be helpful for the above paragraph to explain
-that strbuf_split() leave the "terminator" on the split elements, thus
-clarifying why the rtrim() of split[0] is still needed.
-
-> Signed-off-by: Moritz Neeb <lists@moritzneeb.de>
-> ---
->  builtin/notes.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index ed6f222..706ec11 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -290,7 +290,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
->                 t = &default_notes_tree;
->         }
->
-> -       while (strbuf_getline_lf(&buf, stdin) != EOF) {
-> +       while (strbuf_getline(&buf, stdin) != EOF) {
->                 unsigned char from_obj[20], to_obj[20];
->                 struct strbuf **split;
->                 int err;
-> @@ -299,7 +299,6 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
->                 if (!split[0] || !split[1])
->                         die(_("Malformed input line: '%s'."), buf.buf);
->                 strbuf_rtrim(split[0]);
-> -               strbuf_rtrim(split[1]);
->                 if (get_sha1(split[0]->buf, from_obj))
->                         die(_("Failed to resolve '%s' as a valid ref."), split[0]->buf);
->                 if (get_sha1(split[1]->buf, to_obj))
-> --
-> 2.4.3
+> +	}
+> +
+> +	strbuf_release(&quoted);
+> +
+> +	return 0;
+> +}
+> +
+> +static void prepare_submodule_repo_env(struct argv_array *out)
+> +{
+> +	const char * const *var;
+> +
+> +	for (var = local_repo_env; *var; var++) {
+> +		if (!strcmp(*var, CONFIG_DATA_ENVIRONMENT)) {
+> +			struct strbuf sanitized_config = STRBUF_INIT;
+> +			git_config_from_parameters(sanitize_submodule_config,
+> +						   &sanitized_config);
+> +			argv_array_pushf(out, "%s=%s", *var, sanitized_config.buf);
+> +			strbuf_release(&sanitized_config);
