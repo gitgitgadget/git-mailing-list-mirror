@@ -1,81 +1,70 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v1] git-p4: map a P4 user to Git author name and email address
-Date: Mon, 29 Feb 2016 05:12:22 +0000
-Message-ID: <CAE5ih7-oPE1RYrO78TAnkNSi03qtcUK_iiLywoyRC_FAgdwTAg@mail.gmail.com>
-References: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v1] git-p4: map a P4 user to Git author name and email
+ address
+Date: Mon, 29 Feb 2016 06:31:03 +0100
+Message-ID: <56D3D797.2040401@web.de>
+References: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com> <CAE5ih7-oPE1RYrO78TAnkNSi03qtcUK_iiLywoyRC_FAgdwTAg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Git Users <git@vger.kernel.org>,
 	Lars Schneider <lars.schneider@autodesk.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 06:12:34 2016
+To: Luke Diamand <luke@diamand.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 06:31:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaG8C-0001mG-Ke
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 06:12:28 +0100
+	id 1aaGQQ-0001Vd-EY
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 06:31:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbcB2FMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 00:12:24 -0500
-Received: from mail-ob0-f193.google.com ([209.85.214.193]:35702 "EHLO
-	mail-ob0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709AbcB2FMX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 00:12:23 -0500
-Received: by mail-ob0-f193.google.com with SMTP id rt8so2905677obc.2
-        for <git@vger.kernel.org>; Sun, 28 Feb 2016 21:12:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=NlStitbQLToqMobFeZ8VKOJYO3B4cCfDPf7J6F6JZNU=;
-        b=DlyP92/oEMCi/qp2/JxCrpOk8P0ThrNSTVTVBw+zzF8AI0zLWUpSJOMMCtbVN1RpVp
-         Me7fO9Ey9wOkweSfRv8r6pupjhb3QWREV1+GeRzl43tWYJvyTP1ObgVGAzolK47zOwlr
-         gduw47Lus91c9sYLdkd4ZZJOJixkInhvymsa4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=NlStitbQLToqMobFeZ8VKOJYO3B4cCfDPf7J6F6JZNU=;
-        b=AX2i/IuWZ8w49GVBT7RfGKJrLVv+8duJh1lyqqzGekn+R9BMcLuwPvX9V7xbrb4Jpo
-         e+COtPLaHyOMI7RSEX4O2XDe6rOy/GSEnijZXPUHoQeyPeAmpvArVj1EXxQOrtKgtb0G
-         /g8UrHnTRjhHZQTLMzwjVEtLyUAI1TcztOF2+aPgcVgBnvA094VOk78REi+0GgQC1LEl
-         y0PAa8IM69z0nvvESTIl7JApgY+3CgNyuCV/9A43P9RP1yGukFzX2l4wb95+OauLcExl
-         QXFM3T1GJYOb9cqlr+Nnv0Db123YoXWHtCrx60eubmMbPjAAzHSrNZD5t8mIDqKtTKvh
-         h8eg==
-X-Gm-Message-State: AD7BkJIUsvvZR1vMVGieW2y/VwGxQIGmC9dXx/J+hMEHMO75BufyKh1s9YFKgBPvUyXRJ+WEVxVIX9Gg1na9cw==
-X-Received: by 10.182.196.104 with SMTP id il8mr10246553obc.71.1456722742662;
- Sun, 28 Feb 2016 21:12:22 -0800 (PST)
-Received: by 10.202.172.132 with HTTP; Sun, 28 Feb 2016 21:12:22 -0800 (PST)
-In-Reply-To: <1456655125-17829-1-git-send-email-larsxschneider@gmail.com>
+	id S1751374AbcB2FbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 00:31:14 -0500
+Received: from mout.web.de ([212.227.17.12]:59269 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750783AbcB2FbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 00:31:12 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Mfq6i-1aFH7m0LSu-00NAhn; Mon, 29 Feb 2016 06:31:06
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <CAE5ih7-oPE1RYrO78TAnkNSi03qtcUK_iiLywoyRC_FAgdwTAg@mail.gmail.com>
+X-Provags-ID: V03:K0:mtMwZLMFNNPOetP6i8lD4qfPoHAg9BoUYNon16o7JhZP7TcY+OO
+ iA7KRDwTyRV+HpHnvy4P6TRAEFIQCUFlqXyp6S2JVRt+jmS8utXqeUyvm8HbTvmHC/s6wgE
+ ULTDwxcOPJYAwEKvz6FNKkDjCu6dD2SC9vPqr9c4fAE5fhWlhR6cfMMutovGfFFfB2Dl/Up
+ B5LDW4nTStxxfLb8Naulw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zdYNLcTUlDo=:iBoKBcj6Q82Gkd44E9mpqG
+ fbj2+WcZM1uYFEk7SZ8EOjOZDiFpcbVr9P+606R4RpfVYZgUO3Ia3O3QmWuANE6Kg2BNouP/k
+ RI2cpMeOUQ6jBWMmLmZDkRo6spmY315vSOXU3TUWa7k1axWVWjYdVyAg2YSfaQx48SMmG7UA4
+ qdiohjSJ0xm6F2ozs+Stvfs82ppRAInf2ebHbLBFLfXhIBt0cMYbpQgoWDy6MilO+hFkjs3tk
+ 0Q1RUp87MamFSqVjJywmzELzLG5031P5IWpZHModMli4p9jextF5Vj3aX9ZLX8I2GXSlBw3pa
+ yT13/E/DXZhdwZf0D3X8HYG4qR3sz7L/y/yAy35tavMGyhpPCCM0iHwi0K5b7VHU/BKdaoAu1
+ dZuvwhmwuK/9EeZtCTHQQWSpHFWuPbBJQQTCoDupK46uwsMKgsE0v5HfAhsUXI6Sj3GY7pKy9
+ j+4YVnif8EM9WJcI/+5qgzdcyO3oLnqndLt37f49g/DCgaMokwAarzN61fapk+TPvHyHFEjnQ
+ p6SFgAxeE9A7VEkhfzV0UdDsWbz+pgatPV5/E3XaCUuztYq7pRzrzJLDflyeY80aCaXxtxOik
+ JkdKKZT9ykB+EVTJVsSFh5C5o6xDmetyjqO6mI/9JdUrGGy0f4QStionVaZEKf2eBAnQ9xiPW
+ sl7sCOs9YExmqj7dpNwN4ixVaCDQWkHFsofS7/gAmHmhUjepz7S5k+8EaEqPKlK2MWKVnmuj0
+ qhTGEQEJWVoknyqhiR9se8r3OD+v22AIqqtMIj07ziCJ3ZOtsVjFjRa+8vdPLVmuBfN62Eq0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287800>
 
-On 28 February 2016 at 10:25,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <lars.schneider@autodesk.com>
+
++       (
++               cd "$git" &&
++               git init . &&
++               git config --add git-p4.mapUser "mmax -> Max Mustermann <max@muster.com>"  &&
++               git config --add git-p4.mapUser "mo -> Moritz Untreu <moritz@untreu.com>" &&
+
+> Probably better to use more innocuous names. I'm not sure who these
+> people are, but they might not appreciate being recorded forver in a
+> git-p4 test script.
 >
-> Map a P4 user to a specific name and email address in Git with the
-> "git-p4.mapUser" config. The config value must be a string adhering
-> to the format "p4user -> First Lastname <email@address.com>".
-
-Seems generally fine. I agree with Eric's comments about the "->"
-format. One comment below:
-
-> +test_expect_success 'Clone repo root path with all history' '
-> +       client_view "//depot/... //client/..." &&
-> +       test_when_finished cleanup_git &&
-> +       (
-> +               cd "$git" &&
-> +               git init . &&
-> +               git config --add git-p4.mapUser "mmax -> Max Mustermann <max@muster.com>"  &&
-> +               git config --add git-p4.mapUser "mo -> Moritz Untreu <moritz@untreu.com>" &&
-
-Probably better to use more innocuous names. I'm not sure who these
-people are, but they might not appreciate being recorded forver in a
-git-p4 test script.
-
-Luke
+>
+A better name could be
+Max Musterman <max@example.com>
+Erika Musterman <erika@example.com>
