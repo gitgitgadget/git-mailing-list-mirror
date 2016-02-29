@@ -1,90 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: GSoC 2016 Microproject
-Date: Mon, 29 Feb 2016 16:51:22 +0100
-Message-ID: <vpqfuwbbjlx.fsf@anie.imag.fr>
-References: <56D19EF9.3070702@gmail.com> <vpq8u26qo3y.fsf@anie.imag.fr>
-	<56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
-	<56D2C828.6010901@gmail.com> <vpqpovfblru.fsf@anie.imag.fr>
-	<56D46493.4040909@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: What's cooking in git.git (Feb 2016, #07; Thu, 25)
+Date: Mon, 29 Feb 2016 11:28:41 -0500
+Message-ID: <CAPig+cQkP++rnE4L1QSr-sW8VkS8ce7CyY9KAscebLao2Hw73A@mail.gmail.com>
+References: <xmqqfuwgmlgy.fsf@gitster.mtv.corp.google.com>
+	<56D078F3.9070905@web.de>
+	<xmqqsi0fjpez.fsf@gitster.mtv.corp.google.com>
+	<56D0D2DF.1040807@web.de>
+	<xmqqtwkvhwpd.fsf@gitster.mtv.corp.google.com>
+	<20160227032907.GB10313@sigill.intra.peff.net>
+	<56D14C56.6070306@web.de>
+	<20160229101808.GD2950@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 16:51:55 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 29 17:29:14 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaQ70-0005Lb-HH
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 16:51:54 +0100
+	id 1aaQh4-0008Oa-51
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 17:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362AbcB2Pvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 10:51:39 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:52058 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756060AbcB2Pvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 10:51:37 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u1TFpKEx005106
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 29 Feb 2016 16:51:20 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u1TFpM5K025599;
-	Mon, 29 Feb 2016 16:51:22 +0100
-In-Reply-To: <56D46493.4040909@gmail.com> (Sidhant Sharma's message of "Mon,
-	29 Feb 2016 21:02:35 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 29 Feb 2016 16:51:20 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u1TFpKEx005106
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457365882.34512@NBfn94z6iMYYhLHkLwRvkg
+	id S1753718AbcB2Q2r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 11:28:47 -0500
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:35865 "EHLO
+	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750843AbcB2Q2m convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 11:28:42 -0500
+Received: by mail-vk0-f41.google.com with SMTP id c3so139086094vkb.3
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 08:28:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=yZ9OiA8yJDiT8OENG4IxX49j5//eC25Q/QAhptaTdnk=;
+        b=B9k7VX8jA42vxMJ3fUkhVDYF38BYZER6P5+kBt2UJZlwKGw4zhkcZ4wSF5CSreoFUc
+         IGakvfnRpL3P6L4MevQSmRHl5qqqgn+VJqikhKjms5qVy3LHcJxe7HED6JCqbpUoVgHu
+         fonRQYQEANJgsAGhdO4HSeXravacUcDNNedsCT9vBv9HWAQqpwNTilocRAFuin07tH5x
+         2V4ihyZQFWWNeYIqGvMNIUh0mP7IRRZapnCETK/sPFN9ZBoJoB47H32kXzSg15YGk9/D
+         dCUhRNqkS421y+B0IB6L65IaiisiCbOdSSE5AoCYvft+1x2+KWxgMujry9uCVSwXff2k
+         BlWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=yZ9OiA8yJDiT8OENG4IxX49j5//eC25Q/QAhptaTdnk=;
+        b=EuwnDZyM1j1hrPekSJ8Z08d/ZBl78zlf2GS4refdNKKG9x/yf8Nd+3h1YKw7dNrmwl
+         cT4lqn8Gab8sZzsnrV7NMO7YCt/qZYGXw+Xlbzp6jmzsSXn9WYSYGUwi8W48TpUSAt+Q
+         KMBddgqAT4SDtFhE3+6YAMKIhTztqScU6eRbbOovWVQlhxB3rQ12pkEymmcZ9/Zgt01J
+         rMDzD0SUztJmZHKq1qx2VNsJ3FjaT/rZYnTL40xO4I3uJrLdZNaaewJH80/NqziCwXct
+         CTOAJhAi/mkXPLPNeOPIUYwzwMAmUDYrbjAsPRMEevIoftGygcEtSd6BbWwLg30I9CA4
+         zvwQ==
+X-Gm-Message-State: AD7BkJJPQt8Jp2RBUO4aUeV3vacLqTOvB3BDIRRYRwpXkdUlU4Lc1Jn38KblUqzoCLZA0W69IQ5lQh475YjIpg==
+X-Received: by 10.31.168.76 with SMTP id r73mr12181885vke.117.1456763321226;
+ Mon, 29 Feb 2016 08:28:41 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 29 Feb 2016 08:28:41 -0800 (PST)
+In-Reply-To: <20160229101808.GD2950@sigill.intra.peff.net>
+X-Google-Sender-Auth: w8ojz7fm9Dh14CeHZ6Js28eAAsc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287847>
 
-Sidhant Sharma <tigerkid001@gmail.com> writes:
-
->>> First, I'm not quite sure what to put in the help message for the
->>> options (--quiet, --stateless-rpc, --advertise-refs and
->>> --reject-thin-pack-for-testing).
->> They are currently undocumented. We sometimes have explicitly
->> undocumented options (PARSE_OPT_HIDDEN) when they are used only
->> internally to avoid polluting the end-user's UI.
+On Mon, Feb 29, 2016 at 5:18 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 27, 2016 at 08:12:22AM +0100, Torsten B=C3=B6gershausen w=
+rote:
+>> > Torsten, what is the compiler version (I don't have Apple compiler=
+s, but
+>> > it seems plausible that older clang might have the same problem).
 >>
->> In this case, the command is anyway not meant for end-users so I think
->> it would make sense to document them, but not necessarily within the the
->> microproject.
-> So what may I put in the message parameter? I was thinking
-> perhaps the option itself, without hyphens. Would that be
-> correct?
-
-If you use PARSE_OPT_HIDDEN, I think you don't need to specify a
-message. Otherwise, the documentation only has value if it contains more
-than just the option name, but that is the hard part if you're not
-familiar with the code. The best place to find documentation is in the
-history (git blame the file and see if the commit message introducing
-the option enlightens you). But that's why I said this didn't have to be
-part of the microproject: writting good doc requires a good
-understanding of the whole thing ...
-
->>> Should I make a patch for this and submit it for discussion on the mailing list?
+>> That's machine is running Mac OS X 10.6, which is no longer supporte=
+d
+>> with updates.
 >>
->> On this list, it is indeed often more efficient to say "here's what I'm
->> done. Any comments?" than "here's what I'm about to do".
->>
-> I'm really sorry, I'm not very familiar with mailing list etiquettes.
-> I'll keep that in mind :)
+>>  gcc --version
+>> i686-apple-darwin10-gcc-4.2.1 (GCC) 4.2.1 (Apple Inc. build 5666) (d=
+ot 3)
+>> Copyright (C) 2007 Free Software Foundation, Inc.
+>> This is free software; see the source for copying conditions.  There=
+ is NO
+>> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR P=
+URPOSE.
+>
+> Thanks. Out of curiosity, I tried to reproduce by with a build of gcc
+> 4.2.1, to see if I could bisect. But it seems the toolchain is quite
+> complex. After much munging, I managed to build a broken compiler (wh=
+ich
+> I think is due to a much too-new version of bison, but I stopped
+> digging).
+>
+> Your suggestion elsewhere in the thread to just use clang instead sou=
+nds
+> good to me. :)
 
-No problem. It's OK to say what you do beforehand and to ask help. Just
-don't be surprised when you don't get much feedback on message not
-starting with [PATCH] ;-).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+If possible, for the moment, I'd prefer to hold off on that
+sledge-hammer approach of unconditionally making the build use clang.
+It would be nice to have a more detailed understanding of what exactly
+is triggering the Apple compiler bug, and I've been trying to find
+time to check it out on my old Mac.
