@@ -1,57 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Revert "rev-parse: remove restrictions on some
- options"
-Date: Mon, 29 Feb 2016 06:12:18 -0500
-Message-ID: <20160229111218.GB29769@sigill.intra.peff.net>
-References: <20160226232507.GA9404@sigill.intra.peff.net>
- <20160226232957.GB9552@sigill.intra.peff.net>
- <CAPig+cSXY0XE7C71EAO8MOpzrtSFOA0fcxu5wxAZ-J9RzjusPg@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: GIT_TRACE_PERFORMANCE and pager
+Date: Mon, 29 Feb 2016 12:25:49 +0100
+Message-ID: <CAP8UFD2zFBV7gRVvLB-gGEB=cfZJmYKrfiD2vdTdxgEgYU6jHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	John Keeping <john@keeping.me.uk>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Karsten Blees <karsten.blees@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 29 12:12:44 2016
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 29 12:25:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaLko-0008Kk-N6
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 12:12:43 +0100
+	id 1aaLxb-00060k-R6
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 12:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988AbcB2LMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 06:12:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51311 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753854AbcB2LMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 06:12:21 -0500
-Received: (qmail 13676 invoked by uid 102); 29 Feb 2016 11:12:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 06:12:21 -0500
-Received: (qmail 24871 invoked by uid 107); 29 Feb 2016 11:12:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 06:12:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 06:12:18 -0500
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSXY0XE7C71EAO8MOpzrtSFOA0fcxu5wxAZ-J9RzjusPg@mail.gmail.com>
+	id S1753498AbcB2LZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 06:25:51 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:35199 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752283AbcB2LZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 06:25:50 -0500
+Received: by mail-lb0-f169.google.com with SMTP id bc4so77922290lbc.2
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 03:25:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=fmTuyBJ5w+du25YuG4kxFEGT+mJq591ovCmUQC4rUcw=;
+        b=E7kClDA5UULfnp4dJ/eh8DMgoyg82/c5+LE0830gpCj+fkJ4bM3aQJMhNAQhdmQ1ig
+         i6GrPyLmSH9N7hOOGZbQ8AOu8zZjC86ZKElgpc/yzxmYqOx2CkvVcLnHV95ExMObL6Ma
+         iycH/kXUzE+CnVnymOBAL6IMQx15ESJmkTZstLNIKJ3MHT5henB036QOHmkl+ZLeQO/d
+         u4uop9+UFGTlDes94mxHBKTZ79XshruODTdGJ8ie20demAu4KonLFIOOJBaVDFJuZhBP
+         StiphOKU5r67FS9OCwCbMOLF+TkqvCGMU0zq7BYgzzcI6a8s3W9KK8nfFF6SCgmJMDeD
+         C0mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=fmTuyBJ5w+du25YuG4kxFEGT+mJq591ovCmUQC4rUcw=;
+        b=fYQ08QB1G1fw0qrzw7rP9qljnkHR4p2mF1hlmhkJmSnWg12QMl/U28kI8RMKGEpq0V
+         6gUa5mLUo+Nm/GUA4sRsyVWqhD4mhaJJ+EYEw0RNu4IlfL4IXHxeFMwgWM3PI92el10X
+         eQ8fOMz7dyTJNq79e6UYkZrbI/suu44zZuirgBZWeSF54yX0/2M5vwXCkYAhjTSLt9xJ
+         4JgeJk7sOA7FQp3dd6rbEf4nTwKxAFXunF64wSSbSgZEYs04ivc2hNqhfrfXr7UVCg+f
+         7gds54qYLrsKrR9iw0xng68u+1HalESfYdY2Os7zpgynCwBMei5EudNrUcJwEhZisj5V
+         VSPQ==
+X-Gm-Message-State: AD7BkJIzb8QGhg31w6guGmC9BI4VVDetlYZQqxI3U7mGFq6Ckm1chJhhynVfn1G0lzI86YAdOjrHaCvqP4RjrQ==
+X-Received: by 10.112.128.225 with SMTP id nr1mr5216077lbb.101.1456745149068;
+ Mon, 29 Feb 2016 03:25:49 -0800 (PST)
+Received: by 10.25.137.130 with HTTP; Mon, 29 Feb 2016 03:25:49 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287826>
 
-On Sat, Feb 27, 2016 at 07:53:02PM -0500, Eric Sunshine wrote:
+Hi,
 
-> > then it must receive the two lines of output in the correct
-> 
-> s/correct/& order/
+It looks like setting GIT_TRACE_PERFORMANCE to 1 or 2 (for stdout or
+stderr) does not always work well with commands that use a pager, for
+example:
 
-I fixed this and all of the other typos by switching to a patch that
-needs about one tenth as much explanation. :)
+-------------
+> GIT_TRACE_PERFORMANCE=2 git log -1
+commit f02fbc4f9433937ee0463d0342d6d7d97e1f6f1e
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Feb 26 13:45:26 2016 -0800
 
-I'm sure it's not possible that I introduced any new ones...
+    Git 2.8-rc0
 
--Peff
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+-------------
+
+In the above the GIT_TRACE_PERFORMANCE output is missing.
+
+When I use "--no-pager", I get the GIT_TRACE_PERFORMANCE output:
+
+-------------
+> GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
+commit f02fbc4f9433937ee0463d0342d6d7d97e1f6f1e
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Feb 26 13:45:26 2016 -0800
+
+    Git 2.8-rc0
+
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+12:16:31.258462 trace.c:420             performance: 0.001415428 s:
+git command: 'git' '--no-pager' 'log' '-1'
+-------------
+
+Setting GIT_TRACE to 1 or 2 seems to work, but maybe it is because it
+outputs stuff at the beginning of the process and not at the end.
+
+Cheers,
+Christian.
