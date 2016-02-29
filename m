@@ -1,90 +1,129 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 4/7] notes copy --stdin: read lines with strbuf_getline()
-Date: Mon, 29 Feb 2016 14:48:18 -0500
-Message-ID: <CAPig+cQwhPvpGmiOa-KJzeDsEJZVp9KJMd2Oj_RjDTq6aEtWXA@mail.gmail.com>
-References: <56D401C2.8020100@moritzneeb.de>
-	<56D40314.7040608@moritzneeb.de>
-	<CAPig+cSptQr21QMOJmxT4RPVR3r3zkEQ2TkTU8RoaJfo7=KChw@mail.gmail.com>
-	<56D49B7A.2060601@moritzneeb.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv20 00/12] Expose submodule parallelism to the user
+Date: Mon, 29 Feb 2016 12:40:08 -0800
+Message-ID: <CAGZ79ka7Wrc4kzXWwi8c+6JC0FVC45g=fu-F6QxXFe37sm5GMQ@mail.gmail.com>
+References: <1456773250-5510-1-git-send-email-sbeller@google.com>
+	<20160229193222.GX28749@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Moritz Neeb <lists@moritzneeb.de>
-X-From: git-owner@vger.kernel.org Mon Feb 29 20:48:29 2016
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 29 21:40:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaTnv-0007l0-TK
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 20:48:28 +0100
+	id 1aaUc6-0002Yq-CJ
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 21:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011AbcB2TsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 14:48:23 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:36188 "EHLO
-	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753950AbcB2TsV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 14:48:21 -0500
-Received: by mail-vk0-f67.google.com with SMTP id k196so10119784vka.3
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 11:48:20 -0800 (PST)
+	id S1754308AbcB2UkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 15:40:10 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:32927 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752721AbcB2UkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 15:40:09 -0500
+Received: by mail-io0-f181.google.com with SMTP id z135so200859274iof.0
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 12:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=8eoF6QDIm4sI34IFgmiRzT/+TPeQYTYW3z3sLYNQCJ0=;
-        b=fygVEFhMpJYYzfitFVFpjRg4B+72BRnFr3QZYIP+0TeTGXvOuxvI3ibiu48vZNuPeW
-         E/zGeajVHUT6uKrfaMQ6e+otrcl3o2x1H1gRzH6Rgjn0vs8kypNWih74dRfztfINBNDb
-         pPzcBPCh6HTwCVFy8mc7dMVvZQ+92FGxha9l/ig4bG8je+TOcEICqehw6H36JJ0wj3Lr
-         i9LMR0SiwngHgdoXFhm/Ic5rVWu8vbKRaT4DlMIZqUQpzaEa6YgBbwEHinxeBg2hHrSr
-         y9ZebF//JYiYFFDz4uHBLmWS4pcf6YLvG1PBSpdQo/2ZwUVBsfj9Re9CuRy59qg19IrB
-         XjPQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=aG8HxyjWuDyjosRlccwiEg0ENFElwWt6KcfeWY7WCBc=;
+        b=BtCUosLwq9vtnDxan++N/+ta0lpkrdAo/f17O2FFp46KR9O4wiKvZ7In6/yzwa8vKd
+         C18GUxHtMsS2HgcQosORXQ4u/+Lt3cnr0zeHxurNDuj198yTdoN3NvmqiiwrqwrtQJC7
+         UIbJJz3pvhSit6BCvy0LHQeirohBsQ7QXGUGnD7gPqMrVBR+OrabZ2vu/TxjS9gxyjqw
+         lVK+lKvlEkzvl4eGNUa2Fm/yn2Q0Vy41e2ypSkgInE9uCwJqRmk+paTHw5820oXZv2YD
+         L5O+eG79qlB9ftcPPTWDIxVf4SkiBI1couMFsvHga9Lmopc1y3Qq8CTc+/47olbHy7DJ
+         7FFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc;
-        bh=8eoF6QDIm4sI34IFgmiRzT/+TPeQYTYW3z3sLYNQCJ0=;
-        b=iYT5564vGEJuiuCRt7vbHbEfkAoobYRrQVqyOvMcaUwNUw6VMhZRNgfn2y6Z4z+xix
-         HbcahygDwqdATQU5hEOtA9r34wE+zJqVJ7V4DrP2w/PbKcxR6QG0hsrUyX3EYhQsHIWO
-         HVQmxFsbIuGNiclDlQZsvUFFS7JXn/anJ0dNNv0HbEFje0f+lYEPoHDU15VOd2ZCo+b6
-         RGcmqPv8oY4l9YTNaCu8xKNPrhYWr4CZ459CnSa5arg8uQm3jSTVwjkWyT280eTZj09Q
-         WlsMmOzCNPT3+ggXY09a0MUxi4AZyF/dG9zlKsip+Q82CGZ5x6FTM08gHkQz8V+fl3jI
-         oJFg==
-X-Gm-Message-State: AD7BkJK/oIK6PtvocgOIDvQJiLy0OYR+18jFt4Gl8zmvH/s4H3EQRrC6hr1Tt+bazPC2kSunqzEZLBUn3aCrXg==
-X-Received: by 10.31.182.143 with SMTP id g137mr12516779vkf.45.1456775298923;
- Mon, 29 Feb 2016 11:48:18 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 29 Feb 2016 11:48:18 -0800 (PST)
-In-Reply-To: <56D49B7A.2060601@moritzneeb.de>
-X-Google-Sender-Auth: P8i0ACh6cSaNtFtop-Qzx9daZY0
+        bh=aG8HxyjWuDyjosRlccwiEg0ENFElwWt6KcfeWY7WCBc=;
+        b=PfdQD2aPwKMKoRV+Mm4mHm91kYYHXb5eF9pEiCmKJbg4eW92zrkFqcni0BLsGfpdpD
+         pxsDWePfkoPt5jTZecv2i2qkoIaqnnKsxsTRGhkStjGTsWYl3SWOToSsrWeykG2WLAqL
+         DrQFJUhZ37ap1lua/bxbajohXoL1xKRtZArFEsEL+7ubqhLuBvZoJtaZPB/A0GB8tXNd
+         /IgZzhzVROHnHybdJ0wZy6mMtVrBfkzlVWXMc5W4kBnTKZzpOhm5HrQX5ZYF24vlghzB
+         +jmTgyXRtkArtby/1MGPn+W7Ar482nPHzwh2q50HX6k2GQMZGe24KCTKLiPAaFqUYGnC
+         fn/Q==
+X-Gm-Message-State: AG10YOQAr/AMPppRbMPhih6IMf9fPI6o3sK+tTCwIm7GtWauTH/xLMo8q26vVCsO4GWGzhokI3zDeISYSBZVQZYg
+X-Received: by 10.107.168.149 with SMTP id e21mr21133304ioj.96.1456778408681;
+ Mon, 29 Feb 2016 12:40:08 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Mon, 29 Feb 2016 12:40:08 -0800 (PST)
+In-Reply-To: <20160229193222.GX28749@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287895>
 
-On Mon, Feb 29, 2016 at 2:26 PM, Moritz Neeb <lists@moritzneeb.de> wrote:
-> On 02/29/2016 07:19 PM, Eric Sunshine wrote:
->> If you do elect to keep things the way they are, then (as mentioned in
->> my v2 review) it would be helpful for the above paragraph to explain
->> that strbuf_split() leave the "terminator" on the split elements, thus
->> clarifying why the rtrim() of split[0] is still needed.
+On Mon, Feb 29, 2016 at 11:32 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Stefan Beller wrote:
 >
-> Yes I would rather leave it like it is. I have the feeling it is
-> unmotivated to remove the rtrim of split[1] in the patch 5/7, because it
-> is directly related to the strbuf_getline_lf() replacement. Thats's what
-> I was trying to explain in the 2nd paragraph of the commit message.
+>> I added your suggestions as amending and as a new patch.
 >
-> First I was following your review, but then I had to add a paragraph in
-> patch 5/7 that says something like "because the effect of the previous
-> patch is that there is not a CR anymore, we can now safely remove
-> rtrim() split[1]."
->
-> You're right, maybe I should add a comment about why I left rtrim() of
-> split[0] to make it more obvious. I thought that would get clear by
-> looking at the context, i.e. patch 5/7, where it is explained (by you,
-> thanks for that), that strbuf_split leave this space. Is the assumption,
-> that those two patches are most times viewed in context wrong?
+> I think we're at the point where patches on top would work better.  I
+> admit I was a little scared to see another reroll.
 
-I was more concerned about someone reading patch 4/7 in isolation and
-not consulting 5/7 (which might happen during a "blame" session, but
-it's a very minor point, not worth a re-roll if you and Junio are
-happy with the series as is.
+Yeah I am a bit scared too, so I'll do patches on top for further fixes
+after one last reroll, fixing the issues below.
+
+>
+> [...]
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -299,10 +299,10 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>>
+>>       if (ce_stage(ce)) {
+>>               if (suc->recursive_prefix) {
+>> -                     strbuf_addf(out, "Skipping unmerged submodule %s/%s\n",
+>> +                     strbuf_addf(out,_("Skipping unmerged submodule %s/%s\n"),
+>
+> Missing space after comma.
+>
+> Usual practice for i18n would be something like
+>
+>         struct strbuf path = STRBUF_INIT;
+>         if (suc->recursive_prefix)
+>                 strbuf_addf(&path, "%s/%s", suc->recursive_prefix, ce->name);
+>         else
+>                 strbuf_addstr(&path, ce->name);
+>
+>         strbuf_addf(out, _("Skipping unmerged submodule %s"), path.buf);
+>         strbuf_addch(out, '\n');
+>         strbuf_release(&path);
+>
+> Reasons:
+>  - translators shouldn't have to worry about the trailing newline
+>  - minimizing number of strings to translate
+>  - minimizing the chance that a translator typo produces an invalid path
+
+Thanks for reminding me of that practice!
+
+>
+> [...]
+>> @@ -319,7 +319,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>>       if (suc->update.type == SM_UPDATE_NONE
+>>           || (suc->update.type == SM_UPDATE_UNSPECIFIED
+>>               && sub->update_strategy.type == SM_UPDATE_NONE)) {
+>> -             strbuf_addf(out, "Skipping submodule '%s'\n",
+>> +             strbuf_addf(out, _("Skipping submodule '%s'\n"),
+>>                           displaypath);
+>
+> Same issue here with the trailing \n.
+>
+> If the strbuf_addf + strbuf_addch('\n') pattern is common enough, we
+> could introduce a helper (e.g. strbuf_addf_nl) to save typing.
+
+I don't think it is common enough yet.
+
+Thanks,
+Stefan
+
+>
+> Thanks and hope that helps,
+> Jonathan
