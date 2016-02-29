@@ -1,85 +1,97 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.8.0-rc0
-Date: Mon, 29 Feb 2016 10:24:21 +0100
-Message-ID: <56D40E45.5020304@gmail.com>
-References: <xmqqmvqnhwf4.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
+Date: Mon, 29 Feb 2016 04:28:16 -0500
+Message-ID: <20160229092816.GA23910@sigill.intra.peff.net>
+References: <56D3E56A.5010608@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 29 10:24:32 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 29 10:28:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaK47-0000Aj-29
-	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 10:24:31 +0100
+	id 1aaK7w-0002Dd-BB
+	for gcvg-git-2@plane.gmane.org; Mon, 29 Feb 2016 10:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752644AbcB2JY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 04:24:27 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:33122 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbcB2JYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 04:24:24 -0500
-Received: by mail-wm0-f49.google.com with SMTP id l68so27703436wml.0;
-        Mon, 29 Feb 2016 01:24:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Hejx3j5sU6/afIpt+IArIbSKVyufwTAt10VGo6lPqHs=;
-        b=sMDpYtKtjRB9bUzBwKBsTVhUpWbk9j1uxVnkeOpP4I2fpFIu8ostz5orZVbHX9KmAO
-         U9g8bj/op+Cvp29SzDMbDtkHIy+QIXv7PtOR3CUT6HhAfQrT7zJstX9GT5nZCpL4+iom
-         9J4ROltQfOk2/68cgps9cOGDF/8NTPG6AGJ9oyf84975P9pPM4v2XvSodYEGJb8DHKfI
-         iLGApgzCsS47FcYHWhw0wl0s7iibafQdNI6Gr+ITvFnp9LDjE5Lp2iBcxABHHGEZ6t04
-         CPMvTjZiJMdcoIlPn1PPds+kV49pE5bAxkkPVMH+F546b5FKisthkLrlUDYHEcFKDVzw
-         ZEgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=Hejx3j5sU6/afIpt+IArIbSKVyufwTAt10VGo6lPqHs=;
-        b=WuIAVNWrsGnIjgwukqCA625F5y2lpM2LCXzI0wmuhO+XCxD+8ZNqBAR5hrE7hDIJm0
-         YGDQmQCicTaGhtUxyl/kxzehS59aVdikgxLdqaWcFVgyBwKQJ1R8Yg/tJNaTQiGhOMEp
-         6xAuRJFUlzfcs2y7EpPu3nUad1RTUAwIHXMX5zuRBOxNYxvnEr/IYNOnZz7pS2tYb80E
-         /h/XNpl3fpLe2LdlhAuRF+n1yywxMT+vU5RwbetLVS76hcuklDbkIZIcbP7z/7jsCYvn
-         zkfT3bRvojQSF78WuG2vlNW73/zap7LOgdek57qFZoRZax06C8G4AUUdDSA9x90IDqY2
-         JRTg==
-X-Gm-Message-State: AD7BkJIWaLnXuXjtXfwQZgxnBPrjNlNhurEPHlo9o8DhckGguTczrR/kJmHQDv/ji08MOA==
-X-Received: by 10.28.180.193 with SMTP id d184mr10060391wmf.64.1456737863160;
-        Mon, 29 Feb 2016 01:24:23 -0800 (PST)
-Received: from [10.223.62.76] ([131.228.216.132])
-        by smtp.googlemail.com with ESMTPSA id j10sm24924328wjb.46.2016.02.29.01.24.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 01:24:22 -0800 (PST)
-Newsgroups: gmane.comp.version-control.git,gmane.linux.kernel
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <xmqqmvqnhwf4.fsf@gitster.mtv.corp.google.com>
+	id S1753472AbcB2J2Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 04:28:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51224 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753388AbcB2J2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 04:28:20 -0500
+Received: (qmail 9346 invoked by uid 102); 29 Feb 2016 09:28:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 04:28:20 -0500
+Received: (qmail 24037 invoked by uid 107); 29 Feb 2016 09:28:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 04:28:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 04:28:16 -0500
+Content-Disposition: inline
+In-Reply-To: <56D3E56A.5010608@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287813>
 
-On 2/27/2016 0:41, Junio C Hamano wrote:
+On Mon, Feb 29, 2016 at 07:30:02AM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
->   * Some calls to strcpy(3) triggers a false warning from static
->     analysers that are less intelligent than humans, and reducing the
->     number of these false hits helps us notice real issues.  A few
->     calls to strcpy(3) in test-path-utils that are already safe has
->     been rewritten to avoid false wanings.
->
->   * Some calls to strcpy(3) triggers a false warning from static
->     analysers that are less intelligent than humans, and reducing the
->     number of these false hits helps us notice real issues.  A few
->     calls to strcpy(3) in "git rerere" that are already safe has been
->     rewritten to avoid false wanings.
+> I haven't digged further,
+> but trying to verify t9115 under Windows gave this:
+>=20
+> compat/mingw.c: In function 'mingw_spawnve_fd':
+> compat/mingw.c:1072:10: warning: implicit declaration of function
+> 'xmalloc_array' [-Wimplicit-function-declaration]
+>   wargs =3D xmalloc_array(st_add(st_mult(2, args.len), 1), sizeof(wch=
+ar_t));
+>           ^
 
-This is a duplicate.
+Yikes.
 
-Regards,
-Sebastian
+-- >8 --
+Subject: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
+
+Commit 50a6c8e (use st_add and st_mult for allocation size
+computation, 2016-02-22) fixed up many xmalloc call-sites
+including ones in compat/mingw.c.
+
+But I screwed up one of them, which was half-converted to
+ALLOC_ARRAY, using a very early prototype of the function.
+And I never caught it because I don't build on Windows.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I think this means "master" is broken for mingw builds.
+
+Sorry, Windows people, for breaking your build. I'm happy to hold back
+such repo-wide cleanups from the mingw code in the future, since I can'=
+t
+actually compile them. But the flipside is that if I _do_ improve
+things, you don't get the benefit until somebody manually ports it over=
+=2E
+
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index cfedcf9..54c82ec 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1069,7 +1069,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, co=
+nst char **argv, char **deltaen
+ 			free(quoted);
+ 	}
+=20
+-	wargs =3D xmalloc_array(st_add(st_mult(2, args.len), 1), sizeof(wchar=
+_t));
++	ALLOC_ARRAY(wargs, st_add(st_mult(2, args.len), 1));
+ 	xutftowcs(wargs, args.buf, 2 * args.len + 1);
+ 	strbuf_release(&args);
+=20
+--=20
+2.8.0.rc0.276.gddf4100
