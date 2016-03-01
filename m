@@ -1,110 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
-Date: Tue, 01 Mar 2016 11:07:24 -0800
-Message-ID: <xmqqmvqi6mqb.fsf@gitster.mtv.corp.google.com>
-References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
-	<1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
-	<CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
-	<xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] git-p4: map a P4 user to Git author name and email address
+Date: Tue, 1 Mar 2016 14:15:57 -0500
+Message-ID: <CAPig+cRwEKjGaDA-jy8KJSAhTheJYDmxtPq8SdVs0LA2f9-9Yw@mail.gmail.com>
+References: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:07:46 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Lars Schneider <lars.schneider@autodesk.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:16:12 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aape5-0008FL-KW
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:07:45 +0100
+	id 1aapmA-0005su-BC
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:16:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbcCATHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 14:07:37 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59035 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753712AbcCATH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 14:07:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C470149F54;
-	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GfkpRndgHSHd3ReirHazA8R9Ntw=; b=bUiaJr
-	MOGei1PAP3FJOQpkYJwe62lLrxsBE8hu/s/FtQ7GRXqxs6pIydl0Rl5isAAS8+3L
-	sBvMgxBe3fLt1F3Ktbq8eDacMJp4i2Q2QQaYoOGoYvHwAYIMsHXPEAByScxwUZy7
-	TDw0SBdlTZILt/NlEQKs4zW8OfngBuXcbzmX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uIKxfpXeCkpmytBmq0LgpMTJ/Lybi7vu
-	V2xPlBvKxWMyXwwek4eDdCzR+LMcBlMCjhHu6lz68T2Vo9nTpXkYX7cbe+9TnF8U
-	zP+cCYKBEDR+vYtkeEwIH+q8rHUaV1DjvQBnj0E2PE8tinBjcvhee96UZeVE0kLU
-	Z0CZvJotxjI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BAE9A49F53;
-	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 257BE49F50;
-	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
-In-Reply-To: <CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 1 Mar 2016 10:05:34 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D619DC7C-DFE0-11E5-9CAF-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753262AbcCATQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 14:16:00 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:32863 "EHLO
+	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752086AbcCATP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 14:15:58 -0500
+Received: by mail-vk0-f66.google.com with SMTP id c3so12261811vkb.0
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:15:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=Mur0vMYuDE/m5cCMZWvxpfmFuSVyRDAgM/Z7Gg5rtyA=;
+        b=cqnKa517eXJXTDeoepDiTMzTlK8dmuM8qQ19dvXn092eb0asj9b6hgrfZ+/sOefO1+
+         hninhx3t53sNUYovxPYxxaVSwOkh/0+pGcJ/DoSLrvh9EwY52SH5BNqBrITWw66brXXQ
+         aCJk7Qx0mdTsrzzh0g1Ub05osw070qXu71EQMXbge92bvCxQ+xZvv25gZbqKEGMkTRNP
+         exMC6Jb9gFY7Xv2dYgNRjPU7mHc5/y4fdyPeO+dAOxGXy2QZOdVh8aA9EFmypfo9As1u
+         8sfbNgQtt11tSCPdfJDBJuUBo3LfdSc9z/QMA81H0ze+L4ebidnZuNM4gBpvIWoXACOG
+         juyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Mur0vMYuDE/m5cCMZWvxpfmFuSVyRDAgM/Z7Gg5rtyA=;
+        b=QJOloUvYy8SCS8VUCpliQuZgFehwpdlSYbMQ2eCM7PVB9D4Bv1LT/wjf3C8b31d1P7
+         t10eRAS8ML7qY7rT5Ap1VAM+v2uVc+FBhktMG5r3oimdKbH6WoYErjG8do9dBDM39lnn
+         FeKjpj/4jNg1m8EQJ+UAxnkgehRKP2gBriIO8df86l1a2eo/8aZ4MVpnmOceYtXQ3ykl
+         wcomBrKhEtGMfo9MctzHOPQo0I/dI/30QuJEUYoqJkZO0Jdz+prSZY3IYSTJ3uF9iC/3
+         EAMCszyrP9nl76MXPKIcmQWE2Tcf4Iz/VId20ITMDSpC94F/s5SYFtSvANfCXrDuUPsL
+         fzcw==
+X-Gm-Message-State: AD7BkJL0d6yPhSkeDO4r8W3NFmTYRqt4LVNkAml5wGB/MsIt1OHaS2JMaHDJpG/I1h1Ip1BBehdW+qMRGvMhLg==
+X-Received: by 10.31.8.142 with SMTP id 136mr17384767vki.14.1456859757240;
+ Tue, 01 Mar 2016 11:15:57 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 1 Mar 2016 11:15:57 -0800 (PST)
+In-Reply-To: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
+X-Google-Sender-Auth: y2F7Y9PJYQo5UgdAVAZOTovTqsA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288054>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> On Tue, Mar 1, 2016 at 9:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> I find this in t/lib-httpd.sh:
->>
->>         set_askpass() {
->>                 >"$TRASH_DIRECTORY/askpass-query" &&
->>                 echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
->>                 echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
->>         }
->>
->> and expect_askpass peeks at askpass-query to see if Git asked the
->> right questions.
->>
->> I think askpass-query is cleared here because the author of the test
->> suite expected that the helpers are used in such a way that you
->> always (1) set-askpass once, (2) run a Git command that asks
->> credentials, (3) use expect_askpass to validate and do these three
->> steps as a logical unit?
->>
->> That "clone" the test expects to fail does ask the credential, so
->> even though the test does not check if the "clone" asked the right
->> question, it finishes the three-step logical unit, and then you need
->> to clear askpass-query.
->>
->> It may have been cleaner if you had clear_askpass_query helper that
->> is called (1) at the beginning of set_askpass instead of this manual
->> clearing, (2) at the end of expect_askpass, as the exchange has been
->> tested already at that point, and (3) in place of expect_askpass if
->> you choose not to call it (e.g. this place, instead of the second
->> set_askpass, you would say clear_askpass_query), perhaps, but I do
->> know if that is worth it.
+On Tue, Mar 1, 2016 at 5:49 AM,  <larsxschneider@gmail.com> wrote:
+> Map a P4 user to a specific name and email address in Git with the
+> "git-p4.mapUser" config. The config value must be a string adhering
+> to the format "p4user = First Lastname <email@address.com>".
 >
-> Probably something worth looking at doing in the future.
->
-> I could call expect_askpass here at each time but I don't think it
-> would be meaningful after a test_must_fail.
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> +git-p4.mapUser::
+> +       Map a P4 user to a name and email address in Git. Use a string
+> +       with the following format to create a mapping:
+> ++
+> +-------------
+> +git config --add git-p4.mapUser "p4user = First Last <mail@address.com>"
+> +-------------
+> ++
+> +A mapping will override any user information from P4. Mappings for
+> +multiple P4 user can be defined.
 
-Even if you call expect_askpass to check, another set_askpass is
-expected to start the next cycle anyway (unless we restructure the
-helpers around clear_askpass_query I alluded to, which I am not
-convinced is a good idea yet), so you'll still be asked "why another
-set_askpass to set the same 'wrong pass@host'?".
-
-So, I dunno.
+Sorry for not paying closer attention the first time, but this needs
+to be repeated for each P4 user you want to map, right? One can
+imagine this quickly becoming painful if you have a lot of users to
+map. Have you considered modeling this after git-svn where you can set
+an "authors" file (and name the corresponding option --authors-file)?
