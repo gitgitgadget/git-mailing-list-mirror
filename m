@@ -1,70 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Store EXC_FLAG_* values in unsigned integers
-Date: Tue, 01 Mar 2016 10:26:12 -0800
-Message-ID: <xmqqr3fu6omz.fsf@gitster.mtv.corp.google.com>
-References: <1456851779-38548-1-git-send-email-sauravsachidanand@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] builtin/receive-pack.c: use parse_options API
+Date: Tue, 1 Mar 2016 13:54:13 -0500
+Message-ID: <CAPig+cSSUJkkGKsfDdX7i7fdTkvGd3ppL1tdsqdB7d0hjwdOuQ@mail.gmail.com>
+References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
+	<vpq60x62jvt.fsf@anie.imag.fr>
+	<56D5D601.8030601@gmail.com>
+	<vpqio1613p1.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Saurav Sachidanand <sauravsachidanand@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 19:26:24 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Sidhant Sharma <tigerkid001@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 01 19:54:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aap02-0004AS-So
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:26:23 +0100
+	id 1aapR6-0006BZ-Kb
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:54:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbcCAS0Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2016 13:26:16 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751361AbcCAS0P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Mar 2016 13:26:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 124C04932F;
-	Tue,  1 Mar 2016 13:26:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=n+/KvWaO1gHR
-	UOGTpRm+wcvf7vc=; b=HXqf0RAS0jkH7BDetHzZpPYgcd7bvauGi2t90WCqDTPi
-	RLLZC2mCAxBzvOe6wlNrxpv0E+QuvsFt+s/wXm76zTUUexO7S7WXl5Bt1SAZCSQ+
-	4cw9ndiaSs8lxi+O5jRE3z7t4qnGYmnoMSICtkfXZvsZE/dVLbCwd2BNNkwPB14=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fH5u1a
-	ik7gYwxAnS0bk0vcxcq+M0wpMPD0JmDUjBezTtGor2wD+ufDyqUMyOCRP3ZFAGku
-	PVr1HQJnKoIHVY5Hrh7tXTu5OA1G7ElwWIGrKQp7FEh0Rbu2LcaAFINg/AS9Pe+J
-	VRb/oQQ+YRXiBKUHrN8RbHmobUrTsmDI9GD0s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 07C684932E;
-	Tue,  1 Mar 2016 13:26:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6C68B4932D;
-	Tue,  1 Mar 2016 13:26:13 -0500 (EST)
-In-Reply-To: <1456851779-38548-1-git-send-email-sauravsachidanand@gmail.com>
-	(Saurav Sachidanand's message of "Tue, 1 Mar 2016 22:32:59 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 143636B4-DFDB-11E5-AF13-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751660AbcCASyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 13:54:15 -0500
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:34171 "EHLO
+	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751616AbcCASyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 13:54:14 -0500
+Received: by mail-vk0-f41.google.com with SMTP id e185so177498876vkb.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 10:54:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=WXutdpWk34MyYTmuUhEiXp8uXBgjw4tJEWLJS51JvDA=;
+        b=CVHE3Js9z3hfpLJfQYZpekBGeQyi6jpCySLI48SDDw29AhjjGKW4Fo4Qn2GZwvk9Kn
+         WTa+HfdkvAbQGPqbF3AOTLpDpmyZYoOuACH/aVWc4qnjX5pUuPDNid8WYMVE1+sQ5xQc
+         MNoOPfWrDh1kXdE2QWZ1CbbxicFZm63wkdyDDd0/RVEascBRwjjM4i745ptf8rmxP+Ko
+         DV6kb40eptObxTPXS0HSLiJ2B1BLqVOX2GFWYeWEf9tUukyEyr1pRQVykLlWbEsYPt6w
+         i+7HlzWhJyjf1KP+zFEChifSwNtEpfUoUY/kPpI7W8/kXDeyKnDEj5b0FQHkGE5WCmQt
+         rx5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=WXutdpWk34MyYTmuUhEiXp8uXBgjw4tJEWLJS51JvDA=;
+        b=WHyu3ikyNNHdAA4k8OcPY7W36aLI+G8UAXKX+DXvceCmHiic0ULI3e2xTfYyWU+Xvr
+         Te8ZHuOdw+/3E2ELJ68kbzfnSmVjvKNSp8SUtys92RTdv6QS8DnuEuxfAmVJ5AkbMNu/
+         4x1UcOdn8gyvt2jnODpeJ6rW1Bs/EQaVYmpAUjr41W/n5AJYbZWFDGbKrFoaAZ3wPw+y
+         +sNlY1Z1UYE9mykOHzcjUlyvyqbFqENR/uAMdXP9xvMAprBzefWtzzxgcQvhYWXbUatO
+         3sqxzWUoBFHFHOAAM/lcHlJcKHHaI1cofHaaOt67EYoMOJEwLbOHrorDe+fPkuv70LSk
+         cbcA==
+X-Gm-Message-State: AD7BkJJVtvv4BBb4KUEcrXg8OxPS0AhF9JNEa/4QBLe8cLbHbD89XQOtAvl5i9xRdME2EE9ZggHgfe2ZTxqeNw==
+X-Received: by 10.31.8.142 with SMTP id 136mr17290156vki.14.1456858453737;
+ Tue, 01 Mar 2016 10:54:13 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 1 Mar 2016 10:54:13 -0800 (PST)
+In-Reply-To: <vpqio1613p1.fsf@anie.imag.fr>
+X-Google-Sender-Auth: 3ZG8ghhxN9l57YqX0tjMV_MtJR4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288052>
 
-Saurav Sachidanand <sauravsachidanand@gmail.com> writes:
+On Tue, Mar 1, 2016 at 12:57 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Sidhant Sharma <tigerkid001@gmail.com> writes:
+>> Another thing I'd like to ask is when I prepare the next patch, should
+>> it be sent as reply in this thread, or as a new thread?
+>
+> No strict rule on that, but I usually use --in-reply-to on the root of
+> the thread for previous iteration. If you don't, include a link (e.g.
+> gmane) to the previous iteration in the cover-letter.
 
-> The values defined by the macro EXC_FLAG_* (1, 4, 8, 16) are
-> stored in fields of the structs "pattern" and =E2=80=9Cexclude=E2=80=9D=
-, some
-> functions arguments and a local variable.
-
-It's a minor point, but it is somewhat irritating that "pattern" is
-enclosed in a regular dq pair while "exclude" is in a fancy dq pair.
-I think our log messages tend to prefer the regular ones.
-
-No need to resend; thanks.
+It's good manners to include a link to the previous version even if
+you do use --in-reply-to since not all reviewers will have the
+previous thread in their mailbox.
