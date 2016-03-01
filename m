@@ -1,83 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
-Date: Tue, 1 Mar 2016 14:52:36 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603011452090.3152@virtualbox>
-References: <56D3E56A.5010608@web.de> <20160229092816.GA23910@sigill.intra.peff.net> <56D415C6.2040203@web.de> <20160229100258.GC2950@sigill.intra.peff.net> <xmqqtwkr9vu6.fsf@gitster.mtv.corp.google.com> <20160229213620.GD25342@sigill.intra.peff.net>
- <56D52D77.1030406@web.de> <20160301055457.GA1359@sigill.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Mark win32's pthread_exit() as NORETURN
+Date: Tue, 1 Mar 2016 14:53:04 +0100 (CET)
+Message-ID: <69eef72cfc77e62ad7ad17c6df5f2d2396c64991.1456840324.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1216008406-1456840358=:3152"
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 14:53:00 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 14:53:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aakjT-000299-Le
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 14:53:00 +0100
+	id 1aakjs-0002OR-DA
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 14:53:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593AbcCANwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 08:52:55 -0500
-Received: from mout.gmx.net ([212.227.15.15]:50270 "EHLO mout.gmx.net"
+	id S1753745AbcCANxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 08:53:20 -0500
+Received: from mout.gmx.net ([212.227.15.15]:52747 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752636AbcCANwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 08:52:54 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0McVGq-1aJDsM3H8a-00HgWg; Tue, 01 Mar 2016 14:52:38
+	id S1752636AbcCANxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 08:53:19 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MWk3f-1aQ6YL2SPD-00Xwk5; Tue, 01 Mar 2016 14:53:06
  +0100
 X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160301055457.GA1359@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:LWqHDPfDGF73SBhiNrjb1LbwynUS8EzigJ05DGgiOPIQ1AT3/4p
- envSy8FIG1MrMzzhY3oT5mWmAlhJDB4Jnhl+1HPbo4pp0DV1s399GJCkeIjgiuWFS9mn01q
- KaUXu0Bp2nvzMkmyuNnmI+R87Ell3LAZ9bhAUdmSs+K/E9jbdGt+tib3OFX5vf6hvuLnCDD
- JeJlNntxPlppOTXfsJEYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KyUl24/AdOw=:RHxCPMDUV66BcKOYIBITGW
- fwSGdPq9n9jYQ9i2ZoFCmTZrYuRt2U3jZyj4bXrLwxsCkNYxeK4rzpcXvvWk/ZwFOZC8wKOFn
- 03Qyzr+D8O1VJPyv1iyTzHatMAMAk/MAZzTvMs5jBsGiuijaIXCKGIfXzNBDv1XXNwwHaWjE3
- GM+I3bOgzMb7mznuyYi8fXkyrr6ws1ALhMe3b952uHGh91kL+l4Xby3/xMAAJ0n4V5kA/1AYq
- 7ocKmeOetyCBdk+3FG2B6OkJQj2vwx+jeKpLfStf8dBVCgoRr8cnIr5biUuq1wWR2s7HM7tI+
- Ladt5rbhOwL39TyF2XknWrNg/BUZJZNksfb81qI1xaHfCGgWkzKeHMKByFTlmwwDN4NB+28eT
- 1nETaY6xJezXk9U/bnOwKnKdHxMYNCOxcWmR06zzDschrqst7bmGjX/It0Wpo85D959SS5sYy
- 6o4CIQ6LZKI/vewe7qUmI+yYREgVa2/hgp/hUlKJy7sBj9uqhyPDXXws2ywypd4eGPpzyvwx8
- E9o9tDMe7evrJyCxgPNvbMlD7fSZxuiVfwY6ahyfg7wmc7pntLkdNzGRfLNfb5jAwEkWgWZEE
- dXS/tWc6+SmKA3A+ccZhBx1KGYi3AC0dBa4F4+mr2k7r1KiIT+spl5lV/mKjMr6dB0YWbU3YS
- UvXVJRe7YYOdyB3Hanjmk+HWJop4z4XrY317U7lzPY94xy6NpX/35JobaR+SVtz3MGHFBrJbV
- mFxhxRy6lvyU7dgx7X2guqwSzGgNexUKGipcBhTQ3s/EieSAXRZp0gqsMnFpsMNExL/ScvKz 
+X-Provags-ID: V03:K0:xPRwrr+9dFwa1qsPIqkFB+TsJ1VvP35UuPNdBJ3NjcD02/7u6Wn
+ RfIC9xFOUXq/LXgcC8UUyfRJmbgEOzwfk4VO6BmO5YPjjR9W+Ep4frYQ4ol2V49y0Kp4hOl
+ KsZx0q84UwqIsnm9TfTlEFfPDSlOFfqVTCJGjh7utrufNBVZBg+P3fo9f/iJjiU75+/qBdo
+ Uix3HLyssLv6impyLvA0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EzHZVtJZKyA=:a+46AN1lkxeG7peGub1pdV
+ o8DKahXGe4RFOnTCk73NCpaXiohXo8jAT0Det9SKRylVasc0dfmMQ7u6FRs1ZOWbtqT1NpIU1
+ sEhdb/mYyLsw1ks5CfUHt7Wv5wW0vsZFdWvREwm78FP5Q5Uii8uBWFBudJF3MYkq8htWHNwmT
+ XTJWnRwwB9EcrMr4anZYN4rKognP3OxUnP51uGNc9KLzEEjVzRNCWRzBhZpwcd0/p6pjR5LQt
+ 29nl8YItme3bhrhT3z1bBH6uf10Y18+J9m5HZOKTLByTR91vZLhOuJBpps/1emGpiLYZv0mJ5
+ YkRX7S55arfSUXb1Qcc7liEmn3Fs9Ck9vKxrByJEx09cObGJKsKN0J4ZKT8T+JynAgCiiG04Y
+ aZU+dnHED+AJpv7Wgralt5EwstMYPcO6f3u3H2/ApiKjafu7311aKmwRUwcv2sk6fiIUabqe8
+ wWQOxFSZEFtabU5vq+6Ocemqj47BqGmElwVfoVjCtE+HPU5JoB+zuiqS/0vY1Po3S4KMDt4UD
+ r4kVU+2cQsWAlAlEV6mRgY0wd6OEYL4CAsJDmiHcro0yAlfS7mFeo1bQGz7K0/feavs+ts8Kp
+ Jf3KM2dcqhzvaJyDq0q9WBEZ1IkYloITQmwnoZm+TP0YyI9sRyXtTqoPrtLvkusTxbemAsJdy
+ S7F3h5WU3Q8g/qhFkFvX7Jnd5JKJOQmKnY2LrpbLYVDzbd8txLbUPBaQnPcL16N61MqbVs8Jr
+ eAp8O0rNjK4nukCdOmVRX4oPTYyodxDIrXx/qAbpenZHWlJWqE90U/DzLv2yD2rsKJ3hP5MZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288013>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The pthread_exit() function is not expected to return. Ever.
 
---8323329-1216008406-1456840358=:3152
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Pointed out by Jeff King.
 
-Hi Peff,
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/win32/pthread.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, 1 Mar 2016, Jeff King wrote:
-
-> On Tue, Mar 01, 2016 at 06:49:43AM +0100, Torsten B=C3=B6gershausen wrote=
-:
->=20
-> > However, suspecting jk/epipe-in-async, I don't know if we can do
-> > something against this warning:
-> >=20
-> >  CC run-command.o run-command.c: In function 'async_exit':
-> >  run-command.c:631:1: warning: 'noreturn' function does return } ^
->=20
-> The only thing that function does is call pthread_exit(), which should
-> also be marked NORETURN. Looks like the one in compat/win32/pthread.h
-> isn't?
-
-Correct. Expect a patch momentarily.
-
-Ciao,
-Dscho
---8323329-1216008406-1456840358=:3152--
+diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+index 20b35a2..148db60 100644
+--- a/compat/win32/pthread.h
++++ b/compat/win32/pthread.h
+@@ -78,7 +78,7 @@ extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
+ #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
+ extern pthread_t pthread_self(void);
+ 
+-static inline int pthread_exit(void *ret)
++static inline int NORETURN pthread_exit(void *ret)
+ {
+ 	ExitThread((DWORD)(intptr_t)ret);
+ }
+-- 
+2.7.2.windows.1.5.g64acc33
