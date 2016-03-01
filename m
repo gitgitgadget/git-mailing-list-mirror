@@ -1,134 +1,105 @@
 From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: Re: [PATCH v2] fetch-pack: fix object_id of exact sha1
-Date: Mon, 29 Feb 2016 23:08:07 -0300
-Message-ID: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
-References: <xmqqh9gseiqk.fsf@gitster.mtv.corp.google.com> <1456698144-11519-1-git-send-email-gabrielfrancosouza@gmail.com>
- <20160229100030.GB2950@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH v3] fetch-pack: fix object_id of exact sha1
+Date: Mon, 29 Feb 2016 23:12:56 -0300
+Message-ID: <1456798376-29904-1-git-send-email-gabrielfrancosouza@gmail.com>
+References: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 03:08:36 2016
+X-From: git-owner@vger.kernel.org Tue Mar 01 03:13:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaZjk-0003PN-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 03:08:32 +0100
+	id 1aaZot-0005qT-NP
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 03:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbcCACI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 21:08:28 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:33245 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbcCACI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 21:08:27 -0500
-Received: by mail-ig0-f181.google.com with SMTP id y8so10039547igp.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 18:08:27 -0800 (PST)
+	id S1751199AbcCACNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 21:13:48 -0500
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:33091 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbcCACNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 21:13:47 -0500
+Received: by mail-yw0-f173.google.com with SMTP id u200so138005557ywf.0
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 18:13:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4AsnYtt8EbUm6ynngTJzirARYEIvBv/FhFAcrTo7LYk=;
-        b=MC4bkw6jQEhwwZTubjZLRVyH/gQ/1+zREEqq2dCQjF9dB8aJDdvLqyc9yc/ITfY9oo
-         3laTe56dzf+4/NXmQeHjKyIyvAsccLBQVysjVn4BOpQdJ/N06J0XGhP7444blKr3GfRO
-         BMC9c9oe3RJEUXccl0NnsAQw3KvLP5t+hPdqOEUgEV8iXFcN/IJd644IWdM8ceKY4RRL
-         WjSSnVBh8iUd+Q87WIZAvzz39oZaJELlKjHzvLdxgakMe+rwCr/pYEAWvSl1QJpK4rV8
-         5BTIvNk2Pk3rI15dAqAbFV91b2soTv7SAIt5qGNJDWhsGRe4tkCh0jT5YRhzJIVJyCUk
-         8K/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=o5G0eBW51BBkFUG8yg7IPf9J6ei8uWg6Mb1XMS/LI7A=;
+        b=CV0d+l3lqwzlOqGPXZRYA4T8GQmsZ+pBvWZngqoTR5zUErBrQcpB+8S0NLpmcQFTUs
+         2qLgza6I7Q8K2mFKbTRsGleNh2IhratwK7vqO86arKC1eGaadbqCIeaQcnf4E/aeUiT2
+         0OvX3A7edxH+oUhFi4H9Qcr6zsMe/qCj2Q8bbE/W8camUGlbR0yGByfgA6gVAF1FaSoQ
+         Z1vaz7fRKfw9annqrxRIelSD0Ob8ll4xJUi4RB9fWDZaX+dOk5BWknYdp4NOFSIDU48w
+         x1LHJk8sI7cEdHYeCmGGJ/pk+Y3XjvHnzYGYZ1RIDVpMGDexq7xWVAzQUuuV+1TjT+A8
+         BWew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4AsnYtt8EbUm6ynngTJzirARYEIvBv/FhFAcrTo7LYk=;
-        b=ZLWT0OdMrrIbZDLd/c/QrZX2r93i5lH2zEm/R2DYvV5B30duldAmtNM3mF3GvhTyWs
-         GJTEsQJ+qxUOxebivuaf5UqgTthDliyZ54HQyFP9Y0IHkTy+2zN7VTPEq021tlSm1DkE
-         McLkrhqt8zh8WDZJEOVUlR1Ka91oJKjSv4oBtsa7hQ1AenUjKmDxAB+6WFsmRwEFWlGh
-         T+5lIPMvBt62dfQrKBIe7KObOWtKbgpy+57SOx9FrXj/gOmQtxapOezdIdRLznUf5gMl
-         qGhB17MS+OOTXYgB7cs0iLYAbI166fpMNNq1zzII677BgJnl0TWPpPOl4VrtsdNEjZTV
-         28oA==
-X-Gm-Message-State: AD7BkJIIyYelYS1M8lRAr9QEeSO8ZolwPgiabsZbwZ2LNA3Od0+yMwZhRKD6Mb6Jia7jlzVImb8qI5cDw5zhzQ==
-X-Received: by 10.50.112.71 with SMTP id io7mr1023729igb.50.1456798106623;
- Mon, 29 Feb 2016 18:08:26 -0800 (PST)
-Received: by 10.50.79.233 with HTTP; Mon, 29 Feb 2016 18:08:07 -0800 (PST)
-In-Reply-To: <20160229100030.GB2950@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=o5G0eBW51BBkFUG8yg7IPf9J6ei8uWg6Mb1XMS/LI7A=;
+        b=HIcT4uoNTVjYoByECMrIqpGuk7zSgMzLwVsE8JqM+ms4GpQc6faZeaERmAkeRyN2Gb
+         mF+eYPggIrDlUQaLSb5tyOWTM1Uf+xnM0ME1TOoo7jk99lLYC8jYvtBJjKXPdR9drgJ2
+         dsSBGBaO7dFdjljT7EwsdOPCRFlvd4EhMWr4dUax871IpeCWeaI4E5sV8nQMGd4gdssT
+         eERphYaPy/lG030TOgep97i+F15Wft2XyO8fh8lsnJCC6WYm0ljgJYJS4qTPU5tzpP3q
+         OUNPs9DoRAZ9DmFdPZE9awSgc0EeJy8t0deQMOVrLQRmRcos0nCWqSfcvMhJJ5WTMC3E
+         odEw==
+X-Gm-Message-State: AD7BkJJAq9GWrDhnoGhHCMled2//9OIj9Oufilox+Xt4bLHjC4ng6WFG5juPeQTJGmzjGg==
+X-Received: by 10.129.38.135 with SMTP id m129mr10432209ywm.155.1456798426779;
+        Mon, 29 Feb 2016 18:13:46 -0800 (PST)
+Received: from ghost.localdomain ([201.82.54.180])
+        by smtp.gmail.com with ESMTPSA id h131sm23019956ywb.25.2016.02.29.18.13.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 29 Feb 2016 18:13:46 -0800 (PST)
+X-Mailer: git-send-email 2.7.2
+In-Reply-To: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287995>
 
-On Mon, Feb 29, 2016 at 5:30 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Having said that, this *might* be a good opportunity to imitate the
-> skip_prefix() function. If there are enough similar code constructs, we
-> could simplify all of them by introducing the function
->
->         skip_oid_hex(const char *str, struct object_id *oid, const char **out)
->
-> that returns 1 if and only if an oid was parsed, and stores the pointer
-> after the oid in "out" (skipping an additional space if there is one)?
+Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
+2013-12-05) added support for specifying a SHA-1 as well as a ref name.
+Add support for specifying just a SHA-1 and set the ref name to the same
+value in this case.
 
-I don't think there's any other place that accepts all of "<sha1>",
-"<sha1> <ref>" and "<ref>"
-based on a quick grep for get_oid_hex.
+Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+---
 
-On Mon, Feb 29, 2016 at 7:00 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Feb 28, 2016 at 07:22:24PM -0300, Gabriel Souza Franco wrote:
->
->> Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
->> 2013-12-05) added support for specifying a SHA-1 as well as a ref name.
->> Add support for specifying just a SHA-1 and set the ref name to the same
->> value in this case.
->>
->> Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
->> ---
->>
->> Not the cleanest conditional I've ever written, but it should handle
->> all cases correctly.
->
-> I think it does. But I wonder if it wouldn't be more readable to cover
-> the three formats independently, like:
->
->   if (!get_oid_hex(name, &ref->old_oid) && name[GIT_SHA1_HEXSZ] == ' ') {
->         /* <sha1> <ref>, find refname */
->         name += GIT_SHA1_HEXSZ + 1;
->   } else if (!get_oid_hex(name, &ref->old_oid) && name[GIT_SHA1_HEXSZ] == '\0') {
->         /* <sha1>, leave sha1 as name */
->   } else {
->         /* <ref>, clear any cruft from get_oid_hex */
->         oidclr(&ref->old_oid);
->   }
->
-> And as a bonus you get rid of the separate "oid".  That does call into
-> get_oid_hex twice, but I doubt the performance impact is measurable.
->
-> We could also do:
->
->   if (!get_oid_hex(name, &ref->old_oid)) {
->         if (name[GIT_SHA1_HEXSZ] == ' ') {
->                 /* <sha1> <ref>, find refname */
->                 name += GIT_SHA1_HEXSZ + 1;
->         } else if (name[GIT_SHA1_HEXSZ] == '\0') {
->                 /* <sha1>, leave sha1 as name */
->         } else {
->                 /* <ref>, clear cruft from oid */
->                 oidclr(&ref->old_oid);
->         }
->   } else {
->         /* <ref>, clear cruft from get_oid_hex */
->         oidclr(&ref->old_oid);
->   }
->
-> if you want to minimize the calls at the expense of having to repeat the
-> oidclr().
+I did keep the oid variable because ref is uninitialized at that point,
+and this means having to copy either name or old_oid afterwards anyway.
 
-I think I like this version more, and is close to what I had initially
-before I tried to be clever about it.
-Besides, this isn't a performance critical function, so it shouldn't
-matter much.
-Will send a new (and hopefully final) version shortly.
+ builtin/fetch-pack.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
->
-> -Peff
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 79a611f..50c9901 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -16,10 +16,20 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
+ 	struct ref *ref;
+ 	struct object_id oid;
+ 
+-	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
+-		name += GIT_SHA1_HEXSZ + 1;
+-	else
++	if (!get_oid_hex(name, &oid)) {
++		if (name[GIT_SHA1_HEXSZ] == ' ') {
++			/* <sha1> <ref>, find refname */
++			name += GIT_SHA1_HEXSZ + 1;
++		} else if (name[GIT_SHA1_HEXSZ] == '\0') {
++			/* <sha1>, leave sha1 as name */
++		} else {
++			/* <ref>, clear cruft from oid */
++			oidclr(&oid);
++		}
++	} else {
++		/* <ref>, clear cruft from get_oid_hex */
+ 		oidclr(&oid);
++	}
+ 
+ 	ref = alloc_ref(name);
+ 	oidcpy(&ref->old_oid, &oid);
+-- 
+2.7.2
