@@ -1,109 +1,102 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v7 30/33] refs: break out resolve_ref_unsafe_submodule
-Date: Tue, 01 Mar 2016 14:17:39 -0500
-Organization: Twitter
-Message-ID: <1456859859.18017.79.camel@twopensource.com>
-References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
-	 <1456793586-22082-31-git-send-email-dturner@twopensource.com>
-	 <56D5CF9C.4010808@ramsayjones.plus.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] Mark win32's pthread_exit() as NORETURN
+Date: Tue, 1 Mar 2016 20:34:58 +0100
+Message-ID: <56D5EEE2.3080100@kdbg.org>
+References: <69eef72cfc77e62ad7ad17c6df5f2d2396c64991.1456840324.git.johannes.schindelin@gmx.de>
+ <d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	peff@peff.net, mhagger@alum.mit.edu, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:17:49 2016
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:35:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aapnn-00073z-AR
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:17:47 +0100
+	id 1aaq4b-0002Xw-FJ
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:35:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbcCATRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 14:17:43 -0500
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:34682 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751102AbcCATRm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 14:17:42 -0500
-Received: by mail-qg0-f45.google.com with SMTP id b67so150438750qgb.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:17:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:mime-version:content-transfer-encoding;
-        bh=yseMusD7Ni+Nnl0GN48KZUwnAKneKSQ+x1qJYN+8h7Q=;
-        b=AmxW+997AiIxqJveYRMhiuf8SBeZJgoM1txLKabgd7ncuiKSsHVXdG+2xbHP9xivTK
-         uI14Igz2raKdbpblk3ucs6MDJTjObyTnKBJDBQUE5x97G7pnTpPEgxW0Tv6pG3+yNL1g
-         7FlZwbhE+u16JONyC43cvtq2BWahi5ZVLPcxBGmyusJTQSGZZhi5/4a4OXGcl8SmBwm+
-         dTsy9DT7L9VEVegEvCd+wNCe8YT7O2WpBUTcNKdm/iyvvGJ39tCKLwQIH3xnYCNuXk7G
-         HFWzSQUtqyDloMsOA2fC6CaOFEMyVXwSfxnjE7s35e7/OdscJJtw54pa68L7iEg4T5z6
-         4oRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=yseMusD7Ni+Nnl0GN48KZUwnAKneKSQ+x1qJYN+8h7Q=;
-        b=fSnhqYS/G6eHpxfn9EPXKqp5PC8gpaPRQwK5M8MbJav96AVMYLJQjeQXUFnU//3u6C
-         D+wD7EFwzrI4aHExUDsjYCiCNGpq7RMUoifhE3RR9pfsuzmny0ZO17abQ24Mhz2O4fmJ
-         39NUPN5092tJudvl3GBBB2Ig0pQtlbPGKsDjtf+diqnHkJnjBvJvqd4uAtaX9Sb/g4pN
-         pTMH6E3jw5Ui28Ocf+tTR16UjyLuMSfxfKQZbX2Z1mFup3mOVeCnwjtHAIVk0I11efH5
-         wzNQeDP6IrGKrDm7IucFpOoDBc5v/km6nXBCuROEJUr637EmabK6RCA2WOywekUVLmTV
-         OCgg==
-X-Gm-Message-State: AD7BkJIwoEFWQSMK4cT/dOuMObmLkbnMiHe1VQuiIk2mKedL2VG61zTIP6Mao3ebCH4q6g==
-X-Received: by 10.140.93.65 with SMTP id c59mr28212839qge.101.1456859861461;
-        Tue, 01 Mar 2016 11:17:41 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id u202sm13539964qka.43.2016.03.01.11.17.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Mar 2016 11:17:40 -0800 (PST)
-In-Reply-To: <56D5CF9C.4010808@ramsayjones.plus.com>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1751624AbcCATfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 14:35:03 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:55249 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751187AbcCATfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 14:35:02 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3qF7vl3k9Tz5tlM;
+	Tue,  1 Mar 2016 20:34:59 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 4B7D251EA;
+	Tue,  1 Mar 2016 20:34:58 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288057>
 
-On Tue, 2016-03-01 at 17:21 +0000, Ramsay Jones wrote:
-> 
-> On 01/03/16 00:53, David Turner wrote:
-> > It will soon be useful for resolve_ref_unsafe to support
-> > submodules.
-> > But since it is called from so many places, changing it would have
-> > been painful.  Fortunately, it's just a thin wrapper around (the
-> > former) resolve_ref_1.  So now resolve_ref_1 becomes
-> > resolve_ref_unsafe_submodule, and it passes its submodule argument
-> > through to read_raw_ref.
-> > 
-> > The files backend doesn't need this functionality, but it doesn't
-> > hurt.
-> > 
-> > Signed-off-by: David Turner <dturner@twopensource.com>
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >  refs.c               | 41 +++++++++++++++++++++++++---------------
-> > -
-> >  refs/files-backend.c |  8 ++++++--
-> >  refs/refs-internal.h | 19 ++++++++++++++++---
-> >  3 files changed, 47 insertions(+), 21 deletions(-)
-> > 
-> > diff --git a/refs.c b/refs.c
-> > index 5fe0bac..d1cf707 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -60,6 +60,9 @@ void register_ref_storage_backends(void)
-> >  	 * entries below when you add a new backend.
-> >  	 */
-> >  	register_ref_storage_backend(&refs_be_files);
-> > +#ifdef USE_LIBLMDB
-> > +	register_ref_storage_backend(&refs_be_lmdb);
-> > +#endif
-> 
-> Again, just skimming patches, ...
-> 
-> The lmdb refs backend (hence refs_be_lmdb) is not introduced until
-> the next patch [31/33], right?
+Am 01.03.2016 um 15:13 schrieb Johannes Schindelin:
+> The pthread_exit() function is not expected to return. Ever. On Windows,
+> we call ExitThread() whose documentation claims: "This function does not
+> return a value.":
+>
+> 	https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659
 
-Yep.
+This is misleading: MSDN marks all functions declared void as "does not 
+return a value," for example, look at EnterCriticalSection:
+
+https://msdn.microsoft.com/en-us/library/windows/desktop/ms682608
+
+For this reason, I actually prefer your version 1 patch without the 
+explanation.
+
+>
+> Pointed out by Jeff King.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	Relative to v1, only the commit message changed (to clarify that
+> 	ExitThread() indeed never returns).
+>
+>   compat/win32/pthread.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
+> index 20b35a2..148db60 100644
+> --- a/compat/win32/pthread.h
+> +++ b/compat/win32/pthread.h
+> @@ -78,7 +78,7 @@ extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
+>   #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
+>   extern pthread_t pthread_self(void);
+>
+> -static inline int pthread_exit(void *ret)
+> +static inline int NORETURN pthread_exit(void *ret)
+
+I would have written it as
+
+#ifdef __GNUC__
+__attribute__((__noreturn__))
+#endif
+static inline int pthread_exit(void *ret) ...
+
+but I can live with your version as long as it compiles.
+
+Your solution is pragmatic: NORETURN is defined in git-compat-util.h, 
+and by using it here, we depend on that pthread.h is included 
+sufficiently late that the macro is available at this point. The 
+instance in compat/nedmalloc/malloc.c.h is bracketed with #ifndef WIN32 
+so that it is not compiled on Windows, all other instances are after 
+git-compat-util.h or cache.h or in headers that are to be included only 
+after git-compat-util.h or cache.h per convention. Looks like we are safe.
+
+>   {
+>   	ExitThread((DWORD)(intptr_t)ret);
+>   }
+>
