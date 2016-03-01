@@ -1,105 +1,96 @@
-From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: [PATCH v3] fetch-pack: fix object_id of exact sha1
-Date: Mon, 29 Feb 2016 23:12:56 -0300
-Message-ID: <1456798376-29904-1-git-send-email-gabrielfrancosouza@gmail.com>
-References: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] fetch-pack: fix object_id of exact sha1
+Date: Mon, 29 Feb 2016 23:40:33 -0500
+Message-ID: <20160301044033.GA19272@sigill.intra.peff.net>
+References: <xmqqh9gseiqk.fsf@gitster.mtv.corp.google.com>
+ <1456698144-11519-1-git-send-email-gabrielfrancosouza@gmail.com>
+ <20160229100030.GB2950@sigill.intra.peff.net>
+ <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 01 03:13:52 2016
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 05:40:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaZot-0005qT-NP
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 03:13:52 +0100
+	id 1aac6z-00047V-JW
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 05:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbcCACNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 21:13:48 -0500
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:33091 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbcCACNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 21:13:47 -0500
-Received: by mail-yw0-f173.google.com with SMTP id u200so138005557ywf.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 18:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=o5G0eBW51BBkFUG8yg7IPf9J6ei8uWg6Mb1XMS/LI7A=;
-        b=CV0d+l3lqwzlOqGPXZRYA4T8GQmsZ+pBvWZngqoTR5zUErBrQcpB+8S0NLpmcQFTUs
-         2qLgza6I7Q8K2mFKbTRsGleNh2IhratwK7vqO86arKC1eGaadbqCIeaQcnf4E/aeUiT2
-         0OvX3A7edxH+oUhFi4H9Qcr6zsMe/qCj2Q8bbE/W8camUGlbR0yGByfgA6gVAF1FaSoQ
-         Z1vaz7fRKfw9annqrxRIelSD0Ob8ll4xJUi4RB9fWDZaX+dOk5BWknYdp4NOFSIDU48w
-         x1LHJk8sI7cEdHYeCmGGJ/pk+Y3XjvHnzYGYZ1RIDVpMGDexq7xWVAzQUuuV+1TjT+A8
-         BWew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=o5G0eBW51BBkFUG8yg7IPf9J6ei8uWg6Mb1XMS/LI7A=;
-        b=HIcT4uoNTVjYoByECMrIqpGuk7zSgMzLwVsE8JqM+ms4GpQc6faZeaERmAkeRyN2Gb
-         mF+eYPggIrDlUQaLSb5tyOWTM1Uf+xnM0ME1TOoo7jk99lLYC8jYvtBJjKXPdR9drgJ2
-         dsSBGBaO7dFdjljT7EwsdOPCRFlvd4EhMWr4dUax871IpeCWeaI4E5sV8nQMGd4gdssT
-         eERphYaPy/lG030TOgep97i+F15Wft2XyO8fh8lsnJCC6WYm0ljgJYJS4qTPU5tzpP3q
-         OUNPs9DoRAZ9DmFdPZE9awSgc0EeJy8t0deQMOVrLQRmRcos0nCWqSfcvMhJJ5WTMC3E
-         odEw==
-X-Gm-Message-State: AD7BkJJAq9GWrDhnoGhHCMled2//9OIj9Oufilox+Xt4bLHjC4ng6WFG5juPeQTJGmzjGg==
-X-Received: by 10.129.38.135 with SMTP id m129mr10432209ywm.155.1456798426779;
-        Mon, 29 Feb 2016 18:13:46 -0800 (PST)
-Received: from ghost.localdomain ([201.82.54.180])
-        by smtp.gmail.com with ESMTPSA id h131sm23019956ywb.25.2016.02.29.18.13.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Feb 2016 18:13:46 -0800 (PST)
-X-Mailer: git-send-email 2.7.2
+	id S1751448AbcCAEkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 23:40:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52204 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750798AbcCAEkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 23:40:36 -0500
+Received: (qmail 736 invoked by uid 102); 1 Mar 2016 04:40:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 23:40:36 -0500
+Received: (qmail 4380 invoked by uid 107); 1 Mar 2016 04:40:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 23:40:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 23:40:33 -0500
+Content-Disposition: inline
 In-Reply-To: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287996>
 
-Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
-2013-12-05) added support for specifying a SHA-1 as well as a ref name.
-Add support for specifying just a SHA-1 and set the ref name to the same
-value in this case.
+On Mon, Feb 29, 2016 at 11:08:07PM -0300, Gabriel Souza Franco wrote:
 
-Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
----
+> On Mon, Feb 29, 2016 at 5:30 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Having said that, this *might* be a good opportunity to imitate the
+> > skip_prefix() function. If there are enough similar code constructs, we
+> > could simplify all of them by introducing the function
+> >
+> >         skip_oid_hex(const char *str, struct object_id *oid, const char **out)
+> >
+> > that returns 1 if and only if an oid was parsed, and stores the pointer
+> > after the oid in "out" (skipping an additional space if there is one)?
+> 
+> I don't think there's any other place that accepts all of "<sha1>",
+> "<sha1> <ref>" and "<ref>"
+> based on a quick grep for get_oid_hex.
 
-I did keep the oid variable because ref is uninitialized at that point,
-and this means having to copy either name or old_oid afterwards anyway.
+Yes, but there are places where we get_oid_hex and then skip past that,
+which could use the skip_oid_hex function, like:
 
- builtin/fetch-pack.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 79a611f..50c9901 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -16,10 +16,20 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- 	struct ref *ref;
- 	struct object_id oid;
+diff --git a/connect.c b/connect.c
+index 0478631..ba22ee6 100644
+--- a/connect.c
++++ b/connect.c
+@@ -149,10 +149,9 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 			continue;
+ 		}
  
--	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
--		name += GIT_SHA1_HEXSZ + 1;
--	else
-+	if (!get_oid_hex(name, &oid)) {
-+		if (name[GIT_SHA1_HEXSZ] == ' ') {
-+			/* <sha1> <ref>, find refname */
-+			name += GIT_SHA1_HEXSZ + 1;
-+		} else if (name[GIT_SHA1_HEXSZ] == '\0') {
-+			/* <sha1>, leave sha1 as name */
-+		} else {
-+			/* <ref>, clear cruft from oid */
-+			oidclr(&oid);
-+		}
-+	} else {
-+		/* <ref>, clear cruft from get_oid_hex */
- 		oidclr(&oid);
-+	}
+-		if (len < GIT_SHA1_HEXSZ + 2 || get_oid_hex(buffer, &old_oid) ||
+-			buffer[GIT_SHA1_HEXSZ] != ' ')
++		if (!skip_oid_hex(buffer, &old_oid, &name) ||
++		    !skip_prefix(name, " ", &name))
+ 			die("protocol error: expected sha/ref, got '%s'", buffer);
+-		name = buffer + GIT_SHA1_HEXSZ + 1;
  
- 	ref = alloc_ref(name);
- 	oidcpy(&ref->old_oid, &oid);
--- 
-2.7.2
+ 		name_len = strlen(name);
+ 		if (len != name_len + GIT_SHA1_HEXSZ + 1) {
+
+_But_, if you look at the context just below, we make another implicit
+assumption about GIT_SHA1_HEXSZ. So it's really not buying us that much
+(unless we switch around the whole function to keep reading to the final
+pointer, and compare "end - start" to the original "len" here).
+
+So I'm not sure it's worth the trouble. I am really happy with the
+skip_prefix() function for parsing like this, but I think it's just not
+nearly as big a deal with oid-parsing, because we already have a nice
+constant of GIT_SHA1_HEXSZ to match it (whereas skipping "foo" requires
+us writing the magical "3" somewhere).
+
+Anyway. Whether we want to pursue that or not, I don't think it needs to
+be part of your series. Let's focus on the original goal.
+
+-Peff
