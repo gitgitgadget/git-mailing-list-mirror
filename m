@@ -1,107 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Mark win32's pthread_exit() as NORETURN
-Date: Tue, 01 Mar 2016 09:57:36 -0800
-Message-ID: <xmqq60x684j3.fsf@gitster.mtv.corp.google.com>
-References: <69eef72cfc77e62ad7ad17c6df5f2d2396c64991.1456840324.git.johannes.schindelin@gmx.de>
-	<d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
-	<56D5A955.8010904@atlas-elektronik.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
+Date: Tue, 1 Mar 2016 10:05:34 -0800
+Message-ID: <CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+ <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+ <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com> <xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <stefan.naewe@atlas-elektronik.com>, <git@vger.kernel.org>,
-	<peff@peff.net>, <tboegi@web.de>
-To: <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 01 18:57:46 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 19:06:02 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaoYK-0008M0-NI
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:57:45 +0100
+	id 1aaogK-0005jK-NS
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbcCAR5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 12:57:40 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58845 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751139AbcCAR5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 12:57:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 02CE148A2F;
-	Tue,  1 Mar 2016 12:57:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UMo5VM9G/7QPR3xEPnx0QwhlEUk=; b=kib4qy
-	QoURhWfKHPbxX4tKcQbf7WEZ6fyblYvV43OLTTQg5DcVL9aUc5P6NhDsynNyHQhG
-	OnkPRkRf5M2MZe1bpFaOFA1s1R1L450eOIDc/nYez6N/cGK9ArW25657BV3gxIrx
-	5umyL6MtKPTugl6npbRsIZWRtzLAIm6IhwKwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=afNl9A01Hv1O04dYJKT1G2flSyGzLxVx
-	kjOXoR5cIk7qDgqKchxZajYH+sycIty5qgF3bBuONFOfV5w19WdpDL1Vl3+PePAH
-	iWgEJ8klOLBIVG1St+n64GJQ5i7xoecLgNd33uMf5fl0ON3iZ0cOChkDv3Nl/Ita
-	kmBdDw/YGu0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ED5A948A2E;
-	Tue,  1 Mar 2016 12:57:37 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 63CBF48A2D;
-	Tue,  1 Mar 2016 12:57:37 -0500 (EST)
-In-Reply-To: <56D5A955.8010904@atlas-elektronik.com> (stefan naewe's message
-	of "Tue, 1 Mar 2016 15:38:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 155FF4B6-DFD7-11E5-81DF-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752078AbcCASFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 13:05:55 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36758 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084AbcCASFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 13:05:54 -0500
+Received: by mail-io0-f173.google.com with SMTP id l127so231591921iof.3
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 10:05:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YRTtDK2pG9Ut6VzkYZ5U1QDtssUKaMpIpgDFALJPHk4=;
+        b=bhLfIAs6qzMuaKAydHW3iXcJqchLvKl8Hyl0msYOxi04rGe7rFyQTSDFez7fDKQTHv
+         cmAIBoVJdWgUIC1lsc48/IPKcL5Cd9reosUlyH5WE/YaEPXKIeK6WCr0TNWWvhvEH6Z4
+         S72yCuRD5m4Hh6766wKh6n/j+ThdsVPsATn/83G7fyIFNTzQbHn86VK6W0NRCbVp8sAk
+         C2KdYFyIXU8IvqDszG6QB2t/sIGx48GAjcRDxP5Q14LWlXJ5BST3NB1qDqm5LNF+hLPp
+         J+zBk7qf92kXa9aD1JB8ZuSTNO76EhOiOP4FfIrVjy+aH53BUX8p/TMj+zMLj76erh6p
+         h2Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YRTtDK2pG9Ut6VzkYZ5U1QDtssUKaMpIpgDFALJPHk4=;
+        b=AoRgvdT5INE7ybTctkkkbwH3Y/x+DumRQhmT7/4gRAJZ9cGkeRlgpJwDVrqxH90WMT
+         S3wzb2E+SiWRhGYIWXimMVp+a9jLjXuZlJ2U3hKHrikgq/ja8YoPCBoipih3mNROKsBW
+         gnRbZ6elJ9ZYx4K0/Q6cCJVrHlIZ4TrCPSNRVygtOt82qTVkivb6dN4SZuSelLi6gmTV
+         YfQlZOvYBuHh9WvwjXbxlI5uEZs0YEyer1+Ui9fHNBwKJcnyCoWupRCXGjF4JT/xtRBl
+         ExK6wL9u0+SlOvn7dzRlRz20JQgsxfBYOWSpx9NzQD7kLcBwK2eetK+OM2PVNapYilh3
+         lHnQ==
+X-Gm-Message-State: AG10YORf+QnVp1LOLH07ZVvfvL9GuJMbv/Ng/WY417UFh82YC+rNPijMquH1nCIenwUWboBxoT9EHueLfk7B2w==
+X-Received: by 10.107.166.195 with SMTP id p186mr26190461ioe.146.1456855553824;
+ Tue, 01 Mar 2016 10:05:53 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Tue, 1 Mar 2016 10:05:34 -0800 (PST)
+In-Reply-To: <xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288049>
 
-<stefan.naewe@atlas-elektronik.com> writes:
+On Tue, Mar 1, 2016 at 9:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I find this in t/lib-httpd.sh:
+>
+>         set_askpass() {
+>                 >"$TRASH_DIRECTORY/askpass-query" &&
+>                 echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
+>                 echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+>         }
+>
+> and expect_askpass peeks at askpass-query to see if Git asked the
+> right questions.
+>
+> I think askpass-query is cleared here because the author of the test
+> suite expected that the helpers are used in such a way that you
+> always (1) set-askpass once, (2) run a Git command that asks
+> credentials, (3) use expect_askpass to validate and do these three
+> steps as a logical unit?
+>
+> That "clone" the test expects to fail does ask the credential, so
+> even though the test does not check if the "clone" asked the right
+> question, it finishes the three-step logical unit, and then you need
+> to clear askpass-query.
+>
+> It may have been cleaner if you had clear_askpass_query helper that
+> is called (1) at the beginning of set_askpass instead of this manual
+> clearing, (2) at the end of expect_askpass, as the exchange has been
+> tested already at that point, and (3) in place of expect_askpass if
+> you choose not to call it (e.g. this place, instead of the second
+> set_askpass, you would say clear_askpass_query), perhaps, but I do
+> know if that is worth it.
+>
 
-> Am 01.03.2016 um 15:13 schrieb Johannes Schindelin:
->> The pthread_exit() function is not expected to return. Ever. On Windows,
->> we call ExitThread() whose documentation claims: "This function does not
->> return a value.":
->
-> Does this really mean that ExitThread() does not return ?
->
-> Just wondering...
+Probably something worth looking at doing in the future.
 
-;-).
+I could call expect_askpass here at each time but I don't think it
+would be meaningful after a test_must_fail.
 
-That made me re-read the patch and notice another thing... Dscho, I
-think you would need s/int/void/, too, no?
-
->
->>         https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659
->> 
->> Pointed out by Jeff King.
->> 
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->> 
->>         Relative to v1, only the commit message changed (to clarify that
->>         ExitThread() indeed never returns).
->> 
->>  compat/win32/pthread.h | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
->> index 20b35a2..148db60 100644
->> --- a/compat/win32/pthread.h
->> +++ b/compat/win32/pthread.h
->> @@ -78,7 +78,7 @@ extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
->>  #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
->>  extern pthread_t pthread_self(void);
->> 
->> -static inline int pthread_exit(void *ret)
->> +static inline int NORETURN pthread_exit(void *ret)
->>  {
->>         ExitThread((DWORD)(intptr_t)ret);
->>  }
->> --
->
->
-> Stefan
+Thanks,
+Jake
