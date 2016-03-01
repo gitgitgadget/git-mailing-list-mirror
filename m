@@ -1,98 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Mark win32's pthread_exit() as NORETURN
-Date: Tue, 01 Mar 2016 11:44:24 -0800
-Message-ID: <xmqqio166l0n.fsf@gitster.mtv.corp.google.com>
-References: <69eef72cfc77e62ad7ad17c6df5f2d2396c64991.1456840324.git.johannes.schindelin@gmx.de>
-	<d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
-	<56D5EEE2.3080100@kdbg.org>
+From: Jeenu Viswambharan <jeenuv@gmail.com>
+Subject: git add -p refuses to apply an edited patch that otherwise applies
+Date: Tue, 1 Mar 2016 20:04:39 +0000
+Message-ID: <CAKCW0Y6GT1aKoCLtPaX+-Qk4u6qGdpAZ7RCFFb29qwteJzY1ww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:44:38 2016
+Content-Type: multipart/mixed; boundary=001a113ec13a3b07a8052d02486b
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:05:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaqDg-0000VZ-Sz
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:44:33 +0100
+	id 1aaqXm-0006oN-7X
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 21:05:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752646AbcCATo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 14:44:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53529 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752234AbcCATo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 14:44:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 35F6548B28;
-	Tue,  1 Mar 2016 14:44:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e1Ok3P946M9asUf+BmRlUKfNBa0=; b=cFG0VO
-	PzjCu9l+TFgnyHM61PmAAeRcEzvfm6tZS21/p9+lMzLPJAfMJkXy8fnZ5nNkWcC5
-	Ke2ahqCNVKEphgpou2iKhlQ36EcQXyOCGojTIcYtBldLk1YXpI8IqZkIDmzTZfMY
-	khCKOaq+9/1jQsbcJ7cfQYogyw60YGZebk4tY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xRUDcNbSfzpYIkCXM/JLCDZPvd8gSqo1
-	qHeFfswVDJ+3KSL5OyCz7a95POztnSrQ2+QZQxipgUbPUrOJciAxEP/cSLHZuFOw
-	IV+84wTZLbLIdXNvekc0X/+xr+NIku/bWcYTiSrgc4dwmhmK8igwR1BFEx77b/Nl
-	w/tLkaQhLB0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D9FD48B27;
-	Tue,  1 Mar 2016 14:44:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9D5CA48B26;
-	Tue,  1 Mar 2016 14:44:25 -0500 (EST)
-In-Reply-To: <56D5EEE2.3080100@kdbg.org> (Johannes Sixt's message of "Tue, 1
-	Mar 2016 20:34:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 00FAED64-DFE6-11E5-A546-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751531AbcCAUFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 15:05:10 -0500
+Received: from mail-io0-f180.google.com ([209.85.223.180]:34554 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750813AbcCAUFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 15:05:09 -0500
+Received: by mail-io0-f180.google.com with SMTP id b188so17661093iof.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 12:05:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hhiYUS1jhBRgdO0rjD1KTPZSQWHPx9LKV3QGFTaMivw=;
+        b=jctUXsfYNnEP8sDBDk6iF6DHiX0reKc0WW0fEi4ftl8qrG5P4JheDtDITf8T0kZ8Ma
+         DzROTBZO8mhkDEVmye+MIAj2OCjoHhCP4u2WjlCH6yb/FFTAN0xpShrF8EDHkCxhHBay
+         mknYA9gJQDhqN66P5aalp3Z2ahjB8qC8xJcL0hWFOWVYVZUxOi6TaGqe4VMOxbOxuvvl
+         POmAo/SiO5AblI7EHUiT1DmVkp9sQizknImhKMd3reLheeFigrxtd3AbpdgwSJTEt03I
+         MP5aL6NS00dEP+KBvrq3Be8bnn/b6WlsKrf2b6hsLvQfk5RD079FF8Lycr4ZoZIdIACh
+         8v5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hhiYUS1jhBRgdO0rjD1KTPZSQWHPx9LKV3QGFTaMivw=;
+        b=KjPD5z3xlPUagsZRHQ8TfaQme+RNEI7yAa4NMu0QpevbIsTDcbT3phSFK6sTShSNh0
+         UbcbBUiYH3VH2XgNv1Nk7J639KNIAqvW6Snvcu8wirNnDGk+sPFhQDxdgZJ/82dcXx1L
+         u1tJV9FWYc6RNXtd2fAr1oIyeLIrqM7vH+NeF5MIhTwqR2n4f8wiOah/GTc7v7XO5fsa
+         jmZEGIJAJ/93wXIIgfSoM8yNYUAyU3d+j6Se6tW4JSI1mf/wE66C3mD3nKFwzk0Lgl3W
+         bxqGH6ZRSsavBYiEyNV/Dn/cTM9PT63EG01opmchRI+u/BQGWXatp2v9bFdb4PQZjldF
+         OLkg==
+X-Gm-Message-State: AG10YOTgyFiiuE4nirDE5Yk6shIuA8qKyxn7nNB26rrsimGJB/Q3/ntkew+8uVdkEdBkbjoVwIXZ2dfjnDpomw==
+X-Received: by 10.107.130.167 with SMTP id m39mr31091073ioi.77.1456862708554;
+ Tue, 01 Mar 2016 12:05:08 -0800 (PST)
+Received: by 10.107.155.213 with HTTP; Tue, 1 Mar 2016 12:04:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288059>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+--001a113ec13a3b07a8052d02486b
+Content-Type: text/plain; charset=UTF-8
 
-> Am 01.03.2016 um 15:13 schrieb Johannes Schindelin:
->> The pthread_exit() function is not expected to return. Ever. On Windows,
->> we call ExitThread() whose documentation claims: "This function does not
->> return a value.":
->>
->> 	https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659
->
-> This is misleading: MSDN marks all functions declared void as "does
-> not return a value," for example, look at EnterCriticalSection:
->
-> https://msdn.microsoft.com/en-us/library/windows/desktop/ms682608
->
-> For this reason, I actually prefer your version 1 patch without the
-> explanation.
+Hi,
 
-;-)
+As subject, the problem I'm facing is that, while doing an interactive
+add, an edited patch fails to apply. The same patch content
+successfully applies otherwise, with git apply.
 
->> -static inline int pthread_exit(void *ret)
->> +static inline int NORETURN pthread_exit(void *ret)
->
-> I would have written it as
->
-> #ifdef __GNUC__
-> __attribute__((__noreturn__))
-> #endif
-> static inline int pthread_exit(void *ret) ...
->
-> but I can live with your version as long as it compiles.
+To reproduce the problem:
 
-Either way, let's make sure that the final version returns "void",
-cf.
+  - Add the attached site.css to an empty git repository, and make an
+initial commit
+  - Apply the attached full.patch using 'patch -p1'
+  - Do 'git add -p', and choose to edit the second hunk (i.e., s, n, e)
+  - Edit the presented patch look like the content of attached
+no_problem.patch; write and quit
 
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_exit.html
+The patch fails to apply.
 
-Thanks.
+To see git apply the patch normally, do 'git reset --hard'. Now apply
+the no_problem.patch as
+
+git apply --cached --recount < no_problem.patch
+
+AFAIU, the command above is what the interactive script uses to apply
+the patch to the index, but I'm confused as to why an edited patch
+fails.
+
+Any thoughts? FWIW, I'm using version 2.7.2.
+
+-- 
+Jeenu
+
+--001a113ec13a3b07a8052d02486b
+Content-Type: text/x-patch; charset=US-ASCII; name="full.patch"
+Content-Disposition: attachment; filename="full.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_il9ucl0s0
+
+ZGlmZiAtLWdpdCBhL3NpdGUuY3NzIGIvc2l0ZS5jc3MKaW5kZXggNjhhODhhZS4uMTQzODM4YyAx
+MDA2NDQKLS0tIGEvc2l0ZS5jc3MKKysrIGIvc2l0ZS5jc3MKQEAgLTUzLDE0ICs1NywyMyBAQCBo
+NCB7CiAgIG92ZXJmbG93LXk6IGF1dG87CiB9CiAKLXAgewotICBtYXJnaW46IDE1cHggMHB4Owor
+LyogVGFibGUgb2YgY29udGVudHMgKi8KKyN0b2MgeworICBtYXJnaW46IDIwcHggMHB4IDIwcHgg
+MHB4OworICBwYWRkaW5nLWxlZnQ6IDVweDsKIH0KLQotaDEsIGgyLCBoMywgaDQgeworI3RvYyBs
+aSB7CisgIGRpc3BsYXk6IGJsb2NrOworfQorI3RvYyB1bCB7CisgIHBhZGRpbmctbGVmdDogMTBw
+eDsKICAgbWFyZ2luOiA1cHggMHB4OwogfQogCitwIHsKKyAgbWFyZ2luOiAxNXB4IDBweDsKK30K
+KwogLyoKICAqIEZvciBzY3JlZW4gd2lkZXIgdGhhbiA0ODBweCwgZml4IHRoZSBsZWZ0IGJhciwg
+YW5kIHNldCAyNS83NSBzcGxpdC4KICAqIEFsc28gc2V0IGEgbWF4IHdpZHRoIG9mIDI1MHB4IGFu
+ZCA3NTBweCBtYXgtd2lkdGggcmVzcGVjdGl2ZWx5Cg==
+--001a113ec13a3b07a8052d02486b
+Content-Type: text/x-patch; charset=US-ASCII; name="no_problem.patch"
+Content-Disposition: attachment; filename="no_problem.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_il9ucl1o1
+
+ZGlmZiAtLWdpdCBhL3NpdGUuY3NzIGIvc2l0ZS5jc3MKaW5kZXggNjhhODhhZS4uMTQzODM4YyAx
+MDA2NDQKLS0tIGEvc2l0ZS5jc3MKKysrIGIvc2l0ZS5jc3MKQEAgLTU4LDYgKzYwLDkgQEAKIH0K
+LQotaDEsIGgyLCBoMywgaDQgewotICBtYXJnaW46IDVweCAwcHg7Ci19CiAK
+--001a113ec13a3b07a8052d02486b
+Content-Type: text/css; charset=US-ASCII; name="site.css"
+Content-Disposition: attachment; filename="site.css"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_il9ucl202
+
+Ci8qIFN0eWxlcyB0byBiZSBhcHBsaWVkIGZvciBldmVyeSBvbmUgKi8KYm9keSB7CiAgcG9zaXRp
+b246IHJlbGF0aXZlOwoKICBmb250LWZhbWlseTogIlBUIFNhbnMiLCBzYW5zLXNlcmlmOwogIGZv
+bnQtc2l6ZTogMTZweDsKICB0ZXh0LXJlbmRlcmluZzogb3B0aW1pemVMZWdpYmlsaXR5OwoKICBs
+aW5lLWhlaWdodDogMS40ZW07CiAgd29yZC1zcGFjaW5nOiAwLjA1ZW07CgogIGJveC1zaXppbmc6
+IGJvcmRlci1ib3g7CgogIG1hcmdpbjogMHB4OwogIHBhZGRpbmc6IDBweDsKCiAgY29sb3I6ICMz
+MzM7Cn0KCi8qIFVzZSBwcm9ncmVzc2l2ZWx5IHNtYWxsZXIgaGVhZGluZ3MgKi8KaDEgewogIGZv
+bnQtc2l6ZTogMmVtOwp9CmgyIHsKICBmb250LXNpemU6IDEuN2VtOwp9CmgzIHsKICBmb250LXNp
+emU6IDEuNWVtOwp9Cmg0IHsKICBmb250LXNpemU6IDEuM2VtOwp9CgojbGVmdC1iYXIsICNtYWlu
+IHsKICAvKiBVc2UgYm9yZGVyIGJveCAqLwogIGJveC1zaXppbmc6IGJvcmRlci1ib3g7CgogIC8q
+IFVzZSA1cHggcGFkZGluZyBvdmVyYWxsOyBhIGxpdHRsZSBtb3JlIG9uIHRoZSBsZWZ0ICovCiAg
+cGFkZGluZzogNXB4OwogIHBhZGRpbmctbGVmdDogMTBweDsKfQoKI2xlZnQtYmFyIHsKICAvKiBV
+c2UgYSBzbWFsbGVyIGZvbnQgKi8KICBmb250LXNpemU6IDAuOWVtOwoKICAvKiBFeHRyYSBwYWRk
+aW5nIHRvIHJpZ2h0ICovCiAgcGFkZGluZy1yaWdodDogMTBweDsKCiAgLyogRml4IGhlaWdodCBh
+dCAxMDAlIHNvIHRoYXQgd2UgZ2V0IGEgc2Nyb2xsYmFyICovCiAgbWF4LWhlaWdodDogMTAwJTsK
+ICBvdmVyZmxvdy15OiBhdXRvOwp9CgpwIHsKICBtYXJnaW46IDE1cHggMHB4Owp9CgpoMSwgaDIs
+IGgzLCBoNCB7CiAgbWFyZ2luOiA1cHggMHB4Owp9CgovKgogKiBGb3Igc2NyZWVuIHdpZGVyIHRo
+YW4gNDgwcHgsIGZpeCB0aGUgbGVmdCBiYXIsIGFuZCBzZXQgMjUvNzUgc3BsaXQuCiAqIEFsc28g
+c2V0IGEgbWF4IHdpZHRoIG9mIDI1MHB4IGFuZCA3NTBweCBtYXgtd2lkdGggcmVzcGVjdGl2ZWx5
+CiAqLwo=
+--001a113ec13a3b07a8052d02486b--
