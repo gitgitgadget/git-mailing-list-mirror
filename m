@@ -1,96 +1,102 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] Documentation: reword rebase summary
-Date: Tue, 1 Mar 2016 15:01:07 -0800
-Message-ID: <CA+P7+xp-YZJQh9=kHKnTEo-_k4xxniykH7pJ1neYbOS9em4N_Q@mail.gmail.com>
-References: <1456872598-32571-1-git-send-email-sbeller@google.com>
+From: Joey Hess <id@joeyh.name>
+Subject: Re: bug: git submodule add fails when .git is a symlink
+Date: Tue, 1 Mar 2016 19:14:22 -0400
+Message-ID: <20160301231422.GA3731@kitenet.net>
+References: <20160301204218.GA4083@kitenet.net>
+ <CAGZ79kY6Lf6u0=s8J_cqRNFsry4nu2SdL0GZ2gkFsu6gBrB65Q@mail.gmail.com>
+ <CAGZ79kbV9y6nDuBgqLbzQ=xaroG_uF8RF6gqzk=unJ-9rrtvfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>, pdewulf@lyra-network.com,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 00:01:34 2016
+X-From: git-owner@vger.kernel.org Wed Mar 02 00:14:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aatIK-0005Zw-Oi
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 00:01:33 +0100
+	id 1aatUx-00063t-Pq
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 00:14:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbcCAXB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 18:01:29 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:38222 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750850AbcCAXB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 18:01:28 -0500
-Received: by mail-ig0-f178.google.com with SMTP id y8so30016879igp.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 15:01:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ktOXO3k/zaPwLMtGyAXFYwMj1Bzyg7XKDLIBPt4uFFM=;
-        b=oey1IuVGuSe3jMKpTbg33XLlfLKeez38gp2zENmtWtEU49iJt/lSJS+OxtSzqj1Npn
-         UF3PDCCyoZTSK77QCbdlGzk163jPhtGieHfUMeaM7dH7CFL6PN0+Y0C8aFCZXdoWcf36
-         pYJ1H6m8dooCJ6vwlccTTpVxkeD+hpILR65kLuLsTAB7ScPj507eaEUeBe9XidVoyDGv
-         EzqdDTCPAReVfROsV6sRFEpfRr7TlxtZeADSSmWs9il8MBnQy/YYV/3BFAGtfhCYZmMq
-         EOHiGNOZ9s/XVyZsH0hTFVD9ZYbRAiB/c/NQtVuFzAgXMLwVcArOFYOj568sMp72WLJS
-         PE1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ktOXO3k/zaPwLMtGyAXFYwMj1Bzyg7XKDLIBPt4uFFM=;
-        b=f9egqTB6YTF8uTrEJHWdbx5RdOTq/ETxqguadK/jOpIx6bkytDFsQe6rc7sGot7mR8
-         9b/FAHJD5OWiD1lDBhnugRA3gVIJTsgKazuqFtQnxa878PrQkkVCPeF2I0TJnTQIkWE8
-         hzDqoBdk0UWc+nqTETF+/VWbifb0wkNcZ9XODM4a+kl03/iMkS0JnU7A34TRHEIU2JrD
-         Gycg65aCB/oKw9tdCNpSkxbeb1KIuAXHydMm/826P6BxqjNW2Wl1ete1XC8h/KPxS7d+
-         MlHReg+Rd5vkFRwpDJQpczvIJoZY5Antmm9Q1HC8o6ajhFEm81mu2e+/hb/MAg0+isx8
-         WiZA==
-X-Gm-Message-State: AD7BkJLNscnd+bTea8o60DK3CH8KU1XGkIEK9UVd0CoDf60ozbsGk4fdYM56DlBbof6z99tUC8CWk0v8kfXiwQ==
-X-Received: by 10.50.43.168 with SMTP id x8mr1633580igl.92.1456873287216; Tue,
- 01 Mar 2016 15:01:27 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Tue, 1 Mar 2016 15:01:07 -0800 (PST)
-In-Reply-To: <1456872598-32571-1-git-send-email-sbeller@google.com>
+	id S1751144AbcCAXOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 18:14:32 -0500
+Received: from kitenet.net ([66.228.36.95]:43714 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751066AbcCAXOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 18:14:31 -0500
+X-Question: 42
+Authentication-Results: kitenet.net;
+	dkim=pass (1024-bit key; unprotected) header.d=joeyh.name header.i=@joeyh.name header.b=Xl65N9Eh;
+	dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+	t=1456874062; bh=2mizP8B99LciOgn1XFr1j11E0dw6N5vgpIsbcWlK4d8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Xl65N9Ehd0hpKJstTnVcQ6IUnrDxPPEDOhtep6c2jV3SMvUkg7lyCbp9IHaSUPUCB
+	 YZxpndJdURTdBuH+WZkMjeI3+UeGM2IlN6eeCByLIlXFPCjfVdSWNri6+JrpBx63As
+	 fFpgHxVc2M+YtmorRoFy84nYzO8uc320Aa+5qfWs=
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbV9y6nDuBgqLbzQ=xaroG_uF8RF6gqzk=unJ-9rrtvfw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Status: No, score=-93.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
+	RCVD_IN_SORBS_DUL,RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
+	autolearn_force=no version=3.4.1
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kite.kitenet.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288077>
 
-On Tue, Mar 1, 2016 at 2:49 PM, Stefan Beller <sbeller@google.com> wrote:
-> The wording is introduced in c3f0baaca (Documentation: sync git.txt
-> command list and manual page title, 2007-01-18), but rebase has evolved
-> since then, capture the modern usage by being more generic about the
-> rebase command in the summary.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
->  Inspired by
->  https://medium.freecodecamp.com/git-rebase-and-the-golden-rule-explained-70715eccc372
->  (I tried to cc the author, but I am not sure if I got the right email address)
->
->  Thanks,
->  Stefan
->
->  Documentation/git-rebase.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 6cca8bb..6ed610a 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -3,7 +3,7 @@ git-rebase(1)
->
->  NAME
->  ----
-> -git-rebase - Forward-port local commits to the updated upstream head
-> +git-rebase - Reapply commits on top of another base tip
->
 
-Seems like a reasonable summary to me, and definitely more fitting of
-what rebase does today.
+--7AUc2qLy4jB3hD7Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Jake
+Stefan Beller wrote:
+> To elaborate on that: Starting in 2.7 parts of the submodule stuff
+> has been rewritten in C, in 2.8 even more and there is more in flight for
+>  > 2.8.
+>=20
+> However your bug is also to be found in 2.6, which doesn't contain any
+> recent rewrites, so it is a rather long standing bug, I would presume.
+
+Yes, I saw it with 2.7.0, but I think the user who reported it was on
+2.6.
+
+> As a workaround for now:
+>=20
+>     echo "gitdir: ../gitdir/.git" > .git
+
+Not an option in our particular situation, unfortunately.
+
+I wonder if the miscalculated ../../../somedir could cause git to access
+files outside the git repos?
+
+--=20
+see shy jo
+
+--7AUc2qLy4jB3hD7Z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBVtYiTMkQ2SIlEuPHAQKqyA/+KJAh5FiGJ2qLbMSjVAfIZw0d9ZmIfz6y
+pd7jPjmp6ocaCAJWT4CFsN5oAIBDsqo2diJAfKMo9gZEtJXlh6y+MPlzf/0eBHWD
+QkwaytgQ05wlbRevDleCGHkEyvhLdBC1F7F1YEiWQHFDvMpM15ft8gJBUHB+tLZb
+rh7Hnsn0NxRhXoLN7DStcLAkdP6jiwImsMNVga5E2EGQgFUvKkU16roKAYbIUkiB
+lA4mJJkpOvm9xySwf0rzqU1YXwTZ+EFViDOIX5nFu7Rv9E+2+OVE8rrvMa9g0cP+
+Is2+TDXGybecXCda+jurYY9kgt6M8Am+9XgE0enixTXTdlFIcHJ5DrG0lccE0ybm
+mdt9xg4tvmtpQg1jr2k0Tqkz6ulgx2UFuQhwQFdAhlUPoRt/zxw6shDQqyozdy7U
+0YJIDyAAuMtrSQCbXW125dDsKzq9YwIGea6gqUNMgnw37uhmpLT3hTKuf+zO/h/0
+pnMUu3fSAarwGO9OkBt/yLHxE3fgyVpLyraHF7QEH+4zO6GweRUigBiAilGSJeKc
+fX288I8y9NI+e8uh4konJoyUpGcnrJ9MxkSnm4YT74Jg4ZIeWLf+AN61WTyarfZh
+o/BcmJ53YM1pcfjGODrJA7JaP9gn/LeNK3Kwi0oH7p03Cmar1BQQ2/pJuYeFeYid
+xikKT7WpmGo=
+=3Vai
+-----END PGP SIGNATURE-----
+
+--7AUc2qLy4jB3hD7Z--
