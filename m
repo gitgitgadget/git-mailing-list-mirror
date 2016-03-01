@@ -1,108 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command
- line
-Date: Mon, 29 Feb 2016 20:36:16 -0500
-Message-ID: <20160301013616.GA18301@sigill.intra.peff.net>
-References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
- <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
- <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
- <CA+P7+xrr61wO0XrhXCEbSLPbSo7HxxzDWnq=6K14fvyo7RfscA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v7 31/33] refs: add LMDB refs storage backend
+Date: Tue, 1 Mar 2016 08:45:50 +0700
+Message-ID: <CACsJy8A8rwcKFb_fH2BZN=nuqMdhA2u8xCP4fN0KZmDAczQPog@mail.gmail.com>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+ <1456793586-22082-32-git-send-email-dturner@twopensource.com>
+ <CACsJy8AUqB_1XZweTmAV4atDeUWZJhzEJoY2t9nJqp3CNcViXA@mail.gmail.com> <1456796138.18017.77.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Mark Strapetz <marc.strapetz@syntevo.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 02:36:30 2016
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 02:46:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaZEk-0003b6-4I
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 02:36:30 +0100
+	id 1aaZOM-0000tv-0Y
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 02:46:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbcCABgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 20:36:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52125 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750760AbcCABgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 20:36:24 -0500
-Received: (qmail 24991 invoked by uid 102); 1 Mar 2016 01:36:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 20:36:18 -0500
-Received: (qmail 3210 invoked by uid 107); 1 Mar 2016 01:36:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Feb 2016 20:36:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Feb 2016 20:36:16 -0500
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xrr61wO0XrhXCEbSLPbSo7HxxzDWnq=6K14fvyo7RfscA@mail.gmail.com>
+	id S1750803AbcCABqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 20:46:22 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:34693 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbcCABqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 20:46:21 -0500
+Received: by mail-lb0-f179.google.com with SMTP id of3so90625152lbc.1
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 17:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vxHkd63/edXMyGlSh+lXUo5mwVEzdokkQN3f5cqX5Ic=;
+        b=B7Y9j34VB1Zn+raGlZkZrdH7XILREQwy5XfWhdmLcIKPxhm15sg4Vl7Y3UiPsqemqk
+         t3IDWBfJ8DeL8Fiydv+FrfhDdzQ6SuQ9lpistQgaKLxfpETugCUkZkeesQR1ycGzZeSZ
+         opSzmMLm4SDml1TM2pcTtmHn7QET6jQhwus0+Wd6paaj1QH+iNvzEW3sgaYVThHJHrWz
+         qGbJ16hlSYDQRQjfyaZU9GkndIaC8GVkSbnDNV92XlxDQfoSbvvyMbPBAXWlB8tO1Wso
+         IChdlWDHRqDEPX3JRZwAVFqHST6Jl6Gm/zmwZPO0HJt0B2HidZtcDEXuQh4Y1sziqELb
+         qpew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vxHkd63/edXMyGlSh+lXUo5mwVEzdokkQN3f5cqX5Ic=;
+        b=ZNBSZ9PzWIKLtPI/tfmKD03u+XaZipcah0mC6XCG8WTWSl5ORmegreKAtZTo6Dmjfu
+         +uywAf4vtiH7PrW4qZ9epgQq752qKOAtZdZIZHCgwp5JEj7WkpffDPYnnhFFZj/OokTV
+         c7BHY3fb2IGpAoN8y1Lgpu3cJRXiiC5SKqBHKjcDtY+ka54Wx5phqQDun129UIto8yIt
+         Dh8stV70IxZMzIB6KHj17+1FlPFk8weAy7neBopG9Mmlr5okRCoxVH6HhSDraZ5RzuC6
+         jgIsm6M8itDwB8KhTCOzWbjfMlLyaqFjsg2S5BDBOkuH1fWnBhkCdjcykVMu2JKpmZ00
+         3jdA==
+X-Gm-Message-State: AD7BkJJxD03poxkbhFeWHSQJV9v2QNBCouqnSRhHt61u6gDjXDC5SqFRamwFXHB/z/TkPVyrj1M5TxmBFD11PQ==
+X-Received: by 10.112.209.99 with SMTP id ml3mr6667297lbc.26.1456796779626;
+ Mon, 29 Feb 2016 17:46:19 -0800 (PST)
+Received: by 10.112.51.99 with HTTP; Mon, 29 Feb 2016 17:45:50 -0800 (PST)
+In-Reply-To: <1456796138.18017.77.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287982>
 
-On Mon, Feb 29, 2016 at 03:44:51PM -0800, Jacob Keller wrote:
+On Tue, Mar 1, 2016 at 8:35 AM, David Turner <dturner@twopensource.com> wrote:
+> On Tue, 2016-03-01 at 08:31 +0700, Duy Nguyen wrote:
+>> On Tue, Mar 1, 2016 at 7:53 AM, David Turner <
+>> dturner@twopensource.com> wrote:
+>> > +Weaknesses:
+>> > +-----------
+>> > +
+>> > +The reflog format is somewhat inefficient: a binary format could
+>> > store
+>> > +reflog date/time information in somewhat less space.
+>>
+>> This raises an interesting question. What if we want to change lmdb
+>> format in future (e.g. to address this weakness)? Do we need some
+>> sort
+>> of versioning in lmdb database? I suppose you can always add "lmdb2"
+>> backend that shares most of the code with current lmdb backend. Not
+>> sure if that's what you had in mind though.
+>
+> The weakness of versioning inside the LMDB database is that in order to
+> check the version, you need to already have LMDB.  That's the argument
+> for "lmdb2".
+>
+> I had sort of hoped that this version would be "good enough" that we
+> could avoid modifying it.  So maybe that means we ought to address the
+> reflog format.  But I'm not sure that it's that big a deal.  What do
+> you think?
 
-> On Mon, Feb 29, 2016 at 3:39 PM, Stefan Beller <sbeller@google.com> wrote:
-> > On Mon, Feb 29, 2016 at 2:58 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> >>
-> >> +test_expect_success 'cmdline credential config passes into submodules' '
-> >> +       git init super &&
-> >> +       set_askpass user@host pass@host &&
-> >
-> > I wonder why we use pass@host as a password, it seems confusing to me.
-> > p@ssword would have worked if we wanted to test a password containing an @,
-> > pass@host doesn't quite fit my mental model of how passwords work.
-> > No need to change anything, better be consistent with the rest of the tests.
-> >
-> 
-> I am not sure, but I don't think it particularly matters what we use.
-> Most of this is pretty much copied as suggested by Peff.
+I'm not using lmdb yet (can't because if I convert my git.git to use
+it, all topics I'm working on must be rebased on lmdb :-( ) so I don't
+have any strong opinion about this. As long as we have an escape hatch
+(that won't lead to a too messy future) I think we're good.
 
-Yes, this dates back to 3cf8fe1 (t5550: test HTTP authentication and
-userinfo decoding, 2010-11-14), and the point is just to have an "@" in
-each field. And then because that's the only username defined in the
-apache setup, it's the one all the tests use. :)
-
-I also have found it off-putting, because it looks like "host" is
-supposed to be meaningful. Perhaps the original author had a case where
-their web authentication involved a hostname (which seems plausible for
-a hosting site which covers multiple domains).
-
-It might be nice to fix that, either by using something like "us@r" and
-"p@ssword", or possibly by just introducing a new, easier to read
-alternative to lib-httpd/passwd and using it, as most sites are not
-testing URL parsing (though I suppose that using the @-filled ones
-consistently means we _do_ test the other code paths more thoroughly).
-
-But either way, I don't think it should be part of this series, which
-has already expanded well beyond its original 1-patch goal.
-
-> > Why set set_askpass a second time here?
-> 
-> Interesingly, it fails unless I add this line with:
-> [...]
-> I really don't understand why adding the extra askpass setting fixes
-> this? Possibly because the query and expect files are appended to? Or
-> something else subtle going on?
-
-Right. The askpass test-helper logs the queries it gets, and
-expect_askpass makes sure that we got the right set of queries. It has
-to append to the query-log because it may be invoked multiple times
-(e.g., once for the username, once for the password). So we have to
-clear the query log, and that is one of the things that set_askpass does
-(the other, obviously, is writing the user/pass values for askpass to
-feed back to git). Perhaps it should have been called init_askpass or
-something, but I don't think it's worth changing now.
-
-You could get away with just:
-
-  >"$TRASH_DIRECTORY/askpass-query"
-
-but IMHO it is less obscure to just call set_askpass a second time.
-
--Peff
+Note that storing in binary also has disadvantage. If we move from
+SHA-1 to SHA-XXX in future, we can easily detect incorrect reflog line
+in text form, it's a bit harder to do in binary form when you pack
+everything (including some variable stuff like email) in one value.
+But I think we don't have to care about that right now, there will be
+lots of problems migrating to SHA-XXX anyway.
+-- 
+Duy
