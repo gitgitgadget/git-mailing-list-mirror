@@ -1,104 +1,81 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
-Date: Tue, 1 Mar 2016 10:05:34 -0800
-Message-ID: <CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
-References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
- <1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
- <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com> <xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] environment.c: introduce DECLARE_GIT_GETTER helper macro
+Date: Tue, 01 Mar 2016 10:14:05 -0800
+Message-ID: <xmqqy4a26p76.fsf@gitster.mtv.corp.google.com>
+References: <1456601744-18404-1-git-send-email-kuleshovmail@gmail.com>
+	<20160301150543.GN12887@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Mark Strapetz <marc.strapetz@syntevo.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 19:06:02 2016
+Content-Type: text/plain
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 01 19:14:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaogK-0005jK-NS
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:06:01 +0100
+	id 1aaooL-0003VZ-J3
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:14:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbcCASFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 13:05:55 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:36758 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751084AbcCASFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 13:05:54 -0500
-Received: by mail-io0-f173.google.com with SMTP id l127so231591921iof.3
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 10:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YRTtDK2pG9Ut6VzkYZ5U1QDtssUKaMpIpgDFALJPHk4=;
-        b=bhLfIAs6qzMuaKAydHW3iXcJqchLvKl8Hyl0msYOxi04rGe7rFyQTSDFez7fDKQTHv
-         cmAIBoVJdWgUIC1lsc48/IPKcL5Cd9reosUlyH5WE/YaEPXKIeK6WCr0TNWWvhvEH6Z4
-         S72yCuRD5m4Hh6766wKh6n/j+ThdsVPsATn/83G7fyIFNTzQbHn86VK6W0NRCbVp8sAk
-         C2KdYFyIXU8IvqDszG6QB2t/sIGx48GAjcRDxP5Q14LWlXJ5BST3NB1qDqm5LNF+hLPp
-         J+zBk7qf92kXa9aD1JB8ZuSTNO76EhOiOP4FfIrVjy+aH53BUX8p/TMj+zMLj76erh6p
-         h2Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YRTtDK2pG9Ut6VzkYZ5U1QDtssUKaMpIpgDFALJPHk4=;
-        b=AoRgvdT5INE7ybTctkkkbwH3Y/x+DumRQhmT7/4gRAJZ9cGkeRlgpJwDVrqxH90WMT
-         S3wzb2E+SiWRhGYIWXimMVp+a9jLjXuZlJ2U3hKHrikgq/ja8YoPCBoipih3mNROKsBW
-         gnRbZ6elJ9ZYx4K0/Q6cCJVrHlIZ4TrCPSNRVygtOt82qTVkivb6dN4SZuSelLi6gmTV
-         YfQlZOvYBuHh9WvwjXbxlI5uEZs0YEyer1+Ui9fHNBwKJcnyCoWupRCXGjF4JT/xtRBl
-         ExK6wL9u0+SlOvn7dzRlRz20JQgsxfBYOWSpx9NzQD7kLcBwK2eetK+OM2PVNapYilh3
-         lHnQ==
-X-Gm-Message-State: AG10YORf+QnVp1LOLH07ZVvfvL9GuJMbv/Ng/WY417UFh82YC+rNPijMquH1nCIenwUWboBxoT9EHueLfk7B2w==
-X-Received: by 10.107.166.195 with SMTP id p186mr26190461ioe.146.1456855553824;
- Tue, 01 Mar 2016 10:05:53 -0800 (PST)
-Received: by 10.107.20.76 with HTTP; Tue, 1 Mar 2016 10:05:34 -0800 (PST)
-In-Reply-To: <xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
+	id S1751460AbcCASOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 13:14:11 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63666 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751349AbcCASOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 13:14:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3571B48FF7;
+	Tue,  1 Mar 2016 13:14:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FsWBkyYZu0Sj3cuPYTQPoKEw2/U=; b=Ghk6uJ
+	V3v0oovZrllrCpu2b8W6PU8j9DJQBWzHoKfN16C9QFXWlNMHUdWvbO/l9rBLfos/
+	WlCYBHTVFoU+m7KrmrFmewl+Tkr5C6rJJyJILUrucn6nZRlat9ohAVQNrkORL/mM
+	pd0In6b70lL2+SwOr1+OI3V0fxV+zi8lgDaO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gluYXdIwt6pAaH1/s16/JFAd+lom4BUT
+	ZKE81Euu4CR57NqCseJPt2wo41XmbToLPnZ6hsQMQLBoptPyHKrKPFOWtVfC6m5s
+	Og14KcijbouSEVAgECqRlKmi1AqB2CvGjwfKuZ0/cFkjvGKk91PuIz3XSKmedspT
+	78akHFg5PLk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0919748FF6;
+	Tue,  1 Mar 2016 13:14:08 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 26AD948FF5;
+	Tue,  1 Mar 2016 13:14:07 -0500 (EST)
+In-Reply-To: <20160301150543.GN12887@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 1 Mar 2016 10:05:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 634FD73E-DFD9-11E5-8A40-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288050>
 
-On Tue, Mar 1, 2016 at 9:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I find this in t/lib-httpd.sh:
->
->         set_askpass() {
->                 >"$TRASH_DIRECTORY/askpass-query" &&
->                 echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
->                 echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
->         }
->
-> and expect_askpass peeks at askpass-query to see if Git asked the
-> right questions.
->
-> I think askpass-query is cleared here because the author of the test
-> suite expected that the helpers are used in such a way that you
-> always (1) set-askpass once, (2) run a Git command that asks
-> credentials, (3) use expect_askpass to validate and do these three
-> steps as a logical unit?
->
-> That "clone" the test expects to fail does ask the credential, so
-> even though the test does not check if the "clone" asked the right
-> question, it finishes the three-step logical unit, and then you need
-> to clear askpass-query.
->
-> It may have been cleaner if you had clear_askpass_query helper that
-> is called (1) at the beginning of set_askpass instead of this manual
-> clearing, (2) at the end of expect_askpass, as the exchange has been
-> tested already at that point, and (3) in place of expect_askpass if
-> you choose not to call it (e.g. this place, instead of the second
-> set_askpass, you would say clear_askpass_query), perhaps, but I do
-> know if that is worth it.
->
+Jeff King <peff@peff.net> writes:
 
-Probably something worth looking at doing in the future.
+> On Sun, Feb 28, 2016 at 01:35:44AM +0600, Alexander Kuleshov wrote:
+>
+>> +DECLARE_GIT_GETTER(const char *, get_git_dir, git_dir)
+>> +DECLARE_GIT_GETTER(const char *, get_git_namespace, namespace)
+>> +DECLARE_GIT_GETTER(char *, get_object_directory, git_object_dir)
+>> +DECLARE_GIT_GETTER(char *, get_index_file, git_index_file)
+>> +DECLARE_GIT_GETTER(char *, get_graft_file, git_graft_file)
+>
+> Hmm. I'm somewhat lukewarm on this patch. It's fewer lines and less
+> duplication, which is nice, but this kind of code generation often makes
+> things annoying (to step into with the debugger, to find with ctags,
+> etc). I dunno.
 
-I could call expect_askpass here at each time but I don't think it
-would be meaningful after a test_must_fail.
+For this particular set of functions, single-step-ability would not
+be a huge issue, but I am not enthused, either, even though these
+are vastly more palatable than what was originally proposed.
 
-Thanks,
-Jake
+Another minor annoyance is that I expect to see a semicolon after a
+pair of parentheses that follows a token, but adding one of course
+would break the compilation.
