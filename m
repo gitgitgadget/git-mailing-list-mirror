@@ -1,94 +1,83 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: GSoC 2016 Microproject
-Date: Tue, 1 Mar 2016 13:22:28 +0100
-Message-ID: <20160301122228.GL1831@hank>
-References: <56D19EF9.3070702@gmail.com>
- <vpq8u26qo3y.fsf@anie.imag.fr>
- <56D1BEC8.9010302@gmail.com>
- <vpq1t7yqgi4.fsf@anie.imag.fr>
- <56D2C828.6010901@gmail.com>
- <vpqpovfblru.fsf@anie.imag.fr>
- <56D46493.4040909@gmail.com>
- <vpqfuwbbjlx.fsf@anie.imag.fr>
- <56D57F4E.7000402@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] compat/mingw: brown paper bag fix for 50a6c8e
+Date: Tue, 1 Mar 2016 14:52:36 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603011452090.3152@virtualbox>
+References: <56D3E56A.5010608@web.de> <20160229092816.GA23910@sigill.intra.peff.net> <56D415C6.2040203@web.de> <20160229100258.GC2950@sigill.intra.peff.net> <xmqqtwkr9vu6.fsf@gitster.mtv.corp.google.com> <20160229213620.GD25342@sigill.intra.peff.net>
+ <56D52D77.1030406@web.de> <20160301055457.GA1359@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 13:22:16 2016
+Content-Type: multipart/mixed; BOUNDARY="8323329-1216008406-1456840358=:3152"
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 01 14:53:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aajJd-0005KZ-Ne
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 13:22:14 +0100
+	id 1aakjT-000299-Le
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 14:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438AbcCAMWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 07:22:09 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37489 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753207AbcCAMWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 07:22:08 -0500
-Received: by mail-wm0-f41.google.com with SMTP id p65so30955444wmp.0
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 04:22:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RP3ay2KGeMTLRoCPf2Nd+QW5uzpEKW12Ls+kEKjidLs=;
-        b=uEDc9jM+y7v0LrfDiArKdPSYGAfwcajZSBEOJqvQfNm5Nhvw3VzhG8dvmDWDW63g5h
-         wesVPO7zQl8EL+SzjM0mbVFjIh15nzWkbqo1IvICgkkUC0Y6lu1shakXXwG35mSL7UxD
-         1Sbdoxo+s6P+h/Ic4vJmt5ajnqBPKBW6+XO/rDKZpfm3g8S/A6sJp/EYUiVt8CuKLZdI
-         b5jBahJHzMIHeHliMK800Z6qIpxiTDZ0z9wupv8LbUx+6iSGfQ0CwHSGM8FVVxl+cgIp
-         Ivg6OtXHCzhIhedCH4SMqDCU0C9JBqASH/Xr2+oNAaWcMxqWjyaCawuG1gPc1Qe5R/HW
-         fxnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RP3ay2KGeMTLRoCPf2Nd+QW5uzpEKW12Ls+kEKjidLs=;
-        b=Gnn2RWye/zy1p9SnJP8NcLCvxWcbAtmXHQ2mIbioLX+lmPpV11c4NqQChbjqiT/MSU
-         Zqv6VHrXoy6fQFFjxpyb1a3nM+I7u2Ko4UaSP3M/nvA5TKC+BdhsffjMVxYxoBJ+/b4y
-         B+XRpzSAlF6dL0QKcGgeFKtogVC2JHYgli2sBxijGwa7TBYnwNr9O9JymTf5lclsl9l+
-         u48dJMs7gNn2eS3vfPcoRnT4O4aFkzLVZ4N2nwmziSWjJWHF2wTuCs+XFZcv8TVus/Ke
-         y4m6GaoFI1bjQRBP7B72yu7QwRpb8jXSOrQ4Bu8LeCY19SXUKFliZOuRFAEZ52xGLIdO
-         JLUg==
-X-Gm-Message-State: AD7BkJIAFs/SQW8S7LXdMkAmJ14LeOZptmIubXBGtSShBJBhsF3cJu4xTiBat2n/i9i1Uw==
-X-Received: by 10.28.146.209 with SMTP id u200mr3200317wmd.59.1456834926915;
-        Tue, 01 Mar 2016 04:22:06 -0800 (PST)
-Received: from localhost (host95-109-dynamic.249-95-r.retail.telecomitalia.it. [95.249.109.95])
-        by smtp.gmail.com with ESMTPSA id 8sm21146371wmk.13.2016.03.01.04.22.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Mar 2016 04:22:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <56D57F4E.7000402@gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+	id S1753593AbcCANwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 08:52:55 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50270 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752636AbcCANwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 08:52:54 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0McVGq-1aJDsM3H8a-00HgWg; Tue, 01 Mar 2016 14:52:38
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <20160301055457.GA1359@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:LWqHDPfDGF73SBhiNrjb1LbwynUS8EzigJ05DGgiOPIQ1AT3/4p
+ envSy8FIG1MrMzzhY3oT5mWmAlhJDB4Jnhl+1HPbo4pp0DV1s399GJCkeIjgiuWFS9mn01q
+ KaUXu0Bp2nvzMkmyuNnmI+R87Ell3LAZ9bhAUdmSs+K/E9jbdGt+tib3OFX5vf6hvuLnCDD
+ JeJlNntxPlppOTXfsJEYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KyUl24/AdOw=:RHxCPMDUV66BcKOYIBITGW
+ fwSGdPq9n9jYQ9i2ZoFCmTZrYuRt2U3jZyj4bXrLwxsCkNYxeK4rzpcXvvWk/ZwFOZC8wKOFn
+ 03Qyzr+D8O1VJPyv1iyTzHatMAMAk/MAZzTvMs5jBsGiuijaIXCKGIfXzNBDv1XXNwwHaWjE3
+ GM+I3bOgzMb7mznuyYi8fXkyrr6ws1ALhMe3b952uHGh91kL+l4Xby3/xMAAJ0n4V5kA/1AYq
+ 7ocKmeOetyCBdk+3FG2B6OkJQj2vwx+jeKpLfStf8dBVCgoRr8cnIr5biUuq1wWR2s7HM7tI+
+ Ladt5rbhOwL39TyF2XknWrNg/BUZJZNksfb81qI1xaHfCGgWkzKeHMKByFTlmwwDN4NB+28eT
+ 1nETaY6xJezXk9U/bnOwKnKdHxMYNCOxcWmR06zzDschrqst7bmGjX/It0Wpo85D959SS5sYy
+ 6o4CIQ6LZKI/vewe7qUmI+yYREgVa2/hgp/hUlKJy7sBj9uqhyPDXXws2ywypd4eGPpzyvwx8
+ E9o9tDMe7evrJyCxgPNvbMlD7fSZxuiVfwY6ahyfg7wmc7pntLkdNzGRfLNfb5jAwEkWgWZEE
+ dXS/tWc6+SmKA3A+ccZhBx1KGYi3AC0dBa4F4+mr2k7r1KiIT+spl5lV/mKjMr6dB0YWbU3YS
+ UvXVJRe7YYOdyB3Hanjmk+HWJop4z4XrY317U7lzPY94xy6NpX/35JobaR+SVtz3MGHFBrJbV
+ mFxhxRy6lvyU7dgx7X2guqwSzGgNexUKGipcBhTQ3s/EieSAXRZp0gqsMnFpsMNExL/ScvKz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288012>
 
-On 03/01, Sidhant Sharma wrote:
->
-> > If you use PARSE_OPT_HIDDEN, I think you don't need to specify a message. Otherwise, the documentation only has value if it contains more than just the option name, but that is the hard part if you're not familiar with the code. The best place to find documentation is in the history (git blame the file and see if the commit message introducing the option enlightens you). But that's why I said this didn't have to be part of the microproject: writting good doc requires a good understanding of the whole thing ...
-> I used OPT_HIDDEN_BOOL for all except for reject-thin-pack-for-testing, where I used PARSE_OPT_HIDDEN. I ran the test locally and also on Travis, and the all tests passed. How do I proceed now?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Now you can send a patch to the mailing list.  See
-Documentation/SubmittingPatches for more details.
+--8323329-1216008406-1456840358=:3152
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-It usually is helpful to send the patches to yourself first as well,
-and try to apply them using git am, to avoid mistakes in the patch
-submission.
+Hi Peff,
 
->
-> Thanks and regards,
-> Sidhant Sharma [:tk]
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Tue, 1 Mar 2016, Jeff King wrote:
 
---
-Thomas
+> On Tue, Mar 01, 2016 at 06:49:43AM +0100, Torsten B=C3=B6gershausen wrote=
+:
+>=20
+> > However, suspecting jk/epipe-in-async, I don't know if we can do
+> > something against this warning:
+> >=20
+> >  CC run-command.o run-command.c: In function 'async_exit':
+> >  run-command.c:631:1: warning: 'noreturn' function does return } ^
+>=20
+> The only thing that function does is call pthread_exit(), which should
+> also be marked NORETURN. Looks like the one in compat/win32/pthread.h
+> isn't?
+
+Correct. Expect a patch momentarily.
+
+Ciao,
+Dscho
+--8323329-1216008406-1456840358=:3152--
