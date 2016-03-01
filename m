@@ -1,93 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] bundle doc: 'verify' is not about verifying the bundle
-Date: Tue, 01 Mar 2016 13:36:05 -0800
-Message-ID: <xmqqd1rd7uey.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: bug: git submodule add fails when .git is a symlink
+Date: Tue, 1 Mar 2016 13:39:26 -0800
+Message-ID: <CAGZ79kY6Lf6u0=s8J_cqRNFsry4nu2SdL0GZ2gkFsu6gBrB65Q@mail.gmail.com>
+References: <20160301204218.GA4083@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 01 22:36:16 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joey Hess <id@joeyh.name>
+X-From: git-owner@vger.kernel.org Tue Mar 01 22:39:32 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aarxn-0004Ec-Ea
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 22:36:15 +0100
+	id 1aas0x-0006cM-Vc
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 22:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbcCAVgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 16:36:11 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59676 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751541AbcCAVgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 16:36:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7490A499E4;
-	Tue,  1 Mar 2016 16:36:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=s
-	EMqXvqUPOFFSVCqKvoyoftJ8Yk=; b=PNSL+WGE7X9/k7IeM5jxdtI/VNFyPTxdK
-	2ghLkXQbUpQuuOnChL+gtjg4pDNq+A0HJc37qWiywBXUO9T3DBLz/R83cqFXb0Tv
-	EzfWURanXSOw9ogw4NMBixoWSg79vz/Np6AZxBD8E9qgn2jc65idnpkGwx6uAt3S
-	ufE6Z5WMI8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=x9f
-	D4JRJL5++hx179rC/9EHwPZj6eMZlmUtZYvK6csDdc/xw0I9AMeo8dRTxqY+RFVu
-	+x+TjIyN5ezfBt6jcV+Bpcr0jncbO3Ig23eUfvyOcB7Jni8I615VxXg1tR2HjsZ7
-	R6zr3bu3n5j8B8Me2HkppsaJ/4xRuzAWUeci+04E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 69D92499E3;
-	Tue,  1 Mar 2016 16:36:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 64C0A499E2;
-	Tue,  1 Mar 2016 16:36:07 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9B8BBEC6-DFF5-11E5-97A8-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753837AbcCAVj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 16:39:28 -0500
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:36776 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751809AbcCAVj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 16:39:27 -0500
+Received: by mail-ig0-f177.google.com with SMTP id xg9so28166205igb.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 13:39:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=5P43CTZecdkiaq/f48rTVG1pDl5DCxMKqDUVPNcbyCQ=;
+        b=XxyGHLqmf5iSFhk2QXgrDC90qN3XFCNVoSVC0V/E06fC4/rU0toVn9Y//gdHui6KqX
+         HKMT75zDU1WXzkzrKKCCHL+gHe42+n6sk9w4oVTK+PvTQRxB3yW519HBfQaGi0l/EDEr
+         QEux4LLR28vqrmQSm7vIn/nusbDEcz1f4FP7ErljMfYFvl++gj3OdYMS2XIh8WJDzGkK
+         IdbvHFmYcPMbJcKPKfmD608oh+p/LqYYI0U7jm3ZD1IfDKu/Ul9y+cZMVHzKKM/Ta7uU
+         HJULr/VGtu/J4s6BvZLc42tqLaL5VausLWs8MfiYc+l3DiF95EAjmIpAS5em+XIHSsbO
+         zYPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=5P43CTZecdkiaq/f48rTVG1pDl5DCxMKqDUVPNcbyCQ=;
+        b=Ihyw8Yj/XzNZtPpwFX5WSMsAmheU5cb59XIZmcfWY3qNavH7Na7HgqYrIyKLIbIHPN
+         uazYFXmoBLmuS03IvIgCYsRxvctQ1xRK9iNnRoyIqQo7OrsiHvmU4lCFzmsgdYBnceQv
+         syPQfqQ332kYx+v3F81g6byN8aLPaOvY7iz+NSuEgsqjN1jYqn05ArFRrsEhIKfiBXad
+         HCiThtbqpEsTq5HbZBGeFX6E6jUV/MVDlbUcyDR/CO38vPPATvp8zOqBuke0jsO3NWfB
+         gbjIZpPxaWc0I4op8rBw873/o+kCSS9p1kE62J6xZbVFHvQSlWeumRLNd48Szzpg96ds
+         zk0A==
+X-Gm-Message-State: AD7BkJKP+wrIcLNIVLfbk+Mavdw4jrnajrbO7mZ9Nvp3UAnryLGx+WsWDYYsUmxG9MOusSQq3TFfWYMQC83+QU/E
+X-Received: by 10.50.112.10 with SMTP id im10mr1249081igb.93.1456868366762;
+ Tue, 01 Mar 2016 13:39:26 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Tue, 1 Mar 2016 13:39:26 -0800 (PST)
+In-Reply-To: <20160301204218.GA4083@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288067>
 
-Even though the command does read the bundle header and checks to
-see if it looks reasonable, the thin-pack data stream that follows
-the header in the bundle file is not checked.  More importantly,
-because the thin-pack data does not have a trailing checksum like
-on-disk packfiles do, there isn't much "verification" the command
-can do without unpacking the objects from the stream even if it
-wanted to.
+On Tue, Mar 1, 2016 at 12:42 PM, Joey Hess <id@joeyh.name> wrote:
+>         git init gitdir
+>         mkdir worktree
+>         cd worktree
+>         ln -s ../gitdir/.git .git
+>         git submodule add /any/git/repo sub
+>
+>         fatal: Could not chdir to '../../../sub': No such file or directory
+>
+> Fairly sure this is a bug..
 
-The documentation gives an incorrect impression that the thin-pack
-data contained in the bundle is validated, but the command is to
-validate that the receiving repository is ready to accept the
-bundle, not to check the validity of a bundle file.  Rephrase the
-paragraph to clarify this.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-bundle.txt | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 3a8120c..c0113a8 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -38,11 +38,10 @@ create <file>::
- 	'git-rev-list-args' arguments to define the bundle contents.
- 
- verify <file>::
--	Used to check that a bundle file is valid and will apply
--	cleanly to the current repository.  This includes checks on the
--	bundle format itself as well as checking that the prerequisite
--	commits exist and are fully linked in the current repository.
--	'git bundle' prints a list of missing commits, if any, and exits
-+	Verifies that the given 'file' has a valid-looking bundle
-+	header, and that your repository has all prerequisite
-+	objects necessary to unpack the file as a bundle.  The
-+	command prints a list of missing commits, if any, and exits
- 	with a non-zero status.
- 
- list-heads <file>::
--- 
-2.8.0-rc0-114-g0b3e5e5
+Which version(s) of Git do you use?
