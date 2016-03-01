@@ -1,199 +1,87 @@
-From: Saurav Sachidanand <sauravsachidanand@gmail.com>
-Subject: [PATCH] Store EXC_FLAG_* values in unsigned integers
-Date: Tue,  1 Mar 2016 22:32:59 +0530
-Message-ID: <1456851779-38548-1-git-send-email-sauravsachidanand@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Saurav Sachidanand <sauravsachidanand@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 01 18:03:37 2016
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 2/2] lockfile: improve error message when lockfile exists
+Date: Tue,  1 Mar 2016 18:04:10 +0100
+Message-ID: <1456851850-24759-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1456690276-13914-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1456851850-24759-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Gregory.Mounie@grenoble-inp.fr,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 01 18:04:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aanhr-0003Rv-Sb
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:03:32 +0100
+	id 1aanj0-0004JQ-1Q
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbcCARD1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2016 12:03:27 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:33836 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbcCARDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 12:03:25 -0500
-Received: by mail-pa0-f45.google.com with SMTP id fy10so115082188pac.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 09:03:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sub2ggXAbIU1T5GBPiO9F43HHe6insnegVfWhwDFPdI=;
-        b=gqNoD6u7bMUK1G7V122lgBOIyGq0i4i6WkunkrzzLnpM3xbc+qlJvAXTzApIKzXiTh
-         5TikTgP27x8K5xLCfDwVqsUfe2Hk8bsAivCWUdledtiAIIdscym7K67UmMaitOUbFymS
-         133XCKMqojTh12lhfKHCklmyZGxSeLuYn7HulAjF0dJ5tYd6DYJ9Gv6Y67VbRac6l6Va
-         kJhV1M1x9FuCqF6kylSI+wg71hkpGioTenhzrJKWEnydG2fXRdVmX9DiYvadXIuqWU4O
-         rJqYqxRXbtMxHUh024JQWk5pbiB94ZmqqwMtKRnmujR7ePmOAQLG4ft+QmUtR4CckyPm
-         8asQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sub2ggXAbIU1T5GBPiO9F43HHe6insnegVfWhwDFPdI=;
-        b=dTuD+jIwFN200h+4RJ7mTEUp8e67QkkMsAAl8L5EhXmN7lvP6UM/8+vJeB41St1+/B
-         F+E7NEtQeK7HK4qTkj7aEjTbRhpSr4277D6OEuk/SRqWL4UUB6h7s5C8HmS/qqbmaLfy
-         K9q9GrYKl0ElGbAA2LT5zkzrx0f01uxr5oZOlx6vGTi9oXMF82IO5LNXB4pMKshZlBXR
-         5B0Sz1pxpipNKYf0UOwut7MeoMm0RJjxckgOTy50bnaGDgeSgNHUFpi9dx1fB1woOz82
-         cM2k/adR9O6ceHuS+d56MS58V7T/QRIlB+RCW4WTUHc7AZXYsLIdizO08UqNfrt1WfFQ
-         5kbA==
-X-Gm-Message-State: AD7BkJIj8BnqxFgovR7ckA0b1oGWkAlrq36PVqIUcTivMdAbWPkb75l5AKv20bPEwo4eyA==
-X-Received: by 10.66.142.193 with SMTP id ry1mr31610295pab.33.1456851805022;
-        Tue, 01 Mar 2016 09:03:25 -0800 (PST)
-Received: from localhost.localdomain ([106.51.19.158])
-        by smtp.googlemail.com with ESMTPSA id h2sm13384254pfd.91.2016.03.01.09.03.22
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 01 Mar 2016 09:03:24 -0800 (PST)
-X-Mailer: git-send-email 2.7.1.339.g0233b80
+	id S1752218AbcCAREi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 12:04:38 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:34995 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751845AbcCAREh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 12:04:37 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u21H4CUZ019140
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 1 Mar 2016 18:04:12 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u21H4C3R018006;
+	Tue, 1 Mar 2016 18:04:14 +0100
+X-Mailer: git-send-email 2.7.2.334.g35ed2ae.dirty
+In-Reply-To: <1456851850-24759-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 01 Mar 2016 18:04:12 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u21H4CUZ019140
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1457456654.27588@Hh1VU1Ht+lBZsdijU2gDBA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288038>
 
-The values defined by the macro EXC_FLAG_* (1, 4, 8, 16) are
-stored in fields of the structs "pattern" and =E2=80=9Cexclude=E2=80=9D=
-, some
-functions arguments and a local variable.
+A common mistake leading a user to see this message is to launch "git
+commit", let the editor open (and forget about it), and try again to
+commit.
 
-No variable that holds these values uses its most significant
-bit in any special way, as it=E2=80=99s value is either checked for a
-variant of EXC_FLAG_* using the & operator
-(flags & EXC_FLAG_NODIR), or assigned a value of 0 first
-and then any one of {1, 4, 8, 16} using the | operator
-(flags |=3D EXC_FLAG_NODIR). Hence, change the types of such
-variables and fields to unsigned.
+The previous message was going too quickly to "a git process crashed"
+and to the advice "remove the file manually".
 
-And while we=E2=80=99re at it, document "flags" of "exclude" to explici=
-tly
-state the values it=E2=80=99s supposed to take on.
+This patch modifies the message in two ways: first, it considers that
+"another process is running" is the norm, not the exception, and it
+explicitly hints the user to look at text editors.
 
-Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
+The message is 2 lines longer, but this is not a problem since
+experienced users do not see the message often.
+
+Helped-by: Moritz Neeb <lists@moritzneeb.de>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
+ lockfile.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-This is a patch for the suggested microproject for GSoC 2016, titled
-"Use unsigned integral type for collection of bits." It=E2=80=99s the f=
-ourth
-iteration of this patch that incorporates changes to the commit
-message suggested by Moritz Neeb, Eric Sunshine and Junio C Hamano,
-and to some function signatures suggested by Duy Nguyen. Thanks to
-them for their feedback.
-
-Previous versions of this patch:
-1) http://thread.gmane.org/gmane.comp.version-control.git/286821
-2) http://thread.gmane.org/gmane.comp.version-control.git/287387
-3) http://thread.gmane.org/gmane.comp.version-control.git/287838
-
- attr.c | 2 +-
- dir.c  | 8 ++++----
- dir.h  | 8 ++++----
- 3 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 086c08d..679e13c 100644
---- a/attr.c
-+++ b/attr.c
-@@ -124,7 +124,7 @@ struct pattern {
- 	const char *pattern;
- 	int patternlen;
- 	int nowildcardlen;
--	int flags;		/* EXC_FLAG_* */
-+	unsigned flags;		/* EXC_FLAG_* */
- };
-
- /*
-diff --git a/dir.c b/dir.c
-index 552af23..82cec7d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -459,7 +459,7 @@ int no_wildcard(const char *string)
-
- void parse_exclude_pattern(const char **pattern,
- 			   int *patternlen,
--			   int *flags,
-+			   unsigned *flags,
- 			   int *nowildcardlen)
+diff --git a/lockfile.c b/lockfile.c
+index 62583d1..9268cdf 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -150,9 +150,11 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
  {
- 	const char *p =3D *pattern;
-@@ -500,7 +500,7 @@ void add_exclude(const char *string, const char *ba=
-se,
- {
- 	struct exclude *x;
- 	int patternlen;
--	int flags;
-+	unsigned flags;
- 	int nowildcardlen;
-
- 	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
-@@ -811,7 +811,7 @@ void add_excludes_from_file(struct dir_struct *dir,=
- const char *fname)
-
- int match_basename(const char *basename, int basenamelen,
- 		   const char *pattern, int prefix, int patternlen,
--		   int flags)
-+		   unsigned flags)
- {
- 	if (prefix =3D=3D patternlen) {
- 		if (patternlen =3D=3D basenamelen &&
-@@ -836,7 +836,7 @@ int match_basename(const char *basename, int basena=
-melen,
- int match_pathname(const char *pathname, int pathlen,
- 		   const char *base, int baselen,
- 		   const char *pattern, int prefix, int patternlen,
--		   int flags)
-+		   unsigned flags)
- {
- 	const char *name;
- 	int namelen;
-diff --git a/dir.h b/dir.h
-index 3ec3fb0..e942b50 100644
---- a/dir.h
-+++ b/dir.h
-@@ -28,7 +28,7 @@ struct exclude {
- 	int nowildcardlen;
- 	const char *base;
- 	int baselen;
--	int flags;
-+	unsigned flags;		/* EXC_FLAG_* */
-
- 	/*
- 	 * Counting starts from 1 for line numbers in ignore files,
-@@ -229,10 +229,10 @@ struct dir_entry *dir_add_ignored(struct dir_stru=
-ct *dir, const char *pathname,
-  * attr.c:path_matches()
-  */
- extern int match_basename(const char *, int,
--			  const char *, int, int, int);
-+			  const char *, int, int, unsigned);
- extern int match_pathname(const char *, int,
- 			  const char *, int,
--			  const char *, int, int, int);
-+			  const char *, int, int, unsigned);
-
- extern struct exclude *last_exclude_matching(struct dir_struct *dir,
- 					     const char *name, int *dtype);
-@@ -244,7 +244,7 @@ extern struct exclude_list *add_exclude_list(struct=
- dir_struct *dir,
- extern int add_excludes_from_file_to_list(const char *fname, const cha=
-r *base, int baselen,
- 					  struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fn=
-ame);
--extern void parse_exclude_pattern(const char **string, int *patternlen=
-, int *flags, int *nowildcardlen);
-+extern void parse_exclude_pattern(const char **string, int *patternlen=
-, unsigned *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
- extern void clear_exclude_list(struct exclude_list *el);
---
-2.7.1.339.g0233b80
+ 	if (err == EEXIST) {
+ 		strbuf_addf(buf, _("Unable to create '%s.lock': %s.\n\n"
+-		    "If no other git process is currently running, this probably means a\n"
+-		    "git process crashed in this repository earlier. Make sure no other git\n"
+-		    "process is running and remove the file manually to continue."),
++		    "Another git process seems to be running in this repository, e.g.\n"
++		    "an editor opened by 'git commit'. Please make sure all processes\n"
++		    "are terminated then try again. If it still fails, a git process\n"
++		    "may have crashed in this repository earlier:\n"
++		    "remove the file manually to continue."),
+ 			    absolute_path(path), strerror(err));
+ 	} else
+ 		strbuf_addf(buf, _("Unable to create '%s.lock': %s"),
+-- 
+2.7.2.334.g35ed2ae.dirty
