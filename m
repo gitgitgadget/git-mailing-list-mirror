@@ -1,9 +1,10 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v7 04/33] files-backend: break out ref reading
-Date: Mon, 29 Feb 2016 19:52:37 -0500
-Message-ID: <1456793586-22082-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v7 07/33] refs: add methods for misc ref operations
+Date: Mon, 29 Feb 2016 19:52:40 -0500
+Message-ID: <1456793586-22082-8-git-send-email-dturner@twopensource.com>
 References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>,
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu,
 	pclouds@gmail.com
@@ -13,441 +14,251 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaYaN-0007bz-WA
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 01:54:48 +0100
+	id 1aaYaP-0007bz-V9
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 01:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbcCAAxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754061AbcCAAyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 19:54:47 -0500
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:36079 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751350AbcCAAxe (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 29 Feb 2016 19:53:34 -0500
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:36042 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbcCAAxa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 19:53:30 -0500
-Received: by mail-qg0-f41.google.com with SMTP id u110so1409418qge.3
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:53:29 -0800 (PST)
+Received: by mail-qg0-f51.google.com with SMTP id u110so1410424qge.3
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:53:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rMyj9g23MpUmAEsmXi4rsHGrGtCX48owvW0wtW0SQpM=;
-        b=KVxA/+Z6HJcqFNNCm0SKht2GdzGvo2e2RvVePhOOHMcTuhS8bWhPpOCyJKm+wqBeJk
-         Cr5yAIzyEbS936B2LR+fcMgqk6O5wvuhZBuaVrWRh9GS2hFZsSKegmFiGW7rgtOBa3Ta
-         TlUFCeJy+zgkQNZRtD5Hcukll/d8R5UzxPr0IKAaY4BC8OVksA6HKo9ep19S9kYThYjp
-         RocYhHgE6Xtw7wBs9IFG5anbEfArtdIPnV2NVZeiczipYPQgT+zEy3bSM4uZ1akDgpLr
-         qqbyTZwnayluckncsWY2QYCZ3elzXJ3IdcAnMci1+2UZyf/weM3Pf9QzUOitFI3KtXpS
-         UTSA==
+        bh=IGw1LlPtH9ts7XY8vFr+JaZW3AxNx9TNZQNkUYUfcJ4=;
+        b=nxeu/dTh3Gu8fC6efzjWgcSWQL5avWRn6fzQTUgTQukan2uZpAv8TsRrgalKQvHN1s
+         FqBlspwBLBz2hZlahCD9FEFP2eJ/06DWYIzaFkrk4YcwGNQuzfsYYi7J6bq9dJyzDGLn
+         TPq1KwTiVSzlDVOaa5NnwYt+x9NAiZDqvnBrWqsq7DLameaw0B/SST+1C3kIVsJ2u7qw
+         jjpNQ2PgFghF8sW5ImvXBqagzu8d0E1btISJHVfOMIsq0p92nMn0Ux+Ug99j98GmP53l
+         LNUeG1C7hJ29Ocm+QnShYNkAKG4fIpfqGKKzUaStsiPpW/60Pc1X4zQHJVA2FiNidCi5
+         9inA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rMyj9g23MpUmAEsmXi4rsHGrGtCX48owvW0wtW0SQpM=;
-        b=aylj3FtEBwzy2rBMsbfx8Ruuccgb8N5HqiUlE6XtQmI4xQjmTO6Jg/rjAcwCsP/vDx
-         IUfMf/6nzYHKQK9CjkWgWW4iUtUKDaXx90AXv5iNQ5T56lqTLFngB3h+fpbLgchlhyKP
-         8nu1jC5Z71J0+2m3jwl0E3wqStRtJOQZfuYtZlwTanV2YplfHAjfyBbNrLHYE1zBnHL+
-         ZBwCi3gHoIyDPWoTJUphGSAGxmuFw0Ee30XBZgKaIkXj9Nzjd+OLlhWlDDHOxaVEzvYy
-         Boa2xTJJXxBWUX/YZWcD/JupE1VxuY31WTeFbweeRgDlqhRBjjju542Qb71I+8s8vGiH
-         HzYQ==
-X-Gm-Message-State: AD7BkJIq5uYeiixxjfaBj8XbhYh4Sl078IQ1G+p7er3EUdK6YQtGpW6hHW0KjOPYqQMMtQ==
-X-Received: by 10.140.225.6 with SMTP id v6mr22517524qhb.0.1456793609315;
-        Mon, 29 Feb 2016 16:53:29 -0800 (PST)
+        bh=IGw1LlPtH9ts7XY8vFr+JaZW3AxNx9TNZQNkUYUfcJ4=;
+        b=YcoRInINi/v3objklkxC2udAhPSbtFvq2P7XnFiwPUUaK8tQS6rfEF1XOgwvDuTPcz
+         tcYgDt2hcGjGkrg6uaT1oaR12+9VxUaiTF8JbTXrsdrFhZBzNe72EBpHCLj7AbtpogQS
+         R/FDhdjjyuS22324h623/Th3MSy4YDs6xzlsrP03wzjrk7+YyP6Y0OUTPAvUf9OoLlIN
+         QVFgEgvJP8BbRNskaFWpE66pg0SveDgK7zHVb7yg7N04rNBotrcV+k9nPs/XDM3LtuUi
+         DSGpz9zilcYCqVnWH1aUpdgK15KA8Es/hSx4M7bx4Ij1kAiOaJ4kFLha2R+tFWyh1DM/
+         GAEQ==
+X-Gm-Message-State: AD7BkJL+ymLupHURoBwAnh9axNkUzjaPv5FziHxnSRCRbYUMMMNM1n3bmdkRv6PCaKK4iQ==
+X-Received: by 10.140.155.196 with SMTP id b187mr24470741qhb.14.1456793613358;
+        Mon, 29 Feb 2016 16:53:33 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id z62sm12094715qka.26.2016.02.29.16.53.28
+        by smtp.gmail.com with ESMTPSA id z62sm12094715qka.26.2016.02.29.16.53.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 16:53:28 -0800 (PST)
+        Mon, 29 Feb 2016 16:53:32 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287972>
 
-Refactor resolve_ref_1 in terms of a new function read_raw_ref, which
-is responsible for reading ref data from the ref storage.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-Later, we will make read_raw_ref a pluggable backend function, and make
-resolve_ref_unsafe common.
+Add ref backend methods for:
+read_raw_ref, verify_refname_available, pack_refs, peel_ref,
+create_symref, resolve_gitlink_ref.
 
-Testing done: Hacked in code to run both old and new version of
-resolve_ref_1 and compare all outputs, failing dramatically if outputs
-differed.  Ran test suite.
+read_raw_ref becomes static because it's not used outside refs.c
 
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
-Helped-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs/files-backend.c | 265 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 159 insertions(+), 106 deletions(-)
+ refs.c               | 37 +++++++++++++++++++++++++++++++++++++
+ refs/files-backend.c | 33 ++++++++++++++++++++++-----------
+ refs/refs-internal.h | 27 +++++++++++++++++++++++----
+ 3 files changed, 82 insertions(+), 15 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9676ec2..8c6a58e 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1369,12 +1369,11 @@ static struct ref_entry *get_packed_ref(const char *refname)
- 
- /*
-  * A loose ref file doesn't exist; check for a packed ref.  The
-- * options are forwarded from resolve_safe_unsafe().
-+ * options are forwarded from resolve_ref_unsafe().
-  */
- static int resolve_missing_loose_ref(const char *refname,
--				     int resolve_flags,
- 				     unsigned char *sha1,
--				     int *flags)
-+				     unsigned int *flags)
- {
- 	struct ref_entry *entry;
- 
-@@ -1390,64 +1389,48 @@ static int resolve_missing_loose_ref(const char *refname,
- 		return 0;
- 	}
- 	/* The reference is not a packed reference, either. */
--	if (resolve_flags & RESOLVE_REF_READING) {
--		errno = ENOENT;
--		return -1;
--	} else {
--		hashclr(sha1);
--		return 0;
--	}
-+	errno = ENOENT;
-+	return -1;
+diff --git a/refs.c b/refs.c
+index 2e8efa9..f4873d6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1194,6 +1194,14 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
  }
  
--/* This function needs to return a meaningful errno on failure */
--static const char *resolve_ref_1(const char *refname,
--				 int resolve_flags,
--				 unsigned char *sha1,
--				 int *flags,
--				 struct strbuf *sb_refname,
--				 struct strbuf *sb_path,
--				 struct strbuf *sb_contents)
-+/*
-+ * Read a raw ref from the filesystem or packed refs file.
-+ *
-+ * If the ref is a sha1, fill in sha1 and return 0.
-+ *
-+ * If the ref is symbolic, fill in *symref with the referrent
-+ * (e.g. "refs/heads/master") and return 0.  The caller is responsible
-+ * for validating the referrent.  Set REF_ISSYMREF in flags.
-+ *
-+ * If the ref is neither a symbolic ref nor a sha1, it is broken.  Set
-+ * REF_ISBROKEN in flags, set errno to EINVAL, and return -1.
-+ *
-+ * If the ref doesn't exist, set errno to ENOENT and return -1.
-+ *
-+ * If there is another error reading the ref, set errno appropriately and
-+ * return -1.
-+ *
-+ * Backend-specific flags might be set in flags as well, regardless of
-+ * outcome.
-+ *
-+ * sb_path is workspace: the caller should allocate and free it.
-+ */
 +static int read_raw_ref(const char *refname, unsigned char *sha1,
 +			struct strbuf *symref, struct strbuf *sb_path,
 +			unsigned int *flags)
- {
--	int depth = MAXDEPTH;
--	int bad_name = 0;
--
--	if (flags)
--		*flags = 0;
-+	struct strbuf sb_contents = STRBUF_INIT;
-+	int ret = -1;
-+	const char *path;
-+	const char *buf;
- 
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
--		if (flags)
--			*flags |= REF_BAD_NAME;
-+	strbuf_reset(sb_path);
-+	strbuf_git_path(sb_path, "%s", refname);
-+	path = sb_path->buf;
- 
--		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
--		    !refname_is_safe(refname)) {
--			errno = EINVAL;
--			return NULL;
--		}
--		/*
--		 * dwim_ref() uses REF_ISBROKEN to distinguish between
--		 * missing refs and refs that were present but invalid,
--		 * to complain about the latter to stderr.
--		 *
--		 * We don't know whether the ref exists, so don't set
--		 * REF_ISBROKEN yet.
--		 */
--		bad_name = 1;
--	}
- 	for (;;) {
--		const char *path;
- 		struct stat st;
--		char *buf;
- 		int fd;
--
--		if (--depth < 0) {
--			errno = ELOOP;
--			return NULL;
--		}
--
--		strbuf_reset(sb_path);
--		strbuf_git_path(sb_path, "%s", refname);
--		path = sb_path->buf;
--
- 		/*
- 		 * We might have to loop back here to avoid a race
- 		 * condition: first we lstat() the file, then we try
-@@ -1457,49 +1440,45 @@ static const char *resolve_ref_1(const char *refname,
- 		 * we don't want to report that as an error but rather
- 		 * try again starting with the lstat().
- 		 */
--	stat_ref:
-+
- 		if (lstat(path, &st) < 0) {
- 			if (errno != ENOENT)
--				return NULL;
--			if (resolve_missing_loose_ref(refname, resolve_flags,
--						      sha1, flags))
--				return NULL;
--			if (bad_name) {
--				hashclr(sha1);
--				if (flags)
--					*flags |= REF_ISBROKEN;
--			}
--			return refname;
-+				break;
-+			if (resolve_missing_loose_ref(refname, sha1, flags))
-+				break;
-+			ret = 0;
-+			break;
- 		}
- 
- 		/* Follow "normalized" - ie "refs/.." symlinks by hand */
- 		if (S_ISLNK(st.st_mode)) {
--			strbuf_reset(sb_contents);
--			if (strbuf_readlink(sb_contents, path, 0) < 0) {
-+			strbuf_reset(&sb_contents);
-+			if (strbuf_readlink(&sb_contents, path, 0) < 0) {
- 				if (errno == ENOENT || errno == EINVAL)
- 					/* inconsistent with lstat; retry */
--					goto stat_ref;
-+					continue;
- 				else
--					return NULL;
-+					break;
- 			}
--			if (starts_with(sb_contents->buf, "refs/") &&
--			    !check_refname_format(sb_contents->buf, 0)) {
--				strbuf_swap(sb_refname, sb_contents);
--				refname = sb_refname->buf;
-+			if (starts_with(sb_contents.buf, "refs/") &&
-+			    !check_refname_format(sb_contents.buf, 0)) {
-+				strbuf_swap(&sb_contents, symref);
- 				if (flags)
- 					*flags |= REF_ISSYMREF;
--				if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
--					hashclr(sha1);
--					return refname;
--				}
--				continue;
-+				ret = 0;
-+				break;
-+			} else {
-+				/* bogus symlink ref  */
-+				if (flags)
-+					*flags |= REF_ISBROKEN;
-+				break;
- 			}
- 		}
- 
- 		/* Is it a directory? */
- 		if (S_ISDIR(st.st_mode)) {
- 			errno = EISDIR;
--			return NULL;
-+			break;
- 		}
- 
- 		/*
-@@ -1510,35 +1489,110 @@ static const char *resolve_ref_1(const char *refname,
- 		if (fd < 0) {
- 			if (errno == ENOENT)
- 				/* inconsistent with lstat; retry */
--				goto stat_ref;
-+				continue;
- 			else
--				return NULL;
-+				break;
- 		}
--		strbuf_reset(sb_contents);
--		if (strbuf_read(sb_contents, fd, 256) < 0) {
-+		strbuf_reset(&sb_contents);
-+		if (strbuf_read(&sb_contents, fd, 256) < 0) {
- 			int save_errno = errno;
- 			close(fd);
- 			errno = save_errno;
--			return NULL;
-+			break;
- 		}
- 		close(fd);
--		strbuf_rtrim(sb_contents);
-+		strbuf_rtrim(&sb_contents);
-+		buf = sb_contents.buf;
-+		if (starts_with(buf, "ref:")) {
-+			buf += 4;
-+			while (isspace(*buf))
-+				buf++;
-+
-+			strbuf_reset(symref);
-+			strbuf_addstr(symref, buf);
-+			if (flags)
-+				*flags |= REF_ISSYMREF;
-+			ret = 0;
-+			break;
-+		}
- 
- 		/*
--		 * Is it a symbolic ref?
-+		 * Please note that FETCH_HEAD has additional
-+		 * data after the sha.
- 		 */
--		if (!starts_with(sb_contents->buf, "ref:")) {
--			/*
--			 * Please note that FETCH_HEAD has a second
--			 * line containing other data.
--			 */
--			if (get_sha1_hex(sb_contents->buf, sha1) ||
--			    (sb_contents->buf[40] != '\0' && !isspace(sb_contents->buf[40]))) {
-+		if (get_sha1_hex(buf, sha1) ||
-+		    (buf[40] != '\0' && !isspace(buf[40]))) {
-+			if (flags)
-+				*flags |= REF_ISBROKEN;
-+			errno = EINVAL;
-+			break;
-+		}
-+		ret = 0;
-+		break;
-+	}
-+
-+	strbuf_release(&sb_contents);
-+	return ret;
++{
++	return the_refs_backend->read_raw_ref(refname, sha1, symref, sb_path,
++					      flags);
 +}
 +
-+/* This function needs to return a meaningful errno on failure */
-+static const char *resolve_ref_1(const char *refname,
-+				 int resolve_flags,
-+				 unsigned char *sha1,
-+				 int *flags,
-+				 struct strbuf *sb_refname,
-+				 struct strbuf *sb_path)
+ /* This function needs to return a meaningful errno on failure */
+ static const char *resolve_ref_1(const char *refname,
+ 				 int resolve_flags,
+@@ -1305,3 +1313,32 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ {
+ 	return the_refs_backend->transaction_commit(transaction, err);
+ }
++
++int verify_refname_available(const char *refname, struct string_list *extra,
++			     struct string_list *skip, struct strbuf *err)
 +{
-+	int bad_name = 0;
-+	int symref_count;
++	return the_refs_backend->verify_refname_available(refname, extra, skip, err);
++}
 +
-+	if (flags)
-+		*flags = 0;
++int pack_refs(unsigned int flags)
++{
++	return the_refs_backend->pack_refs(flags);
++}
 +
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+		if (flags)
-+			*flags |= REF_BAD_NAME;
++int peel_ref(const char *refname, unsigned char *sha1)
++{
++	return the_refs_backend->peel_ref(refname, sha1);
++}
 +
-+		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
-+		    !refname_is_safe(refname)) {
-+			errno = EINVAL;
-+			return NULL;
-+		}
-+		/*
-+		 * dwim_ref() uses REF_ISBROKEN to distinguish between
-+		 * missing refs and refs that were present but invalid,
-+		 * to complain about the latter to stderr.
-+		 *
-+		 * We don't know whether the ref exists, so don't set
-+		 * REF_ISBROKEN yet.
-+		 */
-+		bad_name = 1;
-+	}
++int create_symref(const char *ref_target, const char *refs_heads_master,
++		  const char *logmsg)
++{
++	return the_refs_backend->create_symref(ref_target, refs_heads_master,
++					       logmsg);
++}
 +
-+	for (symref_count = 0; symref_count < MAXDEPTH; symref_count++) {
-+		unsigned int read_flags = 0;
-+
-+		if (read_raw_ref(refname, sha1, sb_refname, sb_path, &read_flags)) {
-+			int saved_errno = errno;
-+			if (flags)
-+				*flags |= read_flags;
-+			errno = saved_errno;
-+			if (bad_name) {
-+				hashclr(sha1);
- 				if (flags)
- 					*flags |= REF_ISBROKEN;
--				errno = EINVAL;
-+			}
-+			if (resolve_flags & RESOLVE_REF_READING || errno != ENOENT) {
- 				return NULL;
-+			} else {
-+				hashclr(sha1);
-+				return refname;
- 			}
-+		}
-+		if (flags)
-+			*flags |= read_flags;
-+
-+		if (!(read_flags & REF_ISSYMREF)) {
- 			if (bad_name) {
- 				hashclr(sha1);
- 				if (flags)
-@@ -1546,44 +1600,43 @@ static const char *resolve_ref_1(const char *refname,
- 			}
- 			return refname;
- 		}
--		if (flags)
--			*flags |= REF_ISSYMREF;
--		buf = sb_contents->buf + 4;
--		while (isspace(*buf))
--			buf++;
--		strbuf_reset(sb_refname);
--		strbuf_addstr(sb_refname, buf);
-+
- 		refname = sb_refname->buf;
- 		if (resolve_flags & RESOLVE_REF_NO_RECURSE) {
- 			hashclr(sha1);
-+			if (bad_name && flags)
-+				*flags |= REF_ISBROKEN;
- 			return refname;
- 		}
--		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
-+
-+		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 			if (flags)
- 				*flags |= REF_ISBROKEN;
--
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
--			    !refname_is_safe(buf)) {
-+			    !refname_is_safe(refname)) {
- 				errno = EINVAL;
- 				return NULL;
- 			}
- 			bad_name = 1;
- 		}
- 	}
-+
-+	if (flags)
-+		*flags |= REF_ISBROKEN;
-+	return NULL;
++int resolve_gitlink_ref(const char *path, const char *refname,
++			unsigned char *sha1)
++{
++	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
++}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a509240..96be63c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1330,7 +1330,8 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+ 	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
  }
  
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       unsigned char *sha1, int *flags)
+-int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
++static int files_resolve_gitlink_ref(const char *path, const char *refname,
++				     unsigned char *sha1)
  {
- 	static struct strbuf sb_refname = STRBUF_INIT;
--	struct strbuf sb_contents = STRBUF_INIT;
- 	struct strbuf sb_path = STRBUF_INIT;
- 	const char *ret;
+ 	int len = strlen(path), retval;
+ 	struct strbuf submodule = STRBUF_INIT;
+@@ -1413,9 +1414,9 @@ static int resolve_missing_loose_ref(const char *refname,
+  *
+  * sb_path is workspace: the caller should allocate and free it.
+  */
+-int read_raw_ref(const char *refname, unsigned char *sha1,
+-		 struct strbuf *symref, struct strbuf *sb_path,
+-		 unsigned int *flags)
++static int files_read_raw_ref(const char *refname, unsigned char *sha1,
++			      struct strbuf *symref, struct strbuf *sb_path,
++			      unsigned int *flags)
+ {
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	int ret = -1;
+@@ -1568,7 +1569,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+ 	return status;
+ }
  
- 	ret = resolve_ref_1(refname, resolve_flags, sha1, flags,
--			    &sb_refname, &sb_path, &sb_contents);
-+			    &sb_refname, &sb_path);
-+
- 	strbuf_release(&sb_path);
--	strbuf_release(&sb_contents);
+-int peel_ref(const char *refname, unsigned char *sha1)
++static int files_peel_ref(const char *refname, unsigned char *sha1)
+ {
+ 	int flag;
+ 	unsigned char base[20];
+@@ -2127,7 +2128,7 @@ static void prune_refs(struct ref_to_prune *r)
+ 	}
+ }
+ 
+-int pack_refs(unsigned int flags)
++static int files_pack_refs(unsigned int flags)
+ {
+ 	struct pack_refs_cb_data cbdata;
+ 
+@@ -2318,10 +2319,10 @@ out:
  	return ret;
  }
  
+-int verify_refname_available(const char *newname,
+-			     struct string_list *extras,
+-			     struct string_list *skip,
+-			     struct strbuf *err)
++static int files_verify_refname_available(const char *newname,
++					  struct string_list *extras,
++					  struct string_list *skip,
++					  struct strbuf *err)
+ {
+ 	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
+ 	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
+@@ -2741,7 +2742,9 @@ static int create_symref_locked(struct ref_lock *lock, const char *refname,
+ 	return 0;
+ }
+ 
+-int create_symref(const char *refname, const char *target, const char *logmsg)
++static int files_create_symref(const char *refname,
++			       const char *target,
++			       const char *logmsg)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_lock *lock;
+@@ -3395,4 +3398,12 @@ struct ref_storage_be refs_be_files = {
+ 	NULL,
+ 	"files",
+ 	files_transaction_commit,
++
++	files_pack_refs,
++	files_peel_ref,
++	files_create_symref,
++
++	files_read_raw_ref,
++	files_verify_refname_available,
++	files_resolve_gitlink_ref,
+ };
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 62ba0c0..c5f5ef7 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -209,18 +209,37 @@ int rename_ref_available(const char *oldname, const char *newname);
+ int do_for_each_ref(const char *submodule, const char *base,
+ 		    each_ref_fn fn, int trim, int flags, void *cb_data);
+ 
+-int read_raw_ref(const char *refname, unsigned char *sha1,
+-		 struct strbuf *symref, struct strbuf *sb_path,
+-		 unsigned int *flags);
+-
+ /* refs backends */
+ typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
+ 				      struct strbuf *err);
+ 
++/* misc methods */
++typedef int pack_refs_fn(unsigned int flags);
++typedef int peel_ref_fn(const char *refname, unsigned char *sha1);
++typedef int create_symref_fn(const char *ref_target,
++			     const char *refs_heads_master,
++			     const char *logmsg);
++
++/* resolution methods */
++typedef int read_raw_ref_fn(const char *refname, unsigned char *sha1,
++			    struct strbuf *symref, struct strbuf *sb_path,
++			    unsigned int *flags);
++typedef int verify_refname_available_fn(const char *refname, struct string_list *extra, struct string_list *skip, struct strbuf *err);
++typedef int resolve_gitlink_ref_fn(const char *path, const char *refname,
++				   unsigned char *sha1);
++
+ struct ref_storage_be {
+ 	struct ref_storage_be *next;
+ 	const char *name;
+ 	ref_transaction_commit_fn *transaction_commit;
++
++	pack_refs_fn *pack_refs;
++	peel_ref_fn *peel_ref;
++	create_symref_fn *create_symref;
++
++	read_raw_ref_fn *read_raw_ref;
++	verify_refname_available_fn *verify_refname_available;
++	resolve_gitlink_ref_fn *resolve_gitlink_ref;
+ };
+ 
+ extern struct ref_storage_be refs_be_files;
 -- 
 2.4.2.767.g62658d5-twtrsrc
