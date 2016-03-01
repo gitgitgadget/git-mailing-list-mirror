@@ -1,102 +1,109 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v7 29/33] setup: configure ref storage on setup
-Date: Tue, 01 Mar 2016 14:16:31 -0500
+Subject: Re: [PATCH v7 30/33] refs: break out resolve_ref_unsafe_submodule
+Date: Tue, 01 Mar 2016 14:17:39 -0500
 Organization: Twitter
-Message-ID: <1456859791.18017.78.camel@twopensource.com>
+Message-ID: <1456859859.18017.79.camel@twopensource.com>
 References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
-	 <1456793586-22082-30-git-send-email-dturner@twopensource.com>
-	 <56D5CECD.6020301@ramsayjones.plus.com>
+	 <1456793586-22082-31-git-send-email-dturner@twopensource.com>
+	 <56D5CF9C.4010808@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
 	peff@peff.net, mhagger@alum.mit.edu, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:16:41 2016
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:17:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aapmh-0006Ge-JW
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:16:39 +0100
+	id 1aapnn-00073z-AR
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192AbcCATQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 14:16:35 -0500
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:35840 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753177AbcCATQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 14:16:34 -0500
-Received: by mail-qg0-f54.google.com with SMTP id u110so21107860qge.3
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:16:33 -0800 (PST)
+	id S1751472AbcCATRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 14:17:43 -0500
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:34682 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbcCATRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 14:17:42 -0500
+Received: by mail-qg0-f45.google.com with SMTP id b67so150438750qgb.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:17:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :organization:mime-version:content-transfer-encoding;
-        bh=GJdXcd3dqKG4y3o/VQq1qIz99w6yA1cWbZ1emA6vkd8=;
-        b=nMgOq1p34BZa7boSaR6ZullmtPJLCOScy1kNLIrK+eXkx/H/6k421vThC6HxGrKclr
-         Vh4MTq/zo5T+eT/qlCUJ5BgE/TVHOjuFxesmKXloKZQbkVEfdBYfTrOgnEe2Piqnnndh
-         FdAs3DKUnmH7FePMF3tRx91UjthWm14IrUcggkXK2D0XpXFYK/KKwh2yBPa2EONR1lmc
-         62BK78sZAbqeZgsH6IYmnXVqEKFhNE6XpUVeFIY1kir01hw9EwoF7sGsNb3SuBsTN8A5
-         h2avyaWyVk16nwmL2A3jhKqko2yjNgm8RBYF3TASxdVPFslFa8u+xAHl+qdNuJWF1pPt
-         ECEA==
+        bh=yseMusD7Ni+Nnl0GN48KZUwnAKneKSQ+x1qJYN+8h7Q=;
+        b=AmxW+997AiIxqJveYRMhiuf8SBeZJgoM1txLKabgd7ncuiKSsHVXdG+2xbHP9xivTK
+         uI14Igz2raKdbpblk3ucs6MDJTjObyTnKBJDBQUE5x97G7pnTpPEgxW0Tv6pG3+yNL1g
+         7FlZwbhE+u16JONyC43cvtq2BWahi5ZVLPcxBGmyusJTQSGZZhi5/4a4OXGcl8SmBwm+
+         dTsy9DT7L9VEVegEvCd+wNCe8YT7O2WpBUTcNKdm/iyvvGJ39tCKLwQIH3xnYCNuXk7G
+         HFWzSQUtqyDloMsOA2fC6CaOFEMyVXwSfxnjE7s35e7/OdscJJtw54pa68L7iEg4T5z6
+         4oRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:mime-version:content-transfer-encoding;
-        bh=GJdXcd3dqKG4y3o/VQq1qIz99w6yA1cWbZ1emA6vkd8=;
-        b=datbL5+aCTxxMkNB7fcS1AK+Llypl83fw4qG9k4gCymcHp8GRIznbQY5Bb2R4PlU3M
-         9ZymF5ncFd11oR86D+iw2ahvYk7eqU1vC8IZp9JJYMGOpOMYBxoB/M2Z+obbWe3lOyoq
-         J4ltcND6VJe5Yqg+vpajdtQ58RajTzAYofros0CDmdsehojOD3ODf50zQQY2ARThDP84
-         RczWEuWalCEik+8H0VEPHyvUPIjjxGmViv4TL7MIpKHERds8s12fKWftP1/M8+3JhIl3
-         yBp1+uPcdrW/SAIhO+Ht3JJ8BqMiImIgdeF0YRZ08HfEzM8s2lZhYMoE9RKPE7C+Fr1A
-         D0Sw==
-X-Gm-Message-State: AD7BkJKze11Mzf5VHP5vjBY1N++OH0SncE7sCSROIFyw1lzJxSmKHOI/vmWCs4Fd+3720g==
-X-Received: by 10.140.92.23 with SMTP id a23mr2961067qge.92.1456859793136;
-        Tue, 01 Mar 2016 11:16:33 -0800 (PST)
+        bh=yseMusD7Ni+Nnl0GN48KZUwnAKneKSQ+x1qJYN+8h7Q=;
+        b=fSnhqYS/G6eHpxfn9EPXKqp5PC8gpaPRQwK5M8MbJav96AVMYLJQjeQXUFnU//3u6C
+         D+wD7EFwzrI4aHExUDsjYCiCNGpq7RMUoifhE3RR9pfsuzmny0ZO17abQ24Mhz2O4fmJ
+         39NUPN5092tJudvl3GBBB2Ig0pQtlbPGKsDjtf+diqnHkJnjBvJvqd4uAtaX9Sb/g4pN
+         pTMH6E3jw5Ui28Ocf+tTR16UjyLuMSfxfKQZbX2Z1mFup3mOVeCnwjtHAIVk0I11efH5
+         wzNQeDP6IrGKrDm7IucFpOoDBc5v/km6nXBCuROEJUr637EmabK6RCA2WOywekUVLmTV
+         OCgg==
+X-Gm-Message-State: AD7BkJIwoEFWQSMK4cT/dOuMObmLkbnMiHe1VQuiIk2mKedL2VG61zTIP6Mao3ebCH4q6g==
+X-Received: by 10.140.93.65 with SMTP id c59mr28212839qge.101.1456859861461;
+        Tue, 01 Mar 2016 11:17:41 -0800 (PST)
 Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id p67sm13454324qhb.7.2016.03.01.11.16.31
+        by smtp.gmail.com with ESMTPSA id u202sm13539964qka.43.2016.03.01.11.17.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Mar 2016 11:16:32 -0800 (PST)
-In-Reply-To: <56D5CECD.6020301@ramsayjones.plus.com>
+        Tue, 01 Mar 2016 11:17:40 -0800 (PST)
+In-Reply-To: <56D5CF9C.4010808@ramsayjones.plus.com>
 X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288056>
 
-On Tue, 2016-03-01 at 17:18 +0000, Ramsay Jones wrote:
+On Tue, 2016-03-01 at 17:21 +0000, Ramsay Jones wrote:
 > 
 > On 01/03/16 00:53, David Turner wrote:
-> > This sets up the existing backend early, so that other code which
-> > reads refs is reading from the right place.
+> > It will soon be useful for resolve_ref_unsafe to support
+> > submodules.
+> > But since it is called from so many places, changing it would have
+> > been painful.  Fortunately, it's just a thin wrapper around (the
+> > former) resolve_ref_1.  So now resolve_ref_1 becomes
+> > resolve_ref_unsafe_submodule, and it passes its submodule argument
+> > through to read_raw_ref.
+> > 
+> > The files backend doesn't need this functionality, but it doesn't
+> > hurt.
 > > 
 > > Signed-off-by: David Turner <dturner@twopensource.com>
 > > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > > ---
-> >  config.c | 1 +
-> >  setup.c  | 4 ++++
-> >  2 files changed, 5 insertions(+)
+> >  refs.c               | 41 +++++++++++++++++++++++++---------------
+> > -
+> >  refs/files-backend.c |  8 ++++++--
+> >  refs/refs-internal.h | 19 ++++++++++++++++---
+> >  3 files changed, 47 insertions(+), 21 deletions(-)
 > > 
-> > diff --git a/config.c b/config.c
-> > index 9ba40bc..cca7e28 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -11,6 +11,7 @@
-> >  #include "strbuf.h"
-> >  #include "quote.h"
-> >  #include "hashmap.h"
-> > +#include "refs.h"
-> >  #include "string-list.h"
-> >  #include "utf8.h"
-> >  
+> > diff --git a/refs.c b/refs.c
+> > index 5fe0bac..d1cf707 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -60,6 +60,9 @@ void register_ref_storage_backends(void)
+> >  	 * entries below when you add a new backend.
+> >  	 */
+> >  	register_ref_storage_backend(&refs_be_files);
+> > +#ifdef USE_LIBLMDB
+> > +	register_ref_storage_backend(&refs_be_lmdb);
+> > +#endif
 > 
-> I was just skimming these patches as they passed by, and this
-> caught my eye. If this include is required (eg. to fix a compiler
-> warning), then it should probably be in an earlier patch.
-> Otherwise, it should be in a later patch, no?
+> Again, just skimming patches, ...
+> 
+> The lmdb refs backend (hence refs_be_lmdb) is not introduced until
+> the next patch [31/33], right?
 
-Actually, it's cruft from the previous version of this series :(.  I
-looked at the patch and didn't notice that it was in config.c instead
-of setup.c.  Oops.  Will remove.
+Yep.
