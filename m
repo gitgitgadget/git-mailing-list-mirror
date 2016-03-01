@@ -1,87 +1,299 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 04/10] check_repository_format_gently: stop using
- git_config_early
-Date: Tue, 1 Mar 2016 09:40:39 -0500
-Message-ID: <20160301144039.GD12887@sigill.intra.peff.net>
+Subject: [PATCH 06/10] setup: refactor repo format reading and verification
+Date: Tue, 1 Mar 2016 09:42:06 -0500
+Message-ID: <20160301144206.GF12887@sigill.intra.peff.net>
 References: <20160301143546.GA30806@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: David Turner <dturner@twopensource.com>, mhagger@alum.mit.edu,
 	pclouds@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 01 15:40:58 2016
+X-From: git-owner@vger.kernel.org Tue Mar 01 15:42:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aalTr-0006P5-Ue
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 15:40:56 +0100
+	id 1aalV9-0007FS-Cy
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 15:42:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127AbcCAOko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 09:40:44 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52425 "HELO cloud.peff.net"
+	id S1754168AbcCAOmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 09:42:10 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52438 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754120AbcCAOkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 09:40:43 -0500
-Received: (qmail 27669 invoked by uid 102); 1 Mar 2016 14:40:42 -0000
+	id S1753859AbcCAOmJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 09:42:09 -0500
+Received: (qmail 27731 invoked by uid 102); 1 Mar 2016 14:42:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 09:40:41 -0500
-Received: (qmail 8171 invoked by uid 107); 1 Mar 2016 14:40:53 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 09:42:08 -0500
+Received: (qmail 8211 invoked by uid 107); 1 Mar 2016 14:42:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 09:40:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2016 09:40:39 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 09:42:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2016 09:42:06 -0500
 Content-Disposition: inline
 In-Reply-To: <20160301143546.GA30806@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288023>
 
-There's a chicken-and-egg problem with using the regular
-git_config during the repository setup process. We get
-around it here by using a special interface that lets us
-specify the per-repo config, and avoid calling
-git_pathdup().
+When we want to know if we're in a git repository of
+reasonable vintage, we can call check_repository_format_gently(),
+which does three things:
 
-But this interface doesn't actually make sense. It will look
-in the system and per-user config, too; we definitely would
-not want to accept a core.repositoryformatversion from
-there.
+  1. Reads the config from the .git/config file.
 
-The git_config_from_file interface is a better match, as it
-lets us look at a single file.
+  2. Verifies that the version info we read is sane.
+
+  3. Writes some global variables based on this.
+
+There are a few things we could improve here.
+
+One is that steps 1 and 3 happen together. So if the
+verification in step 2 fails, we still clobber the global
+variables. This is especially bad if we go on to try another
+repository directory; we may end up with a state of mixed
+config variables.
+
+The second is there's no way to ask about the repository
+version for anything besides the main repository we're in.
+git-init wants to do this, and it's possible that we would
+want to start doing so for submodules (e.g., to find out
+which ref backend they're using).
+
+We can improve both by splitting the first two steps into
+separate functions. Now check_repository_format_gently()
+calls out to steps 1 and 2, and does 3 only if step 2
+succeeds.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This has literally been bugging me for 8 years.
+ cache.h |  23 ++++++++++++
+ setup.c | 121 +++++++++++++++++++++++++++++++++++++++++++---------------------
+ 2 files changed, 104 insertions(+), 40 deletions(-)
 
- setup.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 1825851..d03f5d6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -750,6 +750,29 @@ extern int grafts_replace_parents;
+ extern int repository_format_version;
+ extern int repository_format_precious_objects;
+ 
++struct repository_format {
++	int version;
++	int precious_objects;
++	int is_bare;
++	char *work_tree;
++	struct string_list unknown_extensions;
++};
++
++/*
++ * Read the repository format characteristics from the config file "path". If
++ * the version cannot be extracted from the file for any reason, the version
++ * field will be set to -1, and all other fields are undefined.
++ */
++void read_repository_format(struct repository_format *format, const char *path);
++
++/*
++ * Verify that the repository described by repository_format is something we
++ * can read. If it is, return 0. Otherwise, return -1, and "err" will describe
++ * any errors encountered.
++ */
++int verify_repository_format(const struct repository_format *format,
++			     struct strbuf *err);
++
+ /*
+  * Check the repository format version in the path found in get_git_dir(),
+  * and die if it is a version we don't understand. Generally one would
 diff --git a/setup.c b/setup.c
-index a02932b..a6013e6 100644
+index a6013e6..3d498af 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -409,15 +409,10 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 	repo_config = sb.buf;
+@@ -5,7 +5,6 @@
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
+ static int work_tree_config_is_bogus;
+-static struct string_list unknown_extensions = STRING_LIST_INIT_DUP;
+ 
+ /*
+  * The input parameter must contain an absolute path, and it must already be
+@@ -370,12 +369,13 @@ void setup_work_tree(void)
+ 	initialized = 1;
+ }
+ 
+-static int check_repo_format(const char *var, const char *value, void *cb)
++static int check_repo_format(const char *var, const char *value, void *vdata)
+ {
++	struct repository_format *data = vdata;
+ 	const char *ext;
+ 
+ 	if (strcmp(var, "core.repositoryformatversion") == 0)
+-		repository_format_version = git_config_int(var, value);
++		data->version = git_config_int(var, value);
+ 	else if (skip_prefix(var, "extensions.", &ext)) {
+ 		/*
+ 		 * record any known extensions here; otherwise,
+@@ -385,61 +385,105 @@ static int check_repo_format(const char *var, const char *value, void *cb)
+ 		if (!strcmp(ext, "noop"))
+ 			;
+ 		else if (!strcmp(ext, "preciousobjects"))
+-			repository_format_precious_objects = git_config_bool(var, value);
++			data->precious_objects = git_config_bool(var, value);
+ 		else
+-			string_list_append(&unknown_extensions, ext);
++			string_list_append(&data->unknown_extensions, ext);
+ 	}
+ 	return 0;
+ }
+ 
++static void read_repository_format_1(struct repository_format *, config_fn_t,
++				     const char *);
++
+ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *repo_config;
++	struct strbuf err = STRBUF_INIT;
++	struct repository_format candidate;
+ 	config_fn_t fn;
+-	int ret = 0;
+-
+-	string_list_clear(&unknown_extensions, 0);
+ 
+ 	if (get_common_dir(&sb, gitdir))
+ 		fn = check_repo_format;
+ 	else
+ 		fn = check_repository_format_version;
++
+ 	strbuf_addstr(&sb, "/config");
+-	repo_config = sb.buf;
++	read_repository_format_1(&candidate, fn, sb.buf);
++	strbuf_release(&sb);
  
  	/*
--	 * git_config() can't be used here because it calls git_pathdup()
--	 * to get $GIT_CONFIG/config. That call will make setup_git_env()
--	 * set git_dir to ".git".
--	 *
--	 * We are in gitdir setup, no git dir has been found useable yet.
--	 * Use a gentler version of git_config() to check if this repo
--	 * is a good one.
-+	 * Ignore return value; for historical reasons, we must treat a missing
-+	 * config file as a noop (git-init relies on this).
+-	 * Ignore return value; for historical reasons, we must treat a missing
+-	 * config file as a noop (git-init relies on this).
++	 * For historical use of check_repository_format() in git-init,
++	 * we treat a missing config as a silent "ok", even when nongit_ok
++	 * is unset.
  	 */
--	git_config_early(fn, NULL, repo_config);
-+	git_config_from_file(fn, repo_config, NULL);
- 	if (GIT_REPO_VERSION_READ < repository_format_version) {
- 		if (!nongit_ok)
- 			die ("Expected git repo version <= %d, found %d",
+-	git_config_from_file(fn, repo_config, NULL);
+-	if (GIT_REPO_VERSION_READ < repository_format_version) {
+-		if (!nongit_ok)
+-			die ("Expected git repo version <= %d, found %d",
+-			     GIT_REPO_VERSION_READ, repository_format_version);
+-		warning("Expected git repo version <= %d, found %d",
+-			GIT_REPO_VERSION_READ, repository_format_version);
+-		warning("Please upgrade Git");
+-		*nongit_ok = -1;
+-		ret = -1;
++	if (candidate.version < 0)
++		return 0;
++
++	if (verify_repository_format(&candidate, &err) < 0) {
++		if (nongit_ok) {
++			warning("%s", err.buf);
++			strbuf_release(&err);
++			*nongit_ok = -1;
++			return -1;
++		}
++		die("%s", err.buf);
+ 	}
+ 
+-	if (repository_format_version >= 1 && unknown_extensions.nr) {
+-		int i;
++	repository_format_version = candidate.version;
++	repository_format_precious_objects = candidate.precious_objects;
++	string_list_clear(&candidate.unknown_extensions, 0);
++	if (candidate.is_bare != -1) {
++		is_bare_repository_cfg = candidate.is_bare;
++		if (is_bare_repository_cfg == 1)
++			inside_work_tree = -1;
++	}
++	if (candidate.work_tree) {
++		free(git_work_tree_cfg);
++		git_work_tree_cfg = candidate.work_tree;
++		inside_work_tree = -1;
++	}
++
++	return 0;
++}
++
++/*
++ * Internally, we need to swap out "fn" here, but we don't want to expose
++ * that to the world. Hence a wrapper around this internal function.
++ */
++static void read_repository_format_1(struct repository_format *format,
++				     config_fn_t fn, const char *path)
++{
++	memset(format, 0, sizeof(*format));
++	format->version = -1;
++	format->is_bare = -1;
++	string_list_init(&format->unknown_extensions, 1);
++	git_config_from_file(fn, path, format);
++}
+ 
+-		if (!nongit_ok)
+-			die("unknown repository extension: %s",
+-			    unknown_extensions.items[0].string);
++void read_repository_format(struct repository_format *format, const char *path)
++{
++	read_repository_format_1(format, check_repository_format_version, path);
++}
+ 
+-		for (i = 0; i < unknown_extensions.nr; i++)
+-			warning("unknown repository extension: %s",
+-				unknown_extensions.items[i].string);
+-		*nongit_ok = -1;
+-		ret = -1;
++int verify_repository_format(const struct repository_format *format,
++			     struct strbuf *err)
++{
++	if (GIT_REPO_VERSION_READ < format->version) {
++		strbuf_addf(err, "Expected git repo version <= %d, found %d",
++			    GIT_REPO_VERSION_READ, format->version);
++		return -1;
+ 	}
+ 
+-	strbuf_release(&sb);
+-	return ret;
++	if (format->version >= 1 && format->unknown_extensions.nr) {
++		int i;
++
++		for (i = 0; i < format->unknown_extensions.nr; i++)
++			strbuf_addf(err, "unknown repository extension: %s",
++				    format->unknown_extensions.items[i].string);
++		return -1;
++	}
++
++	return 0;
+ }
+ 
+ /*
+@@ -958,19 +1002,16 @@ int git_config_perm(const char *var, const char *value)
+ 
+ int check_repository_format_version(const char *var, const char *value, void *cb)
+ {
++	struct repository_format *data = cb;
+ 	int ret = check_repo_format(var, value, cb);
+ 	if (ret)
+ 		return ret;
+ 	if (strcmp(var, "core.bare") == 0) {
+-		is_bare_repository_cfg = git_config_bool(var, value);
+-		if (is_bare_repository_cfg == 1)
+-			inside_work_tree = -1;
++		data->is_bare = git_config_bool(var, value);
+ 	} else if (strcmp(var, "core.worktree") == 0) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		free(git_work_tree_cfg);
+-		git_work_tree_cfg = xstrdup(value);
+-		inside_work_tree = -1;
++		data->work_tree = xstrdup(value);
+ 	}
+ 	return 0;
+ }
 -- 
 2.8.0.rc0.278.gfeb5644
