@@ -1,59 +1,161 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] builtin/receive-pack.c: use parse_options API
-Date: Tue, 01 Mar 2016 21:39:43 +0100
-Message-ID: <vpqvb56yltc.fsf@anie.imag.fr>
-References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
-	<1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
-	<1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: "Sidhant Sharma \[\:tk\]" <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 21:39:58 2016
+From: Kevin Daudt <me@ikke.info>
+Subject: [PATCH] cherry-pick: add --no-verify option
+Date: Tue,  1 Mar 2016 21:40:46 +0100
+Message-ID: <1456864846-14185-1-git-send-email-me@ikke.info>
+References: <56D576A1.3020202@greg0ire.fr>
+Cc: Kevin Daudt <me@ikke.info>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 21:41:18 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aar5I-0006Ip-Bt
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 21:39:56 +0100
+	id 1aar6Z-0007EX-I2
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 21:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423AbcCAUjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 15:39:52 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:38376 "EHLO rominette.imag.fr"
+	id S1753508AbcCAUlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 15:41:10 -0500
+Received: from ikke.info ([178.21.113.177]:43656 "EHLO vps892.directvps.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752119AbcCAUjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 15:39:51 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u21KdfFS010188
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 1 Mar 2016 21:39:41 +0100
-Received: from anie (ensi-vpn-229.imag.fr [129.88.57.229])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u21KdhHW020721;
-	Tue, 1 Mar 2016 21:39:44 +0100
-In-Reply-To: <1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
-	(Sidhant Sharma's message of "Wed, 2 Mar 2016 01:51:01 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Mar 2016 21:39:41 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u21KdfFS010188
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457469584.54789@DY6EJzXRk68MNW/3bP+aVQ
+	id S1751778AbcCAUlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 15:41:09 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+	id 121CE2D8009; Tue,  1 Mar 2016 21:41:07 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on ikke.info
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.1
+Received: from io.ikke (unknown [10.8.0.30])
+	by vps892.directvps.nl (Postfix) with ESMTP id 7BAC52D8007;
+	Tue,  1 Mar 2016 21:41:06 +0100 (CET)
+X-Mailer: git-send-email 2.7.2
+In-Reply-To: <56D576A1.3020202@greg0ire.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288063>
 
-"Sidhant Sharma [:tk]" <tigerkid001@gmail.com> writes:
+git commit has a --no-verify option to prevent the pre-commit hook from
+running. When continuing a conflicted cherry-pick, git commit gets
+executed which also causes the pre-commit hook to be run.
 
-> Make receive-pack use the parse_options API,
-> bringing it more in line with send-pack and push.
+Add --no-verify and pass that through to the git commit command so that
+the can prevent that from happening
 
-Thanks. This version looks good to me.
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+ builtin/revert.c                |  2 ++
+ sequencer.c                     | 21 ++++++++++++++++-----
+ sequencer.h                     |  1 +
+ t/t3510-cherry-pick-sequence.sh | 12 ++++++++++++
+ 4 files changed, 31 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 56a2c36..81d9c85 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -97,6 +97,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
++		OPT_END(),
+ 	};
+ 
+ 	if (opts->action == REPLAY_PICK) {
+@@ -106,6 +107,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+ 			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+ 			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
++			OPT_BOOL(0, "no-verify", &opts->no_verify, N_("don't run pre-commit hook when continuing cherry-pick")),
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
+diff --git a/sequencer.c b/sequencer.c
+index e66f2fe..657a381 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -978,14 +978,25 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	return 0;
+ }
+ 
+-static int continue_single_pick(void)
++static int continue_single_pick(struct replay_opts *opts)
+ {
+-	const char *argv[] = { "commit", NULL };
++	struct argv_array array;
++	int rc;
++
++	argv_array_init(&array);
++	argv_array_push(&array, "commit");
+ 
+ 	if (!file_exists(git_path_cherry_pick_head()) &&
+ 	    !file_exists(git_path_revert_head()))
+ 		return error(_("no cherry-pick or revert in progress"));
+-	return run_command_v_opt(argv, RUN_GIT_CMD);
++
++	if (opts->no_verify)
++		argv_array_push(&array, "--no-verify");
++
++	rc = run_command_v_opt(array.argv, RUN_GIT_CMD);
++	argv_array_clear(&array);
++
++	return rc;
+ }
+ 
+ static int sequencer_continue(struct replay_opts *opts)
+@@ -993,14 +1004,14 @@ static int sequencer_continue(struct replay_opts *opts)
+ 	struct commit_list *todo_list = NULL;
+ 
+ 	if (!file_exists(git_path_todo_file()))
+-		return continue_single_pick();
++		return continue_single_pick(opts);
+ 	read_populate_opts(&opts);
+ 	read_populate_todo(&todo_list, opts);
+ 
+ 	/* Verify that the conflict has been resolved */
+ 	if (file_exists(git_path_cherry_pick_head()) ||
+ 	    file_exists(git_path_revert_head())) {
+-		int ret = continue_single_pick();
++		int ret = continue_single_pick(opts);
+ 		if (ret)
+ 			return ret;
+ 	}
+diff --git a/sequencer.h b/sequencer.h
+index 5ed5cb1..d868a50 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -34,6 +34,7 @@ struct replay_opts {
+ 	int allow_empty;
+ 	int allow_empty_message;
+ 	int keep_redundant_commits;
++	int no_verify;
+ 
+ 	int mainline;
+ 
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index 7b7a89d..29a06f8 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -340,6 +340,18 @@ test_expect_success '--continue after resolving conflicts and committing' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--continue --no-verify does not run pre-commit hook ' '
++	pristine_detach initial &&
++	mkdir -p .git/hooks &&
++	echo -e "#!/bin/sh\nexit 1" >.git/hooks/pre-commit &&
++	chmod u+x .git/hooks/pre-commit &&
++	test_when_finished "rm -r .git/hooks/" &&
++
++	test_must_fail git cherry-pick picked &&
++	git add foo &&
++	git cherry-pick --continue --no-verify
++'
++
+ test_expect_success '--continue asks for help after resolving patch to nil' '
+ 	pristine_detach conflicting &&
+ 	test_must_fail git cherry-pick initial..picked &&
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.7.2
