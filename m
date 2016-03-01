@@ -1,70 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv21 00/10] Expose submodule parallelism to the user
-Date: Tue, 01 Mar 2016 14:36:10 -0800
-Message-ID: <xmqqziuh6d2d.fsf@gitster.mtv.corp.google.com>
-References: <1456798040-30129-1-git-send-email-sbeller@google.com>
+From: Vladimir Dosen <vladimir.doshen@gmail.com>
+Subject: git-svn ignore-paths and huge files
+Date: Tue, 1 Mar 2016 23:41:14 +0100
+Message-ID: <CAHS3bFRB_PNx0ssno+5Yz3mKt9K7pUzvnqqyucm3CuGuc5P4ZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com,
-	Jens.Lehmann@web.de, peff@peff.net, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 23:36:20 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 23:41:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aastv-00051w-V5
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 23:36:20 +0100
+	id 1aasym-0008Nw-7o
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 23:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbcCAWgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 17:36:14 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50319 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751025AbcCAWgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 17:36:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC6D149DFC;
-	Tue,  1 Mar 2016 17:36:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U/o7AMT/gMRV14dAwQlZu7QMplw=; b=dX0Y1H
-	LOCeU1Yh/ZRiTod/UpZ9LRikJf0swaACtZVhhi8zpgz6Xm89ZNi7oaNAQVranFHk
-	NMGJSHOUxxZVwzYNHeFd4BOkZzJ1jou/GoMiJH1VTO318JMlzu+jLFigWQ20IMkK
-	HkIoIt0aLlkLn4Hsd8fnqoJEZ/3aAwqAiWCuw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qJiK6o0jglkb/NoGamGgOsAJaEuKqTjg
-	HPRt3t3My/IljMVEia/Ixtc1syy2vm5Xi+WY2HhJI2BsO/hzDre5bqdP9CMtf5j2
-	M7IdU1XfmRslaT0mzdGbHCaaMB+z3bbqQ2w2eXzuhT+P2qfGzZoJsyJF5QjdvFo5
-	K02adlOBDyY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A417149DFB;
-	Tue,  1 Mar 2016 17:36:12 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 08BDC49DF3;
-	Tue,  1 Mar 2016 17:36:12 -0500 (EST)
-In-Reply-To: <1456798040-30129-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 29 Feb 2016 18:07:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 001C9DC6-DFFE-11E5-B212-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751270AbcCAWlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 17:41:16 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:34171 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069AbcCAWlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 17:41:16 -0500
+Received: by mail-wm0-f41.google.com with SMTP id p65so56091311wmp.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 14:41:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=6agHqc6qVO8aCF7E9nzVPeW3yU2Jt3W4SLVZ6lSia18=;
+        b=VXxUVHF4wyzsNw63Vu4smJRch7t7MY19PheRRe6+tFpV9isPc00mVR96qkx3oFTbc0
+         m91nM2Zk+x5Db0OXhO07YnjpZRdJZWqIaz4R0JRmVt/WjaUWOdvxHehbshDwa8Nu7KWr
+         zZvmgdmS03m9xGOuzBF0myRZVLUkXdtw8Vjhw96YaTDXqPnsgtgNxCCPxOaULW/JULEQ
+         8oPComA1WmiJMDDrLCrCf1sQbspc3uOlY8dEuZdb+KqaPav4YARbgIEwS+GS4AaLS2kr
+         0YqOeUYXj9MA35y9qBPBX+44kxqHR0oATCCmjONbJoLhORpoytQln3M1Ipqn4xX99x64
+         L/+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=6agHqc6qVO8aCF7E9nzVPeW3yU2Jt3W4SLVZ6lSia18=;
+        b=F9PQtQBerMaStMQJwlJZAp/WFVKCp6Li+gHKAncaNhr37oLanGopSK1nFAcCWaRlpf
+         1F3eGXg0wF3Um9MvduAWbPBcR88KeI6XYFaSMCe1gL0Qlrv3h9iJ1ISdIgUJ/i9xATmb
+         zHXABreV6DILUIZ2ihcx2iZdO8yUmVSbpS8TOp0oKkNySHjqDqyfOOgQPNqtppyC+vgP
+         LFE+kYkPQ54JvLGFB/5DN40T2T7f3B26BVw/8YQ4DKVWP4fDHBhJPxBZ410nYXZ3UtOR
+         TRFc1WkzZUz3O72JD4gW7fL26RcAb9mksAAx4AL9pd2m1R4jyJaPoONGpvFVNwPwQ20C
+         rTng==
+X-Gm-Message-State: AD7BkJK3m/grx2UYQzcwVKQ3xIVFc/HFzBfu6FGKAH1S4PuAHJNqqcDOu0MkdW9/aKEBE+QnKd2onsz9k6qwvg==
+X-Received: by 10.194.184.112 with SMTP id et16mr23158121wjc.75.1456872074659;
+ Tue, 01 Mar 2016 14:41:14 -0800 (PST)
+Received: by 10.27.188.212 with HTTP; Tue, 1 Mar 2016 14:41:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288073>
 
-Stefan Beller <sbeller@google.com> writes:
+Hi.
 
-> * evicted patches:
->   run-command: expose default_{start_failure, task_finished}
->   run_processes_parallel: correctly terminate callbacks with an LF
-> * rebased on top of origin/sb/no-child-process-access-in-run-parallel-callbacks
-> * followed Jonathans advice on improving the situation for translators.
+Recently I sent Eric (who is CC-ed and these days sporadic available
+for deeper analyses) email titled as "git-svn cloning get stuck during
+processing huge file".
+It was about "git svn clone ..." against repository which had big
+third-party files (1,3 GB, 1,1 GB, 80 MB, 55 MB ), temporary stored in
+that repository by mistake (deleted in next revisions).
+So, because I don' t want them, naturally, neither in WC, nor in
+.git/object files as a part of history,
+I used "--ignore-paths" to avoid them.
 
-Queued on top of the fix to parallel-fetch topic, and the
-two patches for submodule-init rebased on top of it.
+Until today I though that process git-svn hangs, because I did not see
+any progress indicator for a  long time, more than couple of hours.
+(Thankful to "--ignore-paths", there were no temporary file(s) under
+./git which rapidly increase on second level, but still there were
+files such as (MAC's git-svn):
+-rw-------   1 vladimirdosen  staff     0 Feb 26 17:51
+Git_git_blob_1101_0_gyOjAm
+-rw-------   1 vladimirdosen  staff     0 Feb 26 17:51
+Git_svn_delta_1101_0_kG6AtD
+-rw-------   1 vladimirdosen  staff     0 Feb 26 17:51 Git_svn_hash_OkjgGH
+, as well as
+-rw-r--r--  1 vladimirdosen  staff     0 Feb 26 17:51 index.lock
+under /.git/svn/refs/remotes/git-svn.
+... and I could note that process "get stuck" somewhere between
+Ra.gs_do_update's call for "$reporter->finish_report($pool);"
+and
+return from Fetcher.apply_textdelta. )
 
-Thanks.
+Fortunately, today, probably thankful to much better network
+condition, I succeed with "latency" 60-80 minutes,
+where handling of mentioned files has taken 98% of total cloning.
+
+So now, my question(s) could be rephrased:
+Is there any way that ignoring with "ignore-paths" can be complete
+ignoring of marked files,
+or why beside many "return undef if $self->is_path_ignored" in git-svn
+this  cloning(fetching) takes significant time anyhow?
+
+It is not only about waiting, but I was misled that process is not
+possible at all if I want to migrate SVN with full history :)
+
+Thanks,
+Vladimir
