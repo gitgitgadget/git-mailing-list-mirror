@@ -1,86 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] git-p4: map a P4 user to Git author name and email address
-Date: Tue, 1 Mar 2016 14:15:57 -0500
-Message-ID: <CAPig+cRwEKjGaDA-jy8KJSAhTheJYDmxtPq8SdVs0LA2f9-9Yw@mail.gmail.com>
-References: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v7 29/33] setup: configure ref storage on setup
+Date: Tue, 01 Mar 2016 14:16:31 -0500
+Organization: Twitter
+Message-ID: <1456859791.18017.78.camel@twopensource.com>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+	 <1456793586-22082-30-git-send-email-dturner@twopensource.com>
+	 <56D5CECD.6020301@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Lars Schneider <lars.schneider@autodesk.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 20:16:12 2016
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	peff@peff.net, mhagger@alum.mit.edu, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:16:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aapmA-0005su-BC
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:16:06 +0100
+	id 1aapmh-0006Ge-JW
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:16:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262AbcCATQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 14:16:00 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:32863 "EHLO
-	mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752086AbcCATP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 14:15:58 -0500
-Received: by mail-vk0-f66.google.com with SMTP id c3so12261811vkb.0
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:15:57 -0800 (PST)
+	id S1753192AbcCATQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 14:16:35 -0500
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:35840 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177AbcCATQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 14:16:34 -0500
+Received: by mail-qg0-f54.google.com with SMTP id u110so21107860qge.3
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 11:16:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Mur0vMYuDE/m5cCMZWvxpfmFuSVyRDAgM/Z7Gg5rtyA=;
-        b=cqnKa517eXJXTDeoepDiTMzTlK8dmuM8qQ19dvXn092eb0asj9b6hgrfZ+/sOefO1+
-         hninhx3t53sNUYovxPYxxaVSwOkh/0+pGcJ/DoSLrvh9EwY52SH5BNqBrITWw66brXXQ
-         aCJk7Qx0mdTsrzzh0g1Ub05osw070qXu71EQMXbge92bvCxQ+xZvv25gZbqKEGMkTRNP
-         exMC6Jb9gFY7Xv2dYgNRjPU7mHc5/y4fdyPeO+dAOxGXy2QZOdVh8aA9EFmypfo9As1u
-         8sfbNgQtt11tSCPdfJDBJuUBo3LfdSc9z/QMA81H0ze+L4ebidnZuNM4gBpvIWoXACOG
-         juyQ==
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:mime-version:content-transfer-encoding;
+        bh=GJdXcd3dqKG4y3o/VQq1qIz99w6yA1cWbZ1emA6vkd8=;
+        b=nMgOq1p34BZa7boSaR6ZullmtPJLCOScy1kNLIrK+eXkx/H/6k421vThC6HxGrKclr
+         Vh4MTq/zo5T+eT/qlCUJ5BgE/TVHOjuFxesmKXloKZQbkVEfdBYfTrOgnEe2Piqnnndh
+         FdAs3DKUnmH7FePMF3tRx91UjthWm14IrUcggkXK2D0XpXFYK/KKwh2yBPa2EONR1lmc
+         62BK78sZAbqeZgsH6IYmnXVqEKFhNE6XpUVeFIY1kir01hw9EwoF7sGsNb3SuBsTN8A5
+         h2avyaWyVk16nwmL2A3jhKqko2yjNgm8RBYF3TASxdVPFslFa8u+xAHl+qdNuJWF1pPt
+         ECEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Mur0vMYuDE/m5cCMZWvxpfmFuSVyRDAgM/Z7Gg5rtyA=;
-        b=QJOloUvYy8SCS8VUCpliQuZgFehwpdlSYbMQ2eCM7PVB9D4Bv1LT/wjf3C8b31d1P7
-         t10eRAS8ML7qY7rT5Ap1VAM+v2uVc+FBhktMG5r3oimdKbH6WoYErjG8do9dBDM39lnn
-         FeKjpj/4jNg1m8EQJ+UAxnkgehRKP2gBriIO8df86l1a2eo/8aZ4MVpnmOceYtXQ3ykl
-         wcomBrKhEtGMfo9MctzHOPQo0I/dI/30QuJEUYoqJkZO0Jdz+prSZY3IYSTJ3uF9iC/3
-         EAMCszyrP9nl76MXPKIcmQWE2Tcf4Iz/VId20ITMDSpC94F/s5SYFtSvANfCXrDuUPsL
-         fzcw==
-X-Gm-Message-State: AD7BkJL0d6yPhSkeDO4r8W3NFmTYRqt4LVNkAml5wGB/MsIt1OHaS2JMaHDJpG/I1h1Ip1BBehdW+qMRGvMhLg==
-X-Received: by 10.31.8.142 with SMTP id 136mr17384767vki.14.1456859757240;
- Tue, 01 Mar 2016 11:15:57 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 1 Mar 2016 11:15:57 -0800 (PST)
-In-Reply-To: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
-X-Google-Sender-Auth: y2F7Y9PJYQo5UgdAVAZOTovTqsA
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:mime-version:content-transfer-encoding;
+        bh=GJdXcd3dqKG4y3o/VQq1qIz99w6yA1cWbZ1emA6vkd8=;
+        b=datbL5+aCTxxMkNB7fcS1AK+Llypl83fw4qG9k4gCymcHp8GRIznbQY5Bb2R4PlU3M
+         9ZymF5ncFd11oR86D+iw2ahvYk7eqU1vC8IZp9JJYMGOpOMYBxoB/M2Z+obbWe3lOyoq
+         J4ltcND6VJe5Yqg+vpajdtQ58RajTzAYofros0CDmdsehojOD3ODf50zQQY2ARThDP84
+         RczWEuWalCEik+8H0VEPHyvUPIjjxGmViv4TL7MIpKHERds8s12fKWftP1/M8+3JhIl3
+         yBp1+uPcdrW/SAIhO+Ht3JJ8BqMiImIgdeF0YRZ08HfEzM8s2lZhYMoE9RKPE7C+Fr1A
+         D0Sw==
+X-Gm-Message-State: AD7BkJKze11Mzf5VHP5vjBY1N++OH0SncE7sCSROIFyw1lzJxSmKHOI/vmWCs4Fd+3720g==
+X-Received: by 10.140.92.23 with SMTP id a23mr2961067qge.92.1456859793136;
+        Tue, 01 Mar 2016 11:16:33 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id p67sm13454324qhb.7.2016.03.01.11.16.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2016 11:16:32 -0800 (PST)
+In-Reply-To: <56D5CECD.6020301@ramsayjones.plus.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288055>
 
-On Tue, Mar 1, 2016 at 5:49 AM,  <larsxschneider@gmail.com> wrote:
-> Map a P4 user to a specific name and email address in Git with the
-> "git-p4.mapUser" config. The config value must be a string adhering
-> to the format "p4user = First Lastname <email@address.com>".
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> +git-p4.mapUser::
-> +       Map a P4 user to a name and email address in Git. Use a string
-> +       with the following format to create a mapping:
-> ++
-> +-------------
-> +git config --add git-p4.mapUser "p4user = First Last <mail@address.com>"
-> +-------------
-> ++
-> +A mapping will override any user information from P4. Mappings for
-> +multiple P4 user can be defined.
+On Tue, 2016-03-01 at 17:18 +0000, Ramsay Jones wrote:
+> 
+> On 01/03/16 00:53, David Turner wrote:
+> > This sets up the existing backend early, so that other code which
+> > reads refs is reading from the right place.
+> > 
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  config.c | 1 +
+> >  setup.c  | 4 ++++
+> >  2 files changed, 5 insertions(+)
+> > 
+> > diff --git a/config.c b/config.c
+> > index 9ba40bc..cca7e28 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -11,6 +11,7 @@
+> >  #include "strbuf.h"
+> >  #include "quote.h"
+> >  #include "hashmap.h"
+> > +#include "refs.h"
+> >  #include "string-list.h"
+> >  #include "utf8.h"
+> >  
+> 
+> I was just skimming these patches as they passed by, and this
+> caught my eye. If this include is required (eg. to fix a compiler
+> warning), then it should probably be in an earlier patch.
+> Otherwise, it should be in a later patch, no?
 
-Sorry for not paying closer attention the first time, but this needs
-to be repeated for each P4 user you want to map, right? One can
-imagine this quickly becoming painful if you have a lot of users to
-map. Have you considered modeling this after git-svn where you can set
-an "authors" file (and name the corresponding option --authors-file)?
+Actually, it's cruft from the previous version of this series :(.  I
+looked at the patch and didn't notice that it was in config.c instead
+of setup.c.  Oops.  Will remove.
