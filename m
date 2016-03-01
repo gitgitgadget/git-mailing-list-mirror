@@ -1,75 +1,76 @@
-From: greg0ire <postmaster@greg0ire.fr>
-Subject: Bypassing hooks while cherry-picking
-Date: Tue, 1 Mar 2016 12:01:53 +0100
-Message-ID: <56D576A1.3020202@greg0ire.fr>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: GSoC 2016 Microproject
+Date: Tue, 1 Mar 2016 17:08:54 +0530
+Message-ID: <56D57F4E.7000402@gmail.com>
+References: <56D19EF9.3070702@gmail.com> <vpq8u26qo3y.fsf@anie.imag.fr>
+ <56D1BEC8.9010302@gmail.com> <vpq1t7yqgi4.fsf@anie.imag.fr>
+ <56D2C828.6010901@gmail.com> <vpqpovfblru.fsf@anie.imag.fr>
+ <56D46493.4040909@gmail.com> <vpqfuwbbjlx.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 01 12:10:24 2016
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 01 12:39:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaiC7-0002mO-5h
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 12:10:23 +0100
+	id 1aaidt-0002xk-Sv
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 12:39:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752051AbcCALKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 06:10:12 -0500
-Received: from 19.mo6.mail-out.ovh.net ([188.165.56.177]:46463 "EHLO
-	19.mo6.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbcCALKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 06:10:11 -0500
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Mar 2016 06:10:11 EST
-Received: from mail179.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo6.mail-out.ovh.net (Postfix) with SMTP id 26BD21004577
-	for <git@vger.kernel.org>; Tue,  1 Mar 2016 12:01:56 +0100 (CET)
-Received: from localhost (HELO queueout) (127.0.0.1)
-	by localhost with SMTP; 1 Mar 2016 13:01:56 +0200
-Received: from str75-1-78-192-188-179.fbxo.proxad.net (HELO ?10.0.1.245?) (postmaster@greg0ire.fr@78.192.188.179)
-  by ns0.ovh.net with SMTP; 1 Mar 2016 13:01:54 +0200
+	id S1752688AbcCALjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 06:39:00 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36333 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750722AbcCALi7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 06:38:59 -0500
+Received: by mail-pa0-f44.google.com with SMTP id yy13so110706678pab.3
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 03:38:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=fEcIvMlpzzdO6C6g8ArZ1qzjYcS9FsTjn/dkCvjkdCE=;
+        b=bIhGrYbRkamzVmXOirPgT2ZUxm+ne1NvK9cH8VSRN5XsfvdCq2Zu9o+tZEK0RuqTb8
+         5YFlv4+oixVbRA684HfSfCPTB3FnQjxkWaoPh/wgfdks37icvkN4aQkMXU5GzuEhy0uz
+         HkU1G1DFI/isoNp4hbcCP9x73AiE2Cr674roGfDyNCcQ/tAQGZT5xPLjYF+icbovk7xt
+         +jdWFdiIO56d2Qwz+8segXM3o1byKcvcBAWtp4yRPgtlPhQlGp8/1QpvaQx1Omeg2Xft
+         XYIlnWuABCLmbS8G6EI+L+SnpUm0t2NgDWhOl0yMOmIr1kq4jhkPk3zXP/IqSkCkMHal
+         cL/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=fEcIvMlpzzdO6C6g8ArZ1qzjYcS9FsTjn/dkCvjkdCE=;
+        b=MTEw+pqMtpiR3mGt44PQfWoHnwZC+LFF0d1GA7217zDr5MxS7F+R1m4kUeCK2qh90k
+         QABUh9SsE/w/27GxyII77uzqpFy8k8qGmVHzu23k+JjaTF1MX+MQTqq9nrrLj+7NIKG4
+         tOYSfJZcbj8NFmI9c+SzEyDCLjrFi1rJDZ+XwQOtDdyTOPq+inW2o+tDMUM3gaBveHPt
+         fT5u5oOvHaTOHw8PgSdzkqal21vIeKFHFlNI2J+OPnbFuljs4zHJffe0MUXNOkdrJK4A
+         upJsHo3Awpy5d8lwDz8mWxSc1+npgEcgVyu0T3yNwP07iSjPUJ+pUKQE2qbdB0lbAwii
+         4d5w==
+X-Gm-Message-State: AD7BkJJUt/F/7SIfJtiFZu2bmD+ZaP0L5d/NS4ArMQXCtF8ORKZwuOG3ggpKTvM15JnmmA==
+X-Received: by 10.66.174.199 with SMTP id bu7mr29369689pac.34.1456832338904;
+        Tue, 01 Mar 2016 03:38:58 -0800 (PST)
+Received: from [192.168.221.113] ([14.139.251.107])
+        by smtp.gmail.com with ESMTPSA id k14sm45009573pfj.0.2016.03.01.03.38.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2016 03:38:58 -0800 (PST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.5.1
-X-Ovh-Tracer-Id: 8548395044352331230
-X-Ovh-Remote: 78.192.188.179 (str75-1-78-192-188-179.fbxo.proxad.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekjedrjedtucetufdoteggodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekjedrjedtgddvtdcutefuodetggdotffvucfrrhhofhhilhgvmecuqfggjfenuceurghilhhouhhtmecufedttdenuc
+In-Reply-To: <vpqfuwbbjlx.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288010>
 
-Hello,
 
-using git 2.1.4 here, and it seems there is no option to bypass 
-pre-commit hooks while cherry-picking, while git commit provides a 
---no-verify option. I ended up doing this to disable hooks while cherry 
-picking :
+> If you use PARSE_OPT_HIDDEN, I think you don't need to specify a message. Otherwise, the documentation only has value if it contains more than just the option name, but that is the hard part if you're not familiar with the code. The best place to find documentation is in the history (git blame the file and see if the commit message introducing the option enlightens you). But that's why I said this didn't have to be part of the microproject: writting good doc requires a good understanding of the whole thing ... 
+I used OPT_HIDDEN_BOOL for all except for reject-thin-pack-for-testing, where I used PARSE_OPT_HIDDEN. I ran the test locally and also on Travis, and the all tests passed. How do I proceed now?
 
-     test -f "$GIT_DIR"/CHERRY_PICK_HEAD && exit 0
 
-Wouldn't it be best to add the --no-verify option to cherry-pick too?
-I had a conflict when cherry-picking the commit, maybe this does not 
-happen otherwise?
 
-Steps to reproduce :
-
-1. create a pre-commit hook
-2. create a commit that fails the hook, and bypass the hook
-3. checkout another branch
-4. might be optional : create a conflicting change with the previously 
-created commit
-5. cherry-pick the commit
-6. might be optional : solve the conflick and use git cherry-pick --continue
-
-Regards,
-
---
-greg0ire
+Thanks and regards,
+Sidhant Sharma [:tk]
