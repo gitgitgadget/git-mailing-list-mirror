@@ -1,105 +1,96 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] bundle doc: 'verify' is not about verifying the bundle
-Date: Tue, 1 Mar 2016 22:42:52 -0000
-Organization: OPDS
-Message-ID: <499EFADFE03B4EDFA48F7E0B99A0E36D@PhilipOakley>
-References: <xmqqd1rd7uey.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] Documentation: reword rebase summary
+Date: Tue, 1 Mar 2016 15:01:07 -0800
+Message-ID: <CA+P7+xp-YZJQh9=kHKnTEo-_k4xxniykH7pJ1neYbOS9em4N_Q@mail.gmail.com>
+References: <1456872598-32571-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 01 23:51:13 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>, pdewulf@lyra-network.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 00:01:34 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aat8H-0006cX-Hy
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 23:51:09 +0100
+	id 1aatIK-0005Zw-Oi
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 00:01:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751236AbcCAWvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 17:51:05 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:63060 "EHLO
-	smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843AbcCAWvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 17:51:04 -0500
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Mar 2016 17:51:03 EST
-Received: from PhilipOakley ([92.16.242.215])
-	by smtp.talktalk.net with SMTP
-	id at0EaD9S2Nhwbat0EarHbf; Tue, 01 Mar 2016 22:42:51 +0000
-X-Originating-IP: [92.16.242.215]
-X-Spam: 0
-X-Authority: v=2.1 cv=Fsylhzfq c=1 sm=1 tr=0 a=YVmkVu95zOgaQGBLgHYOvg==:117
- a=YVmkVu95zOgaQGBLgHYOvg==:17 a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10
- a=s5jvgZ67dGcA:10 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8 a=6CpWEEcn4JxI6UWy6FIA:9
- a=wPNLvfGTeEIA:10
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfH+xKoOgOODISApakjTXC7jpC8fatBkPpkt+ycecH9DYyoAC1d7zF5VFvbKeAEfRBrJS2EVhZlmaO7eWN1E9D2beiKyOuj0XgvUiJczjowiiSSN59a2P
- FeiPEG4Scfb41IsaKUgEZGb7ZgH4v6IQMm2Q6T83uIQVCG9WOwZpBimohd22FNvQxgn2et/ZsmU1v0nXSiUlWKCc/RzQN3/NOW0=
+	id S1751342AbcCAXB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 18:01:29 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:38222 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbcCAXB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 18:01:28 -0500
+Received: by mail-ig0-f178.google.com with SMTP id y8so30016879igp.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 15:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ktOXO3k/zaPwLMtGyAXFYwMj1Bzyg7XKDLIBPt4uFFM=;
+        b=oey1IuVGuSe3jMKpTbg33XLlfLKeez38gp2zENmtWtEU49iJt/lSJS+OxtSzqj1Npn
+         UF3PDCCyoZTSK77QCbdlGzk163jPhtGieHfUMeaM7dH7CFL6PN0+Y0C8aFCZXdoWcf36
+         pYJ1H6m8dooCJ6vwlccTTpVxkeD+hpILR65kLuLsTAB7ScPj507eaEUeBe9XidVoyDGv
+         EzqdDTCPAReVfROsV6sRFEpfRr7TlxtZeADSSmWs9il8MBnQy/YYV/3BFAGtfhCYZmMq
+         EOHiGNOZ9s/XVyZsH0hTFVD9ZYbRAiB/c/NQtVuFzAgXMLwVcArOFYOj568sMp72WLJS
+         PE1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ktOXO3k/zaPwLMtGyAXFYwMj1Bzyg7XKDLIBPt4uFFM=;
+        b=f9egqTB6YTF8uTrEJHWdbx5RdOTq/ETxqguadK/jOpIx6bkytDFsQe6rc7sGot7mR8
+         9b/FAHJD5OWiD1lDBhnugRA3gVIJTsgKazuqFtQnxa878PrQkkVCPeF2I0TJnTQIkWE8
+         hzDqoBdk0UWc+nqTETF+/VWbifb0wkNcZ9XODM4a+kl03/iMkS0JnU7A34TRHEIU2JrD
+         Gycg65aCB/oKw9tdCNpSkxbeb1KIuAXHydMm/826P6BxqjNW2Wl1ete1XC8h/KPxS7d+
+         MlHReg+Rd5vkFRwpDJQpczvIJoZY5Antmm9Q1HC8o6ajhFEm81mu2e+/hb/MAg0+isx8
+         WiZA==
+X-Gm-Message-State: AD7BkJLNscnd+bTea8o60DK3CH8KU1XGkIEK9UVd0CoDf60ozbsGk4fdYM56DlBbof6z99tUC8CWk0v8kfXiwQ==
+X-Received: by 10.50.43.168 with SMTP id x8mr1633580igl.92.1456873287216; Tue,
+ 01 Mar 2016 15:01:27 -0800 (PST)
+Received: by 10.107.20.76 with HTTP; Tue, 1 Mar 2016 15:01:07 -0800 (PST)
+In-Reply-To: <1456872598-32571-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288076>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Even though the command does read the bundle header and checks to
-> see if it looks reasonable, the thin-pack data stream that follows
-> the header in the bundle file is not checked.  More importantly,
-> because the thin-pack data does not have a trailing checksum like
-> on-disk packfiles do, there isn't much "verification" the command
-> can do without unpacking the objects from the stream even if it
-> wanted to.
-> 
-> The documentation gives an incorrect impression that the thin-pack
-> data contained in the bundle is validated, but the command is to
-> validate that the receiving repository is ready to accept the
-> bundle, not to check the validity of a bundle file.  Rephrase the
-> paragraph to clarify this.
-> 
-
-This looks good to me.
-
-I was actually looking at this over the weekend with respect to a back-
-burner issue about indicating which ref is HEAD within the bundle.
-(thread variously $gmane/265001 and it's prior links, though now I'm minded
-to add \0HEAD after the correct ref; e.g. '<sha1>  refs/heads/<ref>\0HEAD')
-
-Philip
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On Tue, Mar 1, 2016 at 2:49 PM, Stefan Beller <sbeller@google.com> wrote:
+> The wording is introduced in c3f0baaca (Documentation: sync git.txt
+> command list and manual page title, 2007-01-18), but rebase has evolved
+> since then, capture the modern usage by being more generic about the
+> rebase command in the summary.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> Documentation/git-bundle.txt | 9 ++++-----
-> 1 file changed, 4 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-> index 3a8120c..c0113a8 100644
-> --- a/Documentation/git-bundle.txt
-> +++ b/Documentation/git-bundle.txt
-> @@ -38,11 +38,10 @@ create <file>::
->  'git-rev-list-args' arguments to define the bundle contents.
-> 
-> verify <file>::
-> - Used to check that a bundle file is valid and will apply
-> - cleanly to the current repository.  This includes checks on the
-> - bundle format itself as well as checking that the prerequisite
-> - commits exist and are fully linked in the current repository.
-> - 'git bundle' prints a list of missing commits, if any, and exits
-> + Verifies that the given 'file' has a valid-looking bundle
-> + header, and that your repository has all prerequisite
-> + objects necessary to unpack the file as a bundle.  The
-> + command prints a list of missing commits, if any, and exits
->  with a non-zero status.
-> 
-> list-heads <file>::
-> -- 
-> 2.8.0-rc0-114-g0b3e5e5
-> 
-> --
+>
+>  Inspired by
+>  https://medium.freecodecamp.com/git-rebase-and-the-golden-rule-explained-70715eccc372
+>  (I tried to cc the author, but I am not sure if I got the right email address)
+>
+>  Thanks,
+>  Stefan
+>
+>  Documentation/git-rebase.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 6cca8bb..6ed610a 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -3,7 +3,7 @@ git-rebase(1)
+>
+>  NAME
+>  ----
+> -git-rebase - Forward-port local commits to the updated upstream head
+> +git-rebase - Reapply commits on top of another base tip
+>
+
+Seems like a reasonable summary to me, and definitely more fitting of
+what rebase does today.
+
+Thanks,
+Jake
