@@ -1,130 +1,118 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] builtin/receive-pack.c: use parse_options API
-Date: Tue, 01 Mar 2016 18:22:30 +0100
-Message-ID: <vpq60x62jvt.fsf@anie.imag.fr>
-References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
+Date: Tue, 01 Mar 2016 09:26:51 -0800
+Message-ID: <xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+	<1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+	<CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: "Sidhant Sharma \[\:tk\]" <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 18:22:48 2016
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 18:27:01 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aao0P-0000iF-5E
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:22:41 +0100
+	id 1aao4Z-0003ew-Fa
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbcCARWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 12:22:37 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:34112 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751371AbcCARWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 12:22:36 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u21HMRsL019031
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 1 Mar 2016 18:22:28 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u21HMUDS018296;
-	Tue, 1 Mar 2016 18:22:30 +0100
-In-Reply-To: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com> (Sidhant
-	Sharma's message of "Tue, 1 Mar 2016 21:06:00 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Mar 2016 18:22:28 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u21HMRsL019031
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457457751.76741@8bq7OpCKkOijEQjvnIfVqQ
+	id S1750996AbcCAR0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 12:26:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65476 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750813AbcCAR0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 12:26:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51BDF48007;
+	Tue,  1 Mar 2016 12:26:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VNbkVn0CAqPlSqxNF22qNq85hkU=; b=tjz21s
+	su27OSBKMYEejmzavQDlrJ8qstAxmKyejqbQ+X6cNdOc17FLHH4Lk1xHoiSp0+Hq
+	ykdtcYx9Dn44r2IxdKTtUqJM6HaJDQibC2AxZTwboy3vTi9g8CQyL5zNRodTY3Kc
+	qmoEhXDt/VfSbpX3XEFitDQDsvizmvhBR8PNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mzaKp0u4/PIjYC0WRd2HS5BkCH87/dSu
+	aNVEb0PKStddrT2+RC1g/BrysgTPrw08CduxZE4UHgTWiRNmRLnrOAp5vrQKtfz1
+	9dgBRYEAhfsB5Jgoqt1gZLrTQ0Lpg99IfU31/hnNFl32GN7KCtgy0xWm/8g0XkLy
+	NZh9KBHLvtU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4735948006;
+	Tue,  1 Mar 2016 12:26:53 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A412B48005;
+	Tue,  1 Mar 2016 12:26:52 -0500 (EST)
+In-Reply-To: <CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 29 Feb 2016 15:39:28 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C9DE4578-DFD2-11E5-9C3E-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288043>
 
-Hi,
+Stefan Beller <sbeller@google.com> writes:
 
-Thanks for your patch.
-
-"Sidhant Sharma [:tk]" <tigerkid001@gmail.com> writes:
-
-> This patch makes receive-pack use the parse_options API,
-
-We usually avoid saying "this patch" and use imperative tone: talk to
-your patch and give it orders like "Make receive-pack use the
-parse_options API ...". Or just skip that part which is already in the
-title.
-
-> @@ -45,12 +48,12 @@ static int unpack_limit = 100;
->  static int report_status;
->  static int use_sideband;
->  static int use_atomic;
-> -static int quiet;
-> +static int quiet = 0;
-
-static int are already initialized to 0, you don't need this explicit "=
-0". In the codebase of Git, we prever omiting the initialization.
-
-> +	struct option options[] = {
-> +		OPT__QUIET(&quiet, N_("quiet")),
-> +		OPT_HIDDEN_BOOL(0, "stateless-rpc", &stateless_rpc, NULL),
-> +		OPT_HIDDEN_BOOL(0, "advertise-refs", &advertise_refs, NULL),
-> +		/* Hidden OPT_BOOL option */
-> +		{
-> +			OPTION_SET_INT, 0, "reject-thin-pack-for-testing", &fix_thin, NULL,
-> +			NULL, PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 0,
-> +		},
-
-After seeing the patch, I think the code would be clearer by using
-something like
-
-	OPT_HIDDEN_BOOL(0, "reject-thin-pack-for-testing", &reject_thin, NULL)
-
-and then use !reject_thin where the patch was using fix_thin. Turns 5
-lines into one here, and you just pay a ! later in terms of readability.
-
-Starting from here, the patch is a bit painful to read because the diff
-heuristics grouped hunks in a strange way. You may try "git format-patch
---patience" or --minimal or --histogram to see if it gives a better
-result. The final commit would be the same, but it may make review
-easier.
-
-(Not blaming you, just pointing a potentially useful hint, don't worry)
-
->  	packet_trace_identity("receive-pack");
+> On Mon, Feb 29, 2016 at 2:58 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+>>
+>> +test_expect_success 'cmdline credential config passes into submodules' '
+>> +       git init super &&
+>> +       set_askpass user@host pass@host &&
 >
-> -	argv++;
-> -	for (i = 1; i < argc; i++) {
-> -		const char *arg = *argv++;
-> +	argc = parse_options(argc, argv, prefix, options, receive_pack_usage, 0);
+> I wonder why we use pass@host as a password, it seems confusing to me.
+> p@ssword would have worked if we wanted to test a password containing an @,
+> pass@host doesn't quite fit my mental model of how passwords work.
+> No need to change anything, better be consistent with the rest of the tests.
 >
-> -		if (*arg == '-') {
-> -			if (!strcmp(arg, "--quiet")) {
-> -				quiet = 1;
-> -				continue;
-> -			}
-> +	if (argc > 1)
-> +		usage_msg_opt(_("Too many arguments."), receive_pack_usage, options);
-> +	if (argc == 0)
-> +		usage_msg_opt(_("You must specify a directory."), receive_pack_usage, options);
+>
+>> +       (
+>> +               cd super &&
+>> +               git submodule add "$HTTPD_URL/auth/dumb/repo.git" sub &&
+>> +               git commit -m "add submodule"
+>> +       ) &&
+>> +       set_askpass wrong pass@host &&
+>> +       test_must_fail git clone --recursive super super-clone &&
+>> +       rm -rf super-clone &&
+>> +       set_askpass wrong pass@host &&
+>
+> Why set set_askpass a second time here?
 
-Before that, the loop was ensuring that service_dir was assigned once
-and only once, and now you check that you have one non-option arg and
-assign it unconditionally:
+I find this in t/lib-httpd.sh:
 
-> +	service_dir = argv[0];
+        set_askpass() {
+                >"$TRASH_DIRECTORY/askpass-query" &&
+                echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
+                echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+        }
 
-... so isn't this "if" dead code:
+and expect_askpass peeks at askpass-query to see if Git asked the
+right questions.
 
->  	if (!service_dir)
-> -		usage(receive_pack_usage);
-> +		usage_with_options(receive_pack_usage, options);
+I think askpass-query is cleared here because the author of the test
+suite expected that the helpers are used in such a way that you
+always (1) set-askpass once, (2) run a Git command that asks
+credentials, (3) use expect_askpass to validate and do these three
+steps as a logical unit?
 
-?
+That "clone" the test expects to fail does ask the credential, so
+even though the test does not check if the "clone" asked the right
+question, it finishes the three-step logical unit, and then you need
+to clear askpass-query.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+It may have been cleaner if you had clear_askpass_query helper that
+is called (1) at the beginning of set_askpass instead of this manual
+clearing, (2) at the end of expect_askpass, as the exchange has been
+tested already at that point, and (3) in place of expect_askpass if
+you choose not to call it (e.g. this place, instead of the second
+set_askpass, you would say clear_askpass_query), perhaps, but I do
+know if that is worth it.
