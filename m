@@ -1,455 +1,201 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v7 22/33] refs: resolve symbolic refs first
-Date: Mon, 29 Feb 2016 19:52:55 -0500
-Message-ID: <1456793586-22082-23-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v7 25/33] refs: check submodules' ref storage config
+Date: Mon, 29 Feb 2016 19:52:58 -0500
+Message-ID: <1456793586-22082-26-git-send-email-dturner@twopensource.com>
 References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu,
 	pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 01 01:54:02 2016
+X-From: git-owner@vger.kernel.org Tue Mar 01 01:54:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaYZb-00078C-Pw
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 01:54:00 +0100
+	id 1aaYZm-0007F1-3j
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 01:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463AbcCAAxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 19:53:54 -0500
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:33734 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752818AbcCAAxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 19:53:53 -0500
-Received: by mail-qg0-f48.google.com with SMTP id d32so74639391qgd.0
-        for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:53:52 -0800 (PST)
+	id S1753645AbcCAAyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Feb 2016 19:54:04 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33271 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752854AbcCAAx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Feb 2016 19:53:56 -0500
+Received: by mail-qk0-f181.google.com with SMTP id s5so63751030qkd.0
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:53:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r5FNiocjPzINFCoIlexzSGHiDcj38l0LWNmCFCQtHSU=;
-        b=w4fHtUBG0198dGccBYOpzlocSLjsLF+7a9jqPDkgQKM3P5jB+GfNrQ2i1d53MhVUSJ
-         L6HrCV4C84fsj0RN4BX6vsgeiLsJ1Y/gXmx/PcVUd5Fhkvapg+qdRH0nn5kfzikpweyq
-         Ye8ycJh0GlsmzyRDa33rezfCAs3dlhhRzawHKCfRZhCtnfr90tVum37JcWuZuI2dTXtv
-         I2a+rb1NSzKrO5aea45WaBOK+7PHFGkjQu8/ZOIkvoAQQIMKJBz93Y9Utj4BD7keVP0M
-         p3ku1mIhLSwRspmQC5aWKTWmmQG6VsicztkDr6UcNo6vbnvUZkfIcz/Oo2LNzq1Z3MAz
-         VGVQ==
+        bh=AhMyNvn3dZXb9whEo5DkynIZzdadeoJQT9xxkiJPrl0=;
+        b=cJ2yigoI06UN/Oc+qjmnXrrRYv2+EUKihn1qjNASr53zzqXnU8Glmc79InoMTstNr0
+         mY8Q/6jcThNugAPnP9wocoqHbXOBTGJ9HjMQFa2jeD6dizDk+xvinowELSgSwbmWARZn
+         cB0MMopHt1c/XoaS/xplpsAhY0dS8I2N3nhVsjWX+scpCL3GbWEvwNa/XPYucyeNiEDB
+         HXgYTERYalS2sU/Dl6O6ezSG4RmXgRytMm2C6iclUdxc/l0gVglwJoTEmhH9Ad0HESw3
+         SCLJ11FTWNb+6ZwHXeiSSGUp6MDzhhwnthfdafI9bXT+6J/Dqer9WbU6utr1fDn+Jgir
+         Cosg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=r5FNiocjPzINFCoIlexzSGHiDcj38l0LWNmCFCQtHSU=;
-        b=Mxojl8YjmBLeTKAjNJG2E3tiaM3wrf5diowFquPy+luX/FYYP2uspFumJAquO9XlWI
-         VvpgViRAP8hC3gYTBzhNNYHtaC5P++9AtTSRP27n2t9FDat72E67Ytu8ovlqxs92jE/r
-         tYJNvb2vfycq0O1HnxiWreFG3yEgX9TQVdHupyPebzS/b5O5txZPtBG+2EU8ACasUwIk
-         RUFZeDuNMOWmAxZeBMnp1AqkJIoEyLWThgBiGZpxT6fCoh6KIak2EiWJdkVH8YHP3fxz
-         p5kc0sEtMd/pn3pxLs8RZC17Do9+fNUeARvIrJfDZJv1g9qpGe76JE65vWRzszpXyOFt
-         7yAA==
-X-Gm-Message-State: AD7BkJJ0LIwfpQkkQ5ngP0QgsNb0f6u2Ibf5yH7xJiP2sEkc2nh9EiddYym4jRaWKnhKug==
-X-Received: by 10.140.96.84 with SMTP id j78mr22408390qge.93.1456793632180;
-        Mon, 29 Feb 2016 16:53:52 -0800 (PST)
+        bh=AhMyNvn3dZXb9whEo5DkynIZzdadeoJQT9xxkiJPrl0=;
+        b=ZkVlqlsIDsbF5EPk8XRSuuvgJON2JgdN8myjHjWCsRH23Xfj5yQGAYEdqmNzcJkP7o
+         kBU4uyYJWYjja5At0BIHpQSdfGJ0x9GexlnhBCY+fs2PXRkD6ZLpa6uXe+JzxzwIYVKU
+         6yhm+wyX4HUucnxrePeBlWhgP9b1u14FAEPyVqBb2ztk4R9uk6PgX7VvZWmvbvpwxMFF
+         kQRGy6eqFYRWmBI7v5wDzIwzg4OtR+L+UVG3cdm/7pjsu8bas8yxZrKXSChlibR/p/sN
+         NwpaeR+2eBPFYI4NvxRmxSEEJLK2xrQ4ByrnjssF0aAAYNsmD5VfeWdxwKY9fccwj+mq
+         H/+g==
+X-Gm-Message-State: AD7BkJKKDfVLbbiQMlTIPyBaidz5LIcOjilfPsOqDcGBsZz7h3teJFdz91qf8ckto/jXWQ==
+X-Received: by 10.55.82.85 with SMTP id g82mr23239601qkb.107.1456793636101;
+        Mon, 29 Feb 2016 16:53:56 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id z62sm12094715qka.26.2016.02.29.16.53.50
+        by smtp.gmail.com with ESMTPSA id z62sm12094715qka.26.2016.02.29.16.53.54
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 29 Feb 2016 16:53:51 -0800 (PST)
+        Mon, 29 Feb 2016 16:53:55 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287959>
 
-Before committing ref updates, split symbolic ref updates into two
-parts: an update to the underlying ref, and a log-only update to the
-symbolic ref.  This ensures that both references are locked correctly
-while their reflogs are updated.
-
-It is still possible to confuse git by concurrent updates, since the
-splitting of symbolic refs does not happen under lock. So a symbolic ref
-could be replaced by a plain ref in the middle of this operation, which
-would lead to reflog discontinuities and missed old-ref checks.
-
-All callers to lock_ref_sha1_basic outside of ref_transaction_commit
-now set REF_NODEREF.  And ref_transaction_commit only happens on
-already-derefernced refs.  So we can assume REF_NODEREF when resolving
-inside this function.
+All submodules must have the same ref storage (for now).  Confirm that
+this is so before attempting to do anything with submodule refs.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.c               |  69 ++++++++++++++++++++++++++
- refs/files-backend.c | 137 ++++++++++++++++++++++++++-------------------------
- refs/refs-internal.h |   8 +++
- 3 files changed, 148 insertions(+), 66 deletions(-)
+ refs.c               | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h               |  2 +-
+ refs/files-backend.c |  8 ++------
+ 3 files changed, 57 insertions(+), 7 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 9f695cd..eee8c37 100644
+index a18cb4d..5d69179 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1354,6 +1354,71 @@ int refs_init_db(int shared, struct strbuf *err)
- 	return the_refs_backend->init_db(shared, err);
+@@ -301,6 +301,54 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
  }
  
-+/*
-+ * Special case for symbolic refs when REF_NODEREF is not turned on.
-+ * Dereference them here, mark them REF_LOG_ONLY, and add an update
-+ * for the underlying ref.
-+ */
-+static int dereference_symrefs(struct ref_transaction *transaction,
-+			       struct strbuf *err)
++static int submodule_backend(const char *key, const char *value, void *data)
 +{
-+	int i;
-+	int nr = transaction->nr;
-+
-+	for (i = 0; i < nr; i++) {
-+		struct ref_update *update = transaction->updates[i];
-+		const char *resolved;
-+		unsigned char sha1[20];
-+		int resolve_flags = 0;
-+		int mustexist = update->flags & REF_HAVE_OLD &&
-+			!is_null_sha1(update->old_sha1);
-+		int deleting = (update->flags & REF_HAVE_NEW) &&
-+			is_null_sha1(update->new_sha1);
-+
-+		if (mustexist)
-+			resolve_flags |= RESOLVE_REF_READING;
-+		if (deleting)
-+			resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME |
-+				RESOLVE_REF_NO_RECURSE;
-+
-+		if (strcmp(update->refname, "HEAD"))
-+			update->flags |= REF_IS_NOT_HEAD;
-+
-+		resolved = resolve_ref_unsafe(update->refname, resolve_flags,
-+					      sha1, &update->type);
-+		if (!resolved) {
-+			/*
-+			 * We may notice this breakage later and die
-+			 * with a sensible error message
-+			 */
-+			update->type |= REF_ISBROKEN;
-+			continue;
-+		}
-+
-+		hashcpy(update->read_sha1, sha1);
-+
-+		if (update->flags & REF_NODEREF ||
-+		    !(update->type & REF_ISSYMREF))
-+			continue;
-+
-+		/* Create a new transaction for the underlying ref */
-+		if (ref_transaction_update(transaction,
-+					   resolved,
-+					   update->new_sha1,
-+					   (update->flags & REF_HAVE_OLD) ?
-+					   update->old_sha1 : NULL,
-+					   update->flags & ~REF_IS_NOT_HEAD,
-+					   update->msg, err))
-+			return -1;
-+
-+		/* Make the symbolic ref update non-recursive */
-+		update->flags |= REF_LOG_ONLY | REF_NODEREF;
-+		update->flags &= ~REF_HAVE_OLD;
-+	}
++	const char **path = data;
++	char **old_path = data;
++	if (!strcmp(key, "extensions.refstorage") &&
++	    !git_config_string(path, key, "extensions.refstorage"))
++			free(*old_path);
 +
 +	return 0;
 +}
 +
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
-@@ -1370,6 +1435,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		return 0;
- 	}
- 
-+	ret = dereference_symrefs(transaction, err);
-+	if (ret)
++/*
++ * Check that a submodule exists. If its ref storage backend differs
++ * from the current backend, die.  If the submodule exists, return
++ * 0. Else return -1.
++ */
++static int check_submodule_backend(const char *submodule)
++{
++	struct strbuf sb = STRBUF_INIT;
++	char *submodule_storage_backend;
++	int result = -1;
++
++	if (!submodule)
++		return 0;
++
++	submodule_storage_backend = xstrdup("files");
++
++	strbuf_addstr(&sb, submodule);
++	if (!is_nonbare_repository_dir(&sb))
 +		goto done;
 +
- 	if (get_affected_refnames(transaction, &affected_refnames, err)) {
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto done;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 1f36dde..7ccaf88 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -7,7 +7,6 @@
++	strbuf_reset(&sb);
++	strbuf_git_path_submodule(&sb, submodule, "config");
++
++	git_config_from_file(submodule_backend, sb.buf,
++			     &submodule_storage_backend);
++	if (strcmp(submodule_storage_backend, ref_storage_backend))
++		die(_("Ref storage '%s' for submodule '%s' does not match our storage, '%s'"),
++		    submodule_storage_backend, submodule, ref_storage_backend);
++
++	result = 0;
++done:
++	free(submodule_storage_backend);
++	strbuf_release(&sb);
++
++	return result;
++}
++
+ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+@@ -313,6 +361,7 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
  
- struct ref_lock {
- 	char *ref_name;
--	char *orig_ref_name;
- 	struct lock_file *lk;
- 	struct object_id old_oid;
- };
-@@ -1715,7 +1714,6 @@ static void unlock_ref(struct ref_lock *lock)
- 	if (lock->lk)
- 		rollback_lock_file(lock->lk);
- 	free(lock->ref_name);
--	free(lock->orig_ref_name);
- 	free(lock);
+ int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
  }
  
-@@ -1771,6 +1769,7 @@ static int remove_empty_directories(struct strbuf *path)
-  */
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
-+					    const unsigned char *read_sha1,
- 					    const struct string_list *extras,
- 					    const struct string_list *skip,
- 					    unsigned int flags, int *type_p,
-@@ -1778,14 +1777,14 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+@@ -323,6 +372,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
  {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct strbuf orig_ref_file = STRBUF_INIT;
--	const char *orig_refname = refname;
- 	struct ref_lock *lock;
- 	int last_errno = 0;
- 	int type;
- 	int lflags = 0;
- 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
--	int resolve_flags = 0;
-+	int resolve_flags = RESOLVE_REF_NO_RECURSE;
- 	int attempts_remaining = 3;
-+	int resolved;
++	check_submodule_backend(submodule);
+ 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+ }
  
- 	assert(err);
+@@ -1138,6 +1188,7 @@ int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+ 	int flag;
  
-@@ -1795,65 +1794,65 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 		resolve_flags |= RESOLVE_REF_READING;
- 	if (flags & REF_DELETING)
- 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
--	if (flags & REF_NODEREF) {
--		resolve_flags |= RESOLVE_REF_NO_RECURSE;
-+	if (flags & REF_NODEREF)
- 		lflags |= LOCK_NO_DEREF;
--	}
+ 	if (submodule) {
++		check_submodule_backend(submodule);
+ 		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
+ 			return fn("HEAD", &oid, 0, cb_data);
  
--	refname = resolve_ref_unsafe(refname, resolve_flags,
--				     lock->old_oid.hash, &type);
--	if (!refname && errno == EISDIR) {
--		/*
--		 * we are trying to lock foo but we used to
--		 * have foo/bar which now does not exist;
--		 * it is normal for the empty directory 'foo'
--		 * to remain.
--		 */
--		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
--		if (remove_empty_directories(&orig_ref_file)) {
-+	if (type_p && *type_p & REF_ISSYMREF) {
-+		hashcpy(lock->old_oid.hash, read_sha1);
-+	} else {
-+		resolved = !!resolve_ref_unsafe(refname, resolve_flags,
-+						lock->old_oid.hash, &type);
-+		if (!resolved && errno == EISDIR) {
-+			/*
-+			 * we are trying to lock foo but we used to
-+			 * have foo/bar which now does not exist;
-+			 * it is normal for the empty directory 'foo'
-+			 * to remain.
-+			 */
-+			strbuf_git_path(&orig_ref_file, "%s", refname);
-+			if (remove_empty_directories(&orig_ref_file)) {
-+				struct ref_dir *loose_refs;
-+				loose_refs = get_loose_refs(&ref_cache);
-+				last_errno = errno;
-+				if (!verify_refname_available_dir(refname, extras, skip,
-+								  loose_refs, err))
-+					strbuf_addf(err, "there are still refs under '%s'",
-+						    refname);
-+				goto error_return;
-+			}
-+			resolved = !!resolve_ref_unsafe(refname, resolve_flags,
-+							lock->old_oid.hash, &type);
-+		}
-+
-+		if (type_p)
-+			*type_p = type;
-+		if (!resolved) {
- 			last_errno = errno;
--			if (!verify_refname_available_dir(orig_refname, extras, skip,
-+			if (last_errno != ENOTDIR ||
-+			    !verify_refname_available_dir(refname, extras, skip,
- 							  get_loose_refs(&ref_cache), err))
--				strbuf_addf(err, "there are still refs under '%s'",
--					    orig_refname);
-+				strbuf_addf(err,
-+					    "unable to resolve reference %s: %s",
-+					    refname, strerror(last_errno));
-+
-+			goto error_return;
-+		}
-+		/*
-+		 * If the ref did not exist and we are creating it, make sure
-+		 * there is no existing packed ref whose name begins with our
-+		 * refname, nor a packed ref whose name is a proper prefix of
-+		 * our refname.
-+		 */
-+		if (is_null_oid(&lock->old_oid) &&
-+		    verify_refname_available_dir(refname, extras, skip,
-+						 get_packed_refs(&ref_cache), err)) {
-+			last_errno = ENOTDIR;
- 			goto error_return;
- 		}
--		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
--					     lock->old_oid.hash, &type);
--	}
--	if (type_p)
--	    *type_p = type;
--	if (!refname) {
--		last_errno = errno;
--		if (last_errno != ENOTDIR ||
--		    !verify_refname_available_dir(orig_refname, extras, skip,
--						  get_loose_refs(&ref_cache), err))
--			strbuf_addf(err, "unable to resolve reference %s: %s",
--				    orig_refname, strerror(last_errno));
--
--		goto error_return;
--	}
--
--	if (flags & REF_NODEREF)
--		refname = orig_refname;
--
--	/*
--	 * If the ref did not exist and we are creating it, make sure
--	 * there is no existing packed ref whose name begins with our
--	 * refname, nor a packed ref whose name is a proper prefix of
--	 * our refname.
--	 */
--	if (is_null_oid(&lock->old_oid) &&
--	    verify_refname_available_dir(refname, extras, skip,
--					 get_packed_refs(&ref_cache), err)) {
--		last_errno = ENOTDIR;
--		goto error_return;
- 	}
--
- 	lock->lk = xcalloc(1, sizeof(struct lock_file));
- 
- 	lock->ref_name = xstrdup(refname);
--	lock->orig_ref_name = xstrdup(orig_refname);
- 	strbuf_git_path(&ref_file, "%s", refname);
- 
-  retry:
-@@ -1885,7 +1884,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 			goto error_return;
- 		}
- 	}
--	if (verify_lock(lock, old_sha1, mustexist, err)) {
-+
-+	if (type_p && *type_p & REF_ISSYMREF && !(*type_p & REF_ISBROKEN)) {
-+		/*
-+		 * Old hash verification for symrefs happens on their
-+		 * base ref.
-+		 */
-+	} else if (verify_lock(lock, old_sha1, mustexist, err)) {
- 		last_errno = errno;
- 		goto error_return;
- 	}
-@@ -2419,8 +2424,8 @@ static int files_rename_ref(const char *oldrefname, const char *newrefname,
- 
- 	logmoved = log;
- 
--	lock = lock_ref_sha1_basic(newrefname, NULL, NULL, NULL, REF_NODEREF,
--				   NULL, &err);
-+	lock = lock_ref_sha1_basic(newrefname, NULL, NULL, NULL, NULL,
-+				   REF_NODEREF, NULL, &err);
- 	if (!lock) {
- 		error("unable to rename '%s' to '%s': %s", oldrefname, newrefname, err.buf);
- 		strbuf_release(&err);
-@@ -2438,8 +2443,9 @@ static int files_rename_ref(const char *oldrefname, const char *newrefname,
- 	return 0;
- 
-  rollback:
--	lock = lock_ref_sha1_basic(oldrefname, NULL, NULL, NULL, REF_NODEREF,
--				   NULL, &err);
-+	lock = lock_ref_sha1_basic(oldrefname, NULL, NULL, NULL, NULL,
-+				   REF_NODEREF, NULL, &err);
-+
- 	if (!lock) {
- 		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -2667,9 +2673,7 @@ static int commit_ref_update(struct ref_lock *lock,
- 			     int flags, struct strbuf *err)
+@@ -1561,6 +1612,9 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ int resolve_gitlink_ref(const char *path, const char *refname,
+ 			unsigned char *sha1)
  {
- 	clear_loose_ref_cache(&ref_cache);
--	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, flags, err) < 0 ||
--	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
--	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg, flags, err) < 0)) {
-+	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg, flags, err) < 0) {
- 		char *old_msg = strbuf_detach(err, NULL);
- 		strbuf_addf(err, "Cannot update the ref '%s': %s",
- 			    lock->ref_name, old_msg);
-@@ -2677,7 +2681,7 @@ static int commit_ref_update(struct ref_lock *lock,
- 		unlock_ref(lock);
- 		return -1;
- 	}
--	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
-+	if (flags & REF_IS_NOT_HEAD) {
- 		/*
- 		 * Special hack: If a branch is updated directly and HEAD
- 		 * points to it (may happen on the remote side of a push
-@@ -2772,8 +2776,8 @@ static int files_create_symref(const char *refname,
- 	struct ref_lock *lock;
- 	int ret;
- 
--	lock = lock_ref_sha1_basic(refname, NULL, NULL, NULL, REF_NODEREF, NULL,
--				   &err);
-+	lock = lock_ref_sha1_basic(refname, NULL, NULL, NULL, NULL, REF_NODEREF,
-+				   NULL, &err);
- 	if (!lock) {
- 		error("%s", err.buf);
- 		strbuf_release(&err);
-@@ -3041,6 +3045,7 @@ static int files_transaction_commit(struct ref_transaction *transaction,
- 				update->refname,
- 				((update->flags & REF_HAVE_OLD) ?
- 				 update->old_sha1 : NULL),
-+				update->read_sha1,
- 				affected_refnames, NULL,
- 				update->flags,
- 				&update->type,
-@@ -3287,7 +3292,7 @@ static int files_reflog_expire(const char *refname, const unsigned char *sha1,
- 	struct ref_lock *lock;
- 	char *log_file;
- 	int status = 0;
--	int type;
-+	int type = 0;
- 	struct strbuf err = STRBUF_INIT;
- 
- 	memset(&cb, 0, sizeof(cb));
-@@ -3300,7 +3305,7 @@ static int files_reflog_expire(const char *refname, const unsigned char *sha1,
- 	 * reference itself, plus we might need to update the
- 	 * reference if --updateref was specified:
- 	 */
--	lock = lock_ref_sha1_basic(refname, sha1, NULL, NULL, REF_NODEREF,
-+	lock = lock_ref_sha1_basic(refname, sha1, NULL, NULL, NULL, REF_NODEREF,
- 				   &type, &err);
- 	if (!lock) {
- 		error("cannot lock ref '%s': %s", refname, err.buf);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index dd76246..0d3f9e7 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -49,6 +49,8 @@
-  */
- #define REF_LOG_ONLY 0x80
- 
-+#define REF_IS_NOT_HEAD 0x100
++	if (check_submodule_backend(path))
++		return -1;
 +
+ 	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
+ }
+ 
+diff --git a/refs.h b/refs.h
+index 09486b2..1888ad8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -512,7 +512,7 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
+ 			 void *policy_cb_data);
+ 
  /*
-  * Return true iff refname is minimally safe. "Safe" here means that
-  * deleting a loose reference by this name will not do any damage, for
-@@ -147,6 +149,12 @@ struct ref_update {
- 	 */
- 	unsigned char old_sha1[20];
- 	/*
-+	 * During the symbolic ref split stage, we resolve refs.
-+	 * We'll re-resolve non-symbolic refs once they are locked,
-+	 * but we store this to avoid re-resolving symbolic refs.
-+	 */
-+	unsigned char read_sha1[20];
-+	/*
- 	 * One or more of REF_HAVE_NEW, REF_HAVE_OLD, REF_NODEREF,
- 	 * REF_DELETING, and REF_ISPRUNING:
- 	 */
+- * Read the refdb storage backend name out of the config file
++ * Read the ref storage backend name out of the config file
+  */
+ int ref_storage_backend_config(const char *var, const char *value, void *ptr);
+ 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 7ccaf88..a13d419 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1347,13 +1347,9 @@ static int files_resolve_gitlink_ref(const char *path, const char *refname,
+ 
+ 	strbuf_add(&submodule, path, len);
+ 	refs = lookup_ref_cache(submodule.buf);
+-	if (!refs) {
+-		if (!is_nonbare_repository_dir(&submodule)) {
+-			strbuf_release(&submodule);
+-			return -1;
+-		}
++	if (!refs)
+ 		refs = create_ref_cache(submodule.buf);
+-	}
++
+ 	strbuf_release(&submodule);
+ 
+ 	retval = resolve_gitlink_ref_recursive(refs, refname, sha1, 0);
 -- 
 2.4.2.767.g62658d5-twtrsrc
