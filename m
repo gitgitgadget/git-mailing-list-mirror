@@ -1,77 +1,110 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] builtin/receive-pack.c: use parse_options API
-Date: Tue, 1 Mar 2016 13:54:13 -0500
-Message-ID: <CAPig+cSSUJkkGKsfDdX7i7fdTkvGd3ppL1tdsqdB7d0hjwdOuQ@mail.gmail.com>
-References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
-	<vpq60x62jvt.fsf@anie.imag.fr>
-	<56D5D601.8030601@gmail.com>
-	<vpqio1613p1.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 7/7] git: submodule honor -c credential.* from command line
+Date: Tue, 01 Mar 2016 11:07:24 -0800
+Message-ID: <xmqqmvqi6mqb.fsf@gitster.mtv.corp.google.com>
+References: <1456786715-24256-1-git-send-email-jacob.e.keller@intel.com>
+	<1456786715-24256-8-git-send-email-jacob.e.keller@intel.com>
+	<CAGZ79kbDaV=i0augzh5RgGYpTWXOuTLx=7Occhc-6iE+0pBVNg@mail.gmail.com>
+	<xmqqh9gq85yc.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sidhant Sharma <tigerkid001@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Mar 01 19:54:26 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mark Strapetz <marc.strapetz@syntevo.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 20:07:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aapR6-0006BZ-Kb
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 19:54:21 +0100
+	id 1aape5-0008FL-KW
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 20:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbcCASyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 13:54:15 -0500
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:34171 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751616AbcCASyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 13:54:14 -0500
-Received: by mail-vk0-f41.google.com with SMTP id e185so177498876vkb.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 10:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=WXutdpWk34MyYTmuUhEiXp8uXBgjw4tJEWLJS51JvDA=;
-        b=CVHE3Js9z3hfpLJfQYZpekBGeQyi6jpCySLI48SDDw29AhjjGKW4Fo4Qn2GZwvk9Kn
-         WTa+HfdkvAbQGPqbF3AOTLpDpmyZYoOuACH/aVWc4qnjX5pUuPDNid8WYMVE1+sQ5xQc
-         MNoOPfWrDh1kXdE2QWZ1CbbxicFZm63wkdyDDd0/RVEascBRwjjM4i745ptf8rmxP+Ko
-         DV6kb40eptObxTPXS0HSLiJ2B1BLqVOX2GFWYeWEf9tUukyEyr1pRQVykLlWbEsYPt6w
-         i+7HlzWhJyjf1KP+zFEChifSwNtEpfUoUY/kPpI7W8/kXDeyKnDEj5b0FQHkGE5WCmQt
-         rx5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=WXutdpWk34MyYTmuUhEiXp8uXBgjw4tJEWLJS51JvDA=;
-        b=WHyu3ikyNNHdAA4k8OcPY7W36aLI+G8UAXKX+DXvceCmHiic0ULI3e2xTfYyWU+Xvr
-         Te8ZHuOdw+/3E2ELJ68kbzfnSmVjvKNSp8SUtys92RTdv6QS8DnuEuxfAmVJ5AkbMNu/
-         4x1UcOdn8gyvt2jnODpeJ6rW1Bs/EQaVYmpAUjr41W/n5AJYbZWFDGbKrFoaAZ3wPw+y
-         +sNlY1Z1UYE9mykOHzcjUlyvyqbFqENR/uAMdXP9xvMAprBzefWtzzxgcQvhYWXbUatO
-         3sqxzWUoBFHFHOAAM/lcHlJcKHHaI1cofHaaOt67EYoMOJEwLbOHrorDe+fPkuv70LSk
-         cbcA==
-X-Gm-Message-State: AD7BkJJVtvv4BBb4KUEcrXg8OxPS0AhF9JNEa/4QBLe8cLbHbD89XQOtAvl5i9xRdME2EE9ZggHgfe2ZTxqeNw==
-X-Received: by 10.31.8.142 with SMTP id 136mr17290156vki.14.1456858453737;
- Tue, 01 Mar 2016 10:54:13 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 1 Mar 2016 10:54:13 -0800 (PST)
-In-Reply-To: <vpqio1613p1.fsf@anie.imag.fr>
-X-Google-Sender-Auth: 3ZG8ghhxN9l57YqX0tjMV_MtJR4
+	id S1753762AbcCATHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 14:07:37 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59035 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753712AbcCATH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 14:07:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C470149F54;
+	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GfkpRndgHSHd3ReirHazA8R9Ntw=; b=bUiaJr
+	MOGei1PAP3FJOQpkYJwe62lLrxsBE8hu/s/FtQ7GRXqxs6pIydl0Rl5isAAS8+3L
+	sBvMgxBe3fLt1F3Ktbq8eDacMJp4i2Q2QQaYoOGoYvHwAYIMsHXPEAByScxwUZy7
+	TDw0SBdlTZILt/NlEQKs4zW8OfngBuXcbzmX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uIKxfpXeCkpmytBmq0LgpMTJ/Lybi7vu
+	V2xPlBvKxWMyXwwek4eDdCzR+LMcBlMCjhHu6lz68T2Vo9nTpXkYX7cbe+9TnF8U
+	zP+cCYKBEDR+vYtkeEwIH+q8rHUaV1DjvQBnj0E2PE8tinBjcvhee96UZeVE0kLU
+	Z0CZvJotxjI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BAE9A49F53;
+	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 257BE49F50;
+	Tue,  1 Mar 2016 14:07:26 -0500 (EST)
+In-Reply-To: <CA+P7+xp41mkHjA0CF=69extO4R2Oam2V3sJA7PoqNbHD=9kw+g@mail.gmail.com>
+	(Jacob Keller's message of "Tue, 1 Mar 2016 10:05:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D619DC7C-DFE0-11E5-9CAF-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288053>
 
-On Tue, Mar 1, 2016 at 12:57 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Sidhant Sharma <tigerkid001@gmail.com> writes:
->> Another thing I'd like to ask is when I prepare the next patch, should
->> it be sent as reply in this thread, or as a new thread?
+Jacob Keller <jacob.keller@gmail.com> writes:
+
+> On Tue, Mar 1, 2016 at 9:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I find this in t/lib-httpd.sh:
+>>
+>>         set_askpass() {
+>>                 >"$TRASH_DIRECTORY/askpass-query" &&
+>>                 echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
+>>                 echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+>>         }
+>>
+>> and expect_askpass peeks at askpass-query to see if Git asked the
+>> right questions.
+>>
+>> I think askpass-query is cleared here because the author of the test
+>> suite expected that the helpers are used in such a way that you
+>> always (1) set-askpass once, (2) run a Git command that asks
+>> credentials, (3) use expect_askpass to validate and do these three
+>> steps as a logical unit?
+>>
+>> That "clone" the test expects to fail does ask the credential, so
+>> even though the test does not check if the "clone" asked the right
+>> question, it finishes the three-step logical unit, and then you need
+>> to clear askpass-query.
+>>
+>> It may have been cleaner if you had clear_askpass_query helper that
+>> is called (1) at the beginning of set_askpass instead of this manual
+>> clearing, (2) at the end of expect_askpass, as the exchange has been
+>> tested already at that point, and (3) in place of expect_askpass if
+>> you choose not to call it (e.g. this place, instead of the second
+>> set_askpass, you would say clear_askpass_query), perhaps, but I do
+>> know if that is worth it.
 >
-> No strict rule on that, but I usually use --in-reply-to on the root of
-> the thread for previous iteration. If you don't, include a link (e.g.
-> gmane) to the previous iteration in the cover-letter.
+> Probably something worth looking at doing in the future.
+>
+> I could call expect_askpass here at each time but I don't think it
+> would be meaningful after a test_must_fail.
 
-It's good manners to include a link to the previous version even if
-you do use --in-reply-to since not all reviewers will have the
-previous thread in their mailbox.
+Even if you call expect_askpass to check, another set_askpass is
+expected to start the next cycle anyway (unless we restructure the
+helpers around clear_askpass_query I alluded to, which I am not
+convinced is a good idea yet), so you'll still be asked "why another
+set_askpass to set the same 'wrong pass@host'?".
+
+So, I dunno.
