@@ -1,71 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] run-command: do not pass child process data into callbacks
-Date: Mon, 29 Feb 2016 15:53:24 -0800
-Message-ID: <xmqqoaaz845n.fsf@gitster.mtv.corp.google.com>
-References: <1456783026-3328-1-git-send-email-sbeller@google.com>
-	<CAGZ79kb2h=4qeGbQ+42Zkq5wZ6eVu1rNQn=d1R6Rz4YA-q0xwg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 16/22] run-command.c: mark strings for translation
+Date: Mon, 29 Feb 2016 16:00:00 -0800
+Message-ID: <CAGZ79kY8sg7XRUyhkqy7v=MHc83TcGisZ8mUXyHpU-CD2-Mj4Q@mail.gmail.com>
+References: <1456555333-5853-1-git-send-email-pclouds@gmail.com>
+	<1456555333-5853-17-git-send-email-pclouds@gmail.com>
+	<xmqq7fhnbb7j.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 01 00:53:36 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 01 01:00:10 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aaXd6-0002IO-9U
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 00:53:32 +0100
+	id 1aaXjV-0005ig-90
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 01:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbcB2Xx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Feb 2016 18:53:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62327 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750870AbcB2Xx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Feb 2016 18:53:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BEE74979B;
-	Mon, 29 Feb 2016 18:53:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rb+S3rw77b4K7OPbkJx5vyrE2B0=; b=FC64Qm
-	e/kn/thlOFEuAIUd5mHe3gdF3bWK/G1+egZVoNnWeLOF/Wd/ZI4R+qpg6tVLHBBM
-	J+sv4Hz5V6OhjfMn7En28KEfPo4h4QBZjh1N7EubCXQYc4ct4GiMUwEOIFBOieIB
-	lVqRKXACbnkgqHdC8PDeE31HHZOi9ClamtiKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VDbCVACJSbtzvRa1jblcnnSAQAwYbs9c
-	WBua0WfySWiYJM1HqmoadplQCnPKDL9K1TqPOrmwvnuxLCR4MvjL+unOU+EbMGod
-	X/uW56nTCbibglyxAFJp5m+931RHLiWLOzNPFZcLX+1DhKN7fm2WnEdXQmIoVcP4
-	kefwntY4W6o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 943B14979A;
-	Mon, 29 Feb 2016 18:53:26 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 15DE449798;
-	Mon, 29 Feb 2016 18:53:26 -0500 (EST)
-In-Reply-To: <CAGZ79kb2h=4qeGbQ+42Zkq5wZ6eVu1rNQn=d1R6Rz4YA-q0xwg@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 29 Feb 2016 13:58:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9FC45E46-DF3F-11E5-AB62-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751494AbcCAAAE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Feb 2016 19:00:04 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35959 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbcCAAAD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Feb 2016 19:00:03 -0500
+Received: by mail-io0-f172.google.com with SMTP id l127so204880896iof.3
+        for <git@vger.kernel.org>; Mon, 29 Feb 2016 16:00:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=ftM9Opvfrx1d8OU9kdDLFBCbe6pEsz+sXxy9j37ORUw=;
+        b=ZsYQa8a66eng45tGKd3KwSMeEp+72tKCRgPFtFZ9bjIj+0LqpXYW2yl9wJddkWpJZ1
+         C9qSkS71JayifXLHA7j0EAURX8mJaygLh3rc6NkYjte32obocEwnOaemucK1J0IlqqQD
+         9Y5Ncytll4U4N1Tzrqpc8mOuGwIUEKXZmgccllRK24sVrLODc7e4ha8hn8IwgwuTbgur
+         GFiG86LVxOEjLyE4Ce1+ZyCoKygsGLXRtVBSxYW6+fpDlGaHjsmE5B9UnqzjWuhEXnOU
+         D07+vaNVKtoSN8GWEhbgQSA0hkI0/BJUtq/EoUC2ucbxoJtzg/Cawc8NNyJ9SUmNUycq
+         70Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=ftM9Opvfrx1d8OU9kdDLFBCbe6pEsz+sXxy9j37ORUw=;
+        b=eQCx0pWxSNLrYu4Xf3opLIFj/4RP4PFOgShMuPVn+tXDUsMtyeHiYe+0LE4VLJwLEH
+         gowJELWMliG7lb92G3560hwArfwwM0Y71sXK/FPCF+EqUttyMwqe3cvLruejjYE5IwuX
+         6wAloJqBb4AM0HRrSE0m9+cPyYetapgOZ9nsqq9kVrF2IXRDMSMFkDWQGZmmhjW72KPg
+         faucYRRh1Y3iCvTBMThL7YibF7ogHcPLEshIXIIPM26NBZur4i7UqpSO9rQTdrVeBibr
+         WMRvx4M19LVSIqNCV1miirkpAyXsaWwA138MOZdCo47eHecPwxhcIaK++tmklyqEZ1iL
+         Y6uw==
+X-Gm-Message-State: AG10YOTqiQon+kcPPKB1eBdinlGxOtQD7QsBRZmqhVu2WdTachOVtU1eYZvFYnphS7ayZdQOiS46dFyuuVs9lFtj
+X-Received: by 10.107.168.149 with SMTP id e21mr21753597ioj.96.1456790400279;
+ Mon, 29 Feb 2016 16:00:00 -0800 (PST)
+Received: by 10.107.58.6 with HTTP; Mon, 29 Feb 2016 16:00:00 -0800 (PST)
+In-Reply-To: <xmqq7fhnbb7j.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/287944>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> It applies on 2.8.0-rc0.
+On Mon, Feb 29, 2016 at 10:52 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
-> (I tried backporting it to 2.7, but realized it is not an issue there)
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>
+> This is new and there aren't many non-BUG messages that are not
+> marked, so let's take this one for 2.8.0.
 
-Thanks.  I tried to be nice to rebase the parallel-update stuff on
-top of this myself, but stopped it as I won't have enough time to
-push the result out for the day anyway.
-
-submodule-parallel-update, submodule-init and refs-backend-lmdb
-topics will be missing from tonight's 'pu'.
+This would collide with "[PATCH] run-command: do not pass child
+process data into callbacks",
+dropping this patch would be easiest.
