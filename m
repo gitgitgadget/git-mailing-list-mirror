@@ -1,164 +1,199 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git-rebase + git-mergetool results in broken state
-Date: Tue, 1 Mar 2016 08:38:01 -0800
-Message-ID: <20160301163801.GA18095@gmail.com>
-References: <CA+hqKG8M97SEmejrdr-OC0yQc=ofY4yWej4gG_6B2jsqGq8imw@mail.gmail.com>
+From: Saurav Sachidanand <sauravsachidanand@gmail.com>
+Subject: [PATCH] Store EXC_FLAG_* values in unsigned integers
+Date: Tue,  1 Mar 2016 22:32:59 +0530
+Message-ID: <1456851779-38548-1-git-send-email-sauravsachidanand@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Joe Einertson <joe@kidblog.org>
-X-From: git-owner@vger.kernel.org Tue Mar 01 17:38:19 2016
+Cc: Saurav Sachidanand <sauravsachidanand@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 01 18:03:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aanJN-0000lr-ME
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 17:38:14 +0100
+	id 1aanhr-0003Rv-Sb
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Mar 2016 18:03:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbcCAQiI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2016 11:38:08 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34964 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbcCAQiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 11:38:07 -0500
-Received: by mail-pf0-f171.google.com with SMTP id w128so70922260pfb.2
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 08:38:06 -0800 (PST)
+	id S1752250AbcCARD1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Mar 2016 12:03:27 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33836 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403AbcCARDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 12:03:25 -0500
+Received: by mail-pa0-f45.google.com with SMTP id fy10so115082188pac.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 09:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=d4hp8J2wrt2NHCbYUd9ORgreMPsWayAF7ACuoXtJ4lY=;
-        b=TyjLjJAhMP+S34oosF6oPQTE/RyKoRaNNiFYLoDCzQKexb3LdjPoHE8miU3SG/qlUR
-         KpBA+pOMrWLZaXe2g4miQWI4Cbj6H8pjsXG1tHUf93Tn4HWPd9J9uPe/MdpzdOFF6pHy
-         0xAehtIsdkDSaSd7SWB/kVTnKZQgYh+FTcs8meswGaH5/vSoOYj1QtLEAzdeojsGTRSk
-         WEDmbRZoV8JcHd++jxolAgPNMuij/nu6IsPfeeaYXJWcg8oNNMiKhvmSmMyHmuOlcgGD
-         aj3Qx1pHlhMQQLYjIV7gi78gvA3DAmrdYAL+diqYBJZXZzB2XZdfbBS+XLFJRe3ypool
-         65oA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sub2ggXAbIU1T5GBPiO9F43HHe6insnegVfWhwDFPdI=;
+        b=gqNoD6u7bMUK1G7V122lgBOIyGq0i4i6WkunkrzzLnpM3xbc+qlJvAXTzApIKzXiTh
+         5TikTgP27x8K5xLCfDwVqsUfe2Hk8bsAivCWUdledtiAIIdscym7K67UmMaitOUbFymS
+         133XCKMqojTh12lhfKHCklmyZGxSeLuYn7HulAjF0dJ5tYd6DYJ9Gv6Y67VbRac6l6Va
+         kJhV1M1x9FuCqF6kylSI+wg71hkpGioTenhzrJKWEnydG2fXRdVmX9DiYvadXIuqWU4O
+         rJqYqxRXbtMxHUh024JQWk5pbiB94ZmqqwMtKRnmujR7ePmOAQLG4ft+QmUtR4CckyPm
+         8asQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=d4hp8J2wrt2NHCbYUd9ORgreMPsWayAF7ACuoXtJ4lY=;
-        b=ePpBxn+XMDpY+i9/1BzEBMMcY9VpE2HTnX3QkCItHWXB1wXsykwCctulsi/JpPmGr0
-         zi7KbSg16993VFafi+45KKWTVQpo3m6WLN3NI7fbKy2qfFCDRpc6Z7lhZYjss5Vqiw0q
-         /+kl69vCYm/NtHMN7l7oDrufRkQPO6Bzozd6TDPoJZ1HSyZ4C3HjGQPLqcZKesVlAJiF
-         V/HLVmjlA/d4zxR90cyPkzCyA78Pp30e5L7aAKQb8cLw3Efr0z0qL7RLMuBZcPRjY9sf
-         mlAficQ9avJcy1xkTLSlWZgPSBcRkuQHLlxuEh3xp4m/UkpbP4LWs3NR82ZxMng3socz
-         0dww==
-X-Gm-Message-State: AD7BkJLAI8dY7/6aM3tmbfHHTXM+ppYyQUUsFuKgmFcX1oFCcEPYbAPfVxnj3vA8oBbkhw==
-X-Received: by 10.98.14.149 with SMTP id 21mr31472259pfo.79.1456850285741;
-        Tue, 01 Mar 2016 08:38:05 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by smtp.gmail.com with ESMTPSA id m5sm46696926pfi.84.2016.03.01.08.38.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Mar 2016 08:38:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CA+hqKG8M97SEmejrdr-OC0yQc=ofY4yWej4gG_6B2jsqGq8imw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sub2ggXAbIU1T5GBPiO9F43HHe6insnegVfWhwDFPdI=;
+        b=dTuD+jIwFN200h+4RJ7mTEUp8e67QkkMsAAl8L5EhXmN7lvP6UM/8+vJeB41St1+/B
+         F+E7NEtQeK7HK4qTkj7aEjTbRhpSr4277D6OEuk/SRqWL4UUB6h7s5C8HmS/qqbmaLfy
+         K9q9GrYKl0ElGbAA2LT5zkzrx0f01uxr5oZOlx6vGTi9oXMF82IO5LNXB4pMKshZlBXR
+         5B0Sz1pxpipNKYf0UOwut7MeoMm0RJjxckgOTy50bnaGDgeSgNHUFpi9dx1fB1woOz82
+         cM2k/adR9O6ceHuS+d56MS58V7T/QRIlB+RCW4WTUHc7AZXYsLIdizO08UqNfrt1WfFQ
+         5kbA==
+X-Gm-Message-State: AD7BkJIj8BnqxFgovR7ckA0b1oGWkAlrq36PVqIUcTivMdAbWPkb75l5AKv20bPEwo4eyA==
+X-Received: by 10.66.142.193 with SMTP id ry1mr31610295pab.33.1456851805022;
+        Tue, 01 Mar 2016 09:03:25 -0800 (PST)
+Received: from localhost.localdomain ([106.51.19.158])
+        by smtp.googlemail.com with ESMTPSA id h2sm13384254pfd.91.2016.03.01.09.03.22
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 01 Mar 2016 09:03:24 -0800 (PST)
+X-Mailer: git-send-email 2.7.1.339.g0233b80
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288037>
 
-On Tue, Feb 23, 2016 at 04:44:49PM -0600, Joe Einertson wrote:
-> I'm experiencing an annoying issue which leaves the repository in a
-> weird, broken state. I am attempting a rather vanilla rebase, rebasin=
-g
-> the commits from a feature branch on top of the newest commits on
-> master.
+The values defined by the macro EXC_FLAG_* (1, 4, 8, 16) are
+stored in fields of the structs "pattern" and =E2=80=9Cexclude=E2=80=9D=
+, some
+functions arguments and a local variable.
 
-Can you tell us a little more about what's in the branch being
-rebased?  Is it perhaps a public project that you can share so
-that we can reproduce the issue?
+No variable that holds these values uses its most significant
+bit in any special way, as it=E2=80=99s value is either checked for a
+variant of EXC_FLAG_* using the & operator
+(flags & EXC_FLAG_NODIR), or assigned a value of 0 first
+and then any one of {1, 4, 8, 16} using the | operator
+(flags |=3D EXC_FLAG_NODIR). Hence, change the types of such
+variables and fields to unsigned.
 
-Here are a few more questions that can help narrow down the
-issue:
+And while we=E2=80=99re at it, document "flags" of "exclude" to explici=
+tly
+state the values it=E2=80=99s supposed to take on.
 
-* What Git vesion are you using?
+Signed-off-by: Saurav Sachidanand <sauravsachidanand@gmail.com>
+---
 
-* What mergetool are you using?
-  - See the output "git config merge.tool"
+This is a patch for the suggested microproject for GSoC 2016, titled
+"Use unsigned integral type for collection of bits." It=E2=80=99s the f=
+ourth
+iteration of this patch that incorporates changes to the commit
+message suggested by Moritz Neeb, Eric Sunshine and Junio C Hamano,
+and to some function signatures suggested by Duy Nguyen. Thanks to
+them for their feedback.
 
-* What platform are you on?  Are you on Windows?
+Previous versions of this patch:
+1) http://thread.gmane.org/gmane.comp.version-control.git/286821
+2) http://thread.gmane.org/gmane.comp.version-control.git/287387
+3) http://thread.gmane.org/gmane.comp.version-control.git/287838
 
-* Does the conflicting commit contain renames?
+ attr.c | 2 +-
+ dir.c  | 8 ++++----
+ dir.h  | 8 ++++----
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-I'm trying to figure out whether we are missing a `mkdir -p`
-somewhere, and whether we hadn't run into this in the past
-because the merge needs to involve renames.
+diff --git a/attr.c b/attr.c
+index 086c08d..679e13c 100644
+--- a/attr.c
++++ b/attr.c
+@@ -124,7 +124,7 @@ struct pattern {
+ 	const char *pattern;
+ 	int patternlen;
+ 	int nowildcardlen;
+-	int flags;		/* EXC_FLAG_* */
++	unsigned flags;		/* EXC_FLAG_* */
+ };
 
-> So, I run a typical series of commands:
-> 1. git checkout feature-branch
-> 2. git rebase master (conflicts ensue)
-> 3. git mergetool
->=20
-> The conflicts are expected, but when using mergetool to resolve them,
-> I encounter many "no such file or directory" errors.
->=20
-> mv: cannot stat
-> =E2=80=98app/components/mediaManager/kbImageEditor.directive.coffee=E2=
-=80=99: No such
-> file or directory
-> cp: cannot stat
-> =E2=80=98./app/components/mediaManager/kbImageEditor.directive_BACKUP=
-_13615.coffee=E2=80=99:
-> No such file or directory
-> mv: cannot move =E2=80=98.merge_file_ogGjXX=E2=80=99 to
-> =E2=80=98./app/components/mediaManager/kbImageEditor.directive_BASE_1=
-3615.coffee=E2=80=99:
-> No such file or directory
-> /usr/lib/git-core/git-mergetool: 229: /usr/lib/git-core/git-mergetool=
-:
-> cannot create ./app/components/mediaManager/kbImageEditor.directive_L=
-OCAL_13615.coffee:
-> Directory nonexistent
-> /usr/lib/git-core/git-mergetool: 229: /usr/lib/git-core/git-mergetool=
-:
-> cannot create ./app/components/mediaManager/kbImageEditor.directive_R=
-EMOTE_13615.coffee:
-> Directory nonexistent
+ /*
+diff --git a/dir.c b/dir.c
+index 552af23..82cec7d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -459,7 +459,7 @@ int no_wildcard(const char *string)
 
-* Does the directory ./app/components/medaiManager/ exist in master?
+ void parse_exclude_pattern(const char **pattern,
+ 			   int *patternlen,
+-			   int *flags,
++			   unsigned *flags,
+ 			   int *nowildcardlen)
+ {
+ 	const char *p =3D *pattern;
+@@ -500,7 +500,7 @@ void add_exclude(const char *string, const char *ba=
+se,
+ {
+ 	struct exclude *x;
+ 	int patternlen;
+-	int flags;
++	unsigned flags;
+ 	int nowildcardlen;
 
-* Did a commit on master perhaps move its content somewhere else?
+ 	parse_exclude_pattern(&string, &patternlen, &flags, &nowildcardlen);
+@@ -811,7 +811,7 @@ void add_excludes_from_file(struct dir_struct *dir,=
+ const char *fname)
 
-* Does that directory have some chmod permissions, or is it owned
-  by a different user?
+ int match_basename(const char *basename, int basenamelen,
+ 		   const char *pattern, int prefix, int patternlen,
+-		   int flags)
++		   unsigned flags)
+ {
+ 	if (prefix =3D=3D patternlen) {
+ 		if (patternlen =3D=3D basenamelen &&
+@@ -836,7 +836,7 @@ int match_basename(const char *basename, int basena=
+melen,
+ int match_pathname(const char *pathname, int pathlen,
+ 		   const char *base, int baselen,
+ 		   const char *pattern, int prefix, int patternlen,
+-		   int flags)
++		   unsigned flags)
+ {
+ 	const char *name;
+ 	int namelen;
+diff --git a/dir.h b/dir.h
+index 3ec3fb0..e942b50 100644
+--- a/dir.h
++++ b/dir.h
+@@ -28,7 +28,7 @@ struct exclude {
+ 	int nowildcardlen;
+ 	const char *base;
+ 	int baselen;
+-	int flags;
++	unsigned flags;		/* EXC_FLAG_* */
 
-* Are you able to create new files in that directory?
+ 	/*
+ 	 * Counting starts from 1 for line numbers in ignore files,
+@@ -229,10 +229,10 @@ struct dir_entry *dir_add_ignored(struct dir_stru=
+ct *dir, const char *pathname,
+  * attr.c:path_matches()
+  */
+ extern int match_basename(const char *, int,
+-			  const char *, int, int, int);
++			  const char *, int, int, unsigned);
+ extern int match_pathname(const char *, int,
+ 			  const char *, int,
+-			  const char *, int, int, int);
++			  const char *, int, int, unsigned);
 
-> This leaves weird dangling files like '.merge_file_ogGjXX' in the
-> repo, and I assume I should not proceed with the merge since it
-> couldn't even create the files to compare.
-
-If you got a failure at this step you can safely delete those
-temporary dangling files and then follow the advice given by
-`git status`.
-
-Typically it'll list files with conflicts.  Open them with
-your $EDITOR, resolve conflicts like normal, and add the
-result using `git add`.  Nonetheless, we'd like to get to the
-bottom of this issue.
-
-> Is this a known issue? Is there any workaround? Is it safe to proceed
-> with the merge?
-
-I've never ran into this myself, and it's never been reported
-here so this is not a known issue.
-
-It's still safe to proceed with the merge and resolve files the
-normal way.  If you would rather undo the rebase and go back to
-your original state (before the rebase) then you can do
-`git rebase --abort` anytime.
-
-I'm not sure about a workaround, but.. it might possibly work if
-you were to `mkdir -p` the directory mentioned above, but that's
-a guess.  If that does workaround the issue then please let us
-know since that would be an interesting data point.
---=20
-David
+ extern struct exclude *last_exclude_matching(struct dir_struct *dir,
+ 					     const char *name, int *dtype);
+@@ -244,7 +244,7 @@ extern struct exclude_list *add_exclude_list(struct=
+ dir_struct *dir,
+ extern int add_excludes_from_file_to_list(const char *fname, const cha=
+r *base, int baselen,
+ 					  struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fn=
+ame);
+-extern void parse_exclude_pattern(const char **string, int *patternlen=
+, int *flags, int *nowildcardlen);
++extern void parse_exclude_pattern(const char **string, int *patternlen=
+, unsigned *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
+ extern void clear_exclude_list(struct exclude_list *el);
+--
+2.7.1.339.g0233b80
