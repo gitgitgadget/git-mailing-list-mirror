@@ -1,134 +1,132 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: fix interactive rebase message
-Date: Wed, 2 Mar 2016 19:49:11 +0100
-Message-ID: <CAN0XMOLrO98XB9DN39=bZpXUyTtUz0y-HuTxDGFBJ3nRR9z3_A@mail.gmail.com>
-References: <1456940183-6712-1-git-send-email-ralf.thielow@gmail.com>
-	<CAGZ79kZA0rC87yJGHB8NaS0aR6fvWJQsBaw998dRySYhBgrD7Q@mail.gmail.com>
+From: =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
+Subject: Re: [PATCH v2] l10n: de.po: add space to abbreviation "z. B."
+Date: Wed, 2 Mar 2016 18:59:04 +0100
+Message-ID: <56D729E8.5070506@gmail.com>
+References: <1456939802-6171-1-git-send-email-ralf.thielow@gmail.com>
+ <1456940928-8233-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	Magnus G <magnus.goerlitz@googlemail.com>
-To: Stefan Beller <sbeller@google.com>,
-	Phillip Sz <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 19:49:20 2016
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, magnus.goerlitz@googlemail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 02 19:59:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abBpl-000433-Vd
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 19:49:18 +0100
+	id 1abBzO-0002at-7W
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 19:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756195AbcCBStN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2016 13:49:13 -0500
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:34253 "EHLO
-	mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181AbcCBStN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Mar 2016 13:49:13 -0500
-Received: by mail-lf0-f48.google.com with SMTP id l13so29138977lfb.1
-        for <git@vger.kernel.org>; Wed, 02 Mar 2016 10:49:12 -0800 (PST)
+	id S1756195AbcCBS7J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Mar 2016 13:59:09 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33949 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756089AbcCBS7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 13:59:08 -0500
+Received: by mail-wm0-f65.google.com with SMTP id p65so282946wmp.1
+        for <git@vger.kernel.org>; Wed, 02 Mar 2016 10:59:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=k7sg4s5kW+dfXUWLNkrIQ5+MHpccjzLMI1qf1/O7il8=;
-        b=pRI0lY/N+i0zX7aEBstHeK/oe67jysoqN/tgIEgHbBKYU/tkr0h9i4sDZe86LMgbEA
-         MODFRVByfPgyviZVMtCShWBsu2Y2H5HXv07Bkfc6HRjhVwAnqkoWZN6ulttykx1fw43I
-         uZK0W5Y/eNCCAniQU4j83A7caW2YHM5ar5TNlx0IRFDSISBOsOV2A1zHAYGACmsDNEil
-         gl9ylh6uWP8yCk2f9y74CB19hd/1ZbqDxUYyyG9OSGLisQANzQm8cUMFUsxBnGFRf+Vt
-         /UVdmYHSu3JbVqRF4/Xyu+KX7hWO4jJCD5XxIUPFmOW6yUQEZ2UN3h6yyRrmYJE7DEXb
-         dxwA==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=iQqdt6EznMk0cW2AGAU3qui/obhNeJVH8K+GBwJynkA=;
+        b=IJLG7ZFSLU3Ph4MdgT5IuKkzNxoFWJBRx+X4n3YM5ZeAcxoQfAbvwIoqhxGH8gkQSM
+         xadM863PlUva30iIMFg83H2QklOgEGz7aK2gHBeuOgGoQUvZMsQikWuiXqny1ibNWZro
+         xdko6hG9T/GGK5AXhfgqbbS2B8nXi7byFrKt1VId4JAmIVILOz1gQ/WzHwRQx1GyMMmw
+         rz56KTQIWbb2CqZuI7eUiPqWVEFLbpnddaLcwPQbYVaaINpUbyXR1i115ZoZ6leduBYK
+         u+LiI/TOq+i78yZk1fmNReoVtRG7rka9dQqaIojYgBbctY7Hb7/PLUIBhAARbvKljrAr
+         EKRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-transfer-encoding;
-        bh=k7sg4s5kW+dfXUWLNkrIQ5+MHpccjzLMI1qf1/O7il8=;
-        b=P3lWV1dcHq9ZB8qWa98ECpRoz+eeySBrCuelFQLGs0iytyHOqGcqrAL1A3ORQBRTj+
-         kfU51b2VV/tvLLZVrtEVN182Yw2Gh/jUBl0IUQwqRdh4kpU7UQSJ7InLNyvYzX+a4HDK
-         hV0L6GwSitaIdCk4qtwLjsK5UxHdN/HqQlaeUBrGqNFJ5oJIfND4zf1M7l7XOUcdSR+K
-         dIKptM8ggpe3SeuOM5g+W5p0agaLFlYqxD2Q2AnAHfR1bU9NTyi8dNMFHhyO3LYrxVju
-         3QIkKoCfbYSfO0hkDTxmHb6lPmA45xHv93eo3EzfkRDQ0nuOc3siOxi4EKdVuQswdKfb
-         9eeg==
-X-Gm-Message-State: AD7BkJK40YNF8/+h1BYi0Gf+jmbw4PpNZnMxVJPxPCAL41A6P0JBLWHIemO2TGlDcOgsSryzlHp4HK3BdKGaNA==
-X-Received: by 10.25.26.83 with SMTP id a80mr11023668lfa.36.1456944551258;
- Wed, 02 Mar 2016 10:49:11 -0800 (PST)
-Received: by 10.25.18.207 with HTTP; Wed, 2 Mar 2016 10:49:11 -0800 (PST)
-In-Reply-To: <CAGZ79kZA0rC87yJGHB8NaS0aR6fvWJQsBaw998dRySYhBgrD7Q@mail.gmail.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=iQqdt6EznMk0cW2AGAU3qui/obhNeJVH8K+GBwJynkA=;
+        b=fwpEJ40bgXxBXSSl4YmcS4W+/UrRwIW596Xf1WN3Yib1Ika6dCk0GJTH1fvtb6GIBq
+         I+yhCYYjFAFhgMmm5UGO2vpYTYWNCLTQ1CPIiPm/xkWEA7oFwfNel2VNNKWBIZDtzHeG
+         SUkOFEIngZgCVM1kA39uGBm6uNxfwoKJ2MxKkCqfTkACXQl9+RWpZMkjtsIGAzX9kZkw
+         dtvqGpkmdupTs7M4Jw+FXWHN+1bpc0Ch9DFQJN74b+S11QrSEpiY5S+PH2URiV08Sc8w
+         aMmjJs+DApLZyIv+m1GJj8nM3DrJqVg6jXhnF8471XaovF9NJKTZI0mUkb21BnaMBUuP
+         HoTA==
+X-Gm-Message-State: AD7BkJLxAelbSjoXUs1Ji9Z5vc0qYAV/gtxDe5/gMvbc6THXjcpIAlvxOrC7FYI8PZSeGA==
+X-Received: by 10.28.135.4 with SMTP id j4mr1561229wmd.80.1456945146696;
+        Wed, 02 Mar 2016 10:59:06 -0800 (PST)
+Received: from ?IPv6:2a02:8108:2bbf:ecb0:5511:d304:47a3:98b3? ([2a02:8108:2bbf:ecb0:5511:d304:47a3:98b3])
+        by smtp.googlemail.com with ESMTPSA id bg1sm37201051wjc.27.2016.03.02.10.59.05
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 Mar 2016 10:59:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <1456940928-8233-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288144>
 
-Am 2. M=C3=A4rz 2016 um 18:46 schrieb Stefan Beller <sbeller@google.com=
->:
-> On Wed, Mar 2, 2016 at 9:36 AM, Ralf Thielow <ralf.thielow@gmail.com>=
- wrote:
->> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->> ---
->>  po/de.po | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/po/de.po b/po/de.po
->> index 8c5f05d..07b4456 100644
->> --- a/po/de.po
->> +++ b/po/de.po
->> @@ -1950,8 +1950,8 @@ msgstr "Keine Kommandos ausgef=C3=BChrt."
->>  #, c-format
->>  msgid "Last command done (%d command done):"
->>  msgid_plural "Last commands done (%d commands done):"
->> -msgstr[0] "Letztes Kommando ausgef=C3=BChrt (%d Kommando ausgef=C3=BC=
-hrt):"
->> -msgstr[1] "Letzte Kommandos ausgef=C3=BChrt (%d Kommandos ausgef=C3=
-=BChrt):"
->> +msgstr[0] "Zuletzt ausgef=C3=BChrtes Kommando (%d Kommando ausgef=C3=
-=BChrt):"
->> +msgstr[1] "Zuletzt ausgef=C3=BChrte Kommandos (%d Kommandos ausgef=C3=
-=BChrt):"
->
-> Ist "Kommando" generell akzeptiert in der deutschen Uebersetzung?
-> Intuitive haette ich jetzt
->
->     Zuletzt ausgef=C3=BChrter Befehl (%d Befehl ausgef=C3=BChrt):
->
-> erwartet.
->
-> thanks,
-> Stefan
->
+In my opinion I would like to see "z.B." in a monospaced environment
+rather than "z. B.".
+The correct way of separating those two is to use a thin space, which i=
+s
+not possible in ASCII.
 
-Looking at the standard translations in Ubuntu [1],
-"command" is supposed to be translated as "Befehl" if
-it's the first part in the command line (the actual command)
-and "Kommando" if it's the second part (a subcommand).
+Look here for further information:
+https://de.wikipedia.org/wiki/Schmales_Leerzeichen
 
-Currently we almost always translate as "Kommando", which,
-following this guidance, is only partially correct.
-In this case here I'd interpret it as "Befehl", too.
+Kind regards,
+Matthias
 
-I personally am happy to go this way.  However, this should
-be done in a separate patch that updates the whole translation.
 
-Phillip, you're by far more experienced with other translations
-than me, what do you think?
-
-[1]
-https://wiki.ubuntu.com/UbuntuGermanTranslators/Standard%C3%BCbersetzun=
-gen
-
->
->>
->>  #: wt-status.c:1119
->>  #, c-format
->> --
->> 2.8.0.rc0.140.gf92f5fe
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Am 02.03.2016 um 18:48 schrieb Ralf Thielow:
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  po/de.po | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/po/de.po b/po/de.po
+> index a6b7bf3..9344a53 100644
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -9145,7 +9145,7 @@ msgid ""
+>  msgstr ""
+>  "Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Spitze Ihres =
+aktuellen\n"
+>  "Branches hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen=
+ ist. F=C3=BChren Sie\n"
+> -"die externen =C3=84nderungen zusammen (z.B. 'git pull ...') bevor S=
+ie \"push\"\n"
+> +"die externen =C3=84nderungen zusammen (z. B. 'git pull ...') bevor =
+Sie \"push\"\n"
+>  "erneut ausf=C3=BChren.\n"
+>  "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --he=
+lp'\n"
+>  "f=C3=BCr weitere Details."
+> @@ -9160,7 +9160,7 @@ msgstr ""
+>  "Aktualisierungen wurden zur=C3=BCckgewiesen, weil die Spitze eines =
+versendeten\n"
+>  "Branches hinter seinem externen Gegenst=C3=BCck zur=C3=BCckgefallen=
+ ist. Checken Sie\n"
+>  "diesen Branch aus und f=C3=BChren Sie die externen =C3=84nderungen =
+zusammen\n"
+> -"(z.B. 'git pull ...') bevor Sie erneut \"push\" ausf=C3=BChren.\n"
+> +"(z. B. 'git pull ...') bevor Sie erneut \"push\" ausf=C3=BChren.\n"
+>  "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --he=
+lp'\n"
+>  "f=C3=BCr weitere Details."
+> =20
+> @@ -9177,7 +9177,7 @@ msgstr ""
+>  "die lokal nicht vorhanden sind. Das wird =C3=BCblicherweise durch e=
+inen \"push\" "
+>  "von\n"
+>  "Commits auf dieselbe Referenz von einem anderen Repository aus veru=
+rsacht.\n"
+> -"Vielleicht m=C3=BCssen Sie die externen =C3=84nderungen zusammenzuf=
+=C3=BChren (z.B. 'git "
+> +"Vielleicht m=C3=BCssen Sie die externen =C3=84nderungen zusammenf=C3=
+=BChren (z. B. 'git "
+>  "pull ...')\n"
+>  "bevor Sie erneut \"push\" ausf=C3=BChren.\n"
+>  "Siehe auch die Sektion 'Note about fast-forwards' in 'git push --he=
+lp'\n"
+>=20
