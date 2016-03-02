@@ -1,71 +1,100 @@
-From: Al Viro <viro@ZenIV.linux.org.uk>
-Subject: Re: Resumable git clone?
-Date: Wed, 2 Mar 2016 02:30:24 +0000
-Message-ID: <20160302023024.GG17997@ZenIV.linux.org.uk>
-References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com>
- <CAGZ79kYjuaOiTCC-NnZDQs=XGbgXWhJe7gk576jod4QnV57eEg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 01/33] setup: call setup_git_directory_gently before
+ accessing refs
+Date: Tue, 1 Mar 2016 21:45:09 -0500
+Message-ID: <20160302024509.GA20625@sigill.intra.peff.net>
+References: <1456793586-22082-1-git-send-email-dturner@twopensource.com>
+ <1456793586-22082-2-git-send-email-dturner@twopensource.com>
+ <20160301083535.GA4952@sigill.intra.peff.net>
+ <1456876072.5981.5.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, sarah@thesharps.us
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 03:30:46 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 03:45:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aawYn-0001Xz-49
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 03:30:45 +0100
+	id 1aawmv-0002Nb-Pj
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 03:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbcCBCab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Mar 2016 21:30:31 -0500
-Received: from zeniv.linux.org.uk ([195.92.253.2]:37639 "EHLO
-	ZenIV.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbcCBCa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Mar 2016 21:30:28 -0500
-Received: from viro by ZenIV.linux.org.uk with local (Exim 4.76 #1 (Red Hat Linux))
-	id 1aawYS-0007jA-Uq; Wed, 02 Mar 2016 02:30:24 +0000
+	id S1750843AbcCBCpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Mar 2016 21:45:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52930 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751849AbcCBCpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Mar 2016 21:45:12 -0500
+Received: (qmail 27995 invoked by uid 102); 2 Mar 2016 02:45:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 21:45:12 -0500
+Received: (qmail 19364 invoked by uid 107); 2 Mar 2016 02:45:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Mar 2016 21:45:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Mar 2016 21:45:09 -0500
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYjuaOiTCC-NnZDQs=XGbgXWhJe7gk576jod4QnV57eEg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1456876072.5981.5.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288092>
 
-On Tue, Mar 01, 2016 at 05:40:28PM -0800, Stefan Beller wrote:
+On Tue, Mar 01, 2016 at 06:47:52PM -0500, David Turner wrote:
 
-> So throwing away half finished stuff while keeping the front load?
-
-Throw away the object that got truncated and ones for which delta chain
-doesn't resolve entirely in the transferred part.
- 
-> > indexing the objects it
-> > contains, and then re-running clone and not having to fetch those
-> > objects.
+> > My fix for this was to teach read_mailmap to avoid looking for
+> > HEAD:.mailmap if we are not in a repository, but to continue with the
+> > others (.mailmap in the cwd, and the mailmap.file config variable).
+> > ...
+> > But I do think your patch is a potential regression there, if anybody
+> > does do that.
 > 
-> The pack is not deterministic for a given repository. When creating
-> the pack, you may encounter races between threads, such that the order
-> in a pack differs.
+> Your version sounds better.  But I don't see it in the patch set you
+> sent earlier? 
 
-FWIW, I wasn't proposing to recreate the remaining bits of that _pack_;
-just do the normal pull with one addition: start with sending the list
-of sha1 of objects you are about to send and let the recepient reply
-with "I already have <set of sha1>, don't bother with those".  And exclude
-those from the transfer.  Encoding for the set being available is an
-interesting variable here - might be plain list of sha1, might be its
-complement ("I want the following subset"), might be "145th to 1029th,
-1517th and 1890th to 1920th of the list you've sent"; which form ends
-up more efficient needs to be found experimentally...
+It's not. Sorry to be unclear. There were _two_ cleanups I was talking
+about (cases where we don't check whether we're in a repo, and fact that
+the repo startup code is unreliable), and I got sucked into the second
+one. I'll try to work up and share my startup_info one today.
 
-IIRC, the objection had been that the organisation of the pack will lead
-to many cases when deltas are transferred *first*, with base object not
-getting there prior to disconnect.  I suspect that fraction of the objects
-getting through would still be worth it, but I hadn't experimented enough
-to be able to tell...
+> When writing my patch, I had assumed that the issue was the resolve_ref
+> on the HEAD that's an argument -- but it's not.  The actual traceback
+> is:
+> [...]
+> #2  resolve_ref_unsafe (refname=refname@entry=0x550b3b "HEAD", 
+>     resolve_flags=resolve_flags@entry=0, 
+>     sha1=sha1@entry=0x7fffffffd100 "\b\326\377\377\377\177", 
+>     flags=flags@entry=0x7fffffffd0fc) at refs/files-backend.c:1600
+> #3  0x00000000004ffe69 in read_config () at remote.c:471
 
-I was more interested in resumable _pull_, with restarted clone treated as
-special case of that.
+Oh, right. I did see problems here but missed them when comparing my
+patch to yours. I ended up in remote.c:read_config, having it check
+whether startup_info->have_repository is set; if it isn't, there is no
+point in looking at HEAD.
+
+That covers this case, and several others I happened across. Thanks for
+clarifying.
+
+> I'm not sure what the right way to fix this is -- in read_config, we're
+> about to access some stuff in a repo (config, HEAD).  It's OK to skip
+> that stuff if we're not in a repo, but we don't want to run
+> setup_git_directory twice (that breaks some stuff), and some of the
+> other callers have already called it.  On top of your earlier
+> repo_initialized patch, we could add the following to read_config:
+> 
+> +       if (!repo_initialized) {
+> +               int nongit = 0;
+> +               setup_git_directory_gently(&nongit);
+> +               if (nongit)
+> +                       return;
+> +       }
+> 
+> But that patch I think was not intended to be permanent.  Still, it
+> does seem odd that there's no straightforward way to know if the repo
+> is initialized. Am I missing something? 
+
+No, there isn't a straightforward way; I think we'll have to add one.
+I'll polish up my series which does this.
+
+-Peff
