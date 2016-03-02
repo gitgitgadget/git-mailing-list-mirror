@@ -1,97 +1,103 @@
-From: phillip <phillip.szelat@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: fix interactive rebase message
-Date: Wed, 02 Mar 2016 20:09:17 +0100
-Message-ID: <B55AE545-A7E5-4454-BB8F-FDE4D5F05B7E@gmail.com>
-References: <1456940183-6712-1-git-send-email-ralf.thielow@gmail.com> <CAGZ79kZA0rC87yJGHB8NaS0aR6fvWJQsBaw998dRySYhBgrD7Q@mail.gmail.com> <CAN0XMOLrO98XB9DN39=bZpXUyTtUz0y-HuTxDGFBJ3nRR9z3_A@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Mark win32's pthread_exit() as NORETURN
+Date: Wed, 2 Mar 2016 20:10:29 +0100 (CET)
+Message-ID: <alpine.DEB.2.20.1603022008240.3152@virtualbox>
+References: <69eef72cfc77e62ad7ad17c6df5f2d2396c64991.1456840324.git.johannes.schindelin@gmx.de> <d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de> <56D5EEE2.3080100@kdbg.org> <xmqqio166l0n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	=?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?ISO-8859-1?Q?Matthias_R=FCster?= <matthias.ruester@gmail.com>,
-	Magnus G <magnus.goerlitz@googlemail.com>
-To: Ralf Thielow <ralf.thielow@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 20:09:28 2016
+Content-Type: text/plain; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 20:10:51 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abC9G-0000y7-NY
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 20:09:27 +0100
+	id 1abCAa-0001u6-Ng
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 20:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826AbcCBTJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 14:09:22 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35079 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752187AbcCBTJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 14:09:21 -0500
-Received: by mail-wm0-f49.google.com with SMTP id l68so100256084wml.0
-        for <git@vger.kernel.org>; Wed, 02 Mar 2016 11:09:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=st45ruvYyNdijG6lvT05F/75S6ybm+ripWypmeaQJzk=;
-        b=Xm21FuituYc3sFbwXi7TxsExJoaqWs7ksePNKS2nydmtXjUgLixbiihOGjEEy5yKNt
-         Xo9XOuU8+LKtDViP+f0IoLsBLX+A+pPeL+KUGJvY5t4mFqL/kMI78LK/bk0/M2+doSh5
-         lBilmB+vQrXEPCWLpVR+RyjZAgsWwBWqmZ851+/b8zUVKQo1huRaE4mej4B0t4p0OPvQ
-         QQUtyIpN3DpdYfMUBnAYt9MOCa64V+R6UtDFtrl5D1ipceJnr/laTHdWXLWGBzy8OK05
-         IRwp6jh2WUjN1ikwBKCqjXJCvX0/IcgErbkIKmymfu0Xio4tcOYqGUkHQi8GbdiolPv7
-         Gr5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:from:date:to:cc:message-id;
-        bh=st45ruvYyNdijG6lvT05F/75S6ybm+ripWypmeaQJzk=;
-        b=N08SByOJ1SS51ldFigDiMKaE3eF0cqzMelLB7cCk++71LV000AJFmWVkjSltvLG9M4
-         pvcenPhvU7AOCjJ4fprbWkue5/mDZCODLkZvB+IdNYrlrlgljcZWmPsqHYFfFhicz4KW
-         tZ2IvzHJZC1EVzf4J7o2tFR+dWmYwfhAI5pEgV5RQRna4B5gzlH4+JkqlegoXdhassET
-         gQq0X56P/LpgKpwkz1DZL9I1WMqOzp3omDlyFslG4i5UGd6FnMps5Mgx6hCPnNTsEXK/
-         ZQ9/PYIL7xSEmf4K0YQZ/Oia9dBNnIXHis/5YDOsVdlZ+9T2t3xKxdFllGP+nJXc3NrS
-         SQiA==
-X-Gm-Message-State: AD7BkJJmaaIsChWy2x4uTFeAGHR0oWlbOhmf1dI8us7vS+Uepd3ycjHxJO/KaqcSO6ulmw==
-X-Received: by 10.28.179.84 with SMTP id c81mr1523844wmf.13.1456945760216;
-        Wed, 02 Mar 2016 11:09:20 -0800 (PST)
-Received: from android-b7bb6bce7d91de53.fritz.box (i59F45C86.versanet.de. [89.244.92.134])
-        by smtp.gmail.com with ESMTPSA id b203sm5476960wmh.8.2016.03.02.11.09.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Mar 2016 11:09:19 -0800 (PST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAN0XMOLrO98XB9DN39=bZpXUyTtUz0y-HuTxDGFBJ3nRR9z3_A@mail.gmail.com>
+	id S1754308AbcCBTKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 14:10:44 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54495 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752458AbcCBTKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 14:10:43 -0500
+Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M936L-1akmXS3dNN-00CPaN; Wed, 02 Mar 2016 20:10:31
+ +0100
+X-X-Sender: virtualbox@virtualbox
+In-Reply-To: <xmqqio166l0n.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Provags-ID: V03:K0:PDs/Tv7lzW5O4q0pplxl+zBX70g6LdrIwrgFefKr9IC+IITyrvn
+ bofvWW9w8si7FYHFKelY0kZWbu3pHHlGQXQbLLzihirc45yFpbcaLfI40DLLqJjhN9CiyGY
+ JCZESnCWAVp/wCh/pFvVd5DQg4ZA1wlQkB5AqmPpbi5PtrGtN61FViipAqmAascL7khUmFM
+ 7oW5jth6vQEHBk5GeTusw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TO4GYtym7lA=:GzrilLLdnqXCRJtPM+1ljc
+ ua/Rm8saVgtZnoFLWYM4PV4zi/YIsmrf+YAYib1HItVAoN/liujOYt1Wz6VZHvp2eGqF1YoAX
+ nay5fAxbGLpnQyCYQfwCgwsmi74j4Q8EfyLzjqWSCEf+SO5dBPLw0X6Gux+qE7y8wNxdMwpwr
+ +Q8YVQLbaeXeIAEwDW6hlYKofIU0zwcXK9xbjhepPIaTCxEDLPccZGq8lyTy+xGw4CEQhpkY0
+ 3+JiBM1OG2sNxXj1LyZGrrdn/YOupeaIT+TdWQxA4yQyj4r6ySi53AW1VufJgZjs9ZACFh2k7
+ EJafBGwGL+0OfJmrKN5kMZOIDRBVMLYlXr2FQfv1M+A8p1KU4F5sdanlCz+lQP/UHJLBNA7da
+ yHMQBBmZaSW8aUix0ItkzOcDu1H6L98ff9x+/dMpg5JfJKujUiH5kVV2vrOhP7Dnt1suEjnul
+ tZ7fnhiEk7oa1ctfkPdJE+Xnkzms4Js98tjhNb0kBVj045u5+igXZhz734OGvvyvTTtHHX6IZ
+ Mubj+bssE2YQbuHpjfuWhwqV9lrdNfkXJt3GR2gqfEG3OkxNB8DQVEEdq2B5PvD/7AiR++ZdC
+ 7UUvYtXrE4hT2P+Rp4l5szXdJRO7zyEu/NReSgrakLxqD/Q6Lpb+8xr1kScM/6kFxl9qlOxBm
+ lv3beH2y1SOzcyqxx5gHDK5PwddfILhXxRj8kzTNDmQ4u51XGuN0yrZNSjMs/8EkAcUbT9kS/
+ 33IpdNo8BtuVD9BdCHGR3Su02N+OCXpn4wN5czHoiV/ht2EgQR/kK925OP+Z2vACLeiA22b5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288145>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288146>
 
 Hi,
 
->
->Looking at the standard translations in Ubuntu [1],
->"command" is supposed to be translated as "Befehl" if
->it's the first part in the command line (the actual command)
->and "Kommando" if it's the second part (a subcommand).
->
->Currently we almost always translate as "Kommando", which,
->following this guidance, is only partially correct.
->In this case here I'd interpret it as "Befehl", too.
->
->I personally am happy to go this way.  However, this should
->be done in a separate patch that updates the whole translation.
->
->Phillip, you're by far more experienced with other translations
->than me, what do you think?
->
+On Tue, 1 Mar 2016, Junio C Hamano wrote:
 
-Well I would just use "Befehl". I have never used/seen the translation "Kommando" for a subcommand, because most people would not know the difference.
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+> > Am 01.03.2016 um 15:13 schrieb Johannes Schindelin:
+> >> The pthread_exit() function is not expected to return. Ever. On Windows,
+> >> we call ExitThread() whose documentation claims: "This function does not
+> >> return a value.":
+> >>
+> >> 	https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659
+> >
+> > This is misleading: MSDN marks all functions declared void as "does
+> > not return a value," for example, look at EnterCriticalSection:
+> >
+> > https://msdn.microsoft.com/en-us/library/windows/desktop/ms682608
+> >
+> > For this reason, I actually prefer your version 1 patch without the
+> > explanation.
+> 
+> ;-)
 
-Maybe we should also change that in the ubuntu guidelines.
+Well, I really like to have that link so I can find it very easily myself
+by simply inspecting the Git log. And the explanation itself was easily
+fixed.
 
-Phillip
+> 
+> >> -static inline int pthread_exit(void *ret)
+> >> +static inline int NORETURN pthread_exit(void *ret)
+> >
+> > I would have written it as
+> >
+> > #ifdef __GNUC__
+> > __attribute__((__noreturn__))
+> > #endif
+> > static inline int pthread_exit(void *ret) ...
+> >
+> > but I can live with your version as long as it compiles.
+> 
+> Either way, let's make sure that the final version returns "void",
+> cf.
+> 
+> http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_exit.html
+
+Fixed, too, in the upcoming v3.
+
+Ciao,
+Dscho
