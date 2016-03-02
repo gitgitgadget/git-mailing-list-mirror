@@ -1,100 +1,91 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3] Mark win32's pthread_exit() as NORETURN
-Date: Wed, 2 Mar 2016 20:11:13 +0100 (CET)
-Message-ID: <63310f6af16c70870bd620c83d8860421ca02718.1456945703.git.johannes.schindelin@gmx.de>
-References: <d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 20:11:48 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/4] bundle doc: 'verify' is not about verifying the bundle
+Date: Wed,  2 Mar 2016 12:32:38 -0800
+Message-ID: <1456950761-19759-2-git-send-email-gitster@pobox.com>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com>
+ <1456950761-19759-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 02 21:32:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abCBU-0002T3-L9
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 20:11:45 +0100
+	id 1abDRy-0006vC-6T
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 21:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755939AbcCBTLd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 14:11:33 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50191 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752052AbcCBTLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 14:11:32 -0500
-Received: from virtualbox ([37.24.143.82]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MVrQS-1aQCk727xY-00X6sH; Wed, 02 Mar 2016 20:11:15
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <d584d8bdaa8645a406c96f2a11f04febf57b2c25.1456841593.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5Dtu/JUrpDpwy+4SarmQbIuaLH7JIgveIGcg1HG0EI1LHgP1mwI
- d1oQg/LHtUfjtYoT97NNVL0SZClLxQiJTXXnPdnMqq2CArZ2/jUeTC/oJBN6kXEl9u/isEO
- vY53+z3BWg510+jiO9EylMzOdf5LGzfQaveOgU4Uf6tOpLP8wgHQ0xdKnNvbVntwidG/gnA
- ZOaoQRCPEtyjN8Y8tozSA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SLK13+GeMxE=:L4L9X8Ph1wVYElJQKv10RE
- pDxQ10qbTtj2lp74RuaFV6ZvSs+O9MMIGRpUtBQ6K/wutRFuw10TrsJAj+JbDPu/VjGcASiZz
- u9CnaP/mP+xqEFPTIddUXRUv3kInnAlet4qhljHOyuZ+lTKrNbRbIpWbKnu15ZCVfAFl7HN45
- gllKSYM6DbMPherhUyAyUsyPLb8Boc+CH8nXNl3UiAaSW2WFQUP1Wu4p5x6FNEE7R+z7rk/kk
- +Av1qHnzZq3mmuNi5a/wE269Ouf3/Vx142Wx7TUN7ghsheq73BkA8Yop9kS6FVj4vA+DpT4bk
- hCsyy4qhhYDlzv48/5kKMrsjtKPdJSsHGyDAT4qVChlXLl4vZ4mm9x99QDkzQ3LMzI+kffGGs
- G2nn7GFxoR4sKKIHq2nfFiQi6tW7NssNRx1thVV6fPLcNRwH/uNqm6QB0O5Xqy/TdVzfnX+xR
- Sp2JtlQ4TTTBxKts5551Ls1I9nOi6wbWIBwIKwLkqZH4lwfZ+MmYSFv5D6Pfzt554N+QDTm9F
- QRXbLN4FMXwxkTIitoDi/mhZzVkNez1NhJX4bLBoYmYA0l3sYXK8BBbu/yRlWJg2IiX7uP56U
- ngVlIu2HW8om0qaXUgCrGaYQEtP0nILepTa9dGistzfk+jYa8SrRHETCQT0iUIG/CqUUs9wer
- P8OWN4UoJw4DVSOMaVGQcO1UVzhH5nX4VL27GyMKnaV4iGsiHVtoGlFVKF7oGtXBBXytUAWjM
- uEof25YmD6rbfP5JAFiWbHy4mHBT0c+wKVmMfsZ2oFApd4xRtl0Xinba0XlYMI4b6lnZlTuo 
+	id S1755915AbcCBUcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 15:32:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60165 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755863AbcCBUcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 15:32:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C6F0648072;
+	Wed,  2 Mar 2016 15:32:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=qX+f
+	usTlJOncJM/10QP/yqxInqg=; b=tM2YcgTSh1koGUPMuiL+51AE61/pNqdPDzYB
+	i1eEFDFV2NnDd6/Y15dsqptiZ5RwUr+VySapIp+LsL/Q/rt7u8llbX7aPiMlu9jl
+	hoFI7hIlodu91mw36qYirAYTi+MxGku3PnKB8KXJLHmtbtuA0zLH+Yfqlsni0N4U
+	O3NTy2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=CXTR4k
+	H4itXI7ZZKBx5/67+qxDilHO5S4G2aVB2EESRV64FaAEiDFIw82euJt+a22Z1rdS
+	+wzgV8xDD+tBntvaikRmmo3PfHIDtAfcze91qQi5iqrPD0bFsUbHjhxq7+HabeRh
+	1Z5PMQC3v+GtfxPmgaTcF8Jaa5Uj4IW6TAn+g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE4DD48070;
+	Wed,  2 Mar 2016 15:32:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E810E4806E;
+	Wed,  2 Mar 2016 15:32:43 -0500 (EST)
+X-Mailer: git-send-email 2.8.0-rc0-114-g0b3e5e5
+In-Reply-To: <1456950761-19759-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: EAEAF5DE-E0B5-11E5-B449-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288149>
 
-The pthread_exit() function is not expected to return. Ever. On Windows,
-we call ExitThread() whose documentation claims: "Ends the calling
-thread", i.e. there is no condition in which this function simply
-returns: https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659
+Even though the command does read the bundle header and checks to
+see if it looks reasonable, the thin-pack data stream that follows
+the header in the bundle file is not checked.
 
-While at it, fix the return type to be void, as per
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_exit.html
+The documentation gives an incorrect impression that the data
+contained in the bundle is validated, but the command is to validate
+that the receiving repository is ready to accept the bundle, not to
+check the validity of a bundle file itself.
 
-Pointed out by Jeff King, helped by Stefan Naewe, Junio Hamano &
-Johannes Sixt.
+Rephrase the paragraph to clarify this.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- compat/win32/pthread.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-Interdiff vs v2:
+ Documentation/git-bundle.txt | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
- diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
- index 148db60..b6ed9e7 100644
- --- a/compat/win32/pthread.h
- +++ b/compat/win32/pthread.h
- @@ -78,7 +78,7 @@ extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
-  #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
-  extern pthread_t pthread_self(void);
-  
- -static inline int NORETURN pthread_exit(void *ret)
- +static inline void NORETURN pthread_exit(void *ret)
-  {
-  	ExitThread((DWORD)(intptr_t)ret);
-  }
-
-
-diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index 20b35a2..b6ed9e7 100644
---- a/compat/win32/pthread.h
-+++ b/compat/win32/pthread.h
-@@ -78,7 +78,7 @@ extern int win32_pthread_join(pthread_t *thread, void **value_ptr);
- #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
- extern pthread_t pthread_self(void);
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 3a8120c..c0113a8 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -38,11 +38,10 @@ create <file>::
+ 	'git-rev-list-args' arguments to define the bundle contents.
  
--static inline int pthread_exit(void *ret)
-+static inline void NORETURN pthread_exit(void *ret)
- {
- 	ExitThread((DWORD)(intptr_t)ret);
- }
+ verify <file>::
+-	Used to check that a bundle file is valid and will apply
+-	cleanly to the current repository.  This includes checks on the
+-	bundle format itself as well as checking that the prerequisite
+-	commits exist and are fully linked in the current repository.
+-	'git bundle' prints a list of missing commits, if any, and exits
++	Verifies that the given 'file' has a valid-looking bundle
++	header, and that your repository has all prerequisite
++	objects necessary to unpack the file as a bundle.  The
++	command prints a list of missing commits, if any, and exits
+ 	with a non-zero status.
+ 
+ list-heads <file>::
 -- 
-2.7.2.windows.1.5.g64acc33
+2.8.0-rc0-114-g0b3e5e5
