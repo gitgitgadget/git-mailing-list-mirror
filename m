@@ -1,76 +1,103 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Josh Triplett <josh@joshtriplett.org>
 Subject: Re: Resumable git clone?
-Date: Wed, 2 Mar 2016 14:44:00 +0700
-Message-ID: <CACsJy8AFXJBc8awQ6uNwgzMjOn9v_+yE9t+bR2Bv9f1kwGw0Yg@mail.gmail.com>
+Date: Tue, 1 Mar 2016 23:54:37 -0800
+Message-ID: <20160302075437.GA8024@x>
 References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com>
  <CAGZ79kYjuaOiTCC-NnZDQs=XGbgXWhJe7gk576jod4QnV57eEg@mail.gmail.com>
- <20160302023024.GG17997@ZenIV.linux.org.uk> <xmqq8u215r25.fsf@gitster.mtv.corp.google.com>
+ <20160302023024.GG17997@ZenIV.linux.org.uk>
+ <xmqq8u215r25.fsf@gitster.mtv.corp.google.com>
  <CACsJy8DcNrOmrKKPibV6GuSqspovBmHzUv_mRB6fZyLjw5wWzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Stefan Beller <sbeller@google.com>,
-	Josh Triplett <josh@joshtriplett.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>, sarah@thesharps.us
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 08:44:38 2016
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 08:54:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ab1SX-00068c-61
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 08:44:37 +0100
+	id 1ab1cP-00040a-GV
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 08:54:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbcCBHod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 02:44:33 -0500
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:35091 "EHLO
-	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbcCBHoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 02:44:32 -0500
-Received: by mail-lf0-f54.google.com with SMTP id j186so54950747lfg.2
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 23:44:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VH6L6fcr9eXw/LBO/mDZClJhvx0u3gqCumx4R1rkXBo=;
-        b=U3MYqKtoUmG2d4K9oK70gX9eCd35eUQBrRBbdXUxRDcA4y7V9m0kMT/ZcKAx+B6Xt9
-         2VJuR+jHnYr0z2nb2e3O6yIm2QWuaVHxWtU8iRnperM50ghXAEFUehnt+WkVK798f9qz
-         yuc5sCWaahcmn8qZLjdeK+zG6PLhLu/xoirsRb8IBoQ0dr63T15jyQqqvrXAitDiIvGj
-         YWtXkCp9swpwzHoVgd74CRwG5m7rI3m/lRIMOzjUwiCTkeExqSoG8RNaSu13gXYJ+wZC
-         9XbpWOKXl57nYNwNfLnPhykLpdZWp/tWdxUKvBfhR6OsVwFpOr96/NMHx+5fD2m3LWeu
-         v0qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VH6L6fcr9eXw/LBO/mDZClJhvx0u3gqCumx4R1rkXBo=;
-        b=ilLmHKUm6W0ngmhgdgPAWWmcdXoN1lFTfi3AA8hekMDPiVBWwkLSQziJo+oVcVJOWr
-         Ss3OL5uhmlaKeVJlUqf6GVO4/TexnRBjLqIEyVV6w1NRRa8W1hqpIX1PNo+h49h9qhii
-         niFCp0OOcfOGnmepgerrJcYuvwvFJxcjrW6cvnttAxnKdwVqVMAESqzkznvzgkT0VXI2
-         7/pu8amj/Q+irzhfTYu2rFKFx++RyJtFYmT2YHEF0h/9IiArUDLi2sswz6gQeXLhrQCa
-         srQRSqbZXA7QWkl9TN0Hv0QkRxMmBAfefb42GR9KFPHsgmlU4nGMPGfkIy8t+jzVNJXQ
-         WLew==
-X-Gm-Message-State: AD7BkJKyLxAbwZgQsHV/FwmWiqzY953MQa5FDVIApvvRd5GuNQe2X+Tcqn5oo9n7L/9CuA1e7zpZSSA4+Lr29g==
-X-Received: by 10.25.159.68 with SMTP id i65mr9551888lfe.94.1456904670553;
- Tue, 01 Mar 2016 23:44:30 -0800 (PST)
-Received: by 10.112.51.99 with HTTP; Tue, 1 Mar 2016 23:44:00 -0800 (PST)
+	id S1751531AbcCBHyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 02:54:46 -0500
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:58043 "EHLO
+	relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750977AbcCBHyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 02:54:45 -0500
+X-Greylist: delayed 23023 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Mar 2016 02:54:45 EST
+Received: from mfilter42-d.gandi.net (mfilter42-d.gandi.net [217.70.178.172])
+	by relay6-d.mail.gandi.net (Postfix) with ESMTP id D793AFB8CA;
+	Wed,  2 Mar 2016 08:54:42 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter42-d.gandi.net
+Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
+	by mfilter42-d.gandi.net (mfilter42-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id 9hmCUj36yu97; Wed,  2 Mar 2016 08:54:41 +0100 (CET)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 69A8DFB886;
+	Wed,  2 Mar 2016 08:54:39 +0100 (CET)
+Content-Disposition: inline
 In-Reply-To: <CACsJy8DcNrOmrKKPibV6GuSqspovBmHzUv_mRB6fZyLjw5wWzQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288101>
 
-On Wed, Mar 2, 2016 at 2:37 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> So in order to salvage some transfer out of 2.4MB, the hypothetical
->> Al protocol would first have the upload-pack give 20*1396 = 28kB
->
-> It could be 10*1396 or less....
+On Wed, Mar 02, 2016 at 02:37:53PM +0700, Duy Nguyen wrote:
+> On Wed, Mar 2, 2016 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Al Viro <viro@ZenIV.linux.org.uk> writes:
+> >
+> >> FWIW, I wasn't proposing to recreate the remaining bits of that _pack_;
+> >> just do the normal pull with one addition: start with sending the list
+> >> of sha1 of objects you are about to send and let the recepient reply
+> >> with "I already have <set of sha1>, don't bother with those".  And exclude
+> >> those from the transfer.
+> >
+> > I did a quick-and-dirty unscientific experiment.
+> >
+> > I had a clone of Linus's repository that was about a week old, whose
+> > tip was at 4de8ebef (Merge tag 'trace-fixes-v4.5-rc5' of
+> > git://git.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-trace,
+> > 2016-02-22).  To bring it up to date (i.e. a pull about a week's
+> > worth of progress) to f691b77b (Merge branch 'for-linus' of
+> > git://git.kernel.org/pub/scm/linux/kernel/git/viro/vfs, 2016-03-01):
+> >
+> >     $ git rev-list --objects 4de8ebef..f691b77b1fc | wc -l
+> >     1396
+> >     $ git rev-parse 4de8ebef..f691b77b1fc |
+> >       git pack-objects --revs --delta-base-offset --stdout |
+> >       wc -c
+> >     2444127
+> >
+> > So in order to salvage some transfer out of 2.4MB, the hypothetical
+> > Al protocol would first have the upload-pack give 20*1396 = 28kB
+> 
+> It could be 10*1396 or less. If the server calculates the shortest
+> unambiguous SHA-1 length (quite cheap on fully packed repo) and sends
+> it to the client, the client can just sends short SHA-1 instead. It's
+> racy though because objects are being added to the server and abbrev
+> length may go up. But we can check ambiguity for all SHA-1 sent by
+> client and ask for resend for ambiguous ones.
+> 
+> On my linux-2.6.git, 10 letters (so 5 bytes) are needed for
+> unambiguous short SHA-1. But we can even go optimistic and ask the
+> client for shorter SHA-1 with hope that resend won't be many.
 
-Oops somehow I read previous mails as client sends SHA-1 to server,
-not the other way around that you and Al were talking about. But the
-same principle applies to the other direction, I think.
--- 
-Duy
+I don't think it's worth the trouble and ambiguity to send abbreviated
+object names over the wire.  I think several simpler optimizations seem
+preferable, such as binary object names, and abbreviating complete
+object sets ("I have these commits/trees and everything they need
+recursively; I also have this stack of random objects.").
+
+That would work especially well for resumable pull, or for the case of
+optimizing pull during the merge window.
+
+- Josh Triplett
