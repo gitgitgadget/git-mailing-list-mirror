@@ -1,78 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Resumable git clone?
-Date: Wed, 02 Mar 2016 00:41:20 -0800
-Message-ID: <xmqqziuh46hb.fsf@gitster.mtv.corp.google.com>
-References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: bug: git submodule add fails when .git is a symlink
+Date: Wed, 2 Mar 2016 03:49:04 -0500
+Message-ID: <20160302084904.GA30295@sigill.intra.peff.net>
+References: <20160301204218.GA4083@kitenet.net>
+ <CAGZ79kY6Lf6u0=s8J_cqRNFsry4nu2SdL0GZ2gkFsu6gBrB65Q@mail.gmail.com>
+ <xmqq8u217tqa.fsf@gitster.mtv.corp.google.com>
+ <20160301231720.GB3731@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sarah@thesharps.us, viro@zeniv.linux.org.uk
-To: Josh Triplett <josh@joshtriplett.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 02 09:41:29 2016
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joey Hess <id@joeyh.name>
+X-From: git-owner@vger.kernel.org Wed Mar 02 09:49:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ab2LX-0002zR-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 09:41:28 +0100
+	id 1ab2T2-0006kK-C5
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 09:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbcCBIlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 03:41:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59225 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751167AbcCBIlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 03:41:23 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AB8E40A9C;
-	Wed,  2 Mar 2016 03:41:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xpg4Iedl5AOS0JCgjXMIU+2fTn8=; b=iBLEN3
-	glMePxTDVqICyr6MEVycn4zFJZP5PrR09jdVVnr9KbqDnT/bUX2fivkYRHFHFivQ
-	WMuDVuPup9qaR3xpnpeodgR4HHeLV4tsOChUgMQHyjeyWncEcf65neVxruplSUW5
-	v4HUPgUQ7W+YJfODJvXfTkOu7yI+CbCyqv9BU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C5pJmEQZPjjF3P9Yl4G5rrE7N/7idlU6
-	UhIn555m0o1wq7bSX0hI0hLlWrU9HxNZVniNc8h4CCzIQ+cW66Tg+AQdMH04XZbw
-	+w5Js0Zwba8e6lVnvHcP5EiSeUctQIW3RfhiGcVxGNcNINzyEFcOKP6T6VbZhZmr
-	p/OdMfMnEsQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3FF2B40A9B;
-	Wed,  2 Mar 2016 03:41:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B05CA40A99;
-	Wed,  2 Mar 2016 03:41:21 -0500 (EST)
-In-Reply-To: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com> (Josh
-	Triplett's message of "Tue, 1 Mar 2016 17:30:56 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8A53E752-E052-11E5-A082-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752718AbcCBItI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 03:49:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53076 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751167AbcCBItH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 03:49:07 -0500
+Received: (qmail 11541 invoked by uid 102); 2 Mar 2016 08:49:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Mar 2016 03:49:07 -0500
+Received: (qmail 21794 invoked by uid 107); 2 Mar 2016 08:49:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Mar 2016 03:49:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Mar 2016 03:49:04 -0500
+Content-Disposition: inline
+In-Reply-To: <20160301231720.GB3731@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288109>
 
-Josh Triplett <josh@joshtriplett.org> writes:
+On Tue, Mar 01, 2016 at 07:17:20PM -0400, Joey Hess wrote:
 
-> If you clone a repository, and the connection drops, the next attempt
-> will have to start from scratch.  This can add significant time and
-> expense if you're on a low-bandwidth or metered connection trying to
-> clone something like Linux.
+> Junio C Hamano wrote:
+> > A more pertinent question may be which version of Git did the above
+> > ever work, I guess.  We fairly liberally chdir around and I do not
+> > think we deliberately avoid assuming that "cd .git && cd .." might
+> > not come back to the original directory, for example, so I wouldn't
+> > be surprised if it never worked.
+> 
+> IIRC git used symlinks for .git in submodules before version 1.7.8, so I
+> guess that older versions supported that pretty well.
+> 
+> This one case is the only time I've seen a symlink for .git present a
+> problem so far.
 
-For this particular issue, your friendly k.org administrator already
-has a solution.  Torvalds/linux.git is made into a bundle weekly
-with
+Fortunately you provided a simple reproduction case, so it is easy to
+bisect. It did work in v1.7.8, and broke in d75219b (submodules: always
+use a relative path from gitdir to work tree, 2012-03-04). Not
+surprising, I guess. It presumably worked before only because we were
+using absolute paths.
 
-    $ git bundle create clone.bundle --all
-
-and the result placed on k.org CDN.  So low-bandwidth cloners can
-grab it over resumable http, clone from the bundle, and then fill
-the most recent part by fetching from k.org already.
-
-The tooling to allow this kind of "bundle" (and possibly other forms
-of "CDN offload" material) transparently used by "git clone" was the
-proposal by Shawn Pearce mentioned elsewhere in this thread.
+-Peff
