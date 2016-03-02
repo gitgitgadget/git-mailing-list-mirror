@@ -1,91 +1,90 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2] git-p4: map a P4 user to Git author name and email address
-Date: Wed, 2 Mar 2016 05:06:31 +0000
-Message-ID: <CAE5ih7_EAjMtdNQ6ab2wrN4LMSBBZ=T7w-fPKLtdRqfvFUhzFQ@mail.gmail.com>
-References: <1456829396-38659-1-git-send-email-larsxschneider@gmail.com>
-	<CAPig+cRwEKjGaDA-jy8KJSAhTheJYDmxtPq8SdVs0LA2f9-9Yw@mail.gmail.com>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: [PATCH v2] builtin/receive-pack.c: use parse_options API
+Date: Wed, 2 Mar 2016 10:48:11 +0530
+Message-ID: <56D67793.5080308@gmail.com>
+References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
+ <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
+ <1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
+ <vpqvb56yltc.fsf@anie.imag.fr> <xmqq4mcp7t28.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Lars Schneider <lars.schneider@autodesk.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 06:06:46 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 02 06:18:22 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aayzj-0007SX-9U
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 06:06:43 +0100
+	id 1aazAz-00066P-It
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 06:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750745AbcCBFGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 00:06:33 -0500
-Received: from mail-ob0-f193.google.com ([209.85.214.193]:33037 "EHLO
-	mail-ob0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702AbcCBFGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 00:06:32 -0500
-Received: by mail-ob0-f193.google.com with SMTP id hc1so6416601obb.0
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 21:06:32 -0800 (PST)
+	id S1750785AbcCBFSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 00:18:17 -0500
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33174 "EHLO
+	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750707AbcCBFSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 00:18:16 -0500
+Received: by mail-pa0-f67.google.com with SMTP id y7so11655870paa.0
+        for <git@vger.kernel.org>; Tue, 01 Mar 2016 21:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc;
-        bh=IgTnoJSjcPLkZYZ9XneskrIwYIO11gMzfmC4OK28qo4=;
-        b=NzcfmG1NuApmZGLMOXqYqAPJ/h1TNqq32/POwdAdvr7QEU+Z+Q3myCBsRgVDiVhjQW
-         wN7AoEqYMs9DRlhwTtk9dg+n8kFi+gtqGjw9hxuKt6sH/zyDZ5cqI0Dg/G4WK6Hk5xzD
-         tjqZulf2T/moDO5+WoQB6hf81imgYmtn/mUgI=
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=R46O3Fu6kQsakWh+/pEMJ8oVRw/JQ+KHa5ziLIL1mPo=;
+        b=YLPpDc7w40DB8lvAYESuDQmD52v8WlikMuOsIwviV4wR2DK7Xp21SumUzLIRSxFHt2
+         zwzRZ9aORpbxsSALxwNrrqjFYACBkZ4jnjxX4oqGsKRLmg5HVHZWiZ/trKLCwwAJ8tuX
+         dW1bUO0sL9j3ObEa5saBFQr4VrK/BqKczOTqrRytMiYDMNJg1f6czDZ35dtyXdQmUg5I
+         SOZeJZcuTWHjPyzWvKzIYU7crxjcdwsdoGSGDEUtD9NJkUxip44z0djPPt5MIX7gGb0+
+         0tEDufzMV3/6vRJ1wtd9FtQJr7KwS9NdsD/RWyg+TVJj+ouSKWY95MgII7KmMuizCGcU
+         z5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=IgTnoJSjcPLkZYZ9XneskrIwYIO11gMzfmC4OK28qo4=;
-        b=VjYy2XkfoT2d3W1fzNoUDQpwCIDSE0T1egvku7pjjYLjwmdfKjbbuPzvzAS22HDGP+
-         R/S4JzqLTPT9lrIBq0zCy1N11KITKv0P1N4vS4V4KRyDFRyoRo4mwu7vXsPQBLRsrNWg
-         ElAbmyIQphc/p9QfQkg9pNqsrZAJScpCzClwS6Iz28q4CSqqGR43mt0iPaQeBx6zCXGR
-         l+TQOsSLyF/NXQ8oIc6mMGSsMc19ZeviXQsz7KoNgZhq/s/ZpnS5DjgVQG37u4CWhoDn
-         4Jzxvc6lIUEukVMk9+vdoiaDMQK118rXasDs7N6scz9/gudzSh1AT5dyizRCNx1D5oDS
-         ChOQ==
-X-Gm-Message-State: AD7BkJITd45mTtEpkSwAUzssln6X8N77tJ16V3e9CLK0JDCuT3JAPvlwv6+H19AKhLOQXQgU1AhaP7I5oaXORg==
-X-Received: by 10.60.142.170 with SMTP id rx10mr18827765oeb.37.1456895191623;
- Tue, 01 Mar 2016 21:06:31 -0800 (PST)
-Received: by 10.202.172.132 with HTTP; Tue, 1 Mar 2016 21:06:31 -0800 (PST)
-In-Reply-To: <CAPig+cRwEKjGaDA-jy8KJSAhTheJYDmxtPq8SdVs0LA2f9-9Yw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=R46O3Fu6kQsakWh+/pEMJ8oVRw/JQ+KHa5ziLIL1mPo=;
+        b=XX7+uP4meesevKSBHlqBrznWQkvffR/GlbQG/JLcWa4xPn3UPph+zzt5uRTTufIxoM
+         Rkir74jmGmIiT9hSoNUw4DEFLz0yg8mf+eUHK7z8z0N3VJ62YjdUYhUnxYJOPgSYPKmr
+         eTUu/wcgWh/5TFUGKlfa766vos/L/6mnFznJg/zfaE51hcBzRNuGNcL6pdO6kmHs9QtA
+         2A9MsIGvhqFIm+68Eb4YdJ81PN7Sg7dWQYGX3AcoMnST6JAWysUyiU9s/RHQs+hIEaDc
+         T8k9Zq2A7d1i1UL8Cha+ltXhCcDVlOupkvxJn6dyXidKMqXROuMkIviqzNKxKsYdtmza
+         Xsew==
+X-Gm-Message-State: AD7BkJJVmSBF4o06LGQaPAuD8gSsHQiMxvsLRf7cLRWb3lhY8LzCq7dnyEqhSbpMkeNC0A==
+X-Received: by 10.66.191.104 with SMTP id gx8mr35577300pac.21.1456895896004;
+        Tue, 01 Mar 2016 21:18:16 -0800 (PST)
+Received: from [192.168.1.10] ([182.68.185.50])
+        by smtp.gmail.com with ESMTPSA id ey7sm11776625pab.47.2016.03.01.21.18.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 01 Mar 2016 21:18:15 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <xmqq4mcp7t28.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288096>
 
-On 1 March 2016 at 19:15, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Mar 1, 2016 at 5:49 AM,  <larsxschneider@gmail.com> wrote:
->> Map a P4 user to a specific name and email address in Git with the
->> "git-p4.mapUser" config. The config value must be a string adhering
->> to the format "p4user = First Lastname <email@address.com>".
->>
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
->> +git-p4.mapUser::
->> +       Map a P4 user to a name and email address in Git. Use a string
->> +       with the following format to create a mapping:
->> ++
->> +-------------
->> +git config --add git-p4.mapUser "p4user = First Last <mail@address.com>"
->> +-------------
->> ++
->> +A mapping will override any user information from P4. Mappings for
->> +multiple P4 user can be defined.
+
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> Sorry for not paying closer attention the first time, but this needs
-> to be repeated for each P4 user you want to map, right? One can
-> imagine this quickly becoming painful if you have a lot of users to
-> map. Have you considered modeling this after git-svn where you can set
-> an "authors" file (and name the corresponding option --authors-file)?
+>> "Sidhant Sharma [:tk]" <tigerkid001@gmail.com> writes:
+>>
+>>> Make receive-pack use the parse_options API,
+>>> bringing it more in line with send-pack and push.
+>> Thanks. This version looks good to me.
+> I'll queue this with your "Reviewed-by:" to 'pu', just as a
+> Microproject reward ;-).  Given that the program will never see an
+> interactive use from a command line, however, I am not sure if it is
+> worth actually merging it down thru 'next' to 'master'.
+>
+> Thanks.
 
-For most authors it should just use the existing Perforce user
-information. This is (I assume) just for the occasional exception
-where Perforce has the wrong email address.
+Thanks for accepting my patch :)
+Now that this one is complete, I was wondering what should I do next. Is there a list of more such microproject-like projects? I'd be very excited to contribute more patches.
 
-Luke
+
+Thanks and regards,
+Sidhant Sharma [:tk]
