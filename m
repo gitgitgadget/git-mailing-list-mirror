@@ -1,90 +1,141 @@
-From: Sidhant Sharma <tigerkid001@gmail.com>
-Subject: Re: [PATCH v2] builtin/receive-pack.c: use parse_options API
-Date: Wed, 2 Mar 2016 10:48:11 +0530
-Message-ID: <56D67793.5080308@gmail.com>
-References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
- <1456846560-9223-1-git-send-email-tigerkid001@gmail.com>
- <1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
- <vpqvb56yltc.fsf@anie.imag.fr> <xmqq4mcp7t28.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Resumable git clone?
+Date: Tue, 01 Mar 2016 22:31:30 -0800
+Message-ID: <xmqq8u215r25.fsf@gitster.mtv.corp.google.com>
+References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com>
+	<CAGZ79kYjuaOiTCC-NnZDQs=XGbgXWhJe7gk576jod4QnV57eEg@mail.gmail.com>
+	<20160302023024.GG17997@ZenIV.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 02 06:18:22 2016
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>, sarah@thesharps.us
+To: Al Viro <viro@ZenIV.linux.org.uk>
+X-From: git-owner@vger.kernel.org Wed Mar 02 07:31:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1aazAz-00066P-It
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 06:18:21 +0100
+	id 1ab0Jx-0001RF-01
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 07:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785AbcCBFSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 00:18:17 -0500
-Received: from mail-pa0-f67.google.com ([209.85.220.67]:33174 "EHLO
-	mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbcCBFSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 00:18:16 -0500
-Received: by mail-pa0-f67.google.com with SMTP id y7so11655870paa.0
-        for <git@vger.kernel.org>; Tue, 01 Mar 2016 21:18:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=R46O3Fu6kQsakWh+/pEMJ8oVRw/JQ+KHa5ziLIL1mPo=;
-        b=YLPpDc7w40DB8lvAYESuDQmD52v8WlikMuOsIwviV4wR2DK7Xp21SumUzLIRSxFHt2
-         zwzRZ9aORpbxsSALxwNrrqjFYACBkZ4jnjxX4oqGsKRLmg5HVHZWiZ/trKLCwwAJ8tuX
-         dW1bUO0sL9j3ObEa5saBFQr4VrK/BqKczOTqrRytMiYDMNJg1f6czDZ35dtyXdQmUg5I
-         SOZeJZcuTWHjPyzWvKzIYU7crxjcdwsdoGSGDEUtD9NJkUxip44z0djPPt5MIX7gGb0+
-         0tEDufzMV3/6vRJ1wtd9FtQJr7KwS9NdsD/RWyg+TVJj+ouSKWY95MgII7KmMuizCGcU
-         z5cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=R46O3Fu6kQsakWh+/pEMJ8oVRw/JQ+KHa5ziLIL1mPo=;
-        b=XX7+uP4meesevKSBHlqBrznWQkvffR/GlbQG/JLcWa4xPn3UPph+zzt5uRTTufIxoM
-         Rkir74jmGmIiT9hSoNUw4DEFLz0yg8mf+eUHK7z8z0N3VJ62YjdUYhUnxYJOPgSYPKmr
-         eTUu/wcgWh/5TFUGKlfa766vos/L/6mnFznJg/zfaE51hcBzRNuGNcL6pdO6kmHs9QtA
-         2A9MsIGvhqFIm+68Eb4YdJ81PN7Sg7dWQYGX3AcoMnST6JAWysUyiU9s/RHQs+hIEaDc
-         T8k9Zq2A7d1i1UL8Cha+ltXhCcDVlOupkvxJn6dyXidKMqXROuMkIviqzNKxKsYdtmza
-         Xsew==
-X-Gm-Message-State: AD7BkJJVmSBF4o06LGQaPAuD8gSsHQiMxvsLRf7cLRWb3lhY8LzCq7dnyEqhSbpMkeNC0A==
-X-Received: by 10.66.191.104 with SMTP id gx8mr35577300pac.21.1456895896004;
-        Tue, 01 Mar 2016 21:18:16 -0800 (PST)
-Received: from [192.168.1.10] ([182.68.185.50])
-        by smtp.gmail.com with ESMTPSA id ey7sm11776625pab.47.2016.03.01.21.18.13
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Mar 2016 21:18:15 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <xmqq4mcp7t28.fsf@gitster.mtv.corp.google.com>
+	id S1750797AbcCBGbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 01:31:35 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59946 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750738AbcCBGbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 01:31:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8A45A42615;
+	Wed,  2 Mar 2016 01:31:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Opuih1kfwRnrQCfy/STMII0d9tE=; b=qqIKfE
+	WuIwM1hf9UJRg4dzJ3yOs15OaeA/jAgHGtyi/xrmYs5x/dD4xC/PqHCnLLIHUzqq
+	9vcUAbV5D8k8p32CJMZxmReuf8aNaE9MO4snom0XLpK3R1SZEJzjYhFOEU+ybh6P
+	KFqpJP/UmGiYcQBfbU8UlcJwTcBR/9s+W66+Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Vsmci5tCVRpQSwgQXJmNgqSFnB6l0+kD
+	mLnMXVyorVEOi5GkfW04iIBvsJzOeUQ4ll84Bm7ninYaeAqr0xValxx3auDv6cLm
+	hwlPM0KOwSQkRfrGfTd/ehVbDHUUo8DkwOKDhdyHWPxwQO/kjCgqK3k0Ke53RyHp
+	HZIlGjoBF+A=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 81FF642614;
+	Wed,  2 Mar 2016 01:31:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 01B4142612;
+	Wed,  2 Mar 2016 01:31:31 -0500 (EST)
+In-Reply-To: <20160302023024.GG17997@ZenIV.linux.org.uk> (Al Viro's message of
+	"Wed, 2 Mar 2016 02:30:24 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 674BA5D6-E040-11E5-B05A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288097>
+
+Al Viro <viro@ZenIV.linux.org.uk> writes:
+
+> FWIW, I wasn't proposing to recreate the remaining bits of that _pack_;
+> just do the normal pull with one addition: start with sending the list
+> of sha1 of objects you are about to send and let the recepient reply
+> with "I already have <set of sha1>, don't bother with those".  And exclude
+> those from the transfer.
+
+I did a quick-and-dirty unscientific experiment.
+
+I had a clone of Linus's repository that was about a week old, whose
+tip was at 4de8ebef (Merge tag 'trace-fixes-v4.5-rc5' of
+git://git.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-trace,
+2016-02-22).  To bring it up to date (i.e. a pull about a week's
+worth of progress) to f691b77b (Merge branch 'for-linus' of
+git://git.kernel.org/pub/scm/linux/kernel/git/viro/vfs, 2016-03-01):
+
+    $ git rev-list --objects 4de8ebef..f691b77b1fc | wc -l
+    1396
+    $ git rev-parse 4de8ebef..f691b77b1fc |
+      git pack-objects --revs --delta-base-offset --stdout |
+      wc -c
+    2444127
+
+So in order to salvage some transfer out of 2.4MB, the hypothetical
+Al protocol would first have the upload-pack give 20*1396 = 28kB
+object names to fetch-pack; no matter how fetch-pack encodes its
+preference, its answer would be less than 28kB.  We would likely to
+design this part of the new protocol in line with the existing part
+and use textual object names, so let's round them up to 100kB.
+
+That is quite small, even if you are on a crappy connection that you
+need to retry 5 times, the additional overhead to negotiate the list
+of objects alone would be 0.5MB (or less than 20% of the real
+transfer).
+
+That is quite interesting [*1*].
+
+For the approach to be practical, you would have to write a program
+that reads from a truncated packfile and writes a new packfile,
+excising deltas that lack their bases, to salvage objects from a
+half-transferred packfile; it is however unclear how involved the
+code would get.
+
+It is probably OK for a tiny pack that has only 1400 objects--we
+could just pass the early part through unpack-objects and let it die
+when it hits EOF, but for a "resumable clone", I do not think you
+can afford to unpack 4.6M objects in the kernel repository into
+loose objects.
+
+The approach of course requires the server end to spend 5 times as
+many cycles as usual in order to help a client that retries 5 times.
+
+On the other hand, the resumable "clone" we were discussing by
+allowing the server to respond with a slightly older bundle or a
+pack and then asking the client to fill the latest bits by a
+follow-up fetch targets to reduce the load of the server side (the
+"slightly older" part can be offloaded to CDN).  It is a happy side
+effect that material offloaded to CDN can more easily obtained via
+HTTPS that is trivially resumable ;-)
+
+I think your "I've got these already" extention may be worth trying,
+and it is definitely better than the "let's make sure the server end
+creates byte-for-byte identical pack stream, and discard the early
+part without sending it to the network", and it may help resuming a
+small incremental fetch, but I do not think it is advisable to use
+it for a full clone, given that it is very likely that we would be
+adding the "offload 'clone' to CDN" kind.  Even though I can foresee
+both kinds to co-exist, I do not think it is practical to offer it
+for resuming multi-hour cloning of the kernel repository (or worse,
+Android repositories) over a trans-Pacific link, for example.
 
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> "Sidhant Sharma [:tk]" <tigerkid001@gmail.com> writes:
->>
->>> Make receive-pack use the parse_options API,
->>> bringing it more in line with send-pack and push.
->> Thanks. This version looks good to me.
-> I'll queue this with your "Reviewed-by:" to 'pu', just as a
-> Microproject reward ;-).  Given that the program will never see an
-> interactive use from a command line, however, I am not sure if it is
-> worth actually merging it down thru 'next' to 'master'.
->
-> Thanks.
+[Footnote]
 
-Thanks for accepting my patch :)
-Now that this one is complete, I was wondering what should I do next. Is there a list of more such microproject-like projects? I'd be very excited to contribute more patches.
-
-
-Thanks and regards,
-Sidhant Sharma [:tk]
+*1* To update v4.5-rc1 to today's HEAD involves 10809 objects, and
+    the pack data takes 14955728 bytes.  That translates to ~440kB
+    needed to advertise a list of textual object names to salvage
+    object transfer of 15MB.
