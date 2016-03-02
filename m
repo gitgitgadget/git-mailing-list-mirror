@@ -1,90 +1,83 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Resumable git clone?
-Date: Wed, 2 Mar 2016 16:28:59 +0700
-Message-ID: <CACsJy8D69ieHSKTFC=0hsz1Ss+bgajxXmcyf4Ma7mrjWrp_NXA@mail.gmail.com>
-References: <20160302012922.GA17114@jtriplet-mobl2.jf.intel.com>
- <CAGZ79kYjuaOiTCC-NnZDQs=XGbgXWhJe7gk576jod4QnV57eEg@mail.gmail.com>
- <20160302023024.GG17997@ZenIV.linux.org.uk> <xmqq8u215r25.fsf@gitster.mtv.corp.google.com>
- <CACsJy8DcNrOmrKKPibV6GuSqspovBmHzUv_mRB6fZyLjw5wWzQ@mail.gmail.com>
- <20160302075437.GA8024@x> <xmqq4mcp5lij.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2] builtin/receive-pack.c: use parse_options API
+Date: Wed, 2 Mar 2016 16:53:54 +0700
+Message-ID: <CACsJy8Dc38BrAHJ2t3HRdrk=A7VR7SFqc03wyajKrydsiCfoNw@mail.gmail.com>
+References: <1456846560-9223-1-git-send-email-tigerkid001@gmail.com> <1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>, sarah@thesharps.us
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 02 10:29:38 2016
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: "Sidhant Sharma [:tk]" <tigerkid001@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 02 10:54:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ab369-00026o-3M
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 10:29:37 +0100
+	id 1ab3UO-0007KS-26
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Mar 2016 10:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754409AbcCBJ3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 04:29:32 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:33474 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753425AbcCBJ3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 04:29:31 -0500
-Received: by mail-lb0-f171.google.com with SMTP id k15so3645861lbg.0
-        for <git@vger.kernel.org>; Wed, 02 Mar 2016 01:29:30 -0800 (PST)
+	id S1754461AbcCBJy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 04:54:27 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:33327 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754286AbcCBJyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 04:54:25 -0500
+Received: by mail-lb0-f170.google.com with SMTP id k15so3994969lbg.0
+        for <git@vger.kernel.org>; Wed, 02 Mar 2016 01:54:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=NQG9XcAfUwHN7OIeZHSQYY+AlyiUshRRHkOsxJU81Bc=;
-        b=cfJFMin/aUT/3gmhIV0Szeiclv7SnAKE+PBMhzfOvee1ccTnqHuNhR6wbBIMCxZL7H
-         YqI//SU5CkyfdriRGtul2aRp7DrwMalyC3cH2SGSol1fqEUfC/ndyq31GiP37KXQ1F4B
-         d6D9ixJMmYs633QMAe7JRgTmyV7lJ8UdxLCuo0ik52afGRW96IR6e+ugnNGQl7alkFnR
-         tF+hC+K6YHYpzFkWZvrItpcm+2NYNTAz6ODqFxtNMWJEy8LdUJIDKk4kSQMRjjcYebcB
-         zRaw2QfjeX5eEPz+Ax29h9vulo28qPD2MbACvLI+g7t89cgNcvJc5+wJsIPky4wy96q2
-         mccA==
+        bh=aoQQTrJrrDynm2g6715T24kyft0fcW51NHAULxeT+ro=;
+        b=pZH+xjaA4Zgkq5d88Y5mGmDFzH8GXICZL6q+2iSXvhi5XJbmVbv6Tlk9yI/lGgIwcL
+         weKkLczVvMyO7MOarjAv3cH2FUKRyenrKKZ8VRahYIX2iBZ/6x7c9P3ryF2+Q15WvWOw
+         eftlbCXUHXargbwDEvOYLwixXDXOMtrf3gXBndLJ/AXDdzWvy1R3PR/wiW2v9sdE38Xz
+         gcssyIaZKFlirI1szIvzYVy/oPsXnDvzgiqLJwaf2jxyway/FmqLDI/bNbjH4SuQFT7X
+         H4J8F/KydLF4OAorXw6ts3rETxmfXgj9xqE8x6s8yQi2HmqzHdAVHOHMUnrCfFyZWrAM
+         z1bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=NQG9XcAfUwHN7OIeZHSQYY+AlyiUshRRHkOsxJU81Bc=;
-        b=CiukyqyqgqG/KNUymIfAlIy/GszVPWquU/VG87e9q86UTBB91eas56/qCFhr9sbbbK
-         dcOR5dEqZW4hgMijHVfU/ZLoqNtzI1HYkIolPU4nqvGIBaBHCuUFTvg87i1aX8tQ6h1b
-         2gOeKv4H9HdvXYIXjA3pEMafeu67+JqeqVehODNTYlJKaBX7WTGjENANNKnvq2k9q8H+
-         Rm1ahDokHQVTtArP+opuyacNUwAO/0okU+CMrbJcoBEOAufI5Nh2a252LUgXy3lKGkCK
-         4HzxOsLtzMvJgKj5hG6RXSwPSFN2lJCoe6jvcuya4HNk8KtjnFACGHs0Hx3ITiGhDrfT
-         n66g==
-X-Gm-Message-State: AD7BkJIVuymZliYXWTo6V/MzcdpirfKNDHLaLcU0aWxEb7+gPY4ZVo+QLm8I64Im8Dg9L65C62FjutOZoWd8VA==
-X-Received: by 10.112.150.133 with SMTP id ui5mr9528786lbb.12.1456910969190;
- Wed, 02 Mar 2016 01:29:29 -0800 (PST)
-Received: by 10.112.51.99 with HTTP; Wed, 2 Mar 2016 01:28:59 -0800 (PST)
-In-Reply-To: <xmqq4mcp5lij.fsf@gitster.mtv.corp.google.com>
+        bh=aoQQTrJrrDynm2g6715T24kyft0fcW51NHAULxeT+ro=;
+        b=TOWrPFj2IlTBL9MxJs8VsrNI6ttfgcWlwh1rGbpc9ivsflWtaldUK0/zBmbyPAITor
+         QUA8yWmnkf/e31qD52HW4LXGCPb7jeNEXdJuigsBaPaag7dIcHh0Q3z8ORHLNsThKhOa
+         MADdocWe+HuCBpb5L3LZftVdomnM4wCIwtsne8oStyiwJkhvoSRSiVkQGel1MalyqGty
+         OAIssQparCLyzhfh8ahwWM4Go5mByAu3W8Ty/Oj2f/IPNEujuQpFHGs2unJIzILLk65E
+         h9y1jd2Gh1fsLQFAAH4WVICKkUS569OUwBsuqUrhxBCLdMNtZzZIWAp6eTM+XuO77vsW
+         LjIQ==
+X-Gm-Message-State: AD7BkJLMsMUVnSeuRy9DcaLPUwAkAD22wajx2HRLPvc4ItTPpQ69S6QcKR64u2kJ7inO5F3uFr5p9vXHzn6E7A==
+X-Received: by 10.112.140.129 with SMTP id rg1mr10235455lbb.80.1456912464312;
+ Wed, 02 Mar 2016 01:54:24 -0800 (PST)
+Received: by 10.112.51.99 with HTTP; Wed, 2 Mar 2016 01:53:54 -0800 (PST)
+In-Reply-To: <1456863661-22783-1-git-send-email-tigerkid001@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288119>
 
-On Wed, Mar 2, 2016 at 3:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
->
->> I don't think it's worth the trouble and ambiguity to send abbreviated
->> object names over the wire.
->
-> Yup.  My unscientific experiment was to show that the list would be
-> far smaller than the actual transfer and between full binary and
-> full textual object name representations there would not be much
-> meaningful difference--you seem to have a better design sense to
-> grasp that point ;-)
+On Wed, Mar 2, 2016 at 3:21 AM, Sidhant Sharma [:tk]
+<tigerkid001@gmail.com> wrote:
+> +       struct option options[] = {
+> +               OPT__QUIET(&quiet, N_("quiet")),
+> +               OPT_HIDDEN_BOOL(0, "stateless-rpc", &stateless_rpc, NULL),
+> +               OPT_HIDDEN_BOOL(0, "advertise-refs", &advertise_refs, NULL),
+> +               OPT_HIDDEN_BOOL(0, "reject-thin-pack-for-testing", &reject_thin, NULL),
+> +               OPT_END()
+> +       };
 
-It may matter, depending on your user target. In order to progress a
-fetch/pull, I need to get at least one object before my connection
-goes down. Picking a random blob in the "large file" range in
-linux-2.6, fs/nls/nls_cp950.c, 500kb. Let's assume the worst case that
-the blob is transferred gzipped, not deltified, that's about 100k.
-Assume again I'm a lazy linux lurker who only fetches after every
-release, the rev-list output between v4.2 and v4.3 is 6M. Even if we
-transfer this list over http with compression, the list is 2.9M, way
-bigger than one blob transfer. Which raises the bar to my successful
-fetch.
+If the patch is already final, don't bother. If not, I think I prefer
+to keep all these options visible (except the "...-for-testing"). This
+command is never executed directly by mere mortals. The ones that run
+it need to know all about these hidden tricks because they're
+implementing new transports.
+
+Another side note. I'm not so sure if we should N_() and _() strings
+in this command (same reasoning, the command's user is very likely
+developers, not true users). But it does not harm to i18n-ize the
+command either. Slightly more work for translators, of course.
 -- 
 Duy
