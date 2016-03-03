@@ -1,116 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] index-pack: --clone-bundle option
-Date: Thu, 03 Mar 2016 15:20:20 -0800
-Message-ID: <xmqqbn6v174b.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com>
-	<xmqqsi071bw1.fsf@gitster.mtv.corp.google.com>
-	<20160303222902.GB26712@sigill.intra.peff.net>
-	<xmqqfuw7186z.fsf_-_@gitster.mtv.corp.google.com>
+From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+Subject: Re: [PATCH v3] fetch-pack: fix object_id of exact sha1
+Date: Thu, 3 Mar 2016 20:35:54 -0300
+Message-ID: <CABaesJ+5B9WEqJQsK5s+WFczWMfvBgTx6UmVwjAL-WAf55zJUw@mail.gmail.com>
+References: <CABaesJK+zuuYAJ6YaEugLMFywMqE8V0W1=_4mJPGDAnfT9yXJg@mail.gmail.com>
+ <1456798376-29904-1-git-send-email-gabrielfrancosouza@gmail.com> <20160301045453.GB19272@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 04 00:20:29 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 04 00:36:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abcXl-00081Q-9b
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 00:20:29 +0100
+	id 1abcn4-0003Da-Vy
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 00:36:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758365AbcCCXUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 18:20:25 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58855 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757954AbcCCXUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 18:20:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F2E34A2FC;
-	Thu,  3 Mar 2016 18:20:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HX/o/m0tpayemw3LR5qYdCPa0Y0=; b=LIu1q8
-	4hM2NIZ/wJ1u1VZhb9ib7b5zvoR8xAJN/vDzdyhNN9GE0zR5ntPuQnaIRCd9U6Wd
-	IMvfsQeCGEv5aoWf/GDt+RPSbWIQ8kL4U/C+hg8NcvVi3PTjBXiOOBsveImFakN8
-	Ud8d1ik/lqDr2Ne57ofUPmvIZiKpw6/+Nn34w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OxdW4JQBcWAFeHrFa6ch6GXesq+IUcOG
-	btLAtb4tY1w8ee29xP2OA0WskRVh5igNRgoFQpsbgSevKrR5khmwcddo9mB3PBxX
-	GIoXlXBQ58J4XZg4LndIa3ooN7Ve96JauZt/cnGJ2h6ksIhZ8o7gTKpdbbnFrxpq
-	OycET/fiiTA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F9C24A2FB;
-	Thu,  3 Mar 2016 18:20:23 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6D2AE4A2F9;
-	Thu,  3 Mar 2016 18:20:21 -0500 (EST)
-In-Reply-To: <xmqqfuw7186z.fsf_-_@gitster.mtv.corp.google.com> (Junio
-	C. Hamano's message of "Thu, 03 Mar 2016 14:57:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8010A196-E196-11E5-A763-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751515AbcCCXgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 18:36:15 -0500
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:35461 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010AbcCCXgO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 18:36:14 -0500
+Received: by mail-ig0-f170.google.com with SMTP id hb3so6974247igb.0
+        for <git@vger.kernel.org>; Thu, 03 Mar 2016 15:36:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4OQ75Z95RktCeZZQww8o9mvBTPAMVX8ba1+0jWpw1Ko=;
+        b=J06s4oac9LOdB0eku/qMRJ9FbwF6Wuno3x+jLd5zhz2SDJHIm6eI1XaHg1cjXWmocw
+         pdI0zgY9dEfHagQneX+2A4QIjPzafmMi8WmsK1l/CmtenewsKYMwifMPwKS0JKT1eupq
+         bBdpLuGVJ1K3mXNVuZDsar5W3rf+0Fnu3zeIej8Qz1cOq46M20zfivuhO2bvbcQE0M/X
+         QpB1K9wGxcLbUj/PeFaFZ/a9JLb8OVjMaIsw/QbEJ16hEUqTjj4pHDWiwOlEkCFiqV9e
+         FxoRZDu3yAScJdyO795rHOQmGnh6raPaI13Cxz88RaepjPeURtH/nM1EMow4txWkDroR
+         Wo2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4OQ75Z95RktCeZZQww8o9mvBTPAMVX8ba1+0jWpw1Ko=;
+        b=Nn4ZCSEfJp8kBJJCIDVY74ntqbMdxVRsgo4x9mr3bBtbD9eVNJ6QreIBA8yZMaYJrO
+         Ssgdtzj2Y4mYv9ZOYThc+pXKYETAv7Uq9CA7yApJaJNVjvnVIwBi7K3pzRlYeUtMwu26
+         8pCHAR2cmZ3xuSyRyrAlZHhjCKkAgMKjXYKsL/rWwq7z7LFCBEakMXsMZaL9mk810u0a
+         GgP96EMTuy1KocqL1XFjbZjKawESq8ark6oRyjkRRac7EatLN9SRRquJRlWRQzbDi7sk
+         cNAwbme07SNeXnebWTcGOFYs5H+ezLMVCAICYeQy+jC2zuvqlxlaSMu0KFsJRBLk60LK
+         w5JA==
+X-Gm-Message-State: AD7BkJLGHYzVDDyI4savLbJcVFTEB0yJYMfd1LPqnfbtq15cqgOUUpTCJ4N12r+gTpOdx+wMu1RxV7tksK1t4A==
+X-Received: by 10.50.92.5 with SMTP id ci5mr540918igb.70.1457048173616; Thu,
+ 03 Mar 2016 15:36:13 -0800 (PST)
+Received: by 10.50.79.233 with HTTP; Thu, 3 Mar 2016 15:35:54 -0800 (PST)
+In-Reply-To: <20160301045453.GB19272@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288225>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Note that this name choice does not matter very much in the larger
-> picture.  As an initial clone that bootstraps from a clone-bundle is
-> expected to do a rough equivalent of:
+On Tue, Mar 1, 2016 at 1:54 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 29, 2016 at 11:12:56PM -0300, Gabriel Souza Franco wrote:
 >
->     # create a new repository
->     git init new-repository &&
->     git remote add origin $URL &&
+>> Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
+>> 2013-12-05) added support for specifying a SHA-1 as well as a ref name.
+>> Add support for specifying just a SHA-1 and set the ref name to the same
+>> value in this case.
+>>
+>> Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+>> ---
+>>
+>> I did keep the oid variable because ref is uninitialized at that point,
+>> and this means having to copy either name or old_oid afterwards anyway.
 >
->     # prime the object store and anchor the history to temporary
->     # references
->     git fetch $bundle 'refs/*:refs/temporary/*' &&
+> Oh, right. That's why we had the variable in the first place (even in
+> the original, we could otherwise have gone without the extra variable).
 >
->     # fetch the more recent history from the true origin
->     git fetch origin &&
->     git checkout -f &&
+>>  builtin/fetch-pack.c | 16 +++++++++++++---
+>>  1 file changed, 13 insertions(+), 3 deletions(-)
 >
->     # remove the temporary refs
->     git for-each-ref -z --format=%(refname) refs/temporary/ |
->     xargs -0 git update-ref -d
+> The code looks good to me. Do we need documentation or test updates?
 >
-> the names recorded in the bundle will not really matter to the end
-> result.
+> Here's a test that can be squashed in. For documentation, it looks like
+> we don't cover the "<sha1> <ref>" form at all. That's maybe OK, as it's
+> mostly for internal use by remote-http (though fetch-pack _is_ plumbing,
+> so perhaps some other remote-* could make use of it). But perhaps we
+> should document that "<sha1>" should work.
 
-Actually, the real implementation of "bootstrap with clone-bundle"
-is more likely to go like this:
+Thanks for providing a test, I hadn't looked up those yet. For
+documentation, should
+it be on the same patch or a new one? Also, I'm not exactly sure how
+to word that <refs>...
+can also contain a hash instead of a ref.
 
-    * The client gets redirected to $name.bndl file, and obtains a
-      fairly full $name.pack file by downloading them as static
-      files;
-
-    * The client initializes an empty repository;
-
-    * The pack file is stored at .git/objects/pack/pack-$sha1.pack;
-
-    * When the client does a "git fetch origin" to fill the more
-      recent part, fetch-pack.c::find_common() would read from the
-      "git bundle list-heads $name.bndl" to learn the "reference"
-      objects.  These are thrown at rev_list_insert_ref() and are
-      advertised as "have"s, just like we advertise objects at the
-      tip of refs in alternate repository.
-
-So there will be no refs/temporary/* hierarchy we would need to
-worry about cleaning up.
-
-Another possible variant is to redirect the client directly to
-download pack-$sha1.pack; "index-pack" needs to be run on the client
-side anyway to create pack-$sha1.idx, so at that time it could do
-the equivalent of "--clone-bundle" processing (it is not strictly
-necessary to create a split bundle) to find the tips of histories,
-and use that information when running "git fetch origin".
-
-So, even though I started working from "split bundle", we may not
-have to have such a feature after all to support CDN offloadable and
-resumable clone.
+>
+> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> index e5f83bf..9b9bec4 100755
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -531,6 +531,20 @@ test_expect_success 'shallow fetch with tags does not break the repository' '
+>                 git fsck
+>         )
+>  '
+> +
+> +test_expect_success 'fetch-pack can fetch a raw sha1' '
+> +       git init hidden &&
+> +       (
+> +               cd hidden &&
+> +               test_commit 1 &&
+> +               test_commit 2 &&
+> +               git update-ref refs/hidden/one HEAD^ &&
+> +               git config transfer.hiderefs refs/hidden &&
+> +               git config uploadpack.allowtipsha1inwant true
+> +       ) &&
+> +       git fetch-pack hidden $(git -C hidden rev-parse refs/hidden/one)
+> +'
+> +
+>  check_prot_path () {
+>         cat >expected <<-EOF &&
+>         Diag: url=$1
