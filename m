@@ -1,76 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Feature request: Configurable prefixes for git commit --fixup and --squash
-Date: Thu, 03 Mar 2016 09:23:14 -0800
-Message-ID: <xmqq7fhj327x.fsf@gitster.mtv.corp.google.com>
-References: <CALHmdRz3ffgifH2BZK14B=4LGFqOeTWpRarD+RAFx8AtwwMidg@mail.gmail.com>
-	<20160303132128.GE1766@serenity.lan>
-	<CALHmdRwgDjRJMQSPzp34aS25ZHg-mr458QeyYgyp85q8g34Aig@mail.gmail.com>
-	<vpq1t7rlfi1.fsf@anie.imag.fr>
-	<CALHmdRwZCb7LnQcKkdy-wNx5Ree+FcMPz2ykqVnTTq_SPDR_HA@mail.gmail.com>
-	<vpqvb53ij45.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 1/3] pull --rebase: add --[no-]autostash flag
+Date: Thu, 03 Mar 2016 18:24:01 +0100
+Message-ID: <vpqd1rbiifi.fsf@anie.imag.fr>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+	<1457021601-9099-1-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Martine Lenders <mlenders@riot-os.org>, authmillenon@riot-os.org,
-	git@vger.kernel.org, John Keeping <john@keeping.me.uk>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Mar 03 18:23:28 2016
+Cc: git@vger.kernel.org, pyokagan@gmail.com, gitster@pobox.com
+To: Mehul Jain <mehul.jain2029@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 18:24:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abWy9-000342-Vl
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 18:23:22 +0100
+	id 1abWz1-0003fY-3z
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 18:24:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245AbcCCRXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 12:23:17 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752052AbcCCRXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 12:23:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C7E5747C55;
-	Thu,  3 Mar 2016 12:23:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P3J2x1NNX2aGbcDUCwvobpbEe64=; b=N+oDbN
-	w7Ll43aX14npycZdTOkby3hBQaJo1IBIrzbvl4HMw6vLFGi+m3a9WTVSK6v6Ch4K
-	8V9PCetN7NqsbyfhQLQzH9dwv9vbWxRWXUFKu4JwzQz6I2KiUTQkRYt08GpSzIcU
-	D1sL6/PJV+y6efz+uv1AXqcQs967SZ5fE9RFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uln6AgW0VCeMDI1yI7/74RYRJlf1U3rZ
-	2bY7PI0kMulBkEmIxm8LUqZiLCfX6lxWV4dBDX6MXvHQ28wgnQ+k+vaSiGoygyEb
-	t6PrYY9e5D1o0xzJrtxhhjdehe6nw2czrTvgb664eivQWn1hmnjZGIDO87ukDtLj
-	gdWGxxTZyVM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD2FE47C53;
-	Thu,  3 Mar 2016 12:23:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 352F647C52;
-	Thu,  3 Mar 2016 12:23:15 -0500 (EST)
-In-Reply-To: <vpqvb53ij45.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	03 Mar 2016 18:09:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9D146B92-E164-11E5-BFE6-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1754675AbcCCRYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 12:24:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:37142 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753256AbcCCRYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 12:24:08 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u23HNxHf029512
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 3 Mar 2016 18:23:59 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u23HO1VT032565;
+	Thu, 3 Mar 2016 18:24:01 +0100
+In-Reply-To: <1457021601-9099-1-git-send-email-mehul.jain2029@gmail.com>
+	(Mehul Jain's message of "Thu, 3 Mar 2016 21:43:19 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Mar 2016 18:23:59 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u23HNxHf029512
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1457630640.13069@P7AaxmAatCzpgjwdGWKubQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288194>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Mehul Jain <mehul.jain2029@gmail.com> writes:
 
-> We don't have "procedure" for feature requests. It happens often that
-> someone dreams aloud like I did above, and it's OK as long as "it
-> shouldn't be hard to implement" is understood as "one day I should do
-> it" and not "hey, you lazy devs, why don't you code that for me?" ;-).
+> If rebase.autoStash configuration variable is 
+> set, there is no way to override it for 
+> "git pull --rebase" from the command line.
+>
+> Teach "git pull --rebase" the --[no]autostash
+> command line flag which overrides the current
+> value of rebase.autostash, if set. As "git rebase"
+> understands the --[no]autostash option, it's 
+> just a matter of passing the option to underlying 
+> "git rebase" when "git pull --rebase" is called.
 
-;-)
+We normally wrap text with a bit less than 80 columns. Yours is wrappet
+at 50 columns which makes it look weird.
 
-> I may get some students to work on this in May, or do it myself one day.
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -85,6 +85,7 @@ static char *opt_squash;
+>  static char *opt_commit;
+>  static char *opt_edit;
+>  static char *opt_ff;
+> +static int opt_autostash = -1;
 
-I envy teachers who can say "hey, code this for me if you want
-course credits".
+Instead of going through this 3-valued "true/false/unset", I would have
+let opt_autostash = 0 by default, and read the configuration before the
+call to parse_options (the usual way to apply precedence: read from low
+precedence to high precedence).
+
+But this is a bit less easy than it seems, since the code currently
+checks the configuration variable only when --rebase is given, so my
+version would do a useless call to git_config_get_bool() when --rebase
+is not given. So I think your version is OK.
+
+> +	else {
+> +		/* If --[no-]autostash option is called without --rebase */
+> +		if (opt_autostash == 0)
+> +			die(_("--no-autostash option is only valid with --rebase."));
+> +		else if (opt_autostash == 1)
+
+The else is not needed since the other branch dies.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
