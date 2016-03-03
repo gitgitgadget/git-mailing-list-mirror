@@ -1,77 +1,118 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] index-pack: correct --keep[=<msg>]
-Date: Thu, 3 Mar 2016 16:44:58 -0500
-Message-ID: <CAPig+cTgJxtuVOEAes_T1jjdN-MqHnSXkmL8mQ80n7rRd=gqXg@mail.gmail.com>
-References: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com>
+From: Santiago Torres <santiago@nyu.edu>
+Subject: Re: [PATCH/RFC] builtin/tag: Changes argument format for verify
+Date: Thu, 3 Mar 2016 17:05:03 -0500
+Message-ID: <20160303220502.GA2234@LykOS>
+References: <1456532864-30327-1-git-send-email-santiago@nyu.edu>
+ <20160227043625.GC11604@sigill.intra.peff.net>
+ <20160227174523.GB11593@LykOS>
+ <20160227183133.GB12822@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 22:45:16 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 03 23:05:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abb3Z-0003Hu-Vx
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 22:45:14 +0100
+	id 1abbMw-0001lm-6R
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 23:05:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758411AbcCCVpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 16:45:01 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:33169 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758315AbcCCVo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 16:44:59 -0500
-Received: by mail-vk0-f48.google.com with SMTP id k1so19306863vkb.0
-        for <git@vger.kernel.org>; Thu, 03 Mar 2016 13:44:59 -0800 (PST)
+	id S1756975AbcCCWFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 17:05:08 -0500
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:33902 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755863AbcCCWFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 17:05:06 -0500
+Received: by mail-qg0-f48.google.com with SMTP id w104so29242513qge.1
+        for <git@vger.kernel.org>; Thu, 03 Mar 2016 14:05:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc;
-        bh=Sk/oV3F4mKgF8KJuk5I4e910YO2q+vKHzYcDuqcUkt8=;
-        b=KKqqpkKuxrJlTJ0CsOvH4oHn0AkwzRBG17XUGaOmlpcIaOJVZAVsEsxgxQIAkv2161
-         GkFg3RxLQKIsXtpxLgg1SIGBgEZgd/AjZco47VtHBQdtz+qI5b44YYJKFru4Uy8Cmh/7
-         U5SDjeVzV6sx+xmVQP6u+6E+gYY8PDAyJHvF4dBc12++BlPj5JqV+5ohUTECM7IFsT2y
-         JdeimX1G+5GCeaFFUm1Wp9a74XBuUJqOdkvnAflxDzCo86D9LzMFE7Ih0i3w1v7ESyDC
-         fva5EJ5Y2oOcUCoqmqhMExBlRyOz3iLwH6NsG9iEeOQx4SUTFKQxv8YmuHaL8Qy1/Hqm
-         LyNg==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LnHBdWx24e5jzIO0cyfAE4VU4LV19O/bVjU8E2Qxl9k=;
+        b=TXlvlA/oLtXTao3/7CaLu+ElfdcApCscTQp4MUWktYGdG9M6odpPCsVJiT/CQib2Ci
+         gnqF5wca4jrBw++7eaRdxRGLmGsFBajU2MdgPHddDLo6SeOqVevEAlBk+4isn5fELlBy
+         JZ4cnO7VWwCPMs/BavTN/ZslhAq+LEMXaNlALYOdmmsPEN3hB4gJxoS7O+isI0wLz/x1
+         EfAoZqJad2sqFu9sbQwedCkCcq7b6dz1MHBHDnypkKMHKl/DNQoy117EihLxOaLIly7N
+         gQqO8+A1crJb+0QIHmNvRmeKptVebPqTE8dJ93KzrJcUYlMA2ZZ7LlMj5Cj79csHYVPI
+         w0Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc;
-        bh=Sk/oV3F4mKgF8KJuk5I4e910YO2q+vKHzYcDuqcUkt8=;
-        b=lUumqflzHPAQT3e/YAyIClF2frN78cfHrJ6+W2rtsYW03psB4XDNBA9CY686IB4GHc
-         dvOnQeR+PCCgrmAlY6MiU/9zP3IaWxTYlDCHFMyaoMCtBL2kxF7K+cskK3RJm2kgdFdN
-         zhDaGZYmIxhwhA5B+51jhpIdYMUgP4A1dMpwrA4RIuHoc585E9dHmaqED1nn2O1ElDhW
-         WFLTJgBThiRt0MmB8uohigoBIEv007URfQImk/4smwOmVt6CIJV5ysMquSANcG8lsPlT
-         CkYON4QxnqULwLHFNe1LAeapniSEMDqvfy0DsWCmgdIN/S9vF952HWymRJby/e7CaQ+L
-         q1Rw==
-X-Gm-Message-State: AD7BkJLfEiCzjETLJ7huTB1LLtvq5VBazr4OQhHIeNHF3O+zJVDSMv3KSoBh0RzQM+KxDWvgVEczLG1tJqvqtg==
-X-Received: by 10.31.150.76 with SMTP id y73mr3728822vkd.84.1457041498801;
- Thu, 03 Mar 2016 13:44:58 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Thu, 3 Mar 2016 13:44:58 -0800 (PST)
-In-Reply-To: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: Quc7jB8WvrMjbgOSa0gTSbtXe6g
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LnHBdWx24e5jzIO0cyfAE4VU4LV19O/bVjU8E2Qxl9k=;
+        b=iLaKOpnzMORNiDpErHmJl6uxinLghJmx1zl0hwNN7RVOB4FP3dkgSDe+ALAcBYNWQ/
+         zRSTipbQuCh3hcSK/ruR0aSDeIWZY/6abIug4g9ciuZ0/7Q7kzFD65yhamJ4sz8XV2Rm
+         o9WVLsejPxnmpHs39ajWvdlMpwSbYyb8Ab9iUi2EbFngJwCC+GRIwa8fwaZs8ie7biBX
+         wPHl/2M5XCxa8tRbELII0PZtNTBsHoFF8nPoyYifMKA6TIl9F+t7cI37LGfMVShFi3X0
+         r58r4h526dhej6pPLlzXdujst82CqT+BMRO1KOKXPL/wDSygxwZIAEl9zmYNbGdNNb9q
+         4crg==
+X-Gm-Message-State: AD7BkJJeHWB+NWkfJH7MpO/+r1crT2dUR9pD4UvXyCOwyRoqvrwwl3wo4kRbJfUmwv83McGW
+X-Received: by 10.140.168.85 with SMTP id o82mr448698qho.75.1457042704593;
+        Thu, 03 Mar 2016 14:05:04 -0800 (PST)
+Received: from LykOS (NYUFWA-WLESSAUTHCLIENTS-14.NATPOOL.NYU.EDU. [216.165.95.3])
+        by smtp.gmail.com with ESMTPSA id l36sm262063qgd.29.2016.03.03.14.05.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 Mar 2016 14:05:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20160227183133.GB12822@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288215>
 
-On Thu, Mar 3, 2016 at 2:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> When 592ce208 (index-pack: use strip_suffix to avoid magic numbers,
-> 2014-06-30) refactored the code to derive names of .idx and .keep
-> files from the name of .pack file, a copy-and-paste typo crept in,
-> mistakingly attempting to create and store the keep message file in
+Hi Peff.
 
-s/mistakingly/mistakenly/
+I've been trying to shape these changes into sensible patch, but it is
+not as trivial as I originally thought. I think the issue lies in the
+tag desambiguation aspect of the git-tag command.
 
-> the .idx file we just created, instead of .keep file.
->
-> As we create the .keep file with O_CREAT|O_EXCL, and we do so after
-> we write the .idx file, we luckily do not clobber the .idx file, but
-> because we deliberately ignored EEXIST when creating .keep file
-> (which is justifiable because only the existence of .keep file
-> matters), nobody noticed this mistake so far.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+It seems that verify-tag can take either the refname or the hash of the
+object. However, git tag --verify takes only the refname, so it doesn't
+resolve the tag-sha1 if that's specified as an argument. 
+
+I'm wondering if this is what we would want in the updated patch (accept
+sha1's also). If so, does the following make sense?
+
+1) if arg not in .git/tag/refs
+2) then try to resolve using get_sha1(name, sha1) take it from there.
+
+Also, would it make sense to remove the verify-tag command altogether? 
+On the same line, it seems that there used to be a --raw flag on the
+verify-tag command, should I propagate this to git tag --verify?
+
+Thanks!
+-Santiago.
+
+
+
+On Sat, Feb 27, 2016 at 01:31:33PM -0500, Jeff King wrote:
+> On Sat, Feb 27, 2016 at 12:45:24PM -0500, Santiago Torres wrote:
+> 
+> > > A much more interesting change in this area, I think, would be to skip
+> > > verify-tag entirely. Once upon a time it had a lot of logic itself, but
+> > > these days it is a thin wrapper over run_gpg_verify(), and we could
+> > > improve the efficiency quite a bit by eliminates the sub-process
+> > > entirely.
+> > 
+> > I agree here too. while going through gdb to follow the logic on this I saw that
+> > this code forks three times (git, tag-verify and gpg). I'm sure that
+> > removing one layer should be good efficiencly-wise.
+> > 
+> > Is it ok if I give this a shot?
+> 
+> Sure.
+> 
+> I suspect the extra process is there for historical reasons; git-tag was
+> originally a shell script that called out to git-verify-tag, and the
+> conversion to C retained the separate call.
+> 
+> I cannot think of a reason that it would be a bad thing to do it all in
+> a single process. Do note the trickery with SIGPIPE in verify-tag,
+> though. We probably need to do the same here (in fact, I wonder if that
+> should be pushed down into the code that calls gpg).
+> 
+> -Peff
