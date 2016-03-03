@@ -1,93 +1,102 @@
 From: Martine Lenders <mlenders@riot-os.org>
 Subject: Re: Feature request: Configurable prefixes for git commit --fixup and --squash
-Date: Thu, 3 Mar 2016 15:33:34 +0100
-Message-ID: <CALHmdRwgDjRJMQSPzp34aS25ZHg-mr458QeyYgyp85q8g34Aig@mail.gmail.com>
+Date: Thu, 3 Mar 2016 15:38:26 +0100
+Message-ID: <CALHmdRwe2d=DwFbNhOB91DQ7rnW7yUTeQZ3td9zef4v2-aOBqg@mail.gmail.com>
 References: <CALHmdRz3ffgifH2BZK14B=4LGFqOeTWpRarD+RAFx8AtwwMidg@mail.gmail.com>
 	<20160303132128.GE1766@serenity.lan>
+	<vpqio13ll3i.fsf@anie.imag.fr>
 Reply-To: authmillenon@riot-os.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: john@keeping.me.uk
+Cc: John Keeping <john@keeping.me.uk>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 03 15:33:44 2016
+X-From: git-owner@vger.kernel.org Thu Mar 03 15:38:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abUJy-0007sv-M6
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 15:33:43 +0100
+	id 1abUOh-0002ig-UU
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 15:38:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756812AbcCCOdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 09:33:39 -0500
-Received: from aquarius.uberspace.de ([95.143.172.114]:49363 "EHLO
+	id S932413AbcCCOib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 09:38:31 -0500
+Received: from aquarius.uberspace.de ([95.143.172.114]:50527 "EHLO
 	aquarius.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755975AbcCCOdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 09:33:38 -0500
-Received: (qmail 1282 invoked from network); 3 Mar 2016 14:33:35 -0000
+	with ESMTP id S932379AbcCCOia (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 09:38:30 -0500
+Received: (qmail 2239 invoked from network); 3 Mar 2016 14:38:28 -0000
 Received: from localhost (HELO mail-wm0-f44.google.com) (127.0.0.1)
-  by aquarius.uberspace.de with SMTP; 3 Mar 2016 14:33:35 -0000
-Received: by mail-wm0-f44.google.com with SMTP id l68so34134906wml.1
-        for <git@vger.kernel.org>; Thu, 03 Mar 2016 06:33:35 -0800 (PST)
-X-Gm-Message-State: AD7BkJI4/Y4AsQJzoIkSQPjTuzRtPN07dse1My6Vvjy5KCmWfvhkjR6fY9bKPfrSZKO/sH7GEOMWGbgNpPkVRQ==
-X-Received: by 10.28.93.79 with SMTP id r76mr6577583wmb.32.1457015614634; Thu,
- 03 Mar 2016 06:33:34 -0800 (PST)
-Received: by 10.194.103.228 with HTTP; Thu, 3 Mar 2016 06:33:34 -0800 (PST)
-In-Reply-To: <20160303132128.GE1766@serenity.lan>
-X-Gmail-Original-Message-ID: <CALHmdRwgDjRJMQSPzp34aS25ZHg-mr458QeyYgyp85q8g34Aig@mail.gmail.com>
+  by aquarius.uberspace.de with SMTP; 3 Mar 2016 14:38:28 -0000
+Received: by mail-wm0-f44.google.com with SMTP id p65so34283532wmp.0
+        for <git@vger.kernel.org>; Thu, 03 Mar 2016 06:38:28 -0800 (PST)
+X-Gm-Message-State: AD7BkJL8F1ZUdMx5nIdRIddBGZkSkmWdpSjDCq4a7XojVyt7O4A8RMipBS/GleDMAozE0LvRrmmElM4ZX0y7RQ==
+X-Received: by 10.194.190.6 with SMTP id gm6mr3417176wjc.115.1457015906948;
+ Thu, 03 Mar 2016 06:38:26 -0800 (PST)
+Received: by 10.194.103.228 with HTTP; Thu, 3 Mar 2016 06:38:26 -0800 (PST)
+In-Reply-To: <vpqio13ll3i.fsf@anie.imag.fr>
+X-Gmail-Original-Message-ID: <CALHmdRwe2d=DwFbNhOB91DQ7rnW7yUTeQZ3td9zef4v2-aOBqg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288181>
 
-Hi John,
-yes, it can be anywhere in the commit message and I already thought
-about using a hook for generating the commit message too, but the
-problem is then, that `git rebase` won't pair up the commit for
-squashing/fixing up with the original commit.
+Hi Matthieu,
+We already do this :-). But sadly, this won't help: [ci skip]
+encourages Travis-CI to do nothing at all, while your proposed
+solution will at least require Travis to boot up a VM (or in case of a
+build matrix several VMs). In our case, including queueing this can
+take up to 1h.
 
-Maybe another approach could be to allow for a configuration of a
-string that is ignored when matching the commit messages in `git
-rebase`.
+Just in case you think I did not consider this: There is an issue on
+Travis' issue tracker [1], which is proposing to make this string
+configurable on their side, but sadly there was no reaction to that up
+until now.
 
 Regards,
 Martine
 
-Am 03.03.2016 14:21 schrieb "John Keeping" <john@keeping.me.uk>:
+[1] https://github.com/travis-ci/travis-ci/issues/4624
+
+2016-03-03 14:58 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> John Keeping <john@keeping.me.uk> writes:
 >
-> On Thu, Mar 03, 2016 at 01:47:00PM +0100, Martine Lenders wrote:
-> > I'm not sure if this was already requested somewhere (a quick - but
-> > admittedly not thorough - search did not reveal anything in that
-> > direction), but I really miss an option to configure the prefixes generated
-> > by `git commit (--fixup | --squash) <commit>` and picked up by `git rebase
-> > -i --autosquash`.
-> >
-> > My reasoning is that in our project we use GitHub + Travis to test-build
-> > our pull requests, but we don't want to spam the CI server with builds that
-> > are just fixups to previous changes (which are uploaded so reviewers can
-> > track the changes to the original PR). Now, Travis has the option to not
-> > build a commit if there is the string `[ci skip]` in the commit message
-> > (sadly also not configurable) so it would be really great for my workflow
-> > if I could just add this string to the message generated by `--fixup`.
+>> On Thu, Mar 03, 2016 at 01:47:00PM +0100, Martine Lenders wrote:
+>>> I'm not sure if this was already requested somewhere (a quick - but
+>>> admittedly not thorough - search did not reveal anything in that
+>>> direction), but I really miss an option to configure the prefixes generated
+>>> by `git commit (--fixup | --squash) <commit>` and picked up by `git rebase
+>>> -i --autosquash`.
+>>>
+>>> My reasoning is that in our project we use GitHub + Travis to test-build
+>>> our pull requests, but we don't want to spam the CI server with builds that
+>>> are just fixups to previous changes (which are uploaded so reviewers can
+>>> track the changes to the original PR). Now, Travis has the option to not
+>>> build a commit if there is the string `[ci skip]` in the commit message
+>>> (sadly also not configurable) so it would be really great for my workflow
+>>> if I could just add this string to the message generated by `--fixup`.
+>>
+>> I am against the feature as you describe it, because it has the
+>> potential to break `git rebase --autosquash` with shared fixups if two
+>> people are using a different prefix.
+>>
+>> However, it sounds like Travis will recognize "[ci skip]" anywhere in
+>> the commit message.  Would a feature to allow autogenerated content in
+>> fixup/squash commit message bodies work?
 >
-> I am against the feature as you describe it, because it has the
-> potential to break `git rebase --autosquash` with shared fixups if two
-> people are using a different prefix.
+> Or, alternatively: change the script used by Travis-CI to do something
+> like
 >
-> However, it sounds like Travis will recognize "[ci skip]" anywhere in
-> the commit message.  Would a feature to allow autogenerated content in
-> fixup/squash commit message bodies work?
->
-> In fact, this can already be achieved with a prepare-commit-msg hook
-> like this (untested, but shows the principle):
->
-> -- >8 --
-> #!/bin/sh
 > case "$(head -n 1 "$1")" in
 > "fixup! "*|"squash! "*)
->         cat >>"$1" <<-\EOF
->
->         [ci skip]
->         EOF
+>         : do nothing
+>         ;;
+> *)
+>         launch_real_tests
 > esac
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
