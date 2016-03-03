@@ -1,120 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] index-pack: add a helper function to derive .idx/.keep filename
-Date: Thu, 03 Mar 2016 13:37:18 -0800
-Message-ID: <xmqqsi071bw1.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] index-pack: correct --keep[=<msg>]
+Date: Thu, 3 Mar 2016 16:44:58 -0500
+Message-ID: <CAPig+cTgJxtuVOEAes_T1jjdN-MqHnSXkmL8mQ80n7rRd=gqXg@mail.gmail.com>
 References: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 03 22:37:26 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 22:45:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abaw2-0005gh-9d
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 22:37:26 +0100
+	id 1abb3Z-0003Hu-Vx
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 22:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792AbcCCVhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 16:37:22 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754573AbcCCVhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 16:37:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 435414850B;
-	Thu,  3 Mar 2016 16:37:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SmFUn6K2QuBMKB6YNsX/DLRCjGQ=; b=NOjX/J
-	TcDNPetGaOuvx+3pjqOFFykmE6Q6CiSv/SPalBATqZGGlSMJ1UJPjoKIu6yuELkq
-	Z3PgwcC9js68oB8LHZXLZ5IjJnKyPYt2WWM4f/JZnkW0+qnUTka0pVDn4cy3L4fQ
-	/FUD2DJwxMJ39+BYabivKwGYC/L05zPKWx5sI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H0UeBL4bPKeCjcvMhI1waMmhZcZ2F+ve
-	9qBz3v9zBlhDlzzPDtJQjIlKO/pT5iVsJ4G7hveMLgVS65bExh5qs8h/41l7ypur
-	e0SZqfj1faQlO6H+aJqP9x5AthyRnagubF0l65Vxuu4WAJFI3r6yHN3ZhpD3DJl1
-	7oZ/oWQFVhE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AE2B48509;
-	Thu,  3 Mar 2016 16:37:20 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF9D848508;
-	Thu,  3 Mar 2016 16:37:19 -0500 (EST)
-In-Reply-To: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 03 Mar 2016 11:14:46 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1B77D668-E188-11E5-9505-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1758411AbcCCVpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 16:45:01 -0500
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:33169 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758315AbcCCVo7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 16:44:59 -0500
+Received: by mail-vk0-f48.google.com with SMTP id k1so19306863vkb.0
+        for <git@vger.kernel.org>; Thu, 03 Mar 2016 13:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc;
+        bh=Sk/oV3F4mKgF8KJuk5I4e910YO2q+vKHzYcDuqcUkt8=;
+        b=KKqqpkKuxrJlTJ0CsOvH4oHn0AkwzRBG17XUGaOmlpcIaOJVZAVsEsxgxQIAkv2161
+         GkFg3RxLQKIsXtpxLgg1SIGBgEZgd/AjZco47VtHBQdtz+qI5b44YYJKFru4Uy8Cmh/7
+         U5SDjeVzV6sx+xmVQP6u+6E+gYY8PDAyJHvF4dBc12++BlPj5JqV+5ohUTECM7IFsT2y
+         JdeimX1G+5GCeaFFUm1Wp9a74XBuUJqOdkvnAflxDzCo86D9LzMFE7Ih0i3w1v7ESyDC
+         fva5EJ5Y2oOcUCoqmqhMExBlRyOz3iLwH6NsG9iEeOQx4SUTFKQxv8YmuHaL8Qy1/Hqm
+         LyNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=Sk/oV3F4mKgF8KJuk5I4e910YO2q+vKHzYcDuqcUkt8=;
+        b=lUumqflzHPAQT3e/YAyIClF2frN78cfHrJ6+W2rtsYW03psB4XDNBA9CY686IB4GHc
+         dvOnQeR+PCCgrmAlY6MiU/9zP3IaWxTYlDCHFMyaoMCtBL2kxF7K+cskK3RJm2kgdFdN
+         zhDaGZYmIxhwhA5B+51jhpIdYMUgP4A1dMpwrA4RIuHoc585E9dHmaqED1nn2O1ElDhW
+         WFLTJgBThiRt0MmB8uohigoBIEv007URfQImk/4smwOmVt6CIJV5ysMquSANcG8lsPlT
+         CkYON4QxnqULwLHFNe1LAeapniSEMDqvfy0DsWCmgdIN/S9vF952HWymRJby/e7CaQ+L
+         q1Rw==
+X-Gm-Message-State: AD7BkJLfEiCzjETLJ7huTB1LLtvq5VBazr4OQhHIeNHF3O+zJVDSMv3KSoBh0RzQM+KxDWvgVEczLG1tJqvqtg==
+X-Received: by 10.31.150.76 with SMTP id y73mr3728822vkd.84.1457041498801;
+ Thu, 03 Mar 2016 13:44:58 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Thu, 3 Mar 2016 13:44:58 -0800 (PST)
+In-Reply-To: <xmqq1t7r2x21.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: Quc7jB8WvrMjbgOSa0gTSbtXe6g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288214>
 
-These are automatically named by replacing .pack suffix in the
-name of the packfile.  Add a small helper to do so, as I'll be
-adding another one soonish.
+On Thu, Mar 3, 2016 at 2:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> When 592ce208 (index-pack: use strip_suffix to avoid magic numbers,
+> 2014-06-30) refactored the code to derive names of .idx and .keep
+> files from the name of .pack file, a copy-and-paste typo crept in,
+> mistakingly attempting to create and store the keep message file in
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/index-pack.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+s/mistakingly/mistakenly/
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 285424f..a5588a2 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1598,6 +1598,18 @@ static void show_pack_info(int stat_only)
- 	}
- }
- 
-+static const char *derive_filename(const char *pack_name, const char *suffix,
-+				   struct strbuf *buf)
-+{
-+	size_t len;
-+	if (!strip_suffix(pack_name, ".pack", &len))
-+		die(_("packfile name '%s' does not end with '.pack'"),
-+		    pack_name);
-+	strbuf_add(buf, pack_name, len);
-+	strbuf_addstr(buf, suffix);
-+	return buf->buf;
-+}
-+
- int cmd_index_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
-@@ -1706,24 +1718,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 		usage(index_pack_usage);
- 	if (fix_thin_pack && !from_stdin)
- 		die(_("--fix-thin cannot be used without --stdin"));
--	if (!index_name && pack_name) {
--		size_t len;
--		if (!strip_suffix(pack_name, ".pack", &len))
--			die(_("packfile name '%s' does not end with '.pack'"),
--			    pack_name);
--		strbuf_add(&index_name_buf, pack_name, len);
--		strbuf_addstr(&index_name_buf, ".idx");
--		index_name = index_name_buf.buf;
--	}
--	if (keep_msg && !keep_name && pack_name) {
--		size_t len;
--		if (!strip_suffix(pack_name, ".pack", &len))
--			die(_("packfile name '%s' does not end with '.pack'"),
--			    pack_name);
--		strbuf_add(&keep_name_buf, pack_name, len);
--		strbuf_addstr(&keep_name_buf, ".keep");
--		keep_name = keep_name_buf.buf;
--	}
-+	if (!index_name && pack_name)
-+		index_name = derive_filename(pack_name, ".idx", &index_name_buf);
-+	if (keep_msg && !keep_name && pack_name)
-+		keep_name = derive_filename(pack_name, ".keep", &keep_name_buf);
-+
- 	if (verify) {
- 		if (!index_name)
- 			die(_("--verify with no packfile name given"));
--- 
-2.8.0-rc0-116-g5beb0d5
+> the .idx file we just created, instead of .keep file.
+>
+> As we create the .keep file with O_CREAT|O_EXCL, and we do so after
+> we write the .idx file, we luckily do not clobber the .idx file, but
+> because we deliberately ignored EEXIST when creating .keep file
+> (which is justifiable because only the existence of .keep file
+> matters), nobody noticed this mistake so far.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
