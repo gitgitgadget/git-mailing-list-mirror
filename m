@@ -1,70 +1,75 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: "./t0001-init.sh --valgrind" is broken
-Date: Thu, 3 Mar 2016 08:04:54 +0700
-Message-ID: <CACsJy8AL_RGEb2z44-yoL+3yF7n1+FMLqZkmWwUDFJnEPYS_nw@mail.gmail.com>
-References: <CAP8UFD0-FxoPe5-35NAKSkegFBoRPy1+BOsqN-y+QJUoXAqR3g@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] bundle v3: the beginning
+Date: Thu, 3 Mar 2016 08:36:40 +0700
+Message-ID: <CACsJy8AzZsC3_7mWQutko8W=X1Lch3bMZRjoHtjVnWwtbMBt7A@mail.gmail.com>
+References: <xmqqfuw84uhb.fsf@gitster.mtv.corp.google.com> <1456950761-19759-1-git-send-email-gitster@pobox.com>
+ <1456950761-19759-5-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 02:05:34 2016
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 03 02:37:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abHhq-0006li-Dz
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 02:05:30 +0100
+	id 1abICc-00019G-Io
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 02:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbcCCBF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Mar 2016 20:05:26 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:32907 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbcCCBFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Mar 2016 20:05:25 -0500
-Received: by mail-lb0-f182.google.com with SMTP id k15so5513571lbg.0
-        for <git@vger.kernel.org>; Wed, 02 Mar 2016 17:05:24 -0800 (PST)
+	id S1753797AbcCCBhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Mar 2016 20:37:13 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:35882 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751482AbcCCBhL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Mar 2016 20:37:11 -0500
+Received: by mail-lb0-f172.google.com with SMTP id x1so6028054lbj.3
+        for <git@vger.kernel.org>; Wed, 02 Mar 2016 17:37:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=/aCbhCtCbapOPHT7DBagmKm88fWXJ+PckP/96WZqoms=;
-        b=BA8ne0Zz+NwKVj08NPToafIDNMIrZ0YR6femgpsaaqoqOp4waFLGffeI4orBL8uumd
-         yBLommR7J9eLpg4yVGy8L7yohORzTcVaQxlrIxuQswQSbzoWNt0U9kbSB7kMEipzjLhb
-         eOUDl/aan9tZqfvK0cl7Ji7ipRDRbpkUEwioJ5EDiI6T/8GwVkDckP5mW0TSf9pj4v+A
-         8hicavpPECWdKCqGhVTj82R95sw5KL6fvZy75kpR2il3zyFXnVCt1QqinzxcC8752h3F
-         TIrP64MGn6DPXS5Sv2n9/rAwnJoarnOBZzjNKDP9KrJVD3qh05gBJZYShknmXwhlN/TS
-         qblg==
+        bh=cNfDYUuA+N78OZicn11xWcHoCSUvoxGfDhDjkCD53m0=;
+        b=cnHyPrBmfXVjsVa6gPBc0wf2v82yOyTmY1t5YJl13dzysfwaO9JVajb14PGLUjeXBf
+         QkFJUDn6Ktya6bxWym4Psj5VcaoNH0SAyIBGsY6gARVjLlSQJ7yTKqJNiN5zZJcgg2n5
+         ZObYPVUnYkKr/FmT9vHvuC05xjURv4SUS4lBq81z83p6JauSjB48UocbcUvkzfaJ5M0X
+         5+JI49QKfP9bMw/BTj38lE2fH9fsFuwhWGEJcB9R+VlukCstdLl2k9csvH9vHVlCzEdz
+         M7WOebMkWwM+MeuB8zbHNpy1yzHtzGQRK7WBQpCZA7gMxDB+ZFRb4kwM+FcSmHODWkxF
+         MPvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=/aCbhCtCbapOPHT7DBagmKm88fWXJ+PckP/96WZqoms=;
-        b=Rx+ISmfe2wu/c67nPJPBm37+sBFX26OUIANVWOuFct6gy4Mm/dlzV3tc8jyh1dssGt
-         Bj0jI4GoquH1DCOAvpzyFX99o6KHFwvxMvZjVpSeiTSTF1cLCoPYhtJWUwMKzjHwfz+S
-         8vs06FH9cdFEOMXZAf2MsQyWMCSjK9GQmotLtqCDmGgIrFaQJ2UC6COqZqmmff/3U81x
-         lndi7mEOdQnuZDLgFHnqoE7In1xXBx08fHidnb77oSiJBVhEbWUJ8pxuza9C+G8QlN7g
-         l2chPVeDD1jezjTDQ6ZrrxT7Z/4DdLn+Ks65GTvipy1ocUkru76RVk9y1B7oY1O8O3Uw
-         6MWQ==
-X-Gm-Message-State: AD7BkJKK6esKPwbGngdzTqsBEf8T73DmunN0M6y79pia8yXrHKcPb4MBwE/k3L7qqINJuXMq1CH7W16udnVleg==
-X-Received: by 10.112.150.133 with SMTP id ui5mr11083188lbb.12.1456967123774;
- Wed, 02 Mar 2016 17:05:23 -0800 (PST)
-Received: by 10.112.34.162 with HTTP; Wed, 2 Mar 2016 17:04:54 -0800 (PST)
-In-Reply-To: <CAP8UFD0-FxoPe5-35NAKSkegFBoRPy1+BOsqN-y+QJUoXAqR3g@mail.gmail.com>
+        bh=cNfDYUuA+N78OZicn11xWcHoCSUvoxGfDhDjkCD53m0=;
+        b=HMin1Qu/ixDFJZ7QzdlHRZOVNyzvCOst0Q8xpt2e4lE4VLnhrPCJX/zPCDLtiJOVwy
+         Y17vd6Xp6CLMhjX/ym+5McDvRyj5fc6m6DSb1K9jNo2lF8XSbGZp57DuqptrQ6ecsdJK
+         5WdoZvckczCZl2lls5jGiMhZx8nzKgRLassBiFnVgD7B5V5PfiWm/3CQmDcydrkRNevk
+         62Oz80bR89W0QXdFv/aZCQvdCw4uKDWjhztvftDXW4IXagRysHNUepZrRRcGGeGEIIrw
+         452r5q5+0dtuzjIkx/ycz68BP+DK7DBRyeoJWjVRsrBrqt+wHtQfDR5Na4ADBS9hDnYt
+         X1Lg==
+X-Gm-Message-State: AD7BkJJD6248O0ZaDoPZTkLnoYOjolqvpxzjFDTnX+9UOQftRUzVZM2etCUXTMV0oyzT3pqmQTIbUn/oxaU9NQ==
+X-Received: by 10.112.150.133 with SMTP id ui5mr11116763lbb.12.1456969030114;
+ Wed, 02 Mar 2016 17:37:10 -0800 (PST)
+Received: by 10.112.34.162 with HTTP; Wed, 2 Mar 2016 17:36:40 -0800 (PST)
+In-Reply-To: <1456950761-19759-5-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288161>
 
-On Thu, Mar 3, 2016 at 7:07 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Hi,
->
-> It looks like commit 57ea7123c86771f47f34e7d92d1822d8b429897a (git.c:
-> make sure we do not leak GIT_* to alias scripts, Dec 20 14:50:19 2015)
-> broke "./t0001-init.sh --valgrind".
+On Thu, Mar 3, 2016 at 3:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  - After arranging that packfile to be downloadable over popular
+>    transfer methods used for serving static files (such as HTTP or
+>    HTTPS) that are easily resumable as $URL/pack-$name.pack, a v3
+>    bundle file (call it $name.bndl) can be prepared with an extended
+>    header "data: $URL/pack-$name.pack" to point at the download
+>    location for the packfile, and be served at "$URL/$name.bndl".
 
-Just wanted to confirm the problem. I will look at it later today.
+Extra setup to offload things to CDN is great and all. But would it be
+ok if we introduced a minimal resumable download service via
+git-daemon to enable this feature with very little setup? Like
+git-shell, you can only download certain packfiles for this use case
+and nothing else with this service.
 -- 
 Duy
