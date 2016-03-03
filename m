@@ -1,139 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: talk about pager in api-trace.txt
-Date: Thu, 03 Mar 2016 08:51:21 -0800
-Message-ID: <xmqqfuw733p2.fsf@gitster.mtv.corp.google.com>
-References: <1456755680-4335-1-git-send-email-chriscool@tuxfamily.org>
-	<20160229213152.GC25342@sigill.intra.peff.net>
-	<CAP8UFD38odsz=fwE9E+0fVJXFE-4vwL1vTQT0rshyCAUYO1fcw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Feature request: Configurable prefixes for git commit --fixup and --squash
+Date: Thu, 03 Mar 2016 18:09:14 +0100
+Message-ID: <vpqvb53ij45.fsf@anie.imag.fr>
+References: <CALHmdRz3ffgifH2BZK14B=4LGFqOeTWpRarD+RAFx8AtwwMidg@mail.gmail.com>
+	<20160303132128.GE1766@serenity.lan>
+	<CALHmdRwgDjRJMQSPzp34aS25ZHg-mr458QeyYgyp85q8g34Aig@mail.gmail.com>
+	<vpq1t7rlfi1.fsf@anie.imag.fr>
+	<CALHmdRwZCb7LnQcKkdy-wNx5Ree+FcMPz2ykqVnTTq_SPDR_HA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 17:51:33 2016
+Cc: authmillenon@riot-os.org, git@vger.kernel.org,
+	John Keeping <john@keeping.me.uk>
+To: Martine Lenders <mlenders@riot-os.org>
+X-From: git-owner@vger.kernel.org Thu Mar 03 18:09:26 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abWTK-0005KM-9R
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 17:51:30 +0100
+	id 1abWkc-0001Rg-E0
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 18:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039AbcCCQvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 11:51:25 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63999 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751530AbcCCQvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 11:51:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 970F24728D;
-	Thu,  3 Mar 2016 11:51:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Um1zPWkzAHy+95glJwA2mU5ggqo=; b=wetIEI
-	59QcDNErfJ+vQ6PEejx2HEJHxLYT5Oq4LWeZvNnBJMT00wxulyOGJzSgZYYjsK1O
-	+UiOt9ged/saAhCdctH3u3FJ+gopaPwa6vPJalMPSLxwZT7ZxJ8S8aT1DVBFFeDb
-	uMqOsN0tXNxRb2PQwHG1ADPXmS9wJ8l0cgLnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uf48CY4nvmXETb8jyC34g0gFJOadeWCv
-	HVdiBlf4IKr4GRDcLHhgt/1h9RoMdsUUBi9end5RANqiWXgvXmse38HwyOezufOX
-	jH+lW92N9eQLUyCnAnjPT2uPM/Q3X7BLz8AeYFQgeWTVX8hPE5dYnLXOlgJ/uDUT
-	q8zgOc8mCxI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EF114728C;
-	Thu,  3 Mar 2016 11:51:23 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EED554728B;
-	Thu,  3 Mar 2016 11:51:22 -0500 (EST)
-In-Reply-To: <CAP8UFD38odsz=fwE9E+0fVJXFE-4vwL1vTQT0rshyCAUYO1fcw@mail.gmail.com>
-	(Christian Couder's message of "Thu, 3 Mar 2016 10:17:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 294BB804-E160-11E5-A1A0-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1757867AbcCCRJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 12:09:20 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:36847 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753817AbcCCRJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 12:09:19 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u23H9CBI025484
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 3 Mar 2016 18:09:12 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u23H9EMw032354;
+	Thu, 3 Mar 2016 18:09:14 +0100
+In-Reply-To: <CALHmdRwZCb7LnQcKkdy-wNx5Ree+FcMPz2ykqVnTTq_SPDR_HA@mail.gmail.com>
+	(Martine Lenders's message of "Thu, 3 Mar 2016 17:48:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Mar 2016 18:09:12 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u23H9CBI025484
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1457629753.0368@sM5onV8CohmMtNo2UztgXg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288191>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Martine Lenders <mlenders@riot-os.org> writes:
 
-> Junio do you plan to merge this patch or would you prefer something like:
+>> [ Please, don't top-post on this list ]
+
+... and as much as possible keep the "XYZ wrote:" line so that we know
+who wrote what ;-).
+
+I wrote:
+>> I wish I could write commit messages like
+>>
+>> fixup! deadbeef: fix typo (foo -> bar)
+>>
+>> So that the commit message contains both the instruction for "rebase
+>> --autosquash" and a quick explanation of what the commit is doing (as
+>> usual commit messages).
+>>
+>> AFAIK, it's not possible currently but shouldn't be hard to implement.
 >
-> +
-> +Bugs & Caveats
-> +--------------
-> +
-> +Some git commands, like `git log`, are run by default using a
-> +pager. In this case, stdout and stderr are redirected to the pager and
-> +are closed when the pager exits.
-> +
-> +If a GIT_TRACE* environment variable has been set to "1" or "2" to
-> +print traces on stderr, no trace output will be printed after the
-> +pager has exited.
-> +
-> +This can be annoying, because GIT_TRACE_PERFORMANCE by default prints
-> +the performance stats for the whole command at atexit() time which
-> +happens after the pager has exited.
-> +
-> +So the following command will print no performance stat:
-> +
-> +------------
-> +GIT_TRACE_PERFORMANCE=2 git log -1
-> +------------
-> +
-> +To overcome this problem, you can use for example:
-> +
-> +------------
-> +GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
-> +------------
->
-> ?
+> I would love that, too :-). This differs however from the original
+> intent of my feature request. So maybe we finish this thread (since my
+> John's proposal is 100% sufficient for me in that regard) and open a
+> new one? How are the procedures for this on this list?
 
-Should I take either one?  Which one do you prefer and why?
+We don't have "procedure" for feature requests. It happens often that
+someone dreams aloud like I did above, and it's OK as long as "it
+shouldn't be hard to implement" is understood as "one day I should do
+it" and not "hey, you lazy devs, why don't you code that for me?" ;-).
 
-I do not have strong preference between the two.  I understand that
-the differences are only in the example workarounds.  And I do not
-think the common parts of the two patches are that great.
+But in general, people get more interested when a proposal has a patch
+attached.
 
-Even though I think the first two paragraphs do not tell a lie, I
-think they are overly verbose, tell irrelevant details and does not
-highlight the real issue.  You only want to say
+I've added the idea here:
 
-	GIT_TRACE_* environment variables can be used to tell Git to
-	show trace output to its standard error stream.  Git can
-	often spawn a pager internally to run its subcommand and
-	send its standard output and standard error to it.
+  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
 
-The third paragraph is misleading.  "by default prints ... at
-atexit() time" sounds as if you are hinting that the solution would
-be to use some non-default way to tell it to print the stats at some
-other time before atexit() to ensure that the output is done before
-the pager exits, but that is not actually what you are going to
-suggest.
+(except I already changed my mind in the syntax)
 
-The real source of the annoyance is not that trace output will not
-be seen after the pager exits, but that PERFORMANCE trace does not
-begin until the pager exits, which by definition means you would see
-nothing.  "This can be annoying" is an understatement (because
-sending PERFORMANCE output to pager always gives an annoying
-result), and blames a wrong thing at the same time (because the fact
-that trace output are sent to pager together with the program output
-is not what makes it annoying; the real culprit is that PERFORMANCE
-output comes only after pager exits).
+I may get some students to work on this in May, or do it myself one day.
 
-I'd replace it with something like this, if I were writing this patch.
-
-	Because GIT_TRACE_PERFORMANCE trace is generated only at the
-	very end of the program with atexit(), which happens after
-	the pager exits, it would not work well if you send its log
-	to the standard error output and let Git spawn the pager at
-	the same time.
-
-That would make "So the following ... no performance stat:"
-unnecessary, and the workarounds more obvious.  You can choose not
-to use the pager, or you can send the trace output to a file.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
