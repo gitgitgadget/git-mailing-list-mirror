@@ -1,92 +1,114 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 1/3] pull --rebase: add --[no-]autostash flag
-Date: Thu, 03 Mar 2016 18:24:01 +0100
-Message-ID: <vpqd1rbiifi.fsf@anie.imag.fr>
+Subject: Re: [PATCH v3 2/3] test: add test for --[no-]autostash flag
+Date: Thu, 03 Mar 2016 18:31:01 +0100
+Message-ID: <vpq1t7rii3u.fsf@anie.imag.fr>
 References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
 	<1457021601-9099-1-git-send-email-mehul.jain2029@gmail.com>
+	<1457021601-9099-2-git-send-email-mehul.jain2029@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, pyokagan@gmail.com, gitster@pobox.com
 To: Mehul Jain <mehul.jain2029@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 18:24:15 2016
+X-From: git-owner@vger.kernel.org Thu Mar 03 18:32:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abWz1-0003fY-3z
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 18:24:15 +0100
+	id 1abX6k-0000gc-E4
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 18:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754675AbcCCRYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 12:24:09 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:37142 "EHLO shiva.imag.fr"
+	id S1756897AbcCCRcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 12:32:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:37315 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753256AbcCCRYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 12:24:08 -0500
+	id S1753256AbcCCRcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 12:32:07 -0500
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u23HNxHf029512
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id u23HV0jn031141
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 3 Mar 2016 18:23:59 +0100
+	Thu, 3 Mar 2016 18:31:00 +0100
 Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u23HO1VT032565;
-	Thu, 3 Mar 2016 18:24:01 +0100
-In-Reply-To: <1457021601-9099-1-git-send-email-mehul.jain2029@gmail.com>
-	(Mehul Jain's message of "Thu, 3 Mar 2016 21:43:19 +0530")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u23HV1dU032660;
+	Thu, 3 Mar 2016 18:31:01 +0100
+In-Reply-To: <1457021601-9099-2-git-send-email-mehul.jain2029@gmail.com>
+	(Mehul Jain's message of "Thu, 3 Mar 2016 21:43:20 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Mar 2016 18:23:59 +0100 (CET)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Mar 2016 18:31:00 +0100 (CET)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u23HNxHf029512
+X-MailScanner-ID: u23HV0jn031141
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1457630640.13069@P7AaxmAatCzpgjwdGWKubQ
+MailScanner-NULL-Check: 1457631061.51399@0FQlWWo7pzOj1aZ2U0xhNA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288195>
 
 Mehul Jain <mehul.jain2029@gmail.com> writes:
 
-> If rebase.autoStash configuration variable is 
-> set, there is no way to override it for 
-> "git pull --rebase" from the command line.
->
-> Teach "git pull --rebase" the --[no]autostash
-> command line flag which overrides the current
-> value of rebase.autostash, if set. As "git rebase"
-> understands the --[no]autostash option, it's 
-> just a matter of passing the option to underlying 
-> "git rebase" when "git pull --rebase" is called.
+> Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+> ---
+>  t/t5520-pull.sh         | 19 +++++++++++++++++++
+>  t/t5521-pull-options.sh | 16 ++++++++++++++++
 
-We normally wrap text with a bit less than 80 columns. Yours is wrappet
-at 50 columns which makes it look weird.
+There's no need to split code/test/doc into separate patches, except if
+your patches are getting really huge. As a reviewer, I like having tests
+and doc in the same patch because they describe the intention of the
+programmer.
 
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -85,6 +85,7 @@ static char *opt_squash;
->  static char *opt_commit;
->  static char *opt_edit;
->  static char *opt_ff;
-> +static int opt_autostash = -1;
+We try to have a history where each commit is equally good, and with
+your version there are two commits where --autostash exists and is
+undocumented (which is not catastrophic, though).
 
-Instead of going through this 3-valued "true/false/unset", I would have
-let opt_autostash = 0 by default, and read the configuration before the
-call to parse_options (the usual way to apply precedence: read from low
-precedence to high precedence).
+> +test_expect_success 'pull --rebase --no-autostash fails with dirty working directory and rebase.autstash set true' '
+> +	test_config rebase.autostash true &&
+> +	git reset --hard before-rebase &&
+> +	echo dirty >new_file &&
+> +	git add new_file &&
+> +	test_must_fail git pull --rebase --no-autostash . copy
+> +'
+> +
+> +test_expect_success 'pull --rebase --autostash succeeds with dirty working directory and rebase.autstash set false' '
+> +	test_config rebase.autostash false &&
+> +	git reset --hard before-rebase &&
+> +	echo dirty >new_file &&
+> +	git add new_file &&
+> +	git pull --rebase --autostash . copy &&
+> +	test_cmp_rev HEAD^ copy &&
+> +	test "$(cat new_file)" = dirty &&
+> +	test "$(cat file)" = "modified again"
+> +'
 
-But this is a bit less easy than it seems, since the code currently
-checks the configuration variable only when --rebase is given, so my
-version would do a useless call to git_config_get_bool() when --rebase
-is not given. So I think your version is OK.
+Sounds good.
 
-> +	else {
-> +		/* If --[no-]autostash option is called without --rebase */
-> +		if (opt_autostash == 0)
-> +			die(_("--no-autostash option is only valid with --rebase."));
-> +		else if (opt_autostash == 1)
+> --- a/t/t5521-pull-options.sh
+> +++ b/t/t5521-pull-options.sh
+> @@ -62,6 +62,22 @@ test_expect_success 'git pull -v --rebase' '
+>  	test_must_be_empty out)
+>  '
+>  
+> +test_expect_success 'git pull --rebase --autostash' '
+> +	mkdir clonedrbas &&
+> +	(cd clonedrbas  && git init &&
+> +	git pull --rebase --autostash "../parent" >out 2>err &&
+> +	test -s err &&
+> +	test_must_be_empty out)
+> +'
+> +
+> +test_expect_success 'git pull --rebase --no-autostash' '
+> +	mkdir clonedrbnas &&
+> +	(cd clonedrbnas  && git init &&
+> +	git pull --rebase --no-autostash "../parent" >out 2>err &&
+> +	test -s err &&
+> +	test_must_be_empty out)
+> +'
 
-The else is not needed since the other branch dies.
+Not sure these tests are needed if you have the ones in t/t5520-pull.sh.
+More tests means more time to run so testing twice the same thing has a
+cost.
 
 -- 
 Matthieu Moy
