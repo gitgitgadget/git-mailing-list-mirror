@@ -1,84 +1,85 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 4/4] config: add '--show-origin' option to print the
- origin of a config value
-Date: Thu, 3 Mar 2016 19:36:31 +0100
-Message-ID: <56D8842F.50602@kdbg.org>
-References: <1455873362-66998-1-git-send-email-larsxschneider@gmail.com>
- <1455873362-66998-5-git-send-email-larsxschneider@gmail.com>
- <56D723F0.7020106@kdbg.org> <07435444-0C35-4615-A403-9E124AFC9427@gmail.com>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH] documentation: fix some typos
+Date: Thu, 3 Mar 2016 19:43:51 +0100 (CET)
+Message-ID: <2012898959.218720.1457030631200.JavaMail.ngmail@webmail12.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes.Schindelin@gmx.de, Duy Nguyen <pclouds@gmail.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 03 19:36:40 2016
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 03 19:44:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abY75-0006Wq-Li
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 19:36:40 +0100
+	id 1abYEA-0003Xx-Ry
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 19:43:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754373AbcCCSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 13:36:35 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:16990 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753213AbcCCSge (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 13:36:34 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3qGLWN390Fz5tlX;
-	Thu,  3 Mar 2016 19:36:32 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 9D1AB5221;
-	Thu,  3 Mar 2016 19:36:31 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <07435444-0C35-4615-A403-9E124AFC9427@gmail.com>
+	id S1754032AbcCCSny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 13:43:54 -0500
+Received: from mail-in-14.arcor-online.net ([151.189.21.54]:38842 "EHLO
+	mail-in-14.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751272AbcCCSnx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2016 13:43:53 -0500
+Received: from mail-in-17-z2.arcor-online.net (mail-in-17-z2.arcor-online.net [151.189.8.34])
+	by mx.arcor.de (Postfix) with ESMTP id 3qGLgq1tW0z90mZ;
+	Thu,  3 Mar 2016 19:43:51 +0100 (CET)
+Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
+	by mail-in-17-z2.arcor-online.net (Postfix) with ESMTP id 396D81105D0;
+	Thu,  3 Mar 2016 19:43:51 +0100 (CET)
+Received: from webmail12.arcor-online.net (webmail12.arcor-online.net [151.189.8.64])
+	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 3qGLgq1Vq3z31ls;
+	Thu,  3 Mar 2016 19:43:51 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-11.arcor-online.net 3qGLgq1Vq3z31ls
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1457030631; bh=ol61bFLNvtK4rF4bfFQ1F4leM4grIzc1dbnArgwedRg=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=Q705WDy6fBIb8nWcnW0qnW57u2KLjMnj8HbCEkv8SiyKWU8ljd9JwyQLvtXfxqQSG
+	 18YwVEmIsSTnerEseAbEGFGg69FHdTFadGbNP7j0mtVHSSRaQpyoXubT6dVsdBKeWu
+	 4G6T6/F30JyCf7/Rz4XNuQDcJEvzchU9zv9hSYqM=
+Received: from [88.72.111.232] by webmail12.arcor-online.net (151.189.8.64) with HTTP (Arcor Webmail); Thu, 3 Mar 2016 19:43:51 +0100 (CET)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 88.72.111.232
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288204>
 
-Am 03.03.2016 um 08:38 schrieb Lars Schneider:
-> (1) If I have a Git core branch with a some changes that builds and
-> tests clean on Linux and OSX. How do I apply all the necessary Git for
-> Windows specific changes to this branch?
 
-How do you do it when you make a patch on Linux and want to test it on 
-OSX, or the other way around? It's the same with Windows, I would guess.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/git-ls-files.txt | 2 +-
+ Documentation/user-manual.txt  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-*I* would export the Linux directory for Windows using Samba and then 
-fetch and push from the Windows side. I would *not* develop on Windows 
-in the exported Samba directory directly. If Samba is too hairy, 
-exchange git bundles on a USB stick.
-
-> (2) During my testing with Windows I noticed that the git config
-> paths look funny by adding ("\\" and "/"). I mentioned the problem in
-> the Gitfor Windows forum:
-> https://groups.google.com/forum/#!topic/git-for-windows/zTv60HhfnYk
-> Duy suggested a solution in that thread. Is this the default way
-> todeal with the paths? Would the list accept this solution?
-
-IMHO, the solution is misguided. Either --show-origin is plumbing, then 
-we need the quoting. Or it is porcelain, then the quoting can be removed 
-(and it is not necessary to "prettify" the file names on Windows). I 
-tend to categorize --show-origin as procelain.
-
-> (3) The tests on Windows seemed very slow to me. Are there tricks to
-> speed them up? Did you try a RAM disk? If yes, how do you do it?
-
-Run on SSD (and be prepared to swap it out for a new one within a year 
-or two) ;-)
-
-Really, there doesn't seem to be much you can do. Run the tests 
---with-dashes to save a shell wrapper around git.exe.
-
-Unfortunately, Windows does not have RAM disks built in. I would 
-appreciate any hints in this direction as well.
-
--- Hannes
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 0e08f56..75c3f41 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -155,7 +155,7 @@ a space) at the start of each line:
+ 	<eolinfo> is either "-text", "none", "lf", "crlf", "mixed" or "".
+ +
+ "" means the file is not a regular file, it is not in the index or
+-not accessable in the working tree.
++not accessible in the working tree.
+ +
+ <eolattr> is the attribute that is used when checking out or committing,
+ it is either "", "-text", "text", "text=auto", "text eol=lf", "text eol=crlf".
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index ec6bacf..5e07454 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2134,7 +2134,7 @@ browsing the repository using gitweb. The default server when using
+ instaweb is lighttpd.
+ 
+ See the file gitweb/INSTALL in the Git source tree and
+-linkgit:gitweb[1] for instructions on details setting up a permament
++linkgit:gitweb[1] for instructions on details setting up a permanent
+ installation with a CGI or Perl capable server.
+ 
+ [[how-to-get-a-git-repository-with-minimal-history]]
+-- 
+2.7.1.windows.1
