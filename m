@@ -1,93 +1,87 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 06/10] setup: refactor repo format reading and verification
-Date: Thu, 3 Mar 2016 20:19:22 +0700
-Message-ID: <CACsJy8B6j2AB5CCBVVz7f1JShq0XVicJfzZvjRO54ksde0RMfQ@mail.gmail.com>
-References: <20160301143546.GA30806@sigill.intra.peff.net> <20160301144206.GF12887@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Feature request: Configurable prefixes for git commit --fixup
+ and --squash
+Date: Thu, 3 Mar 2016 13:21:28 +0000
+Message-ID: <20160303132128.GE1766@serenity.lan>
+References: <CALHmdRz3ffgifH2BZK14B=4LGFqOeTWpRarD+RAFx8AtwwMidg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 03 14:20:06 2016
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: authmillenon@riot-os.org
+X-From: git-owner@vger.kernel.org Thu Mar 03 14:21:49 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abTAd-0005YD-Nq
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 14:20:00 +0100
+	id 1abTCN-0006lO-Ah
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Mar 2016 14:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbcCCNTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 08:19:55 -0500
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:33592 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbcCCNTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Mar 2016 08:19:54 -0500
-Received: by mail-lb0-f174.google.com with SMTP id k15so23017012lbg.0
-        for <git@vger.kernel.org>; Thu, 03 Mar 2016 05:19:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UZ1st+0yesz3oV9q2IuGWuIW7YM1+5sp9LCt4jNynsQ=;
-        b=i3yQMiNlR0adOK+RC/L1Ve+cjVx07jqxZlGziLgyP/cbLWgwppq7ePOg+574mSObMe
-         Gw8wrM5MF3rQJA6C6cmzdw9AHFyKYqPuPKAog5FMVF2pmuCQPYZijBkFhoguUEFI7+wI
-         8a7osTxujkYeYHEUTyC12uFFUtvLoKtYEqpgHEScWSk2qBBXx41b4e8w4KzqOEaxeYpY
-         q3/0M4gcKV/EpHpzOXHnHvBvXMv57Aui6vUIHWGyBKrv7A8kAuJqPksNKziBVv22YUFr
-         nWNXoIMJNEhmb1v5sKpLUsU1zhLFGyMmVpHkXp2tslCJTHLwt4NHHIHgJKdmhcLzFRXX
-         Qo9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UZ1st+0yesz3oV9q2IuGWuIW7YM1+5sp9LCt4jNynsQ=;
-        b=V8s4Igm9lAd4oCLfC1kjkL47LXaJkoairWLNiXESsIS3xpfxnWr5IAXev5/RQfgG5V
-         RtRM0XzsmBOhOOfVFs1HW2JjVBA4J0YxqHYDsXphCJC6drJlt8gVjWKD5es7gm0JpPjv
-         wURm1fOxrHbXUV/flsPV3n50xUG/jL6/iL7O/6zTAYali7Z5VXXPZHWUJ+9YK1tUcX99
-         AGWmgecidJYnPv1q5SYe21+FOu3P9PjWIEhv3oj20CHHbu575br3DgHKKTf7/wtr70x6
-         RYMKKkGqr7BxAQkkQm0J5MSfbhnylpufaeP1ok05tcCtbfV6hNCEZYy5IAc+odXwHpxt
-         tq5g==
-X-Gm-Message-State: AD7BkJKOSFmbUkayce8ez0jx6FbLTom7BOaDkOJnjiSKh8iznba3tka8KZRbhGeQ7fLCtaV0oOi1HxtYui61LQ==
-X-Received: by 10.112.171.163 with SMTP id av3mr993087lbc.145.1457011192398;
- Thu, 03 Mar 2016 05:19:52 -0800 (PST)
-Received: by 10.112.34.162 with HTTP; Thu, 3 Mar 2016 05:19:22 -0800 (PST)
-In-Reply-To: <20160301144206.GF12887@sigill.intra.peff.net>
+	id S1756717AbcCCNVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 08:21:38 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:48306 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754902AbcCCNVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 08:21:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 8DA56CDA556;
+	Thu,  3 Mar 2016 13:21:36 +0000 (GMT)
+X-Quarantine-ID: <F8gQa2pQo68z>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id F8gQa2pQo68z; Thu,  3 Mar 2016 13:21:35 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id A4242CDA5AE;
+	Thu,  3 Mar 2016 13:21:30 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CALHmdRz3ffgifH2BZK14B=4LGFqOeTWpRarD+RAFx8AtwwMidg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288178>
 
-On Tue, Mar 1, 2016 at 9:42 PM, Jeff King <peff@peff.net> wrote:
-> -               for (i = 0; i < unknown_extensions.nr; i++)
-> -                       warning("unknown repository extension: %s",
-> -                               unknown_extensions.items[i].string);
-> -               *nongit_ok = -1;
-> -               ret = -1;
-> +int verify_repository_format(const struct repository_format *format,
-> +                            struct strbuf *err)
-> +{
-> +       if (GIT_REPO_VERSION_READ < format->version) {
-> +               strbuf_addf(err, "Expected git repo version <= %d, found %d",
-> +                           GIT_REPO_VERSION_READ, format->version);
-> +               return -1;
+On Thu, Mar 03, 2016 at 01:47:00PM +0100, Martine Lenders wrote:
+> I'm not sure if this was already requested somewhere (a quick - but
+> admittedly not thorough - search did not reveal anything in that
+> direction), but I really miss an option to configure the prefixes generated
+> by `git commit (--fixup | --squash) <commit>` and picked up by `git rebase
+> -i --autosquash`.
+> 
+> My reasoning is that in our project we use GitHub + Travis to test-build
+> our pull requests, but we don't want to spam the CI server with builds that
+> are just fixups to previous changes (which are uploaded so reviewers can
+> track the changes to the original PR). Now, Travis has the option to not
+> build a commit if there is the string `[ci skip]` in the commit message
+> (sadly also not configurable) so it would be really great for my workflow
+> if I could just add this string to the message generated by `--fixup`.
 
-Since you have given lots of thoughts about this code, perhaps just a
-little bit more, double check if these strings should be translatable
-or not and mark _() if so?
+I am against the feature as you describe it, because it has the
+potential to break `git rebase --autosquash` with shared fixups if two
+people are using a different prefix.
 
->         }
->
-> -       strbuf_release(&sb);
-> -       return ret;
-> +       if (format->version >= 1 && format->unknown_extensions.nr) {
-> +               int i;
-> +
-> +               for (i = 0; i < format->unknown_extensions.nr; i++)
-> +                       strbuf_addf(err, "unknown repository extension: %s",
-> +                                   format->unknown_extensions.items[i].string);
+However, it sounds like Travis will recognize "[ci skip]" anywhere in
+the commit message.  Would a feature to allow autogenerated content in
+fixup/squash commit message bodies work?
 
-Ditto.
--- 
-Duy
+In fact, this can already be achieved with a prepare-commit-msg hook
+like this (untested, but shows the principle):
+
+-- >8 --
+#!/bin/sh
+case "$(head -n 1 "$1")" in
+"fixup! "*|"squash! "*)
+	cat >>"$1" <<-\EOF
+
+	[ci skip]
+	EOF
+esac
