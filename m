@@ -1,160 +1,77 @@
-From: "Sidhant Sharma [:tk]" <tigerkid001@gmail.com>
-Subject: [PATCH] stripspace: add --line-count flag
-Date: Sat,  5 Mar 2016 00:08:43 +0530
-Message-ID: <1457116723-20206-1-git-send-email-tigerkid001@gmail.com>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: [PATCH] stripspace: add --line-count flag
+Date: Sat, 5 Mar 2016 00:13:28 +0530
+Message-ID: <56D9D750.1030703@gmail.com>
+References: <1457116723-20206-1-git-send-email-tigerkid001@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 04 19:39:10 2016
+X-From: git-owner@vger.kernel.org Fri Mar 04 19:43:45 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abud2-0003wa-DQ
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 19:39:08 +0100
+	id 1abuhT-0008Cz-DM
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 19:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759598AbcCDSjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 13:39:03 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36606 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757489AbcCDSjC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 13:39:02 -0500
-Received: by mail-pa0-f45.google.com with SMTP id fi3so37033568pac.3
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 10:39:01 -0800 (PST)
+	id S1759821AbcCDSnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 13:43:35 -0500
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:36286 "EHLO
+	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759782AbcCDSnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 13:43:33 -0500
+Received: by mail-pf0-f170.google.com with SMTP id 63so39483871pfe.3
+        for <git@vger.kernel.org>; Fri, 04 Mar 2016 10:43:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=rGJSDszYYE65MUsSejw3Fzja+CRfNYZnh4u0jclw0lU=;
-        b=Mw9WhlmOWBaXlQnPQaoDs+G9Yg2xe6C+EOHYvtFanPiv5nc/Dpz1y823UnhKZR7Qwj
-         HXuOZ9j9bLGgGCHquZQjBb0i1wi2y6ZPNu8y+1XVGzrSjlgo4cV58pKizREmThpaIFRz
-         J9Bzex2NDntAF2grfrVjPAD9vryvDn9ek/wU0fUi0dPbReZ52ArxerE9gCtrCPSWsJlb
-         zhRS2ac1nO6jz2ddMxVvWmIJv2RtNQOTLOBJZISLYknqvB3zz+qTfnmEBp1QaQx+9vX0
-         zNXCAQuLIMhmwTzXT41Yi3lTXlum2grXq4fbN13VbwNQP8PePvp4Fi0gePa45BNFKnX8
-         EFzA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=s17YdFuL3JGKv4657r8gbesXcpy6uTYx1YiNlirHduQ=;
+        b=MAPWqsafbY42y7t8rlJ16a+V3e6r1FLb7LZLyO2u6QaM98rF+RL5vNM1ge49eZ8x2m
+         jEBVjOTyo7nbvc6S9kFVyuWB8nNAWRYkJoq9oV6tEmiOjITi26xYWrE9j0WJmjs6p0pw
+         70LFnlpo2d6tf+scj2/6l9NN1criL489MAt/mq/FNyQ3PHnqVNJPuEK7xangF5xiwtAm
+         kDMN2Ti/W7rlXcztptBJCOzxxAzVHiqbYVNKNu4mg9+RAW01LgX87Nngi0WlI7cCUi2s
+         spAYRWGhYJhBqDHHKQyIXh2ziN9fkI+9vQpJ/BRl29e5V5jAD1cI28gH/BLkyNZ8vM7x
+         WwZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=rGJSDszYYE65MUsSejw3Fzja+CRfNYZnh4u0jclw0lU=;
-        b=lcXeoY8R95pq96rCj0a5qnw6IHPH583gah9RtLpg8holV4Gws8XiqZLHtjZ690ziSZ
-         l6bN8LpAr8v2RVZuAZwQ4dSrlUBticXli4J5Qz+H+Qq9nXCw1k3xJAjG8WDwjQZV4N6o
-         5kjl2+Q11+p5iKBKSe9lHM0pdJfu7KKBel75e6MbINok4rn1oXUJ9uoXIJweVPByLVup
-         JSNqCN8VUVgp0QTo/7uctSKlcz5pqaIFpbdSbveaBAHzjTgBHy+INsZrs6lNSQ2IiXAv
-         4islEsaxGwYVuZlrXE5X5Itykh8vzMNgoJ2x88w0hPgMIbdqJ6zRCPPvn5NVGbUQzLr1
-         8IeQ==
-X-Gm-Message-State: AD7BkJKAY4BJYYpHhyQ+HiBWqRIV0KMISGx9WffBmDYpprXQlSvfPvagIvi7jgaQDE8XOw==
-X-Received: by 10.66.244.233 with SMTP id xj9mr14217625pac.19.1457116741352;
-        Fri, 04 Mar 2016 10:39:01 -0800 (PST)
-Received: from localhost.localdomain ([182.69.45.48])
-        by smtp.gmail.com with ESMTPSA id u5sm7147442pfi.15.2016.03.04.10.38.59
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=s17YdFuL3JGKv4657r8gbesXcpy6uTYx1YiNlirHduQ=;
+        b=FH1rJMSOXrZN6iRMg9qlJQ/Ne+rhiguIFdXB209LizyQ75YAcO/wt7ojPOctYtB65o
+         tkDLyNgNeUepg6g1F5B2AyNgp8/2531Gk+NOMthuOIu8FUN6nZO9hUgWtO/gmCaJnh09
+         yA6EV9064Xp/yYsE/3OXs8PnGJcw/NF0AgkS3AUirGKj7lMBxq9FcIm7BJpcdtnI5qFJ
+         nIZ0EET6lzkC5tPoFyngDeQHvVBLlOP+GZegf1w6vT7bNFLXgsQNZyD8RpPAfCHfYrgB
+         v6eDTy/EnA4S0o/WNaRPKDw9DrdUD8Htg96RRNcr1S6Zo2bV3BUso9bA/g/K+spAfe9V
+         saww==
+X-Gm-Message-State: AD7BkJK+6LniH157y4kAlsFu48UBHbzJ7tIGEEJ+YWEIzpBiuJdv48/sBytZuSeM1/A93A==
+X-Received: by 10.98.16.150 with SMTP id 22mr14257582pfq.128.1457117012559;
+        Fri, 04 Mar 2016 10:43:32 -0800 (PST)
+Received: from [192.168.1.10] ([182.69.45.48])
+        by smtp.gmail.com with ESMTPSA id to9sm7173281pab.3.2016.03.04.10.43.30
         for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 04 Mar 2016 10:39:00 -0800 (PST)
-X-Mailer: git-send-email 2.7.2
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 Mar 2016 10:43:31 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <1457116723-20206-1-git-send-email-tigerkid001@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288268>
 
-When used, this flag outputs number of lines after stripspace has removed trailing whitespace.
-With `--line-count`, git-rebase--interactive.sh need not rely on `wc -l` for line
-count.
 
-Signed-off-by: Sidhant Sharma [:tk] <tigerkid001@gmail.com>
----
+>  builtin/stripspace.c       | 22 +++++++++++++++++++++-
+>  git-rebase--interactive.sh |  6 +++---
+>  2 files changed, 24 insertions(+), 4 deletions(-)
+>
+This is my first attempt at the small project listed here: https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#implement_.27--count-lines.27_in_.27git_stripspace.27.
+With this, --line-count can be used with stripspace, instead of having to pipe its output to `wc -l` in git-rebase--interactive.sh. I went with --line-count and not --count-lines since its short form (-c) is already in use, and I think -l is more apt for this.
+Comments?
 
- This the first version of the patch for the small project listed here:
- https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#implement_.27--count-lines.27_in_.27git_stripspace.27
 
- builtin/stripspace.c       | 22 +++++++++++++++++++++-
- git-rebase--interactive.sh |  6 +++---
- 2 files changed, 24 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 15e716e..e08da03 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -13,22 +13,38 @@ static void comment_lines(struct strbuf *buf)
- 	free(msg);
- }
-
-+static void count_lines(struct strbuf *buf)
-+{
-+	size_t len = 0;
-+	int i;
-+
-+	for (i = 0; i < buf->len; i++)
-+		if (buf->buf[i] == '\n')
-+			len++;
-+
-+	sprintf(buf->buf, "%zu", len);
-+	buf->len = strlen(buf->buf);
-+}
-+
- static const char * const stripspace_usage[] = {
- 	N_("git stripspace [-s | --strip-comments]"),
- 	N_("git stripspace [-c | --comment-lines]"),
-+	N_("git stripspace [-l | --line-count]"),
- 	NULL
- };
-
- enum stripspace_mode {
- 	STRIP_DEFAULT = 0,
- 	STRIP_COMMENTS,
--	COMMENT_LINES
-+	COMMENT_LINES,
-+	LINE_COUNT
- };
-
- int cmd_stripspace(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	enum stripspace_mode mode = STRIP_DEFAULT;
-+	int count = 0;
-
- 	const struct option options[] = {
- 		OPT_CMDMODE('s', "strip-comments", &mode,
-@@ -37,6 +53,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE('c', "comment-lines", &mode,
- 			    N_("prepend comment character and space to each line"),
- 			    COMMENT_LINES),
-+		OPT_BOOL('l', "line-count", &count, N_("count number of lines")),
- 		OPT_END()
- 	};
-
-@@ -55,6 +72,9 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 	else
- 		comment_lines(&buf);
-
-+	if (count)
-+		count_lines(&buf);
-+
- 	write_or_die(1, buf.buf, buf.len);
- 	strbuf_release(&buf);
- 	return 0;
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c0cfe88..e8bef37 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -120,9 +120,9 @@ mark_action_done () {
- 	sed -e 1q < "$todo" >> "$done"
- 	sed -e 1d < "$todo" >> "$todo".new
- 	mv -f "$todo".new "$todo"
--	new_count=$(git stripspace --strip-comments <"$done" | wc -l)
-+	new_count=$(git stripspace --strip-comments --line-count <"$done")
- 	echo $new_count >"$msgnum"
--	total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
-+	total=$(($new_count + $(git stripspace --strip-comments --line-count <"$todo")))
- 	echo $total >"$end"
- 	if test "$last_count" != "$new_count"
- 	then
-@@ -1251,7 +1251,7 @@ test -s "$todo" || echo noop >> "$todo"
- test -n "$autosquash" && rearrange_squash "$todo"
- test -n "$cmd" && add_exec_commands "$todo"
-
--todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
-+todocount=$(git stripspace --strip-comments --line-count <"$todo")
- todocount=${todocount##* }
-
- cat >>"$todo" <<EOF
---
-2.7.2
+Thanks and regards,
+Sidhant Sharma [:tk]
