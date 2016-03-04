@@ -1,77 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t9700: fix test for perl older than 5.14
-Date: Fri, 4 Mar 2016 17:21:27 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603041720550.3152@virtualbox>
-References: <CAP8UFD1z9H=SygaMVzpc__mXTbnFc2XiW0LZ+sfzdCPmrnXW6g@mail.gmail.com> <20160304085649.GA29752@sigill.intra.peff.net> <1457089104.2660.79.camel@kaarsemaker.net> <20160304114321.GA569@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Fri, 04 Mar 2016 09:28:31 -0800
+Message-ID: <xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+	<20160304055117.GB26609@ikke.info>
+	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
+	<20160304115634.GC26609@ikke.info>
+	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 04 17:21:54 2016
+Content-Type: text/plain
+Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 04 18:28:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1absUB-0000vd-Vy
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 17:21:52 +0100
+	id 1abtWx-0004Uf-7o
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 18:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759867AbcCDQVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 11:21:45 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56839 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759778AbcCDQVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 11:21:41 -0500
-Received: from virtualbox ([89.204.153.216]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M8Nik-1Zh8zz3WE6-00vxHM; Fri, 04 Mar 2016 17:21:30
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <20160304114321.GA569@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:dVa2xY3jmV9ATDtAaxJZ1w3SQft+DWZKcWZmWAneMTZDCibrkCX
- LCEYvNK/0LQ1yFMd+sU94jK9i83qDiVpPiixjS6D5fNnsjWJ7wLxghTu//C5QLQNFu836yC
- 0C4ZJURXbIMMI5RcWO+GazyHJAUx9Zp9uunMvcIVEhNEWBKD5+s/9OaWJhXyohxsUwbqP7o
- vDyb49EAYriQiJjMBW05A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zIQbQRaqAf0=:IgR5eCTxnFNB/FL386WhAM
- yfb3tgy5ADGxQnRZ/5f1+9tUkRDAj8OIaBuG+6wLEOW5Dcr159Hg+NS6WJFnIAn4ZpcWoc4R3
- CcFsxk2PbzEH1glo6+brCvwgbCCu1lLrCdofAJmUf1mcNpAL0pZtqDxVuRJSMmndvbEzHTdsf
- LKuicIWCzgAaKIFqbCvruKGc/HA8qZWCrh7hW6et7FMkV6EtDslK5JGFwgGOuFnLV999ouuUs
- xFhgG2OG1U6ZV910Ms3VITH46mTFcjZnlE3otkKo7hFg5SVnB3KvYtTD1dTr6jDHOqI9QoHgb
- XiSnpkYSJHXOTwBjtkYhGj6pxNZLDitb0F/6R6fKFNbKOJMlzpD0f8v5foJfQMU296tmDpmf3
- Gk9joCb03VDhE4SknH/EGwfXnn1gsGwR/mIwwtge27QXnGM9sSWDflYPCE7/mfDkPWLSphP/3
- sUQ6qinqoNqiFskXRwz33XEpwAF+5a+CajYrhaxB24bHBifRYPOAK+PBWg+eJ2SITTApC3UeW
- dG5GgnfqIXbaNFe3+zI9Yw6Om16OM6jgn7qMjBIo64tpn1INogZ7mBp9nC/KYJ2sZ+z+xwGv/
- UP2s6oZi9DgGbi37YRkodXSrRsbtmqTTMjZgEDbEjZHrt70mLIn71/oAYcLhKoeaG94/YXHAm
- xzy1bM6MFgODx3sMSedl44vX8B/B+Cm3V42z/VWQa8J7n1ZRHXV/fuedsihNrDGAufkXQWxc4
- Em/rKM4oQdefdchZ4UnzF45HbylBqKwkIMtfKzR6IMd1HQeYayQnTV3flK1rQeBE3DjtGVEH 
+	id S1758360AbcCDR2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 12:28:36 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58559 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757568AbcCDR2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 12:28:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 259A148559;
+	Fri,  4 Mar 2016 12:28:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L07YqaVpBF2nQFQrZIVAB2g7oJQ=; b=xtAbnW
+	VWwesUR74uTTV9acOg6YK0KtsRKrbPVDiJ64OrmLEzxWdRLp6EIZ9Cw1NzO28H02
+	q2d1RF7FxpFnwWI277nsiOAl2+0dQoC8thHePA6PU4l+qC3FmBbves7Xdj4hg1Ty
+	mjx5iSwO/ybAKvLYxqPaFJODJtaGYgZu/SpVI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AkxPRGEnL4RoXD5rWlD//EN3oDzA8Sf8
+	QcCAm+8HTe3DfYpL73uszFHIL9svBJeuuxYpu3DNSKolLVv1IRDuiXn2Xh94VUlg
+	5t5fAEIacHD2/oTOcRa1/kw1z0EO/iWza6jgZ4STpoQLuIRD2znlSVJHyyc33CPV
+	Q9+deTVGVw8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1D0C748558;
+	Fri,  4 Mar 2016 12:28:34 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 94EB948557;
+	Fri,  4 Mar 2016 12:28:33 -0500 (EST)
+In-Reply-To: <CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 4 Mar 2016 19:36:46 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 853A384C-E22E-11E5-90F5-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288263>
 
-Hi Peff,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On Fri, 4 Mar 2016, Jeff King wrote:
+> On Fri, Mar 4, 2016 at 6:56 PM, Kevin Daudt <me@ikke.info> wrote:
+>> Verified that it's different in 2.7.0, but 2.7.2 gives expected output.
+>
+> Thanks. 2.7.1 reverts the faulty commit from 2.7.0 that generated two
+> other regression reports before this one. I guess it's all good then
+> (except for the people still on 2.7.0)
 
-> Subject: t9700: fix test for perl older than 5.14
-> 
-> Commit d53c2c6 (mingw: fix t9700's assumption about
-> directory separators, 2016-01-27) uses perl's "/r" regex
-> modifier to do a non-destructive replacement on a string,
-> leaving the original unmodified and returning the result.
-> 
-> This feature was introduced in perl 5.14, but systems with
-> older perl are still common (e.g., CentOS 6.5 still has perl
-> 5.10). Let's work around it by providing a helper function
-> that does the same thing using older syntax.
-> 
-> While we're at it, let's switch to using an alternate regex
-> separator, which is slightly more readable.
+Are we good at 2.8.0-rc0, too?  Somehow I had an impression that we
+queued "another attempt to do it differently" or something.
 
-My apologies! And thanks for cleaning up after me.
+ ... goes and looks ...
 
-Ciao,
-Dscho
+    $ rungit maint status -suall
+    ?? baz/quux/corge/wibble.txt
+    ?? baz/quux/grault.txt
+    ?? foo/bar.txt
+    $ rungit master status -suall
+    ?? baz/quux/corge/wibble.txt
+    ?? baz/quux/grault.txt
+    ?? baz/waldo.txt
+    ?? foo/bar.txt
+    ?? foo/garply.txt
