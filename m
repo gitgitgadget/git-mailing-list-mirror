@@ -1,70 +1,100 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Change in .gitignore handling: intended or bug?
-Date: Fri, 4 Mar 2016 19:36:46 +0700
-Message-ID: <CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
-References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
- <20160304055117.GB26609@ikke.info> <1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
- <20160304115634.GC26609@ikke.info>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/2] test-lib: quote TRASH_DIRECTORY
+Date: Fri, 4 Mar 2016 14:03:15 +0100
+Message-ID: <56D98793.9000708@drmicha.warpmail.net>
+References: <cover.1457088499.git.git@drmicha.warpmail.net>
+ <a07529d116612bcd1c411a697f8f8e37d7c18d3f.1457088499.git.git@drmicha.warpmail.net>
+ <20160304115127.GA8355@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Charles Strahan <charles@cstrahan.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Fri Mar 04 13:37:46 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 04 14:03:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abozJ-00063M-3f
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 13:37:45 +0100
+	id 1abpO7-0002yJ-Ct
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 14:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbcCDMhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 07:37:21 -0500
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:35199 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751852AbcCDMhS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 07:37:18 -0500
-Received: by mail-lb0-f180.google.com with SMTP id bc4so59331409lbc.2
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 04:37:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wo1ShB5RnBoe2CNNOa6DWfJYoIxMW0kStyFu2DF2r0I=;
-        b=jRVogVY1D5FMRLduKpu0iGrl50YK8Uvd1nrjJYnbwzS+6vPShIsEgDgfl+XySts0H5
-         xScX11NUpf7iN5VJud40mWpCemHuHn96MehBVBfb+/TQo0ONMxlsahSD9JE9v39aX5KY
-         8blpKEnIRyQST8fozaiE74oiNvgmrIE3gti4rtQNRglznmPZPw71Zu1b4TZKC5NWsnNz
-         Y6YK4QztydfvLPG9ddAPVhNyj9Z4hmzhj8vdqSEGdOr0S93HMZ/kuA2C/nNo33oZ+9WY
-         xKJabW8RclkTt6i5aU15vIwAmE/a0ESSILAl3pJUdtzS1zYrsewzO6dY5IY8Pm0ftGFT
-         mCGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wo1ShB5RnBoe2CNNOa6DWfJYoIxMW0kStyFu2DF2r0I=;
-        b=WLwvBY6Y/IAuwL13Tswn2Kvjw+8rWzdoin8pG+MS56MCGQ1UQUY7D5MvorCe0ock+W
-         RhPDSsm04oB994pir5gS4FZ64Hzy0tBqyxEnuokVxf2ks13qTM8tENqRP2QrrT++E8Mf
-         QhQPVFGSNF5Qjg3etRkPxa9GnR5/ZYvcBVRoLS7Lv6v1bNhDbxW7In84P3+RQcSmM3ak
-         mF1DADKvLMjOoD36XVz4UK9GUlHgVdZz8OEfYk03IKfpdtIyk2a1SEndp4mphiP2P2vN
-         h0uwju1CBusTHakH4u3Aba8xsr3W46iwl5ymkSd9QLF0nJuH4e/Q4dJq/5WcVE+rSNm7
-         Ukww==
-X-Gm-Message-State: AD7BkJIgNBZOna++hDrLdHgep6hh/lpjr4OQ3q6eD7Tg24znUzff/As7TiXoMSrRrAdd/TDFR403loabgMCfdw==
-X-Received: by 10.112.140.129 with SMTP id rg1mr3175237lbb.80.1457095036442;
- Fri, 04 Mar 2016 04:37:16 -0800 (PST)
-Received: by 10.112.167.10 with HTTP; Fri, 4 Mar 2016 04:36:46 -0800 (PST)
-In-Reply-To: <20160304115634.GC26609@ikke.info>
+	id S1756011AbcCDNDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 08:03:19 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58759 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751852AbcCDNDS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2016 08:03:18 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 247D121B18
+	for <git@vger.kernel.org>; Fri,  4 Mar 2016 08:03:17 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Fri, 04 Mar 2016 08:03:17 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=AKkz5QE/lHlUXN3iWj3tTZX56A8=; b=J/+ZXG
+	Wf4SElIWm0uBmudki6sk7/QZOJPjLB4LBAr/1u7AJBp8IQ520eFFTO9khxm1j8J3
+	wYL9gC5AS4IHN8oZLHPsBeRb3QjcS0kjO3GXzFPAmHnpGXD6ZCar6aqVaz7C+ytt
+	ktuDqlxX+kMvchYLnfxC+55VfrwcIyX3Oy7dU=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=AKkz5QE/lHlUXN3
+	iWj3tTZX56A8=; b=C5Yc1XUbxXszqwWskZbq9r6SrMim15+h01ERi8Ryp3TPvTq
+	L7m8KKK8JbEIMBpySpOMuLcNpq6NF70daeiIYXm3GHubBRzTf18vPjduihtf4Anp
+	nc3gV0CQdURup0E5Uv3QW1JYGBHibFSZqO0BWsNkyKtlUJPHMqXhbQiB1j5Y=
+X-Sasl-enc: MH4edN8C+mLEGfp/hUdDwvospqAeBy9/BzKCjd1/LN49 1457096596
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5F6BAC00014;
+	Fri,  4 Mar 2016 08:03:16 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <20160304115127.GA8355@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288254>
 
-On Fri, Mar 4, 2016 at 6:56 PM, Kevin Daudt <me@ikke.info> wrote:
-> Verified that it's different in 2.7.0, but 2.7.2 gives expected output.
+Jeff King venit, vidit, dixit 04.03.2016 12:51:
+> On Fri, Mar 04, 2016 at 11:53:49AM +0100, Michael J Gruber wrote:
+> 
+>> We always quote $TRASH_DIRECTORY to guard against funky path names. Do
+>> so in one more spot
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>>  t/test-lib.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index 0b47eb6..8957916 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -868,7 +868,7 @@ case "$TRASH_DIRECTORY" in
+>>  /*) ;; # absolute path is good
+>>   *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
+>>  esac
+>> -test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
+>> +test ! -z "$debug" || remove_trash="$TRASH_DIRECTORY"
+> 
+> I don't think this does anything. The shell doesn't do whitespace
+> splitting on the right-hand side of a variable assignment:
+> 
+>   $ foo='lots of spaces and "!'\'' funky chars'
+>   $ bar=$foo
+>   $ echo "$bar"
+>   lots of spaces and "!' funky chars
+> 
+> Of course we _do_ need quotes when we refer to $remove_trash as an
+> argument (as with "$bar" above), but it looks like we do so correctly
+> everywhere.
 
-Thanks. 2.7.1 reverts the faulty commit from 2.7.0 that generated two
-other regression reports before this one. I guess it's all good then
-(except for the people still on 2.7.0)
--- 
-Duy
+I'm used to that behavior, yes, but:
+
+- Is this true for every shell that we support?
+- Having quotes there, too, is a good reminder to have it also where
+necessary.
+
+Michael
