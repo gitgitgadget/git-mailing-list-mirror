@@ -1,96 +1,100 @@
-From: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-Subject: Diff filename has trailing tab if filename contains space
-Date: Sat, 5 Mar 2016 07:50:32 +0800
-Message-ID: <CAHtLG6TLAOA0hg897EntOjG1kJsZEmjDshc-yyO9zP27540AAg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] xdiff/xprepare: fix a memory leak
+Date: Fri, 04 Mar 2016 15:50:31 -0800
+Message-ID: <xmqqegbpyf94.fsf@gitster.mtv.corp.google.com>
+References: <56DA15FA.1090601@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 05 00:50:40 2016
+Content-Type: text/plain
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 00:50:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abzUU-0002At-Vl
+	id 1abzUV-0002At-I0
 	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 00:50:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760576AbcCDXue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 18:50:34 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:33985 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760368AbcCDXud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 18:50:33 -0500
-Received: by mail-vk0-f44.google.com with SMTP id e185so69957292vkb.1
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 15:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=aE378dfQY1Tfbj/kz4uLbEe+x/Mr84SupmVLgLpFdqE=;
-        b=QW0RPpFgGVIft0aFiwL8D6hoLOK+uBTOydPLKF1qZJDRZMtfDqdFhXmDn2TzDJyNyN
-         vZAQ8rWaeE4JKdABFIlN39N1wklI0TcOzLQxZW7kfuS84bkVrqCGDxz6QfGIBFCltOu6
-         woT8j8BfrIfoZAvjRRDR1FwlK5xt7ALdXPVpkfJTIfdrWLB7Triv+8/slJLCuOY8RLNc
-         FqNSerzMS2s0t3egj7kUFsPzl8Zh5aBPRJ5fZLAMFGwXG1efvI0NbwRffPV3WiR6pOc/
-         0eG/8PQovlHG96owrxMz+9nLWmx49iaYrC213H8bgCljjlXXW9LAXwOdRXUxM8mj7vML
-         ob9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=aE378dfQY1Tfbj/kz4uLbEe+x/Mr84SupmVLgLpFdqE=;
-        b=CEvZ8tMGEvJ+gl3elee3qCvgUorOhZ7t1hxNANgry4ZL7MHKGFA8ARMre/D57zF4Zl
-         q23qAIMCDHtUYtL+bLJwhGT6HcVlrXKqtHptiq3CsCfHFKXRh9pyFMWhWM3u1Focu75l
-         vyLz26IEh5uhPxfiQaeUBlh7qG2kDvGQedUKNTFDoC4Ijr4TuZgIpL3QaLXGLM3X/Q61
-         KgA9vxsYrq3rVcTYaTMirDVgtH2IuWKxgqqJAv2RXrDMJALYa6FB85xKxVjn0OBl0qBE
-         kTqvXi7WaZllAjbYWdsbuAat/PP05+0KZ5QPVBfbfbE7Uh4NSbbHqGQxqwmOd7zNWwXf
-         H65Q==
-X-Gm-Message-State: AD7BkJI9p4wZtr0gypvlFTRqM9Qxfz4SxMNzVFM+mxSRnaAgyGTATkDuQ3tKaVwOcGyibmbUq2jeuc4ZspuaLA==
-X-Received: by 10.31.194.2 with SMTP id s2mr8531089vkf.12.1457135432536; Fri,
- 04 Mar 2016 15:50:32 -0800 (PST)
-Received: by 10.159.33.67 with HTTP; Fri, 4 Mar 2016 15:50:32 -0800 (PST)
+	id S1760579AbcCDXuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 18:50:35 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51961 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760368AbcCDXuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 18:50:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 712804ACD1;
+	Fri,  4 Mar 2016 18:50:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=70woBwRIfcmQwUrkGoKoi0iYtAw=; b=cMRzd0
+	km6nyX1R2hh8VJN8prvs2pNf5XEK4crWx044jJHGUCJrSr/KgXW6v+IiCN4ekbTg
+	VNUPcgSYuSNOJGYPUcAR2tu9PCAX0rmmFRypUjZ7xq141Q7SUXUOLlCE2iyFf27l
+	N6ZILKUZWPnBCzXnpM4bGgBCuQ7U2c8f7BIMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ltULNMsgzt+wm2y2a5UkKz4kNW+7bv2S
+	ZqVCp7Utm/W7D+02tCAoMB8Wc3BFUpQpCARkoBLN+9RxentL1wXR3KOcGCF/zye3
+	T+mLfXRKWqzhrkoW8BqcZZMQCzKjYovoIQIbqv1ajrV7ygWusj+oqUNq10i9JE3L
+	q6CAHlEQvqE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 68DFA4ACD0;
+	Fri,  4 Mar 2016 18:50:33 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E14E54ACCF;
+	Fri,  4 Mar 2016 18:50:32 -0500 (EST)
+In-Reply-To: <56DA15FA.1090601@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Fri, 4 Mar 2016 23:10:50 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E2340E76-E263-11E5-8E9F-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288282>
 
-Hi,
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Using git 2.7.1
+> The xdl_prepare_env() function may initialise an xdlclassifier_t
+> data structure via xdl_init_classifier(), which allocates memory
+> to several fields, for example 'rchash', 'rcrecs' and 'ncha'.
+> If this function later exits due to the failure of xdl_optimize_ctxs(),
+> then this xdlclassifier_t structure, and the memory allocated to it,
+> is not cleaned up.
+>
+> In order to fix the memory leak, insert a call to xdl_free_classifier()
+> before returning.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  xdiff/xprepare.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index 5ffcf99..13b55ab 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -301,6 +301,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+>  
+>  		xdl_free_ctx(&xe->xdf2);
+>  		xdl_free_ctx(&xe->xdf1);
+> +		xdl_free_classifier(&cf);
+>  		return -1;
+>  	}
 
-Diff filename has trailing tab if filename contains space
-Please run below shell script
-and look at the output diff file 1.diff
-There is trailing tab chars after these lines:
---- a/8 1/8.txt
-+++ b/8 1/8.txt
----- b/9 86
-+++ b/9 86
+This looks obviously correct from the pattern of prepare's and
+free's in the code that this part follows.  This potential leak has
+been that way since 3443546f (Use a *real* built-in diff generator,
+2006-03-24), i.e. the very beginning.
 
+I find it somewhat strange that the call to xdl_free_classifier() at
+the end of this function is made conditional to XDF_HISTOGRAM_DIFF,
+though.  I can half-buy the argument "that is because we do not call
+init-classifier for XDF_HISTOGRAM_DIFF", but in the error path we
+call free-classifier unconditionally, so the code clearly knows that
+it is safe to call free-classifier on a classifier that is cleared
+with the initial memset(&cf, 0, sizeof cf).
 
-
-#!/bin/sh
-set -e
-git init
-
-echo a >> "normal"
-git add "normal"
-echo y >> "9 86"
-git add "9 86" # file name has space
-mkdir x
-echo d >> "x/normal"
-git add "x/normal"
-mkdir "8 1"
-echo u >> "8 1/8.txt" # directory name has space
-echo k >> "8 1/8.txt"
-git add "8 1/8.txt"
-git commit -m "Initial commit"
-
-echo b >> "normal"
-git add "normal"
-echo c >> "9 86"
-git add "9 86"
-echo e >> "x/normal"
-git add "x/normal"
-echo h >> "8 1/8.txt"
-git add "8 1/8.txt"
-git commit -m "Edit files"
-git diff master~1 > 1.diff
+I think the latter funkiness came from 9f37c275.
