@@ -1,168 +1,70 @@
-From: Charles Strahan <charles@cstrahan.com>
-Subject: Change in .gitignore handling: intended or bug?
-Date: Thu, 03 Mar 2016 21:11:56 -0500
-Message-ID: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Fri, 4 Mar 2016 10:09:05 +0700
+Message-ID: <CACsJy8Csx5ZBQqp0cP0YE-b==Uwfj+fPa6EfHi-fht9oCHTK=A@mail.gmail.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 04 03:12:03 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Charles Strahan <charles@cstrahan.com>
+X-From: git-owner@vger.kernel.org Fri Mar 04 04:09:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abfDn-00031o-3b
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 03:12:03 +0100
+	id 1abg7c-0006T8-Kh
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 04:09:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661AbcCDCL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Mar 2016 21:11:58 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33228 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753278AbcCDCL5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Mar 2016 21:11:57 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id D527B2268D
-	for <git@vger.kernel.org>; Thu,  3 Mar 2016 21:11:56 -0500 (EST)
-Received: from web5 ([10.202.2.215])
-  by compute2.internal (MEProxy); Thu, 03 Mar 2016 21:11:56 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=cstrahan.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=rvv
-	ApzhroHZ3GNV6EHntwq4C4B8=; b=bG0+0QV3QWNjkEpKQ1jNYI1TWKqMUSgzvOo
-	XPkhsS9R2xowpoEOJQ+WouwTfuaaPKJuBPoq8ORkJW0MuwxKAvJ1t5y2kxhfFT27
-	+nT07RajNoElHGv0xUmOa8oc+3tLkQv2eCQxeq+mOUVgqFoanuGxyjP7MRsaON8t
-	Ulmt0v10=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=rvvApzhroHZ3GNV6EHntwq4C4B8=; b=q55CL
-	irZ28/JvgDuCvI6Hp+1dC13grW2HuwVaZdHntNGzE21p3cVzgvNnay7M2IbPx2Vt
-	OopihMwP8xZ6i6+x4OuLl70YXT0tnZfdXTpRvqGF/cE8zpKorz9eoOVaTe21lgTt
-	8/6hvfgWfXeLUdNnKEA8MHlVS5k5xVFt8zgRz4=
-Received: by web5.nyi.internal (Postfix, from userid 99)
-	id 963B6AC3A36; Thu,  3 Mar 2016 21:11:56 -0500 (EST)
-X-Sasl-Enc: dEttNshLh91wwywCWyu7Lx1/XSc4UauQXM3JfXe2rKWb 1457057516
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-b8d6474a
+	id S1751831AbcCDDJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Mar 2016 22:09:37 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:34651 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751228AbcCDDJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Mar 2016 22:09:36 -0500
+Received: by mail-lb0-f179.google.com with SMTP id cf7so30048056lbb.1
+        for <git@vger.kernel.org>; Thu, 03 Mar 2016 19:09:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EW1WLY9C9Ql7kol1CmNkGg8tiN9H8iZ2vR6LIyBg7L0=;
+        b=cmvofpzcUxV6+US2EpAPnpheZpX6cFLF70S+6lgMxeJZGgcFiD8i4eExto3Jz5QLo+
+         fjjekfuADjVcgLlRYnyb1brC+Dbzp/MTbO87qpRS+w/F8E/AH6PPxJZg/pZziYllVi5+
+         ZwSr2gPH7sLn6nNuPeP/D+UdOQW/UfTl5Z8fgN8stQGCxyUrz/SsQ2k8J76C3MmEu9h4
+         nABUDoEzn9YO4DTSi1oUFk5C8vGMHFZgSMom456oNahLrGe2AuBBkAf1HONUxryreYR0
+         oho0b8sTVq9blw4qw6Hzd6fMcL9RbdDCkKjV1AfY6R47LU5QyVx1yT+ZJ6LKkYsPSg3Q
+         Tzfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EW1WLY9C9Ql7kol1CmNkGg8tiN9H8iZ2vR6LIyBg7L0=;
+        b=OIjfyC79xfZXvEUmOOKfHOdxHj0RpQifhW+l2lsExJygTli/JdZOsNjtScDE3p6kL4
+         sYBtjhDLcSWcB4lpctO8bkArSMwqkofheCdM+fV3iKwiPHlMtSSJNig56clnCnLtenZU
+         IIB3b+OOvI9r2iReSrW0xDVt5kVNiLvUpJJ9ofL90pZh8Igy9KW0zOpXVNmp58RRIVvY
+         g9rjV5w6c6GfBr3JCvNP1Jz2s5X0/drYgzQXkRdUBPOvE8qg0vl6dwgYA27y5bybyKdX
+         O94ARqmIn8UdtYhY/DH++VPta5sa20c3JKZceK19ivyEointETE0npiFhnlGb4/d8/Rk
+         94Ag==
+X-Gm-Message-State: AD7BkJJnIGlAJ9QQeTHWKPmqSPTKIQIvE4OzaEr01dL2D5FjPHaiRkcVOwKmKf8LNYnQ6Ghw10IoHhrPkNGyZg==
+X-Received: by 10.112.171.163 with SMTP id av3mr2233478lbc.145.1457060974919;
+ Thu, 03 Mar 2016 19:09:34 -0800 (PST)
+Received: by 10.112.34.162 with HTTP; Thu, 3 Mar 2016 19:09:05 -0800 (PST)
+In-Reply-To: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288229>
 
-Hello,
+On Fri, Mar 4, 2016 at 9:11 AM, Charles Strahan <charles@cstrahan.com> wrote:
+> Hello,
+>
+> I've found a change in the way .gitignore works, and I'm not sure if
+> it's a bug
+> or intended.
 
-I've found a change in the way .gitignore works, and I'm not sure if
-it's a bug
-or intended.
-
-Previously, one could use the following .gitignore:
-
-    *
-    !/foo
-    !/foo/bar.txt
-    !/baz
-    !/baz/quux
-    !/baz/quux/**/*
-
-And these files would be seen by git:
-
-    foo/bar.txt
-    baz/quux/grault.txt
-    baz/quux/corge/wibble.txt
-
-And these files would be ignored:
-
-    foo/garply.txt
-    baz/waldo.txt
-
-At some point (between git 2.6.0 and 2.7.0, I think), the behavior
-changed such
-that _none_ of the files above would be ignored. Previously, git would
-treat
-!/foo as an indication that it should not prune /foo, but that
-_wouldn't_ be
-sufficient to un-ignore the contents thereof. Now, it seems the new
-scheme
-treats !/foo as functionally equivalent to !/foo followed by !/foo/**/*
-in the
-old scheme.
-
-I manage my home directory by making it a git repo, and using
-~/.gitignore to
-selectively permit certain files or subdirectories to be seen by git.
-The recent
-change in behavior has resulted in sensitive directories like ~/.gpg
-being
-un-ignored. For reference, I've appended my .gitignore to the end of
-this email.
-
-So, is this behavior intended, or is this a bug? If the former, is there
-an
-announcement explaining this change?
-
--Charles
-
-(.gitignore is as follows)
-
-*
-!/.Xdefaults
-!/.Xresources
-!/.ackrc
-!/.bash_profile
-!/.config
-!/.config/dunst
-!/.config/dunst/dunstrc
-!/.config/taffybar
-!/.config/taffybar/taffybar.hs
-!/.config/taffybar/taffybar.rc
-!/.ctags
-!/.gdb
-!/.gdb/**/*
-!/.gdbinit
-!/.gemrc
-!/.ghci
-!/.git_template
-!/.git_template/**/*
-!/.gitexcludes
-!/.gitignore
-!/.gnupg
-!/.gnupg/dirmngr.conf
-!/.gnupg/gpg.conf
-!/.goobook/
-!/.goobook/decipher
-!/.goobook/decipher/goobookrc
-!/.inputrc
-!/.irbrc
-!/.irssi
-!/.irssi/**/*
-!/.mbsyncrc
-!/.msmtprc
-!/.mutt
-!/.mutt/accounts
-!/.mutt/accounts/*
-!/.mutt/gpg.rc
-!/.mutt/mailcap
-!/.mutt/muttrc
-!/.mutt/signature
-!/.mutt/theme/*
-!/.nixpkgs
-!/.nixpkgs/**/*
-!/.notmuch-config
-!/.pystartup
-!/.tmux
-!/.tmux.conf
-!/.tmux/**/*
-!/.vim
-!/.vim/**/*
-!/.vimrc
-!/.xmonad
-!/.xmonad/xmonad.hs
-!/.xsession
-!/.zlogin
-!/.zprofile
-!/.zsh
-!/.zsh/**/*
-!/.zshenv
-!/.zshrc
-!/osx
+Can't look into this just yet. Quick question, what's the git version
+you're currently running?
+-- 
+Duy
