@@ -1,84 +1,127 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: t9700-perl-git.sh is broken on some configurations
-Date: Fri, 04 Mar 2016 11:58:24 +0100
-Message-ID: <1457089104.2660.79.camel@kaarsemaker.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t9700: fix test for perl older than 5.14
+Date: Fri, 4 Mar 2016 06:43:21 -0500
+Message-ID: <20160304114321.GA569@sigill.intra.peff.net>
 References: <CAP8UFD1z9H=SygaMVzpc__mXTbnFc2XiW0LZ+sfzdCPmrnXW6g@mail.gmail.com>
-	 <20160304085649.GA29752@sigill.intra.peff.net>
+ <20160304085649.GA29752@sigill.intra.peff.net>
+ <1457089104.2660.79.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 04 12:02:26 2016
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Fri Mar 04 12:43:40 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abnV1-00037P-JG
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 12:02:23 +0100
+	id 1abo8v-0001L4-8N
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 12:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755822AbcCDLCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 06:02:18 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:32917 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbcCDK61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 05:58:27 -0500
-Received: by mail-wm0-f47.google.com with SMTP id l68so15190555wml.0
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 02:58:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=251zCFocvmvqbaHz4WMzaAaYcX6He+F+nAn+6tcPeso=;
-        b=Q9dGXPQZT8QcHFi2vhcy+oRVmMomrqk9QBmpFoZEYQ6SNalQoxUnQJOTnjFoIbZk3z
-         gQ3IXzdVycpJtTw41zn4m7m4STMXrgslGaxso16locwT1LmxRZVc2yuiDJrDqoz7bHkX
-         a6xaUHQhtsRZUgoqPFCL7VZHaQcxWar5RL1HciWLoDZN9zXLz0225fyRCZP4Rr6vfqBO
-         SnngFccrVB0CO1D42DsjKPQ9quo+3qpVUdqwNh+IYJTcQMofZ0QcbmOn69/uPJ5RtkJ3
-         S+niS3bfhBmeawoj0wiKbPFvuYlrCLqyy7tZHePHk1Qjb0/JmO6RCmE+74bZNIm7c85l
-         pi+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=251zCFocvmvqbaHz4WMzaAaYcX6He+F+nAn+6tcPeso=;
-        b=G6/FbSHbhMUZW9DubalHZfkrn8gY+/b0G+TidkB4/Uj3HAneYSinMQZ2sCIUgffFeN
-         MT5NZ8xQ1IJm/QbSkJA5Rt2JWZyeYd7d7v6lACdEd5nPZUqRqMX5s2/wrvDhqxnUu9rN
-         7SSxRU2vMgD6YkkW5EVWybCkJpYYJrmfLTxB20DrN869rUY547GEJMabzI4FwQpOtENe
-         lkJ0cAukckkLoWcg9aHiqJa8vRe7Jgrxt7VG1FVOMcaZjM9XR37FiOhmBSLF1JlfbkfI
-         pkrZf7yj+9p9qAYTfWWCqZqsNnnm4jgC+reotjz01Q6JJhS6nuFD3f6A6efpyjgyahXt
-         vC6Q==
-X-Gm-Message-State: AD7BkJLtwkPumi654f9WAl2hlO2GzBNpEaX2os1ogEYXzeM/gqKiDolbKO2IxEZRcLusOQ==
-X-Received: by 10.194.121.34 with SMTP id lh2mr8200837wjb.145.1457089106369;
-        Fri, 04 Mar 2016 02:58:26 -0800 (PST)
-Received: from seahawk.local (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id m6sm2761673wje.21.2016.03.04.02.58.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Mar 2016 02:58:25 -0800 (PST)
-In-Reply-To: <20160304085649.GA29752@sigill.intra.peff.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3.1 
+	id S1750932AbcCDLn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 06:43:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:54661 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750764AbcCDLnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 06:43:25 -0500
+Received: (qmail 30140 invoked by uid 102); 4 Mar 2016 11:43:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Mar 2016 06:43:24 -0500
+Received: (qmail 14488 invoked by uid 107); 4 Mar 2016 11:43:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Mar 2016 06:43:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Mar 2016 06:43:21 -0500
+Content-Disposition: inline
+In-Reply-To: <1457089104.2660.79.camel@kaarsemaker.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288246>
 
-On vr, 2016-03-04 at 03:56 -0500, Jeff King wrote:
-> ? Those are just guesses, but if we are tickling a bug in perl's parser,
-> this might avoid them. I also wondered when "/r" appeared. It was in
-> 5.14, so you're presumably good there. The "use" statement at the top of
-> the script says "5.008", so perhaps we should be writing it out longhand
-> anyway (that version is "only" 5 years old, so I suspect there are still
-> systems around with 5.12 or older).
+On Fri, Mar 04, 2016 at 11:58:24AM +0100, Dennis Kaarsemaker wrote:
 
-Knowing the system Christian is testing on, I think the problem is that
-the tests are actually being run against perl 5.10, which RHEL 6 ships
-as system perl. As that's still a supported OS, writing tests in a form
-compatible with it would be a good thing :)
+> On vr, 2016-03-04 at 03:56 -0500, Jeff King wrote:
+> > ? Those are just guesses, but if we are tickling a bug in perl's parser,
+> > this might avoid them. I also wondered when "/r" appeared. It was in
+> > 5.14, so you're presumably good there. The "use" statement at the top of
+> > the script says "5.008", so perhaps we should be writing it out longhand
+> > anyway (that version is "only" 5 years old, so I suspect there are still
+> > systems around with 5.12 or older).
+> 
+> Knowing the system Christian is testing on, I think the problem is that
+> the tests are actually being run against perl 5.10, which RHEL 6 ships
+> as system perl. As that's still a supported OS, writing tests in a form
+> compatible with it would be a good thing :)
 
+That would make sense. `perl` in t9700-perl-git.sh (and all of our
+scripts) is actually a shell function:
+
+  perl () {
+          command "$PERL_PATH" "$@"
+  }
+
+to make sure we respect PERL_PATH everywhere. And that defaults in the
+Makefile to /usr/bin/perl. Christian presumably has 5.14 in his $PATH,
+but /usr/bin/perl is the system 5.10.
+
+One workaround would therefore be for him to tweak PERL_PATH, but
+obviously that does not help anyone else. I think we should do this:
+
+-- >8 --
+Subject: t9700: fix test for perl older than 5.14
+
+Commit d53c2c6 (mingw: fix t9700's assumption about
+directory separators, 2016-01-27) uses perl's "/r" regex
+modifier to do a non-destructive replacement on a string,
+leaving the original unmodified and returning the result.
+
+This feature was introduced in perl 5.14, but systems with
+older perl are still common (e.g., CentOS 6.5 still has perl
+5.10). Let's work around it by providing a helper function
+that does the same thing using older syntax.
+
+While we're at it, let's switch to using an alternate regex
+separator, which is slightly more readable.
+
+Reported-by: Christian Couder <christian.couder@gmail.com>
+Helped-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+And yes, before anyone checks, the alternate separators are available
+even in ancient versions of perl. :)
+
+ t/t9700/test.pl | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 7e8c40b..1b75c91 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -17,6 +17,12 @@ BEGIN {
+ use Cwd;
+ use File::Basename;
+ 
++sub adjust_dirsep {
++	my $path = shift;
++	$path =~ s{\\}{/}g;
++	return $path;
++}
++
+ BEGIN { use_ok('Git') }
+ 
+ # set up
+@@ -33,7 +39,7 @@ is($r->config_int("test.int"), 2048, "config_int: integer");
+ is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
+ ok($r->config_bool("test.booltrue"), "config_bool: true");
+ ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
+-is($r->config_path("test.path") =~ s/\\/\//gr, $r->config("test.pathexpanded"),
++is(adjust_dirsep($r->config_path("test.path")), $r->config("test.pathexpanded"),
+    "config_path: ~/foo expansion");
+ is_deeply([$r->config_path("test.pathmulti")], ["foo", "bar"],
+    "config_path: multiple values");
 -- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+2.8.0.rc0.309.g6677de9
