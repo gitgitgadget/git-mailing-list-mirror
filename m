@@ -1,134 +1,149 @@
-From: Alexander Rinass <alex@fournova.com>
-Subject: git diff does not precompose unicode file paths (OS X)
-Date: Fri, 4 Mar 2016 10:07:48 +0100
-Message-ID: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 04 10:07:45 2016
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: t9700-perl-git.sh is broken on some configurations
+Date: Fri, 4 Mar 2016 11:30:36 +0100
+Message-ID: <CAP8UFD3jZ2b8jgw8dR0U=AkPTTm5nO1F92UVjyeAMsfiOaJ_5w@mail.gmail.com>
+References: <CAP8UFD1z9H=SygaMVzpc__mXTbnFc2XiW0LZ+sfzdCPmrnXW6g@mail.gmail.com>
+	<20160304085649.GA29752@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 04 11:30:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1abli4-0007Tg-0j
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 10:07:44 +0100
+	id 1abn0Q-00029p-Q7
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Mar 2016 11:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759148AbcCDJHk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2016 04:07:40 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35882 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758812AbcCDJHd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2016 04:07:33 -0500
-Received: by mail-wm0-f48.google.com with SMTP id n186so25131833wmn.1
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 01:07:32 -0800 (PST)
+	id S1758851AbcCDKal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 05:30:41 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:34445 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbcCDKai (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 05:30:38 -0500
+Received: by mail-lb0-f180.google.com with SMTP id cf7so39663932lbb.1
+        for <git@vger.kernel.org>; Fri, 04 Mar 2016 02:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fournova-com.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=3nbjSWHJlO4ebeDSRk8D3gtUsC80HeG3WloMGpGAA6g=;
-        b=Kz6KnKkiQ5R+A1sdH8vE7Abv9bGuw8OemGTa6bhlN6J7822hhD4zSX13pbJdOoZvvp
-         RgmJh5LGSqWwhiR+zgK6eMmB+fdYbQHCyaHaW48ff6V2IhWfBoWjxVh27/TV4OahnTaK
-         cAPtgO5KNw/zXm/IRvZRUVy4SynWNjncaoQaDEJfGTuXOxpfOas58hkXFmIu1LXU3FQt
-         fjzJqmR3s+wIz8amKqfxKVjXZREvJyznU1yR/+jp9vEWkbwp3dJ+/PZk4pk9uE/TDN8h
-         DWTazM4jc7miWulmFcHlnQzSAJyl2LY+ee0Q7LM950fcEyO7uzM0Krj0293+QHw9a28E
-         Nxaw==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc;
+        bh=5dniU9663uXTxXr6fVJoQ6qN6wOwBeou7Yl7OUZ+xlY=;
+        b=VSxIcf+kmRafgmm1ncXHYPHzkHyLtfZR/j68YSXoFZAfrt/1msKjz1pk0+VyTrwqbY
+         vzJOq5BeFHNR6+z9zGD2mEibdY2H5HM9W7piDitpVRSn4KC8kGfil+9/dWGzz+JjWsjx
+         YbK7aVV9FiEdiZmrH5XWZQpBZ9YUcrgln46C025VRQ3064Gy96B0s8Hta9iZwEX8MrcU
+         Ow226fduNQjdoD2EH8Ty4UYPdORU53jMagMk7Ee0lBWvy44YVFxXxO+ZG89FYGKS4wBU
+         68sjgEumEdP2P5BMBxnA8JGHxGylE6cdT1ZdvoN8+rx7VNMO7ExXjaISlhuN5bxjYTlV
+         U7/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=3nbjSWHJlO4ebeDSRk8D3gtUsC80HeG3WloMGpGAA6g=;
-        b=fB80lFd3TX85m6DSo5MfnOIqEpVtlUj93fwoBjTd+xjQredD1pthLqSUA6vjIDUitS
-         Zf1UurGXg0BrSe6D0068eXYjlBrZESYSRhlQ4B0zQ1HlYLenAacX/uc7t8UkdRjRDNPO
-         JZHOvlYXwSk0NPx0aHjcIZoVgQQZDyju2OLRgIrg/hBnWupBaoM17LLXq81B/bTuZzrd
-         wLjoFJ0IclUucWjNsTSnFgXnYCt2fkEAiYYvNUhIh1PEdMz7/5NnEbciwT0OxmXgwHV8
-         L3mCtdVWBAlLm53w7lCJKLKabx4DONwHLBU5BILccEf+qRCvLCb/xnWLIpjHTeOPZHpq
-         G8SA==
-X-Gm-Message-State: AD7BkJLpy5jxJEzdBxWOyC5LvuT6EpPs5onD3/D+6Jei7bA5pqh3EguLpkJJjLUtWfNAlA==
-X-Received: by 10.194.92.174 with SMTP id cn14mr8923450wjb.66.1457082452098;
-        Fri, 04 Mar 2016 01:07:32 -0800 (PST)
-Received: from ?IPv6:2a02:908:df42:8b00:54b8:eea0:3e61:8f6b? ([2a02:908:df42:8b00:54b8:eea0:3e61:8f6b])
-        by smtp.gmail.com with ESMTPSA id 192sm2363630wmw.0.2016.03.04.01.07.31
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 04 Mar 2016 01:07:31 -0800 (PST)
-X-Mailer: Apple Mail (2.3112)
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc;
+        bh=5dniU9663uXTxXr6fVJoQ6qN6wOwBeou7Yl7OUZ+xlY=;
+        b=hkg+AKa0EGZ9xAFd4HptTXtmGNMTKlfcAU2SSnw8ZfDj56VKF8hU0MdAXi59sy8ni4
+         eyGLX+EBZuLbJPLa7MhX1rBZzTIZYseECFjhd/j7xJyRsyMIHfc31NOtTjDW0959+zTe
+         sDS0yWpfuPsQTyDmQVooi0XBsI8JOu9X0ttQvOLAs+ZLVqc2EM+PiLhyKbxN4FsPOnrD
+         Nc4J6Fo5aKRHXGi0JvPRmgLyvwukf6OVxP5Xe1HnIlsV76ytdlGTheBhbB5tvhgoG1HB
+         h36hPdbOZhm/mTjVaAoCuq6Nh9IKghu3/sSGxvmTCZdP0p2GB1GcT6r4I4KmMjJLNG82
+         PnnQ==
+X-Gm-Message-State: AD7BkJLxye4UHE6mQDzyX49WLV5lOEjwfTitST8dToJp2Gnk6N3WYkbhhBykkFKmeChz2TfU+10F/UrIluX2EQ==
+X-Received: by 10.25.163.199 with SMTP id m190mr2720758lfe.7.1457087437040;
+ Fri, 04 Mar 2016 02:30:37 -0800 (PST)
+Received: by 10.25.137.130 with HTTP; Fri, 4 Mar 2016 02:30:36 -0800 (PST)
+In-Reply-To: <20160304085649.GA29752@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288241>
 
-Hallo,
+On Fri, Mar 4, 2016 at 9:56 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 04, 2016 at 09:13:51AM +0100, Christian Couder wrote:
+>
+>> Indeed on the command line I get:
+>>
+>> ------------------------
+>> $ t/t9700/test.pl
+>> ok 2 - use Git;
+>> Bareword found where operator expected at t/t9700/test.pl line 36,
+>> near "s/\\/\//gr"
+>> syntax error at t/t9700/test.pl line 36, near "s/\\/\//gr"
+>> Execution of t/t9700/test.pl aborted due to compilation errors.
+>> ------------------------
+>>
+>> A quick look at t/t9700/test.pl line 36 was not enough for me to spot
+>> the problem.
+>>
+>> Perl version is: perl 5, version 18, subversion 2 (v5.18.2) built for
+>> x86_64-linux
+>>
+>> The machine is running CentOS 6.5.
+>
+> I can't reproduce on any of the machines I have handy (perl 5.14, 5.20,
+> and 5.22). I don't have 5.18 handy. The line in question looks fine to
+> me, so perhaps it is a temporary regression in 5.18.
 
-It appears that the git diff command does not precompose file path argu=
-ments, even if the option core.precomposeunicode is set to true (which =
-is the default on OS X).
+It is strange because on the same machine there is also v5.10.1
+installed and I get the same error with it.
 
-Passing the decomposed form of a file path to the git diff command will=
- yield no diff for a modified file.
+> Does it help to wrap it in parentheses, like:
+>
+> diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+> index 7e8c40b..edeeb0e 100755
+> --- a/t/t9700/test.pl
+> +++ b/t/t9700/test.pl
+> @@ -33,7 +33,7 @@ is($r->config_int("test.int"), 2048, "config_int: integer");
+>  is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
+>  ok($r->config_bool("test.booltrue"), "config_bool: true");
+>  ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
+> -is($r->config_path("test.path") =~ s/\\/\//gr, $r->config("test.pathexpanded"),
+> +is(($r->config_path("test.path") =~ s/\\/\//gr), $r->config("test.pathexpanded"),
+>     "config_path: ~/foo expansion");
+>  is_deeply([$r->config_path("test.pathmulti")], ["foo", "bar"],
+>     "config_path: multiple values");
 
-In my case, the decomposed form of the file path is sent by the OS X Co=
-coa framework's NSTask, wich I am using in an application. It can be si=
-mulated on OS X by using $(iconv -f utf-8 -t utf-8-mac <<< FILE_PATH) a=
-s file path argument on the shell.
+No, parentheses don't help.
 
-Git commands like add, log, ls-tree, ls-files, mv, ... accept both file=
- path forms, git diff does not.=20
+> or even write it out longhand without "/r":
+>
+> diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+> index 7e8c40b..52471cf 100755
+> --- a/t/t9700/test.pl
+> +++ b/t/t9700/test.pl
+> @@ -33,7 +33,9 @@ is($r->config_int("test.int"), 2048, "config_int: integer");
+>  is($r->config_int("test.nonexistent"), undef, "config_int: nonexistent");
+>  ok($r->config_bool("test.booltrue"), "config_bool: true");
+>  ok(!$r->config_bool("test.boolfalse"), "config_bool: false");
+> -is($r->config_path("test.path") =~ s/\\/\//gr, $r->config("test.pathexpanded"),
+> +my $test_path = $r->config_path("test.path");
+> +$test_path =~ s/\\/\//g;
+> +is($test_path, $r->config("test.pathexpanded"),
+>     "config_path: ~/foo expansion");
+>  is_deeply([$r->config_path("test.pathmulti")], ["foo", "bar"],
+>     "config_path: multiple values");
+>
+> ?
 
-It can be tested with the following setup on OS X (as iconv's utf-8-mac=
- encoding is only available on OS X):
+Yeah, it works like the above with both perl versions.
 
-    git init .
-    git config core.quotepath true
-    git config core.precomposeunicode true # (default on OS X)
-    touch .gitignore && git add .gitignore && git commit -m "Initial co=
-mmit"
-   =20
-    echo "." >> =C3=84
-    git add =C3=84
-    git commit -m "Create commit with unicode file path"
-   =20
-    echo "." >> =C3=84
-   =20
-This gives the following status, showing the precomposed form of "=C3=84=
-":
+> Those are just guesses, but if we are tickling a bug in perl's parser,
+> this might avoid them. I also wondered when "/r" appeared. It was in
+> 5.14, so you're presumably good there.
 
-    git status --short
-     M "\303\204"
-   =20
-Running git add with both forms does work as expected:
+If I just remove the "r" at the end of "s/\\/\//gr", I get with both
+Perl versions:
 
-    git add =C3=84
-    git status --short
-    M  "\303\204"
-   =20
-    git reset HEAD -- =C3=84
-   =20
-    git add $(iconv -f utf-8 -t utf-8-mac <<< =C3=84)
-    git status --short
-    M  "\303\204"
-   =20
-    git reset HEAD -- =C3=84
-   =20
-However, running git diff only works with the precomposed form:
+Can't modify non-lvalue subroutine call at t/t9700/test.pl line 36.
 
-    git status --short
-     M "\303\204"
-   =20
-    git --no-pager diff -- =C3=84
-    [...shows diff...]
-   =20
-    git --no-pager diff -- $(iconv -f utf-8 -t utf-8-mac <<< =C3=84)
-    [...shows NO diff...]
+> The "use" statement at the top of
+> the script says "5.008", so perhaps we should be writing it out longhand
+> anyway (that version is "only" 5 years old, so I suspect there are still
+> systems around with 5.12 or older).
 
-I took a look at the Git source code, and the builtin/diff*.c do not co=
-ntain the parse_options call (which does the precompose_argv call) that=
- the other builtins use.
+Yeah, it would work.
 
-But I am not really familiar with either C or the Git project structure=
-, so this may not mean anything.=20
-
-Best regards,
-Alexander Rinass
+Thanks,
+Christian.
