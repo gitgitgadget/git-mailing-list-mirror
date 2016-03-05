@@ -1,86 +1,67 @@
-From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: [PATCH] fetch-pack: update the documentation for "<refs>..." arguments
-Date: Sat,  5 Mar 2016 16:34:04 -0300
-Message-ID: <1457206444-26134-1-git-send-email-gabrielfrancosouza@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fetch-pack: update the documentation for "<refs>..." arguments
+Date: Sat, 05 Mar 2016 11:35:42 -0800
+Message-ID: <xmqqvb50u38x.fsf@gitster.mtv.corp.google.com>
 References: <xmqqd1r8vjqi.fsf@gitster.mtv.corp.google.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 20:34:39 2016
+	<1457206444-26134-1-git-send-email-gabrielfrancosouza@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 20:35:50 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acHyI-0005lJ-OL
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 20:34:39 +0100
+	id 1acHzR-0006LU-B8
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 20:35:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbcCETeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 14:34:36 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:33167 "EHLO
-	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbcCETee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2016 14:34:34 -0500
-Received: by mail-yw0-f180.google.com with SMTP id b72so65698554ywe.0
-        for <git@vger.kernel.org>; Sat, 05 Mar 2016 11:34:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0CAHTg1brAt0w3mSMk7f6AbPfT7hbWfJxldizR7Hstk=;
-        b=DOOP8IN+jkwjT3o9XC6HJVkAZxV2Q8w3GHXVY4K3ZdXkDlsqk2/S481tCLyOI4s2g7
-         DO/90C2pBCiPpPjqu8UhyiiWDHufWT38rLUSbgFa9prYLtxBmZHbQi2suvT7bdodwce2
-         Q5n44D8fExjrvqMGWZwEzCyqpWzyfKXF8rCb8Li2iLXREw8MZWo+c2h77veQe3mC7cwN
-         rYOCx3IBKLmApzERf0Z4/NOozDKllCAsRCJ2xOedgcE4E4P5ROi4OyBXU+hZH97PgkKK
-         /8BiN4Z3vv3Pw1w+PmZhIr/R0/aaOuEUhPOytNhzKDOY9tyT1GZnPuIKkiIOnpJlM3R9
-         2l3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=0CAHTg1brAt0w3mSMk7f6AbPfT7hbWfJxldizR7Hstk=;
-        b=kb3ccN6solLgQ15ZDfmIyphCu4hX6UvRcVbDTF1GFtDbaCDWFdc2AbKyL96yAKyjkI
-         rTjxbPOvyC7jYRpKzXXDiQWRSNpL7S7ZUdO0ge5+dVLt6/uWrcOARHWpdtDRDpD2qVXC
-         eP6zs1GJVwblnq4M/HOdC8xDdBZ5cw31Fl9VqhMajQneND/bWTDreAXnFlvtpMbj2WAu
-         mmtu5kfwVndXyCMzQqwN/ASngH7DDcLvU31KNl9DKgfNGiBFT15xbd87Mvd3YR2S3ni1
-         DVmyjjCUUe4GyGjnQJ1hrjxo9VhiKgvwhKF1nPJbZeoPYMFUC4JZgPAWpgLMAJP2R3lP
-         8DaA==
-X-Gm-Message-State: AD7BkJIVdYfpgV7ZcPvQAq7BhXGtdCu+ogcWh5kird+xA1EAFlKoGDsaKpA5GmekFu2tgw==
-X-Received: by 10.129.17.66 with SMTP id 63mr8541994ywr.122.1457206473727;
-        Sat, 05 Mar 2016 11:34:33 -0800 (PST)
-Received: from ghost.localdomain ([201.82.54.180])
-        by smtp.gmail.com with ESMTPSA id u134sm7022466ywf.48.2016.03.05.11.34.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 05 Mar 2016 11:34:32 -0800 (PST)
-X-Mailer: git-send-email 2.7.2
-In-Reply-To: <xmqqd1r8vjqi.fsf@gitster.mtv.corp.google.com>
+	id S1750756AbcCETfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2016 14:35:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54553 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750724AbcCETfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2016 14:35:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77B1F4AA19;
+	Sat,  5 Mar 2016 14:35:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8RyTzOqG73tbU0uPToDt7luF+RA=; b=kdWtPv
+	EZ+qWYHamL58KzHr76fytHr/QcwyoWb8bZEWfY6g3hXclGEUTUP6TaezJDTt0nZU
+	WnYgp2JC6w3kKXkV6wZiAMl/6DKCzGyX5PeD7p4EWqQnX2I67mnfVQWEBYZ2pADx
+	2M692zzA18pa8a7S+elKM4QkR8nhv/He8MPZ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M7KZWeN5RvpuBvpjNTRPT6GYF0KG2H88
+	I4BQeS1OwnCTax41KXxCmteNlkvA26AIasrgP6GbVtPEl5UqeXlQkkLK13rEr/s3
+	4XO30GQeX8X1niv8GfXRDsBFMxTQSXQ7CjzPuMDf0YXF1Dw8XPBpESLB8BpRTb34
+	DOlYO7YYhTA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F1214AA18;
+	Sat,  5 Mar 2016 14:35:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E15BE4AA15;
+	Sat,  5 Mar 2016 14:35:43 -0500 (EST)
+In-Reply-To: <1457206444-26134-1-git-send-email-gabrielfrancosouza@gmail.com>
+	(Gabriel Souza Franco's message of "Sat, 5 Mar 2016 16:34:04 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 73A91DE2-E309-11E5-9802-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288324>
 
-When we started allowing an exact object name to be fetched from the
-command line, we forgot to update the documentation.
+Gabriel Souza Franco <gabrielfrancosouza@gmail.com> writes:
 
-Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
----
- Documentation/git-fetch-pack.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+> When we started allowing an exact object name to be fetched from the
+> command line, we forgot to update the documentation.
+>
+> Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
+> ---
 
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-index 8680f45..239623c 100644
---- a/Documentation/git-fetch-pack.txt
-+++ b/Documentation/git-fetch-pack.txt
-@@ -104,6 +104,10 @@ be in a separate packet, and the list must end with a flush packet.
- 	The remote heads to update from. This is relative to
- 	$GIT_DIR (e.g. "HEAD", "refs/heads/master").  When
- 	unspecified, update from all heads the remote side has.
-++
-+If the remote has enabled the options `uploadpack.allowTipSHA1InWant` or
-+`uploadpack.allowReachableSHA1InWant`, they may alternatively be 40-hex
-+sha1s present on the remote.
- 
- SEE ALSO
- --------
--- 
-2.7.2
+Thanks for resending ;-)
