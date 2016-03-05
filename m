@@ -1,88 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Resumable clone
-Date: Sat, 05 Mar 2016 10:40:01 -0800
-Message-ID: <xmqqk2lgvke6.fsf@gitster.mtv.corp.google.com>
-References: <CANtyZjSJf5_xbsBC5tUaazFT3uiEgJnx2_kHLwYwKcn50Jy_qg@mail.gmail.com>
-	<CACsJy8CESL6vH22mGSLRE1OKTEbGz2Vqmsv5bY3mn_E+03wADw@mail.gmail.com>
-	<xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] strbuf_getwholeline: NUL-terminate getdelim buffer on error
+Date: Sat, 5 Mar 2016 13:43:30 -0500
+Message-ID: <20160305184330.GA7534@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kevin Wern <kevin.m.wern@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 19:40:12 2016
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 05 19:43:44 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acH7c-0003t4-95
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 19:40:12 +0100
+	id 1acHAx-0005mO-OH
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 19:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbcCESkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 13:40:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65204 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750717AbcCESkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2016 13:40:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 813F54A11D;
-	Sat,  5 Mar 2016 13:40:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DjXRKdgmTlnqq4/p4eW6Ur0qq5A=; b=BDvSZC
-	HKTINmC7jB5TiFv73LOX0DkI5n9Gap88aj4QTbzaWeknlTKj9Kyf8muUkPoN7lig
-	Wdmr1wM317MZ3H1JoOAekQHmz8v7C8Z+XDDkZ5lw0d4r9jDfKZujH8Wqz3Tf/kiS
-	dE1lL6NQfMY1gXn3lkdLjxGgN5jTe7RIKUyO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s3M9KY27FLUULCfSj3yJCdcy8iNI8V1H
-	IPfmSqznMh6JGpOa3ZfPpN1LL6iCtQCFSZQUS5zJ9BU4eCgj0lhsRznF/wCxyFQ0
-	ky7nJ67RYB9dfgUhGOrZih+68CBgVYSt8gNYXYpAPTEMgLgaaWaMy61o7BfK7z85
-	9m5yVk8j5YQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7788C4A11C;
-	Sat,  5 Mar 2016 13:40:04 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 778074A11A;
-	Sat,  5 Mar 2016 13:40:03 -0500 (EST)
-In-Reply-To: <xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 05 Mar 2016 10:31:50 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AC9DBFCA-E301-11E5-A68D-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1750955AbcCESnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2016 13:43:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55257 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750940AbcCESnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2016 13:43:33 -0500
+Received: (qmail 2770 invoked by uid 102); 5 Mar 2016 18:43:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Mar 2016 13:43:32 -0500
+Received: (qmail 11106 invoked by uid 107); 5 Mar 2016 18:43:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Mar 2016 13:43:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Mar 2016 13:43:30 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288319>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Commit 0cc30e0 (strbuf_getwholeline: use getdelim if it is
+available, 2015-04-16) tries to clean up after getdelim()
+returns EOF, but gets one case wrong, which can lead in some
+obscure cases to us reading uninitialized memory.
 
-> So what remains?  Here is a rough and still slushy outline:
->
->  - A new method, prime_clone(), in "struct transport" for "git
->    clone" client to first call to learn the location of the
->    "alternate resource" from the server.
->
->    ...
->    - The format of the returned "answer" needs to be designed.  It
->      must be able to express:
->
->      - the location of the resource, i.e. a URL;
->
->      - the type of resource, if we want this to be extensible.  I
->        think we should initially limit it to "a single full history
->        .pack", so from that point of view this may not be absolutely
->        necessary, but we already know that we may want to say "go
->        there and you will find an old-style bundle file" to support
->        the kernel.org CDN, and we may also want to support Jeff's
->        "split bundle" or Shawn's ".info" file.  A resource poor
->        (read: personal) machine that hosts a personal of a popular
+After getdelim() returns -1, we re-initialize the strbuf
+only if sb->buf is NULL. The thinking was that either:
 
-Sorry for a typo: s/of a/fork &/;
+  1. We fed an existing allocated buffer to getdelim(), and
+     at most it would have realloc'd, leaving our NUL in
+     place.
 
->        project might want to name a "git clone" URL for that popular
->        project it forked from (e.g. "Clone Linus's repository from
->        kernel.org and then come back here for incremental fetch").
+  2. We didn't have a buffer to feed, so we gave getdelim()
+     NULL; sb->buf will remain NULL, and we just want to
+     restore the empty slopbuf.
+
+But that second case isn't quite right. getdelim() may
+allocate a buffer, write nothing into it, and then return
+EOF. The resulting strbuf rightfully has sb->len set to "0",
+but is missing the NUL terminator in the first byte.
+
+Most call-sites are fine with this. They see the EOF and
+don't bother looking at the strbuf. Or they notice that
+sb->len is empty, and don't look at the contents. But
+there's at least one case that does neither, and relies on
+parsing the resulting (possibly zero-length) string:
+fast-import. You can see this in action with the new test
+(though we probably only notice failure there when run with
+--valgrind or ASAN).
+
+We can fix this by unconditionally resetting the strbuf when
+we have a buffer after getdelim(). That fixes case 2 above.
+Case 1 is probably already fine in practice, but it does not
+hurt for us to re-assert our invariants (especially because
+we are relying on whatever getdelim() happens to do, which
+may vary from platform to platform). Our fix covers that
+case, too.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Not a big rush for 2.8.0-rc, as the bug is in v2.5.0, and I doubt
+there's an easy trigger besides fast-import. But it might be harmless
+enough to squeeze in.
+
+ strbuf.c               | 8 +++++++-
+ t/t9300-fast-import.sh | 4 ++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/strbuf.c b/strbuf.c
+index f60e2ee..2c08dbb 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -481,9 +481,15 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+ 	if (errno == ENOMEM)
+ 		die("Out of memory, getdelim failed");
+ 
+-	/* Restore slopbuf that we moved out of the way before */
++	/*
++	 * Restore strbuf invariants; if getdelim left us with a NULL pointer,
++	 * we can just re-init, but otherwise we should make sure that our
++	 * length is empty, and that the result is NUL-terminated.
++	 */
+ 	if (!sb->buf)
+ 		strbuf_init(sb, 0);
++	else
++		strbuf_reset(sb);
+ 	return EOF;
+ }
+ #else
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 4c5f3c9..25bb60b 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -55,6 +55,10 @@ test_expect_success 'empty stream succeeds' '
+ 	git fast-import </dev/null
+ '
+ 
++test_expect_success 'truncated stream complains' '
++	echo "tag foo" | test_must_fail git fast-import
++'
++
+ test_expect_success 'A: create pack from stdin' '
+ 	test_tick &&
+ 	cat >input <<-INPUT_END &&
+-- 
+2.8.0.rc1.318.g2193183
