@@ -1,91 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Diff filename has trailing tab if filename contains space
-Date: Fri, 04 Mar 2016 16:32:00 -0800
-Message-ID: <xmqqa8mdydbz.fsf@gitster.mtv.corp.google.com>
-References: <CAHtLG6TLAOA0hg897EntOjG1kJsZEmjDshc-yyO9zP27540AAg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Sat, 5 Mar 2016 07:43:37 +0700
+Message-ID: <CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+ <20160304055117.GB26609@ikke.info> <1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
+ <20160304115634.GC26609@ikke.info> <CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
+ <xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 01:32:12 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 01:44:16 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ac08g-0008Q6-Jz
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 01:32:10 +0100
+	id 1ac0KN-0006ds-HK
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 01:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759066AbcCEAcF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2016 19:32:05 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64251 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755567AbcCEAcD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2016 19:32:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 851FD49582;
-	Fri,  4 Mar 2016 19:32:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ETBeTdYFfe5M
-	cnSvRj44depALew=; b=oF3OqWgL/ZlHd0ZpnVNGQ41lM4lpy5Lit5wzX+E5LN0E
-	N9LgiVk195vuTmv/TtX3ohlNg1UvAYtCeLQtB6j40fspjfb2yBeCqd569FLWGvl3
-	K3x56oXI7v9fozMZaCNi37LaqBIXVcS5vsniiybmQl3oLUU5fSpzEik7onWneAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=StuIim
-	yyJrScKS6I7VV5eoHlspzNaJHaTOofzrgripdw3yiLLucR4lrBxOnUuX6S3Q92t/
-	H2WAx7ResMrjJ/7Pcwr3/MjepsExwOAfWXkzuPe+E53ThqzQdGzIpyKZue8yvQKc
-	P2W9Ew6A+Hsv9SmyoCvEQFEZ3TjJiHdlfqkQU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7750A49581;
-	Fri,  4 Mar 2016 19:32:02 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BDF124957F;
-	Fri,  4 Mar 2016 19:32:01 -0500 (EST)
-In-Reply-To: <CAHtLG6TLAOA0hg897EntOjG1kJsZEmjDshc-yyO9zP27540AAg@mail.gmail.com>
-	(=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Sat, 5 Mar 2016 07:50:32
- +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ADAE3900-E269-11E5-BFA2-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1759694AbcCEAoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 19:44:10 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:35597 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755567AbcCEAoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 19:44:09 -0500
+Received: by mail-lb0-f179.google.com with SMTP id bc4so78848961lbc.2
+        for <git@vger.kernel.org>; Fri, 04 Mar 2016 16:44:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FtJdGjdLvuDF4Iydq5/cs1ZA3I8aHL6sHXYvwME8rCY=;
+        b=mB6rxVm4rxUwDZK7PinERVPtIFTAAbotOhnEfXkXzRwy13B6W9yE6o+pAQOjnPlcKO
+         jCAn0H0t0ZNkashWQd/cx7F6Pkd4WM8DEJow2tjvkct0l9CtpTvPAXzdrRahLsQH6xDX
+         B1lhIE9UzS5vIlzDC5Ay9SLt8HH7+KHlN7Epuc2b5O5o7cnQxTjWj2WlONA4zeIAWWYY
+         hp2+0A8t/6qTRybi5TkuJCEymHAIfwegpsHvdCnNJNxwWheQ/WIYxbbhJKkOZYMw0tIU
+         /92QhKKQoFfJS9PsxJAPMk3IK2ePNt6lNiXaBQcAQWQCi0J210QGiMv+LZNH2c0ymBBo
+         VTDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FtJdGjdLvuDF4Iydq5/cs1ZA3I8aHL6sHXYvwME8rCY=;
+        b=DhaKeiWEGSWB730kjQuswHrpSkTnqECsJrjDGp21tIzRP4YpIWvMkBWhf9ktXcxDXz
+         +x1KrAX/97fhcEjlmq8aDUnHkIuhwT3ldDUR+a+DNcAlqroxBCzB/5G35dlM26XX+rcC
+         N8djCdoB7xjSOXd2cJU6yhGmqFObkcCFOIBoUWDKeuA6QQU2LiOdyuLsAfQDMMCEhlP2
+         sy9zb1zhIVN8ySfPeLImMNsLz0N9sIoTXYrI5/M2Mc+7rJt+HyfdUIUm1irzCx333j4s
+         BaZgXFaWaajnbjmkg75zlr2ftVUm3xafVrKUb3bLeHmKce7sF6cmJhVc0kvh4mf5dhtG
+         kvaQ==
+X-Gm-Message-State: AD7BkJKkOtXOmUjeG+tCGP/rx0eUMNRhBy5jvlpbngpoJdSE2Fl5NCnE6NTjOwa9fqie493xaWfj3RPYDKGKEw==
+X-Received: by 10.25.157.213 with SMTP id g204mr4334856lfe.112.1457138647391;
+ Fri, 04 Mar 2016 16:44:07 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Fri, 4 Mar 2016 16:43:37 -0800 (PST)
+In-Reply-To: <xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288284>
 
-=E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
-
-> Hi,
+On Sat, Mar 5, 2016 at 12:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> Using git 2.7.1
+>> On Fri, Mar 4, 2016 at 6:56 PM, Kevin Daudt <me@ikke.info> wrote:
+>>> Verified that it's different in 2.7.0, but 2.7.2 gives expected output.
+>>
+>> Thanks. 2.7.1 reverts the faulty commit from 2.7.0 that generated two
+>> other regression reports before this one. I guess it's all good then
+>> (except for the people still on 2.7.0)
 >
-> Diff filename has trailing tab if filename contains space
+> Are we good at 2.8.0-rc0, too?  Somehow I had an impression that we
+> queued "another attempt to do it differently" or something.
+>
+>  ... goes and looks ...
+>
+>     $ rungit maint status -suall
+>     ?? baz/quux/corge/wibble.txt
+>     ?? baz/quux/grault.txt
+>     ?? foo/bar.txt
+>     $ rungit master status -suall
+>     ?? baz/quux/corge/wibble.txt
+>     ?? baz/quux/grault.txt
+>     ?? baz/waldo.txt
+>     ?? foo/bar.txt
+>     ?? foo/garply.txt
 
-Thanks; that is very much deliberate and has been with us forever.
+If you swap a60ea8f and bac65a2 so that we can have tracing even
+without the problematic commit a60ea8f (dir.c: fix match_pathname() -
+2016-02-15). Without a60ea8f I got
 
-commit 1a9eb3b9d50367bee8fe85022684d812816fe531
-Author: Junio C Hamano <junkio@cox.net>
-Date:   Fri Sep 22 16:17:58 2006 -0700
+GIT_TRACE_EXCLUDE=1 ~/w/git/temp/git status -suall 2>&1 >/dev/null
+|grep waldo
+07:25:05.639445 dir.c:952               exclude: baz/waldo.txt vs * at
+line 1 => yes
 
-    git-diff/git-apply: make diff output a bit friendlier to GNU patch =
-(part 2)
-   =20
-    Somebody was wondering on #git channel why a git generated diff
-    does not apply with GNU patch when the filename contains a SP.
-    It is because GNU patch expects to find TAB (and trailing timestamp=
-)
-    on ---/+++ (old_name and new_name) lines after the filenames.
-   =20
-    The "diff --git" output format was carefully designed to be
-    compatible with GNU patch where it can, but whitespace
-    characters were always a pain.
-   =20
-    This adds an extra TAB (but not trailing timestamp) to old_name
-    and new_name lines of git-diff output when the filename has a SP
-    in it.  An earlier patch updated git-apply to prepare for this.
-   =20
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
+(meaning, baz/waldo.txt matches "*" rule and is decided to be excluded)
+
+with a60ea8f
+
+> /tmp/abc $ GIT_TRACE_EXCLUDE=1 ~/w/git/temp/git status -suall 2>&1 >/dev/null |grep waldo
+07:25:24.425125 dir.c:952               exclude: baz/waldo.txt vs /baz
+at line 4 => no
+
+the decision is not taken earlier from line "!/baz" and it's decided
+to be re-included. Which I would argue is the correct thing because
+you ask to re-include the whole directory "baz". It should behave this
+way because exclude rules without '!' behave this way.
+
+Because positive any negative rules can be nested, by adding a rule to
+reinclude what's inside baz..
+
+    *
+    !/foo
+    !/foo/bar.txt
+    !/baz
+    /baz/*
+    !/baz/quux
+    !/baz/quux/**/*
+
+you'll get baz/waldo.txt excluded.
+
+Yes it's a behavior change. I think the old behavior is unintended.
+But it's probably out there long enough that many .gitignore files may
+rely on it and by making it right, I break them. Whether to revert the
+series is up to you. Let me know if I should send the revert patch.
+-- 
+Duy
