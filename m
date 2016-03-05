@@ -1,141 +1,101 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Making git apply always work relative to current directory
-Date: Sat, 5 Mar 2016 19:42:00 +0000
-Message-ID: <20160305194200.GB48536@vauxhall.crustytoothpaste.net>
-References: <20160305181125.GA48536@vauxhall.crustytoothpaste.net>
- <xmqq4mckvhzq.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
+Date: Sat, 05 Mar 2016 13:18:21 -0800
+Message-ID: <xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>
+References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
+	<1455207366-24892-1-git-send-email-tboegi@web.de>
+	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>
+	<56DA896A.3050201@web.de>
+	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
+	<56DA986B.6040003@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FkmkrVfFsRoUs1wW"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 20:42:14 2016
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 05 22:18:31 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acI5d-000136-BR
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 20:42:13 +0100
+	id 1acJao-00071s-Ni
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 22:18:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbcCETmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 14:42:09 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49756 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750966AbcCETmH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Mar 2016 14:42:07 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1750859AbcCEVS0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Mar 2016 16:18:26 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56282 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750832AbcCEVSZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Mar 2016 16:18:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD78A48D72;
+	Sat,  5 Mar 2016 16:18:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=hJlHsIxD7CJV
+	mtvAw9t825oEwKM=; b=U6ATpsPEwsyI0gBl9ValUqqhtR+OvVzSR+XG3zlLNluN
+	spE8HhSfORojG5EjMNDvg+TI9pliHniq6Lb/u40TFcilw+wLdm/1gKX8ov4UxLpn
+	/GYPeiE+fg9JijQ9lHbfc1y11MT7YoJretQu4UzXCTwObfgGPsT8PFe6H0T8LjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CJsAu7
+	pQfXKHHfxRJTgPhMBZZ/yCR4YJ88tBhaejgMT6ANKMo9F3CozAQ9EplIeFqthFDp
+	vId0HI7SBOAS8rIssib7Tr8JMSgozsmsquB3H6cMyrd9n0lFf0YbGGR84QPkAKcJ
+	jX7uLcXGzaoU8EgVth9uTsbYbjCr3ZnYACWE8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C2D7348D71;
+	Sat,  5 Mar 2016 16:18:23 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3E20E282A1;
-	Sat,  5 Mar 2016 19:42:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1457206926;
-	bh=YcsQq/HRDOgEkWzV7TqPJ0O26IgtLDQxNSDWWPtF1lw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GLJ5Ww06MD9lRtHPZon+ah0UUt+fBVGL1xrj8avT4FSSvCNf7U7u52fJcNb2tkCnc
-	 lmMNgyPZtgUemTo5L3KJIiqSHS5vivcUxgUBY598oL5SEN+zM0W1T895GinDAPNrLQ
-	 YtUz3XrZ3mOt0x82tPdyKLmWHD1lJjlJ9rDo1IOM8NgSiDo7gVCAN2E5eCg72R9TNb
-	 YiJYYaz7yIChx3jTOIO5rscxe0xywhwqbK/wJtAUwXogqm6dqvTT0yrI4Lgex8lf+Y
-	 081n3bzrRxZ8QNIJ/NQuGGTMa4xytFZvdao9pmhhZoT9PNb8nSaIzpYVMEgIiCoBWG
-	 PkSAnaE/vTCFQc8vuj2J0DhssxfcpSm3BpkVqKHitwPyJiXQ5QrbtRb+HR0FP+k0aP
-	 k2eGHYD8kNI7NrmPDOfUDEqi6QPL5QHjj9WwNDgFWTaT73cRqItrHw2UGzj6Lc056H
-	 7MsAX5fTuD97M8ROZ3vdEhyYNNhLZIt40y6Ur9xLvyNtmrIU+W6
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqq4mckvhzq.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.4.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8B2A48D70;
+	Sat,  5 Mar 2016 16:18:22 -0500 (EST)
+In-Reply-To: <56DA986B.6040003@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 5 Mar 2016 09:27:23 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CAA6FE76-E317-11E5-84E9-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288327>
 
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
---FkmkrVfFsRoUs1wW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> When the user has CRLF data in the index and the user tell the
+>> attribute system so that the next "add" would result in "fixing" the
+>> indexed lines to be terminated with LF, "diff-files" _should_ show
+>> that correction as a change, I think.
+> Fair enough.
+> There are 2 users here:
+> User 1 commits files with CRLF into the index, and later decides
+> to set the "text eol=3Dcrlf" attribute on it, without normalizing the=
+ repo.
+>
+> User 2 does a simple "git clone", which includes checkout.
+> Running "git diff" tells user 2, that his work tree is dirty.
+>
+> My conclusion is, that we could suppress the normalization for text f=
+iles,
+> (as we do it for core.autocrlf with the new safer CRLF handling)
+> meaning that "git diff" and "git status" is clean and that files stay=
+ with CRLF
+> in the index.
+> Does this make sense ?
 
-On Sat, Mar 05, 2016 at 11:31:53AM -0800, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > If I run git apply --no-index --verbose <patch>, it succeeds in both
-> > cases, but when I'm in the git repository, it *silently does nothing*.
->=20
-> That originally sounded peculiar to me and I suspected it to be a
-> bug, but it looks like a designed-in feature and with us since
->=20
-> commit edf2e37002eeb30a2ccad5db3b3e1fe41cdc7eb0
-> Author: Junio C Hamano <junkio@cox.net>
-> Date:   Fri Nov 25 23:14:15 2005 -0800
->=20
->     git-apply: work from subdirectory.
->    =20
->     When applying a patch to index file, we need to know where GIT_DIR is;
->     use setup_git_directory() to find it out.  This also allows us to work
->     from a subdirectory if we wanted to.
->    =20
->     When git-apply is run from a subdirectory, it applies the given patch
->     only to the files under the current directory and below.
->    =20
->     Signed-off-by: Junio C Hamano <junkio@cox.net>
->=20
-> So exclusion by use_patch() for paths outside the current directory
-> seems to be a feature; the log message does not say "why", but if I
-> have to guess, the reasoning was probably "The old world order was
-> that the command has to always be run from the top level.  A user
-> who wants to run it from a subdirectory must be doing so for a
-> reason, e.g. 'I am currently working in this directory, do not touch
-> outside this area'".  In any case, I suspect that the existing tooling
-> people built over the past 10 years around "git apply" already depends
-> on this behaviour, so we cannot lightly change it.
+Your example is for these two users to have conflicting settings on
+the line ending, but if user 1 commits files in latin-1 to a project
+where in-project data is expected to be UTF-8 and working tree files
+can be in latin-1, with necessary conversion done via clean/smudge
+filter, the user 2 would see a very similar symptom, wouldn't s/he?
 
-I was planning to add a --here option (maybe spelled
---current-directory) that would change that behavior, since I figured
-that people would be relying on the current behavior.  The man page
-clearly indicates that some people are using it as a better GNU patch,
-so an option that does that might be useful.
+So I am not sure how your example supports a hack that treats CRLF
+conversion as something special among other conversions, without
+doing anything about clean/smudge filter.
 
-Regardless, I'd say that --verbose should cause git apply to say
-something.  I'm not a newbie with Git, and I spent about an hour trying
-to figure this out.  I've also been bitten by it before elsewhere.
-
-> Is it so hard to temporarily go up to the root, run "git apply", and
-> come back?  You can use "--no-index --directory=3Dtrash" for both
-> cases that way.
-
-The existing code used patch until we realized that older versions of
-GNU patch can't apply certain git diffs.  It's not super easy to change
-it, but I suppose we could.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---FkmkrVfFsRoUs1wW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.11 (GNU/Linux)
-
-iQIcBAEBCgAGBQJW2zaIAAoJEL9TXYEfUvaLuvIP+gMkFyVw2izmvaiD0JdQLJXV
-32QZSnMY/kEveplNluK5t+hkTXIDqxv6YmxrlVudUX/ipo5q5LERps016Nbft4tl
-LKrZh2lzEYtOCWULERrNUm5gpe3c3tIcR2T407CFEcglkdGH/wq3HP6pa/xH/nfr
-rRwKRAsMPRYVPVoQvzWGV047jmryb+BETZFTxQsCibF+VNsht+JN+sI65sxOT9/x
-Ly/fwx9eQGYqmO+QsZnqX5wUhQLZTdrkZYpIWDMwMdQrG3OPzQ/n9SDq9+EcIRSr
-2cKtL4gqp/tCxkVpdraLlcdqjZncqq1rvxJc5Lfiji7Pd8ahB3iZzwKfxC0gjmxT
-8D7vM7qEps72NiPbCbL8sMDVZGATSDTYLEPsd6hsqGEJS1VacBhol0azYVPkvbdR
-C6ds+zhmjGcoHNUSE7GTG6OCxwLomoAl4Rc1HaBhVQfpE2JTnKikfx4xmQkgRMHb
-xqPG19jtm6ZRwcjuSB8jF9xPXTBiUqcu/zMVPN2FuRXcBCbJ/crgZ4TQQR2UbUy1
-IrJdwftnAFYWJrz/eRjmxfFCYB6ikmDLZf/jL3LcMd7xBHaRQ/FE78nEJXzuEovx
-LaW2QE914QZLB4D6S8snCAUmxK8YM7ZD6WtMeHG0ho7vhgtxAhUGTV/fsF5Ruh5D
-6oTuQcjAHATLUxm5if+7
-=GLIv
------END PGP SIGNATURE-----
-
---FkmkrVfFsRoUs1wW--
+Besides, it is OK if your status and diff says your worktree is
+dirty immediately after cloning in such a broken situation, I would
+think.  In fact, it may even be preferable to do so, in order to
+indicate that there is something unusual going on.
