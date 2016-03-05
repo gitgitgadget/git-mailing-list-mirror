@@ -1,68 +1,65 @@
 From: Dinesh Polathula <dpdineshp2@gmail.com>
 Subject: [PATCH] branch.c: Allow "-" as a short-hand for "@{-1}" in "git branch -d @{-1}"
-Date: Sat,  5 Mar 2016 16:36:16 +0530
-Message-ID: <1457175976-14732-2-git-send-email-dpdineshp2@gmail.com>
-References: <1457175976-14732-1-git-send-email-dpdineshp2@gmail.com>
+Date: Sat,  5 Mar 2016 16:42:46 +0530
+Message-ID: <1457176366-14952-1-git-send-email-dpdineshp2@gmail.com>
 Cc: Dinesh <dpdineshp2@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 05 12:06:38 2016
+X-From: git-owner@vger.kernel.org Sat Mar 05 12:13:00 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acA2e-0007TA-Gt
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 12:06:36 +0100
+	id 1acA8o-0001l3-DG
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 12:12:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760592AbcCELGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 06:06:32 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35659 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760507AbcCELGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2016 06:06:30 -0500
-Received: by mail-pf0-f172.google.com with SMTP id x188so26873582pfb.2
-        for <git@vger.kernel.org>; Sat, 05 Mar 2016 03:06:30 -0800 (PST)
+	id S1760525AbcCELMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2016 06:12:54 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35876 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759899AbcCELMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2016 06:12:52 -0500
+Received: by mail-pf0-f171.google.com with SMTP id 63so50544109pfe.3
+        for <git@vger.kernel.org>; Sat, 05 Mar 2016 03:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4IckoKDhJCN09Z2tPzJt7HW+Uq1iqcwfR2fgLddThqk=;
-        b=kFuhhBsmtOLyQbTXw4X6llgcO18etD5D+O0BuAICS9EU5iw/oNnLUBPco4Q/Jf+4U4
-         kc50oaYjrHe/0hF9ICTA7uNKQl8r7S1H3CW0VUcp2TLTEpObZ2i3YxK31lrzs438ijJD
-         pIvIMe3ladRVrFbw7TitTsa0dYu0Mi2qj2MffbmtyrI7c4tldiOj9ZdGXBoR9axIsPbt
-         rKYAN5T9HL71N8qVB9hjcvo8Gpg8830DR6X9QFjfZ/WxcHOHBXoxiXThq0AXUxZxH7CF
-         3wxkc/W7Fq2yGS0xB/YHDJEWXwe/NlcU05y1Y894dDdzLgqCiaH42Mu8o2eNEHt3ktEI
-         6keg==
+        h=from:to:cc:subject:date:message-id;
+        bh=LRe34dNe32BDI51HFmfeK7zuTPsmyv3xksWJATNUoyg=;
+        b=zko+WgUFZitSZS7SAfHPXp4s7JI+q5gR9sIThs/Tz7RdPBHjrmEFWub4JwDN3SZzv5
+         mr7x1DzfJj7bwIs4o4oOBF6lx8JL0tFSk50krWGq6zu77S/VOG6Dg3sXh8pZH3mVSe7v
+         V83hOCY8zxgJSEJ24uHhc8ZXMgG1rzZGMBdKyANgh2P/9EHS9dKuRg5tGiyLtayU2j1Y
+         m2aDTjHZNKP7xZPiSQtU/TqGiDMabYJYMpaVLvmbytDDoBg2zPIr9HKz81JL/BV4ovAZ
+         GuaD7phTkYlbBVeRMwUIR15x9QTJCuM0i/p/qEzHK9jOsofR8kU8t/Hr7eydPHhyd5gQ
+         6gJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4IckoKDhJCN09Z2tPzJt7HW+Uq1iqcwfR2fgLddThqk=;
-        b=AVAjrWk7C+6X7AC3FBuW8cQR1UXgltkw/OUJ4LCHeDXgzlugqRLwpckOLVqtDKzQGH
-         7erAD9ZWHVTLiHj1G+QjorQCIGYaiUYnjProrxFJ31TfwVPMsxWQGkztUJbV+aHGLSlS
-         aN7jxKpMkj79VjaIotWlNL75nCgS/aUShswNZIsf2YKA8g5DaOPZ3uI+z1l6tlxXINSj
-         HtzbCPL2AOJWSTqdLZ27tUgSQYgifCy2LMw0mzxJUCicTLwkw0IASyhAhjZ4mZItsc+P
-         TDGEJSRUmQmRJZ+dkCfki0I8d08R8DhS/oXmYL3wSxWmKibtGPv7BLjenqj9lJCWfp4p
-         1UAg==
-X-Gm-Message-State: AD7BkJLLCl8npOkDQKHLfGvBus+ITT33UNO3a/0oHvEn3EyWMXDrNM6bmADNfTw+QXF6yA==
-X-Received: by 10.98.70.139 with SMTP id o11mr19134259pfi.123.1457175990164;
-        Sat, 05 Mar 2016 03:06:30 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LRe34dNe32BDI51HFmfeK7zuTPsmyv3xksWJATNUoyg=;
+        b=Us+FcvcajyK1f53fDWJFRoL/VWh4lY1ljNuKz3nH8Fw3GvM3YQKkOn0sOB0WYbmeDh
+         EefLlTe2THJiAFQN2AAB5dxEJNQlsPIy1S5OiUuCRyd9NdHKEB+eLVb4YdPpmBa4pH1C
+         It9Dn2bdAXG/Edbr8MRTXwjjtiLchK9nUScOhEEyLFLfJTVJnhkTXJrPujwS+p+e4awa
+         vt8nS8BFclzIu5uG85a/S8yFBSMdpmdzySLM3NGDhMXOTXOA3ZUbrOYEX9F4APQy6eRa
+         8hrK8J2PvSeyqEwyfMeFxER9IEJXnbP3GCVESDNOXLT0vzueoJoqvZHUJ7+f7DtB16ek
+         EBng==
+X-Gm-Message-State: AD7BkJI6OzW+JBnnTj9Ke9jIteUXkn9/rs9JrFyZhdxmqCWaiGX0vVxuoYpa0v/Edtm2HQ==
+X-Received: by 10.98.34.18 with SMTP id i18mr11542142pfi.26.1457176371960;
+        Sat, 05 Mar 2016 03:12:51 -0800 (PST)
 Received: from dinesh-pc.local.lan ([117.221.85.13])
-        by smtp.gmail.com with ESMTPSA id sj4sm11676466pab.43.2016.03.05.03.06.28
+        by smtp.gmail.com with ESMTPSA id f65sm11761670pfd.47.2016.03.05.03.12.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 05 Mar 2016 03:06:29 -0800 (PST)
+        Sat, 05 Mar 2016 03:12:51 -0800 (PST)
 X-Mailer: git-send-email 2.8.0.rc0
-In-Reply-To: <1457175976-14732-1-git-send-email-dpdineshp2@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288312>
 
 From: Dinesh <dpdineshp2@gmail.com>
 
-The "-" shorthand can be used as a replacement for "@{-1}" to refer 
-to the previous branch the user was on in the "git branch -d @{-1}" 
-command.Replace "-" argument with "@{-1}" when the command line 
+The "-" shorthand can be used as a replacement for "@{-1}" to refer to 
+the previous branch the user was on in the "git branch -d @{-1}" 
+command. Replace "-" argument with "@{-1}" when the command line 
 arguments are parsed.
 
 Signed-off-by: Dinesh <dpdineshp2@gmail.com>
