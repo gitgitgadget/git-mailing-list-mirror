@@ -1,67 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: update the documentation for "<refs>..." arguments
-Date: Sat, 05 Mar 2016 11:35:42 -0800
-Message-ID: <xmqqvb50u38x.fsf@gitster.mtv.corp.google.com>
-References: <xmqqd1r8vjqi.fsf@gitster.mtv.corp.google.com>
-	<1457206444-26134-1-git-send-email-gabrielfrancosouza@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] strbuf_getwholeline: NUL-terminate getdelim buffer on
+ error
+Date: Sat, 5 Mar 2016 14:36:41 -0500
+Message-ID: <20160305193640.GA20701@sigill.intra.peff.net>
+References: <20160305184330.GA7534@sigill.intra.peff.net>
+ <xmqqziucu3d7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 20:35:50 2016
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 20:36:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acHzR-0006LU-B8
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 20:35:49 +0100
+	id 1acI0O-0006nY-0W
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 20:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750756AbcCETfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 14:35:47 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54553 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750724AbcCETfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2016 14:35:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77B1F4AA19;
-	Sat,  5 Mar 2016 14:35:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8RyTzOqG73tbU0uPToDt7luF+RA=; b=kdWtPv
-	EZ+qWYHamL58KzHr76fytHr/QcwyoWb8bZEWfY6g3hXclGEUTUP6TaezJDTt0nZU
-	WnYgp2JC6w3kKXkV6wZiAMl/6DKCzGyX5PeD7p4EWqQnX2I67mnfVQWEBYZ2pADx
-	2M692zzA18pa8a7S+elKM4QkR8nhv/He8MPZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M7KZWeN5RvpuBvpjNTRPT6GYF0KG2H88
-	I4BQeS1OwnCTax41KXxCmteNlkvA26AIasrgP6GbVtPEl5UqeXlQkkLK13rEr/s3
-	4XO30GQeX8X1niv8GfXRDsBFMxTQSXQ7CjzPuMDf0YXF1Dw8XPBpESLB8BpRTb34
-	DOlYO7YYhTA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F1214AA18;
-	Sat,  5 Mar 2016 14:35:44 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E15BE4AA15;
-	Sat,  5 Mar 2016 14:35:43 -0500 (EST)
-In-Reply-To: <1457206444-26134-1-git-send-email-gabrielfrancosouza@gmail.com>
-	(Gabriel Souza Franco's message of "Sat, 5 Mar 2016 16:34:04 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 73A91DE2-E309-11E5-9802-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1750781AbcCETgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2016 14:36:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55281 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750732AbcCETgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2016 14:36:43 -0500
+Received: (qmail 5340 invoked by uid 102); 5 Mar 2016 19:36:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Mar 2016 14:36:43 -0500
+Received: (qmail 11569 invoked by uid 107); 5 Mar 2016 19:36:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Mar 2016 14:36:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Mar 2016 14:36:41 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqziucu3d7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288325>
 
-Gabriel Souza Franco <gabrielfrancosouza@gmail.com> writes:
+On Sat, Mar 05, 2016 at 11:33:08AM -0800, Junio C Hamano wrote:
 
-> When we started allowing an exact object name to be fetched from the
-> command line, we forgot to update the documentation.
->
-> Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-> ---
+> Jeff King <peff@peff.net> writes:
+> 
+> > Not a big rush for 2.8.0-rc, as the bug is in v2.5.0, and I doubt
+> > there's an easy trigger besides fast-import. But it might be harmless
+> > enough to squeeze in.
+> 
+> Was it found by a real-world debugging session, or by a code
+> inspection?  I'd be really impressed if it were the latter ;-)
 
-Thanks for resending ;-)
+Sorry to disappoint, but it was the former. :)
+
+I found (and am fixing) a _different_ bug with:
+
+  {
+	echo "tag foo"
+	echo "from HEAD:./bar"
+  } | git fast-import
+
+and I wondered if fast-import would take:
+
+  echo "tag foo from HEAD:./bar"
+
+on one line.  The answer is no, btw, but it also tickles this bug (it is
+expecting "from ..." on the next line, and handles EOF by detecting the
+empty string).
+
+-Peff
