@@ -1,88 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Change in .gitignore handling: intended or bug?
-Date: Fri, 04 Mar 2016 17:35:30 -0800
-Message-ID: <xmqq60x1yae5.fsf@gitster.mtv.corp.google.com>
-References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
-	<20160304055117.GB26609@ikke.info>
-	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
-	<20160304115634.GC26609@ikke.info>
-	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
-	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
-	<CACsJy8CcwaZ-zLX3iBKPDNkpMv5vRU=hHYFeBK7o0tnOq6uDJA@mail.gmail.com>
-	<1457139624.4135861.540124922.0A8B3F69@webmail.messagingengine.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] l10n: TEAMS: update Ralf Thielow's email address
+Date: Sat, 5 Mar 2016 11:06:37 +0800
+Message-ID: <CANYiYbFDKqLXU5GNAjan4ZzK8JM4_yoxV5xLuVYWYPi5sMfEVA@mail.gmail.com>
+References: <1457038105-4404-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, Kevin Daudt <me@ikke.info>,
-	Git Mailing List <git@vger.kernel.org>
-To: Charles Strahan <charles@cstrahan.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 02:35:43 2016
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 04:06:46 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ac18B-00089B-As
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 02:35:43 +0100
+	id 1ac2YH-0005oO-M2
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 04:06:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759066AbcCEBfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 20:35:34 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61616 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755567AbcCEBfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 20:35:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3DAD74A305;
-	Fri,  4 Mar 2016 20:35:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pRFIlsN1bHABI6RY3L+PbKia8Ic=; b=rMMdhd
-	Z2CfXqFuBgFG8d3+znC6v4/DEMi0DdvYFcO2IdO3lAFritFKcP+RG8etwZgEWfYs
-	OkCTzr2XQ3UKK4xPU9VVTSSaKtUI/uw7lGyjNMu9NpDZjBuirLfitKgTIx1nAC+x
-	pOrlNiA/mH43g0aZg/AmKGfOHU0M63karmyUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tqRnvHljHCglYuWog6ad5CCLxNr2HZyF
-	Qv2PPyasC7lwFDtVyjvPaaYmhRZVVbPdSZyaHAmb+ZpZEI5Xnkdqx9UT/tTz8XgP
-	SU0OpptKxgjHep/jnraB9Rjnb541SilTFcvFNx4ICrQEnGzsoM8Jthm5qRRKA1UO
-	jiiQwsR8pyw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 35CE44A303;
-	Fri,  4 Mar 2016 20:35:32 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF0954A302;
-	Fri,  4 Mar 2016 20:35:31 -0500 (EST)
-In-Reply-To: <1457139624.4135861.540124922.0A8B3F69@webmail.messagingengine.com>
-	(Charles Strahan's message of "Fri, 04 Mar 2016 20:00:24 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8C9385B4-E272-11E5-B569-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1759799AbcCEDGj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Mar 2016 22:06:39 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38425 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759503AbcCEDGi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Mar 2016 22:06:38 -0500
+Received: by mail-wm0-f49.google.com with SMTP id l68so12281668wml.1
+        for <git@vger.kernel.org>; Fri, 04 Mar 2016 19:06:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=3jN8Tr/eYCHgtz+/VCHRrXF8Wfn/YXGYT4eCrgadzWg=;
+        b=Y8J1S4JIlfc5v/bNqJsRvrbC5bPH3KPuDgGR82ZprOGN6X09bMYJLrcfToyChIa6Tx
+         zyPgp2twBhl2paFwI8rY5YwYtXuVDb0RXl9Yh6+fLRFEiaaeYrDXV6Nf2evL/v2dmXAr
+         x9uz4nbjAg3lmynNLjCUhzmnuJwcretyd6ORhi+4194jBuvkQgVZ80aX1tTsqQuvfSQT
+         6AnThT1svCm1pzckHk9Esl1fbrUhUUuyatk4GUyRGIPb3WDCImnX/F9wHMKrHznsRU8Y
+         NogxV2CGibjkxwiFyk4PPQGb7BwJP3fOIX/KRB2N8w309LJdvV/x7VZhwIux7rO3gV/S
+         fupA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-transfer-encoding;
+        bh=3jN8Tr/eYCHgtz+/VCHRrXF8Wfn/YXGYT4eCrgadzWg=;
+        b=JD5vuZ+9NeZWzzlAG4JG7FiM9S1yfaCPkSjamXSZoQrT+MK6JPS56DkDBG9+EAJd09
+         NMf8zhAMh9QmrkSFadtAS0Ol8YeoF8zzSOybaQWX4fXwGZqSTbjayNHf9RCgv8nWd8lW
+         2LCISFXuYa6FOMZKuHmKDq087ugZjjeCJYbc6awYF1w02j0pTkUG+engPMLWKzLiwkYS
+         Pi/99dom29+8U67NQ4drgmby00muMh21Os7kcuJ5ULICmCzzriqNDD2n4yU30siqSZGr
+         CiLaS/81ap/WGyQxfwBMum6xkozfE10xDSrw1jEbFuKizuhFOAHRTlh8wf7N3jw0mv7z
+         HAkg==
+X-Gm-Message-State: AD7BkJJHEapkN2duVs/frHhmrrFYwOHTw1oM+S9ZNU+3KVOu7wd6bf7uH/BejrldOEWxG1KpILB2JqJ5Q9jZ3A==
+X-Received: by 10.28.138.149 with SMTP id m143mr1895849wmd.94.1457147197224;
+ Fri, 04 Mar 2016 19:06:37 -0800 (PST)
+Received: by 10.194.54.8 with HTTP; Fri, 4 Mar 2016 19:06:37 -0800 (PST)
+In-Reply-To: <1457038105-4404-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288291>
 
-Charles Strahan <charles@cstrahan.com> writes:
+That's fine.  Already pulled to git-po.
 
-> ...as Duy suggests, I think the new behavior makes a bit
-> more sense.
-
-After re-reading your original example, I am inclined to agree with
-this.
-
-> Either way, of course, I'd like for it to not change back and
-> forth between releases :).
+2016-03-04 4:48 GMT+08:00 Ralf Thielow <ralf.thielow@gmail.com>:
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  po/TEAMS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Perhaps just an announcement of the new behavior would suffice -
-> 2.7.0 has been out for a while anyway. If people were going to
-> complain, I figure they would have done so by now.
+> diff --git a/po/TEAMS b/po/TEAMS
+> index df12b58..56274ad 100644
+> --- a/po/TEAMS
+> +++ b/po/TEAMS
+> @@ -11,7 +11,7 @@ Leader:               Alex Henrie <alexhenrie24@gma=
+il.com>
+>
+>  Language:      de (German)
+>  Repository:    https://github.com/ralfth/git-po-de
+> -Leader:                Ralf Thielow <ralf.thielow@googlemail.com>
+> +Leader:                Ralf Thielow <ralf.thielow@gmail.com>
+>  Members:       Thomas Rast <tr@thomasrast.ch>
+>                 Jan Kr=C3=BCger <jk@jk.gs>
+>                 Christian Stimming <stimming@tuhh.de>
+> --
+> 2.8.0.rc0.159.g391b917
+>
 
-Yup, I think a documentation update to clarify how positive and
-negative ignore patterns interact with each other may be necessary,
-with some examples.
 
-Care to work on a patch?
 
-Thanks.
+--=20
+Jiang Xin
