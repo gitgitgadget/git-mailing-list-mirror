@@ -1,143 +1,95 @@
-From: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-Subject: [PATCH v4] fetch-pack: fix object_id of exact sha1
-Date: Fri,  4 Mar 2016 22:11:38 -0300
-Message-ID: <1457140298-2400-1-git-send-email-gabrielfrancosouza@gmail.com>
-References: <20160304005000.GA1074@sigill.intra.peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 05 02:12:02 2016
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 2/2] xdiff/xprepare: fix a memory leak
+Date: Sat, 5 Mar 2016 01:19:18 +0000
+Message-ID: <56DA3416.10707@ramsayjones.plus.com>
+References: <56DA15FA.1090601@ramsayjones.plus.com>
+ <xmqqegbpyf94.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 02:20:07 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ac0lF-0004Jw-Oc
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 02:12:02 +0100
+	id 1ac0t5-00007C-2N
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 02:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759765AbcCEBL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 20:11:58 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:32964 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759049AbcCEBL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 20:11:57 -0500
-Received: by mail-yk0-f172.google.com with SMTP id z13so29950606ykd.0
-        for <git@vger.kernel.org>; Fri, 04 Mar 2016 17:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lvwv3nae3lYyoVmlNxOgDYRich9scQpO4H3sQsw0gKU=;
-        b=NusjTog+ULxBqXnCYSuhn6nKd8wSYwFrXEkjlNLJlv6OP2JFAUa5SG+tANIsUhvSvl
-         IdVwHR2u1FrkcApTLkH4trxiOpL/WKdJD5EXiAo9KV1++1DlRC97dFpOFOpPqsXUI93j
-         AKYn5dSi/Wgpwgd5vtaS0+6Mn2n8gQ+O473s9UlSYKHP3NAT84iih1TAwMLXJe/oD0Ev
-         sljyc3RdoN6DK+Zh2z8/NW0RoiEDEG8A7NwSpFiW+EIcIa3/OsNboR+W7gyskN8uL8X0
-         yWZoMpNMyU/SiI3QNxu+EEnJ+U3jHPdhdFXcw1GnDC5ZxWXZiv8/c0+50s3qdg3JYRSS
-         ZdGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=lvwv3nae3lYyoVmlNxOgDYRich9scQpO4H3sQsw0gKU=;
-        b=W+uVGOz4N2+cS19qlATilH0vrRbbrgcZhBtcTWL58Pf1bdxQxfgUQxDCgBgk5WEBGP
-         N6scZLaDuXwSEQ5HDzSLNAWNUCTwoEvt9kmLIXHWka8NCpUMvWP9q9ky6jDTAmuMFOGU
-         nZZpVbr1tRSZsv96h3YJuj5qO7H2VojnDOQitIB3OogvpB2sSo7g2scmvKRqhh23Ty5L
-         EEO4AShTpGwsHwH9KwGXVuFbkz2RE1aD/rrVE3To2+oxxPlOot0zc4O2q+kVB8jUvYFq
-         hVQ77oYNYuEeBoD4xn6LkIMsmE6dhUDR1+rqkAGrOjwrrv5fIVHJc7rU/kP+9HHR1rwb
-         yZNg==
-X-Gm-Message-State: AD7BkJJ+1P/h3E+kke/YIEJn3IZBuw9QAM4qh5CIJRAk/x7iZrLehWw+wOJmvzNXbE31OA==
-X-Received: by 10.37.64.204 with SMTP id n195mr3174435yba.63.1457140316371;
-        Fri, 04 Mar 2016 17:11:56 -0800 (PST)
-Received: from ghost.localdomain ([201.82.54.180])
-        by smtp.gmail.com with ESMTPSA id u190sm4833751ywd.17.2016.03.04.17.11.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 04 Mar 2016 17:11:55 -0800 (PST)
-X-Mailer: git-send-email 2.7.2
-In-Reply-To: <20160304005000.GA1074@sigill.intra.peff.net>
+	id S1759691AbcCEBTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 20:19:24 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:53579 "EHLO
+	avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755989AbcCEBTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 20:19:23 -0500
+Received: from [10.0.2.15] ([80.189.40.55])
+	by avasout02 with smtp
+	id S1KL1s0041BQLD4011KMSF; Sat, 05 Mar 2016 01:19:21 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=COHXJkfD c=1 sm=1 tr=0
+ a=LVbmpxbf7ppclCt3pfQTng==:117 a=LVbmpxbf7ppclCt3pfQTng==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
+ a=EBOSESyhAAAA:8 a=NeTxBt9OS_FiriEu9mAA:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <xmqqegbpyf94.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288288>
 
-Commit 58f2ed0 (remote-curl: pass ref SHA-1 to fetch-pack as well,
-2013-12-05) added support for specifying a SHA-1 as well as a ref name.
-Add support for specifying just a SHA-1 and set the ref name to the same
-value in this case.
 
-Signed-off-by: Gabriel Souza Franco <gabrielfrancosouza@gmail.com>
----
- Documentation/git-fetch-pack.txt |  4 ++++
- builtin/fetch-pack.c             | 16 +++++++++++++---
- t/t5500-fetch-pack.sh            | 14 ++++++++++++++
- 3 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
-index 8680f45..239623c 100644
---- a/Documentation/git-fetch-pack.txt
-+++ b/Documentation/git-fetch-pack.txt
-@@ -104,6 +104,10 @@ be in a separate packet, and the list must end with a flush packet.
- 	The remote heads to update from. This is relative to
- 	$GIT_DIR (e.g. "HEAD", "refs/heads/master").  When
- 	unspecified, update from all heads the remote side has.
-++
-+If the remote has enabled the options `uploadpack.allowTipSHA1InWant` or
-+`uploadpack.allowReachableSHA1InWant`, they may alternatively be 40-hex
-+sha1s present on the remote.
- 
- SEE ALSO
- --------
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 79a611f..50c9901 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -16,10 +16,20 @@ static void add_sought_entry(struct ref ***sought, int *nr, int *alloc,
- 	struct ref *ref;
- 	struct object_id oid;
- 
--	if (!get_oid_hex(name, &oid) && name[GIT_SHA1_HEXSZ] == ' ')
--		name += GIT_SHA1_HEXSZ + 1;
--	else
-+	if (!get_oid_hex(name, &oid)) {
-+		if (name[GIT_SHA1_HEXSZ] == ' ') {
-+			/* <sha1> <ref>, find refname */
-+			name += GIT_SHA1_HEXSZ + 1;
-+		} else if (name[GIT_SHA1_HEXSZ] == '\0') {
-+			/* <sha1>, leave sha1 as name */
-+		} else {
-+			/* <ref>, clear cruft from oid */
-+			oidclr(&oid);
-+		}
-+	} else {
-+		/* <ref>, clear cruft from get_oid_hex */
- 		oidclr(&oid);
-+	}
- 
- 	ref = alloc_ref(name);
- 	oidcpy(&ref->old_oid, &oid);
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index e5f83bf..9b9bec4 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -531,6 +531,20 @@ test_expect_success 'shallow fetch with tags does not break the repository' '
- 		git fsck
- 	)
- '
-+
-+test_expect_success 'fetch-pack can fetch a raw sha1' '
-+	git init hidden &&
-+	(
-+		cd hidden &&
-+		test_commit 1 &&
-+		test_commit 2 &&
-+		git update-ref refs/hidden/one HEAD^ &&
-+		git config transfer.hiderefs refs/hidden &&
-+		git config uploadpack.allowtipsha1inwant true
-+	) &&
-+	git fetch-pack hidden $(git -C hidden rev-parse refs/hidden/one)
-+'
-+
- check_prot_path () {
- 	cat >expected <<-EOF &&
- 	Diag: url=$1
--- 
-2.7.2
+On 04/03/16 23:50, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> The xdl_prepare_env() function may initialise an xdlclassifier_t
+>> data structure via xdl_init_classifier(), which allocates memory
+>> to several fields, for example 'rchash', 'rcrecs' and 'ncha'.
+>> If this function later exits due to the failure of xdl_optimize_ctxs(),
+>> then this xdlclassifier_t structure, and the memory allocated to it,
+>> is not cleaned up.
+>>
+>> In order to fix the memory leak, insert a call to xdl_free_classifier()
+>> before returning.
+>>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>  xdiff/xprepare.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+>> index 5ffcf99..13b55ab 100644
+>> --- a/xdiff/xprepare.c
+>> +++ b/xdiff/xprepare.c
+>> @@ -301,6 +301,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+>>  
+>>  		xdl_free_ctx(&xe->xdf2);
+>>  		xdl_free_ctx(&xe->xdf1);
+>> +		xdl_free_classifier(&cf);
+>>  		return -1;
+>>  	}
+> 
+> This looks obviously correct from the pattern of prepare's and
+> free's in the code that this part follows.  This potential leak has
+> been that way since 3443546f (Use a *real* built-in diff generator,
+> 2006-03-24), i.e. the very beginning.
+> 
+> I find it somewhat strange that the call to xdl_free_classifier() at
+> the end of this function is made conditional to XDF_HISTOGRAM_DIFF,
+> though.  I can half-buy the argument "that is because we do not call
+> init-classifier for XDF_HISTOGRAM_DIFF", but in the error path we
+> call free-classifier unconditionally, so the code clearly knows that
+> it is safe to call free-classifier on a classifier that is cleared
+> with the initial memset(&cf, 0, sizeof cf).
+
+Indeed, this is actually why I noticed that XDF_DIFF_ALG() wasn't used.
+Rather than doing patch #1, I did consider making this call unconditional.
+I can't remember why I didn't. (Hmm, perhaps I just chickened out! ;-))
+
+ATB,
+Ramsay Jones
