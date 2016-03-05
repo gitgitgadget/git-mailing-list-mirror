@@ -1,95 +1,88 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 2/2] xdiff/xprepare: fix a memory leak
-Date: Sat, 5 Mar 2016 01:19:18 +0000
-Message-ID: <56DA3416.10707@ramsayjones.plus.com>
-References: <56DA15FA.1090601@ramsayjones.plus.com>
- <xmqqegbpyf94.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Fri, 04 Mar 2016 17:35:30 -0800
+Message-ID: <xmqq60x1yae5.fsf@gitster.mtv.corp.google.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+	<20160304055117.GB26609@ikke.info>
+	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
+	<20160304115634.GC26609@ikke.info>
+	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
+	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
+	<CACsJy8CcwaZ-zLX3iBKPDNkpMv5vRU=hHYFeBK7o0tnOq6uDJA@mail.gmail.com>
+	<1457139624.4135861.540124922.0A8B3F69@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 02:20:07 2016
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, Kevin Daudt <me@ikke.info>,
+	Git Mailing List <git@vger.kernel.org>
+To: Charles Strahan <charles@cstrahan.com>
+X-From: git-owner@vger.kernel.org Sat Mar 05 02:35:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ac0t5-00007C-2N
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 02:20:07 +0100
+	id 1ac18B-00089B-As
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 02:35:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759691AbcCEBTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Mar 2016 20:19:24 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:53579 "EHLO
-	avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755989AbcCEBTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Mar 2016 20:19:23 -0500
-Received: from [10.0.2.15] ([80.189.40.55])
-	by avasout02 with smtp
-	id S1KL1s0041BQLD4011KMSF; Sat, 05 Mar 2016 01:19:21 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=COHXJkfD c=1 sm=1 tr=0
- a=LVbmpxbf7ppclCt3pfQTng==:117 a=LVbmpxbf7ppclCt3pfQTng==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=N659UExz7-8A:10
- a=EBOSESyhAAAA:8 a=NeTxBt9OS_FiriEu9mAA:9 a=pILNOxqGKmIA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
-In-Reply-To: <xmqqegbpyf94.fsf@gitster.mtv.corp.google.com>
+	id S1759066AbcCEBfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Mar 2016 20:35:34 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61616 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755567AbcCEBfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Mar 2016 20:35:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3DAD74A305;
+	Fri,  4 Mar 2016 20:35:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pRFIlsN1bHABI6RY3L+PbKia8Ic=; b=rMMdhd
+	Z2CfXqFuBgFG8d3+znC6v4/DEMi0DdvYFcO2IdO3lAFritFKcP+RG8etwZgEWfYs
+	OkCTzr2XQ3UKK4xPU9VVTSSaKtUI/uw7lGyjNMu9NpDZjBuirLfitKgTIx1nAC+x
+	pOrlNiA/mH43g0aZg/AmKGfOHU0M63karmyUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tqRnvHljHCglYuWog6ad5CCLxNr2HZyF
+	Qv2PPyasC7lwFDtVyjvPaaYmhRZVVbPdSZyaHAmb+ZpZEI5Xnkdqx9UT/tTz8XgP
+	SU0OpptKxgjHep/jnraB9Rjnb541SilTFcvFNx4ICrQEnGzsoM8Jthm5qRRKA1UO
+	jiiQwsR8pyw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 35CE44A303;
+	Fri,  4 Mar 2016 20:35:32 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF0954A302;
+	Fri,  4 Mar 2016 20:35:31 -0500 (EST)
+In-Reply-To: <1457139624.4135861.540124922.0A8B3F69@webmail.messagingengine.com>
+	(Charles Strahan's message of "Fri, 04 Mar 2016 20:00:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8C9385B4-E272-11E5-B569-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288289>
 
+Charles Strahan <charles@cstrahan.com> writes:
 
+> ...as Duy suggests, I think the new behavior makes a bit
+> more sense.
 
-On 04/03/16 23:50, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> The xdl_prepare_env() function may initialise an xdlclassifier_t
->> data structure via xdl_init_classifier(), which allocates memory
->> to several fields, for example 'rchash', 'rcrecs' and 'ncha'.
->> If this function later exits due to the failure of xdl_optimize_ctxs(),
->> then this xdlclassifier_t structure, and the memory allocated to it,
->> is not cleaned up.
->>
->> In order to fix the memory leak, insert a call to xdl_free_classifier()
->> before returning.
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>  xdiff/xprepare.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
->> index 5ffcf99..13b55ab 100644
->> --- a/xdiff/xprepare.c
->> +++ b/xdiff/xprepare.c
->> @@ -301,6 +301,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
->>  
->>  		xdl_free_ctx(&xe->xdf2);
->>  		xdl_free_ctx(&xe->xdf1);
->> +		xdl_free_classifier(&cf);
->>  		return -1;
->>  	}
-> 
-> This looks obviously correct from the pattern of prepare's and
-> free's in the code that this part follows.  This potential leak has
-> been that way since 3443546f (Use a *real* built-in diff generator,
-> 2006-03-24), i.e. the very beginning.
-> 
-> I find it somewhat strange that the call to xdl_free_classifier() at
-> the end of this function is made conditional to XDF_HISTOGRAM_DIFF,
-> though.  I can half-buy the argument "that is because we do not call
-> init-classifier for XDF_HISTOGRAM_DIFF", but in the error path we
-> call free-classifier unconditionally, so the code clearly knows that
-> it is safe to call free-classifier on a classifier that is cleared
-> with the initial memset(&cf, 0, sizeof cf).
+After re-reading your original example, I am inclined to agree with
+this.
 
-Indeed, this is actually why I noticed that XDF_DIFF_ALG() wasn't used.
-Rather than doing patch #1, I did consider making this call unconditional.
-I can't remember why I didn't. (Hmm, perhaps I just chickened out! ;-))
+> Either way, of course, I'd like for it to not change back and
+> forth between releases :).
+>
+> Perhaps just an announcement of the new behavior would suffice -
+> 2.7.0 has been out for a while anyway. If people were going to
+> complain, I figure they would have done so by now.
 
-ATB,
-Ramsay Jones
+Yup, I think a documentation update to clarify how positive and
+negative ignore patterns interact with each other may be necessary,
+with some examples.
+
+Care to work on a patch?
+
+Thanks.
