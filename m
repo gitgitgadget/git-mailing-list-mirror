@@ -1,78 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow "-" as a short-hand for "@{-1}" for branch deletion
-Date: Sat, 05 Mar 2016 00:06:52 -0800
-Message-ID: <xmqqpov9wdpf.fsf@gitster.mtv.corp.google.com>
-References: <1457163546-11970-1-git-send-email-dpdineshp2@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
+Date: Sat, 5 Mar 2016 09:27:23 +0100
+Message-ID: <56DA986B.6040003@web.de>
+References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
+ <1455207366-24892-1-git-send-email-tboegi@web.de>
+ <xmqqy4arw089.fsf@gitster.mtv.corp.google.com> <56DA896A.3050201@web.de>
+ <xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Dinesh Polathula <dpdineshp2@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 05 09:07:00 2016
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 05 09:27:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ac7Ep-0001Bs-Dd
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 09:06:59 +0100
+	id 1ac7Yn-0003Dg-2S
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Mar 2016 09:27:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbcCEIG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Mar 2016 03:06:56 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56746 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751491AbcCEIGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Mar 2016 03:06:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9A84C3F525;
-	Sat,  5 Mar 2016 03:06:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KnJ3uiGHt1Zo8o2GfyjXWU9Ytas=; b=NhvIlF
-	WfhE66NXY73XksnYlnmdj2zQZrg2sdzXZ8UF01P5FAG1evfRWFyLP7ZTkofhFtPf
-	XGaYTHGKihpxComQia+U1iMoqyyjyT3zUTtBqfsEdzbE5ZDQsGkAhLXqgZEOyNN+
-	xQ9q5jfVPI+gBUcSUEXT6GnqLjdDbVYYqoNCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CaDG1hBK2m1EhxZImF1Jh7CAlvrrGLpx
-	OeZ9fqPsHAXMbPQfk+AnsXVQx81JejaVa2bsrbDlcVyZqp5VEsCmLZA9DTmt52j9
-	ga7yGjvVlIQcU3LdXgMInc6RuceM6aBwAXqUiPkO35WkQDBcHx7NoBKw+kcwSwc/
-	+MVtFHY9Bzo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 91D4C3F523;
-	Sat,  5 Mar 2016 03:06:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 17AA23F522;
-	Sat,  5 Mar 2016 03:06:53 -0500 (EST)
-In-Reply-To: <1457163546-11970-1-git-send-email-dpdineshp2@gmail.com> (Dinesh
-	Polathula's message of "Sat, 5 Mar 2016 13:09:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 38922574-E2A9-11E5-BD63-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1759531AbcCEI1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Mar 2016 03:27:33 -0500
+Received: from mout.web.de ([212.227.15.4]:60722 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754342AbcCEI1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Mar 2016 03:27:31 -0500
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0M2ZtN-1ZmdUv2F6b-00sOpA; Sat, 05 Mar 2016 09:27:24
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.6.0
+In-Reply-To: <xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:sk/1OR01aevHeeTB2h5maDsvdIIxCRAJdiyMGsvIArAfhx2pbOn
+ z2Kx/HipfcPelgnP8Y1/y5eGOrzzuWTS4KOAx7wh59eQnWj0Q3lkqIiJRzYE4VknwkVr1PG
+ pB0wWr0+KA4QdzFFcqkLQTmdwUjXUMDFCVyE12EIku1xByp0LfY/gbzHGnX1erkxMnD1vp6
+ c1FxjcJ72qaQg/1X9hr6A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e9JsKmEzNzQ=:AbWj5QuEg/WbDNfSHqTWIl
+ keZf4UzcTrviXmQdHwEl5QH0P4XSeHWXF250JAeIOWgMYRfihdrRO5P54g2T0xJRIJ0+wbO/o
+ xdBIFMH0hCpCo0jomBR4zrGQ+MB4nmmBe7oUU6zPUJhlgFIxXiywnDewuE12rIE5zrPs71HhT
+ wGBh29ZxPjoTav3Et72tAQiNJh5rX84fUh48n0Z9Bpw/odEmee/TH7q2lpano6Anl+ihjRmBU
+ ZwfW7ggrJ9Ic5u/NInjfGqDMy2RG+lY6F6yRFy0E4wypGEYPKh+/F+uDSs7tjiTFOob9BFDxj
+ BuG3s9mhPEU7pW3q/SRHsU7QZ3SbVmtoH7eTYplqhkADyUJf0M+SybqcpSl8SaqIepMDsRpdv
+ FgQ267OhZQ8I8t7xTFltM73MZaSLMJY6OvztycO4Hh2JQQ14HfpTuEiwaPVpHUUp95WTqO8El
+ TMcnvO3azoreJRrIttXhcozBNOogrxbRXkCs8yzmMfKzgq051SWssA3Oc0rOfRMkLcsizfog0
+ 5YRFdZD4K+UVqYobb+c7Ydd7o4tu7nPE4cnX5D9WIRMxxt9eCNiZ58Q21IMaeOcfUTy3axVY9
+ tKv27bKRit+hxuD8adREPk7zMqEiwSpYIvQRigLarnL4kc8zkHzBb4Az6fHbVurp1/PKGUZi3
+ czI0UCHHIErUBvFZaWFV3RdT4TYdGX7dSIlg4rLf+HFrPiXEO8FX4dfXIDMHEw+mJPWFk7IgN
+ MMs/aTdaVKVj0EO94IR0YTOnhBXKGorw61uL6QpT4SuRp091r4l0+Zj9AlexnO7NOMCFRtdC 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288304>
 
-Dinesh Polathula <dpdineshp2@gmail.com> writes:
 
-> From: Dinesh <dpdineshp2@gmail.com>
+> I do not think I can endorse this approach, as I cannot explain why
+> it could possibly make sense to treat as if CRLF conversion is
+> somehow special among all the convert_to_git()/convert_to_worktree()
+> conversions, which your patch does to the diff code.
 >
-> ***
-> This patch allows the usage of "-" as a short-hand for "@{-1}" in "git branch -d @{-1}".
+> Comparisons between contents from two tree objects and comparisons
+> between contents from a tree object and the index must happen
+> without conversion, and comparisons between contents from the tree
+> in the HEAD commit and contents from the working tree must be done
+> in line with the HEAD vs index comparison to serve as a preview of
+> what would happen after adding the contents taken from the working
+> tree to the index, which means we should compare what is in the
+> index (without conversion) and the result of running the whole
+> convert_to_git() conversion on what is in the working tree.  It
+> feels fundamentally wrong to apply only CRLF conversion without any
+> other conversion, whether the direction of the conversion is from
+> worktree to git or the other way around, when comparing two things.
 >
-> Note : This is a microproject that is part of the Google Summer of Code application process.
-> I am interested in working on the git Beginner mode implementation as part of Google Summer of Code. The mentor details for this particular project are not available on the Ideas page. The mentors are likely on this mailing list, so I request the mentors to drop me a mail so I can get in contact with you to further discuss the git Beginner mode project.
+> When the user has CRLF data in the index and the user tell the
+> attribute system so that the next "add" would result in "fixing" the
+> indexed lines to be terminated with LF, "diff-files" _should_ show
+> that correction as a change, I think.
+Fair enough.
+There are 2 users here:
+User 1 commits files with CRLF into the index, and later decides
+to set the "text eol=crlf" attribute on it, without normalizing the repo.
 
-Please fill your lines to reasonable length like 70 columns or so,
-in your code, in your proposed log messages, and in your e-mail.
+User 2 does a simple "git clone", which includes checkout.
+Running "git diff" tells user 2, that his work tree is dirty.
 
-> ***
->
-> Dinesh (1):
->   branch.c: Allow "-" as a short-hand for "@{-1}" in "git branch -d
->     @{-1}"
->
->  builtin/branch.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+My conclusion is, that we could suppress the normalization for text files,
+(as we do it for core.autocrlf with the new safer CRLF handling)
+meaning that "git diff" and "git status" is clean and that files stay with CRLF
+in the index.
+Does this make sense ?
