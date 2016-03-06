@@ -1,135 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: Resumable clone
-Date: Sun, 6 Mar 2016 08:59:10 +0100 (CET)
-Message-ID: <alpine.DEB.2.20.1603060831570.3152@virtualbox>
-References: <CANtyZjSJf5_xbsBC5tUaazFT3uiEgJnx2_kHLwYwKcn50Jy_qg@mail.gmail.com> <CACsJy8CESL6vH22mGSLRE1OKTEbGz2Vqmsv5bY3mn_E+03wADw@mail.gmail.com> <xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com>
+Date: Sun, 6 Mar 2016 15:49:49 +0700
+Message-ID: <CACsJy8Donxwx0LE0jDwpLbS4D-m4JzWne29GHAG0jfh2CH3pdQ@mail.gmail.com>
+References: <CANtyZjSJf5_xbsBC5tUaazFT3uiEgJnx2_kHLwYwKcn50Jy_qg@mail.gmail.com>
+ <CACsJy8CESL6vH22mGSLRE1OKTEbGz2Vqmsv5bY3mn_E+03wADw@mail.gmail.com>
+ <xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1603060831570.3152@virtualbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Kevin Wern <kevin.m.wern@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 06 08:59:37 2016
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 06 09:50:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acTbE-0005VL-IB
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 08:59:36 +0100
+	id 1acUOP-0003eu-TK
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 09:50:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751136AbcCFH7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2016 02:59:20 -0500
-Received: from mout.gmx.net ([212.227.17.20]:62938 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751035AbcCFH7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2016 02:59:19 -0500
-Received: from virtualbox ([37.24.143.87]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MQu9K-1aRw0E0D54-00UNsf; Sun, 06 Mar 2016 08:59:12
- +0100
-X-X-Sender: virtualbox@virtualbox
-In-Reply-To: <xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Provags-ID: V03:K0:5qda6NBm4/7q70FYbmKJfjyAcspXQgg5JqzBeldmtSeBY6NbSqH
- nIQ1MQJwnTEneWUIWOOjNw04TLrosIGjLWXJ8qiS9m2W/25hPTXNHTGm55Z+3sFGUYm/GvZ
- 3/s9Ej2lyFr4HabDkljH/sO3nN4IcBrEPRaaqIAHFulP6dERvCqn4bjRnybCj09Ps32rh1a
- V+fJ8LvhruzImCc+hMjIQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J6KppFyx89o=:e+4lU/zI6nr5wJEavu2qMQ
- yVi5X8K6CU1TM44Xa5Th/koKXH/msqdqSwuiHlORExiejvvF69M0rDP9w7Ll68P1lXtoMLgFR
- lymzIchBlDHQ1Jxq/7iGaTPsHvS0MmSv1aBr/8Fs7jsvMvkGgis6aVvyIVN3gX4U9kRERUnbZ
- +4ZLUNRE3ULB7rdFNckKLwdpiyNQ7hjXDmamZBaw/NAnaqPB+eEVHjIOJtSEH0Oc4xC3kMqYp
- eq+Kg5TXbXO8rvQHPlphKjFh9JagT8PHm0i89WqkqSpkZbWUCyuuH+ZE+boCetwf8okv0fV2d
- G3uddKt+vLjNXJf1t3cj5jgNB5UVMf2SPgqzKM25cVnsKLG6PFu/OTe1VB+gYyrc8P6pyH8HQ
- mTw3vf+/FujRuZ1uwYrRtP2UOt64+Ty4y+aL8gapu24BZKIBokjEYEAh1Z+o8O0QKgiTvvfIY
- L39WSNeKF/pZUS4fifbWAtXgneeBVqhN6nYMwT2YsGs8YrPd7yUUb4xgUGiaBPK/CncFpyB/S
- TtQD61J9ALEfZXJlWqlcfKhLbvzFrrGTI9qEzurpm4x52lsouR/n5reNZ+RKl/w9LuhQa4rPd
- yim+wRDOuo/WVH2aR0txR1+WWH6vODIccjlPdwMvOmRnIk1Rf8ngiA0Vp5i67hJ4Wr21pxQ8h
- nypqYAFhTjltNsKkoo1PV+kkFNEo+ABZeFnGFP/EmVmMnS7a4iQ7dzM7+s3UfVwJjmVLBwYei
- 58Krq2DiNBi6dE1kl7sPjR3Lr0MHYGbUCU5rVdalWeZJ/JMMx34VYlZbhdpPqM/f/D2AFiQ8 
+	id S1751156AbcCFIuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2016 03:50:21 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:33430 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbcCFIuV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2016 03:50:21 -0500
+Received: by mail-lb0-f169.google.com with SMTP id k15so101667559lbg.0
+        for <git@vger.kernel.org>; Sun, 06 Mar 2016 00:50:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=N5eJbwpi0bTF3agie9a5+F4N8MRVOw/h4tjeWhMQ9cs=;
+        b=C3Q84VUALiySp3dL1GXtdkd0nmG53DOlito26jE/wmYExC+930yZMBwYu8kUA3kmN9
+         Umx7BmjuhaA0ZDKQHmpgvb93t0EVy8uIT9I/Xh2OAA15si8rrh43jfYFK/cU8KzR54q9
+         MIAOcdVCaxfINEdvPJcTU/zFoAXOhgbrNLc/2Lf3VY9FzZj5kFC3AiQVyILMAWzpsAAK
+         hRsoryf6a1KLWqdiLpMbCDppzQXRIaR+vUAvQogt40t6fDJPs4Uh8GhE7ELEkEkOTV9m
+         4YTLsSwdwW26fuLWNzYHS/NdnQlIpF6YkLktKB7tRUKv6kU9aMkbL4JLc1o9v3yLKzHQ
+         Y5gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=N5eJbwpi0bTF3agie9a5+F4N8MRVOw/h4tjeWhMQ9cs=;
+        b=IFZbf9+lsVSO3vBmkQCaQ+fr4qzSsZweTEw6W50ny+WboAJq97nl6/bqUYoTCoNi/D
+         Jw0UFe57oV3hnkcHsWwo/5GL3EMtL4vd3AnnBKnMV4d49+EkkdRrFRZMjaoYh4KIHPI2
+         O+eZzbbnFnsL0rmLLjV4xYV1Yf4eL6PlJtYGUq4qv57g26ZyvPvbAtQOkC3SGvj12PS/
+         r7fRRyPDj1Keq2ZiQaz47nyuOs7DzwhAKfxLeDI2N+RCiuOyplBX8baJTI5CUovbCL/F
+         ynfile0OWekTikw11FeHEVIQnYsVEIOIMVMkXm7hHZRdbaTvpkfsVupsavChOh8T9Q5j
+         d+Dw==
+X-Gm-Message-State: AD7BkJKL48FWcvM/FROiVWcNHp/U6F4K6jhxbASFXEd77hJoZ3VY0lm66ft3kDqRfGuuZyPjN5xc/oc1UJU7rw==
+X-Received: by 10.25.161.131 with SMTP id k125mr5898952lfe.83.1457254219263;
+ Sun, 06 Mar 2016 00:50:19 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Sun, 6 Mar 2016 00:49:49 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.20.1603060831570.3152@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288339>
 
-Hi Junio & Duy,
+On Sun, Mar 6, 2016 at 2:59 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> First of all: my main gripe with the discussed approach is that it uses
+> bundles. I know, I introduced bundles, but they just seem too klunky and
+> too static for the resumable clone feature.
 
-On Sat, 5 Mar 2016, Junio C Hamano wrote:
+One thing Junio didn't mention in his summary is the use of pack
+bitmap [1]. Jeff talked about GitHub specific needs, but I think it
+has values even outside of GitHub: if people store some secret refs in
+the initial pack (e.g. hidden by ref namespace, or in reflog - imagine
+someone committed a password and did a reset --hard then pushed
+again), they probably do not want to publish initial pack as-is. With
+pack bitmap, we can sort of recreate the "clean initial pack" on the
+fly relatively cheaply because all object order is stable in this
+particular pack. We go a tiny bit less static with this resume+pack
+bitmap combination.
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > Resumable clone is happening. See [1] for the basic idea, [2] and [3]
-> > for some preparation work. I'm sure you can help. Once you've gone
-> > through at least [1], I think you can pick something (e.g. finalizing
-> > the protocol, update the server side, or git-clone....)
-> >
-> > [1] http://thread.gmane.org/gmane.comp.version-control.git/285921
-> > [2] http://thread.gmane.org/gmane.comp.version-control.git/288080/focus=288150
-> > [3] http://thread.gmane.org/gmane.comp.version-control.git/288205/focus=288222
-> 
-> I think your response needs to be refined with a bit higher level
-> overview, though.  Here are some thoughts to summarize the discussion
-> and to extend it.
-> 
-> I think the right way to think about this is that we are adding a
-> capability for the server to instruct the clients: I prefer not to
-> serve a full clone to you in the usual route if I can avoid it.  You
-> can help me by going to an alternate resource and populate your
-> history first and then coming back to me for an additional fetch to
-> complete the history if you want to.  Doing so would also help you
-> because that alternate resource can be a static file (or two) that
-> you can download over a resumable transport (like static files
-> served over HTTPS).
+[1] http://thread.gmane.org/gmane.comp.version-control.git/288205/focus=288222
 
-For quite some time I considered presenting some alternate/additional
-ideas. I feel a little bad for mentioning them here because I *really*
-have no time to follow up on them whatsoever. But maybe they turn out to
-contribute something to the final solution.
+> So I wonder whether it would be possible to come up with a subset of the
+> revs with a stable order, with associated thin packs (using prior revs as
+> negative revs in the commit range) such that each thin pack weighs roughly
+> 1MB (or whatever granularity you desire). My thinking was that it should
+> be possible to follow a similar strategy as bisect to come up with said
+> list.
+>
+> The client could then state that it was interrupted at downloading a given
+> rev's pack, with a specific offset, and the (thin) pack could be
+> regenerated on the fly (or cached), serving only the desired chunk. The
+> server would then also automatically know where in the list of
+> stable-ordered revs the clone was interrupted and continue with the next
+> one.
+>
+> Oh, and if regenerating the thin pack instead of caching it, we need to
+> ensure a stable packing (i.e. no threads!). That is, given a commit range,
+> we need to (re-)generate bytewise-identical thin packs.
 
-I tried to follow the discussion as much as possible, sometimes failing
-due to time constraints, therefore I'd like to apologize in advance if any
-of these ideas have been mentioned already.
+The bytewise-identical idea is already shot down. But I like the
+splitting into multiple thin packs (and re-downloading the whole thin
+pack when failed). Multiple thin packs allow resume capability.
+Chaining thin packs saves bandwidth. And pack-objects still has
+freedom doing anything inside each thin pack. For gigantic repos and
+good-enough connections, this could work (even for fetch/pull).
 
-First of all: my main gripe with the discussed approach is that it uses
-bundles. I know, I introduced bundles, but they just seem too klunky and
-too static for the resumable clone feature.
-
-So I wonder whether it would be possible to come up with a subset of the
-revs with a stable order, with associated thin packs (using prior revs as
-negative revs in the commit range) such that each thin pack weighs roughly
-1MB (or whatever granularity you desire). My thinking was that it should
-be possible to follow a similar strategy as bisect to come up with said
-list.
-
-The client could then state that it was interrupted at downloading a given
-rev's pack, with a specific offset, and the (thin) pack could be
-regenerated on the fly (or cached), serving only the desired chunk. The
-server would then also automatically know where in the list of
-stable-ordered revs the clone was interrupted and continue with the next
-one.
-
-Oh, and if regenerating the thin pack instead of caching it, we need to
-ensure a stable packing (i.e. no threads!). That is, given a commit range,
-we need to (re-)generate bytewise-identical thin packs.
-
-Of course this stable-ordered rev list would have to be persisted when the
-server serves its first resumable clone and then extended with future
-resumable clones whenever new revisions were pushed. (And there would also
-have to be some way to evict no-longer-reachable revs, maybe by simply
-regenerating the whole shebang.)
-
-For all of this to work, the most crucial idea would be this one: a clone
-can *always* start as-is. Only when interrupted, and when the server
-supports the "resumable clone" capability, and only when "resuming"
-the clone, the client could *actually* ask for a resumable clone.
-
-Yes, this could potentially waste a bit of bandwidth on the part of the
-user with a flakey connection (because whatever was transferred during the
-first, non-resumable clone would be blown out of the window), but it might
-make it easier for us to provide a non-fragile upgrade path because the
-cloning process would still default to the current one.
-
-Food for thought?
-
-Ciao,
-Dscho
+The biggest problem I see is it's hard for rev-list to split thin
+packs based on pack size because we do not know that until
+pack-objects has consumed all revs and produced the pack.
+Approximation based on the number of objects should probably be ok
+unless there are very large blobs. But that probably should be
+addressed separately by the resurrection of Junio's split-blob series.
+-- 
+Duy
