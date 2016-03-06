@@ -1,101 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow "-" as a short-hand for "@{-1}" in "git branch -d @{-1}"
-Date: Sun, 06 Mar 2016 13:09:29 -0800
-Message-ID: <xmqqa8mbtit2.fsf@gitster.mtv.corp.google.com>
-References: <1457268494-8394-1-git-send-email-dpdineshp2@gmail.com>
-	<1457268494-8394-2-git-send-email-dpdineshp2@gmail.com>
-	<CAPig+cTHBLGjn_tnAKE2i_zv9TRxdVbNfONpxg=ZvRSz9-4t=Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Dinesh Polathula <dpdineshp2@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Mar 06 22:09:39 2016
+From: Eric Engestrom <eric@engestrom.ch>
+Subject: [PATCH] fetch: show reference pointed by new tags
+Date: Sun,  6 Mar 2016 22:34:54 +0000
+Message-ID: <1457303694-16153-1-git-send-email-eric@engestrom.ch>
+Cc: Eric Engestrom <eric@engestrom.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 06 23:35:20 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acfvm-0002mz-Rk
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 22:09:39 +0100
+	id 1achGh-0007Wp-G1
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 23:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbcCFVJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2016 16:09:34 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51878 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750848AbcCFVJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2016 16:09:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5BE874934C;
-	Sun,  6 Mar 2016 16:09:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Cw1TEy2EQtVB+Fe5hx0FQJnbPys=; b=kaYTe9
-	l7Tke16s0xXVEaiuC9chbSMQjtkRY3EwviM8hAiLtyuCkPIOKxggTrgzazolvmHV
-	E9Px6f0da3oe6twW7RNFUnryDWozslhMDTVhAPXPgfDgNSYQPlk363McmUV00Gzh
-	W0wYVITdnpFjCig4DESc2vPl6jNzDL25mpOcc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l/keNru34tW3cT3TygrCUgKPOqyP0rr8
-	Ia8k5csj6RdU6oot2g3lJDpSMsSXTqlaJirJjKjtjRLEcgByuNE9s9g5jYUtISJz
-	u1T2gdvz6sKZ1oB0Q7Y8Z4x9a19VIh5X0FO60GFqimtXKuihctQclYE308WXATIK
-	HhnkFVL3s8g=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5245C4934B;
-	Sun,  6 Mar 2016 16:09:31 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C54454934A;
-	Sun,  6 Mar 2016 16:09:30 -0500 (EST)
-In-Reply-To: <CAPig+cTHBLGjn_tnAKE2i_zv9TRxdVbNfONpxg=ZvRSz9-4t=Q@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 6 Mar 2016 14:35:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B7F62AB8-E3DF-11E5-B3CF-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751412AbcCFWfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2016 17:35:14 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:33572 "EHLO
+	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751228AbcCFWfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2016 17:35:13 -0500
+Received: by mail-wm0-f43.google.com with SMTP id l68so86328087wml.0
+        for <git@vger.kernel.org>; Sun, 06 Mar 2016 14:35:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=wPLGBrxM0jSDwTtp757guH3KRnl6xLB1fUmSHVhJlxw=;
+        b=WHddkfPWE5HX6t1Gp3+NII1SJEYrH94C65qpbL627z3wJ/lEt70VfLch/aEJUpBStu
+         F3b/LvTtfPWI2Ookrcrini1Ru0eOd8zCmZUy0zKd7+y0y8ele8CwMsxOAKbrPh/xanWe
+         MD2E6p4Qd/o1Vjgymn81OsysQRtH72grO/monY+ffYT52e5YHIteoq2l5C7tVUkLy+n6
+         pvYIz8JfXhogOyVqT9qfF9ReKohy5xOhRIIArkSMf0g0xilibmCSd8Mk8wHNwkXcSD9x
+         IpX9n4KohutDvfkrMU/ZHHIvsWah/Tucj5o4DDSB9NaEDCR7iUoMPWVqZ5wcqmTYyL6C
+         gPDQ==
+X-Gm-Message-State: AD7BkJLNoRjFQpzzFTMRpd4wWQbmK5QO0tkN8T0S5BD2NK/G+DKGN2jzhlSdZP25Xh83kA==
+X-Received: by 10.28.148.16 with SMTP id w16mr9639752wmd.90.1457303712450;
+        Sun, 06 Mar 2016 14:35:12 -0800 (PST)
+Received: from Eric-XPS.localdomain (cpc87083-finc18-2-0-cust120.4-2.cable.virginm.net. [92.238.93.121])
+        by smtp.gmail.com with ESMTPSA id lh1sm14848752wjb.20.2016.03.06.14.35.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 06 Mar 2016 14:35:11 -0800 (PST)
+X-Mailer: git-send-email 2.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288367>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Before, new tags had their names shown twice:
+ * [new tag]         v4.5-rc6   -> v4.5-rc6
 
->> +       if (argc == 3 && !strcmp(argv[2], "-"))
-> ...
-> To address these issues, it seems like a more correct place to
-> recognize "-" as an alias would be somewhere within
-> builtin/branch.d:delete_branches().
+Instead, show the hash of the commit pointed to:
+ * [new tag]         v4.5-rc6   -> fc77dbd
 
-I agree with all your review comments, and the above would also
-cover another issue you did not mention above: "git branch -d/-D"
-actually takes one or more branches to delete.
+Signed-off-by: Eric Engestrom <eric@engestrom.ch>
+---
 
-Another issue to consider is if we get a sensible error message.
+This is my first dive into git's code, so it's likely I'm not doing things
+right. The first candidate for that is the literal `7`, which should probably
+be a variable, but I couldn't find what I should use instead.
 
-What should the error message say if a user did these in a freshly
-created empty repository?
+I'd be happy to fix this for a v2 :]
 
-    $ git commit --allow-empty -m initial
-    $ git commit --allow-empty -m second
-    $ git branch side master^
-    $ git branch -d -
+Cheers,
+  Eric
 
-Currently, you would get
 
-    $ git branch -d -
-    error: branch '-' not found.
+ builtin/fetch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Is it OK to say
-
-    error: branch '@{-1}' not found.
-
-when the user never said '@{-1}' from the command line?
-
-I am not saying it _is_ a problem--it may very well be acceptable,
-as long as the users understand that '-' is merely a short-hand for
-'@{-1}'.  Either way, the log message needs to have some evidence
-that the patch author thought about the issue, the resolution the
-patch author chose for the issue, and the reason why a particular
-resolution was chosen.
-
-Thanks.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e4639d8..93b2145 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -515,6 +515,7 @@ static int update_local_ref(struct ref *ref,
+ 		if (starts_with(name, "refs/tags/")) {
+ 			msg = "storing tag";
+ 			what = _("[new tag]");
++			pretty_ref = find_unique_abbrev(ref->new_oid.hash, 7);
+ 		} else if (starts_with(name, "refs/heads/")) {
+ 			msg = "storing head";
+ 			what = _("[new branch]");
+-- 
+2.7.2
