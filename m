@@ -1,55 +1,56 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 11/15] ref-filter: add support for %(refname:dir) and %(refname:base)
-Date: Sun,  6 Mar 2016 17:34:58 +0530
-Message-ID: <1457265902-7949-12-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH 13/15] branch, tag: use porcelain output
+Date: Sun,  6 Mar 2016 17:35:00 +0530
+Message-ID: <1457265902-7949-14-git-send-email-Karthik.188@gmail.com>
 References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
+Cc: gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 06 13:05:53 2016
+X-From: git-owner@vger.kernel.org Sun Mar 06 13:05:54 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acXRY-0002Bg-Sz
+	id 1acXRZ-0002Bg-Hk
 	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 13:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbcCFMFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2016 07:05:43 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36419 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751472AbcCFMFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2016 07:05:32 -0500
-Received: by mail-pf0-f171.google.com with SMTP id 63so62817027pfe.3
-        for <git@vger.kernel.org>; Sun, 06 Mar 2016 04:05:32 -0800 (PST)
+	id S1751516AbcCFMFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2016 07:05:47 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:35601 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751458AbcCFMFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2016 07:05:36 -0500
+Received: by mail-pa0-f50.google.com with SMTP id bj10so62311367pad.2
+        for <git@vger.kernel.org>; Sun, 06 Mar 2016 04:05:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=paRm7JvQoL/D8XV96PFacFxgkfkBnXpqg6kVboA25SM=;
-        b=mMlpNiMMaJBEwdfzQjN6dfEm1ErzTL6pEV9KwQojDIqCn6t4KL+pvtnG6TLcNY1hzk
-         TKhib9OwuNN1AvB2EKC6bdFt94pWFVx0Uhn057ETz8PFJEcvpTRCVYgg9BAoM3Q68r7u
-         NfvxefqdC+DHCM73KT0XGaiVlv+Kgzx4g8JYAv6kC4nwXPFkUZSs201QWPS8AZH8uhGO
-         QGjXRufa/w7g6d7qilob74cka9r6wFYTtX/EYxZfdayhd9V9GoDFGDpDrhAVjl4qmINQ
-         acYW7GAxfA/pM5hcjVSiAc9gCmP5m5QlfeJWT40ILk8DV1pAtNrbqh9Oxr6Yb5gZqNXe
-         FVOg==
+        bh=bmj1gDYxbrn6kTO7yClK44VkxcAWYtsWHq00CnsjOgc=;
+        b=av2vq9/HYkH0JpKtEhqulc2Jl34fwkEh3nyVSoUn+Ugsu+gucWxU/wTHrT4V3hrTSa
+         I4trO4zwWuDvUO3n183lDvTDhvsQQJKvIDdBWtr8PMG+KgoucauiOSX9D4NgiBiLXZEx
+         8Xz/7+W7oUBSCRQZR8knl/Ntz7f54ebSgBxUsdTHIUsbmITn4ece4najQNfNNAedvvq3
+         tOA4x0vFaQCy+AJKHE3hxZg3m443KJGKFxRNX5mR5NDYAyQXSN4gSQqS5Lq1uB/5fWaa
+         Gz1iHHNJjc+yQbhYenvkl/+REoV4G8ZLhEyNuq0TW2EzGuMsoQuhVzaX12WvBnuApTSx
+         nCLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=paRm7JvQoL/D8XV96PFacFxgkfkBnXpqg6kVboA25SM=;
-        b=g9WRsRNn4UfY2AICld4NocUFUjH4qoerY/9UFj4AEXDVYnlh4OkwAkZR56qu4M/iEc
-         2+wdOa7dK4GzTn7PaiWCuxDevtQVtFpsbytr7t8SVnUGQk71KuGm6lcdDb9D70pKbji5
-         4NJzuy3NC3TG2RDKW6cZQzJx3bL/MDQu06dC7LOKQWM4O+MpYBb3UqRQSWw0SvEqMPeM
-         tqRZ/+pgkC1URf2yuUs/aNmAKV8lTvmE3+QahiFOTE2bu3JmHc3IiFA+wJtdsCxGX+94
-         6m54Ed6GJH6+Onmil3s41r2SmEaWq4PC7jw4quIcP/y3xv7DdXw2uLxPb52hKDGym+5o
-         vB1g==
-X-Gm-Message-State: AD7BkJLuAHc6sT7nXQ/HoaYAIR9WGbHsUlhajvKuAbkl54OeIzfGr/mQQ3hvftw6DLzAXQ==
-X-Received: by 10.98.9.92 with SMTP id e89mr26055884pfd.34.1457265931601;
-        Sun, 06 Mar 2016 04:05:31 -0800 (PST)
+        bh=bmj1gDYxbrn6kTO7yClK44VkxcAWYtsWHq00CnsjOgc=;
+        b=hKXYkZy/vvFUIK0mOWUPd0dvy6seZb/6z90R8x84gFkCD1TeS4VseIgefA0e2p4Js7
+         gcoy71SB7FCDXhu6jG6WxXZCls2akQlick9uf5wvDXiWv79BHL5VpiJzaEUSoqN8pmpU
+         j64jG7Fxs5JWgCYXBa7pM8e+gPqfJEow3P0Qx9Rsl+ubhmCsQEhCvenLs4PZjjuFugvh
+         bD+LlV/S/jchnkjiy9fMvDrJYQY6jEmbyKz5M+PsXWQwddxRPQbU9GjfCAMIwF3UaINH
+         ftYfeEpzkgsy5ugpu7ub3XZPz9JBh4lIPDSmkOHXqDoL2MN/u7kZ1UlaFjK9n+RSD7/k
+         JgMw==
+X-Gm-Message-State: AD7BkJIUdKnx3qgqzV7apG4PNWIIG/KW42HTdyLF3p0Gf3P0VKCMs5aWogu6FH0PvSR5Ig==
+X-Received: by 10.66.122.135 with SMTP id ls7mr25960232pab.59.1457265936053;
+        Sun, 06 Mar 2016 04:05:36 -0800 (PST)
 Received: from localhost.localdomain ([106.51.240.143])
-        by smtp.gmail.com with ESMTPSA id n66sm17536850pfj.39.2016.03.06.04.05.29
+        by smtp.gmail.com with ESMTPSA id n66sm17536850pfj.39.2016.03.06.04.05.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 06 Mar 2016 04:05:31 -0800 (PST)
+        Sun, 06 Mar 2016 04:05:35 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.2
 In-Reply-To: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
@@ -57,102 +58,48 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288354>
 
-Add the options `:dir` and `:base` to the %(refname) atom. The `:dir`
-option gives the directory (the part after $GIT_DIR/) of the ref without
-the refname. The `:base` option gives the base directory of the given
-ref (i.e. the directory following $GIT_DIR/refs/).
+Call ref-filter's setup_ref_filter_porcelain_msg() to enable
+translated messages for the %(upstream:tack) atom. Although branch.c
+doesn't currently use ref-filter's printing API's, this will ensure
+that when it does in the future patches, we do not need to worry about
+translation.
 
-Add tests and documentation for the same.
-
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+Written-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  4 +++-
- ref-filter.c                       | 28 +++++++++++++++++++++++++---
- t/t6300-for-each-ref.sh            |  2 ++
- 3 files changed, 30 insertions(+), 4 deletions(-)
+ builtin/branch.c | 2 ++
+ builtin/tag.c    | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 0658c3f..193e99e 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -96,7 +96,9 @@ refname::
- 	slash-separated path components from the front of the refname
- 	(e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
- 	`<N>` must be a positive integer.  If a displayed ref has fewer
--	components than `<N>`, the command aborts with an error.
-+	components than `<N>`, the command aborts with an error. For the base
-+	directory of the ref (i.e. foo in refs/foo/bar/boz) append
-+	`:base`. For the entire directory path append `:dir`.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 460f32f..8747d82 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -622,6 +622,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
  
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
-diff --git a/ref-filter.c b/ref-filter.c
-index 2393800..45f9d16 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -60,7 +60,7 @@ static struct used_atom {
- 		} objectname;
- 		enum { S_FULL, S_SHORT } symref;
- 		struct {
--			enum { R_NORMAL, R_SHORT, R_STRIP } option;
-+			enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
- 			unsigned int strip;
- 		} refname;
- 	} u;
-@@ -227,7 +227,11 @@ static void refname_atom_parser(struct used_atom *atom, const char *arg)
- 		if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
- 			atom->u.refname.strip <= 0)
- 			die(_("positive value expected refname:strip=%s"), arg);
--	} else
-+	} else if (!strcmp(arg, "dir"))
-+		atom->u.contents.option = R_DIR;
-+	else if (!strcmp(arg, "base"))
-+		atom->u.contents.option = R_BASE;
-+	else
- 		die(_("unrecognized %%(refname) argument: %s"), arg);
- }
- 
-@@ -1166,7 +1170,25 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
- 	else if (atom->u.refname.option == R_STRIP)
- 		return strip_ref_components(ref->refname, atom->u.refname.strip);
--	else
-+	else if (atom->u.refname.option == R_BASE) {
-+		const char *sp, *ep;
++	setup_ref_filter_porcelain_msg();
 +
-+		if (skip_prefix(ref->refname, "refs/", &sp)) {
-+			ep = strchr(sp, '/');
-+			if (!ep)
-+				return "";
-+			return xstrndup(sp, ep - sp);
-+		}
-+		return "";
-+	} else if (atom->u.refname.option == R_DIR) {
-+		const char *sp, *ep;
-+
-+		sp = ref->refname;
-+		ep = strrchr(sp, '/');
-+		if (!ep)
-+			return "";
-+		return xstrndup(sp, ep - sp);
-+	} else
- 		return ref->refname;
- }
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.kind = FILTER_REFS_BRANCHES;
+ 	filter.abbrev = -1;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 1705c94..82a04ed 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -373,6 +373,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
  
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index b06ea1c..36d32d7 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -53,6 +53,8 @@ test_atom head refname refs/heads/master
- test_atom head refname:short master
- test_atom head refname:strip=1 heads/master
- test_atom head refname:strip=2 master
-+test_atom head refname:dir refs/heads
-+test_atom head refname:base heads
- test_atom head upstream refs/remotes/origin/master
- test_atom head upstream:short origin/master
- test_atom head push refs/remotes/myfork/master
++	setup_ref_filter_porcelain_msg();
++
+ 	git_config(git_tag_config, sorting_tail);
+ 
+ 	memset(&opt, 0, sizeof(opt));
 -- 
 2.7.2
