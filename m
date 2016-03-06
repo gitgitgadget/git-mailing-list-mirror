@@ -1,56 +1,55 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 06/15] ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
-Date: Sun,  6 Mar 2016 17:34:53 +0530
-Message-ID: <1457265902-7949-7-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH 11/15] ref-filter: add support for %(refname:dir) and %(refname:base)
+Date: Sun,  6 Mar 2016 17:34:58 +0530
+Message-ID: <1457265902-7949-12-git-send-email-Karthik.188@gmail.com>
 References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
-Cc: gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+Cc: gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 06 13:05:44 2016
+X-From: git-owner@vger.kernel.org Sun Mar 06 13:05:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acXRP-00026H-PZ
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 13:05:44 +0100
+	id 1acXRY-0002Bg-Sz
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Mar 2016 13:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751485AbcCFMFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2016 07:05:34 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36156 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbcCFMF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2016 07:05:27 -0500
-Received: by mail-pa0-f51.google.com with SMTP id fi3so59816275pac.3
-        for <git@vger.kernel.org>; Sun, 06 Mar 2016 04:05:27 -0800 (PST)
+	id S1751511AbcCFMFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2016 07:05:43 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36419 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbcCFMFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2016 07:05:32 -0500
+Received: by mail-pf0-f171.google.com with SMTP id 63so62817027pfe.3
+        for <git@vger.kernel.org>; Sun, 06 Mar 2016 04:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e4Kt8qPtEMmLeO2DFliAJdtRDVNbfZ7LF3bdXNulKSA=;
-        b=muLJma8P3VMom45ukPIgoHrudv09krMF5056f1LM7b8+/UA2p6GH/vBktpTT4ubpmJ
-         6kzM2XXBaJ+DcKRDU2MMuGnpGsZnsWL3+Nl2WEP0aGCP01rhixxMDStca5yCJiih9kPD
-         BRqe+pswXidSt/muQ5pqocFejiM5PTdxtev049xt8C+YR1Nh6klThRRMTe5SAzxzXC39
-         Edn/9ladxYNktTqdfJkM2j++s8scdOMSxuJdSLcS80mU7ZFuWuOM0X6fUkH2QiyvvoMK
-         3MrmYWzXRZdaRg1Ok69LkYXMGvm6HAhw8WlYhWwHWeJfXG3BOKszLBaOAM1wE4OMwWFy
-         LBDA==
+        bh=paRm7JvQoL/D8XV96PFacFxgkfkBnXpqg6kVboA25SM=;
+        b=mMlpNiMMaJBEwdfzQjN6dfEm1ErzTL6pEV9KwQojDIqCn6t4KL+pvtnG6TLcNY1hzk
+         TKhib9OwuNN1AvB2EKC6bdFt94pWFVx0Uhn057ETz8PFJEcvpTRCVYgg9BAoM3Q68r7u
+         NfvxefqdC+DHCM73KT0XGaiVlv+Kgzx4g8JYAv6kC4nwXPFkUZSs201QWPS8AZH8uhGO
+         QGjXRufa/w7g6d7qilob74cka9r6wFYTtX/EYxZfdayhd9V9GoDFGDpDrhAVjl4qmINQ
+         acYW7GAxfA/pM5hcjVSiAc9gCmP5m5QlfeJWT40ILk8DV1pAtNrbqh9Oxr6Yb5gZqNXe
+         FVOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=e4Kt8qPtEMmLeO2DFliAJdtRDVNbfZ7LF3bdXNulKSA=;
-        b=f1/5IMzABXY1Vp1W61h0AORueIVkMYhvDE9Ql665ZjHUFxNaZD6A2xEx7jDasCdhkP
-         JEjKVOYp63YiZWszM6CicwiZ0UjBdIcM7bMKl13BNoDFuH+uZgMUUNPzm/mi4Yv4yhzf
-         rL1gLDUP/jXvfoRzg7nONogO1LgCKsGW511aiorJE7/0iYmDh1C/V6WUqYcD246YZ/Hr
-         UdC27pFltjIIImXUL9xQMWEdcOzjZNLKlMl3L4Y0Gv0/gMW0GLeJkwNd/CFzpAiy+bY8
-         R/C7jO1niF13aBsIFCCvCs2nRnQGqOVJYjnybe4HzoBJiiuzqYAjwf8rTdSyksKFgnI0
-         Grdg==
-X-Gm-Message-State: AD7BkJJ08MfSIWkXXwfZFC/k134JPT7RSYE+SlSzx5HXHVrFqkpH9wvDNB625al4JQ0ZBQ==
-X-Received: by 10.66.124.226 with SMTP id ml2mr25777323pab.90.1457265921571;
-        Sun, 06 Mar 2016 04:05:21 -0800 (PST)
+        bh=paRm7JvQoL/D8XV96PFacFxgkfkBnXpqg6kVboA25SM=;
+        b=g9WRsRNn4UfY2AICld4NocUFUjH4qoerY/9UFj4AEXDVYnlh4OkwAkZR56qu4M/iEc
+         2+wdOa7dK4GzTn7PaiWCuxDevtQVtFpsbytr7t8SVnUGQk71KuGm6lcdDb9D70pKbji5
+         4NJzuy3NC3TG2RDKW6cZQzJx3bL/MDQu06dC7LOKQWM4O+MpYBb3UqRQSWw0SvEqMPeM
+         tqRZ/+pgkC1URf2yuUs/aNmAKV8lTvmE3+QahiFOTE2bu3JmHc3IiFA+wJtdsCxGX+94
+         6m54Ed6GJH6+Onmil3s41r2SmEaWq4PC7jw4quIcP/y3xv7DdXw2uLxPb52hKDGym+5o
+         vB1g==
+X-Gm-Message-State: AD7BkJLuAHc6sT7nXQ/HoaYAIR9WGbHsUlhajvKuAbkl54OeIzfGr/mQQ3hvftw6DLzAXQ==
+X-Received: by 10.98.9.92 with SMTP id e89mr26055884pfd.34.1457265931601;
+        Sun, 06 Mar 2016 04:05:31 -0800 (PST)
 Received: from localhost.localdomain ([106.51.240.143])
-        by smtp.gmail.com with ESMTPSA id n66sm17536850pfj.39.2016.03.06.04.05.19
+        by smtp.gmail.com with ESMTPSA id n66sm17536850pfj.39.2016.03.06.04.05.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 06 Mar 2016 04:05:20 -0800 (PST)
+        Sun, 06 Mar 2016 04:05:31 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.7.2
 In-Reply-To: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
@@ -58,52 +57,102 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288353>
 
-Borrowing from branch.c's implementation print "[gone]" whenever an
-unknown upstream ref is encountered instead of just ignoring it.
+Add the options `:dir` and `:base` to the %(refname) atom. The `:dir`
+option gives the directory (the part after $GIT_DIR/) of the ref without
+the refname. The `:base` option gives the base directory of the given
+ref (i.e. the directory following $GIT_DIR/refs/).
 
-This makes sure that when branch.c is ported over to using ref-filter
-APIs for printing, this feature is not lost.
+Add tests and documentation for the same.
 
-Make changes to t/t6300-for-each-ref.sh to reflect this change.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c            | 4 +++-
- t/t6300-for-each-ref.sh | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ Documentation/git-for-each-ref.txt |  4 +++-
+ ref-filter.c                       | 28 +++++++++++++++++++++++++---
+ t/t6300-for-each-ref.sh            |  2 ++
+ 3 files changed, 30 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 0658c3f..193e99e 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -96,7 +96,9 @@ refname::
+ 	slash-separated path components from the front of the refname
+ 	(e.g., `%(refname:strip=2)` turns `refs/tags/foo` into `foo`.
+ 	`<N>` must be a positive integer.  If a displayed ref has fewer
+-	components than `<N>`, the command aborts with an error.
++	components than `<N>`, the command aborts with an error. For the base
++	directory of the ref (i.e. foo in refs/foo/bar/boz) append
++	`:base`. For the entire directory path append `:dir`.
+ 
+ objecttype::
+ 	The type of the object (`blob`, `tree`, `commit`, `tag`).
 diff --git a/ref-filter.c b/ref-filter.c
-index 2896cde..c8ba68f 100644
+index 2393800..45f9d16 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1039,8 +1039,10 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
- 	else if (atom->u.remote_ref == RR_TRACK) {
- 		if (stat_tracking_info(branch, &num_ours,
--				       &num_theirs, NULL))
-+				       &num_theirs, NULL)) {
-+			*s = "[gone]";
- 			return;
-+		}
+@@ -60,7 +60,7 @@ static struct used_atom {
+ 		} objectname;
+ 		enum { S_FULL, S_SHORT } symref;
+ 		struct {
+-			enum { R_NORMAL, R_SHORT, R_STRIP } option;
++			enum { R_BASE, R_DIR, R_NORMAL, R_SHORT, R_STRIP } option;
+ 			unsigned int strip;
+ 		} refname;
+ 	} u;
+@@ -227,7 +227,11 @@ static void refname_atom_parser(struct used_atom *atom, const char *arg)
+ 		if (strtoul_ui(arg, 10, &atom->u.refname.strip) ||
+ 			atom->u.refname.strip <= 0)
+ 			die(_("positive value expected refname:strip=%s"), arg);
+-	} else
++	} else if (!strcmp(arg, "dir"))
++		atom->u.contents.option = R_DIR;
++	else if (!strcmp(arg, "base"))
++		atom->u.contents.option = R_BASE;
++	else
+ 		die(_("unrecognized %%(refname) argument: %s"), arg);
+ }
  
- 		if (!num_ours && !num_theirs)
- 			*s = "";
+@@ -1166,7 +1170,25 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+ 		return shorten_unambiguous_ref(ref->refname, warn_ambiguous_refs);
+ 	else if (atom->u.refname.option == R_STRIP)
+ 		return strip_ref_components(ref->refname, atom->u.refname.strip);
+-	else
++	else if (atom->u.refname.option == R_BASE) {
++		const char *sp, *ep;
++
++		if (skip_prefix(ref->refname, "refs/", &sp)) {
++			ep = strchr(sp, '/');
++			if (!ep)
++				return "";
++			return xstrndup(sp, ep - sp);
++		}
++		return "";
++	} else if (atom->u.refname.option == R_DIR) {
++		const char *sp, *ep;
++
++		sp = ref->refname;
++		ep = strrchr(sp, '/');
++		if (!ep)
++			return "";
++		return xstrndup(sp, ep - sp);
++	} else
+ 		return ref->refname;
+ }
+ 
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 2be0a3f..a92b36f 100755
+index b06ea1c..36d32d7 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -382,7 +382,7 @@ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
- 
- test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	cat >expected <<-\EOF &&
--
-+	[gone]
- 
- 	EOF
- 	test_when_finished "git config branch.master.merge refs/heads/master" &&
+@@ -53,6 +53,8 @@ test_atom head refname refs/heads/master
+ test_atom head refname:short master
+ test_atom head refname:strip=1 heads/master
+ test_atom head refname:strip=2 master
++test_atom head refname:dir refs/heads
++test_atom head refname:base heads
+ test_atom head upstream refs/remotes/origin/master
+ test_atom head upstream:short origin/master
+ test_atom head push refs/remotes/myfork/master
 -- 
 2.7.2
