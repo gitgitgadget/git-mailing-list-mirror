@@ -1,124 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Resumable clone
-Date: Sun, 06 Mar 2016 19:55:23 -0800
-Message-ID: <xmqq37s3rlg4.fsf@gitster.mtv.corp.google.com>
-References: <CANtyZjSJf5_xbsBC5tUaazFT3uiEgJnx2_kHLwYwKcn50Jy_qg@mail.gmail.com>
-	<CACsJy8CESL6vH22mGSLRE1OKTEbGz2Vqmsv5bY3mn_E+03wADw@mail.gmail.com>
-	<xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1603060831570.3152@virtualbox>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Kevin Wern <kevin.m.wern@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 07 04:55:34 2016
+From: Alexander Rinass <alex@fournova.com>
+Subject: Re: git diff does not precompose unicode file paths (OS X)
+Date: Mon, 7 Mar 2016 08:47:47 +0100
+Message-ID: <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
+References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 08:47:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acmGa-0006lh-VU
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 04:55:33 +0100
+	id 1acpsw-0008Hl-2e
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 08:47:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039AbcCGDz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Mar 2016 22:55:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64369 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751938AbcCGDz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Mar 2016 22:55:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0FE3D4BF99;
-	Sun,  6 Mar 2016 22:55:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=LC4KIKcNG7od57Dj0dpAXb0Xzus=; b=Zv1vtGJavoBZEAyD671U
-	PfqAKvsR3Sj/uPN/3+0nu5D+I0VU4QpcfRmZEjfvuyOczZBjDBxRcw561dvwvFps
-	J6u38kJV9B+UE2lIWR0NqKEda+NjUJ/WSlCl/IcXsfQr75Fyfge/77vj83uTydl9
-	qlVKsOcwA7EsxTEzIdZkQec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=LGaAX7CV9dF2/0tteremsMg+AT09fuHHbl4uhF3SdLzH/+
-	5z1XqK9SIFFbIpb6Xjt8bJkSYtsxPofI7uJdzzWNFXs9wGyD6/EB1jCwa7M1lete
-	MiQMbgv9/flquhL7bpnQa4U3nUbEp8/MxmogQgjJk6vKKqpso00xYKMVuFEhw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F32AE4BF98;
-	Sun,  6 Mar 2016 22:55:24 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71ECC4BF95;
-	Sun,  6 Mar 2016 22:55:24 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6BDF53C8-E418-11E5-B5CF-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752072AbcCGHrR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 02:47:17 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36838 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752006AbcCGHrR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 02:47:17 -0500
+Received: by mail-wm0-f54.google.com with SMTP id n186so72676219wmn.1
+        for <git@vger.kernel.org>; Sun, 06 Mar 2016 23:47:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fournova-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Pp5jvINkCe9KcdWNQrNxRDoDmqJYu2S65GrbZa290kk=;
+        b=LeXuxEGq8f4aT2LCJrPyoLdx1q9Eb6Q+FCG6lisOZ7HtfArd/CgpjDF/Rqj/LlsVSz
+         cPX2rogh41qzRtUtK4MI49UzyFFOnHIZv4TCbb8gTBMpRUa6k3sPChkAoy/xpFzAPXKt
+         riTdQa3BtnKJT4nZoEkmSnJDzx4NliNoN5gKaprTc7C5Jw0HxFTjw2lLKEqsuKayXJF7
+         cbn73YXo/LdydApRMDisFcHU3vA5kdCkLL/QYk7gFhQPR6/Vo9C7EWH2R6ogRC16Iuzl
+         bIaFG5yL1T3TYXYsQMxnstJDj6LtAoKz90i6RGfZpBwqkFWWTsJYY7gEDrPRNjVYfom6
+         dGTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Pp5jvINkCe9KcdWNQrNxRDoDmqJYu2S65GrbZa290kk=;
+        b=HYxDd4sXNd0e51zGymJTvwMq9zlKuRR908buyTir4NekBQg/iI8TgWBotRqhA06c12
+         XHuY9iX4vu4SpVTotj28zRYzBKgwNV4kCSI7tatTrNaYYV06cffbQ4cDQ4wRtPufl+1s
+         uJSaVkRMIAAA6aatws92FE/gxpyHq59/gpNaKLLNswc+q5+xBHM389NCaqItQ42lUkJE
+         xzpZQBC94LKhm0CxshMi15XlCbVvGarQZ++rUul9SUWmD3gD5W2oJyMpra+ADGNDg4en
+         7y3fY1s5iJDGo7sKl5VEN8kRXkKIidHZqNYlEow0JjwxBvWuO4bZIMBdbHEjo5HNjXAD
+         YQ3A==
+X-Gm-Message-State: AD7BkJIDUzevgSehkeZt3wH6/muhuSp7U6xjmSiOCdqodpOYyIhfsioRV/LOEUSMaLxH4g==
+X-Received: by 10.194.61.240 with SMTP id t16mr21114036wjr.27.1457336835348;
+        Sun, 06 Mar 2016 23:47:15 -0800 (PST)
+Received: from ?IPv6:2a02:908:df42:8b00:8962:7301:7cdc:4fc7? ([2a02:908:df42:8b00:8962:7301:7cdc:4fc7])
+        by smtp.gmail.com with ESMTPSA id l135sm12336896wmb.13.2016.03.06.23.47.14
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 06 Mar 2016 23:47:14 -0800 (PST)
+In-Reply-To: <56D9D8C6.2060104@ramsayjones.plus.com>
+X-Mailer: Apple Mail (2.3112)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288380>
-
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> First of all: my main gripe with the discussed approach is that it uses
-> bundles. I know, I introduced bundles, but they just seem too klunky and
-> too static for the resumable clone feature.
-
-We should make the mechanism extensible so that we can later support
-multiple "alternate resource" formats, and "bundle" could be one of
-the options, my current thinking is that the initial version should
-use just a bare packfile to bootstramp, not a bundle.
-
-The format being "static" is both a feature and a practical
-compromise.  It is a feature to allow clone traffic, which is a
-significant portion of the whole traffic to hosting sites, diverted
-off of the core server network for a busy hosting site, saving both
-networking and CPU cost.  And that benefit will be felt even if the
-client has a good enough connection to the server that it does not
-have to worry about resuming.  It is a practical compromise that the
-mechanism will not be extensible for helping incremental fetch but I
-heard that the server side statistics tells us that there aren't
-many "duplicate incremental fetch" requests (i.e. many clients
-having the same set of "have"s so that the server side can prepare,
-serve, and cache the same incremental pack, which can be served on a
-resumable transport, to help resuming clients by supporting
-partial/range requests), I do not think it is practical to try to
-use the same mechanism to help incremental and clone traffic.  One
-size would not fit both here.
-
-I think a better approach to help incremental fetches is along the
-line of what was discussed in the discussion with Al Viro and others
-the other day.  You'd need various building blocks implemented anew,
-including:
-
- - A protocol extension to allow the client to tell the server a
-   list of "not necessarily connected" objects that it has, so that
-   the server side can exclude them from the set of objects the
-   traditional "have"-"ack" exchange would determine to be sent when
-   building a pack.
-
-   - A design of deciding what "list of objects" is worth sending to
-     the server side.  The total number of objects in the receiving
-     end is an obvious upper bound, and it might be sufficient to
-     send the whole thing as-is, but there may be more efficient way
-     to determine this set [*1*]
-
- - A way to salvage objects from a truncated pack, as there is no
-   such tool in core-git.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288381>
 
 
-[Footnote]
+> On 04 Mar 2016, at 19:49, Ramsay Jones <ramsay@ramsayjones.plus.com> =
+wrote:
+>=20
+>=20
+>=20
+> On 04/03/16 14:37, Alexander Rinass wrote:
+>>=20
+>>> On 04 Mar 2016, at 13:16, Torsten B=C3=B6gershausen <tboegi@web.de>=
+ wrote:
+>>>=20
+>>> On 03/04/2016 10:07 AM, Alexander Rinass wrote:
+> [snip]
+>=20
+>>=20
+>> Sticking a precompose_argv(argc, argv) into diff.c=E2=80=99s cmd_dif=
+f function fixes the issue.
+>>=20
+>> But I had to disable the check (precomposed_unicode !=3D 1) in preco=
+mpose_argv to make it work. That=E2=80=99s probably because precompose_=
+argv is usually called from parse_options and is missing some other cal=
+l before it?
+>>=20
+>=20
+> Yes, you need to place it after the configuration is read, but before
+> calls to diff_no_index() or setup_revisions(). Directly after the cal=
+l
+> to git_config() should be fine. [But this begs the question about oth=
+er
+> commands, including plumbing, which don't call parse_options().]
+>=20
+> Maybe this will work for you (I can't test it, since I don't have any
+> access to a Mac):
+>=20
+> diff --git a/builtin/diff.c b/builtin/diff.c
+> index 343c6b8..b7a9405 100644
+> --- a/builtin/diff.c
+> +++ b/builtin/diff.c
+> @@ -320,6 +320,7 @@ int cmd_diff(int argc, const char **argv, const c=
+har *prefix)
+> 		gitmodules_config();
+> 	init_diff_ui_defaults();
+> 	git_config(git_diff_ui_config, NULL);
+> +	precompose_argv(argc, argv);
+>=20
+> 	init_revisions(&rev, prefix);
 
-*1* Once the traditional "have"-"ack" determines the set of objects
-    the sender thinks the receiver may not have, we need to figure
-    out the ones that happen to exist on the receiver end already,
-    either because they were salvaged from a truncated pack data it
-    received earlier, or perhaps because they already existed by
-    fetching from a side branch (e.g. two repositories derived from
-    the same upstream, updating from Linus's kernel tree by somebody
-    who regularly interacts with linux-next tree), and exclude them
-    from the set of objects sent from the sender.
+Your patch fixes it for the diff command without further modifications.
 
-    I've long felt that Eppstein's invertible bloom filter might be
-    a good way to determine efficiently, among the set of objects
-    the sending and the receiving ends have, which ones are common,
-    but I didn't look into this deeply myself.
+I have also modified diff-tree, diff-index and diff-files by adding the=
+ precompose_argv call and successfully verified it.
+
+I have attached the full patch. If there is anything else I can test, l=
+et me know.
+
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 8ed2eb8..15c61fd 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -24,6 +24,7 @@ int cmd_diff_files(int argc, const char **argv, const=
+ char *prefix)
+ 	gitmodules_config();
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev =3D 0;
++	precompose_argv(argc, argv);
+=20
+ 	argc =3D setup_revisions(argc, argv, &rev, NULL);
+ 	while (1 < argc && argv[1][0] =3D=3D '-') {
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index d979824..1af373d 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -21,6 +21,7 @@ int cmd_diff_index(int argc, const char **argv, const=
+ char *prefix)
+ 	gitmodules_config();
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 	rev.abbrev =3D 0;
++	precompose_argv(argc, argv);
+=20
+ 	argc =3D setup_revisions(argc, argv, &rev, NULL);
+ 	for (i =3D 1; i < argc; i++) {
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 2a12b81..806dd7a 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -114,6 +114,8 @@ int cmd_diff_tree(int argc, const char **argv, cons=
+t char *prefix)
+ 	opt->disable_stdin =3D 1;
+ 	memset(&s_r_opt, 0, sizeof(s_r_opt));
+ 	s_r_opt.tweak =3D diff_tree_tweak_rev;
++
++	precompose_argv(argc, argv);
+ 	argc =3D setup_revisions(argc, argv, opt, &s_r_opt);
+=20
+ 	while (--argc > 0) {
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 52c98a9..d6b8f98 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -319,6 +319,7 @@ int cmd_diff(int argc, const char **argv, const cha=
+r *prefix)
+ 	if (!no_index)
+ 		gitmodules_config();
+ 	git_config(git_diff_ui_config, NULL);
++	precompose_argv(argc, argv);
+=20
+ 	init_revisions(&rev, prefix);
+=20
