@@ -1,100 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
-Date: Mon, 07 Mar 2016 00:51:09 -0800
-Message-ID: <xmqqlh5upt6q.fsf@gitster.mtv.corp.google.com>
-References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
-	<1455207366-24892-1-git-send-email-tboegi@web.de>
-	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>
-	<56DA896A.3050201@web.de>
-	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
-	<56DA986B.6040003@web.de>
-	<xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>
-	<xmqqpov6puv7.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: git diff does not precompose unicode file paths (OS X)
+Date: Mon, 07 Mar 2016 09:54:45 +0100
+Message-ID: <56DD41D5.60100@web.de>
+References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com> <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 07 09:51:22 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Alexander Rinass <alex@fournova.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 09:58:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acqsn-00050K-KD
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 09:51:17 +0100
+	id 1acqzu-00017A-MC
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 09:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752163AbcCGIvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2016 03:51:13 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57446 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752046AbcCGIvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2016 03:51:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 490E546379;
-	Mon,  7 Mar 2016 03:51:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QEhqWg8eon2p1sjuI1fabvaIZrU=; b=xX9Zqv
-	CvuuTmGIwE8dVke4YQgyRK175kd2jux51/FFCxqm88SO1Yx81f+3+OAqsPdYSnfZ
-	GgvU3il1oXVP2OaSNRw/BkVBFsi6B0624SkzjYmwV3FFdNrdgH2mNscVJk9LgLwP
-	DeboVzmtcxlk5sJI6sjOe2jVwClJrWyLwVKXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qXmqoLbRHVcoGGGIuzKGET0X7qhp1wbJ
-	rQuwLCVyg0zQHwgyyBP4I+ffFlvOwDwWhmzmWyif9kNXNnRQrxwqt9Rksxcf9wBG
-	tR/4ZeGXX63la2+2+YCAXeoIsHKdw44pJprHlGV+leKG7mZoaS8Z5KQO1L4xoph+
-	h/+U2Exntg4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3FAF746378;
-	Mon,  7 Mar 2016 03:51:11 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF28E46376;
-	Mon,  7 Mar 2016 03:51:10 -0500 (EST)
-In-Reply-To: <xmqqpov6puv7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 07 Mar 2016 00:14:52 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BD75EED0-E441-11E5-B7D7-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1752309AbcCGIy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 03:54:59 -0500
+Received: from mout.web.de ([212.227.15.4]:56436 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752133AbcCGIyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2016 03:54:54 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LtX9Q-1ZtrX945KO-010xV6; Mon, 07 Mar 2016 09:54:48
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
+X-Provags-ID: V03:K0:6uuEqdwk3xsOOePpOJPoOnZBuwTZosGdrBV8WpxP3d9VoZTiyQj
+ Gt1q9cIcpeNDzTG5uJ/mdv9Lgdlx1UKNQ7AYTV+OgmdzltVZPi4Wpw3SjXN2k2W4a2S0dmi
+ P3da93RoSBbG1BkDPpj4T5Ezcb/nMTxggMOeGx/bVSh56yvdy+52W+LbLctpMDhQ0NBQ0Yy
+ zHAtwKCYB73Ivml3Ed4fw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uM8TCiKFl+U=:7Sb48ugqkBcXzoBeASQ/oN
+ YAU9osWpOI+TbKBlxfOFOpwR7cbw/PVQaeKJyTVs3Bik8QO3GmMhQhskuHqK7LK4musB3c0pH
+ yUW5Rif9PuzuevQPosRQWm4d0rHeGVTaBwvfKo/VnfmSVnM55wUWAJeBMMdqB1QrV/IBODxrx
+ YvdmJARhWcB1ltBYeDCUODTqoSSg4qO84nyeKcVK9eV5+L/ld6DxKEB794HdntSOVnnlfNrkV
+ AcxAsS8gRCa+VAYJbvHyDO4cQUldpjmwbpnPmES8gg3enW6YUzSjZcx0/k3MrIc/425EUtUWh
+ dS0kcSsZ1JwxIECxcjOr15Em7MijqIVv3bzeOMf72UofcdRxbcclxBy0QMYtjb4S91iZiOMee
+ ce0g5IXTAnkfwy8Z29aI7+/7Pu9jBafHv47CHNe85FCTCdWQ0Ku1/wM25fLaKu+WSnnKE49o4
+ RFsTimZdfKRrK1v70RejHoE76HsmS9y7XkiK6Sq7BtKu77w7jssZT9zfbxdeiQ89Lp77umPuh
+ /jFSW/Emic6ZlLWIcp1QPuAsUV2yAyD/69S0xU4rW8GU4JP+8pPrC6Y+ojEBc1takc2vBY3Cz
+ O8c6itBViU/QoGEfBqGZWZh55+BI0CpnMDPlpIYKV35JpJGykmRcUpSdpoY/qrnziSe2t+aPZ
+ w1dthODZ5ZZ/wEn/pg7ZyUuZ+G1SkuYv9BfQR0cNTAonOd6meB0qPjiT6MyLwtiYdWvz5p1/S
+ 3onTzV/pvbmONalGsS97ChLOVFYxgsihRSr9acfBUZ7F55tQlT+vP5RgMiIh1U89G1DdTbES 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288385>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Perhaps we can introduce a new function can_clobber() that has the
-> same function signature as ce_uptodate() and update the callers in
-> apply and unpack-trees (there may be others) to call it instead when
-> they want to see if they can clobber the working tree file that
-> corresponds to the cache entry.
-
-By the way, I do not want see ie_match_stat() modified to work like
-the can_clobber() I outlined in the previous message, which in turn
-means that immediately after "git reset --hard" or "git checkout" 
-when your convert_to_git() and convert_to_working_tree() do not
-roundtrip, you _must_ see differences in "git diff".
-
-This is for (at least) two reasons.
-
- * "git diff" (compare between the index and the working tree) is
-   meant as a preview of how the indexed contents will be modified
-   if you did "git add" with what you currently have in your working
-   tree at the path.  In a "conversions do not roundtrip" situation,
-   your "git add" will be modifying the contents in the index, so we
-   should actively be showing what modification we will be making.
-
-   One way of "fixing" the situation without changing either the
-   working tree contents or the indexed contents is to fix your
-   convert-to-git settings to make the conversions round-trip, and
-   then you would stop seeing the changes you would make when you do
-   "git add".  Not showing any diff when can_clobber() is true but
-   ce_uptodate() is false would make "git diff" less useful when the
-   user makes this correction.
-
- * "git add" of a path can legitimately optimize itself by not
-   adding a path that is ce_uptodate().  Mixing ie_match_stat()
-   with can_clobber() logic would mark such a "conversions do not
-   roundtrip" path as ce_uptodate(), and prevent the user from
-   "fixing" the incorrect index entry by running "git add".
+On 03/07/2016 08:47 AM, Alexander Rinass wrote:
+>> On 04 Mar 2016, at 19:49, Ramsay Jones <ramsay@ramsayjones.plus.com>=
+ wrote:
+>>
+>>
+>>
+>> On 04/03/16 14:37, Alexander Rinass wrote:
+>>>> On 04 Mar 2016, at 13:16, Torsten B=C3=B6gershausen <tboegi@web.de=
+> wrote:
+>>>>
+>>>> On 03/04/2016 10:07 AM, Alexander Rinass wrote:
+>> [snip]
+>>
+>>> Sticking a precompose_argv(argc, argv) into diff.c=E2=80=99s cmd_di=
+ff function fixes the issue.
+>>>
+>>> But I had to disable the check (precomposed_unicode !=3D 1) in prec=
+ompose_argv to make it work. That=E2=80=99s probably because precompose=
+_argv is usually called from parse_options and is missing some other ca=
+ll before it?
+>>>
+>> Yes, you need to place it after the configuration is read, but befor=
+e
+>> calls to diff_no_index() or setup_revisions(). Directly after the ca=
+ll
+>> to git_config() should be fine. [But this begs the question about ot=
+her
+>> commands, including plumbing, which don't call parse_options().]
+>>
+>> Maybe this will work for you (I can't test it, since I don't have an=
+y
+>> access to a Mac):
+>>
+>> diff --git a/builtin/diff.c b/builtin/diff.c
+>> index 343c6b8..b7a9405 100644
+>> --- a/builtin/diff.c
+>> +++ b/builtin/diff.c
+>> @@ -320,6 +320,7 @@ int cmd_diff(int argc, const char **argv, const =
+char *prefix)
+>> 		gitmodules_config();
+>> 	init_diff_ui_defaults();
+>> 	git_config(git_diff_ui_config, NULL);
+>> +	precompose_argv(argc, argv);
+>>
+>> 	init_revisions(&rev, prefix);
+> Your patch fixes it for the diff command without further modification=
+s.
+>
+> I have also modified diff-tree, diff-index and diff-files by adding t=
+he precompose_argv call and successfully verified it.
+>
+> I have attached the full patch. If there is anything else I can test,=
+ let me know.
+Thanks for reporting, fixing, testing -
+Do you think you can send an official patch to the list ?
+If not, push your patches to some public repo ?
+And if not, I can put it on my TODO-stack.
