@@ -1,106 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: [BUG?] fetch into shallow sends a large number of objects
-Date: Mon, 7 Mar 2016 17:15:40 -0500
-Message-ID: <20160307221539.GA24034@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
+Date: Mon, 07 Mar 2016 14:34:26 -0800
+Message-ID: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
+References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
+	<1455207366-24892-1-git-send-email-tboegi@web.de>
+	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>
+	<56DA896A.3050201@web.de>
+	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
+	<56DA986B.6040003@web.de>
+	<xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>
+	<xmqqpov6puv7.fsf@gitster.mtv.corp.google.com>
+	<xmqqlh5upt6q.fsf@gitster.mtv.corp.google.com>
+	<56DD42AE.2010200@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 07 23:15:53 2016
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 07 23:34:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ad3RN-0007yw-QR
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 23:15:50 +0100
+	id 1ad3jW-0005F4-Gu
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 23:34:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbcCGWPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2016 17:15:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55982 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753099AbcCGWPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2016 17:15:43 -0500
-Received: (qmail 26813 invoked by uid 102); 7 Mar 2016 22:15:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Mar 2016 17:15:42 -0500
-Received: (qmail 30018 invoked by uid 107); 7 Mar 2016 22:15:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Mar 2016 17:15:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2016 17:15:40 -0500
-Content-Disposition: inline
+	id S1753260AbcCGWeb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 17:34:31 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61258 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753390AbcCGWe3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 17:34:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D0604B863;
+	Mon,  7 Mar 2016 17:34:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=cMuuTnEWKxdx
+	JlcrSuCdhRN9Hx8=; b=t+O8sk9XwRwGGkhsTp0jnevMBQp3k7T5T39JuGfvUFMJ
+	5byfV1V63DFHffu5NHWzhhicTYzXWa/zpP/q91QKbDnddJV5zVUg63iDzeGbM7gv
+	Orea2U+suXlamPxgXyPvL99aapla81wDOnZiJpHcqMgKaI9fONqYalv6sRUE0oM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WShyH8
+	A8GV0n79Dsv83M0HemMb5qv8Og0DtV5kYh3BVSHpSZ/noWI9jF7AjqjwIzs/mI8l
+	kQKBf4e8lAfd/tNXZ11biT2+S/Bs4QAUzSbhPEiTEOicxSW3Ow/yBdJjl8C1wF6Z
+	yiXRQ/08/iH7871oayyiU3YgyABenTgBaiNHk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 046324B862;
+	Mon,  7 Mar 2016 17:34:28 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A61D4B861;
+	Mon,  7 Mar 2016 17:34:27 -0500 (EST)
+In-Reply-To: <56DD42AE.2010200@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 07 Mar 2016 09:58:22 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C01EDFCA-E4B4-11E5-8E8A-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288404>
 
-I came across an interesting shallow-fetch case, and I suspect git is
-doing something very sub-optimal.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-You can reproduce with:
+> The major question, at least on my side, is where to hook in
+> "can_clobber()" ?
 
-	git clone --bare git://github.com/CocoaPods/Specs
-	cd Specs.git
+There are different ways the existing commands ensure that they do
+not lose local modifications.
 
-	time git pack-objects --revs --thin --stdout \
-	  --delta-base-offset --include-tag <<\EOF | wc -c
-	d7a6d9295d718c6015be496880f1a293bdd89185
-	--not
-	067f265bb512c95b22b83ccd121b9facbddcf6b1
-	EOF
+ * Some (like unpack-trees code that is used by "merge") do
+   refresh_cache() upfront and then ask ce_uptodate() if the
+   contents in the working tree match the indexed contents.
+   unpack-trees.c::verify_uptodate_1() has a call to ce_uptodate()
+   and returns early when true (i.e. if "git add" would result in
+   the same index entry), but then does a double-check with
+   ie_match_stat(), which essentially asks the "does an add result
+   in the same index entry?" again.
 
-	time git pack-objects --revs --thin --stdout --shallow \
-	  --delta-base-offset --include-tag <<\EOF | wc -c
-	--shallow ecd7ea6033fe8a05d5c21f3a54355fded6942659
-	d7a6d9295d718c6015be496880f1a293bdd89185
-	--not
-	067f265bb512c95b22b83ccd121b9facbddcf6b1
-	EOF
+ * Others (like apply) do not do the tree-wide refresh_cache(), but
+   asks "does an add result in the same index entry" by calling
+   ce_match_stat(), which is a thin wrapper to ie_match_stat(), in
+   builtin/apply.c::verify_index_match().
 
-The first is a non-shallow clone; it takes a few hundred milliseconds to
-generate the pack, and the result is a few hundred kilobytes. The second
-is a shallow clone (logged from a real-world request); it sends 200
-times as many objects, totaling 270MB, and takes almost a minute of CPU.
+These places need to learn that there is a case where
+ie_match_stat() says "'git add' would change the index, i.e. working
+tree file is different" but the working tree file can still be
+clobbered because 'checkout' would produce the same contents in the
+working tree.
 
-I'm trying to figure out why that is, and whether git can do better.
-
-I think what's happening here is that the history looks like this:
-
-  F ... ecd7ea6 ... 067f265 ... M ... d7a6d929
-   \                           /
-    X ....................... Y
-
-That is, we are asking for 067f265 to d7a6d929, but that includes some
-merge M which _crosses_ our grafted shallow-point ecd7ea6. That pulls in
-essentially all of the history for the entire (missing only the commits
-from the fork point F up to ecd7ea6).
-
-So I _think_ that pack-objects is doing the best it can with the
-information it was given. But presumably in a shallow repo the user
-would prefer to have a segmented history rather than pull in all of
-those old commits.
-
-I don't know how the client invoked git, but we can guess what happened
-and simulate with:
-
-  git tag shallow ecd7ea6033fe8a05d5c21f3a54355fded6942659
-  git tag old 067f265bb512c95b22b83ccd121b9facbddcf6b1
-  git tag new d7a6d9295d718c6015be496880f1a293bdd89185
-
-  git clone --no-local --bare --branch=shallow --depth=1 . clone.git
-  cd clone.git
-  git fetch origin old:refs/tags/old
-  git fetch origin new:refs/tags/new
-
-Of the two follow-up fetches in the clone, the first is reasonably fast
-(it just grabs a few new commits on top of the shallow base), but the
-second is expensive (it grabs the merge which pulls in the whole
-history). If we add "--depth=1" to each of those fetches, everything
-remains fast.
-
-Is this user error to call "git fetch" without "--depth" in the
-subsequent cases? Or should git remember that we are in a shallow repo,
-and presume that the user by default wants to keep things shallow?
-
--Peff
+But stepping back a bit, I no longer am sure if such a loosening is
+desirable.  Imagine that you implemented such loosening and allowed
+a patch to be applied to the index (and the result checked out to
+the working tree).  What would the result of "diff --cached" be
+after doing so?  Would it contain only the change described in the
+patch you just accepted?  If that is the case, it would be OK, but
+if the change from the patch gets mixed with the "fix incorrectly
+recorded data in the index" change that you would have recorded if
+you did "git add" from the working tree without applying the patch,
+then that would not be a desirable outcome, I would suspect.  You
+would rather want to first commit the "fix incorrectly recorded data
+in the index" as a separate preparatory step and then want to apply
+the patch.  So...
