@@ -1,96 +1,98 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC/PATCH] clone: make 'git clone -c
  remote.origin.fetch=<refspec>' work
-Date: Mon, 07 Mar 2016 16:19:31 +0100
-Message-ID: <20160307161931.Horde.TcdEVtHKgSMvScCDUKLclVq@webmail.informatik.kit.edu>
+Date: Mon, 7 Mar 2016 10:33:05 -0500
+Message-ID: <20160307153304.GA23010@sigill.intra.peff.net>
 References: <1457313062-10073-1-git-send-email-szeder@ira.uka.de>
  <xmqqfuw3rrwb.fsf@gitster.mtv.corp.google.com>
+ <20160307161931.Horde.TcdEVtHKgSMvScCDUKLclVq@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 16:20:42 2016
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Mar 07 16:33:15 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acwxc-0007pP-BX
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 16:20:40 +0100
+	id 1acx9m-00082F-9w
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 16:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbcCGPU2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 10:20:28 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:45922 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753366AbcCGPTw convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 10:19:52 -0500
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1acwwm-0003LL-2W; Mon, 07 Mar 2016 16:19:48 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1acwwV-0005nV-TN; Mon, 07 Mar 2016 16:19:31 +0100
-Received: from x590cb2aa.dyn.telefonica.de (x590cb2aa.dyn.telefonica.de
- [89.12.178.170]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Mon, 07 Mar 2016 16:19:31 +0100
-In-Reply-To: <xmqqfuw3rrwb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Horde Application Framework 5
+	id S1753134AbcCGPdL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 10:33:11 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55739 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752858AbcCGPdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2016 10:33:08 -0500
+Received: (qmail 7158 invoked by uid 102); 7 Mar 2016 15:33:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Mar 2016 10:33:07 -0500
+Received: (qmail 25935 invoked by uid 107); 7 Mar 2016 15:33:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Mar 2016 10:33:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Mar 2016 10:33:05 -0500
 Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1457363988.
+In-Reply-To: <20160307161931.Horde.TcdEVtHKgSMvScCDUKLclVq@webmail.informatik.kit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288392>
 
+On Mon, Mar 07, 2016 at 04:19:31PM +0100, SZEDER G=C3=A1bor wrote:
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+> >Even though I think the original description did not mean to include
+> >the fetch refspecs when it talked about configuration taking effect,
+> >I think what this change wants to do probably makes sense.
+>=20
+> Well, currently one would have to clone, set additional fetch refspec=
+s,
+> fetch again and repack.  Using 'git clone -c <refspecs>' would do it =
+in
+> a single step, requiring fewer commands, less time, less data transfe=
+r
+> and less disk space, which fits the justification of v1.7.7-rc0~90^2
+> perfectly.
 
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
->
->> Check whether there are any relevant configured fetch refspecs and
->> take those into account during the initial fetch, unless running 'gi=
-t
->> clone --single-branch'.
->>
->> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
->> ---
->
-> Even though I think the original description did not mean to include
-> the fetch refspecs when it talked about configuration taking effect,
-> I think what this change wants to do probably makes sense.
+Yeah, I think your change very much fits the spirit of what the origina=
+l
+commit was trying for.
 
-Well, currently one would have to clone, set additional fetch refspecs,
-fetch again and repack.  Using 'git clone -c <refspecs>' would do it in
-a single step, requiring fewer commands, less time, less data transfer
-and less disk space, which fits the justification of v1.7.7-rc0~90^2
-perfectly.
+> >My knee-jerk reaction is to change the last paragraph of your log
+> >message to read more like
+> >
+> >	Always read the fetch refspecs from the newly created config
+> >	file, and use that for the initial fetching.
+> >
+> >and do so even when running with "--single-branch".
+>=20
+> Ok, will change the '--single-branch' codepath as well.
+>=20
+> But before doing so, to avoid a possible misunderstanding on my part:
+> I'm not sure how literally you meant that "from the newly created
+> config file" part, because it ignores refspecs specified via any
+> other means, e.g. 'git -c <fetch-refspec> clone'.  I think the
+> initial fetch should be no different from "regular" fetches, and
+> should respect all configured fetch refspecs regardless where they
+> come from.
 
-Or init, add remote, set additional refspecs and fetch, which still
-requires more commands, but at least doesn't transfer more data.
+IMHO, we should stick to the conceptual model that "git clone" is:
 
->> I'm unsure what to do with the '-c <fetch-refspec> --single-branch'
->> combination: it doesn't really make sense to me and can't imagaine a
->> use case where it would be useful...  but perhaps I just lack
->> imagination on this Sunday night.  Hence the RFC.
->
-> My knee-jerk reaction is to change the last paragraph of your log
-> message to read more like
->
-> 	Always read the fetch refspecs from the newly created config
-> 	file, and use that for the initial fetching.
->
-> and do so even when running with "--single-branch".
+  git init
+  git config ... ;# set up remote, etc
+  git fetch
+  git checkout ;# obviously not for --bare
 
-Ok, will change the '--single-branch' codepath as well.
+The implementation has to diverge from that to do certain optimizations=
+,
+but absent any good reason not to, I think we should aim for behaving
+"as if" those commands were run.
 
-But before doing so, to avoid a possible misunderstanding on my part:
-I'm not sure how literally you meant that "from the newly created
-config file" part, because it ignores refspecs specified via any
-other means, e.g. 'git -c <fetch-refspec> clone'.  I think the
-initial fetch should be no different from "regular" fetches, and
-should respect all configured fetch refspecs regardless where they
-come from.
+It certainly may produce surprising behavior at times, but at least it
+is a conceptually simple mental model.  I do admit, though I haven't
+thought hard enough to know whether there are any terrible gotchas
+there.
+
+-Peff
