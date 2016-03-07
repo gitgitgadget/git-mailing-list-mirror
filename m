@@ -1,112 +1,95 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: git diff does not precompose unicode file paths (OS X)
-Date: Mon, 07 Mar 2016 09:54:45 +0100
-Message-ID: <56DD41D5.60100@web.de>
-References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com> <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
+Date: Mon, 07 Mar 2016 09:58:22 +0100
+Message-ID: <56DD42AE.2010200@web.de>
+References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>	<1455207366-24892-1-git-send-email-tboegi@web.de>	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>	<56DA896A.3050201@web.de>	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>	<56DA986B.6040003@web.de>	<xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>	<xmqqpov6puv7.fsf@gitster.mtv.corp.google.com> <xmqqlh5upt6q.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Alexander Rinass <alex@fournova.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 09:58:47 2016
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	=?windows-1252?Q?Torsten_B=F6ge?= =?windows-1252?Q?rshausen?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 07 09:58:58 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acqzu-00017A-MC
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 09:58:39 +0100
+	id 1acr05-0001Ek-Q1
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 09:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbcCGIy7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 03:54:59 -0500
-Received: from mout.web.de ([212.227.15.4]:56436 "EHLO mout.web.de"
+	id S1752615AbcCGI6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2016 03:58:40 -0500
+Received: from mout.web.de ([212.227.17.11]:64475 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752133AbcCGIyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2016 03:54:54 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LtX9Q-1ZtrX945KO-010xV6; Mon, 07 Mar 2016 09:54:48
+	id S1752401AbcCGI6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2016 03:58:33 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0M4I2R-1ZmOpf1JIZ-00rqST; Mon, 07 Mar 2016 09:58:24
  +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
-X-Provags-ID: V03:K0:6uuEqdwk3xsOOePpOJPoOnZBuwTZosGdrBV8WpxP3d9VoZTiyQj
- Gt1q9cIcpeNDzTG5uJ/mdv9Lgdlx1UKNQ7AYTV+OgmdzltVZPi4Wpw3SjXN2k2W4a2S0dmi
- P3da93RoSBbG1BkDPpj4T5Ezcb/nMTxggMOeGx/bVSh56yvdy+52W+LbLctpMDhQ0NBQ0Yy
- zHAtwKCYB73Ivml3Ed4fw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uM8TCiKFl+U=:7Sb48ugqkBcXzoBeASQ/oN
- YAU9osWpOI+TbKBlxfOFOpwR7cbw/PVQaeKJyTVs3Bik8QO3GmMhQhskuHqK7LK4musB3c0pH
- yUW5Rif9PuzuevQPosRQWm4d0rHeGVTaBwvfKo/VnfmSVnM55wUWAJeBMMdqB1QrV/IBODxrx
- YvdmJARhWcB1ltBYeDCUODTqoSSg4qO84nyeKcVK9eV5+L/ld6DxKEB794HdntSOVnnlfNrkV
- AcxAsS8gRCa+VAYJbvHyDO4cQUldpjmwbpnPmES8gg3enW6YUzSjZcx0/k3MrIc/425EUtUWh
- dS0kcSsZ1JwxIECxcjOr15Em7MijqIVv3bzeOMf72UofcdRxbcclxBy0QMYtjb4S91iZiOMee
- ce0g5IXTAnkfwy8Z29aI7+/7Pu9jBafHv47CHNe85FCTCdWQ0Ku1/wM25fLaKu+WSnnKE49o4
- RFsTimZdfKRrK1v70RejHoE76HsmS9y7XkiK6Sq7BtKu77w7jssZT9zfbxdeiQ89Lp77umPuh
- /jFSW/Emic6ZlLWIcp1QPuAsUV2yAyD/69S0xU4rW8GU4JP+8pPrC6Y+ojEBc1takc2vBY3Cz
- O8c6itBViU/QoGEfBqGZWZh55+BI0CpnMDPlpIYKV35JpJGykmRcUpSdpoY/qrnziSe2t+aPZ
- w1dthODZ5ZZ/wEn/pg7ZyUuZ+G1SkuYv9BfQR0cNTAonOd6meB0qPjiT6MyLwtiYdWvz5p1/S
- 3onTzV/pvbmONalGsS97ChLOVFYxgsihRSr9acfBUZ7F55tQlT+vP5RgMiIh1U89G1DdTbES 
+In-Reply-To: <xmqqlh5upt6q.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:hFHU6BuXvOMmouCsq5GULU2eCHVoFiiRbmZzCyEn1fZxzLSs5t8
+ Ekzjsd2VQfjJ7AhiJcFB+C194DeS6gD9eOmPDG+GPqjNhSmwVwaT2irGsvBS6pkhB18idnc
+ 2mVBvdvj6MEWwrqVRgZ5AVMTxTc/kAr5beJy0JJSQABLxvWoGEuu4E+RSS27Bp0bzZguIx7
+ 7dS2y0BO6ByWHUuRDsS+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:w5ekHm8BlOk=:IVgbxsaD2qNhEsvqRQ6+5r
+ sml24fsREWFWID1znTZx0kOK8vPLqsg/OXKrzHlwPjPfQPI2RLvBPw+sdkbk2bREGrhWbITNF
+ qCjaJlLx6s8CyGYdi85YILiENffP/74I3xpCQd1PmhXefOwognCL1uPpC4nXDMmTndQLb8Yo5
+ ufb6/Skr2pSKVTVA/bSzYRGIiara2/n3LlxnzRThMKmX79WKn4fKG4JACyFojwhB4ErZ2hY+8
+ eIgDrBE0fhG4J8hui1BfqgVw4oCvFvbTclzP29KqX+FK7CqcHYpnqVNF5lZQzEqy0OEN0QvNK
+ j3K+EeYjWZD840D6kwd1Ow81JFj/EtZ2rEmz5PNqhpx1bdLdbtJyhYKsWL4NTwuWUsfOR8+nt
+ GfG/VHiNKnkXEDHMMgKpYbzkr3xJPoe+3Wvh3g2tTc0/RWhcUWCkIZSyruF34GBlCuohM49sL
+ /XnKmcbIBUdLAjsWcOmOmTPLZC/GW2TCESdsi82rqIXyFKzhdp+4XUy1OYiUfM0KuW11A/fQJ
+ 6mR/BRDMQSJQUzr4MDANQfa6XcaP6XN7lUem7GocO3caQ70V7fxLSIEAwhflNNy57F5IG/0Ch
+ FU3mjTQKDHn2CWX7YYHzRoZkWHu55rY8cbE+n5/GvLGEwIp402Wmup5tKifQDrmtS9/SZv41S
+ 6uA7LQEVGgwOEzVJzi8Qyj3MYN+tgsym84clGyaf45H46d3j6/wiPZlPWZlkiMa24Y2aI5Aw7
+ hE0NbJe9D8u6WsgVa9Ifk84K9e6L3AM5a4gbEaYArK8jzJiiw5Jk9eq4LoktDDgHtMdu7PAe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288386>
 
-On 03/07/2016 08:47 AM, Alexander Rinass wrote:
->> On 04 Mar 2016, at 19:49, Ramsay Jones <ramsay@ramsayjones.plus.com>=
- wrote:
->>
->>
->>
->> On 04/03/16 14:37, Alexander Rinass wrote:
->>>> On 04 Mar 2016, at 13:16, Torsten B=C3=B6gershausen <tboegi@web.de=
-> wrote:
->>>>
->>>> On 03/04/2016 10:07 AM, Alexander Rinass wrote:
->> [snip]
->>
->>> Sticking a precompose_argv(argc, argv) into diff.c=E2=80=99s cmd_di=
-ff function fixes the issue.
->>>
->>> But I had to disable the check (precomposed_unicode !=3D 1) in prec=
-ompose_argv to make it work. That=E2=80=99s probably because precompose=
-_argv is usually called from parse_options and is missing some other ca=
-ll before it?
->>>
->> Yes, you need to place it after the configuration is read, but befor=
-e
->> calls to diff_no_index() or setup_revisions(). Directly after the ca=
-ll
->> to git_config() should be fine. [But this begs the question about ot=
-her
->> commands, including plumbing, which don't call parse_options().]
->>
->> Maybe this will work for you (I can't test it, since I don't have an=
-y
->> access to a Mac):
->>
->> diff --git a/builtin/diff.c b/builtin/diff.c
->> index 343c6b8..b7a9405 100644
->> --- a/builtin/diff.c
->> +++ b/builtin/diff.c
->> @@ -320,6 +320,7 @@ int cmd_diff(int argc, const char **argv, const =
-char *prefix)
->> 		gitmodules_config();
->> 	init_diff_ui_defaults();
->> 	git_config(git_diff_ui_config, NULL);
->> +	precompose_argv(argc, argv);
->>
->> 	init_revisions(&rev, prefix);
-> Your patch fixes it for the diff command without further modification=
-s.
+On 03/07/2016 09:51 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I have also modified diff-tree, diff-index and diff-files by adding t=
-he precompose_argv call and successfully verified it.
+>> Perhaps we can introduce a new function can_clobber() that has the
+>> same function signature as ce_uptodate() and update the callers in
+>> apply and unpack-trees (there may be others) to call it instead when
+>> they want to see if they can clobber the working tree file that
+>> corresponds to the cache entry.
+> By the way, I do not want see ie_match_stat() modified to work like
+> the can_clobber() I outlined in the previous message, which in turn
+> means that immediately after "git reset --hard" or "git checkout"
+> when your convert_to_git() and convert_to_working_tree() do not
+> roundtrip, you _must_ see differences in "git diff".
 >
-> I have attached the full patch. If there is anything else I can test,=
- let me know.
-Thanks for reporting, fixing, testing -
-Do you think you can send an official patch to the list ?
-If not, push your patches to some public repo ?
-And if not, I can put it on my TODO-stack.
+> This is for (at least) two reasons.
+>
+>   * "git diff" (compare between the index and the working tree) is
+>     meant as a preview of how the indexed contents will be modified
+>     if you did "git add" with what you currently have in your working
+>     tree at the path.  In a "conversions do not roundtrip" situation,
+>     your "git add" will be modifying the contents in the index, so we
+>     should actively be showing what modification we will be making.
+>
+>     One way of "fixing" the situation without changing either the
+>     working tree contents or the indexed contents is to fix your
+>     convert-to-git settings to make the conversions round-trip, and
+>     then you would stop seeing the changes you would make when you do
+>     "git add".  Not showing any diff when can_clobber() is true but
+>     ce_uptodate() is false would make "git diff" less useful when the
+>     user makes this correction.
+>
+>   * "git add" of a path can legitimately optimize itself by not
+>     adding a path that is ce_uptodate().  Mixing ie_match_stat()
+>     with can_clobber() logic would mark such a "conversions do not
+>     roundtrip" path as ce_uptodate(), and prevent the user from
+>     "fixing" the incorrect index entry by running "git add".
+>
+Thanks.
+OK about "git add" and "git diff".
+The major question, at least on my side, is where to hook in 
+"can_clobber()" ?
