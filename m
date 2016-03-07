@@ -1,83 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] clone: make 'git clone -c remote.origin.fetch=<refspec>' work
-Date: Sun, 06 Mar 2016 17:36:04 -0800
-Message-ID: <xmqqfuw3rrwb.fsf@gitster.mtv.corp.google.com>
-References: <1457313062-10073-1-git-send-email-szeder@ira.uka.de>
+Subject: Re: [PATCH v2 1/2] mergetool: honor tempfile configuration when resolving delete conflicts
+Date: Sun, 06 Mar 2016 18:34:16 -0800
+Message-ID: <xmqqbn6rrp7b.fsf@gitster.mtv.corp.google.com>
+References: <1457218586-18654-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Mar 07 02:36:20 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Joe Einertson <joe@kidblog.org>,
+	Charles Bailey <cbailey32@bloomberg.net>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 03:34:27 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ack5r-0002qI-LW
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 02:36:20 +0100
+	id 1acl04-0001zW-1t
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 03:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbcCGBgO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Mar 2016 20:36:14 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64304 "EHLO
+	id S1751845AbcCGCeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Mar 2016 21:34:21 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54249 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751358AbcCGBgM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Mar 2016 20:36:12 -0500
+	with ESMTP id S1751717AbcCGCeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Mar 2016 21:34:19 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 589CD4A847;
-	Sun,  6 Mar 2016 20:36:06 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 109484B2E2;
+	Sun,  6 Mar 2016 21:34:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/TgNjSJpfCyN
-	Acj0PDIviPtugZ0=; b=nOxNk+ya/xeooK8oy1aezbr4lqR55AbLvrbO0+grmO+G
-	hoBZxUfMzfiPhUTQ7tnbusx6WBfzLNdnxiUkW+BxoJkL9im5S5EhQ3cpgx+UQATR
-	vnkindJ/E0vX6DBT7aXJ3hXT3g3VJGVCxBt4rh+bznHUwwvY4jITd6riupCg8Ho=
+	:content-type; s=sasl; bh=SPif+PeUzhlRgNPpUVfXr77Jhrk=; b=oEfnRS
+	MEfgXR0+MN8VjJ4dAEA+YugOb6WYiqUExPx1bhKhgH7OM51bEEx9wq2db+g+610i
+	4/cxU3UJBKWnDpfTxht/uOjJ2dQj8bv0MVh9kEnuz8e2CDrB8+fEyBE1otx5yu9S
+	KiElTHdBlrHlcHN4o2Fc5zCKQAQOsyK8V79Fo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=U259oG
-	SuNCvi9C10Q+QBBBZBHtArE9/K95x7hgYvdzeYjaIjgSzrKOVyuc3uyoqmAJMiB7
-	iCNEu44cwO8MyubN0z3c1P95P/+k4Y3No5jkna8TV1MRLpwh3IXF/iZrN0aaCSqF
-	QGX7Ojq+3BUY90vnxklKrjp9EFEFjhwsMUrI8=
+	:content-type; q=dns; s=sasl; b=LDunRlWvTSm0e3DY4vKyCoXvc0PpclUH
+	+yiQ0kyAp5OCXY6xWhzKYTdKpb4YLBVWxGdsrMpJp0g8v2aKt6jPR23yaQo1zTSt
+	EgvLres251IgCDbtEJdFO8OvBBFWblDuPn7J0Di08gRWB0caALsDCKpIHeXEockh
+	tZ5tTAUc7Ck=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 512004A846;
-	Sun,  6 Mar 2016 20:36:06 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 066B34B2E1;
+	Sun,  6 Mar 2016 21:34:18 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CF7F54A845;
-	Sun,  6 Mar 2016 20:36:05 -0500 (EST)
-In-Reply-To: <1457313062-10073-1-git-send-email-szeder@ira.uka.de> ("SZEDER
-	=?utf-8?Q?G=C3=A1bor=22's?= message of "Mon, 7 Mar 2016 02:11:02 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7DE874B2E0;
+	Sun,  6 Mar 2016 21:34:17 -0500 (EST)
+In-Reply-To: <1457218586-18654-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Sat, 5 Mar 2016 14:56:26 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F5BFBD8A-E404-11E5-B1E8-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 16F1E4EE-E40D-11E5-84BB-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288379>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> Check whether there are any relevant configured fetch refspecs and
-> take those into account during the initial fetch, unless running 'git
-> clone --single-branch'.
+> Teach resolve_deleted_merge() to honor the mergetool.keepBackup and
+> mergetool.keepTemporaries configuration knobs.
 >
-> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+> This ensures that the worktree is kept pristine when resolving deletion
+> conflicts with the variables both set to false.
+>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
 > ---
+> v2 uses test.  2/2 is the same as before, and was not sent this round.
 
-Even though I think the original description did not mean to include
-the fetch refspecs when it talked about configuration taking effect,=20
-I think what this change wants to do probably makes sense.
+Thanks, will queue.
+
+By the way, the fact that 2/2 did not make you realize that your
+"if" statement was broken in the v1 1/2 patch indicates that the
+codepath is not covered by the added test, doesn't it?  I was sort
+of expecting an updated patch for 2/2 for this reason...
+
+>  git-mergetool.sh | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 >
-> I'm unsure what to do with the '-c <fetch-refspec> --single-branch'
-> combination: it doesn't really make sense to me and can't imagaine a
-> use case where it would be useful...  but perhaps I just lack
-> imagination on this Sunday night.  Hence the RFC.
-
-My knee-jerk reaction is to change the last paragraph of your log
-message to read more like
-
-	Always read the fetch refspecs from the newly created config
-	file, and use that for the initial fetching.
-
-and do so even when running with "--single-branch".
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index 9f77e3a..4a9e9ca 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -126,7 +126,12 @@ resolve_deleted_merge () {
+>  		case "$ans" in
+>  		[mMcC]*)
+>  			git add -- "$MERGED"
+> -			cleanup_temp_files --save-backup
+> +			if test "$merge_keep_backup" = "true"
+> +			then
+> +				cleanup_temp_files --save-backup
+> +			else
+> +				cleanup_temp_files
+> +			fi
+>  			return 0
+>  			;;
+>  		[dD]*)
+> @@ -135,6 +140,10 @@ resolve_deleted_merge () {
+>  			return 0
+>  			;;
+>  		[aA]*)
+> +			if test "$merge_keep_temporaries" = "false"
+> +			then
+> +				cleanup_temp_files
+> +			fi
+>  			return 1
+>  			;;
+>  		esac
