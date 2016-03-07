@@ -1,109 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
-Date: Mon, 07 Mar 2016 14:34:26 -0800
-Message-ID: <xmqqegblor2l.fsf@gitster.mtv.corp.google.com>
-References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
-	<1455207366-24892-1-git-send-email-tboegi@web.de>
-	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>
-	<56DA896A.3050201@web.de>
-	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
-	<56DA986B.6040003@web.de>
-	<xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>
-	<xmqqpov6puv7.fsf@gitster.mtv.corp.google.com>
-	<xmqqlh5upt6q.fsf@gitster.mtv.corp.google.com>
-	<56DD42AE.2010200@web.de>
+Subject: Re: [PATCH 02/15] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+Date: Mon, 07 Mar 2016 14:49:44 -0800
+Message-ID: <xmqq7fhdoqd3.fsf@gitster.mtv.corp.google.com>
+References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
+	<1457265902-7949-3-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 07 23:34:35 2016
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 23:49:53 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ad3jW-0005F4-Gu
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 23:34:34 +0100
+	id 1ad3yJ-00008B-OU
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 23:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753260AbcCGWeb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 17:34:31 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61258 "EHLO
+	id S1753470AbcCGWtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2016 17:49:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63769 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753390AbcCGWe3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 17:34:29 -0500
+	with ESMTP id S1752248AbcCGWtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2016 17:49:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D0604B863;
-	Mon,  7 Mar 2016 17:34:28 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ED4B54BC40;
+	Mon,  7 Mar 2016 17:49:45 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cMuuTnEWKxdx
-	JlcrSuCdhRN9Hx8=; b=t+O8sk9XwRwGGkhsTp0jnevMBQp3k7T5T39JuGfvUFMJ
-	5byfV1V63DFHffu5NHWzhhicTYzXWa/zpP/q91QKbDnddJV5zVUg63iDzeGbM7gv
-	Orea2U+suXlamPxgXyPvL99aapla81wDOnZiJpHcqMgKaI9fONqYalv6sRUE0oM=
+	:content-type; s=sasl; bh=8dW6syod+46W7IK8TAwv2x6p/Tc=; b=BLv54U
+	iFa2nHq4uJiWxx5SxNXrphpP2lLjvQt7Q1B0RFT4A0oXjCTueps2StE7DUYUahAT
+	T8qcwepy9WF34mQn6Ut3YcmEJu+Q/KgxUljUsfZ3OwRd5PZHBrs5nXEyGPadv0pq
+	H5wum+1DofB+yDhYwHC0RjZJFyeAmms9r1XB4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WShyH8
-	A8GV0n79Dsv83M0HemMb5qv8Og0DtV5kYh3BVSHpSZ/noWI9jF7AjqjwIzs/mI8l
-	kQKBf4e8lAfd/tNXZ11biT2+S/Bs4QAUzSbhPEiTEOicxSW3Ow/yBdJjl8C1wF6Z
-	yiXRQ/08/iH7871oayyiU3YgyABenTgBaiNHk=
+	:content-type; q=dns; s=sasl; b=Vgl9KHiR1vulMFnLoMYJu3kzZXY74UMC
+	ZUCdu8XnTGNU0iLmGqyONc4MPGuouv2sd9pTi7NPphhYc8Y8OmSZKXTbc+76+w1H
+	DvBXUPmH8+GVS+tY8XZR2Mdk+OmCL8TlVPnX8kWq9tDfIqN9tG7kzelakBUdkyFN
+	aARxpsiTvac=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 046324B862;
-	Mon,  7 Mar 2016 17:34:28 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4C1E4BC3F;
+	Mon,  7 Mar 2016 17:49:45 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A61D4B861;
-	Mon,  7 Mar 2016 17:34:27 -0500 (EST)
-In-Reply-To: <56DD42AE.2010200@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Mon, 07 Mar 2016 09:58:22 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6579A4BC3B;
+	Mon,  7 Mar 2016 17:49:45 -0500 (EST)
+In-Reply-To: <1457265902-7949-3-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Sun, 6 Mar 2016 17:34:49 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C01EDFCA-E4B4-11E5-8E8A-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E35BC51E-E4B6-11E5-884E-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288405>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> The major question, at least on my side, is where to hook in
-> "can_clobber()" ?
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 41e73f0..440e270 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -22,6 +22,8 @@ struct align {
+>  };
+>  
+>  struct if_then_else {
+> +	const char *if_equals,
+> +		*not_equals;
+>  	unsigned int then_atom_seen : 1,
+>  		else_atom_seen : 1,
+>  		condition_satisfied : 1;
+> @@ -411,6 +413,14 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
+>  {
+>  	struct ref_formatting_stack *new;
+>  	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
+> +	const char *valp;
+> +
+> +	if (skip_prefix(atomv->s, "equals=", &valp))
+> +		if_then_else->if_equals = valp;
+> +	else if (skip_prefix(atomv->s, "notequals=", &valp))
+> +		if_then_else->not_equals = valp;
+> +	else if (atomv->s[0])
+> +		die(_("format: unknown format if:%s"), atomv->s);
+>  
+>  	push_stack_element(&state->stack);
+>  	new = state->stack;
 
-There are different ways the existing commands ensure that they do
-not lose local modifications.
+The fact that you are pushing stack element here tells me that this
+"handler" is run once for each 'ref' that we prepare output for
+(i.e. unlike the helper functions called "parser" that are called
+only once while preparing used_atom[] array).
 
- * Some (like unpack-trees code that is used by "merge") do
-   refresh_cache() upfront and then ask ce_uptodate() if the
-   contents in the working tree match the indexed contents.
-   unpack-trees.c::verify_uptodate_1() has a call to ce_uptodate()
-   and returns early when true (i.e. if "git add" would result in
-   the same index entry), but then does a double-check with
-   ie_match_stat(), which essentially asks the "does an add result
-   in the same index entry?" again.
-
- * Others (like apply) do not do the tree-wide refresh_cache(), but
-   asks "does an add result in the same index entry" by calling
-   ce_match_stat(), which is a thin wrapper to ie_match_stat(), in
-   builtin/apply.c::verify_index_match().
-
-These places need to learn that there is a case where
-ie_match_stat() says "'git add' would change the index, i.e. working
-tree file is different" but the working tree file can still be
-clobbered because 'checkout' would produce the same contents in the
-working tree.
-
-But stepping back a bit, I no longer am sure if such a loosening is
-desirable.  Imagine that you implemented such loosening and allowed
-a patch to be applied to the index (and the result checked out to
-the working tree).  What would the result of "diff --cached" be
-after doing so?  Would it contain only the change described in the
-patch you just accepted?  If that is the case, it would be OK, but
-if the change from the patch gets mixed with the "fix incorrectly
-recorded data in the index" change that you would have recorded if
-you did "git add" from the working tree without applying the patch,
-then that would not be a desirable outcome, I would suspect.  You
-would rather want to first commit the "fix incorrectly recorded data
-in the index" as a separate preparatory step and then want to apply
-the patch.  So...
+It somehow feels that this goes against the overall design you did
+in the earlier topic to pre-parse as much as possible when you
+prepare the used_atom array and avoid parsing at the runtime.  Am I
+misreading the patch?
