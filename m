@@ -1,89 +1,96 @@
-From: "Anton Wuerfel" <anton.wuerfel@fau.de>
-Subject: Adding RFC 3161 timestamps to git tags
-Date: Mon, 7 Mar 2016 15:15:16 +0100
-Message-ID: <9bf0ad940a5ce20c0c3742a3dfca70f8.squirrel@faumail.uni-erlangen.de>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [RFC/PATCH] clone: make 'git clone -c
+ remote.origin.fetch=<refspec>' work
+Date: Mon, 07 Mar 2016 16:19:31 +0100
+Message-ID: <20160307161931.Horde.TcdEVtHKgSMvScCDUKLclVq@webmail.informatik.kit.edu>
+References: <1457313062-10073-1-git-send-email-szeder@ira.uka.de>
+ <xmqqfuw3rrwb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: i4passt@cs.fau.de, phillip.raffeck@fau.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 07 15:23:21 2016
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 07 16:20:42 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acw48-0006ji-GA
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 15:23:20 +0100
+	id 1acwxc-0007pP-BX
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 16:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbcCGOXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2016 09:23:17 -0500
-Received: from mx-rz-1.rrze.uni-erlangen.de ([131.188.11.20]:60195 "EHLO
-	mx-rz-1.rrze.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752350AbcCGOXP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 09:23:15 -0500
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Mar 2016 09:23:15 EST
-Received: from boeck2.rrze.uni-erlangen.de (boeck2.rrze.uni-erlangen.de [131.188.11.32])
-	by mx-rz-1.rrze.uni-erlangen.de (Postfix) with ESMTP id 3qJhX463qyz8xMp
-	for <git@vger.kernel.org>; Mon,  7 Mar 2016 15:15:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fau.de; s=fau-2013;
-	t=1457360116; bh=ZrGd4Uw5KotQ8ShJWatC1A8hFM+s4bulSwkZOu7ZKmw=;
-	h=Date:Subject:From:To:Cc:From:To:CC:Subject;
-	b=GOM0O3hXTkrWZbmoZy3eZQm9NPwWFNPHreF9Ewe+WAdIAH8SuJBs3dvy+YsXEpyqD
-	 2UtTelyYgTHCkWUJw47+28tVFbZmHrC0mgjn7Tb2IUhmmSCnUZJY/7wRmQvxHR4ryL
-	 glAqcVz+8eGX4gDikM4FUqKFIwznblTJJE4YCA/84smCU5x7m246YOSIerLMKhaXPT
-	 QpMp2DeWKHlKffLQxmHI42Up822Cv3GnIZIYzCP3886q0pmXtUK49ExIR6FTKd3Jpb
-	 wORTUwth5cjIHV8+AIExZopMPsiwsERd0yy1HNSBPNVejgNGIECTNM/DNzr5DJze/+
-	 0+b4QwS3h/9hg==
-X-Virus-Scanned: amavisd-new at boeck2.rrze.uni-erlangen.de (RRZE)
-Received: from mx-rz-1.rrze.uni-erlangen.de ([131.188.11.20])
-	by boeck2.rrze.uni-erlangen.de (boeck2.rrze.uni-erlangen.de [131.188.11.32]) (amavisd-new, port 10026)
-	with LMTP id AeRl_slD4uUi; Mon,  7 Mar 2016 15:15:16 +0100 (CET)
-Received: from mx-rz-smart.rrze.uni-erlangen.de (mx-rz-smart.rrze.uni-erlangen.de [IPv6:2001:638:a000:1025::1e])
-	by mx-rz-1.rrze.uni-erlangen.de (Postfix) with ESMTP id 3qJhX412gzz8xMd;
-	Mon,  7 Mar 2016 15:15:16 +0100 (CET)
-X-RRZE-Submit-IP: 131.188.11.38
-Received: from faumail.uni-erlangen.de (smtp.fau.de [131.188.11.38])
-	by smtp.uni-erlangen.de (Postfix) with ESMTP id 3qJhX40gJJzHpw5;
-	Mon,  7 Mar 2016 15:15:16 +0100 (CET)
-Received: from 131.188.42.190
-        by faumail.uni-erlangen.de with HTTP;
-        Mon, 7 Mar 2016 15:15:16 +0100
-User-Agent: SquirrelMail/1.4.23 [SVN]
+	id S1753229AbcCGPU2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 10:20:28 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:45922 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753366AbcCGPTw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 10:19:52 -0500
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1acwwm-0003LL-2W; Mon, 07 Mar 2016 16:19:48 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1acwwV-0005nV-TN; Mon, 07 Mar 2016 16:19:31 +0100
+Received: from x590cb2aa.dyn.telefonica.de (x590cb2aa.dyn.telefonica.de
+ [89.12.178.170]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Mon, 07 Mar 2016 16:19:31 +0100
+In-Reply-To: <xmqqfuw3rrwb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1457363988.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288391>
 
-Hello,
 
-as part of an university project we plan to implement time stamp
-signatures according to RFC 3161. This enables users to create and verify
-cryptographic time stamp signatures to prove that a commit existed at a
-certain point in time.
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-As a long-term goal, we would like to get this new feature accepted into
-upstream, so we are very interested in your opinions and suggestions for
-our approach described in the following.
+> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+>
+>> Check whether there are any relevant configured fetch refspecs and
+>> take those into account during the initial fetch, unless running 'gi=
+t
+>> clone --single-branch'.
+>>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+>> ---
+>
+> Even though I think the original description did not mean to include
+> the fetch refspecs when it talked about configuration taking effect,
+> I think what this change wants to do probably makes sense.
 
-We plan to add new command line options to git tag and call openssl
-similar to how "git tag -s" is calling gpg. The time stamp query generated
-by openssl will be sent to the time stamping authority via libcurl.
-Verification of timestamps will be possible via git verify-tag.
+Well, currently one would have to clone, set additional fetch refspecs,
+fetch again and repack.  Using 'git clone -c <refspecs>' would do it in
+a single step, requiring fewer commands, less time, less data transfer
+and less disk space, which fits the justification of v1.7.7-rc0~90^2
+perfectly.
 
-In order to store time stamp signatures, the file format for git tags
-needs to be extended. Similar to how gpg signatures are stored, we would
-store the signed time stamp responses in base64 surrounded by BEGIN and
-END tags:
------BEGIN RFC3161-----
-Issuer: [issuer-name]
-[time stamp response in base64]
------END RFC3161-----
+Or init, add remote, set additional refspecs and fetch, which still
+requires more commands, but at least doesn't transfer more data.
 
-We plan to offer git config options to configure, which timestamping
-authority to use and where trusted certificates are stored.
+>> I'm unsure what to do with the '-c <fetch-refspec> --single-branch'
+>> combination: it doesn't really make sense to me and can't imagaine a
+>> use case where it would be useful...  but perhaps I just lack
+>> imagination on this Sunday night.  Hence the RFC.
+>
+> My knee-jerk reaction is to change the last paragraph of your log
+> message to read more like
+>
+> 	Always read the fetch refspecs from the newly created config
+> 	file, and use that for the initial fetching.
+>
+> and do so even when running with "--single-branch".
 
-Regards,
-Phillip Raffeck
-Anton Wuerfel
+Ok, will change the '--single-branch' codepath as well.
+
+But before doing so, to avoid a possible misunderstanding on my part:
+I'm not sure how literally you meant that "from the newly created
+config file" part, because it ignores refspecs specified via any
+other means, e.g. 'git -c <fetch-refspec> clone'.  I think the
+initial fetch should be no different from "regular" fetches, and
+should respect all configured fetch refspecs regardless where they
+come from.
