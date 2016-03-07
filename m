@@ -1,173 +1,175 @@
-From: Alexander Rinass <alex@fournova.com>
-Subject: Re: git diff does not precompose unicode file paths (OS X)
-Date: Mon, 7 Mar 2016 08:47:47 +0100
-Message-ID: <8C785DB2-CEDB-435B-945B-00E4D98DBF99@fournova.com>
-References: <0008C25D-C3F0-4A1F-8B50-4EF1E84CA04F@fournova.com> <56D97C8C.1060205@web.de> <D9E0FEEC-1987-4045-AD0F-4C7C76DC067B@fournova.com> <56D9D8C6.2060104@ramsayjones.plus.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Mon Mar 07 08:47:24 2016
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] git reset --hard gives clean working tree
+Date: Mon, 07 Mar 2016 00:14:52 -0800
+Message-ID: <xmqqpov6puv7.fsf@gitster.mtv.corp.google.com>
+References: <Message-Id=xmqqio26nqk8.fsf@gitster.mtv.corp.google.com>
+	<1455207366-24892-1-git-send-email-tboegi@web.de>
+	<xmqqy4arw089.fsf@gitster.mtv.corp.google.com>
+	<56DA896A.3050201@web.de>
+	<xmqqtwklwdrh.fsf@gitster.mtv.corp.google.com>
+	<56DA986B.6040003@web.de>
+	<xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 07 09:15:11 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1acpsw-0008Hl-2e
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 08:47:22 +0100
+	id 1acqJm-0000zg-D9
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Mar 2016 09:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbcCGHrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Mar 2016 02:47:17 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:36838 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006AbcCGHrR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Mar 2016 02:47:17 -0500
-Received: by mail-wm0-f54.google.com with SMTP id n186so72676219wmn.1
-        for <git@vger.kernel.org>; Sun, 06 Mar 2016 23:47:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fournova-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Pp5jvINkCe9KcdWNQrNxRDoDmqJYu2S65GrbZa290kk=;
-        b=LeXuxEGq8f4aT2LCJrPyoLdx1q9Eb6Q+FCG6lisOZ7HtfArd/CgpjDF/Rqj/LlsVSz
-         cPX2rogh41qzRtUtK4MI49UzyFFOnHIZv4TCbb8gTBMpRUa6k3sPChkAoy/xpFzAPXKt
-         riTdQa3BtnKJT4nZoEkmSnJDzx4NliNoN5gKaprTc7C5Jw0HxFTjw2lLKEqsuKayXJF7
-         cbn73YXo/LdydApRMDisFcHU3vA5kdCkLL/QYk7gFhQPR6/Vo9C7EWH2R6ogRC16Iuzl
-         bIaFG5yL1T3TYXYsQMxnstJDj6LtAoKz90i6RGfZpBwqkFWWTsJYY7gEDrPRNjVYfom6
-         dGTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Pp5jvINkCe9KcdWNQrNxRDoDmqJYu2S65GrbZa290kk=;
-        b=HYxDd4sXNd0e51zGymJTvwMq9zlKuRR908buyTir4NekBQg/iI8TgWBotRqhA06c12
-         XHuY9iX4vu4SpVTotj28zRYzBKgwNV4kCSI7tatTrNaYYV06cffbQ4cDQ4wRtPufl+1s
-         uJSaVkRMIAAA6aatws92FE/gxpyHq59/gpNaKLLNswc+q5+xBHM389NCaqItQ42lUkJE
-         xzpZQBC94LKhm0CxshMi15XlCbVvGarQZ++rUul9SUWmD3gD5W2oJyMpra+ADGNDg4en
-         7y3fY1s5iJDGo7sKl5VEN8kRXkKIidHZqNYlEow0JjwxBvWuO4bZIMBdbHEjo5HNjXAD
-         YQ3A==
-X-Gm-Message-State: AD7BkJIDUzevgSehkeZt3wH6/muhuSp7U6xjmSiOCdqodpOYyIhfsioRV/LOEUSMaLxH4g==
-X-Received: by 10.194.61.240 with SMTP id t16mr21114036wjr.27.1457336835348;
-        Sun, 06 Mar 2016 23:47:15 -0800 (PST)
-Received: from ?IPv6:2a02:908:df42:8b00:8962:7301:7cdc:4fc7? ([2a02:908:df42:8b00:8962:7301:7cdc:4fc7])
-        by smtp.gmail.com with ESMTPSA id l135sm12336896wmb.13.2016.03.06.23.47.14
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 06 Mar 2016 23:47:14 -0800 (PST)
-In-Reply-To: <56D9D8C6.2060104@ramsayjones.plus.com>
-X-Mailer: Apple Mail (2.3112)
+	id S1752177AbcCGIO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Mar 2016 03:14:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751958AbcCGIO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Mar 2016 03:14:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B78B043E59;
+	Mon,  7 Mar 2016 03:14:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CoKgkaRfCaCHKQ2yxAjlDTtmpXU=; b=RaT5yq
+	1ct59zoMJImVs3s9hZb+jCiYlYqo6GjN7Ftv8ck6hSUuAzr065wumnaM91l598cH
+	SiqUX/oLRy6oDeuIzAOe8l7VTCrsiZR/BaFtimhY/rhJ/rq4XWSALGa6GRVLeFq6
+	T52GR6XFSArczSqpNNOH8Zs5XKFxxsNpbfxus=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qnUdUYYIRJhMzVOc/qxjTwQu53zNxPoT
+	RAG8nvZOA/WB4sQ16nAUAmIUc2C87rOw6p0Iub7xeuUGy4NoEuIDZgvt7e0DtFSa
+	6BUr9na/QKvjwuu4Szr4nz98/dJluS+qdAOpa8mAr43UOM/qNW35rFdAUoq04Q/V
+	OpXRM40z7uM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ADE2343E58;
+	Mon,  7 Mar 2016 03:14:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2FEED43E56;
+	Mon,  7 Mar 2016 03:14:54 -0500 (EST)
+In-Reply-To: <xmqqr3fotyhu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 05 Mar 2016 13:18:21 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AC2723F6-E43C-11E5-89F4-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288382>
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Besides, it is OK if your status and diff says your worktree is
+> dirty immediately after cloning in such a broken situation, I would
+> think.  In fact, it may even be preferable to do so, in order to
+> indicate that there is something unusual going on.
+
+The above needs a bit of clarifying follow-up.
+
+Some operations (e.g. "apply --index" and "checkout another-branch")
+want to make sure that the path in the working tree "matches" what
+is in the index before proceeding.  The reason why they require a
+match is because they are going to update what is in the index and
+then update what is in the working tree to match the result by
+checking the updated index entry out to the working tree--if the
+working tree and the index are different before they start their
+operation, that means you have some changes you made in the working
+tree since you checked it out of the index, and their operation will
+lose such changes.
+
+Normally, this verification is done by ce_match_stat() and friends,
+whose correct operation relies on an earlier refresh_index(), which
+in turn makes sure that the result of running the contents in the
+working tree through convert_to_git() matches what is in the index.
+
+When your convert_to_working_tree() and convert_to_git() do not
+round-trip, however, the result of convert_to_git() on the working
+tree contents would not match what is in the index.  That is
+inconvenient, and it is something you may want to relax to help such
+a broken situation.  Immediately after you "git checkout" (or "git
+reset --hard"), you haven't made any changes, and you should be able
+to "git checkout another" to go to another branch.
+
+For this reason, I am perfectly OK with an approach to teach the
+callers that currently use ce_uptodate() as the only way to make
+sure that there is no modification to a given path (and refuse to
+work on it if ce_uptodate() says the path is modified) that it is
+also OK to clobber a path that does not pass the ce_uptodate() check
+as long as the result of running convert_to_working_tree() on the
+indexed contents matches what is in the working tree.  These callers
+are currently overly strict and you will be relaxing their overly
+strict check to help this broken situation.
+
+Perhaps we can introduce a new function can_clobber() that has the
+same function signature as ce_uptodate() and update the callers in
+apply and unpack-trees (there may be others) to call it instead when
+they want to see if they can clobber the working tree file that
+corresponds to the cache entry.
+
+For implementing the can_clobber() function, you can use something
+along the lines of compare_with_fd() helper function I introduced in
+[1] and do something like this, perhaps.
+
+When I send an illustration patch and say "totally untested", I
+usually start from the real source file and send "git diff" output
+after making changes to the source file, and I may even have at
+least compiled the modified result.  The following however is typed
+directly into my mail program without touching any existing source
+file, so it is truly untested--caveat emptor.
+
+/*
+ * We are about to do some operation to the index entry, and
+ * write the result out to the working tree.  Would we lose
+ * some local change that exist only in the working tree by
+ * doing so?  Return 1 if we can safely clobber the working
+ * tree file (i.e. no changes) and return 0 if we can't (i.e.
+ * there are some changes).
+ */
+int can_clobber(struct cache_entry *ce)
+{
+        int fd, match = 0;
+        enum object_type type;
+	unsigned long size;
+        void *data;
+
+        /*
+         * Does another "git add -f" of the path result in the
+         * identical blob in the index?  If so, the working tree
+         * file is expendable.
+         */
+	if (ce_uptodate(ce))
+        	return 1;
+	fd = open(ce->name, O_RDONLY);
+        if (fd < 0)
+		return 0;
+
+	data = read_sha1_file(ce->sha1, &type, &size);
+	if (type == OBJ_BLOB) {
+		struct strbuf worktree = STRBUF_INIT;
+		/*
+                 * Does another "git checkout -- path"
+		 * recreate what we see in the working tree?
+                 * If so, the working tree file is expendable.
+                 */
+		if (convert_to_working_tree(ce->name, data, size,
+					    &worktree)) {
+			free(data);
+			data = strbuf_detach(&worktree, &size);
+		}
+		if (!compare_with_fd(data, size, fd))
+			match = 1;
+	}
+	free(data);
+	close(fd);
+
+        return match;
+}
 
 
-> On 04 Mar 2016, at 19:49, Ramsay Jones <ramsay@ramsayjones.plus.com> =
-wrote:
->=20
->=20
->=20
-> On 04/03/16 14:37, Alexander Rinass wrote:
->>=20
->>> On 04 Mar 2016, at 13:16, Torsten B=C3=B6gershausen <tboegi@web.de>=
- wrote:
->>>=20
->>> On 03/04/2016 10:07 AM, Alexander Rinass wrote:
-> [snip]
->=20
->>=20
->> Sticking a precompose_argv(argc, argv) into diff.c=E2=80=99s cmd_dif=
-f function fixes the issue.
->>=20
->> But I had to disable the check (precomposed_unicode !=3D 1) in preco=
-mpose_argv to make it work. That=E2=80=99s probably because precompose_=
-argv is usually called from parse_options and is missing some other cal=
-l before it?
->>=20
->=20
-> Yes, you need to place it after the configuration is read, but before
-> calls to diff_no_index() or setup_revisions(). Directly after the cal=
-l
-> to git_config() should be fine. [But this begs the question about oth=
-er
-> commands, including plumbing, which don't call parse_options().]
->=20
-> Maybe this will work for you (I can't test it, since I don't have any
-> access to a Mac):
->=20
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index 343c6b8..b7a9405 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -320,6 +320,7 @@ int cmd_diff(int argc, const char **argv, const c=
-har *prefix)
-> 		gitmodules_config();
-> 	init_diff_ui_defaults();
-> 	git_config(git_diff_ui_config, NULL);
-> +	precompose_argv(argc, argv);
->=20
-> 	init_revisions(&rev, prefix);
+[Reference]
 
-Your patch fixes it for the diff command without further modifications.
-
-I have also modified diff-tree, diff-index and diff-files by adding the=
- precompose_argv call and successfully verified it.
-
-I have attached the full patch. If there is anything else I can test, l=
-et me know.
-
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 8ed2eb8..15c61fd 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -24,6 +24,7 @@ int cmd_diff_files(int argc, const char **argv, const=
- char *prefix)
- 	gitmodules_config();
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	rev.abbrev =3D 0;
-+	precompose_argv(argc, argv);
-=20
- 	argc =3D setup_revisions(argc, argv, &rev, NULL);
- 	while (1 < argc && argv[1][0] =3D=3D '-') {
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index d979824..1af373d 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -21,6 +21,7 @@ int cmd_diff_index(int argc, const char **argv, const=
- char *prefix)
- 	gitmodules_config();
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	rev.abbrev =3D 0;
-+	precompose_argv(argc, argv);
-=20
- 	argc =3D setup_revisions(argc, argv, &rev, NULL);
- 	for (i =3D 1; i < argc; i++) {
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 2a12b81..806dd7a 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -114,6 +114,8 @@ int cmd_diff_tree(int argc, const char **argv, cons=
-t char *prefix)
- 	opt->disable_stdin =3D 1;
- 	memset(&s_r_opt, 0, sizeof(s_r_opt));
- 	s_r_opt.tweak =3D diff_tree_tweak_rev;
-+
-+	precompose_argv(argc, argv);
- 	argc =3D setup_revisions(argc, argv, opt, &s_r_opt);
-=20
- 	while (--argc > 0) {
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 52c98a9..d6b8f98 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -319,6 +319,7 @@ int cmd_diff(int argc, const char **argv, const cha=
-r *prefix)
- 	if (!no_index)
- 		gitmodules_config();
- 	git_config(git_diff_ui_config, NULL);
-+	precompose_argv(argc, argv);
-=20
- 	init_revisions(&rev, prefix);
-=20
+*1* http://thread.gmane.org/gmane.comp.version-control.git/284352/focus=285341
