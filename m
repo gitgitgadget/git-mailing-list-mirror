@@ -1,107 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch: show reference pointed by new tags
-Date: Mon, 07 Mar 2016 20:28:06 -0800
-Message-ID: <xmqqd1r5mw4p.fsf@gitster.mtv.corp.google.com>
-References: <1457303694-16153-1-git-send-email-eric@engestrom.ch>
-	<xmqq60wzta2s.fsf@gitster.mtv.corp.google.com>
-	<xmqqwppfrtai.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 02/15] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+Date: Tue, 8 Mar 2016 11:11:50 +0530
+Message-ID: <CAOLa=ZSFD39HXSw8jo1=ehiKpeqjLUSfc0NkRJD0BSbqAvDwuQ@mail.gmail.com>
+References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
+ <1457265902-7949-3-git-send-email-Karthik.188@gmail.com> <xmqq7fhdoqd3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Eric Engestrom <eric@engestrom.ch>
-X-From: git-owner@vger.kernel.org Tue Mar 08 05:28:22 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 06:42:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ad9Ft-0000af-91
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 05:28:21 +0100
+	id 1adAPb-0005k0-Bu
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 06:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbcCHE2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Mar 2016 23:28:11 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51297 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753411AbcCHE2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Mar 2016 23:28:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E5F644BD86;
-	Mon,  7 Mar 2016 23:28:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=241xg63HJntcKmjfwP1sd5AkjFg=; b=pY5C8P
-	9zJwa3OHzz2gTELZoGkoeTniOTtlUKKYObkcpxmJThEQVHI4KoT/+1CG6v80Qa1V
-	2aD4YdPpzZXsYgLJj+zNjgHzWcb/zqheNDgevSRaO7fJ6ekaztnBpCTu9dUC6q8F
-	rwUxhHE5Q9KyvoUdc4DpurDEYqjl55W3x2DZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=McpASjJaeUM5RV/w2pY4dCBu45GKymJQ
-	IabHRpSP/97FMip7NgtX9TeK9KCREpgSKVVaTNSKT2Rje5tHuH7OualxfPZaJl3o
-	hCu441zSfqVhQoHjk463sCAK6bTD7RMDcGo3yAdeaIrfzFbepoIP1/W/Zi5LzIsw
-	1/24MfFwAiI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0FBF4BD85;
-	Mon,  7 Mar 2016 23:28:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1AA074BD84;
-	Mon,  7 Mar 2016 23:28:08 -0500 (EST)
-In-Reply-To: <xmqqwppfrtai.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 06 Mar 2016 17:05:57 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 28B52DB0-E4E6-11E5-B639-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753436AbcCHFmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 00:42:22 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35156 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751936AbcCHFmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 00:42:21 -0500
+Received: by mail-vk0-f67.google.com with SMTP id e185so448848vkb.2
+        for <git@vger.kernel.org>; Mon, 07 Mar 2016 21:42:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=x/Z9HoEa46h6ffyPU4Qon0dM/R7P6AQJl3O/2/wxNeI=;
+        b=i0i/ym9Zd83iUeAubEGQyIqcPblwm5UXf4mwRCJ4/fLkcUJJb0fg1YGMbZ9UY0cyZI
+         EDbNA3HgwrX8fVwARZLdy2qNEoGcA7lombJRKNE87OGsu9vTlmr0rxlvslv6VCcGub0s
+         tJrd+3JA1djFTwjFNjB8FZITzgCiw7d/mOCPN1vc1lCY5pWUZruBTr6krrdFypS50Uyj
+         HmnIhHFiedxfSiiA5Ar4VETZ5RSQ6llhx0C/+ic4GBgGEDxngBMzcega7p0YCcO7XP5r
+         eGwrGcHEuqkWeKUdUFvJOU3q6XOwscHxogDpAQ800laE2QV9yDT97w6HmwON3Dg0TP0v
+         4AMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=x/Z9HoEa46h6ffyPU4Qon0dM/R7P6AQJl3O/2/wxNeI=;
+        b=AO6N/IieXfIfwQE6uBRZMe5ppqoqKAohpJH+i6jIFdhoHJphj7U9+PaSPDtPR3EIKF
+         EGrdvmAnL5EuBS1i4Xq2nXg1Kjckmn4G4h7nb8WcAsMC/Qk+feND3gm2pz6PqgAI1Nwk
+         w248rgqN0BqG4TKn9jdcIO48yfh0zLVzbvygkM/X5NZdUxQlb2ytG1ytE22vw5v8VTVh
+         fSVVvm/5QPCe7kHB+Grqgzat81uy0Umugj0vIx3v8LloBp3w62b1KtpJFD8TVukWy4j5
+         xa5hx29+47c9OnrE7Op4QGrB3DE1bzgQkdb64RaROX4sym/TfaBk5DNsJm7XGzj0mefK
+         751g==
+X-Gm-Message-State: AD7BkJLgTqRT2wpOZlBM6/YHpwfa8U7FfRH5LYIlQmFnNNpxys/e5U41xXLt3vGcyIwxvA0N/iKsm49I9XXrxw==
+X-Received: by 10.31.6.130 with SMTP id 124mr19826075vkg.106.1457415740310;
+ Mon, 07 Mar 2016 21:42:20 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Mon, 7 Mar 2016 21:41:50 -0800 (PST)
+In-Reply-To: <xmqq7fhdoqd3.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288417>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Mar 8, 2016 at 4:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> But I am merely guessing from the your patch text what the reasoning
-> behind the change was and you are the one who had the original
-> reason why you needed this change, so your "why" may be a lot more
-> useful use case than the one I made up and called "semi-sensible"
-> here.  The proposed log message needs to explain your "why".
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 41e73f0..440e270 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -22,6 +22,8 @@ struct align {
+>>  };
+>>
+>>  struct if_then_else {
+>> +     const char *if_equals,
+>> +             *not_equals;
+>>       unsigned int then_atom_seen : 1,
+>>               else_atom_seen : 1,
+>>               condition_satisfied : 1;
+>> @@ -411,6 +413,14 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
+>>  {
+>>       struct ref_formatting_stack *new;
+>>       struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
+>> +     const char *valp;
+>> +
+>> +     if (skip_prefix(atomv->s, "equals=", &valp))
+>> +             if_then_else->if_equals = valp;
+>> +     else if (skip_prefix(atomv->s, "notequals=", &valp))
+>> +             if_then_else->not_equals = valp;
+>> +     else if (atomv->s[0])
+>> +             die(_("format: unknown format if:%s"), atomv->s);
+>>
+>>       push_stack_element(&state->stack);
+>>       new = state->stack;
 >
-> And if you explained "why", you may have heard other people agreeing
-> with you that this new piece of information is nice to have.  They
-> may even have helped you by suggesting to add this extra information
-> somewhere in the output, instead of replacing existing information
-> in the output (which would lead to loss of convenience and
-> information).
+> The fact that you are pushing stack element here tells me that this
+> "handler" is run once for each 'ref' that we prepare output for
+> (i.e. unlike the helper functions called "parser" that are called
+> only once while preparing used_atom[] array).
+>
+> It somehow feels that this goes against the overall design you did
+> in the earlier topic to pre-parse as much as possible when you
+> prepare the used_atom array and avoid parsing at the runtime.  Am I
+> misreading the patch?
 
-I just thought of another possible explanation why you may have
-thought that it is a good idea to clobber the right hand side of the
-fetch report.  Perhaps you thought that LHS and RHS say the same
-thing and that is redundant?
+You're correct, the "handler" functions run once for each "ref". But WRT
+to the %(if)...%(then)...%(else)...%(end) atoms, it needs to be. Because
+each outcome of these atoms depend on the current outcome of the fields
+used between then WRT to the current ref.
 
-Because "git fetch" is flexible and allows you to store what the
-remote side called X locally as Y, the fetch report in the most
-general form must say X on the remot side) was fetched and stored as
-Y in the local repository, i.e.
+Although we could somehow go about parsing the "equals=" / " notequals="
+part of the %(if) atom beforehand to ensure that we do not end up repeating
+that each time for every atom.
 
-	[new tag] X -> Y
+This could be done by parsing the %(if) atom before hand, probably with a
+if_atom_parser, storing the "equals=" / " notequals=" value into used_atom[i]
+and providing this used_atom[i] to the if_atom_handler. This would require
+extending the prototype of the 'handler' functions to also pass used_atom[i].
+Which seems like a good thing, considering that this may enable future 'handler'
+functions to follow the same route and parse whatever can be parsed beforehand.
 
-but it is excusable that people new to Git who never saw such a
-renaming fetch to misunderstand that we are giving redundant
-information.
-
-If that was the motivation, a possible way to change the behaviour
-would be to show
-
-	[new tag] X
-
-if and only if the remote side and the local side uses exactly the
-sae name for the ref.  The lack of " -> " can clearly tell the user
-that the output is telling us that what they call X is fetched and
-stored as X (i.e. under the same name) locally.  A fetched ref that
-does not update any local ref (i.e. the ones that are recorded only
-in the FETCH_HEAD file) is shown as
-
-	tag X -> FETCH_HEAD
-
-so there is no ambiguity there, either.
+-- 
+Regards,
+Karthik Nayak
