@@ -1,91 +1,121 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 08/15] ref-filter: make "%(symref)" atom work with the
- ':short' modifier
-Date: Tue, 8 Mar 2016 11:51:11 +0530
-Message-ID: <CAOLa=ZSSz7F_-fFm70=uyYsu6eGdUT+-SgbphWd8CKXnZqdCtg@mail.gmail.com>
-References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
- <1457265902-7949-9-git-send-email-Karthik.188@gmail.com> <xmqqtwkhnaxg.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xqqA=aZ5Nr7YuMnLKAc2E3F4Y31oOb06aAcvunqw+gH4A@mail.gmail.com>
+From: Anders Kaseorg <andersk@mit.edu>
+Subject: [PATCH] rebase -p: avoid grep on potentailly non-ASCII data
+Date: Tue, 8 Mar 2016 02:59:06 -0500 (EST)
+Message-ID: <alpine.DEB.2.10.1603080255030.2674@buzzword-bingo.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 07:21:58 2016
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 08 09:04:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adB1n-0000JZ-V9
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 07:21:56 +0100
+	id 1adCcw-0000SV-ML
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 09:04:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982AbcCHGVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 01:21:44 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33347 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753978AbcCHGVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 01:21:42 -0500
-Received: by mail-vk0-f68.google.com with SMTP id c3so515425vkb.0
-        for <git@vger.kernel.org>; Mon, 07 Mar 2016 22:21:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FPX635XyxImLjUjs4/8hkwEjoHx3FCnxiFl9nTv6lnQ=;
-        b=KHLNAaHhsbjWZ3qm/1chUInRZ+n7hrTsYLk1XaSobhsjUyfNy2JAxQELZX6lfH1H3a
-         xgEznxyfEb5G/1B+62XAHaQXt9hd9WAb4ErpBJJyyIg8zC3TvLr8gDSstMtB9Zhptekl
-         GIFsqsNw2LtCGWnUa3Fe3Vo9FPqD05Q+RDtOmBJzSYy8Ga1HaeHuXlnWLXa7eNMVnnUF
-         orfFFHUZI0ERg7RBqdDC37BRhU9csFweOZT0rR6HLofor0qcEm9CV7nebtbKGjy2hmsM
-         jIAjlYblOkhcbJkvtrrI72SpPJ3ovlyyupVgBRdhhQpn1pOpFUAu0OzCEPIiY74xt5Tx
-         OT2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FPX635XyxImLjUjs4/8hkwEjoHx3FCnxiFl9nTv6lnQ=;
-        b=ZMzWOEYuU/oxeRpjd658hiwA4t74oJHWUoDjLgybY79xlWmXnqfXabzGGWhWpwzWlr
-         EfZl1gxifrX42kdTKYRK/0NypQsewwUg9+dKU93VKX5OAcsLbyoJeMZ7hx6a4A8nRXqH
-         NLd5nPGvI7QCxibxXA2qrT7oOf/CER5whMROE12PP4xbv0W0YD+KoEmElelkA594HiPS
-         w0jimLsFW59JkvxH4t+/eMgZ4fdPBSOnfgqv1HUJYmz/NMKQyF6pZmEXrL9Q2gpsLo0l
-         1u9rRfrS7pqmo05FCmg+tmR968K1YQRbgMnHyQ+pC/PDE6GdbERGy+i8R/xzSJjB9NwV
-         WkAw==
-X-Gm-Message-State: AD7BkJI7yTHVVOg46DBWZ+pDifaBpZ3dqWqmY54Rw5cWxWyuQ2kZQd7ddrebvbeFxn1QrU/PfBOhsnoGWC5uVg==
-X-Received: by 10.31.16.40 with SMTP id g40mr18013297vki.97.1457418101278;
- Mon, 07 Mar 2016 22:21:41 -0800 (PST)
-Received: by 10.103.82.133 with HTTP; Mon, 7 Mar 2016 22:21:11 -0800 (PST)
-In-Reply-To: <CA+P7+xqqA=aZ5Nr7YuMnLKAc2E3F4Y31oOb06aAcvunqw+gH4A@mail.gmail.com>
+	id S1753810AbcCHIET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 03:04:19 -0500
+Received: from dmz-mailsec-scanner-6.mit.edu ([18.7.68.35]:53925 "EHLO
+	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753495AbcCHIER (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2016 03:04:17 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Mar 2016 03:04:17 EST
+X-AuditID: 12074423-847ff70000007333-1a-56de864c3bc9
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	(using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by  (Symantec Messaging Gateway) with SMTP id 40.31.29491.C468ED65; Tue,  8 Mar 2016 02:59:08 -0500 (EST)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id u287x843028465;
+	Tue, 8 Mar 2016 02:59:08 -0500
+Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id u287x6WD014830
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 8 Mar 2016 02:59:07 -0500
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsUixCmqrevTdi/MYP0fa4uuK91MFg29V5gd
+	mDwuXlL2+LxJLoApissmJTUnsyy1SN8ugStjf9ds9oJT/BWrJm5haWDcxNPFyMkhIWAi8e7d
+	K8YuRi4OIYE2Jom7v/tZIJwNjBKNDZPYIJxdTBI9j64ygrSwCGhJ3Jk8jwnEZhNQk/hw9Csr
+	iC0iICpxZP4iNhCbWUBcYtPyN2A1wgIuEouPTWIBsXkF3CVub/wDFhcV0JU49O8PG0RcUOLk
+	zCcsEL1aEsunb2OZwMg7C0lqFpLUAkamVYyyKblVurmJmTnFqcm6xcmJeXmpRbpmermZJXqp
+	KaWbGEFhxO6ivIPxZZ/3IUYBDkYlHt4HP++GCbEmlhVX5h5ilORgUhLlfVtxL0yILyk/pTIj
+	sTgjvqg0J7X4EKMEB7OSCC9/C1CONyWxsiq1KB8mJc3BoiTOy8jAwCAkkJ5YkpqdmlqQWgST
+	leHgUJLg5W4FahQsSk1PrUjLzClBSDNxcIIM5wEargZSw1tckJhbnJkOkT/FqMsx5/e5nUxC
+	LOlFiZVS4rzzQC4QACnKKM2DmwOJfweJV4ziQG8J864CGcUDTB1wk14BLWECWqLTdwtkSUki
+	QkqqgbFxpyt/W/HdCzNS5QNNDs1YX//BO6Nhzj3h0wc+rXS53C5yVE747KPHSeE8Fb07jh7h
+	/VLJ1mm9IOT1P5EVLzvOC7m8+PjfTNF4tQO70fPXZ/bu4S62m/SEVbB5AafGu+SWo0fs4ky2
+	hcc92SX+e4dqYHr3Hpa+ph9BvR/cmFqnsvGkee2Yf0WJpTgj0VCLuag4EQD0zO7+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288423>
 
-On Tue, Mar 8, 2016 at 7:26 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Mon, Mar 7, 2016 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> The "%(symref)" atom doesn't work when used with the ':short' modifier
->>> because we strictly match only 'symref' for setting the 'need_symref'
->>> indicator. Fix this by using 'starts_with()' rather than 'strcmp()'.
->>
->> Does that mean you also accept %(symrefgarbage) without complaining?
->>
->>
->
-> Looks like patch 9 fixes this by introducing symref_atom_parser.
->
+The included test case, which uses rebase -p with non-ASCII commit
+messages, was failing as follows:
 
-There are two ways this kinda errors can occur:
-1. %(symrefgarbage) : This is handled by parse_ref_filter_atom() which would
-print a "fatal: unknown field name: symrefgarbage".
-2. %(symref:garbage): This is handled by populate_value() which would print
-a "fatal: unknown symref: format garbage".
+  Warning: the command isn't recognized in the following line:
+   - Binary file (standard input) matches
 
-Either ways we do not need to worry about this as existing code would handle
-it. Also like Jacob mentioned Patch 09 would ensure this error checking would
-happen within symref_atom_parser().
+  You can fix this with 'git rebase --edit-todo'.
+  Or you can abort the rebase with 'git rebase --abort'.
 
+Possibly related to recent GNU grep changes, as with commit
+316336379cf7937c2ecf122c7197cfe5da6b2061.  Avoid the issue by using sed
+instead.
+
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ git-rebase--interactive.sh        |  2 +-
+ t/t3409-rebase-preserve-merges.sh | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index c0cfe88..0efc65c 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -1241,7 +1241,7 @@ then
+ 			# be rebasing on top of it
+ 			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
+ 			sha1=$(git rev-list -1 $rev)
+-			sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
++			sed "/^[a-z][a-z]* $sha1/d" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
+ 			rm "$rewritten"/$rev
+ 		fi
+ 	done
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index 8c251c5..1f01b29 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -119,4 +119,25 @@ test_expect_success 'rebase -p ignores merge.log config' '
+ 	)
+ '
+ 
++test_expect_success 'rebase -p works with non-ASCII commit message' '
++	(
++	mkdir non-ascii &&
++	cd non-ascii &&
++	git init &&
++	echo a > a &&
++	git add a &&
++	git commit -m a &&
++	echo b > b &&
++	git add b &&
++	git commit -m b &&
++	git branch foo &&
++	git reset --hard HEAD^ &&
++	git cherry-pick -x foo &&
++	echo c > c &&
++	git add c &&
++	git commit -m "$(printf "I \\342\\231\\245 Unicode")" &&
++	git rebase -p foo
++	)
++'
++
+ test_done
 -- 
-Regards,
-Karthik Nayak
+2.8.0.rc0
