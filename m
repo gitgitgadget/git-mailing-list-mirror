@@ -1,163 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Change in .gitignore handling: intended or bug?
-Date: Tue, 08 Mar 2016 10:10:35 -0800
-Message-ID: <xmqqbn6olu1w.fsf@gitster.mtv.corp.google.com>
-References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
-	<20160304055117.GB26609@ikke.info>
-	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
-	<20160304115634.GC26609@ikke.info>
-	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
-	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
-	<xmqqlh5ungct.fsf@gitster.mtv.corp.google.com>
-	<xmqq8u1tmr6l.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 19:11:04 2016
+From: Mehul Jain <mehul.jain2029@gmail.com>
+Subject: [PATCH v6 1/2] git-pull.c: introduce git_pull_config()
+Date: Tue,  8 Mar 2016 23:49:07 +0530
+Message-ID: <1457461148-8109-1-git-send-email-mehul.jain2029@gmail.com>
+References: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
+Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com,
+	pyokagan@gmail.com, sunshine@sunshineco.com,
+	Mehul Jain <mehul.jain2029@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 08 19:19:52 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adM5y-00061u-Q9
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:10:59 +0100
+	id 1adMEY-0003Ss-G3
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239AbcCHSKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 13:10:45 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58562 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751021AbcCHSKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 13:10:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B9D549428;
-	Tue,  8 Mar 2016 13:10:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qWxGVT+8YxsPXC4AWhHKoJqL/YQ=; b=ND0szs
-	PGXEB0QRSkGHcOCMkhWWkSVRRUjteolCPjH5FjrFMPQoJlhf4HD1gtnfm+BMva+U
-	5aBKOmR0Ca26aHqMYv3uvxuNRCrjBH9wQEvseZ92Gd8kt0Nnn9l/34cQulYFcpAH
-	hO9P2KGw+5U2DP6cJOLOoTZYIJudjnWHkPlS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C5oNgIaTnqn251VeCV2umgaCPjyIhkKW
-	b1fSXCtA+2M/z6/8uNAAEtz82TRB9oFf0IxQwJG3YeeVXEE7SZEb2SVqNcrhvSvc
-	uGiJtM/FYJFtBjAIsZYbbnH5ztsmPBQKId1j6ev/C7XYVJcV3wbjEJWm6eQq/2Tp
-	bmtC/AXlMDc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4FA5F49427;
-	Tue,  8 Mar 2016 13:10:38 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3EF5849423;
-	Tue,  8 Mar 2016 13:10:37 -0500 (EST)
-In-Reply-To: <CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 8 Mar 2016 17:19:23 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0F17E104-E559-11E5-AB0C-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1750976AbcCHSTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 13:19:47 -0500
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:35396 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbcCHSTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 13:19:45 -0500
+Received: by mail-pa0-f66.google.com with SMTP id fl4so1636438pad.2
+        for <git@vger.kernel.org>; Tue, 08 Mar 2016 10:19:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Zk2lIiwD2WaaVKTKqRCAHY5rmtVAIWm+oAR4BX7aIsg=;
+        b=jJHBTfAPcR5pSQbrn1l4ucijj7IBD5NwhJ9Vx1IPSkpQWJhVemM2FpBjE+uj3x18lT
+         MYvTw/he1W2jPna+0oNkPVrmOYRCR/mGB7hVXp00/t8qDul4MqpVaZ4GAVRxM8PX+hR7
+         SdGR3FZBG0x8tEnB6jL7jact9CSltglckX5eFxKMpxfOiIVy0GBCsjE86TUducRloetp
+         F99dNat+/dVKGVItDfLN1ImhVNCf81OWNnnJ/jvcyJIs7CiXk2FyH/vK5er0mDpdpb02
+         51rJw6IyHFoQMqP/09SFGR54SCkTe1KJ8RVvPH4YNEY55hXV5yjYKMv7b60S1IIZLKji
+         DDeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Zk2lIiwD2WaaVKTKqRCAHY5rmtVAIWm+oAR4BX7aIsg=;
+        b=lqIDM8NKhf1pWKYHZqFyu1wtVDdJ5+Ejb4kiK4N1cGp/nwvWbNF4i11UpJiuB178zL
+         v9Ttv0/0CgcCww0EW0FxvF0ZtkpTGrZTmYrNKIM8mp/F19Cngo/pTwgQwW9n8FbqPs1D
+         VEOX6LnvUYvK1m7kD2APNoqhx5hj2CRS/F3DL2C0iYdQUTXHW6vSLFiA/V45Q1emDpNx
+         +gf2mDy21xJxYsorxVmPfzgolPepzOZBxDQ0+Hx7YidM6BpJaX/ZOB6gWrD4+UQ6uZVa
+         XmI1LDSR1HqvcqFOXwAUTBzJxgCUbYCXr8Ik4Y7PcXkTV2pNZWUxaeqMyBXSm3itu72u
+         m6Hg==
+X-Gm-Message-State: AD7BkJKDI9rdtjZP0l4IgtdutjtxzwlGb7cYFZRuXSjbK+Hw7m6LqvTy+P1aR3I3zrYDkA==
+X-Received: by 10.66.65.109 with SMTP id w13mr43468028pas.142.1457461184512;
+        Tue, 08 Mar 2016 10:19:44 -0800 (PST)
+Received: from localhost.localdomain ([1.39.39.116])
+        by smtp.gmail.com with ESMTPSA id y27sm6510684pfi.82.2016.03.08.10.19.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 08 Mar 2016 10:19:43 -0800 (PST)
+X-Mailer: git-send-email 2.7.1.340.g69eb491.dirty
+In-Reply-To: <1456594902-21182-1-git-send-email-mehul.jain2029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288445>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+git-pull makes a seperate call to git_config_get_bool() to read the value
+of "rebase.autostash", this can be reduced as a call to git_config() is
+already there in the code.
 
-> On Tue, Mar 8, 2016 at 1:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> We need documentation update to settle this one before 2.8 final
->>> ships, as we seem to be seeing more and more end-user confusion on
->>> the list.  I tried to come up with a trimmed-down example, which is
->>> shown below, but I suspect that the code is not exactly working the
->>> way it is described in that (1) dir/file1 is ignored and (3)
->>> !dir/file3 entry makes difference.
->>>
->>> Where did my example go wrong?
->>>
->>> FYI, if I prefix '/' to all the .gitignore entries in the example, i.e.
->>> making it
->>>
->>>     *
->>>     !/dir
->>>     /dir/file2
->>>     !/dir/file3
->>>
->>> instead, then dir/file1 and dir/file3 do get shown as unignored.
->
-> Arghhh.. bug!!!
->
-> The difference between "dir" and "/dir" is, the former is basename
-> matching while the latter is pathname matching. When we check
-> dir/file1 after we enter "dir", we do try to check rule "!/dir" (or
-> "!dir") before rule "*". In the pathname matching case, it works
-> thanks to a60ea8f.
+Introduce a callback function git_pull_config() to read "rebase.autostash"
+along with other variables.
 
-So what do we want to do for the upcoming release?  I am OK to leave
-the code as-is for now and describe it as a known bug that is still
-being worked on (as long as it indeed is being worked on, that is),
-as the desired endgame of making "!dir" act in a way more similar to
-how "dir" acts does sound sensible.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Mehul Jain <mehul.jain2029@gmail.com>
+---
+previous patches: $gname287709
 
-If we are going that route, perhaps something like this is the
-minimum we would need before 2.8 final.
-
-Thoughts?
-
-
- Documentation/gitignore.txt | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 3ded6fd..91d1ce2 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -148,7 +148,43 @@ excluded, the following conditions must be met:
-    be in the same .gitignore file.
+This is a clean-up patch to add --[no-]autostash option to 
+"git pull --rebase".
  
-  - The directory part in the re-include rules must be literal (i.e. no
--   wildcards)
-+   wildcards and has to start with a `/`).
-+
-+A re-inclusion of a directory makes all files in the directory
-+unignored.  For example, suppose you have files `.gitignore`,
-+`dir/file1`, `dir/file2`, and `dir/file3`, and have the following in
-+your `.gitignore`:
-+
-+----------------
-+# .gitignore is not mentioned in .gitignore
-+*
-+!/dir
-+# dir/file1 is not mentioned in .gitignore
-+dir/file2
-+!dir/file3
-+----------------
-+
-+Then:
-+
-+ - `.gitignore` gets ignored, because it matches the `*` at the top
-+   level;
-+
-+ - `dir/file1` does not get ignored, because `/dir` marks everything
-+   underneath `dir/` directory to be 're-included' unless otherwise
-+   specified;
-+
-+ - `dir/file2` gets ignored, because `dir/file2` matches it.
-+
-+ - `dir/file3` does not get ignored, because `!dir/file3` matches it.
-+   Note that the entry `!dir/file3` is redundant because everything
-+   underneath `dir/` is marked to be 're-included' already.
-+
-+Some earlier versions of Git treated `!/dir` above differently in
-+that it did not cause the paths under it unignored (but merely told
-+Git that patterns that begin with dir/ should not be ignored), but
-+this has been corrected to be consistent with `/dir` that says "the
-+directory `dir/` and everything below are ignored."
-+
+ builtin/pull.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 10eff03..8a318e9 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -86,6 +86,7 @@ static char *opt_commit;
+ static char *opt_edit;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
++static int config_autostash = -1;
+ static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
+ static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
+ static char *opt_gpg_sign;
+@@ -304,6 +305,17 @@ static enum rebase_type config_get_rebase(void)
  
- EXAMPLES
- --------
+ 	return REBASE_FALSE;
+ }
++/**
++ * Read config variables.
++ */
++static int git_pull_config(const char *var, const char *value, void *cb)
++{
++	if (!strcmp(var, "rebase.autostash")) {
++		config_autostash = git_config_bool(var, value);
++		return 0;
++	}
++	return git_default_config(var, value, cb);
++}
+ 
+ /**
+  * Returns 1 if there are unstaged changes, 0 otherwise.
+@@ -823,7 +835,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (opt_rebase < 0)
+ 		opt_rebase = config_get_rebase();
+ 
+-	git_config(git_default_config, NULL);
++	git_config(git_pull_config, NULL);
+ 
+ 	if (read_cache_unmerged())
+ 		die_resolve_conflict("Pull");
+@@ -835,13 +847,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		hashclr(orig_head);
+ 
+ 	if (opt_rebase) {
+-		int autostash = 0;
+ 
+ 		if (is_null_sha1(orig_head) && !is_cache_unborn())
+ 			die(_("Updating an unborn branch with changes added to the index."));
+ 
+-		git_config_get_bool("rebase.autostash", &autostash);
+-		if (!autostash)
++		if (config_autostash != 1)
+ 			die_on_unclean_work_tree(prefix);
+ 
+ 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+-- 
+2.7.1.340.g69eb491.dirty
