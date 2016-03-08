@@ -1,127 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Also read SQUASH_MSG if a conflict on a merge squash occurred
-Date: Tue, 08 Mar 2016 10:32:51 -0800
-Message-ID: <xmqq60wwlt0s.fsf@gitster.mtv.corp.google.com>
+From: Sven Strickroth <sven@cs-ware.de>
+Subject: Re: [PATCH] Also read SQUASH_MSG if a conflict on a merge squash
+ occurred
+Date: Tue, 8 Mar 2016 19:49:33 +0100
+Message-ID: <56DF1EBD.8050503@cs-ware.de>
 References: <56DAB71E.6000509@cs-ware.de> <56DE5272.2080009@cs-ware.de>
+ <xmqq60wwlt0s.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Sven Strickroth <sven@cs-ware.de>
-X-From: git-owner@vger.kernel.org Tue Mar 08 19:33:00 2016
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 08 19:49:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adMRH-0004lN-5l
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:32:59 +0100
+	id 1adMhc-0007zN-R6
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:49:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750848AbcCHSc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 13:32:56 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64515 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750701AbcCHScy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 13:32:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1182E49A08;
-	Tue,  8 Mar 2016 13:32:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gaL9bA2YGR8/DmyiuCEqZ9U4TVU=; b=CMpdJt
-	YbPeb6js2+w5jFOoxDs8dDH1ujKCDYdaY7znMoT4rA276d+e/WHLZOYe/UD3DF4Z
-	NdSkbQJAzM3nECtF3FbDYg1VbuOOyHTOv1oJenEx4t9FNg0fAODBxCsxfa4VTHnk
-	EOWdbW2WyZHgxbDM/SMMXy1cDBWO/aM2F4nDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PYZqFQLpKCe6p1oK9keNjimkay50fPue
-	eHs1qjiByuLMn7Pa7/u4bJGaUfhMSepW5blFpNj8vPfdxDu8VF6Ueqb6PA7ibgN4
-	i6U8iuiOPhPrNbUZXjstPHHxr8Zrd5PnN8euuj5nwBEYqqAFvo7Tv6hN5qaEsBOV
-	zVQoUuVIe9M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0840A49A07;
-	Tue,  8 Mar 2016 13:32:53 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1750935AbcCHStt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 13:49:49 -0500
+Received: from srv1.79p.de ([213.239.234.118]:57348 "EHLO srv1.79p.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750747AbcCHSts (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 13:49:48 -0500
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPv6:2003:88:6f35:100:58e:9826:6785:be88] (p200300886F350100058E98266785BE88.dip0.t-ipconnect.de [IPv6:2003:88:6f35:100:58e:9826:6785:be88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 665AE49A04;
-	Tue,  8 Mar 2016 13:32:52 -0500 (EST)
-In-Reply-To: <56DE5272.2080009@cs-ware.de> (Sven Strickroth's message of "Tue,
-	8 Mar 2016 05:17:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AE8E3D0-E55C-11E5-9A92-79226BB36C07-77302942!pb-smtp0.pobox.com
+	(Authenticated sender: sven@cs-ware.de)
+	by srv1.79p.de (Postfix) with ESMTPSA id 0F0CD224476;
+	Tue,  8 Mar 2016 19:49:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cs-ware.de;
+	s=mail2015b; t=1457462980;
+	bh=AgBsYcmp0sm68uUhJZ1AbfGcC/j6x4YdnwR2xN7/T7s=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=fkk40RFmR3Pc0sVOx9TkofxP4J1zJDvGSDKLowGmJmDZQ57su7MrJaqYZjDRiJE5X
+	 ER9vY9AZjC7zp5epcIXNBlDErhx87pjeDV36ftTfaFq8mxY0eXyOP3FBK4IFx0b2nP
+	 Jgte8ENOoi5AwlKujF5G4OFXLoNM3ON9KQ4KnU48cB49hsE++NSzl5WcVctV6Gbpw4
+	 nsgFXcVKAWDSQGlmL/kpaaxeJRzZ1xxPX4d3ydF0cHgyNSoVLnx6xRCLSGxv5QQX2g
+	 MumanzJFg5g6EEYsqfxrcyxBanTUcSY0N6m933X4ALwLIRjOpzZN/qrIyQE+VrBD4x
+	 f2A3J828mh2jw==
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <xmqq60wwlt0s.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288448>
 
-Sven Strickroth <sven@cs-ware.de> writes:
+Am 08.03.2016 um 19:32 schrieb Junio C Hamano:
+>> +		if (!stat(git_path_squash_msg(), &statbuf)) {
+>> +			if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
+>> +				die_errno(_("could not read SQUASH_MSG"));
+>> +			hook_arg1 = "squash";
+>> +		}
+>>  	} else if (!stat(git_path_squash_msg(), &statbuf)) {
+>>  		if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
+>>  			die_errno(_("could not read SQUASH_MSG"));
+> 
+> This reads MERGE_MSG first and then SQUASH_MSG; is that what we
+> really want?  When you are resolving a conflicted rebase, you would
+> see the original log message and then conflicts section.  What is in
+> the SQUASH_MSG is the moral equivalent of the "original log message"
+> but in a less summarized form, so I suspect that the list of conflicts
+> should come to end.
 
-> Subject: Re: [PATCH] Also read SQUASH_MSG if a conflict on a merge squash occurred
+I put them first because the squash commit list could be really long.
+I'll put MERGE_MSG at the end...
 
-A reader sees this line in the output of "git shortlog --no-merges";
-does it sufficiently tell her which Git subcommand is affected by
-this change, if this is a bugfix or a new feature, i.e. enough for
-her to decide how important the change is?
+> The duplicated code to read the same file bothers me somewhat.
+> 
+> I wondered if it makes the result easier to follow (and easier to
+> update) if this part of the code is restructured like this:
+> 
+> 	if (file_exists(git_path_merge_msg()) ||
+>             file_exists(git_path_squash_msg())) {
+> 	    if (file_exists(git_path_squash_msg())) {
+> 		read SQUASH_MSG;
+> 	    }
+>             if (file_exists(git_path_merge_msg()))
+>             	read MERGE_MSG;
+> 	    }
+>             hook_arg1 = "merge";
+> 	}
 
-We often prefix our log message with the name of the area followed
-by a colon and describe the purpose of the change, not the means how
-the objective is achieved, e.g.
+Here hook_arg1 would be always "merge" and never "squash"... Before my
+change it was only "squash" if no conflict occurred.
 
-    Subject: [PATCH] commit: do not lose SQUASH_MSG contents
-
-    When concluding a conflicted "git merge --squash", the command
-    failed to read SQUASH_MSG that was prepared by "git merge", and
-    showed only the "# Conflicts:" list of conflicted paths.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index d054f84..0405d68 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -729,6 +729,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  		if (strbuf_read_file(&sb, git_path_merge_msg(), 0) < 0)
->  			die_errno(_("could not read MERGE_MSG"));
->  		hook_arg1 = "merge";
-> +		/* append SQUASH_MSG here if it exists and a merge --squash was originally performed */
-
-	/*
-         * Our multi-line comment reads more like
-         * this.  That is, the first slash-asterisk is on its
-         * own line, so is the last asterisk-slash.
-         */
-
-> +		if (!stat(git_path_squash_msg(), &statbuf)) {
-> +			if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
-> +				die_errno(_("could not read SQUASH_MSG"));
-> +			hook_arg1 = "squash";
-> +		}
->  	} else if (!stat(git_path_squash_msg(), &statbuf)) {
->  		if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
->  			die_errno(_("could not read SQUASH_MSG"));
-
-This reads MERGE_MSG first and then SQUASH_MSG; is that what we
-really want?  When you are resolving a conflicted rebase, you would
-see the original log message and then conflicts section.  What is in
-the SQUASH_MSG is the moral equivalent of the "original log message"
-but in a less summarized form, so I suspect that the list of conflicts
-should come to end.
-
-The duplicated code to read the same file bothers me somewhat.
-
-I wondered if it makes the result easier to follow (and easier to
-update) if this part of the code is restructured like this:
-
-	if (file_exists(git_path_merge_msg()) ||
-            file_exists(git_path_squash_msg())) {
-	    if (file_exists(git_path_squash_msg())) {
-		read SQUASH_MSG;
-	    }
-            if (file_exists(git_path_merge_msg()))
-            	read MERGE_MSG;
-	    }
-            hook_arg1 = "merge";
-	}
-
-but I am not sure if that structure is better.
-
-Thanks.
+-- 
+Best regards,
+ Sven Strickroth
+ PGP key id F5A9D4C4 @ any key-server
