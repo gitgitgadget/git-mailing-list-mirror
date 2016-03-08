@@ -1,60 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] rebase -p: avoid grep on potentailly non-ASCII data
-Date: Tue, 8 Mar 2016 09:35:56 -0500
-Message-ID: <20160308143556.GA10153@sigill.intra.peff.net>
-References: <alpine.DEB.2.10.1603080255030.2674@buzzword-bingo.mit.edu>
- <56DEC4B4.2000902@web.de>
- <56DED770.4050603@drmicha.warpmail.net>
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: Re: More configuration options for some commonly used command-line
+ options
+Date: Tue, 8 Mar 2016 20:13:23 +0530
+Message-ID: <56DEE50B.4080408@gmail.com>
+References: <56DD6EEE.4030900@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Anders Kaseorg <andersk@mit.edu>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 08 15:36:11 2016
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 08 15:43:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adIk1-00073m-Bn
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 15:36:05 +0100
+	id 1adIrN-000496-Uc
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 15:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754240AbcCHOgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 09:36:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56292 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752440AbcCHOf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 09:35:59 -0500
-Received: (qmail 11595 invoked by uid 102); 8 Mar 2016 14:35:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 09:35:58 -0500
-Received: (qmail 2789 invoked by uid 107); 8 Mar 2016 14:36:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 09:36:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2016 09:35:56 -0500
-Content-Disposition: inline
-In-Reply-To: <56DED770.4050603@drmicha.warpmail.net>
+	id S1754162AbcCHOn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 09:43:29 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:36498 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753635AbcCHOn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 09:43:28 -0500
+Received: by mail-pa0-f52.google.com with SMTP id tt10so13993101pab.3
+        for <git@vger.kernel.org>; Tue, 08 Mar 2016 06:43:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=O7qu17qNiPsWk6hrIo+TEZC6Kly+VogoPBVvJpM/O1s=;
+        b=XILCGWF1UbXk6iegpXgQDUlIzBb67b0o0IiLYMU9upNGAZGNLsWOGb6/cUL6r/EvXS
+         yKKqvyub8IC70B873qvLij8LDxF6I3dIMvDy3dCfWBF4cLy1NZEr3JVPWyDk+CwgBvHM
+         A1+hUTrqyVboc+UCLNdeW5cvJspizyXiTK48lrHVaKtxeo+zlFzbGZHQqijHnSutZxe7
+         0uMSwTqAKwWrnnbOVeJoeRGTvNUyRKnsT7581E3cW2PuZpVA/lNgeWhMEi5ig7gDkK8Y
+         /i74zX+h93aHUKeaP9xnx0BohzH6255a+tXR9TkPGbmKU+hEQpIAztWmgoLzrg+q2CYr
+         UNqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=O7qu17qNiPsWk6hrIo+TEZC6Kly+VogoPBVvJpM/O1s=;
+        b=gyy0WclDCEby47sR1gZOHSNmCc8PgWn7mNRSpUjk1dOHA93S15IJs8/9+RmL+Zs5U6
+         Pnrk8Sy60SUS/CSvY1qKy0EDQCSxtGr68jiighkT6+E88Gt/L/gxp6tD65rWrJ1zzR+Y
+         C4+qtZODHld9jar91HhdWJ1ohRQHy/sKmG2IA2QFPNKhhCT8XgSVC2ZCn/7dzsIy3fHi
+         OvDwgajY3/H67OJaZ+UIFiHyHfxewp+QLevRQvj5/hno0mjL4uPvV21nDGybcIGC0LSS
+         b/UEyfXsJ9vKj6YMqce8tCiIS9BjFXAbi1n0edluEJUxZTLPW0Jga6YPYNpkZPrO+p8k
+         ck3Q==
+X-Gm-Message-State: AD7BkJKlKP9IgUr3jM/doROP5o5Vlxu42JkDKF6aov0lLYDy3vYfKICdWvzNePeeSGbtJg==
+X-Received: by 10.66.221.167 with SMTP id qf7mr42129907pac.94.1457448207368;
+        Tue, 08 Mar 2016 06:43:27 -0800 (PST)
+Received: from [192.168.1.10] ([182.69.45.48])
+        by smtp.gmail.com with ESMTPSA id o7sm5085768pfj.89.2016.03.08.06.43.25
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Mar 2016 06:43:26 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
+In-Reply-To: <56DD6EEE.4030900@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288437>
 
-On Tue, Mar 08, 2016 at 02:45:20PM +0100, Michael J Gruber wrote:
+Sidhant Sharma wrote:
+> Hi,
+>
+> Regarding the GSoC Microproject 'Add configuration options for some commonly
+> used command-line options', currently the list [1] mentions only
+> `git commit -v`. Can the following also be candidates for configurations?
+> * git log -p
+> * git remote -v
+> * git branch -v
+>
+>
+> Regards,
+> Sidhant Sharma [:tk]
+>
+>
+> [1]: https://git.github.io/SoC-2016-Microprojects/
+Perhaps they can be added as Microprojects for the next GSoC.
+Comments?
 
-> It may be worth noting whether other occurrences of "sane_grep" are safe
-> from binary input.
-> 
-> After all, one my question the degree of sanity of our sane_grep, or
-> whether we need asane_grep and bisane_grep in our shell library - "make
-> our grep sane again".
 
-I actually wonder if we should have a build-time knob to put "grep -a"
-into sane_grep(). We do not ever plan to feed it binary data, so that
-will do what, provided the system grep handles "-a". And on those that
-do not know about "-a", one imagines that they do not suffer from this
-problem in the first place (which is really limited to recent versions
-of GNU grep).
-
--Peff
+Regards,
+Sidhant Sharma
