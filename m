@@ -1,134 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Resumable clone
-Date: Tue, 08 Mar 2016 09:07:00 -0800
-Message-ID: <xmqq4mcgnbkb.fsf@gitster.mtv.corp.google.com>
+Date: Tue, 08 Mar 2016 09:25:27 -0800
+Message-ID: <xmqqy49slw54.fsf@gitster.mtv.corp.google.com>
 References: <CANtyZjSJf5_xbsBC5tUaazFT3uiEgJnx2_kHLwYwKcn50Jy_qg@mail.gmail.com>
 	<CACsJy8CESL6vH22mGSLRE1OKTEbGz2Vqmsv5bY3mn_E+03wADw@mail.gmail.com>
 	<xmqqoaasvkrt.fsf@gitster.mtv.corp.google.com>
 	<CANtyZjRZzXabeWEhwCrwN_q_Zsrm1f_d+j2uDhTZeEjv3LjxaA@mail.gmail.com>
+	<CACsJy8A_jkvdJPgBQ_huP-t8a0ra2RfP7jZ7C-ONNm87ktYaiA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-To: Kevin Wern <kevin.m.wern@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 18:07:17 2016
+Cc: Kevin Wern <kevin.m.wern@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 18:25:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adL6E-0000tZ-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 18:07:10 +0100
+	id 1adLO3-0006DZ-KR
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 18:25:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754310AbcCHRHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 12:07:06 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63848 "EHLO
+	id S1754076AbcCHRZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 12:25:32 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60383 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752039AbcCHRHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 12:07:05 -0500
+	with ESMTP id S1752063AbcCHRZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 12:25:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1FF3A4A23F;
-	Tue,  8 Mar 2016 12:07:03 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EDD024A79C;
+	Tue,  8 Mar 2016 12:25:29 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ajzi5UwDB9Lyf62LKnjdLVlL56M=; b=egVujy
-	gTsANSFdoHAFxX6wel05uZBr0NMVYB5NW9EeBghb52W70YrXS82E5KiuCqo7bHf4
-	FvFkMbEjfdxG3Wu/wnKMzweYEcNOo2rOSVpBP9JNETqPs6I8ey16UMfgIEhlH6H6
-	SZYpma68zzgFKFpB1krFYHT71C/W/VRmWJCcM=
+	:content-type; s=sasl; bh=aJ399pdWjwffSbXJUZL3dzDFy94=; b=frUaWS
+	YMR4XAy3QZ3GX0QCM+TPVjL9Mph4g9LhmTTTOY3IA0WN41K6d2ZZKfS6c+77My+s
+	iEuOVQhbQXBnykXWhnnf1A5Q5CoClZheKSbypq27GY2tvES3GqSfVx/oYzTibnmE
+	Ak6hwIoHN28XzfJoMOgFpt77IuNicmEEM1htk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iVAb/8tYGQXuaW84MBfmvMlBzeCbcvkc
-	fzuxkc06y7UPbDGte+wfG+eYWXfuXCqBkZ0kc2OXQzoyC5Zi8uuwA342KC7Vp7/A
-	FHd0Wck9WZSV/f3LLS4QX8VQm0ZRk0nnsCC4wTSm3DTVtheGwGL9y692BZYTtB6e
-	ucjLGPypmFo=
+	:content-type; q=dns; s=sasl; b=ZzT5f7mp5/UXLSmRRb3vqu/OKY5M3D1y
+	fERu08KpUtCt8k3NHHYDD30MIC14YDm6TfI+2Su0JSCBaK9bvV79VTPCPzDYkUYe
+	kIXwTQ2BiQjlqQDPxrTcHCI/p484t2O8TnVuA+VfUvA9xyKXCyOCrgNV0iB8hR0y
+	UQt9dwC6mNg=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 159894A23E;
-	Tue,  8 Mar 2016 12:07:03 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4F2D4A79B;
+	Tue,  8 Mar 2016 12:25:29 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1901A4A23A;
-	Tue,  8 Mar 2016 12:07:02 -0500 (EST)
-In-Reply-To: <CANtyZjRZzXabeWEhwCrwN_q_Zsrm1f_d+j2uDhTZeEjv3LjxaA@mail.gmail.com>
-	(Kevin Wern's message of "Mon, 7 Mar 2016 19:33:40 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 627734A79A;
+	Tue,  8 Mar 2016 12:25:29 -0500 (EST)
+In-Reply-To: <CACsJy8A_jkvdJPgBQ_huP-t8a0ra2RfP7jZ7C-ONNm87ktYaiA@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 8 Mar 2016 18:11:19 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2D156BF8-E550-11E5-9967-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C1155CA8-E552-11E5-BAF3-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288441>
 
-Kevin Wern <kevin.m.wern@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> From what I understand, a pattern exists in clone to download a
-> packfile when a desired object isn't found as a resource. In this
-> case, if no alternative is listed in http-alternatives, the client
-> automatically checks the pack index(es) to see which packfile contains
-> the object it needs.
+> Yeah the determination is tricky, it depends on server setup. Let's
+> start with select the pack for download first because there could be
+> many of them. A heuristic (*) of choosing the biggest one in
+> $GIT_DIR/objects/pack is probably ok for now (we don't need full
+> history, "the biggest part of history" is good enough).
 
-You sound as if you are describing how a fetch over the dumb commit
-walker http transport works.  That does not have anything to do with
-the discussion of resumable clone, though, so I am not sure where
-you are going with this.
+You need to choose a pack that is fully connected, though.  I was
+envisioning that an updated "git repack" would have an extra option
+that help server operators to manage it easily.  You would need to
+consider for example:
 
-> What I believe *doesn't* exist is a
-> way for the server to say, "I have a resource, in this case a
-> full-history packfile, and I *prefer* you get that file instead of
-> attempting to traverse the object tree." This should be implemented in
-> a way that is extensible to other resource types moving forward.
+ - You may not want to rebuild such a base pack too frequently
+   (e.g. you may want to repack a busy repository twice a day, but
+   you would want to redo the base pack only once a week).  It is
+   possible to mark it with .keep for subsequent repacks to leave it
+   alone, but there needs a mechanism to manage that .keep marker.
 
-Yes, that is very close to what I said in the "what remains?"
-section, but with a crucial difference in a detail.  Perhaps reading
-the message you are respoinding to again more carefully will clear
-the confusion.  This is what we want to allow the server to say
-(from the message you are responding to, but rephrased slightly,
-hoping that it would help unconfuse you):
+ - You may not want to have all refs in such a base pack (e.g. you
+   may want to exclude refs/changes/ from it).  There need to be a
+   configuration to specify which refs are included in the base
+   pack.
 
-    I prefer not to serve a full clone to you in the usual route if
-    I can avoid it.  You can help me by populate your history first
-    with something else (which would bring you to a state as if you
-    cloned potentially a bit older version of me) and then coming
-    back to me for an additional fetch to complete the history.
+while designing such an update.  Then the repack with such an option
+would roughly be:
 
-That "something else" does not have to be, and is not expected to
-be, the "full" history of the current state.  As long as it can be
-used to bring the cloner to a reasonably recent state, sufficient to
-make a follow up incremental fetch inexpesive enough, it is
-appropriate.
+    - If it is time to redo a base repack, then
 
-> I'm not sure how the server should determine the returned resource. A
-> packfile alone does not guarantee the full repo history, and I'm not
-> positive checking the idx file for HEAD's commit hash ensures every
-> sub-object is in that file (though I feel it should, because it is
-> delta-compressed).
+      - unplug the .keep bit the previous base pack has;
 
-The above reasoning does not make much technical sense.  delta
-compression does not ensure connectivity in the commit history and
-commit->tree->blob containment.  Again I am not sure where you are
-going with this.
+      - create a pack that contains full history reachable from the
+        specified refs;
 
-> With that in mind, my best guess at the server
-> logic for packfiles is something like:
->
-> Do I have a full history packfile, and am I configured to return one?
-> - If yes, then return an answer specifying the file url and type (packfile)
-> - Otherwise, return some other answer indicating the client must go
-> through the original cloning process (or possibly return a different
-> kind of file and type, once we expand that capability)
+      - mark the new base pack as such;
 
-Roughly speaking, yes.
+    - Pack all objects that are not in the base pack that are
+      reachable from any refs (and other anchoring points, such as
+      reflogs and the index) into a separate pack.
 
-> Which leaves me with questions on how to test the above condition. Is
-> there an expected place, such as config, where the user will specify
-> the type of alternate resource, and should we assume some default if
-> it isn't specified? Can the user optionally specify the exact file to
-> use (I can't see why because it only invites more errors)? Should the
-> specification of this option change git's behavior on update, such as
-> making sure the full history is compressed? Does the existence of the
-> HEAD object in the packfile ensure the repo's entire history is
-> contained in that file?
-
-Those (except for your assumption that no follow-up fetch is
-allowed, which requires you to limit yourself to "full" history,
-which is an unnecessary requirement) are good points one should be
-making design decisions on when building this part of the system.
+And the prime_clone() advertisement would be just the matter of
+knowing how the "base" pack is marked in the above process.
