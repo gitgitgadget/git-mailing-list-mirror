@@ -1,113 +1,63 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Is there a --stat or --numstat like option that'll allow me to have
- my cake and eat it too?
-Date: Tue, 8 Mar 2016 16:08:21 +0100
-Message-ID: <CACBZZX7o+VA1RVvja3xtBQf+rr2bWoByas4D5GKZ_VfQr7H19w@mail.gmail.com>
+From: Colin Walters <walters@verbum.org>
+Subject: git-evtag v2016.1
+Date: Tue, 08 Mar 2016 10:08:24 -0500
+Message-ID: <1457449704.1986312.543056834.5894AE0B@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 08 16:09:31 2016
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 08 16:09:48 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adJGH-0005Yn-2H
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 16:09:25 +0100
+	id 1adJGd-0005qj-EC
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 16:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932535AbcCHPJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 10:09:07 -0500
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:33257 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932378AbcCHPIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 10:08:42 -0500
-Received: by mail-qg0-f48.google.com with SMTP id t4so14373282qge.0
-        for <git@vger.kernel.org>; Tue, 08 Mar 2016 07:08:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=XW5Bu722MaR0Jwahin49N1IufoF8/syTfY40PrZGpp0=;
-        b=H72dbxjSEv0wXlDQrAyfVVwub7YwWms0ohZf53rrtoCpv07Wu76UhO/0WILioo8ILe
-         zmshOlbDbbgd6Igv3WM8m3cWPwzNULB6NDTKJ7Q4vAi3agIZSwwzm39neGzzXcJM4U60
-         q2S5rs2u3HBJxpLhgX+1MzXAe9IGTY2RNj7WkpaTwyCjg6MhGC7DHsvUXblyj2O70qbc
-         Ho8mNgFkWQNgxorIr9lp+lGqUgmC06ZZkBiovVnBeAUkxrxYMl+RX6uAcwxDrMkdwHl2
-         zW+8lMUIyptcd/LIf55hfslOOXs5iXHcD1NB7g6LRjWJb+sGeg9yS1nZjO6/6uBjLZcg
-         Dkog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=XW5Bu722MaR0Jwahin49N1IufoF8/syTfY40PrZGpp0=;
-        b=M7EmqRsOoBE3ig856apgSA3Zu6S7Gq0opkdDJJ9yWgWDjTEyTIjqkURPl3qYCwMU1j
-         HKB0Rdm1ep/Gg9/NpUFiSRkmll51fWPn5QyMEOyCcgDrXteyzoG2L3/dujRlTqHIHLDv
-         xLkc6rUKyBAR+2m4qfOet2CkIz54tscsOEcXN0Cy91woTqe3S7UMO6vC79MKpcETOWtN
-         qF7gnXcn7XmEache+AjYeFKKHkdZ1ASDkxWuR9H3RjfwtcBZsIQ4aa9yfhBpcKEku7jc
-         M2URFhc/XafPV9uwQTqEsDiNda6mpbKUnnC3KdQ3As5NqNwIVuVhCqp1eUXbwMYtIxN+
-         UY9g==
-X-Gm-Message-State: AD7BkJJtZuW4sWQkYHU6UkwVqYDSzI6stPnCs7vhWcCHE6at/smD37yNI8Dr2RVmTgbx771c6WST3HhtDZBpcw==
-X-Received: by 10.140.218.139 with SMTP id o133mr38591941qhb.33.1457449720963;
- Tue, 08 Mar 2016 07:08:40 -0800 (PST)
-Received: by 10.55.77.82 with HTTP; Tue, 8 Mar 2016 07:08:21 -0800 (PST)
+	id S932314AbcCHPId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 10:08:33 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:37332 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932244AbcCHPI0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2016 10:08:26 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 19A0921362
+	for <git@vger.kernel.org>; Tue,  8 Mar 2016 10:08:25 -0500 (EST)
+Received: from web4 ([10.202.2.214])
+  by compute2.internal (MEProxy); Tue, 08 Mar 2016 10:08:25 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:message-id:mime-version:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=MZCnyDaA5/cdKp+PshoV/xZMDMM=; b=fB3RU
+	RiyQJgF879zNAamf9x9EiyfWfz53Ne0JdiBbbU1leHEdS5oMGNsNNeL62Ore363j
+	J9Ptq+uL+nRscuzl96NcuqXfp9MUcc7Cg8uVhqlAykiM7rKVdn/0gjlPT80UZFTH
+	sBNj8qXtbR7alPHGsgEKD9VoHFr0QFF8ms/qks=
+Received: by web4.nyi.internal (Postfix, from userid 99)
+	id BFEF9107C09; Tue,  8 Mar 2016 10:08:24 -0500 (EST)
+X-Sasl-Enc: 60ElEWpYzZEERCp9fNISFH/eE1gQkT4DpfhntTnwNtVD 1457449704
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-27987fac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288439>
 
-I maintain a hook for Git that allows you to block binary pushes[1],
-from other implementations I've seen it's the least stupid thing out
-there that does that.
+A while ago, I started a discussion on stronger verification of git
+tags:
 
-Basically on-push it parses this:
+http://permalink.gmane.org/gmane.comp.version-control.git/264533
 
-    git log --pretty=format:%H -M100% --stat=9000,9001 <old_ref>..<new_ref>
+Since then I've been maintaining:
+https://github.com/cgwalters/git-evtag
 
-The --stat=9000,9001 is there to make sure we still get the filename
-if it's long[2].
+Which I think works well.  At some point I'd like to discuss merging
+some of the functionality into the git core.  
 
-It's important that this is something like "git-log" instead of
-"git-show for each" for performance (think a push with hundreds of
-commits). It's also important that it's not "git diff" (think a push
-that adds/removes a huge binary file within one push). I also don't
-want to manually parse "git log --numstat -p" or whatever for
-performance reasons since every push hangs on this.
+However it's been useful to have a standalone program so that
+I don't have to wait until a new version of git comes out, and it's
+also just easier to prototype.
 
-It's somewhat of a pain to parse that  --stat output, because I have
-to look for /\|\s+Bin / in the output to detect binary changes.
+For those interested, a new version of git-evtag is available:
 
-You might be thinking "why don't you use --numstat?". Because while
-that option does most of what I want it doesn't show the old/new size
-of the binary file, so I can't have a policy to allow e.g. <=1KB files
-without doing a second pass with --stat or "git show".
-
-Both formats also have various parsing edge cases, e.g. with -M100% I
-have to parse out renames like "foo.png => bar.png", but you can also
-create a file with " => " in the filename and there's no way to
-disambiguate it.
-
-Both formats also only show lines added/deleted, but --numstat doesn't
-show the size before/after for binary files, so if I want to also
-prohibit huge non-binary files I can't without running both --stat and
---numstat.
-
-What I really want is something for git-log more like
-git-for-each-ref, so I could emit the following info for each file
-being modified delimited by some binary marker:
-
-    - file name before
-    - file name after
-    - is rename?
-    - is binary?
-    - size in bytes before
-    - size it bytes after
-    - removed lines
-    - added lines
-
-I think no combination of git-log options or any built-in machinery
-comes close to giving me all of that without having to do multiple
-passes with some combination of git-log and git-show, but I'd love to
-be proven wrong.
-
-1. https://github.com/avar/pre-receive-reject-binaries
-2. OVER NINE THOUSAND should be enough for everyone, right?
+https://github.com/cgwalters/git-evtag/releases/tag/v2016.1
