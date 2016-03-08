@@ -1,85 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git has been accepted as a GSoC 2016 mentor organization!
-Date: Tue, 08 Mar 2016 15:01:47 -0800
-Message-ID: <xmqqmvq8k204.fsf@gitster.mtv.corp.google.com>
-References: <448280D1-3EEB-40DF-9886-C9B620E32E3C@gmail.com>
-	<vpqh9h7f9kz.fsf@anie.imag.fr>
-	<xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
-	<vpqziuzdr5r.fsf@anie.imag.fr>
-	<20160217204528.GA22893@sigill.intra.peff.net>
-	<xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
-	<1455788324.3786.14.camel@dwim.me> <vpq1t896s5c.fsf_-_@anie.imag.fr>
-	<1455875178.343346.31.camel@dwim.me> <vpq4mcr8c3j.fsf_-_@anie.imag.fr>
-	<20160308224625.GA29922@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [BUG?] fetch into shallow sends a large number of objects
+Date: Wed, 9 Mar 2016 06:02:10 +0700
+Message-ID: <CACsJy8BFK64rzJwQxB8M3=uA_g9s6N70vjNyLOnroZc28soiAQ@mail.gmail.com>
+References: <20160307221539.GA24034@sigill.intra.peff.net> <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
+ <20160308121444.GA18535@sigill.intra.peff.net> <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
+ <20160308132524.GA22866@sigill.intra.peff.net> <20160308133041.GA9465@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 09 00:01:59 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 00:02:47 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adQdX-0005T0-Lp
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 00:01:56 +0100
+	id 1adQeM-00066J-3B
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 00:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbcCHXBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 18:01:52 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55251 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751075AbcCHXBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 18:01:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 917534A723;
-	Tue,  8 Mar 2016 18:01:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NqAhTcR0EuaJ/ly32gHxT3u35xU=; b=NaxoOC
-	UFFogHlZMQrc9IT7NOK/i0EwX/5MOeOeN1nXW5+gPj1GFo8lKivitbg1pUKOWgWd
-	8LFyrHpWHg1BDJWe2cdBGq0qeb8LI07wgOZ1NQHRE/HuBMDXYxGfPDuztE1EAn6i
-	VT/DDN+3gMNPOmmKyaZ+sQvHAnmQint680NQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qnnU88lD8eQ4CjMJ1V7KbHuU3dpw9rRf
-	PHduGSJhzU17NFhCgMOS8yJBZUce/a+sB9qJ+DaU04MjtOg9WtndOy61aRTr+p9Z
-	SGURW2b136ezrGlSu/VuEYKpS1n1bKoxKeuhdN2gcou/0bfvVkNVyln2ygyM2DYe
-	czpcszKpOMo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 86ED54A722;
-	Tue,  8 Mar 2016 18:01:49 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E2E544A721;
-	Tue,  8 Mar 2016 18:01:48 -0500 (EST)
-In-Reply-To: <20160308224625.GA29922@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 8 Mar 2016 17:46:26 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BD10E5F8-E581-11E5-9386-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751255AbcCHXCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 18:02:43 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:36551 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751075AbcCHXCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 18:02:42 -0500
+Received: by mail-lb0-f181.google.com with SMTP id x1so40162754lbj.3
+        for <git@vger.kernel.org>; Tue, 08 Mar 2016 15:02:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dgZdyuS7zh1LAf1f/ESQwzX5aQDSuM5m1zTLcdeahPM=;
+        b=aLSnsQ3TXgLlCXMuK2jsT5UlC0vXhStAInmFXVI1l+wrrYrS6luF+PjccH7d31W/eB
+         qaDjD3poBAvGIkR6dPlzc8n1arokoF+jIACmGu+ove3JUF8NX8OaDSDgr/sk/jUqUzBS
+         UZiyf99rfXe1DnK3aRe8bHoji3jGIDdLsiHbnks7nNwXLyYL2U9OpfIPDCljvhb7Xe3t
+         /UdlAVw1q9ijVuyEfwCSZ86tJkuT2izmHZx0SJphXKkdbIItD/8cAbTCFlj9UysKTw0/
+         0WQRu+kCmhn2g6jaNpiR+NvPYwRaFOXFyS5DbkyDkLwtd/ppm1a9WQA1HKCFAumLxczq
+         pKHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dgZdyuS7zh1LAf1f/ESQwzX5aQDSuM5m1zTLcdeahPM=;
+        b=OEW1wmUhbYp8uOpPOwhJe12brmXkm6v+uwNkEII4gWkYRAvzDozJ9NkEetPqH2nx0/
+         leOCRwCN0tgW7DB/D3mI4otDvN6axnOAdbi1jWxIIZc/WQ1gVMtWh9zEw5i+IB8LTr9W
+         T+kKEzX/K2JA20i5sEGPkVS4bdvkJN2hf3jvMxJDGY66cZhw1YwX53Yy88MSrMeoZ1Xy
+         4Mz7JcfoLFtstTdvKZ0+oSu/JQu8xK86BeORIGBA/drnYcED0KkOlwz78jMhj87omtiW
+         8hu3huoArbUjSy8HGNcmr6vc7r6HuHt30fmwu4HVpcD/bW7pjcgdEdQIiiiyUySEDGlt
+         rDUw==
+X-Gm-Message-State: AD7BkJL/eH+1NpyVt1aopVVLY9Zp8xQIfL/efQcJjXVMvMoiczNBFNdyq76495VnsbvAYTgE7+MtKeSoRPPfGg==
+X-Received: by 10.25.24.100 with SMTP id o97mr6608718lfi.112.1457478160610;
+ Tue, 08 Mar 2016 15:02:40 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Tue, 8 Mar 2016 15:02:10 -0800 (PST)
+In-Reply-To: <20160308133041.GA9465@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288457>
 
-Jeff King <peff@peff.net> writes:
-
-> I've also signed us up for Outreachy, which is an internship program
-> designed to encourage open source participation by under-represented
-> groups. Details are here:
+On Tue, Mar 8, 2016 at 8:30 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 08, 2016 at 08:25:24AM -0500, Jeff King wrote:
 >
->   https://www.gnome.org/outreachy/
+>> > Good news. We have the mechanism in place, I think.
+>> > get_shallow_commits_by_rev_list() (from 'pu') will produce the right
+>> > shallow points for sending back to the client if you pass "--not
+>> > <current shallow points>" to it. It's meant to be used for
+>> > --shallow-exclude and --shallow-since, but if neither is given (nor
+>> > --depth) I guess we can run it with current shallow points. I wonder
+>> > if we can detect some common cases and avoid commit traversing this
+>> > way though.
+>>
+>> I tried that, but I couldn't quite get it to work. I don't think we need
+>> any special rev-list, though; we can just find the boundary points of
+>> that traversal and mark them as new shallows.
 >
-> but I'll try to summarize here what it means for us.
+> By the way, I found a bug during my initial attempts with
+> get_shallow_commits_by_rev_list().
 
-https://wiki.gnome.org/Outreachy/2016/MayAugust#Participating_Organizations
-
-does not seem to list us though.  Is that expected?
+Hehe. Thanks. Will check why tests missed it and reroll with Ramsay's
+fix once -rc period is over.
+-- 
+Duy
