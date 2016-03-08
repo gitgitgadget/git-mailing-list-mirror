@@ -1,118 +1,163 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding RFC 3161 timestamps to git tags
-Date: Tue, 08 Mar 2016 09:59:39 -0800
-Message-ID: <xmqqfuw0luk4.fsf@gitster.mtv.corp.google.com>
-References: <9bf0ad940a5ce20c0c3742a3dfca70f8.squirrel@faumail.uni-erlangen.de>
-	<56DED396.5070009@drmicha.warpmail.net>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Tue, 08 Mar 2016 10:10:35 -0800
+Message-ID: <xmqqbn6olu1w.fsf@gitster.mtv.corp.google.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+	<20160304055117.GB26609@ikke.info>
+	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
+	<20160304115634.GC26609@ikke.info>
+	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
+	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
+	<xmqqlh5ungct.fsf@gitster.mtv.corp.google.com>
+	<xmqq8u1tmr6l.fsf@gitster.mtv.corp.google.com>
+	<CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Anton Wuerfel <anton.wuerfel@fau.de>, git@vger.kernel.org,
-	i4passt@cs.fau.de, phillip.raffeck@fau.de
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 08 19:00:18 2016
+Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 19:11:04 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adLvb-00072m-C9
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:00:15 +0100
+	id 1adM5y-00061u-Q9
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 19:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbcCHSAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 13:00:12 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51061 "EHLO
+	id S1751239AbcCHSKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 13:10:45 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58562 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750932AbcCHSAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 13:00:09 -0500
+	with ESMTP id S1751021AbcCHSKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 13:10:40 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 965E0490F6;
-	Tue,  8 Mar 2016 13:00:07 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B9D549428;
+	Tue,  8 Mar 2016 13:10:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sQjitHJCIzRPyx1a+hQwTUhCLnQ=; b=FWB/pZ
-	hVo/Lux2Rfq/JHidQBYD6vIK8v9/DZd+Brjw5DDzR0v+r9ZUrechsvX9WgRw9cy7
-	M7DuJJa8Q4QCJtuW7HwqfOyZcMLBmskWi1VdG9HYygp0E56w8FhCcDc34HHUyOri
-	knKWi0DucdW9hx78O+NQHp4uDYezvMkJmWNjc=
+	:content-type; s=sasl; bh=qWxGVT+8YxsPXC4AWhHKoJqL/YQ=; b=ND0szs
+	PGXEB0QRSkGHcOCMkhWWkSVRRUjteolCPjH5FjrFMPQoJlhf4HD1gtnfm+BMva+U
+	5aBKOmR0Ca26aHqMYv3uvxuNRCrjBH9wQEvseZ92Gd8kt0Nnn9l/34cQulYFcpAH
+	hO9P2KGw+5U2DP6cJOLOoTZYIJudjnWHkPlS4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HuVc90Br0pHfwuh6zOBJX3+aOaXc4yt1
-	AyZqa5Vpu87DVwxTr7WoPjwmDLDFMtvvo9qYjiTU9HjB/L8ANmVg+eJ7uE21vbJj
-	dAUTfpc+jPZLzUFqrtCNpAfTWzjwZ1z+ynjcSFmjnn+SiWTD4ZMcBUlL3tQHmFjr
-	Z+uzcxWwtE4=
+	:content-type; q=dns; s=sasl; b=C5oNgIaTnqn251VeCV2umgaCPjyIhkKW
+	b1fSXCtA+2M/z6/8uNAAEtz82TRB9oFf0IxQwJG3YeeVXEE7SZEb2SVqNcrhvSvc
+	uGiJtM/FYJFtBjAIsZYbbnH5ztsmPBQKId1j6ev/C7XYVJcV3wbjEJWm6eQq/2Tp
+	bmtC/AXlMDc=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26DC5490EF;
-	Tue,  8 Mar 2016 13:00:07 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4FA5F49427;
+	Tue,  8 Mar 2016 13:10:38 -0500 (EST)
 Received: from pobox.com (unknown [104.132.1.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 735E6490CC;
-	Tue,  8 Mar 2016 12:59:40 -0500 (EST)
-In-Reply-To: <56DED396.5070009@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Tue, 8 Mar 2016 14:28:54 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3EF5849423;
+	Tue,  8 Mar 2016 13:10:37 -0500 (EST)
+In-Reply-To: <CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 8 Mar 2016 17:19:23 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 879E5A10-E557-11E5-AB57-79226BB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0F17E104-E559-11E5-AB0C-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288444>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Anton Wuerfel venit, vidit, dixit 07.03.2016 15:15:
->> Hello,
->> 
->> as part of an university project we plan to implement time stamp
->> signatures according to RFC 3161. This enables users to create and verify
->> cryptographic time stamp signatures to prove that a commit existed at a
->> certain point in time.
+> On Tue, Mar 8, 2016 at 1:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> We need documentation update to settle this one before 2.8 final
+>>> ships, as we seem to be seeing more and more end-user confusion on
+>>> the list.  I tried to come up with a trimmed-down example, which is
+>>> shown below, but I suspect that the code is not exactly working the
+>>> way it is described in that (1) dir/file1 is ignored and (3)
+>>> !dir/file3 entry makes difference.
+>>>
+>>> Where did my example go wrong?
+>>>
+>>> FYI, if I prefix '/' to all the .gitignore entries in the example, i.e.
+>>> making it
+>>>
+>>>     *
+>>>     !/dir
+>>>     /dir/file2
+>>>     !/dir/file3
+>>>
+>>> instead, then dir/file1 and dir/file3 do get shown as unignored.
 >
-> Before talking about a specific header format (and, possibly, repeating
-> mistakes of the past) we should take a step back to exactly here: What
-> is the goal that you are trying to achieve?
+> Arghhh.. bug!!!
 >
-> "prove that a commit existed at a certain point in time" is a good
-> definition for that goal.
+> The difference between "dir" and "/dir" is, the former is basename
+> matching while the latter is pathname matching. When we check
+> dir/file1 after we enter "dir", we do try to check rule "!/dir" (or
+> "!dir") before rule "*". In the pathname matching case, it works
+> thanks to a60ea8f.
 
-Moving the timestamp signature out of line has merits and demerits.
+So what do we want to do for the upcoming release?  I am OK to leave
+the code as-is for now and describe it as a known bug that is still
+being worked on (as long as it indeed is being worked on, that is),
+as the desired endgame of making "!dir" act in a way more similar to
+how "dir" acts does sound sensible.
 
- - Inline timestamp signature proves that the commit existed at a
-   certain point in time, and also it proves that any descendant
-   commit was not there before that time.  Also, the object name
-   of the signed object itself protects the fact that it was created
-   with the signature (i.e. if you replace the signature, its object
-   name would change)--this can be a feature or inconvenience,
-   depending on your use case.
+If we are going that route, perhaps something like this is the
+minimum we would need before 2.8 final.
 
- - Out of line timestamp signature allows you to say "I didn't
-   bother timestamping that commit I made 5 days ago, and it now is
-   buried 200 commits deep in the history from the tip, but I am
-   asking a timestamping service that the commit existed as of
-   now--I cannot go back and prove that it actually was made 5 days
-   ago, but at least the timestamp proves it was there today".
+Thoughts?
 
-   It does not allow you to say anything about descendant commits,
-   though, like an inline timestamp would.
 
-There is a convenience argument, too, for and against inline vs out
-of line signatures.
+ Documentation/gitignore.txt | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
- - The original "signed tag" is a good out-of-line signature
-   mechanism that you can add signed attestation to a different
-   object (i.e. you made a commit either 2 seconds or 5 days ago,
-   and then you certify that you would want to call that with a
-   tagname with some messages and cryptgraphically sign that
-   retroactively).  Being in the ref namespace, it didn't scale for
-   use cases where you would want to have as many signatures as you
-   would have commits, though.
-
- - The "signed commit" is made in-line, and for those who want to
-   always validate each and every commit, not having to maintain a
-   separate collection of signatures was a convenience.
-
- - The "merge signed tags" is also made in-line, primarily for
-   convenience benefit, i.e. not having to keep collection of all
-   pull request tags out of line.
-
-I haven't thought deeply enough between in-line and out-of-line
-which would suit better for timestamp signatures, though.
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 3ded6fd..91d1ce2 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -148,7 +148,43 @@ excluded, the following conditions must be met:
+    be in the same .gitignore file.
+ 
+  - The directory part in the re-include rules must be literal (i.e. no
+-   wildcards)
++   wildcards and has to start with a `/`).
++
++A re-inclusion of a directory makes all files in the directory
++unignored.  For example, suppose you have files `.gitignore`,
++`dir/file1`, `dir/file2`, and `dir/file3`, and have the following in
++your `.gitignore`:
++
++----------------
++# .gitignore is not mentioned in .gitignore
++*
++!/dir
++# dir/file1 is not mentioned in .gitignore
++dir/file2
++!dir/file3
++----------------
++
++Then:
++
++ - `.gitignore` gets ignored, because it matches the `*` at the top
++   level;
++
++ - `dir/file1` does not get ignored, because `/dir` marks everything
++   underneath `dir/` directory to be 're-included' unless otherwise
++   specified;
++
++ - `dir/file2` gets ignored, because `dir/file2` matches it.
++
++ - `dir/file3` does not get ignored, because `!dir/file3` matches it.
++   Note that the entry `!dir/file3` is redundant because everything
++   underneath `dir/` is marked to be 're-included' already.
++
++Some earlier versions of Git treated `!/dir` above differently in
++that it did not cause the paths under it unignored (but merely told
++Git that patterns that begin with dir/ should not be ignored), but
++this has been corrected to be consistent with `/dir` that says "the
++directory `dir/` and everything below are ignored."
++
+ 
+ EXAMPLES
+ --------
