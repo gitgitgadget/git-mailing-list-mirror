@@ -1,95 +1,158 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] fetch into shallow sends a large number of objects
-Date: Tue, 8 Mar 2016 08:30:41 -0500
-Message-ID: <20160308133041.GA9465@sigill.intra.peff.net>
-References: <20160307221539.GA24034@sigill.intra.peff.net>
- <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
- <20160308121444.GA18535@sigill.intra.peff.net>
- <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
- <20160308132524.GA22866@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] rebase -p: avoid grep on potentailly non-ASCII data
+Date: Tue, 8 Mar 2016 14:45:20 +0100
+Message-ID: <56DED770.4050603@drmicha.warpmail.net>
+References: <alpine.DEB.2.10.1603080255030.2674@buzzword-bingo.mit.edu>
+ <56DEC4B4.2000902@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 14:30:55 2016
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Anders Kaseorg <andersk@mit.edu>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 08 14:46:43 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adHis-0003GG-1P
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 14:30:50 +0100
+	id 1adHy9-0005kv-BZ
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 14:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbcCHNap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 08:30:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56241 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751441AbcCHNao (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 08:30:44 -0500
-Received: (qmail 8787 invoked by uid 102); 8 Mar 2016 13:30:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 08:30:43 -0500
-Received: (qmail 2125 invoked by uid 107); 8 Mar 2016 13:30:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 08:30:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2016 08:30:41 -0500
-Content-Disposition: inline
-In-Reply-To: <20160308132524.GA22866@sigill.intra.peff.net>
+	id S1753530AbcCHNp0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2016 08:45:26 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:59011 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751431AbcCHNpW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2016 08:45:22 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id B040220416
+	for <git@vger.kernel.org>; Tue,  8 Mar 2016 08:45:21 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Tue, 08 Mar 2016 08:45:21 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=HAB+5WhakN1GAiB1CVIU8jjH+Kg=; b=e3veYl
+	12w+Pp5TSWI3NFA4f4OPWFJJ2ZfukfyIV3UECpwXbJR9i2e/uulQybv5rjDHN6vx
+	0rLsEMvpuQGKpTpTristtbDz2o3bfs8hUm98z78BqGR+5FjaKMoOdiV5juGSTDjN
+	rLJYPDYH/MrEPTOyNHlhTeazjT04o1c7Pr5Rs=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=HAB+5WhakN1GAiB
+	1CVIU8jjH+Kg=; b=dkH05TApqYSgpjP0qVeXnoO8ur6+k2Kq7UWImWM1VHR74xC
+	vxJlAKfAK8Q93XzZ8D4p4Sbv828XK8zd4FMTCvhkydy7VUX288BgOKZbFWn50nhs
+	tQdY/dlwM6z0LRvouQfUlIhQdQfe3WsRQZfdJXCgdIALT88+Ubjj/a8EVxkU=
+X-Sasl-enc: 9Q1MAYcWFOMCHLcpL+YJjh5bAGkMnd41ykX4axrqFsf4 1457444721
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 072C5C00012;
+	Tue,  8 Mar 2016 08:45:20 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+In-Reply-To: <56DEC4B4.2000902@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288435>
 
-On Tue, Mar 08, 2016 at 08:25:24AM -0500, Jeff King wrote:
+Torsten B=F6gershausen venit, vidit, dixit 08.03.2016 13:25:
+> On 03/08/2016 08:59 AM, Anders Kaseorg wrote:
+>> The included test case, which uses rebase -p with non-ASCII commit
+>> messages, was failing as follows:
+>>
+>>    Warning: the command isn't recognized in the following line:
+>>     - Binary file (standard input) matches
+>>
+>>    You can fix this with 'git rebase --edit-todo'.
+>>    Or you can abort the rebase with 'git rebase --abort'.
+>>
+>> Possibly related to recent GNU grep changes, as with commit
+>> 316336379cf7937c2ecf122c7197cfe5da6b2061.  Avoid the issue by using =
+sed
+>> instead.
+>>
+>> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+>> ---
+>>   git-rebase--interactive.sh        |  2 +-
+>>   t/t3409-rebase-preserve-merges.sh | 21 +++++++++++++++++++++
+>>   2 files changed, 22 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index c0cfe88..0efc65c 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -1241,7 +1241,7 @@ then
+>>   			# be rebasing on top of it
+>>   			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/=
+$rev
+>>   			sha1=3D$(git rev-list -1 $rev)
+>> -			sane_grep -v "^[a-z][a-z]* $sha1" <"$todo" > "${todo}2" ; mv "${=
+todo}2" "$todo"
+>> +			sed "/^[a-z][a-z]* $sha1/d" <"$todo" > "${todo}2" ; mv "${todo}2=
+" "$todo"
+>>   			rm "$rewritten"/$rev
+>>   		fi
+>>   	done
+>> diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-pres=
+erve-merges.sh
+>> index 8c251c5..1f01b29 100755
+>> --- a/t/t3409-rebase-preserve-merges.sh
+>> +++ b/t/t3409-rebase-preserve-merges.sh
+>> @@ -119,4 +119,25 @@ test_expect_success 'rebase -p ignores merge.lo=
+g config' '
+>>   	)
+>>   '
+>>  =20
+>> +test_expect_success 'rebase -p works with non-ASCII commit message'=
+ '
+>> +	(
+>> +	mkdir non-ascii &&
+> #The cd should be done in a subshell:
+> (
+>> +	cd non-ascii &&
+>> +	git init &&
+>> +	echo a > a &&
+>> +	git add a &&
+>> +	git commit -m a &&
+>> +	echo b > b &&
+> #Style: No space after ">" (and even above and below)
 
-> > Good news. We have the mechanism in place, I think.
-> > get_shallow_commits_by_rev_list() (from 'pu') will produce the right
-> > shallow points for sending back to the client if you pass "--not
-> > <current shallow points>" to it. It's meant to be used for
-> > --shallow-exclude and --shallow-since, but if neither is given (nor
-> > --depth) I guess we can run it with current shallow points. I wonder
-> > if we can detect some common cases and avoid commit traversing this
-> > way though.
-> 
-> I tried that, but I couldn't quite get it to work. I don't think we need
-> any special rev-list, though; we can just find the boundary points of
-> that traversal and mark them as new shallows.
+And also on the sane_grep/sed line.
 
-By the way, I found a bug during my initial attempts with
-get_shallow_commits_by_rev_list(). One of the loops uses "p" to traverse
-a linked list, and then re-uses "p" again for another list traversal
-inside the body of the loop. When the inner loop finishes, "p" is
-left as NULL, and then the outer loop tries to access "p->next", which
-segfaults.
+>=20
+> echo b >b
+>=20
+>=20
+>> +	git add b &&
+>> +	git commit -m b &&
+>> +	git branch foo &&
+>> +	git reset --hard HEAD^ &&
+>> +	git cherry-pick -x foo &&
+>> +	echo c > c &&
+>> +	git add c &&
+>> +	git commit -m "$(printf "I \\342\\231\\245 Unicode")" &&
+>> +	git rebase -p foo
+>> +	)
+>> +
+> #end of subshell
+> )
 
-I _think_ this is just a mistaken re-use of the variable, and can be
-fixed with a new iteration variable for the inner loop, like:
+The whole test is in a subshell already, although that is easy to miss
+(missing indentation).
 
-diff --git a/shallow.c b/shallow.c
-index 6ceb3f8..d600947 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -188,13 +188,14 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
- 	 */
- 	for (p = not_shallow_list; p; p = p->next) {
- 		struct commit *c = p->item;
-+		struct commit_list *parent;
- 
- 		if (parse_commit(c))
- 			die("unable to parse commit %s",
- 			    oid_to_hex(&c->object.oid));
- 
--		for (p = c->parents; p; p = p->next)
--			if (!(p->item->object.flags & not_shallow_flag)) {
-+		for (parent = c->parents; parent; parent = parent->next)
-+			if (!(parent->item->object.flags & not_shallow_flag)) {
- 				c->object.flags |= shallow_flag;
- 				commit_list_insert(c, &result);
- 				break;
+>> '
+>> +
+>>   test_done
+>=20
 
-As I said, I didn't end up using this function either way, but you
-probably want the fix above for the rest of your series. :)
+It may be worth noting whether other occurrences of "sane_grep" are saf=
+e
+from binary input.
 
--Peff
+After all, one my question the degree of sanity of our sane_grep, or
+whether we need asane_grep and bisane_grep in our shell library - "make
+our grep sane again".
+
+Michael
