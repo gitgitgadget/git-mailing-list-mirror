@@ -1,96 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/15] ref-filter: make "%(symref)" atom work with the ':short' modifier
-Date: Tue, 08 Mar 2016 12:19:01 -0800
-Message-ID: <xmqqwppck9je.fsf@gitster.mtv.corp.google.com>
-References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
-	<1457265902-7949-9-git-send-email-Karthik.188@gmail.com>
-	<xmqqtwkhnaxg.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xqqA=aZ5Nr7YuMnLKAc2E3F4Y31oOb06aAcvunqw+gH4A@mail.gmail.com>
-	<CAOLa=ZSSz7F_-fFm70=uyYsu6eGdUT+-SgbphWd8CKXnZqdCtg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Is there a --stat or --numstat like option that'll allow me to
+ have my cake and eat it too?
+Date: Tue, 8 Mar 2016 15:51:24 -0500
+Message-ID: <20160308205124.GA25849@sigill.intra.peff.net>
+References: <CACBZZX7o+VA1RVvja3xtBQf+rr2bWoByas4D5GKZ_VfQr7H19w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 21:19:19 2016
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 21:51:37 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adO69-0008Jt-7g
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 21:19:17 +0100
+	id 1adObL-0007XE-Qx
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 21:51:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbcCHUTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 15:19:07 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53707 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751194AbcCHUTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 15:19:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9AB8B4B904;
-	Tue,  8 Mar 2016 15:19:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w6vadR1iI++nf0CfS+Ad8wat23M=; b=KOKrTD
-	jjqv9o2Nsx6WkE+hk+uYqA1WZx4QpZMlVTb3YKOOOAK7LnTzT5cU5bcCzozXOB14
-	4LAiGql/xNriNGnSMOL5k0j2REw0kkpNKFwOreBJDQ/ET0PB+lVSRI375wYSeCT4
-	CkLdCH1HyUcbDZZCiRBEt1n1Pa6Ghfvw7WlEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mx/A5udpUQ0dkOFuD1u10HL6NseSfiih
-	1SanCjUU0m2P9dh8oCtoU6xVOxsbTwGSdEEnG938QeeucS2nLGvBzt+ZhXAZ3bEc
-	zKWq6YDu0NLSymGUqRs0X8FBw02LXkcwZsUMhv5/2BTme3V5ZSr3I7bMmBXASRtS
-	tZfjkA0ukoc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 916124B902;
-	Tue,  8 Mar 2016 15:19:03 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0B35E4B900;
-	Tue,  8 Mar 2016 15:19:02 -0500 (EST)
-In-Reply-To: <CAOLa=ZSSz7F_-fFm70=uyYsu6eGdUT+-SgbphWd8CKXnZqdCtg@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 8 Mar 2016 11:51:11 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 00198EE8-E56B-11E5-B2CC-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1751552AbcCHUv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Mar 2016 15:51:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56553 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751255AbcCHUv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 15:51:27 -0500
+Received: (qmail 29255 invoked by uid 102); 8 Mar 2016 20:51:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 15:51:26 -0500
+Received: (qmail 6780 invoked by uid 107); 8 Mar 2016 20:51:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 15:51:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2016 15:51:24 -0500
+Content-Disposition: inline
+In-Reply-To: <CACBZZX7o+VA1RVvja3xtBQf+rr2bWoByas4D5GKZ_VfQr7H19w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288452>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Mar 08, 2016 at 04:08:21PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> On Tue, Mar 8, 2016 at 7:26 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Mon, Mar 7, 2016 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>> The "%(symref)" atom doesn't work when used with the ':short' modifier
->>>> because we strictly match only 'symref' for setting the 'need_symref'
->>>> indicator. Fix this by using 'starts_with()' rather than 'strcmp()'.
->>>
->>> Does that mean you also accept %(symrefgarbage) without complaining?
->>>
->>>
->>
->> Looks like patch 9 fixes this by introducing symref_atom_parser.
->>
->
-> There are two ways this kinda errors can occur:
-> 1. %(symrefgarbage) : This is handled by parse_ref_filter_atom() which would
-> print a "fatal: unknown field name: symrefgarbage".
-> 2. %(symref:garbage): This is handled by populate_value() which would print
-> a "fatal: unknown symref: format garbage".
->
-> Either ways we do not need to worry about this as existing code would handle
-> it. Also like Jacob mentioned Patch 09 would ensure this error checking would
-> happen within symref_atom_parser().
+> What I really want is something for git-log more like
+> git-for-each-ref, so I could emit the following info for each file
+> being modified delimited by some binary marker:
+>=20
+>     - file name before
+>     - file name after
+>     - is rename?
+>     - is binary?
+>     - size in bytes before
+>     - size it bytes after
+>     - removed lines
+>     - added lines
 
-You forgot to mention that there is 3., which is that you just
-closed the door for a new valid_atom[] that begins with substring
-"symref" which does not need to flip need_symref on, I think.
+If you get the full sha1s of each object (e.g., by adding --raw), then
+you can dump them all to a single cat-file invocation to efficiently ge=
+t
+the sizes.
 
-You can check valid_atom[i].name with strcmp() to achieve what you
-are trying to do here, instead of checking used_atom[at].name, and I
-think that would be a cleaner way to avoid all three problems.
+I'm not quite sure I understand why you want to know about renames and
+added/removed lines if you are just blocking binary files. If I were
+implementing this[1], I'd probably just block based on blob size, which
+you can do with:
+
+  git rev-list --objects $old..$new |
+  git cat-file --batch-check=3D'%(objectsize) %(objectname) %(rest)' |
+  perl -alne 'print if $F[0] > 1_000_000; # or whatever' |
+  while read size sha1 file; do
+	echo "Whoops, $file ($sha1) is too big"
+	exit 1
+  done
+
+You can also use %(objectsize:disk) to get the on-disk size (which can
+tell you about things that don't compress well, which tend to be the
+sorts of things you are trying to keep out).
+
+You can't ask about binary-ness, but I don't think it would unreasonabl=
+e
+for cat-file to have a "would git consider this content binary?"
+placeholder for --batch-check.
+
+The other things are properties of the comparison, not of individual
+objects, so you'll have to get them from "git log". But with some cleve=
+r
+scripting, I think you could feed those sha1s (or $commit:$path
+specifiers) into a single cat-file invocation to get the before/after
+sizes.
+
+-Peff
+
+[1] GitHub has hard and soft limits for various blob sizes, and at one
+    point the implementation looked very similar to what I showed here.
+    The downside is that for a large push, the rev-list can actually
+    take a fair bit of time (e.g., consider pushing up all of the kerne=
+l
+    history to a brand new repo), and this is on top of the similar wor=
+k
+    already done by index-pack and check_everything_connected().
+
+    These days I have a hacky patch to notice the too-big size directly
+    in index-pack, which is essentially free. It doesn't know about the
+    file path, so we pull that out later in the pre-receive hook. But w=
+e
+    only have to do so in the uncommon case that there _is_ actually a
+    too-big file, so normal pushes incur no penalty.
