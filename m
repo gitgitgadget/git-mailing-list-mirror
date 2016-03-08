@@ -1,162 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Change in .gitignore handling: intended or bug?
-Date: Mon, 07 Mar 2016 22:14:58 -0800
-Message-ID: <xmqq8u1tmr6l.fsf@gitster.mtv.corp.google.com>
-References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
-	<20160304055117.GB26609@ikke.info>
-	<1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
-	<20160304115634.GC26609@ikke.info>
-	<CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
-	<xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
-	<xmqqlh5ungct.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 06/15] ref-filter: make %(upstream:track) prints "[gone]"
+ for invalid upstreams
+Date: Tue, 8 Mar 2016 11:40:04 +0530
+Message-ID: <CAOLa=ZRSuX1+-yR2hte7=jhCnOXS057NMTo8P519JrBHMJkgQA@mail.gmail.com>
+References: <1457265902-7949-1-git-send-email-Karthik.188@gmail.com>
+ <1457265902-7949-7-git-send-email-Karthik.188@gmail.com> <CA+P7+xpdW46_pS9=NuWOuuQd4LwE4_foiRirPNoyrubCYeBNcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 08 07:15:10 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 07:16:35 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adAvE-0003MN-St
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 07:15:09 +0100
+	id 1adAwb-0004QU-U4
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 07:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbcCHGPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 01:15:05 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52504 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753455AbcCHGPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 01:15:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F17C54BDC7;
-	Tue,  8 Mar 2016 01:15:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=P3313mlKW6nqG3fOK+RKXNto1Lg=; b=cSN4TK
-	Q7raohWArrSrNivCCI7aHks50YICOZI8rqgPgxNQSkCKbVUhYV9SVhilC62nj9xA
-	T6rOcYE6u0BNr32q2Z7aU4vpwdleszr8AMWyZ0SiYjAg/RhDQyOopul25x1KUCBg
-	A8iKifC9c36BXApTu1vYWPT6Ye9wN+ITFmQes=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ft/p3xsKJBK13NU7nxleS9hmweNyVjsU
-	eHj18hnos0nJo6dcr+++wM3/kE7ewmtPf0U5qRGWal3cHyNdnG0MS6erCnKNAAyZ
-	y6XAinqfM+RtjuMACANGme2bMghh1VpkITtitrsVONvgJJ8ubgVysKp9J0QFMJo3
-	9VN1EQUX8bE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E184F4BDC6;
-	Tue,  8 Mar 2016 01:15:00 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E5DE4BDC4;
-	Tue,  8 Mar 2016 01:15:00 -0500 (EST)
-In-Reply-To: <xmqqlh5ungct.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 07 Mar 2016 13:11:14 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 16916856-E4F5-11E5-8C32-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S1753840AbcCHGQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 01:16:30 -0500
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:35346 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751936AbcCHGQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 01:16:29 -0500
+Received: by mail-vk0-f67.google.com with SMTP id e185so494930vkb.2
+        for <git@vger.kernel.org>; Mon, 07 Mar 2016 22:16:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g3B1HrwOR+tXiokyxGbsVNgwL2lIfCneBwLY0JRGR3M=;
+        b=Up55Mz+YEM0jkg6bVHXt5MZ/r7krOoej3k/WCit/8NaFPfLOPnmoeIyxRsPA/Sra2A
+         3mpuqR75FUwSgutaCmAaJPi0wXU7b9a5JV2eAzgUakUW/RAJAFEpeJO4OaXLwRD1IAxC
+         w3BEmlgIW6Jcfg6W/wTgnIwrk8Nig1xf/811PJT2/wiOolFu/VJdOZSrA1wTN23QajDA
+         a74332NnJ1n+W0Yw+p2lmuxDQ4JCgtYoWOcaOsDp++QuGJB1G2EzYOLUvDwGV7hTzdnJ
+         LGP4RFkAW88IRU1OaU2hAmUkNeKEOt7HVJArd7J9uQ9P8ocgl1DcDhi1F8V76kN77OEi
+         tdDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g3B1HrwOR+tXiokyxGbsVNgwL2lIfCneBwLY0JRGR3M=;
+        b=XKIWNlNP7BglLYBwNMsRBOMZIHtUWfPySpTh4uteQIamor/mi332dXzRIepYtrN9aa
+         zZGltdQafsNq5XJ+LdY2+laiVPaTwdBPXchTcvr2VnviTjvI3GDtHfQArN87Q64P0oAJ
+         sdkn6FbyaGAve9fQzfy2Foj2QgDsKp8B8pVuBwhkev4m4s46QBSzIL6qpFDCZHYeTFQw
+         K1B+LtnEGOV2kuYQSvweH331Jk/t/417z/mhDepLd3fKsiSNlWQ7hqO+YdhM1SMZ9F5k
+         hEcVzTebPxeEpczXXBNcgCQ4EteoF5Dh5leEDIOhUMmqorYX4ETVCt14dMvprjPKuDF9
+         IKiw==
+X-Gm-Message-State: AD7BkJJKjjCGe5zGYglWRGf594mrfleoxKQ+nqkOhjQe+awkc6HQDxK6rZmdrZulkYeoiEg2pJ/uZjrbds1XdA==
+X-Received: by 10.31.54.75 with SMTP id d72mr23708363vka.30.1457417433634;
+ Mon, 07 Mar 2016 22:10:33 -0800 (PST)
+Received: by 10.103.82.133 with HTTP; Mon, 7 Mar 2016 22:10:04 -0800 (PST)
+In-Reply-To: <CA+P7+xpdW46_pS9=NuWOuuQd4LwE4_foiRirPNoyrubCYeBNcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288421>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> We need documentation update to settle this one before 2.8 final
-> ships, as we seem to be seeing more and more end-user confusion on
-> the list.  I tried to come up with a trimmed-down example, which is
-> shown below, but I suspect that the code is not exactly working the
-> way it is described in that (1) dir/file1 is ignored and (3)
-> !dir/file3 entry makes difference.
+On Tue, Mar 8, 2016 at 7:25 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Sun, Mar 6, 2016 at 4:04 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Borrowing from branch.c's implementation print "[gone]" whenever an
+>> unknown upstream ref is encountered instead of just ignoring it.
+>>
+>> This makes sure that when branch.c is ported over to using ref-filter
+>> APIs for printing, this feature is not lost.
+>>
+>> Make changes to t/t6300-for-each-ref.sh to reflect this change.
+>>
 >
-> Where did my example go wrong?
+> Shouldn't this be documented as well?
 >
-> FYI, if I prefix '/' to all the .gitignore entries in the example, i.e.
-> making it
->
->     *
->     !/dir
->     /dir/file2
->     !/dir/file3
->
-> instead, then dir/file1 and dir/file3 do get shown as unignored.
->
-> If it is documented somewhere, then I can update the example and
-> declare victory (but then the text that accompanies the example
-> still needs to remind the readers why the leading '/' matters.
+> Thanks,
+> Jake
 
-I also found that having an extra slash at the end of the
-"everything underneath 'dir' directory is included", i.e.
+Definitely! will add that in. Thanks.
 
-     *
-     !/dir/
-     /dir/file2
-     !/dir/file3
-
-breaks it.  dir/file1 is ignored, dir/file3 isn't but the latter is
-only because there is an explicit !/dir/file3.  This is contrary to
-this rule in the documentation:
-
- - If the pattern ends with a slash, it is removed for the
-   purpose of the following description, but it would only find
-   a match with a directory.  In other words, `foo/` will match a
-   directory `foo` and paths underneath it, but will not match a
-   regular file or a symbolic link `foo` (this is consistent
-   with the way how pathspec works in general in Git).
-
-In other words, '!/dir/' does not seem to match the directory dir
-and paths underneath it.
-
-Thanks.
-
->  Documentation/gitignore.txt | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
->
-> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-> index 3ded6fd..b841233 100644
-> --- a/Documentation/gitignore.txt
-> +++ b/Documentation/gitignore.txt
-> @@ -150,6 +150,40 @@ excluded, the following conditions must be met:
->   - The directory part in the re-include rules must be literal (i.e. no
->     wildcards)
->  
-> +A re-inclusion of a directory makes all files in the directory
-> +unignored.  For example, suppose you have files `.gitignore`,
-> +`dir/file1`, `dir/file2`, and `dir/file3`, and have the following in
-> +your `.gitignore`:
-> +
-> +----------------
-> +*
-> +!dir
-> +# dir/file1 is not mentioned in .gitignore
-> +dir/file2
-> +!dir/file3
-> +----------------
-> +
-> +Then:
-> +
-> + - `.gitignore` gets ignored, because it matches the `*` at the top
-> +   level;
-> +
-> + - `dir/file1` gets unignored, because `dir` marks everything
-> +   underneath `dir/` to be unignored unless otherwise specified;
-> +
-> + - `dir/file2` gets ignored, because `dir/file2` is listed to be
-> +   ignored;
-> +
-> + - `dir/file3` gets unignored, because `dir/file3` is listed to be
-> +   ignored.  Note that the entry `!dir/file3` is redundant because
-> +   everything underneath `dir/` is marked to be unignored already.
-> +
-> +Some earlier versions of Git treated `!dir` differently in that it
-> +did not cause the paths under it unignored, but this has been
-> +corrected to be consistent with `dir` that says "`dir` and everything
-> +below are ignored."
-> +
-> +
->  EXAMPLES
->  --------
->  
+-- 
+Regards,
+Karthik Nayak
