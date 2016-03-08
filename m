@@ -1,125 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Adding RFC 3161 timestamps to git tags
-Date: Tue, 8 Mar 2016 14:28:54 +0100
-Message-ID: <56DED396.5070009@drmicha.warpmail.net>
-References: <9bf0ad940a5ce20c0c3742a3dfca70f8.squirrel@faumail.uni-erlangen.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] fetch into shallow sends a large number of objects
+Date: Tue, 8 Mar 2016 08:30:41 -0500
+Message-ID: <20160308133041.GA9465@sigill.intra.peff.net>
+References: <20160307221539.GA24034@sigill.intra.peff.net>
+ <xmqqio0xn93q.fsf@gitster.mtv.corp.google.com>
+ <20160308121444.GA18535@sigill.intra.peff.net>
+ <CACsJy8Dk_g1O98UsDaeVS3VXmE2Mn5aR+w1OiFir+QwyJYLVZQ@mail.gmail.com>
+ <20160308132524.GA22866@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: i4passt@cs.fau.de, phillip.raffeck@fau.de,
-	Junio C Hamano <gitster@pobox.com>
-To: Anton Wuerfel <anton.wuerfel@fau.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 08 14:29:07 2016
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 08 14:30:55 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adHh9-00022l-66
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 14:29:03 +0100
+	id 1adHis-0003GG-1P
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Mar 2016 14:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751563AbcCHN27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 08:28:59 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50571 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750843AbcCHN26 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Mar 2016 08:28:58 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2896E20F32
-	for <git@vger.kernel.org>; Tue,  8 Mar 2016 08:28:57 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 08 Mar 2016 08:28:57 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=tQ1KJhyZQXRUcetrPNeY3Eyq/Rc=; b=E8/R8I
-	KC5JBswskqndzvTAFBxxNc9z1s07dBEDkyShWhLy0LBfMFpjDacD0QGNHdjTU3R3
-	Z3Iqt8BJF4x8rE5sTGlNlfxZRu9IZHeZqt2pVjflKt4tulM0e4YMVnW1vrauI82M
-	lFdq3jCiUq0WChakgn08PQB2ryHkOn8O0SErI=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=tQ1KJhyZQXRUcet
-	rPNeY3Eyq/Rc=; b=lr2GQruBVEnW9qttmflvkkbSOAH2P2Ohdcjj6bHlqFvKz+P
-	T7QnwMSeBr7KqMOZFXbujupeeNvKosoW7dm2hj/9f14sq8sHJLNbySbKPyH2s1Hq
-	VlAImZY3HdGTQV3OpbMTY9isDTuVJQ9jA8UQCidoAv6QjeQHvpih5GZPjIiY=
-X-Sasl-enc: ggOWMKuGlxgDL8Eu/yarXMusRE49YKm/gyfMLFGb3ruW 1457443736
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 41988680169;
-	Tue,  8 Mar 2016 08:28:56 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-In-Reply-To: <9bf0ad940a5ce20c0c3742a3dfca70f8.squirrel@faumail.uni-erlangen.de>
+	id S1752969AbcCHNap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 08:30:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56241 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751441AbcCHNao (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 08:30:44 -0500
+Received: (qmail 8787 invoked by uid 102); 8 Mar 2016 13:30:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 08:30:43 -0500
+Received: (qmail 2125 invoked by uid 107); 8 Mar 2016 13:30:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Mar 2016 08:30:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Mar 2016 08:30:41 -0500
+Content-Disposition: inline
+In-Reply-To: <20160308132524.GA22866@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288434>
 
-Anton Wuerfel venit, vidit, dixit 07.03.2016 15:15:
-> Hello,
+On Tue, Mar 08, 2016 at 08:25:24AM -0500, Jeff King wrote:
+
+> > Good news. We have the mechanism in place, I think.
+> > get_shallow_commits_by_rev_list() (from 'pu') will produce the right
+> > shallow points for sending back to the client if you pass "--not
+> > <current shallow points>" to it. It's meant to be used for
+> > --shallow-exclude and --shallow-since, but if neither is given (nor
+> > --depth) I guess we can run it with current shallow points. I wonder
+> > if we can detect some common cases and avoid commit traversing this
+> > way though.
 > 
-> as part of an university project we plan to implement time stamp
-> signatures according to RFC 3161. This enables users to create and verify
-> cryptographic time stamp signatures to prove that a commit existed at a
-> certain point in time.
+> I tried that, but I couldn't quite get it to work. I don't think we need
+> any special rev-list, though; we can just find the boundary points of
+> that traversal and mark them as new shallows.
 
-Before talking about a specific header format (and, possibly, repeating
-mistakes of the past) we should take a step back to exactly here: What
-is the goal that you are trying to achieve?
+By the way, I found a bug during my initial attempts with
+get_shallow_commits_by_rev_list(). One of the loops uses "p" to traverse
+a linked list, and then re-uses "p" again for another list traversal
+inside the body of the loop. When the inner loop finishes, "p" is
+left as NULL, and then the outer loop tries to access "p->next", which
+segfaults.
 
-"prove that a commit existed at a certain point in time" is a good
-definition for that goal.
+I _think_ this is just a mistaken re-use of the variable, and can be
+fixed with a new iteration variable for the inner loop, like:
 
-Based on our standing assumption that a commit SHA1 is unique, it is
-sufficient to "prove that a SHA1 existed[was known] at a certain point
-in time".
+diff --git a/shallow.c b/shallow.c
+index 6ceb3f8..d600947 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -188,13 +188,14 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
+ 	 */
+ 	for (p = not_shallow_list; p; p = p->next) {
+ 		struct commit *c = p->item;
++		struct commit_list *parent;
+ 
+ 		if (parse_commit(c))
+ 			die("unable to parse commit %s",
+ 			    oid_to_hex(&c->object.oid));
+ 
+-		for (p = c->parents; p; p = p->next)
+-			if (!(p->item->object.flags & not_shallow_flag)) {
++		for (parent = c->parents; parent; parent = parent->next)
++			if (!(parent->item->object.flags & not_shallow_flag)) {
+ 				c->object.flags |= shallow_flag;
+ 				commit_list_insert(c, &result);
+ 				break;
 
-In particular, this does not need to take into account the DAG (beyond
-what is determined through the SHA1) nor any prior timestamps.
-Consequently, I don't think that warrants extending the object format in
-any way - it is information in addition to what is in the DAG.
+As I said, I didn't end up using this function either way, but you
+probably want the fix above for the rest of your series. :)
 
-Also, it is conceivable that more than one user of the timestamp service
-requests a timestamp for the same SHA1, and does so for a commit which
-has children already, without wanting to (and without any intrinsic need
-to) rewrite history.
-
-To me, this means timestamps have no place in commit objects.
-
-As for adding additional information to the DAG without altering it, we
-have two means: tags and notes. Tags suffer from a "merge problem",
-notes from a "transport" problem; for both of them you have to know how
-to set up your refspecs.
-
-So, I think a proper first step would be to make our "metadata handling"
-(default notes refspec, merging) more use friendly, i.e. work out of the
-box for the common use case (whatever that is).
-
-That would serve timestamps well, and many other use cases.
-
-> As a long-term goal, we would like to get this new feature accepted into
-> upstream, so we are very interested in your opinions and suggestions for
-> our approach described in the following.
-> 
-> We plan to add new command line options to git tag and call openssl
-> similar to how "git tag -s" is calling gpg. The time stamp query generated
-> by openssl will be sent to the time stamping authority via libcurl.
-> Verification of timestamps will be possible via git verify-tag.
-> 
-> In order to store time stamp signatures, the file format for git tags
-> needs to be extended. Similar to how gpg signatures are stored, we would
-> store the signed time stamp responses in base64 surrounded by BEGIN and
-> END tags:
-> -----BEGIN RFC3161-----
-> Issuer: [issuer-name]
-> [time stamp response in base64]
-> -----END RFC3161-----
-> 
-> We plan to offer git config options to configure, which timestamping
-> authority to use and where trusted certificates are stored.
-> 
-> Regards,
-> Phillip Raffeck
-> Anton Wuerfel
-> 
+-Peff
