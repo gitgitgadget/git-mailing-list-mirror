@@ -1,317 +1,133 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 09/19] index-helper: add Windows support
-Date: Wed,  9 Mar 2016 13:36:12 -0500
-Message-ID: <1457548582-28302-10-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 12/19] read-cache: allow index-helper to prepare shm before git reads it
+Date: Wed,  9 Mar 2016 13:36:15 -0500
+Message-ID: <1457548582-28302-13-git-send-email-dturner@twopensource.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:18 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:21 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiyq-0007PD-TL
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:09 +0100
+	id 1adiyt-0007PD-DH
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933854AbcCISgz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 13:36:55 -0500
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:34264 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933827AbcCISgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 13:36:42 -0500
-Received: by mail-qk0-f170.google.com with SMTP id x1so24104300qkc.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:41 -0800 (PST)
+	id S933870AbcCIShJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 13:37:09 -0500
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:35787 "EHLO
+	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933831AbcCISgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 13:36:45 -0500
+Received: by mail-qk0-f169.google.com with SMTP id o6so24104702qkc.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=qP92Vf7Z4ihBb6oLlHD/SEolGK7cJJKay3quLAZMXwM=;
-        b=HNmQj2GN2xm3JiQdfo8ky4LaGxtonOoNBNoJ8b5+AzU+WcLdICrtz98aqdfFM5gEzX
-         D1vwAQP9W7EPWC2oirSISBFsFTvJJyi+lcRp/N01B5tEq5dGrGnMuA7RkaE0WR7AFuj9
-         ZYFeqga6OiHjxbSlsNVecyroP9iwoXPgnmc/7KWg2JVFpE5VSV0+M6QpXwAbptMXyYRo
-         gSaLl2HQgIfS0SDfBharH1GoCPrbrJZU8I11VHSYtTZAbFSX68Pp595aWKiFLIc+6Ujd
-         fY6Mu3srT4BB2eYNTVTSoU+12kbo/cQ4eAT8HO+n6gnsvaq/bvowwuG+j7/SJ2y0gH1q
-         Xo7g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Hvguxj1nTz7dO01d5+Wol+vHiPLiq47FEE74UYnhw7U=;
+        b=Ctbp/BbaMiHn3mJ0vps2YDNV5P/ddcnG2to68lh9CXRs3GtuSkPQXispMfcV3LgX8U
+         X8QUgRFDCWp3GDedjrkfUGVILQ1YHRxkIx7cMnLkO2FFMIG0L44doKcklqWb6ZlptwSf
+         x/I0B3GvT9Rk47kCdAX3t1dxFcvvjJ1LmeWixb/ZEAKmGbjQm6P5Y7Z06JS1bzfj/iuJ
+         oVTczYLSEsb6xvOdIRUcEIEryqM7JBYkXeLpfNZg1xzSMEJpuzQ9jpxYCH8LAU+dCXsM
+         ID1gLFzMe2X7z2ieZZ1GirZTzNa2v7ryV5eAH6DiMM9F98wa/lO34/ocvPq40+b3s+0d
+         bGXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qP92Vf7Z4ihBb6oLlHD/SEolGK7cJJKay3quLAZMXwM=;
-        b=ig3xBCzqOjqAJLNvKKWEByYJnw6IKdWEiH0KZ0TuGSwFFqOBDrWSqjA4mhtmzPQAmQ
-         lKWLjsBtQFXTRLhakA/8y1g0obY0B51/fcbcmLhxpB/uSlF5/cbW4alDRh7Cc6nLNFJ/
-         lLKjzT2EzGFrBqBmEU9T7dMy3cu7wT6ivhzsxlSHDCxvviVGUXnlym81b8V4VFZI6nUv
-         aOwoKEiDujsPlXKq+TLtXkUrxB82ucS1h0UhDM7AW1izShXx5oXL+x3LX/xZlECDyk6J
-         2RB4GptTtMlflrqTeqoppcLYzjnGoLjeW6dIbWvpW0G/9xP4H5O+KnWwYotw32aRU/f2
-         PKnw==
-X-Gm-Message-State: AD7BkJLKYQwE/4x2EiIMZKUnGoSLkeW2W2TKZN02PtwVzjzWmCU0eUdS/g1TtnLHGo0wMw==
-X-Received: by 10.55.79.86 with SMTP id d83mr45853859qkb.22.1457548601468;
-        Wed, 09 Mar 2016 10:36:41 -0800 (PST)
+        bh=Hvguxj1nTz7dO01d5+Wol+vHiPLiq47FEE74UYnhw7U=;
+        b=gVRqu3nMf9R0sntaNAHycyNC/lj3QKFT4dShzB0HP97gxapgmsN+Hgcccr6OVLHpM1
+         Pj52QOoKtQ/CxGCxR+e9/1LvP14wN7jO1C/FKV/Ip+R3hDic7WLyS3SUidnc+zKo72+u
+         bCwFYpRGb6lF1jJ8TM2Fgn/XvH2gg1yD8F49AUdEtAXPQHQ/sR1q4nAE27vSw34k5JhD
+         G1PGDZD8bHK3ZzbGf4LXHyVrHpAmWAMotwZvohmR68cktmkX4phUkL6PG+iAlCk6XMYi
+         IxbBxixSvCrlYeODEJshmo10i2lEO1dSYDTC55EM0b49n/fDtVBeV5pWfrJbW43CR0Dj
+         N1zw==
+X-Gm-Message-State: AD7BkJJ1wEuAcYtEWQu6iEHcTaoDuWd6mPzCqw3Zw9qH4PemQNXO0AVQuUvAEhLTyhqwsg==
+X-Received: by 10.55.26.86 with SMTP id a83mr43942044qka.79.1457548604217;
+        Wed, 09 Mar 2016 10:36:44 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.128])
-        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.40
+        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.43
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 10:36:40 -0800 (PST)
+        Wed, 09 Mar 2016 10:36:43 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288558>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-Windows supports shared memory, but the semantics is a bit different
-than POSIX shm. The most noticeable thing is there's no way to get the
-shared memory's size by the reader, and wrapping fstat to do that
-would be hell. So the shm size is added near the end, hidden away from
-shm users (storing it in headers would cause more problems with munmap,
-storing it as a separate shm is even worse).
-
-PostMessage is used instead of UNIX signals for
-notification. Lightweight (at least code-wise) on the client side.
+If index-helper puts 'W' before pid in $GIT_DIR/index-helper.pid, then
+git will sleep for a while, expecting to be waken up by SIGUSR1 when
+index-helper has done shm preparation, or after the timeout.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- config.mak.uname |  2 ++
- index-helper.c   | 48 ++++++++++++++++++++++++++++
- read-cache.c     | 13 ++++++++
- shm.c            | 96 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 4 files changed, 159 insertions(+)
+ read-cache.c | 36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b5108e1..49320c7 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -394,6 +394,7 @@ ifndef DEBUG
- else
- 	BASIC_CFLAGS +=3D -Zi -MDd
- endif
-+	PROGRAM_OBJS +=3D index-helper.o
- 	X =3D .exe
- endif
- ifeq ($(uname_S),Interix)
-@@ -574,6 +575,7 @@ else
- 		NO_CURL =3D YesPlease
- 	endif
- endif
-+	PROGRAM_OBJS +=3D index-helper.o
- endif
- ifeq ($(uname_S),QNX)
- 	COMPAT_CFLAGS +=3D -DSA_RESTART=3D0
-diff --git a/index-helper.c b/index-helper.c
-index 4dd9656..cf26da7 100644
---- a/index-helper.c
-+++ b/index-helper.c
-@@ -155,6 +155,51 @@ static void loop(const char *pid_file, int idle_in=
-_seconds)
- 		; /* do nothing, all is handled by signal handlers already */
- }
-=20
-+#elif defined(GIT_WINDOWS_NATIVE)
-+
-+static void loop(const char *pid_file, int idle_in_seconds)
-+{
-+	HWND hwnd;
-+	UINT_PTR timer =3D 0;
-+	MSG msg;
-+	HINSTANCE hinst =3D GetModuleHandle(NULL);
-+	WNDCLASS wc;
-+
-+	/*
-+	 * Emulate UNIX signals by sending WM_USER+x to a
-+	 * window. Register window class and create a new window to
-+	 * catch these messages.
-+	 */
-+	memset(&wc, 0, sizeof(wc));
-+	wc.lpfnWndProc	 =3D DefWindowProc;
-+	wc.hInstance	 =3D hinst;
-+	wc.lpszClassName =3D "git-index-helper";
-+	if (!RegisterClass(&wc))
-+		die_errno(_("could not register new window class"));
-+
-+	hwnd =3D CreateWindow("git-index-helper", pid_file,
-+			    0, 0, 0, 1, 1, NULL, NULL, hinst, NULL);
-+	if (!hwnd)
-+		die_errno(_("could not register new window"));
-+
-+	refresh(0);
-+	while (1) {
-+		timer =3D SetTimer(hwnd, timer, idle_in_seconds * 1000, NULL);
-+		if (!timer)
-+			die(_("no timer!"));
-+		if (!GetMessage(&msg, hwnd, 0, 0) || msg.message =3D=3D WM_TIMER)
-+			break;
-+		switch (msg.message) {
-+		case WM_USER:
-+			refresh(0);
-+			break;
-+		default:
-+			/* just reset the timer */
-+			break;
-+		}
-+	}
-+}
-+
- #else
-=20
- static void loop(const char *pid_file, int idle_in_seconds)
-@@ -198,6 +243,9 @@ int main(int argc, char **argv)
- 	fd =3D hold_lock_file_for_update(&lock,
- 				       git_path("index-helper.pid"),
- 				       LOCK_DIE_ON_ERROR);
-+#ifdef GIT_WINDOWS_NATIVE
-+	strbuf_addstr(&sb, "HWND");
-+#endif
- 	strbuf_addf(&sb, "%" PRIuMAX, (uintmax_t) getpid());
- 	write_in_full(fd, sb.buf, sb.len);
- 	commit_lock_file(&lock);
 diff --git a/read-cache.c b/read-cache.c
-index 1a0ab0c..16fbdf6 100644
+index 85ef15b..57c5df9 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1546,6 +1546,18 @@ static void post_read_index_from(struct index_st=
-ate *istate)
- 	tweak_untracked_cache(istate);
+@@ -1613,14 +1613,46 @@ static void do_poke(struct strbuf *sb, int refr=
+esh_cache)
+ 	PostMessage(hwnd, refresh_cache ? WM_USER : WM_USER + 1, 0, 0);
  }
-=20
-+#if defined(GIT_WINDOWS_NATIVE)
-+static void do_poke(struct strbuf *sb, int refresh_cache)
+ #else
++
++static volatile int done_sleeping;
++
++static void mark_done_sleeping(int sig)
 +{
-+	HWND hwnd;
-+	if (!starts_with(sb->buf, "HWND"))
-+		return;
-+	hwnd =3D FindWindow("git-index-helper", sb->buf);
-+	if (!hwnd)
-+		return;
-+	PostMessage(hwnd, refresh_cache ? WM_USER : WM_USER + 1, 0, 0);
++	done_sleeping =3D 1;
 +}
-+#else
++
++/*
++ * Send a message to the index-helper to let it know that we're going
++ * to read the index.  If refresh_cache is true, then the index-helper
++ * should re-read the index; otherwise, it should just stay alive.
++ *
++ * If the index-helper supports watchman, it will refresh the index
++ * before it hands it over.  Wait up to one second for a response
++ * indicating that the index has been successfully refreshed.
++ *
++ */
  static void do_poke(struct strbuf *sb, int refresh_cache)
  {
- 	char	*start =3D sb->buf;
-@@ -1555,6 +1567,7 @@ static void do_poke(struct strbuf *sb, int refres=
-h_cache)
+-	char	*start =3D sb->buf;
++	int	 wait  =3D sb->buf[0] =3D=3D 'W';
++	char	*start =3D wait ? sb->buf + 1 : sb->buf;
+ 	char	*end   =3D NULL;
+ 	pid_t	 pid   =3D strtoul(start, &end, 10);
++	int	 ret;
++	int	 count =3D 0;
++
++	done_sleeping =3D 0;
+ 	if (!end || end !=3D sb->buf + sb->len)
  		return;
- 	kill(pid, refresh_cache ? SIGHUP : SIGUSR1);
- }
-+#endif
-=20
- static void poke_daemon(struct index_state *istate,
- 			const struct stat *st, int refresh_cache)
-diff --git a/shm.c b/shm.c
-index 4ec1a00..04d8a35 100644
---- a/shm.c
-+++ b/shm.c
-@@ -52,6 +52,102 @@ void git_shm_unlink(const char *fmt, ...)
- 	shm_unlink(path);
- }
-=20
-+#elif defined(GIT_WINDOWS_NATIVE)
+-	kill(pid, refresh_cache ? SIGHUP : SIGUSR1);
++	if (!refresh_cache && wait)
++		signal(SIGHUP, mark_done_sleeping);
++	ret =3D kill(pid, refresh_cache ? SIGHUP : SIGUSR1);
++	if (!refresh_cache && wait) {
++		if (!ret)
++			while (!done_sleeping && count++ < 1000)
++				sleep_millisec(1);
 +
-+#define SHM_PATH_LEN 82	/* a little bit longer than POSIX because of "=
-Local\\" */
-+
-+static ssize_t create_shm_map(int oflag, int perm, ssize_t length,
-+			      void **mmap, int prot, int flags,
-+			      const char *path, unsigned long page_size)
-+{
-+	size_t real_length;
-+	void *last_page;
-+	HANDLE h;
-+
-+	assert(perm   =3D=3D 0700);
-+	assert(oflag  =3D=3D (O_CREAT | O_EXCL | O_RDWR));
-+	assert(prot   =3D=3D (PROT_READ | PROT_WRITE));
-+	assert(flags  =3D=3D MAP_SHARED);
-+	assert(length >=3D 0);
-+
-+	real_length =3D length;
-+	if (real_length % page_size)
-+		real_length +=3D page_size - (real_length % page_size);
-+	real_length +=3D page_size;
-+	h =3D CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0=
-,
-+			      real_length, path);
-+	if (!h)
-+		return -1;
-+	*mmap =3D MapViewOfFile(h, FILE_MAP_ALL_ACCESS, 0, 0, real_length);
-+	CloseHandle(h);
-+	if (!*mmap)
-+		return -1;
-+	last_page =3D (unsigned char *)*mmap + real_length - page_size;
-+	*(unsigned long *)last_page =3D length;
-+	return length;
-+}
-+
-+static ssize_t open_shm_map(int oflag, int perm, ssize_t length, void =
-**mmap,
-+			    int prot, int flags, const char *path,
-+			    unsigned long page_size)
-+{
-+	void *last_page;
-+	HANDLE h;
-+
-+	assert(perm   =3D=3D 0700);
-+	assert(oflag  =3D=3D O_RDONLY);
-+	assert(prot   =3D=3D PROT_READ);
-+	assert(flags  =3D=3D MAP_SHARED);
-+	assert(length <=3D 0);
-+
-+	h =3D OpenFileMapping(FILE_MAP_READ, FALSE, path);
-+	if (!h)
-+		return -1;
-+	*mmap =3D MapViewOfFile(h, FILE_MAP_READ, 0, 0, 0);
-+	CloseHandle(h);
-+	if (!*mmap)
-+		return -1;
-+	if (length < 0) {
-+		MEMORY_BASIC_INFORMATION mbi;
-+		if (!VirtualQuery(*mmap, &mbi, sizeof(mbi))) {
-+			UnmapViewOfFile(*mmap);
-+			return -1;
-+		}
-+		if (mbi.RegionSize % page_size)
-+			die("expected size %lu to be %lu aligned",
-+				    mbi.RegionSize, page_size);
-+		last_page =3D (unsigned char *)*mmap + mbi.RegionSize - page_size;
-+		length =3D *(unsigned long *)last_page;
++		sigaction(SIGHUP, NULL, NULL);
 +	}
-+	return length;
-+}
-+
-+ssize_t git_shm_map(int oflag, int perm, ssize_t length, void **mmap,
-+		    int prot, int flags, const char *fmt, ...)
-+{
-+	SYSTEM_INFO si;
-+	va_list ap;
-+	char path[SHM_PATH_LEN];
-+
-+	GetSystemInfo(&si);
-+
-+	strcpy(path, "Local\\");
-+	va_start(ap, fmt);
-+	vsprintf(path + strlen(path), fmt, ap);
-+	va_end(ap);
-+
-+	if (oflag & O_CREAT)
-+		return create_shm_map(oflag, perm, length, mmap, prot,
-+				      flags, path, si.dwPageSize);
-+	else
-+		return open_shm_map(oflag, perm, length, mmap, prot,
-+				    flags, path, si.dwPageSize);
-+}
-+
-+void git_shm_unlink(const char *fmt, ...)
-+{
-+}
-+
- #else
+ }
+ #endif
 =20
- ssize_t git_shm_map(int oflag, int perm, ssize_t length, void **mmap,
 --=20
 2.4.2.767.g62658d5-twtrsrc
