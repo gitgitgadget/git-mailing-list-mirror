@@ -1,148 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7610-mergetool: add test cases for tempfile behavior
-Date: Wed, 09 Mar 2016 12:43:31 -0800
-Message-ID: <xmqqh9gfgz64.fsf@gitster.mtv.corp.google.com>
-References: <1457501814-10599-1-git-send-email-davvid@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] add a commit.verbose config variable
+Date: Wed, 09 Mar 2016 22:21:54 +0100
+Message-ID: <vpqlh5r9wjx.fsf@anie.imag.fr>
+References: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Charles Bailey <cbailey32@bloomberg.net>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 09 21:43:41 2016
+Cc: git@vger.kernel.org
+To: Pranit Bauva <pranit.bauva@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 09 22:22:06 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adkxI-0005Mr-At
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:43:40 +0100
+	id 1adlYS-0002Cb-NB
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 22:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895AbcCIUnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 15:43:37 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61086 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751536AbcCIUnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 15:43:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B6114CB96;
-	Wed,  9 Mar 2016 15:43:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=97w76MqN9EJWRBSXKOQCbVtHr5A=; b=WZBUjO
-	MKvxMibv+FW0IYQswFEqUjbJVMUt+vv/MX8DnVQoJMWl5RJ7qkUh83630XLsYO1i
-	CWqEMKc6KOO8vj42nus0ALtEaU59NydcTzg3JIXCsEkxBKyHAzuwmiZAU2K9y4v9
-	Fyrl8n/RyI63swLs7l3eIXsArls9HdlyGWgqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N1NjEU7Hr4GeqVRD4zfA7Xmio2Vn3sEl
-	vQj6wtOgyil7k4zr2LKwSEHtznS8o+gTETzPdjs1Z9skGj1g0gA7Mdo6TsaEsZND
-	a0boJ6bccYmlhh6B/msO5HFx5d3J+F4YWQLmBi/aR2zAQ4T6nEqjt1mPG7G45ZcA
-	i/k7rnYEiwM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21E934CB95;
-	Wed,  9 Mar 2016 15:43:34 -0500 (EST)
-Received: from pobox.com (unknown [104.132.1.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 90C274CB94;
-	Wed,  9 Mar 2016 15:43:33 -0500 (EST)
-In-Reply-To: <1457501814-10599-1-git-send-email-davvid@gmail.com> (David
-	Aguilar's message of "Tue, 8 Mar 2016 21:36:54 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9707113C-E637-11E5-8847-79226BB36C07-77302942!pb-smtp0.pobox.com
+	id S934221AbcCIVWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 16:22:00 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:36066 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932504AbcCIVV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 16:21:59 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id u29LLqpe011726
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 9 Mar 2016 22:21:52 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u29LLs4H029320;
+	Wed, 9 Mar 2016 22:21:54 +0100
+In-Reply-To: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
+	(Pranit Bauva's message of "Wed, 9 Mar 2016 18:49:15 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 09 Mar 2016 22:21:52 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u29LLqpe011726
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1458163313.83154@+4BY5xsF4qtEeAWGX1JHwA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288576>
 
-David Aguilar <davvid@gmail.com> writes:
+Hi,
 
-> Ensure that mergetool.keepTemporaries is honored when resolving
-> delete/delete conflicts.
->
-> Ensure that stderr stays empty, and that worktree directories
-> created by mergetool to are removed.
->
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
->  t/t7610-mergetool.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
+This is v2, right? Then call it [PATCH v2] in the title, and summarize
+the diff wrt v1. As much as possible, Cc people who participated in the
+review of v1.
 
-Thanks.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-> index f1668be..cf2eceb 100755
-> --- a/t/t7610-mergetool.sh
-> +++ b/t/t7610-mergetool.sh
-> @@ -273,6 +273,40 @@ test_expect_success 'mergetool delete/delete conflict' '
->  	git reset --hard HEAD
->  '
->  
-> +test_expect_success 'mergetool honors tempfile config for deleted files' '
-> +	test_config mergetool.keepTemporaries false &&
-> +	! git merge move-to-b &&
+> Since many people always run the command with this option, and would
+> prefer not to use the argument again and again but instead specify it in
+> the configuration file.
 
-We'd like to catch a newly built Git segfaulting, so let's change
-this to:
+"Since ... and ..." calls for a verb to end the sentence (already noted
+by Eric with v1).
 
-	test_must_fail git merge move-to-b &&
+> +commit.verbose::
+> +	A boolean to specify whether to always include the verbose option
+> +	with `git commit`. See linkgit:git-commit[1]
 
-Two other "! git merge" in this patch need be changed the same way.
+Either say "See linkgit:git-commit[1]" between parenthesis, or add a
+period (.) at the end of the sentence.
 
-> +	echo d | git mergetool a/a/file.txt &&
-> +	! test -d a &&
-> +	git reset --hard HEAD
-> +'
+> +--override-verbose::
+> +	Disable verbose for the commit if you have activated it
+> +	permanently in the configuration variable `commit.verbose`.
+
+The convention is to call this --no-verbose. --override-verbose is not a
+good name for such option.
+
+Look how other similar cases are managed (e.g. status.short,
+status.branch, am.threeway)
+
+> @@ -1654,6 +1656,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
+>  					  builtin_commit_usage,
+>  					  prefix, current_head, &s);
 > +
-> +test_expect_success 'mergetool produces no errors when keepBackup is used' '
-> +	test_config mergetool.keepBackup true &&
-> +	! git merge move-to-b &&
-> +	: >expect &&
-> +	echo d | git mergetool a/a/file.txt 2>actual &&
-> +	test_cmp expect actual &&
-> +	! test -d a &&
-> +	git reset --hard HEAD
-> +'
-> +
-> +test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
-> +	test_config mergetool.keepTemporaries true &&
-> +	! git merge move-to-b &&
-> +	! (echo a; echo n) | git mergetool a/a/file.txt &&
-> +	test -d a/a &&
-> +	cat  >expect <<\-EOF &&
-> +file_BASE_.txt
-> +file_LOCAL_.txt
-> +file_REMOTE_.txt
-> +-EOF
+> +	if( !override_verbose )
+> +		if( !verbose )
 
-Let's use EOF not -EOF as the end marker for here document, but use
-a dash in front of the marker to allow us indent the contents of the
-here document, like this:
+Style: spaces between if and (, but not inside ( ).
 
-	cat >expect <<-\EOF &&
-	file_BASE_.txt
-	file_LOCAL_.txt
-	file_REMOTE_.txt
-	EOF
+> +			git_config_get_bool("commit.verbose", &verbose);
 
-While at it, let's lose the extra SP after "cat".
+This is a strange way to write the "cli takes precedence over config".
+The usual way is to read from least precedence to highest precedence,
+i.e. git_config_get_bool before calling parse_option.
 
-> +	ls -1 a/a | sed -e "s/[0-9]*//g" >actual &&
-> +	test_cmp expect actual &&
-> +	git clean -fdx &&
-> +	git reset --hard HEAD
-> +'
->  test_expect_success 'deleted vs modified submodule' '
->  	git checkout -b test6 branch1 &&
->  	git submodule update -N &&
+You dropped the "RFC" tag from the subject line, but your patch still
+lacks a test. It cannot be called final without.
 
-
-I'll queue this patch with the above-mentioned fixups squashed in,
-but I suspect that another new test added by the previous patches
-have the same "! git merge" issue we'd want to correct before we
-start to move the topic to 'next' and to 'master', so perhaps you'd
-want to reroll these three patches as two patches (i.e. squashing
-this one to 1/2, correcting the test in 2/2) after 2.8 final ships?
-
-Thanks.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
