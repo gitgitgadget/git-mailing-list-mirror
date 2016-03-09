@@ -1,84 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git has been accepted as a GSoC 2016 mentor organization!
-Date: Wed, 9 Mar 2016 14:34:15 -0500
-Message-ID: <20160309193415.GA6408@sigill.intra.peff.net>
-References: <vpqh9h7f9kz.fsf@anie.imag.fr>
- <xmqq60xnjh1s.fsf@gitster.mtv.corp.google.com>
- <vpqziuzdr5r.fsf@anie.imag.fr>
- <20160217204528.GA22893@sigill.intra.peff.net>
- <xmqq60xnhviw.fsf@gitster.mtv.corp.google.com>
- <1455788324.3786.14.camel@dwim.me>
- <vpq1t896s5c.fsf_-_@anie.imag.fr>
- <1455875178.343346.31.camel@dwim.me>
- <vpq4mcr8c3j.fsf_-_@anie.imag.fr>
- <20160308224625.GA29922@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Also read SQUASH_MSG if a conflict on a merge squash occurred
+Date: Wed, 09 Mar 2016 12:24:44 -0800
+Message-ID: <xmqqziu7h01f.fsf@gitster.mtv.corp.google.com>
+References: <56DAB71E.6000509@cs-ware.de> <56DE5272.2080009@cs-ware.de>
+	<xmqq60wwlt0s.fsf@gitster.mtv.corp.google.com>
+	<xmqqfuvzil3y.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 09 20:34:25 2016
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Sven Strickroth <sven@cs-ware.de>
+X-From: git-owner@vger.kernel.org Wed Mar 09 21:24:56 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adjsF-0000vS-UI
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 20:34:24 +0100
+	id 1adkf7-0007WV-2U
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933008AbcCITeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 14:34:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57347 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751459AbcCITeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 14:34:19 -0500
-Received: (qmail 27810 invoked by uid 102); 9 Mar 2016 19:34:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Mar 2016 14:34:18 -0500
-Received: (qmail 18416 invoked by uid 107); 9 Mar 2016 19:34:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Mar 2016 14:34:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Mar 2016 14:34:15 -0500
-Content-Disposition: inline
-In-Reply-To: <20160308224625.GA29922@sigill.intra.peff.net>
+	id S1753876AbcCIUYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 15:24:50 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752164AbcCIUYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 15:24:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 431404C6A0;
+	Wed,  9 Mar 2016 15:24:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iJdPsfunyfzbiNzw3MTs2xdlsxs=; b=e5JWMa
+	kzZv/rjU5gFIi/Jhoo+t2v8XZQhhmzXO3KHqT/jD0vur7liJuchJnznrj4ifHsFS
+	r+0yPJRW9F9EM7s15jZRmJHDNxzemIzVBtIjEdXA950NGigber20gQuaQNyew11Q
+	BrctFCXqLyaAL3hHPIEn4fJszElBHkrhLZKbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kRe8h3XTmcv3RUEd01Oavr35tN3cEzrs
+	EzAZJI+gzjPRiwA/dNQgzOkCjnxnJo0l4UU5pB5Tz16t5eIKnFL8+5OcwPBMjFbS
+	puKSRqSidLLuIjj2nHzjUvMIpZMpz372yFJPeNMTx6Efb69VNzXIZ9GXum7/9kcP
+	ZeCS6gSNw/M=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AC534C69F;
+	Wed,  9 Mar 2016 15:24:46 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AABBC4C69E;
+	Wed,  9 Mar 2016 15:24:45 -0500 (EST)
+In-Reply-To: <xmqqfuvzil3y.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 09 Mar 2016 10:04:17 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F6C0000A-E634-11E5-8347-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288571>
 
-On Tue, Mar 08, 2016 at 05:46:25PM -0500, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Most of the resources are just pointers to our GSoC stuff. This does
-> mean I've effectively signed our mentors up to participate in this
-> program.  I hope that's OK, as it's effectively the same commitment as
-> GSoC (and obviously we would spread our mentoring resources over the
-> total pool of applicants between both programs, and not double-book any
-> mentors).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The duplicated code to read the same file bothers me somewhat.
+>>
+>> I wondered if it makes the result easier to follow (and easier to
+>> update) if this part of the code is restructured like this:
+>>
+>> 	if (file_exists(git_path_merge_msg()) ||
+>>             file_exists(git_path_squash_msg())) {
+>> 	    if (file_exists(git_path_squash_msg())) {
+>> 		read SQUASH_MSG;
+>> 	    }
+>>             if (file_exists(git_path_merge_msg()))
+>>             	read MERGE_MSG;
+>> 	    }
+>>             hook_arg1 = "merge";
+>> 	}
+>>
+>> but I am not sure if that structure is better.
+>
+> ... as this duplicates file_exists() call to the same thing, which
+> is no better than duplicated calls to read *_MSG files.
 
-Actually, there is one thing we should do. :)
+So, let's take the program structure from your original, but fix the
+order of the inclusion (and the log message), perhaps like the
+attached patch.
 
-Our ideas page is missing potential mentors for many of the projects.
-This is useful information for coordinating GSoC, but I think is doubly
-important for Outreachy, where applicants are encouraged to get in touch
-with mentors early.
+Don't we also want to have a new test so that this "contents from
+both files are included in the result in the expected order" feature
+will not get broken in the future?
 
-So would people who have proposed ideas mind going over the page at
+-- >8 --
+Subject: [PATCH] commit: do not lose SQUASH_MSG contents
 
-  http://git.github.io/SoC-2016-Ideas/
+When concluding a conflicted "git merge --squash", the command
+failed to read SQUASH_MSG that was prepared by "git merge", and
+showed only the "# Conflicts:" list of conflicted paths.
 
-and making sure they are listed under their projects? And likewise, can
-people make sure they are listed with their preferred email addresses? I
-do think we generally expect people to communicate on the list, but it
-should be as easy as possible for them to cc the mentors.
+Place the contents from SQUASH_MSG at the beginning, just like we
+show the commit log skeleton first when concluding a normal merge,
+and then show the "# Conflicts:" list, to help the user write the
+log message for the resulting commit.
 
-If you have fixes to make, please feel free to push straight to "master"
-of that repository (if you have access), or open a pull request or send
-me a patch if you don't.
+Signed-off-by: Sven Strickroth <sven@cs-ware.de>
+---
 
--Peff
+ builtin/commit.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b3bd2d4..4ad3931 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -726,9 +726,19 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 				      &sb, &ctx);
+ 		hook_arg1 = "message";
+ 	} else if (!stat(git_path_merge_msg(), &statbuf)) {
++		hook_arg1 = "merge";
++
++		/*
++		 * In a conflicted 'merge squash', the material to help
++		 * writing the log message is found in SQUASH_MSG.
++		 */
++		if (!stat(git_path_squash_msg(), &statbuf)) {
++			if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
++				die_errno(_("could not read SQUASH_MSG"));
++			hook_arg1 = "squash";
++		}
+ 		if (strbuf_read_file(&sb, git_path_merge_msg(), 0) < 0)
+ 			die_errno(_("could not read MERGE_MSG"));
+-		hook_arg1 = "merge";
+ 	} else if (!stat(git_path_squash_msg(), &statbuf)) {
+ 		if (strbuf_read_file(&sb, git_path_squash_msg(), 0) < 0)
+ 			die_errno(_("could not read SQUASH_MSG"));
+-- 
+2.8.0-rc1-141-gbaa22e3
