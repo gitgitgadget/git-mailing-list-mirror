@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [RFC/PATCH 41/48] builtin/apply: move 'ws_ignore_action' into 'struct apply_state'
-Date: Wed,  9 Mar 2016 18:49:09 +0100
-Message-ID: <1457545756-20616-42-git-send-email-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 42/48] builtin/apply: move 'max_change' and 'max_len' into 'struct apply_state'
+Date: Wed,  9 Mar 2016 18:49:10 +0100
+Message-ID: <1457545756-20616-43-git-send-email-chriscool@tuxfamily.org>
 References: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 18:54:16 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 18:54:17 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiJK-0000P4-W8
+	id 1adiJL-0000P4-IP
 	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933783AbcCIRyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 12:54:10 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35068 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933764AbcCIRxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 12:53:52 -0500
-Received: by mail-wm0-f48.google.com with SMTP id l68so190254634wml.0
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:53:51 -0800 (PST)
+	id S933786AbcCIRyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 12:54:13 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:35115 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933766AbcCIRxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 12:53:55 -0500
+Received: by mail-wm0-f49.google.com with SMTP id l68so190256361wml.0
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:53:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LDjtuls9nm9WSbBGft2KcflU4/YPEz3j01+c3AOxsY4=;
-        b=cli8gG0HckOycgTaHQRQfgrc8/0m0YAovNXOqmADi/oBLfMeOUytHe4TYXkisSBSPh
-         ZRp37E9GqISXtKRNTTrCIKYPRK1NL1UPZCAzDWqAvkhcGGihbeaxzxJYIPXWxhuZBe21
-         PMp0d17nqJRcyjv9LFvjnd77SAw/+kM9zWA3hZsjz6/G/IxGm5fq6T/CN9OyUZXDMF8H
-         Ro80Rsq/WIBLkAm2IsyJPKvzxPNy7MBP6WSzP7DQKie3z1YkL2FlNirAO5C57fff9V4D
-         AMZrX2LJWLnIHhRfLZqTfhyB/d4HfA0Qn4SGP7cgNVQ6NvYOcX0TPO0FrVKDRKWnFu6T
-         5WTA==
+        bh=SRiHU7AaXNcwnKs6RkZE3GacWMc5ffapx9q/+vqtUGU=;
+        b=y377nbN4CorJVES1jl395/EDveDxqLrZqONZEGRbWwB+8i4DExFldwOSm3gqj+HeuS
+         qHaj6ln3UqIuz4n8Nq3CWdMrb1U+BiEm2N1UtZqTKBzs9vSQUxP9h9y+X8qZTDnNqLjj
+         rkIo582ydPWGv+YnLbUPUSSQFKkBm3mZJoGUADZ/iN/UrYlJckhOR6KEHb+T+O1QYlbV
+         4391n4jnmIvVGCNuKZah8BmT9N7j+uful6RZSq6fR56MaqAD+qfuCTBdCTIKmp3feWWj
+         b+zBOi7BRo3O7Z52cl3YRVcyfSuFVcsOanvOiodfynMmTnMCgxfuyeOHbfhYKKO+VTKt
+         Ct+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LDjtuls9nm9WSbBGft2KcflU4/YPEz3j01+c3AOxsY4=;
-        b=jFLWjdnKF9fCOz29f6gw419sEJKc99wn9tGQ8hha56DrTZ/lITR93qnAKE0h4GOmSz
-         ZZWWMTZeg8NEQ03Ek7ECPQad68RRBGGu4rzNmTMGprj7MIqrM8RtMdGv6/AItdgZtNje
-         3Rg5wD3ZfiK6eGocZKENOPypSfP4SGj65lJxZvzsAJTeVsxtSm2t0xUNKdLzjmXrIsbA
-         D4BdT9YPFq+WL6wz4JeRUaLtUcbFWe74T0L5ZHy4j6qljnrs6RvCFENFH4pQJnu8i8eP
-         CDZm1KldIO81U61f8QLQmIdtbSZflb6n+gamIx1v9vvHjJZ+9CGoYNt6VbB+H6VyKMFd
-         DMdw==
-X-Gm-Message-State: AD7BkJJYPkHldJTPQIQQ7HNF5Hz/lKo6mibqn6rgg+SAUYYfJ4G41bxAAKMXDkqJ/KTVPw==
-X-Received: by 10.194.120.99 with SMTP id lb3mr43012384wjb.59.1457546030897;
-        Wed, 09 Mar 2016 09:53:50 -0800 (PST)
+        bh=SRiHU7AaXNcwnKs6RkZE3GacWMc5ffapx9q/+vqtUGU=;
+        b=KqZqU19gRRnMEPkkmE+WrghpC7LvOBgIs1GGpwj5MvSvW3HFrtIOOlLw7lNv6yn05f
+         U1JSmTv1EGWtFVKoBusydcMA/ZyI8xAkEJm2Mk9KMwbyYFVU+TcrnMkOeQqzcCmVsZDS
+         Wrn/vJNj88RYcqRAWU19qtlcC0JLfgEOuJWKdJf1XPYIK6IakNCE5hrh9f1MrQ0GQBcI
+         lEyr6o1hMKfPQebGxzJkUE7pdBEFA2rvUhCmcr/JB9ADfzTU9KiSMRa9OEHkfTvwDKj9
+         Y/33h5JzrwZWCzBrPIxw95vMoieGfGPoUuM6D4vZrcaCR9nxY7HqRLKGuzrkDB3Iy2Wo
+         ND3w==
+X-Gm-Message-State: AD7BkJId6C5poPPg5NWHoYCW/VRH+Tu3vp27kSulmm+8CTx7npWo9ST12OZBvC4oc4nh1g==
+X-Received: by 10.28.147.72 with SMTP id v69mr25679728wmd.79.1457546033512;
+        Wed, 09 Mar 2016 09:53:53 -0800 (PST)
 Received: from localhost.localdomain ([80.215.161.239])
-        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.53.48
+        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.53.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 Mar 2016 09:53:50 -0800 (PST)
+        Wed, 09 Mar 2016 09:53:52 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.0.rc1.49.gca61272
 In-Reply-To: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,127 +64,150 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288530>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 37 ++++++++++++++++++++-----------------
- 1 file changed, 20 insertions(+), 17 deletions(-)
+ builtin/apply.c | 49 +++++++++++++++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index d427c3c..dbb9f0b 100644
+index dbb9f0b..79224fd 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -28,6 +28,12 @@ enum ws_error_action {
- 	correct_ws_error
- };
+@@ -79,6 +79,14 @@ struct apply_state {
  
+ 	int line_termination;
+ 
++	/*
++	 * For "diff-stat" like behaviour, we keep track of the biggest change
++	 * we've seen, and the longest filename. That allows us to do simple
++	 * scaling.
++	 */
++	int max_change;
++	int max_len;
 +
-+enum ws_ignore {
-+	ignore_ws_none,
-+	ignore_ws_change
-+};
-+
- struct apply_state {
- 	const char *prefix;
- 	int prefix_length;
-@@ -92,6 +98,7 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- 
- 	enum ws_error_action ws_error_action;
-+	enum ws_ignore ws_ignore_action;
- };
- 
- static const char * const apply_usage[] = {
-@@ -99,13 +106,6 @@ static const char * const apply_usage[] = {
- 	NULL
- };
- 
--
--static enum ws_ignore {
--	ignore_ws_none,
--	ignore_ws_change
--} ws_ignore_action = ignore_ws_none;
--
--
- static void parse_whitespace_option(struct apply_state *state, const char *option)
- {
- 	if (!option) {
-@@ -136,16 +136,17 @@ static void parse_whitespace_option(struct apply_state *state, const char *optio
- 	die(_("unrecognized whitespace option '%s'"), option);
+ 	int p_value;
+ 	int p_value_known;
+ 	unsigned int p_context;
+@@ -159,13 +167,6 @@ static void set_default_whitespace_mode(struct apply_state *state)
  }
  
--static void parse_ignorewhitespace_option(const char *option)
-+static void parse_ignorewhitespace_option(struct apply_state *state,
-+					  const char *option)
+ /*
+- * For "diff-stat" like behaviour, we keep track of the biggest change
+- * we've seen, and the longest filename. That allows us to do simple
+- * scaling.
+- */
+-static int max_change, max_len;
+-
+-/*
+  * Various "current state", notably line numbers and what
+  * file (and how) we're patching right now.. The "is_xxxx"
+  * things are flags, where -1 means "don't know yet".
+@@ -2191,7 +2192,7 @@ static const char pluses[] =
+ static const char minuses[]=
+ "----------------------------------------------------------------------";
+ 
+-static void show_stats(struct patch *patch)
++static void show_stats(struct apply_state *state, struct patch *patch)
  {
- 	if (!option || !strcmp(option, "no") ||
- 	    !strcmp(option, "false") || !strcmp(option, "never") ||
- 	    !strcmp(option, "none")) {
--		ws_ignore_action = ignore_ws_none;
-+		state->ws_ignore_action = ignore_ws_none;
- 		return;
- 	}
- 	if (!strcmp(option, "change")) {
--		ws_ignore_action = ignore_ws_change;
-+		state->ws_ignore_action = ignore_ws_change;
- 		return;
- 	}
- 	die(_("unrecognized whitespace ignore option '%s'"), option);
-@@ -2508,7 +2509,7 @@ static int match_fragment(struct apply_state *state,
- 	 * fuzzy matching. We collect all the line length information because
- 	 * we need it to adjust whitespace if we match.
+ 	struct strbuf qname = STRBUF_INIT;
+ 	char *cp = patch->new_name ? patch->new_name : patch->old_name;
+@@ -2202,7 +2203,7 @@ static void show_stats(struct patch *patch)
+ 	/*
+ 	 * "scale" the filename
  	 */
--	if (ws_ignore_action == ignore_ws_change) {
-+	if (state->ws_ignore_action == ignore_ws_change) {
- 		return line_by_line_fuzzy_match(img, preimage, postimage, try, try_lno, preimage_limit);
+-	max = max_len;
++	max = state->max_len;
+ 	if (max > 50)
+ 		max = 50;
+ 
+@@ -2225,13 +2226,13 @@ static void show_stats(struct patch *patch)
+ 	/*
+ 	 * scale the add/delete
+ 	 */
+-	max = max + max_change > 70 ? 70 - max : max_change;
++	max = max + state->max_change > 70 ? 70 - max : state->max_change;
+ 	add = patch->lines_added;
+ 	del = patch->lines_deleted;
+ 
+-	if (max_change > 0) {
+-		int total = ((add + del) * max + max_change / 2) / max_change;
+-		add = (add * max + max_change / 2) / max_change;
++	if (state->max_change > 0) {
++		int total = ((add + del) * max + state->max_change / 2) / state->max_change;
++		add = (add * max + state->max_change / 2) / state->max_change;
+ 		del = total - add;
+ 	}
+ 	printf("%5d %.*s%.*s\n", patch->lines_added + patch->lines_deleted,
+@@ -4058,7 +4059,7 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 	discard_index(&result);
+ }
+ 
+-static void stat_patch_list(struct patch *patch)
++static void stat_patch_list(struct apply_state *state, struct patch *patch)
+ {
+ 	int files, adds, dels;
+ 
+@@ -4066,7 +4067,7 @@ static void stat_patch_list(struct patch *patch)
+ 		files++;
+ 		adds += patch->lines_added;
+ 		dels += patch->lines_deleted;
+-		show_stats(patch);
++		show_stats(state, patch);
  	}
  
-@@ -4625,12 +4626,13 @@ static int option_parse_p(const struct option *opt,
+ 	print_stat_summary(stdout, files, adds, dels);
+@@ -4164,25 +4165,25 @@ static void summary_patch_list(struct patch *patch)
+ 	}
  }
  
- static int option_parse_space_change(const struct option *opt,
--			  const char *arg, int unset)
-+				     const char *arg, int unset)
+-static void patch_stats(struct patch *patch)
++static void patch_stats(struct apply_state *state, struct patch *patch)
  {
-+	struct apply_state *state = opt->value;
- 	if (unset)
--		ws_ignore_action = ignore_ws_none;
-+		state->ws_ignore_action = ignore_ws_none;
- 	else
--		ws_ignore_action = ignore_ws_change;
-+		state->ws_ignore_action = ignore_ws_change;
- 	return 0;
+ 	int lines = patch->lines_added + patch->lines_deleted;
+ 
+-	if (lines > max_change)
+-		max_change = lines;
++	if (lines > state->max_change)
++		state->max_change = lines;
+ 	if (patch->old_name) {
+ 		int len = quote_c_style(patch->old_name, NULL, NULL, 0);
+ 		if (!len)
+ 			len = strlen(patch->old_name);
+-		if (len > max_len)
+-			max_len = len;
++		if (len > state->max_len)
++			state->max_len = len;
+ 	}
+ 	if (patch->new_name) {
+ 		int len = quote_c_style(patch->new_name, NULL, NULL, 0);
+ 		if (!len)
+ 			len = strlen(patch->new_name);
+-		if (len > max_len)
+-			max_len = len;
++		if (len > state->max_len)
++			state->max_len = len;
+ 	}
  }
  
-@@ -4705,10 +4707,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 		{ OPTION_CALLBACK, 0, "whitespace", &state, N_("action"),
- 			N_("detect new or modified lines that have whitespace errors"),
- 			0, option_parse_whitespace },
--		{ OPTION_CALLBACK, 0, "ignore-space-change", NULL, NULL,
-+		{ OPTION_CALLBACK, 0, "ignore-space-change", &state, NULL,
- 			N_("ignore changes in whitespace when finding context"),
- 			PARSE_OPT_NOARG, option_parse_space_change },
--		{ OPTION_CALLBACK, 0, "ignore-whitespace", NULL, NULL,
-+		{ OPTION_CALLBACK, 0, "ignore-whitespace", &state, NULL,
- 			N_("ignore changes in whitespace when finding context"),
- 			PARSE_OPT_NOARG, option_parse_space_change },
- 		OPT_BOOL('R', "reverse", &state.apply_in_reverse,
-@@ -4742,13 +4744,14 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	state.p_context = UINT_MAX;
- 	state.squelch_whitespace_errors = 5;
- 	state.ws_error_action = warn_on_ws_error;
-+	state.ws_ignore_action = ignore_ws_none;
- 	strbuf_init(&state.root, 0);
+@@ -4535,7 +4536,7 @@ static int apply_patch(struct apply_state *state,
+ 		if (state->apply_in_reverse)
+ 			reverse_patches(patch);
+ 		if (use_patch(state, patch)) {
+-			patch_stats(patch);
++			patch_stats(state, patch);
+ 			*listp = patch;
+ 			listp = &patch->next;
+ 		}
+@@ -4577,7 +4578,7 @@ static int apply_patch(struct apply_state *state,
+ 		build_fake_ancestor(list, state->fake_ancestor);
  
- 	git_apply_config();
- 	if (apply_default_whitespace)
- 		parse_whitespace_option(&state, apply_default_whitespace);
- 	if (apply_default_ignorewhitespace)
--		parse_ignorewhitespace_option(apply_default_ignorewhitespace);
-+		parse_ignorewhitespace_option(&state, apply_default_ignorewhitespace);
+ 	if (state->diffstat)
+-		stat_patch_list(list);
++		stat_patch_list(state, list);
  
- 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
- 			apply_usage, 0);
+ 	if (state->numstat)
+ 		numstat_patch_list(state, list);
 -- 
 2.8.0.rc1.49.gca61272
