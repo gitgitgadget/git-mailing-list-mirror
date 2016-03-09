@@ -1,85 +1,76 @@
-From: Moritz Neeb <lists@moritzneeb.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v4 0/7] replacing strbuf_getline_lf() by strbuf_getline()
-Date: Wed, 9 Mar 2016 01:25:11 +0100
-Message-ID: <56DF6D67.9040103@moritzneeb.de>
+Date: Tue, 08 Mar 2016 16:39:59 -0800
+Message-ID: <xmqq37s0jxgg.fsf@gitster.mtv.corp.google.com>
 References: <56D28092.9090209@moritzneeb.de> <56D401C2.8020100@moritzneeb.de>
+	<56DF6D67.9040103@moritzneeb.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 01:25:23 2016
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Moritz Neeb <lists@moritzneeb.de>
+X-From: git-owner@vger.kernel.org Wed Mar 09 01:40:33 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adRwF-00007T-Nx
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 01:25:20 +0100
+	id 1adSAx-0003iC-4k
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 01:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076AbcCIAZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Mar 2016 19:25:16 -0500
-Received: from moritzneeb.de ([78.47.1.106]:57565 "EHLO moritzneeb.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750902AbcCIAZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Mar 2016 19:25:14 -0500
-Received: from [141.23.78.21] (wlan-141-23-78-21.tubit.tu-berlin.de [141.23.78.21])
-	by moritzneeb.de (Postfix) with ESMTPSA id 370191C04F;
-	Wed,  9 Mar 2016 01:25:12 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=moritzneeb.de;
-	s=mail; t=1457483112;
-	bh=K2z9eLR8Y96ex0GbUq9TvEWYKXDpsLw+pXy2ZFQw/tQ=;
-	h=Subject:To:References:Cc:From:Date:In-Reply-To:From;
-	b=Cs8h7txz0HsxeqMv3b6M9W6BIzBqlsUHrMWSpZ+yjXi3GYL2C/NxhejrzTtINkKMx
-	 RyN+OMwDuNW846Z4oMXi9jzKGtUHWHcV6pniX/7HNE2VXWEgf982m8JZuqfd8J3mmP
-	 GQxFczqp5RIy5zLteXneXeOm1CaFZ7o/qvxjy7f4=
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-In-Reply-To: <56D401C2.8020100@moritzneeb.de>
+	id S1752626AbcCIAkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Mar 2016 19:40:20 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59971 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753080AbcCIAkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Mar 2016 19:40:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8142E4BEFD;
+	Tue,  8 Mar 2016 19:40:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W8kmiaXRAu3P4DkGgTNTKHiKZkg=; b=j0Gino
+	d2/8X7qz8WmCSeM9rVzfkBZjm9NdAl8lnCDcUNlqPvak8tYZaZ6drTVVv9Bp1SX1
+	XxDzbhXqY26TJL2y5dl35G5w1Xu2lGAQnA4JOxhfLNioRpl5vU8FpaQqj6bWRbsj
+	jjfn8Uio45SDhkberaK2YSkyNZXrXT/Pv+g3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=re0b44+ANIhd8cmsHD/+uRVK4d0V9fZV
+	9lB89OshkT4RRC5dGvuWQsW5CcTOSMt4HUAQn6Ipa9MZ13pW7Q3MkqKDoJ2H/XGa
+	2dxM6QUvvwiIVGuXmzrGSrIF2Ri4/nPUsdyptlCzZ0zqXkBmijE5GvuCc0iyIN7H
+	kkNN0uzkKQY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C57F94BEFA;
+	Tue,  8 Mar 2016 19:40:02 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2CEDD4BEF7;
+	Tue,  8 Mar 2016 19:40:01 -0500 (EST)
+In-Reply-To: <56DF6D67.9040103@moritzneeb.de> (Moritz Neeb's message of "Wed,
+	9 Mar 2016 01:25:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 75140240-E58F-11E5-AC35-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288465>
 
-Hi,
+Moritz Neeb <lists@moritzneeb.de> writes:
 
-how to deal with patches during the v2.8.0 rc freeze? Will they wait on
-the mailing list until the feature release cycle is finished?
+> how to deal with patches during the v2.8.0 rc freeze? Will they wait on
+> the mailing list until the feature release cycle is finished?
 
-Or if it's me who should act on this series, because it got below the
-radar during the rc freeze?
+Because people are expected to stop getting distracted by new
+features and no-op clean-up changes and instead to focus on helping
+find and fix regressions that have been introduced since v2.7.x
+series during the pre-release period, you may not get review
+comments unless your patches are really important.
 
-To my knowledge there's only minor points that have to be discussed:
+To participate in regression hunting or not is your choice.  In any
+case, you'd likely be re-sending a reroll after a release concludes
+this cycle in order to get sufficient reviews and Ack's, as people
+may have expired the last round of patches from you from their
+mailboxes and their brain by then.  And then we go from there.
 
-On 02/29/2016 09:30 AM, Moritz Neeb wrote:
-> 
-> Moritz Neeb (7):
->   quote: remove leading space in sq_dequote_step -- as in v2
-
-in patch 1/7: How many spaces should be removed, cf.:
-
-	http://thread.gmane.org/gmane.comp.version-control.git/285118/focus=287911
-
->   bisect: read bisect paths with strbuf_getline() -- refined commit message
->   clean: read user input with strbuf_getline() -- simplified commit message
->   notes copy --stdin: read lines with strbuf_getline() -- switched with below
->   notes copy --stdin: split lines with string_list_split() -- switched with above
-
-in patches 4/7 and 5/7: Which commit should remove the trimming of
-"split[0]", cf.:
-
-	http://thread.gmane.org/gmane.comp.version-control.git/285118/focus=287894
-
->   remote: read $GIT_DIR/branches/* with strbuf_getline() -- as in v3
->   wt-status: read rebase todolist with strbuf_getline() -- as in v2
-> 
->  bisect.c        |  5 ++---
->  builtin/clean.c |  6 +++---
->  builtin/notes.c | 22 ++++++++++------------
->  quote.c         |  2 ++
->  remote.c        |  2 +-
->  wt-status.c     |  3 +--
->  6 files changed, 19 insertions(+), 21 deletions(-)
-> 
+Thanks.
