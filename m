@@ -1,397 +1,288 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 13/19] index-helper: use watchman to avoid refreshing index with lstat()
-Date: Wed,  9 Mar 2016 13:36:16 -0500
-Message-ID: <1457548582-28302-14-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 17/19] index-helper: process management
+Date: Wed,  9 Mar 2016 13:36:20 -0500
+Message-ID: <1457548582-28302-18-git-send-email-dturner@twopensource.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:30 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:28 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiz1-0007bL-1E
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:19 +0100
+	id 1adiz7-0007g4-NJ
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933871AbcCIShN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 13:37:13 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:34291 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933798AbcCISgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 13:36:46 -0500
-Received: by mail-qk0-f176.google.com with SMTP id x1so24105068qkc.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:46 -0800 (PST)
+	id S933878AbcCIShU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 13:37:20 -0500
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:35701 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932950AbcCISgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 13:36:49 -0500
+Received: by mail-qg0-f52.google.com with SMTP id y89so49339403qge.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=l/7TJVvnUZ2pa8r4vcxZsgfTc9u8dWftad/s1obv44A=;
-        b=CEfBY3cqKh59kkPmSPQ7NGJoM5+h5hNq1HFsQAzIthMf1aks+5+N/9RX1TjpMVd+Ok
-         7MVUGVAEREiJL2gkeep6UPXhPncYSFUI1EM/kofEecjcw5lc5AE5CGr3e13NDw2+aqd+
-         gk1regUjOLHxyuEZAJFhO02ddP/kElmodMpQWSZg/kfqtMsyd64VO1TT29nS33wJg6kP
-         LkH5ant6syQy1trgQiOr9YHnxwKZrFPgV1opeUCJPgYhGiLzdubu+V4OE0CvZkBrFJEc
-         GZYAbpFFs20x4xQ+bd6A04T26x3nxukIr4nopNec2LZlu+2FyFCstuRlWRVNKGuN1Plj
-         R1cw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jxEO1jg8yH0Ya9k7IrMlfLHiP9U2xG0HNwqTlb0tpHo=;
+        b=kVXlTpXFAw0t6Awa1wwAIlrtnzcV80B9b0DFFDxo8SC3FfcaSklTfZfZlPdzsd8KxS
+         5aPqmc6Pmw7H/L+m3xWNCtzpHEQWEgNDNw91KFNMA83JQs2H4rLIkTsc5+1BL+R49TmI
+         0ysCu8CZpdtSKetkxxbwPPjko+EocMyMKuvfpzE+QHpiNjPOV4B+VwfRxLUmdvekt/4C
+         Ka+Y2jAGE/K8hgdM/5gH2mSjXb8Tlzv4hnr5GQcAMejC8ynGsomiehkUgXSBGP6TSps7
+         i1hEmS4nAAR4WkN91Iuy8jWazRodwuDgDHWgJRF7v5u0wceekPZgxqlLaO/UoFyKCBzi
+         RBDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=l/7TJVvnUZ2pa8r4vcxZsgfTc9u8dWftad/s1obv44A=;
-        b=FkzLXa5WF67wp3JCykes6rC2NAioA7Rhi78/by0yfzuvnaWSKDJdzSZ+5SocYmy2CK
-         c16tCmXILXyafjs4jvbz3+1w37Ncmzbuxt+cFzlbsqWMQpGc/DN6Lz/uUWP1l3jScer9
-         GlimFiStYYrVZYMIep+GtEcsxNlBgpPhXU/GgBAkR93h7Ejpqmm9xKwtpr2lxgQW2s7v
-         cmPeaUQt+CGVR3atmDELU7Tt46jdZLoJjl9oF/4mSfBxCaUf9TGfzLJawc1KeWKBhDSS
-         MzmmrCq95yZ5eFon6gAJxy5UneAHD1s0IkKDPAnSolVPto7pPx45NUPWegEemQquzDfv
-         4ztw==
-X-Gm-Message-State: AD7BkJKXUSCtpz9H+IaUrjI6Rk6g3HMSFzEbziFxK8ZNvBLGuvv61myye1gky1kJE9sOHQ==
-X-Received: by 10.55.18.168 with SMTP id 40mr44019585qks.99.1457548605203;
-        Wed, 09 Mar 2016 10:36:45 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=jxEO1jg8yH0Ya9k7IrMlfLHiP9U2xG0HNwqTlb0tpHo=;
+        b=TOFCPBazAJSBEbn3IVeI+m0peLlcGTYHIwf1p9KFfMQJtGArC3QfbQAakq9XKruTnJ
+         T9teVUuD2O7aU/0Vms/xIVUm8LMZuOJ0MlVipdjK+k7S1wWahZSudgQaDnTkRROdDyAU
+         BkC+japHSoCzq4+vKPFsDU8GDOfDaE6KwBa3k2J+fxiCGhRLF6NCmvdL98SRfVwy4Pl/
+         HkoMdtnSi9MooRrc418DzHSsVptV1rbCuVF+gAvHreCgtbCdy1roArfk/2tLcQf42rMw
+         K15ZIhgq4mmU7XyAo8M8ZR11kJmQEhgEqvra3sSsgQ4Ikme+tKdd2KlJM46xjT5zhS9P
+         E2Jg==
+X-Gm-Message-State: AD7BkJLvMG8dO24B3GAAtiv4kzQObSayHLX0L0uwE+01VZjJ6U1t10oVrPu0Yj08usdkWg==
+X-Received: by 10.140.92.180 with SMTP id b49mr35995339qge.81.1457548609029;
+        Wed, 09 Mar 2016 10:36:49 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.128])
-        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.44
+        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 10:36:44 -0800 (PST)
+        Wed, 09 Mar 2016 10:36:48 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288563>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Don't start index-helper when it is already running for a repository.
 
-Watchman is hidden behind index-helper. Before git tries to read the
-index from shm, it notifies index-helper with SIGHUP and sleep,
-waiting for index-helper to prepare shm. index-helper then contacts
-watchman, updates 'WAMA' extension and put it in a separate shm and
-wakes git up with SIGHUP.
+Keep the index-helper pid file's mtime up-to-date.  Before starting
+index-helper, check that (a) the pid file's mtime is recent and (b)
+there is some process with that pid.  Of course, it's possible that
+the mtime is recent but the index-helper has died anyway (and some other
+process has taken its pid), but that's pretty unlikely.
 
-Git uses this extension to not lstat unchanged entries. Git only trust
-'WAMA' extension when it's received from the separate shm, not from
-disk. Unmarked entries are "clean". Marked entries are dirty from
-watchman point of view. If it finds out some entries are
-'watchman-dirty', but are really unchanged (e.g. the file was changed,
-then reverted back), then Git will clear the marking in 'WAMA' before
-writing it down.
+Provide index-helper --kill (to kill the running index-helper) and
+index-helper --ignore-existing (to start up a new index-helper even
+if we believe that there's one already running).
 
-Hiding watchman behind index-helper means you need both daemons. You
-can't run watchman alone. Not so good. But on the other hand, 'git'
-binary is not linked to watchman/json libraries, which is good for
-packaging. Core git package will run fine without watchman-related
-packages. If they need watchman, they can install git-index-helper and
-dependencies.
+Add a test for index-helper's pid-file writing and for --kill.
 
-Another reason for tying watchman to index-helper is, when used with
-untracked cache, we need to keep track of $GIT_WORK_TREE file
-listing. That kind of list can be kept in index-helper.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Makefile       |  5 ++++
- cache.h        |  2 ++
- index-helper.c | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++---
- read-cache.c   | 43 +++++++++++++++++++++++++++---
- 4 files changed, 127 insertions(+), 7 deletions(-)
+ index-helper.c          | 95 +++++++++++++++++++++++++++++++++++++++++++++----
+ t/t7900-index-helper.sh | 23 ++++++++++++
+ 2 files changed, 111 insertions(+), 7 deletions(-)
+ create mode 100755 t/t7900-index-helper.sh
 
-diff --git a/Makefile b/Makefile
-index e51331c..d79fc0c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -450,6 +450,7 @@ MSGFMT =3D msgfmt
- CURL_CONFIG =3D curl-config
- PTHREAD_LIBS =3D -lpthread
- PTHREAD_CFLAGS =3D
-+WATCHMAN_LIBS =3D
- GCOV =3D gcov
-=20
- export TCL_PATH TCLTK_PATH
-@@ -1419,6 +1420,7 @@ endif
- ifdef USE_WATCHMAN
- 	LIB_H +=3D watchman-support.h
- 	LIB_OBJS +=3D watchman-support.o
-+	WATCHMAN_LIBS =3D -lwatchman
- 	BASIC_CFLAGS +=3D -DUSE_WATCHMAN
- endif
-=20
-@@ -2032,6 +2034,9 @@ git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAG=
-S $(GITLIBS) $(VCSSVN_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
-) $(LIBS) \
- 	$(VCSSVN_LIB)
-=20
-+git-index-helper$X: index-helper.o GIT-LDFLAGS $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^=
-) $(LIBS) $(WATCHMAN_LIBS)
-+
- $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
- 	$(QUIET_LNCP)$(RM) $@ && \
- 	ln $< $@ 2>/dev/null || \
-diff --git a/cache.h b/cache.h
-index bf20652..272c928 100644
---- a/cache.h
-+++ b/cache.h
-@@ -558,6 +558,7 @@ extern int daemonize(int *);
-=20
- /* Initialize and use the cache information */
- struct lock_file;
-+extern int verify_index(const struct index_state *);
- extern int read_index(struct index_state *);
- extern int read_index_preload(struct index_state *, const struct paths=
-pec *pathspec);
- extern int do_read_index(struct index_state *istate, const char *path,
-@@ -565,6 +566,7 @@ extern int do_read_index(struct index_state *istate=
-, const char *path,
- extern int read_index_from(struct index_state *, const char *path);
- extern int is_index_unborn(struct index_state *);
- extern int read_index_unmerged(struct index_state *);
-+extern void write_watchman_ext(struct strbuf *sb, struct index_state* =
-istate);
- #define COMMIT_LOCK		(1 << 0)
- #define CLOSE_LOCK		(1 << 1)
- #define REFRESH_DAEMON		(1 << 2)
 diff --git a/index-helper.c b/index-helper.c
-index cf26da7..7e7ce9b 100644
+index dc03e1e..a75da60 100644
 --- a/index-helper.c
 +++ b/index-helper.c
-@@ -5,15 +5,18 @@
- #include "split-index.h"
- #include "shm.h"
- #include "lockfile.h"
-+#include "watchman-support.h"
-=20
- struct shm {
- 	unsigned char sha1[20];
- 	void *shm;
- 	size_t size;
-+	pid_t pid;
- };
-=20
- static struct shm shm_index;
- static struct shm shm_base_index;
-+static struct shm shm_watchman;
- static int daemonized, to_verify =3D 1;
-=20
- static void release_index_shm(struct shm *is)
-@@ -25,10 +28,21 @@ static void release_index_shm(struct shm *is)
- 	is->shm =3D NULL;
- }
-=20
-+static void release_watchman_shm(struct shm *is)
-+{
-+	if (!is->shm)
-+		return;
-+	munmap(is->shm, is->size);
-+	git_shm_unlink("git-watchman-%s-%" PRIuMAX,
-+		       sha1_to_hex(is->sha1), (uintmax_t)is->pid);
-+	is->shm =3D NULL;
-+}
-+
- static void cleanup_shm(void)
- {
- 	release_index_shm(&shm_index);
- 	release_index_shm(&shm_base_index);
-+	release_watchman_shm(&shm_watchman);
- }
-=20
- static void cleanup(void)
-@@ -120,13 +134,15 @@ static void share_the_index(void)
- 	if (the_index.split_index && the_index.split_index->base)
- 		share_index(the_index.split_index->base, &shm_base_index);
- 	share_index(&the_index, &shm_index);
--	if (to_verify && !verify_shm())
-+	if (to_verify && !verify_shm()) {
- 		cleanup_shm();
--	discard_index(&the_index);
-+		discard_index(&the_index);
-+	}
- }
-=20
- static void refresh(int sig)
- {
-+	discard_index(&the_index);
- 	the_index.keep_mmap =3D 1;
- 	the_index.to_shm    =3D 1;
- 	if (read_cache() < 0)
-@@ -136,7 +152,55 @@ static void refresh(int sig)
-=20
+@@ -152,6 +152,17 @@ static void refresh(int sig)
+ 
  #ifdef HAVE_SHM
-=20
--static void do_nothing(int sig)
-+#ifdef USE_WATCHMAN
-+static void share_watchman(struct index_state *istate,
-+			   struct shm *is, pid_t pid)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	void *shm;
-+
-+	write_watchman_ext(&sb, istate);
-+	if (git_shm_map(O_CREAT | O_EXCL | O_RDWR, 0700, sb.len + 20,
-+			&shm, PROT_READ | PROT_WRITE, MAP_SHARED,
-+			"git-watchman-%s-%" PRIuMAX,
-+			sha1_to_hex(istate->sha1), (uintmax_t)pid) =3D=3D sb.len + 20) {
-+		is->size =3D sb.len + 20;
-+		is->shm =3D shm;
-+		is->pid =3D pid;
-+		hashcpy(is->sha1, istate->sha1);
-+
-+		memcpy(shm, sb.buf, sb.len);
-+		hashcpy((unsigned char *)shm + is->size - 20, is->sha1);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+static void prepare_with_watchman(pid_t pid)
+ 
++static void touch_pid_file(void)
 +{
 +	/*
-+	 * with the help of watchman, maybe we could detect if
-+	 * $GIT_DIR/index is updated..
++	 * If we fail to update the times on index-helper.pid, we've
++	 * probably had the repo deleted out from under us or otherwise
++	 * lost access; might as well give up.
 +	 */
-+	if (!verify_index(&the_index))
-+		refresh(0);
-+
-+	if (check_watchman(&the_index))
-+		return;
-+
-+	share_watchman(&the_index, &shm_watchman, pid);
++	if (utimes(git_path("index-helper.pid"), NULL))
++		exit(0);
 +}
 +
-+static void prepare_index(int sig, siginfo_t *si, void *context)
-+{
-+	release_watchman_shm(&shm_watchman);
-+	if (the_index.last_update)
-+		prepare_with_watchman(si->si_pid);
-+	kill(si->si_pid, SIGHUP); /* stop the waiting in poke_daemon() */
-+}
-+
-+#else
-+
-+static void prepare_index(int sig, siginfo_t *si, void *context)
+ #ifdef USE_WATCHMAN
+ static void share_watchman(struct index_state *istate,
+ 			   struct shm *is, pid_t pid)
+@@ -211,9 +222,10 @@ static void prepare_index(int sig, siginfo_t *si, void *context)
+ 
+ #endif
+ 
+-static void loop(const char *pid_file, int idle_in_seconds)
++static void loop(const char *pid_file, int idle_in_minutes)
  {
- 	/*
- 	 * what we need is the signal received and interrupts
-@@ -145,11 +209,21 @@ static void do_nothing(int sig)
- 	 */
- }
-=20
-+#endif
-+
- static void loop(const char *pid_file, int idle_in_seconds)
- {
-+	struct sigaction sa;
-+
+ 	struct sigaction sa;
++	int timeout_count = 0;
+ 
  	sigchain_pop(SIGHUP);	/* pushed by sigchain_push_common */
  	sigchain_push(SIGHUP, refresh);
--	sigchain_push(SIGUSR1, do_nothing);
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_sigaction =3D prepare_index;
-+	sigemptyset(&sa.sa_mask);
-+	sa.sa_flags =3D SA_SIGINFO;
-+	sigaction(SIGUSR1, &sa, NULL);
-+
+@@ -225,19 +237,25 @@ static void loop(const char *pid_file, int idle_in_seconds)
+ 	sigaction(SIGUSR1, &sa, NULL);
+ 
  	refresh(0);
- 	while (sleep(idle_in_seconds))
- 		; /* do nothing, all is handled by signal handlers already */
-@@ -245,6 +319,8 @@ int main(int argc, char **argv)
- 				       LOCK_DIE_ON_ERROR);
- #ifdef GIT_WINDOWS_NATIVE
- 	strbuf_addstr(&sb, "HWND");
-+#elif defined(USE_WATCHMAN)
-+	strbuf_addch(&sb, 'W');	/* see poke_daemon() */
- #endif
- 	strbuf_addf(&sb, "%" PRIuMAX, (uintmax_t) getpid());
- 	write_in_full(fd, sb.buf, sb.len);
-diff --git a/read-cache.c b/read-cache.c
-index 57c5df9..78f5f0e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1405,7 +1405,7 @@ static int read_watchman_ext(struct index_state *=
-istate, const void *data,
- 	return 0;
- }
-=20
--static void write_watchman_ext(struct strbuf *sb, struct index_state* =
-istate)
-+void write_watchman_ext(struct strbuf *sb, struct index_state* istate)
- {
- 	struct ewah_bitmap *bitmap;
- 	int i;
-@@ -1722,6 +1722,39 @@ static int try_shm(struct index_state *istate)
- 	return 0;
- }
-=20
-+static void refresh_by_watchman(struct index_state *istate)
-+{
-+	void *shm =3D NULL;
-+	int length;
-+	int i;
-+
-+	length =3D git_shm_map(O_RDONLY, 0700, -1, &shm,
-+			     PROT_READ, MAP_SHARED,
-+			     "git-watchman-%s-%" PRIuMAX,
-+			     sha1_to_hex(istate->sha1),
-+			     (uintmax_t)getpid());
-+
-+	if (length <=3D 20 ||
-+	    hashcmp(istate->sha1, (unsigned char *)shm + length - 20) ||
-+	    /*
-+	     * No need to clear CE_WATCHMAN_DIRTY set by 'WAMA' on
-+	     * disk. Watchman can only set more, not clear any, so
-+	     * this is OR mask.
-+	     */
-+	    read_watchman_ext(istate, shm, length - 20))
-+		goto done;
-+
-+	for (i =3D 0; i < istate->cache_nr; i++) {
-+		struct cache_entry *ce =3D istate->cache[i];
-+		if (ce_stage(ce) || (ce->ce_flags & CE_WATCHMAN_DIRTY))
-+			continue;
-+		ce_mark_uptodate(ce);
+-	while (sleep(idle_in_seconds))
+-		; /* do nothing, all is handled by signal handlers already */
++	while (timeout_count < idle_in_minutes) {
++		if (sleep(60) == EINTR)
++			timeout_count = 0;
++		else
++			timeout_count ++;
++		touch_pid_file();
 +	}
-+done:
-+	if (shm)
-+		munmap(shm, length);
+ }
+ 
+ #elif defined(GIT_WINDOWS_NATIVE)
+ 
+-static void loop(const char *pid_file, int idle_in_seconds)
++static void loop(const char *pid_file, int idle_in_minutes)
+ {
+ 	HWND hwnd;
+ 	UINT_PTR timer = 0;
+ 	MSG msg;
+ 	HINSTANCE hinst = GetModuleHandle(NULL);
+ 	WNDCLASS wc;
++	int timeout_count = 0;
+ 
+ 	/*
+ 	 * Emulate UNIX signals by sending WM_USER+x to a
+@@ -258,11 +276,18 @@ static void loop(const char *pid_file, int idle_in_seconds)
+ 
+ 	refresh(0);
+ 	while (1) {
+-		timer = SetTimer(hwnd, timer, idle_in_seconds * 1000, NULL);
++		timer = SetTimer(hwnd, timer, 60 * 1000, NULL);
+ 		if (!timer)
+ 			die(_("no timer!"));
+-		if (!GetMessage(&msg, hwnd, 0, 0) || msg.message == WM_TIMER)
++		if (!GetMessage(&msg, hwnd, 0, 0))
+ 			break;
++		if (msg.message == WM_TIMER) {
++			timeout_count ++;
++			if (timeout_count == idle_in_minutes)
++				break;
++		}
++		timeout_count = 0;
++		touch_pid_file();
+ 		switch (msg.message) {
+ 		case WM_USER:
+ 			refresh(0);
+@@ -288,6 +313,44 @@ static const char * const usage_text[] = {
+ 	NULL
+ };
+ 
++static int already_running(void)
++{
++	char contents[20] = {0};
++	char *end;
++	int fd, dead, i = 0;
++	time_t now;
++	pid_t pid;
++	struct stat st;
++
++	fd = open(git_path("index-helper.pid"), O_RDONLY);
++	if (fd < 0)
++		return 0;
++
++	if (fstat(fd, &st) < 0)
++		return 0;
++
++	now = time(&now);
++
++	/*
++	 * We touch the pid file every minute, so if a pid file hasn't
++	 * been updated in two minutes, it's out-of-date.
++	 */
++	if (st.st_mtime + 120 < now)
++		return 0;
++
++	read_in_full(fd, &contents, sizeof(contents));
++
++	while (!isdigit(contents[i]) && contents[i])
++		i++;
++	pid = strtoll(contents + i, &end, 10);
++	if (contents == end)
++		return 0;
++	dead = kill(pid, 0);
++	if (!dead)
++		return pid;
++	return 0;
 +}
 +
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int mu=
-st_exist)
+ static const char *write_pid(void)
  {
-@@ -1842,7 +1875,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 	split_index =3D istate->split_index;
- 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
- 		post_read_index_from(istate);
--		return ret;
-+		goto done;
- 	}
-=20
- 	if (split_index->base)
-@@ -1863,6 +1896,10 @@ int read_index_from(struct index_state *istate, =
-const char *path)
- 		    sha1_to_hex(split_index->base->sha1));
- 	merge_base_index(istate);
- 	post_read_index_from(istate);
+ 	static struct strbuf sb = STRBUF_INIT;
+@@ -314,6 +377,8 @@ int main(int argc, char **argv)
+ {
+ 	const char *prefix;
+ 	int idle_in_minutes = 10, detach = 0;
++	int ignore_existing = 0;
++	int kill_existing = 0;
+ 	const char *pid_file;
+ 	struct option options[] = {
+ 		OPT_INTEGER(0, "exit-after", &idle_in_minutes,
+@@ -321,6 +386,8 @@ int main(int argc, char **argv)
+ 		OPT_BOOL(0, "strict", &to_verify,
+ 			 "verify shared memory after creating"),
+ 		OPT_BOOL(0, "detach", &detach, "detach the process"),
++		OPT_BOOL(0, "ignore-existing", &ignore_existing, "run even if another index-helper seems to be running for this repo"),
++		OPT_BOOL(0, "kill", &kill_existing, "kill any running index-helper for this repo"),
+ 		OPT_END()
+ 	};
+ 
+@@ -335,6 +402,20 @@ int main(int argc, char **argv)
+ 			  options, usage_text, 0))
+ 		die(_("too many arguments"));
+ 
++	if (ignore_existing && kill_existing)
++		die(_("--ignore-existing and --kill don't make sense together"));
 +
-+done:
-+	if (ret > 0 && istate->from_shm && istate->last_update)
-+		refresh_by_watchman(istate);
- 	return ret;
- }
-=20
-@@ -2164,7 +2201,7 @@ out:
++	if (!ignore_existing) {
++		pid_t pid = already_running();
++		if (pid) {
++			if (kill_existing)
++				exit(kill(pid, SIGKILL));
++			else if (!detach)
++				warning("index-helper is apparently already running with pid %d", (int)pid);
++			exit(0);
++		}
++	}
++
+ 	write_pid();
+ 
+ 	atexit(cleanup);
+@@ -351,6 +432,6 @@ int main(int argc, char **argv)
+ 
+ 	if (!idle_in_minutes)
+ 		idle_in_minutes = 0xffffffff / 60;
+-	loop(pid_file, idle_in_minutes * 60);
++	loop(pid_file, idle_in_minutes);
  	return 0;
  }
-=20
--static int verify_index(const struct index_state *istate)
-+int verify_index(const struct index_state *istate)
- {
- 	return verify_index_from(istate, get_index_file());
- }
---=20
+diff --git a/t/t7900-index-helper.sh b/t/t7900-index-helper.sh
+new file mode 100755
+index 0000000..6708180
+--- /dev/null
++++ b/t/t7900-index-helper.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++#
++# Copyright (c) 2016, Twitter, Inc
++#
++
++test_description='git-index-helper
++
++Testing git index-helper
++'
++
++. ./test-lib.sh
++
++test_expect_success 'index-helper creates usable pid file and can be killed' '
++	test_path_is_missing .git/index-helper.pid &&
++	git index-helper --detach &&
++	test_path_is_file .git/index-helper.pid &&
++	pid=$(sed s/[^0-9]//g .git/index-helper.pid) &&
++	kill -0 $pid &&
++	git index-helper --kill &&
++	! kill -0 $pid
++'
++
++test_done
+-- 
 2.4.2.767.g62658d5-twtrsrc
