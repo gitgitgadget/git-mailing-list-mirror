@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [RFC/PATCH 24/48] builtin/apply: move 'fake_ancestor' global into 'struct apply_state'
-Date: Wed,  9 Mar 2016 18:48:52 +0100
-Message-ID: <1457545756-20616-25-git-send-email-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 25/48] builtin/apply: move 'p_context' global into 'struct apply_state'
+Date: Wed,  9 Mar 2016 18:48:53 +0100
+Message-ID: <1457545756-20616-26-git-send-email-chriscool@tuxfamily.org>
 References: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 18:53:26 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 18:53:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiIS-0008D5-Ez
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:53:20 +0100
+	id 1adiIT-0008D5-16
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933736AbcCIRxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 12:53:15 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:33239 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933725AbcCIRxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 12:53:04 -0500
-Received: by mail-wm0-f54.google.com with SMTP id l68so203682085wml.0
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:53:03 -0800 (PST)
+	id S933740AbcCIRxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 12:53:19 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35280 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933699AbcCIRxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 12:53:06 -0500
+Received: by mail-wm0-f48.google.com with SMTP id l68so190224760wml.0
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:53:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9n5y/P3Im24gUmEJCwpuNcRJKnJoMT2bhhKK5IfOwTw=;
-        b=jvY486+KVjN4t/7D/hMDRFhf7vnNCyvaoV5m4qQNrPQcEJ98beJqx6JylxcxCE/PeX
-         /XdvPTApZIoqb7YSWhn39dGMmFb/SXMCHdDyRrN/GzWQVN+9IpAeyz5VPGFIQmrQeML3
-         Sy9mVZESRaYKn546E4J9LACCtejoQA77Jq5NviZwq8P1eaxayAJsIfhfSyynhrv04ux9
-         fMtaZuv/wjPpBxUYoOrL0IKXkY1N/M6q6Gw0MnbZboh6IqXIld3erk9IEmxjb7ZbVPrl
-         cefdoQDrpCWhN3lMkr/thOPVqxQnTG0RrfeTgsbQ7xJTEnkNJFLOj+frz+hYKRGir0ZI
-         FHnQ==
+        bh=PAS4LjZZ7m+3IXwXAdU3/bq3Rb44hbMsfxSgR0HCEu8=;
+        b=Y8oM6kLqIlyh6rPO8dw2P6sGAIHh25EZg68+QZIG2OcjmBzJtajOy0aYuDZfwp2exE
+         axoAOhP567XtH0w9+pJOYRsqLBBSJLwpGaYMIXSapKDgJnl8q4Z3c2C4EzPahIcg4aGl
+         ZxEYTax2Y75EnLGqrmtmW6cFLnJD1J2qCiR3t53F7jurEzwUKHHm7R0herMus6AKu1Be
+         ynWCgb0upngwjyzo4hzHmY+OvLC0+WsX/X4BigA3wHf3q5/iMt1h/mM9UvNqjiPoEc1g
+         LNbDi4+etqRYNLxHnpaS8QtpvYFiYvNisaOWcVj1fSDGqPvXGJ84UIhYyM9Rxq17P90L
+         GCOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9n5y/P3Im24gUmEJCwpuNcRJKnJoMT2bhhKK5IfOwTw=;
-        b=CI+CQIZOOJ60S8VeoGqG6nb9qEMglapTk+qnXs+QnKfgrh9kTQ+GTneDCoXqSg0IHn
-         kLVs4iCFxK5QZf1cHOcBLKa33hCzegnnRhR6WHJw1PwHBVZ/lNNeO0hhPx0r5z6NHVjb
-         un3+OqwcSYc7xcWVjXoH5NrKl4QovOd+18CurcAWNquB9t/4EL2A7eLCSNuSMbrUvhv0
-         eHPo3WC3rMx7AxBKXk5Wl3YyDSTur1mBYSNcu7XKyYuN7RO/4KbT6UPEbqTtKiYxDP3u
-         074wFH637RZ1XeYaQXQap9F29Sq/3JJ7jCu4H5q3MiLvJRcw1q2GIbSHpcf8Hvc/D3TS
-         MgQw==
-X-Gm-Message-State: AD7BkJLabO6UU+GcKoBWkGgOamr/dd+fIz9wUBH6Yava4P52Q6L7VTrYHkPF5/8sOb6yzQ==
-X-Received: by 10.194.71.70 with SMTP id s6mr36586822wju.1.1457545982797;
-        Wed, 09 Mar 2016 09:53:02 -0800 (PST)
+        bh=PAS4LjZZ7m+3IXwXAdU3/bq3Rb44hbMsfxSgR0HCEu8=;
+        b=cALpLx/9my2b53zbsXpX+pJ8om9DvfshpTdjdgX/nHInVHFo3Gdj1u/8BxeRMwV0DD
+         lDQcsOY6Syah6dEmgCNbV/CewIuKyevHhayWeIDQXwCUZQRfHyE6/aYlIKD72IzbyMp6
+         7f947HUawNGH2d7FjDH5NGyyNfX8MxDF8iaP+55W0+yFLuK5f0e3KU10EtUez4CxnX7P
+         rt1aAAEMR0PC+mHKoH/YuF30GAif/MzKnw8Q5XxzKVGALXFu7jU12HLtHFG0BfwDzi7E
+         fqUh6k7dR8DETfLCFOJOSQmLgogkaiwy8JoYDYrFmRL8uAzCGoC6CdwhlKFQgluoYd/2
+         nwFg==
+X-Gm-Message-State: AD7BkJKx+xEeLx3aUIBR1GJd+JjOlpwfH6YwZtpGUo6NU0iirmsVnhA8awYXMZNioIgNbw==
+X-Received: by 10.194.22.97 with SMTP id c1mr36830229wjf.19.1457545985540;
+        Wed, 09 Mar 2016 09:53:05 -0800 (PST)
 Received: from localhost.localdomain ([80.215.161.239])
-        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.53.00
+        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.53.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 Mar 2016 09:53:01 -0800 (PST)
+        Wed, 09 Mar 2016 09:53:04 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.0.rc1.49.gca61272
 In-Reply-To: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,74 +64,57 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288513>
-
-By the way remove comment about '--index-info' that was renamed
-'--build-fake-ancestor' in commit 26b28007689d27a921ea90e5a29fc8eb74b0d297
-(apply: get rid of --index-info in favor of --build-fake-ancestor,
-Sep 17 2007).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288514>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ builtin/apply.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index cc90773..5a2f0f4 100644
+index 5a2f0f4..6e347e2 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -40,6 +40,8 @@ struct apply_state {
- 	/* --numstat does numeric diffstat, and doesn't actually apply */
- 	int numstat;
+@@ -64,12 +64,13 @@ struct apply_state {
+ 	int unsafe_paths;
  
-+	const char *fake_ancestor;
-+
- 	int summary;
- 
- 	int threeway;
-@@ -64,14 +66,9 @@ struct apply_state {
  	int line_termination;
++
++	unsigned int p_context;
  };
  
--/*
-- *  --index-info shows the old and new index info for paths if available.
-- */
--
  static int p_value = 1;
  static int p_value_known;
  static int apply = 1;
--static const char *fake_ancestor;
- static unsigned int p_context = UINT_MAX;
+-static unsigned int p_context = UINT_MAX;
  static const char * const apply_usage[] = {
  	N_("git apply [<options>] [<patch>...]"),
-@@ -4499,8 +4496,8 @@ static int apply_patch(struct apply_state *state,
- 		return 1;
- 	}
+ 	NULL
+@@ -2889,7 +2890,7 @@ static int apply_one_fragment(struct apply_state *state,
+ 			break;
  
--	if (fake_ancestor)
--		build_fake_ancestor(list, fake_ancestor);
-+	if (state->fake_ancestor)
-+		build_fake_ancestor(list, state->fake_ancestor);
- 
- 	if (state->diffstat)
- 		stat_patch_list(list);
-@@ -4619,7 +4616,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("also apply the patch (use with --stat/--summary/--check)")),
- 		OPT_BOOL('3', "3way", &state.threeway,
- 			 N_( "attempt three-way merge if a patch does not apply")),
--		OPT_FILENAME(0, "build-fake-ancestor", &fake_ancestor,
-+		OPT_FILENAME(0, "build-fake-ancestor", &state.fake_ancestor,
- 			N_("build a temporary index based on embedded index information")),
+ 		/* Am I at my context limits? */
+-		if ((leading <= p_context) && (trailing <= p_context))
++		if ((leading <= state->p_context) && (trailing <= state->p_context))
+ 			break;
+ 		if (match_beginning || match_end) {
+ 			match_beginning = match_end = 0;
+@@ -4621,7 +4622,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
  		/* Think twice before adding "--nul" synonym to this */
  		OPT_SET_INT('z', NULL, &state.line_termination,
-@@ -4682,7 +4679,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	}
- 	if (state.apply_with_reject)
- 		apply = state.apply_verbosely = 1;
--	if (!force_apply && (state.diffstat || state.numstat || state.summary || state.check || fake_ancestor))
-+	if (!force_apply && (state.diffstat || state.numstat || state.summary || state.check || state.fake_ancestor))
- 		apply = 0;
- 	if (state.check_index && is_not_gitdir)
- 		die(_("--index outside a repository"));
+ 			N_("paths are separated with NUL character"), '\0'),
+-		OPT_INTEGER('C', NULL, &p_context,
++		OPT_INTEGER('C', NULL, &state.p_context,
+ 				N_("ensure at least <n> lines of context match")),
+ 		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, N_("action"),
+ 			N_("detect new or modified lines that have whitespace errors"),
+@@ -4658,6 +4659,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 	state.prefix_length = state.prefix ? strlen(state.prefix) : 0;
+ 	state.newfd = -1;
+ 	state.line_termination = '\n';
++	state.p_context = UINT_MAX;
+ 
+ 	git_apply_config();
+ 	if (apply_default_whitespace)
 -- 
 2.8.0.rc1.49.gca61272
