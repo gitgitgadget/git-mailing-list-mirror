@@ -1,89 +1,86 @@
-From: Vadim Zeitlin <vz-git@zeitlins.org>
-Subject: Possible bug: --ext-diff ignored with --cc in git log
-Date: Wed, 9 Mar 2016 18:43:10 +0100
-Message-ID: <E1adi8q-0005NJ-4G@smtp.tt-solutions.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="924894213-41-1457545390=:12660"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 19:15:07 2016
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH 0/2] gitk: alter the ordering for the "Tags and heads" view
+Date: Wed,  9 Mar 2016 13:18:08 -0500
+Message-ID: <1457547490-12249-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Wed Mar 09 19:18:25 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adidT-0008Ly-C1
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:15:03 +0100
+	id 1adige-0002Sr-LU
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933500AbcCISOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 13:14:52 -0500
-Received: from sunset.tt-solutions.com ([82.240.17.225]:47640 "EHLO
-	smtp.tt-solutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933814AbcCISOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 13:14:49 -0500
-X-Greylist: delayed 1878 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Mar 2016 13:14:48 EST
-Received: from [192.168.17.86] (helo=Twilight)
-	by smtp.tt-solutions.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <vz-git@zeitlins.org>)
-	id 1adi8q-0005NJ-4G
-	for git@vger.kernel.org; Wed, 09 Mar 2016 18:43:24 +0100
-X-Mailer: Mahogany 0.68.0 'Cynthia', running under Windows 7 (build 7601, Service Pack 1), 64-bit edition
-X-VZ-SMTP-Helo: Twilight
+	id S933618AbcCISSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 13:18:17 -0500
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:32878 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753751AbcCISSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 13:18:15 -0500
+Received: by mail-yw0-f193.google.com with SMTP id g6so2983575ywb.0
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:18:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=xc3lBs4PsTdCGpVnVpq/q0UWixANSgX1m2nhkvF2q0Q=;
+        b=GZfyoyzvqNBd9Bx3sYdA2Cm81u3gdGPH28P9UefEKA4u0p8LWPfymQ9hfnBll00LEa
+         ORDlcLEGg2zy4/J6ylfC/D7GQVJp+bNbK8Pdm7QHsYrE8F2WBQRlp2MBp8apb8z/zmcu
+         7mLFaan7VMsgQ2/K/FreD3CwvE311Ge1uWE2jy9vduvAxVpU/iTuhe1XZ751ZHeZ0yO2
+         rDKIrHIJ1CN5MoK7PlXLdiH6IzdqFEKA4mst7cN0+Dw7gL1TkgyNy4c3KB+AQ4MpKxCc
+         mlBzTq3iEuuCwrpo5FrGunItr9QqpYhNznlmM/kf5yB5jrz+CBl4oaHQ7awshchWQaIf
+         5IuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=xc3lBs4PsTdCGpVnVpq/q0UWixANSgX1m2nhkvF2q0Q=;
+        b=mgFfMxuFMS9l6278u6E4XspFM5MndRcb6wJWXNTzv89re2XD7YjTy21szd6B/BjXLn
+         SNGS/ThbQ4dHWkJBIh7DAp2Y2UfyXGwFpZhly9k+iR+14FtlVzBBfvk1X0EZUCTPggLn
+         wPi+j24AMRIaz+W4PjhE/HY075nBRzQ8dcEAY+CGLeodO2gjymw5h/LqvtQ3ysO2dqNV
+         Q50xd60zSM8WUHiom8jjGnzIn26N5u1LB3UdlQ86okGFT5obfqF8fRd2DvYF/B1IDo6f
+         /vzZwSnYAG2APJvRsce6+gdN0LABE5SnMgRKhndOV2ld/Wx17LzaC2i41xWHfeKmKcvR
+         cNHg==
+X-Gm-Message-State: AD7BkJKlHpXl8s9zAoT3PEvs7dz4L+kflzKV11oXyUeA1d3Gpp42oSBSs4IByFgghB1HRw==
+X-Received: by 10.13.221.87 with SMTP id g84mr8698313ywe.229.1457547494946;
+        Wed, 09 Mar 2016 10:18:14 -0800 (PST)
+Received: from MRappazzo-8.infor.com (pool-100-35-119-77.nwrknj.fios.verizon.net. [100.35.119.77])
+        by smtp.gmail.com with ESMTPSA id o185sm2561964ywb.9.2016.03.09.10.18.13
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 09 Mar 2016 10:18:14 -0800 (PST)
+X-Mailer: git-send-email 2.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288544>
 
---924894213-41-1457545390=:12660
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Disposition: INLINE
+In a codebase with a large number of remote branches, the "Tags and heads"
+view can split the local refs around the name "remotes".  I wanted to make
+this view more useful as a quick view of the refs that are important to me
+at the moment (the branches that I am actively working on).
 
- Hello,
+This patch series adds a command line option to change the ordering of the
+view (`--sort-refs-by-type`) which will sort the refs in the following
+order:
 
- I use a combination of git attributes and a custom diff driver to ignore
-the changes to the generated files (that we unfortunately need to keep in
-our repository) from appearing in "git diff" and "git log" output, i.e.:
+    local refs
+    remote refs which are tracked (upstream) by local refs
+    remote refs
+    tags
+    other refs
 
-	% cat .gitattributes
-	# Use a custom diff driver for bakefile generated files
-	# This allows ignoring them in git diff for example by doing
-	#     $ git config diff.generated.command true
-	# pass --no-ext-diff to git diff to ignore the custom driver
-	*.sln              diff=generated
-	*.vcproj           diff=generated
-	*.vcxproj          diff=generated
-	*.vcxproj.filters  diff=generated
-	% git config diff.generated.command
-	echo Diff of generated file "$1" suppressed; true
+Each of these lists is independently sorted before being put into the main
+ref list.  Also note that the upstream refs are _not_ duplicated in the
+remote refs list.
 
- This works quite nicely most of the time provided you use "--ext-diff"
-with "git log", but not when showing the merges with "--cc". I.e. the
-command "git log --ext-diff -p --cc" still outputs the real diff even for
-the generated files, as if "--ext-diff" were not given. If I use "git log
---ext-diff -p -m", the generated files are ignored, which is nice, but the
-diff for the other files becomes much more verbose and less readable and
-I'd really like to combine "--ext-diff" with "--cc" if possible.
+Michael Rappazzo (2):
+  gitk: alter the ordering for the "Tags and heads" view
+  gitk: add an option to enable sorting the "Tags and heads" view by ref
+    type
 
- Is the current behaviour intentional? I see it with all the git versions I
-tried (1.7.10, 2.1.0, 2.7.0 and v2.8.0-rc1), but I don't really see why
-would it need to work like this, so I hope it's an oversight and could be
-corrected.
+ gitk | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 52 insertions(+), 7 deletions(-)
 
- Or is there perhaps some other way to do what I want already?
-
- Thanks in advance for any help,
-VZ
-
---924894213-41-1457545390=:12660
-Content-Type: APPLICATION/PGP-SIGNATURE
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (MingW32)
-
-iEYEABECAAYFAlbgYK4ACgkQBupB3k9sHoZugQCdFdTiK2o89GahF286One5m0kq
-3FoAn2IFyk6bmFhGziAEhe64Woxj+ayf
-=ftvz
------END PGP SIGNATURE-----
-
---924894213-41-1457545390=:12660--
+-- 
+2.7.2
