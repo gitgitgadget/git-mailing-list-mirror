@@ -1,7 +1,7 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [RFC/PATCH 05/48] builtin/apply: move 'options' variable into cmd_apply()
-Date: Wed,  9 Mar 2016 18:48:33 +0100
-Message-ID: <1457545756-20616-6-git-send-email-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 04/48] builtin/apply: extract line_by_line_fuzzy_match() from match_fragment()
+Date: Wed,  9 Mar 2016 18:48:32 +0100
+Message-ID: <1457545756-20616-5-git-send-email-chriscool@tuxfamily.org>
 References: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -12,51 +12,51 @@ Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 18:52:22 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 18:52:29 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiHT-0007US-4M
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:52:19 +0100
+	id 1adiHS-0007US-D3
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 18:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933651AbcCIRwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 12:52:16 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35366 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933576AbcCIRwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 12:52:13 -0500
-Received: by mail-wm0-f48.google.com with SMTP id l68so190190412wml.0
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:52:12 -0800 (PST)
+	id S933641AbcCIRwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 12:52:14 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:35316 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933628AbcCIRwK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 12:52:10 -0500
+Received: by mail-wm0-f47.google.com with SMTP id l68so190188547wml.0
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 09:52:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DhvF7NQxoioOs9Vr6i07pRvTZks6hyX3q0X/WoFTO0Q=;
-        b=veJyOxqu6hBaW5t2gBmaqHQMuf8JinDltB5tl4tgb3YujeWRzwws1z1cLVQWzodCQ6
-         WjTtbVvhK4u+JiV/OuqSehgOtAtqA7GUbFwzKkyNxNLPAb8BZI95KijZQPMHFaVukdSN
-         7tzFS/PGjanTPFJMPtJ+yAdMW7+pmZH2vRkgLLcV+qHskO1kgxTThFUXPJoNIJfRvYXp
-         joTtz80d2cdTySgFU2KnlG3I1UgRWlO8fWPaXhB0zHLZgchrnsXvGJ8AoNOFnX8E7up+
-         JOu+RiSQ1OI8I4kJ4CBDFyg2LESX0Es693xkrcR4Qc6Oq8imLGMaNm3Bnlkj6dRhayb0
-         0P5w==
+        bh=K9oJAJ4vYAkp/jdE1+Tj8Xyf/8EBvzHMp9rDhggaSns=;
+        b=eowJBsSfwsPeck8ffDrekVMIf+vTDNocvNpf6P7qomM9EXTzdYTbjZV408kiV0sBp1
+         fk5OlbZ9MYesgnxs3m8G3Hq+XH01bqUYHb2YWGXViTqrdlPurvdskdmVzjMZEAlX4oX/
+         f/WzQLfcMJl7kr+6zQM+0RP8emURXtHGOh5LzxAm5rm6JWDEI//KFGJpTmJZtrS+7Zz2
+         iWxRFNXu5XLOHlGyc/9+vmTFRbLT8Sq1sBoMZvkzoB2TgR1GuM/7q3ZE8pjeFjvfLNVx
+         hu8YoZMOYK4EZCigCw3Au1A9j7+JV2fGpulKAjxMHVbb3c8dLykLrUntcrC3+n/lXDJJ
+         p8ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DhvF7NQxoioOs9Vr6i07pRvTZks6hyX3q0X/WoFTO0Q=;
-        b=PgHXRUmGpeXyytgni5icosDE6cJEyxnObz4vdyNepBJ/QzJ1ojr3Gv2hQt2NjhXVeY
-         JEQcj6ggBxZDvyLnmY1dKecMoOU3BQyRaA2d/QdcOz7AVRDEzY0UUnsstoE3+sSxZESc
-         K8joemIzkHBPBJuWGrhDzP45dr0mYxQ1p7X4BqDLLVfa1GT8YPFZpOK0e9lWzHjWVJKI
-         GD75x9aVzmigj1bLKWA+7GQlzlvk66liSfCaRwWe2/Ka1XXBnr84O319YYJzvPHqUzEN
-         dEc5+DX1JryFOi7nEu7wkEQB9i4WAI8aV6ujNgHjfOSDSQ8heGStSlIQ6KufXQgZeoz4
-         RFrw==
-X-Gm-Message-State: AD7BkJLZkkzNi8jDj0FY2/Ysr+2P6NPCK59ofukchrdn/CCU1W0yMno9IFBWrxAuXtEJbw==
-X-Received: by 10.28.146.209 with SMTP id u200mr331848wmd.59.1457545931823;
-        Wed, 09 Mar 2016 09:52:11 -0800 (PST)
+        bh=K9oJAJ4vYAkp/jdE1+Tj8Xyf/8EBvzHMp9rDhggaSns=;
+        b=VkfgJ9M53+O+1bJVt+BCtdw9GJkwb3+3Z1fBFLQFf0jpUOkKT087EbBEakWMhF6/v+
+         co19ki+UEDQ94Iv/ojWGF4SyCZrFw4+o5J73u8GXc8CruzhfL7UMW1fAejnJ1RsnBdy5
+         4oGKdBSHaYYGWx6vUpBN6rmC88flbdAYkv/KrOY/nTcypzYnrPIDE/qRmTnn7cbGLMMR
+         jaaSz7BCTeaxtEO65FLXh5oW7VR3kc1z3XIG4S/yi35q5cPd4yulcLen4dJfbF3WxFXH
+         HHU0hVC9c0eH4TgQIMOsXfL66tsM1IFbUQRDqs8WsPx83ft0jxiqaXYK11Dl1pY5t6w/
+         pwwQ==
+X-Gm-Message-State: AD7BkJJDM6wBSWsV8NllFzapk+lRXE7DrMazg+fPocQxGy7xsrA15k2QItsO3HbiqH7VMQ==
+X-Received: by 10.194.192.36 with SMTP id hd4mr34607188wjc.85.1457545928781;
+        Wed, 09 Mar 2016 09:52:08 -0800 (PST)
 Received: from localhost.localdomain ([80.215.161.239])
-        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.52.09
+        by smtp.gmail.com with ESMTPSA id e127sm24975419wma.20.2016.03.09.09.52.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 Mar 2016 09:52:10 -0800 (PST)
+        Wed, 09 Mar 2016 09:52:07 -0800 (PST)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.8.0.rc1.49.gca61272
 In-Reply-To: <1457545756-20616-1-git-send-email-chriscool@tuxfamily.org>
@@ -64,32 +64,169 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288494>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/apply.c | 125 ++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 71 insertions(+), 54 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 7d7a8ab..838e46a 100644
+index c99c859..7d7a8ab 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -79,7 +79,6 @@ static enum ws_ignore {
- static const char *patch_input_file;
- static struct strbuf root = STRBUF_INIT;
- static int read_stdin = 1;
--static int options;
+@@ -2244,6 +2244,74 @@ static void update_pre_post_images(struct image *preimage,
+ 	postimage->nr -= reduced;
+ }
  
- static void parse_whitespace_option(const char *option)
++static int line_by_line_fuzzy_match(struct image *img,
++				    struct image *preimage,
++				    struct image *postimage,
++				    unsigned long try,
++				    int try_lno,
++				    int preimage_limit)
++{
++	int i;
++	size_t imgoff = 0;
++	size_t preoff = 0;
++	size_t postlen = postimage->len;
++	size_t extra_chars;
++	char *buf;
++	char *preimage_eof;
++	char *preimage_end;
++	struct strbuf fixed;
++	char *fixed_buf;
++	size_t fixed_len;
++
++	for (i = 0; i < preimage_limit; i++) {
++		size_t prelen = preimage->line[i].len;
++		size_t imglen = img->line[try_lno+i].len;
++
++		if (!fuzzy_matchlines(img->buf + try + imgoff, imglen,
++				      preimage->buf + preoff, prelen))
++			return 0;
++		if (preimage->line[i].flag & LINE_COMMON)
++			postlen += imglen - prelen;
++		imgoff += imglen;
++		preoff += prelen;
++	}
++
++	/*
++	 * Ok, the preimage matches with whitespace fuzz.
++	 *
++	 * imgoff now holds the true length of the target that
++	 * matches the preimage before the end of the file.
++	 *
++	 * Count the number of characters in the preimage that fall
++	 * beyond the end of the file and make sure that all of them
++	 * are whitespace characters. (This can only happen if
++	 * we are removing blank lines at the end of the file.)
++	 */
++	buf = preimage_eof = preimage->buf + preoff;
++	for ( ; i < preimage->nr; i++)
++		preoff += preimage->line[i].len;
++	preimage_end = preimage->buf + preoff;
++	for ( ; buf < preimage_end; buf++)
++		if (!isspace(*buf))
++			return 0;
++
++	/*
++	 * Update the preimage and the common postimage context
++	 * lines to use the same whitespace as the target.
++	 * If whitespace is missing in the target (i.e.
++	 * if the preimage extends beyond the end of the file),
++	 * use the whitespace from the preimage.
++	 */
++	extra_chars = preimage_end - preimage_eof;
++	strbuf_init(&fixed, imgoff + extra_chars);
++	strbuf_add(&fixed, img->buf + try, imgoff);
++	strbuf_add(&fixed, preimage_eof, extra_chars);
++	fixed_buf = strbuf_detach(&fixed, &fixed_len);
++	update_pre_post_images(preimage, postimage,
++			       fixed_buf, fixed_len, postlen);
++	return 1;
++}
++
+ static int match_fragment(struct image *img,
+ 			  struct image *preimage,
+ 			  struct image *postimage,
+@@ -2253,7 +2321,7 @@ static int match_fragment(struct image *img,
+ 			  int match_beginning, int match_end)
  {
-@@ -4516,6 +4515,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	int errs = 0;
- 	int is_not_gitdir = !startup_info->have_repository;
- 	int force_apply = 0;
-+	int options = 0;
+ 	int i;
+-	char *fixed_buf, *buf, *orig, *target;
++	char *fixed_buf, *orig, *target;
+ 	struct strbuf fixed;
+ 	size_t fixed_len, postlen;
+ 	int preimage_limit;
+@@ -2314,6 +2382,7 @@ static int match_fragment(struct image *img,
+ 		 * There must be one non-blank context line that match
+ 		 * a line before the end of img.
+ 		 */
++		char *buf;
+ 		char *buf_end;
  
- 	const char *whitespace_option = NULL;
+ 		buf = preimage->buf;
+@@ -2334,59 +2403,7 @@ static int match_fragment(struct image *img,
+ 	 * we need it to adjust whitespace if we match.
+ 	 */
+ 	if (ws_ignore_action == ignore_ws_change) {
+-		size_t imgoff = 0;
+-		size_t preoff = 0;
+-		size_t postlen = postimage->len;
+-		size_t extra_chars;
+-		char *preimage_eof;
+-		char *preimage_end;
+-		for (i = 0; i < preimage_limit; i++) {
+-			size_t prelen = preimage->line[i].len;
+-			size_t imglen = img->line[try_lno+i].len;
+-
+-			if (!fuzzy_matchlines(img->buf + try + imgoff, imglen,
+-					      preimage->buf + preoff, prelen))
+-				return 0;
+-			if (preimage->line[i].flag & LINE_COMMON)
+-				postlen += imglen - prelen;
+-			imgoff += imglen;
+-			preoff += prelen;
+-		}
+-
+-		/*
+-		 * Ok, the preimage matches with whitespace fuzz.
+-		 *
+-		 * imgoff now holds the true length of the target that
+-		 * matches the preimage before the end of the file.
+-		 *
+-		 * Count the number of characters in the preimage that fall
+-		 * beyond the end of the file and make sure that all of them
+-		 * are whitespace characters. (This can only happen if
+-		 * we are removing blank lines at the end of the file.)
+-		 */
+-		buf = preimage_eof = preimage->buf + preoff;
+-		for ( ; i < preimage->nr; i++)
+-			preoff += preimage->line[i].len;
+-		preimage_end = preimage->buf + preoff;
+-		for ( ; buf < preimage_end; buf++)
+-			if (!isspace(*buf))
+-				return 0;
+-
+-		/*
+-		 * Update the preimage and the common postimage context
+-		 * lines to use the same whitespace as the target.
+-		 * If whitespace is missing in the target (i.e.
+-		 * if the preimage extends beyond the end of the file),
+-		 * use the whitespace from the preimage.
+-		 */
+-		extra_chars = preimage_end - preimage_eof;
+-		strbuf_init(&fixed, imgoff + extra_chars);
+-		strbuf_add(&fixed, img->buf + try, imgoff);
+-		strbuf_add(&fixed, preimage_eof, extra_chars);
+-		fixed_buf = strbuf_detach(&fixed, &fixed_len);
+-		update_pre_post_images(preimage, postimage,
+-				fixed_buf, fixed_len, postlen);
+-		return 1;
++		return line_by_line_fuzzy_match(img, preimage, postimage, try, try_lno, preimage_limit);
+ 	}
  
+ 	if (ws_error_action != correct_ws_error)
 -- 
 2.8.0.rc1.49.gca61272
