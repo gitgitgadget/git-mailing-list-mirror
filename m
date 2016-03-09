@@ -1,78 +1,148 @@
-From: Pranit Bauva <pranit.bauva@gmail.com>
-Subject: Re: [PATCH] add a commit.verbose config variable
-Date: Thu, 10 Mar 2016 02:02:28 +0530
-Message-ID: <CAFZEwPM6XLkp07ekBfDaAPcJLvKxRNCW=deFy+GasWYeqcjk-A@mail.gmail.com>
-References: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t7610-mergetool: add test cases for tempfile behavior
+Date: Wed, 09 Mar 2016 12:43:31 -0800
+Message-ID: <xmqqh9gfgz64.fsf@gitster.mtv.corp.google.com>
+References: <1457501814-10599-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 21:33:15 2016
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Charles Bailey <cbailey32@bloomberg.net>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 09 21:43:41 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adkn0-0005Kq-95
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:33:02 +0100
+	id 1adkxI-0005Mr-At
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 21:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753847AbcCIUck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 15:32:40 -0500
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:34481 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933881AbcCIUc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 15:32:29 -0500
-Received: by mail-yk0-f181.google.com with SMTP id x17so26077175ykd.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 12:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
-        bh=iazjaAB0nhDg7qpCxG3EQrBYihC+eq/WECzWakn8TnU=;
-        b=jRy3T9TsGZIMg+srUUKcWh8v6meqnbmdhw3dmZdIYus12G5uuuO8HsEvI0XDaB9QDC
-         0Lyi3COgNHsHFsVH9HVworP8OheMZp2WbKmxaH1Jq/EdhNMzfBphxgWYAleYxPt5ngb3
-         JbRX4NdPK/JljjsU7Tclt+irJu8gstGw+XHPNQ/uG0qe/dcdRDJqm5vaN28z1eevs/z2
-         uJtPqF5JOJo/PiJRmn0tRSJ/m6RvCBykKha0X/RsCxQfeCFp0HmpaHUlp7s+Bs4+twdf
-         zlIrHbIztxZKWs99N3ZCrwUl0oI7U8Lrzhl0lNrHKoBg9E4jho/oixHS2b+fGiEOOVrS
-         3o1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to;
-        bh=iazjaAB0nhDg7qpCxG3EQrBYihC+eq/WECzWakn8TnU=;
-        b=QiKVEHQWJ3vr4SzzisQo9NkefJmvAq4rm8E5SJ3NlBfc7EFCMZE/pHtiP/glhLRhVM
-         AYKxmJXZyHgcWy6Gbdm500ddifEOd3K2ijCOVEOHoUKOBBznl3pBPXu8PH7jR6Bb7KmT
-         ETZ2u39m0+u74g2jlbiOmOMCqtclx35JkMDE9RCzaweAMf3soUfo/Fzk4MF58dADg31T
-         pM/krLjXAnDFCOg9yEuim9KI321BBwdZo5LMywiRHqditcnoGH6NA9BRs1vNxrBS4LhX
-         Wba78fhn7pFwtJPMn+x4ArR474yH1SU34lppt/oOHFo2AjJzbQ5MAirkPWiRcS9323Yw
-         WkTA==
-X-Gm-Message-State: AD7BkJIXbBw3y01h5+6EAOJsGCBQCD1fmeQ6F49zmHoP54f8OANi83cmxRWvD63BqSovqhRsOPRfzVmGT7cxZQ==
-X-Received: by 10.37.0.193 with SMTP id 184mr126064yba.53.1457555548453; Wed,
- 09 Mar 2016 12:32:28 -0800 (PST)
-Received: by 10.13.203.137 with HTTP; Wed, 9 Mar 2016 12:32:28 -0800 (PST)
-In-Reply-To: <010201535cb62b56-9aa72755-b730-478c-9244-41a1ee69e231-000000@eu-west-1.amazonses.com>
+	id S1753895AbcCIUnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 15:43:37 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61086 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751536AbcCIUnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 15:43:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B6114CB96;
+	Wed,  9 Mar 2016 15:43:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=97w76MqN9EJWRBSXKOQCbVtHr5A=; b=WZBUjO
+	MKvxMibv+FW0IYQswFEqUjbJVMUt+vv/MX8DnVQoJMWl5RJ7qkUh83630XLsYO1i
+	CWqEMKc6KOO8vj42nus0ALtEaU59NydcTzg3JIXCsEkxBKyHAzuwmiZAU2K9y4v9
+	Fyrl8n/RyI63swLs7l3eIXsArls9HdlyGWgqU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N1NjEU7Hr4GeqVRD4zfA7Xmio2Vn3sEl
+	vQj6wtOgyil7k4zr2LKwSEHtznS8o+gTETzPdjs1Z9skGj1g0gA7Mdo6TsaEsZND
+	a0boJ6bccYmlhh6B/msO5HFx5d3J+F4YWQLmBi/aR2zAQ4T6nEqjt1mPG7G45ZcA
+	i/k7rnYEiwM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 21E934CB95;
+	Wed,  9 Mar 2016 15:43:34 -0500 (EST)
+Received: from pobox.com (unknown [104.132.1.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 90C274CB94;
+	Wed,  9 Mar 2016 15:43:33 -0500 (EST)
+In-Reply-To: <1457501814-10599-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Tue, 8 Mar 2016 21:36:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9707113C-E637-11E5-8847-79226BB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288575>
 
-A previous version of this patch can be found at
-http://news.gmane.org/gmane.comp.version-control.git/287540 .
+David Aguilar <davvid@gmail.com> writes:
 
-The changes in the patch are :-
- - Fix typo "git config" to "git commit"
- - Use a better commit message
- - Drop a paragraph in commit message so as to not misguide readers
- - Consider additional tests as suggested by Eric Sunshine
- - Add an option "override-verbose" to git commit to override the
-"always true" setting if set in the configuration file
+> Ensure that mergetool.keepTemporaries is honored when resolving
+> delete/delete conflicts.
+>
+> Ensure that stderr stays empty, and that worktree directories
+> created by mergetool to are removed.
+>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+>  t/t7610-mergetool.sh | 34 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
 
-It took me quite some time to send this patch. I was trying to write
-tests for this and send the patch together but I could not find the
-test examples that could be used from the existing code base. If
-someone has an idea in mind then I could probably write the tests.
-Though I have tested this personally for all the cases but I think it
-would be preferable to automate the job.
+Thanks.
 
-Regards,
-Pranit Bauva
-IIT Kharagpur
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> index f1668be..cf2eceb 100755
+> --- a/t/t7610-mergetool.sh
+> +++ b/t/t7610-mergetool.sh
+> @@ -273,6 +273,40 @@ test_expect_success 'mergetool delete/delete conflict' '
+>  	git reset --hard HEAD
+>  '
+>  
+> +test_expect_success 'mergetool honors tempfile config for deleted files' '
+> +	test_config mergetool.keepTemporaries false &&
+> +	! git merge move-to-b &&
+
+We'd like to catch a newly built Git segfaulting, so let's change
+this to:
+
+	test_must_fail git merge move-to-b &&
+
+Two other "! git merge" in this patch need be changed the same way.
+
+> +	echo d | git mergetool a/a/file.txt &&
+> +	! test -d a &&
+> +	git reset --hard HEAD
+> +'
+> +
+> +test_expect_success 'mergetool produces no errors when keepBackup is used' '
+> +	test_config mergetool.keepBackup true &&
+> +	! git merge move-to-b &&
+> +	: >expect &&
+> +	echo d | git mergetool a/a/file.txt 2>actual &&
+> +	test_cmp expect actual &&
+> +	! test -d a &&
+> +	git reset --hard HEAD
+> +'
+> +
+> +test_expect_success 'mergetool keeps tempfiles when aborting delete/delete' '
+> +	test_config mergetool.keepTemporaries true &&
+> +	! git merge move-to-b &&
+> +	! (echo a; echo n) | git mergetool a/a/file.txt &&
+> +	test -d a/a &&
+> +	cat  >expect <<\-EOF &&
+> +file_BASE_.txt
+> +file_LOCAL_.txt
+> +file_REMOTE_.txt
+> +-EOF
+
+Let's use EOF not -EOF as the end marker for here document, but use
+a dash in front of the marker to allow us indent the contents of the
+here document, like this:
+
+	cat >expect <<-\EOF &&
+	file_BASE_.txt
+	file_LOCAL_.txt
+	file_REMOTE_.txt
+	EOF
+
+While at it, let's lose the extra SP after "cat".
+
+> +	ls -1 a/a | sed -e "s/[0-9]*//g" >actual &&
+> +	test_cmp expect actual &&
+> +	git clean -fdx &&
+> +	git reset --hard HEAD
+> +'
+>  test_expect_success 'deleted vs modified submodule' '
+>  	git checkout -b test6 branch1 &&
+>  	git submodule update -N &&
+
+
+I'll queue this patch with the above-mentioned fixups squashed in,
+but I suspect that another new test added by the previous patches
+have the same "! git merge" issue we'd want to correct before we
+start to move the topic to 'next' and to 'master', so perhaps you'd
+want to reroll these three patches as two patches (i.e. squashing
+this one to 1/2, correcting the test in 2/2) after 2.8 final ships?
+
+Thanks.
