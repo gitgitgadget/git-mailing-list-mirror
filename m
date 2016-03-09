@@ -1,86 +1,126 @@
-From: Paul Sokolovsky <paul.sokolovsky@linaro.org>
-Subject: url.<base>.insteadOf used for server-side redirection?
-Date: Wed, 9 Mar 2016 16:33:36 +0700
-Organization: Linaro
-Message-ID: <20160309163336.42161c01@x230>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Change in .gitignore handling: intended or bug?
+Date: Wed, 9 Mar 2016 16:48:34 +0700
+Message-ID: <CACsJy8AUs-DAo-GceO9ND9RPVeDOfm_UM4ZuaeNWDwBVMu+dnQ@mail.gmail.com>
+References: <1457057516.1962831.539160698.3C8B30BC@webmail.messagingengine.com>
+ <20160304055117.GB26609@ikke.info> <1457071957.2027843.539286050.10CF8D0A@webmail.messagingengine.com>
+ <20160304115634.GC26609@ikke.info> <CACsJy8AN7xxFuVX4c6aR_RdDiuDRPjqbXS8Y2+xD4pV8G2onfg@mail.gmail.com>
+ <xmqq4mcm17b4.fsf@gitster.mtv.corp.google.com> <CACsJy8BZm9pFdR+Njst7qZ1UnHUL9XpigM5pW+CLEicOc7ra8g@mail.gmail.com>
+ <xmqqlh5ungct.fsf@gitster.mtv.corp.google.com> <xmqq8u1tmr6l.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8C5r2f76p3oq5oX_1P5Vqt9qd7TAafuKxJ=Y8baELbJog@mail.gmail.com> <xmqqbn6olu1w.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 09 10:34:05 2016
+Content-Type: text/plain; charset=UTF-8
+Cc: Kevin Daudt <me@ikke.info>, Charles Strahan <charles@cstrahan.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 09 10:49:19 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adaVC-0001hT-Me
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 10:33:59 +0100
+	id 1adak2-0003yq-SO
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 10:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbcCIJdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Mar 2016 04:33:55 -0500
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34046 "EHLO
-	mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbcCIJdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 04:33:51 -0500
-Received: by mail-pf0-f180.google.com with SMTP id 129so35942325pfw.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 01:33:51 -0800 (PST)
+	id S1752580AbcCIJtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Mar 2016 04:49:10 -0500
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:34367 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773AbcCIJtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 04:49:07 -0500
+Received: by mail-lb0-f177.google.com with SMTP id xr8so55659233lbb.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 01:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:date:to:subject:message-id:organization:mime-version
-         :content-transfer-encoding;
-        bh=r0Bts3PyaWVQzYPiAmmPqnkhTsB48mBS9uuke+KQc4o=;
-        b=hD3Sj0qKxyxem4+mHGdx7ORTiyWGiuFZ7aBEE34hUqKt8ZQgFUQuRZxM2HRWIOCavh
-         8KylfOIMAeluNtz8zDyJ4DiJP8Q9k/l7vV8/7RLaSSWQAxaIDJqmb5IF7E/GRotN5/tD
-         Gwb5iwH+I5mf3ypIq0RQU8jPVQLhyaT6IMxGs=
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4+aWQukfsf95gFJ5pCspCx/GwHHV6AmBtRojPcxCLms=;
+        b=X97N8I04Sa/+db43eyjTEwS6j8JkSNbUukB7gWDa/zUquyhK91/UEKBHqBAXAjOof+
+         zJqoaRVLmKjkejOBonPoulT7ju4AdOMpjEG1OAxl3G3raQajjPGwNQvBw3QroOdlqdAg
+         rF2iu5SSltUBfpbyNyY4105DY+bYwGn6Xu1gN8t+2cHAd4PTN34qxF0pALAc59EDBf/i
+         WkvYDbJBpTsDpxPCX/IfPSXtHG6bYAhCjQBIEMqkBcZ3niucnpv0uyJ5y+qPxHM3PK9v
+         L9rHRoR/p4B9hsMMnPehECT+QShEuELeut1zEiJUdSG3+Bl5IdoaSVh2Z1d7teIu8sRB
+         XERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:date:to:subject:message-id:organization
-         :mime-version:content-transfer-encoding;
-        bh=r0Bts3PyaWVQzYPiAmmPqnkhTsB48mBS9uuke+KQc4o=;
-        b=cnpjvkfcoD9by7QV7V3MK/ZS6tzVHxNKxFgY0ReMy1tFi09z/4dH5ZAuNfiEPeJ2pO
-         HfUbragq+i2LoUGYiMgOQuPgI1A/r75kiEswY5fvth6rmVmMoQbHnZK5apyQBYXLD44j
-         FU1SjKqH8Jbj33sz+n6UBT31Sn0cpaPz4cMIYogApDVUHk4/llatD/Pf9ZYETcQJiNUe
-         p7cah0Ewewa8IGV2vqL61Nci59RKC8yo19TOhKA9xZcMfcH8d36ZAYNCNJ7zQWGgCv3k
-         2RSM280LaSkJ4yaxyLPIkaObxB/SRXGvP8rSKkoJuN8v9BBTpN1934hs38oavrE+qLL4
-         LC9A==
-X-Gm-Message-State: AD7BkJKQfpQQ77VR1NyLgsSByHjvYwByNGt6GXtefN1WGwZ4dlF7WuaFa6KOnahHpQWyq4IF
-X-Received: by 10.98.31.79 with SMTP id f76mr2052700pff.92.1457516031314;
-        Wed, 09 Mar 2016 01:33:51 -0800 (PST)
-Received: from x230 (110-170-137-3.static.asianet.co.th. [110.170.137.3])
-        by smtp.gmail.com with ESMTPSA id q72sm6989116pfa.70.2016.03.09.01.33.49
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 01:33:50 -0800 (PST)
-X-Google-Original-From: Paul Sokolovsky <Paul.Sokolovsky@linaro.org>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4+aWQukfsf95gFJ5pCspCx/GwHHV6AmBtRojPcxCLms=;
+        b=V8QcJAAsUTJQlzdLpSuHjIVdCM+Y8mu/J5yGcOYSlw9lUJ0T1CAgdL4xClD0fK+zYV
+         rDKu2ZuyAmJxbrNqlE4CayM5MSOWOHfWsFs996Tj1tUASrQw3YxGR4w7M6VhMncv+tws
+         6JbqtRoE3r96TY9BvChHqpj8lbWUhMgTEJ32EExJGiUmS9qnoncmXS3tC3nfAkqwNdlG
+         cEc70nx8RekEGZ5zeE8bbdKEKoR8ORFv2RbJaFM8J6dDcMV426a5faCdvZpC8gUE8+of
+         bfPwge7985lYyD+Tlkq7fz/Mz6CXvzEzzTceID1nmRoNhV90kCsM7o1D5ayV/7svNNk3
+         YKQA==
+X-Gm-Message-State: AD7BkJLW3IefgQmDEcmmvHHOyoU027C/694pg5hl0NNnfvLXCNqb0ghuSf6sd3IeV2ukqyBVYWxWHWmer3dhHg==
+X-Received: by 10.25.211.75 with SMTP id k72mr6453678lfg.45.1457516944586;
+ Wed, 09 Mar 2016 01:49:04 -0800 (PST)
+Received: by 10.112.167.10 with HTTP; Wed, 9 Mar 2016 01:48:34 -0800 (PST)
+In-Reply-To: <xmqqbn6olu1w.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288477>
 
-Hello,
+On Wed, Mar 9, 2016 at 1:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index 3ded6fd..91d1ce2 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -148,7 +148,43 @@ excluded, the following conditions must be met:
+>     be in the same .gitignore file.
+>
+>   - The directory part in the re-include rules must be literal (i.e. no
+> -   wildcards)
+> +   wildcards and has to start with a `/`).
 
-There's a nice git config directive url.insteadOf
-(https://www.kernel.org/pub/software/scm/git/docs/git-config.html ,
-search for "insteadOf"). However, than man doesn't make it explicit if
-it can be used in server-side repository config, and all examples on
-the net appear to be about its usage on user's local side.
+Technically '/' can just appear anywhere in the pattern, except at the
+end. But because the patterns in question must look like this
 
-So, is the remote use supported? Like a user issues a git clone with one
-URL, but gets redirect to another URL and git client proceeds to clone
-from it. Our usecase is to redirect git:// clones to http:// to
-avoid some scalability issues.
+    dir # or any pattern, even "*"
+    !dir/someth*ng
 
-If it's not supported, any chance it could be? Maybe it was discussed
-and voted down? Or voted up and someone has it in their queue? Note
-that the talk is about git-specific redirects, like redirecting one git
-protocol to another.
+even if there is a slash at the end (and is ignored), we are still
+good. Not sure how to phrase that though.
 
+> +
+> +A re-inclusion of a directory makes all files in the directory
+> +unignored.  For example, suppose you have files `.gitignore`,
+> +`dir/file1`, `dir/file2`, and `dir/file3`, and have the following in
+> +your `.gitignore`:
+> +
+> +----------------
+> +# .gitignore is not mentioned in .gitignore
+> +*
+> +!/dir
+> +# dir/file1 is not mentioned in .gitignore
+> +dir/file2
+> +!dir/file3
+> +----------------
+> +
+> +Then:
+> +
+> + - `.gitignore` gets ignored, because it matches the `*` at the top
+> +   level;
+> +
+> + - `dir/file1` does not get ignored, because `/dir` marks everything
+> +   underneath `dir/` directory to be 're-included' unless otherwise
+> +   specified;
+> +
+> + - `dir/file2` gets ignored, because `dir/file2` matches it.
+> +
+> + - `dir/file3` does not get ignored, because `!dir/file3` matches it.
+> +   Note that the entry `!dir/file3` is redundant because everything
+> +   underneath `dir/` is marked to be 're-included' already.
+> +
+> +Some earlier versions of Git treated `!/dir` above differently in
+> +that it did not cause the paths under it unignored (but merely told
+> +Git that patterns that begin with dir/ should not be ignored), but
+> +this has been corrected to be consistent with `/dir` that says "the
+> +directory `dir/` and everything below are ignored."
+> +
 
-Thanks,
-Paul
-
-Linaro.org | Open source software for ARM SoCs
-Follow Linaro: http://www.facebook.com/pages/Linaro
-http://twitter.com/#!/linaroorg - http://www.linaro.org/linaro-blog
+Looks good.
+-- 
+Duy
