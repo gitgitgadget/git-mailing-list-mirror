@@ -1,114 +1,136 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 14/19] update-index: enable/disable watchman support
-Date: Wed,  9 Mar 2016 13:36:17 -0500
-Message-ID: <1457548582-28302-15-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 08/19] index-helper: add --detach
+Date: Wed,  9 Mar 2016 13:36:11 -0500
+Message-ID: <1457548582-28302-9-git-send-email-dturner@twopensource.com>
 References: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:21 2016
+X-From: git-owner@vger.kernel.org Wed Mar 09 19:37:24 2016
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1adiz1-0007bL-Ux
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:20 +0100
+	id 1adiyr-0007PD-L2
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Mar 2016 19:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933876AbcCIShQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 13:37:16 -0500
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:34232 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933835AbcCISgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Mar 2016 13:36:47 -0500
-Received: by mail-qg0-f54.google.com with SMTP id w104so49420763qge.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:46 -0800 (PST)
+	id S933865AbcCISg6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Mar 2016 13:36:58 -0500
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:35914 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933811AbcCISgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Mar 2016 13:36:41 -0500
+Received: by mail-qg0-f41.google.com with SMTP id u110so49367793qge.3
+        for <git@vger.kernel.org>; Wed, 09 Mar 2016 10:36:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=zFNzZjvvTxmWTcKe/LI11MXuaMgJp6qS3yKiIbNqxGg=;
-        b=gXJmEJ3LwoMY0mh5xUUVfTM53NO/EJJHxwDQDPXih9w46B1TMIhN0yl5Gvq1XdL0TS
-         QykyaTUJU+ZMt7s4TaGx529n42w/4rDUY/2zscATLsGqwCJKOjtAigQQNa+CmUvdLIVd
-         M11J6qihOOi0P26uXQvZAC3LCwy3U6C71cKVe4afX/zngjYOs96bmlCm7lGwfdjA1KNW
-         Rm/CMEpTH2uNXBhn6EpQLm8O//Zuh7YYiVoq5UkQEq5s8vSPRATCgaSaExg7z1G/3m27
-         SoJASP7J8c1uaMUCmQDpy6330sH0TzpcUcHRmktrKfMM/5qUYRgsiX0fgJOSpb4n+eZh
-         iQfA==
+        bh=7bT/glrziBxamIsdBbw0K6Mbx0en1hm15gNmwEM4Wkw=;
+        b=F347QjYny9A6Rlr8SWRowKTjdGu9tfhMEJGXcG46k5bpiqq01FzFNGU0L19N47xl/d
+         orFrSfTnca+39etoUJp2WK2/5QNOz8qiqVOHvBMmfxgYLZp0edw7B63LDTokqrzekhUX
+         FnQUZ8XRuMnndTwkXz45QGyewmU3a9fgAJo2+XTPnLUwoffhTY/my5WuExcCDDR1W5bH
+         akwOcHldleuOGmnyjUGXcbimSupHLp4HnabQviTuru6oHHJ3fOlGd8qPHApGdMutMecK
+         YhVlzMFAiKQNz2eSiV6gmdOz5MtGW7JO7yKljriYy9ZGOWESRgyrqYBIV+tpmGKCnQgc
+         iZqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zFNzZjvvTxmWTcKe/LI11MXuaMgJp6qS3yKiIbNqxGg=;
-        b=LrNoo+Hzn2caG5OPdSYVK7MjF/V2zfOPhvrcyzSshP4aUhVttg4yl8RYjFyYXzoXo4
-         5iB3LyDwkUzzsMT92nHiKmxC2/I8fCFl05aMaOge0R75TjBxqYs9tuqYaPEkYJdhV3rO
-         wjulHc7PSZ5LvJIBNw14HvP0d1duiteLswL1bblcUfprpW2jIulHy7BJ2FQ7Z62BbUYD
-         shTTm7S1w1Tw9ilsWFZQULOC124MbLZbRsQJUt2LcGbCBC55PhQqg60dnj2Z6rQgJVMT
-         0ZcMVqSGXgeuAJSO6WL/78stQFOHgAusDgK028l06/rLfWEWENlBKQtPwp3cuiXNjx+b
-         2djQ==
-X-Gm-Message-State: AD7BkJIzj9pQ6Yqaw1WIMdWi/c/bXmI3M/MV0FUoW1UMUovmRcyp2KzPc1hj3LeE7cfmVw==
-X-Received: by 10.140.101.5 with SMTP id t5mr45548527qge.24.1457548606180;
-        Wed, 09 Mar 2016 10:36:46 -0800 (PST)
+        bh=7bT/glrziBxamIsdBbw0K6Mbx0en1hm15gNmwEM4Wkw=;
+        b=FAeoMH4imcfksF9E+JcOOkrN7tTSsAwYIP0lGPKXDuIZKM9B8E85VfrWbFZd6ngcUX
+         q8/bH/d+3RfNluX/iuJCfOiXAe0daM/dZIzKzT2dURU3eIEV22VP8ktI0j48bEUZPSu1
+         j8cj5s6EMRnQGBLKUhJqIgfl2I+eF83bWvce6QJV2su94LE3xVFsyNKMEWZNFYYLa7AC
+         tUEUNP3ju7udokXbQ/SHhgzRNE7P1+++nOdNNKLte//C92QwQaG/mzV2b05LcfvVVRi8
+         UdvggRFNsJxJbozcFxim7RBOMnzXGc54ukSneYvjRXwCLD9sa+UEbEHcB/zMHSF4vxjf
+         D5cw==
+X-Gm-Message-State: AD7BkJKU3k/oC0Jwi121o0QqYa3b5yMZg2qJIXUQYLbL3BecD9ylGK/rxs33ZgM4e8kelA==
+X-Received: by 10.140.224.18 with SMTP id u18mr43891478qhb.10.1457548600518;
+        Wed, 09 Mar 2016 10:36:40 -0800 (PST)
 Received: from ubuntu.twitter.biz ([192.133.79.128])
-        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.45
+        by smtp.gmail.com with ESMTPSA id r6sm4166929qhb.49.2016.03.09.10.36.39
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Mar 2016 10:36:45 -0800 (PST)
+        Wed, 09 Mar 2016 10:36:39 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.767.g62658d5-twtrsrc
 In-Reply-To: <1457548582-28302-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/288560>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/update-index.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Documentation/git-index-helper.txt |  3 +++
+ index-helper.c                     | 10 ++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 1c94ca5..7c08e1c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -914,6 +914,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
+ex-helper.txt
+index ad40366..9ced091 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -31,6 +31,9 @@ OPTIONS
+ 	for reading an index, but because it will happen in the
+ 	background, it's not noticable. `--strict` is enabled by default.
+=20
++--detach::
++	Detach from the shell.
++
+ NOTES
+ -----
+ On UNIX-like systems, $GIT_DIR/index-helper.pid contains the process
+diff --git a/index-helper.c b/index-helper.c
+index 1140bc0..4dd9656 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -14,7 +14,7 @@ struct shm {
+=20
+ static struct shm shm_index;
+ static struct shm shm_base_index;
+-static int to_verify =3D 1;
++static int daemonized, to_verify =3D 1;
+=20
+ static void release_index_shm(struct shm *is)
  {
- 	int newfd, entries, has_errors =3D 0, nul_term_line =3D 0;
- 	enum uc_mode untracked_cache =3D UC_UNSPECIFIED;
-+	int use_watchman =3D -1;
- 	int read_from_stdin =3D 0;
- 	int prefix_length =3D prefix ? strlen(prefix) : 0;
- 	int preferred_index_format =3D 0;
-@@ -1012,6 +1013,8 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
- 			    N_("test if the filesystem supports untracked cache"), UC_TEST)=
-,
- 		OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
- 			    N_("enable untracked cache without testing the filesystem"), UC=
-_FORCE),
-+		OPT_BOOL(0, "watchman", &use_watchman,
-+			N_("use or not use watchman to reduce refresh cost")),
+@@ -33,6 +33,8 @@ static void cleanup_shm(void)
+=20
+ static void cleanup(void)
+ {
++	if (daemonized)
++		return;
+ 	unlink(git_path("index-helper.pid"));
+ 	cleanup_shm();
+ }
+@@ -172,12 +174,13 @@ int main(int argc, char **argv)
+ 	static struct lock_file lock;
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	const char *prefix;
+-	int fd, idle_in_minutes =3D 10;
++	int fd, idle_in_minutes =3D 10, detach =3D 0;
+ 	struct option options[] =3D {
+ 		OPT_INTEGER(0, "exit-after", &idle_in_minutes,
+ 			    N_("exit if not used after some minutes")),
+ 		OPT_BOOL(0, "strict", &to_verify,
+ 			 "verify shared memory after creating"),
++		OPT_BOOL(0, "detach", &detach, "detach the process"),
  		OPT_END()
  	};
 =20
-@@ -1149,6 +1152,14 @@ int cmd_update_index(int argc, const char **argv=
-, const char *prefix)
- 		die("Bug: bad untracked_cache value: %d", untracked_cache);
- 	}
+@@ -202,6 +205,9 @@ int main(int argc, char **argv)
+ 	atexit(cleanup);
+ 	sigchain_push_common(cleanup_on_signal);
 =20
-+	if (use_watchman > 0) {
-+		the_index.last_update    =3D xstrdup("");
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+	} else if (!use_watchman) {
-+		the_index.last_update    =3D NULL;
-+		the_index.cache_changed |=3D WATCHMAN_CHANGED;
-+	}
++	if (detach && daemonize(&daemonized))
++		die_errno("unable to detach");
 +
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
+ 	if (!idle_in_minutes)
+ 		idle_in_minutes =3D 0xffffffff / 60;
+ 	loop(sb.buf, idle_in_minutes * 60);
 --=20
 2.4.2.767.g62658d5-twtrsrc
